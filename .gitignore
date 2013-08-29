@@ -1,3 +1,10 @@
-.Rproj.user
+*.Rproj
+*.Rproj.user
 .Rhistory
 .RData
+mlr/*.tar.gz
+mlr/pkg
+mlr/test_src.R
+mlrMBO/*.tar.gz
+mlrMBO/pkg
+mlrMBO/test_src.R
