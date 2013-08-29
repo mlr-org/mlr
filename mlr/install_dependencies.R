@@ -24,7 +24,8 @@ pkgs <- c(
   "party",
   "penalized", 
   "pls",
-  "randomForest"
+  "randomForest",
+  "robustbase",
   "rpart", 
   "ROCR",
   "rsm",
