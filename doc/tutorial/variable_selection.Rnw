@@ -13,7 +13,7 @@ Classification example
 Let's train a decision tree on the iris data and use a sequential forward search to find the best group of features.
 
 <<>>=
-library("mlrFeatSel")
+library("mlr")
 task <- makeClassifTask(data=iris, target="Species")
 lrn <- makeLearner("classif.rpart")
 rdesc <- makeResampleDesc("Holdout") 
@@ -30,7 +30,6 @@ Regression example
 We fit a simple linear regression model to the BostonHousing data set and use a genetic algorithm to find a feature set that reduces the MSE.
 
 <<>>=
-library("mlrFeatSel")
 library("mlbench")
 data(BostonHousing)
 
