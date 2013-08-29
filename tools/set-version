@@ -1,13 +1,10 @@
 #!/usr/bin/env Rscript --vanilla
 
-removeM = function(v)
-  if (regexpr(".*M", v) > 0) as.integer(substr(v, 1, nchar(v)-1)) else v
-
-v = system("svnversion", TRUE)
-v = strsplit(v, ":")[[1]]
-v = sapply(v, removeM) 
+v = system("git rev-list HEAD --count", TRUE)
 revision = max(as.integer(v))
-
-desc = read.dcf("pkg/DESCRIPTION")
-desc[,"Version"] = sprintf("%s-%i", desc[,"Version"], revision)
+desc = read.dcf("skel/DESCRIPTION")
+ver = desc[,"Version"] 
+ver = strsplit(ver, "-")[[1]][1]
+ver = sprintf("%s-%i", ver, revision)
+desc[,"Version"] = ver
 write.dcf(desc, file="pkg/DESCRIPTION")
