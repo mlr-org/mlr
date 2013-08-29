@@ -1,0 +1,30 @@
+Benchmark Analysis
+==================
+
+This section is concerned with the statistical evaluation of the
+benchmark experiments and drawing inferences in a proper way. Common
+questions under examination are (after selecting a performance measure)
+
+* Is classifier A significantly better than classifier B?
+* Given a group of classifiers, can we identify relations where ...
+
+We won't go into the theoretical details here, but we will try to link
+to some papers which are helpful:
+
+* [Salzberg1997]_ is a good introduction to the topic.
+* [Dietterich1998]_ FIXME
+* [Hornik1998]_ tries to establish a general, statistically valid
+  framework of the theory. Also contains a good overview and critique of
+  previous methods and tests.
+
+* The `benchmarking group`_ at the LMU.
+
+
+* Exploratory and Inferential Analysis of Benchmark Experiments
+  (http://epub.ub.uni-muenchen.de/4134/).
+  Expands on the above paper, mostly with regard to practical issues.
+
+* The benchmark_ package by Eugster et.al.
+
+.. _benchmark: http://r-forge.r-project.org/projects/benchmark/
+.. _`benchmarking group`: http://www.stat.uni-muenchen.de/institut/ag/leisch/work/benchmarking.html

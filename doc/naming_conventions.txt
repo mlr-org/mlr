@@ -1,0 +1,19 @@
+
+assigment is <-
+library with quotation marks, library("mlr")
+load libraries on the first code chunk on a page.
+
+
+task: classification and regression task
+lrn: learner
+ps: parameter set
+ctrl: control object for tuning or variable selection
+mod: model
+pred: prediction
+rdesc: resampe description
+rinst : resample
+r : resample output list
+res : general result
+tune.res: tune results
+varsel.res: varsel result
+
