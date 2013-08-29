@@ -19,11 +19,11 @@ Classification example
 We again use the iris data set, included in R, but now, we want to
 tune a SVM with a polynomial kernel.
 
-We start by loading the **mlrTune** package and creating a classification
+We start by loading the **mlr* package and creating a classification
 task, just like in the tutorial on training_:
 
 <<>>=
-library("mlrTune")
+library("mlr")
 task <- makeClassifTask(data=iris, target="Species")
 @ 
 
@@ -87,7 +87,6 @@ Let's run a nested CV with 5 folds in the outer loop and 3 folds in the
 inner loop on the example from above.
 
 <<>>=
-library("mlrTune")
 task <- makeClassifTask(data=iris, target="Species")
 ps <- makeParamSet(makeDiscreteParam("C", values=2^(-2:2)),
                    makeDiscreteParam("sigma", values=2^(-2:2)))
@@ -96,7 +95,6 @@ ctrl <- makeTuneControlGrid()
 rin <- makeResampleDesc("CV", iters=3)
 rout <- makeResampleDesc("CV", iters=5)
 
-library("mlrChains")
 lrn <- makeTuneWrapper(makeLearner("classif.ksvm"), resampling=rin,
                        par.set=ps, control=ctrl)
 @ 
