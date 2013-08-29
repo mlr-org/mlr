@@ -1,5 +1,9 @@
 context("tuneMBO")
 
+# FIXME remove if mbo is on cran
+
+if (isExpensiveExampleOk()) {
+
 test_that("tuneMBO", {
   library(mlrMBO)
   res = makeResampleDesc("Subsample", iters=4)
@@ -8,7 +12,7 @@ test_that("tuneMBO", {
   )
   
   n1 = 10; n2=2;
-  mbo.ctrl = makeMBOControl(init.design.points=n1, seq.loops=n2)
+  mbo.ctrl = makeMBOControl(init.design.points=n1, iters=n2)
   ctrl = makeTuneControlMBO(learner=makeLearner("regr.randomForest"), mbo.control=mbo.ctrl)
   tr1 = tuneParams(makeLearner("classif.randomForest"), multiclass.task, res, par.set=ps1, control=ctrl)
   expect_equal(getOptPathLength(tr1$opt.path), n1+n2)
@@ -23,5 +27,5 @@ test_that("tuneMBO", {
 })
 
 
-
+}
 

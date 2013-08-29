@@ -14,9 +14,9 @@ test_that("parallel resampling", {
   doit("multicore", as.character(NA))
   doit("multicore", "resample")
   doit("multicore", "foo")
-  doit("snowfall", as.character(NA))
-  doit("snowfall", "resample")
-  doit("snowfall", "foo")
+  doit("mpi", as.character(NA))
+  doit("mpi", "resample")
+  doit("mpi", "foo")
 })
           
 }

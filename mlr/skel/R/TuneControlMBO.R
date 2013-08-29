@@ -1,11 +1,13 @@
 #FIXME: docu check
 
-#' @param learner [\code{\link[mlr]{Learner}}] \cr
-#'   Regression learner to model performance landscape.  
-#' @param mbo.control [\code{\link[mlrMBO]{MBOControl}}] \cr
-#'   Control object for model-based optimization tuning.  
-#' @export
-#' @rdname TuneControl
+#FIXME export when mbo is on cran
+
+# @param learner [\code{\link[mlr]{Learner}}] \cr
+#   Regression learner to model performance landscape.  
+# @param mbo.control [\code{\link[mlrMBO]{MBOControl}}] \cr
+#   Control object for model-based optimization tuning.  
+# @export
+# @rdname TuneControl
 makeTuneControlMBO = function(same.resampling.instance=TRUE, learner, mbo.control) {
   checkArg(learner, "Learner")
   checkArg(mbo.control, "MBOControl")
