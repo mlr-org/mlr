@@ -9,9 +9,11 @@ Description: Interface to a large number of classification and
         operations. Nested resampling.
 Author: Bernd Bischl <bernd_bischl@gmx.net>
 Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
+URL: https://github.com/berndbischl/mlr
+BugReports: https://github.com/berndbischl/mlr/issues
 License: BSD_3_clause + file LICENSE
-Depends: ParamHelpers
-Imports: BBmisc, parallelMap, codetools
+Depends: R (>= 3.0.0), ParamHelpers (>= 1.1-36) 
+Imports: BBmisc (>= 1.3-64), parallelMap, codetools
 Suggests: testthat, snowfall, ada, adabag, cmaes, DiceKriging,
         DiceOptim, e1071, earth, FNN, FSelector, gbm, irace, kernlab,
         kknn, klaR, mboost, mda, mlbench, nnet, party, penalized, pls,
