@@ -27,7 +27,7 @@ test_that("classif_ksvm", {
 		ksvm(x=formula, data=data[subset,], kernel="polydot", kpar=list(degree=3, offset=2, scale=1.5))
 	}
   tp = function (model, newdata, ...) {
-  	kernlab:::predict(model, newdata=newdata)
+  	kernlab::predict(model, newdata=newdata)
 	}
 		
 	testCV("classif.ksvm", multiclass.df, multiclass.target, tune.train=tt, tune.predict=tp,

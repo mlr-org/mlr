@@ -12,7 +12,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   
   if (inherits(control, "TuneControl")) {
     # FIXME change when new version of paramhelpers is online
-    state2 = if (remove.nas) ParamHelpers:::removeMissingValues(state) else state
+    state2 = if (remove.nas) removeMissingValues2(state) else state
     learner = try(setHyperPars(learner, par.vals=state2), silent=TRUE)
     log.fun = logFunTune
   } else  if (inherits(control, "FeatSelControl")) {

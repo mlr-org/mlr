@@ -40,5 +40,5 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control,
   j = sapply(1:nrow(d), function(j) isTRUE(all.equal(as.list(d[j, par.names]), x)))
   y = colMeans(d[j, opt.path$y.names, drop=FALSE])
   # FIXME change when new version of paramhelpers is online
-  makeTuneResult(learner, control, ParamHelpers:::removeMissingValues(x), y, opt.path)
+  makeTuneResult(learner, control, removeMissingValues2(x), y, opt.path)
 }

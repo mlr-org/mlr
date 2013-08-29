@@ -40,7 +40,8 @@
 #' 
 #' ## Now create control-objects for each of the possible feature selection algorithms:
 #' ctrlSeq <- makeFeatSelControlSequential(method="sfs", maxit=NA)
-#' ctrlGA <- makeFeatSelControlGA(maxit=5, max.features=NA, crossover.rate=0.5, mutation.rate=0.1, mu=10, lambda=5)
+#' ctrlGA <- makeFeatSelControlGA(maxit=5, max.features=NA, crossover.rate=0.5,
+#'   mutation.rate=0.1, mu=10, lambda=5)
 #' ctrlRand <- makeFeatSelControlRandom(maxit=10, max.features=NA, prob=0.5)
 #' ctrlExh <- makeFeatSelControlExhaustive(maxit=NA, max.features=NA)
 #' 

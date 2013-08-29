@@ -72,7 +72,7 @@ makeMeasure = function(id, minimize, classif=FALSE, regr=FALSE,
 
   fun1 = fun
   formals(fun1) = list()
-  v = codetools:::findGlobals(fun1, merge=FALSE)$variables
+  v = codetools::findGlobals(fun1, merge=FALSE)$variables
   if (only.binary && !classif)
     stop("only.binary can only be set to TRUE, if 'classif' is set to TRUE!")
 

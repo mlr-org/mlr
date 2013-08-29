@@ -6,7 +6,7 @@ tuneRandom = function(learner, task, resampling, measures, par.set, control, opt
   e = getOptPathEl(opt.path, i)
   # FIXME change when new version of paramhelpers is online
   # FIXME remove NAs always ok?
-  makeTuneResult(learner, control, ParamHelpers:::removeMissingValues(e$x), e$y, opt.path)
+  makeTuneResult(learner, control, removeMissingValues2(e$x), e$y, opt.path)
 }
 
 

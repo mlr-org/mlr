@@ -23,7 +23,7 @@ test_that("classif_lssvm", {
 	}
 
   tp = function (model, newdata, ...) {
-		kernlab:::predict(model, newdata=newdata)
+		kernlab::predict(model, newdata=newdata)
 	}
 	
 	testCV("classif.lssvm", multiclass.df, multiclass.target, tune.train=tt, tune.predict=tp,

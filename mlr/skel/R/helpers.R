@@ -1,3 +1,7 @@
+#FIXME remove when PH get updated on cran
+removeMissingValues2 = function(x) {
+  Filter(Negate(isScalarNA), x)
+}
 
 checkBlocking = function(data, target, blocking) {
   if(length(blocking) && length(blocking) != nrow(data))
@@ -54,7 +58,7 @@ removeFromDots = function(ns, ...) {
 
 logFunSelFeatures = function(learner, task, resampling, measures, par.set, control, opt.path, x, y, remove.nas) {
   i = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
-  messagef("[selectFeatures] %i: %i bits: %s", i, sum(x), mlr:::perfsToString(y))
+  messagef("[selectFeatures] %i: %i bits: %s", i, sum(x), perfsToString(y))
 }
 
 featuresToLogical = function(vars, all.vars) {
