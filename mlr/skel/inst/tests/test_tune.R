@@ -3,6 +3,7 @@ context("tune")
 # fixme: test tuning of chain, maybe in mlrChains
 
 test_that("tune", {
+  library(e1071)
   cp = c(0.05, 0.9)
   minsplit = 1:3 
   ps1 = makeParamSet(

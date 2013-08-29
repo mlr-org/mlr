@@ -116,6 +116,7 @@ testProbParsets = function(t.name, df, target, train.inds, old.probs.list, parse
 
 
 testCV = function(t.name, df, target, folds=2, parset=list(), tune.train, tune.predict = predict) {
+  library(e1071)
 	data = df
 	formula = formula(paste(target, "~."))
 
