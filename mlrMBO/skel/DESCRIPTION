@@ -1,0 +1,12 @@
+Package: mlrMBO
+Title:  mlr: Model-based optimization  
+Description: 
+Author: Bernd Bischl <bernd_bischl@gmx.net>
+Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
+License: BSD
+Depends: ParamHelpers, mlr
+Imports: BBmisc
+Suggests: cmaes, DiceOptim, testthat
+LazyData: yes
+ByteCompile: yes
+Version: 1.0

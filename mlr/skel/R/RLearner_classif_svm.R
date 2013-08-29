@@ -1,0 +1,40 @@
+#' @S3method makeRLearner classif.svm
+makeRLearner.classif.svm = function() {
+  makeRLearnerClassif(
+    cl = "classif.svm",
+    package = "e1071",
+    par.set = makeParamSet(
+      makeDiscreteLearnerParam(id="type", default="C-classification", values=c("C-classification", "nu-classification")),
+      makeNumericLearnerParam(id="cost",  default=1, lower=0, requires=expression(type=="C-classification")),
+      makeNumericLearnerParam(id="nu", default=0.5, requires=expression(type=="nu-classification")),
+      makeDiscreteLearnerParam(id="kernel", default="radial", values=c("linear", "polynomial", "radial", "sigmoid")),
+      makeIntegerLearnerParam(id="degree", default=3L, lower=1L, requires=expression(kernel=="polynomial")),
+      makeNumericLearnerParam(id="coef0", default=0, requires=expression(kernel=="polynomial" || kernel=="sigmoid")),
+      makeNumericLearnerParam(id="gamma", lower=0, requires=expression(kernel!="linear")),
+      makeNumericLearnerParam(id="tolerance", default=0.001, lower=0),
+      makeLogicalLearnerParam(id="shrinking", default=TRUE),
+      makeNumericLearnerParam(id="cachesize", default=40L)
+    ), 
+    twoclass = TRUE,
+    multiclass = TRUE,
+    numerics = TRUE,
+    factors = TRUE,
+    prob = TRUE
+  )
+}
+
+#' @S3method trainLearner classif.svm
+trainLearner.classif.svm = function(.learner, .task, .subset, .weights,  ...) {
+  f = getTaskFormula(.task)
+  svm(f, data=getTaskData(.task, .subset), probability=.learner$predict.type == "prob", ...)
+}
+
+#' @S3method predictLearner classif.svm
+predictLearner.classif.svm = function(.learner, .model, .newdata, ...) {
+  if(.learner$predict.type == "response") {
+    p = predict(.model$learner.model, newdata=.newdata, ...)
+  } else {
+    p = predict(.model$learner.model, newdata=.newdata, probability=TRUE, ...)
+    p = attr(p, "probabilities")
+  }
+}

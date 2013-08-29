@@ -1,0 +1,1 @@
+context("filterFeatures")test_that("filterFeatures", {  ns = getTaskFeatureNames(binaryclass.task)	f = filterFeatures(task=binaryclass.task, method="chi.squared")  expect_equal(names(f), ns)  f = filterFeatures(task=binaryclass.task, method="random.forest.importance")  expect_equal(names(f), ns)})

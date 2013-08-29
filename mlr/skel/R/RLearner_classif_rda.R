@@ -1,0 +1,46 @@
+#' @S3method makeRLearner classif.rda
+makeRLearner.classif.rda = function() {
+  makeRLearnerClassif(
+    cl = "classif.rda",
+    package = "klaR",
+    par.set = makeParamSet(
+      makeNumericLearnerParam(id="lambda", lower=0, upper=1),
+      makeNumericLearnerParam(id="gamma", lower=0, upper=1),
+      makeLogicalLearnerParam(id="crossval", default=TRUE),
+      makeIntegerLearnerParam(id="fold", default=10L, lower=1L),
+      makeNumericLearnerParam(id="train.fraction", default=0.5, lower=0, upper=1),
+      makeDiscreteLearnerParam(id="schedule", default=1L, values=1:2, requires=expression(simAnn==FALSE)),
+      makeNumericLearnerParam(id="T.start", default=0.1, lower=0, requires=expression(simAnn==TRUE)),
+      makeNumericLearnerParam(id="halflife", default=0.1, lower=0, requires=expression(simAnn==TRUE || schedule==1)),
+      makeNumericLearnerParam(id="zero.temp", default=0.01, lower=0, requires=expression(simAnn==TRUE || schedule==1)),
+      makeNumericLearnerParam(id="alpha", default=2, lower=1, requires=expression(simAnn==TRUE || schedule==2)),
+      makeIntegerLearnerParam(id="K", default=100L, lower=1L, requires=expression(simAnn==TRUE || schedule==2)),
+      makeDiscreteLearnerParam(id="kernel", default="triangular", 
+        values=list("rectangular", "triangular", "epanechnikov", "biweight", "triweight", "cos", "inv", "gaussian")),
+      makeLogicalLearnerParam(id="trafo", default=TRUE),
+      makeLogicalLearnerParam(id="SimAnn", default=FALSE),
+      makeLogicalLearnerParam(id="estimate.error", default=TRUE)
+    ), 
+    par.vals = list(estimate.error=FALSE),
+    twoclass = TRUE,
+    multiclass = TRUE,
+    numerics = TRUE,
+    factors = TRUE,
+    prob = TRUE
+  )
+}
+
+#' @S3method trainLearner classif.rda
+trainLearner.classif.rda = function(.learner, .task, .subset, .weights,  ...) {
+  f = getTaskFormula(.task)
+  rda(f, data=getTaskData(.task, .subset), ...)
+}
+
+#' @S3method predictLearner classif.rda
+predictLearner.classif.rda = function(.learner, .model, .newdata, ...) {
+  p = predict(.model$learner.model, newdata=.newdata, ...)
+  if (.learner$predict.type == "response")
+    return(p$class)
+  else
+    return(p$posterior)
+}

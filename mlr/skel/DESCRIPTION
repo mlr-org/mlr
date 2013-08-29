@@ -1,0 +1,12 @@
+Package: mlr
+Title:  mlr: Machine Learning in R. 
+Description: Interface to various classification and regression techniques with a unified interface, including machine-readable parameter descriptions. Generic resampling, including cross-validation, bootstrapping and subsampling.
+Author: Bernd Bischl <bernd_bischl@gmx.net>
+Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
+License: BSD_3_clause + file LICENSE
+Depends: e1071, ParamHelpers
+Imports: BBmisc, parallelMap, codetools
+Suggests: testthat, snowfall, ada, adabag, cmaes, DiceKriging, DiceOptim, earth, FNN, gbm, irace, kernlab, kknn, klaR, mboost, mda, mlbench, nnet, party, penalized, pls, randomForest, reshape, robustbase, rpart, rsm, RWeka, ROCR
+LazyData: yes
+ByteCompile: yes
+Version: 1.0

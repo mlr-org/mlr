@@ -1,0 +1,13 @@
+#!/usr/bin/env Rscript --vanilla
+
+removeM = function(v)
+  if (regexpr(".*M", v) > 0) as.integer(substr(v, 1, nchar(v)-1)) else v
+
+v = system("svnversion", TRUE)
+v = strsplit(v, ":")[[1]]
+v = sapply(v, removeM) 
+revision = max(as.integer(v))
+
+desc = read.dcf("pkg/DESCRIPTION")
+desc[,"Version"] = sprintf("%s-%i", desc[,"Version"], revision)
+write.dcf(desc, file="pkg/DESCRIPTION")

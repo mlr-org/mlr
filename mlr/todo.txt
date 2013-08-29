@@ -1,0 +1,77 @@
+partest laufen lassen
+
+switch on version
+
+- checkTaskLEarner at beginning of resample, but then not each train call
+
+- document default perf measures
+
+- make test still produces output of learners even when configureMlr(show.learner.output=FALSE)
+
+- b632+ test
+ test b632 too  
+
+- it's not clear how the changed descriptions of the files should be saved, e.g. when we change everything potentially during preproc 
+a) output of the model via print
+b) when the task is forwarded via the training funs
+
+- describe parallel in tutorial
+	
+##### later ######  
+  
+- rd name of supervisedtask, report roxygen2 bug
+- examples
+
+- bbmisc function to print vector with names
+
+- listMeasures 
+
+- checkFeature names for predict
+
+- bug in describe /staticdocs
+
+- na.omit in mlrDataTask 
+ 
+- allow task which only becomes true supervised task after preprocessing / feature
+  extraction   
+
+- drop factor levels in makeTask
+  schwierig. das ist beim subsetten des tasks?
+  dann haben wir andere class levels? trat im allpairs exp auf.
+auch doof:
+task = makeClassifTask(data=iris, target="Species")
+rin = makeFixedHoldoutInstance(train.inds=1:100, test.inds=101:150, size=150)
+resample(makeLearner("classif.randomForest"), task, rin)
+
+
+##### tune #####
+
+
+- tune thresh in the end
+
+- it is inconsistent to sometimes use controlobjects, sometimes ... in our control objects
+
+- test mbo with trafo
+
+- mlr tuneMBO minimize autom. setzen
+
+- check that control and tune results are printed properly.   
+
+##### featsel #####
+
+## FIXME: sbs and sfbs prefer higher number of features, when performance stays the same
+
+add a function to get the selection path for features in forward selection
+
+##### chains #####
+
+
+check all print.funs
+
+remove prints in mlrChains wrappers
+
+add getLEarnerModel
+
+add getters for all relevant stuff in wrappers
+
+check that wrapper work with nfeatperc

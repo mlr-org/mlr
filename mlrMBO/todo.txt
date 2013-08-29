@@ -1,0 +1,53 @@
+jakob: 
+- s(x) von RF
+- parallel die fitness evaluieren
+- [Nadja] Immer das letzte funktionsfähige Modell speichern und falls aktuelles nicht läuft, auf das letzte zugreifen. Auch bei MBO-Ausgabe soll immer ein funktionsfähige Modell ausgegeben werden
+
+bernd:
+- dependent params
+- wie geht konfigurieren von algo auf instanzen?
+
+stefan:
+- EI varianten implementieren, siehe tobias comparison paper, 
+  besonders für noisy optimization
+- wir wollen vermutlich erstmal ohne repetitions
+  an den selben punkten auskommen, sollten aber auch ein paar einfache
+  verleichsprinzipien mit repetitions haben  
+- nachdenken, was sonst noch für den noisy fall wichtig ist 
+  und implementieren
+
+klaus
+- multipoint EI implementieren
+
+nadja 
+- tutorial 
+- multipoint
+
+noch keiner:
+- wie optimiert man gut das infill crit, vielleicht auch mit diskreten par. 
+- possibly scale parameters [0,1] before they go into the model?
+- better think about imputing in case of errors and NA. test and doc this.
+- think about how to handle FailureModels
+
+später:
+- tuning von surrogat modellen, wie machen wir es effizient?
+- wie nimmt man modelle die kein s(x) bieten?
+
+
+1) multipoint proposal: nur das interface schaffen und eine dämliche methode rein
+2) factor variablen müssen gehen (betrrift modelund model optimizer)
+3) noisy optimization muss gehen (betrifft model, criterium, optimizer und punkte am ende)
+4) dependent params müssen gehen: betrifft model, optimierer 
+
+cases wo man mbo benutzen kann. was ist dann drin?
+- deterministisch / noisy
+- infill criteria
+- reellwertige X / gemischt (integer, real, factor) / dependent paramaters
+- single opoinmt / multi point
+- error handling
+
+
+
+
+
+
