@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+{% set title = 'Overview' %}
+{% block body %}
+
+            
+<h1>Machine Learning in R (mlr)</h1>
+<div class="admonition warning">
+  <p class="first admonition-title">Warning</p>
+  <p class="last">Very much work in progress, planning to publish a first version soon.</p>
+</div>
+
+<h2>Introduction</h2>
+
+<h3>Motivation</h3>
+
+<p>There is no standardized interface for all the classification and
+regression techniques available for R. Therefore, for any non-trivial
+machine learning experiments, you need to write lengthy, tedious and
+error-prone wrappers to call the different algorithms and unify their
+respective output. Additionally you need to implement infrastructure
+to cope with pre- and post-processing of the results, parallelizing
+your experiment. This often forces useRs to make crummy trade-offs in
+their experiments due to time constraints. <strong>mlr</strong>
+provides this infrastrukture so that you can focus on your
+experiments!</p>
+
+
+<h3>Features</h3>
+
+<ul class="simple">
+  <li>Clear S4 interface to R classification methods</li>
+  <li>Easy extension mechanism through S4 inheritance</li>
+  <li>Abstract description of learners and data by properties</li>
+  <li>Description of data generating process</li>
+  <li>Many convenience methods, generic building blocks for own experiments</li>
+  <li>Resampling like bootstrapping, cross-validation and subsampling</li>
+  <li>Easy tuning of hyperparameters by different optimization algortithms</li>
+  <li>Variable selection</li>
+  <li>Benchmark experiments with two levels of resampling</li>
+  <li>Interface to benchmark package for exploration and inference</li>
+  <li>Easy extension mechanism through S4 inheritance for new methods</li>
+  <li>Parallelization built in</li>
+  <li>Growing collection of tutorials and examples</li>
+  <li>Unit-tested using <a class="reference external"
+  href="https://sourceforge.net/projects/runit/">RUnit</a></li>
+</ul>
+
+<h3>Outlook</h3>
+
+<ul class="simple">
+<li>Meta-optimization of hyperparamters and features by sequential methods</li>
+<li>Different approaches for model selection, maybe also Races</li>
+<li>Clustering</li>
+</ul>
+
+
+<h3>Installation</h3>
+
+<p>Currently the package is available from 
+  <a class="reference external"
+href="http://r-forge.r-project.org">R-Forge</a>. You can install the
+current developer snapshot from within R by running:</p>
+
+<div class="highlight-r"><div class="highlight"><pre><span class="o">&gt;</span> install.packages<span class="p">(</span><span class="s">&quot;mlr&quot;</span><span class="p">,</span> repos <span class="o">=</span> <span class="s">&quot;http://R-Forge.R-project.org&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+
+<h3>Project Link-List</h3>
+<ul class="simple">
+  <li><a class="reference external" href="http://r-forge.r-project.org/projects/mlr/">http://r-forge.r-project.org/projects/mlr/</a>: Project page&lt;/a&gt; at
+    R-Forge (bugtracker, mailing list, svn)</li>
+  <li><tt class="xref doc docutils literal"><span class="pre">/tutorial</span></tt></li>
+  <li><a class="reference external" href="https://r-forge.r-project.org/tracker/?atid=2012&amp;group_id=494&amp;func=browse">Bugtracker</a></li>
+</ul>
+
+{% endblock %}
