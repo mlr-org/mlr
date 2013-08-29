@@ -59,7 +59,7 @@ using our TuneControl_ instance and the resampling strategy,
 described by the ``rdesc`` variable.
 
 <<>>=
-tune(makeLearner("classif.ksvm"), task=task, resampling=rdesc, par.set=ps, control=ctrl)
+tuneParams(makeLearner("classif.ksvm"), task=task, resampling=rdesc, par.set=ps, control=ctrl)
 @ 
 
 Let's take another closer look at the example above. The parameter grid has
@@ -157,7 +157,7 @@ ctrl <- makeTuneControlGrid()
 lrn <- makeLearner("regr.kknn")
 
 ## Tune k-nearest-neighbor-regression with mean squared error as default measure
-tune(learner=lrn, task=task, resampling=rdesc, par.set=ps, control=ctrl, measures=mse)
+tuneParams(learner=lrn, task=task, resampling=rdesc, par.set=ps, control=ctrl, measures=mse)
 @ 
 
 

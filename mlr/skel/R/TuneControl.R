@@ -2,7 +2,7 @@
 #' 
 #' The following tuners are available:
 #' \describe{
-#'   \item{makeTuneControlGrid}{Grid search. All kinds of parameter types can be handled, but you have discretize them yourself by always using \code{\link[ParamHelpers]{makeDiscreteParam}} in the \code{par.set} passed to \code{\link{tune}}.}
+#'   \item{makeTuneControlGrid}{Grid search. All kinds of parameter types can be handled, but you have discretize them yourself by always using \code{\link[ParamHelpers]{makeDiscreteParam}} in the \code{par.set} passed to \code{\link{tuneParams}}.}
 #'   \item{makeTuneControlRandom}{Random search. All kinds of parameter types can be handled.}
 #'   \item{makeTuneControlOptim}{Tuning with \code{\link[stats]{optim}}. Can handle numeric(vector) and integer(vector) hyperparameters. For integers the internally proposed numeric values are automatically rounded.}
 #'   \item{makeTuneControlCMAES}{CMA Evolution Strategy with method \code{\link[cmaes]{cma_es}}. Can handle numeric(vector) and integer(vector) hyperparameters. For integers the internally proposed numeric values are automatically rounded.}

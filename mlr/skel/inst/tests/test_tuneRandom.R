@@ -9,7 +9,7 @@ test_that("tuneRandom", {
   )
   
   ctrl = makeTuneControlRandom(maxit=5)
-  tr = tune(lrn, multiclass.task, rdesc, par.set=ps, control=ctrl)
+  tr = tuneParams(lrn, multiclass.task, rdesc, par.set=ps, control=ctrl)
   expect_equal(getOptPathLength(tr$opt.path), 5)
   expect_true(!is.na(tr$y))
 })
@@ -24,7 +24,7 @@ test_that("tuneRandom works with dependent params", {
     makeNumericParam("sigma", lower=1, upper=2, requires=quote(kernel == "rbfdot"))
   )
   ctrl = makeTuneControlRandom(maxit=5)
-  tr = tune(lrn, multiclass.task, rdesc, par.set=ps, control=ctrl)
+  tr = tuneParams(lrn, multiclass.task, rdesc, par.set=ps, control=ctrl)
   expect_equal(getOptPathLength(tr$opt.path), 5)
   expect_true(!is.na(tr$y))
 })

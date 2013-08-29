@@ -10,7 +10,7 @@ test_that("tuneMBO", {
   n1 = 10; n2=2;
   mbo.ctrl = makeMBOControl(init.design.points=n1, seq.loops=n2)
   ctrl = makeTuneControlMBO(learner=makeLearner("regr.randomForest"), mbo.control=mbo.ctrl)
-  tr1 = tune(makeLearner("classif.randomForest"), multiclass.task, res, par.set=ps1, control=ctrl)
+  tr1 = tuneParams(makeLearner("classif.randomForest"), multiclass.task, res, par.set=ps1, control=ctrl)
   expect_equal(getOptPathLength(tr1$opt.path), n1+n2)
   expect_equal(dim(as.data.frame(tr1$opt.path)), c(n1+n2, 1+1+2))
   
@@ -18,7 +18,7 @@ test_that("tuneMBO", {
     makeIntegerParam("ntree", lower=10, upper=50),
     makeNumericVectorParam("cutoff", len=3, lower=0.001, upper=1, trafo=function(x) 0.9*x/sum(x)) 
   )
-  tr2 = tune(makeLearner("classif.randomForest"), multiclass.task, res, par.set=ps2, control=ctrl)
+  tr2 = tuneParams(makeLearner("classif.randomForest"), multiclass.task, res, par.set=ps2, control=ctrl)
   expect_equal(getOptPathLength(tr2$opt.path), n1+n2)
 })
 

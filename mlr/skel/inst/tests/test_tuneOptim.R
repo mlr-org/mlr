@@ -19,25 +19,25 @@ test_that("tuneOptim", {
   # nelder mead with optim
   ctrl = makeTuneControlOptim(method="Nelder-Mead", 
     start=list(C=0, sigma=0), maxit=10)
-  tr = tune(lrn1, binaryclass.task, res, par.set=ps1, control=ctrl)
+  tr = tuneParams(lrn1, binaryclass.task, res, par.set=ps1, control=ctrl)
   ctrl = makeTuneControlOptim(method="Nelder-Mead", 
     start=list(cp=0.05, minsplit=5), maxit=10)
-  expect_error(tune(lrn2, binaryclass.task, res, par.set=ps2, control=ctrl))
+  expect_error(tuneParams(lrn2, binaryclass.task, res, par.set=ps2, control=ctrl))
   
   ctrl = makeTuneControlOptim(method="SANN", 
     start=list(C=0, sigma=0), maxit=10)
-  tr = tune(lrn1, binaryclass.task, res, par.set=ps1, control=ctrl)
+  tr = tuneParams(lrn1, binaryclass.task, res, par.set=ps1, control=ctrl)
   ctrl = makeTuneControlOptim(method="SANN", 
     start=list(cp=0.05, minsplit=5), maxit=10)
-  expect_error(tune(lrn2, binaryclass.task, res, par.set=ps2, control=ctrl))
+  expect_error(tuneParams(lrn2, binaryclass.task, res, par.set=ps2, control=ctrl))
   
   ctrl = makeTuneControlOptim(method="L-BFGS-B", 
     start=list(C=0, sigma=0), maxit=10)
-  tr = tune(lrn1, binaryclass.task, res, par.set=ps1, control=ctrl)
+  tr = tuneParams(lrn1, binaryclass.task, res, par.set=ps1, control=ctrl)
   ctrl = makeTuneControlOptim(method="L-BFGS-B", 
     start=list(cp=0.05, minsplit=5), maxit=10)
-  tr = tune(lrn2, binaryclass.task, res, par.set=ps2, control=ctrl)
+  tr = tuneParams(lrn2, binaryclass.task, res, par.set=ps2, control=ctrl)
   
-  expect_error(tune(lrn2, multiclass.task, res, par.set=ps3, control=ctrl))
+  expect_error(tuneParams(lrn2, multiclass.task, res, par.set=ps3, control=ctrl))
 })
 

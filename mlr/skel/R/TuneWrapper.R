@@ -6,7 +6,7 @@
 #' used like any other learner object, but which internally uses tune. If the train function is called on it, the search strategy and resampling are invoked
 #' to select an optimal set of hyperparameter values. Finally, a model is fitted on the complete training data with these optimal
 #' hyperparameters and returned.    
-#' See \code{\link{tune}} for more details.
+#' See \code{\link{tuneParams}} for more details.
 #' 
 #' After training, the optimal hyperparameters (and other related information) can be retrieved with 
 #' \code{\link{getTuneResult}}.
@@ -70,7 +70,7 @@ makeTuneWrapper = function(learner, resampling, measures, par.set, control, show
 #' @S3method trainLearner TuneWrapper
 trainLearner.TuneWrapper = function(.learner, .task, .subset,  ...) {
   .task = subsetTask(.task, .subset)
-  or = tune(.learner$next.learner, .task, .learner$resampling, .learner$measures, 
+  or = tuneParams(.learner$next.learner, .task, .learner$resampling, .learner$measures, 
     .learner$opt.pars, .learner$control, .learner$show.info)
   lrn = setHyperPars(.learner$next.learner, par.vals=or$x)
   m = train(lrn, .task)

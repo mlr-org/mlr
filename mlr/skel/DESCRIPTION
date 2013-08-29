@@ -4,9 +4,9 @@ Description: Interface to various classification and regression techniques with 
 Author: Bernd Bischl <bernd_bischl@gmx.net>
 Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 License: BSD_3_clause + file LICENSE
-Depends: e1071, ParamHelpers
+Depends: ParamHelpers
 Imports: BBmisc, parallelMap, codetools
-Suggests: testthat, snowfall, ada, adabag, cmaes, DiceKriging, DiceOptim, earth, FNN, gbm, irace, kernlab, kknn, klaR, mboost, mda, mlbench, nnet, party, penalized, pls, randomForest, reshape, robustbase, rpart, rsm, RWeka, ROCR
+Suggests: testthat, snowfall, ada, adabag, cmaes, DiceKriging, DiceOptim, e1071, earth, FNN, gbm, irace, kernlab, kknn, klaR, mboost, mda, mlbench, nnet, party, penalized, pls, randomForest, reshape, robustbase, rpart, rsm, RWeka, ROCR
 LazyData: yes
 ByteCompile: yes
 Version: 1.0

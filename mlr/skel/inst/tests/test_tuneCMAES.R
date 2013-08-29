@@ -7,7 +7,7 @@ test_that("tuneCMAES", {
     makeIntegerParam("minsplit", lower=1, upper=10)
   )
   ctrl1 = makeTuneControlCMAES(start=list(cp=0.05, minsplit=5L), maxit=5)
-  tr1 = tune(makeLearner("classif.rpart"), multiclass.task, res, 
+  tr1 = tuneParams(makeLearner("classif.rpart"), multiclass.task, res, 
     par.set=ps1, control=ctrl1)
   
   ps2 = makeParamSet(
@@ -18,7 +18,7 @@ test_that("tuneCMAES", {
   
   ctrl2 = makeTuneControlCMAES(start=list(cutoff=c(1/3, 1/3, 1/3), ntree=200L), 
     maxit=5, sigma=2)
-  tr2 = tune(makeLearner("classif.randomForest"), multiclass.task, res, 
+  tr2 = tuneParams(makeLearner("classif.randomForest"), multiclass.task, res, 
     par.set=ps2, control=ctrl2)
   expect_equal(ncol(as.data.frame(tr2$opt.path)), 4+1+2)
   expect_true(is.numeric(tr2$y)) 
@@ -30,7 +30,7 @@ test_that("tuneCMAES", {
     makeNumericParam("cp", lower=0.001, upper=1), 
     makeDiscreteParam("minsplit", values=c(1,2))
   )
-  expect_error(tune(makeLearner("classif.rpart"), multiclass.task, res, 
+  expect_error(tuneParams(makeLearner("classif.rpart"), multiclass.task, res, 
     par.set=ps3, control=ctrl1))
 })
 

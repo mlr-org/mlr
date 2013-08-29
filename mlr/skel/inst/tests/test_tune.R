@@ -18,7 +18,7 @@ test_that("tune", {
 	cv.instance = e1071CVToMlrCV(tr)
 	m1 = setAggregation(mmce, test.mean)
   m2 = setAggregation(mmce, test.sd)
-	tr2 = tune(lrn, multiclass.task, cv.instance, par.set=ps1, control=ctrl, measures=list(m1, m2))
+	tr2 = tuneParams(lrn, multiclass.task, cv.instance, par.set=ps1, control=ctrl, measures=list(m1, m2))
   pp = as.data.frame(tr2$opt.path)  
 	# todo test scale with tune.e1071 and scaled grid!	
 	for(i in 1:nrow(tr$performances)) {
@@ -33,9 +33,9 @@ test_that("tune", {
   
 	# check multiple measures
 	ms = c("acc", "mmce", "timefit") 
-	tr2 = tune(lrn, multiclass.task, cv.instance, par.set=ps1, control=ctrl)
+	tr2 = tuneParams(lrn, multiclass.task, cv.instance, par.set=ps1, control=ctrl)
   
-  expect_error(tune(lrn, multiclass.task, cv.instance, par.set=makeParamSet(), control=ctrl))
+  expect_error(tuneParams(lrn, multiclass.task, cv.instance, par.set=makeParamSet(), control=ctrl))
 })
 
 
