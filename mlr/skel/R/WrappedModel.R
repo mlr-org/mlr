@@ -1,5 +1,3 @@
-#FIXME really store the features? what abou varsel?
-
 #' Induced model of learner.
 #'
 #' Result from \code{\link{train}}. It internally stores the underlying fitted model,

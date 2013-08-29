@@ -2,35 +2,31 @@ partest laufen lassen
 
 switch on version
 
-- checkTaskLEarner at beginning of resample, but then not each train call
-
-- document default perf measures
+##### mlr ######  
 
 - make test still produces output of learners even when configureMlr(show.learner.output=FALSE)
 
 - b632+ test
  test b632 too  
 
-- it's not clear how the changed descriptions of the files should be saved, e.g. when we change everything potentially during preproc 
-a) output of the model via print
-b) when the task is forwarded via the training funs
+- document default perf measures
+
+- checkTaskLEarner at beginning of resample, but then not each train call
 
 - describe parallel in tutorial
-	
-##### later ######  
-  
+
 - rd name of supervisedtask, report roxygen2 bug
 - examples
 
 - bbmisc function to print vector with names
+
+- function to check if learner is applicable to task
 
 - listMeasures 
 
 - checkFeature names for predict
 
 - bug in describe /staticdocs
-
-- na.omit in mlrDataTask 
  
 - allow task which only becomes true supervised task after preprocessing / feature
   extraction   
@@ -45,7 +41,6 @@ resample(makeLearner("classif.randomForest"), task, rin)
 
 
 ##### tune #####
-
 
 - tune thresh in the end
 
@@ -65,7 +60,10 @@ add a function to get the selection path for features in forward selection
 
 ##### chains #####
 
-
+- it's not clear how the changed descriptions of the files should be saved, e.g. when we change everything potentially during preproc 
+a) output of the model via print
+b) when the task is forwarded via the training funs
+  
 check all print.funs
 
 remove prints in mlrChains wrappers

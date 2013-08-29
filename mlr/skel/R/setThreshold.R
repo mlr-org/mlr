@@ -31,7 +31,6 @@
 #' pred <- setThreshold(pred, threshold = threshold)
 #' performance(pred, measure = mmce)
 #' head(as.data.frame(pred))
-#FIXME: potentially write this in C?
 setThreshold = function(pred, threshold) {
   checkArg(pred, "Prediction")
   checkArg(threshold, "numeric", na.ok=FALSE)

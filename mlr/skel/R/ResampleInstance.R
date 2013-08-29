@@ -48,7 +48,6 @@ makeResampleInstance = function(desc, task, size) {
     checkArg(size, "integer", len=1L, na.ok=FALSE)
   }
 
-  #FIXME:
   if (length(blocking) && desc$stratify)
     stop("Blocking can currently not be mixed with stratification in resampling!")
 
