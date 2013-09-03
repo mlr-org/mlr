@@ -32,6 +32,10 @@
 #'   How should infill points be rated. Possible parameter values are:
 #'   \dQuote{mean}: Mean response.
 #'   \dQuote{ei}: Expected improvement.
+#' @param infill.crit.lcb.lambda [\code{numeric(1)}]\cr
+#'   Lambda parameter for lower confidence bound infill criterion.
+#'   Only used if \code{infillcrit="lcb"}, ignored otherwise.
+#'   Deafult is 1.   
 #' @param infill.opt [\code{character(1)}]\cr 
 #'   How should SINGLE points be proposed by using the surrogate model. Possible are: 
 #'   \dQuote{random}: Use a large random latin hypercube design of points and
@@ -111,7 +115,8 @@
 #' @export 
 makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L, 
   init.design.fun=maximinLHS, init.design.args=list(), iters=10L, propose.points=1L, 
-  infill.crit="mean", infill.opt="random", infill.opt.restarts=1L,
+  infill.crit="mean", infill.crit.lcb.lambda=1,  
+  infill.opt="random", infill.opt.restarts=1L,
   infill.opt.random.points=10000L, infill.opt.cmaes.control=list(), 
   multipoint.method="random", multipoint.control=list(),                          
   final.method="best.true.y", final.evals=0L, 
@@ -136,6 +141,7 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
   checkArg(propose.points, "integer", len=1L, na.ok=FALSE, lower=1L)
   
   checkArg(infill.crit, choices=c("mean", "ei", "aei", "lcb"))
+  checkArg(infill.crit.lcb.lambda, "numeric", len=1L, na.ok=FALSE, lower=0)
   checkArg(infill.opt, choices=c("random", "cmaes"))
   infill.opt.restarts = convertInteger(infill.opt.restarts)
   checkArg(infill.opt.restarts, "integer", len=1L, na.ok=FALSE)
@@ -187,6 +193,7 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
     iters = iters, 
     propose.points = propose.points,
     infill.crit = infill.crit,
+    infill.crit.lcb.lambda = infill.crit.lcb.lambda,
     infill.opt = infill.opt,
     infill.opt.restarts = infill.opt.restarts,
     infill.opt.random.points = infill.opt.random.points,

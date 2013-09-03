@@ -58,7 +58,7 @@ infillCritEI = function(points, model, control, par.set, design) {
 infillCritLCB = function(points, model, control, par.set, design) {
   maximize.mult = ifelse(control$minimize, 1, -1) 
   p = predict(model, newdata = points)$data
-  lcb = maximize.mult * (p$response - control$lcb.lambda * p$se)
+  lcb = maximize.mult * (p$response - control$infill.crit.lcb.lambda * p$se)
   return(lcb)
 }
 
