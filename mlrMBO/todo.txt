@@ -1,3 +1,5 @@
+use makeS3Obj when new BBmisc on cran
+
 jakob: 
 - s(x) von RF
 - parallel die fitness evaluieren

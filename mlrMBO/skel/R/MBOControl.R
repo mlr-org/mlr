@@ -222,7 +222,7 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
 #   Control object.
 # @param ... [any]\cr
 #   Not used.
-#' @S3method print MBOControl
+#' @method print MBOControl
 print.MBOControl = function(x, ...) {
   catf("Objective                   : %s = %s!", x$y.name, ifelse(x$minimize, "min", "max"))
   catf("Function type               : %s",  ifelse(x$noisy, "noisy", "deterministic"))

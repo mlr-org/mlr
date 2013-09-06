@@ -32,7 +32,7 @@
 #'   \item{opt.path [\code{\link[ParamHelpers]{OptPath}}]}{Optimization path.}
 #'   \item{models [List of \code{\link[mlr]{WrappedModel}}]}{List of saved regression models.}
 #' @export
-
+#' @aliases MBOResult
 mbo = function(fun, par.set, design=NULL, learner, control, show.info=TRUE, ...) {
   checkStuff(fun, par.set, design, learner, control)
   loadPackages(control)
@@ -156,7 +156,7 @@ mbo = function(fun, par.set, design=NULL, learner, control, show.info=TRUE, ...)
 #   mbo result object instance.
 # @param ... [any]\cr
 #   Not used.
-#' @S3method print MBOResult
+#' @method print MBOResult
 print.MBOResult = function(x, ...) {
   op = x$opt.path
   catf("Recommended parameters:")
