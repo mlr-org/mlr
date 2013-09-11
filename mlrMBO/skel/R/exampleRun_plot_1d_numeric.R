@@ -1,6 +1,6 @@
 plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE, 
   design.pch=19, design.cols=c("black", "darkseagreen", "tomato"), densregion=TRUE, 
-  se.factor1=1, se.factor2=2, ...)  {
+  se.factor1=1, se.factor2=2, xlim, ylim, ...)  {
   
   cex.points = 2
   cex.axis = 1.5
@@ -29,6 +29,8 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
   evals.x = evals[, name.x, drop=FALSE]
   global.opt = x$global.opt
   xseq = evals[, name.x]
+  if (missing(xlim))
+    xlim = range(xseq)
   name.crit = ctrl$infill.crit
   critfun = getInfillCritFunction(name.crit)
   opt.direction = 1
@@ -86,13 +88,17 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
     # let user define ylim himself?
     #if we have se, set ylim via combo of true y and yhat +- se.factor2*se
     #if we dont have se, simply use xombo of real y and yhat
-    ylim = if (se) 
-      range(c(evals[, name.y], evals$yhat - se.factor2*evals$se, evals$yhat + se.factor2*evals$se))
-    else
-      range(c(evals[, name.y], evals$yhat))
+    if (missing(ylim)) {
+      ylim1 = if (se) 
+        range(c(evals[, name.y], evals$yhat - se.factor2*evals$se, evals$yhat + se.factor2*evals$se))
+      else
+        range(c(evals[, name.y], evals$yhat))
+    } else {
+      ylim1 = ylim
+    }
 
     par(mai=c(0.1, 0.8, 0, 0.1))
-    plot(c(), xlim = range(xseq), ylim = ylim, 
+    plot(c(), xlim=xlim, ylim=ylim1, 
       xaxt="n", xlab="", ylab=name.y, main="", cex.axis=cex.axis, cex.lab=cex.lab)
     
     if (model.ok && se) {
@@ -126,7 +132,7 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
     
     par(mai=c(0.8, 0.8, 0.1, 0.1))
     if (model.ok) {
-      plot(xseq, evals[, name.crit], type="l", lty="dashed",  
+      plot(xseq, evals[, name.crit], xlim=xlim, type="l", lty="dashed",  
         xlab=name.x, ylab=name.crit, lwd=lwd.lines, cex.axis=cex.axis, cex.lab=cex.lab)
       #plotDesignPoints(op, ind.inides, ind.seqdes, ind.prodes, name.crit)
     } else {

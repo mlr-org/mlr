@@ -51,12 +51,21 @@
 #'   \code{densregion=TRUE}, the background is shaded 
 #'   in the area \code{yhat(x) +- se.factor2 * se(x)}.
 #'   Default is 2.
+#' @param xlim [\code{numeric(2)}]\cr
+#'   For 1D: \code{xlim} parameter for first and second plot. 
+#'   Default is range of x-values evaluated in run object \code{x}.
+#' @param ylim [\code{numeric(2)}]\cr
+#'   For 1D: \code{ylim} parameter for first plot, for the second plot \code{ylim} is always set
+#'   automatically, depending on the range of the evaluated infill criterion. 
+#'   Default for the first plot is a heuristic to have the true function 
+#'   and \code{yhat(x) +- se.factor2 * se(x)} both in the plot. Note that this heuristic might 
+#'   change the \code{ylim} setting between plot iterations. 
 #' @return Nothing.
 #' @method plot MBOExampleRun
 #' @export
 plot.MBOExampleRun = function(x, iters, pause=TRUE, 
   design.pch=19, design.cols=c("black", "darkseagreen", "tomato"), densregion=TRUE, 
-  se.factor1=1, se.factor2=2, ...)  {
+  se.factor1=1, se.factor2=2, xlim, ylim, ...)  {
   
   # reset all changed pars on exit
   old.pars = par(c("mfrow", "mar", "oma"))
@@ -71,12 +80,21 @@ plot.MBOExampleRun = function(x, iters, pause=TRUE,
   }
   checkArg(pause, "logical", len=1L, na.ok=FALSE)
   checkArg(densregion, "logical", len=1L, na.ok=FALSE)
-    
+  checkArg(se.factor1, "numeric", len=1L, na.ok=FALSE)
+  checkArg(se.factor2, "numeric", len=1L, na.ok=FALSE)
+  #FIXME implement and document meaning for xlim, ylim for 2D plots
+  if (!missing(xlim))
+    checkArg(xlim, "numeric", len=2L, na.ok=FALSE)
+  if (!missing(ylim))
+    checkArg(ylim, "numeric", len=2L, na.ok=FALSE)
+  
   if (x$n.params == 1L && x$par.types %in% c("numeric", "numericvector")) {
     plotMBOExampleRun1DNumeric(x, pause=pause, iters=iters, design.pch=design.pch, design.cols=design.cols, 
-      densregion=densregion, se.factor1=se.factor1, se.factor2=se.factor2, ...)
+      densregion=densregion, se.factor1=se.factor1, se.factor2=se.factor2, 
+      xlim=xlim, ylim=ylim, ...)
   } else if (x$n.params == 2L && all(x$par.types %in% c("numeric", "numericvector"))) {
-    plotMBOExampleRun2DNumeric(x, pause=pause, iters=iters, design.pch=design.pch, design.cols=design.cols, ...)
+    plotMBOExampleRun2DNumeric(x, pause=pause, iters=iters, design.pch=design.pch, design.cols=design.cols,
+      xlim=xlim, ylim=ylim, ...)
   } else {
     stopf("Should not happen!")
   }
