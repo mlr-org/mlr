@@ -54,7 +54,7 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
       evals$yhat = mlrMBO:::infillCritMeanResponse(evals.x, 
         mod, ctrl, par.set, op[ind.pasdes, ])
       if (se) {
-      evals$se = -mlrMBO:::infillCritStandardError(evals.x,
+        evals$se = -mlrMBO:::infillCritStandardError(evals.x,
         mod, ctrl, par.set, op[ind.pasdes, ])
       }
       evals[[name.crit]] = opt.direction * critfun(evals.x,
@@ -63,8 +63,8 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
         evals$yhat.low = evals$yhat - se.factor1 * evals$se 
         evals$yhat.upp = evals$yhat + se.factor1 * evals$se
       }
-    # infill crit y vals for lower plot
-      op[[name.crit]] = opt.direction * critfun(op[, name.x, drop =FALSE], 
+      # infill crit y vals for lower plot
+      op[[name.crit]] = opt.direction * critfun(op[, name.x, drop=FALSE], 
         mod, ctrl, par.set, op[ind.pasdes, ])
     }    
     # define layout, i.e., the space available and the order of the plots 
@@ -76,9 +76,8 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
       calculateGap(op[ind.all,], global.opt, ctrl))
     plot.new()
     legend(x="left", legend=main, cex=cex.legend)
-    legend(x="right", ncol=3, border="white", 
-      legend=c("y", expression(hat(y)), name.crit), 
-      lty=c("solid", "dotted", "dashed"), 
+    legend(x="right", ncol=2, border="white", 
+      legend=c("y", expression(hat(y))),  lty=c("solid", "dotted"), 
       cex=cex.legend, lwd=lwd.lines)
 
     # 2nd plot, show x-axis on next plot
@@ -105,7 +104,7 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
        # values per v-line at every point x. otherwise
        # we might sample the density (given x) only at points where it is
        # numerically 0
-       dr1 = c(dr1, evals$yhat)
+       dr1 = sort(union(dr1, evals$yhat))
        dr2 = matrix(nrow = length(xseq), ncol = length(dr1))
        for(i in seq_along(xseq)) 
          dr2[i,] = dnorm(dr1, evals$yhat[i], evals$se[i])
@@ -129,7 +128,7 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
     if (model.ok) {
       plot(xseq, evals[, name.crit], type="l", lty="dashed",  
         xlab=name.x, ylab=name.crit, lwd=lwd.lines, cex.axis=cex.axis, cex.lab=cex.lab)
-      plotDesignPoints(op, ind.inides, ind.seqdes, ind.prodes, name.crit)
+      #plotDesignPoints(op, ind.inides, ind.seqdes, ind.prodes, name.crit)
     } else {
       plot.new(); legend("center", "Model fit failed", cex=3)
     }
