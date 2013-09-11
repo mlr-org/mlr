@@ -22,7 +22,7 @@
 #' @param control [\code{\link{MBOControl}}]\cr
 #'   Control object for mbo.
 #' @param show.info [\code{logical(1)}]\cr
-#'   Show info message after each function evaluation?
+#'   Verbose output on console?
 #'   Default is \code{TRUE}.
 #' @param ... [any]\cr
 #'   Further arguments passed to fitness function.
