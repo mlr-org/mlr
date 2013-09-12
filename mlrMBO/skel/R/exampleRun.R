@@ -186,6 +186,11 @@ print.MBOExampleRun = function(x, ...) {
   print(x$control)
   catf("Learner                     : %s", x$learner$id)
   catf("Learner settings:\n%s", mlr:::getHyperParsString(x$learner))
+  mr = x$mbo.res
+  op = mr$opt.path
+  catf("Recommended parameters:")
+  catf(paramValueToString(op$par.set, mr$x))
+  catf("Objective: %s = %.3e\n", op$y.names[1], mr$y)
 }
 
 
