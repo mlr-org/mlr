@@ -102,21 +102,23 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
       xaxt="n", xlab="", ylab=name.y, main="", cex.axis=cex.axis, cex.lab=cex.lab)
     
     if (model.ok && se) {
-       dr1 = seq(length = 200, 
-         min(evals$yhat - se.factor2 * evals$se), 
-         max(evals$yhat + se.factor2 * evals$se)
-       )
-       # also always eval at yhat, so we should always have nonzero density
-       # values per v-line at every point x. otherwise
-       # we might sample the density (given x) only at points where it is
-       # numerically 0
-       dr1 = sort(union(dr1, evals$yhat))
-       dr2 = matrix(nrow = length(xseq), ncol = length(dr1))
-       for(i in seq_along(xseq)) 
-         dr2[i,] = dnorm(dr1, evals$yhat[i], evals$se[i])
-       # plot model uncertainty colour gradient
-       densregion(xseq, dr1, dr2, pointwise=TRUE, colmax="pink")
-       # plot yhat +- se.factor1 * se
+      if (densregion) {
+        dr1 = seq(length = 200, 
+          min(evals$yhat - se.factor2 * evals$se), 
+          max(evals$yhat + se.factor2 * evals$se)
+        )
+        # also always eval at yhat, so we should always have nonzero density
+        # values per v-line at every point x. otherwise
+        # we might sample the density (given x) only at points where it is
+        # numerically 0
+        dr1 = sort(union(dr1, evals$yhat))
+        dr2 = matrix(nrow = length(xseq), ncol = length(dr1))
+        for(i in seq_along(xseq)) 
+          dr2[i,] = dnorm(dr1, evals$yhat[i], evals$se[i])
+        # plot model uncertainty colour gradient
+        densregion(xseq, dr1, dr2, pointwise=TRUE, colmax="pink")
+      }
+      # plot yhat +- se.factor1 * se
       lines(xseq, evals$yhat.low, lty="dotted", lwd=lwd.lines, col=rgb(0, 0, 0, alpha=0.5))
       lines(xseq, evals$yhat.upp, lty="dotted", lwd=lwd.lines, col=rgb(0, 0, 0, alpha=0.5))
     }    
@@ -134,6 +136,7 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
     if (model.ok) {
       plot(xseq, evals[, name.crit], xlim=xlim, type="l", lty="dashed",  
         xlab=name.x, ylab=name.crit, lwd=lwd.lines, cex.axis=cex.axis, cex.lab=cex.lab)
+      abline(v=op[ind.prodes, name.x])
       #plotDesignPoints(op, ind.inides, ind.seqdes, ind.prodes, name.crit)
     } else {
       plot.new(); legend("center", "Model fit failed", cex=3)

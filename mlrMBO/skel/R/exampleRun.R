@@ -107,12 +107,7 @@ exampleRun = function(fun, par.set, global.opt=NA_real_, learner, control,
           sprintf("%i x %i", points.per.dim, points.per.dim)
       }
     )
-  #catf("%-20s: %.e4",
-  #  sprintf("Global Opt (%s)", ifelse(is.na(global.opt), "estimated", "known")), 
-  #  ifelse(is.na(global.opt), global.opt, global.opt.estim)
-  #)  
   }
-  
 
   if (inherits(fun, "soo_function"))
     fun = makeMBOFunction(fun)
