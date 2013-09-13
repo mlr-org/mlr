@@ -107,12 +107,7 @@ exampleRun = function(fun, par.set, global.opt=NA_real_, learner, control,
           sprintf("%i x %i", points.per.dim, points.per.dim)
       }
     )
-  #catf("%-20s: %.e4",
-  #  sprintf("Global Opt (%s)", ifelse(is.na(global.opt), "estimated", "known")), 
-  #  ifelse(is.na(global.opt), global.opt, global.opt.estim)
-  #)  
   }
-  
 
   if (inherits(fun, "soo_function"))
     fun = makeMBOFunction(fun)
@@ -191,6 +186,11 @@ print.MBOExampleRun = function(x, ...) {
   print(x$control)
   catf("Learner                     : %s", x$learner$id)
   catf("Learner settings:\n%s", mlr:::getHyperParsString(x$learner))
+  mr = x$mbo.res
+  op = mr$opt.path
+  catf("Recommended parameters:")
+  catf(paramValueToString(op$par.set, mr$x))
+  catf("Objective: %s = %.3e\n", op$y.names[1], mr$y)
 }
 
 

@@ -1,6 +1,6 @@
 plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE, 
   design.pch=19, design.cols=c("black", "darkseagreen", "tomato"), densregion=TRUE, 
-  se.factor1=1, se.factor2=2, ...)  {
+  se.factor1=1, se.factor2=2, xlim, ylim, ...)  {
   
   cex.points = 2
   cex.axis = 1.5
@@ -29,6 +29,8 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
   evals.x = evals[, name.x, drop=FALSE]
   global.opt = x$global.opt
   xseq = evals[, name.x]
+  if (missing(xlim))
+    xlim = range(xseq)
   name.crit = ctrl$infill.crit
   critfun = getInfillCritFunction(name.crit)
   opt.direction = 1
@@ -54,7 +56,7 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
       evals$yhat = mlrMBO:::infillCritMeanResponse(evals.x, 
         mod, ctrl, par.set, op[ind.pasdes, ])
       if (se) {
-      evals$se = -mlrMBO:::infillCritStandardError(evals.x,
+        evals$se = -mlrMBO:::infillCritStandardError(evals.x,
         mod, ctrl, par.set, op[ind.pasdes, ])
       }
       evals[[name.crit]] = opt.direction * critfun(evals.x,
@@ -63,8 +65,8 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
         evals$yhat.low = evals$yhat - se.factor1 * evals$se 
         evals$yhat.upp = evals$yhat + se.factor1 * evals$se
       }
-    # infill crit y vals for lower plot
-      op[[name.crit]] = opt.direction * critfun(op[, name.x, drop =FALSE], 
+      # infill crit y vals for lower plot
+      op[[name.crit]] = opt.direction * critfun(op[, name.x, drop=FALSE], 
         mod, ctrl, par.set, op[ind.pasdes, ])
     }    
     # define layout, i.e., the space available and the order of the plots 
@@ -76,9 +78,8 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
       calculateGap(op[ind.all,], global.opt, ctrl))
     plot.new()
     legend(x="left", legend=main, cex=cex.legend)
-    legend(x="right", ncol=3, border="white", 
-      legend=c("y", expression(hat(y)), name.crit), 
-      lty=c("solid", "dotted", "dashed"), 
+    legend(x="right", ncol=2, border="white", 
+      legend=c("y", expression(hat(y))),  lty=c("solid", "dotted"), 
       cex=cex.legend, lwd=lwd.lines)
 
     # 2nd plot, show x-axis on next plot
@@ -87,31 +88,37 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
     # let user define ylim himself?
     #if we have se, set ylim via combo of true y and yhat +- se.factor2*se
     #if we dont have se, simply use xombo of real y and yhat
-    ylim = if (se) 
-      range(c(evals[, name.y], evals$yhat - se.factor2*evals$se, evals$yhat + se.factor2*evals$se))
-    else
-      range(c(evals[, name.y], evals$yhat))
+    if (missing(ylim)) {
+      ylim1 = if (se) 
+        range(c(evals[, name.y], evals$yhat - se.factor2*evals$se, evals$yhat + se.factor2*evals$se))
+      else
+        range(c(evals[, name.y], evals$yhat))
+    } else {
+      ylim1 = ylim
+    }
 
     par(mai=c(0.1, 0.8, 0, 0.1))
-    plot(c(), xlim = range(xseq), ylim = ylim, 
+    plot(c(), xlim=xlim, ylim=ylim1, 
       xaxt="n", xlab="", ylab=name.y, main="", cex.axis=cex.axis, cex.lab=cex.lab)
     
     if (model.ok && se) {
-       dr1 = seq(length = 200, 
-         min(evals$yhat - se.factor2 * evals$se), 
-         max(evals$yhat + se.factor2 * evals$se)
-       )
-       # also always eval at yhat, so we should always have nonzero density
-       # values per v-line at every point x. otherwise
-       # we might sample the density (given x) only at points where it is
-       # numerically 0
-       dr1 = c(dr1, evals$yhat)
-       dr2 = matrix(nrow = length(xseq), ncol = length(dr1))
-       for(i in seq_along(xseq)) 
-         dr2[i,] = dnorm(dr1, evals$yhat[i], evals$se[i])
-       # plot model uncertainty colour gradient
-       densregion(xseq, dr1, dr2, pointwise=TRUE, colmax="pink")
-       # plot yhat +- se.factor1 * se
+      if (densregion) {
+        dr1 = seq(length = 200, 
+          min(evals$yhat - se.factor2 * evals$se), 
+          max(evals$yhat + se.factor2 * evals$se)
+        )
+        # also always eval at yhat, so we should always have nonzero density
+        # values per v-line at every point x. otherwise
+        # we might sample the density (given x) only at points where it is
+        # numerically 0
+        dr1 = sort(union(dr1, evals$yhat))
+        dr2 = matrix(nrow = length(xseq), ncol = length(dr1))
+        for(i in seq_along(xseq)) 
+          dr2[i,] = dnorm(dr1, evals$yhat[i], evals$se[i])
+        # plot model uncertainty colour gradient
+        densregion(xseq, dr1, dr2, pointwise=TRUE, colmax="pink")
+      }
+      # plot yhat +- se.factor1 * se
       lines(xseq, evals$yhat.low, lty="dotted", lwd=lwd.lines, col=rgb(0, 0, 0, alpha=0.5))
       lines(xseq, evals$yhat.upp, lty="dotted", lwd=lwd.lines, col=rgb(0, 0, 0, alpha=0.5))
     }    
@@ -127,9 +134,10 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
     
     par(mai=c(0.8, 0.8, 0.1, 0.1))
     if (model.ok) {
-      plot(xseq, evals[, name.crit], type="l", lty="dashed",  
+      plot(xseq, evals[, name.crit], xlim=xlim, type="l", lty="dashed",  
         xlab=name.x, ylab=name.crit, lwd=lwd.lines, cex.axis=cex.axis, cex.lab=cex.lab)
-      plotDesignPoints(op, ind.inides, ind.seqdes, ind.prodes, name.crit)
+      abline(v=op[ind.prodes, name.x])
+      #plotDesignPoints(op, ind.inides, ind.seqdes, ind.prodes, name.crit)
     } else {
       plot.new(); legend("center", "Model fit failed", cex=3)
     }

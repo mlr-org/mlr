@@ -2,9 +2,9 @@ wie oft geht das model kaputt bei bbob 1 und 2 D bei kriging?
 was genau tun wir dann, wie wird ein punkt proposed?
 was machen wir beim plot?
 
-kann man irgendwie mehr auf exploitation gehen wenn es mehr gegen ende des budgets geht?
+was machen wir wenn das infill crit komplett flach ist?
 
-# viele bbob funs gehen in 1d nicht 
+kann man irgendwie mehr auf exploitation gehen wenn es mehr gegen ende des budgets geht?
 
 was machen wir, wenn das EI sehr klein wird? kann man bei fsphere provieren.
 bzw was wenn das se überall sehr klein wird?
@@ -23,3 +23,18 @@ besten unter k lösungen zu identifizieren. können wir das nutzen?
 
 
 wie kriegn wir raus ob wir in mbo die zielfunktion logarithmieren?
+
+kann man irgendwie bessere modelle in den knoten der trees fitten um "glattere" RF modelle bei numerics zu
+erzeugen?
+
+besser intensify oder nur auf ein "korrektes" infillcri setzen?
+
+welche regr modelle sind allgemein bei mbo sinnvoll?
+kann mann allgemein per bootstrap lokale uncertainty schätzen?
+
+wie ist exakt die definition der uncertainty bei kriging?
+das ist prinzipiell ein prediction intervall und kein conf. int. für die mean response?
+damit geht die unsicherheit nie gegen null, selbst wenn man unendlcih oft an einer stelle sampelt. das ist anders beim bootstrap oder?
+und was will man eigentlich für die infills?
+
+
