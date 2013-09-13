@@ -106,7 +106,7 @@ mbo = function(fun, par.set, design=NULL, learner, control, show.info=TRUE, ...)
 	# do the mbo magic
   for (loop in seq_len(control$iters)) {
 
-		# impute new points and evaluete target function
+		# propose new points and evaluate target function
     prop.design = proposePoints(model, par.set, control, opt.path)
     xs = lapply(seq_len(nrow(prop.design)), function(i) ParamHelpers:::dfRowToList(prop.design, par.set, i))
     xs = lapply(xs, repairPoint, par.set=par.set)
