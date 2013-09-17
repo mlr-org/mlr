@@ -113,7 +113,7 @@ mbo = function(fun, par.set, design=NULL, learner, control, show.info=TRUE, ...)
 	# do the mbo magic
   for (loop in seq_len(control$iters)) {
 
-		# impute new points and evaluete target function
+		# propose new points and evaluate target function
     prop.design = proposePoints(model, par.set, control, opt.path)
     # handle lambdas for this method
     if (control$multipoint.method == "lcb") {

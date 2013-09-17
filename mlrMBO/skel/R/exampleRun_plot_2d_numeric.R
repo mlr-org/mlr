@@ -6,7 +6,7 @@ plotMBOExampleRun2DNumeric = function(x, iters, pause=TRUE,
   se.factor1=1, se.factor2=2, ...)  {
   
   par(mfrow=c(2, 2), oma=c(0, 0, 2, 0))
-  layout(matrix(1:9, ncol=3, byrow=TRUE), width=c(1, 8, 8), height=c(8, 8, 1))
+  layout(matrix(1:9, ncol=3, byrow=TRUE), widths=c(1, 8, 8), heights=c(8, 8, 1))
   
   # do we plot stuff relatated to model uncertainty?
   se = x$learner$predict.type == "se"
@@ -20,6 +20,8 @@ plotMBOExampleRun2DNumeric = function(x, iters, pause=TRUE,
   evals = x$evals
   global.opt = x$global.opt
   ctrl = x$control
+  proppoints = ctrl$propose.points
+  mr = x$mbo.res
   col = terrain.colors(255)
   x1 = unique(evals[, name.x1])
   x2 = unique(evals[, name.x2])
@@ -29,7 +31,7 @@ plotMBOExampleRun2DNumeric = function(x, iters, pause=TRUE,
   if (name.crit %in% c("ei")) {
     opt.direction = -1
   }
-  op = as.data.frame(x$mbo.res$opt.path)
+  op = as.data.frame(mr$opt.path)
   # ind.* are index sets into the opt.path (initial design and so on)
   ind.inides = which(op$dob == 0)
   
@@ -77,7 +79,7 @@ plotMBOExampleRun2DNumeric = function(x, iters, pause=TRUE,
   #FIXME how do we display noise? do we at all?
   
   for (i in iters) {
-    mod = x$mbo.res$models[[i]]
+    mod = mr$models[[i]]
     
     ind.seqdes = which(op$dob > 0 & op$dob < i)
     ind.prodes = which(op$dob == i)
@@ -89,8 +91,16 @@ plotMBOExampleRun2DNumeric = function(x, iters, pause=TRUE,
     if (se) 
       evals[["se"]] = -mlrMBO:::infillCritStandardError(evals[, names.x, drop=FALSE], 
         mod, ctrl, par.set, op[ind.pasdes, ])
-    evals[[name.crit]] = opt.direction * critfun(evals[, names.x, drop=FALSE], 
-      mod, ctrl, par.set, op[ind.pasdes, ])
+    if (proppoints == 1L) {
+      evals[[name.crit]] = opt.direction * critfun(evals[, names.x, drop=FALSE], 
+        mod, ctrl, par.set, op[ind.pasdes, ])
+    } else {          
+      # just display the first lcb crit fun
+      ctrl2 = ctrl
+      ctrl2$infill.crit.lcb.lambda = mr$multipoint.lcb.lambdas[i, 1]
+      evals[[name.crit]] = opt.direction * infillCritLCB(evals[, names.x, drop=FALSE], 
+        mod, ctrl, par.set, op[ind.pasdes, ])
+    }                                               
     #FIXME expose logariuthm taking
     par(mar=c(0.1, 2.1, 1.5, 0.1))    
     myaxis(2)
