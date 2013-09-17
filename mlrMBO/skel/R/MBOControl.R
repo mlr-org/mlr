@@ -57,10 +57,14 @@
 #'   Control argument for cmaes optimizer.
 #'   Default is empty list.
 #' @param multipoint.method [\code{character(1)}]\cr
-#'   Method used for proposal of multiple infill points, for parallel batch evlauation.
+#'   Method used for proposal of multiple infill points, for parallel batch evaluation.
 #'   Possible values are:
-#'   \dQuote{random}: Propose points randomly. A nonsensical baseline method for comparisons. 
-#'   Default is \code{random}.
+#'   \dQuote{lcb}: Proposes points by optimizing the lower confidence bound 'lcb' criterion,
+#'   \code{propose.points} times. Each lambda value for 'lcb' is drawn randomly from an 
+#'   exp(1)-distribution, so do not define \code{infill.opt.lcb.lambda}.
+#'   The optimizer for each proposal is configured in the same way as for the single point case,
+#'   i.e., by specifying \code{infill.opt} and related stuff.
+#'   Default is \code{lcb}
 #' @param multipoint.control [\code{list}]\cr
 #'   Control object for multipoint proposal method. Contains additional parameters for
 #'   the multipoint method.
@@ -118,7 +122,7 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
   infill.crit="mean", infill.crit.lcb.lambda=1,  
   infill.opt="random", infill.opt.restarts=1L,
   infill.opt.random.points=10000L, infill.opt.cmaes.control=list(), 
-  multipoint.method="random", multipoint.control=list(),                          
+  multipoint.method="lcb", multipoint.control=list(),                          
   final.method="best.true.y", final.evals=0L, 
   y.name="y", impute, impute.errors=FALSE, silent=TRUE, save.model.at=iters, 
   resample.at = integer(0), resample.desc = makeResampleDesc("CV", iter=10), resample.measures=list(mse), 
@@ -149,7 +153,8 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
   checkArg(infill.opt.random.points, "integer", len=1L, na.ok=FALSE, lower=1L) 
   checkArg(infill.opt.cmaes.control, "list") 
   
-  checkArg(multipoint.method, choices=c("random"))
+  checkArg(multipoint.method, choices=c("lcb"))
+  #FIXME we might not want this
   checkArg(multipoint.control, "list")
 
   if (missing(impute)) 

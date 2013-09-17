@@ -25,18 +25,15 @@ proposePoints = function(model, par.set, control, opt.path) {
       cmaes = infillOptCMAES
       #EI       = infillOptEI
     )
-
+    
     design = as.data.frame(opt.path)
     return(infill.opt.fun(infill.crit.fun, model, control, par.set, opt.path, design))
   } else {
 
     multipoint.infill.opt.fun = switch(control$multipoint.method,
-      random = multipointInfillOptRandom
+      lcb = multipointInfillOptLCB
     )
 
     multipoint.infill.opt.fun(model, control, par.set, opt.path, design)
   }
-
-  # FIXME ??
-
 }

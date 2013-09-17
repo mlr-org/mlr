@@ -31,6 +31,7 @@
 #'   \item{y [\code{numeric(1)}]}{Value of fitness function at \code{x}, either from evals during optimization or from requested final evaluations, if those were greater than 0.}
 #'   \item{opt.path [\code{\link[ParamHelpers]{OptPath}}]}{Optimization path.}
 #'   \item{models [List of \code{\link[mlr]{WrappedModel}}]}{List of saved regression models.}
+#'   \item{multipoint.lcb.lambdas [\code{matrix(iters, proposed.points)}]}{Sampled lambda values for multipoint lcb method.}
 #' @export
 #' @aliases MBOResult
 mbo = function(fun, par.set, design=NULL, learner, control, show.info=TRUE, ...) {
@@ -102,12 +103,23 @@ mbo = function(fun, par.set, design=NULL, learner, control, show.info=TRUE, ...)
     r = resample(learner, rt, control$resample.desc, measures=control$resample.measures)
     res.vals[["0"]] = r$aggr
 	}
-
+  
+  # store sampled lambdas for this special method in return val
+  multipoint.lcb.lambdas = if (control$multipoint.method == "lcb") 
+    matrix(nrow=0, ncol=control$propose.points)
+  else
+    NULL
+  
 	# do the mbo magic
   for (loop in seq_len(control$iters)) {
 
 		# impute new points and evaluete target function
     prop.design = proposePoints(model, par.set, control, opt.path)
+    # handle lambdas for this method
+    if (control$multipoint.method == "lcb") {
+      multipoint.lcb.lambdas = rbind(multipoint.lcb.lambdas, attr(prop.design, "multipoint.lcb.lambdas"))
+      attr(prop.design, "multipoint.lcb.lambda") =  NULL
+    }
     xs = lapply(seq_len(nrow(prop.design)), function(i) ParamHelpers:::dfRowToList(prop.design, par.set, i))
     xs = lapply(xs, repairPoint, par.set=par.set)
     ys = evalTargetFun(fun, par.set, xs, opt.path, control, show.info, oldopts, ...)
@@ -146,7 +158,8 @@ mbo = function(fun, par.set, design=NULL, learner, control, show.info=TRUE, ...)
     y=as.numeric(best$y),
     opt.path=opt.path,
     resample=res.vals,
-    models=models
+    models=models,
+    multipoint.lcb.lambdas = multipoint.lcb.lambdas
   ), class="MBOResult")
 }
 

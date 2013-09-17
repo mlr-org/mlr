@@ -31,18 +31,20 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
   xseq = evals[, name.x]
   if (missing(xlim))
     xlim = range(xseq)
+  proppoints = ctrl$propose.points
+  mr = x$mbo.res
   name.crit = ctrl$infill.crit
   critfun = getInfillCritFunction(name.crit)
   opt.direction = 1
   if (name.crit %in% c("ei")) {
     opt.direction = -1
   }
-  op = as.data.frame(x$mbo.res$opt.path)
+  op = as.data.frame(mr$opt.path)
   # ind.* are index sets into the opt.path (initial design and so on)
   ind.inides = which(op$dob == 0)
   
   for (i in iters) {
-    mod = x$mbo.res$models[[i]]
+    mod = mr$models[[i]]
     
     ind.seqdes = which(op$dob > 0 & op$dob < i)
     ind.prodes = which(op$dob == i)
@@ -59,15 +61,24 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
         evals$se = -mlrMBO:::infillCritStandardError(evals.x,
         mod, ctrl, par.set, op[ind.pasdes, ])
       }
-      evals[[name.crit]] = opt.direction * critfun(evals.x,
-        mod, ctrl, par.set, op[ind.pasdes, ])
+      # infill crit y vals for lower plot
+      if (proppoints == 1L) {
+        evals[[name.crit]] = opt.direction * critfun(evals.x,
+          mod, ctrl, par.set, op[ind.pasdes, ])
+      } else {
+        for (j in 1:proppoints) {
+          #FIXME works only for lcb
+          ctrl2 = ctrl
+          ctrl2$infill.crit.lcb.lambda = mr$multipoint.lcb.lambdas[i, j]
+          evals[[sprintf("%s_%i", "lcb", j)]] = 
+            opt.direction * infillCritLCB(evals.x, 
+              mod, ctrl2, par.set, op[ind.pasdes, ])
+        }
+      }
       if (se) {
         evals$yhat.low = evals$yhat - se.factor1 * evals$se 
         evals$yhat.upp = evals$yhat + se.factor1 * evals$se
       }
-      # infill crit y vals for lower plot
-      op[[name.crit]] = opt.direction * critfun(op[, name.x, drop=FALSE], 
-        mod, ctrl, par.set, op[ind.pasdes, ])
     }    
     # define layout, i.e., the space available and the order of the plots 
     layout(matrix(c(1, 2, 3), ncol=1, byrow=TRUE), heights=c(0.5, 2.25, 2.25))
@@ -132,10 +143,19 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
     # plot design points    
     plotDesignPoints(op, ind.inides, ind.seqdes, ind.prodes, name.y)
     
+    # 3rd plot
     par(mai=c(0.8, 0.8, 0.1, 0.1))
     if (model.ok) {
-      plot(xseq, evals[, name.crit], xlim=xlim, type="l", lty="dashed",  
-        xlab=name.x, ylab=name.crit, lwd=lwd.lines, cex.axis=cex.axis, cex.lab=cex.lab)
+      if (proppoints == 1L) {
+        plot(xseq, evals[, name.crit], xlim=xlim, type="l", lty="dashed", 
+          xlab=name.x, ylab=name.crit, lwd=lwd.lines, cex.axis=cex.axis, cex.lab=cex.lab)
+      } else {
+        ylim = range(evals[, sprintf("lcb_%i", 1:proppoints)])
+        plot(c(), c(), xlim=xlim, ylim=ylim, 
+          xlab=name.x, ylab=name.crit, cex.axis=cex.axis, cex.lab=cex.lab)
+        for (j in 1:proppoints)
+          lines(xseq, evals[, sprintf("%s_%i", "lcb", j)], lty="dashed", lwd=lwd.lines)
+      }
       abline(v=op[ind.prodes, name.x])
       #plotDesignPoints(op, ind.inides, ind.seqdes, ind.prodes, name.crit)
     } else {
