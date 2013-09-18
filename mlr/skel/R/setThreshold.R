@@ -49,6 +49,7 @@ setThreshold = function(pred, threshold) {
   p = getProbabilities(pred, cl=levs)
   # resort so we have same order in threshold and p
   threshold = threshold[levs]
+  #FIXME use BBmisc functuion for max.col here
   pred$data$response = factor(max.col(t(t(p) / threshold)), levels=seq_along(levs), labels=levs)
   pred$threshold = threshold
   return(pred)
