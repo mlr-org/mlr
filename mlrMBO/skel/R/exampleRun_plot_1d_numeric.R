@@ -66,13 +66,19 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
         evals[[name.crit]] = opt.direction * critfun(evals.x,
           mod, ctrl, par.set, op[ind.pasdes, ])
       } else {
-        for (j in 1:proppoints) {
-          #FIXME works only for lcb
-          ctrl2 = ctrl
-          ctrl2$infill.crit.lcb.lambda = mr$multipoint.lcb.lambdas[i, j]
-          evals[[sprintf("%s_%i", "lcb", j)]] = 
-            opt.direction * infillCritLCB(evals.x, 
-              mod, ctrl2, par.set, op[ind.pasdes, ])
+        if (ctrl$multipoint.method == "lcb") {
+          for (j in 1:proppoints) {
+            #FIXME works only for lcb
+            ctrl2 = ctrl
+            ctrl2$infill.crit.lcb.lambda = mr$multipoint.lcb.lambdas[i, j]
+            evals[[sprintf("%s_%i", "lcb", j)]] = 
+              opt.direction * infillCritLCB(evals.x, 
+                mod, ctrl2, par.set, op[ind.pasdes, ])
+          }
+        } else if (ctrl$multipoint.method == "multicrit") {
+          #FIXME add case for bicriteria
+          evals[[name.crit]] = -1 * infillCritEI(evals.x,
+            mod, ctrl, par.set, op[ind.pasdes, ])
         }
       }
       if (se) {
@@ -150,11 +156,17 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
         plot(xseq, evals[, name.crit], xlim=xlim, type="l", lty="dashed", 
           xlab=name.x, ylab=name.crit, lwd=lwd.lines, cex.axis=cex.axis, cex.lab=cex.lab)
       } else {
-        ylim = range(evals[, sprintf("lcb_%i", 1:proppoints)])
-        plot(c(), c(), xlim=xlim, ylim=ylim, 
-          xlab=name.x, ylab=name.crit, cex.axis=cex.axis, cex.lab=cex.lab)
-        for (j in 1:proppoints)
-          lines(xseq, evals[, sprintf("%s_%i", "lcb", j)], lty="dashed", lwd=lwd.lines)
+        if (ctrl$multipoint.method == "lcb") {
+          ylim = range(evals[, sprintf("lcb_%i", 1:proppoints)])
+          plot(c(), c(), xlim=xlim, ylim=ylim, 
+            xlab=name.x, ylab=name.crit, cex.axis=cex.axis, cex.lab=cex.lab)
+          for (j in 1:proppoints)
+            lines(xseq, evals[, sprintf("%s_%i", "lcb", j)], lty="dashed", lwd=lwd.lines)
+        } else if (ctrl$multipoint.method == "multicrit") {
+          #FIXME add case for bicriteria
+          plot(xseq, evals[, name.crit], xlim=xlim, type="l", lty="dashed", 
+            xlab=name.x, ylab=name.crit, lwd=lwd.lines, cex.axis=cex.axis, cex.lab=cex.lab)
+        }
       }
       abline(v=op[ind.prodes, name.x])
       #plotDesignPoints(op, ind.inides, ind.seqdes, ind.prodes, name.crit)
