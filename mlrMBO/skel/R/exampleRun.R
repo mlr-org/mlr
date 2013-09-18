@@ -74,7 +74,7 @@ exampleRun = function(fun, par.set, global.opt=NA_real_, learner, control,
   checkArg(control, "MBOControl")
   noisy = control$noisy
   if (missing(learner)) {
-    learner = makeLearner("regr.km", predict.type="se", nugget.estim=noisy)
+    learner = makeLearner("regr.km", covtype="matern5_2", predict.type="se", nugget.estim=noisy)
   } else {
     checkArg(learner, "Learner")
   }
