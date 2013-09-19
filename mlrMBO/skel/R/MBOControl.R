@@ -153,7 +153,7 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
   checkArg(infill.opt.random.points, "integer", len=1L, na.ok=FALSE, lower=1L) 
   checkArg(infill.opt.cmaes.control, "list") 
   
-  checkArg(multipoint.method, choices=c("lcb"))
+  checkArg(multipoint.method, choices=c("lcb", "multicrit"))
   #FIXME we might not want this
   checkArg(multipoint.control, "list")
 

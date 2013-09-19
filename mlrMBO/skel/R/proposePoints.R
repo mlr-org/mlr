@@ -15,6 +15,8 @@ proposePoints = function(model, par.set, control, opt.path) {
   if (inherits(model, "FailureModel"))
     return(generateDesign(control$propose.points, par.set, randomLHS, ints.as.num=TRUE))
 
+  design = as.data.frame(opt.path)
+
   if (control$propose.points == 1L) {
     # determine infill criterion
     infill.crit.fun = getInfillCritFunction(control$infill.crit)
@@ -25,15 +27,12 @@ proposePoints = function(model, par.set, control, opt.path) {
       cmaes = infillOptCMAES
       #EI       = infillOptEI
     )
-    
-    design = as.data.frame(opt.path)
     return(infill.opt.fun(infill.crit.fun, model, control, par.set, opt.path, design))
   } else {
-
     multipoint.infill.opt.fun = switch(control$multipoint.method,
-      lcb = multipointInfillOptLCB
+      lcb = multipointInfillOptLCB,
+      multicrit = multipointInfillOptMulticrit
     )
-
     multipoint.infill.opt.fun(model, control, par.set, opt.path, design)
   }
 }
