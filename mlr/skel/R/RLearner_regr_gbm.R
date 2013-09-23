@@ -4,7 +4,7 @@ makeRLearner.regr.gbm = function() {
     cl = "regr.gbm",
     package = "gbm",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id="distribution", default="gaussian", values=c("gaussian", "laplace")),
+      makeDiscreteLearnerParam(id="distribution", default="gaussian", values=c("gaussian", "laplace", "poisson")),
       makeIntegerLearnerParam(id="n.trees", default=100L, lower=1L),
       makeIntegerLearnerParam(id="interaction.depth", default=1L, lower=1L),
       makeIntegerLearnerParam(id="n.minobsinnode", default=10L, lower=1L),
