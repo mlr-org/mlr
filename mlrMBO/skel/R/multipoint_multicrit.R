@@ -31,6 +31,20 @@ distToNB = function(X, y, minimize = TRUE) {
 }
 
 
+nds_1d_selection <- function(values, n=1, index=1, ...) {  
+  # N solutions given, remove n, k remain
+  N = ncol(values)
+  k = N - n
+  ranks = nds_rank(values)
+  # order according to 
+  # 1) non-dominated front, 
+  # 2) objective value at index (minimization)
+  indicesOrderedByFitness = order(ranks, values[index, ])
+  return(indicesOrderedByFitness[(k+1):N])
+}
+
+
+
 #FIXME: maybe add a local opt. hybrid step to get better
 # into local opts
 
@@ -67,7 +81,7 @@ multipointInfillOptMulticrit = function(model, control, par.set, opt.path, desig
   d = sum(getParamLengths(par.set))
   mu = n
   # FIXME: reasobale standard defaults?
-  eta = 20; p = 1
+  eta = 15; p = 1
   mutate = pm_operator(eta, p, getLower(par.set), getUpper(par.set))
   crossover = sbx_operator(eta, p, getLower(par.set), getUpper(par.set))
   mydist = switch(control$multipoint.distfun,
@@ -125,7 +139,8 @@ multipointInfillOptMulticrit = function(model, control, par.set, opt.path, desig
     # personal communication simon with m. emmerich
     ref = col.maxs + 0.1 * (col.maxs - col.mins)
     
-    to.kill = nds_hv_selection(t(Y), ref=ref)
+    #to.kill = nds_hv_selection(t(Y), ref=ref)
+    to.kill = nds_1d_selection(t(Y), index=2)
     X = X[-to.kill, ,drop=FALSE]
     Y = Y[-to.kill, ,drop=FALSE]
     #FIXME really display all this crap? only on show.info
