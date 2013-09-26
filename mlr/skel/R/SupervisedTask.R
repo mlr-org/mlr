@@ -73,7 +73,7 @@ makeSupervisedTask = function(type, id, data, target, blocking, positive, check.
       if (is.character(data[, target]) || is.logical(data[, target]))
         data[, target] = as.factor(data[, target])
       else
-        stopf("Taget column %s has an unsupported type for classification. Either you made a mistake or you have to convert it. Type: %s",
+        stopf("Target column %s has an unsupported type for classification. Either you made a mistake or you have to convert it. Type: %s",
           target, class(data[,target])[1L])
     }
     levs = levels(data[,target])
@@ -93,7 +93,7 @@ makeSupervisedTask = function(type, id, data, target, blocking, positive, check.
     if (is.integer(data[, target]))
       data[, target] = as.numeric(data[, target])
     else if(!is.numeric(data[, target]))
-      stopf("Taget column %s has an unsupported type for regression. Either you made a mistake or you have to convert it. Type: %s",
+      stopf("Target column %s has an unsupported type for regression. Either you made a mistake or you have to convert it. Type: %s",
         target, class(data[,target])[1L])
     positive = NA_character_
   }
