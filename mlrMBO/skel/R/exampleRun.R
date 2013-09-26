@@ -114,6 +114,9 @@ exampleRun = function(fun, par.set, global.opt=NA_real_, learner, control,
   
   lower = getLower(par.set)
   upper = getUpper(par.set)
+
+  par.types.count = getNumberOfParamTypes(par.set)
+
   if (n.params == 1L) {
     if (par.types %in% c("numeric", "numericvector")) {
       xs = seq(lower, upper, length.out=points.per.dim)
@@ -126,6 +129,9 @@ exampleRun = function(fun, par.set, global.opt=NA_real_, learner, control,
         }
       })
       evals = data.frame(x=xs, y=ys)
+    } else if (par.types %in% c("discrete")) {
+      
+      stop("1d examples with discrete param are currently unter developement.")
     }
   } else if (n.params == 2L) {
     if (all(par.types %in% c("numeric", "numericvector"))) {
@@ -144,6 +150,9 @@ exampleRun = function(fun, par.set, global.opt=NA_real_, learner, control,
         }
      })
      evals = cbind(eval.x, y=ys)
+    } else if (par.types.count$discrete == 1) {
+      str(par.types.count)
+      stop("Not implemented yet!")
     }
   }
   colnames(evals) = c(names.x, name.y)
@@ -203,3 +212,20 @@ getGlobalOptString = function(run) {
 }
 
 
+# FIXME: move this to ParamHelpers?
+getNumberOfParamTypes = function(par.set) {
+  checkArg(par.set, "ParamSet")
+  supported.types = getSupportedParamTypes()
+  actual.types = extractSubList(par.set$pars, "type")
+  count = lapply(supported.types, function(t) {
+    length(types[which(types == t)])
+  })
+  names(count) = supported.types
+  return(count)
+}
+
+getSupportedParamTypes = function() {
+  return(c("numeric", "integer", "numericvector", 
+        "integervector", "discrete", "discretevector", "logical", 
+        "logicalvector", "function", "untyped"))
+}
