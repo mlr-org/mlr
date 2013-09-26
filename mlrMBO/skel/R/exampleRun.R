@@ -67,14 +67,24 @@ exampleRun = function(fun, par.set, global.opt=NA_real_, learner, control,
     par.set = makeNumericParamSet(lower=lower_bounds(fun), upper=upper_bounds(fun))
   else
     checkArg(par.set, "ParamSet")
+
   if (missing(global.opt) && inherits(fun, "soo_function")) 
     global.opt = global_minimum(fun)$val
   else
     checkArg(global.opt, "numeric", len=1L, na.ok=TRUE)
+
+  par.types = extractSubList(par.set$pars, "type")
+
   checkArg(control, "MBOControl")
   noisy = control$noisy
   if (missing(learner)) {
-    learner = makeLearner("regr.km", covtype="matern5_2", predict.type="se", nugget.estim=noisy)
+    # set random forest as default learner if discrete params occur
+    if (any(par.types %in% c("discrete"))) {
+      # FIXME: set further params 
+      learner = makeLearner("regr.randomForest")
+    } else {
+      learner = makeLearner("regr.km", covtype="matern5_2", predict.type="se", nugget.estim=noisy)
+    }
   } else {
     checkArg(learner, "Learner")
   }
@@ -84,7 +94,6 @@ exampleRun = function(fun, par.set, global.opt=NA_real_, learner, control,
   checkArg(noisy.evals, "integer", len = 1L, na.ok = FALSE, lower=1L)
   checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
   n.params = sum(getParamLengths(par.set))
-  par.types = extractSubList(par.set$pars, "type")
   #FIXME: what do we allow?
   #if (n.params != 1L)
   #  stopf("exampleRun can currently only be used for 1D functions, but you have: %iD.", n.params)
@@ -130,8 +139,20 @@ exampleRun = function(fun, par.set, global.opt=NA_real_, learner, control,
       })
       evals = data.frame(x=xs, y=ys)
     } else if (par.types %in% c("discrete")) {
-      
-      stop("1d examples with discrete param are currently unter developement.")
+      if (!noisy) {
+        stopf("ExampleRun does not make sense with a single deterministic discrete parameter.")
+      }
+
+      # extract domain of discrete param
+      xs = unlist(par.set$pars[[1]]$values)
+      cat(xs, "\n")
+
+      ys = sapply(xs, function(x) {
+        mean(replicate(noisy.evals, fun(namedList(names.x, x))))
+      })
+      evals = data.frame(x=xs, y=ys)
+      #print(evals)
+      #stop("1d examples with discrete param are currently unter developement.")
     }
   } else if (n.params == 2L) {
     if (all(par.types %in% c("numeric", "numericvector"))) {
@@ -218,7 +239,7 @@ getNumberOfParamTypes = function(par.set) {
   supported.types = getSupportedParamTypes()
   actual.types = extractSubList(par.set$pars, "type")
   count = lapply(supported.types, function(t) {
-    length(types[which(types == t)])
+    length(actual.types[which(actual.types == t)])
   })
   names(count) = supported.types
   return(count)

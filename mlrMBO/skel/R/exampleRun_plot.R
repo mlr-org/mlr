@@ -28,8 +28,8 @@
 #'   Pause after each iteration?
 #'   Default is \code{TRUE}.
 #' @param design.pch [\code{integer(1)}]\cr
-#'   The pch symbol number used to display the design points.
-#'   Default is 19, which are filled circular dots.
+#'   Three pch symbols used to display design points.
+#'   Default is c(19,19,19), which are filled circular dots.
 #' @param design.cols [\code{integer(1)}]\cr
 #'   Three Colors for design points.
 #'   First is for initial design, second is sequential
@@ -64,7 +64,7 @@
 #' @method plot MBOExampleRun
 #' @export
 plot.MBOExampleRun = function(x, iters, pause=TRUE, 
-  design.pch=19, design.cols=c("black", "darkseagreen", "tomato"), densregion=TRUE, 
+  design.pch=c(19,19,19), design.cols=c("black", "darkseagreen", "tomato"), densregion=TRUE, 
   se.factor1=1, se.factor2=2, xlim, ylim, ...)  {
   
   # reset all changed pars on exit
@@ -88,10 +88,15 @@ plot.MBOExampleRun = function(x, iters, pause=TRUE,
   if (!missing(ylim))
     checkArg(ylim, "numeric", len=2L, na.ok=FALSE)
   
-  if (x$n.params == 1L && x$par.types %in% c("numeric", "numericvector")) {
-    plotMBOExampleRun1DNumeric(x, pause=pause, iters=iters, design.pch=design.pch, design.cols=design.cols, 
-      densregion=densregion, se.factor1=se.factor1, se.factor2=se.factor2, 
-      xlim=xlim, ylim=ylim, ...)
+  if (x$n.params == 1L) {
+    if (x$par.types %in% c("numeric", "numericvector")) {
+      plotMBOExampleRun1DNumeric(x, pause=pause, iters=iters, design.pch=design.pch, design.cols=design.cols, 
+        densregion=densregion, se.factor1=se.factor1, se.factor2=se.factor2, 
+        xlim=xlim, ylim=ylim, ...)
+    # FIXME: do we support "discretevector"
+    } else if (x$par.types %in% c("discrete", "discretevector")) {
+      plotMBOExampleRun1DDiscrete(x, pause=pause, iters=iters, xlim=xlim, ylim=ylim, ...)
+    }
   } else if (x$n.params == 2L && all(x$par.types %in% c("numeric", "numericvector"))) {
     plotMBOExampleRun2DNumeric(x, pause=pause, iters=iters, design.pch=design.pch, design.cols=design.cols,
       xlim=xlim, ylim=ylim, ...)
