@@ -10,6 +10,6 @@ autoplot.MBOexampleRun = function(x, iters, xlim, ylim, pause=TRUE, densregion=T
 	n.params = x$n.params
 	par.types = x$par.types
 	if (n.params == 1) {
-		autoplotExampleRun1d(x, iters, xlim, ylim, pause=pause, densregion=densregion...)
+		autoplotExampleRun1d(x, iters, xlim, ylim, pause=pause, densregion=densregion, ...)
 	}
 }

@@ -29,4 +29,4 @@ run = exampleRun(objfun, ps, global.opt=-1, learner=lrn,
 
 print(run)
 
-autoplot.MBOexampleRun(run, iters=3)
+autoplot.MBOexampleRun(run, iters=3, densregion=TRUE)
