@@ -1,4 +1,6 @@
-autoplotExampleRun1d = function(x, iters, xlim, ylim, pause, ...) {
+# FIXME: add function description
+# FIMXE: check if param names agree with regular plot function
+autoplotExampleRun1d = function(x, iters, xlim, ylim, pause, densregion=TRUE...) {
 	# FIXME: add comments
 	# FIXME: add supoort for 1d with discrete param (keep code clean and try to overgo redundant code)
 	# FIXME: gridExtra not ready for R 3.x. What is the alternative?
@@ -85,11 +87,10 @@ autoplotExampleRun1d = function(x, iters, xlim, ylim, pause, ...) {
 	        #print(head(gg.fun))
 	        pl.fun = ggplot(data=gg.fun)
 	        pl.fun = pl.fun + geom_line(aes(x=x, y=y,linetype=type))
-	        if (se) {
+	        if (se & densregion) {
 	        	# FIXME: rename "gg.funss"
-	        	gg.funss = subset(gg.fun, type=="yhat")
-	        	#head(gg.funss)
-	        	pl.fun = pl.fun + geom_ribbon(data=gg.funss, aes(x=x, ymin=se.min, ymax=se.max), alpha=0.2)
+	        	gg.se = subset(gg.fun, type=="yhat")
+	        	pl.fun = pl.fun + geom_ribbon(data=gg.se, aes(x=x, ymin=se.min, ymax=se.max), alpha=0.2)
 	        }
 	        #pl.fun = pl.fun + geom_point(data=opt.path[idx.init,], aes_string(x=names.x, y=name.y), colour="black", alpha=.4)
 
@@ -98,7 +99,6 @@ autoplotExampleRun1d = function(x, iters, xlim, ylim, pause, ...) {
 	        gg.points = data.frame(x=opt.path[idx, names.x],
 	        	                   y=opt.path[idx, name.y],
 	        	                   type=as.factor(c(rep("init", length(idx.init)), rep("seq", length(idx.seq)), rep("prop", length(idx.proposed)))))
-	        print(head(gg.points))
 	        # if (length(idx.seq) > 0) {
 	        # 	pl.fun = pl.fun + geom_point(data=opt.path[idx.seq,], aes_string(x=names.x, y=name.y), colour="green")
 	        # }
@@ -108,11 +108,11 @@ autoplotExampleRun1d = function(x, iters, xlim, ylim, pause, ...) {
 	        pl.fun = pl.fun + theme(legend.position="top", legend.box = "horizontal", axis.text.x=element_blank())
 	        
 	        pl.crit = ggplot(data=gg.crit, aes(x=x, y=y))
-	        pl.crit = pl.crit + geom_line(linetype="dotted", colour="darkgray")
-	        pl.crit = pl.crit + geom_vline(xintercept=opt.path[idx.untilnow, names.x])
+	        pl.crit = pl.crit + geom_line(linetype="dotted", colour="black")
+	        pl.crit = pl.crit + geom_vline(xintercept=opt.path[idx.proposed, names.x], linetype="dashed", colour="darkgray")
 	        pl.crit = pl.crit + scale_y_continuous(name=name.crit)
 
-	        grid.arrange(pl.fun, pl.crit, nrow=2, main=paste("Visualization of 1d numeric function optimization.\n Iter: ", i))
+	        grid.arrange(pl.fun, pl.crit, nrow=2, main=paste("Iter: ", i))
 
 	        if (pause) {
 				pause()
