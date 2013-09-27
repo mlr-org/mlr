@@ -1,5 +1,5 @@
 plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE, 
-  design.pch=19, design.cols=c("black", "darkseagreen", "tomato"), densregion=TRUE, 
+  design.pch=c(19,19,19), design.cols=c("black", "darkseagreen", "tomato"), densregion=TRUE, 
   se.factor1=1, se.factor2=2, xlim, ylim, ...)  {
   
   cex.points = 2
@@ -7,11 +7,11 @@ plotMBOExampleRun1DNumeric = function(x, iters, pause=TRUE,
   cex.lab = 1.5
   cex.legend = 1.5
   lwd.lines = 2.5
-
+  
   plotDesignPoints = function(op, ind.inides, ind.seqdes, ind.prodes, y) {
-    points(op[ind.inides, name.x], op[ind.inides, y], pch=design.pch, col=design.cols[[1]], cex=cex.points)
-    points(op[ind.seqdes, name.x], op[ind.seqdes, y], pch=design.pch, col=design.cols[[2]], cex=cex.points)
-    points(op[ind.prodes, name.x], op[ind.prodes, y], pch=design.pch, col=design.cols[[3]], cex=cex.points)
+    points(op[ind.inides, name.x], op[ind.inides, y], pch=design.pch[[1]], col=design.cols[[1]], cex=cex.points)
+    points(op[ind.seqdes, name.x], op[ind.seqdes, y], pch=design.pch[[2]], col=design.cols[[2]], cex=cex.points)
+    points(op[ind.prodes, name.x], op[ind.prodes, y], pch=design.pch[[3]], col=design.cols[[3]], cex=cex.points)
   }
   
   requirePackages(c("denstrip"))
