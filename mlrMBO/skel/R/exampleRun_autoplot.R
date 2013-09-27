@@ -6,10 +6,14 @@
 #' @method autoplot MBOExampleRun
 #' @export
 autoplot.MBOexampleRun = function(x, iters, xlim, ylim, pause=TRUE, densregion=TRUE, ...) {
-	# extract number of params
+	# FIXME: check params
 	n.params = x$n.params
 	par.types = x$par.types
 	if (n.params == 1) {
 		autoplotExampleRun1d(x, iters, xlim, ylim, pause=pause, densregion=densregion, ...)
+	} else if (n.params == 2) {
+		autoplotExampleRun2d(x, iters=iters, xlim=xlim, ylim=ylim, pause=pause, ...)
+	} else {
+		stopf("Functions with greater than 3 parameters are not supported.")
 	}
 }

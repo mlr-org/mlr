@@ -41,42 +41,44 @@ autoplotExampleRun1d = function(x, iters, xlim, ylim, pause, densregion=TRUE...)
 
 	idx.init = which(opt.path$dob == 0)
 
-	if (par.types %in% c("numeric", "numericvector")) {
-		#stopf("Plotting 1d numeric function.")
-		for (i in 1:iters) {
+	
+	#stopf("Plotting 1d numeric function.")
+	for (i in 1:iters) {
 
-			# FIXME: the following lines work for discrete parameter as well.
-			# FIXME: only the constuction of the "gg" dataframe is special
-			# FIXME: add iteration counter and further meta information
-			# FIXME: keep in mind geom_errorbar for 
-			model = models[[i]]
-			idx.seq = which(opt.path$dob > 0 & opt.path$dob < i)
-			idx.proposed = which(opt.path$dob == i)
-			idx.untilnow = c(idx.seq, idx.proposed)
+		# FIXME: the following lines work for discrete parameter as well.
+		# FIXME: only the constuction of the "gg" dataframe is special
+		# FIXME: add iteration counter and further meta information
+		# FIXME: keep in mind geom_errorbar for 
+		model = models[[i]]
+		idx.seq = which(opt.path$dob > 0 & opt.path$dob < i)
+		idx.proposed = which(opt.path$dob == i)
+		idx.untilnow = c(idx.seq, idx.proposed)
 
-			model.ok = !inherits(model, "FailureModel")
-	    
-	    	# compute model prediction for current iter
-	    	if (model.ok) {
-	      		evals$yhat = mlrMBO:::infillCritMeanResponse(evals.x, model, 
-	      			control, par.set, opt.path[idx.untilnow,])
-	        }
+		model.ok = !inherits(model, "FailureModel")
+    
+    	# compute model prediction for current iter
+    	if (model.ok) {
+      		evals$yhat = mlrMBO:::infillCritMeanResponse(evals.x, model, 
+      			control, par.set, opt.path[idx.untilnow,])
 
-	        if (propose.points == 1L) {
-        		evals[[name.crit]] = opt.direction * critfun(evals.x,
-          			model, control, par.set, opt.path[idx.untilnow,])
-	        }
+      		if (propose.points == 1L) {
+    		evals[[name.crit]] = opt.direction * critfun(evals.x,
+      			model, control, par.set, opt.path[idx.untilnow,])
+       		}
 
-	        # prepare drawing of standard error (confidence interval)
-	        if (se) {
-        		evals$se = -mlrMBO:::infillCritStandardError(evals.x, model,
-        			control, par.set, opt.path[idx.untilnow,])
-        		# FIXME: make a parameter out of the constant factor
-        		evals$se.min = evals$yhat - 0.3 * evals$se
-        		evals$se.max = evals$yhat + 0.3 * evals$se
-      		}
-
-      		# ggplot stuff
+       		# prepare drawing of standard error (confidence interval)
+        	if (se) {
+    			evals$se = -mlrMBO:::infillCritStandardError(evals.x, model,
+    				control, par.set, opt.path[idx.untilnow,])
+    			# FIXME: make a parameter out of the constant factor
+    			evals$se.min = evals$yhat - 0.3 * evals$se
+    			evals$se.max = evals$yhat + 0.3 * evals$se
+  			}
+        }
+        
+        # FIXME: better source the actual ploting out in seperate numeric/discrete files
+  		if (par.types %in% c("numeric", "numericvector")) {
+	  		# ggplot stuff
 	        n = nrow(evals)
 	        # FIXME: checkout the functionality of the with(...) construct
 
@@ -136,19 +138,35 @@ autoplotExampleRun1d = function(x, iters, xlim, ylim, pause, densregion=TRUE...)
 	      	# FIXME: maybe better return list of ggplot objects?
 	      	# FIXME: plots are not exactly arranged. There is a small shift in horizontal direction.
 	        grid.arrange(pl.fun, pl.crit, nrow=2)
-
-	        if (pause) {
-				pause()
+		} else if (par.types %in% c("discrete")) {
+			if (!noisy) {
+				stopf("Deterministic 1d function with a single factor parameter are not supported.")
 			}
+
+			# build dataframe for different points
+	        idx = c(idx.init, idx.seq, idx.proposed)
+
+	        # FIXME: this is copy and paste (see numeric part)
+	        gg.points = data.frame(x=opt.path[idx, names.x],
+	        	                   y=opt.path[idx, name.y],
+	        	                   type=as.factor(c(rep("init", length(idx.init)), 
+	        	                   					rep("seq", length(idx.seq)), 
+	        	                   					rep("prop", length(idx.proposed)))))
+			head(gg.points)
+			
+    		pl.points = ggplot(data=gg.points, aes(x=x, y=y, colour=type)) + geom_point(size=2.5)
+    		pl.points = pl.points + xlab(names.x)
+    		pl.points = pl.points + ylab(name.y)
+    		pl.points = pl.points + ggtitle(sprintf("Iter = %i, Gap = %.4e", i, 
+	        	calculateGap(opt.path[idx.untilnow,], global.opt, control)))
+    		pl.points = pl.points + theme(legend.position="top", 
+	        	legend.box = "horizontal", 
+	        	plot.title=element_text(size=11, face="bold"))
+    		print(pl.points)
 		}
-	} else if (par.types %in% c("discrete")) {
-		if (!noisy) {
-			stopf("Deterministic 1d function with a single factor parameter are not supported.")
+
+        if (pause) {
+			pause()
 		}
-		#df = op[ind.inides,]
-    	#pl = ggplot(df, aes(x=foo, y=y)) + geom_point()
-    	#print(pl)	
-    	#pl = ggplot(df, aes(x=foo, y=y)) + geom_point()
-		stopf("Plotting 1d noisy discrete function.")
 	}
 }
