@@ -30,17 +30,12 @@ distToNB = function(X, y, minimize = TRUE) {
   })
 }
 
-
-nds_1d_selection <- function(values, n=1, index=1, ...) {  
-  # N solutions given, remove n, k remain
-  N = ncol(values)
-  k = N - n
+nds_1d_selection = function(values, n=1, index=1, ...) {  
+  # order according to non-dominated front, then break ties by objective value at index
   ranks = nds_rank(values)
-  # order according to 
-  # 1) non-dominated front, 
-  # 2) objective value at index (minimization)
-  indicesOrderedByFitness = order(ranks, values[index, ])
-  return(indicesOrderedByFitness[(k+1):N])
+  #FIXME we probably need to maximize some stuff?
+  o = order(ranks, values[index, ])
+  return(tail(o, n))
 }
 
 
@@ -130,17 +125,21 @@ multipointInfillOptMulticrit = function(model, control, par.set, opt.path, desig
     # use first Y criterion to for nearest better
     Y[, y.dim] = -mydist(as.matrix(X), Y[,1], minimize[1])
     addGenerationToPath(X, Y, gen = i)
-    # Select and remove worst individual
-    # FIXME maybe also select wrt first crit
-    # this would be eithe EI or mu (?? 2nd case is less clear!) 
-    col.mins = apply(Y, 2, min)
-    col.maxs = apply(Y, 2, max)
-    # define ref point adaptively by max + 10% of range
-    # personal communication simon with m. emmerich
-    ref = col.maxs + 0.1 * (col.maxs - col.mins)
-    
-    #to.kill = nds_hv_selection(t(Y), ref=ref)
-    to.kill = nds_1d_selection(t(Y), index=2)
+
+    # get elements we want to remove from current pop as index vector
+    to.kill = if (control$multipoint.multicrit.selection == "hypervolume") {
+      col.mins = apply(Y, 2, min)
+      col.maxs = apply(Y, 2, max)
+      # define ref point adaptively by max + 10% of range
+      # personal communication simon with m. emmerich
+      ref = col.maxs + 0.1 * (col.maxs - col.mins)
+      nds_hv_selection(t(Y), ref=ref)
+    } else if (control$multipoint.multicrit.selection == "crowdingdist") {
+      nds_cd_selection(t(Y))
+    } else if (control$multipoint.multicrit.selection == "singlecrit") {
+      nds_1d_selection(t(Y), index=2)
+    }
+
     X = X[-to.kill, ,drop=FALSE]
     Y = Y[-to.kill, ,drop=FALSE]
     #FIXME really display all this crap? only on show.info
