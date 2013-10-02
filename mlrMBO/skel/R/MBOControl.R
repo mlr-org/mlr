@@ -52,19 +52,35 @@
 #'   For \code{infill.opt = "random"}: 
 #'   Number of points in random search optimizer.
 #'   Default is 10000.   
-#' @param infill.opt.cmaes.ctrl [\code{list}]\cr 
+#' @param infill.opt.cmaes.control [\code{list}]\cr 
 #'   For \code{infill.opt = "cmaes"}: 
 #'   Control argument for cmaes optimizer.
 #'   Default is empty list.
 #' @param multipoint.method [\code{character(1)}]\cr
 #'   Method used for proposal of multiple infill points, for parallel batch evaluation.
 #'   Possible values are:
-#'   \dQuote{lcb}: Proposes points by optimizing the lower confidence bound 'lcb' criterion,
-#'   \code{propose.points} times. Each lambda value for 'lcb' is drawn randomly from an 
+#'   \dQuote{lcb}: Proposes points by optimizing the lower confidence bound \dQuote{lcb} criterion,
+#'   \code{propose.points} times. Each lambda value for \dQuote{lcb} is drawn randomly from an 
 #'   exp(1)-distribution, so do not define \code{infill.opt.lcb.lambda}.
 #'   The optimizer for each proposal is configured in the same way as for the single point case,
 #'   i.e., by specifying \code{infill.opt} and related stuff.
 #'   Default is \code{lcb}
+#'   \dQuote{multicrit}: Proposes points by evolutionary multicriteria optimization.
+#'   The EA is a (mu+1) type of algorithm and runs for \code{multipoint.multicrit.maxit} generations.
+#'   The population size is set to \code{propose.points}.
+#'   The selection criterion is \code{multipoint.multicrit.selection}.
+#'   Default is \code{lcb}
+#' @param multipoint.multicrit.selection [\code{character(1)}]\cr 
+#'   Method used for selecting 1 element for removal from the population 
+#'   in each iteration of the multicrit EA. 
+#'   Possible values are:
+#'   \dQuote{hypervolume}: Non-dominated sorting + hypervolume contribution. 
+#'   \dQuote{crowdingdist}: Non-dominated sorting + crowding distance based ranking.  
+#'   \dQuote{ei}: Non-dominated sorting + ei criterion.  
+#'   \dQuote{mean}: Non-dominated sorting + mean response.  
+#'   \dQuote{se}: Non-dominated sorting + se criterion.  
+#'   \dQuote{dist}: Non-dominated sorting + distance criterion.  
+#'   Default is \code{hypervolume}
 #' @param multipoint.control [\code{list}]\cr
 #'   Control object for multipoint proposal method. Contains additional parameters for
 #'   the multipoint method.
@@ -110,7 +126,7 @@
 #'   Default is \code{\link[mlr]{mse}}.   
 #' @param on.learner.error [\code{character(1)}]\cr
 #'   See [\code{\link[mlr]{configureMlr}}].
-#'   Default is \dQuote{stop}. 
+#'   Default is \dQuote{stop}.
 #' @param show.learner.output [\code{logical(1)}]\cr 
 #'   See [\code{\link[mlr]{configureMlr}}].
 #'   Default is \code{FALSE}.
@@ -122,9 +138,9 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
   infill.crit="mean", infill.crit.lcb.lambda=1,  
   infill.opt="random", infill.opt.restarts=1L,
   infill.opt.random.points=10000L, infill.opt.cmaes.control=list(), 
-  multipoint.method="lcb", multipoint.control=list(),                          
+  multipoint.method="lcb", multipoint.multicrit.selection="hypervolume",  multipoint.control=list(),                          
   final.method="best.true.y", final.evals=0L, 
-  y.name="y", impute, impute.errors=FALSE, silent=TRUE, save.model.at=iters, 
+  y.name="y", impute, impute.errors=FALSE, suppress.eval.errors=TRUE, save.model.at=iters, 
   resample.at = integer(0), resample.desc = makeResampleDesc("CV", iter=10), resample.measures=list(mse), 
   on.learner.error="warn", show.learner.output=FALSE
 ) {
@@ -154,6 +170,7 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
   checkArg(infill.opt.cmaes.control, "list") 
   
   checkArg(multipoint.method, choices=c("lcb", "multicrit"))
+  checkArg(multipoint.multicrit.selection, choices=c("hypervolume", "crowdingdist", "ei", "mu", "se", "dist"))
   #FIXME we might not want this
   checkArg(multipoint.control, "list")
 
@@ -163,7 +180,7 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
   else 
     checkArg(impute, formals=c("x", "y", "opt.path"))
   checkArg(impute.errors, "logical", len=1L, na.ok=FALSE)
-  checkArg(silent, "logical", len=1L, na.ok=FALSE)
+  checkArg(suppress.eval.errors, "logical", len=1L, na.ok=FALSE)
 
   # FIXME: remove this for now
   #checkArg(rank.trafo, "logical", len=1L, na.ok=FALSE)
@@ -205,13 +222,14 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
     infill.opt.cmaes.control = infill.opt.cmaes.control,
     #rank.trafo = rank.trafo,
     multipoint.method = multipoint.method,
+    multipoint.multicrit.selection = multipoint.multicrit.selection,
     multipoint.control = multipoint.control,
     final.method = final.method,
     final.evals = final.evals,
     y.name = y.name,
     impute = impute,
     impute.errors = impute.errors,
-    silent = silent,
+    suppress.eval.errors = suppress.eval.errors,
     save.model.at = save.model.at,
     resample.desc = resample.desc,
     resample.at = resample.at,

@@ -6,7 +6,7 @@ Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 License: BSD
 Depends: ParamHelpers, mlr
 Imports: BBmisc
-Suggests: cmaes, DiceOptim, soobench, testthat
+Suggests: cmaes, DiceOptim, emoa, soobench, testthat
 LazyData: yes
 ByteCompile: yes
 Version: 1.0

@@ -1,7 +1,7 @@
-#' Calculate distance to nearest neighbor for each point in a set
-#' @param X [\code{matrix(n, d)}]\cr
-#'   Matrix of n points of dimension d.
-#' @return [\code{numeric(n)}]. Distances to nearest neighbor. 
+# Calculate distance to nearest neighbor for each point in a set
+# @param X [\code{matrix(n, d)}]\cr
+#   Matrix of n points of dimension d.
+# @return [\code{numeric(n)}]. Distances to nearest neighbor. 
 distToNN = function(X, ...) {
   d = as.matrix(dist(X))
   diag(d) = Inf
@@ -9,15 +9,15 @@ distToNN = function(X, ...) {
 }
 
 
-#' Calculate distance to nearest better neighbor for each point in a set
-#' @param X [\code{matrix(n, d)}]\cr
-#'   Matrix of n points of dimension d.
-#' @param y [\code{matrix(n, d)}]\cr
-#'   Vector of numerical values for all points. 
-#'   Smaller is better.
-#' @param minimize [\code{matrix(n, d)}]\cr
-#'   Is \code{y} minimized, so smaller is better?
-#' @return [\code{numeric(n)}]. Distances to nearest better neighbor. 
+# Calculate distance to nearest better neighbor for each point in a set
+# @param X [\code{matrix(n, d)}]\cr
+#   Matrix of n points of dimension d.
+# @param y [\code{matrix(n, d)}]\cr
+#   Vector of numerical values for all points. 
+#   Smaller is better.
+# @param minimize [\code{matrix(n, d)}]\cr
+#   Is \code{y} minimized, so smaller is better?
+# @return [\code{numeric(n)}]. Distances to nearest better neighbor. 
 distToNB = function(X, y, minimize = TRUE) {
   d = as.matrix(dist(X))
   y = ifelse(minimize, 1, -1) * y
@@ -43,11 +43,11 @@ nds_1d_selection = function(values, n=1, index=1, ...) {
 #FIXME: maybe add a local opt. hybrid step to get better
 # into local opts
 
-#' Implements our new infill criterion which optimizes EI and diversity in X space
-#' 
-#' Currently only numerical paramaters are handled, for them pm_operator and 
-#' sbx_operator from emoa are used in the EA.
-#' 
+# Implements our new infill criterion which optimizes EI and diversity in X space
+# 
+# Currently only numerical paramaters are handled, for them pm_operator and 
+# sbx_operator from emoa are used in the EA.
+# 
 multipointInfillOptMulticrit = function(model, control, par.set, opt.path, design) {
   requirePackages("emoa", why="multipointInfillOptMulticrit")
   n = control$propose.points
@@ -92,10 +92,10 @@ multipointInfillOptMulticrit = function(model, control, par.set, opt.path, desig
   Y = matrix(NA, mu, y.dim)
   # mbo infill crits are always minimized
   if (control$multipoint.objective == "ei") {
-    Y[, 1] = infillCritEI(X, model, ctrl, par.set, design)
+    Y[, 1] = infillCritEI(X, model, control, par.set, design)
   } else if (control$multipoint.objective == "bicriteria") {
-    Y[, 1] = infillCritMeanResponse(X, model, ctrl, par.set, design)
-    Y[, 2] = infillCritStandardError(X, model, ctrl, par.set, design)
+    Y[, 1] = infillCritMeanResponse(X, model, control, par.set, design)
+    Y[, 2] = infillCritStandardError(X, model, control, par.set, design)
   }
   # use first Y criterion to for nearest better
   Y[, y.dim] = -mydist(as.matrix(X), Y[,1], minimize[1])
@@ -117,10 +117,10 @@ multipointInfillOptMulticrit = function(model, control, par.set, opt.path, desig
     Y = rbind(Y, rep(NA, y.dim))
     # mbo infill crits are always minimized
     if (control$multipoint.objective == "ei") {
-      Y[nrow(Y), 1] = infillCritEI(child2, model, ctrl, par.set, design)
+      Y[nrow(Y), 1] = infillCritEI(child2, model, control, par.set, design)
     } else if (control$multipoint.objective == "bicriteria") {
-      Y[nrow(Y), 1] = infillCritMeanResponse(child2, model, ctrl, par.set, design)
-      Y[nrow(Y), 2] = infillCritStandardError(child2, model, ctrl, par.set, design)
+      Y[nrow(Y), 1] = infillCritMeanResponse(child2, model, control, par.set, design)
+      Y[nrow(Y), 2] = infillCritStandardError(child2, model, control, par.set, design)
     }
     # use first Y criterion to for nearest better
     Y[, y.dim] = -mydist(as.matrix(X), Y[,1], minimize[1])
