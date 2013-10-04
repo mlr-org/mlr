@@ -4,7 +4,7 @@ Description:  mlr: Model-based optimization
 Author: Bernd Bischl <bernd_bischl@gmx.net>
 Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 License: BSD
-Depends: ParamHelpers, mlr
+Depends: ParamHelpers, mlr, ggplot2
 Imports: BBmisc
 Suggests: cmaes, DiceOptim, emoa, soobench, testthat
 LazyData: yes
