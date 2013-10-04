@@ -84,10 +84,8 @@
 #'   Possible values are:
 #'   \dQuote{hypervolume}: Non-dominated sorting + hypervolume contribution. 
 #'   \dQuote{crowdingdist}: Non-dominated sorting + crowding distance based ranking.  
-#'   \dQuote{ei}: Non-dominated sorting + ei criterion.  
-#'   \dQuote{mean}: Non-dominated sorting + mean response.  
-#'   \dQuote{se}: Non-dominated sorting + se criterion.  
-#'   \dQuote{dist}: Non-dominated sorting + distance criterion.  
+#'   \dQuote{first}: Non-dominated sorting + first objective of \code{multipoint.multicrit.objective} as criterion .  
+#'   \dQuote{last}: Non-dominated sorting + last objective of \code{multipoint.multicrit.objective} as criterion .  
 #'   Default is \code{hypervolume}
 #' @param multipoint.multicrit.maxit [\code{character(1)}]\cr 
 #'   Number of generations for multicrit EA.
@@ -183,7 +181,7 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
   
   checkArg(multipoint.method, choices=c("lcb", "multicrit"))
   checkArg(multipoint.multicrit.objective, choices=c("ei.dist", "mean.se", "mean.se.dist"))
-  checkArg(multipoint.multicrit.selection, choices=c("hypervolume", "crowdingdist", "ei", "mu", "se", "dist"))
+  checkArg(multipoint.multicrit.selection, choices=c("hypervolume", "crowdingdist", "first", "last"))
   checkArg(multipoint.multicrit.dist, choices=c("nearest.neighbor", "nearest.better"))
   multipoint.multicrit.maxit = convertInteger(multipoint.multicrit.maxit)
   checkArg(multipoint.multicrit.maxit, "integer", len=1L, na.ok=FALSE, lower=0L) 

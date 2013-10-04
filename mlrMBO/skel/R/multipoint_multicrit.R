@@ -140,8 +140,10 @@ multipointInfillOptMulticrit = function(model, control, par.set, opt.path, desig
       nds_hv_selection(t(Y))
     } else if (control$multipoint.multicrit.selection == "crowdingdist") {
       nds_cd_selection(t(Y))
-    } else if (control$multipoint.multicrit.selection == "singlecrit") {
-      nds_1d_selection(t(Y), index=2)
+    } else if (control$multipoint.multicrit.selection == "first") {
+      nds_1d_selection(t(Y), index=1)
+    } else if (control$multipoint.multicrit.selection == "last") {
+      nds_1d_selection(t(Y), index=y.dim)
     }
     X = X[-to.kill, ,drop=FALSE]
     Y = Y[-to.kill, ,drop=FALSE]

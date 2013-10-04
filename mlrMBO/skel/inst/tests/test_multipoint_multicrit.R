@@ -8,7 +8,7 @@ test_that("multipoint multicrit", {
   #FIXME how can we test this better?
   for (obj in c("ei.dist", "mean.se", "mean.se.dist")) {
     for (dist in c("nearest.better", "nearest.neighbor")) {
-      for (sel in c("hypervolume", "crowdingdist")) {
+      for (sel in c("hypervolume", "crowdingdist", "first", "last")) {
         
         ctrl = makeMBOControl(init.design.points=10, iters=1, propose.points=4, 
           multipoint.method="multicrit",
