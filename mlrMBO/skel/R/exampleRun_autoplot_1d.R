@@ -14,8 +14,8 @@ autoplotExampleRun1d = function(x, iters, xlim, ylim, pause, densregion=TRUE...)
 
 	se = (x$learner$predict.type == "se")
 
-	propose.points = ctrl$propose.points
-	name.crit = ctrl$infill.crit
+	propose.points = control$propose.points
+	name.crit = control$infill.crit
   	critfun = getInfillCritFunction(name.crit)
   	opt.direction = 1
 

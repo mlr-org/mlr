@@ -13,12 +13,12 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
     evals = x$evals
     global.opt = x$global.opt
     control = x$control
-    proppoints = ctrl$propose.points
+    proppoints = control$propose.points
     mbo.res = x$mbo.res
     #col = terrain.colors(255)
     x1 = unique(evals[, name.x1])
     x2 = unique(evals[, name.x2])
-    name.crit = ctrl$infill.crit
+    name.crit = control$infill.crit
     critfun = getInfillCritFunction(name.crit)
     se = (x$learner$predict.type == "se")
 
