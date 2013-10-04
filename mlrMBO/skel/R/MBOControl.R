@@ -70,6 +70,14 @@
 #'   The population size is set to \code{propose.points}.
 #'   The selection criterion is \code{multipoint.multicrit.selection}.
 #'   Default is \code{lcb}
+#' @param multipoint.multicrit.objective [\code{character(1)}]\cr 
+#'   Distance function used in multicrit EA.
+#'   Possible are: \dQuote{ei}, \dQuote{bicriteria}.
+#'   Default is \dQuote{nearest-better}.
+#' @param multipoint.multicrit.distfun [\code{character(1)}]\cr 
+#'   Distance function used in multicrit EA.
+#'   Possible are: \dQuote{nearest-neigbor}, \dQuote{nearest-better}.
+#'   Default is \dQuote{nearest-better}.
 #' @param multipoint.multicrit.selection [\code{character(1)}]\cr 
 #'   Method used for selecting 1 element for removal from the population 
 #'   in each iteration of the multicrit EA. 
@@ -81,9 +89,9 @@
 #'   \dQuote{se}: Non-dominated sorting + se criterion.  
 #'   \dQuote{dist}: Non-dominated sorting + distance criterion.  
 #'   Default is \code{hypervolume}
-#' @param multipoint.control [\code{list}]\cr
-#'   Control object for multipoint proposal method. Contains additional parameters for
-#'   the multipoint method.
+#' @param multipoint.multicrit.maxit [\code{character(1)}]\cr 
+#'   Number of generations for multicrit EA.
+#'   Default is 100.
 #' @param final.method [\code{character(1)}]\cr 
 #'   How should the final point be proposed. Possible are:    
 #'   \dQuote{best.true.y}: Return best point ever visited according to true value of target function. Can be bad if target function is noisy.    
@@ -171,9 +179,10 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
   
   checkArg(multipoint.method, choices=c("lcb", "multicrit"))
   checkArg(multipoint.multicrit.selection, choices=c("hypervolume", "crowdingdist", "ei", "mu", "se", "dist"))
-  #FIXME we might not want this
-  checkArg(multipoint.control, "list")
-
+  checkArg(multipoint.multicrit.dist, choices=c("nearest-neighbor", "nearest-better"))
+  multipoint.multicrit.maxit = convertInteger(multipoint.multicrit.maxit)
+  checkArg(multipoint.multicrit.maxit, "integer", len=1L, na.ok=FALSE, lower=0L) 
+  
   if (missing(impute)) 
     impute = function(x, y, opt.path) 
       stopf("Infeasible y=%s value encountered at %s", as.character(y), listToShortString(x))
