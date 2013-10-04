@@ -71,13 +71,13 @@
 #'   The selection criterion is \code{multipoint.multicrit.selection}.
 #'   Default is \code{lcb}
 #' @param multipoint.multicrit.objective [\code{character(1)}]\cr 
+#'   Variants / objectives which are optimized in multicrit approach.
+#'   Possible are: \dQuote{ei.dist}, \dQuote{mean.se}, \dQuote{mean.se.dist}.
+#'   Default is \dQuote{ei.dist}.
+#' @param multipoint.multicrit.dist [\code{character(1)}]\cr 
 #'   Distance function used in multicrit EA.
-#'   Possible are: \dQuote{ei}, \dQuote{bicriteria}.
-#'   Default is \dQuote{nearest-better}.
-#' @param multipoint.multicrit.distfun [\code{character(1)}]\cr 
-#'   Distance function used in multicrit EA.
-#'   Possible are: \dQuote{nearest-neigbor}, \dQuote{nearest-better}.
-#'   Default is \dQuote{nearest-better}.
+#'   Possible are: \dQuote{nearest.neigbor}, \dQuote{nearest.better}.
+#'   Default is \dQuote{nearest.better}.
 #' @param multipoint.multicrit.selection [\code{character(1)}]\cr 
 #'   Method used for selecting 1 element for removal from the population 
 #'   in each iteration of the multicrit EA. 
@@ -146,7 +146,11 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
   infill.crit="mean", infill.crit.lcb.lambda=1,  
   infill.opt="random", infill.opt.restarts=1L,
   infill.opt.random.points=10000L, infill.opt.cmaes.control=list(), 
-  multipoint.method="lcb", multipoint.multicrit.selection="hypervolume",  multipoint.control=list(),                          
+  multipoint.method="lcb", 
+  multipoint.multicrit.objective="ei.dist", 
+  multipoint.multicrit.dist="nearest.better", 
+  multipoint.multicrit.selection="hypervolume",  
+  multipoint.multicrit.maxit=100L,  
   final.method="best.true.y", final.evals=0L, 
   y.name="y", impute, impute.errors=FALSE, suppress.eval.errors=TRUE, save.model.at=iters, 
   resample.at = integer(0), resample.desc = makeResampleDesc("CV", iter=10), resample.measures=list(mse), 
@@ -178,8 +182,9 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
   checkArg(infill.opt.cmaes.control, "list") 
   
   checkArg(multipoint.method, choices=c("lcb", "multicrit"))
+  checkArg(multipoint.multicrit.objective, choices=c("ei.dist", "mean.se", "mean.se.dist"))
   checkArg(multipoint.multicrit.selection, choices=c("hypervolume", "crowdingdist", "ei", "mu", "se", "dist"))
-  checkArg(multipoint.multicrit.dist, choices=c("nearest-neighbor", "nearest-better"))
+  checkArg(multipoint.multicrit.dist, choices=c("nearest.neighbor", "nearest.better"))
   multipoint.multicrit.maxit = convertInteger(multipoint.multicrit.maxit)
   checkArg(multipoint.multicrit.maxit, "integer", len=1L, na.ok=FALSE, lower=0L) 
   
@@ -231,8 +236,10 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
     infill.opt.cmaes.control = infill.opt.cmaes.control,
     #rank.trafo = rank.trafo,
     multipoint.method = multipoint.method,
+    multipoint.multicrit.objective = multipoint.multicrit.objective,
+    multipoint.multicrit.dist = multipoint.multicrit.dist,
     multipoint.multicrit.selection = multipoint.multicrit.selection,
-    multipoint.control = multipoint.control,
+    multipoint.multicrit.maxit = multipoint.multicrit.maxit,
     final.method = final.method,
     final.evals = final.evals,
     y.name = y.name,
