@@ -91,10 +91,10 @@ multipointInfillOptMulticrit = function(model, control, par.set, opt.path, desig
   Y = matrix(NA, mu, y.dim)
   # mbo infill crits are always minimized
   if (objective == "ei.dist") {
-    Y[, 1] = infillCritEI(X, model, ctrl, par.set, design)
+    Y[, 1] = infillCritEI(X, model, control, par.set, design)
   } else if (objective %in% c("mean.se", "mean.se.dist")) {
-    Y[, 1] = infillCritMeanResponse(X, model, ctrl, par.set, design)
-    Y[, 2] = infillCritStandardError(X, model, ctrl, par.set, design)
+    Y[, 1] = infillCritMeanResponse(X, model, control, par.set, design)
+    Y[, 2] = infillCritStandardError(X, model, control, par.set, design)
   }
   
   # use first Y criterion to for nearest better
@@ -118,10 +118,10 @@ multipointInfillOptMulticrit = function(model, control, par.set, opt.path, desig
     Y = rbind(Y, rep(NA, y.dim))
     # mbo infill crits are always minimized
     if (objective == "ei.dist") {
-      Y[nrow(Y), 1] = infillCritEI(child2, model, ctrl, par.set, design)
+      Y[nrow(Y), 1] = infillCritEI(child2, model, control, par.set, design)
     } else if (objective %in% c("mean.se", "mean.se.dist")) {
-      Y[nrow(Y), 1] = infillCritMeanResponse(child2, model, ctrl, par.set, design)
-      Y[nrow(Y), 2] = infillCritStandardError(child2, model, ctrl, par.set, design)
+      Y[nrow(Y), 1] = infillCritMeanResponse(child2, model, control, par.set, design)
+      Y[nrow(Y), 2] = infillCritStandardError(child2, model, control, par.set, design)
     }
     # use first Y criterion to for nearest better
     if (objective %in% c("ei.dist", "mean.se.dist")) 
