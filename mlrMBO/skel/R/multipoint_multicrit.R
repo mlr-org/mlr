@@ -20,8 +20,9 @@ distToNB = function(X, y) {
   d = as.matrix(dist(X))
   sapply(seq_col(d), function(i) {
     better = y < y[i]
+    #FIXME the emoa wont work with Infs
     if (sum(better) == 0)
-      Inf
+      1e10
     else
       min(d[better, i])
   })
@@ -127,7 +128,7 @@ multipointInfillOptMulticrit = function(model, control, par.set, opt.path, desig
     if (objective %in% c("ei.dist", "mean.se.dist")) 
       Y[, y.dim] = -mydist(as.matrix(X), Y[,1])
     #addGenerationToPath(X, Y, gen = i)
-
+        
     # get elements we want to remove from current pop as index vector
     to.kill = if (control$multipoint.multicrit.selection == "hypervolume") {
       #col.mins = apply(Y, 2, min)
@@ -147,6 +148,7 @@ multipointInfillOptMulticrit = function(model, control, par.set, opt.path, desig
     }
     X = X[-to.kill, ,drop=FALSE]
     Y = Y[-to.kill, ,drop=FALSE]
+    
     #FIXME really display all this crap? only on show.info
     #messagef("Generation %i; best crit1 = %.2f, max dist = %s", 
     #  i, max(-Y[, 1]), max(-Y[, y.dim]))
