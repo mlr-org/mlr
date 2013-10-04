@@ -52,7 +52,7 @@
 #' @return Nothing.
 #' @method autoplot MBOExampleRun
 #' @export
-autoplot.MBOexampleRun = function(x, iters, pause=TRUE, densregion=TRUE, 
+autoplot.MBOExampleRun = function(x, iters, pause=TRUE, densregion=TRUE, 
 	se.factor1=1, se.factor2=2, xlim, ylim, ...) {
 	niters = x$control$iters
   	if (missing(iters)) {

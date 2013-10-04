@@ -20,6 +20,8 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
     x2 = unique(evals[, name.x2])
     name.crit = ctrl$infill.crit
     critfun = getInfillCritFunction(name.crit)
+    se = (x$learner$predict.type == "se")
+
     opt.direction = 1
     if (name.crit %in% c("ei")) {
         opt.direction = -1
@@ -28,6 +30,9 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
 
     idx.init = which(opt.path$dob == 0)  
       
+    # save sequence of opt plots here
+    plot.sequence = list()
+
     # FIXME: add option to log
     # FIXME: add se option whether it is plotted
     # FIXME: what to plot if not infillcrit that uses se?
@@ -42,36 +47,58 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
         idx.untilnow = c(idx.init, idx.seq, idx.proposed)
 
         model.ok = !inherits(model, "FailureModel")
-    
+
+        # which plots should actually be depicted
+        plots.to.draw = c("y", "yhat", name.crit)
+
         if (model.ok) {
             evals[["yhat"]] = mlrMBO:::infillCritMeanResponse(evals[, names.x, drop=FALSE], 
             model, control, par.set, opt.path[idx.untilnow, ])
-            # if (se) 
-            #     evals[["se"]] = -mlrMBO:::infillCritStandardError(evals[, names.x, drop=FALSE], 
-            #     model, control, par.set, opt.path[ind.pasdes, ])
+            if (se) {
+                evals[["se"]] = -mlrMBO:::infillCritStandardError(evals[, names.x, drop=FALSE], 
+                model, control, par.set, opt.path[idx.untilnow, ])
+                plots.to.draw = c(plots.to.draw, "se")
+            }
             if (proppoints == 1L) {
                 evals[[name.crit]] = opt.direction * critfun(evals[, names.x, drop=FALSE], 
                 model, control, par.set, opt.path[idx.untilnow, ])
             }
         }
 
-        # FIXME: move import elsewhere
+        # FIXME: move imports elsewhere
         library(reshape2)
+        library(gridExtra)
+
         idx = c(idx.init, idx.seq, idx.proposed)
 
-        print(head(evals))
-        # make "long" ggplot-friendly data frame out of "wide" one
-        gg.fun = melt(evals, id=c("x1", "x2"), value.name="y")
-        print(head(gg.fun))
-        # FIXME: fill=z issues error. Check out what is exactly going wrong!
-        pl.fun = ggplot(data=gg.fun, aes(x=x1,y=x2,z=y))
-        pl.fun = pl.fun + geom_tile(aes(fill=y))
-        #pl.fun = pl.fun + scale_fill_gradient(low="white", high="grey40")
-        #pl.fun = pl.fun + stat_contour(binwidth=4, size=0.5, colour="grey30")
-        pl.fun = pl.fun + stat_contour(binwidth=12, size=0.5, colour="grey50")
-        pl.fun = pl.fun + facet_grid(. ~ variable, scales="free")
-        #pl.fun = pl.fun + geom_point(data=gg.fun[idx,])
+        # helper function for sinlge fun plots (without facets)
+        plotSingleFun = function(data, points, name.z, xlim, ylim) {
+            pl = ggplot(data=data, aes_string(x="x1", y="x2", z=name.z))
+            pl = pl + stat_contour(binwidth=5, size=0.5, colour="grey30")
+            if (!missing(xlim) & !missing(ylim)) {
+                pl = pl + xlim(xlim)
+                pl = pl + ylim(ylim)
+            }
+            pl = pl + geom_point(data=points, aes(x=x1, y=x2, z=y, colour=type))
+            pl = pl + ggtitle(sprintf("Iter: %i", i))
+            pl = pl + theme(plot.title=element_text(size=11, face="bold"))
+            if (name.z %in% c("y")) {
+                pl = pl + theme(legend.box = "horizontal", legend.position = "top")
+            }
+            return(pl)
+        }
 
+        # helper to extract legend
+        # https://github.com/hadley/ggplot2/wiki/Share-a-legend-between-two-ggplot2-graphs
+        g_legend <- function(a.gplot){
+            tmp <- ggplot_gtable(ggplot_build(a.gplot))
+            leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+            legend <- tmp$grobs[[leg]]
+            return(legend)
+        }
+
+        # make up data structures for ggplot2
+        gg.fun = evals
         gg.points = data.frame(x1=opt.path[idx, name.x1],
                                 x2=opt.path[idx, name.x2],
                                 y=opt.path[idx, name.y],
@@ -79,15 +106,56 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
                                                 rep("seq", length(idx.seq)), 
                                                 rep("prop", length(idx.proposed)))))
 
-        pl.fun = pl.fun + geom_point(data=gg.points, aes(x=x1, y=x2, z=y, colour=type))
-        pl.fun = pl.fun + ggtitle(sprintf("Iter: %i", i))
-        pl.fun = pl.fun + theme(plot.title=element_text(size=11, face="bold"),
-            legend.box = "horizontal",
-            legend.position = "top")
-                        
-        print(pl.fun)
+        # build single plots
+        pl.fun = plotSingleFun(gg.fun, gg.points, "y")
+        pl.mod = plotSingleFun(gg.fun, gg.points, "yhat")
+        pl.crit = plotSingleFun(gg.fun, gg.points, name.crit)
+        if (se) {
+            pl.se = plotSingleFun(gg.fun, gg.points, "se")
+        }
+
+        # extract legend from first plot
+        gg.legend = g_legend(pl.fun)
+
+        # make "long" dataframe for ggplot 
+        gg.fun = melt(evals, id.vars=c("x1","x2"))
+        
+        # plot all plots using fancy facets
+        pl.all = ggplot(data=gg.fun, aes(x=x1, y=x2, z=value))
+        pl.all = pl.all + stat_contour(binwidth=5, size=0.5, colour="grey30")
+        pl.all = pl.all + geom_point(data=gg.points, aes(x=x1, y=x2, z=y, colour=type))
+        pl.all = pl.all + facet_grid(.~variable, scales="free")
+        pl.all = pl.all + ggtitle(sprintf("Iteration: %i", i))
+        pl.all = pl.all + theme(plot.title=element_text(size=11, face="bold"),
+            legend.box = "horizontal", legend.position = "top")
+        
+        print(pl.all)
+        plot.sequence[[i]] = pl.all
+
+
+        # FIXME: plotting with grid arrange seems ugly if shared legend is neccessary
+        # if (se) {
+        #     pl = grid.arrange(
+        #         pl.fun + theme(legend.position="none"),
+        #         pl.mod + theme(legend.position="none"),
+        #         pl.crit + theme(legend.position="none"),
+        #         pl.se + theme(legend.position="none"),
+        #         nrow=2, legend=gg.legend, heights=c(10,1))
+        # } else {
+        #     stopf("Not implemented yet.")
+        # }
+
         if (pause) {
             pause()
         }
     }
+
+    return(list(
+        "pl.fun" = pl.fun,
+        "pl.mod" = pl.mod,
+        "pl.crit" = pl.crit,
+        "pl.se" = if(exists("pl.se")) pl.se else NA,
+        "pl.crit" = pl.crit,
+        "pl.all" = pl.all,
+        "trace" = plot.sequence))
 }
