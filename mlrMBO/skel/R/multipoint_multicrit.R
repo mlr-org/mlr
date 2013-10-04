@@ -130,18 +130,19 @@ multipointInfillOptMulticrit = function(model, control, par.set, opt.path, desig
 
     # get elements we want to remove from current pop as index vector
     to.kill = if (control$multipoint.multicrit.selection == "hypervolume") {
-      col.mins = apply(Y, 2, min)
-      col.maxs = apply(Y, 2, max)
+      #col.mins = apply(Y, 2, min)
+      #col.maxs = apply(Y, 2, max)
       # define ref point adaptively by max + 10% of range
       # personal communication simon with m. emmerich
-      ref = col.maxs + 0.1 * (col.maxs - col.mins)
-      nds_hv_selection(t(Y), ref=ref)
+      #ref = col.maxs + 0.1 * (col.maxs - col.mins)
+      #print(ref)
+      #nds_hv_selection(t(Y), ref=ref)
+      nds_hv_selection(t(Y))
     } else if (control$multipoint.multicrit.selection == "crowdingdist") {
       nds_cd_selection(t(Y))
     } else if (control$multipoint.multicrit.selection == "singlecrit") {
       nds_1d_selection(t(Y), index=2)
     }
-
     X = X[-to.kill, ,drop=FALSE]
     Y = Y[-to.kill, ,drop=FALSE]
     #FIXME really display all this crap? only on show.info
