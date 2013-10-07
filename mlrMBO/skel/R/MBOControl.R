@@ -52,22 +52,44 @@
 #'   For \code{infill.opt = "random"}: 
 #'   Number of points in random search optimizer.
 #'   Default is 10000.   
-#' @param infill.opt.cmaes.ctrl [\code{list}]\cr 
+#' @param infill.opt.cmaes.control [\code{list}]\cr 
 #'   For \code{infill.opt = "cmaes"}: 
 #'   Control argument for cmaes optimizer.
 #'   Default is empty list.
 #' @param multipoint.method [\code{character(1)}]\cr
 #'   Method used for proposal of multiple infill points, for parallel batch evaluation.
 #'   Possible values are:
-#'   \dQuote{lcb}: Proposes points by optimizing the lower confidence bound 'lcb' criterion,
-#'   \code{propose.points} times. Each lambda value for 'lcb' is drawn randomly from an 
+#'   \dQuote{lcb}: Proposes points by optimizing the lower confidence bound \dQuote{lcb} criterion,
+#'   \code{propose.points} times. Each lambda value for \dQuote{lcb} is drawn randomly from an 
 #'   exp(1)-distribution, so do not define \code{infill.opt.lcb.lambda}.
 #'   The optimizer for each proposal is configured in the same way as for the single point case,
 #'   i.e., by specifying \code{infill.opt} and related stuff.
 #'   Default is \code{lcb}
-#' @param multipoint.control [\code{list}]\cr
-#'   Control object for multipoint proposal method. Contains additional parameters for
-#'   the multipoint method.
+#'   \dQuote{multicrit}: Proposes points by evolutionary multicriteria optimization.
+#'   The EA is a (mu+1) type of algorithm and runs for \code{multipoint.multicrit.maxit} generations.
+#'   The population size is set to \code{propose.points}.
+#'   The selection criterion is \code{multipoint.multicrit.selection}.
+#'   Default is \code{lcb}
+#' @param multipoint.multicrit.objective [\code{character(1)}]\cr 
+#'   Variants / objectives which are optimized in multicrit approach.
+#'   Possible are: \dQuote{ei.dist}, \dQuote{mean.se}, \dQuote{mean.se.dist}.
+#'   Default is \dQuote{ei.dist}.
+#' @param multipoint.multicrit.dist [\code{character(1)}]\cr 
+#'   Distance function used in multicrit EA.
+#'   Possible are: \dQuote{nearest.neigbor}, \dQuote{nearest.better}.
+#'   Default is \dQuote{nearest.better}.
+#' @param multipoint.multicrit.selection [\code{character(1)}]\cr 
+#'   Method used for selecting 1 element for removal from the population 
+#'   in each iteration of the multicrit EA. 
+#'   Possible values are:
+#'   \dQuote{hypervolume}: Non-dominated sorting + hypervolume contribution. 
+#'   \dQuote{crowdingdist}: Non-dominated sorting + crowding distance based ranking.  
+#'   \dQuote{first}: Non-dominated sorting + first objective of \code{multipoint.multicrit.objective} as criterion .  
+#'   \dQuote{last}: Non-dominated sorting + last objective of \code{multipoint.multicrit.objective} as criterion .  
+#'   Default is \code{hypervolume}
+#' @param multipoint.multicrit.maxit [\code{character(1)}]\cr 
+#'   Number of generations for multicrit EA.
+#'   Default is 100.
 #' @param final.method [\code{character(1)}]\cr 
 #'   How should the final point be proposed. Possible are:    
 #'   \dQuote{best.true.y}: Return best point ever visited according to true value of target function. Can be bad if target function is noisy.    
@@ -110,7 +132,7 @@
 #'   Default is \code{\link[mlr]{mse}}.   
 #' @param on.learner.error [\code{character(1)}]\cr
 #'   See [\code{\link[mlr]{configureMlr}}].
-#'   Default is \dQuote{stop}. 
+#'   Default is \dQuote{stop}.
 #' @param show.learner.output [\code{logical(1)}]\cr 
 #'   See [\code{\link[mlr]{configureMlr}}].
 #'   Default is \code{FALSE}.
@@ -122,9 +144,13 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
   infill.crit="mean", infill.crit.lcb.lambda=1,  
   infill.opt="random", infill.opt.restarts=1L,
   infill.opt.random.points=10000L, infill.opt.cmaes.control=list(), 
-  multipoint.method="lcb", multipoint.control=list(),                          
+  multipoint.method="lcb", 
+  multipoint.multicrit.objective="ei.dist", 
+  multipoint.multicrit.dist="nearest.better", 
+  multipoint.multicrit.selection="hypervolume",  
+  multipoint.multicrit.maxit=100L,  
   final.method="best.true.y", final.evals=0L, 
-  y.name="y", impute, impute.errors=FALSE, silent=TRUE, save.model.at=iters, 
+  y.name="y", impute, impute.errors=FALSE, suppress.eval.errors=TRUE, save.model.at=iters, 
   resample.at = integer(0), resample.desc = makeResampleDesc("CV", iter=10), resample.measures=list(mse), 
   on.learner.error="warn", show.learner.output=FALSE
 ) {
@@ -154,16 +180,19 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
   checkArg(infill.opt.cmaes.control, "list") 
   
   checkArg(multipoint.method, choices=c("lcb", "multicrit"))
-  #FIXME we might not want this
-  checkArg(multipoint.control, "list")
-
+  checkArg(multipoint.multicrit.objective, choices=c("ei.dist", "mean.se", "mean.se.dist"))
+  checkArg(multipoint.multicrit.selection, choices=c("hypervolume", "crowdingdist", "first", "last"))
+  checkArg(multipoint.multicrit.dist, choices=c("nearest.neighbor", "nearest.better"))
+  multipoint.multicrit.maxit = convertInteger(multipoint.multicrit.maxit)
+  checkArg(multipoint.multicrit.maxit, "integer", len=1L, na.ok=FALSE, lower=0L) 
+  
   if (missing(impute)) 
     impute = function(x, y, opt.path) 
       stopf("Infeasible y=%s value encountered at %s", as.character(y), listToShortString(x))
   else 
     checkArg(impute, formals=c("x", "y", "opt.path"))
   checkArg(impute.errors, "logical", len=1L, na.ok=FALSE)
-  checkArg(silent, "logical", len=1L, na.ok=FALSE)
+  checkArg(suppress.eval.errors, "logical", len=1L, na.ok=FALSE)
 
   # FIXME: remove this for now
   #checkArg(rank.trafo, "logical", len=1L, na.ok=FALSE)
@@ -205,13 +234,16 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
     infill.opt.cmaes.control = infill.opt.cmaes.control,
     #rank.trafo = rank.trafo,
     multipoint.method = multipoint.method,
-    multipoint.control = multipoint.control,
+    multipoint.multicrit.objective = multipoint.multicrit.objective,
+    multipoint.multicrit.dist = multipoint.multicrit.dist,
+    multipoint.multicrit.selection = multipoint.multicrit.selection,
+    multipoint.multicrit.maxit = multipoint.multicrit.maxit,
     final.method = final.method,
     final.evals = final.evals,
     y.name = y.name,
     impute = impute,
     impute.errors = impute.errors,
-    silent = silent,
+    suppress.eval.errors = suppress.eval.errors,
     save.model.at = save.model.at,
     resample.desc = resample.desc,
     resample.at = resample.at,

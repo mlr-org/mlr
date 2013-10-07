@@ -27,7 +27,7 @@ evalTargetFun = function(fun, par.set, xs, opt.path, control, show.info, oldopts
   xs = lapply(xs, trafoValue, par=par.set)
   fun2 = function(x) {
     if (control$impute.errors) {
-      y = try(fun(x, ...), silent=control$silent)
+      y = try(fun(x, ...), silent=control$suppress.eval.errors)
       if (is.error(y))
         y = NA_real_
     } else {

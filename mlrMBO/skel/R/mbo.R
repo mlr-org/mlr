@@ -69,7 +69,7 @@ mbo = function(fun, par.set, design=NULL, learner, control, show.info=TRUE, ...)
     design.x = design[, colnames(design) != y.name, drop=FALSE]
 	} else {
     #catf("Computing y column for design 'design'. None provided.\n")
-    xs = lapply(seq_len(nrow(design.x)), function(i) ParamHelpers:::dfRowToList(design.x, par.set, i))
+    xs = lapply(seq_len(nrow(design.x)), function(i) dfRowToList(design.x, par.set, i))
     ys = evalTargetFun(fun, par.set, xs, opt.path, control, show.info, oldopts, ...)
     design = cbind(design.x, setColNames(data.frame(ys), y.name))
   }
@@ -83,7 +83,7 @@ mbo = function(fun, par.set, design=NULL, learner, control, show.info=TRUE, ...)
   # reorder
   design.x = design.x[, rep.pids, drop=FALSE]
   # FIXME this is the second time we do this ... maybe reorder code?
-  xs = lapply(seq_len(nrow(design.x)), function(i) ParamHelpers:::dfRowToList(design.x, par.set, i))
+  xs = lapply(seq_len(nrow(design.x)), function(i) dfRowToList(design.x, par.set, i))
 
 	# add initial values to optimization path
   Map(function(x,y) addOptPathEl(opt.path, x=x, y=y, dob=0), xs, ys)
@@ -120,7 +120,7 @@ mbo = function(fun, par.set, design=NULL, learner, control, show.info=TRUE, ...)
       multipoint.lcb.lambdas = rbind(multipoint.lcb.lambdas, attr(prop.design, "multipoint.lcb.lambdas"))
       attr(prop.design, "multipoint.lcb.lambda") =  NULL
     }
-    xs = lapply(seq_len(nrow(prop.design)), function(i) ParamHelpers:::dfRowToList(prop.design, par.set, i))
+    xs = lapply(seq_len(nrow(prop.design)), function(i) dfRowToList(prop.design, par.set, i))
     xs = lapply(xs, repairPoint, par.set=par.set)
     ys = evalTargetFun(fun, par.set, xs, opt.path, control, show.info, oldopts, ...)
 
