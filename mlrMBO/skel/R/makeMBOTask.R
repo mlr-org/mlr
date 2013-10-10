@@ -6,13 +6,13 @@
 #   Name of y-column for target values in optimization path.
 # @return [\code{\link[mlr]{SupervisedTask}]:
 #   List of repaired points.
-makeMBOTask = function(design, y.name, control) {
+makeMBOTask = function(design, par.set, y.name, control) {
   design$dob = design$eol = NULL
   if (any(sapply(design, is.integer)))
     design = as.data.frame(lapply(design, function(x) if(is.integer(x)) as.numeric(x) else x))
   if (any(sapply(design, is.logical)))
     design = as.data.frame(lapply(design, function(x) if(is.logical(x)) as.factor(x) else x))
-  design = refactorNAs(design)
+  design = refactorNAs(design, par.set)
   #if (control$rank.trafo)
   #  design[,y.name] = rank(design[,y.name])
   makeRegrTask(target=y.name, data=design)

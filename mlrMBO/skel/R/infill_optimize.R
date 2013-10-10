@@ -16,12 +16,16 @@
 #   Optimization path / archive.
 # @return [\code{data.frame}]. One proposed point that should be evaluated.
 
+#FIXME we need other optimizers for mixed, depenent param spaces. dont forget refactorNAS then
+
 # mean response of model
 infillOptRandom = function(infill.crit, model, control, par.set, opt.path, design) {
-  newdesign = generateDesign(control$infill.opt.random.points, par.set,
+  newdesign1 = generateDesign(control$infill.opt.random.points, par.set,
     randomLHS, ints.as.num=TRUE, logicals.as.factor=TRUE)
-  y = infill.crit(newdesign, model, control, par.set, design)
-  newdesign[rank(y, ties.method="random") == 1L, , drop=FALSE]
+  # predict on design where NAs where imputed, but return propsed points with NAs
+  newdesign2 = refactorNAs(newdesign1, par.set)
+  y = infill.crit(newdesign2, model, control, par.set, design)
+  newdesign1[rank(y, ties.method="random") == 1L, , drop=FALSE]
 }
 
 infillOptCMAES = function(infill.crit, model, control, par.set, opt.path, design) {
