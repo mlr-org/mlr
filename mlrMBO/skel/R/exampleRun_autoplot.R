@@ -50,7 +50,7 @@
 #'   and \code{yhat(x) +- se.factor2 * se(x)} both in the plot. Note that this heuristic might 
 #'   change the \code{ylim} setting between plot iterations. 
 #' @return Nothing.
-#' @method autoplot MBOExampleRun
+#' @S3method autoplot MBOExampleRun
 #' @export
 autoplot.MBOExampleRun = function(x, iters, pause=TRUE, densregion=TRUE, 
 	se.factor1=1, se.factor2=2, xlim, ylim, ...) {
