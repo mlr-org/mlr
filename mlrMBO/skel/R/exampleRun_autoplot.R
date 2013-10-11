@@ -48,23 +48,25 @@
 #'   automatically, depending on the range of the evaluated infill criterion. 
 #'   Default for the first plot is a heuristic to have the true function 
 #'   and \code{yhat(x) +- se.factor2 * se(x)} both in the plot. Note that this heuristic might 
-#'   change the \code{ylim} setting between plot iterations. 
+#'   change the \code{ylim} setting between plot iterations.
+#' @param ... [\code{list}]\cr
+#'   Further parameters. 
 #' @return Nothing.
 #' @S3method autoplot MBOExampleRun
 #' @export
 autoplot.MBOExampleRun = function(x, iters, pause=TRUE, densregion=TRUE, 
-	se.factor1=1, se.factor2=2, xlim, ylim, ...) {
-	niters = x$control$iters
+	se.factor1=1, se.factor2=2, xlim, ylim, point.size=3, ...) {
+	iters.max = x$control$iters
   	if (missing(iters)) {
-    	iters = seq_len(niters)
+    	iters = seq_len(iters.max)
   	} else {
     	iters = convertIntegers(iters)
-    	checkArg(iters, "integer", min.len=1L, lower=1, upper=niters, na.ok=FALSE)
+    	checkArg(iters, "integer", min.len=1L, lower=1, upper=iters.max, na.ok=FALSE)
   	}
   	checkArg(pause, "logical", len=1L, na.ok=FALSE)
   	checkArg(densregion, "logical", len=1L, na.ok=FALSE)
   	checkArg(se.factor1, "numeric", len=1L, na.ok=FALSE)
- 	 checkArg(se.factor2, "numeric", len=1L, na.ok=FALSE)
+ 	  checkArg(se.factor2, "numeric", len=1L, na.ok=FALSE)
   	#FIXME implement and document meaning for xlim, ylim for 2D plots
  	if (!missing(xlim))
     	checkArg(xlim, "numeric", len=2L, na.ok=FALSE)
@@ -74,9 +76,9 @@ autoplot.MBOExampleRun = function(x, iters, pause=TRUE, densregion=TRUE,
 	n.params = x$n.params
 	par.types = x$par.types
 	if (n.params == 1) {
-		autoplotExampleRun1d(x, iters, xlim, ylim, pause=pause, densregion=densregion, ...)
+		autoplotExampleRun1d(x, iters, xlim, ylim, pause=pause, point.size=point.size, densregion=densregion, ...)
 	} else if (n.params == 2) {
-		autoplotExampleRun2d(x, iters=iters, xlim=xlim, ylim=ylim, pause=pause, ...)
+		autoplotExampleRun2d(x, iters=iters, xlim=xlim, ylim=ylim, pause=pause, point.size=point.size, ...)
 	} else {
 		stopf("Functions with greater than 3 parameters are not supported.")
 	}

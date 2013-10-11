@@ -1,6 +1,6 @@
 # FIXME: add function description
 # FIMXE: check if param names agree with regular plot function
-autoplotExampleRun1d = function(x, iters, xlim, ylim, pause, densregion=TRUE...) {
+autoplotExampleRun1d = function(x, iters, xlim, ylim, pause, point.size, densregion=TRUE...) {
 	# FIXME: add comments
 	# FIXME: add support for 1d with discrete param (keep code clean and try to overgo redundant code)
 	par.set = x$par.set
@@ -43,12 +43,11 @@ autoplotExampleRun1d = function(x, iters, xlim, ylim, pause, densregion=TRUE...)
 
 	
 	#stopf("Plotting 1d numeric function.")
-	for (i in 1:iters) {
+	for (i in iters) {
+		catf("Iter %i", i)
 
 		# FIXME: the following lines work for discrete parameter as well.
 		# FIXME: only the constuction of the "gg" dataframe is special
-		# FIXME: add iteration counter and further meta information
-		# FIXME: keep in mind geom_errorbar for 
 		model = models[[i]]
 		idx.seq = which(opt.path$dob > 0 & opt.path$dob < i)
 		idx.proposed = which(opt.path$dob == i)
@@ -80,7 +79,6 @@ autoplotExampleRun1d = function(x, iters, xlim, ylim, pause, densregion=TRUE...)
   		if (par.types %in% c("numeric", "numericvector")) {
 	  		# ggplot stuff
 	        n = nrow(evals)
-	        # FIXME: checkout the functionality of the with(...) construct
 
 	        # data frame with real fun and model fun evaluations
 	        gg.fun = data.frame(x=rep(evals[,names.x],2), 
@@ -106,20 +104,11 @@ autoplotExampleRun1d = function(x, iters, xlim, ylim, pause, densregion=TRUE...)
 	        pl.fun = ggplot(data=gg.fun)
 	        pl.fun = pl.fun + geom_line(aes(x=x, y=y,linetype=type))
 	        if (se & densregion) {
-	        	# FIXME: rename "gg.funss"
 	        	gg.se = subset(gg.fun, type=="yhat")
 	        	pl.fun = pl.fun + geom_ribbon(data=gg.se, aes(x=x, ymin=se.min, ymax=se.max), alpha=0.2)
 	        }
 
-	        # OLD VERSION OF POINT ADDITION
-	        #pl.fun = pl.fun + geom_point(data=opt.path[idx.init,], aes_string(x=names.x, y=name.y), colour="black", alpha=.4)
-	        # if (length(idx.seq) > 0) {
-	        # 	pl.fun = pl.fun + geom_point(data=opt.path[idx.seq,], aes_string(x=names.x, y=name.y), colour="green")
-	        # }
-	        # pl.fun = pl.fun + geom_point(data=opt.path[idx.proposed,], aes_string(x=names.x, y=name.y), colour="tomato", size=3)
-	        # #pl.fun = pl.fun + geom_hline(yintercept=global.opt, linetype="dashed", colour="darkgray")
-
-	        pl.fun = pl.fun + geom_point(data=gg.points, aes(x=x, y=y, colour=type))
+	        pl.fun = pl.fun + geom_point(data=gg.points, aes(x=x, y=y, colour=type), size=point.size)
 	        pl.fun = pl.fun + xlab(NULL)
 	        pl.fun = pl.fun + ggtitle(sprintf("Iter = %i, Gap = %.4e", i, 
 	        	calculateGap(opt.path[idx.untilnow,], global.opt, control)))
@@ -154,9 +143,10 @@ autoplotExampleRun1d = function(x, iters, xlim, ylim, pause, densregion=TRUE...)
 	        	                   					rep("prop", length(idx.proposed)))))
 			head(gg.points)
 			
-    		pl.points = ggplot(data=gg.points, aes(x=x, y=y, colour=type)) + geom_point(size=2.5)
+    		pl.points = ggplot(data=gg.points, aes(x=x, y=y, colour=type, shape=type)) + geom_point(size=point.size)
     		pl.points = pl.points + xlab(names.x)
     		pl.points = pl.points + ylab(name.y)
+			pl.points = pl.points + scale_colour_discrete(name="type")
     		pl.points = pl.points + ggtitle(sprintf("Iter = %i, Gap = %.4e", i, 
 	        	calculateGap(opt.path[idx.untilnow,], global.opt, control)))
     		pl.points = pl.points + theme(legend.position="top", 
