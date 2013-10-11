@@ -30,32 +30,32 @@ configureMlr(show.learner.output=FALSE)
 
 # print(run)
 
-# autoplot(run, iters=8, densregion=TRUE)
+# autoplot(run, iters = c(2,3,8))
 # stop()
 
 # NOISY DISCRETE FUNCTION
-objfun = function(x) {
-	if (x$foo == "a") {
-		return(5 + rnorm(1))
-	} else if (x$foo == "b") {
-		return(4 + rnorm(1, sd=0.5))
-	} else {
-		return(3 + rnorm(1, sd=1))
-	}
-}
+# objfun = function(x) {
+# 	if (x$foo == "a") {
+# 		return(5 + rnorm(1))
+# 	} else if (x$foo == "b") {
+# 		return(4 + rnorm(1, sd=0.5))
+# 	} else {
+# 		return(3 + rnorm(1, sd=1))
+# 	}
+# }
 
-ps = makeParamSet(
-	makeDiscreteParam("foo", values = c("a", "b", "c"))
-)
+# ps = makeParamSet(
+# 	makeDiscreteParam("foo", values = c("a", "b", "c"))
+# )
 
-ctrl = makeMBOControl(init.design.points=20, iters=5, infill.opt.random.points=100, noisy=TRUE)
+# ctrl = makeMBOControl(init.design.points=20, iters=5, infill.opt.random.points=100, noisy=TRUE)
 
-run = exampleRun(objfun, par.set = ps, control=ctrl, points.per.dim=50)
+# run = exampleRun(objfun, par.set = ps, control=ctrl, points.per.dim=50)
 
-print(run)
+# print(run)
 
-autoplot(run, iters=3)
-stop()
+# autoplot(run, iters=c(2,5))
+# stop()
 
 # 2d NUMERIC FUNCTION
 
@@ -68,6 +68,6 @@ stop()
 
 # run = exampleRun(objfun, learner=lrn, control=ctrl, points.per.dim=50)
 
-# print(run)
+#print(run)
 
-pl = autoplot(run, iters=3, pause=TRUE)
+pl = autoplot(run, iters=c(1,2), point.size=3.5, pause=TRUE)

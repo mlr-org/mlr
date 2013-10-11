@@ -15,7 +15,6 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
     control = x$control
     proppoints = control$propose.points
     mbo.res = x$mbo.res
-    #col = terrain.colors(255)
     x1 = unique(evals[, name.x1])
     x2 = unique(evals[, name.x2])
     name.crit = control$infill.crit
@@ -38,7 +37,7 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
     # FIXME: what to plot if not infillcrit that uses se?
     # FIXME: how do we display noise? do we at all?
   
-    for (i in 2:iters) {
+    for (i in iters) {
         catf("Iter %i", i)
         model = mbo.res$models[[i]]
     
@@ -61,13 +60,9 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
             }
         }
 
-        # FIXME: move imports elsewhere
-        library(reshape2)
-        library(gridExtra)
-
         idx = c(idx.init, idx.seq, idx.proposed)
 
-        # helper function for sinlge fun plots (without facets)
+        # helper function for single plot
         plotSingleFun = function(data, points, name.z, xlim, ylim) {
             pl = ggplot(data=data, aes_string(x="x1", y="x2", z=name.z))
             pl = pl + geom_tile(aes_string(fill=name.z)) + stat_contour()
@@ -76,30 +71,25 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
             pl = pl + ggtitle(sprintf("%s", name.z))
             pl = pl + scale_colour_discrete(name="type")
             pl = pl + scale_fill_continuous(name=name.z)
-            pl = pl + theme(plot.title=element_text(size=11, face="bold"))
-            #if (name.z %in% c("y")) {
-            #    pl = pl + theme(legend.box = "horizontal", legend.position = "top")
-            #}
+            pl = pl + xlab(NULL) # remove axis labels
+            pl = pl + ylab(NULL)
+            pl = pl + theme(
+                plot.title=element_text(size=11, face="bold"), # decrease font size and weight
+                plot.margin=unit(c(0.2,0.2,0.2,0.2), "cm") # adapt margins
+            )
             return(pl)
-        }
-
-        # helper to extract legend
-        # https://github.com/hadley/ggplot2/wiki/Share-a-legend-between-two-ggplot2-graphs
-        g_legend <- function(a.gplot){
-            tmp <- ggplot_gtable(ggplot_build(a.gplot))
-            leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
-            legend <- tmp$grobs[[leg]]
-            return(legend)
         }
 
         # make up data structures for ggplot2
         gg.fun = evals
-        gg.points = data.frame(x1=opt.path[idx, name.x1],
-                                x2=opt.path[idx, name.x2],
-                                y=opt.path[idx, name.y],
-                                type=as.factor(c(rep("init", length(idx.init)), 
-                                                rep("seq", length(idx.seq)), 
-                                                rep("prop", length(idx.proposed)))))
+        gg.points = data.frame(
+            x1=opt.path[idx, name.x1],
+            x2=opt.path[idx, name.x2],
+            y=opt.path[idx, name.y],
+            type=as.factor(c(
+                rep("init", length(idx.init)), 
+                rep("seq", length(idx.seq)), 
+                rep("prop", length(idx.proposed)))))
 
         # build single plots
         pl.fun = plotSingleFun(gg.fun, gg.points, "y")
@@ -109,62 +99,42 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
             pl.se = plotSingleFun(gg.fun, gg.points, "se")
         }
 
-        # extract legend from first plot
-        gg.legend = g_legend(pl.fun)
-
         # make "long" dataframe for ggplot 
-        gg.fun = melt(evals, id.vars=c("x1","x2"))
+        # gg.fun = melt(evals, id.vars=c("x1","x2"))
 
-        # plot all plots using fancy facets
-        pl.all = ggplot(data=gg.fun, aes(x=x1, y=x2, z=value))
-        pl.all = pl.all + geom_tile(aes(fill=value))
-        pl.all = pl.all + scale_fill_continuous(low="#124874", high="#741212")
-        #pl.all = pl.all + stat_contour(aes(fill=..level..))
-        #pl.all = pl.all + scale_colour_continuous(low = "#919191", high = "#4d4d4d")
-        # FIXME: coloured points not possible, since changing the color needs to change 
-        # scale from continuous to discrete. Now we plot each subset of points seperately
-        # as a workarount. Unfortunately until now I have no idea how to set the colors
-        # in the legend.
-        pl.all = pl.all + geom_point(data=gg.points, aes(x=x1, y=x2, z=y, colour=type))
-        #pl.all = pl.all + geom_point(data=gg.points[which(as.character(gg.points$type)=="init"),], aes(x=x1, y=x2, z=y, shape=type), size=2.5, colour="#1296ff")
-        #pl.all = pl.all + geom_point(data=gg.points[which(as.character(gg.points$type)=="prop"),], aes(x=x1, y=x2, z=y, shape=type), size=3, colour="#f35e5a")
-        #pl.all = pl.all + geom_point(data=gg.points[which(as.character(gg.points$type)=="seq"),], aes(x=x1, y=x2, z=y, shape=type), size=3, colour="#18b554")
-        pl.all = pl.all + facet_grid(.~variable, scales="free")
-        pl.all = pl.all + ggtitle(sprintf("Iteration: %i", i))
-        pl.all = pl.all + theme(plot.title=element_text(size=11, face="bold"),
-            legend.box = "horizontal", legend.position = "top")
+        # # plot all plots using fancy facets
+        # pl.all = ggplot(data=gg.fun, aes(x=x1, y=x2, z=value))
+        # pl.all = pl.all + geom_tile(aes(fill=value))
+        # pl.all = pl.all + scale_fill_continuous(low="#124874", high="#741212")
+        # pl.all = pl.all + geom_point(data=gg.points, aes(x=x1, y=x2, z=y, colour=type))
+        # pl.all = pl.all + facet_grid(.~variable, scales="free")
+        # pl.all = pl.all + ggtitle(sprintf("Iteration: %i", i))
+        # pl.all = pl.all + theme(
+        #     plot.title=element_text(size=11, face="bold"),
+        #     legend.box = "horizontal", legend.position = "top")
         #pl.all = direct.label(pl.all)
         
-        #print(pl.all)
-        plot.sequence[[i]] = pl.all
-
-        #print(pl.crit)
-        #stop()
-
-        # FIXME: plotting with grid arrange seems ugly if shared legend is neccessary
         if (se) {
-            pl = grid.arrange(
-                pl.fun,# + theme(legend.position="none"),
-                pl.mod,# + theme(legend.position="none"),
-                pl.crit,# + theme(legend.position="none"),
-                pl.se,# + theme(legend.position="none"),
-                nrow=2)
+            pl.all = grid.arrange(pl.fun, pl.mod, pl.crit, pl.se, 
+                nrow=2, 
+                main=paste("Iter:", i, "\n Axis:", name.x1, "-vs-", name.x2))
         } else {
-            stopf("Not implemented yet.")
+            pl.all = grid.arrange(pl.fun, pl.mod, pl.crit, nrow=1)
         }
-        print(pl)
+
+        plot.sequence[[i]] = list(
+            "pl.fun" = pl.fun,
+            "pl.mod" = pl.mod,
+            "pl.crit" = pl.crit,
+            "pl.se" = if(exists("pl.se")) pl.se else NA,
+            "pl.all" = pl.all)
+
+        print(pl.all)
 
         if (pause) {
             pause()
         }
     }
 
-    return(list(
-        "pl.fun" = pl.fun,
-        "pl.mod" = pl.mod,
-        "pl.crit" = pl.crit,
-        "pl.se" = if(exists("pl.se")) pl.se else NA,
-        "pl.crit" = pl.crit,
-        "pl.all" = pl.all,
-        "trace" = plot.sequence))
+    return(plot.sequence)
 }
