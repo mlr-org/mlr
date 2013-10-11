@@ -4,7 +4,7 @@
 #   NAs are coded as a new level
 refactorNAs = function(data, par.set, na.string="miss") {
   cnd = colnames(data)
-  upp = 2 * getUpper(par.set)
+  upp = 2 * getUpper(par.set, with.nr=TRUE)
   pids = getParamIds(par.set, repeated=TRUE, with.nr=TRUE)
   #FIXME bounds wont work with vec params currently, at least check this, see with.nr=FALSE?
   as.data.frame(sapply(colnames(data), simplify=FALSE, function(pid) {
