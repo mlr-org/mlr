@@ -1,23 +1,25 @@
 # for numeric columns:
-#   NAs are replaced with the min(col)/max(col) * impute.multiplicator.
-#   if min or max is used depends on the sign of impute.multiplicator
-# for factors columns:
-#   New level "na.string" is added and NAs replaced with this string value
-refactorNAs <- function(data, impute.multiplicator=2, na.string="NA") {
-  as.data.frame(lapply(data, function(x) {
-    if (is.numeric(x)) {
-      i = is.na(x)
-      impute.val = range(x, na.rm=TRUE)[(impute.multiplicator >= 0) + 1L] * impute.multiplicator
-      return(replace(x, i, impute.val))
-    }
-    if (is.factor(x)) {
-      i = is.na(x)
-      if (any(i)) {
+#   NAs are replaced with the 2 * upper bound
+# for factor columns:
+#   NAs are coded as a new level
+refactorNAs = function(data, par.set, na.string="miss") {
+  cnd = colnames(data)
+  upp = 2 * getUpper(par.set)
+  pids = getParamIds(par.set, repeated=TRUE, with.nr=TRUE)
+  #FIXME bounds wont work with vec params currently, at least check this, see with.nr=FALSE?
+  as.data.frame(sapply(colnames(data), simplify=FALSE, function(pid) {
+    x = data[[pid]]
+    # do not handle numeric y column, only inputs
+    if (is.numeric(x) && pid %in% pids) {
+      inds = is.na(x)
+      return(replace(x, inds, upp[[pid]]))
+    } else if (is.factor(x)) {
+      inds = is.na(x)
+      if (any(inds)) {
         levels(x) = c(levels(x), na.string)
-        return(replace(x, i, na.string))
+        return(replace(x, inds, na.string))
       }
-      return(x)
     }
-    stopf("Type unsupported: %s", typeof(x))
+    return(x)
   }), stringsAsFactors=FALSE)
 }

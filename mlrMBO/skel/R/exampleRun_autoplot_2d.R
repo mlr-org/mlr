@@ -48,16 +48,12 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
 
         model.ok = !inherits(model, "FailureModel")
 
-        # which plots should actually be depicted
-        plots.to.draw = c("y", "yhat", name.crit)
-
         if (model.ok) {
             evals[["yhat"]] = mlrMBO:::infillCritMeanResponse(evals[, names.x, drop=FALSE], 
             model, control, par.set, opt.path[idx.untilnow, ])
             if (se) {
                 evals[["se"]] = -mlrMBO:::infillCritStandardError(evals[, names.x, drop=FALSE], 
                 model, control, par.set, opt.path[idx.untilnow, ])
-                plots.to.draw = c(plots.to.draw, "se")
             }
             if (proppoints == 1L) {
                 evals[[name.crit]] = opt.direction * critfun(evals[, names.x, drop=FALSE], 
@@ -74,17 +70,16 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
         # helper function for sinlge fun plots (without facets)
         plotSingleFun = function(data, points, name.z, xlim, ylim) {
             pl = ggplot(data=data, aes_string(x="x1", y="x2", z=name.z))
-            pl = pl + stat_contour(binwidth=5, size=0.5, colour="grey30")
-            if (!missing(xlim) & !missing(ylim)) {
-                pl = pl + xlim(xlim)
-                pl = pl + ylim(ylim)
-            }
-            pl = pl + geom_point(data=points, aes(x=x1, y=x2, z=y, colour=type))
-            pl = pl + ggtitle(sprintf("Iter: %i", i))
+            pl = pl + geom_tile(aes_string(fill=name.z)) + stat_contour()
+            pl = pl + stat_contour(binwidth=5)
+            pl = pl + geom_point(data=points, aes(x=x1, y=x2, z=y, colour=type, shape=type))
+            pl = pl + ggtitle(sprintf("%s", name.z))
+            pl = pl + scale_colour_discrete(name="type")
+            pl = pl + scale_fill_continuous(name=name.z)
             pl = pl + theme(plot.title=element_text(size=11, face="bold"))
-            if (name.z %in% c("y")) {
-                pl = pl + theme(legend.box = "horizontal", legend.position = "top")
-            }
+            #if (name.z %in% c("y")) {
+            #    pl = pl + theme(legend.box = "horizontal", legend.position = "top")
+            #}
             return(pl)
         }
 
@@ -119,31 +114,45 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
 
         # make "long" dataframe for ggplot 
         gg.fun = melt(evals, id.vars=c("x1","x2"))
-        
+
         # plot all plots using fancy facets
         pl.all = ggplot(data=gg.fun, aes(x=x1, y=x2, z=value))
-        pl.all = pl.all + stat_contour(binwidth=5, size=0.5, colour="grey30")
+        pl.all = pl.all + geom_tile(aes(fill=value))
+        pl.all = pl.all + scale_fill_continuous(low="#124874", high="#741212")
+        #pl.all = pl.all + stat_contour(aes(fill=..level..))
+        #pl.all = pl.all + scale_colour_continuous(low = "#919191", high = "#4d4d4d")
+        # FIXME: coloured points not possible, since changing the color needs to change 
+        # scale from continuous to discrete. Now we plot each subset of points seperately
+        # as a workarount. Unfortunately until now I have no idea how to set the colors
+        # in the legend.
         pl.all = pl.all + geom_point(data=gg.points, aes(x=x1, y=x2, z=y, colour=type))
+        #pl.all = pl.all + geom_point(data=gg.points[which(as.character(gg.points$type)=="init"),], aes(x=x1, y=x2, z=y, shape=type), size=2.5, colour="#1296ff")
+        #pl.all = pl.all + geom_point(data=gg.points[which(as.character(gg.points$type)=="prop"),], aes(x=x1, y=x2, z=y, shape=type), size=3, colour="#f35e5a")
+        #pl.all = pl.all + geom_point(data=gg.points[which(as.character(gg.points$type)=="seq"),], aes(x=x1, y=x2, z=y, shape=type), size=3, colour="#18b554")
         pl.all = pl.all + facet_grid(.~variable, scales="free")
         pl.all = pl.all + ggtitle(sprintf("Iteration: %i", i))
         pl.all = pl.all + theme(plot.title=element_text(size=11, face="bold"),
             legend.box = "horizontal", legend.position = "top")
+        #pl.all = direct.label(pl.all)
         
-        print(pl.all)
+        #print(pl.all)
         plot.sequence[[i]] = pl.all
 
+        #print(pl.crit)
+        #stop()
 
         # FIXME: plotting with grid arrange seems ugly if shared legend is neccessary
-        # if (se) {
-        #     pl = grid.arrange(
-        #         pl.fun + theme(legend.position="none"),
-        #         pl.mod + theme(legend.position="none"),
-        #         pl.crit + theme(legend.position="none"),
-        #         pl.se + theme(legend.position="none"),
-        #         nrow=2, legend=gg.legend, heights=c(10,1))
-        # } else {
-        #     stopf("Not implemented yet.")
-        # }
+        if (se) {
+            pl = grid.arrange(
+                pl.fun,# + theme(legend.position="none"),
+                pl.mod,# + theme(legend.position="none"),
+                pl.crit,# + theme(legend.position="none"),
+                pl.se,# + theme(legend.position="none"),
+                nrow=2)
+        } else {
+            stopf("Not implemented yet.")
+        }
+        print(pl)
 
         if (pause) {
             pause()

@@ -89,7 +89,7 @@ mbo = function(fun, par.set, design=NULL, learner, control, show.info=TRUE, ...)
   Map(function(x,y) addOptPathEl(opt.path, x=x, y=y, dob=0), xs, ys)
 
 	# set up initial mbo task
-  rt = makeMBOTask(design, y.name, control=control)
+  rt = makeMBOTask(design, par.set, y.name, control=control)
   model = train(learner, rt)
 
   models = namedList(control$save.model.at)
@@ -126,7 +126,7 @@ mbo = function(fun, par.set, design=NULL, learner, control, show.info=TRUE, ...)
 
 		# update optim trace and model
     Map(function(x,y) addOptPathEl(opt.path, x=x, y=y, dob=loop), xs, ys)
-    rt = makeMBOTask(as.data.frame(opt.path, discretes.as.factor=TRUE), y.name, control=control)
+    rt = makeMBOTask(as.data.frame(opt.path, discretes.as.factor=TRUE), par.set, y.name, control=control)
     model = train(learner, rt)
     if (loop %in% control$save.model.at)
       models[[as.character(loop)]] = model
