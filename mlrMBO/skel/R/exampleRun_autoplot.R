@@ -55,8 +55,8 @@
 #' @S3method autoplot MBOExampleRun
 #' @export
 autoplot.MBOExampleRun = function(x, iters, pause=TRUE, densregion=TRUE, 
-	se.factor1=1, se.factor2=2, xlim, ylim, point.size=3, ...) {
-	iters.max = x$control$iters
+	se.factor1=1, se.factor2=2, xlim, ylim, point.size=3, trafo=NULL, ...) {
+	  iters.max = x$control$iters
   	if (missing(iters)) {
     	iters = seq_len(iters.max)
   	} else {
@@ -67,8 +67,12 @@ autoplot.MBOExampleRun = function(x, iters, pause=TRUE, densregion=TRUE,
   	checkArg(densregion, "logical", len=1L, na.ok=FALSE)
   	checkArg(se.factor1, "numeric", len=1L, na.ok=FALSE)
  	  checkArg(se.factor2, "numeric", len=1L, na.ok=FALSE)
+    print(trafo)
+    if (!is.null(trafo)) {
+      checkArg(trafo, "MBOTrafoFunction")
+    }
   	#FIXME implement and document meaning for xlim, ylim for 2D plots
- 	if (!missing(xlim))
+ 	  if (!missing(xlim))
     	checkArg(xlim, "numeric", len=2L, na.ok=FALSE)
   	if (!missing(ylim))
     	checkArg(ylim, "numeric", len=2L, na.ok=FALSE)
@@ -78,7 +82,8 @@ autoplot.MBOExampleRun = function(x, iters, pause=TRUE, densregion=TRUE,
 	if (n.params == 1) {
 		autoplotExampleRun1d(x, iters, xlim, ylim, pause=pause, point.size=point.size, densregion=densregion, ...)
 	} else if (n.params == 2) {
-		autoplotExampleRun2d(x, iters=iters, xlim=xlim, ylim=ylim, pause=pause, point.size=point.size, ...)
+		autoplotExampleRun2d(x, iters=iters, xlim=xlim, ylim=ylim, 
+      pause=pause, point.size=point.size, trafo=trafo, ...)
 	} else {
 		stopf("Functions with greater than 3 parameters are not supported.")
 	}

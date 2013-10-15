@@ -2,7 +2,7 @@
 # FIXME we probably need a simple gui later to do some trafos like log on the the plots
 # while the iters run
 autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE, 
-    se.factor1=1, se.factor2=2, ...)  {
+    se.factor1=1, se.factor2=2, trafo=NULL, ...)  {
       
     # extract information from example run object
     par.set = x$par.set
@@ -32,8 +32,6 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
     # save sequence of opt plots here
     plot.sequence = list()
 
-    # FIXME: add option to log
-    # FIXME: add se option whether it is plotted
     # FIXME: what to plot if not infillcrit that uses se?
     # FIXME: how do we display noise? do we at all?
   
@@ -63,7 +61,11 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
         idx = c(idx.init, idx.seq, idx.proposed)
 
         # helper function for single plot
-        plotSingleFun = function(data, points, name.z, xlim, ylim) {
+        plotSingleFun = function(data, points, name.z, xlim, ylim, trafo = NULL) {
+            if (!is.null(trafo)) {
+                # catf("Applying %s.", attr(trafo, "name"))
+                data[, name.z] = trafo(data[, name.z])
+            }
             pl = ggplot(data=data, aes_string(x="x1", y="x2", z=name.z))
             pl = pl + geom_tile(aes_string(fill=name.z)) + stat_contour()
             pl = pl + stat_contour(binwidth=5)
@@ -91,9 +93,12 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
                 rep("seq", length(idx.seq)), 
                 rep("prop", length(idx.proposed)))))
 
+
         # build single plots
-        pl.fun = plotSingleFun(gg.fun, gg.points, "y")
-        pl.mod = plotSingleFun(gg.fun, gg.points, "yhat")
+        pl.fun = plotSingleFun(gg.fun, gg.points, "y", trafo=trafo)
+        pl.mod = plotSingleFun(gg.fun, gg.points, "yhat", trafo=trafo)
+        # FIXME: check why it is "Not possible to generate contour data" for ackley 2d function
+        # for the crit and se plots
         pl.crit = plotSingleFun(gg.fun, gg.points, name.crit)
         if (se) {
             pl.se = plotSingleFun(gg.fun, gg.points, "se")
@@ -114,10 +119,16 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
         #     legend.box = "horizontal", legend.position = "top")
         #pl.all = direct.label(pl.all)
         
+        title = sprintf("Iter %i\n x-axis: %s, y-axis: %s", i, name.x1, name.x2)
+        if (!is.null(trafo)) {
+            subtitle = sprintf("(%s applied)", attr(trafo, "name"))
+            title = paste(title, subtitle)
+        }
+
         if (se) {
             pl.all = grid.arrange(pl.fun, pl.mod, pl.crit, pl.se, 
                 nrow=2, 
-                main=paste("Iter:", i, "\n Axis:", name.x1, "-vs-", name.x2))
+                main=title)
         } else {
             pl.all = grid.arrange(pl.fun, pl.mod, pl.crit, nrow=1)
         }
