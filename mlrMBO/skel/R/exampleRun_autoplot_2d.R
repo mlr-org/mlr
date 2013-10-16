@@ -68,11 +68,12 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
             }
             pl = ggplot(data=data, aes_string(x="x1", y="x2", z=name.z))
             pl = pl + geom_tile(aes_string(fill=name.z)) + stat_contour()
-            pl = pl + stat_contour(binwidth=5)
+            pl = pl + scale_fill_gradientn(colours = topo.colors(7))
+            pl = pl + stat_contour(aes_string(fill=name.z), binwidth=5)
             pl = pl + geom_point(data=points, aes(x=x1, y=x2, z=y, colour=type, shape=type))
             pl = pl + ggtitle(sprintf("%s", name.z))
             pl = pl + scale_colour_discrete(name="type")
-            pl = pl + scale_fill_continuous(name=name.z)
+            #pl = pl + scale_fill_continuous(name=name.z)
             pl = pl + xlab(NULL) # remove axis labels
             pl = pl + ylab(NULL)
             pl = pl + theme(
