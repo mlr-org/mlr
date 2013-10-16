@@ -8,8 +8,18 @@ library(mlrMBO)
 fun.map = list("branin"   = list("fun" = generate_branin_function),
 			   "ackley_1" = list("fun" = generate_ackley_function, "dimension" = 1),
 			   "ackley_2" = list("fun" = generate_ackley_function, "dimension" = 2),
-			   "discus_1" = list("fun" = generate_discus_function, "dimension" = 1),
-			   "discus_2" = list("fun" = generate_discus_function, "dimension" = 2))
+			   "rastrigin_1" = list("fun" = generate_rastrigin_function, "dimension" = 1),
+			   "rastrigin_2" = list("fun" = generate_rastrigin_function, "dimension" = 2),
+			   "rosenbrock_2" = list("fun" = generate_rosenbrock_function, "dimension" = 2))
+
+trafo = function(x) {
+	trafo = NULL
+	switch(x,
+		"none"  = { trafo=NULL },
+		"log"   = { trafo=mlrMBO:::logTrafo() },
+		"log10" = { trafo=mlrMBO:::log10Trafo() })
+	return(trafo)
+}
 
 # all the shiny magic
 shinyServer(function(input, output) {
@@ -44,10 +54,16 @@ shinyServer(function(input, output) {
 		iter = input$iter
 
 		# determine desired z-transformation
-		trafo = NULL
-		switch(input$trafo,
-			"none" = { trafo=NULL },
-			"log10" = { trafo=mlrMBO:::logTrafo() })
+		trafo.y = trafo(input$trafo.y)
+		trafo.yhat = trafo(input$trafo.yhat)
+		trafo.crit = trafo(input$trafo.crit)
+		trafo.se = trafo(input$trafo.se)
+
+		trafo = list(
+			"y" = trafo.y,
+			"yhat" = trafo.yhat,
+			"crit" = trafo.crit,
+			"se" = trafo.se)
 
 		# build file name
 		hash = function_name(obj.fun)
@@ -68,6 +84,7 @@ shinyServer(function(input, output) {
 			save(file=file.name, list=c("run"))
 		}
 
+		print(str(trafo))
 		pl = autoplot(run, iters=iter, pause=FALSE, trafo=trafo)
 
 		pl$pl.all

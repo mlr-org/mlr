@@ -16,7 +16,7 @@ makeTrafoFunction = function(name, fun) {
 #' @export
 logTrafo = function() {
     makeTrafoFunction(
-        name = "log transformation",
+        name = "log",
         fun = function(x) {
             if (any(x < 0)) {
                 #FIXME what about this?
@@ -24,5 +24,28 @@ logTrafo = function() {
                 x = x - min(x) + 1
             }
             return(log(x))
+        })
+}
+
+#' @export
+log10Trafo = function() {
+    makeTrafoFunction(
+        name = "log10",
+        fun = function(x) {
+            if (any(x < 0)) {
+                #FIXME what about this?
+                warning("Negative function values. Shifting function to apply logarithm.")
+                x = x - min(x) + 1
+            }
+            return(log10(x))
+        })
+}
+
+#' @export
+sqrtTrafo = function() {
+    makeTrafoFunction(
+        name = "sqrt",
+        fun = function(x) {
+            sqrt(x)
         })
 }

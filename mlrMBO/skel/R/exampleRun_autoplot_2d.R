@@ -2,7 +2,8 @@
 # FIXME we probably need a simple gui later to do some trafos like log on the the plots
 # while the iters run
 autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE, 
-    se.factor1=1, se.factor2=2, trafo=NULL, ...)  {
+    se.factor1=1, se.factor2=2, 
+    trafo=NULL, ...)  {
       
     # extract information from example run object
     par.set = x$par.set
@@ -63,22 +64,27 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
         # helper function for single plot
         plotSingleFun = function(data, points, name.z, xlim, ylim, trafo = NULL) {
             if (!is.null(trafo)) {
-                # catf("Applying %s.", attr(trafo, "name"))
                 data[, name.z] = trafo(data[, name.z])
             }
             pl = ggplot(data=data, aes_string(x="x1", y="x2", z=name.z))
-            pl = pl + geom_tile(aes_string(fill=name.z)) + stat_contour()
+            pl = pl + geom_tile(aes_string(fill=name.z))
             pl = pl + scale_fill_gradientn(colours = topo.colors(7))
             pl = pl + stat_contour(aes_string(fill=name.z), binwidth=5)
             pl = pl + geom_point(data=points, aes(x=x1, y=x2, z=y, colour=type, shape=type))
-            pl = pl + ggtitle(sprintf("%s", name.z))
-            pl = pl + scale_colour_discrete(name="type")
-            #pl = pl + scale_fill_continuous(name=name.z)
+
+            title = name.z
+            if (!is.null(trafo)) {
+                title = paste(title, " (", attr(trafo, "name"), "-transformed)", sep="")
+            }
+            
+            pl = pl + ggtitle(title)
+            pl = pl + scale_colour_manual(name="type", values=c("#000000", "red","gray"))
             pl = pl + xlab(NULL) # remove axis labels
             pl = pl + ylab(NULL)
             pl = pl + theme(
                 plot.title=element_text(size=11, face="bold"), # decrease font size and weight
-                plot.margin=unit(c(0.2,0.2,0.2,0.2), "cm") # adapt margins
+                plot.margin=unit(c(0.2,0.2,0.2,0.2), "cm")#, # adapt margins
+                #panel.background=element_blank()
             )
             return(pl)
         }
@@ -96,13 +102,13 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
 
 
         # build single plots
-        pl.fun = plotSingleFun(gg.fun, gg.points, "y", trafo=trafo)
-        pl.mod = plotSingleFun(gg.fun, gg.points, "yhat", trafo=trafo)
+        pl.fun = plotSingleFun(gg.fun, gg.points, "y", trafo=trafo[["y"]])
+        pl.mod = plotSingleFun(gg.fun, gg.points, "yhat", trafo=trafo[["yhat"]])
         # FIXME: check why it is "Not possible to generate contour data" for ackley 2d function
         # for the crit and se plots
-        pl.crit = plotSingleFun(gg.fun, gg.points, name.crit)
+        pl.crit = plotSingleFun(gg.fun, gg.points, name.crit, trafo=trafo[["crit"]])
         if (se) {
-            pl.se = plotSingleFun(gg.fun, gg.points, "se")
+            pl.se = plotSingleFun(gg.fun, gg.points, "se", trafo=trafo[["se"]])
         }
 
         # make "long" dataframe for ggplot 
@@ -121,10 +127,6 @@ autoplotExampleRun2d = function(x, iters, pause=TRUE, densregion=TRUE,
         #pl.all = direct.label(pl.all)
         
         title = sprintf("Iter %i\n x-axis: %s, y-axis: %s", i, name.x1, name.x2)
-        if (!is.null(trafo)) {
-            subtitle = sprintf("(%s applied)", attr(trafo, "name"))
-            title = paste(title, subtitle)
-        }
 
         if (se) {
             pl.all = grid.arrange(pl.fun, pl.mod, pl.crit, pl.se, 

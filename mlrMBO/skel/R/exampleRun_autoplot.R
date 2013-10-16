@@ -67,9 +67,18 @@ autoplot.MBOExampleRun = function(x, iters, pause=TRUE, densregion=TRUE,
   	checkArg(densregion, "logical", len=1L, na.ok=FALSE)
   	checkArg(se.factor1, "numeric", len=1L, na.ok=FALSE)
  	  checkArg(se.factor2, "numeric", len=1L, na.ok=FALSE)
-    print(trafo)
     if (!is.null(trafo)) {
-      checkArg(trafo, "MBOTrafoFunction")
+      # if single function provided, apply it to all plots
+      if (c("MBOTrafoFunction") %in% class(trafo)) {
+        trafo = list("y" = trafo, "yhat" = trafo, "crit" = trafo, "se" = trafo)
+      } else {
+        # otherwise check if all elements are of an appropriate type
+        lapply(trafo, function(t) if(!is.null(t)) checkArg(t, "MBOTrafoFunction"))
+
+        trafo.defaults = list("y" = NULL, "yhat" = NULL, "crit" = NULL, "se" = NULL)
+        trafo.defaults[names(trafo)] = trafo
+        trafo = trafo.defaults 
+      }
     }
   	#FIXME implement and document meaning for xlim, ylim for 2D plots
  	  if (!missing(xlim))

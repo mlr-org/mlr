@@ -133,7 +133,7 @@ autoplotExampleRun1d = function(x, iters, xlim, ylim, pause, point.size, densreg
 			}
 
 			# build dataframe for different points
-	        idx = c(idx.init, idx.seq, idx.proposed)
+	        idx = c(idx.init, idx.seq, idx.proposed)	
 
 	        # FIXME: this is copy and paste (see numeric part)
 	        gg.points = data.frame(x=opt.path[idx, names.x],
@@ -143,7 +143,14 @@ autoplotExampleRun1d = function(x, iters, xlim, ylim, pause, point.size, densreg
 	        	                   					rep("prop", length(idx.proposed)))))
 			head(gg.points)
 			
-    		pl.points = ggplot(data=gg.points, aes(x=x, y=y, colour=type, shape=type)) + geom_point(size=point.size)
+    		pl.points = ggplot(data=gg.points, aes(x=x, y=y, colour=type, shape=type))
+    		pl.points = pl.points + geom_point(size=point.size)
+
+    		if (se & densregion) {
+    			print("SE is active")
+    			
+    		}
+	        
     		pl.points = pl.points + xlab(names.x)
     		pl.points = pl.points + ylab(name.y)
 			pl.points = pl.points + scale_colour_discrete(name="type")
