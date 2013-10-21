@@ -30,7 +30,7 @@ configureMlr(show.learner.output=FALSE)
 
 # print(run)
 
-# autoplot.MBOexampleRun(run, iters=3, densregion=TRUE)
+# autoplot(run, iters = c(2,3,8))
 # stop()
 
 # NOISY DISCRETE FUNCTION
@@ -54,19 +54,20 @@ configureMlr(show.learner.output=FALSE)
 
 # print(run)
 
-# autoplot.MBOexampleRun(run, iters=3)
+# autoplot(run, iters=c(2,5))
+# stop()
 
 # 2d NUMERIC FUNCTION
 
-objfun = branin_function()
+# objfun = generate_branin_function()
 
-ctrl = makeMBOControl(init.design.points=10, iters=10, propose.points=1, 
-  infill.crit="ei", infill.opt="random", infill.opt.random.points=2000)
+# ctrl = makeMBOControl(init.design.points=10, iters=10, propose.points=1, 
+#   infill.crit="ei", infill.opt="random", infill.opt.random.points=2000)
 
-lrn = makeLearner("regr.km", predict.type="se", covtype="matern3_2")
+# lrn = makeLearner("regr.km", predict.type="se", covtype="matern3_2")
 
-run = exampleRun(objfun, learner=lrn, control=ctrl, points.per.dim=50)
+# run = exampleRun(objfun, learner=lrn, control=ctrl, points.per.dim=50)
 
-print(run)
+#print(run)
 
-pl = autoplot(run, iters=3, pause=TRUE)
+pl = autoplot(run, iters=c(1,2), point.size=3.5, pause=TRUE)

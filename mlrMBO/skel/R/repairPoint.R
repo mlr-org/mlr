@@ -11,7 +11,7 @@
 repairPoint = function(par.set, x) {
   Map(function(p, v) {
     if (p$type %in% c("numeric", "numericvector", "integer", "integervector")) {
-      if (any(v < p$lower | v > p$upper)) {
+      if (!(length(v) == 1L && is.na(v)) && any(v < p$lower | v > p$upper)) {
         warningf("Repairing value for %s: %s", p$id, as.character(v))
         v = pmax(p$lower, v)
         v = pmin(p$upper, v)

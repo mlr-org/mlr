@@ -1,0 +1,2 @@
+library(shiny)
+runApp(getwd())
