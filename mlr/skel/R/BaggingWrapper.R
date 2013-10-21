@@ -15,12 +15,10 @@
 #' Prediction works as follows:
 #' For classification we do majority voting to create a discrete label and
 #' probabilites are predicted by considering the proportions of all predicted labels.
-#' For regression the mean value accross predictions is computed.
-#' Prediction of local standard error for regression is a current
-#' TODO and currently not implemented.
+#' For regression the mean value and the standard devations accross predictions is computed.
 #' 
 #' @param learner [\code{\link[mlr]{Learner}}]\cr 
-#'   The learner.  
+#'   The learner. Prediction type of the basic learner must be \dQuote{response}.
 #' @param bag.iters [\code{integer(1)}]\cr
 #'   Iterations = number of fitted models in bagging.
 #'   Default is 10.
@@ -33,10 +31,13 @@
 #' @param bag.feats [\code{numeric(1)}]\cr
 #'   Percentage size of randomly selected features in bags.
 #'   Default is 1.
+#' @param predict.type [\code{character(1)}]\cr
+#'   Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
+#'   Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
+#'   Default is \dQuote{response}.
 #' @return [\code{\link[mlr]{Learner}}].
 #' @export
-#FIXME handle type = se
-makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.size, bag.feats = 1) {
+makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.size, bag.feats = 1, predict.type = "response") {
   checkArg(learner, "Learner")
   bag.iters = convertInteger(bag.iters)
   checkArg(bag.iters, "integer", len=1L, na.ok=FALSE, lower=1L)
@@ -47,6 +48,8 @@ makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.
     checkArg(bag.size, "numeric", len=1L, na.ok=FALSE, lower=0, upper=1)
   }
   checkArg(bag.feats, "numeric", len=1L, na.ok=FALSE, lower=0, upper=1)
+  if (learner$predict.type != "response")
+    stop("Predict type of the basic learner must be response.")
   id = paste(learner$id, "bagged", sep=".")
   packs = learner$packages
   ps = makeParamSet(
@@ -58,7 +61,10 @@ makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.
   pv = list(bag.iters=bag.iters, bag.replace=bag.replace, 
     bag.size=bag.size, bag.feats=bag.feats)
   x = makeBaseWrapper(id, learner, packs, par.set=ps, par.vals=pv, cl="BaggingWrapper")
-  x$se = FALSE
+  x$se = (x$type == "regr")
+  x$prob = (x$type == "classif")
+  if(!is.na(predict.type))
+    x = setPredictType(x, predict.type)
   x
 }
 
@@ -100,12 +106,16 @@ predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
     else
       rowMeans(p)
   } else {
-    levs = .model$task.desc$class.levels
-    p = apply(p, 1, function(x) {
-      x = factor(x, levels = levs)
-      as.numeric(prop.table(table(x)))
-    })
-    setColNames(t(p), levs)
+    if(.learner$type == 'classif') {
+      levs = .model$task.desc$class.levels
+      p = apply(p, 1, function(x) {
+        x = factor(x, levels = levs)
+        as.numeric(prop.table(table(x)))
+      })
+      setColNames(t(p), levs)
+    } else {
+      cbind(rowMeans(p), apply(p, 1, sd))
+    }
   }
 }
 
