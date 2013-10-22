@@ -18,26 +18,32 @@
 
 #FIXME we need other optimizers for mixed, depenent param spaces. dont forget refactorNAS then
 
-# mean response of model
+# random search, where we shrink the region of interest after restarts
+# around the currently best point. only numeric / ints are currently "shrunken"
+# works for ALL parameter sets
+
+#FIXME it would be nice to have a REASONABLE way to shrink categorical stuff too.
+
 infillOptRandom = function(infill.crit, model, control, par.set, opt.path, design) {
   iterater = 0L
   repeat {
     iterater = iterater + 1L
     newdesign1 = generateDesign(control$infill.opt.random.points, par.set,
-                                randomLHS, ints.as.num=TRUE, logicals.as.factor=TRUE)
-    # predict on design where NAs where imputed, but return propsed points with NAs
+      randomLHS, ints.as.num=TRUE, logicals.as.factor=TRUE)
+    # predict on design where NAs were imputed, but return propsed points with NAs
     newdesign2 = refactorNAs(newdesign1, par.set)
     y = infill.crit(newdesign2, model, control, par.set, design)
     best = newdesign1[rank(y, ties.method="random") == 1L, , drop=FALSE]
     
-    if(iterater == control$infill.opt.restarts)
+    if (iterater == control$infill.opt.restarts)
       break
     
-    for(i in seq(along=par.set$pars)) {
+    # now shrink par.set object so we search more locally, then iterate
+    for (i in seq_along(par.set$pars)) {
       par = par.set$pars[[i]]
-      if(par$type %in% c("numeric", "integer", "numericvector", "integervector")) {
+      if (par$type %in% c("numeric", "integer", "numericvector", "integervector")) {
         range = par$upper - par$lower
-        if(best[[i]] < par$lower + range / 4)
+        if (best[[i]] < par$lower + range / 4)
           par$upper = par$upper - range / 2
         else if (best[[i]] > par$upper - range / 4)
           par$lower = par$lower + range / 2
@@ -51,6 +57,10 @@ infillOptRandom = function(infill.crit, model, control, par.set, opt.path, desig
   }
   best
 }
+
+# cmaes with simple random restarts. 
+# the first start is always at the best point of the current opt.path.
+# works only for numerics and integers, latter are simply rounded.
 
 infillOptCMAES = function(infill.crit, model, control, par.set, opt.path, design) {
   # extract lower and upper bound for params
