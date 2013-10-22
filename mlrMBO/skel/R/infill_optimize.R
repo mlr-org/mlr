@@ -20,12 +20,36 @@
 
 # mean response of model
 infillOptRandom = function(infill.crit, model, control, par.set, opt.path, design) {
-  newdesign1 = generateDesign(control$infill.opt.random.points, par.set,
-    randomLHS, ints.as.num=TRUE, logicals.as.factor=TRUE)
-  # predict on design where NAs where imputed, but return propsed points with NAs
-  newdesign2 = refactorNAs(newdesign1, par.set)
-  y = infill.crit(newdesign2, model, control, par.set, design)
-  newdesign1[rank(y, ties.method="random") == 1L, , drop=FALSE]
+  iterater = 0L
+  repeat {
+    iterater = iterater + 1L
+    newdesign1 = generateDesign(control$infill.opt.random.points, par.set,
+                                randomLHS, ints.as.num=TRUE, logicals.as.factor=TRUE)
+    # predict on design where NAs where imputed, but return propsed points with NAs
+    newdesign2 = refactorNAs(newdesign1, par.set)
+    y = infill.crit(newdesign2, model, control, par.set, design)
+    best = newdesign1[rank(y, ties.method="random") == 1L, , drop=FALSE]
+    
+    if(iterater == control$infill.opt.restarts)
+      break
+    
+    for(i in seq(along=par.set$pars)) {
+      par = par.set$pars[[i]]
+      if(par$type %in% c("numeric", "integer", "numericvector", "integervector")) {
+        range = par$upper - par$lower
+        if(best[[i]] < par$lower + range / 4)
+          par$upper = par$upper - range / 2
+        else if (best[[i]] > par$upper - range / 4)
+          par$lower = par$lower + range / 2
+        else {
+          par$lower = par$lower + range / 4
+          par$upper = par$upper - range / 4
+        }
+        par.set$pars[[i]] = par
+      }
+    }
+  }
+  best
 }
 
 infillOptCMAES = function(infill.crit, model, control, par.set, opt.path, design) {
