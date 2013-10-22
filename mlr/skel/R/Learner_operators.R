@@ -111,7 +111,8 @@ setHyperPars2.Learner = function(learner, par.vals) {
       learner$par.vals[[n]] = p
     } else {
       if (!isFeasible(pd, p))
-        stopf("%s is not feasible for parameter '%s'!", p, pd$id)
+        stopf("%s is not feasible for parameter '%s'!", 
+          convertToShortString(p), pd$id)
       ## if valname of discrete par was used, transform it to real value
       #if (pd$type == "discrete" && is.character(p) && length(p) == 1 && p %in% names(pd$values))
       #  p = pd$values[[p]]
