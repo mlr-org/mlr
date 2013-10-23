@@ -5,7 +5,7 @@ Author: Bernd Bischl <bernd_bischl@gmx.net>
 Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 License: BSD
 Depends: ParamHelpers, mlr
-Imports: BBmisc, gridExtra, grid, ggplot2
+Imports: BBmisc (>= 1.4), gridExtra, grid, ggplot2
 Suggests: cmaes, DiceOptim, emoa, soobench, testthat
 LazyData: yes
 ByteCompile: yes

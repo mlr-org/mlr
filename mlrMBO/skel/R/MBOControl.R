@@ -188,7 +188,7 @@ makeMBOControl = function(minimize=TRUE, noisy=FALSE, init.design.points=20L,
   
   if (missing(impute)) 
     impute = function(x, y, opt.path) 
-      stopf("Infeasible y=%s value encountered at %s", as.character(y), listToShortString(x))
+      stopf("Infeasible y=%s value encountered at %s", as.character(y), convertToShortString(x))
   else 
     checkArg(impute, formals=c("x", "y", "opt.path"))
   checkArg(impute.errors, "logical", len=1L, na.ok=FALSE)

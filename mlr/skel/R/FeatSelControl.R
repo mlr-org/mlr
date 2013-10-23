@@ -85,7 +85,7 @@ print.FeatSelControl = function(x, ...) {
     catf("Max. features: %i", x$max.features)
   catf("Max. iterations: %i", x$maxit)
   if (length(x$extra.args) > 0)
-    catf("Further arguments: %s", listToShortString(x$extra.args))
+    catf("Further arguments: %s", convertToShortString(x$extra.args))
   else
     catf("Further arguments: <not used>")
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript --vanilla
 
 v = system("git rev-list HEAD --count", TRUE)
-revision = max(as.integer(v))
+revision = max(as.integer(v)) + 1
 desc = read.dcf("skel/DESCRIPTION")
 ver = desc[,"Version"] 
 ver = strsplit(ver, "-")[[1]][1]

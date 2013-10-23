@@ -55,6 +55,6 @@ makeTuneControl = function(same.resampling.instance, start, ..., cl) {
 print.TuneControl = function(x, ...) {
   catf("Tune control: %s", class(x)[1])
   catf("Same resampling instance: %s", x$same.resampling.instance)
-  catf("Start: %s", listToShortString(x$start))
-  catf("Further arguments: %s", listToShortString(x$extra.args))
+  catf("Start: %s", convertToShortString(x$start))
+  catf("Further arguments: %s", convertToShortString(x$extra.args))
 }
