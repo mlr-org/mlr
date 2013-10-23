@@ -1,21 +1,7 @@
-.Rproj
+mlr.Rcheck
+mlr_*.tar.gz
 .Rproj.user
-mlr.Rproj
+*.Rproj
 .Rhistory
-.RData
-
-mlr/*.tar.gz
-mlr/pkg
-mlr/pkg.Rcheck
-mlr/test_src.R
-
-mlrMBO/*.tar.gz
-mlrMBO/pkg
-mlrMBO/pkg.Rcheck
-mlrMBO/test_src.R
-
-doc/*.log
-doc/*.rst
-doc/tutorial/*.log
-doc/tutorial/*.rst
+html
 

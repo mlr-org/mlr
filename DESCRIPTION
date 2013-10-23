@@ -52,7 +52,7 @@ Suggests:
     ROCR
 LazyData: yes
 ByteCompile: yes
-Version: 1.1
+Version: 1.2-106
 Collate:
     'Aggregation.R'
     'aggregations.R'
