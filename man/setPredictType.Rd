@@ -1,0 +1,29 @@
+\name{setPredictType}
+\alias{setPredictType}
+\title{Set the type of predictions the learner should return.}
+\usage{
+  setPredictType(learner, predict.type)
+}
+\arguments{
+  \item{learner}{[\code{\link{Learner}}]\cr The learner.}
+
+  \item{predict.type}{[\code{character(1)}]\cr
+  Classification: \dQuote{response} or \dQuote{prob}.
+  Regression: \dQuote{response} or \dQuote{se}.  Default is
+  \dQuote{response}.}
+}
+\value{
+  [\code{\link{Learner}}] with changed prediction
+  behaviour.
+}
+\description{
+  Possible prediction types are: Classification: Labels or
+  class probabilities (including labels). Regression:
+  Numeric or response or standard errors (including numeric
+  response).
+}
+\seealso{
+  \code{\link{setThreshold}} to alter the threshold used
+  for prediction.
+}
+

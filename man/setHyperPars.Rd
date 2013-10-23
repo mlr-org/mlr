@@ -1,0 +1,37 @@
+\name{setHyperPars}
+\alias{setHyperPars}
+\title{Set the hyperparameters of a learner object.}
+\usage{
+  setHyperPars(learner, ..., par.vals)
+}
+\arguments{
+  \item{learner}{[\code{\link{Learner}}]\cr The learner.}
+
+  \item{...}{[any]\cr Named (hyper)parameters with new
+  setting. Alternatively these can be passed using the
+  \code{par.vals} argument.}
+
+  \item{par.vals}{[\code{list}]\cr Optional list of named
+  (hyper)parameter settings. The arguments in \code{...}
+  take precedence over values in this list.}
+}
+\value{
+  [\code{\link{Learner}}] with changed hyperparameters.
+}
+\description{
+  Set the hyperparameters of a learner object.
+}
+\examples{
+cl1 <- makeLearner("classif.ksvm", sigma=1)
+cl2 <- setHyperPars(cl1, sigma=10, par.vals=list(C=2))
+print(cl1)
+# note the now set and altered hyperparameters:
+print(cl2)
+}
+\seealso{
+  See \code{\link{getHyperPars}} for a function to retrieve
+  the currently set hyperparameters. To get a list of all
+  hyperparameters of a learner, see the \code{par.set} slot
+  of the \code{\link{Learner}} object.
+}
+

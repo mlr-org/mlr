@@ -1,10 +1,12 @@
-#!/usr/bin/env Rscript --vanilla
+#!/usr/bin/env Rscript
 
 v = system("git rev-list HEAD --count", TRUE)
-revision = max(as.integer(v)) + 1
-desc = read.dcf("skel/DESCRIPTION")
-ver = desc[,"Version"] 
-ver = strsplit(ver, "-")[[1]][1]
-ver = sprintf("%s-%i", ver, revision)
-desc[,"Version"] = ver
-write.dcf(desc, file="pkg/DESCRIPTION")
+revnr = max(as.integer(v))
+desc = read.dcf("DESCRIPTION")
+vernr = desc[, "Version"]
+majorminor = strsplit(vernr, "-")[[1]][1]
+vernr = sprintf("%s-%i", majorminor, revnr)
+desc[,"Version"] = vernr
+write.dcf(desc, file="DESCRIPTION")
+cat(vernr)
+

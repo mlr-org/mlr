@@ -1,0 +1,33 @@
+\name{getTaskTargets}
+\alias{getTaskTargets}
+\title{Get target column of task.}
+\usage{
+  getTaskTargets(task, subset, recode.target = "no")
+}
+\arguments{
+  \item{task}{[\code{\link{SupervisedTask}}]\cr The task.}
+
+  \item{subset}{[\code{integer}]\cr Selected cases.
+  Default is all cases.}
+
+  \item{recode.target}{[\code{character(1)}] \cr Should
+  target classes be recoded? Only for binary
+  classification.  Possible are \dQuote{no} (do nothing),
+  \dQuote{01}, and \dQuote{-1+1}.  In the two latter cases
+  the target vector is converted into a numeric vector.
+  The positive class is coded as +1 and the negative class
+  either as 0 or -1.  Default is \dQuote{no}.}
+}
+\value{
+  A \code{factor} for classification or a \code{numeric}
+  for regression.
+}
+\description{
+  Get target column of task.
+}
+\examples{
+task <- makeClassifTask(data = iris, target = "Species")
+getTaskTargets(task)
+getTaskTargets(task, subset = 1:50)
+}
+

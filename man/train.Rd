@@ -1,0 +1,48 @@
+\name{train}
+\alias{train}
+\title{Train a learning algorithm.}
+\usage{
+  train(learner, task, subset, weights)
+}
+\arguments{
+  \item{learner}{[\code{\link{Learner}}]\cr The learner.}
+
+  \item{task}{[\code{\link{SupervisedTask}}]\cr The task.}
+
+  \item{subset}{[\code{integer}]\cr An index vector
+  specifying the training cases to be used for fitting.  By
+  default the complete data set is used.}
+
+  \item{weights}{[\code{numeric}]\cr Optional, non-negative
+  case weight vector to be used during fitting.  If given,
+  must be of same length as \code{subset} and in
+  corresponding order.  By default missing which means no
+  weights are used.}
+}
+\value{
+  [\code{\link{WrappedModel}}].
+}
+\description{
+  Given a \code{\link{SupervisedTask}}, creates a model for
+  the learning machine which can be used for predictions on
+  new data.
+}
+\examples{
+training.set <- sample(1:nrow(iris), nrow(iris) / 2)
+
+## use linear discriminant analysis to classify iris data
+task <- makeClassifTask(data = iris, target = "Species")
+learner <- makeLearner("classif.lda", method = "mle")
+mod <- train(learner, task, subset = training.set)
+print(mod)
+
+## use random forest to classify iris data
+task <- makeClassifTask(data = iris, target = "Species")
+learner <- makeLearner("classif.rpart", minsplit = 7, predict.type = "prob")
+mod <- train(learner, task, subset = training.set)
+print(mod)
+}
+\seealso{
+  \code{\link{predict}}
+}
+

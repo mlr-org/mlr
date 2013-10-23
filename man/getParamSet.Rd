@@ -1,0 +1,17 @@
+\name{getParamSet}
+\alias{getParamSet}
+\title{Get a description of all possible parameter settings for a learner.}
+\usage{
+  getParamSet(learner)
+}
+\arguments{
+  \item{learner}{[\code{\link{Learner}}]\cr The learner.}
+}
+\value{
+  [\code{\link[ParamHelpers]{ParamSet}}].
+}
+\description{
+  Get a description of all possible parameter settings for
+  a learner.
+}
+

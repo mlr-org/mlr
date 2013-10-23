@@ -1,0 +1,23 @@
+\name{setAggregation}
+\alias{setAggregation}
+\title{Set aggregation function of measure.}
+\usage{
+  setAggregation(measure, aggr)
+}
+\arguments{
+  \item{measure}{[\code{\link{Measure}}]\cr Performance
+  measure.}
+
+  \item{aggr}{[\code{\link{Aggregation}}]\cr Aggregation
+  function.}
+}
+\value{
+  [\code{\link{Measure}}] with changed aggregation
+  behaviour.
+}
+\description{
+  Set how this measure will be aggregated after resampling.
+  To see possible aggregation functions:
+  \code{\link{aggregations}}.
+}
+

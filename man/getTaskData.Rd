@@ -1,0 +1,52 @@
+\name{getTaskData}
+\alias{getTaskData}
+\title{Extract data in task. Useful in \code{\link{trainLearner}} when you add a learning
+machine to the package.}
+\usage{
+  getTaskData(task, subset, features, target.extra = FALSE,
+    recode.target = "no")
+}
+\arguments{
+  \item{task}{[\code{\link{SupervisedTask}}]\cr The task.}
+
+  \item{subset}{[\code{integer}]\cr Selected cases.
+  Default is all cases.}
+
+  \item{features}{[\code{character}]\cr Selected inputs.
+  Default is all input variables.}
+
+  \item{target.extra}{[\code{logical(1)}]\cr Should target
+  vector be returned separately?  If not, a single
+  data.frame including the target is returned, otherwise a
+  list with the input data.frame and an extra vector for
+  the targets.  Default is FALSE.}
+
+  \item{recode.target}{[\code{character(1)}]\cr Should
+  target classes be recoded? Only for binary
+  classification.  Possible are \dQuote{no} (do nothing),
+  \dQuote{01}, and \dQuote{-1+1}.  In the two latter cases
+  the target vector is converted into a numeric vector.
+  The positive class is coded as +1 and the negative class
+  either as 0 or -1.  Default is \dQuote{no}.}
+}
+\value{
+  Either a data.frame or a list with data.frame \code{data}
+  and vector \code{target}.
+}
+\description{
+  Extract data in task. Useful in
+  \code{\link{trainLearner}} when you add a learning
+  machine to the package.
+}
+\examples{
+library("mlbench")
+data(BreastCancer)
+
+df <- BreastCancer
+df$Id <- NULL
+task <- makeClassifTask(id = "BreastCancer", data = df, target = "Class", positive = "malignant")
+head(getTaskData)
+head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = "-1+1"))
+head(getTaskData(task, subset = 1:100, recode.target = "01"))
+}
+

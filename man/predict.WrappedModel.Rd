@@ -1,0 +1,55 @@
+\name{predict.WrappedModel}
+\alias{predict.WrappedModel}
+\title{Predict new data.}
+\usage{
+  \method{predict}{WrappedModel} (object, task, newdata,
+    subset, ...)
+}
+\arguments{
+  \item{object}{[\code{\link{WrappedModel}}]\cr Wrapped
+  model, result of \code{\link{train}}.}
+
+  \item{task}{[\code{\link{SupervisedTask}}]\cr The task.
+  If this is passed, data from this task is predicted.}
+
+  \item{newdata}{[\code{data.frame}]\cr New observations
+  which should be predicted.  Pass this alternatively
+  instead of \code{task}.}
+
+  \item{subset}{[\code{integer}]\cr Index vector to subset
+  \code{task} or \code{newdata}.  Default is all data.}
+
+  \item{...}{[any]\cr Currently ignored.}
+}
+\value{
+  [\code{\link{Prediction}}].
+}
+\description{
+  Predict the target variable of new data using a fitted
+  model. What is stored exactly in the
+  [\code{\link{Prediction}}] object depends on the
+  \code{predict.type} setting of the \code{\link{Learner}}.
+}
+\examples{
+## split iris data in training and test set
+n <- nrow(iris)
+mixed.set <- sample(1:n)
+training.set <- mixed.set[1:(n/2)]
+test.set <- mixed.set[(n/2 + 1):n]
+
+## use linear discriminant analysis as learner for classification task
+task <- makeClassifTask(data = iris, target = "Species")
+learner <- makeLearner("classif.lda", method = "mle")
+mod <- train(learner, task, subset = training.set)
+
+## predict class labels for test data
+pred <- predict(mod, newdata = iris[test.set,])
+head(pred$data)
+
+## predict now probabiliies instead of class labels
+learner <- makeLearner("classif.lda", method = "mle", predict.type = "prob")
+mod <- train(learner, task, subset = training.set)
+pred <- predict(mod, newdata = iris[test.set, ])
+head(pred$data)
+}
+
