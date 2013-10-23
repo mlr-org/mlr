@@ -25,7 +25,7 @@ makeRLearner.classif.ksvm = function() {
         requires=expression(kernel == "besseldot")),
       makeNumericLearnerParam(id="tol", default=0.001, lower=0),
       makeLogicalLearnerParam(id="shrinking", default=TRUE),
-      makeNumericVectorLearnerParam(id="class.weights", len=NA_integer, lower=0),
+      makeNumericVectorLearnerParam(id="class.weights", len=NA_integer_, lower=0),
       makeLogicalLearnerParam(id="fit", default=TRUE)
     ),
     par.vals = list(fit=FALSE),
