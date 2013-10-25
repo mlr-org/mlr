@@ -123,7 +123,7 @@ As you can see, in addition to the predicted probabilities, a response
 is produced by choosing the class with the maximum probability and
 breaking ties at random.
 
-The predicted posterior probabilities can be accessed via the getProb_-function.
+The predicted posterior probabilities can be accessed via the getProbabilities_-function.
 
 <<>>=
 head(getProbabilities(pred))
@@ -193,6 +193,6 @@ head(pred$data)
 .. _Learner: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/makeLearner.html
 .. _Prediction: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/Prediction.html
 .. _predict: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/predict.WrappedModel.html
-.. _getProb: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/getProbabilities.html
+.. _getProbabilities: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/getProbabilities.html
 .. _setThreshold: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/setThreshold.html
 .. _mlbench: http://cran.r-project.org/web/packages/mlbench/index.html
