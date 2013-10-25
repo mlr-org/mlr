@@ -48,7 +48,7 @@ concerning the evaluation of learning methods, are given in section :doc:`perfor
 Regression example
 ..................
 
-As a regression example, the BostonHousing data set is used again.
+As a regression example, the ``BostonHousing`` data set is used again.
 
 <<>>=
 library("mlr")
@@ -217,7 +217,7 @@ example...
 Classification example
 ......................
 
-For the example code, we use the standard iris data set and compare a 
+For the example code, we use the standard ``iris`` data set and compare a 
 Decision Tree and the Linear Discriminant Analysis based on a 3-fold
 cross-validation:
 
@@ -279,7 +279,7 @@ Having a look at the single losses is of course possible as well.
 Regression example
 ......................
 
-Now, we use the BostonHousing data and compare the results of a Neural Net and a k-Nearest-Neighbor regression using out-of-bag bootstraping.
+Now, we use the ``BostonHousing`` data and compare the results of a Neural Net and a k-Nearest-Neighbor regression using out-of-bag bootstraping.
 
 <<>>=
 library("mlr")
