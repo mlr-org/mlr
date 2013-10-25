@@ -119,9 +119,9 @@ As you can see, the optimal configuration usually differs based on the data.
 But you might be able to find a range of the best settings, e.g. the values
 for C should be at least 1 and the values for sigma should be between 0 and 1.
 
-If we want to know, how good those configurations are on the entire data
+If we want to find out, how good those configurations are on the entire data
 set, we might still look at the measures that we already know from
-:doc:`resample`.
+resampling_.
 
 <<>>=
 r$measures.test
@@ -169,8 +169,8 @@ tuneParams(learner=lrn, task=task, resampling=rdesc, par.set=ps, control=ctrl, m
 .. _ParamSet: http://www.statistik.tu-dortmund.de/~bischl/rdocs/ParamHelpers/html/makeParamSet.html
 .. _TuneControl: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlrTune/html/TuneControl.html
 
-.. _training: :doc:`tutorial/train`
-.. _resampling: :doc:`tutorial/resample`
+.. _training: :doc:`train`
+.. _resampling: :doc:`resample`
 
 .. |tune-varsel_processing| image:: /_images/tune-varsel_processing.png
      :align: middle
