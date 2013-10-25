@@ -123,7 +123,7 @@ As you can see, in addition to the predicted probabilities, a response
 is produced by choosing the class with the maximum probability and
 breaking ties at random.
 
-The predicted posterior probabilities can be accessed via the getProbabilities_-function.
+The predicted posterior probabilities can be accessed via the getProb_-function.
 
 <<>>=
 head(getProbabilities(pred))
