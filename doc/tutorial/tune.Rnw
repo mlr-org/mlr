@@ -4,7 +4,7 @@ Tuning Hyperparameters
 Many classification algorithms feature a set of hyperparameters that
 either need to be selected by the user or through resampling,
 e.g. cross-validation. Setting them by hand was already covered in the
-section about training_ and resampling_ -- simply use the
+section about training_ and :doc:`resample` -- simply use the
 ``par.val`` argument in the makeLearner_ method.
 
 Assuming, you have understood how resampling_ works, it is
