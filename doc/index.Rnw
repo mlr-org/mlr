@@ -1,12 +1,6 @@
 Machine Learning in R (mlr)
 ===========================
 
-.. warning::
-
-  Both the package **mlr** as well as its documentation are very much
-  work in progress. Please check back often for updates until we release
-  a version to CRAN. We plan to do this real soon now.
-
 .. toctree::
    :hidden:
    
@@ -67,53 +61,8 @@ or maybe want to help improving **mlr**, please send a mail to the list at
 mlr-general@lists.r-forge.r-project.org or to the maintainer Bernd Bischl 
 at bischl@statistik.uni-dortmund.de.
 
-Installation
-""""""""""""
+Link to the Tutorial
+""""""""""""""""""""
 
-You can currently install the package by performing the following steps. There 
-are slight differences in the installation process between the different 
-operating systems. Basically the steps described for UNIX systems should work 
-fine on all UNIX-based systems such as Linux and Apples Mac OS X. Howewer, 
-Windows users have to do some additional steps to get things work.
-
-.. note::
-
-  If you are not familiar with the concepts of *software versioning and 
-  revisioning systems* and specifically with `SVN <http://en.wikipedia.org/wiki/Apache_Subversion>`_ 
-  you should dive into the basics by asking your favourite search engine for 
-  these keywords.
-
-* **UNIX users**: Open the terminal and checkout the SVN repository by downloading
-  the entire tree into a new directory with the command 
-  ``svn co svn://svn.r-forge.r-project.org/svnroot/mlr/``. Now move to the
-  root of the downloaded directory and enter ``make install``.
-* **Windows users**: Open the Subversion client of your choice (e.g. TortoiseSVN,
-  VisualSVN, SmartSVN, etc.) or the SVN integration within RStudio and perform a
-  SVN Checkout with the URL ``svn://svn.r-forge.r-project.org/svnroot/mlr/`` on 
-  a newly created folder. When using a SVN client, it may be advisable to add your
-  SVN bin directory to your system path. You can do this by starting command 
-  prompt (cmd.exe) and entering the command ``SET PATH=\%PATH\%;<your SVN bin dir>``. 
-  For instance, users at the TU Dortmund Statistics Department can enter 
-  ``SET PATH=\%PATH\%;t:\svn\bin``. Futhermore, the program
-  `Rtools <http://cran.r-project.org/bin/windows/Rtools/index.html>`_ must also
-  be installed. Now you can use the command prompt and move to the root of the
-  downloaded directory and enter ``make install``.
-* **All users**: Furthermore, be sure that all dependent packages for mlr are 
-  installed. The provided file ``install_dependencies.R`` automatically identifies 
-  missing packages and installs them. In addition to this, the packages 
-  `roxygen2 <http://cran.r-project.org/web/packages/roxygen2/index.html>`_ and 
-  `devtools <http://cran.r-project.org/web/packages/devtools/index.html>`_ must 
-  be installed. 
-  
-Project Link-List
-"""""""""""""""""
-
-* :doc:`tutorial/start`
 * :doc:`tutorial/index`
 * List of the :doc:`integrated_learners`
-* R-Forge_ project page
-* Bugtracker_
-
-.. _Bugtracker: https://r-forge.r-project.org/tracker/?atid=2012&group_id=494&func=browse
-.. _RUnit: https://sourceforge.net/projects/runit/
-.. _R-Forge: http://r-forge.r-project.org/projects/mlr/
