@@ -19,7 +19,7 @@ Classification example
 We again use the iris data set, included in R, but now, we want to
 tune a SVM with a polynomial kernel.
 
-We start by loading the **mlr* package and creating a classification
+We start by loading the *mlr* package and creating a classification
 task, just like in the tutorial on training_:
 
 <<>>=

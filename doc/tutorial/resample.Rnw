@@ -41,7 +41,7 @@ r
 
 In this example, the peformance measure is mmce (mean misclassification error), 
 the default for classification. See the documentation for measures_ for a 
-complete list of performance measure available in **mlr**. More explanations, 
+complete list of performance measures available in **mlr**. More explanations, 
 concerning the evaluation of learning methods, are given in section :doc:`performance`.
 
 
@@ -75,8 +75,8 @@ Resampling strategies concern the process of sampling new data sets
 from your data set :math:`D` under examination. One wants to generate
 various training and test sets, which the learning method can be
 fitted and validated on. Here it is assumed that every resampling
-strategy consists of a couple of iterations, where for each one there
-are indices into :math:`D`, defining the respective training and test
+strategy consists of a couple of iterations and for each one of them
+exist indices into :math:`D`, defining the respective training and test
 sets. 
 These iterations are implemented by storing the index set in a
 so called ResampleInstance_ object. The reasons for having the user
@@ -109,7 +109,7 @@ parameters), as well as a class inheriting from ResampleInstance_. This latter
 class takes the description object and takes care of the random
 drawing of indices. While this seems overly complicated, it is
 necessary as sometimes one only wants to describe the drawing process,
-while in other instances one wants to create the concrete index
+while in other instances one wants to create the specific index
 sets. Also, there are convenient methods to make the construction
 process as easy as possible.
 
@@ -145,7 +145,7 @@ Included resampling strategies
 The package comes with a couple of predefined strategies.
 
 * 'Subsample' for subsampling,
-* 'Holdout' for holdout,
+* 'Holdout' for holdout (training/test),
 * 'CV' for cross-validation, 
 * 'LOO' for leave-one-out, 
 * 'StratCV' for stratified cross-validation, 
@@ -218,7 +218,7 @@ Classification example
 ......................
 
 For the example code, we use the standard iris data set and compare a 
-Decision Tree and the Linear Discriminant Analysis based on a 10-fold
+Decision Tree and the Linear Discriminant Analysis based on a 3-fold
 cross-validation:
 
 <<>>=

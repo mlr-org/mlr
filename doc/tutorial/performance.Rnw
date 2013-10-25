@@ -46,7 +46,7 @@ performance(pred = pred, measure = timetrain, model = mod)
 performance(pred = pred, measure = timeboth, model = mod)
 @
 
-A nice method to calculate multiple performace measures at once makes use of the popular R funktion sapply. We define a list of measures and apply the performance function for each element.
+A nice method to calculate multiple performace measures at once makes use of the popular R function sapply. We define a list of measures and apply the performance function for each element.
 
 <<>>=
 ms <- list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain, "timeboth" = timeboth)
