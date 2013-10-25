@@ -13,7 +13,7 @@ Quick start
 Classification example
 ......................
 
-Let's train a Linear Discriminant Analysis on the iris data and make predictions 
+Let's train a Linear Discriminant Analysis on the ``iris`` data and make predictions 
 for the same data set.
 
 <<>>=
@@ -29,7 +29,7 @@ predict(mod, newdata = iris)
 Regression example
 ..................
 
-We fit a simple linear regression model to the BostonHousing data set and predict
+We fit a simple linear regression model to the ``BostonHousing`` data set and predict
 on the training data.
 
 <<>>=
