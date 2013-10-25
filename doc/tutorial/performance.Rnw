@@ -78,7 +78,7 @@ performance(pred, measure = fnr)
 
 Note that, in order to calculate the AUC, the area under the ROC (receiver 
 operating characteristic) curve, we have to make sure that posterior
-probabilities are predicted, i.e. set the predict type of the :doc:`learner` to "prob".
+probabilities are predicted, i.e. set the predict type of the Learner_ to "prob".
 
 <<>>=
 library("mlbench")
@@ -130,3 +130,4 @@ sapply(ms, function(meas) performance(pred, measure = meas))
 .. _performance: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/performance.html
 .. _measures: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/measures.html
 .. _Learners: learner.html
+.. _Learner: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/makeLearner.html
