@@ -121,7 +121,7 @@ for C should be at least 1 and the values for sigma should be between 0 and 1.
 
 If we want to find out, how good those configurations are on the entire data
 set, we might still look at the measures that we already know from
-resampling_.
+:doc:`resample`.
 
 <<>>=
 r$measures.test
