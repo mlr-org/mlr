@@ -21,7 +21,7 @@ Classification example
 ......................
 
 In the following example we define a classification task for the data
-set BreastCancer (from the package mlbench) and exclude the ID
+set ``BreastCancer`` (from the package mlbench) and exclude the ID
 variable from all further model fitting and evaluation.
 
 <<>>=
@@ -49,7 +49,7 @@ name of the target variable and the number of observations per class.
 Regression example
 ..................
 
-We will generally take the BostonHousing data set as regression example.
+We will generally take the ``BostonHousing`` data set as regression example.
 
 <<>>=
 library("mlr")
