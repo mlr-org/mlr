@@ -20,7 +20,7 @@ the performance measures, the function performance_ is used.
 Classification example
 ----------------------
 
-We fit a Linear Discriminant Analysis on a subset of the iris data set and calculate
+We fit a Linear Discriminant Analysis on a subset of the ``iris`` data set and calculate
 the mean misclassification error (mmce) on the test data set.
 
 <<>>=
@@ -99,7 +99,7 @@ Regression example
 ------------------
 
 In regression, everything works analogous to the above examples.
-We again use the BostonHousing data set, fit a Gradient Boosting Machine on a
+We again use the ``BostonHousing`` data set, fit a Gradient Boosting Machine on a
 training set and calculate the mean of squared errors and the mean of absolute 
 errors on the test data set.
 
