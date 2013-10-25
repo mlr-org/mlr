@@ -24,7 +24,7 @@ R Documentation in HTML:
   http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/
   
 Detailed Tutorial:
-  http://www.statistik.tu-dortmund.de/~bischl/mlr_tutorial/index.html
+  https://www.statistik.tu-dortmund.de/~bischl/mlr_tutorial/index.html
   
   Features
 ==========
