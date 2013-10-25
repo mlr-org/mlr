@@ -45,13 +45,10 @@ Features
 * Extension points to integrate your own stuff
 * Unit-tested using `testthat <http://cran.r-project.org/web/packages/testthat/index.html>`_
 * Possibility to fit, predict, evaluate and resample models
-* Tune hyper-parameters of a learner with different optimization algorithms (also available for 
-multi-criteria optimization)
+* Tune hyper-parameters of a learner with different optimization algorithms (also available for multi-criteria optimization)
 * Feature selection with filters and wrappers (also available for multi-criteria optimization)
-* Combine different processing steps to a complex data mining chain; enables nested resampling 
-of optimized models
-* Optimize functions with a model-based sequential parameter optimization method (useful e.g. 
-for the optimization of expensive black-box functions)
+* Combine different processing steps to a complex data mining chain; enables nested resampling of optimized models
+* Optimize functions with a model-based sequential parameter optimization method (useful e.g. for the optimization of expensive black-box functions)
 
 Get in touch
 """"""""""""
