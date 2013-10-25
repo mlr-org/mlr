@@ -50,19 +50,14 @@ Features
 * Parallelization is built-in
 * Extension points to integrate your own stuff
 * Unit-tested using `testthat <http://cran.r-project.org/web/packages/testthat/index.html>`_
-
-As the framework has become rather extensive, it is currently divided into the following R packages:
-
-* **mlr**: The basic package. Fitting, predicting, evaluating, resampling.
-* **mlrTune**: Tune hyper-parameters of a learner with different optimization algorithms. 
-  Multi-criteria optimization is possible, too. 
-* **mlrFeatSel**: Feature selection with filters and wrappers. 
-  Multi-criteria optimization is possible, too.
-* **mlrChains**: Combine different processing steps to a complex data mining chain. 
-  Enables nested resampling of optimized models.
-* **mlrMBO**: Optimize functions with a model-based sequential 
-  parameter optimization method. Useful e.g. for the optimaization of expensive black-box
-  functions.
+* Possibility to fit, predict, evaluate and resample models
+* Tune hyper-parameters of a learner with different optimization algorithms (also available for 
+multi-criteria optimization)
+* Feature selection with filters and wrappers (also available for multi-criteria optimization)
+* Combine different processing steps to a complex data mining chain; enables nested resampling 
+of optimized models
+* Optimize functions with a model-based sequential parameter optimization method (useful e.g. 
+for the optimization of expensive black-box functions)
 
 Get in touch
 """"""""""""
@@ -78,7 +73,7 @@ Installation
 You can currently install the package by performing the following steps. There 
 are slight differences in the installation process between the different 
 operating systems. Basically the steps described for UNIX systems should work 
-fine on all UNIX-based systems such as Linux and Apples MAC OS X. Howewer, 
+fine on all UNIX-based systems such as Linux and Apples Mac OS X. Howewer, 
 Windows users have to do some additional steps to get things work.
 
 .. note::
@@ -91,8 +86,7 @@ Windows users have to do some additional steps to get things work.
 * **UNIX users**: Open the terminal and checkout the SVN repository by downloading
   the entire tree into a new directory with the command 
   ``svn co svn://svn.r-forge.r-project.org/svnroot/mlr/``. Now move to the
-  respective subdirectories of the desired packages (e.g. mlr, mlrTune, ...) and 
-  enter ``make install``.
+  root of the downloaded directory and enter ``make install``.
 * **Windows users**: Open the Subversion client of your choice (e.g. TortoiseSVN,
   VisualSVN, SmartSVN, etc.) or the SVN integration within RStudio and perform a
   SVN Checkout with the URL ``svn://svn.r-forge.r-project.org/svnroot/mlr/`` on 
@@ -102,17 +96,14 @@ Windows users have to do some additional steps to get things work.
   For instance, users at the TU Dortmund Statistics Department can enter 
   ``SET PATH=\%PATH\%;t:\svn\bin``. Futhermore, the program
   `Rtools <http://cran.r-project.org/bin/windows/Rtools/index.html>`_ must also
-  be installed. Now you can use the command prompt and move to the respective 
-  subdirectories of the desired packages (e.g. mlr, mlrMBO, ...) and enter 
-  ``make install``.
+  be installed. Now you can use the command prompt and move to the root of the
+  downloaded directory and enter ``make install``.
 * **All users**: Furthermore, be sure that all dependent packages for mlr are 
   installed. The provided file ``install_dependencies.R`` automatically identifies 
   missing packages and installs them. In addition to this, the packages 
   `roxygen2 <http://cran.r-project.org/web/packages/roxygen2/index.html>`_ and 
   `devtools <http://cran.r-project.org/web/packages/devtools/index.html>`_ must 
-  be installed. The basic package **mlr** is required to be installed when using
-  any of the other four packages. Additionally, **mlrChains** also requires the 
-  installation of **mlrTune** and **mlrFeatSel**.
+  be installed. 
   
 Project Link-List
 """""""""""""""""
