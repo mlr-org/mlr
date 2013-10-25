@@ -4,10 +4,10 @@ Tuning Hyperparameters
 Many classification algorithms feature a set of hyperparameters that
 either need to be selected by the user or through resampling,
 e.g. cross-validation. Setting them by hand was already covered in the
-section about training_ and :doc:`resample` -- simply use the
+section about :doc:`train` and :doc:`resample` -- simply use the
 ``par.val`` argument in the makeLearner_ method.
 
-Assuming, you have understood how resampling_ works, it is
+Assuming, you have understood how :doc:`resample` works, it is
 quite simple to implement a grid search, which is one of the standard
 -- albeit slow -- ways to choose an appropriate set of parameters from a
 given range of values.
@@ -20,7 +20,7 @@ We again use the iris data set, included in R, but now, we want to
 tune a SVM with a polynomial kernel.
 
 We start by loading the *mlr* package and creating a classification
-task, just like in the tutorial on training_:
+task, just like in the tutorial on :doc:`train`:
 
 <<>>=
 library("mlr")
