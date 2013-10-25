@@ -40,7 +40,7 @@ ps <- makeParamSet(makeDiscreteParam("C", values=2^(-2:2)),
 
 We will use cross-validation to assess the quality of a parameter
 combination. For this we need to create a resampling description just
-like in the resampling_ part of the tutorial:
+like in the :doc:`resample` part of the tutorial:
 
 <<>>=
 rdesc <- makeResampleDesc("CV", iters=3)
