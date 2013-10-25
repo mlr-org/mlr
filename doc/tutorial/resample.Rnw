@@ -41,7 +41,7 @@ r
 
 In this example, the peformance measure is mmce (mean misclassification error), 
 the default for classification. See the documentation for measures_ for a 
-complete list of performance measures available in *mlr**. More explanations, 
+complete list of performance measures available in **mlr**. More explanations, 
 concerning the evaluation of learning methods, are given in section :doc:`performance`.
 
 
