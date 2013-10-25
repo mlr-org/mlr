@@ -13,7 +13,7 @@ Quick start
 Classification example
 ......................
 
-We start with a basic example and train a Linear Dicriminant Analysis on the iris data set.
+We start with a basic example and train a Linear Dicriminant Analysis on the ``iris`` data set.
 
 <<>>=
 library("mlr")
@@ -26,7 +26,7 @@ mod
 Regression example
 ..................
 
-We fit a simple linear regression model to the BostonHousing data set.
+We fit a simple linear regression model to the ``BostonHousing`` data set.
 
 <<>>=
 library("mlr")
@@ -59,7 +59,7 @@ observations.
 Classification example
 ......................
 
-Let's train a decision tree on the iris data set.
+Let's train a decision tree on the ``iris`` data set.
 
 <<>>=
 library("mlr")
@@ -92,7 +92,7 @@ mod$learner.model
 Regression example
 ..................
 
-As a regression example we use the BostonHousing data set. Let's train a Gradient Boosting Machine and we begin with the whole data set.
+As a regression example we use the ``BostonHousing`` data set. Let's train a Gradient Boosting Machine and we begin with the whole data set.
 
 <<>>=
 #Create the regression task. 
