@@ -52,7 +52,7 @@ Suggests:
     ROCR
 LazyData: yes
 ByteCompile: yes
-Version: 1.2-106
+Version: 1.2
 Collate:
     'Aggregation.R'
     'aggregations.R'
@@ -187,3 +187,4 @@ Collate:
     'TuneWrapper.R'
     'WrappedModel.R'
     'zzz.R'
+    'RLearner_regr_mob.R'
