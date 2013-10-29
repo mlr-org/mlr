@@ -20,39 +20,39 @@ usage:
 
 
 clean:
-	echo -e "\nCleaning up ..."
+	printf  "\nCleaning up ...\n"
 	${DELETE} src/*.o src/*.so *.tar.gz
 	${DELETE} html
 	${DELETE} *.Rcheck
 	${DELETE} .RData .Rhistory
 
 roxygenize: clean
-	echo -e "\nRoxygenizing package ..."
+	printf "\nRoxygenizing package ...\n"
 	${RSCRIPT} ./tools/roxygenize
 
 package: roxygenize
-	echo -e "\nBuilding package file $(TARGZ)"
-	${R} CMD build . 
- 
+	printf "\nBuilding package file $(TARGZ)\n"
+	${R} CMD build .
+
 install: package
-	echo -e "\nInstalling package $(TARGZ)"
-	${R} CMD INSTALL $(TARGZ) 
+	printf "\nInstalling package $(TARGZ)\n"
+	${R} CMD INSTALL $(TARGZ)
 
 test: install
-	echo -e "\nTesting package $(TARGZ)"
+	printf "\nTesting package $(TARGZ)\n"
 	${RSCRIPT} ./test_all.R
 
 check: package
-	echo -e "\nRunning R CMD check ..."
+	printf "\nRunning R CMD check ...\n"
 	${R} CMD check $(TARGZ)
 
 check-rev-dep: package
-	echo -e "\nRunning reverse dependency checks for CRAN ..."
+	printf "\nRunning reverse dependency checks for CRAN ...\n"
 	${RSCRIPT} ./tools/check-rev-dep
 
 html: install
-	echo -e "\nGenerating html docs..."
+	printf "\nGenerating html docs...\n"
 	${DELETE} html
 	mkdir html
 	${RSCRIPT} ./tools/generate-html-docs
-  
+
