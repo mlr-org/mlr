@@ -43,7 +43,8 @@
 #' }
 #' 
 #' \itemize{ 
-#' 		\item{\bold{regr.blackboost}}{\cr Gradient boosting with regression trees from mboost package: \code{\link[mboost]{blackboost}}}
+#' 		\item{\bold{regr.blackboost}}{\cr Gradient boosting with regression trees from mboost package: \code{\link[mboost]{blackboost}}} 
+#'   	\item{\bold{regr.crs}}{\cr Regression Splines from crs package: \code{\link[crs]{crs}}}
 #' 		\item{\bold{regr.earth}}{\cr Multivariate Adaptive Regression Splines from earth package: \code{\link[earth]{earth}}}
 #' 		\item{\bold{regr.fnn}}{\cr Fast k-Nearest Neighbor from FNN package: \code{\link[FNN]{knn}}}
 #' 		\item{\bold{regr.gbm}}{\cr Gradient boosting machine from gbm package: \code{\link[gbm]{gbm}}\cr
@@ -56,6 +57,8 @@
 #' 		\item{\bold{regr.penalized.lasso}}{\cr Lasso regression from penalized package: \code{\link[penalized]{penalized}}}
 #' 		\item{\bold{regr.lm}}{\cr Simple linear regression from stats package: \code{\link[stats]{lm}}}
 #'    \item{\bold{regr.mars}}{\cr Multivariate Adaptive Regression Splines from mda package: \code{\link[mda]{mars}}}
+#'    \item{\bold{regr.mob}}{\cr Model-based recursive partitioning  yielding a tree with fitted models associated
+#'      with each terminal node from party package: \code{\link[party]{mob}}}
 #'    \item{\bold{regr.nnet}}{\cr Neural Network from nnet package: \code{\link[nnet]{nnet}}\cr
 #'      Note that \code{size} has been set to 3 by default.}  
 #'   	\item{\bold{regr.pcr}}{\cr Principal component regression from pls package: \code{\link[pls]{pcr}}\cr
