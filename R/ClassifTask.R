@@ -12,6 +12,6 @@ print.ClassifTask = function(x, ...) {
   m = length(x$task.desc$class.levels)
   print.SupervisedTask(x)
   catf("Classes: %i", m)
-  cat(di, "\n")
+  catf(collapse(di, "\n"))
   catf("Positive class: %s", x$task.desc$positive)
 }
