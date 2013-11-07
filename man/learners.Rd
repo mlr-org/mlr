@@ -65,14 +65,18 @@
   \code{\link[MASS]{qda}}}
   \item{\bold{classif.randomForest}}{\cr Random Forest from
   randomForest package:
-  \code{\link[randomForest]{randomForest}}}
-  \item{\bold{classif.rda}}{\cr Regularized Discriminant
-  Analysis from klaR package: \code{\link[klaR]{rda}}\cr
-  Note that \code{estimate.error} has been set to
-  \code{FALSE} by default for speed.}
-  \item{\bold{classif.rpart}}{\cr Decision Tree from rpart
-  package: \code{\link[rpart]{rpart}}\cr Note that
-  \code{xval} has been set to 0 by default for speed.}
+  \code{\link[randomForest]{randomForest}}.  The argument
+  \code{fix.factors} restores the factor levels seen in the
+  training data before prediction to circumvent
+  randomForest's internal sanity checks. Default is
+  \code{FALSE}.} \item{\bold{classif.rda}}{\cr Regularized
+  Discriminant Analysis from klaR package:
+  \code{\link[klaR]{rda}}\cr Note that
+  \code{estimate.error} has been set to \code{FALSE} by
+  default for speed.} \item{\bold{classif.rpart}}{\cr
+  Decision Tree from rpart package:
+  \code{\link[rpart]{rpart}}\cr Note that \code{xval} has
+  been set to 0 by default for speed.}
   \item{\bold{classif.svm}}{\cr Support Vector Machines
   (libsvm) from e1071 package: \code{\link[e1071]{svm}}} }
 }
@@ -80,6 +84,8 @@
   \itemize{ \item{\bold{regr.blackboost}}{\cr Gradient
   boosting with regression trees from mboost package:
   \code{\link[mboost]{blackboost}}}
+  \item{\bold{regr.crs}}{\cr Regression Splines from crs
+  package: \code{\link[crs]{crs}}}
   \item{\bold{regr.earth}}{\cr Multivariate Adaptive
   Regression Splines from earth package:
   \code{\link[earth]{earth}}} \item{\bold{regr.fnn}}{\cr
@@ -104,18 +110,24 @@
   stats package: \code{\link[stats]{lm}}}
   \item{\bold{regr.mars}}{\cr Multivariate Adaptive
   Regression Splines from mda package:
-  \code{\link[mda]{mars}}} \item{\bold{regr.nnet}}{\cr
-  Neural Network from nnet package:
-  \code{\link[nnet]{nnet}}\cr Note that \code{size} has
-  been set to 3 by default.} \item{\bold{regr.pcr}}{\cr
-  Principal component regression from pls package:
-  \code{\link[pls]{pcr}}\cr Note that \code{model} has been
-  set to \code{FALSE} by default for speed.}
-  \item{\bold{regr.randomForest}}{\cr Random Forest from
-  randomForest package:
-  \code{\link[randomForest]{randomForest}}}
-  \item{\bold{regr.penalized.ridge}}{\cr Ridge regression
-  from penalized package:
+  \code{\link[mda]{mars}}} \item{\bold{regr.mob}}{\cr
+  Model-based recursive partitioning yielding a tree with
+  fitted models associated with each terminal node from
+  party package: \code{\link[party]{mob}}}
+  \item{\bold{regr.nnet}}{\cr Neural Network from nnet
+  package: \code{\link[nnet]{nnet}}\cr Note that
+  \code{size} has been set to 3 by default.}
+  \item{\bold{regr.pcr}}{\cr Principal component regression
+  from pls package: \code{\link[pls]{pcr}}\cr Note that
+  \code{model} has been set to \code{FALSE} by default for
+  speed.} \item{\bold{regr.randomForest}}{\cr Random Forest
+  from randomForest package:
+  \code{\link[randomForest]{randomForest}}.  The argument
+  \code{fix.factors} restores the factor levels seen in the
+  training data before prediction to circumvent
+  randomForest's internal sanity checks. Default is
+  \code{FALSE}.} \item{\bold{regr.penalized.ridge}}{\cr
+  Ridge regression from penalized package:
   \code{\link[penalized]{penalized}}}
   \item{\bold{regr.rpart}}{\cr Decision Tree from rpart
   package: \code{\link[rpart]{rpart}}\cr Note that

@@ -26,7 +26,7 @@ checkData = function(data, target) {
         stopf("Data contains NaN values in: %s", cn)
     } else if (is.factor(x)) {
       if(any(table(x) == 0L))
-        stopf("Data contains contains empty factor levels in: %s", cn)
+        stopf("Data contains empty factor levels in: %s", cn)
     } else {
       stopf("Unsupported feature type in: %s, %s", cn, class(x)[1L])
     }
