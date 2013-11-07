@@ -44,8 +44,9 @@ trainLearner.classif.randomForest = function(.learner, .task, .subset, .weights,
 predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type=="response", "response", "prob")
   if (.learner$par.vals$fix.factors) {
-    factors = Filter(is.character, model$learner.model$forest$xlevels)
-    .newdata[names(factors)] = factors
+    factors = Filter(is.character, .model$learner.model$forest$xlevels)
+    .newdata[names(factors)] = mapply(factor, x = .newdata[names(factors)],
+                                      levels = factors, SIMPLIFY=FALSE)
   }
   predict(.model$learner.model, newdata=.newdata, type=type, ...)
 }

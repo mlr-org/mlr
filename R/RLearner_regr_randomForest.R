@@ -69,7 +69,8 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights, ..
 predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
   if (.learner$par.vals$fix.factors) {
     factors = Filter(is.character, .model$learner.model$forest$xlevels)
-    .newdata[names(factors)] = factors
+    .newdata[names(factors)] = mapply(factor, x = .newdata[names(factors)],
+                                      levels = factors, SIMPLIFY=FALSE)
   }
 
   if (.learner$predict.type == "se") {
