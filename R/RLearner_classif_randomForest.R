@@ -15,8 +15,9 @@ makeRLearner.classif.randomForest = function() {
       makeLogicalLearnerParam(id="importance", default=FALSE),
       makeLogicalLearnerParam(id="localImp", default=FALSE),
       makeLogicalLearnerParam(id="norm.votes", default=TRUE),
-      makeLogicalLearnerParam(id="keep.inbag", default=FALSE)
-    ), 
+      makeLogicalLearnerParam(id="keep.inbag", default=FALSE),
+      makeLogicalLearnerParam(id="fix.factors", default=FALSE)
+    ),
     twoclass = TRUE,
     multiclass = TRUE,
     numerics = TRUE,
@@ -32,9 +33,9 @@ trainLearner.classif.randomForest = function(.learner, .task, .subset, .weights,
   n = length(levs)
   if (missing(cutoff))
     cutoff = rep(1/n, n)
-  if (!missing(classwt) && is.numeric(classwt) && length(classwt) == n && is.null(names(classwt))) 
+  if (!missing(classwt) && is.numeric(classwt) && length(classwt) == n && is.null(names(classwt)))
     names(classwt) = levs
-  if (is.numeric(cutoff) && length(cutoff) == n && is.null(names(cutoff))) 
+  if (is.numeric(cutoff) && length(cutoff) == n && is.null(names(cutoff)))
     names(cutoff) = levs
   randomForest(f, data=getTaskData(.task, .subset), classwt=classwt, cutoff=cutoff, ...)
 }
@@ -42,5 +43,9 @@ trainLearner.classif.randomForest = function(.learner, .task, .subset, .weights,
 #' @S3method predictLearner classif.randomForest
 predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type=="response", "response", "prob")
+  if (.learner$par.vals$fix.factors) {
+    factors = Filter(is.character, model$learner.model$forest$xlevels)
+    .newdata[names(factors)] = factors
+  }
   predict(.model$learner.model, newdata=.newdata, type=type, ...)
 }

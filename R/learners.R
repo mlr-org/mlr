@@ -1,15 +1,15 @@
-#' List of supported learning algorithms. 
-#' 
-#' \itemize{ 
+#' List of supported learning algorithms.
+#'
+#' \itemize{
 #'   	\item{\bold{classif.ada}}{\cr Boosting from ada package: \code{\link[ada]{ada}}}
 #' 		\item{\bold{classif.boosting}}{\cr Boosting from adabag package: \code{\link[adabag]{boosting}}\cr
-#'      Note that \code{xval} has been set to 0 by default for speed.}  
+#'      Note that \code{xval} has been set to 0 by default for speed.}
 #' 		\item{\bold{classif.blackboost}}{\cr Gradient boosting with regression trees from mboost package: \code{\link[mboost]{blackboost}}}
 #' 		\item{\bold{classif.ctree}}{\cr Conditional Inference Trees from party package: \code{\link[party]{ctree}}}
 #' 		\item{\bold{classif.fnn}}{\cr Fast k-Nearest Neighbor from FNN package: \code{\link[FNN]{knn}}}
 #' 		\item{\bold{classif.gbm}}{\cr Gradient boosting machine from gbm package: \code{\link[gbm]{gbm}}}
 #' 		\item{\bold{classif.glmboost}}{\cr Boosting for GLMs from mbboost package: \code{\link[mboost]{glmboost}}\cr
-#'      Note that \code{family} has been set to \code{Binomial()} by default.}  
+#'      Note that \code{family} has been set to \code{Binomial()} by default.}
 #' 		\item{\bold{classif.J48}}{\cr J48 Decision Trees from RWeka package: \code{\link[RWeka]{J48}}}
 #'      Note that NAs are directly passed to WEKA with \code{na.action = na.pass}.
 #' 		\item{\bold{classif.JRip}}{\cr Propositional Rule Learner from RWeka package: \code{\link[RWeka]{JRip}}}
@@ -17,61 +17,65 @@
 #' 		\item{\bold{classif.kknn}}{\cr k-Nearest Neighbor from kknn package: \code{\link[kknn]{kknn}}}
 #' 		\item{\bold{classif.ksvm}}{\cr Support Vector Machines from kernlab package: \code{\link[kernlab]{ksvm}}\cr
 #'      Note that kernel parameters have to be passed directly and not by using the kpar list in ksvm.\cr
-#'      Note that \code{fit} has been set to \code{FALSE} by default for speed.}  
+#'      Note that \code{fit} has been set to \code{FALSE} by default for speed.}
 #' 		\item{\bold{classif.lda}}{\cr Linear Discriminant Analysis from MASS package: \code{\link[MASS]{lda}}}
 #' 		\item{\bold{classif.logreg}}{\cr Logistic Regression from stats package: \code{\link[stats]{glm}}}
 #' 		\item{\bold{classif.lssvm}}{\cr Least Squares Support Vector Machine from kernlab package: \code{\link[kernlab]{lssvm}}\cr
-#'      Note that \code{fitted} has been set to \code{FALSE} by default for speed.}  
+#'      Note that \code{fitted} has been set to \code{FALSE} by default for speed.}
 #' 		\item{\bold{classif.lvq1}}{\cr Learning Vector Quantization from class package: \code{\link[class]{lvq1}}}
 #' 		\item{\bold{classif.mda}}{\cr Mixture Discriminant Analysis from mda package: \code{\link[mda]{mda}}\cr
-#'      Note that \code{keep.fitted} has been set to \code{FALSE} by default for speed.}  
+#'      Note that \code{keep.fitted} has been set to \code{FALSE} by default for speed.}
 #' 		\item{\bold{classif.multinom}}{\cr Multinomial Regression from nnet package: \code{\link[nnet]{multinom}}}
 #' 		\item{\bold{classif.naiveBayes}}{\cr Naive Bayes from e1071 package: \code{\link[e1071]{naiveBayes}}}
 #' 		\item{\bold{classif.nnet}}{\cr Neural Network from nnet package: \code{\link[nnet]{nnet}}\cr
-#'      Note that \code{size} has been set to 3 by default.}  
+#'      Note that \code{size} has been set to 3 by default.}
 #' 		\item{\bold{classif.OneR}}{\cr 1-R classifier from RWeka package: \code{\link[RWeka]{OneR}}}
 #'      Note that NAs are directly passed to WEKA with \code{na.action = na.pass}.
 #' 		\item{\bold{classif.PART}}{\cr PART decision lists from RWeka package: \code{\link[RWeka]{PART}}}
 #'      Note that NAs are directly passed to WEKA with \code{na.action = na.pass}.
 #' 		\item{\bold{classif.qda}}{\cr Quadratic Discriminant Analysis from MASS package: \code{\link[MASS]{qda}}}
-#' 		\item{\bold{classif.randomForest}}{\cr Random Forest from randomForest package: \code{\link[randomForest]{randomForest}}}
+#' 		\item{\bold{classif.randomForest}}{\cr Random Forest from randomForest package: \code{\link[randomForest]{randomForest}}.
+#'      The argument \code{fix.factors} restores the factor levels seen in the training data before prediction to circumvent
+#'      randomForest's internal sanity checks.}
 #' 		\item{\bold{classif.rda}}{\cr Regularized Discriminant Analysis from klaR package: \code{\link[klaR]{rda}}\cr
-#'      Note that \code{estimate.error} has been set to \code{FALSE} by default for speed.}  
+#'      Note that \code{estimate.error} has been set to \code{FALSE} by default for speed.}
 #' 		\item{\bold{classif.rpart}}{\cr Decision Tree from rpart package: \code{\link[rpart]{rpart}}\cr
-#'      Note that \code{xval} has been set to 0 by default for speed.}  
+#'      Note that \code{xval} has been set to 0 by default for speed.}
 #' 		\item{\bold{classif.svm}}{\cr Support Vector Machines (libsvm) from e1071 package: \code{\link[e1071]{svm}}}
 #' }
-#' 
-#' \itemize{ 
-#' 		\item{\bold{regr.blackboost}}{\cr Gradient boosting with regression trees from mboost package: \code{\link[mboost]{blackboost}}} 
+#'
+#' \itemize{
+#' 		\item{\bold{regr.blackboost}}{\cr Gradient boosting with regression trees from mboost package: \code{\link[mboost]{blackboost}}}
 #'   	\item{\bold{regr.crs}}{\cr Regression Splines from crs package: \code{\link[crs]{crs}}}
 #' 		\item{\bold{regr.earth}}{\cr Multivariate Adaptive Regression Splines from earth package: \code{\link[earth]{earth}}}
 #' 		\item{\bold{regr.fnn}}{\cr Fast k-Nearest Neighbor from FNN package: \code{\link[FNN]{knn}}}
 #' 		\item{\bold{regr.gbm}}{\cr Gradient boosting machine from gbm package: \code{\link[gbm]{gbm}}\cr
-#'      Note that \code{distribution} has been set to \dQuote{gaussian} by default.}  
+#'      Note that \code{distribution} has been set to \dQuote{gaussian} by default.}
 #' 		\item{\bold{regr.kknn}}{\cr K-Nearest-Neighbor regression from kknn package: \code{\link[kknn]{kknn}}}
 #'    \item{\bold{regr.km}}{\cr Kriging from DiceKriging package: \code{\link[DiceKriging]{km}}}
 #' 		\item{\bold{regr.ksvm}}{\cr Support Vector Machines from kernlab package: \code{\link[kernlab]{ksvm}}\cr
 #'      Note that kernel parameters have to be passed directly and not by using the kpar list in ksvm.\cr
-#'      Note that \code{fit} has been set to \code{FALSE} by default for speed.}  
+#'      Note that \code{fit} has been set to \code{FALSE} by default for speed.}
 #' 		\item{\bold{regr.penalized.lasso}}{\cr Lasso regression from penalized package: \code{\link[penalized]{penalized}}}
 #' 		\item{\bold{regr.lm}}{\cr Simple linear regression from stats package: \code{\link[stats]{lm}}}
 #'    \item{\bold{regr.mars}}{\cr Multivariate Adaptive Regression Splines from mda package: \code{\link[mda]{mars}}}
 #'    \item{\bold{regr.mob}}{\cr Model-based recursive partitioning  yielding a tree with fitted models associated
 #'      with each terminal node from party package: \code{\link[party]{mob}}}
 #'    \item{\bold{regr.nnet}}{\cr Neural Network from nnet package: \code{\link[nnet]{nnet}}\cr
-#'      Note that \code{size} has been set to 3 by default.}  
+#'      Note that \code{size} has been set to 3 by default.}
 #'   	\item{\bold{regr.pcr}}{\cr Principal component regression from pls package: \code{\link[pls]{pcr}}\cr
-#'      Note that \code{model} has been set to \code{FALSE} by default for speed.}  
-#' 		\item{\bold{regr.randomForest}}{\cr Random Forest from randomForest package: \code{\link[randomForest]{randomForest}}}
+#'      Note that \code{model} has been set to \code{FALSE} by default for speed.}
+#' 		\item{\bold{regr.randomForest}}{\cr Random Forest from randomForest package: \code{\link[randomForest]{randomForest}}.
+#'      The argument \code{fix.factors} restores the factor levels seen in the training data before prediction to circumvent
+#'      randomForest's internal sanity checks.}
 #' 		\item{\bold{regr.penalized.ridge}}{\cr Ridge regression from penalized package: \code{\link[penalized]{penalized}}}
 #' 		\item{\bold{regr.rpart}}{\cr Decision Tree from rpart package: \code{\link[rpart]{rpart}}\cr
-#'      Note that \code{xval} has been set to 0 by default for speed.}  
+#'      Note that \code{xval} has been set to 0 by default for speed.}
 #' 		\item{\bold{regr.rsm}}{\cr Response surface regression from rsm package: \code{\link[rsm]{rsm}}\cr
-#'      Note that you select the order of the regression by using modelfun="FO" (first order), "TWI" (two-way interactions, this is with 1st oder terms!) and "SO" (full second order)}.  
+#'      Note that you select the order of the regression by using modelfun="FO" (first order), "TWI" (two-way interactions, this is with 1st oder terms!) and "SO" (full second order)}.
 #'    \item{\bold{regr.rvm}}{\cr Relevance Vector Machine from rpart kernlab: \code{\link[kernlab]{rvm}}\cr
 #'      Note that kernel parameters have to be passed directly and not by using the kpar list in rvm.\cr
-#'      Note that \code{fit} has been set to \code{FALSE} by default for speed.}  
+#'      Note that \code{fit} has been set to \code{FALSE} by default for speed.}
 #' }
 #' @name learners
 #' @rdname learners

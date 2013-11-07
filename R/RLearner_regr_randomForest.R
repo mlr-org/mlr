@@ -15,7 +15,8 @@ makeRLearner.regr.randomForest = function() {
       makeIntegerLearnerParam(id="maxnodes", lower=1L),
       makeLogicalLearnerParam(id="importance", default=FALSE),
       makeLogicalLearnerParam(id="localImp", default=FALSE),
-      makeLogicalLearnerParam(id="keep.inbag", default=FALSE)
+      makeLogicalLearnerParam(id="keep.inbag", default=FALSE),
+      makeLogicalLearnerParam(id="fix.factors", default=FALSE)
     ),
     par.vals = list(
       se.method = "bootstrap",
@@ -59,17 +60,20 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights, ..
 
       # save models in attrribute
       attr(m, "mlr.se.bootstrap.models") = models
-    } 
-  } 
+    }
+  }
   return(m)
 }
 
 #' @S3method predictLearner regr.randomForest
 predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
+  if (.learner$par.vals$fix.factors) {
+    factors = Filter(is.character, .model$learner.model$forest$xlevels)
+    .newdata[names(factors)] = factors
+  }
+
   if (.learner$predict.type == "se") {
-    par.vals = .learner$par.vals
-    model = .model$learner.model
-    se.fun = switch(par.vals$se.method,
+    se.fun = switch(.learner$par.vals$se.method,
       bootstrap = bootstrapStandardError,
       noisy.bootstrap = bootstrapStandardError,
       jackknife = jackknifeStandardError
@@ -96,7 +100,7 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
       # save predictions of every single ensemble member, i.e., decision tree
       predict(model, .newdata, predict.all=TRUE)
     })
-    
+
     # n x B matrix of reponses of B forests
     aggr.responses = extractSubList(preds, "aggregate",  simplify=TRUE)
     names(aggr.responses) = 1:B
@@ -124,7 +128,7 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
         res[i,2] = res[i,2] - bias
       }
     }
-    
+
     # var --> sd
     res[,2] = sqrt(res[,2])
 
@@ -148,10 +152,10 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
     # determine number of participating ensembles
     M = lapply(1:n, function(i) sum(abs(inbag[i,]-1)))
 
-    # determine ensemlbe members, where observation i is not included 
+    # determine ensemlbe members, where observation i is not included
     idx = lapply(1:n, function(i) which(inbag[i,] == 0))
 
-    # estimate 
+    # estimate
     res = matrix(NA, ncol=n, nrow=nrow(.newdata))
     for (j in 1:nrow(.newdata)) {
       for (i in 1:n) {
