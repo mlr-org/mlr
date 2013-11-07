@@ -14,6 +14,7 @@ checkData = function(data, target) {
   if (is.factor(y) && any(table(y) == 0L))
     stop("Target contains empty class levels!")
 
+  #FIXME one should probably be able to disable some of these checks via configureMLR
   for (i in seq_len(ncol(data))) {
     x = data[, i]
     cn = cns[i]
