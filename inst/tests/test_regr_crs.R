@@ -7,9 +7,9 @@ test_that("regr_crs", {
     list(degree=rep(3, 12), nmulti=1, cv="none"),
     list(segments=rep(3, 12), nmulti=1, cv="none")
   )
-  
+
   old.predicts.list = list()
-  
+
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     pars = list(regr.formula, data=regr.train)
@@ -20,8 +20,8 @@ test_that("regr_crs", {
     pred = predict(m, newdata=regr.test)
     attr(pred, "lwr") = NULL
     attr(pred, "upr") = NULL
-    old.predicts.list[[i]] = pred 
+    old.predicts.list[[i]] = pred
   }
-  
+
   suppressWarnings(testSimpleParsets("regr.crs", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list))
 })
