@@ -46,7 +46,7 @@ predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) 
   if (.learner$par.vals$fix.factors) {
     factors = Filter(is.character, .model$learner.model$forest$xlevels)
     .newdata[names(factors)] = mapply(factor, x = .newdata[names(factors)],
-                                      levels = factors, SIMPLIFY=FALSE)
+       levels = factors, SIMPLIFY=FALSE)
   }
   predict(.model$learner.model, newdata=.newdata, type=type, ...)
 }

@@ -14,7 +14,7 @@ BugReports: https://github.com/berndbischl/mlr/issues
 License: BSD_3_clause + file LICENSE
 Depends:
     R (>= 3.0.0),
-    ParamHelpers (>= 1.1-36)
+    ParamHelpers (>= 1.2)
 Imports:
     BBmisc (>= 1.4),
     parallelMap,
@@ -25,6 +25,7 @@ Suggests:
     ada,
     adabag,
     cmaes,
+    crs,
     DiceKriging,
     DiceOptim,
     e1071,
