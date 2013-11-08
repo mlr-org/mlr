@@ -34,11 +34,11 @@ e1071BootstrapToMlrBootstrap = function(e1071.tune.result) {
 
 
 testSimple = function(t.name, df, target, train.inds, old.predicts, parset=list()) {
-	inds = train.inds
-	train = df[inds,]
-	test = df[-inds,]
+  inds = train.inds
+  train = df[inds,]
+  test = df[-inds,]
 
-	lrn = do.call("makeLearner", c(t.name, parset))
+  lrn = do.call("makeLearner", c(list(t.name), parset))
   if (is.numeric(df[, target]))
     task = makeRegrTask(data=df, target=target)
   else if (is.factor(df[, target]))
@@ -46,16 +46,17 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset=list(
   else
     stop("Should not happen!")
   m = try(train(lrn, task, subset=inds))
-	if(inherits(m, "FailureModel")){
-		expect_is(old.predicts, "try-error")
-	}else{
-		cp = predict(m, newdata=test)
-		# to avoid issues with dropped levels in the class factor we only check the elemenst as charcters
+
+  if(inherits(m, "FailureModel")){
+    expect_is(old.predicts, "try-error")
+  } else {
+    cp = predict(m, newdata=test)
+    # to avoid issues with dropped levels in the class factor we only check the elements as chars
     if (is.numeric(cp$data$response) && is.numeric(old.predicts))
-      expect_equal(unname(cp$data$response), unname(old.predicts), tol = 1e-5)
+      expect_equal(unname(cp$data$response), unname(old.predicts), tol=1e-5)
     else
       expect_equal(as.character(cp$data$response), as.character(old.predicts))
-	}
+  }
 }
 
 testSimpleParsets = function(t.name, df, target, train.inds, old.predicts.list, parset.list) {

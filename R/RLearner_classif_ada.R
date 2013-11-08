@@ -21,7 +21,7 @@ makeRLearner.classif.ada = function() {
       makeDiscreteLearnerParam(id="surrogatestyle", default=0L, values=0:1),
       # we use 30 as upper limit, see docs of rpart.control
       makeIntegerLearnerParam(id="maxdepth", default=30L, lower=1L, upper=30L)
-    ), 
+    ),
     twoclass = TRUE,
     missings = TRUE,
     numerics = TRUE,
@@ -42,6 +42,6 @@ predictLearner.classif.ada = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type=="response", "vector", "prob")
   p = predict(.model$learner.model, newdata=.newdata, type=type, ...)
   if (type == "prob")
-    colnames(p) = .model$task.desc$class.levels 
+    colnames(p) = .model$task.desc$class.levels
   return(p)
 }
