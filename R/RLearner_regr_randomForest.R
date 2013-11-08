@@ -23,7 +23,7 @@ makeRLearner.regr.randomForest = function() {
     par.vals = list(
       fix.factors = FALSE,
       se.method = "bootstrap",
-      nr.of.bootstrap.samples = 5L,
+      nr.of.bootstrap.samples = 5L
     ),
     missings = FALSE,
     numerics = TRUE,
