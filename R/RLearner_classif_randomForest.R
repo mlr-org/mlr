@@ -18,6 +18,7 @@ makeRLearner.classif.randomForest = function() {
       makeLogicalLearnerParam(id="keep.inbag", default=FALSE),
       makeLogicalLearnerParam(id="fix.factors", default=FALSE)
     ),
+    par.vals = list(fix.factors=FALSE),
     twoclass = TRUE,
     multiclass = TRUE,
     numerics = TRUE,
