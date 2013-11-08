@@ -2,7 +2,7 @@ context("FailureModel")
 
 test_that("FailureModel", {
   configureMlr(on.learner.error="quiet", show.learner.output=FALSE)
-  m = train(makeLearner("classif.qda"), multiclass.task, subset=c(1,51,101))	
+  m = train(makeLearner("classif.qda"), multiclass.task, subset=c(1,51,101))
   expect_true(inherits(m, "FailureModel"))
   expect_true(!is.null(m$learner.model))
   p = predict(m, newdata=iris)
