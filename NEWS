@@ -1,10 +1,11 @@
 
-mlr_1.1:
+mlr_1.2:
+- added class.weights param for classif.svm
 - add fix.factors option to randomForest
 - generic standard error estimation in randomForest and BaggingWrapper
 - new learners:
 -- regr.crs
 -- regr.mob
 
-mlr_1.0:
+mlr_1.1:
 - Initial release to CRAN

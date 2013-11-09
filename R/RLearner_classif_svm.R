@@ -16,7 +16,7 @@ makeRLearner.classif.svm = function() {
       makeLogicalLearnerParam(id="shrinking", default=TRUE),
       makeNumericLearnerParam(id="cachesize", default=40L)
 
-    ), 
+    ),
     twoclass = TRUE,
     multiclass = TRUE,
     numerics = TRUE,
