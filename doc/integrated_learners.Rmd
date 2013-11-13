@@ -1,0 +1,59 @@
+Integrated Learners
+===================
+
+```{r echo=FALSE,results='hide'}
+## Stupid startup banners! GAH!
+library("gbm")
+library("grplasso")
+
+printf <- function(format, ...) cat(sprintf(format, ...), "\n")
+
+show_learners <- function(learners) {
+  learner_descriptions <- NULL
+  
+  for (learner in learners) {
+    l <- makeLearner(learner)
+    package_link <- if (all(l$package != "stats")) {
+      sprintf("`%s <http://cran.r-project.org/web/packages/%s/index.html>`_",
+              l$package,l$package)
+    } else {
+      l$package
+    }
+    package_link <- paste(package_link, collapse=", ")
+
+    description <- as.data.frame(cbind(name=learner, 
+                                       package=package_link))
+    learner_descriptions <- rbind(learner_descriptions, description)
+    #description <- as.data.frame(c(name=learner, 
+    #                               package=package_link, 
+    #                               l@properties))
+    #learner_descriptions <- rbind(learner_descriptions, description)
+  }
+  
+  ## Remove all constant columns:
+  for (column_name in names(learner_descriptions)) {
+    column <- learner_descriptions[[column_name]]
+    if (all(column[[1]] == column)) 
+      learner_descriptions[[column_name]] <- NULL
+  }
+  
+  print(ascii(learner_descriptions, include.rownames=FALSE, frame="topbot"), 
+        type="rest")
+}
+```
+
+List of currently integrated classifiers
+----------------------------------------
+
+```{r echo=FALSE,results='asis'}
+library("mlr")
+show_learners(listLearners(type="classif"))
+``` 
+
+List of currently integrated regression methods
+-----------------------------------------------
+
+```{r echo=FALSE,results='asis'}
+library("mlr")
+show_learners(listLearners(type="regr"))
+``` 

@@ -1,0 +1,42 @@
+Feature Selection
+==================
+
+Often, data sets include a great amount of variables and you want to reduce them. This technique of selecting a subset of relevant variables is called variable selection. Variable selection can make the model interpretable, the learning process faster and the fitted model more general by removing irrelevant variables.  Different approaches exist, in order to figure out, which the relevant variables are.
+
+
+Quick start
+-----------
+
+### Classification example
+
+Let's train a decision tree on the ``iris`` data and use a sequential forward search to find the best group of features w.r.t. the **mmce** (mean misclassification error).
+
+```{r}
+library("mlr")
+task <- makeClassifTask(data=iris, target="Species")
+lrn <- makeLearner("classif.rpart")
+rdesc <- makeResampleDesc("Holdout") 
+
+ctrlSeq <- makeFeatSelControlSequential(method="sfs")
+sfSeq <- selectFeatures(learner=lrn, task=task, resampling=rdesc, control=ctrlSeq)
+sfSeq
+``` 
+
+
+### Regression example
+
+We fit a simple linear regression model to the ``BostonHousing`` data set and use a genetic algorithm to find a feature set that reduces the **mse** (mean squared error).
+
+```{r}
+library("mlbench")
+data(BostonHousing)
+
+task <- makeRegrTask(data = BostonHousing, target = "medv")
+lrn <- makeLearner("regr.lm")
+rdesc <- makeResampleDesc("Holdout") 
+
+ctrlGA <- makeFeatSelControlGA(maxit=10)
+sfGA <- selectFeatures(learner=lrn, task=task, resampling=rdesc, control=ctrlGA)
+sfGA
+```
+
