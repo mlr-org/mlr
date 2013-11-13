@@ -1,7 +1,7 @@
 Integrated Learners
 ===================
 
-<<echo=FALSE,results=hide>>=
+```{r echo=FALSE,results='hide'}
 ## Stupid startup banners! GAH!
 library("gbm")
 library("grplasso")
@@ -40,20 +40,20 @@ show_learners <- function(learners) {
   print(ascii(learner_descriptions, include.rownames=FALSE, frame="topbot"), 
         type="rest")
 }
-@
+```
 
 List of currently integrated classifiers
 ----------------------------------------
 
-<<echo=FALSE,results=ascii>>=
+```{r echo=FALSE,results='asis'}
 library("mlr")
 show_learners(listLearners(type="classif"))
-@ 
+``` 
 
 List of currently integrated regression methods
 -----------------------------------------------
 
-<<echo=FALSE,results=ascii>>=
+```{r echo=FALSE,results='asis'}
 library("mlr")
 show_learners(listLearners(type="regr"))
-@ 
+``` 

@@ -1,16 +1,6 @@
 Machine Learning in R (mlr)
 ===========================
 
-.. toctree::
-   :hidden:
-   
-   tutorial/index
-   integrated_learners
-   faq
-   glossary
-   changes
-   literature
-
 Introduction
 ============
 

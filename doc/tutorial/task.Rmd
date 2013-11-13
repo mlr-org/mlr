@@ -6,25 +6,24 @@ data set and all relevant information regarding the purpose of the
 task. This will be at least the target variable, but might also be
 information about excluded (ID) variables or case weights.
 
-Currently two subclasses of a LearnTask_ exist: ClassifTask_ for
-classification and RegrTask_ for regression problems.  A
-classification task is created by using the makeClassifTask_ factory
+Currently two subclasses of a [LearnTask](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/LearnTask-class.html) exist: [ClassifTask](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/ClassifTask-class.html) for
+classification and [RegrTask](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/RegrTask-class.html) for regression problems.  A
+classification task is created by using the [makeClassifTask](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/makeClassifTask.html) factory
 method. The target variable is converted to a ``factor``, if it is a
-``logical``, ``integer`` or ``character`` vector. Accordingly use makeRegrTask_
+``logical``, ``integer`` or ``character`` vector. Accordingly use [makeRegrTask](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/makeRegrTask.html)
 in order to define a regression task. The target variable is converted 
 to a ``numeric``.
 
 Quick start
 -----------
 
-Classification example
-......................
+### Classification example
 
 In the following example we define a classification task for the data
 set ``BreastCancer`` (from the package mlbench) and exclude the ID
 variable from all further model fitting and evaluation.
 
-<<>>=
+```{r}
 library("mlr")
 library("mlbench")
 data(BreastCancer)
@@ -32,13 +31,13 @@ data(BreastCancer)
 df <- BreastCancer
 df$Id <- NULL
 task <- makeClassifTask(id = "BreastCancer", data = df, target = "Class")
-@ 
+``` 
 
 Now, let us examine the created task:
 
-<<>>=
+```{r}
 task
-@ 
+``` 
 
 The now defined task contains basic information about the data,
 e.g. the types of the features, the number of observations and the number
@@ -46,30 +45,28 @@ of missing values, as well as the classification problem, e.g. the
 name of the target variable and the number of observations per class.
 
 
-Regression example
-..................
+### Regression example
 
 We will generally take the ``BostonHousing`` data set as regression example.
 
-<<>>=
+```{r}
 library("mlr")
 library("mlbench")
 data(BostonHousing)
 df <- BostonHousing
 task <- makeRegrTask(id = "BostonHousing", data = df, target = "medv")
 task
-@
+```
 
 
 Further information
 -------------------
 
-Classification example
-......................
+### Classification example
 
 Let's have another look at the classification example.
 
-<<>>=
+```{r}
 library("mlr")
 library("mlbench")
 data(BreastCancer)
@@ -78,49 +75,49 @@ df <- BreastCancer
 df$Id <- NULL
 task <- makeClassifTask(id = "BreastCancer", data = df, target = "Class")
 task
-@ 
+``` 
 
 As this is a binary problem, we see that a positive class is selected
 by default. This will generally be the first class in the factor
 levels of the target. You probably want to select this manually for
 your applications.
 
-<<>>=
+```{r}
 task <- makeClassifTask(id = "BreastCancer", data = df, target = "Class", 
                         positive = "malignant")
-@ 
+``` 
 
-The makeClassifTask_ help page lists several other arguments that can be 
+The [makeClassifTask](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/makeClassifTask.html) help page lists several other arguments that can be 
 passed to describe further details of the classification problem.
 
 There are some convenient methods to access properties of the data
 set and the classification problem. Look at the documentation of the
-LearnTask_ class and its subclasses ClassifTask_ and RegrTask_, if
+[LearnTask](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/LearnTask-class.html) class and its subclasses [ClassifTask](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/ClassifTask-class.html) and [RegrTask](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/RegrTask-class.html), if
 you are interested in the kind of "getter"-functions, which are
 available. Here are some examples:
 
 Get the names of the input variables.
 
-<<>>=
+```{r}
 getTaskFeatureNames(task)
-@
+```
 
 Get values of the target variable for all observations.
 
-<<>>=
+```{r}
 head(getTaskTargets(task))
-@
+```
 
-All information can be obtained from the slots of the LearnTask_
+All information can be obtained from the slots of the [LearnTask](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/LearnTask-class.html)
 object directly.
 
 The main part of the information is stored in the slot called ``desc``,
-which stands for description. (``task@desc`` is an object of class TaskDesc_.)
+which stands for description. (``task@desc`` is an object of class [TaskDesc](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/TaskDesc-class.html).)
 
-<<>>=
+```{r}
 task$task.desc
 str(task$task.desc)
-@ 
+``` 
 
 Optionally, we can include further information like a blocking factor 
 into the task. Via the blocking argument you can specify if some 
@@ -132,49 +129,41 @@ level belong to the same block.
 
 Now, let's include a (nonsensical) blocking structure:
 
-<<>>=
+```{r}
 blocking <- factor(rep(1:3, nrow(BreastCancer)/3))
 task <- makeClassifTask(id = "BreastCancer", data = df, target = "Class", 
                       blocking = blocking)
 head(task$blocking)
 table(task$blocking)
-@ 
+``` 
 
 From this classification task we can now train various models, which
-will be covered in the section Training_.
+will be covered in the section [Training](train.md).
 Before that, let's look at the regression experiment again.
 
 
-Regression example
-..................
+### Regression example
 
-<<>>=
+```{r}
 library("mlr")
 library("mlbench")
 data(BostonHousing)
 task <- makeRegrTask(data = BostonHousing, target = "medv")
 task
-@
+```
 
 The "getter" functions work analogous to the classification example.
 
-<<>>=
+```{r}
 getTaskFeatureNames(task)
 
 head(getTaskTargets(task))
-@
+```
 
-Inspect TaskDesc_.
+Inspect [TaskDesc](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/TaskDesc.html).
 
-<<>>=
+```{r}
 task$task.desc
 str(task$task.desc)
-@ 
+``` 
 
-.. _LearnTask: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/SupervisedTask.html
-.. _TaskDesc: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/TaskDesc.html
-.. _ClassifTask: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/SupervisedTask.html
-.. _RegrTask: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/SupervisedTask.html
-.. _makeClassifTask: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/SupervisedTask.html
-.. _makeRegrTask: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/SupervisedTask.html
-.. _Training: train.html

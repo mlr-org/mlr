@@ -14,10 +14,10 @@ of origin, the parameter set and the set of properties of your learner.
 
 First, name your learner and replace it all necessary parts of the code. The naming conventions 
 in **mlr** are ``classif.<R_method_name>`` for classification and ``regr.<R_method_name>`` for 
-regression. Second of all, use makeDiscreteLearnerParam_ and makeNumericLearnerParam_ to incorporate 
+regression. Second of all, use [makeDiscreteLearnerParam](http://www.statistik.tu-dortmund.de/~bischl/rdocs/ParamHelpers/html/LearnerParam.html) and [makeNumericLearnerParam](http://www.statistik.tu-dortmund.de/~bischl/rdocs/ParamHelpers/html/LearnerParam.html) to incorporate 
 the complete description of the parameters. Include all possible values for discrete parameters, aswell 
 as lower and upper bounds for numeric parameters. Also, add information for the properties (see also 
-the Section about Learners_). Which types of predictors that are supported (numerics, factors)? 
+the Section about [Learners](learner.html)). Which types of predictors that are supported (numerics, factors)? 
 Are case weights supported? Can the method deal with missing values in the predictor variables and deal with 
 NAs in a meaningful way (not na.omit)? Are oneclass, twoclass, multiclass problems supported? Can the 
 learner predict posterior probabilities? In the regression case, you do not need to take care of the 
@@ -28,7 +28,7 @@ In the following example, you see the R-code for Linear Discriminant Analysis. T
 continuous ones, ``nu`` and ``tol``. It supports classification problems with two or more classes and 
 can deal with numeric and factor explanatory variables. It can predict posterior probabilities.
 
-<<>>=
+```{r}
 makeRLearner.classif.lda = function() {
   makeRLearnerClassif(
     cl = "classif.lda",
@@ -45,7 +45,7 @@ makeRLearner.classif.lda = function() {
     prob = TRUE
   )
 }
-@
+```
 
 Creating the training function of the learner
 ---------------------------------------------
@@ -53,18 +53,18 @@ Creating the training function of the learner
 This must fit a model on the data of the task ``.task`` with regard to the subset defined in the 
 integer vector ``.subset`` and the parameters passed in the ``...`` arguments. It must return the 
 fitted model, no special data type is assumed for this. For further information, read the 
-documentation of getTaskData_.
+documentation of [getTaskData](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/getTaskData.html).
 
 In the example, replace lda by the name of the training function of your method. Pass all 
 required arguments to the training function. The data can be extracted from the task via the 
-getTaskData_ function. Pass further arguments like case weights via ``.weights`` to the training method.
+[getTaskData](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/getTaskData.html) function. Pass further arguments like case weights via ``.weights`` to the training method.
 
-<<>>=
+```{r}
 trainLearner.classif.lda = function(.learner, .task, .subset, .weights,  ...) {
   f = getTaskFormula(.task)
   lda(f, data=getTaskData(.task, .subset), ...)
 }
-@
+```
 
 Creating the prediction method 
 ------------------------------
@@ -76,7 +76,7 @@ classes if ``.learner$predict.type`` is ``"response"``, or you have return a mat
 ``.learner$predict.type`` is ``"prob"``. In the latter case the matrix must have the same number of columns as there
 are classes in the task and the columns have to be named by the class names.
 
-<<>>=
+```{r}
 predictLearner.classif.lda = function(.learner, .model, .newdata, ...) {
 	p = predict(.model$learner.model, newdata=.newdata, ...)
 	if(.learner$predict.type == "response")
@@ -84,11 +84,7 @@ predictLearner.classif.lda = function(.learner, .model, .newdata, ...) {
 	else
 		return(p$posterior)
 }
-@ 
+``` 
 
 
 
-.. _makeNumericLearnerParam: http://www.statistik.tu-dortmund.de/~bischl/rdocs/ParamHelpers/html/LearnerParam.html
-.. _makeDiscreteLearnerParam: http://www.statistik.tu-dortmund.de/~bischl/rdocs/ParamHelpers/html/LearnerParam.html
-.. _Learners: learner.html
-.. _getTaskData: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/getTaskData.html

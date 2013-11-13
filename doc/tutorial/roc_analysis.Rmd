@@ -12,7 +12,6 @@ performance values in dependencies to different false positive and true
 positive rates. Another positive aspect for this graphical plot is the
 fact, that it can compare the performance of an imbalanced data set
 with a modified version. The following functions are created by
-including the features of the ROCR_-Package.
+including the features of the [ROCR](http://cran.r-project.org/web/packages/ROCR/index.html)-Package.
 
 
-.. _ROCR: http://cran.r-project.org/web/packages/ROCR/index.html

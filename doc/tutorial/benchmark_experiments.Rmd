@@ -4,7 +4,7 @@ Benchmark Experiments
 
 In order to get an unbiased estimate of the performance on new data,
 it is generally not enough to simply use repeated cross-validations
-for a given set of hyperparameters and methods (see section :doc:`tune`), 
+for a given set of hyperparameters and methods (see section [tuning](tune.md)), 
 as this might produce an overly optimistic result.
 
 A better (although more time-consuming) approach is nesting two
@@ -33,7 +33,7 @@ In the following we will see four examples to show different benchmark settings:
 Example 1: One task, two learners, no tuning
 ----------------------------------------------
 
-<<eval=FALSE>>=
+```{r eval=FALSE}
 library("mlr")
 
 ## Classification task with iris data set 
@@ -46,7 +46,7 @@ learners = c("classif.lda", "classif.qda")
 rdesc = makeResampleDescription("CV", iters = 5)
 
 res <- bench.exp(learners, task, rdesc)
-@ 
+``` 
 
 The above code should be mainly self-explanatory. In the result every
 column corresponds to one learner.  The entries show the mean test
@@ -56,14 +56,14 @@ But the Benchmark result contains much more information, which you can
 access if you want to see details. Let's have a look to the benchmark
 result from the example above:
 
-<<eval=FALSE>>=
+```{r eval=FALSE}
 ## Access further information 
 ## The single performances of the cross-validation runs 
 res["perf"]
 
 ## Confusion matrices - one for each learner
 res["conf.mats"]
-@ 
+``` 
 	
 Example 2: One task, one learner, tuning
 ----------------------------------------
@@ -74,7 +74,7 @@ which are the best ones. In that case we have two resampling levels.
 We show an example with outer bootstrap and inner cross-validation,
 our learner will be k-nearest-neighbor.
 
-<<eval=FALSE>>=
+```{r eval=FALSE}
 ## Classification task with iris data set 
 task = makeClassifTask(data = iris, target = "Species")
 
@@ -105,7 +105,7 @@ res["tuned.par"]
 
 ## What does the confusion matrix look like? 
 res["conf.mats"]
-@ 
+``` 
 
 Of course everything works the same way if we exchange the resampling
 strategy either in the outer or inner run.  They can be freely
@@ -117,7 +117,7 @@ Example 3: Three tasks, three learners, tuning
 Extensive example which shows a benchmark experiment with three data
 sets, three learners and tuning.
 
-<<eval=FALSE>>=
+```{r eval=FALSE}
 library("dprep")
 library("mlbench")
 data(BreastCancer)
@@ -167,15 +167,15 @@ res["conf.mats", learner = "classif.rpart", task = "BreastCancer"]
 	
 ## Optimal performance of the inner (!) resampling, i.e. here 3-fold cross-validation
 res["opt.perf", learner = "classif.ksvm"]
-@
+```
 
 Example 4: One task, two learners, variable selection
 -----------------------------------------------------
 
-Let's see how we can do :doc:`variable selection </tutorial/variable_selection>` in
+Let's see how we can do [variable selection](variable_selection.md) in
 a benchmark experiment:
 
-<<eval=FALSE>>=
+```{r eval=FALSE}
 ## Classification task with iris data set 
 task = makeClassifTask("iris", data=iris, target = "Species")  
 	
@@ -199,9 +199,11 @@ res = bench.exp(tasks = task, learners = learners, resampling = rdesc)
 	
 ## Which variables have been selected (in the outer resampling steps)?
 res["sel.var", learner="classif.lda"]
-@
+```
 
+<!--(
 .. |benchmark_processing| image:: /_images/benchmark_processing.png
      :align: middle
      :width: 40em
      :alt: Benchmark processing pipeline
+)-->

@@ -11,10 +11,10 @@ It is also possible to access the time to train the model,
 the time to compute the prediction and their sum as performance
 measures.
 
-To see which performance measures are implemented, have a look at measures_. If you want 
+To see which performance measures are implemented, have a look at [measures](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/measures.html). If you want 
 to implement an additional measure or include a measure with non-standard 
-misclassification costs, go to the section :doc:`create_measure`. In order to calculate 
-the performance measures, the function performance_ is used.
+misclassification costs, go to the section [create_measure](create_measure.md). In order to calculate 
+the performance measures, the function [performance](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/performance.html) is used.
 
 
 Classification example
@@ -23,7 +23,7 @@ Classification example
 We fit a Linear Discriminant Analysis on a subset of the ``iris`` data set and calculate
 the mean misclassification error (mmce) on the test data set.
 
-<<>>=
+```{r}
 library("mlr")
 
 task <- makeClassifTask(data = iris, target = "Species")
@@ -32,28 +32,28 @@ mod <- train(lrn, task = task, subset = seq(1,150,2))
 pred <- predict(mod, task = task, subset = seq(2,150,2))
 
 performance(pred, measure = mmce)
-@ 
+``` 
   
 Let's have a look at some more performance measures. Note that, in order to assess 
 the time needed for training, the fitted model has to be passed.
 
-<<>>=
+```{r}
 performance(pred, measure = acc)
 
 performance(pred = pred, measure = timepredict)
 
 performance(pred = pred, measure = timetrain, model = mod)
 performance(pred = pred, measure = timeboth, model = mod)
-@
+```
 
 A nice method to calculate multiple performace measures at once makes use of the popular R function sapply. We define a list of measures and apply the performance function for each element.
 
-<<>>=
+```{r}
 ms <- list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain, "timeboth" = timeboth)
 sapply(ms, function(the.ms) {
   performance(pred = pred, measure = the.ms, model = mod)
 })
-@
+```
 
 Binary classification
 ---------------------
@@ -61,7 +61,7 @@ Binary classification
 In the two-class case many more measures are available. In the following example,
 the accuracy, as well as the false positive and false negative rates are computed.
 
-<<>>=
+```{r}
 library("mlbench")
 data(Sonar)
 
@@ -73,14 +73,14 @@ pred <- predict(mod, task = task)
 performance(pred, measure = acc)
 performance(pred, measure = fpr)
 performance(pred, measure = fnr)
-@ 
+``` 
 
 
 Note that, in order to calculate the AUC, the area under the ROC (receiver 
 operating characteristic) curve, we have to make sure that posterior
-probabilities are predicted, i.e. set the predict type of the Learner_ to "prob".
+probabilities are predicted, i.e. set the predict type of the [Learner](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/makeLearner.html) to "prob".
 
-<<>>=
+```{r}
 library("mlbench")
 data(Sonar)
 
@@ -90,9 +90,9 @@ mod <- train(lrn, task = task)
 pred <- predict(mod, task = task)
 
 performance(pred, measure = auc)
-@ 
+``` 
 
-For more information on ROC analysis see section :doc:`roc_analysis`.
+For more information on ROC analysis see section [ROC Analysis](roc_analysis.md).
 
 
 Regression example
@@ -103,7 +103,7 @@ We again use the ``BostonHousing`` data set, fit a Gradient Boosting Machine on 
 training set and calculate the mean of squared errors and the mean of absolute 
 errors on the test data set.
 
-<<>>=
+```{r}
 library(mlbench)
 data(BostonHousing)
 
@@ -123,11 +123,6 @@ pred <- predict(mod, newdata = BostonHousing[test.set, ])
 ## Compare predicted and true labels using measures MSE and MAE
 ms <- list("mse" = mse, "mae" = mae)
 sapply(ms, function(meas) performance(pred, measure = meas))
-@
+```
 
 
-.. _makeLearner: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/makeLearner.html
-.. _performance: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/performance.html
-.. _measures: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/measures.html
-.. _Learners: learner.html
-.. _Learner: http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/makeLearner.html
