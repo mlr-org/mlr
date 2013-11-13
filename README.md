@@ -83,6 +83,19 @@ But only a VERY SMALL percentage of users should be interested in this.
 
 - "make" will list all other build targets
 
+
+Mailinglist and Email-Service-Hook
+==================================
+
+Developers use this mailing list:
+
+https://groups.google.com/forum/?hl=de#!forum/mlr-devel
+
+mlr-devel@googlegroups.com
+
+The github-service-hook will also send commit messages to this list. 
+
+
 Get in touch
 ============
 
