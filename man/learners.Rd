@@ -17,7 +17,7 @@
   \item{\bold{classif.gbm}}{\cr Gradient boosting machine
   from gbm package: \code{\link[gbm]{gbm}}}
   \item{\bold{classif.glmboost}}{\cr Boosting for GLMs from
-  mbboost package: \code{\link[mboost]{glmboost}}\cr Note
+  mboost package: \code{\link[mboost]{glmboost}}\cr Note
   that \code{family} has been set to \code{Binomial()} by
   default.} \item{\bold{classif.J48}}{\cr J48 Decision
   Trees from RWeka package: \code{\link[RWeka]{J48}}} Note
@@ -138,7 +138,7 @@
   (first order), "TWI" (two-way interactions, this is with
   1st oder terms!) and "SO" (full second order)}.
   \item{\bold{regr.rvm}}{\cr Relevance Vector Machine from
-  rpart kernlab: \code{\link[kernlab]{rvm}}\cr Note that
+  package kernlab: \code{\link[kernlab]{rvm}}\cr Note that
   kernel parameters have to be passed directly and not by
   using the kpar list in rvm.\cr Note that \code{fit} has
   been set to \code{FALSE} by default for speed.} }
