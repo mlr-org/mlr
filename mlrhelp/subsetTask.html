@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>subsetTask. mlr 1.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">mlr 1.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Subset data in task.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre>subsetTask(task, subset, features)</pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>task</dt>
+      <dd>[<code><a href='SupervisedTask.html'>SupervisedTask</a></code>] The task.</dd>
+      <dt>subset</dt>
+      <dd>[<code>integer</code>] Selected cases.
+  Default is all cases.</dd>
+      <dt>features</dt>
+      <dd>[character] Selected inputs. Note that
+  target feature is always included in the resulting task,
+  you should not pass it here.  Default is all features.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+      
+      <p>[<code><a href='SupervisedTask.html'>SupervisedTask</a></code>]. Task with subsetted data.</p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p>Subset data in task.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>task <- makeClassifTask(data = iris, target = "Species")
+subsetTask(task, subset = 1:100)
+</div>
+<div class='output'>Supervised task: data
+Type: classif
+Target: Species
+Observations: 100
+Features:
+numerics  factors 
+       4        0 
+Missings: FALSE
+Has blocking: FALSE
+Classes: 3
+    setosa versicolor  virginica 
+        50         50          0 
+Positive class: NA
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>subsetTask</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

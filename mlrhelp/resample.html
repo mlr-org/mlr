@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>resample. mlr 1.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">mlr 1.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Fit models according to a resampling strategy.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre>resample(learner, task, resampling, measures, weights, models = FALSE, extract = function(model) {
+  }, show.info = TRUE)</pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>learner</dt>
+      <dd>[<code><a href='makeLearner.html'>Learner</a></code>] The learner.</dd>
+      <dt>task</dt>
+      <dd>[<code><a href='SupervisedTask.html'>SupervisedTask</a></code>] The task.</dd>
+      <dt>resampling</dt>
+      <dd>[<code><a href='makeResampleDesc.html'>ResampleDesc</a></code> or
+  <code><a href='makeResampleInstance.html'>ResampleInstance</a></code>] Resampling strategy.
+  If a description is passed, it is instantiated
+  automatically.</dd>
+      <dt>measures</dt>
+      <dd>[<code><a href='makeMeasure.html'>Measure</a></code> | list of
+  <code><a href='makeMeasure.html'>Measure</a></code>] Performance measure(s) to
+  evaluate.</dd>
+      <dt>weights</dt>
+      <dd>[<code>numeric</code>] Optional, non-negative
+  case weight vector to be used during fitting.  If given,
+  must be of same length as observations in task and in
+  corresponding order.  By default missing which means no
+  weights are used.</dd>
+      <dt>models</dt>
+      <dd>[logical(1)] Should all fitted models be
+  returned?  Default is <code>FALSE</code>.</dd>
+      <dt>extract</dt>
+      <dd>[function(model)] Function used to
+  extract information from a fitted model during
+  resampling.  Is applied to every
+  <code><a href='makeWrappedModel.html'>WrappedModel</a></code> resulting from calls to
+  <code><a href='train.html'>train</a></code> during resampling.  Default is to
+  extract nothing.</dd>
+      <dt>show.info</dt>
+      <dd>[logical(1)] Should a few informative
+  lines about the current resampling iteration and the
+  result be logged to the R console?  Default is
+  <code>TRUE</code>.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+      
+      <p>List of: measures.test [<code>data.frame</code>]Rows
+  correspond to test sets in resampling iterations, columns
+  to performance measures. measures.train
+  [<code>data.frame</code>]Rows correspond to training sets in
+  resampling iterations, columns to performance measures.
+  aggr [named numeric]Vector of aggregated
+  performance values. Names are coded like this
+  <measure>.<aggregation>. pred
+  [<code><a href='ResamplePrediction.html'>ResamplePrediction</a></code>]Container for all
+  predictions during resampling. models [list of
+  <code><a href='makeWrappedModel.html'>WrappedModel</a></code>]List of fitted models or
+  <code>NULL</code>. extract [list]List of extracted
+  parts from fitted models or <code>NULL</code>.</p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p>Given a resampling strategy, which defines sets of
+  training and test indices, fits the selected learner
+  using the training sets and performs predictions for the
+  training/test sets. (This depends on what you selected in
+  the resampling strategy, see parameter <code>predict</code> in
+  <code><a href='makeResampleDesc.html'>makeResampleDesc</a></code>.) Then performance
+  measures are calculated and aggregated. You are able to
+  return all fitted models (parameter <code>models</code>) or
+  extract specific parts of the models (parameter
+  <code>extract</code>) as returning all of them completely might
+  be memory intensive.</p>
+  
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+      
+      <p>For construction of the resampling strategies use the
+  factory methods <code><a href='makeResampleDesc.html'>makeResampleDesc</a></code> and
+  <code><a href='makeResampleInstance.html'>makeResampleInstance</a></code>.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>task <- makeClassifTask(data = iris, target = "Species")
+rdesc <- makeResampleDesc("Bootstrap", iters = 10)
+rin <- makeResampleInstance(rdesc, task = task)
+r1 <- resample(makeLearner("classif.qda"), task, rin)
+</div>
+<strong class='message'>[Resample] OOB bootstrapping iter: 1</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 2</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 3</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 4</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 5</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 6</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 7</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 8</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 9</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 10</strong>
+<strong class='message'>[Resample] Result: mmce.test.mean=0,0264</strong>
+<div class='input'>print(r1$measures.test)
+</div>
+<div class='output'>   iter       mmce
+1     1 0,05357143
+2     2 0,00000000
+3     3 0,05454545
+4     4 0,00000000
+5     5 0,01818182
+6     6 0,04166667
+7     7 0,00000000
+8     8 0,02000000
+9     9 0,03448276
+10   10 0,04166667
+</div>
+<div class='input'>print(r1$aggr)
+</div>
+<div class='output'>mmce.test.mean 
+    0,02641148 
+</div>
+<div class='input'>r2 <- resample(makeLearner("classif.rpart"), task, rin)
+</div>
+<strong class='message'>[Resample] OOB bootstrapping iter: 1</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 2</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 3</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 4</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 5</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 6</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 7</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 8</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 9</strong>
+<strong class='message'>[Resample] OOB bootstrapping iter: 10</strong>
+<strong class='message'>[Resample] Result: mmce.test.mean=0,0511</strong>
+<div class='input'>print(r2$measures.test)
+</div>
+<div class='output'>   iter       mmce
+1     1 0,07142857
+2     2 0,06896552
+3     3 0,05454545
+4     4 0,03636364
+5     5 0,07272727
+6     6 0,02083333
+7     7 0,01818182
+8     8 0,04000000
+9     9 0,08620690
+10   10 0,04166667
+</div>
+<div class='input'>print(r2$aggr)
+</div>
+<div class='output'>mmce.test.mean 
+    0,05109192 
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>resample</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+    <h2>See also</h2>
+    
+  <code><a href='makeResampleDesc.html'>makeResampleDesc</a></code>,
+  <code><a href='makeResampleInstance.html'>makeResampleInstance</a></code>
+
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

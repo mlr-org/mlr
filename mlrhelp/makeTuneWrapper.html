@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>makeTuneWrapper. mlr 1.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">mlr 1.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Fuse learner with tuning.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre>makeTuneWrapper(learner, resampling, measures, par.set, control, show.info = TRUE)</pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>learner</dt>
+      <dd>[<code>Learner</code> or string]
+  Learning algorithm.</dd>
+      <dt>resampling</dt>
+      <dd>[<code>ResampleDesc</code> |
+  <code>ResampleInstance</code>] Resampling
+  strategy to evaluate points in hyperparameter space.</dd>
+      <dt>measures</dt>
+      <dd>[list of <code>Measure</code>]
+  Performance measures to evaluate. The first measure,
+  aggregated by the first aggregation function is optimized
+  during tuning, others are simply evaluated.</dd>
+      <dt>par.set</dt>
+      <dd>[<code><a href='http://www.inside-r.org/r-doc/ParamHelpers/makeParamSet'>ParamSet</a></code>] 
+  Collection of parameters and their constraints for
+  optimization.</dd>
+      <dt>control</dt>
+      <dd>[<code><a href='TuneControl.html'>TuneControl</a></code>]  Control
+  object for search method. Also selects the optimization
+  algorithm for tuning.</dd>
+      <dt>show.info</dt>
+      <dd>[<code>logical(1)</code>] Show info message
+  after each hyperparameter evaluation?  Default is
+  <code>TRUE</code>.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+      
+      <p>[<code><a href='makeLearner.html'>Learner</a></code>].</p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p>Fuses a base learner with a search strategy to select its
+  hyperparameters. Creates a learner object, which can be
+  used like any other learner object, but which internally
+  uses tune. If the train function is called on it, the
+  search strategy and resampling are invoked to select an
+  optimal set of hyperparameter values. Finally, a model is
+  fitted on the complete training data with these optimal
+  hyperparameters and returned. See
+  <code><a href='tuneParams.html'>tuneParams</a></code> for more details.</p>
+  
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+      
+      <p>After training, the optimal hyperparameters (and other
+  related information) can be retrieved with
+  <code><a href='getTuneResult.html'>getTuneResult</a></code>.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>task = makeClassifTask(data=iris, target="Species")
+lrn = makeLearner("classif.ksvm")
+</div>
+<strong class='message'>Loading required package: kernlab</strong>
+<div class='input'># stupid mini grid
+ps = makeParamSet(
+  makeDiscreteParam("C", values = 1:2),
+  makeDiscreteParam("sigma", values = 1:2)
+)
+ctrl = makeTuneControlGrid()
+inner = makeResampleDesc("Holdout")
+outer = makeResampleDesc("CV", iters = 2)
+lrn = makeTuneWrapper(lrn, resampling = inner, par.set = ps, control = ctrl)
+mod = train(lrn, task)
+</div>
+<strong class='message'>[Tune] Started tuning learner classif.ksvm for parameter set:</strong>
+<strong class='message'>Disc param 'C'. Vals: 1,2. Trafo: FALSE. Requires: FALSE
+Disc param 'sigma'. Vals: 1,2. Trafo: FALSE. Requires: FALSE</strong>
+<strong class='message'>With control class: TuneControlGrid</strong>
+<strong class='message'>[Tune] 1: C=1,sigma=1 : mmce.test.mean=0,02</strong>
+<strong class='message'>[Tune] 1: C=2,sigma=1 : mmce.test.mean=0,02</strong>
+<strong class='message'>[Tune] 1: C=1,sigma=2 : mmce.test.mean=0,02</strong>
+<strong class='message'>[Tune] 1: C=2,sigma=2 : mmce.test.mean=0,02</strong>
+<strong class='message'>[Tune] Result: C=1,sigma=1 : =0,02</strong>
+<div class='input'>print(getTuneResult(mod))
+</div>
+<div class='output'>Tune result:
+Op. pars: C=1,sigma=1
+=0,02
+</div>
+<div class='input'># nested resampling for evaluation
+# we also extract tuned hyper pars in each iteration
+r = resample(lrn, task, outer, extract = function(model) {
+  getTuneResult(model)$x
+})
+</div>
+<strong class='message'>[Resample] cross-validation iter: 1</strong>
+<strong class='message'>[Tune] Started tuning learner classif.ksvm for parameter set:</strong>
+<strong class='message'>Disc param 'C'. Vals: 1,2. Trafo: FALSE. Requires: FALSE
+Disc param 'sigma'. Vals: 1,2. Trafo: FALSE. Requires: FALSE</strong>
+<strong class='message'>With control class: TuneControlGrid</strong>
+<strong class='message'>[Tune] 1: C=1,sigma=1 : mmce.test.mean=0,04</strong>
+<strong class='message'>[Tune] 1: C=2,sigma=1 : mmce.test.mean=0,04</strong>
+<strong class='message'>[Tune] 1: C=1,sigma=2 : mmce.test.mean=0,04</strong>
+<strong class='message'>[Tune] 1: C=2,sigma=2 : mmce.test.mean=0,04</strong>
+<strong class='message'>[Tune] Result: C=2,sigma=1 : =0,04</strong>
+<strong class='message'>[Resample] cross-validation iter: 2</strong>
+<strong class='message'>[Tune] Started tuning learner classif.ksvm for parameter set:</strong>
+<strong class='message'>Disc param 'C'. Vals: 1,2. Trafo: FALSE. Requires: FALSE
+Disc param 'sigma'. Vals: 1,2. Trafo: FALSE. Requires: FALSE</strong>
+<strong class='message'>With control class: TuneControlGrid</strong>
+<strong class='message'>[Tune] 1: C=1,sigma=1 : mmce.test.mean=0,04</strong>
+<strong class='message'>[Tune] 1: C=2,sigma=1 : mmce.test.mean=0,04</strong>
+<strong class='message'>[Tune] 1: C=1,sigma=2 : mmce.test.mean=0,04</strong>
+<strong class='message'>[Tune] 1: C=2,sigma=2 : mmce.test.mean=0,04</strong>
+<strong class='message'>[Tune] Result: C=1,sigma=1 : =0,04</strong>
+<strong class='message'>[Resample] Result: mmce.test.mean=0,0467</strong>
+<div class='input'>print(r$extract)
+</div>
+<div class='output'>[[1]]
+[[1]]$C
+[1] 2
+
+[[1]]$sigma
+[1] 1
+
+
+[[2]]
+[[2]]$C
+[1] 1
+
+[[2]]$sigma
+[1] 1
+
+
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>makeTuneWrapper</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Prediction. mlr 1.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">mlr 1.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Prediction object.</h1>
+
+<div class="row">
+  <div class="span8">
+        
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p>Result from <code><a href='http://www.inside-r.org/r-doc/stats/predict'>predict</a></code>. Use
+  <code>as.data.frame</code> to access all information in a
+  convenient format. The function
+  <code><a href='getProbabilities.html'>getProbabilities</a></code> is useful to access
+  predicted probabilities..</p>
+  
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+      
+      <p>The <code>data</code> member of the object contains always the
+  following columns: <code>id</code>, index numbers of predicted
+  cases from the task, <code>response</code> either a numeric or
+  a factor, the predicted response values, <code>truth</code>,
+  either a numeric or a factor, the true target values. If
+  probabilities were predicted, as many numeric columns as
+  there were classes named <code>prob.classname</code>. If
+  standard errors were predicted, a numeric column named
+  <code>se</code>.</p>
+  
+      <p>Object members: <span class='describe'> predict.type
+  [<code>character(1)</code>]Type set in
+  <code><a href='setPredictType.html'>setPredictType</a></code>. data
+  [<code>data.frame</code>]See details. threshold
+  [<code>numeric(1)</code>]Threshold set in predict function.
+  task.desc [<code><a href='TaskDesc.html'>TaskDesc</a></code>]Task
+  description object. time [<code>numeric(1)</code>]Time
+  learner needed to generate predictions. </span></p>
+  
+    </div>
+      </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>Prediction</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

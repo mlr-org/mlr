@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>tuneParams. mlr 1.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">mlr 1.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Hyperparameter tuning.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre>tuneParams(learner, task, resampling, measures, par.set, control, show.info = TRUE)</pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>learner</dt>
+      <dd>[<code>Learner</code>] The
+  learner.</dd>
+      <dt>task</dt>
+      <dd>[<code>SupervisedTask</code>] The
+  task.</dd>
+      <dt>resampling</dt>
+      <dd>[<code>ResampleInstance</code> |
+  <code><a href='makeResampleDesc.html'>ResampleDesc</a></code>] Resampling strategy to
+  evaluate points in hyperparameter space. If you pass a
+  description, it is instantiated once at the beginning by
+  default, so all points are evaluated on the same
+  training/test sets.  If you want to change that
+  behaviour, look at <code><a href='TuneControl.html'>TuneControl</a></code>.</dd>
+      <dt>par.set</dt>
+      <dd>[<code><a href='http://www.inside-r.org/r-doc/ParamHelpers/makeParamSet'>ParamSet</a></code>]
+  Collection of parameters and their constraints for
+  optimization.</dd>
+      <dt>control</dt>
+      <dd>[<code><a href='TuneControl.html'>TuneControl</a></code>] Control
+  object for search method. Also selects the optimization
+  algorithm for tuning.</dd>
+      <dt>measures</dt>
+      <dd>[list of <code>Measure</code>]
+  Performance measures to evaluate. The first measure,
+  aggregated by the first aggregation function is optimized
+  during tuning, others are simply evaluated.</dd>
+      <dt>show.info</dt>
+      <dd>[<code>logical(1)</code>] Show info message
+  after each hyperparameter evaluation?  Default is
+  <code>TRUE</code>.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+      
+      <p>[<code><a href='TuneResult.html'>TuneResult</a></code>].</p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p>Optimizes the hyperparameters of a learner for a
+  classification or regression problem. Allows for
+  different optimization methods, such as grid search,
+  evolutionary strategies, etc. You can select such an
+  algorithm (and its settings) by passing a corresponding
+  control object. For a complete list of implemented
+  algorithms look at <code><a href='TuneControl.html'>TuneControl</a></code>.</p>
+  
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+      
+      <p>Note that if tranformations are associated with the
+  parameters, the returned result will contain transformed
+  values in the optimal result and the path.</p>
+  
+    </div>
+      </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>tuneParams</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

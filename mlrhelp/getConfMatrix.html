@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>getConfMatrix. mlr 1.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">mlr 1.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Confusion matrix.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre>getConfMatrix(pred, relative = FALSE)</pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>pred</dt>
+      <dd>[<code><a href='Prediction.html'>Prediction</a></code>] Result of a
+  prediction.</dd>
+      <dt>relative</dt>
+      <dd>[<code>logical(1)</code>] If <code>TRUE</code>
+  rows are normalized to show relative frequencies.
+  Default is <code>FALSE</code>.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+      
+      <p>[<code>matrix</code>]. A confusion matrix.</p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p>Calculates confusion matrix for (possibly resampled)
+  prediction. Rows indicate true classes, columns predicted
+  classes.</p>
+  
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+      
+      <p>Code inspired by <code><a href='http://www.inside-r.org/r-doc/klaR/errormatrix'>errormatrix</a></code>.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>## create classification task and use linear discriminant analysis for classification
+task <- makeClassifTask(data = iris, target = "Species")
+lrn <- makeLearner("classif.lda")
+</div>
+<strong class='message'>Loading required package: MASS</strong>
+<div class='input'>
+## set up training and test data
+n <- nrow(iris)
+mixed.set <- sample(1:n)
+training.set <- mixed.set[1:(n/2)]
+test.set <- mixed.set[(n/2 + 1):n]
+
+## train model
+mod <- train(lrn, task, subset = training.set)
+
+## get predictions and show calculate confusion matrix
+pred <- predict(mod, newdata = iris[test.set, ])
+print(getConfMatrix(pred))
+</div>
+<div class='output'>            predicted
+true         setosa versicolor virginica -SUM-
+  setosa         27          0         0     0
+  versicolor      0         23         2     2
+  virginica       0          0        23     0
+  -SUM-           0          0         2     2
+</div>
+<div class='input'>print(getConfMatrix(pred, relative = TRUE))
+</div>
+<div class='output'>            predicted
+true         setosa versicolor virginica      -SUM-
+  setosa          1       0.00      0.00 0.00000000
+  versicolor      0       0.92      0.08 0.08000000
+  virginica       0       0.00      1.00 0.00000000
+  -SUM-           0       0.00      1.00 0.02666667
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>getConfMatrix</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+    <h2>See also</h2>
+    
+  <code><a href='http://www.inside-r.org/r-doc/stats/predict'>predict</a></code>
+
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>
