@@ -19,7 +19,7 @@
 #' @return [\code{\link{Prediction}}].
 #' @method predict WrappedModel
 #' @S3method predict WrappedModel
-#' @note To extract probabilities use [\code{\link{getProbabilities}}].
+#' @note To extract probabilities use \code{\link{getProbabilities}}.
 #' @examples
 #' ## split iris data in training and test set
 #' n <- nrow(iris)
