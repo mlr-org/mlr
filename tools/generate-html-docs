@@ -2,5 +2,5 @@
 
 library(methods)
 library(staticdocs)
-build_package(".", "htmlhelp")
+build_package(".", "/tmp/pkgdocs")
 

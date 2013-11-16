@@ -53,9 +53,15 @@ check-rev-dep: package
 
 htmlhelp: install
 	printf "\nGenerating html docs...\n"
-	${DELETE} htmlhelp
 	mkdir staticdocs
-	mkdir htmlhelp
+	${DELETE} /tmp/pkgdocs
 	${RSCRIPT} ./tools/generate-html-docs
-	${DELETE} Rplots*.pdf
+	git checkout gh-pages
+	mv /tmp/pkgdocs/* ../mlr
+	git add mlrhelp/.
+	git commit -a -m "new html help"
+	git push origin gh-pages
+	git checkout master
+	# ${DELETE} Rplots*.pdf
+
 
