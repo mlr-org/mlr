@@ -44,10 +44,15 @@
 performance = function(pred, measure, task, model) {
   if (missing(measure))
     measure = default.measures(task)[[1]]
-  else
-    checkArg(measure, "Measure")
-  m = measure
+  if (inherits(measure, "Measure"))
+    measure = list(measure)
+  checkListElementClass(measure, "Measure")
   td = NULL
+  sapply(measure, doPerformaceIteration, pred=pred, task=task, model=model)
+}
+
+doPerformaceIteration = function(measure, pred, task, model){
+  m = measure
   if (m$req.pred) {
     if (missing(pred))
       stopf("You need to pass pred for measure %s!", m$id)
@@ -83,7 +88,7 @@ performance = function(pred, measure, task, model) {
       stopf("Multiclass problems cannot be used for measure %s!", m$id)
     if (!is.null(pred2) && !(pred2$predict.type %in% m$allowed.pred.types))
       stopf("Measure %s is only allowed for predictions of type: %s!",
-        m$id, collapse(m$allowed.pred.types))
+            m$id, collapse(m$allowed.pred.types))
   }
   measure$fun(task2, model2, pred2, m$extra.args)
 }
