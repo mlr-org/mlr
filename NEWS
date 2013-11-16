@@ -1,5 +1,7 @@
 
 mlr_1.2:
+- fixed a bug in stratified CV where elements where not distributed as evenly as possible
+  when the split number did not divide the number of observation 
 - added class.weights param for classif.svm
 - add fix.factors option to randomForest
 - generic standard error estimation in randomForest and BaggingWrapper
