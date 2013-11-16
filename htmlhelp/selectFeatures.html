@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>selectFeatures. mlr 1.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">mlr 1.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Feature selection by wrapper approach.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre>selectFeatures(learner, task, resampling, control, measures, bit.names, bits.to.features, 
+  show.info = TRUE)</pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>learner</dt>
+      <dd>[<code>Learner</code>] The
+  learner.</dd>
+      <dt>task</dt>
+      <dd>[<code>SupervisedTask</code>] The
+  task.</dd>
+      <dt>resampling</dt>
+      <dd>[<code>ResampleInstance</code> |
+  <code><a href='makeResampleDesc.html'>ResampleDesc</a></code>] Resampling strategy to
+  feature sets. If you pass a description, it is
+  instantiated once at the beginning by default, so all
+  points are evaluated on the same training/test sets.  If
+  you want to change that behaviour, look at
+  <code><a href='FeatSelControl.html'>FeatSelControl</a></code>.</dd>
+      <dt>control</dt>
+      <dd>[see <code><a href='FeatSelControl.html'>FeatSelControl</a></code>] Control
+  object for search method. Also selects the optimization
+  algorithm for feature selection.</dd>
+      <dt>measures</dt>
+      <dd>[list of <code><a href='makeMeasure.html'>Measure</a></code>]
+  Performance measures to evaluate. The first measure,
+  aggregated by the first aggregation function is optimized
+  during selection, others are simply evaluated.</dd>
+      <dt>bit.names</dt>
+      <dd>[character] Names of bits encoding
+  the solutions. Also defines the total number of bits in
+  the encoding.  Per default these are the feature names of
+  the task.</dd>
+      <dt>bits.to.features</dt>
+      <dd>[function(x, task)] Function
+  which transforms an integer-0-1 vector into a character
+  vector of selected features.  Per default a value of 1 in
+  the ith bit selects the ith feature to be in the
+  candidate solution.</dd>
+      <dt>show.info</dt>
+      <dd>[<code>logical(1)</code>] A logical value,
+  indicating whether information should be printed.  The
+  default is TRUE.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+      
+      <p>[<code><a href='FeatSelResult.html'>FeatSelResult</a></code>].</p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p>Optimizes the features for a classification or regression
+  problem by choosing a variable selection wrapper
+  approach. Allows for different optimization methods, such
+  as forward search or a genetic algorithm. You can select
+  such an algorithm (and its settings) by passing a
+  corresponding control object. For a complete list of
+  implemented algorithms look at the subclasses of
+  [<code><a href='FeatSelControl.html'>FeatSelControl</a></code>].</p>
+  
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+      
+      <p>All algorithms operate on a 0-1-bit encoding of candidate
+  solutions. Per default a single bit corresponds to a
+  single feature, but you are able to change this by using
+  the arguments <code>bit.names</code> and
+  <code>bits.to.features</code>. Thus allowing you to switch on
+  whole groups of features with a single bit.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>task <- makeClassifTask(data=iris, target="Species")
+lrn <- makeLearner("classif.rpart")
+rdesc <- makeResampleDesc("Holdout")
+
+## Now create control-objects for each of the possible feature selection algorithms:
+ctrlSeq <- makeFeatSelControlSequential(method="sfs", maxit=NA)
+ctrlGA <- makeFeatSelControlGA(maxit=5, max.features=NA, crossover.rate=0.5,
+  mutation.rate=0.1, mu=10, lambda=5)
+ctrlRand <- makeFeatSelControlRandom(maxit=10, max.features=NA, prob=0.5)
+ctrlExh <- makeFeatSelControlExhaustive(maxit=NA, max.features=NA)
+
+## Let's run the feature selction algorithm:
+
+sfSeq <- selectFeatures(lrn, task, rdesc, control=ctrlSeq)
+</div>
+<strong class='message'>[selectFeatures] 1: 0 bits: mmce.test.mean=0.56</strong>
+<strong class='message'>[selectFeatures] 2: 1 bits: mmce.test.mean=0.28</strong>
+<strong class='message'>[selectFeatures] 2: 1 bits: mmce.test.mean= 0.5</strong>
+<strong class='message'>[selectFeatures] 2: 1 bits: mmce.test.mean=0.06</strong>
+<strong class='message'>[selectFeatures] 2: 1 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 3: 2 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 3: 2 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 3: 2 bits: mmce.test.mean=0.06</strong>
+<div class='input'>sfSeq
+</div>
+<div class='output'>FeatSel result:
+Features (1): Petal.Width
+=0.04
+</div>
+<div class='input'>sfGA <- selectFeatures(lrn, task, rdesc, control=ctrlGA)
+</div>
+<strong class='message'>[selectFeatures] 1: 1 bits: mmce.test.mean=0.24</strong>
+<strong class='message'>[selectFeatures] 1: 1 bits: mmce.test.mean=0.24</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean=0.24</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 1: 1 bits: mmce.test.mean= 0.4</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 1: 1 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 1: 1 bits: mmce.test.mean=0.24</strong>
+<strong class='message'>[selectFeatures] 1: 1 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 2: 2 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 2: 2 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 2: 2 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 2: 2 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 2: 2 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 3: 4 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 3: 1 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 3: 1 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 3: 2 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 3: 3 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 4: 2 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 4: 1 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 4: 1 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 4: 1 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 4: 2 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 5: 0 bits: mmce.test.mean=0.68</strong>
+<strong class='message'>[selectFeatures] 5: 1 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 5: 2 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 5: 2 bits: mmce.test.mean=0.02</strong>
+<strong class='message'>[selectFeatures] 5: 2 bits: mmce.test.mean=0.02</strong>
+<div class='input'>sfGA
+</div>
+<div class='output'>FeatSel result:
+Features (2): Sepal.Width, Petal.Length
+=0.02
+</div>
+<div class='input'>sfRand <- selectFeatures(lrn, task, rdesc, control=ctrlRand)
+</div>
+<strong class='message'>[selectFeatures] 1: 1 bits: mmce.test.mean=0.06</strong>
+<strong class='message'>[selectFeatures] 1: 4 bits: mmce.test.mean= 0.1</strong>
+<strong class='message'>[selectFeatures] 1: 1 bits: mmce.test.mean= 0.1</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean= 0.1</strong>
+<strong class='message'>[selectFeatures] 1: 3 bits: mmce.test.mean= 0.1</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean= 0.3</strong>
+<strong class='message'>[selectFeatures] 1: 0 bits: mmce.test.mean=0.64</strong>
+<strong class='message'>[selectFeatures] 1: 3 bits: mmce.test.mean= 0.1</strong>
+<strong class='message'>[selectFeatures] 1: 3 bits: mmce.test.mean= 0.1</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean= 0.1</strong>
+<div class='input'>sfRand
+</div>
+<div class='output'>FeatSel result:
+Features (1): Petal.Length
+=0.06
+</div>
+<div class='input'>sfExh <- selectFeatures(lrn, task, rdesc, control=ctrlExh)
+</div>
+<strong class='message'>[selectFeatures] 1: 0 bits: mmce.test.mean= 0.8</strong>
+<strong class='message'>[selectFeatures] 1: 1 bits: mmce.test.mean= 0.3</strong>
+<strong class='message'>[selectFeatures] 1: 1 bits: mmce.test.mean=0.48</strong>
+<strong class='message'>[selectFeatures] 1: 1 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 1: 1 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean= 0.3</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 1: 2 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 1: 3 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 1: 3 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 1: 3 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 1: 3 bits: mmce.test.mean=0.04</strong>
+<strong class='message'>[selectFeatures] 1: 4 bits: mmce.test.mean=0.04</strong>
+<div class='input'>sfExh
+</div>
+<div class='output'>FeatSel result:
+Features (3): Sepal.Length, Petal.Length, Petal.Width
+=0.04
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>selectFeatures</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

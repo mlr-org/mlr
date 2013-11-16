@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>makeCustomResampledMeasure. mlr 1.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">mlr 1.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Construct your own resampled performance measure.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre>makeCustomResampledMeasure(id, minimize = TRUE, classif = FALSE, regr = FALSE, only.binary = FALSE, 
+  allowed.pred.types = character(0L), fun, extra.args = list())</pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>id</dt>
+      <dd>[<code>character(1)</code>] Name of aggregated
+  measure.</dd>
+      <dt>minimize</dt>
+      <dd>[<code>logical(1)</code>] Should the measure
+  be minimized?  Default is <code>TRUE</code>.</dd>
+      <dt>classif</dt>
+      <dd>[<code>logical(1)</code>] Is the measure
+  applicable for classification?  Default is <code>FALSE</code>.</dd>
+      <dt>regr</dt>
+      <dd>[<code>logical(1)</code>] Is the measure
+  applicable for regression?  Default is <code>FALSE</code>.</dd>
+      <dt>only.binary</dt>
+      <dd>[<code>logical(1)</code>] Is the measure
+  only applicable to binary classification?  Only
+  reasonable if <code>classif</code> is <code>TRUE</code>.  Default is
+  <code>FALSE</code>.</dd>
+      <dt>allowed.pred.types</dt>
+      <dd>[<code>character</code>] Which
+  prediction types are allowed for this measure?  Subset of
+  &#147;response&#148;,&#147;prob&#148;,&#147;se&#148;.  Default is
+  none.</dd>
+      <dt>fun</dt>
+      <dd>[<code>function(task, pred, group, pred,
+  extra.args)</code>] Calculates performance value from
+  <code><a href='ResamplePrediction.html'>ResamplePrediction</a></code> object.  For rare case
+  you can also use the task, the grouping or the extra
+  arguments <code>extra.args</code>.</dd>
+      <dt>extra.args</dt>
+      <dd>[<code>list</code>] List of extra
+  arguments which will always be passed to <code>fun</code>.
+  Default is empty list.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+      
+      <p><code><a href='makeMeasure.html'>Measure</a></code></p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p>Construct your own performance measure, used after
+  resampling. Note that individual training / test set
+  performance values will be set to <code>NA</code>, you only
+  calculate an aggregated value. If you can define a
+  function that makes sense for every single training /
+  test set, implement your own <code><a href='makeMeasure.html'>Measure</a></code>.</p>
+  
+    </div>
+      </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>makeCustomResampledMeasure</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

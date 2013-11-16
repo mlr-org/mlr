@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>getTaskTargets. mlr 1.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">mlr 1.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Get target column of task.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre>getTaskTargets(task, subset, recode.target = "no")</pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>task</dt>
+      <dd>[<code><a href='SupervisedTask.html'>SupervisedTask</a></code>] The task.</dd>
+      <dt>subset</dt>
+      <dd>[<code>integer</code>] Selected cases.
+  Default is all cases.</dd>
+      <dt>recode.target</dt>
+      <dd>[<code>character(1)</code>]  Should
+  target classes be recoded? Only for binary
+  classification.  Possible are &#147;no&#148; (do nothing),
+  &#147;01&#148;, and &#147;-1+1&#148;.  In the two latter cases
+  the target vector is converted into a numeric vector.
+  The positive class is coded as +1 and the negative class
+  either as 0 or -1.  Default is &#147;no&#148;.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+      
+      <p>A <code>factor</code> for classification or a <code>numeric</code>
+  for regression.</p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p>Get target column of task.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>task <- makeClassifTask(data = iris, target = "Species")
+getTaskTargets(task)
+</div>
+<div class='output'>  [1] setosa     setosa     setosa     setosa     setosa     setosa    
+  [7] setosa     setosa     setosa     setosa     setosa     setosa    
+ [13] setosa     setosa     setosa     setosa     setosa     setosa    
+ [19] setosa     setosa     setosa     setosa     setosa     setosa    
+ [25] setosa     setosa     setosa     setosa     setosa     setosa    
+ [31] setosa     setosa     setosa     setosa     setosa     setosa    
+ [37] setosa     setosa     setosa     setosa     setosa     setosa    
+ [43] setosa     setosa     setosa     setosa     setosa     setosa    
+ [49] setosa     setosa     versicolor versicolor versicolor versicolor
+ [55] versicolor versicolor versicolor versicolor versicolor versicolor
+ [61] versicolor versicolor versicolor versicolor versicolor versicolor
+ [67] versicolor versicolor versicolor versicolor versicolor versicolor
+ [73] versicolor versicolor versicolor versicolor versicolor versicolor
+ [79] versicolor versicolor versicolor versicolor versicolor versicolor
+ [85] versicolor versicolor versicolor versicolor versicolor versicolor
+ [91] versicolor versicolor versicolor versicolor versicolor versicolor
+ [97] versicolor versicolor versicolor versicolor virginica  virginica 
+[103] virginica  virginica  virginica  virginica  virginica  virginica 
+[109] virginica  virginica  virginica  virginica  virginica  virginica 
+[115] virginica  virginica  virginica  virginica  virginica  virginica 
+[121] virginica  virginica  virginica  virginica  virginica  virginica 
+[127] virginica  virginica  virginica  virginica  virginica  virginica 
+[133] virginica  virginica  virginica  virginica  virginica  virginica 
+[139] virginica  virginica  virginica  virginica  virginica  virginica 
+[145] virginica  virginica  virginica  virginica  virginica  virginica 
+Levels: setosa versicolor virginica
+</div>
+<div class='input'>getTaskTargets(task, subset = 1:50)
+</div>
+<div class='output'> [1] setosa setosa setosa setosa setosa setosa setosa setosa setosa setosa
+[11] setosa setosa setosa setosa setosa setosa setosa setosa setosa setosa
+[21] setosa setosa setosa setosa setosa setosa setosa setosa setosa setosa
+[31] setosa setosa setosa setosa setosa setosa setosa setosa setosa setosa
+[41] setosa setosa setosa setosa setosa setosa setosa setosa setosa setosa
+Levels: setosa versicolor virginica
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>getTaskTargets</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

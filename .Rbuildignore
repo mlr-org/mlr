@@ -1,0 +1,13 @@
+.gitignore
+Makefile
+todo.txt
+test_all.R
+test_src.R
+^.*tar.gz$
+tools
+src/*.o
+src/*.so
+todo-files
+README.md
+staticdocs
+htmlhelp

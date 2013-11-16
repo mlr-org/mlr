@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>makeCostMeasure. mlr 1.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">mlr 1.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Creates a measure for non-standard misclassification costs.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre>makeCostMeasure(id = "costs", minimize = TRUE, costs, task, aggregate = mean)</pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>id</dt>
+      <dd>[<code>character(1)</code>] Name of measure.
+  Default is &#147;costs&#148;.</dd>
+      <dt>minimize</dt>
+      <dd>[<code>logical(1)</code>] Should the measure
+  be minimized? Default is TRUE. Otherwise you are
+  effectively specifying a benefits matrix.</dd>
+      <dt>costs</dt>
+      <dd>[<code>matrix</code>] Matrix of
+  misclassification costs. Rows and columns have to be
+  named with class labels, order does not matter.  Rows
+  indicate true classes, columns predicted classes.</dd>
+      <dt>task</dt>
+      <dd>[<code><a href='SupervisedTask.html'>ClassifTask</a></code>] Classification
+  task. Has to be passed, so validity of matrix names can
+  be checked.</dd>
+      <dt>aggregate</dt>
+      <dd>[<code>logical(1)</code>] How to aggregate
+  costs over all cases in one test set prediction?  Default
+  is <code><a href='http://www.inside-r.org/r-doc/base/mean'>mean</a></code>.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+      
+      <p>[<code><a href='makeMeasure.html'>Measure</a></code>].</p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p>Creates a measure for non-standard misclassification
+  costs.</p>
+  
+    </div>
+      </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>makeCostMeasure</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+    <h2>See also</h2>
+    
+  <code><a href='measures.html'>measures</a></code>, <code><a href='makeMeasure.html'>makeMeasure</a></code>
+
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

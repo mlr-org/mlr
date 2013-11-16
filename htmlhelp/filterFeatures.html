@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>filterFeatures. mlr 1.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">mlr 1.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Filter features by using a numerical importance criterion.
+Calculates numerical importance values for all features.
+Thresholding of these values can be used to select &#147;useful&#148; features.
+Look at package FSelector for details on the filter algorithms.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre>filterFeatures(task, method = "random.forest.importance")</pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>task</dt>
+      <dd>[<code>SupervisedTask</code>] The
+  task.</dd>
+      <dt>method</dt>
+      <dd>[<code>character(1)</code>] Filter method.
+  Available are: &#147;linear.correlation&#148;,
+  &#147;rank.correlation&#148;, &#147;information.gain&#148;,
+  &#147;gain.ratio&#148;, &#147;symmetrical.uncertainty&#148;,
+  &#147;chi.squared&#148;, &#147;random.forest.importance&#148;,
+  &#147;relief&#148;, &#147;oneR&#148; Default is
+  &#147;random.forest.importance&#148;.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+      
+      <p>[<code>numeric</code>]. A named numeric vector that contains an
+  importance value for each feature.</p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p>Filter features by using a numerical importance
+  criterion. Calculates numerical importance values for all
+  features. Thresholding of these values can be used to
+  select &#147;useful&#148; features. Look at package
+  FSelector for details on the filter algorithms.</p>
+  
+    </div>
+      </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>filterFeatures</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

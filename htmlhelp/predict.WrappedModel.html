@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>predict.WrappedModel. mlr 1.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">mlr 1.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Predict new data.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre>predict(object, task, newdata, subset, ...)</pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>object</dt>
+      <dd>[<code><a href='makeWrappedModel.html'>WrappedModel</a></code>] Wrapped
+  model, result of <code><a href='train.html'>train</a></code>.</dd>
+      <dt>task</dt>
+      <dd>[<code><a href='SupervisedTask.html'>SupervisedTask</a></code>] The task.
+  If this is passed, data from this task is predicted.</dd>
+      <dt>newdata</dt>
+      <dd>[<code>data.frame</code>] New observations
+  which should be predicted.  Pass this alternatively
+  instead of <code>task</code>.</dd>
+      <dt>subset</dt>
+      <dd>[<code>integer</code>] Index vector to subset
+  <code>task</code> or <code>newdata</code>.  Default is all data.</dd>
+      <dt>...</dt>
+      <dd>[any] Currently ignored.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+      
+      <p>[<code><a href='Prediction.html'>Prediction</a></code>].</p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p>Predict the target variable of new data using a fitted
+  model. What is stored exactly in the
+  [<code><a href='Prediction.html'>Prediction</a></code>] object depends on the
+  <code>predict.type</code> setting of the <code><a href='makeLearner.html'>Learner</a></code>.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>## split iris data in training and test set
+n <- nrow(iris)
+mixed.set <- sample(1:n)
+training.set <- mixed.set[1:(n/2)]
+test.set <- mixed.set[(n/2 + 1):n]
+
+## use linear discriminant analysis as learner for classification task
+task <- makeClassifTask(data = iris, target = "Species")
+learner <- makeLearner("classif.lda", method = "mle")
+mod <- train(learner, task, subset = training.set)
+
+## predict class labels for test data
+pred <- predict(mod, newdata = iris[test.set,])
+head(pred$data)
+</div>
+<div class='output'>       truth   response
+1     setosa     setosa
+2  virginica  virginica
+3 versicolor versicolor
+4 versicolor versicolor
+5     setosa     setosa
+6 versicolor versicolor
+</div>
+<div class='input'>
+## predict now probabiliies instead of class labels
+learner <- makeLearner("classif.lda", method = "mle", predict.type = "prob")
+mod <- train(learner, task, subset = training.set)
+pred <- predict(mod, newdata = iris[test.set, ])
+head(pred$data)
+</div>
+<div class='output'>         truth  prob.setosa prob.versicolor prob.virginica   response
+16      setosa 1.000000e+00    6.235382e-26   1.301719e-45     setosa
+106  virginica 7.179175e-47    7.606408e-07   9.999992e-01  virginica
+63  versicolor 3.643906e-17    9.999998e-01   1.764602e-07 versicolor
+91  versicolor 3.186728e-22    9.993283e-01   6.717106e-04 versicolor
+4       setosa 1.000000e+00    1.773551e-15   8.467677e-34     setosa
+96  versicolor 4.302779e-17    9.999626e-01   3.736346e-05 versicolor
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>predict.WrappedModel</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

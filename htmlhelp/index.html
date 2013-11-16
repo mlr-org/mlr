@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Index. mlr 1.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Bernd Bischl &lt;bernd_bischl@gmx.net&gt;">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">mlr 1.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <div class="row">
+  <div class="span8">
+    <h1>mlr: Machine Learning in R </h1>
+
+<h1>  Introduction</h1>
+
+<p>R does not define a standardized interface for all its machine learning algorithms. Therefore, for any 
+  non-trivial experiments, you need to write lengthy, tedious and error-prone wrappers to call the different 
+  algorithms and unify their respective output. Additionally you need to implement infrastructure to resample 
+  your models, optimize hyperparameters, select features, cope with pre- and post-processing of data and 
+  compare models in a statistically meaningful way.
+  As this becomes computationally expensive, you might want to parallelize your experiments as well. This 
+  often forces useRs to make crummy trade-offs in their experiments due to time constraints or lacking expert 
+  programming skills. <strong>mlr</strong> provides this infrastructure so that you can focus on your experiments!
+  The framework currently focuses on supervised methods like classification and regression and their 
+  corresponding evaluation and optimization, but further extensions are planned. It is written in a way 
+  that you can extend it yourself or deviate from the implemented convenience methods and construct your own 
+  complex experiments or algorithms.</p>
+
+<p>Offical CRAN release site: 
+  <a href="http://cran.r-project.org/web/packages/mlr/index.html">http://cran.r-project.org/web/packages/mlr/index.html</a></p>
+
+<p>R Documentation in HTML:
+  <a href="http://www.statistik.tu-dortmund.de/%7Ebischl/rdocs/mlr/">http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/</a></p>
+
+<p>Detailed Tutorial:
+  <a href="https://www.statistik.tu-dortmund.de/%7Ebischl/mlr_tutorial/tutorial/index.html">https://www.statistik.tu-dortmund.de/~bischl/mlr_tutorial/tutorial/index.html</a></p>
+
+<h1>  Features</h1>
+
+<ul>
+<li>Clear S3 interface to R classification and regression methods</li>
+<li>Easy extension mechanism through S3 inheritance</li>
+<li>Abstract description of learners and tasks by properties</li>
+<li>Parameter system for learners to encode data types and constraints</li>
+<li>Many convenience methods and generic building blocks for your
+machine learning experiments</li>
+<li>Resampling like bootstrapping, cross-validation and subsampling</li>
+<li>Easy hyperparameter tuning using different optimization strategies</li>
+<li>Variable selection with filters and wrappers</li>
+<li>Parallelization is built-in</li>
+<li>Extension points to integrate your own stuff</li>
+<li>Unit-testing</li>
+<li>Possibility to fit, predict, evaluate and resample models</li>
+<li>Tune hyper-parameters of a learner with different optimization algorithms (also available for multi-criteria optimization)</li>
+<li>Feature selection with filters and wrappers (also available for multi-criteria optimization)</li>
+<li>Combine different processing steps to a complex data mining chain; enables nested resampling of optimized models</li>
+<li>Optimize functions with a model-based sequential parameter optimization method (useful e.g. for the optimization of expensive black-box functions)</li>
+</ul>
+
+<h1>Installation</h1>
+
+<p>1) Normal users:
+Please use the CRAN version linked above.</p>
+
+<p>2) Early adopters: Simply running</p>
+
+<pre><code class="r">devtools::install_github(&quot;mlr&quot;, username=&quot;berndbischl&quot;)
+</code></pre>
+
+<p>will install the current github version.</p>
+
+<p>3) Developers and hackers:</p>
+
+<p>You can install a new package version after local code changes if you are in the checkout directory via</p>
+
+<pre><code class="r">devtools::install(&quot;.&quot;)
+</code></pre>
+
+<p>Assuming you have a reasonably configured OS and R, you could also build and run tasks via the MAKEFILE.
+But only a VERY SMALL percentage of users should be interested in this.</p>
+
+<ul>
+<li><p>Clone from git repo here</p></li>
+<li><p>Have recent version of R properly installed with all build tools. For Windows this will include </p>
+
+<p><a href="http://cran.r-project.org/bin/windows/Rtools/">http://cran.r-project.org/bin/windows/Rtools/</a></p></li>
+<li><p>Have R, Rscript and the binaries of Rtools in your PATH </p></li>
+<li><p>Have roxygen2, devtools and testhat R packages installed</p></li>
+<li><p>In a console run &ldquo;make install&rdquo; to install. Done.</p></li>
+<li><p>&ldquo;make&rdquo; will list all other build targets</p></li>
+</ul>
+
+<h1>Mailinglist and Email-Service-Hook</h1>
+
+<p>Developers use this mailing list:</p>
+
+<p><a href="https://groups.google.com/forum/?hl=de#!forum/mlr-devel">https://groups.google.com/forum/?hl=de#!forum/mlr-devel</a></p>
+
+<p><a href="mailto:mlr-devel@googlegroups.com">mlr-devel@googlegroups.com</a></p>
+
+<p>The github-service-hook will also send commit messages to this list. </p>
+
+<h1>Get in touch</h1>
+
+<p>If you are interested in the package, have a question regarding the usage or a feature request,
+or maybe want to help improving <strong>mlr</strong>, please send a mail to the list at
+<a href="mailto:mlr-general@lists.r-forge.r-project.org">mlr-general@lists.r-forge.r-project.org</a> or to the maintainer Bernd Bischl
+at <a href="mailto:bischl@statistik.uni-dortmund.de">bischl@statistik.uni-dortmund.de</a>.</p>
+
+
+    <h2>Help topics</h2>
+
+    <h3></h3>
+    
+    
+    <ul class="index">
+        
+      <li>
+        <code><a href="Aggregation.html">Aggregation</a></code><br />An aggregation method reduces the performance values of the test (and possibly the training sets) to a single
+</li>
+            
+      <li>
+        <code><a href="aggregations.html">aggregations</a></code>(b632, b632plus, testgroup.mean, test.max, test.mean, test.median, test.min, test.sd, test.sqrt.of.mean, test.sum, train.max, train.mean, train.median, train.min, train.sd, train.sum)<br />Aggregation methods.</li>
+            
+      <li>
+        <code><a href="asROCRPrediction.html">asROCRPrediction</a></code><br />Converts predictions to a format package ROCR can handle.</li>
+            
+      <li>
+        <code><a href="configureMlr.html">configureMlr</a></code><br />Configures the behaviour of the package.</li>
+            
+      <li>
+        <code><a href="crossover.html">crossover</a></code><br />crossover</li>
+            
+      <li>
+        <code><a href="FeatSelResult.html">FeatSelResult</a></code><br />Result of feature selection.</li>
+            
+      <li>
+        <code><a href="filterFeatures.html">filterFeatures</a></code><br />Filter features by using a numerical importance criterion.
+</li>
+            
+      <li>
+        <code><a href="getBaggingModels.html">getBaggingModels</a></code><br />Returns the list of models fitted in bagging.</li>
+            
+      <li>
+        <code><a href="getConfMatrix.html">getConfMatrix</a></code><br />Confusion matrix.</li>
+            
+      <li>
+        <code><a href="getFilteredFeatures.html">getFilteredFeatures</a></code><br />Returns the filtered features.</li>
+            
+      <li>
+        <code><a href="getHyperPars.html">getHyperPars</a></code><br />Get current parameter settings for a learner.</li>
+            
+      <li>
+        <code><a href="getLearnerModel.html">getLearnerModel</a></code><br />Get underlying R model of learner integrated into mlr.</li>
+            
+      <li>
+        <code><a href="getParamSet.html">getParamSet</a></code><br />Get a description of all possible parameter settings for a learner.</li>
+            
+      <li>
+        <code><a href="getProbabilities.html">getProbabilities</a></code><br />Get probabilities for some classes.</li>
+            
+      <li>
+        <code><a href="getTaskData.html">getTaskData</a></code><br />Extract data in task. Useful in </li>
+            
+      <li>
+        <code><a href="getTaskFeatureNames.html">getTaskFeatureNames</a></code><br />Get feature names of task.</li>
+            
+      <li>
+        <code><a href="getTaskFormula.html">getTaskFormula</a></code><br />Get formula of a task.</li>
+            
+      <li>
+        <code><a href="getTaskFormulaAsString.html">getTaskFormulaAsString</a></code><br />Get formula of a task as a string.</li>
+            
+      <li>
+        <code><a href="getTaskTargets.html">getTaskTargets</a></code><br />Get target column of task.</li>
+            
+      <li>
+        <code><a href="getTuneResult.html">getTuneResult</a></code><br />Returns the optimal hyperparameters and optimization path.</li>
+            
+      <li>
+        <code><a href="learnerArgsToControl.html">learnerArgsToControl</a></code><br />Convert arguments to control structure.</li>
+            
+      <li>
+        <code><a href="learners.html">learners</a></code><br />List of supported learning algorithms.</li>
+            
+      <li>
+        <code><a href="listLearners.html">listLearners</a></code>(listLearnersForTask)<br />Find matching learning algorithms.</li>
+            
+      <li>
+        <code><a href="makeBaggingWrapper.html">makeBaggingWrapper</a></code><br />Fuse learner with the bagging technique.</li>
+            
+      <li>
+        <code><a href="SupervisedTask.html">makeClassifTask</a></code>(ClassifTask, makeRegrTask, RegrTask, SupervisedTask)<br />Create a classification / regression task for a given data set.</li>
+            
+      <li>
+        <code><a href="makeCostMeasure.html">makeCostMeasure</a></code><br />Creates a measure for non-standard misclassification costs.</li>
+            
+      <li>
+        <code><a href="makeCustomResampledMeasure.html">makeCustomResampledMeasure</a></code><br />Construct your own resampled performance measure.</li>
+            
+      <li>
+        <code><a href="FeatSelControl.html">makeFeatSelControlExhaustive</a></code>(FeatSelControl, FeatSelControlExhaustive, FeatSelControlGA, FeatSelControlRandom, FeatSelControlSequential, makeFeatSelControlGA, makeFeatSelControlRandom, makeFeatSelControlSequential)<br />Create control structures for feature selection.</li>
+            
+      <li>
+        <code><a href="makeFilterWrapper.html">makeFilterWrapper</a></code><br />Fuse learner with filter method.</li>
+            
+      <li>
+        <code><a href="makeFixedHoldoutInstance.html">makeFixedHoldoutInstance</a></code><br />Generate a fixed holdout instance for resampling.</li>
+            
+      <li>
+        <code><a href="makeLearner.html">makeLearner</a></code>(Learner)<br />Create learner object.</li>
+            
+      <li>
+        <code><a href="makeMeasure.html">makeMeasure</a></code>(Measure)<br />Construct performance measure.</li>
+            
+      <li>
+        <code><a href="makePreprocWrapper.html">makePreprocWrapper</a></code><br />Fuse learner with preprocessing.</li>
+            
+      <li>
+        <code><a href="makeResampleDesc.html">makeResampleDesc</a></code>(ResampleDesc)<br />Create a description object for a resampling strategy.</li>
+            
+      <li>
+        <code><a href="makeResampleInstance.html">makeResampleInstance</a></code>(ResampleInstance)<br />Instantiates a resampling strategy object.</li>
+            
+      <li>
+        <code><a href="TuneControl.html">makeTuneControlCMAES</a></code>(makeTuneControlGrid, makeTuneControlIrace, makeTuneControlOptim, makeTuneControlRandom, TuneControl, TuneControlCMAES, TuneControlGrid, TuneControlIrace, TuneControlOptim, TuneControlRandom)<br />Create control structures for tuning.</li>
+            
+      <li>
+        <code><a href="makeTuneWrapper.html">makeTuneWrapper</a></code><br />Fuse learner with tuning.</li>
+            
+      <li>
+        <code><a href="makeWrappedModel.html">makeWrappedModel</a></code>(WrappedModel)<br />Induced model of learner.</li>
+            
+      <li>
+        <code><a href="measures.html">measures</a></code>(acc, auc, ber, f1, fdr, featperc, fn, fnr, fp, fpr, gmean, gpr, mae, mcc, medae, medse, mmce, mse, npv, ppv, rmse, sae, sse, timeboth, timepredict, timetrain, tn, tnr, tp, tpr)<br />Performance measures.</li>
+            
+      <li>
+        <code><a href="performance.html">performance</a></code><br />Measure performance of prediction.</li>
+            
+      <li>
+        <code><a href="Prediction.html">Prediction</a></code><br />Prediction object.</li>
+            
+      <li>
+        <code><a href="predictLearner.html">predictLearner</a></code><br />Predict new data with an R learner.</li>
+            
+      <li>
+        <code><a href="predict.WrappedModel.html">predict.WrappedModel</a></code><br />Predict new data.</li>
+            
+      <li>
+        <code><a href="resample.html">resample</a></code><br />Fit models according to a resampling strategy.</li>
+            
+      <li>
+        <code><a href="ResamplePrediction.html">ResamplePrediction</a></code><br />Prediction from resampling.</li>
+            
+      <li>
+        <code><a href="RLearner.html">RLearner</a></code>(makeRLearner, makeRLearnerClassif, makeRLearnerRegr, RLearnerClassif, RLearnerRegr)<br />Internal construction / wrapping of learner object.</li>
+            
+      <li>
+        <code><a href="selectFeatures.html">selectFeatures</a></code><br />Feature selection by wrapper approach.</li>
+            
+      <li>
+        <code><a href="setAggregation.html">setAggregation</a></code><br />Set aggregation function of measure.</li>
+            
+      <li>
+        <code><a href="setHyperPars.html">setHyperPars</a></code><br />Set the hyperparameters of a learner object.</li>
+            
+      <li>
+        <code><a href="setHyperPars2.html">setHyperPars2</a></code><br />Only exported for internal use.</li>
+            
+      <li>
+        <code><a href="setPredictType.html">setPredictType</a></code><br />Set the type of predictions the learner should return.</li>
+            
+      <li>
+        <code><a href="setThreshold.html">setThreshold</a></code><br />Set threshold of prediction object.</li>
+            
+      <li>
+        <code><a href="subsetTask.html">subsetTask</a></code><br />Subset data in task.</li>
+            
+      <li>
+        <code><a href="TaskDesc.html">TaskDesc</a></code><br />Description object for task.</li>
+            
+      <li>
+        <code><a href="train.html">train</a></code><br />Train a learning algorithm.</li>
+            
+      <li>
+        <code><a href="trainLearner.html">trainLearner</a></code><br />Train an R learner.</li>
+            
+      <li>
+        <code><a href="tuneParams.html">tuneParams</a></code><br />Hyperparameter tuning.</li>
+            
+      <li>
+        <code><a href="TuneResult.html">TuneResult</a></code><br />Result of tuning.</li>
+            
+      <li>
+        <code><a href="tuneThreshold.html">tuneThreshold</a></code><br />Tune prediction threshold.</li>
+    
+    </ul>
+  </div>
+  
+  <div class="span3 offset1">
+        
+    <h2>Dependencies</h2>
+    <ul>
+      <li><strong>Depends</strong>: ParamHelpers</li>
+      <li><strong>Imports</strong>: BBmisc, parallelMap, codetools</li>
+      <li><strong>Suggests</strong>: testthat, snowfall, ada, adabag, cmaes, crs, DiceKriging, DiceOptim, e1071, earth, FNN, FSelector, gbm, irace, kernlab, kknn, klaR, mboost, mda, mlbench, nnet, party, penalized, pls, randomForest, reshape, robustbase, rpart, rsm, RWeka, ROCR</li>
+      <li><strong>Extends</strong>: </li>
+    </ul>
+     
+    
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

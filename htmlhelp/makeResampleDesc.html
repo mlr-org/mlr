@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>makeResampleDesc. mlr 1.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">mlr 1.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Create a description object for a resampling strategy.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre>makeResampleDesc(method, predict = "test", ..., stratify = FALSE)</pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>method</dt>
+      <dd>[<code>character(1)</code>] &#147;CV&#148; for
+  cross-validation, &#147;LOO&#148; for leave-one-out,
+  &#147;RepCV&#148; for repeated cross-validation,
+  &#147;Bootstrap&#148; for out-of-bag bootstrap,
+  &#147;Subsample&#148; for subsampling, &#147;Holdout&#148; for
+  holdout.</dd>
+      <dt>predict</dt>
+      <dd>[<code>character(1)</code>] What to predict
+  during resampling: &#147;train&#148;, &#147;test&#148; or
+  &#147;both&#148; sets. Default is &#147;test&#148;.</dd>
+      <dt>...</dt>
+      <dd>[any] Further parameters for strategies.
+  iters [<code>numeric(1)</code>]: Number of iterations, for
+  &#147;CV&#148;, &#147;Subsample&#148; and &#147;Boostrap&#148;
+  split [<code>numeric(1)</code>]: Proportion of training cases
+  for &#147;Holdout&#148; and &#147;Subsample&#148; between 0 and
+  1. Default is 2/3. reps [integer(1)]: Repeats for
+  &#147;RepCV&#148;. Here <code>iters = folds * reps</code>. Default
+  is 10.  folds [integer(1)]: Folds in the repeated CV
+  for <code>RepCV</code>. Here <code>iters = folds * reps</code>.
+  Default is 10.</dd>
+      <dt>stratify</dt>
+      <dd>[<code>logical(1)</code>] Should
+  stratification be done for the classes in classification
+  tasks?  This means that the resampling strategy is
+  applied to all classes individually and the resulting
+  index sets are joined to make sure that the proportion of
+  observations in each training set is as in the original
+  data set. Useful for imbalanced class sizes.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+      
+      <p><code><a href='makeResampleDesc.html'>ResampleDesc</a></code>.</p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p>A description of a resampling algorithm contains all
+  necessary information to create a
+  <code><a href='makeResampleInstance.html'>ResampleInstance</a></code>, when given the size of
+  the data set.</p>
+  
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+      
+      <p>Object slots: <span class='describe'> id
+  [<code>character(1)</code>]Name of resampling strategy.
+  iters [<code>integer(1)</code>]Number of iterations.
+  Note that this is always the complete number of generated
+  train/test sets, so for a 10-times repeated 5fold
+  cross-validation it would be 50. predict
+  [<code>character(1)</code>]What to predict during resampling:
+  &#147;train&#148;, &#147;test&#148; or &#147;both&#148; sets. </span></p>
+  
+      <p>Repeated cross-validation: Use &#147;RepCV&#148;. Then you
+  have to set the aggregation function for your preferred
+  performance measure to &#147;testgroup.mean&#148; via
+  <code><a href='setAggregation.html'>setAggregation</a></code>. B632 bootstrap: Use
+  &#147;Bootstrap&#148; for bootstrap and set predict to
+  &#147;both&#148;.  Then you have to set the aggregation
+  function for your preferred performance measure to
+  &#147;b632&#148; via <code><a href='setAggregation.html'>setAggregation</a></code>. B632+
+  bootstrap: Use &#147;Bootstrap&#148; for bootstrap and set
+  predict to &#147;both&#148;.  Then you have to set the
+  aggregation function for your preferred performance
+  measure to &#147;b632plus&#148; via
+  <code><a href='setAggregation.html'>setAggregation</a></code>. Fixed Holdout set: Use
+  <code><a href='makeFixedHoldoutInstance.html'>makeFixedHoldoutInstance</a></code>.</p>
+  
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'>## Bootstraping
+makeResampleDesc("Bootstrap", iters = 10)
+</div>
+<div class='output'>Resample description: OOB bootstrapping with 10 iterations.
+Predict: test
+Stratification: FALSE
+</div>
+<div class='input'>makeResampleDesc("Bootstrap", iters = 10, predict = "both")
+</div>
+<div class='output'>Resample description: OOB bootstrapping with 10 iterations.
+Predict: both
+Stratification: FALSE
+</div>
+<div class='input'>
+## Subsampling
+makeResampleDesc("Subsample", iters = 10, split = 3/4)
+</div>
+<div class='output'>Resample description: subsampling with 10 iterations and 0.75 split rate.
+Predict: test
+Stratification: FALSE
+</div>
+<div class='input'>makeResampleDesc("Subsample", iters = 10)
+</div>
+<div class='output'>Resample description: subsampling with 10 iterations and 0.67 split rate.
+Predict: test
+Stratification: FALSE
+</div>
+<div class='input'>
+## Holdout respectively test sample estimation
+makeResampleDesc("Holdout")
+</div>
+<div class='output'>Resample description: holdout with 0.67 split rate.
+Predict: test
+Stratification: FALSE
+</div></pre>
+  </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>makeResampleDesc</li><li>ResampleDesc</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

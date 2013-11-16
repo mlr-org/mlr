@@ -23,6 +23,7 @@ clean:
 	printf  "\nCleaning up ...\n"
 	${DELETE} src/*.o src/*.so *.tar.gz
 	${DELETE} html
+	${DELETE} staticdocs
 	${DELETE} *.Rcheck
 	${DELETE} .RData .Rhistory
 
@@ -50,9 +51,11 @@ check-rev-dep: package
 	printf "\nRunning reverse dependency checks for CRAN ...\n"
 	${RSCRIPT} ./tools/check-rev-dep
 
-html: install
+htmlhelp: install
 	printf "\nGenerating html docs...\n"
-	${DELETE} html
-	mkdir html
+	${DELETE} htmlhelp
+	mkdir staticdocs
+	mkdir htmlhelp
 	${RSCRIPT} ./tools/generate-html-docs
+	${DELETE} Rplots*.pdf
 

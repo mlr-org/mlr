@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>measures. mlr 1.2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="#">mlr 1.2</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Performance measures.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre>measures()
+
+featperc
+
+timetrain
+
+timepredict
+
+timeboth
+
+sse
+
+mse
+
+rmse
+
+medse
+
+sae
+
+mae
+
+medae
+
+mmce
+
+acc
+
+ber
+
+auc
+
+tp
+
+tn
+
+fp
+
+fn
+
+tpr
+
+tnr
+
+fpr
+
+fnr
+
+ppv
+
+npv
+
+fdr
+
+mcc
+
+f1
+
+gmean
+
+gpr</pre>
+        
+    <div class="Format">
+      <h2>Format</h2>
+      
+      <p>List of 12
+ $ id                : chr "featperc"
+ $ minimize          : logi TRUE
+ $ classif           : logi TRUE
+ $ regr              : logi TRUE
+ $ only.binary       : logi FALSE
+ $ allowed.pred.types: chr [1:2] "response" "prob"
+ $ req.pred          : logi TRUE
+ $ req.model         : logi TRUE
+ $ req.task          : logi FALSE
+ $ fun               :function (task, model, pred, extra.args)  
+ $ extra.args        : list()
+ $ aggr              :List of 2
+  ..- attr(*, "class")= chr "Aggregation"
+ - attr(*, "class")= chr "Measure"</p>
+  
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+      
+      <p>A performance measure is evaluated after a single
+  train/predict step and returns a single number to assess
+  the quality of the prediction (or maybe only the model,
+  think AIC). The measure itself knows whether it wants to
+  be minimized or maximized and for what tasks it is
+  applicable. See below for a list of already implemented
+  measures. If you want a measure for a misclassification
+  cost matrix, look at <code><a href='makeCostMeasure.html'>makeCostMeasure</a></code>. If
+  you want to implement your own measure, look at
+  <code><a href='makeMeasure.html'>makeMeasure</a></code>.</p>
+  
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+      
+      <p>Classification: <ul>
+<li><b>mmce</b> Mean
+  misclassification error. </li>
+<li><b>acc</b>
+  Accuracy. </li>
+<li><b>ber</b> Balanced error rate.
+  Mean of misclassification error rates on all individual
+  classes. </li>
+<li><b>tp</b> True positives.
+  </li>
+<li><b>tpr</b> True positive rate, also called hit
+  rate or recall. </li>
+<li><b>fp</b> False positives,
+  also called false alarms. </li>
+<li><b>fpr</b> False
+  positive rate, also called false alarm rate or fall-out.
+  </li>
+<li><b>tn</b> True negatives, also called correct
+  rejections. </li>
+<li><b>tnr</b> True negative rate.
+  Also called specificity. </li>
+<li><b>fn</b> False
+  negatives, also called misses. </li>
+<li><b>fnr</b>
+  False negative rate. </li>
+<li><b>ppv</b> Positive
+  predictive value, also called precision.
+  </li>
+<li><b>npv</b> Negative predictive value.
+  </li>
+<li><b>fdr</b> False discovery rate.
+  </li>
+<li><b>f1</b> F1 measure. </li>
+<li><b>mcc</b>
+  Matthews correlation coefficient.
+  </li>
+<li><b>gmean</b> G-mean, geomentric mean of recall
+  and specificity. </li>
+<li><b>gpr</b> Geometric mean of
+  precision and recall. </li>
+<li><b>auc</b> Area under
+  the curve. </li>
+</ul>
+ Only <code>mmce</code>, <code>acc</code> and <code>ber</code>
+  can be used for multiclass problems.</p>
+  
+      <p>Regression: <ul>
+<li><b>sse</b> Sum of
+  squared errors </li>
+<li><b>mse</b> Mean of squared
+  errors </li>
+<li><b>medse</b> Median of squared errors
+  </li>
+<li><b>sae</b> Sum of absolute errors
+  </li>
+<li><b>mae</b> Mean of absolute errors
+  </li>
+<li><b>medae</b> Median of absolute errors
+  </li>
+<li><b>rmse</b> Root mean square error </li>
+</ul></p>
+  
+      <p>General: <ul>
+<li><b>timetrain</b> Time of
+  fitting the model </li>
+<li><b>timepredict</b> Time of
+  predicting test set </li>
+<li><b>timeboth</b> timetrain
+  + trainpredict </li>
+<li><b>featperc</b> Percentage of
+  original features used for model, useful for feature
+  selection. </li>
+</ul></p>
+  
+      <p></p>
+  
+    </div>
+      </div>
+  <div class="span4">
+    <!-- <ul>
+      <li>acc</li><li>auc</li><li>ber</li><li>f1</li><li>fdr</li><li>featperc</li><li>fn</li><li>fnr</li><li>fp</li><li>fpr</li><li>gmean</li><li>gpr</li><li>mae</li><li>mcc</li><li>measures</li><li>medae</li><li>medse</li><li>mmce</li><li>mse</li><li>npv</li><li>ppv</li><li>rmse</li><li>sae</li><li>sse</li><li>timeboth</li><li>timepredict</li><li>timetrain</li><li>tn</li><li>tnr</li><li>tp</li><li>tpr</li>
+    </ul>
+    <ul>
+      <li>datasets</li>
+    </ul> -->
+      
+        
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

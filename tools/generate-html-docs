@@ -1,11 +1,6 @@
 #!/usr/bin/env Rscript --vanilla
 
-pkg.name = basename(getwd())
-setwd("html")
-try ({
-  library(knitr)
-  library(mlr)
-  knit_rd(pkg.name)
-})
-setwd("..")
+library(methods)
+library(staticdocs)
+build_package(".", "htmlhelp")
 
