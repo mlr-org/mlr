@@ -1,155 +1,121 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-<title>aggregations. mlr 1.2</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Aggregation methods.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
 
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/bootstrap-responsive.css" rel="stylesheet">
-<link href="css/highlight.css" rel="stylesheet">
-<link href="css/staticdocs.css" rel="stylesheet">
+<table width="100%" summary="page for aggregations {mlr}"><tr><td>aggregations {mlr}</td><td align="right">R Documentation</td></tr></table>
 
-<!--[if lt IE 9]>
-  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
-  </head>
+<h2>Aggregation methods.</h2>
 
-  <body>
-    <div class="navbar">
-  <div class="navbar-inner">
-    <div class="container">
-      <a class="brand" href="#">mlr 1.2</a>
-      <div class="nav">
-        <ul class="nav">
-          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+<h3>Description</h3>
 
-    <div class="container">
-      <header>
-        
-      </header>
-      
-      <h1>Aggregation methods.</h1>
+ <ul>
+<li><p><B>test.mean</B><br> Mean of performance
+values on test sets. </p>
+</li>
+<li><p><B>test.sd</B><br> Standard
+deviation of performance values on test sets.
+</p>
+</li>
+<li><p><B>test.median</B><br> Median of performance
+values on test sets. </p>
+</li>
+<li><p><B>test.min</B><br> Minimum
+of performance values on test sets.
+</p>
+</li>
+<li><p><B>test.max</B><br> Maximum of performance values
+on test sets. </p>
+</li>
+<li><p><B>test.sum</B><br> Sum of
+performance values on test sets.
+</p>
+</li>
+<li><p><B>train.mean</B><br> Mean of performance values
+on training sets. </p>
+</li>
+<li><p><B>train.sd</B><br> Standard
+deviation of performance values on training sets.
+</p>
+</li>
+<li><p><B>train.median</B><br> Median of performance
+values on training sets. </p>
+</li>
+<li><p><B>train.min</B><br>
+Minimum of performance values on training sets.
+</p>
+</li>
+<li><p><B>train.max</B><br> Maximum of performance values
+on training sets. </p>
+</li>
+<li><p><B>train.sum</B><br> Sum of
+performance values on training sets.
+</p>
+</li>
+<li><p><B>b632</B><br> Aggregation for B632 bootstrap.
+</p>
+</li>
+<li><p><B>b632plus</B><br> Aggregation for B632+
+bootstrap. </p>
+</li>
+<li><p><B>testgroup.mean</B><br> Performance
+values on test sets are grouped according to resampling
+method. The mean for very group is calculated, then the
+mean of those means. Mainly used for repeated CV. </p>
+</li></ul>
 
-<div class="row">
-  <div class="span8">
-    <h2>Usage</h2>
-    <pre>test.mean
 
-test.sd
 
-test.median
+<h3>Usage</h3>
 
-test.min
+<pre>
+  test.mean
 
-test.max
+  test.sd
 
-test.sum
+  test.median
 
-test.sqrt.of.mean
+  test.min
 
-train.mean
+  test.max
 
-train.sd
+  test.sum
 
-train.median
+  test.sqrt.of.mean
 
-train.min
+  train.mean
 
-train.max
+  train.sd
 
-train.sum
+  train.median
 
-b632
+  train.min
 
-b632plus
+  train.max
 
-testgroup.mean</pre>
-        
-    <div class="Format">
-      <h2>Format</h2>
-      
-      <p>List of 2
- $ id : chr "test.mean"
- $ fun:function (task, perf.test, perf.train, measure, group, pred)  
- - attr(*, "class")= chr "Aggregation"</p>
-  
-    </div>
+  train.sum
 
-    <div class="Description">
-      <h2>Description</h2>
-      
-      <p><ul>
-<li><b>test.mean</b> Mean of performance
-  values on test sets. </li>
-<li><b>test.sd</b> Standard
-  deviation of performance values on test sets.
-  </li>
-<li><b>test.median</b> Median of performance
-  values on test sets. </li>
-<li><b>test.min</b> Minimum
-  of performance values on test sets.
-  </li>
-<li><b>test.max</b> Maximum of performance values
-  on test sets. </li>
-<li><b>test.sum</b> Sum of
-  performance values on test sets.
-  </li>
-<li><b>train.mean</b> Mean of performance values
-  on training sets. </li>
-<li><b>train.sd</b> Standard
-  deviation of performance values on training sets.
-  </li>
-<li><b>train.median</b> Median of performance
-  values on training sets. </li>
-<li><b>train.min</b>
-  Minimum of performance values on training sets.
-  </li>
-<li><b>train.max</b> Maximum of performance values
-  on training sets. </li>
-<li><b>train.sum</b> Sum of
-  performance values on training sets.
-  </li>
-<li><b>b632</b> Aggregation for B632 bootstrap.
-  </li>
-<li><b>b632plus</b> Aggregation for B632+
-  bootstrap. </li>
-<li><b>testgroup.mean</b> Performance
-  values on test sets are grouped according to resampling
-  method. The mean for very group is calculated, then the
-  mean of those means. Mainly used for repeated CV. </li>
-</ul></p>
-  
-      <p></p>
-  
-    </div>
-      </div>
-  <div class="span4">
-    <!-- <ul>
-      <li>aggregations</li><li>b632</li><li>b632plus</li><li>testgroup.mean</li><li>test.max</li><li>test.mean</li><li>test.median</li><li>test.min</li><li>test.sd</li><li>test.sqrt.of.mean</li><li>test.sum</li><li>train.max</li><li>train.mean</li><li>train.median</li><li>train.min</li><li>train.sd</li><li>train.sum</li>
-    </ul>
-    <ul>
-      <li>datasets</li>
-    </ul> -->
-      
-    <h2>See also</h2>
-    
-  <code><a href='Aggregation.html'>Aggregation</a></code>
+  b632
 
-        
-  </div>
-</div>
-      
-      <footer>
-      <p class="pull-right"><a href="#">Back to top</a></p>
-<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
-      </footer>
-    </div>
-  </body>
-</html>
+  b632plus
+
+  testgroup.mean
+</pre>
+
+
+<h3>Format</h3>
+
+<p>List of 2
+$ id : chr &quot;test.mean&quot;
+$ fun:function (task, perf.test, perf.train, measure, group, pred)  
+- attr(*, &quot;class&quot;)= chr &quot;Aggregation&quot;</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="Aggregation.html">Aggregation</a></code>
+</p>
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

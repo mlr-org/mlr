@@ -1,139 +1,121 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-<title>performance. mlr 1.2</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Measure performance of prediction.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
 
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/bootstrap-responsive.css" rel="stylesheet">
-<link href="css/highlight.css" rel="stylesheet">
-<link href="css/staticdocs.css" rel="stylesheet">
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body>
 
-<!--[if lt IE 9]>
-  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
-  </head>
+<table width="100%" summary="page for performance {mlr}"><tr><td>performance {mlr}</td><td align="right">R Documentation</td></tr></table>
 
-  <body>
-    <div class="navbar">
-  <div class="navbar-inner">
-    <div class="container">
-      <a class="brand" href="#">mlr 1.2</a>
-      <div class="nav">
-        <ul class="nav">
-          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+<h2>Measure performance of prediction.</h2>
 
-    <div class="container">
-      <header>
-        
-      </header>
-      
-      <h1>Measure performance of prediction.</h1>
+<h3>Description</h3>
 
-<div class="row">
-  <div class="span8">
-    <h2>Usage</h2>
-    <pre>performance(pred, measure, task, model)</pre>
-    
-    <h2>Arguments</h2>
-    <dl>
-      <dt>pred</dt>
-      <dd>[<code><a href='Prediction.html'>Prediction</a></code>]  Prediction
-  object to evaluate.</dd>
-      <dt>measure</dt>
-      <dd>[<code><a href='makeMeasure.html'>Measure</a></code>] Performance
-  measure to evaluate.</dd>
-      <dt>task</dt>
-      <dd>[<code><a href='SupervisedTask.html'>SupervisedTask</a></code>] Learning
-  task, might be requested by performance measure, usually
-  not needed.</dd>
-      <dt>model</dt>
-      <dd>[<code><a href='makeWrappedModel.html'>WrappedModel</a></code>] Model built
-  on training data, might be requested by performance
-  measure, usually not needed.</dd>
-    </dl>
-    
-    <div class="Value">
-      <h2>Value</h2>
-      
-      <p>A single numerical performance value.</p>
-  
-    </div>
+<p>Measures the quality of a prediction w.r.t. some
+performance measure.
+</p>
 
-    <div class="Description">
-      <h2>Description</h2>
-      
-      <p>Measures the quality of a prediction w.r.t. some
-  performance measure.</p>
-  
-    </div>
-    
-    <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'>training.set <- seq(1, nrow(iris), by = 2)
-test.set <- seq(2, nrow(iris), by = 2)
 
-task <- makeClassifTask(data = iris, target = "Species")
-lrn <- makeLearner("classif.lda")
-mod <- train(lrn, task, subset = training.set)
-pred <- predict(mod, newdata = iris[test.set, ])
+<h3>Usage</h3>
+
+<pre>
+  performance(pred, measure, task, model)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>pred</code></td>
+<td>
+<p>[<code><a href="Prediction.html">Prediction</a></code>] <br> Prediction
+object to evaluate.</p>
+</td></tr>
+<tr valign="top"><td><code>measure</code></td>
+<td>
+<p>[<code><a href="makeMeasure.html">Measure</a></code>] Performance
+measure to evaluate.</p>
+</td></tr>
+<tr valign="top"><td><code>task</code></td>
+<td>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> Learning
+task, might be requested by performance measure, usually
+not needed.</p>
+</td></tr>
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>[<code><a href="makeWrappedModel.html">WrappedModel</a></code>]<br> Model built
+on training data, might be requested by performance
+measure, usually not needed.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A single numerical performance value.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="makeMeasure.html">makeMeasure</a></code>, <code><a href="measures.html">measures</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="r">
+training.set &lt;- seq(1, nrow(iris), by = 2)
+test.set &lt;- seq(2, nrow(iris), by = 2)
+
+task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
+lrn &lt;- makeLearner(&quot;classif.lda&quot;)
+mod &lt;- train(lrn, task, subset = training.set)
+pred &lt;- predict(mod, newdata = iris[test.set, ])
 
 ## Here we define the mean misclassification error (MMCE) as our performance measure
-my.mmce <- function(task, model, pred, extra.args) {
+my.mmce &lt;- function(task, model, pred, extra.args) {
   length(which(pred$data$response != pred$data$truth)) / nrow(pred$data)
 }
-ms <- makeMeasure(id = "misclassification.rate",
+ms &lt;- makeMeasure(id = &quot;misclassification.rate&quot;,
                   minimize = TRUE,
                   classif = TRUE,
-                  allowed.pred.types = "response",
+                  allowed.pred.types = &quot;response&quot;,
                   fun = my.mmce)
 performance(pred, ms, task, mod)
-</div>
-<div class='output'>[1] 0.04
-</div>
-<div class='input'>
+</code></pre>
+
+<pre><code>## [1] 0.04
+</code></pre>
+
+<pre><code class="r">
 ## Indeed the MMCE is already implemented in mlr beside other common performance measures
 performance(pred, measure = mmce)
-</div>
-<div class='output'>[1] 0.04
-</div>
-<div class='input'>
+</code></pre>
+
+<pre><code>## [1] 0.04
+</code></pre>
+
+<pre><code class="r">
 ## Compute multiple performance measures at once
-ms <- list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
+ms &lt;- list(&quot;mmce&quot; = mmce, &quot;acc&quot; = acc, &quot;timetrain&quot; = timetrain)
 sapply(ms, function(the.ms) {
   performance(pred, measure = the.ms, task, mod)
 })
-</div>
-<div class='output'>     mmce       acc timetrain 
-    0.040     0.960     0.012 
-</div></pre>
-  </div>
-  <div class="span4">
-    <!-- <ul>
-      <li>performance</li>
-    </ul>
-    <ul>
-      
-    </ul> -->
-      
-    <h2>See also</h2>
-    
-  <code><a href='makeMeasure.html'>makeMeasure</a></code>, <code><a href='measures.html'>measures</a></code>
+</code></pre>
 
-        
-  </div>
-</div>
-      
-      <footer>
-      <p class="pull-right"><a href="#">Back to top</a></p>
-<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
-      </footer>
-    </div>
-  </body>
-</html>
+<pre><code>##      mmce       acc timetrain 
+##     0.040     0.960     0.009
+</code></pre>
+
+<pre><code class="r">
+</code></pre>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

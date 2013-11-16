@@ -1,156 +1,158 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-<title>makeMeasure. mlr 1.2</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Construct performance measure.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
 
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/bootstrap-responsive.css" rel="stylesheet">
-<link href="css/highlight.css" rel="stylesheet">
-<link href="css/staticdocs.css" rel="stylesheet">
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body>
 
-<!--[if lt IE 9]>
-  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
-  </head>
+<table width="100%" summary="page for makeMeasure {mlr}"><tr><td>makeMeasure {mlr}</td><td align="right">R Documentation</td></tr></table>
 
-  <body>
-    <div class="navbar">
-  <div class="navbar-inner">
-    <div class="container">
-      <a class="brand" href="#">mlr 1.2</a>
-      <div class="nav">
-        <ul class="nav">
-          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+<h2>Construct performance measure.</h2>
 
-    <div class="container">
-      <header>
-        
-      </header>
-      
-      <h1>Construct performance measure.</h1>
+<h3>Description</h3>
 
-<div class="row">
-  <div class="span8">
-    <h2>Usage</h2>
-    <pre>makeMeasure(id, minimize, classif = FALSE, regr = FALSE, only.binary = FALSE, allowed.pred.types = character(0L), 
-  fun, extra.args = list(), aggr = test.mean)</pre>
-    
-    <h2>Arguments</h2>
-    <dl>
-      <dt>id</dt>
-      <dd>[<code>character(1)</code>] Name of measure.</dd>
-      <dt>minimize</dt>
-      <dd>[<code>logical(1)</code>] Should the measure
-  be minimized?  Default is in <code>TRUE</code>.</dd>
-      <dt>classif</dt>
-      <dd>[<code>logical(1)</code>] Is the measure
-  applicable for classification?  Default is <code>FALSE</code>.</dd>
-      <dt>regr</dt>
-      <dd>[<code>logical(1)</code>] Is the measure
-  applicable for regression?  Default is <code>FALSE</code>.</dd>
-      <dt>only.binary</dt>
-      <dd>[<code>logical(1)</code>] Is the measure
-  only applicable to binary classification?  Only
-  reasonable if <code>classif</code> is <code>TRUE</code>.  Default is
-  <code>FALSE</code>.</dd>
-      <dt>allowed.pred.types</dt>
-      <dd>[<code>character</code>] Which
-  prediction types are allowed for this measure?  Subset of
-  &#147;response&#148;,&#147;prob&#148;, &#147;se&#148;.  Default is
-  <code>character(0)</code>.</dd>
-      <dt>fun</dt>
-      <dd>[<code>function(task, model, pred,
-  extra.args)</code>] Calculates performance value.</dd>
-      <dt>extra.args</dt>
-      <dd>[<code>list</code>] List of extra
-  arguments which will always be passed to <code>fun</code>.
-  Default is empty list.</dd>
-      <dt>aggr</dt>
-      <dd>[<code><a href='Aggregation.html'>Aggregation</a></code>] Aggregation
-  funtion, which is used to aggregate the values measured
-  on test / training sets of the measure to a single value.
-  Default is <code><a href='aggregations.html'>test.mean</a></code>.</dd>
-    </dl>
-    
-    <div class="Value">
-      <h2>Value</h2>
-      
-      <p>[<code><a href='makeMeasure.html'>Measure</a></code>].</p>
-  
-    </div>
+<p>A measure object encapsulates a function to evaluate the
+performance of a prediction. Information about already
+implemented measures can be obtained here:
+<code><a href="measures.html">measures</a></code>.
+</p>
 
-    <div class="Description">
-      <h2>Description</h2>
-      
-      <p>A measure object encapsulates a function to evaluate the
-  performance of a prediction. Information about already
-  implemented measures can be obtained here:
-  <code><a href='measures.html'>measures</a></code>.</p>
-  
-    </div>
 
-    <div class="Details">
-      <h2>Details</h2>
-      
-      <p>A learner is trained on a a training set d1, results in a
-  model m, predicts another set d2 (which may be a
-  different one or the training set), resulting in the
-  prediction. The performance measure can now be defined
-  using all of the information of the original task, the
-  fitted model and the prediction.</p>
-  
-      <p>Object slots: <span class='describe'> id
-  [<code>character(1)</code>]See argument. minimize
-  [<code>logical(1)</code>]See argument. classif
-  [<code>logical(1)</code>]See argument. regr
-  [<code>logical(1)</code>]See argument. only.binary
-  [<code>logical(1)</code>]See argument.
-  allowed.pred.types [<code>character</code>]See
-  argument. req.pred [<code>logical(1)</code>]Is
-  prediction object required in calculation?
-  req.task [<code>logical(1)</code>]Is task object
-  required in calculation?. req.model
-  [<code>logical(1)</code>]Is model object required in
-  calculation? fun [<code>function</code>]See argument.
-  extra.args [<code>list</code>]See argument. aggr
-  [<code><a href='Aggregation.html'>Aggregation</a></code>]See argument.. </span></p>
-  
-    </div>
-    
-    <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'>f <- function(task, model, pred, extra.args)
+<h3>Usage</h3>
+
+<pre>
+  makeMeasure(id, minimize, classif = FALSE, regr = FALSE,
+    only.binary = FALSE,
+    allowed.pred.types = character(0L), fun,
+    extra.args = list(), aggr = test.mean)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>id</code></td>
+<td>
+<p>[<code>character(1)</code>]<br> Name of measure.</p>
+</td></tr>
+<tr valign="top"><td><code>minimize</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Should the measure
+be minimized?  Default is in <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>classif</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Is the measure
+applicable for classification?  Default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>regr</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Is the measure
+applicable for regression?  Default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>only.binary</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Is the measure
+only applicable to binary classification?  Only
+reasonable if <code>classif</code> is <code>TRUE</code>.  Default is
+<code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>allowed.pred.types</code></td>
+<td>
+<p>[<code>character</code>]<br> Which
+prediction types are allowed for this measure?  Subset of
+&ldquo;response&rdquo;,&ldquo;prob&rdquo;, &ldquo;se&rdquo;.  Default is
+<code>character(0)</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>fun</code></td>
+<td>
+<p>[<code>function(task, model, pred,
+  extra.args)</code>]<br> Calculates performance value.</p>
+</td></tr>
+<tr valign="top"><td><code>extra.args</code></td>
+<td>
+<p>[<code>list</code>]<br> List of extra
+arguments which will always be passed to <code>fun</code>.
+Default is empty list.</p>
+</td></tr>
+<tr valign="top"><td><code>aggr</code></td>
+<td>
+<p>[<code><a href="Aggregation.html">Aggregation</a></code>]<br> Aggregation
+funtion, which is used to aggregate the values measured
+on test / training sets of the measure to a single value.
+Default is <code><a href="aggregations.html">test.mean</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>A learner is trained on a a training set d1, results in a
+model m, predicts another set d2 (which may be a
+different one or the training set), resulting in the
+prediction. The performance measure can now be defined
+using all of the information of the original task, the
+fitted model and the prediction.
+</p>
+<p>Object slots: </p>
+ <dl>
+<dt>id
+[<code>character(1)</code>]</dt><dd><p>See argument.</p>
+</dd> <dt>minimize
+[<code>logical(1)</code>]</dt><dd><p>See argument.</p>
+</dd> <dt>classif
+[<code>logical(1)</code>]</dt><dd><p>See argument.</p>
+</dd> <dt>regr
+[<code>logical(1)</code>]</dt><dd><p>See argument.</p>
+</dd> <dt>only.binary
+[<code>logical(1)</code>]</dt><dd><p>See argument.</p>
+</dd>
+<dt>allowed.pred.types [<code>character</code>]</dt><dd><p>See
+argument.</p>
+</dd> <dt>req.pred [<code>logical(1)</code>]</dt><dd><p>Is
+prediction object required in calculation?</p>
+</dd>
+<dt>req.task [<code>logical(1)</code>]</dt><dd><p>Is task object
+required in calculation?.</p>
+</dd> <dt>req.model
+[<code>logical(1)</code>]</dt><dd><p>Is model object required in
+calculation?</p>
+</dd> <dt>fun [<code>function</code>]</dt><dd><p>See argument.</p>
+</dd>
+<dt>extra.args [<code>list</code>]</dt><dd><p>See argument.</p>
+</dd> <dt>aggr
+[<code><a href="Aggregation.html">Aggregation</a></code>]</dt><dd><p>See argument.</p>
+</dd></dl>
+<p>. 
+</p>
+
+
+<h3>Value</h3>
+
+<p>[<code><a href="makeMeasure.html">Measure</a></code>].
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="r">
+f &lt;- function(task, model, pred, extra.args)
   sum((pred$data$response - pred$data$truth)^2)
-makeMeasure(id="my.sse", minimize=TRUE, regr=TRUE, allowed.pred.types="response", fun=f)
-</div>
-<div class='output'>Performance measure: my.sse
-Minimize: TRUE
-Aggregated by: test.mean
-</div></pre>
-  </div>
-  <div class="span4">
-    <!-- <ul>
-      <li>makeMeasure</li><li>Measure</li>
-    </ul>
-    <ul>
-      
-    </ul> -->
-      
-        
-  </div>
-</div>
-      
-      <footer>
-      <p class="pull-right"><a href="#">Back to top</a></p>
-<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
-      </footer>
-    </div>
-  </body>
-</html>
+makeMeasure(id=&quot;my.sse&quot;, minimize=TRUE, regr=TRUE, allowed.pred.types=&quot;response&quot;, fun=f)
+</code></pre>
+
+<pre><code>## Performance measure: my.sse
+## Minimize: TRUE
+## Aggregated by: test.mean
+</code></pre>
+
+<pre><code class="r">
+</code></pre>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

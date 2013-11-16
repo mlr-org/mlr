@@ -1,131 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-<title>setHyperPars. mlr 1.2</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Set the hyperparameters of a learner object.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
 
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/bootstrap-responsive.css" rel="stylesheet">
-<link href="css/highlight.css" rel="stylesheet">
-<link href="css/staticdocs.css" rel="stylesheet">
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body>
 
-<!--[if lt IE 9]>
-  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
-  </head>
+<table width="100%" summary="page for setHyperPars {mlr}"><tr><td>setHyperPars {mlr}</td><td align="right">R Documentation</td></tr></table>
 
-  <body>
-    <div class="navbar">
-  <div class="navbar-inner">
-    <div class="container">
-      <a class="brand" href="#">mlr 1.2</a>
-      <div class="nav">
-        <ul class="nav">
-          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+<h2>Set the hyperparameters of a learner object.</h2>
 
-    <div class="container">
-      <header>
-        
-      </header>
-      
-      <h1>Set the hyperparameters of a learner object.</h1>
+<h3>Description</h3>
 
-<div class="row">
-  <div class="span8">
-    <h2>Usage</h2>
-    <pre>setHyperPars(learner, ..., par.vals)</pre>
-    
-    <h2>Arguments</h2>
-    <dl>
-      <dt>learner</dt>
-      <dd>[<code><a href='makeLearner.html'>Learner</a></code>] The learner.</dd>
-      <dt>...</dt>
-      <dd>[any] Named (hyper)parameters with new
-  setting. Alternatively these can be passed using the
-  <code>par.vals</code> argument.</dd>
-      <dt>par.vals</dt>
-      <dd>[<code>list</code>] Optional list of named
-  (hyper)parameter settings. The arguments in <code>...</code>
-  take precedence over values in this list.</dd>
-    </dl>
-    
-    <div class="Value">
-      <h2>Value</h2>
-      
-      <p>[<code><a href='makeLearner.html'>Learner</a></code>] with changed hyperparameters.</p>
-  
-    </div>
+<p>Set the hyperparameters of a learner object.
+</p>
 
-    <div class="Description">
-      <h2>Description</h2>
-      
-      <p>Set the hyperparameters of a learner object.</p>
-  
-    </div>
-    
-    <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'>cl1 <- makeLearner("classif.ksvm", sigma=1)
-cl2 <- setHyperPars(cl1, sigma=10, par.vals=list(C=2))
+
+<h3>Usage</h3>
+
+<pre>
+  setHyperPars(learner, ..., par.vals)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>learner</code></td>
+<td>
+<p>[<code><a href="makeLearner.html">Learner</a></code>]<br> The learner.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>[any]<br> Named (hyper)parameters with new
+setting. Alternatively these can be passed using the
+<code>par.vals</code> argument.</p>
+</td></tr>
+<tr valign="top"><td><code>par.vals</code></td>
+<td>
+<p>[<code>list</code>]<br> Optional list of named
+(hyper)parameter settings. The arguments in <code>...</code>
+take precedence over values in this list.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>[<code><a href="makeLearner.html">Learner</a></code>] with changed hyperparameters.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>See <code><a href="getHyperPars.html">getHyperPars</a></code> for a function to retrieve
+the currently set hyperparameters. To get a list of all
+hyperparameters of a learner, see the <code>par.set</code> slot
+of the <code><a href="makeLearner.html">Learner</a></code> object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="r">
+cl1 &lt;- makeLearner(&quot;classif.ksvm&quot;, sigma=1)
+cl2 &lt;- setHyperPars(cl1, sigma=10, par.vals=list(C=2))
 print(cl1)
-</div>
-<div class='output'>Learner classif.ksvm from package kernlab
-Type: classif
-Class: classif.ksvm
-Predict-Type: response
-Hyperparameters: fit=FALSE,sigma=1.00
+</code></pre>
 
-Supported features Numerics:TRUE Factors:TRUE
-Supports missings: FALSE
-Supports weights: FALSE
-Supports classes: two,multi
-Supports probabilities: TRUE
-</div>
-<div class='input'># note the now set and altered hyperparameters:
+<pre><code>## Learner classif.ksvm from package kernlab
+## Type: classif
+## Class: classif.ksvm
+## Predict-Type: response
+## Hyperparameters: fit=FALSE,sigma=1.00
+## 
+## Supported features Numerics:TRUE Factors:TRUE
+## Supports missings: FALSE
+## Supports weights: FALSE
+## Supports classes: two,multi
+## Supports probabilities: TRUE
+</code></pre>
+
+<pre><code class="r"># note the now set and altered hyperparameters:
 print(cl2)
-</div>
-<div class='output'>Learner classif.ksvm from package kernlab
-Type: classif
-Class: classif.ksvm
-Predict-Type: response
-Hyperparameters: fit=FALSE,sigma=10.00,C=2.00
+</code></pre>
 
-Supported features Numerics:TRUE Factors:TRUE
-Supports missings: FALSE
-Supports weights: FALSE
-Supports classes: two,multi
-Supports probabilities: TRUE
-</div></pre>
-  </div>
-  <div class="span4">
-    <!-- <ul>
-      <li>setHyperPars</li>
-    </ul>
-    <ul>
-      
-    </ul> -->
-      
-    <h2>See also</h2>
-    
-  See <code><a href='getHyperPars.html'>getHyperPars</a></code> for a function to retrieve
-  the currently set hyperparameters. To get a list of all
-  hyperparameters of a learner, see the <code>par.set</code> slot
-  of the <code><a href='makeLearner.html'>Learner</a></code> object.
+<pre><code>## Learner classif.ksvm from package kernlab
+## Type: classif
+## Class: classif.ksvm
+## Predict-Type: response
+## Hyperparameters: fit=FALSE,sigma=10.00,C=2.00
+## 
+## Supported features Numerics:TRUE Factors:TRUE
+## Supports missings: FALSE
+## Supports weights: FALSE
+## Supports classes: two,multi
+## Supports probabilities: TRUE
+</code></pre>
 
-        
-  </div>
-</div>
-      
-      <footer>
-      <p class="pull-right"><a href="#">Back to top</a></p>
-<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
-      </footer>
-    </div>
-  </body>
-</html>
+<pre><code class="r">
+</code></pre>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

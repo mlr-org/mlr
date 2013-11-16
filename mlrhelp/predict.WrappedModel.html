@@ -1,139 +1,121 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-<title>predict.WrappedModel. mlr 1.2</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Predict new data.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
 
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/bootstrap-responsive.css" rel="stylesheet">
-<link href="css/highlight.css" rel="stylesheet">
-<link href="css/staticdocs.css" rel="stylesheet">
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body>
 
-<!--[if lt IE 9]>
-  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
-  </head>
+<table width="100%" summary="page for predict.WrappedModel {mlr}"><tr><td>predict.WrappedModel {mlr}</td><td align="right">R Documentation</td></tr></table>
 
-  <body>
-    <div class="navbar">
-  <div class="navbar-inner">
-    <div class="container">
-      <a class="brand" href="#">mlr 1.2</a>
-      <div class="nav">
-        <ul class="nav">
-          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+<h2>Predict new data.</h2>
 
-    <div class="container">
-      <header>
-        
-      </header>
-      
-      <h1>Predict new data.</h1>
+<h3>Description</h3>
 
-<div class="row">
-  <div class="span8">
-    <h2>Usage</h2>
-    <pre>predict(object, task, newdata, subset, ...)</pre>
-    
-    <h2>Arguments</h2>
-    <dl>
-      <dt>object</dt>
-      <dd>[<code><a href='makeWrappedModel.html'>WrappedModel</a></code>] Wrapped
-  model, result of <code><a href='train.html'>train</a></code>.</dd>
-      <dt>task</dt>
-      <dd>[<code><a href='SupervisedTask.html'>SupervisedTask</a></code>] The task.
-  If this is passed, data from this task is predicted.</dd>
-      <dt>newdata</dt>
-      <dd>[<code>data.frame</code>] New observations
-  which should be predicted.  Pass this alternatively
-  instead of <code>task</code>.</dd>
-      <dt>subset</dt>
-      <dd>[<code>integer</code>] Index vector to subset
-  <code>task</code> or <code>newdata</code>.  Default is all data.</dd>
-      <dt>...</dt>
-      <dd>[any] Currently ignored.</dd>
-    </dl>
-    
-    <div class="Value">
-      <h2>Value</h2>
-      
-      <p>[<code><a href='Prediction.html'>Prediction</a></code>].</p>
-  
-    </div>
+<p>Predict the target variable of new data using a fitted
+model. What is stored exactly in the
+[<code><a href="Prediction.html">Prediction</a></code>] object depends on the
+<code>predict.type</code> setting of the <code><a href="makeLearner.html">Learner</a></code>.
+</p>
 
-    <div class="Description">
-      <h2>Description</h2>
-      
-      <p>Predict the target variable of new data using a fitted
-  model. What is stored exactly in the
-  [<code><a href='Prediction.html'>Prediction</a></code>] object depends on the
-  <code>predict.type</code> setting of the <code><a href='makeLearner.html'>Learner</a></code>.</p>
-  
-    </div>
-    
-    <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'>## split iris data in training and test set
-n <- nrow(iris)
-mixed.set <- sample(1:n)
-training.set <- mixed.set[1:(n/2)]
-test.set <- mixed.set[(n/2 + 1):n]
+
+<h3>Usage</h3>
+
+<pre>
+  ## S3 method for class 'WrappedModel'
+ predict(object, task, newdata,
+    subset, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>[<code><a href="makeWrappedModel.html">WrappedModel</a></code>]<br> Wrapped
+model, result of <code><a href="../../caret/html/train.html">train</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>task</code></td>
+<td>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> The task.
+If this is passed, data from this task is predicted.</p>
+</td></tr>
+<tr valign="top"><td><code>newdata</code></td>
+<td>
+<p>[<code>data.frame</code>]<br> New observations
+which should be predicted.  Pass this alternatively
+instead of <code>task</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>subset</code></td>
+<td>
+<p>[<code>integer</code>]<br> Index vector to subset
+<code>task</code> or <code>newdata</code>.  Default is all data.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>[any]<br> Currently ignored.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>[<code><a href="Prediction.html">Prediction</a></code>].
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="r">
+## split iris data in training and test set
+n &lt;- nrow(iris)
+mixed.set &lt;- sample(1:n)
+training.set &lt;- mixed.set[1:(n/2)]
+test.set &lt;- mixed.set[(n/2 + 1):n]
 
 ## use linear discriminant analysis as learner for classification task
-task <- makeClassifTask(data = iris, target = "Species")
-learner <- makeLearner("classif.lda", method = "mle")
-mod <- train(learner, task, subset = training.set)
+task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
+learner &lt;- makeLearner(&quot;classif.lda&quot;, method = &quot;mle&quot;)
+mod &lt;- train(learner, task, subset = training.set)
 
 ## predict class labels for test data
-pred <- predict(mod, newdata = iris[test.set,])
+pred &lt;- predict(mod, newdata = iris[test.set,])
 head(pred$data)
-</div>
-<div class='output'>       truth   response
-1     setosa     setosa
-2  virginica  virginica
-3  virginica  virginica
-4 versicolor versicolor
-5     setosa     setosa
-6     setosa     setosa
-</div>
-<div class='input'>
+</code></pre>
+
+<pre><code>##        truth   response
+## 1  virginica  virginica
+## 2 versicolor versicolor
+## 3  virginica  virginica
+## 4 versicolor versicolor
+## 5 versicolor versicolor
+## 6 versicolor versicolor
+</code></pre>
+
+<pre><code class="r">
 ## predict now probabiliies instead of class labels
-learner <- makeLearner("classif.lda", method = "mle", predict.type = "prob")
-mod <- train(learner, task, subset = training.set)
-pred <- predict(mod, newdata = iris[test.set, ])
+learner &lt;- makeLearner(&quot;classif.lda&quot;, method = &quot;mle&quot;, predict.type = &quot;prob&quot;)
+mod &lt;- train(learner, task, subset = training.set)
+pred &lt;- predict(mod, newdata = iris[test.set, ])
 head(pred$data)
-</div>
-<div class='output'>         truth  prob.setosa prob.versicolor prob.virginica   response
-49      setosa 1.000000e+00    7.888640e-26   4.937392e-50     setosa
-101  virginica 5.602924e-55    3.455413e-09   1.000000e+00  virginica
-122  virginica 1.720159e-40    5.713976e-04   9.994286e-01  virginica
-59  versicolor 5.136293e-21    9.999737e-01   2.626451e-05 versicolor
-35      setosa 1.000000e+00    9.787244e-19   1.033302e-40     setosa
-34      setosa 1.000000e+00    3.524514e-32   2.033230e-58     setosa
-</div></pre>
-  </div>
-  <div class="span4">
-    <!-- <ul>
-      <li>predict.WrappedModel</li>
-    </ul>
-    <ul>
-      
-    </ul> -->
-      
-        
-  </div>
-</div>
-      
-      <footer>
-      <p class="pull-right"><a href="#">Back to top</a></p>
-<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
-      </footer>
-    </div>
-  </body>
-</html>
+</code></pre>
+
+<pre><code>##          truth prob.setosa prob.versicolor prob.virginica   response
+## 144  virginica   2.208e-58       1.548e-07      1.000e+00  virginica
+## 58  versicolor   8.611e-18       1.000e+00      6.160e-10 versicolor
+## 126  virginica   3.427e-45       1.054e-02      9.895e-01  virginica
+## 99  versicolor   6.953e-14       1.000e+00      1.457e-10 versicolor
+## 59  versicolor   8.153e-25       1.000e+00      1.929e-06 versicolor
+## 57  versicolor   3.139e-28       9.996e-01      3.717e-04 versicolor
+</code></pre>
+
+<pre><code class="r">
+</code></pre>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

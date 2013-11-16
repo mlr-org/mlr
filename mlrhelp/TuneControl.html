@@ -1,156 +1,133 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-<title>makeTuneControlCMAES. mlr 1.2</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Create control structures for tuning.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
 
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/bootstrap-responsive.css" rel="stylesheet">
-<link href="css/highlight.css" rel="stylesheet">
-<link href="css/staticdocs.css" rel="stylesheet">
+<table width="100%" summary="page for makeTuneControlCMAES {mlr}"><tr><td>makeTuneControlCMAES {mlr}</td><td align="right">R Documentation</td></tr></table>
 
-<!--[if lt IE 9]>
-  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
-  </head>
+<h2>Create control structures for tuning.</h2>
 
-  <body>
-    <div class="navbar">
-  <div class="navbar-inner">
-    <div class="container">
-      <a class="brand" href="#">mlr 1.2</a>
-      <div class="nav">
-        <ul class="nav">
-          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+<h3>Description</h3>
 
-    <div class="container">
-      <header>
-        
-      </header>
-      
-      <h1>Create control structures for tuning.</h1>
+<p>The following tuners are available: </p>
 
-<div class="row">
-  <div class="span8">
-    <h2>Usage</h2>
-    <pre>makeTuneControlCMAES(same.resampling.instance = TRUE, start, ...)
+<dl>
+<dt>makeTuneControlGrid</dt><dd><p>Grid search. All kinds of
+parameter types can be handled, but you have discretize
+them yourself by always using
+<code><a href="../../ParamHelpers/html/makeDiscreteParam.html">makeDiscreteParam</a></code> in the
+<code>par.set</code> passed to <code><a href="tuneParams.html">tuneParams</a></code>.</p>
+</dd>
+<dt>makeTuneControlRandom</dt><dd><p>Random search. All kinds of
+parameter types can be handled.</p>
+</dd>
+<dt>makeTuneControlOptim</dt><dd><p>Tuning with
+<code><a href="../../stats/html/optim.html">optim</a></code>. Can handle numeric(vector)
+and integer(vector) hyperparameters. For integers the
+internally proposed numeric values are automatically
+rounded.</p>
+</dd> <dt>makeTuneControlCMAES</dt><dd><p>CMA Evolution
+Strategy with method <code><a href="../../cmaes/html/cma_es.html">cma_es</a></code>. Can
+handle numeric(vector) and integer(vector)
+hyperparameters. For integers the internally proposed
+numeric values are automatically rounded.</p>
+</dd>
+<dt>makeTuneControlIrace</dt><dd><p>Tuning with iterated F-Racing
+with method <code><a href="../../irace/html/irace.html">irace</a></code>. All kinds of
+parameter types can be handled.</p>
+</dd> </dl>
 
-makeTuneControlGrid(same.resampling.instance = TRUE)
 
-makeTuneControlIrace(n.instances = 100L, show.irace.output = FALSE, ...)
 
-makeTuneControlOptim(same.resampling.instance = TRUE, start, ...)
+<h3>Usage</h3>
 
-makeTuneControlRandom(same.resampling.instance = TRUE, maxit = 100L)</pre>
-    
-    <h2>Arguments</h2>
-    <dl>
-      <dt>same.resampling.instance</dt>
-      <dd>[<code>logical(1)</code>]
-  Should the same resampling instance be used for all
-  evaluations to reduce variance?  Default is <code>TRUE</code>.</dd>
-      <dt>start</dt>
-      <dd>[<code>numeric</code>] Named list of initial
-  parameter values.</dd>
-      <dt>n.instances</dt>
-      <dd>[<code>integer(1)</code>] Number of
-  random resampling instances for irace, see details.
-  Default is 100.</dd>
-      <dt>maxit</dt>
-      <dd>[<code>integer(1)</code>] Number of iterations
-  for random search.  Default is 100.</dd>
-      <dt>show.irace.output</dt>
-      <dd>[<code>logical(1)</code>] Show
-  console output of irace while tuning?  Default is
-  <code>FALSE</code>.</dd>
-      <dt>...</dt>
-      <dd>[any] Further control parameters passed to
-  the <code>control</code> argument of
-  <code><a href='http://www.inside-r.org/r-doc/stats/optim'>optim</a></code>, the <code>control</code> argument
-  of <code><a href='http://www.inside-r.org/r-doc/cmaes/cma_es'>cma_es</a></code>, <code>tunerConfig</code>
-  argument of <code><a href='http://www.inside-r.org/r-doc/irace/irace-package'>irace</a></code>.</dd>
-    </dl>
-    
-    <div class="Value">
-      <h2>Value</h2>
-      
-      <p>[<code><a href='TuneControl.html'>TuneControl</a></code>]. The specific subclass is one
-  of <code><a href='TuneControl.html'>TuneControlGrid</a></code>,
-  <code><a href='TuneControl.html'>TuneControlRandom</a></code>,
-  <code><a href='TuneControl.html'>TuneControlOptim</a></code>,
-  <code><a href='TuneControl.html'>TuneControlCMAES</a></code>,
-  <code><a href='TuneControl.html'>TuneControlIrace</a></code>.</p>
-  
-    </div>
+<pre>
+  makeTuneControlCMAES(same.resampling.instance = TRUE,
+    start, ...)
 
-    <div class="Description">
-      <h2>Description</h2>
-      
-      <p>The following tuners are available: <span class='describe'>
-  makeTuneControlGridGrid search. All kinds of
-  parameter types can be handled, but you have discretize
-  them yourself by always using
-  <code><a href='http://www.inside-r.org/r-doc/ParamHelpers/Param'>makeDiscreteParam</a></code> in the
-  <code>par.set</code> passed to <code><a href='tuneParams.html'>tuneParams</a></code>.
-  makeTuneControlRandomRandom search. All kinds of
-  parameter types can be handled.
-  makeTuneControlOptimTuning with
-  <code><a href='http://www.inside-r.org/r-doc/stats/optim'>optim</a></code>. Can handle numeric(vector)
-  and integer(vector) hyperparameters. For integers the
-  internally proposed numeric values are automatically
-  rounded. makeTuneControlCMAESCMA Evolution
-  Strategy with method <code><a href='http://www.inside-r.org/r-doc/cmaes/cma_es'>cma_es</a></code>. Can
-  handle numeric(vector) and integer(vector)
-  hyperparameters. For integers the internally proposed
-  numeric values are automatically rounded.
-  makeTuneControlIraceTuning with iterated F-Racing
-  with method <code><a href='http://www.inside-r.org/r-doc/irace/irace-package'>irace</a></code>. All kinds of
-  parameter types can be handled. </span></p>
-  
-    </div>
+  makeTuneControlGrid(same.resampling.instance = TRUE)
 
-    <div class="Details">
-      <h2>Details</h2>
-      
-      <p>Dependent parameters can currently only be handled by
-  random search and irace.</p>
-  
-      <p>Some notes on irace: For resampling you have to pass a
-  <code>ResampleDesc</code>, not a
-  <code>ResampleInstance</code>. The resampling
-  strategy is randomly instantiated <code>n.instances</code>
-  times and these are the instances in the sense of irace
-  (<code>instances</code> element of <code>tunerConfig</code> in
-  <code><a href='http://www.inside-r.org/r-doc/irace/irace-package'>irace</a></code>). Also note that irace will
-  always store its tuning results in a file on disk, see
-  the package documentation for details on this and how to
-  change the file path.</p>
-  
-    </div>
-      </div>
-  <div class="span4">
-    <!-- <ul>
-      <li>makeTuneControlCMAES</li><li>makeTuneControlGrid</li><li>makeTuneControlIrace</li><li>makeTuneControlOptim</li><li>makeTuneControlRandom</li><li>TuneControl</li><li>TuneControlCMAES</li><li>TuneControlGrid</li><li>TuneControlIrace</li><li>TuneControlOptim</li><li>TuneControlRandom</li>
-    </ul>
-    <ul>
-      
-    </ul> -->
-      
-        
-  </div>
-</div>
-      
-      <footer>
-      <p class="pull-right"><a href="#">Back to top</a></p>
-<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
-      </footer>
-    </div>
-  </body>
-</html>
+  makeTuneControlIrace(n.instances = 100L,
+    show.irace.output = FALSE, ...)
+
+  makeTuneControlOptim(same.resampling.instance = TRUE,
+    start, ...)
+
+  makeTuneControlRandom(same.resampling.instance = TRUE,
+    maxit = 100L)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>same.resampling.instance</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br>
+Should the same resampling instance be used for all
+evaluations to reduce variance?  Default is <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>start</code></td>
+<td>
+<p>[<code>numeric</code>]<br> Named list of initial
+parameter values.</p>
+</td></tr>
+<tr valign="top"><td><code>n.instances</code></td>
+<td>
+<p>[<code>integer(1)</code>]<br> Number of
+random resampling instances for irace, see details.
+Default is 100.</p>
+</td></tr>
+<tr valign="top"><td><code>maxit</code></td>
+<td>
+<p>[<code>integer(1)</code>]<br> Number of iterations
+for random search.  Default is 100.</p>
+</td></tr>
+<tr valign="top"><td><code>show.irace.output</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Show
+console output of irace while tuning?  Default is
+<code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>[any]<br> Further control parameters passed to
+the <code>control</code> argument of
+<code><a href="../../stats/html/optim.html">optim</a></code>, the <code>control</code> argument
+of <code><a href="../../cmaes/html/cma_es.html">cma_es</a></code>, <code>tunerConfig</code>
+argument of <code><a href="../../irace/html/irace.html">irace</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Dependent parameters can currently only be handled by
+random search and irace.
+</p>
+<p>Some notes on irace: For resampling you have to pass a
+<code><a href="ResampleDesc.html">ResampleDesc</a></code>, not a
+<code><a href="ResampleInstance.html">ResampleInstance</a></code>. The resampling
+strategy is randomly instantiated <code>n.instances</code>
+times and these are the instances in the sense of irace
+(<code>instances</code> element of <code>tunerConfig</code> in
+<code><a href="../../irace/html/irace.html">irace</a></code>). Also note that irace will
+always store its tuning results in a file on disk, see
+the package documentation for details on this and how to
+change the file path.
+</p>
+
+
+<h3>Value</h3>
+
+<p>[<code><a href="TuneControl.html">TuneControl</a></code>]. The specific subclass is one
+of <code><a href="TuneControl.html">TuneControlGrid</a></code>,
+<code><a href="TuneControl.html">TuneControlRandom</a></code>,
+<code><a href="TuneControl.html">TuneControlOptim</a></code>,
+<code><a href="TuneControl.html">TuneControlCMAES</a></code>,
+<code><a href="TuneControl.html">TuneControlIrace</a></code>.
+</p>
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

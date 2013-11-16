@@ -1,106 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-<title>trainLearner. mlr 1.2</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Train an R learner.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
 
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/bootstrap-responsive.css" rel="stylesheet">
-<link href="css/highlight.css" rel="stylesheet">
-<link href="css/staticdocs.css" rel="stylesheet">
+<table width="100%" summary="page for trainLearner {mlr}"><tr><td>trainLearner {mlr}</td><td align="right">R Documentation</td></tr></table>
 
-<!--[if lt IE 9]>
-  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
-  </head>
+<h2>Train an R learner.</h2>
 
-  <body>
-    <div class="navbar">
-  <div class="navbar-inner">
-    <div class="container">
-      <a class="brand" href="#">mlr 1.2</a>
-      <div class="nav">
-        <ul class="nav">
-          <li><a href="index.html"><i class="icon-home icon-white"></i> Index</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+<h3>Description</h3>
 
-    <div class="container">
-      <header>
-        
-      </header>
-      
-      <h1>Train an R learner.</h1>
+<p>Mainly for internal use. Trains a wrapped learner on a
+given training set. You have to implement this method if
+you want to add another learner to this package.
+</p>
 
-<div class="row">
-  <div class="span8">
-    <h2>Usage</h2>
-    <pre>trainLearner(.learner, .task, .subset, ...)</pre>
-    
-    <h2>Arguments</h2>
-    <dl>
-      <dt>.learner</dt>
-      <dd>[<code><a href='RLearner.html'>RLearner</a></code>] Wrapped
-  learner.</dd>
-      <dt>.task</dt>
-      <dd>[<code><a href='SupervisedTask.html'>SupervisedTask</a></code>] Task to
-  train learner on.</dd>
-      <dt>.subset</dt>
-      <dd>[<code>integer</code>] Subset of cases for
-  training set, index the task with this.  You probably
-  want to use <code><a href='getTaskData.html'>getTaskData</a></code> for this purpose.</dd>
-      <dt>...</dt>
-      <dd>[any] Additional (hyper)parameters, which
-  need to be passed to the underlying train function.</dd>
-    </dl>
-    
-    <div class="Value">
-      <h2>Value</h2>
-      
-      <p>[any]. Model of the underlying learner.</p>
-  
-    </div>
 
-    <div class="Description">
-      <h2>Description</h2>
-      
-      <p>Mainly for internal use. Trains a wrapped learner on a
-  given training set. You have to implement this method if
-  you want to add another learner to this package.</p>
-  
-    </div>
+<h3>Usage</h3>
 
-    <div class="Details">
-      <h2>Details</h2>
-      
-      <p>Your implementation must adhere to the following: The
-  model must be fitted on the subset of <code>.task</code> given
-  by <code>.subset</code>. All parameters must in <code>...</code> must
-  be passed to the underlying training function.</p>
-  
-    </div>
-      </div>
-  <div class="span4">
-    <!-- <ul>
-      <li>trainLearner</li>
-    </ul>
-    <ul>
-      
-    </ul> -->
-      
-        
-  </div>
-</div>
-      
-      <footer>
-      <p class="pull-right"><a href="#">Back to top</a></p>
-<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="http://twitter.github.com/bootstrap">bootstrap</a>.</p>
-      </footer>
-    </div>
-  </body>
-</html>
+<pre>
+  trainLearner(.learner, .task, .subset, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>.learner</code></td>
+<td>
+<p>[<code><a href="RLearner.html">RLearner</a></code>]<br> Wrapped
+learner.</p>
+</td></tr>
+<tr valign="top"><td><code>.task</code></td>
+<td>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> Task to
+train learner on.</p>
+</td></tr>
+<tr valign="top"><td><code>.subset</code></td>
+<td>
+<p>[<code>integer</code>]<br> Subset of cases for
+training set, index the task with this.  You probably
+want to use <code><a href="getTaskData.html">getTaskData</a></code> for this purpose.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>[any]<br> Additional (hyper)parameters, which
+need to be passed to the underlying train function.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Your implementation must adhere to the following: The
+model must be fitted on the subset of <code>.task</code> given
+by <code>.subset</code>. All parameters must in <code>...</code> must
+be passed to the underlying training function.
+</p>
+
+
+<h3>Value</h3>
+
+<p>[any]. Model of the underlying learner.
+</p>
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>
