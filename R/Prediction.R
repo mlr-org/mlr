@@ -1,6 +1,6 @@
 #' Prediction object.
 #'
-#' Result from \code{\link{predict}}.
+#' Result from \code{\link{predict.WrappedModel}}.
 #' Use \code{as.data.frame} to access all information in a convenient format.
 #' The function \code{\link{getProbabilities}} is useful to access predicted probabilities..
 #'

@@ -14,7 +14,7 @@
 #'   it can be a single numerical threshold for the positive class.
 #' @return [\code{\link{Prediction}}] with changed threshold and corresponding response.
 #' @export
-#' @seealso \code{\link{predict}}
+#' @seealso \code{\link{predict.WrappedModel}}
 #' @examples
 #' ## create task and train learner (LDA)
 #' task <- makeClassifTask(data = iris, target = "Species")
