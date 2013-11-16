@@ -9,9 +9,7 @@ instantiateResampleInstance.HoldoutDesc = function(desc, size) {
 
 
 instantiateResampleInstance.CVDesc = function(desc, size) {
-  test.inds = sample(size)
-  # don't warn when we can't split evenly
-  test.inds = suppressWarnings(split(test.inds, seq_len(desc$iters)))
+  test.inds = chunk(1:size, shuffle=TRUE, n.chunks=desc$iters)
   makeResampleInstanceInternal(desc, size, test.inds=test.inds)
 }
 
