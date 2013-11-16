@@ -99,8 +99,8 @@ head(pred$data)
 2  virginica  virginica
 3  virginica  virginica
 4 versicolor versicolor
-5 versicolor versicolor
-6  virginica  virginica
+5     setosa     setosa
+6     setosa     setosa
 </div>
 <div class='input'>
 ## predict now probabiliies instead of class labels
@@ -110,12 +110,12 @@ pred <- predict(mod, newdata = iris[test.set, ])
 head(pred$data)
 </div>
 <div class='output'>         truth  prob.setosa prob.versicolor prob.virginica   response
-16      setosa 1,000000e+00    1,040580e-26   1,952385e-46     setosa
-149  virginica 9,830777e-38    1,358913e-05   9,999864e-01  virginica
-140  virginica 3,409797e-33    1,484239e-03   9,985158e-01  virginica
-86  versicolor 8,128410e-19    9,896182e-01   1,038181e-02 versicolor
-83  versicolor 5,839491e-15    9,999916e-01   8,381665e-06 versicolor
-117  virginica 1,150868e-32    7,905363e-03   9,920946e-01  virginica
+49      setosa 1.000000e+00    7.888640e-26   4.937392e-50     setosa
+101  virginica 5.602924e-55    3.455413e-09   1.000000e+00  virginica
+122  virginica 1.720159e-40    5.713976e-04   9.994286e-01  virginica
+59  versicolor 5.136293e-21    9.999737e-01   2.626451e-05 versicolor
+35      setosa 1.000000e+00    9.787244e-19   1.033302e-40     setosa
+34      setosa 1.000000e+00    3.524514e-32   2.033230e-58     setosa
 </div></pre>
   </div>
   <div class="span4">

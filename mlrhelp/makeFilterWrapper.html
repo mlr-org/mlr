@@ -98,7 +98,7 @@ mod = train(lrn, task)
 <strong class='message'>Loading required package: FSelector</strong>
 <div class='input'>print(getFilteredFeatures(mod))
 </div>
-<div class='output'>[1] "Petal.Length" "Petal.Width" 
+<div class='output'>[1] "Petal.Width"  "Petal.Length"
 </div>
 <div class='input'>r = resample(lrn, task, outer, extract = function(model) {
 getFilteredFeatures(model)
@@ -106,14 +106,14 @@ getFilteredFeatures(model)
 </div>
 <strong class='message'>[Resample] cross-validation iter: 1</strong>
 <strong class='message'>[Resample] cross-validation iter: 2</strong>
-<strong class='message'>[Resample] Result: mmce.test.mean=0,04</strong>
+<strong class='message'>[Resample] Result: mmce.test.mean=0.04</strong>
 <div class='input'>print(r$extract)
 </div>
 <div class='output'>[[1]]
-[1] "Petal.Width"  "Petal.Length"
+[1] "Petal.Length" "Petal.Width" 
 
 [[2]]
-[1] "Petal.Length" "Petal.Width" 
+[1] "Petal.Width"  "Petal.Length"
 
 </div></pre>
   </div>

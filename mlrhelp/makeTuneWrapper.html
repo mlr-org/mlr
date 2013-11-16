@@ -121,16 +121,16 @@ mod = train(lrn, task)
 <strong class='message'>Disc param 'C'. Vals: 1,2. Trafo: FALSE. Requires: FALSE
 Disc param 'sigma'. Vals: 1,2. Trafo: FALSE. Requires: FALSE</strong>
 <strong class='message'>With control class: TuneControlGrid</strong>
-<strong class='message'>[Tune] 1: C=1,sigma=1 : mmce.test.mean=0,02</strong>
-<strong class='message'>[Tune] 1: C=2,sigma=1 : mmce.test.mean=0,02</strong>
-<strong class='message'>[Tune] 1: C=1,sigma=2 : mmce.test.mean=0,02</strong>
-<strong class='message'>[Tune] 1: C=2,sigma=2 : mmce.test.mean=0,02</strong>
-<strong class='message'>[Tune] Result: C=1,sigma=1 : =0,02</strong>
+<strong class='message'>[Tune] 1: C=1,sigma=1 : mmce.test.mean=0.06</strong>
+<strong class='message'>[Tune] 1: C=2,sigma=1 : mmce.test.mean=0.04</strong>
+<strong class='message'>[Tune] 1: C=1,sigma=2 : mmce.test.mean=0.04</strong>
+<strong class='message'>[Tune] 1: C=2,sigma=2 : mmce.test.mean=0.04</strong>
+<strong class='message'>[Tune] Result: C=2,sigma=1 : =0.04</strong>
 <div class='input'>print(getTuneResult(mod))
 </div>
 <div class='output'>Tune result:
-Op. pars: C=1,sigma=1
-=0,02
+Op. pars: C=2,sigma=1
+=0.04
 </div>
 <div class='input'># nested resampling for evaluation
 # we also extract tuned hyper pars in each iteration
@@ -143,27 +143,27 @@ r = resample(lrn, task, outer, extract = function(model) {
 <strong class='message'>Disc param 'C'. Vals: 1,2. Trafo: FALSE. Requires: FALSE
 Disc param 'sigma'. Vals: 1,2. Trafo: FALSE. Requires: FALSE</strong>
 <strong class='message'>With control class: TuneControlGrid</strong>
-<strong class='message'>[Tune] 1: C=1,sigma=1 : mmce.test.mean=0,04</strong>
-<strong class='message'>[Tune] 1: C=2,sigma=1 : mmce.test.mean=0,04</strong>
-<strong class='message'>[Tune] 1: C=1,sigma=2 : mmce.test.mean=0,04</strong>
-<strong class='message'>[Tune] 1: C=2,sigma=2 : mmce.test.mean=0,04</strong>
-<strong class='message'>[Tune] Result: C=2,sigma=1 : =0,04</strong>
+<strong class='message'>[Tune] 1: C=1,sigma=1 : mmce.test.mean=0.04</strong>
+<strong class='message'>[Tune] 1: C=2,sigma=1 : mmce.test.mean=0.04</strong>
+<strong class='message'>[Tune] 1: C=1,sigma=2 : mmce.test.mean=0.12</strong>
+<strong class='message'>[Tune] 1: C=2,sigma=2 : mmce.test.mean=0.12</strong>
+<strong class='message'>[Tune] Result: C=1,sigma=1 : =0.04</strong>
 <strong class='message'>[Resample] cross-validation iter: 2</strong>
 <strong class='message'>[Tune] Started tuning learner classif.ksvm for parameter set:</strong>
 <strong class='message'>Disc param 'C'. Vals: 1,2. Trafo: FALSE. Requires: FALSE
 Disc param 'sigma'. Vals: 1,2. Trafo: FALSE. Requires: FALSE</strong>
 <strong class='message'>With control class: TuneControlGrid</strong>
-<strong class='message'>[Tune] 1: C=1,sigma=1 : mmce.test.mean=0,04</strong>
-<strong class='message'>[Tune] 1: C=2,sigma=1 : mmce.test.mean=0,04</strong>
-<strong class='message'>[Tune] 1: C=1,sigma=2 : mmce.test.mean=0,04</strong>
-<strong class='message'>[Tune] 1: C=2,sigma=2 : mmce.test.mean=0,04</strong>
-<strong class='message'>[Tune] Result: C=1,sigma=1 : =0,04</strong>
-<strong class='message'>[Resample] Result: mmce.test.mean=0,0467</strong>
+<strong class='message'>[Tune] 1: C=1,sigma=1 : mmce.test.mean=0.08</strong>
+<strong class='message'>[Tune] 1: C=2,sigma=1 : mmce.test.mean=0.08</strong>
+<strong class='message'>[Tune] 1: C=1,sigma=2 : mmce.test.mean=0.08</strong>
+<strong class='message'>[Tune] 1: C=2,sigma=2 : mmce.test.mean=0.12</strong>
+<strong class='message'>[Tune] Result: C=1,sigma=1 : =0.08</strong>
+<strong class='message'>[Resample] Result: mmce.test.mean=0.0533</strong>
 <div class='input'>print(r$extract)
 </div>
 <div class='output'>[[1]]
 [[1]]$C
-[1] 2
+[1] 1
 
 [[1]]$sigma
 [1] 1

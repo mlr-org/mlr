@@ -37,104 +37,13 @@
       
       <div class="row">
   <div class="span8">
-    <h1>mlr: Machine Learning in R </h1>
-
-<h1>  Introduction</h1>
-
-<p>R does not define a standardized interface for all its machine learning algorithms. Therefore, for any 
-  non-trivial experiments, you need to write lengthy, tedious and error-prone wrappers to call the different 
-  algorithms and unify their respective output. Additionally you need to implement infrastructure to resample 
-  your models, optimize hyperparameters, select features, cope with pre- and post-processing of data and 
-  compare models in a statistically meaningful way.
-  As this becomes computationally expensive, you might want to parallelize your experiments as well. This 
-  often forces useRs to make crummy trade-offs in their experiments due to time constraints or lacking expert 
-  programming skills. <strong>mlr</strong> provides this infrastructure so that you can focus on your experiments!
-  The framework currently focuses on supervised methods like classification and regression and their 
-  corresponding evaluation and optimization, but further extensions are planned. It is written in a way 
-  that you can extend it yourself or deviate from the implemented convenience methods and construct your own 
-  complex experiments or algorithms.</p>
-
-<p>Offical CRAN release site: 
-  <a href="http://cran.r-project.org/web/packages/mlr/index.html">http://cran.r-project.org/web/packages/mlr/index.html</a></p>
-
-<p>R Documentation in HTML:
-  <a href="http://www.statistik.tu-dortmund.de/%7Ebischl/rdocs/mlr/">http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/</a></p>
-
-<p>Detailed Tutorial:
-  <a href="https://www.statistik.tu-dortmund.de/%7Ebischl/mlr_tutorial/tutorial/index.html">https://www.statistik.tu-dortmund.de/~bischl/mlr_tutorial/tutorial/index.html</a></p>
-
-<h1>  Features</h1>
-
-<ul>
-<li>Clear S3 interface to R classification and regression methods</li>
-<li>Easy extension mechanism through S3 inheritance</li>
-<li>Abstract description of learners and tasks by properties</li>
-<li>Parameter system for learners to encode data types and constraints</li>
-<li>Many convenience methods and generic building blocks for your
-machine learning experiments</li>
-<li>Resampling like bootstrapping, cross-validation and subsampling</li>
-<li>Easy hyperparameter tuning using different optimization strategies</li>
-<li>Variable selection with filters and wrappers</li>
-<li>Parallelization is built-in</li>
-<li>Extension points to integrate your own stuff</li>
-<li>Unit-testing</li>
-<li>Possibility to fit, predict, evaluate and resample models</li>
-<li>Tune hyper-parameters of a learner with different optimization algorithms (also available for multi-criteria optimization)</li>
-<li>Feature selection with filters and wrappers (also available for multi-criteria optimization)</li>
-<li>Combine different processing steps to a complex data mining chain; enables nested resampling of optimized models</li>
-<li>Optimize functions with a model-based sequential parameter optimization method (useful e.g. for the optimization of expensive black-box functions)</li>
-</ul>
-
-<h1>Installation</h1>
-
-<p>1) Normal users:
-Please use the CRAN version linked above.</p>
-
-<p>2) Early adopters: Simply running</p>
-
-<pre><code class="r">devtools::install_github(&quot;mlr&quot;, username=&quot;berndbischl&quot;)
-</code></pre>
-
-<p>will install the current github version.</p>
-
-<p>3) Developers and hackers:</p>
-
-<p>You can install a new package version after local code changes if you are in the checkout directory via</p>
-
-<pre><code class="r">devtools::install(&quot;.&quot;)
-</code></pre>
-
-<p>Assuming you have a reasonably configured OS and R, you could also build and run tasks via the MAKEFILE.
-But only a VERY SMALL percentage of users should be interested in this.</p>
-
-<ul>
-<li><p>Clone from git repo here</p></li>
-<li><p>Have recent version of R properly installed with all build tools. For Windows this will include </p>
-
-<p><a href="http://cran.r-project.org/bin/windows/Rtools/">http://cran.r-project.org/bin/windows/Rtools/</a></p></li>
-<li><p>Have R, Rscript and the binaries of Rtools in your PATH </p></li>
-<li><p>Have roxygen2, devtools and testhat R packages installed</p></li>
-<li><p>In a console run &ldquo;make install&rdquo; to install. Done.</p></li>
-<li><p>&ldquo;make&rdquo; will list all other build targets</p></li>
-</ul>
-
-<h1>Mailinglist and Email-Service-Hook</h1>
-
-<p>Developers use this mailing list:</p>
-
-<p><a href="https://groups.google.com/forum/?hl=de#!forum/mlr-devel">https://groups.google.com/forum/?hl=de#!forum/mlr-devel</a></p>
-
-<p><a href="mailto:mlr-devel@googlegroups.com">mlr-devel@googlegroups.com</a></p>
-
-<p>The github-service-hook will also send commit messages to this list. </p>
-
-<h1>Get in touch</h1>
-
-<p>If you are interested in the package, have a question regarding the usage or a feature request,
-or maybe want to help improving <strong>mlr</strong>, please send a mail to the list at
-<a href="mailto:mlr-general@lists.r-forge.r-project.org">mlr-general@lists.r-forge.r-project.org</a> or to the maintainer Bernd Bischl
-at <a href="mailto:bischl@statistik.uni-dortmund.de">bischl@statistik.uni-dortmund.de</a>.</p>
-
+    Interface to a large number of classification and
+regression techniques, including machine-readable parameter
+descriptions. Generic resampling, including cross-validation,
+bootstrapping and subsampling. Hyperparameter tuning with
+modern optimization techniques. Filter and wrapper methods for
+feature selection. Extension of basic learners with additional
+operations. Nested resampling.
 
     <h2>Help topics</h2>
 

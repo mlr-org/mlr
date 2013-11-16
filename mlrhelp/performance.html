@@ -95,13 +95,13 @@ ms <- makeMeasure(id = "misclassification.rate",
                   fun = my.mmce)
 performance(pred, ms, task, mod)
 </div>
-<div class='output'>[1] 0,04
+<div class='output'>[1] 0.04
 </div>
 <div class='input'>
 ## Indeed the MMCE is already implemented in mlr beside other common performance measures
 performance(pred, measure = mmce)
 </div>
-<div class='output'>[1] 0,04
+<div class='output'>[1] 0.04
 </div>
 <div class='input'>
 ## Compute multiple performance measures at once
@@ -111,7 +111,7 @@ sapply(ms, function(the.ms) {
 })
 </div>
 <div class='output'>     mmce       acc timetrain 
-    0,040     0,960     0,006 
+    0.040     0.960     0.012 
 </div></pre>
   </div>
   <div class="span4">

@@ -142,25 +142,25 @@ r1 <- resample(makeLearner("classif.qda"), task, rin)
 <strong class='message'>[Resample] OOB bootstrapping iter: 8</strong>
 <strong class='message'>[Resample] OOB bootstrapping iter: 9</strong>
 <strong class='message'>[Resample] OOB bootstrapping iter: 10</strong>
-<strong class='message'>[Resample] Result: mmce.test.mean=0,0264</strong>
+<strong class='message'>[Resample] Result: mmce.test.mean=0.0236</strong>
 <div class='input'>print(r1$measures.test)
 </div>
 <div class='output'>   iter       mmce
-1     1 0,05357143
-2     2 0,00000000
-3     3 0,05454545
-4     4 0,00000000
-5     5 0,01818182
-6     6 0,04166667
-7     7 0,00000000
-8     8 0,02000000
-9     9 0,03448276
-10   10 0,04166667
+1     1 0.01886792
+2     2 0.01785714
+3     3 0.00000000
+4     4 0.01785714
+5     5 0.03571429
+6     6 0.03636364
+7     7 0.01785714
+8     8 0.03773585
+9     9 0.01960784
+10   10 0.03448276
 </div>
 <div class='input'>print(r1$aggr)
 </div>
 <div class='output'>mmce.test.mean 
-    0,02641148 
+    0.02363437 
 </div>
 <div class='input'>r2 <- resample(makeLearner("classif.rpart"), task, rin)
 </div>
@@ -174,25 +174,25 @@ r1 <- resample(makeLearner("classif.qda"), task, rin)
 <strong class='message'>[Resample] OOB bootstrapping iter: 8</strong>
 <strong class='message'>[Resample] OOB bootstrapping iter: 9</strong>
 <strong class='message'>[Resample] OOB bootstrapping iter: 10</strong>
-<strong class='message'>[Resample] Result: mmce.test.mean=0,0511</strong>
+<strong class='message'>[Resample] Result: mmce.test.mean=0.0581</strong>
 <div class='input'>print(r2$measures.test)
 </div>
 <div class='output'>   iter       mmce
-1     1 0,07142857
-2     2 0,06896552
-3     3 0,05454545
-4     4 0,03636364
-5     5 0,07272727
-6     6 0,02083333
-7     7 0,01818182
-8     8 0,04000000
-9     9 0,08620690
-10   10 0,04166667
+1     1 0.03773585
+2     2 0.03571429
+3     3 0.01785714
+4     4 0.07142857
+5     5 0.03571429
+6     6 0.09090909
+7     7 0.07142857
+8     8 0.07547170
+9     9 0.05882353
+10   10 0.08620690
 </div>
 <div class='input'>print(r2$aggr)
 </div>
 <div class='output'>mmce.test.mean 
-    0,05109192 
+    0.05812899 
 </div></pre>
   </div>
   <div class="span4">
