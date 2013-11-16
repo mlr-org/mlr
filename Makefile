@@ -55,6 +55,7 @@ htmlhelp: install
 	printf "\nGenerating html docs...\n"
 	mkdir staticdocs
 	${DELETE} /tmp/pkgdocs
+	mkdir /tmp/pkgdocs
 	mv README.md README.xxx
 	${RSCRIPT} ./tools/generate-html-docs
 	mv README.xxx README.md
