@@ -43,6 +43,6 @@ mod <- train(learner, task, subset = training.set)
 print(mod)
 }
 \seealso{
-  \code{\link{predict}}
+  \code{\link{predict.WrappedModel}}
 }
 

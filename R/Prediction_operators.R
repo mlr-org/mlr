@@ -13,7 +13,7 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
 #' @return [\code{data.frame}] with numerical columns or a numerical vector if length of \code{cl} is 1.
 #'   Order of columns is defined by \code{cl}.
 #' @export
-#' @seealso \code{\link{predict}}
+#' @seealso \code{\link{predict.WrappedModel}}
 #' @examples
 #' task <- makeClassifTask(data = iris, target = "Species")
 #' lrn <- makeLearner("classif.lda", predict.type = "prob")

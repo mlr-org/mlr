@@ -12,7 +12,7 @@
 #'  Default is \code{FALSE}.
 #' @return [\code{matrix}]. A confusion matrix.
 #' @export
-#' @seealso \code{\link{predict}}
+#' @seealso \code{\link{predict.WrappedModel}}
 #' @examples
 #' ## create classification task and use linear discriminant analysis for classification
 #' task <- makeClassifTask(data = iris, target = "Species")

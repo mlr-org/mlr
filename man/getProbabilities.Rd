@@ -32,6 +32,6 @@ head(getProbabilities(pred))
 head(getProbabilities(pred, c("setosa", "virginica")))
 }
 \seealso{
-  \code{\link{predict}}
+  \code{\link{predict.WrappedModel}}
 }
 

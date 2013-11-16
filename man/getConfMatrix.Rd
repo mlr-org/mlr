@@ -43,6 +43,6 @@ print(getConfMatrix(pred))
 print(getConfMatrix(pred, relative = TRUE))
 }
 \seealso{
-  \code{\link{predict}}
+  \code{\link{predict.WrappedModel}}
 }
 

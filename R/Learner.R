@@ -28,6 +28,7 @@
 #' @return [\code{\link{Learner}}].
 #' @export
 #' @aliases Learner
+#' @seealso [\code{\link{resample}}], [\code{\link{predict.WrappedModel}}]
 #' @examples
 #' makeLearner("classif.rpart")
 #' makeLearner("classif.lda", predict.type = "prob")

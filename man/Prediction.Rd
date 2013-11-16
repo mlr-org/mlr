@@ -2,7 +2,7 @@
 \alias{Prediction}
 \title{Prediction object.}
 \description{
-  Result from \code{\link{predict}}. Use
+  Result from \code{\link{predict.WrappedModel}}. Use
   \code{as.data.frame} to access all information in a
   convenient format. The function
   \code{\link{getProbabilities}} is useful to access

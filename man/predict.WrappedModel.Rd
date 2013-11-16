@@ -30,6 +30,10 @@
   [\code{\link{Prediction}}] object depends on the
   \code{predict.type} setting of the \code{\link{Learner}}.
 }
+\note{
+  To extract probabilities use
+  [\code{\link{getProbabilities}}].
+}
 \examples{
 ## split iris data in training and test set
 n <- nrow(iris)

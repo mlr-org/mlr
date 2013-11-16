@@ -55,4 +55,8 @@ print(lrn$par.vals)
 lrn <- makeLearner("classif.lda", method = "t", nu = 10)
 print(lrn$par.vals)
 }
+\seealso{
+  [\code{\link{resample}}],
+  [\code{\link{predict.WrappedModel}}]
+}
 

@@ -16,7 +16,7 @@
 #'   By default missing which means no weights are used.
 #' @return [\code{\link{WrappedModel}}].
 #' @export
-#' @seealso \code{\link{predict}}
+#' @seealso \code{\link{predict.WrappedModel}}
 #' @examples
 #' training.set <- sample(1:nrow(iris), nrow(iris) / 2)
 #'

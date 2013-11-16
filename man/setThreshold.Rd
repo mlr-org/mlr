@@ -47,6 +47,6 @@ performance(pred, measure = mmce)
 head(as.data.frame(pred))
 }
 \seealso{
-  \code{\link{predict}}
+  \code{\link{predict.WrappedModel}}
 }
 
