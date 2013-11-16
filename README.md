@@ -21,7 +21,7 @@ Offical CRAN release site:
   http://cran.r-project.org/web/packages/mlr/index.html
 
 R Documentation in HTML:
-  http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/
+  http://berndbischl.github.io/mlr/mlrhelp/
   
 Detailed Tutorial:
   https://www.statistik.tu-dortmund.de/~bischl/mlr_tutorial/tutorial/index.html
