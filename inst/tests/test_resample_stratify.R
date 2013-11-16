@@ -51,14 +51,12 @@ test_that("stratification does not put all remaining elements in the first split
 
   data = data.frame(x = runif(n), y = factor(rep(1:k, sizes)))
   task = makeClassifTask(data=data, target="y")
-  print(task)
   rdesc = makeResampleDesc("CV", iters=3, stratify=TRUE)
   rin = makeResampleInstance(rdesc, task=task)
 
   tabs = lapply(rin$test.inds, function(j) table(getTaskTargets(task, j)))
   split.sizes = sapply(tabs, sum)
-  expect_true(all(split.sizes < 120))
-  print(split.sizes)
+  expect_true(all(split.sizes < 130))
 })
 
 
