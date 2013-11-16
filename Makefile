@@ -55,13 +55,16 @@ htmlhelp: install
 	printf "\nGenerating html docs...\n"
 	mkdir staticdocs
 	${DELETE} /tmp/pkgdocs
+	mv README.md README.xxx
 	${RSCRIPT} ./tools/generate-html-docs
+	mv README.xxx README.md
+	${DELETE} Rplots*.pdf
 	git checkout gh-pages
-	mv /tmp/pkgdocs/* ../mlr
-	git add mlrhelp/.
-	git commit -a -m "new html help"
+	rm -rf mlrhelp
+	mv /tmp/pkgdocs mlrhelp
+	git add mlrhelp
+	git commit -am "new html help"
 	git push origin gh-pages
 	git checkout master
-	# ${DELETE} Rplots*.pdf
 
 
