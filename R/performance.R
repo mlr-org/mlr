@@ -48,10 +48,10 @@ performance = function(pred, measure, task, model) {
     measure = list(measure)
   checkListElementClass(measure, "Measure")
   td = NULL
-  sapply(measure, doPerformaceIteration, pred=pred, task=task, model=model)
+  sapply(measure, doPerformaceIteration, pred=pred, task=task, model=model, td=td)
 }
 
-doPerformaceIteration = function(measure, pred, task, model){
+doPerformaceIteration = function(measure, pred, task, model, td){
   m = measure
   if (m$req.pred) {
     if (missing(pred))
