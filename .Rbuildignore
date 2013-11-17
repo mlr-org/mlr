@@ -1,14 +1,19 @@
+doc
+staticdocs
+todo-files
+tools
+
 .gitignore
+.travis.yml
+
+^.*tar.gz$
+install_dependencies.R
 Makefile
-todo.txt
+README.md
 test_all.R
 test_src.R
-^.*tar.gz$
-tools
+todo.txt
+
 src/*.o
 src/*.so
-todo-files
-README.md
-staticdocs
-.travis.yml
 
