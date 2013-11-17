@@ -9,6 +9,9 @@ before_install:
 install:
   - ./travis-tool.sh github_package testthat
   - ./travis-tool.sh github_package assertthat
+  - ./travis-tool.sh github_package BBmisc
+  - ./travis-tool.sh github_package parallelMap
+  - ./travis-tool.sh github_package ParamHelpers
   - ./travis-tool.sh install_deps
 branches:
   except:
