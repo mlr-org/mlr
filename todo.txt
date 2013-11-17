@@ -3,12 +3,12 @@ partest laufen lassen
 switch on version
 
 #
-##### mlr ######  
+##### mlr ######
 
 - make test still produces output of learners even when configureMlr(show.learner.output=FALSE)
 
 - b632+ test
- test b632 too  
+ test b632 too
 
 - document default perf measures
 
@@ -23,14 +23,14 @@ switch on version
 
 - function to check if learner is applicable to task
 
-- listMeasures 
+- listMeasures
 
 - checkFeature names for predict
 
 - bug in describe /staticdocs
- 
+
 - allow task which only becomes true supervised task after preprocessing / feature
-  extraction   
+  extraction
 
 - drop factor levels in makeTask
   schwierig. das ist beim subsetten des tasks?
@@ -51,7 +51,7 @@ resample(makeLearner("classif.randomForest"), task, rin)
 
 - mlr tuneMBO minimize autom. setzen
 
-- check that control and tune results are printed properly.   
+- check that control and tune results are printed properly.
 
 ##### featsel #####
 
@@ -61,10 +61,10 @@ add a function to get the selection path for features in forward selection
 
 ##### chains #####
 
-- it's not clear how the changed descriptions of the files should be saved, e.g. when we change everything potentially during preproc 
+- it's not clear how the changed descriptions of the files should be saved, e.g. when we change everything potentially during preproc
 a) output of the model via print
 b) when the task is forwarded via the training funs
-  
+
 check all print.funs
 
 remove prints in mlrChains wrappers
