@@ -26,6 +26,9 @@ R Documentation in HTML:
 Detailed Tutorial:
   https://www.statistik.tu-dortmund.de/~bischl/mlr_tutorial/tutorial/index.html
   
+  Travis CI: [![Build Status](https://travis-ci.org/berndbischl/mlr.png)](https://travis-ci.org/berndbischl/mlr)
+  
+  
   Features
 ==========
 
