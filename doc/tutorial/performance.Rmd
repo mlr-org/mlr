@@ -31,19 +31,19 @@ lrn <- makeLearner("classif.lda")
 mod <- train(lrn, task = task, subset = seq(1,150,2))
 pred <- predict(mod, task = task, subset = seq(2,150,2))
 
-performance(pred, measure = mmce)
+performance(pred, measures = mmce)
 ``` 
   
 Let's have a look at some more performance measures. Note that, in order to assess 
 the time needed for training, the fitted model has to be passed.
 
 ```{r}
-performance(pred, measure = acc)
+performance(pred, measures = acc)
 
-performance(pred = pred, measure = timepredict)
+performance(pred = pred, measures = timepredict)
 
-performance(pred = pred, measure = timetrain, model = mod)
-performance(pred = pred, measure = timeboth, model = mod)
+performance(pred = pred, measures = timetrain, model = mod)
+performance(pred = pred, measures = timeboth, model = mod)
 ```
 
 A nice method to calculate multiple performace measures at once makes use of the popular R function sapply. We define a list of measures and apply the performance function for each element.
@@ -51,7 +51,7 @@ A nice method to calculate multiple performace measures at once makes use of the
 ```{r}
 ms <- list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain, "timeboth" = timeboth)
 sapply(ms, function(the.ms) {
-  performance(pred = pred, measure = the.ms, model = mod)
+  performance(pred = pred, measures = the.ms, model = mod)
 })
 ```
 
@@ -70,9 +70,9 @@ lrn <- makeLearner("classif.rpart")
 mod <- train(lrn, task = task)
 pred <- predict(mod, task = task)
 
-performance(pred, measure = acc)
-performance(pred, measure = fpr)
-performance(pred, measure = fnr)
+performance(pred, measures = acc)
+performance(pred, measures = fpr)
+performance(pred, measures = fnr)
 ``` 
 
 
@@ -89,7 +89,7 @@ lrn <- makeLearner("classif.rpart", predict.type = "prob")
 mod <- train(lrn, task = task)
 pred <- predict(mod, task = task)
 
-performance(pred, measure = auc)
+performance(pred, measures = auc)
 ``` 
 
 For more information on ROC analysis see section [ROC Analysis](roc_analysis.md).
@@ -122,7 +122,7 @@ pred <- predict(mod, newdata = BostonHousing[test.set, ])
 
 ## Compare predicted and true labels using measures MSE and MAE
 ms <- list("mse" = mse, "mae" = mae)
-sapply(ms, function(meas) performance(pred, measure = meas))
+sapply(ms, function(meas) performance(pred, measures = meas))
 ```
 
 

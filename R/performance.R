@@ -4,8 +4,8 @@
 #'
 #' @param pred [\code{\link{Prediction}}] \cr
 #'   Prediction object to evaluate.
-#' @param measure [\code{\link{Measure}}]
-#'   Performance measure to evaluate.
+#' @param measures [\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
+#'   Performance measure(s) to evaluate.
 #' @param task [\code{\link{SupervisedTask}}]\cr
 #'   Learning task, might be requested by performance measure, usually not needed.
 #' @param model [\code{\link{WrappedModel}}]\cr
@@ -34,21 +34,21 @@
 #' performance(pred, ms, task, mod)
 #'
 #' ## Indeed the MMCE is already implemented in mlr beside other common performance measures
-#' performance(pred, measure = mmce)
+#' performance(pred, measures = mmce)
 #'
 #' ## Compute multiple performance measures at once
 #' ms <- list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 #' sapply(ms, function(the.ms) {
-#'   performance(pred, measure = the.ms, task, mod)
+#'   performance(pred, measures = the.ms, task, mod)
 #' })
-performance = function(pred, measure, task, model) {
-  if (missing(measure))
-    measure = default.measures(task)[[1]]
-  if (inherits(measure, "Measure"))
-    measure = list(measure)
-  checkListElementClass(measure, "Measure")
+performance = function(pred, measures, task, model) {
+  if (missing(measures))
+    measures = default.measures(task)[[1]]
+  if (inherits(measures, "Measure"))
+    measures = list(measures)
+  checkListElementClass(measures, "Measure")
   td = NULL
-  sapply(measure, doPerformaceIteration, pred=pred, task=task, model=model, td=td)
+  sapply(measures, doPerformaceIteration, pred=pred, task=task, model=model, td=td)
 }
 
 doPerformaceIteration = function(measure, pred, task, model, td){

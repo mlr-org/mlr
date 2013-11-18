@@ -2,14 +2,15 @@
 \alias{performance}
 \title{Measure performance of prediction.}
 \usage{
-  performance(pred, measure, task, model)
+  performance(pred, measures, task, model)
 }
 \arguments{
   \item{pred}{[\code{\link{Prediction}}] \cr Prediction
   object to evaluate.}
 
-  \item{measure}{[\code{\link{Measure}}] Performance
-  measure to evaluate.}
+  \item{measures}{[\code{\link{Measure}} | list of
+  \code{\link{Measure}}]\cr Performance measure(s) to
+  evaluate.}
 
   \item{task}{[\code{\link{SupervisedTask}}]\cr Learning
   task, might be requested by performance measure, usually
@@ -47,12 +48,12 @@ ms <- makeMeasure(id = "misclassification.rate",
 performance(pred, ms, task, mod)
 
 ## Indeed the MMCE is already implemented in mlr beside other common performance measures
-performance(pred, measure = mmce)
+performance(pred, measures = mmce)
 
 ## Compute multiple performance measures at once
 ms <- list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 sapply(ms, function(the.ms) {
-  performance(pred, measure = the.ms, task, mod)
+  performance(pred, measures = the.ms, task, mod)
 })
 }
 \seealso{

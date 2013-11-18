@@ -142,7 +142,7 @@ b632plus = makeAggregation(
       pred2 = makePrediction(task.desc=pred$task.desc,
         id=NULL, truth=grid[,1], predict.type="response", y=grid[,2],
         time=as.numeric(NA))
-      gamma = performance(pred2, measure=measure)
+      gamma = performance(pred2, measures=measure)
       R = (perf.test[i] - perf.train[i]) / (gamma - perf.train[i])
       w = 0.632 / (1 - 0.368*R)
       a[i] = (1-w) * perf.train[i] + w*perf.test[i]

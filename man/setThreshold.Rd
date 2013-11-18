@@ -38,12 +38,12 @@ mod <- train(lrn, task)
 
 ## predict probabilities and compute performance
 pred <- predict(mod, newdata = iris)
-performance(pred, measure = mmce)
+performance(pred, measures = mmce)
 head(as.data.frame(pred))
 ## adjust threshold and predict probabilities again
 threshold <- c(setosa = 0.4, versicolor = 0.3, virginica = 0.3)
 pred <- setThreshold(pred, threshold = threshold)
-performance(pred, measure = mmce)
+performance(pred, measures = mmce)
 head(as.data.frame(pred))
 }
 \seealso{

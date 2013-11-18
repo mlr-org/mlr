@@ -32,7 +32,7 @@
 }
 \note{
   To extract probabilities use
-  [\code{\link{getProbabilities}}].
+  \code{\link{getProbabilities}}.
 }
 \examples{
 ## split iris data in training and test set

@@ -25,8 +25,12 @@ test_that("performance", {
 		expect_equal(e1, e2)
 	})
 	
-	performance(r$pred, measure=mymeasure, task=binaryclass.task)
+	performance(r$pred, measures=mymeasure, task=binaryclass.task)
   
+  # multiple measures as list
+	res = performance(r$pred, measures=list(ber,acc,tp), task=binaryclass.task)
+	expect_true(!any(is.na(res)))
+	expect_true(length(res)==3)
   
   # custom measure
   

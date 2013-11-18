@@ -39,10 +39,10 @@ mod <- train(lrn, task)
 pred <- predict(mod, newdata= iris)
 
 # Compare predicted and true label with our measure.
-performance(pred, measure = my.mmce)
+performance(pred, measures = my.mmce)
 
 # Apparently the result coincides with the mlr implementaion.
-performance(pred, measure = mmce)
+performance(pred, measures = mmce)
 ```
 
 
@@ -72,7 +72,7 @@ pred <- predict(mod, newdata= iris)
 my.costs <- makeCostMeasure(id = "costs", minimize = TRUE, costs=mcm, task, aggregate = mean)
 
 # Compare predicted and true label with our measure.
-performance(pred, measure = my.costs)
+performance(pred, measures = my.costs)
 ```
 
 

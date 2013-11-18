@@ -16,7 +16,7 @@ test_that("measures", {
   mod = train(lrn, task=ct, subset=binaryclass.train.inds)
 	pred = predict(mod, task=ct, subset=binaryclass.test.inds)
   for (m in ms) {
-    perf = performance(pred, measure=m)
+    perf = performance(pred, measures=m)
   }
 	
   r = resample(lrn, ct, res, measures=ms)
