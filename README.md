@@ -12,7 +12,7 @@ mlr: Machine Learning in R
 
 * Run this in R to install the current GitHub version:
   ```r
-  devtools::install_github("BBmisc", username="berndbischl")
+  devtools::install_github("mlr", username="berndbischl")
   ```
 
 * [Further installation instructions](https://github.com/tudo-r/PackagesInfo/wiki/Installation-Information)
