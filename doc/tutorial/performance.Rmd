@@ -11,10 +11,10 @@ It is also possible to access the time to train the model,
 the time to compute the prediction and their sum as performance
 measures.
 
-To see which performance measures are implemented, have a look at [measures](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/measures.html). If you want 
+To see which performance measures are implemented, have a look at [measures](http://berndbischl.github.io/mlr/measures.html). If you want 
 to implement an additional measure or include a measure with non-standard 
 misclassification costs, go to the section [create_measure](create_measure.md). In order to calculate 
-the performance measures, the function [performance](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/performance.html) is used.
+the performance measures, the function [performance](http://berndbischl.github.io/mlr/performance.html) is used.
 
 
 Classification example
@@ -46,13 +46,12 @@ performance(pred = pred, measures = timetrain, model = mod)
 performance(pred = pred, measures = timeboth, model = mod)
 ```
 
-A nice method to calculate multiple performace measures at once makes use of the popular R function sapply. We define a list of measures and apply the performance function for each element.
+Of course we can also calculate multiple performance measures at once simply by unsing a list of meassures which
+can also include [your own measure](create_measure.md).
 
 ```{r}
 ms <- list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain, "timeboth" = timeboth)
-sapply(ms, function(the.ms) {
-  performance(pred = pred, measures = the.ms, model = mod)
-})
+performance(pred = pred, measures = ms, model = mod)
 ```
 
 Binary classification
@@ -78,7 +77,7 @@ performance(pred, measures = fnr)
 
 Note that, in order to calculate the AUC, the area under the ROC (receiver 
 operating characteristic) curve, we have to make sure that posterior
-probabilities are predicted, i.e. set the predict type of the [Learner](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/makeLearner.html) to "prob".
+probabilities are predicted, i.e. set the predict type of the [Learner](http://berndbischl.github.io/mlr/makeLearner.html) to "prob".
 
 ```{r}
 library("mlbench")

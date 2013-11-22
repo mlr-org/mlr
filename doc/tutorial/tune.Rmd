@@ -5,7 +5,7 @@ Many classification algorithms feature a set of hyperparameters that
 either need to be selected by the user or through resampling,
 e.g. cross-validation. Setting them by hand was already covered in the
 section about [training](train.md) and [resampling](resample.md) -- simply use the
-``par.val`` argument in the [makeLearner](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/html/makeLearner.html) method.
+`par.val` argument in the [makeLearner](http://berndbischl.github.io/mlr/makeLearner.html) method.
 
 Assuming, you have understood how [resampling](resample.md) works, it is
 quite simple to implement a grid search, which is one of the standard
@@ -30,7 +30,7 @@ task <- makeClassifTask(data=iris, target="Species")
 Next, we need to create a [ParamSet](http://www.statistik.tu-dortmund.de/~bischl/rdocs/ParamHelpers/html/makeParamSet.html) object, which describes the parameter space 
 we wish to search in. This is done via the function make[ParamSet](http://www.statistik.tu-dortmund.de/~bischl/rdocs/ParamHelpers/html/makeParamSet.html).
 Since we will use a grid search strategy, we add a discrete parameter for the 
-``C`` and ``sigma`` parameter of the SVM to the parameter set.
+`C` and `sigma` parameter of the SVM to the parameter set.
 More details concerning parameter sets are explained in section [parameters](parameters.md).
 
 ```{r}
@@ -56,7 +56,7 @@ ctrl <- makeTuneControlGrid()
 
 Finally, by combining all the previous pieces, we can tune the SVM
 using our [TuneControl](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlrTune/html/TuneControl.html) instance and the resampling strategy,
-described by the ``rdesc`` variable.
+described by the `rdesc` variable.
 
 ```{r}
 tuneParams(makeLearner("classif.ksvm"), task=task, resampling=rdesc, par.set=ps, control=ctrl)
@@ -69,10 +69,9 @@ corresponding parameter of the underlying R function (in this case
 value is a vector of feasible values for this hyperparameter. The
 complete grid is just the cross-product of all feasible values.
 
-(Please note that with ksvm we encounter a somewhat special case, as
-the parameters should be passed through the "kernel" and "kpar"
-structures.  To make this simpler, t.svm allows direct passing. Again,
-see documentation.) 
+(Please note whenever parameters in the underlaying R functions should be 
+passed within a list structure *mlr* tries to give you direct access to
+each parameter and get rid of the list structure -- Like this is the case with `ksvm`) 
 
 Tune now simply performs the cross-validation for every element of the
 cross-product and selects the one with the best mean performance

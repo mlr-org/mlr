@@ -61,9 +61,9 @@ htmlhelp: install
 	mv README.xxx README.md
 	${DELETE} Rplots*.pdf
 	git checkout gh-pages
-	rm -rf mlrhelp
-	mv /tmp/pkgdocs mlrhelp
-	git add mlrhelp
+	rm -rf *
+	mv /tmp/pkgdocs/* .
+	git add .
 	git commit -am "new html help"
 	git push origin gh-pages
 	git checkout master
