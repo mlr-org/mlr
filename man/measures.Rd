@@ -19,6 +19,7 @@
 \alias{medse}
 \alias{mmce}
 \alias{mse}
+\alias{multiclass.auc}
 \alias{npv}
 \alias{ppv}
 \alias{rmse}
@@ -77,6 +78,8 @@
   acc
 
   ber
+
+  multiclass.auc
 
   auc
 
@@ -145,8 +148,11 @@
   \item{\bold{gmean}}{\cr G-mean, geomentric mean of recall
   and specificity.} \item{\bold{gpr}}{\cr Geometric mean of
   precision and recall.} \item{\bold{auc}}{\cr Area under
-  the curve.} } Only \code{mmce}, \code{acc} and \code{ber}
-  can be used for multiclass problems.
+  the curve.} \item{\bold{multiclass.auc}}{\cr Area under
+  the curve for multiclass problems. Calls
+  \code{pROC::multiclass.roc}.} } Only \code{mmce},
+  \code{acc}, \code{multiclass.auc} and \code{ber} can be
+  used for multiclass problems.
 
   Regression: \itemize{ \item{\bold{sse}}{\cr Sum of
   squared errors} \item{\bold{mse}}{\cr Mean of squared

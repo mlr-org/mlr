@@ -15,10 +15,16 @@ test_that("measures", {
 	lrn = makeLearner("classif.rpart")
   mod = train(lrn, task=ct, subset=binaryclass.train.inds)
 	pred = predict(mod, task=ct, subset=binaryclass.test.inds)
-  for (m in ms) {
-    perf = performance(pred, measures=m)
-  }
+  perf = performance(pred, measures=ms)
 	
   r = resample(lrn, ct, res, measures=ms)
 	expect_equal(names(r$measures.test), c("iter", "mmce", "acc", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr", "fnr", "ppv", "npv", "mcc", "f1", "foo"))
+  
+  #Test multiclass auc
+  lrn = makeLearner("classif.randomForest",predict.type="prob")
+  mod = train(lrn, task=multiclass.task, subset=multiclass.train.inds)
+  pred = predict(mod, task=multiclass.task, subset=multiclass.test.inds)
+	perf = performance(pred, measures=multiclass.auc)
+  expect_true(is.numeric(perf))
+  
 })

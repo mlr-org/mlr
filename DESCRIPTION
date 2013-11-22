@@ -50,7 +50,8 @@ Suggests:
     rpart,
     rsm,
     RWeka,
-    ROCR
+    ROCR,
+    pROC
 LazyData: yes
 ByteCompile: yes
 Version: 1.2

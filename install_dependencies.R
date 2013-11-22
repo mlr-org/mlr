@@ -28,6 +28,7 @@ pkgs <- c(
   "robustbase",
   "rpart", 
   "ROCR",
+  "pROC",
   "rsm",
   "RWeka"
 )

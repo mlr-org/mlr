@@ -9,6 +9,7 @@ library(e1071)
 library(adabag)
 library(MASS)
 library(ROCR)
+library(pROC)
 
 if (interactive()) {
   load_all(".")
