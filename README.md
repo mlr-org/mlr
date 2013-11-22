@@ -5,10 +5,10 @@ mlr: Machine Learning in R
   http://cran.r-project.org/web/packages/mlr/index.html
 
 * Detailed Tutorial:
-  https://www.statistik.tu-dortmund.de/~bischl/mlr_tutorial/tutorial/index.html
+  https://github.com/berndbischl/mlr/blob/master/doc/knitted/tutorial/index.md
 
 * R Documentation in HTML:
-  http://berndbischl.github.io/mlr/mlrhelp/
+  http://berndbischl.github.io/mlr/
 
 * Run this in R to install the current GitHub version:
   ```r
