@@ -68,7 +68,7 @@ htmlhelp: install
 	git push origin gh-pages
 	git checkout master
 
-tutorial: install
+tutorial:
 	printf "\nKnitting Rmd tutorial...\n"
 	${DELETE} doc/knitted
 	mkdir doc/knitted

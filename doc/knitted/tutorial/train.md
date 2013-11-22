@@ -4,7 +4,7 @@ Training a Learner
 Training a learner just means fitting a model to a given data set.
 In the **mlr** package this can be done by calling the function [train](http://berndbischl.github.io/mlr/train.html) that 
 provides a unified interface to all integrated [learners](http://berndbischl.github.io/mlr/learners.html) passing a learner 
-and a LearnTask_.
+and a [LearnTask](http://berndbischl.github.io/mlr/makeLearner.html).
 
 
 Quick start
