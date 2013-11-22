@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Fit models according to a resampling strategy.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body>
+
+<table width="100%" summary="page for resample {mlr}"><tr><td>resample {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Fit models according to a resampling strategy.</h2>
+
+<h3>Description</h3>
+
+<p>Given a resampling strategy, which defines sets of
+training and test indices, fits the selected learner
+using the training sets and performs predictions for the
+training/test sets. (This depends on what you selected in
+the resampling strategy, see parameter <code>predict</code> in
+<code><a href="makeResampleDesc.html">makeResampleDesc</a></code>.) Then performance
+measures are calculated and aggregated. You are able to
+return all fitted models (parameter <code>models</code>) or
+extract specific parts of the models (parameter
+<code>extract</code>) as returning all of them completely might
+be memory intensive.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  resample(learner, task, resampling, measures, weights,
+    models = FALSE, extract = function(model) { },
+    show.info = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>learner</code></td>
+<td>
+<p>[<code><a href="makeLearner.html">Learner</a></code>]<br> The learner.</p>
+</td></tr>
+<tr valign="top"><td><code>task</code></td>
+<td>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> The task.</p>
+</td></tr>
+<tr valign="top"><td><code>resampling</code></td>
+<td>
+<p>[<code><a href="makeResampleDesc.html">ResampleDesc</a></code> or
+<code><a href="makeResampleInstance.html">ResampleInstance</a></code>]<br> Resampling strategy.
+If a description is passed, it is instantiated
+automatically.</p>
+</td></tr>
+<tr valign="top"><td><code>measures</code></td>
+<td>
+<p>[<code><a href="makeMeasure.html">Measure</a></code> | list of
+<code><a href="makeMeasure.html">Measure</a></code>]<br> Performance measure(s) to
+evaluate.</p>
+</td></tr>
+<tr valign="top"><td><code>weights</code></td>
+<td>
+<p>[<code>numeric</code>]<br> Optional, non-negative
+case weight vector to be used during fitting.  If given,
+must be of same length as observations in task and in
+corresponding order.  By default missing which means no
+weights are used.</p>
+</td></tr>
+<tr valign="top"><td><code>models</code></td>
+<td>
+<p>[logical(1)]<br> Should all fitted models be
+returned?  Default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>extract</code></td>
+<td>
+<p>[function(model)]<br> Function used to
+extract information from a fitted model during
+resampling.  Is applied to every
+<code><a href="makeWrappedModel.html">WrappedModel</a></code> resulting from calls to
+<code><a href="../../caret/html/train.html">train</a></code> during resampling.  Default is to
+extract nothing.</p>
+</td></tr>
+<tr valign="top"><td><code>show.info</code></td>
+<td>
+<p>[logical(1)]<br> Should a few informative
+lines about the current resampling iteration and the
+result be logged to the R console?  Default is
+<code>TRUE</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>For construction of the resampling strategies use the
+factory methods <code><a href="makeResampleDesc.html">makeResampleDesc</a></code> and
+<code><a href="makeResampleInstance.html">makeResampleInstance</a></code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>List of: </p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>measures.test [<code>data.frame</code>]</code></td>
+<td>
+<p>Rows
+correspond to test sets in resampling iterations, columns
+to performance measures.</p>
+</td></tr> <tr valign="top"><td><code>measures.train
+[<code>data.frame</code>]</code></td>
+<td>
+<p>Rows correspond to training sets in
+resampling iterations, columns to performance measures.</p>
+</td></tr>
+<tr valign="top"><td><code>aggr [named numeric]</code></td>
+<td>
+<p>Vector of aggregated
+performance values. Names are coded like this
+&lt;measure&gt;.&lt;aggregation&gt;.</p>
+</td></tr> <tr valign="top"><td><code>pred
+[<code><a href="ResamplePrediction.html">ResamplePrediction</a></code>]</code></td>
+<td>
+<p>Container for all
+predictions during resampling.</p>
+</td></tr> <tr valign="top"><td><code>models [list of
+<code><a href="makeWrappedModel.html">WrappedModel</a></code>]</code></td>
+<td>
+<p>List of fitted models or
+<code>NULL</code>.</p>
+</td></tr> <tr valign="top"><td><code>extract [list]</code></td>
+<td>
+<p>List of extracted
+parts from fitted models or <code>NULL</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="makeResampleDesc.html">makeResampleDesc</a></code>,
+<code><a href="makeResampleInstance.html">makeResampleInstance</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="r">
+task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
+rdesc &lt;- makeResampleDesc(&quot;Bootstrap&quot;, iters = 10)
+rin &lt;- makeResampleInstance(rdesc, task = task)
+r1 &lt;- resample(makeLearner(&quot;classif.qda&quot;), task, rin)
+</code></pre>
+
+<pre><code>## [Resample] OOB bootstrapping iter: 1
+## [Resample] OOB bootstrapping iter: 2
+## [Resample] OOB bootstrapping iter: 3
+## [Resample] OOB bootstrapping iter: 4
+## [Resample] OOB bootstrapping iter: 5
+## [Resample] OOB bootstrapping iter: 6
+## [Resample] OOB bootstrapping iter: 7
+## [Resample] OOB bootstrapping iter: 8
+## [Resample] OOB bootstrapping iter: 9
+## [Resample] OOB bootstrapping iter: 10
+## [Resample] Result: mmce.test.mean=0.0273
+</code></pre>
+
+<pre><code class="r">print(r1$measures.test)
+</code></pre>
+
+<pre><code>##    iter    mmce
+## 1     1 0.00000
+## 2     2 0.02000
+## 3     3 0.01852
+## 4     4 0.01786
+## 5     5 0.07407
+## 6     6 0.03448
+## 7     7 0.01667
+## 8     8 0.01887
+## 9     9 0.03846
+## 10   10 0.03390
+</code></pre>
+
+<pre><code class="r">print(r1$aggr)
+</code></pre>
+
+<pre><code>## mmce.test.mean 
+##        0.02728
+</code></pre>
+
+<pre><code class="r">r2 &lt;- resample(makeLearner(&quot;classif.rpart&quot;), task, rin)
+</code></pre>
+
+<pre><code>## [Resample] OOB bootstrapping iter: 1
+## [Resample] OOB bootstrapping iter: 2
+## [Resample] OOB bootstrapping iter: 3
+## [Resample] OOB bootstrapping iter: 4
+## [Resample] OOB bootstrapping iter: 5
+## [Resample] OOB bootstrapping iter: 6
+## [Resample] OOB bootstrapping iter: 7
+## [Resample] OOB bootstrapping iter: 8
+## [Resample] OOB bootstrapping iter: 9
+## [Resample] OOB bootstrapping iter: 10
+## [Resample] Result: mmce.test.mean=0.0503
+</code></pre>
+
+<pre><code class="r">print(r2$measures.test)
+</code></pre>
+
+<pre><code>##    iter    mmce
+## 1     1 0.01724
+## 2     2 0.02000
+## 3     3 0.05556
+## 4     4 0.07143
+## 5     5 0.07407
+## 6     6 0.05172
+## 7     7 0.03333
+## 8     8 0.05660
+## 9     9 0.03846
+## 10   10 0.08475
+</code></pre>
+
+<pre><code class="r">print(r2$aggr)
+</code></pre>
+
+<pre><code>## mmce.test.mean 
+##        0.05032
+</code></pre>
+
+<pre><code class="r">
+</code></pre>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

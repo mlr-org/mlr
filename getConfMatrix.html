@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Confusion matrix.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body>
+
+<table width="100%" summary="page for getConfMatrix {mlr}"><tr><td>getConfMatrix {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Confusion matrix.</h2>
+
+<h3>Description</h3>
+
+<p>Calculates confusion matrix for (possibly resampled)
+prediction. Rows indicate true classes, columns predicted
+classes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  getConfMatrix(pred, relative = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>pred</code></td>
+<td>
+<p>[<code><a href="Prediction.html">Prediction</a></code>]<br> Result of a
+prediction.</p>
+</td></tr>
+<tr valign="top"><td><code>relative</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> If <code>TRUE</code>
+rows are normalized to show relative frequencies.
+Default is <code>FALSE</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Code inspired by <code><a href="../../klaR/html/errormatrix.html">errormatrix</a></code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>[<code>matrix</code>]. A confusion matrix.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="predict.WrappedModel.html">predict.WrappedModel</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="r">
+## create classification task and use linear discriminant analysis for classification
+task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
+lrn &lt;- makeLearner(&quot;classif.lda&quot;)
+</code></pre>
+
+<pre><code>## Lade nötiges Paket: MASS
+</code></pre>
+
+<pre><code class="r">
+## set up training and test data
+n &lt;- nrow(iris)
+mixed.set &lt;- sample(1:n)
+training.set &lt;- mixed.set[1:(n/2)]
+test.set &lt;- mixed.set[(n/2 + 1):n]
+
+## train model
+mod &lt;- train(lrn, task, subset = training.set)
+
+## get predictions and show calculate confusion matrix
+pred &lt;- predict(mod, newdata = iris[test.set, ])
+print(getConfMatrix(pred))
+</code></pre>
+
+<pre><code>##             predicted
+## true         setosa versicolor virginica -SUM-
+##   setosa         23          0         0     0
+##   versicolor      0         22         1     1
+##   virginica       0          0        29     0
+##   -SUM-           0          0         1     1
+</code></pre>
+
+<pre><code class="r">print(getConfMatrix(pred, relative = TRUE))
+</code></pre>
+
+<pre><code>##             predicted
+## true         setosa versicolor virginica   -SUM-
+##   setosa          1     0.0000   0.00000 0.00000
+##   versicolor      0     0.9565   0.04348 0.04348
+##   virginica       0     0.0000   1.00000 0.00000
+##   -SUM-           0     0.0000   1.00000 0.01333
+</code></pre>
+
+<pre><code class="r">
+</code></pre>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

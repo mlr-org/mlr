@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Performance measures.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for measures {mlr}"><tr><td>measures {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Performance measures.</h2>
+
+<h3>Description</h3>
+
+<p>A performance measure is evaluated after a single
+train/predict step and returns a single number to assess
+the quality of the prediction (or maybe only the model,
+think AIC). The measure itself knows whether it wants to
+be minimized or maximized and for what tasks it is
+applicable. See below for a list of already implemented
+measures. If you want a measure for a misclassification
+cost matrix, look at <code><a href="makeCostMeasure.html">makeCostMeasure</a></code>. If
+you want to implement your own measure, look at
+<code><a href="makeMeasure.html">makeMeasure</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  measures()
+
+  featperc
+
+  timetrain
+
+  timepredict
+
+  timeboth
+
+  sse
+
+  mse
+
+  rmse
+
+  medse
+
+  sae
+
+  mae
+
+  medae
+
+  mmce
+
+  acc
+
+  ber
+
+  auc
+
+  tp
+
+  tn
+
+  fp
+
+  fn
+
+  tpr
+
+  tnr
+
+  fpr
+
+  fnr
+
+  ppv
+
+  npv
+
+  fdr
+
+  mcc
+
+  f1
+
+  gmean
+
+  gpr
+</pre>
+
+
+<h3>Format</h3>
+
+<p>List of 12
+$ id                : chr &quot;featperc&quot;
+$ minimize          : logi TRUE
+$ classif           : logi TRUE
+$ regr              : logi TRUE
+$ only.binary       : logi FALSE
+$ allowed.pred.types: chr [1:2] &quot;response&quot; &quot;prob&quot;
+$ req.pred          : logi TRUE
+$ req.model         : logi TRUE
+$ req.task          : logi FALSE
+$ fun               :function (task, model, pred, extra.args)  
+$ extra.args        : list()
+$ aggr              :List of 2
+..- attr(*, &quot;class&quot;)= chr &quot;Aggregation&quot;
+- attr(*, &quot;class&quot;)= chr &quot;Measure&quot;</p>
+
+
+<h3>Details</h3>
+
+<p>Classification: </p>
+ <ul>
+<li><p><B>mmce</B><br> Mean
+misclassification error. </p>
+</li>
+<li><p><B>acc</B><br>
+Accuracy. </p>
+</li>
+<li><p><B>ber</B><br> Balanced error rate.
+Mean of misclassification error rates on all individual
+classes. </p>
+</li>
+<li><p><B>tp</B><br> True positives.
+</p>
+</li>
+<li><p><B>tpr</B><br> True positive rate, also called hit
+rate or recall. </p>
+</li>
+<li><p><B>fp</B><br> False positives,
+also called false alarms. </p>
+</li>
+<li><p><B>fpr</B><br> False
+positive rate, also called false alarm rate or fall-out.
+</p>
+</li>
+<li><p><B>tn</B><br> True negatives, also called correct
+rejections. </p>
+</li>
+<li><p><B>tnr</B><br> True negative rate.
+Also called specificity. </p>
+</li>
+<li><p><B>fn</B><br> False
+negatives, also called misses. </p>
+</li>
+<li><p><B>fnr</B><br>
+False negative rate. </p>
+</li>
+<li><p><B>ppv</B><br> Positive
+predictive value, also called precision.
+</p>
+</li>
+<li><p><B>npv</B><br> Negative predictive value.
+</p>
+</li>
+<li><p><B>fdr</B><br> False discovery rate.
+</p>
+</li>
+<li><p><B>f1</B><br> F1 measure. </p>
+</li>
+<li><p><B>mcc</B><br>
+Matthews correlation coefficient.
+</p>
+</li>
+<li><p><B>gmean</B><br> G-mean, geomentric mean of recall
+and specificity. </p>
+</li>
+<li><p><B>gpr</B><br> Geometric mean of
+precision and recall. </p>
+</li>
+<li><p><B>auc</B><br> Area under
+the curve. </p>
+</li></ul>
+<p> Only <code>mmce</code>, <code>acc</code> and <code>ber</code>
+can be used for multiclass problems.
+</p>
+<p>Regression: </p>
+ <ul>
+<li><p><B>sse</B><br> Sum of
+squared errors </p>
+</li>
+<li><p><B>mse</B><br> Mean of squared
+errors </p>
+</li>
+<li><p><B>medse</B><br> Median of squared errors
+</p>
+</li>
+<li><p><B>sae</B><br> Sum of absolute errors
+</p>
+</li>
+<li><p><B>mae</B><br> Mean of absolute errors
+</p>
+</li>
+<li><p><B>medae</B><br> Median of absolute errors
+</p>
+</li>
+<li><p><B>rmse</B><br> Root mean square error </p>
+</li></ul>
+
+<p>General: </p>
+ <ul>
+<li><p><B>timetrain</B><br> Time of
+fitting the model </p>
+</li>
+<li><p><B>timepredict</B><br> Time of
+predicting test set </p>
+</li>
+<li><p><B>timeboth</B><br> timetrain
++ trainpredict </p>
+</li>
+<li><p><B>featperc</B><br> Percentage of
+original features used for model, useful for feature
+selection. </p>
+</li></ul>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

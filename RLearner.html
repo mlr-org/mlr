@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Internal construction / wrapping of learner object.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for RLearner {mlr}"><tr><td>RLearner {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Internal construction / wrapping of learner object.</h2>
+
+<h3>Description</h3>
+
+<p>Wraps an already implemented learning method from R to
+make it accessible to mlr. Call this method in your
+constructor. You have to pass an id (name), the required
+package(s), a description object for all changeable
+parameters (you dont have to do this for the learner to
+work, but it is strongly recommended), and define what
+the learner can / cannot do.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  makeRLearner()
+
+  makeRLearnerClassif(cl, package, par.set,
+    numerics = FALSE, factors = FALSE, missings = FALSE,
+    weights = FALSE, oneclass = FALSE, twoclass = FALSE,
+    multiclass = FALSE, prob = FALSE, par.vals = list())
+
+  makeRLearnerRegr(cl, package, par.set, numerics,
+    factors = FALSE, missings = FALSE, weights = FALSE,
+    se = FALSE, par.vals = list())
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>cl</code></td>
+<td>
+<p>[<code>character(1)</code>] <br> Class name for
+learner to create.  By convention, all classification
+learners start with &ldquo;classif.&rdquo; and all regression
+learners with &ldquo;regr.&rdquo;</p>
+</td></tr>
+<tr valign="top"><td><code>package</code></td>
+<td>
+<p>[<code>character</code>]<br> Package(s) to load
+for the implementation of the learner.</p>
+</td></tr>
+<tr valign="top"><td><code>par.set</code></td>
+<td>
+<p>[<code><a href="../../ParamHelpers/html/ParamSet.html">ParamSet</a></code>] <br>
+Parameter set of (hyper)parameters and their
+constraints.</p>
+</td></tr>
+<tr valign="top"><td><code>numerics</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Can numeric
+features be handled?  Default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>factors</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Can factor features
+be handled?  Default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>missings</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Can missing values
+be handled?  Default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>weights</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Can case weights be
+handled?  Default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>oneclass</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Can one-class
+problems be handled?  Default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>twoclass</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Can two-class
+problems be handled?  Default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>multiclass</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Can multi-class
+problems be handled?  Default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>prob</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Can probabilities be
+predicted?  Default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>se</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Can standard errors be
+predicted??  Default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>par.vals</code></td>
+<td>
+<p>[<code>list</code>] <br> Always set
+hyperparameters to these values when the object is
+constructed.  Useful when default values are missing in
+the underlying function.  The values can later be
+overwritten when the user sets hyperparameters.  Default
+is empty list.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>[<code><a href="RLearner.html">RLearnerClassif</a></code> or
+<code><a href="RLearner.html">RLearnerRegr</a></code>].
+</p>
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>
