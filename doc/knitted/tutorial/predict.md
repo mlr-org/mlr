@@ -271,11 +271,11 @@ the threshold for the *positive* class to 0.8:
 
 
 ```r
-pred <- setThreshold(pred, 0,8)
+pred <- setThreshold(pred, 0.8)
 ```
 
 ```
-## Error: unbenutztes Argument (8)
+## Error: Objekt 'pred' nicht gefunden
 ```
 
 ```r

@@ -69,23 +69,16 @@ an ID.
 
 
 ```r
-lrn <- makeLearner("classif.rpart", minsplit = 7, cp = 0,03, id = "myrpart")
-```
-
-```
-## Error: Argument predict.type must be any of: response,prob!
-```
-
-```r
+lrn <- makeLearner("classif.rpart", minsplit = 7, cp = 0.03, id = "myrpart")
 lrn
 ```
 
 ```
-## Learner classif.rpart from package rpart
+## Learner myrpart from package rpart
 ## Type: classif
 ## Class: classif.rpart
 ## Predict-Type: response
-## Hyperparameters: xval=0
+## Hyperparameters: xval=0,minsplit=7,cp=0.03
 ## 
 ## Supported features Numerics:TRUE Factors:TRUE
 ## Supports missings: TRUE

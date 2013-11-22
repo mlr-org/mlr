@@ -36,7 +36,7 @@ r <- resample(lrn, task, rdesc)
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0,02
+## [Resample] Result: mmce.test.mean=0.0267
 ```
 
 ```r
@@ -52,13 +52,13 @@ r
 ## 
 ## $measures.test
 ##   iter mmce
-## 1    1 0,04
-## 2    2 0,02
-## 3    3 0,00
+## 1    1 0.02
+## 2    2 0.02
+## 3    3 0.04
 ## 
 ## $aggr
 ## mmce.test.mean 
-##           0,02 
+##        0.02667 
 ## 
 ## $pred
 ## Resampled Prediction for:
@@ -67,9 +67,9 @@ r
 ## Stratification: FALSE
 ## predict.type: response
 ## threshold: 
-## time (mean): 0,00
+## time (mean): 0.00
 ## 'data.frame':	150 obs. of  5 variables:
-##  $ id      : int  1 2 11 12 13 14 15 18 20 22 ...
+##  $ id      : int  2 3 6 11 12 14 15 18 19 20 ...
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -119,7 +119,7 @@ r <- resample(lrn, task, rdesc)
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mse.test.mean=26,7
+## [Resample] Result: mse.test.mean=23.7
 ```
 
 ```r
@@ -135,13 +135,13 @@ r
 ## 
 ## $measures.test
 ##   iter   mse
-## 1    1 25,31
-## 2    2 20,86
-## 3    3 34,09
+## 1    1 22.91
+## 2    2 22.04
+## 3    3 26.02
 ## 
 ## $aggr
 ## mse.test.mean 
-##         26,75 
+##         23.66 
 ## 
 ## $pred
 ## Resampled Prediction for:
@@ -150,11 +150,11 @@ r
 ## Stratification: FALSE
 ## predict.type: response
 ## threshold: 
-## time (mean): 0,00
+## time (mean): 0.00
 ## 'data.frame':	506 obs. of  5 variables:
-##  $ id      : int  4 6 7 8 13 15 19 28 31 33 ...
-##  $ truth   : num  33,4 28,7 22,9 27,1 21,7 18,2 20,2 14,8 12,7 13,2 ...
-##  $ response: num  28,4 24,8 22,5 18,6 20,5 ...
+##  $ id      : int  2 10 11 12 13 15 16 20 24 26 ...
+##  $ truth   : num  21.6 18.9 15 18.9 21.7 18.2 19.9 18.2 14.5 13.9 ...
+##  $ response: num  25.5 19.8 20.1 22.3 21.6 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ set     : Factor w/ 1 level "test": 1 1 1 1 1 1 1 1 1 1 ...
 ## 
@@ -360,7 +360,7 @@ r1 <- resample(lrn, task, rinst, list(mmce, acc))
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0,0533,acc.test.mean=0,947
+## [Resample] Result: mmce.test.mean=0.0667,acc.test.mean=0.933
 ```
 
 
@@ -368,19 +368,15 @@ Let's set a couple of hyperparameters for rpart
 
 
 ```r
-lrn1 <- makeLearner("classif.rpart", minsplit = 10, cp = 0,03)
-```
-
-```
-## Error: Argument id must be of class character, not: numeric!
-```
-
-```r
+lrn1 <- makeLearner("classif.rpart", minsplit = 10, cp = 0.03)
 r1 <- resample(lrn1, task, rinst, list(mmce, acc))
 ```
 
 ```
-## Error: Objekt 'lrn1' nicht gefunden
+## [Resample] cross-validation iter: 1
+## [Resample] cross-validation iter: 2
+## [Resample] cross-validation iter: 3
+## [Resample] Result: mmce.test.mean=0.0667,acc.test.mean=0.933
 ```
 
 ```r
@@ -395,7 +391,7 @@ r2 <- resample(lrn2, task, rinst, list(mmce, acc))
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0,02,acc.test.mean=0,98
+## [Resample] Result: mmce.test.mean=0.02,acc.test.mean=0.98
 ```
 
 ```r
@@ -414,13 +410,13 @@ r1
 ## 
 ## $measures.test
 ##   iter mmce  acc
-## 1    1 0,04 0,96
-## 2    2 0,06 0,94
-## 3    3 0,06 0,94
+## 1    1 0.08 0.92
+## 2    2 0.04 0.96
+## 3    3 0.08 0.92
 ## 
 ## $aggr
 ## mmce.test.mean  acc.test.mean 
-##        0,05333        0,94667 
+##        0.06667        0.93333 
 ## 
 ## $pred
 ## Resampled Prediction for:
@@ -429,9 +425,9 @@ r1
 ## Stratification: FALSE
 ## predict.type: response
 ## threshold: 
-## time (mean): 0,00
+## time (mean): 0.00
 ## 'data.frame':	150 obs. of  5 variables:
-##  $ id      : int  2 3 5 10 11 13 17 18 26 31 ...
+##  $ id      : int  5 9 11 13 18 23 32 36 40 43 ...
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -464,13 +460,13 @@ r2
 ## 
 ## $measures.test
 ##   iter mmce  acc
-## 1    1 0,02 0,98
-## 2    2 0,04 0,96
-## 3    3 0,00 1,00
+## 1    1 0.04 0.96
+## 2    2 0.02 0.98
+## 3    3 0.00 1.00
 ## 
 ## $aggr
 ## mmce.test.mean  acc.test.mean 
-##           0,02           0,98 
+##           0.02           0.98 
 ## 
 ## $pred
 ## Resampled Prediction for:
@@ -479,9 +475,9 @@ r2
 ## Stratification: FALSE
 ## predict.type: response
 ## threshold: 
-## time (mean): 0,00
+## time (mean): 0.00
 ## 'data.frame':	150 obs. of  5 variables:
-##  $ id      : int  2 3 5 10 11 13 17 18 26 31 ...
+##  $ id      : int  5 9 11 13 18 23 32 36 40 43 ...
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -512,9 +508,9 @@ r1$measures.test
 
 ```
 ##   iter mmce  acc
-## 1    1 0,04 0,96
-## 2    2 0,06 0,94
-## 3    3 0,06 0,94
+## 1    1 0.08 0.92
+## 2    2 0.04 0.96
+## 3    3 0.08 0.92
 ```
 
 
@@ -530,7 +526,7 @@ r1$aggr
 
 ```
 ## mmce.test.mean  acc.test.mean 
-##        0,05333        0,94667
+##        0.06667        0.93333
 ```
 
 
@@ -568,19 +564,9 @@ r1 <- resample(lrn1, task, rinst, measures = ms)
 
 ```
 ## # weights:  46
-## initial  value 298085,869018 
-## iter  10 value 32378,149668
-## iter  20 value 30296,383035
-## iter  30 value 30165,727208
-## iter  40 value 30148,504757
-## iter  50 value 30145,909932
-## iter  60 value 29522,030295
-## iter  70 value 28796,686324
-## iter  80 value 25355,162507
-## iter  90 value 23825,370542
-## iter 100 value 23030,256704
-## final  value 23030,256704 
-## stopped after 100 iterations
+## initial  value 328951.079618 
+## final  value 41894.161502 
+## converged
 ```
 
 ```
@@ -589,8 +575,8 @@ r1 <- resample(lrn1, task, rinst, measures = ms)
 
 ```
 ## # weights:  46
-## initial  value 295547,026310 
-## final  value 39700,565138 
+## initial  value 323885.132800 
+## final  value 41943.584921 
 ## converged
 ```
 
@@ -600,13 +586,13 @@ r1 <- resample(lrn1, task, rinst, measures = ms)
 
 ```
 ## # weights:  46
-## initial  value 326703,221282 
-## final  value 38972,640261 
+## initial  value 273637.135897 
+## final  value 47153.319921 
 ## converged
 ```
 
 ```
-## [Resample] Result: mse.test.mean=66,4,medae.test.mean= 4,4
+## [Resample] Result: mse.test.mean=81.9,medae.test.mean=4.98
 ```
 
 ```r
@@ -620,7 +606,7 @@ r2 <- resample(lrn2, task, rinst, measures = ms)
 ## [Resample] OOB bootstrapping iter: 1
 ## [Resample] OOB bootstrapping iter: 2
 ## [Resample] OOB bootstrapping iter: 3
-## [Resample] Result: mse.test.mean=15,5,medae.test.mean=1,75
+## [Resample] Result: mse.test.mean=  23,medae.test.mean= 1.9
 ```
 
 
@@ -634,9 +620,9 @@ r1$measures.test
 
 ```
 ##   iter   mse medae
-## 1    1 53,57 4,456
-## 2    2 76,41 4,874
-## 3    3 69,19 3,858
+## 1    1 86.52 5.337
+## 2    2 77.57 5.100
+## 3    3 81.68 4.500
 ```
 
 ```r
@@ -645,9 +631,9 @@ r2$measures.test
 
 ```
 ##   iter   mse medae
-## 1    1 15,80 1,865
-## 2    2 13,03 1,762
-## 3    3 17,68 1,618
+## 1    1 16.33 1.924
+## 2    2 34.80 1.920
+## 3    3 17.80 1.849
 ```
 
 
