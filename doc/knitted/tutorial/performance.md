@@ -30,28 +30,13 @@ library("mlr")
 task <- makeClassifTask(data = iris, target = "Species")
 lrn <- makeLearner("classif.lda")
 mod <- train(lrn, task = task, subset = seq(1, 150, 2))
-```
-
-```
-## Error: Argument "y" fehlt (ohne Standardwert)
-```
-
-```r
 pred <- predict(mod, task = task, subset = seq(2, 150, 2))
-```
-
-```
-## Error: Fehler bei der Auswertung des Argumentes 'object' bei der Methodenauswahl
-## für Funktion 'predict': Fehler: Objekt 'mod' nicht gefunden
-```
-
-```r
 
 performance(pred, measures = mmce)
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+## [1] 0.04
 ```
 
   
@@ -64,7 +49,7 @@ performance(pred, measures = acc)
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+## [1] 0.96
 ```
 
 ```r
@@ -73,7 +58,7 @@ performance(pred = pred, measures = timepredict)
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+## [1] 0.003
 ```
 
 ```r
@@ -82,7 +67,7 @@ performance(pred = pred, measures = timetrain, model = mod)
 ```
 
 ```
-## Error: Objekt 'mod' nicht gefunden
+## [1] 0.005
 ```
 
 ```r
@@ -90,7 +75,7 @@ performance(pred = pred, measures = timeboth, model = mod)
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+## [1] 0.008
 ```
 
 
@@ -104,7 +89,8 @@ performance(pred = pred, measures = ms, model = mod)
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+##      mmce       acc timetrain  timeboth 
+##     0.040     0.960     0.005     0.008
 ```
 
 
@@ -122,28 +108,13 @@ data(Sonar)
 task <- makeClassifTask(data = Sonar, target = "Class", positive = "M")
 lrn <- makeLearner("classif.rpart")
 mod <- train(lrn, task = task)
-```
-
-```
-## Error: Argument "y" fehlt (ohne Standardwert)
-```
-
-```r
 pred <- predict(mod, task = task)
-```
-
-```
-## Error: Fehler bei der Auswertung des Argumentes 'object' bei der Methodenauswahl
-## für Funktion 'predict': Fehler: Objekt 'mod' nicht gefunden
-```
-
-```r
 
 performance(pred, measures = acc)
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+## [1] 0.875
 ```
 
 ```r
@@ -151,7 +122,7 @@ performance(pred, measures = fpr)
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+## [1] 0.1031
 ```
 
 ```r
@@ -159,7 +130,7 @@ performance(pred, measures = fnr)
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+## [1] 0.1441
 ```
 
 
@@ -176,28 +147,18 @@ data(Sonar)
 task <- makeClassifTask(data = Sonar, target = "Class", positive = "M")
 lrn <- makeLearner("classif.rpart", predict.type = "prob")
 mod <- train(lrn, task = task)
-```
-
-```
-## Error: Argument "y" fehlt (ohne Standardwert)
-```
-
-```r
 pred <- predict(mod, task = task)
-```
-
-```
-## Error: Fehler bei der Auswertung des Argumentes 'object' bei der Methodenauswahl
-## für Funktion 'predict': Fehler: Objekt 'mod' nicht gefunden
-```
-
-```r
 
 performance(pred, measures = auc)
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+## KernSmooth 2.23 loaded
+## Copyright M. P. Wand 1997-2009
+```
+
+```
+## [1] 0.9224
 ```
 
 
@@ -226,25 +187,9 @@ test.set <- seq(from = 2, to = nrow(BostonHousing), by = 2)
 ## Gradient Boosting Machine on training set
 lrn <- makeLearner("regr.gbm", n.trees = 1000)
 mod <- train(lrn, task, subset = training.set)
-```
-
-```
-## Error: cannot coerce class "c("regr.gbm", "RLearnerRegr", "RLearner",
-## "Learner")" to a data.frame
-```
-
-```r
 
 ## Prediction on test set data
 pred <- predict(mod, newdata = BostonHousing[test.set, ])
-```
-
-```
-## Error: Fehler bei der Auswertung des Argumentes 'object' bei der Methodenauswahl
-## für Funktion 'predict': Fehler: Objekt 'mod' nicht gefunden
-```
-
-```r
 
 ## Compare predicted and true labels using measures MSE and MAE
 ms <- list(mse = mse, mae = mae)
@@ -252,7 +197,8 @@ sapply(ms, function(meas) performance(pred, measures = meas))
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+##   mse   mae 
+## 42.72  4.54
 ```
 
 

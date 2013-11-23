@@ -3,6 +3,8 @@
 #Knittr all doc and doc/tutorial
 
 library("knitr")
+library("caret")
+library("mlr")
 
 setwd("doc")
 

@@ -22,19 +22,17 @@ library("mlr")
 task <- makeClassifTask(data = iris, target = "Species")
 lrn <- makeLearner("classif.lda")
 mod <- train(lrn, task = task)
-```
-
-```
-## Error: Argument "y" fehlt (ohne Standardwert)
-```
-
-```r
 predict(mod, newdata = iris)
 ```
 
 ```
-## Error: Fehler bei der Auswertung des Argumentes 'object' bei der Methodenauswahl
-## für Funktion 'predict': Fehler: Objekt 'mod' nicht gefunden
+## Prediction:
+## predict.type: response
+## threshold: 
+## time: 0.00
+## 'data.frame':	150 obs. of  2 variables:
+##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ```
 
 
@@ -53,20 +51,17 @@ data(BostonHousing)
 task <- makeRegrTask(data = BostonHousing, target = "medv")
 lrn <- makeLearner("regr.lm")
 mod <- train(lrn, task)
-```
-
-```
-## Error: cannot coerce class "c("regr.lm", "RLearnerRegr", "RLearner",
-## "Learner")" to a data.frame
-```
-
-```r
 predict(mod, newdata = BostonHousing)
 ```
 
 ```
-## Error: Fehler bei der Auswertung des Argumentes 'object' bei der Methodenauswahl
-## für Funktion 'predict': Fehler: Objekt 'mod' nicht gefunden
+## Prediction:
+## predict.type: response
+## threshold: 
+## time: 0.25
+## 'data.frame':	506 obs. of  2 variables:
+##  $ truth   : num  24 21.6 34.7 33.4 36.2 28.7 22.9 27.1 16.5 18.9 ...
+##  $ response: num  30 25 30.6 28.6 27.9 ...
 ```
 
 
@@ -114,22 +109,9 @@ test.set <- seq(from = 2, to = nrow(iris), by = 2)
 # Now, we can train a decision tree using only the observations in
 # ``train.set``:
 mod <- train(lrn, task, subset = training.set)
-```
-
-```
-## Error: cannot coerce class "c("classif.rpart", "RLearnerClassif",
-## "RLearner", "Learner")" to a data.frame
-```
-
-```r
 
 # Finally, to predict the outcome on new values, we use the predict method:
 pred <- predict(mod, newdata = iris[test.set, ])
-```
-
-```
-## Error: Fehler bei der Auswertung des Argumentes 'object' bei der Methodenauswahl
-## für Funktion 'predict': Fehler: Objekt 'mod' nicht gefunden
 ```
 
 
@@ -141,7 +123,13 @@ head(pred$data)
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+##     truth response
+## 2  setosa   setosa
+## 4  setosa   setosa
+## 6  setosa   setosa
+## 8  setosa   setosa
+## 10 setosa   setosa
+## 12 setosa   setosa
 ```
 
 
@@ -150,20 +138,17 @@ Alternatively, we can also predict directly from a task:
 
 ```r
 pred <- predict(mod, task = task, subset = test.set)
-```
-
-```
-## Error: Fehler bei der Auswertung des Argumentes 'object' bei der Methodenauswahl
-## für Funktion 'predict': Fehler: Objekt 'mod' nicht gefunden
-```
-
-```r
 head(as.data.frame(pred))
 ```
 
 ```
-## Error: Fehler bei der Auswertung des Argumentes 'x' bei der Methodenauswahl
-## für Funktion 'as.data.frame': Fehler: Objekt 'pred' nicht gefunden
+##    id  truth response
+## 2   2 setosa   setosa
+## 4   4 setosa   setosa
+## 6   6 setosa   setosa
+## 8   8 setosa   setosa
+## 10 10 setosa   setosa
+## 12 12 setosa   setosa
 ```
 
 
@@ -179,28 +164,18 @@ of the learner.
 ```r
 lrn <- makeLearner("classif.rpart", predict.type = "prob")
 mod <- train(lrn, task)
-```
-
-```
-## Error: cannot coerce class "c("classif.rpart", "RLearnerClassif",
-## "RLearner", "Learner")" to a data.frame
-```
-
-```r
 pred <- predict(mod, newdata = iris[test.set, ])
-```
-
-```
-## Error: Fehler bei der Auswertung des Argumentes 'object' bei der Methodenauswahl
-## für Funktion 'predict': Fehler: Objekt 'mod' nicht gefunden
-```
-
-```r
 head(pred$data)
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+##     truth prob.setosa prob.versicolor prob.virginica response
+## 2  setosa           1               0              0   setosa
+## 4  setosa           1               0              0   setosa
+## 6  setosa           1               0              0   setosa
+## 8  setosa           1               0              0   setosa
+## 10 setosa           1               0              0   setosa
+## 12 setosa           1               0              0   setosa
 ```
 
 
@@ -216,7 +191,13 @@ head(getProbabilities(pred))
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+##    setosa versicolor virginica
+## 2       1          0         0
+## 4       1          0         0
+## 6       1          0         0
+## 8       1          0         0
+## 10      1          0         0
+## 12      1          0         0
 ```
 
 
@@ -241,27 +222,18 @@ data(Sonar)
 task <- makeClassifTask(data = Sonar, target = "Class", positive = "M")
 lrn <- makeLearner("classif.rpart", predict.type = "prob")
 mod <- train(lrn, task = task)
-```
-
-```
-## Error: Argument "y" fehlt (ohne Standardwert)
-```
-
-```r
 pred <- predict(mod, task = task)
-```
-
-```
-## Error: Fehler bei der Auswertung des Argumentes 'object' bei der Methodenauswahl
-## für Funktion 'predict': Fehler: Objekt 'mod' nicht gefunden
-```
-
-```r
 head(pred$data)
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+##   id truth prob.M prob.R response
+## 1  1     R 0.1061 0.8939        R
+## 2  2     R 0.7333 0.2667        M
+## 3  3     R 0.0000 1.0000        R
+## 4  4     R 0.1061 0.8939        R
+## 5  5     R 0.9250 0.0750        M
+## 6  6     R 0.0000 1.0000        R
 ```
 
 
@@ -272,18 +244,17 @@ the threshold for the *positive* class to 0.8:
 
 ```r
 pred <- setThreshold(pred, 0.8)
-```
-
-```
-## Error: Objekt 'pred' nicht gefunden
-```
-
-```r
 head(pred$data)
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+##   id truth prob.M prob.R response
+## 1  1     R 0.1061 0.8939        R
+## 2  2     R 0.7333 0.2667        R
+## 3  3     R 0.0000 1.0000        R
+## 4  4     R 0.1061 0.8939        R
+## 5  5     R 0.9250 0.0750        M
+## 6  6     R 0.0000 1.0000        R
 ```
 
 ```r
@@ -291,7 +262,8 @@ pred$threshold
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+##   M   R 
+## 0.8 0.2
 ```
 
 
@@ -314,30 +286,20 @@ test.set <- seq(from = 2, to = nrow(BostonHousing), by = 2)
 
 lrn <- makeLearner("regr.gbm", n.trees = 100)
 mod <- train(lrn, task, subset = training.set)
-```
-
-```
-## Error: cannot coerce class "c("regr.gbm", "RLearnerRegr", "RLearner",
-## "Learner")" to a data.frame
-```
-
-```r
 
 pred <- predict(mod, newdata = BostonHousing[test.set, ])
-```
-
-```
-## Error: Fehler bei der Auswertung des Argumentes 'object' bei der Methodenauswahl
-## für Funktion 'predict': Fehler: Objekt 'mod' nicht gefunden
-```
-
-```r
 
 head(pred$data)
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+##   truth response
+## 1  21.6    22.26
+## 2  33.4    23.23
+## 3  28.7    22.41
+## 4  27.1    22.12
+## 5  18.9    22.12
+## 6  18.9    22.12
 ```
 
 

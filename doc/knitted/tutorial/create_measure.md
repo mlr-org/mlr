@@ -35,30 +35,14 @@ my.mmce <- makeMeasure(id = "my.mmce", minimize = TRUE, classif = TRUE, allowed.
 task <- makeClassifTask(data = iris, target = "Species")
 lrn <- makeLearner("classif.lda")
 mod <- train(lrn, task)
-```
-
-```
-## Error: cannot coerce class "c("classif.lda", "RLearnerClassif",
-## "RLearner", "Learner")" to a data.frame
-```
-
-```r
 pred <- predict(mod, newdata = iris)
-```
-
-```
-## Error: Fehler bei der Auswertung des Argumentes 'object' bei der Methodenauswahl
-## für Funktion 'predict': Fehler: Objekt 'mod' nicht gefunden
-```
-
-```r
 
 # Compare predicted and true label with our measure.
 performance(pred, measures = my.mmce)
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+## [1] 0.02
 ```
 
 ```r
@@ -68,7 +52,7 @@ performance(pred, measures = mmce)
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+## [1] 0.02
 ```
 
 
@@ -93,23 +77,7 @@ mcm <- matrix(c(0, 2, 2, 3, 0, 2, 1, 1, 0), ncol = 3, dimnames = list(c("setosa"
 task <- makeClassifTask(data = iris, target = "Species")
 lrn <- makeLearner("classif.lda")
 mod <- train(lrn, task)
-```
-
-```
-## Error: cannot coerce class "c("classif.lda", "RLearnerClassif",
-## "RLearner", "Learner")" to a data.frame
-```
-
-```r
 pred <- predict(mod, newdata = iris)
-```
-
-```
-## Error: Fehler bei der Auswertung des Argumentes 'object' bei der Methodenauswahl
-## für Funktion 'predict': Fehler: Objekt 'mod' nicht gefunden
-```
-
-```r
 
 # Encapsulate the cost matrix in a Measure object.
 my.costs <- makeCostMeasure(id = "costs", minimize = TRUE, costs = mcm, task, 
@@ -120,7 +88,7 @@ performance(pred, measures = my.costs)
 ```
 
 ```
-## Error: Objekt 'pred' nicht gefunden
+## [1] 0.02667
 ```
 
 
