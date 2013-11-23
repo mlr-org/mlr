@@ -9,14 +9,14 @@ setwd("doc")
 knit_subdir = "./knitted"
 
 if (!file.exists(knit_subdir)){
-    dir.create(knit_subdir)
+  dir.create(knit_subdir)
 }
 
 files = list.files(recursive=TRUE)
 ending = substr(files, nchar(files)-3, nchar(files))
 files = files[ending==".Rmd"]
-for(file in files){
+for(file in files) {
   destination = file.path(knit_subdir,
-  	paste(substr(file,start=0,stop=nchar(file)-3), "md",sep=""))
+    paste(substr(file,start=0,stop=nchar(file)-3), "md", sep=""))
   knit(input=file,output=destination)
 }
