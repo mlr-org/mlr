@@ -33,85 +33,9 @@
 \alias{tp}
 \alias{tpr}
 \title{Performance measures.}
-\format{List of 12
- $ id                : chr "featperc"
- $ minimize          : logi TRUE
- $ classif           : logi TRUE
- $ regr              : logi TRUE
- $ only.binary       : logi FALSE
- $ allowed.pred.types: chr [1:2] "response" "prob"
- $ req.pred          : logi TRUE
- $ req.model         : logi TRUE
- $ req.task          : logi FALSE
- $ fun               :function (task, model, pred, extra.args)  
- $ extra.args        : list()
- $ aggr              :List of 2
-  ..- attr(*, "class")= chr "Aggregation"
- - attr(*, "class")= chr "Measure"}
+\format{none}
 \usage{
-  measures()
-
-  featperc
-
-  timetrain
-
-  timepredict
-
-  timeboth
-
-  sse
-
-  mse
-
-  rmse
-
-  medse
-
-  sae
-
-  mae
-
-  medae
-
-  mmce
-
-  acc
-
-  ber
-
-  multiclass.auc
-
-  auc
-
-  tp
-
-  tn
-
-  fp
-
-  fn
-
-  tpr
-
-  tnr
-
-  fpr
-
-  fnr
-
-  ppv
-
-  npv
-
-  fdr
-
-  mcc
-
-  f1
-
-  gmean
-
-  gpr
+  none
 }
 \description{
   A performance measure is evaluated after a single
@@ -124,8 +48,7 @@
   cost matrix, look at \code{\link{makeCostMeasure}}. If
   you want to implement your own measure, look at
   \code{\link{makeMeasure}}.
-}
-\details{
+
   Classification: \itemize{ \item{\bold{mmce}}{\cr Mean
   misclassification error.} \item{\bold{acc}}{\cr
   Accuracy.} \item{\bold{ber}}{\cr Balanced error rate.
@@ -145,7 +68,7 @@
   \item{\bold{fdr}}{\cr False discovery rate.}
   \item{\bold{f1}}{\cr F1 measure.} \item{\bold{mcc}}{\cr
   Matthews correlation coefficient.}
-  \item{\bold{gmean}}{\cr G-mean, geomentric mean of recall
+  \item{\bold{gmean}}{\cr G-mean, geometric mean of recall
   and specificity.} \item{\bold{gpr}}{\cr Geometric mean of
   precision and recall.} \item{\bold{auc}}{\cr Area under
   the curve.} \item{\bold{multiclass.auc}}{\cr Area under
