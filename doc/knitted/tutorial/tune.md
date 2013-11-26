@@ -77,37 +77,37 @@ tuneParams(makeLearner("classif.ksvm"), task = task, resampling = rdesc, par.set
 ## Disc param 'C'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
 ## Disc param 'sigma'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
 ## With control class: TuneControlGrid
-## [Tune] 1: C=0.25,sigma=0.25 : mmce.test.mean=0.06
+## [Tune] 1: C=0.25,sigma=0.25 : mmce.test.mean=0.0533
 ## [Tune] 1: C=0.5,sigma=0.25 : mmce.test.mean=0.0533
-## [Tune] 1: C=1,sigma=0.25 : mmce.test.mean=0.04
-## [Tune] 1: C=2,sigma=0.25 : mmce.test.mean=0.0333
-## [Tune] 1: C=4,sigma=0.25 : mmce.test.mean=0.04
+## [Tune] 1: C=1,sigma=0.25 : mmce.test.mean=0.0333
+## [Tune] 1: C=2,sigma=0.25 : mmce.test.mean=0.0467
+## [Tune] 1: C=4,sigma=0.25 : mmce.test.mean=0.0467
 ## [Tune] 1: C=0.25,sigma=0.5 : mmce.test.mean=0.0533
-## [Tune] 1: C=0.5,sigma=0.5 : mmce.test.mean=0.0467
+## [Tune] 1: C=0.5,sigma=0.5 : mmce.test.mean=0.04
 ## [Tune] 1: C=1,sigma=0.5 : mmce.test.mean=0.04
-## [Tune] 1: C=2,sigma=0.5 : mmce.test.mean=0.0333
-## [Tune] 1: C=4,sigma=0.5 : mmce.test.mean=0.04
-## [Tune] 1: C=0.25,sigma=1 : mmce.test.mean=0.0533
-## [Tune] 1: C=0.5,sigma=1 : mmce.test.mean=0.06
+## [Tune] 1: C=2,sigma=0.5 : mmce.test.mean=0.0467
+## [Tune] 1: C=4,sigma=0.5 : mmce.test.mean=0.0467
+## [Tune] 1: C=0.25,sigma=1 : mmce.test.mean=0.06
+## [Tune] 1: C=0.5,sigma=1 : mmce.test.mean=0.04
 ## [Tune] 1: C=1,sigma=1 : mmce.test.mean=0.0533
-## [Tune] 1: C=2,sigma=1 : mmce.test.mean=0.0533
+## [Tune] 1: C=2,sigma=1 : mmce.test.mean=0.0467
 ## [Tune] 1: C=4,sigma=1 : mmce.test.mean=0.0533
-## [Tune] 1: C=0.25,sigma=2 : mmce.test.mean=0.08
+## [Tune] 1: C=0.25,sigma=2 : mmce.test.mean=0.0733
 ## [Tune] 1: C=0.5,sigma=2 : mmce.test.mean=0.06
 ## [Tune] 1: C=1,sigma=2 : mmce.test.mean=0.0533
 ## [Tune] 1: C=2,sigma=2 : mmce.test.mean=0.06
-## [Tune] 1: C=4,sigma=2 : mmce.test.mean=0.06
-## [Tune] 1: C=0.25,sigma=4 : mmce.test.mean=0.127
-## [Tune] 1: C=0.5,sigma=4 : mmce.test.mean=0.0667
-## [Tune] 1: C=1,sigma=4 : mmce.test.mean=0.0667
-## [Tune] 1: C=2,sigma=4 : mmce.test.mean=0.0667
-## [Tune] 1: C=4,sigma=4 : mmce.test.mean=0.0733
-## [Tune] Result: C=2,sigma=0.5 : =0.0333
+## [Tune] 1: C=4,sigma=2 : mmce.test.mean=0.0667
+## [Tune] 1: C=0.25,sigma=4 : mmce.test.mean=0.113
+## [Tune] 1: C=0.5,sigma=4 : mmce.test.mean=0.08
+## [Tune] 1: C=1,sigma=4 : mmce.test.mean=0.0533
+## [Tune] 1: C=2,sigma=4 : mmce.test.mean=0.06
+## [Tune] 1: C=4,sigma=4 : mmce.test.mean=0.06
+## [Tune] Result: C=1,sigma=0.25 : =0.0333
 ```
 
 ```
 ## Tune result:
-## Op. pars: C=2,sigma=0.5
+## Op. pars: C=1,sigma=0.25
 ## =0.0333
 ```
 
@@ -166,155 +166,155 @@ r <- resample(lrn, task, resampling = rout, extract = getTuneResult)
 ## Disc param 'sigma'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
 ## With control class: TuneControlGrid
 ## [Tune] 1: C=0.25,sigma=0.25 : mmce.test.mean=0.075
-## [Tune] 1: C=0.5,sigma=0.25 : mmce.test.mean=0.0583
-## [Tune] 1: C=1,sigma=0.25 : mmce.test.mean=0.05
-## [Tune] 1: C=2,sigma=0.25 : mmce.test.mean=0.0417
+## [Tune] 1: C=0.5,sigma=0.25 : mmce.test.mean=0.0333
+## [Tune] 1: C=1,sigma=0.25 : mmce.test.mean=0.0417
+## [Tune] 1: C=2,sigma=0.25 : mmce.test.mean=0.025
 ## [Tune] 1: C=4,sigma=0.25 : mmce.test.mean=0.0333
 ## [Tune] 1: C=0.25,sigma=0.5 : mmce.test.mean=0.0667
-## [Tune] 1: C=0.5,sigma=0.5 : mmce.test.mean=0.0583
+## [Tune] 1: C=0.5,sigma=0.5 : mmce.test.mean=0.0667
 ## [Tune] 1: C=1,sigma=0.5 : mmce.test.mean=0.0417
+## [Tune] 1: C=2,sigma=0.5 : mmce.test.mean=0.0583
+## [Tune] 1: C=4,sigma=0.5 : mmce.test.mean=0.0583
+## [Tune] 1: C=0.25,sigma=1 : mmce.test.mean=0.0667
+## [Tune] 1: C=0.5,sigma=1 : mmce.test.mean=0.0583
+## [Tune] 1: C=1,sigma=1 : mmce.test.mean=0.0583
+## [Tune] 1: C=2,sigma=1 : mmce.test.mean=0.0583
+## [Tune] 1: C=4,sigma=1 : mmce.test.mean=0.0583
+## [Tune] 1: C=0.25,sigma=2 : mmce.test.mean=0.0917
+## [Tune] 1: C=0.5,sigma=2 : mmce.test.mean=0.0667
+## [Tune] 1: C=1,sigma=2 : mmce.test.mean=0.0667
+## [Tune] 1: C=2,sigma=2 : mmce.test.mean=0.0583
+## [Tune] 1: C=4,sigma=2 : mmce.test.mean=0.075
+## [Tune] 1: C=0.25,sigma=4 : mmce.test.mean= 0.3
+## [Tune] 1: C=0.5,sigma=4 : mmce.test.mean=0.0917
+## [Tune] 1: C=1,sigma=4 : mmce.test.mean=0.0833
+## [Tune] 1: C=2,sigma=4 : mmce.test.mean=0.0917
+## [Tune] 1: C=4,sigma=4 : mmce.test.mean=0.0917
+## [Tune] Result: C=2,sigma=0.25 : =0.025
+## [Resample] cross-validation iter: 2
+## [Tune] Started tuning learner classif.ksvm for parameter set:
+## Disc param 'C'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
+## Disc param 'sigma'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
+## With control class: TuneControlGrid
+## [Tune] 1: C=0.25,sigma=0.25 : mmce.test.mean=0.0833
+## [Tune] 1: C=0.5,sigma=0.25 : mmce.test.mean=0.0333
+## [Tune] 1: C=1,sigma=0.25 : mmce.test.mean=0.025
+## [Tune] 1: C=2,sigma=0.25 : mmce.test.mean=0.025
+## [Tune] 1: C=4,sigma=0.25 : mmce.test.mean=0.0333
+## [Tune] 1: C=0.25,sigma=0.5 : mmce.test.mean=0.0417
+## [Tune] 1: C=0.5,sigma=0.5 : mmce.test.mean=0.0417
+## [Tune] 1: C=1,sigma=0.5 : mmce.test.mean=0.0333
 ## [Tune] 1: C=2,sigma=0.5 : mmce.test.mean=0.0417
 ## [Tune] 1: C=4,sigma=0.5 : mmce.test.mean=0.0417
-## [Tune] 1: C=0.25,sigma=1 : mmce.test.mean=0.075
+## [Tune] 1: C=0.25,sigma=1 : mmce.test.mean=0.0583
+## [Tune] 1: C=0.5,sigma=1 : mmce.test.mean=0.0583
+## [Tune] 1: C=1,sigma=1 : mmce.test.mean=0.0417
+## [Tune] 1: C=2,sigma=1 : mmce.test.mean=0.0417
+## [Tune] 1: C=4,sigma=1 : mmce.test.mean=0.0417
+## [Tune] 1: C=0.25,sigma=2 : mmce.test.mean=0.075
+## [Tune] 1: C=0.5,sigma=2 : mmce.test.mean=0.0667
+## [Tune] 1: C=1,sigma=2 : mmce.test.mean=0.0417
+## [Tune] 1: C=2,sigma=2 : mmce.test.mean=0.0417
+## [Tune] 1: C=4,sigma=2 : mmce.test.mean=0.0417
+## [Tune] 1: C=0.25,sigma=4 : mmce.test.mean=0.217
+## [Tune] 1: C=0.5,sigma=4 : mmce.test.mean=0.0917
+## [Tune] 1: C=1,sigma=4 : mmce.test.mean=0.0583
+## [Tune] 1: C=2,sigma=4 : mmce.test.mean=0.05
+## [Tune] 1: C=4,sigma=4 : mmce.test.mean=0.05
+## [Tune] Result: C=2,sigma=0.25 : =0.025
+## [Resample] cross-validation iter: 3
+## [Tune] Started tuning learner classif.ksvm for parameter set:
+## Disc param 'C'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
+## Disc param 'sigma'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
+## With control class: TuneControlGrid
+## [Tune] 1: C=0.25,sigma=0.25 : mmce.test.mean=0.0917
+## [Tune] 1: C=0.5,sigma=0.25 : mmce.test.mean=0.0667
+## [Tune] 1: C=1,sigma=0.25 : mmce.test.mean=0.0417
+## [Tune] 1: C=2,sigma=0.25 : mmce.test.mean=0.0333
+## [Tune] 1: C=4,sigma=0.25 : mmce.test.mean=0.0417
+## [Tune] 1: C=0.25,sigma=0.5 : mmce.test.mean=0.075
+## [Tune] 1: C=0.5,sigma=0.5 : mmce.test.mean=0.075
+## [Tune] 1: C=1,sigma=0.5 : mmce.test.mean=0.0417
+## [Tune] 1: C=2,sigma=0.5 : mmce.test.mean=0.0417
+## [Tune] 1: C=4,sigma=0.5 : mmce.test.mean=0.0667
+## [Tune] 1: C=0.25,sigma=1 : mmce.test.mean=0.0917
+## [Tune] 1: C=0.5,sigma=1 : mmce.test.mean=0.0667
+## [Tune] 1: C=1,sigma=1 : mmce.test.mean=0.0583
+## [Tune] 1: C=2,sigma=1 : mmce.test.mean=0.0667
+## [Tune] 1: C=4,sigma=1 : mmce.test.mean=0.0667
+## [Tune] 1: C=0.25,sigma=2 : mmce.test.mean=0.108
+## [Tune] 1: C=0.5,sigma=2 : mmce.test.mean=0.075
+## [Tune] 1: C=1,sigma=2 : mmce.test.mean=0.0583
+## [Tune] 1: C=2,sigma=2 : mmce.test.mean=0.05
+## [Tune] 1: C=4,sigma=2 : mmce.test.mean=0.05
+## [Tune] 1: C=0.25,sigma=4 : mmce.test.mean=0.267
+## [Tune] 1: C=0.5,sigma=4 : mmce.test.mean=0.125
+## [Tune] 1: C=1,sigma=4 : mmce.test.mean=0.075
+## [Tune] 1: C=2,sigma=4 : mmce.test.mean=0.0833
+## [Tune] 1: C=4,sigma=4 : mmce.test.mean=0.0833
+## [Tune] Result: C=2,sigma=0.25 : =0.0333
+## [Resample] cross-validation iter: 4
+## [Tune] Started tuning learner classif.ksvm for parameter set:
+## Disc param 'C'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
+## Disc param 'sigma'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
+## With control class: TuneControlGrid
+## [Tune] 1: C=0.25,sigma=0.25 : mmce.test.mean=0.05
+## [Tune] 1: C=0.5,sigma=0.25 : mmce.test.mean=0.0417
+## [Tune] 1: C=1,sigma=0.25 : mmce.test.mean=0.0333
+## [Tune] 1: C=2,sigma=0.25 : mmce.test.mean=0.0333
+## [Tune] 1: C=4,sigma=0.25 : mmce.test.mean=0.0417
+## [Tune] 1: C=0.25,sigma=0.5 : mmce.test.mean=0.0583
+## [Tune] 1: C=0.5,sigma=0.5 : mmce.test.mean=0.05
+## [Tune] 1: C=1,sigma=0.5 : mmce.test.mean=0.0583
+## [Tune] 1: C=2,sigma=0.5 : mmce.test.mean=0.0667
+## [Tune] 1: C=4,sigma=0.5 : mmce.test.mean=0.0583
+## [Tune] 1: C=0.25,sigma=1 : mmce.test.mean=0.0833
 ## [Tune] 1: C=0.5,sigma=1 : mmce.test.mean=0.05
-## [Tune] 1: C=1,sigma=1 : mmce.test.mean=0.05
-## [Tune] 1: C=2,sigma=1 : mmce.test.mean=0.05
+## [Tune] 1: C=1,sigma=1 : mmce.test.mean=0.075
+## [Tune] 1: C=2,sigma=1 : mmce.test.mean=0.075
 ## [Tune] 1: C=4,sigma=1 : mmce.test.mean=0.0583
 ## [Tune] 1: C=0.25,sigma=2 : mmce.test.mean=0.108
-## [Tune] 1: C=0.5,sigma=2 : mmce.test.mean=0.0583
-## [Tune] 1: C=1,sigma=2 : mmce.test.mean=0.0583
-## [Tune] 1: C=2,sigma=2 : mmce.test.mean=0.075
-## [Tune] 1: C=4,sigma=2 : mmce.test.mean=0.075
-## [Tune] 1: C=0.25,sigma=4 : mmce.test.mean=0.225
-## [Tune] 1: C=0.5,sigma=4 : mmce.test.mean=0.117
-## [Tune] 1: C=1,sigma=4 : mmce.test.mean=0.075
-## [Tune] 1: C=2,sigma=4 : mmce.test.mean=0.075
-## [Tune] 1: C=4,sigma=4 : mmce.test.mean=0.075
-## [Tune] Result: C=4,sigma=0.25 : =0.0333
-## [Resample] cross-validation iter: 2
+## [Tune] 1: C=0.5,sigma=2 : mmce.test.mean=0.0833
+## [Tune] 1: C=1,sigma=2 : mmce.test.mean=0.0667
+## [Tune] 1: C=2,sigma=2 : mmce.test.mean=0.0667
+## [Tune] 1: C=4,sigma=2 : mmce.test.mean=0.0667
+## [Tune] 1: C=0.25,sigma=4 : mmce.test.mean=0.283
+## [Tune] 1: C=0.5,sigma=4 : mmce.test.mean=0.15
+## [Tune] 1: C=1,sigma=4 : mmce.test.mean= 0.1
+## [Tune] 1: C=2,sigma=4 : mmce.test.mean=0.0917
+## [Tune] 1: C=4,sigma=4 : mmce.test.mean=0.0917
+## [Tune] Result: C=2,sigma=0.25 : =0.0333
+## [Resample] cross-validation iter: 5
 ## [Tune] Started tuning learner classif.ksvm for parameter set:
 ## Disc param 'C'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
 ## Disc param 'sigma'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
 ## With control class: TuneControlGrid
 ## [Tune] 1: C=0.25,sigma=0.25 : mmce.test.mean=0.0667
 ## [Tune] 1: C=0.5,sigma=0.25 : mmce.test.mean=0.0583
-## [Tune] 1: C=1,sigma=0.25 : mmce.test.mean=0.05
-## [Tune] 1: C=2,sigma=0.25 : mmce.test.mean=0.05
-## [Tune] 1: C=4,sigma=0.25 : mmce.test.mean=0.05
-## [Tune] 1: C=0.25,sigma=0.5 : mmce.test.mean=0.0833
-## [Tune] 1: C=0.5,sigma=0.5 : mmce.test.mean=0.075
-## [Tune] 1: C=1,sigma=0.5 : mmce.test.mean=0.0667
-## [Tune] 1: C=2,sigma=0.5 : mmce.test.mean=0.0667
-## [Tune] 1: C=4,sigma=0.5 : mmce.test.mean=0.0667
-## [Tune] 1: C=0.25,sigma=1 : mmce.test.mean=0.0833
-## [Tune] 1: C=0.5,sigma=1 : mmce.test.mean=0.075
-## [Tune] 1: C=1,sigma=1 : mmce.test.mean=0.0667
-## [Tune] 1: C=2,sigma=1 : mmce.test.mean=0.0583
-## [Tune] 1: C=4,sigma=1 : mmce.test.mean=0.075
-## [Tune] 1: C=0.25,sigma=2 : mmce.test.mean=0.108
-## [Tune] 1: C=0.5,sigma=2 : mmce.test.mean=0.075
-## [Tune] 1: C=1,sigma=2 : mmce.test.mean=0.0583
-## [Tune] 1: C=2,sigma=2 : mmce.test.mean=0.0667
-## [Tune] 1: C=4,sigma=2 : mmce.test.mean=0.075
-## [Tune] 1: C=0.25,sigma=4 : mmce.test.mean=0.267
-## [Tune] 1: C=0.5,sigma=4 : mmce.test.mean=0.142
-## [Tune] 1: C=1,sigma=4 : mmce.test.mean= 0.1
-## [Tune] 1: C=2,sigma=4 : mmce.test.mean= 0.1
-## [Tune] 1: C=4,sigma=4 : mmce.test.mean= 0.1
-## [Tune] Result: C=1,sigma=0.25 : =0.05
-## [Resample] cross-validation iter: 3
-## [Tune] Started tuning learner classif.ksvm for parameter set:
-## Disc param 'C'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
-## Disc param 'sigma'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
-## With control class: TuneControlGrid
-## [Tune] 1: C=0.25,sigma=0.25 : mmce.test.mean=0.0583
-## [Tune] 1: C=0.5,sigma=0.25 : mmce.test.mean=0.0333
-## [Tune] 1: C=1,sigma=0.25 : mmce.test.mean=0.0167
-## [Tune] 1: C=2,sigma=0.25 : mmce.test.mean=0.0167
+## [Tune] 1: C=1,sigma=0.25 : mmce.test.mean=0.0333
+## [Tune] 1: C=2,sigma=0.25 : mmce.test.mean=0.0333
 ## [Tune] 1: C=4,sigma=0.25 : mmce.test.mean=0.0333
-## [Tune] 1: C=0.25,sigma=0.5 : mmce.test.mean=0.0333
-## [Tune] 1: C=0.5,sigma=0.5 : mmce.test.mean=0.0333
-## [Tune] 1: C=1,sigma=0.5 : mmce.test.mean=0.025
-## [Tune] 1: C=2,sigma=0.5 : mmce.test.mean=0.0333
-## [Tune] 1: C=4,sigma=0.5 : mmce.test.mean=0.0333
-## [Tune] 1: C=0.25,sigma=1 : mmce.test.mean=0.0417
-## [Tune] 1: C=0.5,sigma=1 : mmce.test.mean=0.0417
-## [Tune] 1: C=1,sigma=1 : mmce.test.mean=0.05
-## [Tune] 1: C=2,sigma=1 : mmce.test.mean=0.0417
-## [Tune] 1: C=4,sigma=1 : mmce.test.mean=0.0417
-## [Tune] 1: C=0.25,sigma=2 : mmce.test.mean=0.0917
-## [Tune] 1: C=0.5,sigma=2 : mmce.test.mean=0.0667
-## [Tune] 1: C=1,sigma=2 : mmce.test.mean=0.0667
-## [Tune] 1: C=2,sigma=2 : mmce.test.mean=0.0417
-## [Tune] 1: C=4,sigma=2 : mmce.test.mean=0.0417
-## [Tune] 1: C=0.25,sigma=4 : mmce.test.mean=0.242
-## [Tune] 1: C=0.5,sigma=4 : mmce.test.mean=0.15
-## [Tune] 1: C=1,sigma=4 : mmce.test.mean=0.125
-## [Tune] 1: C=2,sigma=4 : mmce.test.mean=0.117
-## [Tune] 1: C=4,sigma=4 : mmce.test.mean=0.117
-## [Tune] Result: C=1,sigma=0.25 : =0.0167
-## [Resample] cross-validation iter: 4
-## [Tune] Started tuning learner classif.ksvm for parameter set:
-## Disc param 'C'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
-## Disc param 'sigma'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
-## With control class: TuneControlGrid
-## [Tune] 1: C=0.25,sigma=0.25 : mmce.test.mean=0.0833
-## [Tune] 1: C=0.5,sigma=0.25 : mmce.test.mean=0.0583
-## [Tune] 1: C=1,sigma=0.25 : mmce.test.mean=0.0417
-## [Tune] 1: C=2,sigma=0.25 : mmce.test.mean=0.0417
-## [Tune] 1: C=4,sigma=0.25 : mmce.test.mean=0.0417
-## [Tune] 1: C=0.25,sigma=0.5 : mmce.test.mean=0.0583
+## [Tune] 1: C=0.25,sigma=0.5 : mmce.test.mean=0.075
 ## [Tune] 1: C=0.5,sigma=0.5 : mmce.test.mean=0.0417
 ## [Tune] 1: C=1,sigma=0.5 : mmce.test.mean=0.0417
-## [Tune] 1: C=2,sigma=0.5 : mmce.test.mean=0.0333
-## [Tune] 1: C=4,sigma=0.5 : mmce.test.mean=0.0333
-## [Tune] 1: C=0.25,sigma=1 : mmce.test.mean=0.0583
-## [Tune] 1: C=0.5,sigma=1 : mmce.test.mean=0.0333
+## [Tune] 1: C=2,sigma=0.5 : mmce.test.mean=0.0417
+## [Tune] 1: C=4,sigma=0.5 : mmce.test.mean=0.05
+## [Tune] 1: C=0.25,sigma=1 : mmce.test.mean=0.075
+## [Tune] 1: C=0.5,sigma=1 : mmce.test.mean=0.05
 ## [Tune] 1: C=1,sigma=1 : mmce.test.mean=0.0417
-## [Tune] 1: C=2,sigma=1 : mmce.test.mean=0.0333
-## [Tune] 1: C=4,sigma=1 : mmce.test.mean=0.0333
-## [Tune] 1: C=0.25,sigma=2 : mmce.test.mean=0.15
+## [Tune] 1: C=2,sigma=1 : mmce.test.mean=0.05
+## [Tune] 1: C=4,sigma=1 : mmce.test.mean=0.0583
+## [Tune] 1: C=0.25,sigma=2 : mmce.test.mean=0.133
 ## [Tune] 1: C=0.5,sigma=2 : mmce.test.mean=0.05
 ## [Tune] 1: C=1,sigma=2 : mmce.test.mean=0.0417
-## [Tune] 1: C=2,sigma=2 : mmce.test.mean=0.0417
-## [Tune] 1: C=4,sigma=2 : mmce.test.mean=0.05
-## [Tune] 1: C=0.25,sigma=4 : mmce.test.mean=0.258
-## [Tune] 1: C=0.5,sigma=4 : mmce.test.mean=0.133
-## [Tune] 1: C=1,sigma=4 : mmce.test.mean=0.05
-## [Tune] 1: C=2,sigma=4 : mmce.test.mean=0.0583
-## [Tune] 1: C=4,sigma=4 : mmce.test.mean=0.0583
-## [Tune] Result: C=4,sigma=1 : =0.0333
-## [Resample] cross-validation iter: 5
-## [Tune] Started tuning learner classif.ksvm for parameter set:
-## Disc param 'C'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
-## Disc param 'sigma'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
-## With control class: TuneControlGrid
-## [Tune] 1: C=0.25,sigma=0.25 : mmce.test.mean=0.0583
-## [Tune] 1: C=0.5,sigma=0.25 : mmce.test.mean=0.0667
-## [Tune] 1: C=1,sigma=0.25 : mmce.test.mean=0.0583
-## [Tune] 1: C=2,sigma=0.25 : mmce.test.mean=0.05
-## [Tune] 1: C=4,sigma=0.25 : mmce.test.mean=0.0583
-## [Tune] 1: C=0.25,sigma=0.5 : mmce.test.mean=0.0583
-## [Tune] 1: C=0.5,sigma=0.5 : mmce.test.mean=0.0583
-## [Tune] 1: C=1,sigma=0.5 : mmce.test.mean=0.0583
-## [Tune] 1: C=2,sigma=0.5 : mmce.test.mean=0.0583
-## [Tune] 1: C=4,sigma=0.5 : mmce.test.mean=0.0667
-## [Tune] 1: C=0.25,sigma=1 : mmce.test.mean=0.075
-## [Tune] 1: C=0.5,sigma=1 : mmce.test.mean=0.075
-## [Tune] 1: C=1,sigma=1 : mmce.test.mean=0.0667
-## [Tune] 1: C=2,sigma=1 : mmce.test.mean=0.075
-## [Tune] 1: C=4,sigma=1 : mmce.test.mean=0.075
-## [Tune] 1: C=0.25,sigma=2 : mmce.test.mean=0.117
-## [Tune] 1: C=0.5,sigma=2 : mmce.test.mean=0.0833
-## [Tune] 1: C=1,sigma=2 : mmce.test.mean=0.0833
-## [Tune] 1: C=2,sigma=2 : mmce.test.mean=0.0917
-## [Tune] 1: C=4,sigma=2 : mmce.test.mean= 0.1
-## [Tune] 1: C=0.25,sigma=4 : mmce.test.mean=0.175
-## [Tune] 1: C=0.5,sigma=4 : mmce.test.mean=0.108
-## [Tune] 1: C=1,sigma=4 : mmce.test.mean=0.108
-## [Tune] 1: C=2,sigma=4 : mmce.test.mean=0.117
-## [Tune] 1: C=4,sigma=4 : mmce.test.mean=0.117
-## [Tune] Result: C=2,sigma=0.25 : =0.05
+## [Tune] 1: C=2,sigma=2 : mmce.test.mean=0.0583
+## [Tune] 1: C=4,sigma=2 : mmce.test.mean=0.0583
+## [Tune] 1: C=0.25,sigma=4 : mmce.test.mean= 0.3
+## [Tune] 1: C=0.5,sigma=4 : mmce.test.mean=0.125
+## [Tune] 1: C=1,sigma=4 : mmce.test.mean=0.0667
+## [Tune] 1: C=2,sigma=4 : mmce.test.mean=0.05
+## [Tune] 1: C=4,sigma=4 : mmce.test.mean=0.05
+## [Tune] Result: C=1,sigma=0.25 : =0.0333
 ## [Resample] Result: mmce.test.mean=0.0333
 ```
 
@@ -331,28 +331,28 @@ r$extract
 ```
 ## [[1]]
 ## Tune result:
-## Op. pars: C=4,sigma=0.25
-## =0.0333
+## Op. pars: C=2,sigma=0.25
+## =0.025
 ## 
 ## [[2]]
 ## Tune result:
-## Op. pars: C=1,sigma=0.25
-## =0.05
+## Op. pars: C=2,sigma=0.25
+## =0.025
 ## 
 ## [[3]]
 ## Tune result:
-## Op. pars: C=1,sigma=0.25
-## =0.0167
+## Op. pars: C=2,sigma=0.25
+## =0.0333
 ## 
 ## [[4]]
 ## Tune result:
-## Op. pars: C=4,sigma=1
+## Op. pars: C=2,sigma=0.25
 ## =0.0333
 ## 
 ## [[5]]
 ## Tune result:
-## Op. pars: C=2,sigma=0.25
-## =0.05
+## Op. pars: C=1,sigma=0.25
+## =0.0333
 ```
 
 
@@ -371,11 +371,11 @@ r$measures.test
 
 ```
 ##   iter    mmce
-## 1    1 0.03333
-## 2    2 0.00000
+## 1    1 0.00000
+## 2    2 0.03333
 ## 3    3 0.06667
-## 4    4 0.06667
-## 5    5 0.00000
+## 4    4 0.00000
+## 5    5 0.06667
 ```
 
 ```r

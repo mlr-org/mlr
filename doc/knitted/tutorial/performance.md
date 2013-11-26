@@ -58,7 +58,7 @@ performance(pred = pred, measures = timepredict)
 ```
 
 ```
-## [1] 0.003
+## [1] 0.002
 ```
 
 ```r
@@ -75,7 +75,7 @@ performance(pred = pred, measures = timeboth, model = mod)
 ```
 
 ```
-## [1] 0.008
+## [1] 0.007
 ```
 
 
@@ -90,7 +90,7 @@ performance(pred = pred, measures = ms, model = mod)
 
 ```
 ##      mmce       acc timetrain  timeboth 
-##     0.040     0.960     0.005     0.008
+##     0.040     0.960     0.005     0.007
 ```
 
 
@@ -197,8 +197,8 @@ sapply(ms, function(meas) performance(pred, measures = meas))
 ```
 
 ```
-##   mse   mae 
-## 42.72  4.54
+##    mse    mae 
+## 42.780  4.546
 ```
 
 
