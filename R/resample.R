@@ -21,7 +21,8 @@
 #' @param weights [\code{numeric}]\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
 #'   If given, must be of same length as observations in task and in corresponding order.
-#'   By default missing which means no weights are used.
+#'   Overwrites weights specified in the task ([\code{\link{SupervisedTask}}]).
+#'   By default missing which means no weights are used unless specified in the task.
 #' @param models [logical(1)]\cr
 #'   Should all fitted models be returned?
 #'   Default is \code{FALSE}.
@@ -66,7 +67,7 @@ resample = function(learner, task, resampling, measures, weights, models=FALSE,
   if (inherits(measures, "Measure"))
     measures = list(measures)
   checkListElementClass(measures, "Measure")
-  if(!missing(weights)) {
+  if (!missing(weights)) {
     checkArg(weights, "numeric", len=task$task.desc$size, na.ok=FALSE, lower=0)
   }
   checkArg(models, "logical", len=1L, na.ok=FALSE)
@@ -88,6 +89,8 @@ resample = function(learner, task, resampling, measures, weights, models=FALSE,
     measures=measures, model=models, extract=extract, show.info=show.info, mlr.options=mlr.options)
   if (!missing(weights))
     more.args$weights = weights
+  else
+    more.args$weights = task$weights
   iter.results = parallelMap(doResampleIteration, seq_len(iters), level="mlr.resample", more.args=more.args)
   mergeResampleResult(task, iter.results, measures, rin, models, extract, show.info)
 }

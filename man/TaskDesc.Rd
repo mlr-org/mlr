@@ -11,9 +11,11 @@
   [\code{character(1)}]}{type Type of task, either
   \dQuote{classif} for classification or \dQuote{regr} for
   regression.} \item{target [\code{character(1)}]}{Name of
-  target variable.} \item{size[\code{integer(1)}]}{Number
-  of cases.} \item{n.feat [\code{integer}]}{Number of
-  features, named vector with entries: \dQuote{numerics},
+  target variable.} \item{weight
+  [\code{character(1)}]}{Name of weight variable.}
+  \item{size[\code{integer(1)}]}{Number of cases.}
+  \item{n.feat [\code{integer}]}{Number of features, named
+  vector with entries: \dQuote{numerics},
   \dQuote{factors}.} \item{class.levels
   [\code{character}]}{All possible classes. \code{NA} if
   not classification.} \item{has.missings

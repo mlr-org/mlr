@@ -6,10 +6,10 @@
 \alias{SupervisedTask}
 \title{Create a classification / regression task for a given data set.}
 \usage{
-  makeClassifTask(id, data, target, blocking, positive,
-    check.data = TRUE)
+  makeClassifTask(id, data, target, weight, blocking,
+    positive, check.data = TRUE)
 
-  makeRegrTask(id, data, target, blocking,
+  makeRegrTask(id, data, target, weight, blocking,
     check.data = TRUE)
 }
 \arguments{
@@ -21,6 +21,10 @@
 
   \item{target}{[\code{character(1)}]\cr Name of the target
   variable.}
+
+  \item{weight}{[\code{character(1)}]\cr Optional, name of
+  the column containing the non-negative case weight vector
+  to be used during fitting.}
 
   \item{blocking}{[\code{factor}]\cr An optional factor of
   the same length as the number of observations.

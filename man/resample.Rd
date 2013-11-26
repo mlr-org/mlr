@@ -23,8 +23,10 @@
   \item{weights}{[\code{numeric}]\cr Optional, non-negative
   case weight vector to be used during fitting.  If given,
   must be of same length as observations in task and in
-  corresponding order.  By default missing which means no
-  weights are used.}
+  corresponding order.  Overwrites weights specified in the
+  task ([\code{\link{SupervisedTask}}]).  By default
+  missing which means no weights are used unless specified
+  in the task.}
 
   \item{models}{[logical(1)]\cr Should all fitted models be
   returned?  Default is \code{FALSE}.}

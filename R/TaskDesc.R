@@ -8,6 +8,7 @@
 #' \item{id [\code{character(1)}]}{Id string of task.}
 #' \item{type [\code{character(1)}]}{type Type of task, either \dQuote{classif} for classification or \dQuote{regr} for regression.}
 #' \item{target [\code{character(1)}]}{Name of target variable.}
+#' \item{weight [\code{character(1)}]}{Name of weight variable.}
 #' \item{size[\code{integer(1)}]}{Number of cases.}
 #' \item{n.feat [\code{integer}]}{Number of features, named vector with entries: \dQuote{numerics}, \dQuote{factors}.}
 #' \item{class.levels [\code{character}]}{All possible classes. \code{NA} if not classification.}
@@ -20,12 +21,13 @@
 #' @rdname TaskDesc
 NULL
 
-makeTaskDesc = function(type, id, data, target, blocking, positive) {
+makeTaskDesc = function(type, id, data, target, weight, blocking, positive) {
   td = list()
   td$id = id
   td$type = type
   i = which(colnames(data) %in% c(target))
   td$target = target
+  td$weight = weight
   td$size = nrow(data)
   y = data[, target]
   td$n.feat = c(

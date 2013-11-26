@@ -19,6 +19,8 @@
 #'   A data frame containing the features and target variable.
 #' @param target [\code{character(1)}]\cr
 #'   Name of the target variable.
+#' @param weight [\code{character(1)}]\cr
+#'   Optional, name of the column containing the non-negative case weight vector to be used during fitting.
 #' @param blocking [\code{factor}]\cr
 #'   An optional factor of the same length as the number of observations.
 #'   Observations with the same blocking level \dQuote{belong together}.
@@ -51,7 +53,7 @@
 #'                                positive = "good", blocking = blocks)
 NULL
 
-makeSupervisedTask = function(type, id, data, target, blocking, positive, check.data) {
+makeSupervisedTask = function(type, id, data, target, weight, blocking, positive, check.data) {
   if(missing(id)) {
     id = deparse(substitute(data))
     if (!is.character(id) || length(id) != 1L)
@@ -61,6 +63,17 @@ makeSupervisedTask = function(type, id, data, target, blocking, positive, check.
   }
   checkArg(data, "data.frame")
   checkArg(target, "character", len=1L, na.ok=FALSE)
+  if (!missing(weight)) {
+    checkArg(weight, "character", len=1L, na.ok=FALSE)
+    checkColumnNames(data, weight)
+    checkArg(data[,weight], "numeric", na.ok=FALSE, lower=0)
+    # store weight seperately and remove weight column
+    weights = data[,weight]
+    data = data[,setdiff(colnames(data),weight)]
+  } else {
+    weight = NULL
+    weights = NULL
+  }
   if (missing(blocking))
     blocking = factor(c())
   else
@@ -99,12 +112,13 @@ makeSupervisedTask = function(type, id, data, target, blocking, positive, check.
   }
   if (check.data)
     checkData(data, target)
-  desc = makeTaskDesc(type, id, data, target, blocking, positive)
+  desc = makeTaskDesc(type, id, data, target, weight, blocking, positive)
   env = new.env()
   env$data = data
   structure(list(
     env = env,
     task.desc = desc,
+    weights = weights,
     blocking = blocking
   ), class="SupervisedTask")
 }
@@ -115,6 +129,7 @@ print.SupervisedTask = function(x, ...) {
   catf("Supervised task: %s", td$id)
   catf("Type: %s", td$type)
   catf("Target: %s", td$target)
+  catf("Weight: %s", td$weight)
   catf("Observations: %i", td$size)
   catf("Features:")
   catf(printToChar(td$n.feat, collapse="\n"))

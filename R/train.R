@@ -14,6 +14,8 @@
 #'   Optional, non-negative case weight vector to be used during fitting.
 #'   If given, must be of same length as \code{subset} and in corresponding order.
 #'   By default missing which means no weights are used.
+#'   Overwrites weights specified in the task ([\code{\link{SupervisedTask}}]).
+#'   By default missing which means no weights are used unless specified in the task.
 #' @return [\code{\link{WrappedModel}}].
 #' @export
 #' @seealso \code{\link{predict.WrappedModel}}
@@ -41,7 +43,7 @@ train = function(learner, task, subset, weights) {
     checkArg(subset, "integer", na.ok=FALSE)
   }
 
-  # make sure that pack for learner ist loaded, probably needed when learner is exported
+  # make sure that pack for learner is loaded, probably needed when learner is exported
   requireLearnerPackages(learner)
 
 
@@ -49,9 +51,13 @@ train = function(learner, task, subset, weights) {
 
   # make pars list for train call
   pars = list(.learner=learner, .task=task, .subset=subset)
+
   if(!missing(weights)) {
     checkArg(weights, "numeric", len=length(subset), na.ok=FALSE, lower=0)
     pars$.weights = weights
+  } else {
+    # we do not check if learer supports weights if weights are part of the task (yet)!
+    pars$.weights = task$weights
   }
 
   checkTaskLearner(task, learner, weights)

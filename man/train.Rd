@@ -17,7 +17,10 @@
   case weight vector to be used during fitting.  If given,
   must be of same length as \code{subset} and in
   corresponding order.  By default missing which means no
-  weights are used.}
+  weights are used.  Overwrites weights specified in the
+  task ([\code{\link{SupervisedTask}}]).  By default
+  missing which means no weights are used unless specified
+  in the task.}
 }
 \value{
   [\code{\link{WrappedModel}}].

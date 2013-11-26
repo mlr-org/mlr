@@ -12,5 +12,7 @@ checkTaskLearner = function(task, learner, weights) {
     stopf("Task %s is a multiclass-problem, but learner %s does not support that!", td$id, learner$id)
 	if (!missing(weights) && !learner$weights)
   	stopf("Weights vector passed to train, but learner %s does not support that!", learner$id)
+  if (length(td$weight) > 0L && !learner$weights)
+    warning("Task contains weights but these are not used by learner %s !", learner$id)
 }
 
