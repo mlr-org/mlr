@@ -72,23 +72,25 @@ train = function(learner, task, subset, weights) {
     learner.model = makeNoFeaturesModel(targets=task$env$data[subset, tn], task.desc=task$task.desc)
     time.train = 0
   } else {
+    opt.slo = getMlrOption("show.learner.output")
+    opt.ole = getMlrOption("on.learner.error")
     # set the seed
-    debug.seed = getOption("mlr.debug.seed", NULL)
+    debug.seed = getMlrOption("debug.seed", NULL)
     if(!is.null(debug.seed))
       set.seed(debug.seed)
     # for optwrappers we want to see the tuning / varsel logging
     # FIXME is case really ok for optwrapper? can we supppress then too?
-    if (getOption("mlr.show.learner.output") || inherits(learner, "OptWrapper"))
+    if (opt.slo || inherits(learner, "OptWrapper"))
       fun1 = identity
     else
       fun1 = capture.output
-    if (getOption("mlr.on.learner.error") == "stop")
+    if (opt.ole == "stop")
       fun2 = identity
     else
       fun2 = function(x) try(x, silent=TRUE)
     st = system.time(or <- fun1(learner.model <- fun2(do.call(trainLearner, pars))), gcFirst = FALSE)
     # was there an error during training? maybe warn then
-    if(is.error(learner.model) && getOption("mlr.on.learner.error") == "warn")
+    if(is.error(learner.model) && opt.ole == "warn")
       warningf("Could not train learner %s: %s", learner$id, as.character(learner.model))
     time.train = as.numeric(st[3L])
   }

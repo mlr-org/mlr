@@ -101,18 +101,19 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
       .newdata = newdata
     )
     pars = c(pars, getHyperPars(learner, "predict"))
-    debug.seed = getOption("mlr.debug.seed", NULL)
+    debug.seed = getMlrOption("debug.seed", NULL)
     if(!is.null(debug.seed))
       set.seed(debug.seed)
     if(inherits(getLearnerModel(model), "NoFeaturesModel")) {
       p = predict_nofeatures(model, newdata)
       time.predict = 0
     } else {
-      if (getOption("mlr.show.learner.output"))
+      opt.ole = getMlrOption("on.learner.error")
+      if (getMlrOption("show.learner.output"))
         fun1 = identity
       else
         fun1 = capture.output
-      if (getOption("mlr.on.learner.error") == "stop")
+      if (opt.ole == "stop")
         fun2 = identity
       else
         fun2 = function(x) try(x, silent=TRUE)
@@ -120,7 +121,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
       time.predict = as.numeric(st[3L])
       # was there an error during prediction?
       if(is.error(p)) {
-        if (getOption("mlr.on.learner.error") == "warn")
+        if (opt.ole == "warn")
           warningf("Could not predict with learner %s: %s", learner$id, as.character(p))
         p = predict_nas(model, newdata)
         time.predict = NA_real_

@@ -82,24 +82,18 @@ resample = function(learner, task, resampling, measures, weights, models=FALSE,
   checkTaskLearner(task, learner, weights)
 
   rin = resampling
-  iters = rin$desc$iters
-  #FIXME this is bad, remove this soon
-  mlr.options = options("mlr.on.learner.error", "mlr.on.par.without.desc", "mlr.show.learner.output")
   more.args = list(learner=learner, task=task, rin=rin,
-    measures=measures, model=models, extract=extract, show.info=show.info, mlr.options=mlr.options)
+    measures=measures, model=models, extract=extract, show.info=show.info)
   if (!missing(weights))
     more.args$weights = weights
   else
     more.args$weights = task$weights
-  iter.results = parallelMap(doResampleIteration, seq_len(iters), level="mlr.resample", more.args=more.args)
+  exportMlrOptions()
+  iter.results = parallelMap(doResampleIteration, seq_len(rin$desc$iters), level="mlr.resample", more.args=more.args)
   mergeResampleResult(task, iter.results, measures, rin, models, extract, show.info)
 }
 
-doResampleIteration = function(learner, task, rin, i, measures, weights, model, extract, show.info, mlr.options) {
-  if (isTRUE(getOption("parallelMap.on.slave"))) {
-    do.call(options, mlr.options)
-  }
-          
+doResampleIteration = function(learner, task, rin, i, measures, weights, model, extract, show.info) {
   if (show.info)
     messagef("[Resample] %s iter: %i", rin$desc$id, i)
   train.i = rin$train.inds[[i]]

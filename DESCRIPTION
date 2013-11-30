@@ -194,3 +194,4 @@ Collate:
     'PreprocImputeWrapper.R'
     'Impute.R'
     'ImputeMethods.R'
+    'options.R'

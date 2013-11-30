@@ -25,10 +25,8 @@ configureMlr = function(on.learner.error="stop", on.par.without.desc="stop", sho
   checkArg(on.learner.error, choices=c("quiet", "warn", "stop"))
   checkArg(on.par.without.desc, choices= c("quiet", "warn", "stop"))
   checkArg(show.learner.output, "logical", len=1L, na.ok=FALSE)
-  options(
-    mlr.on.learner.error = on.learner.error,
-    mlr.on.par.without.desc = on.par.without.desc,
-    mlr.show.learner.output = show.learner.output
-  )
+  setMlrOption("on.learner.error", on.learner.error)
+  setMlrOption("on.par.without.desc", on.par.without.desc)
+  setMlrOption("show.learner.output", show.learner.output)
   invisible(NULL)
 }
