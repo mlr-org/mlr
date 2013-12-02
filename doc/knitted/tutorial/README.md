@@ -14,5 +14,6 @@ Tutorial
 9. [Benchmark Experiments](benchmark_experiments.md)
 10. [Benchmark Analysis](benchmark_analysis.md)
 11. [ROC Analysis](roc_analysis.md)
+12. [Cool Stuff](cool_stuff.md)
 
 * [Literature](../literature.md)

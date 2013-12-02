@@ -6,27 +6,27 @@ test_that("Impute data frame", {
   data[6, ] = NA
 
   # median
-  imputed = impute(data, target, cols=list(x = imp.median(), y = imp.median()))$data
+  imputed = impute(data, target, cols=list(x = imputeMedian(), y = imputeMedian()))$data
   expect_equal(imputed$x[6], 1)
   expect_equal(imputed$y[6], 3)
 
   # mode
-  imputed = impute(data, target, cols=list(f = imp.mode(), x = imp.mode(), y = imp.mode()))$data
+  imputed = impute(data, target, cols=list(f = imputeMode(), x = imputeMode(), y = imputeMode()))$data
   expect_equal(as.character(imputed$f[6]), "a")
   expect_equal(imputed$x[6], 1)
   expect_equal(imputed$y[6], 3)
 
   # min / max
-  imputed = impute(data, target, cols=list(x = imp.min(2), y = imp.max(2)))$data
+  imputed = impute(data, target, cols=list(x = imputeMin(2), y = imputeMax(2)))$data
   expect_equal(imputed$x[6], 2)
   expect_equal(imputed$y[6], 8)
 
   # normal
-  imputed = impute(data, target, cols=list(x = imp.normal(), y = imp.normal()))$data
+  imputed = impute(data, target, cols=list(x = imputeNormal(), y = imputeNormal()))$data
   expect_equal(imputed$x[6], 1)
 
   # hist / table
-  imputed = impute(data, target, cols=list(f = imp.hist(), x = imp.hist(), y=imp.hist(breaks=1, use.mids=FALSE)))$data
+  imputed = impute(data, target, cols=list(f = imputeHist(), x = imputeHist(), y = imputeHist(breaks=1, use.mids=FALSE)))$data
   expect_true(imputed$f[6] %in% c("a", "b"))
   expect_equal(imputed$x[6], 0.5)
   expect_equal(imputed$x[6], 0.5)
@@ -39,7 +39,7 @@ test_that("Impute data frame", {
   expect_equal(imputed$y[6], 1000)
 
   # some reimputations
-  x = impute(data, target, cols=list(f = "xxx", x = imp.mode(), y = imp.max(2)), impute.newlevels=TRUE)
+  x = impute(data, target, cols=list(f = "xxx", x = imputeMode(), y = imputeMax(2)), impute.newlevels=TRUE)
   imputed = reimpute(data, x$desc)
   expect_equal(x$data, imputed)
   imputed = reimpute(data.frame(f=factor("newlvl"), x=NA), x$desc)
@@ -53,8 +53,7 @@ test_that("Impute data frame", {
   expect_true("xxx" %in% levels(imputed$f))
 
   # dummies
-  imputed = impute(data, target, dummies="x")$data
-  expect_equal(imputed[["x.dummy"]], c(rep(FALSE, 5), TRUE))
-
-
+  x = impute(data, target, dummies="x")
+  expect_equal(x$data[["x.dummy"]], c(rep(FALSE, 5), TRUE))
+  expect_equal(reimpute(data, x$desc), x$data)
 })
