@@ -1,3 +1,12 @@
+makeImputeMethod = function(learn, impute, args=list()) {
+  checkArg(learn, "function", formals=c("data", "target", "col"))
+  checkArg(impute, "function", formals="x")
+  checkArg(args, "list")
+  if (!isProperlyNamed(args))
+    stop("All arguments must be properly named")
+  setClasses(list(learn=learn, impute=impute, args=args), "ImputeMethod")
+}
+
 imputeConstFun = function(x, const) {
   if (is.factor(x) && const %nin% levels(x)) {
     levels(x) = c(levels(x), as.character(const))
@@ -9,69 +18,86 @@ imputeConstFun = function(x, const) {
 #' @param const [any]\cr
 #'  Any object to use for imputation.
 #' @rdname impute
-imp.const = function(const) {
-  force(const)
-  setClasses(list(
-    learn = function(...) const,
-    impute = imputeConstFun
-  ), "ImputeMethod")
+imputeConstant = function(const) {
+  makeImputeMethod(
+    learn = function(data, target, col, const) const,
+    impute = imputeConstFun,
+    args = list(const=const)
+  )
 }
 
 #' @export
 #' @rdname impute
-imp.median = function() {
-  setClasses(list(
-    learn = function(data, target, col, ...) median(data[[col]], na.rm=TRUE),
+imputeMedian = function() {
+  makeImputeMethod(
+    learn = function(data, target, col) median(data[[col]], na.rm=TRUE),
     impute = imputeConstFun
-  ), "ImputeMethod")
+  )
 }
 
 #' @export
 #' @rdname impute
-imp.mode = function() {
-  setClasses(list(
-    learn = function(data, target, col, ...) computeMode(data[[col]], na.rm=TRUE),
+imputeMode = function() {
+  makeImputeMethod(
+    learn = function(data, target, col) computeMode(data[[col]], na.rm=TRUE),
     impute = imputeConstFun
-  ), "ImputeMethod")
+  )
 }
 
 #' @export
 #' @param multiplier [\code{numeric(1)}]\cr
 #'  Numeric value to multiply the minimum or maximum.
 #' @rdname impute
-imp.min = function(multiplier=1) {
-  force(multiplier)
-  setClasses(list(
-    learn = function(data, target, col, ...) multiplier*min(data[[col]], na.rm=TRUE),
-    impute = imputeConstFun
-  ), "ImputeMethod")
+imputeMin = function(multiplier=1) {
+  checkArg(multiplier, "numeric", len=1L, na.ok=FALSE)
+  makeImputeMethod(
+    learn = function(data, target, col, multiplier) multiplier*min(data[[col]], na.rm=TRUE),
+    impute = imputeConstFun,
+    args = list(multiplier=multiplier)
+  )
 }
 
 #' @export
 #' @rdname impute
-imp.max = function(multiplier=1) {
-  force(multiplier)
-  setClasses(list(
-    learn = function(data, target, col, ...) multiplier*max(data[[col]], na.rm=TRUE),
-    impute = imputeConstFun
-  ), "ImputeMethod")
+imputeMax = function(multiplier=1) {
+  checkArg(multiplier, "numeric", len=1L, na.ok=FALSE)
+  makeImputeMethod(
+    learn = function(data, target, col, multiplier) multiplier*max(data[[col]], na.rm=TRUE),
+    impute = imputeConstFun,
+    args = list(multiplier=multiplier)
+  )
 }
 
 #' @export
+#' @param mu [\code{numeric(1)}]\cr
+#'  Mean of normal distribution. If missing it will get estimated from the data.
+#' @param sd [\code{numeric(1)}]\cr
+#'  Standard deviation of normal distribution. If missing it will get estimated from the data.
 #' @rdname impute
-imp.normal = function() {
-  setClasses(list(
-    learn = function(data, target, col, ...)  {
-      # FIXME handle cases where all(is.na(x)) == TRUE
-      mu = mean(data[[col]], na.rm=TRUE)
-      sd = sd(data[[col]], na.rm=TRUE)
-      list(mu = mu, sd = sd)
+imputeNormal = function(mu, sd) {
+  if (missing(mu))
+    mu = NULL
+  else
+    checkArg(mu, "numeric", len=1L, na.ok=FALSE)
+  if (missing(sd))
+    sd = NULL
+  else
+    checkArg(sd, "numeric", len=1L, na.ok=FALSE)
+
+  makeImputeMethod(
+    learn = function(data, target, col, mu, sd)  {
+      if (is.null(mu))
+        mu = mean(data[[col]], na.rm=TRUE)
+      if (is.null(sd))
+        sd = sd(data[[col]], na.rm=TRUE)
+      list(mu=mu, sd=sd)
     },
     impute = function(x, mu, sd) {
       ind = is.na(x)
       replace(x, ind, rnorm(sum(ind), mean=mu, sd=sd))
-    }
-  ), "ImputeMethod")
+    },
+    args = list(mu=mu, sd=sd)
+  )
 }
 
 #' @export
@@ -82,7 +108,7 @@ imp.normal = function() {
 #'  If \code{x} is numeric and a histogram is used, impute with bin mids (default)
 #'  or instead draw uniformly distributed samples within bin range.
 #' @rdname impute
-imp.hist = function(breaks, use.mids=TRUE) {
+imputeHist = function(breaks, use.mids=TRUE) {
   if (missing(breaks)) {
     breaks = "Sturges"
   } else {
@@ -91,8 +117,8 @@ imp.hist = function(breaks, use.mids=TRUE) {
   }
   checkArg(use.mids, "logical", len=1L, na.ok=FALSE)
 
-  setClasses(list(
-    learn = function(data, target, col, ...) {
+  makeImputeMethod(
+    learn = function(data, target, col, breaks, use.mids) {
       x = data[[col]]
       if (is.numeric(x)) {
         tmp = hist(x, breaks=breaks, plot=FALSE)
@@ -117,6 +143,7 @@ imp.hist = function(breaks, use.mids=TRUE) {
         values = sample(values, length(ind), replace=TRUE, prob=counts)
       }
       replace(x, ind, values)
-    }
-  ), "ImputeMethod")
+    },
+    args = list(breaks=breaks, use.mids=use.mids)
+  )
 }
