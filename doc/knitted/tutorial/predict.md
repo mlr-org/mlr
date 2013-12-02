@@ -4,7 +4,7 @@ Predicting Outcomes for New Data
 This section is pretty straightforward and - as you might have guessed
 - deals with predicting target values for new observations. It is
 implemented the same way as most of the other predict methods in R, i.e. just 
-call [predict](http://berndbischl.github.io/mlr/predict.WrappedModel.html) on the object returned by [train](http://berndbischl.github.io/mlr/train.html) and pass the data to be predicted.
+call [predict](http://berndbischl.github.io/mlr/man/predict.WrappedModel.html) on the object returned by [train](http://berndbischl.github.io/mlr/man/train.html) and pass the data to be predicted.
 
 
 Quick start
@@ -58,7 +58,7 @@ predict(mod, newdata = BostonHousing)
 ## Prediction:
 ## predict.type: response
 ## threshold: 
-## time: 0.21
+## time: 0.01
 ## 'data.frame':	506 obs. of  2 variables:
 ##  $ truth   : num  24 21.6 34.7 33.4 36.2 28.7 22.9 27.1 16.5 18.9 ...
 ##  $ response: num  30 25 30.6 28.6 27.9 ...
@@ -74,23 +74,23 @@ predictions are required.
 The first possibility, via the ``newdata``-argument, was already shown in the 
 examples above.
 If the data for which predictions are required are already contained in 
-the [Learner](http://berndbischl.github.io/mlr/makeLearner.html), it is also possible to pass the task and optionally specify 
+the [Learner](http://berndbischl.github.io/mlr/man/makeLearner.html), it is also possible to pass the task and optionally specify 
 the subset argument that contains the indices of the test observations.
 
-Predictions are encapsulated in a special [Prediction](http://berndbischl.github.io/mlr/Prediction.html) object. Read the
-documentation of the [Prediction](http://berndbischl.github.io/mlr/Prediction.html) class to see all available
+Predictions are encapsulated in a special [Prediction](http://berndbischl.github.io/mlr/man/Prediction.html) object. Read the
+documentation of the [Prediction](http://berndbischl.github.io/mlr/man/Prediction.html) class to see all available
 accessors.
 
 
 ### Classification example
 
-In case of a classification task, the result of [predict](http://berndbischl.github.io/mlr/predict.WrappedModel.html) depends on 
-the predict type, which was set when generating the [Learner](http://berndbischl.github.io/mlr/makeLearner.html). Per default, 
+In case of a classification task, the result of [predict](http://berndbischl.github.io/mlr/man/predict.WrappedModel.html) depends on 
+the predict type, which was set when generating the [Learner](http://berndbischl.github.io/mlr/man/makeLearner.html). Per default, 
 class labels are predicted.
 
 We start again by loading **mlr** and creating a classification task for the 
 iris dataset. We select two subsets of the data. We train a decision tree on the
-first one and [predict](http://berndbischl.github.io/mlr/predict.WrappedModel.html) the class labels on the test set.
+first one and [predict](http://berndbischl.github.io/mlr/man/predict.WrappedModel.html) the class labels on the test set.
 
 
 ```r
@@ -183,7 +183,7 @@ As you can see, in addition to the predicted probabilities, a response
 is produced by choosing the class with the maximum probability and
 breaking ties at random.
 
-The predicted posterior probabilities can be accessed via the [getProbabilities](http://berndbischl.github.io/mlr/getProbabilities.html)-function.
+The predicted posterior probabilities can be accessed via the [getProbabilities](http://berndbischl.github.io/mlr/man/getProbabilities.html)-function.
 
 
 ```r
@@ -238,7 +238,7 @@ head(pred$data)
 
 
 In a binary classification setting, we can adjust the threshold, used
-to map probabilities, to class labels using [setThreshold](http://berndbischl.github.io/mlr/setThreshold.html). Here, we set
+to map probabilities, to class labels using [setThreshold](http://berndbischl.github.io/mlr/man/setThreshold.html). Here, we set
 the threshold for the *positive* class to 0.8:
 
 
@@ -294,8 +294,8 @@ head(pred$data)
 
 ```
 ##   truth response
-## 1  21.6    22.22
-## 2  33.4    23.21
+## 1  21.6    22.25
+## 2  33.4    23.30
 ## 3  28.7    22.32
 ## 4  27.1    22.15
 ## 5  18.9    22.15

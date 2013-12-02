@@ -6,11 +6,11 @@ data set and all relevant information regarding the purpose of the
 task. This will be at least the target variable, but might also be
 information about excluded (ID) variables or case weights.
 
-Currently two subclasses of a [LearnTask](http://berndbischl.github.io/mlr/makeLearner.html) exist: [ClassifTask](http://berndbischl.github.io/mlr/SupervisedTask.html) for
-classification and [RegrTask]http://berndbischl.github.io/mlr/SupervisedTask.html) for regression problems.  A
-classification task is created by using the [makeClassifTask](http://berndbischl.github.io/mlr/SupervisedTask.html) factory
+Currently two subclasses of a [LearnTask](http://berndbischl.github.io/mlr/man/makeLearner.html) exist: [ClassifTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) for
+classification and [RegrTask]http://berndbischl.github.io/mlr/man/SupervisedTask.html) for regression problems.  A
+classification task is created by using the [makeClassifTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) factory
 method. The target variable is converted to a ``factor``, if it is a
-``logical``, ``integer`` or ``character`` vector. Accordingly use [makeRegrTask](http://berndbischl.github.io/mlr/SupervisedTask.html)
+``logical``, ``integer`` or ``character`` vector. Accordingly use [makeRegrTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html)
 in order to define a regression task. The target variable is converted 
 to a ``numeric``.
 
@@ -46,6 +46,7 @@ task
 ## Supervised task: BreastCancer
 ## Type: classif
 ## Target: Class
+## 
 ## Observations: 699
 ## Features:
 ## numerics  factors 
@@ -83,6 +84,7 @@ task
 ## Supervised task: BostonHousing
 ## Type: regr
 ## Target: medv
+## 
 ## Observations: 506
 ## Features:
 ## numerics  factors 
@@ -116,6 +118,7 @@ task
 ## Supervised task: BreastCancer
 ## Type: classif
 ## Target: Class
+## 
 ## Observations: 699
 ## Features:
 ## numerics  factors 
@@ -140,12 +143,12 @@ task <- makeClassifTask(id = "BreastCancer", data = df, target = "Class", positi
 ```
 
 
-The [makeClassifTask](http://berndbischl.github.io/mlr/SupervisedTask.html) help page lists several other arguments that can be 
+The [makeClassifTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) help page lists several other arguments that can be 
 passed to describe further details of the classification problem.
 
 There are some convenient methods to access properties of the data
 set and the classification problem. Look at the documentation of the
-[LearnTask](http://berndbischl.github.io/mlr/makeLearner.html) class and its subclasses [ClassifTask](http://berndbischl.github.io/mlr/SupervisedTask.html) and [RegrTask](http://berndbischl.github.io/mlr/SupervisedTask.html), if
+[LearnTask](http://berndbischl.github.io/mlr/man/makeLearner.html) class and its subclasses [ClassifTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) and [RegrTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html), if
 you are interested in the kind of "getter"-functions, which are
 available. Here are some examples:
 
@@ -176,11 +179,11 @@ head(getTaskTargets(task))
 ```
 
 
-All information can be obtained from the slots of the [LearnTask](http://berndbischl.github.io/mlr/makeLearner.html)
+All information can be obtained from the slots of the [LearnTask](http://berndbischl.github.io/mlr/man/makeLearner.html)
 object directly.
 
 The main part of the information is stored in the slot called `desc`,
-which stands for description. (`task$task.desc` is an object of class [TaskDesc](http://berndbischl.github.io/mlr/TaskDesc.html).)
+which stands for description. (`task$task.desc` is an object of class [TaskDesc](http://berndbischl.github.io/mlr/man/TaskDesc.html).)
 
 
 ```r
@@ -297,6 +300,7 @@ task
 ## Supervised task: data
 ## Type: regr
 ## Target: medv
+## 
 ## Observations: 506
 ## Features:
 ## numerics  factors 
@@ -328,7 +332,7 @@ head(getTaskTargets(task))
 ```
 
 
-Inspect [TaskDesc](http://berndbischl.github.io/mlr/TaskDesc.html).
+Inspect [TaskDesc](http://berndbischl.github.io/mlr/man/TaskDesc.html).
 
 
 ```r

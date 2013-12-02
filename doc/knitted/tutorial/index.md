@@ -12,6 +12,7 @@ Tutorial
 9. [Benchmark Experiments](benchmark_experiments.md)
 10. [Benchmark Analysis](benchmark_analysis.md)
 11. [ROC Analysis](roc_analysis.md)
+12. [Cool Stuff](cool_stuff.md)
    
 This web page will provide you with an in-depth introduction on how to
 use the **mlr** framework for machine learning experiments and
@@ -19,7 +20,7 @@ optimization in R.
 
 Our focus is on your comprehension of the basic functions and
 applications. For detailed technical information and manual pages, please refer to
-the package's [manual pages](http://berndbischl.github.io/mlr/). They are regularly updated and reflect the documentation
+the package's [manual pages](http://berndbischl.github.io/mlr/man/). They are regularly updated and reflect the documentation
 of the current packages on CRAN.
 
 The approach is step by step and orients itself on the proceeding of a basic data set analysis: 

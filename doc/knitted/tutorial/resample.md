@@ -7,7 +7,7 @@ Resampling
 In order to assess the performance of a learning algorithm, usually resampling 
 strategies are used. There are various methods how this can be done, e.g.
 cross-validation and bootstrap just to mention two popular approaches. 
-In **mlr**, the [resample](http://berndbischl.github.io/mlr/resample.html)-function, depending on the chosen resampling strategy, 
+In **mlr**, the [resample](http://berndbischl.github.io/mlr/man/resample.html)-function, depending on the chosen resampling strategy, 
 fits the selected learner using the corresponding training sets and performs 
 predictions for the corresponding training/test sets and calculates the chosen
 performance measures.
@@ -36,7 +36,7 @@ r <- resample(lrn, task, rdesc)
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.02
+## [Resample] Result: mmce.test.mean=0.0267
 ```
 
 ```r
@@ -52,13 +52,13 @@ r
 ## 
 ## $measures.test
 ##   iter mmce
-## 1    1 0.00
-## 2    2 0.04
+## 1    1 0.04
+## 2    2 0.02
 ## 3    3 0.02
 ## 
 ## $aggr
 ## mmce.test.mean 
-##           0.02 
+##        0.02667 
 ## 
 ## $pred
 ## Resampled Prediction for:
@@ -69,7 +69,7 @@ r
 ## threshold: 
 ## time (mean): 0.00
 ## 'data.frame':	150 obs. of  5 variables:
-##  $ id      : int  1 7 8 9 12 14 15 16 18 19 ...
+##  $ id      : int  1 7 12 14 15 22 25 29 33 35 ...
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -91,7 +91,7 @@ r
 
 
 In this example, the peformance measure is mmce (mean misclassification error), 
-the default for classification. See the documentation for [measures](http://berndbischl.github.io/mlr/measures.html) for a 
+the default for classification. See the documentation for [measures](http://berndbischl.github.io/mlr/man/measures.html) for a 
 complete list of performance measures available in **mlr**. More explanations, 
 concerning the evaluation of learning methods, are given in section [Evaluating Learner Performance](performance.md).
 
@@ -119,7 +119,7 @@ r <- resample(lrn, task, rdesc)
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mse.test.mean=25.3
+## [Resample] Result: mse.test.mean=23.8
 ```
 
 ```r
@@ -135,13 +135,13 @@ r
 ## 
 ## $measures.test
 ##   iter   mse
-## 1    1 18.09
-## 2    2 28.09
-## 3    3 29.77
+## 1    1 25.39
+## 2    2 24.06
+## 3    3 21.88
 ## 
 ## $aggr
 ## mse.test.mean 
-##         25.31 
+##         23.78 
 ## 
 ## $pred
 ## Resampled Prediction for:
@@ -150,11 +150,11 @@ r
 ## Stratification: FALSE
 ## predict.type: response
 ## threshold: 
-## time (mean): 0.00
+## time (mean): 0.01
 ## 'data.frame':	506 obs. of  5 variables:
-##  $ id      : int  5 6 7 14 15 16 20 22 24 25 ...
-##  $ truth   : num  36.2 28.7 22.9 20.4 18.2 19.9 18.2 19.6 14.5 15.6 ...
-##  $ response: num  26.8 25.1 23 19.2 19 ...
+##  $ id      : int  1 2 4 9 12 23 26 27 29 31 ...
+##  $ truth   : num  24 21.6 33.4 16.5 18.9 15.2 13.9 16.6 18.4 12.7 ...
+##  $ response: num  29.93 24.68 29.05 9.81 21.15 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ set     : Factor w/ 1 level "test": 1 1 1 1 1 1 1 1 1 1 ...
 ## 
@@ -187,7 +187,7 @@ strategy consists of a couple of iterations and for each one of them
 exist indices into *D*, defining the respective training and test
 sets. 
 These iterations are implemented by storing the index set in a
-so called [ResampleInstance](http://berndbischl.github.io/mlr/makeResampleInstance.html) object. The reasons for having the user
+so called [ResampleInstance](http://berndbischl.github.io/mlr/man/makeResampleInstance.html) object. The reasons for having the user
 create this data explicitly and not just set an option in an R function
 to choose the resampling method are:
 
@@ -195,7 +195,7 @@ to choose the resampling method are:
   different methods on exactly the same sets, especially when you want
   to add another method to a comparison experiment you already did.
 * It is easy to add other resampling methods later on. You can
-  simply use S4 inheritance, derived from the [ResampleInstance](http://berndbischl.github.io/mlr/makeResampleInstance.html)
+  simply use S4 inheritance, derived from the [ResampleInstance](http://berndbischl.github.io/mlr/man/makeResampleInstance.html)
   class, but you do not have to touch any methods that use the
   resampling strategy.
 
@@ -205,15 +205,15 @@ to choose the resampling method are:
 Resample descriptions and resample instances
 --------------------------------------------
 
-There are two types of objects: a [ResampleDesc](http://berndbischl.github.io/mlr/makeResampleDesc.html) object, which stands for
-a resample description, e.g. a 10-fold cross-validation and a [ResampleInstance](http://berndbischl.github.io/mlr/makeResampleInstance.html)
+There are two types of objects: a [ResampleDesc](http://berndbischl.github.io/mlr/man/makeResampleDesc.html) object, which stands for
+a resample description, e.g. a 10-fold cross-validation and a [ResampleInstance](http://berndbischl.github.io/mlr/man/makeResampleInstance.html)
 object, which creates a resample instance for a specific task and based on a resample
-description. These can be generated by means of the factory methods [makeResampleDesc](http://berndbischl.github.io/mlr/makeResampleDesc.html)
-and make[ResampleInstance](http://berndbischl.github.io/mlr/makeResampleInstance.html).
+description. These can be generated by means of the factory methods [makeResampleDesc](http://berndbischl.github.io/mlr/man/makeResampleDesc.html)
+and make[ResampleInstance](http://berndbischl.github.io/mlr/man/makeResampleInstance.html).
 
 For every resampling strategy, there is a description class, inheriting
-from [ResampleDesc](http://berndbischl.github.io/mlr/makeResampleDesc.html) (which completely characterizes the necessary
-parameters), as well as a class inheriting from [ResampleInstance](http://berndbischl.github.io/mlr/makeResampleInstance.html). This latter
+from [ResampleDesc](http://berndbischl.github.io/mlr/man/makeResampleDesc.html) (which completely characterizes the necessary
+parameters), as well as a class inheriting from [ResampleInstance](http://berndbischl.github.io/mlr/man/makeResampleInstance.html). This latter
 class takes the description object and takes care of the random
 drawing of indices. While this seems overly complicated, it is
 necessary as sometimes one only wants to describe the drawing process,
@@ -229,7 +229,7 @@ rinst <- makeResampleInstance(rdesc, size = nrow(iris))
 ```
 
 
-Asking the [ResampleDesc](http://berndbischl.github.io/mlr/makeResampleDesc.html) or [ResampleInstance](http://berndbischl.github.io/mlr/makeResampleInstance.html) objects for further
+Asking the [ResampleDesc](http://berndbischl.github.io/mlr/man/makeResampleDesc.html) or [ResampleInstance](http://berndbischl.github.io/mlr/man/makeResampleInstance.html) objects for further
 information is easy, just inspect the list elements by using the $-operator.
 
 
@@ -313,7 +313,7 @@ rdesc <- makeResampleDesc("Bootstrap", iters = 10)
 Evaluation of Predictions after Resampling
 ------------------------------------------
 
-The [resample](http://berndbischl.github.io/mlr/resample.html) function evaluates the performance of your learner using
+The [resample](http://berndbischl.github.io/mlr/man/resample.html) function evaluates the performance of your learner using
 a certain resampling strategy for a given machine learning task.
 
 When you use a resampling strategy, **mlr** offers the following
@@ -360,7 +360,7 @@ r1 <- resample(lrn, task, rinst, list(mmce, acc))
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.0933,acc.test.mean=0.907
+## [Resample] Result: mmce.test.mean=0.0533,acc.test.mean=0.947
 ```
 
 
@@ -376,7 +376,7 @@ r1 <- resample(lrn1, task, rinst, list(mmce, acc))
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.0933,acc.test.mean=0.907
+## [Resample] Result: mmce.test.mean=0.0533,acc.test.mean=0.947
 ```
 
 ```r
@@ -391,7 +391,7 @@ r2 <- resample(lrn2, task, rinst, list(mmce, acc))
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.0333,acc.test.mean=0.967
+## [Resample] Result: mmce.test.mean=0.02,acc.test.mean=0.98
 ```
 
 ```r
@@ -411,12 +411,12 @@ r1
 ## $measures.test
 ##   iter mmce  acc
 ## 1    1 0.08 0.92
-## 2    2 0.10 0.90
-## 3    3 0.10 0.90
+## 2    2 0.06 0.94
+## 3    3 0.02 0.98
 ## 
 ## $aggr
 ## mmce.test.mean  acc.test.mean 
-##        0.09333        0.90667 
+##        0.05333        0.94667 
 ## 
 ## $pred
 ## Resampled Prediction for:
@@ -427,7 +427,7 @@ r1
 ## threshold: 
 ## time (mean): 0.00
 ## 'data.frame':	150 obs. of  5 variables:
-##  $ id      : int  3 5 10 11 17 18 19 20 21 28 ...
+##  $ id      : int  5 6 9 11 13 16 17 24 25 27 ...
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -460,13 +460,13 @@ r2
 ## 
 ## $measures.test
 ##   iter mmce  acc
-## 1    1 0.02 0.98
-## 2    2 0.02 0.98
-## 3    3 0.06 0.94
+## 1    1 0.00 1.00
+## 2    2 0.06 0.94
+## 3    3 0.00 1.00
 ## 
 ## $aggr
 ## mmce.test.mean  acc.test.mean 
-##        0.03333        0.96667 
+##           0.02           0.98 
 ## 
 ## $pred
 ## Resampled Prediction for:
@@ -477,7 +477,7 @@ r2
 ## threshold: 
 ## time (mean): 0.00
 ## 'data.frame':	150 obs. of  5 variables:
-##  $ id      : int  3 5 10 11 17 18 19 20 21 28 ...
+##  $ id      : int  5 6 9 11 13 16 17 24 25 27 ...
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -509,8 +509,8 @@ r1$measures.test
 ```
 ##   iter mmce  acc
 ## 1    1 0.08 0.92
-## 2    2 0.10 0.90
-## 3    3 0.10 0.90
+## 2    2 0.06 0.94
+## 3    3 0.02 0.98
 ```
 
 
@@ -526,7 +526,7 @@ r1$aggr
 
 ```
 ## mmce.test.mean  acc.test.mean 
-##        0.09333        0.90667
+##        0.05333        0.94667
 ```
 
 
@@ -564,18 +564,18 @@ r1 <- resample(lrn1, task, rinst, measures = ms)
 
 ```
 ## # weights:  46
-## initial  value 307820.966532 
-## iter  10 value 36015.768389
-## iter  20 value 35816.555626
-## iter  30 value 34913.542909
-## iter  40 value 31138.875475
-## iter  50 value 28832.613831
-## iter  60 value 28743.006760
-## iter  70 value 28613.484794
-## iter  80 value 27870.632278
-## iter  90 value 27581.342619
-## iter 100 value 27261.358231
-## final  value 27261.358231 
+## initial  value 254366.870470 
+## iter  10 value 25694.199049
+## iter  20 value 24934.251636
+## iter  30 value 24498.082030
+## iter  40 value 24209.960484
+## iter  50 value 23832.434430
+## iter  60 value 21083.294819
+## iter  70 value 18056.333906
+## iter  80 value 16734.921747
+## iter  90 value 16396.757861
+## iter 100 value 15779.309278
+## final  value 15779.309278 
 ## stopped after 100 iterations
 ```
 
@@ -585,8 +585,8 @@ r1 <- resample(lrn1, task, rinst, measures = ms)
 
 ```
 ## # weights:  46
-## initial  value 289142.499294 
-## final  value 39055.335336 
+## initial  value 317299.639266 
+## final  value 40413.067372 
 ## converged
 ```
 
@@ -596,13 +596,21 @@ r1 <- resample(lrn1, task, rinst, measures = ms)
 
 ```
 ## # weights:  46
-## initial  value 318656.122880 
-## final  value 46257.589032 
+## initial  value 270812.743287 
+## iter  10 value 30705.258020
+## iter  20 value 27397.100460
+## iter  30 value 26105.094506
+## iter  40 value 23744.485793
+## iter  50 value 21994.172457
+## iter  60 value 20558.376745
+## iter  70 value 19091.159410
+## iter  80 value 19075.650221
+## final  value 19075.645470 
 ## converged
 ```
 
 ```
-## [Resample] Result: mse.test.mean=  72,medae.test.mean=4.92
+## [Resample] Result: mse.test.mean=59.8,medae.test.mean= 3.9
 ```
 
 ```r
@@ -616,7 +624,7 @@ r2 <- resample(lrn2, task, rinst, measures = ms)
 ## [Resample] OOB bootstrapping iter: 1
 ## [Resample] OOB bootstrapping iter: 2
 ## [Resample] OOB bootstrapping iter: 3
-## [Resample] Result: mse.test.mean=15.4,medae.test.mean=1.66
+## [Resample] Result: mse.test.mean=20.2,medae.test.mean=1.83
 ```
 
 
@@ -630,9 +638,9 @@ r1$measures.test
 
 ```
 ##   iter   mse medae
-## 1    1 55.34 4.344
-## 2    2 87.50 5.250
-## 3    3 73.30 5.162
+## 1    1 43.71 4.095
+## 2    2 91.94 4.950
+## 3    3 43.69 2.665
 ```
 
 ```r
@@ -641,9 +649,9 @@ r2$measures.test
 
 ```
 ##   iter   mse medae
-## 1    1 17.24 1.698
-## 2    2 15.79 1.773
-## 3    3 13.19 1.519
+## 1    1 19.20 1.617
+## 2    2 16.61 2.099
+## 3    3 24.68 1.788
 ```
 
 
