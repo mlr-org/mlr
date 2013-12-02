@@ -14,7 +14,7 @@ imp.const = function(const) {
   setClasses(list(
     learn = function(...) const,
     impute = imputeConstFun
-  ), "ImputationObject")
+  ), "ImputeMethod")
 }
 
 #' @export
@@ -23,7 +23,7 @@ imp.median = function() {
   setClasses(list(
     learn = function(data, target, col, ...) median(data[[col]], na.rm=TRUE),
     impute = imputeConstFun
-  ), "ImputationObject")
+  ), "ImputeMethod")
 }
 
 #' @export
@@ -32,7 +32,7 @@ imp.mode = function() {
   setClasses(list(
     learn = function(data, target, col, ...) computeMode(data[[col]], na.rm=TRUE),
     impute = imputeConstFun
-  ), "ImputationObject")
+  ), "ImputeMethod")
 }
 
 #' @export
@@ -44,7 +44,7 @@ imp.min = function(multiplier=1) {
   setClasses(list(
     learn = function(data, target, col, ...) multiplier*min(data[[col]], na.rm=TRUE),
     impute = imputeConstFun
-  ), "ImputationObject")
+  ), "ImputeMethod")
 }
 
 #' @export
@@ -54,7 +54,7 @@ imp.max = function(multiplier=1) {
   setClasses(list(
     learn = function(data, target, col, ...) multiplier*max(data[[col]], na.rm=TRUE),
     impute = imputeConstFun
-  ), "ImputationObject")
+  ), "ImputeMethod")
 }
 
 #' @export
@@ -71,7 +71,7 @@ imp.normal = function() {
       ind = is.na(x)
       replace(x, ind, rnorm(sum(ind), mean=mu, sd=sd))
     }
-  ), "ImputationObject")
+  ), "ImputeMethod")
 }
 
 #' @export
@@ -118,5 +118,5 @@ imp.hist = function(breaks, use.mids=TRUE) {
       }
       replace(x, ind, values)
     }
-  ), "ImputationObject")
+  ), "ImputeMethod")
 }

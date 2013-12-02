@@ -85,7 +85,7 @@ impute = function(data, target, classes = list(), cols = list(), dummies=charact
 
   # learn and thereby transform to list(impute(...), args(...))
   desc$impute = Map(function(xn, x) {
-    if (class(x)[1L] != "ImputationObject")
+    if (class(x)[1L] != "ImputeMethod")
       x = imp.const(x)
     list(impute = x$impute, args = x$learn(data, target, xn))
   }, names(desc$impute), desc$impute)
