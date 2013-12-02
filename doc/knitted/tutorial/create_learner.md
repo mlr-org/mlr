@@ -14,7 +14,7 @@ of origin, the parameter set and the set of properties of your learner.
 
 First, name your learner and replace it all necessary parts of the code. The naming conventions 
 in **mlr** are ``classif.<R_method_name>`` for classification and ``regr.<R_method_name>`` for 
-regression. Second of all, use [makeDiscreteLearnerParam](http://www.statistik.tu-dortmund.de/~bischl/rdocs/ParamHelpers/html/LearnerParam.html) and [makeNumericLearnerParam](http://www.statistik.tu-dortmund.de/~bischl/rdocs/ParamHelpers/html/LearnerParam.html) to incorporate 
+regression. Second of all, use [makeDiscreteLearnerParam](http://berndbischl.github.io/ParamHelpers/man/LearnerParam.html) and [makeNumericLearnerParam](http://berndbischl.github.io/ParamHelpers/man/LearnerParam.html) to incorporate 
 the complete description of the parameters. Include all possible values for discrete parameters, aswell 
 as lower and upper bounds for numeric parameters. Also, add information for the properties (see also 
 the Section about [Learners](learner.md)). Which types of predictors that are supported (numerics, factors)? 

@@ -45,7 +45,7 @@ result = resample(learner = lrn, task = tsk, resampling = rsmpl)
 ## [Resample] cross-validation iter: 8
 ## [Resample] cross-validation iter: 9
 ## [Resample] cross-validation iter: 10
-## [Resample] Result: mmce.test.mean=0.222
+## [Resample] Result: mmce.test.mean=0.235
 ```
 
 Can we improve using *mlrs bagging Wrapper*?
@@ -65,7 +65,7 @@ resultBagging = resample(learner = bagLrn, task = tsk, resampling = rsmpl)
 ## [Resample] cross-validation iter: 8
 ## [Resample] cross-validation iter: 9
 ## [Resample] cross-validation iter: 10
-## [Resample] Result: mmce.test.mean=0.207
+## [Resample] Result: mmce.test.mean=0.192
 ```
 
 It conusmes more time but can outperform not bagged learners on noisy data with many variables.

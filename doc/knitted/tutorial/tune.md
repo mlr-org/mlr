@@ -29,8 +29,8 @@ task <- makeClassifTask(data = iris, target = "Species")
 ```
 
 
-Next, we need to create a [ParamSet](http://www.statistik.tu-dortmund.de/~bischl/rdocs/ParamHelpers/html/makeParamSet.html) object, which describes the parameter space 
-we wish to search in. This is done via the function make[ParamSet](http://www.statistik.tu-dortmund.de/~bischl/rdocs/ParamHelpers/html/makeParamSet.html).
+Next, we need to create a [ParamSet](http://berndbischl.github.io/ParamHelpers/man/makeParamSet.html) object, which describes the parameter space 
+we wish to search in. This is done via the function [makeParamSet](http://berndbischl.github.io/ParamHelpers/man/makeParamSet.html).
 Since we will use a grid search strategy, we add a discrete parameter for the 
 `C` and `sigma` parameter of the SVM to the parameter set.
 More details concerning parameter sets are explained in section [parameters](parameters.md).
@@ -53,7 +53,7 @@ rdesc <- makeResampleDesc("CV", iters = 3)
 
 
 Before we can actually tune our classifier, we need an instance of a
-[TuneControl](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlrTune/html/TuneControl.html) object. These describe the optimization strategy
+[TuneControl](http://berndbischl.github.io/mlr/man/TuneControl.html) object. These describe the optimization strategy
 used. Here we use a grid search:
 
 
@@ -63,7 +63,7 @@ ctrl <- makeTuneControlGrid()
 
 
 Finally, by combining all the previous pieces, we can tune the SVM
-using our [TuneControl](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlrTune/html/TuneControl.html) instance and the resampling strategy,
+using our [TuneControl](http://berndbischl.github.io/mlr/man/TuneControl.html) instance and the resampling strategy,
 described by the `rdesc` variable.
 
 
