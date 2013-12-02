@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Induced model of learner.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for makeWrappedModel {mlr}"><tr><td>makeWrappedModel {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Induced model of learner.</h2>
+
+<h3>Description</h3>
+
+<p>Result from <code><a href="../../caret/html/train.html">train</a></code>. It internally stores the
+underlying fitted model, the subset used for training,
+features used for training and computtation time for
+training.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  makeWrappedModel(learner, model, task.desc, subset,
+    features, time)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>learner</code></td>
+<td>
+<p>[<code><a href="makeLearner.html">Learner</a></code>]<br> The learner.</p>
+</td></tr>
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>[any]<br> Underlying model.</p>
+</td></tr>
+<tr valign="top"><td><code>task.desc</code></td>
+<td>
+<p>[<code><a href="TaskDesc.html">TaskDesc</a></code>]<br> Task
+description object.</p>
+</td></tr>
+<tr valign="top"><td><code>subset</code></td>
+<td>
+<p>[<code>integer</code>]<br> Subset used for
+training.</p>
+</td></tr>
+<tr valign="top"><td><code>features</code></td>
+<td>
+<p>[<code>character</code>]<br> Features used for
+training.</p>
+</td></tr>
+<tr valign="top"><td><code>time</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br> Computation time for
+model fit in seconds.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The constructer <code>makeWrappedModel</code> is only for
+internal use.
+</p>
+<p>Object members: See arguments.
+</p>
+
+
+<h3>Value</h3>
+
+<p>[<code><a href="makeWrappedModel.html">WrappedModel</a></code>].
+</p>
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

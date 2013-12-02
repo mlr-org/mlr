@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Feature selection by wrapper approach.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body>
+
+<table width="100%" summary="page for selectFeatures {mlr}"><tr><td>selectFeatures {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Feature selection by wrapper approach.</h2>
+
+<h3>Description</h3>
+
+<p>Optimizes the features for a classification or regression
+problem by choosing a variable selection wrapper
+approach. Allows for different optimization methods, such
+as forward search or a genetic algorithm. You can select
+such an algorithm (and its settings) by passing a
+corresponding control object. For a complete list of
+implemented algorithms look at the subclasses of
+[<code><a href="FeatSelControl.html">FeatSelControl</a></code>].
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  selectFeatures(learner, task, resampling, control,
+    measures, bit.names, bits.to.features,
+    show.info = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>learner</code></td>
+<td>
+<p>[<code><a href="Learner.html">Learner</a></code>]<br> The
+learner.</p>
+</td></tr>
+<tr valign="top"><td><code>task</code></td>
+<td>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> The
+task.</p>
+</td></tr>
+<tr valign="top"><td><code>resampling</code></td>
+<td>
+<p>[<code><a href="ResampleInstance.html">ResampleInstance</a></code> |
+<code><a href="makeResampleDesc.html">ResampleDesc</a></code>]<br> Resampling strategy to
+feature sets. If you pass a description, it is
+instantiated once at the beginning by default, so all
+points are evaluated on the same training/test sets.  If
+you want to change that behaviour, look at
+<code><a href="FeatSelControl.html">FeatSelControl</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>control</code></td>
+<td>
+<p>[see <code><a href="FeatSelControl.html">FeatSelControl</a></code>] Control
+object for search method. Also selects the optimization
+algorithm for feature selection.</p>
+</td></tr>
+<tr valign="top"><td><code>measures</code></td>
+<td>
+<p>[list of <code><a href="makeMeasure.html">Measure</a></code>]<br>
+Performance measures to evaluate. The first measure,
+aggregated by the first aggregation function is optimized
+during selection, others are simply evaluated.</p>
+</td></tr>
+<tr valign="top"><td><code>bit.names</code></td>
+<td>
+<p>[character]<br> Names of bits encoding
+the solutions. Also defines the total number of bits in
+the encoding.  Per default these are the feature names of
+the task.</p>
+</td></tr>
+<tr valign="top"><td><code>bits.to.features</code></td>
+<td>
+<p>[function(x, task)]<br> Function
+which transforms an integer-0-1 vector into a character
+vector of selected features.  Per default a value of 1 in
+the ith bit selects the ith feature to be in the
+candidate solution.</p>
+</td></tr>
+<tr valign="top"><td><code>show.info</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> A logical value,
+indicating whether information should be printed.  The
+default is TRUE.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>All algorithms operate on a 0-1-bit encoding of candidate
+solutions. Per default a single bit corresponds to a
+single feature, but you are able to change this by using
+the arguments <code>bit.names</code> and
+<code>bits.to.features</code>. Thus allowing you to switch on
+whole groups of features with a single bit.
+</p>
+
+
+<h3>Value</h3>
+
+<p>[<code><a href="FeatSelResult.html">FeatSelResult</a></code>].
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="r">
+task &lt;- makeClassifTask(data=iris, target=&quot;Species&quot;)
+lrn &lt;- makeLearner(&quot;classif.rpart&quot;)
+rdesc &lt;- makeResampleDesc(&quot;Holdout&quot;)
+
+## Now create control-objects for each of the possible feature selection algorithms:
+ctrlSeq &lt;- makeFeatSelControlSequential(method=&quot;sfs&quot;, maxit=NA)
+ctrlGA &lt;- makeFeatSelControlGA(maxit=5, max.features=NA, crossover.rate=0.5,
+  mutation.rate=0.1, mu=10, lambda=5)
+ctrlRand &lt;- makeFeatSelControlRandom(maxit=10, max.features=NA, prob=0.5)
+ctrlExh &lt;- makeFeatSelControlExhaustive(maxit=NA, max.features=NA)
+
+## Let&#39;s run the feature selction algorithm:
+
+sfSeq &lt;- selectFeatures(lrn, task, rdesc, control=ctrlSeq)
+</code></pre>
+
+<pre><code>## [selectFeatures] 1: 0 bits: mmce.test.mean= 0.6
+## [selectFeatures] 2: 1 bits: mmce.test.mean=0.34
+## [selectFeatures] 2: 1 bits: mmce.test.mean=0.42
+## [selectFeatures] 2: 1 bits: mmce.test.mean=0.06
+## [selectFeatures] 2: 1 bits: mmce.test.mean=0.04
+## [selectFeatures] 3: 2 bits: mmce.test.mean=0.04
+## [selectFeatures] 3: 2 bits: mmce.test.mean=0.04
+## [selectFeatures] 3: 2 bits: mmce.test.mean=0.04
+</code></pre>
+
+<pre><code class="r">sfSeq
+</code></pre>
+
+<pre><code>## FeatSel result:
+## Features (1): Petal.Width
+## =0.04
+</code></pre>
+
+<pre><code class="r">sfGA &lt;- selectFeatures(lrn, task, rdesc, control=ctrlGA)
+</code></pre>
+
+<pre><code>## [selectFeatures] 1: 2 bits: mmce.test.mean=0.06
+## [selectFeatures] 1: 4 bits: mmce.test.mean=0.12
+## [selectFeatures] 1: 2 bits: mmce.test.mean=0.06
+## [selectFeatures] 1: 3 bits: mmce.test.mean=0.12
+## [selectFeatures] 1: 3 bits: mmce.test.mean=0.12
+## [selectFeatures] 1: 4 bits: mmce.test.mean=0.12
+## [selectFeatures] 1: 1 bits: mmce.test.mean=0.34
+## [selectFeatures] 1: 0 bits: mmce.test.mean=0.64
+## [selectFeatures] 1: 4 bits: mmce.test.mean=0.12
+## [selectFeatures] 1: 3 bits: mmce.test.mean=0.06
+## [selectFeatures] 1: 2 bits: mmce.test.mean=0.06
+## [selectFeatures] 1: 2 bits: mmce.test.mean=0.06
+## [selectFeatures] 1: 1 bits: mmce.test.mean=0.34
+## [selectFeatures] 1: 1 bits: mmce.test.mean=0.06
+## [selectFeatures] 1: 4 bits: mmce.test.mean=0.12
+## [selectFeatures] 2: 3 bits: mmce.test.mean=0.12
+## [selectFeatures] 2: 1 bits: mmce.test.mean=0.38
+## [selectFeatures] 2: 3 bits: mmce.test.mean=0.12
+## [selectFeatures] 2: 3 bits: mmce.test.mean=0.12
+## [selectFeatures] 2: 2 bits: mmce.test.mean=0.12
+## [selectFeatures] 3: 2 bits: mmce.test.mean=0.06
+## [selectFeatures] 3: 1 bits: mmce.test.mean=0.06
+## [selectFeatures] 3: 2 bits: mmce.test.mean=0.06
+## [selectFeatures] 3: 1 bits: mmce.test.mean=0.06
+## [selectFeatures] 3: 2 bits: mmce.test.mean=0.06
+## [selectFeatures] 4: 2 bits: mmce.test.mean=0.06
+## [selectFeatures] 4: 1 bits: mmce.test.mean=0.06
+## [selectFeatures] 4: 3 bits: mmce.test.mean=0.06
+## [selectFeatures] 4: 2 bits: mmce.test.mean=0.34
+## [selectFeatures] 4: 2 bits: mmce.test.mean=0.06
+## [selectFeatures] 5: 2 bits: mmce.test.mean=0.06
+## [selectFeatures] 5: 1 bits: mmce.test.mean=0.06
+## [selectFeatures] 5: 3 bits: mmce.test.mean=0.06
+## [selectFeatures] 5: 2 bits: mmce.test.mean=0.06
+## [selectFeatures] 5: 0 bits: mmce.test.mean=0.58
+</code></pre>
+
+<pre><code class="r">sfGA
+</code></pre>
+
+<pre><code>## FeatSel result:
+## Features (3): Sepal.Length, Sepal.Width, Petal.Width
+## =0.06
+</code></pre>
+
+<pre><code class="r">sfRand &lt;- selectFeatures(lrn, task, rdesc, control=ctrlRand)
+</code></pre>
+
+<pre><code>## [selectFeatures] 1: 3 bits: mmce.test.mean=0.04
+## [selectFeatures] 1: 2 bits: mmce.test.mean=0.04
+## [selectFeatures] 1: 3 bits: mmce.test.mean= 0.1
+## [selectFeatures] 1: 3 bits: mmce.test.mean=0.04
+## [selectFeatures] 1: 3 bits: mmce.test.mean= 0.1
+## [selectFeatures] 1: 4 bits: mmce.test.mean= 0.1
+## [selectFeatures] 1: 1 bits: mmce.test.mean= 0.1
+## [selectFeatures] 1: 4 bits: mmce.test.mean= 0.1
+## [selectFeatures] 1: 2 bits: mmce.test.mean=0.04
+## [selectFeatures] 1: 4 bits: mmce.test.mean= 0.1
+</code></pre>
+
+<pre><code class="r">sfRand
+</code></pre>
+
+<pre><code>## FeatSel result:
+## Features (3): Sepal.Length, Sepal.Width, Petal.Width
+## =0.04
+</code></pre>
+
+<pre><code class="r">sfExh &lt;- selectFeatures(lrn, task, rdesc, control=ctrlExh)
+</code></pre>
+
+<pre><code>## [selectFeatures] 1: 0 bits: mmce.test.mean=0.66
+## [selectFeatures] 1: 1 bits: mmce.test.mean=0.32
+## [selectFeatures] 1: 1 bits: mmce.test.mean= 0.5
+## [selectFeatures] 1: 1 bits: mmce.test.mean=0.04
+## [selectFeatures] 1: 1 bits: mmce.test.mean=0.04
+## [selectFeatures] 1: 2 bits: mmce.test.mean=0.38
+## [selectFeatures] 1: 2 bits: mmce.test.mean=0.04
+## [selectFeatures] 1: 2 bits: mmce.test.mean=0.04
+## [selectFeatures] 1: 2 bits: mmce.test.mean=0.04
+## [selectFeatures] 1: 2 bits: mmce.test.mean=0.04
+## [selectFeatures] 1: 2 bits: mmce.test.mean=0.04
+## [selectFeatures] 1: 3 bits: mmce.test.mean=0.04
+## [selectFeatures] 1: 3 bits: mmce.test.mean=0.04
+## [selectFeatures] 1: 3 bits: mmce.test.mean=0.04
+## [selectFeatures] 1: 3 bits: mmce.test.mean=0.04
+## [selectFeatures] 1: 4 bits: mmce.test.mean=0.04
+</code></pre>
+
+<pre><code class="r">sfExh
+</code></pre>
+
+<pre><code>## FeatSel result:
+## Features (2): Sepal.Width, Petal.Length
+## =0.04
+</code></pre>
+
+<pre><code class="r">
+</code></pre>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

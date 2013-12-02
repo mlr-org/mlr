@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Impute and re-impute data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body>
+
+<table width="100%" summary="page for impute {mlr}"><tr><td>impute {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Impute and re-impute data</h2>
+
+<h3>Description</h3>
+
+<p>These functions provide some convenience for imputation
+of missing values. A noteworthy feature is given by the
+possibility to re-impute a data set in the same way as
+learned previously which especially becomes handy in
+combination with resampling strategies.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  impute(data, target, classes = list(), cols = list(),
+    dummies = character(0L), impute.newlevels = TRUE)
+
+  imp.const(const)
+
+  imp.median()
+
+  imp.mode()
+
+  imp.min(multiplier = 1)
+
+  imp.max(multiplier = 1)
+
+  imp.normal()
+
+  imp.hist(breaks, use.mids = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>[<code>data.frame</code>]<br> Input data.</p>
+</td></tr>
+<tr valign="top"><td><code>target</code></td>
+<td>
+<p>[<code>character</code>]<br> Name of the column
+specifying the response.</p>
+</td></tr>
+<tr valign="top"><td><code>classes</code></td>
+<td>
+<p>[<code>named list</code>]<br> Named list
+containing imputation techniques for classes of columns.
+E.g. <code>list(integer = 0)</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>cols</code></td>
+<td>
+<p>[<code>named list</code>]<br> Named list containing
+names of the built-in imputation methods to impute
+missing values in the data column referenced by the list
+element's name. Overwrites imputation set via
+<code>classes</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>dummies</code></td>
+<td>
+<p>[<code>character()</code>]<br> Set of column
+names for which dummy variables (binary missing
+indicator) should be created.  Default is
+<code>character(0)</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>impute.newlevels</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Impute new
+levels in factors the same way as missing values? Default
+is <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>const</code></td>
+<td>
+<p>[any]<br> Any object to use for imputation.</p>
+</td></tr>
+<tr valign="top"><td><code>multiplier</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br> Numeric value to
+multiply the minimum or maximum.</p>
+</td></tr>
+<tr valign="top"><td><code>breaks</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br> Number of breaks to
+use in <code><a href="../../graphics/html/hist.html">hist</a></code>. If missing, defaults
+to auto-detection via &ldquo;Sturges&rdquo;.</p>
+</td></tr>
+<tr valign="top"><td><code>use.mids</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> If <code>x</code> is
+numeric and a histogram is used, impute with bin mids
+(default) or instead draw uniformly distributed samples
+within bin range.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The function <code>impute</code> performs the imputations on a
+data set and returns, alongside with the imputed data
+set, an &ldquo;ImputationDesc&rdquo; object which then can be
+passed together with a new data set to
+<code><a href="reimpute.html">reimpute</a></code>.
+</p>
+<p>The imputation techniques can be specified for certain
+features or using the feature classes, see parameters.
+You can either provide an arbitrary object use a built-in
+imputation method or create one yourself using ... FIXME
+we should provide a constructor and document it. The
+built-ins are: </p>
+ <ul>
+<li> <p><code>imp.const(const)</code>
+for imputation using a constant value, </p>
+</li>
+<li>
+<p><code>imp.median()</code> for imputation using the median,
+</p>
+</li>
+<li> <p><code>imp.mode()</code> for imputation using the mode,
+</p>
+</li>
+<li> <p><code>imp.min(multiplier)</code> for imputation using the
+minimum, </p>
+</li>
+<li> <p><code>imp.max(multiplier)</code> for imputation
+using the maximum, </p>
+</li>
+<li> <p><code>imp.normal()</code> for
+imputation using normally distributed random values with
+mean and variance estimated from the data, </p>
+</li>
+<li>
+<p><code>imp.hist(breaks, use.mids)</code> for imputation using
+random values with probabilities calculated using
+<code>table</code> or <code>hist</code>. </p>
+</li></ul>
+
+
+
+<h3>Value</h3>
+
+<p><code>list</code> with two named elements &ldquo;data&rdquo; and
+&ldquo;desc&rdquo;.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="r">
+df = data.frame(x = c(1, 1, NA), y = factor(c(&quot;a&quot;, &quot;a&quot;, &quot;b&quot;)), z=1:3)
+ imputed = impute(df, target=character(0), cols=list(x = 99, y = imp.mode()))
+ print(imputed$data)
+</code></pre>
+
+<pre><code>##    x y z
+## 1  1 a 1
+## 2  1 a 2
+## 3 99 b 3
+</code></pre>
+
+<pre><code class="r"> reimpute(data.frame(x=NA), imputed$desc)
+</code></pre>
+
+<pre><code>##    x y  z
+## 1 99 a NA
+</code></pre>
+
+<pre><code class="r">
+</code></pre>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>
