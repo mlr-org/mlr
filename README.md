@@ -8,7 +8,7 @@ mlr: Machine Learning in R
   https://github.com/berndbischl/mlr/blob/master/doc/knitted/tutorial/index.md
 
 * R Documentation in HTML:
-  http://berndbischl.github.io/mlr/
+  http://berndbischl.github.io/mlr/man/
 
 * Run this in R to install the current GitHub version:
   ```r
