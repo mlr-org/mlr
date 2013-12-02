@@ -5,7 +5,7 @@ Many classification algorithms feature a set of hyperparameters that
 either need to be selected by the user or through resampling,
 e.g. cross-validation. Setting them by hand was already covered in the
 section about [training](train.md) and [resampling](resample.md) -- simply use the
-`par.val` argument in the [makeLearner](http://berndbischl.github.io/mlr/makeLearner.html) method.
+`par.val` argument in the [makeLearner](http://berndbischl.github.io/mlr/man/makeLearner.html) method.
 
 Assuming, you have understood how [resampling](resample.md) works, it is
 quite simple to implement a grid search, which is one of the standard

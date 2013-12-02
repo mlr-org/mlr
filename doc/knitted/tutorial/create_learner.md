@@ -17,7 +17,7 @@ in **mlr** are ``classif.<R_method_name>`` for classification and ``regr.<R_meth
 regression. Second of all, use [makeDiscreteLearnerParam](http://www.statistik.tu-dortmund.de/~bischl/rdocs/ParamHelpers/html/LearnerParam.html) and [makeNumericLearnerParam](http://www.statistik.tu-dortmund.de/~bischl/rdocs/ParamHelpers/html/LearnerParam.html) to incorporate 
 the complete description of the parameters. Include all possible values for discrete parameters, aswell 
 as lower and upper bounds for numeric parameters. Also, add information for the properties (see also 
-the Section about [Learners](learner.html)). Which types of predictors that are supported (numerics, factors)? 
+the Section about [Learners](learner.md)). Which types of predictors that are supported (numerics, factors)? 
 Are case weights supported? Can the method deal with missing values in the predictor variables and deal with 
 NAs in a meaningful way (not na.omit)? Are oneclass, twoclass, multiclass problems supported? Can the 
 learner predict posterior probabilities? In the regression case, you do not need to take care of the 
@@ -46,11 +46,11 @@ Creating the training function of the learner
 This must fit a model on the data of the task ``.task`` with regard to the subset defined in the 
 integer vector ``.subset`` and the parameters passed in the ``...`` arguments. It must return the 
 fitted model, no special data type is assumed for this. For further information, read the 
-documentation of [getTaskData](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/getTaskData.html).
+documentation of [getTaskData](http://berndbischl.github.io/mlr/man/getTaskData.html).
 
 In the example, replace lda by the name of the training function of your method. Pass all 
 required arguments to the training function. The data can be extracted from the task via the 
-[getTaskData](http://www.statistik.tu-dortmund.de/~bischl/rdocs/mlr/getTaskData.html) function. Pass further arguments like case weights via ``.weights`` to the training method.
+[getTaskData](http://berndbischl.github.io/mlr/man/getTaskData.html) function. Pass further arguments like case weights via ``.weights`` to the training method.
 
 
 ```r

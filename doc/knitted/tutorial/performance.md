@@ -11,10 +11,10 @@ It is also possible to access the time to train the model,
 the time to compute the prediction and their sum as performance
 measures.
 
-To see which performance measures are implemented, have a look at [measures](http://berndbischl.github.io/mlr/measures.html). If you want 
+To see which performance measures are implemented, have a look at [measures](http://berndbischl.github.io/mlr/man/measures.html). If you want 
 to implement an additional measure or include a measure with non-standard 
 misclassification costs, go to the section [create_measure](create_measure.md). In order to calculate 
-the performance measures, the function [performance](http://berndbischl.github.io/mlr/performance.html) is used.
+the performance measures, the function [performance](http://berndbischl.github.io/mlr/man/performance.html) is used.
 
 
 Classification example
@@ -58,7 +58,7 @@ performance(pred = pred, measures = timepredict)
 ```
 
 ```
-## [1] 0.002
+## [1] 0.004
 ```
 
 ```r
@@ -67,7 +67,7 @@ performance(pred = pred, measures = timetrain, model = mod)
 ```
 
 ```
-## [1] 0.005
+## [1] 0.956
 ```
 
 ```r
@@ -75,7 +75,7 @@ performance(pred = pred, measures = timeboth, model = mod)
 ```
 
 ```
-## [1] 0.007
+## [1] 0.96
 ```
 
 
@@ -90,7 +90,7 @@ performance(pred = pred, measures = ms, model = mod)
 
 ```
 ##      mmce       acc timetrain  timeboth 
-##     0.040     0.960     0.005     0.007
+##     0.040     0.960     0.956     0.960
 ```
 
 
@@ -137,7 +137,7 @@ performance(pred, measures = fnr)
 
 Note that, in order to calculate the AUC, the area under the ROC (receiver 
 operating characteristic) curve, we have to make sure that posterior
-probabilities are predicted, i.e. set the predict type of the [Learner](http://berndbischl.github.io/mlr/makeLearner.html) to "prob".
+probabilities are predicted, i.e. set the predict type of the [Learner](http://berndbischl.github.io/mlr/man/makeLearner.html) to "prob".
 
 
 ```r
@@ -198,7 +198,7 @@ sapply(ms, function(meas) performance(pred, measures = meas))
 
 ```
 ##    mse    mae 
-## 42.780  4.546
+## 42.882  4.551
 ```
 
 

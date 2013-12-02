@@ -19,7 +19,7 @@ optimization in R.
 
 Our focus is on your comprehension of the basic functions and
 applications. For detailed technical information and manual pages, please refer to
-the package's [manual pages](http://berndbischl.github.io/mlr/). They are regularly updated and reflect the documentation
+the package's [manual pages](http://berndbischl.github.io/mlr/man/). They are regularly updated and reflect the documentation
 of the current packages on CRAN.
 
 The approach is step by step and orients itself on the proceeding of a basic data set analysis: 

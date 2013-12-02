@@ -9,23 +9,23 @@ send the **mlr** maintainers an email or see the part of the tutorial
 on [how to extend the package yourself](create_learner.md).
   
 To see which learners are already implemented, have a look at the
-[learners](http://berndbischl.github.io/mlr/learners.html) documentation page.
+[learners](http://berndbischl.github.io/mlr/man/learners.html) documentation page.
 
 Generally, you have two options to access the learning algorithms in **mlr**. 
-Either by passing the name as a string to the appropriate method, e.g. [train](http://berndbischl.github.io/mlr/train.html), 
-or by constructing a [Learner](http://berndbischl.github.io/mlr/makeLearner.html) object explicitly by means of the
-[makeLearner](http://berndbischl.github.io/mlr/makeLearner.html) factory method. 
+Either by passing the name as a string to the appropriate method, e.g. [train](http://berndbischl.github.io/mlr/man/train.html), 
+or by constructing a [Learner](http://berndbischl.github.io/mlr/man/makeLearner.html) object explicitly by means of the
+[makeLearner](http://berndbischl.github.io/mlr/man/makeLearner.html) factory method. 
 
-Why construct a [Learner](http://berndbischl.github.io/mlr/makeLearner.html) object? 
+Why construct a [Learner](http://berndbischl.github.io/mlr/man/makeLearner.html) object? 
 
-* You have to create a [Learner](http://berndbischl.github.io/mlr/makeLearner.html) object if you want to pass hyperparameter values other than the default values.
+* You have to create a [Learner](http://berndbischl.github.io/mlr/man/makeLearner.html) object if you want to pass hyperparameter values other than the default values.
 * You have the opportunity to set an ID, which is quite useful if you conduct larger experiments and need to access results of a certain learning method.
-* For classification tasks you have to create a [Learner](http://berndbischl.github.io/mlr/makeLearner.html) object if you want to control the type of [prediction](http://berndbischl.github.io/mlr/predict.WrappedModel.html) which is returned. Per default you get the class labels when making a [prediction](http://berndbischl.github.io/mlr/predict.WrappedModel.html). In order to get posterior probabilities you have to specify this when creating the learner.
+* For classification tasks you have to create a [Learner](http://berndbischl.github.io/mlr/man/makeLearner.html) object if you want to control the type of [prediction](http://berndbischl.github.io/mlr/man/predict.WrappedModel.html) which is returned. Per default you get the class labels when making a [prediction](http://berndbischl.github.io/mlr/man/predict.WrappedModel.html). In order to get posterior probabilities you have to specify this when creating the learner.
 
-The [makeLearner](http://berndbischl.github.io/mlr/makeLearner.html) factory method takes the names of the learning method as 
+The [makeLearner](http://berndbischl.github.io/mlr/man/makeLearner.html) factory method takes the names of the learning method as 
 its first argument. The naming conventions are ``classif.<R_method_name>`` for 
 classification methods and ``regr.<R_method_name>`` for regression methods.
-The names of all learning methods are listed on the [learners](http://berndbischl.github.io/mlr/learners.html) documentation page.
+The names of all learning methods are listed on the [learners](http://berndbischl.github.io/mlr/man/learners.html) documentation page.
 
 
 Classification example
@@ -53,9 +53,9 @@ lrn
 ```
 
 
-The generated learner is an object of class [Learner](http://berndbischl.github.io/mlr/makeLearner.html). It contains basic 
+The generated learner is an object of class [Learner](http://berndbischl.github.io/mlr/man/makeLearner.html). It contains basic 
 information about the learning method like the chosen hyperparameter values 
-(if specified) and the type of [prediction](http://berndbischl.github.io/mlr/predict.WrappedModel.html) that will be made by this learner.
+(if specified) and the type of [prediction](http://berndbischl.github.io/mlr/man/predict.WrappedModel.html) that will be made by this learner.
 Moreover, it provides information about the types of classification problems 
 and properties of the data the learning method can deal with. For example,
 it states, if two- or multi-class problems are supported and if it can cope 
@@ -64,7 +64,7 @@ with case weights or missing values.
 The tables in [IntegratedLearners](../integrated_learners.md) provide a survey about these properties for
 all integrated learning methods.
 
-Now let's create a [Learner](http://berndbischl.github.io/mlr/makeLearner.html) and additionally specify hyperparameter values and 
+Now let's create a [Learner](http://berndbischl.github.io/mlr/man/makeLearner.html) and additionally specify hyperparameter values and 
 an ID.
 
 
@@ -88,7 +88,7 @@ lrn
 ```
 
 
-This is how to get posterior probabilities when making a [prediction](http://berndbischl.github.io/mlr/predict.WrappedModel.html).
+This is how to get posterior probabilities when making a [prediction](http://berndbischl.github.io/mlr/man/predict.WrappedModel.html).
 
 
 ```r
@@ -115,7 +115,7 @@ lrn
 Regression example
 ------------------
 
-Create a rpart [Learner](http://berndbischl.github.io/mlr/makeLearner.html) for regression. 
+Create a rpart [Learner](http://berndbischl.github.io/mlr/man/makeLearner.html) for regression. 
 
 
 ```r
@@ -137,7 +137,7 @@ lrn
 ```
 
 
-Finally, let's create a Gradient Boosting Machine [Learner](http://berndbischl.github.io/mlr/makeLearner.html) and pass hyperparameters
+Finally, let's create a Gradient Boosting Machine [Learner](http://berndbischl.github.io/mlr/man/makeLearner.html) and pass hyperparameters
 and an ID.
 
 
