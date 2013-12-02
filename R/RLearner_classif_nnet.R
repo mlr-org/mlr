@@ -16,7 +16,7 @@ makeRLearner.classif.nnet = function() {
       makeNumericLearnerParam(id="decay", default=0),
       makeLogicalLearnerParam(id="Hess", default=FALSE),
       makeLogicalLearnerParam(id="trace", default=TRUE),
-      makeIntegerLearnerParam(id="MaxNWts", default=1000L),
+      makeIntegerLearnerParam(id="MaxNWts", default=1000L, lower=1L),
       makeNumericLearnerParam(id="abstoll", default=1.0e-4),
       makeNumericLearnerParam(id="reltoll", default=1.0e-8)
     ),
