@@ -12,6 +12,7 @@ Tutorial
 9. [Benchmark Experiments](benchmark_experiments.md)
 10. [Benchmark Analysis](benchmark_analysis.md)
 11. [ROC Analysis](roc_analysis.md)
+12. [Cool Stuff](cool_stuff.md)
    
 This web page will provide you with an in-depth introduction on how to
 use the **mlr** framework for machine learning experiments and

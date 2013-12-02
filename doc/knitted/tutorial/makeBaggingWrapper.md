@@ -65,7 +65,7 @@ resultBagging = resample(learner = bagLrn, task = tsk, resampling = rsmpl)
 ## [Resample] cross-validation iter: 8
 ## [Resample] cross-validation iter: 9
 ## [Resample] cross-validation iter: 10
-## [Resample] Result: mmce.test.mean=0.192
+## [Resample] Result: mmce.test.mean=0.187
 ```
 
 It conusmes more time but can outperform not bagged learners on noisy data with many variables.
