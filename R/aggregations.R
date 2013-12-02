@@ -15,7 +15,9 @@
 #' \item{\bold{train.sum}}{\cr Sum of performance values on training sets.}
 #' \item{\bold{b632}}{\cr Aggregation for B632 bootstrap.}
 #' \item{\bold{b632plus}}{\cr Aggregation for B632+ bootstrap.}
-#' \item{\bold{testgroup.mean}}{\cr Performance values on test sets are grouped according to resampling method. The mean for very group is calculated, then the mean of those means. Mainly used for repeated CV.}
+#' \item{\bold{testgroup.mean}}{\cr Performance values on test sets are grouped according
+#'   to resampling method. The mean for very group is calculated, then the mean of those means.
+#'   Mainly used for repeated CV.}
 #' }
 #' @seealso \code{\link{Aggregation}}
 #' @name aggregations
@@ -112,9 +114,6 @@ train.sum = makeAggregation(
   id = "train.sum",
   fun = function(task, perf.test, perf.train, measure, group, pred) sum(perf.train)
 )
-
-
-
 
 #' @export
 #' @rdname aggregations
