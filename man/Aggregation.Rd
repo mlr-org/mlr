@@ -1,7 +1,8 @@
 \name{Aggregation}
 \alias{Aggregation}
-\title{An aggregation method reduces the performance values of the test (and possibly the training sets) to a single
-value. To see all possible, implemented aggregations look at \code{\link{aggregations}}.}
+\title{An aggregation method reduces the performance values of the test
+(and possibly the training sets) to a single value.
+To see all possible, implemented aggregations look at \code{\link{aggregations}}.}
 \description{
   The aggregation can access all relevant information of
   the result after resampling and combine them into a

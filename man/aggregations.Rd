@@ -79,7 +79,7 @@
   bootstrap.} \item{\bold{testgroup.mean}}{\cr Performance
   values on test sets are grouped according to resampling
   method. The mean for very group is calculated, then the
-  mean of those means. Mainly used for repeated CV.} }
+  mean of those means.  Mainly used for repeated CV.} }
 }
 \seealso{
   \code{\link{Aggregation}}
