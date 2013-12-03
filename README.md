@@ -11,7 +11,7 @@ mlr: Machine Learning in R
   http://berndbischl.github.io/mlr/man/
 
 * Run this in R to install the current GitHub version:
-  ```r
+  ```splus
   devtools::install_github("mlr", username="berndbischl")
   ```
 

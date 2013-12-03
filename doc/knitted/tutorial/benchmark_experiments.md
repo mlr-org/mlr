@@ -34,7 +34,7 @@ Example 1: One task, two learners, no tuning
 ----------------------------------------------
 
 
-```r
+```splus
 library("mlr")
 
 ## Classification task with iris data set
@@ -59,7 +59,7 @@ access if you want to see details. Let's have a look to the benchmark
 result from the example above:
 
 
-```r
+```splus
 ## Access further information The single performances of the cross-validation
 ## runs
 res["perf"]
@@ -79,7 +79,7 @@ We show an example with outer bootstrap and inner cross-validation,
 our learner will be k-nearest-neighbor.
 
 
-```r
+```splus
 ## Classification task with iris data set
 task = makeClassifTask(data = iris, target = "Species")
 
@@ -122,7 +122,7 @@ Extensive example which shows a benchmark experiment with three data
 sets, three learners and tuning.
 
 
-```r
+```splus
 library("dprep")
 library("mlbench")
 data(BreastCancer)
@@ -183,7 +183,7 @@ Let's see how we can do [variable selection](variable_selection.md) in
 a benchmark experiment:
 
 
-```r
+```splus
 ## Classification task with iris data set
 task = makeClassifTask("iris", data = iris, target = "Species")
 

@@ -17,7 +17,7 @@ The subsamples are choosen according to the following parameters used in `makeBa
 Of course we also need a `learner` which we have to pass to `makeBaggingWrapper()`.
 
 
-```r
+```splus
 library(mlr)
 data(Sonar)
 tsk = makeClassifTask(data = Sonar, target = "Class")
@@ -30,7 +30,7 @@ bagLrn = makeBaggingWrapper(lrn, bag.iters = 50, bag.replace = TRUE, bag.size = 
 No as we have set up everything we are curious how good the bagging performs.
 First let's try it without bagging:
 
-```r
+```splus
 result = resample(learner = lrn, task = tsk, resampling = rsmpl)
 ```
 
@@ -45,12 +45,12 @@ result = resample(learner = lrn, task = tsk, resampling = rsmpl)
 ## [Resample] cross-validation iter: 8
 ## [Resample] cross-validation iter: 9
 ## [Resample] cross-validation iter: 10
-## [Resample] Result: mmce.test.mean=0.235
+## [Resample] Result: mmce.test.mean=0.25
 ```
 
 Can we improve using *mlrs bagging Wrapper*?
 
-```r
+```splus
 resultBagging = resample(learner = bagLrn, task = tsk, resampling = rsmpl)
 ```
 
@@ -65,7 +65,7 @@ resultBagging = resample(learner = bagLrn, task = tsk, resampling = rsmpl)
 ## [Resample] cross-validation iter: 8
 ## [Resample] cross-validation iter: 9
 ## [Resample] cross-validation iter: 10
-## [Resample] Result: mmce.test.mean=0.187
+## [Resample] Result: mmce.test.mean=0.198
 ```
 
 It conusmes more time but can outperform not bagged learners on noisy data with many variables.

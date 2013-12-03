@@ -20,7 +20,7 @@ Comparing to learners
 You can easely compare the Performance of two learners with `mlr` and the help of `ROCR`.
 First we create a scenario with two different [learners](learner.md) capable of predicting probabilities (Tip: run `listLearners(prob=TRUE)` to get a list of all supported learners doing so).
 
-```r
+```splus
 library("mlbench")
 library("ROCR")
 ```
@@ -30,23 +30,23 @@ library("ROCR")
 ## 
 ## Attaching package: 'gplots'
 ## 
-## Das folgende Objekt ist maskiert from 'package:plotrix':
+## The following object is masked from 'package:plotrix':
 ## 
 ##     plotCI
 ## 
-## Das folgende Objekt ist maskiert from 'package:stats':
+## The following object is masked from 'package:stats':
 ## 
 ##     lowess
 ## 
 ## 
 ## Attaching package: 'ROCR'
 ## 
-## Das folgende Objekt ist maskiert from 'package:mlr':
+## The following object is masked from 'package:mlr':
 ## 
 ##     performance
 ```
 
-```r
+```splus
 library("mlr")
 
 ## Generate 2 class problem with mlbench
@@ -62,7 +62,7 @@ lrn2 <- makeLearner("classif.ksvm", predict.type = "prob")
 
 Afterwards we perform [resampling](resample.md) to obtain predictions for each fold.
 
-```r
+```splus
 ## Perform a 10-fold cross-validation
 rdesc <- makeResampleDesc("CV", iters = 10)
 r1 <- resample(lrn1, task, rdesc)
@@ -82,7 +82,7 @@ r1 <- resample(lrn1, task, rdesc)
 ## [Resample] Result: mmce.test.mean=0.27
 ```
 
-```r
+```splus
 r2 <- resample(lrn2, task, rdesc)
 ```
 
@@ -178,7 +178,7 @@ Otherwise `plot.performance()` will draw one curve for each fold.
 For details view `?plot.performance`.
 
 
-```r
+```splus
 p1 <- asROCRPrediction(r1$pred)
 p2 <- asROCRPrediction(r2$pred)
 perf1 <- ROCR::performance(p1, "tpr", "fpr")
@@ -193,7 +193,7 @@ legend("bottomright", legend = c("lda", "ksvm"), lty = 1, col = c("blue", "red")
 
 We can also cheat a bit and create pooled ROC-Curves by manually setting the class attribute from the prediction object from `ResamplePrediction` to `Prediction`.
 
-```r
+```splus
 r1p <- r1$pred
 r2p <- r2$pred
 class(r1p) <- "Prediction"

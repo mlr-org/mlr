@@ -16,7 +16,7 @@ Let's train a Linear Discriminant Analysis on the ``iris`` data and make predict
 for the same data set.
 
 
-```r
+```splus
 library("mlr")
 
 task <- makeClassifTask(data = iris, target = "Species")
@@ -43,7 +43,7 @@ We fit a simple linear regression model to the ``BostonHousing`` data set and pr
 on the training data.
 
 
-```r
+```splus
 library("mlr")
 library("mlbench")
 data(BostonHousing)
@@ -93,7 +93,7 @@ iris dataset. We select two subsets of the data. We train a decision tree on the
 first one and [predict](http://berndbischl.github.io/mlr/man/predict.WrappedModel.html) the class labels on the test set.
 
 
-```r
+```splus
 library("mlr")
 
 # At first we define the classification task.
@@ -118,7 +118,7 @@ pred <- predict(mod, newdata = iris[test.set, ])
 A data frame that contains the true and predicted class labels can be accessed via
 
 
-```r
+```splus
 head(pred$data)
 ```
 
@@ -136,7 +136,7 @@ head(pred$data)
 Alternatively, we can also predict directly from a task:
 
 
-```r
+```splus
 pred <- predict(mod, task = task, subset = test.set)
 head(as.data.frame(pred))
 ```
@@ -161,7 +161,7 @@ In order to get predicted posterior probabilities, we have to change the ``predi
 of the learner.
 
 
-```r
+```splus
 lrn <- makeLearner("classif.rpart", predict.type = "prob")
 mod <- train(lrn, task)
 pred <- predict(mod, newdata = iris[test.set, ])
@@ -186,7 +186,7 @@ breaking ties at random.
 The predicted posterior probabilities can be accessed via the [getProbabilities](http://berndbischl.github.io/mlr/man/getProbabilities.html)-function.
 
 
-```r
+```splus
 head(getProbabilities(pred))
 ```
 
@@ -215,7 +215,7 @@ predicts probabilities, train the learner and then predict the class labels.
 
 
 
-```r
+```splus
 library("mlbench")
 data(Sonar)
 
@@ -242,7 +242,7 @@ to map probabilities, to class labels using [setThreshold](http://berndbischl.gi
 the threshold for the *positive* class to 0.8:
 
 
-```r
+```splus
 pred <- setThreshold(pred, 0.8)
 head(pred$data)
 ```
@@ -257,7 +257,7 @@ head(pred$data)
 ## 6  6     R 0.0000 1.0000        R
 ```
 
-```r
+```splus
 pred$threshold
 ```
 
@@ -275,7 +275,7 @@ Machine. We use every second observation for training/test. The
 proceeding is analog to the classification case.
 
 
-```r
+```splus
 library(mlbench)
 data(BostonHousing)
 
@@ -294,11 +294,11 @@ head(pred$data)
 
 ```
 ##   truth response
-## 1  21.6    22.25
-## 2  33.4    23.30
-## 3  28.7    22.32
-## 4  27.1    22.15
-## 5  18.9    22.15
+## 1  21.6    22.21
+## 2  33.4    23.22
+## 3  28.7    22.37
+## 4  27.1    22.13
+## 5  18.9    22.13
 ## 6  18.9    22.15
 ```
 

@@ -12,7 +12,7 @@ Quick start
 Let's train a decision tree on the ``iris`` data and use a sequential forward search to find the best group of features w.r.t. the **mmce** (mean misclassification error).
 
 
-```r
+```splus
 library("mlr")
 task <- makeClassifTask(data = iris, target = "Species")
 lrn <- makeLearner("classif.rpart")
@@ -33,7 +33,7 @@ sfSeq <- selectFeatures(learner = lrn, task = task, resampling = rdesc, control 
 ## [selectFeatures] 3: 2 bits: mmce.test.mean=0.06
 ```
 
-```r
+```splus
 sfSeq
 ```
 
@@ -50,7 +50,7 @@ sfSeq
 We fit a simple linear regression model to the ``BostonHousing`` data set and use a genetic algorithm to find a feature set that reduces the **mse** (mean squared error).
 
 
-```r
+```splus
 library("mlbench")
 data(BostonHousing)
 
@@ -125,7 +125,7 @@ sfGA <- selectFeatures(learner = lrn, task = task, resampling = rdesc, control =
 ## [selectFeatures] 10: 9 bits: mse.test.mean=24.9
 ```
 
-```r
+```splus
 sfGA
 ```
 

@@ -20,7 +20,7 @@ Quick start
 
 
 
-```r
+```splus
 library("mlr")
 
 ## Define a learning task and an appropriate learner
@@ -36,10 +36,10 @@ r <- resample(lrn, task, rdesc)
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.0267
+## [Resample] Result: mmce.test.mean=0.02
 ```
 
-```r
+```splus
 r
 ```
 
@@ -54,11 +54,11 @@ r
 ##   iter mmce
 ## 1    1 0.04
 ## 2    2 0.02
-## 3    3 0.02
+## 3    3 0.00
 ## 
 ## $aggr
 ## mmce.test.mean 
-##        0.02667 
+##           0.02 
 ## 
 ## $pred
 ## Resampled Prediction for:
@@ -69,7 +69,7 @@ r
 ## threshold: 
 ## time (mean): 0.00
 ## 'data.frame':	150 obs. of  5 variables:
-##  $ id      : int  1 7 12 14 15 22 25 29 33 35 ...
+##  $ id      : int  2 11 12 13 20 21 22 23 30 31 ...
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -101,7 +101,7 @@ concerning the evaluation of learning methods, are given in section [Evaluating 
 As a regression example, the ``BostonHousing`` data set is used again.
 
 
-```r
+```splus
 library("mlr")
 library("mlbench")
 data(BostonHousing)
@@ -119,10 +119,10 @@ r <- resample(lrn, task, rdesc)
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mse.test.mean=23.8
+## [Resample] Result: mse.test.mean=24.8
 ```
 
-```r
+```splus
 r
 ```
 
@@ -135,13 +135,13 @@ r
 ## 
 ## $measures.test
 ##   iter   mse
-## 1    1 25.39
-## 2    2 24.06
-## 3    3 21.88
+## 1    1 15.01
+## 2    2 33.83
+## 3    3 25.69
 ## 
 ## $aggr
 ## mse.test.mean 
-##         23.78 
+##         24.84 
 ## 
 ## $pred
 ## Resampled Prediction for:
@@ -152,9 +152,9 @@ r
 ## threshold: 
 ## time (mean): 0.01
 ## 'data.frame':	506 obs. of  5 variables:
-##  $ id      : int  1 2 4 9 12 23 26 27 29 31 ...
-##  $ truth   : num  24 21.6 33.4 16.5 18.9 15.2 13.9 16.6 18.4 12.7 ...
-##  $ response: num  29.93 24.68 29.05 9.81 21.15 ...
+##  $ id      : int  2 3 4 7 12 13 15 19 20 24 ...
+##  $ truth   : num  21.6 34.7 33.4 22.9 18.9 21.7 18.2 20.2 18.2 14.5 ...
+##  $ response: num  25.7 30.7 28.6 23.7 22.5 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ set     : Factor w/ 1 level "test": 1 1 1 1 1 1 1 1 1 1 ...
 ## 
@@ -222,7 +222,7 @@ sets. Also, there are convenient methods to make the construction
 process as easy as possible.
 
 
-```r
+```splus
 ## get the cv.instance directly
 rdesc <- makeResampleDesc("CV", iters = 10)
 rinst <- makeResampleInstance(rdesc, size = nrow(iris))
@@ -233,7 +233,7 @@ Asking the [ResampleDesc](http://berndbischl.github.io/mlr/man/makeResampleDesc.
 information is easy, just inspect the list elements by using the $-operator.
 
 
-```r
+```splus
 ## description object number of iterations
 rdesc$iters
 
@@ -272,7 +272,7 @@ training and 1/3 test set. If there is just one iteration, the strategy
 is commonly called `holdout` or `test sample estimation`.
 
 
-```r
+```splus
 rdesc <- makeResampleDesc("Subsample", iters = 10, split = 2/3)
 rdesc <- makeResampleDesc("Subsample", iters = 1, split = 2/3)
 ```
@@ -285,7 +285,7 @@ In the *i*-th step of the *k* iterations the *i*-th subset is
 used as a test set, while the remaining parts form the training set.
 
 
-```r
+```splus
 rdesc <- makeResampleDesc("CV", iters = 10)
 ```
 
@@ -299,7 +299,7 @@ while the remaining elements from *D*, i.e. elements not
 occuring in the training set, form the test set.
 
 
-```r
+```splus
 rdesc <- makeResampleDesc("Bootstrap", iters = 10)
 ```
 
@@ -335,7 +335,7 @@ Decision Tree and the Linear Discriminant Analysis based on a 3-fold
 cross-validation:
 
 
-```r
+```splus
 ## Classification task
 task <- makeClassifTask(data = iris, target = "Species")
 
@@ -349,7 +349,7 @@ Now, we fit a decision tree for each fold and measure both the mean misclassific
 error (`mmce`) and the accuracy (`acc`):
 
 
-```r
+```splus
 ## Merge learner (lrn), i.e. Decision Tree, classification task (task) and
 ## resample instance (rinst)
 lrn <- makeLearner("classif.rpart")
@@ -360,14 +360,14 @@ r1 <- resample(lrn, task, rinst, list(mmce, acc))
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.0533,acc.test.mean=0.947
+## [Resample] Result: mmce.test.mean=0.06,acc.test.mean=0.94
 ```
 
 
 Let's set a couple of hyperparameters for rpart
 
 
-```r
+```splus
 lrn1 <- makeLearner("classif.rpart", minsplit = 10, cp = 0.03)
 r1 <- resample(lrn1, task, rinst, list(mmce, acc))
 ```
@@ -376,10 +376,10 @@ r1 <- resample(lrn1, task, rinst, list(mmce, acc))
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.0533,acc.test.mean=0.947
+## [Resample] Result: mmce.test.mean=0.06,acc.test.mean=0.94
 ```
 
-```r
+```splus
 
 
 ## Second resample for LDA as learner
@@ -394,7 +394,7 @@ r2 <- resample(lrn2, task, rinst, list(mmce, acc))
 ## [Resample] Result: mmce.test.mean=0.02,acc.test.mean=0.98
 ```
 
-```r
+```splus
 
 ## Let's see how well both classifiers did w.r.t mean misclassification error
 ## and accuracy
@@ -410,13 +410,13 @@ r1
 ## 
 ## $measures.test
 ##   iter mmce  acc
-## 1    1 0.08 0.92
-## 2    2 0.06 0.94
-## 3    3 0.02 0.98
+## 1    1 0.06 0.94
+## 2    2 0.04 0.96
+## 3    3 0.08 0.92
 ## 
 ## $aggr
 ## mmce.test.mean  acc.test.mean 
-##        0.05333        0.94667 
+##           0.06           0.94 
 ## 
 ## $pred
 ## Resampled Prediction for:
@@ -425,9 +425,9 @@ r1
 ## Stratification: FALSE
 ## predict.type: response
 ## threshold: 
-## time (mean): 0.00
+## time (mean): 0.01
 ## 'data.frame':	150 obs. of  5 variables:
-##  $ id      : int  5 6 9 11 13 16 17 24 25 27 ...
+##  $ id      : int  1 9 11 13 16 21 22 25 28 30 ...
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -447,7 +447,7 @@ r1
 ## NULL
 ```
 
-```r
+```splus
 r2
 ```
 
@@ -460,8 +460,8 @@ r2
 ## 
 ## $measures.test
 ##   iter mmce  acc
-## 1    1 0.00 1.00
-## 2    2 0.06 0.94
+## 1    1 0.02 0.98
+## 2    2 0.04 0.96
 ## 3    3 0.00 1.00
 ## 
 ## $aggr
@@ -477,7 +477,7 @@ r2
 ## threshold: 
 ## time (mean): 0.00
 ## 'data.frame':	150 obs. of  5 variables:
-##  $ id      : int  5 6 9 11 13 16 17 24 25 27 ...
+##  $ id      : int  1 9 11 13 16 21 22 25 28 30 ...
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -502,15 +502,15 @@ If we want to see the individual values for each fold on the test set, we can ac
 the `measures.test` element of the result list:
 
 
-```r
+```splus
 r1$measures.test
 ```
 
 ```
 ##   iter mmce  acc
-## 1    1 0.08 0.92
-## 2    2 0.06 0.94
-## 3    3 0.02 0.98
+## 1    1 0.06 0.94
+## 2    2 0.04 0.96
+## 3    3 0.08 0.92
 ```
 
 
@@ -520,13 +520,13 @@ get one mean misclassification error (cf. the second column).
 The aggregated performance values are stored in the `aggr` list element:
 
 
-```r
+```splus
 r1$aggr
 ```
 
 ```
 ## mmce.test.mean  acc.test.mean 
-##        0.05333        0.94667
+##           0.06           0.94
 ```
 
 
@@ -540,7 +540,7 @@ Regression example
 Now, we use the ``BostonHousing`` data and compare the results of a Neural Net and a k-Nearest-Neighbor regression using out-of-bag bootstraping.
 
 
-```r
+```splus
 library("mlr")
 library("mlbench")
 data(BostonHousing)
@@ -564,19 +564,15 @@ r1 <- resample(lrn1, task, rinst, measures = ms)
 
 ```
 ## # weights:  46
-## initial  value 254366.870470 
-## iter  10 value 25694.199049
-## iter  20 value 24934.251636
-## iter  30 value 24498.082030
-## iter  40 value 24209.960484
-## iter  50 value 23832.434430
-## iter  60 value 21083.294819
-## iter  70 value 18056.333906
-## iter  80 value 16734.921747
-## iter  90 value 16396.757861
-## iter 100 value 15779.309278
-## final  value 15779.309278 
-## stopped after 100 iterations
+## initial  value 312194.603867 
+## iter  10 value 42701.759336
+## iter  20 value 25960.639925
+## iter  30 value 25841.990298
+## iter  40 value 25810.509350
+## iter  40 value 25810.509302
+## iter  40 value 25810.509302
+## final  value 25810.509302 
+## converged
 ```
 
 ```
@@ -585,8 +581,8 @@ r1 <- resample(lrn1, task, rinst, measures = ms)
 
 ```
 ## # weights:  46
-## initial  value 317299.639266 
-## final  value 40413.067372 
+## initial  value 290405.274971 
+## final  value 38418.607372 
 ## converged
 ```
 
@@ -596,24 +592,16 @@ r1 <- resample(lrn1, task, rinst, measures = ms)
 
 ```
 ## # weights:  46
-## initial  value 270812.743287 
-## iter  10 value 30705.258020
-## iter  20 value 27397.100460
-## iter  30 value 26105.094506
-## iter  40 value 23744.485793
-## iter  50 value 21994.172457
-## iter  60 value 20558.376745
-## iter  70 value 19091.159410
-## iter  80 value 19075.650221
-## final  value 19075.645470 
+## initial  value 279345.310019 
+## final  value 39814.563399 
 ## converged
 ```
 
 ```
-## [Resample] Result: mse.test.mean=59.8,medae.test.mean= 3.9
+## [Resample] Result: mse.test.mean=86.8,medae.test.mean=4.54
 ```
 
-```r
+```splus
 
 ## Another resampling for the k-Nearest Neighbor regression
 lrn2 <- makeLearner("regr.kknn")
@@ -624,7 +612,7 @@ r2 <- resample(lrn2, task, rinst, measures = ms)
 ## [Resample] OOB bootstrapping iter: 1
 ## [Resample] OOB bootstrapping iter: 2
 ## [Resample] OOB bootstrapping iter: 3
-## [Resample] Result: mse.test.mean=20.2,medae.test.mean=1.83
+## [Resample] Result: mse.test.mean=30.4,medae.test.mean=1.73
 ```
 
 
@@ -632,26 +620,26 @@ Now, we can compare both methods regarding the **mse** (mean squared error) and 
 **medae** (median of absolute errors):
 
 
-```r
+```splus
 r1$measures.test
 ```
 
 ```
 ##   iter   mse medae
-## 1    1 43.71 4.095
-## 2    2 91.94 4.950
-## 3    3 43.69 2.665
+## 1    1 71.91 4.357
+## 2    2 89.61 4.800
+## 3    3 98.84 4.470
 ```
 
-```r
+```splus
 r2$measures.test
 ```
 
 ```
 ##   iter   mse medae
-## 1    1 19.20 1.617
-## 2    2 16.61 2.099
-## 3    3 24.68 1.788
+## 1    1 33.37 1.746
+## 2    2 30.34 1.743
+## 3    3 27.60 1.703
 ```
 
 
