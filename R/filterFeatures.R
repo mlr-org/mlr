@@ -5,7 +5,7 @@
 #' Thresholding of these values can be used to select \dQuote{useful} features.
 #' Look at package FSelector for details on the filter algorithms. 
 #' 
-#' @param task [\code{\link[mlr]{SupervisedTask}}]\cr 
+#' @param task [\code{\link{SupervisedTask}}]\cr 
 #'   The task.  
 #' @param method [\code{character(1)}]\cr
 #'   Filter method. Available are:

@@ -13,11 +13,11 @@
 #' Note that if tranformations are associated with the parameters, the returned result will contain
 #' transformed values in the optimal result and the path.
 #' 
-#' @param learner [\code{\link[mlr]{Learner}}]\cr 
+#' @param learner [\code{\link{Learner}}]\cr 
 #'   The learner.
-#' @param task [\code{\link[mlr]{SupervisedTask}}]\cr
+#' @param task [\code{\link{SupervisedTask}}]\cr
 #'   The task.
-#' @param resampling [\code{\link[mlr]{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
+#' @param resampling [\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
 #'   Resampling strategy to evaluate points in hyperparameter space. If you pass a description, 
 #'   it is instantiated once at the beginning by default, so all points are evaluated on the same training/test sets.
 #'   If you want to change that behaviour, look at \code{\link{TuneControl}}. 	
@@ -25,7 +25,7 @@
 #'   Collection of parameters and their constraints for optimization.   
 #' @param control [\code{\link{TuneControl}}]\cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.   
-#' @param measures [list of \code{\link[mlr]{Measure}}]\cr
+#' @param measures [list of \code{\link{Measure}}]\cr
 #'   Performance measures to evaluate. The first measure, aggregated by the first aggregation function
 #'   is optimized during tuning, others are simply evaluated.  
 #' @param show.info [\code{logical(1)}]\cr

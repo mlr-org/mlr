@@ -2,7 +2,7 @@
 
 #FIXME export when mbo is on cran
 
-# @param learner [\code{\link[mlr]{Learner}}] \cr
+# @param learner [\code{\link{Learner}}] \cr
 #   Regression learner to model performance landscape.  
 # @param mbo.control [\code{\link[mlrMBO]{MBOControl}}] \cr
 #   Control object for model-based optimization tuning.  

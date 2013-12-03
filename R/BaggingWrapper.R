@@ -1,23 +1,23 @@
 #' Fuse learner with the bagging technique.
-#' 
-#' Fuses a learner with the bagging method 
-#' (i.e., similar to what a \code{randomForest} does).  
+#'
+#' Fuses a learner with the bagging method
+#' (i.e., similar to what a \code{randomForest} does).
 #' Creates a learner object, which can be
-#' used like any other learner object. 
+#' used like any other learner object.
 #' Models can easily be accessed via \code{\link{getBaggingModels}}.
-#' 
-#' Bagging is implemented as follows: 
+#'
+#' Bagging is implemented as follows:
 #' For each iteration a random data subset is sampled (with or without replacement)
-#' and potentially the number of features is also restricted to 
-#' a random subset. Note that this is usually handled in a slightly different way 
+#' and potentially the number of features is also restricted to
+#' a random subset. Note that this is usually handled in a slightly different way
 #' in the random forest where features are sampled at each tree split).
 #'
 #' Prediction works as follows:
 #' For classification we do majority voting to create a discrete label and
-#' probabilites are predicted by considering the proportions of all predicted labels.
-#' For regression the mean value and the standard devations accross predictions is computed.
-#' 
-#' @param learner [\code{\link[mlr]{Learner}}]\cr 
+#' probabilities are predicted by considering the proportions of all predicted labels.
+#' For regression the mean value and the standard deviations across predictions is computed.
+#'
+#' @param learner [\code{\link{Learner}}]\cr
 #'   The learner. Prediction type of the basic learner must be \dQuote{response}.
 #' @param bag.iters [\code{integer(1)}]\cr
 #'   Iterations = number of fitted models in bagging.
@@ -27,17 +27,21 @@
 #'   Default is TRUE.
 #' @param bag.size [\code{numeric(1)}]\cr
 #'   Percentage size of sampled bags.
-#'   Default is 1 for bootstrapping and 0.632 for subampling.
+#'   Default is 1 for bootstrapping and 0.632 for subsampling.
 #' @param bag.feats [\code{numeric(1)}]\cr
 #'   Percentage size of randomly selected features in bags.
 #'   Default is 1.
 #' @param predict.type [\code{character(1)}]\cr
-#'   Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
-#'   Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
+#'   Classification: \dQuote{response} (= labels) or \dQuote{prob}
+#'   (= probabilities and labels by selecting the ones with maximal probability).
+#'   Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors
+#'   and mean response).
 #'   Default is \dQuote{response}.
-#' @return [\code{\link[mlr]{Learner}}].
+#' @return [\code{\link{Learner}}].
 #' @export
-makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.size, bag.feats = 1, predict.type = "response") {
+makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.size, bag.feats = 1,
+  predict.type = "response") {
+
   checkArg(learner, "Learner")
   bag.iters = convertInteger(bag.iters)
   checkArg(bag.iters, "integer", len=1L, na.ok=FALSE, lower=1L)
@@ -58,7 +62,7 @@ makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.
     makeNumericLearnerParam(id="bag.size", lower=0, upper=1),
     makeNumericLearnerParam(id="bag.feats", lower=0, upper=1, default=2/3)
   )
-  pv = list(bag.iters=bag.iters, bag.replace=bag.replace, 
+  pv = list(bag.iters=bag.iters, bag.replace=bag.replace,
     bag.size=bag.size, bag.feats=bag.feats)
   x = makeBaseWrapper(id, learner, packs, par.set=ps, par.vals=pv, cl="BaggingWrapper")
   x$se = (x$type == "regr")
@@ -69,11 +73,11 @@ makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.
 }
 
 #' @S3method trainLearner BaggingWrapper
-trainLearner.BaggingWrapper = function(.learner, .task, .subset, 
+trainLearner.BaggingWrapper = function(.learner, .task, .subset,
                                        bag.iters, bag.replace, bag.size, bag.feats, ...) {
-  
+
   .task = subsetTask(.task, subset = .subset)
-  n = .task$task.desc$size 
+  n = .task$task.desc$size
   m = round(n * bag.size)
   allinds = seq_len(n)
   if (bag.feats < 1) {
@@ -84,9 +88,9 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset,
     bag = sample(allinds, m, replace = bag.replace)
     if (bag.feats < 1) {
       feats2 = sample(feats, k, replace = FALSE)
-      .task2 = subsetTask(.task, features=feats2)  
+      .task2 = subsetTask(.task, features=feats2)
       train(.learner$next.learner, .task2, subset=bag)
-    } else {
+  } else {
       train(.learner$next.learner, .task, subset=bag)
     }
   })
@@ -97,11 +101,11 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset,
 predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
   models = getBaggingModels(.model)
   g = if(.learner$type == "classif") as.character else identity
-  p = sapply(models, function(m) 
+  p = sapply(models, function(m)
     g(predict(m, newdata=.newdata, ...)$data$response)
   )
   if (.learner$predict.type == "response") {
-    g = if(.learner$type == "classif") 
+    g = if(.learner$type == "classif")
       as.factor(apply(p, 1, computeMode))
     else
       rowMeans(p)
@@ -137,12 +141,12 @@ print.BaggingModel = function(x, ...) {
 }
 
 #' Returns the list of models fitted in bagging.
-#' 
-#' @param model [\code{\link[mlr]{WrappedModel}}]\cr 
+#'
+#' @param model [\code{\link{WrappedModel}}]\cr
 #'   Model produced by training a bagging learner.
 #' @param learner.models [\code{logical(1)}]\cr
-#'   Return underlying R models (e.g., rpart models) or 
-#'   wrapped mlr models (\code{\link[mlr]{WrappedModel}}).
+#'   Return underlying R models (e.g., rpart models) or
+#'   wrapped mlr models (\code{\link{WrappedModel}}).
 #'   Default is \code{FALSE}.
 #' @return [\code{list}].
 #' @export
@@ -152,5 +156,5 @@ getBaggingModels = function(model, learner.models=FALSE) {
   if (learner.models)
     extractSubList(ms, "learner.model", simplify=FALSE)
   else
-    ms    
+    ms
 }

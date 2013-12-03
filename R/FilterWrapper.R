@@ -9,7 +9,7 @@
 #' After training, the selected features can be retrieved with 
 #' \code{\link{getTuneResult}}.
 #' 
-#' @param learner [\code{\link[mlr]{Learner}}]\cr 
+#' @param learner [\code{\link{Learner}}]\cr 
 #'   The learner.  
 #' @param fw.method [\code{character(1)}]\cr
 #'   Filter method. Available are:
@@ -75,7 +75,7 @@ predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
 
 #' Returns the filtered features.
 #' 
-#' @param model [\code{\link[mlr]{WrappedModel}}]\cr 
+#' @param model [\code{\link{WrappedModel}}]\cr 
 #'   Trained Model created with \code{\link{makeFilterWrapper}}.
 #' @return [\code{character}].
 #' @export

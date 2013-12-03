@@ -14,7 +14,8 @@ BugReports: https://github.com/berndbischl/mlr/issues
 License: BSD_3_clause + file LICENSE
 Depends:
     R (>= 3.0.0),
-    ParamHelpers (>= 1.2)
+    ParamHelpers (>= 1.2),
+    stats
 Imports:
     BBmisc (>= 1.4),
     parallelMap,
