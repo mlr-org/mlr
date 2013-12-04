@@ -117,6 +117,11 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
         fun2 = identity
       else
         fun2 = function(x) try(x, silent=TRUE)
+      old.warn.opt = getOption("warn")
+      on.exit(options(warn = old.warn.opt))
+      if (getMlrOption("on.learner.warning") == "quiet") {
+        options(warn = -1L)
+      }
       st = system.time(fun1(p <- fun2(do.call(predictLearner2, pars))), gcFirst = FALSE)
       time.predict = as.numeric(st[3L])
       # was there an error during prediction?

@@ -1,5 +1,9 @@
 
 mlr_1.2:
+- performance functions now allows to compute multiple measures
+- added multiclass.roc performance measure
+- observation weights can now also be specified in the task
+- added option on.learner.warning to configureMlr to suppress warnings in learners
 - fixed a bug in stratified CV where elements where not distributed as evenly as possible
   when the split number did not divide the number of observation 
 - added class.weights param for classif.svm

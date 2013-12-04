@@ -8,6 +8,11 @@
 #'   \dQuote{warn}: A \code{FailureModel} will be created, which predicts only NAs and a warning will be generated.\cr
 #'   \dQuote{quiet}: Same as \dQuote{warn} but without the warning.\cr
 #'   Default is \dQuote{stop}.
+#' @param on.learner.warning [\code{character(1)}]\cr
+#'   What should happen if a warning in an underlying learning algorithm is generated:\cr
+#'   \dQuote{warn}: The warning is generated as usual.\cr
+#'   \dQuote{quiet}: The warning is suppressed.\cr
+#'   Default is \dQuote{warn}.
 #' @param on.par.without.desc [\code{character(1)}]\cr
 #'   What should happen if a parameter of a learner is set to a value, but no parameter description object exists,
 #'   indicating a possibly wrong name:\cr
@@ -21,11 +26,15 @@
 #'   Default is \code{TRUE}.
 #' @return Nothing.
 #' @export
-configureMlr = function(on.learner.error="stop", on.par.without.desc="stop", show.learner.output=TRUE) {
+configureMlr = function(on.learner.error="stop", on.learner.warning="warn",
+  on.par.without.desc="stop", show.learner.output=TRUE) {
+
   checkArg(on.learner.error, choices=c("quiet", "warn", "stop"))
+  checkArg(on.learner.warning, choices=c("warn", "quiet"))
   checkArg(on.par.without.desc, choices= c("quiet", "warn", "stop"))
   checkArg(show.learner.output, "logical", len=1L, na.ok=FALSE)
   setMlrOption("on.learner.error", on.learner.error)
+  setMlrOption("on.learner.warning", on.learner.warning)
   setMlrOption("on.par.without.desc", on.par.without.desc)
   setMlrOption("show.learner.output", show.learner.output)
   invisible(NULL)
