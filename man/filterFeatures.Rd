@@ -8,8 +8,7 @@ Look at package FSelector for details on the filter algorithms.}
   filterFeatures(task, method = "random.forest.importance")
 }
 \arguments{
-  \item{task}{[\code{\link[mlr]{SupervisedTask}}]\cr The
-  task.}
+  \item{task}{[\code{\link{SupervisedTask}}]\cr The task.}
 
   \item{method}{[\code{character(1)}]\cr Filter method.
   Available are: \dQuote{linear.correlation},

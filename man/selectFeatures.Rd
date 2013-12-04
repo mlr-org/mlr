@@ -7,13 +7,11 @@
     show.info = TRUE)
 }
 \arguments{
-  \item{learner}{[\code{\link[mlr]{Learner}}]\cr The
-  learner.}
+  \item{learner}{[\code{\link{Learner}}]\cr The learner.}
 
-  \item{task}{[\code{\link[mlr]{SupervisedTask}}]\cr The
-  task.}
+  \item{task}{[\code{\link{SupervisedTask}}]\cr The task.}
 
-  \item{resampling}{[\code{\link[mlr]{ResampleInstance}} |
+  \item{resampling}{[\code{\link{ResampleInstance}} |
   \code{\link{ResampleDesc}}]\cr Resampling strategy to
   feature sets. If you pass a description, it is
   instantiated once at the beginning by default, so all

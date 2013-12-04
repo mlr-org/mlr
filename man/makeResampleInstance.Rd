@@ -36,15 +36,14 @@
   grouping of resampling iterations. This encodes whether
   specfic iterations 'belong together' (e.g. repeated CV),
   and it can later be used to aggregate performance values
-  accordingly. Default is 'factor()'. } }
+  accordingly. Default is 'factor()'.} }
 }
 \examples{
 task <- makeClassifTask(data = iris, target = "Species")
 rdesc <- makeResampleDesc("Bootstrap", iters = 10)
 rin <- makeResampleInstance(rdesc, task = task)
-rin
 
-## Alternativly provide the size argument instead of a task object
+# Alternatively provide the size argument instead of a task object
 rdesc <- makeResampleDesc("CV", iters = 50)
 rin <- makeResampleInstance(rdesc, size = nrow(iris))
 }

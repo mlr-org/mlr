@@ -6,14 +6,14 @@
     control, show.info = TRUE)
 }
 \arguments{
-  \item{learner}{[\code{\link[mlr]{Learner}} or string]\cr
+  \item{learner}{[\code{\link{Learner}} or string]\cr
   Learning algorithm.}
 
-  \item{resampling}{[\code{\link[mlr]{ResampleDesc}} |
-  \code{\link[mlr]{ResampleInstance}}]\cr Resampling
-  strategy to evaluate points in hyperparameter space.}
+  \item{resampling}{[\code{\link{ResampleDesc}} |
+  \code{\link{ResampleInstance}}]\cr Resampling strategy to
+  evaluate points in hyperparameter space.}
 
-  \item{measures}{[list of \code{\link[mlr]{Measure}}]\cr
+  \item{measures}{[list of \code{\link{Measure}}]\cr
   Performance measures to evaluate. The first measure,
   aggregated by the first aggregation function is optimized
   during tuning, others are simply evaluated.}

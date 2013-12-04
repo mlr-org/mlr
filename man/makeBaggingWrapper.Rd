@@ -7,8 +7,8 @@
     predict.type = "response")
 }
 \arguments{
-  \item{learner}{[\code{\link[mlr]{Learner}}]\cr The
-  learner. Prediction type of the basic learner must be
+  \item{learner}{[\code{\link{Learner}}]\cr The learner.
+  Prediction type of the basic learner must be
   \dQuote{response}.}
 
   \item{bag.iters}{[\code{integer(1)}]\cr Iterations =
@@ -19,7 +19,7 @@
 
   \item{bag.size}{[\code{numeric(1)}]\cr Percentage size of
   sampled bags.  Default is 1 for bootstrapping and 0.632
-  for subampling.}
+  for subsampling.}
 
   \item{bag.feats}{[\code{numeric(1)}]\cr Percentage size
   of randomly selected features in bags.  Default is 1.}
@@ -33,7 +33,7 @@
   \dQuote{response}.}
 }
 \value{
-  [\code{\link[mlr]{Learner}}].
+  [\code{\link{Learner}}].
 }
 \description{
   Fuses a learner with the bagging method (i.e., similar to
@@ -52,9 +52,9 @@
 
   Prediction works as follows: For classification we do
   majority voting to create a discrete label and
-  probabilites are predicted by considering the proportions
-  of all predicted labels. For regression the mean value
-  and the standard devations accross predictions is
-  computed.
+  probabilities are predicted by considering the
+  proportions of all predicted labels. For regression the
+  mean value and the standard deviations across predictions
+  is computed.
 }
 

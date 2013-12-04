@@ -3,6 +3,7 @@
 \title{Configures the behaviour of the package.}
 \usage{
   configureMlr(on.learner.error = "stop",
+    on.learner.warning = "warn",
     on.par.without.desc = "stop",
     show.learner.output = TRUE)
 }
@@ -14,6 +15,12 @@
   be created, which predicts only NAs and a warning will be
   generated.\cr \dQuote{quiet}: Same as \dQuote{warn} but
   without the warning.\cr Default is \dQuote{stop}.}
+
+  \item{on.learner.warning}{[\code{character(1)}]\cr What
+  should happen if a warning in an underlying learning
+  algorithm is generated:\cr \dQuote{warn}: The warning is
+  generated as usual.\cr \dQuote{quiet}: The warning is
+  suppressed.\cr Default is \dQuote{stop}.}
 
   \item{on.par.without.desc}{[\code{character(1)}]\cr What
   should happen if a parameter of a learner is set to a

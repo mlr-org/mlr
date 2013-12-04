@@ -1,3 +1,4 @@
+#FIXME: export and document
 makeImputeMethod = function(learn, impute, args=list()) {
   checkArg(learn, "function", formals=c("data", "target", "col"))
   checkArg(impute, "function", formals="x")

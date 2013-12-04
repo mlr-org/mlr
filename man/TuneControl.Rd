@@ -69,16 +69,16 @@
   \item{makeTuneControlRandom}{Random search. All kinds of
   parameter types can be handled.}
   \item{makeTuneControlOptim}{Tuning with
-  \code{\link[stats]{optim}}. Can handle numeric(vector)
-  and integer(vector) hyperparameters. For integers the
+  \code{\link[stats]{optim}}.  Can handle numeric(vector)
+  and integer(vector) hyperparameters.  For integers the
   internally proposed numeric values are automatically
   rounded.} \item{makeTuneControlCMAES}{CMA Evolution
-  Strategy with method \code{\link[cmaes]{cma_es}}. Can
+  Strategy with method \code{\link[cmaes]{cma_es}}.  Can
   handle numeric(vector) and integer(vector)
-  hyperparameters. For integers the internally proposed
+  hyperparameters.  For integers the internally proposed
   numeric values are automatically rounded.}
   \item{makeTuneControlIrace}{Tuning with iterated F-Racing
-  with method \code{\link[irace]{irace}}. All kinds of
+  with method \code{\link[irace]{irace}}.  All kinds of
   parameter types can be handled.} }
 }
 \details{
@@ -86,10 +86,10 @@
   random search and irace.
 
   Some notes on irace: For resampling you have to pass a
-  \code{\link[mlr]{ResampleDesc}}, not a
-  \code{\link[mlr]{ResampleInstance}}. The resampling
-  strategy is randomly instantiated \code{n.instances}
-  times and these are the instances in the sense of irace
+  \code{\link{ResampleDesc}}, not a
+  \code{\link{ResampleInstance}}. The resampling strategy
+  is randomly instantiated \code{n.instances} times and
+  these are the instances in the sense of irace
   (\code{instances} element of \code{tunerConfig} in
   \code{\link[irace]{irace}}). Also note that irace will
   always store its tuning results in a file on disk, see

@@ -6,8 +6,7 @@
     par.set = makeParamSet(), par.vals = list())
 }
 \arguments{
-  \item{learner}{[\code{\link[mlr]{Learner}}]\cr The
-  learner.}
+  \item{learner}{[\code{\link{Learner}}]\cr The learner.}
 
   \item{train}{[\code{function(data, target, args)}]\cr
   Function to preprocess the data before training.
@@ -36,7 +35,7 @@
   \code{par.set}.  Default is empty list.}
 }
 \value{
-  [\code{\link[mlr]{Learner}}].
+  [\code{\link{Learner}}].
 }
 \description{
   Fuses a base learner with a preprocessing method. Creates

@@ -6,13 +6,11 @@
     control, show.info = TRUE)
 }
 \arguments{
-  \item{learner}{[\code{\link[mlr]{Learner}}]\cr The
-  learner.}
+  \item{learner}{[\code{\link{Learner}}]\cr The learner.}
 
-  \item{task}{[\code{\link[mlr]{SupervisedTask}}]\cr The
-  task.}
+  \item{task}{[\code{\link{SupervisedTask}}]\cr The task.}
 
-  \item{resampling}{[\code{\link[mlr]{ResampleInstance}} |
+  \item{resampling}{[\code{\link{ResampleInstance}} |
   \code{\link{ResampleDesc}}]\cr Resampling strategy to
   evaluate points in hyperparameter space. If you pass a
   description, it is instantiated once at the beginning by
@@ -28,7 +26,7 @@
   object for search method. Also selects the optimization
   algorithm for tuning.}
 
-  \item{measures}{[list of \code{\link[mlr]{Measure}}]\cr
+  \item{measures}{[list of \code{\link{Measure}}]\cr
   Performance measures to evaluate. The first measure,
   aggregated by the first aggregation function is optimized
   during tuning, others are simply evaluated.}

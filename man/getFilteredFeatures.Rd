@@ -5,7 +5,7 @@
   getFilteredFeatures(model)
 }
 \arguments{
-  \item{model}{[\code{\link[mlr]{WrappedModel}}]\cr Trained
+  \item{model}{[\code{\link{WrappedModel}}]\cr Trained
   Model created with \code{\link{makeFilterWrapper}}.}
 }
 \value{

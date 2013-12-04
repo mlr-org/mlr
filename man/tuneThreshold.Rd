@@ -6,17 +6,17 @@
     control = list())
 }
 \arguments{
-  \item{pred}{[\code{\link[mlr]{Prediction}}]\cr Prediction
+  \item{pred}{[\code{\link{Prediction}}]\cr Prediction
   object to use for tuning the treshold.}
 
-  \item{measure}{[\code{\link[mlr]{Measure}}]\cr
-  Performance measure to optimize.}
+  \item{measure}{[\code{\link{Measure}}]\cr Performance
+  measure to optimize.}
 
-  \item{task}{[\code{\link[mlr]{SupervisedTask}}]\cr
-  Learning task. Rarely neeeded, only when required for the
+  \item{task}{[\code{\link{SupervisedTask}}]\cr Learning
+  task. Rarely neeeded, only when required for the
   performance measure.}
 
-  \item{model}{[\code{\link[mlr]{WrappedModel}}]\cr Fitted
+  \item{model}{[\code{\link{WrappedModel}}]\cr Fitted
   model. Rarely neeeded, only when required for the
   performance measure.}
 

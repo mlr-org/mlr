@@ -6,8 +6,7 @@
     fw.method = "random.forest.importance", fw.perc = 1)
 }
 \arguments{
-  \item{learner}{[\code{\link[mlr]{Learner}}]\cr The
-  learner.}
+  \item{learner}{[\code{\link{Learner}}]\cr The learner.}
 
   \item{fw.method}{[\code{character(1)}]\cr Filter method.
   Available are: linear.correlation, rank.correlation,
