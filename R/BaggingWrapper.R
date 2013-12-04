@@ -73,8 +73,8 @@ makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.
 }
 
 #' @S3method trainLearner BaggingWrapper
-trainLearner.BaggingWrapper = function(.learner, .task, .subset,
-                                       bag.iters, bag.replace, bag.size, bag.feats, ...) {
+trainLearner.BaggingWrapper = function(.learner, .task, .subset, bag.iters, bag.replace, 
+  bag.size, bag.feats, ...) {
 
   .task = subsetTask(.task, subset = .subset)
   n = .task$task.desc$size
@@ -94,16 +94,17 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset,
       train(.learner$next.learner, .task, subset=bag)
     }
   })
-  makeChainModel(next.model=models, cl = "BaggingModel")
+  makeChainModel(next.model=models, cl="BaggingModel")
 }
 
 #' @S3method predictLearner BaggingWrapper
 predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
   models = getBaggingModels(.model)
   g = if(.learner$type == "classif") as.character else identity
-  p = sapply(models, function(m)
-    g(predict(m, newdata=.newdata, ...)$data$response)
-  )
+  p = sapply(models, function(m) {
+    nd = .newdata[, m$features, drop=FALSE]
+    g(predict(m, newdata=nd, ...)$data$response)
+  })
   if (.learner$predict.type == "response") {
     g = if(.learner$type == "classif")
       as.factor(apply(p, 1, computeMode))
