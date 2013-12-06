@@ -12,6 +12,9 @@ mlr_1.2:
 - new learners:
 -- regr.crs
 -- regr.mob
+- new functions
+-- oversample, undersample
+-- makeOversampleWrapper, makeUndersampleWrapper
 
 mlr_1.1:
 - Initial release to CRAN
