@@ -20,7 +20,7 @@
   should happen if a warning in an underlying learning
   algorithm is generated:\cr \dQuote{warn}: The warning is
   generated as usual.\cr \dQuote{quiet}: The warning is
-  suppressed.\cr Default is \dQuote{stop}.}
+  suppressed.\cr Default is \dQuote{warn}.}
 
   \item{on.par.without.desc}{[\code{character(1)}]\cr What
   should happen if a parameter of a learner is set to a

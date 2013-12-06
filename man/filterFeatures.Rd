@@ -1,9 +1,6 @@
 \name{filterFeatures}
 \alias{filterFeatures}
-\title{Filter features by using a numerical importance criterion.
-Calculates numerical importance values for all features.
-Thresholding of these values can be used to select \dQuote{useful} features.
-Look at package FSelector for details on the filter algorithms.}
+\title{Filter features by using a numerical importance criterion.}
 \usage{
   filterFeatures(task, method = "random.forest.importance")
 }
@@ -23,10 +20,10 @@ Look at package FSelector for details on the filter algorithms.}
   importance value for each feature.
 }
 \description{
-  Filter features by using a numerical importance
-  criterion. Calculates numerical importance values for all
-  features. Thresholding of these values can be used to
-  select \dQuote{useful} features. Look at package
-  FSelector for details on the filter algorithms.
+  Calculates numerical importance values for all features.
+  Thresholding of these values can be used to select
+  \dQuote{useful} features. Look at package
+  \code{\link[FSelector]{FSelector}} for details on the
+  filter algorithms.
 }
 

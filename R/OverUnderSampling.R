@@ -38,8 +38,8 @@ oversample.ClassifTask = function(obj, target, rate) {
   changeData(obj, d)
 }
 
-
 #' @rdname oversample
+#' @export
 undersample = function(obj, target, rate) {
   UseMethod("undersample")
 }

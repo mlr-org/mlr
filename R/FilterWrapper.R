@@ -1,14 +1,12 @@
-#' @title Fuse learner with filter method.
+#' @title Fuse learner with a feature filter method.
 #'
 #' @description
 #' Fuses a base learner with a filter method. Creates a learner object, which can be
 #' used like any other learner object.
-#' Internally Uses \code{\link{filterFeatures}} before every model fit.
-#'
-#' Look at package FSelector for details on the filter algorithms.
+#' Internally uses \code{\link{filterFeatures}} before every model fit.
 #'
 #' After training, the selected features can be retrieved with
-#' \code{\link{getTuneResult}}.
+#' \code{\link{getFilteredFeatures}}.
 #'
 #' @param learner [\code{\link{Learner}}]\cr
 #'   The learner.
@@ -30,8 +28,9 @@
 #' lrn = makeFilterWrapper(lrn, fw.perc=0.5)
 #' mod = train(lrn, task)
 #' print(getFilteredFeatures(mod))
+#' # now nested resampling, where we extract the features that the filter method selected
 #' r = resample(lrn, task, outer, extract = function(model) {
-#' getFilteredFeatures(model)
+#'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
 makeFilterWrapper = function(learner, fw.method="random.forest.importance", fw.perc=1) {

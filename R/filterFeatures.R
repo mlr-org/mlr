@@ -1,9 +1,8 @@
-#FIXME for which tasks do the filters work?
-
 #' Filter features by using a numerical importance criterion.
+#'
 #' Calculates numerical importance values for all features. 
 #' Thresholding of these values can be used to select \dQuote{useful} features.
-#' Look at package FSelector for details on the filter algorithms. 
+#' Look at package \code{\link[FSelector]{FSelector}} for details on the filter algorithms. 
 #' 
 #' @param task [\code{\link{SupervisedTask}}]\cr 
 #'   The task.  

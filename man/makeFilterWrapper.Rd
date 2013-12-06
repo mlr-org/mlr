@@ -1,6 +1,6 @@
 \name{makeFilterWrapper}
 \alias{makeFilterWrapper}
-\title{Fuse learner with filter method.}
+\title{Fuse learner with a feature filter method.}
 \usage{
   makeFilterWrapper(learner,
     fw.method = "random.forest.importance", fw.perc = 1)
@@ -24,15 +24,11 @@
 \description{
   Fuses a base learner with a filter method. Creates a
   learner object, which can be used like any other learner
-  object. Internally Uses \code{\link{filterFeatures}}
+  object. Internally uses \code{\link{filterFeatures}}
   before every model fit.
-}
-\details{
-  Look at package FSelector for details on the filter
-  algorithms.
 
   After training, the selected features can be retrieved
-  with \code{\link{getTuneResult}}.
+  with \code{\link{getFilteredFeatures}}.
 }
 \examples{
 task = makeClassifTask(data=iris, target="Species")
@@ -42,8 +38,9 @@ outer = makeResampleDesc("CV", iters = 2)
 lrn = makeFilterWrapper(lrn, fw.perc=0.5)
 mod = train(lrn, task)
 print(getFilteredFeatures(mod))
+# now nested resampling, where we extract the features that the filter method selected
 r = resample(lrn, task, outer, extract = function(model) {
-getFilteredFeatures(model)
+  getFilteredFeatures(model)
 })
 print(r$extract)
 }
