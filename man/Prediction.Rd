@@ -6,7 +6,7 @@
   \code{as.data.frame} to access all information in a
   convenient format. The function
   \code{\link{getProbabilities}} is useful to access
-  predicted probabilities..
+  predicted probabilities.
 }
 \details{
   The \code{data} member of the object contains always the

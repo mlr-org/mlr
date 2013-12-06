@@ -14,6 +14,7 @@
 #'   Default is \dQuote{random.forest.importance}.
 #' @return [\code{numeric}]. A named numeric vector that contains an importance value 
 #'   for each feature.
+#'   @seealso \code{\link{getFilteredFeatures}}
 #' @export
 filterFeatures = function(task, method="random.forest.importance") {
   requirePackages("FSelector", "filterFeatures")
@@ -29,6 +30,31 @@ filterFeatures = function(task, method="random.forest.importance") {
   vals = y[,1]
   names(vals) = rownames(y)
   return(vals)
-} 
- 
+}
 
+
+#' Returns the filtered features.
+#'
+#' Returns the selected Features according to their importance.
+#' Features with an importance value of 0 will be left out regardeless of the given \code{n}.
+#' 
+#' @param feat.importance[\code{numeric()}]\cr 
+#'   Result of \code{\link{filterFeatures}}.
+#' @param n [\code{numeric(1)}]\cr
+#'   Number of features ordered by the information value to select.
+#' @param threshold [\code{numeric(1)}]\cr
+#'   Information value as to be greater then the threshold. Default ist 0.
+#' @return [\code{character}]
+#' @export
+getFilteredFeature = function(feat.importance, n, threshold=0) {
+  checkArg(feat.importance, "numeric") 
+  checkArg(threshold, "numeric", len=1)
+  if (missing(n))
+    n = length(feat.importance)
+  checkArg(n, "numeric", len=1, lower=1)
+  feats = feat.importance[feat.importance>threshold]
+  feats = head(feats[order(feats, decreasing=TRUE)], n)
+  results = names(feats)
+  #result = makeFeatSelResult(learner=NA, control=NA, x=names(feats), y=feats, opt.path=NA)
+  results
+}

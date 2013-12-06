@@ -26,4 +26,7 @@
   \code{\link[FSelector]{FSelector}} for details on the
   filter algorithms.
 }
+\seealso{
+  \code{\link{getFilteredFeatures}}
+}
 
