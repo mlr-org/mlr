@@ -15,7 +15,7 @@ List of currently integrated classifiers
 
 
 ```
-## Error: could not find function "ascii"
+## Error: konnte Funktion "ascii" nicht finden
 ```
 
 
@@ -24,6 +24,6 @@ List of currently integrated regression methods
 
 
 ```
-## Error: could not find function "ascii"
+## Error: konnte Funktion "ascii" nicht finden
 ```
 

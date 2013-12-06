@@ -58,7 +58,7 @@ predict(mod, newdata = BostonHousing)
 ## Prediction:
 ## predict.type: response
 ## threshold: 
-## time: 0.01
+## time: 0.00
 ## 'data.frame':	506 obs. of  2 variables:
 ##  $ truth   : num  24 21.6 34.7 33.4 36.2 28.7 22.9 27.1 16.5 18.9 ...
 ##  $ response: num  30 25 30.6 28.6 27.9 ...
@@ -294,12 +294,12 @@ head(pred$data)
 
 ```
 ##   truth response
-## 1  21.6    22.21
-## 2  33.4    23.22
-## 3  28.7    22.37
+## 1  21.6    22.23
+## 2  33.4    23.34
+## 3  28.7    22.41
 ## 4  27.1    22.13
 ## 5  18.9    22.13
-## 6  18.9    22.15
+## 6  18.9    22.13
 ```
 
 

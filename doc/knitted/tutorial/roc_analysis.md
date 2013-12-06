@@ -30,18 +30,18 @@ library("ROCR")
 ## 
 ## Attaching package: 'gplots'
 ## 
-## The following object is masked from 'package:plotrix':
+## Das folgende Objekt ist maskiert from 'package:plotrix':
 ## 
 ##     plotCI
 ## 
-## The following object is masked from 'package:stats':
+## Das folgende Objekt ist maskiert from 'package:stats':
 ## 
 ##     lowess
 ## 
 ## 
 ## Attaching package: 'ROCR'
 ## 
-## The following object is masked from 'package:mlr':
+## Das folgende Objekt ist maskiert from 'package:mlr':
 ## 
 ##     performance
 ```

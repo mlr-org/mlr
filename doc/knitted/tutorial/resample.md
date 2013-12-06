@@ -52,8 +52,8 @@ r
 ## 
 ## $measures.test
 ##   iter mmce
-## 1    1 0.04
-## 2    2 0.02
+## 1    1 0.02
+## 2    2 0.04
 ## 3    3 0.00
 ## 
 ## $aggr
@@ -69,7 +69,7 @@ r
 ## threshold: 
 ## time (mean): 0.00
 ## 'data.frame':	150 obs. of  5 variables:
-##  $ id      : int  2 11 12 13 20 21 22 23 30 31 ...
+##  $ id      : int  7 14 15 18 21 22 23 26 30 37 ...
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -119,7 +119,7 @@ r <- resample(lrn, task, rdesc)
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mse.test.mean=24.8
+## [Resample] Result: mse.test.mean=23.6
 ```
 
 ```splus
@@ -135,13 +135,13 @@ r
 ## 
 ## $measures.test
 ##   iter   mse
-## 1    1 15.01
-## 2    2 33.83
-## 3    3 25.69
+## 1    1 27.14
+## 2    2 19.70
+## 3    3 23.86
 ## 
 ## $aggr
 ## mse.test.mean 
-##         24.84 
+##         23.56 
 ## 
 ## $pred
 ## Resampled Prediction for:
@@ -150,11 +150,11 @@ r
 ## Stratification: FALSE
 ## predict.type: response
 ## threshold: 
-## time (mean): 0.01
+## time (mean): 0.00
 ## 'data.frame':	506 obs. of  5 variables:
-##  $ id      : int  2 3 4 7 12 13 15 19 20 24 ...
-##  $ truth   : num  21.6 34.7 33.4 22.9 18.9 21.7 18.2 20.2 18.2 14.5 ...
-##  $ response: num  25.7 30.7 28.6 23.7 22.5 ...
+##  $ id      : int  1 2 7 9 12 14 17 19 25 27 ...
+##  $ truth   : num  24 21.6 22.9 16.5 18.9 20.4 23.1 20.2 15.6 16.6 ...
+##  $ response: num  29.6 24.8 23.2 12.8 21.9 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ set     : Factor w/ 1 level "test": 1 1 1 1 1 1 1 1 1 1 ...
 ## 
@@ -360,7 +360,7 @@ r1 <- resample(lrn, task, rinst, list(mmce, acc))
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.06,acc.test.mean=0.94
+## [Resample] Result: mmce.test.mean=0.0733,acc.test.mean=0.927
 ```
 
 
@@ -376,7 +376,7 @@ r1 <- resample(lrn1, task, rinst, list(mmce, acc))
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.06,acc.test.mean=0.94
+## [Resample] Result: mmce.test.mean=0.0733,acc.test.mean=0.927
 ```
 
 ```splus
@@ -410,13 +410,13 @@ r1
 ## 
 ## $measures.test
 ##   iter mmce  acc
-## 1    1 0.06 0.94
-## 2    2 0.04 0.96
-## 3    3 0.08 0.92
+## 1    1 0.12 0.88
+## 2    2 0.06 0.94
+## 3    3 0.04 0.96
 ## 
 ## $aggr
 ## mmce.test.mean  acc.test.mean 
-##           0.06           0.94 
+##        0.07333        0.92667 
 ## 
 ## $pred
 ## Resampled Prediction for:
@@ -425,9 +425,9 @@ r1
 ## Stratification: FALSE
 ## predict.type: response
 ## threshold: 
-## time (mean): 0.01
+## time (mean): 0.00
 ## 'data.frame':	150 obs. of  5 variables:
-##  $ id      : int  1 9 11 13 16 21 22 25 28 30 ...
+##  $ id      : int  2 10 24 29 31 39 40 45 47 48 ...
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -460,8 +460,8 @@ r2
 ## 
 ## $measures.test
 ##   iter mmce  acc
-## 1    1 0.02 0.98
-## 2    2 0.04 0.96
+## 1    1 0.04 0.96
+## 2    2 0.02 0.98
 ## 3    3 0.00 1.00
 ## 
 ## $aggr
@@ -477,7 +477,7 @@ r2
 ## threshold: 
 ## time (mean): 0.00
 ## 'data.frame':	150 obs. of  5 variables:
-##  $ id      : int  1 9 11 13 16 21 22 25 28 30 ...
+##  $ id      : int  2 10 24 29 31 39 40 45 47 48 ...
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -508,9 +508,9 @@ r1$measures.test
 
 ```
 ##   iter mmce  acc
-## 1    1 0.06 0.94
-## 2    2 0.04 0.96
-## 3    3 0.08 0.92
+## 1    1 0.12 0.88
+## 2    2 0.06 0.94
+## 3    3 0.04 0.96
 ```
 
 
@@ -526,7 +526,7 @@ r1$aggr
 
 ```
 ## mmce.test.mean  acc.test.mean 
-##           0.06           0.94
+##        0.07333        0.92667
 ```
 
 
@@ -564,14 +564,8 @@ r1 <- resample(lrn1, task, rinst, measures = ms)
 
 ```
 ## # weights:  46
-## initial  value 312194.603867 
-## iter  10 value 42701.759336
-## iter  20 value 25960.639925
-## iter  30 value 25841.990298
-## iter  40 value 25810.509350
-## iter  40 value 25810.509302
-## iter  40 value 25810.509302
-## final  value 25810.509302 
+## initial  value 320129.603325 
+## final  value 46502.059466 
 ## converged
 ```
 
@@ -581,8 +575,9 @@ r1 <- resample(lrn1, task, rinst, measures = ms)
 
 ```
 ## # weights:  46
-## initial  value 290405.274971 
-## final  value 38418.607372 
+## initial  value 305751.251064 
+## iter  10 value 42605.554512
+## final  value 42605.450909 
 ## converged
 ```
 
@@ -592,13 +587,23 @@ r1 <- resample(lrn1, task, rinst, measures = ms)
 
 ```
 ## # weights:  46
-## initial  value 279345.310019 
-## final  value 39814.563399 
-## converged
+## initial  value 269644.425467 
+## iter  10 value 28322.856734
+## iter  20 value 26899.995523
+## iter  30 value 26017.185729
+## iter  40 value 25858.958902
+## iter  50 value 25172.088347
+## iter  60 value 24806.622731
+## iter  70 value 24741.099319
+## iter  80 value 24726.138153
+## iter  90 value 22802.899232
+## iter 100 value 21948.430783
+## final  value 21948.430783 
+## stopped after 100 iterations
 ```
 
 ```
-## [Resample] Result: mse.test.mean=86.8,medae.test.mean=4.54
+## [Resample] Result: mse.test.mean=78.4,medae.test.mean=4.56
 ```
 
 ```splus
@@ -612,7 +617,7 @@ r2 <- resample(lrn2, task, rinst, measures = ms)
 ## [Resample] OOB bootstrapping iter: 1
 ## [Resample] OOB bootstrapping iter: 2
 ## [Resample] OOB bootstrapping iter: 3
-## [Resample] Result: mse.test.mean=30.4,medae.test.mean=1.73
+## [Resample] Result: mse.test.mean=  19,medae.test.mean= 1.8
 ```
 
 
@@ -626,9 +631,9 @@ r1$measures.test
 
 ```
 ##   iter   mse medae
-## 1    1 71.91 4.357
-## 2    2 89.61 4.800
-## 3    3 98.84 4.470
+## 1    1 84.81 4.941
+## 2    2 87.64 4.236
+## 3    3 62.68 4.490
 ```
 
 ```splus
@@ -637,9 +642,9 @@ r2$measures.test
 
 ```
 ##   iter   mse medae
-## 1    1 33.37 1.746
-## 2    2 30.34 1.743
-## 3    3 27.60 1.703
+## 1    1 13.38 1.806
+## 2    2 20.82 1.895
+## 3    3 22.82 1.696
 ```
 
 
