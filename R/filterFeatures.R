@@ -53,15 +53,15 @@ filterFeatures = function(task, method="random.forest.importance") {
 # @param threshold [\code{numeric(1)}]\cr
 #   Information value as to be greater then the threshold. Default is 0.
 # @return [\code{character}]
-getFilteredFeatures = function(feat.importance, n, threshold=0) {
-  checkArg(feat.importance, "numeric") 
-  checkArg(threshold, "numeric", len=1)
-  if (missing(n))
-    n = length(feat.importance)
-  checkArg(n, "numeric", len=1L, lower=1L, na.ok)
-  feats = feat.importance[feat.importance > threshold]
-  feats = head(feats[order(feats, decreasing=TRUE)], n)
-  results = names(feats)
-  #result = makeFeatSelResult(learner=NA, control=NA, x=names(feats), y=feats, opt.path=NA)
-  results
-}
+# getFilteredFeatures = function(feat.importance, n, threshold=0) {
+  # checkArg(feat.importance, "numeric", nas.ok=FALSE) 
+  # checkArg(threshold, "numeric", len=1L, na.ok=FALSE)
+  # if (missing(n))
+    # n = length(feat.importance)
+  # checkArg(n, "integer", len=1L, lower=1L, na.ok=FALSE)
+  # feats = feat.importance[feat.importance > threshold]
+  # feats = head(feats[order(feats, decreasing=TRUE)], n)
+  # results = names(feats)
+  # #result = makeFeatSelResult(learner=NA, control=NA, x=names(feats), y=feats, opt.path=NA)
+  # results
+# }
