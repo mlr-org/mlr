@@ -2,12 +2,11 @@
 \alias{makePreprocWrapper}
 \title{Fuse learner with preprocessing.}
 \usage{
-  makePreprocWrapper(learner, train, predict,
-    par.set = makeParamSet(), par.vals = list())
+makePreprocWrapper(learner, train, predict, par.set = makeParamSet(),
+  par.vals = list())
 }
 \arguments{
-  \item{learner}{[\code{\link[mlr]{Learner}}]\cr The
-  learner.}
+  \item{learner}{[\code{\link{Learner}}]\cr The learner.}
 
   \item{train}{[\code{function(data, target, args)}]\cr
   Function to preprocess the data before training.
@@ -36,14 +35,14 @@
   \code{par.set}.  Default is empty list.}
 }
 \value{
-  [\code{\link[mlr]{Learner}}].
+[\code{\link{Learner}}].
 }
 \description{
-  Fuses a base learner with a preprocessing method. Creates
-  a learner object, which can be used like any other
-  learner object, but which internally preprocesses the
-  data as requested. If the train or predict function is
-  called on data / a task, the preprocessing is always
-  performed automatically.
+Fuses a base learner with a preprocessing method. Creates a
+learner object, which can be used like any other learner
+object, but which internally preprocesses the data as
+requested. If the train or predict function is called on
+data / a task, the preprocessing is always performed
+automatically.
 }
 

@@ -24,7 +24,7 @@ We fit a Linear Discriminant Analysis on a subset of the ``iris`` data set and c
 the mean misclassification error (mmce) on the test data set.
 
 
-```r
+```splus
 library("mlr")
 
 task <- makeClassifTask(data = iris, target = "Species")
@@ -44,7 +44,7 @@ Let's have a look at some more performance measures. Note that, in order to asse
 the time needed for training, the fitted model has to be passed.
 
 
-```r
+```splus
 performance(pred, measures = acc)
 ```
 
@@ -52,30 +52,30 @@ performance(pred, measures = acc)
 ## [1] 0.96
 ```
 
-```r
+```splus
 
 performance(pred = pred, measures = timepredict)
 ```
 
 ```
-## [1] 0.078
+## [1] 0.003
 ```
 
-```r
+```splus
 
 performance(pred = pred, measures = timetrain, model = mod)
 ```
 
 ```
-## [1] 0.023
+## [1] 0.009
 ```
 
-```r
+```splus
 performance(pred = pred, measures = timeboth, model = mod)
 ```
 
 ```
-## [1] 0.101
+## [1] 0.012
 ```
 
 
@@ -83,14 +83,14 @@ Of course we can also calculate multiple performance measures at once simply by 
 can also include [your own measure](create_measure.md).
 
 
-```r
+```splus
 ms <- list(mmce = mmce, acc = acc, timetrain = timetrain, timeboth = timeboth)
 performance(pred = pred, measures = ms, model = mod)
 ```
 
 ```
 ##      mmce       acc timetrain  timeboth 
-##     0.040     0.960     0.023     0.101
+##     0.040     0.960     0.009     0.012
 ```
 
 
@@ -101,7 +101,7 @@ In the two-class case many more measures are available. In the following example
 the accuracy, as well as the false positive and false negative rates are computed.
 
 
-```r
+```splus
 library("mlbench")
 data(Sonar)
 
@@ -117,7 +117,7 @@ performance(pred, measures = acc)
 ## [1] 0.875
 ```
 
-```r
+```splus
 performance(pred, measures = fpr)
 ```
 
@@ -125,7 +125,7 @@ performance(pred, measures = fpr)
 ## [1] 0.1031
 ```
 
-```r
+```splus
 performance(pred, measures = fnr)
 ```
 
@@ -140,7 +140,7 @@ operating characteristic) curve, we have to make sure that posterior
 probabilities are predicted, i.e. set the predict type of the [Learner](http://berndbischl.github.io/mlr/man/makeLearner.html) to "prob".
 
 
-```r
+```splus
 library("mlbench")
 data(Sonar)
 
@@ -174,7 +174,7 @@ training set and calculate the mean of squared errors and the mean of absolute
 errors on the test data set.
 
 
-```r
+```splus
 library(mlbench)
 data(BostonHousing)
 
@@ -198,7 +198,7 @@ sapply(ms, function(meas) performance(pred, measures = meas))
 
 ```
 ##    mse    mae 
-## 42.707  4.541
+## 42.639  4.543
 ```
 
 

@@ -42,13 +42,14 @@
 #'   performance(pred, measures = the.ms, task, mod)
 #' })
 performance = function(pred, measures, task, model) {
-  if (missing(measures))
-    measures = default.measures(task)[[1]]
-  if (inherits(measures, "Measure"))
-    measures = list(measures)
-  checkListElementClass(measures, "Measure")
-  td = NULL
-  sapply(measures, doPerformaceIteration, pred=pred, task=task, model=model, td=td)
+  if (missing(measures)) {
+    measures = default.measures(pred$task.desc)
+  } else {
+    if (inherits(measures, "Measure"))
+      measures = list(measures)
+    checkListElementClass(measures, "Measure")
+  }
+  sapply(measures, doPerformaceIteration, pred=pred, task=task, model=model, td=NULL)
 }
 
 doPerformaceIteration = function(measure, pred, task, model, td){

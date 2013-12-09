@@ -88,6 +88,11 @@ train = function(learner, task, subset, weights) {
       fun2 = identity
     else
       fun2 = function(x) try(x, silent=TRUE)
+    old.warn.opt = getOption("warn")
+    on.exit(options(warn = old.warn.opt))
+    if (getMlrOption("on.learner.warning") == "quiet") {
+      options(warn = -1L)
+    }
     st = system.time(or <- fun1(learner.model <- fun2(do.call(trainLearner, pars))), gcFirst = FALSE)
     # was there an error during training? maybe warn then
     if(is.error(learner.model) && opt.ole == "warn")

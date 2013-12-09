@@ -10,11 +10,11 @@
 #' to a single feature, but you are able to change this by using the arguments \code{bit.names} 
 #' and \code{bits.to.features}. Thus allowing you to switch on whole groups of features with a single bit.  
 #' 
-#' @param learner [\code{\link[mlr]{Learner}}]\cr 
+#' @param learner [\code{\link{Learner}}]\cr 
 #'   The learner.
-#' @param task [\code{\link[mlr]{SupervisedTask}}]\cr
+#' @param task [\code{\link{SupervisedTask}}]\cr
 #'   The task.
-#' @param resampling [\code{\link[mlr]{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
+#' @param resampling [\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
 #'   Resampling strategy to feature sets. If you pass a description, 
 #'   it is instantiated once at the beginning by default, so all points are evaluated on the same training/test sets.
 #'   If you want to change that behaviour, look at \code{\link{FeatSelControl}}.   

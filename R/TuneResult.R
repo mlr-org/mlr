@@ -6,7 +6,7 @@
 #'
 #' Object members:
 #' \describe{
-#' \item{learner [\code{\link[mlr]{Learner}}]}{Learner that was optimized.}
+#' \item{learner [\code{\link{Learner}}]}{Learner that was optimized.}
 #' \item{control [\code{\link{TuneControl}}]}{ Control object from tuning.}
 #' \item{x [\code{list}]}{Named list of hyperparameter values identified as optimal.}
 #' \item{y [\code{numeric}]}{Performance values for optimal \code{x}.}

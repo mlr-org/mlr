@@ -6,7 +6,7 @@
 #'
 #' Object members:
 #' \describe{
-#' \item{learner [\code{\link[mlr]{Learner}}]}{Learner that was optimized.}
+#' \item{learner [\code{\link{Learner}}]}{Learner that was optimized.}
 #' \item{control [\code{\link{FeatSelControl}}]}{ Control object from feature selection.}
 #' \item{x [\code{character}]}{Vector of feature names identified as optimal.}
 #' \item{y [\code{numeric}]}{Performance values for optimal \code{x}.}

@@ -4,14 +4,14 @@
 #' Uses \code{\link{optimize}} for 2class problems and \code{\link[cmaes]{cma_es}}
 #' for multiclass problems.
 #'
-#' @param pred [\code{\link[mlr]{Prediction}}]\cr
+#' @param pred [\code{\link{Prediction}}]\cr
 #'   Prediction object to use for tuning the treshold.
-#' @param measure [\code{\link[mlr]{Measure}}]\cr
+#' @param measure [\code{\link{Measure}}]\cr
 #'   Performance measure to optimize. 
-#' @param task [\code{\link[mlr]{SupervisedTask}}]\cr
+#' @param task [\code{\link{SupervisedTask}}]\cr
 #'   Learning task. Rarely neeeded, 
 #'   only when required for the performance measure. 
-#' @param model [\code{\link[mlr]{WrappedModel}}]\cr
+#' @param model [\code{\link{WrappedModel}}]\cr
 #'   Fitted model. Rarely neeeded, 
 #'   only when required for the performance measure. 
 #' @param control [\code{list}]\cr

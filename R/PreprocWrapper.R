@@ -6,7 +6,7 @@
 #' used like any other learner object, but which internally preprocesses the data as requested. 
 #' If the train or predict function is called on data / a task, the preprocessing is always performed automatically.
 #'
-#' @param learner [\code{\link[mlr]{Learner}}]\cr 
+#' @param learner [\code{\link{Learner}}]\cr 
 #'   The learner.
 #' @param train [\code{function(data, target, args)}]\cr
 #'   Function to preprocess the data before training. 
@@ -28,7 +28,7 @@
 #' @param par.vals [\code{list}]\cr
 #'   Named list of default values for params in \code{args} repectively \code{par.set}.
 #'   Default is empty list.
-#' @return [\code{\link[mlr]{Learner}}].
+#' @return [\code{\link{Learner}}].
 #' @export
 makePreprocWrapper = function(learner, train, predict, par.set=makeParamSet(), par.vals=list()) {
   checkArg(learner, "Learner")

@@ -1,15 +1,11 @@
 \name{filterFeatures}
 \alias{filterFeatures}
-\title{Filter features by using a numerical importance criterion.
-Calculates numerical importance values for all features.
-Thresholding of these values can be used to select \dQuote{useful} features.
-Look at package FSelector for details on the filter algorithms.}
+\title{Filter features by using a numerical importance criterion.}
 \usage{
-  filterFeatures(task, method = "random.forest.importance")
+filterFeatures(task, method = "random.forest.importance")
 }
 \arguments{
-  \item{task}{[\code{\link[mlr]{SupervisedTask}}]\cr The
-  task.}
+  \item{task}{[\code{\link{SupervisedTask}}]\cr The task.}
 
   \item{method}{[\code{character(1)}]\cr Filter method.
   Available are: \dQuote{linear.correlation},
@@ -20,14 +16,17 @@ Look at package FSelector for details on the filter algorithms.}
   \dQuote{random.forest.importance}.}
 }
 \value{
-  [\code{numeric}]. A named numeric vector that contains an
-  importance value for each feature.
+[\code{numeric}]. A named numeric vector that contains an
+importance value for each feature.
 }
 \description{
-  Filter features by using a numerical importance
-  criterion. Calculates numerical importance values for all
-  features. Thresholding of these values can be used to
-  select \dQuote{useful} features. Look at package
-  FSelector for details on the filter algorithms.
+Calculates numerical importance values for all features.
+Thresholding of these values can be used to select
+\dQuote{useful} features. Look at package
+\code{\link[FSelector]{FSelector}} for details on the
+filter algorithms.
+}
+\seealso{
+\code{\link{getFilteredFeatures}}
 }
 

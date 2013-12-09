@@ -38,15 +38,16 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
 # logs point and results
 # adds points to path
 evalOptimizationStates = function(learner, task, resampling, measures, par.set, bits.to.features, control,
-  opt.path, show.info, states, dobs, eols, remove.nas) {
+  opt.path, show.info, states, dobs, eols, remove.nas, level) {
 
   n = length(states)
   if (length(dobs) == 1)
     dobs = rep(dobs, n)
   if (length(eols) == 1)
     eols = rep(eols, n)
+  parallelLibrary("mlr", master=FALSE, level=level)
   exportMlrOptions()
-  ys = parallelMap(evalOptimizationState, states, level="mlr.tune",
+  ys = parallelMap(evalOptimizationState, states, level=level,
     more.args=list(learner=learner, task=task, resampling=resampling,
       measures=measures, par.set=par.set, bits.to.features=bits.to.features,
       control=control, opt.path=opt.path, show.info=show.info, remove.nas=remove.nas))
@@ -56,3 +57,20 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
       dob=dobs[i], eol=eols[i], check.feasible=FALSE)
   return(ys)
 }
+
+evalOptimizationStatesTune = function(learner, task, resampling, measures, par.set, control,
+  opt.path, show.info, states, dobs, eols, remove.nas) {
+
+  evalOptimizationStates(learner, task, resampling, measures, par.set, NULL, control,
+    opt.path, show.info, states, dobs, eols, remove.nas, "mlr.tuneParams")
+}
+
+evalOptimizationStatesFeatSel = function(learner, task, resampling, measures, bits.to.features, control,
+  opt.path, show.info, states, dobs, eols) {
+
+  evalOptimizationStates(learner, task, resampling, measures, NULL, bits.to.features, control,
+    opt.path, show.info, states, dobs, eols, FALSE, "mlr.selectFeatures")
+}
+
+
+

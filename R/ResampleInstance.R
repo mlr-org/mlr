@@ -1,7 +1,8 @@
 #' Instantiates a resampling strategy object.
 #'
-#' This class encapsulates training and test sets generated from the data set for a number of iterations.
-#' It mainly stores a set of integer vectors indicating the training and test examples for each iteration.
+#' This class encapsulates training and test sets generated from the data set for a number 
+#' of iterations. It mainly stores a set of integer vectors indicating the training and 
+#' test examples for each iteration.
 #'
 #' Object slots:
 #' \describe{
@@ -9,7 +10,9 @@
 #' \item{size [integer(1)]}{See argument.}
 #' \item{train.inds [list of \code{integer}]}{List of of training indices for all iterations.}
 #' \item{test.inds [list of \code{integer}]}{List of of test indices for all iterations.}
-#' \item{group [\code{factor}]}{Optional grouping of resampling iterations. This encodes whether specfic iterations 'belong together' (e.g. repeated CV), and it can later be used to aggregate performance values accordingly. Default is 'factor()'. }
+#' \item{group [\code{factor}]}{Optional grouping of resampling iterations. This encodes whether
+#'   specfic iterations 'belong together' (e.g. repeated CV), and it can later be used to 
+#'   aggregate performance values accordingly. Default is 'factor()'.}
 #' }
 #'
 #' @param desc [\code{\link{ResampleDesc}}]\cr
@@ -28,9 +31,8 @@
 #' task <- makeClassifTask(data = iris, target = "Species")
 #' rdesc <- makeResampleDesc("Bootstrap", iters = 10)
 #' rin <- makeResampleInstance(rdesc, task = task)
-#' rin
 #'
-#' ## Alternativly provide the size argument instead of a task object
+#' # Alternatively provide the size argument instead of a task object
 #' rdesc <- makeResampleDesc("CV", iters = 50)
 #' rin <- makeResampleInstance(rdesc, size = nrow(iris))
 makeResampleInstance = function(desc, task, size) {

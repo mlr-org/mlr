@@ -9,7 +9,7 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
       return(NULL)
     dob = max(opt.path$env$dob) + 1L
     # die at once
-    evalOptimizationStates(learner, task, resampling, measures, NULL, bits.to.features, control, opt.path, show.info, xs, dob, dob, FALSE)
+    evalOptimizationStatesFeatSel(learner, task, resampling, measures, bits.to.features, control, opt.path, show.info, xs, dob, dob)
     
     best.i = getOptPathBestIndex(opt.path, dob=dob, ties="random")
     best = getOptPathEl(opt.path, best.i)

@@ -23,7 +23,7 @@ We start by loading the *mlr* package and creating a classification
 task, just like in the tutorial on [training](train.md):
 
 
-```r
+```splus
 library("mlr")
 task <- makeClassifTask(data = iris, target = "Species")
 ```
@@ -36,7 +36,7 @@ Since we will use a grid search strategy, we add a discrete parameter for the
 More details concerning parameter sets are explained in section [parameters](parameters.md).
 
 
-```r
+```splus
 ps <- makeParamSet(makeDiscreteParam("C", values = 2^(-2:2)), makeDiscreteParam("sigma", 
     values = 2^(-2:2)))
 ```
@@ -47,7 +47,7 @@ combination. For this we need to create a resampling description just
 like in the [resampling](resample.md) part of the tutorial:
 
 
-```r
+```splus
 rdesc <- makeResampleDesc("CV", iters = 3)
 ```
 
@@ -57,7 +57,7 @@ Before we can actually tune our classifier, we need an instance of a
 used. Here we use a grid search:
 
 
-```r
+```splus
 ctrl <- makeTuneControlGrid()
 ```
 
@@ -67,7 +67,7 @@ using our [TuneControl](http://berndbischl.github.io/mlr/man/TuneControl.html) i
 described by the `rdesc` variable.
 
 
-```r
+```splus
 tuneParams(makeLearner("classif.ksvm"), task = task, resampling = rdesc, par.set = ps, 
     control = ctrl)
 ```
@@ -136,7 +136,7 @@ Let's run a nested CV with 5 folds in the outer loop and 3 folds in the
 inner loop on the example from above.
 
 
-```r
+```splus
 task <- makeClassifTask(data = iris, target = "Species")
 ps <- makeParamSet(makeDiscreteParam("C", values = 2^(-2:2)), makeDiscreteParam("sigma", 
     values = 2^(-2:2)))
@@ -155,7 +155,7 @@ want to extract the tune results as well. Please note, that storing the
 entire models might be expensive.
 
 
-```r
+```splus
 r <- resample(lrn, task, resampling = rout, extract = getTuneResult)
 ```
 
@@ -324,7 +324,7 @@ each of the 5 outer folds, including the corresponding mmce on the inner
 cross-validations:
 
 
-```r
+```splus
 r$extract
 ```
 
@@ -365,7 +365,7 @@ set, we might still look at the measures that we already know from
 :doc:`resample`.
 
 
-```r
+```splus
 r$measures.test
 ```
 
@@ -378,7 +378,7 @@ r$measures.test
 ## 5    5 0.06667
 ```
 
-```r
+```splus
 r$aggr
 ```
 
@@ -399,7 +399,7 @@ Let's tune `k` of a `k`-nearest-neighbor-regression model (implemented
 in package ``kknn``) on the ``BostonHousing`` data set.
 
 
-```r
+```splus
 library("mlbench")
 data(BostonHousing)
 

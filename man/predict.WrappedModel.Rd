@@ -2,8 +2,7 @@
 \alias{predict.WrappedModel}
 \title{Predict new data.}
 \usage{
-  \method{predict}{WrappedModel} (object, task, newdata,
-    subset, ...)
+\method{predict}{WrappedModel}(object, task, newdata, subset, ...)
 }
 \arguments{
   \item{object}{[\code{\link{WrappedModel}}]\cr Wrapped
@@ -22,17 +21,21 @@
   \item{...}{[any]\cr Currently ignored.}
 }
 \value{
-  [\code{\link{Prediction}}].
+[\code{\link{Prediction}}].
 }
 \description{
-  Predict the target variable of new data using a fitted
-  model. What is stored exactly in the
-  [\code{\link{Prediction}}] object depends on the
-  \code{predict.type} setting of the \code{\link{Learner}}.
+Predict the target variable of new data using a fitted
+model. What is stored exactly in the
+[\code{\link{Prediction}}] object depends on the
+\code{predict.type} setting of the \code{\link{Learner}}.
+If \code{predict.type} was set to \dQuote{prob} probability
+thresholding can be done calling the
+\code{\link{setThreshold}} function on the prediction
+object.
 }
 \note{
-  To extract probabilities use
-  \code{\link{getProbabilities}}.
+To extract probabilities use
+\code{\link{getProbabilities}}.
 }
 \examples{
 ## split iris data in training and test set

@@ -3,6 +3,9 @@
 #' Predict the target variable of new data using a fitted model.
 #' What is stored exactly in the [\code{\link{Prediction}}] object depends
 #' on the \code{predict.type} setting of the \code{\link{Learner}}.
+#' If \code{predict.type} was set to \dQuote{prob} probability thresholding
+#' can be done calling the \code{\link{setThreshold}} function on the
+#' prediction object.
 #'
 #' @param object [\code{\link{WrappedModel}}]\cr
 #'   Wrapped model, result of \code{\link{train}}.
@@ -117,6 +120,11 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
         fun2 = identity
       else
         fun2 = function(x) try(x, silent=TRUE)
+      old.warn.opt = getOption("warn")
+      on.exit(options(warn = old.warn.opt))
+      if (getMlrOption("on.learner.warning") == "quiet") {
+        options(warn = -1L)
+      }
       st = system.time(fun1(p <- fun2(do.call(predictLearner2, pars))), gcFirst = FALSE)
       time.predict = as.numeric(st[3L])
       # was there an error during prediction?

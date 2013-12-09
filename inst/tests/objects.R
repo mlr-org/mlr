@@ -30,4 +30,4 @@ regr.train.inds = seq(1, 506, 3)
 regr.test.inds  = setdiff(1:nrow(regr.df), regr.train.inds)
 regr.train = regr.df[regr.train.inds, ]
 regr.test  = regr.df[regr.test.inds, ]
-regr.task = makeRegrTask("regrtask", data=BostonHousing, target="medv")  
+regr.task = makeRegrTask("regrtask", data=regr.df, target=regr.target)  

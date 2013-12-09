@@ -3,13 +3,12 @@
 \alias{listLearnersForTask}
 \title{Find matching learning algorithms.}
 \usage{
-  listLearners(type = NA, numerics = NA, factors = NA,
-    missings = NA, weights = NA, oneclass = NA,
-    twoclass = NA, multiclass = NA, prob = NA, se = NA,
-    quiet = TRUE, warn.missing.packages = TRUE)
+listLearners(type = NA, numerics = NA, factors = NA, missings = NA,
+  weights = NA, oneclass = NA, twoclass = NA, multiclass = NA,
+  prob = NA, se = NA, quiet = TRUE, warn.missing.packages = TRUE)
 
-  listLearnersForTask(task, weights = NA, prob = NA,
-    se = NA, warn.missing.packages = TRUE)
+listLearnersForTask(task, weights = NA, prob = NA, se = NA,
+  warn.missing.packages = TRUE)
 }
 \arguments{
   \item{type}{[\code{character(1)}]\cr Type of the learning
@@ -56,18 +55,18 @@
   Learners are returned that are applicable.}
 }
 \value{
-  [\code{character}]. Class names of matching learners.
+[\code{character}]. Class names of matching learners.
 }
 \description{
-  Returns the class names of learning algorithms which have
-  specific characteristics, e.g. whether they supports
-  missing values, case weights, etc.
+Returns the class names of learning algorithms which have
+specific characteristics, e.g. whether they supports
+missing values, case weights, etc.
 }
 \details{
-  The default for all search parameters is \code{NA},
-  meaning: property is not required, do not care.
+The default for all search parameters is \code{NA},
+meaning: property is not required, do not care.
 
-  Note that the packages of all learners are loaded during
-  the search.
+Note that the packages of all learners are loaded during
+the search.
 }
 

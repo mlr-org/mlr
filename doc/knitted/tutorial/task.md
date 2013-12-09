@@ -24,7 +24,7 @@ set ``BreastCancer`` (from the package mlbench) and exclude the ID
 variable from all further model fitting and evaluation.
 
 
-```r
+```splus
 library("mlr")
 library("mlbench")
 data(BreastCancer)
@@ -38,7 +38,7 @@ task <- makeClassifTask(id = "BreastCancer", data = df, target = "Class")
 Now, let us examine the created task:
 
 
-```r
+```splus
 task
 ```
 
@@ -71,7 +71,7 @@ name of the target variable and the number of observations per class.
 We will generally take the ``BostonHousing`` data set as regression example.
 
 
-```r
+```splus
 library("mlr")
 library("mlbench")
 data(BostonHousing)
@@ -103,7 +103,7 @@ Further information
 Let's have another look at the classification example.
 
 
-```r
+```splus
 library("mlr")
 library("mlbench")
 data(BreastCancer)
@@ -138,7 +138,7 @@ levels of the target. You probably want to select this manually for
 your applications.
 
 
-```r
+```splus
 task <- makeClassifTask(id = "BreastCancer", data = df, target = "Class", positive = "malignant")
 ```
 
@@ -155,7 +155,7 @@ available. Here are some examples:
 Get the names of the input variables.
 
 
-```r
+```splus
 getTaskFeatureNames(task)
 ```
 
@@ -169,7 +169,7 @@ getTaskFeatureNames(task)
 Get values of the target variable for all observations.
 
 
-```r
+```splus
 head(getTaskTargets(task))
 ```
 
@@ -186,7 +186,7 @@ The main part of the information is stored in the slot called `desc`,
 which stands for description. (`task$task.desc` is an object of class [TaskDesc](http://berndbischl.github.io/mlr/man/TaskDesc.html).)
 
 
-```r
+```splus
 task$task.desc
 ```
 
@@ -226,7 +226,7 @@ task$task.desc
 ## [1] "TaskDesc"
 ```
 
-```r
+```splus
 str(task$task.desc)
 ```
 
@@ -258,7 +258,7 @@ level belong to the same block.
 Now, let's include a (nonsensical) blocking structure:
 
 
-```r
+```splus
 blocking <- factor(rep(1:3, nrow(BreastCancer)/3))
 task <- makeClassifTask(id = "BreastCancer", data = df, target = "Class", blocking = blocking)
 head(task$blocking)
@@ -269,7 +269,7 @@ head(task$blocking)
 ## Levels: 1 2 3
 ```
 
-```r
+```splus
 table(task$blocking)
 ```
 
@@ -288,7 +288,7 @@ Before that, let's look at the regression experiment again.
 ### Regression example
 
 
-```r
+```splus
 library("mlr")
 library("mlbench")
 data(BostonHousing)
@@ -313,7 +313,7 @@ task
 The "getter" functions work analogous to the classification example.
 
 
-```r
+```splus
 getTaskFeatureNames(task)
 ```
 
@@ -322,7 +322,7 @@ getTaskFeatureNames(task)
 ##  [8] "dis"     "rad"     "tax"     "ptratio" "b"       "lstat"
 ```
 
-```r
+```splus
 
 head(getTaskTargets(task))
 ```
@@ -335,7 +335,7 @@ head(getTaskTargets(task))
 Inspect [TaskDesc](http://berndbischl.github.io/mlr/man/TaskDesc.html).
 
 
-```r
+```splus
 task$task.desc
 ```
 
@@ -375,7 +375,7 @@ task$task.desc
 ## [1] "TaskDesc"
 ```
 
-```r
+```splus
 str(task$task.desc)
 ```
 

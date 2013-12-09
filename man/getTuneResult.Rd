@@ -2,17 +2,16 @@
 \alias{getTuneResult}
 \title{Returns the optimal hyperparameters and optimization path.}
 \usage{
-  getTuneResult(model)
+getTuneResult(model)
 }
 \arguments{
-  \item{model}{[\code{\link[mlr]{WrappedModel}}]\cr Trained
+  \item{model}{[\code{\link{WrappedModel}}]\cr Trained
   Model created with \code{\link{makeTuneWrapper}}.}
 }
 \value{
-  [\code{\link{TuneResult}}].
+[\code{\link{TuneResult}}].
 }
 \description{
-  Returns the optimal hyperparameters and optimization
-  path.
+Returns the optimal hyperparameters and optimization path.
 }
 

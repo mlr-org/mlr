@@ -29,7 +29,7 @@ continuous ones, ``nu`` and ``tol``. It supports classification problems with tw
 can deal with numeric and factor explanatory variables. It can predict posterior probabilities.
 
 
-```r
+```splus
 makeRLearner.classif.lda = function() {
     makeRLearnerClassif(cl = "classif.lda", package = "MASS", par.set = makeParamSet(makeDiscreteLearnerParam(id = "method", 
         default = "moment", values = c("moment", "mle", "mve", "t")), makeNumericLearnerParam(id = "nu", 
@@ -53,7 +53,7 @@ required arguments to the training function. The data can be extracted from the 
 [getTaskData](http://berndbischl.github.io/mlr/man/getTaskData.html) function. Pass further arguments like case weights via ``.weights`` to the training method.
 
 
-```r
+```splus
 trainLearner.classif.lda = function(.learner, .task, .subset, .weights, ...) {
     f = getTaskFormula(.task)
     lda(f, data = getTaskData(.task, .subset), ...)
@@ -72,7 +72,7 @@ classes if ``.learner$predict.type`` is ``"response"``, or you have return a mat
 are classes in the task and the columns have to be named by the class names.
 
 
-```r
+```splus
 predictLearner.classif.lda = function(.learner, .model, .newdata, ...) {
     p = predict(.model$learner.model, newdata = .newdata, ...)
     if (.learner$predict.type == "response") 

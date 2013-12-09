@@ -2,7 +2,7 @@
 \alias{learnerArgsToControl}
 \title{Convert arguments to control structure.}
 \usage{
-  learnerArgsToControl(control, ...)
+learnerArgsToControl(control, ...)
 }
 \arguments{
   \item{control}{[\code{function}]\cr Function that creates
@@ -12,10 +12,10 @@
   function.}
 }
 \value{
-  Control structure for learner.
+Control structure for learner.
 }
 \description{
-  Find all elements in \code{...} which are not missing and
-  call \code{control} on them.
+Find all elements in \code{...} which are not missing and
+call \code{control} on them.
 }
 

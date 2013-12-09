@@ -2,21 +2,20 @@
 \alias{tuneThreshold}
 \title{Tune prediction threshold.}
 \usage{
-  tuneThreshold(pred, measure, task, model,
-    control = list())
+tuneThreshold(pred, measure, task, model, control = list())
 }
 \arguments{
-  \item{pred}{[\code{\link[mlr]{Prediction}}]\cr Prediction
+  \item{pred}{[\code{\link{Prediction}}]\cr Prediction
   object to use for tuning the treshold.}
 
-  \item{measure}{[\code{\link[mlr]{Measure}}]\cr
-  Performance measure to optimize.}
+  \item{measure}{[\code{\link{Measure}}]\cr Performance
+  measure to optimize.}
 
-  \item{task}{[\code{\link[mlr]{SupervisedTask}}]\cr
-  Learning task. Rarely neeeded, only when required for the
+  \item{task}{[\code{\link{SupervisedTask}}]\cr Learning
+  task. Rarely neeeded, only when required for the
   performance measure.}
 
-  \item{model}{[\code{\link[mlr]{WrappedModel}}]\cr Fitted
+  \item{model}{[\code{\link{WrappedModel}}]\cr Fitted
   model. Rarely neeeded, only when required for the
   performance measure.}
 
@@ -25,14 +24,14 @@
   list.}
 }
 \value{
-  [\code{list}]. A named list with with the following
-  components: \code{th} is the optimal threshold,
-  \code{perf} the performance value.
+[\code{list}]. A named list with with the following
+components: \code{th} is the optimal threshold, \code{perf}
+the performance value.
 }
 \description{
-  Optimizes the threshold of prediction based on
-  probabilities. Uses \code{\link{optimize}} for 2class
-  problems and \code{\link[cmaes]{cma_es}} for multiclass
-  problems.
+Optimizes the threshold of prediction based on
+probabilities. Uses \code{\link{optimize}} for 2class
+problems and \code{\link[cmaes]{cma_es}} for multiclass
+problems.
 }
 

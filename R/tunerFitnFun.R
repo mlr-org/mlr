@@ -33,7 +33,7 @@ tunerFitnFunVectorized = function(xs, learner, task, resampling, measures, par.s
   # transform parameters
   xs = lapply(xs, mytrafo, par.set=par.set, trafo=trafo)
   dob = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
-  ys = evalOptimizationStates(learner, task, resampling, measures, par.set, NULL, ctrl, 
+  ys = evalOptimizationStatesTune(learner, task, resampling, measures, par.set, ctrl, 
     opt.path, show.info, xs, dobs=dob, eols=NA, remove.nas=remove.nas) 
   #returns list of resample$aggr vectors, take 1st  
   ys = sapply(ys, function(a) a[[1]])

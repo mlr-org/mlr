@@ -15,7 +15,7 @@ Quick start
 We start with a basic example and train a Linear Dicriminant Analysis on the ``iris`` data set.
 
 
-```r
+```splus
 library("mlr")
 task <- makeClassifTask(data = iris, target = "Species")
 lrn <- makeLearner("classif.lda")
@@ -36,7 +36,7 @@ mod
 We fit a simple linear regression model to the ``BostonHousing`` data set.
 
 
-```r
+```splus
 library("mlr")
 library("mlbench")
 data(BostonHousing)
@@ -77,7 +77,7 @@ observations.
 Let's train a decision tree on the ``iris`` data set.
 
 
-```r
+```splus
 library("mlr")
 
 # First, create the classification task and the learner object
@@ -102,7 +102,7 @@ mod
 Now, a subset of the data (every second observation) is used for training.
 
 
-```r
+```splus
 mod <- train(lrn, task, subset = seq(from = 1, to = nrow(iris), by = 2))
 mod
 ```
@@ -118,7 +118,7 @@ mod
 It's still simple to access the wrapped rpart model, but in most cases there won't be a need to do so.
 
 
-```r
+```splus
 mod$learner.model
 ```
 
@@ -142,7 +142,7 @@ mod$learner.model
 As a regression example we use the ``BostonHousing`` data set. Let's train a Gradient Boosting Machine and we begin with the whole data set.
 
 
-```r
+```splus
 # Create the regression task.
 library("mlbench")
 data(BostonHousing)
@@ -165,7 +165,7 @@ mod
 Now, we use a subset of the data for training (every second observation).
 
 
-```r
+```splus
 mod <- train(lrn, task, subset = seq(1, nrow(BostonHousing), 2))
 mod
 ```

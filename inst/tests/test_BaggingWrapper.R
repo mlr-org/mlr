@@ -38,3 +38,12 @@ test_that("BaggingWrapper", {
   m = train(lrn2, regr.task)
   p = predict(m, regr.task)
 })
+
+test_that("BaggingWrapper works with feature subsampling", {
+  # fnn reported the problem when we had a bug here
+  lrn = makeBaggingWrapper(makeLearner("classif.fnn"), bag.iters=2L, bag.feats=0.5)
+  mod = train(lrn, multiclass.task)
+  p = predict(mod, task=multiclass.task)
+  expect_true(!is.na(performance(p)))
+})
+

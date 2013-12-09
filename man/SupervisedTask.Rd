@@ -1,16 +1,15 @@
 \name{makeClassifTask}
 \alias{ClassifTask}
-\alias{makeClassifTask}
-\alias{makeRegrTask}
 \alias{RegrTask}
 \alias{SupervisedTask}
+\alias{makeClassifTask}
+\alias{makeRegrTask}
 \title{Create a classification / regression task for a given data set.}
 \usage{
-  makeClassifTask(id, data, target, weight, blocking,
-    positive, check.data = TRUE)
+makeClassifTask(id, data, target, weight, blocking, positive,
+  check.data = TRUE)
 
-  makeRegrTask(id, data, target, weight, blocking,
-    check.data = TRUE)
+makeRegrTask(id, data, target, weight, blocking, check.data = TRUE)
 }
 \arguments{
   \item{id}{[\code{character(1)}]\cr Id string for object.
@@ -43,28 +42,28 @@
   \code{TRUE}}
 }
 \value{
-  [\code{\link{SupervisedTask}}].
+[\code{\link{SupervisedTask}}].
 }
 \description{
-  The task encapsulates the data and specifies - through
-  its subclasses - the type of the task (either
-  classification or regression), and contains a description
-  object detailing further aspects of the data.
+The task encapsulates the data and specifies - through its
+subclasses - the type of the task (either classification or
+regression), and contains a description object detailing
+further aspects of the data.
 }
 \details{
-  Useful operators are: \code{\link{getTaskFormula}},
-  \code{\link{getTaskFormulaAsString}},
-  \code{\link{getTaskFeatureNames}},
-  \code{\link{getTaskData}}, \code{\link{getTaskTargets}},
-  \code{\link{subsetTask}}.
+Useful operators are: \code{\link{getTaskFormula}},
+\code{\link{getTaskFormulaAsString}},
+\code{\link{getTaskFeatureNames}},
+\code{\link{getTaskData}}, \code{\link{getTaskTargets}},
+\code{\link{subsetTask}}.
 
-  Object members: \describe{ \item{env
-  [\code{environment}]}{Environment where data for the task
-  are stored. Use \code{\link{getTaskData}} in order to
-  access it.} \item{blocking [\code{factor}]}{See argument
-  above. \code{factor(0)} if not present.} \item{task.desc
-  [\code{\link{TaskDesc}}]}{Encapsulates further
-  information about the task.} }
+Object members: \describe{ \item{env
+[\code{environment}]}{Environment where data for the task
+are stored. Use \code{\link{getTaskData}} in order to
+access it.} \item{blocking [\code{factor}]}{See argument
+above. \code{factor(0)} if not present.} \item{task.desc
+[\code{\link{TaskDesc}}]}{Encapsulates further information
+about the task.} }
 }
 \examples{
 library(mlbench)

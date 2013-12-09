@@ -32,7 +32,7 @@ Classification example
 ----------------------
 
 
-```r
+```splus
 library("mlr")
 lrn <- makeLearner("classif.rpart")
 lrn
@@ -68,7 +68,7 @@ Now let's create a [Learner](http://berndbischl.github.io/mlr/man/makeLearner.ht
 an ID.
 
 
-```r
+```splus
 lrn <- makeLearner("classif.rpart", minsplit = 7, cp = 0.03, id = "myrpart")
 lrn
 ```
@@ -91,7 +91,7 @@ lrn
 This is how to get posterior probabilities when making a [prediction](http://berndbischl.github.io/mlr/man/predict.WrappedModel.html).
 
 
-```r
+```splus
 lrn <- makeLearner("classif.rpart", predict.type = "prob")
 lrn
 ```
@@ -118,7 +118,7 @@ Regression example
 Create a rpart [Learner](http://berndbischl.github.io/mlr/man/makeLearner.html) for regression. 
 
 
-```r
+```splus
 lrn <- makeLearner("regr.rpart")
 lrn
 ```
@@ -141,7 +141,7 @@ Finally, let's create a Gradient Boosting Machine [Learner](http://berndbischl.g
 and an ID.
 
 
-```r
+```splus
 lrn <- makeLearner("regr.gbm", n.trees = 500, distribution = "laplace", interaction.depth = 3, 
     id = "mygbm")
 lrn

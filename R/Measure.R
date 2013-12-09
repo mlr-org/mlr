@@ -93,20 +93,16 @@ makeMeasure = function(id, minimize, classif=FALSE, regr=FALSE,
 }
 
 default.measures = function(x) {
-  if (inherits(x, "SupervisedTask")) {
-    if (x$task.desc$type == "classif")
-      return(list(mmce))
-    if (x$task.desc$type == "regr")
-      return(list(mse))
-    stop("Should not happen!")
-  }
-  if (inherits(x, "Learner")) {
-    if (x$type == "classif")
-      return(list(mmce))
-    if (x$type == "regr")
-      return(list(mse))
-    stop("Should not happen!")
-  }
+  type = if (inherits(x, "TaskDesc")) 
+    x$type
+  else if (inherits(x, "SupervisedTask"))
+    x$task.desc$type
+  else if (inherits(x, "Learner"))
+    x$type
+  switch(type, 
+    classif = list(mmce),
+    regr = list(mse)
+  )
 }
 
 
