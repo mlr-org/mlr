@@ -3,8 +3,8 @@ selectFeaturesRandom = function(learner, task, resampling, measures, bit.names, 
 
   states = lapply(1:control$maxit, function(i) createStates(n = length(bit.names),
     max.features = control$max.features, prob = control$extra.args$prob))
-  evalOptimizationStates(learner, task, resampling, measures, NULL, bits.to.features,
-    control, opt.path, show.info, states, 1L, as.integer(NA), FALSE)
+  evalOptimizationStatesFeatSel(learner, task, resampling, measures, bits.to.features,
+    control, opt.path, show.info, states, 1L, as.integer(NA))
   i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), ties="random")
   e = getOptPathEl(opt.path, i)
   makeFeatSelResult(learner, control, names(e$x)[e$x == 1], e$y, opt.path)
