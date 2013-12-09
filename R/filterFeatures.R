@@ -33,6 +33,14 @@ filterFeatures = function(task, method="random.forest.importance") {
 }
 
 
+
+#FIXME: we should rather allow 
+# filter: task, method, threshold --> new task
+# and
+# filter: data.frame, target, method, threshold --> data.frame
+# see oversample and impute for this
+
+
 #' Returns the filtered features.
 #'
 #' Returns the selected Features according to their importance.
@@ -46,7 +54,7 @@ filterFeatures = function(task, method="random.forest.importance") {
 #'   Information value as to be greater then the threshold. Default ist 0.
 #' @return [\code{character}]
 #' @export
-getFilteredFeature = function(feat.importance, n, threshold=0) {
+getFilteredFeatures = function(feat.importance, n, threshold=0) {
   checkArg(feat.importance, "numeric") 
   checkArg(threshold, "numeric", len=1)
   if (missing(n))
