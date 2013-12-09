@@ -2,16 +2,16 @@
 \alias{getTaskFeatureNames}
 \title{Get feature names of task.}
 \usage{
-  getTaskFeatureNames(task)
+getTaskFeatureNames(task)
 }
 \arguments{
   \item{task}{[\code{\link{SupervisedTask}}]\cr The task.}
 }
 \value{
-  [\code{character}].
+[\code{character}].
 }
 \description{
-  Target column name is not included.
+Target column name is not included.
 }
 \examples{
 task <- makeClassifTask(data = iris, target = "Species")

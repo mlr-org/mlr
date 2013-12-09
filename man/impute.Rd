@@ -9,23 +9,23 @@
 \alias{imputeNormal}
 \title{Impute and re-impute data}
 \usage{
-  imputeConstant(const)
+imputeConstant(const)
 
-  imputeMedian()
+imputeMedian()
 
-  imputeMode()
+imputeMode()
 
-  imputeMin(multiplier = 1)
+imputeMin(multiplier = 1)
 
-  imputeMax(multiplier = 1)
+imputeMax(multiplier = 1)
 
-  imputeNormal(mu, sd)
+imputeNormal(mu, sd)
 
-  imputeHist(breaks, use.mids = TRUE)
+imputeHist(breaks, use.mids = TRUE)
 
-  impute(data, target, classes = list(), cols = list(),
-    dummies = character(0L), impute.newlevels = TRUE,
-    resort.factor.levels = TRUE)
+impute(data, target, classes = list(), cols = list(),
+  dummies = character(0L), impute.newlevels = TRUE,
+  resort.factor.levels = TRUE)
 }
 \arguments{
   \item{const}{[any]\cr Any object to use for imputation.}
@@ -75,41 +75,39 @@
   is \code{TRUE}.}
 }
 \value{
-  \code{list} with two named elements \dQuote{data} and
-  \dQuote{desc}.
+\code{list} with two named elements \dQuote{data} and
+\dQuote{desc}.
 }
 \description{
-  These functions provide some convenience for imputation
-  of missing values. A noteworthy feature is given by the
-  possibility to re-impute a data set in the same way as
-  learned previously. This especially becomes handy in
-  whenever resampling is deployed.
+These functions provide some convenience for imputation of
+missing values. A noteworthy feature is given by the
+possibility to re-impute a data set in the same way as
+learned previously. This especially becomes handy in
+whenever resampling is deployed.
 }
 \details{
-  The function \code{impute} performs the imputations on a
-  data set and returns, alongside with the imputed data
-  set, an \dQuote{ImputationDesc} object which then can be
-  passed together with a new data set to
-  \code{\link{reimpute}}.
+The function \code{impute} performs the imputations on a
+data set and returns, alongside with the imputed data set,
+an \dQuote{ImputationDesc} object which then can be passed
+together with a new data set to \code{\link{reimpute}}.
 
-  The imputation techniques can be specified for certain
-  features or for feature classes, see parameters. You can
-  either provide an arbitrary object, use a built-in
-  imputation method or create one yourself using
-  \code{\link{makeImputeMethod}}. The built-ins are:
-  \itemize{ \item \code{imputeConstant(const)} for
-  imputation using a constant value, \item
-  \code{imputeMedian()} for imputation using the median,
-  \item \code{imputeMode()} for imputation using the mode,
-  \item \code{imputeMin(multiplier)} for imputation using
-  the minimum, \item \code{imputeMax(multiplier)} for
-  imputation using the maximum, \item
-  \code{imputeNormal(mean, sd)} for imputation using
-  normally distributed random values. Mean and standard
-  deviation will be calculated from the data if not
-  provided.  \item \code{imputeHist(breaks, use.mids)} for
-  imputation using random values with probabilities
-  calculated using \code{table} or \code{hist}. }
+The imputation techniques can be specified for certain
+features or for feature classes, see parameters. You can
+either provide an arbitrary object, use a built-in
+imputation method or create one yourself using
+\code{\link{makeImputeMethod}}. The built-ins are:
+\itemize{ \item \code{imputeConstant(const)} for imputation
+using a constant value, \item \code{imputeMedian()} for
+imputation using the median, \item \code{imputeMode()} for
+imputation using the mode, \item
+\code{imputeMin(multiplier)} for imputation using the
+minimum, \item \code{imputeMax(multiplier)} for imputation
+using the maximum, \item \code{imputeNormal(mean, sd)} for
+imputation using normally distributed random values. Mean
+and standard deviation will be calculated from the data if
+not provided.  \item \code{imputeHist(breaks, use.mids)}
+for imputation using random values with probabilities
+calculated using \code{table} or \code{hist}. }
 }
 \examples{
 df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z=1:3)

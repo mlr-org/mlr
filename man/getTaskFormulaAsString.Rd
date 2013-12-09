@@ -2,7 +2,7 @@
 \alias{getTaskFormulaAsString}
 \title{Get formula of a task as a string.}
 \usage{
-  getTaskFormulaAsString(x)
+getTaskFormulaAsString(x)
 }
 \arguments{
   \item{x}{[\code{\link{SupervisedTask}} |
@@ -10,10 +10,10 @@
   object.}
 }
 \value{
-  [\code{character(1)}].
+[\code{character(1)}].
 }
 \description{
-  This is simply \dQuote{<target> ~ .}.
+This is simply \dQuote{<target> ~ .}.
 }
 \examples{
 task <- makeClassifTask(data = iris, target = "Species")

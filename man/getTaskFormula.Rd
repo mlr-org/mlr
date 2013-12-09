@@ -2,7 +2,7 @@
 \alias{getTaskFormula}
 \title{Get formula of a task.}
 \usage{
-  getTaskFormula(x, delete.env = TRUE)
+getTaskFormula(x, delete.env = TRUE)
 }
 \arguments{
   \item{x}{[\code{\link{SupervisedTask}} |
@@ -14,10 +14,10 @@
   this option exists, R sucks.  Default is \code{TRUE}.}
 }
 \value{
-  [\code{formula}].
+[\code{formula}].
 }
 \description{
-  This is simply the \code{target ~ .} formula.
+This is simply the \code{target ~ .} formula.
 }
 \examples{
 task <- makeClassifTask(data = iris, target = "Species")

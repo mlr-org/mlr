@@ -2,8 +2,8 @@
 \alias{makeFilterWrapper}
 \title{Fuse learner with a feature filter method.}
 \usage{
-  makeFilterWrapper(learner,
-    fw.method = "random.forest.importance", fw.perc = 1)
+makeFilterWrapper(learner, fw.method = "random.forest.importance",
+  fw.perc = 1)
 }
 \arguments{
   \item{learner}{[\code{\link{Learner}}]\cr The learner.}
@@ -19,16 +19,16 @@
   Default is 1 (=100 percent).}
 }
 \value{
-  [\code{\link{Learner}}].
+[\code{\link{Learner}}].
 }
 \description{
-  Fuses a base learner with a filter method. Creates a
-  learner object, which can be used like any other learner
-  object. Internally uses \code{\link{filterFeatures}}
-  before every model fit.
+Fuses a base learner with a filter method. Creates a
+learner object, which can be used like any other learner
+object. Internally uses \code{\link{filterFeatures}} before
+every model fit.
 
-  After training, the selected features can be retrieved
-  with \code{\link{getFilteredFeatures}}.
+After training, the selected features can be retrieved with
+\code{\link{getFilteredFeatures}}.
 }
 \examples{
 task = makeClassifTask(data=iris, target="Species")

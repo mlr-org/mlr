@@ -3,9 +3,9 @@
 \alias{makeUndersampleWrapper}
 \title{Fuse learner with simple over/undersampling for binary classification.}
 \usage{
-  makeUndersampleWrapper(learner, usw.rate)
+makeUndersampleWrapper(learner, usw.rate)
 
-  makeOversampleWrapper(learner, osw.rate)
+makeOversampleWrapper(learner, osw.rate)
 }
 \arguments{
   \item{learner}{[\code{\link{Learner}}]\cr The learner.}
@@ -22,12 +22,11 @@
   mean doubling the class size.}
 }
 \value{
-  [\code{\link{Learner}}].
+[\code{\link{Learner}}].
 }
 \description{
-  Creates a learner object, which can be used like any
-  other learner object. Internally uses
-  \code{\link{oversample}} or \code{\link{undersample}}
-  before every model fit.
+Creates a learner object, which can be used like any other
+learner object. Internally uses \code{\link{oversample}} or
+\code{\link{undersample}} before every model fit.
 }
 

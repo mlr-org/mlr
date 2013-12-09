@@ -3,9 +3,9 @@
 \alias{undersample}
 \title{Over- or undersample binary classification task to handle class imbalancy.}
 \usage{
-  oversample(obj, target, rate)
+oversample(obj, target, rate)
 
-  undersample(obj, target, rate)
+undersample(obj, target, rate)
 }
 \arguments{
   \item{obj}{[\code{data.frame} |
@@ -25,14 +25,14 @@
   size.}
 }
 \value{
-  [\code{data.frame} | \code{\link{ClassifTask}}]. Same
-  type as \code{obj}.
+[\code{data.frame} | \code{\link{ClassifTask}}]. Same type
+as \code{obj}.
 }
 \description{
-  Oversampling: From the smaller class, observations are
-  randomly drawn with repetitions.
+Oversampling: From the smaller class, observations are
+randomly drawn with repetitions.
 
-  Undersampling: From the larger class, observations are
-  randomly drawn without repetitions.
+Undersampling: From the larger class, observations are
+randomly drawn without repetitions.
 }
 

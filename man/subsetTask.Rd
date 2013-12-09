@@ -2,7 +2,7 @@
 \alias{subsetTask}
 \title{Subset data in task.}
 \usage{
-  subsetTask(task, subset, features)
+subsetTask(task, subset, features)
 }
 \arguments{
   \item{task}{[\code{\link{SupervisedTask}}]\cr The task.}
@@ -15,10 +15,10 @@
   you should not pass it here.  Default is all features.}
 }
 \value{
-  [\code{\link{SupervisedTask}}]. Task with subsetted data.
+[\code{\link{SupervisedTask}}]. Task with subsetted data.
 }
 \description{
-  Subset data in task.
+Subset data in task.
 }
 \examples{
 task <- makeClassifTask(data = iris, target = "Species")

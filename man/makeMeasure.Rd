@@ -1,12 +1,11 @@
 \name{makeMeasure}
-\alias{makeMeasure}
 \alias{Measure}
+\alias{makeMeasure}
 \title{Construct performance measure.}
 \usage{
-  makeMeasure(id, minimize, classif = FALSE, regr = FALSE,
-    only.binary = FALSE,
-    allowed.pred.types = character(0L), fun,
-    extra.args = list(), aggr = test.mean)
+makeMeasure(id, minimize, classif = FALSE, regr = FALSE,
+  only.binary = FALSE, allowed.pred.types = character(0L), fun,
+  extra.args = list(), aggr = test.mean)
 }
 \arguments{
   \item{id}{[\code{character(1)}]\cr Name of measure.}
@@ -43,37 +42,37 @@
   Default is \code{\link{test.mean}}.}
 }
 \value{
-  [\code{\link{Measure}}].
+[\code{\link{Measure}}].
 }
 \description{
-  A measure object encapsulates a function to evaluate the
-  performance of a prediction. Information about already
-  implemented measures can be obtained here:
-  \code{\link{measures}}.
+A measure object encapsulates a function to evaluate the
+performance of a prediction. Information about already
+implemented measures can be obtained here:
+\code{\link{measures}}.
 }
 \details{
-  A learner is trained on a a training set d1, results in a
-  model m, predicts another set d2 (which may be a
-  different one or the training set), resulting in the
-  prediction. The performance measure can now be defined
-  using all of the information of the original task, the
-  fitted model and the prediction.
+A learner is trained on a a training set d1, results in a
+model m, predicts another set d2 (which may be a different
+one or the training set), resulting in the prediction. The
+performance measure can now be defined using all of the
+information of the original task, the fitted model and the
+prediction.
 
-  Object slots: \describe{ \item{id
-  [\code{character(1)}]}{See argument.} \item{minimize
-  [\code{logical(1)}]}{See argument.} \item{classif
-  [\code{logical(1)}]}{See argument.} \item{regr
-  [\code{logical(1)}]}{See argument.} \item{only.binary
-  [\code{logical(1)}]}{See argument.}
-  \item{allowed.pred.types [\code{character}]}{See
-  argument.} \item{req.pred [\code{logical(1)}]}{Is
-  prediction object required in calculation?}
-  \item{req.task [\code{logical(1)}]}{Is task object
-  required in calculation?.} \item{req.model
-  [\code{logical(1)}]}{Is model object required in
-  calculation?} \item{fun [\code{function}]}{See argument.}
-  \item{extra.args [\code{list}]}{See argument.} \item{aggr
-  [\code{\link{Aggregation}}]}{See argument.}. }
+Object slots: \describe{ \item{id
+[\code{character(1)}]}{See argument.} \item{minimize
+[\code{logical(1)}]}{See argument.} \item{classif
+[\code{logical(1)}]}{See argument.} \item{regr
+[\code{logical(1)}]}{See argument.} \item{only.binary
+[\code{logical(1)}]}{See argument.}
+\item{allowed.pred.types [\code{character}]}{See argument.}
+\item{req.pred [\code{logical(1)}]}{Is prediction object
+required in calculation?} \item{req.task
+[\code{logical(1)}]}{Is task object required in
+calculation?.} \item{req.model [\code{logical(1)}]}{Is
+model object required in calculation?} \item{fun
+[\code{function}]}{See argument.} \item{extra.args
+[\code{list}]}{See argument.} \item{aggr
+[\code{\link{Aggregation}}]}{See argument.}. }
 }
 \examples{
 f <- function(task, model, pred, extra.args)
