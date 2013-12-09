@@ -56,4 +56,14 @@ test_that("Impute data frame", {
   x = impute(data, target, dummies="x")
   expect_equal(x$data[["x.dummy"]], c(rep(FALSE, 5), TRUE))
   expect_equal(reimpute(data, x$desc), x$data)
+
+  # dummies
+  x = impute(data, target, classes=list(factor=imputeMode(), numeric=imputeMedian(), integer=imputeMedian()))
+
+  # learner
+  data = data.frame(f = letters[c(1,1,1,1,2)], x = rep(1., 5), y = c(1, 2, 3, 3, 4))
+  target = "f"
+  data[6, ] = NA
+  learner = makeLearner("regr.rpart")
+  x = impute(data, target, cols=list(x = imputeLearner(learner, preimpute=list(classes=list(numeric=imputeMedian())))))
 })

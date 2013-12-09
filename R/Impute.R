@@ -98,7 +98,7 @@ impute = function(data, target, classes=list(), cols=list(), dummies=character(0
     list(
       impute = x$impute,
       # FIXME can we avoid the data duplication here?
-      args = do.call(x$learn, c(list(data=data, target=target, col=xn), x$args))
+      args = do.call(x$learn, c(x$args, list(data=data, target=target, col=xn)))
     )
   }, xn=names(desc$impute), x=desc$impute)
 
@@ -140,9 +140,15 @@ reimpute = function(x, desc) {
   UseMethod("reimpute")
 }
 
+#' @S3method reimpute list
+reimpute.list = function(x, desc) {
+  UseMethod("reimpute", as.data.frame(x))
+}
+
 #' @S3method reimpute data.frame
 reimpute.data.frame = function(x, desc) {
   checkArg(desc, "ImputationDesc")
+  x = as.list(x)
 
   # check for new columns
   new.cols = names(which(names(x) %nin% desc$cols))
@@ -167,10 +173,11 @@ reimpute.data.frame = function(x, desc) {
         x=x[names(newlvls)], nl=newlvls)
   }
 
-  # impute
+  # actually do the imputation
   cols = intersect(names(x), names(desc$impute))
-  x[cols] = Map(function(x, obj) do.call(obj$impute, c(list(x=x), obj$args)),
-    x=x[cols], obj=desc$impute[cols])
+  x[cols] = Map(
+    function(xn, obj) do.call(obj$impute, c(list(data=x, target=target, col=xn), obj$args)),
+  xn=cols, obj=desc$impute[cols])
 
   # resort factor levels
   if (desc$resort.factor.levels) {
@@ -180,5 +187,9 @@ reimpute.data.frame = function(x, desc) {
     }, x=x[cols], expected=desc$lvls)
   }
 
-  data.frame(c(x, dummies), stringsAsFactors=FALSE)
+  x[names(dummies)] = dummies
+  x = data.frame(x, stringsAsFactors=FALSE)
+  stopifnot(is.data.frame(x))
+  x
 }
+
