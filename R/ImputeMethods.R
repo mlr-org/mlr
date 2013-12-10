@@ -1,18 +1,27 @@
-#' Create an imputation method
+# FIXME: From a design point of view, using the task here as input argument
+# might be more extensible for us later and
+# convenient for the user.
+# For us, we can use polymorphism, and for the user
+# the task contains a lot of helpful info.
+# But I do not want to revamp the structure now
+
+#FIXME: what happens in cases when a whole column is NA?
+
+#' Create a custom imputation method.
 #'
-#' This is a constructor to create own imputation methods.
-#'
+#' This is a constructor to create your own imputation methods.
 #' @param learn [\code{function(data, target, col, ...)}]\cr
-#'  Function to learn and extract information on column \code{col}
-#'  out of data frame \code{data}. Argument \code{target} specifies
-#'  the target column of the learning task.
+#'   Function to learn and extract information on column \code{col}
+#'   out of data frame \code{data}. Argument \code{target} specifies
+#'   the target column of the learning task.
+#'   The function has to return a named list of values.
 #' @param impute [\code{function(data, target, col, ...)}]\cr
-#'  Function to impute missing values in \code{col} using information
-#'  returned by \code{learn} on the same column.
-#'  The return value of \code{learn} is automatically passed to this function
-#'  via \code{...}.
+#'   Function to impute missing values in \code{col} using information
+#'   returned by \code{learn} on the same column.
+#'   All list elements of the return values o \code{learn}
+#'   are passed to this function into \code{...}.
 #' @param args [\code{list}]\cr
-#'  Named list of arguments to pass to \code{learn} via \code{...}.
+#'   Named list of arguments to pass to \code{learn} via \code{...}.
 #' @export
 makeImputeMethod = function(learn, impute, args=list()) {
   checkArg(learn, "function", formals=c("data", "target", "col"))
@@ -23,6 +32,7 @@ makeImputeMethod = function(learn, impute, args=list()) {
   setClasses(list(learn=learn, impute=impute, args=args), "ImputeMethod")
 }
 
+# helper function to impute missings of a col to const val
 simpleImpute = function(data, target, col, const) {
   x = data[[col]]
   if (is.factor(x) && const %nin% levels(x)) {
@@ -31,10 +41,29 @@ simpleImpute = function(data, target, col, const) {
   replace(x, is.na(x), const)
 }
 
+
+#' Built in imputation methods
+#' The built-ins are:
+#' \itemize{
+#'   \item \code{imputeConstant(const)} for imputation using a constant value,
+#'   \item \code{imputeMedian()} for imputation using the median,
+#'   \item \code{imputeMode()} for imputation using the mode,
+#'   \item \code{imputeMin(multiplier)} for imputation using the minimum,
+#'   \item \code{imputeMax(multiplier)} for imputation using the maximum,
+#'   \item \code{imputeNormal(mean, sd)} for imputation using normally
+#'     distributed random values. Mean and standard deviation will be calculated
+#'     from the data if not provided.
+#'   \item \code{imputeHist(breaks, use.mids)} for imputation using random values
+#'     with probabilities calculated using \code{table} or \code{hist}.
+#' }
+#' @name imputations
+#' @rdname imputations
+NULL
+
 #' @export
 #' @param const [any]\cr
-#'  Any object to use for imputation.
-#' @rdname impute
+#'  Constant valued use for imputation.
+#' @rdname imputations
 imputeConstant = function(const) {
   makeImputeMethod(
     learn = function(data, target, col, const) const,
@@ -44,7 +73,7 @@ imputeConstant = function(const) {
 }
 
 #' @export
-#' @rdname impute
+#' @rdname imputations
 imputeMedian = function() {
   makeImputeMethod(
     learn = function(data, target, col) median(data[[col]], na.rm=TRUE),
@@ -53,7 +82,7 @@ imputeMedian = function() {
 }
 
 #' @export
-#' @rdname impute
+#' @rdname imputations
 imputeMode = function() {
   makeImputeMethod(
     learn = function(data, target, col) computeMode(data[[col]], na.rm=TRUE),
@@ -63,8 +92,8 @@ imputeMode = function() {
 
 #' @export
 #' @param multiplier [\code{numeric(1)}]\cr
-#'  Numeric value to multiply the minimum or maximum.
-#' @rdname impute
+#'   Value that stored minimum or maximum is multiplied with when imputation is done.
+#' @rdname imputations
 imputeMin = function(multiplier=1) {
   checkArg(multiplier, "numeric", len=1L, na.ok=FALSE)
   makeImputeMethod(
@@ -75,7 +104,7 @@ imputeMin = function(multiplier=1) {
 }
 
 #' @export
-#' @rdname impute
+#' @rdname imputations
 imputeMax = function(multiplier=1) {
   checkArg(multiplier, "numeric", len=1L, na.ok=FALSE)
   makeImputeMethod(
@@ -86,11 +115,11 @@ imputeMax = function(multiplier=1) {
 }
 
 #' @export
-#' @param mu [\code{numeric(1)}]\cr
-#'  Mean of normal distribution. If missing it will get estimated from the data.
-#' @param sd [\code{numeric(1)}]\cr
-#'  Standard deviation of normal distribution. If missing it will get estimated from the data.
-#' @rdname impute
+#' @param min [\code{numeric(1)}]\cr
+#'   Lower bound for uniform distribution. If missing it will be estimated from the data.
+#' @param max [\code{numeric(1)}]\cr
+#'   Upper bound for uniform distribution. If missing it will be estimated from the data.
+#' @rdname imputations
 imputeUniform = function(min, max) {
   if (missing(min))
     min = NULL
@@ -104,9 +133,9 @@ imputeUniform = function(min, max) {
   makeImputeMethod(
     learn = function(data, target, col, min, max)  {
       if (is.null(min))
-        mu = min(data[[col]], na.rm=TRUE)
+        min = min(data[[col]], na.rm=TRUE)
       if (is.null(max))
-        sd = max(data[[col]], na.rm=TRUE)
+        max = max(data[[col]], na.rm=TRUE)
       list(min=min, max=max)
     },
     impute = function(data, target, col, min, max) {
@@ -120,10 +149,10 @@ imputeUniform = function(min, max) {
 
 #' @export
 #' @param mu [\code{numeric(1)}]\cr
-#'  Mean of normal distribution. If missing it will get estimated from the data.
+#'   Mean of normal distribution. If missing it will be estimated from the data.
 #' @param sd [\code{numeric(1)}]\cr
-#'  Standard deviation of normal distribution. If missing it will get estimated from the data.
-#' @rdname impute
+#'   Standard deviation of normal distribution. If missing it will be estimated from the data.
+#' @rdname imputations
 imputeNormal = function(mu, sd) {
   if (missing(mu))
     mu = NULL
@@ -158,7 +187,7 @@ imputeNormal = function(mu, sd) {
 #' @param use.mids [\code{logical(1)}]\cr
 #'  If \code{x} is numeric and a histogram is used, impute with bin mids (default)
 #'  or instead draw uniformly distributed samples within bin range.
-#' @rdname impute
+#' @rdname imputations
 imputeHist = function(breaks, use.mids=TRUE) {
   if (missing(breaks)) {
     breaks = "Sturges"
@@ -169,22 +198,26 @@ imputeHist = function(breaks, use.mids=TRUE) {
   checkArg(use.mids, "logical", len=1L, na.ok=FALSE)
 
   makeImputeMethod(
+
     learn = function(data, target, col, breaks, use.mids) {
       x = data[[col]]
+      # numeric / integer feature
       if (is.numeric(x)) {
         tmp = hist(x, breaks=breaks, plot=FALSE)
         if (use.mids)
-          list(counts=tmp$counts, values=tmp$mids)
+          return(list(counts=tmp$counts, values=tmp$mids))
         else
-          list(counts=tmp$counts, breaks=tmp$breaks)
+          return(list(counts=tmp$counts, breaks=tmp$breaks))
+      # factor or logical feature
       } else {
         tmp = table(x, useNA="no")
         values = names(tmp)
         if (is.logical(x))
           values = as.logical(x)
-        list(counts=as.integer(tmp), values=values)
+        return(list(counts=as.integer(tmp), values=values))
       }
     },
+
     impute = function(data, target, col, counts, values, breaks) {
       x = data[[col]]
       ind = which(is.na(x))
@@ -200,6 +233,7 @@ imputeHist = function(breaks, use.mids=TRUE) {
   )
 }
 
+#' @rdname imputations
 imputeLearner = function(learner, preimpute=list()) {
   checkArg(learner, "Learner")
   checkArg(preimpute, "list")

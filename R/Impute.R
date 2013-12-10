@@ -1,56 +1,84 @@
-#' Impute and re-impute data
+# FIXME: is the target a string or a character vector? this is not explained!
+
+# FIXME: Some of the special cool things need to be explained in a bit more detail
+
+# FIXME: does it make sense to encoubter different features in reimpute set?
+# if not, we shoukd check that.
+
+# FIXME: we can enter crap in cols and classes without good check?
+
+#' @title Impute and re-impute data
 #'
-#' These functions provide some convenience for imputation of missing values.
-#' A noteworthy feature is given by the possibility to re-impute a data set
-#' in the same way as learned previously. This especially becomes handy in
-#' whenever resampling is deployed.
+#' @description
+#' Allows imputation of missing feature values through various techniques.
+#' Note that you have the possibility to re-impute a data set
+#' in the same way as the imputation was performed during training.
+#' This especially comes in handy during resampling when one wants to perform the
+#' same imputation on the test set as on the training set.
 #'
-#' The function \code{impute} performs the imputations on a data set and returns,
-#' alongside with the imputed data set, an \dQuote{ImputationDesc} object which
-#' then can be passed together with a new data set to \code{\link{reimpute}}.
+#' The function \code{impute} performs the imputation on a data set and returns,
+#' alongside with the imputed data set, an \dQuote{ImputationDesc} object
+#' which can contain \dQuote{learned} coefficients and helpful data.
+#' It can then be passed together with a new data set to \code{\link{reimpute}}.
 #'
 #' The imputation techniques can be specified for certain features or for feature classes,
-#' see parameters.
-#' You can either provide an arbitrary object, use a built-in imputation method
-#' or create one yourself using \code{\link{makeImputeMethod}}.
-#' The built-ins are:
-#' \itemize{
-#'   \item \code{imputeConstant(const)} for imputation using a constant value,
-#'   \item \code{imputeMedian()} for imputation using the median,
-#'   \item \code{imputeMode()} for imputation using the mode,
-#'   \item \code{imputeMin(multiplier)} for imputation using the minimum,
-#'   \item \code{imputeMax(multiplier)} for imputation using the maximum,
-#'   \item \code{imputeNormal(mean, sd)} for imputation using normally
-#'     distributed random values. Mean and standard deviation will be calculated
-#'     from the data if not provided.
-#'   \item \code{imputeHist(breaks, use.mids)} for imputation using random values
-#'     with probabilities calculated using \code{table} or \code{hist}.
+#' see function arguments.
+#'
+#' You can either provide an arbitrary object, use a built-in imputation method listed
+#' under \code{\link{imputations}} or create one yourself using \code{\link{makeImputeMethod}}.
+#'
+#' @details
+#' The description object contains these slots
+#' \describe{
+#'   \item{target [\code{character}]}{See argument.}
+#'   \item{features [\code{character}]}{Feature names, these are the column names of \code{data},
+#'     excluding \code{target}.}
+#'   \item{lvls [\code{named list}]}{Mapping of column names of factor features to their levels,
+#'     including newly created ones during imputation.}
+#'   \item{impute [\code{named list}]}{Mapping of column names to imputation functions.}
+#'   \item{dummies [\code{named list}]}{Mapping of column names to imputation functions.}
+#'   \item{impute.new.levels [\code{logical(1)}]}{See argument.}
+#'   \item{recode.factor.levels [\code{logical(1)}]}{See argument.}
 #' }
 #'
 #' @param data [\code{data.frame}]\cr
-#'  Input data.
-#' @param target [\code{character(1)}]\cr
-#'  Name of the column specifying the response.
+#'   Input data.
+#' @param target [\code{character}]\cr
+#'   Name of the column specifying the response.
 #' @param classes [\code{named list}]\cr
-#'  Named list containing imputation techniques for classes of columns. E.g. \code{list(integer = 0)}.
+#'   Named list containing imputation techniques for classes of columns.
+#'   E.g. \code{list(numeric = imputeMedian())}.
 #' @param cols [\code{named list}]\cr
-#'  Named list containing names of the built-in imputation methods to impute missing values
-#'  in the data column referenced by the list element's name. Overwrites imputation set via
-#'  \code{classes}.
-#' @param dummies [\code{character()}]\cr
-#'  Set of column names for which dummy variables (binary missing indicator) should be created.
-#'  Default is \code{character(0)}.
-#' @param impute.newlevels [\code{logical(1)}]\cr
-#'  Impute new levels in factors the same way as missing values? Default is \code{TRUE}.
-#' @return \code{list} with two named elements \dQuote{data} and \dQuote{desc}.
+#'   Named list containing names of the built-in imputation methods to impute missing values
+#'   in the data column referenced by the list element's name. Overwrites imputation set via
+#'   \code{classes}.
+#' @param dummies [\code{character}]\cr
+#'   Column names for which dummy variables (binary missing indicator) should be created.
+#'   Default is \code{character(0)}.
+#' @param impute.new.levels [\code{logical(1)}]\cr
+#'   If new, unencountered factor level occur during reimputation,
+#'   should these be handled as NAs and then be imputed the same way?
+#'   Default is \code{TRUE}.
+#' @param recode.factor.levels [\code{logical(1)}]\cr
+#'   Recode factor levels after reimputation, so they match the respective element of
+#'   \code{lvls} (in the description object) and therefore match the levels of the
+#'   feature factor in the training data after imputation?.
+#'   Default is \code{TRUE}.
+#' @return [\code{list}]
+#'   \item{data \code{data.frame}}{Imputed data.}
+#'   \item{desc \code{ImputationDesc}}{Description object.}
 #' @export
 #' @examples
-#'  df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z=1:3)
-#'  imputed = impute(df, target=character(0), cols=list(x = 99, y = imputeMode()))
-#'  print(imputed$data)
-#'  reimpute(data.frame(x=NA), imputed$desc)
+#' df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z=1:3)
+#' imputed = impute(df, target=character(0), cols=list(x = 99, y = imputeMode()))
+#' print(imputed$data)
+
+# FIXME: seems buggy
+# reimpute(data.frame(x=NA), imputed$desc)
+
 impute = function(data, target, classes=list(), cols=list(), dummies=character(0L),
-  impute.newlevels=TRUE, resort.factor.levels=TRUE) {
+  impute.new.levels=TRUE, recode.factor.levels=TRUE) {
+
   checkArg(data, "data.frame")
   checkArg(target, "character", na.ok=FALSE)
   checkArg(classes, "list")
@@ -63,26 +91,28 @@ impute = function(data, target, classes=list(), cols=list(), dummies=character(0
     if (target %in% names(dummies))
       stopf("Dummy creation of target column '%s' not possible", target)
   }
-  checkArg(impute.newlevels, "logical", len=1L, na.ok=FALSE)
-  checkArg(resort.factor.levels, "logical", len=1L, na.ok=FALSE)
+  checkArg(impute.new.levels, "logical", len=1L, na.ok=FALSE)
+  checkArg(recode.factor.levels, "logical", len=1L, na.ok=FALSE)
 
-  cn = setdiff(names(data), target)
-  cl = vapply(data[cn], class, character(1L))
+  features = setdiff(names(data), target)
+  feature.classes = vapply(data[features], class, character(1L))
 
   # some elements need to be set to a non-harmful
   # setting for the first iteration of impute
   # those will be overwritten later
-  desc = setClasses(list(
-    impute = namedList(cn),
-    dummies = dummies,
+  desc = makeS3Obj("ImputationDesc",
+    target = target,
+    features = features,
     lvls = NULL,
-    impute.newlevels=FALSE,
-    resort.factor.levels=FALSE,
-    cols = cn
-  ), "ImputationDesc")
+    impute = namedList(features),
+    dummies = dummies,
+    impute.new.levels=FALSE,
+    recode.factor.levels=FALSE
+  )
 
   # handle classes -> insert into desc
-  cl2 = cl[cl %in% names(classes) & names(cl) %nin% names(cols)]
+  cl2 = feature.classes[feature.classes %in% names(classes) &
+    names(feature.classes) %nin% names(cols)]
   desc$impute[names(cl2)] = classes[cl2]
 
   # handle cols -> insert into desc
@@ -97,7 +127,7 @@ impute = function(data, target, classes=list(), cols=list(), dummies=character(0
       x = imputeConstant(x)
     list(
       impute = x$impute,
-      # FIXME can we avoid the data duplication here?
+      # FIXME: can we avoid the data duplication here?
       args = do.call(x$learn, c(x$args, list(data=data, target=target, col=xn)))
     )
   }, xn=names(desc$impute), x=desc$impute)
@@ -105,17 +135,24 @@ impute = function(data, target, classes=list(), cols=list(), dummies=character(0
   data = reimpute(data, desc)
 
   # store factor levels (this might include new levels created during imputation)
-  ind = names(which(cl == "factor"))
+  ind = names(which(feature.classes == "factor"))
   desc$lvls = lapply(data[ind], levels)
 
   # set variables for consecutive imputes
-  desc$resort.factor.levels = resort.factor.levels
-  desc$impute.newlevels = impute.newlevels
+  desc$recode.factor.levels = recode.factor.levels
+  desc$impute.new.levels = impute.new.levels
 
-  # return
-  list(data = data, desc=desc)
+  list(data=data, desc=desc)
 }
 
+#' @S3method print ImputationDesc
+print.ImputationDesc = function(x, ...) {
+  catf("Imputation description")
+  catf("Target: %s", collapse(x$target))
+  catf("Features: %i; Imputed: %i", length(x$features), length(x$impute))
+  catf("impute.new.levels: %s", x$impute.new.levels)
+  catf("recode.factor.levels: %s", x$recode.factor.levels)
+}
 
 #' Re-impute a data set
 #'
@@ -158,12 +195,13 @@ reimpute.data.frame = function(x, desc) {
   # restore dropped columns
   x[setdiff(desc$cols, names(x))] = NA
 
-  # store dummies
-  dummies = lapply(x[desc$dummies], is.na)
-  names(dummies) = sprintf("%s.dummy", names(dummies))
+  # calculate dummies, these are boolean T / F masks, where NAs occured in input
+  dummy.cols = lapply(x[desc$dummies], is.na)
+  names(dummy.cols) = sprintf("%s.dummy", desc$dummies)
+
 
   # check for new levels and replace with NAs
-  if (desc$impute.newlevels) {
+  if (desc$impute.new.levels) {
     cols = names(desc$lvls)
     newlvls = Map(function(x, expected) setdiff(levels(x), expected),
       x=x[cols], expected=desc$lvls)
@@ -176,19 +214,20 @@ reimpute.data.frame = function(x, desc) {
   # actually do the imputation
   cols = intersect(names(x), names(desc$impute))
   x[cols] = Map(
-    function(xn, obj) do.call(obj$impute, c(list(data=x, target=target, col=xn), obj$args)),
+    function(xn, obj) do.call(obj$impute, c(list(data=x, target=desc$target, col=xn), obj$args)),
   xn=cols, obj=desc$impute[cols])
 
-  # resort factor levels
-  if (desc$resort.factor.levels) {
+  # recode factor levels
+  if (desc$recode.factor.levels) {
     cols = names(desc$lvls)
     x[cols] = Map(function(x, expected) {
       factor(as.character(x), levels=expected)
     }, x=x[cols], expected=desc$lvls)
   }
 
-  x[names(dummies)] = dummies
+  x[names(dummy.cols)] = dummy.cols
   x = data.frame(x, stringsAsFactors=FALSE)
+  # FIXME: remove assertion?
   stopifnot(is.data.frame(x))
   x
 }
