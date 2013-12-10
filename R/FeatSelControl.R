@@ -1,6 +1,7 @@
 #' @title Create control structures for feature selection.
 #'
 #' @description
+#' Feature selection method used by \code{\link{selectFeatures}}.
 #' The following methods are available:
 #'
 #'  \describe{
@@ -11,7 +12,18 @@
 #'      A feature is included in the current set with probability \code{prob}.
 #'      So we are basically drawing (0,1)-membership-vectors, where each element 
 #'      is Bernoulli(\code{prob}) distributed.}
-#'    \item{FeatSelControlSequential}{Deterministic forward or backward search.}
+#'    \item{FeatSelControlSequential}{Deterministic forward or backward search. That means extending
+#'      (forward) or shrinking (backward) an existing model stepwise by calculating the performance
+#'      of the existing model with variables added (forward) or removed (backward).
+#'      Depending on the given \code{method} different approches are taken.\cr
+#'      \code{sfs} Sequential Forward Search: Starting from an empty model, in each step the feature increasing 
+#'      the performance measure the most is added to the model.\cr
+#'      \code{sbs} Sequential Backward Search: Starting from a model with all features, in each step the feature 
+#'      decreasing the performance measure the least is removed from the model.\cr
+#'      \code{sffs} Sequential Floating Forward Search: Starting from an empty model, in each step the algorithm 
+#'      chooses the best model from all models with one additional feature and from all models with one
+#'      feature less.\cr
+#'      \code{sfbs} Sequential Floating Backward Search: Similar to \code{sffs} but starting with a full model.}
 #'    \item{FeatSelControlGA}{Search via genetic algorithm.
 #'      The GA is a simple (\code{mu}, \code{lambda}) or (\code{mu} + \code{lambda}) algorithm,
 #'      depending on the \code{comma} setting.
@@ -64,10 +76,10 @@
 #' @return [\code{\link{FeatSelControl}}]. The specific subclass is one of
 #'   \code{\link{FeatSelControlExhaustive}}, \code{\link{FeatSelControlRandom}},
 #'   \code{\link{FeatSelControlSequential}}, \code{\link{FeatSelControlGA}}.
+#' @seealso \code{\link{selectFeatures}}
 #' @name FeatSelControl
 #' @rdname FeatSelControl
 #' @aliases FeatSelControlExhaustive FeatSelControlRandom FeatSelControlSequential FeatSelControlGA
-NULL
 
 makeFeatSelControl = function(same.resampling.instance, maxit, max.features, ..., cl) {
   checkArg(same.resampling.instance, "logical", len=1, na.ok=FALSE)
