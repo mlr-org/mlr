@@ -38,9 +38,7 @@
 #'
 #' ## Compute multiple performance measures at once
 #' ms <- list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
-#' sapply(ms, function(the.ms) {
-#'   performance(pred, measures = the.ms, task, mod)
-#' })
+#' performance(pred, measures = ms, task, mod)
 performance = function(pred, measures, task, model) {
   if (missing(measures)) {
     measures = default.measures(pred$task.desc)

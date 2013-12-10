@@ -1,9 +1,9 @@
 \name{makeResampleInstance}
-\alias{ResampleInstance}
 \alias{makeResampleInstance}
+\alias{ResampleInstance}
 \title{Instantiates a resampling strategy object.}
 \usage{
-makeResampleInstance(desc, task, size)
+  makeResampleInstance(desc, task, size)
 }
 \arguments{
   \item{desc}{[\code{\link{ResampleDesc}}]\cr Resampling
@@ -17,26 +17,26 @@ makeResampleInstance(desc, task, size)
   set to resample.  Can be used instead of \code{task}.}
 }
 \value{
-[\code{\link{ResampleInstance}}].
+  [\code{\link{ResampleInstance}}].
 }
 \description{
-This class encapsulates training and test sets generated
-from the data set for a number of iterations. It mainly
-stores a set of integer vectors indicating the training and
-test examples for each iteration.
+  This class encapsulates training and test sets generated
+  from the data set for a number of iterations. It mainly
+  stores a set of integer vectors indicating the training
+  and test examples for each iteration.
 }
 \details{
-Object slots: \describe{ \item{desc
-[\code{\link{ResampleDesc}}]}{See argument.} \item{size
-[integer(1)]}{See argument.} \item{train.inds [list of
-\code{integer}]}{List of of training indices for all
-iterations.} \item{test.inds [list of \code{integer}]}{List
-of of test indices for all iterations.} \item{group
-[\code{factor}]}{Optional grouping of resampling
-iterations. This encodes whether specfic iterations 'belong
-together' (e.g. repeated CV), and it can later be used to
-aggregate performance values accordingly. Default is
-'factor()'.} }
+  Object slots: \describe{ \item{desc
+  [\code{\link{ResampleDesc}}]}{See argument.} \item{size
+  [integer(1)]}{See argument.} \item{train.inds [list of
+  \code{integer}]}{List of of training indices for all
+  iterations.} \item{test.inds [list of
+  \code{integer}]}{List of of test indices for all
+  iterations.} \item{group [\code{factor}]}{Optional
+  grouping of resampling iterations. This encodes whether
+  specfic iterations 'belong together' (e.g. repeated CV),
+  and it can later be used to aggregate performance values
+  accordingly. Default is 'factor()'.} }
 }
 \examples{
 task <- makeClassifTask(data = iris, target = "Species")
@@ -48,6 +48,6 @@ rdesc <- makeResampleDesc("CV", iters = 50)
 rin <- makeResampleInstance(rdesc, size = nrow(iris))
 }
 \seealso{
-\code{\link{makeResampleDesc}}, \code{\link{resample}}
+  \code{\link{makeResampleDesc}}, \code{\link{resample}}
 }
 

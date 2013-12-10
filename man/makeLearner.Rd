@@ -3,8 +3,8 @@
 \alias{makeLearner}
 \title{Create learner object.}
 \usage{
-makeLearner(cl, id = cl, predict.type = "response", ...,
-  par.vals = list())
+  makeLearner(cl, id = cl, predict.type = "response", ...,
+    par.vals = list())
 }
 \arguments{
   \item{cl}{[\code{character(1)}]\cr Class of learner to
@@ -35,14 +35,14 @@ makeLearner(cl, id = cl, predict.type = "response", ...,
   (hyper)parameters to the learner but not both.}
 }
 \value{
-[\code{\link{Learner}}].
+  [\code{\link{Learner}}].
 }
 \description{
-For a classification learner the \code{predict.type} can be
-set to \dQuote{prob} to predict probabilities and the
-maximum value selects the label. The threshold used to
-assign the label can later be changed using the
-\code{\link{setThreshold}} function.
+  For a classification learner the \code{predict.type} can
+  be set to \dQuote{prob} to predict probabilities and the
+  maximum value selects the label. The threshold used to
+  assign the label can later be changed using the
+  \code{\link{setThreshold}} function.
 }
 \examples{
 makeLearner("classif.rpart")
@@ -56,7 +56,7 @@ lrn <- makeLearner("classif.lda", method = "t", nu = 10)
 print(lrn$par.vals)
 }
 \seealso{
-[\code{\link{resample}}],
-[\code{\link{predict.WrappedModel}}]
+  [\code{\link{resample}}],
+  [\code{\link{predict.WrappedModel}}]
 }
 

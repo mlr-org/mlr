@@ -3,8 +3,8 @@
 \title{Extract data in task. Useful in \code{\link{trainLearner}} when you add a learning
 machine to the package.}
 \usage{
-getTaskData(task, subset, features, target.extra = FALSE,
-  recode.target = "no")
+  getTaskData(task, subset, features, target.extra = FALSE,
+    recode.target = "no")
 }
 \arguments{
   \item{task}{[\code{\link{SupervisedTask}}]\cr The task.}
@@ -30,12 +30,13 @@ getTaskData(task, subset, features, target.extra = FALSE,
   either as 0 or -1.  Default is \dQuote{no}.}
 }
 \value{
-Either a data.frame or a list with data.frame \code{data}
-and vector \code{target}.
+  Either a data.frame or a list with data.frame \code{data}
+  and vector \code{target}.
 }
 \description{
-Extract data in task. Useful in \code{\link{trainLearner}}
-when you add a learning machine to the package.
+  Extract data in task. Useful in
+  \code{\link{trainLearner}} when you add a learning
+  machine to the package.
 }
 \examples{
 library("mlbench")

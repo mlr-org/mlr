@@ -1,9 +1,10 @@
 \name{makeWrappedModel}
-\alias{WrappedModel}
 \alias{makeWrappedModel}
+\alias{WrappedModel}
 \title{Induced model of learner.}
 \usage{
-makeWrappedModel(learner, model, task.desc, subset, features, time)
+  makeWrappedModel(learner, model, task.desc, subset,
+    features, time)
 }
 \arguments{
   \item{learner}{[\code{\link{Learner}}]\cr The learner.}
@@ -23,18 +24,18 @@ makeWrappedModel(learner, model, task.desc, subset, features, time)
   model fit in seconds.}
 }
 \value{
-[\code{\link{WrappedModel}}].
+  [\code{\link{WrappedModel}}].
 }
 \description{
-Result from \code{\link{train}}. It internally stores the
-underlying fitted model, the subset used for training,
-features used for training and computtation time for
-training.
+  Result from \code{\link{train}}. It internally stores the
+  underlying fitted model, the subset used for training,
+  features used for training and computtation time for
+  training.
 }
 \details{
-The constructer \code{makeWrappedModel} is only for
-internal use.
+  The constructer \code{makeWrappedModel} is only for
+  internal use.
 
-Object members: See arguments.
+  Object members: See arguments.
 }
 

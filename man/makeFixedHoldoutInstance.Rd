@@ -2,7 +2,7 @@
 \alias{makeFixedHoldoutInstance}
 \title{Generate a fixed holdout instance for resampling.}
 \usage{
-makeFixedHoldoutInstance(train.inds, test.inds, size)
+  makeFixedHoldoutInstance(train.inds, test.inds, size)
 }
 \arguments{
   \item{train.inds}{[\code{integer}]\cr Indices for
@@ -15,9 +15,9 @@ makeFixedHoldoutInstance(train.inds, test.inds, size)
   to resample.}
 }
 \value{
-[\code{\link{ResampleInstance}}].
+  [\code{\link{ResampleInstance}}].
 }
 \description{
-Generate a fixed holdout instance for resampling.
+  Generate a fixed holdout instance for resampling.
 }
 

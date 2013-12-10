@@ -2,7 +2,7 @@
 \alias{getTaskTargets}
 \title{Get target column of task.}
 \usage{
-getTaskTargets(task, subset, recode.target = "no")
+  getTaskTargets(task, subset, recode.target = "no")
 }
 \arguments{
   \item{task}{[\code{\link{SupervisedTask}}]\cr The task.}
@@ -19,11 +19,11 @@ getTaskTargets(task, subset, recode.target = "no")
   either as 0 or -1.  Default is \dQuote{no}.}
 }
 \value{
-A \code{factor} for classification or a \code{numeric} for
-regression.
+  A \code{factor} for classification or a \code{numeric}
+  for regression.
 }
 \description{
-Get target column of task.
+  Get target column of task.
 }
 \examples{
 task <- makeClassifTask(data = iris, target = "Species")

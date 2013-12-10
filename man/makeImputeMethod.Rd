@@ -2,7 +2,7 @@
 \alias{makeImputeMethod}
 \title{Create a custom imputation method.}
 \usage{
-makeImputeMethod(learn, impute, args = list())
+  makeImputeMethod(learn, impute, args = list())
 }
 \arguments{
   \item{learn}{[\code{function(data, target, col, ...)}]\cr
@@ -23,7 +23,7 @@ makeImputeMethod(learn, impute, args = list())
   pass to \code{learn} via \code{...}.}
 }
 \description{
-This is a constructor to create your own imputation
-methods.
+  This is a constructor to create your own imputation
+  methods.
 }
 

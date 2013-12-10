@@ -2,7 +2,8 @@
 \alias{getHyperPars}
 \title{Get current parameter settings for a learner.}
 \usage{
-getHyperPars(learner, for.fun = c("train", "predict", "both"))
+  getHyperPars(learner,
+    for.fun = c("train", "predict", "both"))
 }
 \arguments{
   \item{learner}{[\code{\link{Learner}}]\cr The learner.}
@@ -16,9 +17,9 @@ getHyperPars(learner, for.fun = c("train", "predict", "both"))
   "both")}.}
 }
 \value{
-[\code{list}]. A named list of values.
+  [\code{list}]. A named list of values.
 }
 \description{
-Get current parameter settings for a learner.
+  Get current parameter settings for a learner.
 }
 

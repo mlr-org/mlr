@@ -2,9 +2,10 @@
 \alias{makeCustomResampledMeasure}
 \title{Construct your own resampled performance measure.}
 \usage{
-makeCustomResampledMeasure(id, minimize = TRUE, classif = FALSE,
-  regr = FALSE, only.binary = FALSE, allowed.pred.types = character(0L),
-  fun, extra.args = list())
+  makeCustomResampledMeasure(id, minimize = TRUE,
+    classif = FALSE, regr = FALSE, only.binary = FALSE,
+    allowed.pred.types = character(0L), fun,
+    extra.args = list())
 }
 \arguments{
   \item{id}{[\code{character(1)}]\cr Name of aggregated
@@ -40,14 +41,14 @@ makeCustomResampledMeasure(id, minimize = TRUE, classif = FALSE,
   Default is empty list.}
 }
 \value{
-\code{\link{Measure}}
+  \code{\link{Measure}}
 }
 \description{
-Construct your own performance measure, used after
-resampling. Note that individual training / test set
-performance values will be set to \code{NA}, you only
-calculate an aggregated value. If you can define a function
-that makes sense for every single training / test set,
-implement your own \code{\link{Measure}}.
+  Construct your own performance measure, used after
+  resampling. Note that individual training / test set
+  performance values will be set to \code{NA}, you only
+  calculate an aggregated value. If you can define a
+  function that makes sense for every single training /
+  test set, implement your own \code{\link{Measure}}.
 }
 

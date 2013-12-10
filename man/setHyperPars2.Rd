@@ -2,7 +2,7 @@
 \alias{setHyperPars2}
 \title{Only exported for internal use.}
 \usage{
-setHyperPars2(learner, par.vals)
+  setHyperPars2(learner, par.vals)
 }
 \arguments{
   \item{learner}{[\code{\link{Learner}}]\cr The learner.}
@@ -11,6 +11,6 @@ setHyperPars2(learner, par.vals)
   (hyper)parameter settings.}
 }
 \description{
-Only exported for internal use.
+  Only exported for internal use.
 }
 

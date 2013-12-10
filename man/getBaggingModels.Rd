@@ -2,7 +2,7 @@
 \alias{getBaggingModels}
 \title{Returns the list of models fitted in bagging.}
 \usage{
-getBaggingModels(model, learner.models = FALSE)
+  getBaggingModels(model, learner.models = FALSE)
 }
 \arguments{
   \item{model}{[\code{\link{WrappedModel}}]\cr Model
@@ -14,9 +14,9 @@ getBaggingModels(model, learner.models = FALSE)
   \code{FALSE}.}
 }
 \value{
-[\code{list}].
+  [\code{list}].
 }
 \description{
-Returns the list of models fitted in bagging.
+  Returns the list of models fitted in bagging.
 }
 

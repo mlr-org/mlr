@@ -2,7 +2,7 @@
 \alias{performance}
 \title{Measure performance of prediction.}
 \usage{
-performance(pred, measures, task, model)
+  performance(pred, measures, task, model)
 }
 \arguments{
   \item{pred}{[\code{\link{Prediction}}] \cr Prediction
@@ -21,11 +21,11 @@ performance(pred, measures, task, model)
   measure, usually not needed.}
 }
 \value{
-A single numerical performance value.
+  A single numerical performance value.
 }
 \description{
-Measures the quality of a prediction w.r.t. some
-performance measure.
+  Measures the quality of a prediction w.r.t. some
+  performance measure.
 }
 \examples{
 training.set <- seq(1, nrow(iris), by = 2)
@@ -52,11 +52,9 @@ performance(pred, measures = mmce)
 
 ## Compute multiple performance measures at once
 ms <- list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
-sapply(ms, function(the.ms) {
-  performance(pred, measures = the.ms, task, mod)
-})
+performance(pred, measures = ms, task, mod)
 }
 \seealso{
-\code{\link{makeMeasure}}, \code{\link{measures}}
+  \code{\link{makeMeasure}}, \code{\link{measures}}
 }
 

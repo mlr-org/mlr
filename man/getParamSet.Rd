@@ -2,16 +2,16 @@
 \alias{getParamSet}
 \title{Get a description of all possible parameter settings for a learner.}
 \usage{
-getParamSet(learner)
+  getParamSet(learner)
 }
 \arguments{
   \item{learner}{[\code{\link{Learner}}]\cr The learner.}
 }
 \value{
-[\code{\link[ParamHelpers]{ParamSet}}].
+  [\code{\link[ParamHelpers]{ParamSet}}].
 }
 \description{
-Get a description of all possible parameter settings for a
-learner.
+  Get a description of all possible parameter settings for
+  a learner.
 }
 

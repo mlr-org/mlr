@@ -1,5 +1,6 @@
-#' Filter features by using a numerical importance criterion.
+#' @title Filter features by using a numerical importance criterion.
 #'
+#' @description
 #' Calculates numerical importance values for all features. 
 #' Thresholding of these values can be used to select \dQuote{useful} features.
 #' Look at package \code{\link[FSelector]{FSelector}} for details on the filter algorithms. 
@@ -14,7 +15,7 @@
 #'   Default is \dQuote{random.forest.importance}.
 #' @return [\code{numeric}]. A named numeric vector that contains an importance value 
 #'   for each feature.
-#'   @seealso \code{\link{getFilteredFeatures}}
+#' @seealso \code{\link{makeFilterWrapper}}
 #' @export
 filterFeatures = function(task, method="random.forest.importance") {
   requirePackages("FSelector", "filterFeatures")
@@ -31,8 +32,6 @@ filterFeatures = function(task, method="random.forest.importance") {
   names(vals) = rownames(y)
   return(vals)
 }
-
-
 
 #FIXME: we should rather allow 
 # filter: task, method, threshold --> new task

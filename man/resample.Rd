@@ -2,8 +2,8 @@
 \alias{resample}
 \title{Fit models according to a resampling strategy.}
 \usage{
-resample(learner, task, resampling, measures, weights, models = FALSE,
-  extract, show.info = TRUE)
+  resample(learner, task, resampling, measures, weights,
+    models = FALSE, extract, show.info = TRUE)
 }
 \arguments{
   \item{learner}{[\code{\link{Learner}}]\cr The learner.}
@@ -42,39 +42,39 @@ resample(learner, task, resampling, measures, weights, models = FALSE,
   \code{TRUE}.}
 }
 \value{
-List of: \item{measures.test [\code{data.frame}]}{Rows
-correspond to test sets in resampling iterations, columns
-to performance measures.} \item{measures.train
-[\code{data.frame}]}{Rows correspond to training sets in
-resampling iterations, columns to performance measures.}
-\item{aggr [\code{numeric}]}{Named vector of aggregated
-performance values. Names are coded like this
-<measure>.<aggregation>.} \item{pred
-[\code{\link{ResamplePrediction}}]}{Container for all
-predictions during resampling.} \item{models [list of
-\code{\link{WrappedModel}}]}{List of fitted models or
-\code{NULL}.} \item{extract [\code{list}]}{List of
-extracted parts from fitted models or \code{NULL}.}
+  List of: \item{measures.test [\code{data.frame}]}{Rows
+  correspond to test sets in resampling iterations, columns
+  to performance measures.} \item{measures.train
+  [\code{data.frame}]}{Rows correspond to training sets in
+  resampling iterations, columns to performance measures.}
+  \item{aggr [\code{numeric}]}{Named vector of aggregated
+  performance values. Names are coded like this
+  <measure>.<aggregation>.} \item{pred
+  [\code{\link{ResamplePrediction}}]}{Container for all
+  predictions during resampling.} \item{models [list of
+  \code{\link{WrappedModel}}]}{List of fitted models or
+  \code{NULL}.} \item{extract [\code{list}]}{List of
+  extracted parts from fitted models or \code{NULL}.}
 }
 \description{
-Given a resampling strategy, which defines sets of training
-and test indices, fits the selected learner using the
-training sets and performs predictions for the
-training/test sets. This depends on what you selected in
-the resampling strategy, see parameter \code{predict} in
-\code{\link{makeResampleDesc}}.
+  Given a resampling strategy, which defines sets of
+  training and test indices, fits the selected learner
+  using the training sets and performs predictions for the
+  training/test sets. This depends on what you selected in
+  the resampling strategy, see parameter \code{predict} in
+  \code{\link{makeResampleDesc}}.
 
-Then performance measures are calculated on all respective
-data sets and aggregated.
+  Then performance measures are calculated on all
+  respective data sets and aggregated.
 
-You are able to return all fitted models (parameter
-\code{models}) or extract specific parts of the models
-(parameter \code{extract}) as returning all of them
-completely might be memory intensive.
+  You are able to return all fitted models (parameter
+  \code{models}) or extract specific parts of the models
+  (parameter \code{extract}) as returning all of them
+  completely might be memory intensive.
 
-For construction of the resampling strategies use the
-factory methods \code{\link{makeResampleDesc}} and
-\code{\link{makeResampleInstance}}.
+  For construction of the resampling strategies use the
+  factory methods \code{\link{makeResampleDesc}} and
+  \code{\link{makeResampleInstance}}.
 }
 \examples{
 task <- makeClassifTask(data = iris, target = "Species")
@@ -85,7 +85,7 @@ print(r$measures.test)
 print(r$pred)
 }
 \seealso{
-\code{\link{makeResampleDesc}},
-\code{\link{makeResampleInstance}}
+  \code{\link{makeResampleDesc}},
+  \code{\link{makeResampleInstance}}
 }
 

@@ -2,7 +2,7 @@
 \alias{getProbabilities}
 \title{Get probabilities for some classes.}
 \usage{
-getProbabilities(pred, cl)
+  getProbabilities(pred, cl)
 }
 \arguments{
   \item{pred}{[\code{\link{Prediction}}]\cr Prediction
@@ -13,12 +13,12 @@ getProbabilities(pred, cl)
   the positive class for binary classification.}
 }
 \value{
-[\code{data.frame}] with numerical columns or a numerical
-vector if length of \code{cl} is 1.  Order of columns is
-defined by \code{cl}.
+  [\code{data.frame}] with numerical columns or a numerical
+  vector if length of \code{cl} is 1.  Order of columns is
+  defined by \code{cl}.
 }
 \description{
-Get probabilities for some classes.
+  Get probabilities for some classes.
 }
 \examples{
 task <- makeClassifTask(data = iris, target = "Species")
@@ -32,6 +32,6 @@ head(getProbabilities(pred))
 head(getProbabilities(pred, c("setosa", "virginica")))
 }
 \seealso{
-\code{\link{predict.WrappedModel}}
+  \code{\link{predict.WrappedModel}}
 }
 
