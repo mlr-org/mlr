@@ -17,9 +17,9 @@ We start with a basic example and train a Linear Dicriminant Analysis on the ``i
 
 ```splus
 library("mlr")
-task <- makeClassifTask(data = iris, target = "Species")
-lrn <- makeLearner("classif.lda")
-mod <- train(lrn, task)
+task = makeClassifTask(data = iris, target = "Species")
+lrn = makeLearner("classif.lda")
+mod = train(lrn, task)
 mod
 ```
 
@@ -41,9 +41,9 @@ library("mlr")
 library("mlbench")
 data(BostonHousing)
 
-task <- makeRegrTask(data = BostonHousing, target = "medv")
-lrn <- makeLearner("regr.lm")
-mod <- train(lrn, task)
+task = makeRegrTask(data = BostonHousing, target = "medv")
+lrn = makeLearner("regr.lm")
+mod = train(lrn, task)
 mod
 ```
 
@@ -81,11 +81,11 @@ Let's train a decision tree on the ``iris`` data set.
 library("mlr")
 
 # First, create the classification task and the learner object
-task <- makeClassifTask(data = iris, target = "Species")
-lrn <- makeLearner("classif.rpart")
+task = makeClassifTask(data = iris, target = "Species")
+lrn = makeLearner("classif.rpart")
 
 # Now, train the model with all the instances provided by the iris data.
-mod <- train(lrn, task)
+mod = train(lrn, task)
 
 # You can print some basic information of the model to the console.
 mod
@@ -103,7 +103,7 @@ Now, a subset of the data (every second observation) is used for training.
 
 
 ```splus
-mod <- train(lrn, task, subset = seq(from = 1, to = nrow(iris), by = 2))
+mod = train(lrn, task, subset = seq(from = 1, to = nrow(iris), by = 2))
 mod
 ```
 
@@ -147,10 +147,10 @@ As a regression example we use the ``BostonHousing`` data set. Let's train a Gra
 library("mlbench")
 data(BostonHousing)
 
-task <- makeRegrTask(data = BostonHousing, target = "medv")
-lrn <- makeLearner("regr.gbm", n.trees = 500, distribution = "laplace", interaction.depth = 3)
+task = makeRegrTask(data = BostonHousing, target = "medv")
+lrn = makeLearner("regr.gbm", n.trees = 500, distribution = "laplace", interaction.depth = 3)
 
-mod <- train(lrn, task)
+mod = train(lrn, task)
 mod
 ```
 
@@ -166,7 +166,7 @@ Now, we use a subset of the data for training (every second observation).
 
 
 ```splus
-mod <- train(lrn, task, subset = seq(1, nrow(BostonHousing), 2))
+mod = train(lrn, task, subset = seq(1, nrow(BostonHousing), 2))
 mod
 ```
 

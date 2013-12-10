@@ -24,7 +24,7 @@ task, just like in the tutorial on [training](train.md):
 
 ```{r}
 library("mlr")
-task <- makeClassifTask(data=iris, target="Species")
+task = makeClassifTask(data=iris, target="Species")
 ``` 
 
 Next, we need to create a [ParamSet](http://berndbischl.github.io/ParamHelpers/man/makeParamSet.html) object, which describes the parameter space 
@@ -34,7 +34,7 @@ Since we will use a grid search strategy, we add a discrete parameter for the
 More details concerning parameter sets are explained in section [parameters](parameters.md).
 
 ```{r}
-ps <- makeParamSet(makeDiscreteParam("C", values=2^(-2:2)),
+ps = makeParamSet(makeDiscreteParam("C", values=2^(-2:2)),
                    makeDiscreteParam("sigma", values=2^(-2:2)))
 ``` 
 
@@ -43,7 +43,7 @@ combination. For this we need to create a resampling description just
 like in the [resampling](resample.md) part of the tutorial:
 
 ```{r}
-rdesc <- makeResampleDesc("CV", iters=3)
+rdesc = makeResampleDesc("CV", iters=3)
 ``` 
 
 Before we can actually tune our classifier, we need an instance of a
@@ -51,7 +51,7 @@ Before we can actually tune our classifier, we need an instance of a
 used. Here we use a grid search:
 
 ```{r}
-ctrl <- makeTuneControlGrid()
+ctrl = makeTuneControlGrid()
 ``` 
 
 Finally, by combining all the previous pieces, we can tune the SVM
@@ -86,15 +86,15 @@ Let's run a nested CV with 5 folds in the outer loop and 3 folds in the
 inner loop on the example from above.
 
 ```{r}
-task <- makeClassifTask(data=iris, target="Species")
-ps <- makeParamSet(makeDiscreteParam("C", values=2^(-2:2)),
+task = makeClassifTask(data=iris, target="Species")
+ps = makeParamSet(makeDiscreteParam("C", values=2^(-2:2)),
                    makeDiscreteParam("sigma", values=2^(-2:2)))
-ctrl <- makeTuneControlGrid()
+ctrl = makeTuneControlGrid()
 
-rin <- makeResampleDesc("CV", iters=3)
-rout <- makeResampleDesc("CV", iters=5)
+rin = makeResampleDesc("CV", iters=3)
+rout = makeResampleDesc("CV", iters=5)
 
-lrn <- makeTuneWrapper(makeLearner("classif.ksvm"), resampling=rin,
+lrn = makeTuneWrapper(makeLearner("classif.ksvm"), resampling=rin,
                        par.set=ps, control=ctrl)
 ``` 
 
@@ -103,7 +103,7 @@ want to extract the tune results as well. Please note, that storing the
 entire models might be expensive.
 
 ```{r}
-r <- resample(lrn, task, resampling = rout, extract = getTuneResult)
+r = resample(lrn, task, resampling = rout, extract = getTuneResult, show.info=FALSE)
 ```
 
 Finally, we can compare our results. We receive one optimal setting for
@@ -141,19 +141,19 @@ in package ``kknn``) on the ``BostonHousing`` data set.
 library("mlbench")
 data(BostonHousing)
 
-task <- makeRegrTask(data = BostonHousing, target = "medv")
+task = makeRegrTask(data = BostonHousing, target = "medv")
 
 ## Range of the value k
-ps <- makeParamSet(makeDiscreteParam("k", 1:7))
+ps = makeParamSet(makeDiscreteParam("k", 1:7))
 
 ## Evaluate with 5-fold cross-validation
-rdesc <- makeResampleDesc("CV", iters = 5)
+rdesc = makeResampleDesc("CV", iters = 5)
 
 ## Create a grid tuner:
-ctrl <- makeTuneControlGrid()
+ctrl = makeTuneControlGrid()
 
 ## Create a learner:
-lrn <- makeLearner("regr.kknn")
+lrn = makeLearner("regr.kknn")
 
 ## Tune k-nearest-neighbor-regression with mean squared error as default measure
 tuneParams(learner=lrn, task=task, resampling=rdesc, par.set=ps, control=ctrl, measures=mse)

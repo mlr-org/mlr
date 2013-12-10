@@ -24,12 +24,12 @@ Quick start
 library("mlr")
 
 ## Define a learning task and an appropriate learner
-task <- makeClassifTask(data = iris, target = "Species")
-lrn <- makeLearner("classif.lda")
+task = makeClassifTask(data = iris, target = "Species")
+lrn = makeLearner("classif.lda")
 
 ## Perform a 3-fold cross-validation
-rdesc <- makeResampleDesc("CV", iters = 3)
-r <- resample(lrn, task, rdesc)
+rdesc = makeResampleDesc("CV", iters = 3)
+r = resample(lrn, task, rdesc)
 ```
 
 ```
@@ -107,12 +107,12 @@ library("mlbench")
 data(BostonHousing)
 
 ## Define a learning task and an appropriate learner
-task <- makeRegrTask(data = BostonHousing, target = "medv")
-lrn <- makeLearner("regr.lm")
+task = makeRegrTask(data = BostonHousing, target = "medv")
+lrn = makeLearner("regr.lm")
 
 ## Perform a 3-fold cross-validation
-rdesc <- makeResampleDesc("CV", iters = 3)
-r <- resample(lrn, task, rdesc)
+rdesc = makeResampleDesc("CV", iters = 3)
+r = resample(lrn, task, rdesc)
 ```
 
 ```
@@ -224,8 +224,8 @@ process as easy as possible.
 
 ```splus
 ## get the cv.instance directly
-rdesc <- makeResampleDesc("CV", iters = 10)
-rinst <- makeResampleInstance(rdesc, size = nrow(iris))
+rdesc = makeResampleDesc("CV", iters = 10)
+rinst = makeResampleInstance(rdesc, size = nrow(iris))
 ```
 
 
@@ -273,8 +273,8 @@ is commonly called `holdout` or `test sample estimation`.
 
 
 ```splus
-rdesc <- makeResampleDesc("Subsample", iters = 10, split = 2/3)
-rdesc <- makeResampleDesc("Subsample", iters = 1, split = 2/3)
+rdesc = makeResampleDesc("Subsample", iters = 10, split = 2/3)
+rdesc = makeResampleDesc("Subsample", iters = 1, split = 2/3)
 ```
 
 
@@ -286,7 +286,7 @@ used as a test set, while the remaining parts form the training set.
 
 
 ```splus
-rdesc <- makeResampleDesc("CV", iters = 10)
+rdesc = makeResampleDesc("CV", iters = 10)
 ```
 
 
@@ -300,7 +300,7 @@ occuring in the training set, form the test set.
 
 
 ```splus
-rdesc <- makeResampleDesc("Bootstrap", iters = 10)
+rdesc = makeResampleDesc("Bootstrap", iters = 10)
 ```
 
 
@@ -337,11 +337,11 @@ cross-validation:
 
 ```splus
 ## Classification task
-task <- makeClassifTask(data = iris, target = "Species")
+task = makeClassifTask(data = iris, target = "Species")
 
 ## Resample instance for Cross-validation
-rdesc <- makeResampleDesc("CV", iters = 3)
-rinst <- makeResampleInstance(rdesc, task = task)
+rdesc = makeResampleDesc("CV", iters = 3)
+rinst = makeResampleInstance(rdesc, task = task)
 ```
 
 
@@ -352,8 +352,8 @@ error (`mmce`) and the accuracy (`acc`):
 ```splus
 ## Merge learner (lrn), i.e. Decision Tree, classification task (task) and
 ## resample instance (rinst)
-lrn <- makeLearner("classif.rpart")
-r1 <- resample(lrn, task, rinst, list(mmce, acc))
+lrn = makeLearner("classif.rpart")
+r1 = resample(lrn, task, rinst, list(mmce, acc))
 ```
 
 ```
@@ -368,8 +368,8 @@ Let's set a couple of hyperparameters for rpart
 
 
 ```splus
-lrn1 <- makeLearner("classif.rpart", minsplit = 10, cp = 0.03)
-r1 <- resample(lrn1, task, rinst, list(mmce, acc))
+lrn1 = makeLearner("classif.rpart", minsplit = 10, cp = 0.03)
+r1 = resample(lrn1, task, rinst, list(mmce, acc))
 ```
 
 ```
@@ -383,8 +383,8 @@ r1 <- resample(lrn1, task, rinst, list(mmce, acc))
 
 
 ## Second resample for LDA as learner
-lrn2 <- makeLearner("classif.lda")
-r2 <- resample(lrn2, task, rinst, list(mmce, acc))
+lrn2 = makeLearner("classif.lda")
+r2 = resample(lrn2, task, rinst, list(mmce, acc))
 ```
 
 ```
@@ -534,8 +534,7 @@ The latter value is the aggregation, i.e. by default the mean, of the three
 misclassification errors from the table above.
 Having a look at the single losses is of course possible as well.
 
-Regression example
-......................
+### Regression example
 
 Now, we use the ``BostonHousing`` data and compare the results of a Neural Net and a k-Nearest-Neighbor regression using out-of-bag bootstraping.
 
@@ -546,16 +545,16 @@ library("mlbench")
 data(BostonHousing)
 
 ## Regression task
-task <- makeRegrTask(data = BostonHousing, target = "medv")
+task = makeRegrTask(data = BostonHousing, target = "medv")
 
 ## Resample instance for bootstraping
-rdesc <- makeResampleDesc("Bootstrap", iters = 3)
-rinst <- makeResampleInstance(rdesc, task = task)
+rdesc = makeResampleDesc("Bootstrap", iters = 3)
+rinst = makeResampleInstance(rdesc, task = task)
 
-ms <- list(mse, medae)
+ms = list(mse, medae)
 
-lrn1 <- makeLearner("regr.nnet")
-r1 <- resample(lrn1, task, rinst, measures = ms)
+lrn1 = makeLearner("regr.nnet")
+r1 = resample(lrn1, task, rinst, measures = ms)
 ```
 
 ```
@@ -609,8 +608,8 @@ r1 <- resample(lrn1, task, rinst, measures = ms)
 ```splus
 
 ## Another resampling for the k-Nearest Neighbor regression
-lrn2 <- makeLearner("regr.kknn")
-r2 <- resample(lrn2, task, rinst, measures = ms)
+lrn2 = makeLearner("regr.kknn")
+r2 = resample(lrn2, task, rinst, measures = ms)
 ```
 
 ```

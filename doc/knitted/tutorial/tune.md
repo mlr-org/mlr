@@ -25,7 +25,7 @@ task, just like in the tutorial on [training](train.md):
 
 ```splus
 library("mlr")
-task <- makeClassifTask(data = iris, target = "Species")
+task = makeClassifTask(data = iris, target = "Species")
 ```
 
 
@@ -37,7 +37,7 @@ More details concerning parameter sets are explained in section [parameters](par
 
 
 ```splus
-ps <- makeParamSet(makeDiscreteParam("C", values = 2^(-2:2)), makeDiscreteParam("sigma", 
+ps = makeParamSet(makeDiscreteParam("C", values = 2^(-2:2)), makeDiscreteParam("sigma", 
     values = 2^(-2:2)))
 ```
 
@@ -48,7 +48,7 @@ like in the [resampling](resample.md) part of the tutorial:
 
 
 ```splus
-rdesc <- makeResampleDesc("CV", iters = 3)
+rdesc = makeResampleDesc("CV", iters = 3)
 ```
 
 
@@ -58,7 +58,7 @@ used. Here we use a grid search:
 
 
 ```splus
-ctrl <- makeTuneControlGrid()
+ctrl = makeTuneControlGrid()
 ```
 
 
@@ -137,15 +137,15 @@ inner loop on the example from above.
 
 
 ```splus
-task <- makeClassifTask(data = iris, target = "Species")
-ps <- makeParamSet(makeDiscreteParam("C", values = 2^(-2:2)), makeDiscreteParam("sigma", 
+task = makeClassifTask(data = iris, target = "Species")
+ps = makeParamSet(makeDiscreteParam("C", values = 2^(-2:2)), makeDiscreteParam("sigma", 
     values = 2^(-2:2)))
-ctrl <- makeTuneControlGrid()
+ctrl = makeTuneControlGrid()
 
-rin <- makeResampleDesc("CV", iters = 3)
-rout <- makeResampleDesc("CV", iters = 5)
+rin = makeResampleDesc("CV", iters = 3)
+rout = makeResampleDesc("CV", iters = 5)
 
-lrn <- makeTuneWrapper(makeLearner("classif.ksvm"), resampling = rin, par.set = ps, 
+lrn = makeTuneWrapper(makeLearner("classif.ksvm"), resampling = rin, par.set = ps, 
     control = ctrl)
 ```
 
@@ -156,11 +156,10 @@ entire models might be expensive.
 
 
 ```splus
-r <- resample(lrn, task, resampling = rout, extract = getTuneResult)
+r = resample(lrn, task, resampling = rout, extract = getTuneResult, show.info = FALSE)
 ```
 
 ```
-## [Resample] cross-validation iter: 1
 ## [Tune] Started tuning learner classif.ksvm for parameter set:
 ## Disc param 'C'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
 ## Disc param 'sigma'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
@@ -191,7 +190,6 @@ r <- resample(lrn, task, resampling = rout, extract = getTuneResult)
 ## [Tune] 1: C=2,sigma=4 : mmce.test.mean=0.0917
 ## [Tune] 1: C=4,sigma=4 : mmce.test.mean=0.0917
 ## [Tune] Result: C=2,sigma=0.25 : =0.025
-## [Resample] cross-validation iter: 2
 ## [Tune] Started tuning learner classif.ksvm for parameter set:
 ## Disc param 'C'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
 ## Disc param 'sigma'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
@@ -222,7 +220,6 @@ r <- resample(lrn, task, resampling = rout, extract = getTuneResult)
 ## [Tune] 1: C=2,sigma=4 : mmce.test.mean=0.05
 ## [Tune] 1: C=4,sigma=4 : mmce.test.mean=0.05
 ## [Tune] Result: C=2,sigma=0.25 : =0.025
-## [Resample] cross-validation iter: 3
 ## [Tune] Started tuning learner classif.ksvm for parameter set:
 ## Disc param 'C'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
 ## Disc param 'sigma'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
@@ -253,7 +250,6 @@ r <- resample(lrn, task, resampling = rout, extract = getTuneResult)
 ## [Tune] 1: C=2,sigma=4 : mmce.test.mean=0.0833
 ## [Tune] 1: C=4,sigma=4 : mmce.test.mean=0.0833
 ## [Tune] Result: C=2,sigma=0.25 : =0.0333
-## [Resample] cross-validation iter: 4
 ## [Tune] Started tuning learner classif.ksvm for parameter set:
 ## Disc param 'C'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
 ## Disc param 'sigma'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
@@ -284,7 +280,6 @@ r <- resample(lrn, task, resampling = rout, extract = getTuneResult)
 ## [Tune] 1: C=2,sigma=4 : mmce.test.mean=0.0917
 ## [Tune] 1: C=4,sigma=4 : mmce.test.mean=0.0917
 ## [Tune] Result: C=2,sigma=0.25 : =0.0333
-## [Resample] cross-validation iter: 5
 ## [Tune] Started tuning learner classif.ksvm for parameter set:
 ## Disc param 'C'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
 ## Disc param 'sigma'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
@@ -315,7 +310,6 @@ r <- resample(lrn, task, resampling = rout, extract = getTuneResult)
 ## [Tune] 1: C=2,sigma=4 : mmce.test.mean=0.05
 ## [Tune] 1: C=4,sigma=4 : mmce.test.mean=0.05
 ## [Tune] Result: C=1,sigma=0.25 : =0.0333
-## [Resample] Result: mmce.test.mean=0.0333
 ```
 
 
@@ -403,19 +397,19 @@ in package ``kknn``) on the ``BostonHousing`` data set.
 library("mlbench")
 data(BostonHousing)
 
-task <- makeRegrTask(data = BostonHousing, target = "medv")
+task = makeRegrTask(data = BostonHousing, target = "medv")
 
 ## Range of the value k
-ps <- makeParamSet(makeDiscreteParam("k", 1:7))
+ps = makeParamSet(makeDiscreteParam("k", 1:7))
 
 ## Evaluate with 5-fold cross-validation
-rdesc <- makeResampleDesc("CV", iters = 5)
+rdesc = makeResampleDesc("CV", iters = 5)
 
 ## Create a grid tuner:
-ctrl <- makeTuneControlGrid()
+ctrl = makeTuneControlGrid()
 
 ## Create a learner:
-lrn <- makeLearner("regr.kknn")
+lrn = makeLearner("regr.kknn")
 
 ## Tune k-nearest-neighbor-regression with mean squared error as default
 ## measure

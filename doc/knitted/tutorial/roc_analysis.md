@@ -51,12 +51,12 @@ library("mlr")
 
 ## Generate 2 class problem with mlbench
 set.seed(1)
-testData <- as.data.frame(mlbench.2dnormals(100, sd = 2))
+testData = as.data.frame(mlbench.2dnormals(100, sd = 2))
 
 ## Define a learning task and an appropriate learner
-task <- makeClassifTask(data = testData, target = "classes")
-lrn1 <- makeLearner("classif.lda", predict.type = "prob")
-lrn2 <- makeLearner("classif.ksvm", predict.type = "prob")
+task = makeClassifTask(data = testData, target = "classes")
+lrn1 = makeLearner("classif.lda", predict.type = "prob")
+lrn2 = makeLearner("classif.ksvm", predict.type = "prob")
 ```
 
 
@@ -64,8 +64,8 @@ Afterwards we perform [resampling](resample.md) to obtain predictions for each f
 
 ```splus
 ## Perform a 10-fold cross-validation
-rdesc <- makeResampleDesc("CV", iters = 10)
-r1 <- resample(lrn1, task, rdesc)
+rdesc = makeResampleDesc("CV", iters = 10)
+r1 = resample(lrn1, task, rdesc)
 ```
 
 ```
@@ -83,7 +83,7 @@ r1 <- resample(lrn1, task, rdesc)
 ```
 
 ```splus
-r2 <- resample(lrn2, task, rdesc)
+r2 = resample(lrn2, task, rdesc)
 ```
 
 ```
@@ -179,10 +179,10 @@ For details view `?plot.performance`.
 
 
 ```splus
-p1 <- asROCRPrediction(r1$pred)
-p2 <- asROCRPrediction(r2$pred)
-perf1 <- ROCR::performance(p1, "tpr", "fpr")
-perf2 <- ROCR::performance(p2, "tpr", "fpr")
+p1 = asROCRPrediction(r1$pred)
+p2 = asROCRPrediction(r2$pred)
+perf1 = ROCR::performance(p1, "tpr", "fpr")
+perf2 = ROCR::performance(p2, "tpr", "fpr")
 plot(perf1, col = "blue", avg = "threshold")
 plot(perf2, col = "red", avg = "threshold", add = TRUE)
 legend("bottomright", legend = c("lda", "ksvm"), lty = 1, col = c("blue", "red"))
@@ -194,14 +194,14 @@ legend("bottomright", legend = c("lda", "ksvm"), lty = 1, col = c("blue", "red")
 We can also cheat a bit and create pooled ROC-Curves by manually setting the class attribute from the prediction object from `ResamplePrediction` to `Prediction`.
 
 ```splus
-r1p <- r1$pred
-r2p <- r2$pred
-class(r1p) <- "Prediction"
-class(r2p) <- "Prediction"
-p1 <- asROCRPrediction(r1p)
-p2 <- asROCRPrediction(r2p)
-perf1 <- ROCR::performance(p1, "tpr", "fpr")
-perf2 <- ROCR::performance(p2, "tpr", "fpr")
+r1p = r1$pred
+r2p = r2$pred
+class(r1p) = "Prediction"
+class(r2p) = "Prediction"
+p1 = asROCRPrediction(r1p)
+p2 = asROCRPrediction(r2p)
+perf1 = ROCR::performance(p1, "tpr", "fpr")
+perf2 = ROCR::performance(p2, "tpr", "fpr")
 plot(perf1, col = "blue")
 plot(perf2, col = "red", add = TRUE)
 ```

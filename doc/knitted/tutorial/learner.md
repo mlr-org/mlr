@@ -34,7 +34,7 @@ Classification example
 
 ```splus
 library("mlr")
-lrn <- makeLearner("classif.rpart")
+lrn = makeLearner("classif.rpart")
 lrn
 ```
 
@@ -69,7 +69,7 @@ an ID.
 
 
 ```splus
-lrn <- makeLearner("classif.rpart", minsplit = 7, cp = 0.03, id = "myrpart")
+lrn = makeLearner("classif.rpart", minsplit = 7, cp = 0.03, id = "myrpart")
 lrn
 ```
 
@@ -92,7 +92,7 @@ This is how to get posterior probabilities when making a [prediction](http://ber
 
 
 ```splus
-lrn <- makeLearner("classif.rpart", predict.type = "prob")
+lrn = makeLearner("classif.rpart", predict.type = "prob")
 lrn
 ```
 
@@ -119,7 +119,7 @@ Create a rpart [Learner](http://berndbischl.github.io/mlr/man/makeLearner.html) 
 
 
 ```splus
-lrn <- makeLearner("regr.rpart")
+lrn = makeLearner("regr.rpart")
 lrn
 ```
 
@@ -142,7 +142,7 @@ and an ID.
 
 
 ```splus
-lrn <- makeLearner("regr.gbm", n.trees = 500, distribution = "laplace", interaction.depth = 3, 
+lrn = makeLearner("regr.gbm", n.trees = 500, distribution = "laplace", interaction.depth = 3, 
     id = "mygbm")
 lrn
 ```

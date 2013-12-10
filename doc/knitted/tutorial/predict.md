@@ -19,9 +19,9 @@ for the same data set.
 ```splus
 library("mlr")
 
-task <- makeClassifTask(data = iris, target = "Species")
-lrn <- makeLearner("classif.lda")
-mod <- train(lrn, task = task)
+task = makeClassifTask(data = iris, target = "Species")
+lrn = makeLearner("classif.lda")
+mod = train(lrn, task = task)
 predict(mod, newdata = iris)
 ```
 
@@ -48,9 +48,9 @@ library("mlr")
 library("mlbench")
 data(BostonHousing)
 
-task <- makeRegrTask(data = BostonHousing, target = "medv")
-lrn <- makeLearner("regr.lm")
-mod <- train(lrn, task)
+task = makeRegrTask(data = BostonHousing, target = "medv")
+lrn = makeLearner("regr.lm")
+mod = train(lrn, task)
 predict(mod, newdata = BostonHousing)
 ```
 
@@ -58,7 +58,7 @@ predict(mod, newdata = BostonHousing)
 ## Prediction:
 ## predict.type: response
 ## threshold: 
-## time: 0.00
+## time: 0.01
 ## 'data.frame':	506 obs. of  2 variables:
 ##  $ truth   : num  24 21.6 34.7 33.4 36.2 28.7 22.9 27.1 16.5 18.9 ...
 ##  $ response: num  30 25 30.6 28.6 27.9 ...
@@ -97,21 +97,21 @@ first one and [predict](http://berndbischl.github.io/mlr/man/predict.WrappedMode
 library("mlr")
 
 # At first we define the classification task.
-task <- makeClassifTask(data = iris, target = "Species")
+task = makeClassifTask(data = iris, target = "Species")
 
 # Define the learning algorithm
-lrn <- makeLearner("classif.rpart")
+lrn = makeLearner("classif.rpart")
 
 # Split the iris data into a training set for learning and a test set.
-training.set <- seq(from = 1, to = nrow(iris), by = 2)
-test.set <- seq(from = 2, to = nrow(iris), by = 2)
+training.set = seq(from = 1, to = nrow(iris), by = 2)
+test.set = seq(from = 2, to = nrow(iris), by = 2)
 
 # Now, we can train a decision tree using only the observations in
 # ``train.set``:
-mod <- train(lrn, task, subset = training.set)
+mod = train(lrn, task, subset = training.set)
 
 # Finally, to predict the outcome on new values, we use the predict method:
-pred <- predict(mod, newdata = iris[test.set, ])
+pred = predict(mod, newdata = iris[test.set, ])
 ```
 
 
@@ -137,7 +137,7 @@ Alternatively, we can also predict directly from a task:
 
 
 ```splus
-pred <- predict(mod, task = task, subset = test.set)
+pred = predict(mod, task = task, subset = test.set)
 head(as.data.frame(pred))
 ```
 
@@ -162,9 +162,9 @@ of the learner.
 
 
 ```splus
-lrn <- makeLearner("classif.rpart", predict.type = "prob")
-mod <- train(lrn, task)
-pred <- predict(mod, newdata = iris[test.set, ])
+lrn = makeLearner("classif.rpart", predict.type = "prob")
+mod = train(lrn, task)
+pred = predict(mod, newdata = iris[test.set, ])
 head(pred$data)
 ```
 
@@ -219,10 +219,10 @@ predicts probabilities, train the learner and then predict the class labels.
 library("mlbench")
 data(Sonar)
 
-task <- makeClassifTask(data = Sonar, target = "Class", positive = "M")
-lrn <- makeLearner("classif.rpart", predict.type = "prob")
-mod <- train(lrn, task = task)
-pred <- predict(mod, task = task)
+task = makeClassifTask(data = Sonar, target = "Class", positive = "M")
+lrn = makeLearner("classif.rpart", predict.type = "prob")
+mod = train(lrn, task = task)
+pred = predict(mod, task = task)
 head(pred$data)
 ```
 
@@ -243,7 +243,7 @@ the threshold for the *positive* class to 0.8:
 
 
 ```splus
-pred <- setThreshold(pred, 0.8)
+pred = setThreshold(pred, 0.8)
 head(pred$data)
 ```
 
@@ -279,15 +279,15 @@ proceeding is analog to the classification case.
 library(mlbench)
 data(BostonHousing)
 
-task <- makeRegrTask(data = BostonHousing, target = "medv")
+task = makeRegrTask(data = BostonHousing, target = "medv")
 
-training.set <- seq(from = 1, to = nrow(BostonHousing), by = 2)
-test.set <- seq(from = 2, to = nrow(BostonHousing), by = 2)
+training.set = seq(from = 1, to = nrow(BostonHousing), by = 2)
+test.set = seq(from = 2, to = nrow(BostonHousing), by = 2)
 
-lrn <- makeLearner("regr.gbm", n.trees = 100)
-mod <- train(lrn, task, subset = training.set)
+lrn = makeLearner("regr.gbm", n.trees = 100)
+mod = train(lrn, task, subset = training.set)
 
-pred <- predict(mod, newdata = BostonHousing[test.set, ])
+pred = predict(mod, newdata = BostonHousing[test.set, ])
 
 head(pred$data)
 ```

@@ -46,7 +46,7 @@ learners = c("classif.lda", "classif.qda")
 ## Define cross-validation indices
 rdesc = makeResampleDescription("CV", iters = 5)
 
-res <- bench.exp(learners, task, rdesc)
+res = bench.exp(learners, task, rdesc)
 ```
 
 

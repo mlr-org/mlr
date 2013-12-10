@@ -29,9 +29,9 @@ library("mlr")
 library("mlbench")
 data(BreastCancer)
 
-df <- BreastCancer
-df$Id <- NULL
-task <- makeClassifTask(id = "BreastCancer", data = df, target = "Class")
+df = BreastCancer
+df$Id = NULL
+task = makeClassifTask(id = "BreastCancer", data = df, target = "Class")
 ```
 
 
@@ -75,8 +75,8 @@ We will generally take the ``BostonHousing`` data set as regression example.
 library("mlr")
 library("mlbench")
 data(BostonHousing)
-df <- BostonHousing
-task <- makeRegrTask(id = "BostonHousing", data = df, target = "medv")
+df = BostonHousing
+task = makeRegrTask(id = "BostonHousing", data = df, target = "medv")
 task
 ```
 
@@ -108,9 +108,9 @@ library("mlr")
 library("mlbench")
 data(BreastCancer)
 
-df <- BreastCancer
-df$Id <- NULL
-task <- makeClassifTask(id = "BreastCancer", data = df, target = "Class")
+df = BreastCancer
+df$Id = NULL
+task = makeClassifTask(id = "BreastCancer", data = df, target = "Class")
 task
 ```
 
@@ -139,7 +139,7 @@ your applications.
 
 
 ```splus
-task <- makeClassifTask(id = "BreastCancer", data = df, target = "Class", positive = "malignant")
+task = makeClassifTask(id = "BreastCancer", data = df, target = "Class", positive = "malignant")
 ```
 
 
@@ -259,8 +259,8 @@ Now, let's include a (nonsensical) blocking structure:
 
 
 ```splus
-blocking <- factor(rep(1:3, nrow(BreastCancer)/3))
-task <- makeClassifTask(id = "BreastCancer", data = df, target = "Class", blocking = blocking)
+blocking = factor(rep(1:3, nrow(BreastCancer)/3))
+task = makeClassifTask(id = "BreastCancer", data = df, target = "Class", blocking = blocking)
 head(task$blocking)
 ```
 
@@ -292,7 +292,7 @@ Before that, let's look at the regression experiment again.
 library("mlr")
 library("mlbench")
 data(BostonHousing)
-task <- makeRegrTask(data = BostonHousing, target = "medv")
+task = makeRegrTask(data = BostonHousing, target = "medv")
 task
 ```
 
