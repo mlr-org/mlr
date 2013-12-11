@@ -8,6 +8,7 @@ before_install:
   - ./travis-tool.sh bootstrap
 install:
   - ./travis-tool.sh aptget_install r-cran-rjava
+  - sudo R CMD javareconf
   - ./travis-tool.sh github_package testthat
   - ./travis-tool.sh github_package assertthat
   - ./travis-tool.sh github_package berndbischl/BBmisc
