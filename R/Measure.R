@@ -89,7 +89,7 @@ makeMeasure = function(id, minimize, classif=FALSE, regr=FALSE,
     fun=fun,
     extra.args=extra.args
   ), class="Measure")
-  setAggregation(m, test.mean)
+  setAggregation(m, aggr)
 }
 
 default.measures = function(x) {
