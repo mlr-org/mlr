@@ -14,6 +14,7 @@ Tutorial
 11. [ROC Analysis](roc_analysis.md)
 12. Cool Stuff - Various short examples of cool stuff we have put into **mlr**.
   * [`makeBaggingWrapper()`](makeBagginWrapper.md) You can wrap all the learners supported by **mlr** in a nice bagging method improving stability of the predictions.
+  * [Multicriteria Evaluation](multicriteria_evaluation.md) Learn how to aggregate the multiple measures from a cross validation.
    
 This web page will provide you with an in-depth introduction on how to
 use the **mlr** framework for machine learning experiments and
