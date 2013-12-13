@@ -52,6 +52,7 @@ train = function(learner, task, subset, weights) {
   # make pars list for train call
   pars = list(.learner=learner, .task=task, .subset=subset)
 
+  # FIXME: code is bad here, set weights, the simply check it in checktasklearner
   if(!missing(weights)) {
     checkArg(weights, "numeric", len=length(subset), na.ok=FALSE, lower=0)
     pars$.weights = weights
