@@ -9,10 +9,6 @@ Integrated Learners
 ## Loaded gbm 2.1
 ```
 
-```
-## Error: there is no package called 'grplasso'
-```
-
 
 List of currently integrated classifiers
 ----------------------------------------

@@ -46,12 +46,12 @@ task
 ## Supervised task: BreastCancer
 ## Type: classif
 ## Target: Class
-## 
 ## Observations: 699
 ## Features:
 ## numerics  factors 
 ##        0        9 
 ## Missings: TRUE
+## Has weights: FALSE
 ## Has blocking: FALSE
 ## Classes: 2
 ##    benign malignant 
@@ -84,12 +84,12 @@ task
 ## Supervised task: BostonHousing
 ## Type: regr
 ## Target: medv
-## 
 ## Observations: 506
 ## Features:
 ## numerics  factors 
 ##       12        1 
 ## Missings: FALSE
+## Has weights: FALSE
 ## Has blocking: FALSE
 ```
 
@@ -118,12 +118,12 @@ task
 ## Supervised task: BreastCancer
 ## Type: classif
 ## Target: Class
-## 
 ## Observations: 699
 ## Features:
 ## numerics  factors 
 ##        0        9 
 ## Missings: TRUE
+## Has weights: FALSE
 ## Has blocking: FALSE
 ## Classes: 2
 ##    benign malignant 
@@ -213,6 +213,9 @@ task$task.desc
 ## $has.missings
 ## [1] TRUE
 ## 
+## $has.weights
+## [1] FALSE
+## 
 ## $has.blocking
 ## [1] FALSE
 ## 
@@ -231,7 +234,7 @@ str(task$task.desc)
 ```
 
 ```
-## List of 10
+## List of 11
 ##  $ id          : chr "BreastCancer"
 ##  $ type        : chr "classif"
 ##  $ target      : chr "Class"
@@ -240,6 +243,7 @@ str(task$task.desc)
 ##   ..- attr(*, "names")= chr [1:2] "numerics" "factors"
 ##  $ class.levels: chr [1:2] "benign" "malignant"
 ##  $ has.missings: logi TRUE
+##  $ has.weights : logi FALSE
 ##  $ has.blocking: logi FALSE
 ##  $ positive    : chr "malignant"
 ##  $ negative    : chr "benign"
@@ -300,12 +304,12 @@ task
 ## Supervised task: data
 ## Type: regr
 ## Target: medv
-## 
 ## Observations: 506
 ## Features:
 ## numerics  factors 
 ##       12        1 
 ## Missings: FALSE
+## Has weights: FALSE
 ## Has blocking: FALSE
 ```
 
@@ -362,6 +366,9 @@ task$task.desc
 ## $has.missings
 ## [1] FALSE
 ## 
+## $has.weights
+## [1] FALSE
+## 
 ## $has.blocking
 ## [1] FALSE
 ## 
@@ -380,7 +387,7 @@ str(task$task.desc)
 ```
 
 ```
-## List of 10
+## List of 11
 ##  $ id          : chr "data"
 ##  $ type        : chr "regr"
 ##  $ target      : chr "medv"
@@ -389,6 +396,7 @@ str(task$task.desc)
 ##   ..- attr(*, "names")= chr [1:2] "numerics" "factors"
 ##  $ class.levels: chr NA
 ##  $ has.missings: logi FALSE
+##  $ has.weights : logi FALSE
 ##  $ has.blocking: logi FALSE
 ##  $ negative    : chr NA
 ##  $ positive    : chr NA

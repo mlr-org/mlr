@@ -590,9 +590,9 @@ r1 = resample(lrn1, task, rinst, measures = ms)
 ## iter  60 value 33587.767691
 ## iter  70 value 30794.362608
 ## iter  80 value 17452.871567
-## iter  90 value 14696.588630
-## iter 100 value 7869.634073
-## final  value 7869.634073 
+## iter  90 value 14696.588690
+## iter 100 value 7869.633980
+## final  value 7869.633980 
 ## stopped after 100 iterations
 ```
 

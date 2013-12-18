@@ -5,6 +5,7 @@ Often, data sets include a great amount of variables and you want to reduce them
 This technique of selecting a subset of relevant variables is called variable selection. 
 Variable selection can make the model interpretable, the learning process faster and the fitted model more general by removing irrelevant variables. 
 Different approaches exist, in order to figure out, which the relevant variables are.
+*mlr* supports [filters](#Filter) and [wrappers](#Wrapper).
 
 Filter
 ------
