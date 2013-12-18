@@ -35,43 +35,40 @@ No as we have set up everything we are curious how good the bagging performs.
 First let's try it without bagging:
 
 ```splus
-result = resample(learner = lrn, task = tsk, resampling = rsmpl)
+result = resample(learner = lrn, task = tsk, resampling = rsmpl, show.info = FALSE)
 ```
 
 ```
 ## Loading packages on slaves: mlr
-## [Resample] cross-validation iter: 1
-## [Resample] cross-validation iter: 2
-## [Resample] cross-validation iter: 3
-## [Resample] cross-validation iter: 4
-## [Resample] cross-validation iter: 5
-## [Resample] cross-validation iter: 6
-## [Resample] cross-validation iter: 7
-## [Resample] cross-validation iter: 8
-## [Resample] cross-validation iter: 9
-## [Resample] cross-validation iter: 10
-## [Resample] Result: mmce.test.mean=0.255
+```
+
+```splus
+result$aggr
+```
+
+```
+## mmce.test.mean 
+##         0.2545
 ```
 
 Can we improve using *mlrs bagging Wrapper*?
 
 ```splus
-resultBagging = resample(learner = bagLrn, task = tsk, resampling = rsmpl)
+result = resultBagging = resample(learner = bagLrn, task = tsk, resampling = rsmpl, 
+    show.info = FALSE)
 ```
 
 ```
 ## Loading packages on slaves: mlr
-## [Resample] cross-validation iter: 1
-## [Resample] cross-validation iter: 2
-## [Resample] cross-validation iter: 3
-## [Resample] cross-validation iter: 4
-## [Resample] cross-validation iter: 5
-## [Resample] cross-validation iter: 6
-## [Resample] cross-validation iter: 7
-## [Resample] cross-validation iter: 8
-## [Resample] cross-validation iter: 9
-## [Resample] cross-validation iter: 10
-## [Resample] Result: mmce.test.mean=0.201
+```
+
+```splus
+result$aggr
+```
+
+```
+## mmce.test.mean 
+##         0.2014
 ```
 
 It conusmes more time but can outperform not bagged learners on noisy data with many variables.

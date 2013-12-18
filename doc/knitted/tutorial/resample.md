@@ -152,7 +152,7 @@ r
 ## Stratification: FALSE
 ## predict.type: response
 ## threshold: 
-## time (mean): 0.01
+## time (mean): 0.00
 ## 'data.frame':	506 obs. of  5 variables:
 ##  $ id      : int  2 7 8 10 11 15 23 29 31 32 ...
 ##  $ truth   : num  21.6 22.9 27.1 18.9 15 18.2 15.2 18.4 12.7 14.5 ...

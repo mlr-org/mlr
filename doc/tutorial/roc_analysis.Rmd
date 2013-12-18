@@ -19,27 +19,30 @@ Comparing to learners
 
 You can easely compare the Performance of two learners with `mlr` and the help of `ROCR`.
 First we create a scenario with two different [learners](learner.md) capable of predicting probabilities (Tip: run `listLearners(prob=TRUE)` to get a list of all supported learners doing so).
-```{r}
+```{r, echo=FALSE}
 library("mlbench")
 library("ROCR")
 library("mlr")
+```
+
+```{r}
 
 ## Generate 2 class problem with mlbench
 set.seed(1)
-testData = as.data.frame(mlbench.2dnormals(100,sd=2))
+testData = as.data.frame(mlbench.2dnormals(100, sd = 2))
 
 ## Define a learning task and an appropriate learner
 task = makeClassifTask(data = testData, target = "classes")
-lrn1 = makeLearner("classif.lda", predict.type="prob")
-lrn2 = makeLearner("classif.ksvm", predict.type="prob")
+lrn1 = makeLearner("classif.lda", predict.type = "prob")
+lrn2 = makeLearner("classif.ksvm", predict.type = "prob")
 ```
 
 Afterwards we perform [resampling](resample.md) to obtain predictions for each fold.
 ```{r}
 ## Perform a 10-fold cross-validation
 rdesc = makeResampleDesc("CV", iters = 10)
-r1 = resample(lrn1, task, rdesc)
-r2 = resample(lrn2, task, rdesc)
+r1 = resample(lrn1, task, rdesc, show.info = FALSE)
+r2 = resample(lrn2, task, rdesc, show.info = FALSE)
 ```
 
 Now we have to convert each prediction within the resample-result to a ROCR prediction using the `asROCRPrediction()` function.

@@ -20,11 +20,6 @@ Comparing to learners
 You can easely compare the Performance of two learners with `mlr` and the help of `ROCR`.
 First we create a scenario with two different [learners](learner.md) capable of predicting probabilities (Tip: run `listLearners(prob=TRUE)` to get a list of all supported learners doing so).
 
-```splus
-library("mlbench")
-library("ROCR")
-```
-
 ```
 ## Loading required package: gplots
 ## 
@@ -46,8 +41,9 @@ library("ROCR")
 ##     performance
 ```
 
+
+
 ```splus
-library("mlr")
 
 ## Generate 2 class problem with mlbench
 set.seed(1)
@@ -65,111 +61,32 @@ Afterwards we perform [resampling](resample.md) to obtain predictions for each f
 ```splus
 ## Perform a 10-fold cross-validation
 rdesc = makeResampleDesc("CV", iters = 10)
-r1 = resample(lrn1, task, rdesc)
+r1 = resample(lrn1, task, rdesc, show.info = FALSE)
 ```
 
 ```
 ## Loading packages on slaves: mlr
-## [Resample] cross-validation iter: 1
-## [Resample] cross-validation iter: 2
-## [Resample] cross-validation iter: 3
-## [Resample] cross-validation iter: 4
-## [Resample] cross-validation iter: 5
-## [Resample] cross-validation iter: 6
-## [Resample] cross-validation iter: 7
-## [Resample] cross-validation iter: 8
-## [Resample] cross-validation iter: 9
-## [Resample] cross-validation iter: 10
-## [Resample] Result: mmce.test.mean=0.27
 ```
 
 ```splus
-r2 = resample(lrn2, task, rdesc)
+r2 = resample(lrn2, task, rdesc, show.info = FALSE)
 ```
 
 ```
 ## Loading packages on slaves: mlr
-## [Resample] cross-validation iter: 1
 ```
 
 ```
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
 ## Using automatic sigma estimation (sigest) for RBF or laplace kernel
-```
-
-```
-## [Resample] cross-validation iter: 2
-```
-
-```
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel
-```
-
-```
-## [Resample] cross-validation iter: 3
-```
-
-```
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel
-```
-
-```
-## [Resample] cross-validation iter: 4
-```
-
-```
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel
-```
-
-```
-## [Resample] cross-validation iter: 5
-```
-
-```
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel
-```
-
-```
-## [Resample] cross-validation iter: 6
-```
-
-```
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel
-```
-
-```
-## [Resample] cross-validation iter: 7
-```
-
-```
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel
-```
-
-```
-## [Resample] cross-validation iter: 8
-```
-
-```
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel
-```
-
-```
-## [Resample] cross-validation iter: 9
-```
-
-```
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel
-```
-
-```
-## [Resample] cross-validation iter: 10
-```
-
-```
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel
-```
-
-```
-## [Resample] Result: mmce.test.mean=0.32
 ```
 
 

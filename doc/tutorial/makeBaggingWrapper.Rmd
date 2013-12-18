@@ -32,11 +32,13 @@ bagLrn = makeBaggingWrapper(lrn, bag.iters=50, bag.replace=TRUE, bag.size=0.8, b
 No as we have set up everything we are curious how good the bagging performs.
 First let's try it without bagging:
 ```{r makeBaggingWrapper_without}
-result = resample(learner=lrn, task=tsk, resampling=rsmpl)
+result = resample(learner=lrn, task=tsk, resampling=rsmpl, show.info=FALSE)
+result$aggr
 ```
 Can we improve using *mlrs bagging Wrapper*?
 ```{r makeBaggingWrapper_with}
-resultBagging = resample(learner=bagLrn, task=tsk, resampling=rsmpl)
+result = resultBagging = resample(learner=bagLrn, task=tsk, resampling=rsmpl, show.info=FALSE)
+result$aggr
 ```
 It conusmes more time but can outperform not bagged learners on noisy data with many variables.
 

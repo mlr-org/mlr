@@ -44,7 +44,7 @@ task = makeClassifTask(data = iris, target = "Species")
 learners = c("classif.lda", "classif.qda")
 
 ## Define cross-validation indices
-rdesc = makeResampleDescription("CV", iters = 5)
+rdesc = makeResampleDesc("CV", iters = 5)
 
 res = bench.exp(learners, task, rdesc)
 ```
