@@ -26,16 +26,37 @@
 #'   Default is \code{TRUE}.
 #' @return Nothing.
 #' @export
-configureMlr = function(on.learner.error="stop", on.learner.warning="warn",
-  on.par.without.desc="stop", show.learner.output=TRUE) {
-
-  checkArg(on.learner.error, choices=c("quiet", "warn", "stop"))
-  checkArg(on.learner.warning, choices=c("warn", "quiet"))
-  checkArg(on.par.without.desc, choices= c("quiet", "warn", "stop"))
-  checkArg(show.learner.output, "logical", len=1L, na.ok=FALSE)
-  setMlrOption("on.learner.error", on.learner.error)
-  setMlrOption("on.learner.warning", on.learner.warning)
-  setMlrOption("on.par.without.desc", on.par.without.desc)
-  setMlrOption("show.learner.output", show.learner.output)
+configureMlr = function(on.learner.error, on.learner.warning,
+                        on.par.without.desc, show.learner.output) {
+  defaults = list(on.learner.error="stop", 
+                  on.learner.warning="warn",
+                  on.par.without.desc="stop", 
+                  show.learner.output=TRUE)
+  anyChange = FALSE
+  if(!missing(on.learner.error)) {
+    checkArg(on.learner.error, choices=c("quiet", "warn", "stop"))
+    setMlrOption("on.learner.error", on.learner.error)
+    anyChange = TRUE
+  }
+  if(!missing(on.learner.warning)) {
+    checkArg(on.learner.warning, choices=c("warn", "quiet"))
+    setMlrOption("on.learner.warning", on.learner.error)
+    anyChange = TRUE
+  }
+  if(!missing(on.par.without.desc)) {
+    checkArg(on.par.without.desc, choices= c("quiet", "warn", "stop"))
+    setMlrOption("on.par.without.desc", on.par.without.desc)
+    anyChange = TRUE
+  }
+  if(!missing(show.learner.output)) {
+    checkArg(show.learner.output, "logical", len=1L, na.ok=FALSE)
+    setMlrOption("show.learner.output", show.learner.output)
+    anyChange = TRUE
+  }
+  if(!anyChange) {
+    for(par in names(defaults)) {
+      setMlrOption(par, defaults$par)
+    }
+  }
   invisible(NULL)
 }
