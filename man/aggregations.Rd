@@ -3,7 +3,6 @@
 \alias{aggregations}
 \alias{b632}
 \alias{b632plus}
-\alias{testgroup.mean}
 \alias{test.max}
 \alias{test.mean}
 \alias{test.median}
@@ -11,6 +10,7 @@
 \alias{test.sd}
 \alias{test.sqrt.of.mean}
 \alias{test.sum}
+\alias{testgroup.mean}
 \alias{train.max}
 \alias{train.mean}
 \alias{train.median}

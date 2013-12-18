@@ -1,7 +1,7 @@
 #' @export
 #' @rdname SupervisedTask
-makeClassifTask = function(id, data, target, weight, blocking, positive, check.data=TRUE) {
-  task = makeSupervisedTask("classif", id, data, target, weight, blocking, positive, check.data)
+makeClassifTask = function(id, data, target, weights, blocking, positive, check.data=TRUE) {
+  task = makeSupervisedTask("classif", id, data, target, weights, blocking, positive, check.data)
   return(addClasses(task, "ClassifTask"))
 }
 

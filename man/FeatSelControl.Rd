@@ -1,4 +1,4 @@
-\name{makeFeatSelControlExhaustive}
+\name{FeatSelControl}
 \alias{FeatSelControl}
 \alias{FeatSelControlExhaustive}
 \alias{FeatSelControlGA}
@@ -10,6 +10,9 @@
 \alias{makeFeatSelControlSequential}
 \title{Create control structures for feature selection.}
 \usage{
+  makeFeatSelControl(same.resampling.instance, maxit,
+    max.features, ..., cl)
+
   makeFeatSelControlExhaustive(same.resampling.instance = TRUE,
     maxit = as.integer(NA), max.features = as.integer(NA))
 
@@ -99,12 +102,27 @@
   basically drawing (0,1)-membership-vectors, where each
   element is Bernoulli(\code{prob}) distributed.}
   \item{FeatSelControlSequential}{Deterministic forward or
-  backward search. Depending on the given \code{method}
-  different approches are taken.\cr sfs sbs sffs sfbs}
-  \item{FeatSelControlGA}{Search via genetic algorithm.
-  The GA is a simple (\code{mu}, \code{lambda}) or
-  (\code{mu} + \code{lambda}) algorithm, depending on the
-  \code{comma} setting.  A comma strategy selects a new
+  backward search. That means extending (forward) or
+  shrinking (backward) an existing model stepwise by
+  calculating the performance of the existing model with
+  variables added (forward) or removed (backward).
+  Depending on the given \code{method} different approches
+  are taken.\cr \code{sfs} Sequential Forward Search:
+  Starting from an empty model, in each step the feature
+  increasing the performance measure the most is added to
+  the model.\cr \code{sbs} Sequential Backward Search:
+  Starting from a model with all features, in each step the
+  feature decreasing the performance measure the least is
+  removed from the model.\cr \code{sffs} Sequential
+  Floating Forward Search: Starting from an empty model, in
+  each step the algorithm chooses the best model from all
+  models with one additional feature and from all models
+  with one feature less.\cr \code{sfbs} Sequential Floating
+  Backward Search: Similar to \code{sffs} but starting with
+  a full model.} \item{FeatSelControlGA}{Search via genetic
+  algorithm.  The GA is a simple (\code{mu}, \code{lambda})
+  or (\code{mu} + \code{lambda}) algorithm, depending on
+  the \code{comma} setting.  A comma strategy selects a new
   population of size \code{mu} out of the \code{lambda} >
   \code{mu} offspring.  A plus strategy uses the joint pool
   of \code{mu} parents and \code{lambda} offspring for
@@ -118,5 +136,8 @@
   \code{mutation.rate}. If \code{max.features} is set,
   offspring are repeatedly generated until the setting is
   satisfied.} }
+}
+\seealso{
+  \code{\link{selectFeatures}}
 }
 

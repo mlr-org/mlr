@@ -13,9 +13,8 @@
 #' @param weights [\code{numeric}]\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
 #'   If given, must be of same length as \code{subset} and in corresponding order.
-#'   By default missing which means no weights are used.
-#'   Overwrites weights specified in the task ([\code{\link{SupervisedTask}}]).
-#'   By default missing which means no weights are used unless specified in the task.
+#'   By default missing which means no weights are used unless specified in the task ([\code{\link{SupervisedTask}}]).
+#'   Weights from the task will be overwritten.
 #' @return [\code{\link{WrappedModel}}].
 #' @export
 #' @seealso \code{\link{predict.WrappedModel}}
@@ -55,13 +54,12 @@ train = function(learner, task, subset, weights) {
   # FIXME: code is bad here, set weights, the simply check it in checktasklearner
   if(!missing(weights)) {
     checkArg(weights, "numeric", len=length(subset), na.ok=FALSE, lower=0)
-    pars$.weights = weights
   } else {
-    # we do not check if learer supports weights if weights are part of the task (yet)!
-    pars$.weights = task$weights
+    weights = task$weights
   }
 
   checkTaskLearner(task, learner, weights)
+  pars$.weights = weights
 
   # only pass train hyper pars as basic rlearner in ...
   pars = c(pars, getHyperPars(learner, "train"))
