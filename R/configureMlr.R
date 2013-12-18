@@ -40,7 +40,7 @@ configureMlr = function(on.learner.error, on.learner.warning,
   }
   if(!missing(on.learner.warning)) {
     checkArg(on.learner.warning, choices=c("warn", "quiet"))
-    setMlrOption("on.learner.warning", on.learner.error)
+    setMlrOption("on.learner.warning", on.learner.warning)
     anyChange = TRUE
   }
   if(!missing(on.par.without.desc)) {
