@@ -69,6 +69,7 @@ r1 = resample(lrn1, task, rdesc)
 ```
 
 ```
+## Loading packages on slaves: mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
@@ -87,6 +88,7 @@ r2 = resample(lrn2, task, rdesc)
 ```
 
 ```
+## Loading packages on slaves: mlr
 ## [Resample] cross-validation iter: 1
 ```
 

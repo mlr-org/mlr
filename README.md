@@ -29,7 +29,7 @@ algorithms and unify their respective output. Additionally you need to implement
 your models, optimize hyperparameters, select features, cope with pre- and post-processing of data and 
 compare models in a statistically meaningful way.
 As this becomes computationally expensive, you might want to parallelize your experiments as well. This 
-often forces useRs to make crummy trade-offs in their experiments due to time constraints or lacking expert 
+often forces users to make crummy trade-offs in their experiments due to time constraints or lacking expert 
 programming skills. **mlr** provides this infrastructure so that you can focus on your experiments!
 The framework currently focuses on supervised methods like classification and regression and their 
 corresponding evaluation and optimization, but further extensions are planned. It is written in a way 
@@ -52,10 +52,9 @@ Features
 * Extension points to integrate your own stuff
 * Unit-testing
 * Possibility to fit, predict, evaluate and resample models
-* Tune hyper-parameters of a learner with different optimization algorithms (also available for multi-criteria optimization)
-* Feature selection with filters and wrappers (also available for multi-criteria optimization)
+* Tune hyper-parameters of a learner with different optimization algorithms
+* Feature selection with filters and wrappers
 * Combine different processing steps to a complex data mining chain; enables nested resampling of optimized models
-* Optimize functions with a model-based sequential parameter optimization method (useful e.g. for the optimization of expensive black-box functions)
 
 
 Mailinglist and Email-Service-Hook

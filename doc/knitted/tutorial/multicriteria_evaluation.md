@@ -21,7 +21,7 @@ rmse$aggr  #Root mean square error
 ```
 
 ```
-## Aggregation function: test.mean
+## Aggregation function: test.sqrt.of.mean
 ```
 
 You can also create a new `measure` by using a different aggregation (see `?aggregations`).

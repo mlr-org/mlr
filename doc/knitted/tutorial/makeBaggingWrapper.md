@@ -39,6 +39,7 @@ result = resample(learner = lrn, task = tsk, resampling = rsmpl)
 ```
 
 ```
+## Loading packages on slaves: mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
@@ -59,6 +60,7 @@ resultBagging = resample(learner = bagLrn, task = tsk, resampling = rsmpl)
 ```
 
 ```
+## Loading packages on slaves: mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3

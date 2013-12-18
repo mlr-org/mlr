@@ -44,6 +44,13 @@ learnerFiltered = makeFilterWrapper(learner = learner, fw.method = "information.
 rdesc = makeResampleDesc("CV", iters = 10)
 rsres = resample(learner = learnerFiltered, task = task, resampling = rdesc, 
     show.info = FALSE, models = TRUE)
+```
+
+```
+## Loading packages on slaves: mlr
+```
+
+```splus
 rsres$aggr
 ```
 
@@ -93,13 +100,23 @@ sfSeq = selectFeatures(learner = lrn, task = task, resampling = rdesc, control =
 ```
 
 ```
+## Loading packages on slaves: mlr
 ## [selectFeatures] 1: 0 bits: mmce.test.mean=0.66
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
 ## [selectFeatures] 2: 1 bits: mmce.test.mean=0.28
+## Loading packages on slaves: mlr
 ## [selectFeatures] 2: 1 bits: mmce.test.mean=0.58
+## Loading packages on slaves: mlr
 ## [selectFeatures] 2: 1 bits: mmce.test.mean=0.12
+## Loading packages on slaves: mlr
 ## [selectFeatures] 2: 1 bits: mmce.test.mean=0.04
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
 ## [selectFeatures] 3: 2 bits: mmce.test.mean=0.04
+## Loading packages on slaves: mlr
 ## [selectFeatures] 3: 2 bits: mmce.test.mean=0.04
+## Loading packages on slaves: mlr
 ## [selectFeatures] 3: 2 bits: mmce.test.mean=0.12
 ```
 
@@ -131,6 +148,83 @@ rdesc = makeResampleDesc("Holdout")
 ctrlGA = makeFeatSelControlGA(maxit = 10)
 sfGA = selectFeatures(learner = lrn, task = task, resampling = rdesc, control = ctrlGA, 
     show.info = FALSE)
+```
+
+```
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+## Loading packages on slaves: mlr
+```
+
+```splus
 sfGA
 ```
 

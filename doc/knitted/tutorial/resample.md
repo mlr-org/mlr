@@ -33,6 +33,7 @@ r = resample(lrn, task, rdesc)
 ```
 
 ```
+## Loading packages on slaves: mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
@@ -52,9 +53,9 @@ r
 ## 
 ## $measures.test
 ##   iter mmce
-## 1    1 0.02
+## 1    1 0.00
 ## 2    2 0.04
-## 3    3 0.00
+## 3    3 0.02
 ## 
 ## $aggr
 ## mmce.test.mean 
@@ -69,7 +70,7 @@ r
 ## threshold: 
 ## time (mean): 0.00
 ## 'data.frame':	150 obs. of  5 variables:
-##  $ id      : int  7 14 15 18 21 22 23 26 30 37 ...
+##  $ id      : int  4 6 7 9 11 14 15 16 17 20 ...
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -116,10 +117,11 @@ r = resample(lrn, task, rdesc)
 ```
 
 ```
+## Loading packages on slaves: mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mse.test.mean=23.6
+## [Resample] Result: mse.test.mean=23.7
 ```
 
 ```splus
@@ -135,13 +137,13 @@ r
 ## 
 ## $measures.test
 ##   iter   mse
-## 1    1 27.14
-## 2    2 19.70
-## 3    3 23.86
+## 1    1 21.39
+## 2    2 21.70
+## 3    3 28.11
 ## 
 ## $aggr
 ## mse.test.mean 
-##         23.56 
+##         23.73 
 ## 
 ## $pred
 ## Resampled Prediction for:
@@ -150,11 +152,11 @@ r
 ## Stratification: FALSE
 ## predict.type: response
 ## threshold: 
-## time (mean): 0.00
+## time (mean): 0.01
 ## 'data.frame':	506 obs. of  5 variables:
-##  $ id      : int  1 2 7 9 12 14 17 19 25 27 ...
-##  $ truth   : num  24 21.6 22.9 16.5 18.9 20.4 23.1 20.2 15.6 16.6 ...
-##  $ response: num  29.6 24.8 23.2 12.8 21.9 ...
+##  $ id      : int  2 7 8 10 11 15 23 29 31 32 ...
+##  $ truth   : num  21.6 22.9 27.1 18.9 15 18.2 15.2 18.4 12.7 14.5 ...
+##  $ response: num  25.2 22.9 19.5 18.9 19 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  $ set     : Factor w/ 1 level "test": 1 1 1 1 1 1 1 1 1 1 ...
 ## 
@@ -357,10 +359,11 @@ r1 = resample(lrn, task, rinst, list(mmce, acc))
 ```
 
 ```
+## Loading packages on slaves: mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.0733,acc.test.mean=0.927
+## [Resample] Result: mmce.test.mean=0.0667,acc.test.mean=0.933
 ```
 
 
@@ -373,10 +376,11 @@ r1 = resample(lrn1, task, rinst, list(mmce, acc))
 ```
 
 ```
+## Loading packages on slaves: mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.0733,acc.test.mean=0.927
+## [Resample] Result: mmce.test.mean=0.0667,acc.test.mean=0.933
 ```
 
 ```splus
@@ -388,6 +392,7 @@ r2 = resample(lrn2, task, rinst, list(mmce, acc))
 ```
 
 ```
+## Loading packages on slaves: mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
@@ -412,11 +417,11 @@ r1
 ##   iter mmce  acc
 ## 1    1 0.12 0.88
 ## 2    2 0.06 0.94
-## 3    3 0.04 0.96
+## 3    3 0.02 0.98
 ## 
 ## $aggr
 ## mmce.test.mean  acc.test.mean 
-##        0.07333        0.92667 
+##        0.06667        0.93333 
 ## 
 ## $pred
 ## Resampled Prediction for:
@@ -427,7 +432,7 @@ r1
 ## threshold: 
 ## time (mean): 0.00
 ## 'data.frame':	150 obs. of  5 variables:
-##  $ id      : int  2 10 24 29 31 39 40 45 47 48 ...
+##  $ id      : int  7 8 9 10 11 18 21 27 28 29 ...
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -460,8 +465,8 @@ r2
 ## 
 ## $measures.test
 ##   iter mmce  acc
-## 1    1 0.04 0.96
-## 2    2 0.02 0.98
+## 1    1 0.06 0.94
+## 2    2 0.00 1.00
 ## 3    3 0.00 1.00
 ## 
 ## $aggr
@@ -477,7 +482,7 @@ r2
 ## threshold: 
 ## time (mean): 0.00
 ## 'data.frame':	150 obs. of  5 variables:
-##  $ id      : int  2 10 24 29 31 39 40 45 47 48 ...
+##  $ id      : int  7 8 9 10 11 18 21 27 28 29 ...
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
@@ -510,7 +515,7 @@ r1$measures.test
 ##   iter mmce  acc
 ## 1    1 0.12 0.88
 ## 2    2 0.06 0.94
-## 3    3 0.04 0.96
+## 3    3 0.02 0.98
 ```
 
 
@@ -526,7 +531,7 @@ r1$aggr
 
 ```
 ## mmce.test.mean  acc.test.mean 
-##        0.07333        0.92667
+##        0.06667        0.93333
 ```
 
 
@@ -558,13 +563,15 @@ r1 = resample(lrn1, task, rinst, measures = ms)
 ```
 
 ```
+## Loading packages on slaves: mlr
 ## [Resample] OOB bootstrapping iter: 1
 ```
 
 ```
 ## # weights:  46
-## initial  value 320129.603325 
-## final  value 46502.059466 
+## initial  value 292231.495398 
+## iter  10 value 29782.467916
+## final  value 29782.463353 
 ## converged
 ```
 
@@ -574,10 +581,19 @@ r1 = resample(lrn1, task, rinst, measures = ms)
 
 ```
 ## # weights:  46
-## initial  value 305751.251064 
-## iter  10 value 42605.554512
-## final  value 42605.450909 
-## converged
+## initial  value 284428.087455 
+## iter  10 value 40399.161851
+## iter  20 value 39953.253525
+## iter  30 value 39744.137532
+## iter  40 value 39630.255120
+## iter  50 value 36570.254768
+## iter  60 value 33587.767691
+## iter  70 value 30794.362608
+## iter  80 value 17452.871567
+## iter  90 value 14696.588630
+## iter 100 value 7869.634073
+## final  value 7869.634073 
+## stopped after 100 iterations
 ```
 
 ```
@@ -586,23 +602,13 @@ r1 = resample(lrn1, task, rinst, measures = ms)
 
 ```
 ## # weights:  46
-## initial  value 269644.425467 
-## iter  10 value 28322.856734
-## iter  20 value 26899.995523
-## iter  30 value 26017.185729
-## iter  40 value 25858.958902
-## iter  50 value 25172.088347
-## iter  60 value 24806.622731
-## iter  70 value 24741.099319
-## iter  80 value 24726.138153
-## iter  90 value 22802.899232
-## iter 100 value 21948.430783
-## final  value 21948.430783 
-## stopped after 100 iterations
+## initial  value 269393.766260 
+## final  value 35915.975593 
+## converged
 ```
 
 ```
-## [Resample] Result: mse.test.mean=78.4,medae.test.mean=4.56
+## [Resample] Result: mse.test.mean=73.8,medae.test.mean=3.91
 ```
 
 ```splus
@@ -613,10 +619,11 @@ r2 = resample(lrn2, task, rinst, measures = ms)
 ```
 
 ```
+## Loading packages on slaves: mlr
 ## [Resample] OOB bootstrapping iter: 1
 ## [Resample] OOB bootstrapping iter: 2
 ## [Resample] OOB bootstrapping iter: 3
-## [Resample] Result: mse.test.mean=  19,medae.test.mean= 1.8
+## [Resample] Result: mse.test.mean=27.3,medae.test.mean=1.73
 ```
 
 
@@ -629,10 +636,10 @@ r1$measures.test
 ```
 
 ```
-##   iter   mse medae
-## 1    1 84.81 4.941
-## 2    2 87.64 4.236
-## 3    3 62.68 4.490
+##   iter    mse medae
+## 1    1  81.50 4.315
+## 2    2  30.79 2.222
+## 3    3 108.99 5.195
 ```
 
 ```splus
@@ -641,9 +648,9 @@ r2$measures.test
 
 ```
 ##   iter   mse medae
-## 1    1 13.38 1.806
-## 2    2 20.82 1.895
-## 3    3 22.82 1.696
+## 1    1 29.04 1.664
+## 2    2 26.20 1.892
+## 3    3 26.71 1.644
 ```
 
 
