@@ -1,15 +1,15 @@
-analyzeFeatSelResult = function(fs.obj){
+analyzeFeatSelResult = function(fs.obj, ...){
   cl = class(fs.obj$control)[1]
   stopifnot(cl %in% c("FeatSelControlSequential", "FeatSelControlGA"))
   analyzeFunc = switch(cl,
     FeatSelControlSequential = analyzeSequential,
     FeatSelControlGA = analyzeGA,
     stop(paste("Unknown class of control object:", cl)))
-  analyzeFunc(fs.obj)  
+  analyzeFunc(fs.obj, ...)  
 }
 
 
-analyzeSequential = function(fs.obj){
+analyzeSequential = function(fs.obj, reduce=TRUE){
   df = as.data.frame(fs.obj$opt.path)
   feat.names = names(fs.obj$opt.path$par.set$pars)
   measure = fs.obj$opt.path$minimize[1]
@@ -17,9 +17,11 @@ analyzeSequential = function(fs.obj){
   df$optimum = (df[,names(measure)] == optimum)
   df$selected = (df$dob < df$eol)
   df$n.feats = rowSums(df[,feat.names])
-  red.df = df[(df$optimum | df$selected), ]
+  if(reduce)
+    df = df[(df$optimum | df$selected), ]
   ctrl = fs.obj$control
-  result = list(reduced.data.frame = red.df, control = ctrl, x = fs.obj$x, y = fs.obj$y, features = feat.names)
+  names(fs.obj$y) = names(measure)
+  result = list(reduced.data.frame = df, control = ctrl, x = fs.obj$x, y = fs.obj$y, features = feat.names)
   mode(result) = "list"
   class(result) = "analyzeFeatSelResult"
   return(result)
@@ -43,93 +45,60 @@ analyzeGA = function(fs.obj){
 }
 
 
-printAnalyzeFeatSelResultSeq = function(x, ...) {
+printAnalyzeFeatSelResultSeq = function(x, printed.features=10) {
   catf("FeatSel result:")
-  change = ifelse(x$control$extra.args$method %in% c("sfs", "sffs"), "add", "remove")
   n.feats = length(x$x)
-  feat.names = x$features
-  m.names = names(x$y)
-  printed.features = 10
-  if(length(x$x) > printed.features) {
-    catf("- features (%i): %s", n.feats, paste(c(x$x[1:printed.features], "..."), collapse = ", "))
-  } else {
-    catf("- features (%i): %s", n.feats, paste(x$x[1:n.feats], collapse = ", "))
-  }
-  catf("- Performance:  %s", perfsToString(x$y))
+  final.feats.print = head(x$x, printed.features)
+  if(n.feats > printed.features) 
+    final.feats.print[printed.features+1] = "..."
+  catf("- features (%i): %s", n.feats, paste(final.feats.print, collapse = ", "))
+  catf("- Performance: %s", mlr:::perfsToString(x$y))
   catf("\nPath to optimum:")
   df = x$reduced.data.frame
-  final = FALSE
-  steps = unique(df$dob)
-  steps = min(steps):max(steps)
-  ## summarize the evaluations for each step (dob)
-  old_feats = character()
-  for(i in steps) {
-    X.step = df[df$dob == i, ]  # relevant data per dob (equal or better performance)
-    ## 1st case: new optimum
-    if(any(X.step$selected)) {
-      catf("Step %i:", i)
-      X.select = X.step[X.step$selected, ] # relevant data with a new optimum
-      for(j in 1:nrow(X.select)) {
-        if(X.select$n.feats[j] == 0) {
-          catf("- select 0 features")
-          meas = X.select[j, m.names]
-          names(meas) = m.names
-          catf("- performance: %s", perfsToString(meas))
-        } else {
-          ## extract features and performance for each optimum
-          feats = feat.names[as.logical(X.select[j, feat.names])]
-          of = feats
-          if(length(feats) >= length(old_feats)) {
-            feats = setdiff(feats, old_feats)
-          } else {
-            feats = setdiff(old_feats, feats)
-          }
-          old_feats = of
-          meas = X.select[j, m.names]
-          names(meas) = m.names
-          if((i == 1) && (change == "remove")) {
-            catf("- start with all features")
-            catf("- performance: %s", perfsToString(meas))
-            next
-          }
-          catf("- %s feature: %s", change, feats)
-          catf("- performance: %s", perfsToString(meas))
-        }
-      }
+  df$step = as.numeric(as.factor(df$dob))
+  # Initialize first Values
+  n.feats.old = df[1,"n.feats"]
+  stepVars.old = x$features[df[1,x$features]==1]  
+  measures.old = as.numeric(df[1,names(x$y)])
+  names(measures.old) = names(x$y)
+  # Iterate over all steps:
+  for(i in unique(df$step)){
+    df.step = df[df$step==i,]
+    # Print what happens in each step
+    for(j in seq_row(df.step)) {
+      measures = as.numeric(df.step[j,names(x$y)])
+      names(measures) = names(x$y)
+      measures.gain = measures - measures.old
+      n.feats = df.step[j, "n.feats"]
+      if (n.feats < n.feats.old) changeTxt = "Removed: "
+      else if (n.feats > n.feats.old) changeTxt = "Added: "
+      else changeTxt = "Initial model"
+      stepVars = x$features[df.step[j,x$features]==1]
+      diffVar = setdiff(union(stepVars, stepVars.old), intersect(stepVars, stepVars.old))
+      diffVar = paste(diffVar, collapse=",")
+      if (df.step[j,"selected"]) {
+        n.feats.opt = n.feats
+        stepVars.opt = stepVars
+        measures.opt = measures
+        txtSelected = "SELECTED"
+      } else 
+        txtSelected = ""
+      catf("- Features: %s  \t %s%s \t Gain: %s \t %s",
+           n.feats, changeTxt, diffVar, mlr:::perfsToString(measures.gain), txtSelected)
     }
-    ## 2nd case: new alternatives
-    if(any((X.step$optimum) & (!X.step$selected))) {
-      if(!final) {
-        final = TRUE
-        catf("--- found final result ---")
-      }
-      catf("\nFurther alternatives (as step %i):", i)
-      X.alternative = X.step[(X.step$optimum) & (!X.step$selected), ] # relevant data with equal performance
-      ## extract features and performance for each alternative
-      for(j in 1:nrow(X.alternative)) {
-        feats = feat.names[as.logical(X.alternative[j, feat.names])]
-        of = feats
-        if(length(feats) >= length(old_feats)) {
-          feats = setdiff(feats, old_feats)
-        } else {
-          feats = setdiff(old_feats, feats)
-        }
-        nf = length(feats)
-        catf("(%02i) %s feature: %s", j, change, feats)
-      }
-      meas = X.alternative[1, m.names]
-      names(meas) = m.names
-      catf("performance of alternatives: %s", perfsToString(meas))
-    }
-  } ## end of for-loop
-  ## Comment at the end of path, explaining why the algorithm stopped there.
-  if(!is.na(x$control$max.features) & 
-       (max(df$n.feats) == x$control$max.features) & 
-       (change == "add")) {
+    # Print end result of each Step
+    catf("Finished step: %i with \t %s \t Optimum: %s", 
+         head(df.step[,"step"],1), mlr:::perfsToString(measures.opt), any(df.step$optimum))
+    n.feats.old = n.feats.opt
+    stepVars.old = stepVars.opt
+    measures.old = measures.opt
+  }
+  
+  if (!is.na(x$control$max.features) & (max(df$n.feats) == x$control$max.features)) {
     catf("\nStopped due to reached maximum of allowed features (%i).", x$control$max.features)
   } else {
     catf("\nStopped, because no improving set of features (w.r.t. %s) was found.", 
-         paste(m.names, collapse = ", "))
+         paste(names(x$y), collapse = ", "))
   } 
 }
 
@@ -145,7 +114,7 @@ printAnalyzeFeatSelResultGA = function(x, ...) {
   } else {
     catf(" features (%i): %s", n.feats, paste(x$x[1:n.feats], collapse = ", "))
   }
-  catf(" Performance:  %s", perfsToString(x$y))
+  catf(" Performance:  %s", mlr:::perfsToString(x$y))
   catf("\nPath to optimum:")
   df = x$reduced.data.frame
   generations = 1L : x$control$maxit
@@ -162,13 +131,13 @@ printAnalyzeFeatSelResultGA = function(x, ...) {
     perf_pop = c(perf_pop, as.numeric(meas))
     if(X.init$n.feats[i] == 0L) {
       catf("  (%02i) select 0 features", ind_counter)
-      catf("       performance: %s", perfsToString(meas))
+      catf("       performance: %s", mlr:::perfsToString(meas))
       next
     }
     feats = feat.names[as.logical(X.init[i, feat.names])]
     if(X.init$n.feats[i] == 1) {
       catf("  (%02i) select feature %s:", ind_counter, feats)
-      catf("       performance: %s", perfsToString(meas))
+      catf("       performance: %s", mlr:::perfsToString(meas))
       next
     }
     nf = length(feats)
@@ -179,7 +148,7 @@ printAnalyzeFeatSelResultGA = function(x, ...) {
       catf("  (%02i) select %02i features: %s", ind_counter, nf, 
            paste(feats[1:nf], collapse = ", "))
     }
-    catf("       performance: %s", perfsToString(meas))
+    catf("       performance: %s", mlr:::perfsToString(meas))
   }
   ## Evaluate the generations (which of the new individuals replaces which of the old ones?)
   for(g in generations) {
@@ -207,13 +176,13 @@ printAnalyzeFeatSelResultGA = function(x, ...) {
       perf_pop[replace_index[k]] = as.numeric(meas)
       if(X.sel$n.feats == 0L) {
         catf("  (%02i) select 0 features", ind_counter)
-        catf("       performance: %s", perfsToString(meas))
+        catf("       performance: %s", mlr:::perfsToString(meas))
         next
       }
       feats = feat.names[as.logical(X.sel[, feat.names])]
       if(X.init$n.feats[i] == 1) {
         catf("  (%02i) select feature %s:", ind_counter, feats)
-        catf("       performance: %s", perfsToString(meas))
+        catf("       performance: %s", mlr:::perfsToString(meas))
         next
       }
       nf = length(feats)
@@ -224,7 +193,7 @@ printAnalyzeFeatSelResultGA = function(x, ...) {
         catf("  (%02i) select %02i features: %s", ind_counter, nf, 
              paste(feats[1:nf], collapse = ", "))
       }
-      catf("       performance: %s", perfsToString(meas))
+      catf("       performance: %s", mlr:::perfsToString(meas))
     } ## end of loop of individuals per generation
   } ## end of generations-loop 
 }
