@@ -55,7 +55,7 @@ configureMlr = function(on.learner.error, on.learner.warning,
   }
   if(!anyChange) {
     for(par in names(defaults)) {
-      setMlrOption(par, defaults$par)
+      setMlrOption(par, defaults[[par]])
     }
   }
   invisible(NULL)
