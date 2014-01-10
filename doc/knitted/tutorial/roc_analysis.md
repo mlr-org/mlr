@@ -76,19 +76,6 @@ r2 = resample(lrn2, task, rdesc, show.info = FALSE)
 ## Loading packages on slaves: mlr
 ```
 
-```
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
-## Using automatic sigma estimation (sigest) for RBF or laplace kernel
-```
-
 
 Now we have to convert each prediction within the resample-result to a ROCR prediction using the `asROCRPrediction()` function.
 Afterwards we let `ROCR` calculate the performance measures and plot the ROC Curve.

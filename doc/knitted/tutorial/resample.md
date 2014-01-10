@@ -152,7 +152,7 @@ r
 ## Stratification: FALSE
 ## predict.type: response
 ## threshold: 
-## time (mean): 0.00
+## time (mean): 0.01
 ## 'data.frame':	506 obs. of  5 variables:
 ##  $ id      : int  2 7 8 10 11 15 23 29 31 32 ...
 ##  $ truth   : num  21.6 22.9 27.1 18.9 15 18.2 15.2 18.4 12.7 14.5 ...
@@ -565,49 +565,8 @@ r1 = resample(lrn1, task, rinst, measures = ms)
 ```
 ## Loading packages on slaves: mlr
 ## [Resample] OOB bootstrapping iter: 1
-```
-
-```
-## # weights:  46
-## initial  value 292231.495398 
-## iter  10 value 29782.467916
-## final  value 29782.463353 
-## converged
-```
-
-```
 ## [Resample] OOB bootstrapping iter: 2
-```
-
-```
-## # weights:  46
-## initial  value 284428.087455 
-## iter  10 value 40399.161851
-## iter  20 value 39953.253525
-## iter  30 value 39744.137532
-## iter  40 value 39630.255120
-## iter  50 value 36570.254768
-## iter  60 value 33587.767691
-## iter  70 value 30794.362608
-## iter  80 value 17452.871567
-## iter  90 value 14696.588690
-## iter 100 value 7869.633980
-## final  value 7869.633980 
-## stopped after 100 iterations
-```
-
-```
 ## [Resample] OOB bootstrapping iter: 3
-```
-
-```
-## # weights:  46
-## initial  value 269393.766260 
-## final  value 35915.975593 
-## converged
-```
-
-```
 ## [Resample] Result: mse.test.mean=73.8,medae.test.mean=3.91
 ```
 
