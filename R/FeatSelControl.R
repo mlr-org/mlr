@@ -76,7 +76,7 @@
 #' @return [\code{\link{FeatSelControl}}]. The specific subclass is one of
 #'   \code{\link{FeatSelControlExhaustive}}, \code{\link{FeatSelControlRandom}},
 #'   \code{\link{FeatSelControlSequential}}, \code{\link{FeatSelControlGA}}.
-#' @seealso \code{\link{selectFeatures}}
+#' @seealso \code{\link{selectFeatures}}, \code{\link{analyzeFeatSelResult}}
 #' @name FeatSelControl
 #' @rdname FeatSelControl
 #' @aliases FeatSelControlExhaustive FeatSelControlRandom FeatSelControlSequential FeatSelControlGA

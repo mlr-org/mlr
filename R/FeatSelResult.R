@@ -2,7 +2,8 @@
 #' 
 #' Container for results of feature selection.
 #' Contains the obtained features, their performance values
-#' and the optimization path which lead there. 
+#' and the optimization path which lead there.  \cr
+#' You can visualize it using \code{\link{analyzeFeatSelResult}}.
 #'
 #' Object members:
 #' \describe{

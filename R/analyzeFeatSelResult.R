@@ -12,14 +12,14 @@
 #'   Default is \code{FALSE}.
 #' @return Nothing.
 #' @export
-analyzeFeatSelResult = function(fs.obj, ...){
+analyzeFeatSelResult = function(fs.obj, reduce=TRUE){
   cl = class(fs.obj$control)[1]
   stopifnot(cl %in% c("FeatSelControlSequential", "FeatSelControlGA"))
   analyzeFunc = switch(cl,
     FeatSelControlSequential = analyzeSequential,
     FeatSelControlGA = analyzeGA,
     stop(paste("Unknown class of control object:", cl)))
-  analyzeFunc(fs.obj, ...)  
+  analyzeFunc(fs.obj, reduce)  
 }
 
 
@@ -57,7 +57,7 @@ stringMaxConcat = function(x, printed.features){
 printAnalyzeFeatSelResultHead = function(x, printed.features=10){
   catf("FeatSel result:")
   catf("- features (%i): %s", length(x$x), stringMaxConcat(x$x, printed.features))
-  catf("- Performance: %s", mlr:::perfsToString(x$y))
+  catf("- Performance: %s", perfsToString(x$y))
   catf("\nPath to optimum:")
 }
 
@@ -93,11 +93,11 @@ printAnalyzeFeatSelResultSeq = function(x, printed.features=10) {
       } else 
         txtSelected = ""
       catf("- Features: %i  \t %s%s \t Gain: %s \t %s",
-           n.feats, changeTxt, diffVar, mlr:::perfsToString(measures.gain), txtSelected)
+           n.feats, changeTxt, diffVar, perfsToString(measures.gain), txtSelected)
     }
     # Print end result of each Step
     catf("Finished step: %i with \t %s \t Optimum: %s", 
-         head(df.step[,"step"],1), mlr:::perfsToString(measures.opt), any(df.step$optimum))
+         head(df.step[,"step"],1), perfsToString(measures.opt), any(df.step$optimum))
     n.feats.old = n.feats.opt
     stepVars.old = stepVars.opt
     measures.old = measures.opt
@@ -131,7 +131,7 @@ printAnalyzeFeatSelResultGA = function(x, printed.features=10) {
       if(!df.this.gen[j, "selected"]) dieTxt = "\t (died out)"
       else dieTxt = ""
       catf("- (%i) \t Features: %i  \t %s \t Features: %s %s", 
-           j, df.this.gen[j,"n.feats"], mlr:::perfsToString(measures), stringMaxConcat(feats, printed.features), dieTxt)
+           j, df.this.gen[j,"n.feats"], perfsToString(measures), stringMaxConcat(feats, printed.features), dieTxt)
     }
   }
 }
@@ -151,13 +151,13 @@ printAnalyzeFeatSelResultGA.old = function(x, printed.features=10) {
     perf_pop = c(perf_pop, as.numeric(meas))
     if(X.init$n.feats[i] == 0L) {
       catf("  (%02i) select 0 features", ind_counter)
-      catf("       performance: %s", mlr:::perfsToString(meas))
+      catf("       performance: %s", perfsToString(meas))
       next
     }
     feats = feat.names[as.logical(X.init[i, feat.names])]
     if(X.init$n.feats[i] == 1) {
       catf("  (%02i) select feature %s:", ind_counter, feats)
-      catf("       performance: %s", mlr:::perfsToString(meas))
+      catf("       performance: %s", perfsToString(meas))
       next
     }
     nf = length(feats)
@@ -168,7 +168,7 @@ printAnalyzeFeatSelResultGA.old = function(x, printed.features=10) {
       catf("  (%02i) select %02i features: %s", ind_counter, nf, 
            paste(feats[1:nf], collapse = ", "))
     }
-    catf("       performance: %s", mlr:::perfsToString(meas))
+    catf("       performance: %s", perfsToString(meas))
   }
   ## Evaluate the generations (which of the new individuals replaces which of the old ones?)
   for(g in generations) {
@@ -196,13 +196,13 @@ printAnalyzeFeatSelResultGA.old = function(x, printed.features=10) {
       perf_pop[replace_index[k]] = as.numeric(meas)
       if(X.sel$n.feats == 0L) {
         catf("  (%02i) select 0 features", ind_counter)
-        catf("       performance: %s", mlr:::perfsToString(meas))
+        catf("       performance: %s", perfsToString(meas))
         next
       }
       feats = feat.names[as.logical(X.sel[, feat.names])]
       if(X.init$n.feats[i] == 1) {
         catf("  (%02i) select feature %s:", ind_counter, feats)
-        catf("       performance: %s", mlr:::perfsToString(meas))
+        catf("       performance: %s", perfsToString(meas))
         next
       }
       nf = length(feats)
@@ -213,7 +213,7 @@ printAnalyzeFeatSelResultGA.old = function(x, printed.features=10) {
         catf("  (%02i) select %02i features: %s", ind_counter, nf, 
              paste(feats[1:nf], collapse = ", "))
       }
-      catf("       performance: %s", mlr:::perfsToString(meas))
+      catf("       performance: %s", perfsToString(meas))
     } ## end of loop of individuals per generation
   } ## end of generations-loop 
 }
