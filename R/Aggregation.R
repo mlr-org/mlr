@@ -12,9 +12,37 @@
 #' \item{fun [\code{function(task, perf.test, perf.train, measure, group, pred)}]}{Aggregation function.}
 #' }
 #' @name Aggregation
+#' @seealso \code{\link{makeAggregation}}
 #' @rdname Aggregation
 NULL
 
+
+#' @title Specifiy your own aggregation of measures
+#' 
+#' @description 
+#' This is an adavanced feature of mlr. It gives access to some
+#' inner workings so the result might not be compatible with everything! \cr
+#' 
+#' 
+#' @param id [\code{character(1)}]\cr
+#'   Name of the aggregation method. (Preferably the same name as the generated function)
+#' @param fun [\code{function}]\cr
+#'   A function with following signature: \code{function(task, perf.test, perf.train, measure, group, pred)}
+#'   \itemize{
+#'    \item{\bold{task}}: task (\code{\link{SupervisedTask}}) object
+#'    \item{\bold{perf.test}}: numerical vector of \link{performance} results on the test data set
+#'    \item{\bold{perf.train}}. numerical vector of \link{performance} results on the train data set
+#'    \item{\bold{measure}}: \code{\link{Measure}} object.
+#'    \item{\bold{group}}: grouping vector
+#'    \item{\bold{pred}}: \code{\link{Prediction}} object
+#'   }
+#' @seealso \link{aggregations}, \code{\link{setAggregation}}
+#' @return \link{Aggregation} object
+#' @examples
+#' # computes the interquartile range on all performance values
+#' test.iqr = makeAggregation(id="test.iqr", 
+#'   fun = function (task, perf.test, perf.train, measure, group, pred) IQR(perf.test))
+#' @export
 makeAggregation = function(id, fun) {
   checkArg(id, "character", len=1L, na.ok=FALSE)
   structure(list(id=id, fun=fun), class="Aggregation")

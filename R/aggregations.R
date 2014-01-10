@@ -68,6 +68,13 @@ test.sum = makeAggregation(
 
 #' @export
 #' @rdname aggregations
+test.range = makeAggregation(
+  id = "test.range",
+  fun = function(task, perf.test, perf.train, measure, group, pred) diff(range(perf.test))
+)
+
+#' @export
+#' @rdname aggregations
 test.sqrt.of.mean = makeAggregation(
   id = "test.sqrt.of.mean",
   fun = function(task, perf.test, perf.train, measure, group, pred) sqrt(mean(perf.test))
@@ -113,6 +120,20 @@ train.max = makeAggregation(
 train.sum = makeAggregation(
   id = "train.sum",
   fun = function(task, perf.test, perf.train, measure, group, pred) sum(perf.train)
+)
+
+#' @export
+#' @rdname aggregations
+train.range = makeAggregation(
+  id = "train.range",
+  fun = function(task, perf.test, perf.train, measure, group, pred) diff(range(perf.train))
+)
+
+#' @export
+#' @rdname aggregations
+train.sqrt.of.mean = makeAggregation(
+  id = "train.sqrt.of.mean",
+  fun = function(task, perf.test, perf.train, measure, group, pred) sqrt(mean(perf.train))
 )
 
 #' @export
