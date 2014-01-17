@@ -2,23 +2,31 @@
 
 #Knittr all doc and doc/tutorial
 
-library("knitr")
 library("caret")
 library("mlr")
 
-setwd("doc")
+knit_subdir = "doc/knitted" #dir where the posts are published
+input_subdir = "doc" #dir where the new Rmd files can be found
+figure_dir = "figs"
 
-knit_subdir = "./knitted"
 
-if (!file.exists(knit_subdir)){
-  dir.create(knit_subdir)
+KnitPost = function(input, destination) {
+    require(knitr)
+    this_wd = getwd()
+    dir.create(dirname(destination))
+    setwd(dirname(destination))
+    fig.path = paste0(figure_dir,"/", sub(".Rmd$", "", basename(input)), "/")
+    opts_chunk$set(fig.path = fig.path)
+    render_markdown()
+    knit(file.path(this_wd,input), envir = parent.frame(), output=basename(destination))
+    setwd(this_wd)
 }
 
-files = list.files(recursive=TRUE)
+this_wd = getwd()
+files = list.files(input_subdir, recursive=TRUE)
 ending = substr(files, nchar(files)-3, nchar(files))
 files = files[ending==".Rmd"]
 for(file in files) {
-  destination = file.path(knit_subdir,
-    paste(substr(file,start=0,stop=nchar(file)-3), "md", sep=""))
-  knit(input=file,output=destination)
+  destination = file.path(knit_subdir, paste(substr(file,start=0,stop=nchar(file)-3), "md", sep=""))
+  KnitPost(input=file.path(input_subdir,file), destination=destination)
 }

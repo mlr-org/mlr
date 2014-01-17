@@ -129,7 +129,7 @@ g = ggplot(data, aes(x = lstat, y = response, ymin = response - se, ymax = respo
 g + geom_point() + geom_linerange(alpha = 0.5)
 ```
 
-![plot of chunk makeBaggingWrapper_regressionPlot](figure/makeBaggingWrapper_regressionPlot.png) 
+![plot of chunk makeBaggingWrapper_regressionPlot](figs/makeBaggingWrapper/makeBaggingWrapper_regressionPlot.png) 
 
 For more details about the date see `?BostonHousing`.
 

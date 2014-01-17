@@ -119,5 +119,5 @@ p = ggplot(aes(x = mmce.test.mean, y = mmce.test.range, xmax = mmce.test.max,
 print(p)
 ```
 
-![plot of chunk MulticriteriaEvaluation](figure/MulticriteriaEvaluation.png) 
+![plot of chunk MulticriteriaEvaluation](figs/multicriteria_evaluation/MulticriteriaEvaluation.png) 
 

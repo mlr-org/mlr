@@ -94,7 +94,7 @@ plot(perf2, col = "red", avg = "threshold", add = TRUE)
 legend("bottomright", legend = c("lda", "ksvm"), lty = 1, col = c("blue", "red"))
 ```
 
-![plot of chunk ROCRaverage](figure/ROCRaverage.png) 
+![plot of chunk ROCRaverage](figs/roc_analysis/ROCRaverage.png) 
 
 
 We can also cheat a bit and create pooled ROC-Curves by manually setting the class attribute from the prediction object from `ResamplePrediction` to `Prediction`.
@@ -112,6 +112,6 @@ plot(perf1, col = "blue")
 plot(perf2, col = "red", add = TRUE)
 ```
 
-![plot of chunk ROCRpooled](figure/ROCRpooled.png) 
+![plot of chunk ROCRpooled](figs/roc_analysis/ROCRpooled.png) 
 
 

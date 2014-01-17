@@ -11,12 +11,8 @@ endif
 tutorial:
 	printf "\nKnitting Rmd tutorial...\n"
 	${DELETE} doc/knitted
-	${DELETE} doc/figure
-	mkdir doc/knitted
-	mkdir doc/knitted/tutorial
 	${RSCRIPT} ./tools/generate-md-tutorial
 	sed $(SED_OPTION) s/\`\`\`r/\`\`\`splus/ doc/knitted/*.md
 	sed $(SED_OPTION) s/\`\`\`r/\`\`\`splus/ doc/knitted/tutorial/*.md
-	mv doc/figure doc/knitted/tutorial/figure
 
 
