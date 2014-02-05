@@ -22,35 +22,29 @@
 NULL
 
 makeTaskDesc = function(type, id, data, target, weights, blocking, positive) {
-  td = list()
-  td$id = id
-  td$type = type
-  i = which(colnames(data) %in% c(target))
-  td$target = target
-  td$size = nrow(data)
   y = data[, target]
-  td$n.feat = c(
-    numerics = sum(sapply(data, is.numeric)) - is.numeric(y),
-    factors = sum(sapply(data, is.factor)) - is.factor(y)
+  td = list(
+    id = id,
+    type = type,
+    target = target,
+    size = nrow(data),
+    n.feat = c(numerics = sum(sapply(data, is.numeric)) - is.numeric(y), factors = sum(sapply(data, is.factor)) - is.factor(y)),
+    has.missings = any(is.na(data)),
+    has.weights = length(weights) > 0L,
+    has.blocking = length(blocking) > 0L,
+    class.levels = NA_character_,
+    positive = NA_character_,
+    negative = NA_character_
   )
-  if(type == "classif")
+
+  if(type == "classif") {
     td$class.levels = levels(y)
-  else
-    td$class.levels = NA_character_
-  td$has.missings = any(sapply(data, function(x) any(is.na(x))))
-  td$has.weights = length(weights) > 0L
-  td$has.blocking = length(blocking) > 0L
-  if (type == "classif") {
     td$positive = positive
     if (length(td$class.levels) == 1L)
-      td$negative = paste("not_", positive)
+      td$negative = paste0("not_", positive)
     else if(length(td$class.levels) == 2L)
       td$negative = setdiff(td$class.levels, positive)
-    else
-      td$negative = NA_character_
-  } else {
-    td$positive = td$negative = NA_character_
   }
+
   return(structure(td, class="TaskDesc"))
 }
-
