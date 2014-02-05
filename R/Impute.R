@@ -226,9 +226,5 @@ reimpute.data.frame = function(x, desc) {
   }
 
   x[names(dummy.cols)] = dummy.cols
-  x = data.frame(x, stringsAsFactors=FALSE)
-  # FIXME: remove assertion?
-  stopifnot(is.data.frame(x))
-  x
+  data.frame(x, stringsAsFactors=FALSE)
 }
-

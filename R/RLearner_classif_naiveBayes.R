@@ -6,7 +6,7 @@ makeRLearner.classif.naiveBayes = function() {
     par.set = makeParamSet(
       makeNumericLearnerParam(id="laplace", default=0, lower=0)
       # makeNumericLearnerParam(id="threshold", default=0.001, lower=0)
-    ), 
+    ),
     twoclass = TRUE,
     multiclass = TRUE,
     missings = TRUE,
@@ -27,5 +27,3 @@ predictLearner.classif.naiveBayes = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type=="response", "class", "raw")
   predict(.model$learner.model, newdata=.newdata, type=type, ...)
 }
-
-

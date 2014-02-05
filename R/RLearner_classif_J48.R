@@ -16,7 +16,7 @@ makeRLearner.classif.J48 = function() {
       makeLogicalLearnerParam(id="L"),
       makeLogicalLearnerParam(id="A"),
       makeLogicalLearnerParam(id="J")
-    ), 
+    ),
     twoclass = TRUE,
     multiclass = TRUE,
     missings = TRUE,

@@ -235,6 +235,7 @@ imputeHist = function(breaks, use.mids=TRUE) {
 
 #' @rdname imputations
 imputeLearner = function(learner, preimpute=list()) {
+  # FIXME: this function needs some love
   checkArg(learner, "Learner")
   checkArg(preimpute, "list")
   if (!isProperlyNamed(preimpute))

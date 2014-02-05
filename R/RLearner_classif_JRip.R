@@ -9,7 +9,7 @@ makeRLearner.classif.JRip = function() {
       makeIntegerLearnerParam(id="O", default=2L, lower=1L),
       makeLogicalLearnerParam(id="E", default=FALSE),
       makeLogicalLearnerParam(id="P", default=FALSE)
-    ), 
+    ),
     oneclass = FALSE,
     twoclass = TRUE,
     multiclass = TRUE,

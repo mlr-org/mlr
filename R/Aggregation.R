@@ -18,12 +18,12 @@ NULL
 
 
 #' @title Specifiy your own aggregation of measures
-#' 
-#' @description 
+#'
+#' @description
 #' This is an adavanced feature of mlr. It gives access to some
 #' inner workings so the result might not be compatible with everything! \cr
-#' 
-#' 
+#'
+#'
 #' @param id [\code{character(1)}]\cr
 #'   Name of the aggregation method. (Preferably the same name as the generated function)
 #' @param fun [\code{function}]\cr
@@ -40,16 +40,15 @@ NULL
 #' @return \link{Aggregation} object
 #' @examples
 #' # computes the interquartile range on all performance values
-#' test.iqr = makeAggregation(id="test.iqr", 
+#' test.iqr = makeAggregation(id="test.iqr",
 #'   fun = function (task, perf.test, perf.train, measure, group, pred) IQR(perf.test))
 #' @export
 makeAggregation = function(id, fun) {
   checkArg(id, "character", len=1L, na.ok=FALSE)
-  structure(list(id=id, fun=fun), class="Aggregation")
+  setClasses(list(id=id, fun=fun), "Aggregation")
 }
 
 #' @S3method print Aggregation
 print.Aggregation = function(x, ...) {
   catf("Aggregation function: %s", x$id)
 }
-

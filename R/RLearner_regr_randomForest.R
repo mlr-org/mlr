@@ -120,21 +120,21 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
       # Thus, compute a corrected version
       # FIXME: check if this works properly
       const = ((1/R) - (1/M))/(B*R*(R-1))
-      for (i in 1:nrow(.newdata)) {
+      for (i in seq_row(.newdata)) {
         bias = 0
-        for (b in 1:B) {
-          for (r in 1:R) {
+        for (b in seq_len(B)) {
+          for (r in seq_len(R)) {
             bias = bias + (ind.responses[[b]][i,r] - aggr.responses[i,b])^2
           }
         }
 
         bias = bias * const
-        res[i,2] = res[i,2] - bias
+        res[i,2L] = res[i,2L] - bias
       }
     }
 
     # var --> sd
-    res[,2] = sqrt(res[,2])
+    res[,2L] = sqrt(res[,2L])
 
     return(res)
 }
@@ -154,21 +154,21 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
     rf.preds = predict(model, .newdata, predict.all=TRUE)
 
     # determine number of participating ensembles
-    M = lapply(1:n, function(i) sum(abs(inbag[i,]-1)))
+    M = lapply(seq_len(n), function(i) sum(abs(inbag[i,]-1)))
 
     # determine ensemlbe members, where observation i is not included
-    idx = lapply(1:n, function(i) which(inbag[i,] == 0))
+    idx = lapply(seq_len(n), function(i) which(inbag[i,] == 0L))
 
     # estimate
-    res = matrix(NA, ncol=n, nrow=nrow(.newdata))
-    for (j in 1:nrow(.newdata)) {
-      for (i in 1:n) {
+    res = matrix(NA_real_, ncol=n, nrow=nrow(.newdata))
+    for (j in seq_row(.newdata)) {
+      for (i in seq_len(n)) {
         res[j,i] = sum(rf.preds$individual[j,idx[[i]]]) / M[[i]]
       }
     }
 
     mean.responses = rf.preds$aggregate
-    se.preds = apply(res, 1, function(row) {
+    se.preds = apply(res, 1L, function(row) {
       sum((row - mean(row))^2)  / n
     })
     return(cbind(mean.responses, se.preds))

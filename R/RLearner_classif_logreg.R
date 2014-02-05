@@ -32,7 +32,6 @@ predictLearner.classif.logreg = function(.learner, .model, .newdata, ...) {
   } else {
     levs <- .model$task.desc$class.levels
     p <- as.factor(ifelse(x > 0.5, levs[2L], levs[1L]))
-    names(p) <- NULL
-    return(p)
+    unname(p)
   }
 }

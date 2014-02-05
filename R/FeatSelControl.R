@@ -7,27 +7,27 @@
 #'  \describe{
 #'    \item{FeatSelControlExhaustive}{Exhaustive search. All feature sets (up to a certain number
 #'      of features \code{max.features}) are searched.}
-#'    \item{FeatSelControlRandom}{Random search. Features vectores are randomly drawn, 
+#'    \item{FeatSelControlRandom}{Random search. Features vectores are randomly drawn,
 #'      up to a certain number of features \code{max.features}.
 #'      A feature is included in the current set with probability \code{prob}.
-#'      So we are basically drawing (0,1)-membership-vectors, where each element 
+#'      So we are basically drawing (0,1)-membership-vectors, where each element
 #'      is Bernoulli(\code{prob}) distributed.}
 #'    \item{FeatSelControlSequential}{Deterministic forward or backward search. That means extending
 #'      (forward) or shrinking (backward) an existing model stepwise by calculating the performance
 #'      of the existing model with variables added (forward) or removed (backward).
 #'      Depending on the given \code{method} different approches are taken.\cr
-#'      \code{sfs} Sequential Forward Search: Starting from an empty model, in each step the feature increasing 
+#'      \code{sfs} Sequential Forward Search: Starting from an empty model, in each step the feature increasing
 #'      the performance measure the most is added to the model.\cr
-#'      \code{sbs} Sequential Backward Search: Starting from a model with all features, in each step the feature 
+#'      \code{sbs} Sequential Backward Search: Starting from a model with all features, in each step the feature
 #'      decreasing the performance measure the least is removed from the model.\cr
-#'      \code{sffs} Sequential Floating Forward Search: Starting from an empty model, in each step the algorithm 
+#'      \code{sffs} Sequential Floating Forward Search: Starting from an empty model, in each step the algorithm
 #'      chooses the best model from all models with one additional feature and from all models with one
 #'      feature less.\cr
 #'      \code{sfbs} Sequential Floating Backward Search: Similar to \code{sffs} but starting with a full model.}
 #'    \item{FeatSelControlGA}{Search via genetic algorithm.
 #'      The GA is a simple (\code{mu}, \code{lambda}) or (\code{mu} + \code{lambda}) algorithm,
 #'      depending on the \code{comma} setting.
-#'      A comma strategy selects a new population of size \code{mu} out of the 
+#'      A comma strategy selects a new population of size \code{mu} out of the
 #'      \code{lambda} > \code{mu} offspring.
 #'      A plus strategy uses the joint pool of \code{mu} parents and \code{lambda} offspring
 #'      for selecting \code{mu} new candidates.
@@ -35,8 +35,8 @@
 #'      by randomly choosing pairs of parents. These are crossed over and \code{crossover.rate}
 #'      represents the probability of choosing a feature from the first parent instead of
 #'      the second parent.
-#'      The resulting offspring is mutated, i.e., its bits are flipped with 
-#'      probability \code{mutation.rate}. If \code{max.features} is set, offspring are 
+#'      The resulting offspring is mutated, i.e., its bits are flipped with
+#'      probability \code{mutation.rate}. If \code{max.features} is set, offspring are
 #'      repeatedly generated until the setting is satisfied.}
 #'  }
 #'
@@ -80,9 +80,8 @@
 #' @name FeatSelControl
 #' @rdname FeatSelControl
 #' @aliases FeatSelControlExhaustive FeatSelControlRandom FeatSelControlSequential FeatSelControlGA
-
 makeFeatSelControl = function(same.resampling.instance, maxit, max.features, ..., cl) {
-  checkArg(same.resampling.instance, "logical", len=1, na.ok=FALSE)
+  checkArg(same.resampling.instance, "logical", len=1L, na.ok=FALSE)
   maxit = convertInteger(maxit)
   checkArg(maxit, "integer", len=1L, lower=1L, na.ok=TRUE)
   max.features = convertInteger(max.features)
@@ -94,6 +93,7 @@ makeFeatSelControl = function(same.resampling.instance, maxit, max.features, ...
   return(x)
 }
 
+
 #' @S3method print FeatSelControl
 print.FeatSelControl = function(x, ...) {
   catf("FeatSel control: %s", class(x)[1])
@@ -103,9 +103,8 @@ print.FeatSelControl = function(x, ...) {
   else
     catf("Max. features: %i", x$max.features)
   catf("Max. iterations: %i", x$maxit)
-  if (length(x$extra.args) > 0)
+  if (length(x$extra.args))
     catf("Further arguments: %s", convertToShortString(x$extra.args))
   else
     catf("Further arguments: <not used>")
 }
-

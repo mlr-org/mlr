@@ -1,6 +1,6 @@
 #' @S3method as.data.frame Prediction
 as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
-  return(x$data)
+  x$data
 }
 
 #' Get probabilities for some classes.
@@ -20,14 +20,12 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
 #' mod <- train(lrn, task)
 #' # predict probabilities
 #' pred <- predict(mod, newdata = iris)
-
+#'
 #' # Get probabilities for all classes
 #' head(getProbabilities(pred))
-
+#'
 #' # Get probabilities for a subset of classes
 #' head(getProbabilities(pred, c("setosa", "virginica")))
-
-
 getProbabilities = function(pred, cl) {
   checkArg(pred, "Prediction")
   if (pred$task.desc$type != "classif")

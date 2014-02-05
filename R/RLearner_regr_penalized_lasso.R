@@ -5,7 +5,7 @@ makeRLearner.regr.penalized.lasso = function() {
     package = "penalized",
     par.set = makeParamSet(
       makeNumericLearnerParam(id="lambda1", default=0, lower=0)
-    ), 
+    ),
     missings = TRUE,
     numerics = TRUE,
     factors = TRUE,

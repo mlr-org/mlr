@@ -24,11 +24,11 @@ makeRLearner.regr.mob = function() {
 }
 
 #' @S3method trainLearner regr.mob
-trainLearner.regr.mob = function(.learner, .task, .subset, .weights, alpha, bonferroni, minsplit, 
+trainLearner.regr.mob = function(.learner, .task, .subset, .weights, alpha, bonferroni, minsplit,
   trim, breakties, part.feats, term.feats, ...) {
-  
+
   cntrl = learnerArgsToControl(mob_control, alpha, bonferroni, minsplit, trim, breakties)
-  
+
   feats = getTaskFeatureNames(.task)
   # FIXME document stuff
   # FIXME think about these defaults, also ask julia
@@ -36,10 +36,10 @@ trainLearner.regr.mob = function(.learner, .task, .subset, .weights, alpha, bonf
     part.feats = feats
   if (missing(term.feats))
     term.feats = feats
-  
+
   target = .task$task.desc$target
   f = as.formula(paste(target, "~", collapse(term.feats, sep=" + "), "|", collapse(part.feats, sep=" + ")))
-  
+
   if (missing(.weights)) {
     mob(f, data=getTaskData(.task, .subset), control = cntrl, ...)
   } else  {

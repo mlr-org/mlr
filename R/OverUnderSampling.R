@@ -1,16 +1,16 @@
 #' @title Over- or undersample binary classification task to handle class imbalancy.
 #'
 #' @description
-#' 
+#'
 #' Oversampling: From the smaller class, observations are randomly drawn with repetitions.
 #'
-#' Undersampling: From the larger class, observations are randomly drawn without repetitions. 
+#' Undersampling: From the larger class, observations are randomly drawn without repetitions.
 #'
 #' @param obj [\code{data.frame} | \code{\link{ClassifTask}}]\cr
 #'   Input data.
 #' @param target [\code{character(1)}]\cr
 #'   Name of the column specifying the response.
-#'   Only used when \code{obj} is a data.frame, otherwise ignored. 
+#'   Only used when \code{obj} is a data.frame, otherwise ignored.
 #' @param rate [\code{numeric(1)}]\cr
 #'   Factor to upsample the smaller or downsample the bigger class.
 #'   For undersampling: Must be between 0 and 1,
@@ -65,9 +65,9 @@ sampleBinaryClass = function(data, target, rate, cl, replace) {
   small = getMinIndex(tab)
   small = names(tab)[small]
   big = setdiff(names(tab), small)
-  cls = if (cl == 1L) 
+  cls = if (cl == 1L)
     c(small, big)
-  else 
+  else
     c(big, small)
   i1 = which(y == cls[[1L]])
   i2 = which(y == cls[[2L]])
@@ -75,5 +75,3 @@ sampleBinaryClass = function(data, target, rate, cl, replace) {
   newinds = sample(i1, newsize, replace=replace)
   data[c(newinds, i2), ]
 }
-
-

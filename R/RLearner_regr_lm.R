@@ -7,7 +7,7 @@ makeRLearner.regr.lm = function() {
   			 makeDiscreteLearnerParam(id="method", default="moment", values=c("moment", "mle", "mve", "t")),
   			 makeNumericLearnerParam(id="nu", lower=2, requires=expression(method=="t")),
       makeNumericLearnerParam(id="tol", default=1.0e-4, lower=0)
-    ), 
+    ),
     missings = FALSE,
     numerics = TRUE,
     factors = TRUE,
@@ -15,7 +15,7 @@ makeRLearner.regr.lm = function() {
     weights = TRUE
   )
 }
-		
+
 #' @S3method trainLearner regr.lm
 trainLearner.regr.lm = function(.learner, .task, .subset, .weights,  ...) {
   d = getTaskData(.task, .subset)
@@ -27,7 +27,7 @@ trainLearner.regr.lm = function(.learner, .task, .subset, .weights,  ...) {
     lm(f, data=d, weights=.weights, ...)
   }
 }
-	
+
 #' @S3method predictLearner regr.lm
 predictLearner.regr.lm = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response") {

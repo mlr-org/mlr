@@ -5,7 +5,7 @@ makeRLearner.classif.OneR = function() {
     package = "RWeka",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id="B", default=6L, lower=1L)
-    ), 
+    ),
     twoclass = TRUE,
     multiclass = TRUE,
     missings = TRUE,

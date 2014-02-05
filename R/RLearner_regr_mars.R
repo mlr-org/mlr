@@ -27,5 +27,5 @@ trainLearner.regr.mars = function(.learner, .task, .subset, .weights,  ...) {
 
 #' @S3method predictLearner regr.mars
 predictLearner.regr.mars = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata=.newdata)[,1]
+  predict(.model$learner.model, newdata=.newdata)[,1L]
 }

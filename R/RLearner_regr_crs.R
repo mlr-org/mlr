@@ -32,7 +32,7 @@ makeRLearner.regr.crs = function() {
       makeIntegerLearnerParam(id="restarts", default=0, lower=0),
       makeIntegerLearnerParam(id="nmulti", default=5, lower=0),
       makeLogicalLearnerParam(id="singular.ok", default=FALSE)
-      
+
     ),
     par.vals = list(),
     missings = FALSE,
@@ -67,6 +67,6 @@ predictLearner.regr.crs = function(.learner, .model, .newdata, ...) {
     pred = predict(.model$learner.model, newdata=.newdata, ...)
     attr(pred, "lwr") = NULL
     attr(pred, "upr") = NULL
-    pred  
+    pred
   }
 }

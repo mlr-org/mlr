@@ -1,10 +1,10 @@
-# FIXME: interface was changed, read page, pars, mnaybe rename
+# FIXME: interface was changed, read page, pars, maybe rename
 #' @S3method makeRLearner classif.boosting
 makeRLearner.classif.boosting = function() {
   makeRLearnerClassif(
     cl = "classif.boosting",
     package = "adabag",
-    par.set = makeParamSet( 
+    par.set = makeParamSet(
       makeLogicalLearnerParam(id="boos", default=TRUE),
       makeIntegerLearnerParam(id="mfinal", default=100L, lower=1L),
       makeDiscreteLearnerParam(id="coeflearn", default="Breiman", values=c("Breiman", "Freund")),
@@ -19,7 +19,7 @@ makeRLearner.classif.boosting = function() {
       # we use 30 as upper limit, see docs of rpart.control
       makeIntegerLearnerParam(id="maxdepth", default=30L, lower=1L, upper=30L),
       makeIntegerLearnerParam(id="xval", default=0L, lower=0L)
-    ), 
+    ),
     par.vals = list(xval=0L),
     twoclass = TRUE,
     multiclass = TRUE,

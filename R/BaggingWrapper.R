@@ -73,7 +73,7 @@ makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.
 }
 
 #' @S3method trainLearner BaggingWrapper
-trainLearner.BaggingWrapper = function(.learner, .task, .subset, bag.iters, bag.replace, 
+trainLearner.BaggingWrapper = function(.learner, .task, .subset, bag.iters, bag.replace,
   bag.size, bag.feats, ...) {
 
   .task = subsetTask(.task, subset = .subset)
@@ -107,23 +107,22 @@ predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
   })
   if (.learner$predict.type == "response") {
     g = if(.learner$type == "classif")
-      as.factor(apply(p, 1, computeMode))
+      as.factor(apply(p, 1L, computeMode))
     else
       rowMeans(p)
   } else {
     if(.learner$type == 'classif') {
       levs = .model$task.desc$class.levels
-      p = apply(p, 1, function(x) {
+      p = apply(p, 1L, function(x) {
         x = factor(x, levels = levs)
         as.numeric(prop.table(table(x)))
       })
       setColNames(t(p), levs)
     } else {
-      cbind(rowMeans(p), apply(p, 1, sd))
+      cbind(rowMeans(p), apply(p, 1L, sd))
     }
   }
 }
-
 
 
 #' @S3method makeWrappedModel BaggingWrapper
@@ -136,7 +135,7 @@ makeWrappedModel.BaggingWrapper = function(learner, model, task.desc, subset, fe
 #' @S3method print BaggingModel
 print.BaggingModel = function(x, ...) {
   s = capture.output(print.WrappedModel(x))
-  u = sprintf("Bagged Learner: %s", class(x$learner$next.learner)[1])
+  u = sprintf("Bagged Learner: %s", class(x$learner$next.learner)[1L])
   s = append(s, u, 1L)
   lapply(s, catf)
 }

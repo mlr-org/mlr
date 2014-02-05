@@ -27,15 +27,15 @@ NULL
 makePrediction = function(task.desc, id, truth, predict.type, y, time) {
 	data = list()
 	# if null no col in data present
-	data[["id"]] = id
-	data[["truth"]] = truth
+	data$id = id
+	data$truth = truth
   if (predict.type == "response") {
-    data[["response"]] = y
+    data$response = y
   } else if (predict.type == "prob") {
-		data[["prob"]] = y
+		data$prob = y
   } else if (predict.type == "se"){
-    data[["response"]] = y[,1L]
-    data[["se"]] = y[,2L]
+    data$response = y[, 1L]
+    data$se = y[, 2L]
   }
   data = as.data.frame(data)
   # fix columnnames for prob if strage chars are in factor levels
@@ -43,13 +43,13 @@ makePrediction = function(task.desc, id, truth, predict.type, y, time) {
 	if (length(i))
 		colnames(data)[i] = paste("prob.", colnames(y), sep="")
 
-  p = structure(list(
+  p = setClasses(list(
     predict.type = predict.type,
     data = data,
     threshold = NA_real_,
     task.desc = task.desc,
     time = time
-  ), class="Prediction")
+  ), "Prediction")
 
   if (predict.type == "prob") {
     th = rep(1/length(task.desc$class.levels), length(task.desc$class.levels))
@@ -67,4 +67,3 @@ print.Prediction = function(x, ...) {
   catf("time: %.2f", x$time)
   catf(printStrToChar(as.data.frame(x)))
 }
-

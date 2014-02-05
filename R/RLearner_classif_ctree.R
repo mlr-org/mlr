@@ -15,7 +15,7 @@ makeRLearner.classif.ctree = function() {
       makeIntegerLearnerParam(id="mtry", default=0L, lower=0L),
       makeLogicalLearnerParam(id="savesplitstats", default=TRUE),
       makeIntegerLearnerParam(id="maxdepth", default=0L, lower=0L)
-    ), 
+    ),
     twoclass = TRUE,
     multiclass = TRUE,
     missings = TRUE,
@@ -27,11 +27,11 @@ makeRLearner.classif.ctree = function() {
 }
 
 #' @S3method trainLearner classif.ctree
-trainLearner.classif.ctree = function(.learner, .task, .subset, .weights, teststat, testtype, 
-  mincriterion, minsplit, minbucket, stump, nresample, maxsurrogate, mtry, 
+trainLearner.classif.ctree = function(.learner, .task, .subset, .weights, teststat, testtype,
+  mincriterion, minsplit, minbucket, stump, nresample, maxsurrogate, mtry,
   savesplitstats, maxdepth, ...) {
-  
-  ctrl = learnerArgsToControl(ctree_control, teststat, testtype, mincriterion, minsplit, 
+
+  ctrl = learnerArgsToControl(ctree_control, teststat, testtype, mincriterion, minsplit,
     minbucket, stump, nresample, maxsurrogate, mtry, savesplitstats, maxdepth)
   f = getTaskFormula(.task)
   ctree(f, data=getTaskData(.task, .subset), controls=ctrl, ...)

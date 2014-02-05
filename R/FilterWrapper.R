@@ -46,33 +46,30 @@ makeFilterWrapper = function(learner, fw.method="random.forest.importance", fw.p
   )
   pv = list(fw.method=fw.method, fw.perc=fw.perc)
   # FIXME: scale to 0,1
-  makeBaseWrapper(id, learner, package="FSelector", par.set=ps, par.vals=pv,
-    cl="FilterWrapper")
+  makeBaseWrapper(id, learner, package="FSelector", par.set=ps, par.vals=pv, cl="FilterWrapper")
   # FIXME: check that for some the inputs have to be all num. or accept error in train and NA in predict?
 }
+
 
 #' @S3method trainLearner FilterWrapper
 trainLearner.FilterWrapper = function(.learner, .task, .subset, fw.method, fw.perc, ...) {
   .task = subsetTask(.task, subset=.subset)
-  tn = .task$task.desc$target
-  vals = filterFeatures(.task)
-  # fixme: are all filter vales high=good?
-  vals = sort(vals, decreasing=TRUE)
-  inds = seq_len(round(fw.perc*length(vals)))
-  features = names(vals)[inds]
+  # FIXME: are all filter vales high=good?
+  vals = sort(filterFeatures(.task), decreasing=TRUE)
+  features = head(names(vals), round(fw.perc * length(vals)))
   # we have already subsetted obs
   .task = subsetTask(.task, features=features)
   m = train(.learner$next.learner, .task)
-  # fixme: enter correct obejcts (features, etc)
-  x = makeChainModel(next.model=m, cl = "FilterModel")
-  return(x)
+  # FIXME: enter correct objects (features, etc)
+  makeChainModel(next.model=m, cl = "FilterModel")
 }
+
 
 #' @S3method predictLearner FilterWrapper
 predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
-  .newdata = .newdata[, .model$learner.model$next.model$features, drop=FALSE]
-  NextMethod(.newdata=.newdata)
+  NextMethod(.newdata=.newdata[, .model$learner.model$next.model$features, drop=FALSE])
 }
+
 
 #' Returns the filtered features.
 #'
@@ -83,5 +80,3 @@ predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
 getFilteredFeatures = function(model) {
   model$learner.model$next.model$features
 }
-
-
