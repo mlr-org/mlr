@@ -1,8 +1,8 @@
 #' Result of tuning.
-#' 
+#'
 #' Container for results of hyperparameter tuning.
 #' Contains the obtained point in search space, its performance values
-#' and the optimization path which lead there. 
+#' and the optimization path which lead there.
 #'
 #' Object members:
 #' \describe{

@@ -1,5 +1,5 @@
 #' @title Shows the detailed steps of the feature selection.
-#' 
+#'
 #' @description
 #' This function prints the steps \code{\link{selectFeatures}} took to find it's optimal set of features and the reason why it stopped.
 #' It can also give information about all calculations done on each intermediate step.
@@ -13,20 +13,20 @@
 #' @return Nothing.
 #' @export
 analyzeFeatSelResult = function(fs.obj, reduce=TRUE){
-  cl = class(fs.obj$control)[1]
+  cl = class(fs.obj$control)[1L]
   stopifnot(cl %in% c("FeatSelControlSequential", "FeatSelControlGA"))
   analyzeFunc = switch(cl,
     FeatSelControlSequential = analyzeSequential,
     FeatSelControlGA = analyzeGA,
     stop(paste("Unknown class of control object:", cl)))
-  analyzeFunc(fs.obj, reduce)  
+  analyzeFunc(fs.obj, reduce)
 }
 
 
 analyzeSequential = function(fs.obj, reduce=TRUE){
   df = as.data.frame(fs.obj$opt.path)
   feat.names = names(fs.obj$opt.path$par.set$pars)
-  measure = fs.obj$opt.path$minimize[1]
+  measure = fs.obj$opt.path$minimize[1L]
   optimum = ifelse(measure, min(df[,names(measure)]), max(df[,names(measure)]))
   df$optimum = (df[,names(measure)] == optimum)
   df$selected = (is.na(df$eol) | (df$dob < df$eol))
@@ -49,26 +49,26 @@ analyzeGA = function(fs.obj, reduce=TRUE){
 stringMaxConcat = function(x, printed.features){
   l = length(x)
   x = head(x, printed.features)
-  if(l > printed.features) 
-    x = c(x,"...")
-  paste(x, collapse = ", ")
+  if(l > printed.features)
+    x = c(x, "...")
+  collapse(x, ", ")
 }
 
-printAnalyzeFeatSelResultHead = function(x, printed.features=10){
+printAnalyzeFeatSelResultHead = function(x, printed.features=10L){
   catf("FeatSel result:")
   catf("- features (%i): %s", length(x$x), stringMaxConcat(x$x, printed.features))
   catf("- Performance: %s", perfsToString(x$y))
   catf("\nPath to optimum:")
 }
 
-printAnalyzeFeatSelResultSeq = function(x, printed.features=10) {
+printAnalyzeFeatSelResultSeq = function(x, printed.features=10L) {
   printAnalyzeFeatSelResultHead(x, printed.features)
   df = x$reduced.data.frame
   df$step = as.numeric(as.factor(df$dob))
   # Initialize first Values
-  n.feats.old = df[1,"n.feats"]
-  stepVars.old = x$features[df[1,x$features]==1]  
-  measures.old = as.numeric(df[1,names(x$y)])
+  n.feats.old = df[1L,"n.feats"]
+  stepVars.old = x$features[df[1L,x$features]==1]
+  measures.old = as.numeric(df[1L,names(x$y)])
   names(measures.old) = names(x$y)
   # Iterate over all steps:
   for(i in unique(df$step)){
@@ -90,62 +90,59 @@ printAnalyzeFeatSelResultSeq = function(x, printed.features=10) {
         stepVars.opt = stepVars
         measures.opt = measures
         txtSelected = "SELECTED"
-      } else 
+      } else
         txtSelected = ""
       catf("- Features: %i  \t %s%s \t Gain: %s \t %s",
            n.feats, changeTxt, diffVar, perfsToString(measures.gain), txtSelected)
     }
     # Print end result of each Step
-    catf("Finished step: %i with \t %s \t Optimum: %s", 
-         head(df.step[,"step"],1), perfsToString(measures.opt), any(df.step$optimum))
+    catf("Finished step: %i with \t %s \t Optimum: %s",
+         head(df.step[,"step"],1L), perfsToString(measures.opt), any(df.step$optimum))
     n.feats.old = n.feats.opt
     stepVars.old = stepVars.opt
     measures.old = measures.opt
   }
-  
+
   if (!is.na(x$control$max.features) & (max(df$n.feats) == x$control$max.features)) {
     catf("\nStopped due to reached maximum of allowed features (%i).", x$control$max.features)
   } else {
-    catf("\nStopped, because no improving set of features (w.r.t. %s) was found.", 
+    catf("\nStopped, because no improving set of features (w.r.t. %s) was found.",
          paste(names(x$y), collapse = ", "))
-  } 
+  }
 }
 
-printAnalyzeFeatSelResultGA = function(x, printed.features=10) {
+printAnalyzeFeatSelResultGA = function(x, printed.features=10L) {
   printAnalyzeFeatSelResultHead(x, printed.features)
   df = x$reduced.data.frame
   generations = 0:x$control$maxit
-  for(i in generations) {
+  for (i in generations) {
     df.this.gen = df[df$dob == i,]
-    if(i == 0) textGen = "Initial generation:"
-    else textGen = paste("Generation ",i,":",sep="")
-    catf(textGen)
-    if(nrow(df.this.gen) == 0L) {
+    cat(if (i == 0L) "Initial generation:" else paste0("Generation ", i, ":"))
+    if (nrow(df.this.gen) == 0L) {
       catf("- none of the new individuals is better than any from the current best population")
       next
     }
-    for(j in seq_row(df.this.gen)) {
+    for (j in seq_row(df.this.gen)) {
       feats = x$features[df.this.gen[j, x$features]==1]
       measures = as.numeric(df.this.gen[j,names(x$y)])
       names(measures) = names(x$y)
-      if(!df.this.gen[j, "selected"]) dieTxt = "\t (died out)"
-      else dieTxt = ""
-      catf("- (%i) \t Features: %i  \t %s \t Features: %s %s", 
+      dieTxt = if (!df.this.gen[j, "selected"]) "\t (died out)" else ""
+      catf("- (%i) \t Features: %i  \t %s \t Features: %s %s",
            j, df.this.gen[j,"n.feats"], perfsToString(measures), stringMaxConcat(feats, printed.features), dieTxt)
     }
   }
 }
-printAnalyzeFeatSelResultGA.old = function(x, printed.features=10) {
-  
+
+printAnalyzeFeatSelResultGA.old = function(x, printed.features=10L) {
   generations = seq_len(x$control$maxit)
   ind_counter = 0L
   ind_act = seq_row(df)
-  perf_pop = numeric()  
+  perf_pop = numeric()
   ## initial generation
   X.init = df[df$dob == 0L, ]
   catf("Initial generation:")
   for(i in seq_row(X.init)) {
-    ind_counter = ind_counter + 1
+    ind_counter = ind_counter + 1L
     meas = X.init[i, m.names]
     names(meas) = m.names
     perf_pop = c(perf_pop, as.numeric(meas))
@@ -162,10 +159,10 @@ printAnalyzeFeatSelResultGA.old = function(x, printed.features=10) {
     }
     nf = length(feats)
     if(nf > printed.features) {
-      catf("  (%02i) select %02i features: %s", ind_counter, nf, 
+      catf("  (%02i) select %02i features: %s", ind_counter, nf,
            paste(c(feats[1:printed.features], "..."), collapse = ", "))
     } else {
-      catf("  (%02i) select %02i features: %s", ind_counter, nf, 
+      catf("  (%02i) select %02i features: %s", ind_counter, nf,
            paste(feats[1:nf], collapse = ", "))
     }
     catf("       performance: %s", perfsToString(meas))
@@ -182,7 +179,7 @@ printAnalyzeFeatSelResultGA.old = function(x, printed.features=10) {
     replace_index = rev(order(perf_pop))[1:new_inds]
     to_be_replaced = ind_act[replace_index]
     if(length(replace_index) == 1L) {
-      catf("- replace individual %s with:", paste(paste("(", to_be_replaced, ")", sep = ""), collapse = ", "))  
+      catf("- replace individual %s with:", paste(paste("(", to_be_replaced, ")", sep = ""), collapse = ", "))
     } else {
       catf("- replace individuals %s with:", paste(paste("(", to_be_replaced, ")", sep = ""), collapse = ", "))
     }
@@ -207,21 +204,21 @@ printAnalyzeFeatSelResultGA.old = function(x, printed.features=10) {
       }
       nf = length(feats)
       if(nf > printed.features) {
-        catf("  (%02i) select %02i features: %s", ind_counter, nf, 
+        catf("  (%02i) select %02i features: %s", ind_counter, nf,
              paste(c(feats[1:printed.features], "..."), collapse = ", "))
       } else {
-        catf("  (%02i) select %02i features: %s", ind_counter, nf, 
+        catf("  (%02i) select %02i features: %s", ind_counter, nf,
              paste(feats[1:nf], collapse = ", "))
       }
       catf("       performance: %s", perfsToString(meas))
     } ## end of loop of individuals per generation
-  } ## end of generations-loop 
+  } ## end of generations-loop
 }
 
 
 #' @S3method print analyzeFeatSelResult
 print.analyzeFeatSelResult = function(x, ...) {
-  switch(class(x$control)[1],
+  switch(class(x$control)[1L],
          FeatSelControlSequential = printAnalyzeFeatSelResultSeq(x, ...),
          FeatSelControlGA = printAnalyzeFeatSelResultGA(x, ...))
 }

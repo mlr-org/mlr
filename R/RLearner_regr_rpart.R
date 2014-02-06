@@ -14,7 +14,7 @@ makeRLearner.regr.rpart = function() {
       # we use 30 as upper limit, see docs of rpart.control
       makeIntegerLearnerParam(id="maxdepth", default=30L, lower=1L, upper=30L),
       makeIntegerLearnerParam(id="xval", default=10L, lower=0L)
-    ), 
+    ),
     par.vals = list(xval=0L),
     missings = TRUE,
     numerics = TRUE,

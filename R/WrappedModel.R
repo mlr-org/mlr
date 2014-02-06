@@ -35,14 +35,14 @@ makeWrappedModel.Learner = function(learner, model, task.desc, subset, features,
   } else {
     cl = "WrappedModel"
   }
-  structure(list(
+  setClasses(list(
     learner = learner,
     learner.model = model,
     task.desc = task.desc,
     subset = subset,
     features = features,
     time = time
-  ), class=cl)
+  ), cl)
 }
 
 #' Get underlying R model of learner integrated into mlr.
@@ -64,7 +64,7 @@ getLearnerModel.WrappedModel = function(model) {
 #' @S3method print WrappedModel
 print.WrappedModel = function(x, ...) {
   cat(
-    "Learner model for id=", x$learner$id, " class=", class(x$learner)[1], "\n",
+    "Learner model for id=", x$learner$id, " class=", class(x$learner)[1L], "\n",
     "Trained on obs: ", length(x$subset), "\n",
     "Used features: ", length(x$features), "\n",
     "Hyperparameters: ", getHyperParsString(x$learner), "\n",

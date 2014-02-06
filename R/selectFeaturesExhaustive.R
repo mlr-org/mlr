@@ -3,7 +3,7 @@ selectFeaturesExhaustive = function(learner, task, resampling, measures, bit.nam
   states = list(rep(0, p))
   for (i in 1:min(control$max.features, p, na.rm=TRUE)) {
     x = combn(1:p, i)
-    s = lapply(1:ncol(x), function(j) { 
+    s = lapply(1:ncol(x), function(j) {
         b = rep(0, p)
         b[x[,j]] = 1
         b
@@ -14,4 +14,4 @@ selectFeaturesExhaustive = function(learner, task, resampling, measures, bit.nam
   i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), ties="random")
   e = getOptPathEl(opt.path, i)
 	makeFeatSelResult(learner, control, names(e$x)[e$x == 1], e$y, opt.path)
-} 
+}

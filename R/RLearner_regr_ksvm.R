@@ -49,5 +49,5 @@ trainLearner.regr.ksvm = function(.learner, .task, .subset, .weights, degree, of
 
 #' @S3method predictLearner regr.ksvm
 predictLearner.regr.ksvm = function(.learner, .model, .newdata, ...) {
-  kernlab::predict(.model$learner.model, newdata=.newdata, ...)[,1]
+  kernlab::predict(.model$learner.model, newdata=.newdata, ...)[, 1L]
 }

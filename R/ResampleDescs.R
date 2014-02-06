@@ -57,4 +57,3 @@ print.RepCVDesc = function(x, ...) {
   catf("Predict: %s", x$predict)
   catf("Stratification: %s", x$stratify)
 }
-

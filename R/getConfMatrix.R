@@ -50,7 +50,7 @@ getConfMatrix = function(pred, relative=FALSE) {
   dimnames(result) = list(true = c(cls, "-SUM-"),
                           predicted = c(cls, "-SUM-"))
   if (relative) {
-    # FIXME this is quite inefficient
+    # FIXME: this is quite inefficient
     total = sum(result[1:n, 1:n])
     n1 = n + 1
     result[n1, 1:n] = if (result[n1, n1] != 0) result[n1, 1:n]/result[n1, n1] else 0

@@ -60,8 +60,7 @@ makeTuneControl = function(same.resampling.instance, start, ..., cl) {
     stop("'start' must be a properly named list!")
   x = makeOptControl(same.resampling.instance=same.resampling.instance, ...)
   x$start = start
-  class(x) = c(cl, "TuneControl", class(x))
-  return(x)
+  addClasses(x, c(cl, "TuneControl"))
 }
 
 #' @S3method print TuneControl

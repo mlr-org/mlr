@@ -5,10 +5,10 @@
 #' create a \code{\link{ResampleInstance}}, when given the size of the data set.
 #'
 #' @details
-#' Some notes on some special strategies: 
+#' Some notes on some special strategies:
 #' \describe{
 #' \item{Repeated cross-validation}{Use \dQuote{RepCV}. Then you have to set the aggregation function
-#'   for your preferred performance measure to \dQuote{testgroup.mean} 
+#'   for your preferred performance measure to \dQuote{testgroup.mean}
 #'   via \code{\link{setAggregation}}.}
 #' \item{B632 bootstrap}{Use \dQuote{Bootstrap} for bootstrap and set predict to \dQuote{both}.
 #'   Then you have to set the aggregation function for your preferred performance measure to
@@ -18,7 +18,7 @@
 #'   \dQuote{b632plus} via \code{\link{setAggregation}}.}
 #' \item{Fixed Holdout set}{Use \code{\link{makeFixedHoldoutInstance}}.}
 #' }
-#' 
+#'
 #' Object slots:
 #' \describe{
 #' \item{id [\code{character(1)}]}{Name of resampling strategy.}
@@ -45,7 +45,7 @@
 #'     \dQuote{Subsample} between 0 and 1. Default is 2/3.}
 #'   \item{reps [integer(1)]}{Repeats for \dQuote{RepCV}. Here \code{iters = folds * reps}.
 #'     Default is 10.}
-#'   \item{folds [integer(1)]}{Folds in the repeated CV for \code{RepCV}. 
+#'   \item{folds [integer(1)]}{Folds in the repeated CV for \code{RepCV}.
 #'     Here \code{iters = folds * reps}. Default is 10.}
 #'   }
 #' @param stratify [\code{logical(1)}]\cr
@@ -73,22 +73,16 @@ makeResampleDesc = function(method, predict="test", ..., stratify=FALSE) {
   checkArg(stratify, "logical", len=1L, na.ok=FALSE)
   if (stratify && method == "LOO")
     stop("Stratification cannot be done for LOO!")
-  constructor = paste("makeResampleDesc", method, sep="")
-  cl = paste(method, "Desc", sep="")
-  d = do.call(constructor, list(...))
+  d = do.call(paste0("makeResampleDesc", method), list(...))
   d$predict = predict
   d$stratify = stratify
-  class(d) = c(cl, class(d))
-  return(d)
+  addClasses(d, paste0(method, "Desc"))
 }
 
 
 makeResampleDescInternal = function(id, iters, predict="test", ...) {
-  res = list(...)
-  res$id = id
-  res$iters = iters
-  res$predict = predict
-  structure(res, class = "ResampleDesc")
+  setClasses(insert(list(...), list(id = id, iters=iters, predict=predict)),
+    "ResampleDesc")
 }
 
 #' @S3method print ResampleDesc
@@ -97,4 +91,3 @@ print.ResampleDesc = function(x, ...) {
   catf("Predict: %s", x$predict)
   catf("Stratification: %s", x$stratify)
 }
-

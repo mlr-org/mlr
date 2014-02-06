@@ -7,9 +7,8 @@ instantiateResampleInstance.HoldoutDesc = function(desc, size) {
   makeResampleInstanceInternal(desc, size, train.inds=list(inds))
 }
 
-
 instantiateResampleInstance.CVDesc = function(desc, size) {
-  test.inds = chunk(1:size, shuffle=TRUE, n.chunks=desc$iters)
+  test.inds = chunk(seq_len(size), shuffle=TRUE, n.chunks=desc$iters)
   makeResampleInstanceInternal(desc, size, test.inds=test.inds)
 }
 
@@ -20,12 +19,12 @@ instantiateResampleInstance.LOODesc = function(desc, size) {
 }
 
 instantiateResampleInstance.SubsampleDesc = function(desc, size) {
-  inds = lapply(1:desc$iters, function(x) sample(size, size*desc$split))
+  inds = lapply(seq_len(desc$iters), function(x) sample(size, size*desc$split))
   makeResampleInstanceInternal(desc, size, train.inds=inds)
 }
 
 instantiateResampleInstance.BootstrapDesc = function(desc, size) {
-  inds = lapply(1:desc$iters, function(x) sample(size, size, replace=TRUE))
+  inds = lapply(seq_len(desc$iters), function(x) sample(size, size, replace=TRUE))
   makeResampleInstanceInternal(desc, size, train.inds=inds)
 }
 
@@ -38,4 +37,3 @@ instantiateResampleInstance.RepCVDesc = function(desc, size) {
   g = as.factor(rep(seq_len(desc$reps), each=folds))
   makeResampleInstanceInternal(desc, size, train.inds=train.inds, test.inds=test.inds, group=g)
 }
-

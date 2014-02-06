@@ -11,8 +11,9 @@
 #' getTaskFeatureNames(task)
 getTaskFeatureNames = function(task) {
   #FIXME argument checks currently not done for speed
-  return(setdiff(colnames(task$env$data), task$task.desc$target))
+  setdiff(colnames(task$env$data), task$task.desc$target)
 }
+
 
 #' Get formula of a task as a string.
 #'
@@ -122,7 +123,7 @@ getTaskTargets = function(task, subset, recode.target="no") {
 #' head(getTaskData(task, subset = 1:100, recode.target = "01"))
 getTaskData = function(task, subset, features, target.extra=FALSE, recode.target="no") {
   tn = task$task.desc$target
-  ms = missing(subset) || identical(subset, 1:task$task.desc$size)
+  ms = missing(subset) || identical(subset, seq_len(task$task.desc$size))
   mv = missing(features) || identical(features, getTaskFeatureNames(task))
 
   if (target.extra) {

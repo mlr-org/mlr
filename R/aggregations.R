@@ -141,7 +141,7 @@ train.sqrt.of.mean = makeAggregation(
 b632 = makeAggregation(
   id = "b632",
   fun = function(task, perf.test, perf.train, measure, group, pred) {
-    mean(0.632*perf.test + (1-0.632)*perf.train)
+    mean(0.632*perf.test + 0.368*perf.train)
   }
 )
 
@@ -160,8 +160,8 @@ b632plus = makeAggregation(
       y2 = df2$response
       grid = expand.grid(y1, y2, KEEP.OUT.ATTRS=FALSE)
       pred2 = makePrediction(task.desc=pred$task.desc,
-        id=NULL, truth=grid[,1], predict.type="response", y=grid[,2],
-        time=as.numeric(NA))
+        id=NULL, truth=grid[, 1L], predict.type="response", y=grid[, 2L],
+        time=NA_real_)
       gamma = performance(pred2, measures=measure)
       R = (perf.test[i] - perf.train[i]) / (gamma - perf.train[i])
       w = 0.632 / (1 - 0.368*R)

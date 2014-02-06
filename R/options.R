@@ -5,10 +5,9 @@ setMlrOption = function(name, val) {
 
 getMlrOption = function(name, default) {
   name = sprintf("mlr.%s", name)
-  getOption(name, default) 
+  getOption(name, default)
 }
 
 exportMlrOptions = function() {
 
 }
-

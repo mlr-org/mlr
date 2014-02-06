@@ -46,5 +46,5 @@ makeTaskDesc = function(type, id, data, target, weights, blocking, positive) {
       td$negative = setdiff(td$class.levels, positive)
   }
 
-  return(structure(td, class="TaskDesc"))
+  setClasses(td, "TaskDesc")
 }

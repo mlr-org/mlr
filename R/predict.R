@@ -90,7 +90,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
 
   response = NULL
   prob = NULL
-  time.predict = as.numeric(NA)
+  time.predict = NA_real_
 
   # was there an error in building the model? --> return NAs
   if(inherits(model, "FailureModel")) {

@@ -14,6 +14,7 @@
 NULL
 
 makeResamplePrediction = function(instance, preds.test, preds.train) {
+  # FIXME: prealloc
   data = data.frame()
   for (i in seq_len(instance$desc$iters)) {
     if (!is.null(preds.test[[i]]))
@@ -22,15 +23,14 @@ makeResamplePrediction = function(instance, preds.test, preds.train) {
       data = rbind(data, cbind(preds.train[[i]]$data, iter=i, set="train"))
   }
   p1 = preds.test[[1L]]
-  time =
-  structure(list(
+  setClasses(list(
     instance = instance,
     predict.type = p1$predict.type,
     data = data,
     threshold = p1$threshold,
     task.desc = p1$task.desc,
     time = extractSubList(preds.test, "time")
-  ), class=c("ResamplePrediction", "Prediction"))
+  ), c("ResamplePrediction", "Prediction"))
 }
 
 #' @S3method print ResamplePrediction
@@ -42,5 +42,3 @@ print.ResamplePrediction = function(x, ...) {
   catf("time (mean): %.2f", mean(x$time))
   catf(printStrToChar(as.data.frame(x)))
 }
-
-

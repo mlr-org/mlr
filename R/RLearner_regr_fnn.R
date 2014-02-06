@@ -26,7 +26,6 @@ trainLearner.regr.fnn = function(.learner, .task, .subset, .weights,  ...) {
 #' @S3method predictLearner regr.fnn
 predictLearner.regr.fnn = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
-  pars = list(train=m$train$data, test=.newdata, y=m$train$target)
-  pars = c(pars, m$parset, list(...))
+  pars = c(list(train=m$train$data, test=.newdata, y=m$train$target), m$parset, list(...))
   do.call(FNN::knn.reg, pars)$pred
 }

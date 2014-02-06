@@ -1,7 +1,7 @@
 #' Instantiates a resampling strategy object.
 #'
-#' This class encapsulates training and test sets generated from the data set for a number 
-#' of iterations. It mainly stores a set of integer vectors indicating the training and 
+#' This class encapsulates training and test sets generated from the data set for a number
+#' of iterations. It mainly stores a set of integer vectors indicating the training and
 #' test examples for each iteration.
 #'
 #' Object slots:
@@ -11,7 +11,7 @@
 #' \item{train.inds [list of \code{integer}]}{List of of training indices for all iterations.}
 #' \item{test.inds [list of \code{integer}]}{List of of test indices for all iterations.}
 #' \item{group [\code{factor}]}{Optional grouping of resampling iterations. This encodes whether
-#'   specfic iterations 'belong together' (e.g. repeated CV), and it can later be used to 
+#'   specfic iterations 'belong together' (e.g. repeated CV), and it can later be used to
 #'   aggregate performance values accordingly. Default is 'factor()'.}
 #' }
 #'
@@ -43,7 +43,7 @@ makeResampleInstance = function(desc, task, size) {
     blocking = task$blocking
   } else {
     task = NULL
-    blocking = factor(c())
+    blocking = factor()
   }
   if (!missing(size)) {
     size = convertInteger(size)
@@ -58,14 +58,12 @@ makeResampleInstance = function(desc, task, size) {
       stop("Blocking always needs the task!")
     levs = levels(blocking)
     size2 = length(levs)
-    levs = levels(blocking)
-    size2 = length(levs)
     # create instance for blocks
     inst = instantiateResampleInstance(desc, size2)
     # now exchange block indices with indices of elements of this block and shuffle
     inst$train.inds = lapply(inst$train.inds, function(i) sample(which(blocking %in% levs[i])))
     ti = sample(size)
-    inst$test.inds = lapply(inst$train.inds, function(x)  setdiff(ti, x))
+    inst$test.inds = lapply(inst$train.inds, function(x) setdiff(ti, x))
     inst$size = size
   } else if (desc$stratify) {
     if (is.null(task))

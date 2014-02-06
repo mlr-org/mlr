@@ -69,7 +69,7 @@ makeSupervisedTask = function(type, id, data, target, weights, blocking, positiv
     weights = NULL
   }
   if (missing(blocking))
-    blocking = factor(c())
+    blocking = factor()
   else
     checkArg(blocking, "factor", len=nrow(data), na.ok=FALSE)
   checkArg(check.data, "logical", len=1L, na.ok=FALSE)
@@ -83,13 +83,13 @@ makeSupervisedTask = function(type, id, data, target, weights, blocking, positiv
         stopf("Target column %s has an unsupported type for classification. Either you made a mistake or you have to convert it. Type: %s",
           target, class(data[,target])[1L])
     }
-    levs = levels(data[,target])
+    levs = levels(data[, target])
     m = length(levs)
     if (missing(positive)) {
       if (m <= 2L)
         positive = levs[1L]
       else
-        positive = as.character(NA)
+        positive = NA_character_
     } else {
       if (m > 2L)
         stop("Cannot set a positive class for a multiclass problem!")
@@ -109,12 +109,12 @@ makeSupervisedTask = function(type, id, data, target, weights, blocking, positiv
   desc = makeTaskDesc(type, id, data, target, weights, blocking, positive)
   env = new.env()
   env$data = data
-  structure(list(
+  setClasses(list(
     env = env,
     task.desc = desc,
     weights = weights,
     blocking = blocking
-  ), class="SupervisedTask")
+  ), "SupervisedTask")
 }
 
 #' @S3method print SupervisedTask

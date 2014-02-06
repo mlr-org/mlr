@@ -91,4 +91,3 @@ doPerformaceIteration = function(measure, pred, task, model, td){
   }
   measure$fun(task2, model2, pred2, m$extra.args)
 }
-

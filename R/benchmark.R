@@ -30,7 +30,7 @@ benchmark = function(learners, tasks, resamplings, measures, same.resampling.ins
     learners = list(learners)
   checkArg(learners, "list")
   checkListElementClass(learners, "Learner")
-  if (length(learners) == 0L)
+  if (!length(learners))
     stop("No learners were passed!")
   learner.ids = extractSubList(learners, "id")
   if (any(duplicated(learner.ids)))
@@ -41,7 +41,7 @@ benchmark = function(learners, tasks, resamplings, measures, same.resampling.ins
     tasks = list(tasks)
   checkArg(tasks, "list")
   checkListElementClass(tasks, "SupervisedTask")
-  if (length(tasks) == 0)
+  if (!length(tasks))
     stop("No tasks were passed!")
   task.ids = extractSubList(tasks, "id")
   if (any(duplicated(task.ids)))
@@ -120,8 +120,3 @@ benchmarkParallel = function(index, learners, tasks, resamplings, measures) {
   ind.task = index[2L]
   resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]], measures=measures)
 }
-
-
-
-
-

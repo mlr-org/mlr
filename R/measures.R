@@ -121,7 +121,7 @@ mse = makeMeasure(id="mse", minimize=TRUE, regr=TRUE, allowed.pred.types=c("resp
 )
 
 #' @export rmse
-#' @format none 
+#' @format none
 #' @rdname measures
 #' @usage none
 #' @format none

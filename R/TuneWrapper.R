@@ -64,7 +64,7 @@ makeTuneWrapper = function(learner, resampling, measures, par.set, control, show
   checkArg(control, "TuneControl")
   checkArg(show.info, "logical", len=1L, na.ok=FALSE)
   id = paste(learner$id, "tuned", sep=".")
-  x = makeOptWrapper(id, learner, resampling, measures, par.set, character(0),
+  x = makeOptWrapper(id, learner, resampling, measures, par.set, character(0L),
     function(){}, control, show.info, "TuneWrapper")
   checkTunerParset(learner, par.set, control)
   return(x)
@@ -98,7 +98,3 @@ predictLearner.TuneWrapper = function(.learner, .model, .newdata, ...) {
 getTuneResult = function(model) {
   model$learner.model$opt.result
 }
-
-
-
-

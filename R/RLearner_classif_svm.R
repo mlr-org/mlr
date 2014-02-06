@@ -34,9 +34,8 @@ trainLearner.classif.svm = function(.learner, .task, .subset, .weights,  ...) {
 #' @S3method predictLearner classif.svm
 predictLearner.classif.svm = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response") {
-    p = predict(.model$learner.model, newdata=.newdata, ...)
+    predict(.model$learner.model, newdata=.newdata, ...)
   } else {
-    p = predict(.model$learner.model, newdata=.newdata, probability=TRUE, ...)
-    p = attr(p, "probabilities")
+    attr(predict(.model$learner.model, newdata=.newdata, probability=TRUE, ...), "probabilities")
   }
 }

@@ -6,7 +6,7 @@ convertStartToNumeric = function(start, par.set) {
 
 convertXNumeric = function(x, par.set) {
   ids = getParamIds(par.set, repeated=TRUE, with.nr=FALSE)
-  # factor usually does sort(unique(...)) for levels which changes order! 
+  # factor usually does sort(unique(...)) for levels which changes order!
   x = split(x, factor(ids, levels=unique(ids)))
   names(x) = getParamIds(par.set, repeated=FALSE)
   roundIntegers(x, par.set=par.set)
@@ -15,14 +15,14 @@ convertXNumeric = function(x, par.set) {
 
 convertXMatrixCols = function(xs, par.set) {
   rownames(xs) = colnames(xs) = NULL
-  xs = lapply(1:ncol(xs), function(i) {
+  xs = lapply(seq_col(xs), function(i) {
     convertXNumeric(xs[,i], par.set)
   })
 }
 
 
 roundIntegers = function(x, par.set) {
-  Map(function(par, v) { 
+  Map(function(par, v) {
     if (par$type %in% c("integer", "integervector"))
       as.integer(round(v))
     else

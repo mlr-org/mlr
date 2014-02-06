@@ -45,7 +45,7 @@ makeOptPathDFFromMeasures = function(par.set, measures) {
 # evals a set of var-lists and return the corresponding states
 logFunTune = function(learner, task, resampling, measures, par.set, control, opt.path, x, y, remove.nas) {
   i = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
-  messagef("[Tune] %i: %s : %s", i, 
+  messagef("[Tune] %i: %s : %s", i,
     paramValueToString(par.set, x, show.missing.values=!remove.nas), perfsToString(y))
 }
 
@@ -92,7 +92,7 @@ logicalToFeatures = function(x, all.vars) {
 
 binaryToFeatures = function(x, all.vars) {
   mode(x) = "logical"
-  logicalToFeatures(x, all.vars)  
+  logicalToFeatures(x, all.vars)
 }
 
 compare.diff = function(state1, state2, control, measure, threshold) {

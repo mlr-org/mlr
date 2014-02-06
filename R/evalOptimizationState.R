@@ -20,7 +20,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   # also error msg is annoying
   if (is.error(learner)) {
     if (grep("not a feasible parameter setting", learner) > 0)
-      y = ifelse(measures[[1]]$minimize, 1 , -1) * Inf
+      y = ifelse(measures[[1L]]$minimize, 1 , -1) * Inf
     else
       stop(learner)
   } else {
@@ -41,9 +41,9 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
   opt.path, show.info, states, dobs, eols, remove.nas, level) {
 
   n = length(states)
-  if (length(dobs) == 1)
+  if (length(dobs) == 1L)
     dobs = rep(dobs, n)
-  if (length(eols) == 1)
+  if (length(eols) == 1L)
     eols = rep(eols, n)
   parallelLibrary("mlr", master=FALSE, level=level)
   exportMlrOptions()
@@ -71,6 +71,3 @@ evalOptimizationStatesFeatSel = function(learner, task, resampling, measures, bi
   evalOptimizationStates(learner, task, resampling, measures, NULL, bits.to.features, control,
     opt.path, show.info, states, dobs, eols, FALSE, "mlr.selectFeatures")
 }
-
-
-

@@ -1,4 +1,3 @@
-
 #' @S3method makeRLearner classif.rpart
 makeRLearner.classif.rpart = function() {
   makeRLearnerClassif(

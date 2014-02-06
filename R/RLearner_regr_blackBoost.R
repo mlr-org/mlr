@@ -38,7 +38,6 @@ trainLearner.regr.blackboost = function(.learner, .task, .subset, .weights, msto
     blackboost(f, data=getTaskData(.task, .subset), control=ctrl, tree_controls=tc)
 }
 
-
 predictLearner.regr.blackboost = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata=.newdata, ...)[,1L]
+  predict(.model$learner.model, newdata=.newdata, ...)[, 1L]
 }

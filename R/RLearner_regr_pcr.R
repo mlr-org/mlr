@@ -30,5 +30,5 @@ trainLearner.regr.pcr = function(.learner, .task, .subset, .weights,  ...) {
 #' @S3method predictLearner regr.pcr
 predictLearner.regr.pcr = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata=.newdata)
-  p[,1L,dim(p)[3L]]
+  p[, 1L, dim(p)[3L]]
 }

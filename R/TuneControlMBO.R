@@ -3,9 +3,9 @@
 #FIXME export when mbo is on cran
 
 # @param learner [\code{\link{Learner}}] \cr
-#   Regression learner to model performance landscape.  
+#   Regression learner to model performance landscape.
 # @param mbo.control [\code{\link[mlrMBO]{MBOControl}}] \cr
-#   Control object for model-based optimization tuning.  
+#   Control object for model-based optimization tuning.
 # @export
 # @rdname TuneControl
 makeTuneControlMBO = function(same.resampling.instance=TRUE, learner, mbo.control) {
@@ -16,4 +16,3 @@ makeTuneControlMBO = function(same.resampling.instance=TRUE, learner, mbo.contro
   x$mbo.control = mbo.control
   return(x)
 }
-

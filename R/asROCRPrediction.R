@@ -27,4 +27,3 @@ asROCRPrediction.ResamplePrediction = function(pred) {
   truth = split(pred$data$truth, iter)
   ROCR::prediction(prob, truth, label.ordering=c(pred$task.desc$negative, pred$task.desc$positive))
 }
-

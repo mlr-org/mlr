@@ -41,6 +41,5 @@ predictLearner.classif.rda = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata=.newdata, ...)
   if (.learner$predict.type == "response")
     return(p$class)
-  else
-    return(p$posterior)
+  return(p$posterior)
 }
