@@ -22,13 +22,13 @@
 NULL
 
 makeTaskDesc = function(type, id, data, target, weights, blocking, positive) {
-  y = data[, target]
+  cl = dropNamed(vapply(data, class, character(1L)), target)
   td = list(
     id = id,
     type = type,
     target = target,
     size = nrow(data),
-    n.feat = c(numerics = sum(sapply(data, is.numeric)) - is.numeric(y), factors = sum(sapply(data, is.factor)) - is.factor(y)),
+    n.feat = c(numerics = sum(cl %in% c("integer", "numeric")), factor = sum(cl == "factor")),
     has.missings = any(is.na(data)),
     has.weights = length(weights) > 0L,
     has.blocking = length(blocking) > 0L,
@@ -38,7 +38,7 @@ makeTaskDesc = function(type, id, data, target, weights, blocking, positive) {
   )
 
   if(type == "classif") {
-    td$class.levels = levels(y)
+    td$class.levels = levels(data[, target])
     td$positive = positive
     if (length(td$class.levels) == 1L)
       td$negative = paste0("not_", positive)

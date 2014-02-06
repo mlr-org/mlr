@@ -1,6 +1,7 @@
-#' Create a classification / regression task for a given data set.
+#' Create a classification, regression or survival task for a given data set.
 #'
-#' The task encapsulates the data and specifies - through its subclasses - the type of the task (either classification or regression),
+#' The task encapsulates the data and specifies - through its subclasses -
+#' the type of the task (either classification, regression or survival),
 #' and contains a description object detailing further aspects of the data.
 #'
 #' Useful operators are: \code{\link{getTaskFormula}}, \code{\link{getTaskFormulaAsString}}, \code{\link{getTaskFeatureNames}},
@@ -37,7 +38,7 @@
 #' @return [\code{\link{SupervisedTask}}].
 #' @name SupervisedTask
 #' @rdname SupervisedTask
-#' @aliases ClassifTask RegrTask
+#' @aliases ClassifTask RegrTask SurvTask
 #' @examples
 #' library(mlbench)
 #' data(BostonHousing)
@@ -62,7 +63,7 @@ makeSupervisedTask = function(type, id, data, target, weights, blocking, positiv
     checkArg(id, "character", len=1L, na.ok=FALSE)
   }
   checkArg(data, "data.frame")
-  checkArg(target, "character", len=1L, na.ok=FALSE)
+  checkArg(target, "character", min.len=1L, na.ok=FALSE)
   if (!missing(weights)) {
     checkArg(weights, "numeric", len=nrow(data), na.ok=FALSE, lower=0)
   } else {
@@ -76,6 +77,9 @@ makeSupervisedTask = function(type, id, data, target, weights, blocking, positiv
   checkBlocking(data, target, blocking)
   checkColumnNames(data, target)
   if (type == "classif") {
+    if (length(target) != 1L)
+      stop("Exactly one target column must be specified for a classification task")
+
     if (!is.factor(data[, target])) {
       if (is.character(data[, target]) || is.logical(data[, target]))
         data[, target] = as.factor(data[, target])
@@ -95,19 +99,30 @@ makeSupervisedTask = function(type, id, data, target, weights, blocking, positiv
         stop("Cannot set a positive class for a multiclass problem!")
       checkArg(positive, choices=levs)
     }
-  }
-  if (type == "regr") {
+  } else if (type == "regr") {
+    if (length(target) != 1L)
+      stop("Exactly one target column must be specified for a regression task")
     if (is.integer(data[, target]))
       data[, target] = as.numeric(data[, target])
     else if(!is.numeric(data[, target]))
       stopf("Target column %s has an unsupported type for regression. Either you made a mistake or you have to convert it. Type: %s",
         target, class(data[,target])[1L])
     positive = NA_character_
+  } else if (type == "surv") {
+    if (length(target) != 2L)
+      stop("Exactly two target columns must be specified for a survival task")
+    # target = setNames(target, c("time", "event"))
+    if (!is.numeric(data[[target[1L]]]))
+      stop("Survival time must be numeric")
+    if (!is.logical(data[[target[2L]]]))
+      data[[target[2L]]] = as.logical(data[[target[2L]]])
+    positive = NA_character_
   }
   if (check.data)
     checkData(data, target)
   desc = makeTaskDesc(type, id, data, target, weights, blocking, positive)
-  env = new.env()
+  # FIXME: don't hash?
+  env = new.env(parent=emptyenv())
   env$data = data
   setClasses(list(
     env = env,
@@ -122,7 +137,7 @@ print.SupervisedTask = function(x, ...) {
   td = x$task.desc
   catf("Supervised task: %s", td$id)
   catf("Type: %s", td$type)
-  catf("Target: %s", td$target)
+  catf("Target: %s", collapse(td$target))
   catf("Observations: %i", td$size)
   catf("Features:")
   catf(printToChar(td$n.feat, collapse="\n"))
