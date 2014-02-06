@@ -2,7 +2,7 @@
 \alias{analyzeFeatSelResult}
 \title{Shows the detailed steps of the feature selection.}
 \usage{
-analyzeFeatSelResult(fs.obj, ...)
+analyzeFeatSelResult(fs.obj, reduce = TRUE)
 }
 \arguments{
   \item{fs.obj}{[\code{FeatSelResult(1)}]\cr The result of

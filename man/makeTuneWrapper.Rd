@@ -2,8 +2,8 @@
 \alias{makeTuneWrapper}
 \title{Fuse learner with tuning.}
 \usage{
-  makeTuneWrapper(learner, resampling, measures, par.set,
-    control, show.info = TRUE)
+makeTuneWrapper(learner, resampling, measures, par.set, control,
+  show.info = TRUE)
 }
 \arguments{
   \item{learner}{[\code{\link{Learner}} or string]\cr
@@ -31,23 +31,23 @@
   \code{TRUE}.}
 }
 \value{
-  [\code{\link{Learner}}].
+[\code{\link{Learner}}].
 }
 \description{
-  Fuses a base learner with a search strategy to select its
-  hyperparameters. Creates a learner object, which can be
-  used like any other learner object, but which internally
-  uses tune. If the train function is called on it, the
-  search strategy and resampling are invoked to select an
-  optimal set of hyperparameter values. Finally, a model is
-  fitted on the complete training data with these optimal
-  hyperparameters and returned. See
-  \code{\link{tuneParams}} for more details.
+Fuses a base learner with a search strategy to select its
+hyperparameters. Creates a learner object, which can be
+used like any other learner object, but which internally
+uses tune. If the train function is called on it, the
+search strategy and resampling are invoked to select an
+optimal set of hyperparameter values. Finally, a model is
+fitted on the complete training data with these optimal
+hyperparameters and returned. See \code{\link{tuneParams}}
+for more details.
 }
 \details{
-  After training, the optimal hyperparameters (and other
-  related information) can be retrieved with
-  \code{\link{getTuneResult}}.
+After training, the optimal hyperparameters (and other
+related information) can be retrieved with
+\code{\link{getTuneResult}}.
 }
 \examples{
 task = makeClassifTask(data=iris, target="Species")

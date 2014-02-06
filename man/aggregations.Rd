@@ -7,6 +7,7 @@
 \alias{test.mean}
 \alias{test.median}
 \alias{test.min}
+\alias{test.range}
 \alias{test.sd}
 \alias{test.sqrt.of.mean}
 \alias{test.sum}
@@ -15,74 +16,83 @@
 \alias{train.mean}
 \alias{train.median}
 \alias{train.min}
+\alias{train.range}
 \alias{train.sd}
+\alias{train.sqrt.of.mean}
 \alias{train.sum}
 \title{Aggregation methods.}
-\format{List of 2
+\format{\preformatted{List of 2
  $ id : chr "test.mean"
  $ fun:function (task, perf.test, perf.train, measure, group, pred)  
- - attr(*, "class")= chr "Aggregation"}
+ - attr(*, "class")= chr "Aggregation"
+}}
 \usage{
-  test.mean
+test.mean
 
-  test.sd
+test.sd
 
-  test.median
+test.median
 
-  test.min
+test.min
 
-  test.max
+test.max
 
-  test.sum
+test.sum
 
-  test.sqrt.of.mean
+test.range
 
-  train.mean
+test.sqrt.of.mean
 
-  train.sd
+train.mean
 
-  train.median
+train.sd
 
-  train.min
+train.median
 
-  train.max
+train.min
 
-  train.sum
+train.max
 
-  b632
+train.sum
 
-  b632plus
+train.range
 
-  testgroup.mean
+train.sqrt.of.mean
+
+b632
+
+b632plus
+
+testgroup.mean
 }
 \description{
-  \itemize{ \item{\bold{test.mean}}{\cr Mean of performance
-  values on test sets.} \item{\bold{test.sd}}{\cr Standard
-  deviation of performance values on test sets.}
-  \item{\bold{test.median}}{\cr Median of performance
-  values on test sets.} \item{\bold{test.min}}{\cr Minimum
-  of performance values on test sets.}
-  \item{\bold{test.max}}{\cr Maximum of performance values
-  on test sets.} \item{\bold{test.sum}}{\cr Sum of
-  performance values on test sets.}
-  \item{\bold{train.mean}}{\cr Mean of performance values
-  on training sets.} \item{\bold{train.sd}}{\cr Standard
-  deviation of performance values on training sets.}
-  \item{\bold{train.median}}{\cr Median of performance
-  values on training sets.} \item{\bold{train.min}}{\cr
-  Minimum of performance values on training sets.}
-  \item{\bold{train.max}}{\cr Maximum of performance values
-  on training sets.} \item{\bold{train.sum}}{\cr Sum of
-  performance values on training sets.}
-  \item{\bold{b632}}{\cr Aggregation for B632 bootstrap.}
-  \item{\bold{b632plus}}{\cr Aggregation for B632+
-  bootstrap.} \item{\bold{testgroup.mean}}{\cr Performance
-  values on test sets are grouped according to resampling
-  method. The mean for very group is calculated, then the
-  mean of those means.  Mainly used for repeated CV.} }
+\itemize{ \item{\bold{test.mean}}{\cr Mean of performance
+values on test sets.} \item{\bold{test.sd}}{\cr Standard
+deviation of performance values on test sets.}
+\item{\bold{test.median}}{\cr Median of performance values
+on test sets.} \item{\bold{test.min}}{\cr Minimum of
+performance values on test sets.}
+\item{\bold{test.max}}{\cr Maximum of performance values on
+test sets.} \item{\bold{test.sum}}{\cr Sum of performance
+values on test sets.} \item{\bold{train.mean}}{\cr Mean of
+performance values on training sets.}
+\item{\bold{train.sd}}{\cr Standard deviation of
+performance values on training sets.}
+\item{\bold{train.median}}{\cr Median of performance values
+on training sets.} \item{\bold{train.min}}{\cr Minimum of
+performance values on training sets.}
+\item{\bold{train.max}}{\cr Maximum of performance values
+on training sets.} \item{\bold{train.sum}}{\cr Sum of
+performance values on training sets.}
+\item{\bold{b632}}{\cr Aggregation for B632 bootstrap.}
+\item{\bold{b632plus}}{\cr Aggregation for B632+
+bootstrap.} \item{\bold{testgroup.mean}}{\cr Performance
+values on test sets are grouped according to resampling
+method. The mean for very group is calculated, then the
+mean of those means.  Mainly used for repeated CV.} }
 }
 \seealso{
-  \code{\link{Aggregation}}
+\code{\link{Aggregation}}
 }
 \keyword{datasets}
 

@@ -1,22 +1,20 @@
 \name{RLearner}
-\alias{makeRLearner}
-\alias{makeRLearnerClassif}
-\alias{makeRLearnerRegr}
 \alias{RLearner}
 \alias{RLearnerClassif}
 \alias{RLearnerRegr}
+\alias{makeRLearner}
+\alias{makeRLearnerClassif}
+\alias{makeRLearnerRegr}
 \title{Internal construction / wrapping of learner object.}
 \usage{
-  makeRLearner()
+makeRLearner()
 
-  makeRLearnerClassif(cl, package, par.set,
-    numerics = FALSE, factors = FALSE, missings = FALSE,
-    weights = FALSE, oneclass = FALSE, twoclass = FALSE,
-    multiclass = FALSE, prob = FALSE, par.vals = list())
+makeRLearnerClassif(cl, package, par.set, numerics = FALSE, factors = FALSE,
+  missings = FALSE, weights = FALSE, oneclass = FALSE, twoclass = FALSE,
+  multiclass = FALSE, prob = FALSE, par.vals = list())
 
-  makeRLearnerRegr(cl, package, par.set, numerics,
-    factors = FALSE, missings = FALSE, weights = FALSE,
-    se = FALSE, par.vals = list())
+makeRLearnerRegr(cl, package, par.set, numerics, factors = FALSE,
+  missings = FALSE, weights = FALSE, se = FALSE, par.vals = list())
 }
 \arguments{
   \item{cl}{[\code{character(1)}] \cr Class name for
@@ -66,16 +64,15 @@
   is empty list.}
 }
 \value{
-  [\code{\link{RLearnerClassif}} or
-  \code{\link{RLearnerRegr}}].
+[\code{\link{RLearnerClassif}} or
+\code{\link{RLearnerRegr}}].
 }
 \description{
-  Wraps an already implemented learning method from R to
-  make it accessible to mlr. Call this method in your
-  constructor. You have to pass an id (name), the required
-  package(s), a description object for all changeable
-  parameters (you dont have to do this for the learner to
-  work, but it is strongly recommended), and define what
-  the learner can / cannot do.
+Wraps an already implemented learning method from R to make
+it accessible to mlr. Call this method in your constructor.
+You have to pass an id (name), the required package(s), a
+description object for all changeable parameters (you dont
+have to do this for the learner to work, but it is strongly
+recommended), and define what the learner can / cannot do.
 }
 

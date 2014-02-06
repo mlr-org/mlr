@@ -2,7 +2,7 @@
 \alias{getConfMatrix}
 \title{Confusion matrix.}
 \usage{
-  getConfMatrix(pred, relative = FALSE)
+getConfMatrix(pred, relative = FALSE)
 }
 \arguments{
   \item{pred}{[\code{\link{Prediction}}]\cr Result of a
@@ -13,15 +13,15 @@
   Default is \code{FALSE}.}
 }
 \value{
-  [\code{matrix}]. A confusion matrix.
+[\code{matrix}]. A confusion matrix.
 }
 \description{
-  Calculates confusion matrix for (possibly resampled)
-  prediction. Rows indicate true classes, columns predicted
-  classes.
+Calculates confusion matrix for (possibly resampled)
+prediction. Rows indicate true classes, columns predicted
+classes.
 }
 \details{
-  Code inspired by \code{\link[klaR]{errormatrix}}.
+Code inspired by \code{\link[klaR]{errormatrix}}.
 }
 \examples{
 ## create classification task and use linear discriminant analysis for classification
@@ -43,6 +43,6 @@ print(getConfMatrix(pred))
 print(getConfMatrix(pred, relative = TRUE))
 }
 \seealso{
-  \code{\link{predict.WrappedModel}}
+\code{\link{predict.WrappedModel}}
 }
 

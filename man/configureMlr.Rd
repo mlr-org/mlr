@@ -2,10 +2,8 @@
 \alias{configureMlr}
 \title{Configures the behaviour of the package.}
 \usage{
-  configureMlr(on.learner.error = "stop",
-    on.learner.warning = "warn",
-    on.par.without.desc = "stop",
-    show.learner.output = TRUE)
+configureMlr(on.learner.error, on.learner.warning, on.par.without.desc,
+  show.learner.output)
 }
 \arguments{
   \item{on.learner.error}{[\code{character(1)}]\cr What
@@ -37,10 +35,10 @@
   is \code{TRUE}.}
 }
 \value{
-  Nothing.
+Nothing.
 }
 \description{
-  Configuration is done by setting custom
-  \code{\link{options}}.
+Configuration is done by setting custom
+\code{\link{options}}.
 }
 

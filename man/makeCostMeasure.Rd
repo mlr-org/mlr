@@ -2,8 +2,8 @@
 \alias{makeCostMeasure}
 \title{Creates a measure for non-standard misclassification costs.}
 \usage{
-  makeCostMeasure(id = "costs", minimize = TRUE, costs,
-    task, aggregate = mean)
+makeCostMeasure(id = "costs", minimize = TRUE, costs, task,
+  aggregate = mean)
 }
 \arguments{
   \item{id}{[\code{character(1)}]\cr Name of measure.
@@ -27,13 +27,12 @@
   is \code{\link{mean}}.}
 }
 \value{
-  [\code{\link{Measure}}].
+[\code{\link{Measure}}].
 }
 \description{
-  Creates a measure for non-standard misclassification
-  costs.
+Creates a measure for non-standard misclassification costs.
 }
 \seealso{
-  \code{\link{measures}}, \code{\link{makeMeasure}}
+\code{\link{measures}}, \code{\link{makeMeasure}}
 }
 

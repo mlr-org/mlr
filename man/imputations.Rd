@@ -24,23 +24,23 @@ The built-ins are:
     with probabilities calculated using \code{table} or \code{hist}.
 }}
 \usage{
-  imputeConstant(const)
+imputeConstant(const)
 
-  imputeMedian()
+imputeMedian()
 
-  imputeMode()
+imputeMode()
 
-  imputeMin(multiplier = 1)
+imputeMin(multiplier = 1)
 
-  imputeMax(multiplier = 1)
+imputeMax(multiplier = 1)
 
-  imputeUniform(min, max)
+imputeUniform(min, max)
 
-  imputeNormal(mu, sd)
+imputeNormal(mu, sd)
 
-  imputeHist(breaks, use.mids = TRUE)
+imputeHist(breaks, use.mids = TRUE)
 
-  imputeLearner(learner, preimpute = list())
+imputeLearner(learner, preimpute = list())
 }
 \arguments{
   \item{const}{[any]\cr Constant valued use for
@@ -76,19 +76,18 @@ The built-ins are:
   within bin range.}
 }
 \description{
-  Built in imputation methods The built-ins are: \itemize{
-  \item \code{imputeConstant(const)} for imputation using a
-  constant value, \item \code{imputeMedian()} for
-  imputation using the median, \item \code{imputeMode()}
-  for imputation using the mode, \item
-  \code{imputeMin(multiplier)} for imputation using the
-  minimum, \item \code{imputeMax(multiplier)} for
-  imputation using the maximum, \item
-  \code{imputeNormal(mean, sd)} for imputation using
-  normally distributed random values. Mean and standard
-  deviation will be calculated from the data if not
-  provided.  \item \code{imputeHist(breaks, use.mids)} for
-  imputation using random values with probabilities
-  calculated using \code{table} or \code{hist}. }
+Built in imputation methods The built-ins are: \itemize{
+\item \code{imputeConstant(const)} for imputation using a
+constant value, \item \code{imputeMedian()} for imputation
+using the median, \item \code{imputeMode()} for imputation
+using the mode, \item \code{imputeMin(multiplier)} for
+imputation using the minimum, \item
+\code{imputeMax(multiplier)} for imputation using the
+maximum, \item \code{imputeNormal(mean, sd)} for imputation
+using normally distributed random values. Mean and standard
+deviation will be calculated from the data if not provided.
+\item \code{imputeHist(breaks, use.mids)} for imputation
+using random values with probabilities calculated using
+\code{table} or \code{hist}. }
 }
 

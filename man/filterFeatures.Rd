@@ -2,7 +2,7 @@
 \alias{filterFeatures}
 \title{Filter features by using a numerical importance criterion.}
 \usage{
-  filterFeatures(task, method = "random.forest.importance")
+filterFeatures(task, method = "random.forest.importance")
 }
 \arguments{
   \item{task}{[\code{\link{SupervisedTask}}]\cr The task.}
@@ -16,17 +16,17 @@
   \dQuote{random.forest.importance}.}
 }
 \value{
-  [\code{numeric}]. A named numeric vector that contains an
-  importance value for each feature.
+[\code{numeric}]. A named numeric vector that contains an
+importance value for each feature.
 }
 \description{
-  Calculates numerical importance values for all features.
-  Thresholding of these values can be used to select
-  \dQuote{useful} features. Look at package
-  \code{\link[FSelector]{FSelector}} for details on the
-  filter algorithms.
+Calculates numerical importance values for all features.
+Thresholding of these values can be used to select
+\dQuote{useful} features. Look at package
+\code{\link[FSelector]{FSelector}} for details on the
+filter algorithms.
 }
 \seealso{
-  \code{\link{makeFilterWrapper}}
+\code{\link{makeFilterWrapper}}
 }
 

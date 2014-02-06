@@ -2,7 +2,7 @@
 \alias{train}
 \title{Train a learning algorithm.}
 \usage{
-  train(learner, task, subset, weights)
+train(learner, task, subset, weights)
 }
 \arguments{
   \item{learner}{[\code{\link{Learner}}]\cr The learner.}
@@ -22,12 +22,12 @@
   will be overwritten.}
 }
 \value{
-  [\code{\link{WrappedModel}}].
+[\code{\link{WrappedModel}}].
 }
 \description{
-  Given a \code{\link{SupervisedTask}}, creates a model for
-  the learning machine which can be used for predictions on
-  new data.
+Given a \code{\link{SupervisedTask}}, creates a model for
+the learning machine which can be used for predictions on
+new data.
 }
 \examples{
 training.set <- sample(1:nrow(iris), nrow(iris) / 2)
@@ -45,6 +45,6 @@ mod <- train(learner, task, subset = training.set)
 print(mod)
 }
 \seealso{
-  \code{\link{predict.WrappedModel}}
+\code{\link{predict.WrappedModel}}
 }
 

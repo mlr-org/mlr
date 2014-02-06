@@ -2,9 +2,8 @@
 \alias{selectFeatures}
 \title{Feature selection by wrapper approach.}
 \usage{
-  selectFeatures(learner, task, resampling, control,
-    measures, bit.names, bits.to.features,
-    show.info = TRUE)
+selectFeatures(learner, task, resampling, control, measures, bit.names,
+  bits.to.features, show.info = TRUE)
 }
 \arguments{
   \item{learner}{[\code{\link{Learner}}]\cr The learner.}
@@ -44,25 +43,25 @@
   default is TRUE.}
 }
 \value{
-  [\code{\link{FeatSelResult}}].
+[\code{\link{FeatSelResult}}].
 }
 \description{
-  Optimizes the features for a classification or regression
-  problem by choosing a variable selection wrapper
-  approach. Allows for different optimization methods, such
-  as forward search or a genetic algorithm. You can select
-  such an algorithm (and its settings) by passing a
-  corresponding control object. For a complete list of
-  implemented algorithms look at the subclasses of
-  [\code{\link{FeatSelControl}}].
+Optimizes the features for a classification or regression
+problem by choosing a variable selection wrapper approach.
+Allows for different optimization methods, such as forward
+search or a genetic algorithm. You can select such an
+algorithm (and its settings) by passing a corresponding
+control object. For a complete list of implemented
+algorithms look at the subclasses of
+[\code{\link{FeatSelControl}}].
 }
 \details{
-  All algorithms operate on a 0-1-bit encoding of candidate
-  solutions. Per default a single bit corresponds to a
-  single feature, but you are able to change this by using
-  the arguments \code{bit.names} and
-  \code{bits.to.features}. Thus allowing you to switch on
-  whole groups of features with a single bit.
+All algorithms operate on a 0-1-bit encoding of candidate
+solutions. Per default a single bit corresponds to a single
+feature, but you are able to change this by using the
+arguments \code{bit.names} and \code{bits.to.features}.
+Thus allowing you to switch on whole groups of features
+with a single bit.
 }
 \examples{
 task <- makeClassifTask(data=iris, target="Species")
