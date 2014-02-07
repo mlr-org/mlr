@@ -7,8 +7,9 @@
 #'
 #' @param cl [\code{character(1)}]\cr
 #'   Class of learner to create. By convention, all classification learners
-#'   start with \dQuote{classif.} and all regression learners with
-#'   \dQuote{regr.}. A list of all learners is available on the
+#'   start with \dQuote{classif.}, all regression learners with
+#'   \dQuote{regr.} and all survival learners start with \dQuote{surv.}.
+#'   A list of all learners is available on the
 #'   \code{\link{learners}} help page.
 #' @param id [\code{character(1)}]\cr
 #'   Id string for object. Used to display object.
@@ -16,6 +17,7 @@
 #' @param predict.type [\code{character(1)}]\cr
 #'   Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
 #'   Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
+#'   Survival: \dQuote{response} (= ???). FIXME
 #'   Default is \dQuote{response}.
 #' @param ... [any]\cr
 #'   Optional named (hyper)parameters.

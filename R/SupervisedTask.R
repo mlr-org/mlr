@@ -111,11 +111,11 @@ makeSupervisedTask = function(type, id, data, target, weights, blocking, positiv
   } else if (type == "surv") {
     if (length(target) != 2L)
       stop("Exactly two target columns must be specified for a survival task")
-    # target = setNames(target, c("time", "event"))
+    # target = setNames(target, c("time", "status"))
     if (!is.numeric(data[[target[1L]]]))
       stop("Survival time must be numeric")
-    if (!is.logical(data[[target[2L]]]))
-      data[[target[2L]]] = as.logical(data[[target[2L]]])
+    if (!is.logical(data[[target[2L]]]) || is.integer(data[[target[2L]]]))
+      data[[target[2L]]] = as.integer(as.logical(data[[target[2L]]]))
     positive = NA_character_
   }
   if (check.data)

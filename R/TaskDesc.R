@@ -6,7 +6,8 @@
 #' Object members:
 #' \describe{
 #' \item{id [\code{character(1)}]}{Id string of task.}
-#' \item{type [\code{character(1)}]}{type Type of task, either \dQuote{classif} for classification or \dQuote{regr} for regression.}
+#' \item{type [\code{character(1)}]}{type Type of task, either \dQuote{classif} for classification, \dQuote{regr} for regression or
+#'   \dQuote{surv} for survival.}
 #' \item{target [\code{character(1)}]}{Name of target variable.}
 #' \item{size[\code{integer(1)}]}{Number of cases.}
 #' \item{n.feat [\code{integer}]}{Number of features, named vector with entries: \dQuote{numerics}, \dQuote{factors}.}

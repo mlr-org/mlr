@@ -9,9 +9,12 @@ if (FALSE) {
   library(survival)
   N = 10
   time = rexp(N, 0.5) + 0.1
-  event = sample(0:1, N, prob=c(2, 8), replace=TRUE)
-  s = Surv(time, event)
-  data = cbind(time, event, iris[seq(1, 150, length.out=N), ])
+  status = sample(0:1, N, prob=c(2, 8), replace=TRUE)
+  s = Surv(time, status)
+  data = cbind(time, status, iris[seq(1, 150, length.out=N), ])
+  target = c("time", "status")
 
-  task = makeSurvTask("testtask", data, target = c("time", "event"))
+  task = makeSurvTask("testtask", data, target = c("time", "status"))
+  getTaskData(task, target.extra=TRUE)
+  subsetTask(task, 1:3, features="Species")
 }
