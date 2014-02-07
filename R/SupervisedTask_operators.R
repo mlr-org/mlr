@@ -149,7 +149,7 @@ getTaskData = function(task, subset, features, target.extra=FALSE, recode.target
     if (missing(features) || identical(features, task.features))
       features = NULL
     else
-      features = c(features, tn) # FIXME: we want an union, but tests are stupidly written
+      features = union(features, tn)
 
     res = indexHelper(task$env$data, subset, features, drop=FALSE)
     if (recode.target %nin% c("no", "surv")) {
