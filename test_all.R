@@ -14,11 +14,11 @@ library(pROC)
 if (interactive()) {
   load_all(".")
 } else {
-  library(mlr)  
+  library(mlr)
 }
 
-source("inst/tests/helpers.R")
-source("inst/tests/objects.R")
+source("inst/tests/helper_helpers.R")
+source("inst/tests/helper_objects.R")
 options(mlr.debug.seed=123L)
 configureMlr(show.learner.output=FALSE)
 test_dir("inst/tests")
