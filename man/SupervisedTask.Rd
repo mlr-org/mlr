@@ -2,14 +2,18 @@
 \alias{ClassifTask}
 \alias{RegrTask}
 \alias{SupervisedTask}
+\alias{SurvTask}
 \alias{makeClassifTask}
 \alias{makeRegrTask}
-\title{Create a classification / regression task for a given data set.}
+\alias{makeSurvTask}
+\title{Create a classification, regression or survival task for a given data set.}
 \usage{
 makeClassifTask(id, data, target, weights, blocking, positive,
   check.data = TRUE)
 
 makeRegrTask(id, data, target, weights, blocking, check.data = TRUE)
+
+makeSurvTask(id, data, target, weights, blocking, check.data = TRUE)
 }
 \arguments{
   \item{id}{[\code{character(1)}]\cr Id string for object.
@@ -45,9 +49,9 @@ makeRegrTask(id, data, target, weights, blocking, check.data = TRUE)
 }
 \description{
 The task encapsulates the data and specifies - through its
-subclasses - the type of the task (either classification or
-regression), and contains a description object detailing
-further aspects of the data.
+subclasses - the type of the task (either classification,
+regression or survival), and contains a description object
+detailing further aspects of the data.
 }
 \details{
 Useful operators are: \code{\link{getTaskFormula}},

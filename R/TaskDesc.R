@@ -28,7 +28,7 @@ makeTaskDesc = function(type, id, data, target, weights, blocking, positive) {
     type = type,
     target = target,
     size = nrow(data),
-    n.feat = c(numerics = sum(cl %in% c("integer", "numeric")), factor = sum(cl == "factor")),
+    n.feat = c(numerics = sum(cl %in% c("integer", "numeric")), factors = sum(cl == "factor")),
     has.missings = any(is.na(data)),
     has.weights = length(weights) > 0L,
     has.blocking = length(blocking) > 0L,

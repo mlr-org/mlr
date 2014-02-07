@@ -8,25 +8,20 @@
 checkData = function(data, target) {
   # FIXME: one should probably be able to disable some of these checks via configureMLR
   mapply(function(x, cn, is.target) {
+    if (is.target && any(is.na(x)))
+      stop("Target contains missing values!")
     if (!deparse(as.name(cn), backtick=TRUE) == cn)
       stopf("Column name contains special characters: %s", cn)
-    if (is.target) {
-      if (any(is.na(x)))
-        stop("Target contains missing values!")
-      if (is.factor(x) && any(table(x) == 0L))
-        stop("Target contains empty class levels!")
+    if (is.numeric(x)) {
+      if (any(is.infinite(x)))
+        stopf("Data contains infinite values in: %s", cn)
+      if (any(is.nan(x)))
+        stopf("Data contains NaN values in: %s", cn)
+    } else if (is.factor(x)) {
+      if(any(table(x) == 0L))
+        stopf("Data contains empty factor levels in: %s", cn)
     } else {
-      if (is.numeric(x)) {
-        if (any(is.infinite(x)))
-          stopf("Data contains infinite values in: %s", cn)
-        if (any(is.nan(x)))
-          stopf("Data contains NaN values in: %s", cn)
-      } else if (is.factor(x)) {
-        if(any(table(x) == 0L))
-          stopf("Data contains empty factor levels in: %s", cn)
-      } else {
-        stopf("Unsupported feature type in: %s, %s", cn, class(x)[1L])
-      }
+      stopf("Unsupported feature type in: %s, %s", cn, class(x)[1L])
     }
   }, x = data, cn = colnames(data), is.target = colnames(data) %in% target)
 }
