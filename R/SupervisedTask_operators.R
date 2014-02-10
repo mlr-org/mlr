@@ -35,8 +35,8 @@ getTaskFeatureNames = function(task) {
 #' task <- makeClassifTask(data = iris, target = "Species")
 #' getTaskFormulaAsString(task)
 #' @export
-getTaskFormulaAsString = function(x) {
-  paste(getTargetName(x), "~.")
+getTaskFormulaAsString = function(x, target=getTargetName(x)) {
+  paste(target, "~.")
 }
 
 

@@ -16,5 +16,9 @@ if (FALSE) {
 
   task = makeSurvTask("testtask", data, target = c("time", "status"))
   getTaskData(task, target.extra=TRUE)
-  subsetTask(task, 1:3, features="Species")
+  task2 = subsetTask(task, 1:3, features="Species")
+
+  lrn = makeLearner("surv.coxph")
+  trained = train(lrn, task)
+  predict(trained, task)
 }

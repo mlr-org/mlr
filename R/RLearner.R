@@ -7,8 +7,9 @@
 #'
 #' @param cl [\code{character(1)}] \cr
 #'   Class name for learner to create.
-#'   By convention, all classification learners start with \dQuote{classif.}
-#'   and all regression learners with \dQuote{regr.}
+#'   By convention, all classification learners start with \dQuote{classif.},
+#'   all regression learners with \dQuote{regr.} and all survival learners
+#'   start with \dQuote{surv.}.
 #' @param package [\code{character}]\cr
 #'   Package(s) to load for the implementation of the learner.
 #' @param par.set [\code{\link[ParamHelpers]{ParamSet}}] \cr
@@ -45,10 +46,10 @@
 #'   Useful when default values are missing in the underlying function.
 #'   The values can later be overwritten when the user sets hyperparameters.
 #'   Default is empty list.
-#' @return [\code{\link{RLearnerClassif}} or \code{\link{RLearnerRegr}}].
+#' @return [\code{\link{RLearnerClassif}}, \code{\link{RLearnerRegr}} or \code{\link{RLearnerSurv}}].
 #' @name RLearner
 #' @rdname RLearner
-#' @aliases RLearnerClassif RLearnerRegr
+#' @aliases RLearnerClassif RLearnerRegr RLearnerSurv
 NULL
 
 #' @export
@@ -66,7 +67,7 @@ makeRLearnerInternal = function(id, type, package, par.set, numerics, factors, m
   requirePackages(package, paste("learner", id))
 
   checkArg(id, "character", len=1L, na.ok=FALSE)
-  checkArg(type, choices=c("classif", "regr"))
+  checkArg(type, choices=c("classif", "regr", "surv"))
   checkArg(package, "character", na.ok=FALSE)
   checkArg(par.set, "ParamSet")
   checkListElementClass(par.set$pars, "LearnerParam")
@@ -125,5 +126,17 @@ makeRLearnerRegr = function(cl, package, par.set, numerics, factors=FALSE,
     makeRLearnerInternal(cl, "regr", package, par.set, numerics, factors, missings, weights,
       FALSE, FALSE, FALSE, FALSE, se, par.vals),
     c(cl, "RLearnerRegr")
+  )
+}
+
+#' @export
+#' @rdname RLearner
+makeRLearnerSurv = function(cl, package, par.set, numerics, factors=FALSE,
+  missings=FALSE, weights=FALSE, se=FALSE, par.vals=list()) {
+
+  addClasses(
+    makeRLearnerInternal(cl, "surv", package, par.set, numerics, factors, missings, weights,
+      FALSE, FALSE, FALSE, FALSE, se, par.vals),
+    c(cl, "RLearnerSurv")
   )
 }

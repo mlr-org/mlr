@@ -78,7 +78,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
   requireLearnerPackages(learner)
   cns = colnames(newdata)
   tn = td$target
-  t.col = which(cns == tn)
+  t.col = which(cns %in% tn)
   # get truth and drop target col, if target in newdata
   if (length(t.col) == 1L) {
     #FIXME this copies data

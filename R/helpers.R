@@ -25,7 +25,7 @@ recodeY = function(y, type, positive) {
     "no" = y,
     "01" = as.numeric(y == positive),
     "-1+1" = as.numeric(2L*(y == positive)-1L),
-    "surv" = Surv(time = y[, 1L], event = y[, 2L], type="rigth"),
+    "surv" = Surv(time = y[, 1L], event = y[, 2L], type="right"),
     stop("Unknown value for 'type'"))
 }
 
