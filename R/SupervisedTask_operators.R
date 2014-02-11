@@ -1,8 +1,11 @@
-getTargetName = function(x) {
+getTargetNames = function(x) {
   if (inherits(x, "TaskDesc"))
     x$target
   else
     x$task.desc$target
+}
+
+getTargetNamesAsSurvival = function(x) {
 }
 
 
@@ -29,13 +32,21 @@ getTaskFeatureNames = function(task) {
 #'
 #' @param x [\code{\link{SupervisedTask}} | \code{\link{TaskDesc}}]\cr
 #'   Task or its description object.
+#' @param target [\code{character(1)}]\cr
+#'   Left hand side of formula.
+#'   Default is defined by task \code{x}.
 #' @return [\code{character(1)}].
 #' @export
 #' @examples
 #' task <- makeClassifTask(data = iris, target = "Species")
 #' getTaskFormulaAsString(task)
 #' @export
-getTaskFormulaAsString = function(x, target=getTargetName(x)) {
+getTaskFormulaAsString = function(x, target=getTargetNames(x)) {
+  if (length(target) != 1L)
+    target = sprintf("Surv(%s, %s)", target[1L], target[2L])
+    # FIXME: best way to check if x is survival task or desc?
+    # using just the length is pretty error prone
+    # Don't know why there are not more helpers as S3 methods.
   paste(target, "~.")
 }
 
@@ -46,6 +57,9 @@ getTaskFormulaAsString = function(x, target=getTargetName(x)) {
 #'
 #' @param x [\code{\link{SupervisedTask}} | \code{\link{TaskDesc}}]\cr
 #'   Task or its description object.
+#' @param target [\code{character(1)}]\cr
+#'   Left hand side of formula.
+#'   Default is defined by task \code{x}.
 #' @param delete.env [\code{delete.env}]\cr
 #'   Delete enviroment attached to returned formula?
 #'   Don't ask why this option exists, R sucks.
@@ -56,8 +70,8 @@ getTaskFormulaAsString = function(x, target=getTargetName(x)) {
 #' task <- makeClassifTask(data = iris, target = "Species")
 #' getTaskFormula(task)
 #' @export
-getTaskFormula = function(x, delete.env = TRUE) {
-  form = reformulate(".", getTargetName(x))
+getTaskFormula = function(x, target=getTargetNames(x), delete.env=TRUE) {
+  form = as.formula(getTaskFormulaAsString(x, target=target), environment=NULL)
   if (delete.env)
     environment(form) = NULL
   return(form)

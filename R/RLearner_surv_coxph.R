@@ -17,9 +17,10 @@ makeRLearner.surv.coxph = function() {
 
 #' @S3method trainLearner surv.coxph
 trainLearner.surv.coxph = function(.learner, .task, .subset, .weights,  ...) {
-  f = getTaskFormulaAsString(.task, "Surv(time, status)") # FIXME use getTaskFormula after patching it
+  # FIXME: setting the environment to NULL is a horrible idea.
+  # This completely breaks the function lookup
   if (missing(.weights)) {
-    coxph(as.formula(f), getTaskData(.task, subset=.subset))
+    coxph(getTaskFormula(.task), getTaskData(.task, subset=.subset))
   } else  {
     #...
   }

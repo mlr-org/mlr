@@ -17,7 +17,7 @@
 #' @param predict.type [\code{character(1)}]\cr
 #'   Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
 #'   Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
-#'   Survival: \dQuote{response} (= ???). FIXME
+#'   Survival: \dQuote{response} (= some sort of orderable risk) or \dQuote{prob} (= time dependent probabilities).
 #'   Default is \dQuote{response}.
 #' @param ... [any]\cr
 #'   Optional named (hyper)parameters.
@@ -52,7 +52,7 @@ makeLearner = function(cl, id=cl, predict.type="response", ..., par.vals=list())
     wl$id = id
   }
   checkArg(par.vals, "list")
-  if (cl == "")
+  if (!nzchar(cl))
     stop("Cannot create learner from empty string!")
   if (!inherits(wl, "RLearner"))
     stop("Learner must be a basic RLearner!")
