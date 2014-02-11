@@ -17,12 +17,15 @@ makeRLearner.surv.coxph = function() {
 
 #' @S3method trainLearner surv.coxph
 trainLearner.surv.coxph = function(.learner, .task, .subset, .weights,  ...) {
-  # FIXME: setting the environment to NULL is a horrible idea.
-  # This completely breaks the function lookup
   if (missing(.weights)) {
-    coxph(getTaskFormula(.task), getTaskData(.task, subset=.subset))
+    coxph(
+      formula = getTaskFormula(.task, env=as.environment("package:survival")),
+      data = getTaskData(.task, subset=.subset))
   } else  {
-    #...
+    coxph(
+      formula = getTaskFormula(.task, env=.GlobalEnv),
+      data = getTaskData(.task, subset=.subset),
+      weights = .weights)
   }
 }
 

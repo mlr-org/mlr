@@ -5,10 +5,6 @@ getTargetNames = function(x) {
     x$task.desc$target
 }
 
-getTargetNamesAsSurvival = function(x) {
-}
-
-
 #' Get feature names of task.
 #'
 #' Target column name is not included.
@@ -45,8 +41,7 @@ getTaskFormulaAsString = function(x, target=getTargetNames(x)) {
   if (length(target) != 1L)
     target = sprintf("Surv(%s, %s)", target[1L], target[2L])
     # FIXME: best way to check if x is survival task or desc?
-    # using just the length is pretty error prone
-    # Don't know why there are not more helpers as S3 methods.
+    # Using just the length is pretty error prone
   paste(target, "~.")
 }
 
@@ -60,21 +55,18 @@ getTaskFormulaAsString = function(x, target=getTargetNames(x)) {
 #' @param target [\code{character(1)}]\cr
 #'   Left hand side of formula.
 #'   Default is defined by task \code{x}.
-#' @param delete.env [\code{delete.env}]\cr
-#'   Delete enviroment attached to returned formula?
-#'   Don't ask why this option exists, R sucks.
-#'   Default is \code{TRUE}.
+#' @param env [\code{environment}]\cr
+#'   Environment of the formula. Set this to \code{parent.frame()}
+#'   for the default behaviour.
+#'   Default is \code{NULL} which deletes the environment.
 #' @return [\code{formula}].
 #' @export
 #' @examples
 #' task <- makeClassifTask(data = iris, target = "Species")
 #' getTaskFormula(task)
 #' @export
-getTaskFormula = function(x, target=getTargetNames(x), delete.env=TRUE) {
-  form = as.formula(getTaskFormulaAsString(x, target=target), environment=NULL)
-  if (delete.env)
-    environment(form) = NULL
-  return(form)
+getTaskFormula = function(x, target=getTargetNames(x), env=NULL) {
+  as.formula(getTaskFormulaAsString(x, target=target), env=env)
 }
 
 

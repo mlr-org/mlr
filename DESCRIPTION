@@ -35,6 +35,7 @@ Suggests:
     FNN,
     FSelector,
     gbm,
+    Hmisc,
     irace,
     kernlab,
     kknn,

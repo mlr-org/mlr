@@ -66,6 +66,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
     subset = seq_len(size)
   } else {
     subset = convertIntegers(subset)
+    # FIXME: min.len, lower, upper
     checkArg(subset, "integer", na.ok=FALSE)
   }
   if (missing(newdata)) {
@@ -76,11 +77,9 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
 
   # if we saved a model and loaded it later just for prediction this is necessary
   requireLearnerPackages(learner)
-  cns = colnames(newdata)
-  tn = td$target
-  t.col = which(cns %in% tn)
+  t.col = which(colnames(newdata) %in% td$target)
   # get truth and drop target col, if target in newdata
-  if (length(t.col) == 1L) {
+  if (length(t.col)) {
     #FIXME this copies data
     truth = newdata[, t.col]
     newdata = newdata[, -t.col, drop=FALSE]
@@ -143,4 +142,3 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
   makePrediction(task.desc=td, id=ids, truth=truth,
     predict.type=learner$predict.type, y=p, time=time.predict)
 }
-

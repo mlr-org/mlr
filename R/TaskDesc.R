@@ -47,5 +47,6 @@ makeTaskDesc = function(type, id, data, target, weights, blocking, positive) {
       td$negative = setdiff(td$class.levels, positive)
   }
 
-  setClasses(td, "TaskDesc")
+  cl = switch(type, classif = "ClassifTaskDesc", regr = "RegrTaskDesc", surv = "SurvTaskDesc")
+  setClasses(td, c(cl, "TaskDesc"))
 }

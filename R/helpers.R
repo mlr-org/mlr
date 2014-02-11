@@ -98,3 +98,7 @@ binaryToFeatures = function(x, all.vars) {
 compare.diff = function(state1, state2, control, measure, threshold) {
   ifelse(measure$minimize, 1, -1) * (state1$y[1] - state2$y[1]) > threshold
 }
+
+filterNull = function(x) {
+  x[!vapply(x, is.null, logical(1L))]
+}

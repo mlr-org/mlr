@@ -23,8 +23,9 @@ makeLearner(cl, id = cl, predict.type = "response", ...,
   the ones with maximal probability).  Regression:
   \dQuote{response} (= mean response) or \dQuote{se} (=
   standard errors and mean response).  Survival:
-  \dQuote{response} (= ???). FIXME Default is
-  \dQuote{response}.}
+  \dQuote{response} (= some sort of orderable risk) or
+  \dQuote{prob} (= time dependent probabilities).  Default
+  is \dQuote{response}.}
 
   \item{...}{[any]\cr Optional named (hyper)parameters.
   Alternatively these can be given using the

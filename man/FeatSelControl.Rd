@@ -1,4 +1,4 @@
-\name{makeFeatSelControlExhaustive}
+\name{FeatSelControl}
 \alias{FeatSelControl}
 \alias{FeatSelControlExhaustive}
 \alias{FeatSelControlGA}
@@ -10,14 +10,14 @@
 \alias{makeFeatSelControlSequential}
 \title{Create control structures for feature selection.}
 \usage{
+makeFeatSelControl(same.resampling.instance, maxit, max.features, ..., cl)
+
 makeFeatSelControlExhaustive(same.resampling.instance = TRUE,
   maxit = NA_integer_, max.features = NA_integer_)
 
 makeFeatSelControlGA(same.resampling.instance = TRUE, maxit = NA_integer_,
   max.features = NA_integer_, comma = FALSE, mu = 10L, lambda,
   crossover.rate = 0.5, mutation.rate = 0.05)
-
-makeFeatSelControl(same.resampling.instance, maxit, max.features, ..., cl)
 
 makeFeatSelControlRandom(same.resampling.instance = TRUE, maxit = 100L,
   max.features = NA_integer_, prob = 0.5)
