@@ -66,18 +66,17 @@ trainLearner.FeatSelWrapper = function(.learner, .task, .subset,  ...) {
   else
     or = selectFeatures(.learner$next.learner, task, .learner$resampling, .learner$control,
       .learner$measures, .learner$bit.names, .learner$bits.to.features)
-  task = subsetTask(task, features=or$x)
-  m = train(.learner$next.learner, .task)
+  task2 = subsetTask(task, features=or$x)
+  m = train(.learner$next.learner, task2)
   x = makeChainModel(next.model=m, cl = "FeatSelModel")
   x$opt.result = or
-  xxx <<- or
   return(x)
 }
 
 #' @S3method predictLearner FeatSelWrapper
 predictLearner.FeatSelWrapper = function(.learner, .model, .newdata, ...) {
-  .newdata = .newdata[, learner.model$opt.result$x]
-  predictLearner(lrn, .model$learner.model$next.model, .newdata)
+  .newdata = .newdata[, .model$learner.model$opt.result$x, drop=FALSE]
+  predictLearner(.learner$next.learner, .model$learner.model$next.model, .newdata, ...)
 }
 
 #' Returns the optimal hyperparameters and optimization path.
