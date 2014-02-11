@@ -34,6 +34,6 @@ print.FeatSelResult = function(x, ...) {
   else
     x = head(x, printed.features)
 
-  catf("Features (%i): %s", n.feats, collapse(x, ", "))
+  catf("Features (%i): %s", n.feats, collapse(x$x, ", "))
   catf("%s", perfsToString(x$y))
 }
