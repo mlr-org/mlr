@@ -16,7 +16,10 @@ makeOptWrapper = function(id, learner, resampling, measures, par.set, bit.names,
 #' @S3method makeWrappedModel OptWrapper
 makeWrappedModel.OptWrapper = function(learner, model, task.desc, subset, features, time) {
   x = NextMethod()
-  addClasses(x, c("TuneModel", "OptModel"))
+  if (inherits(learner, "TuneWrapper"))
+    addClasses(x, c("TuneModel", "OptModel"))
+  else
+    addClasses(x, c("FeatSelModel", "OptModel"))
 }
 
 #' @S3method print OptModel
