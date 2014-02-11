@@ -7,23 +7,25 @@
 #' Finally, a model is fitted on the complete training data with these variables and returned.
 #' See \code{\link{selectFeatures}} for more details.
 #'
-#' @param learner [\code{\linkS4class{Learner}} or string]\cr
+#' @param learner [\code{\link{Learner}} or string]\cr
 #'   Learning algorithm. See \code{\link{learners}}.
-#' @param resampling [\code{\linkS4class{ResampleInstance}}] or [\code{\linkS4class{ResampleDesc}}]\cr
-#'   Resampling strategy to evaluate points in hyperparameter space.
-#' @param measures [list of \code{\linkS4class{Measure}}]\cr
-#'   Performance measures to evaluate. The first measure, aggregated by the first aggregation function is optimized during tuning, others are simply evaluated.
-#' @param bit.names [character]\cr
+#' @param resampling [\code{\link{ResampleDesc}} | \code{\link{ResampleInstance}}]\cr
+#'   Resampling strategy to evaluate feature sets.
+#' @param measures [list of \code{\link{Measure}}]\cr
+#'   Performance measures to evaluate. The first measure, aggregated by the first aggregation function
+#'   is optimized during feature selection, others are simply evaluated.
+#' @param bit.names [\code{character}]\cr
 #'   Names of bits encoding the solutions. Also defines the total number of bits in the encoding.
 #'   Per default these are the feature names of the task.
-#' @param bits.to.features [function(x, task)]\cr
+#' @param bits.to.features [\code{function(x, task)}]\cr
 #'   Function which transforms an integer-0-1 vector into a character vector of selected features.
 #'   Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.
-#' @param control [\code{\linkS4class{VarselControl}}]
+#' @param control [\code{\link{FeatSelControl}}]
 #'   Control object for search method. Also selects the optimization algorithm for feature selection.
-#' @param log.fun [function(learner, task, resampling, measure, par.set, control, opt.path, x, y)]\cr
-#'   Called after every hyperparameter evaluation. Default is to print performance via mlr logger.
-#' @return \code{\link{Learner}}.
+#' @param show.info [\code{logical(1)}]\cr
+#'   Show info message after each feature set evaluation?
+#'   Default is \code{TRUE}.
+#' @return [\code{\link{Learner}}].
 #' @export
 makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.features,
   control, show.info=TRUE) {
@@ -39,12 +41,12 @@ makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.
       checkListElementClass(measures, "Measure")
   }
   if (missing(bit.names)) {
-    bit.names = getTaskFeatureNames(task)
+    bit.names = character(0)
   } else {
     checkArg(bit.names, "character", na.ok=FALSE)
   }
   if (missing(bits.to.features)) {
-    bits.to.features = function(x, task) binaryToFeatures(x, getTaskFeatureNames(task))
+    bits.to.features = NULL
   } else {
     checkArg(bits.to.features, "function", formals=c("x", "task"))
   }
@@ -61,13 +63,15 @@ makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.
 trainLearner.FeatSelWrapper = function(.learner, .task, .subset,  ...) {
   task = subsetTask(.task, .subset)
   if (length(.learner$bit.names) == 0)
+    #FIXME: really look at bitnames / bits.to.features stuff and test it.
+    # do we need the extra case here?
     or = selectFeatures(.learner$next.learner, task, .learner$resampling, .learner$control,
       .learner$measures)
   else
     or = selectFeatures(.learner$next.learner, task, .learner$resampling, .learner$control,
       .learner$measures, .learner$bit.names, .learner$bits.to.features)
-  task2 = subsetTask(task, features=or$x)
-  m = train(.learner$next.learner, task2)
+  task = subsetTask(task, features=or$x)
+  m = train(.learner$next.learner, task)
   x = makeChainModel(next.model=m, cl = "FeatSelModel")
   x$opt.result = or
   return(x)
@@ -79,11 +83,11 @@ predictLearner.FeatSelWrapper = function(.learner, .model, .newdata, ...) {
   predictLearner(.learner$next.learner, .model$learner.model$next.model, .newdata, ...)
 }
 
-#' Returns the optimal hyperparameters and optimization path.
+#' Returns the selected feature set and optimization path.
 #'
 #' @param model [\code{\link{WrappedModel}}]\cr
-#'   Trained Model created with \code{\link{makeTuneWrapper}}.
-#' @return [\code{\link{TuneResult}}].
+#'   Trained Model created with \code{\link{makeFeatSelWrapper}}.
+#' @return [\code{\link{FeatSelResult}}].
 #' @export
 getFeatSelResult = function(model) {
   model$learner.model$opt.result
