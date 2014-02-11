@@ -1,5 +1,7 @@
 
+
 mlr_1.2:
+- added FeatSelWrapper and getFeatSelResult
 - performance functions now allows to compute multiple measures
 - added multiclass.roc performance measure
 - observation weights can now also be specified in the task
