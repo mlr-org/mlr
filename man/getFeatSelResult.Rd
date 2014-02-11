@@ -1,0 +1,17 @@
+\name{getFeatSelResult}
+\alias{getFeatSelResult}
+\title{Returns the selected feature set and optimization path.}
+\usage{
+getFeatSelResult(model)
+}
+\arguments{
+  \item{model}{[\code{\link{WrappedModel}}]\cr Trained
+  Model created with \code{\link{makeFeatSelWrapper}}.}
+}
+\value{
+[\code{\link{FeatSelResult}}].
+}
+\description{
+Returns the selected feature set and optimization path.
+}
+
