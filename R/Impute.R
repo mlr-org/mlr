@@ -180,11 +180,13 @@ reimpute = function(x, desc) {
   UseMethod("reimpute")
 }
 
+#' @method reimpute list
 #' @S3method reimpute list
 reimpute.list = function(x, desc) {
   UseMethod("reimpute", as.data.frame(x))
 }
 
+#' @method reimpute data.frame
 #' @S3method reimpute data.frame
 reimpute.data.frame = function(x, desc) {
   checkArg(desc, "ImputationDesc")

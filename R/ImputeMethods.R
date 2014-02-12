@@ -55,6 +55,8 @@ simpleImpute = function(data, target, col, const) {
 #'     from the data if not provided.
 #'   \item \code{imputeHist(breaks, use.mids)} for imputation using random values
 #'     with probabilities calculated using \code{table} or \code{hist}.
+#'   \item \code{imputeLearner(learner, preimpute)} for imputations using the response
+#'     of a classification or regression learner.
 #' }
 #' @name imputations
 #' @rdname imputations
@@ -234,6 +236,13 @@ imputeHist = function(breaks, use.mids=TRUE) {
 }
 
 #' @rdname imputations
+#' @param learner [\code{Learner}]\cr
+#'  Classification or regression learner. Its predcitions will be used for imputations.
+#'  Note that the target column is not available for this operation.
+#' @param preimute [\code{list}]\cr
+#'  Arguments for inner call to \code{\link{impute}} in scenarios where
+#'  \code{learner} itself cannot handle missing values.
+#'  Default is \code{list()}.
 #' @export
 imputeLearner = function(learner, preimpute=list()) {
   # FIXME: this function needs some love
