@@ -6,9 +6,9 @@ test_that("parallel resampling", {
   doit = function(mode, level) {
     lrn = makeLearner("classif.rpart")
     rdesc = makeResampleDesc("CV", iters=2L)
+    on.exit(parallelStop())
     parallelStart(mode=mode, cpus=2L, level=level)
     r = resample(lrn, multiclass.task, rdesc)
-    parallelStop()
     expect_true(!is.na(r$aggr[1]))
   }
   doit("multicore", as.character(NA))
@@ -28,9 +28,9 @@ test_that("parallel tuning", {
     rdesc = makeResampleDesc("CV", iters = 2L)
     ps = makeParamSet(makeDiscreteParam("cp", values = c(0.01, 0.05)))
     ctrl = makeTuneControlGrid()
+    on.exit(parallelStop())
     parallelStart(mode=mode, cpus=2L, level=level)
     res = tuneParams(lrn, multiclass.task, rdesc, par.set=ps, control=ctrl)
-    parallelStop()
     expect_true(!is.na(res$y))
   }
   doit("multicore", as.character(NA))
@@ -49,9 +49,9 @@ test_that("parallel featsel", {
     lrn = makeLearner("classif.rpart")
     rdesc = makeResampleDesc("CV", iters = 2L)
     ctrl = makeFeatSelControlRandom(maxit=2L)
+    on.exit(parallelStop())
     parallelStart(mode=mode, cpus=2L, level=level)
     res = selectFeatures(lrn, multiclass.task, rdesc, control=ctrl)
-    parallelStop()
     expect_true(!is.na(res$y))
   }
   doit("multicore", as.character(NA))

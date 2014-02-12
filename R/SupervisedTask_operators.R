@@ -1,3 +1,10 @@
+getTargetNames = function(x) {
+  if (inherits(x, "TaskDesc"))
+    x$target
+  else
+    x$task.desc$target
+}
+
 #' Get feature names of task.
 #'
 #' Target column name is not included.
@@ -21,18 +28,21 @@ getTaskFeatureNames = function(task) {
 #'
 #' @param x [\code{\link{SupervisedTask}} | \code{\link{TaskDesc}}]\cr
 #'   Task or its description object.
+#' @param target [\code{character(1)}]\cr
+#'   Left hand side of formula.
+#'   Default is defined by task \code{x}.
 #' @return [\code{character(1)}].
 #' @export
 #' @examples
 #' task <- makeClassifTask(data = iris, target = "Species")
 #' getTaskFormulaAsString(task)
 #' @export
-getTaskFormulaAsString = function(x) {
-  g = function(target) paste(target, "~.")
-  if (inherits(x, "TaskDesc"))
-    f = g(x$target)
-  else
-    f = g(x$task.desc$target)
+getTaskFormulaAsString = function(x, target=getTargetNames(x)) {
+  if (length(target) != 1L)
+    target = sprintf("Surv(%s, %s)", target[1L], target[2L])
+    # FIXME: best way to check if x is survival task or desc?
+    # Using just the length is pretty error prone
+  paste(target, "~.")
 }
 
 
@@ -42,24 +52,22 @@ getTaskFormulaAsString = function(x) {
 #'
 #' @param x [\code{\link{SupervisedTask}} | \code{\link{TaskDesc}}]\cr
 #'   Task or its description object.
-#' @param delete.env [\code{delete.env}]\cr
-#'   Delete enviroment attached to returned formula?
-#'   Don't ask why this option exists, R sucks.
-#'   Default is \code{TRUE}.
+#' @param target [\code{character(1)}]\cr
+#'   Left hand side of formula.
+#'   Default is defined by task \code{x}.
+#' @param env [\code{environment}]\cr
+#'   Environment of the formula. Set this to \code{parent.frame()}
+#'   for the default behaviour.
+#'   Default is \code{NULL} which deletes the environment.
 #' @return [\code{formula}].
 #' @export
 #' @examples
 #' task <- makeClassifTask(data = iris, target = "Species")
 #' getTaskFormula(task)
 #' @export
-getTaskFormula = function(x, delete.env = TRUE) {
-  target = if (inherits(x, "TaskDesc")) x$target  else x$task.desc$target
-  form = reformulate(".", target)
-  if (delete.env)
-    environment(form) = NULL
-  return(form)
+getTaskFormula = function(x, target=getTargetNames(x), env=NULL) {
+  as.formula(getTaskFormulaAsString(x, target=target), env=env)
 }
-
 
 
 #' Get target column of task.
@@ -122,42 +130,39 @@ getTaskTargets = function(task, subset, recode.target="no") {
 #' head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = "-1+1"))
 #' head(getTaskData(task, subset = 1:100, recode.target = "01"))
 getTaskData = function(task, subset, features, target.extra=FALSE, recode.target="no") {
+  indexHelper = function(df, i, j, drop=TRUE) {
+    switch(2L * is.null(i) + is.null(j) + 1L,
+      df[i, j, drop=drop],
+      df[i,  , drop=drop],
+      df[ , j, drop=drop],
+      df
+    )
+  }
+
   tn = task$task.desc$target
-  ms = missing(subset) || identical(subset, seq_len(task$task.desc$size))
-  mv = missing(features) || identical(features, getTaskFeatureNames(task))
+  task.features = getTaskFeatureNames(task)
+  if (missing(subset) || identical(subset, seq_len(task$task.desc$size)))
+    subset = NULL
 
   if (target.extra) {
-    # FIXME wtf ...
-    list(
-      data =
-        if (ms && mv)
-          {d=task$env$data;d[,tn]=NULL;d}
-        else if (ms)
-          task$env$data[,features,drop=FALSE]
-        else if (mv)
-          {d=task$env$data[subset,,drop=FALSE];d[,tn]=NULL;d}
-        else
-          task$env$data[subset,c(features, tn),drop=FALSE],
-      target =
-        if (ms)
-          recodeY(getTaskTargets(task), type=recode.target, positive=task$task.desc$positive)
-        else
-          recodeY(getTaskTargets(task)[subset], type=recode.target, positive=task$task.desc$positive)
+    if (missing(features))
+      features = task.features
+    res = list(
+      data = indexHelper(task$env$data, subset, setdiff(features, tn), drop=FALSE),
+      target = recodeY(indexHelper(task$env$data, subset, tn), type=recode.target, positive=task$task.desc$positive)
     )
   } else {
-    d =
-      if (ms && mv)
-        task$env$data
-      else if (ms)
-        task$env$data[,c(features, tn),drop=FALSE]
-      else if (mv)
-        task$env$data[subset,,drop=FALSE]
-      else
-        task$env$data[subset,c(features, tn),drop=FALSE]
-    if (recode.target != "no")
-      d[,tn] = recodeY(d[, tn], type=recode.target, positive=task$task.desc$positive)
-    return(d)
+    if (missing(features) || identical(features, task.features))
+      features = NULL
+    else
+      features = union(features, tn)
+
+    res = indexHelper(task$env$data, subset, features, drop=FALSE)
+    if (recode.target %nin% c("no", "surv")) {
+      res[, tn] = recodeY(res[, tn], type=recode.target, positive=task$task.desc$positive)
+    }
   }
+  res
 }
 
 
@@ -190,7 +195,8 @@ subsetTask = function(task, subset, features) {
 # we create a new env, so the reference is not changed
 # FIXME really check what goes on here!
 changeData = function(task, data) {
-  task$env = new.env()
+  force(data)
+  task$env = new.env(parent=emptyenv())
   task$env$data = data
   d = task$task.desc
   task$task.desc = makeTaskDesc(d$type, d$id, data, d$target, d$weight, task$blocking, d$positive)

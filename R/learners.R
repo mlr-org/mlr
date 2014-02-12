@@ -77,6 +77,9 @@
 #'     Note that kernel parameters have to be passed directly and not by using the kpar list in rvm.\cr
 #'     Note that \code{fit} has been set to \code{FALSE} by default for speed.}
 #' }
+#' \itemize{
+#'   \item{\bold{surv.coxph}}{\cr Cox Proportional Hazard Model.}
+#' }
 #' @name learners
 #' @rdname learners
 NULL

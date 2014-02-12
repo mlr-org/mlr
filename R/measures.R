@@ -44,6 +44,11 @@
 #'   \item{\bold{rmse}}{\cr Root mean square error}
 #' }
 #'
+#' Survival:
+#' \itemize{
+#'   \item{\bold{cindex}}{\cr Concordance index}
+#' }
+#'
 #' General:
 #' \itemize{
 #'   \item{\bold{timetrain}}{\cr Time of fitting the model}
@@ -392,6 +397,17 @@ gpr = makeMeasure(id="gpr", minimize=FALSE, classif=TRUE, only.binary=TRUE, allo
   }
 )
 
+#' @export cindex
+#' @rdname measures
+#' @usage none
+#' @format none
+cindex = makeMeasure(id="cindex", minimize=FALSE, allowed.pred.types=c("response", "prob"),
+  fun=function(task, model, pred, extra.args) {
+    requirePackages("Hmisc")
+    s = Surv(pred$data$truth.time, pred$data$truth.event)
+    rcorr.cens(-1 * pred$data$response, s)[["C Index"]]
+  }
+)
 
 # FIXME: this usage none, format none stuff is crap, but i currently do no know a better
 # way to do this with roxygen2. We are neither documenting functions nor datsets here, but R objects.

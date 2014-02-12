@@ -25,38 +25,83 @@
 NULL
 
 makePrediction = function(task.desc, id, truth, predict.type, y, time) {
-	data = list()
-	# if null no col in data present
+  UseMethod("makePrediction")
+}
+
+#' @method makePrediction RegrTaskDesc
+#' @S3method makePrediction RegrTaskDesc
+makePrediction.RegrTaskDesc = function(task.desc, id, truth, predict.type, y, time) {
+  data = namedList(c("id", "truth", "response", "se"))
 	data$id = id
 	data$truth = truth
   if (predict.type == "response") {
     data$response = y
-  } else if (predict.type == "prob") {
-		data$prob = y
-  } else if (predict.type == "se"){
+  } else {
     data$response = y[, 1L]
     data$se = y[, 2L]
   }
-  data = as.data.frame(data)
-  # fix columnnames for prob if strage chars are in factor levels
-	i = grep("prob.", colnames(data))
-	if (length(i))
-		colnames(data)[i] = paste("prob.", colnames(y), sep="")
 
-  p = setClasses(list(
+  makeS3Obj(c("RegrPrediction", "Prediction"),
+    predict.type = predict.type,
+    data = as.data.frame(filterNull(data)),
+    threshold = NA_real_,
+    task.desc = task.desc,
+    time = time
+  )
+}
+
+#' @method makePrediction ClassifTaskDesc
+#' @S3method makePrediction ClassifTaskDesc
+makePrediction.ClassifTaskDesc = function(task.desc, id, truth, predict.type, y, time) {
+  data = namedList(c("id", "truth", "response", "prob"))
+	data$id = id
+	data$truth = truth
+  if (predict.type == "response") {
+    data$response = y
+    data = as.data.frame(filterNull(data))
+  } else {
+		data$prob = y
+    data = as.data.frame(filterNull(data))
+    # fix columnnames for prob if strage chars are in factor levels
+    i = grep("prob.", names(data), fixed=TRUE)
+    if (length(i))
+      names(data)[i] = paste0("prob.", colnames(y))
+  }
+
+  p = makeS3Obj(c("ClassifPrediction", "Prediction"),
     predict.type = predict.type,
     data = data,
     threshold = NA_real_,
     task.desc = task.desc,
     time = time
-  ), "Prediction")
+  )
 
   if (predict.type == "prob") {
     th = rep(1/length(task.desc$class.levels), length(task.desc$class.levels))
     names(th) = task.desc$class.levels
     p = setThreshold(p, th)
   }
+
   return(p)
+}
+
+#' @method makePrediction SurvTaskDesc
+#' @S3method makePrediction SurvTaskDesc
+makePrediction.SurvTaskDesc = function(task.desc, id, truth, predict.type, y, time) {
+  stopifnot(ncol(truth) == 2L) #FIXME: DEBUG
+  data = namedList(c("id", "truth.time", "truth.event", "response"))
+	data$id = id
+	data$truth.time = truth[, 1L]
+	data$truth.event = truth[, 2L]
+  data$response = y
+
+  makeS3Obj(c("SurvPrediction", "Prediction"),
+    predict.type = predict.type,
+    data = as.data.frame(filterNull(data)),
+    threshold = NA_real_,
+    task.desc = task.desc,
+    time = time
+  )
 }
 
 #' @S3method print Prediction

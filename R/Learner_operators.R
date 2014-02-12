@@ -140,7 +140,8 @@ setPredictType = function(learner, predict.type) {
   checkArg(learner, "Learner")
   checkArg(predict.type, choices=switch(learner$type,
     classif = c("response", "prob"),
-    regr = c("response", "se")
+    regr = c("response", "se"),
+    surv = c("response", "prob")
   ))
   if (predict.type == "prob" && !learner$prob)
     stopf("Trying to predict probs, but %s does not support that!", learner$id)

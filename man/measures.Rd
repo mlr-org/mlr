@@ -3,6 +3,7 @@
 \alias{acc}
 \alias{auc}
 \alias{ber}
+\alias{cindex}
 \alias{f1}
 \alias{fdr}
 \alias{featperc}
@@ -35,6 +36,8 @@
 \title{Performance measures.}
 \format{none}
 \usage{
+none
+
 none
 
 none
@@ -145,6 +148,9 @@ errors} \item{\bold{mse}}{\cr Mean of squared errors}
 \item{\bold{mae}}{\cr Mean of absolute errors}
 \item{\bold{medae}}{\cr Median of absolute errors}
 \item{\bold{rmse}}{\cr Root mean square error} }
+
+Survival: \itemize{ \item{\bold{cindex}}{\cr Concordance
+index} }
 
 General: \itemize{ \item{\bold{timetrain}}{\cr Time of
 fitting the model} \item{\bold{timepredict}}{\cr Time of

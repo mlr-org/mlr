@@ -6,7 +6,8 @@
 #' Object members:
 #' \describe{
 #' \item{id [\code{character(1)}]}{Id string of task.}
-#' \item{type [\code{character(1)}]}{type Type of task, either \dQuote{classif} for classification or \dQuote{regr} for regression.}
+#' \item{type [\code{character(1)}]}{type Type of task, either \dQuote{classif} for classification, \dQuote{regr} for regression or
+#'   \dQuote{surv} for survival.}
 #' \item{target [\code{character(1)}]}{Name of target variable.}
 #' \item{size[\code{integer(1)}]}{Number of cases.}
 #' \item{n.feat [\code{integer}]}{Number of features, named vector with entries: \dQuote{numerics}, \dQuote{factors}.}
@@ -22,13 +23,13 @@
 NULL
 
 makeTaskDesc = function(type, id, data, target, weights, blocking, positive) {
-  y = data[, target]
+  cl = dropNamed(vapply(data, function(x) head(class(x), 1L), character(1L)), target)
   td = list(
     id = id,
     type = type,
     target = target,
     size = nrow(data),
-    n.feat = c(numerics = sum(sapply(data, is.numeric)) - is.numeric(y), factors = sum(sapply(data, is.factor)) - is.factor(y)),
+    n.feat = c(numerics = sum(cl %in% c("integer", "numeric")), factors = sum(cl == "factor")),
     has.missings = any(is.na(data)),
     has.weights = length(weights) > 0L,
     has.blocking = length(blocking) > 0L,
@@ -38,7 +39,7 @@ makeTaskDesc = function(type, id, data, target, weights, blocking, positive) {
   )
 
   if(type == "classif") {
-    td$class.levels = levels(y)
+    td$class.levels = levels(data[, target])
     td$positive = positive
     if (length(td$class.levels) == 1L)
       td$negative = paste0("not_", positive)
@@ -46,5 +47,6 @@ makeTaskDesc = function(type, id, data, target, weights, blocking, positive) {
       td$negative = setdiff(td$class.levels, positive)
   }
 
-  setClasses(td, "TaskDesc")
+  cl = switch(type, classif = "ClassifTaskDesc", regr = "RegrTaskDesc", surv = "SurvTaskDesc")
+  setClasses(td, c(cl, "TaskDesc"))
 }

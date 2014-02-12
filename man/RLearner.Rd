@@ -2,9 +2,11 @@
 \alias{RLearner}
 \alias{RLearnerClassif}
 \alias{RLearnerRegr}
+\alias{RLearnerSurv}
 \alias{makeRLearner}
 \alias{makeRLearnerClassif}
 \alias{makeRLearnerRegr}
+\alias{makeRLearnerSurv}
 \title{Internal construction / wrapping of learner object.}
 \usage{
 makeRLearner()
@@ -15,12 +17,16 @@ makeRLearnerClassif(cl, package, par.set, numerics = FALSE, factors = FALSE,
 
 makeRLearnerRegr(cl, package, par.set, numerics, factors = FALSE,
   missings = FALSE, weights = FALSE, se = FALSE, par.vals = list())
+
+makeRLearnerSurv(cl, package, par.set, numerics, factors = FALSE,
+  missings = FALSE, weights = FALSE, se = FALSE, par.vals = list())
 }
 \arguments{
   \item{cl}{[\code{character(1)}] \cr Class name for
   learner to create.  By convention, all classification
-  learners start with \dQuote{classif.} and all regression
-  learners with \dQuote{regr.}}
+  learners start with \dQuote{classif.}, all regression
+  learners with \dQuote{regr.} and all survival learners
+  start with \dQuote{surv.}.}
 
   \item{package}{[\code{character}]\cr Package(s) to load
   for the implementation of the learner.}
@@ -64,8 +70,8 @@ makeRLearnerRegr(cl, package, par.set, numerics, factors = FALSE,
   is empty list.}
 }
 \value{
-[\code{\link{RLearnerClassif}} or
-\code{\link{RLearnerRegr}}].
+[\code{\link{RLearnerClassif}}, \code{\link{RLearnerRegr}}
+or \code{\link{RLearnerSurv}}].
 }
 \description{
 Wraps an already implemented learning method from R to make

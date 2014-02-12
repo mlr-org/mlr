@@ -6,19 +6,11 @@
 # - No infinite values
 # - No NANs
 checkData = function(data, target) {
-  cns = colnames(data)
-  y = data[, target]
-
-  if (any(is.na(y)))
-    stop("Target contains missing values!")
-  if (is.factor(y) && any(table(y) == 0L))
-    stop("Target contains empty class levels!")
-
-  #FIXME one should probably be able to disable some of these checks via configureMLR
-  for (i in seq_len(ncol(data))) {
-    x = data[, i]
-    cn = cns[i]
-    if(!deparse(as.name(cn), backtick=TRUE) == cn)
+  # FIXME: one should probably be able to disable some of these checks via configureMLR
+  mapply(function(x, cn, is.target) {
+    if (is.target && any(is.na(x)))
+      stop("Target contains missing values!")
+    if (!deparse(as.name(cn), backtick=TRUE) == cn)
       stopf("Column name contains special characters: %s", cn)
     if (is.numeric(x)) {
       if (any(is.infinite(x)))
@@ -31,16 +23,15 @@ checkData = function(data, target) {
     } else {
       stopf("Unsupported feature type in: %s, %s", cn, class(x)[1L])
     }
-  }
+  }, x = data, cn = colnames(data), is.target = colnames(data) %in% target)
 }
 
 checkColumnNames = function(data, target) {
   cns = colnames(data)
   dup = duplicated(cns)
-  if(any(dup))
-    stopf("Duplicated column names in data are not allowed: %s", collapse(cns[dup]))
-  if (!(target %in% cns)) {
-    stopf("Column names of data don't contain target var: %s", target)
+  if (any(dup))
+    stopf("Duplicated column names in data are not allowed: %s", collapse(unique(cns[dup])))
+  if (!all(target %in% cns)) {
+    stopf("Column names of data don't contain target var: %s", collapse(target))
   }
 }
-

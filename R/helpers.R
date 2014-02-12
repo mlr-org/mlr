@@ -21,12 +21,12 @@ perfsToString = function(y) {
 }
 
 recodeY = function(y, type, positive) {
-  if (type == "01")
-    as.numeric(y == positive)
-  else if (type == "-1+1")
-    as.numeric(2L*(y == positive)-1L)
-  else
-    y
+  switch(type,
+    "no" = y,
+    "01" = as.numeric(y == positive),
+    "-1+1" = as.numeric(2L*(y == positive)-1L),
+    "surv" = Surv(time = y[, 1L], event = y[, 2L], type="right"),
+    stop("Unknown value for 'type'"))
 }
 
 ##### tuning #####
@@ -97,4 +97,8 @@ binaryToFeatures = function(x, all.vars) {
 
 compare.diff = function(state1, state2, control, measure, threshold) {
   ifelse(measure$minimize, 1, -1) * (state1$y[1] - state2$y[1]) > threshold
+}
+
+filterNull = function(x) {
+  x[!vapply(x, is.null, logical(1L))]
 }

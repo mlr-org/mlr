@@ -9,8 +9,9 @@ makeLearner(cl, id = cl, predict.type = "response", ...,
 \arguments{
   \item{cl}{[\code{character(1)}]\cr Class of learner to
   create. By convention, all classification learners start
-  with \dQuote{classif.} and all regression learners with
-  \dQuote{regr.}. A list of all learners is available on
+  with \dQuote{classif.}, all regression learners with
+  \dQuote{regr.} and all survival learners start with
+  \dQuote{surv.}.  A list of all learners is available on
   the \code{\link{learners}} help page.}
 
   \item{id}{[\code{character(1)}]\cr Id string for object.
@@ -21,8 +22,10 @@ makeLearner(cl, id = cl, predict.type = "response", ...,
   \dQuote{prob} (= probabilities and labels by selecting
   the ones with maximal probability).  Regression:
   \dQuote{response} (= mean response) or \dQuote{se} (=
-  standard errors and mean response).  Default is
-  \dQuote{response}.}
+  standard errors and mean response).  Survival:
+  \dQuote{response} (= some sort of orderable risk) or
+  \dQuote{prob} (= time dependent probabilities).  Default
+  is \dQuote{response}.}
 
   \item{...}{[any]\cr Optional named (hyper)parameters.
   Alternatively these can be given using the
