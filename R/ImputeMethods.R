@@ -234,6 +234,7 @@ imputeHist = function(breaks, use.mids=TRUE) {
 }
 
 #' @rdname imputations
+#' @export
 imputeLearner = function(learner, preimpute=list()) {
   # FIXME: this function needs some love
   checkArg(learner, "Learner")
