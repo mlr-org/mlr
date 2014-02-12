@@ -20,12 +20,14 @@ trainLearner.surv.coxph = function(.learner, .task, .subset, .weights,  ...) {
   if (missing(.weights)) {
     coxph(
       formula = getTaskFormula(.task, env=as.environment("package:survival")),
-      data = getTaskData(.task, subset=.subset))
+      data = getTaskData(.task, subset=.subset),
+      ...)
   } else  {
     coxph(
       formula = getTaskFormula(.task, env=.GlobalEnv),
       data = getTaskData(.task, subset=.subset),
-      weights = .weights)
+      weights = .weights,
+      ...)
   }
 }
 
