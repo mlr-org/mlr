@@ -45,13 +45,14 @@
 #' pred <- predict(mod, newdata = iris[test.set, ])
 #' head(pred$data)
 predict.WrappedModel = function(object, task, newdata, subset, ...) {
-  if (!missing(task) && !missing(newdata))
+  if (!xor(missing(task), missing(newdata)))
     stop("Pass either a task object or a newdata data.frame to predict, but not both!")
   checkArg(object, "WrappedModel")
   model = object
   learner = model$learner
   td = model$task.desc
 
+  # FIXME: cleanup if cases
   if (missing(newdata)) {
     checkArg(task, "SupervisedTask")
     size = task$task.desc$size

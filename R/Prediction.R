@@ -53,22 +53,24 @@ makePrediction.RegrTaskDesc = function(task.desc, id, truth, predict.type, y, ti
 #' @method makePrediction ClassifTaskDesc
 #' @S3method makePrediction ClassifTaskDesc
 makePrediction.ClassifTaskDesc = function(task.desc, id, truth, predict.type, y, time) {
-  data = namedList(c("id", "truth", "response"))
+  data = namedList(c("id", "truth", "response", "prob"))
 	data$id = id
 	data$truth = truth
   if (predict.type == "response") {
     data$response = y
+    data = as.data.frame(filterNull(data))
   } else {
 		data$prob = y
+    data = as.data.frame(filterNull(data))
     # fix columnnames for prob if strage chars are in factor levels
     i = grep("prob.", names(data), fixed=TRUE)
     if (length(i))
-      names(data)[i] = paste0("prob.", names(y))
+      names(data)[i] = paste0("prob.", colnames(y))
   }
 
   p = makeS3Obj(c("ClassifPrediction", "Prediction"),
     predict.type = predict.type,
-    data = as.data.frame(filterNull(data)),
+    data = data,
     threshold = NA_real_,
     task.desc = task.desc,
     time = time

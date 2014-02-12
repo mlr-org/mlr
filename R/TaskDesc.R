@@ -23,7 +23,7 @@
 NULL
 
 makeTaskDesc = function(type, id, data, target, weights, blocking, positive) {
-  cl = dropNamed(vapply(data, class, character(1L)), target)
+  cl = dropNamed(vapply(data, function(x) head(class(x), 1L), character(1L)), target)
   td = list(
     id = id,
     type = type,
