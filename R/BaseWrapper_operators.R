@@ -6,7 +6,6 @@ getParamSet.BaseWrapper = function(learner) {
 
 #' @S3method getHyperPars BaseWrapper
 getHyperPars.BaseWrapper = function(learner, for.fun="train") {
-  x = getHyperPars.Learner(learner, for.fun)
   c(getHyperPars(learner$next.learner, for.fun), getHyperPars.Learner(learner, for.fun))
 }
 

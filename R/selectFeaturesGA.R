@@ -1,5 +1,4 @@
 selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits.to.features, control, opt.path, show.info) {
-  fit = measureAggrName(measures[[1]])
   # generate mu feature sets (of correct size)
   states = list()
   mu = control$extra.args$mu
@@ -13,8 +12,8 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
         break
     }
   }
-  evalOptimizationStatesFeatSel(learner, task, resampling, measures, 
-    bits.to.features, control, opt.path, show.info, states, 0L, as.integer(NA))  
+  evalOptimizationStatesFeatSel(learner, task, resampling, measures,
+    bits.to.features, control, opt.path, show.info, states, 0L, as.integer(NA))
   pop.inds = 1:mu
   for(i in 1:control$maxit) {
     # get all mu elements which are alive, ie the current pop and their bit vecs as matrix
@@ -23,7 +22,7 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
     pop.y = pop.df[, yname]
     # create lambda offspring and eval
     kids.list = replicate(lambda, generateKid(pop.featmat, control), simplify=FALSE)
-    kids.y = evalOptimizationStatesFeatSel(learner, task, resampling, measures, 
+    kids.y = evalOptimizationStatesFeatSel(learner, task, resampling, measures,
       bits.to.features, control, opt.path, show.info, states = kids.list, i, as.integer(NA))
     kids.y = extractSubList(kids.y, yname)
     oplen = getOptPathLength(opt.path)
@@ -48,7 +47,7 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
 }
 
 
-# sample 2 random parents, CX, mutate --> 1 kid 
+# sample 2 random parents, CX, mutate --> 1 kid
 # (repeat in a loop if max.features not satisfied)
 generateKid = function(featmat, control) {
   parents = sample(1:nrow(featmat), 2, replace=TRUE)

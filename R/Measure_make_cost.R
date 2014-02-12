@@ -37,7 +37,6 @@ makeCostMeasure = function(id="costs", minimize=TRUE, costs, task, aggregate=mea
     classif=TRUE, regr=FALSE, allowed.pred.types=c("response", "prob"), only.binary=FALSE,
     fun=function(task, model, pred, extra.args) {
       costs = extra.args[[1L]]
-      mean.costs = extra.args[[2L]]
       # cannot index with NA
       r = pred$data$response
       if (any(is.na(r)))

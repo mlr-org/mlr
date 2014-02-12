@@ -114,10 +114,8 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
     m = train(learner, task, subset=train.i)
   else
     m = train(learner, task, subset=train.i, weights=weights[train.i])
-  p = predict(m, task=task, subset=test.i)
 
   # does a measure require to calculate pred.train?
-  ptrain = any(sapply(measures, function(m) m$req.pred))
   ms.train = rep(NA, length(measures))
   ms.test = rep(NA, length(measures))
   pred.train = NULL

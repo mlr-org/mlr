@@ -23,7 +23,6 @@ filterFeatures = function(task, method="random.forest.importance") {
   checkArg(method, choices=c("linear.correlation", "rank.correlation", "information.gain",
     "gain.ratio", "symmetrical.uncertainty", "chi.squared", "random.forest.importance",
     "relief", "oneR"))
-  tn = task$task.desc$target
   f = getTaskFormulaAsString(task)
   data = getTaskData(task)
   fun = get(method, envir=getNamespace("FSelector"))
