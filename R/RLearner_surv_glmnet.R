@@ -2,7 +2,7 @@
 makeRLearner.surv.glmnet = function() {
   makeRLearnerSurv(
     cl = "surv.glmnet",
-    package = "survival",
+    package = "glmnet",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id="nfolds", default=10L, lower=3L), # FIXME: upper=nrow?
       makeNumericLearnerParam(id="alpha", default=1, lower=0, upper=1)
@@ -17,11 +17,12 @@ makeRLearner.surv.glmnet = function() {
 
 #' @S3method trainLearner surv.glmnet
 trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights,  ...) {
+  #FIXME: unnecessary data duplication
   data = getTaskData(.task, subset=.subset, target.extra=TRUE, recode.target="surv")
   if (missing(.weights)) {
-    cv.glmnet(y=data$target, x=data$data, family="cox", ...)
+    cv.glmnet(y=data$target, x=as.matrix(data$data), family="cox", ...)
   } else  {
-    cv.glmnet(y=data$target, x=data$data, weights=.weights, family="cox", ...)
+    cv.glmnet(y=data$target, x=as.matrix(data$data), weights=.weights, family="cox", ...)
   }
 }
 
@@ -29,7 +30,7 @@ trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights,  ...) {
 predictLearner.surv.glmnet = function(.learner, .model, .newdata, ...) {
   s = .model$learner.model$lambda.min
   if(.learner$predict.type == "response")
-    drop(predict.coxnet(.model$learner.model, newx=.newdata, type="link", s=s, ...))
+    as.numeric(predict(.model$learner.model, newx=as.matrix(.newdata), type="response", s=s, ...))
   else
     stop("Unknown predict type")
 }

@@ -7,25 +7,27 @@ makeSurvTask = function(id, data, target, weights, blocking, check.data=TRUE) {
 
 if (FALSE) {
   library(survival)
-  N = 150
-  train = sample(N, 2/3 * N)
-  test = setdiff(seq_len(N), train)
-
-  time = rexp(N, 0.5) + 0.1
-  status = sample(0:1, N, prob=c(2, 8), replace=TRUE)
-  s = Surv(time, status)
-  data = cbind(time, status, iris)
-  target = c("time", "status")
-
-  task = makeSurvTask("testtask", data, target = target)
-  task2 = subsetTask(task, train)
+  # N = 150
+  # train = sample(N, 2/3 * N)
+  # test = setdiff(seq_len(N), train)
+  #
+  # time = rexp(N, 0.5) + 0.1
+  # status = sample(0:1, N, prob=c(2, 8), replace=TRUE)
+  # s = Surv(time, status)
+  # data = cbind(time, status, iris)
+  # target = c("time", "status")
+  #
+  # task = makeSurvTask("testtask", data, target = target)
+  # task = subsetTask(task, features = setdiff(names(iris), "Species"))
+  data(lung, package="survival")
+  task = makeSurvTask("lung", dropNamed(lung, "inst"), target=c("time", "status"))
 
   lrn = makeLearner("surv.coxph")
-  trained = train(lrn, task2)
-  pred = predict(trained, newdata=getTaskData(task, test))
+
+  lrn = makeImputeWrapper(makeLearner("surv.glmnet"), classes=list(numeric = imputeMedian()), update.learner.chars=TRUE)
+  model = train(lrn, task)
+  pred = predict(model, task)
   performance(pred, cindex)
-
-
 
   # data = data.frame(time=1:20, event=rep(1, 20), x=1:20+runif(20))
   #

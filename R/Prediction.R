@@ -88,6 +88,7 @@ makePrediction.ClassifTaskDesc = function(task.desc, id, truth, predict.type, y,
 #' @method makePrediction SurvTaskDesc
 #' @S3method makePrediction SurvTaskDesc
 makePrediction.SurvTaskDesc = function(task.desc, id, truth, predict.type, y, time) {
+  stopifnot(ncol(truth) == 2L) #FIXME: DEBUG
   data = namedList(c("id", "truth.time", "truth.event", "response"))
 	data$id = id
 	data$truth.time = truth[, 1L]
