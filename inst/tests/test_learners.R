@@ -6,13 +6,15 @@ test_that("listLearners", {
   x1 = listLearners()
   x2 = listLearners(type="classif")
   x3 = listLearners(type="regr")
+  x4 = listLearners(type="surv")
   expect_true(length(x1) > 40)
-  expect_true(length(x2) > 10)
-  expect_true(length(x2) > 10)
-  expect_true(setequal(x1, union(x2, x3)))
+  expect_true(length(x2) > 20)
+  expect_true(length(x3) > 10)
+  expect_true(length(x4) > 1)
+  expect_true(setequal(x1, c(x2, x3, x4)))
 
-  x4 = listLearners(type="classif", multiclass=TRUE, factors=TRUE, prob=TRUE)
-  expect_true(length(x4) > 10 && all(x4 %in% x2))
+  x5 = listLearners(type="classif", multiclass=TRUE, factors=TRUE, prob=TRUE)
+  expect_true(length(x5) > 10 && all(x5 %in% x2))
 })
 
 test_that("listLearnersForTask", {

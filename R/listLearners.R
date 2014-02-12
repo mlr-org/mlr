@@ -8,7 +8,8 @@
 #' Note that the packages of all learners are loaded during the search.
 #'
 #' @param type [\code{character(1)}]\cr
-#'   Type of the learning algorithm, either \dQuote{classif} or \dQuote{regr}.
+#'   Type of the learning algorithm, one of \dQuote{classif}, \dQuote{regr}
+#'   or \dQuote{surv}.
 #' @param numerics [\code{logical(1)}]\cr
 #'   Supports real-valued features?
 #' @param factors [\code{logical(1)}]\cr
@@ -43,7 +44,7 @@ listLearners = function(type=NA, numerics=NA, factors=NA,
                         prob=NA, se=NA, quiet=TRUE,
                         warn.missing.packages=TRUE) {
 
-  checkArg(type, choices=list("classif", "regr", NA), NA)
+  checkArg(type, choices=list("classif", "regr", "surv", NA), NA)
   checkArg(numerics, "logical", len=1L, na.ok=TRUE)
   checkArg(factors, "logical", len=1L, na.ok=TRUE)
   checkArg(missings, "logical", len=1L, na.ok=TRUE)
