@@ -1,0 +1,35 @@
+#' @S3method makeRLearner surv.glmnet
+makeRLearner.surv.glmnet = function() {
+  makeRLearnerSurv(
+    cl = "surv.glmnet",
+    package = "survival",
+    par.set = makeParamSet(
+      makeIntegerLearnerParam(id="nfolds", default=10L, lower=3L), # FIXME: upper=nrow?
+      makeNumericLearnerParam(id="alpha", default=1, lower=0, upper=1)
+    ),
+    missings = FALSE,
+    numerics = TRUE,
+    factors = FALSE,
+    se = FALSE,
+    weights = TRUE
+  )
+}
+
+#' @S3method trainLearner surv.glmnet
+trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights,  ...) {
+  data = getTaskData(.task, subset=.subset, target.extra=TRUE, recode.target="surv")
+  if (missing(.weights)) {
+    cv.glmnet(y=data$target, x=data$data, family="cox", ...)
+  } else  {
+    cv.glmnet(y=data$target, x=data$data, weights=.weights, family="cox", ...)
+  }
+}
+
+#' @S3method predictLearner surv.glmnet
+predictLearner.surv.glmnet = function(.learner, .model, .newdata, ...) {
+  s = .model$learner.model$lambda.min
+  if(.learner$predict.type == "response")
+    drop(predict.coxnet(.model$learner.model, newx=.newdata, type="link", s=s, ...))
+  else
+    stop("Unknown predict type")
+}
