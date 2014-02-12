@@ -22,6 +22,8 @@ The built-ins are:
     from the data if not provided.
   \item \code{imputeHist(breaks, use.mids)} for imputation using random values
     with probabilities calculated using \code{table} or \code{hist}.
+  \item \code{imputeLearner(learner, preimpute)} for imputations using the response
+    of a classification or regression learner.
 }}
 \usage{
 imputeConstant(const)
@@ -74,6 +76,16 @@ imputeLearner(learner, preimpute = list())
   numeric and a histogram is used, impute with bin mids
   (default) or instead draw uniformly distributed samples
   within bin range.}
+
+  \item{learner}{[\code{Learner}]\cr Classification or
+  regression learner. Its predcitions will be used for
+  imputations.  Note that the target column is not
+  available for this operation.}
+
+  \item{preimute}{[\code{list}]\cr Arguments for inner call
+  to \code{\link{impute}} in scenarios where \code{learner}
+  itself cannot handle missing values.  Default is
+  \code{list()}.}
 }
 \description{
 Built in imputation methods The built-ins are: \itemize{
@@ -88,6 +100,9 @@ using normally distributed random values. Mean and standard
 deviation will be calculated from the data if not provided.
 \item \code{imputeHist(breaks, use.mids)} for imputation
 using random values with probabilities calculated using
-\code{table} or \code{hist}. }
+\code{table} or \code{hist}.  \item
+\code{imputeLearner(learner, preimpute)} for imputations
+using the response of a classification or regression
+learner. }
 }
 
