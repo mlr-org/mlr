@@ -18,3 +18,5 @@ todo.txt
 src/*.o
 src/*.so
 
+^.*\.Rproj$
+^\.Rproj\.user$
