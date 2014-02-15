@@ -23,7 +23,7 @@ test_that("TuneWrapper", {
     makeNumericParam(id="sigma", trafo=function(x) 2^x)
   )
   lrn1b = makeLearner("regr.ksvm")
-  lrn2 = makeTuneWrapper(lrn1b, resampling=inner, par.set=ps2, 
+  lrn2 = makeTuneWrapper(lrn1b, resampling=inner, par.set=ps2,
     control=makeTuneControlOptim(start=list(C=0, epsilon=0, sigma=0), maxit=5))
 
   m = train(lrn2, task=regr.task)

@@ -1,10 +1,12 @@
 #FIXME: document args
 
-#' Fuse learner with tuning.
+#' @title Fuse learner with tuning.
 #'
+#' @description
 #' Fuses a base learner with a search strategy to select its hyperparameters.
 #' Creates a learner object, which can be used like any other learner object,
-#' but which internally uses tune. If the train function is called on it,
+#' but which internally uses \code{\link{tuneParams}}.
+#' If the train function is called on it,
 #' the search strategy and resampling are invoked
 #' to select an optimal set of hyperparameter values. Finally, a model is fitted on the
 #' complete training data with these optimal hyperparameters and returned.
@@ -13,11 +15,14 @@
 #' After training, the optimal hyperparameters (and other related information) can be retrieved with
 #' \code{\link{getTuneResult}}.
 #'
-#' @param learner [\code{\link{Learner}} or string]\cr
-#'   Learning algorithm.
-#' @param resampling [\code{\link{ResampleDesc}} | \code{\link{ResampleInstance}}]\cr
-#'   Resampling strategy to evaluate points in hyperparameter space.
-#' @param measures [list of \code{\link{Measure}}]\cr
+#' @param learner [\code{\link{Learner}}]\cr
+#'   The learner.
+#' @param resampling [\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
+#'   Resampling strategy to evaluate points in hyperparameter space. If you pass a description, 
+#'   it is instantiated once at the beginning by default, so all points are 
+#'   evaluated on the same training/test sets.
+#'   If you want to change that behaviour, look at \code{\link{TuneControl}}. 	
+#' @param measures [\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
 #'   Performance measures to evaluate. The first measure, aggregated by the first aggregation function
 #'   is optimized during tuning, others are simply evaluated.
 #' @param par.set [\code{\link[ParamHelpers]{ParamSet}}] \cr

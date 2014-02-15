@@ -11,7 +11,7 @@ test_that("FeatSelWrapper", {
   r = resample(lrn2, multiclass.task, outer, extract=function(model) {
     getFeatSelResult(model)
   })
-  expect_true(!is.na(r$aggr[[1]])) 
+  expect_true(!is.na(r$aggr[[1]]))
   feats = extractSubList(r$extract, "x", simplify=FALSE)
   expect_true(is.list(feats) && length(feats) == 2L && all(sapply(feats, is.character)))
   perfs = extractSubList(r$extract, "y")

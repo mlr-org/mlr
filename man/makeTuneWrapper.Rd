@@ -6,17 +6,21 @@ makeTuneWrapper(learner, resampling, measures, par.set, control,
   show.info = TRUE)
 }
 \arguments{
-  \item{learner}{[\code{\link{Learner}} or string]\cr
-  Learning algorithm.}
+  \item{learner}{[\code{\link{Learner}}]\cr The learner.}
 
-  \item{resampling}{[\code{\link{ResampleDesc}} |
-  \code{\link{ResampleInstance}}]\cr Resampling strategy to
-  evaluate points in hyperparameter space.}
+  \item{resampling}{[\code{\link{ResampleInstance}} |
+  \code{\link{ResampleDesc}}]\cr Resampling strategy to
+  evaluate points in hyperparameter space. If you pass a
+  description, it is instantiated once at the beginning by
+  default, so all points are evaluated on the same
+  training/test sets.  If you want to change that
+  behaviour, look at \code{\link{TuneControl}}.}
 
-  \item{measures}{[list of \code{\link{Measure}}]\cr
-  Performance measures to evaluate. The first measure,
-  aggregated by the first aggregation function is optimized
-  during tuning, others are simply evaluated.}
+  \item{measures}{[\code{\link{Measure}} | list of
+  \code{\link{Measure}}]\cr Performance measures to
+  evaluate. The first measure, aggregated by the first
+  aggregation function is optimized during tuning, others
+  are simply evaluated.}
 
   \item{par.set}{[\code{\link[ParamHelpers]{ParamSet}}] \cr
   Collection of parameters and their constraints for
@@ -37,14 +41,13 @@ makeTuneWrapper(learner, resampling, measures, par.set, control,
 Fuses a base learner with a search strategy to select its
 hyperparameters. Creates a learner object, which can be
 used like any other learner object, but which internally
-uses tune. If the train function is called on it, the
-search strategy and resampling are invoked to select an
-optimal set of hyperparameter values. Finally, a model is
-fitted on the complete training data with these optimal
-hyperparameters and returned. See \code{\link{tuneParams}}
-for more details.
-}
-\details{
+uses \code{\link{tuneParams}}. If the train function is
+called on it, the search strategy and resampling are
+invoked to select an optimal set of hyperparameter values.
+Finally, a model is fitted on the complete training data
+with these optimal hyperparameters and returned. See
+\code{\link{tuneParams}} for more details.
+
 After training, the optimal hyperparameters (and other
 related information) can be retrieved with
 \code{\link{getTuneResult}}.

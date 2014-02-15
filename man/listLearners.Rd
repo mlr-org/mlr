@@ -12,7 +12,8 @@ listLearnersForTask(task, weights = NA, prob = NA, se = NA,
 }
 \arguments{
   \item{type}{[\code{character(1)}]\cr Type of the learning
-  algorithm, either \dQuote{classif} or \dQuote{regr}.}
+  algorithm, one of \dQuote{classif}, \dQuote{regr} or
+  \dQuote{surv}.}
 
   \item{numerics}{[\code{logical(1)}]\cr Supports
   real-valued features?}

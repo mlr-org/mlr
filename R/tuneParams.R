@@ -19,13 +19,14 @@
 #'   The task.
 #' @param resampling [\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
 #'   Resampling strategy to evaluate points in hyperparameter space. If you pass a description, 
-#'   it is instantiated once at the beginning by default, so all points are evaluated on the same training/test sets.
+#'   it is instantiated once at the beginning by default, so all points are 
+#'   evaluated on the same training/test sets.
 #'   If you want to change that behaviour, look at \code{\link{TuneControl}}. 	
 #' @param par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
 #'   Collection of parameters and their constraints for optimization.   
 #' @param control [\code{\link{TuneControl}}]\cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.   
-#' @param measures [list of \code{\link{Measure}}]\cr
+#' @param measures [\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
 #'   Performance measures to evaluate. The first measure, aggregated by the first aggregation function
 #'   is optimized during tuning, others are simply evaluated.  
 #' @param show.info [\code{logical(1)}]\cr

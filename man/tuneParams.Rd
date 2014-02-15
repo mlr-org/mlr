@@ -26,10 +26,11 @@ tuneParams(learner, task, resampling, measures, par.set, control,
   object for search method. Also selects the optimization
   algorithm for tuning.}
 
-  \item{measures}{[list of \code{\link{Measure}}]\cr
-  Performance measures to evaluate. The first measure,
-  aggregated by the first aggregation function is optimized
-  during tuning, others are simply evaluated.}
+  \item{measures}{[\code{\link{Measure}} | list of
+  \code{\link{Measure}}]\cr Performance measures to
+  evaluate. The first measure, aggregated by the first
+  aggregation function is optimized during tuning, others
+  are simply evaluated.}
 
   \item{show.info}{[\code{logical(1)}]\cr Show info message
   after each hyperparameter evaluation?  Default is

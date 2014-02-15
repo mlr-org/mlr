@@ -1,22 +1,26 @@
 \name{makeFeatSelWrapper}
 \alias{makeFeatSelWrapper}
-\title{Fuse learner with variable selection.}
+\title{Fuse learner with feature selection.}
 \usage{
 makeFeatSelWrapper(learner, resampling, measures, bit.names, bits.to.features,
   control, show.info = TRUE)
 }
 \arguments{
-  \item{learner}{[\code{\link{Learner}} or string]\cr
-  Learning algorithm. See \code{\link{learners}}.}
+  \item{learner}{[\code{\link{Learner}}]\cr The learner.}
 
   \item{resampling}{[\code{\link{ResampleDesc}} |
   \code{\link{ResampleInstance}}]\cr Resampling strategy to
-  evaluate feature sets.}
+  evaluate feature sets. If you pass a description, it is
+  instantiated once at the beginning by default, so all
+  feature sets are evaluated on the same training/test
+  sets.  If you want to change that behaviour, look at
+  \code{\link{TuneControl}}.}
 
-  \item{measures}{[list of \code{\link{Measure}}]\cr
-  Performance measures to evaluate. The first measure,
-  aggregated by the first aggregation function is optimized
-  during feature selection, others are simply evaluated.}
+  \item{measures}{[\code{\link{Measure}} | list of
+  \code{\link{Measure}}]\cr Performance measures to
+  evaluate. The first measure, aggregated by the first
+  aggregation function is optimized during feature
+  selection, others are simply evaluated.}
 
   \item{bit.names}{[\code{character}]\cr Names of bits
   encoding the solutions. Also defines the total number of
@@ -29,7 +33,7 @@ makeFeatSelWrapper(learner, resampling, measures, bit.names, bits.to.features,
   value of 1 in the ith bit selects the ith feature to be
   in the candidate solution.}
 
-  \item{control}{[\code{\link{FeatSelControl}}] Control
+  \item{control}{[\code{\link{FeatSelControl}}]\cr Control
   object for search method. Also selects the optimization
   algorithm for feature selection.}
 
@@ -43,11 +47,16 @@ makeFeatSelWrapper(learner, resampling, measures, bit.names, bits.to.features,
 \description{
 Fuses a base learner with a search strategy to select
 variables. Creates a learner object, which can be used like
-any other learner object, but which internally uses varsel.
-If the train function is called on it, the search strategy
-and resampling are invoked to select an optimal set of
-variables. Finally, a model is fitted on the complete
-training data with these variables and returned. See
-\code{\link{selectFeatures}} for more details.
+any other learner object, but which internally uses
+\code{\link{selectFeatures}}. If the train function is
+called on it, the search strategy and resampling are
+invoked to select an optimal set of variables. Finally, a
+model is fitted on the complete training data with these
+variables and returned. See \code{\link{selectFeatures}}
+for more details.
+
+After training, the optimal hyperparameters (and other
+related information) can be retrieved with
+\code{\link{getFeatSelResult}}.
 }
 
