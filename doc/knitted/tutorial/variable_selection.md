@@ -10,7 +10,7 @@ Different approaches exist, in order to figure out, which the relevant variables
 Filter
 ------
 
-Filters are the most simple approach to find variables that do not contain a lot of additional information and thus can be left out.
+Filters are the simplest approach to find variables that do not contain a lot of additional information and thus can be left out.
 Different methods are built into **mlr**'s function `filterFeatures()` all accessing filter algorithms from the package `FSelector`.
 The function is given a `task` and simply returns an importance vector.
 
@@ -76,7 +76,7 @@ table(sfeats)
 ```
 
 The selection of features seems to be very stable.
-The `Sepa.Width` did not made it into a singe fold.
+The `Sepal.Width` did not made it into a single fold.
 
 Wrapper
 -------
