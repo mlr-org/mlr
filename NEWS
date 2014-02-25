@@ -14,6 +14,7 @@ mlr_1.2:
 - new learners:
 -- regr.crs
 -- regr.mob
+-- classif.LiblineaRLogReg
 - new functions
 -- oversample, undersample
 -- makeOversampleWrapper, makeUndersampleWrapper
