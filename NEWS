@@ -15,6 +15,8 @@ mlr_1.2:
 -- regr.crs
 -- regr.mob
 -- classif.LiblineaRLogReg
+-- classif.LiblineaRBinary
+-- classif.LiblineaRMultiClass
 - new functions
 -- oversample, undersample
 -- makeOversampleWrapper, makeUndersampleWrapper
