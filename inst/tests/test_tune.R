@@ -30,7 +30,7 @@ test_that("tune", {
     expect_equal(tr$performances[i,"dispersion"], pp[j,"mmce.test.sd"])
   }
   # test printing
-  capture.output(print(tr2))
+  expect_output(print(tr2), "mmce.test.mean=")
 
   # check multiple measures
   ms = c("acc", "mmce", "timefit")
