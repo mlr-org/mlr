@@ -5,7 +5,7 @@ makeRLearner.classif.LiblineaRMultiClass = function() {
     package = "LiblineaR",
     par.set = makeParamSet(
       # FIXME: type is more a categorical param....
-      makeDiscreteLearnerParam(id="type", values=c(4)),
+      makeDiscreteLearnerParam(id="type", values=4),
       makeNumericLearnerParam(id="cost", default=1, lower=0),
       makeNumericLearnerParam(id="epsilon", default=0.01, lower=0),
       makeLogicalLearnerParam(id="bias", default=TRUE),
@@ -13,7 +13,7 @@ makeRLearner.classif.LiblineaRMultiClass = function() {
       makeIntegerLearnerParam(id="cross", default=0L, lower=0L),
       makeLogicalLearnerParam(id="verbose", default=FALSE)
     ),
-    par.vals = list(type=4, epsilon=0.1)
+    par.vals = list(type=4, epsilon=0.1),
     twoclass = TRUE,
     multiclass = TRUE,
     missings = FALSE,
