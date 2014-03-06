@@ -23,10 +23,10 @@ Imports:
     survival
 Suggests:
     testthat,
-    snowfall,
     ada,
     adabag,
     cmaes,
+    CoxBoost,
     crs,
     DiceKriging,
     DiceOptim,
@@ -41,6 +41,7 @@ Suggests:
     kernlab,
     kknn,
     klaR,
+    LiblineaR,
     mboost,
     mda,
     mlbench,
@@ -48,14 +49,14 @@ Suggests:
     party,
     penalized,
     pls,
+    pROC,
     randomForest,
     reshape,
     robustbase,
     rpart,
     rsm,
     RWeka,
-    ROCR,
-    pROC
+    ROCR
 LazyData: yes
 ByteCompile: yes
 Version: 1.2
