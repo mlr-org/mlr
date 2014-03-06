@@ -28,7 +28,7 @@ tuneThreshold = function(pred, measure, task, model, control=list()) {
   if (!missing(model))
     checkArg(model, "WrappedModel")
   checkArg(control, "list")
-  
+
   td = pred$task.desc
   if (missing(measure))
     measure = default.measures(td)[[1]]
@@ -52,6 +52,7 @@ tuneThreshold = function(pred, measure, task, model, control=list()) {
     th = or[[1]]
     perf = or$objective
   } else {
+    requirePackages("cmaes", "tuneThreshold")
     start = rep(0.5, k)
     or = cma_es(par=start, fn=fitn, lower=0, upper=1, control=control)
     th = or$par / sum(or$par)
