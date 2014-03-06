@@ -2,22 +2,22 @@
 \alias{removeConstantFeatures}
 \title{Remove constant features from a data set.}
 \usage{
-removeConstantFeatures(x, perc = 0, safeCols = NULL, na.mode = "ignore",
-  show.info = TRUE, printed.features = 10L)
+removeConstantFeatures(x, perc = 0, dont.rm = character(0),
+  na.mode = "ignore", show.info = TRUE, printed.features = 10L)
 }
 \arguments{
-  \item{x}{[\code{\link{data.frame}}] or
-  [\code{\link{SupervisedTask}}] \cr The data set or a task
-  inlcuding it.}
+  \item{x}{[\code{\link{data.frame}} |
+  \code{\link{SupervisedTask}}]\cr The data set or task.}
 
-  \item{perc}{[\code{numeric}]\cr The percentage of a
-  features' values (in [0, 1)) that must differ from the
-  mode value.  Default is 0, which means only constant
-  features with exactly one observed level are removed.}
+  \item{perc}{[\code{numeric(1)}]\cr The percentage of a
+  feature values in [0, 1) that must differ from the mode
+  value.  Default is 0, which means only constant features
+  with exactly one observed level are removed.}
 
-  \item{safeCols}{[\code{character()}]\cr Name(s) of the
-  columns which must not be deleted. (E.g. the target
-  column - automaticaly added when provided a \code{task})}
+  \item{dont.rm}{[\code{character()}]\cr Names of the
+  columns which must not be deleted.  E.g. the target
+  column - automatically added when provided a
+  \code{task}.}
 
   \item{na.mode}{[\code{character}]\cr \itemize{ \item
   \code{ignore}: \code{NA}s will be ignored (lower value of
@@ -27,16 +27,14 @@ removeConstantFeatures(x, perc = 0, safeCols = NULL, na.mode = "ignore",
   modal value }}
 }
 \value{
-[\code{\link{data.frame}}] or
-[\code{\link{SupervisedTask}}]. The input \code{data.frame}
-or the task containing it without the columns containing
-the constant features.
+[\code{\link{data.frame}} | \code{\link{SupervisedTask}}].
 }
 \description{
-Constant features can lead to errors in some models. Given
-a \code{data.frame}, this function removes all constant
-features. With the argument 'perc', there is a possibility
-to also remove features for whom less than 'perc' percent
-of the observations differ from the mode value.
+Constant features can lead to errors in some models and
+obviously provide no information in the training set that
+can be learned from. With the argument \dQuote{perc}, there
+is a possibility to also remove features for which less
+than \dQuote{perc} percent of the observations differ from
+the mode value.
 }
 

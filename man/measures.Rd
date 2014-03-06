@@ -20,7 +20,6 @@
 \alias{medse}
 \alias{mmce}
 \alias{mse}
-\alias{multiclass.auc}
 \alias{npv}
 \alias{ppv}
 \alias{rmse}
@@ -36,8 +35,6 @@
 \title{Performance measures.}
 \format{none}
 \usage{
-none
-
 none
 
 none
@@ -135,11 +132,8 @@ rate.} \item{\bold{f1}}{\cr F1 measure.}
 \item{\bold{gmean}}{\cr G-mean, geometric mean of recall
 and specificity.} \item{\bold{gpr}}{\cr Geometric mean of
 precision and recall.} \item{\bold{auc}}{\cr Area under the
-curve.} \item{\bold{multiclass.auc}}{\cr Area under the
-curve for multiclass problems. Calls
-\code{pROC::multiclass.roc}.} } Only \code{mmce},
-\code{acc}, \code{multiclass.auc} and \code{ber} can be
-used for multiclass problems.
+curve.} } Only \code{mmce}, \code{acc}, and \code{ber} can
+be used for multiclass problems.
 
 Regression: \itemize{ \item{\bold{sse}}{\cr Sum of squared
 errors} \item{\bold{mse}}{\cr Mean of squared errors}

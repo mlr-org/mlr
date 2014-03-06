@@ -3,7 +3,8 @@
 \alias{makeWrappedModel}
 \title{Induced model of learner.}
 \usage{
-makeWrappedModel(learner, model, task.desc, subset, features, time)
+makeWrappedModel(learner, model, task.desc, subset, features, factor.levels,
+  time)
 }
 \arguments{
   \item{learner}{[\code{\link{Learner}}]\cr The learner.}
@@ -19,6 +20,11 @@ makeWrappedModel(learner, model, task.desc, subset, features, time)
   \item{features}{[\code{character}]\cr Features used for
   training.}
 
+  \item{factor.levels}{[named \code{list} of
+  \code{character}]\cr Levels of factor variables (features
+  and potentially target) in training data.  Named by
+  variable name, non-factors do not occur in the list.}
+
   \item{time}{[\code{numeric(1)}]\cr Computation time for
   model fit in seconds.}
 }
@@ -28,11 +34,11 @@ makeWrappedModel(learner, model, task.desc, subset, features, time)
 \description{
 Result from \code{\link{train}}. It internally stores the
 underlying fitted model, the subset used for training,
-features used for training and computtation time for
-training.
+features used for training, levels of factors in the data
+set and computation time that was spent for training.
 }
 \details{
-The constructer \code{makeWrappedModel} is only for
+The constructed \code{makeWrappedModel} is only for
 internal use.
 
 Object members: See arguments.
