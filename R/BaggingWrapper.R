@@ -126,7 +126,7 @@ predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
 
 
 #' @S3method makeWrappedModel BaggingWrapper
-makeWrappedModel.BaggingWrapper = function(learner, model, task.desc, subset, features, time) {
+makeWrappedModel.BaggingWrapper = function(learner, model, task.desc, subset, features, factor.levels, time) {
   x = NextMethod()
   class(x) = c("BaggingModel", class(x))
   return(x)

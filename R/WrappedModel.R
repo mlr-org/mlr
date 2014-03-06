@@ -1,9 +1,10 @@
 #' Induced model of learner.
 #'
 #' Result from \code{\link{train}}. It internally stores the underlying fitted model,
-#' the subset used for training, features used for training and computtation time for training.
+#' the subset used for training, features used for training, levels of factors in the
+#' data set and computation time that was spent for training.
 #'
-#' The constructer \code{makeWrappedModel} is only for internal use.
+#' The constructed \code{makeWrappedModel} is only for internal use.
 #'
 #' Object members: See arguments.
 #'
@@ -17,17 +18,20 @@
 #'   Subset used for training.
 #' @param features [\code{character}]\cr
 #'   Features used for training.
+#' @param factor.levels [named \code{list} of \code{character}]\cr
+#'   Levels of factor variables (features and potentially target) in training data.
+#'   Named by variable name, non-factors do not occur in the list.
 #' @param time [\code{numeric(1)}]\cr
 #'   Computation time for model fit in seconds.
 #' @return [\code{\link{WrappedModel}}].
 #' @export
 #' @aliases WrappedModel
-makeWrappedModel = function(learner, model, task.desc, subset, features, time) {
+makeWrappedModel = function(learner, model, task.desc, subset, features, factor.levels, time) {
   UseMethod("makeWrappedModel")
 }
 
 #' @S3method makeWrappedModel Learner
-makeWrappedModel.Learner = function(learner, model, task.desc, subset, features, time) {
+makeWrappedModel.Learner = function(learner, model, task.desc, subset, features, factor.levels, time) {
   if(is.error(model)) {
     model = as.character(model)
     time = NA_real_
@@ -41,6 +45,7 @@ makeWrappedModel.Learner = function(learner, model, task.desc, subset, features,
     task.desc = task.desc,
     subset = subset,
     features = features,
+    factor.levels = factor.levels,
     time = time
   ), cl)
 }
