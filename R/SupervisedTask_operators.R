@@ -202,3 +202,18 @@ changeData = function(task, data) {
   task$task.desc = makeTaskDesc(d$type, d$id, data, d$target, d$weight, task$blocking, d$positive)
   return(task)
 }
+
+
+# returns factor levels of all factors in a task a named list of char vecs
+# non chars do not occur in the output
+getTaskFactorLevels = function(task) {
+  levs = lapply(task$env$data, function(x) {
+    if (is.factor(x))
+      levels(x)
+    else
+      NULL
+  })
+  levs = Filter(Negate(is.null), levs)
+  return(levs)
+}
+

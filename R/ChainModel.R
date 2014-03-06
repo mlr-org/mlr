@@ -1,11 +1,11 @@
 makeChainModel = function(next.model, cl) {
-  #fixme: what to do in case of failure?
+  #FIXME: what to do in case of failure?
   setClasses(list(next.model = next.model), c(cl, "ChainModel", "WrappedModel"))
 }
 
 
 #' @S3method makeWrappedModel BaseWrapper
-makeWrappedModel.BaseWrapper = function(learner, model, task.desc, subset, features, time) {
+makeWrappedModel.BaseWrapper = function(learner, model, task.desc, subset, features, factor.levels, time) {
   x = NextMethod()
   addClasses(x, "BaseWrapperModel")
 }

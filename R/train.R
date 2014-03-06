@@ -98,5 +98,6 @@ train = function(learner, task, subset, weights) {
       warningf("Could not train learner %s: %s", learner$id, as.character(learner.model))
     time.train = as.numeric(st[3L])
   }
-  makeWrappedModel(learner, learner.model, task$task.desc, subset, vars, time.train)
+  factor.levels = getTaskFactorLevels(task)
+  makeWrappedModel(learner, learner.model, task$task.desc, subset, vars, factor.levels, time.train)
 }
