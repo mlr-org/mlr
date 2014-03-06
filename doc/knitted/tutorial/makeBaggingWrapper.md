@@ -68,7 +68,7 @@ result$aggr
 
 ```
 ## mmce.test.mean 
-##         0.2014
+##         0.2062
 ```
 
 It conusmes more time but can outperform not bagged learners on noisy data with many variables.
@@ -95,12 +95,12 @@ head(pred$data)
 
 ```
 ##   truth response     se
-## 1  21.6    21.99 0.6175
-## 2  34.7    34.20 1.5283
-## 3  36.2    32.77 0.6924
-## 4  28.7    26.42 1.1923
-## 5  27.1    17.99 0.2326
-## 6  16.5    16.50 0.4518
+## 1  21.6    22.51 0.6191
+## 2  34.7    34.95 2.3807
+## 3  36.2    32.52 0.6787
+## 4  28.7    26.07 0.8861
+## 5  27.1    18.06 0.6985
+## 6  16.5    16.43 0.8577
 ```
 
 In the column labled `se` the standard deviation for each prediction (`response`) is given.

@@ -49,7 +49,7 @@ task
 ## Observations: 699
 ## Features:
 ## numerics  factors 
-##        0        9 
+##        0        4 
 ## Missings: TRUE
 ## Has weights: FALSE
 ## Has blocking: FALSE
@@ -121,7 +121,7 @@ task
 ## Observations: 699
 ## Features:
 ## numerics  factors 
-##        0        9 
+##        0        4 
 ## Missings: TRUE
 ## Has weights: FALSE
 ## Has blocking: FALSE
@@ -205,10 +205,7 @@ task$task.desc
 ## 
 ## $n.feat
 ## numerics  factors 
-##        0        9 
-## 
-## $class.levels
-## [1] "benign"    "malignant"
+##        0        4 
 ## 
 ## $has.missings
 ## [1] TRUE
@@ -219,6 +216,9 @@ task$task.desc
 ## $has.blocking
 ## [1] FALSE
 ## 
+## $class.levels
+## [1] "benign"    "malignant"
+## 
 ## $positive
 ## [1] "malignant"
 ## 
@@ -226,7 +226,7 @@ task$task.desc
 ## [1] "benign"
 ## 
 ## attr(,"class")
-## [1] "TaskDesc"
+## [1] "ClassifTaskDesc" "TaskDesc"
 ```
 
 ```splus
@@ -239,15 +239,15 @@ str(task$task.desc)
 ##  $ type        : chr "classif"
 ##  $ target      : chr "Class"
 ##  $ size        : int 699
-##  $ n.feat      : Named int [1:2] 0 9
+##  $ n.feat      : Named int [1:2] 0 4
 ##   ..- attr(*, "names")= chr [1:2] "numerics" "factors"
-##  $ class.levels: chr [1:2] "benign" "malignant"
 ##  $ has.missings: logi TRUE
 ##  $ has.weights : logi FALSE
 ##  $ has.blocking: logi FALSE
+##  $ class.levels: chr [1:2] "benign" "malignant"
 ##  $ positive    : chr "malignant"
 ##  $ negative    : chr "benign"
-##  - attr(*, "class")= chr "TaskDesc"
+##  - attr(*, "class")= chr [1:2] "ClassifTaskDesc" "TaskDesc"
 ```
 
 
@@ -360,9 +360,6 @@ task$task.desc
 ## numerics  factors 
 ##       12        1 
 ## 
-## $class.levels
-## [1] NA
-## 
 ## $has.missings
 ## [1] FALSE
 ## 
@@ -372,14 +369,17 @@ task$task.desc
 ## $has.blocking
 ## [1] FALSE
 ## 
-## $negative
+## $class.levels
 ## [1] NA
 ## 
 ## $positive
 ## [1] NA
 ## 
+## $negative
+## [1] NA
+## 
 ## attr(,"class")
-## [1] "TaskDesc"
+## [1] "RegrTaskDesc" "TaskDesc"
 ```
 
 ```splus
@@ -394,13 +394,13 @@ str(task$task.desc)
 ##  $ size        : int 506
 ##  $ n.feat      : Named int [1:2] 12 1
 ##   ..- attr(*, "names")= chr [1:2] "numerics" "factors"
-##  $ class.levels: chr NA
 ##  $ has.missings: logi FALSE
 ##  $ has.weights : logi FALSE
 ##  $ has.blocking: logi FALSE
-##  $ negative    : chr NA
+##  $ class.levels: chr NA
 ##  $ positive    : chr NA
-##  - attr(*, "class")= chr "TaskDesc"
+##  $ negative    : chr NA
+##  - attr(*, "class")= chr [1:2] "RegrTaskDesc" "TaskDesc"
 ```
 
 
