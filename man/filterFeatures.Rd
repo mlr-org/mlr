@@ -8,12 +8,27 @@ filterFeatures(task, method = "random.forest.importance")
   \item{task}{[\code{\link{SupervisedTask}}]\cr The task.}
 
   \item{method}{[\code{character(1)}]\cr Filter method.
-  Available are: \dQuote{linear.correlation},
-  \dQuote{rank.correlation}, \dQuote{information.gain},
-  \dQuote{gain.ratio}, \dQuote{symmetrical.uncertainty},
-  \dQuote{chi.squared}, \dQuote{random.forest.importance},
-  \dQuote{relief}, \dQuote{oneR} Default is
-  \dQuote{random.forest.importance}.}
+  Available are:\cr \dQuote{linear.correlation}: Pearson's
+  correlation for regression with continous data\cr
+  \dQuote{rank.correlation}: Spearman's correlation for
+  regression with continous data\cr
+  \dQuote{information.gain}: Entropy-based information gain
+  for classification and regression of mixed feature
+  sets\cr \dQuote{gain.ratio}: Entropy-based gain ratio for
+  classification and regression of mixed feature sets\cr
+  \dQuote{symmetrical.uncertainty}: Entropy-based
+  symmetrical uncertainty for classification and regression
+  of mixed feature sets\cr \dQuote{chi.squared}: Finds
+  weights of mixed feature sets using chi-squared test for
+  classification and regression\cr
+  \dQuote{random.forest.importance}: Finds weights of mixed
+  feature sets using RandomForest algorithm for
+  classification and regression\cr \dQuote{relief}: Finds
+  weights of mixed feature sets using distances between
+  instances for classification and regression\cr
+  \dQuote{oneR}: Finds weights of mixed feature sets using
+  association rules for classification and regression\cr
+  Default is \dQuote{random.forest.importance}.}
 }
 \value{
 [\code{numeric}]. A named numeric vector that contains an
