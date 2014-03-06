@@ -34,7 +34,6 @@ analyzeSequential = function(fs.obj, reduce=TRUE){
   if(reduce)
     df = df[(df$optimum | df$selected), ]
   ctrl = fs.obj$control
-  names(fs.obj$y) = names(measure)
   result = list(reduced.data.frame = df, control = ctrl, x = fs.obj$x, y = fs.obj$y, features = feat.names)
   mode(result) = "list"
   class(result) = "analyzeFeatSelResult"
