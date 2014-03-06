@@ -21,6 +21,14 @@
 #'   \code{th} is the optimal threshold, \code{perf} the performance value.
 #' @export
 tuneThreshold = function(pred, measure, task, model, control=list()) {
+  checkArg(pred, "Prediction")
+  checkArg(measure, "Measure")
+  if (!missing(task))
+    checkArg(task, "SupervisedTask")
+  if (!missing(model))
+    checkArg(model, "WrappedModel")
+  checkArg(control, "list")
+  
   td = pred$task.desc
   if (missing(measure))
     measure = default.measures(td)[[1]]

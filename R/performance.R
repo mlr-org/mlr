@@ -40,11 +40,14 @@
 #' ms <- list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 #' performance(pred, measures = ms, task, mod)
 performance = function(pred, measures, task, model) {
+  if (!missing(pred))
+    checkArg(pred, "Prediction")
   if (missing(measures)) {
     measures = default.measures(pred$task.desc)
   } else {
     if (inherits(measures, "Measure"))
       measures = list(measures)
+    checkArg(measures, "list")
     checkListElementClass(measures, "Measure")
   }
   sapply(measures, doPerformaceIteration, pred=pred, task=task, model=model, td=NULL)
@@ -55,7 +58,6 @@ doPerformaceIteration = function(measure, pred, task, model, td){
   if (m$req.pred) {
     if (missing(pred))
       stopf("You need to pass pred for measure %s!", m$id)
-    checkArg(pred, "Prediction")
     pred2 = pred
     td = pred$task.desc
   } else {
