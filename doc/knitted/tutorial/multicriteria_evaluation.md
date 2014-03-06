@@ -42,7 +42,7 @@ r = resample(lrn, task, rdesc, measures = list(mmce, mmceAggrBySd))
 ## [Resample] cross-validation iter: 3
 ## [Resample] cross-validation iter: 4
 ## [Resample] cross-validation iter: 5
-## [Resample] Result: mmce.test.mean=0.0733,mmce.test.sd=0.0435
+## [Resample] Result: mmce.test.mean=0.0667,mmce.test.sd=0.0333
 ```
 
 
@@ -107,8 +107,8 @@ ms1max = setAggregation(ms1, test.max)
 
 ```
 ## FeatSel result:
-## Features (2): Sepal.Length, Petal.Length
-## mmce.test.mean=0.0667,mmce.test.range=0.0667,mmce.test.min=0.0333,mmce.test.max= 0.1
+## Features (2): Sepal.Length, Petal.Width
+## mmce.test.mean=0.06,mmce.test.range= 0.1,mmce.test.min=0.0333,mmce.test.max=0.133
 ```
 
 ```splus

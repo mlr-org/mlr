@@ -30,3 +30,5 @@ for(file in files) {
   destination = file.path(knit_subdir, paste(substr(file,start=0,stop=nchar(file)-3), "md", sep=""))
   KnitPost(input=file.path(input_subdir,file), destination=destination)
 }
+
+warnings()

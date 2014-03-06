@@ -71,5 +71,5 @@ data = cbind(pred$data, BostonHousing[test.inds,])
 g = ggplot(data, aes(x=lstat, y=response, ymin=response-se, ymax=response+se, col=age))
 g + geom_point() + geom_linerange(alpha=0.5)
 ```
-For more details about the date see `?BostonHousing`.
+For more details about the data see `?BostonHousing`.
 

@@ -102,7 +102,7 @@ Now, we can run our nested CV. For further evaluations, we might
 want to extract the tune results as well. Please note, that storing the
 entire models might be expensive.
 
-```{r}
+```{r, message=FALSE, results='hide'}
 r = resample(lrn, task, resampling = rout, extract = getTuneResult, show.info=FALSE)
 ```
 
