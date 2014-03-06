@@ -42,9 +42,11 @@ test_that("selectFeatures", {
   fr = selectFeatures(lrn, task=binaryclass.task, resampling=inner, control=ctrl, show.info=FALSE)
   expect_equal(length(fr$x), 1)
 
-  ctrl = makeFeatSelControlSequential(beta=1, max.features=58, method="sbs")
-  fr = selectFeatures(lrn, task=binaryclass.task, resampling=inner, control=ctrl, show.info=FALSE)
-  expect_equal(length(fr$x), 58)
+  # reduce features so it does not take ages to test
+  mytask = subsetTask(binaryclass.task, features = getTaskFeatureNames(binaryclass.task)[1:5])
+  ctrl = makeFeatSelControlSequential(beta=1, max.features=3, method="sbs")
+  fr = selectFeatures(lrn, task=mytask, resampling=inner, control=ctrl, show.info=FALSE)
+  expect_equal(length(fr$x), 3L)
 
   ctrl = makeFeatSelControlGA(maxit=5, max.features=30)
   fr = selectFeatures(lrn, task=binaryclass.task, resampling=inner, control=ctrl, show.info=FALSE)
