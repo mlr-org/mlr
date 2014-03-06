@@ -131,5 +131,5 @@ g + geom_point() + geom_linerange(alpha = 0.5)
 
 ![plot of chunk makeBaggingWrapper_regressionPlot](figs/makeBaggingWrapper/makeBaggingWrapper_regressionPlot.png) 
 
-For more details about the date see `?BostonHousing`.
+For more details about the data see `?BostonHousing`.
 

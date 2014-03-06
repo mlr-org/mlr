@@ -20,26 +20,6 @@ Comparing to learners
 You can easely compare the Performance of two learners with `mlr` and the help of `ROCR`.
 First we create a scenario with two different [learners](learner.md) capable of predicting probabilities (Tip: run `listLearners(prob=TRUE)` to get a list of all supported learners doing so).
 
-```
-## Loading required package: gplots
-## 
-## Attaching package: 'gplots'
-## 
-## Das folgende Objekt ist maskiert from 'package:plotrix':
-## 
-##     plotCI
-## 
-## Das folgende Objekt ist maskiert from 'package:stats':
-## 
-##     lowess
-## 
-## 
-## Attaching package: 'ROCR'
-## 
-## Das folgende Objekt ist maskiert from 'package:mlr':
-## 
-##     performance
-```
 
 
 

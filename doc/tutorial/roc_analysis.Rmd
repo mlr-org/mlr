@@ -19,7 +19,7 @@ Comparing to learners
 
 You can easely compare the Performance of two learners with `mlr` and the help of `ROCR`.
 First we create a scenario with two different [learners](learner.md) capable of predicting probabilities (Tip: run `listLearners(prob=TRUE)` to get a list of all supported learners doing so).
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
 library("mlbench")
 library("ROCR")
 library("mlr")
