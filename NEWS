@@ -20,6 +20,7 @@ mlr_1.2:
 - new functions
 -- oversample, undersample
 -- makeOversampleWrapper, makeUndersampleWrapper
+-- removeConstantFeatures
 
 mlr_1.1:
 - Initial release to CRAN
