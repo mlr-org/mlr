@@ -1,4 +1,4 @@
-#' @S3method makeRLearner classif.LiblineaR
+#' @S3method makeRLearner classif.LiblineaRLogReg
 makeRLearner.classif.LiblineaRLogReg = function() {
   makeRLearnerClassif(
     cl = "classif.LiblineaRLogReg",
@@ -30,7 +30,7 @@ trainLearner.classif.LiblineaRLogReg = function(.learner, .task, .subset, .weigh
   LiblineaR(data=d$data, labels=d$target, ...)
 }
 
-#' @S3method predictLearner classif.LiblineaRLogRegR
+#' @S3method predictLearner classif.LiblineaRLogReg
 predictLearner.classif.LiblineaRLogReg = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response")
     p = as.factor(predict(.model$learner.model, newx=.newdata, ...)$predictions)
