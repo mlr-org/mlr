@@ -201,7 +201,7 @@ to choose the resampling method are:
   class, but you do not have to touch any methods that use the
   resampling strategy.
 
-![Resampling Figure](http://mlr.r-forge.r-project.org/_images/resampling.png "Resampling Figure")
+![Resampling Figure](../../_images/resampling.png "Resampling Figure")
                      
                      
 Resample descriptions and resample instances
@@ -280,7 +280,7 @@ rdesc = makeResampleDesc("Subsample", iters = 1, split = 2/3)
 ```
 
 
-### `k`-fold cross-validation
+### k-fold cross-validation
 
 The data set is partitioned into *k* subsets of (nearly) equal size. 
 In the *i*-th step of the *k* iterations the *i*-th subset is 
@@ -403,16 +403,10 @@ r2 = resample(lrn2, task, rinst, list(mmce, acc))
 
 ## Let's see how well both classifiers did w.r.t mean misclassification error
 ## and accuracy
-r1
+r1[c("measures.test", "aggr")]
 ```
 
 ```
-## $measures.train
-##   iter mmce acc
-## 1    1   NA  NA
-## 2    2   NA  NA
-## 3    3   NA  NA
-## 
 ## $measures.test
 ##   iter mmce  acc
 ## 1    1 0.12 0.88
@@ -421,48 +415,14 @@ r1
 ## 
 ## $aggr
 ## mmce.test.mean  acc.test.mean 
-##        0.06667        0.93333 
-## 
-## $pred
-## Resampled Prediction for:
-## Resample description: cross-validation with 3 iterations.
-## Predict: test
-## Stratification: FALSE
-## predict.type: response
-## threshold: 
-## time (mean): 0.00
-## 'data.frame':	150 obs. of  5 variables:
-##  $ id      : int  1 7 9 11 14 15 18 21 25 26 ...
-##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
-##  $ set     : Factor w/ 1 level "test": 1 1 1 1 1 1 1 1 1 1 ...
-## 
-## $models
-## NULL
-## 
-## $extract
-## $extract[[1]]
-## NULL
-## 
-## $extract[[2]]
-## NULL
-## 
-## $extract[[3]]
-## NULL
+##        0.06667        0.93333
 ```
 
 ```splus
-r2
+r2[c("measures.test", "aggr")]
 ```
 
 ```
-## $measures.train
-##   iter mmce acc
-## 1    1   NA  NA
-## 2    2   NA  NA
-## 3    3   NA  NA
-## 
 ## $measures.test
 ##   iter mmce  acc
 ## 1    1 0.04 0.96
@@ -471,35 +431,7 @@ r2
 ## 
 ## $aggr
 ## mmce.test.mean  acc.test.mean 
-##           0.02           0.98 
-## 
-## $pred
-## Resampled Prediction for:
-## Resample description: cross-validation with 3 iterations.
-## Predict: test
-## Stratification: FALSE
-## predict.type: response
-## threshold: 
-## time (mean): 0.00
-## 'data.frame':	150 obs. of  5 variables:
-##  $ id      : int  1 7 9 11 14 15 18 21 25 26 ...
-##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
-##  $ set     : Factor w/ 1 level "test": 1 1 1 1 1 1 1 1 1 1 ...
-## 
-## $models
-## NULL
-## 
-## $extract
-## $extract[[1]]
-## NULL
-## 
-## $extract[[2]]
-## NULL
-## 
-## $extract[[3]]
-## NULL
+##           0.02           0.98
 ```
 
 
@@ -591,25 +523,35 @@ Now, we can compare both methods regarding the **mse** (mean squared error) and 
 
 
 ```splus
-r1$measures.test
+r1[c("measures.test", "aggr")]
 ```
 
 ```
+## $measures.test
 ##   iter   mse medae
 ## 1    1 83.35 5.789
 ## 2    2 90.61 5.200
 ## 3    3 93.08 5.282
+## 
+## $aggr
+##   mse.test.mean medae.test.mean 
+##          89.009           5.423
 ```
 
 ```splus
-r2$measures.test
+r2[c("measures.test", "aggr")]
 ```
 
 ```
+## $measures.test
 ##   iter   mse medae
 ## 1    1 13.66 1.916
 ## 2    2 23.71 1.894
 ## 3    3 17.11 1.886
+## 
+## $aggr
+##   mse.test.mean medae.test.mean 
+##          18.157           1.898
 ```
 
 

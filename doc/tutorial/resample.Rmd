@@ -89,7 +89,7 @@ to choose the resampling method are:
   class, but you do not have to touch any methods that use the
   resampling strategy.
 
-![Resampling Figure](http://mlr.r-forge.r-project.org/_images/resampling.png "Resampling Figure")
+![Resampling Figure](../../_images/resampling.png "Resampling Figure")
                      
                      
 Resample descriptions and resample instances
@@ -164,7 +164,7 @@ rdesc = makeResampleDesc("Subsample", iters = 10, split = 2/3)
 rdesc = makeResampleDesc("Subsample", iters = 1, split = 2/3)
 ``` 
 
-### `k`-fold cross-validation
+### k-fold cross-validation
 
 The data set is partitioned into *k* subsets of (nearly) equal size. 
 In the *i*-th step of the *k* iterations the *i*-th subset is 
@@ -247,8 +247,8 @@ lrn2 = makeLearner("classif.lda")
 r2 = resample(lrn2, task, rinst, list(mmce, acc))	
 
 ## Let's see how well both classifiers did w.r.t mean misclassification error and accuracy
-r1
-r2
+r1[c("measures.test","aggr")]
+r2[c("measures.test","aggr")]
 ``` 
 
 If we want to see the individual values for each fold on the test set, we can access 
@@ -301,8 +301,8 @@ Now, we can compare both methods regarding the **mse** (mean squared error) and 
 **medae** (median of absolute errors):
 
 ```{r}
-r1$measures.test
-r2$measures.test
+r1[c("measures.test","aggr")]
+r2[c("measures.test","aggr")]
 ```
 
 
