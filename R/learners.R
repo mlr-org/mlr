@@ -1,4 +1,6 @@
-#' List of supported learning algorithms.
+#' @title List of supported learning algorithms.
+#'
+#' @description
 #'
 #' \itemize{
 #'   \item{\bold{classif.ada}}{\cr Boosting from ada package: \code{\link[ada]{ada}}}
@@ -78,7 +80,9 @@
 #'     Note that \code{fit} has been set to \code{FALSE} by default for speed.}
 #' }
 #' \itemize{
-#'   \item{\bold{surv.coxph}}{\cr Cox Proportional Hazard Model.}
+#'   \item{\bold{surv.CoxBoosth}}{\cr Cox proportional hazards model with componentwise likelhood based boosting from CoxBoost package: \code{\link[CoxBoost]{CoxBoost}}}
+#'   \item{\bold{surv.coxph}}{\cr Cox proportional hazard model from survival package: \code{\link[survival]{coxph}}}
+#'   \item{\bold{surv.glmnet}}{\cr GLM with regularization from glmnet package: \code{\link[glmnet]{glmnet}}}
 #' }
 #' @name learners
 #' @rdname learners
