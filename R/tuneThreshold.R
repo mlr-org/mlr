@@ -1,5 +1,5 @@
 #' Tune prediction threshold.
-#' 
+#'
 #' Optimizes the threshold of prediction based on probabilities.
 #' Uses \code{\link{optimize}} for 2class problems and \code{\link[cmaes]{cma_es}}
 #' for multiclass problems.
@@ -7,25 +7,25 @@
 #' @param pred [\code{\link{Prediction}}]\cr
 #'   Prediction object to use for tuning the treshold.
 #' @param measure [\code{\link{Measure}}]\cr
-#'   Performance measure to optimize. 
+#'   Performance measure to optimize.
 #' @param task [\code{\link{SupervisedTask}}]\cr
-#'   Learning task. Rarely neeeded, 
-#'   only when required for the performance measure. 
+#'   Learning task. Rarely neeeded,
+#'   only when required for the performance measure.
 #' @param model [\code{\link{WrappedModel}}]\cr
-#'   Fitted model. Rarely neeeded, 
-#'   only when required for the performance measure. 
+#'   Fitted model. Rarely neeeded,
+#'   only when required for the performance measure.
 #' @param control [\code{list}]\cr
 #'   Control object for \code{\link[cmaes]{cma_es}} when used.
 #'   Default is empty list.
-#' @return [\code{list}]. A named list with with the following components: 
-#'   \code{th} is the optimal threshold, \code{perf} the performance value.  	 
+#' @return [\code{list}]. A named list with with the following components:
+#'   \code{th} is the optimal threshold, \code{perf} the performance value.
 #' @export
 tuneThreshold = function(pred, measure, task, model, control=list()) {
   td = pred$task.desc
-	if (missing(measure))
-		measure = default.measures(td)[[1]]
+ if (missing(measure))
+ measure = default.measures(td)[[1]]
   probs = getProbabilities(pred)
-  
+
   # brutally return NA if we find any NA in the predicted probs...
   if (any(is.na(probs))) {
     return(list(th=NA, pred=pred, th.seq=numeric(0), perf=numeric(0)))
@@ -33,12 +33,12 @@ tuneThreshold = function(pred, measure, task, model, control=list()) {
 
   cls = pred$task.desc$class.levels
   k = length(cls)
-	fitn = function(x) {
+  fitn = function(x) {
     if (k > 2)
       names(x) = cls
-		performance(setThreshold(pred, x), measure, task, model)
-	}
-  
+    performance(setThreshold(pred, x), measure, task, model)
+  }
+
   if (k == 2) {
     or = optimize(f=fitn, lower=0, upper=1, maximum=measure$minimize)
     th = or[[1]]
@@ -49,6 +49,6 @@ tuneThreshold = function(pred, measure, task, model, control=list()) {
     th = or$par / sum(or$par)
     names(th) = cls
     perf = or$val
-  }  
-	return(list(th=th, perf=perf))
+  }
+  return(list(th=th, perf=perf))
 }

@@ -76,8 +76,7 @@ package: \code{\link[rpart]{rpart}}\cr Note that
 \code{xval} has been set to 0 by default for speed.}
 \item{\bold{classif.svm}}{\cr Support Vector Machines
 (libsvm) from e1071 package: \code{\link[e1071]{svm}}} }
-}
-\details{
+
 \itemize{ \item{\bold{regr.blackboost}}{\cr Gradient
 boosting with regression trees from mboost package:
 \code{\link[mboost]{blackboost}}}
@@ -138,7 +137,12 @@ package kernlab: \code{\link[kernlab]{rvm}}\cr Note that
 kernel parameters have to be passed directly and not by
 using the kpar list in rvm.\cr Note that \code{fit} has
 been set to \code{FALSE} by default for speed.} } \itemize{
-\item{\bold{surv.coxph}}{\cr Cox Proportional Hazard
-Model.} }
+\item{\bold{surv.CoxBoosth}}{\cr Cox proportional hazards
+model with componentwise likelhood based boosting from
+CoxBoost package: \code{\link[CoxBoost]{CoxBoost}}}
+\item{\bold{surv.coxph}}{\cr Cox proportional hazard model
+from survival package: \code{\link[survival]{coxph}}}
+\item{\bold{surv.glmnet}}{\cr GLM with regularization from
+glmnet package: \code{\link[glmnet]{glmnet}}} }
 }
 
