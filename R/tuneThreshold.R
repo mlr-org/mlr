@@ -22,8 +22,8 @@
 #' @export
 tuneThreshold = function(pred, measure, task, model, control=list()) {
   td = pred$task.desc
- if (missing(measure))
- measure = default.measures(td)[[1]]
+  if (missing(measure))
+    measure = default.measures(td)[[1]]
   probs = getProbabilities(pred)
 
   # brutally return NA if we find any NA in the predicted probs...
