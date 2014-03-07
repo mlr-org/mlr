@@ -1,4 +1,3 @@
-library(testthat)
 context("selectFeatures")
 
 test_that("selectFeatures", {
