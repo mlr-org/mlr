@@ -49,14 +49,15 @@ stringMaxConcat = function(x, printed.features){
   l = length(x)
   x = head(x, printed.features)
   if(l > printed.features)
-    x = c(x, "...")
-  collapse(x, ", ")
+    x = c(x, "etc.")
+  collapse(clipString(x, 20L), ", ")
 }
 
 printAnalyzeFeatSelResultHead = function(x, printed.features=10L){
   catf("FeatSel result:")
-  catf("- features (%i): %s", length(x$x), stringMaxConcat(x$x, printed.features))
-  catf("- Performance: %s", perfsToString(x$y))
+  catf("- Features         : %i", length(x$x)) 
+  catf("- Performance      : %s", perfsToString(x$y))
+  cat("  "); catf(stringMaxConcat(x$x, printed.features))
   catf("\nPath to optimum:")
 }
 
@@ -80,7 +81,7 @@ printAnalyzeFeatSelResultSeq = function(x, printed.features=10L) {
       n.feats = df.step[j, "n.feats"]
       if (n.feats < n.feats.old) changeTxt = "Removed: "
       else if (n.feats > n.feats.old) changeTxt = "Added: "
-      else changeTxt = "Initial model"
+      else changeTxt = "Init"
       stepVars = x$features[df.step[j,x$features]==1]
       diffVar = setdiff(union(stepVars, stepVars.old), intersect(stepVars, stepVars.old))
       diffVar = paste(diffVar, collapse=",")
@@ -88,15 +89,15 @@ printAnalyzeFeatSelResultSeq = function(x, printed.features=10L) {
         n.feats.opt = n.feats
         stepVars.opt = stepVars
         measures.opt = measures
-        txtSelected = "SELECTED"
+        txtSelected = TRUE
       } else
-        txtSelected = ""
-      catf("- Features: %i  \t %s%s \t Gain: %s \t %s",
-           n.feats, changeTxt, diffVar, perfsToString(measures.gain), txtSelected)
+        txtSelected = FALSE
+      catf("- Features: %4i  \t %-10s%-20s \t Perf = %.4g \t Gain: %.3g \t Sel = %-5s \t Opt = %-5s",
+           n.feats, changeTxt, diffVar, measures.opt, measures.gain, txtSelected, any(df.step$optimum))
     }
     # Print end result of each Step
-    catf("Finished step: %i with \t %s \t Optimum: %s",
-         head(df.step[,"step"],1L), perfsToString(measures.opt), any(df.step$optimum))
+    # catf("Finished step: %i with perf %.3g, Optimum = %s",
+         # head(df.step[,"step"],1L), measures.opt,
     n.feats.old = n.feats.opt
     stepVars.old = stepVars.opt
     measures.old = measures.opt
