@@ -27,10 +27,10 @@ test_that("removeConstantFeatures", {
   testData_res = removeConstantFeatures(testData)
   expect_equal(colnames(testData_res), c("a","b","c","d","target", "safe"))
 
-  testData_res = removeConstantFeatures(testData, na.mode="factor", perc=0.2)
+  testData_res = removeConstantFeatures(testData, na.mode="distinct", perc=0.2)
   expect_equal(colnames(testData_res), c("e", "safe"))
 
-  testData_res = removeConstantFeatures(testData, na.mode="modus", perc=0.2)
+  testData_res = removeConstantFeatures(testData, na.mode="single", perc=0.2)
   expect_equal(colnames(testData_res), "safe")
 })
 
