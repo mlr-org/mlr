@@ -34,8 +34,8 @@ Since we will use a grid search strategy, we add a discrete parameter for the
 More details concerning parameter sets are explained in section [parameters](parameters.md).
 
 ```{r}
-ps = makeParamSet(makeDiscreteParam("C", values=2^(-2:2)),
-                   makeDiscreteParam("sigma", values=2^(-2:2)))
+ps = makeParamSet(makeDiscreteParam("C", values=2^(-1:1)),
+                   makeDiscreteParam("sigma", values=2^(-1:1)))
 ``` 
 
 We will use cross-validation to assess the quality of a parameter
@@ -95,15 +95,15 @@ rin = makeResampleDesc("CV", iters=3)
 rout = makeResampleDesc("CV", iters=5)
 
 lrn = makeTuneWrapper(makeLearner("classif.ksvm"), resampling=rin,
-                       par.set=ps, control=ctrl)
+                       par.set=ps, control=ctrl, show.info=FALSE)
 ``` 
 
 Now, we can run our nested CV. For further evaluations, we might
 want to extract the tune results as well. Please note, that storing the
 entire models might be expensive.
 
-```{r, message=FALSE, results='hide'}
-r = resample(lrn, task, resampling = rout, extract = getTuneResult, show.info=FALSE)
+```{r, message=FALSE}
+r = resample(lrn, task, resampling = rout, extract = getTuneResult)
 ```
 
 Finally, we can compare our results. We receive one optimal setting for
