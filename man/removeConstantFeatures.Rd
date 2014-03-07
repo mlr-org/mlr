@@ -3,7 +3,7 @@
 \title{Remove constant features from a data set.}
 \usage{
 removeConstantFeatures(x, perc = 0, dont.rm = character(0),
-  na.mode = "ignore", show.info = TRUE, printed.features = 10L)
+  na.mode = "na.rm", show.info = TRUE)
 }
 \arguments{
   \item{x}{[\code{\link{data.frame}} |
@@ -14,17 +14,18 @@ removeConstantFeatures(x, perc = 0, dont.rm = character(0),
   value.  Default is 0, which means only constant features
   with exactly one observed level are removed.}
 
-  \item{dont.rm}{[\code{character()}]\cr Names of the
-  columns which must not be deleted.  E.g. the target
-  column - automatically added when provided a
-  \code{task}.}
+  \item{dont.rm}{[\code{character}]\cr Names of the columns
+  which must not be deleted.  Default is no columns.  Note
+  that for a task the target column is always added to
+  these so it is never removed.}
 
-  \item{na.mode}{[\code{character}]\cr \itemize{ \item
-  \code{ignore}: \code{NA}s will be ignored (lower value of
-  differation)\cr \item \code{factor}: \code{NA}s will be
-  seen as own value (higher value of differation) \cr \item
-  \code{modus}: like factor but \code{NA}s can also be a
-  modal value }}
+  \item{na.mode}{[\code{character(1)}]\cr \itemize{ \item
+  \code{na.rm}: \code{NA}s will be ignored in the
+  percentage calculation.\cr \item \code{single}: NAs will
+  be seen as a single, extra level in the percentage
+  calculation.\cr \item \code{distinct}: \code{NA}s will be
+  seen as multiple extra levels in the percentage
+  calculation.\cr }}
 }
 \value{
 [\code{\link{data.frame}} | \code{\link{SupervisedTask}}].
