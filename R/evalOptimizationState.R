@@ -45,7 +45,7 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
     dobs = rep(dobs, n)
   if (length(eols) == 1L)
     eols = rep(eols, n)
-  parallelLibrary("mlr", master=FALSE, level=level)
+  parallelLibrary("mlr", master=FALSE, level=level, show.info=FALSE)
   exportMlrOptions()
   ys = parallelMap(evalOptimizationState, states, level=level,
     more.args=list(learner=learner, task=task, resampling=resampling,
