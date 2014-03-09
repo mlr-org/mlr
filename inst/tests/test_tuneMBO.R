@@ -2,7 +2,7 @@ context("tuneMBO")
 
 # FIXME remove if mbo is on cran
 
-if (isExpensiveExampleOk()) {
+if (interactive()) {
 
 test_that("tuneMBO", {
   library(mlrMBO)
