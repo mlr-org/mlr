@@ -12,10 +12,10 @@ To see all possible, implemented aggregations look at <code><a href="aggregation
 
 <h3>Description</h3>
 
-<p>The aggregation can access all relevant information of
-the result after resampling and combine them into a
-single value. Though usually something very simple like
-taking the mean of the test set performances is done.
+<p>The aggregation can access all relevant information of the
+result after resampling and combine them into a single
+value. Though usually something very simple like taking the
+mean of the test set performances is done.
 </p>
 
 
@@ -27,9 +27,15 @@ taking the mean of the test set performances is done.
 [<code>character(1)</code>]</dt><dd><p>Name of aggregation method.</p>
 </dd>
 <dt>fun [<code>function(task, perf.test, perf.train,
-  measure, group, pred)</code>]</dt><dd><p>Aggregation function.</p>
+measure, group, pred)</code>]</dt><dd><p>Aggregation function.</p>
 </dd> </dl>
 
+
+
+<h3>See Also</h3>
+
+<p><code><a href="makeAggregation.html">makeAggregation</a></code>
+</p>
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
 </body></html>

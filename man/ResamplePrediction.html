@@ -10,18 +10,17 @@
 
 <h3>Description</h3>
 
-<p>Contains predictions from resampling, returned (among
-other stuff) by function <code><a href="../../gdata/html/resample.html">resample</a></code>. Can
-basically be used in the same way as
-<code><a href="Prediction.html">Prediction</a></code>, its super class. The main
-differences are: (a) The internal data.frame (member
-<code>data</code>) contains an additional column <code>id</code>,
-specifying the iteration of the resampling strategy, and
-and additional columns <code>set</code>, specifying whether the
-prediction was from an observation in the &ldquo;train&rdquo;
-or &ldquo;test&rdquo; set. (b) The prediction <code>time</code> is a
-numeric vector, its length equals the number of
-iterations.
+<p>Contains predictions from resampling, returned (among other
+stuff) by function <code><a href="../../gdata/html/resample.html">resample</a></code>. Can basically be
+used in the same way as <code><a href="Prediction.html">Prediction</a></code>, its super
+class. The main differences are: (a) The internal
+data.frame (member <code>data</code>) contains an additional
+column <code>id</code>, specifying the iteration of the
+resampling strategy, and and additional columns <code>set</code>,
+specifying whether the prediction was from an observation
+in the &ldquo;train&rdquo; or &ldquo;test&rdquo; set. (b) The
+prediction <code>time</code> is a numeric vector, its length
+equals the number of iterations.
 </p>
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>

@@ -10,8 +10,8 @@
 
 <h3>Description</h3>
 
-<p>Description object for task, encapsulates basic
-statistics without having to store the complete data set.
+<p>Description object for task, encapsulates basic statistics
+without having to store the complete data set.
 </p>
 
 
@@ -23,26 +23,26 @@ statistics without having to store the complete data set.
 [<code>character(1)</code>]</dt><dd><p>Id string of task.</p>
 </dd> <dt>type
 [<code>character(1)</code>]</dt><dd><p>type Type of task, either
-&ldquo;classif&rdquo; for classification or &ldquo;regr&rdquo; for
-regression.</p>
-</dd> <dt>target [<code>character(1)</code>]</dt><dd><p>Name of
-target variable.</p>
-</dd> <dt>weight
-[<code>character(1)</code>]</dt><dd><p>Name of weight variable.</p>
+&ldquo;classif&rdquo; for classification, &ldquo;regr&rdquo; for
+regression or &ldquo;surv&rdquo; for survival.</p>
+</dd> <dt>target
+[<code>character(1)</code>]</dt><dd><p>Name of target variable.</p>
 </dd>
 <dt>size[<code>integer(1)</code>]</dt><dd><p>Number of cases.</p>
 </dd>
 <dt>n.feat [<code>integer</code>]</dt><dd><p>Number of features, named
-vector with entries: &ldquo;numerics&rdquo;,
-&ldquo;factors&rdquo;.</p>
-</dd> <dt>class.levels
-[<code>character</code>]</dt><dd><p>All possible classes. <code>NA</code> if
-not classification.</p>
-</dd> <dt>has.missings
-[<code>logical(1)</code>]</dt><dd><p>Are missing values present?</p>
+vector with entries: &ldquo;numerics&rdquo;, &ldquo;factors&rdquo;.</p>
 </dd>
-<dt>has.blocking [<code>logical(1)</code>]</dt><dd><p>Is blocking
-available in task for observations?</p>
+<dt>class.levels [<code>character</code>]</dt><dd><p>All possible
+classes. <code>NA</code> if not classification.</p>
+</dd>
+<dt>has.missings [<code>logical(1)</code>]</dt><dd><p>Are missing values
+present?</p>
+</dd> <dt>has.weights [<code>logical(1)</code>]</dt><dd><p>Are
+weights specified for each observation?</p>
+</dd> <dt>has.blocking
+[<code>logical(1)</code>]</dt><dd><p>Is blocking available in task for
+observations?</p>
 </dd> <dt>positive
 [<code>character(1)</code>]</dt><dd><p>Positive class label for binary
 classification, <code>NA</code> else.</p>

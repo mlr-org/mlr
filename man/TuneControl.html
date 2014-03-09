@@ -23,19 +23,19 @@ them yourself by always using
 parameter types can be handled.</p>
 </dd>
 <dt>makeTuneControlOptim</dt><dd><p>Tuning with
-<code><a href="../../stats/html/optim.html">optim</a></code>. Can handle numeric(vector)
-and integer(vector) hyperparameters. For integers the
+<code><a href="../../stats/html/optim.html">optim</a></code>.  Can handle numeric(vector) and
+integer(vector) hyperparameters.  For integers the
 internally proposed numeric values are automatically
 rounded.</p>
 </dd> <dt>makeTuneControlCMAES</dt><dd><p>CMA Evolution
-Strategy with method <code><a href="../../cmaes/html/cma_es.html">cma_es</a></code>. Can
-handle numeric(vector) and integer(vector)
-hyperparameters. For integers the internally proposed
-numeric values are automatically rounded.</p>
-</dd>
-<dt>makeTuneControlIrace</dt><dd><p>Tuning with iterated F-Racing
-with method <code><a href="../../irace/html/irace.html">irace</a></code>. All kinds of
-parameter types can be handled.</p>
+Strategy with method <code><a href="../../cmaes/html/cma_es.html">cma_es</a></code>.  Can
+handle numeric(vector) and integer(vector) hyperparameters.
+For integers the internally proposed numeric values are
+automatically rounded.</p>
+</dd> <dt>makeTuneControlIrace</dt><dd><p>Tuning
+with iterated F-Racing with method
+<code><a href="../../irace/html/irace.html">irace</a></code>.  All kinds of parameter types
+can be handled.</p>
 </dd> </dl>
 
 
@@ -43,19 +43,15 @@ parameter types can be handled.</p>
 <h3>Usage</h3>
 
 <pre>
-  makeTuneControlCMAES(same.resampling.instance = TRUE,
-    start, ...)
+makeTuneControlCMAES(same.resampling.instance = TRUE, start, ...)
 
-  makeTuneControlGrid(same.resampling.instance = TRUE)
+makeTuneControlGrid(same.resampling.instance = TRUE)
 
-  makeTuneControlIrace(n.instances = 100L,
-    show.irace.output = FALSE, ...)
+makeTuneControlIrace(n.instances = 100L, show.irace.output = FALSE, ...)
 
-  makeTuneControlOptim(same.resampling.instance = TRUE,
-    start, ...)
+makeTuneControlOptim(same.resampling.instance = TRUE, start, ...)
 
-  makeTuneControlRandom(same.resampling.instance = TRUE,
-    maxit = 100L)
+makeTuneControlRandom(same.resampling.instance = TRUE, maxit = 100L)
 </pre>
 
 
@@ -107,15 +103,15 @@ argument of <code><a href="../../irace/html/irace.html">irace</a></code>.</p>
 random search and irace.
 </p>
 <p>Some notes on irace: For resampling you have to pass a
-<code><a href="ResampleDesc.html">ResampleDesc</a></code>, not a
-<code><a href="ResampleInstance.html">ResampleInstance</a></code>. The resampling
-strategy is randomly instantiated <code>n.instances</code>
-times and these are the instances in the sense of irace
-(<code>instances</code> element of <code>tunerConfig</code> in
+<code><a href="makeResampleDesc.html">ResampleDesc</a></code>, not a
+<code><a href="makeResampleInstance.html">ResampleInstance</a></code>. The resampling strategy is
+randomly instantiated <code>n.instances</code> times and these
+are the instances in the sense of irace (<code>instances</code>
+element of <code>tunerConfig</code> in
 <code><a href="../../irace/html/irace.html">irace</a></code>). Also note that irace will
-always store its tuning results in a file on disk, see
-the package documentation for details on this and how to
-change the file path.
+always store its tuning results in a file on disk, see the
+package documentation for details on this and how to change
+the file path.
 </p>
 
 
