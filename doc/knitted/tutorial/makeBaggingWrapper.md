@@ -39,7 +39,7 @@ result = resample(learner = lrn, task = tsk, resampling = rsmpl, show.info = FAL
 ```
 
 ```
-## Loading packages on slaves: mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
 ```
 
 ```splus
@@ -59,7 +59,7 @@ result = resultBagging = resample(learner = bagLrn, task = tsk, resampling = rsm
 ```
 
 ```
-## Loading packages on slaves: mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
 ```
 
 ```splus
@@ -110,18 +110,6 @@ Here we plot the *percentage of lower status of the population* (`lstat`) agains
 
 ```splus
 library("ggplot2")
-```
-
-```
-## 
-## Attaching package: 'ggplot2'
-## 
-## Das folgende Objekt ist maskiert from 'package:mboost':
-## 
-##     %+%
-```
-
-```splus
 library("reshape2")
 data = cbind(pred$data, BostonHousing[test.inds, ])
 g = ggplot(data, aes(x = lstat, y = response, ymin = response - se, ymax = response + 

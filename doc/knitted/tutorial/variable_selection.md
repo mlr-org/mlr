@@ -48,7 +48,7 @@ rsres = resample(learner = learnerFiltered, task = task, resampling = rdesc,
 ```
 
 ```
-## Loading packages on slaves: mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
 ```
 
 ```splus
@@ -101,24 +101,24 @@ sfSeq = selectFeatures(learner = lrn, task = task, resampling = rdesc, control =
 ```
 
 ```
-## Loading packages on slaves: mlr
-## [selectFeatures] 1: 0 bits: mmce.test.mean=0.78
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## [selectFeatures] 2: 1 bits: mmce.test.mean=0.28
-## Loading packages on slaves: mlr
-## [selectFeatures] 2: 1 bits: mmce.test.mean=0.58
-## Loading packages on slaves: mlr
-## [selectFeatures] 2: 1 bits: mmce.test.mean=0.12
-## Loading packages on slaves: mlr
-## [selectFeatures] 2: 1 bits: mmce.test.mean=0.04
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## [selectFeatures] 3: 2 bits: mmce.test.mean=0.04
-## Loading packages on slaves: mlr
-## [selectFeatures] 3: 2 bits: mmce.test.mean=0.04
-## Loading packages on slaves: mlr
-## [selectFeatures] 3: 2 bits: mmce.test.mean=0.12
+## Loading packages on master (to be available on slaves for mode local): mlr
+## [selectFeatures] 1: 0 bits: mmce.test.mean=0.62
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## [selectFeatures] 2: 1 bits: mmce.test.mean=0.34
+## Loading packages on master (to be available on slaves for mode local): mlr
+## [selectFeatures] 2: 1 bits: mmce.test.mean=0.52
+## Loading packages on master (to be available on slaves for mode local): mlr
+## [selectFeatures] 2: 1 bits: mmce.test.mean=0.06
+## Loading packages on master (to be available on slaves for mode local): mlr
+## [selectFeatures] 2: 1 bits: mmce.test.mean=0.06
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## [selectFeatures] 3: 2 bits: mmce.test.mean=0.06
+## Loading packages on master (to be available on slaves for mode local): mlr
+## [selectFeatures] 3: 2 bits: mmce.test.mean=0.06
+## Loading packages on master (to be available on slaves for mode local): mlr
+## [selectFeatures] 3: 2 bits: mmce.test.mean=0.06
 ```
 
 ```splus
@@ -127,8 +127,8 @@ sfSeq
 
 ```
 ## FeatSel result:
-## Features (1): Petal.Width
-## =0.04
+## Features (1): Petal.Length
+## mmce.test.mean=0.06
 ```
 
 ```splus
@@ -137,21 +137,21 @@ analyzeFeatSelResult(sfSeq, reduce = FALSE)
 
 ```
 ## FeatSel result:
-## - features (1): Petal.Width
-## - Performance: mmce.test.mean=0.04
+## - features (1): Petal.Length
+## - Performance: mmce.test.mean=0.06
 ## 
 ## Path to optimum:
 ## - Features: 0  	 Initial model 	 Gain: mmce.test.mean=   0 	 SELECTED
-## Finished step: 1 with 	 mmce.test.mean=0.78 	 Optimum: FALSE
-## - Features: 1  	 Added: Sepal.Length 	 Gain: mmce.test.mean=-0.5 	 
-## - Features: 1  	 Added: Sepal.Width 	 Gain: mmce.test.mean=-0.2 	 
-## - Features: 1  	 Added: Petal.Length 	 Gain: mmce.test.mean=-0.66 	 
-## - Features: 1  	 Added: Petal.Width 	 Gain: mmce.test.mean=-0.74 	 SELECTED
-## Finished step: 2 with 	 mmce.test.mean=0.04 	 Optimum: TRUE
+## Finished step: 1 with 	 mmce.test.mean=0.62 	 Optimum: FALSE
+## - Features: 1  	 Added: Sepal.Length 	 Gain: mmce.test.mean=-0.28 	 
+## - Features: 1  	 Added: Sepal.Width 	 Gain: mmce.test.mean=-0.1 	 
+## - Features: 1  	 Added: Petal.Length 	 Gain: mmce.test.mean=-0.56 	 
+## - Features: 1  	 Added: Petal.Width 	 Gain: mmce.test.mean=-0.56 	 SELECTED
+## Finished step: 2 with 	 mmce.test.mean=0.06 	 Optimum: TRUE
 ## - Features: 2  	 Added: Sepal.Length 	 Gain: mmce.test.mean=   0 	 
 ## - Features: 2  	 Added: Sepal.Width 	 Gain: mmce.test.mean=   0 	 
-## - Features: 2  	 Added: Petal.Length 	 Gain: mmce.test.mean=0.08 	 
-## Finished step: 3 with 	 mmce.test.mean=0.04 	 Optimum: TRUE
+## - Features: 2  	 Added: Petal.Length 	 Gain: mmce.test.mean=   0 	 
+## Finished step: 3 with 	 mmce.test.mean=0.06 	 Optimum: TRUE
 ## 
 ## Stopped, because no improving set of features (w.r.t. mmce.test.mean) was found.
 ```
@@ -177,77 +177,77 @@ sfGA = selectFeatures(learner = lrn, task = task, resampling = rdesc, control = 
 ```
 
 ```
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
 ```
 
 ```splus
@@ -256,8 +256,8 @@ sfGA
 
 ```
 ## FeatSel result:
-## Features (9): indus, chas, rm, dis, rad, tax, ptratio, b, lstat
-## =20.3
+## Features (12): crim, zn, indus, nox, rm, age, dis, rad, tax, ptratio, b, lstat
+## mse.test.mean=  23
 ```
 
 ```splus
@@ -266,48 +266,48 @@ analyzeFeatSelResult(sfGA)
 
 ```
 ## FeatSel result:
-## - features (9): indus, chas, rm, dis, rad, tax, ptratio, b, lstat
-## - Performance: mse.test.mean=20.3
+## - features (12): crim, zn, indus, nox, rm, age, dis, rad, tax, ptratio, ...
+## - Performance: mse.test.mean=  23
 ## 
 ## Path to optimum:
-## Initial generation:- (1) 	 Features: 4  	 mse.test.mean=54.4 	 Features: indus, nox, tax, b 
-## - (2) 	 Features: 6  	 mse.test.mean=27.9 	 Features: indus, age, tax, ptratio, b, lstat 
-## - (3) 	 Features: 8  	 mse.test.mean=29.5 	 Features: crim, chas, nox, age, dis, tax, b, lstat 
-## - (4) 	 Features: 4  	 mse.test.mean=54.2 	 Features: chas, nox, age, b 
-## - (5) 	 Features: 6  	 mse.test.mean=33.7 	 Features: crim, chas, nox, rm, age, rad 
-## - (6) 	 Features: 7  	 mse.test.mean=26.2 	 Features: chas, nox, rad, tax, ptratio, b, lstat 
-## - (7) 	 Features: 7  	 mse.test.mean=  46 	 Features: crim, chas, nox, age, dis, ptratio, b 
-## - (8) 	 Features: 8  	 mse.test.mean=22.8 	 Features: crim, indus, chas, rm, dis, rad, tax, lstat 
-## - (9) 	 Features: 6  	 mse.test.mean=51.5 	 Features: crim, indus, nox, age, tax, ptratio 
-## - (10) 	 Features: 5  	 mse.test.mean=54.3 	 Features: crim, chas, dis, ptratio, b 
-## Generation 1:- (1) 	 Features: 7  	 mse.test.mean=  46 	 Features: crim, chas, nox, age, dis, ptratio, b 
-## - (2) 	 Features: 7  	 mse.test.mean=  27 	 Features: chas, nox, age, tax, ptratio, b, lstat 
-## - (3) 	 Features: 6  	 mse.test.mean=28.8 	 Features: crim, chas, age, dis, tax, lstat 
-## - (4) 	 Features: 8  	 mse.test.mean=21.9 	 Features: chas, nox, rm, rad, tax, ptratio, b, lstat 
-## Generation 2:- (1) 	 Features: 9  	 mse.test.mean=22.4 	 Features: crim, indus, chas, rm, age, dis, tax, b, lstat 
-## - (2) 	 Features: 9  	 mse.test.mean=28.3 	 Features: crim, indus, chas, nox, age, dis, tax, b, lstat 
-## Generation 3:- (1) 	 Features: 8  	 mse.test.mean=22.7 	 Features: indus, chas, rm, age, tax, ptratio, b, lstat 
-## - (2) 	 Features: 8  	 mse.test.mean=22.8 	 Features: crim, indus, chas, rm, dis, rad, tax, lstat 
-## - (3) 	 Features: 8  	 mse.test.mean=21.9 	 Features: indus, chas, rm, rad, tax, ptratio, b, lstat 
-## - (4) 	 Features: 9  	 mse.test.mean=25.6 	 Features: indus, chas, nox, age, rad, tax, ptratio, b, lstat 
-## Generation 4:- (1) 	 Features: 10  	 mse.test.mean=20.7 	 Features: indus, chas, nox, rm, dis, rad, tax, ptratio, b, lstat 
-## - (2) 	 Features: 8  	 mse.test.mean=22.8 	 Features: crim, indus, chas, rm, rad, tax, ptratio, lstat 
-## - (3) 	 Features: 7  	 mse.test.mean=23.7 	 Features: zn, rm, age, tax, ptratio, b, lstat 
-## - (4) 	 Features: 8  	 mse.test.mean=21.9 	 Features: chas, nox, rm, rad, tax, ptratio, b, lstat 
-## Generation 5:- (1) 	 Features: 11  	 mse.test.mean=21.9 	 Features: crim, zn, indus, chas, rm, age, dis, rad, tax, b, ... 
-## - (2) 	 Features: 10  	 mse.test.mean=20.7 	 Features: indus, chas, nox, rm, dis, rad, tax, ptratio, b, lstat 
-## Generation 6:- (1) 	 Features: 9  	 mse.test.mean=22.4 	 Features: indus, chas, nox, rm, rad, tax, ptratio, b, lstat 
-## - (2) 	 Features: 10  	 mse.test.mean=21.4 	 Features: zn, indus, chas, rm, age, dis, tax, ptratio, b, lstat 
-## - (3) 	 Features: 10  	 mse.test.mean=20.7 	 Features: indus, chas, nox, rm, dis, rad, tax, ptratio, b, lstat 
-## Generation 7:- (1) 	 Features: 8  	 mse.test.mean=21.9 	 Features: indus, chas, rm, rad, tax, ptratio, b, lstat 
-## - (2) 	 Features: 9  	 mse.test.mean=21.2 	 Features: indus, chas, rm, age, dis, tax, ptratio, b, lstat 
-## Generation 8:- (1) 	 Features: 12  	 mse.test.mean=20.8 	 Features: zn, indus, chas, nox, rm, age, dis, rad, tax, ptratio, ... 
-## - (2) 	 Features: 11  	 mse.test.mean=20.8 	 Features: indus, chas, nox, rm, age, dis, rad, tax, ptratio, b, ... 
-## Generation 9:- (1) 	 Features: 9  	 mse.test.mean=20.3 	 Features: indus, chas, rm, dis, rad, tax, ptratio, b, lstat 
-## - (2) 	 Features: 10  	 mse.test.mean=20.5 	 Features: indus, chas, rm, age, dis, rad, tax, ptratio, b, lstat 
-## - (3) 	 Features: 10  	 mse.test.mean=20.7 	 Features: indus, chas, nox, rm, dis, rad, tax, ptratio, b, lstat 
-## Generation 10:- (1) 	 Features: 10  	 mse.test.mean=20.7 	 Features: indus, chas, nox, rm, dis, rad, tax, ptratio, b, lstat 
-## - (2) 	 Features: 10  	 mse.test.mean=20.5 	 Features: indus, chas, rm, age, dis, rad, tax, ptratio, b, lstat
+## Initial generation:- (1) 	 Features: 11  	 mse.test.mean=27.1 	 Features: crim, zn, chas, nox, rm, age, rad, tax, ptratio, b, ... 
+## - (2) 	 Features: 8  	 mse.test.mean=28.2 	 Features: zn, indus, rm, age, tax, ptratio, b, lstat 
+## - (3) 	 Features: 6  	 mse.test.mean=55.2 	 Features: crim, indus, nox, dis, rad, tax 
+## - (4) 	 Features: 4  	 mse.test.mean=43.1 	 Features: zn, indus, rm, age 
+## - (5) 	 Features: 6  	 mse.test.mean=  51 	 Features: zn, chas, age, dis, tax, b 
+## - (6) 	 Features: 5  	 mse.test.mean=56.3 	 Features: chas, age, rad, ptratio, b 
+## - (7) 	 Features: 6  	 mse.test.mean=37.6 	 Features: zn, rm, age, tax, ptratio, b 
+## - (8) 	 Features: 6  	 mse.test.mean=56.1 	 Features: crim, zn, chas, age, rad, ptratio 
+## - (9) 	 Features: 4  	 mse.test.mean=62.5 	 Features: crim, nox, dis, tax 
+## - (10) 	 Features: 2  	 mse.test.mean=62.8 	 Features: crim, ptratio 
+## Generation 1:- (1) 	 Features: 5  	 mse.test.mean=32.4 	 Features: crim, nox, dis, tax, lstat 
+## - (2) 	 Features: 6  	 mse.test.mean=42.3 	 Features: zn, chas, rm, age, rad, b 
+## - (3) 	 Features: 8  	 mse.test.mean=26.4 	 Features: zn, indus, rm, age, dis, tax, b, lstat 
+## Generation 2:- (1) 	 Features: 7  	 mse.test.mean=28.6 	 Features: zn, indus, chas, age, dis, tax, lstat 
+## - (2) 	 Features: 10  	 mse.test.mean=27.7 	 Features: crim, indus, chas, rm, age, rad, tax, ptratio, b, lstat 
+## - (3) 	 Features: 9  	 mse.test.mean=29.8 	 Features: crim, indus, chas, rm, age, dis, tax, b, lstat 
+## Generation 3:- (1) 	 Features: 8  	 mse.test.mean=27.6 	 Features: crim, zn, indus, rm, age, dis, tax, lstat 
+## - (2) 	 Features: 11  	 mse.test.mean=26.2 	 Features: crim, indus, chas, rm, age, dis, rad, tax, ptratio, b, ... 
+## - (3) 	 Features: 4  	 mse.test.mean=30.1 	 Features: dis, tax, ptratio, lstat 
+## Generation 4:- (1) 	 Features: 7  	 mse.test.mean=  28 	 Features: indus, rm, age, rad, tax, ptratio, lstat 
+## - (2) 	 Features: 6  	 mse.test.mean=28.5 	 Features: crim, zn, nox, dis, tax, lstat 
+## - (3) 	 Features: 11  	 mse.test.mean=26.3 	 Features: crim, zn, indus, chas, rm, age, dis, rad, tax, ptratio, ... 
+## Generation 5:- (1) 	 Features: 9  	 mse.test.mean=25.7 	 Features: indus, chas, nox, rm, dis, tax, ptratio, b, lstat 
+## - (2) 	 Features: 8  	 mse.test.mean=26.6 	 Features: indus, rm, age, rad, tax, ptratio, b, lstat 
+## - (3) 	 Features: 7  	 mse.test.mean=27.8 	 Features: crim, zn, indus, age, dis, tax, lstat 
+## Generation 6:- (1) 	 Features: 9  	 mse.test.mean=26.3 	 Features: indus, nox, rm, age, rad, tax, ptratio, b, lstat 
+## - (2) 	 Features: 10  	 mse.test.mean=25.8 	 Features: crim, zn, indus, rm, age, dis, tax, ptratio, b, lstat 
+## - (3) 	 Features: 9  	 mse.test.mean=25.7 	 Features: indus, chas, nox, rm, dis, tax, ptratio, b, lstat 
+## Generation 7:- (1) 	 Features: 11  	 mse.test.mean=26.2 	 Features: crim, indus, chas, rm, age, dis, rad, tax, ptratio, b, ... 
+## - (2) 	 Features: 9  	 mse.test.mean=26.3 	 Features: indus, nox, rm, age, rad, tax, ptratio, b, lstat 
+## - (3) 	 Features: 9  	 mse.test.mean=25.3 	 Features: zn, indus, rm, age, dis, tax, ptratio, b, lstat 
+## Generation 8:- (1) 	 Features: 11  	 mse.test.mean=  24 	 Features: crim, zn, indus, rm, age, dis, rad, tax, ptratio, b, ... 
+## - (2) 	 Features: 10  	 mse.test.mean=26.3 	 Features: zn, indus, chas, rm, age, dis, tax, ptratio, b, lstat 
+## - (3) 	 Features: 8  	 mse.test.mean=25.3 	 Features: zn, rm, age, dis, tax, ptratio, b, lstat 
+## Generation 9:- (1) 	 Features: 9  	 mse.test.mean=25.9 	 Features: crim, zn, rm, age, dis, tax, ptratio, b, lstat 
+## - (2) 	 Features: 12  	 mse.test.mean=  23 	 Features: crim, zn, indus, nox, rm, age, dis, rad, tax, ptratio, ... 
+## Generation 10:- (1) 	 Features: 12  	 mse.test.mean=  23 	 Features: crim, zn, indus, nox, rm, age, dis, rad, tax, ptratio, ... 
+## - (2) 	 Features: 11  	 mse.test.mean=25.3 	 Features: zn, indus, chas, nox, rm, age, dis, tax, ptratio, b, ...
 ```
 
 

@@ -37,8 +37,8 @@ More details concerning parameter sets are explained in section [parameters](par
 
 
 ```splus
-ps = makeParamSet(makeDiscreteParam("C", values = 2^(-2:2)), makeDiscreteParam("sigma", 
-    values = 2^(-2:2)))
+ps = makeParamSet(makeDiscreteParam("C", values = 2^(-1:1)), makeDiscreteParam("sigma", 
+    values = 2^(-1:1)))
 ```
 
 
@@ -74,67 +74,35 @@ tuneParams(makeLearner("classif.ksvm"), task = task, resampling = rdesc, par.set
 
 ```
 ## [Tune] Started tuning learner classif.ksvm for parameter set:
-## Disc param 'C'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
-## Disc param 'sigma'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
+## Disc param 'C'. Vals: 0.5,1,2. Trafo: FALSE. Requires: FALSE
+## Disc param 'sigma'. Vals: 0.5,1,2. Trafo: FALSE. Requires: FALSE
 ## With control class: TuneControlGrid
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## [Tune] 1: C=0.25,sigma=0.25 : mmce.test.mean=0.0533
-## Loading packages on slaves: mlr
-## [Tune] 1: C=0.5,sigma=0.25 : mmce.test.mean=0.0533
-## Loading packages on slaves: mlr
-## [Tune] 1: C=1,sigma=0.25 : mmce.test.mean=0.0333
-## Loading packages on slaves: mlr
-## [Tune] 1: C=2,sigma=0.25 : mmce.test.mean=0.0467
-## Loading packages on slaves: mlr
-## [Tune] 1: C=4,sigma=0.25 : mmce.test.mean=0.0467
-## Loading packages on slaves: mlr
-## [Tune] 1: C=0.25,sigma=0.5 : mmce.test.mean=0.0533
-## Loading packages on slaves: mlr
-## [Tune] 1: C=0.5,sigma=0.5 : mmce.test.mean=0.04
-## Loading packages on slaves: mlr
-## [Tune] 1: C=1,sigma=0.5 : mmce.test.mean=0.04
-## Loading packages on slaves: mlr
-## [Tune] 1: C=2,sigma=0.5 : mmce.test.mean=0.0467
-## Loading packages on slaves: mlr
-## [Tune] 1: C=4,sigma=0.5 : mmce.test.mean=0.0467
-## Loading packages on slaves: mlr
-## [Tune] 1: C=0.25,sigma=1 : mmce.test.mean=0.06
-## Loading packages on slaves: mlr
-## [Tune] 1: C=0.5,sigma=1 : mmce.test.mean=0.04
-## Loading packages on slaves: mlr
-## [Tune] 1: C=1,sigma=1 : mmce.test.mean=0.0533
-## Loading packages on slaves: mlr
-## [Tune] 1: C=2,sigma=1 : mmce.test.mean=0.0467
-## Loading packages on slaves: mlr
-## [Tune] 1: C=4,sigma=1 : mmce.test.mean=0.0533
-## Loading packages on slaves: mlr
-## [Tune] 1: C=0.25,sigma=2 : mmce.test.mean=0.0733
-## Loading packages on slaves: mlr
-## [Tune] 1: C=0.5,sigma=2 : mmce.test.mean=0.06
-## Loading packages on slaves: mlr
-## [Tune] 1: C=1,sigma=2 : mmce.test.mean=0.0533
-## Loading packages on slaves: mlr
-## [Tune] 1: C=2,sigma=2 : mmce.test.mean=0.06
-## Loading packages on slaves: mlr
-## [Tune] 1: C=4,sigma=2 : mmce.test.mean=0.0667
-## Loading packages on slaves: mlr
-## [Tune] 1: C=0.25,sigma=4 : mmce.test.mean=0.113
-## Loading packages on slaves: mlr
-## [Tune] 1: C=0.5,sigma=4 : mmce.test.mean=0.08
-## Loading packages on slaves: mlr
-## [Tune] 1: C=1,sigma=4 : mmce.test.mean=0.0533
-## Loading packages on slaves: mlr
-## [Tune] 1: C=2,sigma=4 : mmce.test.mean=0.06
-## Loading packages on slaves: mlr
-## [Tune] 1: C=4,sigma=4 : mmce.test.mean=0.06
-## [Tune] Result: C=1,sigma=0.25 : =0.0333
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## [Tune] 1: C=0.5; sigma=0.5 : mmce.test.mean=0.04
+## Loading packages on master (to be available on slaves for mode local): mlr
+## [Tune] 1: C=1; sigma=0.5 : mmce.test.mean=0.04
+## Loading packages on master (to be available on slaves for mode local): mlr
+## [Tune] 1: C=2; sigma=0.5 : mmce.test.mean=0.0467
+## Loading packages on master (to be available on slaves for mode local): mlr
+## [Tune] 1: C=0.5; sigma=1 : mmce.test.mean=0.04
+## Loading packages on master (to be available on slaves for mode local): mlr
+## [Tune] 1: C=1; sigma=1 : mmce.test.mean=0.0533
+## Loading packages on master (to be available on slaves for mode local): mlr
+## [Tune] 1: C=2; sigma=1 : mmce.test.mean=0.0467
+## Loading packages on master (to be available on slaves for mode local): mlr
+## [Tune] 1: C=0.5; sigma=2 : mmce.test.mean=0.06
+## Loading packages on master (to be available on slaves for mode local): mlr
+## [Tune] 1: C=1; sigma=2 : mmce.test.mean=0.0533
+## Loading packages on master (to be available on slaves for mode local): mlr
+## [Tune] 1: C=2; sigma=2 : mmce.test.mean=0.06
+## [Tune] Result: C=0.5; sigma=0.5 : mmce.test.mean=0.04
 ```
 
 ```
 ## Tune result:
-## Op. pars: C=1,sigma=0.25
-## =0.0333
+## Op. pars: C=0.5; sigma=0.5
+## mmce.test.mean=0.04
 ```
 
 
@@ -172,7 +140,7 @@ rin = makeResampleDesc("CV", iters = 3)
 rout = makeResampleDesc("CV", iters = 5)
 
 lrn = makeTuneWrapper(makeLearner("classif.ksvm"), resampling = rin, par.set = ps, 
-    control = ctrl)
+    control = ctrl, show.info = FALSE)
 ```
 
 
@@ -182,7 +150,7 @@ entire models might be expensive.
 
 
 ```splus
-r = resample(lrn, task, resampling = rout, extract = getTuneResult, show.info = FALSE)
+r = resample(lrn, task, resampling = rout, extract = getTuneResult)
 ```
 
 
@@ -198,28 +166,28 @@ r$extract
 ```
 ## [[1]]
 ## Tune result:
-## Op. pars: C=2,sigma=0.25
-## =0.025
+## Op. pars: C=1; sigma=0.25
+## mmce.test.mean=0.05
 ## 
 ## [[2]]
 ## Tune result:
-## Op. pars: C=2,sigma=0.25
-## =0.025
+## Op. pars: C=4; sigma=0.25
+## mmce.test.mean=0.0417
 ## 
 ## [[3]]
 ## Tune result:
-## Op. pars: C=2,sigma=0.25
-## =0.0333
+## Op. pars: C=0.5; sigma=0.5
+## mmce.test.mean=0.0333
 ## 
 ## [[4]]
 ## Tune result:
-## Op. pars: C=2,sigma=0.25
-## =0.0333
+## Op. pars: C=0.5; sigma=0.25
+## mmce.test.mean=0.0417
 ## 
 ## [[5]]
 ## Tune result:
-## Op. pars: C=1,sigma=0.25
-## =0.0333
+## Op. pars: C=2; sigma=0.5
+## mmce.test.mean=0.0167
 ```
 
 
@@ -238,11 +206,11 @@ r$measures.test
 
 ```
 ##   iter    mmce
-## 1    1 0.00000
-## 2    2 0.03333
+## 1    1 0.06667
+## 2    2 0.00000
 ## 3    3 0.06667
-## 4    4 0.00000
-## 5    5 0.06667
+## 4    4 0.06667
+## 5    5 0.13333
 ```
 
 ```splus
@@ -251,7 +219,7 @@ r$aggr
 
 ```
 ## mmce.test.mean 
-##        0.03333
+##        0.06667
 ```
 
 

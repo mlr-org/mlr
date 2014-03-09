@@ -36,7 +36,7 @@ r = resample(lrn, task, rdesc, measures = list(mmce, mmceAggrBySd))
 ```
 
 ```
-## Loading packages on slaves: mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
@@ -86,23 +86,23 @@ ms1max = setAggregation(ms1, test.max)
 ```
 
 ```
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
-## Loading packages on slaves: mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
 ```
 
 ```

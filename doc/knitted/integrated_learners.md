@@ -5,6 +5,13 @@ Integrated Learners
 ```
 ## Loading required package: survival
 ## Loading required package: splines
+## 
+## Attaching package: 'survival'
+## 
+## The following object is masked from 'package:caret':
+## 
+##     cluster
+## 
 ## Loading required package: parallel
 ## Loaded gbm 2.1
 ```
@@ -15,13 +22,7 @@ List of currently integrated classifiers
 
 
 ```
-## Warning: The following learners could not be constructed, probably because their packages are not installed:
-## classif.LiblineaRBinary,classif.LiblineaRLogReg,classif.LiblineaRMultiClass,surv.CoxBoost,surv.glmnet
-## Check ?learners to see which packages you need or install mlr with all suggestions.
-```
-
-```
-## Error: konnte Funktion "ascii" nicht finden
+## Error: error in evaluating the argument 'x' in selecting a method for function 'print': Error: could not find function "ascii"
 ```
 
 
@@ -30,12 +31,6 @@ List of currently integrated regression methods
 
 
 ```
-## Warning: The following learners could not be constructed, probably because their packages are not installed:
-## classif.LiblineaRBinary,classif.LiblineaRLogReg,classif.LiblineaRMultiClass,surv.CoxBoost,surv.glmnet
-## Check ?learners to see which packages you need or install mlr with all suggestions.
-```
-
-```
-## Error: konnte Funktion "ascii" nicht finden
+## Error: error in evaluating the argument 'x' in selecting a method for function 'print': Error: could not find function "ascii"
 ```
 

@@ -58,7 +58,7 @@ performance(pred = pred, measures = timepredict)
 ```
 
 ```
-## [1] 0.003
+## [1] 0.009
 ```
 
 ```splus
@@ -67,7 +67,7 @@ performance(pred = pred, measures = timetrain, model = mod)
 ```
 
 ```
-## [1] 0.051
+## [1] 0.021
 ```
 
 ```splus
@@ -75,7 +75,7 @@ performance(pred = pred, measures = timeboth, model = mod)
 ```
 
 ```
-## [1] 0.054
+## [1] 0.03
 ```
 
 
@@ -90,7 +90,7 @@ performance(pred = pred, measures = ms, model = mod)
 
 ```
 ##      mmce       acc timetrain  timeboth 
-##     0.040     0.960     0.051     0.054
+##     0.040     0.960     0.021     0.030
 ```
 
 
@@ -153,12 +153,7 @@ performance(pred, measures = auc)
 ```
 
 ```
-## KernSmooth 2.23 loaded
-## Copyright M. P. Wand 1997-2009
-```
-
-```
-## [1] 0.9224
+## Error: Argument xs must be of class list, not: function!
 ```
 
 

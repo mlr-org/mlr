@@ -45,7 +45,7 @@ r1 = resample(lrn1, task, rdesc, show.info = FALSE)
 ```
 
 ```
-## Loading packages on slaves: mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
 ```
 
 ```splus
@@ -53,7 +53,7 @@ r2 = resample(lrn2, task, rdesc, show.info = FALSE)
 ```
 
 ```
-## Loading packages on slaves: mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
 ```
 
 

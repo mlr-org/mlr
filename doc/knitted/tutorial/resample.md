@@ -33,7 +33,7 @@ r = resample(lrn, task, rdesc)
 ```
 
 ```
-## Loading packages on slaves: mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
@@ -68,7 +68,7 @@ r
 ## Stratification: FALSE
 ## predict.type: response
 ## threshold: 
-## time (mean): 0.00
+## time (mean): 0.01
 ## 'data.frame':	150 obs. of  5 variables:
 ##  $ id      : int  1 2 11 15 17 20 22 25 26 28 ...
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
@@ -117,7 +117,7 @@ r = resample(lrn, task, rdesc)
 ```
 
 ```
-## Loading packages on slaves: mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
@@ -152,7 +152,7 @@ r
 ## Stratification: FALSE
 ## predict.type: response
 ## threshold: 
-## time (mean): 0.00
+## time (mean): 0.01
 ## 'data.frame':	506 obs. of  5 variables:
 ##  $ id      : int  4 14 24 25 29 35 41 42 43 49 ...
 ##  $ truth   : num  33.4 20.4 14.5 15.6 18.4 13.5 34.9 26.6 25.3 14.4 ...
@@ -359,7 +359,7 @@ r1 = resample(lrn, task, rinst, list(mmce, acc))
 ```
 
 ```
-## Loading packages on slaves: mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
@@ -376,7 +376,7 @@ r1 = resample(lrn1, task, rinst, list(mmce, acc))
 ```
 
 ```
-## Loading packages on slaves: mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
@@ -392,7 +392,7 @@ r2 = resample(lrn2, task, rinst, list(mmce, acc))
 ```
 
 ```
-## Loading packages on slaves: mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
@@ -495,7 +495,7 @@ r1 = resample(lrn1, task, rinst, measures = ms)
 ```
 
 ```
-## Loading packages on slaves: mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Resample] OOB bootstrapping iter: 1
 ## [Resample] OOB bootstrapping iter: 2
 ## [Resample] OOB bootstrapping iter: 3
@@ -510,7 +510,7 @@ r2 = resample(lrn2, task, rinst, measures = ms)
 ```
 
 ```
-## Loading packages on slaves: mlr
+## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Resample] OOB bootstrapping iter: 1
 ## [Resample] OOB bootstrapping iter: 2
 ## [Resample] OOB bootstrapping iter: 3
