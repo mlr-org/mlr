@@ -15,10 +15,10 @@ License: BSD_3_clause + file LICENSE
 Depends:
     R (>= 3.0.0),
     ParamHelpers (>= 1.2),
-    BBmisc (>= 1.5),
+    BBmisc (>= 1.6),
     stats
 Imports:
-    parallelMap,
+    parallelMap (>= 1.1),
     codetools,
     survival
 Suggests:
