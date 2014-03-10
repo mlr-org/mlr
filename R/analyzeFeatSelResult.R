@@ -1,21 +1,23 @@
-#' @title Show and visualized the steps of the feature selection.
+#' @title Show and visualize the steps of feature selection.
 #'
 #' @description
-#' This function prints the steps \code{\link{selectFeatures}} took to find it's optimal set
+#' This function prints the steps \code{\link{selectFeatures}} took to find its optimal set
 #' of features and the reason why it stopped.
-#' It can also give information about all calculations done on each intermediate step.
+#' It can also print information about all calculations done in each intermediate step.
+#'
 #' Currently only implemented for sequential feature selection.
 #'
 #' @param res [\code{FeatSelResult(1)}]\cr
 #'   The result of of \code{\link{selectFeatures}}.
 #' @param reduce [\code{logical(1)}]\cr
-#'   Per iteration: Print only the selected feature or all features
-#'   that were evaluated?
+#'   Per iteration: Print only the selected feature (or all features
+#'   that were evaluated)?
 #'   Default is \code{TRUE}.
 #' @return Nothing.
 #' @export
-analyzeFeatSelResult = function(res, reduce=TRUE, printed.features=10L) {
+analyzeFeatSelResult = function(res, reduce=TRUE) {
   checkArg(res$control, "FeatSelControlSequential")
+  checkArg(reduce, "logical", len=1L, na.ok=FALSE)
 
   x = res$x
   y = res$y
