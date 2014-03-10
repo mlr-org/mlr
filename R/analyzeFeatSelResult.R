@@ -110,7 +110,7 @@ printAnalyzeFeatSelResultSeq = function(x, printed.features=10L) {
 print.analyzeFeatSelResult = function(x, ...) {
   cl = class(x$control)[1L]
   switch(cl,
-    FeatSelControlSequential = printAnalyzeFeatSelResultSeq(x, ...)
+    FeatSelControlSequential = printAnalyzeFeatSelResultSeq(x, ...),
     stopf("Not implemented for class %s!", cl)
   )
 }
