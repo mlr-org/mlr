@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Create learner object.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body>
+
+<table width="100%" summary="page for makeLearner {mlr}"><tr><td>makeLearner {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Create learner object.</h2>
+
+<h3>Description</h3>
+
+<p>For a classification learner the <code>predict.type</code> can
+be set to &ldquo;prob&rdquo; to predict probabilities and the
+maximum value selects the label. The threshold used to
+assign the label can later be changed using the
+<code><a href="setThreshold.html">setThreshold</a></code> function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  makeLearner(cl, id = cl, predict.type = "response", ...,
+    par.vals = list())
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>cl</code></td>
+<td>
+<p>[<code>character(1)</code>]<br> Class of learner to
+create. By convention, all classification learners start
+with &ldquo;classif.&rdquo; and all regression learners with
+&ldquo;regr.&rdquo;. A list of all learners is available on
+the <code><a href="learners.html">learners</a></code> help page.</p>
+</td></tr>
+<tr valign="top"><td><code>id</code></td>
+<td>
+<p>[<code>character(1)</code>]<br> Id string for object.
+Used to display object.  Default is <code>cl</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>predict.type</code></td>
+<td>
+<p>[<code>character(1)</code>]<br>
+Classification: &ldquo;response&rdquo; (= labels) or
+&ldquo;prob&rdquo; (= probabilities and labels by selecting
+the ones with maximal probability).  Regression:
+&ldquo;response&rdquo; (= mean response) or &ldquo;se&rdquo; (=
+standard errors and mean response).  Default is
+&ldquo;response&rdquo;.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>[any]<br> Optional named (hyper)parameters.
+Alternatively these can be given using the
+<code>par.vals</code> argument.</p>
+</td></tr>
+<tr valign="top"><td><code>par.vals</code></td>
+<td>
+<p>[<code>list</code>]<br> Optional list of named
+(hyper)parameters. The arguments in <code>...</code> take
+precedence over values in this list. We strongly
+encourage you to use one or the other to pass
+(hyper)parameters to the learner but not both.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>[<code><a href="makeLearner.html">Learner</a></code>].
+</p>
+
+
+<h3>See Also</h3>
+
+<p>[<code><a href="../../gdata/html/resample.html">resample</a></code>],
+[<code><a href="predict.WrappedModel.html">predict.WrappedModel</a></code>]
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="r">
+makeLearner(&quot;classif.rpart&quot;)
+</code></pre>
+
+<pre><code>## Loading required package: rpart
+</code></pre>
+
+<pre><code>## Learner classif.rpart from package rpart
+## Type: classif
+## Class: classif.rpart
+## Predict-Type: response
+## Hyperparameters: xval=0
+## 
+## Supported features Numerics:TRUE Factors:TRUE
+## Supports missings: TRUE
+## Supports weights: TRUE
+## Supports classes: two,multi
+## Supports probabilities: TRUE
+</code></pre>
+
+<pre><code class="r">makeLearner(&quot;classif.lda&quot;, predict.type = &quot;prob&quot;)
+</code></pre>
+
+<pre><code>## Learner classif.lda from package MASS
+## Type: classif
+## Class: classif.lda
+## Predict-Type: prob
+## Hyperparameters: 
+## 
+## Supported features Numerics:TRUE Factors:TRUE
+## Supports missings: FALSE
+## Supports weights: FALSE
+## Supports classes: two,multi
+## Supports probabilities: TRUE
+</code></pre>
+
+<pre><code class="r">
+lrn &lt;- makeLearner(&quot;classif.rpart&quot;, minsplit = 5)
+print(lrn$par.vals)
+</code></pre>
+
+<pre><code>## $xval
+## [1] 0
+## 
+## $minsplit
+## [1] 5
+</code></pre>
+
+<pre><code class="r">lrn &lt;- makeLearner(&quot;classif.lda&quot;, method = &quot;mle&quot;)
+print(lrn$par.vals)
+</code></pre>
+
+<pre><code>## $method
+## [1] &quot;mle&quot;
+</code></pre>
+
+<pre><code class="r">lrn &lt;- makeLearner(&quot;classif.lda&quot;, method = &quot;t&quot;, nu = 10)
+print(lrn$par.vals)
+</code></pre>
+
+<pre><code>## $method
+## [1] &quot;t&quot;
+## 
+## $nu
+## [1] 10
+</code></pre>
+
+<pre><code class="r">
+</code></pre>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

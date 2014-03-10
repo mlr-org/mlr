@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Measure performance of prediction.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body>
+
+<table width="100%" summary="page for performance {mlr}"><tr><td>performance {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Measure performance of prediction.</h2>
+
+<h3>Description</h3>
+
+<p>Measures the quality of a prediction w.r.t. some
+performance measure.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  performance(pred, measures, task, model)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>pred</code></td>
+<td>
+<p>[<code><a href="Prediction.html">Prediction</a></code>] <br> Prediction
+object to evaluate.</p>
+</td></tr>
+<tr valign="top"><td><code>measures</code></td>
+<td>
+<p>[<code><a href="makeMeasure.html">Measure</a></code> | list of
+<code><a href="makeMeasure.html">Measure</a></code>]<br> Performance measure(s) to
+evaluate.</p>
+</td></tr>
+<tr valign="top"><td><code>task</code></td>
+<td>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> Learning
+task, might be requested by performance measure, usually
+not needed.</p>
+</td></tr>
+<tr valign="top"><td><code>model</code></td>
+<td>
+<p>[<code><a href="makeWrappedModel.html">WrappedModel</a></code>]<br> Model built
+on training data, might be requested by performance
+measure, usually not needed.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A single numerical performance value.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="makeMeasure.html">makeMeasure</a></code>, <code><a href="measures.html">measures</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="r">
+training.set &lt;- seq(1, nrow(iris), by = 2)
+test.set &lt;- seq(2, nrow(iris), by = 2)
+
+task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
+lrn &lt;- makeLearner(&quot;classif.lda&quot;)
+mod &lt;- train(lrn, task, subset = training.set)
+pred &lt;- predict(mod, newdata = iris[test.set, ])
+
+## Here we define the mean misclassification error (MMCE) as our performance measure
+my.mmce &lt;- function(task, model, pred, extra.args) {
+  length(which(pred$data$response != pred$data$truth)) / nrow(pred$data)
+}
+ms &lt;- makeMeasure(id = &quot;misclassification.rate&quot;,
+                  minimize = TRUE,
+                  classif = TRUE,
+                  allowed.pred.types = &quot;response&quot;,
+                  fun = my.mmce)
+performance(pred, ms, task, mod)
+</code></pre>
+
+<pre><code>## [1] 0.04
+</code></pre>
+
+<pre><code class="r">
+## Indeed the MMCE is already implemented in mlr beside other common performance measures
+performance(pred, measures = mmce)
+</code></pre>
+
+<pre><code>## [1] 0.04
+</code></pre>
+
+<pre><code class="r">
+## Compute multiple performance measures at once
+ms &lt;- list(&quot;mmce&quot; = mmce, &quot;acc&quot; = acc, &quot;timetrain&quot; = timetrain)
+sapply(ms, function(the.ms) {
+  performance(pred, measures = the.ms, task, mod)
+})
+</code></pre>
+
+<pre><code>##      mmce       acc timetrain 
+##     0.040     0.960     0.009
+</code></pre>
+
+<pre><code class="r">
+</code></pre>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

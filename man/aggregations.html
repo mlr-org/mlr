@@ -18,32 +18,32 @@ values on test sets. </p>
 deviation of performance values on test sets.
 </p>
 </li>
-<li><p><B>test.median</B><br> Median of performance values
+<li><p><B>test.median</B><br> Median of performance
+values on test sets. </p>
+</li>
+<li><p><B>test.min</B><br> Minimum
+of performance values on test sets.
+</p>
+</li>
+<li><p><B>test.max</B><br> Maximum of performance values
 on test sets. </p>
 </li>
-<li><p><B>test.min</B><br> Minimum of
+<li><p><B>test.sum</B><br> Sum of
 performance values on test sets.
 </p>
 </li>
-<li><p><B>test.max</B><br> Maximum of performance values on
-test sets. </p>
-</li>
-<li><p><B>test.sum</B><br> Sum of performance
-values on test sets. </p>
-</li>
-<li><p><B>train.mean</B><br> Mean of
-performance values on training sets.
-</p>
-</li>
-<li><p><B>train.sd</B><br> Standard deviation of
-performance values on training sets.
-</p>
-</li>
-<li><p><B>train.median</B><br> Median of performance values
+<li><p><B>train.mean</B><br> Mean of performance values
 on training sets. </p>
 </li>
-<li><p><B>train.min</B><br> Minimum of
-performance values on training sets.
+<li><p><B>train.sd</B><br> Standard
+deviation of performance values on training sets.
+</p>
+</li>
+<li><p><B>train.median</B><br> Median of performance
+values on training sets. </p>
+</li>
+<li><p><B>train.min</B><br>
+Minimum of performance values on training sets.
 </p>
 </li>
 <li><p><B>train.max</B><br> Maximum of performance values
@@ -70,53 +70,47 @@ mean of those means.  Mainly used for repeated CV. </p>
 <h3>Usage</h3>
 
 <pre>
-test.mean
+  test.mean
 
-test.sd
+  test.sd
 
-test.median
+  test.median
 
-test.min
+  test.min
 
-test.max
+  test.max
 
-test.sum
+  test.sum
 
-test.range
+  test.sqrt.of.mean
 
-test.sqrt.of.mean
+  train.mean
 
-train.mean
+  train.sd
 
-train.sd
+  train.median
 
-train.median
+  train.min
 
-train.min
+  train.max
 
-train.max
+  train.sum
 
-train.sum
+  b632
 
-train.range
+  b632plus
 
-train.sqrt.of.mean
-
-b632
-
-b632plus
-
-testgroup.mean
+  testgroup.mean
 </pre>
 
 
 <h3>Format</h3>
 
-<PRE>List of 2
- $ id : chr "test.mean"
- $ fun:function (task, perf.test, perf.train, measure, group, pred)  
- - attr(*, "class")= chr "Aggregation"
-</PRE>
+<p>List of 2
+$ id : chr &quot;test.mean&quot;
+$ fun:function (task, perf.test, perf.train, measure, group, pred)  
+- attr(*, &quot;class&quot;)= chr &quot;Aggregation&quot;</p>
+
 
 <h3>See Also</h3>
 
