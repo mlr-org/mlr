@@ -36,10 +36,8 @@ resample(learner, task, resampling, measures, weights, models = FALSE,
   \code{\link{train}} during resampling.  Default is to
   extract nothing.}
 
-  \item{show.info}{[\code{logical(1)}]\cr Should a few
-  informative lines about the current resampling iteration
-  and the result be logged to the R console?  Default is
-  \code{TRUE}.}
+  \item{show.info}{[\code{logical(1)}]\cr Verbose output on
+  console?  Default is \code{TRUE}.}
 }
 \value{
 List of: \item{measures.test [\code{data.frame}]}{Rows

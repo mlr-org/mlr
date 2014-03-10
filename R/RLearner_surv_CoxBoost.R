@@ -12,7 +12,7 @@ makeRLearner.surv.CoxBoost = function() {
       makeLogicalLearnerParam(id="standardize", default=TRUE),
       makeDiscreteLearnerParam(id="criterion", default="pscore", values=c("pscore", "score", "hpscore", "hscore")),
       makeNumericLearnerParam(id="stepsize.factor", default=1, lower=0),
-      makeDiscreteLearnerParam(id="sf.scheme", default="sigmoid", values=c("sigmoid", "linear")),
+      makeDiscreteLearnerParam(id="sf.scheme", default="sigmoid", values=c("sigmoid", "linear"))
       # FIXME still missing some arguments
     ),
     missings = FALSE,

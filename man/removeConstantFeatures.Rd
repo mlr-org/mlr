@@ -26,6 +26,9 @@ removeConstantFeatures(x, perc = 0, dont.rm = character(0),
   calculation.\cr \item \code{distinct}: \code{NA}s will be
   seen as multiple extra levels in the percentage
   calculation.\cr }}
+
+  \item{show.info}{[\code{logical(1)}]\cr Verbose output on
+  console?  Default is \code{TRUE}.}
 }
 \value{
 [\code{\link{data.frame}} | \code{\link{SupervisedTask}}].
