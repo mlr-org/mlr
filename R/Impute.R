@@ -86,13 +86,13 @@ impute = function(data, target, classes=list(), cols=list(), dummies=character(0
   if (length(target)) {
     not.ok = target %nin% names(data)
     if (any(not.ok))
-      stopf("Target column '%s' must be present in data", target[first(not.ok)])
+      stopf("Target column '%s' must be present in data", target[which.first(not.ok)])
     not.ok = target %in% names(cols)
     if (any(not.ok))
-      stopf("Imputation of target column '%s' not possible", target[first(not.ok)])
+      stopf("Imputation of target column '%s' not possible", target[which.first(not.ok)])
     not.ok = target %in% names(dummies)
     if (any(not.ok))
-      stopf("Dummy creation of target column '%s' not possible", target[first(not.ok)])
+      stopf("Dummy creation of target column '%s' not possible", target[which.first(not.ok)])
   }
   checkArg(impute.new.levels, "logical", len=1L, na.ok=FALSE)
   checkArg(recode.factor.levels, "logical", len=1L, na.ok=FALSE)
