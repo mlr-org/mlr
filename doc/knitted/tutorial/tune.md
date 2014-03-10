@@ -77,24 +77,14 @@ tuneParams(makeLearner("classif.ksvm"), task = task, resampling = rdesc, par.set
 ## Disc param 'C'. Vals: 0.5,1,2. Trafo: FALSE. Requires: FALSE
 ## Disc param 'sigma'. Vals: 0.5,1,2. Trafo: FALSE. Requires: FALSE
 ## With control class: TuneControlGrid
-## Loading packages on master (to be available on slaves for mode local): mlr
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Tune] 1: C=0.5; sigma=0.5 : mmce.test.mean=0.04
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Tune] 1: C=1; sigma=0.5 : mmce.test.mean=0.04
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Tune] 1: C=2; sigma=0.5 : mmce.test.mean=0.0467
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Tune] 1: C=0.5; sigma=1 : mmce.test.mean=0.04
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Tune] 1: C=1; sigma=1 : mmce.test.mean=0.0533
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Tune] 1: C=2; sigma=1 : mmce.test.mean=0.0467
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Tune] 1: C=0.5; sigma=2 : mmce.test.mean=0.06
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Tune] 1: C=1; sigma=2 : mmce.test.mean=0.0533
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Tune] 1: C=2; sigma=2 : mmce.test.mean=0.06
 ## [Tune] Result: C=0.5; sigma=0.5 : mmce.test.mean=0.04
 ```
@@ -150,7 +140,7 @@ entire models might be expensive.
 
 
 ```splus
-r = resample(lrn, task, resampling = rout, extract = getTuneResult)
+r = resample(lrn, task, resampling = rout, extract = getTuneResult, show.info = FALSE)
 ```
 
 

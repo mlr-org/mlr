@@ -42,18 +42,7 @@ Afterwards we perform [resampling](resample.md) to obtain predictions for each f
 ## Perform a 10-fold cross-validation
 rdesc = makeResampleDesc("CV", iters = 10)
 r1 = resample(lrn1, task, rdesc, show.info = FALSE)
-```
-
-```
-## Loading packages on master (to be available on slaves for mode local): mlr
-```
-
-```splus
 r2 = resample(lrn2, task, rdesc, show.info = FALSE)
-```
-
-```
-## Loading packages on master (to be available on slaves for mode local): mlr
 ```
 
 

@@ -58,7 +58,7 @@ performance(pred = pred, measures = timepredict)
 ```
 
 ```
-## [1] 0.009
+## [1] 0.004
 ```
 
 ```splus
@@ -67,7 +67,7 @@ performance(pred = pred, measures = timetrain, model = mod)
 ```
 
 ```
-## [1] 0.021
+## [1] 0.109
 ```
 
 ```splus
@@ -75,7 +75,7 @@ performance(pred = pred, measures = timeboth, model = mod)
 ```
 
 ```
-## [1] 0.03
+## [1] 0.113
 ```
 
 
@@ -90,7 +90,7 @@ performance(pred = pred, measures = ms, model = mod)
 
 ```
 ##      mmce       acc timetrain  timeboth 
-##     0.040     0.960     0.021     0.030
+##     0.040     0.960     0.109     0.113
 ```
 
 
@@ -153,7 +153,7 @@ performance(pred, measures = auc)
 ```
 
 ```
-## Error: Argument xs must be of class list, not: function!
+## Error: Argument measures must be of class list, not: function!
 ```
 
 
