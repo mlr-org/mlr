@@ -33,7 +33,6 @@ r = resample(lrn, task, rdesc)
 ```
 
 ```
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
@@ -68,7 +67,7 @@ r
 ## Stratification: FALSE
 ## predict.type: response
 ## threshold: 
-## time (mean): 0.01
+## time (mean): 0.00
 ## 'data.frame':	150 obs. of  5 variables:
 ##  $ id      : int  1 2 11 15 17 20 22 25 26 28 ...
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
@@ -117,7 +116,6 @@ r = resample(lrn, task, rdesc)
 ```
 
 ```
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
@@ -359,7 +357,6 @@ r1 = resample(lrn, task, rinst, list(mmce, acc))
 ```
 
 ```
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
@@ -376,7 +373,6 @@ r1 = resample(lrn1, task, rinst, list(mmce, acc))
 ```
 
 ```
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
@@ -392,7 +388,6 @@ r2 = resample(lrn2, task, rinst, list(mmce, acc))
 ```
 
 ```
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
@@ -495,7 +490,6 @@ r1 = resample(lrn1, task, rinst, measures = ms)
 ```
 
 ```
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Resample] OOB bootstrapping iter: 1
 ## [Resample] OOB bootstrapping iter: 2
 ## [Resample] OOB bootstrapping iter: 3
@@ -510,7 +504,6 @@ r2 = resample(lrn2, task, rinst, measures = ms)
 ```
 
 ```
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Resample] OOB bootstrapping iter: 1
 ## [Resample] OOB bootstrapping iter: 2
 ## [Resample] OOB bootstrapping iter: 3

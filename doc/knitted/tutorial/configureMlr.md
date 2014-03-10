@@ -21,7 +21,6 @@ r = resample(lrn, task, rdesc)
 ```
 
 ```
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Resample] cross-validation iter: 1
 ```
 
@@ -46,7 +45,7 @@ r = resample(lrn, task, rdesc)
 ```
 
 ```
-## [Resample] Result: mmce.test.mean=0.06
+## [Resample] Result: mmce.test.mean=0.0733
 ```
 
 Just try the following:
@@ -57,11 +56,10 @@ r = resample(lrn, task, rdesc)
 ```
 
 ```
-## Loading packages on master (to be available on slaves for mode local): mlr
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.04
+## [Resample] Result: mmce.test.mean=0.06
 ```
 
 
