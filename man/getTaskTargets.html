@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Get target column of task.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body>
+
+<table width="100%" summary="page for getTaskTargets {mlr}"><tr><td>getTaskTargets {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Get target column of task.</h2>
+
+<h3>Description</h3>
+
+<p>Get target column of task.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  getTaskTargets(task, subset, recode.target = "no")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>task</code></td>
+<td>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> The task.</p>
+</td></tr>
+<tr valign="top"><td><code>subset</code></td>
+<td>
+<p>[<code>integer</code>]<br> Selected cases.
+Default is all cases.</p>
+</td></tr>
+<tr valign="top"><td><code>recode.target</code></td>
+<td>
+<p>[<code>character(1)</code>] <br> Should
+target classes be recoded? Only for binary
+classification.  Possible are &ldquo;no&rdquo; (do nothing),
+&ldquo;01&rdquo;, and &ldquo;-1+1&rdquo;.  In the two latter cases
+the target vector is converted into a numeric vector.
+The positive class is coded as +1 and the negative class
+either as 0 or -1.  Default is &ldquo;no&rdquo;.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>A <code>factor</code> for classification or a <code>numeric</code>
+for regression.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="r">
+task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
+getTaskTargets(task)
+</code></pre>
+
+<pre><code>##   [1] setosa     setosa     setosa     setosa     setosa     setosa    
+##   [7] setosa     setosa     setosa     setosa     setosa     setosa    
+##  [13] setosa     setosa     setosa     setosa     setosa     setosa    
+##  [19] setosa     setosa     setosa     setosa     setosa     setosa    
+##  [25] setosa     setosa     setosa     setosa     setosa     setosa    
+##  [31] setosa     setosa     setosa     setosa     setosa     setosa    
+##  [37] setosa     setosa     setosa     setosa     setosa     setosa    
+##  [43] setosa     setosa     setosa     setosa     setosa     setosa    
+##  [49] setosa     setosa     versicolor versicolor versicolor versicolor
+##  [55] versicolor versicolor versicolor versicolor versicolor versicolor
+##  [61] versicolor versicolor versicolor versicolor versicolor versicolor
+##  [67] versicolor versicolor versicolor versicolor versicolor versicolor
+##  [73] versicolor versicolor versicolor versicolor versicolor versicolor
+##  [79] versicolor versicolor versicolor versicolor versicolor versicolor
+##  [85] versicolor versicolor versicolor versicolor versicolor versicolor
+##  [91] versicolor versicolor versicolor versicolor versicolor versicolor
+##  [97] versicolor versicolor versicolor versicolor virginica  virginica 
+## [103] virginica  virginica  virginica  virginica  virginica  virginica 
+## [109] virginica  virginica  virginica  virginica  virginica  virginica 
+## [115] virginica  virginica  virginica  virginica  virginica  virginica 
+## [121] virginica  virginica  virginica  virginica  virginica  virginica 
+## [127] virginica  virginica  virginica  virginica  virginica  virginica 
+## [133] virginica  virginica  virginica  virginica  virginica  virginica 
+## [139] virginica  virginica  virginica  virginica  virginica  virginica 
+## [145] virginica  virginica  virginica  virginica  virginica  virginica 
+## Levels: setosa versicolor virginica
+</code></pre>
+
+<pre><code class="r">getTaskTargets(task, subset = 1:50)
+</code></pre>
+
+<pre><code>##  [1] setosa setosa setosa setosa setosa setosa setosa setosa setosa setosa
+## [11] setosa setosa setosa setosa setosa setosa setosa setosa setosa setosa
+## [21] setosa setosa setosa setosa setosa setosa setosa setosa setosa setosa
+## [31] setosa setosa setosa setosa setosa setosa setosa setosa setosa setosa
+## [41] setosa setosa setosa setosa setosa setosa setosa setosa setosa setosa
+## Levels: setosa versicolor virginica
+</code></pre>
+
+<pre><code class="r">
+</code></pre>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

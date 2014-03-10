@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Get probabilities for some classes.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body>
+
+<table width="100%" summary="page for getProbabilities {mlr}"><tr><td>getProbabilities {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Get probabilities for some classes.</h2>
+
+<h3>Description</h3>
+
+<p>Get probabilities for some classes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  getProbabilities(pred, cl)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>pred</code></td>
+<td>
+<p>[<code><a href="Prediction.html">Prediction</a></code>]<br> Prediction
+object.</p>
+</td></tr>
+<tr valign="top"><td><code>cl</code></td>
+<td>
+<p>[<code>character</code>]<br> Names of classes.
+Default is either all classes for multi-class problems or
+the positive class for binary classification.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>[<code>data.frame</code>] with numerical columns or a numerical
+vector if length of <code>cl</code> is 1.  Order of columns is
+defined by <code>cl</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="predict.WrappedModel.html">predict.WrappedModel</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="r">
+task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
+lrn &lt;- makeLearner(&quot;classif.lda&quot;, predict.type = &quot;prob&quot;)
+mod &lt;- train(lrn, task)
+# predict probabilities
+pred &lt;- predict(mod, newdata = iris)
+# Get probabilities for all classes
+head(getProbabilities(pred))
+</code></pre>
+
+<pre><code>##   setosa versicolor virginica
+## 1      1  3.896e-22 2.611e-42
+## 2      1  7.218e-18 5.042e-37
+## 3      1  1.464e-19 4.676e-39
+## 4      1  1.269e-16 3.567e-35
+## 5      1  1.637e-22 1.083e-42
+## 6      1  3.883e-21 4.567e-40
+</code></pre>
+
+<pre><code class="r"># Get probabilities for a subset of classes
+head(getProbabilities(pred, c(&quot;setosa&quot;, &quot;virginica&quot;)))
+</code></pre>
+
+<pre><code>##   setosa virginica
+## 1      1 2.611e-42
+## 2      1 5.042e-37
+## 3      1 4.676e-39
+## 4      1 3.567e-35
+## 5      1 1.083e-42
+## 6      1 4.567e-40
+</code></pre>
+
+<pre><code class="r">
+</code></pre>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

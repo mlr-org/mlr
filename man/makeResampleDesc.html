@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Create a description object for a resampling strategy.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body>
+
+<table width="100%" summary="page for makeResampleDesc {mlr}"><tr><td>makeResampleDesc {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Create a description object for a resampling strategy.</h2>
+
+<h3>Description</h3>
+
+<p>A description of a resampling algorithm contains all
+necessary information to create a
+<code><a href="makeResampleInstance.html">ResampleInstance</a></code>, when given the size of
+the data set.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  makeResampleDesc(method, predict = "test", ...,
+    stratify = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>method</code></td>
+<td>
+<p>[<code>character(1)</code>]<br> &ldquo;CV&rdquo; for
+cross-validation, &ldquo;LOO&rdquo; for leave-one-out,
+&ldquo;RepCV&rdquo; for repeated cross-validation,<br>
+&ldquo;Bootstrap&rdquo; for out-of-bag bootstrap,
+&ldquo;Subsample&rdquo; for subsampling, &ldquo;Holdout&rdquo; for
+holdout.</p>
+</td></tr>
+<tr valign="top"><td><code>predict</code></td>
+<td>
+<p>[<code>character(1)</code>]<br> What to predict
+during resampling: &ldquo;train&rdquo;, &ldquo;test&rdquo; or
+&ldquo;both&rdquo; sets. Default is &ldquo;test&rdquo;.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>[any]<br> Further parameters for strategies.<br>
+iters [<code>numeric(1)</code>]: Number of iterations, for
+&ldquo;CV&rdquo;, &ldquo;Subsample&rdquo; and &ldquo;Boostrap&rdquo;<br>
+split [<code>numeric(1)</code>]: Proportion of training cases
+for &ldquo;Holdout&rdquo; and &ldquo;Subsample&rdquo; between 0 and
+1. Default is 2/3.<br> reps [integer(1)]: Repeats for
+&ldquo;RepCV&rdquo;. Here <code>iters = folds * reps</code>. Default
+is 10. <br> folds [integer(1)]: Folds in the repeated CV
+for <code>RepCV</code>. Here <code>iters = folds * reps</code>.
+Default is 10.</p>
+</td></tr>
+<tr valign="top"><td><code>stratify</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Should
+stratification be done for the classes in classification
+tasks?  This means that the resampling strategy is
+applied to all classes individually and the resulting
+index sets are joined to make sure that the proportion of
+observations in each training set is as in the original
+data set. Useful for imbalanced class sizes.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Object slots: </p>
+ <dl>
+<dt>id
+[<code>character(1)</code>]</dt><dd><p>Name of resampling strategy.</p>
+</dd>
+<dt>iters [<code>integer(1)</code>]</dt><dd><p>Number of iterations.
+Note that this is always the complete number of generated
+train/test sets, so for a 10-times repeated 5fold
+cross-validation it would be 50.</p>
+</dd> <dt>predict
+[<code>character(1)</code>]</dt><dd><p>What to predict during resampling:
+&ldquo;train&rdquo;, &ldquo;test&rdquo; or &ldquo;both&rdquo; sets.</p>
+</dd> </dl>
+
+<p>Repeated cross-validation: Use &ldquo;RepCV&rdquo;. Then you
+have to set the aggregation function for your preferred
+performance measure to &ldquo;testgroup.mean&rdquo; via
+<code><a href="setAggregation.html">setAggregation</a></code>. B632 bootstrap: Use
+&ldquo;Bootstrap&rdquo; for bootstrap and set predict to
+&ldquo;both&rdquo;.  Then you have to set the aggregation
+function for your preferred performance measure to
+&ldquo;b632&rdquo; via <code><a href="setAggregation.html">setAggregation</a></code>. B632+
+bootstrap: Use &ldquo;Bootstrap&rdquo; for bootstrap and set
+predict to &ldquo;both&rdquo;.  Then you have to set the
+aggregation function for your preferred performance
+measure to &ldquo;b632plus&rdquo; via
+<code><a href="setAggregation.html">setAggregation</a></code>. Fixed Holdout set: Use
+<code><a href="makeFixedHoldoutInstance.html">makeFixedHoldoutInstance</a></code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code><a href="makeResampleDesc.html">ResampleDesc</a></code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="r">
+## Bootstraping
+makeResampleDesc(&quot;Bootstrap&quot;, iters = 10)
+</code></pre>
+
+<pre><code>## Resample description: OOB bootstrapping with 10 iterations.
+## Predict: test
+## Stratification: FALSE
+</code></pre>
+
+<pre><code class="r">makeResampleDesc(&quot;Bootstrap&quot;, iters = 10, predict = &quot;both&quot;)
+</code></pre>
+
+<pre><code>## Resample description: OOB bootstrapping with 10 iterations.
+## Predict: both
+## Stratification: FALSE
+</code></pre>
+
+<pre><code class="r">
+## Subsampling
+makeResampleDesc(&quot;Subsample&quot;, iters = 10, split = 3/4)
+</code></pre>
+
+<pre><code>## Resample description: subsampling with 10 iterations and 0.75 split rate.
+## Predict: test
+## Stratification: FALSE
+</code></pre>
+
+<pre><code class="r">makeResampleDesc(&quot;Subsample&quot;, iters = 10)
+</code></pre>
+
+<pre><code>## Resample description: subsampling with 10 iterations and 0.67 split rate.
+## Predict: test
+## Stratification: FALSE
+</code></pre>
+
+<pre><code class="r">
+## Holdout respectively test sample estimation
+makeResampleDesc(&quot;Holdout&quot;)
+</code></pre>
+
+<pre><code>## Resample description: holdout with 0.67 split rate.
+## Predict: test
+## Stratification: FALSE
+</code></pre>
+
+<pre><code class="r">
+</code></pre>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

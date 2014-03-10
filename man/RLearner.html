@@ -10,29 +10,29 @@
 
 <h3>Description</h3>
 
-<p>Wraps an already implemented learning method from R to make
-it accessible to mlr. Call this method in your constructor.
-You have to pass an id (name), the required package(s), a
-description object for all changeable parameters (you dont
-have to do this for the learner to work, but it is strongly
-recommended), and define what the learner can / cannot do.
+<p>Wraps an already implemented learning method from R to
+make it accessible to mlr. Call this method in your
+constructor. You have to pass an id (name), the required
+package(s), a description object for all changeable
+parameters (you dont have to do this for the learner to
+work, but it is strongly recommended), and define what
+the learner can / cannot do.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-makeRLearner()
+  makeRLearner()
 
-makeRLearnerClassif(cl, package, par.set, numerics = FALSE, factors = FALSE,
-  missings = FALSE, weights = FALSE, oneclass = FALSE, twoclass = FALSE,
-  multiclass = FALSE, prob = FALSE, par.vals = list())
+  makeRLearnerClassif(cl, package, par.set,
+    numerics = FALSE, factors = FALSE, missings = FALSE,
+    weights = FALSE, oneclass = FALSE, twoclass = FALSE,
+    multiclass = FALSE, prob = FALSE, par.vals = list())
 
-makeRLearnerRegr(cl, package, par.set, numerics, factors = FALSE,
-  missings = FALSE, weights = FALSE, se = FALSE, par.vals = list())
-
-makeRLearnerSurv(cl, package, par.set, numerics, factors = FALSE,
-  missings = FALSE, weights = FALSE, se = FALSE, par.vals = list())
+  makeRLearnerRegr(cl, package, par.set, numerics,
+    factors = FALSE, missings = FALSE, weights = FALSE,
+    se = FALSE, par.vals = list())
 </pre>
 
 
@@ -43,9 +43,8 @@ makeRLearnerSurv(cl, package, par.set, numerics, factors = FALSE,
 <td>
 <p>[<code>character(1)</code>] <br> Class name for
 learner to create.  By convention, all classification
-learners start with &ldquo;classif.&rdquo;, all regression
-learners with &ldquo;regr.&rdquo; and all survival learners
-start with &ldquo;surv.&rdquo;.</p>
+learners start with &ldquo;classif.&rdquo; and all regression
+learners with &ldquo;regr.&rdquo;</p>
 </td></tr>
 <tr valign="top"><td><code>package</code></td>
 <td>
@@ -117,8 +116,8 @@ is empty list.</p>
 
 <h3>Value</h3>
 
-<p>[<code><a href="RLearner.html">RLearnerClassif</a></code>, <code><a href="RLearner.html">RLearnerRegr</a></code>
-or <code><a href="RLearner.html">RLearnerSurv</a></code>].
+<p>[<code><a href="RLearner.html">RLearnerClassif</a></code> or
+<code><a href="RLearner.html">RLearnerRegr</a></code>].
 </p>
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>

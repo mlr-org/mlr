@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Instantiates a resampling strategy object.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body>
+
+<table width="100%" summary="page for makeResampleInstance {mlr}"><tr><td>makeResampleInstance {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Instantiates a resampling strategy object.</h2>
+
+<h3>Description</h3>
+
+<p>This class encapsulates training and test sets generated
+from the data set for a number of iterations. It mainly
+stores a set of integer vectors indicating the training
+and test examples for each iteration.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  makeResampleInstance(desc, task, size)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>desc</code></td>
+<td>
+<p>[<code><a href="makeResampleDesc.html">ResampleDesc</a></code>]<br> Resampling
+description object.</p>
+</td></tr>
+<tr valign="top"><td><code>task</code></td>
+<td>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> Data of
+task to resample from.  Prefer to pass this instead of
+<code>size</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>size</code></td>
+<td>
+<p>[<code><a href="../../base/html/integer.html">integer</a></code>]<br> Size of the data
+set to resample.  Can be used instead of <code>task</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Object slots: </p>
+ <dl>
+<dt>desc
+[<code><a href="makeResampleDesc.html">ResampleDesc</a></code>]</dt><dd><p>See argument.</p>
+</dd> <dt>size
+[integer(1)]</dt><dd><p>See argument.</p>
+</dd> <dt>train.inds [list of
+<code>integer</code>]</dt><dd><p>List of of training indices for all
+iterations.</p>
+</dd> <dt>test.inds [list of
+<code>integer</code>]</dt><dd><p>List of of test indices for all
+iterations.</p>
+</dd> <dt>group [<code>factor</code>]</dt><dd><p>Optional
+grouping of resampling iterations. This encodes whether
+specfic iterations 'belong together' (e.g. repeated CV),
+and it can later be used to aggregate performance values
+accordingly. Default is 'factor()'. </p>
+</dd> </dl>
+
+
+
+<h3>Value</h3>
+
+<p>[<code><a href="makeResampleInstance.html">ResampleInstance</a></code>].
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="makeResampleDesc.html">makeResampleDesc</a></code>, <code><a href="../../gdata/html/resample.html">resample</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="r">
+task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
+rdesc &lt;- makeResampleDesc(&quot;Bootstrap&quot;, iters = 10)
+rin &lt;- makeResampleInstance(rdesc, task = task)
+rin
+</code></pre>
+
+<pre><code>## Resample instance for 150 cases for:
+## Resample description: OOB bootstrapping with 10 iterations.
+## Predict: test
+## Stratification: FALSE
+</code></pre>
+
+<pre><code class="r">
+## Alternativly provide the size argument instead of a task object
+rdesc &lt;- makeResampleDesc(&quot;CV&quot;, iters = 50)
+rin &lt;- makeResampleInstance(rdesc, size = nrow(iris))
+
+</code></pre>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>
