@@ -7,7 +7,7 @@ task. This will be at least the target variable, but might also be
 information about excluded (ID) variables or case weights.
 
 Currently two subclasses of a [LearnTask](http://berndbischl.github.io/mlr/man/makeLearner.html) exist: [ClassifTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) for
-classification and [RegrTask]http://berndbischl.github.io/mlr/man/SupervisedTask.html) for regression problems.  A
+classification and [RegrTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) for regression problems.  A
 classification task is created by using the [makeClassifTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) factory
 method. The target variable is converted to a ``factor``, if it is a
 ``logical``, ``integer`` or ``character`` vector. Accordingly use [makeRegrTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html)
