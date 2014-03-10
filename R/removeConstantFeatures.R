@@ -21,6 +21,9 @@
 #'   \item \code{single}: NAs will be seen as a single, extra level in the percentage calculation.\cr
 #'   \item \code{distinct}: \code{NA}s will be seen as multiple extra levels in the percentage calculation.\cr
 #' }
+#' @param show.info [\code{logical(1)}]\cr
+#'   Verbose output on console?
+#'   Default is \code{TRUE}.
 #' @return [\code{\link{data.frame}} | \code{\link{SupervisedTask}}].
 #' @export
 removeConstantFeatures = function(x, perc = 0, dont.rm = character(0), na.mode = "na.rm",

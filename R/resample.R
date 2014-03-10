@@ -38,8 +38,7 @@
 #'   during resampling.
 #'   Default is to extract nothing.
 #' @param show.info [\code{logical(1)}]\cr
-#'   Should a few informative lines about the current resampling iteration and the result be
-#'   logged to the R console?
+#'   Verbose output on console?
 #'   Default is \code{TRUE}.
 #' @return List of:
 #'   \item{measures.test [\code{data.frame}]}{Rows correspond to test sets in resampling iterations,
