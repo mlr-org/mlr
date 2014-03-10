@@ -79,6 +79,8 @@
 #' @name FeatSelControl
 #' @rdname FeatSelControl
 #' @aliases FeatSelControlExhaustive FeatSelControlRandom FeatSelControlSequential FeatSelControlGA
+NULL
+
 makeFeatSelControl = function(same.resampling.instance, maxit, max.features, ..., cl) {
   checkArg(same.resampling.instance, "logical", len=1L, na.ok=FALSE)
   maxit = convertInteger(maxit)
