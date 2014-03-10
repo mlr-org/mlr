@@ -29,10 +29,12 @@
 <a href="#L">L</a>
 <a href="#M">M</a>
 <a href="#N">N</a>
+<a href="#O">O</a>
 <a href="#P">P</a>
 <a href="#R">R</a>
 <a href="#S">S</a>
 <a href="#T">T</a>
+<a href="#U">U</a>
 <a href="#W">W</a>
 </p>
 
@@ -46,6 +48,8 @@
 <td>An aggregation method reduces the performance values of the test (and possibly the training sets) to a single value. To see all possible, implemented aggregations look at 'aggregations'.</td></tr>
 <tr><td width="25%"><a href="aggregations.html">aggregations</a></td>
 <td>Aggregation methods.</td></tr>
+<tr><td width="25%"><a href="analyzeFeatSelResult.html">analyzeFeatSelResult</a></td>
+<td>Shows the detailed steps of the feature selection.</td></tr>
 <tr><td width="25%"><a href="asROCRPrediction.html">asROCRPrediction</a></td>
 <td>Converts predictions to a format package ROCR can handle.</td></tr>
 <tr><td width="25%"><a href="measures.html">auc</a></td>
@@ -66,8 +70,10 @@
 <h2><a name="C">-- C --</a></h2>
 
 <table width="100%">
+<tr><td width="25%"><a href="measures.html">cindex</a></td>
+<td>Performance measures.</td></tr>
 <tr><td width="25%"><a href="SupervisedTask.html">ClassifTask</a></td>
-<td>Create a classification / regression task for a given data set.</td></tr>
+<td>Create a classification, regression or survival task for a given data set.</td></tr>
 <tr><td width="25%"><a href="configureMlr.html">configureMlr</a></td>
 <td>Configures the behaviour of the package.</td></tr>
 <tr><td width="25%"><a href="crossover.html">crossover</a></td>
@@ -96,7 +102,7 @@
 <tr><td width="25%"><a href="FeatSelResult.html">FeatSelResult</a></td>
 <td>Result of feature selection.</td></tr>
 <tr><td width="25%"><a href="filterFeatures.html">filterFeatures</a></td>
-<td>Filter features by using a numerical importance criterion. Calculates numerical importance values for all features. Thresholding of these values can be used to select "useful" features. Look at package FSelector for details on the filter algorithms.</td></tr>
+<td>Filter features by using a numerical importance criterion.</td></tr>
 <tr><td width="25%"><a href="measures.html">fn</a></td>
 <td>Performance measures.</td></tr>
 <tr><td width="25%"><a href="measures.html">fnr</a></td>
@@ -114,6 +120,8 @@
 <td>Returns the list of models fitted in bagging.</td></tr>
 <tr><td width="25%"><a href="getConfMatrix.html">getConfMatrix</a></td>
 <td>Confusion matrix.</td></tr>
+<tr><td width="25%"><a href="getFeatSelResult.html">getFeatSelResult</a></td>
+<td>Returns the selected feature set and optimization path.</td></tr>
 <tr><td width="25%"><a href="getFilteredFeatures.html">getFilteredFeatures</a></td>
 <td>Returns the filtered features.</td></tr>
 <tr><td width="25%"><a href="getHyperPars.html">getHyperPars</a></td>
@@ -145,22 +153,28 @@
 <h2><a name="I">-- I --</a></h2>
 
 <table width="100%">
-<tr><td width="25%"><a href="impute.html">imp.const</a></td>
-<td>Impute and re-impute data</td></tr>
-<tr><td width="25%"><a href="impute.html">imp.hist</a></td>
-<td>Impute and re-impute data</td></tr>
-<tr><td width="25%"><a href="impute.html">imp.max</a></td>
-<td>Impute and re-impute data</td></tr>
-<tr><td width="25%"><a href="impute.html">imp.median</a></td>
-<td>Impute and re-impute data</td></tr>
-<tr><td width="25%"><a href="impute.html">imp.min</a></td>
-<td>Impute and re-impute data</td></tr>
-<tr><td width="25%"><a href="impute.html">imp.mode</a></td>
-<td>Impute and re-impute data</td></tr>
-<tr><td width="25%"><a href="impute.html">imp.normal</a></td>
-<td>Impute and re-impute data</td></tr>
+<tr><td width="25%"><a href="imputations.html">imputations</a></td>
+<td>Built in imputation methods The built-ins are:         • 'imputeConstant(const)' for imputation using a constant           value,         • 'imputeMedian()' for imputation using the median,         • 'imputeMode()' for imputation using the mode,         • 'imputeMin(multiplier)' for imputation using the minimum,         • 'imputeMax(multiplier)' for imputation using the maximum,         • 'imputeNormal(mean, sd)' for imputation using normally           distributed random values. Mean and standard deviation will           be calculated from the data if not provided.         • 'imputeHist(breaks, use.mids)' for imputation using random           values with probabilities calculated using 'table' or 'hist'.         • 'imputeLearner(learner, preimpute)' for imputations using the           response of a classification or regression learner.</td></tr>
 <tr><td width="25%"><a href="impute.html">impute</a></td>
 <td>Impute and re-impute data</td></tr>
+<tr><td width="25%"><a href="imputations.html">imputeConstant</a></td>
+<td>Built in imputation methods The built-ins are:         • 'imputeConstant(const)' for imputation using a constant           value,         • 'imputeMedian()' for imputation using the median,         • 'imputeMode()' for imputation using the mode,         • 'imputeMin(multiplier)' for imputation using the minimum,         • 'imputeMax(multiplier)' for imputation using the maximum,         • 'imputeNormal(mean, sd)' for imputation using normally           distributed random values. Mean and standard deviation will           be calculated from the data if not provided.         • 'imputeHist(breaks, use.mids)' for imputation using random           values with probabilities calculated using 'table' or 'hist'.         • 'imputeLearner(learner, preimpute)' for imputations using the           response of a classification or regression learner.</td></tr>
+<tr><td width="25%"><a href="imputations.html">imputeHist</a></td>
+<td>Built in imputation methods The built-ins are:         • 'imputeConstant(const)' for imputation using a constant           value,         • 'imputeMedian()' for imputation using the median,         • 'imputeMode()' for imputation using the mode,         • 'imputeMin(multiplier)' for imputation using the minimum,         • 'imputeMax(multiplier)' for imputation using the maximum,         • 'imputeNormal(mean, sd)' for imputation using normally           distributed random values. Mean and standard deviation will           be calculated from the data if not provided.         • 'imputeHist(breaks, use.mids)' for imputation using random           values with probabilities calculated using 'table' or 'hist'.         • 'imputeLearner(learner, preimpute)' for imputations using the           response of a classification or regression learner.</td></tr>
+<tr><td width="25%"><a href="imputations.html">imputeLearner</a></td>
+<td>Built in imputation methods The built-ins are:         • 'imputeConstant(const)' for imputation using a constant           value,         • 'imputeMedian()' for imputation using the median,         • 'imputeMode()' for imputation using the mode,         • 'imputeMin(multiplier)' for imputation using the minimum,         • 'imputeMax(multiplier)' for imputation using the maximum,         • 'imputeNormal(mean, sd)' for imputation using normally           distributed random values. Mean and standard deviation will           be calculated from the data if not provided.         • 'imputeHist(breaks, use.mids)' for imputation using random           values with probabilities calculated using 'table' or 'hist'.         • 'imputeLearner(learner, preimpute)' for imputations using the           response of a classification or regression learner.</td></tr>
+<tr><td width="25%"><a href="imputations.html">imputeMax</a></td>
+<td>Built in imputation methods The built-ins are:         • 'imputeConstant(const)' for imputation using a constant           value,         • 'imputeMedian()' for imputation using the median,         • 'imputeMode()' for imputation using the mode,         • 'imputeMin(multiplier)' for imputation using the minimum,         • 'imputeMax(multiplier)' for imputation using the maximum,         • 'imputeNormal(mean, sd)' for imputation using normally           distributed random values. Mean and standard deviation will           be calculated from the data if not provided.         • 'imputeHist(breaks, use.mids)' for imputation using random           values with probabilities calculated using 'table' or 'hist'.         • 'imputeLearner(learner, preimpute)' for imputations using the           response of a classification or regression learner.</td></tr>
+<tr><td width="25%"><a href="imputations.html">imputeMedian</a></td>
+<td>Built in imputation methods The built-ins are:         • 'imputeConstant(const)' for imputation using a constant           value,         • 'imputeMedian()' for imputation using the median,         • 'imputeMode()' for imputation using the mode,         • 'imputeMin(multiplier)' for imputation using the minimum,         • 'imputeMax(multiplier)' for imputation using the maximum,         • 'imputeNormal(mean, sd)' for imputation using normally           distributed random values. Mean and standard deviation will           be calculated from the data if not provided.         • 'imputeHist(breaks, use.mids)' for imputation using random           values with probabilities calculated using 'table' or 'hist'.         • 'imputeLearner(learner, preimpute)' for imputations using the           response of a classification or regression learner.</td></tr>
+<tr><td width="25%"><a href="imputations.html">imputeMin</a></td>
+<td>Built in imputation methods The built-ins are:         • 'imputeConstant(const)' for imputation using a constant           value,         • 'imputeMedian()' for imputation using the median,         • 'imputeMode()' for imputation using the mode,         • 'imputeMin(multiplier)' for imputation using the minimum,         • 'imputeMax(multiplier)' for imputation using the maximum,         • 'imputeNormal(mean, sd)' for imputation using normally           distributed random values. Mean and standard deviation will           be calculated from the data if not provided.         • 'imputeHist(breaks, use.mids)' for imputation using random           values with probabilities calculated using 'table' or 'hist'.         • 'imputeLearner(learner, preimpute)' for imputations using the           response of a classification or regression learner.</td></tr>
+<tr><td width="25%"><a href="imputations.html">imputeMode</a></td>
+<td>Built in imputation methods The built-ins are:         • 'imputeConstant(const)' for imputation using a constant           value,         • 'imputeMedian()' for imputation using the median,         • 'imputeMode()' for imputation using the mode,         • 'imputeMin(multiplier)' for imputation using the minimum,         • 'imputeMax(multiplier)' for imputation using the maximum,         • 'imputeNormal(mean, sd)' for imputation using normally           distributed random values. Mean and standard deviation will           be calculated from the data if not provided.         • 'imputeHist(breaks, use.mids)' for imputation using random           values with probabilities calculated using 'table' or 'hist'.         • 'imputeLearner(learner, preimpute)' for imputations using the           response of a classification or regression learner.</td></tr>
+<tr><td width="25%"><a href="imputations.html">imputeNormal</a></td>
+<td>Built in imputation methods The built-ins are:         • 'imputeConstant(const)' for imputation using a constant           value,         • 'imputeMedian()' for imputation using the median,         • 'imputeMode()' for imputation using the mode,         • 'imputeMin(multiplier)' for imputation using the minimum,         • 'imputeMax(multiplier)' for imputation using the maximum,         • 'imputeNormal(mean, sd)' for imputation using normally           distributed random values. Mean and standard deviation will           be calculated from the data if not provided.         • 'imputeHist(breaks, use.mids)' for imputation using random           values with probabilities calculated using 'table' or 'hist'.         • 'imputeLearner(learner, preimpute)' for imputations using the           response of a classification or regression learner.</td></tr>
+<tr><td width="25%"><a href="imputations.html">imputeUniform</a></td>
+<td>Built in imputation methods The built-ins are:         • 'imputeConstant(const)' for imputation using a constant           value,         • 'imputeMedian()' for imputation using the median,         • 'imputeMode()' for imputation using the mode,         • 'imputeMin(multiplier)' for imputation using the minimum,         • 'imputeMax(multiplier)' for imputation using the maximum,         • 'imputeNormal(mean, sd)' for imputation using normally           distributed random values. Mean and standard deviation will           be calculated from the data if not provided.         • 'imputeHist(breaks, use.mids)' for imputation using random           values with probabilities calculated using 'table' or 'hist'.         • 'imputeLearner(learner, preimpute)' for imputations using the           response of a classification or regression learner.</td></tr>
 </table>
 
 <h2><a name="L">-- L --</a></h2>
@@ -183,10 +197,12 @@
 <table width="100%">
 <tr><td width="25%"><a href="measures.html">mae</a></td>
 <td>Performance measures.</td></tr>
+<tr><td width="25%"><a href="makeAggregation.html">makeAggregation</a></td>
+<td>Specifiy your own aggregation of measures</td></tr>
 <tr><td width="25%"><a href="makeBaggingWrapper.html">makeBaggingWrapper</a></td>
 <td>Fuse learner with the bagging technique.</td></tr>
 <tr><td width="25%"><a href="SupervisedTask.html">makeClassifTask</a></td>
-<td>Create a classification / regression task for a given data set.</td></tr>
+<td>Create a classification, regression or survival task for a given data set.</td></tr>
 <tr><td width="25%"><a href="makeCostMeasure.html">makeCostMeasure</a></td>
 <td>Creates a measure for non-standard misclassification costs.</td></tr>
 <tr><td width="25%"><a href="makeCustomResampledMeasure.html">makeCustomResampledMeasure</a></td>
@@ -199,18 +215,24 @@
 <td>Create control structures for feature selection.</td></tr>
 <tr><td width="25%"><a href="FeatSelControl.html">makeFeatSelControlSequential</a></td>
 <td>Create control structures for feature selection.</td></tr>
+<tr><td width="25%"><a href="makeFeatSelWrapper.html">makeFeatSelWrapper</a></td>
+<td>Fuse learner with feature selection.</td></tr>
 <tr><td width="25%"><a href="makeFilterWrapper.html">makeFilterWrapper</a></td>
-<td>Fuse learner with filter method.</td></tr>
+<td>Fuse learner with a feature filter method.</td></tr>
 <tr><td width="25%"><a href="makeFixedHoldoutInstance.html">makeFixedHoldoutInstance</a></td>
 <td>Generate a fixed holdout instance for resampling.</td></tr>
+<tr><td width="25%"><a href="makeImputeMethod.html">makeImputeMethod</a></td>
+<td>Create a custom imputation method.</td></tr>
 <tr><td width="25%"><a href="makeLearner.html">makeLearner</a></td>
 <td>Create learner object.</td></tr>
 <tr><td width="25%"><a href="makeMeasure.html">makeMeasure</a></td>
 <td>Construct performance measure.</td></tr>
+<tr><td width="25%"><a href="makeUndersampleWrapper.html">makeOversampleWrapper</a></td>
+<td>Fuse learner with simple over/undersampling for binary classification.</td></tr>
 <tr><td width="25%"><a href="makePreprocWrapper.html">makePreprocWrapper</a></td>
 <td>Fuse learner with preprocessing.</td></tr>
 <tr><td width="25%"><a href="SupervisedTask.html">makeRegrTask</a></td>
-<td>Create a classification / regression task for a given data set.</td></tr>
+<td>Create a classification, regression or survival task for a given data set.</td></tr>
 <tr><td width="25%"><a href="makeResampleDesc.html">makeResampleDesc</a></td>
 <td>Create a description object for a resampling strategy.</td></tr>
 <tr><td width="25%"><a href="makeResampleInstance.html">makeResampleInstance</a></td>
@@ -221,6 +243,10 @@
 <td>Internal construction / wrapping of learner object.</td></tr>
 <tr><td width="25%"><a href="RLearner.html">makeRLearnerRegr</a></td>
 <td>Internal construction / wrapping of learner object.</td></tr>
+<tr><td width="25%"><a href="RLearner.html">makeRLearnerSurv</a></td>
+<td>Internal construction / wrapping of learner object.</td></tr>
+<tr><td width="25%"><a href="SupervisedTask.html">makeSurvTask</a></td>
+<td>Create a classification, regression or survival task for a given data set.</td></tr>
 <tr><td width="25%"><a href="TuneControl.html">makeTuneControlCMAES</a></td>
 <td>Create control structures for tuning.</td></tr>
 <tr><td width="25%"><a href="TuneControl.html">makeTuneControlGrid</a></td>
@@ -233,6 +259,8 @@
 <td>Create control structures for tuning.</td></tr>
 <tr><td width="25%"><a href="makeTuneWrapper.html">makeTuneWrapper</a></td>
 <td>Fuse learner with tuning.</td></tr>
+<tr><td width="25%"><a href="makeUndersampleWrapper.html">makeUndersampleWrapper</a></td>
+<td>Fuse learner with simple over/undersampling for binary classification.</td></tr>
 <tr><td width="25%"><a href="makeWrappedModel.html">makeWrappedModel</a></td>
 <td>Induced model of learner.</td></tr>
 <tr><td width="25%"><a href="measures.html">mcc</a></td>
@@ -249,8 +277,6 @@
 <td>Performance measures.</td></tr>
 <tr><td width="25%"><a href="measures.html">mse</a></td>
 <td>Performance measures.</td></tr>
-<tr><td width="25%"><a href="measures.html">multiclass.auc</a></td>
-<td>Performance measures.</td></tr>
 </table>
 
 <h2><a name="N">-- N --</a></h2>
@@ -258,6 +284,13 @@
 <table width="100%">
 <tr><td width="25%"><a href="measures.html">npv</a></td>
 <td>Performance measures.</td></tr>
+</table>
+
+<h2><a name="O">-- O --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="oversample.html">oversample</a></td>
+<td>Over- or undersample binary classification task to handle class imbalancy.</td></tr>
 </table>
 
 <h2><a name="P">-- P --</a></h2>
@@ -279,9 +312,11 @@
 
 <table width="100%">
 <tr><td width="25%"><a href="SupervisedTask.html">RegrTask</a></td>
-<td>Create a classification / regression task for a given data set.</td></tr>
+<td>Create a classification, regression or survival task for a given data set.</td></tr>
 <tr><td width="25%"><a href="reimpute.html">reimpute</a></td>
 <td>Re-impute a data set</td></tr>
+<tr><td width="25%"><a href="removeConstantFeatures.html">removeConstantFeatures</a></td>
+<td>Remove constant features from a data set.</td></tr>
 <tr><td width="25%"><a href="resample.html">resample</a></td>
 <td>Fit models according to a resampling strategy.</td></tr>
 <tr><td width="25%"><a href="makeResampleDesc.html">ResampleDesc</a></td>
@@ -295,6 +330,8 @@
 <tr><td width="25%"><a href="RLearner.html">RLearnerClassif</a></td>
 <td>Internal construction / wrapping of learner object.</td></tr>
 <tr><td width="25%"><a href="RLearner.html">RLearnerRegr</a></td>
+<td>Internal construction / wrapping of learner object.</td></tr>
+<tr><td width="25%"><a href="RLearner.html">RLearnerSurv</a></td>
 <td>Internal construction / wrapping of learner object.</td></tr>
 <tr><td width="25%"><a href="measures.html">rmse</a></td>
 <td>Performance measures.</td></tr>
@@ -322,7 +359,9 @@
 <tr><td width="25%"><a href="subsetTask.html">subsetTask</a></td>
 <td>Subset data in task.</td></tr>
 <tr><td width="25%"><a href="SupervisedTask.html">SupervisedTask</a></td>
-<td>Create a classification / regression task for a given data set.</td></tr>
+<td>Create a classification, regression or survival task for a given data set.</td></tr>
+<tr><td width="25%"><a href="SupervisedTask.html">SurvTask</a></td>
+<td>Create a classification, regression or survival task for a given data set.</td></tr>
 </table>
 
 <h2><a name="T">-- T --</a></h2>
@@ -337,6 +376,8 @@
 <tr><td width="25%"><a href="aggregations.html">test.median</a></td>
 <td>Aggregation methods.</td></tr>
 <tr><td width="25%"><a href="aggregations.html">test.min</a></td>
+<td>Aggregation methods.</td></tr>
+<tr><td width="25%"><a href="aggregations.html">test.range</a></td>
 <td>Aggregation methods.</td></tr>
 <tr><td width="25%"><a href="aggregations.html">test.sd</a></td>
 <td>Aggregation methods.</td></tr>
@@ -370,7 +411,11 @@
 <td>Aggregation methods.</td></tr>
 <tr><td width="25%"><a href="aggregations.html">train.min</a></td>
 <td>Aggregation methods.</td></tr>
+<tr><td width="25%"><a href="aggregations.html">train.range</a></td>
+<td>Aggregation methods.</td></tr>
 <tr><td width="25%"><a href="aggregations.html">train.sd</a></td>
+<td>Aggregation methods.</td></tr>
+<tr><td width="25%"><a href="aggregations.html">train.sqrt.of.mean</a></td>
 <td>Aggregation methods.</td></tr>
 <tr><td width="25%"><a href="aggregations.html">train.sum</a></td>
 <td>Aggregation methods.</td></tr>
@@ -394,6 +439,13 @@
 <td>Result of tuning.</td></tr>
 <tr><td width="25%"><a href="tuneThreshold.html">tuneThreshold</a></td>
 <td>Tune prediction threshold.</td></tr>
+</table>
+
+<h2><a name="U">-- U --</a></h2>
+
+<table width="100%">
+<tr><td width="25%"><a href="oversample.html">undersample</a></td>
+<td>Over- or undersample binary classification task to handle class imbalancy.</td></tr>
 </table>
 
 <h2><a name="W">-- W --</a></h2>

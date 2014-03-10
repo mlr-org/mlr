@@ -11,19 +11,17 @@
 <h3>Description</h3>
 
 <p>Fuses a learner with the bagging method (i.e., similar to
-what a <code>randomForest</code> does). Creates a learner
-object, which can be used like any other learner object.
-Models can easily be accessed via
-<code><a href="getBaggingModels.html">getBaggingModels</a></code>.
+what a <code>randomForest</code> does). Creates a learner object,
+which can be used like any other learner object. Models can
+easily be accessed via <code><a href="getBaggingModels.html">getBaggingModels</a></code>.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-  makeBaggingWrapper(learner, bag.iters = 10L,
-    bag.replace = TRUE, bag.size, bag.feats = 1,
-    predict.type = "response")
+makeBaggingWrapper(learner, bag.iters = 10L, bag.replace = TRUE, bag.size,
+  bag.feats = 1, predict.type = "response")
 </pre>
 
 
@@ -32,8 +30,8 @@ Models can easily be accessed via
 <table summary="R argblock">
 <tr valign="top"><td><code>learner</code></td>
 <td>
-<p>[<code><a href="Learner.html">Learner</a></code>]<br> The
-learner. Prediction type of the basic learner must be
+<p>[<code><a href="makeLearner.html">Learner</a></code>]<br> The learner.
+Prediction type of the basic learner must be
 &ldquo;response&rdquo;.</p>
 </td></tr>
 <tr valign="top"><td><code>bag.iters</code></td>
@@ -50,7 +48,7 @@ with replacement (bootstrapping)?  Default is TRUE.</p>
 <td>
 <p>[<code>numeric(1)</code>]<br> Percentage size of
 sampled bags.  Default is 1 for bootstrapping and 0.632
-for subampling.</p>
+for subsampling.</p>
 </td></tr>
 <tr valign="top"><td><code>bag.feats</code></td>
 <td>
@@ -73,24 +71,23 @@ standard errors and mean response).  Default is
 <h3>Details</h3>
 
 <p>Bagging is implemented as follows: For each iteration a
-random data subset is sampled (with or without
-replacement) and potentially the number of features is
-also restricted to a random subset. Note that this is
-usually handled in a slightly different way in the random
-forest where features are sampled at each tree split).
+random data subset is sampled (with or without replacement)
+and potentially the number of features is also restricted
+to a random subset. Note that this is usually handled in a
+slightly different way in the random forest where features
+are sampled at each tree split).
 </p>
 <p>Prediction works as follows: For classification we do
 majority voting to create a discrete label and
-probabilites are predicted by considering the proportions
-of all predicted labels. For regression the mean value
-and the standard devations accross predictions is
-computed.
+probabilities are predicted by considering the proportions
+of all predicted labels. For regression the mean value and
+the standard deviations across predictions is computed.
 </p>
 
 
 <h3>Value</h3>
 
-<p>[<code><a href="Learner.html">Learner</a></code>].
+<p>[<code><a href="makeLearner.html">Learner</a></code>].
 </p>
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>

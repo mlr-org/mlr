@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Built in imputation methods The built-ins are: •...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for imputations {mlr}"><tr><td>imputations {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Built in imputation methods
+The built-ins are:
+
+<ul>
+<li> <p><code>imputeConstant(const)</code> for imputation using a constant value,
+</p>
+</li>
+<li> <p><code>imputeMedian()</code> for imputation using the median,
+</p>
+</li>
+<li> <p><code>imputeMode()</code> for imputation using the mode,
+</p>
+</li>
+<li> <p><code>imputeMin(multiplier)</code> for imputation using the minimum,
+</p>
+</li>
+<li> <p><code>imputeMax(multiplier)</code> for imputation using the maximum,
+</p>
+</li>
+<li> <p><code>imputeNormal(mean, sd)</code> for imputation using normally
+distributed random values. Mean and standard deviation will be calculated
+from the data if not provided.
+</p>
+</li>
+<li> <p><code>imputeHist(breaks, use.mids)</code> for imputation using random values
+with probabilities calculated using <code>table</code> or <code>hist</code>.
+</p>
+</li>
+<li> <p><code>imputeLearner(learner, preimpute)</code> for imputations using the response
+of a classification or regression learner.
+</p>
+</li></ul>
+</h2>
+
+<h3>Description</h3>
+
+<p>Built in imputation methods The built-ins are: </p>
+
+<ul>
+<li> <p><code>imputeConstant(const)</code> for imputation using a
+constant value, </p>
+</li>
+<li> <p><code>imputeMedian()</code> for imputation
+using the median, </p>
+</li>
+<li> <p><code>imputeMode()</code> for imputation
+using the mode, </p>
+</li>
+<li> <p><code>imputeMin(multiplier)</code> for
+imputation using the minimum, </p>
+</li>
+<li>
+<p><code>imputeMax(multiplier)</code> for imputation using the
+maximum, </p>
+</li>
+<li> <p><code>imputeNormal(mean, sd)</code> for imputation
+using normally distributed random values. Mean and standard
+deviation will be calculated from the data if not provided.
+</p>
+</li>
+<li> <p><code>imputeHist(breaks, use.mids)</code> for imputation
+using random values with probabilities calculated using
+<code>table</code> or <code>hist</code>.  </p>
+</li>
+<li>
+<p><code>imputeLearner(learner, preimpute)</code> for imputations
+using the response of a classification or regression
+learner. </p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+imputeConstant(const)
+
+imputeMedian()
+
+imputeMode()
+
+imputeMin(multiplier = 1)
+
+imputeMax(multiplier = 1)
+
+imputeUniform(min, max)
+
+imputeNormal(mu, sd)
+
+imputeHist(breaks, use.mids = TRUE)
+
+imputeLearner(learner, preimpute = list())
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>const</code></td>
+<td>
+<p>[any]<br> Constant valued use for
+imputation.</p>
+</td></tr>
+<tr valign="top"><td><code>multiplier</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br> Value that
+stored minimum or maximum is multiplied with when
+imputation is done.</p>
+</td></tr>
+<tr valign="top"><td><code>min</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br> Lower bound for uniform
+distribution. If missing it will be estimated from the
+data.</p>
+</td></tr>
+<tr valign="top"><td><code>max</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br> Upper bound for uniform
+distribution. If missing it will be estimated from the
+data.</p>
+</td></tr>
+<tr valign="top"><td><code>mu</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br> Mean of normal
+distribution. If missing it will be estimated from the
+data.</p>
+</td></tr>
+<tr valign="top"><td><code>sd</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br> Standard deviation of
+normal distribution. If missing it will be estimated from
+the data.</p>
+</td></tr>
+<tr valign="top"><td><code>breaks</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br> Number of breaks to
+use in <code><a href="../../graphics/html/hist.html">hist</a></code>. If missing, defaults
+to auto-detection via &ldquo;Sturges&rdquo;.</p>
+</td></tr>
+<tr valign="top"><td><code>use.mids</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> If <code>x</code> is
+numeric and a histogram is used, impute with bin mids
+(default) or instead draw uniformly distributed samples
+within bin range.</p>
+</td></tr>
+<tr valign="top"><td><code>learner</code></td>
+<td>
+<p>[<code>Learner</code>]<br> Classification or
+regression learner. Its predcitions will be used for
+imputations.  Note that the target column is not
+available for this operation.</p>
+</td></tr>
+<tr valign="top"><td><code>preimute</code></td>
+<td>
+<p>[<code>list</code>]<br> Arguments for inner call
+to <code><a href="../../e1071/html/impute.html">impute</a></code> in scenarios where <code>learner</code>
+itself cannot handle missing values.  Default is
+<code>list()</code>.</p>
+</td></tr>
+</table>
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

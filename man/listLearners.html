@@ -19,13 +19,12 @@ missing values, case weights, etc.
 <h3>Usage</h3>
 
 <pre>
-  listLearners(type = NA, numerics = NA, factors = NA,
-    missings = NA, weights = NA, oneclass = NA,
-    twoclass = NA, multiclass = NA, prob = NA, se = NA,
-    quiet = TRUE, warn.missing.packages = TRUE)
+listLearners(type = NA, numerics = NA, factors = NA, missings = NA,
+  weights = NA, oneclass = NA, twoclass = NA, multiclass = NA,
+  prob = NA, se = NA, quiet = TRUE, warn.missing.packages = TRUE)
 
-  listLearnersForTask(task, weights = NA, prob = NA,
-    se = NA, warn.missing.packages = TRUE)
+listLearnersForTask(task, weights = NA, prob = NA, se = NA,
+  warn.missing.packages = TRUE)
 </pre>
 
 
@@ -35,7 +34,8 @@ missing values, case weights, etc.
 <tr valign="top"><td><code>type</code></td>
 <td>
 <p>[<code>character(1)</code>]<br> Type of the learning
-algorithm, either &ldquo;classif&rdquo; or &ldquo;regr&rdquo;.</p>
+algorithm, one of &ldquo;classif&rdquo;, &ldquo;regr&rdquo; or
+&ldquo;surv&rdquo;.</p>
 </td></tr>
 <tr valign="top"><td><code>numerics</code></td>
 <td>

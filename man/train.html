@@ -24,7 +24,7 @@ new data.
 <h3>Usage</h3>
 
 <pre>
-  train(learner, task, subset, weights)
+train(learner, task, subset, weights)
 </pre>
 
 
@@ -51,10 +51,9 @@ default the complete data set is used.</p>
 case weight vector to be used during fitting.  If given,
 must be of same length as <code>subset</code> and in
 corresponding order.  By default missing which means no
-weights are used.  Overwrites weights specified in the
-task ([<code><a href="SupervisedTask.html">SupervisedTask</a></code>]).  By default
-missing which means no weights are used unless specified
-in the task.</p>
+weights are used unless specified in the task
+([<code><a href="SupervisedTask.html">SupervisedTask</a></code>]).  Weights from the task
+will be overwritten.</p>
 </td></tr>
 </table>
 

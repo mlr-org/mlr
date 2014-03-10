@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Remove constant features from a data set.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for removeConstantFeatures {mlr}"><tr><td>removeConstantFeatures {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Remove constant features from a data set.</h2>
+
+<h3>Description</h3>
+
+<p>Constant features can lead to errors in some models and
+obviously provide no information in the training set that
+can be learned from. With the argument &ldquo;perc&rdquo;, there
+is a possibility to also remove features for which less
+than &ldquo;perc&rdquo; percent of the observations differ from
+the mode value.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+removeConstantFeatures(x, perc = 0, dont.rm = character(0),
+  na.mode = "na.rm", show.info = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>[<code><a href="../../base/html/data.frame.html">data.frame</a></code> |
+<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> The data set or task.</p>
+</td></tr>
+<tr valign="top"><td><code>perc</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br> The percentage of a
+feature values in [0, 1) that must differ from the mode
+value.  Default is 0, which means only constant features
+with exactly one observed level are removed.</p>
+</td></tr>
+<tr valign="top"><td><code>dont.rm</code></td>
+<td>
+<p>[<code>character</code>]<br> Names of the columns
+which must not be deleted.  Default is no columns.  Note
+that for a task the target column is always added to
+these so it is never removed.</p>
+</td></tr>
+<tr valign="top"><td><code>na.mode</code></td>
+<td>
+<p>[<code>character(1)</code>]<br> </p>
+ <ul>
+<li>
+<p><code>na.rm</code>: <code>NA</code>s will be ignored in the
+percentage calculation.<br> </p>
+</li>
+<li> <p><code>single</code>: NAs will
+be seen as a single, extra level in the percentage
+calculation.<br> </p>
+</li>
+<li> <p><code>distinct</code>: <code>NA</code>s will be
+seen as multiple extra levels in the percentage
+calculation.<br> </p>
+</li></ul>
+</td></tr>
+<tr valign="top"><td><code>show.info</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Verbose output on
+console?  Default is <code>TRUE</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>[<code><a href="../../base/html/data.frame.html">data.frame</a></code> | <code><a href="SupervisedTask.html">SupervisedTask</a></code>].
+</p>
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

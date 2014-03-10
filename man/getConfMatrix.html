@@ -24,7 +24,7 @@ classes.
 <h3>Usage</h3>
 
 <pre>
-  getConfMatrix(pred, relative = FALSE)
+getConfMatrix(pred, relative = FALSE)
 </pre>
 
 
@@ -91,21 +91,21 @@ print(getConfMatrix(pred))
 
 <pre><code>##             predicted
 ## true         setosa versicolor virginica -SUM-
-##   setosa         23          0         0     0
-##   versicolor      0         26         2     2
-##   virginica       0          1        23     1
-##   -SUM-           0          1         2     3
+##   setosa         32          0         0     0
+##   versicolor      0         26         0     0
+##   virginica       0          0        17     0
+##   -SUM-           0          0         0     0
 </code></pre>
 
 <pre><code class="r">print(getConfMatrix(pred, relative = TRUE))
 </code></pre>
 
 <pre><code>##             predicted
-## true         setosa versicolor virginica   -SUM-
-##   setosa          1    0.00000   0.00000 0.00000
-##   versicolor      0    0.92857   0.07143 0.07143
-##   virginica       0    0.04167   0.95833 0.04167
-##   -SUM-           0    0.33333   0.66667 0.04000
+## true         setosa versicolor virginica -SUM-
+##   setosa          1          0         0     0
+##   versicolor      0          1         0     0
+##   virginica       0          0         1     0
+##   -SUM-           0          0         0     0
 </code></pre>
 
 <pre><code class="r">

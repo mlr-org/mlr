@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>R: Create a classification / regression task for a given data...</title>
+<html><head><title>R: Create a classification, regression or survival task for a...</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="R.css">
 
@@ -11,25 +11,26 @@
 
 <table width="100%" summary="page for makeClassifTask {mlr}"><tr><td>makeClassifTask {mlr}</td><td align="right">R Documentation</td></tr></table>
 
-<h2>Create a classification / regression task for a given data set.</h2>
+<h2>Create a classification, regression or survival task for a given data set.</h2>
 
 <h3>Description</h3>
 
-<p>The task encapsulates the data and specifies - through
-its subclasses - the type of the task (either
-classification or regression), and contains a description
-object detailing further aspects of the data.
+<p>The task encapsulates the data and specifies - through its
+subclasses - the type of the task (either classification,
+regression or survival), and contains a description object
+detailing further aspects of the data.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-  makeClassifTask(id, data, target, weight, blocking,
-    positive, check.data = TRUE)
+makeClassifTask(id, data, target, weights, blocking, positive,
+  check.data = TRUE)
 
-  makeRegrTask(id, data, target, weight, blocking,
-    check.data = TRUE)
+makeRegrTask(id, data, target, weights, blocking, check.data = TRUE)
+
+makeSurvTask(id, data, target, weights, blocking, check.data = TRUE)
 </pre>
 
 
@@ -51,11 +52,10 @@ containing the features and target variable.</p>
 <p>[<code>character(1)</code>]<br> Name of the target
 variable.</p>
 </td></tr>
-<tr valign="top"><td><code>weight</code></td>
+<tr valign="top"><td><code>weights</code></td>
 <td>
-<p>[<code>character(1)</code>]<br> Optional, name of
-the column containing the non-negative case weight vector
-to be used during fitting.</p>
+<p>[<code>numeric</code>]<br> Optional, non-negative
+case weight vector to be used during fitting.</p>
 </td></tr>
 <tr valign="top"><td><code>blocking</code></td>
 <td>
@@ -99,8 +99,8 @@ access it.</p>
 </dd> <dt>blocking [<code>factor</code>]</dt><dd><p>See argument
 above. <code>factor(0)</code> if not present.</p>
 </dd> <dt>task.desc
-[<code><a href="TaskDesc.html">TaskDesc</a></code>]</dt><dd><p>Encapsulates further
-information about the task.</p>
+[<code><a href="TaskDesc.html">TaskDesc</a></code>]</dt><dd><p>Encapsulates further information
+about the task.</p>
 </dd> </dl>
 
 

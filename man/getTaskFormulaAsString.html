@@ -22,7 +22,7 @@
 <h3>Usage</h3>
 
 <pre>
-  getTaskFormulaAsString(x)
+getTaskFormulaAsString(x, target = getTargetNames(x))
 </pre>
 
 
@@ -34,6 +34,11 @@
 <p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code> |
 <code><a href="TaskDesc.html">TaskDesc</a></code>]<br> Task or its description
 object.</p>
+</td></tr>
+<tr valign="top"><td><code>target</code></td>
+<td>
+<p>[<code>character(1)</code>]<br> Left hand side of
+formula.  Default is defined by task <code>x</code>.</p>
 </td></tr>
 </table>
 
@@ -49,7 +54,12 @@ object.</p>
 <pre><code class="r">
 task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
 getTaskFormulaAsString(task)
+</code></pre>
 
+<pre><code>## [1] &quot;Species ~.&quot;
+</code></pre>
+
+<pre><code class="r">
 </code></pre>
 
 

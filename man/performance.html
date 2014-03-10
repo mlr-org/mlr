@@ -23,7 +23,7 @@ performance measure.
 <h3>Usage</h3>
 
 <pre>
-  performance(pred, measures, task, model)
+performance(pred, measures, task, model)
 </pre>
 
 
@@ -105,9 +105,7 @@ performance(pred, measures = mmce)
 <pre><code class="r">
 ## Compute multiple performance measures at once
 ms &lt;- list(&quot;mmce&quot; = mmce, &quot;acc&quot; = acc, &quot;timetrain&quot; = timetrain)
-sapply(ms, function(the.ms) {
-  performance(pred, measures = the.ms, task, mod)
-})
+performance(pred, measures = ms, task, mod)
 </code></pre>
 
 <pre><code>##      mmce       acc timetrain 

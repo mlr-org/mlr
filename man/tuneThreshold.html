@@ -20,8 +20,7 @@ problems.
 <h3>Usage</h3>
 
 <pre>
-  tuneThreshold(pred, measure, task, model,
-    control = list())
+tuneThreshold(pred, measure, task, model, control = list())
 </pre>
 
 
@@ -35,18 +34,18 @@ object to use for tuning the treshold.</p>
 </td></tr>
 <tr valign="top"><td><code>measure</code></td>
 <td>
-<p>[<code><a href="Measure.html">Measure</a></code>]<br>
-Performance measure to optimize.</p>
+<p>[<code><a href="makeMeasure.html">Measure</a></code>]<br> Performance
+measure to optimize.</p>
 </td></tr>
 <tr valign="top"><td><code>task</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
-Learning task. Rarely neeeded, only when required for the
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> Learning
+task. Rarely neeeded, only when required for the
 performance measure.</p>
 </td></tr>
 <tr valign="top"><td><code>model</code></td>
 <td>
-<p>[<code><a href="WrappedModel.html">WrappedModel</a></code>]<br> Fitted
+<p>[<code><a href="makeWrappedModel.html">WrappedModel</a></code>]<br> Fitted
 model. Rarely neeeded, only when required for the
 performance measure.</p>
 </td></tr>
@@ -62,8 +61,8 @@ list.</p>
 <h3>Value</h3>
 
 <p>[<code>list</code>]. A named list with with the following
-components: <code>th</code> is the optimal threshold,
-<code>perf</code> the performance value.
+components: <code>th</code> is the optimal threshold, <code>perf</code>
+the performance value.
 </p>
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>

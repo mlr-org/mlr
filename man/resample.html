@@ -15,26 +15,32 @@
 
 <h3>Description</h3>
 
-<p>Given a resampling strategy, which defines sets of
-training and test indices, fits the selected learner
-using the training sets and performs predictions for the
-training/test sets. (This depends on what you selected in
+<p>Given a resampling strategy, which defines sets of training
+and test indices, fits the selected learner using the
+training sets and performs predictions for the
+training/test sets. This depends on what you selected in
 the resampling strategy, see parameter <code>predict</code> in
-<code><a href="makeResampleDesc.html">makeResampleDesc</a></code>.) Then performance
-measures are calculated and aggregated. You are able to
-return all fitted models (parameter <code>models</code>) or
-extract specific parts of the models (parameter
-<code>extract</code>) as returning all of them completely might
-be memory intensive.
+<code><a href="makeResampleDesc.html">makeResampleDesc</a></code>.
+</p>
+<p>Then performance measures are calculated on all respective
+data sets and aggregated.
+</p>
+<p>You are able to return all fitted models (parameter
+<code>models</code>) or extract specific parts of the models
+(parameter <code>extract</code>) as returning all of them
+completely might be memory intensive.
+</p>
+<p>For construction of the resampling strategies use the
+factory methods <code><a href="makeResampleDesc.html">makeResampleDesc</a></code> and
+<code><a href="makeResampleInstance.html">makeResampleInstance</a></code>.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-  resample(learner, task, resampling, measures, weights,
-    models = FALSE, extract = function(model) { },
-    show.info = TRUE)
+resample(learner, task, resampling, measures, weights, models = FALSE,
+  extract, show.info = TRUE)
 </pre>
 
 
@@ -68,19 +74,18 @@ evaluate.</p>
 case weight vector to be used during fitting.  If given,
 must be of same length as observations in task and in
 corresponding order.  Overwrites weights specified in the
-task ([<code><a href="SupervisedTask.html">SupervisedTask</a></code>]).  By default
-missing which means no weights are used unless specified
-in the task.</p>
+<code>task</code>.  By default missing which means no weights
+are used unless specified in the task.</p>
 </td></tr>
 <tr valign="top"><td><code>models</code></td>
 <td>
-<p>[logical(1)]<br> Should all fitted models be
-returned?  Default is <code>FALSE</code>.</p>
+<p>[<code>logical(1)</code>]<br> Should all fitted
+models be returned?  Default is <code>FALSE</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>extract</code></td>
 <td>
-<p>[function(model)]<br> Function used to
-extract information from a fitted model during
+<p>[<code>function(model)</code>]<br> Function used
+to extract information from a fitted model during
 resampling.  Is applied to every
 <code><a href="makeWrappedModel.html">WrappedModel</a></code> resulting from calls to
 <code><a href="../../caret/html/train.html">train</a></code> during resampling.  Default is to
@@ -88,20 +93,10 @@ extract nothing.</p>
 </td></tr>
 <tr valign="top"><td><code>show.info</code></td>
 <td>
-<p>[logical(1)]<br> Should a few informative
-lines about the current resampling iteration and the
-result be logged to the R console?  Default is
-<code>TRUE</code>.</p>
+<p>[<code>logical(1)</code>]<br> Verbose output on
+console?  Default is <code>TRUE</code>.</p>
 </td></tr>
 </table>
-
-
-<h3>Details</h3>
-
-<p>For construction of the resampling strategies use the
-factory methods <code><a href="makeResampleDesc.html">makeResampleDesc</a></code> and
-<code><a href="makeResampleInstance.html">makeResampleInstance</a></code>.
-</p>
 
 
 <h3>Value</h3>
@@ -119,9 +114,9 @@ to performance measures.</p>
 <p>Rows correspond to training sets in
 resampling iterations, columns to performance measures.</p>
 </td></tr>
-<tr valign="top"><td><code>aggr [named numeric]</code></td>
+<tr valign="top"><td><code>aggr [<code>numeric</code>]</code></td>
 <td>
-<p>Vector of aggregated
+<p>Named vector of aggregated
 performance values. Names are coded like this
 &lt;measure&gt;.&lt;aggregation&gt;.</p>
 </td></tr> <tr valign="top"><td><code>pred
@@ -134,10 +129,10 @@ predictions during resampling.</p>
 <td>
 <p>List of fitted models or
 <code>NULL</code>.</p>
-</td></tr> <tr valign="top"><td><code>extract [list]</code></td>
+</td></tr> <tr valign="top"><td><code>extract [<code>list</code>]</code></td>
 <td>
-<p>List of extracted
-parts from fitted models or <code>NULL</code>.</p>
+<p>List of
+extracted parts from fitted models or <code>NULL</code>.</p>
 </td></tr>
 </table>
 
@@ -153,84 +148,46 @@ parts from fitted models or <code>NULL</code>.</p>
 
 <pre><code class="r">
 task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
-rdesc &lt;- makeResampleDesc(&quot;Bootstrap&quot;, iters = 10)
-rin &lt;- makeResampleInstance(rdesc, task = task)
-r1 &lt;- resample(makeLearner(&quot;classif.qda&quot;), task, rin)
+rdesc &lt;- makeResampleDesc(&quot;CV&quot;, iters = 2)
+r &lt;- resample(makeLearner(&quot;classif.qda&quot;), task, rdesc)
 </code></pre>
 
-<pre><code>## [Resample] OOB bootstrapping iter: 1
-## [Resample] OOB bootstrapping iter: 2
-## [Resample] OOB bootstrapping iter: 3
-## [Resample] OOB bootstrapping iter: 4
-## [Resample] OOB bootstrapping iter: 5
-## [Resample] OOB bootstrapping iter: 6
-## [Resample] OOB bootstrapping iter: 7
-## [Resample] OOB bootstrapping iter: 8
-## [Resample] OOB bootstrapping iter: 9
-## [Resample] OOB bootstrapping iter: 10
-## [Resample] Result: mmce.test.mean=0.0334
+<pre><code>## [Resample] cross-validation iter: 1
+## [Resample] cross-validation iter: 2
+## [Resample] Result: mmce.test.mean=0.0267
 </code></pre>
 
-<pre><code class="r">print(r1$measures.test)
-</code></pre>
-
-<pre><code>##    iter    mmce
-## 1     1 0.01754
-## 2     2 0.05085
-## 3     3 0.05455
-## 4     4 0.08929
-## 5     5 0.01786
-## 6     6 0.01818
-## 7     7 0.00000
-## 8     8 0.03390
-## 9     9 0.03333
-## 10   10 0.01887
-</code></pre>
-
-<pre><code class="r">print(r1$aggr)
+<pre><code class="r">print(r$aggr)
 </code></pre>
 
 <pre><code>## mmce.test.mean 
-##        0.03344
+##        0.02667
 </code></pre>
 
-<pre><code class="r">r2 &lt;- resample(makeLearner(&quot;classif.rpart&quot;), task, rin)
+<pre><code class="r">print(r$measures.test)
 </code></pre>
 
-<pre><code>## [Resample] OOB bootstrapping iter: 1
-## [Resample] OOB bootstrapping iter: 2
-## [Resample] OOB bootstrapping iter: 3
-## [Resample] OOB bootstrapping iter: 4
-## [Resample] OOB bootstrapping iter: 5
-## [Resample] OOB bootstrapping iter: 6
-## [Resample] OOB bootstrapping iter: 7
-## [Resample] OOB bootstrapping iter: 8
-## [Resample] OOB bootstrapping iter: 9
-## [Resample] OOB bootstrapping iter: 10
-## [Resample] Result: mmce.test.mean=0.0677
+<pre><code>##   iter    mmce
+## 1    1 0.04000
+## 2    2 0.01333
 </code></pre>
 
-<pre><code class="r">print(r2$measures.test)
+<pre><code class="r">print(r$pred)
 </code></pre>
 
-<pre><code>##    iter    mmce
-## 1     1 0.08772
-## 2     2 0.06780
-## 3     3 0.05455
-## 4     4 0.07143
-## 5     5 0.07143
-## 6     6 0.07273
-## 7     7 0.07692
-## 8     8 0.06780
-## 9     9 0.05000
-## 10   10 0.05660
-</code></pre>
-
-<pre><code class="r">print(r2$aggr)
-</code></pre>
-
-<pre><code>## mmce.test.mean 
-##         0.0677
+<pre><code>## Resampled Prediction for:
+## Resample description: cross-validation with 2 iterations.
+## Predict: test
+## Stratification: FALSE
+## predict.type: response
+## threshold: 
+## time (mean): 0.00
+## &#39;data.frame&#39;:    150 obs. of  5 variables:
+##  $ id      : int  5 6 11 12 15 17 18 19 21 22 ...
+##  $ truth   : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ response: Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ set     : Factor w/ 1 level &quot;test&quot;: 1 1 1 1 1 1 1 1 1 1 ...
 </code></pre>
 
 <pre><code class="r">

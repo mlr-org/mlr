@@ -15,33 +15,35 @@
 
 <h3>Description</h3>
 
-<p>These functions provide some convenience for imputation
-of missing values. A noteworthy feature is given by the
-possibility to re-impute a data set in the same way as
-learned previously which especially becomes handy in
-combination with resampling strategies.
+<p>Allows imputation of missing feature values through various
+techniques. Note that you have the possibility to re-impute
+a data set in the same way as the imputation was performed
+during training. This especially comes in handy during
+resampling when one wants to perform the same imputation on
+the test set as on the training set.
+</p>
+<p>The function <code>impute</code> performs the imputation on a
+data set and returns, alongside with the imputed data set,
+an &ldquo;ImputationDesc&rdquo; object which can contain
+&ldquo;learned&rdquo; coefficients and helpful data. It can then
+be passed together with a new data set to
+<code><a href="reimpute.html">reimpute</a></code>.
+</p>
+<p>The imputation techniques can be specified for certain
+features or for feature classes, see function arguments.
+</p>
+<p>You can either provide an arbitrary object, use a built-in
+imputation method listed under <code><a href="imputations.html">imputations</a></code> or
+create one yourself using <code><a href="makeImputeMethod.html">makeImputeMethod</a></code>.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-  impute(data, target, classes = list(), cols = list(),
-    dummies = character(0L), impute.newlevels = TRUE)
-
-  imp.const(const)
-
-  imp.median()
-
-  imp.mode()
-
-  imp.min(multiplier = 1)
-
-  imp.max(multiplier = 1)
-
-  imp.normal()
-
-  imp.hist(breaks, use.mids = TRUE)
+impute(data, target, classes = list(), cols = list(),
+  dummies = character(0L), impute.new.levels = TRUE,
+  recode.factor.levels = TRUE)
 </pre>
 
 
@@ -61,7 +63,7 @@ specifying the response.</p>
 <td>
 <p>[<code>named list</code>]<br> Named list
 containing imputation techniques for classes of columns.
-E.g. <code>list(integer = 0)</code>.</p>
+E.g. <code>list(numeric = imputeMedian())</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>cols</code></td>
 <td>
@@ -73,111 +75,83 @@ element's name. Overwrites imputation set via
 </td></tr>
 <tr valign="top"><td><code>dummies</code></td>
 <td>
-<p>[<code>character()</code>]<br> Set of column
-names for which dummy variables (binary missing
-indicator) should be created.  Default is
-<code>character(0)</code>.</p>
+<p>[<code>character</code>]<br> Column names for
+which dummy variables (binary missing indicator) should
+be created.  Default is <code>character(0)</code>.</p>
 </td></tr>
-<tr valign="top"><td><code>impute.newlevels</code></td>
+<tr valign="top"><td><code>impute.new.levels</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br> Impute new
-levels in factors the same way as missing values? Default
+<p>[<code>logical(1)</code>]<br> If new,
+unencountered factor level occur during reimputation,
+should these be handled as NAs and then be imputed the
+same way?  Default is <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>recode.factor.levels</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br> Recode
+factor levels after reimputation, so they match the
+respective element of <code>lvls</code> (in the description
+object) and therefore match the levels of the feature
+factor in the training data after imputation?.  Default
 is <code>TRUE</code>.</p>
-</td></tr>
-<tr valign="top"><td><code>const</code></td>
-<td>
-<p>[any]<br> Any object to use for imputation.</p>
-</td></tr>
-<tr valign="top"><td><code>multiplier</code></td>
-<td>
-<p>[<code>numeric(1)</code>]<br> Numeric value to
-multiply the minimum or maximum.</p>
-</td></tr>
-<tr valign="top"><td><code>breaks</code></td>
-<td>
-<p>[<code>numeric(1)</code>]<br> Number of breaks to
-use in <code><a href="../../graphics/html/hist.html">hist</a></code>. If missing, defaults
-to auto-detection via &ldquo;Sturges&rdquo;.</p>
-</td></tr>
-<tr valign="top"><td><code>use.mids</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> If <code>x</code> is
-numeric and a histogram is used, impute with bin mids
-(default) or instead draw uniformly distributed samples
-within bin range.</p>
 </td></tr>
 </table>
 
 
 <h3>Details</h3>
 
-<p>The function <code>impute</code> performs the imputations on a
-data set and returns, alongside with the imputed data
-set, an &ldquo;ImputationDesc&rdquo; object which then can be
-passed together with a new data set to
-<code><a href="reimpute.html">reimpute</a></code>.
-</p>
-<p>The imputation techniques can be specified for certain
-features or using the feature classes, see parameters.
-You can either provide an arbitrary object use a built-in
-imputation method or create one yourself using ... FIXME
-we should provide a constructor and document it. The
-built-ins are: </p>
- <ul>
-<li> <p><code>imp.const(const)</code>
-for imputation using a constant value, </p>
-</li>
-<li>
-<p><code>imp.median()</code> for imputation using the median,
-</p>
-</li>
-<li> <p><code>imp.mode()</code> for imputation using the mode,
-</p>
-</li>
-<li> <p><code>imp.min(multiplier)</code> for imputation using the
-minimum, </p>
-</li>
-<li> <p><code>imp.max(multiplier)</code> for imputation
-using the maximum, </p>
-</li>
-<li> <p><code>imp.normal()</code> for
-imputation using normally distributed random values with
-mean and variance estimated from the data, </p>
-</li>
-<li>
-<p><code>imp.hist(breaks, use.mids)</code> for imputation using
-random values with probabilities calculated using
-<code>table</code> or <code>hist</code>. </p>
-</li></ul>
+<p>The description object contains these slots </p>
+
+<dl>
+<dt>target [<code>character</code>]</dt><dd><p>See argument.</p>
+</dd>
+<dt>features [<code>character</code>]</dt><dd><p>Feature names, these are
+the column names of <code>data</code>, excluding <code>target</code>.</p>
+</dd>
+<dt>lvls [<code>named list</code>]</dt><dd><p>Mapping of column names of
+factor features to their levels, including newly created
+ones during imputation.</p>
+</dd> <dt>impute [<code>named
+list</code>]</dt><dd><p>Mapping of column names to imputation functions.</p>
+</dd>
+<dt>dummies [<code>named list</code>]</dt><dd><p>Mapping of column names
+to imputation functions.</p>
+</dd> <dt>impute.new.levels
+[<code>logical(1)</code>]</dt><dd><p>See argument.</p>
+</dd>
+<dt>recode.factor.levels [<code>logical(1)</code>]</dt><dd><p>See
+argument.</p>
+</dd> </dl>
 
 
 
 <h3>Value</h3>
 
-<p><code>list</code> with two named elements &ldquo;data&rdquo; and
-&ldquo;desc&rdquo;.
-</p>
+<p>[<code>list</code>] </p>
+<table summary="R valueblock">
+<tr valign="top"><td><code>data <code>data.frame</code></code></td>
+<td>
+<p>Imputed data.</p>
+</td></tr>
+<tr valign="top"><td><code>desc <code>ImputationDesc</code></code></td>
+<td>
+<p>Description object.</p>
+</td></tr>
+</table>
 
 
 <h3>Examples</h3>
 
 <pre><code class="r">
 df = data.frame(x = c(1, 1, NA), y = factor(c(&quot;a&quot;, &quot;a&quot;, &quot;b&quot;)), z=1:3)
- imputed = impute(df, target=character(0), cols=list(x = 99, y = imp.mode()))
- print(imputed$data)
+imputed = impute(df, target=character(0), cols=list(x = 99, y = imputeMode()))
+print(imputed$data)
 </code></pre>
 
 <pre><code>##    x y z
 ## 1  1 a 1
 ## 2  1 a 2
 ## 3 99 b 3
-</code></pre>
-
-<pre><code class="r"> reimpute(data.frame(x=NA), imputed$desc)
-</code></pre>
-
-<pre><code>##    x y  z
-## 1 99 a NA
 </code></pre>
 
 <pre><code class="r">

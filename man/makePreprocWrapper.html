@@ -10,20 +10,20 @@
 
 <h3>Description</h3>
 
-<p>Fuses a base learner with a preprocessing method. Creates
-a learner object, which can be used like any other
-learner object, but which internally preprocesses the
-data as requested. If the train or predict function is
-called on data / a task, the preprocessing is always
-performed automatically.
+<p>Fuses a base learner with a preprocessing method. Creates a
+learner object, which can be used like any other learner
+object, but which internally preprocesses the data as
+requested. If the train or predict function is called on
+data / a task, the preprocessing is always performed
+automatically.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-  makePreprocWrapper(learner, train, predict,
-    par.set = makeParamSet(), par.vals = list())
+makePreprocWrapper(learner, train, predict, par.set = makeParamSet(),
+  par.vals = list())
 </pre>
 
 
@@ -32,8 +32,7 @@ performed automatically.
 <table summary="R argblock">
 <tr valign="top"><td><code>learner</code></td>
 <td>
-<p>[<code><a href="Learner.html">Learner</a></code>]<br> The
-learner.</p>
+<p>[<code><a href="makeLearner.html">Learner</a></code>]<br> The learner.</p>
 </td></tr>
 <tr valign="top"><td><code>train</code></td>
 <td>
@@ -74,7 +73,7 @@ values for params in <code>args</code> repectively
 
 <h3>Value</h3>
 
-<p>[<code><a href="Learner.html">Learner</a></code>].
+<p>[<code><a href="makeLearner.html">Learner</a></code>].
 </p>
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>

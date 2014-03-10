@@ -17,15 +17,15 @@
 
 <p>This class encapsulates training and test sets generated
 from the data set for a number of iterations. It mainly
-stores a set of integer vectors indicating the training
-and test examples for each iteration.
+stores a set of integer vectors indicating the training and
+test examples for each iteration.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-  makeResampleInstance(desc, task, size)
+makeResampleInstance(desc, task, size)
 </pre>
 
 
@@ -62,14 +62,14 @@ set to resample.  Can be used instead of <code>task</code>.</p>
 </dd> <dt>train.inds [list of
 <code>integer</code>]</dt><dd><p>List of of training indices for all
 iterations.</p>
-</dd> <dt>test.inds [list of
-<code>integer</code>]</dt><dd><p>List of of test indices for all
-iterations.</p>
-</dd> <dt>group [<code>factor</code>]</dt><dd><p>Optional
-grouping of resampling iterations. This encodes whether
-specfic iterations 'belong together' (e.g. repeated CV),
-and it can later be used to aggregate performance values
-accordingly. Default is 'factor()'. </p>
+</dd> <dt>test.inds [list of <code>integer</code>]</dt><dd><p>List
+of of test indices for all iterations.</p>
+</dd> <dt>group
+[<code>factor</code>]</dt><dd><p>Optional grouping of resampling
+iterations. This encodes whether specfic iterations 'belong
+together' (e.g. repeated CV), and it can later be used to
+aggregate performance values accordingly. Default is
+'factor()'.</p>
 </dd> </dl>
 
 
@@ -92,17 +92,8 @@ accordingly. Default is 'factor()'. </p>
 task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
 rdesc &lt;- makeResampleDesc(&quot;Bootstrap&quot;, iters = 10)
 rin &lt;- makeResampleInstance(rdesc, task = task)
-rin
-</code></pre>
 
-<pre><code>## Resample instance for 150 cases for:
-## Resample description: OOB bootstrapping with 10 iterations.
-## Predict: test
-## Stratification: FALSE
-</code></pre>
-
-<pre><code class="r">
-## Alternativly provide the size argument instead of a task object
+# Alternatively provide the size argument instead of a task object
 rdesc &lt;- makeResampleDesc(&quot;CV&quot;, iters = 50)
 rin &lt;- makeResampleInstance(rdesc, size = nrow(iris))
 

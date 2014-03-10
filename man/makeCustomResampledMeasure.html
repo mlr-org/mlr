@@ -13,19 +13,18 @@
 <p>Construct your own performance measure, used after
 resampling. Note that individual training / test set
 performance values will be set to <code>NA</code>, you only
-calculate an aggregated value. If you can define a
-function that makes sense for every single training /
-test set, implement your own <code><a href="makeMeasure.html">Measure</a></code>.
+calculate an aggregated value. If you can define a function
+that makes sense for every single training / test set,
+implement your own <code><a href="makeMeasure.html">Measure</a></code>.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-  makeCustomResampledMeasure(id, minimize = TRUE,
-    classif = FALSE, regr = FALSE, only.binary = FALSE,
-    allowed.pred.types = character(0L), fun,
-    extra.args = list())
+makeCustomResampledMeasure(id, minimize = TRUE, classif = FALSE,
+  regr = FALSE, only.binary = FALSE, allowed.pred.types = character(0L),
+  fun, extra.args = list())
 </pre>
 
 

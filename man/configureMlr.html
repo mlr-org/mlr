@@ -18,9 +18,8 @@
 <h3>Usage</h3>
 
 <pre>
-  configureMlr(on.learner.error = "stop",
-    on.par.without.desc = "stop",
-    show.learner.output = TRUE)
+configureMlr(on.learner.error, on.learner.warning, on.par.without.desc,
+  show.learner.output)
 </pre>
 
 
@@ -36,6 +35,14 @@ generated.<br> &ldquo;warn&rdquo;: A <code>FailureModel</code> will
 be created, which predicts only NAs and a warning will be
 generated.<br> &ldquo;quiet&rdquo;: Same as &ldquo;warn&rdquo; but
 without the warning.<br> Default is &ldquo;stop&rdquo;.</p>
+</td></tr>
+<tr valign="top"><td><code>on.learner.warning</code></td>
+<td>
+<p>[<code>character(1)</code>]<br> What
+should happen if a warning in an underlying learning
+algorithm is generated:<br> &ldquo;warn&rdquo;: The warning is
+generated as usual.<br> &ldquo;quiet&rdquo;: The warning is
+suppressed.<br> Default is &ldquo;warn&rdquo;.</p>
 </td></tr>
 <tr valign="top"><td><code>on.par.without.desc</code></td>
 <td>

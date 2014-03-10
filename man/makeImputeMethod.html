@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Create a custom imputation method.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for makeImputeMethod {mlr}"><tr><td>makeImputeMethod {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Create a custom imputation method.</h2>
+
+<h3>Description</h3>
+
+<p>This is a constructor to create your own imputation
+methods.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+makeImputeMethod(learn, impute, args = list())
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>learn</code></td>
+<td>
+<p>[<code>function(data, target, col, ...)</code>]<br>
+Function to learn and extract information on column
+<code>col</code> out of data frame <code>data</code>. Argument
+<code>target</code> specifies the target column of the learning
+task.  The function has to return a named list of
+values.</p>
+</td></tr>
+<tr valign="top"><td><code>impute</code></td>
+<td>
+<p>[<code>function(data, target, col,
+  ...)</code>]<br> Function to impute missing values in <code>col</code>
+using information returned by <code>learn</code> on the same
+column.  All list elements of the return values o
+<code>learn</code> are passed to this function into
+<code>...</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>args</code></td>
+<td>
+<p>[<code>list</code>]<br> Named list of arguments to
+pass to <code>learn</code> via <code>...</code>.</p>
+</td></tr>
+</table>
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

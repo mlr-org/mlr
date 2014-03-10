@@ -16,17 +16,16 @@ machine to the package.</h2>
 
 <h3>Description</h3>
 
-<p>Extract data in task. Useful in
-<code><a href="trainLearner.html">trainLearner</a></code> when you add a learning
-machine to the package.
+<p>Extract data in task. Useful in <code><a href="trainLearner.html">trainLearner</a></code>
+when you add a learning machine to the package.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-  getTaskData(task, subset, features, target.extra = FALSE,
-    recode.target = "no")
+getTaskData(task, subset, features, target.extra = FALSE,
+  recode.target = "no")
 </pre>
 
 
@@ -90,10 +89,10 @@ head(getTaskData)
 <pre><code>##                                                                                 
 ## 1 function (task, subset, features, target.extra = FALSE, recode.target = &quot;no&quot;) 
 ## 2 {                                                                             
-## 3     tn = task$task.desc$target                                                
-## 4     ms = missing(subset) || identical(subset, 1:task$task.desc$size)          
-## 5     mv = missing(features) || identical(features, getTaskFeatureNames(task))  
-## 6     if (target.extra) {
+## 3     indexHelper = function(df, i, j, drop = TRUE) {                           
+## 4         switch(2L * is.null(i) + is.null(j) + 1L, df[i, j, drop = drop],      
+## 5             df[i, , drop = drop], df[, j, drop = drop], df)                   
+## 6     }
 </code></pre>
 
 <pre><code class="r">head(getTaskData(task, features = c(&quot;Cell.size&quot;, &quot;Cell.shape&quot;), recode.target = &quot;-1+1&quot;))

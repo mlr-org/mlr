@@ -12,16 +12,16 @@
 
 <p>Result from <code><a href="../../caret/html/train.html">train</a></code>. It internally stores the
 underlying fitted model, the subset used for training,
-features used for training and computtation time for
-training.
+features used for training, levels of factors in the data
+set and computation time that was spent for training.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-  makeWrappedModel(learner, model, task.desc, subset,
-    features, time)
+makeWrappedModel(learner, model, task.desc, subset, features, factor.levels,
+  time)
 </pre>
 
 
@@ -51,6 +51,13 @@ training.</p>
 <p>[<code>character</code>]<br> Features used for
 training.</p>
 </td></tr>
+<tr valign="top"><td><code>factor.levels</code></td>
+<td>
+<p>[named <code>list</code> of
+<code>character</code>]<br> Levels of factor variables (features
+and potentially target) in training data.  Named by
+variable name, non-factors do not occur in the list.</p>
+</td></tr>
 <tr valign="top"><td><code>time</code></td>
 <td>
 <p>[<code>numeric(1)</code>]<br> Computation time for
@@ -61,7 +68,7 @@ model fit in seconds.</p>
 
 <h3>Details</h3>
 
-<p>The constructer <code>makeWrappedModel</code> is only for
+<p>The constructed <code>makeWrappedModel</code> is only for
 internal use.
 </p>
 <p>Object members: See arguments.

@@ -15,8 +15,8 @@
 
 <h3>Description</h3>
 
-<p>For a classification learner the <code>predict.type</code> can
-be set to &ldquo;prob&rdquo; to predict probabilities and the
+<p>For a classification learner the <code>predict.type</code> can be
+set to &ldquo;prob&rdquo; to predict probabilities and the
 maximum value selects the label. The threshold used to
 assign the label can later be changed using the
 <code><a href="setThreshold.html">setThreshold</a></code> function.
@@ -26,8 +26,8 @@ assign the label can later be changed using the
 <h3>Usage</h3>
 
 <pre>
-  makeLearner(cl, id = cl, predict.type = "response", ...,
-    par.vals = list())
+makeLearner(cl, id = cl, predict.type = "response", ...,
+  par.vals = list())
 </pre>
 
 
@@ -38,8 +38,9 @@ assign the label can later be changed using the
 <td>
 <p>[<code>character(1)</code>]<br> Class of learner to
 create. By convention, all classification learners start
-with &ldquo;classif.&rdquo; and all regression learners with
-&ldquo;regr.&rdquo;. A list of all learners is available on
+with &ldquo;classif.&rdquo;, all regression learners with
+&ldquo;regr.&rdquo; and all survival learners start with
+&ldquo;surv.&rdquo;.  A list of all learners is available on
 the <code><a href="learners.html">learners</a></code> help page.</p>
 </td></tr>
 <tr valign="top"><td><code>id</code></td>
@@ -54,8 +55,10 @@ Classification: &ldquo;response&rdquo; (= labels) or
 &ldquo;prob&rdquo; (= probabilities and labels by selecting
 the ones with maximal probability).  Regression:
 &ldquo;response&rdquo; (= mean response) or &ldquo;se&rdquo; (=
-standard errors and mean response).  Default is
-&ldquo;response&rdquo;.</p>
+standard errors and mean response).  Survival:
+&ldquo;response&rdquo; (= some sort of orderable risk) or
+&ldquo;prob&rdquo; (= time dependent probabilities).  Default
+is &ldquo;response&rdquo;.</p>
 </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>

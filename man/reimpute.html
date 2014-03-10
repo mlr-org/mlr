@@ -10,8 +10,8 @@
 
 <h3>Description</h3>
 
-<p>This function accepts a data set and a imputation
-description returned by <code><a href="../../e1071/html/impute.html">impute</a></code> to perform
+<p>This function accepts a data frame and a imputation
+description as returned by <code><a href="../../e1071/html/impute.html">impute</a></code> to perform
 the following actions: </p>
  <ol>
 <li><p> Restore dropped
@@ -24,11 +24,11 @@ variables for columns as specified in <code>impute</code> </p>
 <p>Optionally check factors for new levels to treat them as
 <code>NA</code>s </p>
 </li>
-<li><p> Reorder factor levels to ensure the same
-integer representation </p>
+<li><p> Reorder factor levels to ensure identical
+integer representation as before </p>
 </li>
-<li><p> Impute missing values using
-data collected on original data set </p>
+<li><p> Impute missing
+values using previously collected data </p>
 </li></ol>
 
 
@@ -36,7 +36,7 @@ data collected on original data set </p>
 <h3>Usage</h3>
 
 <pre>
-  reimpute(x, desc, .initial = FALSE)
+reimpute(x, desc)
 </pre>
 
 
@@ -52,11 +52,6 @@ Currently only data frames are supported.</p>
 <td>
 <p>[<code>ImputationDesc</code>]<br> Imputation
 description as returned by <code><a href="../../e1071/html/impute.html">impute</a></code>.</p>
-</td></tr>
-<tr valign="top"><td><code>.initial</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Internally used to
-disable some imputations for the first run of impute.</p>
 </td></tr>
 </table>
 

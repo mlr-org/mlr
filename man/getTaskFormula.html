@@ -22,7 +22,7 @@
 <h3>Usage</h3>
 
 <pre>
-  getTaskFormula(x, delete.env = TRUE)
+getTaskFormula(x, target = getTargetNames(x), env = NULL)
 </pre>
 
 
@@ -35,11 +35,17 @@
 <code><a href="TaskDesc.html">TaskDesc</a></code>]<br> Task or its description
 object.</p>
 </td></tr>
-<tr valign="top"><td><code>delete.env</code></td>
+<tr valign="top"><td><code>target</code></td>
 <td>
-<p>[<code>delete.env</code>]<br> Delete
-enviroment attached to returned formula?  Don't ask why
-this option exists, R sucks.  Default is <code>TRUE</code>.</p>
+<p>[<code>character(1)</code>]<br> Left hand side of
+formula.  Default is defined by task <code>x</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>env</code></td>
+<td>
+<p>[<code>environment</code>]<br> Environment of the
+formula. Set this to <code>parent.frame()</code> for the
+default behaviour.  Default is <code>NULL</code> which deletes
+the environment.</p>
 </td></tr>
 </table>
 

@@ -25,10 +25,9 @@ implemented measures can be obtained here:
 <h3>Usage</h3>
 
 <pre>
-  makeMeasure(id, minimize, classif = FALSE, regr = FALSE,
-    only.binary = FALSE,
-    allowed.pred.types = character(0L), fun,
-    extra.args = list(), aggr = test.mean)
+makeMeasure(id, minimize, classif = FALSE, regr = FALSE,
+  only.binary = FALSE, allowed.pred.types = character(0L), fun,
+  extra.args = list(), aggr = test.mean)
 </pre>
 
 
@@ -92,11 +91,11 @@ Default is <code><a href="aggregations.html">test.mean</a></code>.</p>
 <h3>Details</h3>
 
 <p>A learner is trained on a a training set d1, results in a
-model m, predicts another set d2 (which may be a
-different one or the training set), resulting in the
-prediction. The performance measure can now be defined
-using all of the information of the original task, the
-fitted model and the prediction.
+model m, predicts another set d2 (which may be a different
+one or the training set), resulting in the prediction. The
+performance measure can now be defined using all of the
+information of the original task, the fitted model and the
+prediction.
 </p>
 <p>Object slots: </p>
  <dl>
@@ -111,19 +110,19 @@ fitted model and the prediction.
 </dd> <dt>only.binary
 [<code>logical(1)</code>]</dt><dd><p>See argument.</p>
 </dd>
-<dt>allowed.pred.types [<code>character</code>]</dt><dd><p>See
-argument.</p>
-</dd> <dt>req.pred [<code>logical(1)</code>]</dt><dd><p>Is
-prediction object required in calculation?</p>
+<dt>allowed.pred.types [<code>character</code>]</dt><dd><p>See argument.</p>
 </dd>
-<dt>req.task [<code>logical(1)</code>]</dt><dd><p>Is task object
-required in calculation?.</p>
-</dd> <dt>req.model
-[<code>logical(1)</code>]</dt><dd><p>Is model object required in
-calculation?</p>
-</dd> <dt>fun [<code>function</code>]</dt><dd><p>See argument.</p>
-</dd>
-<dt>extra.args [<code>list</code>]</dt><dd><p>See argument.</p>
+<dt>req.pred [<code>logical(1)</code>]</dt><dd><p>Is prediction object
+required in calculation?</p>
+</dd> <dt>req.task
+[<code>logical(1)</code>]</dt><dd><p>Is task object required in
+calculation?.</p>
+</dd> <dt>req.model [<code>logical(1)</code>]</dt><dd><p>Is
+model object required in calculation?</p>
+</dd> <dt>fun
+[<code>function</code>]</dt><dd><p>See argument.</p>
+</dd> <dt>extra.args
+[<code>list</code>]</dt><dd><p>See argument.</p>
 </dd> <dt>aggr
 [<code><a href="Aggregation.html">Aggregation</a></code>]</dt><dd><p>See argument.</p>
 </dd></dl>

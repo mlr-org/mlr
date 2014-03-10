@@ -19,15 +19,18 @@
 model. What is stored exactly in the
 [<code><a href="Prediction.html">Prediction</a></code>] object depends on the
 <code>predict.type</code> setting of the <code><a href="makeLearner.html">Learner</a></code>.
+If <code>predict.type</code> was set to &ldquo;prob&rdquo; probability
+thresholding can be done calling the
+<code><a href="setThreshold.html">setThreshold</a></code> function on the prediction
+object.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-  ## S3 method for class 'WrappedModel'
- predict(object, task, newdata,
-    subset, ...)
+## S3 method for class 'WrappedModel'
+predict(object, task, newdata, subset, ...)
 </pre>
 
 
@@ -96,11 +99,11 @@ head(pred$data)
 
 <pre><code>##        truth   response
 ## 1 versicolor versicolor
-## 2  virginica  virginica
+## 2     setosa     setosa
 ## 3  virginica  virginica
-## 4  virginica  virginica
-## 5     setosa     setosa
-## 6 versicolor versicolor
+## 4     setosa     setosa
+## 5  virginica  virginica
+## 6  virginica  virginica
 </code></pre>
 
 <pre><code class="r">
@@ -112,12 +115,12 @@ head(pred$data)
 </code></pre>
 
 <pre><code>##          truth prob.setosa prob.versicolor prob.virginica   response
-## 90  versicolor   4.407e-19       9.999e-01      1.206e-04 versicolor
-## 102  virginica   1.058e-35       6.921e-04      9.993e-01  virginica
-## 138  virginica   6.954e-33       2.522e-03      9.975e-01  virginica
-## 106  virginica   1.338e-44       1.329e-06      1.000e+00  virginica
-## 9       setosa   1.000e+00       5.297e-14      4.295e-32     setosa
-## 100 versicolor   1.646e-17       9.999e-01      8.241e-05 versicolor
+## 99  versicolor   2.047e-09       1.000e+00      2.298e-07 versicolor
+## 30      setosa   1.000e+00       1.897e-13      1.889e-29     setosa
+## 124  virginica   6.675e-26       1.409e-01      8.591e-01  virginica
+## 20      setosa   1.000e+00       1.412e-18      3.646e-35     setosa
+## 104  virginica   9.262e-32       9.163e-03      9.908e-01  virginica
+## 117  virginica   4.350e-29       2.765e-02      9.724e-01  virginica
 </code></pre>
 
 <pre><code class="r">

@@ -1,23 +1,23 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>R: Returns the filtered features.</title>
+<html><head><title>R: Returns the selected feature set and optimization path.</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="R.css">
 </head><body>
 
-<table width="100%" summary="page for getFilteredFeatures {mlr}"><tr><td>getFilteredFeatures {mlr}</td><td align="right">R Documentation</td></tr></table>
+<table width="100%" summary="page for getFeatSelResult {mlr}"><tr><td>getFeatSelResult {mlr}</td><td align="right">R Documentation</td></tr></table>
 
-<h2>Returns the filtered features.</h2>
+<h2>Returns the selected feature set and optimization path.</h2>
 
 <h3>Description</h3>
 
-<p>Returns the filtered features.
+<p>Returns the selected feature set and optimization path.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-getFilteredFeatures(model)
+getFeatSelResult(model)
 </pre>
 
 
@@ -27,14 +27,14 @@ getFilteredFeatures(model)
 <tr valign="top"><td><code>model</code></td>
 <td>
 <p>[<code><a href="makeWrappedModel.html">WrappedModel</a></code>]<br> Trained
-Model created with <code><a href="makeFilterWrapper.html">makeFilterWrapper</a></code>.</p>
+Model created with <code><a href="makeFeatSelWrapper.html">makeFeatSelWrapper</a></code>.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>[<code>character</code>].
+<p>[<code><a href="FeatSelResult.html">FeatSelResult</a></code>].
 </p>
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>

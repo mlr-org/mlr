@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>R: Fuse learner with filter method.</title>
+<html><head><title>R: Fuse learner with a feature filter method.</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="R.css">
 
@@ -11,22 +11,25 @@
 
 <table width="100%" summary="page for makeFilterWrapper {mlr}"><tr><td>makeFilterWrapper {mlr}</td><td align="right">R Documentation</td></tr></table>
 
-<h2>Fuse learner with filter method.</h2>
+<h2>Fuse learner with a feature filter method.</h2>
 
 <h3>Description</h3>
 
 <p>Fuses a base learner with a filter method. Creates a
 learner object, which can be used like any other learner
-object. Internally Uses <code><a href="filterFeatures.html">filterFeatures</a></code>
-before every model fit.
+object. Internally uses <code><a href="filterFeatures.html">filterFeatures</a></code> before
+every model fit.
+</p>
+<p>After training, the selected features can be retrieved with
+<code><a href="getFilteredFeatures.html">getFilteredFeatures</a></code>.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-  makeFilterWrapper(learner,
-    fw.method = "random.forest.importance", fw.perc = 1)
+makeFilterWrapper(learner, fw.method = "random.forest.importance",
+  fw.perc = 1)
 </pre>
 
 
@@ -35,8 +38,7 @@ before every model fit.
 <table summary="R argblock">
 <tr valign="top"><td><code>learner</code></td>
 <td>
-<p>[<code><a href="Learner.html">Learner</a></code>]<br> The
-learner.</p>
+<p>[<code><a href="makeLearner.html">Learner</a></code>]<br> The learner.</p>
 </td></tr>
 <tr valign="top"><td><code>fw.method</code></td>
 <td>
@@ -53,16 +55,6 @@ highest ranking features to select after filtering.
 Default is 1 (=100 percent).</p>
 </td></tr>
 </table>
-
-
-<h3>Details</h3>
-
-<p>Look at package FSelector for details on the filter
-algorithms.
-</p>
-<p>After training, the selected features can be retrieved
-with <code><a href="getTuneResult.html">getTuneResult</a></code>.
-</p>
 
 
 <h3>Value</h3>
@@ -91,14 +83,15 @@ mod = train(lrn, task)
 <pre><code>## [1] &quot;Petal.Length&quot; &quot;Petal.Width&quot;
 </code></pre>
 
-<pre><code class="r">r = resample(lrn, task, outer, extract = function(model) {
-getFilteredFeatures(model)
+<pre><code class="r"># now nested resampling, where we extract the features that the filter method selected
+r = resample(lrn, task, outer, extract = function(model) {
+  getFilteredFeatures(model)
 })
 </code></pre>
 
 <pre><code>## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
-## [Resample] Result: mmce.test.mean=0.0467
+## [Resample] Result: mmce.test.mean=0.0333
 </code></pre>
 
 <pre><code class="r">print(r$extract)
