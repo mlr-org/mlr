@@ -13,11 +13,13 @@ mlr_1.2:
 - add fix.factors option to randomForest
 - generic standard error estimation in randomForest and BaggingWrapper
 - new learners:
+-- classif.LiblineaRBinary
+-- classif.LiblineaRLogReg
+-- classif.LiblineaRMultiClass
+-- classif.plr
+-- classif.rrlda
 -- regr.crs
 -- regr.mob
--- classif.LiblineaRLogReg
--- classif.LiblineaRBinary
--- classif.LiblineaRMultiClass
 -- surv.CoxBoost
 -- surv.coxph
 -- surv.glmnet
