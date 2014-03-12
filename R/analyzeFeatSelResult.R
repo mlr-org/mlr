@@ -39,6 +39,13 @@ analyzeFeatSelResult = function(res, reduce=TRUE) {
 
   ### produce df data.frame that contains all info
   df = as.data.frame(op)
+  # convert measure to text
+
+  df$measure.txt = format(df[,measure], width = min(width.num, giveDecs(df[,measure])$str.width))
+  # calculate measure diff for each dob
+  mins = aggregate(df[,measure], by = list(dob = df$dob), function(x) c(min = min(x), c = length(x)))
+  df$diff = rep(mins$x[,1], mins$x[,2]) - df[,measure]
+  df$diff.txt = format(df$diff, width = min(width.num, giveDecs(df$diff)$str.width))
   # feature was selected when it never "died" or it "died" in later iteration
   df$sel = (is.na(df$eol) | (df$dob < df$eol))
   df$opt = is.na(df$eol)
@@ -59,8 +66,6 @@ analyzeFeatSelResult = function(res, reduce=TRUE) {
     catf(strrepeat("-", 80))
     for (j in seq_row(df.dob)) {
       row = df.dob[j, ]
-      cur.perf = row[[measure]]
-      cur.diff = cur.perf - old.perf
       cur.feats = features[row[features] == 1]
       cur.sel = ifelse(row$sel, "*", " ")
       change.txt = if (thedob == 1L)
@@ -75,8 +80,8 @@ analyzeFeatSelResult = function(res, reduce=TRUE) {
         change.feat = symdiff(cur.feats, old.feats)
       catf("- Features: %4i  %s : %-20s  Perf = %s  Diff: %s  %s",
         length(cur.feats), change.txt, clipString(change.feat, width.feat),
-        formatC(cur.perf, format="g", width=width.num),
-        formatC(cur.diff, format="g", width=width.num),
+        row[["measure.txt"]],
+        row[["diff.txt"]],
         cur.sel)
     }
     # in last block be might not have selected any state because no improvement
@@ -93,4 +98,18 @@ analyzeFeatSelResult = function(res, reduce=TRUE) {
   }
 }
 
+giveDecs = function(x) {
+  x = x[x!=0]
+  if (length(x) == 0) {
+    after.dec = 0
+    dec = 0
+  } else {
+    after.dec = -1 * min(0,(floor(log10(min(abs(x))))))
+    dec = max(0,ceiling(log10(abs(x))))
+  }
+  str.width = after.dec + dec
+  if(after.dec > 0)
+    str.width = str.width + 1
+  list(dec = dec, after.dec = after.dec, digits = after.dec + dec, str.width = str.width)
+}
 
