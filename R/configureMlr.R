@@ -30,6 +30,7 @@
 #'   suppressed?
 #'   Default is \code{TRUE}.
 #' @return Nothing.
+#' @seealso \code{\link{getMlrOptions}}
 #' @export
 configureMlr = function(on.learner.error, on.learner.warning, on.par.without.desc, show.learner.output) {
 

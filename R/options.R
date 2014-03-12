@@ -1,3 +1,15 @@
+#' @title Returns a list of mlr's options
+#'
+#  @return [\code{list}]
+#' @seealso \code{\link{configureMlr}}
+#' @export
+getMlrOptions = function() {
+  mlr.inds = substr(names(options()), start=1L, stop=4L) == "mlr."
+  mlr.options = options()[mlr.inds]
+  names(mlr.options) = substring(names(mlr.options), first=5L)
+  mlr.options
+}
+
 setMlrOption = function(name, val) {
   name = sprintf("mlr.%s", name)
   do.call(options, setNames(list(val), name))
