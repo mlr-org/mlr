@@ -1,6 +1,6 @@
 \name{configureMlr}
 \alias{configureMlr}
-\title{Configures the behaviour of the package.}
+\title{Configures the behavior of the package.}
 \usage{
 configureMlr(on.learner.error, on.learner.warning, on.par.without.desc,
   show.learner.output)
@@ -40,5 +40,14 @@ Nothing.
 \description{
 Configuration is done by setting custom
 \code{\link{options}}.
+
+If you do not set an option here, its current value will be
+kept.
+
+If you call this function with an empty argument list,
+everything is set to its defaults.
+}
+\seealso{
+\code{\link{getMlrOptions}}
 }
 
