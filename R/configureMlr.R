@@ -1,6 +1,11 @@
-#' Configures the behaviour of the package.
+#' @title Configures the behavior of the package.
 #'
+#' @description
 #' Configuration is done by setting custom \code{\link{options}}.
+#'
+#' If you do not set an option here, its current value will be kept.
+#'
+#' If you call this function with an empty argument list, everything is set to its defaults.
 #'
 #' @param on.learner.error [\code{character(1)}]\cr
 #'   What should happen if an error in an underlying learning algorithm is caught:\cr
@@ -26,37 +31,39 @@
 #'   Default is \code{TRUE}.
 #' @return Nothing.
 #' @export
-configureMlr = function(on.learner.error, on.learner.warning,
-                        on.par.without.desc, show.learner.output) {
-  defaults = list(on.learner.error="stop", 
-                  on.learner.warning="warn",
-                  on.par.without.desc="stop", 
-                  show.learner.output=TRUE)
-  anyChange = FALSE
-  if(!missing(on.learner.error)) {
-    checkArg(on.learner.error, choices=c("quiet", "warn", "stop"))
+configureMlr = function(on.learner.error, on.learner.warning, on.par.without.desc, show.learner.output) {
+
+  defaults = list(
+    on.learner.error = "stop",
+    on.learner.warning = "warn",
+    on.par.without.desc = "stop",
+    show.learner.output = TRUE
+  )
+
+  any.change = FALSE
+  if (!missing(on.learner.error)) {
+    checkArg(on.learner.error, choices = c("quiet", "warn", "stop"))
     setMlrOption("on.learner.error", on.learner.error)
-    anyChange = TRUE
+    any.change = TRUE
   }
-  if(!missing(on.learner.warning)) {
-    checkArg(on.learner.warning, choices=c("warn", "quiet"))
+  if (!missing(on.learner.warning)) {
+    checkArg(on.learner.warning, choices = c("warn", "quiet"))
     setMlrOption("on.learner.warning", on.learner.warning)
-    anyChange = TRUE
+    any.change = TRUE
   }
-  if(!missing(on.par.without.desc)) {
-    checkArg(on.par.without.desc, choices= c("quiet", "warn", "stop"))
+  if (!missing(on.par.without.desc)) {
+    checkArg(on.par.without.desc, choices = c("quiet", "warn", "stop"))
     setMlrOption("on.par.without.desc", on.par.without.desc)
-    anyChange = TRUE
+    any.change = TRUE
   }
-  if(!missing(show.learner.output)) {
-    checkArg(show.learner.output, "logical", len=1L, na.ok=FALSE)
+  if (!missing(show.learner.output)) {
+    checkArg(show.learner.output, "logical", len = 1L, na.ok = FALSE)
     setMlrOption("show.learner.output", show.learner.output)
-    anyChange = TRUE
+    any.change = TRUE
   }
-  if(!anyChange) {
-    for(par in names(defaults)) {
-      setMlrOption(par, defaults[[par]])
-    }
-  }
+
+  # na change, set everything to defaults
+  if (!any.change)
+    Map(setMlrOption, names(defaults), defaults)
   invisible(NULL)
 }
