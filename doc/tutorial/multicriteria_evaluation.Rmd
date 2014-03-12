@@ -34,6 +34,9 @@ Remember: It is important that the head of the function looks exactly like given
 `perf.test` and `perf.train` are both numerical vectors containing the measure values.
 In the usual cases (e.g. *cross validation*) the `perf.train` vector is empty.
 
+Practical example: Evaluate the range
+-------------------------------------
+
 Let's say you are interested in the range of the obtained measures:
 ```{r MulticriteriaEvaluation_range}
 my.range.aggr = mlr:::makeAggregation(id="test.range", 
