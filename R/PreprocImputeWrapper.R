@@ -13,9 +13,7 @@ makeImputeWrapper = function(learner, ...) {
   rm(not.ok)
 
   trainfun = function(data, target, args) {
-    message("Imputing data ...")
-    setNames(do.call(impute, c(list(data=data, target=target), args)),
-      c("data", "control"))
+    setNames(do.call(impute, c(list(data=data, target=target), args)), c("data", "control"))
   }
 
   predictfun = function(data, target, args, control) {
