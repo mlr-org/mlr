@@ -21,13 +21,17 @@
 #'   \item \code{single}: NAs will be seen as a single, extra level in the percentage calculation.\cr
 #'   \item \code{distinct}: \code{NA}s will be seen as multiple extra levels in the percentage calculation.\cr
 #' }
+#' @param tol [\code{numeric}]\cr
+#'   Numerical tolerance to treat two numbers as equal.
+#'   Variables stored as \code{double} will get rounded accordingly before computing the mode.
+#'   Default is \code{sqrt(.Maschine$double.eps)}.
 #' @param show.info [\code{logical(1)}]\cr
 #'   Verbose output on console?
-#'   Default is \code{TRUE}.
+#'   Default is \code{FALSE}.
 #' @return [\code{\link{data.frame}} | \code{\link{SupervisedTask}}].
 #' @export
-removeConstantFeatures = function(x, perc = 0, dont.rm = character(0), na.mode = "na.rm",
-  show.info = TRUE) {
+removeConstantFeatures = function(x, perc = 0, dont.rm = character(0L),
+  na.mode = "na.rm", tol = .Machine$double.eps^.5, show.info = FALSE) {
 
   checkArg(x, c("data.frame", "SupervisedTask"))
   checkArg(perc, "numeric", len=1L, lower=0, upper=1, na.ok=FALSE)
@@ -39,46 +43,43 @@ removeConstantFeatures = function(x, perc = 0, dont.rm = character(0), na.mode =
 
 #' @method removeConstantFeatures data.frame
 #' @S3method removeConstantFeatures data.frame
-removeConstantFeatures.data.frame = function(x, perc = 0, dont.rm = character(0), na.mode = "na.rm",
-  show.info = TRUE) {
+removeConstantFeatures.data.frame = function(x, perc = 0, dont.rm = character(0L),
+  na.mode = "na.rm", tol = .Machine$double.eps^.5, show.info = FALSE) {
+  isEqual = function(x, y) {
+    res = (x == y) | (is.na(x) & is.na(y))
+    replace(res, is.na(res), FALSE)
+  }
 
   checkArg(dont.rm, subset=colnames(x))
-  if (ncol(x) == 0)
+  if (any(!dim(x)))
     return(x)
 
+  digits = ceiling(log10(1/tol))
+
   cns = setdiff(colnames(x), dont.rm)
-  # compute modes for cols
-  modi = lapply(x[, cns], computeMode, na.rm = (na.mode != "single"))
-  # compute how many entries differ from mode val
-  differ.ratio = sapply(cns, function(cn) {
-    if (na.mode != "na.rm")
-      mean(!modi[[cn]] %equals2% x[, cn])
-    else {
-      mean(modi[[cn]] != x[, cn], na.rm=TRUE)
+  ratio = vnapply(x[, cns, drop=FALSE], function(x) {
+    if (is.double(x))
+      x = round(x, digits=digits)
+    m = computeMode(x, na.rm = (na.mode != "single"))
+    if (na.mode != "na.rm") {
+      mean(!isEqual(x, m))
+    } else {
+      mean(m != x, na.rm=TRUE)
     }
-  })
-  dropcols = cns[differ.ratio <= perc]
-  if (show.info) {
+  }, use.names = FALSE)
+
+  dropcols = cns[ratio <= perc]
+  if (show.info && length(dropcols))
     messagef("Removing %i columns: %s", length(dropcols), collapse(dropcols))
-  }
   dropNamed(x, dropcols)
 }
 
 #' @method removeConstantFeatures SupervisedTask
 #' @S3method removeConstantFeatures SupervisedTask
-removeConstantFeatures.SupervisedTask = function(x, perc = 0, dont.rm = character(0), na.mode = "na.rm",
-  show.info = TRUE) {
+removeConstantFeatures.SupervisedTask = function(x, perc = 0, dont.rm = character(0L),
+  na.mode = "na.rm", tol = .Machine$double.eps^.5, show.info = FALSE) {
 
   dont.rm = union(getTargetNames(x), dont.rm)
-  res = removeConstantFeatures(getTaskData(x), perc, dont.rm, na.mode, show.info)
+  res = removeConstantFeatures(getTaskData(x), perc, dont.rm, na.mode, tol, show.info)
   changeData(task=x, data=res)
-}
-
-
-# checks which elements are equal
-# NA == NA, NA != 1, 1 == 1, 1 != 2
-`%equals2%` = function(x, y) {
-  res = (x == y)  |  (is.na(x) & is.na(y))
-  res[is.na(res)] <- FALSE
-  res
 }
