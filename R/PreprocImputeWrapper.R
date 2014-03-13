@@ -1,4 +1,4 @@
-makeImputeWrapper = function(learner, ..., update.learner.chars=FALSE) {
+makeImputeWrapper = function(learner, ...) {
   checkArg(learner, "Learner")
   args = list(...)
   if (!isProperlyNamed(args))
@@ -24,7 +24,6 @@ makeImputeWrapper = function(learner, ..., update.learner.chars=FALSE) {
   }
 
   lrn = makePreprocWrapper(learner, trainfun, predictfun, par.vals=args)
-  if (update.learner.chars)
-    lrn$missings = TRUE
+  lrn$missings = TRUE
   lrn
 }
