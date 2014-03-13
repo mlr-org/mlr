@@ -1,6 +1,6 @@
 context("random_forest_standard_error")
 
-test_that("standard error should always be positive", {
+test_that("standard error", {
   data(BostonHousing)
 
   n = nrow(BostonHousing)
@@ -8,6 +8,7 @@ test_that("standard error should always be positive", {
   test.set.idx = setdiff(1:n, train.set.idx)
   train.set = BostonHousing[train.set.idx,]
   test.set = BostonHousing[test.set.idx,]
+  one.point = BostonHousing[1, ]
 
   se.methods = c("bootstrap", "jackknife", "noisy.bootstrap")
 
@@ -24,5 +25,9 @@ test_that("standard error should always be positive", {
     preds = predict(model, newdata=test.set)
     se.preds = preds$data$se
     expect_true(all(se.preds >= 0))
+    preds = predict(model, newdata = one.point)
+    se.preds = preds$data$se
+    expect_true(all(se.preds >= 0))
   }
 })
+
