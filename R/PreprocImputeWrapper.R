@@ -19,7 +19,6 @@ makeImputeWrapper = function(learner, ...) {
   }
 
   predictfun = function(data, target, args, control) {
-    message("Reimputing data ...")
     reimpute(data, control)
   }
 
