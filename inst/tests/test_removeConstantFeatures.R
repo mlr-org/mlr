@@ -10,6 +10,7 @@ test_that("removeConstantFeatures", {
     e = c(NA,1),
     f = c(1,NA),
     g = c(1,1),
+    n = c(0, 1 - 0.7 - 0.3),
     target = as.factor(1:2)
   )
   testData = testData[c(rep(1,9),2),]
@@ -27,10 +28,11 @@ test_that("removeConstantFeatures", {
   testData_res = removeConstantFeatures(testData)
   expect_equal(colnames(testData_res), c("a","b","c","d","target", "safe"))
 
+  testData_res = removeConstantFeatures(testData, tol=0)
+  expect_true(setequal(colnames(testData_res), c("a","b","c","d","target", "safe", "n")))
+
   testData_res = removeConstantFeatures(testData, na.mode="distinct", perc=0.2)
   expect_equal(colnames(testData_res), c("e", "safe"))
-
   testData_res = removeConstantFeatures(testData, na.mode="single", perc=0.2)
   expect_equal(colnames(testData_res), "safe")
 })
-
