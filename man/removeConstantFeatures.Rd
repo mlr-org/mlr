@@ -2,8 +2,8 @@
 \alias{removeConstantFeatures}
 \title{Remove constant features from a data set.}
 \usage{
-removeConstantFeatures(x, perc = 0, dont.rm = character(0),
-  na.mode = "na.rm", show.info = TRUE)
+removeConstantFeatures(x, perc = 0, dont.rm = character(0L),
+  na.mode = "na.rm", tol = .Machine$double.eps^0.5, show.info = FALSE)
 }
 \arguments{
   \item{x}{[\code{\link{data.frame}} |
@@ -27,8 +27,14 @@ removeConstantFeatures(x, perc = 0, dont.rm = character(0),
   seen as multiple extra levels in the percentage
   calculation.\cr }}
 
+  \item{tol}{[\code{numeric}]\cr Numerical tolerance to
+  treat two numbers as equal.  Variables stored as
+  \code{double} will get rounded accordingly before
+  computing the mode.  Default is
+  \code{sqrt(.Maschine$double.eps)}.}
+
   \item{show.info}{[\code{logical(1)}]\cr Verbose output on
-  console?  Default is \code{TRUE}.}
+  console?  Default is \code{FALSE}.}
 }
 \value{
 [\code{\link{data.frame}} | \code{\link{SupervisedTask}}].
