@@ -105,11 +105,10 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
     })
 
     # n x B matrix of reponses of B forests
-    aggr.responses = extractSubList(preds, "aggregate",  simplify=TRUE)
-    names(aggr.responses) = 1:B
+    aggr.responses = extractSubList(preds, "aggregate", simplify = "cols")
     mean.responses = rowMeans(aggr.responses)
     # list of n x M matrices of ensemble responses
-    ind.responses = extractSubList(preds, "individual", simplify=FALSE, use.names=FALSE)
+    ind.responses = extractSubList(preds, "individual", simplify = FALSE, use.names = FALSE)
 
     # R substracts columnswise matrix - vector, 2nd is actually apply(aggr.responses, 1, var)
     res = cbind(mean.responses, rowSums((aggr.responses - mean.responses)^2) / (B-1))
@@ -134,7 +133,6 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
 
     # var --> sd
     res[,2L] = sqrt(res[,2L])
-
     return(res)
 }
 
@@ -150,11 +148,11 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
     n = nrow(inbag)
 
     # keep predictions of all ensemble members
-    rf.preds = predict(model, .newdata, predict.all=TRUE)
+    rf.preds = predict(model, .newdata, predict.all = TRUE)
 
     # determine number of participating ensembles
+    # FIXME: formula looks strange. proof read ALL code in this file!
     M = lapply(seq_len(n), function(i) sum(abs(inbag[i,]-1)))
-
     # determine ensemlbe members, where observation i is not included
     idx = lapply(seq_len(n), function(i) which(inbag[i,] == 0L))
 
@@ -162,7 +160,7 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
     res = matrix(NA_real_, ncol=n, nrow=nrow(.newdata))
     for (j in seq_row(.newdata)) {
       for (i in seq_len(n)) {
-        res[j,i] = sum(rf.preds$individual[j,idx[[i]]]) / M[[i]]
+        res[j,i] = sum(rf.preds$individual[j, idx[[i]]]) / M[[i]]
       }
     }
 
