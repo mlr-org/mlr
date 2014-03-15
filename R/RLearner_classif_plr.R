@@ -6,10 +6,6 @@ makeRLearner.classif.plr = function() {
     par.set = makeParamSet(
       makeNumericLearnerParam(id="lambda", default=1e-4, lower=0),
       makeNumericLearnerParam(id="cp", default=2)
-      # cp is a numerical parameter, but
-      # if cp="aic" it is converted to cp=2 and
-      # if cp="bic" it is converted to cp=log(sample size).
-      # default is "bic", not 2.
     ),
     twoclass = TRUE,
     multiclass = FALSE,
