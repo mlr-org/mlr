@@ -31,6 +31,12 @@
 #' @param positive [\code{character(1)}]\cr
 #'   Positive class for binary classification.
 #'   Default is the first factor level of the target attribute.
+#' @param fixup.data [\code{logical(1)}]\cr
+#'   Should some basic cleaning up of data be performed?
+#'   Currently this means removing empty factor levels for the columns.
+#'   Possible coices are: \dQuote{no} = Don't do it. \dQuote{warn} = Do it but warn about it.
+#'   \dQuote{quiet} = Do it but keep silent.
+#'   Default is \dQuote{warn}.
 #' @param check.data [\code{logical(1)}]\cr
 #'   Should sanity of data be checked initially at task creation?
 #'   You should have good reasons to turn this off.
@@ -54,7 +60,7 @@
 #'                                positive = "good", blocking = blocks)
 NULL
 
-makeSupervisedTask = function(type, id, data, target, weights, blocking, positive, check.data) {
+makeSupervisedTask = function(type, id, data, target, weights, blocking, positive, fixup.data, check.data) {
   if(missing(id)) {
     id = deparse(substitute(data))
     if (!is.character(id) || length(id) != 1L)
@@ -73,9 +79,11 @@ makeSupervisedTask = function(type, id, data, target, weights, blocking, positiv
     blocking = factor()
   else
     checkArg(blocking, "factor", len=nrow(data), na.ok=FALSE)
+  checkArg(fixup.data, choices = c("warn", "quiet", "no"))
   checkArg(check.data, "logical", len=1L, na.ok=FALSE)
   checkBlocking(data, target, blocking)
   checkColumnNames(data, target)
+  data = fixupData(data, fixup.data)
   if (type == "classif") {
     if (length(target) != 1L)
       stop("Exactly one target column must be specified for a classification task")

@@ -9,11 +9,13 @@
 \title{Create a classification, regression or survival task for a given data set.}
 \usage{
 makeClassifTask(id, data, target, weights, blocking, positive,
+  fixup.data = "warn", check.data = TRUE)
+
+makeRegrTask(id, data, target, weights, blocking, fixup.data = "warn",
   check.data = TRUE)
 
-makeRegrTask(id, data, target, weights, blocking, check.data = TRUE)
-
-makeSurvTask(id, data, target, weights, blocking, check.data = TRUE)
+makeSurvTask(id, data, target, weights, blocking, fixup.data = "warn",
+  check.data = TRUE)
 }
 \arguments{
   \item{id}{[\code{character(1)}]\cr Id string for object.
@@ -38,6 +40,13 @@ makeSurvTask(id, data, target, weights, blocking, check.data = TRUE)
   \item{positive}{[\code{character(1)}]\cr Positive class
   for binary classification.  Default is the first factor
   level of the target attribute.}
+
+  \item{fixup.data}{[\code{logical(1)}]\cr Should some
+  basic cleaning up of data be performed?  Currently this
+  means removing empty factor levels for the columns.
+  Possible coices are: \dQuote{no} = Don't do it.
+  \dQuote{warn} = Do it but warn about it.  \dQuote{quiet}
+  = Do it but keep silent.  Default is \dQuote{warn}.}
 
   \item{check.data}{[\code{logical(1)}]\cr Should sanity of
   data be checked initially at task creation?  You should

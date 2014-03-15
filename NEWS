@@ -12,6 +12,7 @@ mlr_1.2:
 - added class.weights param for classif.svm
 - add fix.factors option to randomForest
 - generic standard error estimation in randomForest and BaggingWrapper
+- added fixup.data option to task contructors, so basic data cleanup can be performed
 - new learners:
 -- classif.LiblineaRBinary
 -- classif.LiblineaRLogReg
