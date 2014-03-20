@@ -9,8 +9,8 @@
 #'   The task.
 #' @param method [\code{character(1)}]\cr
 #'   Filter method. Available are:\cr
-#'   \dQuote{linear.correlation}: Pearson's correlation for regression with continous data\cr 
-#'   \dQuote{rank.correlation}: Spearman's correlation for regression with continous data\cr 
+#'   \dQuote{linear.correlation}: Pearson's correlation for regression with numerical data\cr 
+#'   \dQuote{rank.correlation}: Spearman's correlation for regression with numerical data\cr 
 #'   \dQuote{information.gain}: Entropy-based information gain for classification and 
 #'   regression of mixed feature sets\cr
 #'   \dQuote{gain.ratio}: Entropy-based gain ratio for classification and regression of 
@@ -36,6 +36,10 @@ filterFeatures = function(task, method="random.forest.importance") {
   checkArg(method, choices=c("linear.correlation", "rank.correlation", "information.gain",
     "gain.ratio", "symmetrical.uncertainty", "chi.squared", "random.forest.importance",
     "relief", "oneR"))
+  if (method %in% c("linear.correlation", "rank.correlation")) {
+    if (inherits(task, "ClassifTask") || (task$task.desc$n.feat["factors"] > 0L))
+      stop("Method can only be applied for a regression task with numerical data!")
+  }
   f = getTaskFormulaAsString(task)
   data = getTaskData(task)
   fun = get(method, envir=getNamespace("FSelector"))
@@ -64,15 +68,15 @@ filterFeatures = function(task, method="random.forest.importance") {
 # @param threshold [\code{numeric(1)}]\cr
 #   Information value as to be greater then the threshold. Default is 0.
 # @return [\code{character}]
-# getFilteredFeatures = function(feat.importance, n, threshold=0) {
-  # checkArg(feat.importance, "numeric", nas.ok=FALSE)
-  # checkArg(threshold, "numeric", len=1L, na.ok=FALSE)
-  # if (missing(n))
-    # n = length(feat.importance)
-  # checkArg(n, "integer", len=1L, lower=1L, na.ok=FALSE)
-  # feats = feat.importance[feat.importance > threshold]
-  # feats = head(feats[order(feats, decreasing=TRUE)], n)
-  # results = names(feats)
-  # #result = makeFeatSelResult(learner=NA, control=NA, x=names(feats), y=feats, opt.path=NA)
-  # results
-# }
+#  getFilteredFeatures = function(feat.importance, n, threshold=0) {
+#    checkArg(feat.importance, "numeric", nas.ok=FALSE)
+#    checkArg(threshold, "numeric", len=1L, na.ok=FALSE)
+#    if (missing(n))
+#      n = length(feat.importance)
+#    checkArg(n, "integer", len=1L, lower=1L, na.ok=FALSE)
+#    feats = feat.importance[feat.importance > threshold]
+#    feats = head(feats[order(feats, decreasing=TRUE)], n)
+#    results = names(feats)
+#    #result = makeFeatSelResult(learner=NA, control=NA, x=names(feats), y=feats, opt.path=NA)
+#    results
+#  }

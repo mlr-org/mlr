@@ -9,9 +9,9 @@ filterFeatures(task, method = "random.forest.importance")
 
   \item{method}{[\code{character(1)}]\cr Filter method.
   Available are:\cr \dQuote{linear.correlation}: Pearson's
-  correlation for regression with continous data\cr
+  correlation for regression with numerical data\cr
   \dQuote{rank.correlation}: Spearman's correlation for
-  regression with continous data\cr
+  regression with numerical data\cr
   \dQuote{information.gain}: Entropy-based information gain
   for classification and regression of mixed feature
   sets\cr \dQuote{gain.ratio}: Entropy-based gain ratio for
