@@ -79,6 +79,5 @@ rdesc = makeResampleDesc("Holdout")
 ctrlGA = makeFeatSelControlGA(maxit=10)
 sfGA = selectFeatures(learner=lrn, task=task, resampling=rdesc, control=ctrlGA, show.info=FALSE)
 sfGA
-analyzeFeatSelResult(sfGA)
 ```
 
