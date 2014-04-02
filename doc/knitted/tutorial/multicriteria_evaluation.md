@@ -41,7 +41,7 @@ r = resample(lrn, task, rdesc, measures = list(mmce, mmceAggrBySd))
 ## [Resample] cross-validation iter: 3
 ## [Resample] cross-validation iter: 4
 ## [Resample] cross-validation iter: 5
-## [Resample] Result: mmce.test.mean=0.0667,mmce.test.sd=0.0333
+## [Resample] Result: mmce.test.mean=0.0733,mmce.test.sd=0.0365
 ```
 
 
@@ -63,6 +63,9 @@ mlr:::makeAggregation(id = "some.name", fun = function(task, perf.test, perf.tra
 Remember: It is important that the head of the function looks exactly like given above!
 `perf.test` and `perf.train` are both numerical vectors containing the measure values.
 In the usual cases (e.g. *cross validation*) the `perf.train` vector is empty.
+
+Practical example: Evaluate the range
+-------------------------------------
 
 Let's say you are interested in the range of the obtained measures:
 
@@ -86,8 +89,8 @@ ms1max = setAggregation(ms1, test.max)
 
 ```
 ## FeatSel result:
-## Features (2): Sepal.Length, Petal.Width
-## mmce.test.mean=0.06,mmce.test.range= 0.1,mmce.test.min=0.0333,mmce.test.max=0.133
+## Features (3): Sepal.Length, Sepal.Width, Petal.Width
+## mmce.test.mean=0.0467,mmce.test.range=0.0333,mmce.test.min=0.0333,mmce.test.max=0.0667
 ```
 
 ```splus

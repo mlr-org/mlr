@@ -119,100 +119,24 @@ analyzeFeatSelResult(sfSeq, reduce = FALSE)
 ```
 
 ```
-## FeatSel result:
-## - Features         : 1
-## - Performance      : mmce.test.mean=0.06
-##   Petal.Length
+## Features         : 1
+## Performance      : mmce.test.mean=0.06
+## Petal.Length
 ## 
 ## Path to optimum:
-## - Features:    0  	 Init                           	 Perf = 0.62 	 Gain: 0 	 Sel = TRUE  	 Opt = FALSE
-## - Features:    1  	 Added:    Sepal.Length         	 Perf = 0.62 	 Gain: -0.28 	 Sel = FALSE 	 Opt = TRUE 
-## - Features:    1  	 Added:    Sepal.Width          	 Perf = 0.62 	 Gain: -0.1 	 Sel = FALSE 	 Opt = TRUE 
-## - Features:    1  	 Added:    Petal.Length         	 Perf = 0.62 	 Gain: -0.56 	 Sel = FALSE 	 Opt = TRUE 
-## - Features:    1  	 Added:    Petal.Width          	 Perf = 0.06 	 Gain: -0.56 	 Sel = TRUE  	 Opt = TRUE 
-## - Features:    2  	 Added:    Sepal.Length         	 Perf = 0.06 	 Gain: 0 	 Sel = FALSE 	 Opt = TRUE 
-## - Features:    2  	 Added:    Sepal.Width          	 Perf = 0.06 	 Gain: 0 	 Sel = FALSE 	 Opt = TRUE 
-## - Features:    2  	 Added:    Petal.Length         	 Perf = 0.06 	 Gain: 0 	 Sel = FALSE 	 Opt = TRUE 
+## --------------------------------------------------------------------------------
+## - Features:    0  Init   :                       Perf = 0.62  Diff:  0.00  *
+## --------------------------------------------------------------------------------
+## - Features:    1  Add    : Sepal.Length          Perf = 0.34  Diff: -0.28   
+## - Features:    1  Add    : Sepal.Width           Perf = 0.52  Diff: -0.46   
+## - Features:    1  Add    : Petal.Length          Perf = 0.06  Diff:  0.00   
+## - Features:    1  Add    : Petal.Width           Perf = 0.06  Diff:  0.00  *
+## --------------------------------------------------------------------------------
+## - Features:    2  Add    : Sepal.Length          Perf = 0.06  Diff:  0.00   
+## - Features:    2  Add    : Sepal.Width           Perf = 0.06  Diff:  0.00   
+## - Features:    2  Add    : Petal.Length          Perf = 0.06  Diff:  0.00   
 ## 
-## Stopped, because no improving set of features (w.r.t. mmce.test.mean) was found.
-```
-
-
-
-#### Regression example
-
-We fit a simple linear regression model to the ``BostonHousing`` data set and use a genetic algorithm to find a feature set that reduces the **mse** (mean squared error).
-
-
-```splus
-library("mlbench")
-data(BostonHousing)
-
-task = makeRegrTask(data = BostonHousing, target = "medv")
-lrn = makeLearner("regr.lm")
-rdesc = makeResampleDesc("Holdout")
-
-ctrlGA = makeFeatSelControlGA(maxit = 10)
-sfGA = selectFeatures(learner = lrn, task = task, resampling = rdesc, control = ctrlGA, 
-    show.info = FALSE)
-sfGA
-```
-
-```
-## FeatSel result:
-## Features (12): crim, zn, indus, nox, rm, age, dis, rad, tax, ptratio, b, lstat
-## mse.test.mean=  23
-```
-
-```splus
-analyzeFeatSelResult(sfGA)
-```
-
-```
-## FeatSel result:
-## - Features         : 12
-## - Performance      : mse.test.mean=  23
-##   crim, zn, indus, nox, rm, age, dis, rad, tax, ptratio, etc.
-## 
-## Path to optimum:
-## Initial generation:- (1) 	 Features: 11  	 mse.test.mean=27.1 	 Features: crim, zn, chas, nox, rm, age, rad, tax, ptratio, b, etc. 
-## - (2) 	 Features: 8  	 mse.test.mean=28.2 	 Features: zn, indus, rm, age, tax, ptratio, b, lstat 
-## - (3) 	 Features: 6  	 mse.test.mean=55.2 	 Features: crim, indus, nox, dis, rad, tax 
-## - (4) 	 Features: 4  	 mse.test.mean=43.1 	 Features: zn, indus, rm, age 
-## - (5) 	 Features: 6  	 mse.test.mean=  51 	 Features: zn, chas, age, dis, tax, b 
-## - (6) 	 Features: 5  	 mse.test.mean=56.3 	 Features: chas, age, rad, ptratio, b 
-## - (7) 	 Features: 6  	 mse.test.mean=37.6 	 Features: zn, rm, age, tax, ptratio, b 
-## - (8) 	 Features: 6  	 mse.test.mean=56.1 	 Features: crim, zn, chas, age, rad, ptratio 
-## - (9) 	 Features: 4  	 mse.test.mean=62.5 	 Features: crim, nox, dis, tax 
-## - (10) 	 Features: 2  	 mse.test.mean=62.8 	 Features: crim, ptratio 
-## Generation 1:- (1) 	 Features: 5  	 mse.test.mean=32.4 	 Features: crim, nox, dis, tax, lstat 
-## - (2) 	 Features: 6  	 mse.test.mean=42.3 	 Features: zn, chas, rm, age, rad, b 
-## - (3) 	 Features: 8  	 mse.test.mean=26.4 	 Features: zn, indus, rm, age, dis, tax, b, lstat 
-## Generation 2:- (1) 	 Features: 7  	 mse.test.mean=28.6 	 Features: zn, indus, chas, age, dis, tax, lstat 
-## - (2) 	 Features: 10  	 mse.test.mean=27.7 	 Features: crim, indus, chas, rm, age, rad, tax, ptratio, b, lstat 
-## - (3) 	 Features: 9  	 mse.test.mean=29.8 	 Features: crim, indus, chas, rm, age, dis, tax, b, lstat 
-## Generation 3:- (1) 	 Features: 8  	 mse.test.mean=27.6 	 Features: crim, zn, indus, rm, age, dis, tax, lstat 
-## - (2) 	 Features: 11  	 mse.test.mean=26.2 	 Features: crim, indus, chas, rm, age, dis, rad, tax, ptratio, b, etc. 
-## - (3) 	 Features: 4  	 mse.test.mean=30.1 	 Features: dis, tax, ptratio, lstat 
-## Generation 4:- (1) 	 Features: 7  	 mse.test.mean=  28 	 Features: indus, rm, age, rad, tax, ptratio, lstat 
-## - (2) 	 Features: 6  	 mse.test.mean=28.5 	 Features: crim, zn, nox, dis, tax, lstat 
-## - (3) 	 Features: 11  	 mse.test.mean=26.3 	 Features: crim, zn, indus, chas, rm, age, dis, rad, tax, ptratio, etc. 
-## Generation 5:- (1) 	 Features: 9  	 mse.test.mean=25.7 	 Features: indus, chas, nox, rm, dis, tax, ptratio, b, lstat 
-## - (2) 	 Features: 8  	 mse.test.mean=26.6 	 Features: indus, rm, age, rad, tax, ptratio, b, lstat 
-## - (3) 	 Features: 7  	 mse.test.mean=27.8 	 Features: crim, zn, indus, age, dis, tax, lstat 
-## Generation 6:- (1) 	 Features: 9  	 mse.test.mean=26.3 	 Features: indus, nox, rm, age, rad, tax, ptratio, b, lstat 
-## - (2) 	 Features: 10  	 mse.test.mean=25.8 	 Features: crim, zn, indus, rm, age, dis, tax, ptratio, b, lstat 
-## - (3) 	 Features: 9  	 mse.test.mean=25.7 	 Features: indus, chas, nox, rm, dis, tax, ptratio, b, lstat 
-## Generation 7:- (1) 	 Features: 11  	 mse.test.mean=26.2 	 Features: crim, indus, chas, rm, age, dis, rad, tax, ptratio, b, etc. 
-## - (2) 	 Features: 9  	 mse.test.mean=26.3 	 Features: indus, nox, rm, age, rad, tax, ptratio, b, lstat 
-## - (3) 	 Features: 9  	 mse.test.mean=25.3 	 Features: zn, indus, rm, age, dis, tax, ptratio, b, lstat 
-## Generation 8:- (1) 	 Features: 11  	 mse.test.mean=  24 	 Features: crim, zn, indus, rm, age, dis, rad, tax, ptratio, b, etc. 
-## - (2) 	 Features: 10  	 mse.test.mean=26.3 	 Features: zn, indus, chas, rm, age, dis, tax, ptratio, b, lstat 
-## - (3) 	 Features: 8  	 mse.test.mean=25.3 	 Features: zn, rm, age, dis, tax, ptratio, b, lstat 
-## Generation 9:- (1) 	 Features: 9  	 mse.test.mean=25.9 	 Features: crim, zn, rm, age, dis, tax, ptratio, b, lstat 
-## - (2) 	 Features: 12  	 mse.test.mean=  23 	 Features: crim, zn, indus, nox, rm, age, dis, rad, tax, ptratio, etc. 
-## Generation 10:- (1) 	 Features: 12  	 mse.test.mean=  23 	 Features: crim, zn, indus, nox, rm, age, dis, rad, tax, ptratio, etc. 
-## - (2) 	 Features: 11  	 mse.test.mean=25.3 	 Features: zn, indus, chas, nox, rm, age, dis, tax, ptratio, b, etc.
+## Stopped, because no improving feature was found.
 ```
 
 

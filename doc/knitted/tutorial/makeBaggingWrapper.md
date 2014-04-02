@@ -41,7 +41,7 @@ result$aggr
 
 ```
 ## mmce.test.mean 
-##         0.2545
+##          0.251
 ```
 
 Can we improve using *mlrs bagging Wrapper*?
@@ -54,7 +54,7 @@ result$aggr
 
 ```
 ## mmce.test.mean 
-##         0.2062
+##         0.2164
 ```
 
 It conusmes more time but can outperform not bagged learners on noisy data with many variables.
@@ -81,12 +81,12 @@ head(pred$data)
 
 ```
 ##   truth response     se
-## 1  21.6    22.51 0.6191
-## 2  34.7    34.95 2.3807
-## 3  36.2    32.52 0.6787
-## 4  28.7    26.07 0.8861
-## 5  27.1    18.06 0.6985
-## 6  16.5    16.43 0.8577
+## 1  21.6    22.43 0.4203
+## 2  34.7    34.53 1.4286
+## 3  36.2    33.08 0.4778
+## 4  28.7    26.50 1.0213
+## 5  27.1    18.32 0.5842
+## 6  16.5    16.58 0.3969
 ```
 
 In the column labled `se` the standard deviation for each prediction (`response`) is given.
@@ -96,18 +96,6 @@ Here we plot the *percentage of lower status of the population* (`lstat`) agains
 
 ```splus
 library("ggplot2")
-```
-
-```
-## 
-## Attaching package: 'ggplot2'
-## 
-## Das folgende Objekt ist maskiert from 'package:mboost':
-## 
-##     %+%
-```
-
-```splus
 library("reshape2")
 data = cbind(pred$data, BostonHousing[test.inds, ])
 g = ggplot(data, aes(x = lstat, y = response, ymin = response - se, ymax = response + 

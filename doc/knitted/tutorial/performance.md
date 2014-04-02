@@ -67,7 +67,7 @@ performance(pred = pred, measures = timetrain, model = mod)
 ```
 
 ```
-## [1] 0.109
+## [1] 0.011
 ```
 
 ```splus
@@ -75,7 +75,7 @@ performance(pred = pred, measures = timeboth, model = mod)
 ```
 
 ```
-## [1] 0.113
+## [1] 0.015
 ```
 
 
@@ -90,7 +90,7 @@ performance(pred = pred, measures = ms, model = mod)
 
 ```
 ##      mmce       acc timetrain  timeboth 
-##     0.040     0.960     0.109     0.113
+##     0.040     0.960     0.011     0.015
 ```
 
 
@@ -153,7 +153,12 @@ performance(pred, measures = auc)
 ```
 
 ```
-## Error: Argument measures must be of class list, not: function!
+## KernSmooth 2.23 loaded
+## Copyright M. P. Wand 1997-2009
+```
+
+```
+## [1] 0.9224
 ```
 
 
@@ -193,7 +198,7 @@ sapply(ms, function(meas) performance(pred, measures = meas))
 
 ```
 ##    mse    mae 
-## 42.858  4.556
+## 42.854  4.558
 ```
 
 
