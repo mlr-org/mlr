@@ -29,7 +29,7 @@ predict(mod, newdata = iris)
 ## Prediction:
 ## predict.type: response
 ## threshold: 
-## time: 0.01
+## time: 0.00
 ## 'data.frame':	150 obs. of  2 variables:
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...

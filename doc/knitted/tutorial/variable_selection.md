@@ -140,3 +140,30 @@ analyzeFeatSelResult(sfSeq, reduce = FALSE)
 ```
 
 
+
+#### Regression example
+
+We fit a simple linear regression model to the ``BostonHousing`` data set and use a genetic algorithm to find a feature set that reduces the **mse** (mean squared error).
+
+
+```splus
+library("mlbench")
+data(BostonHousing)
+
+task = makeRegrTask(data = BostonHousing, target = "medv")
+lrn = makeLearner("regr.lm")
+rdesc = makeResampleDesc("Holdout")
+
+ctrlGA = makeFeatSelControlGA(maxit = 10)
+sfGA = selectFeatures(learner = lrn, task = task, resampling = rdesc, control = ctrlGA, 
+    show.info = FALSE)
+sfGA
+```
+
+```
+## FeatSel result:
+## Features (12): crim, zn, indus, nox, rm, age, dis, rad, tax, ptratio, b, lstat
+## mse.test.mean=  23
+```
+
+
