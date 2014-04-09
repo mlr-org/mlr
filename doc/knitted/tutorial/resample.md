@@ -150,7 +150,7 @@ r
 ## Stratification: FALSE
 ## predict.type: response
 ## threshold: 
-## time (mean): 0.01
+## time (mean): 0.00
 ## 'data.frame':	506 obs. of  5 variables:
 ##  $ id      : int  3 8 13 19 20 22 30 31 36 41 ...
 ##  $ truth   : num  34.7 27.1 21.7 20.2 18.2 19.6 21 12.7 18.9 34.9 ...
@@ -493,7 +493,7 @@ r1 = resample(lrn1, task, rinst, measures = ms)
 ## [Resample] OOB bootstrapping iter: 1
 ## [Resample] OOB bootstrapping iter: 2
 ## [Resample] OOB bootstrapping iter: 3
-## [Resample] Result: mse.test.mean=73.9,medae.test.mean=4.55
+## [Resample] Result: mse.test.mean=72.9,medae.test.mean=4.47
 ```
 
 ```splus
@@ -524,11 +524,11 @@ r1[c("measures.test", "aggr")]
 ##   iter   mse medae
 ## 1    1 74.42 4.700
 ## 2    2 81.19 4.157
-## 3    3 66.04 4.789
+## 3    3 63.14 4.565
 ## 
 ## $aggr
 ##   mse.test.mean medae.test.mean 
-##          73.882           4.549
+##          72.915           4.474
 ```
 
 ```splus
