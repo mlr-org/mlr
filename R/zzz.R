@@ -4,6 +4,7 @@
 #' @importFrom stats predict
 #' @importFrom codetools findGlobals
 #' @importFrom survival Surv
+#' @importFrom survival is.Surv
 
 .onAttach <- function(libname, pkgname) {
   configureMlr()

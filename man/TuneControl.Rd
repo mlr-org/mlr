@@ -1,4 +1,4 @@
-\name{makeTuneControlCMAES}
+\name{TuneControl}
 \alias{TuneControl}
 \alias{TuneControlCMAES}
 \alias{TuneControlGrid}
