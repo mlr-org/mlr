@@ -36,7 +36,8 @@ performance(pred, measures = mmce)
 ```
 
 ```
-## [1] 0.04
+## mmce 
+## 0.04
 ```
 
   
@@ -49,7 +50,8 @@ performance(pred, measures = acc)
 ```
 
 ```
-## [1] 0.96
+##  acc 
+## 0.96
 ```
 
 ```splus
@@ -58,7 +60,8 @@ performance(pred = pred, measures = timepredict)
 ```
 
 ```
-## [1] 0.004
+## timepredict 
+##       0.011
 ```
 
 ```splus
@@ -67,7 +70,8 @@ performance(pred = pred, measures = timetrain, model = mod)
 ```
 
 ```
-## [1] 0.047
+## timetrain 
+##      0.01
 ```
 
 ```splus
@@ -75,7 +79,8 @@ performance(pred = pred, measures = timeboth, model = mod)
 ```
 
 ```
-## [1] 0.051
+## timeboth 
+##    0.021
 ```
 
 
@@ -89,8 +94,10 @@ performance(pred = pred, measures = ms, model = mod)
 ```
 
 ```
-##      mmce       acc timetrain  timeboth 
-##     0.040     0.960     0.047     0.051
+##           mmce.mmce             acc.acc timetrain.timetrain 
+##               0.040               0.960               0.010 
+##   timeboth.timeboth 
+##               0.021
 ```
 
 
@@ -114,7 +121,8 @@ performance(pred, measures = acc)
 ```
 
 ```
-## [1] 0.875
+##   acc 
+## 0.875
 ```
 
 ```splus
@@ -122,7 +130,8 @@ performance(pred, measures = fpr)
 ```
 
 ```
-## [1] 0.1031
+##    fpr 
+## 0.1031
 ```
 
 ```splus
@@ -130,7 +139,8 @@ performance(pred, measures = fnr)
 ```
 
 ```
-## [1] 0.1441
+##    fnr 
+## 0.1441
 ```
 
 
@@ -153,7 +163,13 @@ performance(pred, measures = auc)
 ```
 
 ```
-## Error: Argument measures must be of class list, not: function!
+## KernSmooth 2.23 loaded
+## Copyright M. P. Wand 1997-2009
+```
+
+```
+##    auc 
+## 0.9224
 ```
 
 
@@ -192,8 +208,8 @@ sapply(ms, function(meas) performance(pred, measures = meas))
 ```
 
 ```
-##    mse    mae 
-## 42.854  4.558
+## mse.mse mae.mae 
+##   42.70    4.54
 ```
 
 

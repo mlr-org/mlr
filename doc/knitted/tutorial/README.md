@@ -15,8 +15,9 @@ Tutorial
 12. [List of all integrated learners](http://berndbischl.github.io/mlr/man/learners.html)
 13. Cool Stuff - Various short examples of cool stuff we have put into **mlr**.
   * [Generic bagging](makeBaggingWrapper.md) You can wrap all learners supported by **mlr** in a nice bagging method improving stability of the predictions and allowing you to get standard error estimations.
+  * [Over and undersampling](over_and_undersampling.md) Oversample minority classes or vice versa.
   * [Multicriteria evaluation](multicriteria_evaluation.md) Learn how to aggregate the multiple measures from a cross validation.
-  * [mlr Configuration](configureMlr.md) ignore learner errors, **mlr**'s parameter checking and surpress other output.
+  * [mlr Configuration](configureMlr.md) ignore learner errors, **mlr**'s parameter checking and suppress other output.
 
 This web page will provide you with an in-depth introduction on how to
 use the **mlr** framework for machine learning experiments and

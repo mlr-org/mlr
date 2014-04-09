@@ -45,7 +45,7 @@ r = resample(lrn, task, rdesc)
 ```
 
 ```
-## [Resample] Result: mmce.test.mean=0.06
+## [Resample] Result: mmce.test.mean=0.0467
 ```
 
 Just try the following:
