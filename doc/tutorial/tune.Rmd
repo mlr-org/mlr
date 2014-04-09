@@ -19,6 +19,8 @@ Classification example
 We again use the iris data set, included in R, but now, we want to
 tune a SVM with a polynomial kernel.
 
+### Simple Grid Search witch Cross Validation
+
 We start by loading the *mlr* package and creating a classification
 task, just like in the tutorial on [training](train.md):
 
@@ -34,8 +36,8 @@ Since we will use a grid search strategy, we add a discrete parameter for the
 More details concerning parameter sets are explained in section [parameters](parameters.md).
 
 ```{r}
-ps = makeParamSet(makeDiscreteParam("C", values=2^(-1:1)),
-                   makeDiscreteParam("sigma", values=2^(-1:1)))
+ps = makeParamSet(makeDiscreteParam("C", values=2^(-2:2)),
+                   makeDiscreteParam("sigma", values=2^(-2:2)))
 ``` 
 
 We will use cross-validation to assess the quality of a parameter
@@ -59,9 +61,17 @@ using our [TuneControl](http://berndbischl.github.io/mlr/man/TuneControl.html) i
 described by the `rdesc` variable.
 
 ```{r}
-tuneParams(makeLearner("classif.ksvm"), task=task, resampling=rdesc, par.set=ps, control=ctrl)
-``` 
+r = tuneParams(makeLearner("classif.ksvm"), task=task, resampling=rdesc, par.set=ps, control=ctrl, measures=list(mmce, setAggregation(mmce, test.sd)))
+```
 
+We used a trick also described [here](multicriteria_evaluation.md) to also obtain the Standard Deviation by adding a second measure.
+A quick visualization of the Grid Search can be achived by accessing the opt.path as follows
+```{r tune_gridSearchVisualized}
+library(ggplot2)
+head((opt.grid = as.data.frame(r$opt.path)))
+g = ggplot(opt.grid, aes(x=C, y=sigma, fill=mmce.test.mean, label=round(mmce.test.sd,3)))
+g + geom_tile() + geom_text(color="white")
+```
 Let's take another closer look at the example above. The parameter grid has
 to be a named list, where every entry has to be named according to the
 corresponding parameter of the underlying R function (in this case
@@ -81,6 +91,8 @@ Unfortunately, it's not clear, how reliable the results are. One might
 want to find out, if the configurations vary for slightly different data sets.
 A good approach for getting a better feeling of the best parameter setting
 would be a nested cross-validation.
+
+### Nested Cross Validation
 
 Let's run a nested CV with 5 folds in the outer loop and 3 folds in the
 inner loop on the example from above.
@@ -120,7 +132,7 @@ for C should be at least 1 and the values for sigma should be between 0 and 1.
 
 If we want to find out, how good those configurations are on the entire data
 set, we might still look at the measures that we already know from
-:doc:`resample`.
+[Resampling](resample.md).
 
 ```{r}
 r$measures.test
@@ -130,6 +142,18 @@ r$aggr
 Thus, we receive 5 misclassification errors (one for each optimal parameter
 configuration per outer fold) and one aggregated version, i.e. the mean,
 of those 5 values.
+
+#### Visualization
+
+To extract the `opt.path`s we have to access the inner cross validations.
+```{r tune_nestedGridSearchVisualized}
+opt.paths = lapply(r$extract, function(x) as.data.frame(x$opt.path))
+opt.mmce = lapply(opt.paths, function(x) x$mmce.test.mean)
+opt.grid = opt.paths[[1]][,1:2]
+opt.grid$mmce.test.mean = apply(simplify2array(opt.mmce),1, mean)
+g = ggplot(opt.grid, aes(x=C, y=sigma, fill=mmce.test.mean))
+g + geom_tile()
+```
 
 Regression example
 ------------------

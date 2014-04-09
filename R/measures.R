@@ -29,12 +29,9 @@
 #'   \item{\bold{gmean}}{\cr G-mean, geometric mean of recall and specificity.}
 #'   \item{\bold{gpr}}{\cr Geometric mean of precision and recall.}
 #'   \item{\bold{auc}}{\cr Area under the curve.}
-#FIXME: see issue, 2 lines removed
-#   \item{\bold{multiclass.auc}}{\cr Area under the curve for multiclass problems. Calls \code{pROC::multiclass.roc}.}
+#'   \item{\bold{multiclass.auc}}{\cr Area under the curve for multiclass problems. Calls \code{pROC::multiclass.roc}.}
 #' }
-# FIXME: one line removed / changed
-# Only \code{mmce}, \code{acc}, \code{multiclass.auc} and \code{ber} can be used for multiclass problems.
-#' Only \code{mmce}, \code{acc}, and \code{ber} can be used for multiclass problems.
+#' Only \code{mmce}, \code{acc}, \code{multiclass.auc} and \code{ber} can be used for multiclass problems.
 #'
 #' Regression:
 #' \itemize{
@@ -214,18 +211,24 @@ ber = makeMeasure(id="ber", minimize=TRUE, classif=TRUE, allowed.pred.types=c("r
   }
 )
 
-# @export multiclass.auc
-# @rdname measures
-# @usage none
-# @format none
-# multiclass.auc = makeMeasure(id="multiclass.auc", minimize=FALSE, classif=TRUE, only.binary=FALSE, allowed.pred.types=c("response", "prob"),
-#   fun=function(task, model, pred, extra.args) {
-#     # pROC does allow NAs
-#     requirePackages("pROC", "multiclass.auc")
-#     auc = pROC::multiclass.roc(response=pred$data$response, predictor=as.matrix(getProbabilities(pred)))$auc
-#     as.numeric(auc)
-#   }
-# )
+#' @export multiclass.auc
+#' @rdname measures
+#' @usage none
+#' @format none
+multiclass.auc = makeMeasure(id="multiclass.auc", minimize=FALSE, classif=TRUE, only.binary=FALSE, allowed.pred.types=c("response", "prob"),
+  fun=function(task, model, pred, extra.args) {
+    # pROC does allow NAs
+    requirePackages("pROC", "multiclass.auc")
+    resp = pred$data$response
+    predP = getProbabilities(pred)
+    # choose the probablity of the choosen response
+    predV = sapply(seq_row(predP), function(i) {
+      predP[i, resp[i]]
+    })
+    auc = pROC::multiclass.roc(response=resp, predictor=predV)$auc
+    as.numeric(auc)
+  }
+)
 
 
 # classif_two
