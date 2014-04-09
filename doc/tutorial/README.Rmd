@@ -8,7 +8,7 @@ Tutorial
 5. [Evaluating learner performance](performance.md)
 6. [Resampling](resample.md)
 7. [Tuning hyperparameters](tune.md)
-8. [Variable selection](variable_selection.md)
+8. [Feature selection](feature_selection.md)
 9. [Benchmark experiments](benchmark_experiments.md)
 10. [Benchmark analysis](benchmark_analysis.md)
 11. [ROC analysis](roc_analysis.md)
