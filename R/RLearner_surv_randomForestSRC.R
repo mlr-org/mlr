@@ -21,16 +21,15 @@ makeRLearner.surv.randomForestSRC = function() {
 
 #' @S3method trainLearner surv.randomForestSRC
 trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights,  ...) {
-  #FIXME: unnecessary data duplication
-  data = getTaskData(.task, subset=.subset, target.extra=FALSE)
-  rfsrc(getTaskFormula(.task), data = data, importance="none", proximity=FALSE, ...)
+  f = getTaskFormula(.task, env=as.environment("package:survival"))
+  rfsrc(getTaskFormula(.task), data = getTaskData(.task, .subset), importance = "none", proximity = FALSE, forest = TRUE, ...)
 }
 
 #' @S3method predictLearner surv.randomForestSRC
 predictLearner.surv.randomForestSRC = function(.learner, .model, .newdata, ...) {
-  s = .model$learner.model$lambda.min
-  if(.learner$predict.type == "response")
-    predict(.model$learner.model, newdata=.newdata, importance = "none", ...)
-  else
+  if(.learner$predict.type == "response") {
+    predict(.model$learner.model, newdata=.newdata, importance = "none", na.action = "na.impute", ...)$predicted
+  } else {
     stop("Unknown predict type")
+  }
 }
