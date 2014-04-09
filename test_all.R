@@ -21,4 +21,12 @@ source("inst/tests/helper_helpers.R")
 source("inst/tests/helper_objects.R")
 options(mlr.debug.seed=123L)
 configureMlr(show.learner.output=FALSE)
-test_dir("inst/tests")
+
+args = commandArgs()
+file = args[which(args == "--args")+1]
+if(length(file)==0 || is.na(file)) {
+  test_dir("inst/tests")
+}else{
+  catf("Run test for file %s", file.path("inst",file))
+  test_file(file.path("inst","tests",file))
+}
