@@ -10,27 +10,48 @@ test_that("getTaskData", {
   df = getTaskData(binaryclass.task, recode.target="01")
   expect_equal(df[, 1:20], binaryclass.df[, 1:20])
   expect_true(is.numeric(df[, binaryclass.target]))
-  expect_equal(sum(df[, binaryclass.target] == 1), 
+  expect_equal(sum(df[, binaryclass.target] == 1),
     sum(binaryclass.df[, binaryclass.target] == binaryclass.task$task.desc$positive))
-  expect_equal(sum(df[, binaryclass.target] == 0), 
+  expect_equal(sum(df[, binaryclass.target] == 0),
     sum(binaryclass.df[, binaryclass.target] == binaryclass.task$task.desc$negative))
   df = getTaskData(binaryclass.task, recode.target="-1+1")
   expect_equal(df[,1:20], binaryclass.df[, 1:20])
   expect_true(is.numeric(df[, binaryclass.target]))
-  expect_equal(sum(df[, binaryclass.target] == 1), 
+  expect_equal(sum(df[, binaryclass.target] == 1),
     sum(binaryclass.df[, binaryclass.target] == binaryclass.task$task.desc$positive))
-  expect_equal(sum(df[, binaryclass.target] == -1), 
+  expect_equal(sum(df[, binaryclass.target] == -1),
     sum(binaryclass.df[, binaryclass.target] == binaryclass.task$task.desc$negative))
 
   df = getTaskData(binaryclass.task, subset=1:150, features=colnames(binaryclass.df)[1:2])
   expect_equal(nrow(df), 150)
   expect_equal(ncol(df), 3)
-  df = getTaskData(binaryclass.task, subset=1:150, features=colnames(binaryclass.df)[1:2], 
+  df = getTaskData(binaryclass.task, subset=1:150, features=colnames(binaryclass.df)[1:2],
     recode.target="01")
   expect_equal(nrow(df), 150)
   expect_equal(ncol(df), 3)
-  
+
   x = getTaskData(multiclass.task, target.extra=TRUE)
   expect_equal(x$data[,1:4], multiclass.df[,1:4])
   expect_equal(x$target, multiclass.df[, multiclass.target])
+})
+
+test_that("getTaskData survival", {
+  df = getTaskData(surv.task)
+  expect_equal(df, surv.df)
+  cn = colnames(surv.df)[3:4]
+  df = getTaskData(surv.task, subset=1:10, features=cn)
+  expect_equal(df, surv.df[1:10, union(cn, surv.target)])
+
+  x = getTaskData(surv.task, target.extra=TRUE)
+  expect_true(setequal(names(x), c("data", "target")))
+  expect_true(is.data.frame(x$data))
+  expect_true(is.data.frame(x$target))
+  expect_equal(dim(x$data), c(150L, 5L))
+  expect_equal(dim(x$target), c(150L, 2L))
+  expect_equal(names(x$target), surv.target)
+  expect_true(setequal(names(x$data), setdiff(names(surv.df), surv.target)))
+
+  x = getTaskData(surv.task, target.extra=TRUE, recode.target="surv")
+  expect_true(is.Surv(x$target))
+  expect_equal(dim(x$target), c(150L, 2L))
 })
