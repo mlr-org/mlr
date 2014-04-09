@@ -101,7 +101,8 @@ default.measures = function(x) {
     x$type
   switch(type,
     classif = list(mmce),
-    regr = list(mse)
+    regr = list(mse),
+    surv = list(cindex)
   )
 }
 
