@@ -1,4 +1,4 @@
-\name{FeatSelControl}
+\name{makeFeatSelControlExhaustive}
 \alias{FeatSelControl}
 \alias{FeatSelControlExhaustive}
 \alias{FeatSelControlGA}
