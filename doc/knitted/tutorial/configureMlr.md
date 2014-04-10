@@ -45,7 +45,7 @@ r = resample(lrn, task, rdesc)
 ```
 
 ```
-## [Resample] Result: mmce.test.mean=0.06
+## [Resample] Result: mmce.test.mean=0.0467
 ```
 
 Just try the following:
@@ -59,7 +59,7 @@ r = resample(lrn, task, rdesc)
 ## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.0533
+## [Resample] Result: mmce.test.mean=0.0467
 ```
 
 

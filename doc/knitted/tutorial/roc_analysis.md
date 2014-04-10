@@ -24,7 +24,6 @@ First we create a scenario with two different [learners](learner.md) capable of 
 
 
 ```splus
-
 ## Generate 2 class problem with mlbench
 set.seed(1)
 testData = as.data.frame(mlbench.2dnormals(100, sd = 2))

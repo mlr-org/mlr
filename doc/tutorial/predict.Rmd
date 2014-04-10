@@ -21,7 +21,9 @@ library("mlr")
 task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.lda")
 mod = train(lrn, task = task)
-predict(mod, newdata = iris)
+pred = predict(mod, newdata = iris)
+pred
+performance(pred)
 ``` 
 
 

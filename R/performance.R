@@ -91,5 +91,7 @@ doPerformaceIteration = function(measure, pred, task, model, td){
       stopf("Measure %s is only allowed for predictions of type: %s!",
             m$id, collapse(m$allowed.pred.types))
   }
-  measure$fun(task2, model2, pred2, m$extra.args)
+  res = measure$fun(task2, model2, pred2, m$extra.args)
+  names(res) = measure$id
+  res
 }

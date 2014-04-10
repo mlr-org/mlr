@@ -19,6 +19,8 @@ Classification example
 We again use the iris data set, included in R, but now, we want to
 tune a SVM with a polynomial kernel.
 
+### Simple Grid Search witch Cross Validation
+
 We start by loading the *mlr* package and creating a classification
 task, just like in the tutorial on [training](train.md):
 
@@ -37,8 +39,8 @@ More details concerning parameter sets are explained in section [parameters](par
 
 
 ```splus
-ps = makeParamSet(makeDiscreteParam("C", values = 2^(-1:1)), makeDiscreteParam("sigma", 
-    values = 2^(-1:1)))
+ps = makeParamSet(makeDiscreteParam("C", values = 2^(-2:2)), makeDiscreteParam("sigma", 
+    values = 2^(-2:2)))
 ```
 
 
@@ -68,33 +70,70 @@ described by the `rdesc` variable.
 
 
 ```splus
-tuneParams(makeLearner("classif.ksvm"), task = task, resampling = rdesc, par.set = ps, 
-    control = ctrl)
+r = tuneParams(makeLearner("classif.ksvm"), task = task, resampling = rdesc, 
+    par.set = ps, control = ctrl, measures = list(mmce, setAggregation(mmce, 
+        test.sd)))
 ```
 
 ```
 ## [Tune] Started tuning learner classif.ksvm for parameter set:
-## Disc param 'C'. Vals: 0.5,1,2. Trafo: FALSE. Requires: FALSE
-## Disc param 'sigma'. Vals: 0.5,1,2. Trafo: FALSE. Requires: FALSE
+## Disc param 'C'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
+## Disc param 'sigma'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
 ## With control class: TuneControlGrid
-## [Tune] 1: C=0.5; sigma=0.5 : mmce.test.mean=0.04
-## [Tune] 1: C=1; sigma=0.5 : mmce.test.mean=0.04
-## [Tune] 1: C=2; sigma=0.5 : mmce.test.mean=0.0467
-## [Tune] 1: C=0.5; sigma=1 : mmce.test.mean=0.04
-## [Tune] 1: C=1; sigma=1 : mmce.test.mean=0.0533
-## [Tune] 1: C=2; sigma=1 : mmce.test.mean=0.0467
-## [Tune] 1: C=0.5; sigma=2 : mmce.test.mean=0.06
-## [Tune] 1: C=1; sigma=2 : mmce.test.mean=0.0533
-## [Tune] 1: C=2; sigma=2 : mmce.test.mean=0.06
-## [Tune] Result: C=0.5; sigma=0.5 : mmce.test.mean=0.04
+## [Tune] 1: C=0.25; sigma=0.25 : mmce.test.mean=0.0533,mmce.test.sd=0.0416
+## [Tune] 1: C=0.5; sigma=0.25 : mmce.test.mean=0.0533,mmce.test.sd=0.0416
+## [Tune] 1: C=1; sigma=0.25 : mmce.test.mean=0.0333,mmce.test.sd=0.0231
+## [Tune] 1: C=2; sigma=0.25 : mmce.test.mean=0.0467,mmce.test.sd=0.0462
+## [Tune] 1: C=4; sigma=0.25 : mmce.test.mean=0.0467,mmce.test.sd=0.0462
+## [Tune] 1: C=0.25; sigma=0.5 : mmce.test.mean=0.0533,mmce.test.sd=0.0306
+## [Tune] 1: C=0.5; sigma=0.5 : mmce.test.mean=0.04,mmce.test.sd=0.02
+## [Tune] 1: C=1; sigma=0.5 : mmce.test.mean=0.04,mmce.test.sd=0.0346
+## [Tune] 1: C=2; sigma=0.5 : mmce.test.mean=0.0467,mmce.test.sd=0.0462
+## [Tune] 1: C=4; sigma=0.5 : mmce.test.mean=0.0467,mmce.test.sd=0.0462
+## [Tune] 1: C=0.25; sigma=1 : mmce.test.mean=0.06,mmce.test.sd=0.04
+## [Tune] 1: C=0.5; sigma=1 : mmce.test.mean=0.04,mmce.test.sd=0.02
+## [Tune] 1: C=1; sigma=1 : mmce.test.mean=0.0533,mmce.test.sd=0.0416
+## [Tune] 1: C=2; sigma=1 : mmce.test.mean=0.0467,mmce.test.sd=0.0306
+## [Tune] 1: C=4; sigma=1 : mmce.test.mean=0.0533,mmce.test.sd=0.0231
+## [Tune] 1: C=0.25; sigma=2 : mmce.test.mean=0.0733,mmce.test.sd=0.0231
+## [Tune] 1: C=0.5; sigma=2 : mmce.test.mean=0.06,mmce.test.sd=0.04
+## [Tune] 1: C=1; sigma=2 : mmce.test.mean=0.0533,mmce.test.sd=0.0306
+## [Tune] 1: C=2; sigma=2 : mmce.test.mean=0.06,mmce.test.sd=0.02
+## [Tune] 1: C=4; sigma=2 : mmce.test.mean=0.0667,mmce.test.sd=0.0115
+## [Tune] 1: C=0.25; sigma=4 : mmce.test.mean=0.113,mmce.test.sd=0.0306
+## [Tune] 1: C=0.5; sigma=4 : mmce.test.mean=0.08,mmce.test.sd=0.02
+## [Tune] 1: C=1; sigma=4 : mmce.test.mean=0.0533,mmce.test.sd=0.0231
+## [Tune] 1: C=2; sigma=4 : mmce.test.mean=0.06,mmce.test.sd=0.02
+## [Tune] 1: C=4; sigma=4 : mmce.test.mean=0.06,mmce.test.sd=0.02
+## [Tune] Result: C=1; sigma=0.25 : mmce.test.mean=0.0333,mmce.test.sd=0.0231
+```
+
+
+We used a trick also described [here](multicriteria_evaluation.md) to also obtain the Standard Deviation by adding a second measure.
+A quick visualization of the Grid Search can be achived by accessing the opt.path as follows
+
+```splus
+library(ggplot2)
+head((opt.grid = as.data.frame(r$opt.path)))
 ```
 
 ```
-## Tune result:
-## Op. pars: C=0.5; sigma=0.5
-## mmce.test.mean=0.04
+##      C sigma mmce.test.mean mmce.test.sd dob eol
+## 1 0.25  0.25        0.05333      0.04163   1   1
+## 2  0.5  0.25        0.05333      0.04163   1   1
+## 3    1  0.25        0.03333      0.02309   1   1
+## 4    2  0.25        0.04667      0.04619   1   1
+## 5    4  0.25        0.04667      0.04619   1   1
+## 6 0.25   0.5        0.05333      0.03055   1   1
 ```
 
+```splus
+g = ggplot(opt.grid, aes(x = C, y = sigma, fill = mmce.test.mean, label = round(mmce.test.sd, 
+    3)))
+g + geom_tile() + geom_text(color = "white")
+```
+
+![plot of chunk tune_gridSearchVisualized](figs/tune/tune_gridSearchVisualized.png) 
 
 Let's take another closer look at the example above. The parameter grid has
 to be a named list, where every entry has to be named according to the
@@ -115,6 +154,8 @@ Unfortunately, it's not clear, how reliable the results are. One might
 want to find out, if the configurations vary for slightly different data sets.
 A good approach for getting a better feeling of the best parameter setting
 would be a nested cross-validation.
+
+### Nested Cross Validation
 
 Let's run a nested CV with 5 folds in the outer loop and 3 folds in the
 inner loop on the example from above.
@@ -156,28 +197,28 @@ r$extract
 ```
 ## [[1]]
 ## Tune result:
-## Op. pars: C=1; sigma=0.25
-## mmce.test.mean=0.05
+## Op. pars: C=2; sigma=0.25
+## mmce.test.mean=0.025
 ## 
 ## [[2]]
 ## Tune result:
-## Op. pars: C=4; sigma=0.25
-## mmce.test.mean=0.0417
+## Op. pars: C=2; sigma=0.25
+## mmce.test.mean=0.025
 ## 
 ## [[3]]
 ## Tune result:
-## Op. pars: C=0.5; sigma=0.5
+## Op. pars: C=2; sigma=0.25
 ## mmce.test.mean=0.0333
 ## 
 ## [[4]]
 ## Tune result:
-## Op. pars: C=0.5; sigma=0.25
-## mmce.test.mean=0.0417
+## Op. pars: C=2; sigma=0.25
+## mmce.test.mean=0.0333
 ## 
 ## [[5]]
 ## Tune result:
-## Op. pars: C=2; sigma=0.5
-## mmce.test.mean=0.0167
+## Op. pars: C=1; sigma=0.25
+## mmce.test.mean=0.0333
 ```
 
 
@@ -187,7 +228,7 @@ for C should be at least 1 and the values for sigma should be between 0 and 1.
 
 If we want to find out, how good those configurations are on the entire data
 set, we might still look at the measures that we already know from
-:doc:`resample`.
+[Resampling](resample.md).
 
 
 ```splus
@@ -196,11 +237,11 @@ r$measures.test
 
 ```
 ##   iter    mmce
-## 1    1 0.06667
-## 2    2 0.00000
+## 1    1 0.00000
+## 2    2 0.03333
 ## 3    3 0.06667
-## 4    4 0.06667
-## 5    5 0.13333
+## 4    4 0.00000
+## 5    5 0.06667
 ```
 
 ```splus
@@ -209,13 +250,29 @@ r$aggr
 
 ```
 ## mmce.test.mean 
-##        0.06667
+##        0.03333
 ```
 
 
 Thus, we receive 5 misclassification errors (one for each optimal parameter
 configuration per outer fold) and one aggregated version, i.e. the mean,
 of those 5 values.
+
+#### Visualization
+
+To extract the `opt.path`s we have to access the inner cross validations.
+
+```splus
+opt.paths = lapply(r$extract, function(x) as.data.frame(x$opt.path))
+opt.mmce = lapply(opt.paths, function(x) x$mmce.test.mean)
+opt.grid = opt.paths[[1]][, 1:2]
+opt.grid$mmce.test.mean = apply(simplify2array(opt.mmce), 1, mean)
+g = ggplot(opt.grid, aes(x = C, y = sigma, fill = mmce.test.mean))
+g + geom_tile()
+```
+
+![plot of chunk tune_nestedGridSearchVisualized](figs/tune/tune_nestedGridSearchVisualized.png) 
+
 
 Regression example
 ------------------

@@ -23,7 +23,7 @@ List of currently integrated classifiers
 
 ```
 ## Warning: The following learners could not be constructed, probably because their packages are not installed:
-## classif.LiblineaRBinary,classif.LiblineaRLogReg,classif.LiblineaRMultiClass,classif.plr,classif.rrlda,regr.crs,surv.CoxBoost,surv.glmnet
+## surv.CoxBoost,surv.glmnet,surv.randomForestSRC
 ## Check ?learners to see which packages you need or install mlr with all suggestions.
 ```
 
@@ -38,7 +38,7 @@ List of currently integrated regression methods
 
 ```
 ## Warning: The following learners could not be constructed, probably because their packages are not installed:
-## classif.LiblineaRBinary,classif.LiblineaRLogReg,classif.LiblineaRMultiClass,classif.plr,classif.rrlda,regr.crs,surv.CoxBoost,surv.glmnet
+## surv.CoxBoost,surv.glmnet,surv.randomForestSRC
 ## Check ?learners to see which packages you need or install mlr with all suggestions.
 ```
 

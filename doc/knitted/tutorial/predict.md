@@ -22,7 +22,8 @@ library("mlr")
 task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.lda")
 mod = train(lrn, task = task)
-predict(mod, newdata = iris)
+pred = predict(mod, newdata = iris)
+pred
 ```
 
 ```
@@ -33,6 +34,15 @@ predict(mod, newdata = iris)
 ## 'data.frame':	150 obs. of  2 variables:
 ##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
 ##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
+```
+
+```splus
+performance(pred)
+```
+
+```
+## mmce 
+## 0.02
 ```
 
 
@@ -58,7 +68,7 @@ predict(mod, newdata = BostonHousing)
 ## Prediction:
 ## predict.type: response
 ## threshold: 
-## time: 0.01
+## time: 0.00
 ## 'data.frame':	506 obs. of  2 variables:
 ##  $ truth   : num  24 21.6 34.7 33.4 36.2 28.7 22.9 27.1 16.5 18.9 ...
 ##  $ response: num  30 25 30.6 28.6 27.9 ...
@@ -294,11 +304,11 @@ head(pred$data)
 
 ```
 ##   truth response
-## 1  21.6    22.27
-## 2  33.4    23.29
-## 3  28.7    22.36
-## 4  27.1    22.13
-## 5  18.9    22.13
+## 1  21.6    22.23
+## 2  33.4    23.23
+## 3  28.7    22.37
+## 4  27.1    22.12
+## 5  18.9    22.12
 ## 6  18.9    22.13
 ```
 

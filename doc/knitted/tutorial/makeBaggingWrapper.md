@@ -1,7 +1,7 @@
 
 
 
-Bagging Wrapper
+Generic bagging
 ========================================================
 
 One reason why *Random Forrests* perform so well ist that they are using Bagging as a technique to gain more stability.
