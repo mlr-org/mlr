@@ -23,11 +23,12 @@ makeRLearner.classif.glmboost = function() {
 
 #' @S3method trainLearner classif.glmboost
 trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights, mstop, nu, risk, ...) {
-  f = getTaskFormula(.task)
   ctrl = learnerArgsToControl(boost_control, mstop, nu, risk)
   if (missing(.weights)) {
+    f = getTaskFormula(.task)
     glmboost(f, data=getTaskData(.task, .subset), control=ctrl, , ...)
   } else  {
+    f = as.formula(getTaskFormulaAsString(.task))
     glmboost(f, data=getTaskData(.task, .subset), control=ctrl, weights=.weights, ...)
   }
 }
