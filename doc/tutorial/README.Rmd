@@ -18,6 +18,7 @@ Tutorial
   * [Over and undersampling](over_and_undersampling.md) Oversample minority classes or vice versa.
   * [Multicriteria evaluation](multicriteria_evaluation.md) Learn how to aggregate the multiple measures from a cross validation.
   * [mlr Configuration](configureMlr.md) ignore learner errors, **mlr**'s parameter checking and suppress other output.
+  * [Parallelization](parallelization.md) Make use of multicore CPUs and other distributed computing methods.
 
 This web page will provide you with an in-depth introduction on how to
 use the **mlr** framework for machine learning experiments and

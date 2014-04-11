@@ -94,14 +94,14 @@ sfSeq = selectFeatures(learner = lrn, task = task, resampling = rdesc, control =
 ```
 
 ```
-## [selectFeatures] 1: 0 bits: mmce.test.mean=0.64
-## [selectFeatures] 2: 1 bits: mmce.test.mean= 0.4
-## [selectFeatures] 2: 1 bits: mmce.test.mean= 0.5
-## [selectFeatures] 2: 1 bits: mmce.test.mean=0.08
-## [selectFeatures] 2: 1 bits: mmce.test.mean=0.02
-## [selectFeatures] 3: 2 bits: mmce.test.mean=0.02
-## [selectFeatures] 3: 2 bits: mmce.test.mean=0.02
-## [selectFeatures] 3: 2 bits: mmce.test.mean=0.08
+## [selectFeatures] 1: 0 bits: mmce.test.mean= 0.6
+## [selectFeatures] 2: 1 bits: mmce.test.mean=0.42
+## [selectFeatures] 2: 1 bits: mmce.test.mean=0.56
+## [selectFeatures] 2: 1 bits: mmce.test.mean= 0.1
+## [selectFeatures] 2: 1 bits: mmce.test.mean= 0.1
+## [selectFeatures] 3: 2 bits: mmce.test.mean= 0.1
+## [selectFeatures] 3: 2 bits: mmce.test.mean= 0.1
+## [selectFeatures] 3: 2 bits: mmce.test.mean= 0.1
 ```
 
 ```splus
@@ -110,8 +110,8 @@ sfSeq
 
 ```
 ## FeatSel result:
-## Features (1): Petal.Width
-## mmce.test.mean=0.02
+## Features (1): Petal.Length
+## mmce.test.mean= 0.1
 ```
 
 ```splus
@@ -120,21 +120,21 @@ analyzeFeatSelResult(sfSeq, reduce = FALSE)
 
 ```
 ## Features         : 1
-## Performance      : mmce.test.mean=0.02
-## Petal.Width
+## Performance      : mmce.test.mean= 0.1
+## Petal.Length
 ## 
 ## Path to optimum:
 ## --------------------------------------------------------------------------------
-## - Features:    0  Init   :                       Perf = 0.64  Diff:  0.00  *
+## - Features:    0  Init   :                       Perf = 0.60  Diff:  0.00  *
 ## --------------------------------------------------------------------------------
-## - Features:    1  Add    : Sepal.Length          Perf = 0.40  Diff: -0.38   
-## - Features:    1  Add    : Sepal.Width           Perf = 0.50  Diff: -0.48   
-## - Features:    1  Add    : Petal.Length          Perf = 0.08  Diff: -0.06   
-## - Features:    1  Add    : Petal.Width           Perf = 0.02  Diff:  0.00  *
+## - Features:    1  Add    : Sepal.Length          Perf = 0.42  Diff: -0.32   
+## - Features:    1  Add    : Sepal.Width           Perf = 0.56  Diff: -0.46   
+## - Features:    1  Add    : Petal.Length          Perf = 0.10  Diff:  0.00  *
+## - Features:    1  Add    : Petal.Width           Perf = 0.10  Diff:  0.00   
 ## --------------------------------------------------------------------------------
-## - Features:    2  Add    : Sepal.Length          Perf = 0.02  Diff:  0.00   
-## - Features:    2  Add    : Sepal.Width           Perf = 0.02  Diff:  0.00   
-## - Features:    2  Add    : Petal.Length          Perf = 0.08  Diff: -0.06   
+## - Features:    2  Add    : Sepal.Length          Perf = 0.10  Diff:  0.00   
+## - Features:    2  Add    : Sepal.Width           Perf = 0.10  Diff:  0.00   
+## - Features:    2  Add    : Petal.Width           Perf = 0.10  Diff:  0.00   
 ## 
 ## Stopped, because no improving feature was found.
 ```
@@ -162,8 +162,8 @@ sfGA
 
 ```
 ## FeatSel result:
-## Features (10): crim, zn, indus, chas, nox, rm, dis, rad, ptratio, lstat
-## mse.test.mean=  23
+## Features (8): crim, chas, rm, age, dis, rad, ptratio, lstat
+## mse.test.mean=30.8
 ```
 
 

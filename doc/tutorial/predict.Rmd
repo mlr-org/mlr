@@ -23,7 +23,6 @@ lrn = makeLearner("classif.lda")
 mod = train(lrn, task = task)
 pred = predict(mod, newdata = iris)
 pred
-performance(pred)
 ``` 
 
 
