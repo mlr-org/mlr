@@ -35,6 +35,15 @@ in ksvm.\cr Note that \code{fit} has been set to
 \code{FALSE} by default for speed.}
 \item{\bold{classif.lda}}{\cr Linear Discriminant Analysis
 from MASS package: \code{\link[MASS]{lda}}}
+\item{\bold{classif.LiblineaRBinary}}{\cr Regularized
+Binary Linear Predictive Models Estimation from LiblineaR
+package: \code{\link[LiblineaR]{LiblineaR}}}
+\item{\bold{classif.LiblineaRLogReg}}{\cr Regularized
+Logistic Regression from LiblineaR package:
+\code{\link[LiblineaR]{LiblineaR}}}
+\item{\bold{classif.LiblineaRMultiClass}}{\cr Multi-class
+Support Vector Classification by Crammer and Singer from
+LiblineaR package: \code{\link[LiblineaR]{LiblineaR}}}
 \item{\bold{classif.logreg}}{\cr Logistic Regression from
 stats package: \code{\link[stats]{glm}}}
 \item{\bold{classif.lssvm}}{\cr Least Squares Support
