@@ -23,6 +23,7 @@ test_that("performance", {
 		t2 = getTaskTargets(task)[id]
 		e2 = mean(t2 != pred$data$response)
 		expect_equal(e1, e2)
+    0
 	})
 	
 	performance(r$pred, measures=mymeasure, task=binaryclass.task)

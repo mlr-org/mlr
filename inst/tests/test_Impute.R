@@ -54,7 +54,7 @@ test_that("Impute data frame", {
   expect_true("xxx" %in% levels(imputed$f))
 
   # dummies
-  x = impute(data, target, dummies="x")
+  x = impute(data, target, dummy.cols="x")
   expect_equal(x$data[["x.dummy"]], c(rep(FALSE, 5), TRUE))
   expect_equal(reimpute(data, x$desc), x$data)
 

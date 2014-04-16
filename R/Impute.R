@@ -1,12 +1,3 @@
-# FIXME: is the target a string or a character vector? this is not explained!
-
-# FIXME: Some of the special cool things need to be explained in a bit more detail
-
-# FIXME: does it make sense to encoubter different features in reimpute set?
-# if not, we shoukd check that.
-
-# FIXME: we can enter crap in cols and classes without good check?
-
 #' @title Impute and re-impute data
 #'
 #' @description
@@ -44,16 +35,19 @@
 #' @param data [\code{data.frame}]\cr
 #'   Input data.
 #' @param target [\code{character}]\cr
-#'   Name of the column specifying the response.
+#'   Name of the column specifying the response column(s).
 #' @param classes [\code{named list}]\cr
 #'   Named list containing imputation techniques for classes of columns.
 #'   E.g. \code{list(numeric = imputeMedian())}.
 #' @param cols [\code{named list}]\cr
-#'   Named list containing names of the built-in imputation methods to impute missing values
+#'   Named list containing names of imputation methods to impute missing values
 #'   in the data column referenced by the list element's name. Overwrites imputation set via
 #'   \code{classes}.
-#' @param dummies [\code{character}]\cr
-#'   Column names for which dummy variables (binary missing indicator) should be created.
+#' @param dummy.classes [\code{character}]\cr
+#'   Character vector with class names of columns to create dummy columns (containing binary missing indicator) for.
+#'   Default is \code{character(0)}.
+#' @param dummy.cols [\code{character}]\cr
+#'   Column names to create dummy columns (containing binary missing indicator) for.
 #'   Default is \code{character(0)}.
 #' @param impute.new.levels [\code{logical(1)}]\cr
 #'   If new, unencountered factor level occur during reimputation,
@@ -72,17 +66,17 @@
 #' df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z=1:3)
 #' imputed = impute(df, target=character(0), cols=list(x = 99, y = imputeMode()))
 #' print(imputed$data)
-
-# FIXME: seems buggy
-# reimpute(data.frame(x=NA), imputed$desc)
-
-impute = function(data, target, classes=list(), cols=list(), dummies=character(0L),
-  impute.new.levels=TRUE, recode.factor.levels=TRUE) {
+#' reimpute(data.frame(x=NA), imputed$desc)
+impute = function(data, target, classes=list(), cols=list(), dummy.classes=character(0L),
+  dummy.cols=character(0L), impute.new.levels=TRUE, recode.factor.levels=TRUE) {
 
   checkArg(data, "data.frame")
   checkArg(target, "character", na.ok=FALSE)
   checkArg(classes, "list")
   checkArg(cols, "list")
+  checkArg(dummy.classes, "character", na.ok=FALSE)
+  checkArg(dummy.cols, "character", na.ok=FALSE)
+
   if (length(target)) {
     not.ok = target %nin% names(data)
     if (any(not.ok))
@@ -90,12 +84,26 @@ impute = function(data, target, classes=list(), cols=list(), dummies=character(0
     not.ok = target %in% names(cols)
     if (any(not.ok))
       stopf("Imputation of target column '%s' not possible", target[which.first(not.ok)])
-    not.ok = target %in% names(dummies)
+    not.ok = target %in% names(dummy.cols)
     if (any(not.ok))
       stopf("Dummy creation of target column '%s' not possible", target[which.first(not.ok)])
   }
+  not.ok = names(cols) %nin% names(data)
+  if (any(not.ok))
+    stopf("Column for imputation not present in data: %s", names(cols)[which.fist(not.ok)])
+  not.ok = dummy.cols %nin% names(data)
+  if (any(not.ok))
+    stopf("Column for dummy creation not present in data: %s", names(cols)[which.fist(not.ok)])
   checkArg(impute.new.levels, "logical", len=1L, na.ok=FALSE)
   checkArg(recode.factor.levels, "logical", len=1L, na.ok=FALSE)
+
+  allowed.classes = c("logical", "integer", "numeric", "complex", "character", "factor")
+  not.ok = any(names(classes) %nin% allowed.classes)
+  if (any(not.ok))
+    stopf("Column class '%s' for imputation not recognized", names(cols)[which.first(not.ok)])
+  not.ok = any(dummy.classes %nin% allowed.classes)
+  if (any(not.ok))
+    stopf("Column class '%s' for dummy creation not recognized", dummy.classes[which.first(not.ok)])
 
   features = setdiff(names(data), target)
   feature.classes = vapply(data[features], class, character(1L))
@@ -108,18 +116,20 @@ impute = function(data, target, classes=list(), cols=list(), dummies=character(0
     features = features,
     lvls = NULL,
     impute = namedList(features),
-    dummies = dummies,
+    dummies = character(0L),
     impute.new.levels=FALSE,
     recode.factor.levels=FALSE
   )
 
   # handle classes -> insert into desc
-  cl2 = feature.classes[feature.classes %in% names(classes) &
-    names(feature.classes) %nin% names(cols)]
+  cl2 = feature.classes[feature.classes %in% names(classes) & names(feature.classes) %nin% names(cols)]
   desc$impute[names(cl2)] = classes[cl2]
 
   # handle cols -> insert into desc
   desc$impute[names(cols)] = cols
+
+  # handle dummies
+  desc$dummies = union(features[feature.classes %in% dummy.classes], dummy.cols)
 
   # cleanup
   desc$impute = Filter(Negate(is.null), desc$impute)
@@ -130,7 +140,6 @@ impute = function(data, target, classes=list(), cols=list(), dummies=character(0
       x = imputeConstant(x)
     list(
       impute = x$impute,
-      # FIXME: can we avoid the data duplication here?
       args = do.call(x$learn, c(x$args, list(data=data, target=target, col=xn)))
     )
   }, xn=names(desc$impute), x=desc$impute)
@@ -198,7 +207,7 @@ reimpute.data.frame = function(x, desc) {
     stop("New columns (%s) found in data. Unable to impute.", collapse(new.cols))
 
   # restore dropped columns
-  x[setdiff(desc$cols, names(x))] = NA
+  x[setdiff(desc$features, names(x))] = NA
 
   # calculate dummies, these are boolean T / F masks, where NAs occured in input
   dummy.cols = lapply(x[desc$dummies], is.na)
