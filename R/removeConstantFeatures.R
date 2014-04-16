@@ -80,5 +80,5 @@ removeConstantFeatures.SupervisedTask = function(x, perc = 0, dont.rm = characte
 
   dont.rm = union(getTargetNames(x), dont.rm)
   res = removeConstantFeatures(getTaskData(x), perc, dont.rm, na.ignore, tol, show.info)
-  changeData(task = x, data = res, task$env$costs)
+  changeData(task = x, data = res, costs = x$env$costs)
 }
