@@ -10,7 +10,7 @@
 #'   Learning task, might be requested by performance measure, usually not needed.
 #' @param model [\code{\link{WrappedModel}}]\cr
 #'   Model built on training data, might be requested by performance measure, usually not needed.
-#' @return A single numerical performance value.
+#' @return [named \code{numeric}]. Performance value(s), named by measure(s).
 #' @export
 #' @seealso \code{\link{makeMeasure}}, \code{\link{measures}}
 #' @examples
@@ -21,22 +21,9 @@
 #' lrn <- makeLearner("classif.lda")
 #' mod <- train(lrn, task, subset = training.set)
 #' pred <- predict(mod, newdata = iris[test.set, ])
-#'
-#' ## Here we define the mean misclassification error (MMCE) as our performance measure
-#' my.mmce <- function(task, model, pred, extra.args) {
-#'   length(which(pred$data$response != pred$data$truth)) / nrow(pred$data)
-#' }
-#' ms <- makeMeasure(id = "misclassification.rate",
-#'                   minimize = TRUE,
-#'                   classif = TRUE,
-#'                   allowed.pred.types = "response",
-#'                   fun = my.mmce)
-#' performance(pred, ms, task, mod)
-#'
-#' ## Indeed the MMCE is already implemented in mlr beside other common performance measures
 #' performance(pred, measures = mmce)
 #'
-#' ## Compute multiple performance measures at once
+#' # Compute multiple performance measures at once
 #' ms <- list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 #' performance(pred, measures = ms, task, mod)
 performance = function(pred, measures, task, model) {
@@ -50,7 +37,7 @@ performance = function(pred, measures, task, model) {
     checkArg(measures, "list")
     checkListElementClass(measures, "Measure")
   }
-  sapply(measures, doPerformaceIteration, pred=pred, task=task, model=model, td=NULL)
+  sapply(measures, doPerformaceIteration, pred = pred, task = task, model = model, td = NULL)
 }
 
 doPerformaceIteration = function(measure, pred, task, model, td){
@@ -89,7 +76,7 @@ doPerformaceIteration = function(measure, pred, task, model, td){
       stopf("Multiclass problems cannot be used for measure %s!", m$id)
     if (!is.null(pred2) && !(pred2$predict.type %in% m$allowed.pred.types))
       stopf("Measure %s is only allowed for predictions of type: %s!",
-            m$id, collapse(m$allowed.pred.types))
+        m$id, collapse(m$allowed.pred.types))
   }
   res = measure$fun(task2, model2, pred2, m$extra.args)
   names(res) = measure$id

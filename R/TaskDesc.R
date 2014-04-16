@@ -9,7 +9,7 @@
 #' \item{type [\code{character(1)}]}{Type of task, \dQuote{classif} for classification,
 #'   \dQuote{regr} for regression, \dQuote{surv} for survival, \dQuote{costsens} for
 #'   cost-sensitive classification.}
-#' \item{target [\dQuote{character(0)] | \code{character(1)} | \code{character(2)}]}{
+#' \item{target [\code{character(0)} | \code{character(1)} | \code{character(2)}]}{
 #'  Name of target variable.
 #'  For \dQuote{surv} these are the names of the survival time and event columns, so it has length 2.
 #'  For \dQuote{costsens} ist has length 0, as there is no target column, but a cost matrix instead.}
