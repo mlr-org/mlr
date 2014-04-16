@@ -3,7 +3,7 @@
 makeSurvTask = function(id, data, target, weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE) {
 
-  makeSupervisedTask("SurvTask", "surv", data, target, weights, blocking, NA_character_,
+  task = makeSupervisedTask("SurvTask", "surv", data, target, weights, blocking,
     checkTargetSurv, fixup.data, fixupDataSurv, check.data)
   id = checkOrGuessId(id, data)
   task$task.desc = makeTaskDesc.SurvTask(task, id, target)
@@ -15,8 +15,8 @@ checkTargetSurv = function(data, target) {
 }
 
 # normal fixup + convert target cols numeric (time) and 0-1-integer (events)
-fixupDataSurv = function(data, target) {
-  data = fixupData(data, target)
+fixupDataSurv = function(data, target, choice) {
+  data = fixupData(data, target, choice)
   if (is.integer(data[[target[1L]]]))
     data[[target[1L]]] = as.numeric(data[[target[1L]]])
   if (!is.logical(data[[target[2L]]]) || is.integer(data[[target[2L]]]))
@@ -25,7 +25,7 @@ fixupDataSurv = function(data, target) {
 }
 
 #' @S3method makeTaskDesc SurvTask
-makeTaskDesc.SurvTask = function(task, id, data, target) {
-  addClasses(makeTaskDesc.SupervisedTask(task, id, data), "TaskDescSurv")
+makeTaskDesc.SurvTask = function(task, id, target) {
+  addClasses(makeTaskDescInternal(task, "surv", id, target), "TaskDescSurv")
 }
 
