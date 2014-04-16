@@ -8,10 +8,10 @@ test_that("FilterWrapper", {
   expect_equal(m$features, getTaskFeatureNames(binaryclass.task))
   lrn2 = makeFilterWrapper(lrn1, fw.method = "chi.squared", fw.perc = 0)
   m = train(lrn2, binaryclass.task)
-  #fixme: export getleaf
+  #FIXME: export getleaf?
   if (interactive()) {
-  expect_equal(getLeafModel(m)$features, character(0))
-  expect_true(inherits(getLeafModel(m)$learner.model, "NoFeaturesModel"))
+    expect_equal(getLeafModel(m)$features, character(0))
+    expect_true(inherits(getLeafModel(m)$learner.model, "NoFeaturesModel"))
   }
   lrn2 = makeFilterWrapper(lrn1, fw.method = "chi.squared", fw.perc = 0.1)
   res = makeResampleDesc("CV", iters = 2)
