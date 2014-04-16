@@ -138,10 +138,11 @@ setHyperPars2.Learner = function(learner, par.vals) {
 #' @export
 setPredictType = function(learner, predict.type) {
   checkArg(learner, "Learner")
-  checkArg(predict.type, choices=switch(learner$type,
+  checkArg(predict.type, choices = switch(learner$type,
     classif = c("response", "prob"),
     regr = c("response", "se"),
-    surv = c("response", "prob")
+    surv = c("response", "prob"),
+    costsens = c("response")
   ))
   if (predict.type == "prob" && !learner$prob)
     stopf("Trying to predict probs, but %s does not support that!", learner$id)
