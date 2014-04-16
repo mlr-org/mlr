@@ -21,9 +21,12 @@
 #'     Note that kernel parameters have to be passed directly and not by using the kpar list in ksvm.\cr
 #'     Note that \code{fit} has been set to \code{FALSE} by default for speed.}
 #'   \item{\bold{classif.lda}}{\cr Linear Discriminant Analysis from MASS package: \code{\link[MASS]{lda}}}
-#'   \item{\bold{classif.LiblineaRBinary}}{\cr Regularized Binary Linear Predictive Models Estimation from LiblineaR package: \code{\link[LiblineaR]{LiblineaR}}}
-#'   \item{\bold{classif.LiblineaRLogReg}}{\cr Regularized Logistic Regression from LiblineaR package: \code{\link[LiblineaR]{LiblineaR}}}
-#'   \item{\bold{classif.LiblineaRMultiClass}}{\cr Multi-class Support Vector Classification by Crammer and Singer from LiblineaR package: \code{\link[LiblineaR]{LiblineaR}}}
+#'   \item{\bold{classif.LiblineaRBinary}}{\cr Regularized Binary Linear Predictive Models Estimation from LiblineaR package: \code{\link[LiblineaR]{LiblineaR}}
+#'     Note that this model subsumes the types 1,2,3,5}
+#'   \item{\bold{classif.LiblineaRLogReg}}{\cr Regularized Logistic Regression from LiblineaR package: \code{\link[LiblineaR]{LiblineaR}}
+#'     Note that this model subsumes type 0,6,7.}
+#'   \item{\bold{classif.LiblineaRMultiClass}}{\cr Multi-class Support Vector Classification by Crammer and Singer from LiblineaR package: \code{\link[LiblineaR]{LiblineaR}}
+#'     Note that this model is type 4.}
 #'   \item{\bold{classif.logreg}}{\cr Logistic Regression from stats package: \code{\link[stats]{glm}}}
 #'   \item{\bold{classif.lssvm}}{\cr Least Squares Support Vector Machine from kernlab package: \code{\link[kernlab]{lssvm}}\cr
 #'     Note that \code{fitted} has been set to \code{FALSE} by default for speed.}
