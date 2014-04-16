@@ -1,6 +1,8 @@
 #' @export
 #' @rdname SupervisedTask
-makeSurvTask = function(id, data, target, weights, blocking, fixup.data = "warn", check.data = TRUE) {
+makeSurvTask = function(id, data, target, weights = NULL, blocking = NULL,
+  fixup.data = "warn", check.data = TRUE) {
+
   makeSupervisedTask("SurvTask", "surv", data, target, weights, blocking, NA_character_,
     checkTargetSurv, fixup.data, fixupDataSurv, check.data)
   id = checkOrGuessId(id, data)
