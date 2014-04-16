@@ -7,8 +7,7 @@ Result from \code{\link{predict.WrappedModel}}. Use
 convenient format. The function
 \code{\link{getProbabilities}} is useful to access
 predicted probabilities.
-}
-\details{
+
 The \code{data} member of the object contains always the
 following columns: \code{id}, index numbers of predicted
 cases from the task, \code{response} either a numeric or a

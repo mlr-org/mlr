@@ -15,6 +15,8 @@
 \alias{gpr}
 \alias{mae}
 \alias{mcc}
+\alias{mcp}
+\alias{meancosts}
 \alias{measures}
 \alias{medae}
 \alias{medse}
@@ -101,6 +103,10 @@ none
 none
 
 none
+
+meancosts
+
+mcp
 }
 \description{
 A performance measure is evaluated after a single
@@ -151,6 +157,11 @@ errors} \item{\bold{mse}}{\cr Mean of squared errors}
 
 Survival: \itemize{ \item{\bold{cindex}}{\cr Concordance
 index} }
+
+Cost-sensitive: \itemize{ \item{\bold{meancosts}}{\cr Mean
+costs of the predicted choices.} \item{\bold{mcp}}{\cr
+Misclassification penalty, i.e. average difference between
+costs of oracle and model prediction.} }
 
 General: \itemize{ \item{\bold{timetrain}}{\cr Time of
 fitting the model} \item{\bold{timepredict}}{\cr Time of

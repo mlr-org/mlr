@@ -3,28 +3,32 @@
 \title{Impute and re-impute data}
 \usage{
 impute(data, target, classes = list(), cols = list(),
-  dummies = character(0L), impute.new.levels = TRUE,
-  recode.factor.levels = TRUE)
+  dummy.classes = character(0L), dummy.cols = character(0L),
+  impute.new.levels = TRUE, recode.factor.levels = TRUE)
 }
 \arguments{
   \item{data}{[\code{data.frame}]\cr Input data.}
 
   \item{target}{[\code{character}]\cr Name of the column
-  specifying the response.}
+  specifying the response column(s).}
 
   \item{classes}{[\code{named list}]\cr Named list
   containing imputation techniques for classes of columns.
   E.g. \code{list(numeric = imputeMedian())}.}
 
   \item{cols}{[\code{named list}]\cr Named list containing
-  names of the built-in imputation methods to impute
-  missing values in the data column referenced by the list
-  element's name. Overwrites imputation set via
-  \code{classes}.}
+  names of imputation methods to impute missing values in
+  the data column referenced by the list element's name.
+  Overwrites imputation set via \code{classes}.}
 
-  \item{dummies}{[\code{character}]\cr Column names for
-  which dummy variables (binary missing indicator) should
-  be created.  Default is \code{character(0)}.}
+  \item{dummy.classes}{[\code{character}]\cr Character
+  vector with class names of columns to create dummy
+  columns (containing binary missing indicator) for.
+  Default is \code{character(0)}.}
+
+  \item{dummy.cols}{[\code{character}]\cr Column names to
+  create dummy columns (containing binary missing
+  indicator) for.  Default is \code{character(0)}.}
 
   \item{impute.new.levels}{[\code{logical(1)}]\cr If new,
   unencountered factor level occur during reimputation,
@@ -83,5 +87,6 @@ argument.} }
 df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z=1:3)
 imputed = impute(df, target=character(0), cols=list(x = 99, y = imputeMode()))
 print(imputed$data)
+reimpute(data.frame(x=NA), imputed$desc)
 }
 

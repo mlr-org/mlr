@@ -26,7 +26,7 @@ regression.
 Get target column of task.
 }
 \examples{
-task <- makeClassifTask(data = iris, target = "Species")
+task = makeClassifTask(data = iris, target = "Species")
 getTaskTargets(task)
 getTaskTargets(task, subset = 1:50)
 }

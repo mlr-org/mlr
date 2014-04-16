@@ -3,7 +3,7 @@
 \title{Remove constant features from a data set.}
 \usage{
 removeConstantFeatures(x, perc = 0, dont.rm = character(0L),
-  na.mode = "na.rm", tol = .Machine$double.eps^0.5, show.info = FALSE)
+  na.ignore = FALSE, tol = .Machine$double.eps^0.5, show.info = TRUE)
 }
 \arguments{
   \item{x}{[\code{\link{data.frame}} |
@@ -19,22 +19,19 @@ removeConstantFeatures(x, perc = 0, dont.rm = character(0L),
   that for a task the target column is always added to
   these so it is never removed.}
 
-  \item{na.mode}{[\code{character(1)}]\cr \itemize{ \item
-  \code{na.rm}: \code{NA}s will be ignored in the
-  percentage calculation.\cr \item \code{single}: NAs will
-  be seen as a single, extra level in the percentage
-  calculation.\cr \item \code{distinct}: \code{NA}s will be
-  seen as multiple extra levels in the percentage
-  calculation.\cr }}
+  \item{na.ignore}{[\code{logical(1)}]\cr Should NAs be
+  ignored in the percentage calculation?  (Or should they
+  be treated as a single, extra level in the percentage
+  calculation?)  Default is \code{FALSE}.}
 
-  \item{tol}{[\code{numeric}]\cr Numerical tolerance to
+  \item{tol}{[\code{numeric(1)}]\cr Numerical tolerance to
   treat two numbers as equal.  Variables stored as
   \code{double} will get rounded accordingly before
   computing the mode.  Default is
   \code{sqrt(.Maschine$double.eps)}.}
 
   \item{show.info}{[\code{logical(1)}]\cr Verbose output on
-  console?  Default is \code{FALSE}.}
+  console?  Default is \code{TRUE}.}
 }
 \value{
 [\code{\link{data.frame}} | \code{\link{SupervisedTask}}].

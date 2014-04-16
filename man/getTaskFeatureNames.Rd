@@ -14,7 +14,7 @@ getTaskFeatureNames(task)
 Target column name is not included.
 }
 \examples{
-task <- makeClassifTask(data = iris, target = "Species")
+task = makeClassifTask(data = iris, target = "Species")
 getTaskFeatureNames(task)
 }
 

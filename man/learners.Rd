@@ -37,13 +37,16 @@ in ksvm.\cr Note that \code{fit} has been set to
 from MASS package: \code{\link[MASS]{lda}}}
 \item{\bold{classif.LiblineaRBinary}}{\cr Regularized
 Binary Linear Predictive Models Estimation from LiblineaR
-package: \code{\link[LiblineaR]{LiblineaR}}}
+package: \code{\link[LiblineaR]{LiblineaR}} Note that this
+model subsumes the types 1,2,3,5}
 \item{\bold{classif.LiblineaRLogReg}}{\cr Regularized
 Logistic Regression from LiblineaR package:
-\code{\link[LiblineaR]{LiblineaR}}}
+\code{\link[LiblineaR]{LiblineaR}} Note that this model
+subsumes type 0,6,7.}
 \item{\bold{classif.LiblineaRMultiClass}}{\cr Multi-class
 Support Vector Classification by Crammer and Singer from
-LiblineaR package: \code{\link[LiblineaR]{LiblineaR}}}
+LiblineaR package: \code{\link[LiblineaR]{LiblineaR}} Note
+that this model is type 4.}
 \item{\bold{classif.logreg}}{\cr Logistic Regression from
 stats package: \code{\link[stats]{glm}}}
 \item{\bold{classif.lssvm}}{\cr Least Squares Support

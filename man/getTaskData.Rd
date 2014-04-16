@@ -1,7 +1,6 @@
 \name{getTaskData}
 \alias{getTaskData}
-\title{Extract data in task. Useful in \code{\link{trainLearner}} when you add a learning
-machine to the package.}
+\title{Extract data in task.}
 \usage{
 getTaskData(task, subset, features, target.extra = FALSE,
   recode.target = "no")
@@ -34,16 +33,16 @@ Either a data.frame or a list with data.frame \code{data}
 and vector \code{target}.
 }
 \description{
-Extract data in task. Useful in \code{\link{trainLearner}}
-when you add a learning machine to the package.
+Useful in \code{\link{trainLearner}} when you add a
+learning machine to the package.
 }
 \examples{
 library("mlbench")
 data(BreastCancer)
 
-df <- BreastCancer
-df$Id <- NULL
-task <- makeClassifTask(id = "BreastCancer", data = df, target = "Class", positive = "malignant")
+df = BreastCancer
+df$Id = NULL
+task = makeClassifTask(id = "BreastCancer", data = df, target = "Class", positive = "malignant")
 head(getTaskData)
 head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = "-1+1"))
 head(getTaskData(task, subset = 1:100, recode.target = "01"))
