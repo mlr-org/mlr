@@ -11,12 +11,12 @@ Filter
 ------
 
 Filters are the simplest approach to find variables that do not contain a lot of additional information and thus can be left out.
-Different methods are built into **mlr**'s function `filterFeatures()` all accessing filter algorithms from the package `FSelector`.
+Different methods are built into **mlr**'s function `getFeatureFilterValues()` all accessing filter algorithms from the package `FSelector`.
 The function is given a `task` and simply returns an importance vector.
 ```{r}
 library("mlr")
 task = makeClassifTask(data=iris, target="Species")
-importance = filterFeatures(task, method="information.gain")
+importance = getFeatureFilterValues(task, method="information.gain")
 sort(importance, decreasing=TRUE)
 ```
 So according to this filter `Petal.Width` and `Petal.Length` contain the most *information*.
