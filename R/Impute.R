@@ -66,10 +66,7 @@
 #' df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z=1:3)
 #' imputed = impute(df, target=character(0), cols=list(x = 99, y = imputeMode()))
 #' print(imputed$data)
-
-# FIXME: seems buggy
-# reimpute(data.frame(x=NA), imputed$desc)
-
+#' reimpute(data.frame(x=NA), imputed$desc)
 impute = function(data, target, classes=list(), cols=list(), dummy.classes=character(0L),
   dummy.cols=character(0L), impute.new.levels=TRUE, recode.factor.levels=TRUE) {
 
@@ -210,7 +207,7 @@ reimpute.data.frame = function(x, desc) {
     stop("New columns (%s) found in data. Unable to impute.", collapse(new.cols))
 
   # restore dropped columns
-  x[setdiff(desc$cols, names(x))] = NA
+  x[setdiff(desc$features, names(x))] = NA
 
   # calculate dummies, these are boolean T / F masks, where NAs occured in input
   dummy.cols = lapply(x[desc$dummies], is.na)
