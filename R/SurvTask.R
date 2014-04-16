@@ -1,48 +1,29 @@
 #' @export
 #' @rdname SupervisedTask
 makeSurvTask = function(id, data, target, weights, blocking, fixup.data = "warn", check.data = TRUE) {
-  addClasses(makeSupervisedTask("surv", id, data, target, weights, blocking, NA_character_, fixup.data, check.data),
-    "SurvivalTask")
+  makeSupervisedTask("SurvTask", "surv", data, target, weights, blocking, NA_character_,
+    checkTargetSurv, fixup.data, fixupDataSurv, check.data)
+  id = checkOrGuessId(id, data)
+  task$task.desc = makeTaskDesc.SurvTask(task, id, target)
+  return(task)
 }
 
-if (FALSE) {
-  library(survival)
-  # N = 150
-  # train = sample(N, 2/3 * N)
-  # test = setdiff(seq_len(N), train)
-  #
-  # time = rexp(N, 0.5) + 0.1
-  # status = sample(0:1, N, prob=c(2, 8), replace=TRUE)
-  # s = Surv(time, status)
-  # data = cbind(time, status, iris)
-  # target = c("time", "status")
-  #
-  # task = makeSurvTask("testtask", data, target = target)
-  # task = subsetTask(task, features = setdiff(names(iris), "Species"))
-  data(lung, package="survival")
-  task = makeSurvTask("lung", dropNamed(lung, "inst"), target=c("time", "status"))
-
-  lrn = makeLearner("surv.coxph")
-
-  lrn = makeImputeWrapper(makeLearner("surv.glmnet"), classes=list(numeric = imputeMedian()), update.learner.chars=TRUE)
-  model = train(lrn, task)
-  pred = predict(model, task)
-  performance(pred, cindex)
-
-  # data = data.frame(time=1:20, event=rep(1, 20), x=1:20+runif(20))
-  #
-  #
-  # s = with(data, Surv(time, event))
-  # mod = coxph(s ~ x, data=data)
-  # lp = predict(mod, data)
-  # rcorr.cens(lp, s)
-  #
-  # task = makeSurvTask(data=data, target=c("time", "event"))
-  # lrn = makeLearner("surv.coxph")
-  # trained = train(lrn, task)
-  # pred = predict(trained, newdata=getTaskData(task, test))
-  # performance(pred, cindex)
-
-  # task = makeClassifTask("iris", iris, target="Species")
-  # predict(train(makeLearner("classif.rpart"), task), task)
+checkTargetSurv = function(data, target) {
+  checkTarget("surv", data, target, 2L, list(c("numeric", "integer"), c("logical", "integer")))
 }
+
+# normal fixup + convert target cols numeric (time) and 0-1-integer (events)
+fixupDataSurv = function(data, target) {
+  data = fixupData(data, target)
+  if (is.integer(data[[target[1L]]]))
+    data[[target[1L]]] = as.numeric(data[[target[1L]]])
+  if (!is.logical(data[[target[2L]]]) || is.integer(data[[target[2L]]]))
+    data[[target[2L]]] = as.integer(as.logical(data[[target[2L]]]))
+  return(data)
+}
+
+#' @S3method makeTaskDesc SurvTask
+makeTaskDesc.SurvTask = function(task, id, data, target) {
+  addClasses(makeTaskDesc.SupervisedTask(task, id, data), "TaskDescSurv")
+}
+
