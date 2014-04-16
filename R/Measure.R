@@ -3,9 +3,10 @@
 #' A measure object encapsulates a function to evaluate the performance of a prediction.
 #' Information about already implemented measures can be obtained here: \code{\link{measures}}.
 #'
-#' A learner is trained on a a training set d1, results in a model m, predicts another set d2 (which may be a different one
-#' or the training set), resulting in the prediction. The performance measure can now be defined using all of the information of
-#' the original task, the fitted model and the prediction.
+#' A learner is trained on a a training set d1, results in a model m, predicts another set d2
+#' (which may be a different one or the training set), resulting in the prediction.
+#' The performance measure can now be defined using all of the information of the original task,
+#' the fitted model and the prediction.
 #'
 #' Object slots:
 #' \describe{
@@ -34,6 +35,9 @@
 #' @param regr [\code{logical(1)}]\cr
 #'   Is the measure applicable for regression?
 #'   Default is \code{FALSE}.
+#' @param costsens [\code{logical(1)}]\cr
+#'   Is the measure applicable for cost-sensitive learning?
+#'   Default is \code{FALSE}.
 #' @param only.binary [\code{logical(1)}]\cr
 #'   Is the measure only applicable to binary classification?
 #'   Only reasonable if \code{classif} is \code{TRUE}.
@@ -57,38 +61,40 @@
 #' @examples
 #' f <- function(task, model, pred, extra.args)
 #'   sum((pred$data$response - pred$data$truth)^2)
-#' makeMeasure(id="my.sse", minimize=TRUE, regr=TRUE, allowed.pred.types="response", fun=f)
-makeMeasure = function(id, minimize, classif=FALSE, regr=FALSE,
-  only.binary=FALSE, allowed.pred.types=character(0L), fun, extra.args=list(), aggr=test.mean) {
+#' makeMeasure(id = "my.sse", minimize = TRUE, regr = TRUE, allowed.pred.types = "response", fun = f)
+makeMeasure = function(id, minimize, classif = FALSE, regr = FALSE, costsens = FALSE,
+  only.binary = FALSE, allowed.pred.types = character(0L), fun, extra.args = list(), aggr = test.mean) {
 
-  checkArg(id, "character", len=1L, na.ok=FALSE)
-  checkArg(minimize, "logical", len=1L, na.ok=FALSE)
-  checkArg(classif, "logical", len=1L, na.ok=FALSE)
-  checkArg(regr, "logical", len=1L, na.ok=FALSE)
-  checkArg(only.binary, "logical", len=1L, na.ok=FALSE)
-  checkArg(allowed.pred.types, subset=c("response", "prob", "se"))
+  checkArg(id, "character", len = 1L, na.ok = FALSE)
+  checkArg(minimize, "logical", len = 1L, na.ok = FALSE)
+  checkArg(classif, "logical", len = 1L, na.ok = FALSE)
+  checkArg(regr, "logical", len = 1L, na.ok = FALSE)
+  checkArg(costsens, "logical", len = 1L, na.ok = FALSE)
+  checkArg(only.binary, "logical", len = 1L, na.ok = FALSE)
+  checkArg(allowed.pred.types, subset = c("response", "prob", "se"))
   checkArg(fun, "function")
   checkArg(extra.args, "list")
 
   fun1 = fun
   formals(fun1) = list()
-  v = codetools::findGlobals(fun1, merge=FALSE)$variables
+  v = codetools::findGlobals(fun1, merge = FALSE)$variables
   if (only.binary && !classif)
     stop("only.binary can only be set to TRUE, if 'classif' is set to TRUE!")
 
-  m = structure(list(
-    id=id,
-    minimize=minimize,
-    classif=classif,
-    regr=regr,
-    only.binary=only.binary,
-    allowed.pred.types=allowed.pred.types,
-    req.pred="pred" %in% v,
-    req.model="model" %in% v,
-    req.task="task" %in% v,
-    fun=fun,
-    extra.args=extra.args
-  ), class="Measure")
+  m = makeS3Obj("Measure",
+    id = id,
+    minimize = minimize,
+    classif = classif,
+    regr = regr,
+    costsens = costsens,
+    only.binary = only.binary,
+    allowed.pred.types = allowed.pred.types,
+    req.pred = "pred" %in% v,
+    req.model = "model" %in% v,
+    req.task = "task" %in% v,
+    fun = fun,
+    extra.args = extra.args
+  )
   setAggregation(m, aggr)
 }
 
@@ -102,7 +108,7 @@ default.measures = function(x) {
   switch(type,
     classif = list(mmce),
     regr = list(mse),
-    surv = list(cindex)
+    costsens = list(mcp)
   )
 }
 
