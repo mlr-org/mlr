@@ -32,23 +32,25 @@
 #'   Default is empty list.
 #' @return \code{\link{Measure}}
 #' @export
-makeCustomResampledMeasure = function(id, minimize=TRUE, classif=FALSE, regr=FALSE,
-    only.binary=FALSE, allowed.pred.types=character(0L), fun, extra.args=list()) {
-    checkArg(id, "character", len=1L, na.ok=FALSE)
-    checkArg(minimize, "logical", len=1L, na.ok=FALSE)
-    checkArg(classif, "logical", len=1L, na.ok=FALSE)
-    checkArg(regr, "logical", len=1L, na.ok=FALSE)
-    checkArg(only.binary, len=1L, "logical", na.ok=FALSE)
-    checkArg(allowed.pred.types, subset=c("response", "prob", "se"))
-    checkArg(fun, "function")
-    checkArg(extra.args, "list")
+makeCustomResampledMeasure = function(id, minimize = TRUE, classif = FALSE, regr = FALSE, costsens = FALSE,
+  only.binary = FALSE, allowed.pred.types = character(0L), fun, extra.args=list()) {
 
-    force(fun)
-    fun1 = function(task, model, pred, extra.args) NA_real_
-    # args are checked here
-    custom = makeMeasure(id="custom", minimize, classif, regr, only.binary, allowed.pred.types, fun1, extra.args)
-    fun2 = function(task, perf.test, perf.train, measure, group, pred)
-      fun(task, group, pred, extra.args)
-    aggr = makeAggregation(id=id, fun=fun2)
-    setAggregation(custom, aggr)
+  checkArg(id, "character", len = 1L, na.ok = FALSE)
+  checkArg(minimize, "logical", len = 1L, na.ok = FALSE)
+  checkArg(classif, "logical", len = 1L, na.ok = FALSE)
+  checkArg(regr, "logical", len = 1L, na.ok = FALSE)
+  checkArg(only.binary, "logical", len = 1L, na.ok = FALSE)
+  checkArg(allowed.pred.types, subset=c("response", "prob", "se"))
+  checkArg(fun, "function")
+  checkArg(extra.args, "list")
+
+  force(fun)
+  fun1 = function(task, model, pred, extra.args) NA_real_
+  # args are checked here
+  custom = makeMeasure(id = "custom", minimize, classif, regr, costsens, 
+    only.binary, allowed.pred.types, fun1, extra.args)
+  fun2 = function(task, perf.test, perf.train, measure, group, pred)
+    fun(task, group, pred, extra.args)
+  aggr = makeAggregation(id=id, fun=fun2)
+  setAggregation(custom, aggr)
 }

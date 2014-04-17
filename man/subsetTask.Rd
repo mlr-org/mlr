@@ -21,7 +21,7 @@ subsetTask(task, subset, features)
 Subset data in task.
 }
 \examples{
-task <- makeClassifTask(data = iris, target = "Species")
+task = makeClassifTask(data = iris, target = "Species")
 subsetTask(task, subset = 1:100)
 }
 

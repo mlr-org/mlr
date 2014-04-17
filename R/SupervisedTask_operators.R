@@ -1,3 +1,10 @@
+getTaskType = function(x) {
+  if (inherits(x, "TaskDesc"))
+    x$type
+  else
+    x$task.desc$type
+}
+
 getTargetNames = function(x) {
   if (inherits(x, "TaskDesc"))
     x$target
@@ -14,7 +21,7 @@ getTargetNames = function(x) {
 #' @return [\code{character}].
 #' @export
 #' @examples
-#' task <- makeClassifTask(data = iris, target = "Species")
+#' task = makeClassifTask(data = iris, target = "Species")
 #' getTaskFeatureNames(task)
 getTaskFeatureNames = function(task) {
   #FIXME argument checks currently not done for speed
@@ -22,33 +29,21 @@ getTaskFeatureNames = function(task) {
 }
 
 
-#' Get formula of a task as a string.
-#'
-#' This is simply \dQuote{<target> ~ .}.
-#'
-#' @param x [\code{\link{SupervisedTask}} | \code{\link{TaskDesc}}]\cr
-#'   Task or its description object.
-#' @param target [\code{character(1)}]\cr
-#'   Left hand side of formula.
-#'   Default is defined by task \code{x}.
-#' @return [\code{character(1)}].
 #' @export
-#' @examples
-#' task <- makeClassifTask(data = iris, target = "Species")
-#' getTaskFormulaAsString(task)
-#' @export
-getTaskFormulaAsString = function(x, target=getTargetNames(x)) {
-  if (length(target) != 1L)
+#' @rdname getTaskFormula
+getTaskFormulaAsString = function(x, target = getTargetNames(x)) {
+  type = getTaskType(x)
+  if (type == "surv")
     target = sprintf("Surv(%s, %s)", target[1L], target[2L])
-    # FIXME: best way to check if x is survival task or desc?
-    # Using just the length is pretty error prone
+  else if (type == "costsens")
+    stop("There is no formula available for cost-sensitive learning.")
   paste(target, "~.")
 }
 
 
 #' Get formula of a task.
 #'
-#' This is simply the \code{target ~ .} formula.
+#' This is simply \dQuote{<target> ~ .}.
 #'
 #' @param x [\code{\link{SupervisedTask}} | \code{\link{TaskDesc}}]\cr
 #'   Task or its description object.
@@ -59,14 +54,10 @@ getTaskFormulaAsString = function(x, target=getTargetNames(x)) {
 #'   Environment of the formula. Set this to \code{parent.frame()}
 #'   for the default behaviour.
 #'   Default is \code{NULL} which deletes the environment.
-#' @return [\code{formula}].
+#' @return [\code{formula} | \code{character(1)}].
 #' @export
-#' @examples
-#' task <- makeClassifTask(data = iris, target = "Species")
-#' getTaskFormula(task)
-#' @export
-getTaskFormula = function(x, target=getTargetNames(x), env=NULL) {
-  as.formula(getTaskFormulaAsString(x, target=target), env=env)
+getTaskFormula = function(x, target = getTargetNames(x), env = NULL) {
+  as.formula(getTaskFormulaAsString(x, target = target), env = env)
 }
 
 
@@ -86,18 +77,21 @@ getTaskFormula = function(x, target=getTargetNames(x), env=NULL) {
 #' @return A \code{factor} for classification or a \code{numeric} for regression.
 #' @export
 #' @examples
-#' task <- makeClassifTask(data = iris, target = "Species")
+#' task = makeClassifTask(data = iris, target = "Species")
 #' getTaskTargets(task)
 #' getTaskTargets(task, subset = 1:50)
 getTaskTargets = function(task, subset, recode.target="no") {
-  #FIXME argument checks currently not done for speed
+  #FIXME: argument checks currently not done for speed
+  if (task$task.desc$type == "costsens")
+    stop("There is no target available for cost-sensitive learning.")
   y = task$env$data[subset, task$task.desc$target]
   recodeY(y, recode.target, task$task.desc$positive)
 }
 
 
-#' Extract data in task. Useful in \code{\link{trainLearner}} when you add a learning
-#' machine to the package.
+#' Extract data in task.
+#'
+#' Useful in \code{\link{trainLearner}} when you add a learning machine to the package.
 #'
 #' @param task [\code{\link{SupervisedTask}}]\cr
 #'   The task.
@@ -123,13 +117,14 @@ getTaskTargets = function(task, subset, recode.target="no") {
 #' library("mlbench")
 #' data(BreastCancer)
 #'
-#' df <- BreastCancer
-#' df$Id <- NULL
-#' task <- makeClassifTask(id = "BreastCancer", data = df, target = "Class", positive = "malignant")
+#' df = BreastCancer
+#' df$Id = NULL
+#' task = makeClassifTask(id = "BreastCancer", data = df, target = "Class", positive = "malignant")
 #' head(getTaskData)
 #' head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = "-1+1"))
 #' head(getTaskData(task, subset = 1:100, recode.target = "01"))
-getTaskData = function(task, subset, features, target.extra=FALSE, recode.target="no") {
+getTaskData = function(task, subset, features, target.extra = FALSE, recode.target = "no") {
+  #FIXME: argument checks currently not done for speed
   indexHelper = function(df, i, j, drop=TRUE) {
     switch(2L * is.null(i) + is.null(j) + 1L,
       df[i, j, drop=drop],
@@ -165,6 +160,28 @@ getTaskData = function(task, subset, features, target.extra=FALSE, recode.target
   res
 }
 
+#' Extract costs in task.
+#'
+#' Retuns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
+#'
+#' @param task [\code{\link{CostSensTask}}]\cr
+#'   The task.
+#' @param subset [\code{integer}]\cr
+#'   Selected cases.
+#'   Default is all cases.
+#' @return [\code{matrix} | \code{NULL}].
+#' @export
+getTaskCosts = function(task, subset) {
+  if (task$task.desc$type != "costsens")
+    return(NULL)
+  ms = missing(subset) || identical(subset, 1:task$task.desc$size)
+  d = if (ms)
+    task$env$costs
+  else
+    task$env$costs[subset, , drop = FALSE]
+  return(d)
+}
+
 
 #' Subset data in task.
 #'
@@ -180,10 +197,12 @@ getTaskData = function(task, subset, features, target.extra=FALSE, recode.target
 #' @return [\code{\link{SupervisedTask}}]. Task with subsetted data.
 #' @export
 #' @examples
-#' task <- makeClassifTask(data = iris, target = "Species")
+#' task = makeClassifTask(data = iris, target = "Species")
 #' subsetTask(task, subset = 1:100)
 subsetTask = function(task, subset, features) {
-  task = changeData(task, getTaskData(task, subset, features))
+  # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
+  # FIXME: maybe we want this independent of changeData?
+  task = changeData(task, getTaskData(task, subset, features), getTaskCosts(task, subset))
   if (!missing(subset)) {
     if (task$task.desc$has.blocking)
       task$blocking = task$blocking[subset]
@@ -193,13 +212,18 @@ subsetTask = function(task, subset, features) {
 
 
 # we create a new env, so the reference is not changed
-# FIXME really check what goes on here!
-changeData = function(task, data) {
+# FIXME: really check what goes on here! where is this called / used?
+changeData = function(task, data, costs) {
   force(data)
-  task$env = new.env(parent=emptyenv())
+  task$env = new.env(parent = emptyenv())
   task$env$data = data
-  d = task$task.desc
-  task$task.desc = makeTaskDesc(d$type, d$id, data, d$target, d$weight, task$blocking, d$positive)
+  task$env$costs = costs
+  td = task$task.desc
+  # FIXME: this is bad style but I see no other way right now
+  if (td$type == "classif")
+    task$task.desc = makeTaskDesc(task, td$id, td$target, td$positive)
+  else
+    task$task.desc = makeTaskDesc(task, td$id, td$target)
   return(task)
 }
 

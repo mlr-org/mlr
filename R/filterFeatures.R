@@ -30,7 +30,7 @@
 #'   for each feature.
 #' @seealso \code{\link{makeFilterWrapper}}
 #' @export
-filterFeatures = function(task, method="random.forest.importance") {
+getFeatureFilterValues = function(task, method="random.forest.importance") {
   requirePackages("FSelector", "filterFeatures")
   checkArg(task, "SupervisedTask")
   checkArg(method, choices=c("linear.correlation", "rank.correlation", "information.gain",
@@ -56,27 +56,27 @@ filterFeatures = function(task, method="random.forest.importance") {
 # see oversample and impute for this
 
 
-# Returns the filtered features.
-#
-# Returns the selected Features according to their importance.
-# Features with an importance value of 0 will be left out regardeless of the given \code{n}.
-#
-# @param feat.importance [\code{numeric}]\cr
-#   Result of \code{\link{filterFeatures}}.
-# @param n [\code{integer(1)}]\cr
-#   Number of features ordered by the information value to select.
-# @param threshold [\code{numeric(1)}]\cr
-#   Information value as to be greater then the threshold. Default is 0.
-# @return [\code{character}]
-#  getFilteredFeatures = function(feat.importance, n, threshold=0) {
-#    checkArg(feat.importance, "numeric", nas.ok=FALSE)
-#    checkArg(threshold, "numeric", len=1L, na.ok=FALSE)
-#    if (missing(n))
-#      n = length(feat.importance)
-#    checkArg(n, "integer", len=1L, lower=1L, na.ok=FALSE)
-#    feats = feat.importance[feat.importance > threshold]
-#    feats = head(feats[order(feats, decreasing=TRUE)], n)
-#    results = names(feats)
-#    #result = makeFeatSelResult(learner=NA, control=NA, x=names(feats), y=feats, opt.path=NA)
-#    results
-#  }
+#' Returns the filtered features.
+#'
+#' Returns the selected Features according to their importance.
+#' Features with an importance value of 0 will be left out regardeless of the given \code{n}.
+#'
+#' @param feat.importance [\code{numeric}]\cr
+#'   Result of \code{\link{filterFeatures}}.
+#' @param n [\code{integer(1)}]\cr
+#'   Number of features ordered by the information value to select.
+#' @param threshold [\code{numeric(1)}]\cr
+#'   Information value as to be greater then the threshold. Default is 0.
+#' @return [\code{character}]
+filterFeatures = function(feat.importance, n, threshold = 0) {
+  checkArg(feat.importance, "numeric", na.ok=FALSE)
+  checkArg(threshold, "numeric", len=1L, na.ok=FALSE)
+  if (missing(n))
+    n = length(feat.importance)
+  checkArg(n, "integer", len=1L, lower=1L, na.ok=FALSE)
+  feats = feat.importance[feat.importance > threshold]
+  feats = head(feats[order(feats, decreasing=TRUE)], n)
+  results = names(feats)
+  # results = makeFeatSelResult(learner=NA, control=NA, x=names(feats), y=feats, opt.path=NA)
+  results
+}

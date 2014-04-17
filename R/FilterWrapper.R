@@ -17,15 +17,15 @@
 #'   Default is random.forest.importance.
 #' @param fw.perc [\code{numeric(1)}]\cr
 #'   Percentage of highest ranking features to select after filtering.
-#'   Default is 1 (=100 percent).
+#'   Default is 1 ( = 100 percent).
 #' @return [\code{\link{Learner}}].
 #' @export
 #' @examples
-#' task = makeClassifTask(data=iris, target="Species")
+#' task = makeClassifTask(data = iris, target = "Species")
 #' lrn = makeLearner("classif.lda")
 #' inner = makeResampleDesc("Holdout")
 #' outer = makeResampleDesc("CV", iters = 2)
-#' lrn = makeFilterWrapper(lrn, fw.perc=0.5)
+#' lrn = makeFilterWrapper(lrn, fw.perc = 0.5)
 #' mod = train(lrn, task)
 #' print(getFilteredFeatures(mod))
 #' # now nested resampling, where we extract the features that the filter method selected
@@ -33,41 +33,41 @@
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
-makeFilterWrapper = function(learner, fw.method="random.forest.importance", fw.perc=1) {
+makeFilterWrapper = function(learner, fw.method = "random.forest.importance", fw.perc = 1) {
   checkArg(learner, "Learner")
   meths = c("linear.correlation", "rank.correlation", "information.gain", "gain.ratio",
     "symmetrical.uncertainty", "chi.squared", "random.forest.importance", "relief", "oneR")
-  checkArg(fw.method, choices=meths)
-  checkArg(fw.perc, "numeric", len=1L, na.ok=FALSE, lower=0, upper=1)
-  id = paste(learner$id, "filtered", sep=".")
+  checkArg(fw.method, choices = meths)
+  checkArg(fw.perc, "numeric", len = 1L, na.ok = FALSE, lower = 0, upper = 1)
+  id = paste(learner$id, "filtered", sep = ".")
   ps = makeParamSet(
-    makeDiscreteLearnerParam(id="fw.method", values=meths),
-    makeNumericLearnerParam(id="fw.perc")
+    makeDiscreteLearnerParam(id = "fw.method", values = meths),
+    makeNumericLearnerParam(id = "fw.perc")
   )
-  pv = list(fw.method=fw.method, fw.perc=fw.perc)
+  pv = list(fw.method = fw.method, fw.perc = fw.perc)
   # FIXME: scale to 0,1
-  makeBaseWrapper(id, learner, package="FSelector", par.set=ps, par.vals=pv, cl="FilterWrapper")
+  makeBaseWrapper(id, learner, package = "FSelector", par.set = ps, par.vals = pv, cl = "FilterWrapper")
   # FIXME: check that for some the inputs have to be all num. or accept error in train and NA in predict?
 }
 
 
 #' @S3method trainLearner FilterWrapper
 trainLearner.FilterWrapper = function(.learner, .task, .subset, fw.method, fw.perc, ...) {
-  .task = subsetTask(.task, subset=.subset)
-  # FIXME: are all filter vales high=good?
-  vals = sort(filterFeatures(.task), decreasing=TRUE)
+  .task = subsetTask(.task, subset = .subset)
+  # FIXME: are all filter vales high = good?
+  vals = sort(filterFeatures(.task), decreasing = TRUE)
   features = head(names(vals), round(fw.perc * length(vals)))
   # we have already subsetted obs
-  .task = subsetTask(.task, features=features)
+  .task = subsetTask(.task, features = features)
   m = train(.learner$next.learner, .task)
   # FIXME: enter correct objects (features, etc)
-  makeChainModel(next.model=m, cl = "FilterModel")
+  makeChainModel(next.model = m, cl = "FilterModel")
 }
 
 
 #' @S3method predictLearner FilterWrapper
 predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
-  NextMethod(.newdata=.newdata[, .model$learner.model$next.model$features, drop=FALSE])
+  NextMethod(.newdata = .newdata[, .model$learner.model$next.model$features, drop = FALSE])
 }
 
 

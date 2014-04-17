@@ -3,7 +3,7 @@
 \alias{makeMeasure}
 \title{Construct performance measure.}
 \usage{
-makeMeasure(id, minimize, classif = FALSE, regr = FALSE,
+makeMeasure(id, minimize, classif = FALSE, regr = FALSE, costsens = FALSE,
   only.binary = FALSE, allowed.pred.types = character(0L), fun,
   extra.args = list(), aggr = test.mean)
 }
@@ -18,6 +18,10 @@ makeMeasure(id, minimize, classif = FALSE, regr = FALSE,
 
   \item{regr}{[\code{logical(1)}]\cr Is the measure
   applicable for regression?  Default is \code{FALSE}.}
+
+  \item{costsens}{[\code{logical(1)}]\cr Is the measure
+  applicable for cost-sensitive learning?  Default is
+  \code{FALSE}.}
 
   \item{only.binary}{[\code{logical(1)}]\cr Is the measure
   only applicable to binary classification?  Only
@@ -77,6 +81,6 @@ model object required in calculation?} \item{fun
 \examples{
 f <- function(task, model, pred, extra.args)
   sum((pred$data$response - pred$data$truth)^2)
-makeMeasure(id="my.sse", minimize=TRUE, regr=TRUE, allowed.pred.types="response", fun=f)
+makeMeasure(id = "my.sse", minimize = TRUE, regr = TRUE, allowed.pred.types = "response", fun = f)
 }
 

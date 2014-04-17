@@ -21,7 +21,8 @@ performance(pred, measures, task, model)
   measure, usually not needed.}
 }
 \value{
-A single numerical performance value.
+[named \code{numeric}]. Performance value(s), named by
+measure(s).
 }
 \description{
 Measures the quality of a prediction w.r.t. some
@@ -35,22 +36,9 @@ task <- makeClassifTask(data = iris, target = "Species")
 lrn <- makeLearner("classif.lda")
 mod <- train(lrn, task, subset = training.set)
 pred <- predict(mod, newdata = iris[test.set, ])
-
-## Here we define the mean misclassification error (MMCE) as our performance measure
-my.mmce <- function(task, model, pred, extra.args) {
-  length(which(pred$data$response != pred$data$truth)) / nrow(pred$data)
-}
-ms <- makeMeasure(id = "misclassification.rate",
-                  minimize = TRUE,
-                  classif = TRUE,
-                  allowed.pred.types = "response",
-                  fun = my.mmce)
-performance(pred, ms, task, mod)
-
-## Indeed the MMCE is already implemented in mlr beside other common performance measures
 performance(pred, measures = mmce)
 
-## Compute multiple performance measures at once
+# Compute multiple performance measures at once
 ms <- list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 performance(pred, measures = ms, task, mod)
 }

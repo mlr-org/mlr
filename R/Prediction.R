@@ -1,5 +1,6 @@
-#' Prediction object.
+#' @title Prediction object.
 #'
+#' @description
 #' Result from \code{\link{predict.WrappedModel}}.
 #' Use \code{as.data.frame} to access all information in a convenient format.
 #' The function \code{\link{getProbabilities}} is useful to access predicted probabilities.
@@ -28,12 +29,11 @@ makePrediction = function(task.desc, id, truth, predict.type, y, time) {
   UseMethod("makePrediction")
 }
 
-#' @method makePrediction RegrTaskDesc
-#' @S3method makePrediction RegrTaskDesc
-makePrediction.RegrTaskDesc = function(task.desc, id, truth, predict.type, y, time) {
+#' @S3method makePrediction TaskDescRegr
+makePrediction.TaskDescRegr = function(task.desc, id, truth, predict.type, y, time) {
   data = namedList(c("id", "truth", "response", "se"))
-	data$id = id
-	data$truth = truth
+  data$id = id
+  data$truth = truth
   if (predict.type == "response") {
     data$response = y
   } else {
@@ -41,7 +41,7 @@ makePrediction.RegrTaskDesc = function(task.desc, id, truth, predict.type, y, ti
     data$se = y[, 2L]
   }
 
-  makeS3Obj(c("RegrPrediction", "Prediction"),
+  makeS3Obj(c("PredictionRegr", "Prediction"),
     predict.type = predict.type,
     data = as.data.frame(filterNull(data)),
     threshold = NA_real_,
@@ -50,17 +50,16 @@ makePrediction.RegrTaskDesc = function(task.desc, id, truth, predict.type, y, ti
   )
 }
 
-#' @method makePrediction ClassifTaskDesc
-#' @S3method makePrediction ClassifTaskDesc
-makePrediction.ClassifTaskDesc = function(task.desc, id, truth, predict.type, y, time) {
+#' @S3method makePrediction TaskDescClassif
+makePrediction.TaskDescClassif = function(task.desc, id, truth, predict.type, y, time) {
   data = namedList(c("id", "truth", "response", "prob"))
-	data$id = id
-	data$truth = truth
+  data$id = id
+  data$truth = truth
   if (predict.type == "response") {
     data$response = y
     data = as.data.frame(filterNull(data))
   } else {
-		data$prob = y
+    data$prob = y
     data = as.data.frame(filterNull(data))
     # fix columnnames for prob if strage chars are in factor levels
     i = grep("prob.", names(data), fixed=TRUE)
@@ -68,7 +67,7 @@ makePrediction.ClassifTaskDesc = function(task.desc, id, truth, predict.type, y,
       names(data)[i] = paste0("prob.", colnames(y))
   }
 
-  p = makeS3Obj(c("ClassifPrediction", "Prediction"),
+  p = makeS3Obj(c("PredictionClassif", "Prediction"),
     predict.type = predict.type,
     data = data,
     threshold = NA_real_,
@@ -85,19 +84,33 @@ makePrediction.ClassifTaskDesc = function(task.desc, id, truth, predict.type, y,
   return(p)
 }
 
-#' @method makePrediction SurvTaskDesc
-#' @S3method makePrediction SurvTaskDesc
-makePrediction.SurvTaskDesc = function(task.desc, id, truth, predict.type, y, time) {
-  stopifnot(ncol(truth) == 2L) #FIXME: DEBUG
+#' @S3method makePrediction TaskDescSurv
+makePrediction.TaskDescSurv = function(task.desc, id, truth, predict.type, y, time) {
   data = namedList(c("id", "truth.time", "truth.event", "response"))
-	data$id = id
-	data$truth.time = truth[, 1L]
-	data$truth.event = truth[, 2L]
+  data$id = id
+  data$truth.time = truth[, 1L]
+  data$truth.event = truth[, 2L]
   data$response = y
 
-  makeS3Obj(c("SurvPrediction", "Prediction"),
+  makeS3Obj(c("PredictionSurv", "Prediction"),
     predict.type = predict.type,
     data = as.data.frame(filterNull(data)),
+    threshold = NA_real_,
+    task.desc = task.desc,
+    time = time
+  )
+}
+
+#' @S3method makePrediction TaskDescCostSens
+makePrediction.TaskDescCostSens = function(task.desc, id, truth, predict.type, y, time) {
+  data = namedList(c("id", "response"))
+  data$id = id
+  data$response = y
+  data = as.data.frame(filterNull(data))
+
+  makeS3Obj(c("PredictionCostSens", "Prediction"),
+    predict.type = predict.type,
+    data = data,
     threshold = NA_real_,
     task.desc = task.desc,
     time = time

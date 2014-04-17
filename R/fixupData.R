@@ -1,9 +1,10 @@
 # basic clean up of data. currently removes empty factor levels
-fixupData = function(data, choice) {
+fixupData = function(data, target, choice) {
   if (choice == "no")
     return(data)
   if (choice == "quiet")
     return(droplevels(data))
+  # the next lines look a bit complicated, we calculate the warning info message
   cns = colnames(data)
   levs1 = lapply(data, function(x)
     if (is.factor(x)) levels(x) else NULL)

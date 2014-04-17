@@ -1,14 +1,13 @@
-# FIXME: test this
-makeBaseWrapper = function(id, next.learner, package=character(0L), par.set=makeParamSet(),
+makeBaseWrapper = function(id, next.learner, package = character(0L), par.set = makeParamSet(),
   par.vals=list(), cl) {
 
   if (inherits(next.learner, "OptWrapper"))
     stop("Cannot wrap an optimization wrapper with something else!")
   ns = intersect(names(par.set$pars), names(next.learner$par.set$pars))
-  if (length(ns))
+  if (length(ns) > 0L)
     stopf("Hyperparameter names in wrapper clash with base learner names: %s", collapse(ns))
 
-  structure(list(
+  makeS3Obj(c(cl, "BaseWrapper", "Learner"),
     id = id,
     type = next.learner$type,
     package = c(package, next.learner$package),
@@ -25,7 +24,7 @@ makeBaseWrapper = function(id, next.learner, package=character(0L), par.set=make
     prob = next.learner$prob,
     se = next.learner$se,
     next.learner = next.learner
-  ), class = c(cl, "BaseWrapper", "Learner"))
+  )
 }
 
 #' @S3method predictLearner BaseWrapper
@@ -33,7 +32,8 @@ predictLearner.BaseWrapper = function(.learner, .model, .newdata, ...) {
   args = removeFromDots(names(.learner$par.vals), ...)
   do.call(predictLearner, c(
     list(.learner$next.learner, .model$learner.model$next.model, .newdata),
-    args))
+    args)
+  )
 }
 
 # FIXME: test

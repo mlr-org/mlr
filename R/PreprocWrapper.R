@@ -1,4 +1,4 @@
-#fixme use learnerparam or ordinary params?
+#FIXME: use learnerparam or ordinary params?
 
 #' Fuse learner with preprocessing.
 #'
@@ -30,17 +30,17 @@
 #'   Default is empty list.
 #' @return [\code{\link{Learner}}].
 #' @export
-makePreprocWrapper = function(learner, train, predict, par.set=makeParamSet(), par.vals=list()) {
+makePreprocWrapper = function(learner, train, predict, par.set = makeParamSet(), par.vals = list()) {
   checkArg(learner, "Learner")
-  checkArg(train, formals=c("data", "target", "args"))
-  checkArg(predict, formals=c("data", "target", "args", "control"))
+  checkArg(train, formals = c("data", "target", "args"))
+  checkArg(predict, formals = c("data", "target", "args", "control"))
   checkArg(par.set, "ParamSet")
   checkArg(par.vals, "list")
   if (!isProperlyNamed(par.vals))
     stop("'par.vals' must be a properly named list!")
 
-  id = paste(learner$id, "preproc", sep=".")
-  x = makeBaseWrapper(id, next.learner=learner, par.set=par.set, par.vals=par.vals, cl="PreprocWrapper")
+  id = paste(learner$id, "preproc", sep = ".")
+  x = makeBaseWrapper(id, next.learner = learner, par.set = par.set, par.vals = par.vals, cl = "PreprocWrapper")
   x$train = train
   x$predict = predict
   return(x)
@@ -49,18 +49,18 @@ makePreprocWrapper = function(learner, train, predict, par.set=makeParamSet(), p
 #' @S3method trainLearner PreprocWrapper
 trainLearner.PreprocWrapper = function(.learner, .task, .subset, ...) {
   pvs = .learner$par.vals
-  pp = .learner$train(data=getTaskData(.task, .subset),
-    target=.task$task.desc$target, args=pvs)
+  pp = .learner$train(data = getTaskData(.task, .subset),
+    target = .task$task.desc$target, args = pvs)
   # FIXME: why is the order important?
-  if (!(is.list(pp) && length(pp)==2L && all(names(pp) == c("data", "control")) &&
+  if (!(is.list(pp) && length(pp) == 2L && all(names(pp) == c("data", "control")) &&
     is.data.frame(pp$data) && is.list(pp$control)))
     stop("Preprocessing train must result in list wil elements data[data.frame] and control[list]!")
-  .task = changeData(.task, pp$data)
+  .task = changeData(.task, pp$data, .task$env$costs)
   # we have already subsetted!
   m = train(.learner$next.learner, .task)
   # FIXME: time and can we do this better?
   # we dont really kow which subset was used after preprocessing and features will have changed
-  x = makeChainModel(next.model=m, cl = "PreprocModel")
+  x = makeChainModel(next.model = m, cl = "PreprocModel")
   x$control = pp$control
   return(x)
 }
@@ -72,5 +72,5 @@ predictLearner.PreprocWrapper = function(.learner, .model, .newdata, ...) {
     .learner$par.vals, .model$learner.model$control)
   if (!is.data.frame(.newdata))
     stop("Preprocessing must result in a data.frame!")
-  NextMethod(.newdata=.newdata)
+  NextMethod(.newdata = .newdata)
 }

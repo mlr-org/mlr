@@ -2,47 +2,47 @@ context("checkData")
 
 test_that("checkData", {
   expect_error(makeClassifTask(data=binaryclass.df, target= "foo"), "don't contain target var: foo")
-  
+
   # y contains missings
   df = multiclass.df
   df[1, multiclass.target] = NA
-  expect_error(makeClassifTask(data=df, target=multiclass.target), "Target contains missing values")
+  expect_error(makeClassifTask(data = df, target = multiclass.target), "'Species' contains missing values")
   df = regr.df
   df[1, regr.target] = NaN
-  expect_error(makeRegrTask(data=df, target=regr.target), "Target contains missing values")
-  
+  expect_error(makeRegrTask(data = df, target = regr.target), "'medv' contains missing values")
+
   # data contains infs
   df = regr.df
   df[1, regr.target] = Inf
-  expect_error(makeRegrTask(data=df, target=regr.target), "Data contains infinite")
+  expect_error(makeRegrTask(data = df, target = regr.target), "Data contains infinite")
   df = regr.df
   df[1, getTaskFeatureNames(regr.task)[1]] = Inf
-  expect_error(makeRegrTask(data=df, target=regr.target), "Data contains infinite")
+  expect_error(makeRegrTask(data = df, target = regr.target), "Data contains infinite")
 
   # data contains nans
   df = regr.df
   df[1, getTaskFeatureNames(regr.task)[1]] = NaN
-  expect_error(makeRegrTask(data=df, target=regr.target), "Data contains NaN")
-  
+  expect_error(makeRegrTask(data = df, target = regr.target), "Data contains NaN")
+
   # check conversion of target
   df = binaryclass.df
-  df[, binaryclass.target] = as.character(df[, binaryclass.target]) 
-  task = makeClassifTask(data=df, target=binaryclass.target)
+  df[, binaryclass.target] = as.character(df[, binaryclass.target])
+  task = makeClassifTask(data = df, target=binaryclass.target)
   expect_true(is.factor(getTaskTargets(task)))
 
   df = binaryclass.df
   df[, binaryclass.target] = as.logical(as.integer(binaryclass.df[, binaryclass.target])-1)
-  task = makeClassifTask(data=df, target=binaryclass.target)
+  task = makeClassifTask(data = df, target=binaryclass.target)
   expect_true(is.factor(getTaskTargets(task)))
 
   df = regr.df
-  df[, regr.target] = as.integer(regr.df[, regr.target]) 
-  task = makeRegrTask(data=df, target=regr.target)
+  df[, regr.target] = as.integer(regr.df[, regr.target])
+  task = makeRegrTask(data = df, target = regr.target)
   expect_true(is.numeric(getTaskTargets(task)))
-  
+
   # check unsupported columns
   df = multiclass.df
   df[, 1] = as.logical(df[,1])
   colnames(df)[1] = "aaa"
-  expect_error(makeClassifTask(data=df, target=multiclass.target), "Unsupported feature type in: aaa, logical")
+  expect_error(makeClassifTask(data = df, target = multiclass.target), "Unsupported feature type in: aaa, logical")
 })

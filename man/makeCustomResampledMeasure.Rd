@@ -3,8 +3,8 @@
 \title{Construct your own resampled performance measure.}
 \usage{
 makeCustomResampledMeasure(id, minimize = TRUE, classif = FALSE,
-  regr = FALSE, only.binary = FALSE, allowed.pred.types = character(0L),
-  fun, extra.args = list())
+  regr = FALSE, costsens = FALSE, only.binary = FALSE,
+  allowed.pred.types = character(0L), fun, extra.args = list())
 }
 \arguments{
   \item{id}{[\code{character(1)}]\cr Name of aggregated

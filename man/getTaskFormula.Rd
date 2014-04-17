@@ -1,7 +1,10 @@
-\name{getTaskFormula}
+\name{getTaskFormulaAsString}
 \alias{getTaskFormula}
+\alias{getTaskFormulaAsString}
 \title{Get formula of a task.}
 \usage{
+getTaskFormulaAsString(x, target = getTargetNames(x))
+
 getTaskFormula(x, target = getTargetNames(x), env = NULL)
 }
 \arguments{
@@ -18,13 +21,9 @@ getTaskFormula(x, target = getTargetNames(x), env = NULL)
   the environment.}
 }
 \value{
-[\code{formula}].
+[\code{formula} | \code{character(1)}].
 }
 \description{
-This is simply the \code{target ~ .} formula.
-}
-\examples{
-task <- makeClassifTask(data = iris, target = "Species")
-getTaskFormula(task)
+This is simply \dQuote{<target> ~ .}.
 }
 
