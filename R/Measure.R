@@ -108,7 +108,8 @@ default.measures = function(x) {
   switch(type,
     classif = list(mmce),
     regr = list(mse),
-    costsens = list(mcp)
+    costsens = list(mcp),
+    surv = list(cindex)
   )
 }
 
