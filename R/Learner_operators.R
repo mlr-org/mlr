@@ -127,11 +127,13 @@ setHyperPars2.Learner = function(learner, par.vals) {
 #' Possible prediction types are:
 #' Classification: Labels or class probabilities (including labels).
 #' Regression: Numeric or response or standard errors (including numeric response).
+#' Survival: Linear predictor or survival probability.
 #' @param learner [\code{\link{Learner}}]\cr
 #'   The learner.
 #' @param predict.type [\code{character(1)}]\cr
 #'   Classification: \dQuote{response} or \dQuote{prob}.
 #'   Regression: \dQuote{response} or \dQuote{se}.
+#'   Survival: \dQuote{response} (linear predictor) or \dQuote{prob}.
 #'   Default is \dQuote{response}.
 #' @return [\code{\link{Learner}}] with changed prediction behaviour.
 #' @seealso \code{\link{setThreshold}} to alter the threshold used for prediction.
