@@ -30,7 +30,7 @@ trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights,  ...) {
 predictLearner.surv.glmnet = function(.learner, .model, .newdata, ...) {
   s = .model$learner.model$lambda.min
   if(.learner$predict.type == "response")
-    as.numeric(predict(.model$learner.model, newx=as.matrix(.newdata), type="response", s=s, ...))
+    as.numeric(predict(.model$learner.model, newx=as.matrix(.newdata), type="link", s=s, ...))
   else
     stop("Unknown predict type")
 }

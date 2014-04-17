@@ -55,7 +55,7 @@ trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights,  ...) 
 #' @S3method predictLearner surv.CoxBoost
 predictLearner.surv.CoxBoost = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response")
-    as.numeric(predict(.model$learner.model, newdata=as.matrix(.newdata), type="risk"))
+    as.numeric(predict(.model$learner.model, newdata=as.matrix(.newdata), type="lp"))
   else
     stop("Unknown predict type")
 }

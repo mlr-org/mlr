@@ -34,7 +34,7 @@ trainLearner.surv.coxph = function(.learner, .task, .subset, .weights,  ...) {
 #' @S3method predictLearner surv.coxph
 predictLearner.surv.coxph = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response")
-    predict(.model$learner.model, newdata=.newdata, type="risk", ...)
+    predict(.model$learner.model, newdata=.newdata, type="lp", ...)
   else
     stop("Unknown predict type")
 }
