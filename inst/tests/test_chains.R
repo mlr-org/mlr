@@ -30,5 +30,3 @@ test_that("chains", {
   perf = performance(p, mmce)
   expect_true(perf < 0.1)
 })
-
-}
