@@ -34,21 +34,15 @@
 #' @examples
 #' makeLearner("classif.rpart")
 #' makeLearner("classif.lda", predict.type = "prob")
-#'
-#' lrn <- makeLearner("classif.rpart", minsplit = 5)
+#' lrn = makeLearner("classif.lda", method = "t", nu = 10)
 #' print(lrn$par.vals)
-#' lrn <- makeLearner("classif.lda", method = "mle")
-#' print(lrn$par.vals)
-#' lrn <- makeLearner("classif.lda", method = "t", nu = 10)
-#' print(lrn$par.vals)
-makeLearner = function(cl, id=cl, predict.type="response", ..., par.vals=list()) {
-  checkArg(cl, "character", len=1L, na.ok=FALSE)
-  constructor = getS3method("makeRLearner", class=cl)
-  # FIXME wl = constructor()
+makeLearner = function(cl, id = cl, predict.type = "response", ..., par.vals = list()) {
+  checkArg(cl, "character", len = 1L, na.ok = FALSE)
+  constructor = getS3method("makeRLearner", class = cl)
   wl = do.call(constructor, list())
 
   if (!missing(id)) {
-    checkArg(id, "character", len=1L, na.ok=FALSE)
+    checkArg(id, "character", len = 1L, na.ok = FALSE)
     wl$id = id
   }
   checkArg(par.vals, "list")
@@ -56,8 +50,8 @@ makeLearner = function(cl, id=cl, predict.type="response", ..., par.vals=list())
     stop("Cannot create learner from empty string!")
   if (!inherits(wl, "RLearner"))
     stop("Learner must be a basic RLearner!")
-  wl = setHyperPars(wl, ..., par.vals=par.vals)
-  wl = setPredictType(wl, predict.type)
+  wl = setHyperPars(learner = wl, ..., par.vals = par.vals)
+  wl = setPredictType(learner = wl, predict.type = predict.type)
   return(wl)
 }
 
