@@ -40,3 +40,7 @@ surv.test.inds  = setdiff(1:150, surv.train.inds)
 surv.train = surv.df[surv.train.inds, ]
 surv.test  = surv.df[surv.test.inds, ]
 surv.task = makeSurvTask("survtask", data = surv.df, target = surv.target)
+
+costsens.feat  = iris
+costsens.costs = matrix(rnorm(150L * 3L), 150L, 3L)
+costsens.task = makeCostSensTask("costsens", data = costsens.feat, costs = costsens.costs)
