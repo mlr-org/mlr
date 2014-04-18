@@ -155,7 +155,7 @@ testCV = function(t.name, df, target, folds=2, parset=list(), tune.train, tune.p
   }
 }
 
-testCVParsets = function(t.name, df, target, folds=3, tune.train, tune.predict=predict, parset.list) {
+testCVParsets = function(t.name, df, target, folds=2, tune.train, tune.predict=predict, parset.list) {
 
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
