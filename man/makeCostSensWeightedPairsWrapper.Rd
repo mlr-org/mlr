@@ -1,0 +1,23 @@
+\name{makeCostSensWeightedPairsWrapper}
+\alias{makeCostSensWeightedPairsWrapper}
+\title{Wraps a regression learner for use in cost-sensitive learning.}
+\usage{
+makeCostSensWeightedPairsWrapper(learner)
+}
+\arguments{
+  \item{learner}{[\code{\link[mlr]{Learner}}]\cr The basic
+  regression learner.}
+}
+\value{
+[\code{\link[mlr]{Learner}}].
+}
+\description{
+Creates a wrapper, which can be used like any other learner
+object. Models can easily be accessed via
+\code{\link{getCostSensWeightedPairsModels}}.
+
+For each class in the task, an individual regression model
+is fitted for the costs of that class. During prediction,
+the class with the lowest predicted costs is selected.
+}
+

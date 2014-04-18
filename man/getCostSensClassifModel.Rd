@@ -1,0 +1,23 @@
+\name{getCostSensClassifModel}
+\alias{getCostSensClassifModel}
+\title{Returns the underlying classification model.}
+\usage{
+getCostSensClassifModel(model, learner.models = TRUE)
+}
+\arguments{
+  \item{model}{[\code{\link[mlr]{WrappedModel}}]\cr Model
+  produced by training a cost-sensitive classification
+  learner.}
+
+  \item{learner.models}{[\code{logical(1)}]\cr Return
+  underlying R model or wrapped mlr model
+  (\code{\link[mlr]{WrappedModel}}).  Default is
+  \code{FALSE}.}
+}
+\value{
+[\code{list}].
+}
+\description{
+Returns the underlying classification model.
+}
+

@@ -50,12 +50,7 @@ assign the label can later be changed using the
 \examples{
 makeLearner("classif.rpart")
 makeLearner("classif.lda", predict.type = "prob")
-
-lrn <- makeLearner("classif.rpart", minsplit = 5)
-print(lrn$par.vals)
-lrn <- makeLearner("classif.lda", method = "mle")
-print(lrn$par.vals)
-lrn <- makeLearner("classif.lda", method = "t", nu = 10)
+lrn = makeLearner("classif.lda", method = "t", nu = 10)
 print(lrn$par.vals)
 }
 \seealso{

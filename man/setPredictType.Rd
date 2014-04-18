@@ -9,8 +9,9 @@ setPredictType(learner, predict.type)
 
   \item{predict.type}{[\code{character(1)}]\cr
   Classification: \dQuote{response} or \dQuote{prob}.
-  Regression: \dQuote{response} or \dQuote{se}.  Default is
-  \dQuote{response}.}
+  Regression: \dQuote{response} or \dQuote{se}.  Survival:
+  \dQuote{response} (linear predictor) or \dQuote{prob}.
+  Default is \dQuote{response}.}
 }
 \value{
 [\code{\link{Learner}}] with changed prediction behaviour.
@@ -19,7 +20,8 @@ setPredictType(learner, predict.type)
 Possible prediction types are: Classification: Labels or
 class probabilities (including labels). Regression: Numeric
 or response or standard errors (including numeric
-response).
+response). Survival: Linear predictor or survival
+probability.
 }
 \seealso{
 \code{\link{setThreshold}} to alter the threshold used for
