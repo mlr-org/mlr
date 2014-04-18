@@ -17,6 +17,7 @@
 #'   \item{\bold{classif.JRip}}{\cr Propositional Rule Learner from RWeka package: \code{\link[RWeka]{JRip}}}
 #'     Note that NAs are directly passed to WEKA with \code{na.action = na.pass}.
 #'   \item{\bold{classif.kknn}}{\cr k-Nearest Neighbor from kknn package: \code{\link[kknn]{kknn}}}
+#'   \item{\bold{classif.knn}}{\cr k-Nearest Neighbor from class package: \code{\link[class]{knn}}}
 #'   \item{\bold{classif.ksvm}}{\cr Support Vector Machines from kernlab package: \code{\link[kernlab]{ksvm}}\cr
 #'     Note that kernel parameters have to be passed directly and not by using the kpar list in ksvm.\cr
 #'     Note that \code{fit} has been set to \code{FALSE} by default for speed.}

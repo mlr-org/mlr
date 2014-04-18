@@ -25,6 +25,7 @@ Suggests:
     testthat,
     ada,
     adabag,
+    class,
     cmaes,
     CoxBoost,
     crs,
