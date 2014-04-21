@@ -85,6 +85,15 @@ imputeMedian = function() {
 
 #' @export
 #' @rdname imputations
+imputeMean = function() {
+  makeImputeMethod(
+    learn = function(data, target, col) mean(data[[col]], na.rm=TRUE),
+    impute = simpleImpute
+  )
+}
+
+#' @export
+#' @rdname imputations
 imputeMode = function() {
   makeImputeMethod(
     learn = function(data, target, col) computeMode(data[[col]], na.rm=TRUE),
