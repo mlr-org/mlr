@@ -29,11 +29,15 @@ trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset, ...) {
   .task = subsetTask(.task, subset = .subset)
   costs = .task$env$costs
   classes = .task$task.desc$class.levels
-  j = getMinIndexOfRows(costs)
-  newy = classes[j]
+  # case of equals best costs, do random sampling
+  newy = getMinIndexOfRows(costs)
+  newy = classes[newy]
   feats = .task$env$data
-  #FIXME name clash
+  #FIXME: name clash
   data = cbind(feats, .y = newy)
+  # remove stuff with completely equal costs from training
+  remove = apply(costs, 1, function(x) length(unique(x)) == 1)
+  data = data[-remove, ]
   task = makeClassifTask(data = data, target = ".y")
   model = train(.learner$next.learner, task)
   makeChainModel(next.model = model, cl = "CostSensClassifModel")
