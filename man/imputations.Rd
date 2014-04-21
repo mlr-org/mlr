@@ -4,6 +4,7 @@
 \alias{imputeHist}
 \alias{imputeLearner}
 \alias{imputeMax}
+\alias{imputeMean}
 \alias{imputeMedian}
 \alias{imputeMin}
 \alias{imputeMode}
@@ -29,6 +30,8 @@ The built-ins are:
 imputeConstant(const)
 
 imputeMedian()
+
+imputeMean()
 
 imputeMode()
 
