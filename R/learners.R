@@ -29,6 +29,7 @@
 #'     Note that this model subsumes type 0,6,7.}
 #'   \item{\bold{classif.LiblineaRMultiClass}}{\cr Multi-class Support Vector Classification by Crammer and Singer from LiblineaR package: \code{\link[LiblineaR]{LiblineaR}}
 #'     Note that this model is type 4.}
+#'   \item{\bold{classif.linDA}}{\cr Linear Discriminant Analysis from DiscriMiner package: \code{\link[DiscriMiner]{linDA}}}
 #'   \item{\bold{classif.logreg}}{\cr Logistic Regression from stats package: \code{\link[stats]{glm}}}
 #'   \item{\bold{classif.lssvm}}{\cr Least Squares Support Vector Machine from kernlab package: \code{\link[kernlab]{lssvm}}\cr
 #'     Note that \code{fitted} has been set to \code{FALSE} by default for speed.}
@@ -45,6 +46,7 @@
 #'     Note that NAs are directly passed to WEKA with \code{na.action = na.pass}.
 #'   \item{\bold{classif.plsDA}}{\cr Partial Least Squares (PLS) Discriminant Analysis from DiscriMiner package: \code{\link[DiscriMiner]{plsDA}}}
 #'   \item{\bold{classif.qda}}{\cr Quadratic Discriminant Analysis from MASS package: \code{\link[MASS]{qda}}}
+#'   \item{\bold{classif.quaDA}}{\cr Quadratic Discriminant Analysis from DiscriMiner package: \code{\link[DiscriMiner]{quaDA}}}
 #'   \item{\bold{classif.randomForest}}{\cr Random Forest from randomForest package: \code{\link[randomForest]{randomForest}}.
 #'     The argument \code{fix.factors} restores the factor levels seen in the training data before prediction to circumvent
 #'     randomForest's internal sanity checks. Default is \code{FALSE}.}
