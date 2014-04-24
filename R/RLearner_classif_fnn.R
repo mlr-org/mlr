@@ -11,7 +11,7 @@ makeRLearner.classif.fnn = function() {
     ),
     twoclass = TRUE,
     multiclass = TRUE,
-    numerics = TRUE,
+    numerics = TRUE
   )
 }
 

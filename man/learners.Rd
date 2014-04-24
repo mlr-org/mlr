@@ -16,6 +16,9 @@ from party package: \code{\link[party]{ctree}}}
 FNN package: \code{\link[FNN]{knn}}}
 \item{\bold{classif.gbm}}{\cr Gradient boosting machine
 from gbm package: \code{\link[gbm]{gbm}}}
+\item{\bold{classif.geoDA}}{\cr Geometric Predictive
+Discriminant Analysis from DiscriMiner package:
+\code{\link[DiscriMiner]{geoDA}}}
 \item{\bold{classif.glmboost}}{\cr Boosting for GLMs from
 mboost package: \code{\link[mboost]{glmboost}}\cr Note that
 \code{family} has been set to \code{Binomial()} by
