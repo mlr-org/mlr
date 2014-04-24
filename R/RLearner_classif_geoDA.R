@@ -1,4 +1,3 @@
-#FIXME: probs can only be predicted for two class problems (winning class)
 #' @S3method makeRLearner classif.geoDA
 makeRLearner.classif.geoDA = function() {
   makeRLearnerClassif(

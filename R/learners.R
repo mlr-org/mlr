@@ -43,6 +43,7 @@
 #'     Note that NAs are directly passed to WEKA with \code{na.action = na.pass}.
 #'   \item{\bold{classif.PART}}{\cr PART decision lists from RWeka package: \code{\link[RWeka]{PART}}}
 #'     Note that NAs are directly passed to WEKA with \code{na.action = na.pass}.
+#'   \item{\bold{classif.plsDA}}{\cr Partial Least Squares (PLS) Discriminant Analysis from DiscriMiner package: \code{\link[DiscriMiner]{plsDA}}}
 #'   \item{\bold{classif.qda}}{\cr Quadratic Discriminant Analysis from MASS package: \code{\link[MASS]{qda}}}
 #'   \item{\bold{classif.randomForest}}{\cr Random Forest from randomForest package: \code{\link[randomForest]{randomForest}}.
 #'     The argument \code{fix.factors} restores the factor levels seen in the training data before prediction to circumvent
