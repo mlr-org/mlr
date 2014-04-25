@@ -41,12 +41,12 @@
 #'   Verbose output on console?
 #'   Default is \code{TRUE}.
 #' @return List of:
-#'   \item{measures.test [\code{data.frame}]}{Gives you access to performance measurements 
+#'   \item{measures.test [\code{data.frame}]}{Gives you access to performance measurements
 #'     on the individual test sets. Rows correspond to sets in resampling iterations,
 #'     columns to performance measures.}
-#'   \item{measures.train [\code{data.frame}]}{Gives you access to performance measurements 
+#'   \item{measures.train [\code{data.frame}]}{Gives you access to performance measurements
 #'     on the individual training sets. Rows correspond to sets in resampling iterations,
-#'     columns to performance measures. Usually not available, only if specifically requested, 
+#'     columns to performance measures. Usually not available, only if specifically requested,
 #'     see general description above.}
 #'   \item{aggr [\code{numeric}]}{Named vector of aggregated performance values. Names are coded like
 #'     this <measure>.<aggregation>.}
@@ -62,14 +62,14 @@
 #' print(r$aggr)
 #' print(r$measures.test)
 #' print(r$pred)
-resample = function(learner, task, resampling, measures, weights, models=FALSE,
-  extract, show.info=TRUE) {
+resample = function(learner, task, resampling, measures, weights, models = FALSE,
+  extract, show.info = TRUE) {
 
   checkArg(learner, "Learner")
   checkArg(task, "SupervisedTask")
   # instantiate resampling
   if (inherits(resampling, "ResampleDesc"))
-    resampling = makeResampleInstance(resampling, task=task)
+    resampling = makeResampleInstance(resampling, task = task)
   checkArg(resampling, "ResampleInstance")
   if (missing(measures))
     measures = default.measures(task)
@@ -77,14 +77,14 @@ resample = function(learner, task, resampling, measures, weights, models=FALSE,
     measures = list(measures)
   checkListElementClass(measures, "Measure")
   if (!missing(weights)) {
-    checkArg(weights, "numeric", len=task$task.desc$size, na.ok=FALSE, lower=0)
+    checkArg(weights, "numeric", len = task$task.desc$size, na.ok = FALSE, lower = 0)
   }
-  checkArg(models, "logical", len=1L, na.ok=FALSE)
+  checkArg(models, "logical", len = 1L, na.ok = FALSE)
   if (missing(extract))
     extract = function(model) {}
   else
-    checkArg(extract, formals="model")
-  checkArg(show.info, "logical", len=1L, na.ok=FALSE)
+    checkArg(extract, formals = "model")
+  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
 
   n = task$task.desc$size
   r = resampling$size
@@ -94,15 +94,15 @@ resample = function(learner, task, resampling, measures, weights, models=FALSE,
   checkTaskLearner(task, learner, weights)
 
   rin = resampling
-  more.args = list(learner=learner, task=task, rin=rin,
-    measures=measures, model=models, extract=extract, show.info=show.info)
+  more.args = list(learner = learner, task = task, rin = rin,
+    measures = measures, model = models, extract = extract, show.info = show.info)
   if (!missing(weights))
     more.args$weights = weights
   else
     more.args$weights = task$weights
-  parallelLibrary("mlr", master=FALSE, level="mlr.resample", show.info=FALSE)
+  parallelLibrary("mlr", master = FALSE, level = "mlr.resample", show.info = FALSE)
   exportMlrOptions()
-  iter.results = parallelMap(doResampleIteration, seq_len(rin$desc$iters), level="mlr.resample", more.args=more.args)
+  iter.results = parallelMap(doResampleIteration, seq_len(rin$desc$iters), level = "mlr.resample", more.args = more.args)
   mergeResampleResult(task, iter.results, measures, rin, models, extract, show.info)
 }
 
@@ -113,9 +113,9 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   test.i = rin$test.inds[[i]]
 
   if (missing(weights))
-    m = train(learner, task, subset=train.i)
+    m = train(learner, task, subset = train.i)
   else
-    m = train(learner, task, subset=train.i, weights=weights[train.i])
+    m = train(learner, task, subset = train.i, weights = weights[train.i])
 
   # does a measure require to calculate pred.train?
   ms.train = rep(NA, length(measures))
@@ -124,16 +124,16 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   pred.test = NULL
   pp = rin$desc$predict
   if (pp == "train") {
-    pred.train = predict(m, task, subset=train.i)
-    ms.train = sapply(measures, function(pm) performance(task=task, model=m, pred=pred.train, measures=pm))
+    pred.train = predict(m, task, subset = train.i)
+    ms.train = sapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
   } else if (pp == "test") {
-    pred.test = predict(m, task, subset=test.i)
-    ms.test = sapply(measures, function(pm) performance(task=task, model=m, pred=pred.test, measures=pm))
+    pred.test = predict(m, task, subset = test.i)
+    ms.test = sapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
   } else { # "both"
-    pred.train = predict(m, task, subset=train.i)
-    ms.train = sapply(measures, function(pm) performance(task=task, model=m, pred=pred.train, measures=pm))
-    pred.test = predict(m, task, subset=test.i)
-    ms.test = sapply(measures, function(pm) performance(task=task, model=m, pred=pred.test, measures=pm))
+    pred.train = predict(m, task, subset = train.i)
+    ms.train = sapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
+    pred.test = predict(m, task, subset = test.i)
+    ms.test = sapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
   }
   ex = extract(m)
   list(
@@ -150,21 +150,21 @@ mergeResampleResult = function(task, iter.results, measures, rin, models, extrac
   iters = length(iter.results)
   mids = sapply(measures, function(m) m$id)
 
-  ms.test = extractSubList(iter.results, "measures.test", simplify=FALSE)
+  ms.test = extractSubList(iter.results, "measures.test", simplify = FALSE)
   ms.test = as.data.frame(do.call(rbind, ms.test))
   colnames(ms.test) = sapply(measures, function(pm) pm$id)
   rownames(ms.test) = NULL
-  ms.test = cbind(iter=seq_len(iters), ms.test)
+  ms.test = cbind(iter = seq_len(iters), ms.test)
 
-  ms.train = extractSubList(iter.results, "measures.train", simplify=FALSE)
+  ms.train = extractSubList(iter.results, "measures.train", simplify = FALSE)
   ms.train = as.data.frame(do.call(rbind, ms.train))
   colnames(ms.train) = mids
   rownames(ms.train) = NULL
-  ms.train = cbind(iter=1:iters, ms.train)
+  ms.train = cbind(iter = 1:iters, ms.train)
 
-  preds.test = extractSubList(iter.results, "pred.test", simplify=FALSE)
-  preds.train = extractSubList(iter.results, "pred.train", simplify=FALSE)
-  pred = makeResamplePrediction(instance=rin, preds.test=preds.test, preds.train=preds.train)
+  preds.test = extractSubList(iter.results, "pred.test", simplify = FALSE)
+  preds.train = extractSubList(iter.results, "pred.train", simplify = FALSE)
+  pred = makeResamplePrediction(instance = rin, preds.test = preds.test, preds.train = preds.train)
 
   aggr = sapply(measures, function(m)  m$aggr$fun(task, ms.test[, m$id], ms.train[, m$id], m, rin$group, pred))
   names(aggr) = sapply(measures, measureAggrName)
@@ -177,7 +177,7 @@ mergeResampleResult = function(task, iter.results, measures, rin, models, extrac
     aggr = aggr,
     pred = pred,
     models = if(models) lapply(iter.results, function(x) x$model) else NULL,
-    extract = if(is.function(extract)) extractSubList(iter.results, "extract", simplify=FALSE) else NULL
+    extract = if(is.function(extract)) extractSubList(iter.results, "extract", simplify = FALSE) else NULL
   )
 }
 
