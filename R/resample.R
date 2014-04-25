@@ -41,10 +41,13 @@
 #'   Verbose output on console?
 #'   Default is \code{TRUE}.
 #' @return List of:
-#'   \item{measures.test [\code{data.frame}]}{Rows correspond to test sets in resampling iterations,
+#'   \item{measures.test [\code{data.frame}]}{Gives you access to performance measurements 
+#'     on the individual test sets. Rows correspond to sets in resampling iterations,
 #'     columns to performance measures.}
-#'   \item{measures.train [\code{data.frame}]}{Rows correspond to training sets in resampling
-#'     iterations, columns to performance measures.}
+#'   \item{measures.train [\code{data.frame}]}{Gives you access to performance measurements 
+#'     on the individual training sets. Rows correspond to sets in resampling iterations,
+#'     columns to performance measures. Usually not available, only if specifically requested, 
+#'     see general description above.}
 #'   \item{aggr [\code{numeric}]}{Named vector of aggregated performance values. Names are coded like
 #'     this <measure>.<aggregation>.}
 #'   \item{pred [\code{\link{ResamplePrediction}}]}{Container for all predictions during resampling.}
