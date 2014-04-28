@@ -40,11 +40,15 @@ resample(learner, task, resampling, measures, weights, models = FALSE,
   console?  Default is \code{TRUE}.}
 }
 \value{
-List of: \item{measures.test [\code{data.frame}]}{Rows
-correspond to test sets in resampling iterations, columns
-to performance measures.} \item{measures.train
-[\code{data.frame}]}{Rows correspond to training sets in
-resampling iterations, columns to performance measures.}
+List of: \item{measures.test [\code{data.frame}]}{Gives you
+access to performance measurements on the individual test
+sets. Rows correspond to sets in resampling iterations,
+columns to performance measures.} \item{measures.train
+[\code{data.frame}]}{Gives you access to performance
+measurements on the individual training sets. Rows
+correspond to sets in resampling iterations, columns to
+performance measures. Usually not available, only if
+specifically requested, see general description above.}
 \item{aggr [\code{numeric}]}{Named vector of aggregated
 performance values. Names are coded like this
 <measure>.<aggregation>.} \item{pred

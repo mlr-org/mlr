@@ -11,7 +11,7 @@ makeSurvTask = function(id, data, target, weights = NULL, blocking = NULL,
 }
 
 checkTargetSurv = function(data, target) {
-  checkTarget("surv", data, target, 2L, list(c("numeric", "integer"), c("logical", "integer")))
+  checkTarget("surv", data, target, 2L, list(c("numeric", "integer"), c("logical", "numeric")))
 }
 
 # normal fixup + convert target cols numeric (time) and 0-1-integer (events)
@@ -19,7 +19,8 @@ fixupDataSurv = function(data, target, choice) {
   data = fixupData(data, target, choice)
   if (is.integer(data[[target[1L]]]))
     data[[target[1L]]] = as.numeric(data[[target[1L]]])
-  if (!is.logical(data[[target[2L]]]) || is.integer(data[[target[2L]]]))
+  # FIXME: check if numeric is convertible to logical
+  if (!is.logical(data[[target[2L]]]) || is.numeric(data[[target[2L]]]))
     data[[target[2L]]] = as.integer(as.logical(data[[target[2L]]]))
   return(data)
 }
