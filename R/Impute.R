@@ -90,10 +90,10 @@ impute = function(data, target, classes=list(), cols=list(), dummy.classes=chara
   }
   not.ok = names(cols) %nin% names(data)
   if (any(not.ok))
-    stopf("Column for imputation not present in data: %s", names(cols)[which.fist(not.ok)])
+    stopf("Column for imputation not present in data: %s", names(cols)[which.first(not.ok)])
   not.ok = dummy.cols %nin% names(data)
   if (any(not.ok))
-    stopf("Column for dummy creation not present in data: %s", names(cols)[which.fist(not.ok)])
+    stopf("Column for dummy creation not present in data: %s", names(cols)[which.first(not.ok)])
   checkArg(impute.new.levels, "logical", len=1L, na.ok=FALSE)
   checkArg(recode.factor.levels, "logical", len=1L, na.ok=FALSE)
 
