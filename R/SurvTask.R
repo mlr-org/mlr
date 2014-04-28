@@ -11,7 +11,7 @@ makeSurvTask = function(id, data, target, weights = NULL, blocking = NULL,
 }
 
 checkTargetSurv = function(data, target) {
-  checkTarget("surv", data, target, 2L, list(c("numeric", "integer"), c("logical", "numeric")))
+  checkTarget("surv", data, target, 2L, list(c("numeric", "integer"), c("logical", "numeric", "integer")))
 }
 
 # normal fixup + convert target cols numeric (time) and 0-1-integer (events)
