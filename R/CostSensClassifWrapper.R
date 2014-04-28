@@ -27,19 +27,34 @@ makeCostSensClassifWrapper = function(learner) {
 #' @S3method trainLearner CostSensClassifWrapper
 trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset, ...) {
   .task = subsetTask(.task, subset = .subset)
-  costs = .task$env$costs
-  classes = .task$task.desc$class.levels
-  # case of equals best costs, do random sampling
-  newy = getMinIndexOfRows(costs)
-  newy = classes[newy]
   feats = .task$env$data
-  data = cbind(feats, ..y.. = newy)
-  # remove stuff with completely equal costs from training
-  remove = apply(costs, 1, function(x) length(unique(x)) == 1)
-  data = data[-remove, ]
-  task = makeClassifTask(data = data, target = "..y..")
-  model = train(.learner$next.learner, task)
+  costs = .task$env$costs
+  cns = colnames(costs)
+  # compute average costs of all classes, then sort labels by it
+  cns.costs = colSums(costs)
+  cns = cns[order(cns.costs, decreasing = FALSE)]
+  costs = costs[, cns]
+  # case of equals best costs, take the one which is better on whole data
+  newy = getMinIndexOfRows(costs, ties.method = "first")
+  newy = cns[newy]
+  # if all equal, predict one class, stupid fringe case
+  if (length(unique(newy)) == 1) {
+    model = newy[1]
+  } else {
+    data = cbind(feats, ..y.. = newy)
+    task = makeClassifTask(data = data, target = "..y..")
+    model = train(.learner$next.learner, task)
+  }
   makeChainModel(next.model = model, cl = "CostSensClassifModel")
+}
+
+#' @S3method predictLearner CostSensClassifWrapper
+predictLearner.CostSensClassifWrapper = function(.learner, .model, .newdata, ...) {
+  m = .model$learner.model$next.model
+  # handle constant prediction
+  if (is.character(m))
+    return(as.factor(rep(m, nrow(.newdata))))
+  NextMethod()
 }
 
 #' @S3method makeWrappedModel CostSensClassifWrapper

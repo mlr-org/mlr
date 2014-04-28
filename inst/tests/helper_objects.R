@@ -42,5 +42,5 @@ surv.test  = surv.df[surv.test.inds, ]
 surv.task = makeSurvTask("survtask", data = surv.df, target = surv.target)
 
 costsens.feat  = iris
-costsens.costs = matrix(rnorm(150L * 3L), 150L, 3L)
+costsens.costs = matrix(runif(150L * 3L, min = 0, max = 1), 150L, 3L)
 costsens.task = makeCostSensTask("costsens", data = costsens.feat, costs = costsens.costs)
