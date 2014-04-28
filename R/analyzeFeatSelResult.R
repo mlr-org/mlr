@@ -15,9 +15,9 @@
 #'   Default is \code{TRUE}.
 #' @return Nothing.
 #' @export
-analyzeFeatSelResult = function(res, reduce=TRUE) {
+analyzeFeatSelResult = function(res, reduce = TRUE) {
   checkArg(res$control, "FeatSelControlSequential")
-  checkArg(reduce, "logical", len=1L, na.ok=FALSE)
+  checkArg(reduce, "logical", len = 1L, na.ok = FALSE)
 
   x = res$x
   y = res$y
@@ -32,7 +32,7 @@ analyzeFeatSelResult = function(res, reduce=TRUE) {
   ##### print header
   catf("Features         : %i", length(x))
   catf("Performance      : %s", perfsToString(y))
-  catf(collapse(x, sep=", "))
+  catf(collapse(x, sep = ", "))
   catf("\nPath to optimum:")
 
   ##### print path
@@ -99,7 +99,7 @@ analyzeFeatSelResult = function(res, reduce=TRUE) {
 }
 
 giveDecs = function(x) {
-  x = x[x!=0]
+  x = x[x != 0]
   if (length(x) == 0) {
     after.dec = 0
     dec = 0

@@ -85,10 +85,10 @@ imputeLearner(learner, preimpute = list())
   imputations.  Note that the target column is not
   available for this operation.}
 
-  \item{preimute}{[\code{list}]\cr Arguments for inner call
-  to \code{\link{impute}} in scenarios where \code{learner}
-  itself cannot handle missing values.  Default is
-  \code{list()}.}
+  \item{preimpute}{[\code{list}]\cr Arguments for inner
+  call to \code{\link{impute}} in scenarios where
+  \code{learner} itself cannot handle missing values.
+  Default is \code{list()}.}
 }
 \description{
 Built in imputation methods The built-ins are: \itemize{

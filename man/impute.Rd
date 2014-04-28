@@ -84,9 +84,9 @@ to imputation functions.} \item{impute.new.levels
 argument.} }
 }
 \examples{
-df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z=1:3)
-imputed = impute(df, target=character(0), cols=list(x = 99, y = imputeMode()))
+df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z = 1:3)
+imputed = impute(df, target = character(0), cols = list(x = 99, y = imputeMode()))
 print(imputed$data)
-reimpute(data.frame(x=NA), imputed$desc)
+reimpute(data.frame(x = NA), imputed$desc)
 }
 
