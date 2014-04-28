@@ -63,19 +63,19 @@
 #'   \item{desc \code{ImputationDesc}}{Description object.}
 #' @export
 #' @examples
-#' df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z=1:3)
-#' imputed = impute(df, target=character(0), cols=list(x = 99, y = imputeMode()))
+#' df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z = 1:3)
+#' imputed = impute(df, target = character(0), cols = list(x = 99, y = imputeMode()))
 #' print(imputed$data)
-#' reimpute(data.frame(x=NA), imputed$desc)
-impute = function(data, target, classes=list(), cols=list(), dummy.classes=character(0L),
-  dummy.cols=character(0L), impute.new.levels=TRUE, recode.factor.levels=TRUE) {
+#' reimpute(data.frame(x = NA), imputed$desc)
+impute = function(data, target, classes = list(), cols = list(), dummy.classes = character(0L),
+  dummy.cols = character(0L), impute.new.levels = TRUE, recode.factor.levels = TRUE) {
 
   checkArg(data, "data.frame")
-  checkArg(target, "character", na.ok=FALSE)
+  checkArg(target, "character", na.ok = FALSE)
   checkArg(classes, "list")
   checkArg(cols, "list")
-  checkArg(dummy.classes, "character", na.ok=FALSE)
-  checkArg(dummy.cols, "character", na.ok=FALSE)
+  checkArg(dummy.classes, "character", na.ok = FALSE)
+  checkArg(dummy.cols, "character", na.ok = FALSE)
 
   if (length(target)) {
     not.ok = target %nin% names(data)
@@ -94,8 +94,8 @@ impute = function(data, target, classes=list(), cols=list(), dummy.classes=chara
   not.ok = dummy.cols %nin% names(data)
   if (any(not.ok))
     stopf("Column for dummy creation not present in data: %s", names(cols)[which.first(not.ok)])
-  checkArg(impute.new.levels, "logical", len=1L, na.ok=FALSE)
-  checkArg(recode.factor.levels, "logical", len=1L, na.ok=FALSE)
+  checkArg(impute.new.levels, "logical", len = 1L, na.ok = FALSE)
+  checkArg(recode.factor.levels, "logical", len = 1L, na.ok = FALSE)
 
   allowed.classes = c("logical", "integer", "numeric", "complex", "character", "factor")
   not.ok = any(names(classes) %nin% allowed.classes)
@@ -117,8 +117,8 @@ impute = function(data, target, classes=list(), cols=list(), dummy.classes=chara
     lvls = NULL,
     impute = namedList(features),
     dummies = character(0L),
-    impute.new.levels=FALSE,
-    recode.factor.levels=FALSE
+    impute.new.levels = FALSE,
+    recode.factor.levels = FALSE
   )
 
   # handle classes -> insert into desc
@@ -140,9 +140,9 @@ impute = function(data, target, classes=list(), cols=list(), dummy.classes=chara
       x = imputeConstant(x)
     list(
       impute = x$impute,
-      args = do.call(x$learn, c(x$args, list(data=data, target=target, col=xn)))
+      args = do.call(x$learn, c(x$args, list(data = data, target = target, col = xn)))
     )
-  }, xn=names(desc$impute), x=desc$impute)
+  }, xn = names(desc$impute), x = desc$impute)
 
   data = reimpute(data, desc)
 
@@ -154,7 +154,7 @@ impute = function(data, target, classes=list(), cols=list(), dummy.classes=chara
   desc$recode.factor.levels = recode.factor.levels
   desc$impute.new.levels = impute.new.levels
 
-  list(data=data, desc=desc)
+  list(data = data, desc = desc)
 }
 
 #' @S3method print ImputationDesc
@@ -218,27 +218,27 @@ reimpute.data.frame = function(x, desc) {
   if (desc$impute.new.levels) {
     cols = names(desc$lvls)
     newlvls = Map(function(x, expected) setdiff(levels(x), expected),
-      x=x[cols], expected=desc$lvls)
+      x = x[cols], expected = desc$lvls)
     newlvls = Filter(length, newlvls)
     if (length(newlvls))
       x[names(newlvls)] = Map(function(x, nl) droplevels(replace(x, x %in% nl, NA)),
-        x=x[names(newlvls)], nl=newlvls)
+        x = x[names(newlvls)], nl = newlvls)
   }
 
   # actually do the imputation
   cols = intersect(names(x), names(desc$impute))
   x[cols] = Map(
-    function(xn, obj) do.call(obj$impute, c(list(data=x, target=desc$target, col=xn), obj$args)),
-  xn=cols, obj=desc$impute[cols])
+    function(xn, obj) do.call(obj$impute, c(list(data = x, target = desc$target, col = xn), obj$args)),
+  xn = cols, obj = desc$impute[cols])
 
   # recode factor levels
   if (desc$recode.factor.levels) {
     cols = names(desc$lvls)
     x[cols] = Map(function(x, expected) {
-      factor(as.character(x), levels=expected)
-    }, x=x[cols], expected=desc$lvls)
+      factor(as.character(x), levels = expected)
+    }, x = x[cols], expected = desc$lvls)
   }
 
   x[names(dummy.cols)] = dummy.cols
-  data.frame(x, stringsAsFactors=FALSE)
+  data.frame(x, stringsAsFactors = FALSE)
 }

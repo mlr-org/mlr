@@ -108,12 +108,12 @@ predictions during resampling.} \item{models [list of
 extracted parts from fitted models or \code{NULL}.}
 }
 \description{
-Given a resampling strategy, which defines sets of training
-and test indices, fits the selected learner using the
-training sets and performs predictions for the
-training/test sets. This depends on what you selected in
-the resampling strategy, see parameter \code{predict} in
-\code{\link{makeResampleDesc}}.
+\code{resample}: Given a resampling strategy, which defines
+sets of training and test indices, fits the selected
+learner using the training sets and performs predictions
+for the training/test sets. This depends on what you
+selected in the resampling strategy, see parameter
+\code{predict} in \code{\link{makeResampleDesc}}.
 
 Then performance measures are calculated on all respective
 data sets and aggregated.
@@ -126,6 +126,9 @@ completely might be memory intensive.
 For construction of the resampling strategies use the
 factory methods \code{\link{makeResampleDesc}} and
 \code{\link{makeResampleInstance}}.
+
+The remaining functions on this page are convenience
+wrappers for the various existing resampling strategies.
 }
 \examples{
 task <- makeClassifTask(data = iris, target = "Species")
