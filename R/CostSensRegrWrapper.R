@@ -34,9 +34,8 @@ trainLearner.CostSensRegrWrapper = function(.learner, .task, .subset, ...) {
   for (i in seq_along(classes)) {
     cl = classes[i]
     y = costs[, cl]
-    data = cbind(feats, .y = y)
-    # FIXME: .y check clash
-    task = makeRegrTask(id = cl, data = data, target = ".y")
+    data = cbind(feats, ..y.. = y)
+    task = makeRegrTask(id = cl, data = data, target = "..y..")
     # FIXME: what to do with ... pars
     models[[i]] = train(.learner$next.learner, task)
   }

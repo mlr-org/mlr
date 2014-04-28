@@ -6,13 +6,20 @@ makeCostSensTask = function(id, data, costs, blocking = NULL, fixup.data = "warn
     costs = as.matrix(costs)
   if (is.null(colnames(costs)))
     colnames(costs) = paste("y", seq_col(costs), sep = "")
-  checkColumnNames(costs)
+  if (check.data) {
+    checkColumnNames(costs)
+  }
   task = makeSupervisedTask("CostSensTask", "costsens", data, character(0L), NULL, blocking,
     checkTargetCostSens, fixup.data, fixupData, check.data)
   # check costs a bit more and store them
   if (nrow(costs) != nrow(data))
     stopf("Number of rows in cost matrix (%s) should equal the number of observations (%s).",
       nrow(costs), nrow(data))
+  if (check.data) {
+    # we use ..y.. later in the models as a name for temp labels
+    if ("..y.." %in% c(colnames(data), colnames(data)))
+      stopf("The name '..y..' is currently reserved for costsens tasks. You can use it neither for features nor labels!")
+  }
   task$env$costs = costs
   id = checkOrGuessId(id, data)
   task$task.desc = makeTaskDesc.CostSensTask(task, id, character(0L))

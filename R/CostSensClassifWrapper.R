@@ -33,12 +33,11 @@ trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset, ...) {
   newy = getMinIndexOfRows(costs)
   newy = classes[newy]
   feats = .task$env$data
-  #FIXME: name clash
-  data = cbind(feats, .y = newy)
+  data = cbind(feats, ..y.. = newy)
   # remove stuff with completely equal costs from training
   remove = apply(costs, 1, function(x) length(unique(x)) == 1)
   data = data[-remove, ]
-  task = makeClassifTask(data = data, target = ".y")
+  task = makeClassifTask(data = data, target = "..y..")
   model = train(.learner$next.learner, task)
   makeChainModel(next.model = model, cl = "CostSensClassifModel")
 }

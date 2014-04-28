@@ -43,9 +43,8 @@ trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset, .
       if (all(y == a1) || all(y == a2)) {
         models[[counter]] = y[1]
       } else {
-        feats$.y = y
-        # FIXME: name clash
-        task = makeClassifTask(data = feats, target = ".y")
+        feats$..y.. = y
+        task = makeClassifTask(data = feats, target = "..y..")
         w = abs(costs[, a1] - costs[, a2])
         models[[counter]] = train(.learner, task, weights = w)
       }
