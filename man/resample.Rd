@@ -1,7 +1,35 @@
-\name{resample}
+\name{crossval}
+\alias{bootstrapB632}
+\alias{bootstrapB632plus}
+\alias{bootstrapOOB}
+\alias{crossval}
+\alias{holdout}
+\alias{repcv}
 \alias{resample}
+\alias{subsample}
 \title{Fit models according to a resampling strategy.}
 \usage{
+crossval(lrn, task, iters = 10L, stratify = FALSE, measures,
+  models = FALSE, ...)
+
+repcv(lrn, task, folds = 10L, reps = 10L, stratify = FALSE, measures,
+  models = FALSE, ...)
+
+holdout(lrn, task, split = 2/3, stratify = FALSE, measures,
+  models = FALSE, ...)
+
+subsample(lrn, task, iters = 30, split = 2/3, stratify = FALSE, measures,
+  models = FALSE, ...)
+
+bootstrapOOB(lrn, task, iters = 30, stratify = FALSE, measures,
+  models = FALSE, ...)
+
+bootstrapB632(lrn, task, iters = 30, stratify = FALSE, measures,
+  models = FALSE, ...)
+
+bootstrapB632plus(lrn, task, iters = 30, stratify = FALSE, measures,
+  models = FALSE, ...)
+
 resample(learner, task, resampling, measures, weights, models = FALSE,
   extract, show.info = TRUE)
 }

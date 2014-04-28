@@ -39,7 +39,7 @@
 #' @param ... [any]\cr
 #'   Further parameters for strategies.\cr
 #'   \describe{
-#'   \item{iters [\code{numeric(1)}]}{Number of iterations, for \dQuote{CV}, \dQuote{Subsample}
+#'   \item{iters [\code{integer(1)}]}{Number of iterations, for \dQuote{CV}, \dQuote{Subsample}
 #'     and \dQuote{Boostrap}}
 #'   \item{split [\code{numeric(1)}]}{Proportion of training cases for \dQuote{Holdout} and
 #'     \dQuote{Subsample} between 0 and 1. Default is 2/3.}
