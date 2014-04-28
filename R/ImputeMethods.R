@@ -23,13 +23,13 @@
 #' @param args [\code{list}]\cr
 #'   Named list of arguments to pass to \code{learn} via \code{...}.
 #' @export
-makeImputeMethod = function(learn, impute, args=list()) {
-  checkArg(learn, "function", formals=c("data", "target", "col"))
-  checkArg(impute, "function", formals=c("data", "target", "col"))
+makeImputeMethod = function(learn, impute, args = list()) {
+  checkArg(learn, "function", formals = c("data", "target", "col"))
+  checkArg(impute, "function", formals = c("data", "target", "col"))
   checkArg(args, "list")
   if (!isProperlyNamed(args))
     stop("All arguments must be properly named")
-  setClasses(list(learn=learn, impute=impute, args=args), "ImputeMethod")
+  setClasses(list(learn = learn, impute = impute, args = args), "ImputeMethod")
 }
 
 # helper function to impute missings of a col to const val
@@ -70,7 +70,7 @@ imputeConstant = function(const) {
   makeImputeMethod(
     learn = function(data, target, col, const) const,
     impute = simpleImpute,
-    args = list(const=const)
+    args = list(const = const)
   )
 }
 
@@ -78,7 +78,7 @@ imputeConstant = function(const) {
 #' @rdname imputations
 imputeMedian = function() {
   makeImputeMethod(
-    learn = function(data, target, col) median(data[[col]], na.rm=TRUE),
+    learn = function(data, target, col) median(data[[col]], na.rm = TRUE),
     impute = simpleImpute
   )
 }
@@ -87,7 +87,7 @@ imputeMedian = function() {
 #' @rdname imputations
 imputeMean = function() {
   makeImputeMethod(
-    learn = function(data, target, col) mean(data[[col]], na.rm=TRUE),
+    learn = function(data, target, col) mean(data[[col]], na.rm = TRUE),
     impute = simpleImpute
   )
 }
@@ -96,7 +96,7 @@ imputeMean = function() {
 #' @rdname imputations
 imputeMode = function() {
   makeImputeMethod(
-    learn = function(data, target, col) computeMode(data[[col]], na.rm=TRUE),
+    learn = function(data, target, col) computeMode(data[[col]], na.rm = TRUE),
     impute = simpleImpute
   )
 }
@@ -105,23 +105,23 @@ imputeMode = function() {
 #' @param multiplier [\code{numeric(1)}]\cr
 #'   Value that stored minimum or maximum is multiplied with when imputation is done.
 #' @rdname imputations
-imputeMin = function(multiplier=1) {
-  checkArg(multiplier, "numeric", len=1L, na.ok=FALSE)
+imputeMin = function(multiplier = 1) {
+  checkArg(multiplier, "numeric", len = 1L, na.ok = FALSE)
   makeImputeMethod(
-    learn = function(data, target, col, multiplier) multiplier*min(data[[col]], na.rm=TRUE),
+    learn = function(data, target, col, multiplier) multiplier*min(data[[col]], na.rm = TRUE),
     impute = simpleImpute,
-    args = list(multiplier=multiplier)
+    args = list(multiplier = multiplier)
   )
 }
 
 #' @export
 #' @rdname imputations
-imputeMax = function(multiplier=1) {
-  checkArg(multiplier, "numeric", len=1L, na.ok=FALSE)
+imputeMax = function(multiplier = 1) {
+  checkArg(multiplier, "numeric", len = 1L, na.ok = FALSE)
   makeImputeMethod(
-    learn = function(data, target, col, multiplier) multiplier*max(data[[col]], na.rm=TRUE),
+    learn = function(data, target, col, multiplier) multiplier*max(data[[col]], na.rm = TRUE),
     impute = simpleImpute,
-    args = list(multiplier=multiplier)
+    args = list(multiplier = multiplier)
   )
 }
 
@@ -135,26 +135,26 @@ imputeUniform = function(min, max) {
   if (missing(min))
     min = NULL
   else
-    checkArg(min, "numeric", len=1L, na.ok=FALSE)
+    checkArg(min, "numeric", len = 1L, na.ok = FALSE)
   if (missing(max))
     max = NULL
   else
-    checkArg(max, "numeric", len=1L, na.ok=FALSE)
+    checkArg(max, "numeric", len = 1L, na.ok = FALSE)
 
   makeImputeMethod(
     learn = function(data, target, col, min, max)  {
       if (is.null(min))
-        min = min(data[[col]], na.rm=TRUE)
+        min = min(data[[col]], na.rm = TRUE)
       if (is.null(max))
-        max = max(data[[col]], na.rm=TRUE)
-      list(min=min, max=max)
+        max = max(data[[col]], na.rm = TRUE)
+      list(min = min, max = max)
     },
     impute = function(data, target, col, min, max) {
       x = data[[col]]
       ind = is.na(x)
-      replace(x, ind, runif(sum(ind), min=min, max=max))
+      replace(x, ind, runif(sum(ind), min = min, max = max))
     },
-    args = list(min=min, max=max)
+    args = list(min = min, max = max)
   )
 }
 
@@ -168,26 +168,26 @@ imputeNormal = function(mu, sd) {
   if (missing(mu))
     mu = NULL
   else
-    checkArg(mu, "numeric", len=1L, na.ok=FALSE)
+    checkArg(mu, "numeric", len = 1L, na.ok = FALSE)
   if (missing(sd))
     sd = NULL
   else
-    checkArg(sd, "numeric", len=1L, na.ok=FALSE)
+    checkArg(sd, "numeric", len = 1L, na.ok = FALSE)
 
   makeImputeMethod(
     learn = function(data, target, col, mu, sd)  {
       if (is.null(mu))
-        mu = mean(data[[col]], na.rm=TRUE)
+        mu = mean(data[[col]], na.rm = TRUE)
       if (is.null(sd))
-        sd = sd(data[[col]], na.rm=TRUE)
-      list(mu=mu, sd=sd)
+        sd = sd(data[[col]], na.rm = TRUE)
+      list(mu = mu, sd = sd)
     },
     impute = function(data, target, col, mu, sd) {
       x = data[[col]]
       ind = is.na(x)
-      replace(x, ind, rnorm(sum(ind), mean=mu, sd=sd))
+      replace(x, ind, rnorm(sum(ind), mean = mu, sd = sd))
     },
-    args = list(mu=mu, sd=sd)
+    args = list(mu = mu, sd = sd)
   )
 }
 
@@ -199,14 +199,14 @@ imputeNormal = function(mu, sd) {
 #'  If \code{x} is numeric and a histogram is used, impute with bin mids (default)
 #'  or instead draw uniformly distributed samples within bin range.
 #' @rdname imputations
-imputeHist = function(breaks, use.mids=TRUE) {
+imputeHist = function(breaks, use.mids = TRUE) {
   if (missing(breaks)) {
     breaks = "Sturges"
   } else {
     breaks = convertInteger(breaks)
-    checkArg(breaks, "integer", len=1L, na.ok=FALSE)
+    checkArg(breaks, "integer", len = 1L, na.ok = FALSE)
   }
-  checkArg(use.mids, "logical", len=1L, na.ok=FALSE)
+  checkArg(use.mids, "logical", len = 1L, na.ok = FALSE)
 
   makeImputeMethod(
 
@@ -214,18 +214,18 @@ imputeHist = function(breaks, use.mids=TRUE) {
       x = data[[col]]
       # numeric / integer feature
       if (is.numeric(x)) {
-        tmp = hist(x, breaks=breaks, plot=FALSE)
+        tmp = hist(x, breaks = breaks, plot = FALSE)
         if (use.mids)
-          return(list(counts=tmp$counts, values=tmp$mids))
+          return(list(counts = tmp$counts, values = tmp$mids))
         else
-          return(list(counts=tmp$counts, breaks=tmp$breaks))
+          return(list(counts = tmp$counts, breaks = tmp$breaks))
       # factor or logical feature
       } else {
-        tmp = table(x, useNA="no")
+        tmp = table(x, useNA = "no")
         values = names(tmp)
         if (is.logical(x))
           values = as.logical(x)
-        return(list(counts=as.integer(tmp), values=values))
+        return(list(counts = as.integer(tmp), values = values))
       }
     },
 
@@ -233,14 +233,14 @@ imputeHist = function(breaks, use.mids=TRUE) {
       x = data[[col]]
       ind = which(is.na(x))
       if (missing(values)) {
-        w = sample(seq_along(counts), length(ind), replace=TRUE, prob=counts)
-        values = runif(length(ind), min=head(breaks, -1L)[w], max=tail(breaks, -1L)[w])
+        w = sample(seq_along(counts), length(ind), replace = TRUE, prob = counts)
+        values = runif(length(ind), min = head(breaks, -1L)[w], max = tail(breaks, -1L)[w])
       } else {
-        values = sample(values, length(ind), replace=TRUE, prob=counts)
+        values = sample(values, length(ind), replace = TRUE, prob = counts)
       }
       replace(x, ind, values)
     },
-    args = list(breaks=breaks, use.mids=use.mids)
+    args = list(breaks = breaks, use.mids = use.mids)
   )
 }
 
@@ -253,7 +253,7 @@ imputeHist = function(breaks, use.mids=TRUE) {
 #'  \code{learner} itself cannot handle missing values.
 #'  Default is \code{list()}.
 #' @export
-imputeLearner = function(learner, preimpute=list()) {
+imputeLearner = function(learner, preimpute = list()) {
   # FIXME: this function needs some love
   checkArg(learner, "Learner")
   checkArg(preimpute, "list")
@@ -265,7 +265,7 @@ imputeLearner = function(learner, preimpute=list()) {
       cl = class(learner)
 
       if (length(preimpute)) {
-        x = do.call(impute, c(preimpute, list(data=data, target=target)))
+        x = do.call(impute, c(preimpute, list(data = data, target = target)))
         desc = x$desc
         data = x$data
       } else {
@@ -273,21 +273,21 @@ imputeLearner = function(learner, preimpute=list()) {
       }
 
       if ("RLearnerRegr" %in% cl) {
-        task = makeRegrTask("impute", data=dropNamed(data, target), target=col)
+        task = makeRegrTask("impute", data = dropNamed(data, target), target = col)
       } else if ("RLearnerClassif" %in% cl) {
-        task = makeClassifTask("impute", data=dropNamed(data, target), target=col)
+        task = makeClassifTask("impute", data = dropNamed(data, target), target = col)
       } else {
         stop("Unknown learner class for impute")
       }
 
-      list(model=train(learner, task), desc=desc)
+      list(model = train(learner, task), desc = desc)
     },
     impute = function(data, target, col, model, desc) {
       if (!is.null(desc))
         data = reimpute(data, desc)
 
-      predict(model, newdata=data)
+      predict(model, newdata = data)
     },
-    args = list(learner=learner, preimpute=preimpute)
+    args = list(learner = learner, preimpute = preimpute)
   )
 }
