@@ -248,7 +248,7 @@ imputeHist = function(breaks, use.mids = TRUE) {
 #' @param learner [\code{Learner}]\cr
 #'  Classification or regression learner. Its predcitions will be used for imputations.
 #'  Note that the target column is not available for this operation.
-#' @param preimute [\code{list}]\cr
+#' @param preimpute [\code{list}]\cr
 #'  Arguments for inner call to \code{\link{impute}} in scenarios where
 #'  \code{learner} itself cannot handle missing values.
 #'  Default is \code{list()}.
