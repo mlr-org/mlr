@@ -25,6 +25,7 @@ makeCostSensWeightedPairsWrapper = function(learner) {
 
 #' @S3method trainLearner CostSensWeightedPairsWrapper
 trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset, ...) {
+  # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
   costs = .task$env$costs
   classes = .task$task.desc$class.levels
@@ -46,7 +47,7 @@ trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset, .
         feats$..y.. = y
         task = makeClassifTask(data = feats, target = "..y..")
         w = abs(costs[, a1] - costs[, a2])
-        models[[counter]] = train(.learner, task, weights = w)
+        models[[counter]] = train(.learner$next.learner, task, weights = w)
       }
       counter = counter + 1L
     }

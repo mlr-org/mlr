@@ -26,6 +26,7 @@ makeCostSensClassifWrapper = function(learner) {
 
 #' @S3method trainLearner CostSensClassifWrapper
 trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset, ...) {
+  # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
   feats = .task$env$data
   costs = .task$env$costs

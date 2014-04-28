@@ -19,10 +19,16 @@ test_that("costsens", {
   costs[,] = 1
   task = makeCostSensTask(data = costsens.feat, costs = costs)
   r = resample(lrn, task, rdesc)
-  # expect_true(!is.na(r$aggr))
-  
-  # lrn = makeCostSensWeightedPairsWrapper(makeLearner("classif.rpart"))
-  # r = resample(lrn, costsens.task, rdesc)
-  # expect_true(!is.na(r$aggr))
+  expect_true(!is.na(r$aggr))
+
+  # check that hyperpars are propagated
+  lrn2 = setHyperPars(lrn, minsplit = 50)
+  m = train(lrn2, costsens.task)
+  m2 = getCostSensClassifModel(m, learner.model = TRUE)
+  expect_equal(m2$control$minsplit, 50)
+
+  lrn = makeCostSensWeightedPairsWrapper(makeLearner("classif.rpart"))
+  r = resample(lrn, costsens.task, rdesc)
+  expect_true(!is.na(r$aggr))
 })
 

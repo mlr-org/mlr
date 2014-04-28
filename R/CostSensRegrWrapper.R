@@ -26,6 +26,7 @@ makeCostSensRegrWrapper = function(learner) {
 
 #' @S3method trainLearner CostSensRegrWrapper
 trainLearner.CostSensRegrWrapper = function(.learner, .task, .subset, ...) {
+  # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
   costs = .task$env$costs
   classes = .task$task.desc$class.levels
@@ -36,7 +37,6 @@ trainLearner.CostSensRegrWrapper = function(.learner, .task, .subset, ...) {
     y = costs[, cl]
     data = cbind(feats, ..y.. = y)
     task = makeRegrTask(id = cl, data = data, target = "..y..")
-    # FIXME: what to do with ... pars
     models[[i]] = train(.learner$next.learner, task)
   }
   makeChainModel(next.model = models, cl = "CostSensRegrModel")
