@@ -1,7 +1,9 @@
 #' @export
 #' @rdname SupervisedTask
 makeCostSensTask = function(id, data, costs, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
-  checkArg(costs, "matrix", na.ok = FALSE)
+  checkArg(costs, c("data.frame", "matrix"), na.ok = FALSE)
+  if (is.data.frame(costs))
+    costs = as.matrix(costs)
   if (is.null(colnames(costs)))
     colnames(costs) = paste("y", seq_col(costs), sep = "")
   checkColumnNames(costs)

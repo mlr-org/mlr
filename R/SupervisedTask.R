@@ -27,6 +27,14 @@
 #'   Name of the target variable.
 #'   For survival analysis these are the names of the survival time and event columns,
 #'   so it has length 2.
+#' @param costs [\code{data.frame}]\cr
+#'   A numeric matrix or data frame containing the costs of misclassification.
+#'   We assume the general case of observation specific costs.
+#'   This means we have n rows, corresponding to the observations, in the same order as \code{data}.
+#'   The columns correspond to classes and their names are the class labels
+#'   (if unnamed we use y1 to yk as labels).
+#'   Each entry (i,j) of the matrix specifies the cost of predicting class j
+#'   for observation i.
 #' @param weights [\code{numeric}]\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
 #'   Cannot be set for cost-sensitive learning.
@@ -55,7 +63,7 @@
 #' @return [\code{\link{SupervisedTask}}].
 #' @name SupervisedTask
 #' @rdname SupervisedTask
-#' @aliases ClassifTask RegrTask SurvTask
+#' @aliases ClassifTask RegrTask SurvTask CostSensTask
 #' @examples
 #' library(mlbench)
 #' data(BostonHousing)

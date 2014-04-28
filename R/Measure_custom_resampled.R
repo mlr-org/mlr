@@ -16,6 +16,9 @@
 #' @param regr [\code{logical(1)}]\cr
 #'   Is the measure applicable for regression?
 #'   Default is \code{FALSE}.
+#' @param costsens [\code{logical(1)}]\cr
+#'   Is the measure applicable for cost-sensitive learning?
+#'   Default is \code{FALSE}.
 #' @param only.binary [\code{logical(1)}]\cr
 #'   Is the measure only applicable to binary classification?
 #'   Only reasonable if \code{classif} is \code{TRUE}.

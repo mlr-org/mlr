@@ -19,6 +19,10 @@ makeCustomResampledMeasure(id, minimize = TRUE, classif = FALSE,
   \item{regr}{[\code{logical(1)}]\cr Is the measure
   applicable for regression?  Default is \code{FALSE}.}
 
+  \item{costsens}{[\code{logical(1)}]\cr Is the measure
+  applicable for cost-sensitive learning?  Default is
+  \code{FALSE}.}
+
   \item{only.binary}{[\code{logical(1)}]\cr Is the measure
   only applicable to binary classification?  Only
   reasonable if \code{classif} is \code{TRUE}.  Default is

@@ -57,14 +57,15 @@ makeWrappedModel.CostSensClassifWrapper = function(learner, model, task.desc, su
 #'
 #' @param model [\code{\link[mlr]{WrappedModel}}]\cr
 #'   Model produced by training a cost-sensitive classification learner.
-#' @param learner.models [\code{logical(1)}]\cr
+#' @param learner.model [\code{logical(1)}]\cr
 #'   Return underlying R model or wrapped
 #'   mlr model (\code{\link[mlr]{WrappedModel}}).
 #'   Default is \code{FALSE}.
 #' @return [\code{list}].
 #' @export
-getCostSensClassifModel= function(model, learner.models = TRUE) {
+getCostSensClassifModel= function(model, learner.model = TRUE) {
   checkArg(model, "CostSensClassifModel")
+  checkArg(learner.model, "logical", len = 1L, na.ok = FALSE)
   m = model$learner.model$next.model
   if (learner.model)
     m$learner.model
