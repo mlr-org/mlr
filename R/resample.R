@@ -1,6 +1,8 @@
 #' @title Fit models according to a resampling strategy.
 #'
 #' @description
+#'
+#' \code{resample}:
 #' Given a resampling strategy, which defines sets of training and test indices,
 #' fits the selected learner using the training sets and performs predictions for
 #' the training/test sets. This depends on what you selected in the resampling strategy,
@@ -15,13 +17,27 @@
 #' For construction of the resampling strategies use the factory methods
 #' \code{\link{makeResampleDesc}} and \code{\link{makeResampleInstance}}.
 #'
-#' @param learner [\code{\link{Learner}}]\cr
+#' The remaining functions on this page are convenience wrappers for the various
+#' existing resampling strategies.
+#'
+#' @param learner [\code{\link{Learner}} | \code{character(1)}]\cr
 #'   The learner.
+#'   If you pass a string the learner will be created via \code{\link{makeLearner}}.
 #' @param task [\code{\link{SupervisedTask}}]\cr
 #'   The task.
 #' @param resampling [\code{\link{ResampleDesc}} or \code{\link{ResampleInstance}}]\cr
 #'   Resampling strategy.
 #'   If a description is passed, it is instantiated automatically.
+#' @param iters [\code{integer(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param folds [\code{integer(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param reps [\code{integer(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param split [\code{numeric(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
+#' @param stratify [\code{logical(1)}]\cr
+#'   See \code{\link{ResampleDesc}}.
 #' @param measures [\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
 #'   Performance measure(s) to evaluate.
 #' @param weights [\code{numeric}]\cr
@@ -37,6 +53,8 @@
 #'   Is applied to every \code{\link{WrappedModel}} resulting from calls to \code{\link{train}}
 #'   during resampling.
 #'   Default is to extract nothing.
+#' @param ... [any]\cr
+#'   Further hyperparameters passed to \code{learner}.
 #' @param show.info [\code{logical(1)}]\cr
 #'   Verbose output on console?
 #'   Default is \code{TRUE}.
@@ -65,17 +83,13 @@
 resample = function(learner, task, resampling, measures, weights, models = FALSE,
   extract, show.info = TRUE) {
 
-  checkArg(learner, "Learner")
+  learner = checkLearner(learner)
   checkArg(task, "SupervisedTask")
   # instantiate resampling
   if (inherits(resampling, "ResampleDesc"))
     resampling = makeResampleInstance(resampling, task = task)
   checkArg(resampling, "ResampleInstance")
-  if (missing(measures))
-    measures = default.measures(task)
-  if (inherits(measures, "Measure"))
-    measures = list(measures)
-  checkListElementClass(measures, "Measure")
+  measures = checkMeasures(measures, task)
   if (!missing(weights)) {
     checkArg(weights, "numeric", len = task$task.desc$size, na.ok = FALSE, lower = 0)
   }

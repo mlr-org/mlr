@@ -9,32 +9,35 @@
 \alias{subsample}
 \title{Fit models according to a resampling strategy.}
 \usage{
-crossval(lrn, task, iters = 10L, stratify = FALSE, measures,
-  models = FALSE, ...)
+crossval(learner, task, iters = 10L, stratify = FALSE, measures,
+  models = FALSE, ..., show.info = TRUE)
 
-repcv(lrn, task, folds = 10L, reps = 10L, stratify = FALSE, measures,
-  models = FALSE, ...)
+repcv(learner, task, folds = 10L, reps = 10L, stratify = FALSE, measures,
+  models = FALSE, ..., show.info = TRUE)
 
-holdout(lrn, task, split = 2/3, stratify = FALSE, measures,
-  models = FALSE, ...)
+holdout(learner, task, split = 2/3, stratify = FALSE, measures,
+  models = FALSE, ..., show.info = TRUE)
 
-subsample(lrn, task, iters = 30, split = 2/3, stratify = FALSE, measures,
-  models = FALSE, ...)
+subsample(learner, task, iters = 30, split = 2/3, stratify = FALSE,
+  measures, models = FALSE, ..., show.info = TRUE)
 
-bootstrapOOB(lrn, task, iters = 30, stratify = FALSE, measures,
-  models = FALSE, ...)
+bootstrapOOB(learner, task, iters = 30, stratify = FALSE, measures,
+  models = FALSE, ..., show.info = TRUE)
 
-bootstrapB632(lrn, task, iters = 30, stratify = FALSE, measures,
-  models = FALSE, ...)
+bootstrapB632(learner, task, iters = 30, stratify = FALSE, measures,
+  models = FALSE, ..., show.info = TRUE)
 
-bootstrapB632plus(lrn, task, iters = 30, stratify = FALSE, measures,
-  models = FALSE, ...)
+bootstrapB632plus(learner, task, iters = 30, stratify = FALSE, measures,
+  models = FALSE, ..., show.info = TRUE)
 
 resample(learner, task, resampling, measures, weights, models = FALSE,
   extract, show.info = TRUE)
 }
 \arguments{
-  \item{learner}{[\code{\link{Learner}}]\cr The learner.}
+  \item{learner}{[\code{\link{Learner}} |
+  \code{character(1)}]\cr The learner.  If you pass a
+  string the learner will be created via
+  \code{\link{makeLearner}}.}
 
   \item{task}{[\code{\link{SupervisedTask}}]\cr The task.}
 
@@ -42,6 +45,21 @@ resample(learner, task, resampling, measures, weights, models = FALSE,
   \code{\link{ResampleInstance}}]\cr Resampling strategy.
   If a description is passed, it is instantiated
   automatically.}
+
+  \item{iters}{[\code{integer(1)}]\cr See
+  \code{\link{ResampleDesc}}.}
+
+  \item{folds}{[\code{integer(1)}]\cr See
+  \code{\link{ResampleDesc}}.}
+
+  \item{reps}{[\code{integer(1)}]\cr See
+  \code{\link{ResampleDesc}}.}
+
+  \item{split}{[\code{numeric(1)}]\cr See
+  \code{\link{ResampleDesc}}.}
+
+  \item{stratify}{[\code{logical(1)}]\cr See
+  \code{\link{ResampleDesc}}.}
 
   \item{measures}{[\code{\link{Measure}} | list of
   \code{\link{Measure}}]\cr Performance measure(s) to
@@ -63,6 +81,9 @@ resample(learner, task, resampling, measures, weights, models = FALSE,
   \code{\link{WrappedModel}} resulting from calls to
   \code{\link{train}} during resampling.  Default is to
   extract nothing.}
+
+  \item{...}{[any]\cr Further hyperparameters passed to
+  \code{learner}.}
 
   \item{show.info}{[\code{logical(1)}]\cr Verbose output on
   console?  Default is \code{TRUE}.}

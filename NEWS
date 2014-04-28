@@ -36,6 +36,7 @@ mlr_1.2:
 -- makeOversampleWrapper, makeUndersampleWrapper
 -- removeConstantFeatures
 -- makeCostSensTaks, makeCostSensRegrWrapper, makeCostsSensWeightedPairsLearner
+-- holdout, subsample, crossval, repcv, bootstrapOOB, bootstrapB632, bootstrapB632plus
 
 - imputation stuff ????
 - surv stuff ????
