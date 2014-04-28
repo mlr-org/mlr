@@ -2,12 +2,18 @@
 \alias{removeConstantFeatures}
 \title{Remove constant features from a data set.}
 \usage{
-removeConstantFeatures(x, perc = 0, dont.rm = character(0L),
+removeConstantFeatures(x, target, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^0.5, show.info = TRUE)
 }
 \arguments{
   \item{x}{[\code{\link{data.frame}} |
   \code{\link{SupervisedTask}}]\cr The data set or task.}
+
+  \item{target}{[\code{character}]\cr Name of the column(s)
+  specifying the response if you passed a
+  \code{data.frame}.  User input is ignored if you pass a
+  task and \code{target} is automatically set.  Never
+  removed.}
 
   \item{perc}{[\code{numeric(1)}]\cr The percentage of a
   feature values in [0, 1) that must differ from the mode
@@ -15,9 +21,7 @@ removeConstantFeatures(x, perc = 0, dont.rm = character(0L),
   with exactly one observed level are removed.}
 
   \item{dont.rm}{[\code{character}]\cr Names of the columns
-  which must not be deleted.  Default is no columns.  Note
-  that for a task the target column is always added to
-  these so it is never removed.}
+  which must not be deleted.  Default is no columns.}
 
   \item{na.ignore}{[\code{logical(1)}]\cr Should NAs be
   ignored in the percentage calculation?  (Or should they

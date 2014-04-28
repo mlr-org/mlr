@@ -9,8 +9,8 @@ impute(data, target, classes = list(), cols = list(),
 \arguments{
   \item{data}{[\code{data.frame}]\cr Input data.}
 
-  \item{target}{[\code{character}]\cr Name of the column
-  specifying the response column(s).}
+  \item{target}{[\code{character}]\cr Name of the column(s)
+  specifying the response.}
 
   \item{classes}{[\code{named list}]\cr Named list
   containing imputation techniques for classes of columns.

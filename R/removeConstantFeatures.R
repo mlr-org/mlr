@@ -8,13 +8,16 @@
 #'
 #' @param x [\code{\link{data.frame}} | \code{\link{SupervisedTask}}]\cr
 #'   The data set or task.
+#' @param target [\code{character}]\cr
+#'   Name of the column(s) specifying the response if you passed a \code{data.frame}.
+#'   User input is ignored if you pass a task and \code{target} is automatically set.
+#'   Never removed.
 #' @param perc [\code{numeric(1)}]\cr
 #'   The percentage of a feature values in [0, 1) that must differ from the mode value.
 #'   Default is 0, which means only constant features with exactly one observed level are removed.
 #' @param dont.rm [\code{character}]\cr
 #'   Names of the columns which must not be deleted.
 #'   Default is no columns.
-#'   Note that for a task the target column is always added to these so it is never removed.
 #' @param na.ignore [\code{logical(1)}]\cr
 #'   Should NAs be ignored in the percentage calculation?
 #'   (Or should they be treated as a single, extra level in the percentage calculation?)
@@ -28,7 +31,7 @@
 #'   Default is \code{TRUE}.
 #' @return [\code{\link{data.frame}} | \code{\link{SupervisedTask}}].
 #' @export
-removeConstantFeatures = function(x, perc = 0, dont.rm = character(0L),
+removeConstantFeatures = function(x, target, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = TRUE) {
 
   checkArg(x, c("data.frame", "SupervisedTask"))
@@ -41,10 +44,15 @@ removeConstantFeatures = function(x, perc = 0, dont.rm = character(0L),
 
 #' @method removeConstantFeatures data.frame
 #' @S3method removeConstantFeatures data.frame
-removeConstantFeatures.data.frame = function(x, perc = 0, dont.rm = character(0L),
+removeConstantFeatures.data.frame = function(x, target, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = TRUE) {
 
   checkArg(dont.rm, subset = colnames(x))
+  if (!missing(target)) {
+    checkArg(target, subset = colnames(x)) 
+    dont.rm = union(dont.rm, target)
+  }
+
   if (any(!dim(x)))
     return(x)
 
@@ -75,10 +83,11 @@ removeConstantFeatures.data.frame = function(x, perc = 0, dont.rm = character(0L
 
 #' @method removeConstantFeatures SupervisedTask
 #' @S3method removeConstantFeatures SupervisedTask
-removeConstantFeatures.SupervisedTask = function(x, perc = 0, dont.rm = character(0L),
+removeConstantFeatures.SupervisedTask = function(x, target, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = TRUE) {
 
-  dont.rm = union(getTargetNames(x), dont.rm)
-  res = removeConstantFeatures(getTaskData(x), perc, dont.rm, na.ignore, tol, show.info)
+  if (!missing(target))
+    stop("Do not pass 'target' when you pass a task!")
+  res = removeConstantFeatures(getTaskData(x), getTargetNames(x), perc, dont.rm, na.ignore, tol, show.info)
   changeData(task = x, data = res, costs = x$env$costs)
 }
