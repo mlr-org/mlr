@@ -57,7 +57,9 @@ predictLearner.CostSensRegrWrapper = function(.learner, .model, .newdata, ...) {
 
 
 #' @S3method makeWrappedModel CostSensRegrWrapper
-makeWrappedModel.CostSensRegrWrapper = function(learner, model, task.desc, subset, vars, features, time) {
+makeWrappedModel.CostSensRegrWrapper = function(learner, model, task.desc, subset, features,
+  factor.levels, time) {
+
   x = NextMethod()
   class(x) = c("CostSensRegrModel", class(x))
   return(x)

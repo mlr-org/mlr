@@ -73,7 +73,9 @@ predictLearner.CostSensWeightedPairsWrapper = function(.learner, .model, .newdat
 
 
 #' @S3method makeWrappedModel CostSensWeightedPairsWrapper
-makeWrappedModel.CostSensWeightedPairsWrapper = function(learner, model, task.desc, subset, vars, features, time) {
+makeWrappedModel.CostSensWeightedPairsWrapper = function(learner, model, task.desc, subset, features,
+  factor.levels, time) {
+
   x = NextMethod()
   class(x) = c("CostSensWeightedPairsModel", class(x))
   return(x)

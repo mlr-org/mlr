@@ -44,7 +44,9 @@ trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset, ...) {
 }
 
 #' @S3method makeWrappedModel CostSensClassifWrapper
-makeWrappedModel.CostSensClassifWrapper = function(learner, model, task.desc, subset, vars, features, time) {
+makeWrappedModel.CostSensClassifWrapper = function(learner, model, task.desc, subset, features,
+  factor.levels, time) {
+
   x = NextMethod()
   class(x) = c("CostSensClassifModel", class(x))
   return(x)
