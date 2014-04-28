@@ -15,16 +15,13 @@
 #'   Resampling strategies for tasks.
 #' @param measures [\code{\link{Measure}} | list of them]\cr
 #'   Performance measures.
-#' @param models [logical] \cr
-#'   Should all fitted models be stored?
-#'   Default is FALSE.
 #' @param same.resampling.instance [logical(1)]\cr
 #'   Should the same resampling instance be used for all learners (per task) to reduce variance?
 #'   Default is \code{TRUE}.
-#' @return \code{\linkS4class{bench.result}}.
+#' @return [\code{list}].
 #' @export
 benchmark = function(learners, tasks, resamplings, measures, same.resampling.instance=TRUE) {
-
+  
   # check learners
   if (inherits(learners, "Learner"))
     learners = list(learners)
@@ -35,6 +32,7 @@ benchmark = function(learners, tasks, resamplings, measures, same.resampling.ins
   learner.ids = extractSubList(learners, "id")
   if (any(duplicated(learner.ids)))
     stop("Learners need unique ids!")
+  names(learners) = learner.ids
 
   # check tasks
   if (inherits(tasks, "SupervisedTask"))
@@ -43,9 +41,11 @@ benchmark = function(learners, tasks, resamplings, measures, same.resampling.ins
   checkListElementClass(tasks, "SupervisedTask")
   if (!length(tasks))
     stop("No tasks were passed!")
-  task.ids = extractSubList(tasks, "id")
+  
+  task.ids = extractSubList(tasks,"task.desc")["id",]
   if (any(duplicated(task.ids)))
     stop("Tasks need unique ids!")
+  names(tasks) = task.ids
 
   # check resamplings
   if (missing(resamplings))
@@ -54,10 +54,11 @@ benchmark = function(learners, tasks, resamplings, measures, same.resampling.ins
     resamplings = replicate(length(tasks), resamplings, simplify=FALSE)
   if (length(resamplings) != length(tasks))
     stop("Number of resampling strategies and number of tasks differ!")
+  names(resamplings) = task.ids
 
   # check measures
   if (missing(measures)) {
-    measures = default.measures(tasks[[1]])
+    measures = mlr:::default.measures(tasks[[1]])
   } else {
     if (inherits(measures, "Measure"))
      measures = list(measures)
@@ -65,9 +66,9 @@ benchmark = function(learners, tasks, resamplings, measures, same.resampling.ins
 
   # check rest
   checkArg(same.resampling.instance, "logical", len=1L, na.ok=FALSE)
-
+  
   measure.ids = extractSubList(measures, "id")
-
+  
   # instantiate resampling
   if (same.resampling.instance) {
     resamplings = Map(function(res, tt) {
@@ -78,45 +79,20 @@ benchmark = function(learners, tasks, resamplings, measures, same.resampling.ins
     }, resamplings, tasks)
   }
 
-  tds = ins = rrs = ors = list()
-
-  inds = as.matrix(expand.grid(1:length(learners), 1:length(tasks)))
-  inds = lapply(1:nrow(inds), function(i) inds[i, ])
+  inds.mat = as.matrix(expand.grid(learner=learner.ids, task=task.ids))
+  inds = split(inds.mat, f=seq_row(inds.mat))
   more.args = list(learners=learners, tasks=tasks, resamplings=resamplings, measures=measures)
-  parallelMap(benchmarkParallel, inds, more.args=more.args)
-  # results = parallelMap(inds, benchmark_par, from="bench", learners=learners, tasks=tasks, resamplings=resamplings,
-    # measures=measures, models=models)
-
-  counter = 1
-  for (j in 1:length(tasks)) {
-    task = tasks[[j]]
-    rrs[[j]] = list()
-    ors[[j]] = list()
-    tds[[j]] = task@desc
-    for (i in 1:length(learners)) {
-      wl = learners[[i]]
-      learner.names[i] = wl@desc@id
-      bm = results[[counter]]
-      counter = counter+1
-
-      rrs[[j]][[i]] = bm$res.result
-      if(is(wl, "OptWrapper")) ors[[j]][[i]] = bm$ors else ors[[j]][i] = list(NULL)
-    }
-    names(rrs[[j]]) = learner.names
-    names(ors[[j]]) = learner.names
-  }
-  names(tds) = task.names
-  names(learners) = learner.names
-  names(resamplings) = task.names
-  names(rrs) = task.names
-  names(ins) = task.names
-  return(new("bench.result", task.descs=tds, learners=learners, resamplings=resamplings,
-      measures=measures, res.results = rrs, opt.results = ors, input.names=ins
-    ))
+  results = parallelMap(benchmarkParallel, inds, more.args=more.args)
+  res.measures = extractSubList(results, "aggr", simplify=FALSE)
+  res.measures = do.call(rbind,res.measures)
+  res.df = cbind.data.frame(inds.mat, res.measures)
+  
+  list(result.df = res.df, results=results)
 }
 
 benchmarkParallel = function(index, learners, tasks, resamplings, measures) {
-  ind.learner = index[1L]
-  ind.task = index[2L]
+  ind.learner = index[1L][[1]]
+  ind.task = index[2L][[1]]
+  messagef("Task: %s, Learner: %s", ind.task, ind.learner)
   resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]], measures=measures)
 }
