@@ -35,7 +35,7 @@
 #' @param data [\code{data.frame}]\cr
 #'   Input data.
 #' @param target [\code{character}]\cr
-#'   Name of the column specifying the response column(s).
+#'   Name of the column(s) specifying the response.
 #' @param classes [\code{named list}]\cr
 #'   Named list containing imputation techniques for classes of columns.
 #'   E.g. \code{list(numeric = imputeMedian())}.
