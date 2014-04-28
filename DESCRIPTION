@@ -60,7 +60,8 @@ Suggests:
     rpart,
     rsm,
     RWeka,
-    ROCR
+    ROCR,
+    stepPlr
 LazyData: yes
 ByteCompile: yes
 Version: 1.2
