@@ -102,3 +102,12 @@ compare.diff = function(state1, state2, control, measure, threshold) {
 filterNull = function(x) {
   x[!vapply(x, is.null, logical(1L))]
 }
+
+attachTrainingInfo = function(x, info) {
+  attr(x, "mlr.train.info") = as.list(info)
+  x
+}
+
+getTrainingInfo = function(x) {
+  attr(x, "mlr.train.info")
+}
