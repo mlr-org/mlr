@@ -1,11 +1,18 @@
-#' @title Wraps a regression learner for use in cost-sensitive learning.
+#' @title Wraps a classifier for cost-sensitive learning to produce a weighted pairs model.
 #'
 #' @description
 #' Creates a wrapper, which can be used like any other learner object.
 #' Models can easily be accessed via \code{\link{getCostSensWeightedPairsModels}}.
 #'
-#' For each class in the task, an individual regression model is fitted for the costs of that class.
-#' During prediction, the class with the lowest predicted costs is selected.
+#' For each pair of labels, we fit a binary classifier.
+#' For each observation we define the label to be the element of the pair with minimal costs.
+#' During fitting, we also weight the observation with the absolute difference in costs.
+#' Prediction is performed by simple voting.
+#'
+#' This approach is sometimes called cost-sensitive one-vs-one (CS-OVO),
+#' because it is obviously very similar to the
+#' one-vs-one approach where one reduces a normal multi-class problem to
+#' multiple binary ones and aggregates by voting.
 #'
 #' @param learner [\code{\link[mlr]{Learner}}]\cr
 #'   The basic regression learner.
@@ -40,7 +47,6 @@ trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset, .
       a2 = classes[j]
       y = ifelse(costs[, a1] < costs[, a2], a1, a2)
       # if on the sample one alg is always better, always predict it
-      # FIXME: really need this?
       if (all(y == a1) || all(y == a2)) {
         models[[counter]] = y[1]
       } else {
@@ -63,7 +69,6 @@ predictLearner.CostSensWeightedPairsWrapper = function(.learner, .model, .newdat
   models = getCostSensWeightedPairsModels(.model)
   preds = sapply(models, function(mod) {
     n = nrow(.newdata)
-    # FIXME: really need this?
     if (is.character(mod))
        rep(mod, n)
     else
