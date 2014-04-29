@@ -4,7 +4,7 @@ test_that("classif_rpart", {
   library(rpart)
   parset.list = list(
     list(),
-    list(minsplit = 10, cp= 0.005),
+    list(minsplit = 10, cp = 0.005),
     list(minsplit = 50, cp = 0.05),
     list(minsplit = 50, cp = 0.999),
     list(minsplit = 1, cp = 0.0005)
