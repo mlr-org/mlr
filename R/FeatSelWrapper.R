@@ -9,7 +9,7 @@
 #' Finally, a model is fitted on the complete training data with these variables and returned.
 #' See \code{\link{selectFeatures}} for more details.
 #'
-#' After training, the optimal hyperparameters (and other related information) can be retrieved with
+#' After training, the optimal features (and other related information) can be retrieved with
 #' \code{\link{getFeatSelResult}}.
 #'
 #' @param learner [\code{\link{Learner}}]\cr
@@ -35,8 +35,18 @@
 #'   Default is \code{TRUE}.
 #' @return [\code{\link{Learner}}].
 #' @export
+#' @examples
+#' # nested resampling with feature selection (with a pretty stupid algorithm for selection)
+#' task = makeClassifTask(data = iris, target = "Species")
+#' outer = makeResampleDesc("CV", iters = 2L)
+#' inner = makeResampleDesc("Holdout")
+#' ctrl = makeFeatSelControlRandom(maxit = 3)
+#' lrn1 = makeLearner("classif.ksvm")
+#' lrn2 = makeFeatSelWrapper(lrn1, resampling = inner, control = ctrl)
+#' # we also extract the selected features for all iteration here
+#' r = resample(lrn2, task, outer, extract = getFeatSelResult)
 makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.features,
-  control, show.info=TRUE) {
+  control, show.info = TRUE) {
 
   checkArg(learner, "Learner")
   checkArg(resampling, c("ResampleDesc", "ResampleInstance"))
@@ -51,16 +61,16 @@ makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.
   if (missing(bit.names)) {
     bit.names = character(0)
   } else {
-    checkArg(bit.names, "character", na.ok=FALSE)
+    checkArg(bit.names, "character", na.ok = FALSE)
   }
   if (missing(bits.to.features)) {
     bits.to.features = NULL
   } else {
-    checkArg(bits.to.features, "function", formals=c("x", "task"))
+    checkArg(bits.to.features, "function", formals = c("x", "task"))
   }
   checkArg(control, "FeatSelControl")
-  checkArg(show.info, "logical", len=1L, na.ok=FALSE)
-  id = paste(learner$id, "featsel", sep=".")
+  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
+  id = paste(learner$id, "featsel", sep = ".")
   x = makeOptWrapper(id, learner, resampling, measures, makeParamSet(), bit.names,
     bits.to.features, control, show.info, "FeatSelWrapper")
   # checkVarselParset(learner, par.set, bit.names, control)
@@ -78,16 +88,16 @@ trainLearner.FeatSelWrapper = function(.learner, .task, .subset,  ...) {
   else
     or = selectFeatures(.learner$next.learner, task, .learner$resampling, .learner$control,
       .learner$measures, .learner$bit.names, .learner$bits.to.features)
-  task = subsetTask(task, features=or$x)
+  task = subsetTask(task, features = or$x)
   m = train(.learner$next.learner, task)
-  x = makeChainModel(next.model=m, cl = "FeatSelModel")
+  x = makeChainModel(next.model = m, cl = "FeatSelModel")
   x$opt.result = or
   return(x)
 }
 
 #' @S3method predictLearner FeatSelWrapper
 predictLearner.FeatSelWrapper = function(.learner, .model, .newdata, ...) {
-  .newdata = .newdata[, .model$learner.model$opt.result$x, drop=FALSE]
+  .newdata = .newdata[, .model$learner.model$opt.result$x, drop = FALSE]
   predictLearner(.learner$next.learner, .model$learner.model$next.model, .newdata, ...)
 }
 

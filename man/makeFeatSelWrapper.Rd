@@ -55,8 +55,19 @@ model is fitted on the complete training data with these
 variables and returned. See \code{\link{selectFeatures}}
 for more details.
 
-After training, the optimal hyperparameters (and other
-related information) can be retrieved with
+After training, the optimal features (and other related
+information) can be retrieved with
 \code{\link{getFeatSelResult}}.
+}
+\examples{
+# nested resampling with feature selection (with a pretty stupid algorithm for selection)
+task = makeClassifTask(data = iris, target = "Species")
+outer = makeResampleDesc("CV", iters = 2L)
+inner = makeResampleDesc("Holdout")
+ctrl = makeFeatSelControlRandom(maxit = 3)
+lrn1 = makeLearner("classif.ksvm")
+lrn2 = makeFeatSelWrapper(lrn1, resampling = inner, control = ctrl)
+# we also extract the selected features for all iteration here
+r = resample(lrn2, task, outer, extract = getFeatSelResult)
 }
 

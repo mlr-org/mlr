@@ -81,7 +81,7 @@ imputeLearner(learner, preimpute = list())
   within bin range.}
 
   \item{learner}{[\code{Learner}]\cr Classification or
-  regression learner. Its predcitions will be used for
+  regression learner. Its predictions will be used for
   imputations.  Note that the target column is not
   available for this operation.}
 

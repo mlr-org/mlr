@@ -53,7 +53,7 @@ related information) can be retrieved with
 \code{\link{getTuneResult}}.
 }
 \examples{
-task = makeClassifTask(data=iris, target="Species")
+task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.ksvm")
 # stupid mini grid
 ps = makeParamSet(
@@ -68,9 +68,7 @@ mod = train(lrn, task)
 print(getTuneResult(mod))
 # nested resampling for evaluation
 # we also extract tuned hyper pars in each iteration
-r = resample(lrn, task, outer, extract = function(model) {
-  getTuneResult(model)$x
-})
+r = resample(lrn, task, outer, extract = getTuneResult)
 print(r$extract)
 }
 
