@@ -19,10 +19,11 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   # params became infeasible when we could not model constraints
   # also error msg is annoying
   if (is.error(learner)) {
-    if (grep("not a feasible parameter setting", learner) > 0)
+    msg = as.character(learner)
+    if (length(grep("not feasible for parameter", msg)) > 0L)
       y = ifelse(measures[[1L]]$minimize, 1 , -1) * Inf
     else
-      stop(learner)
+      stop(msg)
   } else {
     r = resample(learner, task, resampling, measures = measures, show.info = FALSE)
     y = r$aggr

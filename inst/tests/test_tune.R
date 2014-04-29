@@ -30,7 +30,7 @@ test_that("tune", {
     expect_equal(tr$performances[i,"dispersion"], pp[j,"mmce.test.sd"])
   }
   # test printing
-  expect_output(print(tr2), "mmce.test.mean = ")
+  expect_output(print(tr2), "mmce.test.mean=")
 
   # check multiple measures
   ms = c("acc", "mmce", "timefit")
@@ -39,4 +39,20 @@ test_that("tune", {
   expect_error(tuneParams(lrn, multiclass.task, cv.instance, par.set = makeParamSet(), control = ctrl))
 })
 
+test_that("tuning works with infeasible pars", {
+  # i am not sure if we want that behavior always but currently we impute Inf when we eval
+  # outside of constraints
+  # and there was a bug in that code so we test now
+
+  ps = makeParamSet(
+    makeDiscreteParam("cp", values = c(0.05, 2))
+  )
+  lrn = makeLearner("classif.rpart")
+  rdesc = makeResampleDesc("Holdout", split = 0.2)
+  ctrl = makeTuneControlGrid()
+  z = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
+  d = as.data.frame(z$opt.path)
+  expect_true(is.finite(d[1L, "mmce.test.mean"]))
+  expect_true(is.infinite(d[2L, "mmce.test.mean"]))
+})
 
