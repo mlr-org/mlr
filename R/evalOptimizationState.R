@@ -6,12 +6,12 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   opt.path, show.info, state, remove.nas) {
 
   if (inherits(control, "TuneControl")) {
-    # FIXME change when new version of paramhelpers is online
+    # FIXME: change when new version of paramhelpers is online
     state2 = if (remove.nas) removeMissingValues2(state) else state
-    learner = try(setHyperPars(learner, par.vals=state2), silent=TRUE)
+    learner = try(setHyperPars(learner, par.vals = state2), silent = TRUE)
     log.fun = logFunTune
   } else  if (inherits(control, "FeatSelControl")) {
-    task = subsetTask(task, features=bits.to.features(state, task))
+    task = subsetTask(task, features = bits.to.features(state, task))
     log.fun = logFunSelFeatures
   }
 
@@ -24,7 +24,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
     else
       stop(learner)
   } else {
-    r = resample(learner, task, resampling, measures=measures, show.info=FALSE)
+    r = resample(learner, task, resampling, measures = measures, show.info = FALSE)
     y = r$aggr
   }
   if (show.info)
@@ -45,16 +45,16 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
     dobs = rep(dobs, n)
   if (length(eols) == 1L)
     eols = rep(eols, n)
-  parallelLibrary("mlr", master=FALSE, level=level, show.info=FALSE)
+  parallelLibrary("mlr", master = FALSE, level = level, show.info = FALSE)
   exportMlrOptions()
-  ys = parallelMap(evalOptimizationState, states, level=level,
-    more.args=list(learner=learner, task=task, resampling=resampling,
-      measures=measures, par.set=par.set, bits.to.features=bits.to.features,
-      control=control, opt.path=opt.path, show.info=show.info, remove.nas=remove.nas))
+  ys = parallelMap(evalOptimizationState, states, level = level,
+    more.args = list(learner = learner, task = task, resampling = resampling,
+      measures = measures, par.set = par.set, bits.to.features = bits.to.features,
+      control = control, opt.path = opt.path, show.info = show.info, remove.nas = remove.nas))
   # add stuff to opt.path
   for (i in seq_len(n))
-    addOptPathEl(opt.path, x=as.list(states[[i]]), y=ys[[i]],
-      dob=dobs[i], eol=eols[i], check.feasible=FALSE)
+    addOptPathEl(opt.path, x = as.list(states[[i]]), y = ys[[i]],
+      dob = dobs[i], eol = eols[i], check.feasible = FALSE)
   return(ys)
 }
 
