@@ -7,19 +7,19 @@ test_that("tune", {
   cp = c(0.05, 0.9)
   minsplit = 1:3
   ps1 = makeParamSet(
-    makeDiscreteParam("cp", values=cp),
-    makeDiscreteParam("minsplit", values=minsplit)
+    makeDiscreteParam("cp", values = cp),
+    makeDiscreteParam("minsplit", values = minsplit)
   )
   ctrl = makeTuneControlGrid()
   folds = 3
 
-  tr = tune.rpart(formula=multiclass.formula, data=multiclass.df, cp=cp, minsplit=minsplit,
-    	tunecontrol = tune.control(sampling = "cross", cross = folds))
+  tr = tune.rpart(formula = multiclass.formula, data = multiclass.df, cp = cp, minsplit = minsplit,
+    tunecontrol = tune.control(sampling = "cross", cross = folds))
   lrn = makeLearner("classif.rpart")
   cv.instance = e1071CVToMlrCV(tr)
   m1 = setAggregation(mmce, test.mean)
   m2 = setAggregation(mmce, test.sd)
-  tr2 = tuneParams(lrn, multiclass.task, cv.instance, par.set=ps1, control=ctrl, measures=list(m1, m2))
+  tr2 = tuneParams(lrn, multiclass.task, cv.instance, par.set = ps1, control = ctrl, measures = list(m1, m2))
   pp = as.data.frame(tr2$opt.path)
   # todo test scale with tune.e1071 and scaled grid!
   for(i in 1:nrow(tr$performances)) {
@@ -30,13 +30,13 @@ test_that("tune", {
     expect_equal(tr$performances[i,"dispersion"], pp[j,"mmce.test.sd"])
   }
   # test printing
-  expect_output(print(tr2), "mmce.test.mean=")
+  expect_output(print(tr2), "mmce.test.mean = ")
 
   # check multiple measures
   ms = c("acc", "mmce", "timefit")
-  tr2 = tuneParams(lrn, multiclass.task, cv.instance, par.set=ps1, control=ctrl)
+  tr2 = tuneParams(lrn, multiclass.task, cv.instance, par.set = ps1, control = ctrl)
 
-  expect_error(tuneParams(lrn, multiclass.task, cv.instance, par.set=makeParamSet(), control=ctrl))
+  expect_error(tuneParams(lrn, multiclass.task, cv.instance, par.set = makeParamSet(), control = ctrl))
 })
 
 
