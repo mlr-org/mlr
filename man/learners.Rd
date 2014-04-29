@@ -73,14 +73,18 @@ package: \code{\link[e1071]{naiveBayes}}}
 package: \code{\link[nnet]{nnet}}\cr Note that \code{size}
 has been set to 3 by default.}
 \item{\bold{classif.OneR}}{\cr 1-R classifier from RWeka
-package: \code{\link[RWeka]{OneR}}} Note that NAs are
-directly passed to WEKA with \code{na.action = na.pass}.
+package: \code{\link[RWeka]{OneR}}\cr Note that NAs are
+directly passed to WEKA with \code{na.action = na.passi}}.
 \item{\bold{classif.PART}}{\cr PART decision lists from
-RWeka package: \code{\link[RWeka]{PART}}} Note that NAs are
-directly passed to WEKA with \code{na.action = na.pass}.
-\item{\bold{classif.plsDA}}{\cr Partial Least Squares (PLS)
-Discriminant Analysis from DiscriMiner package:
-\code{\link[DiscriMiner]{plsDA}}}
+RWeka package: \code{\link[RWeka]{PART}}\cr Note that NAs
+are directly passed to WEKA with \code{na.action =
+na.pass}}.  \item{\bold{classif.plr}}{\cr Logistic
+regression with a L2 penalty from stepPlr package:
+\code{\link[stepPlr]{plr}}\cr Note that AIC and BIC penalty
+types can be selected via the new parameter
+\code{cp.type}}.  \item{\bold{classif.plsDA}}{\cr Partial
+Least Squares (PLS) Discriminant Analysis from DiscriMiner
+package: \code{\link[DiscriMiner]{plsDA}}}
 \item{\bold{classif.qda}}{\cr Quadratic Discriminant
 Analysis from MASS package: \code{\link[MASS]{qda}}}
 \item{\bold{classif.quaDA}}{\cr Quadratic Discriminant
@@ -88,7 +92,7 @@ Analysis from DiscriMiner package:
 \code{\link[DiscriMiner]{quaDA}}}
 \item{\bold{classif.randomForest}}{\cr Random Forest from
 randomForest package:
-\code{\link[randomForest]{randomForest}}.  The argument
+\code{\link[randomForest]{randomForest}}.\cr The argument
 \code{fix.factors} restores the factor levels seen in the
 training data before prediction to circumvent
 randomForest's internal sanity checks. Default is
