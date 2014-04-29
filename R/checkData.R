@@ -4,8 +4,6 @@
 # - No infinite values
 # - No NANs
 checkData = function(type, data, target) {
-  # FIXME: one should probably be able to disable some of these checks via configureMLR
-  #BB: really? why? we have an option in the constructor? isnt this better?
   mapply(function(x, cn) {
     if (is.numeric(x)) {
       if (any(is.infinite(x)))
