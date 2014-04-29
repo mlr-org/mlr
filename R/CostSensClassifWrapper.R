@@ -43,7 +43,8 @@ trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset, ...) {
     model = newy[1]
   } else {
     data = cbind(feats, ..y.. = newy)
-    task = makeClassifTask(data = data, target = "..y..")
+    task = makeClassifTask(data = data, target = "..y..",
+      check.data = FALSE, fixup.data = "quiet")
     model = train(.learner$next.learner, task)
   }
   makeChainModel(next.model = model, cl = "CostSensClassifModel")

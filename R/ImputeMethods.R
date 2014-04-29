@@ -273,9 +273,11 @@ imputeLearner = function(learner, preimpute = list()) {
       }
 
       if ("RLearnerRegr" %in% cl) {
-        task = makeRegrTask("impute", data = dropNamed(data, target), target = col)
+        task = makeRegrTask("impute", data = dropNamed(data, target), target = col,
+          check.data = FALSE, fixup.data = "quiet")
       } else if ("RLearnerClassif" %in% cl) {
-        task = makeClassifTask("impute", data = dropNamed(data, target), target = col)
+        task = makeClassifTask("impute", data = dropNamed(data, target), target = col,
+          check.data = FALSE, fixup.data = "quiet")
       } else {
         stop("Unknown learner class for impute")
       }
