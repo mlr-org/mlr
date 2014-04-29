@@ -6,7 +6,7 @@ library("caret")
 library("mlr")
 
 knit_subdir = "doc/knitted" #dir where the posts are published
-input_subdir = "doc" #dir where the new Rmd files can be found
+input_subdir = "doc/temp" #dir where the new Rmd files can be found
 figure_dir = "figs"
 
 
