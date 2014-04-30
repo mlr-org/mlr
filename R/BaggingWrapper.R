@@ -73,7 +73,7 @@ makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.
 }
 
 #' @S3method trainLearner BaggingWrapper
-trainLearner.BaggingWrapper = function(.learner, .task, .subset, bag.iters, bag.replace,
+trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights, bag.iters, bag.replace,
   bag.size, bag.feats, ...) {
 
   .task = subsetTask(.task, subset = .subset)
@@ -86,12 +86,13 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset, bag.iters, bag.
   }
   models = lapply(seq_len(bag.iters), function(i) {
     bag = sample(allinds, m, replace = bag.replace)
+    w = .weights[bag]
     if (bag.feats < 1) {
       feats2 = sample(feats, k, replace = FALSE)
       .task2 = subsetTask(.task, features=feats2)
-      train(.learner$next.learner, .task2, subset=bag)
+      train(.learner$next.learner, .task2, subset=bag, weights = w)
   } else {
-      train(.learner$next.learner, .task, subset=bag)
+      train(.learner$next.learner, .task, subset=bag, weights = w)
     }
   })
   makeChainModel(next.model=models, cl="BaggingModel")
