@@ -2,8 +2,8 @@
 #'
 #' @description
 #' Complete benchmark experiment to compare different learning algorithms across one or more tasks
-#' w.r.t. a given resampling strategy. Experiments are paired, meaning always the same
-#' training / test sets are used for the  different learners.
+#' w.r.t. a given resampling strategy for each task. Experiments are paired, meaning always the same
+#' training / test sets are used for the different learners.
 #'
 #' You can also get automatic, internal tuning by using \code{\link{makeTuneWrapper}} with your learner.
 #'
@@ -12,15 +12,13 @@
 #' @param tasks [\code{\link{SupervisedTask}} | list of them]\cr
 #'   Tasks that learners should be run on.
 #' @param resamplings [\code{\link{ResampleDesc}} | \code{\link{ResampleInstance}} | list of them]\cr
-#'   Resampling strategies for tasks.
+#'   Resampling strategy for each tasks. Provided one it is used for every task otherwise each resampling
+#'   strategy is bounded to one task.
 #' @param measures [\code{\link{Measure}} | list of them]\cr
 #'   Performance measures.
-#' @param same.resampling.instance [logical(1)]\cr
-#'   Should the same resampling instance be used for all learners (per task) to reduce variance?
-#'   Default is \code{TRUE}.
-#' @return [\code{list}].
+#' @return [\code{benchmark.result}].
 #' @export
-benchmark = function(learners, tasks, resamplings, measures, same.resampling.instance = TRUE) {
+benchmark = function(learners, tasks, resamplings, measures) {
 
   # check learners
   if (inherits(learners, "Learner"))
@@ -64,35 +62,96 @@ benchmark = function(learners, tasks, resamplings, measures, same.resampling.ins
      measures = list(measures)
   }
 
-  # check rest
-  checkArg(same.resampling.instance, "logical", len = 1L, na.ok = FALSE)
-
   measure.ids = extractSubList(measures, "id")
 
   # instantiate resampling
-  if (same.resampling.instance) {
-    resamplings = Map(function(res, tt) {
-      if (is(res, "ResampleInstance"))
-        res
-      else
-        makeResampleInstance(res,task = tt)
-    }, resamplings, tasks)
-  }
+  resamplings = Map(function(res, tt) {
+    if (is(res, "ResampleInstance"))
+      res
+    else
+      makeResampleInstance(res,task = tt)
+  }, resamplings, tasks)
 
-  inds.mat = as.matrix(expand.grid(learner = learner.ids, task = task.ids))
-  inds = split(inds.mat, f = seq_row(inds.mat))
+  inds.mat = expand.grid(task = task.ids, learner = learner.ids, stringsAsFactors=FALSE)
+  inds = split(as.matrix(inds.mat), f = seq_row(inds.mat))
   more.args = list(learners = learners, tasks = tasks, resamplings = resamplings, measures = measures)
   results = parallelMap(benchmarkParallel, inds, more.args = more.args)
-  res.measures = extractSubList(results, "aggr", simplify = FALSE)
-  res.measures = do.call(rbind,res.measures)
-  res.df = cbind.data.frame(inds.mat, res.measures)
-
-  list(result.df = res.df, results = results)
+  results.by.task = split(results, unlist(inds.mat$task))
+  for(taskname in names(results.by.task)){
+    names(results.by.task[[taskname]]) = unlist(inds.mat$learner)[unlist(inds.mat$task) == taskname]
+  }
+  results.by.task = addClasses(results.by.task, "benchmark.result")
+  results.by.task
 }
 
 benchmarkParallel = function(index, learners, tasks, resamplings, measures) {
-  ind.learner = index[1L][[1]]
-  ind.task = index[2L][[1]]
+  ind.learner = index[2L][[1L]]
+  ind.task = index[1L][[1L]]
   messagef("Task: %s, Learner: %s", ind.task, ind.learner)
-  resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]], measures = measures)
+  if("FeatSelWrapper" %in% class(learners[[ind.learner]]))
+    extract.this = getFeatSelResult
+  else if("TuneWrapper" %in% class(learners[[ind.learner]]))
+    extract.this = getTuneResult
+  #else if("FilterWrapper" %in% class(learners[[ind.learner]]))
+  #  extract.this = getFilteredFeatures
+  else
+    extract.this = function(model) {}
+  resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]], measures = measures, extract = extract.this)
 }
+
+#FIXME Correct S4 Handling and Export of the following functions
+extractMeasures.benchmark.result = function(results) {
+  res = lapply(names(results), function(task.name) {
+    lapply(names(results[[task.name]]), function(learner.name) {
+      res = data.frame(task=task.name, learner=learner.name)
+      cbind(res, t(results[[task.name]][[learner.name]]$aggr))
+    })
+  })
+  do.call(rbind, unlist(res, recursive=FALSE))
+}
+
+print.benchmark.result = function(results) {
+  print(extractMeasures.benchmark.result(results))
+}
+
+as.data.frame.benchmark.result = function(results) {
+  extractMeasures.benchmark.result(results)
+}
+
+extractPrediction.benchmark.result = function(results) {
+  res = lapply(names(results), function(task.name) {
+    t.res = lapply(names(results[[task.name]]), function(learner.name) {
+      l.res = data.frame(results[[task.name]][[learner.name]]$pred)[, "response", drop = FALSE]
+      names(l.res) = paste0("response.", learner.name)
+      l.res
+    })
+    t.res.df = as.data.frame(results[[task.name]][[1]]$pred)[,c("id", "truth", "iter", "set")]
+    t.res.df = cbind(t.res.df, do.call(cbind, t.res))
+    t.res.df
+  })
+  res
+}
+
+getExtract.benchmark.result = function(results, what){
+  if(missing(what))
+    what = NULL
+  res = lapply(results, function(task) {
+    t.res = lapply(task, function(learner) {
+      if (is.null(what) || what %in% class(learner$extract[[1]]))
+        learner$extract
+      else
+        NULL
+    })
+  })
+  res
+}
+
+getFeatSelResult.benchmark.result = function(results) {
+  getExtract.benchmark.result(results, "FeatSelResult")
+}
+
+getTuneResult.benchmark.result = function(results) {
+  getExtract.benchmark.result(results, "TuneResult")
+}
+
+

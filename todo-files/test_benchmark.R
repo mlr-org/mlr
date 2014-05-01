@@ -6,13 +6,23 @@ source("inst/tests/helper_objects.R")
 source("todo-files/benchmark.R")
 
 tasks = list(binaryclass.task, multiclass.task)
-learners.txt = lapply(tasks, listLearnersForTask)
-learners.txt = intersect(learners.txt[[1]], learners.txt[[2]])[2:5]
-#learners.txt = setdiff(learners.txt, c("classif.plsDA","classif.qda","classif.quaDA")) #throw away not working ones
+learners.txt = c("classif.fnn", "classif.rpart")
 learners = lapply(learners.txt, function(x) makeLearner(cl=x, id=paste0("Learner.",x)))
-resamplings = list(makeResampleDesc("CV", iters=3), makeResampleDesc("Bootstrap", iters=3))
-configureMlr(on.learner.error="warn")
+
+rin = makeResampleDesc("CV", iters = 3L)
+ps = makeParamSet(makeDiscreteLearnerParam("k", values=c(1,3,5)))
+
+learners = c(learners, list(
+  makeFeatSelWrapper(learners[[1]], resampling = rin, control = makeFeatSelControlRandom(maxit = 3)),
+  makeTuneWrapper(learners[[1]], resampling = rin, par.set = ps, control = makeTuneControlGrid())))
+
+resamplings = list(rin, makeResampleDesc("Bootstrap", iters=3))
+
 measures = list(mmce, acc)
+
 result = benchmark(learners=learners, tasks=tasks, resamplings=resamplings, measures=measures)
-result$result.df
-str(result$results)
+result
+extractPrediction.benchmark.result(result) #FIXME extractPrediction(result) does not work
+getFeatSelResult.benchmark.result(result) #FIXME getFeatSelResult(result) does not work as intended
+getTuneResult.benchmark.result(result) #FIXME getTuneResult(result) does not work as intended
+
