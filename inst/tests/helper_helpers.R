@@ -43,6 +43,8 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset=list(
     task = makeRegrTask(data=df, target=target)
   else if (is.factor(df[, target]))
     task = makeClassifTask(data=df, target=target)
+  else if (is.data.frame(df[, target]) && is.numeric(df[, target[1L]]) && is.numeric(df[, target[2L]]))
+    task = makeSurvTask(data=df, target=target)
   else
     stop("Should not happen!")
   m = try(train(lrn, task, subset=inds))
