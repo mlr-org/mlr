@@ -22,7 +22,8 @@ measures = list(mmce, acc)
 
 result = benchmark(learners=learners, tasks=tasks, resamplings=resamplings, measures=measures)
 result
-extractPrediction.benchmark.result(result) #FIXME extractPrediction(result) does not work
+getPredictions.benchmark.result(result) #FIXME extractPrediction(result) does not work
 getFeatSelResult.benchmark.result(result) #FIXME getFeatSelResult(result) does not work as intended
 getTuneResult.benchmark.result(result) #FIXME getTuneResult(result) does not work as intended
+getMeasures.benchmark.result(result) #FIXME getMeasures(result) does not work as intended
 

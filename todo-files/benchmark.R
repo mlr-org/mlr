@@ -96,7 +96,7 @@ benchmarkParallel = function(index, learners, tasks, resamplings, measures) {
   #  extract.this = getFilteredFeatures
   else
     extract.this = function(model) {}
-  resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]], measures = measures, extract = extract.this)
+  resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]], measures = measures, model = TRUE, extract = extract.this)
 }
 
 #FIXME Correct S4 Handling and Export of the following functions
@@ -118,7 +118,7 @@ as.data.frame.benchmark.result = function(results) {
   extractMeasures.benchmark.result(results)
 }
 
-extractPrediction.benchmark.result = function(results) {
+getPredictions.benchmark.result = function(results) {
   res = lapply(names(results), function(task.name) {
     t.res = lapply(names(results[[task.name]]), function(learner.name) {
       l.res = data.frame(results[[task.name]][[learner.name]]$pred)[, "response", drop = FALSE]
@@ -129,16 +129,35 @@ extractPrediction.benchmark.result = function(results) {
     t.res.df = cbind(t.res.df, do.call(cbind, t.res))
     t.res.df
   })
+  names(res) = names(results)
   res
 }
 
-getExtract.benchmark.result = function(results, what){
+getMeasures.benchmark.result = function(results) {
+  res = lapply(names(results), function(task.name) {
+    t.res = lapply(names(results[[task.name]]), function(learner.name) {
+      l.res = results[[task.name]][[learner.name]]$measures.test
+      l.res = subset(l.res, select=-iter)
+      names(l.res) = paste0(learner.name, ".", names(l.res))
+      l.res
+    })
+    t.res.df = results[[task.name]][[1]]$measures.test[, c("iter"), drop = FALSE]
+    t.res.df = cbind(t.res.df, do.call(cbind, t.res))
+    t.res.df
+  })
+  names(res) = names(results)
+  res
+}
+
+
+
+getExtract.benchmark.result = function(results, what, within="extract"){
   if(missing(what))
     what = NULL
   res = lapply(results, function(task) {
     t.res = lapply(task, function(learner) {
-      if (is.null(what) || what %in% class(learner$extract[[1]]))
-        learner$extract
+      if (is.null(what) || what %in% class(learner[[within]][[1]]))
+        learner[[within]]
       else
         NULL
     })
