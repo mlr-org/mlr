@@ -1,11 +1,18 @@
 \name{getFeatureFilterValues}
 \alias{getFeatureFilterValues}
-\title{Filter features by using a numerical importance criterion.}
+\title{Calculates feature filter values by using a numerical importance criterion.}
 \usage{
-getFeatureFilterValues(task, method = "random.forest.importance")
+getFeatureFilterValues(obj, target, method = "random.forest.importance")
 }
 \arguments{
-  \item{task}{[\code{\link{SupervisedTask}}]\cr The task.}
+  \item{obj}{[\code{\link{data.frame}} |
+  \code{\link{SupervisedTask}}]\cr The data set or task.}
+
+  \item{target}{[\code{character}]\cr Name of the column(s)
+  specifying the response if you passed a
+  \code{data.frame}.  User input is ignored if you pass a
+  task and \code{target} is automatically set.  Never
+  removed.}
 
   \item{method}{[\code{character(1)}]\cr Filter method.
   Available are:\cr \dQuote{linear.correlation}: Pearson's
