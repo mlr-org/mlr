@@ -16,7 +16,7 @@
 #'   strategy is bounded to one task.
 #' @param measures [\code{\link{Measure}} | list of them]\cr
 #'   Performance measures.
-#' @return [\code{benchmark.result}].
+#' @return [\code{BenchmarkResult}].
 #' @export
 benchmark = function(learners, tasks, resamplings, measures) {
 
@@ -80,7 +80,7 @@ benchmark = function(learners, tasks, resamplings, measures) {
   for(taskname in names(results.by.task)){
     names(results.by.task[[taskname]]) = unlist(inds.mat$learner)[unlist(inds.mat$task) == taskname]
   }
-  results.by.task = addClasses(results.by.task, "benchmark.result")
+  results.by.task = addClasses(results.by.task, "BenchmarkResult")
   results.by.task
 }
 
@@ -99,8 +99,19 @@ benchmarkParallel = function(index, learners, tasks, resamplings, measures) {
   resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]], measures = measures, model = TRUE, extract = extract.this)
 }
 
-#FIXME Correct S4 Handling and Export of the following functions
-extractMeasures.benchmark.result = function(results) {
+#' Extract the aggregated measures of an object.
+#'
+#' @param object [\code{\link{BenchmarkResult}}]\cr
+#'   Object which contains the aggregated measures.
+#' @return [\code{data.frame}].
+#' @export
+#' @aliases getAggrMeasures
+getAggrMeasures = function(object) {
+  UseMethod("getAggrMeasures")
+}
+
+#' @S3method getAggrMeasures BenchmarkResult
+getAggrMeasures.BenchmarkResult = function(results) {
   res = lapply(names(results), function(task.name) {
     lapply(names(results[[task.name]]), function(learner.name) {
       res = data.frame(task=task.name, learner=learner.name)
@@ -110,15 +121,29 @@ extractMeasures.benchmark.result = function(results) {
   do.call(rbind, unlist(res, recursive=FALSE))
 }
 
-print.benchmark.result = function(results) {
-  print(extractMeasures.benchmark.result(results))
+#' @S3method print BenchmarkResult
+print.BenchmarkResult = function(results) {
+  print(getAggrMeasures.BenchmarkResult(results))
 }
 
-as.data.frame.benchmark.result = function(results) {
-  extractMeasures.benchmark.result(results)
+#' @S3method as.data.frame BenchmarkResult
+as.data.frame.BenchmarkResult = function(results) {
+  getAggrMeasures.BenchmarkResult(results)
 }
 
-getPredictions.benchmark.result = function(results) {
+#' Extract the prediction inforamtions of an object
+#'
+#' @param object [\code{\link{BenchmarkResult}}]\cr
+#'   Object which contains the predictions
+#' @return [\code{data.frame}].
+#' @export
+#' @aliases getPredictions
+getPredictions = function(object) {
+  UseMethod("makeWrappedModel")
+}
+
+#' @S3method getPredictions BenchmarkResult
+getPredictions.BenchmarkResult = function(results) {
   res = lapply(names(results), function(task.name) {
     t.res = lapply(names(results[[task.name]]), function(learner.name) {
       l.res = data.frame(results[[task.name]][[learner.name]]$pred)[, "response", drop = FALSE]
@@ -133,7 +158,19 @@ getPredictions.benchmark.result = function(results) {
   res
 }
 
-getMeasures.benchmark.result = function(results) {
+#' Extract the measure results of an object
+#'
+#' @param object [\code{\link{BenchmarkResult}}]\cr
+#'   Object which contains the measure results.
+#' @return [\code{data.frame}].
+#' @export
+#' @aliases getMeasures
+getMeasures = function(object) {
+  UseMethod("getMeasures")
+}
+
+#' @S3method getMeasures BenchmarkResult
+getMeasures.BenchmarkResult = function(results) {
   res = lapply(names(results), function(task.name) {
     t.res = lapply(names(results[[task.name]]), function(learner.name) {
       l.res = results[[task.name]][[learner.name]]$measures.test
@@ -149,9 +186,8 @@ getMeasures.benchmark.result = function(results) {
   res
 }
 
-
-
-getExtract.benchmark.result = function(results, what, within="extract"){
+# #' @S3method getExtract BenchmarkResult
+getExtract.BenchmarkResult = function(results, what, within="extract"){
   if(missing(what))
     what = NULL
   res = lapply(results, function(task) {
@@ -165,12 +201,14 @@ getExtract.benchmark.result = function(results, what, within="extract"){
   res
 }
 
-getFeatSelResult.benchmark.result = function(results) {
-  getExtract.benchmark.result(results, "FeatSelResult")
+#' @S3method getFeatSelResult BenchmarkResult
+getFeatSelResult.BenchmarkResult = function(results) {
+  getExtract.BenchmarkResult(results, "FeatSelResult")
 }
 
-getTuneResult.benchmark.result = function(results) {
-  getExtract.benchmark.result(results, "TuneResult")
+#' @S3method getTuneResult BenchmarkResult
+getTuneResult.BenchmarkResult = function(results) {
+  getExtract.BenchmarkResult(results, "TuneResult")
 }
 
 
