@@ -25,7 +25,7 @@ recodeY = function(y, type, task) {
     "no" = y,
     "01" = as.numeric(y == task$task.desc$positive),
     "-1+1" = as.numeric(2L*(y == task$task.desc$positive)-1L),
-    "surv" = Surv(y[, 1L], y[, 2L], type  = task$task.desc$surv.type)
+    "surv" = Surv(y[, 1L], y[, 2L], type  = task$task.desc$surv.type),
     stop("Unknown value for 'type'"))
 }
 
