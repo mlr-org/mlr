@@ -20,12 +20,12 @@ perfsToString = function(y) {
   paste(paste(names(y), "=", formatC(y, digits=3L), sep=""), collapse=",")
 }
 
-recodeY = function(y, type, positive) {
+recodeY = function(y, type, task) {
   switch(type,
     "no" = y,
-    "01" = as.numeric(y == positive),
-    "-1+1" = as.numeric(2L*(y == positive)-1L),
-    "surv" = Surv(time = y[, 1L], event = y[, 2L], type="right"),
+    "01" = as.numeric(y == task$task.desc$positive),
+    "-1+1" = as.numeric(2L*(y == task$task.desc$positive)-1L),
+    "surv" = Surv(y[, 1L], y[, 2L], type  = task$task.desc$surv.type)
     stop("Unknown value for 'type'"))
 }
 

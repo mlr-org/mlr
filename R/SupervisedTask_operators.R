@@ -85,7 +85,7 @@ getTaskTargets = function(task, subset, recode.target="no") {
   if (task$task.desc$type == "costsens")
     stop("There is no target available for cost-sensitive learning.")
   y = task$env$data[subset, task$task.desc$target]
-  recodeY(y, recode.target, task$task.desc$positive)
+  recodeY(y, recode.target, task)
 }
 
 
@@ -144,7 +144,7 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
       features = task.features
     res = list(
       data = indexHelper(task$env$data, subset, setdiff(features, tn), drop=FALSE),
-      target = recodeY(indexHelper(task$env$data, subset, tn), type=recode.target, positive=task$task.desc$positive)
+      target = recodeY(indexHelper(task$env$data, subset, tn), type = recode.target, task = task)
     )
   } else {
     if (missing(features) || identical(features, task.features))
@@ -154,7 +154,7 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
 
     res = indexHelper(task$env$data, subset, features, drop=FALSE)
     if (recode.target %nin% c("no", "surv")) {
-      res[, tn] = recodeY(res[, tn], type=recode.target, positive=task$task.desc$positive)
+      res[, tn] = recodeY(res[, tn], type = recode.target, task = task)
     }
   }
   res
