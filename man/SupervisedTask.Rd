@@ -60,7 +60,7 @@ makeSurvTask(id, data, target, weights = NULL, blocking = NULL,
   for binary classification.  Default is the first factor
   level of the target attribute.}
 
-  \item{fixup.data}{[\code{logical(1)}]\cr Should some
+  \item{fixup.data}{[\code{character(1)}]\cr Should some
   basic cleaning up of data be performed?  Currently this
   means removing empty factor levels for the columns.
   Possible coices are: \dQuote{no} = Don't do it.

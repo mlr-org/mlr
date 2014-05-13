@@ -48,7 +48,7 @@
 #' @param positive [\code{character(1)}]\cr
 #'   Positive class for binary classification.
 #'   Default is the first factor level of the target attribute.
-#' @param fixup.data [\code{logical(1)}]\cr
+#' @param fixup.data [\code{character(1)}]\cr
 #'   Should some basic cleaning up of data be performed?
 #'   Currently this means removing empty factor levels for the columns.
 #'   Possible coices are:
@@ -77,40 +77,66 @@
 #'   positive = "good", blocking = blocking)
 NULL
 
-makeSupervisedTask = function(subclass, type, data, target, weights = NULL, blocking = NULL,
-  check.target.fun, fixup.data = "warn", fixup.fun, check.data = TRUE) {
-
-  checkArg(type, choices = c("classif", "regr", "surv", "costsens"))
-  checkArg(data, "data.frame")
-  checkArg(check.data, "logical", len = 1L, na.ok = FALSE)
-  # check that col names are ok
-  if (check.data)
-    checkColumnNames(data, 'data')
-  # check that target column is ok
-  if (check.data)
-    check.target.fun(data, target)
-  if (!is.null(weights))
-    checkArg(weights, "numeric", len = nrow(data), na.ok = FALSE, lower = 0)
-  if (!is.null(blocking))
-    checkArg(blocking, "factor", len = nrow(data), na.ok = FALSE)
-  checkArg(fixup.data, choices = c("warn", "quiet", "no"))
-  # check that blocking is ok
-  if (check.data)
-    checkBlocking(data, target, blocking)
-  # possibly convert data a bit
-  if (fixup.data != "no")
-    data = fixup.fun(data, target, fixup.data)
-  # check that data df does not contain bad stuff
-  if (check.data)
-    checkData(type, data, target)
-  # FIXME: don't hash?
+makeSupervisedTask = function(type, data, target, weights = NULL, blocking = NULL) {
   env = new.env(parent = emptyenv())
   env$data = data
-  makeS3Obj(c(subclass, "SupervisedTask"),
+  makeS3Obj("SupervisedTask",
     env = env,
     weights = weights,
-    blocking = blocking
+    blocking = blocking,
+    task.desc = NA
   )
+}
+
+#' @S3method checkTask SupervisedTask
+checkTask.SupervisedTask = function(task, target, ...) {
+  checkColumnNames(task$env$data, 'data')
+  if (!is.null(task$env$weights))
+    checkArg(weights, "numeric", len = nrow(task$env$data), na.ok = FALSE, lower = 0)
+  if (!is.null(task$blocking)) {
+    checkArg(task$blocking, "factor", len = nrow(task$env$data), na.ok = FALSE)
+    if(length(task$blocking) && length(task$blocking) != nrow(task$env$data))
+      stop("Blocking has to be of the same length as number of rows in data! Or pass none at all.")
+  }
+
+  w = which.first(target %nin% colnames(task$env$data))
+  if (length(w) > 0L)
+    stopf("Column names of data doesn't contain target var: %s", target[w])
+  for (tt in target) {
+    if (any(is.na(task$env$data[[tt]])))
+      stopf("Target column '%s' contains missing values!", tt)
+  }
+
+  checkColumn = function(x, cn) {
+    if (is.numeric(x)) {
+      if (any(is.infinite(x)))
+        stopf("Data contains infinite values in: %s", cn)
+      if (any(is.nan(x)))
+        stopf("Data contains NaN values in: %s", cn)
+    } else if (is.factor(x)) {
+      if(any(table(x) == 0L))
+        stopf("Data contains empty factor levels in: %s", cn)
+    } else {
+      stopf("Unsupported feature type in: %s, %s", cn, class(x)[1L])
+    }
+  }
+  Map(checkColumn, x = task$env$data, cn = colnames(task$env$data))
+}
+
+#' @S3method fixupData SupervisedTask
+fixupData.SupervisedTask = function(task, target, choice) {
+  if (choice == "quiet") {
+    task$env$data = droplevels(task$env$data)
+  } else if (choice == "warn") {
+    # the next lines look a bit complicated, we calculate the warning info message
+    cns = colnames(task$env$data)
+    levs1 = lapply(task$env$data, function(x) if (is.factor(x)) levels(x) else NULL)
+    data = droplevels(task$env$data)
+    levs2 = lapply(data, function(x) if (is.factor(x)) levels(x) else NULL)
+    j = vlapply(cns, function(cn) any(levs1[[cn]] != levs2[[cn]]))
+    if (any(j))
+      warningf("Empty factor levels were dropped for columns: %s", collapse(cns[j]))
+  }
 }
 
 # either guess task id from variable name of data or check it

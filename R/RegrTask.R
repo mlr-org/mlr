@@ -2,31 +2,37 @@
 #' @rdname SupervisedTask
 makeRegrTask = function(id, data, target, weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE) {
+  checkArg(fixup.data, choices = c("no", "quiet", "warn"))
+  checkArg(check.data, "logical", len = 1L, na.ok = FALSE)
 
-  task = makeSupervisedTask("RegrTask", "regr", data, target, weights, blocking,
-    checkTargetRegr, fixup.data, fixupDataRegr, check.data)
+  task = addClasses(makeSupervisedTask("regr", data, target, weights, blocking), "RegrTask")
+  if (fixup.data != "no")
+    fixupData(task, target, fixup.data)
+  if (check.data)
+    checkTask(task, target)
+
   id = checkOrGuessId(id, data)
   task$task.desc = makeTaskDesc.RegrTask(task, id, target)
   return(task)
 }
 
-checkTargetRegr = function(data, target) {
-  # these can all be auto-converted in a sane way
-  checkTarget("regr", data, target, 1L, list(c("numeric", "integer")))
+#' @S3method checkTask RegrTask
+checkTask.RegrTask = function(task, target, ...) {
+  NextMethod("checkTask")
+  checkArg(target, "character", len = 1L)
+  if (!is.numeric(task$env$data[[target]]))
+    stopf("Target column '%s' must be numeric", target)
 }
 
-# normal fixup + convert target col to numeric
-fixupDataRegr = function(data, target, choice) {
-  data = fixupData(data, target, choice)
-  targetcol = data[, target]
-  if (is.integer(targetcol))
-    data[, target] = as.numeric(targetcol)
-  return(data)
+#' @S3method fixupData RegrTask
+fixupData.RegrTask = function(task, target, choice, ...) {
+  NextMethod("fixupData")
+  x = task$env$data[[target]]
+  if (is.integer(x))
+    task$env$data[[target]] = as.numeric(x)
 }
 
 #' @S3method makeTaskDesc RegrTask
 makeTaskDesc.RegrTask = function(task, id, target) {
   addClasses(makeTaskDescInternal(task, "regr", id, target), "TaskDescRegr")
 }
-
-

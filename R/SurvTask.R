@@ -2,27 +2,34 @@
 #' @rdname SupervisedTask
 makeSurvTask = function(id, data, target, weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE) {
+  checkArg(fixup.data, choices = c("no", "quiet", "warn"))
+  checkArg(check.data, "logical", len = 1L, na.ok = FALSE)
 
-  task = makeSupervisedTask("SurvTask", "surv", data, target, weights, blocking,
-    checkTargetSurv, fixup.data, fixupDataSurv, check.data)
+  task = addClasses(makeSupervisedTask("surv", data, target, weights, blocking), "SurvTask")
+
+  if (fixup.data != "no")
+    fixupData(task, target, fixup.data)
+  if (check.data)
+    checkTask(task, target)
   id = checkOrGuessId(id, data)
   task$task.desc = makeTaskDesc.SurvTask(task, id, target)
   return(task)
 }
 
-checkTargetSurv = function(data, target) {
-  checkTarget("surv", data, target, 2L, list(c("numeric", "integer"), c("logical", "numeric", "integer")))
+#' @S3method checkTask SurvTask
+checkTask.SurvTask = function(task, target, ...) {
+  NextMethod("checkTask")
+  checkArg(target, "character", len = 2L)
+  ### TODO: more checks here
 }
 
-# normal fixup + convert target cols numeric (time) and 0-1-integer (events)
-fixupDataSurv = function(data, target, choice) {
-  data = fixupData(data, target, choice)
-  if (is.integer(data[[target[1L]]]))
-    data[[target[1L]]] = as.numeric(data[[target[1L]]])
-  # FIXME: check if numeric is convertible to logical
-  if (!is.logical(data[[target[2L]]]) || is.numeric(data[[target[2L]]]))
-    data[[target[2L]]] = as.integer(as.logical(data[[target[2L]]]))
-  return(data)
+#' @S3method fixupData SurvTask
+fixupData.SurvTask = function(task, target, choice, ...) {
+  NextMethod("fixupData")
+  if (is.integer(task$env$data[[target[1L]]]))
+    task$env$data[[target[1L]]] = as.numeric(data$env$data[[target[1L]]])
+  if (!is.logical(task$env$data[[target[2L]]]) || is.numeric(task$env$data[[target[2L]]]))
+    task$env$data[[target[2L]]] = as.integer(as.logical(task$env$data[[target[2L]]]))
 }
 
 #' @S3method makeTaskDesc SurvTask

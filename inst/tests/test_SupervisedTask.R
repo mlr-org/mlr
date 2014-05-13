@@ -21,9 +21,9 @@ test_that("SupervisedTask", {
 
   # wrong target type
   expect_error(makeClassifTask(data=regr.df, target=regr.target),
-    "unsupported type")
+    "must be a factor")
 	expect_error(makeRegrTask(data=multiclass.df, target=multiclass.target),
-    "unsupported type")
+    "must be numeric")
 
 	# wrong vars
 	expect_error(subsetTask(multiclass.task, vars=c("Sepal.Length", "x", "y")))

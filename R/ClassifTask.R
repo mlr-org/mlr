@@ -2,9 +2,14 @@
 #' @rdname SupervisedTask
 makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
   positive, fixup.data = "warn", check.data = TRUE) {
+  checkArg(fixup.data, choices = c("no", "quiet", "warn"))
+  checkArg(check.data, "logical", len = 1L, na.ok = FALSE)
 
-  task = makeSupervisedTask("ClassifTask", "classif", data, target, weights, blocking,
-    checkTargetClassif, fixup.data, fixupDataClassif, check.data)
+  task = addClasses(makeSupervisedTask("classif", data, target, weights, blocking), "ClassifTask")
+  if (fixup.data != "no")
+    fixupData(task, target, fixup.data)
+  if (check.data)
+    checkTask(task, target)
 
   # we expect the target to be a factor from here on
   levs = levels(data[, target])
@@ -24,18 +29,21 @@ makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
   return(task)
 }
 
-checkTargetClassif = function(data, target) {
-  # these can all be auto-converted in a sane way
-  checkTarget("classif", data, target, 1L, list(c("factor", "logical", "character", "integer")))
+#' @S3method checkTask ClassifTask
+checkTask.ClassifTask = function(task, target, ...) {
+  NextMethod("checkTask")
+  checkArg(target, "character", len = 1L)
+  if (!is.factor(task$env$data[[target]])) {
+    stopf("Target column '%s' must be a factor", target)
+  }
 }
 
-# normal fixup + convert target col to factor
-fixupDataClassif = function(data, target, choice) {
-  data = fixupData(data, target, choice)
-  targetcol = data[, target]
-  if (is.character(targetcol) || is.logical(targetcol) || is.integer(targetcol))
-    data[, target] = as.factor(targetcol)
-  return(data)
+#' @S3method fixupData ClassifTask
+fixupData.ClassifTask = function(task, target, choice, ...) {
+  NextMethod("fixupData")
+  x = task$env$data[[target]]
+  if (is.character(x) || is.logical(x) || is.integer(x))
+    task$env$data[[target]] = as.factor(x)
 }
 
 #' @S3method makeTaskDesc ClassifTask

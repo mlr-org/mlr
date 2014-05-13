@@ -3,11 +3,6 @@ removeMissingValues2 = function(x) {
   Filter(Negate(isScalarNA), x)
 }
 
-checkBlocking = function(data, target, blocking) {
-  if(length(blocking) && length(blocking) != nrow(data))
-    stop("Blocking has to be of the same length as number of rows in data! Or pass none at all.")
-}
-
 requireLearnerPackages = function(learner) {
   requirePackages(learner$package, paste("learner", learner$id))
 }
