@@ -11,7 +11,7 @@ makeRLearner.classif.quaDA = function() {
     numerics = TRUE,
     factors = FALSE,
     missings = FALSE,
-    prob = TRUE
+    prob = FALSE
   )
 }
 
