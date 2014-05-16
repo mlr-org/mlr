@@ -31,11 +31,11 @@ makeRLearner.classif.blackboost = function() {
 }
 
 #' @S3method trainLearner classif.blackboost
-trainLearner.classif.blackboost = function(.learner, .task, .subset, .weights, mstop, nu, risk, teststat, testtype, mincriterion, maxdepth, ...) {
+trainLearner.classif.blackboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, risk, teststat, testtype, mincriterion, maxdepth, ...) {
   ctrl = learnerArgsToControl(boost_control, mstop, nu, risk)
   tc = learnerArgsToControl(ctree_control, teststat, testtype, mincriterion, maxdepth)
   f = getTaskFormula(.task)
-  if (!missing(.weights))
+  if (!is.null(.weights))
     blackboost(f, data=getTaskData(.task, .subset), control=ctrl, tree_controls=tc, weights=.weights, ...)
   else
     blackboost(f, data=getTaskData(.task, .subset), control=ctrl, tree_controls=tc, ...)

@@ -24,7 +24,7 @@ makeRLearner.classif.LiblineaRMultiClass = function() {
 }
 
 #' @S3method trainLearner classif.LiblineaRMultiClass
-trainLearner.classif.LiblineaRMultiClass = function(.learner, .task, .subset, .weights, ...) {
+trainLearner.classif.LiblineaRMultiClass = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   LiblineaR(data = d$data, labels = d$target, ...)
 }

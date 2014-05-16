@@ -16,7 +16,7 @@ makeRLearner.classif.fnn = function() {
 }
 
 #' @S3method trainLearner classif.fnn
-trainLearner.classif.fnn = function(.learner, .task, .subset, .weights,  ...) {
+trainLearner.classif.fnn = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra=TRUE)
   list(train=d, parset=list(...))
 }

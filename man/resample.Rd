@@ -30,8 +30,8 @@ bootstrapB632(learner, task, iters = 30, stratify = FALSE, measures,
 bootstrapB632plus(learner, task, iters = 30, stratify = FALSE, measures,
   models = FALSE, ..., show.info = TRUE)
 
-resample(learner, task, resampling, measures, weights, models = FALSE,
-  extract, show.info = TRUE)
+resample(learner, task, resampling, measures, weights = NULL,
+  models = FALSE, extract, show.info = TRUE)
 }
 \arguments{
   \item{learner}{[\code{\link{Learner}} |
@@ -69,8 +69,8 @@ resample(learner, task, resampling, measures, weights, models = FALSE,
   case weight vector to be used during fitting.  If given,
   must be of same length as observations in task and in
   corresponding order.  Overwrites weights specified in the
-  \code{task}.  By default missing which means no weights
-  are used unless specified in the task.}
+  \code{task}.  By default \code{NULL} which means no
+  weights are used unless specified in the task.}
 
   \item{models}{[\code{logical(1)}]\cr Should all fitted
   models be returned?  Default is \code{FALSE}.}

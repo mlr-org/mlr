@@ -26,7 +26,7 @@ makeRLearner.regr.km = function() {
 }
 
 #' @S3method trainLearner regr.km
-trainLearner.regr.km = function(.learner, .task, .subset, .weights,  ...) {
+trainLearner.regr.km = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra=TRUE)
   km(design=d$data, response=d$target, ...)
 }

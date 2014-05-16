@@ -44,9 +44,9 @@ makeRLearner.regr.crs = function() {
 }
 
 #' @S3method trainLearner regr.mob
-trainLearner.regr.crs = function(.learner, .task, .subset, .weights,  ...) {
+trainLearner.regr.crs = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  if (missing(.weights)) {
+  if (is.null(.weights)) {
     crs(f, data=getTaskData(.task, .subset), ...)
   } else  {
     crs(f, data=getTaskData(.task, .subset), weights=.weights, ...)

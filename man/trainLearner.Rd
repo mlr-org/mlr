@@ -2,7 +2,7 @@
 \alias{trainLearner}
 \title{Train an R learner.}
 \usage{
-trainLearner(.learner, .task, .subset, ...)
+trainLearner(.learner, .task, .subset, .weights, ...)
 }
 \arguments{
   \item{.learner}{[\code{\link{RLearner}}]\cr Wrapped
@@ -14,6 +14,9 @@ trainLearner(.learner, .task, .subset, ...)
   \item{.subset}{[\code{integer}]\cr Subset of cases for
   training set, index the task with this.  You probably
   want to use \code{\link{getTaskData}} for this purpose.}
+
+  \item{.weights}{[\code{numeric}]\cr Weights for each
+  observation}
 
   \item{...}{[any]\cr Additional (hyper)parameters, which
   need to be passed to the underlying train function.}

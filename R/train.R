@@ -13,7 +13,7 @@
 #' @param weights [\code{numeric}]\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
 #'   If given, must be of same length as \code{subset} and in corresponding order.
-#'   By default missing which means no weights are used unless specified in the task ([\code{\link{SupervisedTask}}]).
+#'   By default \code{NULL} which means no weights are used unless specified in the task ([\code{\link{SupervisedTask}}]).
 #'   Weights from the task will be overwritten.
 #' @return [\code{\link{WrappedModel}}].
 #' @export
@@ -32,7 +32,7 @@
 #' learner <- makeLearner("classif.rpart", minsplit = 7, predict.type = "prob")
 #' mod <- train(learner, task, subset = training.set)
 #' print(mod)
-train = function(learner, task, subset, weights) {
+train = function(learner, task, subset, weights = NULL) {
   checkArg(learner, "Learner")
   checkArg(task, "SupervisedTask")
   if (missing(subset)) {
@@ -52,7 +52,7 @@ train = function(learner, task, subset, weights) {
   pars = list(.learner=learner, .task=task, .subset=subset)
 
   # FIXME: code is bad here, set weights, the simply check it in checktasklearner
-  if(!missing(weights)) {
+  if(!is.null(weights)) {
     checkArg(weights, "numeric", len=length(subset), na.ok=FALSE, lower=0)
   } else {
     weights = task$weights

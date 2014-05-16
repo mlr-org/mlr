@@ -24,7 +24,7 @@ makeRLearner.classif.LiblineaRLogReg = function() {
 }
 
 #' @S3method trainLearner classif.LiblineaRLogReg
-trainLearner.classif.LiblineaRLogReg = function(.learner, .task, .subset, .weights,  ...) {
+trainLearner.classif.LiblineaRLogReg = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   LiblineaR(data = d$data, labels = d$target, ...)
 }

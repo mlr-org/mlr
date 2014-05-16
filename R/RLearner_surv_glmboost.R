@@ -19,10 +19,10 @@ makeRLearner.surv.glmboost = function() {
 }
 
 #' @S3method trainLearner surv.glmboost
-trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights, mstop, nu, ...) {
+trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, ...) {
   f = getTaskFormula(.task, env=as.environment("package:survival"))
   ctrl = learnerArgsToControl(boost_control, mstop, nu)
-  if (missing(.weights)) {
+  if (is.null(.weights)) {
     glmboost(f, data=getTaskData(.task, .subset), control=ctrl, family=CoxPH())
   } else  {
     glmboost(f, data=getTaskData(.task, .subset), control=ctrl, weights=.weights, ...)

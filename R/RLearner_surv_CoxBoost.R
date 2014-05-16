@@ -24,10 +24,10 @@ makeRLearner.surv.CoxBoost = function() {
 }
 
 #' @S3method trainLearner surv.CoxBoost
-trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights,  ...) {
+trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL,  ...) {
   #FIXME: unnecessary data duplication
   data = getTaskData(.task, subset=.subset, target.extra=TRUE, recode.target="no")
-  if (missing(.weights))
+  if (is.null(.weights))
     .weights = NULL
 
   cb = optimCoxBoostPenalty(

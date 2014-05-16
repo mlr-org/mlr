@@ -16,7 +16,7 @@ makeRLearner.classif.linDA = function() {
 }
 
 #' @S3method trainLearner classif.linDA
-trainLearner.classif.linDA = function(.learner, .task, .subset, .weights,  ...) {
+trainLearner.classif.linDA = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra=TRUE)
   linDA(variables = d$data, group = d$target)
 }

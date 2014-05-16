@@ -22,7 +22,7 @@ makeRLearner.classif.JRip = function() {
 }
 
 #' @S3method trainLearner classif.JRip
-trainLearner.classif.JRip = function(.learner, .task, .subset, .weights,  ...) {
+trainLearner.classif.JRip = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
   ctrl = Weka_control(..., S=as.integer(runif(1, min=-.Machine$integer.max, max=.Machine$integer.max)))
   JRip(f, data=getTaskData(.task, .subset), control=ctrl, na.action=na.pass)

@@ -22,7 +22,7 @@ makeRLearner.classif.kknn = function() {
 }
 
 #' @S3method trainLearner classif.kknn
-trainLearner.classif.kknn = function(.learner, .task, .subset, .weights,  ...) {
+trainLearner.classif.kknn = function(.learner, .task, .subset, .weights = NULL,  ...) {
   list(td=.task$task.desc, data=getTaskData(.task, .subset), parset=list(...))
 }
 

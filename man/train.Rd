@@ -2,7 +2,7 @@
 \alias{train}
 \title{Train a learning algorithm.}
 \usage{
-train(learner, task, subset, weights)
+train(learner, task, subset, weights = NULL)
 }
 \arguments{
   \item{learner}{[\code{\link{Learner}}]\cr The learner.}
@@ -16,8 +16,8 @@ train(learner, task, subset, weights)
   \item{weights}{[\code{numeric}]\cr Optional, non-negative
   case weight vector to be used during fitting.  If given,
   must be of same length as \code{subset} and in
-  corresponding order.  By default missing which means no
-  weights are used unless specified in the task
+  corresponding order.  By default \code{NULL} which means
+  no weights are used unless specified in the task
   ([\code{\link{SupervisedTask}}]).  Weights from the task
   will be overwritten.}
 }

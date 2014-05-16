@@ -31,8 +31,8 @@ makeRLearner.classif.nnet = function() {
 }
 
 #' @S3method trainLearner classif.nnet
-trainLearner.classif.nnet = function(.learner, .task, .subset, .weights,  ...) {
-  if (missing(.weights)) {
+trainLearner.classif.nnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
+  if (is.null(.weights)) {
     f = getTaskFormula(.task)
     nnet(f, data=getTaskData(.task, .subset), ...)
   } else  {

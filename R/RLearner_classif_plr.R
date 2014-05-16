@@ -19,7 +19,7 @@ makeRLearner.classif.plr = function() {
 }
 
 #' @S3method trainLearner classif.plr
-trainLearner.classif.plr = function(.learner, .task, .subset, .weights, cp.type, cp,  ...) {
+trainLearner.classif.plr = function(.learner, .task, .subset, .weights = NULL, cp.type, cp,  ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "01")
   # cp.type has preference
   if (!missing(cp.type))
@@ -30,7 +30,7 @@ trainLearner.classif.plr = function(.learner, .task, .subset, .weights, cp.type,
     cp2 = NULL
   args = list(x = d$data, y = d$target)
   args$cp = cp2
-  if (!missing(.weights))
+  if (!is.null(.weights))
     args$weights = .weights
   args = c(args, list(...))
   do.call(plr, args)

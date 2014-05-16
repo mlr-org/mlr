@@ -73,7 +73,7 @@ makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.
 }
 
 #' @S3method trainLearner BaggingWrapper
-trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights, bag.iters, bag.replace,
+trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL, bag.iters, bag.replace,
   bag.size, bag.feats, ...) {
 
   .task = subsetTask(.task, subset = .subset)

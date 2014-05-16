@@ -22,9 +22,9 @@ makeRLearner.classif.glmboost = function() {
 }
 
 #' @S3method trainLearner classif.glmboost
-trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights, mstop, nu, risk, ...) {
+trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, risk, ...) {
   ctrl = learnerArgsToControl(boost_control, mstop, nu, risk)
-  if (missing(.weights)) {
+  if (is.null(.weights)) {
     f = getTaskFormula(.task)
     glmboost(f, data=getTaskData(.task, .subset), control=ctrl, , ...)
   } else  {

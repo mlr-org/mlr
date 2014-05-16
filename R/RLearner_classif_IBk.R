@@ -22,7 +22,7 @@ makeRLearner.classif.IBk = function() {
 }
 
 #' @S3method trainLearner classif.IBk
-trainLearner.classif.IBk = function(.learner, .task, .subset, .weights,  ...) {
+trainLearner.classif.IBk = function(.learner, .task, .subset, .weights = NULL,  ...) {
   ctrl = Weka_control(...)
   IBk(getTaskFormula(.task), data = getTaskData(.task, .subset), control = ctrl, na.action = na.pass)
 }
