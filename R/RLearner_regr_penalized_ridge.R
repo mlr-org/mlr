@@ -1,4 +1,4 @@
-#' @S3method makeRLearner regr.penalized.ridge
+#' @export
 makeRLearner.regr.penalized.ridge = function() {
   makeRLearnerRegr(
     cl = "regr.penalized.ridge",
@@ -14,13 +14,13 @@ makeRLearner.regr.penalized.ridge = function() {
   )
 }
 
-#' @S3method trainLearner regr.penalized.ridge
-trainLearner.regr.penalized.ridge = function(.learner, .task, .subset, .weights = NULL,  ...) {
+#' @export
+trainLearner.regr.penalized.ridge = function(.learner, .task, .subset, .weights,  ...) {
   f = getTaskFormula(.task)
   penalized(f, data=getTaskData(.task, .subset), ...)
 }
 
-#' @S3method predictLearner regr.penalized.ridge
+#' @export
 predictLearner.regr.penalized.ridge = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   .newdata[,.model$task.desc$target] = 0

@@ -71,7 +71,7 @@ makeTuneWrapper = function(learner, resampling, measures, par.set, control, show
   return(x)
 }
 
-#' @S3method trainLearner TuneWrapper
+#' @export
 trainLearner.TuneWrapper = function(.learner, .task, .subset,  ...) {
   .task = subsetTask(.task, .subset)
   or = tuneParams(.learner$next.learner, .task, .learner$resampling, .learner$measures,
@@ -83,7 +83,7 @@ trainLearner.TuneWrapper = function(.learner, .task, .subset,  ...) {
   return(x)
 }
 
-#' @S3method predictLearner TuneWrapper
+#' @export
 predictLearner.TuneWrapper = function(.learner, .model, .newdata, ...) {
   lrn = setHyperPars(.learner$next.learner,
     par.vals = .model$learner.model$opt.result$x)

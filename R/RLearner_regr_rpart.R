@@ -1,4 +1,4 @@
-#' @S3method makeRLearner regr.rpart
+#' @export
 makeRLearner.regr.rpart = function() {
   makeRLearnerRegr(
     cl = "regr.rpart",
@@ -24,10 +24,10 @@ makeRLearner.regr.rpart = function() {
   )
 }
 
-#' @S3method trainLearner regr.rpart
-trainLearner.regr.rpart = function(.learner, .task, .subset, .weights = NULL,  ...) {
+#' @export
+trainLearner.regr.rpart = function(.learner, .task, .subset, .weights,  ...) {
   d = getTaskData(.task, .subset)
-  if (is.null(.weights)) {
+  if (missing(.weights)) {
     f = getTaskFormula(.task)
     rpart(f, data=d, ...)
   } else  {
@@ -36,7 +36,7 @@ trainLearner.regr.rpart = function(.learner, .task, .subset, .weights = NULL,  .
   }
 }
 
-#' @S3method predictLearner regr.rpart
+#' @export
 predictLearner.regr.rpart = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, newdata=.newdata, ...)
 }

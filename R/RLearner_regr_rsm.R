@@ -1,4 +1,4 @@
-#' @S3method makeRLearner regr.rsm
+#' @export
 makeRLearner.regr.rsm = function() {
   makeRLearnerRegr(
     cl = "regr.rsm",
@@ -15,8 +15,8 @@ makeRLearner.regr.rsm = function() {
   )
 }
 
-#' @S3method trainLearner regr.rsm
-trainLearner.regr.rsm = function(.learner, .task, .subset, .weights = NULL,  ...) {
+#' @export
+trainLearner.regr.rsm = function(.learner, .task, .subset, .weights,  ...) {
   mf = list(...)$modelfun
   vs = paste(getTaskFeatureNames(.task), collapse=",")
   g = function(x) paste(x, "(", vs, ")", sep="")
@@ -32,7 +32,7 @@ trainLearner.regr.rsm = function(.learner, .task, .subset, .weights = NULL,  ...
   do.call(rsm, myargs)
 }
 
-#' @S3method predictLearner regr.rsm
+#' @export
 predictLearner.regr.rsm = function(.learner, .model, .newdata, ...) {
   as.numeric(predict(.model$learner.model, newdata=.newdata, ...))
 }

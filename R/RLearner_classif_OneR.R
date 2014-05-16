@@ -1,4 +1,4 @@
-#' @S3method makeRLearner classif.OneR
+#' @export
 makeRLearner.classif.OneR = function() {
   makeRLearnerClassif(
     cl = "classif.OneR",
@@ -15,14 +15,14 @@ makeRLearner.classif.OneR = function() {
   )
 }
 
-#' @S3method trainLearner classif.OneR
-trainLearner.classif.OneR = function(.learner, .task, .subset, .weights = NULL,  ...) {
+#' @export
+trainLearner.classif.OneR = function(.learner, .task, .subset, .weights,  ...) {
   f = getTaskFormula(.task)
   ctrl = Weka_control(...)
 	OneR(f, data=getTaskData(.task, .subset), control=ctrl, na.action=na.pass)
 }
 
-#' @S3method makeRLearner classif.OneR
+#' @export
 predictLearner.classif.OneR = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, prob="prob", "class")
   predict(.model$learner.model, newdata=.newdata, type=type, ...)

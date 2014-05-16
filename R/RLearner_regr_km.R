@@ -1,4 +1,4 @@
-#' @S3method makeRLearner regr.km
+#' @export
 makeRLearner.regr.km = function() {
   makeRLearnerRegr(
     cl = "regr.km",
@@ -25,13 +25,13 @@ makeRLearner.regr.km = function() {
   )
 }
 
-#' @S3method trainLearner regr.km
-trainLearner.regr.km = function(.learner, .task, .subset, .weights = NULL,  ...) {
+#' @export
+trainLearner.regr.km = function(.learner, .task, .subset, .weights,  ...) {
   d = getTaskData(.task, .subset, target.extra=TRUE)
   km(design=d$data, response=d$target, ...)
 }
 
-#' @S3method predictLearner regr.km
+#' @export
 predictLearner.regr.km = function(.learner, .model, .newdata, jitter, ...) {
   # this is a bit stupid. km with nugget estim seems to perfectly interpolate the data
   # ONLY at exactly the training points

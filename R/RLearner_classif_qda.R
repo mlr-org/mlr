@@ -1,4 +1,4 @@
-#' @S3method makeRLearner classif.qda
+#' @export
 makeRLearner.classif.qda = function() {
   makeRLearnerClassif(
     cl = "classif.qda",
@@ -15,13 +15,13 @@ makeRLearner.classif.qda = function() {
   )
 }
 
-#' @S3method trainLearner classif.qda
-trainLearner.classif.qda = function(.learner, .task, .subset, .weights = NULL,  ...) {
+#' @export
+trainLearner.classif.qda = function(.learner, .task, .subset, .weights,  ...) {
   f = getTaskFormula(.task)
   qda(f, data=getTaskData(.task, .subset), ...)
 }
 
-#' @S3method predictLearner classif.qda
+#' @export
 predictLearner.classif.qda = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata=.newdata, ...)
   if(.learner$predict.type == "response")

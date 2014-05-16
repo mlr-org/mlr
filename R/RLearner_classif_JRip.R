@@ -1,4 +1,4 @@
-#' @S3method makeRLearner classif.JRip
+#' @export
 makeRLearner.classif.JRip = function() {
   makeRLearnerClassif(
     cl = "classif.JRip",
@@ -21,14 +21,14 @@ makeRLearner.classif.JRip = function() {
   )
 }
 
-#' @S3method trainLearner classif.JRip
-trainLearner.classif.JRip = function(.learner, .task, .subset, .weights = NULL,  ...) {
+#' @export
+trainLearner.classif.JRip = function(.learner, .task, .subset, .weights,  ...) {
   f = getTaskFormula(.task)
   ctrl = Weka_control(..., S=as.integer(runif(1, min=-.Machine$integer.max, max=.Machine$integer.max)))
   JRip(f, data=getTaskData(.task, .subset), control=ctrl, na.action=na.pass)
 }
 
-#' @S3method predictLearner classif.JRip
+#' @export
 predictLearner.classif.JRip = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, prob="prob", "class")
   predict(.model$learner.model, newdata=.newdata, type=type, ...)

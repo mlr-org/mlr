@@ -1,4 +1,4 @@
-#' @S3method makeRLearner classif.plsDA
+#' @export
 makeRLearner.classif.plsDA = function() {
   makeRLearnerClassif(
     cl = "classif.plsDA",
@@ -16,13 +16,13 @@ makeRLearner.classif.plsDA = function() {
   )
 }
 
-#' @S3method trainLearner classif.plsDA
-trainLearner.classif.plsDA = function(.learner, .task, .subset, .weights = NULL,  ...) {
+#' @export
+trainLearner.classif.plsDA = function(.learner, .task, .subset, .weights,  ...) {
   d = getTaskData(.task, .subset, target.extra=TRUE)
   plsDA(variables = d$data, group = d$target, ...)
 }
 
-#' @S3method predictLearner classif.plsDA
+#' @export
 predictLearner.classif.plsDA = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   p = classify(m, newdata = .newdata)

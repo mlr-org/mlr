@@ -1,6 +1,6 @@
 # FIXME document BS options
 
-#' @S3method makeRLearner regr.randomForest
+#' @export
 makeRLearner.regr.randomForest = function() {
   makeRLearnerRegr(
     cl = "regr.randomForest",
@@ -33,8 +33,8 @@ makeRLearner.regr.randomForest = function() {
   )
 }
 
-#' @S3method trainLearner regr.randomForest
-trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL, ...) {
+#' @export
+trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights, ...) {
   f = getTaskFormula(.task)
   par.vals = .learner$par.vals
 
@@ -67,7 +67,7 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
   return(m)
 }
 
-#' @S3method predictLearner regr.randomForest
+#' @export
 predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
   if (.learner$par.vals$fix.factors) {
     factors = Filter(is.character, .model$learner.model$forest$xlevels)

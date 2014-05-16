@@ -30,7 +30,7 @@ makeWrappedModel = function(learner, model, task.desc, subset, features, factor.
   UseMethod("makeWrappedModel")
 }
 
-#' @S3method makeWrappedModel Learner
+#' @export
 makeWrappedModel.Learner = function(learner, model, task.desc, subset, features, factor.levels, time) {
   if(is.error(model)) {
     model = as.character(model)
@@ -61,12 +61,12 @@ getLearnerModel = function(model) {
   UseMethod("getLearnerModel")
 }
 
-#'@S3method getLearnerModel WrappedModel
+#' @export
 getLearnerModel.WrappedModel = function(model) {
   model$learner.model
 }
 
-#' @S3method print WrappedModel
+#' @export
 print.WrappedModel = function(x, ...) {
   cat(
     "Learner model for id=", x$learner$id, " class=", class(x$learner)[1L], "\n",

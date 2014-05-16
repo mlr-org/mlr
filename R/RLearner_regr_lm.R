@@ -1,4 +1,4 @@
-#' @S3method makeRLearner regr.lm
+#' @export
 makeRLearner.regr.lm = function() {
   makeRLearnerRegr(
     cl = "regr.lm",
@@ -16,10 +16,10 @@ makeRLearner.regr.lm = function() {
   )
 }
 
-#' @S3method trainLearner regr.lm
-trainLearner.regr.lm = function(.learner, .task, .subset, .weights = NULL,  ...) {
+#' @export
+trainLearner.regr.lm = function(.learner, .task, .subset, .weights,  ...) {
   d = getTaskData(.task, .subset)
-  if (is.null(.weights)) {
+  if (missing(.weights)) {
     f = getTaskFormula(.task)
     lm(f, data=d, ...)
   } else  {
@@ -28,7 +28,7 @@ trainLearner.regr.lm = function(.learner, .task, .subset, .weights = NULL,  ...)
   }
 }
 
-#' @S3method predictLearner regr.lm
+#' @export
 predictLearner.regr.lm = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response") {
     predict(.model$learner.model, newdata=.newdata, se.fit=FALSE, ...)
