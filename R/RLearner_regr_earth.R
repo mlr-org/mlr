@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner regr.earth
 makeRLearner.regr.earth = function() {
   makeRLearnerRegr(
     cl = "regr.earth",
@@ -16,13 +16,13 @@ makeRLearner.regr.earth = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner regr.earth
 trainLearner.regr.earth = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
   earth(f, data=getTaskData(.task, .subset), ...)
 }
 
-#' @export
+#' @S3method predictLearner regr.earth
 predictLearner.regr.earth = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, newdata=.newdata)[, 1L]
 }

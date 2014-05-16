@@ -33,7 +33,7 @@ makeResamplePrediction = function(instance, preds.test, preds.train) {
   ), c("ResamplePrediction", "Prediction"))
 }
 
-#' @export
+#' @S3method print ResamplePrediction
 print.ResamplePrediction = function(x, ...) {
   cat("Resampled Prediction for:\n")
   print(x$instance$desc)

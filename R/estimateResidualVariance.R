@@ -3,7 +3,7 @@ estimateResidualVariance = function(x, task, data, target) {
   UseMethod("estimateResidualVariance")
 }
 
-#' @export
+#' @S3method estimateResidualVariance Learner
 estimateResidualVariance.Learner = function(x, task, data, target) {
   if (missing(task)) {
     checkArg(data, "data.frame")
@@ -16,7 +16,7 @@ estimateResidualVariance.Learner = function(x, task, data, target) {
   estimateResidualVariance.WrappedModel(model, task = task)
 }
 
-#' @export
+#' @S3method estimateResidualVariance WrappedModel
 estimateResidualVariance.WrappedModel = function(x, task, data, target) {
   if (missing(task)) {
     checkArg(data, "data.frame")

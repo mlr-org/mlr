@@ -30,8 +30,8 @@ print(cl2)
 }
 \seealso{
 See \code{\link{getHyperPars}} for a function to retrieve
-  the currently set hyperparameters. To get a list of all hyperparameters of
-  a learner, see the \code{par.set} slot of the \code{\link{Learner}}
-  object.
+the currently set hyperparameters. To get a list of all
+hyperparameters of a learner, see the \code{par.set} slot
+of the \code{\link{Learner}} object.
 }
 

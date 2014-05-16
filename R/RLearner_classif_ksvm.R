@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner classif.ksvm
 makeRLearner.classif.ksvm = function() {
   makeRLearnerClassif(
     cl = "classif.ksvm",
@@ -37,7 +37,7 @@ makeRLearner.classif.ksvm = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner classif.ksvm
 trainLearner.classif.ksvm = function(.learner, .task, .subset, .weights = NULL, degree, offset, scale, sigma, order, length, lambda, normalized,  ...) {
 
   # FIXME custom kernel. freezes? check mailing list
@@ -56,7 +56,7 @@ trainLearner.classif.ksvm = function(.learner, .task, .subset, .weights = NULL, 
     ksvm(f, data=getTaskData(.task, .subset), prob.model=pm, ...)
 }
 
-#' @export
+#' @S3method predictLearner classif.ksvm
 predictLearner.classif.ksvm = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, prob="probabilities", "response")
   kernlab::predict(.model$learner.model, newdata=.newdata, type=type, ...)

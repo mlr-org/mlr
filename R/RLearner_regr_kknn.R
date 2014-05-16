@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner regr.kknn
 makeRLearner.regr.kknn = function() {
   makeRLearnerRegr(
     cl = "regr.kknn",
@@ -17,12 +17,12 @@ makeRLearner.regr.kknn = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner regr.kknn
 trainLearner.regr.kknn = function(.learner, .task, .subset, .weights = NULL,  ...) {
   list(td=.task$task.desc, data=getTaskData(.task, .subset), parset=list(...))
 }
 
-#' @export
+#' @S3method predictLearner regr.kknn
 predictLearner.regr.kknn = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   f = getTaskFormula(.model$task.desc)

@@ -29,7 +29,7 @@ makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
   return(task)
 }
 
-#' @export
+#' @S3method checkTask ClassifTask
 checkTask.ClassifTask = function(task, target, ...) {
   NextMethod("checkTask")
   checkArg(target, "character", len = 1L)
@@ -38,7 +38,7 @@ checkTask.ClassifTask = function(task, target, ...) {
   }
 }
 
-#' @export
+#' @S3method fixupData ClassifTask
 fixupData.ClassifTask = function(task, target, choice, ...) {
   NextMethod("fixupData")
   x = task$env$data[[target]]
@@ -46,7 +46,7 @@ fixupData.ClassifTask = function(task, target, choice, ...) {
     task$env$data[[target]] = as.factor(x)
 }
 
-#' @export
+#' @S3method makeTaskDesc ClassifTask
 makeTaskDesc.ClassifTask = function(task, id, target, positive) {
   td = makeTaskDescInternal(task, "classif", id, target)
   td$class.levels = levels(task$env$data[, target])
@@ -59,7 +59,7 @@ makeTaskDesc.ClassifTask = function(task, id, target, positive) {
   return(addClasses(td, "TaskDescClassif"))
 }
 
-#' @export
+#' @S3method print ClassifTask
 print.ClassifTask = function(x, ...) {
   # remove 1st newline
   di = printToChar(table(getTaskTargets(x)), collapse = NULL)[-1L]

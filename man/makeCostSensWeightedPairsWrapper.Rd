@@ -12,17 +12,19 @@ makeCostSensWeightedPairsWrapper(learner)
 [\code{\link[mlr]{Learner}}].
 }
 \description{
-Creates a wrapper, which can be used like any other learner object.
-Models can easily be accessed via \code{\link{getCostSensWeightedPairsModels}}.
+Creates a wrapper, which can be used like any other learner
+object. Models can easily be accessed via
+\code{\link{getCostSensWeightedPairsModels}}.
 
-For each pair of labels, we fit a binary classifier.
-For each observation we define the label to be the element of the pair with minimal costs.
-During fitting, we also weight the observation with the absolute difference in costs.
+For each pair of labels, we fit a binary classifier. For
+each observation we define the label to be the element of
+the pair with minimal costs. During fitting, we also weight
+the observation with the absolute difference in costs.
 Prediction is performed by simple voting.
 
-This approach is sometimes called cost-sensitive one-vs-one (CS-OVO),
-because it is obviously very similar to the
-one-vs-one approach where one reduces a normal multi-class problem to
-multiple binary ones and aggregates by voting.
+This approach is sometimes called cost-sensitive one-vs-one
+(CS-OVO), because it is obviously very similar to the
+one-vs-one approach where one reduces a normal multi-class
+problem to multiple binary ones and aggregates by voting.
 }
 

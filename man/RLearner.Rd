@@ -70,12 +70,15 @@ makeRLearnerSurv(cl, package, par.set, numerics, factors = FALSE,
   is empty list.}
 }
 \value{
-[\code{\link{RLearnerClassif}}, \code{\link{RLearnerRegr}} or \code{\link{RLearnerSurv}}].
+[\code{\link{RLearnerClassif}}, \code{\link{RLearnerRegr}}
+or \code{\link{RLearnerSurv}}].
 }
 \description{
-Wraps an already implemented learning method from R to make it accessible to mlr.
-Call this method in your constructor. You have to pass an id (name), the required
-package(s), a description object for all changeable parameters (you dont have to do this for the
-learner to work, but it is strongly recommended), and define what the learner can / cannot do.
+Wraps an already implemented learning method from R to make
+it accessible to mlr. Call this method in your constructor.
+You have to pass an id (name), the required package(s), a
+description object for all changeable parameters (you dont
+have to do this for the learner to work, but it is strongly
+recommended), and define what the learner can / cannot do.
 }
 

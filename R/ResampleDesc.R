@@ -85,7 +85,7 @@ makeResampleDescInternal = function(id, iters, predict="test", ...) {
     "ResampleDesc")
 }
 
-#' @export
+#' @S3method print ResampleDesc
 print.ResampleDesc = function(x, ...) {
   catf("Resample description: %s with %i iterations.", x$id, x$iters)
   catf("Predict: %s", x$predict)

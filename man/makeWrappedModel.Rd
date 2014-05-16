@@ -32,12 +32,14 @@ makeWrappedModel(learner, model, task.desc, subset, features, factor.levels,
 [\code{\link{WrappedModel}}].
 }
 \description{
-Result from \code{\link{train}}. It internally stores the underlying fitted model,
-the subset used for training, features used for training, levels of factors in the
-data set and computation time that was spent for training.
+Result from \code{\link{train}}. It internally stores the
+underlying fitted model, the subset used for training,
+features used for training, levels of factors in the data
+set and computation time that was spent for training.
 }
 \details{
-The constructed \code{makeWrappedModel} is only for internal use.
+The constructed \code{makeWrappedModel} is only for
+internal use.
 
 Object members: See arguments.
 }

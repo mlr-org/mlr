@@ -12,10 +12,12 @@ makeCostSensRegrWrapper(learner)
 [\code{\link[mlr]{Learner}}].
 }
 \description{
-Creates a wrapper, which can be used like any other learner object.
-Models can easily be accessed via \code{\link{getCostSensRegrModels}}.
+Creates a wrapper, which can be used like any other learner
+object. Models can easily be accessed via
+\code{\link{getCostSensRegrModels}}.
 
-For each class in the task, an individual regression model is fitted for the costs of that class.
-During prediction, the class with the lowest predicted costs is selected.
+For each class in the task, an individual regression model
+is fitted for the costs of that class. During prediction,
+the class with the lowest predicted costs is selected.
 }
 

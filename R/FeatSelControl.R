@@ -95,7 +95,7 @@ makeFeatSelControl = function(same.resampling.instance, maxit, max.features, ...
 }
 
 
-#' @export
+#' @S3method print FeatSelControl
 print.FeatSelControl = function(x, ...) {
   catf("FeatSel control: %s", class(x)[1])
   catf("Same resampling instance: %s", x$same.resampling.instance)

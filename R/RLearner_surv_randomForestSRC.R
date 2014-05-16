@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner surv.randomForestSRC
 makeRLearner.surv.randomForestSRC = function() {
   makeRLearnerSurv(
     cl = "surv.randomForestSRC",
@@ -19,13 +19,13 @@ makeRLearner.surv.randomForestSRC = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner surv.randomForestSRC
 trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task, env=as.environment("package:survival"))
   rfsrc(getTaskFormula(.task), data = getTaskData(.task, .subset), importance = "none", proximity = FALSE, forest = TRUE, ...)
 }
 
-#' @export
+#' @S3method predictLearner surv.randomForestSRC
 predictLearner.surv.randomForestSRC = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response") {
     predict(.model$learner.model, newdata=.newdata, importance = "none", na.action = "na.impute", ...)$predicted

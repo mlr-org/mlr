@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner regr.mob
 makeRLearner.regr.mob = function() {
   makeRLearnerRegr(
     cl = "regr.mob",
@@ -23,7 +23,7 @@ makeRLearner.regr.mob = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner regr.mob
 trainLearner.regr.mob = function(.learner, .task, .subset, .weights = NULL, alpha, bonferroni, minsplit,
   trim, breakties, part.feats, term.feats, ...) {
 
@@ -47,7 +47,7 @@ trainLearner.regr.mob = function(.learner, .task, .subset, .weights = NULL, alph
   }
 }
 
-#' @export
+#' @S3method predictLearner regr.mob
 predictLearner.regr.mob = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, newdata=.newdata, ...)
 }

@@ -1,4 +1,4 @@
-#' @export
+#' @S3method as.data.frame Prediction
 as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
   x$data
 }

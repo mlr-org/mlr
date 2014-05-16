@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner classif.lda
 makeRLearner.classif.lda = function() {
   makeRLearnerClassif(
     cl = "classif.lda",
@@ -16,13 +16,13 @@ makeRLearner.classif.lda = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner classif.lda
 trainLearner.classif.lda = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
   lda(f, data=getTaskData(.task, .subset), ...)
 }
 
-#' @export
+#' @S3method predictLearner classif.lda
 predictLearner.classif.lda = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata=.newdata, ...)
   if(.learner$predict.type == "response")

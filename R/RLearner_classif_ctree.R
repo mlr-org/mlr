@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner classif.ctree
 makeRLearner.classif.ctree = function() {
   makeRLearnerClassif(
     cl = "classif.ctree",
@@ -26,7 +26,7 @@ makeRLearner.classif.ctree = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner classif.ctree
 trainLearner.classif.ctree = function(.learner, .task, .subset, .weights = NULL, teststat, testtype,
   mincriterion, minsplit, minbucket, stump, nresample, maxsurrogate, mtry,
   savesplitstats, maxdepth, ...) {
@@ -37,7 +37,7 @@ trainLearner.classif.ctree = function(.learner, .task, .subset, .weights = NULL,
   ctree(f, data=getTaskData(.task, .subset), controls=ctrl, ...)
 }
 
-#' @export
+#' @S3method predictLearner classif.ctree
 predictLearner.classif.ctree = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type == "prob") {
     m = .model$learner.model

@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner surv.coxph
 makeRLearner.surv.coxph = function() {
   makeRLearnerSurv(
     cl = "surv.coxph",
@@ -20,7 +20,7 @@ makeRLearner.surv.coxph = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner surv.coxph
 trainLearner.surv.coxph = function(.learner, .task, .subset, .weights = NULL,  ...) {
   if (is.null(.weights)) {
     coxph(
@@ -36,7 +36,7 @@ trainLearner.surv.coxph = function(.learner, .task, .subset, .weights = NULL,  .
   }
 }
 
-#' @export
+#' @S3method predictLearner surv.coxph
 predictLearner.surv.coxph = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response")
     predict(.model$learner.model, newdata=.newdata, type="lp", ...)

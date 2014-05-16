@@ -41,33 +41,38 @@ makeResampleDesc(method, predict = "test", ..., stratify = FALSE)
 [\code{\link{ResampleDesc}}].
 }
 \description{
-A description of a resampling algorithm contains all necessary information to
-create a \code{\link{ResampleInstance}}, when given the size of the data set.
+A description of a resampling algorithm contains all
+necessary information to create a
+\code{\link{ResampleInstance}}, when given the size of the
+data set.
 }
 \details{
-Some notes on some special strategies:
-\describe{
-\item{Repeated cross-validation}{Use \dQuote{RepCV}. Then you have to set the aggregation function
-  for your preferred performance measure to \dQuote{testgroup.mean}
-  via \code{\link{setAggregation}}.}
-\item{B632 bootstrap}{Use \dQuote{Bootstrap} for bootstrap and set predict to \dQuote{both}.
-  Then you have to set the aggregation function for your preferred performance measure to
-  \dQuote{b632} via \code{\link{setAggregation}}.}
-\item{B632+ bootstrap}{Use \dQuote{Bootstrap} for bootstrap and set predict to \dQuote{both}.
-  Then you have to set the aggregation function for your preferred performance measure to
-  \dQuote{b632plus} via \code{\link{setAggregation}}.}
-\item{Fixed Holdout set}{Use \code{\link{makeFixedHoldoutInstance}}.}
-}
+Some notes on some special strategies: \describe{
+\item{Repeated cross-validation}{Use \dQuote{RepCV}. Then
+you have to set the aggregation function for your preferred
+performance measure to \dQuote{testgroup.mean} via
+\code{\link{setAggregation}}.} \item{B632 bootstrap}{Use
+\dQuote{Bootstrap} for bootstrap and set predict to
+\dQuote{both}.  Then you have to set the aggregation
+function for your preferred performance measure to
+\dQuote{b632} via \code{\link{setAggregation}}.}
+\item{B632+ bootstrap}{Use \dQuote{Bootstrap} for bootstrap
+and set predict to \dQuote{both}.  Then you have to set the
+aggregation function for your preferred performance measure
+to \dQuote{b632plus} via \code{\link{setAggregation}}.}
+\item{Fixed Holdout set}{Use
+\code{\link{makeFixedHoldoutInstance}}.} }
 
-Object slots:
-\describe{
-\item{id [\code{character(1)}]}{Name of resampling strategy.}
-\item{iters [\code{integer(1)}]}{Number of iterations. Note that this is always the complete number
-  of generated train/test sets, so for a 10-times repeated 5fold cross-validation it would be 50.}
-\item{predict [\code{character(1)}]}{See argument.}
-\item{stratify [\code{logical(1)}]}{See argument.}
-\item{All parameters passed in ... under the respective argument name}{See arguments.}
-}
+Object slots: \describe{ \item{id
+[\code{character(1)}]}{Name of resampling strategy.}
+\item{iters [\code{integer(1)}]}{Number of iterations. Note
+that this is always the complete number of generated
+train/test sets, so for a 10-times repeated 5fold
+cross-validation it would be 50.} \item{predict
+[\code{character(1)}]}{See argument.} \item{stratify
+[\code{logical(1)}]}{See argument.} \item{All parameters
+passed in ... under the respective argument name}{See
+arguments.} }
 }
 \examples{
 # Bootstraping

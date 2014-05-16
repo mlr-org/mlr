@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner regr.gbm
 makeRLearner.regr.gbm = function() {
   makeRLearnerRegr(
     cl = "regr.gbm",
@@ -21,7 +21,7 @@ makeRLearner.regr.gbm = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner regr.gbm
 trainLearner.regr.gbm = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
   if (is.null(.weights)) {
@@ -33,7 +33,7 @@ trainLearner.regr.gbm = function(.learner, .task, .subset, .weights = NULL,  ...
   }
 }
 
-#' @export
+#' @S3method predictLearner regr.gbm
 predictLearner.regr.gbm = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   predict(m, newdata=.newdata, n.trees=length(m$trees), ...)

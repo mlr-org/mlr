@@ -13,8 +13,9 @@ getProbabilities(pred, cl)
   the positive class for binary classification.}
 }
 \value{
-[\code{data.frame}] with numerical columns or a numerical vector if length of \code{cl} is 1.
-  Order of columns is defined by \code{cl}.
+[\code{data.frame}] with numerical columns or a numerical
+vector if length of \code{cl} is 1.  Order of columns is
+defined by \code{cl}.
 }
 \description{
 Get probabilities for some classes.

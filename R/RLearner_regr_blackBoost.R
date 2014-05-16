@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner regr.blackboost
 makeRLearner.regr.blackboost = function() {
   makeRLearnerRegr(
     cl = "regr.blackboost",

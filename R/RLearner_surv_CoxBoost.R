@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner surv.CoxBoost
 makeRLearner.surv.CoxBoost = function() {
   makeRLearnerSurv(
     cl = "surv.CoxBoost",
@@ -23,7 +23,7 @@ makeRLearner.surv.CoxBoost = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner surv.CoxBoost
 trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL,  ...) {
   #FIXME: unnecessary data duplication
   data = getTaskData(.task, subset=.subset, target.extra=TRUE, recode.target="no")
@@ -52,7 +52,7 @@ trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL,
   )
 }
 
-#' @export
+#' @S3method predictLearner surv.CoxBoost
 predictLearner.surv.CoxBoost = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response")
     as.numeric(predict(.model$learner.model, newdata=as.matrix(.newdata), type="lp"))

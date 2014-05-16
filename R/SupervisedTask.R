@@ -88,7 +88,7 @@ makeSupervisedTask = function(type, data, target, weights = NULL, blocking = NUL
   )
 }
 
-#' @export
+#' @S3method checkTask SupervisedTask
 checkTask.SupervisedTask = function(task, target, ...) {
   checkColumnNames(task$env$data, 'data')
   if (!is.null(task$env$weights))
@@ -123,7 +123,7 @@ checkTask.SupervisedTask = function(task, target, ...) {
   Map(checkColumn, x = task$env$data, cn = colnames(task$env$data))
 }
 
-#' @export
+#' @S3method fixupData SupervisedTask
 fixupData.SupervisedTask = function(task, target, choice) {
   if (choice == "quiet") {
     task$env$data = droplevels(task$env$data)
@@ -152,7 +152,7 @@ checkOrGuessId = function(id, data) {
   return(id)
 }
 
-#' @export
+#' @S3method print SupervisedTask
 print.SupervisedTask = function(x, print.target = TRUE, print.weights = TRUE, ...) {
   td = x$task.desc
   catf("Supervised task: %s", td$id)

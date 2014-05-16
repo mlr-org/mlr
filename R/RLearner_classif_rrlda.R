@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner classif.rrlda
 makeRLearner.classif.rrlda = function() {
   makeRLearnerClassif(
     cl = "classif.rrlda",
@@ -9,7 +9,7 @@ makeRLearner.classif.rrlda = function() {
       makeNumericLearnerParam(id="hp", default=0.75, lower=0),
       makeIntegerLearnerParam(id="nssamples", default=30L, lower=1L),
       makeIntegerLearnerParam(id="maxit", default=50L, lower=1L),
-      makeDiscreteLearnerParam(id="penalty", default="L2", values=c("L1", "L2"))
+      makeDiscreteLearnerParam(id="penalty", default="L2", values=c("L1", "L2"))  
     ),
     twoclass = TRUE,
     multiclass = TRUE,
@@ -21,13 +21,13 @@ makeRLearner.classif.rrlda = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner classif.rrlda
 trainLearner.classif.rrlda = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra=TRUE)
   rrlda(x=d$data, grouping=d$target, ...)
 }
 
-#' @export
+#' @S3method predictLearner classif.rrlda
 predictLearner.classif.rrlda = function(.learner, .model, .newdata, ...) {
   p = as.factor(predict(.model$learner.model, x=.newdata, ...)$class)
 }

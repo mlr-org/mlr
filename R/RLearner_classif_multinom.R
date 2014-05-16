@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner classif.multinom
 makeRLearner.classif.multinom = function() {
   makeRLearnerClassif(
     cl = "classif.multinom",
@@ -24,7 +24,7 @@ makeRLearner.classif.multinom = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner classif.multinom
 trainLearner.classif.multinom = function(.learner, .task, .subset, .weights = NULL,  ...) {
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
@@ -35,7 +35,7 @@ trainLearner.classif.multinom = function(.learner, .task, .subset, .weights = NU
   }
 }
 
-#' @export
+#' @S3method predictLearner classif.multinom
 predictLearner.classif.multinom = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type=="response", "class", "probs")
   levs = .model$task.desc$class.levels

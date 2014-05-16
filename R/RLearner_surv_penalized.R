@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner surv.penalized
 makeRLearner.surv.penalized = function() {
   makeRLearnerSurv(
     cl = "surv.penalized",
@@ -19,13 +19,13 @@ makeRLearner.surv.penalized = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner surv.penalized
 trainLearner.surv.penalized = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task, env = as.environment("package:survival"))
   penalized(f, data=getTaskData(.task, .subset), model = "cox", trace = FALSE, ...)
 }
 
-#' @export
+#' @S3method predictLearner surv.penalized
 predictLearner.surv.penalized = function(.learner, .model, .newdata, ...) {
   model = .learner$learner.model
   .newdata = model.matrix(model@formula$penalized, .newdata)

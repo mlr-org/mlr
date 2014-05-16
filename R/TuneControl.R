@@ -63,7 +63,7 @@ makeTuneControl = function(same.resampling.instance, start, ..., cl) {
   addClasses(x, c(cl, "TuneControl"))
 }
 
-#' @export
+#' @S3method print TuneControl
 print.TuneControl = function(x, ...) {
   catf("Tune control: %s", class(x)[1])
   catf("Same resampling instance: %s", x$same.resampling.instance)

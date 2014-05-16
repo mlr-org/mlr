@@ -51,7 +51,7 @@ makeFilterWrapper = function(learner, fw.method = "random.forest.importance", fw
 }
 
 
-#' @export
+#' @S3method trainLearner FilterWrapper
 trainLearner.FilterWrapper = function(.learner, .task, .subset, fw.method, fw.perc, ...) {
   .task = subsetTask(.task, subset = .subset)
   # FIXME: are all filter vales high = good?
@@ -65,7 +65,7 @@ trainLearner.FilterWrapper = function(.learner, .task, .subset, fw.method, fw.pe
 }
 
 
-#' @export
+#' @S3method predictLearner FilterWrapper
 predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
   NextMethod(.newdata = .newdata[, .model$learner.model$next.model$features, drop = FALSE])
 }

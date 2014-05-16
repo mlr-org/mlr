@@ -25,14 +25,14 @@ oversample = function(obj, target, rate) {
   UseMethod("oversample")
 }
 
-#' @export
+#' @S3method oversample data.frame
 oversample.data.frame = function(obj, target, rate) {
   checkArg(target, "character", na.ok=FALSE)
   checkArg(rate, "numeric", len=1L, na.ok=FALSE, lower=0)
   sampleBinaryClass(obj, target, rate, cl=1L, replace=TRUE)
 }
 
-#' @export
+#' @S3method oversample ClassifTask
 oversample.ClassifTask = function(obj, target, rate) {
   d = oversample(obj$env$data, obj$task.desc$target, rate)
   changeData(obj, d)
@@ -44,14 +44,14 @@ undersample = function(obj, target, rate) {
   UseMethod("undersample")
 }
 
-#' @export
+#' @S3method undersample data.frame
 undersample.data.frame= function(obj, target, rate) {
   checkArg(target, "character", na.ok=FALSE)
   checkArg(rate, "numeric", len=1L, na.ok=FALSE, lower=0, upper=1)
   sampleBinaryClass(obj, target, rate, cl=2L, replace=FALSE)
 }
 
-#' @export
+#' @S3method undersample ClassifTask
 undersample.ClassifTask = function(obj, target, rate) {
   d = undersample(obj$env$data, obj$task.desc$target, rate)
   changeData(obj, d)

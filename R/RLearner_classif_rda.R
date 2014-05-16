@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner classif.rda
 makeRLearner.classif.rda = function() {
   makeRLearnerClassif(
     cl = "classif.rda",
@@ -30,13 +30,13 @@ makeRLearner.classif.rda = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner classif.rda
 trainLearner.classif.rda = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
   rda(f, data=getTaskData(.task, .subset), ...)
 }
 
-#' @export
+#' @S3method predictLearner classif.rda
 predictLearner.classif.rda = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata=.newdata, ...)
   if (.learner$predict.type == "response")

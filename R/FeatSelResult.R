@@ -23,7 +23,7 @@ makeFeatSelResult = function(learner, control, x, y, opt.path) {
 }
 
 
-#' @export
+#' @S3method print FeatSelResult
 print.FeatSelResult = function(x, ...) {
   catf("FeatSel result:")
 

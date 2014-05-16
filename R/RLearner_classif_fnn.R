@@ -1,5 +1,5 @@
 #FIXME: probs can only be predicted for two class problems (winning class)
-#' @export
+#' @S3method makeRLearner classif.fnn
 makeRLearner.classif.fnn = function() {
   makeRLearnerClassif(
     cl = "classif.fnn",
@@ -15,13 +15,13 @@ makeRLearner.classif.fnn = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner classif.fnn
 trainLearner.classif.fnn = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra=TRUE)
   list(train=d, parset=list(...))
 }
 
-#' @export
+#' @S3method predictLearner classif.fnn
 predictLearner.classif.fnn = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   pars = list(train=m$train$data, test=.newdata, cl=m$train$target)

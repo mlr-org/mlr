@@ -9,7 +9,7 @@ getParamSet = function(learner) {
   UseMethod("getParamSet")
 }
 
-#' @export
+#'@S3method getParamSet Learner
 getParamSet.Learner = function(learner) {
   checkArg(learner, "Learner")
   learner$par.set
@@ -32,7 +32,7 @@ getHyperPars = function(learner,  for.fun=c("train", "predict", "both")) {
   UseMethod("getHyperPars")
 }
 
-#' @export
+#' @S3method getHyperPars Learner
 getHyperPars.Learner = function(learner, for.fun=c("train", "predict", "both")) {
   checkArg(learner, "Learner")
   pars = learner$par.set$pars
@@ -91,7 +91,7 @@ setHyperPars2 = function(learner, par.vals) {
   UseMethod("setHyperPars2")
 }
 
-#' @export
+#' @S3method setHyperPars2 Learner
 setHyperPars2.Learner = function(learner, par.vals) {
   ns = names(par.vals)
   pars = learner$par.set$pars

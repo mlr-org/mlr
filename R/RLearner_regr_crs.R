@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner regr.crs
 makeRLearner.regr.crs = function() {
   makeRLearnerRegr(
     cl = "regr.crs",
@@ -43,7 +43,7 @@ makeRLearner.regr.crs = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner regr.mob
 trainLearner.regr.crs = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
   if (is.null(.weights)) {
@@ -53,7 +53,7 @@ trainLearner.regr.crs = function(.learner, .task, .subset, .weights = NULL,  ...
   }
 }
 
-#' @export
+#' @S3method predictLearner regr.crs
 predictLearner.regr.crs = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type == "se") {
     pred = predict(.model$learner.model, newdata=.newdata, ...)

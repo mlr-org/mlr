@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner classif.LiblineaRLogReg
 makeRLearner.classif.LiblineaRLogReg = function() {
   makeRLearnerClassif(
     cl = "classif.LiblineaRLogReg",
@@ -23,13 +23,13 @@ makeRLearner.classif.LiblineaRLogReg = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner classif.LiblineaRLogReg
 trainLearner.classif.LiblineaRLogReg = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   LiblineaR(data = d$data, labels = d$target, ...)
 }
 
-#' @export
+#' @S3method predictLearner classif.LiblineaRLogReg
 predictLearner.classif.LiblineaRLogReg = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response")
     p = as.factor(predict(.model$learner.model, newx = .newdata, ...)$predictions)

@@ -48,7 +48,7 @@ makeAggregation = function(id, fun) {
   setClasses(list(id=id, fun=fun), "Aggregation")
 }
 
-#' @export
+#' @S3method print Aggregation
 print.Aggregation = function(x, ...) {
   catf("Aggregation function: %s", x$id)
 }

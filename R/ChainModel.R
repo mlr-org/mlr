@@ -4,14 +4,14 @@ makeChainModel = function(next.model, cl) {
 }
 
 
-#' @export
+#' @S3method makeWrappedModel BaseWrapper
 makeWrappedModel.BaseWrapper = function(learner, model, task.desc, subset, features, factor.levels, time) {
   x = NextMethod()
   addClasses(x, "BaseWrapperModel")
 }
 
 
-#' @export
+#' @S3method print BaseWrapperModel
 print.BaseWrapperModel = function(x, ...) {
   leafm = getLeafModel(x)
   catf("Learner model for id=%s chain=%s",

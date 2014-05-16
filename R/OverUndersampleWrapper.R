@@ -45,7 +45,7 @@ makeOversampleWrapper = function(learner, osw.rate) {
   makeBaseWrapper(id, learner, package="mlr", par.set=ps, par.vals=pv, cl="OversampleWrapper")
 }
 
-#' @export
+#' @S3method trainLearner UndersampleWrapper
 trainLearner.UndersampleWrapper = function(.learner, .task, .subset, usw.rate, ...) {
   .task = subsetTask(.task, .subset)
   .task = undersample(.task, rate=usw.rate)
@@ -54,7 +54,7 @@ trainLearner.UndersampleWrapper = function(.learner, .task, .subset, usw.rate, .
   return(x)
 }
 
-#' @export
+#' @S3method trainLearner OversampleWrapper
 trainLearner.OversampleWrapper = function(.learner, .task, .subset, osw.rate, ...) {
   .task = subsetTask(.task, .subset)
   .task = oversample(.task, rate=osw.rate)

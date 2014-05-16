@@ -31,13 +31,15 @@ getFeatureFilterValues(task, method = "random.forest.importance")
   Default is \dQuote{random.forest.importance}.}
 }
 \value{
-[\code{numeric}]. A named numeric vector that contains an importance value
-  for each feature.
+[\code{numeric}]. A named numeric vector that contains an
+importance value for each feature.
 }
 \description{
 Calculates numerical importance values for all features.
-Thresholding of these values can be used to select \dQuote{useful} features.
-Look at package \code{\link[FSelector]{FSelector}} for details on the filter algorithms.
+Thresholding of these values can be used to select
+\dQuote{useful} features. Look at package
+\code{\link[FSelector]{FSelector}} for details on the
+filter algorithms.
 }
 \seealso{
 \code{\link{makeFilterWrapper}}

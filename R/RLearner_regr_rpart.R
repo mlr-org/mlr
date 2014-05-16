@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner regr.rpart
 makeRLearner.regr.rpart = function() {
   makeRLearnerRegr(
     cl = "regr.rpart",
@@ -24,7 +24,7 @@ makeRLearner.regr.rpart = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner regr.rpart
 trainLearner.regr.rpart = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset)
   if (is.null(.weights)) {
@@ -36,7 +36,7 @@ trainLearner.regr.rpart = function(.learner, .task, .subset, .weights = NULL,  .
   }
 }
 
-#' @export
+#' @S3method predictLearner regr.rpart
 predictLearner.regr.rpart = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, newdata=.newdata, ...)
 }

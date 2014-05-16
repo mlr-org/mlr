@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner classif.nnet
 makeRLearner.classif.nnet = function() {
   makeRLearnerClassif(
     cl = "classif.nnet",
@@ -30,7 +30,7 @@ makeRLearner.classif.nnet = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner classif.nnet
 trainLearner.classif.nnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
@@ -41,7 +41,7 @@ trainLearner.classif.nnet = function(.learner, .task, .subset, .weights = NULL, 
   }
 }
 
-#' @export
+#' @S3method predictLearner classif.nnet
 predictLearner.classif.nnet = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, response="class", prob="raw")
   p = predict(.model$learner.model, newdata=.newdata, type=type, ...)

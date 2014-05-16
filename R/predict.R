@@ -21,7 +21,7 @@
 #'   Currently ignored.
 #' @return [\code{\link{Prediction}}].
 #' @method predict WrappedModel
-#' @export
+#' @S3method predict WrappedModel
 #' @note To extract probabilities use \code{\link{getProbabilities}}.
 #' @examples
 #' ## split iris data in training and test set

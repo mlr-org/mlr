@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner classif.rpart
 makeRLearner.classif.rpart = function() {
   makeRLearnerClassif(
     cl = "classif.rpart",
@@ -27,8 +27,8 @@ makeRLearner.classif.rpart = function() {
   )
 }
 
-#' @export
-trainLearner.classif.rpart = function(.learner, .task, .subset, .weights = NULL,  ...) {
+#' @S3method trainLearner classif.rpart
+trainLearner.classif.rpart = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
@@ -39,7 +39,7 @@ trainLearner.classif.rpart = function(.learner, .task, .subset, .weights = NULL,
   }
 }
 
-#' @export
+#' @S3method predictLearner classif.rpart
 predictLearner.classif.rpart = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, prob="prob", "class")
   predict(.model$learner.model, newdata=.newdata, type=type, ...)

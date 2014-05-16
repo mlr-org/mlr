@@ -18,7 +18,8 @@ filterFeatures(feat.importance, n, threshold = 0)
 [\code{character}]
 }
 \description{
-Returns the selected Features according to their importance.
-Features with an importance value of 0 will be left out regardeless of the given \code{n}.
+Returns the selected Features according to their
+importance. Features with an importance value of 0 will be
+left out regardeless of the given \code{n}.
 }
 

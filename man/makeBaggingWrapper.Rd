@@ -35,22 +35,23 @@ makeBaggingWrapper(learner, bag.iters = 10L, bag.replace = TRUE, bag.size,
 [\code{\link{Learner}}].
 }
 \description{
-Fuses a learner with the bagging method
-(i.e., similar to what a \code{randomForest} does).
-Creates a learner object, which can be
-used like any other learner object.
-Models can easily be accessed via \code{\link{getBaggingModels}}.
+Fuses a learner with the bagging method (i.e., similar to
+what a \code{randomForest} does). Creates a learner object,
+which can be used like any other learner object. Models can
+easily be accessed via \code{\link{getBaggingModels}}.
 }
 \details{
-Bagging is implemented as follows:
-For each iteration a random data subset is sampled (with or without replacement)
-and potentially the number of features is also restricted to
-a random subset. Note that this is usually handled in a slightly different way
-in the random forest where features are sampled at each tree split).
+Bagging is implemented as follows: For each iteration a
+random data subset is sampled (with or without replacement)
+and potentially the number of features is also restricted
+to a random subset. Note that this is usually handled in a
+slightly different way in the random forest where features
+are sampled at each tree split).
 
-Prediction works as follows:
-For classification we do majority voting to create a discrete label and
-probabilities are predicted by considering the proportions of all predicted labels.
-For regression the mean value and the standard deviations across predictions is computed.
+Prediction works as follows: For classification we do
+majority voting to create a discrete label and
+probabilities are predicted by considering the proportions
+of all predicted labels. For regression the mean value and
+the standard deviations across predictions is computed.
 }
 

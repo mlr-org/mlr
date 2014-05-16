@@ -77,7 +77,7 @@ makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.
   return(x)
 }
 
-#' @export
+#' @S3method trainLearner FeatSelWrapper
 trainLearner.FeatSelWrapper = function(.learner, .task, .subset,  ...) {
   task = subsetTask(.task, .subset)
   if (length(.learner$bit.names) == 0)
@@ -95,7 +95,7 @@ trainLearner.FeatSelWrapper = function(.learner, .task, .subset,  ...) {
   return(x)
 }
 
-#' @export
+#' @S3method predictLearner FeatSelWrapper
 predictLearner.FeatSelWrapper = function(.learner, .model, .newdata, ...) {
   .newdata = .newdata[, .model$learner.model$opt.result$x, drop = FALSE]
   predictLearner(.learner$next.learner, .model$learner.model$next.model, .newdata, ...)

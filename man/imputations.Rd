@@ -91,21 +91,21 @@ imputeLearner(learner, preimpute = list())
   Default is \code{list()}.}
 }
 \description{
-Built in imputation methods
-The built-ins are:
-\itemize{
-  \item \code{imputeConstant(const)} for imputation using a constant value,
-  \item \code{imputeMedian()} for imputation using the median,
-  \item \code{imputeMode()} for imputation using the mode,
-  \item \code{imputeMin(multiplier)} for imputation using the minimum,
-  \item \code{imputeMax(multiplier)} for imputation using the maximum,
-  \item \code{imputeNormal(mean, sd)} for imputation using normally
-    distributed random values. Mean and standard deviation will be calculated
-    from the data if not provided.
-  \item \code{imputeHist(breaks, use.mids)} for imputation using random values
-    with probabilities calculated using \code{table} or \code{hist}.
-  \item \code{imputeLearner(learner, preimpute)} for imputations using the response
-    of a classification or regression learner.
-}
+Built in imputation methods The built-ins are: \itemize{
+\item \code{imputeConstant(const)} for imputation using a
+constant value, \item \code{imputeMedian()} for imputation
+using the median, \item \code{imputeMode()} for imputation
+using the mode, \item \code{imputeMin(multiplier)} for
+imputation using the minimum, \item
+\code{imputeMax(multiplier)} for imputation using the
+maximum, \item \code{imputeNormal(mean, sd)} for imputation
+using normally distributed random values. Mean and standard
+deviation will be calculated from the data if not provided.
+\item \code{imputeHist(breaks, use.mids)} for imputation
+using random values with probabilities calculated using
+\code{table} or \code{hist}.  \item
+\code{imputeLearner(learner, preimpute)} for imputations
+using the response of a classification or regression
+learner. }
 }
 

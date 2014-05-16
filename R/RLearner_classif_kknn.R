@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner classif.kknn
 makeRLearner.classif.kknn = function() {
   makeRLearnerClassif(
     cl = "classif.kknn",
@@ -21,12 +21,12 @@ makeRLearner.classif.kknn = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner classif.kknn
 trainLearner.classif.kknn = function(.learner, .task, .subset, .weights = NULL,  ...) {
   list(td=.task$task.desc, data=getTaskData(.task, .subset), parset=list(...))
 }
 
-#' @export
+#' @S3method predictLearner classif.kknn
 predictLearner.classif.kknn = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   f = getTaskFormula(.model$task.desc)

@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner regr.penalized.lasso
 makeRLearner.regr.penalized.lasso = function() {
   makeRLearnerRegr(
     cl = "regr.penalized.lasso",
@@ -14,13 +14,13 @@ makeRLearner.regr.penalized.lasso = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner regr.penalized.lasso
 trainLearner.regr.penalized.lasso = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
   penalized(f, data=getTaskData(.task, .subset), ...)
 }
 
-#' @export
+#' @S3method predictLearner regr.penalized.lasso
 predictLearner.regr.penalized.lasso = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   .newdata[,.model$task.desc$target] = 0

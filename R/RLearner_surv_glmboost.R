@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner surv.glmboost
 makeRLearner.surv.glmboost = function() {
   makeRLearnerSurv(
     cl = "surv.glmboost",
@@ -18,7 +18,7 @@ makeRLearner.surv.glmboost = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner surv.glmboost
 trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, ...) {
   f = getTaskFormula(.task, env=as.environment("package:survival"))
   ctrl = learnerArgsToControl(boost_control, mstop, nu)
@@ -29,7 +29,7 @@ trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL,
   }
 }
 
-#' @export
+#' @S3method predictLearner surv.glmboost
 predictLearner.surv.glmboost = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response")
     predict(.model$learner.model, newdata = .newdata, type = "link")

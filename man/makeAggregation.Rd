@@ -25,8 +25,9 @@ makeAggregation(id, fun)
 \link{Aggregation} object
 }
 \description{
-This is an adavanced feature of mlr. It gives access to some
-inner workings so the result might not be compatible with everything! \cr
+This is an adavanced feature of mlr. It gives access to
+some inner workings so the result might not be compatible
+with everything! \cr
 }
 \examples{
 # computes the interquartile range on all performance values

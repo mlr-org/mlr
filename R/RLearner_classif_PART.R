@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner classif.PART
 makeRLearner.classif.PART = function() {
   makeRLearnerClassif(
    cl = "classif.PART",
@@ -21,14 +21,14 @@ makeRLearner.classif.PART = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner classif.PART
 trainLearner.classif.PART = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
   ctrl = Weka_control(..., Q=as.integer(runif(1L, min=-.Machine$integer.max, max=.Machine$integer.max)))
   PART(f, data=getTaskData(.task, .subset), control=ctrl, na.action=na.pass)
 }
 
-#' @export
+#' @S3method predictLearner classif.PART
 predictLearner.classif.PART = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, prob="prob", "class")
   predict(.model$learner.model, newdata=.newdata, type=type, ...)

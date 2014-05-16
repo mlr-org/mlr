@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner regr.rvm
 makeRLearner.regr.rvm = function() {
   makeRLearnerRegr(
     cl = "regr.rvm",
@@ -35,7 +35,7 @@ makeRLearner.regr.rvm = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner regr.rvm
 trainLearner.regr.rvm = function(.learner, .task, .subset, .weights = NULL, degree, offset, scale, sigma, order, length, lambda, normalized, ...) {
   kpar = learnerArgsToControl(list, degree, offset, scale, sigma, order, length, lambda, normalized)
   f = getTaskFormula(.task)
@@ -45,7 +45,7 @@ trainLearner.regr.rvm = function(.learner, .task, .subset, .weights = NULL, degr
     rvm(f, data=getTaskData(.task, .subset), ...)
 }
 
-#' @export
+#' @S3method predictLearner regr.rvm
 predictLearner.regr.rvm = function(.learner, .model, .newdata, ...) {
   kernlab::predict(.model$learner.model, newdata=.newdata, ...)[,1]
 }

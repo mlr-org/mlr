@@ -1,4 +1,4 @@
-#' @export
+#' @S3method makeRLearner regr.nnet
 makeRLearner.regr.nnet = function() {
   makeRLearnerRegr(
     cl = "regr.nnet",
@@ -28,7 +28,7 @@ makeRLearner.regr.nnet = function() {
   )
 }
 
-#' @export
+#' @S3method trainLearner regr.nnet
 trainLearner.regr.nnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
@@ -39,7 +39,7 @@ trainLearner.regr.nnet = function(.learner, .task, .subset, .weights = NULL,  ..
   }
 }
 
-#' @export
+#' @S3method predictLearner regr.nnet
 predictLearner.regr.nnet = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, newdata=.newdata, ...)[, 1L]
 }

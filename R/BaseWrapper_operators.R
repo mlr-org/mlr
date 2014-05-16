@@ -1,16 +1,16 @@
-#' @export
+#' @S3method getParamSet BaseWrapper
 getParamSet.BaseWrapper = function(learner) {
   c(learner$par.set, getParamSet(learner$next.learner))
 }
 
 
-#' @export
+#' @S3method getHyperPars BaseWrapper
 getHyperPars.BaseWrapper = function(learner, for.fun="train") {
   c(getHyperPars(learner$next.learner, for.fun), getHyperPars.Learner(learner, for.fun))
 }
 
 
-#' @export
+#' @S3method setHyperPars2 BaseWrapper
 setHyperPars2.BaseWrapper = function(learner, par.vals) {
   ns = names(par.vals)
   pds.n = names(learner$par.set$pars)
