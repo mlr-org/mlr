@@ -46,7 +46,7 @@ makePreprocWrapper = function(learner, train, predict, par.set = makeParamSet(),
   return(x)
 }
 
-#' @S3method trainLearner PreprocWrapper
+#' @export
 trainLearner.PreprocWrapper = function(.learner, .task, .subset, ...) {
   pvs = .learner$par.vals
   pp = .learner$train(data = getTaskData(.task, .subset),
@@ -66,7 +66,7 @@ trainLearner.PreprocWrapper = function(.learner, .task, .subset, ...) {
 }
 
 
-#' @S3method predictLearner PreprocWrapper
+#' @export
 predictLearner.PreprocWrapper = function(.learner, .model, .newdata, ...) {
   .newdata = .learner$predict(.newdata, .model$task.desc$target,
     .learner$par.vals, .model$learner.model$control)

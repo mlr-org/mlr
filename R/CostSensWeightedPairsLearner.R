@@ -30,7 +30,7 @@ makeCostSensWeightedPairsWrapper = function(learner) {
   x
 }
 
-#' @S3method trainLearner CostSensWeightedPairsWrapper
+#' @export
 trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset, ...) {
   # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
@@ -63,7 +63,7 @@ trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset, .
 }
 
 
-#' @S3method predictLearner CostSensWeightedPairsWrapper
+#' @export
 predictLearner.CostSensWeightedPairsWrapper = function(.learner, .model, .newdata, ...) {
   classes = .model$task.desc$class.levels
   models = getCostSensWeightedPairsModels(.model)
@@ -78,7 +78,7 @@ predictLearner.CostSensWeightedPairsWrapper = function(.learner, .model, .newdat
 }
 
 
-#' @S3method makeWrappedModel CostSensWeightedPairsWrapper
+#' @export
 makeWrappedModel.CostSensWeightedPairsWrapper = function(learner, model, task.desc, subset, features,
   factor.levels, time) {
 

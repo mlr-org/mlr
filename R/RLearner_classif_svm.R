@@ -1,4 +1,4 @@
-#' @S3method makeRLearner classif.svm
+#' @export
 makeRLearner.classif.svm = function() {
   makeRLearnerClassif(
     cl = "classif.svm",
@@ -25,13 +25,13 @@ makeRLearner.classif.svm = function() {
   )
 }
 
-#' @S3method trainLearner classif.svm
+#' @export
 trainLearner.classif.svm = function(.learner, .task, .subset, .weights,  ...) {
   f = getTaskFormula(.task)
   svm(f, data=getTaskData(.task, .subset), probability=.learner$predict.type == "prob", ...)
 }
 
-#' @S3method predictLearner classif.svm
+#' @export
 predictLearner.classif.svm = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response") {
     predict(.model$learner.model, newdata=.newdata, ...)

@@ -16,7 +16,7 @@ makeRegrTask = function(id, data, target, weights = NULL, blocking = NULL,
   return(task)
 }
 
-#' @S3method checkTask RegrTask
+#' @export
 checkTask.RegrTask = function(task, target, ...) {
   NextMethod("checkTask")
   checkArg(target, "character", len = 1L)
@@ -24,7 +24,7 @@ checkTask.RegrTask = function(task, target, ...) {
     stopf("Target column '%s' must be numeric", target)
 }
 
-#' @S3method fixupData RegrTask
+#' @export
 fixupData.RegrTask = function(task, target, choice, ...) {
   NextMethod("fixupData")
   x = task$env$data[[target]]
@@ -32,7 +32,7 @@ fixupData.RegrTask = function(task, target, choice, ...) {
     task$env$data[[target]] = as.numeric(x)
 }
 
-#' @S3method makeTaskDesc RegrTask
+#' @export
 makeTaskDesc.RegrTask = function(task, id, target) {
   addClasses(makeTaskDescInternal(task, "regr", id, target), "TaskDescRegr")
 }

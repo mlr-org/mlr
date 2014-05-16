@@ -1,4 +1,4 @@
-#' @S3method makeRLearner classif.geoDA
+#' @export
 makeRLearner.classif.geoDA = function() {
   makeRLearnerClassif(
     cl = "classif.geoDA",
@@ -12,13 +12,13 @@ makeRLearner.classif.geoDA = function() {
   )
 }
 
-#' @S3method trainLearner classif.geoDA
+#' @export
 trainLearner.classif.geoDA = function(.learner, .task, .subset, .weights,  ...) {
   d = getTaskData(.task, .subset, target.extra=TRUE)
   geoDA(variables = d$data, group = d$target)
 }
 
-#' @S3method predictLearner classif.geoDA
+#' @export
 predictLearner.classif.geoDA = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   p = classify(m, newdata = .newdata)

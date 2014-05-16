@@ -1,5 +1,5 @@
 # checked props
-#' @S3method makeRLearner classif.J48
+#' @export
 makeRLearner.classif.J48 = function() {
   makeRLearnerClassif(
     cl = "classif.J48",
@@ -26,14 +26,14 @@ makeRLearner.classif.J48 = function() {
   )
 }
 
-#' @S3method trainLearner classif.J48
+#' @export
 trainLearner.classif.J48 = function(.learner, .task, .subset, .weights,  ...) {
   ctrl = Weka_control(..., Q=as.integer(runif(1, min=-.Machine$integer.max, max=.Machine$integer.max)))
   f = getTaskFormulaAsString(.task)
   J48(as.formula(f), data=getTaskData(.task, .subset), control=ctrl, na.action=na.pass)
 }
 
-#' @S3method predictLearner classif.J48
+#' @export
 predictLearner.classif.J48 = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, prob="prob", "class")
   predict(.model$learner.model, newdata=.newdata, type=type, ...)

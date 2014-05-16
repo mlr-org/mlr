@@ -55,7 +55,7 @@ makeLearner = function(cl, id = cl, predict.type = "response", ..., par.vals = l
   return(wl)
 }
 
-#' @S3method print Learner
+#' @export
 print.Learner = function(x, ...) {
   cat(
     "Learner ", x$id, " from package ", collapse(x$package), "\n",

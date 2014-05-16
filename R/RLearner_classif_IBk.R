@@ -1,4 +1,4 @@
-#' @S3method makeRLearner classif.IBk
+#' @export
 makeRLearner.classif.IBk = function() {
   makeRLearnerClassif(
     cl = "classif.IBk",
@@ -21,13 +21,13 @@ makeRLearner.classif.IBk = function() {
   )
 }
 
-#' @S3method trainLearner classif.IBk
+#' @export
 trainLearner.classif.IBk = function(.learner, .task, .subset, .weights,  ...) {
   ctrl = Weka_control(...)
   IBk(getTaskFormula(.task), data = getTaskData(.task, .subset), control = ctrl, na.action = na.pass)
 }
 
-#' @S3method predictLearner classif.IBk
+#' @export
 predictLearner.classif.IBk = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, prob = "prob", "class")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)

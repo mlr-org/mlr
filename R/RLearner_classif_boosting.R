@@ -1,5 +1,5 @@
 # FIXME: interface was changed, read page, pars, maybe rename
-#' @S3method makeRLearner classif.boosting
+#' @export
 makeRLearner.classif.boosting = function() {
   makeRLearnerClassif(
     cl = "classif.boosting",
@@ -30,14 +30,14 @@ makeRLearner.classif.boosting = function() {
   )
 }
 
-#' @S3method trainLearner classif.boosting
+#' @export
 trainLearner.classif.boosting= function(.learner, .task, .subset, .weights, minsplit, minbucket, cp, maxcompete, maxsurrogate, usesurrogate, surrogatestyle, maxdepth, xval, ...) {
   f = getTaskFormula(.task)
   ctrl = learnerArgsToControl(rpart.control, minsplit, minbucket, cp, maxcompete, maxsurrogate, usesurrogate, surrogatestyle, maxdepth, xval)
   boosting(f, data=getTaskData(.task, .subset), control=ctrl, ...)
 }
 
-#' @S3method predictLearner classif.boosting
+#' @export
 predictLearner.classif.boosting = function(.learner, .model, .newdata, ...) {
   levs = levels=.model$task.desc$class.levels
   # stupid adaboost

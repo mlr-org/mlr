@@ -1,4 +1,4 @@
-#' @S3method makeRLearner classif.plr
+#' @export
 makeRLearner.classif.plr = function() {
   makeRLearnerClassif(
     cl = "classif.plr",
@@ -18,7 +18,7 @@ makeRLearner.classif.plr = function() {
   )
 }
 
-#' @S3method trainLearner classif.plr
+#' @export
 trainLearner.classif.plr = function(.learner, .task, .subset, .weights, cp.type, cp,  ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "01")
   # cp.type has preference
@@ -36,7 +36,7 @@ trainLearner.classif.plr = function(.learner, .task, .subset, .weights, cp.type,
   do.call(plr, args)
 }
 
-#' @S3method predictLearner classif.plr
+#' @export
 predictLearner.classif.plr = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newx = .newdata, type = "response", ...)
   levs = c(.model$task.desc$negative, .model$task.desc$positive)
