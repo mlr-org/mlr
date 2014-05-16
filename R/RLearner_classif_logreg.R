@@ -13,7 +13,7 @@ makeRLearner.classif.logreg = function() {
 }
 
 #' @export
-trainLearner.classif.logreg = function(.learner, .task, .subset, .weights,  ...) {
+trainLearner.classif.logreg = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
   glm(f, data=getTaskData(.task, .subset), model=FALSE, family="binomial", ...)
 }

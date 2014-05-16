@@ -24,7 +24,7 @@ makeRLearner.classif.LiblineaRBinary = function() {
 }
 
 #' @export
-trainLearner.classif.LiblineaRBinary = function(.learner, .task, .subset, .weights, ...) {
+trainLearner.classif.LiblineaRBinary = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   LiblineaR(data = d$data, labels = d$target, ...)
 }

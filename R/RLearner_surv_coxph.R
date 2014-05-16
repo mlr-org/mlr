@@ -21,8 +21,8 @@ makeRLearner.surv.coxph = function() {
 }
 
 #' @export
-trainLearner.surv.coxph = function(.learner, .task, .subset, .weights,  ...) {
-  if (missing(.weights)) {
+trainLearner.surv.coxph = function(.learner, .task, .subset, .weights = NULL,  ...) {
+  if (is.null(.weights)) {
     coxph(
       formula = getTaskFormula(.task, env=as.environment("package:survival")),
       data = getTaskData(.task, subset=.subset),

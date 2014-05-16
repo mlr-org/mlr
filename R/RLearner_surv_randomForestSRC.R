@@ -20,7 +20,7 @@ makeRLearner.surv.randomForestSRC = function() {
 }
 
 #' @export
-trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights,  ...) {
+trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task, env=as.environment("package:survival"))
   rfsrc(getTaskFormula(.task), data = getTaskData(.task, .subset), importance = "none", proximity = FALSE, forest = TRUE, ...)
 }

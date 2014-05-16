@@ -21,7 +21,7 @@ makeRLearner.classif.knn = function() {
 }
 
 #' @export
-trainLearner.classif.knn = function(.learner, .task, .subset, .weights,  ...) {
+trainLearner.classif.knn = function(.learner, .task, .subset, .weights = NULL,  ...) {
   z = getTaskData(.task, .subset, target.extra = TRUE)
   c(list(train = z$data, cl = z$target), list(...))
 }

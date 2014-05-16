@@ -16,10 +16,10 @@ makeRLearner.surv.glmnet = function() {
 }
 
 #' @export
-trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights,  ...) {
+trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
   #FIXME: unnecessary data duplication
   data = getTaskData(.task, subset=.subset, target.extra=TRUE, recode.target="surv")
-  if (missing(.weights)) {
+  if (is.null(.weights)) {
     cv.glmnet(y=data$target, x=as.matrix(data$data), family="cox", ...)
   } else  {
     cv.glmnet(y=data$target, x=as.matrix(data$data), weights=.weights, family="cox", ...)

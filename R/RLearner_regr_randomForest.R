@@ -34,7 +34,7 @@ makeRLearner.regr.randomForest = function() {
 }
 
 #' @export
-trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights, ...) {
+trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = NULL, ...) {
   f = getTaskFormula(.task)
   par.vals = .learner$par.vals
 

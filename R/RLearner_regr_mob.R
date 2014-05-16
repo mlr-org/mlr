@@ -24,7 +24,7 @@ makeRLearner.regr.mob = function() {
 }
 
 #' @export
-trainLearner.regr.mob = function(.learner, .task, .subset, .weights, alpha, bonferroni, minsplit,
+trainLearner.regr.mob = function(.learner, .task, .subset, .weights = NULL, alpha, bonferroni, minsplit,
   trim, breakties, part.feats, term.feats, ...) {
 
   cntrl = learnerArgsToControl(mob_control, alpha, bonferroni, minsplit, trim, breakties)
@@ -40,7 +40,7 @@ trainLearner.regr.mob = function(.learner, .task, .subset, .weights, alpha, bonf
   target = .task$task.desc$target
   f = as.formula(paste(target, "~", collapse(term.feats, sep=" + "), "|", collapse(part.feats, sep=" + ")))
 
-  if (missing(.weights)) {
+  if (is.null(.weights)) {
     mob(f, data=getTaskData(.task, .subset), control = cntrl, ...)
   } else  {
     mob(f, data=getTaskData(.task, .subset), control = cntrl, weights=.weights, ...)

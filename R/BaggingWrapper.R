@@ -72,7 +72,7 @@ makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.
   x
 }
 
-#' @S3method trainLearner BaggingWrapper
+#' @export
 trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL, bag.iters, bag.replace,
   bag.size, bag.feats, ...) {
 
@@ -98,7 +98,7 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL
   makeChainModel(next.model=models, cl="BaggingModel")
 }
 
-#' @S3method predictLearner BaggingWrapper
+#' @export
 predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
   models = getBaggingModels(.model)
   g = if(.learner$type == "classif") as.character else identity
@@ -125,15 +125,14 @@ predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
   }
 }
 
-
-#' @S3method makeWrappedModel BaggingWrapper
+#' @export
 makeWrappedModel.BaggingWrapper = function(learner, model, task.desc, subset, features, factor.levels, time) {
   x = NextMethod()
   class(x) = c("BaggingModel", class(x))
   return(x)
 }
 
-#' @S3method print BaggingModel
+#' @export
 print.BaggingModel = function(x, ...) {
   s = capture.output(print.WrappedModel(x))
   u = sprintf("Bagged Learner: %s", class(x$learner$next.learner)[1L])

@@ -27,7 +27,7 @@ makeRLearner.classif.ctree = function() {
 }
 
 #' @export
-trainLearner.classif.ctree = function(.learner, .task, .subset, .weights, teststat, testtype,
+trainLearner.classif.ctree = function(.learner, .task, .subset, .weights = NULL, teststat, testtype,
   mincriterion, minsplit, minbucket, stump, nresample, maxsurrogate, mtry,
   savesplitstats, maxdepth, ...) {
 

@@ -17,7 +17,7 @@ makeRLearner.classif.lda = function() {
 }
 
 #' @export
-trainLearner.classif.lda = function(.learner, .task, .subset, .weights,  ...) {
+trainLearner.classif.lda = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
   lda(f, data=getTaskData(.task, .subset), ...)
 }

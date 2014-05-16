@@ -18,7 +18,7 @@ makeRLearner.regr.kknn = function() {
 }
 
 #' @export
-trainLearner.regr.kknn = function(.learner, .task, .subset, .weights,  ...) {
+trainLearner.regr.kknn = function(.learner, .task, .subset, .weights = NULL,  ...) {
   list(td=.task$task.desc, data=getTaskData(.task, .subset), parset=list(...))
 }
 

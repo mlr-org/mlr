@@ -38,7 +38,7 @@ makeRLearner.classif.ksvm = function() {
 }
 
 #' @export
-trainLearner.classif.ksvm = function(.learner, .task, .subset, .weights, degree, offset, scale, sigma, order, length, lambda, normalized,  ...) {
+trainLearner.classif.ksvm = function(.learner, .task, .subset, .weights = NULL, degree, offset, scale, sigma, order, length, lambda, normalized,  ...) {
 
   # FIXME custom kernel. freezes? check mailing list
   # FIXME unify cla + regr, test all sigma stuff

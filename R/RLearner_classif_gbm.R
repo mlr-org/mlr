@@ -22,9 +22,9 @@ makeRLearner.classif.gbm = function() {
 }
 
 #' @export
-trainLearner.classif.gbm = function(.learner, .task, .subset, .weights,  ...) {
+trainLearner.classif.gbm = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, recode.target="01")
-  if (missing(.weights)) {
+  if (is.null(.weights)) {
     f = getTaskFormula(.task)
     gbm(f, data=d, keep.data=FALSE, verbose=FALSE, ...)
   } else  {

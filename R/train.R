@@ -59,7 +59,7 @@ train = function(learner, task, subset, weights = NULL) {
   }
 
   checkTaskLearner(task, learner, weights)
-  pars$.weights = weights
+  pars = setValue(pars, "weights", weights)
 
   # only pass train hyper pars as basic rlearner in ...
   pars = c(pars, getHyperPars(learner, "train"))
