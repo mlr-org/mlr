@@ -16,14 +16,14 @@ makeSurvTask = function(id, data, target, weights = NULL, blocking = NULL,
   return(task)
 }
 
-#' @S3method checkTask SurvTask
+#' @export
 checkTask.SurvTask = function(task, target, ...) {
   NextMethod("checkTask")
   checkArg(target, "character", len = 2L)
   ### TODO: more checks here
 }
 
-#' @S3method fixupData SurvTask
+#' @export
 fixupData.SurvTask = function(task, target, choice, ...) {
   NextMethod("fixupData")
   if (is.integer(task$env$data[[target[1L]]]))
@@ -32,7 +32,7 @@ fixupData.SurvTask = function(task, target, choice, ...) {
     task$env$data[[target[2L]]] = as.integer(as.logical(task$env$data[[target[2L]]]))
 }
 
-#' @S3method makeTaskDesc SurvTask
+#' @export
 makeTaskDesc.SurvTask = function(task, id, target) {
   addClasses(makeTaskDescInternal(task, "surv", id, target), "TaskDescSurv")
 }

@@ -7,7 +7,7 @@ asROCRPrediction = function(pred) {
   UseMethod("asROCRPrediction")
 }
 
-#' @S3method asROCRPrediction Prediction
+#' @export
 asROCRPrediction.Prediction = function(pred) {
   if(length(pred$task.desc$class.levels) != 2L) {
     stop("More than 2 classes!")
@@ -16,7 +16,7 @@ asROCRPrediction.Prediction = function(pred) {
   ROCR::prediction(p, pred$data$truth, label.ordering=c(pred$task.desc$negative, pred$task.desc$positive))
 }
 
-#' @S3method asROCRPrediction ResamplePrediction
+#' @export
 asROCRPrediction.ResamplePrediction = function(pred) {
   if(length(pred$task.desc$class.levels) != 2L) {
     stop("More than 2 classes!")

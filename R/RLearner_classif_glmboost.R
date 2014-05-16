@@ -1,4 +1,4 @@
-#' @S3method makeRLearner classif.glmboost
+#' @export
 makeRLearner.classif.glmboost = function() {
   makeRLearnerClassif(
     cl = "classif.glmboost",
@@ -21,7 +21,7 @@ makeRLearner.classif.glmboost = function() {
   )
 }
 
-#' @S3method trainLearner classif.glmboost
+#' @export
 trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, risk, ...) {
   ctrl = learnerArgsToControl(boost_control, mstop, nu, risk)
   if (is.null(.weights)) {
@@ -33,7 +33,7 @@ trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NU
   }
 }
 
-#' @S3method predictLearner classif.glmboost
+#' @export
 predictLearner.classif.glmboost = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type == "response", "class", "response")
   p = predict(.model$learner.model, newdata=.newdata, type=type, ...)

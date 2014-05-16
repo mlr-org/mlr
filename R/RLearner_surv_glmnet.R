@@ -1,4 +1,4 @@
-#' @S3method makeRLearner surv.glmnet
+#' @export
 makeRLearner.surv.glmnet = function() {
   makeRLearnerSurv(
     cl = "surv.glmnet",
@@ -15,7 +15,7 @@ makeRLearner.surv.glmnet = function() {
   )
 }
 
-#' @S3method trainLearner surv.glmnet
+#' @export
 trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
   #FIXME: unnecessary data duplication
   data = getTaskData(.task, subset=.subset, target.extra=TRUE, recode.target="surv")
@@ -26,7 +26,7 @@ trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights = NULL,  
   }
 }
 
-#' @S3method predictLearner surv.glmnet
+#' @export
 predictLearner.surv.glmnet = function(.learner, .model, .newdata, ...) {
   s = .model$learner.model$lambda.min
   if(.learner$predict.type == "response")
