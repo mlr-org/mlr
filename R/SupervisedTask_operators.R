@@ -214,6 +214,10 @@ subsetTask = function(task, subset, features) {
 # we create a new env, so the reference is not changed
 # FIXME: really check what goes on here! where is this called / used?
 changeData = function(task, data, costs) {
+  if(missing(costs))
+    costs = getTaskCosts(task)
+  if(missing(data))
+    data = getTaskData(task)
   force(data)
   task$env = new.env(parent = emptyenv())
   task$env$data = data
