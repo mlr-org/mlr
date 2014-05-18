@@ -20,7 +20,7 @@ makeTuneResult = function(learner, control, x, y, opt.path) {
 }
 
 
-#'@S3method print TuneResult
+#'@export
 print.TuneResult = function(x, ...) {
   catf("Tune result:")
   catf("Op. pars: %s", paramValueToString(x$opt.path$par.set, x$x))

@@ -9,7 +9,7 @@ getParamSet = function(learner) {
   UseMethod("getParamSet")
 }
 
-#'@S3method getParamSet Learner
+#'@export
 getParamSet.Learner = function(learner) {
   checkArg(learner, "Learner")
   learner$par.set

@@ -9,7 +9,7 @@ makeRLearner.classif.rrlda = function() {
       makeNumericLearnerParam(id="hp", default=0.75, lower=0),
       makeIntegerLearnerParam(id="nssamples", default=30L, lower=1L),
       makeIntegerLearnerParam(id="maxit", default=50L, lower=1L),
-      makeDiscreteLearnerParam(id="penalty", default="L2", values=c("L1", "L2"))  
+      makeDiscreteLearnerParam(id="penalty", default="L2", values=c("L1", "L2"))
     ),
     twoclass = TRUE,
     multiclass = TRUE,

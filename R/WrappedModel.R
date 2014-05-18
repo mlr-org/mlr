@@ -61,7 +61,7 @@ getLearnerModel = function(model) {
   UseMethod("getLearnerModel")
 }
 
-#'@S3method getLearnerModel WrappedModel
+#'@export
 getLearnerModel.WrappedModel = function(model) {
   model$learner.model
 }

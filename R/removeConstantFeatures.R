@@ -49,7 +49,7 @@ removeConstantFeatures.data.frame = function(x, target, perc = 0, dont.rm = char
 
   checkArg(dont.rm, subset = colnames(x))
   if (!missing(target)) {
-    checkArg(target, subset = colnames(x)) 
+    checkArg(target, subset = colnames(x))
     dont.rm = union(dont.rm, target)
   }
 
