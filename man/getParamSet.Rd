@@ -11,7 +11,6 @@ getParamSet(learner)
 [\code{\link[ParamHelpers]{ParamSet}}].
 }
 \description{
-Get a description of all possible parameter settings for a
-learner.
+Get a description of all possible parameter settings for a learner.
 }
 

@@ -38,14 +38,11 @@ configureMlr(on.learner.error, on.learner.warning, on.par.without.desc,
 Nothing.
 }
 \description{
-Configuration is done by setting custom
-\code{\link{options}}.
+Configuration is done by setting custom \code{\link{options}}.
 
-If you do not set an option here, its current value will be
-kept.
+If you do not set an option here, its current value will be kept.
 
-If you call this function with an empty argument list,
-everything is set to its defaults.
+If you call this function with an empty argument list, everything is set to its defaults.
 }
 \seealso{
 \code{\link{getMlrOptions}}

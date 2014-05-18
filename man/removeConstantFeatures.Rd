@@ -41,11 +41,10 @@ removeConstantFeatures(x, target, perc = 0, dont.rm = character(0L),
 [\code{\link{data.frame}} | \code{\link{SupervisedTask}}].
 }
 \description{
-Constant features can lead to errors in some models and
-obviously provide no information in the training set that
-can be learned from. With the argument \dQuote{perc}, there
-is a possibility to also remove features for which less
-than \dQuote{perc} percent of the observations differ from
-the mode value.
+Constant features can lead to errors in some models and obviously provide
+no information in the training set that can be learned from.
+With the argument \dQuote{perc}, there is a possibility to also remove
+features for which less than \dQuote{perc} percent of the observations
+differ from the mode value.
 }
 

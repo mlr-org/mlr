@@ -76,25 +76,22 @@ makeSurvTask(id, data, target, weights = NULL, blocking = NULL,
 [\code{\link{SupervisedTask}}].
 }
 \description{
-The task encapsulates the data and specifies - through its
-subclasses - the type of the task. It also contains a
-description object detailing further aspects of the data.
+The task encapsulates the data and specifies - through its subclasses -
+the type of the task.
+It also contains a description object detailing further aspects of the data.
 
-Useful operators are: \code{\link{getTaskFormula}},
-\code{\link{getTaskFormulaAsString}},
-\code{\link{getTaskFeatureNames}},
-\code{\link{getTaskData}}, \code{\link{getTaskTargets}},
+Useful operators are: \code{\link{getTaskFormula}}, \code{\link{getTaskFormulaAsString}},
+\code{\link{getTaskFeatureNames}}, \code{\link{getTaskData}}, \code{\link{getTaskTargets}},
 \code{\link{subsetTask}}.
 
-Object members: \describe{ \item{env
-[\code{environment}]}{Environment where data for the task
-are stored.  Use \code{\link{getTaskData}} in order to
-access it.} \item{weights [\code{numeric}]}{See argument
-above. \code{NULL} if not present.} \item{blocking
-[\code{factor}]}{See argument above. \code{NULL} if not
-present.} \item{task.desc
-[\code{\link{TaskDesc}}]}{Encapsulates further information
-about the task.} }
+Object members:
+\describe{
+\item{env [\code{environment}]}{Environment where data for the task are stored.
+  Use \code{\link{getTaskData}} in order to access it.}
+\item{weights [\code{numeric}]}{See argument above. \code{NULL} if not present.}
+\item{blocking [\code{factor}]}{See argument above. \code{NULL} if not present.}
+\item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
+}
 }
 \examples{
 library(mlbench)

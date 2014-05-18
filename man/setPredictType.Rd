@@ -17,14 +17,12 @@ setPredictType(learner, predict.type)
 [\code{\link{Learner}}] with changed prediction behaviour.
 }
 \description{
-Possible prediction types are: Classification: Labels or
-class probabilities (including labels). Regression: Numeric
-or response or standard errors (including numeric
-response). Survival: Linear predictor or survival
-probability.
+Possible prediction types are:
+Classification: Labels or class probabilities (including labels).
+Regression: Numeric or response or standard errors (including numeric response).
+Survival: Linear predictor or survival probability.
 }
 \seealso{
-\code{\link{setThreshold}} to alter the threshold used for
-prediction.
+\code{\link{setThreshold}} to alter the threshold used for prediction.
 }
 

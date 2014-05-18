@@ -59,15 +59,12 @@ listLearnersForTask(task, weights = NA, prob = NA, se = NA,
 [\code{character}]. Class names of matching learners.
 }
 \description{
-Returns the class names of learning algorithms which have
-specific characteristics, e.g. whether they supports
-missing values, case weights, etc.
+Returns the class names of learning algorithms which have specific characteristics, e.g.
+whether they supports missing values, case weights, etc.
 }
 \details{
-The default for all search parameters is \code{NA},
-meaning: property is not required, do not care.
+The default for all search parameters is \code{NA}, meaning: property is not required, do not care.
 
-Note that the packages of all learners are loaded during
-the search.
+Note that the packages of all learners are loaded during the search.
 }
 

@@ -1,4 +1,4 @@
-#' @S3method makeRLearner classif.randomForest
+#' @export
 makeRLearner.classif.randomForest = function() {
   makeRLearnerClassif(
     cl = "classif.randomForest",
@@ -27,7 +27,7 @@ makeRLearner.classif.randomForest = function() {
   )
 }
 
-#' @S3method trainLearner classif.randomForest
+#' @export
 trainLearner.classif.randomForest = function(.learner, .task, .subset, .weights = NULL, classwt=NULL, cutoff, ...) {
   f = getTaskFormula(.task)
   levs = .task$task.desc$class.levels
@@ -41,7 +41,7 @@ trainLearner.classif.randomForest = function(.learner, .task, .subset, .weights 
   randomForest(f, data=getTaskData(.task, .subset), classwt=classwt, cutoff=cutoff, ...)
 }
 
-#' @S3method predictLearner classif.randomForest
+#' @export
 predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type=="response", "response", "prob")
   if (.learner$par.vals$fix.factors) {

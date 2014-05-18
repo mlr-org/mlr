@@ -1,5 +1,5 @@
 # FIXME parset
-#' @S3method makeRLearner classif.lvq1
+#' @export
 makeRLearner.classif.lvq1 = function() {
   makeRLearnerClassif(
     cl = "classif.lvq1",
@@ -17,7 +17,7 @@ makeRLearner.classif.lvq1 = function() {
   )
 }
 
-#' @S3method trainLearner classif.lvq1		
+#' @export
 trainLearner.classif.lvq1 = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra=TRUE)
   cdbk.args = insert(list(), list(...), c("size", "k", "prior"))
@@ -32,7 +32,7 @@ trainLearner.classif.lvq1 = function(.learner, .task, .subset, .weights = NULL, 
   do.call(lvq1, lvq.args)  
 }
 
-#' @S3method predictLearner classif.lvq1	
+#' @export
 predictLearner.classif.lvq1 = function(.learner, .model, .newdata, ...) {
   lvqtest(.model$learner.model, test=.newdata, ...)
 }

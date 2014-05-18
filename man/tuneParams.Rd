@@ -40,17 +40,14 @@ tuneParams(learner, task, resampling, measures, par.set, control,
 [\code{\link{TuneResult}}].
 }
 \description{
-Optimizes the hyperparameters of a learner for a
-classification or regression problem. Allows for different
-optimization methods, such as grid search, evolutionary
-strategies, etc. You can select such an algorithm (and its
-settings) by passing a corresponding control object. For a
-complete list of implemented algorithms look at
+Optimizes the hyperparameters of a learner for a classification or regression problem.
+Allows for different optimization methods, such as grid search, evolutionary strategies, etc.
+You can select such an algorithm (and its settings)
+by passing a corresponding control object. For a complete list of implemented algorithms look at
 \code{\link{TuneControl}}.
 }
 \details{
-Note that if tranformations are associated with the
-parameters, the returned result will contain transformed
-values in the optimal result and the path.
+Note that if tranformations are associated with the parameters, the returned result will contain
+transformed values in the optimal result and the path.
 }
 

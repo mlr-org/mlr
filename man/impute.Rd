@@ -43,45 +43,41 @@ impute(data, target, classes = list(), cols = list(),
   is \code{TRUE}.}
 }
 \value{
-[\code{list}] \item{data \code{data.frame}}{Imputed data.}
-\item{desc \code{ImputationDesc}}{Description object.}
+[\code{list}]
+  \item{data \code{data.frame}}{Imputed data.}
+  \item{desc \code{ImputationDesc}}{Description object.}
 }
 \description{
-Allows imputation of missing feature values through various
-techniques. Note that you have the possibility to re-impute
-a data set in the same way as the imputation was performed
-during training. This especially comes in handy during
-resampling when one wants to perform the same imputation on
-the test set as on the training set.
+Allows imputation of missing feature values through various techniques.
+Note that you have the possibility to re-impute a data set
+in the same way as the imputation was performed during training.
+This especially comes in handy during resampling when one wants to perform the
+same imputation on the test set as on the training set.
 
-The function \code{impute} performs the imputation on a
-data set and returns, alongside with the imputed data set,
-an \dQuote{ImputationDesc} object which can contain
-\dQuote{learned} coefficients and helpful data. It can then
-be passed together with a new data set to
-\code{\link{reimpute}}.
+The function \code{impute} performs the imputation on a data set and returns,
+alongside with the imputed data set, an \dQuote{ImputationDesc} object
+which can contain \dQuote{learned} coefficients and helpful data.
+It can then be passed together with a new data set to \code{\link{reimpute}}.
 
-The imputation techniques can be specified for certain
-features or for feature classes, see function arguments.
+The imputation techniques can be specified for certain features or for feature classes,
+see function arguments.
 
-You can either provide an arbitrary object, use a built-in
-imputation method listed under \code{\link{imputations}} or
-create one yourself using \code{\link{makeImputeMethod}}.
+You can either provide an arbitrary object, use a built-in imputation method listed
+under \code{\link{imputations}} or create one yourself using \code{\link{makeImputeMethod}}.
 }
 \details{
-The description object contains these slots \describe{
-\item{target [\code{character}]}{See argument.}
-\item{features [\code{character}]}{Feature names, these are
-the column names of \code{data}, excluding \code{target}.}
-\item{lvls [\code{named list}]}{Mapping of column names of
-factor features to their levels, including newly created
-ones during imputation.} \item{impute [\code{named
-list}]}{Mapping of column names to imputation functions.}
-\item{dummies [\code{named list}]}{Mapping of column names
-to imputation functions.} \item{impute.new.levels
-[\code{logical(1)}]}{See argument.}
-\item{recode.factor.levels [\code{logical(1)}]}{See
-argument.} }
+The description object contains these slots
+\describe{
+  \item{target [\code{character}]}{See argument.}
+  \item{features [\code{character}]}{Feature names, these are the column names of \code{data},
+    excluding \code{target}.}
+  \item{lvls [\code{named list}]}{Mapping of column names of factor features to their levels,
+    including newly created ones during imputation.}
+  \item{impute [\code{named list}]}{Mapping of column names to imputation functions.}
+  \item{dummies [\code{named list}]}{Mapping of column names to imputation functions.}
+  \item{impute.new.levels [\code{logical(1)}]}{See argument.}
+  \item{recode.factor.levels [\code{logical(1)}]}{See argument.}
+}
 }
 \examples{
 df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z = 1:3)

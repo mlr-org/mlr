@@ -2,16 +2,12 @@
 \alias{ResamplePrediction}
 \title{Prediction from resampling.}
 \description{
-Contains predictions from resampling, returned (among other
-stuff) by function \code{\link{resample}}. Can basically be
-used in the same way as \code{\link{Prediction}}, its super
-class. The main differences are: (a) The internal
-data.frame (member \code{data}) contains an additional
-column \code{id}, specifying the iteration of the
-resampling strategy, and and additional columns \code{set},
-specifying whether the prediction was from an observation
-in the \dQuote{train} or \dQuote{test} set. (b) The
-prediction \code{time} is a numeric vector, its length
-equals the number of iterations.
+Contains predictions from resampling, returned (among other stuff) by function \code{\link{resample}}.
+Can basically be used in the same way as \code{\link{Prediction}}, its super class.
+The main differences are:
+(a) The internal data.frame (member \code{data}) contains an additional column \code{id}, specifying the iteration
+of the resampling strategy, and and additional columns \code{set}, specifying whether the prediction
+was from an observation in the \dQuote{train} or \dQuote{test} set. (b) The prediction \code{time} is
+a numeric vector, its length equals the number of iterations.
 }
 

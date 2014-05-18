@@ -16,12 +16,10 @@ analyzeFeatSelResult(res, reduce = TRUE)
 Nothing.
 }
 \description{
-This function prints the steps \code{\link{selectFeatures}}
-took to find its optimal set of features and the reason why
-it stopped. It can also print information about all
-calculations done in each intermediate step.
+This function prints the steps \code{\link{selectFeatures}} took to find its optimal set
+of features and the reason why it stopped.
+It can also print information about all calculations done in each intermediate step.
 
-Currently only implemented for sequential feature
-selection.
+Currently only implemented for sequential feature selection.
 }
 

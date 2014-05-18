@@ -26,7 +26,7 @@ makeCostSensClassifWrapper = function(learner) {
   x
 }
 
-#' @S3method trainLearner CostSensClassifWrapper
+#' @export
 trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset, ...) {
   # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
@@ -52,7 +52,7 @@ trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset, ...) {
   makeChainModel(next.model = model, cl = "CostSensClassifModel")
 }
 
-#' @S3method predictLearner CostSensClassifWrapper
+#' @export
 predictLearner.CostSensClassifWrapper = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model$next.model
   # handle constant prediction
@@ -61,7 +61,7 @@ predictLearner.CostSensClassifWrapper = function(.learner, .model, .newdata, ...
   NextMethod()
 }
 
-#' @S3method makeWrappedModel CostSensClassifWrapper
+#' @export
 makeWrappedModel.CostSensClassifWrapper = function(learner, model, task.desc, subset, features,
   factor.levels, time) {
 

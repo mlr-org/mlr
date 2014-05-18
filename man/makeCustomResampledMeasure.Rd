@@ -47,11 +47,9 @@ makeCustomResampledMeasure(id, minimize = TRUE, classif = FALSE,
 \code{\link{Measure}}
 }
 \description{
-Construct your own performance measure, used after
-resampling. Note that individual training / test set
-performance values will be set to \code{NA}, you only
-calculate an aggregated value. If you can define a function
-that makes sense for every single training / test set,
-implement your own \code{\link{Measure}}.
+Construct your own performance measure, used after resampling.
+Note that individual training / test set performance values will be set to \code{NA}, you
+only calculate an aggregated value. If you can define a function that makes sense
+for every single training / test set, implement your own \code{\link{Measure}}.
 }
 

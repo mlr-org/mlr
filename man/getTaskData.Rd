@@ -29,12 +29,10 @@ getTaskData(task, subset, features, target.extra = FALSE,
   either as 0 or -1.  Default is \dQuote{no}.}
 }
 \value{
-Either a data.frame or a list with data.frame \code{data}
-and vector \code{target}.
+Either a data.frame or a list with data.frame \code{data} and vector \code{target}.
 }
 \description{
-Useful in \code{\link{trainLearner}} when you add a
-learning machine to the package.
+Useful in \code{\link{trainLearner}} when you add a learning machine to the package.
 }
 \examples{
 library("mlbench")

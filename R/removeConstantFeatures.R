@@ -43,7 +43,7 @@ removeConstantFeatures = function(x, target, perc = 0, dont.rm = character(0L),
 }
 
 #' @method removeConstantFeatures data.frame
-#' @S3method removeConstantFeatures data.frame
+#' @export
 removeConstantFeatures.data.frame = function(x, target, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = TRUE) {
 
@@ -82,7 +82,7 @@ removeConstantFeatures.data.frame = function(x, target, perc = 0, dont.rm = char
 }
 
 #' @method removeConstantFeatures SupervisedTask
-#' @S3method removeConstantFeatures SupervisedTask
+#' @export
 removeConstantFeatures.SupervisedTask = function(x, target, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = TRUE) {
 

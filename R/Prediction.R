@@ -29,7 +29,7 @@ makePrediction = function(task.desc, id, truth, predict.type, y, time) {
   UseMethod("makePrediction")
 }
 
-#' @S3method makePrediction TaskDescRegr
+#' @export
 makePrediction.TaskDescRegr = function(task.desc, id, truth, predict.type, y, time) {
   data = namedList(c("id", "truth", "response", "se"))
   data$id = id
@@ -50,7 +50,7 @@ makePrediction.TaskDescRegr = function(task.desc, id, truth, predict.type, y, ti
   )
 }
 
-#' @S3method makePrediction TaskDescClassif
+#' @export
 makePrediction.TaskDescClassif = function(task.desc, id, truth, predict.type, y, time) {
   data = namedList(c("id", "truth", "response", "prob"))
   data$id = id
@@ -84,7 +84,7 @@ makePrediction.TaskDescClassif = function(task.desc, id, truth, predict.type, y,
   return(p)
 }
 
-#' @S3method makePrediction TaskDescSurv
+#' @export
 makePrediction.TaskDescSurv = function(task.desc, id, truth, predict.type, y, time) {
   data = namedList(c("id", "truth.time", "truth.event", "response"))
   data$id = id
@@ -101,7 +101,7 @@ makePrediction.TaskDescSurv = function(task.desc, id, truth, predict.type, y, ti
   )
 }
 
-#' @S3method makePrediction TaskDescCostSens
+#' @export
 makePrediction.TaskDescCostSens = function(task.desc, id, truth, predict.type, y, time) {
   data = namedList(c("id", "response"))
   data$id = id
@@ -117,7 +117,7 @@ makePrediction.TaskDescCostSens = function(task.desc, id, truth, predict.type, y
   )
 }
 
-#' @S3method print Prediction
+#' @export
 print.Prediction = function(x, ...) {
   catf("Prediction:")
   catf("predict.type: %s", x$predict.type)

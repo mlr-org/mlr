@@ -16,9 +16,8 @@ getConfMatrix(pred, relative = FALSE)
 [\code{matrix}]. A confusion matrix.
 }
 \description{
-Calculates confusion matrix for (possibly resampled)
-prediction. Rows indicate true classes, columns predicted
-classes.
+Calculates confusion matrix for (possibly resampled) prediction.
+Rows indicate true classes, columns predicted classes.
 }
 \details{
 Code inspired by \code{\link[klaR]{errormatrix}}.

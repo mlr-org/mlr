@@ -114,7 +114,7 @@ makeResampleInstanceInternal = function(desc, size, train.inds, test.inds, group
   ), class="ResampleInstance")
 }
 
-#' @S3method print ResampleInstance
+#' @export
 print.ResampleInstance = function(x, ...) {
   catf("Resample instance for %i cases for:", x$size)
   print(x$desc)

@@ -14,7 +14,6 @@ getTaskCosts(task, subset)
 [\code{matrix} | \code{NULL}].
 }
 \description{
-Retuns \dQuote{NULL} if the task is not of type
-\dQuote{costsens}.
+Retuns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
 }
 

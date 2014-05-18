@@ -25,9 +25,8 @@ train(learner, task, subset, weights = NULL)
 [\code{\link{WrappedModel}}].
 }
 \description{
-Given a \code{\link{SupervisedTask}}, creates a model for
-the learning machine which can be used for predictions on
-new data.
+Given a \code{\link{SupervisedTask}}, creates a model for the learning machine
+which can be used for predictions on new data.
 }
 \examples{
 training.set <- sample(1:nrow(iris), nrow(iris) / 2)

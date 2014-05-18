@@ -1,4 +1,4 @@
-#' @S3method makeRLearner regr.pcr
+#' @export
 makeRLearner.regr.pcr = function() {
   makeRLearnerRegr(
     cl = "regr.pcr",
@@ -21,13 +21,13 @@ makeRLearner.regr.pcr = function() {
   )
 }
 
-#' @S3method trainLearner regr.pcr
+#' @export
 trainLearner.regr.pcr = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
   pcr(f, data=getTaskData(.task, .subset), ...)
 }
 
-#' @S3method predictLearner regr.pcr
+#' @export
 predictLearner.regr.pcr = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata=.newdata)
   p[, 1L, dim(p)[3L]]

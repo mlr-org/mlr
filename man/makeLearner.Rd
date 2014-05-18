@@ -41,10 +41,9 @@ makeLearner(cl, id = cl, predict.type = "response", ...,
 [\code{\link{Learner}}].
 }
 \description{
-For a classification learner the \code{predict.type} can be
-set to \dQuote{prob} to predict probabilities and the
-maximum value selects the label. The threshold used to
-assign the label can later be changed using the
+For a classification learner the \code{predict.type} can be set
+to \dQuote{prob} to predict probabilities and the maximum
+value selects the label. The threshold used to assign the label can later be changed using the
 \code{\link{setThreshold}} function.
 }
 \examples{
@@ -54,7 +53,6 @@ lrn = makeLearner("classif.lda", method = "t", nu = 10)
 print(lrn$par.vals)
 }
 \seealso{
-[\code{\link{resample}}],
-[\code{\link{predict.WrappedModel}}]
+[\code{\link{resample}}], [\code{\link{predict.WrappedModel}}]
 }
 

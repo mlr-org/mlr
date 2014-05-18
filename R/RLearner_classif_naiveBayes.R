@@ -1,4 +1,4 @@
-#' @S3method makeRLearner classif.naiveBayes
+#' @export
 makeRLearner.classif.naiveBayes = function() {
   makeRLearnerClassif(
     cl = "classif.naiveBayes",
@@ -16,13 +16,13 @@ makeRLearner.classif.naiveBayes = function() {
   )
 }
 
-#' @S3method trainLearner classif.naiveBayes
+#' @export
 trainLearner.classif.naiveBayes = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
   naiveBayes(f, data=getTaskData(.task, .subset), ...)
 }
 
-#' @S3method predictLearner classif.naiveBayes
+#' @export
 predictLearner.classif.naiveBayes = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type=="response", "class", "raw")
   predict(.model$learner.model, newdata=.newdata, type=type, ...)

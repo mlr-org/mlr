@@ -25,8 +25,8 @@ makeOversampleWrapper(learner, osw.rate)
 [\code{\link{Learner}}].
 }
 \description{
-Creates a learner object, which can be used like any other
-learner object. Internally uses \code{\link{oversample}} or
-\code{\link{undersample}} before every model fit.
+Creates a learner object, which can be
+used like any other learner object.
+Internally uses \code{\link{oversample}} or \code{\link{undersample}} before every model fit.
 }
 

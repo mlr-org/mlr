@@ -1,4 +1,4 @@
-#' @S3method makeRLearner classif.rrlda
+#' @export
 makeRLearner.classif.rrlda = function() {
   makeRLearnerClassif(
     cl = "classif.rrlda",
@@ -21,13 +21,13 @@ makeRLearner.classif.rrlda = function() {
   )
 }
 
-#' @S3method trainLearner classif.rrlda
+#' @export
 trainLearner.classif.rrlda = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra=TRUE)
   rrlda(x=d$data, grouping=d$target, ...)
 }
 
-#' @S3method predictLearner classif.rrlda
+#' @export
 predictLearner.classif.rrlda = function(.learner, .model, .newdata, ...) {
   p = as.factor(predict(.model$learner.model, x=.newdata, ...)$class)
 }

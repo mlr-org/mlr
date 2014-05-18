@@ -21,12 +21,10 @@ performance(pred, measures, task, model)
   measure, usually not needed.}
 }
 \value{
-[named \code{numeric}]. Performance value(s), named by
-measure(s).
+[named \code{numeric}]. Performance value(s), named by measure(s).
 }
 \description{
-Measures the quality of a prediction w.r.t. some
-performance measure.
+Measures the quality of a prediction w.r.t. some performance measure.
 }
 \examples{
 training.set <- seq(1, nrow(iris), by = 2)

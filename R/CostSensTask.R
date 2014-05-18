@@ -20,7 +20,7 @@ makeCostSensTask = function(id, data, costs, blocking = NULL, fixup.data = "warn
   return(task)
 }
 
-#' @S3method checkTask CostSensTask
+#' @export
 checkTask.CostSensTask = function(task, target, ...) {
   NextMethod("checkTask")
 
@@ -40,20 +40,20 @@ checkTask.CostSensTask = function(task, target, ...) {
     stopf("The name '..y..' is currently reserved for costsens tasks. You can use it neither for features nor labels!")
 }
 
-#' @S3method fixupData CostSensTask
+#' @export
 fixupData.CostSensTask = function(task, target, choice, ...) {
   # FIXME: move fixes from checkTask here?
   NextMethod("fixupData")
 }
 
-#' @S3method makeTaskDesc CostSensTask
+#' @export
 makeTaskDesc.CostSensTask = function(task, id, target) {
   td = makeTaskDescInternal(task, "costsens", id, target)
   td$class.levels = colnames(task$env$costs)
   return(addClasses(td, "TaskDescCostSens"))
 }
 
-#' @S3method print CostSensTask
+#' @export
 print.CostSensTask = function(x, ...) {
   print.SupervisedTask(x, print.target = FALSE, print.weights = FALSE)
   levs = x$task.desc$class.levels

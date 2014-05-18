@@ -38,11 +38,8 @@ makePreprocWrapper(learner, train, predict, par.set = makeParamSet(),
 [\code{\link{Learner}}].
 }
 \description{
-Fuses a base learner with a preprocessing method. Creates a
-learner object, which can be used like any other learner
-object, but which internally preprocesses the data as
-requested. If the train or predict function is called on
-data / a task, the preprocessing is always performed
-automatically.
+Fuses a base learner with a preprocessing method. Creates a learner object, which can be
+used like any other learner object, but which internally preprocesses the data as requested.
+If the train or predict function is called on data / a task, the preprocessing is always performed automatically.
 }
 

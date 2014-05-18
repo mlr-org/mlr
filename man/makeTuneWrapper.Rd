@@ -38,18 +38,16 @@ makeTuneWrapper(learner, resampling, measures, par.set, control,
 [\code{\link{Learner}}].
 }
 \description{
-Fuses a base learner with a search strategy to select its
-hyperparameters. Creates a learner object, which can be
-used like any other learner object, but which internally
-uses \code{\link{tuneParams}}. If the train function is
-called on it, the search strategy and resampling are
-invoked to select an optimal set of hyperparameter values.
-Finally, a model is fitted on the complete training data
-with these optimal hyperparameters and returned. See
-\code{\link{tuneParams}} for more details.
+Fuses a base learner with a search strategy to select its hyperparameters.
+Creates a learner object, which can be used like any other learner object,
+but which internally uses \code{\link{tuneParams}}.
+If the train function is called on it,
+the search strategy and resampling are invoked
+to select an optimal set of hyperparameter values. Finally, a model is fitted on the
+complete training data with these optimal hyperparameters and returned.
+See \code{\link{tuneParams}} for more details.
 
-After training, the optimal hyperparameters (and other
-related information) can be retrieved with
+After training, the optimal hyperparameters (and other related information) can be retrieved with
 \code{\link{getTuneResult}}.
 }
 \examples{

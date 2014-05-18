@@ -16,7 +16,7 @@ trainLearner(.learner, .task, .subset, .weights, ...)
   want to use \code{\link{getTaskData}} for this purpose.}
 
   \item{.weights}{[\code{numeric}]\cr Weights for each
-  observation}
+  observation.}
 
   \item{...}{[any]\cr Additional (hyper)parameters, which
   need to be passed to the underlying train function.}
@@ -25,14 +25,12 @@ trainLearner(.learner, .task, .subset, .weights, ...)
 [any]. Model of the underlying learner.
 }
 \description{
-Mainly for internal use. Trains a wrapped learner on a
-given training set. You have to implement this method if
-you want to add another learner to this package.
+Mainly for internal use. Trains a wrapped learner on a given training set.
+You have to implement this method if you want to add another learner to this package.
 }
 \details{
-Your implementation must adhere to the following: The model
-must be fitted on the subset of \code{.task} given by
-\code{.subset}. All parameters must in \code{...} must be
-passed to the underlying training function.
+Your implementation must adhere to the following:
+The model must be fitted on the subset of \code{.task} given by \code{.subset}. All parameters
+must in \code{...} must be passed to the underlying training function.
 }
 

@@ -24,14 +24,12 @@ tuneThreshold(pred, measure, task, model, control = list())
   list.}
 }
 \value{
-[\code{list}]. A named list with with the following
-components: \code{th} is the optimal threshold, \code{perf}
-the performance value.
+[\code{list}]. A named list with with the following components:
+  \code{th} is the optimal threshold, \code{perf} the performance value.
 }
 \description{
-Optimizes the threshold of prediction based on
-probabilities. Uses \code{\link{optimize}} for 2class
-problems and \code{\link[cmaes]{cma_es}} for multiclass
-problems.
+Optimizes the threshold of prediction based on probabilities.
+Uses \code{\link{optimize}} for 2class problems and \code{\link[cmaes]{cma_es}}
+for multiclass problems.
 }
 
