@@ -44,6 +44,7 @@ filter = function(obj, target, method="random.forest.importance", threshold = 0,
   UseMethod("filter")
 }
 
+#' @export
 filter.SupervisedTask = function(obj, target, method="random.forest.importance", threshold = 0, n = NULL, percentage = NULL) {
   if (method %in% c("linear.correlation", "rank.correlation")) {
     if (inherits(obj, "ClassifTask") || (obj$task.desc$n.feat["factors"] > 0L))
@@ -53,6 +54,7 @@ filter.SupervisedTask = function(obj, target, method="random.forest.importance",
   changeData(obj, d)
 }
 
+#' @export
 filter.data.frame = function(obj, target, method="random.forest.importance", threshold = 0, n = NULL, percentage = NULL) {
   requirePackages("FSelector", "filterFeatures")
   checkArg(target, "character")
