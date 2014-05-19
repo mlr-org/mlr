@@ -1,11 +1,17 @@
-\name{getFeatureFilterValues}
-\alias{getFeatureFilterValues}
+\name{filter}
+\alias{filter}
 \title{Filter features by using a numerical importance criterion.}
 \usage{
-getFeatureFilterValues(task, method = "random.forest.importance")
+filter(obj, target, method = "random.forest.importance", threshold = 0,
+  n = NULL, percentage = NULL)
 }
 \arguments{
-  \item{task}{[\code{\link{SupervisedTask}}]\cr The task.}
+  \item{obj}{[\code{data.frame} |
+  \code{\link{SupervisedTask}}]\cr Input data.}
+
+  \item{target}{[\code{character(1)}]\cr Name of the column
+  specifying the response.  Only used when \code{obj} is a
+  data.frame, otherwise ignored.}
 
   \item{method}{[\code{character(1)}]\cr Filter method.
   Available are:\cr \dQuote{linear.correlation}: Pearson's
@@ -29,14 +35,22 @@ getFeatureFilterValues(task, method = "random.forest.importance")
   \dQuote{oneR}: Finds weights of mixed feature sets using
   association rules for classification and regression\cr
   Default is \dQuote{random.forest.importance}.}
+
+  \item{threshold}{[\code{numeric(1)}]\cr Information value
+  as to be greater then the threshold. Default is 0.}
+
+  \item{n}{[\code{integer(1)}]\cr Number of features
+  ordered by the information value to select.}
+
+  \item{percentage}{[\code{numeric(1)}]\cr Alternatively to
+  \code{n} you can give a relative number of features.}
 }
 \value{
-[\code{numeric}]. A named numeric vector that contains an importance value
-  for each feature.
+[\code{data.frame} | \code{\link{SupervisedTask}}]. Same type as \code{obj}.
 }
 \description{
-Calculates numerical importance values for all features.
-Thresholding of these values can be used to select \dQuote{useful} features.
+Calculates numerical importance values for all features and selects the Features
+according to a given threashold.
 Look at package \code{\link[FSelector]{FSelector}} for details on the filter algorithms.
 }
 \seealso{
