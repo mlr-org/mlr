@@ -9,7 +9,8 @@ Description: Interface to a large number of classification and
     operations. Nested resampling.
 Author: Bernd Bischl <bernd_bischl@gmx.net>,
     Michel Lang <lang@statistik.tu-dortmund.de>,
-    Jakob Richter <code@jakob-r.de>
+    Jakob Richter <code@jakob-r.de>,
+    Leonard Judt <leonard.judt@tu-dortmund.de>
 Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 URL: https://github.com/berndbischl/mlr
 BugReports: https://github.com/berndbischl/mlr/issues
