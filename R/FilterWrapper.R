@@ -58,8 +58,9 @@ makeFilterWrapper = function(learner, fw.method = "random.forest.importance", fw
 #' @export
 trainLearner.FilterWrapper = function(.learner, .task, .subset, fw.method, fw.threshold, fw.n, fw.percentage, ...) {
   .task = subsetTask(.task, subset = .subset)
-  # FIXME: are all filter vales high = good?
-  .task = filter(.task, method = fw.method, threshold = fw.threshold, n = fw.n, percentage = fw.percentage)
+  # FIXME: are all filter values high = good?
+  feat.imp = getFeatureFilterValues(.task, method = fw.method)
+  .task = filterFeatures(.task, feat.importance = feat.imp, threshold = fw.threshold, n = fw.n, percentage = fw.percentage)
   m = train(.learner$next.learner, .task)
   # FIXME: enter correct objects (features, etc)
   makeChainModel(next.model = m, cl = "FilterModel")
