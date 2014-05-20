@@ -22,7 +22,7 @@
 filterFeatures = function(obj, target, feat.importance, threshold = 0, n = NULL, percentage = NULL) {
   checkArg(obj, c("data.frame", "SupervisedTask"))
   checkArg(feat.importance, "numeric")
-  checkFilterArguments(threshold, n, percentage)
+  checkFilterArguments(method=NULL, threshold, n, percentage)
   UseMethod("filterFeatures")
 }
 
@@ -45,7 +45,10 @@ filterFeatures.data.frame = function(obj, target, feat.importance, threshold = 0
   obj[, colnames(obj) %in% c(feats, target), drop = FALSE] #preserves order!
   }
 
-checkFilterArguments = function(threshold, n, percentage) {
+checkFilterArguments = function(method, threshold, n, percentage) {
+  if(!isNotSet(method)) {
+    checkArg(method, choices = filter.methods)
+  }  
   if(!isNotSet(threshold)) {
     checkArg(threshold, "numeric", len = 1L, na.ok = FALSE, lower = 0)
   }
@@ -61,6 +64,10 @@ checkFilterArguments = function(threshold, n, percentage) {
   if(isNotSet(threshold) && isNotSet(n) && isNotSet(percentage))
     stop("You have to provide at least a threshold, a n or a percentage!")
 }
+
+filter.methods = c("linear.correlation", "rank.correlation", "information.gain",
+                   "gain.ratio", "symmetrical.uncertainty", "chi.squared", 
+                   "random.forest.importance", "relief", "oneR")
 
 isNotSet = function(x) {
   missing(x) || is.null(x)

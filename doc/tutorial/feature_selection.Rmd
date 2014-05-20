@@ -20,6 +20,12 @@ importance = getFeatureFilterValues(task, method="information.gain")
 sort(importance, decreasing=TRUE)
 ```
 So according to this filter `Petal.Width` and `Petal.Length` contain the most *information*.
+With **mlr**'s function `filterFeatures()` you can now filter the task by leaving out all
+but a set number of features with the highest feature importance now into the task. 
+```{r}
+filtered.task = filterFeatures(task, feat.importance = importance, n=2L)
+```
+Other filter options in `filterFeatures()' are to require a percentage of features filtered instead or to set a threshold for the numerical importance values.
 
 In a proper experimental set up you might want to automate the selection of the variables so that it can be part of the validation method of your choice.
 We will use the standard 10-fold cross validation.

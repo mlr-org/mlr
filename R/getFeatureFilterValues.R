@@ -33,9 +33,7 @@
 #' @export
 getFeatureFilterValues = function(obj, target, method="random.forest.importance") {
   checkArg(obj, c("data.frame", "SupervisedTask"))
-  checkArg(method, choices = c("linear.correlation", "rank.correlation", "information.gain",
-                               "gain.ratio", "symmetrical.uncertainty", "chi.squared", 
-                               "random.forest.importance", "relief", "oneR"))
+  checkArg(method, choices = filter.methods)
   UseMethod("getFeatureFilterValues")
 }
 
