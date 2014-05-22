@@ -49,7 +49,7 @@ We will use the standard 10-fold cross validation.
 ```r
 learner = makeLearner("classif.fnn")
 learnerFiltered = makeFilterWrapper(learner = learner, fw.method = "information.gain", 
-    fw.perc = 0.7)
+    fw.percentage = 0.7)
 rdesc = makeResampleDesc("CV", iters = 10)
 rsres = resample(learner = learnerFiltered, task = task, resampling = rdesc, 
     show.info = FALSE, models = TRUE)
