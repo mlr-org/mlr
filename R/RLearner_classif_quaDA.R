@@ -1,4 +1,4 @@
-#' @S3method makeRLearner classif.quaDA
+#' @export
 makeRLearner.classif.quaDA = function() {
   makeRLearnerClassif(
     cl = "classif.quaDA",
@@ -15,14 +15,14 @@ makeRLearner.classif.quaDA = function() {
   )
 }
 
-#' @S3method trainLearner classif.quaDA
-trainLearner.classif.quaDA = function(.learner, .task, .subset, .weights,  ...) {
+#' @export
+trainLearner.classif.quaDA = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra=TRUE)
   is.prob = (.learner$predict.type == "prop")
   quaDA(variables = d$data, group = d$target, prob = is.prob)
 }
 
-#' @S3method predictLearner classif.quaDA
+#' @export
 predictLearner.classif.quaDA = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   p = classify(m, newdata = .newdata)

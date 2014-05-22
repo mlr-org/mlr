@@ -1,4 +1,4 @@
-#' @S3method makeRLearner classif.logreg
+#' @export
 makeRLearner.classif.logreg = function() {
   makeRLearnerClassif(
     cl = "classif.logreg",
@@ -12,13 +12,13 @@ makeRLearner.classif.logreg = function() {
   )
 }
 
-#' @S3method trainLearner classif.logreg
-trainLearner.classif.logreg = function(.learner, .task, .subset, .weights,  ...) {
+#' @export
+trainLearner.classif.logreg = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
   glm(f, data=getTaskData(.task, .subset), model=FALSE, family="binomial", ...)
 }
 
-#' @S3method predictLearner classif.logreg
+#' @export
 predictLearner.classif.logreg = function(.learner, .model, .newdata, ...) {
   x = predict(.model$learner.model, newdata=.newdata, type="response", ...)
   levs = .model$task.desc$class.levels

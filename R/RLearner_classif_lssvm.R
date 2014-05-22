@@ -1,4 +1,4 @@
-#' @S3method makeRLearner classif.lssvm
+#' @export
 makeRLearner.classif.lssvm = function() {
   makeRLearnerClassif(
     cl = "classif.lssvm",
@@ -31,8 +31,8 @@ makeRLearner.classif.lssvm = function() {
   )
 }
 
-#' @S3method trainLearner classif.lssvm
-trainLearner.classif.lssvm = function(.learner, .task, .subset, .weights, degree, offset, scale, sigma, order, length, lambda, normalized, ...) {
+#' @export
+trainLearner.classif.lssvm = function(.learner, .task, .subset, .weights = NULL, degree, offset, scale, sigma, order, length, lambda, normalized, ...) {
 # FIXME custom kernel. freezes? check mailing list
 # FIXME unify cla + regr, test all sigma stuff
 
@@ -45,7 +45,7 @@ trainLearner.classif.lssvm = function(.learner, .task, .subset, .weights, degree
     lssvm(f, data=getTaskData(.task, .subset), ...)
 }
 
-#' @S3method predictLearner classif.lssvm
+#' @export
 predictLearner.classif.lssvm = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, "response")
   kernlab::predict(.model$learner.model, newdata=.newdata, type=type, ...)

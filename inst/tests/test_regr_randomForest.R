@@ -29,3 +29,19 @@ test_that("regr_randomForest", {
   testCVParsets("regr.randomForest", regr.df, regr.target, tune.train = tt, parset.list = parset.list)
 
 })
+
+
+test_that("fix factors work", {
+  data(iris)
+  n = nrow(iris)
+  data = iris
+  train = sample(1:n, floor(n * 0.9))
+  test = setdiff(1:n, train)
+  
+  task = makeRegrTask(data=data[train, ], target="Sepal.Length")
+  learner = makeLearner("regr.randomForest", fix.factors=TRUE)
+  model = train(learner, task)
+  newdata = data[head(test, 1L), ]
+  newdata$Species = droplevels(newdata$Species)
+  expect_is(predict(model, newdata=newdata), "Prediction")
+})

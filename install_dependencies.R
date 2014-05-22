@@ -2,13 +2,15 @@ pkgs <- c(
   "devtools",
   "roxygen2",
   "testthat",
-
   "abind", 
   "BBmisc", 
   "codetools", 
   "ada", 
   "adabag", 
+  "cmaes",
+  "crs",
   "DiceKriging", 
+  "DiscriMiner",
   "e1071",
   "earth", 
   "FNN",
@@ -17,6 +19,7 @@ pkgs <- c(
   "kernlab", 
   "kknn", 
   "klaR",
+  "LiblineaR",
   "mboost", 
   "mda", 
   "nnet", 
@@ -27,10 +30,12 @@ pkgs <- c(
   "randomForest",
   "robustbase",
   "rpart", 
+  "rrlda",
   "ROCR",
   "pROC",
   "rsm",
-  "RWeka"
+  "RWeka",
+  "stepPlr"
 )
 
 # Determine missing packages 

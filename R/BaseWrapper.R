@@ -27,7 +27,7 @@ makeBaseWrapper = function(id, next.learner, package = character(0L), par.set = 
   )
 }
 
-#' @S3method predictLearner BaseWrapper
+#' @export
 predictLearner.BaseWrapper = function(.learner, .model, .newdata, ...) {
   args = removeFromDots(names(.learner$par.vals), ...)
   do.call(predictLearner, c(
@@ -37,7 +37,7 @@ predictLearner.BaseWrapper = function(.learner, .model, .newdata, ...) {
 }
 
 # FIXME: test
-#' @S3method print BaseWrapper
+#' @export
 print.BaseWrapper = function(x, ...) {
   s = ""
   y = x

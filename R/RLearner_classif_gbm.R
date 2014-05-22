@@ -1,4 +1,4 @@
-#' @S3method makeRLearner classif.gbm
+#' @export
 makeRLearner.classif.gbm = function() {
   makeRLearnerClassif(
     cl = "classif.gbm",
@@ -21,10 +21,10 @@ makeRLearner.classif.gbm = function() {
   )
 }
 
-#' @S3method trainLearner classif.gbm
-trainLearner.classif.gbm = function(.learner, .task, .subset, .weights,  ...) {
+#' @export
+trainLearner.classif.gbm = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, recode.target="01")
-  if (missing(.weights)) {
+  if (is.null(.weights)) {
     f = getTaskFormula(.task)
     gbm(f, data=d, keep.data=FALSE, verbose=FALSE, ...)
   } else  {
@@ -33,7 +33,7 @@ trainLearner.classif.gbm = function(.learner, .task, .subset, .weights,  ...) {
   }
 }
 
-#' @S3method predictLearner classif.gbm
+#' @export
 predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   p = predict(m, newdata=.newdata, type="response", n.trees=length(m$trees), single.tree=FALSE, ...)

@@ -157,7 +157,7 @@ impute = function(data, target, classes = list(), cols = list(), dummy.classes =
   list(data = data, desc = desc)
 }
 
-#' @S3method print ImputationDesc
+#' @export
 print.ImputationDesc = function(x, ...) {
   catf("Imputation description")
   catf("Target: %s", collapse(x$target))
@@ -190,13 +190,13 @@ reimpute = function(x, desc) {
 }
 
 #' @method reimpute list
-#' @S3method reimpute list
+#' @export
 reimpute.list = function(x, desc) {
   UseMethod("reimpute", as.data.frame(x))
 }
 
 #' @method reimpute data.frame
-#' @S3method reimpute data.frame
+#' @export
 reimpute.data.frame = function(x, desc) {
   checkArg(desc, "ImputationDesc")
   x = as.list(x)

@@ -1,4 +1,4 @@
-#' @S3method makeRLearner regr.mob
+#' @export
 makeRLearner.regr.mob = function() {
   makeRLearnerRegr(
     cl = "regr.mob",
@@ -23,8 +23,8 @@ makeRLearner.regr.mob = function() {
   )
 }
 
-#' @S3method trainLearner regr.mob
-trainLearner.regr.mob = function(.learner, .task, .subset, .weights, alpha, bonferroni, minsplit,
+#' @export
+trainLearner.regr.mob = function(.learner, .task, .subset, .weights = NULL, alpha, bonferroni, minsplit,
   trim, breakties, part.feats, term.feats, ...) {
 
   cntrl = learnerArgsToControl(mob_control, alpha, bonferroni, minsplit, trim, breakties)
@@ -40,14 +40,14 @@ trainLearner.regr.mob = function(.learner, .task, .subset, .weights, alpha, bonf
   target = .task$task.desc$target
   f = as.formula(paste(target, "~", collapse(term.feats, sep=" + "), "|", collapse(part.feats, sep=" + ")))
 
-  if (missing(.weights)) {
+  if (is.null(.weights)) {
     mob(f, data=getTaskData(.task, .subset), control = cntrl, ...)
   } else  {
     mob(f, data=getTaskData(.task, .subset), control = cntrl, weights=.weights, ...)
   }
 }
 
-#' @S3method predictLearner regr.mob
+#' @export
 predictLearner.regr.mob = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, newdata=.newdata, ...)
 }

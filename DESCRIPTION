@@ -7,11 +7,15 @@ Description: Interface to a large number of classification and
     modern optimization techniques. Filter and wrapper methods for
     feature selection. Extension of basic learners with additional
     operations. Nested resampling.
-Author: Bernd Bischl <bernd_bischl@gmx.net>
+Author: Bernd Bischl <bernd_bischl@gmx.net>,
+    Michel Lang <lang@statistik.tu-dortmund.de>,
+    Jakob Richter <code@jakob-r.de>,
+    Leonard Judt <leonard.judt@tu-dortmund.de>
 Maintainer: Bernd Bischl <bernd_bischl@gmx.net>
 URL: https://github.com/berndbischl/mlr
 BugReports: https://github.com/berndbischl/mlr/issues
 License: BSD_3_clause + file LICENSE
+Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 3.0.0),
     ParamHelpers (>= 1.2),

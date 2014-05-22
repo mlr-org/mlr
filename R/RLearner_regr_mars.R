@@ -1,4 +1,4 @@
-#' @S3method makeRLearner regr.mars
+#' @export
 makeRLearner.regr.mars = function() {
   makeRLearnerRegr(
     cl = "regr.mars",
@@ -19,13 +19,13 @@ makeRLearner.regr.mars = function() {
   )
 }
 
-#' @S3method trainLearner regr.mars
-trainLearner.regr.mars = function(.learner, .task, .subset, .weights,  ...) {
+#' @export
+trainLearner.regr.mars = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra=TRUE)
   mars(x = as.matrix(d$data), y = d$target, ...)
 }
 
-#' @S3method predictLearner regr.mars
+#' @export
 predictLearner.regr.mars = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, newdata=.newdata)[, 1L]
 }
