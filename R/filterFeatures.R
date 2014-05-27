@@ -8,8 +8,25 @@
 #' @param target [\code{character(1)}]\cr
 #'   Name of the column specifying the response.
 #'   Only used when \code{obj} is a data.frame, otherwise ignored.
-#' @param feat.importance [\code{numeric}]\cr
-#'   Importance values for all features. See \code{\link{getFeatureFilterValues}}.
+#' @param method [\code{character(1)}]\cr
+#'   Filter method. Available are:\cr
+#'   \dQuote{linear.correlation}: Pearson's correlation for regression with numerical data\cr 
+#'   \dQuote{rank.correlation}: Spearman's correlation for regression with numerical data\cr 
+#'   \dQuote{information.gain}: Entropy-based information gain for classification and 
+#'   regression of mixed feature sets\cr
+#'   \dQuote{gain.ratio}: Entropy-based gain ratio for classification and regression of 
+#'   mixed feature sets\cr 
+#'   \dQuote{symmetrical.uncertainty}: Entropy-based symmetrical uncertainty for 
+#'   classification and regression of mixed feature sets\cr 
+#'   \dQuote{chi.squared}: Finds weights of mixed feature sets using chi-squared test for 
+#'   classification and regression\cr
+#'   \dQuote{random.forest.importance}: Finds weights of mixed feature sets using 
+#'   RandomForest algorithm for classification and regression\cr 
+#'   \dQuote{relief}: Finds weights of mixed feature sets using distances between instances 
+#'   for classification and regression\cr 
+#'   \dQuote{oneR}: Finds weights of mixed feature sets using association rules for 
+#'   classification and regression\cr 
+#'   Default is \dQuote{random.forest.importance}.
 #' @param threshold [\code{numeric(1)}]\cr
 #'   Information value as to be greater then the threshold. Default is 0.
 #' @param n [\code{integer(1)}]\cr
@@ -19,23 +36,27 @@
 #' @return [\code{data.frame} | \code{\link{SupervisedTask}}]. Same type as \code{obj}.
 #' @seealso \code{\link{makeFilterWrapper}}
 #' @export
-filterFeatures = function(obj, target, feat.importance, threshold = 0, n = NULL, percentage = NULL) {
+filterFeatures = function(obj, target, method="random.forest.importance", threshold = 0, n = NULL, percentage = NULL) {
   checkArg(obj, c("data.frame", "SupervisedTask"))
-  checkArg(feat.importance, "numeric")
-  checkFilterArguments(method=NULL, threshold, n, percentage)
+  checkFilterArguments(method, threshold, n, percentage)
   UseMethod("filterFeatures")
 }
 
 #' @export
-filterFeatures.SupervisedTask = function(obj, target, feat.importance, threshold = 0, n = NULL, percentage = NULL) {
-  d = filterFeatures(getTaskData(obj), obj$task.desc$target, feat.importance, threshold, n, percentage)
+filterFeatures.SupervisedTask = function(obj, target, method="random.forest.importance", threshold = 0, n = NULL, percentage = NULL) {
+  d = filterFeatures(getTaskData(obj), obj$task.desc$target, method, threshold, n, percentage)
   changeData(obj, d)
 }
 
 #' @export
-filterFeatures.data.frame = function(obj, target, feat.importance, threshold = 0, n = NULL, percentage = NULL) {
+filterFeatures.data.frame = function(obj, target, method="random.forest.importance", threshold = 0, n = NULL, percentage = NULL) {
   requirePackages("FSelector")
   checkArg(target, "character")
+  feat.importance = getFeatureFilterValues(obj, target, method)
+  if(threshold <= 0 && any(feat.importance<threshold)){
+    warningf("The threshold was set to %d but they are observed feature importance values below 
+          that value generetad by %s .", threshold, method)
+  }
   if(isNotSet(n))
     n = length(feat.importance)
   if(!isNotSet(percentage))
@@ -50,7 +71,7 @@ checkFilterArguments = function(method, threshold, n, percentage) {
     checkArg(method, choices = filter.methods)
   }  
   if(!isNotSet(threshold)) {
-    checkArg(threshold, "numeric", len = 1L, na.ok = FALSE, lower = 0)
+    checkArg(threshold, "numeric", len = 1L, na.ok = FALSE)
   }
   if(!isNotSet(n)) {
     checkArg(convertInteger(n), "integer", len = 1L, na.ok = FALSE, lower = 0)
