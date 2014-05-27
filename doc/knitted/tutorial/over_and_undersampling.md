@@ -65,7 +65,8 @@ performance(predict(mod, newdata = data.even), measures = mmce)
 ```
 
 ```
-## [1] 0.5
+## mmce 
+##  0.5
 ```
 
 ```splus
@@ -73,7 +74,8 @@ performance(predict(mod.over, newdata = data.even), measures = mmce)
 ```
 
 ```
-## [1] 0.37
+## mmce 
+## 0.37
 ```
 
 ```splus
@@ -81,7 +83,8 @@ performance(predict(mod.under, newdata = data.even), measures = mmce)
 ```
 
 ```
-## [1] 0.37
+## mmce 
+## 0.37
 ```
 
 
@@ -101,7 +104,8 @@ performance(predict(mod, newdata = data.even), measures = mmce)
 ```
 
 ```
-## [1] 0.5
+## mmce 
+##  0.5
 ```
 
 ```splus
@@ -109,7 +113,8 @@ performance(predict(mod.over, newdata = data.even), measures = mmce)
 ```
 
 ```
-## [1] 0.37
+## mmce 
+## 0.37
 ```
 
 ```splus
@@ -117,6 +122,7 @@ performance(predict(mod.under, newdata = data.even), measures = mmce)
 ```
 
 ```
-## [1] 0.5
+## mmce 
+##  0.5
 ```
 

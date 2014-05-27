@@ -23,7 +23,7 @@ r = resample(lrn, task, rdesc)
 ```
 
 ```
-## Mapping in parallel: mode=socket; cpus=2; elements=4.
+## Mapping in parallel: mode = socket; cpus = 2; elements = 4.
 ## [Resample] Result: mmce.test.mean=0.0201
 ```
 

@@ -23,7 +23,7 @@ So according to this filter `Petal.Width` and `Petal.Length` contain the most *i
 With **mlr**'s function `filterFeatures()` you can now filter the task by leaving out all
 but a set number of features with the highest feature importance now into the task. 
 ```{r}
-filtered.task = filterFeatures(task, feat.importance = importance, n=2L)
+filtered.task = filterFeatures(task, method="information.gain", n=2)
 ```
 Other filter options in `filterFeatures()' are to require a percentage of features filtered instead or to set a threshold for the numerical importance values.
 
@@ -45,6 +45,17 @@ table(sfeats)
 ```
 The selection of features seems to be very stable.
 The `Sepal.Width` did not make it into a single fold.
+
+### Tuning the threshold
+```{r}
+library("mlbench")
+data(Sonar)
+task = makeClassifTask(data = Sonar, target = "Class", positive = "M")
+lrn = makeLearner("classif.rpart")
+lrnFiltered = makeFilterWrapper(learner=lrn, fw.method="chi.squared", fw.threshold=0)
+ps = makeParamSet(makeDiscreteParam("fw.threshold", values = seq(from=0.2, 0.4, by=0.05)))
+tuneRes = tuneParams(lrnFiltered, task=task, resampling=makeResampleDesc("CV", iters=5), par.set=ps, control=makeTuneControlGrid())
+```
 
 Wrapper
 -------

@@ -3,23 +3,15 @@ Learning Tasks
 
 Learning tasks are the basic elements of the package to encapsulate the
 data set and all relevant information regarding the purpose of the
-task. This will be at least the target variable, but might also be
-information about excluded (ID) variables or case weights.
+task, e.g, the target variable.
 
-Currently two subclasses of a [LearnTask](http://berndbischl.github.io/mlr/man/makeLearner.html) exist: [ClassifTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) for
-classification and [RegrTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) for regression problems.  A
-classification task is created by using the [makeClassifTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) factory
-method. The target variable is converted to a ``factor``, if it is a
-``logical``, ``integer`` or ``character`` vector. Accordingly use [makeRegrTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html)
-in order to define a regression task. The target variable is converted 
-to a ``numeric``.
+Currently two subclasses of a [SupervisedTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) exist: [ClassifTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) for
+classification and [RegrTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) for regression problems.
+We are also working on survival analysis and a general definition of cost-sensitive learning.
+A classification task is created by using [makeClassifTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html),
+[makeRegrTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) is used for regression task.
 
-Quick start
------------
-
-### Classification example
-
-In the following example we define a classification task for the data
+In the following example, we define a classification task for the data
 set ``BreastCancer`` (from the package mlbench) and exclude the ID
 variable from all further model fitting and evaluation.
 
@@ -31,15 +23,8 @@ data(BreastCancer)
 
 df = BreastCancer
 df$Id = NULL
-task = makeClassifTask(id = "BreastCancer", data = df, target = "Class")
-```
-
-
-Now, let us examine the created task:
-
-
-```splus
-task
+classif.task = makeClassifTask(id = "BreastCancer", data = df, target = "Class")
+classif.task
 ```
 
 ```
@@ -60,24 +45,18 @@ task
 ```
 
 
-The now defined task contains basic information about the data,
-e.g. the types of the features, the number of observations and the number
-of missing values, as well as the classification problem, e.g. the
-name of the target variable and the number of observations per class.
+As we can see, the task records basic information about the data set,
+e.g., the types of the features, the number of observations, whether
+missing values are present, the number of observations per class and so on.
 
 
-### Regression example
-
-We will generally take the ``BostonHousing`` data set as regression example.
+In many of the following regression examples we will use the ``BostonHousing`` data set:
 
 
 ```splus
-library("mlr")
-library("mlbench")
 data(BostonHousing)
-df = BostonHousing
-task = makeRegrTask(id = "BostonHousing", data = df, target = "medv")
-task
+regr.task = makeRegrTask(id = "BostonHousing", data = BostonHousing, target = "medv")
+regr.task
 ```
 
 ```
@@ -94,69 +73,34 @@ task
 ```
 
 
-
 Further information
 -------------------
 
-### Classification example
-
 Let's have another look at the classification example.
 
-
-```splus
-library("mlr")
-library("mlbench")
-data(BreastCancer)
-
-df = BreastCancer
-df$Id = NULL
-task = makeClassifTask(id = "BreastCancer", data = df, target = "Class")
-task
-```
-
-```
-## Supervised task: BreastCancer
-## Type: classif
-## Target: Class
-## Observations: 699
-## Features:
-## numerics  factors 
-##        0        4 
-## Missings: TRUE
-## Has weights: FALSE
-## Has blocking: FALSE
-## Classes: 2
-##    benign malignant 
-##       458       241 
-## Positive class: benign
-```
-
-
 As this is a binary problem, we see that a positive class is selected
-by default. This will generally be the first class in the factor
-levels of the target. You probably want to select this manually for
-your applications.
+by default. This will generally be auto-selected, but you might
+want to do this manually for your application. It mainly concerns ROC analysis, where in order
+to talk about something like a true positive rate, we need to know which of the two classes is the positive
+one.
 
 
 ```splus
-task = makeClassifTask(id = "BreastCancer", data = df, target = "Class", positive = "malignant")
+classif.task = makeClassifTask(id = "BreastCancer", data = df, target = "Class", 
+    positive = "malignant")
 ```
 
 
-The [makeClassifTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) help page lists several other arguments that can be 
-passed to describe further details of the classification problem.
+There are also some convenient methods to access properties and parts of the task.
+The most important ones are listed in [SupervisedTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html).
 
-There are some convenient methods to access properties of the data
-set and the classification problem. Look at the documentation of the
-[LearnTask](http://berndbischl.github.io/mlr/man/makeLearner.html) class and its subclasses [ClassifTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) and [RegrTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html), if
-you are interested in the kind of "getter"-functions, which are
-available. Here are some examples:
+Here are some examples.
 
-Get the names of the input variables.
 
 
 ```splus
-getTaskFeatureNames(task)
+# get the names of the input variables:
+getTaskFeatureNames(classif.task)
 ```
 
 ```
@@ -165,12 +109,10 @@ getTaskFeatureNames(task)
 ## [9] "Mitoses"
 ```
 
-
-Get values of the target variable for all observations.
-
-
 ```splus
-head(getTaskTargets(task))
+
+# get values of the target variable for all observations:
+head(getTaskTargets(classif.task))
 ```
 
 ```
@@ -178,59 +120,45 @@ head(getTaskTargets(task))
 ## Levels: benign malignant
 ```
 
-
-All information can be obtained from the slots of the [LearnTask](http://berndbischl.github.io/mlr/man/makeLearner.html)
-object directly.
-
-The main part of the information is stored in the slot called `desc`,
-which stands for description. (`task$task.desc` is an object of class [TaskDesc](http://berndbischl.github.io/mlr/man/TaskDesc.html).)
-
-
 ```splus
-task$task.desc
+head(getTaskTargets(regr.task))
 ```
 
 ```
-## $id
-## [1] "BreastCancer"
-## 
-## $type
-## [1] "classif"
-## 
-## $target
-## [1] "Class"
-## 
-## $size
-## [1] 699
-## 
-## $n.feat
-## numerics  factors 
-##        0        4 
-## 
-## $has.missings
-## [1] TRUE
-## 
-## $has.weights
-## [1] FALSE
-## 
-## $has.blocking
-## [1] FALSE
-## 
-## $class.levels
-## [1] "benign"    "malignant"
-## 
-## $positive
-## [1] "malignant"
-## 
-## $negative
-## [1] "benign"
-## 
-## attr(,"class")
-## [1] "ClassifTaskDesc" "TaskDesc"
+## [1] 24.0 21.6 34.7 33.4 36.2 28.7
 ```
 
 ```splus
-str(task$task.desc)
+
+# accessing the data set:
+str(getTaskData(classif.task))
+```
+
+```
+## 'data.frame':	699 obs. of  10 variables:
+##  $ Cl.thickness   : Ord.factor w/ 10 levels "1"<"2"<"3"<"4"<..: 5 5 3 6 4 8 1 2 2 4 ...
+##  $ Cell.size      : Ord.factor w/ 10 levels "1"<"2"<"3"<"4"<..: 1 4 1 8 1 10 1 1 1 2 ...
+##  $ Cell.shape     : Ord.factor w/ 10 levels "1"<"2"<"3"<"4"<..: 1 4 1 8 1 10 1 2 1 1 ...
+##  $ Marg.adhesion  : Ord.factor w/ 10 levels "1"<"2"<"3"<"4"<..: 1 5 1 1 3 8 1 1 1 1 ...
+##  $ Epith.c.size   : Ord.factor w/ 10 levels "1"<"2"<"3"<"4"<..: 2 7 2 3 2 7 2 2 2 2 ...
+##  $ Bare.nuclei    : Factor w/ 10 levels "1","2","3","4",..: 1 10 2 4 1 10 10 1 1 1 ...
+##  $ Bl.cromatin    : Factor w/ 10 levels "1","2","3","4",..: 3 3 3 3 3 9 3 3 1 2 ...
+##  $ Normal.nucleoli: Factor w/ 10 levels "1","2","3","4",..: 1 2 1 7 1 7 1 1 1 1 ...
+##  $ Mitoses        : Factor w/ 9 levels "1","2","3","4",..: 1 1 1 1 1 1 1 1 5 1 ...
+##  $ Class          : Factor w/ 2 levels "benign","malignant": 1 1 1 1 1 2 1 1 1 1 ...
+```
+
+
+Note the many options [getTaskData](http://berndbischl.github.io/mlr/man/getTaskData.html) provides to convert the data set into a covenient format.
+This is especially handy when you integrate a learner from another package into mlr.
+
+If you are more technically inclined, you could also directly access
+the information stored in the slot called `task$task.desc`,
+which stands for "description" and is of class [TaskDesc](http://berndbischl.github.io/mlr/man/TaskDesc.html).
+
+
+```splus
+str(classif.task$task.desc)
 ```
 
 ```
@@ -247,160 +175,15 @@ str(task$task.desc)
 ##  $ class.levels: chr [1:2] "benign" "malignant"
 ##  $ positive    : chr "malignant"
 ##  $ negative    : chr "benign"
-##  - attr(*, "class")= chr [1:2] "ClassifTaskDesc" "TaskDesc"
+##  - attr(*, "class")= chr [1:2] "TaskDescClassif" "TaskDesc"
 ```
 
 
-Optionally, we can include further information like a blocking factor 
-into the task. Via the blocking argument you can specify if some 
-observations "belong together". Specifically, they are either put all
-in the training or the test set during a resampling iteration. The
-blocking argument is a factor of the same length as the number of
-observations in the data set, where observations with the same factor
-level belong to the same block.
+The [SupervisedTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) help page also lists several other arguments
+to describe further details of the problem.
 
-Now, let's include a (nonsensical) blocking structure:
-
-
-```splus
-blocking = factor(rep(1:3, nrow(BreastCancer)/3))
-task = makeClassifTask(id = "BreastCancer", data = df, target = "Class", blocking = blocking)
-head(task$blocking)
-```
-
-```
-## [1] 1 2 3 1 2 3
-## Levels: 1 2 3
-```
-
-```splus
-table(task$blocking)
-```
-
-```
-## 
-##   1   2   3 
-## 233 233 233
-```
-
-
-From this classification task we can now train various models, which
-will be covered in the section [Training](train.md).
-Before that, let's look at the regression experiment again.
-
-
-### Regression example
-
-
-```splus
-library("mlr")
-library("mlbench")
-data(BostonHousing)
-task = makeRegrTask(data = BostonHousing, target = "medv")
-task
-```
-
-```
-## Supervised task: data
-## Type: regr
-## Target: medv
-## Observations: 506
-## Features:
-## numerics  factors 
-##       12        1 
-## Missings: FALSE
-## Has weights: FALSE
-## Has blocking: FALSE
-```
-
-
-The "getter" functions work analogous to the classification example.
-
-
-```splus
-getTaskFeatureNames(task)
-```
-
-```
-##  [1] "crim"    "zn"      "indus"   "chas"    "nox"     "rm"      "age"    
-##  [8] "dis"     "rad"     "tax"     "ptratio" "b"       "lstat"
-```
-
-```splus
-
-head(getTaskTargets(task))
-```
-
-```
-## [1] 24.0 21.6 34.7 33.4 36.2 28.7
-```
-
-
-Inspect [TaskDesc](http://berndbischl.github.io/mlr/man/TaskDesc.html).
-
-
-```splus
-task$task.desc
-```
-
-```
-## $id
-## [1] "data"
-## 
-## $type
-## [1] "regr"
-## 
-## $target
-## [1] "medv"
-## 
-## $size
-## [1] 506
-## 
-## $n.feat
-## numerics  factors 
-##       12        1 
-## 
-## $has.missings
-## [1] FALSE
-## 
-## $has.weights
-## [1] FALSE
-## 
-## $has.blocking
-## [1] FALSE
-## 
-## $class.levels
-## [1] NA
-## 
-## $positive
-## [1] NA
-## 
-## $negative
-## [1] NA
-## 
-## attr(,"class")
-## [1] "RegrTaskDesc" "TaskDesc"
-```
-
-```splus
-str(task$task.desc)
-```
-
-```
-## List of 11
-##  $ id          : chr "data"
-##  $ type        : chr "regr"
-##  $ target      : chr "medv"
-##  $ size        : int 506
-##  $ n.feat      : Named int [1:2] 12 1
-##   ..- attr(*, "names")= chr [1:2] "numerics" "factors"
-##  $ has.missings: logi FALSE
-##  $ has.weights : logi FALSE
-##  $ has.blocking: logi FALSE
-##  $ class.levels: chr NA
-##  $ positive    : chr NA
-##  $ negative    : chr NA
-##  - attr(*, "class")= chr [1:2] "RegrTaskDesc" "TaskDesc"
-```
-
+E.g., we could include a blocking factor into the task.
+This would tell the task that some observations "belong together", so they are either put all
+in the training or the test set during a resampling iteration.
+Or you could weight observations according to their importance.
 
