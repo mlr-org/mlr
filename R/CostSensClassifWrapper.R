@@ -10,12 +10,11 @@
 #' preferred.)
 #' Then the classifier is fitted to that data and subsequently used for prediction.
 #'
-#' @param learner [\code{\link[mlr]{Learner}}]\cr
-#'   The basic classification learner.
-#' @return [\code{\link[mlr]{Learner}}].
+#' @template arg_learner_classif
+#' @template ret_learner
 #' @export
 makeCostSensClassifWrapper = function(learner) {
-  checkLearnerClassif(learner)
+  learner = checkLearnerClassif(learner)
   learner = setPredictType(learner, "response")
   id = paste("costsens", learner$id, sep = ".")
   x = makeBaseWrapper(id, learner, package = learner$packages, cl = "CostSensClassifWrapper")

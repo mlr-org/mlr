@@ -8,8 +8,7 @@
 #' After training, the selected features can be retrieved with
 #' \code{\link{getFilteredFeatures}}.
 #'
-#' @param learner [\code{\link{Learner}}]\cr
-#'   The learner.
+#' @template arg_learner
 #' @param fw.method [\code{character(1)}]\cr
 #'   Filter method. Available are:
 #'   linear.correlation, rank.correlation, information.gain, gain.ratio, symmetrical.uncertainty,
@@ -18,8 +17,8 @@
 #' @param fw.threshold [\code{numeric(1)}]\cr
 #'   Information value as to be greater then the threshold. Default is 0.
 #' @param fw.n [\code{integer(1)}]\cr
-#'   Number of features ordered by the information value to select. 
-#'   This can decrease the number of features after threasholding. 
+#'   Number of features ordered by the information value to select.
+#'   This can decrease the number of features after threasholding.
 #' @param fw.percentage [\code{numeric(1)}]\cr
 #'   Alternatively to \code{n} you can give a relative number of features.
 #' @return [\code{\link{Learner}}].
@@ -38,7 +37,7 @@
 #' })
 #' print(r$extract)
 makeFilterWrapper = function(learner, fw.method = "random.forest.importance", fw.threshold = 0, fw.n = NULL, fw.percentage = NULL) {
-  checkArg(learner, "Learner")
+  learner = checkLearner(learner)
   meths = filter.methods #defined in filterFeatures.R
   checkFilterArguments(method = fw.method, threshold = fw.threshold, n = fw.n, percentage = fw.percentage)
   id = paste(learner$id, "filtered", sep = ".")

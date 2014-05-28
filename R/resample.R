@@ -20,11 +20,8 @@
 #' The remaining functions on this page are convenience wrappers for the various
 #' existing resampling strategies.
 #'
-#' @param learner [\code{\link{Learner}} | \code{character(1)}]\cr
-#'   The learner.
-#'   If you pass a string the learner will be created via \code{\link{makeLearner}}.
-#' @param task [\code{\link{SupervisedTask}}]\cr
-#'   The task.
+#' @template arg_learner
+#' @template arg_task
 #' @param resampling [\code{\link{ResampleDesc}} or \code{\link{ResampleInstance}}]\cr
 #'   Resampling strategy.
 #'   If a description is passed, it is instantiated automatically.
