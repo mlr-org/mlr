@@ -1,7 +1,34 @@
-visualizeLearner = function(learner, task, features = NULL, ..., par.vals = list(),
-  gridsize = 30, pointsize = 2) {
+#' Visualizes a learning algorithm on a 1D or 2D data set.
+#'
+#' Trains the model for 1 or 2 selected features, then displays it via ggplot2.
+#'
+#' @param learner [\code{\link{Learner}}]\cr
+#'   The learner.
+#' @param task [\code{\link{SupervisedTask}}]\cr
+#'   The task.
+#' @param features [\code{character}]\cr
+#'   Selected features for model.
+#'   By default the first 2 features are used.
+#' @param ... [any]\cr
+#'   Parameters for \code{learner}.
+#' @param ... [\code{list}]\cr
+#'   Parameters for \code{learner}.
+#' @param features [\code{character}]\cr
+#'   Selected features for model.
+#'   By default the first 2 features are used.
+#' @param grid [\code{integer(1)}]\cr
+#'   Grid resolution per axis for 2D background.
+#'   Default is 50.
+#' @param pointsize [\code{integer(1)}]\cr
+#'   Pointsize for ggplot2 geom_point for data points.
+#'   Default is 2.
+#' @return [\code{\link{WrappedModel}}].
+#' @export
 
-  checkLearner(learner, type = "classif")
+visualizeLearner = function(learner, task, features = NULL, ..., par.vals = list(),
+  gridsize = 50L, pointsize = 2L) {
+
+  learner = checkLearner(learner, type = "classif")
   checkArg(task, "SupervisedTask")
   fns = getTaskFeatureNames(task)
   if (is.null(features))
@@ -9,11 +36,17 @@ visualizeLearner = function(learner, task, features = NULL, ..., par.vals = list
   else
     checkArg(features, subset = fns)
   par.vals = insert(list(...), par.vals)
+  gridsize = convertInteger(gridsize)
+  checkArg(gridsize, "integer", len = 1L, na.ok = FALSE)
+  pointsize = convertInteger(pointsize)
+  checkArg(pointsize, "integer", len = 1L, na.ok = FALSE)
+  requirePackages("ggplot2", why = "visualizeLearner")
 
   # subset to features, train learner with selected hyperpars
   task = subsetTask(task, features = features)
-  lrn = setHyperPars(lrn, par.vals = par.vals)
-  mod = train(lrn, task)
+  learner = setHyperPars(learner, par.vals = par.vals)
+  mod = train(learner, task)
+  cv = crossval(learner, task, iters = 10L, show.info = FALSE)
 
   # some shortcut names
   target = task$task.desc$target
@@ -49,6 +82,7 @@ visualizeLearner = function(learner, task, features = NULL, ..., par.vals = list
       size = pointsize + .5, col = "orange")
   }
   title = sprintf("%s: %s", learner$id, paramValueToString(learner$par.set, par.vals))
+  title = sprintf("%s\nTrain err = %g; CV = %g", title, mean(data$.err), cv$aggr[1L])
   p = p + ggtitle(title)
 
   return(p)
