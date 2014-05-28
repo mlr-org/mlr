@@ -7,8 +7,9 @@ selectFeatures(learner, task, resampling, control, measures, bit.names,
   bits.to.features, show.info = TRUE)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}}]\cr
-The learner.}
+\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+The learner.
+If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
 \item{task}{[\code{\link{SupervisedTask}}]\cr
 The task.}
