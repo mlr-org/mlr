@@ -35,8 +35,7 @@
 #'   See \code{\link{ResampleDesc}}.
 #' @param stratify [\code{logical(1)}]\cr
 #'   See \code{\link{ResampleDesc}}.
-#' @param measures [\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
-#'   Performance measure(s) to evaluate.
+#' @template arg_measures
 #' @param weights [\code{numeric}]\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
 #'   If given, must be of same length as observations in task and in corresponding order.
