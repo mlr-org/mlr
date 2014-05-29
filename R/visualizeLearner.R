@@ -1,3 +1,5 @@
+#FIXME: the name of the method might be improved. it is too unspecific
+
 #' @title Visualizes a learning algorithm on a 1D or 2D data set.
 #'
 #' @description
