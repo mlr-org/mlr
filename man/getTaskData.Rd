@@ -15,7 +15,8 @@ Selected cases.
 Default is all cases.}
 
 \item{features}{[\code{character}]\cr
-Selected inputs.  Default is all input variables.}
+Selected features.
+Default is all.}
 
 \item{target.extra}{[\code{logical(1)}]\cr
 Should target vector be returned separately?

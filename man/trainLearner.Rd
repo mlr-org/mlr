@@ -3,7 +3,7 @@
 \alias{trainLearner}
 \title{Train an R learner.}
 \usage{
-trainLearner(.learner, .task, .subset, .weights, ...)
+trainLearner(.learner, .task, .subset, .weights = NULL, ...)
 }
 \arguments{
 \item{.learner}{[\code{\link{RLearner}}]\cr

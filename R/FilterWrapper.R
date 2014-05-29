@@ -58,7 +58,7 @@ makeFilterWrapper = function(learner, fw.method = "random.forest.importance", fw
 
 
 #' @export
-trainLearner.FilterWrapper = function(.learner, .task, .subset, .weights, fw.method, fw.threshold, fw.n, fw.percentage, ...) {
+trainLearner.FilterWrapper = function(.learner, .task, .subset, .weights = NULL, fw.method, fw.threshold, fw.n, fw.percentage, ...) {
   .task = subsetTask(.task, subset = .subset)
   # FIXME: are all filter values high = good?
   .task = filterFeatures(.task, method = fw.method, threshold = fw.threshold, n = fw.n, percentage = fw.percentage)

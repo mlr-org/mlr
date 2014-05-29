@@ -20,7 +20,7 @@
 #'   Additional (hyper)parameters, which need to be passed to the underlying train function.
 #' @return [any]. Model of the underlying learner.
 #' @export
-trainLearner = function(.learner, .task, .subset, .weights, ...) {
+trainLearner = function(.learner, .task, .subset, .weights = NULL, ...) {
   UseMethod("trainLearner")
 }
 
