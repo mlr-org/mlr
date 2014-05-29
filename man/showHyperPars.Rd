@@ -17,6 +17,6 @@ A list of all learners is available on the
 [\code{invisible(NULL)}].
 }
 \description{
-Useful for quick overview, also does not foce you to create the learner.
+Useful for a quick overview, also does not foce you to create the learner.
 }
 

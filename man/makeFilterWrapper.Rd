@@ -37,6 +37,9 @@ Internally uses \code{\link{filterFeatures}} before every model fit.
 
 After training, the selected features can be retrieved with
 \code{\link{getFilteredFeatures}}.
+
+Note that observation weights do not influence the filtering and are simply passed
+down to the next learner.
 }
 \examples{
 task = makeClassifTask(data = iris, target = "Species")

@@ -3,8 +3,9 @@
 \alias{visualizeLearner}
 \title{Visualizes a learning algorithm on a 1D or 2D data set.}
 \usage{
-visualizeLearner(learner, task, features = NULL, ..., par.vals = list(),
-  gridsize = 50L, pointsize = 2L)
+visualizeLearner(learner, task, features = NULL, measures, ...,
+  par.vals = list(), gridsize, pointsize = 2L, prob.alpha = TRUE,
+  se.band = TRUE, err.col = "orange")
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -29,17 +30,47 @@ Selected features for model.
 By default the first 2 features are used.}
 
 \item{grid}{[\code{integer(1)}]\cr
-Grid resolution per axis for 2D background.
-Default is 50.}
+Grid resolution per axis for background predictions.
+Default is 500 for 1D and 100 for 2D.}
 
 \item{pointsize}{[\code{integer(1)}]\cr
 Pointsize for ggplot2 geom_point for data points.
 Default is 2.}
+
+\item{prob.alpha}{[\code{logical(1)}]\cr
+For classification: Set alpha value of background to probability for
+predicted class? Allows visualization of \dQuote{confidence} for prediction.
+If not, only a constant color is displayed in the background for the predicted label.
+Default is \code{TRUE}.}
+
+\item{se.band}{[\code{logical(1)}]\cr
+For regression in 1D: Show band for standard error estimation?
+Default is \code{TRUE}.}
+
+\item{err.col}{[\code{character(1)}]\cr
+For classification: Color of misclassified data points.
+Default is \dQuote{orange}}
+
+\item{cv}{[\code{integer(1)}]\cr
+Do cross-validation and display in plot title?
+Number of folds.
+Default is 10.}
 }
 \value{
 [\code{\link{WrappedModel}}].
 }
 \description{
 Trains the model for 1 or 2 selected features, then displays it via \code{\link[ggplot2]{ggplot}}.
+Good for teaching or exploring models.
+
+For classification, only 2D plots are supported. The data points, the classification and
+potentially through color alpha blending the posterior probabilities are shown.
+
+For regression, 1D and 2D plots are supported. 1D shows the data, the estimated mean and potentially
+the estimated standard error. 2D does not show estimated standard error,
+but only the estimated mean via background color.
+
+The plot title displays the model id, its parameters, the test training performance
+and the cross-validation performance.
 }
 

@@ -4,6 +4,9 @@
 #' used like any other learner object.
 #' Internally uses \code{\link{oversample}} or \code{\link{undersample}} before every model fit.
 #'
+#' Note that observation weights do not influence the sampling and are simply passed
+#' down to the next learner.
+#'
 #' @param learner [\code{\link{Learner}}]\cr
 #'   The learner.
 #' @param usw.rate [\code{numeric(1)}]\cr
@@ -46,19 +49,19 @@ makeOversampleWrapper = function(learner, osw.rate) {
 }
 
 #' @export
-trainLearner.UndersampleWrapper = function(.learner, .task, .subset, usw.rate, ...) {
+trainLearner.UndersampleWrapper = function(.learner, .task, .subset, .weights, usw.rate, ...) {
   .task = subsetTask(.task, .subset)
   .task = undersample(.task, rate=usw.rate)
-  m = train(.learner$next.learner, .task)
+  m = train(.learner$next.learner, .task, weights = .weights)
   x = makeChainModel(next.model=m, cl="UndersampleModel")
   return(x)
 }
 
 #' @export
-trainLearner.OversampleWrapper = function(.learner, .task, .subset, osw.rate, ...) {
+trainLearner.OversampleWrapper = function(.learner, .task, .subset, .weights, osw.rate, ...) {
   .task = subsetTask(.task, .subset)
   .task = oversample(.task, rate=osw.rate)
-  m = train(.learner$next.learner, .task)
+  m = train(.learner$next.learner, .task, weights = .weights)
   x = makeChainModel(next.model=m, cl="OversampleModel")
   return(x)
 }

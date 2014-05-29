@@ -8,6 +8,9 @@
 #' After training, the selected features can be retrieved with
 #' \code{\link{getFilteredFeatures}}.
 #'
+#' Note that observation weights do not influence the filtering and are simply passed
+#' down to the next learner.
+#'
 #' @template arg_learner
 #' @param fw.method [\code{character(1)}]\cr
 #'   Filter method. Available are:
@@ -55,11 +58,11 @@ makeFilterWrapper = function(learner, fw.method = "random.forest.importance", fw
 
 
 #' @export
-trainLearner.FilterWrapper = function(.learner, .task, .subset, fw.method, fw.threshold, fw.n, fw.percentage, ...) {
+trainLearner.FilterWrapper = function(.learner, .task, .subset, .weights, fw.method, fw.threshold, fw.n, fw.percentage, ...) {
   .task = subsetTask(.task, subset = .subset)
   # FIXME: are all filter values high = good?
   .task = filterFeatures(.task, method = fw.method, threshold = fw.threshold, n = fw.n, percentage = fw.percentage)
-  m = train(.learner$next.learner, .task)
+  m = train(.learner$next.learner, .task, weights = .weights)
   # FIXME: enter correct objects (features, etc)
   makeChainModel(next.model = m, cl = "FilterModel")
 }
