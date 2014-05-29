@@ -3,9 +3,9 @@
 \alias{visualizeLearner}
 \title{Visualizes a learning algorithm on a 1D or 2D data set.}
 \usage{
-visualizeLearner(learner, task, features = NULL, measures, ...,
-  par.vals = list(), gridsize, pointsize = 2L, prob.alpha = TRUE,
-  se.band = TRUE, err.col = "orange")
+visualizeLearner(learner, task, features = NULL, measures, cv = 10L, ...,
+  gridsize, pointsize = 2L, prob.alpha = TRUE, se.band = TRUE,
+  err.col = "orange")
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -19,22 +19,23 @@ The task.}
 Selected features for model.
 By default the first 2 features are used.}
 
+\item{measures}{[\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
+Performance measure(s) to evaluate.}
+
+\item{cv}{[\code{integer(1)}]\cr
+Do cross-validation and display in plot title?
+Number of folds. 0 means no CV.
+Default is 10.}
+
 \item{...}{[any]\cr
 Parameters for \code{learner}.}
 
-\item{...}{[\code{list}]\cr
-Parameters for \code{learner}.}
-
-\item{features}{[\code{character}]\cr
-Selected features for model.
-By default the first 2 features are used.}
-
-\item{grid}{[\code{integer(1)}]\cr
+\item{gridsize}{[\code{integer(1)}]\cr
 Grid resolution per axis for background predictions.
 Default is 500 for 1D and 100 for 2D.}
 
 \item{pointsize}{[\code{integer(1)}]\cr
-Pointsize for ggplot2 geom_point for data points.
+Pointsize for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
 Default is 2.}
 
 \item{prob.alpha}{[\code{logical(1)}]\cr
@@ -50,11 +51,6 @@ Default is \code{TRUE}.}
 \item{err.col}{[\code{character(1)}]\cr
 For classification: Color of misclassified data points.
 Default is \dQuote{orange}}
-
-\item{cv}{[\code{integer(1)}]\cr
-Do cross-validation and display in plot title?
-Number of folds.
-Default is 10.}
 }
 \value{
 [\code{\link{WrappedModel}}].
