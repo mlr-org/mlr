@@ -45,7 +45,7 @@
 #' @param err.col [\code{character(1)}]\cr
 #'   For classification: Color of misclassified data points.
 #'   Default is \dQuote{orange}
-#' @return [\code{\link{WrappedModel}}].
+#' @return The ggplot2 object.
 #' @export
 visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L,  ...,
   gridsize, pointsize = 2L,
@@ -53,6 +53,7 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
 
   learner = checkLearner(learner)
   checkArg(task, "SupervisedTask")
+  td = task$task.desc
 
   # features and dimensionality
   fns = getTaskFeatureNames(task)
@@ -63,6 +64,10 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
     checkArg(features, subset = fns, max.len = 2L)
   }
   taskdim = length(features)
+  if (td$type == "classif" && taskdim != 2L)
+    stopf("Classification: currently only 2D plots supported, not: %i", taskdim)
+  if (td$type == "regr" && taskdim %nin% 1:2)
+    stopf("Regression: currently only 1D and 2D plots supported, not: %i", taskdim)
 
   measures = checkMeasures(measures, task)
   if (missing(gridsize)) {
@@ -83,7 +88,6 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
   learner = setHyperPars(learner, ...)
 
   # some shortcut names
-  td = task$task.desc
   target = td$target
   data = getTaskData(task)
   y = getTaskTargets(task)
