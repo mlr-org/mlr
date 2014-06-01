@@ -5,3 +5,4 @@ mlr_*.tar.gz
 .Rhistory
 staticdocs
 
+.RData
