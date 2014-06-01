@@ -99,7 +99,8 @@ getTaskTargets = function(task, subset, recode.target="no") {
 #'   Selected cases.
 #'   Default is all cases.
 #' @param features [\code{character}]\cr
-#'   Selected inputs.  Default is all input variables.
+#'   Selected features.
+#'   Default is all.
 #' @param target.extra [\code{logical(1)}]\cr
 #'   Should target vector be returned separately?
 #'   If not, a single data.frame including the target is returned, otherwise a list

@@ -14,6 +14,7 @@
 \alias{fpr}
 \alias{gmean}
 \alias{gpr}
+\alias{ks}
 \alias{mae}
 \alias{mcc}
 \alias{mcp}
@@ -39,6 +40,8 @@
 \title{Performance measures.}
 \format{none}
 \usage{
+none
+
 none
 
 none

@@ -10,10 +10,8 @@
 #' to a single feature, but you are able to change this by using the arguments \code{bit.names}
 #' and \code{bits.to.features}. Thus allowing you to switch on whole groups of features with a single bit.
 #'
-#' @param learner [\code{\link{Learner}}]\cr
-#'   The learner.
-#' @param task [\code{\link{SupervisedTask}}]\cr
-#'   The task.
+#' @template arg_learner
+#' @template arg_task
 #' @param resampling [\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
 #'   Resampling strategy to feature sets. If you pass a description,
 #'   it is instantiated once at the beginning by default, so all points are evaluated on the same training/test sets.
@@ -58,7 +56,7 @@
 selectFeatures = function(learner, task, resampling, control, measures,
   bit.names, bits.to.features, show.info=TRUE) {
 
-  checkArg(learner, "Learner")
+  learner = checkLearner(learner)
   checkArg(task, "SupervisedTask")
   if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")

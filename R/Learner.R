@@ -5,12 +5,7 @@
 #' value selects the label. The threshold used to assign the label can later be changed using the
 #' \code{\link{setThreshold}} function.
 #'
-#' @param cl [\code{character(1)}]\cr
-#'   Class of learner to create. By convention, all classification learners
-#'   start with \dQuote{classif.}, all regression learners with
-#'   \dQuote{regr.} and all survival learners start with \dQuote{surv.}.
-#'   A list of all learners is available on the
-#'   \code{\link{learners}} help page.
+#' @template arg_lrncl
 #' @param id [\code{character(1)}]\cr
 #'   Id string for object. Used to display object.
 #'   Default is \code{cl}.

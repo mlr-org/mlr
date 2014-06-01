@@ -39,6 +39,8 @@ mlr_1.2:
 -- removeConstantFeatures
 -- makeCostSensTaks, makeCostSensRegrWrapper, makeCostsSensWeightedPairsLearner
 -- holdout, subsample, crossval, repcv, bootstrapOOB, bootstrapB632, bootstrapB632plus
+-- showHyperPars
+--  visualizeLearner
 
 - imputation stuff ????
 - surv stuff ????

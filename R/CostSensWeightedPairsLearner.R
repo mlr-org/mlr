@@ -14,12 +14,11 @@
 #' one-vs-one approach where one reduces a normal multi-class problem to
 #' multiple binary ones and aggregates by voting.
 #'
-#' @param learner [\code{\link[mlr]{Learner}}]\cr
-#'   The basic regression learner.
+#' @template arg_learner_classif
 #' @return [\code{\link[mlr]{Learner}}].
 #' @export
 makeCostSensWeightedPairsWrapper = function(learner) {
-  checkLearnerClassif(learner, weights = TRUE)
+  learner = checkLearnerClassif(learner, weights = TRUE)
   learner = setPredictType(learner, "response")
   id = paste("costsens", learner$id, sep = ".")
   x = makeBaseWrapper(id, learner, package = learner$packages, cl = "CostSensWeightedPairsWrapper")

@@ -7,12 +7,11 @@
 #' For each class in the task, an individual regression model is fitted for the costs of that class.
 #' During prediction, the class with the lowest predicted costs is selected.
 #'
-#' @param learner [\code{\link[mlr]{Learner}}]\cr
-#'   The basic regression learner.
-#' @return [\code{\link[mlr]{Learner}}].
+#' @template arg_learner_regr
+#' @template ret_learner
 #' @export
 makeCostSensRegrWrapper = function(learner) {
-  checkLearnerRegr(learner)
+  learner = checkLearnerRegr(learner)
   # we cannot make use of 'se' here
   learner = setPredictType(learner, "response")
   id = paste("costsens", learner$id, sep = ".")

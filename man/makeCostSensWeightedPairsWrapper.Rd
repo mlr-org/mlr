@@ -6,8 +6,9 @@
 makeCostSensWeightedPairsWrapper(learner)
 }
 \arguments{
-\item{learner}{[\code{\link[mlr]{Learner}}]\cr
-The basic regression learner.}
+\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+The classification learner.
+If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 }
 \value{
 [\code{\link[mlr]{Learner}}].

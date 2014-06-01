@@ -29,4 +29,8 @@ Creates a learner object, which can be
 used like any other learner object.
 Internally uses \code{\link{oversample}} or \code{\link{undersample}} before every model fit.
 }
+\details{
+Note that observation weights do not influence the sampling and are simply passed
+down to the next learner.
+}
 

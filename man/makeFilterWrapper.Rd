@@ -7,8 +7,9 @@ makeFilterWrapper(learner, fw.method = "random.forest.importance",
   fw.threshold = 0, fw.n = NULL, fw.percentage = NULL)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}}]\cr
-The learner.}
+\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+The learner.
+If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
 \item{fw.method}{[\code{character(1)}]\cr
 Filter method. Available are:
@@ -36,6 +37,9 @@ Internally uses \code{\link{filterFeatures}} before every model fit.
 
 After training, the selected features can be retrieved with
 \code{\link{getFilteredFeatures}}.
+
+Note that observation weights do not influence the filtering and are simply passed
+down to the next learner.
 }
 \examples{
 task = makeClassifTask(data = iris, target = "Species")

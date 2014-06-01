@@ -3,10 +3,8 @@
 #' Given a \code{\link{SupervisedTask}}, creates a model for the learning machine
 #' which can be used for predictions on new data.
 #'
-#' @param learner [\code{\link{Learner}}]\cr
-#'   The learner.
-#' @param task [\code{\link{SupervisedTask}}]\cr
-#'   The task.
+#' @template arg_learner
+#' @template arg_task
 #' @param subset [\code{integer}]\cr
 #'   An index vector specifying the training cases to be used for fitting.
 #'   By default the complete data set is used.
@@ -33,7 +31,7 @@
 #' mod <- train(learner, task, subset = training.set)
 #' print(mod)
 train = function(learner, task, subset, weights = NULL) {
-  checkArg(learner, "Learner")
+  learner = checkLearner(learner)
   checkArg(task, "SupervisedTask")
   if (missing(subset)) {
     subset = seq_len(task$task.desc$size)

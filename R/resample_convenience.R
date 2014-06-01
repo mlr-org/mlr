@@ -5,7 +5,7 @@
 crossval = function(learner, task, iters = 10L, stratify = FALSE, measures, models = FALSE, ..., show.info = TRUE) {
   learner = checkLearner(learner, ...)
   rdesc = makeResampleDesc("CV", iters = iters, stratify = stratify)
-  resample(learner, task, rdesc, measures = measures, models = models)
+  resample(learner, task, rdesc, measures = measures, models = models, show.info = show.info)
 }
 
 #' @rdname resample
@@ -13,7 +13,7 @@ crossval = function(learner, task, iters = 10L, stratify = FALSE, measures, mode
 repcv = function(learner, task, folds = 10L, reps = 10L, stratify = FALSE, measures, models = FALSE, ..., show.info = TRUE) {
   learner = checkLearner(learner, ...)
   rdesc = makeResampleDesc("RepCV", folds = folds, reps = reps, stratify = stratify)
-  resample(learner, task, rdesc, measures = measures, models = models)
+  resample(learner, task, rdesc, measures = measures, models = models, show.info = show.info)
 }
 
 #' @rdname resample
@@ -21,7 +21,7 @@ repcv = function(learner, task, folds = 10L, reps = 10L, stratify = FALSE, measu
 holdout = function(learner, task, split = 2/3, stratify = FALSE, measures, models = FALSE, ..., show.info = TRUE) {
   learner = checkLearner(learner, ...)
   rdesc = makeResampleDesc("Holdout", split = split, stratify = stratify)
-  resample(learner, task, rdesc, measures = measures, models = models)
+  resample(learner, task, rdesc, measures = measures, models = models, show.info = show.info)
 }
 
 #' @rdname resample
@@ -29,7 +29,7 @@ holdout = function(learner, task, split = 2/3, stratify = FALSE, measures, model
 subsample = function(learner, task, iters = 30, split = 2/3, stratify = FALSE, measures, models = FALSE, ..., show.info = TRUE) {
   learner = checkLearner(learner, ...)
   rdesc = makeResampleDesc("Subsample", iters = iters, split = split, stratify = stratify)
-  resample(learner, task, rdesc, measures = measures, models = models)
+  resample(learner, task, rdesc, measures = measures, models = models, show.info = show.info)
 }
 
 #' @rdname resample
@@ -37,7 +37,7 @@ subsample = function(learner, task, iters = 30, split = 2/3, stratify = FALSE, m
 bootstrapOOB = function(learner, task, iters = 30, stratify = FALSE, measures, models = FALSE, ..., show.info = TRUE) {
   learner = checkLearner(learner, ...)
   rdesc = makeResampleDesc("Bootstrap", iters = iters, stratify = stratify)
-  resample(learner, task, rdesc, measures = measures, models = models)
+  resample(learner, task, rdesc, measures = measures, models = models, show.info = show.info)
 }
 
 #' @rdname resample
@@ -47,7 +47,7 @@ bootstrapB632 = function(learner, task, iters = 30, stratify = FALSE, measures, 
   checkArg(task, "SupervisedTask")
   rdesc = makeResampleDesc("Bootstrap", predict = "both", iters = iters, stratify = stratify)
   measures = checkMeasures(measures, task, aggr = b632)
-  resample(learner, task, rdesc, measures = measures, models = models)
+  resample(learner, task, rdesc, measures = measures, models = models, show.info = show.info)
 }
 
 #' @rdname resample
@@ -57,6 +57,6 @@ bootstrapB632plus = function(learner, task, iters = 30, stratify = FALSE, measur
   checkArg(task, "SupervisedTask")
   rdesc = makeResampleDesc("Bootstrap", predict = "both", iters = iters, stratify = stratify)
   measures = checkMeasures(measures, task, aggr = b632plus)
-  resample(learner, task, rdesc, measures = measures, models = models)
+  resample(learner, task, rdesc, measures = measures, models = models, show.info = show.info)
 }
 

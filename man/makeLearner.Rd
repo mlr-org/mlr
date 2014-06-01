@@ -9,7 +9,7 @@ makeLearner(cl, id = cl, predict.type = "response", ...,
 }
 \arguments{
 \item{cl}{[\code{character(1)}]\cr
-Class of learner to create. By convention, all classification learners
+Class of learner. By convention, all classification learners
 start with \dQuote{classif.}, all regression learners with
 \dQuote{regr.} and all survival learners start with \dQuote{surv.}.
 A list of all learners is available on the
