@@ -25,6 +25,8 @@
 \format{\preformatted{List of 2
  $ id : chr "test.mean"
  $ fun:function (task, perf.test, perf.train, measure, group, pred)  
+  ..- attr(*, "srcref")=Class 'srcref'  atomic [1:8] 31 9 31 83 9 83 31 31
+  .. .. ..- attr(*, "srcfile")=Classes 'srcfilecopy', 'srcfile' <environment: 0x68eaee8> 
  - attr(*, "class")= chr "Aggregation"
 }}
 \usage{
