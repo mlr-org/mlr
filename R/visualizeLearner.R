@@ -42,17 +42,23 @@
 #' @param se.band [\code{logical(1)}]\cr
 #'   For regression in 1D: Show band for standard error estimation?
 #'   Default is \code{TRUE}.
+#' @param err.mark [\code{character(1)}]:
+#'   For classification: Either mark error of the model on the training data (\dQuote{train}) or
+#'   during cross-validation (\dQuote{cv}) or not at all with \dQuote{none}.
+#'   Default is \dQuote{train}.
 #' @param err.col [\code{character(1)}]\cr
 #'   For classification: Color of misclassified data points.
 #'   Default is \dQuote{orange}
-#' @return [\code{\link{WrappedModel}}].
+#' @return The ggplot2 object.
 #' @export
 visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L,  ...,
   gridsize, pointsize = 2L,
-  prob.alpha = TRUE, se.band = TRUE, err.col = "orange") {
+  prob.alpha = TRUE, se.band = TRUE,
+  err.mark = "train", err.col = "orange") {
 
   learner = checkLearner(learner)
   checkArg(task, "SupervisedTask")
+  td = task$task.desc
 
   # features and dimensionality
   fns = getTaskFeatureNames(task)
@@ -63,6 +69,10 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
     checkArg(features, subset = fns, max.len = 2L)
   }
   taskdim = length(features)
+  if (td$type == "classif" && taskdim != 2L)
+    stopf("Classification: currently only 2D plots supported, not: %i", taskdim)
+  if (td$type == "regr" && taskdim %nin% 1:2)
+    stopf("Regression: currently only 1D and 2D plots supported, not: %i", taskdim)
 
   measures = checkMeasures(measures, task)
   if (missing(gridsize)) {
@@ -75,6 +85,10 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
   checkArg(pointsize, "integer", len = 1L, na.ok = FALSE)
   checkArg(prob.alpha, "logical", len = 1L, na.ok = FALSE)
   checkArg(se.band, "logical", len = 1L, na.ok = FALSE)
+  checkArg(err.mark, choice = c("train", "cv", "none"))
+  checkArg(err.col, "character", len = 1L, na.ok = FALSE)
+  if (td$type == "classif" && err.mark == "cv" && cv == 0L)
+    stopf("Classification: CV must be switched on, with 'cv' > 0, for err.type = 'cv'!")
 
   requirePackages("ggplot2", why = "visualizeLearner")
 
@@ -83,7 +97,6 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
   learner = setHyperPars(learner, ...)
 
   # some shortcut names
-  td = task$task.desc
   target = td$target
   data = getTaskData(task)
   y = getTaskTargets(task)
@@ -102,6 +115,7 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
   perf.train = performance(pred.train, measures = measures)
   cv = crossval(learner, task, iters = 10L, measures = measures, show.info = FALSE)
   perf.cv = cv$aggr
+  pred.cv = cv$pred
 
   # 2d stuff
   if (taskdim == 2L) {
@@ -124,7 +138,12 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
   grid[, target] = pred.grid$data$response
 
   if (td$type == "classif") {
-    data$.err = (y != yhat)
+    data$.err = if (err.mark == "train")
+      (y != yhat)
+    else if (err.mark == "cv")
+      y != pred.cv$data[order(pred.cv$data$id), "response"]
+    else
+      NULL
     if (taskdim == 2L) {
       p = ggplot(grid, aes_string(x = x1n, y = x2n))
       if (learner$prob && prob.alpha) {
@@ -138,7 +157,7 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
       }
       p = p + geom_point(data = data, mapping = aes_string(x = x1n, y = x2n, shape = target),
         size = pointsize)
-      if (any(data$.err)) {
+      if (err.mark != "none" && any(data$.err)) {
         p = p + geom_point(data = subset(data, data$.err),
           mapping = aes_string(x = x1n, y = x2n, shape = target),
           size = pointsize + 1, col = err.col, show_guide = FALSE)
