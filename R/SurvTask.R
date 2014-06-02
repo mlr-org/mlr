@@ -27,7 +27,7 @@ checkTask.SurvTask = function(task, target, ...) {
 fixupData.SurvTask = function(task, target, choice, ...) {
   NextMethod("fixupData")
   if (is.integer(task$env$data[[target[1L]]]))
-    task$env$data[[target[1L]]] = as.numeric(data$env$data[[target[1L]]])
+    task$env$data[[target[1L]]] = as.numeric(task$env$data[[target[1L]]])
   if (!is.logical(task$env$data[[target[2L]]]) || is.numeric(task$env$data[[target[2L]]]))
     task$env$data[[target[2L]]] = as.integer(as.logical(task$env$data[[target[2L]]]))
 }
