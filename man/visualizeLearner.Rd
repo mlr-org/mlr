@@ -5,7 +5,7 @@
 \usage{
 visualizeLearner(learner, task, features = NULL, measures, cv = 10L, ...,
   gridsize, pointsize = 2L, prob.alpha = TRUE, se.band = TRUE,
-  err.col = "orange")
+  err.mark = "train", err.col = "orange")
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -48,12 +48,17 @@ Default is \code{TRUE}.}
 For regression in 1D: Show band for standard error estimation?
 Default is \code{TRUE}.}
 
+\item{err.mark}{[\code{character(1)}]:
+For classification: Either mark error of the model on the training data (\dQuote{train}) or
+during cross-validation (\dQuote{cv}) or not at all with \dQuote{none}.
+Default is \dQuote{train}.}
+
 \item{err.col}{[\code{character(1)}]\cr
 For classification: Color of misclassified data points.
 Default is \dQuote{orange}}
 }
 \value{
-[\code{\link{WrappedModel}}].
+The ggplot2 object.
 }
 \description{
 Trains the model for 1 or 2 selected features, then displays it via \code{\link[ggplot2]{ggplot}}.

@@ -19,6 +19,7 @@
 #'   to resampling method. The mean for very group is calculated, then the mean of those means.
 #'   Mainly used for repeated CV.}
 #' }
+#' @format None
 #' @seealso \code{\link{Aggregation}}
 #' @name aggregations
 #' @rdname aggregations

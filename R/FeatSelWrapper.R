@@ -105,7 +105,7 @@ predictLearner.FeatSelWrapper = function(.learner, .model, .newdata, ...) {
 #'
 #' @param model [\code{\link{WrappedModel}} | \code{BenchMarkResult}]\cr
 #'   Trained Model created with \code{\link{makeFeatSelWrapper}} or benchmark result created with \code{\link{benchmark}}.
-#' @return [\code{\link{FeatSelResult}} or list of \code{\link{FeatSelResult}s}].
+#' @return [\code{\link{FeatSelResult}} or list of \code{\link{FeatSelResult}}s].
 #' @export
 getFeatSelResult = function(model) {
   UseMethod("getFeatSelResult")

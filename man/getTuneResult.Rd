@@ -10,7 +10,7 @@ getTuneResult(model)
 Trained Model created with \code{\link{makeTuneWrapper}} or benchmark result created with \code{\link{benchmark}}.}
 }
 \value{
-[\code{\link{TuneResult}} or list of \code{\link{TuneResult}s}].
+[\code{\link{TuneResult}} or list of \code{\link{TuneResult}}s].
 }
 \description{
 Returns the optimal hyperparameters and optimization path.
