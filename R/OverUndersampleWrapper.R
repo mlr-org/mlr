@@ -20,49 +20,47 @@
 #' @export
 makeUndersampleWrapper = function(learner, usw.rate) {
   checkArg(learner, "Learner")
-  checkArg(usw.rate, "numeric", len=1L, na.ok=FALSE, lower=0, upper=1)
+  checkArg(usw.rate, "numeric", len = 1L, na.ok = FALSE, lower = 0, upper = 1)
   if (learner$type != "classif")
     stopf("Undersampling is only supported for classifiers, not for type = '%s'!", learner$type)
 
-  id = paste(learner$id, "undersampled", sep=".")
+  id = paste(learner$id, "undersampled", sep = ".")
   ps = makeParamSet(
-    makeNumericLearnerParam(id="usw.rate")
+    makeNumericLearnerParam(id = "usw.rate")
   )
-  pv = list(usw.rate=usw.rate)
-  makeBaseWrapper(id, learner, package="mlr", par.set=ps, par.vals=pv, cl="UndersampleWrapper")
+  pv = list(usw.rate = usw.rate)
+  makeBaseWrapper(id, learner, package = "mlr", par.set = ps, par.vals = pv, cl = "UndersampleWrapper")
 }
 
 #' @rdname makeUndersampleWrapper
 #' @export
 makeOversampleWrapper = function(learner, osw.rate) {
   checkArg(learner, "Learner")
-  checkArg(osw.rate, "numeric", len=1L, na.ok=FALSE, lower=1)
+  checkArg(osw.rate, "numeric", len = 1L, na.ok = FALSE, lower = 1)
   if (learner$type != "classif")
     stopf("Oversampling is only supported for classifiers, not for type = '%s'!", learner$type)
 
-  id = paste(learner$id, "overrsampled", sep=".")
+  id = paste(learner$id, "overrsampled", sep = ".")
   ps = makeParamSet(
-    makeNumericLearnerParam(id="osw.rate")
+    makeNumericLearnerParam(id = "osw.rate")
   )
-  pv = list(osw.rate=osw.rate)
-  makeBaseWrapper(id, learner, package="mlr", par.set=ps, par.vals=pv, cl="OversampleWrapper")
+  pv = list(osw.rate = osw.rate)
+  makeBaseWrapper(id, learner, package = "mlr", par.set = ps, par.vals = pv, cl = "OversampleWrapper")
 }
 
 #' @export
 trainLearner.UndersampleWrapper = function(.learner, .task, .subset, .weights, usw.rate, ...) {
   .task = subsetTask(.task, .subset)
-  .task = undersample(.task, rate=usw.rate)
+  .task = undersample(.task, rate = usw.rate)
   m = train(.learner$next.learner, .task, weights = .weights)
-  x = makeChainModel(next.model=m, cl="UndersampleModel")
-  return(x)
+  makeChainModel(next.model = m, cl = "UndersampleModel")
 }
 
 #' @export
 trainLearner.OversampleWrapper = function(.learner, .task, .subset, .weights, osw.rate, ...) {
   .task = subsetTask(.task, .subset)
-  .task = oversample(.task, rate=osw.rate)
+  .task = oversample(.task, rate = osw.rate)
   m = train(.learner$next.learner, .task, weights = .weights)
-  x = makeChainModel(next.model=m, cl="OversampleModel")
-  return(x)
+  makeChainModel(next.model = m, cl = "OversampleModel")
 }
 
