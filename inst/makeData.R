@@ -1,12 +1,9 @@
 library(methods)
 library(BBmisc)
 library(mlr)
-library(mlbench)
-library(mboost)
 
 dn = "../data"
 stopifnot(isDirectory(dn))
-file.remove(list.files(dn, full.names = TRUE))
 
 data(iris, package = "datasets")
 iris.task = makeClassifTask("iris-example", data = iris, target = "Species")
