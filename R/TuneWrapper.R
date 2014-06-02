@@ -92,10 +92,15 @@ predictLearner.TuneWrapper = function(.learner, .model, .newdata, ...) {
 
 #' Returns the optimal hyperparameters and optimization path.
 #'
-#' @param model [\code{\link{WrappedModel}}]\cr
-#'   Trained Model created with \code{\link{makeTuneWrapper}}.
-#' @return [\code{\link{TuneResult}}].
+#' @param model [\code{\link{WrappedModel}} | \code{BenchMarkResult}]\cr
+#'   Trained Model created with \code{\link{makeTuneWrapper}} or benchmark result created with \code{\link{benchmark}}.
+#' @return [\code{\link{TuneResult}} or list of \code{\link{TuneResult}s}].
 #' @export
 getTuneResult = function(model) {
+  UseMethod("getTuneResult")
+}
+
+#' @export
+getTuneResult.WrappedModel = function(model) {
   model$learner.model$opt.result
 }

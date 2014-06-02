@@ -83,3 +83,15 @@ predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
 getFilteredFeatures = function(model) {
   model$learner.model$next.model$features
 }
+
+# used in benchmark() ... there is no FilterResult
+getFilterResult = function(model) {
+  UseMethod("getFilterResult")
+}
+
+getFilterResult.WrappedModel = function(model) {
+  x = getFilteredFeatures(model)
+  if (is.null(x))
+    x = list()
+  addClasses(x, "FilterResult")
+}

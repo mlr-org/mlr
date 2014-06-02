@@ -6,11 +6,11 @@
 getFeatSelResult(model)
 }
 \arguments{
-\item{model}{[\code{\link{WrappedModel}}]\cr
-Trained Model created with \code{\link{makeFeatSelWrapper}}.}
+\item{model}{[\code{\link{WrappedModel}} | \code{BenchMarkResult}]\cr
+Trained Model created with \code{\link{makeFeatSelWrapper}} or benchmark result created with \code{\link{benchmark}}.}
 }
 \value{
-[\code{\link{FeatSelResult}}].
+[\code{\link{FeatSelResult}} or list of \code{\link{FeatSelResult}s}].
 }
 \description{
 Returns the selected feature set and optimization path.
