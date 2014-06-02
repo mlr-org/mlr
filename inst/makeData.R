@@ -12,4 +12,4 @@ iris.train = subsetTask(iris.task, subset = i)
 iris.test = subsetTask(iris.task, subset = setdiff(1:150, i))
 iris.lrn = makeLearner("classif.rpart")
 save(iris.task, iris.lrn, iris.train, iris.test,
-  file = file.path(dn, "mlr.iris.RData"))
+  file = file.path(dn, "iris.mlr.RData"))
