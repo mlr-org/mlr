@@ -6,11 +6,11 @@
 getTuneResult(model)
 }
 \arguments{
-\item{model}{[\code{\link{WrappedModel}}]\cr
-Trained Model created with \code{\link{makeTuneWrapper}}.}
+\item{model}{[\code{\link{WrappedModel}} | \code{BenchMarkResult}]\cr
+Trained Model created with \code{\link{makeTuneWrapper}} or benchmark result created with \code{\link{benchmark}}.}
 }
 \value{
-[\code{\link{TuneResult}}].
+[\code{\link{TuneResult}} or list of \code{\link{TuneResult}}s].
 }
 \description{
 Returns the optimal hyperparameters and optimization path.

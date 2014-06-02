@@ -8,7 +8,7 @@
 #'  \item{iris.test}{Test subset of \code{iris.task}.}
 #' }
 #'
-#' @name mlr.iris
+#' @name iris.mlr
 #' @references See \code{\link[datasets]{iris}}.
 #' @keywords data
 #' @docType data
