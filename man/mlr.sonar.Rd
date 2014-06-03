@@ -2,21 +2,19 @@
 \docType{data}
 \name{mlr.sonar}
 \alias{mlr.sonar}
-\alias{sonar.lrn}
+\alias{sonar.rin}
 \alias{sonar.task}
-\alias{sonar.test}
-\alias{sonar.train}
 \title{Sonar classification task}
 \description{
-List with following named elements:
-\describe{
- \item{sonar.task}{Classification task.}
- \item{sonar.lrn}{Classification learner using \code{classif.rpart}.}
- \item{sonar.train}{Training subset of \code{sonar.task}.}
- \item{sonar.test}{Test subset of \code{sonar.task}.}
-}
+Contains the task (\code{sonar.task}) and a matching resample instance
+(\code{sonar.rin}).
+
+Contains the task (\code{sonar.task}) and a matching resample instance
+(\code{sonar.rin}).
 }
 \references{
+See \code{\link[mlbench]{Sonar}}.
+
 See \code{\link[mlbench]{Sonar}}.
 }
 \keyword{data}

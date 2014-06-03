@@ -2,23 +2,16 @@
 \docType{data}
 \name{mlr.wpbc}
 \alias{mlr.wpbc}
-\alias{wpbc.lrn}
+\alias{wpbc.rin}
 \alias{wpbc.task}
-\alias{wpbc.test}
-\alias{wpbc.train}
 \title{Wisonsin Prognostic Breast Cancer (WPBC) survival task}
 \description{
-Contains the following objects:
-\describe{
- \item{wpbc.task}{Regression task.}
- \item{wpbc.lrn}{Classification learner using \code{regr.lm}.}
- \item{wpbc.train}{Training subset of \code{wpbc.task}.}
- \item{wpbc.test}{Test subset of \code{wpbc.task}.}
-}
+Contains the task (\code{wpbc.task}) and a matching resample instance
+(\code{wpbc.rin}).
 }
 \references{
-See \code{\link[mboost]{wpbc}}. Four incomplete cases have been
-  removed from the task.
+See \code{\link[mboost]{wpbc}}. Four incomplete cases
+  have been removed from the task.
 }
 \keyword{data}
 
