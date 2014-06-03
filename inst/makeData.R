@@ -35,7 +35,7 @@ wpbc$status = ifelse(wpbc$status == "R", 1L, 0L)
 wpbc = wpbc[complete.cases(wpbc), ]
 train = (seq_row(wpbc) %% 3L) > 0L
 wpbc.task = makeSurvTask("wpbc-example", data = wpbc, target = c("time", "status"))
-wpbc.lrn = makeLearner("classif.rpart")
+wpbc.lrn = makeLearner("surv.coxph")
 wpbc.train = subsetTask(wpbc.task, subset = train)
 wpbc.test = subsetTask(wpbc.task, subset = !train)
 save(wpbc.task, wpbc.lrn, wpbc.train, wpbc.test, file = file.path(dn, "mlr.wpbc.RData"), compress = "xz")
