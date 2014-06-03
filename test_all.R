@@ -19,8 +19,6 @@ if (interactive()) {
 
 source("inst/tests/helper_helpers.R")
 source("inst/tests/helper_objects.R")
-options(mlr.debug.seed=123L)
-configureMlr(show.learner.output=FALSE)
 
 args = commandArgs()
 file = args[which(args == "--args")+1]
