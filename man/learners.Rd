@@ -97,6 +97,7 @@
   \item{\bold{surv.CoxBoosth}}{\cr Cox proportional hazards model with componentwise likelhood based boosting from CoxBoost package: \code{\link[CoxBoost]{CoxBoost}}}
   \item{\bold{surv.coxph}}{\cr Cox proportional hazard model from survival package: \code{\link[survival]{coxph}}}
   \item{\bold{surv.glmnet}}{\cr GLM with regularization from glmnet package: \code{\link[glmnet]{glmnet}}}
+  \item{\bold{surv.randomForestSRC}}{\cr Random Forests for Survival from randomForestSRC package: \code{\link[randomForestSRC]{randomForestSRC}}}
 }
 }
 
