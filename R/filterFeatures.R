@@ -89,7 +89,3 @@ checkFilterArguments = function(method, threshold, n, percentage) {
 filter.methods = c("linear.correlation", "rank.correlation", "information.gain",
                    "gain.ratio", "symmetrical.uncertainty", "chi.squared", 
                    "random.forest.importance", "relief", "oneR")
-
-isNotSet = function(x) {
-  missing(x) || is.null(x)
-}
