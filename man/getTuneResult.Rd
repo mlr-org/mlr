@@ -3,10 +3,10 @@
 \alias{getTuneResult}
 \title{Returns the optimal hyperparameters and optimization path.}
 \usage{
-getTuneResult(model)
+getTuneResult(object)
 }
 \arguments{
-\item{model}{[\code{\link{WrappedModel}} | \code{BenchMarkResult}]\cr
+\item{object}{[\code{\link{WrappedModel}} | \code{BenchMarkResult}]\cr
 Trained Model created with \code{\link{makeTuneWrapper}} or benchmark result created with \code{\link{benchmark}}.}
 }
 \value{

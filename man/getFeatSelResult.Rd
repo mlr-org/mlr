@@ -3,10 +3,10 @@
 \alias{getFeatSelResult}
 \title{Returns the selected feature set and optimization path.}
 \usage{
-getFeatSelResult(model)
+getFeatSelResult(object)
 }
 \arguments{
-\item{model}{[\code{\link{WrappedModel}} | \code{BenchMarkResult}]\cr
+\item{object}{[\code{\link{WrappedModel}} | \code{BenchMarkResult}]\cr
 Trained Model created with \code{\link{makeFeatSelWrapper}} or benchmark result created with \code{\link{benchmark}}.}
 }
 \value{

@@ -90,6 +90,19 @@ benchmark = function(learners, tasks, resamplings, measures) {
   addClasses(results.by.task, "BenchmarkResult")
 }
 
+#' Result of benchmark
+#'
+#' Container for results of benchmarked experiments using \code{\link{benchmark}}.
+#' The structure of the object itself is rather complicated, it is recommended to
+#' retrive required information via \code{link{getAggrMeasures}}, \code{link{getPredictions}},
+#' \code{\link{getMeasures}}, \code{\link{getFeatSelResult}}, \code{\link{getTuneResult}} or
+#' \code{\link{getFilterResult}}. Alternatively, you can convert the object using
+#' \code{\link[base]{as.data.frame}}
+#'
+#' @name BenchmarkResult
+#' @rdname BenchmarkResult
+NULL
+
 benchmarkParallel = function(index, learners, tasks, resamplings, measures) {
   ind.task = index[1L][[1L]]
   ind.learner = index[2L][[1L]]
@@ -103,7 +116,7 @@ benchmarkParallel = function(index, learners, tasks, resamplings, measures) {
   } else {
     extract.this = function(model) { NULL }
   }
-  resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]], measures = measures, model = TRUE, extract = extract.this)
+  resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]], measures = measures, models = TRUE, extract = extract.this)
 }
 
 #' Extract the aggregated measures of an object.
@@ -118,25 +131,25 @@ getAggrMeasures = function(object) {
 }
 
 #' @export
-getAggrMeasures.BenchmarkResult = function(results) {
-  task.names = names(results)
-  learner.names = unname(lapply(results, names))
+getAggrMeasures.BenchmarkResult = function(object) {
+  task.names = names(object)
+  learner.names = unname(lapply(object, names))
   df = data.frame(
     task = rep.int(task.names, viapply(learner.names, length)),
     learner = unlist(learner.names)
   )
-  aggr = rowLapply(df, function(x) t(results[[x$task]][[x$learner]]$aggr))
+  aggr = rowLapply(df, function(x) t(object[[x$task]][[x$learner]]$aggr))
   cbind(df, do.call(rbind, aggr))
 }
 
 #' @export
-print.BenchmarkResult = function(results) {
-  print(getAggrMeasures.BenchmarkResult(results))
+print.BenchmarkResult = function(x, ...) {
+  print(getAggrMeasures.BenchmarkResult(x))
 }
 
 #' @export
-as.data.frame.BenchmarkResult = function(results) {
-  getAggrMeasures.BenchmarkResult(results)
+as.data.frame.BenchmarkResult = function(x, ...) {
+  getAggrMeasures.BenchmarkResult(x)
 }
 
 #' Extract the prediction inforamation of an object
@@ -151,17 +164,17 @@ getPredictions = function(object) {
 }
 
 #' @export
-getPredictions.BenchmarkResult = function(results) {
+getPredictions.BenchmarkResult = function(object) {
   extractResponse = function(learner.name, task.name) {
-    setNames(data.frame(results[[task.name]][[learner.name]]$pred)[, "response", drop = FALSE],
+    setNames(data.frame(object[[task.name]][[learner.name]]$pred)[, "response", drop = FALSE],
       paste0("response.", learner.name))
   }
-  setNames(lapply(names(results), function(task.name) {
+  setNames(lapply(names(object), function(task.name) {
     cbind(
-      as.data.frame(results[[task.name]][[1L]]$pred)[, c("id", "truth", "iter", "set"), drop = FALSE],
-      do.call(cbind, lapply(names(results[[task.name]]), extractResponse, task.name = task.name))
+      as.data.frame(object[[task.name]][[1L]]$pred)[, c("id", "truth", "iter", "set"), drop = FALSE],
+      do.call(cbind, lapply(names(object[[task.name]]), extractResponse, task.name = task.name))
     )
-  }), names(results))
+  }), names(object))
 }
 
 #' Extract the measure results of an object
@@ -176,23 +189,23 @@ getMeasures = function(object) {
 }
 
 #' @export
-getMeasures.BenchmarkResult = function(results) {
+getMeasures.BenchmarkResult = function(object) {
   extractMeasures = function(learner.name, task.name) {
-      x = subset(results[[task.name]][[learner.name]]$measures.test, select = -iter)
+      x = dropNamed(object[[task.name]][[learner.name]]$measures.test, "iter")
       setNames(x, paste0(learner.name, ".", names(x)))
   }
-  setNames(lapply(names(results), function(task.name) {
+  setNames(lapply(names(object), function(task.name) {
     cbind(
-      results[[task.name]][[1L]]$measures.test[, "iter", drop = FALSE],
-      do.call(cbind, lapply(names(results[[task.name]]), extractMeasures, task.name = task.name))
+      object[[task.name]][[1L]]$measures.test[, "iter", drop = FALSE],
+      do.call(cbind, lapply(names(object[[task.name]]), extractMeasures, task.name = task.name))
     )
-  }), names(results))
+  }), names(object))
 }
 
-getExtract = function(results, what, within = "extract") {
+getExtract = function(object, what, within = "extract") {
   if(missing(what))
     what = NULL
-  lapply(results, function(task) {
+  lapply(object, function(task) {
     t.res = lapply(task, function(learner) {
       if (is.null(what) || what %in% class(learner[[within]][[1L]]))
         learner[[within]]
@@ -203,16 +216,16 @@ getExtract = function(results, what, within = "extract") {
 }
 
 #' @export
-getFeatSelResult.BenchmarkResult = function(results) {
-  getExtract(results, "FeatSelResult")
+getFeatSelResult.BenchmarkResult = function(object) {
+  getExtract(object, "FeatSelResult")
 }
 
 #' @export
-getTuneResult.BenchmarkResult = function(results) {
-  getExtract(results, "TuneResult")
+getTuneResult.BenchmarkResult = function(object) {
+  getExtract(object, "TuneResult")
 }
 
 #' @export
-getFilterResult.BenchmarkResult = function(results) {
-  getExtract(results, "FilterResult")
+getFilterResult.BenchmarkResult = function(object) {
+  getExtract(object, "FilterResult")
 }

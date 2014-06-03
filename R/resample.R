@@ -44,7 +44,7 @@
 #' @param models [\code{logical(1)}]\cr
 #'   Should all fitted models be returned?
 #'   Default is \code{FALSE}.
-#' @param extract [\code{function(model)}]\cr
+#' @param extract [\code{function}]\cr
 #'   Function used to extract information from a fitted model during resampling.
 #'   Is applied to every \code{\link{WrappedModel}} resulting from calls to \code{\link{train}}
 #'   during resampling.
@@ -93,7 +93,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   if (missing(extract))
     extract = function(model) {}
   else
-    checkArg(extract, formals = "model")
+    checkArg(extract, "function")
   checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
 
   n = task$task.desc$size

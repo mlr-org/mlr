@@ -84,14 +84,24 @@ getFilteredFeatures = function(model) {
   model$learner.model$next.model$features
 }
 
-# used in benchmark() ... there is no FilterResult
-getFilterResult = function(model) {
+#' Returns a filter result
+#'
+#' This is a which adds a class attribute to the result of \code{\link{getFilteredFeatures}}
+#' which is required for \code{\link{benchmark}}.
+#'
+#' @param object [\code{\link{WrappedModel}} | \code{BenchMarkResult}]\cr
+#'   Trained Model created with \code{\link{makeFilterWrapper}} or benchmark result created with \code{\link{benchmark}}.
+#' @return [\code{\link{FilterResult}} or list of \code{\link{FilterResult}}s].
+#' @aliases FilterResult
+#' @export
+getFilterResult = function(object) {
   UseMethod("getFilterResult")
 }
 
-getFilterResult.WrappedModel = function(model) {
-  x = getFilteredFeatures(model)
+#' @export
+getFilterResult.WrappedModel = function(object) {
+  x = getFilteredFeatures(object)
   if (is.null(x))
-    x = list()
+    return(NULL)
   addClasses(x, "FilterResult")
 }
