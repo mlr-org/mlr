@@ -78,12 +78,14 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
 
   # if we saved a model and loaded it later just for prediction this is necessary
   requireLearnerPackages(learner)
-  t.col = which(colnames(newdata) %in% td$target)
+  t.col = match(td$target, colnames(newdata))
+
   # get truth and drop target col, if target in newdata
-  if (length(t.col)) {
-    #FIXME this copies data
-    truth = newdata[, t.col]
-    newdata = newdata[, -t.col, drop=FALSE]
+  if (!all(is.na(t.col))) {
+    if (length(t.col) > 1L && any(is.na(t.col)))
+      stop("Some but not all target columns found in data")
+    truth = newdata[, t.col, drop = TRUE]
+    newdata = newdata[, -t.col, drop = FALSE]
   } else {
     truth = NULL
   }
