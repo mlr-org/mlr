@@ -6,8 +6,8 @@
 performance(pred, measures, task, model)
 }
 \arguments{
-\item{pred}{[\code{\link{Prediction}}] \cr
-Prediction object to evaluate.}
+\item{pred}{[\code{\link{Prediction}}]\cr
+Prediction object.}
 
 \item{measures}{[\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
 Performance measure(s) to evaluate.}

@@ -7,7 +7,7 @@ tuneThreshold(pred, measure, task, model, control = list())
 }
 \arguments{
 \item{pred}{[\code{\link{Prediction}}]\cr
-Prediction object to use for tuning the treshold.}
+Prediction object.}
 
 \item{measure}{[\code{\link{Measure}}]\cr
 Performance measure to optimize.}

@@ -7,10 +7,10 @@ getConfMatrix(pred, relative = FALSE)
 }
 \arguments{
 \item{pred}{[\code{\link{Prediction}}]\cr
-Result of a prediction.}
+Prediction object.}
 
 \item{relative}{[\code{logical(1)}]\cr
-   If \code{TRUE} rows are normalized to show relative frequencies.
+If \code{TRUE} rows are normalized to show relative frequencies.
 Default is \code{FALSE}.}
 }
 \value{

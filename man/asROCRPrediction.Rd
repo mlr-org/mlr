@@ -6,7 +6,7 @@
 asROCRPrediction(pred)
 }
 \arguments{
-\item{pred}{[\code{\link{Prediction}} | \code{\link{Prediction}}] \cr
+\item{pred}{[\code{\link{Prediction}}]\cr
 Prediction object.}
 }
 \description{

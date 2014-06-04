@@ -4,7 +4,7 @@
 \title{Visualizes a learning algorithm on a 1D or 2D data set.}
 \usage{
 visualizeLearner(learner, task, features = NULL, measures, cv = 10L, ...,
-  gridsize, pointsize = 2L, prob.alpha = TRUE, se.band = TRUE,
+  gridsize, pointsize = 2, prob.alpha = TRUE, se.band = TRUE,
   err.mark = "train", err.col = "orange")
 }
 \arguments{
@@ -34,7 +34,7 @@ Parameters for \code{learner}.}
 Grid resolution per axis for background predictions.
 Default is 500 for 1D and 100 for 2D.}
 
-\item{pointsize}{[\code{integer(1)}]\cr
+\item{pointsize}{[\code{numeric(1)}]\cr
 Pointsize for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
 Default is 2.}
 
