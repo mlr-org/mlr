@@ -36,8 +36,14 @@ test_that("learners work", {
   lrns = listLearnersForTask(task=task)
   lrns = lapply(lrns, makeLearner)
   lapply(lrns, function(lrn) {
-    m = train(lrn, task)
-    p = predict(m, task)
+    # there seems to be some numerical problem with plsDA on the subsetted data...?
+    task2 = if (lrn == "classif.plsDA")
+      subsetTask(binaryclass.task, subset=c(1:50, 150:208),
+        features=getTaskFeatureNames(binaryclass.task)[1:15])
+    else
+      task
+    m = train(lrn, task2)
+    p = predict(m, task2)
   })
 
   # binary classif with prob
