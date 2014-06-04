@@ -27,7 +27,7 @@
 performance = function(pred, measures, task, model) {
   if (!missing(pred))
     checkArg(pred, "Prediction")
-  measures = checkMeasures(measures, pred$task.dec)
+  measures = checkMeasures(measures, pred$task.desc)
   sapply(measures, doPerformaceIteration, pred = pred, task = task, model = model, td = NULL)
 }
 

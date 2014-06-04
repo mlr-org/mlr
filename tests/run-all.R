@@ -1,5 +1,4 @@
 library(testthat)
-library(reshape)
 library(mlr)
 
 # source(system.file("tests/helpers.R", package="mlr"))

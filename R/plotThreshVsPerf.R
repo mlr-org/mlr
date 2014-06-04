@@ -24,7 +24,7 @@ plotThreshVsPerf = function(pred, measures, mark.th = NA_real_,
   checkArg(mark.th, "numeric", len = 1L, lower = 0, upper = 1, na.ok = TRUE)
   checkArg(linesize, "numeric", len = 1L, lower = 0, na.ok = FALSE)
 
-  requirePackages("ggplot2", why = "plotThreshVsPerf")
+  requirePackages(c("ggplot2", "reshape2"), why = "plotThreshVsPerf")
 
   mids = extractSubList(measures, "id")
   # grid for predictions
@@ -32,7 +32,7 @@ plotThreshVsPerf = function(pred, measures, mark.th = NA_real_,
   grid = data.frame(threshold = thseq)
   # eval all perf measures on grid
   perf = asMatrixRows(lapply(thseq, function(threshold) {
-    pp = setThreshold(pred, th = threshold)
+    pp = setThreshold(pred, threshold = threshold)
     performance(pp, measures = measures)
   }), col.names = mids)
   grid = cbind(grid, perf)
