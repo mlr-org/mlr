@@ -31,7 +31,7 @@
 #' @param gridsize [\code{integer(1)}]\cr
 #'   Grid resolution per axis for background predictions.
 #'   Default is 500 for 1D and 100 for 2D.
-#' @param pointsize [\code{integer(1)}]\cr
+#' @param pointsize [\code{numeric(1)}]\cr
 #'   Pointsize for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
 #'   Default is 2.
 #' @param prob.alpha [\code{logical(1)}]\cr
@@ -52,7 +52,7 @@
 #' @return The ggplot2 object.
 #' @export
 visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L,  ...,
-  gridsize, pointsize = 2L,
+  gridsize, pointsize = 2,
   prob.alpha = TRUE, se.band = TRUE,
   err.mark = "train", err.col = "orange") {
 
@@ -84,8 +84,7 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
     gridsize = convertInteger(gridsize)
     checkArg(gridsize, "integer", len = 1L, na.ok = FALSE)
   }
-  pointsize = convertInteger(pointsize)
-  checkArg(pointsize, "integer", len = 1L, na.ok = FALSE)
+  checkArg(pointsize, "numeric", len = 1L, na.ok = FALSE, lower = 0)
   checkArg(prob.alpha, "logical", len = 1L, na.ok = FALSE)
   checkArg(se.band, "logical", len = 1L, na.ok = FALSE)
   checkArg(err.mark, choices = c("train", "cv", "none"))
