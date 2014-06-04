@@ -75,6 +75,9 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
     stopf("Regression: currently only 1D and 2D plots supported, not: %i", taskdim)
 
   measures = checkMeasures(measures, task)
+  cv = convertInteger(cv)
+  checkArg(cv, "integer", len = 1L, lower = 0L, na.ok = FALSE)
+
   if (missing(gridsize)) {
     gridsize = ifelse(taskdim == 1L, 500, 100)
   } else {
@@ -113,9 +116,13 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
   pred.train = predict(mod, task)
   yhat = pred.train$data$response
   perf.train = performance(pred.train, measures = measures)
-  cv = crossval(learner, task, iters = 10L, measures = measures, show.info = FALSE)
-  perf.cv = cv$aggr
-  pred.cv = cv$pred
+  if (cv > 0L) {
+    cv = crossval(learner, task, iters = 10L, measures = measures, show.info = FALSE)
+    perf.cv = cv$aggr
+    pred.cv = cv$pred
+  } else {
+    perf.cv = NA_real_
+  }
 
   # 2d stuff
   if (taskdim == 2L) {
