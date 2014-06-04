@@ -1,9 +1,9 @@
-context("MetaLearner")
+context("ModelMultiplexer")
 
-test_that("MetaLearner", {
+test_that("ModelMultiplexer", {
   bls = list(makeLearner("classif.lda"), makeLearner("classif.rpart"))
-  lrn = makeMetaLearner(bls)
-  expect_equal(class(lrn), c("MetaLearner", "Learner"))
+  lrn = makeModelMultiplexer(bls)
+  expect_equal(class(lrn), c("ModelMultiplexer", "Learner"))
   mod = train(lrn, task = binaryclass.task)
   expect_equal(class(mod), "WrappedModel")
 

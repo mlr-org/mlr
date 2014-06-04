@@ -9,12 +9,12 @@
 #' @param base.learners [\code{list} of \code{\link{Learner}}]\cr
 #'  List of Learners with unique IDs.
 #' @param id [\code{character(1)}]\cr
-#'  Identifier for constructred MetaLearner.
-#'  Default is \dQuote{MetaLearner}.
-#' @return [\code{MetaLearner}]. A \code{\link{Learner}} specialized as \code{MetaLearner}.
-#' @aliases MetaLearner
+#'  Identifier for constructred ModelMultiplexer.
+#'  Default is \dQuote{ModelMultiplexer}.
+#' @return [\code{ModelMultiplexer}]. A \code{\link{Learner}} specialized as \code{ModelMultiplexer}.
+#' @aliases ModelMultiplexer
 #' @export
-makeMetaLearner = function(base.learners, id = "MetaLearner") {
+makeModelMultiplexer = function(base.learners, id = "ModelMultiplexer") {
   checkArg(id, "character", len = 1L, na.ok = FALSE)
   checkArg(base.learners, "list", min.len = 1L)
   checkListElementClass(base.learners, "Learner")
@@ -36,7 +36,7 @@ makeMetaLearner = function(base.learners, id = "MetaLearner") {
     par.set = c(par.set, ps)
   }
 
-  lrn = makeS3Obj(c("MetaLearner", "Learner"),
+  lrn = makeS3Obj(c("ModelMultiplexer", "Learner"),
     id = id,
     type = type,
     package = unique(extractSubList(base.learners, "package")),
@@ -59,7 +59,7 @@ makeMetaLearner = function(base.learners, id = "MetaLearner") {
 }
 
 #' @export
-trainLearner.MetaLearner = function(.learner, .task, .subset, selected.learner, ...) {
+trainLearner.ModelMultiplexer = function(.learner, .task, .subset, selected.learner, ...) {
   bl = .learner$base.learners[[selected.learner]]
   args = list(...)
   names(args) = substring(names(args), nchar(bl$id) + 2L)
@@ -67,7 +67,7 @@ trainLearner.MetaLearner = function(.learner, .task, .subset, selected.learner, 
 }
 
 #' @export
-predictLearner.MetaLearner = function(.learner, .model, .newdata, ...) {
+predictLearner.ModelMultiplexer = function(.learner, .model, .newdata, ...) {
   sl = .learner$par.vals$selected.learner
   bl = .learner$base.learners[[sl]]
   predictLearner(bl, .model, .newdata)
