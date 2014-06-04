@@ -43,6 +43,7 @@ mlr_1.2:
 -- visualizeLearner
 -- downsample
 -- makeDownsampleWrapper
+-- plotThreshVsPerf
 
 - imputation stuff ????
 - surv stuff ????
