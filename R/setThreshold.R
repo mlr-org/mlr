@@ -6,8 +6,7 @@
 #' For multiclass: Probabilities are divided by corresponding thresholds and the class with maximum resulting value is selected.
 #' The result of both are equivalent if in the multi-threshold case the values are greater than 0 and sum to 1.
 #'
-#' @param pred [\code{\link{Prediction}}]\cr
-#'   The prediction.
+#' @template arg_pred
 #' @param threshold [\code{numeric}]\cr
 #'   Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.
 #'   Only if \code{pred} is a prediction object resulting from binary classification

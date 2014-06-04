@@ -4,8 +4,7 @@
 #' Uses \code{\link{optimize}} for 2class problems and \code{\link[cmaes]{cma_es}}
 #' for multiclass problems.
 #'
-#' @param pred [\code{\link{Prediction}}]\cr
-#'   Prediction object to use for tuning the treshold.
+#' @template arg_pred
 #' @param measure [\code{\link{Measure}}]\cr
 #'   Performance measure to optimize.
 #' @param task [\code{\link{SupervisedTask}}]\cr

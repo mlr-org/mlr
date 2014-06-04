@@ -5,8 +5,7 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
 
 #' Get probabilities for some classes.
 #'
-#' @param pred [\code{\link{Prediction}}]\cr
-#'   Prediction object.
+#' @template arg_pred
 #' @param cl [\code{character}]\cr
 #'   Names of classes.
 #'   Default is either all classes for multi-class problems or the positive class for binary classification.
