@@ -19,6 +19,10 @@ test_that("SupervisedTask", {
   expect_equal(ct2$task.desc$size, 150)
   expect_equal(sum(ct2$task.desc$n.feat), 2)
 
+  # wrong data
+  expect_error(makeClassifTask(data = 44, target = "y"),
+    "must be of class data.frame")
+  
   # wrong target type
   expect_error(makeClassifTask(data=regr.df, target=regr.target),
     "must be a factor")
