@@ -1,7 +1,7 @@
 #' Tune prediction threshold.
 #'
 #' Optimizes the threshold of prediction based on probabilities.
-#' Uses \code{\link{optimize}} for 2class problems and \code{\link[cmaes]{cma_es}}
+#' Uses \code{\link[BBmisc]{optimizeSubInts}} for 2class problems and \code{\link[cmaes]{cma_es}}
 #' for multiclass problems.
 #'
 #' @template arg_pred
@@ -13,13 +13,16 @@
 #' @param model [\code{\link{WrappedModel}}]\cr
 #'   Fitted model. Rarely neeeded,
 #'   only when required for the performance measure.
+#' @param nsub [\code{integer(1)}]\cr
+#'   Passed to \code{\link[BBmisc]{optimizeSubInts}} for 2class problems.
+#'   Default is 20.
 #' @param control [\code{list}]\cr
 #'   Control object for \code{\link[cmaes]{cma_es}} when used.
 #'   Default is empty list.
 #' @return [\code{list}]. A named list with with the following components:
 #'   \code{th} is the optimal threshold, \code{perf} the performance value.
 #' @export
-tuneThreshold = function(pred, measure, task, model, control=list()) {
+tuneThreshold = function(pred, measure, task, model, nsub = 20L, control=list()) {
   checkArg(pred, "Prediction")
   checkArg(measure, "Measure")
   if (!missing(task))
@@ -47,7 +50,7 @@ tuneThreshold = function(pred, measure, task, model, control=list()) {
   }
 
   if (k == 2) {
-    or = optimize(f=fitn, lower=0, upper=1, maximum=measure$minimize)
+    or = optimizeSubInts(f=fitn, lower=0, upper=1, maximum=!measure$minimize, nsub = nsub)
     th = or[[1]]
     perf = or$objective
   } else {

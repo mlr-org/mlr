@@ -10,6 +10,7 @@ library(adabag)
 library(MASS)
 library(ROCR)
 library(pROC)
+library(pls) # otherwise pls shadows crossval
 
 if (interactive()) {
   load_all(".")

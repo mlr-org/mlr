@@ -3,7 +3,7 @@
 \alias{tuneThreshold}
 \title{Tune prediction threshold.}
 \usage{
-tuneThreshold(pred, measure, task, model, control = list())
+tuneThreshold(pred, measure, task, model, nsub = 20L, control = list())
 }
 \arguments{
 \item{pred}{[\code{\link{Prediction}}]\cr
@@ -20,6 +20,8 @@ only when required for the performance measure.}
 Fitted model. Rarely neeeded,
 only when required for the performance measure.}
 
+\item{nsub}{Passed to \code{\link[BBmisc]{optimizeSubInts}} for 2class problems.}
+
 \item{control}{[\code{list}]\cr
 Control object for \code{\link[cmaes]{cma_es}} when used.
 Default is empty list.}
@@ -30,7 +32,7 @@ Default is empty list.}
 }
 \description{
 Optimizes the threshold of prediction based on probabilities.
-Uses \code{\link{optimize}} for 2class problems and \code{\link[cmaes]{cma_es}}
+Uses \code{\link[BBmisc]{optimizeSubInts}} for 2class problems and \code{\link[cmaes]{cma_es}}
 for multiclass problems.
 }
 
