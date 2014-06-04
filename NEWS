@@ -19,7 +19,9 @@ mlr_1.2:
 -- classif.LiblineaRBinary
 -- classif.LiblineaRLogReg
 -- classif.LiblineaRMultiClass
+-- classif.linDA
 -- classif.plr
+-- classif.plsDA
 -- classif.rrlda
 -- regr.crs
 -- regr.mob
