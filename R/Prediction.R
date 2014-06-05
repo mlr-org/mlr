@@ -88,6 +88,7 @@ makePrediction.TaskDescClassif = function(task.desc, id, truth, predict.type, y,
 makePrediction.TaskDescSurv = function(task.desc, id, truth, predict.type, y, time) {
   data = namedList(c("id", "truth.time", "truth.event", "response"))
   data$id = id
+  # FIXME: recode times
   data$truth.time = truth[, 1L]
   data$truth.event = truth[, 2L]
   data$response = y

@@ -16,6 +16,7 @@ perfsToString = function(y) {
 }
 
 recodeY = function(y, type, positive) {
+  # FIXME: support left, right and interval for surv
   switch(type,
     "no" = y,
     "01" = as.numeric(y == positive),

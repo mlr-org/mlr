@@ -15,6 +15,7 @@ makeRLearner.surv.CoxBoost = function() {
       makeDiscreteLearnerParam(id="sf.scheme", default="sigmoid", values=c("sigmoid", "linear"))
       # FIXME still missing some arguments
     ),
+    #censoring = "left",
     missings = FALSE,
     numerics = TRUE,
     factors = FALSE,
@@ -25,7 +26,8 @@ makeRLearner.surv.CoxBoost = function() {
 
 #' @export
 trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  #FIXME: unnecessary data duplication
+  # FIXME: after recodeY is updated ...
+  # data = getTaskData(.task, subset=.subset, target.extra=TRUE, recode.target="right")
   data = getTaskData(.task, subset=.subset, target.extra=TRUE, recode.target="no")
   if (is.null(.weights))
     .weights = NULL
