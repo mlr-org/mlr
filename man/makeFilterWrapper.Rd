@@ -42,7 +42,7 @@ task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.lda")
 inner = makeResampleDesc("Holdout")
 outer = makeResampleDesc("CV", iters = 2)
-lrn = makeFilterWrapper(lrn, val = 0.5)
+lrn = makeFilterWrapper(lrn, fw.val = 0.5)
 mod = train(lrn, task)
 print(getFilteredFeatures(mod))
 # now nested resampling, where we extract the features that the filter method selected
