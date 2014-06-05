@@ -5,6 +5,8 @@
 #' used like any other learner object.
 #' Internally uses \code{\link{filterFeatures}} before every model fit.
 #'
+#' Features are selected via one of: \code{fw.perc}, \code{fw.n} or \code{fw.threshold}.
+#'
 #' After training, the selected features can be retrieved with
 #' \code{\link{getFilteredFeatures}}.
 #'
@@ -13,25 +15,20 @@
 #'
 #' @template arg_learner
 #' @param fw.method [\code{character(1)}]\cr
-#'   Filter method. Available are:
-#'   linear.correlation, rank.correlation, information.gain, gain.ratio, symmetrical.uncertainty,
-#'   chi.squared, random.forest.importance, relief, oneR
-#'   Default is random.forest.importance.
-#' @param fw.threshold [\code{numeric(1)}]\cr
-#'   Information value as to be greater then the threshold. Default is 0.
-#' @param fw.n [\code{integer(1)}]\cr
-#'   Number of features ordered by the information value to select.
-#'   This can decrease the number of features after threasholding.
-#' @param fw.percentage [\code{numeric(1)}]\cr
-#'   Alternatively to \code{n} you can give a relative number of features.
-#' @return [\code{\link{Learner}}].
+#'   See \code{\link{getFilterValues}}.
+#'   Default is \dQuote{random.forest.importance}.
+#' @param fw.select [\code{character(1)}]\cr
+#'   See \code{\link{filterFeatures}}.
+#' @param fw.val [\code{numeric(1)}]\cr
+#'   See \code{\link{filterFeatures}}.
+#' @template ret_learner
 #' @export
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn = makeLearner("classif.lda")
 #' inner = makeResampleDesc("Holdout")
 #' outer = makeResampleDesc("CV", iters = 2)
-#' lrn = makeFilterWrapper(lrn, fw.percentage = 0.5)
+#' lrn = makeFilterWrapper(lrn, val = 0.5)
 #' mod = train(lrn, task)
 #' print(getFilteredFeatures(mod))
 #' # now nested resampling, where we extract the features that the filter method selected
@@ -39,29 +36,26 @@
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
-makeFilterWrapper = function(learner, fw.method = "random.forest.importance", fw.threshold = 0, fw.n = NULL, fw.percentage = NULL) {
+makeFilterWrapper = function(learner, fw.method = "random.forest.importance", fw.select = "perc", fw.val) {
   learner = checkLearner(learner)
-  meths = filter.methods #defined in filterFeatures.R
-  checkFilterArguments(method = fw.method, threshold = fw.threshold, n = fw.n, percentage = fw.percentage)
+  checkFilterArguments(method = fw.method, select = fw.select, val = fw.val)
   id = paste(learner$id, "filtered", sep = ".")
   ps = makeParamSet(
-    makeDiscreteLearnerParam(id = "fw.method", values = meths),
-    makeNumericLearnerParam(id = "fw.threshold"),
-    makeIntegerLearnerParam(id = "fw.n", requires = expression(is.null(fw.percentage))), #FIXME: Is that the correct way for an XOR?
-    makeNumericLearnerParam(id = "fw.percentage", requires = expression(is.null(fw.n)))
+    makeDiscreteLearnerParam(id = "fw.method", values = getFilterMethods()),
+    makeDiscreteLearnerParam(id = "fw.select", values = c("perc", "abs", "threshold")),
+    makeNumericLearnerParam(id = "fw.val")
   )
-  pv = list(fw.method = fw.method, fw.threshold = fw.threshold, fw.n = fw.n, fw.percentage = fw.percentage)
-  # FIXME: scale to 0,1
+  pv = list(fw.method = fw.method, fw.select = fw.select, fw.val = fw.val)
   makeBaseWrapper(id, learner, package = "FSelector", par.set = ps, par.vals = pv, cl = "FilterWrapper")
   # FIXME: check that for some the inputs have to be all num. or accept error in train and NA in predict?
 }
 
 
 #' @export
-trainLearner.FilterWrapper = function(.learner, .task, .subset, .weights = NULL, fw.method, fw.threshold, fw.n, fw.percentage, ...) {
+trainLearner.FilterWrapper = function(.learner, .task, .subset, .weights = NULL, fw.method = "random.forest.importance", fw.select = "perc", fw.val, ...) {
   .task = subsetTask(.task, subset = .subset)
   # FIXME: are all filter values high = good?
-  .task = filterFeatures(.task, method = fw.method, threshold = fw.threshold, n = fw.n, percentage = fw.percentage)
+  .task = filterFeatures(.task, method = fw.method, select = fw.select, val = fw.val)
   m = train(.learner$next.learner, .task, weights = .weights)
   # FIXME: enter correct objects (features, etc)
   makeChainModel(next.model = m, cl = "FilterModel")

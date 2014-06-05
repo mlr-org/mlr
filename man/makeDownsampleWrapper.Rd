@@ -3,7 +3,7 @@
 \alias{makeDownsampleWrapper}
 \title{Fuse learner with simple downsampling (subsampling).}
 \usage{
-makeDownsampleWrapper(learner, sw.percentage = NULL, sw.n = NULL,
+makeDownsampleWrapper(learner, sw.perc = NULL, sw.n = NULL,
   sw.stratify = FALSE)
 }
 \arguments{
@@ -11,7 +11,7 @@ makeDownsampleWrapper(learner, sw.percentage = NULL, sw.n = NULL,
 The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
-\item{sw.percentage}{[\code{numeric(1)}]\cr
+\item{sw.perc}{[\code{numeric(1)}]\cr
 Percentage of the observations to train the learner on.}
 
 \item{sw.n}{[\code{numeric(1)}]\cr
@@ -22,11 +22,10 @@ Should the downsampled data be stratified according to the target classes? Defau
 }
 \value{
 [\code{\link{Learner}}].
-#
 }
 \description{
 Creates a learner object, which can be
 used like any other learner object.
-It will only be trained on a subset of the original data to save eg. computational time.
+It will only be trained on a subset of the original data to save computational time.
 }
 

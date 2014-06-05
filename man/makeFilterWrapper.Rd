@@ -4,7 +4,7 @@
 \title{Fuse learner with a feature filter method.}
 \usage{
 makeFilterWrapper(learner, fw.method = "random.forest.importance",
-  fw.threshold = 0, fw.n = NULL, fw.percentage = NULL)
+  fw.select = "perc", fw.val)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -12,20 +12,14 @@ The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
 \item{fw.method}{[\code{character(1)}]\cr
-Filter method. Available are:
-linear.correlation, rank.correlation, information.gain, gain.ratio, symmetrical.uncertainty,
-chi.squared, random.forest.importance, relief, oneR
-Default is random.forest.importance.}
+See \code{\link{getFilterValues}}.
+Default is \dQuote{random.forest.importance}.}
 
-\item{fw.threshold}{[\code{numeric(1)}]\cr
-Information value as to be greater then the threshold. Default is 0.}
+\item{fw.select}{[\code{character(1)}]\cr
+See \code{\link{filterFeatures}}.}
 
-\item{fw.n}{[\code{integer(1)}]\cr
-Number of features ordered by the information value to select.
-This can decrease the number of features after threasholding.}
-
-\item{fw.percentage}{[\code{numeric(1)}]\cr
-Alternatively to \code{n} you can give a relative number of features.}
+\item{fw.val}{[\code{numeric(1)}]\cr
+See \code{\link{filterFeatures}}.}
 }
 \value{
 [\code{\link{Learner}}].
@@ -34,6 +28,8 @@ Alternatively to \code{n} you can give a relative number of features.}
 Fuses a base learner with a filter method. Creates a learner object, which can be
 used like any other learner object.
 Internally uses \code{\link{filterFeatures}} before every model fit.
+
+Features are selected via one of: \code{fw.perc}, \code{fw.n} or \code{fw.threshold}.
 
 After training, the selected features can be retrieved with
 \code{\link{getFilteredFeatures}}.
@@ -46,7 +42,7 @@ task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.lda")
 inner = makeResampleDesc("Holdout")
 outer = makeResampleDesc("CV", iters = 2)
-lrn = makeFilterWrapper(lrn, fw.percentage = 0.5)
+lrn = makeFilterWrapper(lrn, val = 0.5)
 mod = train(lrn, task)
 print(getFilteredFeatures(mod))
 # now nested resampling, where we extract the features that the filter method selected
