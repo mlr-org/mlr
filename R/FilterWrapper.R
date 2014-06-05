@@ -38,7 +38,8 @@
 #' print(r$extract)
 makeFilterWrapper = function(learner, fw.method = "random.forest.importance", fw.select = "perc", fw.val) {
   learner = checkLearner(learner)
-  checkFilterArguments(method = fw.method, select = fw.select, val = fw.val)
+  checkArg(fw.method, choices = getFilterMethods())
+  checkFilterArguments(select = fw.select, val = fw.val)
   id = paste(learner$id, "filtered", sep = ".")
   ps = makeParamSet(
     makeDiscreteLearnerParam(id = "fw.method", values = getFilterMethods()),

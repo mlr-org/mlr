@@ -2,10 +2,9 @@
 #'
 #' @description
 #' First, calls \code{\link{getFilterValues}}.
-#' Features are then selected via one of: \code{fw.perc}, \code{fw.n} or \code{fw.threshold}.
+#' Features are then selected via \code{select} and \code{val}.
 #'
-#' @template arg_taskdf
-#' @template arg_target12
+#' @template arg_task
 #' @param method [\code{character(1)}]\cr
 #'   See \code{\link{getFilterValues}}.
 #'   Default is \dQuote{random.forest.importance}.
@@ -18,28 +17,16 @@
 #' @param val  [\code{numeric(1)}]\cr
 #'   Depends on \code{select}:
 #'   Either a percentage from [0, 1], a number of features or a threshold value for the criterion.
-#' @return [\code{data.frame} | \code{\link{SupervisedTask}}]. Same type as \code{obj}.
+#' @param ... [any]\cr
+#'   Passed down to selected method.
+#' @template ret_task
 #' @export
 #' @family filter
-filterFeatures = function(obj, target, method = "random.forest.importance", select = "perc", val) {
-  checkArg(obj, c("data.frame", "SupervisedTask"))
-  val = checkFilterArguments(method, select, val)
-  UseMethod("filterFeatures")
-}
-
-#' @export
-filterFeatures.SupervisedTask = function(obj, target, method = "random.forest.importance", select = "perc", val) {
-  d = filterFeatures(getTaskData(obj), obj$task.desc$target, method, select, val)
-  changeData(obj, d)
-}
-
-#' @export
-filterFeatures.data.frame = function(obj, target, method = "random.forest.importance", select = "perc", val) {
-
-  requirePackages("FSelector")
-  checkArg(target, "character")
-  fvals = getFilterValues(obj, target, method)
-  p = length(fvals)
+filterFeatures = function(task, method = "random.forest.importance", select = "perc", val, ...) {
+  # does checks + loads FSelector
+  fvals = getFilterValues(task = task, method = method, ...)
+  allfeats = names(fvals)
+  p = length(allfeats)
   nfirst = switch(select,
     perc = round(val * p),
     abs = val,
@@ -49,14 +36,13 @@ filterFeatures.data.frame = function(obj, target, method = "random.forest.import
   feats = if (nfirst < 1)
     character(0)
   else if (nfirst >= p)
-    setdiff(colnames(obj), target)
+    names(fvals)
   else
     feats = names(fvals)[1:nfirst]
-  obj[, colnames(obj) %in% c(feats, target), drop = FALSE] #preserves order!
+  subsetTask(task, features = feats)
 }
 
-checkFilterArguments = function(method, select, val) {
-  checkArg(method, choices = getFilterMethods())
+checkFilterArguments = function(select, val) {
   checkArg(select, choices = c("perc", "abs", "threshold"))
   switch(select,
     perc = checkArg(val, "numeric", len = 1L, na.ok = FALSE, lower = 0, upper = 1),

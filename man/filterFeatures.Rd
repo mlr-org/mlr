@@ -3,17 +3,12 @@
 \alias{filterFeatures}
 \title{Filter features by thresholding importance values.}
 \usage{
-filterFeatures(obj, target, method = "random.forest.importance",
-  select = "perc", val)
+filterFeatures(task, method = "random.forest.importance", select = "perc",
+  val, ...)
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{SupervisedTask}}]\cr
-Input data.}
-
-\item{target}{[\code{character(1)} | \code{character(2)}]\cr
-Name of the target variable(s).
-For survival analysis these are the names of the survival time and event columns,
-so it has length 2.}
+\item{task}{[\code{\link{SupervisedTask}}]\cr
+The task.}
 
 \item{method}{[\code{character(1)}]\cr
 See \code{\link{getFilterValues}}.
@@ -29,13 +24,16 @@ Default is \dQuote{perc}.}
 \item{val}{[\code{numeric(1)}]\cr
 Depends on \code{select}:
 Either a percentage from [0, 1], a number of features or a threshold value for the criterion.}
+
+\item{...}{[any]\cr
+Passed down to selected method.}
 }
 \value{
-[\code{data.frame} | \code{\link{SupervisedTask}}]. Same type as \code{obj}.
+[\code{\link{SupervisedTask}}].
 }
 \description{
 First, calls \code{\link{getFilterValues}}.
-Features are then selected via one of: \code{fw.perc}, \code{fw.n} or \code{fw.threshold}.
+Features are then selected via \code{select} and \code{val}.
 }
 \seealso{
 Other filter: \code{\link{getFilterMethods}};

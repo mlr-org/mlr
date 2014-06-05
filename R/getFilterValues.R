@@ -4,6 +4,8 @@
 #' Calculates numerical importance values for all features.
 #' Look at package \code{\link[FSelector]{FSelector}} for details on the filter algorithms.
 #'
+#' Currently only supports classification and regression.
+#'
 #' Available \code{method}s are:
 #' \tabular{lll}{
 #'   linear.correlation         \tab R      \tab
@@ -26,8 +28,7 @@
 #'     \code{\link[RWeka]{OneR}} assocation rule \cr
 #' }
 #'
-#' @template arg_taskdf
-#' @template arg_taskdf_target
+#' @template arg_task
 #' @param method [\code{character(1)}]\cr
 #'   Filter method, see above.
 #'   Default is \dQuote{random.forest.importance}.
@@ -36,29 +37,19 @@
 #' @return [named \code{numeric}]. Importance value for each feature.
 #' @export
 #' @family filter
-getFilterValues = function(obj, target, method = "random.forest.importance", ...) {
-  checkArg(obj, c("data.frame", "SupervisedTask"))
+getFilterValues = function(task, method = "random.forest.importance", ...) {
+  checkArg(task, c("ClassifTask", "RegrTask"))
   checkArg(method, choices = getFilterMethods())
   requirePackages("FSelector", why = "getFilterValues")
-  UseMethod("getFilterValues")
-}
 
-#' @export
-getFilterValues.SupervisedTask = function(obj, target, method = "random.forest.importance", ...) {
   if (method %in% c("linear.correlation", "rank.correlation")) {
-    if (!inherits(obj, "RegrTask") || (obj$task.desc$n.feat["factors"] > 0L))
+    if (!inherits(task, "RegrTask") || (task$task.desc$n.feat["factors"] > 0L))
       stop("Method can only be applied for a regression task with numerical data!")
   }
-  getFilterValues(getTaskData(obj), obj$task.desc$target, method)
+
+  fun = get(method, envir = getNamespace("FSelector"))
+  f = getTaskFormulaAsString(task)
+  y = fun(as.formula(f), getTaskData(task), ...)
+  setNames(y[,1L], rownames(y))
 }
 
-#' @export
-getFilterValues.data.frame = function(obj, target, method = "random.forest.importance", ...) {
-  checkArg(target, "character")
-  fun = get(method, envir = getNamespace("FSelector"))
-  f = paste(target, "~.")
-  y = fun(as.formula(f), obj, ...)
-  vals = y[,1L]
-  names(vals) = rownames(y)
-  vals
-}
