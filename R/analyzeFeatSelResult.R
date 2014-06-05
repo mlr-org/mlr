@@ -35,17 +35,14 @@ analyzeFeatSelResult = function(res, reduce = TRUE) {
   catf(collapse(x, sep = ", "))
   catf("\nPath to optimum:")
 
+  numToString = function(x) sprintf("%.5g", x)
+
   ##### print path
 
   ### produce df data.frame that contains all info
   df = as.data.frame(op)
   # convert measure to text
 
-  df$measure.txt = format(df[,measure], width = min(width.num, giveDecs(df[,measure])$str.width))
-  # calculate measure diff for each dob
-  mins = aggregate(df[,measure], by = list(dob = df$dob), function(x) c(min = min(x), c = length(x)))
-  df$diff = rep(mins$x[,1], mins$x[,2]) - df[,measure]
-  df$diff.txt = format(df$diff, width = min(width.num, giveDecs(df$diff)$str.width))
   # feature was selected when it never "died" or it "died" in later iteration
   df$sel = (is.na(df$eol) | (df$dob < df$eol))
   df$opt = is.na(df$eol)
@@ -56,7 +53,7 @@ analyzeFeatSelResult = function(res, reduce = TRUE) {
 
   ### Initialize some variables
   old.feats = features[df[1L, features] == 1]
-  old.perf = df[1L, measure]
+  old.perf = NA_real_
 
   ### Iterate over all dobs / steps per dob and print info for each
   for (thedob in unique(df$dob)) {
@@ -68,6 +65,7 @@ analyzeFeatSelResult = function(res, reduce = TRUE) {
       row = df.dob[j, ]
       cur.feats = features[row[features] == 1]
       cur.sel = ifelse(row$sel, "*", " ")
+      cur.perf = row[, measure]
       change.txt = if (thedob == 1L)
         "Init  "
       else if (length(cur.feats) < length(old.feats))
@@ -80,8 +78,8 @@ analyzeFeatSelResult = function(res, reduce = TRUE) {
         change.feat = symdiff(cur.feats, old.feats)
       catf("- Features: %4i  %s : %-20s  Perf = %s  Diff: %s  %s",
         length(cur.feats), change.txt, clipString(change.feat, width.feat),
-        row[["measure.txt"]],
-        row[["diff.txt"]],
+        numToString(cur.perf),
+        numToString(ifelse(minimize, 1, -1) * (old.perf - cur.perf)),
         cur.sel)
     }
     # in last block be might not have selected any state because no improvement
@@ -98,18 +96,4 @@ analyzeFeatSelResult = function(res, reduce = TRUE) {
   }
 }
 
-giveDecs = function(x) {
-  x = x[x != 0]
-  if (length(x) == 0) {
-    after.dec = 0
-    dec = 0
-  } else {
-    after.dec = -1 * min(0,(floor(log10(min(abs(x))))))
-    dec = max(0,ceiling(log10(abs(x))))
-  }
-  str.width = after.dec + dec
-  if(after.dec > 0)
-    str.width = str.width + 1
-  list(dec = dec, after.dec = after.dec, digits = after.dec + dec, str.width = str.width)
-}
 

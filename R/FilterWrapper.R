@@ -5,8 +5,6 @@
 #' used like any other learner object.
 #' Internally uses \code{\link{filterFeatures}} before every model fit.
 #'
-#' Features are selected via one of: \code{fw.perc}, \code{fw.n} or \code{fw.threshold}.
-#'
 #' After training, the selected features can be retrieved with
 #' \code{\link{getFilteredFeatures}}.
 #'
@@ -19,10 +17,12 @@
 #'   Default is \dQuote{random.forest.importance}.
 #' @param fw.select [\code{character(1)}]\cr
 #'   See \code{\link{filterFeatures}}.
+#'   Default is \dQuote{perc}.
 #' @param fw.val [\code{numeric(1)}]\cr
 #'   See \code{\link{filterFeatures}}.
 #' @template ret_learner
 #' @export
+#' @family filter
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn = makeLearner("classif.lda")
@@ -48,17 +48,14 @@ makeFilterWrapper = function(learner, fw.method = "random.forest.importance", fw
   )
   pv = list(fw.method = fw.method, fw.select = fw.select, fw.val = fw.val)
   makeBaseWrapper(id, learner, package = "FSelector", par.set = ps, par.vals = pv, cl = "FilterWrapper")
-  # FIXME: check that for some the inputs have to be all num. or accept error in train and NA in predict?
 }
 
 
 #' @export
 trainLearner.FilterWrapper = function(.learner, .task, .subset, .weights = NULL, fw.method = "random.forest.importance", fw.select = "perc", fw.val, ...) {
   .task = subsetTask(.task, subset = .subset)
-  # FIXME: are all filter values high = good?
   .task = filterFeatures(.task, method = fw.method, select = fw.select, val = fw.val)
   m = train(.learner$next.learner, .task, weights = .weights)
-  # FIXME: enter correct objects (features, etc)
   makeChainModel(next.model = m, cl = "FilterModel")
 }
 
@@ -75,6 +72,7 @@ predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
 #'   Trained Model created with \code{\link{makeFilterWrapper}}.
 #' @return [\code{character}].
 #' @export
+#' @family filter
 getFilteredFeatures = function(model) {
   model$learner.model$next.model$features
 }
@@ -89,6 +87,7 @@ getFilteredFeatures = function(model) {
 #' @return [\code{\link{FilterResult}} or list of \code{\link{FilterResult}}s].
 #' @aliases FilterResult
 #' @export
+#' @family filter
 getFilterResult = function(object) {
   UseMethod("getFilterResult")
 }

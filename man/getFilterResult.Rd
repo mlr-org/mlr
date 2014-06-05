@@ -17,4 +17,11 @@ Trained Model created with \code{\link{makeFilterWrapper}} or benchmark result c
 This is a which adds a class attribute to the result of \code{\link{getFilteredFeatures}}
 which is required for \code{\link{benchmark}}.
 }
+\seealso{
+Other filter: \code{\link{filterFeatures}};
+  \code{\link{getFilterMethods}};
+  \code{\link{getFilterValues}};
+  \code{\link{getFilteredFeatures}};
+  \code{\link{makeFilterWrapper}}
+}
 

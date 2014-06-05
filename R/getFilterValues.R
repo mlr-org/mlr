@@ -1,30 +1,32 @@
-#' @title Calculates feature importance values.
+#' @title Calculates feature filter values.
 #'
 #' @description
-#' Calculates numerical importance values for all features.
+#' Calculates numerical filter values for all features.
 #' Look at package \code{\link[FSelector]{FSelector}} for details on the filter algorithms.
 #'
-#' Currently only supports classification and regression.
+#' Currently only supports classification (C) and regression (R). Allowed feature types are abbreviated
+#' in table as numerics (N) and factors (F).
 #'
 #' Available \code{method}s are:
-#' \tabular{lll}{
-#'   linear.correlation         \tab R      \tab
+#' \tabular{llll}{
+#'   Method                     \tab Tasks \tab Feats \tab Description \cr
+#'   linear.correlation         \tab R     \tab N     \tab
 #'     Pearson's correlation between feature and target \cr
-#'   rank.correlation           \tab R      \tab
+#'   rank.correlation           \tab R     \tab N     \tab
 #'     Spearman's correlation between feature and target \cr
-#'   information.gain           \tab C,R    \tab
+#'   information.gain           \tab C,R   \tab N,F   \tab
 #'     Entropy-based information gain between feature and target \cr
-#'   gain.ratio                 \tab C,R    \tab
+#'   gain.ratio                 \tab C,R   \tab N,F   \tab
 #'     Entropy-based gain ratio between feature and target \cr
-#'  symmetrical.uncertainty     \tab C,R    \tab
+#'  symmetrical.uncertainty     \tab C,R   \tab N,F   \tab
 #'     Entropy-based symmetrical uncertainty between feature and target \cr
-#'   chi.squared                \tab C,R    \tab
+#'   chi.squared                \tab C,R   \tab N,F   \tab
 #'     Chi-squared statistic of independence between feature and target \cr
-#'   random.forest.importance   \tab C,R    \tab
+#'   random.forest.importance   \tab C,R   \tab N,F   \tab
 #'     See \code{\link[randomForest]{importance}} \cr
-#'   relief                     \tab C,R    \tab
+#'   relief                     \tab C,R   \tab N,F   \tab
 #'     RELIEF algorithm \cr
-#'   oneR                       \tab C,R    \tab
+#'   oneR                       \tab C,R   \tab N,F   \tab
 #'     \code{\link[RWeka]{OneR}} assocation rule \cr
 #' }
 #'
@@ -42,9 +44,9 @@ getFilterValues = function(task, method = "random.forest.importance", ...) {
   checkArg(method, choices = getFilterMethods())
   requirePackages("FSelector", why = "getFilterValues")
 
-  if (method %in% c("linear.correlation", "rank.correlation")) {
+  if (method %in% c("linear.")) {
     if (!inherits(task, "RegrTask") || (task$task.desc$n.feat["factors"] > 0L))
-      stop("Method can only be applied for a regression task with numerical data!")
+      stopf("Method '%s' %can only be applied for a regression task with numerical data!", method)
   }
 
   fun = get(method, envir = getNamespace("FSelector"))

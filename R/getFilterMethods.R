@@ -2,17 +2,17 @@
 #'
 #' @return [\code{character(1)}].
 #' @export
-#' @family filter 
+#' @family filter
 getFilterMethods = function() {
   c(
-    "linear.correlation", 
-    "rank.correlation", 
+    "linear.correlation",
+    "rank.correlation",
     "information.gain",
     "gain.ratio",
     "symmetrical.uncertainty",
     "chi.squared",
     "random.forest.importance",
-    "relief", 
+    "relief",
     "oneR"
   )
 }
