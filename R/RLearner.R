@@ -14,7 +14,7 @@
 #'   Package(s) to load for the implementation of the learner.
 #' @param properties [\code{character(1)}]\cr
 #'   Set of learner properties. Some standard property names include:
-#'   \description{
+#'   \describe{
 #'     \item{numerics}{Can numeric features be handled?}
 #'     \item{factors}{Can factor features be handled?}
 #'     \item{numerics}{Can numeric features be handled?}
@@ -116,5 +116,5 @@ removeProperties = function(lrn, props) {
 
 hasProperties = function(lrn, props) {
   checkArg(props, "character", na.o = FALSE)
-  props %in% lrn$properties
+  all(props %in% lrn$properties)
 }
