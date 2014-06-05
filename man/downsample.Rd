@@ -3,7 +3,7 @@
 \alias{downsample}
 \title{Downsample (subsample) a task or a data.frame.}
 \usage{
-downsample(obj, target, percentage = NULL, n = NULL, stratify = FALSE)
+downsample(obj, target, perc = NULL, n = NULL, stratify = FALSE)
 }
 \arguments{
 \item{obj}{[\code{data.frame} | \code{\link{SupervisedTask}} | \code{\link{ResampleInstance}}]\cr
@@ -13,7 +13,7 @@ Input data or a \code{ResampleInstance}.}
 Name of the column specifying the response.
 Only used when \code{obj} is a \code{data.frame} and \code{stratify = TRUE}, otherwise ignored.}
 
-\item{percentage}{[\code{numeric(1)}]\cr
+\item{perc}{[\code{numeric(1)}]\cr
 Percentage of the observations to keep in the downsampled data.}
 
 \item{n}{[\code{numeric(1)}]\cr

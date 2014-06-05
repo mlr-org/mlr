@@ -20,7 +20,9 @@ only when required for the performance measure.}
 Fitted model. Rarely neeeded,
 only when required for the performance measure.}
 
-\item{nsub}{Passed to \code{\link[BBmisc]{optimizeSubInts}} for 2class problems.}
+\item{nsub}{[\code{integer(1)}]\cr
+Passed to \code{\link[BBmisc]{optimizeSubInts}} for 2class problems.
+Default is 20.}
 
 \item{control}{[\code{list}]\cr
 Control object for \code{\link[cmaes]{cma_es}} when used.

@@ -3,53 +3,40 @@
 \alias{filterFeatures}
 \title{Filter features by thresholding importance values.}
 \usage{
-filterFeatures(obj, target, method = "random.forest.importance",
-  threshold = 0, n = NULL, percentage = NULL)
+filterFeatures(task, method = "random.forest.importance", select = "perc",
+  val, ...)
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{SupervisedTask}}]\cr
-Input data.}
-
-\item{target}{[\code{character(1)}]\cr
-Name of the column specifying the response.
-Only used when \code{obj} is a data.frame, otherwise ignored.}
+\item{task}{[\code{\link{SupervisedTask}}]\cr
+The task.}
 
 \item{method}{[\code{character(1)}]\cr
-Filter method. Available are:\cr
-\dQuote{linear.correlation}: Pearson's correlation for regression with numerical data\cr
-\dQuote{rank.correlation}: Spearman's correlation for regression with numerical data\cr
-\dQuote{information.gain}: Entropy-based information gain for classification and
-regression of mixed feature sets\cr
-\dQuote{gain.ratio}: Entropy-based gain ratio for classification and regression of
-mixed feature sets\cr
-\dQuote{symmetrical.uncertainty}: Entropy-based symmetrical uncertainty for
-classification and regression of mixed feature sets\cr
-\dQuote{chi.squared}: Finds weights of mixed feature sets using chi-squared test for
-classification and regression\cr
-\dQuote{random.forest.importance}: Finds weights of mixed feature sets using
-RandomForest algorithm for classification and regression\cr
-\dQuote{relief}: Finds weights of mixed feature sets using distances between instances
-for classification and regression\cr
-\dQuote{oneR}: Finds weights of mixed feature sets using association rules for
-classification and regression\cr
+See \code{\link{getFilterValues}}.
 Default is \dQuote{random.forest.importance}.}
 
-\item{threshold}{[\code{numeric(1)}]\cr
-Information value as to be greater then the threshold. Default is 0.}
+\item{select}{[\code{character(1)}]\cr
+How to select top features.
+\dQuote{perc} = select top-scoring percentage, \dQuote{abd} = select number
+of top-scoring features, \dQuote{threshold} = select all features whose
+criterion value is >= \code{val}.
+Default is \dQuote{perc}.}
 
-\item{n}{[\code{integer(1)}]\cr
-Number of features ordered by the information value to select.}
+\item{val}{[\code{numeric(1)}]\cr
+Depends on \code{select}:
+Either a percentage from [0, 1], a number of features or a threshold value for the criterion.}
 
-\item{percentage}{[\code{numeric(1)}]\cr
-Alternatively to \code{n} you can give a relative number of features.}
+\item{...}{[any]\cr
+Passed down to selected method.}
 }
 \value{
-[\code{data.frame} | \code{\link{SupervisedTask}}]. Same type as \code{obj}.
+[\code{\link{SupervisedTask}}].
 }
 \description{
-Selects the features by importance values and according to a given threashold.
+First, calls \code{\link{getFilterValues}}.
+Features are then selected via \code{select} and \code{val}.
 }
 \seealso{
-\code{\link{makeFilterWrapper}}
+Other filter: \code{\link{getFilterMethods}};
+  \code{\link{getFilterValues}}
 }
 

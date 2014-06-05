@@ -25,15 +25,15 @@ test_that("benchmark", {
 
 
   # make it more complex
-  ps = makeParamSet(makeDiscreteLearnerParam("cp", values=c(0.01, 0.1)))
+  ps = makeParamSet(makeDiscreteLearnerParam("cp", values = c(0.01, 0.1)))
   learner.names = c("classif.lda", "classif.rpart", "classif.lda.featsel", "classif.rpart.tuned", "classif.lda.filtered")
   learners = list(makeLearner("classif.lda"), makeLearner("classif.rpart"))
   learners = c(learners, list(
     makeFeatSelWrapper(learners[[1L]], resampling = rin, control = makeFeatSelControlRandom(maxit = 3)),
     makeTuneWrapper(learners[[2L]], resampling = rin, par.set = ps, control = makeTuneControlGrid()),
-    makeFilterWrapper(learners[[1L]])
+    makeFilterWrapper(learners[[1L]], fw.val = 0.5)
   ))
-  resamplings = list(rin, makeResampleDesc("Bootstrap", iters=3))
+  resamplings = list(rin, makeResampleDesc("Bootstrap", iters = 3))
   measures = list(mmce, acc)
 
   res = benchmark(learners = learners, tasks = tasks, resamplings = resamplings, measures = measures)
