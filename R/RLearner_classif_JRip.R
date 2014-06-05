@@ -10,14 +10,7 @@ makeRLearner.classif.JRip = function() {
       makeLogicalLearnerParam(id="E", default=FALSE),
       makeLogicalLearnerParam(id="P", default=FALSE)
     ),
-    oneclass = FALSE,
-    twoclass = TRUE,
-    multiclass = TRUE,
-    missings = TRUE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE,
-    weights = FALSE
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob")
   )
 }
 

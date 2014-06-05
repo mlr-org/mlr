@@ -25,11 +25,7 @@ makeRLearner.regr.randomForest = function() {
       se.method = "bootstrap",
       nr.of.bootstrap.samples = 5L
     ),
-    missings = FALSE,
-    numerics = TRUE,
-    factors = TRUE,
-    se = TRUE,
-    weights = FALSE
+    properties = c("numerics", "factors", "se")
   )
 }
 

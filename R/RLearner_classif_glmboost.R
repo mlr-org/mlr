@@ -10,14 +10,7 @@ makeRLearner.classif.glmboost = function() {
       makeLogicalLearnerParam(id="center", default=FALSE)
     ),
     par.vals = list(family=Binomial()),
-    oneclass = FALSE,
-    twoclass = TRUE,
-    multiclass = FALSE,
-    missings = FALSE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE,
-    weights = TRUE
+    properties = c("twoclass", "numerics", "factors", "prob", "weights")
   )
 }
 

@@ -146,14 +146,13 @@ setPredictType = function(learner, predict.type) {
     surv = c("response", "prob"),
     costsens = c("response")
   ))
-  if (predict.type == "prob" && !learner$prob)
+  if (predict.type == "prob" && !hasProperties(learner, "prob"))
     stopf("Trying to predict probs, but %s does not support that!", learner$id)
-  if (predict.type == "se" && !learner$se)
+  if (predict.type == "se" && !hasProperties(learner, "se"))
     stopf("Trying to predict standard errors, but %s does not support that!", learner$id)
   learner$predict.type = predict.type
   return(learner)
 }
-
 
 # FIXME what if hyper pars are of complx type?
 getHyperParsString = function(learner) {

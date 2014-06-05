@@ -6,12 +6,7 @@ makeRLearner.classif.OneR = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id="B", default=6L, lower=1L)
     ),
-    twoclass = TRUE,
-    multiclass = TRUE,
-    missings = TRUE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob")
   )
 }
 

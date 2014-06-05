@@ -24,10 +24,7 @@ makeRLearner.classif.lssvm = function() {
       makeLogicalLearnerParam(id="fitted", default=TRUE)
     ),
     par.vals = list(fitted=FALSE),
-    twoclass = TRUE,
-    multiclass = TRUE,
-    numerics = TRUE,
-    factors = TRUE
+    properties = c("twoclass", "multiclass", "numerics", "factors")
   )
 }
 

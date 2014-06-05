@@ -22,12 +22,7 @@ makeRLearner.classif.ada = function() {
       # we use 30 as upper limit, see docs of rpart.control
       makeIntegerLearnerParam(id="maxdepth", default=30L, lower=1L, upper=30L)
     ),
-    twoclass = TRUE,
-    missings = TRUE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE,
-    weights = TRUE
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights")
   )
 }
 

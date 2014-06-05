@@ -17,11 +17,7 @@ makeRLearner.regr.km = function() {
       makeLogicalLearnerParam(id = "jitter", default = FALSE, when = "predict")
     ),
     par.vals = list(jitter = FALSE),
-    missings = FALSE,
-    numerics = TRUE,
-    factors = FALSE,
-    se = TRUE,
-    weights = FALSE
+    properties = c("numerics", "se")
   )
 }
 

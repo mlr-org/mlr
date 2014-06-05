@@ -21,12 +21,7 @@ makeRLearner.classif.boosting = function() {
       makeIntegerLearnerParam(id="xval", default=0L, lower=0L)
     ),
     par.vals = list(xval=0L),
-    twoclass = TRUE,
-    multiclass = TRUE,
-    missings = TRUE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob")
   )
 }
 

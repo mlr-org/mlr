@@ -10,19 +10,11 @@ makeBaseWrapper = function(id, next.learner, package = character(0L), par.set = 
   makeS3Obj(c(cl, "BaseWrapper", "Learner"),
     id = id,
     type = next.learner$type,
+    predict.type = next.learner$predict.type,
     package = c(package, next.learner$package),
     par.set = par.set,
     par.vals = par.vals,
-    numerics = next.learner$numerics,
-    factors = next.learner$factors,
-    predict.type = next.learner$predict.type,
-    missings = next.learner$missings,
-    weights = next.learner$weights,
-    oneclass = next.learner$oneclass,
-    twoclass = next.learner$twoclass,
-    multiclass = next.learner$multiclass,
-    prob = next.learner$prob,
-    se = next.learner$se,
+    properties = next.learner$properties,
     next.learner = next.learner
   )
 }

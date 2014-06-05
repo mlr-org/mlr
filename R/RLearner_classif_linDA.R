@@ -6,12 +6,7 @@ makeRLearner.classif.linDA = function() {
     par.set = makeParamSet(
       #makeNumericVectorLearnerParam(id="prior", lower=0, upper=1, default=NULL),
       ),
-    twoclass = TRUE,
-    multiclass = TRUE,
-    numerics = TRUE,
-    factors = FALSE,
-    missings = FALSE,
-    prob = TRUE
+    properties = c("twoclass", "multiclass", "numerics", "prob")
   )
 }
 

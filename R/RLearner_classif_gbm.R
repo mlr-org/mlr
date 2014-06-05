@@ -13,12 +13,7 @@ makeRLearner.classif.gbm = function() {
       makeNumericLearnerParam(id="train.fraction", default=1, lower=0, upper=1)
     ),
     par.vals = list(distribution = "bernoulli"),
-    twoclass = TRUE,
-    missings = TRUE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE,
-    weights = TRUE
+    properties = c("twoclass", "missings", "numerics", "factors", "prob", "weights")
   )
 }
 

@@ -8,11 +8,7 @@ makeRLearner.regr.earth = function() {
       makeNumericLearnerParam(id="penalty"),
       makeIntegerLearnerParam(id="nprune")
       ),
-    missings = FALSE,
-    numerics = TRUE,
-    factors = TRUE,
-    se = FALSE,
-    weights = FALSE
+    properties = c("numerics", "factors")
   )
 }
 

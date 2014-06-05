@@ -108,8 +108,8 @@ benchmark = function(learners, tasks, resamplings, measures) {
 NULL
 
 benchmarkParallel = function(index, learners, tasks, resamplings, measures) {
-  ind.task = index[1L][[1L]]
-  ind.learner = index[2L][[1L]]
+  ind.task = index[[1L]]
+  ind.learner = index[[2L]]
   messagef("Task: %s, Learner: %s", ind.task, ind.learner)
   if("FeatSelWrapper" %in% class(learners[[ind.learner]])) {
     extract.this = getFeatSelResult

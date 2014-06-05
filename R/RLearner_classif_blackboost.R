@@ -21,12 +21,7 @@ makeRLearner.classif.blackboost = function() {
       makeIntegerLearnerParam(id="maxdepth", default=0L, lower=0L)
     ),
     par.vals = list(family=Binomial()),
-    twoclass = TRUE,
-    missings = TRUE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE,
-    weights = TRUE
+    properties = c("twoclass", "missings", "numerics", "factors", "prob", "weights")
   )
 }
 

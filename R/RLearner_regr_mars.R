@@ -11,11 +11,7 @@ makeRLearner.regr.mars = function() {
       makeLogicalLearnerParam(id="prune", default=TRUE),
       makeLogicalLearnerParam(id="forward.step", default=TRUE)
     ),
-    missings = FALSE,
-    numerics = TRUE,
-    factors = FALSE,
-    se = FALSE,
-    weights = FALSE
+    properties = c("numerics")
   )
 }
 

@@ -17,11 +17,7 @@ makeRLearner.classif.svm = function() {
       makeNumericLearnerParam(id="cachesize", default=40L)
 
     ),
-    twoclass = TRUE,
-    multiclass = TRUE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
   )
 }
 

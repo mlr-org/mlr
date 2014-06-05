@@ -11,13 +11,7 @@ makeRLearner.classif.rrlda = function() {
       makeIntegerLearnerParam(id="maxit", default=50L, lower=1L),
       makeDiscreteLearnerParam(id="penalty", default="L2", values=c("L1", "L2"))
     ),
-    twoclass = TRUE,
-    multiclass = TRUE,
-    missings = FALSE,
-    numerics = TRUE,
-    factors = FALSE,
-    prob = FALSE,
-    weights = FALSE
+    properties = c("twoclass", "multiclass", "numerics")
   )
 }
 

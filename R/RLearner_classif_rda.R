@@ -22,11 +22,7 @@ makeRLearner.classif.rda = function() {
       makeLogicalLearnerParam(id="estimate.error", default=TRUE)
     ),
     par.vals = list(estimate.error=FALSE),
-    twoclass = TRUE,
-    multiclass = TRUE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
   )
 }
 

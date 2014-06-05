@@ -17,10 +17,7 @@ makeCostSensRegrWrapper = function(learner) {
   id = paste("costsens", learner$id, sep = ".")
   x = makeBaseWrapper(id, learner, package = learner$packages, cl = "CostSensRegrWrapper")
   x$type = "costsens"
-  x$weights = FALSE
-  x$se = FALSE
-  x$prob = FALSE
-  x
+  removeProperties(x, c("weights", "se", "prob"))
 }
 
 #' @export

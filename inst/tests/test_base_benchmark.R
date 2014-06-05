@@ -1,4 +1,6 @@
 context("benchmark")
+source("helper_helpers.R")
+source("helper_objects.R")
 
 test_that("benchmark", {
   task.names = c("binary", "multiclass")

@@ -65,8 +65,9 @@ makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.
   pv = list(bag.iters=bag.iters, bag.replace=bag.replace,
     bag.size=bag.size, bag.feats=bag.feats)
   x = makeBaseWrapper(id, learner, packs, par.set=ps, par.vals=pv, cl="BaggingWrapper")
-  x$se = (x$type == "regr")
-  x$prob = (x$type == "classif")
+  x = switch(x$type,
+    "classif" = addProperties(x, "prob"),
+    "regr" = addProperties(x, "se"))
   if(!is.na(predict.type))
     x = setPredictType(x, predict.type)
   x

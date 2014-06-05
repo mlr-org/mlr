@@ -4,11 +4,7 @@ makeRLearner.classif.geoDA = function() {
     cl = "classif.geoDA",
     package = "DiscriMiner",
     par.set = makeParamSet(),
-    twoclass = TRUE,
-    multiclass = TRUE,
-    numerics = TRUE,
-    factors = FALSE,
-    missings = FALSE
+    properties = c("twoclass", "multiclass", "numerics")
   )
 }
 

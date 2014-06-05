@@ -4,11 +4,7 @@ makeRLearner.classif.logreg = function() {
     cl = "classif.logreg",
     package = "stats",
     par.set = makeParamSet(),
-    twoclass = TRUE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE,
-    weights = TRUE
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights")
   )
 }
 

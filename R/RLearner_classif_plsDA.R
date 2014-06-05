@@ -8,11 +8,7 @@ makeRLearner.classif.plsDA = function() {
       makeIntegerLearnerParam(id="comps", lower=1L, default=2L, requires=expression(autosel==TRUE)),
       makeLogicalLearnerParam(id="retain.models", default=FALSE)
       ),
-    twoclass = TRUE,
-    multiclass = TRUE,
-    numerics = TRUE,
-    factors = FALSE,
-    missings = FALSE
+    properties = c("twoclass", "multiclass", "numerics")
   )
 }
 

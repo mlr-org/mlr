@@ -8,11 +8,7 @@ makeRLearner.classif.lda = function() {
       makeNumericLearnerParam(id="nu", lower=2, requires=expression(method=="t")),
       makeNumericLearnerParam(id="tol", default=1e-4, lower=0)
     ),
-    twoclass=TRUE,
-    multiclass = TRUE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
   )
 }
 
