@@ -19,7 +19,9 @@ mlr_1.2:
 -- classif.LiblineaRBinary
 -- classif.LiblineaRLogReg
 -- classif.LiblineaRMultiClass
+-- classif.linDA
 -- classif.plr
+-- classif.plsDA
 -- classif.rrlda
 -- regr.crs
 -- regr.mob
@@ -43,6 +45,7 @@ mlr_1.2:
 -- visualizeLearner
 -- downsample
 -- makeDownsampleWrapper
+-- plotThreshVsPerf
 
 - imputation stuff ????
 - surv stuff ????

@@ -7,7 +7,7 @@ setThreshold(pred, threshold)
 }
 \arguments{
 \item{pred}{[\code{\link{Prediction}}]\cr
-The prediction.}
+Prediction object.}
 
 \item{threshold}{[\code{numeric}]\cr
 Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.

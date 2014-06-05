@@ -58,7 +58,7 @@ Suggests:
     pROC,
     randomForest,
     randomForestSRC,
-    reshape,
+    reshape2,
     rrlda,
     robustbase,
     rpart,

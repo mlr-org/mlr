@@ -5,11 +5,10 @@
 #'
 #' Code inspired by \code{\link[klaR]{errormatrix}}.
 #'
-#' @param pred [\code{\link{Prediction}}]\cr
-#'   Result of a prediction.
+#' @template arg_pred
 #' @param relative [\code{logical(1)}]\cr
-#' 	If \code{TRUE} rows are normalized to show relative frequencies.
-#'  Default is \code{FALSE}.
+#'   If \code{TRUE} rows are normalized to show relative frequencies.
+#'   Default is \code{FALSE}.
 #' @return [\code{matrix}]. A confusion matrix.
 #' @export
 #' @seealso \code{\link{predict.WrappedModel}}

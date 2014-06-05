@@ -1,7 +1,6 @@
 #' Converts predictions to a format package ROCR can handle.
 #'
-#' @param pred [\code{\link{Prediction}} | \code{\link{Prediction}}] \cr
-#'		Prediction object.
+#' @template arg_pred
 #' @export
 asROCRPrediction = function(pred) {
   UseMethod("asROCRPrediction")

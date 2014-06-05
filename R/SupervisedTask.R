@@ -79,6 +79,7 @@ NULL
 
 makeSupervisedTask = function(type, data, target, weights = NULL, blocking = NULL) {
   env = new.env(parent = emptyenv())
+  checkArg(data, "data.frame")
   env$data = data
   makeS3Obj("SupervisedTask",
     env = env,
@@ -87,6 +88,8 @@ makeSupervisedTask = function(type, data, target, weights = NULL, blocking = NUL
     task.desc = NA
   )
 }
+
+#FIXME: it would probably be better to have: pre-check, fixup, post-check!
 
 #' @export
 checkTask.SupervisedTask = function(task, target, ...) {

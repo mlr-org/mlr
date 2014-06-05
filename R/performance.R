@@ -2,10 +2,8 @@
 #'
 #' Measures the quality of a prediction w.r.t. some performance measure.
 #'
-#' @param pred [\code{\link{Prediction}}] \cr
-#'   Prediction object to evaluate.
-#' @param measures [\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
-#'   Performance measure(s) to evaluate.
+#' @template arg_pred
+#' @template arg_measures
 #' @param task [\code{\link{SupervisedTask}}]\cr
 #'   Learning task, might be requested by performance measure, usually not needed.
 #' @param model [\code{\link{WrappedModel}}]\cr
@@ -29,14 +27,7 @@
 performance = function(pred, measures, task, model) {
   if (!missing(pred))
     checkArg(pred, "Prediction")
-  if (missing(measures)) {
-    measures = default.measures(pred$task.desc)
-  } else {
-    if (inherits(measures, "Measure"))
-      measures = list(measures)
-    checkArg(measures, "list")
-    checkListElementClass(measures, "Measure")
-  }
+  measures = checkMeasures(measures, pred$task.desc)
   sapply(measures, doPerformaceIteration, pred = pred, task = task, model = model, td = NULL)
 }
 
