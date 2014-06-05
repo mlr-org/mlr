@@ -9,7 +9,7 @@ checkTaskLearner = function(task, learner, weights) {
   if (td$n.feat["numerics"] > 0L && !learner$numerics) {
     wrong.cols = columNamesOf(task, is.numeric)
     stopf("Task %s has numeric inputs in %s, but learner %s does not support that!", td$id, wrong.cols, learner$id)
-  } 
+  }
   if (td$n.feat["factors"] > 0L && !learner$factors) {
     wrong.cols = columNamesOf(task, is.factor)
     stopf("Data set has factor inputs in %s, but learner %s does not support that!", td$id, wrong.cols, learner$id)
@@ -20,6 +20,8 @@ checkTaskLearner = function(task, learner, weights) {
     stopf("Weights vector passed to train, but learner %s does not support that!", learner$id)
   if (td$has.weights && !learner$weights)
     warning("Task contains weights but these are not used by learner %s !", learner$id)
+  # FIXME:
+  # check survival task attributes
 }
 
 columNamesOf =  function(task, findFunction){

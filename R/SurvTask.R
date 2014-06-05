@@ -1,18 +1,23 @@
 #' @export
+#' @param type [\code{character(1)}]\cr
+#'  Survival type. Allowed are \dQuote{right} (default), \dQuote{left} and \dQuote{interval2}.
+#'  See \code{\link[survival]{Surv}} for details.
 #' @rdname SupervisedTask
-makeSurvTask = function(id, data, target, weights = NULL, blocking = NULL,
+makeSurvTask = function(id, data, target, surv.type = "right", weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE) {
   checkArg(fixup.data, choices = c("no", "quiet", "warn"))
   checkArg(check.data, "logical", len = 1L, na.ok = FALSE)
 
   task = addClasses(makeSupervisedTask("surv", data, target, weights, blocking), "SurvTask")
+  ### FIXME
+  ### convert survival times to interval2
 
   if (fixup.data != "no")
     fixupData(task, target, fixup.data)
   if (check.data)
     checkTask(task, target)
   id = checkOrGuessId(id, data)
-  task$task.desc = makeTaskDesc.SurvTask(task, id, target)
+  task$task.desc = makeTaskDesc.SurvTask(task, id, target, surv.type)
   return(task)
 }
 
@@ -33,6 +38,8 @@ fixupData.SurvTask = function(task, target, choice, ...) {
 }
 
 #' @export
-makeTaskDesc.SurvTask = function(task, id, target) {
-  addClasses(makeTaskDescInternal(task, "surv", id, target), "TaskDescSurv")
+makeTaskDesc.SurvTask = function(task, id, target, surv.type) {
+  td = makeTaskDescInternal(task, "surv", id, target)
+  td$surv.type = surv.type
+  addClasses(td, "TaskDescSurv")
 }

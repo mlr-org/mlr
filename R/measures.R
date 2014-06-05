@@ -416,6 +416,7 @@ gpr = makeMeasure(id = "gpr", minimize = FALSE, classif = TRUE, only.binary = TR
 cindex = makeMeasure(id = "cindex", minimize = FALSE, allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     requirePackages("Hmisc")
+    # FIXME: this will break after switch to interval2 format
     s = Surv(pred$data$truth.time, pred$data$truth.event)
     rcorr.cens(-1 * pred$data$response, s)[["C Index"]]
   }
