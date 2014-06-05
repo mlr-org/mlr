@@ -24,8 +24,6 @@ test_that("benchmark", {
   expect_true(is.data.frame(tmp))
 
 
-
-
   # make it more complex
   ps = makeParamSet(makeDiscreteLearnerParam("cp", values=c(0.01, 0.1)))
   learner.names = c("classif.lda", "classif.rpart", "classif.lda.featsel", "classif.rpart.tuned", "classif.lda.filtered")

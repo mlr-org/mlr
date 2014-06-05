@@ -75,13 +75,17 @@ benchmark = function(learners, tasks, resamplings, measures) {
     checkArg(measures, "list")
     checkListElementClass(measures, "Measure")
   }
-  measure.ids = extractSubList(measures, "id")
 
   inds = expand.grid(task = task.ids, learner = learner.ids, stringsAsFactors = FALSE)
+
+  plevel = "mlr.benchmark"
+  parallelLibrary("mlr", master = FALSE, level = plevel, show.info = FALSE)
+  exportMlrOptions()
   results = parallelMap(
     benchmarkParallel,
     split(as.matrix(inds), f = seq_row(inds)),
-    more.args = list(learners = learners, tasks = tasks, resamplings = resamplings, measures = measures)
+    more.args = list(learners = learners, tasks = tasks, resamplings = resamplings, measures = measures),
+    level = plevel
   )
   results.by.task = split(results, unlist(inds$task))
   for(taskname in names(results.by.task)) {
@@ -90,7 +94,7 @@ benchmark = function(learners, tasks, resamplings, measures) {
   addClasses(results.by.task, "BenchmarkResult")
 }
 
-#' Result of benchmark
+#' Result of a benchmark
 #'
 #' Container for results of benchmarked experiments using \code{\link{benchmark}}.
 #' The structure of the object itself is rather complicated, it is recommended to
