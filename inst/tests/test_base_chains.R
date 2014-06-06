@@ -46,7 +46,7 @@ test_that("chains", {
 
     ps = makeParamSet(
       makeDiscreteParam(id = "minsplit", values = c(5,10)),
-      makeDiscreteParam(id = "fw.percentage", values = c(0.8, 1))
+      makeDiscreteParam(id = "fw.perc", values = c(0.8, 1))
     )
 
     lrn5 = makeTuneWrapper(lrn4, resampling = inner, par.set = ps,

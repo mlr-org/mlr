@@ -152,7 +152,7 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
       NULL
     if (taskdim == 2L) {
       p = ggplot(grid, aes_string(x = x1n, y = x2n))
-      if (learner$prob && prob.alpha) {
+      if (hasProperties(learner, "prob") && prob.alpha) {
         # max of rows is prob for selected class
         grid$.prob.pred.class = apply(getProbabilities(pred.grid, cl = td$class.levels), 1, max)
         p = p + geom_tile(data = grid, mapping = aes_string(fill = target, alpha = ".prob.pred.class"),
