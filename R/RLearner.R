@@ -109,12 +109,12 @@ addProperties = function(lrn, props) {
 }
 
 removeProperties = function(lrn, props) {
-  checkArg(props, "character", na.o = FALSE)
+  checkArg(props, "character", na.ok = FALSE)
   lrn$properties = setdiff(lrn$properties, props)
   lrn
 }
 
 hasProperties = function(lrn, props) {
-  checkArg(props, "character", na.o = FALSE)
+  checkArg(props, "character", na.ok = FALSE)
   all(props %in% lrn$properties)
 }

@@ -46,7 +46,7 @@ listLearners = function(type=NA, properties = character(0L), quiet=TRUE, warn.mi
   res = filterNull(res)
   err = filterNull(err)
   if (warn.missing.packages && length(err))
-    warningf("The following learners could not be constructed, probably because their packages are not installed:\n%s\nCheck ?learners to see which packages you need or install mlr with all suggestions.", collapse(errs))
+    warningf("The following learners could not be constructed, probably because their packages are not installed:\n%s\nCheck ?learners to see which packages you need or install mlr with all suggestions.", collapse(err))
   vcapply(res, function(lrn) class(lrn)[1L])
 }
 
@@ -54,8 +54,9 @@ listLearners = function(type=NA, properties = character(0L), quiet=TRUE, warn.mi
 #'   The task. Learners are returned that are applicable.
 #' @export
 #' @rdname listLearners
-listLearnersForTask = function(task, weights=NA, prob=NA, se=NA, warn.missing.packages=TRUE) {
+listLearnersForTask = function(task, properties = character(0L), warn.missing.packages=TRUE) {
   checkArg(task, "SupervisedTask")
+  checkArg(properties, "character", na.ok = FALSE)
   td = task$task.desc
 
   props = character(0L)
@@ -68,5 +69,5 @@ listLearnersForTask = function(task, weights=NA, prob=NA, se=NA, warn.missing.pa
     if (length(td$class.levels) >= 3L) props = c(props, "multiclass")
   }
 
-  listLearners(type=td$type, properties = props, warn.missing.packages=warn.missing.packages)
+  listLearners(type=td$type, properties = union(props, properties), warn.missing.packages=warn.missing.packages)
 }
