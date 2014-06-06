@@ -1,8 +1,6 @@
 context("downsample")
 
 test_that("downsample",  {
-  down.df = downsample(binaryclass.df, target = binaryclass.target, perc = 0.5, stratify = TRUE)
-  expect_equal(binaryclass.df[as.numeric(rownames(down.df)), ], down.df) #quite strict
   down.tsk = downsample(multiclass.task, n = 50)
   expect_equal(down.tsk$task.desc$size, 50L)
   rsm.methods = c("CV", "LOO", "RepCV", "Bootstrap", "Subsample", "Holdout")
