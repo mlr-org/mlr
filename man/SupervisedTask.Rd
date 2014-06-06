@@ -75,7 +75,7 @@ Should sanity of data be checked initially at task creation?
 You should have good reasons to turn this off (one might be speed).
 Default is \code{TRUE}}
 
-\item{type}{[\code{character(1)}]\cr
+\item{surv.type}{[\code{character(1)}]\cr
 Survival type. Allowed are \dQuote{right} (default), \dQuote{left} and \dQuote{interval2}.
 See \code{\link[survival]{Surv}} for details.}
 }
