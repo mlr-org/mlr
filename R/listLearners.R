@@ -60,9 +60,9 @@ listLearnersForTask = function(task, properties = character(0L), warn.missing.pa
   td = task$task.desc
 
   props = character(0L)
-  if (td$n.feat["numerics"]) props = c(props, "numerics")
-  if (td$n.feat["factors"]) props = c(props, "factors")
-  if (td$n.feat["missings"]) props = c(props, "missings")
+  if (td$n.feat["numerics"] > 0L) props = c(props, "numerics")
+  if (td$n.feat["factors"] > 0L) props = c(props, "factors")
+  if (td$has.missings) props = c(props, "missings")
   if (td$type == "classif") {
     if (length(td$class.levels) == 1L) props = c(props, "oneclass")
     if (length(td$class.levels) == 2L) props = c(props, "twoclass")

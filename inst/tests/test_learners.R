@@ -13,7 +13,7 @@ test_that("listLearners", {
   expect_true(length(x4) > 1)
   expect_true(setequal(x1, c(x2, x3, x4)))
 
-  x5 = listLearners(type="classif", multiclass=TRUE, factors=TRUE, prob=TRUE)
+  x5 = listLearners(type="classif", properties = c("multiclass", "factors", "prob"))
   expect_true(length(x5) > 10 && all(x5 %in% x2))
 })
 
@@ -49,7 +49,7 @@ test_that("learners work", {
   # binary classif with prob
   task = subsetTask(binaryclass.task, subset=c(1:50, 150:208),
     features=getTaskFeatureNames(binaryclass.task)[1:2])
-  lrns = listLearnersForTask(task=task, prob=TRUE)
+  lrns = listLearnersForTask(task=task, properties="prob")
   lrns = lapply(lrns, makeLearner, predict.type="prob")
   lapply(lrns, function(lrn) {
     m = train(lrn, task)
@@ -60,7 +60,7 @@ test_that("learners work", {
   # binary classif with weights
   task = makeClassifTask(data=binaryclass.df, target=binaryclass.target)
   task = subsetTask(task, subset=c(1:50, 150:208), features=getTaskFeatureNames(task)[1:2])
-  lrns = listLearnersForTask(task=task, weights=TRUE)
+  lrns = listLearnersForTask(task=task, properties = "weights")
   lrns = lapply(lrns, makeLearner)
   lapply(lrns, function(lrn) {
     m = train(lrn, task, weights=1:task$task.desc$size)
@@ -82,7 +82,7 @@ test_that("learners work", {
   # regr with se
   task = subsetTask(regr.task, subset=c(1:70),
   features = getTaskFeatureNames(regr.task)[1:2])
-  lrns = listLearnersForTask(task=task, se=TRUE)
+  lrns = listLearnersForTask(task=task, properties = "se")
   lrns = lapply(lrns, makeLearner, predict.type="se")
   lapply(lrns, function(lrn) {
     if (lrn$id == "regr.km")
@@ -94,7 +94,7 @@ test_that("learners work", {
 
   # regr with weights
   task = subsetTask(regr.task, subset=1:70, features=getTaskFeatureNames(regr.task)[1:2])
-  lrns = listLearnersForTask(task=task, weights=TRUE)
+  lrns = listLearnersForTask(task=task, properties = "weights")
   lrns = lapply(lrns, makeLearner)
   lapply(lrns, function(lrn) {
     if (lrn$id == "regr.km")
