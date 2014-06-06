@@ -19,10 +19,11 @@
 #' @return [\code{ModelMultiplexer}]. A \code{\link{Learner}} specialized as \code{ModelMultiplexer}.
 #' @aliases ModelMultiplexer
 #' @export
-#' bls = list( 
+#' @examples
+#' bls = list(
 #'   makeLearner("classif.ksvm"),
 #'   makeLearner("classif.randomForest")
-#' )  
+#' )
 #' lrn = makeModelMultiplexer(bls)
 #' rdesc = makeResampleDesc("CV", iters = 2L)
 #' ps = makeParamSet(
