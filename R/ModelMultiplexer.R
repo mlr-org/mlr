@@ -1,7 +1,12 @@
-#' Create a meta learner
+#' @title Create model multiplexer for model selection to tune over multiple possible models.
 #'
-#' A meta learner combines multiple base learners by dispatching
-#' on the hyperparameter \dQuote{selected.learner}.
+#' @description
+#' Combines multiple base learners by dispatching
+#' on the hyperparameter \dQuote{selected.learner} to a specific model class.
+#' This allows to tune not only the model class (SVM, random forest, etc) but also
+#' their hyperparameters in one go. Combine this with \code{\link{tuneParams}} and
+#' \code{\link{makeTuneControlIrace}} for a very powerful approach.
+#'
 #' The parameter set is the union of all (unique) base learners.
 #' In order to avoid name clashes all parameter names are prefixed
 #' with the base learner id, i.e. \dQuote{[task.type].[learner.id].[parameter.name]}.
@@ -9,11 +14,26 @@
 #' @param base.learners [\code{list} of \code{\link{Learner}}]\cr
 #'  List of Learners with unique IDs.
 #' @param id [\code{character(1)}]\cr
-#'  Identifier for constructred ModelMultiplexer.
+#'  Identifier for constructed ModelMultiplexer.
 #'  Default is \dQuote{ModelMultiplexer}.
 #' @return [\code{ModelMultiplexer}]. A \code{\link{Learner}} specialized as \code{ModelMultiplexer}.
 #' @aliases ModelMultiplexer
 #' @export
+#' bls = list( 
+#'   makeLearner("classif.ksvm"),
+#'   makeLearner("classif.randomForest")
+#' )  
+#' lrn = makeModelMultiplexer(bls)
+#' rdesc = makeResampleDesc("CV", iters = 2L)
+#' ps = makeParamSet(
+#'   makeDiscreteParam("selected.learner", values = extractSubList(bls, "id")),
+#'   makeNumerciParam("classif.ksvm.sigma", lower=-10, upper=10, requires = quote(selected.learner == "classif.ksvm")),
+#'   makeIntegerParam("classif.randomForest.ntrees", lower=1, upper=500, requires = quote(selected.learner == "classif.randomForsest"))
+#' )
+#' ctrl = makeTuneControlIrace(maxit = 10)
+#' res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)
+#' print(res)
+#' print(head(as.data.frame(res$opt.path)))
 makeModelMultiplexer = function(base.learners, id = "ModelMultiplexer") {
   checkArg(id, "character", len = 1L, na.ok = FALSE)
   checkArg(base.learners, "list", min.len = 1L)
@@ -51,11 +71,11 @@ makeModelMultiplexer = function(base.learners, id = "ModelMultiplexer") {
 }
 
 #' @export
-trainLearner.ModelMultiplexer = function(.learner, .task, .subset, selected.learner, ...) {
+trainLearner.ModelMultiplexer = function(.learner, .task, .subset, .weights, selected.learner, ...) {
   bl = .learner$base.learners[[selected.learner]]
   args = list(...)
   names(args) = substring(names(args), nchar(bl$id) + 2L)
-  do.call(trainLearner, c(list(bl, .task, .subset), args))
+  do.call(trainLearner, c(list(bl, .task, .subset, .weights), args))
 }
 
 #' @export

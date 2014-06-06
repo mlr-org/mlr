@@ -107,7 +107,7 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
 
   # predictions
   # if learner supports prob or se, enable it
-  if (td$type == "regr" && taskdim == 1L && learner$se)
+  if (td$type == "regr" && taskdim == 1L && hasProperties(learner, "se"))
     learner = setPredictType(learner, "se")
   if (td$type == "classif" && hasProperties(learner, "prob"))
     learner = setPredictType(learner, "prob")
@@ -177,7 +177,7 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
       p = p + geom_point(data = data, mapping = aes_string(y = target), size = pointsize)
       p = p + geom_line(data = grid, mapping = aes_string(y = target))
       # show se band
-      if (se.band && learner$se) {
+      if (se.band && hasProperties(learner, "se")) {
         grid$.se = pred.grid$data$se
         grid$.ymin = grid[, target] - grid$.se
         grid$.ymax = grid[, target] + grid$.se

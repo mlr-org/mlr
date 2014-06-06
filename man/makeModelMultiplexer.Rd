@@ -2,7 +2,7 @@
 \name{makeModelMultiplexer}
 \alias{ModelMultiplexer}
 \alias{makeModelMultiplexer}
-\title{Create a meta learner}
+\title{Create model multiplexer for model selection to tune over multiple possible models.}
 \usage{
 makeModelMultiplexer(base.learners, id = "ModelMultiplexer")
 }
@@ -11,15 +11,19 @@ makeModelMultiplexer(base.learners, id = "ModelMultiplexer")
 List of Learners with unique IDs.}
 
 \item{id}{[\code{character(1)}]\cr
-Identifier for constructred ModelMultiplexer.
+Identifier for constructed ModelMultiplexer.
 Default is \dQuote{ModelMultiplexer}.}
 }
 \value{
 [\code{ModelMultiplexer}]. A \code{\link{Learner}} specialized as \code{ModelMultiplexer}.
 }
 \description{
-A meta learner combines multiple base learners by dispatching
-on the hyperparameter \dQuote{selected.learner}.
+Combines multiple base learners by dispatching
+on the hyperparameter \dQuote{selected.learner} to a specific model class.
+This allows to tune not only the model class (SVM, random forest, etc) but also
+their hyperparameters in one go. Combine this with \code{\link{tuneParams}} and
+\code{\link{makeTuneControlIrace}} for a very powerful approach.
+
 The parameter set is the union of all (unique) base learners.
 In order to avoid name clashes all parameter names are prefixed
 with the base learner id, i.e. \dQuote{[task.type].[learner.id].[parameter.name]}.
