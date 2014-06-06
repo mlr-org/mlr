@@ -59,7 +59,7 @@ makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.
       checkListElementClass(measures, "Measure")
   }
   if (missing(bit.names)) {
-    bit.names = character(0)
+    bit.names = character(0L)
   } else {
     checkArg(bit.names, "character", na.ok = FALSE)
   }

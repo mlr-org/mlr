@@ -23,10 +23,7 @@ makeCostSensWeightedPairsWrapper = function(learner) {
   id = paste("costsens", learner$id, sep = ".")
   x = makeBaseWrapper(id, learner, package = learner$packages, cl = "CostSensWeightedPairsWrapper")
   x$type = "costsens"
-  x$weights = FALSE
-  x$se = FALSE
-  x$prob = FALSE
-  x
+  removeProperties(x, c("weights", "se", "prob"))
 }
 
 #' @export
@@ -73,17 +70,15 @@ predictLearner.CostSensWeightedPairsWrapper = function(.learner, .model, .newdat
     else
       as.character(predict(mod, newdata = .newdata, ...)$data$response)
   })
-  factor(apply(preds, 1, computeMode), levels = classes)
+  factor(apply(preds, 1L, computeMode), levels = classes)
 }
 
 
 #' @export
 makeWrappedModel.CostSensWeightedPairsWrapper = function(learner, model, task.desc, subset, features,
   factor.levels, time) {
-
   x = NextMethod()
-  class(x) = c("CostSensWeightedPairsModel", class(x))
-  return(x)
+  addClasses(x, "CostSensWeightedPairsModel")
 }
 
 
@@ -105,4 +100,3 @@ getCostSensWeightedPairsModels = function(model, learner.models = FALSE) {
   else
     ms
 }
-

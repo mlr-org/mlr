@@ -19,11 +19,7 @@ makeRLearner.classif.randomForest = function() {
       makeLogicalLearnerParam(id="fix.factors", default=FALSE)
     ),
     par.vals = list(fix.factors=FALSE),
-    twoclass = TRUE,
-    multiclass = TRUE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
   )
 }
 

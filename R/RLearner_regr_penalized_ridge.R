@@ -6,11 +6,7 @@ makeRLearner.regr.penalized.ridge = function() {
     par.set = makeParamSet(
       makeNumericLearnerParam(id="lambda2", default=0, lower=0)
     ),
-    missings = TRUE,
-    numerics = TRUE,
-    factors = TRUE,
-    se = FALSE,
-    weights = FALSE
+    properties = c("missings", "numerics", "factors")
   )
 }
 

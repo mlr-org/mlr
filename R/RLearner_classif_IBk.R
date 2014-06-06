@@ -12,12 +12,7 @@ makeRLearner.classif.IBk = function() {
       makeLogicalLearnerParam(id = "X"),
       makeUntypedLearnerParam(id = "A", default = "weka.core.neighboursearch.LinearNNSearch")
     ),
-    twoclass = TRUE,
-    multiclass = TRUE,
-    missings = TRUE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
   )
 }
 

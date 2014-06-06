@@ -35,11 +35,7 @@ makeRLearner.regr.crs = function() {
 
     ),
     par.vals = list(),
-    missings = FALSE,
-    numerics = TRUE,
-    factors = TRUE,
-    se = TRUE,
-    weights = TRUE
+    properties = c("numerics", "factors", "se", "weights")
   )
 }
 

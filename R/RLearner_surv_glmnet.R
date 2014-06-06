@@ -7,11 +7,7 @@ makeRLearner.surv.glmnet = function() {
       makeIntegerLearnerParam(id="nfolds", default=10L, lower=3L), # FIXME: upper=nrow?
       makeNumericLearnerParam(id="alpha", default=1, lower=0, upper=1)
     ),
-    missings = FALSE,
-    numerics = TRUE,
-    factors = FALSE,
-    se = FALSE,
-    weights = TRUE
+    properties = c("numerics", "weights", "rcens")
   )
 }
 

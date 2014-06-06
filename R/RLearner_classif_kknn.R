@@ -10,14 +10,7 @@ makeRLearner.classif.kknn = function() {
       makeDiscreteLearnerParam(id="kernel", default="triangular",
         values=list("rectangular", "triangular", "epanechnikov", "biweight", "triweight", "cos", "inv", "gaussian"))
     ),
-    oneclass = FALSE,
-    twoclass = TRUE,
-    multiclass = TRUE,
-    missings = FALSE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE,
-    weights = FALSE
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
   )
 }
 

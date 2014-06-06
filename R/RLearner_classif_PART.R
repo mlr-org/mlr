@@ -1,23 +1,18 @@
 #' @export
 makeRLearner.classif.PART = function() {
   makeRLearnerClassif(
-   cl = "classif.PART",
-   package = "RWeka",
-   par.set = makeParamSet(
-     makeNumericLearnerParam(id="C", default=0.25, lower=0),
-     makeIntegerLearnerParam(id="M", default=2L, lower=1L),
-     makeLogicalLearnerParam(id="R"),
-     makeIntegerLearnerParam(id="N", default=3L, lower=2L),
-     makeLogicalLearnerParam(id="B"),
-     makeLogicalLearnerParam(id="U"),
-     makeLogicalLearnerParam(id="J")
-   ),
-   twoclass = TRUE,
-   multiclass = TRUE,
-   missings = TRUE,
-   numerics = TRUE,
-   factors = TRUE,
-   prob = TRUE
+    cl = "classif.PART",
+    package = "RWeka",
+    par.set = makeParamSet(
+      makeNumericLearnerParam(id="C", default=0.25, lower=0),
+      makeIntegerLearnerParam(id="M", default=2L, lower=1L),
+      makeLogicalLearnerParam(id="R"),
+      makeIntegerLearnerParam(id="N", default=3L, lower=2L),
+      makeLogicalLearnerParam(id="B"),
+      makeLogicalLearnerParam(id="U"),
+      makeLogicalLearnerParam(id="J")
+    ),
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob")
   )
 }
 

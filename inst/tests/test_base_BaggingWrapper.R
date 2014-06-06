@@ -28,7 +28,7 @@ test_that("BaggingWrapper", {
   p = predict(m, binaryclass.task)
   getProbabilities(p)
   r = resample(lrn2, binaryclass.task, rdesc, measures=auc)
-  
+
   lrn1 = makeLearner("regr.rpart")
   lrn2 = makeBaggingWrapper(lrn1, bag.iters=3L)
   m = train(lrn2, regr.task)

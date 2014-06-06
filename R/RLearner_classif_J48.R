@@ -17,12 +17,7 @@ makeRLearner.classif.J48 = function() {
       makeLogicalLearnerParam(id="A"),
       makeLogicalLearnerParam(id="J")
     ),
-    twoclass = TRUE,
-    multiclass = TRUE,
-    missings = TRUE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob")
   )
 }
 

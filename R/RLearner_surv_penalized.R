@@ -10,12 +10,7 @@ makeRLearner.surv.penalized = function() {
       makeLogicalLearnerParam(id="standardize", default=FALSE),
       makeIntegerLearnerParam(id="maxiter", default=25L)
     ),
-    # FIXME this depends on the prediction method ...
-    missings = FALSE,
-    numerics = TRUE,
-    factors = FALSE,
-    se = FALSE,
-    weights = FALSE
+    properties = c("numerics", "rcens")
   )
 }
 

@@ -28,11 +28,7 @@ makeRLearner.regr.ksvm = function() {
       makeLogicalLearnerParam(id="fit", default=TRUE)
     ),
     par.vals = list(fit=FALSE),
-    missings = FALSE,
-    numerics = TRUE,
-    factors = TRUE,
-    se = FALSE,
-    weights = FALSE
+    properties = c("numerics", "factors")
   )
 }
 

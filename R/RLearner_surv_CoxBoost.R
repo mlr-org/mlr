@@ -15,12 +15,7 @@ makeRLearner.surv.CoxBoost = function() {
       makeDiscreteLearnerParam(id="sf.scheme", default="sigmoid", values=c("sigmoid", "linear"))
       # FIXME still missing some arguments
     ),
-    #censoring = "left",
-    missings = FALSE,
-    numerics = TRUE,
-    factors = FALSE,
-    se = FALSE,
-    weights = TRUE
+    properties = c("numerics", "weights", "rcens")
   )
 }
 

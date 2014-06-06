@@ -4,16 +4,8 @@ makeRLearner.classif.lvq1 = function() {
   makeRLearnerClassif(
     cl = "classif.lvq1",
     package = "class",
-    par.set = makeParamSet(
-    ),
-    oneclass = FALSE,
-    twoclass = TRUE,
-    multiclass = TRUE,
-    missings = FALSE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = FALSE,
-    weights = FALSE
+    par.set = makeParamSet(),
+    properties = c("twoclass", "multiclass", "numerics", "factors")
   )
 }
 

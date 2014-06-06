@@ -7,11 +7,7 @@ makeRLearner.classif.qda = function() {
       makeDiscreteLearnerParam(id="method", default="moment", values=c("moment", "mle", "mve", "t")),
       makeNumericLearnerParam(id="nu", default=5 , lower=2, requires=expression(method == "t"))
     ),
-    twoclass = TRUE,
-    multiclass = TRUE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
   )
 }
 

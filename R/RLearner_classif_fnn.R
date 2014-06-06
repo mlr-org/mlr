@@ -9,9 +9,7 @@ makeRLearner.classif.fnn = function() {
       makeLogicalLearnerParam(id="use.all", default=TRUE, requires=expression(algorithm == "VR")),
       makeDiscreteLearnerParam(id="algorithm", default="cover_tree", values=list("cover_tree", "kd_tree", "VR"))
     ),
-    twoclass = TRUE,
-    multiclass = TRUE,
-    numerics = TRUE
+    properties = c("twoclass", "multiclass", "numerics")
   )
 }
 

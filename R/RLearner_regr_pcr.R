@@ -13,11 +13,7 @@ makeRLearner.regr.pcr = function() {
       makeLogicalLearnerParam(id="y", default=FALSE)
     ),
     par.vals = list(model=FALSE),
-    missings = FALSE,
-    numerics = TRUE,
-    factors = TRUE,
-    se = FALSE,
-    weights = FALSE
+    properties = c("numerics", "factors")
   )
 }
 

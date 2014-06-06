@@ -21,12 +21,7 @@ makeRLearner.classif.nnet = function() {
       makeNumericLearnerParam(id="reltoll", default=1.0e-8)
     ),
     par.vals = list(size=3L),
-    twoclass = TRUE,
-    multiclass = TRUE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE,
-    weights = TRUE
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights")
   )
 }
 

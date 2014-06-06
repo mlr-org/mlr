@@ -13,13 +13,7 @@ makeRLearner.classif.LiblineaRLogReg = function() {
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L),
       makeLogicalLearnerParam(id = "verbose", default = FALSE)
     ),
-    twoclass = TRUE,
-    multiclass = FALSE,
-    missings = FALSE,
-    numerics = TRUE,
-    factors = FALSE,
-    prob = TRUE,
-    weights = FALSE
+  properties = c("twoclass", "numerics", "prob")
   )
 }
 

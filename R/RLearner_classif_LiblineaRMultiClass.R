@@ -13,13 +13,7 @@ makeRLearner.classif.LiblineaRMultiClass = function() {
       makeLogicalLearnerParam(id = "verbose", default = FALSE)
     ),
     par.vals = list(type = 4),
-    twoclass = TRUE,
-    multiclass = TRUE,
-    missings = FALSE,
-    numerics = TRUE,
-    factors = FALSE,
-    prob = FALSE,
-    weights = FALSE
+    properties = c("twoclass", "multiclass", "numerics")
   )
 }
 

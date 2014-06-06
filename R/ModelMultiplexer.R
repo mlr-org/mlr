@@ -42,16 +42,8 @@ makeModelMultiplexer = function(base.learners, id = "ModelMultiplexer") {
     package = unique(extractSubList(base.learners, "package")),
     par.set = par.set,
     par.vals = list(selected.learner = ids[1L]),
-    predict.type = "response",
-    numerics = all(extractSubList(base.learners, "numerics")),
-    factors = all(extractSubList(base.learners, "factors")),
-    missings = all(extractSubList(base.learners, "missings")),
-    weights = all(extractSubList(base.learners, "weights")),
-    oneclass = all(extractSubList(base.learners, "oneclass")),
-    twoclass = all(extractSubList(base.learners, "twoclass")),
-    multiclass = all(extractSubList(base.learners, "multiclass")),
-    multiclass = all(extractSubList(base.learners, "prob")),
-    se = all(extractSubList(base.learners, "se"))
+    properties = Reduce(intersect, extractSubList(base.learners, "properties")),
+    predict.type = "response"
   )
 
   lrn$base.learners = setNames(base.learners, ids)

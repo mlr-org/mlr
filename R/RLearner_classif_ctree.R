@@ -16,13 +16,7 @@ makeRLearner.classif.ctree = function() {
       makeLogicalLearnerParam(id="savesplitstats", default=TRUE),
       makeIntegerLearnerParam(id="maxdepth", default=0L, lower=0L)
     ),
-    twoclass = TRUE,
-    multiclass = TRUE,
-    missings = TRUE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE,
-    weights = TRUE
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights")
   )
 }
 

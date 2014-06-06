@@ -8,15 +8,8 @@ makeRLearner.classif.knn = function() {
       makeNumericLearnerParam(id = "l", default = 0L, lower = 0L),
       makeLogicalLearnerParam(id = "use.all", default = TRUE)
     ),
-    oneclass = FALSE,
-    twoclass = TRUE,
-    multiclass = TRUE,
-    missings = FALSE,
-    numerics = TRUE,
-    factors = TRUE,
     # knn cannot really return probs, only for the winning class (yeah well done BR)
-    prob = FALSE,
-    weights = FALSE
+    properties = c("twoclass", "multiclass", "numerics", "factors")
   )
 }
 

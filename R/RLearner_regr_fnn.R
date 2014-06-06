@@ -9,11 +9,7 @@ makeRLearner.regr.fnn = function() {
       makeLogicalLearnerParam(id="use.all", default=TRUE, requires=expression(algorithm == "VR")),
       makeDiscreteLearnerParam(id="algorithm", default="cover_tree", values=list("cover_tree", "kd_tree", "VR"))
     ),
-   missings = FALSE,
-   numerics = TRUE,
-   factors = FALSE,
-   se = FALSE,
-   weights = FALSE
+    properties = c("numerics")
   )
 }
 

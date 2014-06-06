@@ -8,13 +8,7 @@ makeRLearner.classif.plr = function() {
       makeDiscreteLearnerParam(id = "cp.type", values = c("bic", "aic"), default = "bic"),
       makeNumericLearnerParam(id = "cp", lower = 0, default = 2)
     ),
-    twoclass = TRUE,
-    multiclass = FALSE,
-    missings = FALSE,
-    numerics = TRUE,
-    factors = TRUE,
-    prob = TRUE,
-    weights = TRUE
+    properties = c("twoclass", "numerics", "factors", "prob", "weights")
   )
 }
 

@@ -10,11 +10,7 @@ makeRLearner.surv.glmboost = function() {
       makeNumericLearnerParam(id="nu", default=0.1, lower=0, upper=1),
       makeLogicalLearnerParam(id="center", default=FALSE)
     ),
-    missings = FALSE,
-    numerics = TRUE,
-    factors = TRUE,
-    se = FALSE,
-    weights = TRUE
+    properties = c("numerics", "factors", "weights", "rcens")
   )
 }
 
