@@ -19,10 +19,11 @@
 #' @return [\code{ModelMultiplexer}]. A \code{\link{Learner}} specialized as \code{ModelMultiplexer}.
 #' @aliases ModelMultiplexer
 #' @export
-#' bls = list( 
+#' @examples
+#' bls = list(
 #'   makeLearner("classif.ksvm"),
 #'   makeLearner("classif.randomForest")
-#' )  
+#' )
 #' lrn = makeModelMultiplexer(bls)
 #' rdesc = makeResampleDesc("CV", iters = 2L)
 #' ps = makeParamSet(
@@ -62,7 +63,7 @@ makeModelMultiplexer = function(base.learners, id = "ModelMultiplexer") {
     package = unique(extractSubList(base.learners, "package")),
     par.set = par.set,
     par.vals = list(selected.learner = ids[1L]),
-    properties = Reduce(intersect, extractSubList(base.learners, "properties")),
+    properties = Reduce(intersect, extractSubList(base.learners, "properties", simplify = FALSE)),
     predict.type = "response"
   )
 
@@ -71,7 +72,7 @@ makeModelMultiplexer = function(base.learners, id = "ModelMultiplexer") {
 }
 
 #' @export
-trainLearner.ModelMultiplexer = function(.learner, .task, .subset, .weights, selected.learner, ...) {
+trainLearner.ModelMultiplexer = function(.learner, .task, .subset, .weights = NULL, selected.learner, ...) {
   bl = .learner$base.learners[[selected.learner]]
   args = list(...)
   names(args) = substring(names(args), nchar(bl$id) + 2L)

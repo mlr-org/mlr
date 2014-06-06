@@ -24,7 +24,7 @@ source("inst/tests/helper_objects.R")
 args = commandArgs()
 file = args[which(args == "--args")+1]
 if(length(file)==0 || is.na(file)) {
-  test_dir("inst/tests")
+  test_dir("inst/tests", filter = "base")
 }else{
   catf("Run test for file %s", file.path("inst",file))
   test_file(file.path("inst","tests",file))

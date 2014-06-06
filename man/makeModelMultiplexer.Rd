@@ -28,4 +28,21 @@ The parameter set is the union of all (unique) base learners.
 In order to avoid name clashes all parameter names are prefixed
 with the base learner id, i.e. \dQuote{[task.type].[learner.id].[parameter.name]}.
 }
+\examples{
+bls = list(
+  makeLearner("classif.ksvm"),
+  makeLearner("classif.randomForest")
+)
+lrn = makeModelMultiplexer(bls)
+rdesc = makeResampleDesc("CV", iters = 2L)
+ps = makeParamSet(
+  makeDiscreteParam("selected.learner", values = extractSubList(bls, "id")),
+  makeNumerciParam("classif.ksvm.sigma", lower=-10, upper=10, requires = quote(selected.learner == "classif.ksvm")),
+  makeIntegerParam("classif.randomForest.ntrees", lower=1, upper=500, requires = quote(selected.learner == "classif.randomForsest"))
+)
+ctrl = makeTuneControlIrace(maxit = 10)
+res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)
+print(res)
+print(head(as.data.frame(res$opt.path)))
+}
 
