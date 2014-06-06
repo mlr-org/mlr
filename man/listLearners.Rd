@@ -4,9 +4,8 @@
 \alias{listLearnersForTask}
 \title{Find matching learning algorithms.}
 \usage{
-listLearners(type = NA, numerics = NA, factors = NA, missings = NA,
-  weights = NA, oneclass = NA, twoclass = NA, multiclass = NA,
-  prob = NA, se = NA, quiet = TRUE, warn.missing.packages = TRUE)
+listLearners(type = NA, properties = character(0L), quiet = TRUE,
+  warn.missing.packages = TRUE)
 
 listLearnersForTask(task, weights = NA, prob = NA, se = NA,
   warn.missing.packages = TRUE)
@@ -16,32 +15,8 @@ listLearnersForTask(task, weights = NA, prob = NA, se = NA,
 Type of the learning algorithm, one of \dQuote{classif}, \dQuote{regr}
 or \dQuote{surv}.}
 
-\item{numerics}{[\code{logical(1)}]\cr
-Supports real-valued features?}
-
-\item{factors}{[\code{logical(1)}]\cr
-Supports factor features?}
-
-\item{missings}{[\code{logical(1)}]\cr
-Supports missing values in features?}
-
-\item{weights}{[\code{logical(1)}]\cr
-Supports case weights?}
-
-\item{oneclass}{[\code{logical(1)}]\cr
-Supports oneclass problems?}
-
-\item{twoclass}{[\code{logical(1)}]\cr
-Supports twoclass problems?}
-
-\item{multiclass}{[\code{logical(1)}]\cr
-Supports multiclass problems?}
-
-\item{prob}{[\code{logical(1)}]\cr
-Can predict probabilities (classification)?}
-
-\item{se}{[\code{logical(1)}]\cr
-Can predict standard errors (regression)?}
+\item{properties}{[\code{character)}]\cr
+Set of required properties to filter for. Default is \code{character(0)}.}
 
 \item{quiet}{[\code{logical(1)}]\cr
 Construct learners quietly to check their properties, shows no package startup messages.

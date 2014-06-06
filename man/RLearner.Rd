@@ -12,15 +12,14 @@
 \usage{
 makeRLearner()
 
-makeRLearnerClassif(cl, package, par.set, numerics = FALSE, factors = FALSE,
-  missings = FALSE, weights = FALSE, oneclass = FALSE, twoclass = FALSE,
-  multiclass = FALSE, prob = FALSE, par.vals = list())
+makeRLearnerClassif(cl, package, par.set, par.vals = list(),
+  properties = character(0L))
 
-makeRLearnerRegr(cl, package, par.set, numerics, factors = FALSE,
-  missings = FALSE, weights = FALSE, se = FALSE, par.vals = list())
+makeRLearnerRegr(cl, package, par.set, par.vals = list(),
+  properties = character(0L))
 
-makeRLearnerSurv(cl, package, par.set, numerics, factors = FALSE,
-  missings = FALSE, weights = FALSE, se = FALSE, par.vals = list())
+makeRLearnerSurv(cl, package, par.set, par.vals = list(),
+  properties = character(0L))
 }
 \arguments{
 \item{cl}{[\code{character(1)}] \cr
@@ -32,44 +31,20 @@ start with \dQuote{surv.}.}
 \item{package}{[\code{character}]\cr
 Package(s) to load for the implementation of the learner.}
 
+\item{properties}{[\code{character(1)}]\cr
+Set of learner properties. Some standard property names include:
+\describe{
+  \item{numerics}{Can numeric features be handled?}
+  \item{factors}{Can factor features be handled?}
+  \item{numerics}{Can numeric features be handled?}
+  \item{missings}{Can missing features be handled?}
+  \item{oneclas,twoclass,multiclass}{Can one-class, two-class or multi-class classification problems be handled?}
+  \item{prob}{Can probabilites be predicted?}
+  \item{se}{Can standard errors be predicted?}
+}}
+
 \item{par.set}{[\code{\link[ParamHelpers]{ParamSet}}] \cr
 Parameter set of (hyper)parameters and their constraints.}
-
-\item{numerics}{[\code{logical(1)}]\cr
-Can numeric features be handled?
-Default is \code{FALSE}.}
-
-\item{factors}{[\code{logical(1)}]\cr
-Can factor features be handled?
-Default is \code{FALSE}.}
-
-\item{missings}{[\code{logical(1)}]\cr
-Can missing values be handled?
-Default is \code{FALSE}.}
-
-\item{weights}{[\code{logical(1)}]\cr
-Can case weights be handled?
-Default is \code{FALSE}.}
-
-\item{oneclass}{[\code{logical(1)}]\cr
-Can one-class problems be handled?
-Default is \code{FALSE}.}
-
-\item{twoclass}{[\code{logical(1)}]\cr
-Can two-class problems be handled?
-Default is \code{FALSE}.}
-
-\item{multiclass}{[\code{logical(1)}]\cr
-Can multi-class problems be handled?
-Default is \code{FALSE}.}
-
-\item{prob}{[\code{logical(1)}]\cr
-Can probabilities be predicted?
-Default is \code{FALSE}.}
-
-\item{se}{[\code{logical(1)}]\cr
-Can standard errors be predicted??
-Default is \code{FALSE}.}
 
 \item{par.vals}{[\code{list}] \cr
 Always set hyperparameters to these values when the object is constructed.
@@ -84,6 +59,6 @@ Default is empty list.}
 Wraps an already implemented learning method from R to make it accessible to mlr.
 Call this method in your constructor. You have to pass an id (name), the required
 package(s), a description object for all changeable parameters (you dont have to do this for the
-learner to work, but it is strongly recommended), and define what the learner can / cannot do.
+learner to work, but it is strongly recommended), and use property tags to define features of the learner.
 }
 

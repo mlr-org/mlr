@@ -20,8 +20,8 @@ makeCostSensTask(id, data, costs, blocking = NULL, fixup.data = "warn",
 makeRegrTask(id, data, target, weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE)
 
-makeSurvTask(id, data, target, weights = NULL, blocking = NULL,
-  fixup.data = "warn", check.data = TRUE)
+makeSurvTask(id, data, target, surv.type = "right", weights = NULL,
+  blocking = NULL, fixup.data = "warn", check.data = TRUE)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -74,6 +74,10 @@ Default is \dQuote{warn}.}
 Should sanity of data be checked initially at task creation?
 You should have good reasons to turn this off (one might be speed).
 Default is \code{TRUE}}
+
+\item{type}{[\code{character(1)}]\cr
+Survival type. Allowed are \dQuote{right} (default), \dQuote{left} and \dQuote{interval2}.
+See \code{\link[survival]{Surv}} for details.}
 }
 \value{
 [\code{\link{SupervisedTask}}].
