@@ -12,7 +12,11 @@ getFilterMethods()
 Returns all available feature filter methods.
 }
 \seealso{
-Other filter: \code{\link{filterFeatures}};
-  \code{\link{getFilterValues}}
+Other filter: \code{\link{FilterResult}},
+  \code{\link{getFilterResult}};
+  \code{\link{filterFeatures}};
+  \code{\link{getFilterValues}};
+  \code{\link{getFilteredFeatures}};
+  \code{\link{makeFilterWrapper}}
 }
 

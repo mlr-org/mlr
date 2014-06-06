@@ -1,4 +1,4 @@
-#' @title Filter features by thresholding importance values.
+#' @title Filter features by thresholding filter values.
 #'
 #' @description
 #' First, calls \code{\link{getFilterValues}}.
@@ -9,8 +9,8 @@
 #'   See \code{\link{getFilterValues}}.
 #'   Default is \dQuote{random.forest.importance}.
 #' @param select [\code{character(1)}]\cr
-#'   How to select top features.
-#'   \dQuote{perc} = select top-scoring percentage, \dQuote{abd} = select number
+#'   How to select top-scoring features.
+#'   \dQuote{perc} = select top-scoring percentage, \dQuote{abs} = select absolute number
 #'   of top-scoring features, \dQuote{threshold} = select all features whose
 #'   criterion value is >= \code{val}.
 #'   Default is \dQuote{perc}.

@@ -16,7 +16,8 @@ See \code{\link{getFilterValues}}.
 Default is \dQuote{random.forest.importance}.}
 
 \item{fw.select}{[\code{character(1)}]\cr
-See \code{\link{filterFeatures}}.}
+See \code{\link{filterFeatures}}.
+Default is \dQuote{perc}.}
 
 \item{fw.val}{[\code{numeric(1)}]\cr
 See \code{\link{filterFeatures}}.}
@@ -28,8 +29,6 @@ See \code{\link{filterFeatures}}.}
 Fuses a base learner with a filter method. Creates a learner object, which can be
 used like any other learner object.
 Internally uses \code{\link{filterFeatures}} before every model fit.
-
-Features are selected via one of: \code{fw.perc}, \code{fw.n} or \code{fw.threshold}.
 
 After training, the selected features can be retrieved with
 \code{\link{getFilteredFeatures}}.
@@ -50,5 +49,13 @@ r = resample(lrn, task, outer, extract = function(model) {
   getFilteredFeatures(model)
 })
 print(r$extract)
+}
+\seealso{
+Other filter: \code{\link{FilterResult}},
+  \code{\link{getFilterResult}};
+  \code{\link{filterFeatures}};
+  \code{\link{getFilterMethods}};
+  \code{\link{getFilterValues}};
+  \code{\link{getFilteredFeatures}}
 }
 
