@@ -5,8 +5,8 @@ test_that("chains", {
     lrn1 = makeLearner("classif.rpart", minsplit = 10)
     lrn2 = makePreprocWrapperRemoveOutliers(lrn1, ro.alpha = 1)
     lrn3 = makePreprocWrapperPCA(lrn2)
-    lrn4 = makeFilterWrapper(lrn3, fw.val = 0.5) 
-    
+    lrn4 = makeFilterWrapper(lrn3, fw.val = 0.5)
+
     m = train(lrn4, multiclass.task)
 
     p = predict(m, multiclass.task)
@@ -33,8 +33,8 @@ test_that("chains", {
     expect_true(perf < 0.1)
   } else {
     lrn1 = makeLearner("classif.rpart", minsplit = 10)
-    lrn4 = makeFilterWrapper(lrn1) 
-    
+    lrn4 = makeFilterWrapper(lrn1, fw.val = 0.5)
+
     m = train(lrn4, multiclass.task)
 
     p = predict(m, multiclass.task)
@@ -59,5 +59,5 @@ test_that("chains", {
     perf = performance(p, mmce)
     expect_true(perf < 0.1)
   }
-  
+
 })
