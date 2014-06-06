@@ -13,8 +13,7 @@ makeRLearner.classif.quaDA = function() {
 #' @export
 trainLearner.classif.quaDA = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra=TRUE)
-  is.prob = (.learner$predict.type == "prob")
-  quaDA(variables = d$data, group = d$target, prob = is.prob)
+  quaDA(variables = d$data, group = d$target, ...)
 }
 
 #' @export
