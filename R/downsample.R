@@ -17,6 +17,7 @@
 #'   Should the downsample be stratified according to the target classes?
 #' @seealso \code{\link{makeResampleInstance}}
 #' @return [\code{data.frame} | \code{\link{SupervisedTask}} | \code{\link{ResampleInstance}}]. Same type as \code{obj}.
+#' @family downsample
 #' @export
 downsample = function(obj, target, perc = NULL, n = NULL, stratify = FALSE) {
   checkArg(obj, c("data.frame", "SupervisedTask", "ResampleInstance"))

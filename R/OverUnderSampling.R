@@ -19,6 +19,7 @@
 #'   For oversampling: Must be between 1 and \code{Inf},
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
 #' @return [\code{data.frame} | \code{\link{ClassifTask}}]. Same type as \code{obj}.
+#' @family OverUndersample
 #' @export
 oversample = function(obj, target, rate) {
   checkArg(obj, c("data.frame", "ClassifTask"))

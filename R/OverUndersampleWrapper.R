@@ -17,6 +17,7 @@
 #'   Factor to oversample the smaller class. Must be between 1 and \code{Inf},
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
 #' @return [\code{\link{Learner}}].
+#' @family OverUndersample
 #' @export
 makeUndersampleWrapper = function(learner, usw.rate) {
   checkArg(learner, "Learner")

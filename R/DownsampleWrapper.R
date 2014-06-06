@@ -12,6 +12,7 @@
 #' @param sw.stratify [\code{boolean(1)}]\cr
 #'   Should the downsampled data be stratified according to the target classes? Default is \code{FALSE}.
 #' @template ret_learner
+#' @family downsample
 #' @export
 makeDownsampleWrapper = function(learner, sw.perc = NULL, sw.n = NULL, sw.stratify = FALSE) {
   checkArg(learner, "Learner")
