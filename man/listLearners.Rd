@@ -7,7 +7,7 @@
 listLearners(type = NA, properties = character(0L), quiet = TRUE,
   warn.missing.packages = TRUE)
 
-listLearnersForTask(task, weights = NA, prob = NA, se = NA,
+listLearnersForTask(task, properties = character(0L),
   warn.missing.packages = TRUE)
 }
 \arguments{
