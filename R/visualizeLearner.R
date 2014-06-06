@@ -109,7 +109,7 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
   # if learner supports prob or se, enable it
   if (td$type == "regr" && taskdim == 1L && learner$se)
     learner = setPredictType(learner, "se")
-  if (td$type == "classif" && learner$prob)
+  if (td$type == "classif" && hasProperties(learner, "prob"))
     learner = setPredictType(learner, "prob")
   mod = train(learner, task)
   pred.train = predict(mod, task)
