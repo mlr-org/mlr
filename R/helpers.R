@@ -108,7 +108,10 @@ getTrainingInfo = function(x) {
   attr(x, "mlr.train.info")
 }
 
-#FIXME Put to BBmisc or abandon?
 isNotSet = function(x) {
   missing(x) || is.null(x)
+}
+
+isSet = function(x) {
+  !isNotSet(x)
 }

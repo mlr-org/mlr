@@ -18,8 +18,8 @@ makeDownsampleWrapper = function(learner, sw.perc = NULL, sw.n = NULL, sw.strati
   checkDownsampleArguments(perc = sw.perc, n = sw.n, stratify = sw.stratify)
   id = paste(learner$id, "downsampled", sep = ".")
   ps = makeParamSet(
-    makeNumericLearnerParam(id = "sw.perc", requires = expression(is.null(sw.n))),
-    makeIntegerLearnerParam(id = "sw.n", requires = expression(is.null(sw.perc))),
+    makeNumericLearnerParam(id = "sw.perc", requires = expression(is.null(sw.n)), lower = 0, upper = 1),
+    makeIntegerLearnerParam(id = "sw.n", requires = expression(is.null(sw.perc)), lower = 1L),
     makeLogicalLearnerParam(id = "sw.stratify")
   )
   pv = list(sw.perc = sw.perc, sw.n = sw.n, sw.stratify = sw.stratify)

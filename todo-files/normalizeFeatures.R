@@ -31,20 +31,20 @@ normalizeFeatures = function(obj, target = NULL, methods = "standardize", column
 
 #' @export
 normalizeFeatures.data.frame = function(obj, target = NULL, methods = "standardize", columns = NULL, range = c(0,1)) {
-  if(!isNotSet(target)) {
+  if(isSet(target)) {
     checkArg(target, min.len=1, max.len=3, cl="character")
   }
-  if(!isNotSet(range)) {
+  if(isSet(range)) {
     checkArg(range, cl="numeric", len=2, lower=0, upper=1)
   }
   
   # extract obj to work on
   numeric.cols = vlapply(obj, is.numeric)
   work.cols = names(numeric.cols)
-  if(!isNotSet(columns)) {
+  if(isSet(columns)) {
     work.cols = intersect(work.cols, columns)
   }
-  if(!isNotSet(target)) {
+  if(isSet(target)) {
     work.cols = setdiff(work.cols, target)
   }
   work.obj = obj[,work.cols]
