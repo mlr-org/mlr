@@ -24,6 +24,8 @@
 #' @family filter
 filterFeatures = function(task, method = "random.forest.importance", select = "perc", val, ...) {
   # does checks + loads FSelector
+  checkArg(method, choices = getFilterMethods())
+  checkFilterArguments(select = select, val = val)
   fvals = getFilterValues(task = task, method = method, ...)
   allfeats = names(fvals)
   p = length(allfeats)
