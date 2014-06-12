@@ -18,14 +18,14 @@ if (interactive()) {
   library(mlr)
 }
 
-source("inst/tests/helper_helpers.R")
-source("inst/tests/helper_objects.R")
+source("tests/testthat/helper_helpers.R")
+source("tests/testthat/helper_objects.R")
 
 args = commandArgs()
-file = args[which(args == "--args")+1]
-if(length(file)==0 || is.na(file)) {
-  test_dir("inst/tests", filter = "base")
-}else{
-  catf("Run test for file %s", file.path("inst",file))
-  test_file(file.path("inst","tests",file))
+file = args[which(args == "--args") + 1L]
+if (length(file) == 0 || is.na(file)) {
+  test_dir("tests/testthat", filter = "base")
+} else {
+  catf("Run test for file %s", file.path("tests", "testthat", file))
+  test_file(file.path("tests", "testthat", file))
 }

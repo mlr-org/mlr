@@ -32,4 +32,8 @@ Oversampling: From the smaller class, observations are randomly drawn with repet
 
 Undersampling: From the larger class, observations are randomly drawn without repetitions.
 }
+\seealso{
+Other OverUndersample: \code{\link{makeOversampleWrapper}},
+  \code{\link{makeUndersampleWrapper}}
+}
 

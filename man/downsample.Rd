@@ -3,24 +3,24 @@
 \alias{downsample}
 \title{Downsample (subsample) a task or a data.frame.}
 \usage{
-downsample(obj, target, perc = NULL, n = NULL, stratify = FALSE)
+downsample(obj, select = "perc", val = 1, stratify = FALSE, ...)
 }
 \arguments{
 \item{obj}{[\code{\link{SupervisedTask}} | \code{\link{ResampleInstance}}]\cr
 Input data or a \code{ResampleInstance}.}
 
-\item{target}{[\code{character(1)}]\cr
-Name of the column specifying the response.
-Only used when \code{obj} is a \code{data.frame} and \code{stratify = TRUE}, otherwise ignored.}
+\item{select}{[\code{character(1)}]\cr
+How to select the size of the downsampled dataset.
+\dQuote{perc} = select observations by percentage, \dQuote{abs} = select absolute number
+of observations.
+Default is \dQuote{perc}.}
 
-\item{perc}{[\code{numeric(1)}]\cr
-Percentage of the observations to keep in the downsampled data.}
-
-\item{n}{[\code{numeric(1)}]\cr
-Total number of observations to keep in the downsampled data.}
+\item{val}{[\code{numeric(1)}]\cr
+Depends on \code{select}:
+Either a percentage from [0, 1] or a number of observations.}
 
 \item{stratify}{[\code{boolean(1)}]\cr
-Should the downsample be stratified according to the target classes?}
+Should the downsampled data be stratified according to the target classes? Default is \code{FALSE}.}
 }
 \value{
 [\code{data.frame} | \code{\link{SupervisedTask}} | \code{\link{ResampleInstance}}]. Same type as \code{obj}.
@@ -31,5 +31,7 @@ Decrease the observations in a \code{task} or a \code{ResampleInstance}
 }
 \seealso{
 \code{\link{makeResampleInstance}}
+
+Other downsample: \code{\link{makeDownsampleWrapper}}
 }
 

@@ -3,21 +3,25 @@
 \alias{makeDownsampleWrapper}
 \title{Fuse learner with simple downsampling (subsampling).}
 \usage{
-makeDownsampleWrapper(learner, sw.perc = NULL, sw.n = NULL,
-  sw.stratify = FALSE)
+makeDownsampleWrapper(learner, dw.select = "perc", dw.val = 1,
+  dw.stratify = FALSE)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
 The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
-\item{sw.perc}{[\code{numeric(1)}]\cr
-Percentage of the observations to train the learner on.}
+\item{dw.select}{[\code{character(1)}]\cr
+How to select the size of the downsampled dataset.
+\dQuote{perc} = select observations by percentage, \dQuote{abs} = select absolute number
+of observations.
+Default is \dQuote{perc}.}
 
-\item{sw.n}{[\code{numeric(1)}]\cr
-Total number of observations to train the learner on.}
+\item{dw.val}{[\code{numeric(1)}]\cr
+Depends on \code{select}:
+Either a percentage from [0, 1] or a number of observations.}
 
-\item{sw.stratify}{[\code{boolean(1)}]\cr
+\item{dw.stratify}{[\code{boolean(1)}]\cr
 Should the downsampled data be stratified according to the target classes? Default is \code{FALSE}.}
 }
 \value{
@@ -27,5 +31,8 @@ Should the downsampled data be stratified according to the target classes? Defau
 Creates a learner object, which can be
 used like any other learner object.
 It will only be trained on a subset of the original data to save computational time.
+}
+\seealso{
+Other downsample: \code{\link{downsample}}
 }
 

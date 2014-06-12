@@ -33,4 +33,8 @@ Internally uses \code{\link{oversample}} or \code{\link{undersample}} before eve
 Note that observation weights do not influence the sampling and are simply passed
 down to the next learner.
 }
+\seealso{
+Other OverUndersample: \code{\link{oversample}},
+  \code{\link{undersample}}
+}
 
