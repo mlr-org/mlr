@@ -9,15 +9,15 @@ checkTaskLearner = function(task, learner, weights) {
     stopf("Task '%s' is '%s', but learner '%s' is for '%s'!", td$id, td$type, learner$id, learner$type)
   if (td$has.missings && !hasProperties(learner, "missings")) {
     wrong.cols = getColNames(task, is.na)
-    stopf("Task '%s' has missing values in %s, but learner '%s' does not support that!", td$id, wrong.cols, learner$id)
+    stopf("Task '%s' has missing values in '%s', but learner '%s' does not support that!", td$id, wrong.cols, learner$id)
   }
   if (td$n.feat["numerics"] > 0L && !hasProperties(learner, "numerics")) {
     wrong.cols = getColNames(task, is.numeric)
-    stopf("Task '%s' has numeric inputs in %s, but learner '%s' does not support that!", td$id, wrong.cols, learner$id)
+    stopf("Task '%s' has numeric inputs in '%s', but learner '%s' does not support that!", td$id, wrong.cols, learner$id)
   }
   if (td$n.feat["factors"] > 0L && !hasProperties(learner, "factors")) {
     wrong.cols = getColNames(task, is.factor)
-    stopf("Data set has factor inputs in %s, but learner '%s' does not support that!", td$id, wrong.cols, learner$id)
+    stopf("Data set has factor inputs in '%s', but learner '%s' does not support that!", td$id, wrong.cols, learner$id)
   }
   if (td$type == "classif") {
     if (length(td$class.levels) == 1L) {
