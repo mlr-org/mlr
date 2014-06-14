@@ -17,7 +17,7 @@ checkTaskLearner = function(task, learner, weights) {
   }
   if (td$n.feat["factors"] > 0L && !hasProperties(learner, "factors")) {
     wrong.cols = getColNames(task, is.factor)
-    stopf("Data set has factor inputs in '%s', but learner '%s' does not support that!", td$id, wrong.cols, learner$id)
+    stopf("Task '%s' has factor inputs in '%s', but learner '%s' does not support that!", td$id, wrong.cols, learner$id)
   }
   if (td$type == "classif") {
     if (length(td$class.levels) == 1L) {
