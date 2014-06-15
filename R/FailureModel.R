@@ -3,7 +3,7 @@
 #' @description
 #'
 #' A subclass of \code{\link{WrappedModel}}. It is created
-#' - if you set the respective option in \code{\list{configureMlr}} -
+#' - if you set the respective option in \code{\link{configureMlr}} -
 #' when a model internally crashed during training.
 #' The model always predicts NAs.
 #'
