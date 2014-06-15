@@ -14,7 +14,7 @@ makeOptWrapper = function(id, learner, resampling, measures, par.set, bit.names,
 }
 
 #' @export
-makeWrappedModel.OptWrapper = function(learner, model, task.desc, subset, features, factor.levels, time) {
+makeWrappedModel.OptWrapper = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
   x = NextMethod()
   if (inherits(learner, "TuneWrapper"))
     addClasses(x, c("TuneModel", "OptModel"))

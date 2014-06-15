@@ -58,7 +58,7 @@ predictLearner.CostSensClassifWrapper = function(.learner, .model, .newdata, ...
 }
 
 #' @export
-makeWrappedModel.CostSensClassifWrapper = function(learner, model, task.desc, subset, features,
+makeWrappedModel.CostSensClassifWrapper = function(learner, learner.model, task.desc, subset, features,
   factor.levels, time) {
 
   x = NextMethod()

@@ -75,7 +75,7 @@ predictLearner.CostSensWeightedPairsWrapper = function(.learner, .model, .newdat
 
 
 #' @export
-makeWrappedModel.CostSensWeightedPairsWrapper = function(learner, model, task.desc, subset, features,
+makeWrappedModel.CostSensWeightedPairsWrapper = function(learner, learner.model, task.desc, subset, features,
   factor.levels, time) {
   x = NextMethod()
   addClasses(x, "CostSensWeightedPairsModel")

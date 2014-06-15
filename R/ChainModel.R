@@ -5,7 +5,7 @@ makeChainModel = function(next.model, cl) {
 
 
 #' @export
-makeWrappedModel.BaseWrapper = function(learner, model, task.desc, subset, features, factor.levels, time) {
+makeWrappedModel.BaseWrapper = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
   x = NextMethod()
   addClasses(x, "BaseWrapperModel")
 }

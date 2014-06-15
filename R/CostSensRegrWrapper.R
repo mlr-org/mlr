@@ -53,7 +53,7 @@ predictLearner.CostSensRegrWrapper = function(.learner, .model, .newdata, ...) {
 
 
 #' @export
-makeWrappedModel.CostSensRegrWrapper = function(learner, model, task.desc, subset, features,
+makeWrappedModel.CostSensRegrWrapper = function(learner, learner.model, task.desc, subset, features,
   factor.levels, time) {
 
   x = NextMethod()
