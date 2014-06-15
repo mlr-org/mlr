@@ -1,19 +1,20 @@
-#' Induced model of learner.
+#' @title Induced model of learner.
 #'
-#' Result from \code{\link{train}}. It internally stores the underlying fitted model,
+#' @description
+#' Result from \code{\link{train}}.
+#'
+#' It internally stores the underlying fitted model,
 #' the subset used for training, features used for training, levels of factors in the
 #' data set and computation time that was spent for training.
 #'
-#' The constructed \code{makeWrappedModel} is only for internal use.
-#'
 #' Object members: See arguments.
 #'
-#' @param learner [\code{\link{Learner}}]\cr
-#'   The learner.
-#' @param model [any]\cr
+#' The constructor \code{makeWrappedModel} is mainly for internal use.
+#'
+#' @template arg_learner
+#' @param learner.model [any]\cr
 #'   Underlying model.
-#' @param task.desc [\code{\link{TaskDesc}}]\cr
-#'   Task description object.
+#' @template arg_taskdesc
 #' @param subset [\code{integer}]\cr
 #'   Subset used for training.
 #' @param features [\code{character}]\cr
@@ -23,31 +24,31 @@
 #'   Named by variable name, non-factors do not occur in the list.
 #' @param time [\code{numeric(1)}]\cr
 #'   Computation time for model fit in seconds.
-#' @return [\code{\link{WrappedModel}}].
+#'  @template ret_wmodel
 #' @export
 #' @aliases WrappedModel
-makeWrappedModel = function(learner, model, task.desc, subset, features, factor.levels, time) {
+makeWrappedModel = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
   UseMethod("makeWrappedModel")
 }
 
 #' @export
-makeWrappedModel.Learner = function(learner, model, task.desc, subset, features, factor.levels, time) {
-  if(is.error(model)) {
-    model = as.character(model)
+makeWrappedModel.Learner = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
+  if(is.error(learner.model)) {
+    learner.model = as.character(learner.model)
     time = NA_real_
     cl = c("FailureModel", "WrappedModel")
   } else {
     cl = "WrappedModel"
   }
-  setClasses(list(
+  makeS3Obj(cl,
     learner = learner,
-    learner.model = model,
+    learner.model = learner.model,
     task.desc = task.desc,
     subset = subset,
     features = features,
     factor.levels = factor.levels,
     time = time
-  ), cl)
+  )
 }
 
 #' Get underlying R model of learner integrated into mlr.
@@ -69,7 +70,7 @@ getLearnerModel.WrappedModel = function(model) {
 #' @export
 print.WrappedModel = function(x, ...) {
   cat(
-    "Learner model for id=", x$learner$id, " class=", class(x$learner)[1L], "\n",
+    "Model for id=", x$learner$id, " class=", getClass1(x$learner), "\n",
     "Trained on obs: ", length(x$subset), "\n",
     "Used features: ", length(x$features), "\n",
     "Hyperparameters: ", getHyperParsString(x$learner), "\n",

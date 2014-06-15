@@ -24,26 +24,20 @@
 #' @export
 #' @note To extract probabilities use \code{\link{getProbabilities}}.
 #' @examples
-#' ## split iris data in training and test set
-#' n <- nrow(iris)
-#' mixed.set <- sample(1:n)
-#' training.set <- mixed.set[1:(n/2)]
-#' test.set <- mixed.set[(n/2 + 1):n]
+#' # train and predict
+#' train.set = seq(1, 150, 2)
+#' test.set = seq(2, 150, 2)
+#' model = train("classif.lda", iris.task, subset = train.set)
+#' p = predict(model, newdata = iris, subset = test.set)
+#' print(p)
+#' predict(model, task = iris.task, subset = test.set)
 #'
-#' ## use linear discriminant analysis as learner for classification task
-#' task <- makeClassifTask(data = iris, target = "Species")
-#' learner <- makeLearner("classif.lda", method = "mle")
-#' mod <- train(learner, task, subset = training.set)
-#'
-#' ## predict class labels for test data
-#' pred <- predict(mod, newdata = iris[test.set,])
-#' head(pred$data)
-#'
-#' ## predict now probabiliies instead of class labels
-#' learner <- makeLearner("classif.lda", method = "mle", predict.type = "prob")
-#' mod <- train(learner, task, subset = training.set)
-#' pred <- predict(mod, newdata = iris[test.set, ])
-#' head(pred$data)
+#' # predict now probabiliies instead of class labels
+#' lrn = makeLearner("classif.lda", predict.type = "prob")
+#' model = train(lrn, iris.task, subset = train.set)
+#' p = predict(model, task = iris.task, subset = test.set)
+#' print(p)
+#' getProbabilities(p)
 predict.WrappedModel = function(object, task, newdata, subset, ...) {
   if (!xor(missing(task), missing(newdata)))
     stop("Pass either a task object or a newdata data.frame to predict, but not both!")
@@ -68,12 +62,12 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
   } else {
     subset = convertIntegers(subset)
     # FIXME: min.len, lower, upper
-    checkArg(subset, "integer", na.ok=FALSE)
+    checkArg(subset, "integer", na.ok = FALSE)
   }
   if (missing(newdata)) {
     newdata = getTaskData(task, subset)
   } else {
-    newdata = newdata[subset,,drop=FALSE]
+    newdata = newdata[subset,,drop = FALSE]
   }
 
   # if we saved a model and loaded it later just for prediction this is necessary
@@ -92,7 +86,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
 
   # was there an error in building the model? --> return NAs
   if(inherits(model, "FailureModel")) {
-    p = predict_nas(model, newdata)
+    p = predictFailureModel(model, newdata)
     time.predict = NA_real_
   } else {
     #FIXME this copies newdata
@@ -117,7 +111,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
       if (opt.ole == "stop")
         fun2 = identity
       else
-        fun2 = function(x) try(x, silent=TRUE)
+        fun2 = function(x) try(x, silent = TRUE)
       old.warn.opt = getOption("warn")
       on.exit(options(warn = old.warn.opt))
       if (getMlrOption("on.learner.warning") == "quiet") {
@@ -129,7 +123,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
       if(is.error(p)) {
         if (opt.ole == "warn")
           warningf("Could not predict with learner %s: %s", learner$id, as.character(p))
-        p = predict_nas(model, newdata)
+        p = predictFailureModel(model, newdata)
         time.predict = NA_real_
       }
     }
@@ -138,6 +132,6 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
     ids = NULL
   else
     ids = subset
-  makePrediction(task.desc=td, id=ids, truth=truth,
-    predict.type=learner$predict.type, y=p, time=time.predict)
+  makePrediction(task.desc = td, id = ids, truth = truth,
+    predict.type = learner$predict.type, y = p, time = time.predict)
 }

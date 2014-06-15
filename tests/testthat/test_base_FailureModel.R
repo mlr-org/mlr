@@ -1,19 +1,52 @@
 context("FailureModel")
 
 test_that("FailureModel", {
-  configureMlr(on.learner.error="quiet", show.learner.output=FALSE)
-  m = train(makeLearner("classif.qda"), multiclass.task, subset=c(1,51,101))
+  configureMlr(on.learner.error = "quiet", show.learner.output = FALSE)
+
+  # classif: response
+  lrn = makeLearner("classif.qda", predict.type = "prob")
+  m = train(lrn, multiclass.task, subset = c(1,51,101))
   expect_true(inherits(m, "FailureModel"))
   expect_true(!is.null(m$learner.model))
-  p = predict(m, newdata=iris)
+  p = predict(m, newdata = iris)
   expect_true(all(is.na(p$data$response)))
 
-
-  wl = makeLearner("regr.ksvm", epsilon=10)
-  m = train(wl, regr.task)	
+  # classif: probs
+  lrn = makeLearner("classif.qda", predict.type = "prob")
+  m = train(lrn, multiclass.task, subset = c(1,51,101))
   expect_true(inherits(m, "FailureModel"))
   expect_true(!is.null(m$learner.model))
-  p = predict(m, newdata=regr.df)
+  p = predict(m, newdata = iris)
   expect_true(all(is.na(p$data$response)))
-  configureMlr(on.learner.error="stop", show.learner.output=FALSE)
+  prob = getProbabilities(p)
+  expect_true(dim(prob) == c(150, 3) && all(is.na(prob)))
+
+  task = dropFeatures(regr.task, "chas")
+  # regr: response
+  wl = makeLearner("regr.km")
+  m = train(wl, task, subset = 1:2)
+  expect_true(inherits(m, "FailureModel"))
+  expect_true(!is.null(m$learner.model))
+  p = predict(m, task = task)
+  expect_true(all(is.na(p$data$response)))
+
+  # regr: se
+  wl = makeLearner("regr.km", predict.type = "se")
+  m = train(wl, task, subset = 1:2)
+  expect_true(inherits(m, "FailureModel"))
+  expect_true(!is.null(m$learner.model))
+  p = predict(m, task = task)
+  expect_true(all(is.na(p$data$response)))
+  expect_true(all(is.na(p$data$se)))
+
+  # costens: response
+  lrn = makeCostSensClassifWrapper("classif.qda")
+  m = train(lrn, costsens.task, subset = c(1,51,101))
+  # FIXME: reenable when issue is solved
+  # expect_true(inherits(m, "FailureModel"))
+  expect_true(!is.null(m$learner.model))
+  p = predict(m, newdata = iris)
+  expect_true(all(is.na(p$data$response)))
+
+  configureMlr(on.learner.error = "stop", show.learner.output = FALSE)
 })
