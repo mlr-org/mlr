@@ -12,7 +12,7 @@ measureAggrName = function(measure) {
 }
 
 perfsToString = function(y) {
-  paste(paste(names(y), " = ", formatC(y, digits = 3L), sep = ""), collapse = ",")
+  paste(paste(names(y), "=", formatC(y, digits = 3L), sep = ""), collapse = ",")
 }
 
 recodeY = function(y, type, positive) {
