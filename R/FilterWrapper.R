@@ -92,6 +92,7 @@ getFilterResult = function(object) {
 #' @export
 getFilterResult.WrappedModel = function(object) {
   x = getFilteredFeatures(object)
+  # FIXME: what is this?
   if (is.null(x))
     return(NULL)
   addClasses(x, "FilterResult")
