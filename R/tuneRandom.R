@@ -1,7 +1,7 @@
 tuneRandom = function(learner, task, resampling, measures, par.set, control, opt.path, show.info) {
   vals = sampleValues(n = control$extra.args$maxit, par = par.set)
   evalOptimizationStatesTune(learner, task, resampling, measures, par.set, control, opt.path,
-    show.info, vals, dobs = 1L, eols = 1L, remove.nas = TRUE)
+    show.info, vals, dobs = seq_along(vals), eols = NA_integer_, remove.nas = TRUE)
   i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), ties = "random")
   e = getOptPathEl(opt.path, i)
   # FIXME: change when new version of paramhelpers is online
