@@ -22,7 +22,7 @@ makeFeatSelControlRandom(same.resampling.instance = TRUE, maxit = 100L,
   max.features = NA_integer_, prob = 0.5)
 
 makeFeatSelControlSequential(same.resampling.instance = TRUE, method,
-  alpha = 0.01, beta = 0.01, maxit = NA_integer_,
+  alpha = 0.01, beta = -0.001, maxit = NA_integer_,
   max.features = NA_integer_)
 }
 \arguments{
@@ -65,10 +65,15 @@ values are \code{sfs} (forward search), \code{sbs} (backward search), \code{sffs
 (floating forward search) and \code{sfbs} (floating backward search).}
 
 \item{alpha}{[\code{numeric(1)}]\cr
-Parameter of the sequential feature selection. Minimal value of improvement.}
+Parameter of the sequential feature selection.
+Minimal value of improvement difference for a forward / adding step.
+Default is 0.01.}
 
 \item{beta}{[\code{numeric(1)}]\cr
-Parameter of the sequential feature selection. Maximal value of setback.}
+Parameter of the sequential feature selection.
+Minimal value of improvement difference for a backward / removing step.
+Negative values imply that you allow a slight decrease for the removal of a feature.
+Default is -0.001.}
 }
 \value{
 [\code{\link{FeatSelControl}}]. The specific subclass is one of

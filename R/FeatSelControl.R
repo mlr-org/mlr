@@ -69,9 +69,14 @@
 #'   values are \code{sfs} (forward search), \code{sbs} (backward search), \code{sffs}
 #'   (floating forward search) and \code{sfbs} (floating backward search).
 #' @param alpha [\code{numeric(1)}]\cr
-#'   Parameter of the sequential feature selection. Minimal value of improvement.
+#'   Parameter of the sequential feature selection.
+#'   Minimal value of improvement difference for a forward / adding step.
+#'   Default is 0.01.
 #' @param beta [\code{numeric(1)}]\cr
-#'   Parameter of the sequential feature selection. Maximal value of setback.
+#'   Parameter of the sequential feature selection.
+#'   Minimal value of improvement difference for a backward / removing step.
+#'   Negative values imply that you allow a slight decrease for the removal of a feature.
+#'   Default is -0.001.
 #' @return [\code{\link{FeatSelControl}}]. The specific subclass is one of
 #'   \code{\link{FeatSelControlExhaustive}}, \code{\link{FeatSelControlRandom}},
 #'   \code{\link{FeatSelControlSequential}}, \code{\link{FeatSelControlGA}}.
@@ -82,12 +87,12 @@
 NULL
 
 makeFeatSelControl = function(same.resampling.instance, maxit, max.features, ..., cl) {
-  checkArg(same.resampling.instance, "logical", len=1L, na.ok=FALSE)
+  checkArg(same.resampling.instance, "logical", len = 1L, na.ok = FALSE)
   maxit = convertInteger(maxit)
-  checkArg(maxit, "integer", len=1L, lower=1L, na.ok=TRUE)
+  checkArg(maxit, "integer", len = 1L, lower = 1L, na.ok = TRUE)
   max.features = convertInteger(max.features)
-  checkArg(max.features, "integer", len=1L, lower=1L, na.ok=TRUE)
-  x = makeOptControl(same.resampling.instance=same.resampling.instance, ...)
+  checkArg(max.features, "integer", len = 1L, lower = 1L, na.ok = TRUE)
+  x = makeOptControl(same.resampling.instance = same.resampling.instance, ...)
   x$maxit = maxit
   x$max.features = max.features
   class(x) = c(cl, "FeatSelControl", class(x))

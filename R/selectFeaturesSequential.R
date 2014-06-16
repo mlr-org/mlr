@@ -11,7 +11,7 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
     # die at once
     evalOptimizationStatesFeatSel(learner, task, resampling, measures, bits.to.features, control, opt.path, show.info, xs, dob, dob)
 
-    best.i = getOptPathBestIndex(opt.path, dob=dob, ties="random")
+    best.i = getOptPathBestIndex(opt.path, dob = dob, ties = "random")
     best = getOptPathEl(opt.path, best.i)
     # best element lives one iteration longer
     thresh = ifelse(forward, control$extra.args$alpha, control$extra.args$beta)
@@ -66,11 +66,9 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
     sfbs = gen.new.states.sbs,
     stop(paste("Unknown method:", method))
   )
-
-  y = evalOptimizationState(learner, task, resampling, measures, NULL, bits.to.features, control, opt.path, show.info, x, FALSE)
-  state = list(x=x, y=y)
-  # FIXME: not used?
-  path = addOptPathEl(opt.path, x=as.list(x), y=y, dob=1L, eol=2L)
+  y = evalOptimizationState(learner, task, resampling, measures, NULL, bits.to.features, control, opt.path, show.info, 1L, x, FALSE)
+  state = list(x = x, y = y)
+  addOptPathEl(opt.path, x = as.list(x), y = y, dob = 1L, eol = 2L)
 
   forward = (method %in% c("sfs", "sffs"))
   fail = 0
@@ -89,7 +87,7 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
       gns = switch(method,
         sffs = gen.new.states.sbs,
         sfbs = gen.new.states.sfs
-      )
+        )
       state2 = seq.step(!forward, state, gns, compare)
       if (!is.null(state2)) {
         state = state2
@@ -105,7 +103,7 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
 
   if (all(opt.path$env$eol[opt.path$env$dob == last] == last))
     last = last-1
-  i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1L]]), dob=last, ties="first")
+  i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1L]]), dob = last, ties = "first")
   e = getOptPathEl(opt.path, i)
-	makeFeatSelResult(learner, control, names(e$x)[e$x == 1], e$y, opt.path)
+  makeFeatSelResult(learner, control, names(e$x)[e$x == 1], e$y, opt.path)
 }
