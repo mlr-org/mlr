@@ -85,6 +85,7 @@ and how to change the file path.
 \seealso{
 Other tune: \code{\link{ModelMultiplexer}},
   \code{\link{makeModelMultiplexer}};
+  \code{\link{getTuneResult}};
   \code{\link{makeModelMultiplexerParamSet}};
   \code{\link{makeTuneWrapper}}; \code{\link{tuneParams}};
   \code{\link{tuneThreshold}}

@@ -15,4 +15,22 @@ Trained Model created with \code{\link{makeTuneWrapper}} or benchmark result cre
 \description{
 Returns the optimal hyperparameters and optimization path.
 }
+\seealso{
+Other tune: \code{\link{ModelMultiplexer}},
+  \code{\link{makeModelMultiplexer}};
+  \code{\link{TuneControl}},
+  \code{\link{TuneControlCMAES}},
+  \code{\link{TuneControlGrid}},
+  \code{\link{TuneControlIrace}},
+  \code{\link{TuneControlOptim}},
+  \code{\link{TuneControlRandom}},
+  \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlGrid}},
+  \code{\link{makeTuneControlIrace}},
+  \code{\link{makeTuneControlOptim}},
+  \code{\link{makeTuneControlRandom}};
+  \code{\link{makeModelMultiplexerParamSet}};
+  \code{\link{makeTuneWrapper}}; \code{\link{tuneParams}};
+  \code{\link{tuneThreshold}}
+}
 

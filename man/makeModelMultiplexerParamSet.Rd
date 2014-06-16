@@ -55,6 +55,7 @@ Other tune: \code{\link{ModelMultiplexer}},
   \code{\link{makeTuneControlIrace}},
   \code{\link{makeTuneControlOptim}},
   \code{\link{makeTuneControlRandom}};
+  \code{\link{getTuneResult}};
   \code{\link{makeTuneWrapper}}; \code{\link{tuneParams}};
   \code{\link{tuneThreshold}}
 }

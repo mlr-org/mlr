@@ -18,7 +18,7 @@ If only one is provided, it will be replicated to match the number of tasks.
 If missing, a 10-fold cross validation is used.}
 
 \item{measures}{[(list of) \code{\link{Measure}}]\cr
-Performance measures.
+Performance measures for all tasks.
 If missing, the default measure of the first task is used.}
 }
 \value{
@@ -29,5 +29,9 @@ Complete benchmark experiment to compare different learning algorithms across on
 w.r.t. a given resampling strategy. Experiments are paired, meaning always the same
 training / test sets are used for the different learners.
 Furhtermore, your learners can be automatically tuned using \code{\link{makeTuneWrapper}}.
+}
+\seealso{
+Other benchmark: \code{\link{getAggrMeasures}};
+  \code{\link{getMeasures}}; \code{\link{getPredictions}}
 }
 

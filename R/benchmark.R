@@ -14,34 +14,24 @@
 #'   If only one is provided, it will be replicated to match the number of tasks.
 #'   If missing, a 10-fold cross validation is used.
 #' @param measures [(list of) \code{\link{Measure}}]\cr
-#'   Performance measures.
+#'   Performance measures for all tasks.
 #'   If missing, the default measure of the first task is used.
 #' @return [\code{BenchmarkResult}].
+#' @family benchmark
 #' @export
 benchmark = function(learners, tasks, resamplings, measures) {
-  # check learners
-  if (inherits(learners, "Learner")) {
-    learners = list(learners)
-  } else {
-    checkArg(learners, "list")
-    checkListElementClass(learners, "Learner")
-    if (!length(learners))
-      stop("No learners were passed!")
-  }
+  learners = ensureVector(learners, 1L, "Learner")
+  checkArg(learners, "list", min.len = 1L)
+  checkListElementClass(learners, "Learner")
   learner.ids = extractSubList(learners, "id")
   if (anyDuplicated(learner.ids))
     stop("Learners need unique ids!")
   names(learners) = learner.ids
 
   # check tasks
-  if (inherits(tasks, "SupervisedTask")) {
-    tasks = list(tasks)
-  } else {
-    checkArg(tasks, "list")
-    checkListElementClass(tasks, "SupervisedTask")
-    if (!length(tasks))
-      stop("No tasks were passed!")
-  }
+  tasks = ensureVector(tasks, 1L, "SupervisedTask")
+  checkArg(tasks, "list", min.len = 1L)
+  checkListElementClass(tasks, "SupervisedTask")
   task.ids = extractSubList(tasks, "task.desc")["id",]
   if (anyDuplicated(task.ids))
     stop("Tasks need unique ids!")
@@ -69,9 +59,8 @@ benchmark = function(learners, tasks, resamplings, measures) {
   # check measures
   if (missing(measures)) {
     measures = default.measures(tasks[[1L]])
-  } else if (inherits(measures, "Measure")) {
-      measures = list(measures)
   } else {
+    measures = ensureVector(tasks, 1L, "Measure")
     checkArg(measures, "list")
     checkListElementClass(measures, "Measure")
   }
@@ -94,7 +83,7 @@ benchmark = function(learners, tasks, resamplings, measures) {
   addClasses(results.by.task, "BenchmarkResult")
 }
 
-#' Result of a benchmark
+#' Result of a benchmark run.
 #'
 #' Container for results of benchmarked experiments using \code{\link{benchmark}}.
 #' The structure of the object itself is rather complicated, it is recommended to
@@ -123,13 +112,12 @@ benchmarkParallel = function(index, learners, tasks, resamplings, measures) {
   resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]], measures = measures, models = TRUE, extract = extract.this)
 }
 
-#' Extract the aggregated measures of an object.
+#' Extract the aggregated measures of a benchmark result.
 #'
-#' @param object [\code{\link{BenchmarkResult}}]\cr
-#'   Object which contains the aggregated measures.
+#' @template arg_bmr
 #' @return [\code{data.frame}].
 #' @export
-#' @aliases getAggrMeasures
+#' @family benchmark
 getAggrMeasures = function(object) {
   UseMethod("getAggrMeasures")
 }
@@ -156,13 +144,12 @@ as.data.frame.BenchmarkResult = function(x, ...) {
   getAggrMeasures.BenchmarkResult(x)
 }
 
-#' Extract the prediction inforamation of an object
+#' Extract the predictions from a benchmark result.
 #'
-#' @param object [\code{\link{BenchmarkResult}}]\cr
-#'   Object which contains the predictions
+#' @template arg_bmr
 #' @return [\code{data.frame}].
 #' @export
-#' @aliases getPredictions
+#' @family benchmark
 getPredictions = function(object) {
   UseMethod("getPredictions")
 }
@@ -181,13 +168,12 @@ getPredictions.BenchmarkResult = function(object) {
   }), names(object))
 }
 
-#' Extract the measure results of an object
+#' Extract performance measures of bechmark result.
 #'
-#' @param object [\code{\link{BenchmarkResult}}]\cr
-#'   Object which contains the measure results.
+#' @template arg_bmr
 #' @return [\code{data.frame}].
 #' @export
-#' @aliases getMeasures
+#' @family benchmark
 getMeasures = function(object) {
   UseMethod("getMeasures")
 }

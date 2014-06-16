@@ -79,6 +79,7 @@ Other tune: \code{\link{ModelMultiplexer}},
   \code{\link{makeTuneControlIrace}},
   \code{\link{makeTuneControlOptim}},
   \code{\link{makeTuneControlRandom}};
+  \code{\link{getTuneResult}};
   \code{\link{makeModelMultiplexerParamSet}};
   \code{\link{tuneParams}}; \code{\link{tuneThreshold}}
 }

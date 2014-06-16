@@ -77,12 +77,9 @@ getFilteredFeatures = function(model) {
   model$learner.model$next.model$features
 }
 
-#' Returns a filter result
+#' Returns a filter result after training or benchmarking.
 #'
-#' This is a which adds a class attribute to the result of \code{\link{getFilteredFeatures}}
-#' which is required for \code{\link{benchmark}}.
-#'
-#' @param object [\code{\link{WrappedModel}} | \code{BenchMarkResult}]\cr
+#' @param object [\code{\link{WrappedModel}} | \code{\link{BenchmarkResult}}]\cr
 #'   Trained Model created with \code{\link{makeFilterWrapper}} or benchmark result created with \code{\link{benchmark}}.
 #' @return [\code{\link{FilterResult}} or list of \code{\link{FilterResult}}s].
 #' @aliases FilterResult

@@ -101,9 +101,9 @@ predictLearner.FeatSelWrapper = function(.learner, .model, .newdata, ...) {
   predictLearner(.learner$next.learner, .model$learner.model$next.model, .newdata, ...)
 }
 
-#' Returns the selected feature set and optimization path.
+#' Returns the selected feature set and optimization path after training or benchmarking.
 #'
-#' @param object [\code{\link{WrappedModel}} | \code{BenchMarkResult}]\cr
+#' @param object [\code{\link{WrappedModel}} | \code{BenchmarkResult}]\cr
 #'   Trained Model created with \code{\link{makeFeatSelWrapper}} or benchmark result created with \code{\link{benchmark}}.
 #' @return [\code{\link{FeatSelResult}} or list of \code{\link{FeatSelResult}}s].
 #' @export
