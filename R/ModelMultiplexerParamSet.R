@@ -13,10 +13,13 @@
 #'
 #' @param multiplexer [\code{\link{ModelMultiplexer}}]\cr
 #'   The muliplexer learner.
-#' @param ... [\code{\link[ParamHelpers]{ParamSet}}]\cr
-#'   Named param sets. Names must correspond to base learners.
+#' @param ... [\code{\link[ParamHelpers]{ParamSet}} | \code{\link[ParamHelpers]{Param}}]\cr
+#'   (a) First option: Named param sets. Names must correspond to base learners.
 #'   You only need to enter the parameters you want to tune without reference
 #'   to the \code{selected.learner} field in any way.
+#'   (b) Second option. Just the params you would enter in the param sets.
+#'   Even shorterto create. Only works when it can be uniquely identified to which
+#'   learner each of your passed parameters belongs.
 #' @param .check [\code{logical}]\cr
 #'   Check that for each param in \code{...} one param in found in the base learners.
 #'   Default is \code{TRUE}
@@ -32,12 +35,42 @@ makeModelMultiplexerParamSet = function(multiplexer, ..., .check = TRUE) {
   bls = multiplexer$base.learners
   bl.ids = extractSubList(bls, "id")
 
+  args = list(...)
   new.ps = makeParamSet(
     makeDiscreteParam("selected.learner", values = bl.ids)
   )
 
-  pss = list(...)
-  checkListElementClass(pss, "ParamSet")
+  # if basic param were passed we now group them into param sets
+  # we match each param in the base learners and add it to the correct parset
+  if (inherits(args[[1L]], "Param")) {
+    checkListElementClass(args, "Param")
+    # our target result + all available params
+    pss = namedList(bl.ids, makeParamSet())
+    all.par.ids = getParamIds(multiplexer$par.set)
+
+    for (j in seq_along(args)) {
+      p = args[[j]]
+      pid = p$id
+      # end of param name we need to find
+      long.pid.end = sprintf("\\.%s$", pid)
+      found = grep(long.pid.end, all.par.ids)
+      if (length(found) == 0L)
+        stopf("No param of id '%s' in any base learner!", pid)
+      if (length(found) > 1L)
+        stopf("Multiple params of id '%s' found in base learners, pass correctly grouped param sets!", pid)
+      # get the learner that is referenced from prefix of found string + add param to correct parset
+      for.learner = gsub(long.pid.end, "", all.par.ids[[found]])
+      for.pars = pss[[for.learner]]$pars
+      for.pars[[pid]] = p
+      pss[[for.learner]]$pars = for.pars
+    }
+    # remove empty stuff we did not fill + add to new.ps
+    pss = Filter(Negate(isEmpty), pss)
+  } else {
+    checkListElementClass(args, "ParamSet")
+    pss = args
+  }
+
   pss.ids = names(pss)
 
   # iterate thru params: prefix param id with base learner id and set requires field

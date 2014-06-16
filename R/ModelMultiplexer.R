@@ -32,12 +32,8 @@
 #' # parameter names are prefixed automatically and the 'requires'
 #' # element is set, too, to make all paramaters subordinate to 'selected.learner'
 #' ps = makeModelMultiplexerParamSet(lrn,
-#'   classif.ksvm = makeParamSet(
-#'     makeNumericParam("sigma", lower=-10, upper = 10, trafo = function(x) 2^x)
-#'   ),
-#'   classif.randomForest = makeParamSet(
-#'     makeIntegerParam("ntree", lower = 1L, upper = 500L)
-#'   )
+#'   makeNumericParam("sigma", lower=-10, upper = 10, trafo = function(x) 2^x),
+#'   makeIntegerParam("ntree", lower = 1L, upper = 500L)
 #' )
 #' print(ps)
 #' rdesc = makeResampleDesc("CV", iters = 2L)
@@ -48,6 +44,16 @@
 #' print(res)
 #' print(head(as.data.frame(res$opt.path)))
 #'
+#' # more unique and reliable way to construct the param set
+#' ps = makeModelMultiplexerParamSet(lrn,
+#'   classif.ksvm = makeParamSet(
+#'     makeNumericParam("sigma", lower=-10, upper = 10, trafo = function(x) 2^x)
+#'   ),
+#'   classif.randomForest = makeParamSet(
+#'     makeIntegerParam("ntree", lower = 1L, upper = 500L)
+#'   )
+#' )
+#'
 #' # this is how you would construct the param set manually, works too
 #' ps = makeParamSet(
 #'   makeDiscreteParam("selected.learner", values = extractSubList(bls, "id")),
@@ -56,6 +62,9 @@
 #'   makeIntegerParam("classif.randomForest.ntree", lower = 1L, upper = 500L,
 #'     requires = quote(selected.learner == "classif.randomForst"))
 #' )
+#'
+#' # all three ps-objects are exactly the same internally.
+#'
 makeModelMultiplexer = function(base.learners, id = "ModelMultiplexer") {
   checkArg(id, "character", len = 1L, na.ok = FALSE)
   checkArg(base.learners, "list", min.len = 1L)
