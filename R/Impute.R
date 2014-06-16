@@ -59,8 +59,8 @@
 #'   feature factor in the training data after imputation?.
 #'   Default is \code{TRUE}.
 #' @return [\code{list}]
-#'   \item{data \code{data.frame}}{Imputed data.}
-#'   \item{desc \code{ImputationDesc}}{Description object.}
+#'   \item{data [\code{data.frame}]}{Imputed data.}
+#'   \item{desc [\code{ImputationDesc}]}{Description object.}
 #' @export
 #' @examples
 #' df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z = 1:3)
