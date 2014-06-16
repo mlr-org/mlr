@@ -6,8 +6,20 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   opt.path, show.info, dob, state, remove.nas) {
 
   if (inherits(control, "TuneControl")) {
-    # FIXME: change when new version of paramhelpers is online
-    state2 = if (remove.nas) removeMissingValues2(state) else state
+    state2 = if (remove.nas) removeMissingValues(state) else state
+
+    # apparnatly sometimes tuners produce infeasible params?
+    # think about this
+    # tuner is out of our control, can produce anything.
+    # now this might be
+    # !isFeasible(parset)
+    # !isSettable(learner)
+    # also the even if  it is, the learner might cras later
+    # in these cases we want to
+    # a) inform or abort
+    # b) impute y
+    # right?
+    # FIXME: this line is really bad
     learner = try(setHyperPars(learner, par.vals = state2), silent = TRUE)
     log.fun = logFunTune
   } else  if (inherits(control, "FeatSelControl")) {
@@ -28,6 +40,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
     r = resample(learner, task, resampling, measures = measures, show.info = FALSE)
     y = r$aggr
   }
+  # FIXME: if we set y to Inf (problem value) we have to name it for logging, right?
   if (show.info)
     log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob, state, y, remove.nas)
   return(y)
