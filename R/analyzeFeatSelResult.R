@@ -7,13 +7,11 @@
 #'
 #' Currently only implemented for sequential feature selection.
 #'
-#' @param res [\code{FeatSelResult(1)}]\cr
-#'   The result of of \code{\link{selectFeatures}}.
+#' @template arg_fsres
 #' @param reduce [\code{logical(1)}]\cr
-#'   Per iteration: Print only the selected feature (or all features
-#'   that were evaluated)?
+#'   Per iteration: Print only the selected feature (or all features that were evaluated)?
 #'   Default is \code{TRUE}.
-#' @return Nothing.
+#' @template ret_inv_null
 #' @export
 analyzeFeatSelResult = function(res, reduce = TRUE) {
   checkArg(res$control, "FeatSelControlSequential")
@@ -94,6 +92,7 @@ analyzeFeatSelResult = function(res, reduce = TRUE) {
   } else {
     catf("\nStopped, because no improving feature was found.")
   }
+  invisible(NULL)
 }
 
 
