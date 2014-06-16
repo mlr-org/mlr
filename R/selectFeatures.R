@@ -19,7 +19,8 @@
 #' @param control [see \code{\link{FeatSelControl}}]
 #'   Control object for search method. Also selects the optimization algorithm for feature selection.
 #' @param measures [list of \code{\link{Measure}}]\cr
-#'   Performance measures to evaluate. The first measure, aggregated by the first aggregation function is optimized during selection, others are simply evaluated.
+#'   Performance measures to evaluate. The first measure, aggregated by the first aggregation function
+#'   is optimized during selection, others are simply evaluated.
 #' @param bit.names [character]\cr
 #'   Names of bits encoding the solutions. Also defines the total number of bits in the encoding.
 #'   Per default these are the feature names of the task.
@@ -32,36 +33,19 @@
 #' @return [\code{\link{FeatSelResult}}].
 #' @export
 #' @examples
-#' task <- makeClassifTask(data=iris, target="Species")
-#' lrn <- makeLearner("classif.rpart")
-#' rdesc <- makeResampleDesc("Holdout")
-#'
-#' ## Now create control-objects for each of the possible feature selection algorithms:
-#' ctrlSeq <- makeFeatSelControlSequential(method="sfs", maxit=NA)
-#' ctrlGA <- makeFeatSelControlGA(maxit=5, max.features=NA, crossover.rate=0.5,
-#'   mutation.rate=0.1, mu=10, lambda=5)
-#' ctrlRand <- makeFeatSelControlRandom(maxit=10, max.features=NA, prob=0.5)
-#' ctrlExh <- makeFeatSelControlExhaustive(maxit=NA, max.features=NA)
-#'
-#' ## Let's run the feature selction algorithm:
-#'
-#' sfSeq <- selectFeatures(lrn, task, rdesc, control=ctrlSeq)
-#' sfSeq
-#' sfGA <- selectFeatures(lrn, task, rdesc, control=ctrlGA)
-#' sfGA
-#' sfRand <- selectFeatures(lrn, task, rdesc, control=ctrlRand)
-#' sfRand
-#' sfExh <- selectFeatures(lrn, task, rdesc, control=ctrlExh)
-#' sfExh
+#' rdesc = makeResampleDesc("Holdout")
+#' ctrl = makeFeatSelControlSequential(method = "sfs", maxit = NA)
+#' res = selectFeatures("classif.rpart", iris.task, rdesc, control = ctrl)
+#' analyzeFeatSelResult(res)
 selectFeatures = function(learner, task, resampling, control, measures,
-  bit.names, bits.to.features, show.info=TRUE) {
+  bit.names, bits.to.features, show.info = TRUE) {
 
   learner = checkLearner(learner)
   checkArg(task, "SupervisedTask")
   if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")
   if (inherits(resampling, "ResampleDesc") && control$same.resampling.instance)
-    resampling = makeResampleInstance(resampling, task=task)
+    resampling = makeResampleInstance(resampling, task = task)
   if (missing(measures))
     measures = default.measures(task)
   if (inherits(measures, "Measure"))
@@ -70,15 +54,15 @@ selectFeatures = function(learner, task, resampling, control, measures,
   if (missing(bit.names)) {
     bit.names = getTaskFeatureNames(task)
   } else {
-    checkArg(bit.names, "character", na.ok=FALSE)
+    checkArg(bit.names, "character", na.ok = FALSE)
   }
   if (missing(bits.to.features)) {
     bits.to.features = function(x, task) binaryToFeatures(x, getTaskFeatureNames(task))
   } else {
-    checkArg(bits.to.features, "function", formals=c("x", "task"))
+    checkArg(bits.to.features, "function", formals = c("x", "task"))
   }
   checkArg(control, "FeatSelControl")
-  checkArg(show.info, "logical", len=1L, na.ok=FALSE)
+  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
 
   par.set = lapply(bit.names, function(bn) makeIntegerParam(bn))
   par.set = do.call(makeParamSet, par.set)

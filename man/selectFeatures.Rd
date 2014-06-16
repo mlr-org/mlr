@@ -23,7 +23,8 @@ If you want to change that behaviour, look at \code{\link{FeatSelControl}}.}
 Control object for search method. Also selects the optimization algorithm for feature selection.}
 
 \item{measures}{[list of \code{\link{Measure}}]\cr
-Performance measures to evaluate. The first measure, aggregated by the first aggregation function is optimized during selection, others are simply evaluated.}
+Performance measures to evaluate. The first measure, aggregated by the first aggregation function
+is optimized during selection, others are simply evaluated.}
 
 \item{bit.names}{[character]\cr
 Names of bits encoding the solutions. Also defines the total number of bits in the encoding.
@@ -53,26 +54,9 @@ to a single feature, but you are able to change this by using the arguments \cod
 and \code{bits.to.features}. Thus allowing you to switch on whole groups of features with a single bit.
 }
 \examples{
-task <- makeClassifTask(data=iris, target="Species")
-lrn <- makeLearner("classif.rpart")
-rdesc <- makeResampleDesc("Holdout")
-
-## Now create control-objects for each of the possible feature selection algorithms:
-ctrlSeq <- makeFeatSelControlSequential(method="sfs", maxit=NA)
-ctrlGA <- makeFeatSelControlGA(maxit=5, max.features=NA, crossover.rate=0.5,
-  mutation.rate=0.1, mu=10, lambda=5)
-ctrlRand <- makeFeatSelControlRandom(maxit=10, max.features=NA, prob=0.5)
-ctrlExh <- makeFeatSelControlExhaustive(maxit=NA, max.features=NA)
-
-## Let's run the feature selction algorithm:
-
-sfSeq <- selectFeatures(lrn, task, rdesc, control=ctrlSeq)
-sfSeq
-sfGA <- selectFeatures(lrn, task, rdesc, control=ctrlGA)
-sfGA
-sfRand <- selectFeatures(lrn, task, rdesc, control=ctrlRand)
-sfRand
-sfExh <- selectFeatures(lrn, task, rdesc, control=ctrlExh)
-sfExh
+rdesc = makeResampleDesc("Holdout")
+ ctrl = makeFeatSelControlSequential(method = "sfs", maxit = NA)
+ res = selectFeatures("classif.rpart", iris.task, rdesc, control = ctrl)
+ analyzeFeatSelResult(res)
 }
 
