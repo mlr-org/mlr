@@ -41,6 +41,7 @@ Suggests:
     FNN,
     FSelector,
     gbm,
+    ggplot2,
     glmnet,
     Hmisc,
     irace,
