@@ -124,5 +124,5 @@ print.Prediction = function(x, ...) {
   catf("predict.type: %s", x$predict.type)
   catf("threshold: %s", collapse(sprintf("%s=%.2f", names(x$threshold), x$threshold)))
   catf("time: %.2f", x$time)
-  catf(printStrToChar(as.data.frame(x)))
+  print(head(as.data.frame(x)))
 }
