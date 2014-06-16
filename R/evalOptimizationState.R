@@ -3,7 +3,7 @@
 # must be already in correct format, either a named list of values or a named integer vector for features
 # logs point and results
 evalOptimizationState = function(learner, task, resampling, measures, par.set, bits.to.features, control,
-  opt.path, show.info, state, remove.nas) {
+  opt.path, show.info, dob, state, remove.nas) {
 
   if (inherits(control, "TuneControl")) {
     # FIXME: change when new version of paramhelpers is online
@@ -29,7 +29,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
     y = r$aggr
   }
   if (show.info)
-    log.fun(learner, task, resampling, measures, par.set, control, opt.path, state, y, remove.nas)
+    log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob, state, y, remove.nas)
   return(y)
 }
 
@@ -48,7 +48,7 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
     eols = rep(eols, n)
   parallelLibrary("mlr", master = FALSE, level = level, show.info = FALSE)
   exportMlrOptions()
-  ys = parallelMap(evalOptimizationState, states, level = level,
+  ys = parallelMap(evalOptimizationState, dobs, states, level = level,
     more.args = list(learner = learner, task = task, resampling = resampling,
       measures = measures, par.set = par.set, bits.to.features = bits.to.features,
       control = control, opt.path = opt.path, show.info = show.info, remove.nas = remove.nas))
