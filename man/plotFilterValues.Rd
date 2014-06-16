@@ -3,16 +3,15 @@
 \alias{plotFilterValues}
 \title{Plot filter values.}
 \usage{
-plotFilterValues(task, values, sort = "dec", n.show = 20L,
+plotFilterValues(fvalues, sort = "dec", n.show = 20L,
   feat.type.cols = c("red", "green"))
 }
 \arguments{
 \item{task}{[\code{\link{SupervisedTask}}]\cr
 The task.}
 
-\item{values}{[\code{logical(1)}]\cr
-Per iteration: Print only the selected feature (or all features that were evaluated)?
-Default is \code{TRUE}.}
+\item{fvalues}{[\code{\link{FilterValues}}]\cr
+Filtr values.}
 
 \item{sort}{[\code{character(1)}]\cr
 Sort features like this.

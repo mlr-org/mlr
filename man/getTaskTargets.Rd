@@ -9,9 +9,6 @@ getTaskTargets(task, subset, recode.target = "no")
 \item{task}{[\code{\link{SupervisedTask}}]\cr
 The task.}
 
-\item{task}{[\code{\link{SupervisedTask}}]\cr
-The task.}
-
 \item{subset}{[\code{integer}]\cr
 Selected cases.
 Default is all cases.}

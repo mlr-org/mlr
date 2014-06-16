@@ -17,7 +17,7 @@ Default is \dQuote{random.forest.importance}.}
 Passed down to selected method.}
 }
 \value{
-[named \code{numeric}]. Importance value for each feature.
+[\code{\link{FilterValues}}].
 }
 \description{
 Calculates numerical filter values for all features.
@@ -52,7 +52,7 @@ Available \code{method}s are:
 \seealso{
 Other filter: \code{\link{FilterResult}},
   \code{\link{getFilterResult}};
-  \code{\link{filterFeatures}};
+  \code{\link{FilterValues}}; \code{\link{filterFeatures}};
   \code{\link{getFilterMethods}};
   \code{\link{getFilteredFeatures}};
   \code{\link{makeFilterWrapper}}

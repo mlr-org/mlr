@@ -44,8 +44,8 @@ Default is \code{TRUE}.}
 }
 \value{
 [\code{list}]
-  \item{data \code{data.frame}}{Imputed data.}
-  \item{desc \code{ImputationDesc}}{Description object.}
+  \item{data [\code{data.frame}]}{Imputed data.}
+  \item{desc [\code{ImputationDesc}]}{Description object.}
 }
 \description{
 Allows imputation of missing feature values through various techniques.

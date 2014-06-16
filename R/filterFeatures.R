@@ -27,21 +27,16 @@ filterFeatures = function(task, method = "random.forest.importance", select = "p
   checkArg(method, choices = getFilterMethods())
   checkFilterArguments(select = select, val = val)
   fvals = getFilterValues(task = task, method = method, ...)
-  allfeats = names(fvals)
-  p = length(allfeats)
+  d = fvals$data
+  p = nrow(d)
   nfirst = switch(select,
     perc = round(val * p),
     abs = val,
-    sum(fvals >= val)
+    sum(d$val >= val)
   )
-  fvals = sort(fvals, decreasing = TRUE)
-  feats = if (nfirst < 1)
-    character(0)
-  else if (nfirst >= p)
-    names(fvals)
-  else
-    feats = names(fvals)[1:nfirst]
-  subsetTask(task, features = feats)
+  nfirst = min(max(0, nfirst), p)
+  d = sortByCol(d, "val", asc = FALSE)
+  subsetTask(task, features = d$name[seq_len(nfirst)])
 }
 
 checkFilterArguments = function(select, val) {

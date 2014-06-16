@@ -17,7 +17,8 @@ Trained Model created with \code{\link{makeFilterWrapper}} or benchmark result c
 Returns a filter result after training or benchmarking.
 }
 \seealso{
-Other filter: \code{\link{filterFeatures}};
+Other filter: \code{\link{FilterValues}};
+  \code{\link{filterFeatures}};
   \code{\link{getFilterMethods}};
   \code{\link{getFilterValues}};
   \code{\link{getFilteredFeatures}};

@@ -38,6 +38,7 @@ Features are then selected via \code{select} and \code{val}.
 \seealso{
 Other filter: \code{\link{FilterResult}},
   \code{\link{getFilterResult}};
+  \code{\link{FilterValues}};
   \code{\link{getFilterMethods}};
   \code{\link{getFilterValues}};
   \code{\link{getFilteredFeatures}};

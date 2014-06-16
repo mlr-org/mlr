@@ -1,33 +1,48 @@
-getTaskNFeats = function(task) {
-  sum(task$task.desc$n.feat)
-}
-
-plotFilterValues = function(task, values, sort = "dec", nshow = 20L, feat.type.cols = c("red", "green")) {
-  checkArg(task, "SupervisedTask")
-  checkArg(values, "numeric")
+#' Plot filter values.
+#'
+#' @template arg_task
+#' @param fvalues [\code{\link{FilterValues}}]\cr
+#'   Filtr values.
+#' @param sort [\code{character(1)}]\cr
+#'   Sort features like this.
+#'   \dQuote{dec} = decreasing, \dQuote{inc} = increasing, \dQuote{none} = no sorting.
+#'   Default is decreasing.
+#' @param n.show [\code{integer(1)}]\cr
+#'   Number of features (maximal) to show.
+#'   Default is 20.
+#' @param feat.type.cols [\code{character(2)}*]\cr
+#'   Colors for factor and numeric features.
+#'   \code{NULL} means no colors.
+#'   Default is darkgreen and darkblue.
+#' @template ret_gg2
+#' @export
+plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols = c("darkgreen", "darkblue")) {
+  checkArg(fvalues, "FilterValues")
   checkArg(sort, choices = c("dec", "inc", "none"))
-  p = length(values)
-  nshow = min(nshow, p)
-  data = getTaskData(task)
+  n.show = convertInteger(n.show)
+  checkArg(n.show, "integer", min.len = 1L, na.ok = FALSE)
+
+  d = fvalues$data
+  k = nrow(d)
+  n.show = min(n.show, k)
   if (sort != "none")
-    values = sort(values, decreasing = (sort == "dec"))
-  ns = names(values)
-  feat = factor(ns, levels = ns)
-  d = data.frame(feat = feat, val = values)
-  d = d[1:nshow,, drop = FALSE]
+    d = sortByCol(d, "val", asc = (sort == "inc"))
+  # resort for ggplot
+  d$name = factor(d$name, levels = d$name)
+  d = d[1:n.show,, drop = FALSE]
   if (!is.null(feat.type.cols)) {
-    d$factor = sapply(as.character(d$feat), function(f)
-      ifelse(is.factor(data[,f]), "Y", "N"))
-    mp = aes_string(x = "feat", y = "val", fill = "factor")
+    checkArg(feat.type.cols, "character", len = 2L, na.ok = FALSE)
+    mp = aes_string(x = "name", y = "val", fill = "type")
   } else {
-    mp = aes_string(x = "feat", y = "val")
+    mp = aes_string(x = "name", y = "val")
   }
   p = ggplot(data = d, mapping = mp)
   p = p + geom_bar(stat = "identity")
   if (!is.null(feat.type.cols))
     p = p + scale_fill_manual(values = feat.type.cols)
-  p = p + ggtitle(sprintf("Task '%s' with %i total features, filter = '%s'",
-    task$task.desc$id, getTaskNFeats(task), "dddd"))
+  p = p + ggtitle(sprintf("%s (%i features), filter = %s",
+    fvalues$task.desc$id, k , fvalues$method))
   p = p + xlab("") + ylab("")
+  p = p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
   return(p)
 }

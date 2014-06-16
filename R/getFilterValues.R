@@ -36,9 +36,9 @@
 #'   Default is \dQuote{random.forest.importance}.
 #' @param ... [any]\cr
 #'   Passed down to selected method.
-#' @return [named \code{numeric}]. Importance value for each feature.
-#' @export
+#' @return [\code{\link{FilterValues}}].
 #' @family filter
+#' @export
 getFilterValues = function(task, method = "random.forest.importance", ...) {
   checkArg(task, c("ClassifTask", "RegrTask"))
   checkArg(method, choices = getFilterMethods())
@@ -51,7 +51,40 @@ getFilterValues = function(task, method = "random.forest.importance", ...) {
 
   fun = get(method, envir = getNamespace("FSelector"))
   f = getTaskFormulaAsString(task)
-  y = fun(as.formula(f), getTaskData(task), ...)
-  setNames(y[,1L], rownames(y))
+  data = getTaskData(task)
+  y = fun(as.formula(f), data, ...)
+  ns = rownames(y)
+  types = sapply(data[, ns, drop = FALSE], getClass1)
+  makeS3Obj("FilterValues",
+    task.desc = task$task.desc,
+    method = method,
+    data = data.frame(
+      name = ns,
+      val = y[,1L],
+      type = types,
+      stringsAsFactors = FALSE
+    )
+  )
+}
+
+#' Result of \code{\link{getFilterValues}}.
+#'
+#' \itemize{
+#'   \item{task.desc [\code{\link{TaskDesc}}]}{Task description.}
+#'   \item{method [\code{character}]}{Filter method.}
+#'   \item{data [\code{data.frame}]}{Has columns: \code{name} = Names of features;
+#'     \code{val} = Feature importance values; \code{type} = Feature column type.}
+#' }
+#' @name FilterValues
+#' @rdname FilterValues
+#' @family filter
+NULL
+
+#' @export
+print.FilterValues = function(x, ...) {
+  catf("FilterValues:")
+  catf("Task: %s", x$task.desc$id)
+  catf("Method: %s", x$method)
+  print(head(as.data.frame(x$data)))
 }
 

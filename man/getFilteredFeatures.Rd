@@ -18,7 +18,7 @@ Returns the filtered features.
 \seealso{
 Other filter: \code{\link{FilterResult}},
   \code{\link{getFilterResult}};
-  \code{\link{filterFeatures}};
+  \code{\link{FilterValues}}; \code{\link{filterFeatures}};
   \code{\link{getFilterMethods}};
   \code{\link{getFilterValues}};
   \code{\link{makeFilterWrapper}}
