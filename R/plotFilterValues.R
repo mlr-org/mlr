@@ -1,6 +1,5 @@
 #' Plot filter values.
 #'
-#' @template arg_task
 #' @param fvalues [\code{\link{FilterValues}}]\cr
 #'   Filtr values.
 #' @param sort [\code{character(1)}]\cr
@@ -16,6 +15,9 @@
 #'   Default is darkgreen and darkblue.
 #' @template ret_gg2
 #' @export
+#' @examples
+#' fv = getFilterValues(iris.task, method = "chi.squared")
+#' plotFilterValues(fv)
 plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols = c("darkgreen", "darkblue")) {
   checkArg(fvalues, "FilterValues")
   checkArg(sort, choices = c("dec", "inc", "none"))

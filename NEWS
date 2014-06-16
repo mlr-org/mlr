@@ -41,7 +41,7 @@ mlr_1.2:
 -- visualizeLearner
 -- plotThreshVsPerf
 -- holdout, subsample, crossval, repcv, bootstrapOOB, bootstrapB632, bootstrapB632plus
--- getFilterMethods, getFilterValues, filterFeatures, makeFilterWrapper
+-- getFilterMethods, getFilterValues, filterFeatures, makeFilterWrapper, plotFilterValues
 -- oversample, undersample, makeOversampleWrapper, makeUndersampleWrapper
 -- makeCostSensTaks, makeCostSensRegrWrapper, makeCostsSensWeightedPairsLearner
 -- downsample, makeDownsampleWrapper

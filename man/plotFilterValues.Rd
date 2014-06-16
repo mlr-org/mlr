@@ -4,12 +4,9 @@
 \title{Plot filter values.}
 \usage{
 plotFilterValues(fvalues, sort = "dec", n.show = 20L,
-  feat.type.cols = c("red", "green"))
+  feat.type.cols = c("darkgreen", "darkblue"))
 }
 \arguments{
-\item{task}{[\code{\link{SupervisedTask}}]\cr
-The task.}
-
 \item{fvalues}{[\code{\link{FilterValues}}]\cr
 Filtr values.}
 
@@ -23,14 +20,18 @@ Number of features (maximal) to show.
 Default is 20.}
 
 \item{feat.type.cols}{[\code{character(2)}*]\cr
-Colors for numeric and factor features.
+Colors for factor and numeric features.
 \code{NULL} means no colors.
-Default is red and green.}
+Default is darkgreen and darkblue.}
 }
 \value{
 ggplot2 plot object.
 }
 \description{
 Plot filter values.
+}
+\examples{
+fv = getFilterValues(iris.task, method = "chi.squared")
+plotFilterValues(fv)
 }
 
