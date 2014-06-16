@@ -8,11 +8,11 @@ requireLearnerPackages = function(learner) {
 }
 
 measureAggrName = function(measure) {
-  paste(measure$id, measure$aggr$id, sep=".")
+  paste(measure$id, measure$aggr$id, sep = ".")
 }
 
 perfsToString = function(y) {
-  paste(paste(names(y), "=", formatC(y, digits=3L), sep=""), collapse=",")
+  paste(paste(names(y), " = ", formatC(y, digits = 3L), sep = ""), collapse = ",")
 }
 
 recodeY = function(y, type, positive) {
@@ -21,7 +21,7 @@ recodeY = function(y, type, positive) {
     "no" = y,
     "01" = as.numeric(y == positive),
     "-1+1" = as.numeric(2L*(y == positive)-1L),
-    "surv" = Surv(time = y[, 1L], event = y[, 2L], type="right"),
+    "surv" = Surv(time = y[, 1L], event = y[, 2L], type = "right"),
     stop("Unknown value for 'type'"))
 }
 
@@ -31,18 +31,26 @@ makeOptPathDFFromMeasures = function(par.set, measures) {
   if (any(duplicated(ns)))
     stop("Cannot create OptPath, measures do not have unique ids!")
   if (length(intersect(ns, names(par.set$pars))) > 0 ||
-    length(intersect(ns, getParamIds(par.set, repeated=TRUE, with.nr=TRUE))) > 0)
+    length(intersect(ns, getParamIds(par.set, repeated = TRUE, with.nr = TRUE))) > 0)
     stop("Cannot create OptPath, measures ids and dimension names of input space overlap!")
   minimize = sapply(measures, function(m) m$minimize)
-  makeOptPathDF(par.set, ns, minimize, add.transformed.x=TRUE)
+  makeOptPathDF(par.set, ns, minimize, add.transformed.x = TRUE)
 }
 
 
 # evals a set of var-lists and return the corresponding states
 logFunTune = function(learner, task, resampling, measures, par.set, control, opt.path, x, y, remove.nas) {
   i = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
-  messagef("[Tune] %i: %s : %s", i,
-    paramValueToString(par.set, x, show.missing.values=!remove.nas), perfsToString(y))
+  if (!inherits(learner, "ModelMultiplexer")) {
+    messagef("[Tune] %i: %s : %s", i,
+      paramValueToString(par.set, x, show.missing.values = !remove.nas), perfsToString(y))
+  } else {
+    # shorten tuning logging a bit. we remove the sel.learner prefix from params
+    s = paramValueToString(par.set, x, show.missing.values = !remove.nas)
+    x$selected.learner
+    s = gsub(paste0(x$selected.learner, "\\."), "", s)
+    messagef("[Tune] %i: %s : %s", i, s, perfsToString(y))
+  }
 }
 
 removeFromDots = function(ns, ...) {
@@ -69,7 +77,7 @@ featuresToLogical = function(vars, all.vars) {
 }
 
 featuresToBinary = function(vars, all.vars) {
-  y=featuresToLogical(vars, all.vars)
+  y = featuresToLogical(vars, all.vars)
   mode(y) = "integer"
   y
 }

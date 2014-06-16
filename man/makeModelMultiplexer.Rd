@@ -22,11 +22,15 @@ Combines multiple base learners by dispatching
 on the hyperparameter \dQuote{selected.learner} to a specific model class.
 This allows to tune not only the model class (SVM, random forest, etc) but also
 their hyperparameters in one go. Combine this with \code{\link{tuneParams}} and
-\code{\link{makeTuneControlIrace}} for a very powerful approach.
+\code{\link{makeTuneControlIrace}} for a very powerful approach, see example below.
 
 The parameter set is the union of all (unique) base learners.
 In order to avoid name clashes all parameter names are prefixed
-with the base learner id, i.e. \dQuote{[task.type].[learner.id].[parameter.name]}.
+with the base learner id, i.e. \dQuote{[learner.id].[parameter.name]}.
+}
+\note{
+Note that logging output during tuning is somewhat shortened to make it more readable.
+  I.e., the artificial prefix before parameter names is suppressed.
 }
 \examples{
 bls = list(
@@ -34,15 +38,36 @@ bls = list(
   makeLearner("classif.randomForest")
 )
 lrn = makeModelMultiplexer(bls)
-rdesc = makeResampleDesc("CV", iters = 2L)
-ps = makeParamSet(
-  makeDiscreteParam("selected.learner", values = extractSubList(bls, "id")),
-  makeNumerciParam("classif.ksvm.sigma", lower=-10, upper=10, requires = quote(selected.learner == "classif.ksvm")),
-  makeIntegerParam("classif.randomForest.ntrees", lower=1, upper=500, requires = quote(selected.learner == "classif.randomForsest"))
+# simple way to contruct param set for tuning
+# parameter names are prefixed automatically and the 'requires'
+# element is set, too, to make all paramaters subordinate to 'selected.learner'
+ps = makeModelMultiplexerParamSet(lrn,
+  classif.ksvm = makeParamSet(
+    makeNumericParam("sigma", lower=-10, upper = 10, trafo = function(x) 2^x)
+  ),
+  classif.randomForest = makeParamSet(
+    makeIntegerParam("ntree", lower = 1L, upper = 500L)
+  )
 )
-ctrl = makeTuneControlIrace(maxit = 10)
+print(ps)
+rdesc = makeResampleDesc("CV", iters = 2L)
+# to save some time we use random search. but you probably want something like this:
+# ctrl = makeTuneControlIrace(maxExperiments = 500L)
+ctrl = makeTuneControlRandom(maxit = 4L)
 res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)
 print(res)
 print(head(as.data.frame(res$opt.path)))
+
+# this is how you would construct the param set manually, works too
+ps = makeParamSet(
+  makeDiscreteParam("selected.learner", values = extractSubList(bls, "id")),
+  makeNumericParam("classif.ksvm.sigma", lower=-10, upper = 10, trafo = function(x) 2^x,
+    requires = quote(selected.learner == "classif.ksvm")),
+  makeIntegerParam("classif.randomForest.ntree", lower = 1L, upper = 500L,
+    requires = quote(selected.learner == "classif.randomForst"))
+)
+}
+\seealso{
+Other multiplexer, tune: \code{\link{makeModelMultiplexerParamSet}}
 }
 

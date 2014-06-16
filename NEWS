@@ -44,6 +44,7 @@ mlr_1.2:
 -- oversample, undersample, makeOversampleWrapper, makeUndersampleWrapper
 -- makeCostSensTaks, makeCostSensRegrWrapper, makeCostsSensWeightedPairsLearner
 -- downsample, makeDownsampleWrapper
+-- makeModelMultiplexer, makeModelMultiplexerParamSet
 
 - imputation stuff ????
 - surv stuff ????
