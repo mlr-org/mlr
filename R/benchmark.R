@@ -60,7 +60,7 @@ benchmark = function(learners, tasks, resamplings, measures) {
   if (missing(measures)) {
     measures = default.measures(tasks[[1L]])
   } else {
-    measures = ensureVector(tasks, 1L, "Measure")
+    measures = ensureVector(measures, 1L, "Measure")
     checkArg(measures, "list")
     checkListElementClass(measures, "Measure")
   }

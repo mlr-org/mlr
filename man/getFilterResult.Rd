@@ -2,20 +2,19 @@
 \name{getFilterResult}
 \alias{FilterResult}
 \alias{getFilterResult}
-\title{Returns a filter result}
+\title{Returns a filter result after training or benchmarking.}
 \usage{
 getFilterResult(object)
 }
 \arguments{
-\item{object}{[\code{\link{WrappedModel}} | \code{BenchMarkResult}]\cr
+\item{object}{[\code{\link{WrappedModel}} | \code{\link{BenchmarkResult}}]\cr
 Trained Model created with \code{\link{makeFilterWrapper}} or benchmark result created with \code{\link{benchmark}}.}
 }
 \value{
 [\code{\link{FilterResult}} or list of \code{\link{FilterResult}}s].
 }
 \description{
-This is a which adds a class attribute to the result of \code{\link{getFilteredFeatures}}
-which is required for \code{\link{benchmark}}.
+Returns a filter result after training or benchmarking.
 }
 \seealso{
 Other filter: \code{\link{filterFeatures}};
