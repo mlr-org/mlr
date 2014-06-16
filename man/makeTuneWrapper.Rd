@@ -65,4 +65,21 @@ print(getTuneResult(mod))
 r = resample(lrn, task, outer, extract = getTuneResult)
 print(r$extract)
 }
+\seealso{
+Other tune: \code{\link{ModelMultiplexer}},
+  \code{\link{makeModelMultiplexer}};
+  \code{\link{TuneControl}},
+  \code{\link{TuneControlCMAES}},
+  \code{\link{TuneControlGrid}},
+  \code{\link{TuneControlIrace}},
+  \code{\link{TuneControlOptim}},
+  \code{\link{TuneControlRandom}},
+  \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlGrid}},
+  \code{\link{makeTuneControlIrace}},
+  \code{\link{makeTuneControlOptim}},
+  \code{\link{makeTuneControlRandom}};
+  \code{\link{makeModelMultiplexerParamSet}};
+  \code{\link{tuneParams}}; \code{\link{tuneThreshold}}
+}
 

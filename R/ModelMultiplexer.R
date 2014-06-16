@@ -18,10 +18,11 @@
 #'  Default is \dQuote{ModelMultiplexer}.
 #' @return [\code{ModelMultiplexer}]. A \code{\link{Learner}} specialized as \code{ModelMultiplexer}.
 #' @aliases ModelMultiplexer
+#' @family multiplexer
+#' @family tune
 #' @export
 #' @note Note that logging output during tuning is somewhat shortened to make it more readable.
 #'   I.e., the artificial prefix before parameter names is suppressed.
-#' @family multiplexer, tune
 #' @examples
 #' bls = list(
 #'   makeLearner("classif.ksvm"),

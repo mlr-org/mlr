@@ -82,4 +82,11 @@ in \code{\link[irace]{irace}}). Also note that irace will always
 store its tuning results in a file on disk, see the package documentation for details on this
 and how to change the file path.
 }
+\seealso{
+Other tune: \code{\link{ModelMultiplexer}},
+  \code{\link{makeModelMultiplexer}};
+  \code{\link{makeModelMultiplexerParamSet}};
+  \code{\link{makeTuneWrapper}}; \code{\link{tuneParams}};
+  \code{\link{tuneThreshold}}
+}
 

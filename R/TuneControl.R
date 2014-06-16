@@ -48,6 +48,7 @@
 #' @return [\code{\link{TuneControl}}]. The specific subclass is one of
 #'   \code{\link{TuneControlGrid}}, \code{\link{TuneControlRandom}}, \code{\link{TuneControlOptim}},
 #'   \code{\link{TuneControlCMAES}}, \code{\link{TuneControlIrace}}.
+#' @family tune
 #' @name TuneControl
 #' @rdname TuneControl
 #' @aliases TuneControlGrid TuneControlRandom TuneControlOptim TuneControlCMAES TuneControlIrace

@@ -25,7 +25,8 @@
 #'   Default is \code{TRUE}
 #' @template ret_ps
 #' @export
-#' @family multiplexer, tune
+#' @family multiplexer
+#' @family tune
 #' @examples
 #' # See makeModelMultiplexer
 makeModelMultiplexerParamSet = function(multiplexer, ..., .check = TRUE) {

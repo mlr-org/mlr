@@ -32,6 +32,7 @@
 #'   Default is \code{TRUE}.
 #' @return [\code{\link{Learner}}].
 #' @export
+#' @family tune
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn = makeLearner("classif.ksvm")

@@ -76,6 +76,21 @@ ps = makeParamSet(
 # all three ps-objects are exactly the same internally.
 }
 \seealso{
-Other multiplexer, tune: \code{\link{makeModelMultiplexerParamSet}}
+Other multiplexer: \code{\link{makeModelMultiplexerParamSet}}
+
+Other tune: \code{\link{TuneControl}},
+  \code{\link{TuneControlCMAES}},
+  \code{\link{TuneControlGrid}},
+  \code{\link{TuneControlIrace}},
+  \code{\link{TuneControlOptim}},
+  \code{\link{TuneControlRandom}},
+  \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlGrid}},
+  \code{\link{makeTuneControlIrace}},
+  \code{\link{makeTuneControlOptim}},
+  \code{\link{makeTuneControlRandom}};
+  \code{\link{makeModelMultiplexerParamSet}};
+  \code{\link{makeTuneWrapper}}; \code{\link{tuneParams}};
+  \code{\link{tuneThreshold}}
 }
 

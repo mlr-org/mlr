@@ -31,6 +31,7 @@
 #'   Show info message after each hyperparameter evaluation?
 #'   Default is \code{TRUE}.
 #' @return [\code{\link{TuneResult}}].
+#' @family tune
 #' @export
 tuneParams = function(learner, task, resampling, measures, par.set, control, show.info=TRUE) {
   learner = checkLearner(learner)

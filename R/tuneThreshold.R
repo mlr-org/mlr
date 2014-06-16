@@ -21,6 +21,7 @@
 #'   Default is empty list.
 #' @return [\code{list}]. A named list with with the following components:
 #'   \code{th} is the optimal threshold, \code{perf} the performance value.
+#' @family tune
 #' @export
 tuneThreshold = function(pred, measure, task, model, nsub = 20L, control=list()) {
   checkArg(pred, "Prediction")

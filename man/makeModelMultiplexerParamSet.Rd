@@ -39,7 +39,23 @@ The following is done automatically:
 # See makeModelMultiplexer
 }
 \seealso{
-Other multiplexer, tune: \code{\link{ModelMultiplexer}},
+Other multiplexer: \code{\link{ModelMultiplexer}},
   \code{\link{makeModelMultiplexer}}
+
+Other tune: \code{\link{ModelMultiplexer}},
+  \code{\link{makeModelMultiplexer}};
+  \code{\link{TuneControl}},
+  \code{\link{TuneControlCMAES}},
+  \code{\link{TuneControlGrid}},
+  \code{\link{TuneControlIrace}},
+  \code{\link{TuneControlOptim}},
+  \code{\link{TuneControlRandom}},
+  \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlGrid}},
+  \code{\link{makeTuneControlIrace}},
+  \code{\link{makeTuneControlOptim}},
+  \code{\link{makeTuneControlRandom}};
+  \code{\link{makeTuneWrapper}}; \code{\link{tuneParams}};
+  \code{\link{tuneThreshold}}
 }
 

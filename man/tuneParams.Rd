@@ -48,4 +48,22 @@ by passing a corresponding control object. For a complete list of implemented al
 Note that if tranformations are associated with the parameters, the returned result will contain
 transformed values in the optimal result and the path.
 }
+\seealso{
+Other tune: \code{\link{ModelMultiplexer}},
+  \code{\link{makeModelMultiplexer}};
+  \code{\link{TuneControl}},
+  \code{\link{TuneControlCMAES}},
+  \code{\link{TuneControlGrid}},
+  \code{\link{TuneControlIrace}},
+  \code{\link{TuneControlOptim}},
+  \code{\link{TuneControlRandom}},
+  \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlGrid}},
+  \code{\link{makeTuneControlIrace}},
+  \code{\link{makeTuneControlOptim}},
+  \code{\link{makeTuneControlRandom}};
+  \code{\link{makeModelMultiplexerParamSet}};
+  \code{\link{makeTuneWrapper}};
+  \code{\link{tuneThreshold}}
+}
 
