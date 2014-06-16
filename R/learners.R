@@ -13,6 +13,7 @@
 #'   \item{\bold{classif.geoDA}}{\cr Geometric Predictive Discriminant Analysis from DiscriMiner package: \code{\link[DiscriMiner]{geoDA}}}
 #'   \item{\bold{classif.glmboost}}{\cr Boosting for GLMs from mboost package: \code{\link[mboost]{glmboost}}\cr
 #'     Note that \code{family} has been set to \code{Binomial()} by default.}
+#'   \item{\bold{classif.IBk}}{\cr K-nearest neighbours from RWeka package: \code{\link[RWeka]{IBk}}}
 #'   \item{\bold{classif.J48}}{\cr J48 Decision Trees from RWeka package: \code{\link[RWeka]{J48}}}
 #'     Note that NAs are directly passed to WEKA with \code{na.action = na.pass}.
 #'   \item{\bold{classif.JRip}}{\cr Propositional Rule Learner from RWeka package: \code{\link[RWeka]{JRip}}}
@@ -66,6 +67,7 @@
 #'   \item{\bold{regr.fnn}}{\cr Fast k-Nearest Neighbor from FNN package: \code{\link[FNN]{knn}}}
 #'   \item{\bold{regr.gbm}}{\cr Gradient boosting machine from gbm package: \code{\link[gbm]{gbm}}\cr
 #'     Note that \code{distribution} has been set to \dQuote{gaussian} by default.}
+#'   \item{\bold{regr.IBk}}{\cr K-nearest neighbours from RWeka package: \code{\link[RWeka]{IBk}}}
 #'   \item{\bold{regr.kknn}}{\cr K-Nearest-Neighbor regression from kknn package: \code{\link[kknn]{kknn}}}
 #'    \item{\bold{regr.km}}{\cr Kriging from DiceKriging package: \code{\link[DiceKriging]{km}}}
 #'   \item{\bold{regr.ksvm}}{\cr Support Vector Machines from kernlab package: \code{\link[kernlab]{ksvm}}\cr

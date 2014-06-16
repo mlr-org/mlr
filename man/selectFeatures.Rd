@@ -55,8 +55,8 @@ and \code{bits.to.features}. Thus allowing you to switch on whole groups of feat
 }
 \examples{
 rdesc = makeResampleDesc("Holdout")
- ctrl = makeFeatSelControlSequential(method = "sfs", maxit = NA)
- res = selectFeatures("classif.rpart", iris.task, rdesc, control = ctrl)
- analyzeFeatSelResult(res)
+ctrl = makeFeatSelControlSequential(method = "sfs", maxit = NA)
+res = selectFeatures("classif.rpart", iris.task, rdesc, control = ctrl)
+analyzeFeatSelResult(res)
 }
 

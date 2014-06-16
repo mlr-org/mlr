@@ -16,6 +16,7 @@ mlr_1.2:
 
 - new learners:
 -- classif.knn
+-- classif.IBk
 -- classif.LiblineaRBinary
 -- classif.LiblineaRLogReg
 -- classif.LiblineaRMultiClass
@@ -24,6 +25,7 @@ mlr_1.2:
 -- classif.plsDA
 -- classif.rrlda
 -- regr.crs
+-- regr.IBk
 -- regr.mob
 -- surv.CoxBoost
 -- surv.coxph
