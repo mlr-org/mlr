@@ -48,4 +48,12 @@ head(getTaskData)
 head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = "-1+1"))
 head(getTaskData(task, subset = 1:100, recode.target = "01"))
 }
+\seealso{
+Other task: \code{\link{getTaskCosts}};
+  \code{\link{getTaskFeatureNames}};
+  \code{\link{getTaskFormula}},
+  \code{\link{getTaskFormulaAsString}};
+  \code{\link{getTaskNFeats}};
+  \code{\link{getTaskTargets}}; \code{\link{subsetTask}}
+}
 

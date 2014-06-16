@@ -37,6 +37,7 @@ mlr_1.2:
 -- showHyperPars
 -- removeConstantFeatures
 -- dropFeatures
+-- getTaskNFeats
 -- visualizeLearner
 -- plotThreshVsPerf
 -- holdout, subsample, crossval, repcv, bootstrapOOB, bootstrapB632, bootstrapB632plus

@@ -19,4 +19,12 @@ Default is all cases.}
 \description{
 Retuns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
 }
+\seealso{
+Other task: \code{\link{getTaskData}};
+  \code{\link{getTaskFeatureNames}};
+  \code{\link{getTaskFormula}},
+  \code{\link{getTaskFormulaAsString}};
+  \code{\link{getTaskNFeats}};
+  \code{\link{getTaskTargets}}; \code{\link{subsetTask}}
+}
 

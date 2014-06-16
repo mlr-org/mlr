@@ -16,18 +16,24 @@ getTargetNames = function(x) {
 #'
 #' Target column name is not included.
 #'
-#' @param task [\code{\link{SupervisedTask}}]\cr
-#'   The task.
+#' @template arg_task
 #' @return [\code{character}].
+#' @family task
 #' @export
-#' @examples
-#' task = makeClassifTask(data = iris, target = "Species")
-#' getTaskFeatureNames(task)
 getTaskFeatureNames = function(task) {
   #FIXME argument checks currently not done for speed
   setdiff(colnames(task$env$data), task$task.desc$target)
 }
 
+#' Get number of feature in task.
+#'
+#' @template arg_task
+#' @return [\code{integer(1)}].
+#' @export
+#' @family task
+getTaskNFeats = function(task) {
+  sum(task$task.desc$n.feat)
+}
 
 #' @export
 #' @rdname getTaskFormula
@@ -45,8 +51,7 @@ getTaskFormulaAsString = function(x, target = getTargetNames(x)) {
 #'
 #' This is simply \dQuote{<target> ~ .}.
 #'
-#' @param x [\code{\link{SupervisedTask}} | \code{\link{TaskDesc}}]\cr
-#'   Task or its description object.
+#' @template arg_task_or_desc
 #' @param target [\code{character(1)}]\cr
 #'   Left hand side of formula.
 #'   Default is defined by task \code{x}.
@@ -55,6 +60,7 @@ getTaskFormulaAsString = function(x, target = getTargetNames(x)) {
 #'   for the default behaviour.
 #'   Default is \code{NULL} which deletes the environment.
 #' @return [\code{formula} | \code{character(1)}].
+#' @family task
 #' @export
 getTaskFormula = function(x, target = getTargetNames(x), env = NULL) {
   as.formula(getTaskFormulaAsString(x, target = target), env = env)
@@ -63,6 +69,7 @@ getTaskFormula = function(x, target = getTargetNames(x), env = NULL) {
 
 #' Get target column of task.
 #'
+#' @template arg_task
 #' @param task [\code{\link{SupervisedTask}}]\cr
 #'   The task.
 #' @param subset [\code{integer}]\cr
@@ -75,6 +82,7 @@ getTaskFormula = function(x, target = getTargetNames(x), env = NULL) {
 #'   The positive class is coded as +1 and the negative class either as 0 or -1.
 #'   Default is \dQuote{no}.
 #' @return A \code{factor} for classification or a \code{numeric} for regression.
+#' @family task
 #' @export
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
@@ -93,8 +101,7 @@ getTaskTargets = function(task, subset, recode.target="no") {
 #'
 #' Useful in \code{\link{trainLearner}} when you add a learning machine to the package.
 #'
-#' @param task [\code{\link{SupervisedTask}}]\cr
-#'   The task.
+#' @template arg_task
 #' @param subset [\code{integer}]\cr
 #'   Selected cases.
 #'   Default is all cases.
@@ -113,6 +120,7 @@ getTaskTargets = function(task, subset, recode.target="no") {
 #'   The positive class is coded as +1 and the negative class either as 0 or -1.
 #'   Default is \dQuote{no}.
 #' @return Either a data.frame or a list with data.frame \code{data} and vector \code{target}.
+#' @family task
 #' @export
 #' @examples
 #' library("mlbench")
@@ -171,6 +179,7 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
 #'   Selected cases.
 #'   Default is all cases.
 #' @return [\code{matrix} | \code{NULL}].
+#' @family task
 #' @export
 getTaskCosts = function(task, subset) {
   if (task$task.desc$type != "costsens")
@@ -196,6 +205,7 @@ getTaskCosts = function(task, subset) {
 #'   resulting task, you should not pass it here.
 #'   Default is all features.
 #' @return [\code{\link{SupervisedTask}}]. Task with subsetted data.
+#' @family task
 #' @export
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")

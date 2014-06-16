@@ -27,4 +27,11 @@ Default is \code{NULL} which deletes the environment.}
 \description{
 This is simply \dQuote{<target> ~ .}.
 }
+\seealso{
+Other task: \code{\link{getTaskCosts}};
+  \code{\link{getTaskData}};
+  \code{\link{getTaskFeatureNames}};
+  \code{\link{getTaskNFeats}};
+  \code{\link{getTaskTargets}}; \code{\link{subsetTask}}
+}
 

@@ -9,6 +9,9 @@ getTaskTargets(task, subset, recode.target = "no")
 \item{task}{[\code{\link{SupervisedTask}}]\cr
 The task.}
 
+\item{task}{[\code{\link{SupervisedTask}}]\cr
+The task.}
+
 \item{subset}{[\code{integer}]\cr
 Selected cases.
 Default is all cases.}
@@ -30,5 +33,13 @@ Get target column of task.
 task = makeClassifTask(data = iris, target = "Species")
 getTaskTargets(task)
 getTaskTargets(task, subset = 1:50)
+}
+\seealso{
+Other task: \code{\link{getTaskCosts}};
+  \code{\link{getTaskData}};
+  \code{\link{getTaskFeatureNames}};
+  \code{\link{getTaskFormula}},
+  \code{\link{getTaskFormulaAsString}};
+  \code{\link{getTaskNFeats}}; \code{\link{subsetTask}}
 }
 

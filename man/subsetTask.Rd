@@ -28,4 +28,12 @@ Subset data in task.
 task = makeClassifTask(data = iris, target = "Species")
 subsetTask(task, subset = 1:100)
 }
+\seealso{
+Other task: \code{\link{getTaskCosts}};
+  \code{\link{getTaskData}};
+  \code{\link{getTaskFeatureNames}};
+  \code{\link{getTaskFormula}},
+  \code{\link{getTaskFormulaAsString}};
+  \code{\link{getTaskNFeats}}; \code{\link{getTaskTargets}}
+}
 
