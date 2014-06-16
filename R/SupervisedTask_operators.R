@@ -70,8 +70,6 @@ getTaskFormula = function(x, target = getTargetNames(x), env = NULL) {
 #' Get target column of task.
 #'
 #' @template arg_task
-#' @param task [\code{\link{SupervisedTask}}]\cr
-#'   The task.
 #' @param subset [\code{integer}]\cr
 #'   Selected cases.
 #'   Default is all cases.
