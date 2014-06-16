@@ -12,7 +12,7 @@ The muliplexer learner.}
 \item{...}{[\code{\link[ParamHelpers]{ParamSet}} | \code{\link[ParamHelpers]{Param}}]\cr
 (a) First option: Named param sets. Names must correspond to base learners.
 You only need to enter the parameters you want to tune without reference
-to the \code{selected.learner} field in any way.
+to the \code{selected.learner} field in any way.\cr
 (b) Second option. Just the params you would enter in the param sets.
 Even shorterto create. Only works when it can be uniquely identified to which
 learner each of your passed parameters belongs.}

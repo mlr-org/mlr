@@ -46,7 +46,6 @@ logFunTune = function(learner, task, resampling, measures, par.set, control, opt
   } else {
     # shorten tuning logging a bit. we remove the sel.learner prefix from params
     s = paramValueToString(par.set, x, show.missing.values = !remove.nas)
-    x$selected.learner
     s = gsub(paste0(x$selected.learner, "\\."), "", s)
     messagef("[Tune] %i: %s : %s", dob, s, perfsToString(y))
   }
@@ -59,9 +58,8 @@ removeFromDots = function(ns, ...) {
 
 ##### featsel #####
 
-logFunSelFeatures = function(learner, task, resampling, measures, par.set, control, opt.path, x, y, remove.nas) {
-  i = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
-  messagef("[selectFeatures] %i: %i bits: %s", i, sum(x), perfsToString(y))
+logFunSelFeatures = function(learner, task, resampling, measures, par.set, control, opt.path, dob, x, y, remove.nas) {
+  messagef("[selectFeatures] %i: %i bits: %s", dob, sum(x), perfsToString(y))
 }
 
 featuresToLogical = function(vars, all.vars) {
