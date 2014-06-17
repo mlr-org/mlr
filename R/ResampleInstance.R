@@ -24,9 +24,9 @@
 #'   Size of the data set to resample.
 #'   Can be used instead of \code{task}.
 #' @return [\code{\link{ResampleInstance}}].
+#' @family resample
 #' @export
 #' @aliases ResampleInstance
-#' @seealso \code{\link{makeResampleDesc}}, \code{\link{resample}}
 #' @examples
 #' task <- makeClassifTask(data = iris, target = "Species")
 #' rdesc <- makeResampleDesc("Bootstrap", iters = 10)

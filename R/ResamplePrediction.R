@@ -11,6 +11,7 @@
 #' a numeric vector, its length equals the number of iterations.
 #' @name ResamplePrediction
 #' @rdname ResamplePrediction
+#' @family resample
 NULL
 
 makeResamplePrediction = function(instance, preds.test, preds.train) {

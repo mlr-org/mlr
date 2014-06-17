@@ -65,8 +65,8 @@
 #'   \item{pred [\code{\link{ResamplePrediction}}]}{Container for all predictions during resampling.}
 #'   \item{models [list of \code{\link{WrappedModel}}]}{List of fitted models or \code{NULL}.}
 #'   \item{extract [\code{list}]}{List of extracted parts from fitted models or \code{NULL}.}
+#' @family resample
 #' @export
-#' @seealso \code{\link{makeResampleDesc}}, \code{\link{makeResampleInstance}}
 #' @examples
 #' task <- makeClassifTask(data = iris, target = "Species")
 #' rdesc <- makeResampleDesc("CV", iters = 2)

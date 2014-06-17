@@ -54,6 +54,7 @@
 #'   index sets are joined to make sure that the proportion of observations in each training set
 #'   is as in the original data set. Useful for imbalanced class sizes.
 #' @return [\code{\link{ResampleDesc}}].
+#' @family resample
 #' @export
 #' @aliases ResampleDesc
 #' @examples
