@@ -43,6 +43,11 @@ predictFailureModel = function(model, newdata) {
       rep(NA_real_, n)
     else
       matrix(NA_real_, nrow = n, ncol = 2L, dimnames = list(NULL, c("response", "se")))
+  } else if (type == "surv") {
+    if (ptype == "response")
+      res = rep.int(NA_real_, n)
+    else
+      stop("Predict type 'prob' for survival not yet supported")
   } else if (type == "costsens") {
     levs = model$task.desc$class.levels
     res = factor(rep(NA_character_, n), levels = levs)
