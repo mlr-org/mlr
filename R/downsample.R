@@ -20,25 +20,25 @@
 #' @return [\code{data.frame} | \code{\link{SupervisedTask}} | \code{\link{ResampleInstance}}]. Same type as \code{obj}.
 #' @family downsample
 #' @export
-downsample = function(obj, select = "perc", val = 1, stratify = FALSE, ...) {
+downsample = function(obj, select = "perc", val = 1, stratify = FALSE) {
   checkDownsampleArguments(select, val, stratify)
   UseMethod("downsample")
 }
 
 #' @export
-downsample.SupervisedTask = function(obj, select = "perc", val = 1, stratify = FALSE, ...) {
+downsample.SupervisedTask = function(obj, select = "perc", val = 1, stratify = FALSE) {
   if(select == "abs") {
     perc = val / obj$task.desc$size
   } else {
     perc = val
   }
-  holdoutDesc = makeResampleDesc(method = "Holdout", stratify = stratify, split = perc, ...)
+  holdoutDesc = makeResampleDesc(method = "Holdout", stratify = stratify, split = perc)
   holdoutInst = makeResampleInstance(desc = holdoutDesc, task = obj)
   subsetTask(task = obj, subset = holdoutInst$train.inds[[1]])
 }
 
 #' @export
-downsample.ResampleInstance = function(obj, select = "perc", val = 1, stratify = FALSE, ...) {
+downsample.ResampleInstance = function(obj, select = "perc", val = 1, stratify = FALSE) {
   if(stratify) {
     stop("Stratifying is not supported for a ResampleInstance!")
   }
@@ -51,7 +51,7 @@ downsample.ResampleInstance = function(obj, select = "perc", val = 1, stratify =
     if(n > length(x)) {
       stopf("The given val = %i is bigger than the observations in the sample: %i.", n, length(x))
     }
-    sample(x, size = n, ...)
+    sample(x, size = n)
   })
 }
 

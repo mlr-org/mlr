@@ -3,7 +3,7 @@
 \alias{downsample}
 \title{Downsample (subsample) a task or a data.frame.}
 \usage{
-downsample(obj, select = "perc", val = 1, stratify = FALSE, ...)
+downsample(obj, select = "perc", val = 1, stratify = FALSE)
 }
 \arguments{
 \item{obj}{[\code{\link{SupervisedTask}} | \code{\link{ResampleInstance}}]\cr
