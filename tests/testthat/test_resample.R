@@ -2,15 +2,15 @@
 context("resample")
 
 test_that("resample", {
-  rin1 = makeResampleInstance(makeResampleDesc("Bootstrap", iters=4), task=multiclass.task)  
-  rin2 = makeResampleInstance(makeResampleDesc("CV", iters=7), task=multiclass.task)  
-  rin3 = makeResampleInstance(makeResampleDesc("Subsample", iters=2), task=multiclass.task)  
-  
+  rin1 = makeResampleInstance(makeResampleDesc("Bootstrap", iters = 4), task = multiclass.task)
+  rin2 = makeResampleInstance(makeResampleDesc("CV", iters = 7), task = multiclass.task)
+  rin3 = makeResampleInstance(makeResampleDesc("Subsample", iters = 2), task = multiclass.task)
+
   lrn = makeLearner("classif.lda")
-  p1 = resample(lrn, multiclass.task, rin1)$pred       
-  p2 = resample(lrn, multiclass.task, rin2)$pred       
-  p3 = resample(lrn, multiclass.task, rin3)$pred       
-  
+  p1 = resample(lrn, multiclass.task, rin1)$pred
+  p2 = resample(lrn, multiclass.task, rin2)$pred
+  p3 = resample(lrn, multiclass.task, rin3)$pred
+
   inds = Reduce(c, rin1$test.inds)
   y = getTaskTargets(multiclass.task)[inds]
   expect_equal(p1$data$id, inds)
@@ -24,46 +24,60 @@ test_that("resample", {
   expect_equal(p3$data$id, inds)
   expect_equal(p3$data$truth, y)
 
-  cv.i = makeResampleInstance(makeResampleDesc("CV", iters=3), binaryclass.task)
-  
+  cv.i = makeResampleInstance(makeResampleDesc("CV", iters = 3), binaryclass.task)
+
   lrn1 = makeLearner("classif.lda")
-  lrn2 = makeLearner("classif.lda", predict.type="prob")
+  lrn2 = makeLearner("classif.lda", predict.type = "prob")
   rf1 = resample(lrn1, binaryclass.task, cv.i)$pred
   rf2 = resample(lrn2, binaryclass.task, cv.i)$pred
   rf3 = resample(lrn2, binaryclass.task, cv.i)$pred
   rf3 = setThreshold(rf3, 0)
   rf4 = resample(lrn2, binaryclass.task, cv.i)$pred
   rf4 = setThreshold(rf4, 1)
-  
+
   expect_equal(rf1$data$response, rf2$data$response)
-  f1 = factor(rep(binaryclass.task$task.desc$positive, cv.i$size), levels=binaryclass.task$task.desc$class.levels)
+  f1 = factor(rep(binaryclass.task$task.desc$positive, cv.i$size), levels = binaryclass.task$task.desc$class.levels)
   expect_equal(rf3$data$response, f1)
-  f2 = factor(rep(binaryclass.task$task.desc$negative, cv.i$size), levels=binaryclass.task$task.desc$class.levels)
+  f2 = factor(rep(binaryclass.task$task.desc$negative, cv.i$size), levels = binaryclass.task$task.desc$class.levels)
   expect_equal(rf4$data$response, f2)
-  
-  ct = makeClassifTask(data=iris[,c("Species", "Petal.Width")], target="Species")
-  fit = resample(lrn1, ct, makeResampleDesc("CV", iters=2))
-  
+
+  ct = makeClassifTask(data = iris[,c("Species", "Petal.Width")], target = "Species")
+  fit = resample(lrn1, ct, makeResampleDesc("CV", iters = 2))
+
 })
 
 test_that("resampling, predicting train set works", {
-  rdesc = makeResampleDesc("CV", iters=2, predict="train")
+  rdesc = makeResampleDesc("CV", iters = 2, predict = "train")
   lrn = makeLearner("classif.rpart")
   r = resample(lrn, multiclass.task, rdesc)
   expect_true(as.logical(is.na(r$aggr["mmce.test.mean"])))
 
-  rdesc = makeResampleDesc("CV", iters=2, predict="train")
+  rdesc = makeResampleDesc("CV", iters = 2, predict = "train")
   lrn = makeLearner("classif.rpart")
   m = setAggregation(mmce, train.mean)
-  r = resample(lrn, multiclass.task, rdesc, measures=m)
+  r = resample(lrn, multiclass.task, rdesc, measures = m)
   expect_true(!as.logical(is.na(r$aggr["mmce.train.mean"])))
-  
-  rdesc = makeResampleDesc("CV", iters=2, predict="both")
+
+  rdesc = makeResampleDesc("CV", iters = 2, predict = "both")
   lrn = makeLearner("classif.rpart")
   m1 = setAggregation(mmce, train.mean)
   m2 = setAggregation(mmce, test.mean)
-  r = resample(lrn, multiclass.task, rdesc, measures=list(m1, m2))
+  r = resample(lrn, multiclass.task, rdesc, measures = list(m1, m2))
   expect_true(!as.logical(is.na(r$aggr["mmce.train.mean"])))
   expect_true(!as.logical(is.na(r$aggr["mmce.test.mean"])))
-  
+
 })
+
+
+test_that("ResampleInstance can bew created from string", {
+  rin = makeResampleInstance("CV", size = 100)
+  expect_is(rin$desc, "CVDesc")
+  expect_equal(rin$size, 100)
+  expect_equal(rin$desc$iters, 10)
+
+  rin = makeResampleInstance("CV", task = iris.task, iters = 17, stratify = TRUE)
+  expect_is(rin$desc, "CVDesc")
+  expect_equal(rin$size, 150)
+  expect_equal(rin$desc$iters, 17)
+})
+

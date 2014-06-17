@@ -3,7 +3,7 @@
 \alias{downsample}
 \title{Downsample (subsample) a task or a data.frame.}
 \usage{
-downsample(obj, select = "perc", val = 1, stratify = FALSE)
+downsample(obj, select = "perc", val, stratify = FALSE)
 }
 \arguments{
 \item{obj}{[\code{\link{SupervisedTask}} | \code{\link{ResampleInstance}}]\cr
@@ -27,7 +27,7 @@ Should the downsampled data be stratified according to the target classes? Defau
 }
 \description{
 Decrease the observations in a \code{task} or a \code{ResampleInstance}
-  to a given percentage or absolute number.
+to a given percentage or absolute number.
 }
 \seealso{
 \code{\link{makeResampleInstance}}
