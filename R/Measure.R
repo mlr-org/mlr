@@ -35,6 +35,9 @@
 #' @param regr [\code{logical(1)}]\cr
 #'   Is the measure applicable for regression?
 #'   Default is \code{FALSE}.
+#' @param surv [\code{logical(1)}]\cr
+#'   Is the measure applicable for survival?
+#'   Default is \code{FALSE}.
 #' @param costsens [\code{logical(1)}]\cr
 #'   Is the measure applicable for cost-sensitive learning?
 #'   Default is \code{FALSE}.
@@ -62,13 +65,14 @@
 #' f <- function(task, model, pred, extra.args)
 #'   sum((pred$data$response - pred$data$truth)^2)
 #' makeMeasure(id = "my.sse", minimize = TRUE, regr = TRUE, allowed.pred.types = "response", fun = f)
-makeMeasure = function(id, minimize, classif = FALSE, regr = FALSE, costsens = FALSE,
+makeMeasure = function(id, minimize, classif = FALSE, regr = FALSE, surv = FALSE, costsens = FALSE,
   only.binary = FALSE, allowed.pred.types = character(0L), fun, extra.args = list(), aggr = test.mean) {
 
   checkArg(id, "character", len = 1L, na.ok = FALSE)
   checkArg(minimize, "logical", len = 1L, na.ok = FALSE)
   checkArg(classif, "logical", len = 1L, na.ok = FALSE)
   checkArg(regr, "logical", len = 1L, na.ok = FALSE)
+  checkArg(surv, "logical", len = 1L, na.ok = FALSE)
   checkArg(costsens, "logical", len = 1L, na.ok = FALSE)
   checkArg(only.binary, "logical", len = 1L, na.ok = FALSE)
   checkArg(allowed.pred.types, subset = c("response", "prob", "se"))
@@ -86,6 +90,7 @@ makeMeasure = function(id, minimize, classif = FALSE, regr = FALSE, costsens = F
     minimize = minimize,
     classif = classif,
     regr = regr,
+    surv = surv,
     costsens = costsens,
     only.binary = only.binary,
     allowed.pred.types = allowed.pred.types,

@@ -413,7 +413,7 @@ gpr = makeMeasure(id = "gpr", minimize = FALSE, classif = TRUE, only.binary = TR
 #' @rdname measures
 #' @usage none
 #' @format none
-cindex = makeMeasure(id = "cindex", minimize = FALSE, allowed.pred.types = c("response", "prob"),
+cindex = makeMeasure(id = "cindex", minimize = FALSE, surv = TRUE, allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     requirePackages("Hmisc")
     # FIXME: this will break after switch to interval2 format
