@@ -3,29 +3,41 @@
 \alias{LearnerProperties}
 \alias{addProperties}
 \alias{hasProperties}
+\alias{hasPropertiesAll}
+\alias{hasProperty}
 \alias{removeProperties}
 \alias{setProperties}
 \title{Set, add, remove or query properties of learners}
 \usage{
-setProperties(lrn, props)
+setProperties(learner, props)
 
-addProperties(lrn, props)
+addProperties(learner, props)
 
-removeProperties(lrn, props)
+removeProperties(learner, props)
 
-hasProperties(lrn, props)
+hasProperties(learner, props)
+
+hasPropertiesAll(learner, props)
+
+hasProperty(learner, prop)
 }
 \arguments{
-\item{lrn}{[\code{RLearner}]\cr
-A \code{\link{RLearner}}.}
+\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+The learner.
+If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
 \item{props}{[\code{character}]\cr
 Vector of properties to set, add, remove or query.}
+
+\item{prop}{[\code{character(1)}]\cr
+Single property.}
 }
 \value{
 \code{setProperties}, \code{addProperties} and \code{removeProperties}
- return an updated \code{\link{RLearner}}. \code{hasProperties} returns
- a logical vector of the same length of \code{props}.
+ return an updated \code{\link{Learner}}.
+ \code{hasProperty} returns scalar logical if the property is present
+ \code{hasPropertiesAll} returns a scalar logical if all properties are present.
+ \code{hasProperties} returns a logical vector of the same length of \code{props}.
 }
 \description{
 Set, add, remove or query properties of learners
