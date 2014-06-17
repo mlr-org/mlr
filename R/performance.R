@@ -61,6 +61,7 @@ doPerformaceIteration = function(measure, pred, task, model, td){
   }
   # null only happens in custom resampled measure when we do no individual measurements
   if (!is.null(td)) {
+    # FIXME: add surv and costsens
     if ((td$type == "classif" && !m$classif) || (td$type == "regr" && !m$regr))
       stopf("Wrong task type %s for measure %s!", td$type, m$id)
     if (m$only.binary && length(td$class.levels) > 2)
