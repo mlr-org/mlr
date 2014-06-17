@@ -19,6 +19,9 @@
 #' @param costsens [\code{logical(1)}]\cr
 #'   Is the measure applicable for cost-sensitive learning?
 #'   Default is \code{FALSE}.
+#' @param surv [\code{logical(1)}]\cr
+#'   Is the measure applicable for survival learning?
+#'   Default is \code{FALSE}.
 #' @param only.binary [\code{logical(1)}]\cr
 #'   Is the measure only applicable to binary classification?
 #'   Only reasonable if \code{classif} is \code{TRUE}.
@@ -35,13 +38,14 @@
 #'   Default is empty list.
 #' @return \code{\link{Measure}}
 #' @export
-makeCustomResampledMeasure = function(id, minimize = TRUE, classif = FALSE, regr = FALSE, costsens = FALSE,
+makeCustomResampledMeasure = function(id, minimize = TRUE, classif = FALSE, regr = FALSE, surv = FALSE, costsens = FALSE,
   only.binary = FALSE, allowed.pred.types = character(0L), fun, extra.args=list()) {
 
   checkArg(id, "character", len = 1L, na.ok = FALSE)
   checkArg(minimize, "logical", len = 1L, na.ok = FALSE)
   checkArg(classif, "logical", len = 1L, na.ok = FALSE)
   checkArg(regr, "logical", len = 1L, na.ok = FALSE)
+  checkArg(surv, "logical", len = 1L, na.ok = FALSE)
   checkArg(only.binary, "logical", len = 1L, na.ok = FALSE)
   checkArg(allowed.pred.types, subset=c("response", "prob", "se"))
   checkArg(fun, "function")
@@ -50,7 +54,7 @@ makeCustomResampledMeasure = function(id, minimize = TRUE, classif = FALSE, regr
   force(fun)
   fun1 = function(task, model, pred, extra.args) NA_real_
   # args are checked here
-  custom = makeMeasure(id = "custom", minimize, classif, regr, costsens, 
+  custom = makeMeasure(id = "custom", minimize, classif, regr, surv, costsens,
     only.binary, allowed.pred.types, fun1, extra.args)
   fun2 = function(task, perf.test, perf.train, measure, group, pred)
     fun(task, group, pred, extra.args)
