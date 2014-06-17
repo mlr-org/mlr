@@ -96,24 +96,41 @@ makeRLearnerSurv = function(cl, package, par.set, par.vals = list(), properties 
   )
 }
 
+#' Set, add, remove or query properties of learners
+#'
+#' @param lrn [\code{RLearner}]\cr
+#'  A \code{\link{RLearner}}.
+#' @param props [\code{character}]\cr
+#'  Vector of properties to set, add, remove or query.
+#' @return \code{setProperties}, \code{addProperties} and \code{removeProperties}
+#'  return an updated \code{\link{RLearner}}. \code{hasProperties} returns
+#'  a logical vector of the same length of \code{props}.
+#' @export
+#' @name LearnerProperties
 setProperties = function(lrn, props) {
   checkArg(props, "character", na.ok = FALSE)
   lrn$properties = unique(props)
   lrn
 }
 
+#' @rdname LearnerProperties
+#' @export
 addProperties = function(lrn, props) {
   checkArg(props, "character", na.ok = FALSE)
   lrn$properties = union(lrn$properties, props)
   lrn
 }
 
+#' @rdname LearnerProperties
+#' @export
 removeProperties = function(lrn, props) {
   checkArg(props, "character", na.ok = FALSE)
   lrn$properties = setdiff(lrn$properties, props)
   lrn
 }
 
+#' @rdname LearnerProperties
+#' @export
 hasProperties = function(lrn, props) {
   checkArg(props, "character", na.ok = FALSE)
   all(props %in% lrn$properties)
