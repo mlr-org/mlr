@@ -7,6 +7,12 @@
 #'
 #' If you call this function with an empty argument list, everything is set to its defaults.
 #'
+#' @param show.info [\code{logical(1)}]\cr
+#'   Some methods of mlr support a \code{show.info} argument to enable
+#'   verbose output on the console. This option sets the default value for these arguments.
+#'   Setting the argument manually in one of these functions will overwrite the default
+#'   value for that specific function call.
+#'   Default is \code{TRUE}.
 #' @param on.learner.error [\code{character(1)}]\cr
 #'   What should happen if an error in an underlying learning algorithm is caught:\cr
 #'   \dQuote{stop}: R exception is generated.\cr
@@ -29,12 +35,13 @@
 #'   Should the output of the learning algorithm during training and prediction be shown or captured and
 #'   suppressed?
 #'   Default is \code{TRUE}.
-#' @return Nothing.
-#' @seealso \code{\link{getMlrOptions}}
+#' @template ret_inv_null
+#' @family configure
 #' @export
-configureMlr = function(on.learner.error, on.learner.warning, on.par.without.desc, show.learner.output) {
+configureMlr = function(show.info, on.learner.error, on.learner.warning, on.par.without.desc, show.learner.output) {
 
   defaults = list(
+    show.info = TRUE,
     on.learner.error = "stop",
     on.learner.warning = "warn",
     on.par.without.desc = "stop",
@@ -42,6 +49,11 @@ configureMlr = function(on.learner.error, on.learner.warning, on.par.without.des
   )
 
   any.change = FALSE
+  if (!missing(show.info)) {
+    checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
+    setMlrOption("show.info", show.info)
+    any.change = TRUE
+  }
   if (!missing(on.learner.error)) {
     checkArg(on.learner.error, choices = c("quiet", "warn", "stop"))
     setMlrOption("on.learner.error", on.learner.error)

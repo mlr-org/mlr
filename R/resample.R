@@ -51,9 +51,7 @@
 #'   Default is to extract nothing.
 #' @param ... [any]\cr
 #'   Further hyperparameters passed to \code{learner}.
-#' @param show.info [\code{logical(1)}]\cr
-#'   Verbose output on console?
-#'   Default is \code{TRUE}.
+#' @template arg_showinfo
 #' @return List of:
 #'   \item{measures.test [\code{data.frame}]}{Gives you access to performance measurements
 #'     on the individual test sets. Rows correspond to sets in resampling iterations,
@@ -77,7 +75,7 @@
 #' print(r$measures.test)
 #' print(r$pred)
 resample = function(learner, task, resampling, measures, weights = NULL, models = FALSE,
-  extract, show.info = TRUE) {
+  extract, show.info = getMlrOption("show.info")) {
 
   learner = checkLearner(learner)
   checkArg(task, "SupervisedTask")

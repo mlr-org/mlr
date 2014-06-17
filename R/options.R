@@ -1,8 +1,8 @@
 #' @title Returns a list of mlr's options
 #'
-#  @return [\code{list}]
-#' @seealso \code{\link{configureMlr}}
+#' @return [\code{list}].
 #' @export
+#' @family configure
 getMlrOptions = function() {
   mlr.inds = substr(names(options()), start=1L, stop=4L) == "mlr."
   mlr.options = options()[mlr.inds]

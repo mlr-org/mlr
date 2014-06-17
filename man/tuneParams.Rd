@@ -4,7 +4,7 @@
 \title{Hyperparameter tuning.}
 \usage{
 tuneParams(learner, task, resampling, measures, par.set, control,
-  show.info = TRUE)
+  show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -31,8 +31,8 @@ Performance measures to evaluate. The first measure, aggregated by the first agg
 is optimized during tuning, others are simply evaluated.}
 
 \item{show.info}{[\code{logical(1)}]\cr
-Show info message after each hyperparameter evaluation?
-Default is \code{TRUE}.}
+Print verbose output on console?
+Default is set via \code{\link{configureMlr}}.}
 }
 \value{
 [\code{\link{TuneResult}}].

@@ -32,7 +32,7 @@ bootstrapB632plus(learner, task, iters = 30, stratify = FALSE, measures,
   models = FALSE, ..., show.info = TRUE)
 
 resample(learner, task, resampling, measures, weights = NULL,
-  models = FALSE, extract, show.info = TRUE)
+  models = FALSE, extract, show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -84,8 +84,8 @@ Default is to extract nothing.}
 Further hyperparameters passed to \code{learner}.}
 
 \item{show.info}{[\code{logical(1)}]\cr
-Verbose output on console?
-Default is \code{TRUE}.}
+Print verbose output on console?
+Default is set via \code{\link{configureMlr}}.}
 }
 \value{
 List of:

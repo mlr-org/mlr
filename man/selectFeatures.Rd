@@ -4,7 +4,7 @@
 \title{Feature selection by wrapper approach.}
 \usage{
 selectFeatures(learner, task, resampling, control, measures, bit.names,
-  bits.to.features, show.info = TRUE)
+  bits.to.features, show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -15,7 +15,7 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 The task.}
 
 \item{resampling}{[\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
-Resampling strategy to feature sets. If you pass a description,
+Resampling strategy for feature selection. If you pass a description,
 it is instantiated once at the beginning by default, so all points are evaluated on the same training/test sets.
 If you want to change that behaviour, look at \code{\link{FeatSelControl}}.}
 
@@ -35,8 +35,8 @@ Function which transforms an integer-0-1 vector into a character vector of selec
 Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.}
 
 \item{show.info}{[\code{logical(1)}]\cr
-A logical value, indicating whether information should be printed.
-The default is TRUE.}
+Print verbose output on console?
+Default is set via \code{\link{configureMlr}}.}
 }
 \value{
 [\code{\link{FeatSelResult}}].
@@ -47,8 +47,7 @@ Allows for different optimization methods, such as forward search or a genetic a
 You can select such an algorithm (and its settings)
 by passing a corresponding control object. For a complete list of implemented algorithms look at the
 subclasses of [\code{\link{FeatSelControl}}].
-}
-\details{
+
 All algorithms operate on a 0-1-bit encoding of candidate solutions. Per default a single bit corresponds
 to a single feature, but you are able to change this by using the arguments \code{bit.names}
 and \code{bits.to.features}. Thus allowing you to switch on whole groups of features with a single bit.

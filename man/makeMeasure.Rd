@@ -4,9 +4,10 @@
 \alias{makeMeasure}
 \title{Construct performance measure.}
 \usage{
-makeMeasure(id, minimize, classif = FALSE, regr = FALSE, costsens = FALSE,
-  only.binary = FALSE, allowed.pred.types = character(0L), fun,
-  extra.args = list(), aggr = test.mean)
+makeMeasure(id, minimize, classif = FALSE, regr = FALSE, surv = FALSE,
+  costsens = FALSE, only.binary = FALSE,
+  allowed.pred.types = character(0L), fun, extra.args = list(),
+  aggr = test.mean)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -22,6 +23,10 @@ Default is \code{FALSE}.}
 
 \item{regr}{[\code{logical(1)}]\cr
 Is the measure applicable for regression?
+Default is \code{FALSE}.}
+
+\item{surv}{[\code{logical(1)}]\cr
+Is the measure applicable for survival?
 Default is \code{FALSE}.}
 
 \item{costsens}{[\code{logical(1)}]\cr

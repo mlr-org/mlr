@@ -12,8 +12,7 @@
 #' After training, the optimal features (and other related information) can be retrieved with
 #' \code{\link{getFeatSelResult}}.
 #'
-#' @param learner [\code{\link{Learner}}]\cr
-#'   The learner.
+#' @template arg_learner
 #' @param resampling [\code{\link{ResampleDesc}} | \code{\link{ResampleInstance}}]\cr
 #'   Resampling strategy to evaluate feature sets. If you pass a description,
 #'   it is instantiated once at the beginning by default, so all feature sets are
@@ -30,10 +29,8 @@
 #'   Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.
 #' @param control [\code{\link{FeatSelControl}}]\cr
 #'   Control object for search method. Also selects the optimization algorithm for feature selection.
-#' @param show.info [\code{logical(1)}]\cr
-#'   Show info message after each feature set evaluation?
-#'   Default is \code{TRUE}.
-#' @return [\code{\link{Learner}}].
+#' @template arg_showinfo
+#' @template ret_learner
 #' @export
 #' @examples
 #' # nested resampling with feature selection (with a pretty stupid algorithm for selection)
@@ -46,7 +43,7 @@
 #' # we also extract the selected features for all iteration here
 #' r = resample(lrn2, task, outer, extract = getFeatSelResult)
 makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.features,
-  control, show.info = TRUE) {
+  control, show.info = getMlrOption("show.info")) {
 
   checkArg(learner, "Learner")
   checkArg(resampling, c("ResampleDesc", "ResampleInstance"))

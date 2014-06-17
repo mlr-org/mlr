@@ -5,10 +5,13 @@
 \usage{
 getMlrOptions()
 }
+\value{
+[\code{list}].
+}
 \description{
 Returns a list of mlr's options
 }
 \seealso{
-\code{\link{configureMlr}}
+Other configure: \code{\link{configureMlr}}
 }
 

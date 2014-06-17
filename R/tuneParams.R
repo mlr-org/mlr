@@ -27,13 +27,11 @@
 #' @param measures [\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
 #'   Performance measures to evaluate. The first measure, aggregated by the first aggregation function
 #'   is optimized during tuning, others are simply evaluated.
-#' @param show.info [\code{logical(1)}]\cr
-#'   Show info message after each hyperparameter evaluation?
-#'   Default is \code{TRUE}.
+#' @template arg_showinfo
 #' @return [\code{\link{TuneResult}}].
 #' @family tune
 #' @export
-tuneParams = function(learner, task, resampling, measures, par.set, control, show.info=TRUE) {
+tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)
   checkArg(task, "SupervisedTask")
   if (missing(measures))
@@ -46,8 +44,8 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
   if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")
   if (inherits(resampling, "ResampleDesc") && control$same.resampling.instance)
-    resampling = makeResampleInstance(resampling, task=task)
-  checkArg(show.info, "logical", len=1L, na.ok=FALSE)
+    resampling = makeResampleInstance(resampling, task = task)
+  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
   checkTunerParset(learner, par.set, control)
   cl = as.character(class(control))[1]
 	sel.func = switch(cl,

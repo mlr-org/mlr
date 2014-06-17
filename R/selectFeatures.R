@@ -1,5 +1,6 @@
-#' Feature selection by wrapper approach.
+#' @title Feature selection by wrapper approach.
 #'
+#' @description
 #' Optimizes the features for a classification or regression problem by choosing a variable selection wrapper approach.
 #' Allows for different optimization methods, such as forward search or a genetic algorithm.
 #' You can select such an algorithm (and its settings)
@@ -13,7 +14,7 @@
 #' @template arg_learner
 #' @template arg_task
 #' @param resampling [\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
-#'   Resampling strategy to feature sets. If you pass a description,
+#'   Resampling strategy for feature selection. If you pass a description,
 #'   it is instantiated once at the beginning by default, so all points are evaluated on the same training/test sets.
 #'   If you want to change that behaviour, look at \code{\link{FeatSelControl}}.
 #' @param control [see \code{\link{FeatSelControl}}]
@@ -27,9 +28,7 @@
 #' @param bits.to.features [function(x, task)]\cr
 #'   Function which transforms an integer-0-1 vector into a character vector of selected features.
 #'   Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.
-#' @param show.info [\code{logical(1)}]\cr
-#'   A logical value, indicating whether information should be printed.
-#'   The default is TRUE.
+#' @template arg_showinfo
 #' @return [\code{\link{FeatSelResult}}].
 #' @export
 #' @examples
@@ -38,7 +37,7 @@
 #' res = selectFeatures("classif.rpart", iris.task, rdesc, control = ctrl)
 #' analyzeFeatSelResult(res)
 selectFeatures = function(learner, task, resampling, control, measures,
-  bit.names, bits.to.features, show.info = TRUE) {
+  bit.names, bits.to.features, show.info = getMlrOption("show.info")) {
 
   learner = checkLearner(learner)
   checkArg(task, "SupervisedTask")

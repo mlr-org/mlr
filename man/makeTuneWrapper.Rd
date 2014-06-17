@@ -4,11 +4,12 @@
 \title{Fuse learner with tuning.}
 \usage{
 makeTuneWrapper(learner, resampling, measures, par.set, control,
-  show.info = TRUE)
+  show.info = getMlrOption("show.info"))
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}}]\cr
-The learner.}
+\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+The learner.
+If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
 \item{resampling}{[\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
 Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
@@ -27,8 +28,8 @@ Collection of parameters and their constraints for optimization.}
 Control object for search method. Also selects the optimization algorithm for tuning.}
 
 \item{show.info}{[\code{logical(1)}]\cr
-Show info message after each hyperparameter evaluation?
-Default is \code{TRUE}.}
+Print verbose output on console?
+Default is set via \code{\link{configureMlr}}.}
 }
 \value{
 [\code{\link{Learner}}].

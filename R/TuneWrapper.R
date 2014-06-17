@@ -13,8 +13,7 @@
 #' After training, the optimal hyperparameters (and other related information) can be retrieved with
 #' \code{\link{getTuneResult}}.
 #'
-#' @param learner [\code{\link{Learner}}]\cr
-#'   The learner.
+#' @template arg_learner
 #' @param resampling [\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
 #'   Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
 #'   it is instantiated once at the beginning by default, so all points are
@@ -27,10 +26,8 @@
 #'   Collection of parameters and their constraints for optimization.
 #' @param control [\code{\link{TuneControl}}] \cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.
-#' @param show.info [\code{logical(1)}]\cr
-#'   Show info message after each hyperparameter evaluation?
-#'   Default is \code{TRUE}.
-#' @return [\code{\link{Learner}}].
+#' @template arg_showinfo
+#' @template ret_learner
 #' @export
 #' @family tune
 #' @examples
@@ -51,7 +48,7 @@
 #' # we also extract tuned hyper pars in each iteration
 #' r = resample(lrn, task, outer, extract = getTuneResult)
 #' print(r$extract)
-makeTuneWrapper = function(learner, resampling, measures, par.set, control, show.info = TRUE) {
+makeTuneWrapper = function(learner, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   checkArg(learner, "Learner")
   checkArg(resampling, c("ResampleDesc", "ResampleInstance"))
   if (missing(measures)) {

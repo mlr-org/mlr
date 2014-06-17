@@ -13,6 +13,7 @@ mlr_1.2:
 - add fix.factors option to randomForest
 - generic standard error estimation in randomForest and BaggingWrapper
 - added fixup.data option to task contructors, so basic data cleanup can be performed
+- show.info is now an option in configureMlr
 
 - new learners:
 -- classif.knn

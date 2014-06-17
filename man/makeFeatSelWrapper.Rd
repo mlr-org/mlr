@@ -4,11 +4,12 @@
 \title{Fuse learner with feature selection.}
 \usage{
 makeFeatSelWrapper(learner, resampling, measures, bit.names, bits.to.features,
-  control, show.info = TRUE)
+  control, show.info = getMlrOption("show.info"))
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}}]\cr
-The learner.}
+\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+The learner.
+If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
 \item{resampling}{[\code{\link{ResampleDesc}} | \code{\link{ResampleInstance}}]\cr
 Resampling strategy to evaluate feature sets. If you pass a description,
@@ -32,8 +33,8 @@ Per default a value of 1 in the ith bit selects the ith feature to be in the can
 Control object for search method. Also selects the optimization algorithm for feature selection.}
 
 \item{show.info}{[\code{logical(1)}]\cr
-Show info message after each feature set evaluation?
-Default is \code{TRUE}.}
+Print verbose output on console?
+Default is set via \code{\link{configureMlr}}.}
 }
 \value{
 [\code{\link{Learner}}].

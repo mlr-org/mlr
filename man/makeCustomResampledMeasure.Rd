@@ -4,7 +4,7 @@
 \title{Construct your own resampled performance measure.}
 \usage{
 makeCustomResampledMeasure(id, minimize = TRUE, classif = FALSE,
-  regr = FALSE, costsens = FALSE, only.binary = FALSE,
+  regr = FALSE, surv = FALSE, costsens = FALSE, only.binary = FALSE,
   allowed.pred.types = character(0L), fun, extra.args = list())
 }
 \arguments{
@@ -25,6 +25,10 @@ Default is \code{FALSE}.}
 
 \item{costsens}{[\code{logical(1)}]\cr
 Is the measure applicable for cost-sensitive learning?
+Default is \code{FALSE}.}
+
+\item{surv}{[\code{logical(1)}]\cr
+Is the measure applicable for survival learning?
 Default is \code{FALSE}.}
 
 \item{only.binary}{[\code{logical(1)}]\cr

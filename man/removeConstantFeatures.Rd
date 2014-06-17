@@ -4,7 +4,8 @@
 \title{Remove constant features from a data set.}
 \usage{
 removeConstantFeatures(x, target, perc = 0, dont.rm = character(0L),
-  na.ignore = FALSE, tol = .Machine$double.eps^0.5, show.info = TRUE)
+  na.ignore = FALSE, tol = .Machine$double.eps^0.5,
+  show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{x}{[\code{\link{data.frame}} | \code{\link{SupervisedTask}}]\cr
@@ -34,8 +35,8 @@ Variables stored as \code{double} will get rounded accordingly before computing 
 Default is \code{sqrt(.Maschine$double.eps)}.}
 
 \item{show.info}{[\code{logical(1)}]\cr
-Verbose output on console?
-Default is \code{TRUE}.}
+Print verbose output on console?
+Default is set via \code{\link{configureMlr}}.}
 }
 \value{
 [\code{\link{data.frame}} | \code{\link{SupervisedTask}}].
