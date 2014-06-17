@@ -79,4 +79,14 @@ makeResampleDesc("Subsample", iters = 10)
 # Holdout a.k.a. test sample estimation
 makeResampleDesc("Holdout")
 }
+\seealso{
+Other resample: \code{\link{ResampleInstance}},
+  \code{\link{makeResampleInstance}};
+  \code{\link{ResamplePrediction}};
+  \code{\link{bootstrapB632}},
+  \code{\link{bootstrapB632plus}},
+  \code{\link{bootstrapOOB}}, \code{\link{crossval}},
+  \code{\link{holdout}}, \code{\link{repcv}},
+  \code{\link{resample}}, \code{\link{subsample}}
+}
 

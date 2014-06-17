@@ -11,4 +11,15 @@ of the resampling strategy, and and additional columns \code{set}, specifying wh
 was from an observation in the \dQuote{train} or \dQuote{test} set. (b) The prediction \code{time} is
 a numeric vector, its length equals the number of iterations.
 }
+\seealso{
+Other resample: \code{\link{ResampleDesc}},
+  \code{\link{makeResampleDesc}};
+  \code{\link{ResampleInstance}},
+  \code{\link{makeResampleInstance}};
+  \code{\link{bootstrapB632}},
+  \code{\link{bootstrapB632plus}},
+  \code{\link{bootstrapOOB}}, \code{\link{crossval}},
+  \code{\link{holdout}}, \code{\link{repcv}},
+  \code{\link{resample}}, \code{\link{subsample}}
+}
 

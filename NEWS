@@ -14,6 +14,7 @@ mlr_1.2:
 - generic standard error estimation in randomForest and BaggingWrapper
 - added fixup.data option to task contructors, so basic data cleanup can be performed
 - show.info is now an option in configureMlr
+- learners now support taggable properties that can be queried and changed. also see below.
 
 - new learners:
 -- classif.knn
@@ -41,7 +42,7 @@ mlr_1.2:
 -- removeConstantFeatures
 -- dropFeatures
 -- getTaskNFeats
--- visualizeLearner
+-- plotLearnerPrediction
 -- plotThreshVsPerf
 -- holdout, subsample, crossval, repcv, bootstrapOOB, bootstrapB632, bootstrapB632plus
 -- getFilterMethods, getFilterValues, filterFeatures, makeFilterWrapper, plotFilterValues
@@ -49,6 +50,7 @@ mlr_1.2:
 -- makeCostSensTaks, makeCostSensRegrWrapper, makeCostsSensWeightedPairsLearner
 -- downsample, makeDownsampleWrapper
 -- makeModelMultiplexer, makeModelMultiplexerParamSet
+-- hasProperties, setProperties, addProperties, removeProperties
 
 - imputation stuff ????
 - surv stuff ????

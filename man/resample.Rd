@@ -130,6 +130,10 @@ print(r$measures.test)
 print(r$pred)
 }
 \seealso{
-\code{\link{makeResampleDesc}}, \code{\link{makeResampleInstance}}
+Other resample: \code{\link{ResampleDesc}},
+  \code{\link{makeResampleDesc}};
+  \code{\link{ResampleInstance}},
+  \code{\link{makeResampleInstance}};
+  \code{\link{ResamplePrediction}}
 }
 

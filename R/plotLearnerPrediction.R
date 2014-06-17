@@ -1,5 +1,3 @@
-#FIXME: the name of the method might be improved. it is too unspecific
-
 #' @title Visualizes a learning algorithm on a 1D or 2D data set.
 #'
 #' @description
@@ -46,15 +44,21 @@
 #'   For classification: Either mark error of the model on the training data (\dQuote{train}) or
 #'   during cross-validation (\dQuote{cv}) or not at all with \dQuote{none}.
 #'   Default is \dQuote{train}.
+#' @param bg.cols [\code{character(3)}]\cr
+#'   Background colors for classification and regression.
+#'   Sorted from low, medium to high.
+#'   Default is \code{TRUE}.
 #' @param err.col [\code{character(1)}]\cr
 #'   For classification: Color of misclassified data points.
 #'   Default is \dQuote{orange}
 #' @return The ggplot2 object.
 #' @export
-visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L,  ...,
+plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 10L,  ...,
   gridsize, pointsize = 2,
   prob.alpha = TRUE, se.band = TRUE,
-  err.mark = "train", err.col = "orange") {
+  err.mark = "train",
+  bg.cols = c("darkblue", "green", "darkred"),
+  err.col = "orange") {
 
   learner = checkLearner(learner)
   checkArg(task, "SupervisedTask")
@@ -107,9 +111,9 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
 
   # predictions
   # if learner supports prob or se, enable it
-  if (td$type == "regr" && taskdim == 1L && hasProperty(learner, "se"))
+  if (td$type == "regr" && taskdim == 1L && hasProperties(learner, "se"))
     learner = setPredictType(learner, "se")
-  if (td$type == "classif" && hasProperty(learner, "prob"))
+  if (td$type == "classif" && hasProperties(learner, "prob"))
     learner = setPredictType(learner, "prob")
   mod = train(learner, task)
   pred.train = predict(mod, task)
@@ -152,9 +156,10 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
       NULL
     if (taskdim == 2L) {
       p = ggplot(grid, aes_string(x = x1n, y = x2n))
-      if (hasProperty(learner, "prob") && prob.alpha) {
+      if (hasProperties(learner, "prob") && prob.alpha) {
         # max of rows is prob for selected class
-        grid$.prob.pred.class = apply(getProbabilities(pred.grid, cl = td$class.levels), 1, max)
+        prob = apply(getProbabilities(pred.grid, cl = td$class.levels), 1, max)
+        grid$.prob.pred.class = prob
         p = p + geom_tile(data = grid, mapping = aes_string(fill = target, alpha = ".prob.pred.class"),
           show_guide = TRUE)
         p = p + scale_alpha(range = range(grid$.prob.pred.class))
@@ -177,7 +182,7 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
       p = p + geom_point(data = data, mapping = aes_string(y = target), size = pointsize)
       p = p + geom_line(data = grid, mapping = aes_string(y = target))
       # show se band
-      if (se.band && hasProperty(learner, "se")) {
+      if (se.band && hasProperties(learner, "se")) {
         grid$.se = pred.grid$data$se
         grid$.ymin = grid[, target] - grid$.se
         grid$.ymax = grid[, target] + grid$.se
@@ -185,18 +190,17 @@ visualizeLearner = function(learner, task, features = NULL, measures, cv = 10L, 
       }
     } else if (taskdim == 2L) {
       #FIXME: color are not scaled correctly?
-      cols = c("red", "white", "blue")
       # plot background from model / grid
       p = ggplot(mapping = aes_string(x = x1n, y = x2n))
       p = p + geom_tile(data = grid, mapping = aes_string(fill = target))
-      p = p + scale_fill_gradient2(low = cols[1L], mid = cols[2L], high = cols[3L])
+      p = p + scale_fill_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L])
       # plot point, with circle and interior color for y
       p = p + geom_point(data = data, mapping = aes_string(x = x1n, y = x2n, colour = target),
         size = pointsize)
       p = p + geom_point(data = data, mapping = aes_string(x = x1n, y = x2n),
         size = pointsize, colour = "black", shape = 1)
       # plot point, with circle and interior color for y
-      p = p + scale_colour_gradient2(low = cols[1L], mid = cols[2L], high = cols[3L])
+      p = p + scale_colour_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L])
       p  = p + guides(colour = FALSE)
     }
   }

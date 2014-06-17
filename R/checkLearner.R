@@ -5,7 +5,7 @@ checkLearner = function(learner, type = NULL, weights = FALSE, ...) {
     checkArg(learner, "Learner")
   if (!is.null(type) && learner$type != type)
     stopf("Learner '%s' must be of type %s, not: %s", learner$id, type, learner$type)
-  if (weights && !hasProperty(learner, "weights"))
+  if (weights && !hasProperties(learner, "weights"))
     stopf("Learner '%s' must support weights, but does not!", learner$id)
   setHyperPars(learner, ...)
 }

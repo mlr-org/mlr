@@ -48,6 +48,13 @@ rdesc <- makeResampleDesc("CV", iters = 50)
 rin <- makeResampleInstance(rdesc, size = nrow(iris))
 }
 \seealso{
-\code{\link{makeResampleDesc}}, \code{\link{resample}}
+Other resample: \code{\link{ResampleDesc}},
+  \code{\link{makeResampleDesc}};
+  \code{\link{ResamplePrediction}};
+  \code{\link{bootstrapB632}},
+  \code{\link{bootstrapB632plus}},
+  \code{\link{bootstrapOOB}}, \code{\link{crossval}},
+  \code{\link{holdout}}, \code{\link{repcv}},
+  \code{\link{resample}}, \code{\link{subsample}}
 }
 
