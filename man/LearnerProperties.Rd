@@ -2,6 +2,7 @@
 \name{LearnerProperties}
 \alias{LearnerProperties}
 \alias{addProperties}
+\alias{getProperties}
 \alias{hasProperties}
 \alias{removeProperties}
 \alias{setProperties}
@@ -14,6 +15,8 @@ addProperties(learner, props)
 removeProperties(learner, props)
 
 hasProperties(learner, props)
+
+getProperties(learner)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -27,6 +30,7 @@ Vector of properties to set, add, remove or query.}
 \code{setProperties}, \code{addProperties} and \code{removeProperties}
  return an updated \code{\link{Learner}}.
  \code{hasProperties} returns a logical vector of the same length of \code{props}.
+ \code{getProperties} returns the character vector of set properties.
 }
 \description{
 Set, add, remove or query properties of learners

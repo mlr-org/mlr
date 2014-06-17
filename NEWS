@@ -50,7 +50,7 @@ mlr_1.2:
 -- makeCostSensTaks, makeCostSensRegrWrapper, makeCostsSensWeightedPairsLearner
 -- downsample, makeDownsampleWrapper
 -- makeModelMultiplexer, makeModelMultiplexerParamSet
--- hasProperties, setProperties, addProperties, removeProperties
+-- hasProperties, getProperties, setProperties, addProperties, removeProperties
 
 - imputation stuff ????
 - surv stuff ????
