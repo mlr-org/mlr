@@ -189,7 +189,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
         p = p + geom_ribbon(data = grid, mapping = aes_string(ymin = ".ymin", ymax = ".ymax"), alpha = 0.2)
       }
     } else if (taskdim == 2L) {
-      #FIXME: color are not scaled correctly?
+      #FIXME: color are not scaled correctly? can be improved?
       # plot background from model / grid
       p = ggplot(mapping = aes_string(x = x1n, y = x2n))
       p = p + geom_tile(data = grid, mapping = aes_string(fill = target))
