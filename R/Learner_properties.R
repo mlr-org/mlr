@@ -6,7 +6,6 @@
 #' @return \code{setProperties}, \code{addProperties} and \code{removeProperties}
 #'  return an updated \code{\link{Learner}}.
 #'  \code{hasProperties} returns a logical vector of the same length of \code{props}.
-#'  \code{getProperties} returns the character vector of set properties.
 #' @export
 #' @name LearnerProperties
 setProperties = function(learner, props) {
@@ -41,14 +40,3 @@ hasProperties = function(learner, props) {
   checkArg(props, "character", na.ok = FALSE)
   props %in% learner$properties
 }
-
-#' @rdname LearnerProperties
-#' @export
-getProperties = function(learner) {
-  learner = checkLearner(learner)
-  learner$properties
-}
-
-
-
-
