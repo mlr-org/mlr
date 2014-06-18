@@ -3,13 +3,11 @@
 #' Returns the class names of learning algorithms which have specific characteristics, e.g.
 #' whether they supports missing values, case weights, etc.
 #'
-#' The default for all search parameters is \code{NA}, meaning: property is not required, do not care.
-#'
 #' Note that the packages of all learners are loaded during the search.
 #'
 #' @param type [\code{character(1)}]\cr
 #'   Type of the learning algorithm, one of \dQuote{classif}, \dQuote{regr}
-#'   or \dQuote{surv}.
+#'   or \dQuote{surv}. Default is \code{NA}, matching all types.
 #' @param properties [\code{character)}]\cr
 #'   Set of required properties to filter for. Default is \code{character(0)}.
 #' @param quiet [\code{logical(1)}]\cr
@@ -22,13 +20,12 @@
 #'   Default is code{TRUE}.
 #' @return [\code{character}]. Class names of matching learners.
 #' @export
-listLearners = function(type=NA, properties = character(0L), quiet=TRUE, warn.missing.packages=TRUE) {
+listLearners = function(type = NA_character_, properties = character(0L), quiet=TRUE, warn.missing.packages=TRUE) {
   checkArg(type, choices=list("classif", "regr", "surv", NA), NA)
   checkArg(properties, "character", na.ok = FALSE)
   checkArg(warn.missing.packages, "logical", len=1L, na.ok=FALSE)
 
   meths = as.character(methods("makeRLearner"))
-  # FIXME preallocate
   res = err = vector("list", length(meths))
   for (i in seq_along(meths)) {
     m = meths[[i]]

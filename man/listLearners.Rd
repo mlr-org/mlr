@@ -2,18 +2,21 @@
 \name{listLearners}
 \alias{listLearners}
 \alias{listLearnersForTask}
+\alias{listMeasuresForTask}
 \title{Find matching learning algorithms.}
 \usage{
-listLearners(type = NA, properties = character(0L), quiet = TRUE,
-  warn.missing.packages = TRUE)
+listLearners(type = NA_character_, properties = character(0L),
+  quiet = TRUE, warn.missing.packages = TRUE)
 
 listLearnersForTask(task, properties = character(0L),
   warn.missing.packages = TRUE)
+
+listMeasuresForTask(task, properties = character(0L))
 }
 \arguments{
 \item{type}{[\code{character(1)}]\cr
 Type of the learning algorithm, one of \dQuote{classif}, \dQuote{regr}
-or \dQuote{surv}.}
+or \dQuote{surv}. Default is \code{NA}, matching all types.}
 
 \item{properties}{[\code{character)}]\cr
 Set of required properties to filter for. Default is \code{character(0)}.}
@@ -30,6 +33,9 @@ Default is code{TRUE}.}
 
 \item{task}{[\code{\link{SupervisedTask}}]\cr
 The task. Learners are returned that are applicable.}
+
+\item{task}{[\code{\link{SupervisedTask}}]\cr
+The task. Learners are returned that are applicable.}
 }
 \value{
 [\code{character}]. Class names of matching learners.
@@ -39,8 +45,6 @@ Returns the class names of learning algorithms which have specific characteristi
 whether they supports missing values, case weights, etc.
 }
 \details{
-The default for all search parameters is \code{NA}, meaning: property is not required, do not care.
-
 Note that the packages of all learners are loaded during the search.
 }
 
