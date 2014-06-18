@@ -21,7 +21,7 @@
 #' @return [\code{character}]. Class names of matching learners.
 #' @export
 listLearners = function(type = NA_character_, properties = character(0L), quiet=TRUE, warn.missing.packages=TRUE) {
-  checkArg(type, choices=list("classif", "regr", "surv", NA), NA)
+  checkArg(type, choices=c("classif", "regr", "surv", NA_character_))
   checkArg(properties, "character", na.ok = FALSE)
   checkArg(warn.missing.packages, "logical", len=1L, na.ok=FALSE)
 

@@ -8,4 +8,3 @@ test_that("showHyperPars", {
   }
   })
 })
-

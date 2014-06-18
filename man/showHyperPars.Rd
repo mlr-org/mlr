@@ -3,15 +3,12 @@
 \alias{showHyperPars}
 \title{Display all possible hyperparameter settings for a learner that mlr knows.}
 \usage{
-showHyperPars(cl)
+showHyperPars(learner)
 }
 \arguments{
-\item{cl}{[\code{character(1)}]\cr
-Class of learner. By convention, all classification learners
-start with \dQuote{classif.}, all regression learners with
-\dQuote{regr.} and all survival learners start with \dQuote{surv.}.
-A list of all learners is available on the
-\code{\link{learners}} help page.}
+\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+The learner.
+If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 }
 \value{
 [\code{invisible(NULL)}].
