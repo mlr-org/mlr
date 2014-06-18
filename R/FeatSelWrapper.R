@@ -13,48 +13,24 @@
 #' \code{\link{getFeatSelResult}}.
 #'
 #' @template arg_learner
-#' @param resampling [\code{\link{ResampleDesc}} | \code{\link{ResampleInstance}}]\cr
-#'   Resampling strategy to evaluate feature sets. If you pass a description,
-#'   it is instantiated once at the beginning by default, so all feature sets are
-#'   evaluated on the same training/test sets.
-#'   If you want to change that behaviour, look at \code{\link{TuneControl}}.
-#' @param measures [\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
-#'   Performance measures to evaluate. The first measure, aggregated by the first aggregation function
-#'   is optimized during feature selection, others are simply evaluated.
-#' @param bit.names [\code{character}]\cr
-#'   Names of bits encoding the solutions. Also defines the total number of bits in the encoding.
-#'   Per default these are the feature names of the task.
-#' @param bits.to.features [\code{function(x, task)}]\cr
-#'   Function which transforms an integer-0-1 vector into a character vector of selected features.
-#'   Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.
-#' @param control [\code{\link{FeatSelControl}}]\cr
-#'   Control object for search method. Also selects the optimization algorithm for feature selection.
-#' @template arg_showinfo
+#' @inheritParams selectFeatures
 #' @template ret_learner
+#' @family featsel
 #' @export
 #' @examples
 #' # nested resampling with feature selection (with a pretty stupid algorithm for selection)
-#' task = makeClassifTask(data = iris, target = "Species")
 #' outer = makeResampleDesc("CV", iters = 2L)
 #' inner = makeResampleDesc("Holdout")
 #' ctrl = makeFeatSelControlRandom(maxit = 3)
-#' lrn1 = makeLearner("classif.ksvm")
-#' lrn2 = makeFeatSelWrapper(lrn1, resampling = inner, control = ctrl)
+#' lrn = makeFeatSelWrapper("classif.ksvm", resampling = inner, control = ctrl)
 #' # we also extract the selected features for all iteration here
-#' r = resample(lrn2, task, outer, extract = getFeatSelResult)
+#' r = resample(lrn, iris.task, outer, extract = getFeatSelResult)
 makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.features,
   control, show.info = getMlrOption("show.info")) {
 
-  checkArg(learner, "Learner")
+  learner = checkLearner(learner)
   checkArg(resampling, c("ResampleDesc", "ResampleInstance"))
-  if (missing(measures)) {
-    measures = default.measures(learner)
-  } else {
-    if (inherits(measures, "Measure"))
-      measures = list(measures)
-    else
-      checkListElementClass(measures, "Measure")
-  }
+  measures = checkMeasures(measures, learner)
   if (missing(bit.names)) {
     bit.names = character(0L)
   } else {
@@ -80,11 +56,13 @@ trainLearner.FeatSelWrapper = function(.learner, .task, .subset,  ...) {
   if (length(.learner$bit.names) == 0)
     #FIXME: really look at bitnames / bits.to.features stuff and test it.
     # do we need the extra case here?
-    or = selectFeatures(.learner$next.learner, task, .learner$resampling, .learner$control,
-      .learner$measures)
+    or = selectFeatures(.learner$next.learner, task, .learner$resampling,
+      measures = .learner$measures, control = .learner$control)
   else
-    or = selectFeatures(.learner$next.learner, task, .learner$resampling, .learner$control,
-      .learner$measures, .learner$bit.names, .learner$bits.to.features)
+    or = selectFeatures(.learner$next.learner, task, .learner$resampling,
+      measures = .learner$measures,
+      bit.names = .learner$bit.names, bits.to.features = .learner$bits.to.features,
+      control = .learner$control)
   task = subsetTask(task, features = or$x)
   m = train(.learner$next.learner, task)
   x = makeChainModel(next.model = m, cl = "FeatSelModel")

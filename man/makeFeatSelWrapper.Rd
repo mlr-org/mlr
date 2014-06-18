@@ -11,26 +11,26 @@ makeFeatSelWrapper(learner, resampling, measures, bit.names, bits.to.features,
 The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
-\item{resampling}{[\code{\link{ResampleDesc}} | \code{\link{ResampleInstance}}]\cr
-Resampling strategy to evaluate feature sets. If you pass a description,
-it is instantiated once at the beginning by default, so all feature sets are
-evaluated on the same training/test sets.
-If you want to change that behaviour, look at \code{\link{TuneControl}}.}
+\item{resampling}{[\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
+Resampling strategy for feature selection. If you pass a description,
+it is instantiated once at the beginning by default, so all points are evaluated on the same training/test sets.
+If you want to change that behaviour, look at \code{\link{FeatSelControl}}.}
 
-\item{measures}{[\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
+\item{measures}{[list of \code{\link{Measure}} | \code{\link{Measure}}]\cr
 Performance measures to evaluate. The first measure, aggregated by the first aggregation function
-is optimized during feature selection, others are simply evaluated.}
+is optimized, others are simply evaluated.}
 
-\item{bit.names}{[\code{character}]\cr
+\item{bit.names}{[character]\cr
 Names of bits encoding the solutions. Also defines the total number of bits in the encoding.
 Per default these are the feature names of the task.}
 
-\item{bits.to.features}{[\code{function(x, task)}]\cr
+\item{bits.to.features}{[function(x, task)]\cr
 Function which transforms an integer-0-1 vector into a character vector of selected features.
 Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.}
 
-\item{control}{[\code{\link{FeatSelControl}}]\cr
-Control object for search method. Also selects the optimization algorithm for feature selection.}
+\item{control}{[see \code{\link{FeatSelControl}}]
+Control object for search method.
+Also selects the optimization algorithm for feature selection.}
 
 \item{show.info}{[\code{logical(1)}]\cr
 Print verbose output on console?
@@ -53,13 +53,24 @@ After training, the optimal features (and other related information) can be retr
 }
 \examples{
 # nested resampling with feature selection (with a pretty stupid algorithm for selection)
-task = makeClassifTask(data = iris, target = "Species")
 outer = makeResampleDesc("CV", iters = 2L)
 inner = makeResampleDesc("Holdout")
 ctrl = makeFeatSelControlRandom(maxit = 3)
-lrn1 = makeLearner("classif.ksvm")
-lrn2 = makeFeatSelWrapper(lrn1, resampling = inner, control = ctrl)
+lrn = makeFeatSelWrapper("classif.ksvm", resampling = inner, control = ctrl)
 # we also extract the selected features for all iteration here
-r = resample(lrn2, task, outer, extract = getFeatSelResult)
+r = resample(lrn, iris.task, outer, extract = getFeatSelResult)
+}
+\seealso{
+Other featsel: \code{\link{FeatSelControl}},
+  \code{\link{FeatSelControlExhaustive}},
+  \code{\link{FeatSelControlGA}},
+  \code{\link{FeatSelControlRandom}},
+  \code{\link{FeatSelControlSequential}},
+  \code{\link{makeFeatSelControlExhaustive}},
+  \code{\link{makeFeatSelControlGA}},
+  \code{\link{makeFeatSelControlRandom}},
+  \code{\link{makeFeatSelControlSequential}};
+  \code{\link{analyzeFeatSelResult}};
+  \code{\link{selectFeatures}}
 }
 

@@ -17,27 +17,27 @@
 #'   Resampling strategy for feature selection. If you pass a description,
 #'   it is instantiated once at the beginning by default, so all points are evaluated on the same training/test sets.
 #'   If you want to change that behaviour, look at \code{\link{FeatSelControl}}.
-#' @param control [see \code{\link{FeatSelControl}}]
-#'   Control object for search method. Also selects the optimization algorithm for feature selection.
-#' @param measures [list of \code{\link{Measure}}]\cr
-#'   Performance measures to evaluate. The first measure, aggregated by the first aggregation function
-#'   is optimized during selection, others are simply evaluated.
+#' @template arg_measures_opt
 #' @param bit.names [character]\cr
 #'   Names of bits encoding the solutions. Also defines the total number of bits in the encoding.
 #'   Per default these are the feature names of the task.
 #' @param bits.to.features [function(x, task)]\cr
 #'   Function which transforms an integer-0-1 vector into a character vector of selected features.
 #'   Per default a value of 1 in the ith bit selects the ith feature to be in the candidate solution.
+#' @param control [see \code{\link{FeatSelControl}}]
+#'   Control object for search method.
+#'   Also selects the optimization algorithm for feature selection.
 #' @template arg_showinfo
 #' @return [\code{\link{FeatSelResult}}].
+#' @family featsel
 #' @export
 #' @examples
 #' rdesc = makeResampleDesc("Holdout")
 #' ctrl = makeFeatSelControlSequential(method = "sfs", maxit = NA)
 #' res = selectFeatures("classif.rpart", iris.task, rdesc, control = ctrl)
 #' analyzeFeatSelResult(res)
-selectFeatures = function(learner, task, resampling, control, measures,
-  bit.names, bits.to.features, show.info = getMlrOption("show.info")) {
+selectFeatures = function(learner, task, resampling, measures,
+  bit.names, bits.to.features, control, show.info = getMlrOption("show.info")) {
 
   learner = checkLearner(learner)
   checkArg(task, "SupervisedTask")
@@ -45,11 +45,7 @@ selectFeatures = function(learner, task, resampling, control, measures,
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")
   if (inherits(resampling, "ResampleDesc") && control$same.resampling.instance)
     resampling = makeResampleInstance(resampling, task = task)
-  if (missing(measures))
-    measures = default.measures(task)
-  if (inherits(measures, "Measure"))
-    measures = list(measures)
-  checkListElementClass(measures, "Measure")
+  measures = checkMeasures(measures, learner)
   if (missing(bit.names)) {
     bit.names = getTaskFeatureNames(task)
   } else {

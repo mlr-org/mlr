@@ -20,13 +20,11 @@
 #'   it is instantiated once at the beginning by default, so all points are
 #'   evaluated on the same training/test sets.
 #'   If you want to change that behaviour, look at \code{\link{TuneControl}}.
+#' @template arg_measures_opt
 #' @param par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
 #'   Collection of parameters and their constraints for optimization.
 #' @param control [\code{\link{TuneControl}}]\cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.
-#' @param measures [\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
-#'   Performance measures to evaluate. The first measure, aggregated by the first aggregation function
-#'   is optimized during tuning, others are simply evaluated.
 #' @template arg_showinfo
 #' @return [\code{\link{TuneResult}}].
 #' @family tune
@@ -34,11 +32,7 @@
 tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)
   checkArg(task, "SupervisedTask")
-  if (missing(measures))
-    measures = default.measures(task)
-  if (is(measures, "Measure"))
-    measures = list(measures)
-  checkListElementClass(measures, "Measure")
+  measures = checkMeasures(measures, learner)
   checkArg(par.set, "ParamSet")
   checkArg(control, "TuneControl")
   if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
@@ -48,14 +42,14 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
   checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
   checkTunerParset(learner, par.set, control)
   cl = as.character(class(control))[1]
-	sel.func = switch(cl,
+  sel.func = switch(cl,
     TuneControlGrid = tuneGrid,
     TuneControlOptim = tuneOptim,
     TuneControlCMAES = tuneCMAES,
     TuneControlMBO = tuneMBO,
-	  TuneControlIrace = tuneIrace,
-	  TuneControlRandom = tuneRandom
-	)
+    TuneControlIrace = tuneIrace,
+    TuneControlRandom = tuneRandom
+  )
   opt.path = makeOptPathDFFromMeasures(par.set, measures)
   if (show.info) {
     messagef("[Tune] Started tuning learner %s for parameter set:", learner$id)
@@ -65,7 +59,7 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
   or = sel.func(learner, task, resampling, measures, par.set, control, opt.path, show.info)
   if (show.info)
     messagef("[Tune] Result: %s : %s", paramValueToString(par.set, or$x), perfsToString(or$y))
-	return(or)
+  return(or)
 }
 
 

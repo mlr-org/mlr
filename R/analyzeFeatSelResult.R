@@ -12,6 +12,7 @@
 #'   Per iteration: Print only the selected feature (or all features that were evaluated)?
 #'   Default is \code{TRUE}.
 #' @template ret_inv_null
+#' @family featsel
 #' @export
 analyzeFeatSelResult = function(res, reduce = TRUE) {
   checkArg(res$control, "FeatSelControlSequential")
