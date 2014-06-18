@@ -2,11 +2,11 @@ context("resample: cv")
 
 
 test_that("cv instance works", {
-  rin = makeResampleInstance(makeResampleDesc("CV", iters=3), size=25)
-  
+  rin = makeResampleInstance(makeResampleDesc("CV", iters = 3), size = 25)
+
   folds = rin$desc$iters
   expect_equal(folds, 3)
-  
+
   for (i in 1:folds) {
     i1 = rin$train.inds[[i]]
     i2 = rin$test.inds[[i]]
@@ -18,21 +18,21 @@ test_that("cv instance works", {
   }
   # check that resampling is really stochastic
   if (interactive()) {
-    rin1 = makeResampleInstance(makeResampleDesc("CV", iters=3), size=500)
-    rin2 = makeResampleInstance(makeResampleDesc("CV", iters=3), size=500)
-    expect_true(!all(sort(rin1$test.inds[[1]])== sort(rin2$test.inds[[1]])))
+    rin1 = makeResampleInstance(makeResampleDesc("CV", iters = 2L), size = 500)
+    rin2 = makeResampleInstance(makeResampleDesc("CV", iters = 2L), size = 500)
+    expect_true(!all(sort(rin1$test.inds[[1]]) == sort(rin2$test.inds[[1]])))
   }
-})  
+})
 
 test_that("cv resampling works", {
   data = multiclass.df
   formula = multiclass.formula
-  parset = list(minsplit=12, cp=0.09)
+  parset = list(minsplit = 12, cp = 0.09)
 
   tt = "rpart"
-  tp = function(model, newdata) predict(model, newdata, type="class")
+  tp = function(model, newdata) predict(model, newdata, type = "class")
 
-  testCV("classif.rpart", multiclass.df, multiclass.target, tune.train=tt, tune.predict=tp, parset=parset)
+  testCV("classif.rpart", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset = parset)
 })
 
 

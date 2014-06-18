@@ -15,28 +15,37 @@
 #'   aggregate performance values accordingly. Default is 'factor()'.}
 #' }
 #'
-#' @param desc [\code{\link{ResampleDesc}}]\cr
-#'   Resampling description object.
+#' @param desc [\code{\link{ResampleDesc}} | \code{character(1)}]\cr
+#'   Resampling description object or name of resampling strategy.
+#'   In the latter case \code{\link{makeResampleDesc}} will be called internally on the string.
 #' @param task [\code{\link{SupervisedTask}}]\cr
 #'   Data of task to resample from.
 #'   Prefer to pass this instead of \code{size}.
 #' @param size [\code{\link{integer}}]\cr
 #'   Size of the data set to resample.
 #'   Can be used instead of \code{task}.
+#' @param ... [any]\cr
+#'   Passed down to \code{\link{makeResampleDesc}} in case
+#'   you passed a string in \code{desc}.
+#'   Otherwise ignored.
 #' @return [\code{\link{ResampleInstance}}].
 #' @family resample
 #' @export
 #' @aliases ResampleInstance
 #' @examples
-#' task <- makeClassifTask(data = iris, target = "Species")
-#' rdesc <- makeResampleDesc("Bootstrap", iters = 10)
-#' rin <- makeResampleInstance(rdesc, task = task)
+#' rdesc = makeResampleDesc("Bootstrap", iters = 10)
+#' rin = makeResampleInstance(rdesc, task = iris.task)
 #'
-#' # Alternatively provide the size argument instead of a task object
-#' rdesc <- makeResampleDesc("CV", iters = 50)
-#' rin <- makeResampleInstance(rdesc, size = nrow(iris))
-makeResampleInstance = function(desc, task, size) {
-  checkArg(desc, "ResampleDesc")
+#' rdesc = makeResampleDesc("CV", iters = 50)
+#' rin = makeResampleInstance(rdesc, size = nrow(iris))
+#'
+#' rin = makeResampleInstance("CV", iters = 10, task = iris.task)
+makeResampleInstance = function(desc, task, size, ...) {
+  checkArg(desc, c("ResampleDesc", "character"))
+  if (is.character(desc)) {
+    checkArg(desc, "character", len = 1L, na.ok = FALSE)
+    desc = makeResampleDesc(desc, ...)
+  }
   if (!missing(task)) {
     checkArg(task, "SupervisedTask")
     size = task$task.desc$size
@@ -47,7 +56,7 @@ makeResampleInstance = function(desc, task, size) {
   }
   if (!missing(size)) {
     size = convertInteger(size)
-    checkArg(size, "integer", len=1L, na.ok=FALSE)
+    checkArg(size, "integer", len = 1L, na.ok = FALSE)
   }
 
   if (length(blocking) && desc$stratify)
@@ -72,7 +81,7 @@ makeResampleInstance = function(desc, task, size) {
       stop("Stratification is currently only supported for classification!")
     y = getTaskTargets(task)
     # resample on every class
-    class.inds = lapply(task$task.desc$class.levels, function(x) which(x==y))
+    class.inds = lapply(task$task.desc$class.levels, function(x) which(x == y))
     train.inds = vector("list", length(class.inds))
     test.inds = vector("list", length(class.inds))
     for (i in seq_along(class.inds)) {
@@ -82,7 +91,7 @@ makeResampleInstance = function(desc, task, size) {
         train.inds[[i]] = lapply(inst$train.inds, function(j) ci[j])
         test.inds[[i]] = lapply(inst$test.inds, function(j) ci[j])
       } else {
-        train.inds[[i]] = test.inds[[i]] = replicate(desc$iters, integer(0L), simplify=FALSE)
+        train.inds[[i]] = test.inds[[i]] = replicate(desc$iters, integer(0L), simplify = FALSE)
       }
     }
     inst = instantiateResampleInstance(desc, size)
@@ -94,7 +103,7 @@ makeResampleInstance = function(desc, task, size) {
   return(inst)
 }
 
-makeResampleInstanceInternal = function(desc, size, train.inds, test.inds, group=factor(c())) {
+makeResampleInstanceInternal = function(desc, size, train.inds, test.inds, group = factor(c())) {
   if (missing(test.inds) && !missing(train.inds)) {
     # shuffle data set and remove inds
     test.inds = sample(size)
@@ -105,13 +114,13 @@ makeResampleInstanceInternal = function(desc, size, train.inds, test.inds, group
     train.inds = sample(size)
     train.inds = lapply(test.inds, function(x) setdiff(train.inds, x))
   }
-  inst = structure(list(
-    desc=desc,
-    size=size,
+  inst = makeS3Obj("ResampleInstance",
+    desc = desc,
+    size = size,
     train.inds = train.inds,
     test.inds = test.inds,
     group = group
-  ), class="ResampleInstance")
+  )
 }
 
 #' @export

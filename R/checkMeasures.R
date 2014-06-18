@@ -1,13 +1,10 @@
-checkMeasures = function(measures, task, aggr = NULL) {
+checkMeasures = function(measures, obj, aggr = NULL) {
   if (missing(measures)) {
-    measures = default.measures(task)
+    measures = default.measures(obj)
   } else {
-    if (is(measures, "Measure")) {
-      measures = list(measures)
-    } else {
-      checkArg(measures, "list")
-      checkListElementClass(measures, "Measure")
-    }
+    measures = ensureVector(measures, n = 1L, cl = "Measure")
+    checkArg(measures, "list")
+    checkListElementClass(measures, "Measure")
   }
   if (!is.null(aggr))
     measures = lapply(measures, setAggregation, aggr = aggr)

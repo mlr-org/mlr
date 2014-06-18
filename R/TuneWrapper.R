@@ -14,19 +14,7 @@
 #' \code{\link{getTuneResult}}.
 #'
 #' @template arg_learner
-#' @param resampling [\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
-#'   Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
-#'   it is instantiated once at the beginning by default, so all points are
-#'   evaluated on the same training/test sets.
-#'   If you want to change that behaviour, look at \code{\link{TuneControl}}.
-#' @param measures [\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
-#'   Performance measures to evaluate. The first measure, aggregated by the first aggregation function
-#'   is optimized during tuning, others are simply evaluated.
-#' @param par.set [\code{\link[ParamHelpers]{ParamSet}}] \cr
-#'   Collection of parameters and their constraints for optimization.
-#' @param control [\code{\link{TuneControl}}] \cr
-#'   Control object for search method. Also selects the optimization algorithm for tuning.
-#' @template arg_showinfo
+#' @inheritParams tuneParams
 #' @template ret_learner
 #' @export
 #' @family tune
@@ -49,16 +37,9 @@
 #' r = resample(lrn, task, outer, extract = getTuneResult)
 #' print(r$extract)
 makeTuneWrapper = function(learner, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
-  checkArg(learner, "Learner")
+  learner = checkLearner(learner)
   checkArg(resampling, c("ResampleDesc", "ResampleInstance"))
-  if (missing(measures)) {
-    measures = default.measures(learner)
-  } else {
-    if (is(measures, "Measure"))
-      measures = list(measures)
-    else
-      checkListElementClass(measures, "Measure")
-  }
+  measures = checkMeasures(measures, learner)
   checkArg(par.set, "ParamSet")
   checkArg(control, "TuneControl")
   checkArg(show.info, "logical", len = 1L, na.ok = FALSE)

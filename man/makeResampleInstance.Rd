@@ -4,11 +4,12 @@
 \alias{makeResampleInstance}
 \title{Instantiates a resampling strategy object.}
 \usage{
-makeResampleInstance(desc, task, size)
+makeResampleInstance(desc, task, size, ...)
 }
 \arguments{
-\item{desc}{[\code{\link{ResampleDesc}}]\cr
-Resampling description object.}
+\item{desc}{[\code{\link{ResampleDesc}} | \code{character(1)}]\cr
+Resampling description object or name of resampling strategy.
+In the latter case \code{\link{makeResampleDesc}} will be called internally on the string.}
 
 \item{task}{[\code{\link{SupervisedTask}}]\cr
 Data of task to resample from.
@@ -17,6 +18,11 @@ Prefer to pass this instead of \code{size}.}
 \item{size}{[\code{\link{integer}}]\cr
 Size of the data set to resample.
 Can be used instead of \code{task}.}
+
+\item{...}{[any]\cr
+Passed down to \code{\link{makeResampleDesc}} in case
+you passed a string in \code{desc}.
+Otherwise ignored.}
 }
 \value{
 [\code{\link{ResampleInstance}}].
@@ -39,13 +45,13 @@ Object slots:
 }
 }
 \examples{
-task <- makeClassifTask(data = iris, target = "Species")
-rdesc <- makeResampleDesc("Bootstrap", iters = 10)
-rin <- makeResampleInstance(rdesc, task = task)
+rdesc = makeResampleDesc("Bootstrap", iters = 10)
+rin = makeResampleInstance(rdesc, task = iris.task)
 
-# Alternatively provide the size argument instead of a task object
-rdesc <- makeResampleDesc("CV", iters = 50)
-rin <- makeResampleInstance(rdesc, size = nrow(iris))
+rdesc = makeResampleDesc("CV", iters = 50)
+rin = makeResampleInstance(rdesc, size = nrow(iris))
+
+rin = makeResampleInstance("CV", iters = 10, task = iris.task)
 }
 \seealso{
 Other resample: \code{\link{ResampleDesc}},

@@ -17,14 +17,14 @@ it is instantiated once at the beginning by default, so all points are
 evaluated on the same training/test sets.
 If you want to change that behaviour, look at \code{\link{TuneControl}}.}
 
-\item{measures}{[\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
+\item{measures}{[list of \code{\link{Measure}} | \code{\link{Measure}}]\cr
 Performance measures to evaluate. The first measure, aggregated by the first aggregation function
-is optimized during tuning, others are simply evaluated.}
+is optimized, others are simply evaluated.}
 
-\item{par.set}{[\code{\link[ParamHelpers]{ParamSet}}] \cr
+\item{par.set}{[\code{\link[ParamHelpers]{ParamSet}}]\cr
 Collection of parameters and their constraints for optimization.}
 
-\item{control}{[\code{\link{TuneControl}}] \cr
+\item{control}{[\code{\link{TuneControl}}]\cr
 Control object for search method. Also selects the optimization algorithm for tuning.}
 
 \item{show.info}{[\code{logical(1)}]\cr

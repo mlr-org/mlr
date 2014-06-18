@@ -1,24 +1,25 @@
 context("downsample")
 
 test_that("downsample",  {
-  down.tsk = downsample(multiclass.task, select = "abs", val = 50L)
+  down.tsk = downsample(multiclass.task, perc = 1/3)
   expect_equal(down.tsk$task.desc$size, 50L)
-  rsm.methods = c("CV", "LOO", "RepCV", "Bootstrap", "Subsample", "Holdout")
+  rsm.methods = c("Bootstrap", "Subsample", "Holdout")
   for(rsm.method in rsm.methods) {
-    res = makeResampleDesc(method = rsm.method)
-    res.inst = makeResampleInstance(desc = res, task = binaryclass.task)
-    res.inst.down = downsample(res.inst, select = "perc", val = 0.5)
+    rin = makeResampleInstance(rsm.method, task = binaryclass.task)
+    rin2 = downsample(rin, perc = 0.5)
+    sapply(seq_along(rin$train.inds), function(i)
+      expect_equal(
+        length(rin2$train.inds[[i]]),
+        length(rin$train.inds[[i]]) / 2
+      )
+    )
   }
 })
 
 test_that("downsample wrapper",  {
   rdesc = makeResampleDesc("CV", iters = 2)
-  lrn1 = makeLearner("classif.rpart")
-  lrn2 = makeDownsampleWrapper(lrn1, dw.select = "perc", dw.val = 0.5)
-  lrn3 = makeDownsampleWrapper(lrn1, dw.select = "abs", dw.val = 50, dw.stratify = TRUE)
-  r = resample(lrn2, binaryclass.task, rdesc)
-  expect_true(!is.na(r$aggr))
-  r = resample(lrn3, multiclass.task, rdesc)
+  lrn = makeDownsampleWrapper("classif.rpart", dw.perc = 0.5)
+  r = resample(lrn, binaryclass.task, rdesc)
   expect_true(!is.na(r$aggr))
 })
 
