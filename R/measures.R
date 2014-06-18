@@ -1,4 +1,5 @@
 #' @title Performance measures.
+#' @name measures
 #'
 #' @description
 #' A performance measure is evaluated after a single train/predict step and returns a single number to assess the quality
@@ -66,15 +67,16 @@
 #' @export
 #' @usage none
 #' @format none
-measures = function() {}
+NULL
 
-
-#general
+###############################################################################
+### general ###
+###############################################################################
 #' @export featperc
 #' @rdname measures
 #' @usage none
 #' @format none
-featperc = makeMeasure(id = "featperc", minimize = TRUE, classif = TRUE, regr = TRUE, allowed.pred.types = c("response", "prob"),
+featperc = makeMeasure(id = "featperc", minimize = TRUE, properties = c("classif", "classif.multi", "regr", "surv", "costsens"), allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     length(model$features) / sum(pred$task.desc$n.feat)
   }
@@ -84,7 +86,7 @@ featperc = makeMeasure(id = "featperc", minimize = TRUE, classif = TRUE, regr = 
 #' @rdname measures
 #' @usage none
 #' @format none
-timetrain = makeMeasure(id = "timetrain", minimize = TRUE, classif = TRUE, regr = TRUE, allowed.pred.types = c("response", "prob"),
+timetrain = makeMeasure(id = "timetrain", minimize = TRUE, properties = c("classif", "classif.multi", "regr", "surv", "costsens"), allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     model$time
   }
@@ -94,7 +96,7 @@ timetrain = makeMeasure(id = "timetrain", minimize = TRUE, classif = TRUE, regr 
 #' @rdname measures
 #' @usage none
 #' @format none
-timepredict = makeMeasure(id = "timepredict", minimize = TRUE, classif = TRUE, regr = TRUE, allowed.pred.types = c("response", "prob"),
+timepredict = makeMeasure(id = "timepredict", minimize = TRUE, properties = c("classif", "classif.multi", "regr", "surv", "costsens"), allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     pred$time
   }
@@ -104,19 +106,20 @@ timepredict = makeMeasure(id = "timepredict", minimize = TRUE, classif = TRUE, r
 #' @rdname measures
 #' @usage none
 #' @format none
-timeboth = makeMeasure(id = "timeboth", minimize = TRUE, classif = TRUE, regr = TRUE, allowed.pred.types = c("response", "prob"),
+timeboth = makeMeasure(id = "timeboth", minimize = TRUE, properties = c("classif", "classif.multi", "regr", "surv", "costsens"), allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     model$time + pred$time
   }
 )
 
+###############################################################################
 ### regression ###
-
+###############################################################################
 #' @export sse
 #' @rdname measures
 #' @usage none
 #' @format none
-sse = makeMeasure(id = "sse", minimize = TRUE, regr = TRUE, allowed.pred.types = c("response", "se"),
+sse = makeMeasure(id = "sse", minimize = TRUE, properties = "regr", allowed.pred.types = c("response", "se"),
   fun = function(task, model, pred, extra.args) {
     sum((pred$data$response - pred$data$truth)^2)
   }
@@ -126,7 +129,7 @@ sse = makeMeasure(id = "sse", minimize = TRUE, regr = TRUE, allowed.pred.types =
 #' @rdname measures
 #' @usage none
 #' @format none
-mse = makeMeasure(id = "mse", minimize = TRUE, regr = TRUE, allowed.pred.types = c("response", "se"),
+mse = makeMeasure(id = "mse", minimize = TRUE, properties = "regr", allowed.pred.types = c("response", "se"),
   fun = function(task, model, pred, extra.args) {
     mean((pred$data$response - pred$data$truth)^2)
   }
@@ -137,7 +140,7 @@ mse = makeMeasure(id = "mse", minimize = TRUE, regr = TRUE, allowed.pred.types =
 #' @rdname measures
 #' @usage none
 #' @format none
-rmse = makeMeasure(id = "rmse", minimize = TRUE, regr = TRUE, allowed.pred.types = c("response", "se"),
+rmse = makeMeasure(id = "rmse", minimize = TRUE, properties = "regr", allowed.pred.types = c("response", "se"),
   fun = function(task, model, pred, extra.args) {
     mean((pred$data$response - pred$data$truth)^2)
   },
@@ -148,7 +151,7 @@ rmse = makeMeasure(id = "rmse", minimize = TRUE, regr = TRUE, allowed.pred.types
 #' @rdname measures
 #' @usage none
 #' @format none
-medse = makeMeasure(id = "medse", minimize = TRUE, regr = TRUE, allowed.pred.types = c("response", "se"),
+medse = makeMeasure(id = "medse", minimize = TRUE, properties = "regr", allowed.pred.types = c("response", "se"),
   fun = function(task, model, pred, extra.args) {
     median((pred$data$response - pred$data$truth)^2)
   }
@@ -158,7 +161,7 @@ medse = makeMeasure(id = "medse", minimize = TRUE, regr = TRUE, allowed.pred.typ
 #' @rdname measures
 #' @usage none
 #' @format none
-sae = makeMeasure(id = "sae", minimize = TRUE, regr = TRUE, allowed.pred.types = c("response", "se"),
+sae = makeMeasure(id = "sae", minimize = TRUE, properties = "regr", allowed.pred.types = c("response", "se"),
   fun = function(task, model, pred, extra.args) {
     sum(abs(pred$data$response - pred$data$truth))
   }
@@ -168,7 +171,7 @@ sae = makeMeasure(id = "sae", minimize = TRUE, regr = TRUE, allowed.pred.types =
 #' @rdname measures
 #' @usage none
 #' @format none
-mae = makeMeasure(id = "mae", minimize = TRUE, regr = TRUE, allowed.pred.types = c("response", "se"),
+mae = makeMeasure(id = "mae", minimize = TRUE, properties = "regr", allowed.pred.types = c("response", "se"),
   fun = function(task, model, pred, extra.args) {
     mean(abs(pred$data$response - pred$data$truth))
   }
@@ -178,20 +181,20 @@ mae = makeMeasure(id = "mae", minimize = TRUE, regr = TRUE, allowed.pred.types =
 #' @rdname measures
 #' @usage none
 #' @format none
-medae = makeMeasure(id = "medae", minimize = TRUE, regr = TRUE, allowed.pred.types = c("response", "se"),
+medae = makeMeasure(id = "medae", minimize = TRUE, properties = "regr", allowed.pred.types = c("response", "se"),
   fun = function(task, model, pred, extra.args) {
     median(abs(pred$data$response - pred$data$truth))
   }
 )
 
-
-# classif_multi
-
+###############################################################################
+### classif multi ###
+###############################################################################
 #' @export mmce
 #' @rdname measures
 #' @usage none
 #' @format none
-mmce = makeMeasure(id = "mmce", minimize = TRUE, classif = TRUE, allowed.pred.types = c("response", "prob"),
+mmce = makeMeasure(id = "mmce", minimize = TRUE, properties = c("classif", "classif.multi"), allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     mean(pred$data$response != pred$data$truth)
   }
@@ -201,7 +204,7 @@ mmce = makeMeasure(id = "mmce", minimize = TRUE, classif = TRUE, allowed.pred.ty
 #' @rdname measures
 #' @usage none
 #' @format none
-acc = makeMeasure(id = "acc", minimize = FALSE, classif = TRUE, allowed.pred.types = c("response", "prob"),
+acc = makeMeasure(id = "acc", minimize = FALSE, properties = c("classif", "classif.multi"), allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     mean(pred$data$response == pred$data$truth)
   }
@@ -211,7 +214,7 @@ acc = makeMeasure(id = "acc", minimize = FALSE, classif = TRUE, allowed.pred.typ
 #' @rdname measures
 #' @usage none
 #' @format none
-ber = makeMeasure(id = "ber", minimize = TRUE, classif = TRUE, allowed.pred.types = c("response", "prob"),
+ber = makeMeasure(id = "ber", minimize = TRUE, properties = c("classif", "classif.multi"), allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     n = length(pred$task.desc$class.levels) + 1L
     mean(getConfMatrix(pred, relative = TRUE)[-n, n])
@@ -222,7 +225,7 @@ ber = makeMeasure(id = "ber", minimize = TRUE, classif = TRUE, allowed.pred.type
 #' @rdname measures
 #' @usage none
 #' @format none
-multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, classif = TRUE, only.binary = FALSE, allowed.pred.types = c("response", "prob"),
+multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, properties = c("classif", "classif.multi"), allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     # pROC does allow NAs
     requirePackages("pROC", "multiclass.auc")
@@ -237,13 +240,14 @@ multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, classif = 
   }
 )
 
-# classif_two
-
+###############################################################################
+### classif binary ###
+###############################################################################
 #' @export auc
 #' @rdname measures
 #' @usage none
 #' @format none
-auc = makeMeasure(id = "auc", minimize = FALSE, classif = TRUE, only.binary = TRUE, allowed.pred.types = "prob",
+auc = makeMeasure(id = "auc", minimize = FALSE, properties = "classif", allowed.pred.types = "prob",
   fun = function(task, model, pred, extra.args) {
     # ROCR does not work with NAs
     if (any(is.na(pred$data$response)) || length(unique(pred$data$truth)) == 1L)
@@ -257,7 +261,7 @@ auc = makeMeasure(id = "auc", minimize = FALSE, classif = TRUE, only.binary = TR
 #' @rdname measures
 #' @usage none
 #' @format none
-tp = makeMeasure(id = "tp", minimize = FALSE, classif = TRUE, only.binary = TRUE, allowed.pred.types = c("response", "prob"),
+tp = makeMeasure(id = "tp", minimize = FALSE, properties = "classif", allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     sum(pred$data$truth == pred$data$response & pred$data$response == pred$task.desc$positive)
   }
@@ -267,7 +271,7 @@ tp = makeMeasure(id = "tp", minimize = FALSE, classif = TRUE, only.binary = TRUE
 #' @rdname measures
 #' @usage none
 #' @format none
-tn = makeMeasure(id = "tn", minimize = FALSE, classif = TRUE, only.binary = TRUE, allowed.pred.types = c("response", "prob"),
+tn = makeMeasure(id = "tn", minimize = FALSE, properties = "classif", allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     sum(pred$data$truth == pred$data$response & pred$data$response == pred$task.desc$negative)
   }
@@ -277,7 +281,7 @@ tn = makeMeasure(id = "tn", minimize = FALSE, classif = TRUE, only.binary = TRUE
 #' @rdname measures
 #' @usage none
 #' @format none
-fp = makeMeasure(id = "fp", minimize = TRUE, classif = TRUE, only.binary = TRUE, allowed.pred.types = c("response", "prob"),
+fp = makeMeasure(id = "fp", minimize = TRUE, properties = "classif", allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     sum(pred$data$truth != pred$data$response & pred$data$response == pred$task.desc$positive)
   }
@@ -287,18 +291,17 @@ fp = makeMeasure(id = "fp", minimize = TRUE, classif = TRUE, only.binary = TRUE,
 #' @rdname measures
 #' @usage none
 #' @format none
-fn = makeMeasure(id = "fn", minimize = TRUE, classif = TRUE, only.binary = TRUE, allowed.pred.types = c("response", "prob"),
+fn = makeMeasure(id = "fn", minimize = TRUE, properties = "classif", allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     sum(pred$data$truth != pred$data$response & pred$data$response == pred$task.desc$negative)
   }
 )
 
-
 #' @export tpr
 #' @rdname measures
 #' @usage none
 #' @format none
-tpr = makeMeasure(id = "tpr", minimize = FALSE, classif = TRUE, only.binary = TRUE, allowed.pred.types = c("response", "prob"),
+tpr = makeMeasure(id = "tpr", minimize = FALSE, properties = "classif", allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     tp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive)
   }
@@ -308,7 +311,7 @@ tpr = makeMeasure(id = "tpr", minimize = FALSE, classif = TRUE, only.binary = TR
 #' @rdname measures
 #' @usage none
 #' @format none
-tnr = makeMeasure(id = "tnr", minimize = FALSE, classif = TRUE, only.binary = TRUE, allowed.pred.types = c("response", "prob"),
+tnr = makeMeasure(id = "tnr", minimize = FALSE, properties = "classif", allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     tn$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$negative)
   }
@@ -318,7 +321,7 @@ tnr = makeMeasure(id = "tnr", minimize = FALSE, classif = TRUE, only.binary = TR
 #' @rdname measures
 #' @usage none
 #' @format none
-fpr = makeMeasure(id = "fpr", minimize = TRUE, classif = TRUE, only.binary = TRUE, allowed.pred.types = c("response", "prob"),
+fpr = makeMeasure(id = "fpr", minimize = TRUE, properties = "classif", allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     fp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$negative)
   }
@@ -328,7 +331,7 @@ fpr = makeMeasure(id = "fpr", minimize = TRUE, classif = TRUE, only.binary = TRU
 #' @rdname measures
 #' @usage none
 #' @format none
-fnr = makeMeasure(id = "fnr", minimize = TRUE, classif = TRUE, only.binary = TRUE, allowed.pred.types = c("response", "prob"),
+fnr = makeMeasure(id = "fnr", minimize = TRUE, properties = "classif", allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     fn$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive)
   }
@@ -338,7 +341,7 @@ fnr = makeMeasure(id = "fnr", minimize = TRUE, classif = TRUE, only.binary = TRU
 #' @rdname measures
 #' @usage none
 #' @format none
-ppv = makeMeasure(id = "ppv", minimize = FALSE, classif = TRUE, only.binary = TRUE, allowed.pred.types = c("response", "prob"),
+ppv = makeMeasure(id = "ppv", minimize = FALSE, properties = "classif", allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     tp$fun(pred = pred) / sum(pred$data$response == pred$task.desc$positive)
   }
@@ -348,7 +351,7 @@ ppv = makeMeasure(id = "ppv", minimize = FALSE, classif = TRUE, only.binary = TR
 #' @rdname measures
 #' @usage none
 #' @format none
-npv = makeMeasure(id = "npv", minimize = FALSE, classif = TRUE, only.binary = TRUE, allowed.pred.types = c("response", "prob"),
+npv = makeMeasure(id = "npv", minimize = FALSE, properties = "classif", allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     tn$fun(pred = pred) / sum(pred$data$response == pred$task.desc$negative)
   }
@@ -358,7 +361,7 @@ npv = makeMeasure(id = "npv", minimize = FALSE, classif = TRUE, only.binary = TR
 #' @rdname measures
 #' @usage none
 #' @format none
-fdr = makeMeasure(id = "fdr", minimize = TRUE, classif = TRUE, only.binary = TRUE, allowed.pred.types = c("response", "prob"),
+fdr = makeMeasure(id = "fdr", minimize = TRUE, properties = "classif", allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     fp$fun(pred = pred) / sum(pred$data$response == pred$task.desc$positive)
   }
@@ -368,7 +371,7 @@ fdr = makeMeasure(id = "fdr", minimize = TRUE, classif = TRUE, only.binary = TRU
 #' @rdname measures
 #' @usage none
 #' @format none
-mcc = makeMeasure(id = "mcc", minimize = FALSE, classif = TRUE, only.binary = TRUE, allowed.pred.types = c("response", "prob"),
+mcc = makeMeasure(id = "mcc", minimize = FALSE, properties = "classif", allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     (tp$fun(pred = pred) *
     tn$fun(pred = pred) -
@@ -382,7 +385,7 @@ mcc = makeMeasure(id = "mcc", minimize = FALSE, classif = TRUE, only.binary = TR
 #' @rdname measures
 #' @usage none
 #' @format none
-f1 = makeMeasure(id = "f1", minimize = FALSE, classif = TRUE, only.binary = TRUE, allowed.pred.types = c("response", "prob"),
+f1 = makeMeasure(id = "f1", minimize = FALSE, properties = "classif", allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     2 * tp$fun(pred = pred) /
       (sum(pred$data$truth == pred$task.desc$positive) + sum(pred$data$response == pred$task.desc$positive))
@@ -393,7 +396,7 @@ f1 = makeMeasure(id = "f1", minimize = FALSE, classif = TRUE, only.binary = TRUE
 #' @rdname measures
 #' @usage none
 #' @format none
-gmean = makeMeasure(id = "gmean", minimize = FALSE, classif = TRUE, only.binary = TRUE, allowed.pred.types = c("response", "prob"),
+gmean = makeMeasure(id = "gmean", minimize = FALSE, properties = "classif", allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     sqrt(tpr$fun(pred = pred) * tnr$fun(pred = pred))
   }
@@ -403,17 +406,20 @@ gmean = makeMeasure(id = "gmean", minimize = FALSE, classif = TRUE, only.binary 
 #' @rdname measures
 #' @usage none
 #' @format none
-gpr = makeMeasure(id = "gpr", minimize = FALSE, classif = TRUE, only.binary = TRUE, allowed.pred.types = c("response", "prob"),
+gpr = makeMeasure(id = "gpr", minimize = FALSE, properties = "classif", allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     sqrt(ppv$fun(pred = pred) * tpr$fun(pred = pred))
   }
 )
 
+###############################################################################
+### survival ###
+###############################################################################
 #' @export cindex
 #' @rdname measures
 #' @usage none
 #' @format none
-cindex = makeMeasure(id = "cindex", minimize = FALSE, surv = TRUE, allowed.pred.types = c("response", "prob"),
+cindex = makeMeasure(id = "cindex", minimize = FALSE, properties = "surv", allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     requirePackages("Hmisc")
     # FIXME: this will break after switch to interval2 format
@@ -422,11 +428,12 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, surv = TRUE, allowed.pred.
   }
 )
 
+###############################################################################
 ### cost-sensitive ###
-
+###############################################################################
 #' @export meancosts
 #' @rdname measures
-meancosts = makeMeasure(id = "meancosts", minimize = TRUE, costsens = TRUE, allowed.pred.types = "response",
+meancosts = makeMeasure(id = "meancosts", minimize = TRUE, properties = "costsens", allowed.pred.types = "response",
   fun = function(task, model, pred, extra.args) {
     classes = as.character(pred$data$response)
     ids = pred$data$id
@@ -440,13 +447,10 @@ meancosts = makeMeasure(id = "meancosts", minimize = TRUE, costsens = TRUE, allo
 
 #' @export mcp
 #' @rdname measures
-mcp = makeMeasure(id = "mcp", minimize = TRUE, costsens = TRUE, allowed.pred.types = "response",
+mcp = makeMeasure(id = "mcp", minimize = TRUE, properties = "costsens", allowed.pred.types = "response",
   fun = function(task, model, pred, extra.args) {
     mc = meancosts$fun(task, NULL, pred, extra.args)
     oc = mean(apply(task$env$costs, 1L, min))
     mc - oc
   }
 )
-
-# FIXME: this usage none, format none stuff is crap, but i currently do no know a better
-# way to do this with roxygen2. We are neither documenting functions nor datsets here, but R objects.

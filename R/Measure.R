@@ -12,9 +12,7 @@
 #' \describe{
 #' \item{id [\code{character(1)}]}{See argument.}
 #' \item{minimize [\code{logical(1)}]}{See argument.}
-#' \item{classif [\code{logical(1)}]}{See argument.}
-#' \item{regr [\code{logical(1)}]}{See argument.}
-#' \item{only.binary [\code{logical(1)}]}{See argument.}
+#' \item{properties [\code{character}]}{See argument.}
 #' \item{allowed.pred.types [\code{character}]}{See argument.}
 #' \item{req.pred [\code{logical(1)}]}{Is prediction object required in calculation?}
 #' \item{req.task [\code{logical(1)}]}{Is task object required in calculation?.}
@@ -29,22 +27,16 @@
 #' @param minimize [\code{logical(1)}]\cr
 #'   Should the measure be minimized?
 #'   Default is in \code{TRUE}.
-#' @param classif [\code{logical(1)}]\cr
-#'   Is the measure applicable for classification?
-#'   Default is \code{FALSE}.
-#' @param regr [\code{logical(1)}]\cr
-#'   Is the measure applicable for regression?
-#'   Default is \code{FALSE}.
-#' @param surv [\code{logical(1)}]\cr
-#'   Is the measure applicable for survival?
-#'   Default is \code{FALSE}.
-#' @param costsens [\code{logical(1)}]\cr
-#'   Is the measure applicable for cost-sensitive learning?
-#'   Default is \code{FALSE}.
-#' @param only.binary [\code{logical(1)}]\cr
-#'   Is the measure only applicable to binary classification?
-#'   Only reasonable if \code{classif} is \code{TRUE}.
-#'   Default is \code{FALSE}.
+#' @param properties [\code{character}]\cr
+#'   Set of measure properties. Some standard property names include:
+#'   \describe{
+#'     \item{classif}{Is the measure applicable for classification?}
+#'     \item{classif.multi}{Is the measure applicable for multi-class classification?}
+#'     \item{regr}{Is the measure applicable for regression?}
+#'     \item{surv}{Is the measure applicable for survival?}
+#'     \item{costsens}{Is the measure applicable for cost-sensitve learning?}
+#'   }
+#'   Default is \code{character(0)}.
 #' @param allowed.pred.types [\code{character}]\cr
 #'   Which prediction types are allowed for this measure?
 #'   Subset of \dQuote{response},\dQuote{prob}, \dQuote{se}.
@@ -65,34 +57,24 @@
 #' f <- function(task, model, pred, extra.args)
 #'   sum((pred$data$response - pred$data$truth)^2)
 #' makeMeasure(id = "my.sse", minimize = TRUE, regr = TRUE, allowed.pred.types = "response", fun = f)
-makeMeasure = function(id, minimize, classif = FALSE, regr = FALSE, surv = FALSE, costsens = FALSE,
-  only.binary = FALSE, allowed.pred.types = character(0L), fun, extra.args = list(), aggr = test.mean) {
-
+makeMeasure = function(id, minimize, properties = character(0L), allowed.pred.types = character(0L),
+  fun, extra.args = list(), aggr = test.mean) {
   checkArg(id, "character", len = 1L, na.ok = FALSE)
   checkArg(minimize, "logical", len = 1L, na.ok = FALSE)
-  checkArg(classif, "logical", len = 1L, na.ok = FALSE)
-  checkArg(regr, "logical", len = 1L, na.ok = FALSE)
-  checkArg(surv, "logical", len = 1L, na.ok = FALSE)
-  checkArg(costsens, "logical", len = 1L, na.ok = FALSE)
-  checkArg(only.binary, "logical", len = 1L, na.ok = FALSE)
+  checkArg(properties, "character", na.ok = FALSE)
   checkArg(allowed.pred.types, subset = c("response", "prob", "se"))
   checkArg(fun, "function")
   checkArg(extra.args, "list")
 
+  # FIXME: I think this is never used...
   fun1 = fun
   formals(fun1) = list()
   v = codetools::findGlobals(fun1, merge = FALSE)$variables
-  if (only.binary && !classif)
-    stop("only.binary can only be set to TRUE, if 'classif' is set to TRUE!")
 
   m = makeS3Obj("Measure",
     id = id,
     minimize = minimize,
-    classif = classif,
-    regr = regr,
-    surv = surv,
-    costsens = costsens,
-    only.binary = only.binary,
+    properties = properties,
     allowed.pred.types = allowed.pred.types,
     req.pred = "pred" %in% v,
     req.model = "model" %in% v,
@@ -143,4 +125,3 @@ print.Measure = function(x, ...) {
   catf("Minimize: %s", x$minimize)
   catf("Aggregated by: %s", x$aggr$id)
 }
-

@@ -23,6 +23,7 @@
 #'     \item{prob}{Can probabilites be predicted?}
 #'     \item{se}{Can standard errors be predicted?}
 #'   }
+#'   Default is \code{character(0)}.
 #' @param par.set [\code{\link[ParamHelpers]{ParamSet}}] \cr
 #'   Parameter set of (hyper)parameters and their constraints.
 #' @param par.vals [\code{list}] \cr

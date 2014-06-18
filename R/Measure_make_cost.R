@@ -34,7 +34,8 @@ makeCostMeasure = function(id="costs", minimize=TRUE, costs, task, aggregate=mea
   }
 
   makeMeasure(id="costs", minimize=minimize, extra.args=list(costs, aggregate),
-    classif=TRUE, regr=FALSE, surv=FALSE, allowed.pred.types=c("response", "prob"), only.binary=FALSE,
+    properties = c("classif", "classif.multi"),
+    allowed.pred.types = c("response", "prob"),
     fun=function(task, model, pred, extra.args) {
       costs = extra.args[[1L]]
       # cannot index with NA

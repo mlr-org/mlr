@@ -3,7 +3,7 @@ context("measures")
 test_that("measures", {
   ct = binaryclass.task
 
-  mymeasure = makeMeasure(id="foo", minimize=TRUE, classif=TRUE, regr=TRUE, allowed.pred.types=c("response", "prob"),
+  mymeasure = makeMeasure(id="foo", minimize=TRUE, properties = c("classif", "classif.multi", "regr"), allowed.pred.types=c("response", "prob"),
     fun=function(task, model, pred, extra.args) {
       tt = pred
       1

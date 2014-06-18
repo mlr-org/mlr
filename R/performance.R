@@ -61,10 +61,9 @@ doPerformaceIteration = function(measure, pred, task, model, td){
   }
   # null only happens in custom resampled measure when we do no individual measurements
   if (!is.null(td)) {
-    # FIXME: add surv and costsens
-    if ((td$type == "classif" && !m$classif) || (td$type == "regr" && !m$regr))
-      stopf("Wrong task type %s for measure %s!", td$type, m$id)
-    if (m$only.binary && length(td$class.levels) > 2)
+    if (td$type %nin% m$properties)
+      stopf("Measure %s does not support task type %s!", m$id, td$type)
+    if (td$type == "classif" && length(td$class.levels) > 2L && "classif.multi" %nin% m$properties)
       stopf("Multiclass problems cannot be used for measure %s!", m$id)
     if (!is.null(pred2) && !(pred2$predict.type %in% m$allowed.pred.types))
       stopf("Measure %s is only allowed for predictions of type: %s!",
