@@ -3,26 +3,18 @@
 \alias{makeDownsampleWrapper}
 \title{Fuse learner with simple downsampling (subsampling).}
 \usage{
-makeDownsampleWrapper(learner, dw.select = "perc", dw.val = 1,
-  dw.stratify = FALSE)
+makeDownsampleWrapper(learner, dw.perc = 1, dw.stratify = FALSE)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
 The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
-\item{dw.select}{[\code{character(1)}]\cr
-How to select the size of the downsampled dataset.
-\dQuote{perc} = select observations by percentage, \dQuote{abs} = select absolute number
-of observations.
-Default is \dQuote{perc}.}
+\item{dw.perc}{[\code{numeric(1)}]\cr
+See \code{\link{downsample}}.}
 
-\item{dw.val}{[\code{numeric(1)}]\cr
-Depends on \code{select}:
-Either a percentage from [0, 1] or a number of observations.}
-
-\item{dw.stratify}{[\code{boolean(1)}]\cr
-Should the downsampled data be stratified according to the target classes? Default is \code{FALSE}.}
+\item{dw.stratify}{[\code{logical(1)}]\cr
+See \code{\link{downsample}}.}
 }
 \value{
 [\code{\link{Learner}}].

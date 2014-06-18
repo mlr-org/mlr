@@ -3,31 +3,27 @@
 \alias{downsample}
 \title{Downsample (subsample) a task or a data.frame.}
 \usage{
-downsample(obj, select = "perc", val, stratify = FALSE)
+downsample(obj, perc = 1, stratify = FALSE)
 }
 \arguments{
 \item{obj}{[\code{\link{SupervisedTask}} | \code{\link{ResampleInstance}}]\cr
 Input data or a \code{ResampleInstance}.}
 
-\item{select}{[\code{character(1)}]\cr
-How to select the size of the downsampled dataset.
-\dQuote{perc} = select observations by percentage, \dQuote{abs} = select absolute number
-of observations.
-Default is \dQuote{perc}.}
+\item{perc}{[\code{numeric(1)}]\cr
+Percentage from [0, 1].
+Default is 1.}
 
-\item{val}{[\code{numeric(1)}]\cr
-Depends on \code{select}:
-Either a percentage from [0, 1] or a number of observations.}
-
-\item{stratify}{[\code{boolean(1)}]\cr
-Should the downsampled data be stratified according to the target classes? Default is \code{FALSE}.}
+\item{stratify}{[\code{logical(1)}]\cr
+Only for classification:
+Should the downsampled data be stratified according to the target classes?
+Default is \code{FALSE}.}
 }
 \value{
 [\code{data.frame} | \code{\link{SupervisedTask}} | \code{\link{ResampleInstance}}]. Same type as \code{obj}.
 }
 \description{
 Decrease the observations in a \code{task} or a \code{ResampleInstance}
-to a given percentage or absolute number.
+to a given percentage of observations.
 }
 \seealso{
 \code{\link{makeResampleInstance}}
