@@ -3,8 +3,7 @@
 \alias{makeCustomResampledMeasure}
 \title{Construct your own resampled performance measure.}
 \usage{
-makeCustomResampledMeasure(id, minimize = TRUE, classif = FALSE,
-  regr = FALSE, surv = FALSE, costsens = FALSE, only.binary = FALSE,
+makeCustomResampledMeasure(id, minimize = TRUE, properties = character(0L),
   allowed.pred.types = character(0L), fun, extra.args = list())
 }
 \arguments{
@@ -15,26 +14,16 @@ Name of aggregated measure.}
 Should the measure be minimized?
 Default is \code{TRUE}.}
 
-\item{classif}{[\code{logical(1)}]\cr
-Is the measure applicable for classification?
-Default is \code{FALSE}.}
-
-\item{regr}{[\code{logical(1)}]\cr
-Is the measure applicable for regression?
-Default is \code{FALSE}.}
-
-\item{costsens}{[\code{logical(1)}]\cr
-Is the measure applicable for cost-sensitive learning?
-Default is \code{FALSE}.}
-
-\item{surv}{[\code{logical(1)}]\cr
-Is the measure applicable for survival learning?
-Default is \code{FALSE}.}
-
-\item{only.binary}{[\code{logical(1)}]\cr
-Is the measure only applicable to binary classification?
-Only reasonable if \code{classif} is \code{TRUE}.
-Default is \code{FALSE}.}
+\item{properties}{[\code{character}]\cr
+Set of measure properties. Some standard property names include:
+\describe{
+  \item{classif}{Is the measure applicable for classification?}
+  \item{classif.multi}{Is the measure applicable for multi-class classification?}
+  \item{regr}{Is the measure applicable for regression?}
+  \item{surv}{Is the measure applicable for survival?}
+  \item{costsens}{Is the measure applicable for cost-sensitve learning?}
+}
+Default is \code{character(0)}.}
 
 \item{allowed.pred.types}{[\code{character}]
 Which prediction types are allowed for this measure?

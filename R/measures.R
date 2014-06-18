@@ -64,7 +64,6 @@
 #'   \item{\bold{timeboth}}{\cr timetrain + trainpredict}
 #'   \item{\bold{featperc}}{\cr Percentage of original features used for model, useful for feature selection.}
 #' }
-#' @export
 #' @usage none
 #' @format none
 NULL

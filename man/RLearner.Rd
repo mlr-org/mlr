@@ -41,7 +41,8 @@ Set of learner properties. Some standard property names include:
   \item{oneclas,twoclass,multiclass}{Can one-class, two-class or multi-class classification problems be handled?}
   \item{prob}{Can probabilites be predicted?}
   \item{se}{Can standard errors be predicted?}
-}}
+}
+Default is \code{character(0)}.}
 
 \item{par.set}{[\code{\link[ParamHelpers]{ParamSet}}] \cr
 Parameter set of (hyper)parameters and their constraints.}
