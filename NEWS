@@ -49,6 +49,8 @@ mlr_1.2:
 -- plotThreshVsPerf
 -- holdout, subsample, crossval, repcv, bootstrapOOB, bootstrapB632, bootstrapB632plus
 -- listFilterMethods, getFilterValues, filterFeatures, makeFilterWrapper, plotFilterValues
+-- benchmark
+-- getPerformances, getAggrPerformances, getPredictions, getFilterResult, getTuneResult, getFeatSelResult
 -- oversample, undersample, makeOversampleWrapper, makeUndersampleWrapper
 -- downsample, makeDownsampleWrapper
 -- makeModelMultiplexer, makeModelMultiplexerParamSet

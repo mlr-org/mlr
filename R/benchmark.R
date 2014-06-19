@@ -87,13 +87,14 @@ benchmark = function(learners, tasks, resamplings, measures) {
 #'
 #' Container for results of benchmarked experiments using \code{\link{benchmark}}.
 #' The structure of the object itself is rather complicated, it is recommended to
-#' retrive required information via \code{link{getAggrMeasures}}, \code{link{getPredictions}},
-#' \code{\link{getMeasures}}, \code{\link{getFeatSelResult}}, \code{\link{getTuneResult}} or
+#' retrive required information via \code{link{getAggrPerformances}}, \code{link{getPredictions}},
+#' \code{\link{getPerformances}}, \code{\link{getFeatSelResult}}, \code{\link{getTuneResult}} or
 #' \code{\link{getFilterResult}}. Alternatively, you can convert the object using
 #' \code{\link[base]{as.data.frame}}
 #'
 #' @name BenchmarkResult
 #' @rdname BenchmarkResult
+#' @family benchmark
 NULL
 
 benchmarkParallel = function(index, learners, tasks, resamplings, measures) {
@@ -112,85 +113,17 @@ benchmarkParallel = function(index, learners, tasks, resamplings, measures) {
   resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]], measures = measures, models = TRUE, extract = extract.this)
 }
 
-#' Extract the aggregated measures of a benchmark result.
-#'
-#' @template arg_bmr
-#' @return [\code{data.frame}].
-#' @export
-#' @family benchmark
-getAggrMeasures = function(object) {
-  UseMethod("getAggrMeasures")
-}
-
-#' @export
-getAggrMeasures.BenchmarkResult = function(object) {
-  task.names = names(object)
-  learner.names = unname(lapply(object, names))
-  df = data.frame(
-    task = rep.int(task.names, viapply(learner.names, length)),
-    learner = unlist(learner.names)
-  )
-  aggr = rowLapply(df, function(x) t(object[[x$task]][[x$learner]]$aggr))
-  cbind(df, do.call(rbind, aggr))
-}
 
 #' @export
 print.BenchmarkResult = function(x, ...) {
-  print(getAggrMeasures.BenchmarkResult(x))
+  print(getAggrPerformances.BenchmarkResult(x))
 }
 
 #' @export
 as.data.frame.BenchmarkResult = function(x, ...) {
-  getAggrMeasures.BenchmarkResult(x)
+  getAggrPerformances.BenchmarkResult(x)
 }
 
-#' Extract the predictions from a benchmark result.
-#'
-#' @template arg_bmr
-#' @return [\code{data.frame}].
-#' @export
-#' @family benchmark
-getPredictions = function(object) {
-  UseMethod("getPredictions")
-}
-
-#' @export
-getPredictions.BenchmarkResult = function(object) {
-  extractResponse = function(learner.name, task.name) {
-    setNames(data.frame(object[[task.name]][[learner.name]]$pred)[, "response", drop = FALSE],
-      paste0("response.", learner.name))
-  }
-  setNames(lapply(names(object), function(task.name) {
-    cbind(
-      as.data.frame(object[[task.name]][[1L]]$pred)[, c("id", "truth", "iter", "set"), drop = FALSE],
-      do.call(cbind, lapply(names(object[[task.name]]), extractResponse, task.name = task.name))
-    )
-  }), names(object))
-}
-
-#' Extract performance measures of bechmark result.
-#'
-#' @template arg_bmr
-#' @return [\code{data.frame}].
-#' @export
-#' @family benchmark
-getMeasures = function(object) {
-  UseMethod("getMeasures")
-}
-
-#' @export
-getMeasures.BenchmarkResult = function(object) {
-  extractMeasures = function(learner.name, task.name) {
-      x = dropNamed(object[[task.name]][[learner.name]]$measures.test, "iter")
-      setNames(x, paste0(learner.name, ".", names(x)))
-  }
-  setNames(lapply(names(object), function(task.name) {
-    cbind(
-      object[[task.name]][[1L]]$measures.test[, "iter", drop = FALSE],
-      do.call(cbind, lapply(names(object[[task.name]]), extractMeasures, task.name = task.name))
-    )
-  }), names(object))
-}
 
 getExtract = function(object, what, within = "extract") {
   if(missing(what))
@@ -205,17 +138,4 @@ getExtract = function(object, what, within = "extract") {
   })
 }
 
-#' @export
-getFeatSelResult.BenchmarkResult = function(object) {
-  getExtract(object, "FeatSelResult")
-}
 
-#' @export
-getTuneResult.BenchmarkResult = function(object) {
-  getExtract(object, "TuneResult")
-}
-
-#' @export
-getFilterResult.BenchmarkResult = function(object) {
-  getExtract(object, "FilterResult")
-}
