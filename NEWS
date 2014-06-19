@@ -48,7 +48,7 @@ mlr_1.2:
 -- plotLearnerPrediction
 -- plotThreshVsPerf
 -- holdout, subsample, crossval, repcv, bootstrapOOB, bootstrapB632, bootstrapB632plus
--- getFilterMethods, getFilterValues, filterFeatures, makeFilterWrapper, plotFilterValues
+-- listFilterMethods, getFilterValues, filterFeatures, makeFilterWrapper, plotFilterValues
 -- oversample, undersample, makeOversampleWrapper, makeUndersampleWrapper
 -- downsample, makeDownsampleWrapper
 -- makeModelMultiplexer, makeModelMultiplexerParamSet

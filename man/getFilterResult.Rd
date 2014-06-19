@@ -19,9 +19,9 @@ Returns a filter result after training or benchmarking.
 \seealso{
 Other filter: \code{\link{FilterValues}};
   \code{\link{filterFeatures}};
-  \code{\link{getFilterMethods}};
   \code{\link{getFilterValues}};
   \code{\link{getFilteredFeatures}};
+  \code{\link{listFilterMethods}};
   \code{\link{makeFilterWrapper}}
 }
 
