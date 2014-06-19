@@ -1,13 +1,18 @@
-#' Find matching learning algorithms.
+#' @title Find matching learning algorithms.
 #'
+#' @description
 #' Returns the class names of learning algorithms which have specific characteristics, e.g.
 #' whether they supports missing values, case weights, etc.
+#'
+#' \code{listLearnersForTask} returns all learners that are in principle applicable
+#' for a given task.
 #'
 #' Note that the packages of all learners are loaded during the search.
 #'
 #' @param type [\code{character(1)}]\cr
 #'   Type of the learning algorithm, one of \dQuote{classif}, \dQuote{regr}
-#'   or \dQuote{surv}. Default is \code{NA}, matching all types.
+#'   or \dQuote{surv}.
+#'   Default is \code{NA}, matching all types.
 #' @param properties [\code{character)}]\cr
 #'   Set of required properties to filter for. Default is \code{character(0)}.
 #' @param quiet [\code{logical(1)}]\cr
@@ -20,17 +25,32 @@
 #'   Default is code{TRUE}.
 #' @return [\code{character}]. Class names of matching learners.
 #' @export
-listLearners = function(type = NA_character_, properties = character(0L), quiet=TRUE, warn.missing.packages=TRUE) {
-  checkArg(type, choices=c("classif", "regr", "surv", NA_character_))
+listLearners  = function(obj = NA_character_, properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE) {
+  if (!missing(obj))
+    checkArg(obj, c("character", "SupervisedTask"))
   checkArg(properties, "character", na.ok = FALSE)
-  checkArg(warn.missing.packages, "logical", len=1L, na.ok=FALSE)
+  checkArg(warn.missing.packages, "logical", len = 1L, na.ok = FALSE)
+  UseMethod("listLearners")
+}
 
+
+#' @export
+#' @rdname listLearners
+listLearners.default  = function(obj, properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE) {
+  listLearners.character(obj = NA_character_)
+}
+
+#' @export
+#' @rdname listLearners
+listLearners.character  = function(obj, properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE) {
+  checkArg(obj, choices = c("classif", "regr", "surv", NA_character_))
+  type = obj
   meths = as.character(methods("makeRLearner"))
   res = err = vector("list", length(meths))
   for (i in seq_along(meths)) {
     m = meths[[i]]
     if (quiet)
-      suppressAll(lrn <- try(do.call(m, list()), silent=TRUE))
+      suppressAll(lrn <- try(do.call(m, list()), silent = TRUE))
     else
       lrn = try(do.call(m, list()))
 
@@ -47,12 +67,11 @@ listLearners = function(type = NA_character_, properties = character(0L), quiet=
   vcapply(res, function(lrn) class(lrn)[1L])
 }
 
-#' @param task [\code{\link{SupervisedTask}}]\cr
-#'   The task. Learners are returned that are applicable.
+#' @template arg_task
 #' @export
 #' @rdname listLearners
-listLearnersForTask = function(task, properties = character(0L), warn.missing.packages=TRUE) {
-  checkArg(task, "SupervisedTask")
+listLearners.SupervisedTask = function(obj, properties = character(0L), warn.missing.packages = TRUE) {
+  task = obj
   checkArg(properties, "character", na.ok = FALSE)
   td = task$task.desc
 
@@ -66,5 +85,5 @@ listLearnersForTask = function(task, properties = character(0L), warn.missing.pa
     if (length(td$class.levels) >= 3L) props = c(props, "multiclass")
   }
 
-  listLearners(type=td$type, properties = union(props, properties), warn.missing.packages=warn.missing.packages)
+  listLearners.character(td$type, properties = union(props, properties), warn.missing.packages = warn.missing.packages)
 }

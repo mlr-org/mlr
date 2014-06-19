@@ -1,7 +1,11 @@
-#' Find matching measures.
+#' @title Find matching measures.
 #'
+#' @description
 #' Returns the matching measures which have specific characteristics, e.g.
 #' whether they supports classification or regression.
+#'
+#' \code{listMeasuresForTask} returns all learners that are in principle applicable
+#' for a given task.
 #'
 #' @param properties [\code{character)}]\cr
 #'   Set of required properties to filter for. Default is \code{character(0)}.
@@ -15,9 +19,8 @@ listMeasures = function(properties = character(0L)) {
   names(res)[res]
 }
 
-#' @param task [\code{\link{SupervisedTask}}]\cr
-#'   The task. Learners are returned that are applicable.
-#' @rdname listLearners
+#' @template arg_task
+#' @rdname listMeasures
 ##' @export
 listMeasuresForTask = function(task, properties = character(0L)) {
   checkArg(task, "SupervisedTask")
