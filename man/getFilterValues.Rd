@@ -37,7 +37,7 @@ Available \code{method}s are:
     Entropy-based information gain between feature and target \cr
   gain.ratio                 \tab C,R   \tab N,F   \tab
     Entropy-based gain ratio between feature and target \cr
- symmetrical.uncertainty     \tab C,R   \tab N,F   \tab
+  symmetrical.uncertainty    \tab C,R   \tab N,F   \tab
     Entropy-based symmetrical uncertainty between feature and target \cr
   chi.squared                \tab C,R   \tab N,F   \tab
     Chi-squared statistic of independence between feature and target \cr
@@ -47,6 +47,8 @@ Available \code{method}s are:
     RELIEF algorithm \cr
   oneR                       \tab C,R   \tab N,F   \tab
     \code{\link[RWeka]{OneR}} assocation rule \cr
+  mRMR.classic               \tab R     \tab N     \tab
+    Classic mRMR algorithm from \code{\link[mRMRe]{mRMRe}} package \cr
 }
 }
 \seealso{
