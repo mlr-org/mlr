@@ -7,16 +7,16 @@
 \title{Find matching learning algorithms.}
 \usage{
 listLearners(obj = NA_character_, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE)
+  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
 
 \method{listLearners}{default}(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE)
+  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
 
 \method{listLearners}{character}(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE)
+  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
 
 \method{listLearners}{SupervisedTask}(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE)
+  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
 }
 \arguments{
 \item{obj}{[\code{character(1)} | \code{\link{SupervisedTask}}]\cr
@@ -30,15 +30,25 @@ Set of required properties to filter for. Default is \code{character(0)}.}
 \item{quiet}{[\code{logical(1)}]\cr
 Construct learners quietly to check their properties, shows no package startup messages.
 Turn off if you suspect errors.
-Default is code{TRUE}.}
+Default is \code{TRUE}.}
 
 \item{warn.missing.packages}{[\code{logical(1)}]\cr
 If some learner cannot be constructed because its package is missing,
 should a warning be shown?
-Default is code{TRUE}.}
+Default is \code{TRUE}.}
+
+\item{warn.missing.packages}{[\code{logical(1)}]\cr
+If some learner cannot be constructed because its package is missing,
+should a warning be shown?
+Default is \code{TRUE}.}
+
+\item{create}{[\code{logical(1)}]\cr
+Instantiate objects (or return strings)?
+Default is \code{FALSE}.}
 }
 \value{
-[\code{character}]. Class names of matching learners.
+[\code{character} | \code of \code{\link{Learner}}]. Class names of matching
+  learners or instantiated objects.
 }
 \description{
 Returns the class names of learning algorithms which have specific characteristics, e.g.

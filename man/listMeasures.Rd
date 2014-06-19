@@ -6,13 +6,16 @@
 \alias{listMeasures.default}
 \title{Find matching measures.}
 \usage{
-listMeasures(obj, properties = character(0L))
+listMeasures(obj, properties = character(0L), create = FALSE)
 
-\method{listMeasures}{default}(obj, properties = character(0L))
+\method{listMeasures}{default}(obj, properties = character(0L),
+  create = FALSE)
 
-\method{listMeasures}{character}(obj, properties = character(0L))
+\method{listMeasures}{character}(obj, properties = character(0L),
+  create = FALSE)
 
-\method{listMeasures}{SupervisedTask}(obj, properties = character(0L))
+\method{listMeasures}{SupervisedTask}(obj, properties = character(0L),
+  create = FALSE)
 }
 \arguments{
 \item{obj}{[\code{character(1)} | \code{\link{SupervisedTask}}]\cr
@@ -24,9 +27,14 @@ Default is \code{NA}, matching all types.}
 Set of required properties to filter for.
 See \code{\link{Measure}} for some standardized properties.
 Default is \code{character(0)}.}
+
+\item{create}{[\code{logical(1)}]\cr
+Instantiate objects (or return strings)?
+Default is \code{FALSE}.}
 }
 \value{
-[\code{character}]. Class names of matching learners.
+[\code{character} | \code of \code{\link{Measure}}]. Class names of matching
+  measures or instantiated objects.
 }
 \description{
 Returns the matching measures which have specific characteristics, e.g.
