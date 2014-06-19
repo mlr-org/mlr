@@ -13,7 +13,8 @@ getFilterMethods = function() {
     "chi.squared",
     "random.forest.importance",
     "relief",
-    "oneR"
+    "oneR",
+    "mRMR.classic"
   )
 }
 
