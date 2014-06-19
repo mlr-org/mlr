@@ -31,7 +31,12 @@ training / test sets are used for the different learners.
 Furhtermore, your learners can be automatically tuned using \code{\link{makeTuneWrapper}}.
 }
 \seealso{
-Other benchmark: \code{\link{getAggrMeasures}};
-  \code{\link{getMeasures}}; \code{\link{getPredictions}}
+Other benchmark: \code{\link{BenchmarkResult}};
+  \code{\link{FilterResult}},
+  \code{\link{getFilterResult}};
+  \code{\link{getAggrPerformances}};
+  \code{\link{getFeatSelResult}};
+  \code{\link{getPerformances}};
+  \code{\link{getPredictions}}; \code{\link{getTuneResult}}
 }
 

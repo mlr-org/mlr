@@ -15,4 +15,25 @@ Trained Model created with \code{\link{makeFeatSelWrapper}} or benchmark result 
 \description{
 Returns the selected feature set and optimization path after training or benchmarking.
 }
+\seealso{
+Other benchmark: \code{\link{BenchmarkResult}};
+  \code{\link{FilterResult}},
+  \code{\link{getFilterResult}}; \code{\link{benchmark}};
+  \code{\link{getAggrPerformances}};
+  \code{\link{getPerformances}};
+  \code{\link{getPredictions}}; \code{\link{getTuneResult}}
+
+Other featsel: \code{\link{FeatSelControl}},
+  \code{\link{FeatSelControlExhaustive}},
+  \code{\link{FeatSelControlGA}},
+  \code{\link{FeatSelControlRandom}},
+  \code{\link{FeatSelControlSequential}},
+  \code{\link{makeFeatSelControlExhaustive}},
+  \code{\link{makeFeatSelControlGA}},
+  \code{\link{makeFeatSelControlRandom}},
+  \code{\link{makeFeatSelControlSequential}};
+  \code{\link{analyzeFeatSelResult}};
+  \code{\link{makeFeatSelWrapper}};
+  \code{\link{selectFeatures}}
+}
 

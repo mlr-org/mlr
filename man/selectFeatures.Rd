@@ -70,6 +70,7 @@ Other featsel: \code{\link{FeatSelControl}},
   \code{\link{makeFeatSelControlRandom}},
   \code{\link{makeFeatSelControlSequential}};
   \code{\link{analyzeFeatSelResult}};
+  \code{\link{getFeatSelResult}};
   \code{\link{makeFeatSelWrapper}}
 }
 

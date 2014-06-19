@@ -121,6 +121,7 @@ The following methods are available:
 }
 \seealso{
 Other featsel: \code{\link{analyzeFeatSelResult}};
+  \code{\link{getFeatSelResult}};
   \code{\link{makeFeatSelWrapper}};
   \code{\link{selectFeatures}}
 }

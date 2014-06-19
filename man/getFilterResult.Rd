@@ -17,6 +17,13 @@ Trained Model created with \code{\link{makeFilterWrapper}} or benchmark result c
 Returns a filter result after training or benchmarking.
 }
 \seealso{
+Other benchmark: \code{\link{BenchmarkResult}};
+  \code{\link{benchmark}};
+  \code{\link{getAggrPerformances}};
+  \code{\link{getFeatSelResult}};
+  \code{\link{getPerformances}};
+  \code{\link{getPredictions}}; \code{\link{getTuneResult}}
+
 Other filter: \code{\link{FilterValues}};
   \code{\link{filterFeatures}};
   \code{\link{getFilterValues}};
