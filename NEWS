@@ -38,19 +38,18 @@ mlr_1.2:
 -- multiauc???
 
 - new functions
--- showHyperPars
--- removeConstantFeatures
--- dropFeatures
+-- removeConstantFeatures, normalizeFeatures, dropFeatures
 -- getTaskNFeats
+-- hasProperties, getProperties, setProperties, addProperties, removeProperties
+-- showHyperPars
 -- plotLearnerPrediction
 -- plotThreshVsPerf
 -- holdout, subsample, crossval, repcv, bootstrapOOB, bootstrapB632, bootstrapB632plus
 -- getFilterMethods, getFilterValues, filterFeatures, makeFilterWrapper, plotFilterValues
 -- oversample, undersample, makeOversampleWrapper, makeUndersampleWrapper
--- makeCostSensTaks, makeCostSensRegrWrapper, makeCostsSensWeightedPairsLearner
 -- downsample, makeDownsampleWrapper
 -- makeModelMultiplexer, makeModelMultiplexerParamSet
--- hasProperties, getProperties, setProperties, addProperties, removeProperties
+-- makeCostSensTaks, makeCostSensRegrWrapper, makeCostsSensWeightedPairsLearner
 
 - imputation stuff ????
 - surv stuff ????
