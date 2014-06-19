@@ -7,7 +7,7 @@
 #' Note that the packages of all learners are loaded during the search.
 #'
 #' @template arg_task_or_type
-#' @param properties [\code{character)}]\cr
+#' @param properties [\code{character}]\cr
 #'   Set of required properties to filter for. Default is \code{character(0)}.
 #' @param quiet [\code{logical(1)}]\cr
 #'   Construct learners quietly to check their properties, shows no package startup messages.
@@ -17,14 +17,10 @@
 #'   If some learner cannot be constructed because its package is missing,
 #'   should a warning be shown?
 #'   Default is \code{TRUE}.
-#' @param warn.missing.packages [\code{logical(1)}]\cr
-#'   If some learner cannot be constructed because its package is missing,
-#'   should a warning be shown?
-#'   Default is \code{TRUE}.
 #' @param create [\code{logical(1)}]\cr
 #'   Instantiate objects (or return strings)?
 #'   Default is \code{FALSE}.
-#' @return [\code{character} | \code of \code{\link{Learner}}]. Class names of matching
+#' @return [\code{character} | \code{list} of \code{\link{Learner}}]. Class names of matching
 #'   learners or instantiated objects.
 #' @export
 listLearners  = function(obj = NA_character_, properties = character(0L),

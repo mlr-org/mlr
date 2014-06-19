@@ -4,18 +4,15 @@
 #' Returns the matching measures which have specific characteristics, e.g.
 #' whether they supports classification or regression.
 #'
-#' \code{listMeasuresForTask} returns all learners that are in principle applicable
-#' for a given task.
-#'
 #' @template arg_task_or_type
-#' @param properties [\code{character)}]\cr
+#' @param properties [\code{character}]\cr
 #'   Set of required properties to filter for.
 #'   See \code{\link{Measure}} for some standardized properties.
 #'   Default is \code{character(0)}.
 #' @param create [\code{logical(1)}]\cr
 #'   Instantiate objects (or return strings)?
 #'   Default is \code{FALSE}.
-#' @return [\code{character} | \code of \code{\link{Measure}}]. Class names of matching
+#' @return [\code{character} | \code{list} of \code{\link{Measure}}]. Class names of matching
 #'   measures or instantiated objects.
 #' @export
 listMeasures = function(obj, properties = character(0L), create = FALSE) {

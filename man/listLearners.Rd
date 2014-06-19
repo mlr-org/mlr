@@ -24,7 +24,7 @@ Either a task or the type of the task, in the latter case one of:
 \dQuote{classif}, \dQuote{regr},  \dQuote{surv}, dQuote{costsens}.
 Default is \code{NA}, matching all types.}
 
-\item{properties}{[\code{character)}]\cr
+\item{properties}{[\code{character}]\cr
 Set of required properties to filter for. Default is \code{character(0)}.}
 
 \item{quiet}{[\code{logical(1)}]\cr
@@ -37,17 +37,12 @@ If some learner cannot be constructed because its package is missing,
 should a warning be shown?
 Default is \code{TRUE}.}
 
-\item{warn.missing.packages}{[\code{logical(1)}]\cr
-If some learner cannot be constructed because its package is missing,
-should a warning be shown?
-Default is \code{TRUE}.}
-
 \item{create}{[\code{logical(1)}]\cr
 Instantiate objects (or return strings)?
 Default is \code{FALSE}.}
 }
 \value{
-[\code{character} | \code of \code{\link{Learner}}]. Class names of matching
+[\code{character} | \code{list} of \code{\link{Learner}}]. Class names of matching
   learners or instantiated objects.
 }
 \description{

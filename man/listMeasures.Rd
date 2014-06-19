@@ -23,7 +23,7 @@ Either a task or the type of the task, in the latter case one of:
 \dQuote{classif}, \dQuote{regr},  \dQuote{surv}, dQuote{costsens}.
 Default is \code{NA}, matching all types.}
 
-\item{properties}{[\code{character)}]\cr
+\item{properties}{[\code{character}]\cr
 Set of required properties to filter for.
 See \code{\link{Measure}} for some standardized properties.
 Default is \code{character(0)}.}
@@ -33,14 +33,11 @@ Instantiate objects (or return strings)?
 Default is \code{FALSE}.}
 }
 \value{
-[\code{character} | \code of \code{\link{Measure}}]. Class names of matching
+[\code{character} | \code{list} of \code{\link{Measure}}]. Class names of matching
   measures or instantiated objects.
 }
 \description{
 Returns the matching measures which have specific characteristics, e.g.
 whether they supports classification or regression.
-
-\code{listMeasuresForTask} returns all learners that are in principle applicable
-for a given task.
 }
 
