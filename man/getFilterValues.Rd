@@ -48,7 +48,7 @@ Available \code{method}s are:
   oneR                       \tab C,R   \tab N,F   \tab
     \code{\link[RWeka]{OneR}} assocation rule \cr
   mRMR.classic               \tab R     \tab N     \tab
-    Classic mRMR algorithm from \code{\link[mRMRe]{mRMRe}} package \cr
+    MRMR algorithm, see \code{\link[mRMRe]{mRMR.classic}} from \code{mRMRe} package \cr
 }
 }
 \seealso{

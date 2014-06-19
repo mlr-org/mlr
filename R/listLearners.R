@@ -4,15 +4,9 @@
 #' Returns the class names of learning algorithms which have specific characteristics, e.g.
 #' whether they supports missing values, case weights, etc.
 #'
-#' \code{listLearnersForTask} returns all learners that are in principle applicable
-#' for a given task.
-#'
 #' Note that the packages of all learners are loaded during the search.
 #'
-#' @param type [\code{character(1)}]\cr
-#'   Type of the learning algorithm, one of \dQuote{classif}, \dQuote{regr}
-#'   or \dQuote{surv}.
-#'   Default is \code{NA}, matching all types.
+#' @template arg_task_or_type
 #' @param properties [\code{character)}]\cr
 #'   Set of required properties to filter for. Default is \code{character(0)}.
 #' @param quiet [\code{logical(1)}]\cr
@@ -43,7 +37,7 @@ listLearners.default  = function(obj, properties = character(0L), quiet = TRUE, 
 #' @export
 #' @rdname listLearners
 listLearners.character  = function(obj, properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE) {
-  checkArg(obj, choices = c("classif", "regr", "surv", NA_character_))
+  checkArg(obj, choices = c("classif", "regr", "surv", "costsens", NA_character_))
   type = obj
   meths = as.character(methods("makeRLearner"))
   res = err = vector("list", length(meths))
@@ -67,10 +61,9 @@ listLearners.character  = function(obj, properties = character(0L), quiet = TRUE
   vcapply(res, function(lrn) class(lrn)[1L])
 }
 
-#' @template arg_task
 #' @export
 #' @rdname listLearners
-listLearners.SupervisedTask = function(obj, properties = character(0L), warn.missing.packages = TRUE) {
+listLearners.SupervisedTask = function(obj, properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE) {
   task = obj
   checkArg(properties, "character", na.ok = FALSE)
   td = task$task.desc

@@ -16,12 +16,12 @@ listLearners(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE)
 
 \method{listLearners}{SupervisedTask}(obj, properties = character(0L),
-  warn.missing.packages = TRUE)
+  quiet = TRUE, warn.missing.packages = TRUE)
 }
 \arguments{
-\item{type}{[\code{character(1)}]\cr
-Type of the learning algorithm, one of \dQuote{classif}, \dQuote{regr}
-or \dQuote{surv}.
+\item{obj}{[\code{character(1)} | \code{\link{SupervisedTask}}]\cr
+Either a task or the type of the task, in the latter case one of:
+\dQuote{classif}, \dQuote{regr},  \dQuote{surv}, dQuote{costsens}.
 Default is \code{NA}, matching all types.}
 
 \item{properties}{[\code{character)}]\cr
@@ -36,9 +36,6 @@ Default is code{TRUE}.}
 If some learner cannot be constructed because its package is missing,
 should a warning be shown?
 Default is code{TRUE}.}
-
-\item{task}{[\code{\link{SupervisedTask}}]\cr
-The task.}
 }
 \value{
 [\code{character}]. Class names of matching learners.
@@ -46,9 +43,6 @@ The task.}
 \description{
 Returns the class names of learning algorithms which have specific characteristics, e.g.
 whether they supports missing values, case weights, etc.
-
-\code{listLearnersForTask} returns all learners that are in principle applicable
-for a given task.
 
 Note that the packages of all learners are loaded during the search.
 }
