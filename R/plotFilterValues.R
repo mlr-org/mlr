@@ -40,7 +40,7 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
     mp = aes_string(x = "name", y = "val")
   }
   p = ggplot(data = d, mapping = mp)
-  p = p + geom_bar(stat = "identity")
+  p = p + geom_bar(position = "identity", stat = "identity")
   if (!is.null(feat.type.cols))
     p = p + scale_fill_manual(values = feat.type.cols)
   p = p + ggtitle(sprintf("%s (%i features), filter = %s",

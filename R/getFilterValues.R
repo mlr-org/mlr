@@ -44,36 +44,35 @@
 getFilterValues = function(task, method = "random.forest.importance", ...) {
   checkArg(task, c("ClassifTask", "RegrTask"))
   checkArg(method, choices = getFilterMethods())
-  
+
   if (method %in% c("linear.correlation", "rank.correlation", "mRMR.classic")) {
     if (!inherits(task, "RegrTask") || (task$task.desc$n.feat["factors"] > 0L))
       stopf("Method '%s' can only be applied for a regression task with numerical data!", method)
   }
 
   data = getTaskData(task)
-  
-  if (method %in% c("mRMR.classic")) {
+
+  if (method == "mRMR.classic") {
     requirePackages("mRMRe", why = "getFilterValues")
     fun = get(method, envir = getNamespace("mRMRe"))
-    
+
     target.ind = which(getTargetNames(task) == colnames(data))
     data.mrmr = mRMR.data(data = data)
-    res = fun(data = data.mrmr, target_indices = target.ind, 
-              feature_count = length(data.mrmr@feature_names) - 1)
-    
+    res = fun(data = data.mrmr, target_indices = target.ind,
+      feature_count = length(data.mrmr@feature_names) - 1)
+
     y = as.vector(scores(res)[[1]])
     ns = res@feature_names[as.vector(solutions(res)[[1]])]
-    
   } else {
     requirePackages("FSelector", why = "getFilterValues")
     fun = get(method, envir = getNamespace("FSelector"))
     f = getTaskFormulaAsString(task)
-    
+
     y = fun(as.formula(f), data, ...)
     ns = rownames(y)
     y = y[,1L]
   }
-    
+
   types = sapply(data[, ns, drop = FALSE], getClass1)
   makeS3Obj("FilterValues",
     task.desc = task$task.desc,

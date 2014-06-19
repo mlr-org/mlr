@@ -52,6 +52,7 @@ Suggests:
     mboost,
     mda,
     mlbench,
+    mRMRe,
     nnet,
     party,
     penalized,
