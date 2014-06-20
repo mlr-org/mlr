@@ -77,7 +77,7 @@ smote = function(task, rate, nn = 5) {
       # concat factors, then index either 1st or 2nd half for each position
       x12 = c(x1[is.fac], x2[is.fac])
       j = 1:p.fac + sample(c(0, p.fac), p.fac, replace = TRUE)
-      res[i, col.fac] = x12[j]
+      res[i, is.fac] = x12[j]
     }
   }
   res[[target]] = z$min.name
