@@ -31,37 +31,48 @@ getTaskTargets(task, subset, recode.target = "no")
 <table summary="R argblock">
 <tr valign="top"><td><code>task</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> The task.</p>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+The task.</p>
 </td></tr>
 <tr valign="top"><td><code>subset</code></td>
 <td>
-<p>[<code>integer</code>]<br> Selected cases.
+<p>[<code>integer</code>]<br>
+Selected cases.
 Default is all cases.</p>
 </td></tr>
 <tr valign="top"><td><code>recode.target</code></td>
 <td>
-<p>[<code>character(1)</code>] <br> Should
-target classes be recoded? Only for binary
-classification.  Possible are &ldquo;no&rdquo; (do nothing),
-&ldquo;01&rdquo;, and &ldquo;-1+1&rdquo;.  In the two latter cases
-the target vector is converted into a numeric vector.
-The positive class is coded as +1 and the negative class
-either as 0 or -1.  Default is &ldquo;no&rdquo;.</p>
+<p>[<code>character(1)</code>] <br>
+Should target classes be recoded? Only for binary classification.
+Possible are &ldquo;no&rdquo; (do nothing), &ldquo;01&rdquo;, and &ldquo;-1+1&rdquo;.
+In the two latter cases the target vector is converted into a numeric vector.
+The positive class is coded as +1 and the negative class either as 0 or -1.
+Default is &ldquo;no&rdquo;.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>A <code>factor</code> for classification or a <code>numeric</code> for
-regression.
+<p>A <code>factor</code> for classification or a <code>numeric</code> for regression.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other task: <code><a href="getTaskCosts.html">getTaskCosts</a></code>;
+<code><a href="getTaskData.html">getTaskData</a></code>;
+<code><a href="getTaskFeatureNames.html">getTaskFeatureNames</a></code>;
+<code><a href="getTaskFormula.html">getTaskFormula</a></code>,
+<code><a href="getTaskFormula.html">getTaskFormulaAsString</a></code>;
+<code><a href="getTaskNFeats.html">getTaskNFeats</a></code>; <code><a href="subsetTask.html">subsetTask</a></code>
 </p>
 
 
 <h3>Examples</h3>
 
 <pre><code class="r">
-task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
+task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 getTaskTargets(task)
 </code></pre>
 

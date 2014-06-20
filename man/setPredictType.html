@@ -10,10 +10,10 @@
 
 <h3>Description</h3>
 
-<p>Possible prediction types are: Classification: Labels or
-class probabilities (including labels). Regression: Numeric
-or response or standard errors (including numeric
-response).
+<p>Possible prediction types are:
+Classification: Labels or class probabilities (including labels).
+Regression: Numeric or response or standard errors (including numeric response).
+Survival: Linear predictor or survival probability.
 </p>
 
 
@@ -29,14 +29,16 @@ setPredictType(learner, predict.type)
 <table summary="R argblock">
 <tr valign="top"><td><code>learner</code></td>
 <td>
-<p>[<code><a href="makeLearner.html">Learner</a></code>]<br> The learner.</p>
+<p>[<code><a href="makeLearner.html">Learner</a></code>]<br>
+The learner.</p>
 </td></tr>
 <tr valign="top"><td><code>predict.type</code></td>
 <td>
 <p>[<code>character(1)</code>]<br>
 Classification: &ldquo;response&rdquo; or &ldquo;prob&rdquo;.
-Regression: &ldquo;response&rdquo; or &ldquo;se&rdquo;.  Default is
-&ldquo;response&rdquo;.</p>
+Regression: &ldquo;response&rdquo; or &ldquo;se&rdquo;.
+Survival: &ldquo;response&rdquo; (linear predictor) or &ldquo;prob&rdquo;.
+Default is &ldquo;response&rdquo;.</p>
 </td></tr>
 </table>
 
@@ -49,8 +51,7 @@ Regression: &ldquo;response&rdquo; or &ldquo;se&rdquo;.  Default is
 
 <h3>See Also</h3>
 
-<p><code><a href="setThreshold.html">setThreshold</a></code> to alter the threshold used for
-prediction.
+<p><code><a href="setThreshold.html">setThreshold</a></code> to alter the threshold used for prediction.
 </p>
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>

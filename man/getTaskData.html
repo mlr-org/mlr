@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>R: Extract data in task. Useful in 'trainLearner' when you add a...</title>
+<html><head><title>R: Extract data in task.</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="R.css">
 
@@ -11,13 +11,11 @@
 
 <table width="100%" summary="page for getTaskData {mlr}"><tr><td>getTaskData {mlr}</td><td align="right">R Documentation</td></tr></table>
 
-<h2>Extract data in task. Useful in <code><a href="trainLearner.html">trainLearner</a></code> when you add a learning
-machine to the package.</h2>
+<h2>Extract data in task.</h2>
 
 <h3>Description</h3>
 
-<p>Extract data in task. Useful in <code><a href="trainLearner.html">trainLearner</a></code>
-when you add a learning machine to the package.
+<p>Useful in <code><a href="trainLearner.html">trainLearner</a></code> when you add a learning machine to the package.
 </p>
 
 
@@ -34,43 +32,55 @@ getTaskData(task, subset, features, target.extra = FALSE,
 <table summary="R argblock">
 <tr valign="top"><td><code>task</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> The task.</p>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+The task.</p>
 </td></tr>
 <tr valign="top"><td><code>subset</code></td>
 <td>
-<p>[<code>integer</code>]<br> Selected cases.
+<p>[<code>integer</code>]<br>
+Selected cases.
 Default is all cases.</p>
 </td></tr>
 <tr valign="top"><td><code>features</code></td>
 <td>
-<p>[<code>character</code>]<br> Selected inputs.
-Default is all input variables.</p>
+<p>[<code>character</code>]<br>
+Selected features.
+Default is all.</p>
 </td></tr>
 <tr valign="top"><td><code>target.extra</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br> Should target
-vector be returned separately?  If not, a single
-data.frame including the target is returned, otherwise a
-list with the input data.frame and an extra vector for
-the targets.  Default is FALSE.</p>
+<p>[<code>logical(1)</code>]<br>
+Should target vector be returned separately?
+If not, a single data.frame including the target is returned, otherwise a list
+with the input data.frame and an extra vector for the targets.
+Default is FALSE.</p>
 </td></tr>
 <tr valign="top"><td><code>recode.target</code></td>
 <td>
-<p>[<code>character(1)</code>]<br> Should
-target classes be recoded? Only for binary
-classification.  Possible are &ldquo;no&rdquo; (do nothing),
-&ldquo;01&rdquo;, and &ldquo;-1+1&rdquo;.  In the two latter cases
-the target vector is converted into a numeric vector.
-The positive class is coded as +1 and the negative class
-either as 0 or -1.  Default is &ldquo;no&rdquo;.</p>
+<p>[<code>character(1)</code>]<br>
+Should target classes be recoded? Only for binary classification.
+Possible are &ldquo;no&rdquo; (do nothing), &ldquo;01&rdquo;, and &ldquo;-1+1&rdquo;.
+In the two latter cases the target vector is converted into a numeric vector.
+The positive class is coded as +1 and the negative class either as 0 or -1.
+Default is &ldquo;no&rdquo;.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>Either a data.frame or a list with data.frame <code>data</code>
-and vector <code>target</code>.
+<p>Either a data.frame or a list with data.frame <code>data</code> and vector <code>target</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other task: <code><a href="getTaskCosts.html">getTaskCosts</a></code>;
+<code><a href="getTaskFeatureNames.html">getTaskFeatureNames</a></code>;
+<code><a href="getTaskFormula.html">getTaskFormula</a></code>,
+<code><a href="getTaskFormula.html">getTaskFormulaAsString</a></code>;
+<code><a href="getTaskNFeats.html">getTaskNFeats</a></code>;
+<code><a href="getTaskTargets.html">getTaskTargets</a></code>; <code><a href="subsetTask.html">subsetTask</a></code>
 </p>
 
 
@@ -80,9 +90,9 @@ and vector <code>target</code>.
 library(&quot;mlbench&quot;)
 data(BreastCancer)
 
-df &lt;- BreastCancer
-df$Id &lt;- NULL
-task &lt;- makeClassifTask(id = &quot;BreastCancer&quot;, data = df, target = &quot;Class&quot;, positive = &quot;malignant&quot;)
+df = BreastCancer
+df$Id = NULL
+task = makeClassifTask(id = &quot;BreastCancer&quot;, data = df, target = &quot;Class&quot;, positive = &quot;malignant&quot;)
 head(getTaskData)
 </code></pre>
 

@@ -10,8 +10,7 @@
 
 <h3>Description</h3>
 
-<p>This is a constructor to create your own imputation
-methods.
+<p>This is a constructor to create your own imputation methods.
 </p>
 
 
@@ -28,25 +27,23 @@ makeImputeMethod(learn, impute, args = list())
 <tr valign="top"><td><code>learn</code></td>
 <td>
 <p>[<code>function(data, target, col, ...)</code>]<br>
-Function to learn and extract information on column
-<code>col</code> out of data frame <code>data</code>. Argument
-<code>target</code> specifies the target column of the learning
-task.  The function has to return a named list of
-values.</p>
+Function to learn and extract information on column <code>col</code>
+out of data frame <code>data</code>. Argument <code>target</code> specifies
+the target column of the learning task.
+The function has to return a named list of values.</p>
 </td></tr>
 <tr valign="top"><td><code>impute</code></td>
 <td>
-<p>[<code>function(data, target, col,
-  ...)</code>]<br> Function to impute missing values in <code>col</code>
-using information returned by <code>learn</code> on the same
-column.  All list elements of the return values o
-<code>learn</code> are passed to this function into
-<code>...</code>.</p>
+<p>[<code>function(data, target, col, ...)</code>]<br>
+Function to impute missing values in <code>col</code> using information
+returned by <code>learn</code> on the same column.
+All list elements of the return values o <code>learn</code>
+are passed to this function into <code>...</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>args</code></td>
 <td>
-<p>[<code>list</code>]<br> Named list of arguments to
-pass to <code>learn</code> via <code>...</code>.</p>
+<p>[<code>list</code>]<br>
+Named list of arguments to pass to <code>learn</code> via <code>...</code>.</p>
 </td></tr>
 </table>
 

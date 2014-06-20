@@ -15,9 +15,8 @@
 
 <h3>Description</h3>
 
-<p>This is an adavanced feature of mlr. It gives access to
-some inner workings so the result might not be compatible
-with everything! <br>
+<p>This is an adavanced feature of mlr. It gives access to some
+inner workings so the result might not be compatible with everything! <br>
 </p>
 
 
@@ -33,35 +32,33 @@ makeAggregation(id, fun)
 <table summary="R argblock">
 <tr valign="top"><td><code>id</code></td>
 <td>
-<p>[<code>character(1)</code>]<br> Name of the
-aggregation method. (Preferably the same name as the
-generated function)</p>
+<p>[<code>character(1)</code>]<br>
+Name of the aggregation method. (Preferably the same name as the generated function)</p>
 </td></tr>
 <tr valign="top"><td><code>fun</code></td>
 <td>
-<p>[<code>function</code>]<br> A function with following
-signature: <code>function(task, perf.test, perf.train,
-  measure, group, pred)</code> </p>
- <ul>
-<li><p><B>task</B>: task
-(<code><a href="SupervisedTask.html">SupervisedTask</a></code>) object
+<p>[<code>function</code>]<br>
+A function with following signature: <code>function(task, perf.test, perf.train, measure, group, pred)</code>
+</p>
+
+<ul>
+<li><p><B>task</B>: task (<code><a href="SupervisedTask.html">SupervisedTask</a></code>) object
 </p>
 </li>
-<li><p><B>perf.test</B>: numerical vector of
-<a href="performance.html">performance</a> results on the test data set
+<li><p><B>perf.test</B>: numerical vector of <a href="performance.html">performance</a> results on the test data set
 </p>
 </li>
-<li><p><B>perf.train</B>. numerical vector of
-<a href="performance.html">performance</a> results on the train data set
+<li><p><B>perf.train</B>. numerical vector of <a href="performance.html">performance</a> results on the train data set
 </p>
 </li>
 <li><p><B>measure</B>: <code><a href="makeMeasure.html">Measure</a></code> object.
 </p>
 </li>
-<li><p><B>group</B>: grouping vector </p>
+<li><p><B>group</B>: grouping vector
+</p>
 </li>
-<li><p><B>pred</B>:
-<code><a href="Prediction.html">Prediction</a></code> object </p>
+<li><p><B>pred</B>: <code><a href="Prediction.html">Prediction</a></code> object
+</p>
 </li></ul>
 </td></tr>
 </table>

@@ -12,23 +12,23 @@ To see all possible, implemented aggregations look at <code><a href="aggregation
 
 <h3>Description</h3>
 
-<p>The aggregation can access all relevant information of the
-result after resampling and combine them into a single
-value. Though usually something very simple like taking the
-mean of the test set performances is done.
+<p>The aggregation can access all relevant information of the result after resampling
+and combine them into a single value. Though usually something very simple
+like taking the mean of the test set performances is done.
 </p>
 
 
 <h3>Details</h3>
 
-<p>Object members: </p>
- <dl>
-<dt>id
-[<code>character(1)</code>]</dt><dd><p>Name of aggregation method.</p>
+<p>Object members:
+</p>
+
+<dl>
+<dt>id [<code>character(1)</code>]</dt><dd><p>Name of aggregation method.</p>
 </dd>
-<dt>fun [<code>function(task, perf.test, perf.train,
-measure, group, pred)</code>]</dt><dd><p>Aggregation function.</p>
-</dd> </dl>
+<dt>fun [<code>function(task, perf.test, perf.train, measure, group, pred)</code>]</dt><dd><p>Aggregation function.</p>
+</dd>
+</dl>
 
 
 

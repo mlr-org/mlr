@@ -15,26 +15,22 @@
 
 <h3>Description</h3>
 
-<p>Allows imputation of missing feature values through various
-techniques. Note that you have the possibility to re-impute
-a data set in the same way as the imputation was performed
-during training. This especially comes in handy during
-resampling when one wants to perform the same imputation on
-the test set as on the training set.
+<p>Allows imputation of missing feature values through various techniques.
+Note that you have the possibility to re-impute a data set
+in the same way as the imputation was performed during training.
+This especially comes in handy during resampling when one wants to perform the
+same imputation on the test set as on the training set.
 </p>
-<p>The function <code>impute</code> performs the imputation on a
-data set and returns, alongside with the imputed data set,
-an &ldquo;ImputationDesc&rdquo; object which can contain
-&ldquo;learned&rdquo; coefficients and helpful data. It can then
-be passed together with a new data set to
-<code><a href="reimpute.html">reimpute</a></code>.
+<p>The function <code>impute</code> performs the imputation on a data set and returns,
+alongside with the imputed data set, an &ldquo;ImputationDesc&rdquo; object
+which can contain &ldquo;learned&rdquo; coefficients and helpful data.
+It can then be passed together with a new data set to <code><a href="reimpute.html">reimpute</a></code>.
 </p>
-<p>The imputation techniques can be specified for certain
-features or for feature classes, see function arguments.
+<p>The imputation techniques can be specified for certain features or for feature classes,
+see function arguments.
 </p>
-<p>You can either provide an arbitrary object, use a built-in
-imputation method listed under <code><a href="imputations.html">imputations</a></code> or
-create one yourself using <code><a href="makeImputeMethod.html">makeImputeMethod</a></code>.
+<p>You can either provide an arbitrary object, use a built-in imputation method listed
+under <code><a href="imputations.html">imputations</a></code> or create one yourself using <code><a href="makeImputeMethod.html">makeImputeMethod</a></code>.
 </p>
 
 
@@ -42,8 +38,8 @@ create one yourself using <code><a href="makeImputeMethod.html">makeImputeMethod
 
 <pre>
 impute(data, target, classes = list(), cols = list(),
-  dummies = character(0L), impute.new.levels = TRUE,
-  recode.factor.levels = TRUE)
+  dummy.classes = character(0L), dummy.cols = character(0L),
+  impute.new.levels = TRUE, recode.factor.levels = TRUE)
 </pre>
 
 
@@ -52,88 +48,93 @@ impute(data, target, classes = list(), cols = list(),
 <table summary="R argblock">
 <tr valign="top"><td><code>data</code></td>
 <td>
-<p>[<code>data.frame</code>]<br> Input data.</p>
+<p>[<code>data.frame</code>]<br>
+Input data.</p>
 </td></tr>
 <tr valign="top"><td><code>target</code></td>
 <td>
-<p>[<code>character</code>]<br> Name of the column
-specifying the response.</p>
+<p>[<code>character</code>]<br>
+Name of the column(s) specifying the response.</p>
 </td></tr>
 <tr valign="top"><td><code>classes</code></td>
 <td>
-<p>[<code>named list</code>]<br> Named list
-containing imputation techniques for classes of columns.
+<p>[<code>named list</code>]<br>
+Named list containing imputation techniques for classes of columns.
 E.g. <code>list(numeric = imputeMedian())</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>cols</code></td>
 <td>
-<p>[<code>named list</code>]<br> Named list containing
-names of the built-in imputation methods to impute
-missing values in the data column referenced by the list
-element's name. Overwrites imputation set via
+<p>[<code>named list</code>]<br>
+Named list containing names of imputation methods to impute missing values
+in the data column referenced by the list element's name. Overwrites imputation set via
 <code>classes</code>.</p>
 </td></tr>
-<tr valign="top"><td><code>dummies</code></td>
+<tr valign="top"><td><code>dummy.classes</code></td>
 <td>
-<p>[<code>character</code>]<br> Column names for
-which dummy variables (binary missing indicator) should
-be created.  Default is <code>character(0)</code>.</p>
+<p>[<code>character</code>]<br>
+Character vector with class names of columns to create dummy columns (containing binary missing indicator) for.
+Default is <code>character(0)</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>dummy.cols</code></td>
+<td>
+<p>[<code>character</code>]<br>
+Column names to create dummy columns (containing binary missing indicator) for.
+Default is <code>character(0)</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>impute.new.levels</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br> If new,
-unencountered factor level occur during reimputation,
-should these be handled as NAs and then be imputed the
-same way?  Default is <code>TRUE</code>.</p>
+<p>[<code>logical(1)</code>]<br>
+If new, unencountered factor level occur during reimputation,
+should these be handled as NAs and then be imputed the same way?
+Default is <code>TRUE</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>recode.factor.levels</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br> Recode
-factor levels after reimputation, so they match the
-respective element of <code>lvls</code> (in the description
-object) and therefore match the levels of the feature
-factor in the training data after imputation?.  Default
-is <code>TRUE</code>.</p>
+<p>[<code>logical(1)</code>]<br>
+Recode factor levels after reimputation, so they match the respective element of
+<code>lvls</code> (in the description object) and therefore match the levels of the
+feature factor in the training data after imputation?.
+Default is <code>TRUE</code>.</p>
 </td></tr>
 </table>
 
 
 <h3>Details</h3>
 
-<p>The description object contains these slots </p>
+<p>The description object contains these slots
+</p>
 
 <dl>
 <dt>target [<code>character</code>]</dt><dd><p>See argument.</p>
 </dd>
-<dt>features [<code>character</code>]</dt><dd><p>Feature names, these are
-the column names of <code>data</code>, excluding <code>target</code>.</p>
+<dt>features [<code>character</code>]</dt><dd><p>Feature names, these are the column names of <code>data</code>,
+excluding <code>target</code>.</p>
 </dd>
-<dt>lvls [<code>named list</code>]</dt><dd><p>Mapping of column names of
-factor features to their levels, including newly created
-ones during imputation.</p>
-</dd> <dt>impute [<code>named
-list</code>]</dt><dd><p>Mapping of column names to imputation functions.</p>
+<dt>lvls [<code>named list</code>]</dt><dd><p>Mapping of column names of factor features to their levels,
+including newly created ones during imputation.</p>
 </dd>
-<dt>dummies [<code>named list</code>]</dt><dd><p>Mapping of column names
-to imputation functions.</p>
-</dd> <dt>impute.new.levels
-[<code>logical(1)</code>]</dt><dd><p>See argument.</p>
+<dt>impute [<code>named list</code>]</dt><dd><p>Mapping of column names to imputation functions.</p>
 </dd>
-<dt>recode.factor.levels [<code>logical(1)</code>]</dt><dd><p>See
-argument.</p>
-</dd> </dl>
+<dt>dummies [<code>named list</code>]</dt><dd><p>Mapping of column names to imputation functions.</p>
+</dd>
+<dt>impute.new.levels [<code>logical(1)</code>]</dt><dd><p>See argument.</p>
+</dd>
+<dt>recode.factor.levels [<code>logical(1)</code>]</dt><dd><p>See argument.</p>
+</dd>
+</dl>
 
 
 
 <h3>Value</h3>
 
-<p>[<code>list</code>] </p>
+<p>[<code>list</code>]
+</p>
 <table summary="R valueblock">
-<tr valign="top"><td><code>data <code>data.frame</code></code></td>
+<tr valign="top"><td><code>data [<code>data.frame</code>]</code></td>
 <td>
 <p>Imputed data.</p>
 </td></tr>
-<tr valign="top"><td><code>desc <code>ImputationDesc</code></code></td>
+<tr valign="top"><td><code>desc [<code>ImputationDesc</code>]</code></td>
 <td>
 <p>Description object.</p>
 </td></tr>
@@ -143,8 +144,8 @@ argument.</p>
 <h3>Examples</h3>
 
 <pre><code class="r">
-df = data.frame(x = c(1, 1, NA), y = factor(c(&quot;a&quot;, &quot;a&quot;, &quot;b&quot;)), z=1:3)
-imputed = impute(df, target=character(0), cols=list(x = 99, y = imputeMode()))
+df = data.frame(x = c(1, 1, NA), y = factor(c(&quot;a&quot;, &quot;a&quot;, &quot;b&quot;)), z = 1:3)
+imputed = impute(df, target = character(0), cols = list(x = 99, y = imputeMode()))
 print(imputed$data)
 </code></pre>
 
@@ -152,6 +153,13 @@ print(imputed$data)
 ## 1  1 a 1
 ## 2  1 a 2
 ## 3 99 b 3
+</code></pre>
+
+<pre><code class="r">reimpute(data.frame(x = NA), imputed$desc)
+</code></pre>
+
+<pre><code>##    x y  z
+## 1 99 a NA
 </code></pre>
 
 <pre><code class="r">

@@ -15,9 +15,8 @@
 
 <h3>Description</h3>
 
-<p>Calculates confusion matrix for (possibly resampled)
-prediction. Rows indicate true classes, columns predicted
-classes.
+<p>Calculates confusion matrix for (possibly resampled) prediction.
+Rows indicate true classes, columns predicted classes.
 </p>
 
 
@@ -33,13 +32,13 @@ getConfMatrix(pred, relative = FALSE)
 <table summary="R argblock">
 <tr valign="top"><td><code>pred</code></td>
 <td>
-<p>[<code><a href="Prediction.html">Prediction</a></code>]<br> Result of a
-prediction.</p>
+<p>[<code><a href="Prediction.html">Prediction</a></code>]<br>
+Prediction object.</p>
 </td></tr>
 <tr valign="top"><td><code>relative</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br> If <code>TRUE</code>
-rows are normalized to show relative frequencies.
+<p>[<code>logical(1)</code>]<br>
+If <code>TRUE</code> rows are normalized to show relative frequencies.
 Default is <code>FALSE</code>.</p>
 </td></tr>
 </table>
@@ -69,12 +68,7 @@ Default is <code>FALSE</code>.</p>
 ## create classification task and use linear discriminant analysis for classification
 task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn &lt;- makeLearner(&quot;classif.lda&quot;)
-</code></pre>
 
-<pre><code>## Loading required package: MASS
-</code></pre>
-
-<pre><code class="r">
 ## set up training and test data
 n &lt;- nrow(iris)
 mixed.set &lt;- sample(1:n)
@@ -91,21 +85,21 @@ print(getConfMatrix(pred))
 
 <pre><code>##             predicted
 ## true         setosa versicolor virginica -SUM-
-##   setosa         32          0         0     0
-##   versicolor      0         26         0     0
-##   virginica       0          0        17     0
-##   -SUM-           0          0         0     0
+##   setosa         26          0         0     0
+##   versicolor      0         25         4     4
+##   virginica       0          0        20     0
+##   -SUM-           0          0         4     4
 </code></pre>
 
 <pre><code class="r">print(getConfMatrix(pred, relative = TRUE))
 </code></pre>
 
 <pre><code>##             predicted
-## true         setosa versicolor virginica -SUM-
-##   setosa          1          0         0     0
-##   versicolor      0          1         0     0
-##   virginica       0          0         1     0
-##   -SUM-           0          0         0     0
+## true         setosa versicolor virginica   -SUM-
+##   setosa          1     0.0000    0.0000 0.00000
+##   versicolor      0     0.8621    0.1379 0.13793
+##   virginica       0     0.0000    1.0000 0.00000
+##   -SUM-           0     0.0000    1.0000 0.05333
 </code></pre>
 
 <pre><code class="r">

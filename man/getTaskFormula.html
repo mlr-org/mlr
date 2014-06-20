@@ -2,26 +2,23 @@
 <html><head><title>R: Get formula of a task.</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="R.css">
-
-<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
-<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
-<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
 </head><body>
 
-<table width="100%" summary="page for getTaskFormula {mlr}"><tr><td>getTaskFormula {mlr}</td><td align="right">R Documentation</td></tr></table>
+<table width="100%" summary="page for getTaskFormulaAsString {mlr}"><tr><td>getTaskFormulaAsString {mlr}</td><td align="right">R Documentation</td></tr></table>
 
 <h2>Get formula of a task.</h2>
 
 <h3>Description</h3>
 
-<p>This is simply the <code>target ~ .</code> formula.
+<p>This is simply &ldquo;&lt;target&gt; ~ .&rdquo;.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
+getTaskFormulaAsString(x, target = getTargetNames(x))
+
 getTaskFormula(x, target = getTargetNames(x), env = NULL)
 </pre>
 
@@ -31,45 +28,39 @@ getTaskFormula(x, target = getTargetNames(x), env = NULL)
 <table summary="R argblock">
 <tr valign="top"><td><code>x</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code> |
-<code><a href="TaskDesc.html">TaskDesc</a></code>]<br> Task or its description
-object.</p>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code> | <code><a href="TaskDesc.html">TaskDesc</a></code>]<br>
+Task or its description object.</p>
 </td></tr>
 <tr valign="top"><td><code>target</code></td>
 <td>
-<p>[<code>character(1)</code>]<br> Left hand side of
-formula.  Default is defined by task <code>x</code>.</p>
+<p>[<code>character(1)</code>]<br>
+Left hand side of formula.
+Default is defined by task <code>x</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>env</code></td>
 <td>
-<p>[<code>environment</code>]<br> Environment of the
-formula. Set this to <code>parent.frame()</code> for the
-default behaviour.  Default is <code>NULL</code> which deletes
-the environment.</p>
+<p>[<code>environment</code>]<br>
+Environment of the formula. Set this to <code>parent.frame()</code>
+for the default behaviour.
+Default is <code>NULL</code> which deletes the environment.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>[<code>formula</code>].
+<p>[<code>formula</code> | <code>character(1)</code>].
 </p>
 
 
-<h3>Examples</h3>
+<h3>See Also</h3>
 
-<pre><code class="r">
-task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
-getTaskFormula(task)
-</code></pre>
-
-<pre><code>## Species ~ .
-## NULL
-</code></pre>
-
-<pre><code class="r">
-</code></pre>
-
+<p>Other task: <code><a href="getTaskCosts.html">getTaskCosts</a></code>;
+<code><a href="getTaskData.html">getTaskData</a></code>;
+<code><a href="getTaskFeatureNames.html">getTaskFeatureNames</a></code>;
+<code><a href="getTaskNFeats.html">getTaskNFeats</a></code>;
+<code><a href="getTaskTargets.html">getTaskTargets</a></code>; <code><a href="subsetTask.html">subsetTask</a></code>
+</p>
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
 </body></html>

@@ -15,10 +15,8 @@
 
 <h3>Description</h3>
 
-<p>A description of a resampling algorithm contains all
-necessary information to create a
-<code><a href="makeResampleInstance.html">ResampleInstance</a></code>, when given the size of the
-data set.
+<p>A description of a resampling algorithm contains all necessary information to
+create a <code><a href="makeResampleInstance.html">ResampleInstance</a></code>, when given the size of the data set.
 </p>
 
 
@@ -34,99 +32,106 @@ makeResampleDesc(method, predict = "test", ..., stratify = FALSE)
 <table summary="R argblock">
 <tr valign="top"><td><code>method</code></td>
 <td>
-<p>[<code>character(1)</code>]<br> &ldquo;CV&rdquo; for
-cross-validation, &ldquo;LOO&rdquo; for leave-one-out,
-&ldquo;RepCV&rdquo; for repeated cross-validation,
-&ldquo;Bootstrap&rdquo; for out-of-bag bootstrap,
-&ldquo;Subsample&rdquo; for subsampling, &ldquo;Holdout&rdquo; for
-holdout.</p>
+<p>[<code>character(1)</code>]<br>
+&ldquo;CV&rdquo; for cross-validation, &ldquo;LOO&rdquo; for leave-one-out, &ldquo;RepCV&rdquo; for
+repeated cross-validation, &ldquo;Bootstrap&rdquo; for out-of-bag bootstrap, &ldquo;Subsample&rdquo; for
+subsampling, &ldquo;Holdout&rdquo; for holdout.</p>
 </td></tr>
 <tr valign="top"><td><code>predict</code></td>
 <td>
-<p>[<code>character(1)</code>]<br> What to predict
-during resampling: &ldquo;train&rdquo;, &ldquo;test&rdquo; or
-&ldquo;both&rdquo; sets.  Default is &ldquo;test&rdquo;.</p>
+<p>[<code>character(1)</code>]<br>
+What to predict during resampling: &ldquo;train&rdquo;, &ldquo;test&rdquo; or &ldquo;both&rdquo; sets.
+Default is &ldquo;test&rdquo;.</p>
 </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
-<p>[any]<br> Further parameters for strategies.<br>
+<p>[any]<br>
+Further parameters for strategies.<br>
 </p>
- <dl>
-<dt>iters [<code>numeric(1)</code>]</dt><dd><p>Number of
-iterations, for &ldquo;CV&rdquo;, &ldquo;Subsample&rdquo; and
-&ldquo;Boostrap&rdquo;</p>
-</dd> <dt>split
-[<code>numeric(1)</code>]</dt><dd><p>Proportion of training cases for
-&ldquo;Holdout&rdquo; and &ldquo;Subsample&rdquo; between 0 and 1.
-Default is 2/3.</p>
-</dd> <dt>reps [integer(1)]</dt><dd><p>Repeats for
-&ldquo;RepCV&rdquo;. Here <code>iters = folds * reps</code>.
+
+<dl>
+<dt>iters [<code>integer(1)</code>]</dt><dd><p>Number of iterations, for &ldquo;CV&rdquo;, &ldquo;Subsample&rdquo;
+and &ldquo;Boostrap&rdquo;</p>
+</dd>
+<dt>split [<code>numeric(1)</code>]</dt><dd><p>Proportion of training cases for &ldquo;Holdout&rdquo; and
+&ldquo;Subsample&rdquo; between 0 and 1. Default is 2/3.</p>
+</dd>
+<dt>reps [integer(1)]</dt><dd><p>Repeats for &ldquo;RepCV&rdquo;. Here <code>iters = folds * reps</code>.
 Default is 10.</p>
-</dd> <dt>folds [integer(1)]</dt><dd><p>Folds in the
-repeated CV for <code>RepCV</code>.  Here <code>iters = folds *
-  reps</code>. Default is 10.</p>
-</dd> </dl>
+</dd>
+<dt>folds [integer(1)]</dt><dd><p>Folds in the repeated CV for <code>RepCV</code>.
+Here <code>iters = folds * reps</code>. Default is 10.</p>
+</dd>
+</dl>
 </td></tr>
 <tr valign="top"><td><code>stratify</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br> Should
-stratification be done for the classes in classification
-tasks?  This means that the resampling strategy is
-applied to all classes individually and the resulting
-index sets are joined to make sure that the proportion of
-observations in each training set is as in the original
-data set. Useful for imbalanced class sizes.</p>
+<p>[<code>logical(1)</code>]<br>
+Should stratification be done for the classes in classification tasks?
+This means that the resampling strategy is applied to all classes individually and the resulting
+index sets are joined to make sure that the proportion of observations in each training set
+is as in the original data set. Useful for imbalanced class sizes.</p>
 </td></tr>
 </table>
 
 
 <h3>Details</h3>
 
-<p>Some notes on some special strategies: </p>
+<p>Some notes on some special strategies:
+</p>
 
 <dl>
-<dt>Repeated cross-validation</dt><dd><p>Use &ldquo;RepCV&rdquo;. Then
-you have to set the aggregation function for your preferred
-performance measure to &ldquo;testgroup.mean&rdquo; via
-<code><a href="setAggregation.html">setAggregation</a></code>.</p>
-</dd> <dt>B632 bootstrap</dt><dd><p>Use
-&ldquo;Bootstrap&rdquo; for bootstrap and set predict to
-&ldquo;both&rdquo;.  Then you have to set the aggregation
-function for your preferred performance measure to
+<dt>Repeated cross-validation</dt><dd><p>Use &ldquo;RepCV&rdquo;. Then you have to set the aggregation function
+for your preferred performance measure to &ldquo;testgroup.mean&rdquo;
+via <code><a href="setAggregation.html">setAggregation</a></code>.</p>
+</dd>
+<dt>B632 bootstrap</dt><dd><p>Use &ldquo;Bootstrap&rdquo; for bootstrap and set predict to &ldquo;both&rdquo;.
+Then you have to set the aggregation function for your preferred performance measure to
 &ldquo;b632&rdquo; via <code><a href="setAggregation.html">setAggregation</a></code>.</p>
 </dd>
-<dt>B632+ bootstrap</dt><dd><p>Use &ldquo;Bootstrap&rdquo; for bootstrap
-and set predict to &ldquo;both&rdquo;.  Then you have to set the
-aggregation function for your preferred performance measure
-to &ldquo;b632plus&rdquo; via <code><a href="setAggregation.html">setAggregation</a></code>.</p>
+<dt>B632+ bootstrap</dt><dd><p>Use &ldquo;Bootstrap&rdquo; for bootstrap and set predict to &ldquo;both&rdquo;.
+Then you have to set the aggregation function for your preferred performance measure to
+&ldquo;b632plus&rdquo; via <code><a href="setAggregation.html">setAggregation</a></code>.</p>
 </dd>
-<dt>Fixed Holdout set</dt><dd><p>Use
-<code><a href="makeFixedHoldoutInstance.html">makeFixedHoldoutInstance</a></code>.</p>
-</dd> </dl>
+<dt>Fixed Holdout set</dt><dd><p>Use <code><a href="makeFixedHoldoutInstance.html">makeFixedHoldoutInstance</a></code>.</p>
+</dd>
+</dl>
 
-<p>Object slots: </p>
- <dl>
-<dt>id
-[<code>character(1)</code>]</dt><dd><p>Name of resampling strategy.</p>
+<p>Object slots:
+</p>
+
+<dl>
+<dt>id [<code>character(1)</code>]</dt><dd><p>Name of resampling strategy.</p>
 </dd>
-<dt>iters [<code>integer(1)</code>]</dt><dd><p>Number of iterations. Note
-that this is always the complete number of generated
-train/test sets, so for a 10-times repeated 5fold
-cross-validation it would be 50.</p>
-</dd> <dt>predict
-[<code>character(1)</code>]</dt><dd><p>See argument.</p>
-</dd> <dt>stratify
-[<code>logical(1)</code>]</dt><dd><p>See argument.</p>
-</dd> <dt>All parameters
-passed in ... under the respective argument name</dt><dd><p>See
-arguments.</p>
-</dd> </dl>
+<dt>iters [<code>integer(1)</code>]</dt><dd><p>Number of iterations. Note that this is always the complete number
+of generated train/test sets, so for a 10-times repeated 5fold cross-validation it would be 50.</p>
+</dd>
+<dt>predict [<code>character(1)</code>]</dt><dd><p>See argument.</p>
+</dd>
+<dt>stratify [<code>logical(1)</code>]</dt><dd><p>See argument.</p>
+</dd>
+<dt>All parameters passed in ... under the respective argument name</dt><dd><p>See arguments.</p>
+</dd>
+</dl>
 
 
 
 <h3>Value</h3>
 
 <p>[<code><a href="makeResampleDesc.html">ResampleDesc</a></code>].
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other resample: <code><a href="makeResampleInstance.html">ResampleInstance</a></code>,
+<code><a href="makeResampleInstance.html">makeResampleInstance</a></code>;
+<code><a href="ResamplePrediction.html">ResamplePrediction</a></code>;
+<code><a href="resample.html">bootstrapB632</a></code>,
+<code><a href="resample.html">bootstrapB632plus</a></code>,
+<code><a href="resample.html">bootstrapOOB</a></code>, <code><a href="../../bootstrap/html/crossval.html">crossval</a></code>,
+<code><a href="resample.html">holdout</a></code>, <code><a href="resample.html">repcv</a></code>,
+<code><a href="../../gdata/html/resample.html">resample</a></code>, <code><a href="resample.html">subsample</a></code>
 </p>
 
 

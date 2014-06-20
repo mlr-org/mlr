@@ -10,18 +10,23 @@
 
 <h3>Description</h3>
 
-<p>Result from <code><a href="../../caret/html/train.html">train</a></code>. It internally stores the
-underlying fitted model, the subset used for training,
-features used for training, levels of factors in the data
-set and computation time that was spent for training.
+<p>Result from <code><a href="../../caret/html/train.html">train</a></code>.
+</p>
+<p>It internally stores the underlying fitted model,
+the subset used for training, features used for training, levels of factors in the
+data set and computation time that was spent for training.
+</p>
+<p>Object members: See arguments.
+</p>
+<p>The constructor <code>makeWrappedModel</code> is mainly for internal use.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-makeWrappedModel(learner, model, task.desc, subset, features, factor.levels,
-  time)
+makeWrappedModel(learner, learner.model, task.desc, subset, features,
+  factor.levels, time)
 </pre>
 
 
@@ -30,49 +35,42 @@ makeWrappedModel(learner, model, task.desc, subset, features, factor.levels,
 <table summary="R argblock">
 <tr valign="top"><td><code>learner</code></td>
 <td>
-<p>[<code><a href="makeLearner.html">Learner</a></code>]<br> The learner.</p>
+<p>[<code><a href="makeLearner.html">Learner</a></code> | <code>character(1)</code>]<br>
+The learner.
+If you pass a string the learner will be created via <code><a href="makeLearner.html">makeLearner</a></code>.</p>
 </td></tr>
-<tr valign="top"><td><code>model</code></td>
+<tr valign="top"><td><code>learner.model</code></td>
 <td>
-<p>[any]<br> Underlying model.</p>
+<p>[any]<br>
+Underlying model.</p>
 </td></tr>
 <tr valign="top"><td><code>task.desc</code></td>
 <td>
-<p>[<code><a href="TaskDesc.html">TaskDesc</a></code>]<br> Task
-description object.</p>
+<p>[<code><a href="TaskDesc.html">TaskDesc</a></code>]<br>
+Task description object.</p>
 </td></tr>
 <tr valign="top"><td><code>subset</code></td>
 <td>
-<p>[<code>integer</code>]<br> Subset used for
-training.</p>
+<p>[<code>integer</code>]<br>
+Subset used for training.</p>
 </td></tr>
 <tr valign="top"><td><code>features</code></td>
 <td>
-<p>[<code>character</code>]<br> Features used for
-training.</p>
+<p>[<code>character</code>]<br>
+Features used for training.</p>
 </td></tr>
 <tr valign="top"><td><code>factor.levels</code></td>
 <td>
-<p>[named <code>list</code> of
-<code>character</code>]<br> Levels of factor variables (features
-and potentially target) in training data.  Named by
-variable name, non-factors do not occur in the list.</p>
+<p>[named <code>list</code> of <code>character</code>]<br>
+Levels of factor variables (features and potentially target) in training data.
+Named by variable name, non-factors do not occur in the list.</p>
 </td></tr>
 <tr valign="top"><td><code>time</code></td>
 <td>
-<p>[<code>numeric(1)</code>]<br> Computation time for
-model fit in seconds.</p>
+<p>[<code>numeric(1)</code>]<br>
+Computation time for model fit in seconds.</p>
 </td></tr>
 </table>
-
-
-<h3>Details</h3>
-
-<p>The constructed <code>makeWrappedModel</code> is only for
-internal use.
-</p>
-<p>Object members: See arguments.
-</p>
 
 
 <h3>Value</h3>

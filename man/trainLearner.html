@@ -10,16 +10,15 @@
 
 <h3>Description</h3>
 
-<p>Mainly for internal use. Trains a wrapped learner on a
-given training set. You have to implement this method if
-you want to add another learner to this package.
+<p>Mainly for internal use. Trains a wrapped learner on a given training set.
+You have to implement this method if you want to add another learner to this package.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-trainLearner(.learner, .task, .subset, ...)
+trainLearner(.learner, .task, .subset, .weights = NULL, ...)
 </pre>
 
 
@@ -28,34 +27,38 @@ trainLearner(.learner, .task, .subset, ...)
 <table summary="R argblock">
 <tr valign="top"><td><code>.learner</code></td>
 <td>
-<p>[<code><a href="RLearner.html">RLearner</a></code>]<br> Wrapped
-learner.</p>
+<p>[<code><a href="RLearner.html">RLearner</a></code>]<br>
+Wrapped learner.</p>
 </td></tr>
 <tr valign="top"><td><code>.task</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> Task to
-train learner on.</p>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+Task to train learner on.</p>
 </td></tr>
 <tr valign="top"><td><code>.subset</code></td>
 <td>
-<p>[<code>integer</code>]<br> Subset of cases for
-training set, index the task with this.  You probably
-want to use <code><a href="getTaskData.html">getTaskData</a></code> for this purpose.</p>
+<p>[<code>integer</code>]<br>
+Subset of cases for training set, index the task with this.
+You probably want to use <code><a href="getTaskData.html">getTaskData</a></code> for this purpose.</p>
+</td></tr>
+<tr valign="top"><td><code>.weights</code></td>
+<td>
+<p>[<code>numeric</code>]<br>
+Weights for each observation.</p>
 </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
-<p>[any]<br> Additional (hyper)parameters, which
-need to be passed to the underlying train function.</p>
+<p>[any]<br>
+Additional (hyper)parameters, which need to be passed to the underlying train function.</p>
 </td></tr>
 </table>
 
 
 <h3>Details</h3>
 
-<p>Your implementation must adhere to the following: The model
-must be fitted on the subset of <code>.task</code> given by
-<code>.subset</code>. All parameters must in <code>...</code> must be
-passed to the underlying training function.
+<p>Your implementation must adhere to the following:
+The model must be fitted on the subset of <code>.task</code> given by <code>.subset</code>. All parameters
+must in <code>...</code> must be passed to the underlying training function.
 </p>
 
 

@@ -10,46 +10,49 @@
 
 <h3>Description</h3>
 
-<p>Description object for task, encapsulates basic statistics
+<p>Description object for task, encapsulates basic properties of the task
 without having to store the complete data set.
 </p>
 
 
 <h3>Details</h3>
 
-<p>Object members: </p>
- <dl>
-<dt>id
-[<code>character(1)</code>]</dt><dd><p>Id string of task.</p>
-</dd> <dt>type
-[<code>character(1)</code>]</dt><dd><p>type Type of task, either
-&ldquo;classif&rdquo; for classification, &ldquo;regr&rdquo; for
-regression or &ldquo;surv&rdquo; for survival.</p>
-</dd> <dt>target
-[<code>character(1)</code>]</dt><dd><p>Name of target variable.</p>
+<p>Object members:
+</p>
+
+<dl>
+<dt>id [<code>character(1)</code>]</dt><dd><p>Id string of task.</p>
 </dd>
-<dt>size[<code>integer(1)</code>]</dt><dd><p>Number of cases.</p>
+<dt>type [<code>character(1)</code>]</dt><dd><p>Type of task, &ldquo;classif&rdquo; for classification,
+&ldquo;regr&rdquo; for regression, &ldquo;surv&rdquo; for survival, &ldquo;costsens&rdquo; for
+cost-sensitive classification.</p>
 </dd>
-<dt>n.feat [<code>integer</code>]</dt><dd><p>Number of features, named
-vector with entries: &ldquo;numerics&rdquo;, &ldquo;factors&rdquo;.</p>
+<dt>target [<code>character(0)</code> | <code>character(1)</code> | <code>character(2)</code>]</dt><dd>
+<p>Name of target variable.
+For &ldquo;surv&rdquo; these are the names of the survival time and event columns, so it has length 2.
+For &ldquo;costsens&rdquo; ist has length 0, as there is no target column, but a cost matrix instead.</p>
 </dd>
-<dt>class.levels [<code>character</code>]</dt><dd><p>All possible
-classes. <code>NA</code> if not classification.</p>
+<dt>size [<code>integer(1)</code>]</dt><dd><p>Number of cases in data set.</p>
 </dd>
-<dt>has.missings [<code>logical(1)</code>]</dt><dd><p>Are missing values
-present?</p>
-</dd> <dt>has.weights [<code>logical(1)</code>]</dt><dd><p>Are
-weights specified for each observation?</p>
-</dd> <dt>has.blocking
-[<code>logical(1)</code>]</dt><dd><p>Is blocking available in task for
-observations?</p>
-</dd> <dt>positive
-[<code>character(1)</code>]</dt><dd><p>Positive class label for binary
-classification, <code>NA</code> else.</p>
-</dd> <dt>negative
-[<code>character(1)</code>]</dt><dd><p>Negative class label for binary
-classification, <code>NA</code> else.</p>
-</dd> </dl>
+<dt>n.feat [<code>integer(2)</code>]</dt><dd><p>Number of features, named vector with entries:
+&ldquo;numerics&rdquo;, &ldquo;factors&rdquo;.</p>
+</dd>
+<dt>has.missings [<code>logical(1)</code>]</dt><dd><p>Are missing values present?</p>
+</dd>
+<dt>has.weights [<code>logical(1)</code>]</dt><dd><p>Are weights specified for each observation?</p>
+</dd>
+<dt>has.blocking [<code>logical(1)</code>]</dt><dd><p>Is a blocking factor for cases available in the task?</p>
+</dd>
+<dt>class.levels [<code>character</code>]</dt><dd><p>All possible classes.
+Only present for &ldquo;classif&rdquo; and &ldquo;costsens&rdquo;.</p>
+</dd>
+<dt>positive [<code>character(1)</code>]</dt><dd><p>Positive class label for binary classification.
+Only present for &ldquo;classif&rdquo;, NA for multiclass.</p>
+</dd>
+<dt>negative [<code>character(1)</code>]</dt><dd><p>Negative class label for binary classification.
+Only present for &ldquo;classif&rdquo;, NA for multiclass.</p>
+</dd>
+</dl>
 
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>

@@ -10,40 +10,32 @@
 
 <h3>Description</h3>
 
-<p>Result from <code><a href="predict.WrappedModel.html">predict.WrappedModel</a></code>. Use
-<code>as.data.frame</code> to access all information in a
-convenient format. The function
-<code><a href="getProbabilities.html">getProbabilities</a></code> is useful to access
-predicted probabilities.
+<p>Result from <code><a href="predict.WrappedModel.html">predict.WrappedModel</a></code>.
+Use <code>as.data.frame</code> to access all information in a convenient format.
+The function <code><a href="getProbabilities.html">getProbabilities</a></code> is useful to access predicted probabilities.
+</p>
+<p>The <code>data</code> member of the object contains always the following columns:
+<code>id</code>, index numbers of predicted cases from the task, <code>response</code>
+either a numeric or a factor, the predicted response values, <code>truth</code>,
+either a numeric or a factor, the true target values.
+If probabilities were predicted, as many numeric columns as there were classes named
+<code>prob.classname</code>. If standard errors were predicted, a numeric column named <code>se</code>.
+</p>
+<p>Object members:
 </p>
 
-
-<h3>Details</h3>
-
-<p>The <code>data</code> member of the object contains always the
-following columns: <code>id</code>, index numbers of predicted
-cases from the task, <code>response</code> either a numeric or a
-factor, the predicted response values, <code>truth</code>, either
-a numeric or a factor, the true target values. If
-probabilities were predicted, as many numeric columns as
-there were classes named <code>prob.classname</code>. If standard
-errors were predicted, a numeric column named <code>se</code>.
-</p>
-<p>Object members: </p>
- <dl>
-<dt>predict.type
-[<code>character(1)</code>]</dt><dd><p>Type set in
-<code><a href="setPredictType.html">setPredictType</a></code>.</p>
-</dd> <dt>data
-[<code>data.frame</code>]</dt><dd><p>See details.</p>
-</dd> <dt>threshold
-[<code>numeric(1)</code>]</dt><dd><p>Threshold set in predict function.</p>
+<dl>
+<dt>predict.type [<code>character(1)</code>]</dt><dd><p>Type set in <code><a href="setPredictType.html">setPredictType</a></code>.</p>
 </dd>
-<dt>task.desc [<code><a href="TaskDesc.html">TaskDesc</a></code>]</dt><dd><p>Task description
-object.</p>
-</dd> <dt>time [<code>numeric(1)</code>]</dt><dd><p>Time learner
-needed to generate predictions.</p>
-</dd> </dl>
+<dt>data [<code>data.frame</code>]</dt><dd><p>See details.</p>
+</dd>
+<dt>threshold [<code>numeric(1)</code>]</dt><dd><p>Threshold set in predict function.</p>
+</dd>
+<dt>task.desc [<code><a href="TaskDesc.html">TaskDesc</a></code>]</dt><dd><p>Task description object.</p>
+</dd>
+<dt>time [<code>numeric(1)</code>]</dt><dd><p>Time learner needed to generate predictions.</p>
+</dd>
+</dl>
 
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>

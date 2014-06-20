@@ -10,10 +10,11 @@
 
 <h3>Description</h3>
 
-<p>Fuses a learner with the bagging method (i.e., similar to
-what a <code>randomForest</code> does). Creates a learner object,
-which can be used like any other learner object. Models can
-easily be accessed via <code><a href="getBaggingModels.html">getBaggingModels</a></code>.
+<p>Fuses a learner with the bagging method
+(i.e., similar to what a <code>randomForest</code> does).
+Creates a learner object, which can be
+used like any other learner object.
+Models can easily be accessed via <code><a href="getBaggingModels.html">getBaggingModels</a></code>.
 </p>
 
 
@@ -30,58 +31,57 @@ makeBaggingWrapper(learner, bag.iters = 10L, bag.replace = TRUE, bag.size,
 <table summary="R argblock">
 <tr valign="top"><td><code>learner</code></td>
 <td>
-<p>[<code><a href="makeLearner.html">Learner</a></code>]<br> The learner.
-Prediction type of the basic learner must be
-&ldquo;response&rdquo;.</p>
+<p>[<code><a href="makeLearner.html">Learner</a></code>]<br>
+The learner. Prediction type of the basic learner must be &ldquo;response&rdquo;.</p>
 </td></tr>
 <tr valign="top"><td><code>bag.iters</code></td>
 <td>
-<p>[<code>integer(1)</code>]<br> Iterations =
-number of fitted models in bagging.  Default is 10.</p>
+<p>[<code>integer(1)</code>]<br>
+Iterations = number of fitted models in bagging.
+Default is 10.</p>
 </td></tr>
 <tr valign="top"><td><code>bag.replace</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br> Sample bags
-with replacement (bootstrapping)?  Default is TRUE.</p>
+<p>[<code>logical(1)</code>]<br>
+Sample bags with replacement (bootstrapping)?
+Default is TRUE.</p>
 </td></tr>
 <tr valign="top"><td><code>bag.size</code></td>
 <td>
-<p>[<code>numeric(1)</code>]<br> Percentage size of
-sampled bags.  Default is 1 for bootstrapping and 0.632
-for subsampling.</p>
+<p>[<code>numeric(1)</code>]<br>
+Percentage size of sampled bags.
+Default is 1 for bootstrapping and 0.632 for subsampling.</p>
 </td></tr>
 <tr valign="top"><td><code>bag.feats</code></td>
 <td>
-<p>[<code>numeric(1)</code>]<br> Percentage size
-of randomly selected features in bags.  Default is 1.</p>
+<p>[<code>numeric(1)</code>]<br>
+Percentage size of randomly selected features in bags.
+Default is 1.</p>
 </td></tr>
 <tr valign="top"><td><code>predict.type</code></td>
 <td>
 <p>[<code>character(1)</code>]<br>
-Classification: &ldquo;response&rdquo; (= labels) or
-&ldquo;prob&rdquo; (= probabilities and labels by selecting
-the ones with maximal probability).  Regression:
-&ldquo;response&rdquo; (= mean response) or &ldquo;se&rdquo; (=
-standard errors and mean response).  Default is
-&ldquo;response&rdquo;.</p>
+Classification: &ldquo;response&rdquo; (= labels) or &ldquo;prob&rdquo;
+(= probabilities and labels by selecting the ones with maximal probability).
+Regression: &ldquo;response&rdquo; (= mean response) or &ldquo;se&rdquo; (= standard errors
+and mean response).
+Default is &ldquo;response&rdquo;.</p>
 </td></tr>
 </table>
 
 
 <h3>Details</h3>
 
-<p>Bagging is implemented as follows: For each iteration a
-random data subset is sampled (with or without replacement)
-and potentially the number of features is also restricted
-to a random subset. Note that this is usually handled in a
-slightly different way in the random forest where features
-are sampled at each tree split).
+<p>Bagging is implemented as follows:
+For each iteration a random data subset is sampled (with or without replacement)
+and potentially the number of features is also restricted to
+a random subset. Note that this is usually handled in a slightly different way
+in the random forest where features are sampled at each tree split).
 </p>
-<p>Prediction works as follows: For classification we do
-majority voting to create a discrete label and
-probabilities are predicted by considering the proportions
-of all predicted labels. For regression the mean value and
-the standard deviations across predictions is computed.
+<p>Prediction works as follows:
+For classification we do majority voting to create a discrete label and
+probabilities are predicted by considering the proportions of all predicted labels.
+For regression the mean value and the standard deviations across predictions is computed.
 </p>
 
 

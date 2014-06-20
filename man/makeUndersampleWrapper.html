@@ -10,9 +10,9 @@
 
 <h3>Description</h3>
 
-<p>Creates a learner object, which can be used like any other
-learner object. Internally uses <code><a href="oversample.html">oversample</a></code> or
-<code><a href="oversample.html">undersample</a></code> before every model fit.
+<p>Creates a learner object, which can be
+used like any other learner object.
+Internally uses <code><a href="oversample.html">oversample</a></code> or <code><a href="oversample.html">undersample</a></code> before every model fit.
 </p>
 
 
@@ -30,29 +30,42 @@ makeOversampleWrapper(learner, osw.rate)
 <table summary="R argblock">
 <tr valign="top"><td><code>learner</code></td>
 <td>
-<p>[<code><a href="makeLearner.html">Learner</a></code>]<br> The learner.</p>
+<p>[<code><a href="makeLearner.html">Learner</a></code>]<br>
+The learner.</p>
 </td></tr>
 <tr valign="top"><td><code>usw.rate</code></td>
 <td>
-<p>[<code>numeric(1)</code>]<br> Factor to
-downsample the bigger class. Must be between 0 and 1,
-where 1 means no downsampling, 0.5 implies reduction to
-50 percent and 0 would imply reduction to 0
-observations.</p>
+<p>[<code>numeric(1)</code>]<br>
+Factor to downsample the bigger class. Must be between 0 and 1,
+where 1 means no downsampling, 0.5 implies reduction to 50 percent
+and 0 would imply reduction to 0 observations.</p>
 </td></tr>
 <tr valign="top"><td><code>osw.rate</code></td>
 <td>
-<p>[<code>numeric(1)</code>]<br> Factor to
-oversample the smaller class. Must be between 1 and
-<code>Inf</code>, where 1 means no oversampling and 2 would
-mean doubling the class size.</p>
+<p>[<code>numeric(1)</code>]<br>
+Factor to oversample the smaller class. Must be between 1 and <code>Inf</code>,
+where 1 means no oversampling and 2 would mean doubling the class size.</p>
 </td></tr>
 </table>
+
+
+<h3>Details</h3>
+
+<p>Note that observation weights do not influence the sampling and are simply passed
+down to the next learner.
+</p>
 
 
 <h3>Value</h3>
 
 <p>[<code><a href="makeLearner.html">Learner</a></code>].
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other OverUndersample: <code><a href="oversample.html">oversample</a></code>,
+<code><a href="oversample.html">undersample</a></code>
 </p>
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>

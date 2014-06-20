@@ -10,25 +10,26 @@
 
 <h3>Description</h3>
 
-<p>This function accepts a data frame and a imputation
-description as returned by <code><a href="../../e1071/html/impute.html">impute</a></code> to perform
-the following actions: </p>
- <ol>
-<li><p> Restore dropped
-columns, setting them to <code>NA</code> </p>
+<p>This function accepts a data frame and a imputation description
+as returned by <code><a href="../../e1071/html/impute.html">impute</a></code> to perform the following actions:
+</p>
+
+<ol>
+<li><p> Restore dropped columns, setting them to <code>NA</code>
+</p>
 </li>
-<li><p> Add dummy
-variables for columns as specified in <code>impute</code> </p>
+<li><p> Add dummy variables for columns as specified in <code>impute</code>
+</p>
 </li>
-<li>
-<p>Optionally check factors for new levels to treat them as
-<code>NA</code>s </p>
+<li><p> Optionally check factors for new levels to treat them as <code>NA</code>s
+</p>
 </li>
-<li><p> Reorder factor levels to ensure identical
-integer representation as before </p>
+<li><p> Reorder factor levels to ensure identical integer representation as
+before
+</p>
 </li>
-<li><p> Impute missing
-values using previously collected data </p>
+<li><p> Impute missing values using previously collected data
+</p>
 </li></ol>
 
 
@@ -45,13 +46,13 @@ reimpute(x, desc)
 <table summary="R argblock">
 <tr valign="top"><td><code>x</code></td>
 <td>
-<p>[<code>data.frame</code>]<br> Object to reimpute.
-Currently only data frames are supported.</p>
+<p>[<code>data.frame</code>]<br>
+Object to reimpute. Currently only data frames are supported.</p>
 </td></tr>
 <tr valign="top"><td><code>desc</code></td>
 <td>
-<p>[<code>ImputationDesc</code>]<br> Imputation
-description as returned by <code><a href="../../e1071/html/impute.html">impute</a></code>.</p>
+<p>[<code>ImputationDesc</code>]<br>
+Imputation description as returned by <code><a href="../../e1071/html/impute.html">impute</a></code>.</p>
 </td></tr>
 </table>
 

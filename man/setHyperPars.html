@@ -31,19 +31,20 @@ setHyperPars(learner, ..., par.vals)
 <table summary="R argblock">
 <tr valign="top"><td><code>learner</code></td>
 <td>
-<p>[<code><a href="makeLearner.html">Learner</a></code>]<br> The learner.</p>
+<p>[<code><a href="makeLearner.html">Learner</a></code>]<br>
+The learner.</p>
 </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
-<p>[any]<br> Named (hyper)parameters with new
-setting. Alternatively these can be passed using the
-<code>par.vals</code> argument.</p>
+<p>[any]<br>
+Named (hyper)parameters with new setting. Alternatively these can be passed
+using the <code>par.vals</code> argument.</p>
 </td></tr>
 <tr valign="top"><td><code>par.vals</code></td>
 <td>
-<p>[<code>list</code>]<br> Optional list of named
-(hyper)parameter settings. The arguments in <code>...</code>
-take precedence over values in this list.</p>
+<p>[<code>list</code>]<br>
+Optional list of named (hyper)parameter settings. The arguments in
+<code>...</code> take precedence over values in this list.</p>
 </td></tr>
 </table>
 
@@ -57,9 +58,9 @@ take precedence over values in this list.</p>
 <h3>See Also</h3>
 
 <p>See <code><a href="getHyperPars.html">getHyperPars</a></code> for a function to retrieve
-the currently set hyperparameters. To get a list of all
-hyperparameters of a learner, see the <code>par.set</code> slot
-of the <code><a href="makeLearner.html">Learner</a></code> object.
+the currently set hyperparameters. To get a list of all hyperparameters of
+a learner, see the <code>par.set</code> slot of the <code><a href="makeLearner.html">Learner</a></code>
+object.
 </p>
 
 
@@ -74,14 +75,9 @@ print(cl1)
 <pre><code>## Learner classif.ksvm from package kernlab
 ## Type: classif
 ## Class: classif.ksvm
+## Properties: twoclass,multiclass,numerics,factors,prob
 ## Predict-Type: response
-## Hyperparameters: fit=FALSE,sigma=1.00
-## 
-## Supported features Numerics:TRUE Factors:TRUE
-## Supports missings: FALSE
-## Supports weights: FALSE
-## Supports classes: two,multi
-## Supports probabilities: TRUE
+## Hyperparameters: fit=FALSE,sigma=1
 </code></pre>
 
 <pre><code class="r"># note the now set and altered hyperparameters:
@@ -91,14 +87,9 @@ print(cl2)
 <pre><code>## Learner classif.ksvm from package kernlab
 ## Type: classif
 ## Class: classif.ksvm
+## Properties: twoclass,multiclass,numerics,factors,prob
 ## Predict-Type: response
-## Hyperparameters: fit=FALSE,sigma=10.00,C=2.00
-## 
-## Supported features Numerics:TRUE Factors:TRUE
-## Supports missings: FALSE
-## Supports weights: FALSE
-## Supports classes: two,multi
-## Supports probabilities: TRUE
+## Hyperparameters: fit=FALSE,sigma=10,C=2
 </code></pre>
 
 <pre><code class="r">

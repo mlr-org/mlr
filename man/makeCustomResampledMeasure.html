@@ -10,21 +10,18 @@
 
 <h3>Description</h3>
 
-<p>Construct your own performance measure, used after
-resampling. Note that individual training / test set
-performance values will be set to <code>NA</code>, you only
-calculate an aggregated value. If you can define a function
-that makes sense for every single training / test set,
-implement your own <code><a href="makeMeasure.html">Measure</a></code>.
+<p>Construct your own performance measure, used after resampling.
+Note that individual training / test set performance values will be set to <code>NA</code>, you
+only calculate an aggregated value. If you can define a function that makes sense
+for every single training / test set, implement your own <code><a href="makeMeasure.html">Measure</a></code>.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-makeCustomResampledMeasure(id, minimize = TRUE, classif = FALSE,
-  regr = FALSE, only.binary = FALSE, allowed.pred.types = character(0L),
-  fun, extra.args = list())
+makeCustomResampledMeasure(id, minimize = TRUE, properties = character(0L),
+  allowed.pred.types = character(0L), fun, extra.args = list())
 </pre>
 
 
@@ -33,50 +30,53 @@ makeCustomResampledMeasure(id, minimize = TRUE, classif = FALSE,
 <table summary="R argblock">
 <tr valign="top"><td><code>id</code></td>
 <td>
-<p>[<code>character(1)</code>]<br> Name of aggregated
-measure.</p>
+<p>[<code>character(1)</code>]<br>
+Name of aggregated measure.</p>
 </td></tr>
 <tr valign="top"><td><code>minimize</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br> Should the measure
-be minimized?  Default is <code>TRUE</code>.</p>
+<p>[<code>logical(1)</code>]<br>
+Should the measure be minimized?
+Default is <code>TRUE</code>.</p>
 </td></tr>
-<tr valign="top"><td><code>classif</code></td>
+<tr valign="top"><td><code>properties</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br> Is the measure
-applicable for classification?  Default is <code>FALSE</code>.</p>
-</td></tr>
-<tr valign="top"><td><code>regr</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Is the measure
-applicable for regression?  Default is <code>FALSE</code>.</p>
-</td></tr>
-<tr valign="top"><td><code>only.binary</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Is the measure
-only applicable to binary classification?  Only
-reasonable if <code>classif</code> is <code>TRUE</code>.  Default is
-<code>FALSE</code>.</p>
+<p>[<code>character</code>]<br>
+Set of measure properties. Some standard property names include:
+</p>
+
+<dl>
+<dt>classif</dt><dd><p>Is the measure applicable for classification?</p>
+</dd>
+<dt>classif.multi</dt><dd><p>Is the measure applicable for multi-class classification?</p>
+</dd>
+<dt>regr</dt><dd><p>Is the measure applicable for regression?</p>
+</dd>
+<dt>surv</dt><dd><p>Is the measure applicable for survival?</p>
+</dd>
+<dt>costsens</dt><dd><p>Is the measure applicable for cost-sensitve learning?</p>
+</dd>
+</dl>
+
+<p>Default is <code>character(0)</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>allowed.pred.types</code></td>
 <td>
-<p>[<code>character</code>] Which
-prediction types are allowed for this measure?  Subset of
-&ldquo;response&rdquo;,&ldquo;prob&rdquo;,&ldquo;se&rdquo;.  Default is
-none.</p>
+<p>[<code>character</code>]
+Which prediction types are allowed for this measure?
+Subset of &ldquo;response&rdquo;,&ldquo;prob&rdquo;,&ldquo;se&rdquo;.
+Default is none.</p>
 </td></tr>
 <tr valign="top"><td><code>fun</code></td>
 <td>
-<p>[<code>function(task, pred, group, pred,
-  extra.args)</code>]<br> Calculates performance value from
-<code><a href="ResamplePrediction.html">ResamplePrediction</a></code> object.  For rare case
-you can also use the task, the grouping or the extra
-arguments <code>extra.args</code>.</p>
+<p>[<code>function(task, pred, group, pred, extra.args)</code>]<br>
+Calculates performance value from <code><a href="ResamplePrediction.html">ResamplePrediction</a></code> object.
+For rare case you can also use the task, the grouping or the extra arguments <code>extra.args</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>extra.args</code></td>
 <td>
-<p>[<code>list</code>]<br> List of extra
-arguments which will always be passed to <code>fun</code>.
+<p>[<code>list</code>]<br>
+List of extra arguments which will always be passed to <code>fun</code>.
 Default is empty list.</p>
 </td></tr>
 </table>

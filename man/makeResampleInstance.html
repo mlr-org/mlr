@@ -15,9 +15,8 @@
 
 <h3>Description</h3>
 
-<p>This class encapsulates training and test sets generated
-from the data set for a number of iterations. It mainly
-stores a set of integer vectors indicating the training and
+<p>This class encapsulates training and test sets generated from the data set for a number
+of iterations. It mainly stores a set of integer vectors indicating the training and
 test examples for each iteration.
 </p>
 
@@ -25,7 +24,7 @@ test examples for each iteration.
 <h3>Usage</h3>
 
 <pre>
-makeResampleInstance(desc, task, size)
+makeResampleInstance(desc, task, size, ...)
 </pre>
 
 
@@ -34,43 +33,51 @@ makeResampleInstance(desc, task, size)
 <table summary="R argblock">
 <tr valign="top"><td><code>desc</code></td>
 <td>
-<p>[<code><a href="makeResampleDesc.html">ResampleDesc</a></code>]<br> Resampling
-description object.</p>
+<p>[<code><a href="makeResampleDesc.html">ResampleDesc</a></code> | <code>character(1)</code>]<br>
+Resampling description object or name of resampling strategy.
+In the latter case <code><a href="makeResampleDesc.html">makeResampleDesc</a></code> will be called internally on the string.</p>
 </td></tr>
 <tr valign="top"><td><code>task</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> Data of
-task to resample from.  Prefer to pass this instead of
-<code>size</code>.</p>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+Data of task to resample from.
+Prefer to pass this instead of <code>size</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>size</code></td>
 <td>
-<p>[<code><a href="../../base/html/integer.html">integer</a></code>]<br> Size of the data
-set to resample.  Can be used instead of <code>task</code>.</p>
+<p>[<code><a href="../../base/html/integer.html">integer</a></code>]<br>
+Size of the data set to resample.
+Can be used instead of <code>task</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>[any]<br>
+Passed down to <code><a href="makeResampleDesc.html">makeResampleDesc</a></code> in case
+you passed a string in <code>desc</code>.
+Otherwise ignored.</p>
 </td></tr>
 </table>
 
 
 <h3>Details</h3>
 
-<p>Object slots: </p>
- <dl>
-<dt>desc
-[<code><a href="makeResampleDesc.html">ResampleDesc</a></code>]</dt><dd><p>See argument.</p>
-</dd> <dt>size
-[integer(1)]</dt><dd><p>See argument.</p>
-</dd> <dt>train.inds [list of
-<code>integer</code>]</dt><dd><p>List of of training indices for all
-iterations.</p>
-</dd> <dt>test.inds [list of <code>integer</code>]</dt><dd><p>List
-of of test indices for all iterations.</p>
-</dd> <dt>group
-[<code>factor</code>]</dt><dd><p>Optional grouping of resampling
-iterations. This encodes whether specfic iterations 'belong
-together' (e.g. repeated CV), and it can later be used to
-aggregate performance values accordingly. Default is
-'factor()'.</p>
-</dd> </dl>
+<p>Object slots:
+</p>
+
+<dl>
+<dt>desc [<code><a href="makeResampleDesc.html">ResampleDesc</a></code>]</dt><dd><p>See argument.</p>
+</dd>
+<dt>size [integer(1)]</dt><dd><p>See argument.</p>
+</dd>
+<dt>train.inds [list of <code>integer</code>]</dt><dd><p>List of of training indices for all iterations.</p>
+</dd>
+<dt>test.inds [list of <code>integer</code>]</dt><dd><p>List of of test indices for all iterations.</p>
+</dd>
+<dt>group [<code>factor</code>]</dt><dd><p>Optional grouping of resampling iterations. This encodes whether
+specfic iterations 'belong together' (e.g. repeated CV), and it can later be used to
+aggregate performance values accordingly. Default is 'factor()'.</p>
+</dd>
+</dl>
 
 
 
@@ -82,20 +89,27 @@ aggregate performance values accordingly. Default is
 
 <h3>See Also</h3>
 
-<p><code><a href="makeResampleDesc.html">makeResampleDesc</a></code>, <code><a href="../../gdata/html/resample.html">resample</a></code>
+<p>Other resample: <code><a href="makeResampleDesc.html">ResampleDesc</a></code>,
+<code><a href="makeResampleDesc.html">makeResampleDesc</a></code>;
+<code><a href="ResamplePrediction.html">ResamplePrediction</a></code>;
+<code><a href="resample.html">bootstrapB632</a></code>,
+<code><a href="resample.html">bootstrapB632plus</a></code>,
+<code><a href="resample.html">bootstrapOOB</a></code>, <code><a href="../../bootstrap/html/crossval.html">crossval</a></code>,
+<code><a href="resample.html">holdout</a></code>, <code><a href="resample.html">repcv</a></code>,
+<code><a href="../../gdata/html/resample.html">resample</a></code>, <code><a href="resample.html">subsample</a></code>
 </p>
 
 
 <h3>Examples</h3>
 
 <pre><code class="r">
-task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
-rdesc &lt;- makeResampleDesc(&quot;Bootstrap&quot;, iters = 10)
-rin &lt;- makeResampleInstance(rdesc, task = task)
+rdesc = makeResampleDesc(&quot;Bootstrap&quot;, iters = 10)
+rin = makeResampleInstance(rdesc, task = iris.task)
 
-# Alternatively provide the size argument instead of a task object
-rdesc &lt;- makeResampleDesc(&quot;CV&quot;, iters = 50)
-rin &lt;- makeResampleInstance(rdesc, size = nrow(iris))
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 50)
+rin = makeResampleInstance(rdesc, size = nrow(iris))
+
+rin = makeResampleInstance(&quot;CV&quot;, iters = 10, task = iris.task)
 
 </code></pre>
 

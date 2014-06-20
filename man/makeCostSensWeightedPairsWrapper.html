@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Wraps a classifier for cost-sensitive learning to produce a...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for makeCostSensWeightedPairsWrapper {mlr}"><tr><td>makeCostSensWeightedPairsWrapper {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Wraps a classifier for cost-sensitive learning to produce a weighted pairs model.</h2>
+
+<h3>Description</h3>
+
+<p>Creates a wrapper, which can be used like any other learner object.
+Models can easily be accessed via <code><a href="getCostSensWeightedPairsModels.html">getCostSensWeightedPairsModels</a></code>.
+</p>
+<p>For each pair of labels, we fit a binary classifier.
+For each observation we define the label to be the element of the pair with minimal costs.
+During fitting, we also weight the observation with the absolute difference in costs.
+Prediction is performed by simple voting.
+</p>
+<p>This approach is sometimes called cost-sensitive one-vs-one (CS-OVO),
+because it is obviously very similar to the
+one-vs-one approach where one reduces a normal multi-class problem to
+multiple binary ones and aggregates by voting.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+makeCostSensWeightedPairsWrapper(learner)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>learner</code></td>
+<td>
+<p>[<code><a href="makeLearner.html">Learner</a></code> | <code>character(1)</code>]<br>
+The classification learner.
+If you pass a string the learner will be created via <code><a href="makeLearner.html">makeLearner</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>[<code><a href="Learner.html">Learner</a></code>].
+</p>
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

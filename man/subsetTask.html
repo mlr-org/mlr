@@ -31,18 +31,21 @@ subsetTask(task, subset, features)
 <table summary="R argblock">
 <tr valign="top"><td><code>task</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> The task.</p>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+The task.</p>
 </td></tr>
 <tr valign="top"><td><code>subset</code></td>
 <td>
-<p>[<code>integer</code>]<br> Selected cases.
+<p>[<code>integer</code>]<br>
+Selected cases.
 Default is all cases.</p>
 </td></tr>
 <tr valign="top"><td><code>features</code></td>
 <td>
-<p>[character]<br> Selected inputs. Note that
-target feature is always included in the resulting task,
-you should not pass it here.  Default is all features.</p>
+<p>[character]<br>
+Selected inputs. Note that target feature is always included in the
+resulting task, you should not pass it here.
+Default is all features.</p>
 </td></tr>
 </table>
 
@@ -53,14 +56,25 @@ you should not pass it here.  Default is all features.</p>
 </p>
 
 
+<h3>See Also</h3>
+
+<p>Other task: <code><a href="getTaskCosts.html">getTaskCosts</a></code>;
+<code><a href="getTaskData.html">getTaskData</a></code>;
+<code><a href="getTaskFeatureNames.html">getTaskFeatureNames</a></code>;
+<code><a href="getTaskFormula.html">getTaskFormula</a></code>,
+<code><a href="getTaskFormula.html">getTaskFormulaAsString</a></code>;
+<code><a href="getTaskNFeats.html">getTaskNFeats</a></code>; <code><a href="getTaskTargets.html">getTaskTargets</a></code>
+</p>
+
+
 <h3>Examples</h3>
 
 <pre><code class="r">
-task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
+task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 subsetTask(task, subset = 1:100)
 </code></pre>
 
-<pre><code>## Supervised task: data
+<pre><code>## Supervised task: iris
 ## Type: classif
 ## Target: Species
 ## Observations: 100

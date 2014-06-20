@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>R: Create a classification, regression or survival task for a...</title>
+<html><head><title>R: Create a classification, regression, survival or...</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="R.css">
 
@@ -11,26 +11,49 @@
 
 <table width="100%" summary="page for makeClassifTask {mlr}"><tr><td>makeClassifTask {mlr}</td><td align="right">R Documentation</td></tr></table>
 
-<h2>Create a classification, regression or survival task for a given data set.</h2>
+<h2>Create a classification, regression, survival or cost-sensitive classification task.</h2>
 
 <h3>Description</h3>
 
-<p>The task encapsulates the data and specifies - through its
-subclasses - the type of the task (either classification,
-regression or survival), and contains a description object
-detailing further aspects of the data.
+<p>The task encapsulates the data and specifies - through its subclasses -
+the type of the task.
+It also contains a description object detailing further aspects of the data.
 </p>
+<p>Useful operators are: <code><a href="getTaskFormula.html">getTaskFormula</a></code>, <code><a href="getTaskFormula.html">getTaskFormulaAsString</a></code>,
+<code><a href="getTaskFeatureNames.html">getTaskFeatureNames</a></code>, <code><a href="getTaskData.html">getTaskData</a></code>, <code><a href="getTaskTargets.html">getTaskTargets</a></code>,
+<code><a href="subsetTask.html">subsetTask</a></code>.
+</p>
+<p>Object members:
+</p>
+
+<dl>
+<dt>env [<code>environment</code>]</dt><dd><p>Environment where data for the task are stored.
+Use <code><a href="getTaskData.html">getTaskData</a></code> in order to access it.</p>
+</dd>
+<dt>weights [<code>numeric</code>]</dt><dd><p>See argument above. <code>NULL</code> if not present.</p>
+</dd>
+<dt>blocking [<code>factor</code>]</dt><dd><p>See argument above. <code>NULL</code> if not present.</p>
+</dd>
+<dt>task.desc [<code><a href="TaskDesc.html">TaskDesc</a></code>]</dt><dd><p>Encapsulates further information about the task.</p>
+</dd>
+</dl>
+
 
 
 <h3>Usage</h3>
 
 <pre>
-makeClassifTask(id, data, target, weights, blocking, positive,
+makeClassifTask(id, data, target, weights = NULL, blocking = NULL, positive,
+  fixup.data = "warn", check.data = TRUE)
+
+makeCostSensTask(id, data, costs, blocking = NULL, fixup.data = "warn",
   check.data = TRUE)
 
-makeRegrTask(id, data, target, weights, blocking, check.data = TRUE)
+makeRegrTask(id, data, target, weights = NULL, blocking = NULL,
+  fixup.data = "warn", check.data = TRUE)
 
-makeSurvTask(id, data, target, weights, blocking, check.data = TRUE)
+makeSurvTask(id, data, target, surv.type = "right", weights = NULL,
+  blocking = NULL, fixup.data = "warn", check.data = TRUE)
 </pre>
 
 
@@ -39,70 +62,80 @@ makeSurvTask(id, data, target, weights, blocking, check.data = TRUE)
 <table summary="R argblock">
 <tr valign="top"><td><code>id</code></td>
 <td>
-<p>[<code>character(1)</code>]<br> Id string for object.
+<p>[<code>character(1)</code>]<br>
+Id string for object.
 Default is the name of R variable passed to <code>data</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>data</code></td>
 <td>
-<p>[<code>data.frame</code>]<br> A data frame
-containing the features and target variable.</p>
+<p>[<code>data.frame</code>]<br>
+A data frame containing the features and target variable(s).</p>
 </td></tr>
 <tr valign="top"><td><code>target</code></td>
 <td>
-<p>[<code>character(1)</code>]<br> Name of the target
-variable.</p>
+<p>[<code>character(1)</code> | <code>character(2)</code>]<br>
+Name of the target variable.
+For survival analysis these are the names of the survival time and event columns,
+so it has length 2.</p>
+</td></tr>
+<tr valign="top"><td><code>costs</code></td>
+<td>
+<p>[<code>data.frame</code>]<br>
+A numeric matrix or data frame containing the costs of misclassification.
+We assume the general case of observation specific costs.
+This means we have n rows, corresponding to the observations, in the same order as <code>data</code>.
+The columns correspond to classes and their names are the class labels
+(if unnamed we use y1 to yk as labels).
+Each entry (i,j) of the matrix specifies the cost of predicting class j
+for observation i.</p>
 </td></tr>
 <tr valign="top"><td><code>weights</code></td>
 <td>
-<p>[<code>numeric</code>]<br> Optional, non-negative
-case weight vector to be used during fitting.</p>
+<p>[<code>numeric</code>]<br>
+Optional, non-negative case weight vector to be used during fitting.
+Cannot be set for cost-sensitive learning.
+Default is <code>NULL</code> which means no (= equal) weights.</p>
 </td></tr>
 <tr valign="top"><td><code>blocking</code></td>
 <td>
-<p>[<code>factor</code>]<br> An optional factor of
-the same length as the number of observations.
-Observations with the same blocking level &ldquo;belong
-together&rdquo;.  Specifically, they are either put all in the
-training or the test set during a resampling iteration.
-Default is no blocking.</p>
+<p>[<code>factor</code>]<br>
+An optional factor of the same length as the number of observations.
+Observations with the same blocking level &ldquo;belong together&rdquo;.
+Specifically, they are either put all in the training or the test set
+during a resampling iteration.
+Default is <code>NULL</code> which means no blocking.</p>
 </td></tr>
 <tr valign="top"><td><code>positive</code></td>
 <td>
-<p>[<code>character(1)</code>]<br> Positive class
-for binary classification.  Default is the first factor
-level of the target attribute.</p>
+<p>[<code>character(1)</code>]<br>
+Positive class for binary classification.
+Default is the first factor level of the target attribute.</p>
+</td></tr>
+<tr valign="top"><td><code>fixup.data</code></td>
+<td>
+<p>[<code>character(1)</code>]<br>
+Should some basic cleaning up of data be performed?
+Currently this means removing empty factor levels for the columns.
+Possible coices are:
+&ldquo;no&rdquo; = Don't do it.
+&ldquo;warn&rdquo; = Do it but warn about it.
+&ldquo;quiet&rdquo; = Do it but keep silent.
+Default is &ldquo;warn&rdquo;.</p>
 </td></tr>
 <tr valign="top"><td><code>check.data</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br> Should sanity of
-data be checked initially at task creation?  You should
-have good reasons to turn this off.  Default is
-<code>TRUE</code></p>
+<p>[<code>logical(1)</code>]<br>
+Should sanity of data be checked initially at task creation?
+You should have good reasons to turn this off (one might be speed).
+Default is <code>TRUE</code></p>
+</td></tr>
+<tr valign="top"><td><code>surv.type</code></td>
+<td>
+<p>[<code>character(1)</code>]<br>
+Survival type. Allowed are &ldquo;right&rdquo; (default), &ldquo;left&rdquo; and &ldquo;interval2&rdquo;.
+See <code><a href="../../survival/html/Surv.html">Surv</a></code> for details.</p>
 </td></tr>
 </table>
-
-
-<h3>Details</h3>
-
-<p>Useful operators are: <code><a href="getTaskFormula.html">getTaskFormula</a></code>,
-<code><a href="getTaskFormulaAsString.html">getTaskFormulaAsString</a></code>,
-<code><a href="getTaskFeatureNames.html">getTaskFeatureNames</a></code>,
-<code><a href="getTaskData.html">getTaskData</a></code>, <code><a href="getTaskTargets.html">getTaskTargets</a></code>,
-<code><a href="subsetTask.html">subsetTask</a></code>.
-</p>
-<p>Object members: </p>
- <dl>
-<dt>env
-[<code>environment</code>]</dt><dd><p>Environment where data for the task
-are stored. Use <code><a href="getTaskData.html">getTaskData</a></code> in order to
-access it.</p>
-</dd> <dt>blocking [<code>factor</code>]</dt><dd><p>See argument
-above. <code>factor(0)</code> if not present.</p>
-</dd> <dt>task.desc
-[<code><a href="TaskDesc.html">TaskDesc</a></code>]</dt><dd><p>Encapsulates further information
-about the task.</p>
-</dd> </dl>
-
 
 
 <h3>Value</h3>
@@ -116,17 +149,65 @@ about the task.</p>
 <pre><code class="r">
 library(mlbench)
 data(BostonHousing)
-RegrTask &lt;- makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
-
-ClassifTask &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
-
-## an example of a classification task with more than those standard arguments:
-library(mlbench)
 data(Ionosphere)
-blocks &lt;- factor(c(rep(1, 51), rep(2, 300)))
-ClassifTask &lt;- makeClassifTask(id = &quot;myIonosphere&quot;, data = Ionosphere, target = &quot;Class&quot;,
-                               positive = &quot;good&quot;, blocking = blocks)
 
+makeClassifTask(data = iris, target = &quot;Species&quot;)
+</code></pre>
+
+<pre><code>## Supervised task: iris
+## Type: classif
+## Target: Species
+## Observations: 150
+## Features:
+## numerics  factors 
+##        4        0 
+## Missings: FALSE
+## Has weights: FALSE
+## Has blocking: FALSE
+## Classes: 3
+##     setosa versicolor  virginica 
+##         50         50         50 
+## Positive class: NA
+</code></pre>
+
+<pre><code class="r">makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
+</code></pre>
+
+<pre><code>## Supervised task: BostonHousing
+## Type: regr
+## Target: medv
+## Observations: 506
+## Features:
+## numerics  factors 
+##       12        1 
+## Missings: FALSE
+## Has weights: FALSE
+## Has blocking: FALSE
+</code></pre>
+
+<pre><code class="r"># an example of a classification task with more than those standard arguments:
+blocking = factor(c(rep(1, 51), rep(2, 300)))
+makeClassifTask(id = &quot;myIonosphere&quot;, data = Ionosphere, target = &quot;Class&quot;,
+  positive = &quot;good&quot;, blocking = blocking)
+</code></pre>
+
+<pre><code>## Supervised task: myIonosphere
+## Type: classif
+## Target: Class
+## Observations: 351
+## Features:
+## numerics  factors 
+##       32        2 
+## Missings: FALSE
+## Has weights: FALSE
+## Has blocking: TRUE
+## Classes: 2
+##  bad good 
+##  126  225 
+## Positive class: good
+</code></pre>
+
+<pre><code class="r">
 </code></pre>
 
 

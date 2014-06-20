@@ -10,11 +10,9 @@
 
 <h3>Description</h3>
 
-<p>Oversampling: From the smaller class, observations are
-randomly drawn with repetitions.
+<p>Oversampling: From the smaller class, observations are randomly drawn with repetitions.
 </p>
-<p>Undersampling: From the larger class, observations are
-randomly drawn without repetitions.
+<p>Undersampling: From the larger class, observations are randomly drawn without repetitions.
 </p>
 
 
@@ -32,33 +30,38 @@ undersample(obj, target, rate)
 <table summary="R argblock">
 <tr valign="top"><td><code>obj</code></td>
 <td>
-<p>[<code>data.frame</code> |
-<code><a href="SupervisedTask.html">ClassifTask</a></code>]<br> Input data.</p>
+<p>[<code>data.frame</code> | <code><a href="SupervisedTask.html">ClassifTask</a></code>]<br>
+Input data.</p>
 </td></tr>
 <tr valign="top"><td><code>target</code></td>
 <td>
-<p>[<code>character(1)</code>]<br> Name of the column
-specifying the response.  Only used when <code>obj</code> is a
-data.frame, otherwise ignored.</p>
+<p>[<code>character(1)</code>]<br>
+Name of the column specifying the response.
+Only used when <code>obj</code> is a data.frame, otherwise ignored.</p>
 </td></tr>
 <tr valign="top"><td><code>rate</code></td>
 <td>
-<p>[<code>numeric(1)</code>]<br> Factor to upsample the
-smaller or downsample the bigger class.  For
-undersampling: Must be between 0 and 1, where 1 means no
-downsampling, 0.5 implies reduction to 50 percent and 0
-would imply reduction to 0 observations.  For
-oversampling: Must be between 1 and <code>Inf</code>, where 1
-means no oversampling and 2 would mean doubling the class
-size.</p>
+<p>[<code>numeric(1)</code>]<br>
+Factor to upsample the smaller or downsample the bigger class.
+For undersampling: Must be between 0 and 1,
+where 1 means no downsampling, 0.5 implies reduction to 50 percent
+and 0 would imply reduction to 0 observations.
+For oversampling: Must be between 1 and <code>Inf</code>,
+where 1 means no oversampling and 2 would mean doubling the class size.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>[<code>data.frame</code> | <code><a href="SupervisedTask.html">ClassifTask</a></code>]. Same type
-as <code>obj</code>.
+<p>[<code>data.frame</code> | <code><a href="SupervisedTask.html">ClassifTask</a></code>]. Same type as <code>obj</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other OverUndersample: <code><a href="makeUndersampleWrapper.html">makeOversampleWrapper</a></code>,
+<code><a href="makeUndersampleWrapper.html">makeUndersampleWrapper</a></code>
 </p>
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>

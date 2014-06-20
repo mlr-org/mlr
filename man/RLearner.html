@@ -10,12 +10,10 @@
 
 <h3>Description</h3>
 
-<p>Wraps an already implemented learning method from R to make
-it accessible to mlr. Call this method in your constructor.
-You have to pass an id (name), the required package(s), a
-description object for all changeable parameters (you dont
-have to do this for the learner to work, but it is strongly
-recommended), and define what the learner can / cannot do.
+<p>Wraps an already implemented learning method from R to make it accessible to mlr.
+Call this method in your constructor. You have to pass an id (name), the required
+package(s), a description object for all changeable parameters (you dont have to do this for the
+learner to work, but it is strongly recommended), and use property tags to define features of the learner.
 </p>
 
 
@@ -24,15 +22,14 @@ recommended), and define what the learner can / cannot do.
 <pre>
 makeRLearner()
 
-makeRLearnerClassif(cl, package, par.set, numerics = FALSE, factors = FALSE,
-  missings = FALSE, weights = FALSE, oneclass = FALSE, twoclass = FALSE,
-  multiclass = FALSE, prob = FALSE, par.vals = list())
+makeRLearnerClassif(cl, package, par.set, par.vals = list(),
+  properties = character(0L))
 
-makeRLearnerRegr(cl, package, par.set, numerics, factors = FALSE,
-  missings = FALSE, weights = FALSE, se = FALSE, par.vals = list())
+makeRLearnerRegr(cl, package, par.set, par.vals = list(),
+  properties = character(0L))
 
-makeRLearnerSurv(cl, package, par.set, numerics, factors = FALSE,
-  missings = FALSE, weights = FALSE, se = FALSE, par.vals = list())
+makeRLearnerSurv(cl, package, par.set, par.vals = list(),
+  properties = character(0L))
 </pre>
 
 
@@ -41,84 +38,61 @@ makeRLearnerSurv(cl, package, par.set, numerics, factors = FALSE,
 <table summary="R argblock">
 <tr valign="top"><td><code>cl</code></td>
 <td>
-<p>[<code>character(1)</code>] <br> Class name for
-learner to create.  By convention, all classification
-learners start with &ldquo;classif.&rdquo;, all regression
-learners with &ldquo;regr.&rdquo; and all survival learners
+<p>[<code>character(1)</code>] <br>
+Class name for learner to create.
+By convention, all classification learners start with &ldquo;classif.&rdquo;,
+all regression learners with &ldquo;regr.&rdquo; and all survival learners
 start with &ldquo;surv.&rdquo;.</p>
 </td></tr>
 <tr valign="top"><td><code>package</code></td>
 <td>
-<p>[<code>character</code>]<br> Package(s) to load
-for the implementation of the learner.</p>
+<p>[<code>character</code>]<br>
+Package(s) to load for the implementation of the learner.</p>
+</td></tr>
+<tr valign="top"><td><code>properties</code></td>
+<td>
+<p>[<code>character(1)</code>]<br>
+Set of learner properties. Some standard property names include:
+</p>
+
+<dl>
+<dt>numerics</dt><dd><p>Can numeric features be handled?</p>
+</dd>
+<dt>factors</dt><dd><p>Can factor features be handled?</p>
+</dd>
+<dt>numerics</dt><dd><p>Can numeric features be handled?</p>
+</dd>
+<dt>missings</dt><dd><p>Can missing features be handled?</p>
+</dd>
+<dt>oneclas,twoclass,multiclass</dt><dd><p>Can one-class, two-class or multi-class classification problems be handled?</p>
+</dd>
+<dt>prob</dt><dd><p>Can probabilites be predicted?</p>
+</dd>
+<dt>se</dt><dd><p>Can standard errors be predicted?</p>
+</dd>
+</dl>
+
+<p>Default is <code>character(0)</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>par.set</code></td>
 <td>
 <p>[<code><a href="../../ParamHelpers/html/ParamSet.html">ParamSet</a></code>] <br>
-Parameter set of (hyper)parameters and their
-constraints.</p>
-</td></tr>
-<tr valign="top"><td><code>numerics</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Can numeric
-features be handled?  Default is <code>FALSE</code>.</p>
-</td></tr>
-<tr valign="top"><td><code>factors</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Can factor features
-be handled?  Default is <code>FALSE</code>.</p>
-</td></tr>
-<tr valign="top"><td><code>missings</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Can missing values
-be handled?  Default is <code>FALSE</code>.</p>
-</td></tr>
-<tr valign="top"><td><code>weights</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Can case weights be
-handled?  Default is <code>FALSE</code>.</p>
-</td></tr>
-<tr valign="top"><td><code>oneclass</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Can one-class
-problems be handled?  Default is <code>FALSE</code>.</p>
-</td></tr>
-<tr valign="top"><td><code>twoclass</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Can two-class
-problems be handled?  Default is <code>FALSE</code>.</p>
-</td></tr>
-<tr valign="top"><td><code>multiclass</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Can multi-class
-problems be handled?  Default is <code>FALSE</code>.</p>
-</td></tr>
-<tr valign="top"><td><code>prob</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Can probabilities be
-predicted?  Default is <code>FALSE</code>.</p>
-</td></tr>
-<tr valign="top"><td><code>se</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Can standard errors be
-predicted??  Default is <code>FALSE</code>.</p>
+Parameter set of (hyper)parameters and their constraints.</p>
 </td></tr>
 <tr valign="top"><td><code>par.vals</code></td>
 <td>
-<p>[<code>list</code>] <br> Always set
-hyperparameters to these values when the object is
-constructed.  Useful when default values are missing in
-the underlying function.  The values can later be
-overwritten when the user sets hyperparameters.  Default
-is empty list.</p>
+<p>[<code>list</code>] <br>
+Always set hyperparameters to these values when the object is constructed.
+Useful when default values are missing in the underlying function.
+The values can later be overwritten when the user sets hyperparameters.
+Default is empty list.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>[<code><a href="RLearner.html">RLearnerClassif</a></code>, <code><a href="RLearner.html">RLearnerRegr</a></code>
-or <code><a href="RLearner.html">RLearnerSurv</a></code>].
+<p>[<code><a href="RLearner.html">RLearnerClassif</a></code>, <code><a href="RLearner.html">RLearnerRegr</a></code> or <code><a href="RLearner.html">RLearnerSurv</a></code>].
 </p>
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>

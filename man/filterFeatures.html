@@ -1,27 +1,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>R: Filter features by using a numerical importance criterion.</title>
+<html><head><title>R: Filter features by thresholding filter values.</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="R.css">
 </head><body>
 
 <table width="100%" summary="page for filterFeatures {mlr}"><tr><td>filterFeatures {mlr}</td><td align="right">R Documentation</td></tr></table>
 
-<h2>Filter features by using a numerical importance criterion.</h2>
+<h2>Filter features by thresholding filter values.</h2>
 
 <h3>Description</h3>
 
-<p>Calculates numerical importance values for all features.
-Thresholding of these values can be used to select
-&ldquo;useful&rdquo; features. Look at package
-<code><a href="../../FSelector/html/FSelector.html">FSelector</a></code> for details on the
-filter algorithms.
+<p>First, calls <code><a href="getFilterValues.html">getFilterValues</a></code>.
+Features are then selected via <code>select</code> and <code>val</code>.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-filterFeatures(task, method = "random.forest.importance")
+filterFeatures(task, method = "random.forest.importance", select = "perc",
+  val, ...)
 </pre>
 
 
@@ -30,46 +28,53 @@ filterFeatures(task, method = "random.forest.importance")
 <table summary="R argblock">
 <tr valign="top"><td><code>task</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> The task.</p>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+The task.</p>
 </td></tr>
 <tr valign="top"><td><code>method</code></td>
 <td>
-<p>[<code>character(1)</code>]<br> Filter method.
-Available are:<br> &ldquo;linear.correlation&rdquo;: Pearson's
-correlation for regression with continous data<br>
-&ldquo;rank.correlation&rdquo;: Spearman's correlation for
-regression with continous data<br>
-&ldquo;information.gain&rdquo;: Entropy-based information gain
-for classification and regression of mixed feature
-sets<br> &ldquo;gain.ratio&rdquo;: Entropy-based gain ratio for
-classification and regression of mixed feature sets<br>
-&ldquo;symmetrical.uncertainty&rdquo;: Entropy-based
-symmetrical uncertainty for classification and regression
-of mixed feature sets<br> &ldquo;chi.squared&rdquo;: Finds
-weights of mixed feature sets using chi-squared test for
-classification and regression<br>
-&ldquo;random.forest.importance&rdquo;: Finds weights of mixed
-feature sets using RandomForest algorithm for
-classification and regression<br> &ldquo;relief&rdquo;: Finds
-weights of mixed feature sets using distances between
-instances for classification and regression<br>
-&ldquo;oneR&rdquo;: Finds weights of mixed feature sets using
-association rules for classification and regression<br>
+<p>[<code>character(1)</code>]<br>
+See <code><a href="getFilterValues.html">getFilterValues</a></code>.
 Default is &ldquo;random.forest.importance&rdquo;.</p>
+</td></tr>
+<tr valign="top"><td><code>select</code></td>
+<td>
+<p>[<code>character(1)</code>]<br>
+How to select top-scoring features.
+&ldquo;perc&rdquo; = select top-scoring percentage, &ldquo;abs&rdquo; = select absolute number
+of top-scoring features, &ldquo;threshold&rdquo; = select all features whose
+criterion value is &gt;= <code>val</code>.
+Default is &ldquo;perc&rdquo;.</p>
+</td></tr>
+<tr valign="top"><td><code>val</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br>
+Depends on <code>select</code>:
+Either a percentage from [0, 1], a number of features or a threshold value for the criterion.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>[any]<br>
+Passed down to selected method.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>[<code>numeric</code>]. A named numeric vector that contains an
-importance value for each feature.
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>].
 </p>
 
 
 <h3>See Also</h3>
 
-<p><code><a href="makeFilterWrapper.html">makeFilterWrapper</a></code>
+<p>Other filter: <code><a href="getFilterResult.html">FilterResult</a></code>,
+<code><a href="getFilterResult.html">getFilterResult</a></code>;
+<code><a href="FilterValues.html">FilterValues</a></code>;
+<code><a href="getFilterMethods.html">getFilterMethods</a></code>;
+<code><a href="getFilterValues.html">getFilterValues</a></code>;
+<code><a href="getFilteredFeatures.html">getFilteredFeatures</a></code>;
+<code><a href="makeFilterWrapper.html">makeFilterWrapper</a></code>
 </p>
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>

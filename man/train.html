@@ -15,16 +15,15 @@
 
 <h3>Description</h3>
 
-<p>Given a <code><a href="SupervisedTask.html">SupervisedTask</a></code>, creates a model for
-the learning machine which can be used for predictions on
-new data.
+<p>Given a <code><a href="SupervisedTask.html">SupervisedTask</a></code>, creates a model for the learning machine
+which can be used for predictions on new data.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-train(learner, task, subset, weights)
+train(learner, task, subset, weights = NULL)
 </pre>
 
 
@@ -33,27 +32,28 @@ train(learner, task, subset, weights)
 <table summary="R argblock">
 <tr valign="top"><td><code>learner</code></td>
 <td>
-<p>[<code><a href="makeLearner.html">Learner</a></code>]<br> The learner.</p>
+<p>[<code><a href="makeLearner.html">Learner</a></code> | <code>character(1)</code>]<br>
+The learner.
+If you pass a string the learner will be created via <code><a href="makeLearner.html">makeLearner</a></code>.</p>
 </td></tr>
 <tr valign="top"><td><code>task</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> The task.</p>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+The task.</p>
 </td></tr>
 <tr valign="top"><td><code>subset</code></td>
 <td>
-<p>[<code>integer</code>]<br> An index vector
-specifying the training cases to be used for fitting.  By
-default the complete data set is used.</p>
+<p>[<code>integer</code>]<br>
+An index vector specifying the training cases to be used for fitting.
+By default the complete data set is used.</p>
 </td></tr>
 <tr valign="top"><td><code>weights</code></td>
 <td>
-<p>[<code>numeric</code>]<br> Optional, non-negative
-case weight vector to be used during fitting.  If given,
-must be of same length as <code>subset</code> and in
-corresponding order.  By default missing which means no
-weights are used unless specified in the task
-([<code><a href="SupervisedTask.html">SupervisedTask</a></code>]).  Weights from the task
-will be overwritten.</p>
+<p>[<code>numeric</code>]<br>
+Optional, non-negative case weight vector to be used during fitting.
+If given, must be of same length as <code>subset</code> and in corresponding order.
+By default <code>NULL</code> which means no weights are used unless specified in the task ([<code><a href="SupervisedTask.html">SupervisedTask</a></code>]).
+Weights from the task will be overwritten.</p>
 </td></tr>
 </table>
 
@@ -82,7 +82,7 @@ mod &lt;- train(learner, task, subset = training.set)
 print(mod)
 </code></pre>
 
-<pre><code>## Learner model for id=classif.lda class=classif.lda
+<pre><code>## Model for id=classif.lda class=classif.lda
 ## Trained on obs: 75
 ## Used features: 4
 ## Hyperparameters: method=mle
@@ -96,7 +96,7 @@ mod &lt;- train(learner, task, subset = training.set)
 print(mod)
 </code></pre>
 
-<pre><code>## Learner model for id=classif.rpart class=classif.rpart
+<pre><code>## Model for id=classif.rpart class=classif.rpart
 ## Trained on obs: 75
 ## Used features: 4
 ## Hyperparameters: xval=0,minsplit=7

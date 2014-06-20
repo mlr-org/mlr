@@ -10,9 +10,8 @@
 
 <h3>Description</h3>
 
-<p>Mainly for internal use. Predict new data with a fitted
-model. You have to implement this method if you want to add
-another learner to this package.
+<p>Mainly for internal use. Predict new data with a fitted model.
+You have to implement this method if you want to add another learner to this package.
 </p>
 
 
@@ -28,46 +27,42 @@ predictLearner(.learner, .model, .newdata, ...)
 <table summary="R argblock">
 <tr valign="top"><td><code>.learner</code></td>
 <td>
-<p>[<code><a href="RLearner.html">RLearner</a></code>]<br> Wrapped
-learner.</p>
+<p>[<code><a href="RLearner.html">RLearner</a></code>]<br>
+Wrapped learner.</p>
 </td></tr>
 <tr valign="top"><td><code>.model</code></td>
 <td>
-<p>[<code><a href="makeWrappedModel.html">WrappedModel</a></code>]<br> Model
-produced by training.</p>
+<p>[<code><a href="makeWrappedModel.html">WrappedModel</a></code>]<br>
+Model produced by training.</p>
 </td></tr>
 <tr valign="top"><td><code>.newdata</code></td>
 <td>
-<p>[<code>data.frame</code>]<br> New data to
-predict. Does not include target column.</p>
+<p>[<code>data.frame</code>]<br>
+New data to predict. Does not include target column.</p>
 </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
-<p>[any]<br> Additional parameters, which need to
-be passed to the underlying predict function.</p>
+<p>[any]<br>
+Additional parameters, which need to be passed to the underlying predict function.</p>
 </td></tr>
 </table>
 
 
 <h3>Details</h3>
 
-<p>You implementation must adhere to the following: The model
-must be fitted on the subset of <code>.task</code> given by
-<code>.subset</code>. All parameters in <code>...</code> must be passed
-to the underlying training function.
+<p>You implementation must adhere to the following:
+The model must be fitted on the subset of <code>.task</code> given by <code>.subset</code>. All parameters
+in <code>...</code> must be passed to the underlying training function.
 </p>
 
 
 <h3>Value</h3>
 
-<p>For classification: Either a factor for type
-&ldquo;response&rdquo; or a matrix for type &ldquo;prob&rdquo;. In
-the latter case the columns must be named with the class
-labels.  For regressions: Either a numeric for type
-&ldquo;response&rdquo; or a matrix with two columns for type
-&ldquo;se&rdquo;. In the latter case first column is the
-estimated response (mean value) and the second column the
-estimated standard errors.
+<p>For classification: Either a factor for type &ldquo;response&rdquo; or a matrix for
+type &ldquo;prob&rdquo;. In the latter case the columns must be named with the class labels.
+For regressions: Either a numeric for type &ldquo;response&rdquo; or a matrix with two columns
+for type &ldquo;se&rdquo;. In the latter case first column is the estimated response (mean value)
+and the second column the estimated standard errors.
 </p>
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>

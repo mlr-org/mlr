@@ -15,13 +15,15 @@
 
 <h3>Description</h3>
 
-<p>Fuses a base learner with a filter method. Creates a
-learner object, which can be used like any other learner
-object. Internally uses <code><a href="filterFeatures.html">filterFeatures</a></code> before
-every model fit.
+<p>Fuses a base learner with a filter method. Creates a learner object, which can be
+used like any other learner object.
+Internally uses <code><a href="filterFeatures.html">filterFeatures</a></code> before every model fit.
 </p>
 <p>After training, the selected features can be retrieved with
 <code><a href="getFilteredFeatures.html">getFilteredFeatures</a></code>.
+</p>
+<p>Note that observation weights do not influence the filtering and are simply passed
+down to the next learner.
 </p>
 
 
@@ -29,7 +31,7 @@ every model fit.
 
 <pre>
 makeFilterWrapper(learner, fw.method = "random.forest.importance",
-  fw.perc = 1)
+  fw.select = "perc", fw.val)
 </pre>
 
 
@@ -38,21 +40,26 @@ makeFilterWrapper(learner, fw.method = "random.forest.importance",
 <table summary="R argblock">
 <tr valign="top"><td><code>learner</code></td>
 <td>
-<p>[<code><a href="makeLearner.html">Learner</a></code>]<br> The learner.</p>
+<p>[<code><a href="makeLearner.html">Learner</a></code> | <code>character(1)</code>]<br>
+The learner.
+If you pass a string the learner will be created via <code><a href="makeLearner.html">makeLearner</a></code>.</p>
 </td></tr>
 <tr valign="top"><td><code>fw.method</code></td>
 <td>
-<p>[<code>character(1)</code>]<br> Filter method.
-Available are: linear.correlation, rank.correlation,
-information.gain, gain.ratio, symmetrical.uncertainty,
-chi.squared, random.forest.importance, relief, oneR
-Default is random.forest.importance.</p>
+<p>[<code>character(1)</code>]<br>
+See <code><a href="getFilterValues.html">getFilterValues</a></code>.
+Default is &ldquo;random.forest.importance&rdquo;.</p>
 </td></tr>
-<tr valign="top"><td><code>fw.perc</code></td>
+<tr valign="top"><td><code>fw.select</code></td>
 <td>
-<p>[<code>numeric(1)</code>]<br> Percentage of
-highest ranking features to select after filtering.
-Default is 1 (=100 percent).</p>
+<p>[<code>character(1)</code>]<br>
+See <code><a href="filterFeatures.html">filterFeatures</a></code>.
+Default is &ldquo;perc&rdquo;.</p>
+</td></tr>
+<tr valign="top"><td><code>fw.val</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br>
+See <code><a href="filterFeatures.html">filterFeatures</a></code>.</p>
 </td></tr>
 </table>
 
@@ -63,14 +70,25 @@ Default is 1 (=100 percent).</p>
 </p>
 
 
+<h3>See Also</h3>
+
+<p>Other filter: <code><a href="getFilterResult.html">FilterResult</a></code>,
+<code><a href="getFilterResult.html">getFilterResult</a></code>;
+<code><a href="FilterValues.html">FilterValues</a></code>; <code><a href="filterFeatures.html">filterFeatures</a></code>;
+<code><a href="getFilterMethods.html">getFilterMethods</a></code>;
+<code><a href="getFilterValues.html">getFilterValues</a></code>;
+<code><a href="getFilteredFeatures.html">getFilteredFeatures</a></code>
+</p>
+
+
 <h3>Examples</h3>
 
 <pre><code class="r">
-task = makeClassifTask(data=iris, target=&quot;Species&quot;)
+task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.lda&quot;)
 inner = makeResampleDesc(&quot;Holdout&quot;)
 outer = makeResampleDesc(&quot;CV&quot;, iters = 2)
-lrn = makeFilterWrapper(lrn, fw.perc=0.5)
+lrn = makeFilterWrapper(lrn, fw.val = 0.5)
 mod = train(lrn, task)
 </code></pre>
 
@@ -91,7 +109,7 @@ r = resample(lrn, task, outer, extract = function(model) {
 
 <pre><code>## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
-## [Resample] Result: mmce.test.mean=0.0333
+## [Resample] Result: mmce.test.mean=0.0467
 </code></pre>
 
 <pre><code class="r">print(r$extract)

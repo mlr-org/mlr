@@ -10,33 +10,29 @@
 
 <h3>Description</h3>
 
-<p>The following tuners are available: </p>
+<p>The following tuners are available:
+</p>
 
 <dl>
-<dt>makeTuneControlGrid</dt><dd><p>Grid search. All kinds of
-parameter types can be handled, but you have discretize
-them yourself by always using
-<code><a href="../../ParamHelpers/html/makeDiscreteParam.html">makeDiscreteParam</a></code> in the
-<code>par.set</code> passed to <code><a href="tuneParams.html">tuneParams</a></code>.</p>
+<dt>makeTuneControlGrid</dt><dd><p>Grid search. All kinds of parameter types can be handled,
+but you have discretize them yourself by always using
+<code><a href="../../ParamHelpers/html/makeDiscreteParam.html">makeDiscreteParam</a></code> in the <code>par.set</code>
+passed to <code><a href="tuneParams.html">tuneParams</a></code>.</p>
 </dd>
-<dt>makeTuneControlRandom</dt><dd><p>Random search. All kinds of
-parameter types can be handled.</p>
+<dt>makeTuneControlRandom</dt><dd><p>Random search. All kinds of parameter types can be handled.</p>
 </dd>
-<dt>makeTuneControlOptim</dt><dd><p>Tuning with
-<code><a href="../../stats/html/optim.html">optim</a></code>.  Can handle numeric(vector) and
-integer(vector) hyperparameters.  For integers the
-internally proposed numeric values are automatically
-rounded.</p>
-</dd> <dt>makeTuneControlCMAES</dt><dd><p>CMA Evolution
-Strategy with method <code><a href="../../cmaes/html/cma_es.html">cma_es</a></code>.  Can
-handle numeric(vector) and integer(vector) hyperparameters.
-For integers the internally proposed numeric values are
-automatically rounded.</p>
-</dd> <dt>makeTuneControlIrace</dt><dd><p>Tuning
-with iterated F-Racing with method
-<code><a href="../../irace/html/irace.html">irace</a></code>.  All kinds of parameter types
-can be handled.</p>
-</dd> </dl>
+<dt>makeTuneControlOptim</dt><dd><p>Tuning with <code><a href="../../stats/html/optim.html">optim</a></code>.
+Can handle numeric(vector) and integer(vector) hyperparameters.
+For integers the internally proposed numeric values are automatically rounded.</p>
+</dd>
+<dt>makeTuneControlCMAES</dt><dd><p>CMA Evolution Strategy with method <code><a href="../../cmaes/html/cma_es.html">cma_es</a></code>.
+Can handle numeric(vector) and integer(vector) hyperparameters.
+For integers the internally proposed numeric values are automatically rounded.</p>
+</dd>
+<dt>makeTuneControlIrace</dt><dd><p>Tuning with iterated F-Racing with method <code><a href="../../irace/html/irace.html">irace</a></code>.
+All kinds of parameter types can be handled.</p>
+</dd>
+</dl>
 
 
 
@@ -61,37 +57,37 @@ makeTuneControlRandom(same.resampling.instance = TRUE, maxit = 100L)
 <tr valign="top"><td><code>same.resampling.instance</code></td>
 <td>
 <p>[<code>logical(1)</code>]<br>
-Should the same resampling instance be used for all
-evaluations to reduce variance?  Default is <code>TRUE</code>.</p>
+Should the same resampling instance be used for all evaluations to reduce variance?
+Default is <code>TRUE</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>start</code></td>
 <td>
-<p>[<code>numeric</code>]<br> Named list of initial
-parameter values.</p>
+<p>[<code>numeric</code>]<br>
+Named list of initial parameter values.</p>
 </td></tr>
 <tr valign="top"><td><code>n.instances</code></td>
 <td>
-<p>[<code>integer(1)</code>]<br> Number of
-random resampling instances for irace, see details.
+<p>[<code>integer(1)</code>]<br>
+Number of random resampling instances for irace, see details.
 Default is 100.</p>
 </td></tr>
 <tr valign="top"><td><code>maxit</code></td>
 <td>
-<p>[<code>integer(1)</code>]<br> Number of iterations
-for random search.  Default is 100.</p>
+<p>[<code>integer(1)</code>]<br>
+Number of iterations for random search.
+Default is 100.</p>
 </td></tr>
 <tr valign="top"><td><code>show.irace.output</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br> Show
-console output of irace while tuning?  Default is
-<code>FALSE</code>.</p>
+<p>[<code>logical(1)</code>]<br>
+Show console output of irace while tuning?
+Default is <code>FALSE</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
-<p>[any]<br> Further control parameters passed to
-the <code>control</code> argument of
-<code><a href="../../stats/html/optim.html">optim</a></code>, the <code>control</code> argument
-of <code><a href="../../cmaes/html/cma_es.html">cma_es</a></code>, <code>tunerConfig</code>
+<p>[any]<br>
+Further control parameters passed to the <code>control</code> argument of <code><a href="../../stats/html/optim.html">optim</a></code>,
+the <code>control</code> argument of <code><a href="../../cmaes/html/cma_es.html">cma_es</a></code>, <code>tunerConfig</code>
 argument of <code><a href="../../irace/html/irace.html">irace</a></code>.</p>
 </td></tr>
 </table>
@@ -99,30 +95,34 @@ argument of <code><a href="../../irace/html/irace.html">irace</a></code>.</p>
 
 <h3>Details</h3>
 
-<p>Dependent parameters can currently only be handled by
-random search and irace.
+<p>Dependent parameters can currently only be handled by random search and irace.
 </p>
-<p>Some notes on irace: For resampling you have to pass a
-<code><a href="makeResampleDesc.html">ResampleDesc</a></code>, not a
-<code><a href="makeResampleInstance.html">ResampleInstance</a></code>. The resampling strategy is
-randomly instantiated <code>n.instances</code> times and these
-are the instances in the sense of irace (<code>instances</code>
-element of <code>tunerConfig</code> in
-<code><a href="../../irace/html/irace.html">irace</a></code>). Also note that irace will
-always store its tuning results in a file on disk, see the
-package documentation for details on this and how to change
-the file path.
+<p>Some notes on irace: For resampling you have to pass a <code><a href="makeResampleDesc.html">ResampleDesc</a></code>,
+not a <code><a href="makeResampleInstance.html">ResampleInstance</a></code>.
+The resampling strategy is randomly instantiated <code>n.instances</code> times and
+these are the instances in the sense of irace (<code>instances</code> element of <code>tunerConfig</code>
+in <code><a href="../../irace/html/irace.html">irace</a></code>). Also note that irace will always
+store its tuning results in a file on disk, see the package documentation for details on this
+and how to change the file path.
 </p>
 
 
 <h3>Value</h3>
 
-<p>[<code><a href="TuneControl.html">TuneControl</a></code>]. The specific subclass is one
-of <code><a href="TuneControl.html">TuneControlGrid</a></code>,
-<code><a href="TuneControl.html">TuneControlRandom</a></code>,
-<code><a href="TuneControl.html">TuneControlOptim</a></code>,
-<code><a href="TuneControl.html">TuneControlCMAES</a></code>,
-<code><a href="TuneControl.html">TuneControlIrace</a></code>.
+<p>[<code><a href="TuneControl.html">TuneControl</a></code>]. The specific subclass is one of
+<code><a href="TuneControl.html">TuneControlGrid</a></code>, <code><a href="TuneControl.html">TuneControlRandom</a></code>, <code><a href="TuneControl.html">TuneControlOptim</a></code>,
+<code><a href="TuneControl.html">TuneControlCMAES</a></code>, <code><a href="TuneControl.html">TuneControlIrace</a></code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other tune: <code><a href="makeModelMultiplexer.html">ModelMultiplexer</a></code>,
+<code><a href="makeModelMultiplexer.html">makeModelMultiplexer</a></code>;
+<code><a href="getTuneResult.html">getTuneResult</a></code>;
+<code><a href="makeModelMultiplexerParamSet.html">makeModelMultiplexerParamSet</a></code>;
+<code><a href="makeTuneWrapper.html">makeTuneWrapper</a></code>; <code><a href="tuneParams.html">tuneParams</a></code>;
+<code><a href="tuneThreshold.html">tuneThreshold</a></code>
 </p>
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>

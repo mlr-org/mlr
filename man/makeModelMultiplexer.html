@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Create model multiplexer for model selection to tune over...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</head><body>
+
+<table width="100%" summary="page for makeModelMultiplexer {mlr}"><tr><td>makeModelMultiplexer {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Create model multiplexer for model selection to tune over multiple possible models.</h2>
+
+<h3>Description</h3>
+
+<p>Combines multiple base learners by dispatching
+on the hyperparameter &ldquo;selected.learner&rdquo; to a specific model class.
+This allows to tune not only the model class (SVM, random forest, etc) but also
+their hyperparameters in one go. Combine this with <code><a href="tuneParams.html">tuneParams</a></code> and
+<code><a href="TuneControl.html">makeTuneControlIrace</a></code> for a very powerful approach, see example below.
+</p>
+<p>The parameter set is the union of all (unique) base learners.
+In order to avoid name clashes all parameter names are prefixed
+with the base learner id, i.e. &ldquo;[learner.id].[parameter.name]&rdquo;.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+makeModelMultiplexer(base.learners, id = "ModelMultiplexer")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>base.learners</code></td>
+<td>
+<p>[<code>list</code> of <code><a href="makeLearner.html">Learner</a></code>]<br>
+List of Learners with unique IDs.</p>
+</td></tr>
+<tr valign="top"><td><code>id</code></td>
+<td>
+<p>[<code>character(1)</code>]<br>
+Identifier for constructed ModelMultiplexer.
+Default is &ldquo;ModelMultiplexer&rdquo;.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>[<code>ModelMultiplexer</code>]. A <code><a href="makeLearner.html">Learner</a></code> specialized as <code>ModelMultiplexer</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Note that logging output during tuning is somewhat shortened to make it more readable.
+I.e., the artificial prefix before parameter names is suppressed.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other multiplexer: <code><a href="makeModelMultiplexerParamSet.html">makeModelMultiplexerParamSet</a></code>
+</p>
+<p>Other tune: <code><a href="TuneControl.html">TuneControl</a></code>,
+<code><a href="TuneControl.html">TuneControlCMAES</a></code>,
+<code><a href="TuneControl.html">TuneControlGrid</a></code>,
+<code><a href="TuneControl.html">TuneControlIrace</a></code>,
+<code><a href="TuneControl.html">TuneControlOptim</a></code>,
+<code><a href="TuneControl.html">TuneControlRandom</a></code>,
+<code><a href="TuneControl.html">makeTuneControlCMAES</a></code>,
+<code><a href="TuneControl.html">makeTuneControlGrid</a></code>,
+<code><a href="TuneControl.html">makeTuneControlIrace</a></code>,
+<code><a href="TuneControl.html">makeTuneControlOptim</a></code>,
+<code><a href="TuneControl.html">makeTuneControlRandom</a></code>;
+<code><a href="getTuneResult.html">getTuneResult</a></code>;
+<code><a href="makeModelMultiplexerParamSet.html">makeModelMultiplexerParamSet</a></code>;
+<code><a href="makeTuneWrapper.html">makeTuneWrapper</a></code>; <code><a href="tuneParams.html">tuneParams</a></code>;
+<code><a href="tuneThreshold.html">tuneThreshold</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="r">
+bls = list(
+  makeLearner(&quot;classif.ksvm&quot;),
+  makeLearner(&quot;classif.randomForest&quot;)
+)
+</code></pre>
+
+<pre><code>## Loading required package: randomForest
+## randomForest 4.6-7
+## Type rfNews() to see new features/changes/bug fixes.
+</code></pre>
+
+<pre><code class="r">lrn = makeModelMultiplexer(bls)
+# simple way to contruct param set for tuning
+# parameter names are prefixed automatically and the &#39;requires&#39;
+# element is set, too, to make all paramaters subordinate to &#39;selected.learner&#39;
+ps = makeModelMultiplexerParamSet(lrn,
+  makeNumericParam(&quot;sigma&quot;, lower=-10, upper = 10, trafo = function(x) 2^x),
+  makeIntegerParam(&quot;ntree&quot;, lower = 1L, upper = 500L)
+)
+print(ps)
+</code></pre>
+
+<pre><code>##                                Type len Def
+## selected.learner           discrete   -   -
+## classif.ksvm.sigma          numeric   -   -
+## classif.randomForest.ntree  integer   -   -
+##                                                       Constr Req Trafo
+## selected.learner           classif.ksvm,classif.randomForest   -     -
+## classif.ksvm.sigma                                 -10 to 10   Y     Y
+## classif.randomForest.ntree                          1 to 500   Y     -
+</code></pre>
+
+<pre><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 2L)
+# to save some time we use random search. but you probably want something like this:
+# ctrl = makeTuneControlIrace(maxExperiments = 500L)
+ctrl = makeTuneControlRandom(maxit = 4L)
+res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)
+</code></pre>
+
+<pre><code>## [Tune] Started tuning learner ModelMultiplexer for parameter set:
+##                                Type len Def
+## selected.learner           discrete   -   -
+## classif.ksvm.sigma          numeric   -   -
+## classif.randomForest.ntree  integer   -   -
+##                                                       Constr Req Trafo
+## selected.learner           classif.ksvm,classif.randomForest   -     -
+## classif.ksvm.sigma                                 -10 to 10   Y     Y
+## classif.randomForest.ntree                          1 to 500   Y     -
+## With control class: TuneControlRandom
+## [Tune] 1: selected.learner=classif.randomForest; ntree=22 : mmce.test.mean=0.04
+## [Tune] 2: selected.learner=classif.randomForest; ntree=211 : mmce.test.mean=0.0467
+## [Tune] 3: selected.learner=classif.ksvm; sigma=0.00239 : mmce.test.mean=0.427
+## [Tune] 4: selected.learner=classif.ksvm; sigma=0.216 : mmce.test.mean=0.0533
+## [Tune] Result: selected.learner=classif.randomForest; classif.randomForest.ntree=22 : mmce.test.mean=0.04
+</code></pre>
+
+<pre><code class="r">print(res)
+</code></pre>
+
+<pre><code>## Tune result:
+## Op. pars: selected.learner=classif.randomForest; classif.randomForest.ntree=22
+## mmce.test.mean=0.04
+</code></pre>
+
+<pre><code class="r">print(head(as.data.frame(res$opt.path)))
+</code></pre>
+
+<pre><code>##       selected.learner classif.ksvm.sigma classif.randomForest.ntree
+## 1 classif.randomForest                 NA                         22
+## 2 classif.randomForest                 NA                        211
+## 3         classif.ksvm           0.002391                         NA
+## 4         classif.ksvm           0.215967                         NA
+##   mmce.test.mean dob eol
+## 1        0.04000   1  NA
+## 2        0.04667   2  NA
+## 3        0.42667   3  NA
+## 4        0.05333   4  NA
+</code></pre>
+
+<pre><code class="r">
+# more unique and reliable way to construct the param set
+ps = makeModelMultiplexerParamSet(lrn,
+  classif.ksvm = makeParamSet(
+    makeNumericParam(&quot;sigma&quot;, lower=-10, upper = 10, trafo = function(x) 2^x)
+  ),
+  classif.randomForest = makeParamSet(
+    makeIntegerParam(&quot;ntree&quot;, lower = 1L, upper = 500L)
+  )
+)
+
+# this is how you would construct the param set manually, works too
+ps = makeParamSet(
+  makeDiscreteParam(&quot;selected.learner&quot;, values = extractSubList(bls, &quot;id&quot;)),
+  makeNumericParam(&quot;classif.ksvm.sigma&quot;, lower=-10, upper = 10, trafo = function(x) 2^x,
+    requires = quote(selected.learner == &quot;classif.ksvm&quot;)),
+  makeIntegerParam(&quot;classif.randomForest.ntree&quot;, lower = 1L, upper = 500L,
+    requires = quote(selected.learner == &quot;classif.randomForst&quot;))
+)
+
+# all three ps-objects are exactly the same internally.
+
+</code></pre>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

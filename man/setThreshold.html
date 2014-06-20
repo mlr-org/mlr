@@ -16,14 +16,10 @@
 <h3>Description</h3>
 
 <p>Set threshold of prediction object for classification.
-Creates corresponding discrete class response for the newly
-set threshold. For binary classification: The positive
-class is predicted if the probability value exceeds the
-threshold. For multiclass: Probabilities are divided by
-corresponding thresholds and the class with maximum
-resulting value is selected. The result of both are
-equivalent if in the multi-threshold case the values are
-greater than 0 and sum to 1.
+Creates corresponding discrete class response for the newly set threshold.
+For binary classification: The positive class is predicted if the probability value exceeds the threshold.
+For multiclass: Probabilities are divided by corresponding thresholds and the class with maximum resulting value is selected.
+The result of both are equivalent if in the multi-threshold case the values are greater than 0 and sum to 1.
 </p>
 
 
@@ -39,25 +35,22 @@ setThreshold(pred, threshold)
 <table summary="R argblock">
 <tr valign="top"><td><code>pred</code></td>
 <td>
-<p>[<code><a href="Prediction.html">Prediction</a></code>]<br> The
-prediction.</p>
+<p>[<code><a href="Prediction.html">Prediction</a></code>]<br>
+Prediction object.</p>
 </td></tr>
 <tr valign="top"><td><code>threshold</code></td>
 <td>
-<p>[<code>numeric</code>]<br> Threshold to produce
-class labels. Has to be a named vector, where names
-correspond to class labels.  Only if <code>pred</code> is a
-prediction object resulting from binary classification it
-can be a single numerical threshold for the positive
-class.</p>
+<p>[<code>numeric</code>]<br>
+Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.
+Only if <code>pred</code> is a prediction object resulting from binary classification
+it can be a single numerical threshold for the positive class.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>[<code><a href="Prediction.html">Prediction</a></code>] with changed threshold and
-corresponding response.
+<p>[<code><a href="Prediction.html">Prediction</a></code>] with changed threshold and corresponding response.
 </p>
 
 
@@ -80,7 +73,8 @@ pred &lt;- predict(mod, newdata = iris)
 performance(pred, measures = mmce)
 </code></pre>
 
-<pre><code>## [1] 0.02
+<pre><code>## mmce 
+## 0.02
 </code></pre>
 
 <pre><code class="r">head(as.data.frame(pred))
@@ -101,7 +95,8 @@ pred &lt;- setThreshold(pred, threshold = threshold)
 performance(pred, measures = mmce)
 </code></pre>
 
-<pre><code>## [1] 0.02
+<pre><code>## mmce 
+## 0.02
 </code></pre>
 
 <pre><code class="r">head(as.data.frame(pred))

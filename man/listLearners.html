@@ -10,20 +10,32 @@
 
 <h3>Description</h3>
 
-<p>Returns the class names of learning algorithms which have
-specific characteristics, e.g. whether they supports
-missing values, case weights, etc.
+<p>Returns the class names of learning algorithms which have specific characteristics, e.g.
+whether they supports missing values, case weights, etc.
+</p>
+<p><code>listLearnersForTask</code> returns all learners that are in principle applicable
+for a given task.
+</p>
+<p>Note that the packages of all learners are loaded during the search.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-listLearners(type = NA, numerics = NA, factors = NA, missings = NA,
-  weights = NA, oneclass = NA, twoclass = NA, multiclass = NA,
-  prob = NA, se = NA, quiet = TRUE, warn.missing.packages = TRUE)
+listLearners(obj = NA_character_, properties = character(0L),
+  quiet = TRUE, warn.missing.packages = TRUE)
 
-listLearnersForTask(task, weights = NA, prob = NA, se = NA,
+## Default S3 method:
+listLearners(obj, properties = character(0L),
+  quiet = TRUE, warn.missing.packages = TRUE)
+
+## S3 method for class 'character'
+listLearners(obj, properties = character(0L),
+  quiet = TRUE, warn.missing.packages = TRUE)
+
+## S3 method for class 'SupervisedTask'
+listLearners(obj, properties = character(0L),
   warn.missing.packages = TRUE)
 </pre>
 
@@ -33,85 +45,36 @@ listLearnersForTask(task, weights = NA, prob = NA, se = NA,
 <table summary="R argblock">
 <tr valign="top"><td><code>type</code></td>
 <td>
-<p>[<code>character(1)</code>]<br> Type of the learning
-algorithm, one of &ldquo;classif&rdquo;, &ldquo;regr&rdquo; or
-&ldquo;surv&rdquo;.</p>
+<p>[<code>character(1)</code>]<br>
+Type of the learning algorithm, one of &ldquo;classif&rdquo;, &ldquo;regr&rdquo;
+or &ldquo;surv&rdquo;.
+Default is <code>NA</code>, matching all types.</p>
 </td></tr>
-<tr valign="top"><td><code>numerics</code></td>
+<tr valign="top"><td><code>properties</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br> Supports
-real-valued features?</p>
-</td></tr>
-<tr valign="top"><td><code>factors</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Supports factor
-features?</p>
-</td></tr>
-<tr valign="top"><td><code>missings</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Supports missing
-values in features?</p>
-</td></tr>
-<tr valign="top"><td><code>weights</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Supports case
-weights?</p>
-</td></tr>
-<tr valign="top"><td><code>oneclass</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Supports oneclass
-problems?</p>
-</td></tr>
-<tr valign="top"><td><code>twoclass</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Supports twoclass
-problems?</p>
-</td></tr>
-<tr valign="top"><td><code>multiclass</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Supports
-multiclass problems?</p>
-</td></tr>
-<tr valign="top"><td><code>prob</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Can predict
-probabilities (classification)?</p>
-</td></tr>
-<tr valign="top"><td><code>se</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br> Can predict standard
-errors (regression)?</p>
+<p>[<code>character)</code>]<br>
+Set of required properties to filter for. Default is <code>character(0)</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>quiet</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br> Construct learners
-quietly to check their properties, shows no package
-startup messages.  Turn off if you suspect errors.
+<p>[<code>logical(1)</code>]<br>
+Construct learners quietly to check their properties, shows no package startup messages.
+Turn off if you suspect errors.
 Default is codeTRUE.</p>
 </td></tr>
 <tr valign="top"><td><code>warn.missing.packages</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br> If
-some learner cannot be constructed because its package is
-missing, should a warning be shown?  Default is
-codeTRUE.</p>
+<p>[<code>logical(1)</code>]<br>
+If some learner cannot be constructed because its package is missing,
+should a warning be shown?
+Default is codeTRUE.</p>
 </td></tr>
 <tr valign="top"><td><code>task</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> The task.
-Learners are returned that are applicable.</p>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+The task.</p>
 </td></tr>
 </table>
-
-
-<h3>Details</h3>
-
-<p>The default for all search parameters is <code>NA</code>,
-meaning: property is not required, do not care.
-</p>
-<p>Note that the packages of all learners are loaded during
-the search.
-</p>
 
 
 <h3>Value</h3>

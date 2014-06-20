@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Plot threshold vs. performance(s) for 2-class classification.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for plotThreshVsPerf {mlr}"><tr><td>plotThreshVsPerf {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Plot threshold vs. performance(s) for 2-class classification.</h2>
+
+<h3>Description</h3>
+
+<p>Plot threshold vs. performance(s) for 2-class classification.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+plotThreshVsPerf(pred, measures, mark.th = NA_real_, gridsize = 100L,
+  linesize = 1.5)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>pred</code></td>
+<td>
+<p>[<code><a href="Prediction.html">Prediction</a></code>]<br>
+Prediction object.</p>
+</td></tr>
+<tr valign="top"><td><code>measures</code></td>
+<td>
+<p>[<code><a href="makeMeasure.html">Measure</a></code> | list of <code><a href="makeMeasure.html">Measure</a></code>]<br>
+Performance measure(s) to evaluate.</p>
+</td></tr>
+<tr valign="top"><td><code>mark.th</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br>
+Mark given threshold with vertical line?
+Default is <code>NA</code> which means not to do it.</p>
+</td></tr>
+<tr valign="top"><td><code>gridsize</code></td>
+<td>
+<p>[<code>integer(1)</code>]<br>
+Grid resolution for x-axis (threshold).
+Default is 100.</p>
+</td></tr>
+<tr valign="top"><td><code>linesize</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br>
+Linesize for ggplot2 <code><a href="../../ggplot2/html/geom_line.html">geom_line</a></code> for performance graphs.
+Default is 1.5.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>ggplot2 plot object.
+</p>
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

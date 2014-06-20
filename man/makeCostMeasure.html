@@ -27,33 +27,30 @@ makeCostMeasure(id = "costs", minimize = TRUE, costs, task,
 <table summary="R argblock">
 <tr valign="top"><td><code>id</code></td>
 <td>
-<p>[<code>character(1)</code>]<br> Name of measure.
-Default is &ldquo;costs&rdquo;.</p>
+<p>[<code>character(1)</code>]<br>
+Name of measure. Default is &ldquo;costs&rdquo;.</p>
 </td></tr>
 <tr valign="top"><td><code>minimize</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br> Should the measure
-be minimized? Default is TRUE. Otherwise you are
-effectively specifying a benefits matrix.</p>
+<p>[<code>logical(1)</code>]<br>
+Should the measure be minimized? Default is TRUE. Otherwise you are effectively specifying a benefits matrix.</p>
 </td></tr>
 <tr valign="top"><td><code>costs</code></td>
 <td>
-<p>[<code>matrix</code>]<br> Matrix of
-misclassification costs. Rows and columns have to be
-named with class labels, order does not matter.  Rows
-indicate true classes, columns predicted classes.</p>
+<p>[<code>matrix</code>]<br>
+Matrix of misclassification costs. Rows and columns have to be named with class labels, order does not matter.
+Rows indicate true classes, columns predicted classes.</p>
 </td></tr>
 <tr valign="top"><td><code>task</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">ClassifTask</a></code>]<br> Classification
-task. Has to be passed, so validity of matrix names can
-be checked.</p>
+<p>[<code><a href="SupervisedTask.html">ClassifTask</a></code>]<br>
+Classification task. Has to be passed, so validity of matrix names can be checked.</p>
 </td></tr>
 <tr valign="top"><td><code>aggregate</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br> How to aggregate
-costs over all cases in one test set prediction?  Default
-is <code><a href="../../base/html/mean.html">mean</a></code>.</p>
+<p>[<code>logical(1)</code>]<br>
+How to aggregate costs over all cases in one test set prediction?
+Default is <code><a href="../../base/html/mean.html">mean</a></code>.</p>
 </td></tr>
 </table>
 

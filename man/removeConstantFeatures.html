@@ -10,20 +10,20 @@
 
 <h3>Description</h3>
 
-<p>Constant features can lead to errors in some models and
-obviously provide no information in the training set that
-can be learned from. With the argument &ldquo;perc&rdquo;, there
-is a possibility to also remove features for which less
-than &ldquo;perc&rdquo; percent of the observations differ from
-the mode value.
+<p>Constant features can lead to errors in some models and obviously provide
+no information in the training set that can be learned from.
+With the argument &ldquo;perc&rdquo;, there is a possibility to also remove
+features for which less than &ldquo;perc&rdquo; percent of the observations
+differ from the mode value.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-removeConstantFeatures(x, perc = 0, dont.rm = character(0),
-  na.mode = "na.rm", show.info = TRUE)
+removeConstantFeatures(x, target, perc = 0, dont.rm = character(0L),
+  na.ignore = FALSE, tol = .Machine$double.eps^0.5,
+  show.info = getMlrOption("show.info"))
 </pre>
 
 
@@ -32,44 +32,47 @@ removeConstantFeatures(x, perc = 0, dont.rm = character(0),
 <table summary="R argblock">
 <tr valign="top"><td><code>x</code></td>
 <td>
-<p>[<code><a href="../../base/html/data.frame.html">data.frame</a></code> |
-<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> The data set or task.</p>
+<p>[<code><a href="../../base/html/data.frame.html">data.frame</a></code> | <code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+The data set or task.</p>
+</td></tr>
+<tr valign="top"><td><code>target</code></td>
+<td>
+<p>[<code>character</code>]<br>
+Name of the column(s) specifying the response if you passed a <code>data.frame</code>.
+User input is ignored if you pass a task and <code>target</code> is automatically set.
+Never removed.</p>
 </td></tr>
 <tr valign="top"><td><code>perc</code></td>
 <td>
-<p>[<code>numeric(1)</code>]<br> The percentage of a
-feature values in [0, 1) that must differ from the mode
-value.  Default is 0, which means only constant features
-with exactly one observed level are removed.</p>
+<p>[<code>numeric(1)</code>]<br>
+The percentage of a feature values in [0, 1) that must differ from the mode value.
+Default is 0, which means only constant features with exactly one observed level are removed.</p>
 </td></tr>
 <tr valign="top"><td><code>dont.rm</code></td>
 <td>
-<p>[<code>character</code>]<br> Names of the columns
-which must not be deleted.  Default is no columns.  Note
-that for a task the target column is always added to
-these so it is never removed.</p>
+<p>[<code>character</code>]<br>
+Names of the columns which must not be deleted.
+Default is no columns.</p>
 </td></tr>
-<tr valign="top"><td><code>na.mode</code></td>
+<tr valign="top"><td><code>na.ignore</code></td>
 <td>
-<p>[<code>character(1)</code>]<br> </p>
- <ul>
-<li>
-<p><code>na.rm</code>: <code>NA</code>s will be ignored in the
-percentage calculation.<br> </p>
-</li>
-<li> <p><code>single</code>: NAs will
-be seen as a single, extra level in the percentage
-calculation.<br> </p>
-</li>
-<li> <p><code>distinct</code>: <code>NA</code>s will be
-seen as multiple extra levels in the percentage
-calculation.<br> </p>
-</li></ul>
+<p>[<code>logical(1)</code>]<br>
+Should NAs be ignored in the percentage calculation?
+(Or should they be treated as a single, extra level in the percentage calculation?)
+Default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>tol</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br>
+Numerical tolerance to treat two numbers as equal.
+Variables stored as <code>double</code> will get rounded accordingly before computing the mode.
+Default is <code>sqrt(.Maschine$double.eps)</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>show.info</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br> Verbose output on
-console?  Default is <code>TRUE</code>.</p>
+<p>[<code>logical(1)</code>]<br>
+Print verbose output on console?
+Default is set via <code><a href="configureMlr.html">configureMlr</a></code>.</p>
 </td></tr>
 </table>
 

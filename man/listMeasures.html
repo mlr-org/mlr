@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Find matching measures.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for listMeasures {mlr}"><tr><td>listMeasures {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Find matching measures.</h2>
+
+<h3>Description</h3>
+
+<p>Returns the matching measures which have specific characteristics, e.g.
+whether they supports classification or regression.
+</p>
+<p><code>listMeasuresForTask</code> returns all learners that are in principle applicable
+for a given task.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+listMeasures(properties = character(0L))
+
+listMeasuresForTask(task, properties = character(0L))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>properties</code></td>
+<td>
+<p>[<code>character)</code>]<br>
+Set of required properties to filter for. Default is <code>character(0)</code>.
+See <a href="makeMeasure.html">Measure</a> for some standardized properties.</p>
+</td></tr>
+<tr valign="top"><td><code>task</code></td>
+<td>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+The task.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>[<code>character</code>]. Class names of matching learners.
+</p>
+
+<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+</body></html>

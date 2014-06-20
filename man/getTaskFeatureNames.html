@@ -2,11 +2,6 @@
 <html><head><title>R: Get feature names of task.</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="R.css">
-
-<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
-<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
-<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
 </head><body>
 
 <table width="100%" summary="page for getTaskFeatureNames {mlr}"><tr><td>getTaskFeatureNames {mlr}</td><td align="right">R Documentation</td></tr></table>
@@ -31,7 +26,8 @@ getTaskFeatureNames(task)
 <table summary="R argblock">
 <tr valign="top"><td><code>task</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br> The task.</p>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+The task.</p>
 </td></tr>
 </table>
 
@@ -42,19 +38,14 @@ getTaskFeatureNames(task)
 </p>
 
 
-<h3>Examples</h3>
+<h3>See Also</h3>
 
-<pre><code class="r">
-task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
-getTaskFeatureNames(task)
-</code></pre>
-
-<pre><code>## [1] &quot;Sepal.Length&quot; &quot;Sepal.Width&quot;  &quot;Petal.Length&quot; &quot;Petal.Width&quot;
-</code></pre>
-
-<pre><code class="r">
-</code></pre>
-
+<p>Other task: <code><a href="getTaskCosts.html">getTaskCosts</a></code>;
+<code><a href="getTaskData.html">getTaskData</a></code>; <code><a href="getTaskFormula.html">getTaskFormula</a></code>,
+<code><a href="getTaskFormula.html">getTaskFormulaAsString</a></code>;
+<code><a href="getTaskNFeats.html">getTaskNFeats</a></code>;
+<code><a href="getTaskTargets.html">getTaskTargets</a></code>; <code><a href="subsetTask.html">subsetTask</a></code>
+</p>
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
 </body></html>

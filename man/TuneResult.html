@@ -10,30 +10,29 @@
 
 <h3>Description</h3>
 
-<p>Container for results of hyperparameter tuning. Contains
-the obtained point in search space, its performance values
+<p>Container for results of hyperparameter tuning.
+Contains the obtained point in search space, its performance values
 and the optimization path which lead there.
 </p>
 
 
 <h3>Details</h3>
 
-<p>Object members: </p>
- <dl>
-<dt>learner
-[<code><a href="makeLearner.html">Learner</a></code>]</dt><dd><p>Learner that was optimized.</p>
+<p>Object members:
+</p>
+
+<dl>
+<dt>learner [<code><a href="makeLearner.html">Learner</a></code>]</dt><dd><p>Learner that was optimized.</p>
 </dd>
-<dt>control [<code><a href="TuneControl.html">TuneControl</a></code>]</dt><dd><p> Control object
-from tuning.</p>
-</dd> <dt>x [<code>list</code>]</dt><dd><p>Named list of
-hyperparameter values identified as optimal.</p>
-</dd> <dt>y
-[<code>numeric</code>]</dt><dd><p>Performance values for optimal <code>x</code>.</p>
+<dt>control [<code><a href="TuneControl.html">TuneControl</a></code>]</dt><dd><p> Control object from tuning.</p>
 </dd>
-<dt>opt.path
-[<code><a href="../../ParamHelpers/html/OptPath.html">OptPath</a></code>]</dt><dd><p>Optimization path
-which lead to <code>x</code>.</p>
-</dd> </dl>
+<dt>x [<code>list</code>]</dt><dd><p>Named list of hyperparameter values identified as optimal.</p>
+</dd>
+<dt>y [<code>numeric</code>]</dt><dd><p>Performance values for optimal <code>x</code>.</p>
+</dd>
+<dt>opt.path [<code><a href="../../ParamHelpers/html/OptPath.html">OptPath</a></code>]</dt><dd><p>Optimization path which lead to <code>x</code>.</p>
+</dd>
+</dl>
 
 
 <hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
