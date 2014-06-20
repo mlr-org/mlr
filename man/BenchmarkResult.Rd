@@ -5,9 +5,17 @@
 \description{
 Container for results of benchmarked experiments using \code{\link{benchmark}}.
 The structure of the object itself is rather complicated, it is recommended to
-retrive required information via \code{link{getAggrMeasures}}, \code{link{getPredictions}},
-\code{\link{getMeasures}}, \code{\link{getFeatSelResult}}, \code{\link{getTuneResult}} or
+retrive required information via \code{link{getAggrPerformances}}, \code{link{getPredictions}},
+\code{\link{getPerformances}}, \code{\link{getFeatSelResult}}, \code{\link{getTuneResult}} or
 \code{\link{getFilterResult}}. Alternatively, you can convert the object using
 \code{\link[base]{as.data.frame}}
+}
+\seealso{
+Other benchmark: \code{\link{FilterResult}},
+  \code{\link{getFilterResult}}; \code{\link{benchmark}};
+  \code{\link{getAggrPerformances}};
+  \code{\link{getFeatSelResult}};
+  \code{\link{getPerformances}};
+  \code{\link{getPredictions}}; \code{\link{getTuneResult}}
 }
 

@@ -215,6 +215,8 @@ subsetTask = function(task, subset, features) {
   if (!missing(subset)) {
     if (task$task.desc$has.blocking)
       task$blocking = task$blocking[subset]
+    if (task$task.desc$has.weights)
+      task$weights = task$weights[subset]
   }
   return(task)
 }
@@ -222,15 +224,18 @@ subsetTask = function(task, subset, features) {
 
 # we create a new env, so the reference is not changed
 # FIXME: really check what goes on here! where is this called / used?
-changeData = function(task, data, costs) {
-  if(missing(costs))
-    costs = getTaskCosts(task)
-  if(missing(data))
+changeData = function(task, data, costs, weights) {
+  if (missing(data))
     data = getTaskData(task)
+  if (missing(costs))
+    costs = getTaskCosts(task)
+  if (missing(weights))
+    weights = task$env$weights
   force(data)
   task$env = new.env(parent = emptyenv())
   task$env$data = data
   task$env$costs = costs
+  task$env$weights = weights
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
   if (td$type == "classif")

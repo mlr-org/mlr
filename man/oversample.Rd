@@ -4,17 +4,13 @@
 \alias{undersample}
 \title{Over- or undersample binary classification task to handle class imbalancy.}
 \usage{
-oversample(obj, target, rate)
+oversample(task, rate)
 
-undersample(obj, target, rate)
+undersample(task, rate)
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{ClassifTask}}]\cr
-Input data.}
-
-\item{target}{[\code{character(1)}]\cr
-Name of the column specifying the response.
-Only used when \code{obj} is a data.frame, otherwise ignored.}
+\item{task}{[\code{\link{SupervisedTask}}]\cr
+The task.}
 
 \item{rate}{[\code{numeric(1)}]\cr
 Factor to upsample the smaller or downsample the bigger class.
@@ -25,7 +21,7 @@ For oversampling: Must be between 1 and \code{Inf},
 where 1 means no oversampling and 2 would mean doubling the class size.}
 }
 \value{
-[\code{data.frame} | \code{\link{ClassifTask}}]. Same type as \code{obj}.
+[\code{\link{SupervisedTask}}].
 }
 \description{
 Oversampling: From the smaller class, observations are randomly drawn with repetitions.

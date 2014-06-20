@@ -7,48 +7,47 @@
 \title{Find matching learning algorithms.}
 \usage{
 listLearners(obj = NA_character_, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE)
+  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
 
 \method{listLearners}{default}(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE)
+  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
 
 \method{listLearners}{character}(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE)
+  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
 
 \method{listLearners}{SupervisedTask}(obj, properties = character(0L),
-  warn.missing.packages = TRUE)
+  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
 }
 \arguments{
-\item{type}{[\code{character(1)}]\cr
-Type of the learning algorithm, one of \dQuote{classif}, \dQuote{regr}
-or \dQuote{surv}.
+\item{obj}{[\code{character(1)} | \code{\link{SupervisedTask}}]\cr
+Either a task or the type of the task, in the latter case one of:
+\dQuote{classif}, \dQuote{regr},  \dQuote{surv}, dQuote{costsens}.
 Default is \code{NA}, matching all types.}
 
-\item{properties}{[\code{character)}]\cr
+\item{properties}{[\code{character}]\cr
 Set of required properties to filter for. Default is \code{character(0)}.}
 
 \item{quiet}{[\code{logical(1)}]\cr
 Construct learners quietly to check their properties, shows no package startup messages.
 Turn off if you suspect errors.
-Default is code{TRUE}.}
+Default is \code{TRUE}.}
 
 \item{warn.missing.packages}{[\code{logical(1)}]\cr
 If some learner cannot be constructed because its package is missing,
 should a warning be shown?
-Default is code{TRUE}.}
+Default is \code{TRUE}.}
 
-\item{task}{[\code{\link{SupervisedTask}}]\cr
-The task.}
+\item{create}{[\code{logical(1)}]\cr
+Instantiate objects (or return strings)?
+Default is \code{FALSE}.}
 }
 \value{
-[\code{character}]. Class names of matching learners.
+[\code{character} | \code{list} of \code{\link{Learner}}]. Class names of matching
+  learners or instantiated objects.
 }
 \description{
 Returns the class names of learning algorithms which have specific characteristics, e.g.
 whether they supports missing values, case weights, etc.
-
-\code{listLearnersForTask} returns all learners that are in principle applicable
-for a given task.
 
 Note that the packages of all learners are loaded during the search.
 }

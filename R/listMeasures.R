@@ -4,31 +4,54 @@
 #' Returns the matching measures which have specific characteristics, e.g.
 #' whether they supports classification or regression.
 #'
-#' \code{listMeasuresForTask} returns all learners that are in principle applicable
-#' for a given task.
-#'
-#' @param properties [\code{character)}]\cr
-#'   Set of required properties to filter for. Default is \code{character(0)}.
-#'   See \link{Measure} for some standardized properties.
-#' @return [\code{character}]. Class names of matching learners.
-##' @export
-listMeasures = function(properties = character(0L)) {
+#' @template arg_task_or_type
+#' @param properties [\code{character}]\cr
+#'   Set of required properties to filter for.
+#'   See \code{\link{Measure}} for some standardized properties.
+#'   Default is \code{character(0)}.
+#' @param create [\code{logical(1)}]\cr
+#'   Instantiate objects (or return strings)?
+#'   Default is \code{FALSE}.
+#' @return [\code{character} | \code{list} of \code{\link{Measure}}]. Class names of matching
+#'   measures or instantiated objects.
+#' @export
+listMeasures = function(obj, properties = character(0L), create = FALSE) {
+  if (!missing(obj))
+    checkArg(obj, c("character", "SupervisedTask"))
   checkArg(properties, "character", na.ok = FALSE)
-  ee = as.environment("package:mlr")
-  res = vlapply(ee, function(x) inherits(x, "Measure") && all(properties %in% x$properties))
-  names(res)[res]
+  checkArg(create, "logical", len = 1L, na.ok = FALSE)
+  UseMethod("listMeasures")
 }
 
-#' @template arg_task
 #' @rdname listMeasures
-##' @export
-listMeasuresForTask = function(task, properties = character(0L)) {
-  checkArg(task, "SupervisedTask")
-  checkArg(properties, "character", na.ok = FALSE)
-  td = task$task.desc
+#' @export
+listMeasures.default = function(obj, properties = character(0L), create = FALSE) {
+  listMeasures2(properties, create)
+}
 
-  props = td$type
+#' @rdname listMeasures
+#' @export
+listMeasures.character = function(obj, properties = character(0L), create = FALSE) {
+  checkArg(obj, choices = c("classif", "regr", "surv", "costsens", NA_character_))
+  if (is.na(obj))
+    obj = character(0L)
+  listMeasures2(union(obj, properties), create)
+}
+
+#' @rdname listMeasures
+#' @export
+listMeasures.SupervisedTask = function(obj, properties = character(0L), create = FALSE) {
+  td = obj$task.desc
   if (td$type == "classif" && length(td$class.levels) > 2L)
-    props = c(props, "classif.multi")
-  listMeasures(properties = props)
+    properties = union(properties, "classif.multi")
+  listMeasures.character(td$type, properties = properties, create)
+}
+
+listMeasures2 = function(properties = character(0L), create = FALSE) {
+  ee = as.environment("package:mlr")
+  res = Filter(function(x) inherits(x, "Measure") && all(properties %in% x$properties), as.list(ee))
+  if (create)
+    res
+  else
+    names(res)
 }

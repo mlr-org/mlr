@@ -33,6 +33,7 @@ Other featsel: \code{\link{FeatSelControl}},
   \code{\link{makeFeatSelControlGA}},
   \code{\link{makeFeatSelControlRandom}},
   \code{\link{makeFeatSelControlSequential}};
+  \code{\link{getFeatSelResult}};
   \code{\link{makeFeatSelWrapper}};
   \code{\link{selectFeatures}}
 }

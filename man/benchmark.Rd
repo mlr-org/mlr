@@ -3,7 +3,8 @@
 \alias{benchmark}
 \title{Benchmark experiment for multiple learners and tasks.}
 \usage{
-benchmark(learners, tasks, resamplings, measures)
+benchmark(learners, tasks, resamplings, measures,
+  show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learners}{[(list of) \code{\link{Learner}}]\cr
@@ -20,6 +21,10 @@ If missing, a 10-fold cross validation is used.}
 \item{measures}{[(list of) \code{\link{Measure}}]\cr
 Performance measures for all tasks.
 If missing, the default measure of the first task is used.}
+
+\item{show.info}{[\code{logical(1)}]\cr
+Print verbose output on console?
+Default is set via \code{\link{configureMlr}}.}
 }
 \value{
 [\code{BenchmarkResult}].
@@ -31,7 +36,12 @@ training / test sets are used for the different learners.
 Furhtermore, your learners can be automatically tuned using \code{\link{makeTuneWrapper}}.
 }
 \seealso{
-Other benchmark: \code{\link{getAggrMeasures}};
-  \code{\link{getMeasures}}; \code{\link{getPredictions}}
+Other benchmark: \code{\link{BenchmarkResult}};
+  \code{\link{FilterResult}},
+  \code{\link{getFilterResult}};
+  \code{\link{getAggrPerformances}};
+  \code{\link{getFeatSelResult}};
+  \code{\link{getPerformances}};
+  \code{\link{getPredictions}}; \code{\link{getTuneResult}}
 }
 

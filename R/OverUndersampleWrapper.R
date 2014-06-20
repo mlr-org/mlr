@@ -1,5 +1,4 @@
 #' @title Fuse learner with simple ove/underrsampling for imbalancy correction in binary classification.
-#' Fuse learner with simple over/undersampling for binary classification.
 #'
 #' @description
 #' Creates a learner object, which can be

@@ -29,7 +29,7 @@
 #'   oneR                       \tab C,R   \tab N,F   \tab
 #'     \code{\link[RWeka]{OneR}} assocation rule \cr
 #'   mRMR.classic               \tab R     \tab N     \tab
-#'     Classic mRMR algorithm from \code{\link[mRMRe]{mRMRe}} package \cr
+#'     MRMR algorithm, see \code{\link[mRMRe]{mRMR.classic}} from \code{mRMRe} package \cr
 #' }
 #'
 #' @template arg_task
@@ -43,7 +43,7 @@
 #' @export
 getFilterValues = function(task, method = "random.forest.importance", ...) {
   checkArg(task, c("ClassifTask", "RegrTask"))
-  checkArg(method, choices = getFilterMethods())
+  checkArg(method, choices = listFilterMethods())
 
   if (method %in% c("linear.correlation", "rank.correlation", "mRMR.classic")) {
     if (!inherits(task, "RegrTask") || (task$task.desc$n.feat["factors"] > 0L))

@@ -15,6 +15,8 @@ mlr_1.2:
 - added fixup.data option to task contructors, so basic data cleanup can be performed
 - show.info is now an option in configureMlr
 - learners now support taggable properties that can be queried and changed. also see below.
+- listLearners(forTask) was unified
+
 
 - new learners:
 -- classif.knn
@@ -42,10 +44,13 @@ mlr_1.2:
 -- getTaskNFeats
 -- hasProperties, getProperties, setProperties, addProperties, removeProperties
 -- showHyperPars
+-- listMeasures
 -- plotLearnerPrediction
 -- plotThreshVsPerf
 -- holdout, subsample, crossval, repcv, bootstrapOOB, bootstrapB632, bootstrapB632plus
--- getFilterMethods, getFilterValues, filterFeatures, makeFilterWrapper, plotFilterValues
+-- listFilterMethods, getFilterValues, filterFeatures, makeFilterWrapper, plotFilterValues
+-- benchmark
+-- getPerformances, getAggrPerformances, getPredictions, getFilterResult, getTuneResult, getFeatSelResult
 -- oversample, undersample, makeOversampleWrapper, makeUndersampleWrapper
 -- downsample, makeDownsampleWrapper
 -- makeModelMultiplexer, makeModelMultiplexerParamSet

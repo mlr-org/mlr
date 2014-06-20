@@ -54,8 +54,8 @@ print(r$extract)
 Other filter: \code{\link{FilterResult}},
   \code{\link{getFilterResult}};
   \code{\link{FilterValues}}; \code{\link{filterFeatures}};
-  \code{\link{getFilterMethods}};
   \code{\link{getFilterValues}};
-  \code{\link{getFilteredFeatures}}
+  \code{\link{getFilteredFeatures}};
+  \code{\link{listFilterMethods}}
 }
 

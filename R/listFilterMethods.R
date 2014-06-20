@@ -3,7 +3,7 @@
 #' @return [\code{character(1)}].
 #' @export
 #' @family filter
-getFilterMethods = function() {
+listFilterMethods = function() {
   c(
     "linear.correlation",
     "rank.correlation",
