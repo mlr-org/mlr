@@ -60,6 +60,7 @@ smote = function(task, rate, nn = 5) {
   nearneigh = apply(minclass.dist, 1, order)
   nearneigh = nearneigh[, 1:nn, drop = FALSE]
 
+  # FIXME: this is slow and must either be vectorized or done in C
   for (i in 1:n.new) {
     # select a random minority obs
     j.sel = sample(1:n.min, 1L)
