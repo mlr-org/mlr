@@ -3,7 +3,8 @@
 \alias{benchmark}
 \title{Benchmark experiment for multiple learners and tasks.}
 \usage{
-benchmark(learners, tasks, resamplings, measures)
+benchmark(learners, tasks, resamplings, measures,
+  show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learners}{[(list of) \code{\link{Learner}}]\cr
@@ -20,6 +21,10 @@ If missing, a 10-fold cross validation is used.}
 \item{measures}{[(list of) \code{\link{Measure}}]\cr
 Performance measures for all tasks.
 If missing, the default measure of the first task is used.}
+
+\item{show.info}{[\code{logical(1)}]\cr
+Print verbose output on console?
+Default is set via \code{\link{configureMlr}}.}
 }
 \value{
 [\code{BenchmarkResult}].

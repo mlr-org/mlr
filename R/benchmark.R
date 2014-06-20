@@ -16,10 +16,11 @@
 #' @param measures [(list of) \code{\link{Measure}}]\cr
 #'   Performance measures for all tasks.
 #'   If missing, the default measure of the first task is used.
+#' @template arg_showinfo
 #' @return [\code{BenchmarkResult}].
 #' @family benchmark
 #' @export
-benchmark = function(learners, tasks, resamplings, measures) {
+benchmark = function(learners, tasks, resamplings, measures, show.info = getMlrOption("show.info")) {
   learners = ensureVector(learners, 1L, "Learner")
   checkArg(learners, "list", min.len = 1L)
   checkListElementClass(learners, "Learner")
@@ -73,7 +74,8 @@ benchmark = function(learners, tasks, resamplings, measures) {
   results = parallelMap(
     benchmarkParallel,
     split(as.matrix(inds), f = seq_row(inds)),
-    more.args = list(learners = learners, tasks = tasks, resamplings = resamplings, measures = measures),
+    more.args = list(learners = learners, tasks = tasks, resamplings = resamplings,
+      measures = measures, show.info = show.info),
     level = plevel
   )
   results.by.task = split(results, unlist(inds$task))
@@ -97,20 +99,23 @@ benchmark = function(learners, tasks, resamplings, measures) {
 #' @family benchmark
 NULL
 
-benchmarkParallel = function(index, learners, tasks, resamplings, measures) {
+benchmarkParallel = function(index, learners, tasks, resamplings, measures, show.info) {
   ind.task = index[[1L]]
   ind.learner = index[[2L]]
-  messagef("Task: %s, Learner: %s", ind.task, ind.learner)
-  if("FeatSelWrapper" %in% class(learners[[ind.learner]])) {
+  if (show.info)
+    messagef("Task: %s, Learner: %s", ind.task, ind.learner)
+  cl = class(learners[[ind.learner]])
+  if("FeatSelWrapper" %in% cl) {
     extract.this = getFeatSelResult
-  } else if("TuneWrapper" %in% class(learners[[ind.learner]])) {
+  } else if("TuneWrapper" %in% cl) {
     extract.this = getTuneResult
-  } else if("FilterWrapper" %in% class(learners[[ind.learner]])) {
+  } else if("FilterWrapper" %in% cl) {
     extract.this = getFilterResult
   } else {
     extract.this = function(model) { NULL }
   }
-  resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]], measures = measures, models = TRUE, extract = extract.this)
+  resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]],
+    measures = measures, models = TRUE, extract = extract.this, show.info = show.info)
 }
 
 
@@ -137,5 +142,3 @@ getExtract = function(object, what, within = "extract") {
     })
   })
 }
-
-
