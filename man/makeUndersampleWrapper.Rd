@@ -2,7 +2,7 @@
 \name{makeUndersampleWrapper}
 \alias{makeOversampleWrapper}
 \alias{makeUndersampleWrapper}
-\title{Fuse learner with simple over/undersampling for binary classification.}
+\title{Fuse learner with simple ove/underrsampling for imbalancy correction in binary classification.}
 \usage{
 makeUndersampleWrapper(learner, usw.rate)
 
