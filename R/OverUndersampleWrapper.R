@@ -1,5 +1,6 @@
-#' Fuse learner with simple over/undersampling for binary classification.
+#' @title Fuse learner with simple over/undersampling for binary classification.
 #'
+#' @description
 #' Creates a learner object, which can be
 #' used like any other learner object.
 #' Internally uses \code{\link{oversample}} or \code{\link{undersample}} before every model fit.
@@ -7,8 +8,7 @@
 #' Note that observation weights do not influence the sampling and are simply passed
 #' down to the next learner.
 #'
-#' @param learner [\code{\link{Learner}}]\cr
-#'   The learner.
+#' @template arg_learner
 #' @param usw.rate [\code{numeric(1)}]\cr
 #'   Factor to downsample the bigger class. Must be between 0 and 1,
 #'   where 1 means no downsampling, 0.5 implies reduction to 50 percent
@@ -16,7 +16,7 @@
 #' @param osw.rate [\code{numeric(1)}]\cr
 #'   Factor to oversample the smaller class. Must be between 1 and \code{Inf},
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
-#' @return [\code{\link{Learner}}].
+#' @template ret_learner
 #' @family OverUndersample
 #' @export
 makeUndersampleWrapper = function(learner, usw.rate) {

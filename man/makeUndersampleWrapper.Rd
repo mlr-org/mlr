@@ -9,8 +9,9 @@ makeUndersampleWrapper(learner, usw.rate)
 makeOversampleWrapper(learner, osw.rate)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}}]\cr
-The learner.}
+\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+The learner.
+If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
 \item{usw.rate}{[\code{numeric(1)}]\cr
 Factor to downsample the bigger class. Must be between 0 and 1,
@@ -28,8 +29,7 @@ where 1 means no oversampling and 2 would mean doubling the class size.}
 Creates a learner object, which can be
 used like any other learner object.
 Internally uses \code{\link{oversample}} or \code{\link{undersample}} before every model fit.
-}
-\details{
+
 Note that observation weights do not influence the sampling and are simply passed
 down to the next learner.
 }
