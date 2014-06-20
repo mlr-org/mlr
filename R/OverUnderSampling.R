@@ -20,8 +20,8 @@
 oversample = function(task, rate) {
   checkTask2(task, "ClassifTask", binary = TRUE)
   checkArg(rate, "numeric", len = 1L, lower = 1)
-  d = sampleBinaryClass(task$env$data, task$task.desc$target, rate, cl = 1L, replace = TRUE)
-  changeData(task, d)
+  j = sampleBinaryClass(task$env$data, task$task.desc$target, rate, cl = 1L, replace = TRUE)
+  subsetTask(task, j)
 }
 
   #' @rdname oversample
@@ -29,8 +29,8 @@ oversample = function(task, rate) {
 undersample = function(task, rate) {
   checkArg(task, "ClassifTask")
   checkArg(rate, "numeric", len = 1L, lower = 0, upper = 1)
-  d = sampleBinaryClass(task$env$data, task$task.desc$target, rate, cl = 2L, replace = FALSE)
-  changeData(task, d)
+  j = sampleBinaryClass(task$env$data, task$task.desc$target, rate, cl = 2L, replace = FALSE)
+  subsetTask(task, j)
 }
 
 sampleBinaryClass = function(data, target, rate, cl, replace) {
@@ -47,5 +47,5 @@ sampleBinaryClass = function(data, target, rate, cl, replace) {
   i2 = which(y == cls[[2L]])
   newsize = round(length(i1) * rate)
   newinds = sample(i1, newsize, replace = replace)
-  data[c(newinds, i2), ]
+  return(c(newinds, i2))
 }
