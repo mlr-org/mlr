@@ -52,6 +52,7 @@ mlr_1.2:
 -- benchmark
 -- getPerformances, getAggrPerformances, getPredictions, getFilterResult, getTuneResult, getFeatSelResult
 -- oversample, undersample, makeOversampleWrapper, makeUndersampleWrapper
+-- smote, makeSmoteWrapper
 -- downsample, makeDownsampleWrapper
 -- makeModelMultiplexer, makeModelMultiplexerParamSet
 -- makeCostSensTaks, makeCostSensRegrWrapper, makeCostsSensWeightedPairsLearner

@@ -3,7 +3,7 @@
 \alias{makeSmoteWrapper}
 \title{Fuse learner with SMOTE oversampling for imbalancy correction in binary classification.}
 \usage{
-makeSmoteWrapper(learner, sw.rate)
+makeSmoteWrapper(learner, sw.rate, sw.nn = 5L)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}}]\cr
@@ -12,6 +12,10 @@ The learner.}
 \item{sw.rate}{[\code{numeric(1)}]\cr
 Factor to oversample the smaller class. Must be between 1 and \code{Inf},
 where 1 means no oversampling and 2 would mean doubling the class size.}
+
+\item{sw.nn}{[\code{integer(1)}]\cr
+Number of nearest neighbors to consider.
+Default is 5.}
 }
 \value{
 [\code{\link{Learner}}].
