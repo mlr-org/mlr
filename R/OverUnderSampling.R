@@ -15,7 +15,7 @@
 #'   For oversampling: Must be between 1 and \code{Inf},
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
 #' @template ret_task
-#' @family OverUndersample
+#' @family imbalancy
 #' @export
 oversample = function(task, rate) {
   checkTask2(task, "ClassifTask", binary = TRUE)
@@ -27,7 +27,7 @@ oversample = function(task, rate) {
   #' @rdname oversample
 #' @export
 undersample = function(task, rate) {
-  checkArg(task, "ClassifTask")
+  checkTask2(task, "ClassifTask", binary = TRUE)
   checkArg(rate, "numeric", len = 1L, lower = 0, upper = 1)
   j = sampleBinaryClass(getTaskTargets(task), rate, cl = "max", replace = FALSE)
   subsetTask(task, j)

@@ -26,10 +26,17 @@ test_that("over and undersample wrapper",  {
   expect_true(!is.na(r$aggr))
 })
 
+test_that("over and undersample arg check works", {
+  task = makeClassifTask(data = multiclass.df, target = multiclass.target)
+  expect_error(undersample(task, rate = 0.5), "binary")
+  expect_error(oversample(task, rate = 0.5), "binary")
+})
+
 test_that("over and undersample works with weights", {
-  task = makeClassifTask(data = multiclass.df, target = multiclass.target, weights = 1:150)
+  task = makeClassifTask(data = binaryclass.df, target = binaryclass.target, weights = 1:nrow(binaryclass.df))
   task2 = undersample(task, rate = 0.5)
-  expect_equal(length(task2$weights), 75L)
+  expect_true(length(task2$weights) < length(task$weights))
+  expect_true(all(task2$weights %in% task$weights))
 })
 
 

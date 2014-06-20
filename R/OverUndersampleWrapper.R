@@ -17,7 +17,7 @@
 #'   Factor to oversample the smaller class. Must be between 1 and \code{Inf},
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
 #' @template ret_learner
-#' @family OverUndersample
+#' @family imbalancy
 #' @export
 makeUndersampleWrapper = function(learner, usw.rate) {
   # FIXME: check binary classif
