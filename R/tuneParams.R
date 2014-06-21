@@ -42,13 +42,15 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     resampling = makeResampleInstance(resampling, task = task)
   checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
   checkTunerParset(learner, par.set, control)
-  cl = as.character(class(control))[1]
+  cl = getClass1(control)
   sel.func = switch(cl,
+    TuneControlRandom = tuneRandom,
     TuneControlGrid = tuneGrid,
     TuneControlCMAES = tuneCMAES,
+    TuneControlGenSA = tuneGenSA,
     TuneControlMBO = tuneMBO,
     TuneControlIrace = tuneIrace,
-    TuneControlRandom = tuneRandom
+    stopf("Tuning algorithm for '%s' does not exist!", cl)
   )
   opt.path = makeOptPathDFFromMeasures(par.set, measures)
   if (show.info) {

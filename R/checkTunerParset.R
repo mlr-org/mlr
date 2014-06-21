@@ -6,9 +6,6 @@
 
 checkTunerParset = function(learner, par.set, control) {
   cl = getClass1(control)
-  if (cl %nin% c("TuneControlRandom", "TuneControlGrid", "TuneControlCMAES",
-      "TuneControlIrace", "TuneControlMBO"))
-    stopf("Tuning algorithm for '%s' does not exist!", cl)
 
   if (getParamNr(par.set) == 0L)
     stop("No parameters were passed!")

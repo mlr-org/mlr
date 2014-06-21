@@ -1,7 +1,6 @@
-# FIXME:  set initial varaince to (upper-lower)/2 if both bounds are given
-tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.path, show.info) {
+tuneGenSA = function(learner, task, resampling, measures, par.set, control, opt.path, show.info) {
 
-  requirePackages("cmaes", "tune_cmaes")
+  requirePackages("GenSA", why = "tuneGenSA")
 
   low = getLower(par.set)
   upp = getUpper(par.set)
@@ -9,16 +8,13 @@ tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.
   if (is.null(start))
     start = sampleValue(par.set, start, trafo = FALSE)
   start = convertStartToNumeric(start, par.set)
-  ctrl.cmaes = control$extra.args
-  ctrl.cmaes$vectorized = TRUE
-  cx = function(x) convertXMatrixCols(x, par.set)
-
-  or = cma_es(par = start, fn = tunerFitnFunVectorized, lower = low, upper = upp, control = ctrl.cmaes,
+  ctrl.gensa = control$extra.args
+  or = GenSA(par = start, fn = tunerFitnFun, lower = low, upper = upp, control = ctrl.gensa,
     learner = learner, task = task, resampling = resampling, measures = measures,
     par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
-    trafo = TRUE, convertx = cx, remove.nas = FALSE)
-
+    trafo = TRUE, convertx = identity, remove.nas = FALSE)
   i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), ties = "random")
   e = getOptPathEl(opt.path, i)
   makeTuneResult(learner, control, e$x, e$y, opt.path)
 }
+

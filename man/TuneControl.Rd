@@ -7,20 +7,38 @@
 \alias{TuneControlOptim}
 \alias{TuneControlRandom}
 \alias{makeTuneControlCMAES}
+\alias{makeTuneControlGenSA}
 \alias{makeTuneControlGrid}
 \alias{makeTuneControlIrace}
 \alias{makeTuneControlRandom}
 \title{Create control structures for tuning.}
 \usage{
-makeTuneControlCMAES(same.resampling.instance = TRUE, start, ...)
+makeTuneControlCMAES(same.resampling.instance = TRUE, start = NULL, ...)
 
-makeTuneControlGrid(same.resampling.instance = TRUE)
+makeTuneControlGenSA(same.resampling.instance = TRUE, start = NULL, ...)
+
+makeTuneControlGrid(same.resampling.instance = TRUE, resolution = 10L)
 
 makeTuneControlIrace(n.instances = 100L, show.irace.output = FALSE, ...)
 
 makeTuneControlRandom(same.resampling.instance = TRUE, maxit = 100L)
 }
 \arguments{
+\item{resolution}{[\code{integer}]\cr
+Resolution of the grid for each numeric/integer parameter in \code{par.set}.
+For vector parameters, it is the resolution per dimension.
+Either pass one resolution for all parameters, or a named vector.
+See \code{\link[ParamHelpers]{generateGridDesign}}.
+Default is 10.}
+
+\item{n.instances}{[\code{integer(1)}]\cr
+Number of random resampling instances for irace, see details.
+Default is 100.}
+
+\item{show.irace.output}{[\code{logical(1)}]\cr
+Show console output of irace while tuning?
+Default is \code{FALSE}.}
+
 \item{same.resampling.instance}{[\code{logical(1)}]\cr
 Should the same resampling instance be used for all evaluations to reduce variance?
 Default is \code{TRUE}.}
@@ -28,22 +46,14 @@ Default is \code{TRUE}.}
 \item{start}{[\code{numeric}]\cr
 Named list of initial parameter values.}
 
-\item{n.instances}{[\code{integer(1)}]\cr
-Number of random resampling instances for irace, see details.
-Default is 100.}
-
-\item{maxit}{[\code{integer(1)}]\cr
-Number of iterations for random search.
-Default is 100.}
-
-\item{show.irace.output}{[\code{logical(1)}]\cr
-Show console output of irace while tuning?
-Default is \code{FALSE}.}
-
 \item{...}{[any]\cr
 Further control parameters passed to the \code{control} argument of \code{\link[stats]{optim}},
 the \code{control} argument of \code{\link[cmaes]{cma_es}}, \code{tunerConfig}
 argument of \code{\link[irace]{irace}}.}
+
+\item{maxit}{[\code{integer(1)}]\cr
+Number of iterations for random search.
+Default is 100.}
 }
 \value{
 [\code{\link{TuneControl}}]. The specific subclass is one of

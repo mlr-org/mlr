@@ -42,6 +42,7 @@ Suggests:
     FNN,
     FSelector,
     gbm,
+    GenSA,
     ggplot2,
     glmnet,
     Hmisc,
