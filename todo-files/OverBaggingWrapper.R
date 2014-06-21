@@ -33,13 +33,14 @@
 #'   Default is \dQuote{response}.
 #' @return [\code{\link{Learner}}].
 #' @export
-makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 2, 
-  predict.type = "response") {
+makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 2,
+  obw.maxcl = "boot", predict.type = "response") {
   
   learner = checkLearner(learner, "classif")
   obw.iters = convertInteger(obw.iters)
   checkArg(obw.iters, "integer", len = 1L, na.ok = FALSE, lower = 1L)
   checkArg(obw.rate, "numeric", len = 1L, na.ok = FALSE, lower = 1)
+  checkArg(obw.maxcl, "character", choices=c("boot","all"))  
   
   if (learner$predict.type != "response")
     stop("Predict type of the basic learner must be response.")
@@ -47,9 +48,10 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 2,
   packs = learner$packages
   ps = makeParamSet(
     makeIntegerLearnerParam(id = "obw.iters", lower = 1L, default = 10L),
-    makeNumericLearnerParam(id = "obw.rate", lower = 1)
+    makeNumericLearnerParam(id = "obw.rate", lower = 1),
+    makeDiscreteLearnerParam(id = "obw.maxcl", c("boot","all"))    
   )
-  pv = list(obw.iters = obw.iters, obw.rate = obw.rate)
+  pv = list(obw.iters = obw.iters, obw.rate = obw.rate, obw.maxcl = obw.maxcl)
   x = makeBaseWrapper(id, learner, packs, par.set = ps, par.vals = pv, cl = "OverBaggingWrapper")
   x = addProperties(x, "prob")
    
@@ -60,27 +62,26 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 2,
 
 #' @export
 trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, obw.iters,
-   obw.rate, bag, ...) {
+   obw.rate, obw.maxcl, bag, ...) {
 
   .task = subsetTask(.task, subset = .subset)
-  
-  # ad option 1
-  y = getTaskTargets(.task)
-  z = getMinMaxClass(y)
-  inds1 = z$min.inds # min class
-  inds2 = z$max.inds # maj class
-  newsize = round(length(inds1) * obw.rate)  
+  if(obw.maxcl == "boot") {
+    y = getTaskTargets(.task)
+    z = getMinMaxClass(y)
+    inds1 = z$min.inds # min class
+    inds2 = z$max.inds # maj class
+    newsize = round(length(inds1) * obw.rate)
+  }
     
   models = lapply(seq_len(obw.iters), function(i) { 
-    # option 1
-    # returns indexes of oversampled minority class examples and bootstrapped majority class examples
-    bag = c(sample(inds1, newsize, replace = TRUE),
-            sample(inds2, length(inds2), replace = TRUE))
-    
-    # option 2
-    # returns indexes of oversampled minority class examples and ALL majority class examples
-    # bag = sampleBinaryClass(getTaskTargets(.task), obw.rate, cl = "min", replace = TRUE)
-    
+    if(obw.maxcl == "boot") {
+      # returns indexes of oversampled minority class examples and bootstrapped majority class examples
+      bag = c(sample(inds1, newsize, replace = TRUE),
+              sample(inds2, length(inds2), replace = TRUE))
+    } else {
+      # returns indexes of oversampled minority class examples and ALL majority class examples
+      bag = sampleBinaryClass(getTaskTargets(.task), obw.rate, cl = "min", replace = TRUE)
+    }
     train(.learner$next.learner, .task, subset = bag)
   })
   makeChainModel(next.model = models, cl = "OverBaggingModel")
