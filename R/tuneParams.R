@@ -45,7 +45,6 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
   cl = as.character(class(control))[1]
   sel.func = switch(cl,
     TuneControlGrid = tuneGrid,
-    TuneControlOptim = tuneOptim,
     TuneControlCMAES = tuneCMAES,
     TuneControlMBO = tuneMBO,
     TuneControlIrace = tuneIrace,

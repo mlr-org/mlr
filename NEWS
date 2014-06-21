@@ -16,6 +16,8 @@ mlr_1.2:
 - show.info is now an option in configureMlr
 - learners now support taggable properties that can be queried and changed. also see below.
 - listLearners(forTask) was unified
+- removed tuning via R' optim method (makeTuneControlOptim), as the optimizers in there really make
+  no sense for tuning
 
 
 - new learners:
