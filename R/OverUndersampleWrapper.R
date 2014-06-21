@@ -38,8 +38,8 @@ makeOversampleWrapper = function(learner, osw.rate) {
   learner = checkLearner(learner, "classif")
   checkArg(osw.rate, "numeric", len = 1L, na.ok = FALSE, lower = 1)
 
-  id = paste(learner$id, "overrsampled", sep = ".")
-  ps = makeParamSet(
+  id = paste(learner$id, "oversampled", sep = ".")
+  ps = makeParamSet
     makeNumericLearnerParam(id = "osw.rate")
   )
   pv = list(osw.rate = osw.rate)
