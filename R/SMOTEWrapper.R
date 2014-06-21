@@ -8,8 +8,7 @@
 #' Note that observation weights do not influence the sampling and are simply passed
 #' down to the next learner.
 #'
-#' @param learner [\code{\link{Learner}}]\cr
-#'   The learner.
+#' @template arg_learner
 #' @param sw.rate [\code{numeric(1)}]\cr
 #'   Factor to oversample the smaller class. Must be between 1 and \code{Inf},
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
@@ -18,7 +17,7 @@
 #'   Default is 5.
 #' @template ret_learner
 #' @export
-makeSmoteWrapper = function(learner, sw.rate, sw.nn = 5L) {
+makeSMOTEWrapper = function(learner, sw.rate, sw.nn = 5L) {
   learner = checkLearner(learner, "classif")
   checkArg(sw.rate, "numeric", len = 1L, na.ok = FALSE, lower = 1)
   sw.nn = convertInteger(sw.nn)
@@ -30,15 +29,15 @@ makeSmoteWrapper = function(learner, sw.rate, sw.nn = 5L) {
     makeIntegerLearnerParam(id = "sw.nn", lower = 1L)
   )
   pv = list(sw.rate = sw.rate)
-  makeBaseWrapper(id, learner, package = "mlr", par.set = ps, par.vals = pv, cl = "SmoteWrapper")
+  makeBaseWrapper(id, learner, package = "mlr", par.set = ps, par.vals = pv, cl = "SMOTEWrapper")
 }
 
 #' @export
-trainLearner.SmoteWrapper = function(.learner, .task, .subset, .weights = NULL, sw.rate, ...) {
+trainLearner.SMOTEWrapper = function(.learner, .task, .subset, .weights = NULL, sw.rate, ...) {
   .task = subsetTask(.task, .subset)
   .task = smote(.task, rate = sw.rate)
   m = train(.learner$next.learner, .task, weights = .weights)
-  makeChainModel(next.model = m, cl = "SmoteModel")
+  makeChainModel(next.model = m, cl = "SMOTEModel")
 }
 
 
