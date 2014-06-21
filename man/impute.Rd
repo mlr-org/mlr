@@ -85,4 +85,14 @@ imputed = impute(df, target = character(0), cols = list(x = 99, y = imputeMode()
 print(imputed$data)
 reimpute(data.frame(x = NA), imputed$desc)
 }
+\seealso{
+Other impute: \code{\link{imputations}},
+  \code{\link{imputeConstant}}, \code{\link{imputeHist}},
+  \code{\link{imputeMax}}, \code{\link{imputeMean}},
+  \code{\link{imputeMedian}}, \code{\link{imputeMin}},
+  \code{\link{imputeMode}}, \code{\link{imputeNormal}},
+  \code{\link{imputeUniform}};
+  \code{\link{makeImputeMethod}};
+  \code{\link{makeImputeWrapper}}; \code{\link{reimpute}}
+}
 

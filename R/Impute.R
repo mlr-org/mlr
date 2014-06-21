@@ -62,6 +62,7 @@
 #'   \item{data [\code{data.frame}]}{Imputed data.}
 #'   \item{desc [\code{ImputationDesc}]}{Description object.}
 #' @export
+#' @family impute
 #' @examples
 #' df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z = 1:3)
 #' imputed = impute(df, target = character(0), cols = list(x = 99, y = imputeMode()))
@@ -184,6 +185,7 @@ print.ImputationDesc = function(x, ...) {
 #' @param desc [\code{ImputationDesc}]\cr
 #'   Imputation description as returned by \code{\link{impute}}.
 #' @return Imputated \code{x}.
+#' @family impute
 #' @export
 reimpute = function(x, desc) {
   UseMethod("reimpute")
