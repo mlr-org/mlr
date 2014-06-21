@@ -78,7 +78,6 @@ Other tune: \code{\link{ModelMultiplexer}},
   \code{\link{makeTuneControlCMAES}},
   \code{\link{makeTuneControlGrid}},
   \code{\link{makeTuneControlIrace}},
-  \code{\link{makeTuneControlOptim}},
   \code{\link{makeTuneControlRandom}};
   \code{\link{getTuneResult}};
   \code{\link{makeModelMultiplexerParamSet}};

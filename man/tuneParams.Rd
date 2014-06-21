@@ -38,13 +38,12 @@ Default is set via \code{\link{configureMlr}}.}
 [\code{\link{TuneResult}}].
 }
 \description{
-Optimizes the hyperparameters of a learner for a classification or regression problem.
+Optimizes the hyperparameters of a learner.
 Allows for different optimization methods, such as grid search, evolutionary strategies, etc.
 You can select such an algorithm (and its settings)
 by passing a corresponding control object. For a complete list of implemented algorithms look at
 \code{\link{TuneControl}}.
-}
-\details{
+
 Note that if tranformations are associated with the parameters, the returned result will contain
 transformed values in the optimal result and the path.
 }
@@ -60,7 +59,6 @@ Other tune: \code{\link{ModelMultiplexer}},
   \code{\link{makeTuneControlCMAES}},
   \code{\link{makeTuneControlGrid}},
   \code{\link{makeTuneControlIrace}},
-  \code{\link{makeTuneControlOptim}},
   \code{\link{makeTuneControlRandom}};
   \code{\link{getTuneResult}};
   \code{\link{makeModelMultiplexerParamSet}};

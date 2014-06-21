@@ -9,7 +9,6 @@
 \alias{makeTuneControlCMAES}
 \alias{makeTuneControlGrid}
 \alias{makeTuneControlIrace}
-\alias{makeTuneControlOptim}
 \alias{makeTuneControlRandom}
 \title{Create control structures for tuning.}
 \usage{
@@ -18,8 +17,6 @@ makeTuneControlCMAES(same.resampling.instance = TRUE, start, ...)
 makeTuneControlGrid(same.resampling.instance = TRUE)
 
 makeTuneControlIrace(n.instances = 100L, show.irace.output = FALSE, ...)
-
-makeTuneControlOptim(same.resampling.instance = TRUE, start, ...)
 
 makeTuneControlRandom(same.resampling.instance = TRUE, maxit = 100L)
 }
