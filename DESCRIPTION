@@ -19,7 +19,7 @@ Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 3.0.0),
     ParamHelpers (>= 1.2),
-    BBmisc (>= 1.6),
+    BBmisc (>= 1.7),
     stats
 Imports:
     parallelMap (>= 1.1),

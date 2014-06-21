@@ -18,7 +18,9 @@ mlr_1.2:
 - listLearners(forTask) was unified
 - removed tuning via R' optim method (makeTuneControlOptim), as the optimizers in there really make
   no sense for tuning
-
+- Grid search was improved so one does not have to discretize parameters manually anymore
+  (although this is still possible). Instead one now passes a 'resolution' argument. Internally we 
+  now use ParamHelpers::generateGridDesign for this.
 
 - new learners:
 -- classif.knn
