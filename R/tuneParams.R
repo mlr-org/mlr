@@ -2,9 +2,10 @@
 # FIXME check trafo
 # FIXME: example missing
 
-#' Hyperparameter tuning.
+#' @title Hyperparameter tuning.
 #'
-#' Optimizes the hyperparameters of a learner for a classification or regression problem.
+#' @description
+#' Optimizes the hyperparameters of a learner.
 #' Allows for different optimization methods, such as grid search, evolutionary strategies, etc.
 #' You can select such an algorithm (and its settings)
 #' by passing a corresponding control object. For a complete list of implemented algorithms look at
