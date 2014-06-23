@@ -61,6 +61,8 @@ mlr_1.2:
 -- makeTuneControlGenSA
 -- makeModelMultiplexer, makeModelMultiplexerParamSet
 -- makeCostSensTaks, makeCostSensRegrWrapper, makeCostsSensWeightedPairsLearner
+-- normalizeFeatures
+-- createDummyFeatures
 
 - imputation stuff ????
 - surv stuff ????
