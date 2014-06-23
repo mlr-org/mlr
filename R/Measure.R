@@ -121,6 +121,7 @@ setAggregation = function(measure, aggr) {
 #' @export
 print.Measure = function(x, ...) {
   catf("Performance measure: %s", x$id)
+  catf("Properties: %s", collapse(x$properties))
   catf("Minimize: %s", x$minimize)
   catf("Aggregated by: %s", x$aggr$id)
 }
