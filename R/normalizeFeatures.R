@@ -3,7 +3,7 @@
 #' @description
 #' Normalize features by different methods. Internally \code{\link{normalize}} is used.
 #'
-#' @param obj [\code{data.frame} | \code{\link{SupervisedTask}} | \code{numeric}]\cr
+#' @param obj [\code{data.frame} | \code{\link{SupervisedTask}}]\cr
 #'   Input data.
 #' @param target [\code{character(1)}]\cr
 #'   Name of the column specifying the response.
@@ -19,7 +19,7 @@
 #'   Names of the columns to exclude.
 #' @param range [\code{numeric(2)}]\cr
 #'   Range the features should be scaled to. Default is \code{c(0,1)}.
-#' @return [\code{data.frame} | \code{\link{SupervisedTask}} | \code{numeric}]. Same type as \code{obj}.
+#' @return [\code{data.frame} | \code{\link{SupervisedTask}}]. Same type as \code{obj}.
 #' @seealso \code{\link{normalize}}
 #' @export
 
