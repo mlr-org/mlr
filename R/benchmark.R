@@ -33,7 +33,7 @@ benchmark = function(learners, tasks, resamplings, measures, show.info = getMlrO
   tasks = ensureVector(tasks, 1L, "SupervisedTask")
   checkArg(tasks, "list", min.len = 1L)
   checkListElementClass(tasks, "SupervisedTask")
-  task.ids = extractSubList(tasks, "task.desc")["id",]
+  task.ids = extractSubList(tasks, c("task.desc", "id"))
   if (anyDuplicated(task.ids))
     stop("Tasks need unique ids!")
   names(tasks) = task.ids

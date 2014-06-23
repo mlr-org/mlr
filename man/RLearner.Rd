@@ -36,7 +36,6 @@ Set of learner properties. Some standard property names include:
 \describe{
   \item{numerics}{Can numeric features be handled?}
   \item{factors}{Can factor features be handled?}
-  \item{numerics}{Can numeric features be handled?}
   \item{missings}{Can missing features be handled?}
   \item{oneclas,twoclass,multiclass}{Can one-class, two-class or multi-class classification problems be handled?}
   \item{prob}{Can probabilites be predicted?}

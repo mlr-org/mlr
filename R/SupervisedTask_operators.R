@@ -231,7 +231,6 @@ changeData = function(task, data, costs, weights) {
     costs = getTaskCosts(task)
   if (missing(weights))
     weights = task$env$weights
-  force(data)
   task$env = new.env(parent = emptyenv())
   task$env$data = data
   task$env$costs = costs
@@ -249,13 +248,6 @@ changeData = function(task, data, costs, weights) {
 # returns factor levels of all factors in a task a named list of char vecs
 # non chars do not occur in the output
 getTaskFactorLevels = function(task) {
-  levs = lapply(task$env$data, function(x) {
-    if (is.factor(x))
-      levels(x)
-    else
-      NULL
-  })
-  levs = Filter(Negate(is.null), levs)
-  return(levs)
+  cols = vlapply(task$env$data, is.factor)
+  lapply(task$env$data[cols], levels)
 }
-

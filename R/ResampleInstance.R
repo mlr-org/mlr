@@ -125,6 +125,6 @@ makeResampleInstanceInternal = function(desc, size, train.inds, test.inds, group
 
 #' @export
 print.ResampleInstance = function(x, ...) {
-  catf("Resample instance for %i cases for:", x$size)
+  catf("Resample instance for %i cases.", x$size)
   print(x$desc)
 }
