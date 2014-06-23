@@ -32,15 +32,6 @@
 #'   Default is \code{TRUE}.
 #' @param start [\code{numeric}]\cr
 #'   Named list of initial parameter values.
-#' @param n.instances [\code{integer(1)}]\cr
-#'   Number of random resampling instances for irace, see details.
-#'   Default is 100.
-#' @param maxit [\code{integer(1)}]\cr
-#'   Number of iterations for random search.
-#'   Default is 100.
-#' @param show.irace.output [\code{logical(1)}]\cr
-#'   Show console output of irace while tuning?
-#'   Default is \code{FALSE}.
 #' @param ... [any]\cr
 #'   Further control parameters passed to the \code{control} argument of \code{\link[stats]{optim}},
 #'   the \code{control} argument of \code{\link[cmaes]{cma_es}}, \code{tunerConfig}
@@ -54,12 +45,14 @@
 #' @aliases TuneControlGrid TuneControlRandom TuneControlOptim TuneControlCMAES TuneControlIrace
 NULL
 
-makeTuneControl = function(same.resampling.instance, start, ..., cl) {
-  checkArg(same.resampling.instance, "logical", len=1, na.ok=FALSE)
-  checkArg(start, "list")
-  if (!isProperlyNamed(start))
-    stop("'start' must be a properly named list!")
-  x = makeOptControl(same.resampling.instance=same.resampling.instance, ...)
+makeTuneControl = function(same.resampling.instance, start = NULL, ..., cl) {
+  checkArg(same.resampling.instance, "logical", len = 1, na.ok = FALSE)
+  if (!is.null(start)) {
+    checkArg(start, "list")
+    if (!isProperlyNamed(start))
+      stop("'start' must be a properly named list!")
+  }
+  x = makeOptControl(same.resampling.instance = same.resampling.instance, ...)
   x$start = start
   addClasses(x, c(cl, "TuneControl"))
 }

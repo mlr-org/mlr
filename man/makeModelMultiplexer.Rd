@@ -85,9 +85,9 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{TuneControlOptim}},
   \code{\link{TuneControlRandom}},
   \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlGenSA}},
   \code{\link{makeTuneControlGrid}},
   \code{\link{makeTuneControlIrace}},
-  \code{\link{makeTuneControlOptim}},
   \code{\link{makeTuneControlRandom}};
   \code{\link{getTuneResult}};
   \code{\link{makeModelMultiplexerParamSet}};

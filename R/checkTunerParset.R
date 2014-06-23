@@ -1,41 +1,39 @@
+# check this:
+# - tune algo exists
+# - parameters are not empty
+# - algo can handle these parameters
+# - algo can handle dependencies
+
 checkTunerParset = function(learner, par.set, control) {
-  if (!length(par.set$pars))
+  cl = getClass1(control)
+
+  if (getParamNr(par.set) == 0L)
     stop("No parameters were passed!")
+
   x = setdiff(names(par.set$pars), names(getParamSet(learner)$pars))
-  if (length(x))
-    stop("Can only tune parameters for which learner parameters exist: ", paste(x, collapse=","))
+  if (length(x) > 0L)
+    stopf("Can only tune parameters for which learner parameters exist: %s", collapse(x))
 
+  checkParsOk = function(algo, ok)
+    if (length(filterParams(par.set, type = ok)$pars) < length(par.set$pars))
+      stopf("%s can only be applied to: %s!", algo, collapse(ok))
 
-  checkParsOk = function(algo, ok) {
-    if(length(filterParams(par.set, type=ok)$pars) < length(par.set$pars))
-      stop(sprintf("%s can only be applied to: %s!", algo, paste(ok, collapse=",")))
-  }
   checkStart = function() {
     if (length(control$start) != length(par.set$pars))
       stop("Length of 'start' has to match number of parameters in 'par.set'!")
     x = setdiff(names(control$start), names(getParamSet(learner)$pars))
     if (length(x))
-      stop("'start' contains parameters for which no learner parameters exist: ", paste(x, collapse=","))
+      stopf("'start' contains parameters for which no learner parameters exist: %s", collapse(x))
   }
 
-  # FIXME: wtf?
-  if (is(control, "TuneControlGrid")) {
-    checkParsOk("Grid search",  c("discrete", "logical"))
-  } else if (is(control, "TuneControlOptim")) {
-    checkParsOk("Optim", c("numeric", "integer", "numericvector", "integervector"))
-    checkStart()
-  } else if (is(control, "TuneControlCMAES")) {
+  # check special conditions for some tuners
+  if (inherits(control, "TuneControlCMAES")) {
     checkParsOk("CMAES", c("numeric", "integer", "numericvector", "integervector"))
     checkStart()
-  } else if (is(control, "TuneControlMBO")) {
-  } else if (is(control, "TuneControlMies")) {
-  } else if (is(control, "TuneControlIrace")) {
-  } else if (is(control, "TuneControlRandom")) {
-  } else {
-    stop("Tuning algorithm for ", class(control)[1L], " does not exist!")
   }
-  if(any(sapply(par.set$pars, function(p) !is.null(p$requires)))) {
-    if (!(is(control, "TuneControlRandom") || is(control, "TuneControlIrace")))
-      stop("Tuning algorithm for ", class(control)[1L], " cannot handle dependent paramters!")
-  }
+
+  # check requires / dependent params
+  if (hasRequires(par.set) && cl %nin% c("TuneControlRandom", "TuneControlGrid",
+      "TuneControlIrace", "TuneControlMBO"))
+    stopf("Tuning algorithm for '%s' cannot handle dependent parameters!")
 }

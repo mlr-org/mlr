@@ -33,9 +33,9 @@ Other tune: \code{\link{ModelMultiplexer}},
   \code{\link{TuneControlOptim}},
   \code{\link{TuneControlRandom}},
   \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlGenSA}},
   \code{\link{makeTuneControlGrid}},
   \code{\link{makeTuneControlIrace}},
-  \code{\link{makeTuneControlOptim}},
   \code{\link{makeTuneControlRandom}};
   \code{\link{makeModelMultiplexerParamSet}};
   \code{\link{makeTuneWrapper}}; \code{\link{tuneParams}};

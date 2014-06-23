@@ -1,18 +1,16 @@
 # generates an R function that we can pass to a tuner to optrimize hyper pars
-
-mytrafo = function(par.set, x, trafo) {
-  x = if (trafo)
-    trafoValue(par.set, x)
-  else
-    x
-}
+# - possibly convert x with custom functon
+# - possibly trafo x
+# - eval states (maybe in parallel)
+# - add evals to opt path
+# - return y scalar (vector for vectorized version below), always minimized
 
 # one x
 tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
   opt.path, show.info, trafo, convertx, remove.nas) {
 
   x = convertx(x)
-  x = mytrafo(par.set, x, trafo)
+  x = mytrafo(trafo, par.set, x)
   #FIXME: what happens if we leave constraints? svm with nelder mead e.g.
   # transform parameters
   dob = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
@@ -38,4 +36,12 @@ tunerFitnFunVectorized = function(xs, learner, task, resampling, measures, par.s
   #returns list of resample$aggr vectors, take 1st
   ys = sapply(ys, function(a) a[[1]])
   ifelse(measures[[1]]$minimize, 1 , -1) * ys
+}
+
+# short helper to trafo x depending on boolean flag, only used in this file
+mytrafo = function(trafo, par.set, x) {
+  if (trafo)
+    trafoValue(par.set, x)
+  else
+    x
 }

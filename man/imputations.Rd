@@ -3,7 +3,6 @@
 \alias{imputations}
 \alias{imputeConstant}
 \alias{imputeHist}
-\alias{imputeLearner}
 \alias{imputeMax}
 \alias{imputeMean}
 \alias{imputeMedian}
@@ -30,23 +29,21 @@ The built-ins are:
 \usage{
 imputeConstant(const)
 
-imputeMedian()
+imputeMedian(all.na = NA)
 
-imputeMean()
+imputeMean(all.na = NA)
 
-imputeMode()
+imputeMode(all.na = NA)
 
-imputeMin(multiplier = 1)
+imputeMin(multiplier = 1, all.na = NA)
 
-imputeMax(multiplier = 1)
+imputeMax(multiplier = 1, all.na = NA)
 
-imputeUniform(min, max)
+imputeUniform(min = NA_real_, max = NA_real_)
 
-imputeNormal(mu, sd)
+imputeNormal(mu = NA_real_, sd = NA_real_)
 
 imputeHist(breaks, use.mids = TRUE)
-
-imputeLearner(learner, preimpute = list())
 }
 \arguments{
 \item{const}{[any]\cr
@@ -56,10 +53,12 @@ Constant valued use for imputation.}
 Value that stored minimum or maximum is multiplied with when imputation is done.}
 
 \item{min}{[\code{numeric(1)}]\cr
-Lower bound for uniform distribution. If missing it will be estimated from the data.}
+Lower bound for uniform distribution.
+If NA (default), it will be estimated from the data.}
 
 \item{max}{[\code{numeric(1)}]\cr
-Upper bound for uniform distribution. If missing it will be estimated from the data.}
+Upper bound for uniform distribution.
+If NA (default), it will be estimated from the data.}
 
 \item{mu}{[\code{numeric(1)}]\cr
 Mean of normal distribution. If missing it will be estimated from the data.}
@@ -74,15 +73,6 @@ defaults to auto-detection via \dQuote{Sturges}.}
 \item{use.mids}{[\code{logical(1)}]\cr
 If \code{x} is numeric and a histogram is used, impute with bin mids (default)
 or instead draw uniformly distributed samples within bin range.}
-
-\item{learner}{[\code{Learner}]\cr
-Classification or regression learner. Its predictions will be used for imputations.
-Note that the target column is not available for this operation.}
-
-\item{preimpute}{[\code{list}]\cr
-Arguments for inner call to \code{\link{impute}} in scenarios where
-\code{learner} itself cannot handle missing values.
-Default is \code{list()}.}
 }
 \description{
 Built in imputation methods
@@ -101,5 +91,10 @@ The built-ins are:
   \item \code{imputeLearner(learner, preimpute)} for imputations using the response
     of a classification or regression learner.
 }
+}
+\seealso{
+Other impute: \code{\link{impute}};
+  \code{\link{makeImputeMethod}};
+  \code{\link{makeImputeWrapper}}; \code{\link{reimpute}}
 }
 

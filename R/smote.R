@@ -32,7 +32,7 @@ smote = function(task, rate, nn = 5) {
   requirePackages("cluster", why = "smote")
   # check for changeData later
   if (!is.null(task$weights))
-    stopf("Smote cannot be used with weights in task!")
+    stopf("SMOTE cannot be used with weights in task!")
 
   # shortcuts
   data = getTaskData(task)

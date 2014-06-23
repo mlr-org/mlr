@@ -13,7 +13,7 @@ test_that("smote works",  {
 test_that("smote wrapper",  {
   rdesc = makeResampleDesc("CV", iters = 2)
   lrn1 = makeLearner("classif.rpart")
-  lrn2 = makeSmoteWrapper(lrn1, sw.rate = 2)
+  lrn2 = makeSMOTEWrapper(lrn1, sw.rate = 2)
   r = resample(lrn2, binaryclass.task, rdesc)
   expect_true(!is.na(r$aggr))
 })
