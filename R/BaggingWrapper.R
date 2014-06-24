@@ -38,7 +38,7 @@ makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.
   learner = checkLearner(learner)
   bag.iters = convertInteger(bag.iters)
   checkArg(bag.iters, "integer", len = 1L, na.ok = FALSE, lower = 1L)
-  checkArg(bag.replace, "logical", na.ok = FALSE)
+  assertLogical(bag.replace, len = 1L, any.missing = FALSE)
   if (missing(bag.size)) {
     bag.size = if (bag.replace) 1 else 0.632
   } else {

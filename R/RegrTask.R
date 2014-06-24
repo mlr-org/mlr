@@ -3,7 +3,7 @@
 makeRegrTask = function(id, data, target, weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE) {
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
-  checkArg(check.data, "logical", len = 1L, na.ok = FALSE)
+  assertLogical(check.data, len = 1L, any.missing = FALSE)
 
   task = addClasses(makeSupervisedTask("regr", data, target, weights, blocking), "RegrTask")
   if (fixup.data != "no")

@@ -210,7 +210,7 @@ imputeHist = function(breaks, use.mids = TRUE) {
     breaks = convertInteger(breaks)
     checkArg(breaks, "integer", len = 1L, na.ok = FALSE)
   }
-  checkArg(use.mids, "logical", len = 1L, na.ok = FALSE)
+  assertLogical(use.mids, len = 1L, any.missing = FALSE)
 
   makeImputeMethod(
 

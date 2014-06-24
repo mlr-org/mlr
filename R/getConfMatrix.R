@@ -32,7 +32,7 @@
 #' print(getConfMatrix(pred, relative = TRUE))
 getConfMatrix = function(pred, relative = FALSE) {
   checkArg(pred, "Prediction")
-  checkArg(relative, "logical", len = 1L, na.ok = FALSE)
+  assertLogical(relative, len = 1L, any.missing = FALSE)
 
   if (pred$task.desc$type != "classif")
     stop("Can only calculate confusion matrix for classification predictions, not: %s",

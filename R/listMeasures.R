@@ -19,7 +19,7 @@ listMeasures = function(obj, properties = character(0L), create = FALSE) {
   if (!missing(obj))
     checkArg(obj, c("character", "SupervisedTask"))
   assertCharacter(properties, any.missing = FALSE)
-  checkArg(create, "logical", len = 1L, na.ok = FALSE)
+  assertLogical(create, len = 1L, any.missing = FALSE) 
   UseMethod("listMeasures")
 }
 

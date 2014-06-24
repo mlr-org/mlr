@@ -40,7 +40,7 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")
   if (inherits(resampling, "ResampleDesc") && control$same.resampling.instance)
     resampling = makeResampleInstance(resampling, task = task)
-  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
+  assertLogical(show.info, len = 1L, any.missing = FALSE)
   checkTunerParset(learner, par.set, control)
   cl = getClass1(control)
   sel.func = switch(cl,

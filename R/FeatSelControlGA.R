@@ -5,7 +5,7 @@ makeFeatSelControlGA = function(same.resampling.instance = TRUE,
 
   maxit = convertInteger(maxit)
   checkArg(maxit, "integer", len = 1L, lower = 1L, na.ok = FALSE)
-  checkArg(comma, "logical", len = 1L, na.ok = FALSE)
+  assertLogical(comma, len = 1L, any.missing = FALSE)
   mu = convertInteger(mu)
   checkArg(mu, "integer", len = 1L, lower = 1L, na.ok = FALSE)
   if (missing(lambda))  {

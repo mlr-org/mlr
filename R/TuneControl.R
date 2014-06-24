@@ -46,7 +46,7 @@
 NULL
 
 makeTuneControl = function(same.resampling.instance, start = NULL, ..., cl) {
-  checkArg(same.resampling.instance, "logical", len = 1, na.ok = FALSE)
+  assertLogical(same.resampling.instance, len = 1, any.missing = FALSE)
   if (!is.null(start)) {
     checkArg(start, "list")
     if (!isProperlyNamed(start))

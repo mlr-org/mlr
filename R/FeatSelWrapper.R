@@ -42,7 +42,7 @@ makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.
     checkArg(bits.to.features, "function", formals = c("x", "task"))
   }
   checkArg(control, "FeatSelControl")
-  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
+  assertLogical(show.info, len = 1L, any.missing = FALSE)
   id = paste(learner$id, "featsel", sep = ".")
   x = makeOptWrapper(id, learner, resampling, measures, makeParamSet(), bit.names,
     bits.to.features, control, show.info, "FeatSelWrapper")

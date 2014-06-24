@@ -6,7 +6,7 @@
 makeSurvTask = function(id, data, target, surv.type = "right", weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE) {
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
-  checkArg(check.data, "logical", len = 1L, na.ok = FALSE)
+  assertLogical(check.data, len = 1L, any.missing = FALSE)
 
   task = addClasses(makeSupervisedTask("surv", data, target, weights, blocking), "SurvTask")
   ### FIXME

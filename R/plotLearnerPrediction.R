@@ -89,8 +89,8 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
     checkArg(gridsize, "integer", len = 1L, na.ok = FALSE)
   }
   checkArg(pointsize, "numeric", len = 1L, na.ok = FALSE, lower = 0)
-  checkArg(prob.alpha, "logical", len = 1L, na.ok = FALSE)
-  checkArg(se.band, "logical", len = 1L, na.ok = FALSE)
+  assertLogical(prob.alpha, len = 1L, any.missing = FALSE)
+  assertLogical(se.band, len = 1L, any.missing = FALSE)
   assertChoice(err.mark, choices = c("train", "cv", "none"))
   assertCharacter(err.col, len = 1L, any.missing = FALSE)
   if (td$type == "classif" && err.mark == "cv" && cv == 0L)

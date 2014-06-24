@@ -3,7 +3,7 @@
 makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
   positive, fixup.data = "warn", check.data = TRUE) {
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
-  checkArg(check.data, "logical", len = 1L, na.ok = FALSE)
+  assertLogical(check.data, len = 1L, any.missing = FALSE)
 
   task = addClasses(makeSupervisedTask("classif", data, target, weights, blocking), "ClassifTask")
   if (fixup.data != "no")

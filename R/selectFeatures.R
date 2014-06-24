@@ -57,7 +57,7 @@ selectFeatures = function(learner, task, resampling, measures,
     checkArg(bits.to.features, "function", formals = c("x", "task"))
   }
   checkArg(control, "FeatSelControl")
-  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
+  assertLogical(show.info, len = 1L, any.missing = FALSE)
 
   par.set = lapply(bit.names, function(bn) makeIntegerParam(bn))
   par.set = do.call(makeParamSet, par.set)

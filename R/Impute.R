@@ -95,8 +95,8 @@ impute = function(data, target, classes = list(), cols = list(), dummy.classes =
   not.ok = dummy.cols %nin% names(data)
   if (any(not.ok))
     stopf("Column for dummy creation not present in data: %s", names(cols)[which.first(not.ok)])
-  checkArg(impute.new.levels, "logical", len = 1L, na.ok = FALSE)
-  checkArg(recode.factor.levels, "logical", len = 1L, na.ok = FALSE)
+  assertLogical(impute.new.levels, len = 1L, any.missing = FALSE)
+  assertLogical(recode.factor.levels, len = 1L, any.missing = FALSE)
 
   allowed.classes = c("logical", "integer", "numeric", "complex", "character", "factor")
   not.ok = any(names(classes) %nin% allowed.classes)

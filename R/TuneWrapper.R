@@ -42,7 +42,7 @@ makeTuneWrapper = function(learner, resampling, measures, par.set, control, show
   measures = checkMeasures(measures, learner)
   checkArg(par.set, "ParamSet")
   checkArg(control, "TuneControl")
-  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
+  assertLogical(show.info, len = 1L, any.missing = FALSE)
   id = paste(learner$id, "tuned", sep = ".")
   x = makeOptWrapper(id, learner, resampling, measures, par.set, character(0L),
     function(){}, control, show.info, "TuneWrapper")
