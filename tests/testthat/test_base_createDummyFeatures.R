@@ -6,7 +6,7 @@ test_that("createDummyFeatures", {
   df$c = as.factor(df$c)
   df.d = createDummyFeatures(df)
   expect_equal(colnames(df.d), c("a", "b", "c.A", "c.B"))
-  df.d = createDummyFeatures(df, intercept = FALSE)
+  df.d = createDummyFeatures(df, method = "reference")
   expect_equal(colnames(df.d), c("a", "b", "c.B"))
   
   dummy.task = createDummyFeatures(iris.task)

@@ -3,7 +3,7 @@
 \alias{createDummyFeatures}
 \title{Generate dummy variables for factor features.}
 \usage{
-createDummyFeatures(obj, target = NULL, intercept = TRUE,
+createDummyFeatures(obj, target = NULL, method = "1-of-n",
   exclude = character(0L))
 }
 \arguments{
@@ -14,10 +14,10 @@ Input data.}
 Name of the column specifying the response.
 Only used when \code{obj} is a data.frame, otherwise ignored.}
 
-\item{intercept}{[\code{logical(1)}]\cr
-\code{TRUE} if for n levels you want n dummy variables.
-Otherwise \code{FALSE} gives you n-1 dummy variables.
-Default is \code{TRUE}.}
+\item{method}{[\code{logical(1)}]\cr
+Available are:\cr
+\dQuote{1-of-n}: For n factor levels there will be n dummy variables.\cr
+\dQuote{reference}: There will be n-w dummy variables leaving out the first factor level of each variable.\cr}
 
 \item{exclude}{[\code{character}]\cr
 Names of the columns to exclude.
@@ -29,7 +29,7 @@ Default is none.}
   \code{obj}.
 }
 \description{
-Replace all factor features with their dummy variables.
+Replace all factor features with their dummy variables. Internally \code{\link{model.matrix}} is used.
 }
 \seealso{
 \code{\link{model.matrix}}
