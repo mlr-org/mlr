@@ -62,7 +62,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
   } else {
     subset = convertIntegers(subset)
     # FIXME: min.len, lower, upper
-    checkArg(subset, "integer", na.ok = FALSE)
+    assertInteger(subset, any.missing = FALSE)
   }
   if (missing(newdata)) {
     newdata = getTaskData(task, subset)

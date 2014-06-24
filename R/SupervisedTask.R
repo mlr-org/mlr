@@ -95,7 +95,7 @@ makeSupervisedTask = function(type, data, target, weights = NULL, blocking = NUL
 checkTask.SupervisedTask = function(task, target, ...) {
   checkColumnNames(task$env$data, 'data')
   if (!is.null(task$env$weights))
-    checkArg(weights, "numeric", len = nrow(task$env$data), na.ok = FALSE, lower = 0)
+    assertNumeric(weights, len = nrow(task$env$data), any.missing = FALSE, lower = 0)
   if (!is.null(task$blocking)) {
     checkArg(task$blocking, "factor", len = nrow(task$env$data), na.ok = FALSE)
     if(length(task$blocking) && length(task$blocking) != nrow(task$env$data))

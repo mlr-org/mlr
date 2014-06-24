@@ -56,7 +56,7 @@ makeResampleInstance = function(desc, task, size, ...) {
   }
   if (!missing(size)) {
     size = convertInteger(size)
-    checkArg(size, "integer", len = 1L, na.ok = FALSE)
+    assertInteger(size, len = 1L, any.missing = FALSE)
   }
 
   if (length(blocking) && desc$stratify)

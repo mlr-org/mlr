@@ -19,9 +19,9 @@
 #' @export
 makeSMOTEWrapper = function(learner, sw.rate, sw.nn = 5L) {
   learner = checkLearner(learner, "classif")
-  checkArg(sw.rate, "numeric", len = 1L, na.ok = FALSE, lower = 1)
+  assertNumeric(sw.rate, len = 1L, any.missing = FALSE, lower = 1)
   sw.nn = convertInteger(sw.nn)
-  checkArg(sw.nn, "integer", len = 1L, na.ok = FALSE, lower = 1L)
+  assertInteger(sw.nn, len = 1L, any.missing = FALSE, lower = 1L)
 
   id = paste(learner$id, "undersampled", sep = ".")
   ps = makeParamSet(

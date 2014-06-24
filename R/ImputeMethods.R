@@ -109,7 +109,7 @@ imputeMode = function(all.na = NA) {
 #'   Value that stored minimum or maximum is multiplied with when imputation is done.
 #' @rdname imputations
 imputeMin = function(multiplier = 1, all.na = NA) {
-  checkArg(multiplier, "numeric", len = 1L, na.ok = FALSE)
+  assertNumeric(multiplier, len = 1L, any.missing = FALSE)
   makeImputeMethod(
     learn = function(data, target, col, multiplier) multiplier*min(data[[col]], na.rm = TRUE),
     impute = simpleImpute,
@@ -120,7 +120,7 @@ imputeMin = function(multiplier = 1, all.na = NA) {
 #' @export
 #' @rdname imputations
 imputeMax = function(multiplier = 1, all.na = NA) {
-  checkArg(multiplier, "numeric", len = 1L, na.ok = FALSE)
+  assertNumeric(multiplier, len = 1L, any.missing = FALSE)
   makeImputeMethod(
     learn = function(data, target, col, multiplier) multiplier*max(data[[col]], na.rm = TRUE),
     impute = simpleImpute,
@@ -137,8 +137,8 @@ imputeMax = function(multiplier = 1, all.na = NA) {
 #'   If NA (default), it will be estimated from the data.
 #' @rdname imputations
 imputeUniform = function(min = NA_real_, max = NA_real_) {
-  checkArg(min, "numeric", len = 1L, na.ok = TRUE)
-  checkArg(max, "numeric", len = 1L, na.ok = TRUE)
+  assertNumeric(min, len = 1L, any.missing = TRUE)
+  assertNumeric(max, len = 1L, any.missing = TRUE)
   makeImputeMethod(
     learn = function(data, target, col, min, max)  {
       if (is.na(min)) {
@@ -169,8 +169,8 @@ imputeUniform = function(min = NA_real_, max = NA_real_) {
 #'   Standard deviation of normal distribution. If missing it will be estimated from the data.
 #' @rdname imputations
 imputeNormal = function(mu = NA_real_, sd = NA_real_) {
-  checkArg(mu, "numeric", len = 1L, na.ok = TRUE)
-  checkArg(sd, "numeric", len = 1L, na.ok = TRUE)
+  assertNumeric(mu, len = 1L, any.missing = TRUE)
+  assertNumeric(sd, len = 1L, any.missing = TRUE)
 
   makeImputeMethod(
     learn = function(data, target, col, mu, sd)  {
@@ -208,7 +208,7 @@ imputeHist = function(breaks, use.mids = TRUE) {
     breaks = "Sturges"
   } else {
     breaks = convertInteger(breaks)
-    checkArg(breaks, "integer", len = 1L, na.ok = FALSE)
+    assertInteger(breaks, len = 1L, any.missing = FALSE)
   }
   assertLogical(use.mids, len = 1L, any.missing = FALSE)
 

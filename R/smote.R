@@ -25,9 +25,9 @@
 #' @export
 smote = function(task, rate, nn = 5) {
   checkTask2(task, binary = TRUE)
-  checkArg(rate, "numeric", len = 1L, lower = 1)
+  assertNumeric(rate, len = 1L, lower = 1)
   nn = convertInteger(nn)
-  checkArg(nn, "integer", len = 1L, lower = 1L)
+  assertInteger(nn, len = 1L, lower = 1L)
 
   requirePackages("cluster", why = "smote")
   # check for changeData later

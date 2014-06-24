@@ -32,7 +32,7 @@
 #' head(as.data.frame(pred))
 setThreshold = function(pred, threshold) {
   checkArg(pred, "Prediction")
-  checkArg(threshold, "numeric", na.ok = FALSE)
+  assertNumeric(threshold, any.missing = FALSE)
   td = pred$task.desc
   if (td$type != "classif")
     stop("Threshold can only be set for classification predictions!")

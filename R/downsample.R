@@ -19,7 +19,7 @@
 #' @export
 downsample = function(obj, perc = 1, stratify = FALSE) {
   checkArg(obj, c("SupervisedTask", "ResampleInstance"))
-  checkArg(perc, "numeric", len = 1L, na.ok = FALSE, lower = 0, upper = 1)
+  assertNumeric(perc, len = 1L, any.missing = FALSE, lower = 0, upper = 1)
   assertLogical(stratify, len = 1L, any.missing = FALSE)
   UseMethod("downsample")
 }

@@ -80,15 +80,15 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
 
   measures = checkMeasures(measures, task)
   cv = convertInteger(cv)
-  checkArg(cv, "integer", len = 1L, lower = 0L, na.ok = FALSE)
+  assertInteger(cv, len = 1L, lower = 0L, any.missing = FALSE)
 
   if (missing(gridsize)) {
     gridsize = ifelse(taskdim == 1L, 500, 100)
   } else {
     gridsize = convertInteger(gridsize)
-    checkArg(gridsize, "integer", len = 1L, na.ok = FALSE)
+    assertInteger(gridsize, len = 1L, any.missing = FALSE)
   }
-  checkArg(pointsize, "numeric", len = 1L, na.ok = FALSE, lower = 0)
+  assertNumeric(pointsize, len = 1L, any.missing = FALSE, lower = 0)
   assertLogical(prob.alpha, len = 1L, any.missing = FALSE)
   assertLogical(se.band, len = 1L, any.missing = FALSE)
   assertChoice(err.mark, choices = c("train", "cv", "none"))

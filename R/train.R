@@ -37,7 +37,7 @@ train = function(learner, task, subset, weights = NULL) {
     subset = seq_len(task$task.desc$size)
   } else {
     subset = convertIntegers(subset)
-    checkArg(subset, "integer", na.ok = FALSE)
+    assertInteger(subset, any.missing = FALSE)
   }
 
   # make sure that pack for learner is loaded, probably needed when learner is exported
@@ -51,7 +51,7 @@ train = function(learner, task, subset, weights = NULL) {
 
   # FIXME: code is bad here, set weights, the simply check it in checktasklearner
   if(!is.null(weights)) {
-    checkArg(weights, "numeric", len = length(subset), na.ok = FALSE, lower = 0)
+    assertNumeric(weights, len = length(subset), any.missing = FALSE, lower = 0)
   } else {
     weights = task$weights
   }

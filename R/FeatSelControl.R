@@ -88,9 +88,9 @@ NULL
 makeFeatSelControl = function(same.resampling.instance, maxit, max.features, ..., cl) {
   assertLogical(same.resampling.instance, len = 1L, any.missing = FALSE)
   maxit = convertInteger(maxit)
-  checkArg(maxit, "integer", len = 1L, lower = 1L, na.ok = TRUE)
+  assertInteger(maxit, len = 1L, lower = 1L, any.missing = TRUE)
   max.features = convertInteger(max.features)
-  checkArg(max.features, "integer", len = 1L, lower = 1L, na.ok = TRUE)
+  assertInteger(max.features, len = 1L, lower = 1L, any.missing = TRUE)
   x = makeOptControl(same.resampling.instance = same.resampling.instance, ...)
   x$maxit = maxit
   x$max.features = max.features
