@@ -1,7 +1,7 @@
 #FIXME: read this
 
 makePreprocWrapperPCA = function(learner) {
-  checkArg(learner, "Learner")
+  assertClass(learner, classes = "Learner")
 
   trainfun = function(data, target, args) {
     cns = colnames(data)

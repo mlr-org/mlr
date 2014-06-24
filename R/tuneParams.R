@@ -32,10 +32,10 @@
 #' @export
 tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)
-  checkArg(task, "SupervisedTask")
+  assertClass(task, classes = "SupervisedTask")
   measures = checkMeasures(measures, learner)
   checkArg(par.set, "ParamSet")
-  checkArg(control, "TuneControl")
+  assertClass(control, classes = "TuneControl")
   if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")
   if (inherits(resampling, "ResampleDesc") && control$same.resampling.instance)

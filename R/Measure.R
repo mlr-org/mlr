@@ -64,7 +64,7 @@ makeMeasure = function(id, minimize, properties = character(0L), allowed.pred.ty
   assertLogical(minimize, len = 1L, any.missing = FALSE)
   assertCharacter(properties, any.missing = FALSE)
   assertSubset(allowed.pred.types, choices = c("response", "prob", "se"))
-  checkArg(fun, "function")
+  assertFunction(fun)
   checkArg(extra.args, "list")
 
   # FIXME: I think this is never used...
@@ -112,8 +112,8 @@ default.measures = function(x) {
 #' @return [\code{\link{Measure}}] with changed aggregation behaviour.
 #' @export
 setAggregation = function(measure, aggr) {
-  checkArg(measure, "Measure")
-  checkArg(aggr, "Aggregation")
+  assertClass(measure, classes = "Measure")
+  assertClass(aggr, classes = "Aggregation")
   measure$aggr = aggr
   return(measure)
 }

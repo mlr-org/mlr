@@ -44,7 +44,7 @@ benchmark = function(learners, tasks, resamplings, measures, show.info = getMlrO
   } else if (inherits(resamplings, "ResampleInstance") || inherits(resamplings, "ResampleDesc")) {
     resamplings = replicate(length(tasks), resamplings, simplify = FALSE)
   } else {
-    checkArg(resamplings, "list")
+    assertList(resamplings)
     if (length(resamplings) != length(tasks))
       stop("Number of resampling strategies and number of tasks differ!")
   }
@@ -62,7 +62,7 @@ benchmark = function(learners, tasks, resamplings, measures, show.info = getMlrO
     measures = default.measures(tasks[[1L]])
   } else {
     measures = ensureVector(measures, 1L, "Measure")
-    checkArg(measures, "list")
+    assertList(measures)
     checkListElementClass(measures, "Measure")
   }
 

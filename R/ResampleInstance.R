@@ -41,13 +41,13 @@
 #'
 #' rin = makeResampleInstance("CV", iters = 10, task = iris.task)
 makeResampleInstance = function(desc, task, size, ...) {
-  checkArg(desc, c("ResampleDesc", "character"))
+  assertClass(desc, classes = c("ResampleDesc", "character")
   if (is.character(desc)) {
     assertCharacter(desc, len = 1L, any.missing = FALSE)
     desc = makeResampleDesc(desc, ...)
   }
   if (!missing(task)) {
-    checkArg(task, "SupervisedTask")
+    assertClass(task, classes = "SupervisedTask")
     size = task$task.desc$size
     blocking = task$blocking
   } else {

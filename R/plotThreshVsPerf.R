@@ -16,7 +16,7 @@
 plotThreshVsPerf = function(pred, measures, mark.th = NA_real_,
   gridsize = 100L, linesize = 1.5) {
 
-  checkArg(pred, "Prediction")
+  assertClass(pred, classes = "Prediction")
   td = pred$task.desc
   if (td$type != "classif" || length(td$class.levels) != 2L)
     stopf("Task must be binary classification!")

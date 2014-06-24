@@ -73,8 +73,8 @@ impute = function(data, target, classes = list(), cols = list(), dummy.classes =
 
   checkArg(data, "data.frame")
   assertCharacter(target, any.missing = FALSE)
-  checkArg(classes, "list")
-  checkArg(cols, "list")
+  assertList(classes)
+  assertList(cols)
   assertCharacter(dummy.classes, any.missing = FALSE)
   assertCharacter(dummy.cols, any.missing = FALSE)
 
@@ -200,7 +200,7 @@ reimpute.list = function(x, desc) {
 #' @method reimpute data.frame
 #' @export
 reimpute.data.frame = function(x, desc) {
-  checkArg(desc, "ImputationDesc")
+  assertClass(desc, classes = "ImputationDesc")
   x = as.list(x)
 
   # check for new columns

@@ -41,14 +41,14 @@
 predict.WrappedModel = function(object, task, newdata, subset, ...) {
   if (!xor(missing(task), missing(newdata)))
     stop("Pass either a task object or a newdata data.frame to predict, but not both!")
-  checkArg(object, "WrappedModel")
+  assertClass(object, classes = "WrappedModel")
   model = object
   learner = model$learner
   td = model$task.desc
 
   # FIXME: cleanup if cases
   if (missing(newdata)) {
-    checkArg(task, "SupervisedTask")
+    assertClass(task, classes = "SupervisedTask")
     size = task$task.desc$size
   } else {
     checkArg(newdata, "data.frame")

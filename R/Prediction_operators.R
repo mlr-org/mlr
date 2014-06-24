@@ -26,7 +26,7 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
 #' # Get probabilities for a subset of classes
 #' head(getProbabilities(pred, c("setosa", "virginica")))
 getProbabilities = function(pred, cl) {
-  checkArg(pred, "Prediction")
+  assertClass(pred, classes = "Prediction")
   if (pred$task.desc$type != "classif")
     stop("Prediction was not generated from a ClassifTask!")
   if (missing(cl)) {

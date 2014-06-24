@@ -31,7 +31,7 @@
 #' performance(pred, measures = mmce)
 #' head(as.data.frame(pred))
 setThreshold = function(pred, threshold) {
-  checkArg(pred, "Prediction")
+  assertClass(pred, classes = "Prediction")
   assertNumeric(threshold, any.missing = FALSE)
   td = pred$task.desc
   if (td$type != "classif")

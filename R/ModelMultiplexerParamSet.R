@@ -30,7 +30,7 @@
 #' @examples
 #' # See makeModelMultiplexer
 makeModelMultiplexerParamSet = function(multiplexer, ..., .check = TRUE) {
-  checkArg(multiplexer, "ModelMultiplexer")
+  assertClass(multiplexer, classes = "ModelMultiplexer")
   assertLogical(.check, len = 1L, any.missing = TRUE)
 
   bls = multiplexer$base.learners

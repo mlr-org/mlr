@@ -31,7 +31,7 @@
 #' print(getConfMatrix(pred))
 #' print(getConfMatrix(pred, relative = TRUE))
 getConfMatrix = function(pred, relative = FALSE) {
-  checkArg(pred, "Prediction")
+  assertClass(pred, classes = "Prediction")
   assertLogical(relative, len = 1L, any.missing = FALSE)
 
   if (pred$task.desc$type != "classif")

@@ -27,7 +27,7 @@ listLearners  = function(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, create = FALSE) {
 
   if (!missing(obj))
-    checkArg(obj, c("character", "SupervisedTask"))
+    assertClass(obj, classes = c("character", "SupervisedTask")
   assertCharacter(properties, any.missing = FALSE)
   assertLogical(warn.missing.packages, len = 1L, any.missing = FALSE)
   assertLogical(create, len = 1L, any.missing = FALSE)

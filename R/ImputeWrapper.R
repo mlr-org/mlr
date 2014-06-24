@@ -13,7 +13,7 @@
 #' @template ret_learner
 makeImputeWrapper = function(learner, classes = list(), cols = list(), dummy.classes = character(0L),
   dummy.cols = character(0L), impute.new.levels = TRUE, recode.factor.levels = TRUE) {
-  checkArg(learner, "Learner")
+  assertClass(learner, classes = "Learner")
   args = list(classes = classes, cols = cols, dummy.classes = dummy.classes,
     dummy.cols = dummy.cols, impute.new.levels = impute.new.levels,
     recode.factor.levels = recode.factor.levels)

@@ -37,7 +37,7 @@ estimateResidualVariance.WrappedModel = function(x, task, data, target) {
     assertCharacter(target, len = 1L, any.missing = FALSE)
     task = makeRegrTask(data = data, target = target)
   } else {
-    checkArg(task, "RegrTask")
+    assertClass(task, classes = "RegrTask")
   }
   p = predict(x, task)
   var(p$data$response - p$data$truth)

@@ -26,7 +26,7 @@
 #' performance(pred, measures = ms, task, mod)
 performance = function(pred, measures, task, model) {
   if (!missing(pred))
-    checkArg(pred, "Prediction")
+    assertClass(pred, classes = "Prediction")
   measures = checkMeasures(measures, pred$task.desc)
   sapply(measures, doPerformaceIteration, pred = pred, task = task, model = model, td = NULL)
 }
@@ -44,7 +44,7 @@ doPerformaceIteration = function(measure, pred, task, model, td){
   if (m$req.model) {
     if (missing(model))
       stopf("You need to pass model for measure %s!", m$id)
-    checkArg(model, "WrappedModel")
+    assertClass(model, classes = "WrappedModel")
     model2 = model
     td = model$task.desc
   } else {
@@ -53,7 +53,7 @@ doPerformaceIteration = function(measure, pred, task, model, td){
   if (m$req.task) {
     if (missing(task))
       stopf("You need to pass task for measure %s!", m$id)
-    checkArg(task, "SupervisedTask")
+    assertClass(task, classes = "SupervisedTask")
     task2 = task
     td = task$desc
   } else {

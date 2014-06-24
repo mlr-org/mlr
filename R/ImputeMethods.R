@@ -25,7 +25,7 @@
 makeImputeMethod = function(learn, impute, args = list()) {
   assertFunction(learn, args = c("data", "target", "col"))
   assertFunction(impute, args = c("data", "target", "col"))
-  checkArg(args, "list")
+  assertList(args)
   if (!isProperlyNamed(args))
     stop("All arguments must be properly named")
   setClasses(list(learn = learn, impute = impute, args = args), "ImputeMethod")
@@ -259,8 +259,8 @@ imputeHist = function(breaks, use.mids = TRUE) {
 # #' @export
 imputeLearner = function(learner, preimpute = list()) {
   # FIXME: this function needs some love
-  checkArg(learner, "Learner")
-  checkArg(preimpute, "list")
+  assertClass(learner, classes = "Learner")
+  assertList(preimpute)
   if (!isProperlyNamed(preimpute))
     stop("All elements in preimpute must be properly named")
 

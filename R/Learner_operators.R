@@ -5,13 +5,13 @@
 #' @return [\code{\link[ParamHelpers]{ParamSet}}].
 #' @export
 getParamSet = function(learner) {
-  checkArg(learner, "Learner")
+  assertClass(learner, classes = "Learner")
   UseMethod("getParamSet")
 }
 
 #'@export
 getParamSet.Learner = function(learner) {
-  checkArg(learner, "Learner")
+  assertClass(learner, classes = "Learner")
   learner$par.set
 }
 
@@ -27,14 +27,14 @@ getParamSet.Learner = function(learner) {
 #' @return [\code{list}]. A named list of values.
 #' @export
 getHyperPars = function(learner,  for.fun = c("train", "predict", "both")) {
-  checkArg(learner, "Learner")
+  assertClass(learner, classes = "Learner")
   assertSubset(for.fun, choices = c("train", "predict", "both"))
   UseMethod("getHyperPars")
 }
 
 #' @export
 getHyperPars.Learner = function(learner, for.fun = c("train", "predict", "both")) {
-  checkArg(learner, "Learner")
+  assertClass(learner, classes = "Learner")
   pars = learner$par.set$pars
   pv = learner$par.vals
   ns = Filter(function(x) pars[[x]]$when %in% for.fun, names(pv))
@@ -64,7 +64,7 @@ getHyperPars.Learner = function(learner, for.fun = c("train", "predict", "both")
 #' # note the now set and altered hyperparameters:
 #' print(cl2)
 setHyperPars = function(learner, ..., par.vals) {
-  checkArg(learner, "Learner")
+  assertClass(learner, classes = "Learner")
   args = list(...)
   if (missing(par.vals)) {
     par.vals = list()
@@ -139,7 +139,7 @@ setHyperPars2.Learner = function(learner, par.vals) {
 #' @seealso \code{\link{setThreshold}} to alter the threshold used for prediction.
 #' @export
 setPredictType = function(learner, predict.type) {
-  checkArg(learner, "Learner")
+  assertClass(learner, classes = "Learner")
   checkArg(predict.type, choices = switch(learner$type,
     classif = c("response", "prob"),
     regr = c("response", "se"),

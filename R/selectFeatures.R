@@ -40,7 +40,7 @@ selectFeatures = function(learner, task, resampling, measures,
   bit.names, bits.to.features, control, show.info = getMlrOption("show.info")) {
 
   learner = checkLearner(learner)
-  checkArg(task, "SupervisedTask")
+  assertClass(task, classes = "SupervisedTask")
   if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")
   if (inherits(resampling, "ResampleDesc") && control$same.resampling.instance)
@@ -56,7 +56,7 @@ selectFeatures = function(learner, task, resampling, measures,
   } else {
     assertFunction(bits.to.features, args = c("x", "task"))
   }
-  checkArg(control, "FeatSelControl")
+  assertClass(control, classes = "FeatSelControl")
   assertLogical(show.info, len = 1L, any.missing = FALSE)
 
   par.set = lapply(bit.names, function(bn) makeIntegerParam(bn))

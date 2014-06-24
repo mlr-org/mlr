@@ -4,7 +4,7 @@
 # FIXME: indexing without drop
 
 makePreprocWrapperRemoveOutliers = function(learner, ro.alpha = 0.5) {
-  checkArg(learner, "Learner")
+  assertClass(learner, classes = "Learner")
 
   trainfun = function(data, target, args) {
     require(robustbase)

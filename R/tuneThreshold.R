@@ -24,13 +24,13 @@
 #' @family tune
 #' @export
 tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list()) {
-  checkArg(pred, "Prediction")
-  checkArg(measure, "Measure")
+  assertClass(pred, classes = "Prediction")
+  assertClass(measure, classes = "Measure")
   if (!missing(task))
-    checkArg(task, "SupervisedTask")
+    assertClass(task, classes = "SupervisedTask")
   if (!missing(model))
-    checkArg(model, "WrappedModel")
-  checkArg(control, "list")
+    assertClass(model, classes = "WrappedModel")
+  assertList(control)
 
   td = pred$task.desc
   if (missing(measure))

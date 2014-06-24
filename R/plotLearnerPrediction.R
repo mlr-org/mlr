@@ -61,7 +61,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   err.col = "orange") {
 
   learner = checkLearner(learner)
-  checkArg(task, "SupervisedTask")
+  assertClass(task, classes = "SupervisedTask")
   td = task$task.desc
 
   # features and dimensionality

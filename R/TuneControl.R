@@ -48,7 +48,7 @@ NULL
 makeTuneControl = function(same.resampling.instance, start = NULL, ..., cl) {
   assertLogical(same.resampling.instance, len = 1, any.missing = FALSE)
   if (!is.null(start)) {
-    checkArg(start, "list")
+    assertList(start)
     if (!isProperlyNamed(start))
       stop("'start' must be a properly named list!")
   }

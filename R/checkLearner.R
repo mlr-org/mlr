@@ -2,7 +2,7 @@ checkLearner = function(learner, type = NULL, weights = FALSE, ...) {
   if (is.character(learner))
     learner = makeLearner(learner)
   else
-    checkArg(learner, "Learner")
+    assertClass(learner, classes = "Learner")
   if (!is.null(type) && learner$type != type)
     stopf("Learner '%s' must be of type %s, not: %s", learner$id, type, learner$type)
   if (weights && !hasProperties(learner, "weights"))

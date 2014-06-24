@@ -93,7 +93,7 @@ makeWrappedModel.CostSensWeightedPairsWrapper = function(learner, learner.model,
 #' @return [\code{list}].
 #' @export
 getCostSensWeightedPairsModels = function(model, learner.models = FALSE) {
-  checkArg(model, "CostSensWeightedPairsModel")
+  assertClass(model, classes = "CostSensWeightedPairsModel")
   ms = model$learner.model$next.model
   if (learner.models)
     extractSubList(ms, "learner.model", simplify = FALSE)
