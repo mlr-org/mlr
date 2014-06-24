@@ -63,7 +63,7 @@ makeMeasure = function(id, minimize, properties = character(0L), allowed.pred.ty
   assertCharacter(id, len = 1L, any.missing = FALSE)
   assertLogical(minimize, len = 1L, any.missing = FALSE)
   assertCharacter(properties, any.missing = FALSE)
-  checkArg(allowed.pred.types, subset = c("response", "prob", "se"))
+  assertSubset(allowed.pred.types, choices = c("response", "prob", "se"))
   checkArg(fun, "function")
   checkArg(extra.args, "list")
 

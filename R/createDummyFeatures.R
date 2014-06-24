@@ -27,7 +27,7 @@ createDummyFeatures = function(obj, target = NULL, method = "1-of-n", exclude = 
 
 #' @export
 createDummyFeatures.data.frame = function(obj, target = NULL, method = "1-of-n", exclude = character(0L)) {
-  checkArg(exclude, subset = colnames(obj))
+  assertSubset(exclude, choices = colnames(obj))
   # extract obj to work on
   work.cols = colnames(obj)[sapply(obj, is.factor)]
   if (isSet(exclude))
@@ -60,7 +60,7 @@ createDummyFeatures.data.frame = function(obj, target = NULL, method = "1-of-n",
 
 #' @export
 createDummyFeatures.SupervisedTask = function(obj, target = NULL, method = "1-of-n", exclude = character(0)) {
-  checkArg(exclude, subset = getFeatureNames(obj))
+  assertSubset(exclude, choices = getFeatureNames(obj))
   d = createDummyFeatures(obj = getTaskData(obj), target = obj$task.desc$target, method = method, exclude = exclude)
   changeData(obj, d)
 }

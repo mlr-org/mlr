@@ -1,3 +1,3 @@
 checkDfTarget = function(df, target) {
-  checkArg(target, subset = colnames(target))
+  assertSubset(target, choices = colnames(target))
 }

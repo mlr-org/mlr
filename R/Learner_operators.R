@@ -28,7 +28,7 @@ getParamSet.Learner = function(learner) {
 #' @export
 getHyperPars = function(learner,  for.fun = c("train", "predict", "both")) {
   checkArg(learner, "Learner")
-  checkArg(for.fun, subset = c("train", "predict", "both"))
+  assertSubset(for.fun, choices = c("train", "predict", "both"))
   UseMethod("getHyperPars")
 }
 

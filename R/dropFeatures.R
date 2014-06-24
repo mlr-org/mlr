@@ -8,7 +8,7 @@
 dropFeatures = function(task, features) {
   checkArg(task, "SupervisedTask")
   f = getTaskFeatureNames(task)
-  checkArg(features, subset = f)
+  assertSubset(features, choices = f)
   subsetTask(task, features = setdiff(f, features))
 }
 
