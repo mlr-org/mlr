@@ -70,7 +70,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
     # take first or first 2 features as default
     features = if (length(fns) == 1L) fns else fns[1:2]
   } else {
-    assertSubset(features, choices = fns, max.len = 2L)
+    checkArg(features, choices = fns, max.len = 2L)
   }
   taskdim = length(features)
   if (td$type == "classif" && taskdim != 2L)

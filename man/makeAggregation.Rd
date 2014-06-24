@@ -29,7 +29,7 @@ inner workings so the result might not be compatible with everything! \cr
 }
 \examples{
 # computes the interquartile range on all performance values
-test.iqr = makeAggregation(id="test.iqr",
+test.iqr = makeAggregation(id = "test.iqr",
   fun = function (task, perf.test, perf.train, measure, group, pred) IQR(perf.test))
 }
 \seealso{
