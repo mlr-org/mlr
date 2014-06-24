@@ -24,7 +24,8 @@ Depends:
 Imports:
     parallelMap (>= 1.1),
     codetools,
-    survival
+    survival,
+    checkmate
 Suggests:
     testthat,
     ada,

@@ -1,6 +1,7 @@
 #' @import BBmisc
 #' @import parallelMap
 #' @import ParamHelpers
+#' @import checkmate
 #' @importFrom stats predict
 #' @importFrom codetools findGlobals
 #' @importFrom survival Surv
@@ -8,5 +9,5 @@
 
 .onAttach <- function(libname, pkgname) {
   configureMlr()
-  parallelRegisterLevels(package="mlr", levels=c("benchmark", "resample", "selectFeatures", "tuneParams"))
+  parallelRegisterLevels(package = "mlr", levels = c("benchmark", "resample", "selectFeatures", "tuneParams"))
 }
