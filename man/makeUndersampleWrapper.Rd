@@ -34,7 +34,8 @@ Note that observation weights do not influence the sampling and are simply passe
 down to the next learner.
 }
 \seealso{
-Other imbalancy: \code{\link{oversample}},
-  \code{\link{undersample}}; \code{\link{smote}}
+Other imbalancy: \code{\link{makeOverBaggingWrapper}};
+  \code{\link{oversample}}, \code{\link{undersample}};
+  \code{\link{smote}}
 }
 
