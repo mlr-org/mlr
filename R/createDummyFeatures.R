@@ -1,27 +1,33 @@
-#' @title Generate dummy variables for factor features
-#'   
-#' @description Replace all factor features with their dummy variables.
-#'   
-#' @param obj [\code{data.frame} | \code{\link{SupervisedTask}}]\cr Input data.
-#' @param target [\code{character(1)}]\cr Name of the column specifying the 
-#'   response. Only used when \code{obj} is a data.frame, otherwise ignored.
-#' @param intercept [\code{boolean(1)}]\cr \code{TRUE} if for n levels you want 
-#'   n dummy variables. Otherwise \code{FALSE} gives you n-1 dummy variables.
-#' @param exclude [\code{character}]\cr Names of the columns to exclude.
-#' @return [\code{data.frame} | \code{\link{SupervisedTask}}]. Same type as 
+#' @title Generate dummy variables for factor features.
+#'
+#' @description
+#' Replace all factor features with their dummy variables.
+#'
+#' @param obj [\code{data.frame} | \code{\link{SupervisedTask}}]\cr
+#'   Input data.
+#' @param target [\code{character(1)}]\cr
+#'   Name of the column specifying the response.
+#'   Only used when \code{obj} is a data.frame, otherwise ignored.
+#' @param intercept [\code{logical(1)}]\cr
+#'   \code{TRUE} if for n levels you want n dummy variables.
+#'   Otherwise \code{FALSE} gives you n-1 dummy variables.
+#'   Default is \code{TRUE}.
+#' @param exclude [\code{character}]\cr
+#'   Names of the columns to exclude.
+#'   The target does not have to be included here.
+#'   Default is none.
+#' @return [\code{data.frame} | \code{\link{SupervisedTask}}]. Same type as
 #'   \code{obj}.
 #' @seealso \code{\link{model.matrix}}
 #' @export
-
-createDummyFeatures = function(obj, target = NULL, intercept = TRUE, exclude = NULL) {
-  assertLogical(intercept, len = 1L, any.missing = FALSE)
-  if(isSet(exclude))
-    assertCharacter(exclude, any.missing = FALSE)
+createDummyFeatures = function(obj, target = NULL, intercept = TRUE, exclude = character(0L)) {
+  checkArg(intercept, "logical", len = 1L, na.ok = FALSE)
   UseMethod("createDummyFeatures")
 }
 
 #' @export
-createDummyFeatures.data.frame = function(obj, target = NULL, intercept = TRUE, exclude = NULL) {
+createDummyFeatures.data.frame = function(obj, target = NULL, intercept = TRUE, exclude = character(0L)) {
+  checkArg(exclude, subset = colnames(obj))
   # extract obj to work on
   work.cols = colnames(obj)[sapply(obj, is.factor)]
   if (isSet(exclude))
@@ -29,7 +35,7 @@ createDummyFeatures.data.frame = function(obj, target = NULL, intercept = TRUE, 
   if (isSet(target))
     work.cols = setdiff(work.cols, target)
   dummies = lapply(work.cols, function(colname) {
-    if(intercept){
+    if (intercept) {
       res = model.matrix(~obj[[colname]]-1)
       colnames(res) = levels(obj[[colname]])
     } else {
@@ -48,7 +54,8 @@ createDummyFeatures.data.frame = function(obj, target = NULL, intercept = TRUE, 
 }
 
 #' @export
-createDummyFeatures.SupervisedTask = function(obj, target = NULL, intercept = TRUE, exclude = NULL) {
+createDummyFeatures.SupervisedTask = function(obj, target = NULL, intercept = TRUE, exclude = character(0)) {
+  checkArg(exclude, subset = getFeatureNames(obj))
   d = createDummyFeatures(obj = getTaskData(obj), target = obj$task.desc$target, intercept = intercept, exclude = exclude)
   changeData(obj, d)
 }
