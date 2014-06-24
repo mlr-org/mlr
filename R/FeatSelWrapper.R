@@ -39,7 +39,7 @@ makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.
   if (missing(bits.to.features)) {
     bits.to.features = NULL
   } else {
-    checkArg(bits.to.features, "function", formals = c("x", "task"))
+    assertFunction(bits.to.features, args = c("x", "task"))
   }
   checkArg(control, "FeatSelControl")
   assertLogical(show.info, len = 1L, any.missing = FALSE)

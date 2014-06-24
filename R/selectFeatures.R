@@ -54,7 +54,7 @@ selectFeatures = function(learner, task, resampling, measures,
   if (missing(bits.to.features)) {
     bits.to.features = function(x, task) binaryToFeatures(x, getTaskFeatureNames(task))
   } else {
-    checkArg(bits.to.features, "function", formals = c("x", "task"))
+    assertFunction(bits.to.features, args = c("x", "task"))
   }
   checkArg(control, "FeatSelControl")
   assertLogical(show.info, len = 1L, any.missing = FALSE)

@@ -23,8 +23,8 @@
 #' @family impute
 #' @export
 makeImputeMethod = function(learn, impute, args = list()) {
-  checkArg(learn, "function", formals = c("data", "target", "col"))
-  checkArg(impute, "function", formals = c("data", "target", "col"))
+  assertFunction(learn, args = c("data", "target", "col"))
+  assertFunction(impute, args = c("data", "target", "col"))
   checkArg(args, "list")
   if (!isProperlyNamed(args))
     stop("All arguments must be properly named")
