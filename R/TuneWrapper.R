@@ -40,7 +40,7 @@ makeTuneWrapper = function(learner, resampling, measures, par.set, control, show
   learner = checkLearner(learner)
   checkArg(resampling, c("ResampleDesc", "ResampleInstance"))
   measures = checkMeasures(measures, learner)
-  assertClasses(par.set, classes = "ParamSet")
+  assertClass(par.set, classes = "ParamSet")
   assertClass(control, classes = "TuneControl")
   assertLogical(show.info, len = 1L, any.missing = FALSE)
   id = paste(learner$id, "tuned", sep = ".")

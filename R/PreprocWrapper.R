@@ -33,7 +33,7 @@ makePreprocWrapper = function(learner, train, predict, par.set = makeParamSet(),
   learner = checkLearner(learner)
   assertFunction(train, args = c("data", "target", "args"))
   assertFunction(predict, args = c("data", "target", "args", "control"))
-  assertClasses(par.set, classes = "ParamSet")
+  assertClass(par.set, classes = "ParamSet")
   checkList(par.vals)
   if (!isProperlyNamed(par.vals))
     stop("'par.vals' must be a properly named list!")
