@@ -34,7 +34,7 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
   learner = checkLearner(learner)
   assertClass(task, classes = "SupervisedTask")
   measures = checkMeasures(measures, learner)
-  checkArg(par.set, "ParamSet")
+  assertClasses(par.set, classes = "ParamSet")
   assertClass(control, classes = "TuneControl")
   if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")
