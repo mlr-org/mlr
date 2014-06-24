@@ -42,7 +42,7 @@
 #' @family filter
 #' @export
 getFilterValues = function(task, method = "random.forest.importance", ...) {
-  assertClass(task, classes = c("ClassifTask", "RegrTask")
+  checkArg(task, c("ClassifTask", "RegrTask"))
   assertChoice(method, choices = listFilterMethods())
 
   if (method %in% c("linear.correlation", "rank.correlation", "mRMR.classic")) {

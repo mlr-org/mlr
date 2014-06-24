@@ -41,7 +41,7 @@
 #'
 #' rin = makeResampleInstance("CV", iters = 10, task = iris.task)
 makeResampleInstance = function(desc, task, size, ...) {
-  assertClass(desc, classes = c("ResampleDesc", "character")
+  checkArg(desc, c("ResampleDesc", "character"))
   if (is.character(desc)) {
     assertCharacter(desc, len = 1L, any.missing = FALSE)
     desc = makeResampleDesc(desc, ...)

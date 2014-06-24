@@ -32,7 +32,7 @@
 removeConstantFeatures = function(x, target, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = getMlrOption("show.info")) {
 
-  assertClass(x, classes = c("data.frame", "SupervisedTask")
+  checkArg(x, c("data.frame", "SupervisedTask"))
   assertNumeric(perc, len = 1L, lower = 0, upper = 1, any.missing = FALSE)
   assertCharacter(dont.rm, any.missing = FALSE)
   assertLogical(na.ignore, len = 1L, any.missing = FALSE)

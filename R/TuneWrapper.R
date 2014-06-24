@@ -38,7 +38,7 @@
 #' print(r$extract)
 makeTuneWrapper = function(learner, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)
-  assertClass(resampling, classes = c("ResampleDesc", "ResampleInstance")
+  checkArg(resampling, c("ResampleDesc", "ResampleInstance"))
   measures = checkMeasures(measures, learner)
   checkArg(par.set, "ParamSet")
   assertClass(control, classes = "TuneControl")
