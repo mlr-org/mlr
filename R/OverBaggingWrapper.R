@@ -8,7 +8,8 @@
 #'
 #' OverBagging is implemented as follows:
 #' For each iteration a random data subset is sampled. Minority class examples
-#' are oversampled and majority class examples are sampled with replacement. 
+#' are oversampled and majority class examples are either sampled with replacement
+#' or all majority class examples take part in each bag. 
 #' Note that this is usually handled in a slightly different way
 #' in the random forest where features are sampled at each tree split).
 #'
@@ -25,6 +26,10 @@
 #'   Factor to upsample the smaller class in each bag.
 #'   Must be between 1 and \code{Inf},
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
+#' @param obw.maxcl [\code{numeric(1)}]\cr
+#'   character value that controls how to sample majority class.
+#'   all means every instance of the majority class gets in each bag,
+#'   boot means the majority class instances are bootstrapped in each iteration.   
 #' @param predict.type [\code{character(1)}]\cr
 #'   Classification: \dQuote{response} (= labels) or \dQuote{prob}
 #'   (= probabilities and labels by selecting the ones with maximal probability).
@@ -40,7 +45,7 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 2,
   obw.iters = convertInteger(obw.iters)
   checkArg(obw.iters, "integer", len = 1L, na.ok = FALSE, lower = 1L)
   checkArg(obw.rate, "numeric", len = 1L, na.ok = FALSE, lower = 1)
-  checkArg(obw.maxcl, "character", choices=c("boot","all"))  
+  checkArg(obw.maxcl, "character", choices=c("boot", "all"))  
   
   if (learner$predict.type != "response")
     stop("Predict type of the basic learner must be response.")
@@ -49,7 +54,7 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 2,
   ps = makeParamSet(
     makeIntegerLearnerParam(id = "obw.iters", lower = 1L, default = 10L),
     makeNumericLearnerParam(id = "obw.rate", lower = 1),
-    makeDiscreteLearnerParam(id = "obw.maxcl", c("boot","all"))    
+    makeDiscreteLearnerParam(id = "obw.maxcl", c("boot", "all"))    
   )
   pv = list(obw.iters = obw.iters, obw.rate = obw.rate, obw.maxcl = obw.maxcl)
   x = makeBaseWrapper(id, learner, packs, par.set = ps, par.vals = pv, cl = "OverBaggingWrapper")
@@ -61,28 +66,18 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 2,
 }
 
 #' @export
-trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, obw.iters,
-   obw.rate, obw.maxcl, bag, ...) {
+trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, .weights = NULL, 
+   obw.iters, obw.rate, obw.maxcl, ...) {
 
   .task = subsetTask(.task, subset = .subset)
-  if(obw.maxcl == "boot") {
-    y = getTaskTargets(.task)
-    z = getMinMaxClass(y)
-    inds1 = z$min.inds # min class
-    inds2 = z$max.inds # maj class
-    newsize = round(length(inds1) * obw.rate)
-  }
-    
+  
   models = lapply(seq_len(obw.iters), function(i) { 
-    if(obw.maxcl == "boot") {
-      # returns indexes of oversampled minority class examples and bootstrapped majority class examples
-      bag = c(sample(inds1, newsize, replace = TRUE),
-              sample(inds2, length(inds2), replace = TRUE))
+    if (obw.maxcl == "boot") {
+      bag = sampleBinaryClass(getTaskTargets(.task), obw.rate, cl = "min", minreplace = TRUE, maxreplace = TRUE)
     } else {
-      # returns indexes of oversampled minority class examples and ALL majority class examples
-      bag = sampleBinaryClass(getTaskTargets(.task), obw.rate, cl = "min", replace = TRUE)
+      bag = sampleBinaryClass(getTaskTargets(.task), obw.rate, cl = "min", minreplace = TRUE, maxreplace = FALSE)
     }
-    train(.learner$next.learner, .task, subset = bag)
+    train(.learner$next.learner, .task, subset = bag, weights = NULL)
   })
   makeChainModel(next.model = models, cl = "OverBaggingModel")
 }

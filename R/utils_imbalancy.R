@@ -18,12 +18,20 @@ getMinMaxClass = function(y) {
 
 
 # resample one of the two classes cl
-sampleBinaryClass = function(y, rate, cl, replace) {
+# sampleBinaryClass = function(y, rate, cl, replace) {
+#   z = getMinMaxClass(y)
+#   inds1 = switch(cl, min = z$min.inds, max = z$max.inds)
+#   inds2 = switch(cl, min = z$max.inds, max = z$min.inds)
+#   newsize = round(length(inds1) * rate)
+#   newinds = sample(inds1, newsize, replace = replace)
+#   c(newinds, inds2)
+# }
+sampleBinaryClass = function(y, rate, cl, minreplace = TRUE, maxreplace = TRUE) {
   z = getMinMaxClass(y)
   inds1 = switch(cl, min = z$min.inds, max = z$max.inds)
   inds2 = switch(cl, min = z$max.inds, max = z$min.inds)
   newsize = round(length(inds1) * rate)
-  newinds = sample(inds1, newsize, replace = replace)
-  c(newinds, inds2)
+  newinds1 = sample(inds1, newsize, replace = minreplace)
+  newinds2 = sample(inds2, length(inds2), replace = maxreplace)
+  c(newinds1, newinds2)
 }
-
