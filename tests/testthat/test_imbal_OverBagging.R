@@ -22,11 +22,11 @@ test_that("oversampling in each bag works", {
    lrn2 = makeOverBaggingWrapper(lrn1, obw.rate = 5, obw.iters = 3)
    mod = train(lrn2, task)
    models = getBaggingModels(mod)
-   tab = lapply(1:length(models), function(i) { 
-     data[[i]] = getTaskData(task, models[[i]]$subset)
-     table(data[[i]][, binaryclass.target]) }) 
-   expect_equal(tab1["M"], tab[[1]]["M"])
-   expect_equal(tab1["M"], tab[[length(models)]]["M"])
-   expect_equal(tab1["R"], round(tab[[1]]["R"] / 5))
-   expect_equal(tab1["R"], round(tab[[length(models)]]["R"] / 5))
+   # check min class size gets increased by rate/factor 5
+   tab = lapply(1:length(models), function(i) {
+     data = getTaskData(task, models[[i]]$subset)
+     tab = table(data[, binaryclass.target])
+     expect_equal(tab1["M"], tab["M"])
+     expect_equal(tab1["R"], round(tab["R"] / 5))
+   })
 })
