@@ -31,8 +31,8 @@
 #' @export
 makePreprocWrapper = function(learner, train, predict, par.set = makeParamSet(), par.vals = list()) {
   learner = checkLearner(learner)
-  checkArg(train, formals = c("data", "target", "args"))
-  checkArg(predict, formals = c("data", "target", "args", "control"))
+  assertFunction(train, args = c("data", "target", "args"))
+  assertFunction(predict, args = c("data", "target", "args", "control"))
   checkArg(par.set, "ParamSet")
   checkArg(par.vals, "list")
   if (!isProperlyNamed(par.vals))
