@@ -39,8 +39,11 @@ createDummyFeatures.data.frame = function(obj, target = NULL, intercept = TRUE, 
       res = model.matrix(~obj[[colname]]-1)
       colnames(res) = levels(obj[[colname]])
     } else {
-      res = model.matrix(~obj[[colname]])
+      res = model.matrix(~obj[[colname]])[, -1, drop = FALSE]
       colnames(res) = tail(levels(obj[[colname]]), -1)
+    }
+    if (ncol(res) == 1) {
+      colnames(res) = paste(colname, colnames(res), sep=".")
     }
     res
   })
