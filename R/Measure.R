@@ -65,7 +65,7 @@ makeMeasure = function(id, minimize, properties = character(0L), allowed.pred.ty
   assertCharacter(properties, any.missing = FALSE)
   assertSubset(allowed.pred.types, choices = c("response", "prob", "se"))
   assertFunction(fun)
-  checkArg(extra.args, "list")
+  assertList(extra.args)
 
   # FIXME: I think this is never used...
   fun1 = fun

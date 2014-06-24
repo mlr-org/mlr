@@ -40,7 +40,7 @@ makeCustomResampledMeasure = function(id, minimize = TRUE, properties = characte
   assertCharacter(properties, any.missing = FALSE)
   assertSubset(allowed.pred.types, choices = c("response", "prob", "se"))
   assertFunction(fun)
-  checkArg(extra.args, "list")
+  assertList(extra.args)
 
   force(fun)
   fun1 = function(task, model, pred, extra.args) NA_real_

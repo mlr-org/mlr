@@ -79,7 +79,7 @@ NULL
 
 makeSupervisedTask = function(type, data, target, weights = NULL, blocking = NULL) {
   env = new.env(parent = emptyenv())
-  checkArg(data, "data.frame")
+  assertDataFrame(data)
   env$data = data
   makeS3Obj("SupervisedTask",
     env = env,

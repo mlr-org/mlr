@@ -27,7 +27,7 @@ checkTask.CostSensTask = function(task, target, ...) {
   checkArg(task$env$costs, c("data.frame", "matrix"), na.ok = FALSE)
   if (is.data.frame(task$env$costs))
     task$env$costs = as.matrix(task$env$costs)
-  checkArg(task$env$costs, "matrix", na.ok = FALSE, lower = 0)
+  checkArg(task$env$costs, "matrix", na.ok = FALSE, lower = 0) #FIXME https://github.com/mllg/checkmate/issues/29
   if (is.null(colnames(task$env$costs)))
     colnames(task$env$costs) = paste("y", seq_col(task$env$costs), sep = "")
   checkColumnNames(task$env$costs)

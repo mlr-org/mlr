@@ -68,7 +68,7 @@
 #'
 makeModelMultiplexer = function(base.learners, id = "ModelMultiplexer") {
   assertCharacter(id, len = 1L, any.missing = FALSE)
-  checkArg(base.learners, "list", min.len = 1L)
+  assertList(base.learners, min.len = 1L)
   checkListElementClass(base.learners, "Learner")
   ids = unique(extractSubList(base.learners, "id"))
   if (length(ids) != length(base.learners))

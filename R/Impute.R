@@ -71,7 +71,7 @@
 impute = function(data, target, classes = list(), cols = list(), dummy.classes = character(0L),
   dummy.cols = character(0L), impute.new.levels = TRUE, recode.factor.levels = TRUE) {
 
-  checkArg(data, "data.frame")
+  assertDataFrame(data)
   assertCharacter(target, any.missing = FALSE)
   assertList(classes)
   assertList(cols)

@@ -40,7 +40,7 @@ makeLearner = function(cl, id = cl, predict.type = "response", ..., par.vals = l
     assertCharacter(id, len = 1L, any.missing = FALSE)
     wl$id = id
   }
-  checkArg(par.vals, "list")
+  assertList(par.vals)
   if (!nzchar(cl))
     stop("Cannot create learner from empty string!")
   if (!inherits(wl, "RLearner"))

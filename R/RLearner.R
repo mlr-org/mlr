@@ -52,9 +52,9 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
   assertChoice(type, choices = c("classif", "regr", "surv"))
   assertCharacter(package, any.missing = FALSE)
   assertCharacter(properties, any.missing = FALSE)
-  checkArg(par.set, "ParamSet")
+  assertClass(par.set, classes = "ParamSet")
   checkListElementClass(par.set$pars, "LearnerParam")
-  checkArg(par.vals, "list")
+  assertList(par.vals)
   if(!isProperlyNamed(par.vals))
     stop("Argument par.vals must be a properly named list!")
 

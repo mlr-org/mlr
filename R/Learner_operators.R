@@ -69,7 +69,7 @@ setHyperPars = function(learner, ..., par.vals) {
   if (missing(par.vals)) {
     par.vals = list()
   } else {
-    checkArg(par.vals, "list")
+    assertList(par.vals)
     if(!isProperlyNamed(par.vals))
       stop("All parameter settings have to be named arguments!")
   }
