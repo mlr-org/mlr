@@ -55,17 +55,17 @@ configureMlr = function(show.info, on.learner.error, on.learner.warning, on.par.
     any.change = TRUE
   }
   if (!missing(on.learner.error)) {
-    checkArg(on.learner.error, choices = c("quiet", "warn", "stop"))
+    assertChoice(on.learner.error, choices = c("quiet", "warn", "stop"))
     setMlrOption("on.learner.error", on.learner.error)
     any.change = TRUE
   }
   if (!missing(on.learner.warning)) {
-    checkArg(on.learner.warning, choices = c("warn", "quiet"))
+    assertChoice(on.learner.warning, choices = c("warn", "quiet"))
     setMlrOption("on.learner.warning", on.learner.warning)
     any.change = TRUE
   }
   if (!missing(on.par.without.desc)) {
-    checkArg(on.par.without.desc, choices = c("quiet", "warn", "stop"))
+    assertChoice(on.par.without.desc, choices = c("quiet", "warn", "stop"))
     setMlrOption("on.par.without.desc", on.par.without.desc)
     any.change = TRUE
   }

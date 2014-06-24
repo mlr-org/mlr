@@ -43,7 +43,7 @@
 #' @export
 getFilterValues = function(task, method = "random.forest.importance", ...) {
   checkArg(task, c("ClassifTask", "RegrTask"))
-  checkArg(method, choices = listFilterMethods())
+  assertChoice(method, choices = listFilterMethods())
 
   if (method %in% c("linear.correlation", "rank.correlation", "mRMR.classic")) {
     if (!inherits(task, "RegrTask") || (task$task.desc$n.feat["factors"] > 0L))

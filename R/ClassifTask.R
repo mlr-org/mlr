@@ -2,7 +2,7 @@
 #' @rdname SupervisedTask
 makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
   positive, fixup.data = "warn", check.data = TRUE) {
-  checkArg(fixup.data, choices = c("no", "quiet", "warn"))
+  assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   checkArg(check.data, "logical", len = 1L, na.ok = FALSE)
 
   task = addClasses(makeSupervisedTask("classif", data, target, weights, blocking), "ClassifTask")
@@ -22,7 +22,7 @@ makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
   } else {
     if (m > 2L)
       stop("Cannot set a positive class for a multiclass problem!")
-    checkArg(positive, choices = levs)
+    assertChoice(positive, choices = levs)
   }
   id = checkOrGuessId(id, data)
   task$task.desc = makeTaskDesc.ClassifTask(task, id, target, positive)

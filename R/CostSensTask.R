@@ -1,7 +1,7 @@
 #' @export
 #' @rdname SupervisedTask
 makeCostSensTask = function(id, data, costs, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
-  checkArg(fixup.data, choices = c("no", "quiet", "warn"))
+  assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   checkArg(check.data, "logical", len = 1L, na.ok = FALSE)
 
   # we don't have a target nor weights

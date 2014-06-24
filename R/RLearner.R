@@ -49,7 +49,7 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
   requirePackages(package, paste("learner", id))
 
   checkArg(id, "character", len = 1L, na.ok = FALSE)
-  checkArg(type, choices = c("classif", "regr", "surv"))
+  assertChoice(type, choices = c("classif", "regr", "surv"))
   checkArg(package, "character", na.ok = FALSE)
   checkArg(properties, "character", na.ok = FALSE)
   checkArg(par.set, "ParamSet")

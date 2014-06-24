@@ -20,7 +20,7 @@
 #' plotFilterValues(fv)
 plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols = c("darkgreen", "darkblue")) {
   checkArg(fvalues, "FilterValues")
-  checkArg(sort, choices = c("dec", "inc", "none"))
+  assertChoice(sort, choices = c("dec", "inc", "none"))
   requirePackages("ggplot2", why = "getFilterValues")
   n.show = convertInteger(n.show)
   checkArg(n.show, "integer", min.len = 1L, na.ok = FALSE)

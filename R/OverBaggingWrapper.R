@@ -40,7 +40,7 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate, obw.maxcl 
   obw.iters = convertInteger(obw.iters)
   checkArg(obw.iters, "integer", len = 1L, na.ok = FALSE, lower = 1L)
   checkArg(obw.rate, "numeric", len = 1L, na.ok = FALSE, lower = 1)
-  checkArg(obw.maxcl, choices = c("boot", "all"))
+  assertChoice(obw.maxcl, choices = c("boot", "all"))
 
   if (learner$predict.type != "response")
     stop("Predict type of the basic learner must be response.")

@@ -5,7 +5,7 @@
 #' @rdname SupervisedTask
 makeSurvTask = function(id, data, target, surv.type = "right", weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE) {
-  checkArg(fixup.data, choices = c("no", "quiet", "warn"))
+  assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   checkArg(check.data, "logical", len = 1L, na.ok = FALSE)
 
   task = addClasses(makeSupervisedTask("surv", data, target, weights, blocking), "SurvTask")

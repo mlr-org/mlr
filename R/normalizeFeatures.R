@@ -24,7 +24,7 @@
 #' @export
 
 normalizeFeatures = function(obj, target = NULL, method = "standardize", exclude = NULL, range = c(0,1)) {
-  checkArg(method, choices = c("range", "standardize", "center", "scale"))
+  assertChoice(method, choices = c("range", "standardize", "center", "scale"))
   UseMethod("normalizeFeatures")
 }
 

@@ -69,8 +69,8 @@
 #' # Holdout a.k.a. test sample estimation
 #' makeResampleDesc("Holdout")
 makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE) {
-  checkArg(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap"))
-  checkArg(predict, "character", choices = c("train", "test", "both"))
+  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap"))
+  assertChoice(predict, choices = c("train", "test", "both"))
   checkArg(stratify, "logical", len = 1L, na.ok = FALSE)
   if (stratify && method == "LOO")
     stop("Stratification cannot be done for LOO!")

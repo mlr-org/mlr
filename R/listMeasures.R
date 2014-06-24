@@ -32,7 +32,7 @@ listMeasures.default = function(obj, properties = character(0L), create = FALSE)
 #' @rdname listMeasures
 #' @export
 listMeasures.character = function(obj, properties = character(0L), create = FALSE) {
-  checkArg(obj, choices = c("classif", "regr", "surv", "costsens", NA_character_))
+  assertChoice(obj, choices = c("classif", "regr", "surv", "costsens", NA_character_))
   if (is.na(obj))
     obj = character(0L)
   listMeasures2(union(obj, properties), create)

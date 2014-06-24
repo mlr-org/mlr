@@ -48,7 +48,7 @@ listLearners.default  = function(obj, properties = character(0L),
 listLearners.character  = function(obj, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, create = FALSE) {
 
-  checkArg(obj, choices = c("classif", "regr", "surv", "costsens", NA_character_))
+  assertChoice(obj, choices = c("classif", "regr", "surv", "costsens", NA_character_))
   type = obj
   meths = as.character(methods("makeRLearner"))
   res = err = vector("list", length(meths))

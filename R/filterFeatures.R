@@ -24,7 +24,7 @@
 #' @family filter
 filterFeatures = function(task, method = "random.forest.importance", select = "perc", val, ...) {
   # does checks + loads FSelector
-  checkArg(method, choices = listFilterMethods())
+  assertChoice(method, choices = listFilterMethods())
   checkFilterArguments(select = select, val = val)
   fvals = getFilterValues(task = task, method = method, ...)
   d = fvals$data
@@ -40,7 +40,7 @@ filterFeatures = function(task, method = "random.forest.importance", select = "p
 }
 
 checkFilterArguments = function(select, val) {
-  checkArg(select, choices = c("perc", "abs", "threshold"))
+  assertChoice(select, choices = c("perc", "abs", "threshold"))
   switch(select,
     perc = checkArg(val, "numeric", len = 1L, na.ok = FALSE, lower = 0, upper = 1),
     abs = {
