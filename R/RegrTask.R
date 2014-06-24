@@ -19,7 +19,7 @@ makeRegrTask = function(id, data, target, weights = NULL, blocking = NULL,
 #' @export
 checkTask.RegrTask = function(task, target, ...) {
   NextMethod("checkTask")
-  checkArg(target, "character", len = 1L)
+  assertCharacter(target, len = 1L)
   if (!is.numeric(task$env$data[[target]]))
     stopf("Target column '%s' must be numeric", target)
 }

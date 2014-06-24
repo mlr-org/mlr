@@ -60,9 +60,9 @@
 #' makeMeasure(id = "my.sse", minimize = TRUE, properties = c("regr", "response"), fun = f)
 makeMeasure = function(id, minimize, properties = character(0L), allowed.pred.types = character(0L),
   fun, extra.args = list(), aggr = test.mean) {
-  checkArg(id, "character", len = 1L, na.ok = FALSE)
+  assertCharacter(id, len = 1L, any.missing = FALSE)
   checkArg(minimize, "logical", len = 1L, na.ok = FALSE)
-  checkArg(properties, "character", na.ok = FALSE)
+  assertCharacter(properties, any.missing = FALSE)
   checkArg(allowed.pred.types, subset = c("response", "prob", "se"))
   checkArg(fun, "function")
   checkArg(extra.args, "list")

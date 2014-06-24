@@ -35,9 +35,9 @@
 makeCustomResampledMeasure = function(id, minimize = TRUE, properties = character(0L),
   allowed.pred.types = character(0L), fun, extra.args = list()) {
 
-  checkArg(id, "character", len = 1L, na.ok = FALSE)
+  assertCharacter(id, len = 1L, any.missing = FALSE)
   checkArg(minimize, "logical", len = 1L, na.ok = FALSE)
-  checkArg(properties, "character", na.ok = FALSE)
+  assertCharacter(properties, any.missing = FALSE)
   checkArg(allowed.pred.types, subset = c("response", "prob", "se"))
   checkArg(fun, "function")
   checkArg(extra.args, "list")

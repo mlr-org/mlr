@@ -32,7 +32,7 @@ makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
 #' @export
 checkTask.ClassifTask = function(task, target, ...) {
   NextMethod("checkTask")
-  checkArg(target, "character", len = 1L)
+  assertCharacter(target, len = 1L)
   if (!is.factor(task$env$data[[target]])) {
     stopf("Target column '%s' must be a factor", target)
   }

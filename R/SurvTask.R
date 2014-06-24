@@ -24,7 +24,7 @@ makeSurvTask = function(id, data, target, surv.type = "right", weights = NULL, b
 #' @export
 checkTask.SurvTask = function(task, target, ...) {
   NextMethod("checkTask")
-  checkArg(target, "character", len = 2L)
+  assertCharacter(target, len = 2L)
   ### TODO: more checks here
 }
 

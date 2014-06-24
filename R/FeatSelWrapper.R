@@ -34,7 +34,7 @@ makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.
   if (missing(bit.names)) {
     bit.names = character(0L)
   } else {
-    checkArg(bit.names, "character", na.ok = FALSE)
+    assertCharacter(bit.names, any.missing = FALSE)
   }
   if (missing(bits.to.features)) {
     bits.to.features = NULL

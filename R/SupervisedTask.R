@@ -150,7 +150,7 @@ checkOrGuessId = function(id, data) {
     if (!is.character(id) || length(id) != 1L)
       stop("Cannot infer id for task automatically. Please set it manually!")
   } else {
-    checkArg(id, "character", len = 1L, na.ok = FALSE)
+    assertCharacter(id, len = 1L, any.missing = FALSE)
   }
   return(id)
 }

@@ -72,11 +72,11 @@ impute = function(data, target, classes = list(), cols = list(), dummy.classes =
   dummy.cols = character(0L), impute.new.levels = TRUE, recode.factor.levels = TRUE) {
 
   checkArg(data, "data.frame")
-  checkArg(target, "character", na.ok = FALSE)
+  assertCharacter(target, any.missing = FALSE)
   checkArg(classes, "list")
   checkArg(cols, "list")
-  checkArg(dummy.classes, "character", na.ok = FALSE)
-  checkArg(dummy.cols, "character", na.ok = FALSE)
+  assertCharacter(dummy.classes, any.missing = FALSE)
+  assertCharacter(dummy.cols, any.missing = FALSE)
 
   if (length(target)) {
     not.ok = target %nin% names(data)

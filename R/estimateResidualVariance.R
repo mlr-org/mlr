@@ -24,7 +24,7 @@ estimateResidualVariance = function(x, task, data, target) {
 estimateResidualVariance.Learner = function(x, task, data, target) {
   if (missing(task)) {
     checkArg(data, "data.frame")
-    checkArg(target, "character", len = 1L, na.ok = FALSE)
+    assertCharacter(target, len = 1L, any.missing = FALSE)
     task = makeRegrTask(data = data, target = target)
   }
   estimateResidualVariance.WrappedModel(train(x, task), task)
@@ -34,7 +34,7 @@ estimateResidualVariance.Learner = function(x, task, data, target) {
 estimateResidualVariance.WrappedModel = function(x, task, data, target) {
   if (missing(task)) {
     checkArg(data, "data.frame")
-    checkArg(target, "character", len = 1L, na.ok = FALSE)
+    assertCharacter(target, len = 1L, any.missing = FALSE)
     task = makeRegrTask(data = data, target = target)
   } else {
     checkArg(task, "RegrTask")

@@ -92,7 +92,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   checkArg(prob.alpha, "logical", len = 1L, na.ok = FALSE)
   checkArg(se.band, "logical", len = 1L, na.ok = FALSE)
   assertChoice(err.mark, choices = c("train", "cv", "none"))
-  checkArg(err.col, "character", len = 1L, na.ok = FALSE)
+  assertCharacter(err.col, len = 1L, any.missing = FALSE)
   if (td$type == "classif" && err.mark == "cv" && cv == 0L)
     stopf("Classification: CV must be switched on, with 'cv' > 0, for err.type = 'cv'!")
 

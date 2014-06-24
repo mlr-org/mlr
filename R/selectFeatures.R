@@ -49,7 +49,7 @@ selectFeatures = function(learner, task, resampling, measures,
   if (missing(bit.names)) {
     bit.names = getTaskFeatureNames(task)
   } else {
-    checkArg(bit.names, "character", na.ok = FALSE)
+    assertCharacter(bit.names, any.missing = FALSE)
   }
   if (missing(bits.to.features)) {
     bits.to.features = function(x, task) binaryToFeatures(x, getTaskFeatureNames(task))

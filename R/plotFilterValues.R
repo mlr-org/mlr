@@ -34,7 +34,7 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
   d$name = factor(d$name, levels = d$name)
   d = d[1:n.show,, drop = FALSE]
   if (!is.null(feat.type.cols)) {
-    checkArg(feat.type.cols, "character", len = 2L, na.ok = FALSE)
+    assertCharacter(feat.type.cols, len = 2L, any.missing = FALSE)
     mp = aes_string(x = "name", y = "val", fill = "type")
   } else {
     mp = aes_string(x = "name", y = "val")

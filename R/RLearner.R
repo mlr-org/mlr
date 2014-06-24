@@ -45,13 +45,13 @@ makeRLearner = function() {
 makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties) {
   # must do that before accessing par.set
   # one case where lazy eval is actually helpful...
-  checkArg(package, "character", na.ok = FALSE)
+  assertCharacter(package, any.missing = FALSE)
   requirePackages(package, paste("learner", id))
 
-  checkArg(id, "character", len = 1L, na.ok = FALSE)
+  assertCharacter(id, len = 1L, any.missing = FALSE)
   assertChoice(type, choices = c("classif", "regr", "surv"))
-  checkArg(package, "character", na.ok = FALSE)
-  checkArg(properties, "character", na.ok = FALSE)
+  assertCharacter(package, any.missing = FALSE)
+  assertCharacter(properties, any.missing = FALSE)
   checkArg(par.set, "ParamSet")
   checkListElementClass(par.set$pars, "LearnerParam")
   checkArg(par.vals, "list")

@@ -28,7 +28,7 @@ listLearners  = function(obj = NA_character_, properties = character(0L),
 
   if (!missing(obj))
     checkArg(obj, c("character", "SupervisedTask"))
-  checkArg(properties, "character", na.ok = FALSE)
+  assertCharacter(properties, any.missing = FALSE)
   checkArg(warn.missing.packages, "logical", len = 1L, na.ok = FALSE)
   checkArg(create, "logical", len = 1L, na.ok = FALSE)
   UseMethod("listLearners")
@@ -81,7 +81,7 @@ listLearners.SupervisedTask = function(obj, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, create = FALSE) {
 
   task = obj
-  checkArg(properties, "character", na.ok = FALSE)
+  assertCharacter(properties, any.missing = FALSE)
   td = task$task.desc
 
   props = character(0L)

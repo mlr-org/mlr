@@ -43,7 +43,7 @@
 makeResampleInstance = function(desc, task, size, ...) {
   checkArg(desc, c("ResampleDesc", "character"))
   if (is.character(desc)) {
-    checkArg(desc, "character", len = 1L, na.ok = FALSE)
+    assertCharacter(desc, len = 1L, any.missing = FALSE)
     desc = makeResampleDesc(desc, ...)
   }
   if (!missing(task)) {
