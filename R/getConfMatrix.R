@@ -30,9 +30,9 @@
 #' pred <- predict(mod, newdata = iris[test.set, ])
 #' print(getConfMatrix(pred))
 #' print(getConfMatrix(pred, relative = TRUE))
-getConfMatrix = function(pred, relative=FALSE) {
+getConfMatrix = function(pred, relative = FALSE) {
   checkArg(pred, "Prediction")
-  checkArg(relative, "logical", len=1L, na.ok=FALSE)
+  checkArg(relative, "logical", len = 1L, na.ok = FALSE)
 
   if (pred$task.desc$type != "classif")
     stop("Can only calculate confusion matrix for classification predictions, not: %s",

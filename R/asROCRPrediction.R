@@ -12,7 +12,7 @@ asROCRPrediction.Prediction = function(pred) {
     stop("More than 2 classes!")
   }
   p = getProbabilities(pred)
-  ROCR::prediction(p, pred$data$truth, label.ordering=c(pred$task.desc$negative, pred$task.desc$positive))
+  ROCR::prediction(p, pred$data$truth, label.ordering = c(pred$task.desc$negative, pred$task.desc$positive))
 }
 
 #' @export
@@ -24,5 +24,5 @@ asROCRPrediction.ResamplePrediction = function(pred) {
   iter = pred$data$iter
   prob = split(prob, iter)
   truth = split(pred$data$truth, iter)
-  ROCR::prediction(prob, truth, label.ordering=c(pred$task.desc$negative, pred$task.desc$positive))
+  ROCR::prediction(prob, truth, label.ordering = c(pred$task.desc$negative, pred$task.desc$positive))
 }

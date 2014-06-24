@@ -159,11 +159,11 @@ b632plus = makeAggregation(
       df2 = df[df$iter == i, ]
       y1 = df2$truth
       y2 = df2$response
-      grid = expand.grid(y1, y2, KEEP.OUT.ATTRS=FALSE)
-      pred2 = makePrediction(task.desc=pred$task.desc,
-        id=NULL, truth=grid[, 1L], predict.type="response", y=grid[, 2L],
-        time=NA_real_)
-      gamma = performance(pred2, measures=measure)
+      grid = expand.grid(y1, y2, KEEP.OUT.ATTRS = FALSE)
+      pred2 = makePrediction(task.desc = pred$task.desc,
+        id = NULL, truth = grid[, 1L], predict.type = "response", y = grid[, 2L],
+        time = NA_real_)
+      gamma = performance(pred2, measures = measure)
       R = (perf.test[i] - perf.train[i]) / (gamma - perf.train[i])
       w = 0.632 / (1 - 0.368*R)
       a[i] = (1-w) * perf.train[i] + w*perf.test[i]

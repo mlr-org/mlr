@@ -45,7 +45,7 @@ createDummyFeatures.data.frame = function(obj, target = NULL, method = "1-of-n",
       colnames(res) = tail(levels(obj[[colname]]), -1)
     }
     if (ncol(res) == 1) {
-      colnames(res) = paste(colname, colnames(res), sep=".")
+      colnames(res) = paste(colname, colnames(res), sep = ".")
     }
     res
   })

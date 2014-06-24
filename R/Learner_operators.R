@@ -26,14 +26,14 @@ getParamSet.Learner = function(learner) {
 #'   Default is \code{c("train", "predict", "both")}.
 #' @return [\code{list}]. A named list of values.
 #' @export
-getHyperPars = function(learner,  for.fun=c("train", "predict", "both")) {
+getHyperPars = function(learner,  for.fun = c("train", "predict", "both")) {
   checkArg(learner, "Learner")
-  checkArg(for.fun, subset=c("train", "predict", "both"))
+  checkArg(for.fun, subset = c("train", "predict", "both"))
   UseMethod("getHyperPars")
 }
 
 #' @export
-getHyperPars.Learner = function(learner, for.fun=c("train", "predict", "both")) {
+getHyperPars.Learner = function(learner, for.fun = c("train", "predict", "both")) {
   checkArg(learner, "Learner")
   pars = learner$par.set$pars
   pv = learner$par.vals
@@ -58,8 +58,8 @@ getHyperPars.Learner = function(learner, for.fun=c("train", "predict", "both")) 
 #'   a learner, see the \code{par.set} slot of the \code{\link{Learner}}
 #'   object.
 #' @examples
-#' cl1 <- makeLearner("classif.ksvm", sigma=1)
-#' cl2 <- setHyperPars(cl1, sigma=10, par.vals=list(C=2))
+#' cl1 <- makeLearner("classif.ksvm", sigma = 1)
+#' cl2 <- setHyperPars(cl1, sigma = 10, par.vals = list(C = 2))
 #' print(cl1)
 #' # note the now set and altered hyperparameters:
 #' print(cl2)
@@ -107,7 +107,7 @@ setHyperPars2.Learner = function(learner, par.vals) {
         stop(msg)
       if (opwd == "warn")
         warning(msg)
-      learner$par.set$pars[[n]] = makeUntypedLearnerParam(id=n)
+      learner$par.set$pars[[n]] = makeUntypedLearnerParam(id = n)
       learner$par.vals[[n]] = p
     } else {
       if (!isFeasible(pd, p))

@@ -4,12 +4,12 @@ makeRLearner.regr.mars = function() {
     cl = "regr.mars",
     package = "mda",
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id="degree", default=1L, lower=1L),
-      makeIntegerLearnerParam(id="nk", lower=1L),
-      makeNumericLearnerParam(id="penalty", default=2, lower=0),
-      makeNumericLearnerParam(id="thresh", default=0.001, lower=0),
-      makeLogicalLearnerParam(id="prune", default=TRUE),
-      makeLogicalLearnerParam(id="forward.step", default=TRUE)
+      makeIntegerLearnerParam(id = "degree", default = 1L, lower = 1L),
+      makeIntegerLearnerParam(id = "nk", lower = 1L),
+      makeNumericLearnerParam(id = "penalty", default = 2, lower = 0),
+      makeNumericLearnerParam(id = "thresh", default = 0.001, lower = 0),
+      makeLogicalLearnerParam(id = "prune", default = TRUE),
+      makeLogicalLearnerParam(id = "forward.step", default = TRUE)
     ),
     properties = c("numerics")
   )
@@ -17,7 +17,7 @@ makeRLearner.regr.mars = function() {
 
 #' @export
 trainLearner.regr.mars = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  d = getTaskData(.task, .subset, target.extra=TRUE)
+  d = getTaskData(.task, .subset, target.extra = TRUE)
   mars(x = as.matrix(d$data), y = d$target, ...)
 }
 

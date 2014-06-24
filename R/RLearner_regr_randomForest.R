@@ -6,19 +6,19 @@ makeRLearner.regr.randomForest = function() {
     cl = "regr.randomForest",
     package = "randomForest",
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id="ntree", default=500L, lower=1L),
-      makeIntegerLearnerParam(id="ntree.for.se", default=100L, lower=1L),
-      makeDiscreteLearnerParam(id="se.method", default="bootstrap", values=c("bootstrap", "jackknife", "noisy.bootstrap")),
-      makeIntegerLearnerParam(id="nr.of.bootstrap.samples", default=5L, lower=1L),
-      makeIntegerLearnerParam(id="mtry", lower=1L),
-      makeLogicalLearnerParam(id="replace", default=TRUE),
-      makeIntegerLearnerParam(id="sampsize", lower=1L),
-      makeIntegerLearnerParam(id="nodesize", default=1L, lower=1L),
-      makeIntegerLearnerParam(id="maxnodes", lower=1L),
-      makeLogicalLearnerParam(id="importance", default=FALSE),
-      makeLogicalLearnerParam(id="localImp", default=FALSE),
-      makeLogicalLearnerParam(id="keep.inbag", default=FALSE),
-      makeLogicalLearnerParam(id="fix.factors", default=FALSE)
+      makeIntegerLearnerParam(id = "ntree", default = 500L, lower = 1L),
+      makeIntegerLearnerParam(id = "ntree.for.se", default = 100L, lower = 1L),
+      makeDiscreteLearnerParam(id = "se.method", default = "bootstrap", values = c("bootstrap", "jackknife", "noisy.bootstrap")),
+      makeIntegerLearnerParam(id = "nr.of.bootstrap.samples", default = 5L, lower = 1L),
+      makeIntegerLearnerParam(id = "mtry", lower = 1L),
+      makeLogicalLearnerParam(id = "replace", default = TRUE),
+      makeIntegerLearnerParam(id = "sampsize", lower = 1L),
+      makeIntegerLearnerParam(id = "nodesize", default = 1L, lower = 1L),
+      makeIntegerLearnerParam(id = "maxnodes", lower = 1L),
+      makeLogicalLearnerParam(id = "importance", default = FALSE),
+      makeLogicalLearnerParam(id = "localImp", default = FALSE),
+      makeLogicalLearnerParam(id = "keep.inbag", default = FALSE),
+      makeLogicalLearnerParam(id = "fix.factors", default = FALSE)
     ),
     par.vals = list(
       fix.factors = FALSE,
@@ -34,7 +34,7 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
   f = getTaskFormula(.task)
   par.vals = .learner$par.vals
 
-  m = randomForest(f, data=getTaskData(.task, .subset), ...)
+  m = randomForest(f, data = getTaskData(.task, .subset), ...)
 
   # we have to do some preprocessing here if we need the standard error
   if (.learner$predict.type == "se") {
@@ -46,14 +46,14 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
       bootstrapSize = nrow(train)
 
       # generate bootstrap samples
-      samplesIdx = replicate(numberOfBootstraps, sample(1:bootstrapSize, replace=TRUE))
+      samplesIdx = replicate(numberOfBootstraps, sample(1:bootstrapSize, replace = TRUE))
 
       # determine whether we work with reduced ensemble size (noisy bootstrap) or not
       ntree = if (par.vals$se.method == "bootstrap") par.vals$ntree else par.vals$ntree.for.se
 
       # fit models on the bootstrap samples
       models = apply(samplesIdx, 2, function(bootstrapIdx) {
-        randomForest(f, data=train[bootstrapIdx,],...)
+        randomForest(f, data = train[bootstrapIdx,],...)
       })
 
       # save models in attrribute
@@ -68,7 +68,7 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
   if (.learner$par.vals$fix.factors) {
     factors = Filter(is.character, .model$learner.model$forest$xlevels)
     .newdata[names(factors)] = mapply(factor, x = .newdata[names(factors)],
-      levels = factors, SIMPLIFY=FALSE)
+      levels = factors, SIMPLIFY = FALSE)
   }
 
   if (.learner$predict.type == "se") {
@@ -97,7 +97,7 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
     # make predictions for newdata based on each "bootstrap model"
     preds = lapply(models, function(model) {
       # save predictions of every single ensemble member, i.e., decision tree
-      predict(model, .newdata, predict.all=TRUE)
+      predict(model, .newdata, predict.all = TRUE)
     })
 
     # n x B matrix of reponses of B forests
@@ -153,7 +153,7 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
     idx = lapply(seq_len(n), function(i) which(inbag[i,] == 0L))
 
     # estimate
-    res = matrix(NA_real_, ncol=n, nrow=nrow(.newdata))
+    res = matrix(NA_real_, ncol = n, nrow = nrow(.newdata))
     for (j in seq_row(.newdata)) {
       for (i in seq_len(n)) {
         res[j,i] = sum(rf.preds$individual[j, idx[[i]]]) / M[[i]]

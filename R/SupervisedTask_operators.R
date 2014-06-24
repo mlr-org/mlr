@@ -86,7 +86,7 @@ getTaskFormula = function(x, target = getTargetNames(x), env = NULL) {
 #' task = makeClassifTask(data = iris, target = "Species")
 #' getTaskTargets(task)
 #' getTaskTargets(task, subset = 1:50)
-getTaskTargets = function(task, subset, recode.target="no") {
+getTaskTargets = function(task, subset, recode.target = "no") {
   #FIXME: argument checks currently not done for speed
   if (task$task.desc$type == "costsens")
     stop("There is no target available for cost-sensitive learning.")
@@ -132,11 +132,11 @@ getTaskTargets = function(task, subset, recode.target="no") {
 #' head(getTaskData(task, subset = 1:100, recode.target = "01"))
 getTaskData = function(task, subset, features, target.extra = FALSE, recode.target = "no") {
   #FIXME: argument checks currently not done for speed
-  indexHelper = function(df, i, j, drop=TRUE) {
+  indexHelper = function(df, i, j, drop = TRUE) {
     switch(2L * is.null(i) + is.null(j) + 1L,
-      df[i, j, drop=drop],
-      df[i,  , drop=drop],
-      df[ , j, drop=drop],
+      df[i, j, drop = drop],
+      df[i,  , drop = drop],
+      df[ , j, drop = drop],
       df
     )
   }
@@ -150,8 +150,8 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
     if (missing(features))
       features = task.features
     res = list(
-      data = indexHelper(task$env$data, subset, setdiff(features, tn), drop=FALSE),
-      target = recodeY(indexHelper(task$env$data, subset, tn), type=recode.target, positive=task$task.desc$positive)
+      data = indexHelper(task$env$data, subset, setdiff(features, tn), drop = FALSE),
+      target = recodeY(indexHelper(task$env$data, subset, tn), type = recode.target, positive = task$task.desc$positive)
     )
   } else {
     if (missing(features) || identical(features, task.features))
@@ -159,9 +159,9 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
     else
       features = union(features, tn)
 
-    res = indexHelper(task$env$data, subset, features, drop=FALSE)
+    res = indexHelper(task$env$data, subset, features, drop = FALSE)
     if (recode.target %nin% c("no", "surv")) {
-      res[, tn] = recodeY(res[, tn], type=recode.target, positive=task$task.desc$positive)
+      res[, tn] = recodeY(res[, tn], type = recode.target, positive = task$task.desc$positive)
     }
   }
   res

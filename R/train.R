@@ -37,7 +37,7 @@ train = function(learner, task, subset, weights = NULL) {
     subset = seq_len(task$task.desc$size)
   } else {
     subset = convertIntegers(subset)
-    checkArg(subset, "integer", na.ok=FALSE)
+    checkArg(subset, "integer", na.ok = FALSE)
   }
 
   # make sure that pack for learner is loaded, probably needed when learner is exported
@@ -47,11 +47,11 @@ train = function(learner, task, subset, weights = NULL) {
   tn = task$task.desc$target
 
   # make pars list for train call
-  pars = list(.learner=learner, .task=task, .subset=subset)
+  pars = list(.learner = learner, .task = task, .subset = subset)
 
   # FIXME: code is bad here, set weights, the simply check it in checktasklearner
   if(!is.null(weights)) {
-    checkArg(weights, "numeric", len=length(subset), na.ok=FALSE, lower=0)
+    checkArg(weights, "numeric", len = length(subset), na.ok = FALSE, lower = 0)
   } else {
     weights = task$weights
   }
@@ -66,7 +66,7 @@ train = function(learner, task, subset, weights = NULL) {
   # no vars? then use no vars model
 
   if (length(vars) == 0L) {
-    learner.model = makeNoFeaturesModel(targets=task$env$data[subset, tn], task.desc=task$task.desc)
+    learner.model = makeNoFeaturesModel(targets = task$env$data[subset, tn], task.desc = task$task.desc)
     time.train = 0
   } else {
     opt.slo = getMlrOption("show.learner.output")
@@ -84,7 +84,7 @@ train = function(learner, task, subset, weights = NULL) {
     if (opt.ole == "stop")
       fun2 = identity
     else
-      fun2 = function(x) try(x, silent=TRUE)
+      fun2 = function(x) try(x, silent = TRUE)
     old.warn.opt = getOption("warn")
     on.exit(options(warn = old.warn.opt))
     if (getMlrOption("on.learner.warning") == "quiet") {

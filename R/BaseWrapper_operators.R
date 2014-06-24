@@ -5,7 +5,7 @@ getParamSet.BaseWrapper = function(learner) {
 
 
 #' @export
-getHyperPars.BaseWrapper = function(learner, for.fun="train") {
+getHyperPars.BaseWrapper = function(learner, for.fun = "train") {
   c(getHyperPars(learner$next.learner, for.fun), getHyperPars.Learner(learner, for.fun))
 }
 
@@ -16,9 +16,9 @@ setHyperPars2.BaseWrapper = function(learner, par.vals) {
   pds.n = names(learner$par.set$pars)
   for (i in seq_along(par.vals)) {
     if (ns[i] %in% pds.n) {
-      learner = setHyperPars2.Learner(learner, par.vals=par.vals[i])
+      learner = setHyperPars2.Learner(learner, par.vals = par.vals[i])
     } else {
-      learner$next.learner = setHyperPars2(learner$next.learner, par.vals=par.vals[i])
+      learner$next.learner = setHyperPars2(learner$next.learner, par.vals = par.vals[i])
     }
   }
   return(learner)

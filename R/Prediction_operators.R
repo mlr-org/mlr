@@ -40,7 +40,7 @@ getProbabilities = function(pred, cl) {
   if (pred$predict.type != "prob")
     stop("Probabilities not present in Prediction object!")
   cns = colnames(pred$data)
-  cl2 = paste("prob", cl, sep=".")
+  cl2 = paste("prob", cl, sep = ".")
   if (!all(cl2 %in% cns))
     stopf("Trying to get probabilities for nonexistant classes: %s", collapse(cl))
   y = pred$data[, cl2]
@@ -56,5 +56,5 @@ getProbabilities = function(pred, cl) {
 #	target = Reduce(c, lapply(preds, function(x) x@target))
 #	weights = Reduce(c, lapply(preds, function(x) x@weights))
 #	prob = Reduce(rbind, lapply(preds, function(x) x@prob))
-#	return(new("Prediction", task.desc=preds[[1]]@desc, id=id, response=response, target=target, weights=weights, prob=prob));
+#	return(new("Prediction", task.desc = preds[[1]]@desc, id = id, response = response, target = target, weights = weights, prob = prob));
 #}

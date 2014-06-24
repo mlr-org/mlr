@@ -68,10 +68,10 @@
 #'
 #' # Holdout a.k.a. test sample estimation
 #' makeResampleDesc("Holdout")
-makeResampleDesc = function(method, predict="test", ..., stratify=FALSE) {
-  checkArg(method, choices=c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap"))
-  checkArg(predict, "character", choices=c("train", "test", "both"))
-  checkArg(stratify, "logical", len=1L, na.ok=FALSE)
+makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE) {
+  checkArg(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap"))
+  checkArg(predict, "character", choices = c("train", "test", "both"))
+  checkArg(stratify, "logical", len = 1L, na.ok = FALSE)
   if (stratify && method == "LOO")
     stop("Stratification cannot be done for LOO!")
   d = do.call(paste0("makeResampleDesc", method), list(...))
@@ -81,8 +81,8 @@ makeResampleDesc = function(method, predict="test", ..., stratify=FALSE) {
 }
 
 
-makeResampleDescInternal = function(id, iters, predict="test", ...) {
-  setClasses(insert(list(...), list(id = id, iters=iters, predict=predict)),
+makeResampleDescInternal = function(id, iters, predict = "test", ...) {
+  setClasses(insert(list(...), list(id = id, iters = iters, predict = predict)),
     "ResampleDesc")
 }
 

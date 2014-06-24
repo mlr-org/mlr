@@ -33,7 +33,7 @@ removeConstantFeatures = function(x, target, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = getMlrOption("show.info")) {
 
   checkArg(x, c("data.frame", "SupervisedTask"))
-  checkArg(perc, "numeric", len = 1L, lower = 0, upper=1, na.ok = FALSE)
+  checkArg(perc, "numeric", len = 1L, lower = 0, upper = 1, na.ok = FALSE)
   checkArg(dont.rm, "character", na.ok = FALSE)
   checkArg(na.ignore, "logical", len = 1L, na.ok = FALSE)
   checkArg(show.info, "logical", len = 1L, na.ok = FALSE)

@@ -4,7 +4,7 @@ makeRLearner.regr.penalized.ridge = function() {
     cl = "regr.penalized.ridge",
     package = "penalized",
     par.set = makeParamSet(
-      makeNumericLearnerParam(id="lambda2", default=0, lower=0)
+      makeNumericLearnerParam(id = "lambda2", default = 0, lower = 0)
     ),
     properties = c("missings", "numerics", "factors")
   )
@@ -13,7 +13,7 @@ makeRLearner.regr.penalized.ridge = function() {
 #' @export
 trainLearner.regr.penalized.ridge = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  penalized(f, data=getTaskData(.task, .subset), ...)
+  penalized(f, data = getTaskData(.task, .subset), ...)
 }
 
 #' @export

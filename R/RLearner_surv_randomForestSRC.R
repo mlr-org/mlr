@@ -4,12 +4,12 @@ makeRLearner.surv.randomForestSRC = function() {
     cl = "surv.randomForestSRC",
     package = "randomForestSRC",
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id="ntree", default=1000L, lower=1L),
-      makeDiscreteLearnerParam(id="bootstrap", values=c("by.root", "by.node", "none"), default="by.root"),
-      makeIntegerLearnerParam(id="mtry", lower=1L),
-      makeIntegerLearnerParam(id="nodesize", lower=1L, default=3L),
-      makeDiscreteLearnerParam(id="splitrule", values=c("logrank", "logrankscore"), default="logrank"),
-      makeDiscreteLearnerParam(id="na.action", values=c("na.omit", "na.impute"), default="na.omit")
+      makeIntegerLearnerParam(id = "ntree", default = 1000L, lower = 1L),
+      makeDiscreteLearnerParam(id = "bootstrap", values = c("by.root", "by.node", "none"), default = "by.root"),
+      makeIntegerLearnerParam(id = "mtry", lower = 1L),
+      makeIntegerLearnerParam(id = "nodesize", lower = 1L, default = 3L),
+      makeDiscreteLearnerParam(id = "splitrule", values = c("logrank", "logrankscore"), default = "logrank"),
+      makeDiscreteLearnerParam(id = "na.action", values = c("na.omit", "na.impute"), default = "na.omit")
     ),
     properties = c("missings", "numerics", "factors", "rcens")
   )
@@ -17,7 +17,7 @@ makeRLearner.surv.randomForestSRC = function() {
 
 #' @export
 trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  f = getTaskFormula(.task, env=as.environment("package:survival"))
+  f = getTaskFormula(.task, env = as.environment("package:survival"))
   rfsrc(getTaskFormula(.task), data = getTaskData(.task, .subset), importance = "none", proximity = FALSE, forest = TRUE, ...)
 }
 

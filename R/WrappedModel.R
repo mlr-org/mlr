@@ -70,10 +70,10 @@ getLearnerModel.WrappedModel = function(model) {
 #' @export
 print.WrappedModel = function(x, ...) {
   cat(
-    "Model for id=", x$learner$id, " class=", getClass1(x$learner), "\n",
+    "Model for id = ", x$learner$id, " class = ", getClass1(x$learner), "\n",
     "Trained on obs: ", length(x$subset), "\n",
     "Used features: ", length(x$features), "\n",
     "Hyperparameters: ", getHyperParsString(x$learner), "\n",
-    sep=""
+    sep = ""
   )
 }

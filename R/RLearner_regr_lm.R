@@ -4,9 +4,9 @@ makeRLearner.regr.lm = function() {
     cl = "regr.lm",
     package = "stats",
     par.set = makeParamSet(
-  			 makeDiscreteLearnerParam(id="method", default="moment", values=c("moment", "mle", "mve", "t")),
-  			 makeNumericLearnerParam(id="nu", lower=2, requires=expression(method=="t")),
-      makeNumericLearnerParam(id="tol", default=1.0e-4, lower=0)
+  			 makeDiscreteLearnerParam(id = "method", default = "moment", values = c("moment", "mle", "mve", "t")),
+  			 makeNumericLearnerParam(id = "nu", lower = 2, requires = expression(method=="t")),
+      makeNumericLearnerParam(id = "tol", default = 1.0e-4, lower = 0)
     ),
     properties = c("numerics", "factors", "se", "weights")
   )
@@ -17,19 +17,19 @@ trainLearner.regr.lm = function(.learner, .task, .subset, .weights = NULL,  ...)
   d = getTaskData(.task, .subset)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
-    lm(f, data=d, ...)
+    lm(f, data = d, ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
-    lm(f, data=d, weights=.weights, ...)
+    lm(f, data = d, weights=.weights, ...)
   }
 }
 
 #' @export
 predictLearner.regr.lm = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response") {
-    predict(.model$learner.model, newdata=.newdata, se.fit=FALSE, ...)
+    predict(.model$learner.model, newdata=.newdata, se.fit = FALSE, ...)
   } else {
-    p = predict(.model$learner.model, newdata=.newdata, se.fit=TRUE, ...)
+    p = predict(.model$learner.model, newdata=.newdata, se.fit = TRUE, ...)
     cbind(p$fit, p$se.fit)
   }
 }

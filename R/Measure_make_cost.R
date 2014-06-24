@@ -15,9 +15,9 @@
 #' @return [\code{\link{Measure}}].
 #' @export
 #' @seealso \code{\link{measures}}, \code{\link{makeMeasure}}
-makeCostMeasure = function(id="costs", minimize=TRUE, costs, task, aggregate=mean) {
-  checkArg(id, "character", len=1L, na.ok=FALSE)
-  checkArg(minimize, "logical", len=1L, na.ok=FALSE)
+makeCostMeasure = function(id = "costs", minimize = TRUE, costs, task, aggregate = mean) {
+  checkArg(id, "character", len = 1L, na.ok = FALSE)
+  checkArg(minimize, "logical", len = 1L, na.ok = FALSE)
   checkArg(costs, "matrix")
   checkArg(task, "ClassifTask")
   checkArg(aggregate, "function")
@@ -33,10 +33,10 @@ makeCostMeasure = function(id="costs", minimize=TRUE, costs, task, aggregate=mea
       stop("Row and column names of cost matrix have to equal class levels!")
   }
 
-  makeMeasure(id="costs", minimize=minimize, extra.args=list(costs, aggregate),
+  makeMeasure(id = "costs", minimize = minimize, extra.args = list(costs, aggregate),
     properties = c("classif", "classif.multi"),
     allowed.pred.types = c("response", "prob"),
-    fun=function(task, model, pred, extra.args) {
+    fun = function(task, model, pred, extra.args) {
       costs = extra.args[[1L]]
       # cannot index with NA
       r = pred$data$response

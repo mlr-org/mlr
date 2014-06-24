@@ -1,5 +1,5 @@
 makeBaseWrapper = function(id, next.learner, package = character(0L), par.set = makeParamSet(),
-  par.vals=list(), cl) {
+  par.vals = list(), cl) {
 
   if (inherits(next.learner, "OptWrapper"))
     stop("Cannot wrap an optimization wrapper with something else!")
@@ -34,7 +34,7 @@ print.BaseWrapper = function(x, ...) {
   s = ""
   y = x
   while (inherits(y, "BaseWrapper")) {
-    s = paste(s, class(y)[1L], "->", sep="")
+    s = paste(s, class(y)[1L], "->", sep = "")
     y = y$next.learner
   }
   s = paste(s, class(y)[1L])

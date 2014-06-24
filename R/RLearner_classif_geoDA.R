@@ -10,7 +10,7 @@ makeRLearner.classif.geoDA = function() {
 
 #' @export
 trainLearner.classif.geoDA = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  d = getTaskData(.task, .subset, target.extra=TRUE)
+  d = getTaskData(.task, .subset, target.extra = TRUE)
   geoDA(variables = d$data, group = d$target, ...)
 }
 

@@ -20,14 +20,14 @@ makeImputeWrapper = function(learner, classes = list(), cols = list(), dummy.cla
   rm(list = names(args))
 
   trainfun = function(data, target, args) {
-    setNames(do.call(impute, c(list(data=data, target=target), args)), c("data", "control"))
+    setNames(do.call(impute, c(list(data = data, target = target), args)), c("data", "control"))
   }
 
   predictfun = function(data, target, args, control) {
     reimpute(data, control)
   }
 
-  lrn = makePreprocWrapper(learner, trainfun, predictfun, par.vals=args)
+  lrn = makePreprocWrapper(learner, trainfun, predictfun, par.vals = args)
   lrn$missings = TRUE
   lrn
 }

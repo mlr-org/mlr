@@ -21,7 +21,7 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
     pop.featmat = as.matrix(pop.df[, bit.names]); mode(pop.featmat) = "integer"
     pop.y = pop.df[, yname]
     # create lambda offspring and eval
-    kids.list = replicate(lambda, generateKid(pop.featmat, control), simplify=FALSE)
+    kids.list = replicate(lambda, generateKid(pop.featmat, control), simplify = FALSE)
     kids.y = evalOptimizationStatesFeatSel(learner, task, resampling, measures,
       bits.to.features, control, opt.path, show.info, states = kids.list, i, as.integer(NA))
     kids.y = extractSubList(kids.y, yname)
@@ -41,7 +41,7 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
     pop.inds = pool.inds[order(pool.y, decreasing=!minimize)[1:mu]]
     setOptPathElEOL(opt.path, setdiff(pool.inds, pop.inds), i)
   }
-  i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), ties="random")
+  i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), ties = "random")
   e = getOptPathEl(opt.path, i)
   makeFeatSelResult(learner, control, names(e$x)[e$x == 1], e$y, opt.path)
 }
@@ -50,7 +50,7 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
 # sample 2 random parents, CX, mutate --> 1 kid
 # (repeat in a loop if max.features not satisfied)
 generateKid = function(featmat, control) {
-  parents = sample(1:nrow(featmat), 2, replace=TRUE)
+  parents = sample(1:nrow(featmat), 2, replace = TRUE)
   while(TRUE) {
     kid = crossover(featmat[parents[1],], featmat[parents[2],], control$extra.args$crossover.rate)
     kid = mutateBits(kid, control$extra.args$mutation.rate)

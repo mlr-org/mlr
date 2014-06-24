@@ -1,15 +1,15 @@
 convertStartToNumeric = function(start, par.set) {
-  ids = getParamIds(par.set, repeated=FALSE)
+  ids = getParamIds(par.set, repeated = FALSE)
   start = start[ids]
   as.numeric(unlist(start))
 }
 
 convertXNumeric = function(x, par.set) {
-  ids = getParamIds(par.set, repeated=TRUE, with.nr=FALSE)
+  ids = getParamIds(par.set, repeated = TRUE, with.nr = FALSE)
   # factor usually does sort(unique(...)) for levels which changes order!
-  x = split(x, factor(ids, levels=unique(ids)))
-  names(x) = getParamIds(par.set, repeated=FALSE)
-  roundIntegers(x, par.set=par.set)
+  x = split(x, factor(ids, levels = unique(ids)))
+  names(x) = getParamIds(par.set, repeated = FALSE)
+  roundIntegers(x, par.set = par.set)
 }
 
 

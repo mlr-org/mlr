@@ -40,12 +40,12 @@ NULL
 #' @return \link{Aggregation} object
 #' @examples
 #' # computes the interquartile range on all performance values
-#' test.iqr = makeAggregation(id="test.iqr",
+#' test.iqr = makeAggregation(id = "test.iqr",
 #'   fun = function (task, perf.test, perf.train, measure, group, pred) IQR(perf.test))
 #' @export
 makeAggregation = function(id, fun) {
-  checkArg(id, "character", len=1L, na.ok=FALSE)
-  setClasses(list(id=id, fun=fun), "Aggregation")
+  checkArg(id, "character", len = 1L, na.ok = FALSE)
+  setClasses(list(id = id, fun = fun), "Aggregation")
 }
 
 #' @export
