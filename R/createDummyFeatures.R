@@ -21,7 +21,7 @@
 #' @seealso \code{\link{model.matrix}}
 #' @export
 createDummyFeatures = function(obj, target = NULL, method = "1-of-n", exclude = character(0L)) {
-  checkArg(method, subset = c("1-of-n", "reference"))
+  checkArg(method, choices = c("1-of-n", "reference"))
   UseMethod("createDummyFeatures")
 }
 
