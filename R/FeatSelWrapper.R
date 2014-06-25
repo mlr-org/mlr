@@ -29,7 +29,7 @@ makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.
   control, show.info = getMlrOption("show.info")) {
 
   learner = checkLearner(learner)
-  assert(assertClass(resampling, "ResampleDesc"), assertClass(resampling, "ResampleInstance"))
+  assert(checkClass(resampling, "ResampleDesc"), checkClass(resampling, "ResampleInstance"))
   measures = checkMeasures(measures, learner)
   if (missing(bit.names)) {
     bit.names = character(0L)

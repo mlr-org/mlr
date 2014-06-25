@@ -23,7 +23,7 @@ makeCostSensTask = function(id, data, costs, blocking = NULL, fixup.data = "warn
 #' @export
 checkTask.CostSensTask = function(task, target, ...) {
   NextMethod("checkTask")
-  assert(assertMatrix(task$env$costs, any.missing = FALSE), assertDataFrame(task$env$costs, any.missing = FALSE))
+  assert(checkMatrix(task$env$costs, any.missing = FALSE), checkDataFrame(task$env$costs, any.missing = FALSE))
   if (is.data.frame(task$env$costs))
     task$env$costs = as.matrix(task$env$costs)
   assertNumeric(task$env$costs, lower = 0)
