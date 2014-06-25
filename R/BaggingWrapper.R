@@ -18,6 +18,10 @@
 #' probabilities are predicted by considering the proportions of all predicted labels.
 #' For regression the mean value and the standard deviations across predictions is computed.
 #'
+#' Note that the passed base learner must always have \code{predict.type = 'response'},
+#' while the BaggingWrapper can estimate probabilities and standard errors, so it can
+#' be set, e.g., to \code{predict.type = 'prob'}.
+#'
 #' @template arg_learner
 #' @param bag.iters [\code{integer(1)}]\cr
 #'   Iterations = number of fitted models in bagging.
@@ -131,3 +135,13 @@ print.BaggingModel = function(x, ...) {
   s = append(s, u, 1L)
   lapply(s, catf)
 }
+
+# we need to override here. while the predtype of the encapsulated learner must always
+# be response, we can estimates probs and se on the outside
+#' @export
+setPredictType.BaggingWrapper = function(learner, predict.type) {
+  learner = setPredictType.Learner(learner, predict.type)
+  return(learner)
+}
+
+
