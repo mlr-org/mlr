@@ -32,15 +32,15 @@
 #' lrn = makeLearner("classif.lda", method = "t", nu = 10)
 #' print(lrn$par.vals)
 makeLearner = function(cl, id = cl, predict.type = "response", ..., par.vals = list()) {
-  checkArg(cl, "character", len = 1L, na.ok = FALSE)
+  assertCharacter(cl, len = 1L, any.missing = FALSE)
   constructor = getS3method("makeRLearner", class = cl)
   wl = do.call(constructor, list())
 
   if (!missing(id)) {
-    checkArg(id, "character", len = 1L, na.ok = FALSE)
+    assertCharacter(id, len = 1L, any.missing = FALSE)
     wl$id = id
   }
-  checkArg(par.vals, "list")
+  assertList(par.vals)
   if (!nzchar(cl))
     stop("Cannot create learner from empty string!")
   if (!inherits(wl, "RLearner"))

@@ -4,16 +4,16 @@ makeRLearner.regr.km = function() {
     cl = "regr.km",
     package = "DiceKriging",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id="covtype", default="matern5_2",
-        values=list("gauss", "matern5_2", "matern3_2", "exp", "powexp")),
-      makeNumericLearnerParam(id="nugget"),
-      makeLogicalLearnerParam(id="nugget.estim", default=FALSE),
-      makeNumericVectorLearnerParam(id="noise.var"),
-      makeDiscreteLearnerParam(id="optim.method", default="BFGS",
-        values=list("BFGS", "gen")),
-      makeNumericVectorLearnerParam(id="lower"),
-      makeNumericVectorLearnerParam(id="upper"),
-      makeUntypedLearnerParam(id="control"),
+      makeDiscreteLearnerParam(id = "covtype", default = "matern5_2",
+        values = list("gauss", "matern5_2", "matern3_2", "exp", "powexp")),
+      makeNumericLearnerParam(id = "nugget"),
+      makeLogicalLearnerParam(id = "nugget.estim", default = FALSE),
+      makeNumericVectorLearnerParam(id = "noise.var"),
+      makeDiscreteLearnerParam(id = "optim.method", default = "BFGS",
+        values = list("BFGS", "gen")),
+      makeNumericVectorLearnerParam(id = "lower"),
+      makeNumericVectorLearnerParam(id = "upper"),
+      makeUntypedLearnerParam(id = "control"),
       makeLogicalLearnerParam(id = "jitter", default = FALSE, when = "predict")
     ),
     par.vals = list(jitter = FALSE),
@@ -23,8 +23,8 @@ makeRLearner.regr.km = function() {
 
 #' @export
 trainLearner.regr.km = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  d = getTaskData(.task, .subset, target.extra=TRUE)
-  km(design=d$data, response=d$target, ...)
+  d = getTaskData(.task, .subset, target.extra = TRUE)
+  km(design = d$data, response = d$target, ...)
 }
 
 #' @export

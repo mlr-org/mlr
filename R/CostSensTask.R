@@ -1,8 +1,8 @@
 #' @export
 #' @rdname SupervisedTask
 makeCostSensTask = function(id, data, costs, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
-  checkArg(fixup.data, choices = c("no", "quiet", "warn"))
-  checkArg(check.data, "logical", len = 1L, na.ok = FALSE)
+  assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
+  assertLogical(check.data, len = 1L, any.missing = FALSE)
 
   # we don't have a target nor weights
   target = character(0L)
@@ -23,11 +23,10 @@ makeCostSensTask = function(id, data, costs, blocking = NULL, fixup.data = "warn
 #' @export
 checkTask.CostSensTask = function(task, target, ...) {
   NextMethod("checkTask")
-
-  checkArg(task$env$costs, c("data.frame", "matrix"), na.ok = FALSE)
+  assert(checkMatrix(task$env$costs, any.missing = FALSE), checkDataFrame(task$env$costs, any.missing = FALSE))
   if (is.data.frame(task$env$costs))
     task$env$costs = as.matrix(task$env$costs)
-  checkArg(task$env$costs, "matrix", na.ok = FALSE, lower = 0)
+  assertNumeric(task$env$costs, lower = 0)
   if (is.null(colnames(task$env$costs)))
     colnames(task$env$costs) = paste("y", seq_col(task$env$costs), sep = "")
   checkColumnNames(task$env$costs)

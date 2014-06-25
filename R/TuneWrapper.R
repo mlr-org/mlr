@@ -38,11 +38,11 @@
 #' print(r$extract)
 makeTuneWrapper = function(learner, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)
-  checkArg(resampling, c("ResampleDesc", "ResampleInstance"))
+  assert(checkClass(resampling, "ResampleDesc"), checkClass(resampling, "ResampleInstance"))
   measures = checkMeasures(measures, learner)
-  checkArg(par.set, "ParamSet")
-  checkArg(control, "TuneControl")
-  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
+  assertClass(par.set, classes = "ParamSet")
+  assertClass(control, classes = "TuneControl")
+  assertLogical(show.info, len = 1L, any.missing = FALSE)
   id = paste(learner$id, "tuned", sep = ".")
   x = makeOptWrapper(id, learner, resampling, measures, par.set, character(0L),
     function(){}, control, show.info, "TuneWrapper")
@@ -69,18 +69,3 @@ predictLearner.TuneWrapper = function(.learner, .model, .newdata, ...) {
   predictLearner(lrn, .model$learner.model$next.model, .newdata)
 }
 
-#' Returns the optimal hyperparameters and optimization path after training or benchmarking.
-#'
-#' @param object [\code{\link{WrappedModel}} | \code{BenchmarkResult}]\cr
-#'   Trained Model created with \code{\link{makeTuneWrapper}} or benchmark result created with \code{\link{benchmark}}.
-#' @return [\code{\link{TuneResult}} or list of \code{\link{TuneResult}}s].
-#' @family tune
-#' @export
-getTuneResult = function(object) {
-  UseMethod("getTuneResult")
-}
-
-#' @export
-getTuneResult.WrappedModel = function(object) {
-  object$learner.model$opt.result
-}

@@ -16,12 +16,13 @@
 #' @param measures [(list of) \code{\link{Measure}}]\cr
 #'   Performance measures for all tasks.
 #'   If missing, the default measure of the first task is used.
+#' @template arg_showinfo
 #' @return [\code{BenchmarkResult}].
 #' @family benchmark
 #' @export
-benchmark = function(learners, tasks, resamplings, measures) {
+benchmark = function(learners, tasks, resamplings, measures, show.info = getMlrOption("show.info")) {
   learners = ensureVector(learners, 1L, "Learner")
-  checkArg(learners, "list", min.len = 1L)
+  assertList(learners, min.len = 1L)
   checkListElementClass(learners, "Learner")
   learner.ids = extractSubList(learners, "id")
   if (anyDuplicated(learner.ids))
@@ -30,9 +31,9 @@ benchmark = function(learners, tasks, resamplings, measures) {
 
   # check tasks
   tasks = ensureVector(tasks, 1L, "SupervisedTask")
-  checkArg(tasks, "list", min.len = 1L)
+  assertList(tasks, min.len = 1L)
   checkListElementClass(tasks, "SupervisedTask")
-  task.ids = extractSubList(tasks, "task.desc")["id",]
+  task.ids = extractSubList(tasks, c("task.desc", "id"))
   if (anyDuplicated(task.ids))
     stop("Tasks need unique ids!")
   names(tasks) = task.ids
@@ -43,7 +44,7 @@ benchmark = function(learners, tasks, resamplings, measures) {
   } else if (inherits(resamplings, "ResampleInstance") || inherits(resamplings, "ResampleDesc")) {
     resamplings = replicate(length(tasks), resamplings, simplify = FALSE)
   } else {
-    checkArg(resamplings, "list")
+    assertList(resamplings)
     if (length(resamplings) != length(tasks))
       stop("Number of resampling strategies and number of tasks differ!")
   }
@@ -61,7 +62,7 @@ benchmark = function(learners, tasks, resamplings, measures) {
     measures = default.measures(tasks[[1L]])
   } else {
     measures = ensureVector(measures, 1L, "Measure")
-    checkArg(measures, "list")
+    assertList(measures)
     checkListElementClass(measures, "Measure")
   }
 
@@ -73,7 +74,8 @@ benchmark = function(learners, tasks, resamplings, measures) {
   results = parallelMap(
     benchmarkParallel,
     split(as.matrix(inds), f = seq_row(inds)),
-    more.args = list(learners = learners, tasks = tasks, resamplings = resamplings, measures = measures),
+    more.args = list(learners = learners, tasks = tasks, resamplings = resamplings,
+      measures = measures, show.info = show.info),
     level = plevel
   )
   results.by.task = split(results, unlist(inds$task))
@@ -87,110 +89,46 @@ benchmark = function(learners, tasks, resamplings, measures) {
 #'
 #' Container for results of benchmarked experiments using \code{\link{benchmark}}.
 #' The structure of the object itself is rather complicated, it is recommended to
-#' retrive required information via \code{link{getAggrMeasures}}, \code{link{getPredictions}},
-#' \code{\link{getMeasures}}, \code{\link{getFeatSelResult}}, \code{\link{getTuneResult}} or
+#' retrive required information via \code{link{getAggrPerformances}}, \code{link{getPredictions}},
+#' \code{\link{getPerformances}}, \code{\link{getFeatSelResult}}, \code{\link{getTuneResult}} or
 #' \code{\link{getFilterResult}}. Alternatively, you can convert the object using
 #' \code{\link[base]{as.data.frame}}
 #'
 #' @name BenchmarkResult
 #' @rdname BenchmarkResult
+#' @family benchmark
 NULL
 
-benchmarkParallel = function(index, learners, tasks, resamplings, measures) {
+benchmarkParallel = function(index, learners, tasks, resamplings, measures, show.info) {
   ind.task = index[[1L]]
   ind.learner = index[[2L]]
-  messagef("Task: %s, Learner: %s", ind.task, ind.learner)
-  if("FeatSelWrapper" %in% class(learners[[ind.learner]])) {
+  if (show.info)
+    messagef("Task: %s, Learner: %s", ind.task, ind.learner)
+  cl = class(learners[[ind.learner]])
+  if("FeatSelWrapper" %in% cl) {
     extract.this = getFeatSelResult
-  } else if("TuneWrapper" %in% class(learners[[ind.learner]])) {
+  } else if("TuneWrapper" %in% cl) {
     extract.this = getTuneResult
-  } else if("FilterWrapper" %in% class(learners[[ind.learner]])) {
+  } else if("FilterWrapper" %in% cl) {
     extract.this = getFilterResult
   } else {
     extract.this = function(model) { NULL }
   }
-  resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]], measures = measures, models = TRUE, extract = extract.this)
+  resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]],
+    measures = measures, models = TRUE, extract = extract.this, show.info = show.info)
 }
 
-#' Extract the aggregated measures of a benchmark result.
-#'
-#' @template arg_bmr
-#' @return [\code{data.frame}].
-#' @export
-#' @family benchmark
-getAggrMeasures = function(object) {
-  UseMethod("getAggrMeasures")
-}
-
-#' @export
-getAggrMeasures.BenchmarkResult = function(object) {
-  task.names = names(object)
-  learner.names = unname(lapply(object, names))
-  df = data.frame(
-    task = rep.int(task.names, viapply(learner.names, length)),
-    learner = unlist(learner.names)
-  )
-  aggr = rowLapply(df, function(x) t(object[[x$task]][[x$learner]]$aggr))
-  cbind(df, do.call(rbind, aggr))
-}
 
 #' @export
 print.BenchmarkResult = function(x, ...) {
-  print(getAggrMeasures.BenchmarkResult(x))
+  print(getAggrPerformances.BenchmarkResult(x))
 }
 
 #' @export
 as.data.frame.BenchmarkResult = function(x, ...) {
-  getAggrMeasures.BenchmarkResult(x)
+  getAggrPerformances.BenchmarkResult(x)
 }
 
-#' Extract the predictions from a benchmark result.
-#'
-#' @template arg_bmr
-#' @return [\code{data.frame}].
-#' @export
-#' @family benchmark
-getPredictions = function(object) {
-  UseMethod("getPredictions")
-}
-
-#' @export
-getPredictions.BenchmarkResult = function(object) {
-  extractResponse = function(learner.name, task.name) {
-    setNames(data.frame(object[[task.name]][[learner.name]]$pred)[, "response", drop = FALSE],
-      paste0("response.", learner.name))
-  }
-  setNames(lapply(names(object), function(task.name) {
-    cbind(
-      as.data.frame(object[[task.name]][[1L]]$pred)[, c("id", "truth", "iter", "set"), drop = FALSE],
-      do.call(cbind, lapply(names(object[[task.name]]), extractResponse, task.name = task.name))
-    )
-  }), names(object))
-}
-
-#' Extract performance measures of bechmark result.
-#'
-#' @template arg_bmr
-#' @return [\code{data.frame}].
-#' @export
-#' @family benchmark
-getMeasures = function(object) {
-  UseMethod("getMeasures")
-}
-
-#' @export
-getMeasures.BenchmarkResult = function(object) {
-  extractMeasures = function(learner.name, task.name) {
-      x = dropNamed(object[[task.name]][[learner.name]]$measures.test, "iter")
-      setNames(x, paste0(learner.name, ".", names(x)))
-  }
-  setNames(lapply(names(object), function(task.name) {
-    cbind(
-      object[[task.name]][[1L]]$measures.test[, "iter", drop = FALSE],
-      do.call(cbind, lapply(names(object[[task.name]]), extractMeasures, task.name = task.name))
-    )
-  }), names(object))
-}
 
 getExtract = function(object, what, within = "extract") {
   if(missing(what))
@@ -203,19 +141,4 @@ getExtract = function(object, what, within = "extract") {
         NULL
     })
   })
-}
-
-#' @export
-getFeatSelResult.BenchmarkResult = function(object) {
-  getExtract(object, "FeatSelResult")
-}
-
-#' @export
-getTuneResult.BenchmarkResult = function(object) {
-  getExtract(object, "TuneResult")
-}
-
-#' @export
-getFilterResult.BenchmarkResult = function(object) {
-  getExtract(object, "FilterResult")
 }

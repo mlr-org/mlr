@@ -19,17 +19,19 @@ Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 3.0.0),
     ParamHelpers (>= 1.2),
-    BBmisc (>= 1.6),
+    BBmisc (>= 1.7),
     stats
 Imports:
     parallelMap (>= 1.1),
     codetools,
-    survival
+    survival,
+    checkmate
 Suggests:
     testthat,
     ada,
     adabag,
     class,
+    cluster,
     cmaes,
     CoxBoost,
     crs,
@@ -41,6 +43,7 @@ Suggests:
     FNN,
     FSelector,
     gbm,
+    GenSA,
     ggplot2,
     glmnet,
     Hmisc,
@@ -52,6 +55,7 @@ Suggests:
     mboost,
     mda,
     mlbench,
+    mRMRe,
     nnet,
     party,
     penalized,

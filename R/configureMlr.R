@@ -50,27 +50,27 @@ configureMlr = function(show.info, on.learner.error, on.learner.warning, on.par.
 
   any.change = FALSE
   if (!missing(show.info)) {
-    checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
+    assertLogical(show.info, len = 1L, any.missing = FALSE)
     setMlrOption("show.info", show.info)
     any.change = TRUE
   }
   if (!missing(on.learner.error)) {
-    checkArg(on.learner.error, choices = c("quiet", "warn", "stop"))
+    assertChoice(on.learner.error, choices = c("quiet", "warn", "stop"))
     setMlrOption("on.learner.error", on.learner.error)
     any.change = TRUE
   }
   if (!missing(on.learner.warning)) {
-    checkArg(on.learner.warning, choices = c("warn", "quiet"))
+    assertChoice(on.learner.warning, choices = c("warn", "quiet"))
     setMlrOption("on.learner.warning", on.learner.warning)
     any.change = TRUE
   }
   if (!missing(on.par.without.desc)) {
-    checkArg(on.par.without.desc, choices = c("quiet", "warn", "stop"))
+    assertChoice(on.par.without.desc, choices = c("quiet", "warn", "stop"))
     setMlrOption("on.par.without.desc", on.par.without.desc)
     any.change = TRUE
   }
   if (!missing(show.learner.output)) {
-    checkArg(show.learner.output, "logical", len = 1L, na.ok = FALSE)
+    assertLogical(show.learner.output, len = 1L, any.missing = FALSE)
     setMlrOption("show.learner.output", show.learner.output)
     any.change = TRUE
   }

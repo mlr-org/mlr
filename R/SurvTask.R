@@ -5,8 +5,8 @@
 #' @rdname SupervisedTask
 makeSurvTask = function(id, data, target, surv.type = "right", weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE) {
-  checkArg(fixup.data, choices = c("no", "quiet", "warn"))
-  checkArg(check.data, "logical", len = 1L, na.ok = FALSE)
+  assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
+  assertLogical(check.data, len = 1L, any.missing = FALSE)
 
   task = addClasses(makeSupervisedTask("surv", data, target, weights, blocking), "SurvTask")
   ### FIXME
@@ -24,7 +24,7 @@ makeSurvTask = function(id, data, target, surv.type = "right", weights = NULL, b
 #' @export
 checkTask.SurvTask = function(task, target, ...) {
   NextMethod("checkTask")
-  checkArg(target, "character", len = 2L)
+  assertCharacter(target, len = 2L)
   ### TODO: more checks here
 }
 

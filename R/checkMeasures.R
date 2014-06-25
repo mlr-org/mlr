@@ -3,7 +3,7 @@ checkMeasures = function(measures, obj, aggr = NULL) {
     measures = default.measures(obj)
   } else {
     measures = ensureVector(measures, n = 1L, cl = "Measure")
-    checkArg(measures, "list")
+    assertList(measures)
     checkListElementClass(measures, "Measure")
   }
   if (!is.null(aggr))

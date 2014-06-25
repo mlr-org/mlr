@@ -40,7 +40,7 @@ selectFeatures = function(learner, task, resampling, measures,
   bit.names, bits.to.features, control, show.info = getMlrOption("show.info")) {
 
   learner = checkLearner(learner)
-  checkArg(task, "SupervisedTask")
+  assertClass(task, classes = "SupervisedTask")
   if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")
   if (inherits(resampling, "ResampleDesc") && control$same.resampling.instance)
@@ -49,15 +49,15 @@ selectFeatures = function(learner, task, resampling, measures,
   if (missing(bit.names)) {
     bit.names = getTaskFeatureNames(task)
   } else {
-    checkArg(bit.names, "character", na.ok = FALSE)
+    assertCharacter(bit.names, any.missing = FALSE)
   }
   if (missing(bits.to.features)) {
     bits.to.features = function(x, task) binaryToFeatures(x, getTaskFeatureNames(task))
   } else {
-    checkArg(bits.to.features, "function", formals = c("x", "task"))
+    assertFunction(bits.to.features, args = c("x", "task"))
   }
-  checkArg(control, "FeatSelControl")
-  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
+  assertClass(control, classes = "FeatSelControl")
+  assertLogical(show.info, len = 1L, any.missing = FALSE)
 
   par.set = lapply(bit.names, function(bn) makeIntegerParam(bn))
   par.set = do.call(makeParamSet, par.set)

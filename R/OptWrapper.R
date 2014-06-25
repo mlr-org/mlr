@@ -1,7 +1,7 @@
 makeOptWrapper = function(id, learner, resampling, measures, par.set, bit.names, bits.to.features,
   control, show.info, cl) {
 
-  x = makeBaseWrapper(id, learner, cl=c(cl, "OptWrapper"))
+  x = makeBaseWrapper(id, learner, cl = c(cl, "OptWrapper"))
   x$resampling = resampling
   x$measures = measures
   x$opt.pars = par.set

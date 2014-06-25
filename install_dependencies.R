@@ -2,6 +2,7 @@ pkgs <- c(
   "devtools",
   "roxygen2",
   "testthat",
+  "checkmate",
   "abind", 
   "BBmisc", 
   "codetools", 

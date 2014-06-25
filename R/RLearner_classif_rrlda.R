@@ -4,12 +4,12 @@ makeRLearner.classif.rrlda = function() {
     cl = "classif.rrlda",
     package = "rrlda",
     par.set = makeParamSet(
-      makeNumericVectorLearnerParam(id="prior", len=NA_integer_),
-      makeNumericLearnerParam(id="lambda", default=0.5, lower=0),
-      makeNumericLearnerParam(id="hp", default=0.75, lower=0),
-      makeIntegerLearnerParam(id="nssamples", default=30L, lower=1L),
-      makeIntegerLearnerParam(id="maxit", default=50L, lower=1L),
-      makeDiscreteLearnerParam(id="penalty", default="L2", values=c("L1", "L2"))
+      makeNumericVectorLearnerParam(id = "prior", len = NA_integer_),
+      makeNumericLearnerParam(id = "lambda", default = 0.5, lower = 0),
+      makeNumericLearnerParam(id = "hp", default = 0.75, lower = 0),
+      makeIntegerLearnerParam(id = "nssamples", default = 30L, lower = 1L),
+      makeIntegerLearnerParam(id = "maxit", default = 50L, lower = 1L),
+      makeDiscreteLearnerParam(id = "penalty", default = "L2", values = c("L1", "L2"))
     ),
     properties = c("twoclass", "multiclass", "numerics")
   )
@@ -17,8 +17,8 @@ makeRLearner.classif.rrlda = function() {
 
 #' @export
 trainLearner.classif.rrlda = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  d = getTaskData(.task, .subset, target.extra=TRUE)
-  rrlda(x=d$data, grouping=d$target, ...)
+  d = getTaskData(.task, .subset, target.extra = TRUE)
+  rrlda(x = d$data, grouping = d$target, ...)
 }
 
 #' @export

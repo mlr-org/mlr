@@ -4,9 +4,9 @@ makeRLearner.classif.lda = function() {
     cl = "classif.lda",
     package = "MASS",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id="method", default="moment", values=c("moment", "mle", "mve", "t")),
-      makeNumericLearnerParam(id="nu", lower=2, requires=expression(method=="t")),
-      makeNumericLearnerParam(id="tol", default=1e-4, lower=0)
+      makeDiscreteLearnerParam(id = "method", default = "moment", values = c("moment", "mle", "mve", "t")),
+      makeNumericLearnerParam(id = "nu", lower = 2, requires = expression(method=="t")),
+      makeNumericLearnerParam(id = "tol", default = 1e-4, lower = 0)
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
   )
@@ -15,7 +15,7 @@ makeRLearner.classif.lda = function() {
 #' @export
 trainLearner.classif.lda = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  lda(f, data=getTaskData(.task, .subset), ...)
+  lda(f, data = getTaskData(.task, .subset), ...)
 }
 
 #' @export

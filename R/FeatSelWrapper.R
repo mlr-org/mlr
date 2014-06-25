@@ -29,20 +29,20 @@ makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.
   control, show.info = getMlrOption("show.info")) {
 
   learner = checkLearner(learner)
-  checkArg(resampling, c("ResampleDesc", "ResampleInstance"))
+  assert(checkClass(resampling, "ResampleDesc"), checkClass(resampling, "ResampleInstance"))
   measures = checkMeasures(measures, learner)
   if (missing(bit.names)) {
     bit.names = character(0L)
   } else {
-    checkArg(bit.names, "character", na.ok = FALSE)
+    assertCharacter(bit.names, any.missing = FALSE)
   }
   if (missing(bits.to.features)) {
     bits.to.features = NULL
   } else {
-    checkArg(bits.to.features, "function", formals = c("x", "task"))
+    assertFunction(bits.to.features, args = c("x", "task"))
   }
-  checkArg(control, "FeatSelControl")
-  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
+  assertClass(control, classes = "FeatSelControl")
+  assertLogical(show.info, len = 1L, any.missing = FALSE)
   id = paste(learner$id, "featsel", sep = ".")
   x = makeOptWrapper(id, learner, resampling, measures, makeParamSet(), bit.names,
     bits.to.features, control, show.info, "FeatSelWrapper")
@@ -76,17 +76,3 @@ predictLearner.FeatSelWrapper = function(.learner, .model, .newdata, ...) {
   predictLearner(.learner$next.learner, .model$learner.model$next.model, .newdata, ...)
 }
 
-#' Returns the selected feature set and optimization path after training or benchmarking.
-#'
-#' @param object [\code{\link{WrappedModel}} | \code{BenchmarkResult}]\cr
-#'   Trained Model created with \code{\link{makeFeatSelWrapper}} or benchmark result created with \code{\link{benchmark}}.
-#' @return [\code{\link{FeatSelResult}} or list of \code{\link{FeatSelResult}}s].
-#' @export
-getFeatSelResult = function(object) {
-  UseMethod("getFeatSelResult")
-}
-
-#' @export
-getFeatSelResult.WrappedModel = function(object) {
-  object$learner.model$opt.result
-}

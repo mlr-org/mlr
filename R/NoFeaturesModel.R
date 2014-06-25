@@ -12,7 +12,7 @@ predict_nofeatures = function(model, newdata) {
   tab = prop.table(table(y))
   probs = as.numeric(tab)
   if(model$learner$predict.type == "response")
-    return(sample(as.factor(names(tab)), nrow(newdata), prob=probs, replace=TRUE))
+    return(sample(as.factor(names(tab)), nrow(newdata), prob = probs, replace = TRUE))
   else {
     probs = t(replicate(nrow(newdata), probs))
     colnames(probs) = names(tab)

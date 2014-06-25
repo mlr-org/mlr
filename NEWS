@@ -15,6 +15,12 @@ mlr_1.2:
 - added fixup.data option to task contructors, so basic data cleanup can be performed
 - show.info is now an option in configureMlr
 - learners now support taggable properties that can be queried and changed. also see below.
+- listLearners(forTask) was unified
+- removed tuning via R' optim method (makeTuneControlOptim), as the optimizers in there really make
+  no sense for tuning
+- Grid search was improved so one does not have to discretize parameters manually anymore
+  (although this is still possible). Instead one now passes a 'resolution' argument. Internally we 
+  now use ParamHelpers::generateGridDesign for this.
 
 - new learners:
 -- classif.knn
@@ -38,19 +44,25 @@ mlr_1.2:
 -- multiauc???
 
 - new functions
--- showHyperPars
--- removeConstantFeatures
--- dropFeatures
+-- removeConstantFeatures, normalizeFeatures, dropFeatures
 -- getTaskNFeats
+-- hasProperties, getProperties, setProperties, addProperties, removeProperties
+-- showHyperPars
+-- listMeasures
 -- plotLearnerPrediction
 -- plotThreshVsPerf
 -- holdout, subsample, crossval, repcv, bootstrapOOB, bootstrapB632, bootstrapB632plus
--- getFilterMethods, getFilterValues, filterFeatures, makeFilterWrapper, plotFilterValues
+-- listFilterMethods, getFilterValues, filterFeatures, makeFilterWrapper, plotFilterValues
+-- benchmark
+-- getPerformances, getAggrPerformances, getPredictions, getFilterResult, getTuneResult, getFeatSelResult
 -- oversample, undersample, makeOversampleWrapper, makeUndersampleWrapper
--- makeCostSensTaks, makeCostSensRegrWrapper, makeCostsSensWeightedPairsLearner
+-- smote, makeSmoteWrapper
 -- downsample, makeDownsampleWrapper
+-- makeTuneControlGenSA
 -- makeModelMultiplexer, makeModelMultiplexerParamSet
--- hasProperties, getProperties, setProperties, addProperties, removeProperties
+-- makeCostSensTaks, makeCostSensRegrWrapper, makeCostsSensWeightedPairsLearner
+-- normalizeFeatures
+-- createDummyFeatures
 
 - imputation stuff ????
 - surv stuff ????

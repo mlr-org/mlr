@@ -42,7 +42,7 @@ checkPredictLearnerOutput = function(learner, model, p) {
         stopf("predictLearner for %s has returned a class %s instead of a factor!", learner$id, cl)
       levs2 = levels(p)
       if (length(levs2) != length(levs) || any(levs != levs2))
-        p = factor(p, levels=levs)
+        p = factor(p, levels = levs)
     } else if (learner$predict.type == "prob") {
       if (!is.matrix(p))
         stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)

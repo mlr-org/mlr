@@ -33,14 +33,14 @@
 #' @return \code{\link{Measure}}
 #' @export
 makeCustomResampledMeasure = function(id, minimize = TRUE, properties = character(0L),
-  allowed.pred.types = character(0L), fun, extra.args=list()) {
+  allowed.pred.types = character(0L), fun, extra.args = list()) {
 
-  checkArg(id, "character", len = 1L, na.ok = FALSE)
-  checkArg(minimize, "logical", len = 1L, na.ok = FALSE)
-  checkArg(properties, "character", na.ok = FALSE)
-  checkArg(allowed.pred.types, subset=c("response", "prob", "se"))
-  checkArg(fun, "function")
-  checkArg(extra.args, "list")
+  assertCharacter(id, len = 1L, any.missing = FALSE)
+  assertLogical(minimize, len = 1L, any.missing = FALSE)
+  assertCharacter(properties, any.missing = FALSE)
+  assertSubset(allowed.pred.types, choices = c("response", "prob", "se"))
+  assertFunction(fun)
+  assertList(extra.args)
 
   force(fun)
   fun1 = function(task, model, pred, extra.args) NA_real_
@@ -48,6 +48,6 @@ makeCustomResampledMeasure = function(id, minimize = TRUE, properties = characte
   custom = makeMeasure(id = "custom", minimize, properties, allowed.pred.types, fun1, extra.args)
   fun2 = function(task, perf.test, perf.train, measure, group, pred)
     fun(task, group, pred, extra.args)
-  aggr = makeAggregation(id=id, fun=fun2)
+  aggr = makeAggregation(id = id, fun = fun2)
   setAggregation(custom, aggr)
 }

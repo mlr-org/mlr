@@ -4,15 +4,15 @@ makeRLearner.regr.pcr = function() {
     cl = "regr.pcr",
     package = "pls",
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id="ncomp", lower=1L),
-      makeDiscreteLearnerParam(id="method", default="cppls",
-        values=c("kernelpls", "widekernelpls", "simpls", "oscorespls", "cppls", "svdpc")),
-      makeLogicalLearnerParam(id="scale", default=FALSE),
-      makeLogicalLearnerParam(id="model", default=TRUE),
-      makeLogicalLearnerParam(id="x", default=FALSE),
-      makeLogicalLearnerParam(id="y", default=FALSE)
+      makeIntegerLearnerParam(id = "ncomp", lower = 1L),
+      makeDiscreteLearnerParam(id = "method", default = "cppls",
+        values = c("kernelpls", "widekernelpls", "simpls", "oscorespls", "cppls", "svdpc")),
+      makeLogicalLearnerParam(id = "scale", default = FALSE),
+      makeLogicalLearnerParam(id = "model", default = TRUE),
+      makeLogicalLearnerParam(id = "x", default = FALSE),
+      makeLogicalLearnerParam(id = "y", default = FALSE)
     ),
-    par.vals = list(model=FALSE),
+    par.vals = list(model = FALSE),
     properties = c("numerics", "factors")
   )
 }
@@ -20,7 +20,7 @@ makeRLearner.regr.pcr = function() {
 #' @export
 trainLearner.regr.pcr = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  pcr(f, data=getTaskData(.task, .subset), ...)
+  pcr(f, data = getTaskData(.task, .subset), ...)
 }
 
 #' @export

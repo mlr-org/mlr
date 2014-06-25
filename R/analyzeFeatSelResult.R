@@ -15,8 +15,8 @@
 #' @family featsel
 #' @export
 analyzeFeatSelResult = function(res, reduce = TRUE) {
-  checkArg(res$control, "FeatSelControlSequential")
-  checkArg(reduce, "logical", len = 1L, na.ok = FALSE)
+  assertClass(res$control, "FeatSelControlSequential")
+  assertLogical(reduce, len = 1L, any.missing = FALSE)
 
   x = res$x
   y = res$y

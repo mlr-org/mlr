@@ -1,5 +1,6 @@
-#' Fuse learner with simple over/undersampling for binary classification.
+#' @title Fuse learner with simple ove/underrsampling for imbalancy correction in binary classification.
 #'
+#' @description
 #' Creates a learner object, which can be
 #' used like any other learner object.
 #' Internally uses \code{\link{oversample}} or \code{\link{undersample}} before every model fit.
@@ -7,8 +8,7 @@
 #' Note that observation weights do not influence the sampling and are simply passed
 #' down to the next learner.
 #'
-#' @param learner [\code{\link{Learner}}]\cr
-#'   The learner.
+#' @template arg_learner
 #' @param usw.rate [\code{numeric(1)}]\cr
 #'   Factor to downsample the bigger class. Must be between 0 and 1,
 #'   where 1 means no downsampling, 0.5 implies reduction to 50 percent
@@ -16,14 +16,13 @@
 #' @param osw.rate [\code{numeric(1)}]\cr
 #'   Factor to oversample the smaller class. Must be between 1 and \code{Inf},
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
-#' @return [\code{\link{Learner}}].
-#' @family OverUndersample
+#' @template ret_learner
+#' @family imbalancy
 #' @export
 makeUndersampleWrapper = function(learner, usw.rate) {
-  checkArg(learner, "Learner")
-  checkArg(usw.rate, "numeric", len = 1L, na.ok = FALSE, lower = 0, upper = 1)
-  if (learner$type != "classif")
-    stopf("Undersampling is only supported for classifiers, not for type = '%s'!", learner$type)
+  # FIXME: check binary classif
+  learner = checkLearner(learner, "classif")
+  assertNumeric(usw.rate, len = 1L, any.missing = FALSE, lower = 0, upper = 1)
 
   id = paste(learner$id, "undersampled", sep = ".")
   ps = makeParamSet(
@@ -36,13 +35,11 @@ makeUndersampleWrapper = function(learner, usw.rate) {
 #' @rdname makeUndersampleWrapper
 #' @export
 makeOversampleWrapper = function(learner, osw.rate) {
-  checkArg(learner, "Learner")
-  checkArg(osw.rate, "numeric", len = 1L, na.ok = FALSE, lower = 1)
-  if (learner$type != "classif")
-    stopf("Oversampling is only supported for classifiers, not for type = '%s'!", learner$type)
+  learner = checkLearner(learner, "classif")
+  assertNumeric(osw.rate, len = 1L, any.missing = FALSE, lower = 1)
 
-  id = paste(learner$id, "overrsampled", sep = ".")
-  ps = makeParamSet(
+  id = paste(learner$id, "oversampled", sep = ".")
+  ps = makeParamSet (
     makeNumericLearnerParam(id = "osw.rate")
   )
   pv = list(osw.rate = osw.rate)

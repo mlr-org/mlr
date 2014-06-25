@@ -16,6 +16,14 @@ Trained Model created with \code{\link{makeTuneWrapper}} or benchmark result cre
 Returns the optimal hyperparameters and optimization path after training or benchmarking.
 }
 \seealso{
+Other benchmark: \code{\link{BenchmarkResult}};
+  \code{\link{FilterResult}},
+  \code{\link{getFilterResult}}; \code{\link{benchmark}};
+  \code{\link{getAggrPerformances}};
+  \code{\link{getFeatSelResult}};
+  \code{\link{getPerformances}};
+  \code{\link{getPredictions}}
+
 Other tune: \code{\link{ModelMultiplexer}},
   \code{\link{makeModelMultiplexer}};
   \code{\link{TuneControl}},
@@ -25,9 +33,9 @@ Other tune: \code{\link{ModelMultiplexer}},
   \code{\link{TuneControlOptim}},
   \code{\link{TuneControlRandom}},
   \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlGenSA}},
   \code{\link{makeTuneControlGrid}},
   \code{\link{makeTuneControlIrace}},
-  \code{\link{makeTuneControlOptim}},
   \code{\link{makeTuneControlRandom}};
   \code{\link{makeModelMultiplexerParamSet}};
   \code{\link{makeTuneWrapper}}; \code{\link{tuneParams}};

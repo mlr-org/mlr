@@ -19,9 +19,9 @@ makeResamplePrediction = function(instance, preds.test, preds.train) {
   data = data.frame()
   for (i in seq_len(instance$desc$iters)) {
     if (!is.null(preds.test[[i]]))
-      data = rbind(data, cbind(preds.test[[i]]$data, iter=i, set="test"))
+      data = rbind(data, cbind(preds.test[[i]]$data, iter = i, set = "test"))
     if (!is.null(preds.train[[i]]))
-      data = rbind(data, cbind(preds.train[[i]]$data, iter=i, set="train"))
+      data = rbind(data, cbind(preds.train[[i]]$data, iter = i, set = "train"))
   }
   p1 = preds.test[[1L]]
   setClasses(list(

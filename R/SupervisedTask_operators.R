@@ -86,7 +86,7 @@ getTaskFormula = function(x, target = getTargetNames(x), env = NULL) {
 #' task = makeClassifTask(data = iris, target = "Species")
 #' getTaskTargets(task)
 #' getTaskTargets(task, subset = 1:50)
-getTaskTargets = function(task, subset, recode.target="no") {
+getTaskTargets = function(task, subset, recode.target = "no") {
   #FIXME: argument checks currently not done for speed
   if (task$task.desc$type == "costsens")
     stop("There is no target available for cost-sensitive learning.")
@@ -132,11 +132,11 @@ getTaskTargets = function(task, subset, recode.target="no") {
 #' head(getTaskData(task, subset = 1:100, recode.target = "01"))
 getTaskData = function(task, subset, features, target.extra = FALSE, recode.target = "no") {
   #FIXME: argument checks currently not done for speed
-  indexHelper = function(df, i, j, drop=TRUE) {
+  indexHelper = function(df, i, j, drop = TRUE) {
     switch(2L * is.null(i) + is.null(j) + 1L,
-      df[i, j, drop=drop],
-      df[i,  , drop=drop],
-      df[ , j, drop=drop],
+      df[i, j, drop = drop],
+      df[i,  , drop = drop],
+      df[ , j, drop = drop],
       df
     )
   }
@@ -150,8 +150,8 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
     if (missing(features))
       features = task.features
     res = list(
-      data = indexHelper(task$env$data, subset, setdiff(features, tn), drop=FALSE),
-      target = recodeY(indexHelper(task$env$data, subset, tn), type=recode.target, positive=task$task.desc$positive)
+      data = indexHelper(task$env$data, subset, setdiff(features, tn), drop = FALSE),
+      target = recodeY(indexHelper(task$env$data, subset, tn), type = recode.target, positive = task$task.desc$positive)
     )
   } else {
     if (missing(features) || identical(features, task.features))
@@ -159,9 +159,9 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
     else
       features = union(features, tn)
 
-    res = indexHelper(task$env$data, subset, features, drop=FALSE)
+    res = indexHelper(task$env$data, subset, features, drop = FALSE)
     if (recode.target %nin% c("no", "surv")) {
-      res[, tn] = recodeY(res[, tn], type=recode.target, positive=task$task.desc$positive)
+      res[, tn] = recodeY(res[, tn], type = recode.target, positive = task$task.desc$positive)
     }
   }
   res
@@ -215,6 +215,8 @@ subsetTask = function(task, subset, features) {
   if (!missing(subset)) {
     if (task$task.desc$has.blocking)
       task$blocking = task$blocking[subset]
+    if (task$task.desc$has.weights)
+      task$weights = task$weights[subset]
   }
   return(task)
 }
@@ -222,15 +224,17 @@ subsetTask = function(task, subset, features) {
 
 # we create a new env, so the reference is not changed
 # FIXME: really check what goes on here! where is this called / used?
-changeData = function(task, data, costs) {
-  if(missing(costs))
-    costs = getTaskCosts(task)
-  if(missing(data))
+changeData = function(task, data, costs, weights) {
+  if (missing(data))
     data = getTaskData(task)
-  force(data)
+  if (missing(costs))
+    costs = getTaskCosts(task)
+  if (missing(weights))
+    weights = task$env$weights
   task$env = new.env(parent = emptyenv())
   task$env$data = data
   task$env$costs = costs
+  task$env$weights = weights
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
   if (td$type == "classif")
@@ -244,13 +248,6 @@ changeData = function(task, data, costs) {
 # returns factor levels of all factors in a task a named list of char vecs
 # non chars do not occur in the output
 getTaskFactorLevels = function(task) {
-  levs = lapply(task$env$data, function(x) {
-    if (is.factor(x))
-      levels(x)
-    else
-      NULL
-  })
-  levs = Filter(Negate(is.null), levs)
-  return(levs)
+  cols = vlapply(task$env$data, is.factor)
+  lapply(task$env$data[cols], levels)
 }
-

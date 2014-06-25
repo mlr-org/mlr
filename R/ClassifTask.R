@@ -2,8 +2,8 @@
 #' @rdname SupervisedTask
 makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
   positive, fixup.data = "warn", check.data = TRUE) {
-  checkArg(fixup.data, choices = c("no", "quiet", "warn"))
-  checkArg(check.data, "logical", len = 1L, na.ok = FALSE)
+  assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
+  assertLogical(check.data, len = 1L, any.missing = FALSE)
 
   task = addClasses(makeSupervisedTask("classif", data, target, weights, blocking), "ClassifTask")
   if (fixup.data != "no")
@@ -22,7 +22,7 @@ makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
   } else {
     if (m > 2L)
       stop("Cannot set a positive class for a multiclass problem!")
-    checkArg(positive, choices = levs)
+    assertChoice(positive, choices = levs)
   }
   id = checkOrGuessId(id, data)
   task$task.desc = makeTaskDesc.ClassifTask(task, id, target, positive)
@@ -32,7 +32,7 @@ makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
 #' @export
 checkTask.ClassifTask = function(task, target, ...) {
   NextMethod("checkTask")
-  checkArg(target, "character", len = 1L)
+  assertCharacter(target, len = 1L)
   if (!is.factor(task$env$data[[target]])) {
     stopf("Target column '%s' must be a factor", target)
   }

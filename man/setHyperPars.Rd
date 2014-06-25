@@ -24,8 +24,8 @@ Optional list of named (hyper)parameter settings. The arguments in
 Set the hyperparameters of a learner object.
 }
 \examples{
-cl1 <- makeLearner("classif.ksvm", sigma=1)
-cl2 <- setHyperPars(cl1, sigma=10, par.vals=list(C=2))
+cl1 <- makeLearner("classif.ksvm", sigma = 1)
+cl2 <- setHyperPars(cl1, sigma = 10, par.vals = list(C = 2))
 print(cl1)
 # note the now set and altered hyperparameters:
 print(cl2)

@@ -73,7 +73,7 @@ makeWrappedModel.CostSensRegrWrapper = function(learner, learner.model, task.des
 #' @return [\code{list}].
 #' @export
 getCostSensRegrModels = function(model, learner.models = FALSE) {
-  checkArg(model, "CostSensRegrModel")
+  assertClass(model, classes = "CostSensRegrModel")
   ms = model$learner.model$next.model
   if (learner.models)
     extractSubList(ms, "learner.model", simplify = FALSE)

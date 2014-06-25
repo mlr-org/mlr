@@ -17,7 +17,7 @@ makeRLearner.surv.penalized = function() {
 #' @export
 trainLearner.surv.penalized = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task, env = as.environment("package:survival"))
-  penalized(f, data=getTaskData(.task, .subset), model = "cox", trace = FALSE, ...)
+  penalized(f, data = getTaskData(.task, .subset), model = "cox", trace = FALSE, ...)
 }
 
 #' @export

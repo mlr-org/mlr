@@ -79,7 +79,7 @@ NULL
 
 makeSupervisedTask = function(type, data, target, weights = NULL, blocking = NULL) {
   env = new.env(parent = emptyenv())
-  checkArg(data, "data.frame")
+  assertDataFrame(data)
   env$data = data
   makeS3Obj("SupervisedTask",
     env = env,
@@ -95,9 +95,9 @@ makeSupervisedTask = function(type, data, target, weights = NULL, blocking = NUL
 checkTask.SupervisedTask = function(task, target, ...) {
   checkColumnNames(task$env$data, 'data')
   if (!is.null(task$env$weights))
-    checkArg(weights, "numeric", len = nrow(task$env$data), na.ok = FALSE, lower = 0)
+    assertNumeric(weights, len = nrow(task$env$data), any.missing = FALSE, lower = 0)
   if (!is.null(task$blocking)) {
-    checkArg(task$blocking, "factor", len = nrow(task$env$data), na.ok = FALSE)
+    assertFactor(task$blocking, len = nrow(task$env$data), any.missing = FALSE)
     if(length(task$blocking) && length(task$blocking) != nrow(task$env$data))
       stop("Blocking has to be of the same length as number of rows in data! Or pass none at all.")
   }
@@ -150,7 +150,7 @@ checkOrGuessId = function(id, data) {
     if (!is.character(id) || length(id) != 1L)
       stop("Cannot infer id for task automatically. Please set it manually!")
   } else {
-    checkArg(id, "character", len = 1L, na.ok = FALSE)
+    assertCharacter(id, len = 1L, any.missing = FALSE)
   }
   return(id)
 }
@@ -164,7 +164,7 @@ print.SupervisedTask = function(x, print.target = TRUE, print.weights = TRUE, ..
     catf("Target: %s", collapse(td$target))
   catf("Observations: %i", td$size)
   catf("Features:")
-  catf(printToChar(td$n.feat, collapse="\n"))
+  catf(printToChar(td$n.feat, collapse = "\n"))
   catf("Missings: %s", td$has.missings)
   if (print.weights)
     catf("Has weights: %s", td$has.weights)

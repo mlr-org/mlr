@@ -62,6 +62,7 @@
 #'   \item{data [\code{data.frame}]}{Imputed data.}
 #'   \item{desc [\code{ImputationDesc}]}{Description object.}
 #' @export
+#' @family impute
 #' @examples
 #' df = data.frame(x = c(1, 1, NA), y = factor(c("a", "a", "b")), z = 1:3)
 #' imputed = impute(df, target = character(0), cols = list(x = 99, y = imputeMode()))
@@ -70,12 +71,12 @@
 impute = function(data, target, classes = list(), cols = list(), dummy.classes = character(0L),
   dummy.cols = character(0L), impute.new.levels = TRUE, recode.factor.levels = TRUE) {
 
-  checkArg(data, "data.frame")
-  checkArg(target, "character", na.ok = FALSE)
-  checkArg(classes, "list")
-  checkArg(cols, "list")
-  checkArg(dummy.classes, "character", na.ok = FALSE)
-  checkArg(dummy.cols, "character", na.ok = FALSE)
+  assertDataFrame(data)
+  assertCharacter(target, any.missing = FALSE)
+  assertList(classes)
+  assertList(cols)
+  assertCharacter(dummy.classes, any.missing = FALSE)
+  assertCharacter(dummy.cols, any.missing = FALSE)
 
   if (length(target)) {
     not.ok = target %nin% names(data)
@@ -94,8 +95,8 @@ impute = function(data, target, classes = list(), cols = list(), dummy.classes =
   not.ok = dummy.cols %nin% names(data)
   if (any(not.ok))
     stopf("Column for dummy creation not present in data: %s", names(cols)[which.first(not.ok)])
-  checkArg(impute.new.levels, "logical", len = 1L, na.ok = FALSE)
-  checkArg(recode.factor.levels, "logical", len = 1L, na.ok = FALSE)
+  assertLogical(impute.new.levels, len = 1L, any.missing = FALSE)
+  assertLogical(recode.factor.levels, len = 1L, any.missing = FALSE)
 
   allowed.classes = c("logical", "integer", "numeric", "complex", "character", "factor")
   not.ok = any(names(classes) %nin% allowed.classes)
@@ -184,6 +185,7 @@ print.ImputationDesc = function(x, ...) {
 #' @param desc [\code{ImputationDesc}]\cr
 #'   Imputation description as returned by \code{\link{impute}}.
 #' @return Imputated \code{x}.
+#' @family impute
 #' @export
 reimpute = function(x, desc) {
   UseMethod("reimpute")
@@ -198,7 +200,7 @@ reimpute.list = function(x, desc) {
 #' @method reimpute data.frame
 #' @export
 reimpute.data.frame = function(x, desc) {
-  checkArg(desc, "ImputationDesc")
+  assertClass(desc, classes = "ImputationDesc")
   x = as.list(x)
 
   # check for new columns

@@ -4,9 +4,9 @@ makeRLearner.regr.earth = function() {
     cl = "regr.earth",
     package = "earth",
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id="degree", default=1L, lower=1L),
-      makeNumericLearnerParam(id="penalty"),
-      makeIntegerLearnerParam(id="nprune")
+      makeIntegerLearnerParam(id = "degree", default = 1L, lower = 1L),
+      makeNumericLearnerParam(id = "penalty"),
+      makeIntegerLearnerParam(id = "nprune")
       ),
     properties = c("numerics", "factors")
   )
@@ -15,7 +15,7 @@ makeRLearner.regr.earth = function() {
 #' @export
 trainLearner.regr.earth = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  earth(f, data=getTaskData(.task, .subset), ...)
+  earth(f, data = getTaskData(.task, .subset), ...)
 }
 
 #' @export

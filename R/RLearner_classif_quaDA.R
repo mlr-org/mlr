@@ -4,7 +4,7 @@ makeRLearner.classif.quaDA = function() {
     cl = "classif.quaDA",
     package = "DiscriMiner",
     par.set = makeParamSet(
-      #makeNumericVectorLearnerParam(id="prior", lower=0, upper=1, default=NULL),
+      #makeNumericVectorLearnerParam(id = "prior", lower = 0, upper = 1, default = NULL),
       ),
     properties = c("twoclass", "multiclass", "numerics")
   )
@@ -12,7 +12,7 @@ makeRLearner.classif.quaDA = function() {
 
 #' @export
 trainLearner.classif.quaDA = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  d = getTaskData(.task, .subset, target.extra=TRUE)
+  d = getTaskData(.task, .subset, target.extra = TRUE)
   quaDA(variables = d$data, group = d$target, ...)
 }
 

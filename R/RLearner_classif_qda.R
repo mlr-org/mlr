@@ -4,8 +4,8 @@ makeRLearner.classif.qda = function() {
     cl = "classif.qda",
     package = "MASS",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id="method", default="moment", values=c("moment", "mle", "mve", "t")),
-      makeNumericLearnerParam(id="nu", default=5 , lower=2, requires=expression(method == "t"))
+      makeDiscreteLearnerParam(id = "method", default = "moment", values = c("moment", "mle", "mve", "t")),
+      makeNumericLearnerParam(id = "nu", default = 5 , lower = 2, requires = expression(method == "t"))
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
   )
@@ -14,7 +14,7 @@ makeRLearner.classif.qda = function() {
 #' @export
 trainLearner.classif.qda = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  qda(f, data=getTaskData(.task, .subset), ...)
+  qda(f, data = getTaskData(.task, .subset), ...)
 }
 
 #' @export

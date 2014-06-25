@@ -41,13 +41,13 @@
 #'
 #' rin = makeResampleInstance("CV", iters = 10, task = iris.task)
 makeResampleInstance = function(desc, task, size, ...) {
-  checkArg(desc, c("ResampleDesc", "character"))
+  assert(checkClass(desc, "ResampleDesc"), checkCharacter(desc))
   if (is.character(desc)) {
-    checkArg(desc, "character", len = 1L, na.ok = FALSE)
+    assertCharacter(desc, len = 1L, any.missing = FALSE)
     desc = makeResampleDesc(desc, ...)
   }
   if (!missing(task)) {
-    checkArg(task, "SupervisedTask")
+    assertClass(task, classes = "SupervisedTask")
     size = task$task.desc$size
     blocking = task$blocking
   } else {
@@ -56,7 +56,7 @@ makeResampleInstance = function(desc, task, size, ...) {
   }
   if (!missing(size)) {
     size = convertInteger(size)
-    checkArg(size, "integer", len = 1L, na.ok = FALSE)
+    assertInteger(size, len = 1L, any.missing = FALSE)
   }
 
   if (length(blocking) && desc$stratify)
@@ -125,6 +125,6 @@ makeResampleInstanceInternal = function(desc, size, train.inds, test.inds, group
 
 #' @export
 print.ResampleInstance = function(x, ...) {
-  catf("Resample instance for %i cases for:", x$size)
+  catf("Resample instance for %i cases.", x$size)
   print(x$desc)
 }

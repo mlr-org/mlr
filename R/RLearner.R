@@ -17,7 +17,6 @@
 #'   \describe{
 #'     \item{numerics}{Can numeric features be handled?}
 #'     \item{factors}{Can factor features be handled?}
-#'     \item{numerics}{Can numeric features be handled?}
 #'     \item{missings}{Can missing features be handled?}
 #'     \item{oneclas,twoclass,multiclass}{Can one-class, two-class or multi-class classification problems be handled?}
 #'     \item{prob}{Can probabilites be predicted?}
@@ -46,16 +45,16 @@ makeRLearner = function() {
 makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties) {
   # must do that before accessing par.set
   # one case where lazy eval is actually helpful...
-  checkArg(package, "character", na.ok=FALSE)
+  assertCharacter(package, any.missing = FALSE)
   requirePackages(package, paste("learner", id))
 
-  checkArg(id, "character", len=1L, na.ok=FALSE)
-  checkArg(type, choices=c("classif", "regr", "surv"))
-  checkArg(package, "character", na.ok=FALSE)
-  checkArg(properties, "character", na.ok=FALSE)
-  checkArg(par.set, "ParamSet")
+  assertCharacter(id, len = 1L, any.missing = FALSE)
+  assertChoice(type, choices = c("classif", "regr", "surv"))
+  assertCharacter(package, any.missing = FALSE)
+  assertCharacter(properties, any.missing = FALSE)
+  assertClass(par.set, classes = "ParamSet")
   checkListElementClass(par.set$pars, "LearnerParam")
-  checkArg(par.vals, "list")
+  assertList(par.vals)
   if(!isProperlyNamed(par.vals))
     stop("Argument par.vals must be a properly named list!")
 

@@ -78,21 +78,21 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   extract, show.info = getMlrOption("show.info")) {
 
   learner = checkLearner(learner)
-  checkArg(task, "SupervisedTask")
+  assertClass(task, classes = "SupervisedTask")
   # instantiate resampling
   if (inherits(resampling, "ResampleDesc"))
     resampling = makeResampleInstance(resampling, task = task)
-  checkArg(resampling, "ResampleInstance")
+  assertClass(resampling, classes = "ResampleInstance")
   measures = checkMeasures(measures, task)
   if (!is.null(weights)) {
-    checkArg(weights, "numeric", len = task$task.desc$size, na.ok = FALSE, lower = 0)
+    assertNumeric(weights, len = task$task.desc$size, any.missing = FALSE, lower = 0) 
   }
-  checkArg(models, "logical", len = 1L, na.ok = FALSE)
+  assertLogical(models, len = 1L, any.missing = FALSE)
   if (missing(extract))
     extract = function(model) {}
   else
-    checkArg(extract, "function")
-  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
+    assertFunction(extract)
+  assertLogical(show.info, len = 1L, any.missing = FALSE)
 
   n = task$task.desc$size
   r = resampling$size

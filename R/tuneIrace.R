@@ -6,9 +6,9 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control,
   #FIXME allow to do in parallel
   hookRun = function(instance, candidate, extra.params = NULL, config = list()) {
     rin = instance
-    tunerFitnFun(candidate$values, learner=learner, task=task, resampling=rin, measures=measures, 
-      par.set=par.set, ctrl=control, opt.path=opt.path, show.info=show.info, 
-      trafo=TRUE, convertx=identity, remove.nas=TRUE) 
+    tunerFitnFun(candidate$values, learner = learner, task = task, resampling = rin, measures = measures, 
+      par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info, 
+      trafo = TRUE, convertx = identity, remove.nas = TRUE) 
   }
   n.instances = control$extra.args$n.instances
   control$extra.args$n.instances = NULL
@@ -18,7 +18,7 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control,
 
   parameters = convertParamSetToIrace(par.set)
   log.file = tempfile()
-  tuner.config = c(list(hookRun = hookRun, instances = instances, logFile=log.file), control$extra.args)
+  tuner.config = c(list(hookRun = hookRun, instances = instances, logFile = log.file), control$extra.args)
 
   g = if (show.irace.output) identity else capture.output
   g({
@@ -38,7 +38,7 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control,
   par.names = names(x)
   # get all lines in opt.path which correspond to x and average their perf values
   j = sapply(1:nrow(d), function(j) isTRUE(all.equal(as.list(d[j, par.names]), x)))
-  y = colMeans(d[j, opt.path$y.names, drop=FALSE])
+  y = colMeans(d[j, opt.path$y.names, drop = FALSE])
   # FIXME change when new version of paramhelpers is online
   makeTuneResult(learner, control, removeMissingValues2(x), y, opt.path)
 }

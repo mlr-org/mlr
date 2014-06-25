@@ -16,13 +16,13 @@
 plotThreshVsPerf = function(pred, measures, mark.th = NA_real_,
   gridsize = 100L, linesize = 1.5) {
 
-  checkArg(pred, "Prediction")
+  assertClass(pred, classes = "Prediction")
   td = pred$task.desc
   if (td$type != "classif" || length(td$class.levels) != 2L)
     stopf("Task must be binary classification!")
   measures = checkMeasures(measures, td)
-  checkArg(mark.th, "numeric", len = 1L, lower = 0, upper = 1, na.ok = TRUE)
-  checkArg(linesize, "numeric", len = 1L, lower = 0, na.ok = FALSE)
+  assertNumeric(mark.th, len = 1L, lower = 0, upper = 1, any.missing = TRUE)
+  assertNumeric(linesize, len = 1L, lower = 0, any.missing = FALSE)
 
   requirePackages(c("ggplot2", "reshape2"), why = "plotThreshVsPerf")
 

@@ -14,31 +14,38 @@ Filters are the simplest approach to find variables that do not contain a lot of
 Different methods are built into **mlr**'s function `getFeatureFilterValues()` all accessing filter algorithms from the package `FSelector`.
 The function is given a `task` and simply returns an importance vector.
 
-```splus
+```r
 library("mlr")
 task = makeClassifTask(data = iris, target = "Species")
-importance = getFeatureFilterValues(task, method = "information.gain")
+importance = getFilterValues(task, method = "information.gain")
 ```
 
 ```
 ## Loading required package: FSelector
 ```
 
-```splus
-sort(importance, decreasing = TRUE)
+```r
+importance
 ```
 
 ```
-##  Petal.Width Petal.Length Sepal.Length  Sepal.Width 
-##       1.3784       1.3565       0.6523       0.3856
+## FilterValues:
+## Task: iris
+## Method: information.gain
+##                      name    val    type
+## Sepal.Length Sepal.Length 0.6523 numeric
+## Sepal.Width   Sepal.Width 0.3856 numeric
+## Petal.Length Petal.Length 1.3565 numeric
+## Petal.Width   Petal.Width 1.3784 numeric
 ```
 
 So according to this filter `Petal.Width` and `Petal.Length` contain the most *information*.
 With **mlr**'s function `filterFeatures()` you can now filter the task by leaving out all
 but a set number of features with the highest feature importance now into the task. 
 
-```splus
-filtered.task = filterFeatures(task, method = "information.gain", n = 2)
+```r
+filtered.task = filterFeatures(task, method = "information.gain", select = "abs", 
+    val = 2)
 ```
 
 Other filter options in `filterFeatures()' are to require a percentage of features filtered instead or to set a threshold for the numerical importance values.
@@ -46,10 +53,10 @@ Other filter options in `filterFeatures()' are to require a percentage of featur
 In a proper experimental set up you might want to automate the selection of the variables so that it can be part of the validation method of your choice.
 We will use the standard 10-fold cross validation.
 
-```splus
+```r
 learner = makeLearner("classif.fnn")
 learnerFiltered = makeFilterWrapper(learner = learner, fw.method = "information.gain", 
-    fw.percentage = 0.7)
+    fw.select = "perc", fw.val = 0.7)
 rdesc = makeResampleDesc("CV", iters = 10)
 rsres = resample(learner = learnerFiltered, task = task, resampling = rdesc, 
     show.info = FALSE, models = TRUE)
@@ -65,7 +72,7 @@ Now you want might want to know which features have been used.
 Luckily we have called `resample` with the argument `models=TRUE` which means that `rsres$models` contains a `list` of each model used for a fold.
 In this case the `Learner` is also of the class `FilterWrapper` and we can call `getFilteredFeatures()` on each model.
 
-```splus
+```r
 sfeats = sapply(rsres$models, getFilteredFeatures)
 table(sfeats)
 ```
@@ -81,28 +88,29 @@ The `Sepal.Width` did not make it into a single fold.
 
 ### Tuning the threshold
 
-```splus
+```r
 library("mlbench")
 data(Sonar)
 task = makeClassifTask(data = Sonar, target = "Class", positive = "M")
 lrn = makeLearner("classif.rpart")
-lrnFiltered = makeFilterWrapper(learner = lrn, fw.method = "chi.squared", fw.threshold = 0)
-ps = makeParamSet(makeDiscreteParam("fw.threshold", values = seq(from = 0.2, 
-    0.4, by = 0.05)))
+lrnFiltered = makeFilterWrapper(learner = lrn, fw.method = "chi.squared", fw.select = "threshold", 
+    fw.val = 0)
+ps = makeParamSet(makeDiscreteParam("fw.val", values = seq(from = 0.2, 0.4, 
+    by = 0.05)))
 tuneRes = tuneParams(lrnFiltered, task = task, resampling = makeResampleDesc("CV", 
     iters = 5), par.set = ps, control = makeTuneControlGrid())
 ```
 
 ```
 ## [Tune] Started tuning learner classif.rpart.filtered for parameter set:
-## Disc param 'fw.threshold'. Vals: 0.2,0.25,0.3,0.35,0.4. Trafo: FALSE. Requires: FALSE
+## Disc param 'fw.val'. Vals: 0.2,0.25,0.3,0.35,0.4. Trafo: FALSE. Requires: FALSE
 ## With control class: TuneControlGrid
-## [Tune] 1: fw.threshold=0.2 : mmce.test.mean=0.259
-## [Tune] 1: fw.threshold=0.25 : mmce.test.mean=0.259
-## [Tune] 1: fw.threshold=0.3 : mmce.test.mean=0.264
-## [Tune] 1: fw.threshold=0.35 : mmce.test.mean=0.336
-## [Tune] 1: fw.threshold=0.4 : mmce.test.mean=0.336
-## [Tune] Result: fw.threshold=0.25 : mmce.test.mean=0.259
+## [Tune] 1: fw.val=0.2 : mmce.test.mean=0.269
+## [Tune] 2: fw.val=0.25 : mmce.test.mean=0.269
+## [Tune] 3: fw.val=0.3 : mmce.test.mean=0.274
+## [Tune] 4: fw.val=0.35 : mmce.test.mean=0.307
+## [Tune] 5: fw.val=0.4 : mmce.test.mean=0.336
+## [Tune] Result: fw.val=0.25 : mmce.test.mean=0.269
 ```
 
 
@@ -118,7 +126,7 @@ Unlike the **filters** *wrappers* make use of the performance a **learner** can 
 Let's train a decision tree on the ``iris`` data and use a sequential forward search to find the best group of features w.r.t. the **mmce** (mean misclassification error).
 
 
-```splus
+```r
 library("mlr")
 task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.rpart")
@@ -129,9 +137,9 @@ sfSeq = selectFeatures(learner = lrn, task = task, resampling = rdesc, control =
 ```
 
 ```
-## [selectFeatures] 1: 0 bits: mmce.test.mean=0.72
-## [selectFeatures] 2: 1 bits: mmce.test.mean= 0.3
-## [selectFeatures] 2: 1 bits: mmce.test.mean=0.48
+## [selectFeatures] 1: 0 bits: mmce.test.mean=0.64
+## [selectFeatures] 2: 1 bits: mmce.test.mean=0.24
+## [selectFeatures] 2: 1 bits: mmce.test.mean=0.54
 ## [selectFeatures] 2: 1 bits: mmce.test.mean=0.08
 ## [selectFeatures] 2: 1 bits: mmce.test.mean=0.04
 ## [selectFeatures] 3: 2 bits: mmce.test.mean=0.04
@@ -139,7 +147,7 @@ sfSeq = selectFeatures(learner = lrn, task = task, resampling = rdesc, control =
 ## [selectFeatures] 3: 2 bits: mmce.test.mean=0.08
 ```
 
-```splus
+```r
 sfSeq
 ```
 
@@ -149,7 +157,7 @@ sfSeq
 ## mmce.test.mean=0.04
 ```
 
-```splus
+```r
 analyzeFeatSelResult(sfSeq, reduce = FALSE)
 ```
 
@@ -160,15 +168,15 @@ analyzeFeatSelResult(sfSeq, reduce = FALSE)
 ## 
 ## Path to optimum:
 ## --------------------------------------------------------------------------------
-## - Features:    0  Init   :                       Perf = 0.72  Diff:  0.00  *
+## - Features:    0  Init   :                       Perf = 0.64  Diff: NA  *
 ## --------------------------------------------------------------------------------
-## - Features:    1  Add    : Sepal.Length          Perf = 0.30  Diff: -0.26   
-## - Features:    1  Add    : Sepal.Width           Perf = 0.48  Diff: -0.44   
-## - Features:    1  Add    : Petal.Length          Perf = 0.08  Diff: -0.04   
-## - Features:    1  Add    : Petal.Width           Perf = 0.04  Diff:  0.00  *
+## - Features:    1  Add    : Sepal.Length          Perf = 0.24  Diff: 0.4   
+## - Features:    1  Add    : Sepal.Width           Perf = 0.54  Diff: 0.1   
+## - Features:    1  Add    : Petal.Length          Perf = 0.08  Diff: 0.56   
+## - Features:    1  Add    : Petal.Width           Perf = 0.04  Diff: 0.6  *
 ## --------------------------------------------------------------------------------
-## - Features:    2  Add    : Sepal.Length          Perf = 0.04  Diff:  0.00   
-## - Features:    2  Add    : Sepal.Width           Perf = 0.04  Diff:  0.00   
+## - Features:    2  Add    : Sepal.Length          Perf = 0.04  Diff: 0   
+## - Features:    2  Add    : Sepal.Width           Perf = 0.04  Diff: 0   
 ## - Features:    2  Add    : Petal.Length          Perf = 0.08  Diff: -0.04   
 ## 
 ## Stopped, because no improving feature was found.
@@ -181,7 +189,7 @@ analyzeFeatSelResult(sfSeq, reduce = FALSE)
 We fit a simple linear regression model to the ``BostonHousing`` data set and use a genetic algorithm to find a feature set that reduces the **mse** (mean squared error).
 
 
-```splus
+```r
 library("mlbench")
 data(BostonHousing)
 
@@ -197,8 +205,8 @@ sfGA
 
 ```
 ## FeatSel result:
-## Features (10): zn, nox, rm, age, dis, rad, tax, ptratio, b, lstat
-## mse.test.mean=25.1
+## Features (8): crim, nox, rm, dis, rad, ptratio, b, lstat
+## mse.test.mean=19.9
 ```
 
 

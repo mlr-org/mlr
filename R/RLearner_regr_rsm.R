@@ -4,9 +4,9 @@ makeRLearner.regr.rsm = function() {
     cl = "regr.rsm",
     package = "rsm",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id="modelfun", default="FO", values=c("FO", "TWI", "SO"))
+      makeDiscreteLearnerParam(id = "modelfun", default = "FO", values = c("FO", "TWI", "SO"))
     ),
-    par.vals = list(modelfun="FO"),
+    par.vals = list(modelfun = "FO"),
     properties = c("numerics")
   )
 }
@@ -14,8 +14,8 @@ makeRLearner.regr.rsm = function() {
 #' @export
 trainLearner.regr.rsm = function(.learner, .task, .subset, .weights = NULL,  ...) {
   mf = list(...)$modelfun
-  vs = paste(getTaskFeatureNames(.task), collapse=",")
-  g = function(x) paste(x, "(", vs, ")", sep="")
+  vs = paste(getTaskFeatureNames(.task), collapse = ",")
+  g = function(x) paste(x, "(", vs, ")", sep = "")
   mf = switch(mf,
     FO = g("FO"),
     TWI = paste(g("TWI"), "+", g("FO")),

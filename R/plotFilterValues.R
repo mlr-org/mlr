@@ -19,11 +19,11 @@
 #' fv = getFilterValues(iris.task, method = "chi.squared")
 #' plotFilterValues(fv)
 plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols = c("darkgreen", "darkblue")) {
-  checkArg(fvalues, "FilterValues")
-  checkArg(sort, choices = c("dec", "inc", "none"))
+  assertClass(fvalues, classes = "FilterValues")
+  assertChoice(sort, choices = c("dec", "inc", "none"))
   requirePackages("ggplot2", why = "getFilterValues")
   n.show = convertInteger(n.show)
-  checkArg(n.show, "integer", min.len = 1L, na.ok = FALSE)
+  assertInteger(n.show, min.len = 1L, any.missing = FALSE)
 
   d = fvalues$data
   k = nrow(d)
@@ -34,13 +34,13 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
   d$name = factor(d$name, levels = d$name)
   d = d[1:n.show,, drop = FALSE]
   if (!is.null(feat.type.cols)) {
-    checkArg(feat.type.cols, "character", len = 2L, na.ok = FALSE)
+    assertCharacter(feat.type.cols, len = 2L, any.missing = FALSE)
     mp = aes_string(x = "name", y = "val", fill = "type")
   } else {
     mp = aes_string(x = "name", y = "val")
   }
   p = ggplot(data = d, mapping = mp)
-  p = p + geom_bar(stat = "identity")
+  p = p + geom_bar(position = "identity", stat = "identity")
   if (!is.null(feat.type.cols))
     p = p + scale_fill_manual(values = feat.type.cols)
   p = p + ggtitle(sprintf("%s (%i features), filter = %s",

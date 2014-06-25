@@ -10,7 +10,7 @@
 #' @name LearnerProperties
 setProperties = function(learner, props) {
   learner = checkLearner(learner)
-  checkArg(props, "character", na.ok = FALSE)
+  assertCharacter(props, any.missing = FALSE)
   learner$properties = unique(props)
   learner
 }
@@ -19,7 +19,7 @@ setProperties = function(learner, props) {
 #' @export
 addProperties = function(learner, props) {
   learner = checkLearner(learner)
-  checkArg(props, "character", na.ok = FALSE)
+  assertCharacter(props, any.missing = FALSE)
   learner$properties = union(learner$properties, props)
   learner
 }
@@ -28,7 +28,7 @@ addProperties = function(learner, props) {
 #' @export
 removeProperties = function(learner, props) {
   learner = checkLearner(learner)
-  checkArg(props, "character", na.ok = FALSE)
+  assertCharacter(props, any.missing = FALSE)
   learner$properties = setdiff(learner$properties, props)
   learner
 }
@@ -37,6 +37,6 @@ removeProperties = function(learner, props) {
 #' @export
 hasProperties = function(learner, props) {
   learner = checkLearner(learner)
-  checkArg(props, "character", na.ok = FALSE)
+  assertCharacter(props, any.missing = FALSE)
   props %in% learner$properties
 }

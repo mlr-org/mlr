@@ -21,8 +21,8 @@
 #'   Currently ignored.
 #' @return [\code{\link{Prediction}}].
 #' @method predict WrappedModel
+#' @family predict
 #' @export
-#' @note To extract probabilities use \code{\link{getProbabilities}}.
 #' @examples
 #' # train and predict
 #' train.set = seq(1, 150, 2)
@@ -41,17 +41,17 @@
 predict.WrappedModel = function(object, task, newdata, subset, ...) {
   if (!xor(missing(task), missing(newdata)))
     stop("Pass either a task object or a newdata data.frame to predict, but not both!")
-  checkArg(object, "WrappedModel")
+  assertClass(object, classes = "WrappedModel")
   model = object
   learner = model$learner
   td = model$task.desc
 
   # FIXME: cleanup if cases
   if (missing(newdata)) {
-    checkArg(task, "SupervisedTask")
+    assertClass(task, classes = "SupervisedTask")
     size = task$task.desc$size
   } else {
-    checkArg(newdata, "data.frame")
+    assertDataFrame(newdata)
     size = nrow(newdata)
     if (size == 0L)
       stop("newdata must be a data.frame with at least one row!")
@@ -62,7 +62,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
   } else {
     subset = convertIntegers(subset)
     # FIXME: min.len, lower, upper
-    checkArg(subset, "integer", na.ok = FALSE)
+    assertInteger(subset, any.missing = FALSE)
   }
   if (missing(newdata)) {
     newdata = getTaskData(task, subset)

@@ -1,5 +1,6 @@
-#' Construct performance measure.
+#' @title Construct performance measure.
 #'
+#' @description
 #' A measure object encapsulates a function to evaluate the performance of a prediction.
 #' Information about already implemented measures can be obtained here: \code{\link{measures}}.
 #'
@@ -10,16 +11,16 @@
 #'
 #' Object slots:
 #' \describe{
-#' \item{id [\code{character(1)}]}{See argument.}
-#' \item{minimize [\code{logical(1)}]}{See argument.}
-#' \item{properties [\code{character}]}{See argument.}
-#' \item{allowed.pred.types [\code{character}]}{See argument.}
-#' \item{req.pred [\code{logical(1)}]}{Is prediction object required in calculation?}
-#' \item{req.task [\code{logical(1)}]}{Is task object required in calculation?.}
-#' \item{req.model [\code{logical(1)}]}{Is model object required in calculation?}
-#' \item{fun [\code{function}]}{See argument.}
-#' \item{extra.args [\code{list}]}{See argument.}
-#' \item{aggr [\code{\link{Aggregation}}]}{See argument.}.
+#'   \item{id [\code{character(1)}]}{See argument.}
+#'   \item{minimize [\code{logical(1)}]}{See argument.}
+#'   \item{properties [\code{character}]}{See argument.}
+#'   \item{allowed.pred.types [\code{character}]}{See argument.}
+#'   \item{req.pred [\code{logical(1)}]}{Is prediction object required in calculation?}
+#'   \item{req.task [\code{logical(1)}]}{Is task object required in calculation?.}
+#'   \item{req.model [\code{logical(1)}]}{Is model object required in calculation?}
+#'   \item{fun [\code{function}]}{See argument.}
+#'   \item{extra.args [\code{list}]}{See argument.}
+#'   \item{aggr [\code{\link{Aggregation}}]}{See argument.}.
 #' }
 #'
 #' @param id [\code{character(1)}]\cr
@@ -54,17 +55,17 @@
 #' @export
 #' @aliases Measure
 #' @examples
-#' f <- function(task, model, pred, extra.args)
+#' f = function(task, model, pred, extra.args)
 #'   sum((pred$data$response - pred$data$truth)^2)
-#' makeMeasure(id = "my.sse", minimize = TRUE, regr = TRUE, allowed.pred.types = "response", fun = f)
+#' makeMeasure(id = "my.sse", minimize = TRUE, properties = c("regr", "response"), fun = f)
 makeMeasure = function(id, minimize, properties = character(0L), allowed.pred.types = character(0L),
   fun, extra.args = list(), aggr = test.mean) {
-  checkArg(id, "character", len = 1L, na.ok = FALSE)
-  checkArg(minimize, "logical", len = 1L, na.ok = FALSE)
-  checkArg(properties, "character", na.ok = FALSE)
-  checkArg(allowed.pred.types, subset = c("response", "prob", "se"))
-  checkArg(fun, "function")
-  checkArg(extra.args, "list")
+  assertCharacter(id, len = 1L, any.missing = FALSE)
+  assertLogical(minimize, len = 1L, any.missing = FALSE)
+  assertCharacter(properties, any.missing = FALSE)
+  assertSubset(allowed.pred.types, choices = c("response", "prob", "se"))
+  assertFunction(fun)
+  assertList(extra.args)
 
   # FIXME: I think this is never used...
   fun1 = fun
@@ -106,15 +107,13 @@ default.measures = function(x) {
 #' Set how this measure will be aggregated after resampling.
 #' To see possible aggregation functions: \code{\link{aggregations}}.
 #'
-#' @param measure [\code{\link{Measure}}]\cr
-#'   Performance measure.
-#' @param aggr [\code{\link{Aggregation}}]\cr
-#'   Aggregation function.
+#' @template arg_measure
+#' @template arg_aggr
 #' @return [\code{\link{Measure}}] with changed aggregation behaviour.
 #' @export
 setAggregation = function(measure, aggr) {
-  checkArg(measure, "Measure")
-  checkArg(aggr, "Aggregation")
+  assertClass(measure, classes = "Measure")
+  assertClass(aggr, classes = "Aggregation")
   measure$aggr = aggr
   return(measure)
 }
@@ -122,6 +121,7 @@ setAggregation = function(measure, aggr) {
 #' @export
 print.Measure = function(x, ...) {
   catf("Performance measure: %s", x$id)
+  catf("Properties: %s", collapse(x$properties))
   catf("Minimize: %s", x$minimize)
   catf("Aggregated by: %s", x$aggr$id)
 }

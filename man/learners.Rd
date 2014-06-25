@@ -90,7 +90,7 @@
   \item{\bold{regr.rpart}}{\cr Decision Tree from rpart package: \code{\link[rpart]{rpart}}\cr
     Note that \code{xval} has been set to 0 by default for speed.}
   \item{\bold{regr.rsm}}{\cr Response surface regression from rsm package: \code{\link[rsm]{rsm}}\cr
-    Note that you select the order of the regression by using modelfun="FO" (first order), "TWI" (two-way interactions, this is with 1st oder terms!) and "SO" (full second order)}.
+    Note that you select the order of the regression by using modelfun = "FO" (first order), "TWI" (two-way interactions, this is with 1st oder terms!) and "SO" (full second order)}.
   \item{\bold{regr.rvm}}{\cr Relevance Vector Machine from package kernlab: \code{\link[kernlab]{rvm}}\cr
     Note that kernel parameters have to be passed directly and not by using the kpar list in rvm.\cr
     Note that \code{fit} has been set to \code{FALSE} by default for speed.}

@@ -23,14 +23,14 @@
 #'   \code{th} is the optimal threshold, \code{perf} the performance value.
 #' @family tune
 #' @export
-tuneThreshold = function(pred, measure, task, model, nsub = 20L, control=list()) {
-  checkArg(pred, "Prediction")
-  checkArg(measure, "Measure")
+tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list()) {
+  assertClass(pred, classes = "Prediction")
+  assertClass(measure, classes = "Measure")
   if (!missing(task))
-    checkArg(task, "SupervisedTask")
+    assertClass(task, classes = "SupervisedTask")
   if (!missing(model))
-    checkArg(model, "WrappedModel")
-  checkArg(control, "list")
+    assertClass(model, classes = "WrappedModel")
+  assertList(control)
 
   td = pred$task.desc
   if (missing(measure))
@@ -39,7 +39,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control=list())
 
   # brutally return NA if we find any NA in the predicted probs...
   if (any(is.na(probs))) {
-    return(list(th=NA, pred=pred, th.seq=numeric(0), perf=numeric(0)))
+    return(list(th = NA, pred = pred, th.seq = numeric(0), perf = numeric(0)))
   }
 
   cls = pred$task.desc$class.levels
@@ -51,16 +51,16 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control=list())
   }
 
   if (k == 2) {
-    or = optimizeSubInts(f=fitn, lower=0, upper=1, maximum=!measure$minimize, nsub = nsub)
+    or = optimizeSubInts(f = fitn, lower = 0, upper = 1, maximum=!measure$minimize, nsub = nsub)
     th = or[[1]]
     perf = or$objective
   } else {
     requirePackages("cmaes", "tuneThreshold")
     start = rep(0.5, k)
-    or = cma_es(par=start, fn=fitn, lower=0, upper=1, control=control)
+    or = cma_es(par = start, fn = fitn, lower = 0, upper = 1, control = control)
     th = or$par / sum(or$par)
     names(th) = cls
     perf = or$val
   }
-  return(list(th=th, perf=perf))
+  return(list(th = th, perf = perf))
 }

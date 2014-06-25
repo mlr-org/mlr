@@ -62,7 +62,7 @@ makePrediction.TaskDescClassif = function(task.desc, id, truth, predict.type, y,
     data$prob = y
     data = as.data.frame(filterNull(data))
     # fix columnnames for prob if strage chars are in factor levels
-    i = grep("prob.", names(data), fixed=TRUE)
+    i = grep("prob.", names(data), fixed = TRUE)
     if (length(i))
       names(data)[i] = paste0("prob.", colnames(y))
   }

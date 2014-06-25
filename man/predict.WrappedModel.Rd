@@ -34,9 +34,6 @@ If \code{predict.type} was set to \dQuote{prob} probability thresholding
 can be done calling the \code{\link{setThreshold}} function on the
 prediction object.
 }
-\note{
-To extract probabilities use \code{\link{getProbabilities}}.
-}
 \examples{
 # train and predict
 train.set = seq(1, 150, 2)
@@ -52,5 +49,9 @@ model = train(lrn, iris.task, subset = train.set)
 p = predict(model, task = iris.task, subset = test.set)
 print(p)
 getProbabilities(p)
+}
+\seealso{
+Other predict: \code{\link{getProbabilities}};
+  \code{\link{setPredictType}}
 }
 

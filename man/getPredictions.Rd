@@ -16,7 +16,12 @@ Benchmark result.}
 Extract the predictions from a benchmark result.
 }
 \seealso{
-Other benchmark: \code{\link{benchmark}};
-  \code{\link{getAggrMeasures}}; \code{\link{getMeasures}}
+Other benchmark: \code{\link{BenchmarkResult}};
+  \code{\link{FilterResult}},
+  \code{\link{getFilterResult}}; \code{\link{benchmark}};
+  \code{\link{getAggrPerformances}};
+  \code{\link{getFeatSelResult}};
+  \code{\link{getPerformances}};
+  \code{\link{getTuneResult}}
 }
 

@@ -2,9 +2,10 @@
 # FIXME check trafo
 # FIXME: example missing
 
-#' Hyperparameter tuning.
+#' @title Hyperparameter tuning.
 #'
-#' Optimizes the hyperparameters of a learner for a classification or regression problem.
+#' @description
+#' Optimizes the hyperparameters of a learner.
 #' Allows for different optimization methods, such as grid search, evolutionary strategies, etc.
 #' You can select such an algorithm (and its settings)
 #' by passing a corresponding control object. For a complete list of implemented algorithms look at
@@ -31,24 +32,25 @@
 #' @export
 tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)
-  checkArg(task, "SupervisedTask")
+  assertClass(task, classes = "SupervisedTask")
   measures = checkMeasures(measures, learner)
-  checkArg(par.set, "ParamSet")
-  checkArg(control, "TuneControl")
+  assertClass(par.set, classes = "ParamSet")
+  assertClass(control, classes = "TuneControl")
   if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")
   if (inherits(resampling, "ResampleDesc") && control$same.resampling.instance)
     resampling = makeResampleInstance(resampling, task = task)
-  checkArg(show.info, "logical", len = 1L, na.ok = FALSE)
+  assertLogical(show.info, len = 1L, any.missing = FALSE)
   checkTunerParset(learner, par.set, control)
-  cl = as.character(class(control))[1]
+  cl = getClass1(control)
   sel.func = switch(cl,
+    TuneControlRandom = tuneRandom,
     TuneControlGrid = tuneGrid,
-    TuneControlOptim = tuneOptim,
     TuneControlCMAES = tuneCMAES,
+    TuneControlGenSA = tuneGenSA,
     TuneControlMBO = tuneMBO,
     TuneControlIrace = tuneIrace,
-    TuneControlRandom = tuneRandom
+    stopf("Tuning algorithm for '%s' does not exist!", cl)
   )
   opt.path = makeOptPathDFFromMeasures(par.set, measures)
   if (show.info) {

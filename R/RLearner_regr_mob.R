@@ -4,15 +4,15 @@ makeRLearner.regr.mob = function() {
     cl = "regr.mob",
     package = "party",
     par.set = makeParamSet(
-      makeNumericLearnerParam(id="alpha", default=0.05, lower=0, upper=1),
-      makeLogicalLearnerParam(id="bonferroni", default=TRUE),
-      makeIntegerLearnerParam(id="minsplit", default=20L, lower=1L),
-      makeNumericLearnerParam(id="trim", default=0.1, lower=0, upper=1),
-      makeLogicalLearnerParam(id="breakties", default=FALSE),
-      makeDiscreteLearnerParam(id="model", default=glinearModel,
-        values=list(glinearModel=glinearModel, linearModel=linearModel)),
-      makeUntypedLearnerParam(id="part.feats"),
-      makeUntypedLearnerParam(id="term.feats")
+      makeNumericLearnerParam(id = "alpha", default = 0.05, lower = 0, upper = 1),
+      makeLogicalLearnerParam(id = "bonferroni", default = TRUE),
+      makeIntegerLearnerParam(id = "minsplit", default = 20L, lower = 1L),
+      makeNumericLearnerParam(id = "trim", default = 0.1, lower = 0, upper = 1),
+      makeLogicalLearnerParam(id = "breakties", default = FALSE),
+      makeDiscreteLearnerParam(id = "model", default = glinearModel,
+        values = list(glinearModel = glinearModel, linearModel = linearModel)),
+      makeUntypedLearnerParam(id = "part.feats"),
+      makeUntypedLearnerParam(id = "term.feats")
     ),
     par.vals = list(),
     properties = c("numerics", "factors", "weights")
@@ -34,12 +34,12 @@ trainLearner.regr.mob = function(.learner, .task, .subset, .weights = NULL, alph
     term.feats = feats
 
   target = .task$task.desc$target
-  f = as.formula(paste(target, "~", collapse(term.feats, sep=" + "), "|", collapse(part.feats, sep=" + ")))
+  f = as.formula(paste(target, "~", collapse(term.feats, sep = " + "), "|", collapse(part.feats, sep = " + ")))
 
   if (is.null(.weights)) {
-    mob(f, data=getTaskData(.task, .subset), control = cntrl, ...)
+    mob(f, data = getTaskData(.task, .subset), control = cntrl, ...)
   } else  {
-    mob(f, data=getTaskData(.task, .subset), control = cntrl, weights=.weights, ...)
+    mob(f, data = getTaskData(.task, .subset), control = cntrl, weights=.weights, ...)
   }
 }
 

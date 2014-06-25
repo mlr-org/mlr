@@ -5,13 +5,13 @@
 #' @return [\code{\link[ParamHelpers]{ParamSet}}].
 #' @export
 getParamSet = function(learner) {
-  checkArg(learner, "Learner")
+  assertClass(learner, classes = "Learner")
   UseMethod("getParamSet")
 }
 
 #'@export
 getParamSet.Learner = function(learner) {
-  checkArg(learner, "Learner")
+  assertClass(learner, classes = "Learner")
   learner$par.set
 }
 
@@ -26,15 +26,15 @@ getParamSet.Learner = function(learner) {
 #'   Default is \code{c("train", "predict", "both")}.
 #' @return [\code{list}]. A named list of values.
 #' @export
-getHyperPars = function(learner,  for.fun=c("train", "predict", "both")) {
-  checkArg(learner, "Learner")
-  checkArg(for.fun, subset=c("train", "predict", "both"))
+getHyperPars = function(learner,  for.fun = c("train", "predict", "both")) {
+  assertClass(learner, classes = "Learner")
+  assertSubset(for.fun, choices = c("train", "predict", "both"))
   UseMethod("getHyperPars")
 }
 
 #' @export
-getHyperPars.Learner = function(learner, for.fun=c("train", "predict", "both")) {
-  checkArg(learner, "Learner")
+getHyperPars.Learner = function(learner, for.fun = c("train", "predict", "both")) {
+  assertClass(learner, classes = "Learner")
   pars = learner$par.set$pars
   pv = learner$par.vals
   ns = Filter(function(x) pars[[x]]$when %in% for.fun, names(pv))
@@ -58,18 +58,18 @@ getHyperPars.Learner = function(learner, for.fun=c("train", "predict", "both")) 
 #'   a learner, see the \code{par.set} slot of the \code{\link{Learner}}
 #'   object.
 #' @examples
-#' cl1 <- makeLearner("classif.ksvm", sigma=1)
-#' cl2 <- setHyperPars(cl1, sigma=10, par.vals=list(C=2))
+#' cl1 <- makeLearner("classif.ksvm", sigma = 1)
+#' cl2 <- setHyperPars(cl1, sigma = 10, par.vals = list(C = 2))
 #' print(cl1)
 #' # note the now set and altered hyperparameters:
 #' print(cl2)
 setHyperPars = function(learner, ..., par.vals) {
-  checkArg(learner, "Learner")
+  assertClass(learner, classes = "Learner")
   args = list(...)
   if (missing(par.vals)) {
     par.vals = list()
   } else {
-    checkArg(par.vals, "list")
+    assertList(par.vals)
     if(!isProperlyNamed(par.vals))
       stop("All parameter settings have to be named arguments!")
   }
@@ -107,7 +107,7 @@ setHyperPars2.Learner = function(learner, par.vals) {
         stop(msg)
       if (opwd == "warn")
         warning(msg)
-      learner$par.set$pars[[n]] = makeUntypedLearnerParam(id=n)
+      learner$par.set$pars[[n]] = makeUntypedLearnerParam(id = n)
       learner$par.vals[[n]] = p
     } else {
       if (!isFeasible(pd, p))
@@ -122,37 +122,6 @@ setHyperPars2.Learner = function(learner, par.vals) {
   return(learner)
 }
 
-#' Set the type of predictions the learner should return.
-#'
-#' Possible prediction types are:
-#' Classification: Labels or class probabilities (including labels).
-#' Regression: Numeric or response or standard errors (including numeric response).
-#' Survival: Linear predictor or survival probability.
-#' @param learner [\code{\link{Learner}}]\cr
-#'   The learner.
-#' @param predict.type [\code{character(1)}]\cr
-#'   Classification: \dQuote{response} or \dQuote{prob}.
-#'   Regression: \dQuote{response} or \dQuote{se}.
-#'   Survival: \dQuote{response} (linear predictor) or \dQuote{prob}.
-#'   Default is \dQuote{response}.
-#' @return [\code{\link{Learner}}] with changed prediction behaviour.
-#' @seealso \code{\link{setThreshold}} to alter the threshold used for prediction.
-#' @export
-setPredictType = function(learner, predict.type) {
-  checkArg(learner, "Learner")
-  checkArg(predict.type, choices = switch(learner$type,
-    classif = c("response", "prob"),
-    regr = c("response", "se"),
-    surv = c("response", "prob"),
-    costsens = c("response")
-  ))
-  if (predict.type == "prob" && !hasProperties(learner, "prob"))
-    stopf("Trying to predict probs, but %s does not support that!", learner$id)
-  if (predict.type == "se" && !hasProperties(learner, "se"))
-    stopf("Trying to predict standard errors, but %s does not support that!", learner$id)
-  learner$predict.type = predict.type
-  return(learner)
-}
 
 # FIXME what if hyper pars are of complx type?
 getHyperParsString = function(learner) {

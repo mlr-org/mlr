@@ -3,8 +3,8 @@
 # simul study?
 # FIXME: indexing without drop
 
-makePreprocWrapperRemoveOutliers = function(learner, ro.alpha=0.5) {
-  checkArg(learner, "Learner")
+makePreprocWrapperRemoveOutliers = function(learner, ro.alpha = 0.5) {
+  assertClass(learner, classes = "Learner")
 
   trainfun = function(data, target, args) {
     require(robustbase)
@@ -19,7 +19,7 @@ makePreprocWrapperRemoveOutliers = function(learner, ro.alpha=0.5) {
       idx = unsplit(idx, data[,target])
       data = data[idx,]
     }
-    list(data=data, control=list())
+    list(data = data, control = list())
   }
 
   predictfun = function(data, target, args, control) {
@@ -30,7 +30,7 @@ makePreprocWrapperRemoveOutliers = function(learner, ro.alpha=0.5) {
     learner,
     trainfun,
     predictfun,
-    par.set=makeParamSet(makeNumericLearnerParam("ro.alpha", lower=0, upper=1)),
-    par.vals=list(ro.alpha=ro.alpha)
+    par.set = makeParamSet(makeNumericLearnerParam("ro.alpha", lower = 0, upper = 1)),
+    par.vals = list(ro.alpha = ro.alpha)
   )
 }

@@ -4,34 +4,34 @@ makeRLearner.regr.crs = function() {
     cl = "regr.crs",
     package = "crs",
     par.set = makeParamSet(
-      makeIntegerVectorLearnerParam(id="degree", default=3, lower=0),
-      makeIntegerVectorLearnerParam(id="segments", default=1, lower=1),
-      makeIntegerVectorLearnerParam(id="lambda"),
-      makeLogicalLearnerParam(id="lambda.discrete", default=FALSE),
-      makeIntegerLearnerParam(id="lambda.discrete.num", default=100, lower=0,
-        requires=expression(lambda.discret)),
-      makeDiscreteLearnerParam(id="cv", default="nomad",
-        values=c("nomad", "exhaustive", "none")),
-      makeIntegerLearnerParam(id="cv.treshold", default=10000, lower=0),
-      makeDiscreteLearnerParam(id="cv.func", default="cv.ls",
-        values=c("cv.ls", "cv.gcv", "cv.aic")),
-      makeLogicalLearnerParam(id="kernel", default=TRUE),
-      makeIntegerLearnerParam(id="degree.max", default=10, lower=0),
-      makeIntegerLearnerParam(id="segments.max", default=10, lower=1),
-      makeIntegerLearnerParam(id="degree.min", default=0, lower=0),
-      makeIntegerLearnerParam(id="segments.min", default=1, lower=1),
-      makeIntegerLearnerParam(id="cv.df.min", default=1,
-        requires=expression(cv=="nomad")),
-      makeDiscreteLearnerParam(id="complexity", default="degree-knots",
-        values=c("degree-knots", "degree", "knots")),
-      makeDiscreteLearnerParam(id="knots", default="quantiles",
-        values=c("quantiles", "uniform", "auto")),
-      makeDiscreteLearnerParam(id="basis", default="auto",
-        values=c("auto", "additive", "tensor", "glp")),
-      makeLogicalLearnerParam(id="prune", default=FALSE),
-      makeIntegerLearnerParam(id="restarts", default=0, lower=0),
-      makeIntegerLearnerParam(id="nmulti", default=5, lower=0),
-      makeLogicalLearnerParam(id="singular.ok", default=FALSE)
+      makeIntegerVectorLearnerParam(id = "degree", default = 3, lower = 0),
+      makeIntegerVectorLearnerParam(id = "segments", default = 1, lower = 1),
+      makeIntegerVectorLearnerParam(id = "lambda"),
+      makeLogicalLearnerParam(id = "lambda.discrete", default = FALSE),
+      makeIntegerLearnerParam(id = "lambda.discrete.num", default = 100, lower = 0,
+        requires = expression(lambda.discret)),
+      makeDiscreteLearnerParam(id = "cv", default = "nomad",
+        values = c("nomad", "exhaustive", "none")),
+      makeIntegerLearnerParam(id = "cv.treshold", default = 10000, lower = 0),
+      makeDiscreteLearnerParam(id = "cv.func", default = "cv.ls",
+        values = c("cv.ls", "cv.gcv", "cv.aic")),
+      makeLogicalLearnerParam(id = "kernel", default = TRUE),
+      makeIntegerLearnerParam(id = "degree.max", default = 10, lower = 0),
+      makeIntegerLearnerParam(id = "segments.max", default = 10, lower = 1),
+      makeIntegerLearnerParam(id = "degree.min", default = 0, lower = 0),
+      makeIntegerLearnerParam(id = "segments.min", default = 1, lower = 1),
+      makeIntegerLearnerParam(id = "cv.df.min", default = 1,
+        requires = expression(cv=="nomad")),
+      makeDiscreteLearnerParam(id = "complexity", default = "degree-knots",
+        values = c("degree-knots", "degree", "knots")),
+      makeDiscreteLearnerParam(id = "knots", default = "quantiles",
+        values = c("quantiles", "uniform", "auto")),
+      makeDiscreteLearnerParam(id = "basis", default = "auto",
+        values = c("auto", "additive", "tensor", "glp")),
+      makeLogicalLearnerParam(id = "prune", default = FALSE),
+      makeIntegerLearnerParam(id = "restarts", default = 0, lower = 0),
+      makeIntegerLearnerParam(id = "nmulti", default = 5, lower = 0),
+      makeLogicalLearnerParam(id = "singular.ok", default = FALSE)
 
     ),
     par.vals = list(),
@@ -43,9 +43,9 @@ makeRLearner.regr.crs = function() {
 trainLearner.regr.crs = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
   if (is.null(.weights)) {
-    crs(f, data=getTaskData(.task, .subset), ...)
+    crs(f, data = getTaskData(.task, .subset), ...)
   } else  {
-    crs(f, data=getTaskData(.task, .subset), weights=.weights, ...)
+    crs(f, data = getTaskData(.task, .subset), weights=.weights, ...)
   }
 }
 

@@ -38,11 +38,11 @@
 #' print(r$extract)
 makeFilterWrapper = function(learner, fw.method = "random.forest.importance", fw.select = "perc", fw.val) {
   learner = checkLearner(learner)
-  checkArg(fw.method, choices = getFilterMethods())
+  assertChoice(fw.method, choices = listFilterMethods())
   checkFilterArguments(select = fw.select, val = fw.val)
   id = paste(learner$id, "filtered", sep = ".")
   ps = makeParamSet(
-    makeDiscreteLearnerParam(id = "fw.method", values = getFilterMethods()),
+    makeDiscreteLearnerParam(id = "fw.method", values = listFilterMethods()),
     makeDiscreteLearnerParam(id = "fw.select", values = c("perc", "abs", "threshold")),
     makeNumericLearnerParam(id = "fw.val")
   )
@@ -77,23 +77,3 @@ getFilteredFeatures = function(model) {
   model$learner.model$next.model$features
 }
 
-#' Returns a filter result after training or benchmarking.
-#'
-#' @param object [\code{\link{WrappedModel}} | \code{\link{BenchmarkResult}}]\cr
-#'   Trained Model created with \code{\link{makeFilterWrapper}} or benchmark result created with \code{\link{benchmark}}.
-#' @return [\code{\link{FilterResult}} or list of \code{\link{FilterResult}}s].
-#' @aliases FilterResult
-#' @export
-#' @family filter
-getFilterResult = function(object) {
-  UseMethod("getFilterResult")
-}
-
-#' @export
-getFilterResult.WrappedModel = function(object) {
-  x = getFilteredFeatures(object)
-  # FIXME: what is this?
-  if (is.null(x))
-    return(NULL)
-  addClasses(x, "FilterResult")
-}
