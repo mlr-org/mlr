@@ -21,7 +21,7 @@ test_that("SupervisedTask", {
 
   # wrong data
   expect_error(makeClassifTask(data = 44, target = "y"),
-    "must be of class data.frame")
+    "Must be of class data.frame")
 
   # wrong target type
   expect_error(makeClassifTask(data = regr.df, target = regr.target),
