@@ -6,8 +6,9 @@
 setPredictType(learner, predict.type)
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}}]\cr
-The learner.}
+\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+The learner.
+If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
 \item{predict.type}{[\code{character(1)}]\cr
 Classification: \dQuote{response} or \dQuote{prob}.
@@ -16,7 +17,7 @@ Survival: \dQuote{response} (linear predictor) or \dQuote{prob}.
 Default is \dQuote{response}.}
 }
 \value{
-[\code{\link{Learner}}] with changed prediction behaviour.
+[\code{\link{Learner}}].
 }
 \description{
 Possible prediction types are:
@@ -25,6 +26,7 @@ Regression: Numeric or response or standard errors (including numeric response).
 Survival: Linear predictor or survival probability.
 }
 \seealso{
-\code{\link{setThreshold}} to alter the threshold used for prediction.
+Other predict: \code{\link{getProbabilities}};
+  \code{\link{predict.WrappedModel}}
 }
 

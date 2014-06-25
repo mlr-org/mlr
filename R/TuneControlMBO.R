@@ -10,7 +10,7 @@
 # @rdname TuneControl
 makeTuneControlMBO = function(same.resampling.instance = TRUE, learner, mbo.control) {
   assertClass(learner, classes = "Learner")
-  checkArg(mbo.control, "MBOControl")
+  assertClass(mbo.control, "MBOControl")
   x = makeTuneControl(same.resampling.instance = same.resampling.instance, start = list(), cl = "TuneControlMBO")
   x$learner = learner
   x$mbo.control = mbo.control

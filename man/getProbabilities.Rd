@@ -21,11 +21,11 @@ Default is either all classes for multi-class problems or the positive class for
 Get probabilities for some classes.
 }
 \examples{
-task <- makeClassifTask(data = iris, target = "Species")
-lrn <- makeLearner("classif.lda", predict.type = "prob")
-mod <- train(lrn, task)
+task = makeClassifTask(data = iris, target = "Species")
+lrn = makeLearner("classif.lda", predict.type = "prob")
+mod = train(lrn, task)
 # predict probabilities
-pred <- predict(mod, newdata = iris)
+pred = predict(mod, newdata = iris)
 
 # Get probabilities for all classes
 head(getProbabilities(pred))
@@ -34,6 +34,7 @@ head(getProbabilities(pred))
 head(getProbabilities(pred, c("setosa", "virginica")))
 }
 \seealso{
-\code{\link{predict.WrappedModel}}
+Other predict: \code{\link{predict.WrappedModel}};
+  \code{\link{setPredictType}}
 }
 

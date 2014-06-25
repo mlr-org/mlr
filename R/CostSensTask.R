@@ -23,11 +23,10 @@ makeCostSensTask = function(id, data, costs, blocking = NULL, fixup.data = "warn
 #' @export
 checkTask.CostSensTask = function(task, target, ...) {
   NextMethod("checkTask")
-
-  checkArg(task$env$costs, c("data.frame", "matrix"), na.ok = FALSE)
+  assert(assertMatrix(task$env$costs, any.missing = FALSE), assertDataFrame(task$env$costs, any.missing = FALSE))
   if (is.data.frame(task$env$costs))
     task$env$costs = as.matrix(task$env$costs)
-  checkArg(task$env$costs, "matrix", na.ok = FALSE, lower = 0) #FIXME https://github.com/mllg/checkmate/issues/29
+  assertNumeric(task$env$costs, lower = 0)
   if (is.null(colnames(task$env$costs)))
     colnames(task$env$costs) = paste("y", seq_col(task$env$costs), sep = "")
   checkColumnNames(task$env$costs)

@@ -17,7 +17,7 @@
 #' @export
 listMeasures = function(obj, properties = character(0L), create = FALSE) {
   if (!missing(obj))
-    checkArg(obj, c("character", "SupervisedTask"))
+    assert(assertCharacter(obj), assertClass(obj, "SupervisedTask"))
   assertCharacter(properties, any.missing = FALSE)
   assertLogical(create, len = 1L, any.missing = FALSE) 
   UseMethod("listMeasures")

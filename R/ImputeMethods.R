@@ -69,7 +69,7 @@ NULL
 #'  Constant valued use for imputation.
 #' @rdname imputations
 imputeConstant = function(const) {
-  checkArg(const, "vector", len = 1L, na.ok = FALSE)
+  assertVector(const, len = 1L, any.missing = FALSE)
   makeImputeMethod(
     learn = function(data, target, col, const) const,
     impute = simpleImpute,

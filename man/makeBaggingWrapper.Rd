@@ -47,5 +47,9 @@ Prediction works as follows:
 For classification we do majority voting to create a discrete label and
 probabilities are predicted by considering the proportions of all predicted labels.
 For regression the mean value and the standard deviations across predictions is computed.
+
+Note that the passed base learner must always have \code{predict.type = 'response'},
+while the BaggingWrapper can estimate probabilities and standard errors, so it can
+be set, e.g., to \code{predict.type = 'prob'}.
 }
 

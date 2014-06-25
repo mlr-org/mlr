@@ -97,7 +97,7 @@ checkTask.SupervisedTask = function(task, target, ...) {
   if (!is.null(task$env$weights))
     assertNumeric(weights, len = nrow(task$env$data), any.missing = FALSE, lower = 0)
   if (!is.null(task$blocking)) {
-    checkArg(task$blocking, "factor", len = nrow(task$env$data), na.ok = FALSE)
+    assertFactor(task$blocking, len = nrow(task$env$data), any.missing = FALSE)
     if(length(task$blocking) && length(task$blocking) != nrow(task$env$data))
       stop("Blocking has to be of the same length as number of rows in data! Or pass none at all.")
   }
