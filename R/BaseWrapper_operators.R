@@ -30,3 +30,14 @@ getLeafLearner = function(learner) {
     return(getLeafLearner(learner$next.learner))
   return(learner)
 }
+
+
+# default is to set the predict.type for the wrapper and recursively for all learners inside
+# if one does not want this, one must override
+#' @export
+setPredictType.BaseWrapper = function(learner, predict.type) {
+  learner$next.learner = setPredictType(learner$next.learner, predict.type)
+  learner = setPredictType.Learner(learner, predict.type)
+  return(learner)
+}
+

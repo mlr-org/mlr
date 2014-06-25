@@ -1,0 +1,17 @@
+context("setPredictType")
+
+test_that("predict.type gets propagated", {
+  inner = makeResampleDesc("Holdout")
+  lrn1 = makeLearner("classif.rpart")
+  ps = makeParamSet(makeNumericParam("cp", lower = 0.1, upper = 1))
+  ctrl = makeTuneControlRandom(maxit = 2)
+  lrn2 = makeTuneWrapper(lrn1, resampling = inner, control = ctrl, par.set = ps)
+  expect_equal(lrn2$predict.type, "response")
+  lrn2 = setPredictType(lrn2, "prob")
+  expect_equal(lrn2$predict.type, "prob")
+
+  m = train(lrn2, iris.task)
+  p = predict(m, iris.task)
+  prob = getProbabilities(p)
+  expect_true(is.data.frame(prob) && nrow(prob) == nrow(iris))
+})

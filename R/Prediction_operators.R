@@ -12,13 +12,13 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
 #' @return [\code{data.frame}] with numerical columns or a numerical vector if length of \code{cl} is 1.
 #'   Order of columns is defined by \code{cl}.
 #' @export
-#' @seealso \code{\link{predict.WrappedModel}}
+#' @family predict
 #' @examples
-#' task <- makeClassifTask(data = iris, target = "Species")
-#' lrn <- makeLearner("classif.lda", predict.type = "prob")
-#' mod <- train(lrn, task)
+#' task = makeClassifTask(data = iris, target = "Species")
+#' lrn = makeLearner("classif.lda", predict.type = "prob")
+#' mod = train(lrn, task)
 #' # predict probabilities
-#' pred <- predict(mod, newdata = iris)
+#' pred = predict(mod, newdata = iris)
 #'
 #' # Get probabilities for all classes
 #' head(getProbabilities(pred))

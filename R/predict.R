@@ -21,8 +21,8 @@
 #'   Currently ignored.
 #' @return [\code{\link{Prediction}}].
 #' @method predict WrappedModel
+#' @family predict
 #' @export
-#' @note To extract probabilities use \code{\link{getProbabilities}}.
 #' @examples
 #' # train and predict
 #' train.set = seq(1, 150, 2)
