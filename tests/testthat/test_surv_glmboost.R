@@ -3,29 +3,21 @@ context("surv_glmboost")
 test_that("surv_glmboost", {
   library(survival)
   parset.list = list(
-    list(family = CoxPH()),
-    list(mstop = 50, nu = 0.2, family = CoxPH()),
-    list(mstop = 200, family = CoxPH()),
-    list(mstop = 250, nu = 0.05,  family = CoxPH())
+    list(mstop = 100L, nu = 0.1),
+    list(mstop = 50L, nu = 1),
+    list(mstop = 200L, nu = 0.5),
+    list(mstop = 250L, nu = 0.05)
   )
   
   old.predicts.list = list()
   
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(formula = surv.formula, data = surv.train, family = parset$family)
-    ctrl = boost_control()
-    if (!is.null(parset$mstop)) 
-      ctrl$mstop = parset$mstop
-    if (!is.null(parset$nu))
-      ctrl$nu = parset$nu
-    pars = c(pars, list(control= ctrl))
+    ctrl = boost_control(mstop = parset$mstop, nu = parset$nu)
+    f = getTaskFormula(surv.task, env=as.environment("package:survival"))
+    pars = list(f, data = surv.train, control = ctrl, family = CoxPH())
     set.seed(getOption("mlr.debug.seed"))
-    # glmboost(formula = pars$formula, data = pars$data, family = CoxPH()) doesn't work, but
-    # glmboost(pars$formula, data = pars$data, family = CoxPH()) does..!? Use hack for this: 
-    glm = function(...) glmboost(pars$formula, ...)
-    # m = do.call(glmboost, pars)
-    m = do.call(glm, pars[-1])
+    m = do.call(glmboost, pars)
     
     p  = predict(m, newdata = surv.test, type = "link")
     old.predicts.list[[i]] = drop(p)
