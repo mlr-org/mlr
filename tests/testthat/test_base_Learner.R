@@ -1,7 +1,7 @@
 context("Learner")
 
 test_that("Learner", {
-  wl = makeLearner("classif.rpart", minsplit=3)
+  wl = makeLearner("classif.rpart", minsplit = 3)
   expect_equal(wl$type, "classif")
   expect_equal(wl$id, "classif.rpart")
   expect_true(is.character(wl$properties))
@@ -12,8 +12,8 @@ test_that("Learner", {
   expect_equal(wl$id, "regr.lm")
   expect_true(is.character(wl$properties))
 
-  expect_error(makeLearner("classif.lvq1", predict.type="prob"), "Trying to predict probs, but")
-  expect_error(makeLearner("regr.lm", predict.type="prob"), " Argument predict.type must be")
+  expect_error(makeLearner("classif.lvq1", predict.type = "prob"), "Trying to predict probs, but")
+  expect_error(makeLearner("regr.lm", predict.type = "prob"), "'predict.type'")
   wl = makeLearner("classif.lvq1")
   expect_error(setPredictType(wl, "prob"), "Trying to predict probs, but")
 })
