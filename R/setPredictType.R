@@ -5,6 +5,10 @@
 #' Classification: Labels or class probabilities (including labels).
 #' Regression: Numeric or response or standard errors (including numeric response).
 #' Survival: Linear predictor or survival probability.
+#'
+#' For complex wrappers the predict type is usually also passed down the
+#' encapsulated learner in a recursive fashion.
+#'
 #' @template arg_learner
 #' @param predict.type [\code{character(1)}]\cr
 #'   Classification: \dQuote{response} or \dQuote{prob}.

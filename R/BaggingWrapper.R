@@ -20,7 +20,9 @@
 #'
 #' Note that the passed base learner must always have \code{predict.type = 'response'},
 #' while the BaggingWrapper can estimate probabilities and standard errors, so it can
-#' be set, e.g., to \code{predict.type = 'prob'}.
+#' be set, e.g., to \code{predict.type = 'prob'}. For this reason, when you call
+#' \code{\link{setPredictType}}, the type is only set for the BaggingWrapper, not passed
+#' down to the inner learner.
 #'
 #' @template arg_learner
 #' @param bag.iters [\code{integer(1)}]\cr
