@@ -12,17 +12,17 @@
 #' @export
 #' @seealso \code{\link{makeMeasure}}, \code{\link{measures}}
 #' @examples
-#' training.set <- seq(1, nrow(iris), by = 2)
-#' test.set <- seq(2, nrow(iris), by = 2)
+#' training.set = seq(1, nrow(iris), by = 2)
+#' test.set = seq(2, nrow(iris), by = 2)
 #'
-#' task <- makeClassifTask(data = iris, target = "Species")
-#' lrn <- makeLearner("classif.lda")
-#' mod <- train(lrn, task, subset = training.set)
-#' pred <- predict(mod, newdata = iris[test.set, ])
+#' task = makeClassifTask(data = iris, target = "Species")
+#' lrn = makeLearner("classif.lda")
+#' mod = train(lrn, task, subset = training.set)
+#' pred = predict(mod, newdata = iris[test.set, ])
 #' performance(pred, measures = mmce)
 #'
 #' # Compute multiple performance measures at once
-#' ms <- list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
+#' ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 #' performance(pred, measures = ms, task, mod)
 performance = function(pred, measures, task, model) {
   if (!missing(pred))

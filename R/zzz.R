@@ -7,7 +7,7 @@
 #' @importFrom survival Surv
 #' @importFrom survival is.Surv
 
-.onAttach <- function(libname, pkgname) {
+.onAttach = function(libname, pkgname) {
   configureMlr()
   parallelRegisterLevels(package = "mlr", levels = c("benchmark", "resample", "selectFeatures", "tuneParams"))
 }

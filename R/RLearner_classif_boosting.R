@@ -36,7 +36,7 @@ trainLearner.classif.boosting= function(.learner, .task, .subset, .weights = NUL
 predictLearner.classif.boosting = function(.learner, .model, .newdata, ...) {
   levs = levels = .model$task.desc$class.levels
   # stupid adaboost
-  .newdata[, .model$task.desc$target] <- factor(rep(1, nrow(.newdata)), levels = levs)
+  .newdata[, .model$task.desc$target] = factor(rep(1, nrow(.newdata)), levels = levs)
   p = predict(.model$learner.model, newdata = .newdata, ...)
   if (.learner$predict.type == "prob") {
     return(setColNames(p$prob, levs))

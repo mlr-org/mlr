@@ -44,7 +44,7 @@ predictLearner.classif.nnet = function(.learner, .model, .newdata, ...) {
     return(as.factor(p))
   else {
     if (length(.model$task.desc$class.levels) == 2L) {
-      y <- cbind(1-p, p)
+      y = cbind(1-p, p)
       colnames(y) = .model$learner.model$lev
       return(y)
     } else

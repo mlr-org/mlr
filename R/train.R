@@ -17,18 +17,18 @@
 #' @export
 #' @seealso \code{\link{predict.WrappedModel}}
 #' @examples
-#' training.set <- sample(1:nrow(iris), nrow(iris) / 2)
+#' training.set = sample(1:nrow(iris), nrow(iris) / 2)
 #'
 #' ## use linear discriminant analysis to classify iris data
-#' task <- makeClassifTask(data = iris, target = "Species")
-#' learner <- makeLearner("classif.lda", method = "mle")
-#' mod <- train(learner, task, subset = training.set)
+#' task = makeClassifTask(data = iris, target = "Species")
+#' learner = makeLearner("classif.lda", method = "mle")
+#' mod = train(learner, task, subset = training.set)
 #' print(mod)
 #'
 #' ## use random forest to classify iris data
-#' task <- makeClassifTask(data = iris, target = "Species")
-#' learner <- makeLearner("classif.rpart", minsplit = 7, predict.type = "prob")
-#' mod <- train(learner, task, subset = training.set)
+#' task = makeClassifTask(data = iris, target = "Species")
+#' learner = makeLearner("classif.rpart", minsplit = 7, predict.type = "prob")
+#' mod = train(learner, task, subset = training.set)
 #' print(mod)
 train = function(learner, task, subset, weights = NULL) {
   learner = checkLearner(learner)

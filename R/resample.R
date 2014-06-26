@@ -68,9 +68,9 @@
 #' @family resample
 #' @export
 #' @examples
-#' task <- makeClassifTask(data = iris, target = "Species")
-#' rdesc <- makeResampleDesc("CV", iters = 2)
-#' r <- resample(makeLearner("classif.qda"), task, rdesc)
+#' task = makeClassifTask(data = iris, target = "Species")
+#' rdesc = makeResampleDesc("CV", iters = 2)
+#' r = resample(makeLearner("classif.qda"), task, rdesc)
 #' print(r$aggr)
 #' print(r$measures.test)
 #' print(r$pred)
@@ -85,7 +85,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   assertClass(resampling, classes = "ResampleInstance")
   measures = checkMeasures(measures, task)
   if (!is.null(weights)) {
-    assertNumeric(weights, len = task$task.desc$size, any.missing = FALSE, lower = 0) 
+    assertNumeric(weights, len = task$task.desc$size, any.missing = FALSE, lower = 0)
   }
   assertLogical(models, len = 1L, any.missing = FALSE)
   if (missing(extract))
