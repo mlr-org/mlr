@@ -1,14 +1,14 @@
 tuneIrace = function(learner, task, resampling, measures, par.set, control,
                    opt.path, show.info) {
-  
+
   requirePackages(c("irace"), "tuneIrace")
-  
+
   #FIXME allow to do in parallel
   hookRun = function(instance, candidate, extra.params = NULL, config = list()) {
     rin = instance
-    tunerFitnFun(candidate$values, learner = learner, task = task, resampling = rin, measures = measures, 
-      par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info, 
-      trafo = TRUE, convertx = identity, remove.nas = TRUE) 
+    tunerFitnFun(candidate$values, learner = learner, task = task, resampling = rin, measures = measures,
+      par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
+      trafo = TRUE, convertx = identity, remove.nas = TRUE)
   }
   n.instances = control$extra.args$n.instances
   control$extra.args$n.instances = NULL
