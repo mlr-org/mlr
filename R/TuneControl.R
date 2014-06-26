@@ -12,7 +12,9 @@
 #'     For integers the internally proposed numeric values are automatically rounded.}
 #'   \item{makeTuneControlCMAES}{CMA Evolution Strategy with method \code{\link[cmaes]{cma_es}}.
 #'     Can handle numeric(vector) and integer(vector) hyperparameters.
-#'     For integers the internally proposed numeric values are automatically rounded.}
+#'     For integers the internally proposed numeric values are automatically rounded.
+#'     The sigma variance parameter is initialized to 1/4 of the span of box-constraints per
+#'     parameter dimension.}
 #'   \item{makeTuneControlIrace}{Tuning with iterated F-Racing with method \code{\link[irace]{irace}}.
 #'     All kinds of parameter types can be handled.}
 #' }
