@@ -1,4 +1,3 @@
-#FIXME: read all
 # evaluates either a hyperpar setting or a feature set by resampling
 # must be already in correct format, either a named list of values or a named integer vector for features
 # logs point and results
