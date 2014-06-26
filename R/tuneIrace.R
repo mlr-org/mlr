@@ -1,7 +1,6 @@
-tuneIrace = function(learner, task, resampling, measures, par.set, control,
-                   opt.path, show.info) {
+tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.path, show.info) {
 
-  requirePackages(c("irace"), "tuneIrace")
+  requirePackages("irace", why = "tuneIrace")
 
   #FIXME allow to do in parallel
   hookRun = function(instance, candidate, extra.params = NULL, config = list()) {
@@ -21,12 +20,7 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control,
   tuner.config = c(list(hookRun = hookRun, instances = instances, logFile = log.file), control$extra.args)
 
   g = if (show.irace.output) identity else capture.output
-  g({
-  or = irace(
-    tunerConfig = tuner.config,
-    parameters = parameters
-  )
-  })
+  g(or <- irace(tunerConfig = tuner.config, parameters = parameters))
   unlink(log.file)
   if (nrow(or) == 0)
     stop("irace produced no result, possibly the budget was set too low?")
@@ -37,8 +31,7 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control,
   d = as.data.frame(opt.path)
   par.names = names(x)
   # get all lines in opt.path which correspond to x and average their perf values
-  j = sapply(1:nrow(d), function(j) isTRUE(all.equal(as.list(d[j, par.names]), x)))
+  j = sapply(1:nrow(d), function(j) isTRUE(all.equal(as.list(d[j, par.names, drop, FALSE]), x)))
   y = colMeans(d[j, opt.path$y.names, drop = FALSE])
-  # FIXME change when new version of paramhelpers is online
-  makeTuneResult(learner, control, removeMissingValues2(x), y, opt.path)
+  makeTuneResult(learner, control, removeMissingValues(x), y, opt.path)
 }

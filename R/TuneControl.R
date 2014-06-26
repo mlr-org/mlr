@@ -16,7 +16,9 @@
 #'     The sigma variance parameter is initialized to 1/4 of the span of box-constraints per
 #'     parameter dimension.}
 #'   \item{makeTuneControlIrace}{Tuning with iterated F-Racing with method \code{\link[irace]{irace}}.
-#'     All kinds of parameter types can be handled.}
+#'     All kinds of parameter types can be handled. We return the best of the final elite
+#'     candidates found by irace in the last race. Its estimated performance is the mean of all
+#'     evaluations ever done for that candidate.}
 #' }
 #'
 #' Dependent parameters can currently only be handled by random search and irace.
