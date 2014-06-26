@@ -45,5 +45,5 @@ trainLearner.regr.ksvm = function(.learner, .task, .subset, .weights = NULL, deg
 
 #' @export
 predictLearner.regr.ksvm = function(.learner, .model, .newdata, ...) {
-  kernlab::predict(.model$learner.model, newdata=.newdata, ...)[, 1L]
+  kernlab::predict(.model$learner.model, newdata = .newdata, ...)[, 1L]
 }

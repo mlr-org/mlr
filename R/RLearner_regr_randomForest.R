@@ -79,7 +79,7 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
     )
     se.fun(.learner, .model, .newdata, ...)
   } else {
-    predict(.model$learner.model, newdata=.newdata, ...)
+    predict(.model$learner.model, newdata = .newdata, ...)
   }
 }
 

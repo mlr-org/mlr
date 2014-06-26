@@ -19,12 +19,12 @@ makeRLearner.classif.PART = function() {
 #' @export
 trainLearner.classif.PART = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  ctrl = Weka_control(..., Q = as.integer(runif(1L, min=-.Machine$integer.max, max=.Machine$integer.max)))
+  ctrl = Weka_control(..., Q = as.integer(runif(1L, min = -.Machine$integer.max, max = .Machine$integer.max)))
   PART(f, data = getTaskData(.task, .subset), control = ctrl, na.action = na.pass)
 }
 
 #' @export
 predictLearner.classif.PART = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, prob = "prob", "class")
-  predict(.model$learner.model, newdata=.newdata, type = type, ...)
+  predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }

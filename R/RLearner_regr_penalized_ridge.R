@@ -20,5 +20,5 @@ trainLearner.regr.penalized.ridge = function(.learner, .task, .subset, .weights 
 predictLearner.regr.penalized.ridge = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   .newdata[,.model$task.desc$target] = 0
-  penalized::predict(m, data=.newdata,  ...)[, "mu"]
+  penalized::predict(m, data = .newdata,  ...)[, "mu"]
 }

@@ -34,7 +34,7 @@ trainLearner.classif.rda = function(.learner, .task, .subset, .weights = NULL,  
 
 #' @export
 predictLearner.classif.rda = function(.learner, .model, .newdata, ...) {
-  p = predict(.model$learner.model, newdata=.newdata, ...)
+  p = predict(.model$learner.model, newdata = .newdata, ...)
   if (.learner$predict.type == "response")
     return(p$class)
   return(p$posterior)

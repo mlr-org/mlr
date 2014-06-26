@@ -22,6 +22,6 @@ trainLearner.regr.fnn = function(.learner, .task, .subset, .weights = NULL,  ...
 #' @export
 predictLearner.regr.fnn = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
-  pars = c(list(train = m$train$data, test=.newdata, y = m$train$target), m$parset, list(...))
+  pars = c(list(train = m$train$data, test = .newdata, y = m$train$target), m$parset, list(...))
   do.call(FNN::knn.reg, pars)$pred
 }

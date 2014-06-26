@@ -39,11 +39,11 @@ trainLearner.regr.mob = function(.learner, .task, .subset, .weights = NULL, alph
   if (is.null(.weights)) {
     mob(f, data = getTaskData(.task, .subset), control = cntrl, ...)
   } else  {
-    mob(f, data = getTaskData(.task, .subset), control = cntrl, weights=.weights, ...)
+    mob(f, data = getTaskData(.task, .subset), control = cntrl, weights = .weights, ...)
   }
 }
 
 #' @export
 predictLearner.regr.mob = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata=.newdata, ...)
+  predict(.model$learner.model, newdata = .newdata, ...)
 }

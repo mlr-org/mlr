@@ -45,5 +45,5 @@ trainLearner.classif.lssvm = function(.learner, .task, .subset, .weights = NULL,
 #' @export
 predictLearner.classif.lssvm = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, "response")
-  kernlab::predict(.model$learner.model, newdata=.newdata, type = type, ...)
+  kernlab::predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }

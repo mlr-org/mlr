@@ -20,5 +20,5 @@ trainLearner.classif.OneR = function(.learner, .task, .subset, .weights = NULL, 
 #' @export
 predictLearner.classif.OneR = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, prob = "prob", "class")
-  predict(.model$learner.model, newdata=.newdata, type = type, ...)
+  predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }

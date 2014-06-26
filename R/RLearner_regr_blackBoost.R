@@ -29,11 +29,11 @@ trainLearner.regr.blackboost = function(.learner, .task, .subset, .weights = NUL
   tc = learnerArgsToControl(ctree_control, teststat, testtype, mincriterion, maxdepth)
   f = getTaskFormula(.task)
   if (!is.null(.weights))
-    blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, weights=.weights)
+    blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, weights = .weights)
   else
     blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc)
 }
 
 predictLearner.regr.blackboost = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata=.newdata, ...)[, 1L]
+  predict(.model$learner.model, newdata = .newdata, ...)[, 1L]
 }

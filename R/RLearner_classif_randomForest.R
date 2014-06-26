@@ -45,5 +45,5 @@ predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) 
     .newdata[names(factors)] = mapply(factor, x = .newdata[names(factors)],
        levels = factors, SIMPLIFY = FALSE)
   }
-  predict(.model$learner.model, newdata=.newdata, type = type, ...)
+  predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }

@@ -26,7 +26,7 @@ trainLearner.classif.multinom = function(.learner, .task, .subset, .weights = NU
     multinom(f, data = getTaskData(.task, .subset), ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
-    multinom(f, data = getTaskData(.task, .subset), weights=.weights, ...)
+    multinom(f, data = getTaskData(.task, .subset), weights = .weights, ...)
   }
 }
 
@@ -34,7 +34,7 @@ trainLearner.classif.multinom = function(.learner, .task, .subset, .weights = NU
 predictLearner.classif.multinom = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type=="response", "class", "probs")
   levs = .model$task.desc$class.levels
-  p = predict(.model$learner.model, newdata=.newdata, type = type, ...)
+  p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
   if (type == "probs" && length(levs)==2L) {
     p = matrix(c(1-p, p), ncol = 2L, byrow = FALSE)
     colnames(p) = levs

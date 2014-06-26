@@ -45,14 +45,14 @@ trainLearner.regr.crs = function(.learner, .task, .subset, .weights = NULL,  ...
   if (is.null(.weights)) {
     crs(f, data = getTaskData(.task, .subset), ...)
   } else  {
-    crs(f, data = getTaskData(.task, .subset), weights=.weights, ...)
+    crs(f, data = getTaskData(.task, .subset), weights = .weights, ...)
   }
 }
 
 #' @export
 predictLearner.regr.crs = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type == "se") {
-    pred = predict(.model$learner.model, newdata=.newdata, ...)
+    pred = predict(.model$learner.model, newdata = .newdata, ...)
     lwr = attr(pred, "lwr")
     attr(pred, "lwr") = NULL
     attr(pred, "upr") = NULL
@@ -60,7 +60,7 @@ predictLearner.regr.crs = function(.learner, .model, .newdata, ...) {
     se = (pred - lwr) * sqrt(.model$task.desc$size) / qnorm(0.95)
     cbind(pred, se)
   } else {
-    pred = predict(.model$learner.model, newdata=.newdata, ...)
+    pred = predict(.model$learner.model, newdata = .newdata, ...)
     attr(pred, "lwr") = NULL
     attr(pred, "upr") = NULL
     pred

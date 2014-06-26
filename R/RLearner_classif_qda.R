@@ -19,7 +19,7 @@ trainLearner.classif.qda = function(.learner, .task, .subset, .weights = NULL,  
 
 #' @export
 predictLearner.classif.qda = function(.learner, .model, .newdata, ...) {
-  p = predict(.model$learner.model, newdata=.newdata, ...)
+  p = predict(.model$learner.model, newdata = .newdata, ...)
   if(.learner$predict.type == "response")
     return(p$class)
   else

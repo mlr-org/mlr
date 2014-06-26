@@ -23,5 +23,5 @@ trainLearner.regr.mars = function(.learner, .task, .subset, .weights = NULL,  ..
 
 #' @export
 predictLearner.regr.mars = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata=.newdata)[, 1L]
+  predict(.model$learner.model, newdata = .newdata)[, 1L]
 }

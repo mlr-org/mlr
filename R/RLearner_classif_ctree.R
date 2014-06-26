@@ -35,12 +35,12 @@ trainLearner.classif.ctree = function(.learner, .task, .subset, .weights = NULL,
 predictLearner.classif.ctree = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type == "prob") {
     m = .model$learner.model
-    p = treeresponse(m, newdata=.newdata, ...)
+    p = treeresponse(m, newdata = .newdata, ...)
     p = do.call(rbind, p)
     rownames(p) = NULL
     colnames(p) = m@responses@levels[[.model$task.desc$target]]
     return(p)
   } else {
-    predict(.model$learner.model, newdata=.newdata, ...)
+    predict(.model$learner.model, newdata = .newdata, ...)
   }
 }

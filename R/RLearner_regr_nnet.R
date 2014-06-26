@@ -31,11 +31,11 @@ trainLearner.regr.nnet = function(.learner, .task, .subset, .weights = NULL,  ..
     nnet(f, data = getTaskData(.task, .subset), linout = TRUE, ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
-    nnet(f, data = getTaskData(.task, .subset), linout = TRUE, weights=.weights, ...)
+    nnet(f, data = getTaskData(.task, .subset), linout = TRUE, weights = .weights, ...)
   }
 }
 
 #' @export
 predictLearner.regr.nnet = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata=.newdata, ...)[, 1L]
+  predict(.model$learner.model, newdata = .newdata, ...)[, 1L]
 }

@@ -32,14 +32,14 @@ trainLearner.classif.nnet = function(.learner, .task, .subset, .weights = NULL, 
     nnet(f, data = getTaskData(.task, .subset), ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
-    nnet(f, data = getTaskData(.task, .subset), weights=.weights, ...)
+    nnet(f, data = getTaskData(.task, .subset), weights = .weights, ...)
   }
 }
 
 #' @export
 predictLearner.classif.nnet = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, response = "class", prob = "raw")
-  p = predict(.model$learner.model, newdata=.newdata, type = type, ...)
+  p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
   if (type == "class")
     return(as.factor(p))
   else {

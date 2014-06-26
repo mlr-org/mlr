@@ -21,7 +21,7 @@ trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL,
   if (is.null(.weights)) {
     glmboost(f, data = getTaskData(.task, .subset), control = ctrl, family = CoxPH())
   } else  {
-    glmboost(f, data = getTaskData(.task, .subset), control = ctrl, weights=.weights, ...)
+    glmboost(f, data = getTaskData(.task, .subset), control = ctrl, weights = .weights, ...)
   }
 }
 

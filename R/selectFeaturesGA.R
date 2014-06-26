@@ -38,7 +38,7 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
       pool.y = c(pop.y, kids.y)
     }
     # get next pop of best mu from pool
-    pop.inds = pool.inds[order(pool.y, decreasing=!minimize)[1:mu]]
+    pop.inds = pool.inds[order(pool.y, decreasing = !minimize)[1:mu]]
     setOptPathElEOL(opt.path, setdiff(pool.inds, pop.inds), i)
   }
   i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), ties = "random")

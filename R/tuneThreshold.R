@@ -51,7 +51,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
   }
 
   if (k == 2) {
-    or = optimizeSubInts(f = fitn, lower = 0, upper = 1, maximum=!measure$minimize, nsub = nsub)
+    or = optimizeSubInts(f = fitn, lower = 0, upper = 1, maximum = !measure$minimize, nsub = nsub)
     th = or[[1]]
     perf = or$objective
   } else {

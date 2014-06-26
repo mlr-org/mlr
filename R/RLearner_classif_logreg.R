@@ -16,7 +16,7 @@ trainLearner.classif.logreg = function(.learner, .task, .subset, .weights = NULL
 
 #' @export
 predictLearner.classif.logreg = function(.learner, .model, .newdata, ...) {
-  x = predict(.model$learner.model, newdata=.newdata, type = "response", ...)
+  x = predict(.model$learner.model, newdata = .newdata, type = "response", ...)
   levs = .model$task.desc$class.levels
   if (.learner$predict.type == "prob") {
     # FIXME this should be a helper function

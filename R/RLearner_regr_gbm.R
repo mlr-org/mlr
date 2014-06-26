@@ -25,12 +25,12 @@ trainLearner.regr.gbm = function(.learner, .task, .subset, .weights = NULL,  ...
     gbm(f, data = getTaskData(.task, .subset), keep.data = FALSE, ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
-    gbm(f, data = getTaskData(.task, .subset), keep.data = FALSE, weights=.weights, ...)
+    gbm(f, data = getTaskData(.task, .subset), keep.data = FALSE, weights = .weights, ...)
   }
 }
 
 #' @export
 predictLearner.regr.gbm = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
-  predict(m, newdata=.newdata, n.trees = length(m$trees), ...)
+  predict(m, newdata = .newdata, n.trees = length(m$trees), ...)
 }

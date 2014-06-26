@@ -29,12 +29,12 @@ trainLearner.classif.rpart = function(.learner, .task, .subset, .weights = NULL,
     rpart(f, data = d, ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
-    rpart(f, data = d, weights=.weights, ...)
+    rpart(f, data = d, weights = .weights, ...)
   }
 }
 
 #' @export
 predictLearner.classif.rpart = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, prob = "prob", "class")
-  predict(.model$learner.model, newdata=.newdata, type = type, ...)
+  predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }

@@ -28,11 +28,11 @@ trainLearner.regr.rpart = function(.learner, .task, .subset, .weights = NULL,  .
     rpart(f, data = d, ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
-    rpart(f, data = d, weights=.weights, ...)
+    rpart(f, data = d, weights = .weights, ...)
   }
 }
 
 #' @export
 predictLearner.regr.rpart = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata=.newdata, ...)
+  predict(.model$learner.model, newdata = .newdata, ...)
 }

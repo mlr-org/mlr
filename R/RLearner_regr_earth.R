@@ -20,5 +20,5 @@ trainLearner.regr.earth = function(.learner, .task, .subset, .weights = NULL,  .
 
 #' @export
 predictLearner.regr.earth = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata=.newdata)[, 1L]
+  predict(.model$learner.model, newdata = .newdata)[, 1L]
 }

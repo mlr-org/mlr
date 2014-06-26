@@ -16,14 +16,14 @@ makeRLearner.classif.kknn = function() {
 
 #' @export
 trainLearner.classif.kknn = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  list(td=.task$task.desc, data = getTaskData(.task, .subset), parset = list(...))
+  list(td = .task$task.desc, data = getTaskData(.task, .subset), parset = list(...))
 }
 
 #' @export
 predictLearner.classif.kknn = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   f = getTaskFormula(.model$task.desc)
-  pars = list(formula = f, train = m$data, test=.newdata)
+  pars = list(formula = f, train = m$data, test = .newdata)
   pars = c(pars, m$parset, list(...))
   m = do.call(kknn, pars)
   if (.learner$predict.type == "response")

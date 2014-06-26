@@ -26,5 +26,5 @@ trainLearner.classif.lvq1 = function(.learner, .task, .subset, .weights = NULL, 
 
 #' @export
 predictLearner.classif.lvq1 = function(.learner, .model, .newdata, ...) {
-  lvqtest(.model$learner.model, test=.newdata, ...)
+  lvqtest(.model$learner.model, test = .newdata, ...)
 }

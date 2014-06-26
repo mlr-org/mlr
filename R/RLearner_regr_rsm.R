@@ -30,5 +30,5 @@ trainLearner.regr.rsm = function(.learner, .task, .subset, .weights = NULL,  ...
 
 #' @export
 predictLearner.regr.rsm = function(.learner, .model, .newdata, ...) {
-  as.numeric(predict(.model$learner.model, newdata=.newdata, ...))
+  as.numeric(predict(.model$learner.model, newdata = .newdata, ...))
 }

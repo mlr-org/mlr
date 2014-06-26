@@ -22,8 +22,8 @@ makeRLearner.surv.CoxBoost = function() {
 #' @export
 trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL,  ...) {
   # FIXME: after recodeY is updated ...
-  # data = getTaskData(.task, subset=.subset, target.extra = TRUE, recode.target = "right")
-  data = getTaskData(.task, subset=.subset, target.extra = TRUE, recode.target = "no")
+  # data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "right")
+  data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "no")
   if (is.null(.weights))
     .weights = NULL
 

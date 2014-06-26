@@ -22,14 +22,14 @@ trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NU
     glmboost(f, data = getTaskData(.task, .subset), control = ctrl, , ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
-    glmboost(f, data = getTaskData(.task, .subset), control = ctrl, weights=.weights, ...)
+    glmboost(f, data = getTaskData(.task, .subset), control = ctrl, weights = .weights, ...)
   }
 }
 
 #' @export
 predictLearner.classif.glmboost = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type == "response", "class", "response")
-  p = predict(.model$learner.model, newdata=.newdata, type = type, ...)
+  p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
   if (.learner$predict.type  == "prob") {
     p = p[,1L]
     y = matrix(0, ncol = 2L, nrow = nrow(.newdata))

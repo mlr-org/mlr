@@ -31,7 +31,7 @@ trainLearner.classif.blackboost = function(.learner, .task, .subset, .weights = 
   tc = learnerArgsToControl(ctree_control, teststat, testtype, mincriterion, maxdepth)
   f = getTaskFormula(.task)
   if (!is.null(.weights))
-    blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, weights=.weights, ...)
+    blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, weights = .weights, ...)
   else
     blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, ...)
 }
@@ -39,7 +39,7 @@ trainLearner.classif.blackboost = function(.learner, .task, .subset, .weights = 
 #' @export
 predictLearner.classif.blackboost = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type == "response", "class", "response")
-  p = predict(.model$learner.model, newdata=.newdata, type = type, ...)
+  p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
   if (.learner$predict.type == "prob") {
     y = matrix(0, ncol = 2L, nrow = nrow(.newdata))
     colnames(y) = .model$task.desc$class.levels

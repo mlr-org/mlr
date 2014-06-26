@@ -24,14 +24,14 @@ makeRLearner.classif.svm = function() {
 #' @export
 trainLearner.classif.svm = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  svm(f, data = getTaskData(.task, .subset), probability=.learner$predict.type == "prob", ...)
+  svm(f, data = getTaskData(.task, .subset), probability = .learner$predict.type == "prob", ...)
 }
 
 #' @export
 predictLearner.classif.svm = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response") {
-    predict(.model$learner.model, newdata=.newdata, ...)
+    predict(.model$learner.model, newdata = .newdata, ...)
   } else {
-    attr(predict(.model$learner.model, newdata=.newdata, probability = TRUE, ...), "probabilities")
+    attr(predict(.model$learner.model, newdata = .newdata, probability = TRUE, ...), "probabilities")
   }
 }

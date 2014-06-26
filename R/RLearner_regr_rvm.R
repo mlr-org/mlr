@@ -22,7 +22,7 @@ makeRLearner.regr.rvm = function() {
       makeNumericLearnerParam(id = "var", default = 0.1, lower = 0),
       makeLogicalLearnerParam(id = "var.fix", default = FALSE),
       makeNumericLearnerParam(id = "iterations", default = 100L, lower = 0L),
-      makeNumericLearnerParam(id = "tol", default=.Machine$double.eps, lower = 0),
+      makeNumericLearnerParam(id = "tol", default = .Machine$double.eps, lower = 0),
       makeNumericLearnerParam(id = "minmaxdiff", default = 0.001, lower = 0),
       makeLogicalLearnerParam(id = "fit", default = TRUE)
     ),
@@ -43,5 +43,5 @@ trainLearner.regr.rvm = function(.learner, .task, .subset, .weights = NULL, degr
 
 #' @export
 predictLearner.regr.rvm = function(.learner, .model, .newdata, ...) {
-  kernlab::predict(.model$learner.model, newdata=.newdata, ...)[,1]
+  kernlab::predict(.model$learner.model, newdata = .newdata, ...)[,1]
 }

@@ -23,7 +23,7 @@ makeRLearner.classif.J48 = function() {
 
 #' @export
 trainLearner.classif.J48 = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  ctrl = Weka_control(..., Q = as.integer(runif(1, min=-.Machine$integer.max, max=.Machine$integer.max)))
+  ctrl = Weka_control(..., Q = as.integer(runif(1, min = -.Machine$integer.max, max = .Machine$integer.max)))
   f = getTaskFormulaAsString(.task)
   J48(as.formula(f), data = getTaskData(.task, .subset), control = ctrl, na.action = na.pass)
 }
@@ -31,5 +31,5 @@ trainLearner.classif.J48 = function(.learner, .task, .subset, .weights = NULL,  
 #' @export
 predictLearner.classif.J48 = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, prob = "prob", "class")
-  predict(.model$learner.model, newdata=.newdata, type = type, ...)
+  predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }

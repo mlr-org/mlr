@@ -17,12 +17,12 @@ makeRLearner.classif.JRip = function() {
 #' @export
 trainLearner.classif.JRip = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  ctrl = Weka_control(..., S = as.integer(runif(1, min=-.Machine$integer.max, max=.Machine$integer.max)))
+  ctrl = Weka_control(..., S = as.integer(runif(1, min = -.Machine$integer.max, max = .Machine$integer.max)))
   JRip(f, data = getTaskData(.task, .subset), control = ctrl, na.action = na.pass)
 }
 
 #' @export
 predictLearner.classif.JRip = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, prob = "prob", "class")
-  predict(.model$learner.model, newdata=.newdata, type = type, ...)
+  predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }
