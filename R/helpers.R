@@ -1,8 +1,3 @@
-#FIXME remove when PH get updated on cran
-removeMissingValues2 = function(x) {
-  Filter(Negate(isScalarNA), x)
-}
-
 requireLearnerPackages = function(learner) {
   requirePackages(learner$package, paste("learner", learner$id))
 }

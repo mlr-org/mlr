@@ -248,52 +248,55 @@ imputeHist = function(breaks, use.mids = TRUE) {
   )
 }
 
-# #' @rdname imputations
-# #' @param learner [\code{Learner}]\cr
-# #'  Classification or regression learner. Its predictions will be used for imputations.
-# #'  Note that the target column is not available for this operation.
-# #' @param preimpute [\code{list}]\cr
-# #'  Arguments for inner call to \code{\link{impute}} in scenarios where
-# #'  \code{learner} itself cannot handle missing values.
-# #'  Default is \code{list()}.
-# #' @export
-imputeLearner = function(learner, preimpute = list()) {
-  # FIXME: this function needs some love
+#' @param learner [\code{Learner}]\cr
+#'  Supervised learner. Its predictions will be used for imputations.
+#'  Note that the target column is not available for this operation.
+#' @param features [\code{character}]\cr
+#'  Features to use in \code{learner} for prediction.
+#'  Default is \code{NULL} which uses all available features except the target column
+#'  of the original task.
+#' @rdname imputations
+#' @export
+imputeLearner = function(learner, features = NULL) {
   assertClass(learner, classes = "Learner")
-  assertList(preimpute)
-  if (!isProperlyNamed(preimpute))
-    stop("All elements in preimpute must be properly named")
+  if (!is.null(features))
+    assertCharacter(features, any.missing = FALSE)
 
   makeImputeMethod(
-    learn = function(data, target, col, learner, preimpute) {
-      cl = class(learner)
-
-      if (length(preimpute)) {
-        x = do.call(impute, c(preimpute, list(data = data, target = target)))
-        desc = x$desc
-        data = x$data
-      } else {
-        desc = NULL
-      }
-
+    learn = function(data, target, col, learner, features) {
+      # FIXME: we need a helper for this
+      # FIXME: this does not work if wrapped more than once
+      if (inherits(learner, "BaseWrapper"))
+        cl = class(learner$next.learner)
+      else
+        cl = class(learner)
       if ("RLearnerRegr" %in% cl) {
-        task = makeRegrTask("impute", data = dropNamed(data, target), target = col,
-          check.data = FALSE, fixup.data = "quiet")
+        constructor = makeRegrTask
       } else if ("RLearnerClassif" %in% cl) {
-        task = makeClassifTask("impute", data = dropNamed(data, target), target = col,
-          check.data = FALSE, fixup.data = "quiet")
+        constructor = makeClassifTask
+      } else if ("RLearnerSurv" %in% cl) {
+        constructor = makeSurvTask
       } else {
         stop("Unknown learner class for impute")
       }
+      if (is.null(features))
+        features = names(data)
+      features = setdiff(features, target)
+      # FIXME: check columns here
 
-      list(model = train(learner, task), desc = desc)
+      task = constructor("impute", data = subset(data, select = features), target = col,
+        check.data = FALSE, fixup.data = "quiet")
+      list(model = train(learner, subsetTask(task, features = features)), features = features)
     },
-    impute = function(data, target, col, model, desc) {
-      if (!is.null(desc))
-        data = reimpute(data, desc)
 
-      predict(model, newdata = data)
+    impute = function(data, target, col, model, features) {
+      x = data[[col]]
+      ind = is.na(x)
+      # FIXME we do we get a list instead of a data.frame?
+      newdata = as.data.frame(data)[ind, features, drop = FALSE]
+     p =  predict(model, newdata = newdata)$data$response
+     replace(x, ind, p)
     },
-    args = list(learner = learner, preimpute = preimpute)
+    args = list(learner = learner, features = features)
   )
 }

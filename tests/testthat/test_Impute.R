@@ -64,7 +64,7 @@ test_that("Impute data frame", {
   # learner
   data = data.frame(f = letters[c(1,1,1,1,2)], x = rep(1., 5), y = c(1, 2, 3, 3, 4))
   target = "f"
-  data[6, ] = NA
-  learner = makeLearner("regr.rpart")
-  x = impute(data, target, cols=list(x = imputeLearner(learner, preimpute=list(classes=list(numeric=imputeMedian())))))
+  data[5, 3] = NA
+  learner = makeImputeWrapper(makeLearner("regr.rpart"), classes = list(numeric = imputeMedian()))
+  impute(data, target, cols=list(y = imputeLearner(learner)))
 })

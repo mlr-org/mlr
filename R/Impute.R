@@ -107,7 +107,7 @@ impute = function(data, target, classes = list(), cols = list(), dummy.classes =
     stopf("Column class '%s' for dummy creation not recognized", dummy.classes[which.first(not.ok)])
 
   features = setdiff(names(data), target)
-  feature.classes = vapply(data[features], class, character(1L))
+  feature.classes = vcapply(data[features], class)
 
   # some elements need to be set to a non-harmful
   # setting for the first iteration of impute
