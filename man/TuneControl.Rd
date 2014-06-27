@@ -43,6 +43,16 @@ Default is \code{FALSE}.}
 Should the same resampling instance be used for all evaluations to reduce variance?
 Default is \code{TRUE}.}
 
+\item{impute.val}{[\code{numeric(1)}]\cr
+If something goes wrong during optimization (e.g, the learner crashes),
+this value is fed back to the tuner, so the tuning algorithm does not abort.
+It is not stored in the optimization path, an NA and a corresponding error message are
+logged instead.
+Note that this value is later multiplied by -1 for maximization measures internally, so you
+need to enter a larger positive value for maximization here as well.
+Default is the worst obtainable value of the performance measure you optimize for when
+you aggregate by mean value, or \code{Inf} instead.}
+
 \item{start}{[\code{numeric}]\cr
 Named list of initial parameter values.}
 
@@ -81,8 +91,7 @@ The following tuners are available:
     candidates found by irace in the last race. Its estimated performance is the mean of all
     evaluations ever done for that candidate.}
 }
-}
-\details{
+
 Dependent parameters can currently only be handled by random search and irace.
 
 Some notes on irace: For resampling you have to pass a \code{\link{ResampleDesc}},
