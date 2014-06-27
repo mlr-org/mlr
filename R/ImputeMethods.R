@@ -77,7 +77,7 @@ imputeConstant = function(const) {
 
 #' @export
 #' @rdname imputations
-imputeMedian = function(all.na = NA) {
+imputeMedian = function() {
   makeImputeMethod(
     learn = function(data, target, col) median(data[[col]], na.rm = TRUE),
     impute = simpleImpute
@@ -86,7 +86,7 @@ imputeMedian = function(all.na = NA) {
 
 #' @export
 #' @rdname imputations
-imputeMean = function(all.na = NA) {
+imputeMean = function() {
   makeImputeMethod(
     learn = function(data, target, col) mean(data[[col]], na.rm = TRUE),
     impute = simpleImpute
@@ -95,7 +95,7 @@ imputeMean = function(all.na = NA) {
 
 #' @export
 #' @rdname imputations
-imputeMode = function(all.na = NA) {
+imputeMode = function() {
   makeImputeMethod(
     learn = function(data, target, col) computeMode(data[[col]], na.rm = TRUE),
     impute = simpleImpute
@@ -106,7 +106,7 @@ imputeMode = function(all.na = NA) {
 #' @param multiplier [\code{numeric(1)}]\cr
 #'   Value that stored minimum or maximum is multiplied with when imputation is done.
 #' @rdname imputations
-imputeMin = function(multiplier = 1, all.na = NA) {
+imputeMin = function(multiplier = 1) {
   assertNumber(multiplier)
   makeImputeMethod(
     learn = function(data, target, col, multiplier) multiplier*min(data[[col]], na.rm = TRUE),
@@ -117,7 +117,7 @@ imputeMin = function(multiplier = 1, all.na = NA) {
 
 #' @export
 #' @rdname imputations
-imputeMax = function(multiplier = 1, all.na = NA) {
+imputeMax = function(multiplier = 1) {
   assertNumber(multiplier)
   makeImputeMethod(
     learn = function(data, target, col, multiplier) multiplier*max(data[[col]], na.rm = TRUE),
