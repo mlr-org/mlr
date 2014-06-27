@@ -39,4 +39,3 @@ setPredictType.Learner = function(learner, predict.type) {
   learner$predict.type = predict.type
   return(learner)
 }
-

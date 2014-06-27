@@ -43,14 +43,14 @@ makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.
 
   learner = checkLearner(learner)
   bag.iters = convertInteger(bag.iters)
-  assertInteger(bag.iters, len = 1L, any.missing = FALSE, lower = 1L)
-  assertLogical(bag.replace, len = 1L, any.missing = FALSE)
+  assertCount(bag.iters, positive = TRUE)
+  assertFlag(bag.replace)
   if (missing(bag.size)) {
     bag.size = if (bag.replace) 1 else 0.632
   } else {
-    assertNumeric(bag.size, len = 1L, any.missing = FALSE, lower = 0, upper = 1)
+    assertNumber(bag.size, lower = 0, upper = 1)
   }
-  assertNumeric(bag.feats, len = 1L, any.missing = FALSE, lower = 0, upper = 1)
+  assertNumber(bag.feats, lower = 0, upper = 1)
   if (learner$predict.type != "response")
     stop("Predict type of the basic learner must be 'response'.")
   id = paste(learner$id, "bagged", sep = ".")

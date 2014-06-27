@@ -35,7 +35,7 @@ getProbabilities = function(pred, cl) {
     else
       cl = pred$task.desc$class.levels
   } else {
-    assertCharacter(cl)
+    assertCharacter(cl, any.missing = FALSE)
   }
   if (pred$predict.type != "prob")
     stop("Probabilities not present in Prediction object!")

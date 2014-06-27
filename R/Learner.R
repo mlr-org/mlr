@@ -32,12 +32,12 @@
 #' lrn = makeLearner("classif.lda", method = "t", nu = 10)
 #' print(lrn$par.vals)
 makeLearner = function(cl, id = cl, predict.type = "response", ..., par.vals = list()) {
-  assertCharacter(cl, len = 1L, any.missing = FALSE)
+  assertString(cl)
   constructor = getS3method("makeRLearner", class = cl)
   wl = do.call(constructor, list())
 
   if (!missing(id)) {
-    assertCharacter(id, len = 1L, any.missing = FALSE)
+    assertString(id)
     wl$id = id
   }
   assertList(par.vals)

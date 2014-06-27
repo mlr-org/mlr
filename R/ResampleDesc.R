@@ -71,7 +71,7 @@
 makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE) {
   assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap"))
   assertChoice(predict, choices = c("train", "test", "both"))
-  assertLogical(stratify, len = 1L, any.missing = FALSE)
+  assertFlag(stratify)
   if (stratify && method == "LOO")
     stop("Stratification cannot be done for LOO!")
   d = do.call(paste0("makeResampleDesc", method), list(...))

@@ -14,8 +14,8 @@
 #' @export
 makeDownsampleWrapper = function(learner, dw.perc = 1, dw.stratify = FALSE) {
   learner = checkLearner(learner)
-  assertNumeric(dw.perc, len = 1L, any.missing = FALSE, lower = 0, upper = 1)
-  assertLogical(dw.stratify, len = 1L, any.missing = FALSE)
+  assertNumber(dw.perc, na.ok = FALSE, lower = 0, upper = 1)
+  assertFlag(dw.stratify)
   id = paste(learner$id, "downsampled", sep = ".")
   ps = makeParamSet(
     makeNumericLearnerParam(id = "dw.perc", lower = 0, upper = 1, default = 1),

@@ -50,7 +50,7 @@
 NULL
 
 makeTuneControl = function(same.resampling.instance, start = NULL, ..., cl) {
-  assertLogical(same.resampling.instance, len = 1, any.missing = FALSE)
+  assertFlag(same.resampling.instance)
   if (!is.null(start)) {
     assertList(start)
     if (!isProperlyNamed(start))

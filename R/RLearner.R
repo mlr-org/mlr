@@ -48,9 +48,8 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
   assertCharacter(package, any.missing = FALSE)
   requirePackages(package, paste("learner", id))
 
-  assertCharacter(id, len = 1L, any.missing = FALSE)
+  assertString(id)
   assertChoice(type, choices = c("classif", "regr", "surv"))
-  assertCharacter(package, any.missing = FALSE)
   assertCharacter(properties, any.missing = FALSE)
   assertClass(par.set, classes = "ParamSet")
   checkListElementClass(par.set$pars, "LearnerParam")

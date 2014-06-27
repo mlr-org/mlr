@@ -57,7 +57,7 @@ selectFeatures = function(learner, task, resampling, measures,
     assertFunction(bits.to.features, args = c("x", "task"))
   }
   assertClass(control, classes = "FeatSelControl")
-  assertLogical(show.info, len = 1L, any.missing = FALSE)
+  assertFlag(show.info)
 
   par.set = lapply(bit.names, function(bn) makeIntegerParam(bn))
   par.set = do.call(makeParamSet, par.set)

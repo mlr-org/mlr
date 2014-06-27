@@ -2,7 +2,7 @@
 #' @rdname SupervisedTask
 makeCostSensTask = function(id, data, costs, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
-  assertLogical(check.data, len = 1L, any.missing = FALSE)
+  assertFlag(check.data)
 
   # we don't have a target nor weights
   target = character(0L)

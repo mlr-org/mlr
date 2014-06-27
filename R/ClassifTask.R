@@ -3,7 +3,7 @@
 makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
   positive, fixup.data = "warn", check.data = TRUE) {
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
-  assertLogical(check.data, len = 1L, any.missing = FALSE)
+  assertFlag(check.data)
 
   task = addClasses(makeSupervisedTask("classif", data, target, weights, blocking), "ClassifTask")
   if (fixup.data != "no")
@@ -32,7 +32,7 @@ makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
 #' @export
 checkTask.ClassifTask = function(task, target, ...) {
   NextMethod("checkTask")
-  assertCharacter(target, len = 1L)
+  assertString(target)
   if (!is.factor(task$env$data[[target]])) {
     stopf("Target column '%s' must be a factor", target)
   }

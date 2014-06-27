@@ -16,8 +16,8 @@
 #' @export
 #' @seealso \code{\link{measures}}, \code{\link{makeMeasure}}
 makeCostMeasure = function(id = "costs", minimize = TRUE, costs, task, aggregate = mean) {
-  assertCharacter(id, len = 1L, any.missing = FALSE)
-  assertLogical(minimize, len = 1L, any.missing = FALSE)
+  assertString(id)
+  assertFlag(minimize)
   assertMatrix(costs)
   assertClass(task, classes = "ClassifTask")
   assertFunction(aggregate)

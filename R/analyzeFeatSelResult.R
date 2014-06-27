@@ -16,7 +16,7 @@
 #' @export
 analyzeFeatSelResult = function(res, reduce = TRUE) {
   assertClass(res$control, "FeatSelControlSequential")
-  assertLogical(reduce, len = 1L, any.missing = FALSE)
+  assertFlag(reduce)
 
   x = res$x
   y = res$y

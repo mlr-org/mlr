@@ -29,8 +29,8 @@ listLearners  = function(obj = NA_character_, properties = character(0L),
   if (!missing(obj))
     assert(checkCharacter(obj), checkClass(obj, "SupervisedTask"))
   assertCharacter(properties, any.missing = FALSE)
-  assertLogical(warn.missing.packages, len = 1L, any.missing = FALSE)
-  assertLogical(create, len = 1L, any.missing = FALSE)
+  assertFlag(warn.missing.packages)
+  assertFlag(create)
   UseMethod("listLearners")
 }
 
