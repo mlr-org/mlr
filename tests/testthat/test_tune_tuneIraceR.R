@@ -18,7 +18,7 @@ test_that("tuneIrace", {
   res = makeResampleDesc("Holdout")
   ps2 = makeParamSet(
     makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x),
-    makeIntegerParam("sigma", lower = -5, upper = 5, trafo = function(x) 2^x)
+    makeNumericParam("sigma", lower = -5, upper = 5, trafo = function(x) 2^x)
   )
 
   n = 100
