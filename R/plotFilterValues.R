@@ -22,8 +22,7 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
   assertClass(fvalues, classes = "FilterValues")
   assertChoice(sort, choices = c("dec", "inc", "none"))
   requirePackages("ggplot2", why = "getFilterValues")
-  n.show = convertInteger(n.show)
-  assertInteger(n.show, min.len = 1L, any.missing = FALSE)
+  n.show = asCount(n.show)
 
   d = fvalues$data
   k = nrow(d)

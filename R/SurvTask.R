@@ -6,7 +6,7 @@
 makeSurvTask = function(id, data, target, surv.type = "right", weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE) {
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
-  assertLogical(check.data, len = 1L, any.missing = FALSE)
+  assertFlag(check.data)
 
   task = addClasses(makeSupervisedTask("surv", data, target, weights, blocking), "SurvTask")
   ### FIXME
@@ -24,7 +24,7 @@ makeSurvTask = function(id, data, target, surv.type = "right", weights = NULL, b
 #' @export
 checkTask.SurvTask = function(task, target, ...) {
   NextMethod("checkTask")
-  assertCharacter(target, len = 2L)
+  assertCharacter(target, len = 2L, any.missing = FALSE)
   ### TODO: more checks here
 }
 

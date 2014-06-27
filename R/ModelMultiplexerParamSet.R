@@ -31,7 +31,7 @@
 #' # See makeModelMultiplexer
 makeModelMultiplexerParamSet = function(multiplexer, ..., .check = TRUE) {
   assertClass(multiplexer, classes = "ModelMultiplexer")
-  assertLogical(.check, len = 1L, any.missing = TRUE)
+  assertFlag(.check)
 
   bls = multiplexer$base.learners
   bl.ids = extractSubList(bls, "id")

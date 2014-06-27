@@ -42,7 +42,7 @@ makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.
     assertFunction(bits.to.features, args = c("x", "task"))
   }
   assertClass(control, classes = "FeatSelControl")
-  assertLogical(show.info, len = 1L, any.missing = FALSE)
+  assertFlag(show.info)
   id = paste(learner$id, "featsel", sep = ".")
   x = makeOptWrapper(id, learner, resampling, measures, makeParamSet(), bit.names,
     bits.to.features, control, show.info, "FeatSelWrapper")

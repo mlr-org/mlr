@@ -25,9 +25,9 @@
 #' @export
 smote = function(task, rate, nn = 5) {
   checkTask2(task, binary = TRUE)
-  assertNumeric(rate, len = 1L, lower = 1)
+  assertNumber(rate, lower = 1)
   nn = convertInteger(nn)
-  assertInteger(nn, len = 1L, lower = 1L)
+  assertCount(nn, positive = TRUE)
 
   requirePackages("cluster", why = "smote")
   # check for changeData later
@@ -40,8 +40,8 @@ smote = function(task, rate, nn = 5) {
   y = data[, target]
   x = dropNamed(data, target)
   z = getMinMaxClass(y)
-  x.min = x[z$min.inds, ]
-  x.max = x[z$max.inds, ]
+  x.min = x[z$min.inds, , drop = FALSE]
+  x.max = x[z$max.inds, , drop = FALSE]
   n.min = nrow(x.min)
   n.new  = round(rate * n.min) - n.min
   row1 = x[1L, ]
@@ -86,7 +86,3 @@ smote = function(task, rate, nn = 5) {
   # we can neither allow costssens (!= classif anyway nor weights)
   changeData(task, data2)
 }
-
-
-
-

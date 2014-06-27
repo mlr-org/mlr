@@ -11,5 +11,3 @@ dropFeatures = function(task, features) {
   assertSubset(features, choices = f)
   subsetTask(task, features = setdiff(f, features))
 }
-
-

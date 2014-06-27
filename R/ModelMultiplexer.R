@@ -67,7 +67,7 @@
 #' # all three ps-objects are exactly the same internally.
 #'
 makeModelMultiplexer = function(base.learners, id = "ModelMultiplexer") {
-  assertCharacter(id, len = 1L, any.missing = FALSE)
+  assertString(id)
   assertList(base.learners, min.len = 1L)
   checkListElementClass(base.learners, "Learner")
   ids = unique(extractSubList(base.learners, "id"))

@@ -70,9 +70,8 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
     # take first or first 2 features as default
     features = if (length(fns) == 1L) fns else fns[1:2]
   } else {
-    che
+    assertCharacter(features, max.len = 2L)
     assertSubset(features, choices = fns)
-    assertVector(features, max.len = 2)
   }
   taskdim = length(features)
   if (td$type == "classif" && taskdim != 2L)
@@ -81,20 +80,18 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
     stopf("Regression: currently only 1D and 2D plots supported, not: %i", taskdim)
 
   measures = checkMeasures(measures, task)
-  cv = convertInteger(cv)
-  assertInteger(cv, len = 1L, lower = 0L, any.missing = FALSE)
+  cv = asCount(cv)
 
   if (missing(gridsize)) {
     gridsize = ifelse(taskdim == 1L, 500, 100)
   } else {
-    gridsize = convertInteger(gridsize)
-    assertInteger(gridsize, len = 1L, any.missing = FALSE)
+    gridsize = asCount(gridsize)
   }
-  assertNumeric(pointsize, len = 1L, any.missing = FALSE, lower = 0)
-  assertLogical(prob.alpha, len = 1L, any.missing = FALSE)
-  assertLogical(se.band, len = 1L, any.missing = FALSE)
+  assertNumber(pointsize, lower = 0)
+  assertFlag(prob.alpha)
+  assertFlag(se.band)
   assertChoice(err.mark, choices = c("train", "cv", "none"))
-  assertCharacter(err.col, len = 1L, any.missing = FALSE)
+  assertString(err.col)
   if (td$type == "classif" && err.mark == "cv" && cv == 0L)
     stopf("Classification: CV must be switched on, with 'cv' > 0, for err.type = 'cv'!")
 

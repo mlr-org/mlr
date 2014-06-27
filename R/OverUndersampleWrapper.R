@@ -22,7 +22,7 @@
 makeUndersampleWrapper = function(learner, usw.rate) {
   # FIXME: check binary classif
   learner = checkLearner(learner, "classif")
-  assertNumeric(usw.rate, len = 1L, any.missing = FALSE, lower = 0, upper = 1)
+  assertNumber(usw.rate, lower = 0, upper = 1)
 
   id = paste(learner$id, "undersampled", sep = ".")
   ps = makeParamSet(
@@ -36,7 +36,7 @@ makeUndersampleWrapper = function(learner, usw.rate) {
 #' @export
 makeOversampleWrapper = function(learner, osw.rate) {
   learner = checkLearner(learner, "classif")
-  assertNumeric(osw.rate, len = 1L, any.missing = FALSE, lower = 1)
+  assertNumber(osw.rate, lower = 1)
 
   id = paste(learner$id, "oversampled", sep = ".")
   ps = makeParamSet (
