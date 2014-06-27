@@ -1,26 +1,32 @@
 #' Creates a measure for non-standard misclassification costs.
 #'
 #' @param id [\code{character(1)}]\cr
-#'   Name of measure. Default is \dQuote{costs}.
+#'   Name of measure.
+#'   Default is \dQuote{costs}.
 #' @param minimize [\code{logical(1)}]\cr
-#'   Should the measure be minimized? Default is TRUE. Otherwise you are effectively specifying a benefits matrix.
+#'   Should the measure be minimized?
+#'   Otherwise you are effectively specifying a benefits matrix.
+#'   Default is \code{TRUE}.
 #' @param costs [\code{matrix}]\cr
 #'   Matrix of misclassification costs. Rows and columns have to be named with class labels, order does not matter.
 #'   Rows indicate true classes, columns predicted classes.
 #' @param task [\code{\link{ClassifTask}}]\cr
 #'   Classification task. Has to be passed, so validity of matrix names can be checked.
-#' @param aggregate [\code{logical(1)}]\cr
-#'   How to aggregate costs over all cases in one test set prediction?
+#' @param combine [\code{function}]\cr
+#'   How to combine costs over all cases for a SINGLE test set?
+#'   Note this is not the same as the \code{aggregate} argument in \code{\link{makeMeasure}}
+#'   You can set this as well via \code{\link{setAggregate}}, as for any measure.
 #'   Default is \code{\link{mean}}.
+#' @inheritParams makeMeasure
 #' @return [\code{\link{Measure}}].
 #' @export
-#' @seealso \code{\link{measures}}, \code{\link{makeMeasure}}
-makeCostMeasure = function(id = "costs", minimize = TRUE, costs, task, aggregate = mean) {
+#' @family performance
+makeCostMeasure = function(id = "costs", minimize = TRUE, costs, task, combine = mean, best = NULL, worst = NULL) {
   assertString(id)
   assertFlag(minimize)
   assertMatrix(costs)
   assertClass(task, classes = "ClassifTask")
-  assertFunction(aggregate)
+  assertFunction(combine)
 
   #check costs
   levs = task$task.desc$class.levels
@@ -33,9 +39,10 @@ makeCostMeasure = function(id = "costs", minimize = TRUE, costs, task, aggregate
       stop("Row and column names of cost matrix have to equal class levels!")
   }
 
-  makeMeasure(id = "costs", minimize = minimize, extra.args = list(costs, aggregate),
+  makeMeasure(id = "costs", minimize = minimize, extra.args = list(costs, combine),
     properties = c("classif", "classif.multi"),
     allowed.pred.types = c("response", "prob"),
+    best = best, worst = worst,
     fun = function(task, model, pred, extra.args) {
       costs = extra.args[[1L]]
       # cannot index with NA
@@ -46,7 +53,7 @@ makeCostMeasure = function(id = "costs", minimize = TRUE, costs, task, aggregate
         costs[truth, pred]
       }
       y = mapply(cc, as.character(pred$data$truth), as.character(r))
-      aggregate(y)
+      combine(y)
     }
   )
 }
