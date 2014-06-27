@@ -15,10 +15,10 @@
 #' @param combine [\code{function}]\cr
 #'   How to combine costs over all cases for a SINGLE test set?
 #'   Note this is not the same as the \code{aggregate} argument in \code{\link{makeMeasure}}
-#'   You can set this as well via \code{\link{setAggregate}}, as for any measure.
+#'   You can set this as well via \code{\link{setAggregation}}, as for any measure.
 #'   Default is \code{\link{mean}}.
 #' @inheritParams makeMeasure
-#' @return [\code{\link{Measure}}].
+#' @template ret_measure
 #' @export
 #' @family performance
 makeCostMeasure = function(id = "costs", minimize = TRUE, costs, task, combine = mean, best = NULL, worst = NULL) {

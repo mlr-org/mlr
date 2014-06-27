@@ -30,11 +30,11 @@ as returned by \code{\link{impute}} to perform the following actions:
 \seealso{
 Other impute: \code{\link{imputations}},
   \code{\link{imputeConstant}}, \code{\link{imputeHist}},
-  \code{\link{imputeMax}}, \code{\link{imputeMean}},
-  \code{\link{imputeMedian}}, \code{\link{imputeMin}},
-  \code{\link{imputeMode}}, \code{\link{imputeNormal}},
-  \code{\link{imputeUniform}}; \code{\link{impute}};
-  \code{\link{makeImputeMethod}};
+  \code{\link{imputeLearner}}, \code{\link{imputeMax}},
+  \code{\link{imputeMean}}, \code{\link{imputeMedian}},
+  \code{\link{imputeMin}}, \code{\link{imputeMode}},
+  \code{\link{imputeNormal}}, \code{\link{imputeUniform}};
+  \code{\link{impute}}; \code{\link{makeImputeMethod}};
   \code{\link{makeImputeWrapper}}
 }
 

@@ -6,7 +6,7 @@
 \usage{
 makeMeasure(id, minimize, properties = character(0L),
   allowed.pred.types = character(0L), fun, extra.args = list(),
-  aggr = test.mean)
+  aggr = test.mean, best = NULL, worst = NULL)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -43,6 +43,14 @@ Default is empty list.}
 Aggregation funtion, which is used to aggregate the values measured
 on test / training sets of the measure to a single value.
 Default is \code{\link{test.mean}}.}
+
+\item{best}{[\code{numeric(1)}]\cr
+Best obtainable value for measure.
+Default is -\code{Inf} or \code{Inf}, depending on \code{minimize}.}
+
+\item{worst}{[\code{numeric(1)}]\cr
+Worst obtainable value for measure.
+Default is \code{Inf} or -\code{Inf}, depending on \code{minimize}.}
 }
 \value{
 [\code{\link{Measure}}].
@@ -68,11 +76,33 @@ Object slots:
   \item{fun [\code{function}]}{See argument.}
   \item{extra.args [\code{list}]}{See argument.}
   \item{aggr [\code{\link{Aggregation}}]}{See argument.}.
+  \item{best [\code{numeric(1)}]}{See argument.}
+  \item{worst [\code{numeric(1)}]}{See argument.}
 }
 }
 \examples{
 f = function(task, model, pred, extra.args)
   sum((pred$data$response - pred$data$truth)^2)
 makeMeasure(id = "my.sse", minimize = TRUE, properties = c("regr", "response"), fun = f)
+}
+\seealso{
+Other performance: \code{\link{acc}}, \code{\link{auc}},
+  \code{\link{ber}}, \code{\link{cindex}},
+  \code{\link{f1}}, \code{\link{fdr}},
+  \code{\link{featperc}}, \code{\link{fn}},
+  \code{\link{fnr}}, \code{\link{fp}}, \code{\link{fpr}},
+  \code{\link{gmean}}, \code{\link{gpr}},
+  \code{\link{mae}}, \code{\link{mcc}}, \code{\link{mcp}},
+  \code{\link{meancosts}}, \code{\link{measures}},
+  \code{\link{medae}}, \code{\link{medse}},
+  \code{\link{mmce}}, \code{\link{mse}},
+  \code{\link{multiclass.auc}}, \code{\link{npv}},
+  \code{\link{ppv}}, \code{\link{rmse}}, \code{\link{sae}},
+  \code{\link{sse}}, \code{\link{timeboth}},
+  \code{\link{timepredict}}, \code{\link{timetrain}},
+  \code{\link{tn}}, \code{\link{tnr}}, \code{\link{tp}},
+  \code{\link{tpr}}; \code{\link{makeCostMeasure}};
+  \code{\link{makeCustomResampledMeasure}};
+  \code{\link{performance}}
 }
 

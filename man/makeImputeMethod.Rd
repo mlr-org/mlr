@@ -27,10 +27,11 @@ This is a constructor to create your own imputation methods.
 \seealso{
 Other impute: \code{\link{imputations}},
   \code{\link{imputeConstant}}, \code{\link{imputeHist}},
-  \code{\link{imputeMax}}, \code{\link{imputeMean}},
-  \code{\link{imputeMedian}}, \code{\link{imputeMin}},
-  \code{\link{imputeMode}}, \code{\link{imputeNormal}},
-  \code{\link{imputeUniform}}; \code{\link{impute}};
-  \code{\link{makeImputeWrapper}}; \code{\link{reimpute}}
+  \code{\link{imputeLearner}}, \code{\link{imputeMax}},
+  \code{\link{imputeMean}}, \code{\link{imputeMedian}},
+  \code{\link{imputeMin}}, \code{\link{imputeMode}},
+  \code{\link{imputeNormal}}, \code{\link{imputeUniform}};
+  \code{\link{impute}}; \code{\link{makeImputeWrapper}};
+  \code{\link{reimpute}}
 }
 

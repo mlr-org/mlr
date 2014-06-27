@@ -4,14 +4,17 @@
 \title{Creates a measure for non-standard misclassification costs.}
 \usage{
 makeCostMeasure(id = "costs", minimize = TRUE, costs, task,
-  aggregate = mean)
+  combine = mean, best = NULL, worst = NULL)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
-Name of measure. Default is \dQuote{costs}.}
+Name of measure.
+Default is \dQuote{costs}.}
 
 \item{minimize}{[\code{logical(1)}]\cr
-Should the measure be minimized? Default is TRUE. Otherwise you are effectively specifying a benefits matrix.}
+Should the measure be minimized?
+Otherwise you are effectively specifying a benefits matrix.
+Default is \code{TRUE}.}
 
 \item{costs}{[\code{matrix}]\cr
 Matrix of misclassification costs. Rows and columns have to be named with class labels, order does not matter.
@@ -20,9 +23,19 @@ Rows indicate true classes, columns predicted classes.}
 \item{task}{[\code{\link{ClassifTask}}]\cr
 Classification task. Has to be passed, so validity of matrix names can be checked.}
 
-\item{aggregate}{[\code{logical(1)}]\cr
-How to aggregate costs over all cases in one test set prediction?
+\item{combine}{[\code{function}]\cr
+How to combine costs over all cases for a SINGLE test set?
+Note this is not the same as the \code{aggregate} argument in \code{\link{makeMeasure}}
+You can set this as well via \code{\link{setAggregation}}, as for any measure.
 Default is \code{\link{mean}}.}
+
+\item{best}{[\code{numeric(1)}]\cr
+Best obtainable value for measure.
+Default is -\code{Inf} or \code{Inf}, depending on \code{minimize}.}
+
+\item{worst}{[\code{numeric(1)}]\cr
+Worst obtainable value for measure.
+Default is \code{Inf} or -\code{Inf}, depending on \code{minimize}.}
 }
 \value{
 [\code{\link{Measure}}].
@@ -31,6 +44,24 @@ Default is \code{\link{mean}}.}
 Creates a measure for non-standard misclassification costs.
 }
 \seealso{
-\code{\link{measures}}, \code{\link{makeMeasure}}
+Other performance: \code{\link{Measure}},
+  \code{\link{makeMeasure}}; \code{\link{acc}},
+  \code{\link{auc}}, \code{\link{ber}},
+  \code{\link{cindex}}, \code{\link{f1}},
+  \code{\link{fdr}}, \code{\link{featperc}},
+  \code{\link{fn}}, \code{\link{fnr}}, \code{\link{fp}},
+  \code{\link{fpr}}, \code{\link{gmean}},
+  \code{\link{gpr}}, \code{\link{mae}}, \code{\link{mcc}},
+  \code{\link{mcp}}, \code{\link{meancosts}},
+  \code{\link{measures}}, \code{\link{medae}},
+  \code{\link{medse}}, \code{\link{mmce}},
+  \code{\link{mse}}, \code{\link{multiclass.auc}},
+  \code{\link{npv}}, \code{\link{ppv}}, \code{\link{rmse}},
+  \code{\link{sae}}, \code{\link{sse}},
+  \code{\link{timeboth}}, \code{\link{timepredict}},
+  \code{\link{timetrain}}, \code{\link{tn}},
+  \code{\link{tnr}}, \code{\link{tp}}, \code{\link{tpr}};
+  \code{\link{makeCustomResampledMeasure}};
+  \code{\link{performance}}
 }
 

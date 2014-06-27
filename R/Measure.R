@@ -59,7 +59,7 @@
 #' @param worst [\code{numeric(1)}]\cr
 #'   Worst obtainable value for measure.
 #'   Default is \code{Inf} or -\code{Inf}, depending on \code{minimize}.
-#' @return [\code{\link{Measure}}].
+#' @template ret_measure
 #' @export
 #' @family performance
 #' @aliases Measure
