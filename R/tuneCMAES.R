@@ -10,7 +10,9 @@ tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.
   start = convertStartToNumeric(start, par.set)
   # set sigma to 1/4 per dim, defaults in cmaes are crap for this, last time I looked
   # and vectorized evals for speed and parallel, then insert user controls
-  sigma = (upp - low) / 4
+  # FIXME: there is a bug in cmaes that I reported MULTIPLE times now
+  # while the docs say we can set sigma to a vector, there is a stopifnot in code which does not allow it
+  sigma = median(upp - low) / 2
   ctrl.cmaes = list(vectorized = TRUE, sigma = sigma)
   ctrl.cmaes = insert(ctrl.cmaes, control$extra.args)
   cx = function(x) convertXMatrixCols(x, par.set)
