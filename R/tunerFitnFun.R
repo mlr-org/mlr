@@ -13,12 +13,11 @@ tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
   x = mytrafo(trafo, par.set, x)
   # transform parameters
   dob = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
-  y = evalOptimizationState(learner, task, resampling, measures, par.set, NULL, ctrl,
+  res = evalOptimizationState(learner, task, resampling, measures, par.set, NULL, ctrl,
     opt.path, show.info, dob, x, remove.nas)
-  addOptPathEl(opt.path, x = x, y = y, dob = dob, eol = NA, check.feasible = FALSE)
-  #returns resample$aggr vector, take 1st
-  #FIXME: what should happen if we get an infeasible y here? docu this!
-  ifelse(measures[[1]]$minimize, 1 , -1) * y[[1]]
+  addOptPathEl(opt.path, x = x, y = res$y, dob = dob, eol = NA, check.feasible = FALSE,
+    exec.time = res$exec.time, error.message = res$errmsg)
+  convertYForTuner(res$y, measures, ctrl)
 }
 
 # multiple xs in parallel
@@ -29,11 +28,11 @@ tunerFitnFunVectorized = function(xs, learner, task, resampling, measures, par.s
   # transform parameters
   xs = lapply(xs, mytrafo, par.set = par.set, trafo = trafo)
   dob = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
-  ys = evalOptimizationStatesTune(learner, task, resampling, measures, par.set, ctrl,
+  res.list = evalOptimizationStatesTune(learner, task, resampling, measures, par.set, ctrl,
     opt.path, show.info, xs, dobs = dob, eols = NA, remove.nas = remove.nas)
-  #returns list of resample$aggr vectors, take 1st
-  ys = sapply(ys, function(a) a[[1]])
-  ifelse(measures[[1]]$minimize, 1 , -1) * ys
+  ys = extractSubList(res.list, "y")
+  # we return a numeric vec of y-values
+  sapply(ys, convertYForTuner, measures = measures, ctrl = ctrl)
 }
 
 # short helper to trafo x depending on boolean flag, only used in this file
@@ -42,4 +41,16 @@ mytrafo = function(trafo, par.set, x) {
     trafoValue(par.set, x)
   else
     x
+}
+
+# short helper that imputes illegal values and also negates for maximization problems
+convertYForTuner = function(y, measures, ctrl) {
+  # can be a vector
+  y = y[[1L]]
+  # if there was any problem we return the imputed value that the user selected
+  if (is.na(y) || is.nan(y) || is.infinite(y))
+    y = ctrl$impute.val
+  # we now negate values for maximization
+  y = y * ifelse(measures[[1]]$minimize, 1 , -1)
+  return(y)
 }
