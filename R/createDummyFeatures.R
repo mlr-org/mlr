@@ -2,38 +2,36 @@
 #'
 #' @description
 #' Replace all factor features with their dummy variables. Internally \code{\link{model.matrix}} is used.
+#' Non factor features will be left untouched and passed to the result.
 #'
 #' @param obj [\code{data.frame} | \code{\link{SupervisedTask}}]\cr
 #'   Input data.
-#' @param target [\code{character(1)}]\cr
-#'   Name of the column specifying the response.
+#' @param target [\code{character()}]\cr
+#'   Name of the column(s) specifying the response.
 #'   Only used when \code{obj} is a data.frame, otherwise ignored.
-#' @param method [\code{logical(1)}]\cr
+#' @param method [\code{character(1)}]\cr
 #'   Available are:\cr
 #'   \dQuote{1-of-n}: For n factor levels there will be n dummy variables.\cr
-#'   \dQuote{reference}: There will be n-w dummy variables leaving out the first factor level of each variable.\cr
-#' @param exclude [\code{character}]\cr
-#'   Names of the columns to exclude.
-#'   The target does not have to be included here.
-#'   Default is none.
+#'   \dQuote{reference}: There will be n-1 dummy variables leaving out the first factor level of each variable.\cr
+#' @template arg_exclude
 #' @return [\code{data.frame} | \code{\link{SupervisedTask}}]. Same type as
 #'   \code{obj}.
 #' @seealso \code{\link{model.matrix}}
 #' @export
-createDummyFeatures = function(obj, target = NULL, method = "1-of-n", exclude = character(0L)) {
+createDummyFeatures = function(obj, target = character(0L), method = "1-of-n", exclude = character(0L)) {
   assertChoice(method, choices = c("1-of-n", "reference"))
+  assertCharacter(target)
+  assertCharacter(exclude)
   UseMethod("createDummyFeatures")
 }
 
 #' @export
-createDummyFeatures.data.frame = function(obj, target = NULL, method = "1-of-n", exclude = character(0L)) {
+createDummyFeatures.data.frame = function(obj, target = character(0L), method = "1-of-n", exclude = character(0L)) {
   assertSubset(exclude, choices = colnames(obj))
   # extract obj to work on
   work.cols = colnames(obj)[sapply(obj, is.factor)]
-  if (isSet(exclude))
-    work.cols = setdiff(work.cols, exclude)
-  if (isSet(target))
-    work.cols = setdiff(work.cols, target)
+  work.cols = setdiff(work.cols, exclude)
+  work.cols = setdiff(work.cols, target)
   dummies = lapply(work.cols, function(colname) {
     if (method == "1-of-n") {
       form = paste0("~",colname,"-1")
@@ -59,7 +57,7 @@ createDummyFeatures.data.frame = function(obj, target = NULL, method = "1-of-n",
 }
 
 #' @export
-createDummyFeatures.SupervisedTask = function(obj, target = NULL, method = "1-of-n", exclude = character(0)) {
+createDummyFeatures.SupervisedTask = function(obj, target = character(0L), method = "1-of-n", exclude = character(0)) {
   assertSubset(exclude, choices = getTaskFeatureNames(obj))
   d = createDummyFeatures(obj = getTaskData(obj), target = obj$task.desc$target, method = method, exclude = exclude)
   changeData(obj, d)
