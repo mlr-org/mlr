@@ -40,8 +40,8 @@ smote = function(task, rate, nn = 5) {
   y = data[, target]
   x = dropNamed(data, target)
   z = getMinMaxClass(y)
-  x.min = x[z$min.inds, ]
-  x.max = x[z$max.inds, ]
+  x.min = x[z$min.inds, , drop = FALSE]
+  x.max = x[z$max.inds, , drop = FALSE]
   n.min = nrow(x.min)
   n.new  = round(rate * n.min) - n.min
   row1 = x[1L, ]
