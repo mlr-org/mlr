@@ -25,9 +25,7 @@
 makeImputeMethod = function(learn, impute, args = list()) {
   assertFunction(learn, args = c("data", "target", "col"))
   assertFunction(impute, args = c("data", "target", "col"))
-  assertList(args)
-  if (!isProperlyNamed(args))
-    stop("All arguments must be properly named")
+  assertList(args, names = "named")
   setClasses(list(learn = learn, impute = impute, args = args), "ImputeMethod")
 }
 
@@ -109,7 +107,7 @@ imputeMode = function(all.na = NA) {
 #'   Value that stored minimum or maximum is multiplied with when imputation is done.
 #' @rdname imputations
 imputeMin = function(multiplier = 1, all.na = NA) {
-  assertNumeric(multiplier, len = 1L, any.missing = FALSE)
+  assertNumber(multiplier)
   makeImputeMethod(
     learn = function(data, target, col, multiplier) multiplier*min(data[[col]], na.rm = TRUE),
     impute = simpleImpute,
@@ -120,7 +118,7 @@ imputeMin = function(multiplier = 1, all.na = NA) {
 #' @export
 #' @rdname imputations
 imputeMax = function(multiplier = 1, all.na = NA) {
-  assertNumeric(multiplier, len = 1L, any.missing = FALSE)
+  assertNumber(multiplier)
   makeImputeMethod(
     learn = function(data, target, col, multiplier) multiplier*max(data[[col]], na.rm = TRUE),
     impute = simpleImpute,
@@ -137,8 +135,8 @@ imputeMax = function(multiplier = 1, all.na = NA) {
 #'   If NA (default), it will be estimated from the data.
 #' @rdname imputations
 imputeUniform = function(min = NA_real_, max = NA_real_) {
-  assertNumeric(min, len = 1L, any.missing = TRUE)
-  assertNumeric(max, len = 1L, any.missing = TRUE)
+  assertNumber(min)
+  assertNumber(max)
   makeImputeMethod(
     learn = function(data, target, col, min, max)  {
       if (is.na(min)) {
@@ -169,8 +167,8 @@ imputeUniform = function(min = NA_real_, max = NA_real_) {
 #'   Standard deviation of normal distribution. If missing it will be estimated from the data.
 #' @rdname imputations
 imputeNormal = function(mu = NA_real_, sd = NA_real_) {
-  assertNumeric(mu, len = 1L, any.missing = TRUE)
-  assertNumeric(sd, len = 1L, any.missing = TRUE)
+  assertNumber(mu, na.ok = TRUE)
+  assertNumber(sd, na.ok = TRUE)
 
   makeImputeMethod(
     learn = function(data, target, col, mu, sd)  {
@@ -207,10 +205,9 @@ imputeHist = function(breaks, use.mids = TRUE) {
   if (missing(breaks)) {
     breaks = "Sturges"
   } else {
-    breaks = convertInteger(breaks)
-    assertInteger(breaks, len = 1L, any.missing = FALSE)
+    breaks = asCount(breaks)
   }
-  assertLogical(use.mids, len = 1L, any.missing = FALSE)
+  assertFlag(use.mids)
 
   makeImputeMethod(
 

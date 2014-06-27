@@ -3,20 +3,17 @@
 makeFeatSelControlGA = function(same.resampling.instance = TRUE,
   maxit = NA_integer_, max.features = NA_integer_, comma = FALSE, mu = 10L, lambda, crossover.rate = 0.5, mutation.rate = 0.05) {
 
-  maxit = convertInteger(maxit)
-  assertInteger(maxit, len = 1L, lower = 1L, any.missing = FALSE)
-  assertLogical(comma, len = 1L, any.missing = FALSE)
-  mu = convertInteger(mu)
-  assertInteger(mu, len = 1L, lower = 1L, any.missing = FALSE)
+  maxit = asCount(maxit, positive = TRUE)
+  assertFlag(comma)
+  mu = asCount(mu, positive = TRUE)
   if (missing(lambda))  {
     lambda = if (comma) 2L * mu else round(mu / 2L)
   } else {
-    lambda = convertInteger(lambda)
     lam.low  = if (comma) mu else 1L
-    assertInteger(lambda, len = 1L, lower = lam.low, any.missing = FALSE)
+    lambda = asInt(lambda, lower = lam.low)
   }
-  assertNumeric(crossover.rate, len = 1L, lower = 0, upper = 1, any.missing = FALSE)
-  assertNumeric(mutation.rate, len = 1L, lower = 0, upper = 1, any.missing = FALSE)
+  assertNumber(crossover.rate, lower = 0, upper = 1)
+  assertNumber(mutation.rate, lower = 0, upper = 1)
 
   ctrl = makeFeatSelControl(same.resampling.instance = same.resampling.instance,
     maxit = maxit, max.features = max.features,

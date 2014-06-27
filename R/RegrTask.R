@@ -3,7 +3,7 @@
 makeRegrTask = function(id, data, target, weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE) {
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
-  assertLogical(check.data, len = 1L, any.missing = FALSE)
+  assertFlag(check.data)
 
   task = addClasses(makeSupervisedTask("regr", data, target, weights, blocking), "RegrTask")
   if (fixup.data != "no")
@@ -19,7 +19,7 @@ makeRegrTask = function(id, data, target, weights = NULL, blocking = NULL,
 #' @export
 checkTask.RegrTask = function(task, target, ...) {
   NextMethod("checkTask")
-  assertCharacter(target, len = 1L)
+  assertString(target)
   if (!is.numeric(task$env$data[[target]]))
     stopf("Target column '%s' must be numeric", target)
 }

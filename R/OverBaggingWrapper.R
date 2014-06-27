@@ -37,9 +37,8 @@
 makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate, obw.maxcl = "boot") {
 
   learner = checkLearner(learner, "classif")
-  obw.iters = convertInteger(obw.iters)
-  assertInteger(obw.iters, len = 1L, any.missing = FALSE, lower = 1L)
-  assertNumeric(obw.rate, len = 1L, any.missing = FALSE, lower = 1)
+  obw.iters = asCount(obw.iters, positive = TRUE)
+  assertNumber(obw.rate, lower = 1)
   assertChoice(obw.maxcl, choices = c("boot", "all"))
 
   if (learner$predict.type != "response")

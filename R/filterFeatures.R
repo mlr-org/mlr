@@ -42,12 +42,8 @@ filterFeatures = function(task, method = "random.forest.importance", select = "p
 checkFilterArguments = function(select, val) {
   assertChoice(select, choices = c("perc", "abs", "threshold"))
   switch(select,
-    perc = assertNumeric(val, len = 1L, any.missing = FALSE, lower = 0, upper = 1),
-    abs = {
-      val = convertInteger(val)
-      assertInteger(val, len = 1L, any.missing = FALSE, lower = 0)
-    },
-    threshold = assertNumeric(val, len = 1L, any.missing = FALSE)
+    perc = assertNumber(val, lower = 0, upper = 1),
+    abs = assertCount(val),
+    threshold = assertNumber(val)
   )
 }
-

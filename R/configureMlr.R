@@ -50,7 +50,7 @@ configureMlr = function(show.info, on.learner.error, on.learner.warning, on.par.
 
   any.change = FALSE
   if (!missing(show.info)) {
-    assertLogical(show.info, len = 1L, any.missing = FALSE)
+    assertFlag(show.info)
     setMlrOption("show.info", show.info)
     any.change = TRUE
   }
@@ -70,7 +70,7 @@ configureMlr = function(show.info, on.learner.error, on.learner.warning, on.par.
     any.change = TRUE
   }
   if (!missing(show.learner.output)) {
-    assertLogical(show.learner.output, len = 1L, any.missing = FALSE)
+    assertFlag(show.learner.output)
     setMlrOption("show.learner.output", show.learner.output)
     any.change = TRUE
   }

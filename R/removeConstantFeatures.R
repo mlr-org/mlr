@@ -31,10 +31,10 @@
 #' @export
 removeConstantFeatures = function(x, target, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = getMlrOption("show.info")) {
-  assertNumeric(perc, len = 1L, lower = 0, upper = 1, any.missing = FALSE)
+  assertNumber(perc, lower = 0, upper = 1)
   assertCharacter(dont.rm, any.missing = FALSE)
-  assertLogical(na.ignore, len = 1L, any.missing = FALSE)
-  assertLogical(show.info, len = 1L, any.missing = FALSE)
+  assertFlag(na.ignore)
+  assertFlag(show.info)
   UseMethod("removeConstantFeatures")
 }
 

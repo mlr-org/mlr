@@ -18,8 +18,8 @@
 #' @family downsample
 #' @export
 downsample = function(obj, perc = 1, stratify = FALSE) {
-  assertNumeric(perc, len = 1L, any.missing = FALSE, lower = 0, upper = 1)
-  assertLogical(stratify, len = 1L, any.missing = FALSE)
+  assertNumber(perc, lower = 0, upper = 1)
+  assertFlag(stratify)
   UseMethod("downsample")
 }
 

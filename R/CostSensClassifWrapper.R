@@ -79,7 +79,7 @@ makeWrappedModel.CostSensClassifWrapper = function(learner, learner.model, task.
 #' @export
 getCostSensClassifModel= function(model, learner.model = TRUE) {
   assertClass(model, classes = "CostSensClassifModel")
-  assertLogical(learner.model, len = 1L, any.missing = FALSE)
+  assertFlag(learner.model)
   m = model$learner.model$next.model
   if (learner.model)
     m$learner.model

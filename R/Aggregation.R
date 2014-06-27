@@ -44,7 +44,7 @@ NULL
 #'   fun = function (task, perf.test, perf.train, measure, group, pred) IQR(perf.test))
 #' @export
 makeAggregation = function(id, fun) {
-  assertCharacter(id, len = 1L, any.missing = FALSE)
+  assertString(id)
   setClasses(list(id = id, fun = fun), "Aggregation")
 }
 

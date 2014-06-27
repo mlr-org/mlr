@@ -15,7 +15,7 @@ makeFixedHoldoutInstance = function(train.inds, test.inds, size) {
   # FIXME min.len
   assertInteger(train.inds, any.missing = FALSE)
   assertInteger(test.inds, any.missing = FALSE)
-  assertInteger(size, len = 1L, any.missing = FALSE)
+  assertCount(size)
   # FIXME DIV/0
   rdesc = makeResampleDesc("Holdout", split = length(train.inds)/size)
   rin = makeResampleInstance(rdesc, size = size)

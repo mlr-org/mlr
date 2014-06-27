@@ -87,12 +87,12 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   if (!is.null(weights)) {
     assertNumeric(weights, len = task$task.desc$size, any.missing = FALSE, lower = 0)
   }
-  assertLogical(models, len = 1L, any.missing = FALSE)
+  assertFlag(models)
   if (missing(extract))
     extract = function(model) {}
   else
     assertFunction(extract)
-  assertLogical(show.info, len = 1L, any.missing = FALSE)
+  assertFlag(show.info)
 
   n = task$task.desc$size
   r = resampling$size

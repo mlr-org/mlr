@@ -51,11 +51,8 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
     assertClass(task, classes = "SupervisedTask")
     size = task$task.desc$size
   } else {
-    assertDataFrame(newdata)
+    assertDataFrame(newdata, min.rows = 1L)
     size = nrow(newdata)
-    if (size == 0L)
-      stop("newdata must be a data.frame with at least one row!")
-    # FIXME check that data is of same structure?
   }
   if (missing(subset)) {
     subset = seq_len(size)

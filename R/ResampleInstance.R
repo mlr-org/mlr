@@ -41,11 +41,9 @@
 #'
 #' rin = makeResampleInstance("CV", iters = 10, task = iris.task)
 makeResampleInstance = function(desc, task, size, ...) {
-  assert(checkClass(desc, "ResampleDesc"), checkCharacter(desc))
-  if (is.character(desc)) {
-    assertCharacter(desc, len = 1L, any.missing = FALSE)
+  assert(checkClass(desc, "ResampleDesc"), checkString(desc))
+  if (is.character(desc))
     desc = makeResampleDesc(desc, ...)
-  }
   if (!missing(task)) {
     assertClass(task, classes = "SupervisedTask")
     size = task$task.desc$size
@@ -54,10 +52,8 @@ makeResampleInstance = function(desc, task, size, ...) {
     task = NULL
     blocking = factor()
   }
-  if (!missing(size)) {
-    size = convertInteger(size)
-    assertInteger(size, len = 1L, any.missing = FALSE)
-  }
+  if (!missing(size))
+    size = asCount(size)
 
   if (length(blocking) && desc$stratify)
     stop("Blocking can currently not be mixed with stratification in resampling!")
