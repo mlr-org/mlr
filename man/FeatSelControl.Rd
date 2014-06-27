@@ -12,18 +12,18 @@
 \title{Create control structures for feature selection.}
 \usage{
 makeFeatSelControlExhaustive(same.resampling.instance = TRUE,
+  impute.val = Inf, maxit = NA_integer_, max.features = NA_integer_)
+
+makeFeatSelControlGA(same.resampling.instance = TRUE, impute.val = Inf,
+  maxit = NA_integer_, max.features = NA_integer_, comma = FALSE,
+  mu = 10L, lambda, crossover.rate = 0.5, mutation.rate = 0.05)
+
+makeFeatSelControlRandom(same.resampling.instance = TRUE, impute.val = Inf,
+  maxit = 100L, max.features = NA_integer_, prob = 0.5)
+
+makeFeatSelControlSequential(same.resampling.instance = TRUE,
+  impute.val = Inf, method, alpha = 0.01, beta = -0.001,
   maxit = NA_integer_, max.features = NA_integer_)
-
-makeFeatSelControlGA(same.resampling.instance = TRUE, maxit = NA_integer_,
-  max.features = NA_integer_, comma = FALSE, mu = 10L, lambda,
-  crossover.rate = 0.5, mutation.rate = 0.05)
-
-makeFeatSelControlRandom(same.resampling.instance = TRUE, maxit = 100L,
-  max.features = NA_integer_, prob = 0.5)
-
-makeFeatSelControlSequential(same.resampling.instance = TRUE, method,
-  alpha = 0.01, beta = -0.001, maxit = NA_integer_,
-  max.features = NA_integer_)
 }
 \arguments{
 \item{same.resampling.instance}{[\code{logical(1)}]\cr
