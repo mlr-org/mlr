@@ -42,6 +42,8 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     resampling = makeResampleInstance(resampling, task = task)
   assertFlag(show.info)
   checkTunerParset(learner, par.set, control)
+  control = setDefaultImputeVal(control, measures)
+
   cl = getClass1(control)
   sel.func = switch(cl,
     TuneControlRandom = tuneRandom,
@@ -56,7 +58,8 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
   if (show.info) {
     messagef("[Tune] Started tuning learner %s for parameter set:", learner$id)
     messagef(printToChar(par.set))
-    messagef("With control class: %s",  cl)
+    messagef("With control class: %s", cl)
+    messagef("Imputation value: %g", control$impute.val)
   }
   or = sel.func(learner, task, resampling, measures, par.set, control, opt.path, show.info)
   if (show.info)

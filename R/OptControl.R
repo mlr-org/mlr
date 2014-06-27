@@ -1,6 +1,7 @@
-makeOptControl = function(same.resampling.instance, ...) {
-  setClasses(list(
-      same.resampling.instance = same.resampling.instance,
-      extra.args = list(...)),
-    "OptControl")
+makeOptControl = function(same.resampling.instance, impute.val = Inf, ...) {
+  makeS3Obj("OptControl",
+    same.resampling.instance = same.resampling.instance,
+    impute.val = impute.val,
+    extra.args = list(...)
+  )
 }
