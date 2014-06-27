@@ -19,11 +19,13 @@ checkTunerParset = function(learner, par.set, control) {
       stopf("%s can only be applied to: %s!", algo, collapse(ok))
 
   checkStart = function() {
-    if (length(control$start) != length(par.set$pars))
-      stop("Length of 'start' has to match number of parameters in 'par.set'!")
-    x = setdiff(names(control$start), names(getParamSet(learner)$pars))
-    if (length(x))
-      stopf("'start' contains parameters for which no learner parameters exist: %s", collapse(x))
+    if (!is.null(control$start)) {
+      if (length(control$start) != length(par.set$pars))
+        stop("Length of 'start' has to match number of parameters in 'par.set'!")
+      x = setdiff(names(control$start), names(getParamSet(learner)$pars))
+      if (length(x))
+        stopf("'start' contains parameters for which no learner parameters exist: %s", collapse(x))
+    }
   }
 
   # check special conditions for some tuners
