@@ -32,7 +32,7 @@ filterNull = function(x) {
 }
 
 attachTrainingInfo = function(x, info) {
-  attr(x, "mlr.train.info") = as.list(info)
+  attr(x, "mlr.train.info") = info
   x
 }
 
