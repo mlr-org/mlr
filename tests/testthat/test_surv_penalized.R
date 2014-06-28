@@ -17,10 +17,10 @@ test_that("surv_penalized", {
     # contr = contr.none(3)
     # colnames(contr) = levels(surv.test[, "Species"])
     # contrasts(surv.test[, "Species"], how.many = 3) = contr
-    p = penalized::predict(m, penalized = model.matrix(surv.formula, surv.test[, -7])[, -1])
+    p = survival(penalized::predict(m, penalized = model.matrix(surv.formula, surv.test[, -7])[, -1]), Inf)
     old.predicts.list[[i]] = p
   }
 
   # FIXME: does not work yet:
-  # testSimpleParsets("surv.penalized", surv.df[, -7], surv.target, surv.train.inds, old.predicts.list, parset.list)
+  testSimpleParsets("surv.penalized", surv.df[, -7], surv.target, surv.train.inds, old.predicts.list, parset.list)
 })
