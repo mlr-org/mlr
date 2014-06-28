@@ -30,15 +30,15 @@ The built-ins are:
 \usage{
 imputeConstant(const)
 
-imputeMedian(all.na = NA)
+imputeMedian()
 
-imputeMean(all.na = NA)
+imputeMean()
 
-imputeMode(all.na = NA)
+imputeMode()
 
-imputeMin(multiplier = 1, all.na = NA)
+imputeMin(multiplier = 1)
 
-imputeMax(multiplier = 1, all.na = NA)
+imputeMax(multiplier = 1)
 
 imputeUniform(min = NA_real_, max = NA_real_)
 
