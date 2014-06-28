@@ -1,4 +1,4 @@
-#' @export
+##' @export
 makeRLearner.surv.penalized = function() {
   makeRLearnerSurv(
     cl = "surv.penalized",
@@ -14,18 +14,18 @@ makeRLearner.surv.penalized = function() {
   )
 }
 
-#' @export
+##' @export
 trainLearner.surv.penalized = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task, env = as.environment("package:survival"))
   penalized(f, data = getTaskData(.task, .subset), model = "cox", trace = FALSE, ...)
 }
 
-#' @export
+##' @export
 predictLearner.surv.penalized = function(.learner, .model, .newdata, ...) {
   model = .model$learner.model
   # FIXME: add possibility to handle factors
   # .newdata = addContrasts(.newdata)
-  predict(model, penalized = model.matrix(model@formula$penalized, .newdata)[, -1])
+  penalized::predict(model, penalized = model.matrix(model@formula$penalized, .newdata)[, -1])
 }
 
 addContrasts = function(data) {
