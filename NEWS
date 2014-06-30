@@ -58,6 +58,7 @@ mlr_1.2:
 -- oversample, undersample, makeOversampleWrapper, makeUndersampleWrapper
 -- smote, makeSmoteWrapper
 -- downsample, makeDownsampleWrapper
+-- makeWeightedClassesWrapper
 -- makeTuneControlGenSA
 -- makeModelMultiplexer, makeModelMultiplexerParamSet
 -- makeCostSensTaks, makeCostSensRegrWrapper, makeCostsSensWeightedPairsLearner
