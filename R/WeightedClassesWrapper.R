@@ -31,7 +31,7 @@ makeWeightedClassesWrapper = function(learner, wcw.weight) {
 }
 
 #' @export
-trainLearner.WeightedClassesWrapper = function(.learner, .task, .subset, wcw.weight, ...) {
+trainLearner.WeightedClassesWrapper = function(.learner, .task, .subset, .weights, wcw.weight, ...) {
   .task = subsetTask(.task, .subset)
   td = .task$task.desc
   levs = td$class.levels
