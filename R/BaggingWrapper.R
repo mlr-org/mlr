@@ -54,7 +54,7 @@ makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.
   if (learner$predict.type != "response")
     stop("Predict type of the basic learner must be 'response'.")
   id = paste(learner$id, "bagged", sep = ".")
-  packs = learner$packages
+  packs = learner$package
   ps = makeParamSet(
     makeIntegerLearnerParam(id = "bag.iters", lower = 1L, default = 10L),
     makeLogicalLearnerParam(id = "bag.replace", default = TRUE),
