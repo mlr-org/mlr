@@ -1,48 +1,42 @@
 # evaluates either a hyperpar setting or a feature set by resampling
 # must be already in correct format, either a named list of values or a named integer vector for features
 # logs point and results
+# return y-value(s), exectime, and potential erorr msg
 evalOptimizationState = function(learner, task, resampling, measures, par.set, bits.to.features, control,
   opt.path, show.info, dob, state, remove.nas) {
 
+  y = setNames(rep(NA_real_, length(measures)), sapply(measures, measureAggrName))
+  errmsg = NA_character_
+  exec.time = NA_real_
+  evalok = TRUE
+  learner2 = learner
   if (inherits(control, "TuneControl")) {
-    state2 = if (remove.nas) removeMissingValues(state) else state
-
-    # apparnatly sometimes tuners produce infeasible params?
-    # think about this
-    # tuner is out of our control, can produce anything.
-    # now this might be
-    # !isFeasible(parset)
-    # !isSettable(learner)
-    # also the even if  it is, the learner might cras later
-    # in these cases we want to
-    # a) inform or abort
-    # b) impute y
-    # right?
-    # FIXME: this line is really bad
-    learner = try(setHyperPars(learner, par.vals = state2), silent = TRUE)
     log.fun = logFunTune
-  } else  if (inherits(control, "FeatSelControl")) {
-    task = subsetTask(task, features = bits.to.features(state, task))
+    state2 = if (remove.nas) removeMissingValues(state) else state
+    learner2 = try(setHyperPars(learner, par.vals = state2))
+    # if somebody above (eg tuner) prodcued bad settings, we catch this here and dont eval
+    if (is.error(learner2)) {
+      evalok = FALSE
+      errmsg = as.character(learner2)
+    }
+  } else if (inherits(control, "FeatSelControl")) {
     log.fun = logFunSelFeatures
+    task = subsetTask(task, features = bits.to.features(state, task))
   }
 
-  # FIXME: reflect? just returning +- inf is not good!
-  # params became infeasible when we could not model constraints
-  # also error msg is annoying
-  if (is.error(learner)) {
-    msg = as.character(learner)
-    if (length(grep("not feasible for parameter", msg)) > 0L)
-      y = ifelse(measures[[1L]]$minimize, 1 , -1) * Inf
-    else
-      stop(msg)
-  } else {
-    r = resample(learner, task, resampling, measures = measures, show.info = FALSE)
+  # if no problems: resample + measure time
+  if (evalok) {
+    exec.time = system.time({
+      r = resample(learner2, task, resampling, measures = measures, show.info = FALSE)
+    })
     y = r$aggr
+    exec.time = exec.time[3L]
   }
-  # FIXME: if we set y to Inf (problem value) we have to name it for logging, right?
+  # if eval was not ok, everything should have been initailized to NAs
+
   if (show.info)
     log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob, state, y, remove.nas)
-  return(y)
+  list(y = y, exec.time = exec.time, errmsg = errmsg)
 }
 
 # evaluates a list of states by calling evalOptimizationState
@@ -50,6 +44,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
 # might be done in parallel
 # logs point and results
 # adds points to path
+# returns list of lists, the single eval results
 evalOptimizationStates = function(learner, task, resampling, measures, par.set, bits.to.features, control,
   opt.path, show.info, states, dobs, eols, remove.nas, level) {
 
@@ -60,15 +55,17 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
     eols = rep(eols, n)
   parallelLibrary("mlr", master = FALSE, level = level, show.info = FALSE)
   exportMlrOptions()
-  ys = parallelMap(evalOptimizationState, dobs, states, level = level,
+  res.list = parallelMap(evalOptimizationState, dobs, states, level = level,
     more.args = list(learner = learner, task = task, resampling = resampling,
       measures = measures, par.set = par.set, bits.to.features = bits.to.features,
       control = control, opt.path = opt.path, show.info = show.info, remove.nas = remove.nas))
   # add stuff to opt.path
-  for (i in seq_len(n))
-    addOptPathEl(opt.path, x = as.list(states[[i]]), y = ys[[i]],
-      dob = dobs[i], eol = eols[i], check.feasible = FALSE)
-  return(ys)
+  for (i in seq_len(n)) {
+    res = res.list[[i]]
+    addOptPathEl(opt.path, x = as.list(states[[i]]), y = res$y, exec.time = res$exec.time,
+      error.message = res$errmsg, dob = dobs[i], eol = eols[i], check.feasible = FALSE)
+  }
+  return(res.list)
 }
 
 evalOptimizationStatesTune = function(learner, task, resampling, measures, par.set, control,

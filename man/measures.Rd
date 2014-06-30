@@ -173,5 +173,11 @@ General:
   \item{\bold{featperc}}{\cr Percentage of original features used for model, useful for feature selection.}
 }
 }
+\seealso{
+Other performance: \code{\link{Measure}},
+  \code{\link{makeMeasure}}; \code{\link{makeCostMeasure}};
+  \code{\link{makeCustomResampledMeasure}};
+  \code{\link{performance}}
+}
 \keyword{datasets}
 

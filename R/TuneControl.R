@@ -1,5 +1,6 @@
-#' Create control structures for tuning.
+#' @title Create control structures for tuning.
 #'
+#' @description
 #' The following tuners are available:
 #' \describe{
 #'   \item{makeTuneControlGrid}{Grid search. All kinds of parameter types can be handled,
@@ -34,6 +35,7 @@
 #' @param same.resampling.instance [\code{logical(1)}]\cr
 #'   Should the same resampling instance be used for all evaluations to reduce variance?
 #'   Default is \code{TRUE}.
+#' @template arg_imputey
 #' @param start [\code{numeric}]\cr
 #'   Named list of initial parameter values.
 #' @param ... [any]\cr
@@ -49,14 +51,15 @@
 #' @aliases TuneControlGrid TuneControlRandom TuneControlOptim TuneControlCMAES TuneControlIrace
 NULL
 
-makeTuneControl = function(same.resampling.instance, start = NULL, ..., cl) {
+makeTuneControl = function(same.resampling.instance, impute.val = Inf, start = NULL, ..., cl) {
   assertFlag(same.resampling.instance)
+  assertNumber(impute.val)
   if (!is.null(start)) {
     assertList(start)
     if (!isProperlyNamed(start))
       stop("'start' must be a properly named list!")
   }
-  x = makeOptControl(same.resampling.instance = same.resampling.instance, ...)
+  x = makeOptControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val, ...)
   x$start = start
   addClasses(x, c(cl, "TuneControl"))
 }
@@ -65,6 +68,7 @@ makeTuneControl = function(same.resampling.instance, start = NULL, ..., cl) {
 print.TuneControl = function(x, ...) {
   catf("Tune control: %s", class(x)[1])
   catf("Same resampling instance: %s", x$same.resampling.instance)
+  catf("Imputation value: %g", x$impute.val)
   catf("Start: %s", convertToShortString(x$start))
   catf("Further arguments: %s", convertToShortString(x$extra.args))
 }

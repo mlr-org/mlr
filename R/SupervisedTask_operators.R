@@ -237,10 +237,10 @@ changeData = function(task, data, costs, weights) {
   task$env$weights = weights
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
-  if (td$type == "classif")
-    task$task.desc = makeTaskDesc(task, td$id, td$target, td$positive)
-  else
-    task$task.desc = makeTaskDesc(task, td$id, td$target)
+  task$task.desc = switch(td$type,
+    "classif" = makeTaskDesc(task, td$id, td$target, td$positive),
+    "surv" = makeTaskDesc(task, td$id, td$target, td$surv.type),
+    makeTaskDesc(task, td$id, td$target))
   return(task)
 }
 

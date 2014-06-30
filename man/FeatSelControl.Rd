@@ -12,23 +12,33 @@
 \title{Create control structures for feature selection.}
 \usage{
 makeFeatSelControlExhaustive(same.resampling.instance = TRUE,
+  impute.val = Inf, maxit = NA_integer_, max.features = NA_integer_)
+
+makeFeatSelControlGA(same.resampling.instance = TRUE, impute.val = Inf,
+  maxit = NA_integer_, max.features = NA_integer_, comma = FALSE,
+  mu = 10L, lambda, crossover.rate = 0.5, mutation.rate = 0.05)
+
+makeFeatSelControlRandom(same.resampling.instance = TRUE, impute.val = Inf,
+  maxit = 100L, max.features = NA_integer_, prob = 0.5)
+
+makeFeatSelControlSequential(same.resampling.instance = TRUE,
+  impute.val = Inf, method, alpha = 0.01, beta = -0.001,
   maxit = NA_integer_, max.features = NA_integer_)
-
-makeFeatSelControlGA(same.resampling.instance = TRUE, maxit = NA_integer_,
-  max.features = NA_integer_, comma = FALSE, mu = 10L, lambda,
-  crossover.rate = 0.5, mutation.rate = 0.05)
-
-makeFeatSelControlRandom(same.resampling.instance = TRUE, maxit = 100L,
-  max.features = NA_integer_, prob = 0.5)
-
-makeFeatSelControlSequential(same.resampling.instance = TRUE, method,
-  alpha = 0.01, beta = -0.001, maxit = NA_integer_,
-  max.features = NA_integer_)
 }
 \arguments{
 \item{same.resampling.instance}{[\code{logical(1)}]\cr
 Should the same resampling instance be used for all evaluations to reduce variance?
 Default is \code{TRUE}.}
+
+\item{impute.val}{[\code{numeric(1)}]\cr
+If something goes wrong during optimization (e.g, the learner crashes),
+this value is fed back to the tuner, so the tuning algorithm does not abort.
+It is not stored in the optimization path, an NA and a corresponding error message are
+logged instead.
+Note that this value is later multiplied by -1 for maximization measures internally, so you
+need to enter a larger positive value for maximization here as well.
+Default is the worst obtainable value of the performance measure you optimize for when
+you aggregate by mean value, or \code{Inf} instead.}
 
 \item{maxit}{[\code{integer(1)}]\cr
 Maximal number of iterations. Note, that this is usually not equal to the number

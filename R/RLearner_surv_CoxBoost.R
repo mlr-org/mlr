@@ -23,6 +23,7 @@ makeRLearner.surv.CoxBoost = function() {
 trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL,  ...) {
   # FIXME: after recodeY is updated ...
   # data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "right")
+  # FIXME use model.matrix to allow factors
   data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "no")
   if (is.null(.weights))
     .weights = NULL

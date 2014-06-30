@@ -10,7 +10,7 @@
 #'   Model built on training data, might be requested by performance measure, usually not needed.
 #' @return [named \code{numeric}]. Performance value(s), named by measure(s).
 #' @export
-#' @seealso \code{\link{makeMeasure}}, \code{\link{measures}}
+#' @family performance
 #' @examples
 #' training.set = seq(1, nrow(iris), by = 2)
 #' test.set = seq(2, nrow(iris), by = 2)

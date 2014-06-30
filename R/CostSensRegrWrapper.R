@@ -15,7 +15,7 @@ makeCostSensRegrWrapper = function(learner) {
   # we cannot make use of 'se' here
   learner = setPredictType(learner, "response")
   id = paste("costsens", learner$id, sep = ".")
-  x = makeBaseWrapper(id, learner, package = learner$packages, cl = "CostSensRegrWrapper")
+  x = makeBaseWrapper(id, learner, package = learner$package, cl = "CostSensRegrWrapper")
   x$type = "costsens"
   removeProperties(x, c("weights", "se", "prob"))
 }

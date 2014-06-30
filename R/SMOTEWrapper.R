@@ -28,7 +28,7 @@ makeSMOTEWrapper = function(learner, sw.rate, sw.nn = 5L) {
     makeIntegerLearnerParam(id = "sw.nn", lower = 1L)
   )
   pv = list(sw.rate = sw.rate)
-  makeBaseWrapper(id, learner, package = "mlr", par.set = ps, par.vals = pv, cl = "SMOTEWrapper")
+  makeBaseWrapper(id, learner, package = learner$package, par.set = ps, par.vals = pv, cl = "SMOTEWrapper")
 }
 
 #' @export

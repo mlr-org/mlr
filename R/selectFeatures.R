@@ -63,8 +63,14 @@ selectFeatures = function(learner, task, resampling, measures,
   par.set = do.call(makeParamSet, par.set)
   #checkVarselParset(learner, par.set, bit.names, control)
   opt.path = makeOptPathDFFromMeasures(par.set, measures)
+  control = setDefaultImputeVal(control, measures)
 
   cl = as.character(class(control))[1]
+  if (show.info) {
+    messagef("[FeatSel] Started selecting features for learner '%s'", learner$id)
+    messagef("With control class: %s", cl)
+    messagef("Imputation value: %g", control$impute.val)
+  }
   sel.func = switch(cl,
     FeatSelControlRandom = selectFeaturesRandom,
     FeatSelControlExhaustive = selectFeaturesExhaustive,
@@ -72,6 +78,9 @@ selectFeatures = function(learner, task, resampling, measures,
     FeatSelControlGA = selectFeaturesGA
   )
 
-  sel.func(learner, task, resampling, measures, bit.names,
+  or = sel.func(learner, task, resampling, measures, bit.names,
     bits.to.features, control, opt.path, show.info)
+  if (show.info)
+    messagef("[FeatSel] Result: %i bits : %s", length(or$x), perfsToString(or$y))
+  return(or)
 }

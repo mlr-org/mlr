@@ -25,20 +25,20 @@ Code inspired by \code{\link[klaR]{errormatrix}}.
 }
 \examples{
 ## create classification task and use linear discriminant analysis for classification
-task <- makeClassifTask(data = iris, target = "Species")
-lrn <- makeLearner("classif.lda")
+task = makeClassifTask(data = iris, target = "Species")
+lrn = makeLearner("classif.lda")
 
 ## set up training and test data
-n <- nrow(iris)
-mixed.set <- sample(1:n)
-training.set <- mixed.set[1:(n/2)]
-test.set <- mixed.set[(n/2 + 1):n]
+n = nrow(iris)
+mixed.set = sample(1:n)
+training.set = mixed.set[1:(n/2)]
+test.set = mixed.set[(n/2 + 1):n]
 
 ## train model
-mod <- train(lrn, task, subset = training.set)
+mod = train(lrn, task, subset = training.set)
 
 ## get predictions and show calculate confusion matrix
-pred <- predict(mod, newdata = iris[test.set, ])
+pred = predict(mod, newdata = iris[test.set, ])
 print(getConfMatrix(pred))
 print(getConfMatrix(pred, relative = TRUE))
 }

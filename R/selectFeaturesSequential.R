@@ -66,9 +66,9 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
     sfbs = gen.new.states.sbs,
     stop(paste("Unknown method:", method))
   )
-  y = evalOptimizationState(learner, task, resampling, measures, NULL, bits.to.features, control, opt.path, show.info, 1L, x, FALSE)
-  state = list(x = x, y = y)
-  addOptPathEl(opt.path, x = as.list(x), y = y, dob = 1L, eol = 2L)
+  res = evalOptimizationState(learner, task, resampling, measures, NULL, bits.to.features, control, opt.path, show.info, 1L, x, FALSE)
+  state = list(x = x, y = res$y)
+  addOptPathEl(opt.path, x = as.list(x), y = res$y, dob = 1L, eol = 2L, exec.time = res$exec.time, error.message = res$errmsg)
 
   forward = (method %in% c("sfs", "sffs"))
   fail = 0

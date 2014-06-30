@@ -3,6 +3,7 @@
 \alias{imputations}
 \alias{imputeConstant}
 \alias{imputeHist}
+\alias{imputeLearner}
 \alias{imputeMax}
 \alias{imputeMean}
 \alias{imputeMedian}
@@ -29,21 +30,23 @@ The built-ins are:
 \usage{
 imputeConstant(const)
 
-imputeMedian(all.na = NA)
+imputeMedian()
 
-imputeMean(all.na = NA)
+imputeMean()
 
-imputeMode(all.na = NA)
+imputeMode()
 
-imputeMin(multiplier = 1, all.na = NA)
+imputeMin(multiplier = 1)
 
-imputeMax(multiplier = 1, all.na = NA)
+imputeMax(multiplier = 1)
 
 imputeUniform(min = NA_real_, max = NA_real_)
 
 imputeNormal(mu = NA_real_, sd = NA_real_)
 
 imputeHist(breaks, use.mids = TRUE)
+
+imputeLearner(learner, features = NULL)
 }
 \arguments{
 \item{const}{[any]\cr
@@ -73,6 +76,15 @@ defaults to auto-detection via \dQuote{Sturges}.}
 \item{use.mids}{[\code{logical(1)}]\cr
 If \code{x} is numeric and a histogram is used, impute with bin mids (default)
 or instead draw uniformly distributed samples within bin range.}
+
+\item{learner}{[\code{Learner}]\cr
+Supervised learner. Its predictions will be used for imputations.
+Note that the target column is not available for this operation.}
+
+\item{features}{[\code{character}]\cr
+Features to use in \code{learner} for prediction.
+Default is \code{NULL} which uses all available features except the target column
+of the original task.}
 }
 \description{
 Built in imputation methods

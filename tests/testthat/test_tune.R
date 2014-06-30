@@ -53,6 +53,8 @@ test_that("tuning works with infeasible pars", {
   z = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
   d = as.data.frame(z$opt.path)
   expect_true(is.finite(d[1L, "mmce.test.mean"]))
-  expect_true(is.infinite(d[2L, "mmce.test.mean"]))
+  expect_true(is.na(d[1L, "error.message"]))
+  expect_true(is.na(d[2L, "mmce.test.mean"]))
+  expect_true(!is.na(d[2L, "error.message"]))
 })
 

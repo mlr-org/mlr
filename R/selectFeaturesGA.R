@@ -22,9 +22,9 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
     pop.y = pop.df[, yname]
     # create lambda offspring and eval
     kids.list = replicate(lambda, generateKid(pop.featmat, control), simplify = FALSE)
-    kids.y = evalOptimizationStatesFeatSel(learner, task, resampling, measures,
+    kids.evals = evalOptimizationStatesFeatSel(learner, task, resampling, measures,
       bits.to.features, control, opt.path, show.info, states = kids.list, i, as.integer(NA))
-    kids.y = extractSubList(kids.y, yname)
+    kids.y = extractSubList(kids.evals, c("y", yname))
     oplen = getOptPathLength(opt.path)
     kids.inds = seq(oplen - lambda + 1, oplen)
     if (control$extra.args$comma) {

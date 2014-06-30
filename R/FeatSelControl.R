@@ -42,6 +42,7 @@
 #' @param same.resampling.instance [\code{logical(1)}]\cr
 #'   Should the same resampling instance be used for all evaluations to reduce variance?
 #'   Default is \code{TRUE}.
+#' @template arg_imputey
 #' @param maxit [\code{integer(1)}]\cr
 #'   Maximal number of iterations. Note, that this is usually not equal to the number
 #'   of function evaluations.
@@ -85,11 +86,12 @@
 #' @aliases FeatSelControlExhaustive FeatSelControlRandom FeatSelControlSequential FeatSelControlGA
 NULL
 
-makeFeatSelControl = function(same.resampling.instance, maxit, max.features, ..., cl) {
+makeFeatSelControl = function(same.resampling.instance, impute.val = Inf, maxit, max.features, ..., cl) {
   assertFlag(same.resampling.instance)
+  assertNumber(impute.val)
   maxit = asCount(maxit, na.ok = TRUE, positive = TRUE)
   max.features = asCount(max.features, na.ok = TRUE, positive = TRUE)
-  x = makeOptControl(same.resampling.instance = same.resampling.instance, ...)
+  x = makeOptControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val, ...)
   x$maxit = maxit
   x$max.features = max.features
   class(x) = c(cl, "FeatSelControl", class(x))
@@ -101,6 +103,7 @@ makeFeatSelControl = function(same.resampling.instance, maxit, max.features, ...
 print.FeatSelControl = function(x, ...) {
   catf("FeatSel control: %s", class(x)[1])
   catf("Same resampling instance: %s", x$same.resampling.instance)
+  catf("Imputation value: %g", x$impute.val)
   if (is.na(x$max.features))
     catf("Max. features: <not used>")
   else
