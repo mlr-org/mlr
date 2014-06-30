@@ -117,7 +117,7 @@ checkTask.SupervisedTask = function(task, target, ...) {
       if (any(is.nan(x)))
         stopf("Data contains NaN values in: %s", cn)
     } else if (is.factor(x)) {
-      if(any(table(x) == 0L))
+      if (any(table(x) == 0L))
         stopf("Data contains empty factor levels in: %s", cn)
     } else {
       stopf("Unsupported feature type in: %s, %s", cn, class(x)[1L])
@@ -136,9 +136,10 @@ fixupData.SupervisedTask = function(task, target, choice) {
     levs1 = lapply(task$env$data, function(x) if (is.factor(x)) levels(x) else NULL)
     data = droplevels(task$env$data)
     levs2 = lapply(data, function(x) if (is.factor(x)) levels(x) else NULL)
-    j = vlapply(cns, function(cn) any(levs1[[cn]] != levs2[[cn]]))
+    j = vlapply(cns, function(cn) !setequal(levs1[[cn]], levs2[[cn]]))
     if (any(j))
       warningf("Empty factor levels were dropped for columns: %s", collapse(cns[j]))
+    task$env$data = droplevels(task$env$data)
   }
 }
 
