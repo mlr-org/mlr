@@ -9,7 +9,6 @@ test_that("classif_gbm", {
     list(interaction.depth = 2)
 	)
 	
-	
 	old.predicts.list = list()
 	old.probs.list = list()
 	
@@ -32,4 +31,11 @@ test_that("classif_gbm", {
 	
 	testSimpleParsets("classif.gbm", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.predicts.list, parset.list)
 	testProbParsets("classif.gbm", binaryclass.df, binaryclass.target, binaryclass.train.inds, old.probs.list, parset.list)
+  
+	set.seed(getOption("mlr.debug.seed"))
+	m = gbm(multiclass.formula, data = multiclass.train, n.trees = 300, interaction.depth = 2, distribution = "multinomial")
+	p = predict(m, newdata = multiclass.test, n.trees = 300)
+  y = factor(apply(p[,,1],1, function(r) colnames(p)[which.max(r)]))
+	testSimple("classif.gbm", multiclass.df, multiclass.target, multiclass.train.inds, y,  
+	           parset=list(n.trees = 300, interaction.depth = 2, distribution = "multinomial"))
 })

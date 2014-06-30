@@ -4,7 +4,7 @@ makeRLearner.classif.gbm = function() {
     cl = "classif.gbm",
     package = "gbm",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "distribution", default = "bernoulli", values = c("bernoulli", "adaboost")),
+      makeDiscreteLearnerParam(id = "distribution", values = c("bernoulli", "adaboost", "gaussian", "laplace", "huberized", "multinomial", "poisson", "pairwise")),
       makeIntegerLearnerParam(id = "n.trees", default = 100L, lower = 1L),
       makeIntegerLearnerParam(id = "interaction.depth", default = 1L, lower = 1L),
       makeIntegerLearnerParam(id = "n.minobsinnode", default = 10L, lower = 1L),
@@ -12,14 +12,16 @@ makeRLearner.classif.gbm = function() {
       makeNumericLearnerParam(id = "bag.fraction", default = 0.5, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "train.fraction", default = 1, lower = 0, upper = 1)
     ),
-    par.vals = list(distribution = "bernoulli"),
-    properties = c("twoclass", "missings", "numerics", "factors", "prob", "weights")
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights")
   )
 }
 
 #' @export
 trainLearner.classif.gbm = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  d = getTaskData(.task, .subset, recode.target = "01")
+  if(length(.task$task.desc$class.levels) == 2L)
+    d = getTaskData(.task, .subset, recode.target = "01")
+  else
+    d = getTaskData(.task, .subset)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
     gbm(f, data = d, keep.data = FALSE, verbose = FALSE, ...)
@@ -32,17 +34,29 @@ trainLearner.classif.gbm = function(.learner, .task, .subset, .weights = NULL,  
 #' @export
 predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
-  p = predict(m, newdata = .newdata, type = "response", n.trees = length(m$trees), single.tree = FALSE, ...)
-  levs = c(.model$task.desc$negative, .model$task.desc$positive)
-  if (.learner$predict.type == "prob") {
-    y = matrix(0, ncol = 2, nrow = nrow(.newdata))
-    colnames(y) = levs
-    y[,1L] = 1-p
-    y[,2L] = p
-    return(y)
+  p = predict(m, newdata = .newdata, type = "response", n.trees = m$n.trees, single.tree = FALSE, ...)
+  if (length(.model$task.desc$class.levels) == 2) {
+    levs = c(.model$task.desc$negative, .model$task.desc$positive)
+    if (.learner$predict.type == "prob") {
+      y = matrix(0, ncol = 2, nrow = nrow(.newdata))
+      colnames(y) = levs
+      y[,1L] = 1-p
+      y[,2L] = p
+      return(y)
+    } else {
+      p = as.factor(ifelse(p > 0.5, levs[2L], levs[1L]))
+      names(p) = NULL
+      return(p)
+    }
   } else {
-    p = as.factor(ifelse(p > 0.5, levs[2L], levs[1L]))
-    names(p) = NULL
-    return(p)
+    p = p[,,1]
+    if (.learner$predict.type == "prob") {
+      return(p)
+    } else {
+      ind = getMaxIndexOfRows(p)
+      y = sapply(ind, function(r) colnames(p)[r])
+      return(factor(y))
+    }
   }
+  
 }
