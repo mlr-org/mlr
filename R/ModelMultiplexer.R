@@ -13,9 +13,6 @@
 #'
 #' @param base.learners [\code{list} of \code{\link{Learner}}]\cr
 #'  List of Learners with unique IDs.
-#' @param id [\code{character(1)}]\cr
-#'  Identifier for constructed ModelMultiplexer.
-#'  Default is \dQuote{ModelMultiplexer}.
 #' @return [\code{ModelMultiplexer}]. A \code{\link{Learner}} specialized as \code{ModelMultiplexer}.
 #' @aliases ModelMultiplexer
 #' @family multiplexer
@@ -66,8 +63,8 @@
 #'
 #' # all three ps-objects are exactly the same internally.
 #'
-makeModelMultiplexer = function(base.learners, id = "ModelMultiplexer") {
-  assertString(id)
+makeModelMultiplexer = function(base.learners) {
+  id = "ModelMultiplexer"
   assertList(base.learners, min.len = 1L)
   checkListElementClass(base.learners, "Learner")
   ids = unique(extractSubList(base.learners, "id"))
