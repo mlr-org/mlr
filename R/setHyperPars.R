@@ -1,14 +1,13 @@
 #' Set the hyperparameters of a learner object.
 #'
-#' @param learner [\code{\link{Learner}}]\cr
-#'   The learner.
+#' @template arg_learner
 #' @param ... [any]\cr
 #'   Named (hyper)parameters with new setting. Alternatively these can be passed
 #'   using the \code{par.vals} argument.
 #' @param par.vals [\code{list}]\cr
 #'    Optional list of named (hyper)parameter settings. The arguments in
 #'    \code{...} take precedence over values in this list.
-#' @return [\code{\link{Learner}}] with changed hyperparameters.
+#' @template ret_learner
 #' @export
 #' @seealso See \code{\link{getHyperPars}} for a function to retrieve
 #'   the currently set hyperparameters. To get a list of all hyperparameters of

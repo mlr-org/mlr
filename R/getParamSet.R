@@ -1,8 +1,7 @@
 #' Get a description of all possible parameter settings for a learner.
 #'
-#' @param learner [\code{\link{Learner}}]\cr
-#'   The learner.
-#' @return [\code{\link[ParamHelpers]{ParamSet}}].
+#' @template arg_learner
+#' @template ret_ps
 #' @export
 getParamSet = function(learner) {
   assertClass(learner, classes = "Learner")

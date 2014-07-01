@@ -1,7 +1,6 @@
 #' Get current parameter settings for a learner.
 #'
-#' @param learner [\code{\link{Learner}}]\cr
-#'   The learner.
+#' @template arg_learner
 #' @param for.fun [\code{character(1)}]\cr
 #'   Restrict the returned settings to hyperparameters corresponding to \code{when}
 #'   the are used (see \code{\link[ParamHelpers]{LearnerParam}}).
