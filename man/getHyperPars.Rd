@@ -22,4 +22,9 @@ Default is \code{c("train", "predict", "both")}.}
 \description{
 Get current parameter settings for a learner.
 }
+\seealso{
+Other learner: \code{\link{getParamSet}};
+  \code{\link{setHyperPars}}; \code{\link{setId}};
+  \code{\link{setPredictType}}; \code{\link{showHyperPars}}
+}
 

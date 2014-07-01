@@ -3,20 +3,15 @@
 \alias{setId}
 \title{Set the id of a learner object.}
 \usage{
-setId(learner, ..., par.vals)
+setId(learner, id)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
 The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
-\item{...}{[any]\cr
-Named (hyper)parameters with new setting. Alternatively these can be passed
-using the \code{par.vals} argument.}
-
-\item{par.vals}{[\code{list}]\cr
-Optional list of named (hyper)parameter settings. The arguments in
-\code{...} take precedence over values in this list.}
+\item{id}{[\code{character(1)}]\cr
+New id for learner.}
 }
 \value{
 [\code{\link{Learner}}].
@@ -24,17 +19,9 @@ Optional list of named (hyper)parameter settings. The arguments in
 \description{
 Set the id of a learner object.
 }
-\examples{
-cl1 = makeLearner("classif.ksvm", sigma = 1)
-cl2 = setHyperPars(cl1, sigma = 10, par.vals = list(C = 2))
-print(cl1)
-# note the now set and altered hyperparameters:
-print(cl2)
-}
 \seealso{
-See \code{\link{getHyperPars}} for a function to retrieve
-  the currently set hyperparameters. To get a list of all hyperparameters of
-  a learner, see the \code{par.set} slot of the \code{\link{Learner}}
-  object.
+Other learner: \code{\link{getHyperPars}};
+  \code{\link{getParamSet}}; \code{\link{setHyperPars}};
+  \code{\link{setPredictType}}; \code{\link{showHyperPars}}
 }
 

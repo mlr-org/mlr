@@ -29,6 +29,10 @@ For complex wrappers the predict type is usually also passed down the
 encapsulated learner in a recursive fashion.
 }
 \seealso{
+Other learner: \code{\link{getHyperPars}};
+  \code{\link{getParamSet}}; \code{\link{setHyperPars}};
+  \code{\link{setId}}; \code{\link{showHyperPars}}
+
 Other predict: \code{\link{getProbabilities}};
   \code{\link{predict.WrappedModel}}
 }

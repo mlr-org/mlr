@@ -4,8 +4,6 @@
 \title{Only exported for internal use.}
 \usage{
 setHyperPars2(learner, par.vals)
-
-setHyperPars2(learner, par.vals)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}}]\cr
@@ -13,16 +11,8 @@ The learner.}
 
 \item{par.vals}{[\code{list}]\cr
 List of named (hyper)parameter settings.}
-
-\item{learner}{[\code{\link{Learner}}]\cr
-The learner.}
-
-\item{par.vals}{[\code{list}]\cr
-List of named (hyper)parameter settings.}
 }
 \description{
-Only exported for internal use.
-
 Only exported for internal use.
 }
 

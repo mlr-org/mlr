@@ -16,4 +16,9 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 \description{
 Get a description of all possible parameter settings for a learner.
 }
+\seealso{
+Other learner: \code{\link{getHyperPars}};
+  \code{\link{setHyperPars}}; \code{\link{setId}};
+  \code{\link{setPredictType}}; \code{\link{showHyperPars}}
+}
 
