@@ -1,46 +1,3 @@
-#' Get a description of all possible parameter settings for a learner.
-#'
-#' @param learner [\code{\link{Learner}}]\cr
-#'   The learner.
-#' @return [\code{\link[ParamHelpers]{ParamSet}}].
-#' @export
-getParamSet = function(learner) {
-  assertClass(learner, classes = "Learner")
-  UseMethod("getParamSet")
-}
-
-#'@export
-getParamSet.Learner = function(learner) {
-  assertClass(learner, classes = "Learner")
-  learner$par.set
-}
-
-#' Get current parameter settings for a learner.
-#'
-#' @param learner [\code{\link{Learner}}]\cr
-#'   The learner.
-#' @param for.fun [\code{character(1)}]\cr
-#'   Restrict the returned settings to hyperparameters corresponding to \code{when}
-#'   the are used (see \code{\link[ParamHelpers]{LearnerParam}}).
-#'   Must be a subset of: \dQuote{train}, \dQuote{predict} or \dQuote{both}.
-#'   Default is \code{c("train", "predict", "both")}.
-#' @return [\code{list}]. A named list of values.
-#' @export
-getHyperPars = function(learner,  for.fun = c("train", "predict", "both")) {
-  assertClass(learner, classes = "Learner")
-  assertSubset(for.fun, choices = c("train", "predict", "both"))
-  UseMethod("getHyperPars")
-}
-
-#' @export
-getHyperPars.Learner = function(learner, for.fun = c("train", "predict", "both")) {
-  assertClass(learner, classes = "Learner")
-  pars = learner$par.set$pars
-  pv = learner$par.vals
-  ns = Filter(function(x) pars[[x]]$when %in% for.fun, names(pv))
-  pv[ns]
-}
-
 #' Set the hyperparameters of a learner object.
 #'
 #' @param learner [\code{\link{Learner}}]\cr
@@ -122,12 +79,3 @@ setHyperPars2.Learner = function(learner, par.vals) {
   return(learner)
 }
 
-
-# FIXME what if hyper pars are of complx type?
-getHyperParsString = function(learner) {
-  hps = getHyperPars(learner)
-  ns = names(hps)
-  pars = getParamSet(learner)$pars[ns]
-  s = Map(paramValueToString, pars, hps)
-  paste(ns, s, sep = "=", collapse = ",")
-}
