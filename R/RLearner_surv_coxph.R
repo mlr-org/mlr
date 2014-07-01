@@ -26,7 +26,7 @@ trainLearner.surv.coxph = function(.learner, .task, .subset, .weights = NULL,  .
     mod = coxph(formula = f, data = data, weights = .weights, ...)
   }
   if (.learner$predict.type == "prob")
-    mod = attachTrainingInfo(mod, list(surv.range = range(getTaskTargets(task)[, 1L])))
+    mod = attachTrainingInfo(mod, list(surv.range = range(getTaskTargets(.task)[, 1L])))
   mod
 }
 
