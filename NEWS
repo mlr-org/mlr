@@ -48,6 +48,7 @@ mlr_1.2:
 -- getTaskNFeats
 -- hasProperties, getProperties, setProperties, addProperties, removeProperties
 -- showHyperPars
+-- setId
 -- listMeasures
 -- plotLearnerPrediction
 -- plotThreshVsPerf
