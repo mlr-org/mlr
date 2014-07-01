@@ -10,9 +10,8 @@ makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
     fixupData(task, target, fixup.data)
   if (check.data)
     checkTaskCreation(task, target)
-
   # we expect the target to be a factor from here on
-  levs = levels(data[, target])
+  levs = levels(task$env$data[, target])
   m = length(levs)
   if (missing(positive)) {
     if (m <= 2L)
