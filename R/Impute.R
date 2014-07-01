@@ -43,9 +43,6 @@
 #'   Named list containing names of imputation methods to impute missing values
 #'   in the data column referenced by the list element's name. Overwrites imputation set via
 #'   \code{classes}.
-#' @param dummy.classes [\code{character}]\cr
-#'   Character vector with class names of columns to create dummy columns (containing binary missing indicator) for.
-#'   Default is \code{character(0)}.
 #' @param dummy.cols [\code{character}]\cr
 #'   Column names to create dummy columns (containing binary missing indicator) for.
 #'   Default is \code{character(0)}.
@@ -72,14 +69,13 @@
 #' imputed = impute(df, target = character(0), cols = list(x = 99, y = imputeMode()))
 #' print(imputed$data)
 #' reimpute(data.frame(x = NA), imputed$desc)
-impute = function(data, target, classes = list(), cols = list(), dummy.classes = character(0L),
+impute = function(data, target, classes = list(), cols = list(),
   dummy.cols = character(0L), dummy.type = "factor", impute.new.levels = TRUE, recode.factor.levels = TRUE) {
 
   assertDataFrame(data)
   assertCharacter(target, any.missing = FALSE)
   assertList(classes)
   assertList(cols)
-  assertCharacter(dummy.classes, any.missing = FALSE)
   assertCharacter(dummy.cols, any.missing = FALSE)
   assertChoice(dummy.type, c("factor", "numeric"))
 
@@ -107,9 +103,6 @@ impute = function(data, target, classes = list(), cols = list(), dummy.classes =
   not.ok = any(names(classes) %nin% allowed.classes)
   if (any(not.ok))
     stopf("Column class '%s' for imputation not recognized", names(cols)[which.first(not.ok)])
-  not.ok = any(dummy.classes %nin% allowed.classes)
-  if (any(not.ok))
-    stopf("Column class '%s' for dummy creation not recognized", dummy.classes[which.first(not.ok)])
 
   features = setdiff(names(data), target)
   feature.classes = vcapply(data[features], class)
@@ -136,7 +129,7 @@ impute = function(data, target, classes = list(), cols = list(), dummy.classes =
   desc$impute[names(cols)] = cols
 
   # handle dummies
-  desc$dummies = union(features[feature.classes %in% dummy.classes], dummy.cols)
+  desc$dummies = dummy.cols
 
   # cleanup
   desc$impute = Filter(Negate(is.null), desc$impute)
