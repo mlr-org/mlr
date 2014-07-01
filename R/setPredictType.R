@@ -17,6 +17,7 @@
 #'   Default is \dQuote{response}.
 #' @template ret_learner
 #' @family predict
+#' @family learner
 #' @export
 setPredictType = function(learner, predict.type) {
   assertClass(learner, classes = "Learner")

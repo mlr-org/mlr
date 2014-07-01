@@ -9,10 +9,7 @@
 #'    \code{...} take precedence over values in this list.
 #' @template ret_learner
 #' @export
-#' @seealso See \code{\link{getHyperPars}} for a function to retrieve
-#'   the currently set hyperparameters. To get a list of all hyperparameters of
-#'   a learner, see the \code{par.set} slot of the \code{\link{Learner}}
-#'   object.
+#' @family learner
 #' @examples
 #' cl1 = makeLearner("classif.ksvm", sigma = 1)
 #' cl2 = setHyperPars(cl1, sigma = 10, par.vals = list(C = 2))

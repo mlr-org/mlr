@@ -7,6 +7,7 @@
 #'   Must be a subset of: \dQuote{train}, \dQuote{predict} or \dQuote{both}.
 #'   Default is \code{c("train", "predict", "both")}.
 #' @return [\code{list}]. A named list of values.
+#' @family learner
 #' @export
 getHyperPars = function(learner,  for.fun = c("train", "predict", "both")) {
   assertClass(learner, classes = "Learner")

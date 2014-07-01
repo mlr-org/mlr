@@ -4,15 +4,11 @@
 \alias{makeModelMultiplexer}
 \title{Create model multiplexer for model selection to tune over multiple possible models.}
 \usage{
-makeModelMultiplexer(base.learners, id = "ModelMultiplexer")
+makeModelMultiplexer(base.learners)
 }
 \arguments{
 \item{base.learners}{[\code{list} of \code{\link{Learner}}]\cr
 List of Learners with unique IDs.}
-
-\item{id}{[\code{character(1)}]\cr
-Identifier for constructed ModelMultiplexer.
-Default is \dQuote{ModelMultiplexer}.}
 }
 \value{
 [\code{ModelMultiplexer}]. A \code{\link{Learner}} specialized as \code{ModelMultiplexer}.

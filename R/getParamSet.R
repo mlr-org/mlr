@@ -2,6 +2,7 @@
 #'
 #' @template arg_learner
 #' @template ret_ps
+#' @family learner
 #' @export
 getParamSet = function(learner) {
   assertClass(learner, classes = "Learner")
