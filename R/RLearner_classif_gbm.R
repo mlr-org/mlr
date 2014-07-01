@@ -54,9 +54,9 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
       return(p)
     } else {
       ind = getMaxIndexOfRows(p)
-      y = sapply(ind, function(r) colnames(p)[r])
-      return(factor(y))
+      cns = colnames(p)
+      return(factor(cns[ind], levels = cns))
     }
   }
-  
+
 }
