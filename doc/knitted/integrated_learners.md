@@ -26,13 +26,7 @@ List of currently integrated classifiers
 
 
 ```
-## Warning: The following learners could not be constructed, probably because their packages are not installed:
-## surv.CoxBoost,surv.glmnet,surv.randomForestSRC
-## Check ?learners to see which packages you need or install mlr with all suggestions.
-```
-
-```
-## Error: konnte Funktion "ascii" nicht finden
+## Error: unbenutztes Argument (type = "classif")
 ```
 
 
@@ -41,12 +35,6 @@ List of currently integrated regression methods
 
 
 ```
-## Warning: The following learners could not be constructed, probably because their packages are not installed:
-## surv.CoxBoost,surv.glmnet,surv.randomForestSRC
-## Check ?learners to see which packages you need or install mlr with all suggestions.
-```
-
-```
-## Error: konnte Funktion "ascii" nicht finden
+## Error: unbenutztes Argument (type = "regr")
 ```
 

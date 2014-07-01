@@ -31,8 +31,7 @@ The first argument defines the underlying algorithm from R.
 The naming conventions are ``classif.<R_method_name>`` for
 classification methods and ``regr.<R_method_name>`` for regression methods.
 The names of all learning methods are listed on the \man[learners] help page.
-The tables in [IntegratedLearners](../integrated_learners.md) provide a survey about these properties for
-all integrated learning methods.
+The tables in [IntegratedLearners](../integrated_learners.md) provide a survey about these properties for all integrated learning methods.
 
 Further information
 -------------------

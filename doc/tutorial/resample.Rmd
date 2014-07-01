@@ -38,10 +38,8 @@ r = resample(lrn, task, rdesc)
 r
 ```
 
-In this example, the peformance measure is mmce (mean misclassification error), 
-the default for classification. See the documentation for [measures](http://berndbischl.github.io/mlr/man/measures.html) for a 
-complete list of performance measures available in **mlr**. More explanations, 
-concerning the evaluation of learning methods, are given in section [Evaluating Learner Performance](performance.md).
+In this example, the peformance measure is *mmce (mean misclassification error)*, the default for classification. See the documentation for [measures](http://berndbischl.github.io/mlr/man/measures.html) for a complete list of performance measures available in **mlr**. 
+More explanations, concerning the evaluation of learning methods, are given in section [Evaluating Learner Performance](performance.md).
 
 
 ### Regression example

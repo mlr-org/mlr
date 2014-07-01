@@ -5,9 +5,8 @@ Learning tasks are the basic elements of the package to encapsulate the
 data set and all relevant information regarding the purpose of the
 task, e.g, the target variable.
 
-Currently two subclasses of a [SupervisedTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) exist: [ClassifTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) for
-classification and [RegrTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) for regression problems.
-We are also working on survival analysis and a general definition of cost-sensitive learning.
+Currently these subclasses of a [SupervisedTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) exist: [ClassifTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) for classification and \man2[RegrTask][SupervisedTask] for regression problems.
+**mlr** also offers survival analysis ([SurvTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html)) and cost-sensitive learning (\man2[SurvTask][CostSensTask]).
 A classification task is created by using [makeClassifTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html),
 [makeRegrTask](http://berndbischl.github.io/mlr/man/SupervisedTask.html) is used for regression task.
 

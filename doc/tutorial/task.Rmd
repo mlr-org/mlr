@@ -5,9 +5,8 @@ Learning tasks are the basic elements of the package to encapsulate the
 data set and all relevant information regarding the purpose of the
 task, e.g, the target variable.
 
-Currently two subclasses of a \man[SupervisedTask] exist: \man2[ClassifTask][SupervisedTask] for
-classification and \man2[RegrTask][SupervisedTask] for regression problems.
-We are also working on survival analysis and a general definition of cost-sensitive learning.
+Currently these subclasses of a \man[SupervisedTask] exist: \man2[ClassifTask][SupervisedTask] for classification and \man2[RegrTask][SupervisedTask] for regression problems.
+**mlr** also offers survival analysis (\man2[SurvTask][SupervisedTask]) and cost-sensitive learning (\man2[SurvTask][CostSensTask]).
 A classification task is created by using \man2[makeClassifTask][SupervisedTask],
 \man2[makeRegrTask][SupervisedTask] is used for regression task.
 

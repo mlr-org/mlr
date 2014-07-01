@@ -12,7 +12,7 @@ Quick start
 
 ### Classification example
 
-We start with a basic example and train a Linear Dicriminant Analysis on the ``iris`` data set.
+We start with a basic example and train a Linear Discriminant Analysis on the ``iris`` data set.
 
 ```{r}
 library("mlr")
@@ -50,63 +50,4 @@ train the learner. This set is passed using the ``subset`` argument of [train](h
 
 The return value is always an object of class [WrappedModel](http://berndbischl.github.io/mlr/man/makeWrappedModel.html), which wraps the
 particular model of the used R classification or regression method. It
-can subsequently be used to perform a [prediction](http://berndbischl.github.io/mlr/man/predict.WrappedModel.html) for new
-observations.
-
-
-### Classification example
-
-Let's train a decision tree on the ``iris`` data set.
-
-```{r}
-library("mlr")
-
-#First, create the classification task and the learner object
-task = makeClassifTask(data = iris, target = "Species")
-lrn = makeLearner("classif.rpart")
-
-# Now, train the model with all the instances provided by the iris data.
-mod = train(lrn, task)
-
-# You can print some basic information of the model to the console.
-mod
-```
-
-Now, a subset of the data (every second observation) is used for training.
-
-```{r}
-mod = train(lrn, task, subset = seq(from = 1, to = nrow(iris), by = 2))
-mod
-```
-  
-It's still simple to access the wrapped rpart model, but in most cases there won't be a need to do so.
-
-```{r}
-mod$learner.model
-``` 
-
-
-### Regression example
-
-As a regression example we use the ``BostonHousing`` data set. Let's train a Gradient Boosting Machine and we begin with the whole data set.
-
-```{r}
-#Create the regression task. 
-library("mlbench")
-data(BostonHousing)
-
-task = makeRegrTask(data = BostonHousing, target = "medv")
-lrn = makeLearner("regr.gbm", n.trees = 500, distribution = "laplace", interaction.depth = 3)
-
-mod = train(lrn, task)  
-mod
-```
-
-Now, we use a subset of the data for training (every second observation).
-
-```{r}
-mod = train(lrn, task, subset = seq(1, nrow(BostonHousing), 2))
-mod
-```
-
-
+can subsequently be used to perform a [prediction](http://berndbischl.github.io/mlr/man/predict.WrappedModel.html) for new observations.

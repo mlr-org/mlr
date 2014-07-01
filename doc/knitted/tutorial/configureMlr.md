@@ -14,6 +14,13 @@ library("mlr")
 ## Define a learning task and an appropriate learner
 task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.ksvm")
+```
+
+```
+## Loading required package: kernlab
+```
+
+```splus
 
 ## Perform a 3-fold cross-validation
 rdesc = makeResampleDesc("CV", iters = 3)

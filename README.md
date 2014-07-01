@@ -31,10 +31,9 @@ compare models in a statistically meaningful way.
 As this becomes computationally expensive, you might want to parallelize your experiments as well. This 
 often forces users to make crummy trade-offs in their experiments due to time constraints or lacking expert 
 programming skills. **mlr** provides this infrastructure so that you can focus on your experiments!
-The framework currently focuses on supervised methods like classification and regression and their 
-corresponding evaluation and optimization, but further extensions are planned. It is written in a way 
-that you can extend it yourself or deviate from the implemented convenience methods and construct your own 
-complex experiments or algorithms.
+The framework currently focuses on supervised methods like classification, regression and survival analysis and 
+their corresponding evaluation and optimization. It is written in a way that you can extend it yourself or 
+deviate from the implemented convenience methods and construct your own complex experiments or algorithms.
 
 Features
 ========

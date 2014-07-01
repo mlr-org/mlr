@@ -18,13 +18,20 @@ parallelStartSocket(2)
 ```splus
 task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.lda")
+```
+
+```
+## Loading required package: MASS
+```
+
+```splus
 rdesc = makeResampleDesc("CV", iters = 4)
 r = resample(lrn, task, rdesc)
 ```
 
 ```
 ## Mapping in parallel: mode = socket; cpus = 2; elements = 4.
-## [Resample] Result: mmce.test.mean=0.0201
+## [Resample] Result: mmce.test.mean=0.0265
 ```
 
 ```splus

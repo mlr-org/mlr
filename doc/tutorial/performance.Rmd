@@ -11,10 +11,9 @@ It is also possible to access the time to train the model,
 the time to compute the prediction and their sum as performance
 measures.
 
-To see which performance measures are implemented, have a look at [measures](http://berndbischl.github.io/mlr/man/measures.html). If you want 
-to implement an additional measure or include a measure with non-standard 
-misclassification costs, go to the section [create_measure](create_measure.md). In order to calculate 
-the performance measures, the function [performance](http://berndbischl.github.io/mlr/man/performance.html) is used.
+To see which performance measures are implemented, have a look at [measures](http://berndbischl.github.io/mlr/man/measures.html). 
+If you want to implement an additional measure or include a measure with non-standard misclassification costs, go to the section [create_measure](create_measure.md). 
+In order to calculate the performance measures, the function [performance](http://berndbischl.github.io/mlr/man/performance.html) is used.
 
 
 Classification example
@@ -46,8 +45,7 @@ performance(pred = pred, measures = timetrain, model = mod)
 performance(pred = pred, measures = timeboth, model = mod)
 ```
 
-Of course we can also calculate multiple performance measures at once simply by unsing a list of meassures which
-can also include [your own measure](create_measure.md).
+Of course we can also calculate multiple performance measures at once simply by using a list of measures which can also include [your own measure](create_measure.md).
 
 ```{r}
 ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain, "timeboth" = timeboth)
@@ -69,11 +67,8 @@ lrn = makeLearner("classif.rpart")
 mod = train(lrn, task = task)
 pred = predict(mod, task = task)
 
-performance(pred, measures = acc)
-performance(pred, measures = fpr)
-performance(pred, measures = fnr)
+performance(pred, measures = list(acc, fpr, fnr))
 ``` 
-
 
 Note that, in order to calculate the AUC, the area under the ROC (receiver 
 operating characteristic) curve, we have to make sure that posterior
