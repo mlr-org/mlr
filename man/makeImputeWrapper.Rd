@@ -5,7 +5,8 @@
 \usage{
 makeImputeWrapper(learner, classes = list(), cols = list(),
   dummy.classes = character(0L), dummy.cols = character(0L),
-  impute.new.levels = TRUE, recode.factor.levels = TRUE)
+  dummy.type = "factor", impute.new.levels = TRUE,
+  recode.factor.levels = TRUE)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -28,6 +29,11 @@ Default is \code{character(0)}.}
 \item{dummy.cols}{[\code{character}]\cr
 Column names to create dummy columns (containing binary missing indicator) for.
 Default is \code{character(0)}.}
+
+\item{dummy.type}{[\code{character(1)}]\cr
+How dummy columns are encoded. Either as 0/1 with type \dQuote{numeric}
+or as \dQuote{factor}.
+Default is \dQuote{factor}.}
 
 \item{impute.new.levels}{[\code{logical(1)}]\cr
 If new, unencountered factor level occur during reimputation,

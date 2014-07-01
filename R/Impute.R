@@ -49,6 +49,10 @@
 #' @param dummy.cols [\code{character}]\cr
 #'   Column names to create dummy columns (containing binary missing indicator) for.
 #'   Default is \code{character(0)}.
+#' @param dummy.type [\code{character(1)}]\cr
+#'   How dummy columns are encoded. Either as 0/1 with type \dQuote{numeric}
+#'   or as \dQuote{factor}.
+#'   Default is \dQuote{factor}.
 #' @param impute.new.levels [\code{logical(1)}]\cr
 #'   If new, unencountered factor level occur during reimputation,
 #'   should these be handled as NAs and then be imputed the same way?
@@ -69,7 +73,7 @@
 #' print(imputed$data)
 #' reimpute(data.frame(x = NA), imputed$desc)
 impute = function(data, target, classes = list(), cols = list(), dummy.classes = character(0L),
-  dummy.cols = character(0L), impute.new.levels = TRUE, recode.factor.levels = TRUE) {
+  dummy.cols = character(0L), dummy.type = "factor", impute.new.levels = TRUE, recode.factor.levels = TRUE) {
 
   assertDataFrame(data)
   assertCharacter(target, any.missing = FALSE)
@@ -77,6 +81,7 @@ impute = function(data, target, classes = list(), cols = list(), dummy.classes =
   assertList(cols)
   assertCharacter(dummy.classes, any.missing = FALSE)
   assertCharacter(dummy.cols, any.missing = FALSE)
+  assertChoice(dummy.type, c("factor", "numeric"))
 
   if (length(target)) {
     not.ok = target %nin% names(data)
@@ -118,6 +123,7 @@ impute = function(data, target, classes = list(), cols = list(), dummy.classes =
     lvls = NULL,
     impute = namedList(features),
     dummies = character(0L),
+    dummy.type = dummy.type,
     impute.new.levels = FALSE,
     recode.factor.levels = FALSE
   )
@@ -165,6 +171,7 @@ print.ImputationDesc = function(x, ...) {
   catf("Features: %i; Imputed: %i", length(x$features), length(x$impute))
   catf("impute.new.levels: %s", x$impute.new.levels)
   catf("recode.factor.levels: %s", x$recode.factor.levels)
+  catf("dummy.type: %s", x$dummy.type)
 }
 
 #' Re-impute a data set
@@ -211,8 +218,12 @@ reimpute.data.frame = function(x, desc) {
   # restore dropped columns
   x[setdiff(desc$features, names(x))] = NA
 
-  # calculate dummies, these are boolean T / F masks, where NAs occured in input
-  dummy.cols = lapply(x[desc$dummies], is.na)
+  # calculate dummies, these nums or factors (see option), where NAs occured in input
+  f = if (desc$dummy.type == "numeric")
+    function(x) as.numeric(is.na(x))
+  else
+    function(x) as.factor(is.na(x))
+  dummy.cols = lapply(x[desc$dummies], f)
   names(dummy.cols) = sprintf("%s.dummy", desc$dummies)
 
 
