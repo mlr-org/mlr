@@ -1,4 +1,4 @@
-checkTaskLearner = function(task, learner, weights) {
+checkTaskCreationLearner = function(task, learner, weights) {
   getColNames =  function(task, property){
     .data = getTaskData(task)
     has.it = sapply(.data, function(x) any(property(x)))

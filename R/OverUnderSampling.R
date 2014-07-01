@@ -18,7 +18,7 @@
 #' @family imbalancy
 #' @export
 oversample = function(task, rate) {
-  checkTask2(task, "ClassifTask", binary = TRUE)
+  checkTask(task, "ClassifTask", binary = TRUE)
   assertNumber(rate, lower = 1)
   j = sampleBinaryClass(getTaskTargets(task), rate, cl = "min", minreplace = TRUE, maxreplace = FALSE)
   subsetTask(task, j)
@@ -27,7 +27,7 @@ oversample = function(task, rate) {
   #' @rdname oversample
 #' @export
 undersample = function(task, rate) {
-  checkTask2(task, "ClassifTask", binary = TRUE)
+  checkTask(task, "ClassifTask", binary = TRUE)
   assertNumber(rate, lower = 0, upper = 1)
   j = sampleBinaryClass(getTaskTargets(task), rate, cl = "max", minreplace = FALSE, maxreplace = FALSE)
   subsetTask(task, j)

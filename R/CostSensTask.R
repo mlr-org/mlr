@@ -13,7 +13,7 @@ makeCostSensTask = function(id, data, costs, blocking = NULL, fixup.data = "warn
   if (fixup.data != "no")
     fixupData(task, target, fixup.data)
   if (check.data)
-    checkTask(task, target)
+    checkTaskCreation(task, target)
 
   id = checkOrGuessId(id, data)
   task$task.desc = makeTaskDesc.CostSensTask(task, id, target)
@@ -21,8 +21,8 @@ makeCostSensTask = function(id, data, costs, blocking = NULL, fixup.data = "warn
 }
 
 #' @export
-checkTask.CostSensTask = function(task, target, ...) {
-  NextMethod("checkTask")
+checkTaskCreation.CostSensTask = function(task, target, ...) {
+  NextMethod("checkTaskCreation")
   assert(checkMatrix(task$env$costs, any.missing = FALSE), checkDataFrame(task$env$costs, any.missing = FALSE))
   if (is.data.frame(task$env$costs))
     task$env$costs = as.matrix(task$env$costs)
@@ -41,7 +41,7 @@ checkTask.CostSensTask = function(task, target, ...) {
 
 #' @export
 fixupData.CostSensTask = function(task, target, choice, ...) {
-  # FIXME: move fixes from checkTask here?
+  # FIXME: move fixes from checkTaskCreation here?
   NextMethod("fixupData")
 }
 

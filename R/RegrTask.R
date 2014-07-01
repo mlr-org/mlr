@@ -9,7 +9,7 @@ makeRegrTask = function(id, data, target, weights = NULL, blocking = NULL,
   if (fixup.data != "no")
     fixupData(task, target, fixup.data)
   if (check.data)
-    checkTask(task, target)
+    checkTaskCreation(task, target)
 
   id = checkOrGuessId(id, data)
   task$task.desc = makeTaskDesc.RegrTask(task, id, target)
@@ -17,8 +17,8 @@ makeRegrTask = function(id, data, target, weights = NULL, blocking = NULL,
 }
 
 #' @export
-checkTask.RegrTask = function(task, target, ...) {
-  NextMethod("checkTask")
+checkTaskCreation.RegrTask = function(task, target, ...) {
+  NextMethod("checkTaskCreation")
   assertString(target)
   if (!is.numeric(task$env$data[[target]]))
     stopf("Target column '%s' must be numeric", target)

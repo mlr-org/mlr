@@ -24,7 +24,7 @@
 #' @family imbalancy
 #' @export
 smote = function(task, rate, nn = 5) {
-  checkTask2(task, binary = TRUE)
+  checkTask(task, binary = TRUE)
   assertNumber(rate, lower = 1)
   nn = convertInteger(nn)
   assertCount(nn, positive = TRUE)

@@ -15,15 +15,15 @@ makeSurvTask = function(id, data, target, surv.type = "right", weights = NULL, b
   if (fixup.data != "no")
     fixupData(task, target, fixup.data)
   if (check.data)
-    checkTask(task, target)
+    checkTaskCreation(task, target)
   id = checkOrGuessId(id, data)
   task$task.desc = makeTaskDesc.SurvTask(task, id, target, surv.type)
   return(task)
 }
 
 #' @export
-checkTask.SurvTask = function(task, target, ...) {
-  NextMethod("checkTask")
+checkTaskCreation.SurvTask = function(task, target, ...) {
+  NextMethod("checkTaskCreation")
   assertCharacter(target, len = 2L, any.missing = FALSE)
   ### TODO: more checks here
 }

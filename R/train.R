@@ -55,7 +55,7 @@ train = function(learner, task, subset, weights = NULL) {
     weights = task$weights
   }
 
-  checkTaskLearner(task, learner, weights)
+  checkTaskCreationLearner(task, learner, weights)
   pars$.weights = weights
 
   # only pass train hyper pars as basic rlearner in ...

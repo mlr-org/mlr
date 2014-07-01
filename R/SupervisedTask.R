@@ -92,7 +92,7 @@ makeSupervisedTask = function(type, data, target, weights = NULL, blocking = NUL
 #FIXME: it would probably be better to have: pre-check, fixup, post-check!
 
 #' @export
-checkTask.SupervisedTask = function(task, target, ...) {
+checkTaskCreation.SupervisedTask = function(task, target, ...) {
   checkColumnNames(task$env$data, 'data')
   if (!is.null(task$env$weights))
     assertNumeric(weights, len = nrow(task$env$data), any.missing = FALSE, lower = 0)
