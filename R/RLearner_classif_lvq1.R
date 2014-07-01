@@ -5,7 +5,7 @@ makeRLearner.classif.lvq1 = function() {
     cl = "classif.lvq1",
     package = "class",
     par.set = makeParamSet(),
-    properties = c("twoclass", "multiclass", "numerics", "factors")
+    properties = c("twoclass", "multiclass", "numerics")
   )
 }
 

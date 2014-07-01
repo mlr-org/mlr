@@ -9,7 +9,8 @@ makeRLearner.classif.knn = function() {
       makeLogicalLearnerParam(id = "use.all", default = TRUE)
     ),
     # knn cannot really return probs, only for the winning class (yeah well done BR)
-    properties = c("twoclass", "multiclass", "numerics", "factors")
+    # knn also cannot handle factors in features apparantly
+    properties = c("twoclass", "multiclass", "numerics")
   )
 }
 
