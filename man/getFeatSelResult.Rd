@@ -11,6 +11,7 @@ Trained Model created with \code{\link{makeFeatSelWrapper}} or benchmark result 
 }
 \value{
 [\code{\link{FeatSelResult}} or list of \code{\link{FeatSelResult}}s].
+  \code{NULL}, if no feature selection was performed.
 }
 \description{
 Returns the selected feature set and optimization path after training or benchmarking.

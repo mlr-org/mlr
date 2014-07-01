@@ -11,6 +11,7 @@ Trained Model created with \code{\link{makeTuneWrapper}} or benchmark result cre
 }
 \value{
 [\code{\link{TuneResult}} or list of \code{\link{TuneResult}}s].
+  \code{NULL}, if no tuning was performed.
 }
 \description{
 Returns the optimal hyperparameters and optimization path after training or benchmarking.
