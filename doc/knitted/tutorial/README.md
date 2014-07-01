@@ -1,6 +1,36 @@
 Tutorial
 ========
 
+Quick start
+-----------
+
+A simple stratified cross-validation of the *linear discriminant analysis* with **mlr**.
+
+```splus
+library(mlr)
+data(iris)
+# Define the Task:
+tsk = makeClassifTask(id = "tutorial", data = iris, target = "Species")
+# Define the Learner:
+lrn = makeLearner("classif.lda")
+# Define the Resampling Strategy:
+rsm = makeResampleDesc(method = "CV", stratify = TRUE)
+# Do the resampling:
+res = resample(learner = lrn, task = tsk, resampling = rsm, show.info = FALSE)
+# Get the mean misclassification error:
+res$aggr
+```
+
+```
+## mmce.test.mean 
+##           0.02
+```
+
+Datails for each step can be found in the following tutorial chapters.
+
+Content
+-------
+
 1. [Learning tasks](task.md)
 2. [Learners](learner.md)
 3. [Training a learner](train.md)

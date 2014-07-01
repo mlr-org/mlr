@@ -33,8 +33,7 @@ The first argument defines the underlying algorithm from R.
 The naming conventions are ``classif.<R_method_name>`` for
 classification methods and ``regr.<R_method_name>`` for regression methods.
 The names of all learning methods are listed on the [learners](http://berndbischl.github.io/mlr/man/learners.html) help page.
-The tables in [IntegratedLearners](../integrated_learners.md) provide a survey about these properties for
-all integrated learning methods.
+The tables in [IntegratedLearners](../integrated_learners.md) provide a survey about these properties for all integrated learning methods.
 
 Further information
 -------------------
@@ -55,14 +54,9 @@ lrn
 ## Learner classif.rpart from package rpart
 ## Type: classif
 ## Class: classif.rpart
+## Properties: twoclass,multiclass,missings,numerics,factors,prob,weights
 ## Predict-Type: prob
 ## Hyperparameters: xval=0,minsplit=20
-## 
-## Supported features Numerics:TRUE Factors:TRUE
-## Supports missings: TRUE
-## Supports weights: TRUE
-## Supports classes: two,multi
-## Supports probabilities: TRUE
 ```
 
 ```splus
@@ -71,26 +65,17 @@ lrn$par.set
 ```
 
 ```
-## Int param 'minsplit'. Constr: 1 to Inf. Trafo: FALSE. Requires: FALSE
-## Used: train. Default: 20.
-## Int param 'minbucket'. Constr: 1 to Inf. Trafo: FALSE. Requires: FALSE
-## Used: train. Default: <none>.
-## Num param 'cp'. Constr: 0 to 1. Trafo: FALSE. Requires: FALSE
-## Used: train. Default: 0.01.
-## Int param 'maxcompete'. Constr: 0 to Inf. Trafo: FALSE. Requires: FALSE
-## Used: train. Default: 4.
-## Int param 'maxsurrogate'. Constr: 0 to Inf. Trafo: FALSE. Requires: FALSE
-## Used: train. Default: 5.
-## Disc param 'usesurrogate'. Vals: 0,1,2. Trafo: FALSE. Requires: FALSE
-## Used: train. Default: 2.
-## Disc param 'surrogatestyle'. Vals: 0,1. Trafo: FALSE. Requires: FALSE
-## Used: train. Default: 0.
-## Int param 'maxdepth'. Constr: 1 to 30. Trafo: FALSE. Requires: FALSE
-## Used: train. Default: 30.
-## Int param 'xval'. Constr: 0 to Inf. Trafo: FALSE. Requires: FALSE
-## Used: train. Default: 10.
-## Untyped param 'parms'. Trafo: FALSE. Requires: FALSE
-## Used: train. Default: <none>.
+##                    Type len  Def   Constr Req Trafo
+## minsplit        integer   -   20 1 to Inf   -     -
+## minbucket       integer   -    - 1 to Inf   -     -
+## cp              numeric   - 0.01   0 to 1   -     -
+## maxcompete      integer   -    4 0 to Inf   -     -
+## maxsurrogate    integer   -    5 0 to Inf   -     -
+## usesurrogate   discrete   -    2    0,1,2   -     -
+## surrogatestyle discrete   -    0      0,1   -     -
+## maxdepth        integer   -   30  1 to 30   -     -
+## xval            integer   -   10 0 to Inf   -     -
+## parms           untyped   -    -        -   -     -
 ```
 
 

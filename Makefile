@@ -25,5 +25,7 @@ tutorial:
 	# splus looks nicer
 	sed $(SED_OPTION) s/\`\`\`r/\`\`\`splus/ doc/knitted/*.md
 	sed $(SED_OPTION) s/\`\`\`r/\`\`\`splus/ doc/knitted/tutorial/*.md
+	# delete crap
+	${DELETE} doc/temp
 
 

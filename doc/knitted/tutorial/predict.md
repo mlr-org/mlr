@@ -1,9 +1,8 @@
 Predicting Outcomes for New Data
 ================================
 
-This section is pretty straightforward and - as you might have guessed
-- deals with predicting target values for new observations. It is
-implemented the same way as most of the other predict methods in R, i.e. just 
+Predicting the target values for new observations is
+implemented the same way as most of the other predict methods in *R*, i.e. just 
 call [predict](http://berndbischl.github.io/mlr/man/predict.WrappedModel.html) on the object returned by [train](http://berndbischl.github.io/mlr/man/train.html) and pass the data to be predicted.
 
 
@@ -31,9 +30,13 @@ pred
 ## predict.type: response
 ## threshold: 
 ## time: 0.00
-## 'data.frame':	150 obs. of  2 variables:
-##  $ truth   : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ response: Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
+##    truth response
+## 1 setosa   setosa
+## 2 setosa   setosa
+## 3 setosa   setosa
+## 4 setosa   setosa
+## 5 setosa   setosa
+## 6 setosa   setosa
 ```
 
 
@@ -60,9 +63,13 @@ predict(mod, newdata = BostonHousing)
 ## predict.type: response
 ## threshold: 
 ## time: 0.00
-## 'data.frame':	506 obs. of  2 variables:
-##  $ truth   : num  24 21.6 34.7 33.4 36.2 28.7 22.9 27.1 16.5 18.9 ...
-##  $ response: num  30 25 30.6 28.6 27.9 ...
+##   truth response
+## 1  24.0    30.00
+## 2  21.6    25.03
+## 3  34.7    30.57
+## 4  33.4    28.61
+## 5  36.2    27.94
+## 6  28.7    25.26
 ```
 
 
@@ -90,7 +97,7 @@ the predict type, which was set when generating the [Learner](http://berndbischl
 class labels are predicted.
 
 We start again by loading **mlr** and creating a classification task for the 
-iris dataset. We select two subsets of the data. We train a decision tree on the
+iris data set. We select two subsets of the data. We train a decision tree on the
 first one and [predict](http://berndbischl.github.io/mlr/man/predict.WrappedModel.html) the class labels on the test set.
 
 
@@ -112,11 +119,11 @@ test.set = seq(from = 2, to = nrow(iris), by = 2)
 mod = train(lrn, task, subset = training.set)
 
 # Finally, to predict the outcome on new values, we use the predict method:
-pred = predict(mod, newdata = iris[test.set, ])
+pred = predict(mod, newdata = iris, subset = test.set)
 ```
 
 
-A data frame that contains the true and predicted class labels can be accessed via
+A `data.frame` that contains the true and predicted class labels can be accessed via
 
 
 ```splus
@@ -134,7 +141,7 @@ head(pred$data)
 ```
 
 
-Alternatively, we can also predict directly from a task:
+Alternatively, we can also predict directly from a `task`:
 
 
 ```splus
@@ -153,8 +160,8 @@ head(as.data.frame(pred))
 ```
 
 
-When predicting from a task, the resulting data frame contains an additional column, 
-called ID, which tells us for which element in the original data set the prediction 
+When predicting from a `task`, the resulting `data.frame` contains an additional column, 
+called *ID*, which tells us for which element in the original data set the prediction 
 is done. 
 (In the iris example the IDs and the rownames coincide.)
 
@@ -165,7 +172,7 @@ of the learner.
 ```splus
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 mod = train(lrn, task)
-pred = predict(mod, newdata = iris[test.set, ])
+pred = predict(mod, newdata = iris, subset = test.set)
 head(pred$data)
 ```
 
@@ -210,10 +217,9 @@ we can specify a positive class when generating the task. Moreover, we can set t
 threshold value that is used to assign class labels based on the predicted 
 posteriors.
 
-To illustrate binary classification we use the Sonar dataset from the
-[mlbench](http://cran.r-project.org/web/packages/mlbench/index.html) package. Again, we create a classification task and a learner, which 
-predicts probabilities, train the learner and then predict the class labels.
-
+To illustrate binary classification we use the Sonar data set from the
+[mlbench](http://cran.r-project.org/web/packages/mlbench/index.html) package. 
+Again, we create a classification task and a learner, which predicts probabilities, train the learner and then predict the class labels.
 
 
 ```splus
@@ -288,19 +294,18 @@ test.set = seq(from = 2, to = nrow(BostonHousing), by = 2)
 lrn = makeLearner("regr.gbm", n.trees = 100)
 mod = train(lrn, task, subset = training.set)
 
-pred = predict(mod, newdata = BostonHousing[test.set, ])
+pred = predict(mod, newdata = BostonHousing, subset = test.set)
 
 head(pred$data)
 ```
 
 ```
 ##   truth response
-## 1  21.6    22.25
-## 2  33.4    23.25
-## 3  28.7    22.35
-## 4  27.1    22.14
-## 5  18.9    22.14
-## 6  18.9    22.14
+## 1  21.6    22.23
+## 2  33.4    23.18
+## 3  28.7    22.33
+## 4  27.1    22.15
+## 5  18.9    22.15
+## 6  18.9    22.15
 ```
-
 

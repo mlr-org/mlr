@@ -69,7 +69,7 @@ trainLearner.classif.lda = function(.learner, .task, .subset, .weights,  ...) {
 Creating the prediction method 
 ------------------------------
 
-This must predict all the new observations in the data frame ``.newdata`` with the wrapped model ``.model.`` 
+This must predict all the new observations in the `data.frame` ``.newdata`` with the wrapped model ``.model.`` 
 Simply access the real fitted model by ``.model$learner.model``. For regression: you have to return a 
 numeric vector of predicted response values. For classification: you have to return a factor of predicted
 classes if ``.learner$predict.type`` is ``"response"``, or you have return a matrix of predicted probabilities if

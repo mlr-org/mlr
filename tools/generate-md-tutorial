@@ -13,7 +13,7 @@ figure_dir = "figs"
 KnitPost = function(input, destination) {
     require(knitr)
     this_wd = getwd()
-    dir.create(dirname(destination))
+    dir.create(dirname(destination), showWarnings = FALSE)
     setwd(dirname(destination))
     fig.path = paste0(figure_dir,"/", sub(".Rmd$", "", basename(input)), "/")
     opts_chunk$set(fig.path = fig.path)

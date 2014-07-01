@@ -25,24 +25,34 @@ table(data$class)
 
 ```splus
 data.over = oversample(data, "class", rate = 4)
+```
+
+```
+## Error: unbenutztes Argument ("class")
+```
+
+```splus
 table(data.over$class)
 ```
 
 ```
-## 
-##  A  B 
-## 80 80
+## Error: Objekt 'data.over' nicht gefunden
 ```
 
 ```splus
 data.under = undersample(data, "class", rate = 1/4)
+```
+
+```
+## Error: unbenutztes Argument ("class")
+```
+
+```splus
 table(data.under$class)
 ```
 
 ```
-## 
-##  A  B 
-## 20 20
+## Error: Objekt 'data.under' nicht gefunden
 ```
 
 
@@ -75,7 +85,7 @@ performance(predict(mod.over, newdata = data.even), measures = mmce)
 
 ```
 ## mmce 
-## 0.37
+## 0.38
 ```
 
 ```splus
@@ -84,7 +94,7 @@ performance(predict(mod.under, newdata = data.even), measures = mmce)
 
 ```
 ## mmce 
-## 0.37
+## 0.38
 ```
 
 
@@ -114,7 +124,7 @@ performance(predict(mod.over, newdata = data.even), measures = mmce)
 
 ```
 ## mmce 
-## 0.37
+## 0.27
 ```
 
 ```splus
@@ -123,6 +133,6 @@ performance(predict(mod.under, newdata = data.even), measures = mmce)
 
 ```
 ## mmce 
-##  0.5
+## 0.33
 ```
 

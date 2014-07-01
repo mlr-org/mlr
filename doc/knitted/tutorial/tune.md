@@ -77,35 +77,36 @@ r = tuneParams(makeLearner("classif.ksvm"), task = task, resampling = rdesc,
 
 ```
 ## [Tune] Started tuning learner classif.ksvm for parameter set:
-## Disc param 'C'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
-## Disc param 'sigma'. Vals: 0.25,0.5,1,2,4. Trafo: FALSE. Requires: FALSE
+##           Type len Def         Constr Req Trafo
+## C     discrete   -   - 0.25,0.5,1,2,4   -     -
+## sigma discrete   -   - 0.25,0.5,1,2,4   -     -
 ## With control class: TuneControlGrid
-## [Tune] 1: C=0.25; sigma=0.25 : mmce.test.mean=0.0533,mmce.test.sd=0.0416
-## [Tune] 1: C=0.5; sigma=0.25 : mmce.test.mean=0.0533,mmce.test.sd=0.0416
-## [Tune] 1: C=1; sigma=0.25 : mmce.test.mean=0.0333,mmce.test.sd=0.0231
-## [Tune] 1: C=2; sigma=0.25 : mmce.test.mean=0.0467,mmce.test.sd=0.0462
-## [Tune] 1: C=4; sigma=0.25 : mmce.test.mean=0.0467,mmce.test.sd=0.0462
-## [Tune] 1: C=0.25; sigma=0.5 : mmce.test.mean=0.0533,mmce.test.sd=0.0306
-## [Tune] 1: C=0.5; sigma=0.5 : mmce.test.mean=0.04,mmce.test.sd=0.02
-## [Tune] 1: C=1; sigma=0.5 : mmce.test.mean=0.04,mmce.test.sd=0.0346
-## [Tune] 1: C=2; sigma=0.5 : mmce.test.mean=0.0467,mmce.test.sd=0.0462
-## [Tune] 1: C=4; sigma=0.5 : mmce.test.mean=0.0467,mmce.test.sd=0.0462
-## [Tune] 1: C=0.25; sigma=1 : mmce.test.mean=0.06,mmce.test.sd=0.04
-## [Tune] 1: C=0.5; sigma=1 : mmce.test.mean=0.04,mmce.test.sd=0.02
-## [Tune] 1: C=1; sigma=1 : mmce.test.mean=0.0533,mmce.test.sd=0.0416
-## [Tune] 1: C=2; sigma=1 : mmce.test.mean=0.0467,mmce.test.sd=0.0306
-## [Tune] 1: C=4; sigma=1 : mmce.test.mean=0.0533,mmce.test.sd=0.0231
-## [Tune] 1: C=0.25; sigma=2 : mmce.test.mean=0.0733,mmce.test.sd=0.0231
-## [Tune] 1: C=0.5; sigma=2 : mmce.test.mean=0.06,mmce.test.sd=0.04
-## [Tune] 1: C=1; sigma=2 : mmce.test.mean=0.0533,mmce.test.sd=0.0306
-## [Tune] 1: C=2; sigma=2 : mmce.test.mean=0.06,mmce.test.sd=0.02
-## [Tune] 1: C=4; sigma=2 : mmce.test.mean=0.0667,mmce.test.sd=0.0115
-## [Tune] 1: C=0.25; sigma=4 : mmce.test.mean=0.113,mmce.test.sd=0.0306
-## [Tune] 1: C=0.5; sigma=4 : mmce.test.mean=0.08,mmce.test.sd=0.02
-## [Tune] 1: C=1; sigma=4 : mmce.test.mean=0.0533,mmce.test.sd=0.0231
-## [Tune] 1: C=2; sigma=4 : mmce.test.mean=0.06,mmce.test.sd=0.02
-## [Tune] 1: C=4; sigma=4 : mmce.test.mean=0.06,mmce.test.sd=0.02
-## [Tune] Result: C=1; sigma=0.25 : mmce.test.mean=0.0333,mmce.test.sd=0.0231
+## [Tune] 1: C=0.25; sigma=0.25 : mmce.test.mean=0.0533,mmce.test.sd=0.0503
+## [Tune] 2: C=0.5; sigma=0.25 : mmce.test.mean=0.06,mmce.test.sd=0.04
+## [Tune] 3: C=1; sigma=0.25 : mmce.test.mean=0.0333,mmce.test.sd=0.0115
+## [Tune] 4: C=2; sigma=0.25 : mmce.test.mean=0.0467,mmce.test.sd=0.0231
+## [Tune] 5: C=4; sigma=0.25 : mmce.test.mean=0.04,mmce.test.sd=0.02
+## [Tune] 6: C=0.25; sigma=0.5 : mmce.test.mean=0.0667,mmce.test.sd=0.0306
+## [Tune] 7: C=0.5; sigma=0.5 : mmce.test.mean=0.06,mmce.test.sd=0.02
+## [Tune] 8: C=1; sigma=0.5 : mmce.test.mean=0.0467,mmce.test.sd=0.0115
+## [Tune] 9: C=2; sigma=0.5 : mmce.test.mean=0.04,mmce.test.sd=0.02
+## [Tune] 10: C=4; sigma=0.5 : mmce.test.mean=0.04,mmce.test.sd=0.02
+## [Tune] 11: C=0.25; sigma=1 : mmce.test.mean=0.0867,mmce.test.sd=0.0231
+## [Tune] 12: C=0.5; sigma=1 : mmce.test.mean=0.0667,mmce.test.sd=0.0115
+## [Tune] 13: C=1; sigma=1 : mmce.test.mean=0.06,mmce.test.sd=0.02
+## [Tune] 14: C=2; sigma=1 : mmce.test.mean=0.06,mmce.test.sd=0.02
+## [Tune] 15: C=4; sigma=1 : mmce.test.mean=0.0733,mmce.test.sd=0.0231
+## [Tune] 16: C=0.25; sigma=2 : mmce.test.mean= 0.1,mmce.test.sd=0.0346
+## [Tune] 17: C=0.5; sigma=2 : mmce.test.mean=0.0867,mmce.test.sd=0.0306
+## [Tune] 18: C=1; sigma=2 : mmce.test.mean=0.08,mmce.test.sd=0.0346
+## [Tune] 19: C=2; sigma=2 : mmce.test.mean=0.08,mmce.test.sd=0.0346
+## [Tune] 20: C=4; sigma=2 : mmce.test.mean=0.08,mmce.test.sd=0.0346
+## [Tune] 21: C=0.25; sigma=4 : mmce.test.mean=0.16,mmce.test.sd=0.06
+## [Tune] 22: C=0.5; sigma=4 : mmce.test.mean=0.107,mmce.test.sd=0.0503
+## [Tune] 23: C=1; sigma=4 : mmce.test.mean=0.0933,mmce.test.sd=0.0611
+## [Tune] 24: C=2; sigma=4 : mmce.test.mean=0.0933,mmce.test.sd=0.0611
+## [Tune] 25: C=4; sigma=4 : mmce.test.mean= 0.1,mmce.test.sd=0.0529
+## [Tune] Result: C=1; sigma=0.25 : mmce.test.mean=0.0333,mmce.test.sd=0.0115
 ```
 
 
@@ -119,12 +120,12 @@ head((opt.grid = as.data.frame(r$opt.path)))
 
 ```
 ##      C sigma mmce.test.mean mmce.test.sd dob eol
-## 1 0.25  0.25        0.05333      0.04163   1   1
-## 2  0.5  0.25        0.05333      0.04163   1   1
-## 3    1  0.25        0.03333      0.02309   1   1
-## 4    2  0.25        0.04667      0.04619   1   1
-## 5    4  0.25        0.04667      0.04619   1   1
-## 6 0.25   0.5        0.05333      0.03055   1   1
+## 1 0.25  0.25        0.05333      0.05033   1  NA
+## 2  0.5  0.25        0.06000      0.04000   2  NA
+## 3    1  0.25        0.03333      0.01155   3  NA
+## 4    2  0.25        0.04667      0.02309   4  NA
+## 5    4  0.25        0.04000      0.02000   5  NA
+## 6 0.25   0.5        0.06667      0.03055   6  NA
 ```
 
 ```splus
@@ -197,28 +198,28 @@ r$extract
 ```
 ## [[1]]
 ## Tune result:
-## Op. pars: C=2; sigma=0.25
-## mmce.test.mean=0.025
+## Op. pars: C=0.25; sigma=0.25
+## mmce.test.mean=0.0417
 ## 
 ## [[2]]
 ## Tune result:
-## Op. pars: C=2; sigma=0.25
-## mmce.test.mean=0.025
+## Op. pars: C=1; sigma=0.25
+## mmce.test.mean=0.0167
 ## 
 ## [[3]]
 ## Tune result:
-## Op. pars: C=2; sigma=0.25
-## mmce.test.mean=0.0333
+## Op. pars: C=0.25; sigma=0.25
+## mmce.test.mean=0.05
 ## 
 ## [[4]]
 ## Tune result:
-## Op. pars: C=2; sigma=0.25
+## Op. pars: C=0.5; sigma=0.25
 ## mmce.test.mean=0.0333
 ## 
 ## [[5]]
 ## Tune result:
-## Op. pars: C=1; sigma=0.25
-## mmce.test.mean=0.0333
+## Op. pars: C=2; sigma=0.25
+## mmce.test.mean=0.0417
 ```
 
 
@@ -238,10 +239,10 @@ r$measures.test
 ```
 ##   iter    mmce
 ## 1    1 0.00000
-## 2    2 0.03333
-## 3    3 0.06667
-## 4    4 0.00000
-## 5    5 0.06667
+## 2    2 0.10000
+## 3    3 0.00000
+## 4    4 0.03333
+## 5    5 0.03333
 ```
 
 ```splus

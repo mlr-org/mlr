@@ -11,10 +11,9 @@ It is also possible to access the time to train the model,
 the time to compute the prediction and their sum as performance
 measures.
 
-To see which performance measures are implemented, have a look at [measures](http://berndbischl.github.io/mlr/man/measures.html). If you want 
-to implement an additional measure or include a measure with non-standard 
-misclassification costs, go to the section [create_measure](create_measure.md). In order to calculate 
-the performance measures, the function [performance](http://berndbischl.github.io/mlr/man/performance.html) is used.
+To see which performance measures are implemented, have a look at [measures](http://berndbischl.github.io/mlr/man/measures.html). 
+If you want to implement an additional measure or include a measure with non-standard misclassification costs, go to the section [create_measure](create_measure.md). 
+In order to calculate the performance measures, the function [performance](http://berndbischl.github.io/mlr/man/performance.html) is used.
 
 
 Classification example
@@ -61,7 +60,7 @@ performance(pred = pred, measures = timepredict)
 
 ```
 ## timepredict 
-##       0.005
+##       0.004
 ```
 
 ```splus
@@ -71,7 +70,7 @@ performance(pred = pred, measures = timetrain, model = mod)
 
 ```
 ## timetrain 
-##     0.008
+##     0.011
 ```
 
 ```splus
@@ -80,12 +79,11 @@ performance(pred = pred, measures = timeboth, model = mod)
 
 ```
 ## timeboth 
-##    0.013
+##    0.015
 ```
 
 
-Of course we can also calculate multiple performance measures at once simply by unsing a list of meassures which
-can also include [your own measure](create_measure.md).
+Of course we can also calculate multiple performance measures at once simply by using a list of measures which can also include [your own measure](create_measure.md).
 
 
 ```splus
@@ -95,9 +93,9 @@ performance(pred = pred, measures = ms, model = mod)
 
 ```
 ##           mmce.mmce             acc.acc timetrain.timetrain 
-##               0.040               0.960               0.008 
+##               0.040               0.960               0.011 
 ##   timeboth.timeboth 
-##               0.013
+##               0.015
 ```
 
 
@@ -117,32 +115,13 @@ lrn = makeLearner("classif.rpart")
 mod = train(lrn, task = task)
 pred = predict(mod, task = task)
 
-performance(pred, measures = acc)
+performance(pred, measures = list(acc, fpr, fnr))
 ```
 
 ```
-##   acc 
-## 0.875
+##    acc    fpr    fnr 
+## 0.8750 0.1031 0.1441
 ```
-
-```splus
-performance(pred, measures = fpr)
-```
-
-```
-##    fpr 
-## 0.1031
-```
-
-```splus
-performance(pred, measures = fnr)
-```
-
-```
-##    fnr 
-## 0.1441
-```
-
 
 
 Note that, in order to calculate the AUC, the area under the ROC (receiver 
@@ -209,7 +188,7 @@ sapply(ms, function(meas) performance(pred, measures = meas))
 
 ```
 ## mse.mse mae.mae 
-##   42.78    4.55
+##  42.907   4.558
 ```
 
 

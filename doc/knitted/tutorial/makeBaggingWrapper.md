@@ -26,6 +26,13 @@ library(mlbench)  #for the datasets
 data(Sonar)
 tsk = makeClassifTask(data = Sonar, target = "Class")
 lrn = makeLearner("classif.PART")
+```
+
+```
+## Loading required package: RWeka
+```
+
+```splus
 rsmpl = makeResampleDesc("CV", iters = 10)
 bagLrn = makeBaggingWrapper(lrn, bag.iters = 50, bag.replace = TRUE, bag.size = 0.8, 
     bag.feats = 3/4, predict.type = "prob")
@@ -73,6 +80,15 @@ train.inds = seq(1, 506, 3)
 test.inds = setdiff(1:nrow(BostonHousing), train.inds)
 task = makeRegrTask("regrtask", data = BostonHousing, target = "medv")
 lrn = makeLearner("regr.randomForest")
+```
+
+```
+## Loading required package: randomForest
+## randomForest 4.6-7
+## Type rfNews() to see new features/changes/bug fixes.
+```
+
+```splus
 bagLrn = makeBaggingWrapper(lrn, predict.type = "se")
 mod = train(learner = bagLrn, task = task, subset = train.inds)
 pred = predict(mod, newdata = BostonHousing, subset = test.inds)
