@@ -80,6 +80,8 @@ test_that("parallel exporting of options works", {
     r = resample(lrn, task, rdesc)
   }
   doit("socket", as.character(NA))
+  # make sure
+  configureMlr(on.learner.error = "stop")
 })
 
 }
