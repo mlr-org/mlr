@@ -5,6 +5,7 @@
 evalOptimizationState = function(learner, task, resampling, measures, par.set, bits.to.features, control,
   opt.path, show.info, dob, state, remove.nas) {
 
+  setSlaveOptions()
   y = setNames(rep(NA_real_, length(measures)), sapply(measures, measureAggrName))
   errmsg = NA_character_
   exec.time = NA_real_
@@ -54,7 +55,7 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
   if (length(eols) == 1L)
     eols = rep(eols, n)
   parallelLibrary("mlr", master = FALSE, level = level, show.info = FALSE)
-  exportMlrOptions()
+  exportMlrOptions(level = level)
   res.list = parallelMap(evalOptimizationState, dobs, states, level = level,
     more.args = list(learner = learner, task = task, resampling = resampling,
       measures = measures, par.set = par.set, bits.to.features = bits.to.features,

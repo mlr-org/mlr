@@ -70,7 +70,7 @@ benchmark = function(learners, tasks, resamplings, measures, show.info = getMlrO
 
   plevel = "mlr.benchmark"
   parallelLibrary("mlr", master = FALSE, level = plevel, show.info = FALSE)
-  exportMlrOptions()
+  exportMlrOptions(level = "mlr.benchmark")
   results = parallelMap(
     benchmarkParallel,
     split(as.matrix(inds), f = seq_row(inds)),
@@ -100,6 +100,7 @@ benchmark = function(learners, tasks, resamplings, measures, show.info = getMlrO
 NULL
 
 benchmarkParallel = function(index, learners, tasks, resamplings, measures, show.info) {
+  setSlaveOptions()
   ind.task = index[[1L]]
   ind.learner = index[[2L]]
   if (show.info)
