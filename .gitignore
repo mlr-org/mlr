@@ -4,5 +4,6 @@ mlr_*.tar.gz
 *.Rproj
 .Rhistory
 staticdocs
-
+src/*.so
+src/*.o
 .RData
