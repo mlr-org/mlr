@@ -57,9 +57,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
   if (missing(subset)) {
     subset = seq_len(size)
   } else {
-    subset = convertIntegers(subset)
-    # FIXME: min.len, lower, upper
-    assertInteger(subset, any.missing = FALSE)
+    subset = asInteger(subset, min.len = 1L, any.missing = FALSE, lower = 1L, upper = size)
   }
   if (missing(newdata)) {
     newdata = getTaskData(task, subset)

@@ -3,27 +3,27 @@
 \alias{makeBaggingWrapper}
 \title{Fuse learner with the bagging technique.}
 \usage{
-makeBaggingWrapper(learner, bag.iters = 10L, bag.replace = TRUE, bag.size,
-  bag.feats = 1)
+makeBaggingWrapper(learner, bw.iters = 10L, bw.replace = TRUE, bw.size,
+  bw.feats = 1)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
 The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
-\item{bag.iters}{[\code{integer(1)}]\cr
+\item{bw.iters}{[\code{integer(1)}]\cr
 Iterations = number of fitted models in bagging.
 Default is 10.}
 
-\item{bag.replace}{[\code{logical(1)}]\cr
+\item{bw.replace}{[\code{logical(1)}]\cr
 Sample bags with replacement (bootstrapping)?
 Default is TRUE.}
 
-\item{bag.size}{[\code{numeric(1)}]\cr
+\item{bw.size}{[\code{numeric(1)}]\cr
 Percentage size of sampled bags.
 Default is 1 for bootstrapping and 0.632 for subsampling.}
 
-\item{bag.feats}{[\code{numeric(1)}]\cr
+\item{bw.feats}{[\code{numeric(1)}]\cr
 Percentage size of randomly selected features in bags.
 Default is 1.}
 }

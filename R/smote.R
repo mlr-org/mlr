@@ -24,11 +24,10 @@
 #' @family imbalancy
 #' @export
 #' @useDynLib mlr c_smote
-smote = function(task, rate, nn = 5) {
+smote = function(task, rate, nn = 5L) {
   checkTask(task, binary = TRUE)
   assertNumber(rate, lower = 1)
-  nn = convertInteger(nn)
-  assertCount(nn, positive = TRUE)
+  nn = asInt(nn, lower = 1L)
 
   requirePackages("cluster", why = "smote")
   # check for changeData later

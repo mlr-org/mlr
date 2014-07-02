@@ -19,9 +19,9 @@ test_that("predict.type gets propagated", {
 
 test_that("predict.type works with BaggingWrapper, special case", {
   lrn1 = makeLearner("classif.rpart", predict.type = "prob")
-  expect_error(makeBaggingWrapper(lrn1, bag.iters = 3), "response")
+  expect_error(makeBaggingWrapper(lrn1, bw.iters = 3), "response")
   lrn1 = makeLearner("classif.rpart")
-  lrn2 = makeBaggingWrapper(lrn1, bag.iters = 3)
+  lrn2 = makeBaggingWrapper(lrn1, bw.iters = 3)
   expect_equal(lrn2$predict.type, "response")
   lrn2 = setPredictType(lrn2, "prob")
   expect_equal(lrn2$predict.type, "prob")

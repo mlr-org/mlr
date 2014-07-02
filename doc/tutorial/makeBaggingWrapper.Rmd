@@ -14,9 +14,9 @@ Here is how you do it:
 Like in a *Random Forrests* we need a Learner which is trained on each *Bagging* iteration with a subsample of the training dataset.
 The subsamples are choosen according to the following parameters used in `makeBaggingWrapper()`:
 * `bag.iters` On how many subsamples do we want to train our learner?
-* `bag.replace` Sample bags with replacement? (Also known as *bootstrapping*)
-* `bag.size` Percentage size of the sampled bags. (*Note: When `bag.replace=TRUE`, `bag.size=1` is default which does not mean, that one bag contains all the observations as observations will occur multiple times in each bag*)
-* `bag.feats` Percentage size of randomy selected features for each iteration. 
+* `bw.replace` Sample bags with replacement? (Also known as *bootstrapping*)
+* `bw.size` Percentage size of the sampled bags. (*Note: When `bw.replace=TRUE`, `bag.size=1` is default which does not mean, that one bag contains all the observations as observations will occur multiple times in each bag*)
+* `bw.feats` Percentage size of randomy selected features for each iteration. 
 
 Of course we also need a `learner` which we have to pass to `makeBaggingWrapper()`.
 
@@ -27,7 +27,7 @@ data(Sonar)
 tsk = makeClassifTask(data=Sonar, target="Class")
 lrn = makeLearner("classif.PART")
 rsmpl = makeResampleDesc("CV", iters=10)
-bagLrn = makeBaggingWrapper(lrn, bag.iters=50, bag.replace=TRUE, bag.size=0.8, bag.feats=3/4, predict.type="prob")
+bagLrn = makeBaggingWrapper(lrn, bag.iters=50, bw.replace=TRUE, bw.size=0.8, bw.feats=3/4, predict.type="prob")
 ```
 No as we have set up everything we are curious how good the bagging performs.
 First let's try it without bagging:

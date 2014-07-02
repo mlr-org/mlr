@@ -25,44 +25,43 @@
 #' down to the inner learner.
 #'
 #' @template arg_learner
-#' @param bag.iters [\code{integer(1)}]\cr
+#' @param bw.iters [\code{integer(1)}]\cr
 #'   Iterations = number of fitted models in bagging.
 #'   Default is 10.
-#' @param bag.replace [\code{logical(1)}]\cr
+#' @param bw.replace [\code{logical(1)}]\cr
 #'   Sample bags with replacement (bootstrapping)?
 #'   Default is TRUE.
-#' @param bag.size [\code{numeric(1)}]\cr
+#' @param bw.size [\code{numeric(1)}]\cr
 #'   Percentage size of sampled bags.
 #'   Default is 1 for bootstrapping and 0.632 for subsampling.
-#' @param bag.feats [\code{numeric(1)}]\cr
+#' @param bw.feats [\code{numeric(1)}]\cr
 #'   Percentage size of randomly selected features in bags.
 #'   Default is 1.
 #' @template ret_learner
 #' @export
-makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.size, bag.feats = 1) {
+makeBaggingWrapper = function(learner, bw.iters = 10L, bw.replace = TRUE, bw.size, bw.feats = 1) {
 
   learner = checkLearner(learner)
-  bag.iters = convertInteger(bag.iters)
-  assertCount(bag.iters, positive = TRUE)
-  assertFlag(bag.replace)
-  if (missing(bag.size)) {
-    bag.size = if (bag.replace) 1 else 0.632
+  bw.iters = asInt(bw.iters, lower = 1L)
+  assertFlag(bw.replace)
+  if (missing(bw.size)) {
+    bw.size = if (bw.replace) 1 else 0.632
   } else {
-    assertNumber(bag.size, lower = 0, upper = 1)
+    assertNumber(bw.size, lower = 0, upper = 1)
   }
-  assertNumber(bag.feats, lower = 0, upper = 1)
+  assertNumber(bw.feats, lower = 0, upper = 1)
   if (learner$predict.type != "response")
     stop("Predict type of the basic learner must be 'response'.")
   id = paste(learner$id, "bagged", sep = ".")
   packs = learner$package
   ps = makeParamSet(
-    makeIntegerLearnerParam(id = "bag.iters", lower = 1L, default = 10L),
-    makeLogicalLearnerParam(id = "bag.replace", default = TRUE),
-    makeNumericLearnerParam(id = "bag.size", lower = 0, upper = 1),
-    makeNumericLearnerParam(id = "bag.feats", lower = 0, upper = 1, default = 2/3)
+    makeIntegerLearnerParam(id = "bw.iters", lower = 1L, default = 10L),
+    makeLogicalLearnerParam(id = "bw.replace", default = TRUE),
+    makeNumericLearnerParam(id = "bw.size", lower = 0, upper = 1),
+    makeNumericLearnerParam(id = "bw.feats", lower = 0, upper = 1, default = 2/3)
   )
-  pv = list(bag.iters = bag.iters, bag.replace = bag.replace,
-    bag.size = bag.size, bag.feats = bag.feats)
+  pv = list(bw.iters = bw.iters, bw.replace = bw.replace,
+    bw.size = bw.size, bw.feats = bw.feats)
   x = makeBaseWrapper(id, learner, packs, par.set = ps, par.vals = pv, cl = "BaggingWrapper")
   x = switch(x$type,
     "classif" = addProperties(x, "prob"),
@@ -71,21 +70,21 @@ makeBaggingWrapper = function(learner, bag.iters = 10L, bag.replace = TRUE, bag.
 }
 
 #' @export
-trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL, bag.iters, bag.replace,
-  bag.size, bag.feats, ...) {
+trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL, bw.iters, bw.replace,
+  bw.size, bw.feats, ...) {
 
   .task = subsetTask(.task, subset = .subset)
   n = .task$task.desc$size
-  m = round(n * bag.size)
+  m = round(n * bw.size)
   allinds = seq_len(n)
-  if (bag.feats < 1) {
+  if (bw.feats < 1) {
     feats = getTaskFeatureNames(.task)
-    k = round(bag.feats * length(feats))
+    k = round(bw.feats * length(feats))
   }
-  models = lapply(seq_len(bag.iters), function(i) {
-    bag = sample(allinds, m, replace = bag.replace)
+  models = lapply(seq_len(bw.iters), function(i) {
+    bag = sample(allinds, m, replace = bw.replace)
     w = .weights[bag]
-    if (bag.feats < 1) {
+    if (bw.feats < 1) {
       feats2 = sample(feats, k, replace = FALSE)
       .task2 = subsetTask(.task, features = feats2)
       train(.learner$next.learner, .task2, subset = bag, weights = w)

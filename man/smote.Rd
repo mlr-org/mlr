@@ -3,7 +3,7 @@
 \alias{smote}
 \title{Synthetic Minority Oversampling Technique to handle class imbalancy in binary classification.}
 \usage{
-smote(task, rate, nn = 5)
+smote(task, rate, nn = 5L)
 }
 \arguments{
 \item{task}{[\code{\link{SupervisedTask}}]\cr
