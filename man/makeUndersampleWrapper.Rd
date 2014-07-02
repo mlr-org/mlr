@@ -36,6 +36,6 @@ down to the next learner.
 \seealso{
 Other imbalancy: \code{\link{makeOverBaggingWrapper}};
   \code{\link{oversample}}, \code{\link{undersample}};
-  \code{\link{smote2}}; \code{\link{smote}}
+  \code{\link{smote}}
 }
 

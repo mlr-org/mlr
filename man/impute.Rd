@@ -4,9 +4,8 @@
 \title{Impute and re-impute data}
 \usage{
 impute(data, target, classes = list(), cols = list(),
-  dummy.classes = character(0L), dummy.cols = character(0L),
-  dummy.type = "factor", impute.new.levels = TRUE,
-  recode.factor.levels = TRUE)
+  dummy.cols = character(0L), dummy.type = "factor",
+  impute.new.levels = TRUE, recode.factor.levels = TRUE)
 }
 \arguments{
 \item{data}{[\code{data.frame}]\cr
@@ -23,10 +22,6 @@ E.g. \code{list(numeric = imputeMedian())}.}
 Named list containing names of imputation methods to impute missing values
 in the data column referenced by the list element's name. Overwrites imputation set via
 \code{classes}.}
-
-\item{dummy.classes}{[\code{character}]\cr
-Character vector with class names of columns to create dummy columns (containing binary missing indicator) for.
-Default is \code{character(0)}.}
 
 \item{dummy.cols}{[\code{character}]\cr
 Column names to create dummy columns (containing binary missing indicator) for.

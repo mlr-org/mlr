@@ -35,7 +35,6 @@ is sampled from the two given levels of x1 and x2 per feature.
 Other imbalancy: \code{\link{makeOverBaggingWrapper}};
   \code{\link{makeOversampleWrapper}},
   \code{\link{makeUndersampleWrapper}};
-  \code{\link{oversample}}, \code{\link{undersample}};
-  \code{\link{smote2}}
+  \code{\link{oversample}}, \code{\link{undersample}}
 }
 
