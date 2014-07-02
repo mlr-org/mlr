@@ -51,7 +51,8 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate, obw.maxcl 
     makeDiscreteLearnerParam(id = "obw.maxcl", c("boot", "all"))
   )
   pv = list(obw.iters = obw.iters, obw.rate = obw.rate, obw.maxcl = obw.maxcl)
-  x = makeBaseWrapper(id, learner, packs, par.set = ps, par.vals = pv, cl = "OverBaggingWrapper")
+  x = makeBaseWrapper(id, learner, packs, par.set = ps, par.vals = pv,
+    cl = c("OverBaggingWrapper", "BaggingWrapper"))
   x = addProperties(x, "prob")
 
   return(x)
@@ -67,37 +68,6 @@ trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, .weights = 
     bag = sampleBinaryClass(y, obw.rate, cl = "min", minreplace = TRUE, maxreplace = (obw.maxcl == "boot"))
     train(.learner$next.learner, .task, subset = bag, weights = .weights)
   })
-  makeChainModel(next.model = models, cl = "OverBaggingModel")
+  makeChainModel(next.model = models, cl = "BaggingModel")
 }
 
-#' @export
-predictLearner.OverBaggingWrapper = function(.learner, .model, .newdata, ...) {
-  models = getBaggingModels(.model)
-  p = sapply(models, function(m) {
-    as.character(predict(m, newdata = .newdata, ...)$data$response)
-  })
-  if (.learner$predict.type == "response") {
-    g = as.factor(apply(p, 1L, computeMode))
-  } else {
-    levs = .model$task.desc$class.levels
-    p = apply(p, 1L, function(x) {
-      x = factor(x, levels = levs) # we need all level for the table and we need them in consitent order!
-      as.numeric(prop.table(table(x)))
-    })
-    setColNames(t(p), levs)
-  }
-}
-
-#' @export
-makeWrappedModel.OverBaggingWrapper = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
-  x = NextMethod()
-  addClasses(x, "OverBaggingModel")
-}
-
-#' @export
-print.OverBaggingModel = function(x, ...) {
-  s = capture.output(print.WrappedModel(x))
-  u = sprintf("OverBagged Learner: %s", class(x$learner$next.learner)[1L])
-  s = append(s, u, 1L)
-  lapply(s, catf)
-}

@@ -9,7 +9,7 @@
 #' @return [\code{list}].
 #' @export
 getBaggingModels = function(model, learner.models = FALSE) {
-  assert(checkClass(model, "BaggingModel"), checkClass(model, "OverBaggingModel"))
+  checkClass(model, "BaggingModel")
   ms = model$learner.model$next.model
   if (learner.models)
     extractSubList(ms, "learner.model", simplify = FALSE)
