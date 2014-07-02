@@ -1,5 +1,4 @@
 makeChainModel = function(next.model, cl) {
-  #FIXME: what to do in case of failure?
   setClasses(list(next.model = next.model), c(cl, "ChainModel", "WrappedModel"))
 }
 
