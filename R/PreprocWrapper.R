@@ -54,7 +54,7 @@ trainLearner.PreprocWrapper = function(.learner, .task, .subset, ...) {
   if (!(is.list(pp) && length(pp) == 2L && all(names(pp) == c("data", "control")) &&
     is.data.frame(pp$data) && is.list(pp$control)))
     stop("Preprocessing train must result in list wil elements data[data.frame] and control[list]!")
-  .task = changeData(.task, pp$data, .task$env$costs)
+  .task = changeData(.task, pp$data)
   # we have already subsetted!
   m = train(.learner$next.learner, .task)
   # FIXME: time and can we do this better?

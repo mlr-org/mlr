@@ -85,5 +85,5 @@ removeConstantFeatures.SupervisedTask = function(x, target, perc = 0, dont.rm = 
   if (!missing(target))
     stop("Do not pass 'target' when you pass a task!")
   res = removeConstantFeatures(getTaskData(x), getTargetNames(x), perc, dont.rm, na.ignore, tol, show.info)
-  changeData(task = x, data = res, costs = x$env$costs)
+  changeData(task = x, data = res)
 }
