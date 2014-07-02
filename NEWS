@@ -50,6 +50,7 @@ mlr_1.2:
 -- showHyperPars
 -- setId
 -- listMeasures
+-- isFailureModel
 -- plotLearnerPrediction
 -- plotThreshVsPerf
 -- holdout, subsample, crossval, repcv, bootstrapOOB, bootstrapB632, bootstrapB632plus

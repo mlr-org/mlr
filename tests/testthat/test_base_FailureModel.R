@@ -42,8 +42,7 @@ test_that("FailureModel", {
   # costens: response
   lrn = makeCostSensClassifWrapper("classif.qda")
   m = train(lrn, costsens.task, subset = c(1,51,101))
-  # FIXME: reenable when issue is solved
-  # expect_true(inherits(m, "FailureModel"))
+  expect_true(isFailureModel(m))
   expect_true(!is.null(m$learner.model))
   p = predict(m, newdata = iris)
   expect_true(all(is.na(p$data$response)))
