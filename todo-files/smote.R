@@ -1,4 +1,4 @@
-# FIXME: add paper reference
+# FIXME add paper reference
 
 #' @title Synthetic Minority Oversampling Technique to handle class imbalancy in binary classification.
 #'
@@ -23,7 +23,6 @@
 #' @template ret_task
 #' @family imbalancy
 #' @export
-#' @useDynLib mlr c_smote
 smote = function(task, rate, nn = 5) {
   checkTask(task, binary = TRUE)
   assertNumber(rate, lower = 1)
@@ -42,43 +41,46 @@ smote = function(task, rate, nn = 5) {
   x = dropNamed(data, target)
   z = getMinMaxClass(y)
   x.min = x[z$min.inds, , drop = FALSE]
+  x.max = x[z$max.inds, , drop = FALSE]
   n.min = nrow(x.min)
   n.new  = round(rate * n.min) - n.min
-  if (n.new <= 0L)
-    return(task)
-  is.num = sapply(x, is.numeric)
-  res = matrix(0, n.new, ncol(x))
-  # convert xmin to matrix, so we can handle it better in C
-  # factors are integer levels
-  x.min.matrix = x.min
-  if (any(is.num)) {
-    for (i in 1:ncol(x.min.matrix)) {
-      if (!is.num[i])
-        x.min.matrix[, i] = as.integer(x.min.matrix[, i])
-    }
-  }
-  x.min.matrix = as.matrix(x.min.matrix)
+  row1 = x[1L, ]
+  is.num = sapply(row1, is.numeric)
+  is.fac = sapply(row1, is.factor)
+  has.num = any(is.num)
+  has.fac = any(is.fac)
+  p.fac = sum(is.fac)
+  res = Reduce(rbind, replicate(n.new, row1, FALSE))
 
   # dist matrix on smaller class, diag = 0 so we dont find x as neighnor of x
   minclass.dist = as.matrix(daisy(x.min))
   diag(minclass.dist) = NA
   # get n nearest neighbors, we have an index matrix now
   # nearneigh[7, 3] is 3rd nearest neighbor of observation 7
-  nearneigh = t(apply(minclass.dist, 1, order))
+  nearneigh = apply(minclass.dist, 1, order)
   nearneigh = nearneigh[, 1:nn, drop = FALSE]
-  res = .Call(c_smote, x.min.matrix, is.num, nearneigh, res)
-  res = as.data.frame(res)
 
-  # convert ints back to factors
-  if (any(is.num)) {
-    for (i in 1:ncol(res)) {
-      if (!is.num[i])
-        res[, i] = as.factor(as.integer(res[, i]))
-      levels(res[, i]) = levels(x[, i])
+  # FIXME: this is slow and must either be vectorized or done in C
+  for (i in 1:n.new) {
+    # select a random minority obs
+    j.sel = sample(1:n.min, 1L)
+    x1 = x.min[j.sel, ]
+    # select a random neighbor
+    j.nn = nearneigh[j.sel, sample(1:nn, 1L)]
+    x2 = x.min[j.nn, ]
+    # do convex combination for numerics
+    p = runif(1)
+    if (has.num) {
+      res[i, is.num] = p * x1[is.num] + (1 - p) * x2[is.num]
+    }
+    # sample level for factors from x0 and x1
+    if (has.fac) {
+      # concat factors, then index either 1st or 2nd half for each position
+      x12 = c(x1[is.fac], x2[is.fac])
+      j = 1:p.fac + sample(c(0, p.fac), p.fac, replace = TRUE)
+      res[i, is.fac] = x12[j]
     }
   }
-
-  colnames(res) = colnames(x)
   res[[target]] = z$min.name
   data2 = rbind(data, res)
   # we can neither allow costssens (!= classif anyway nor weights)

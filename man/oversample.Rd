@@ -31,6 +31,7 @@ Undersampling: From the larger class, observations are randomly drawn without re
 \seealso{
 Other imbalancy: \code{\link{makeOverBaggingWrapper}};
   \code{\link{makeOversampleWrapper}},
-  \code{\link{makeUndersampleWrapper}}; \code{\link{smote}}
+  \code{\link{makeUndersampleWrapper}};
+  \code{\link{smote2}}; \code{\link{smote}}
 }
 

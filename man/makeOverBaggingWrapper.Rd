@@ -51,6 +51,6 @@ probabilities are predicted by considering the proportions of all predicted labe
 Other imbalancy: \code{\link{makeOversampleWrapper}},
   \code{\link{makeUndersampleWrapper}};
   \code{\link{oversample}}, \code{\link{undersample}};
-  \code{\link{smote}}
+  \code{\link{smote2}}; \code{\link{smote}}
 }
 
