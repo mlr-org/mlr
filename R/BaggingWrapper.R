@@ -126,7 +126,7 @@ predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
 #' @export
 makeWrappedModel.BaggingWrapper = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
   x = NextMethod()
-  addClasses(x, "OverBaggingModel")
+  addClasses(x, "BaggingModel")
 }
 
 #' @export
