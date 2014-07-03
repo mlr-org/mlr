@@ -1,7 +1,7 @@
-
-
-mlr_1.2:
-- mlr now supports survuival analysis models
+mlr_2.0:
+- mlr now supports survival analysis models (experimental)
+- mlr now supports cost-sensitive learning with example-specific costs (experimental)
+- mlr now suppo
 - added FeatSelWrapper and getFeatSelResult
 - performance functions now allows to compute multiple measures
 - added multiclass.roc performance measure
@@ -12,7 +12,7 @@ mlr_1.2:
 - added class.weights param for classif.svm
 - add fix.factors option to randomForest
 - generic standard error estimation in randomForest and BaggingWrapper
-- added fixup.data option to task contructors, so basic data cleanup can be performed
+- added fixup.data option to task constructors, so basic data cleanup can be performed
 - show.info is now an option in configureMlr
 - learners now support taggable properties that can be queried and changed. also see below.
 - listLearners(forTask) was unified
@@ -21,6 +21,8 @@ mlr_1.2:
 - Grid search was improved so one does not have to discretize parameters manually anymore
   (although this is still possible). Instead one now passes a 'resolution' argument. Internally we 
   now use ParamHelpers::generateGridDesign for this.
+- toy tasks were added for convenient usage: iris.task, sonar.task, bh.task
+  they also also have corresponding resampling instances, so you directly start working, e.g., iris.rin
 
 - new learners:
 -- classif.knn
@@ -37,7 +39,10 @@ mlr_1.2:
 -- regr.mob
 -- surv.CoxBoost
 -- surv.coxph
+-- surv.glmboost
 -- surv.glmnet
+-- surv.penalized
+-- surv.randomForestSRC
 
 - new measures
 -- multiauc
@@ -64,13 +69,11 @@ mlr_1.2:
 -- makeWeightedClassesWrapper
 -- makeTuneControlGenSA
 -- makeModelMultiplexer, makeModelMultiplexerParamSet
--- makeCostSensTaks, makeCostSensRegrWrapper, makeCostsSensWeightedPairsLearner
+-- makeCostSensTask, makeCostSensClassifWrapper, makeCostSensRegrWrapper, makeCostsSensWeightedPairsLearner
+-- makeSurvTask
 -- normalizeFeatures
 -- createDummyFeatures
-
-- imputation stuff ????
-- surv stuff ????
-- <really check logs!>
+-- impute, reimpute, makeImputeWrapper, lots of impute<Method>, makeImputeMethod 
 
 mlr_1.1:
 - Initial release to CRAN
