@@ -2,13 +2,20 @@
 \docType{data}
 \name{mlr.sonar}
 \alias{mlr.sonar}
-\alias{sonar}
+\alias{sonar.rin}
+\alias{sonar.task}
 \title{Sonar classification task}
 \description{
-Classification task for the Sonar data set.
+Contains the task (\code{sonar.task}) and a matching resample instance
+(\code{sonar.rin}).
+
+Contains the task (\code{sonar.task}) and a matching resample instance
+(\code{sonar.rin}).
 }
 \references{
-See \code{\link[mlbench]{Sonar}} in package mlbench.
+See \code{\link[mlbench]{Sonar}}.
+
+See \code{\link[mlbench]{Sonar}}.
 }
 \keyword{data}
 
