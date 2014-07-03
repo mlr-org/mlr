@@ -2,14 +2,16 @@
 \docType{data}
 \name{mlr.wpbc}
 \alias{mlr.wpbc}
-\alias{wpbc}
+\alias{wpbc.rin}
+\alias{wpbc.task}
 \title{Wisonsin Prognostic Breast Cancer (WPBC) survival task}
 \description{
-Survival task for the WPBC data set.
+Contains the task (\code{wpbc.task}) and a matching resample instance
+(\code{wpbc.rin}).
 }
 \references{
-See \code{\link[mboost]{wpbc}} in package mboost.
-  Four incomplete cases have been removed from the task.
+See \code{\link[mboost]{wpbc}}. Four incomplete cases
+  have been removed from the task.
 }
 \keyword{data}
 
