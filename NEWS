@@ -40,8 +40,9 @@ mlr_1.2:
 -- surv.glmnet
 
 - new measures
--- cost sens ????
--- multiauc???
+-- multiauc
+-- cindex
+--  meancosts, mcp
 
 - new functions
 -- removeConstantFeatures, normalizeFeatures, dropFeatures

@@ -1,12 +1,12 @@
 Package: mlr
 Title: mlr: Machine Learning in R.
-Description: Interface to a large number of classification and
-    regression techniques, including machine-readable parameter
-    descriptions. Generic resampling, including cross-validation,
-    bootstrapping and subsampling. Hyperparameter tuning with
-    modern optimization techniques. Filter and wrapper methods for
-    feature selection. Extension of basic learners with additional
-    operations. Nested resampling.
+Description: Interface to a large number of classification and regression
+    techniques, including machine-readable parameter descriptions. There is
+    also a n experimental extension for surival analysis and cost-sensitive
+    learning. Generic resampling, including cross-validation, bootstrapping and
+    subsampling. Hyperparameter tuning with modern optimization techniques.
+    Filter and wrapper methods for feature selection. Extension of basic
+    learners with additional operations common in machine learning.
 Author: Bernd Bischl <bernd_bischl@gmx.net>,
     Michel Lang <lang@statistik.tu-dortmund.de>,
     Jakob Richter <code@jakob-r.de>,
@@ -73,4 +73,4 @@ Suggests:
     stepPlr
 LazyData: yes
 ByteCompile: yes
-Version: 1.2
+Version: 2.0
