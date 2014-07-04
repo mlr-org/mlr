@@ -48,8 +48,14 @@ the fitted model and the prediction.
 <dt>aggr [<code><a href="Aggregation.html">Aggregation</a></code>]</dt><dd><p>See argument.</p>
 </dd></dl>
 <p>.
-
 </p>
+<dl>
+<dt>best [<code>numeric(1)</code>]</dt><dd><p>See argument.</p>
+</dd>
+<dt>worst [<code>numeric(1)</code>]</dt><dd><p>See argument.</p>
+</dd>
+</dl>
+
 
 
 <h3>Usage</h3>
@@ -57,7 +63,7 @@ the fitted model and the prediction.
 <pre>
 makeMeasure(id, minimize, properties = character(0L),
   allowed.pred.types = character(0L), fun, extra.args = list(),
-  aggr = test.mean)
+  aggr = test.mean, best = NULL, worst = NULL)
 </pre>
 
 
@@ -121,6 +127,18 @@ Aggregation funtion, which is used to aggregate the values measured
 on test / training sets of the measure to a single value.
 Default is <code><a href="aggregations.html">test.mean</a></code>.</p>
 </td></tr>
+<tr valign="top"><td><code>best</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br>
+Best obtainable value for measure.
+Default is -<code>Inf</code> or <code>Inf</code>, depending on <code>minimize</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>worst</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br>
+Worst obtainable value for measure.
+Default is <code>Inf</code> or -<code>Inf</code>, depending on <code>minimize</code>.</p>
+</td></tr>
 </table>
 
 
@@ -130,20 +148,43 @@ Default is <code><a href="aggregations.html">test.mean</a></code>.</p>
 </p>
 
 
+<h3>See Also</h3>
+
+<p>Other performance: <code><a href="measures.html">acc</a></code>, <code><a href="../../glmnet/html/glmnet-internal.html">auc</a></code>,
+<code><a href="measures.html">ber</a></code>, <code><a href="measures.html">cindex</a></code>,
+<code><a href="measures.html">f1</a></code>, <code><a href="measures.html">fdr</a></code>,
+<code><a href="measures.html">featperc</a></code>, <code><a href="measures.html">fn</a></code>,
+<code><a href="measures.html">fnr</a></code>, <code><a href="measures.html">fp</a></code>, <code><a href="measures.html">fpr</a></code>,
+<code><a href="measures.html">gmean</a></code>, <code><a href="measures.html">gpr</a></code>,
+<code><a href="measures.html">mae</a></code>, <code><a href="measures.html">mcc</a></code>, <code><a href="measures.html">mcp</a></code>,
+<code><a href="measures.html">meancosts</a></code>, <code><a href="measures.html">measures</a></code>,
+<code><a href="measures.html">medae</a></code>, <code><a href="measures.html">medse</a></code>,
+<code><a href="measures.html">mmce</a></code>, <code><a href="measures.html">mse</a></code>,
+<code><a href="measures.html">multiclass.auc</a></code>, <code><a href="measures.html">npv</a></code>,
+<code><a href="measures.html">ppv</a></code>, <code><a href="measures.html">rmse</a></code>, <code><a href="measures.html">sae</a></code>,
+<code><a href="measures.html">sse</a></code>, <code><a href="measures.html">timeboth</a></code>,
+<code><a href="measures.html">timepredict</a></code>, <code><a href="measures.html">timetrain</a></code>,
+<code><a href="measures.html">tn</a></code>, <code><a href="measures.html">tnr</a></code>, <code><a href="measures.html">tp</a></code>,
+<code><a href="measures.html">tpr</a></code>; <code><a href="makeCostMeasure.html">makeCostMeasure</a></code>;
+<code><a href="makeCustomResampledMeasure.html">makeCustomResampledMeasure</a></code>;
+<code><a href="performance.html">performance</a></code>
+</p>
+
+
 <h3>Examples</h3>
 
-<pre><code class="r">
-f = function(task, model, pred, extra.args)
+<pre><code class="r">f = function(task, model, pred, extra.args)
   sum((pred$data$response - pred$data$truth)^2)
-makeMeasure(id = &quot;my.sse&quot;, minimize = TRUE, props = c(&quot;regr&quot;, &quot;response&quot;), fun = f)
+makeMeasure(id = &quot;my.sse&quot;, minimize = TRUE, properties = c(&quot;regr&quot;, &quot;response&quot;), fun = f)
 </code></pre>
 
-<pre><code>## Error: unused argument (props = c(&quot;regr&quot;, &quot;response&quot;))
+<pre><code>## Performance measure: my.sse
+## Properties: regr,response
+## Minimize: TRUE
+## Best: -Inf; Worst: Inf
+## Aggregated by: test.mean
 </code></pre>
 
-<pre><code class="r">
-</code></pre>
 
-
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

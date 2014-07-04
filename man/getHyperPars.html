@@ -26,8 +26,9 @@ getHyperPars(learner, for.fun = c("train", "predict", "both"))
 <table summary="R argblock">
 <tr valign="top"><td><code>learner</code></td>
 <td>
-<p>[<code><a href="makeLearner.html">Learner</a></code>]<br>
-The learner.</p>
+<p>[<code><a href="makeLearner.html">Learner</a></code> | <code>character(1)</code>]<br>
+The learner.
+If you pass a string the learner will be created via <code><a href="makeLearner.html">makeLearner</a></code>.</p>
 </td></tr>
 <tr valign="top"><td><code>for.fun</code></td>
 <td>
@@ -45,5 +46,13 @@ Default is <code>c("train", "predict", "both")</code>.</p>
 <p>[<code>list</code>]. A named list of values.
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+
+<h3>See Also</h3>
+
+<p>Other learner: <code><a href="getParamSet.html">getParamSet</a></code>;
+<code><a href="setHyperPars.html">setHyperPars</a></code>; <code><a href="setId.html">setId</a></code>;
+<code><a href="setPredictType.html">setPredictType</a></code>; <code><a href="showHyperPars.html">showHyperPars</a></code>
+</p>
+
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

@@ -72,39 +72,34 @@ Weights from the task will be overwritten.</p>
 
 <h3>Examples</h3>
 
-<pre><code class="r">
-training.set &lt;- sample(1:nrow(iris), nrow(iris) / 2)
+<pre><code class="r">training.set = sample(1:nrow(iris), nrow(iris) / 2)
 
 ## use linear discriminant analysis to classify iris data
-task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
-learner &lt;- makeLearner(&quot;classif.lda&quot;, method = &quot;mle&quot;)
-mod &lt;- train(learner, task, subset = training.set)
+task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+learner = makeLearner(&quot;classif.lda&quot;, method = &quot;mle&quot;)
+mod = train(learner, task, subset = training.set)
 print(mod)
 </code></pre>
 
-<pre><code>## Model for id=classif.lda class=classif.lda
+<pre><code>## Model for id = classif.lda class = classif.lda
 ## Trained on obs: 75
 ## Used features: 4
 ## Hyperparameters: method=mle
 </code></pre>
 
-<pre><code class="r">
-## use random forest to classify iris data
-task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
-learner &lt;- makeLearner(&quot;classif.rpart&quot;, minsplit = 7, predict.type = &quot;prob&quot;)
-mod &lt;- train(learner, task, subset = training.set)
+<pre><code class="r">## use random forest to classify iris data
+task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+learner = makeLearner(&quot;classif.rpart&quot;, minsplit = 7, predict.type = &quot;prob&quot;)
+mod = train(learner, task, subset = training.set)
 print(mod)
 </code></pre>
 
-<pre><code>## Model for id=classif.rpart class=classif.rpart
+<pre><code>## Model for id = classif.rpart class = classif.rpart
 ## Trained on obs: 75
 ## Used features: 4
 ## Hyperparameters: xval=0,minsplit=7
 </code></pre>
 
-<pre><code class="r">
-</code></pre>
 
-
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

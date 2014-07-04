@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Fuse learner with the bagging technique and oversampling for...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for makeOverBaggingWrapper {mlr}"><tr><td>makeOverBaggingWrapper {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Fuse learner with the bagging technique and oversampling for imbalancy correction.</h2>
+
+<h3>Description</h3>
+
+<p>Fuses a classification learner for binary classification with an over-bagging method
+for imbalancy correction when we have strongly unequal class sizes.
+Creates a learner object, which can be
+used like any other learner object.
+Models can easily be accessed via <code><a href="getBaggingModels.html">getBaggingModels</a></code>.
+</p>
+<p>OverBagging is implemented as follows:
+For each iteration a random data subset is sampled. Minority class examples
+are oversampled with replacement with a given rate.
+Majority class examples are either simply copied into each bag, or bootstrapped with replacement
+until we have as many majority class examples as in the original training data.
+Features are currently not changed or sampled.
+</p>
+<p>Prediction works as follows:
+For classification we do majority voting to create a discrete label and
+probabilities are predicted by considering the proportions of all predicted labels.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+makeOverBaggingWrapper(learner, obw.iters = 10L, obw.rate,
+  obw.maxcl = "boot")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>learner</code></td>
+<td>
+<p>[<code><a href="makeLearner.html">Learner</a></code> | <code>character(1)</code>]<br>
+The learner.
+If you pass a string the learner will be created via <code><a href="makeLearner.html">makeLearner</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>obw.iters</code></td>
+<td>
+<p>[<code>integer(1)</code>]<br>
+Number of fitted models in bagging.
+Default is 10.</p>
+</td></tr>
+<tr valign="top"><td><code>obw.rate</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br>
+Factor to upsample the smaller class in each bag.
+Must be between 1 and <code>Inf</code>,
+where 1 means no oversampling and 2 would mean doubling the class size.</p>
+</td></tr>
+<tr valign="top"><td><code>obw.maxcl</code></td>
+<td>
+<p>[<code>character(1)</code>]<br>
+character value that controls how to sample majority class.
+&ldquo;all&rdquo; means every instance of the majority class gets in each bag,
+&ldquo;boot&rdquo; means the majority class instances are bootstrapped in each iteration.
+Default is &ldquo;boot&rdquo;.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>[<code><a href="makeLearner.html">Learner</a></code>].
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other imbalancy: <code><a href="makeUndersampleWrapper.html">makeOversampleWrapper</a></code>,
+<code><a href="makeUndersampleWrapper.html">makeUndersampleWrapper</a></code>;
+<code><a href="oversample.html">oversample</a></code>, <code><a href="oversample.html">undersample</a></code>;
+<code><a href="smote.html">smote</a></code>
+</p>
+
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

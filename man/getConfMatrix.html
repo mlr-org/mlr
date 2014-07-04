@@ -64,31 +64,30 @@ Default is <code>FALSE</code>.</p>
 
 <h3>Examples</h3>
 
-<pre><code class="r">
-## create classification task and use linear discriminant analysis for classification
-task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
-lrn &lt;- makeLearner(&quot;classif.lda&quot;)
+<pre><code class="r">## create classification task and use linear discriminant analysis for classification
+task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+lrn = makeLearner(&quot;classif.lda&quot;)
 
 ## set up training and test data
-n &lt;- nrow(iris)
-mixed.set &lt;- sample(1:n)
-training.set &lt;- mixed.set[1:(n/2)]
-test.set &lt;- mixed.set[(n/2 + 1):n]
+n = nrow(iris)
+mixed.set = sample(1:n)
+training.set = mixed.set[1:(n/2)]
+test.set = mixed.set[(n/2 + 1):n]
 
 ## train model
-mod &lt;- train(lrn, task, subset = training.set)
+mod = train(lrn, task, subset = training.set)
 
 ## get predictions and show calculate confusion matrix
-pred &lt;- predict(mod, newdata = iris[test.set, ])
+pred = predict(mod, newdata = iris[test.set, ])
 print(getConfMatrix(pred))
 </code></pre>
 
 <pre><code>##             predicted
 ## true         setosa versicolor virginica -SUM-
-##   setosa         26          0         0     0
-##   versicolor      0         25         4     4
-##   virginica       0          0        20     0
-##   -SUM-           0          0         4     4
+##   setosa         27          0         0     0
+##   versicolor      0         18         1     1
+##   virginica       0          3        26     3
+##   -SUM-           0          3         1     4
 </code></pre>
 
 <pre><code class="r">print(getConfMatrix(pred, relative = TRUE))
@@ -96,15 +95,12 @@ print(getConfMatrix(pred))
 
 <pre><code>##             predicted
 ## true         setosa versicolor virginica   -SUM-
-##   setosa          1     0.0000    0.0000 0.00000
-##   versicolor      0     0.8621    0.1379 0.13793
-##   virginica       0     0.0000    1.0000 0.00000
-##   -SUM-           0     0.0000    1.0000 0.05333
-</code></pre>
-
-<pre><code class="r">
+##   setosa          1     0.0000   0.00000 0.00000
+##   versicolor      0     0.9474   0.05263 0.05263
+##   virginica       0     0.1034   0.89655 0.10345
+##   -SUM-           0     0.7500   0.25000 0.05333
 </code></pre>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

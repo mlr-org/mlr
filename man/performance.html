@@ -60,20 +60,37 @@ Model built on training data, might be requested by performance measure, usually
 
 <h3>See Also</h3>
 
-<p><code><a href="makeMeasure.html">makeMeasure</a></code>, <code><a href="measures.html">measures</a></code>
+<p>Other performance: <code><a href="makeMeasure.html">Measure</a></code>,
+<code><a href="makeMeasure.html">makeMeasure</a></code>; <code><a href="measures.html">acc</a></code>,
+<code><a href="../../glmnet/html/glmnet-internal.html">auc</a></code>, <code><a href="measures.html">ber</a></code>,
+<code><a href="measures.html">cindex</a></code>, <code><a href="measures.html">f1</a></code>,
+<code><a href="measures.html">fdr</a></code>, <code><a href="measures.html">featperc</a></code>,
+<code><a href="measures.html">fn</a></code>, <code><a href="measures.html">fnr</a></code>, <code><a href="measures.html">fp</a></code>,
+<code><a href="measures.html">fpr</a></code>, <code><a href="measures.html">gmean</a></code>,
+<code><a href="measures.html">gpr</a></code>, <code><a href="measures.html">mae</a></code>, <code><a href="measures.html">mcc</a></code>,
+<code><a href="measures.html">mcp</a></code>, <code><a href="measures.html">meancosts</a></code>,
+<code><a href="measures.html">measures</a></code>, <code><a href="measures.html">medae</a></code>,
+<code><a href="measures.html">medse</a></code>, <code><a href="measures.html">mmce</a></code>,
+<code><a href="measures.html">mse</a></code>, <code><a href="measures.html">multiclass.auc</a></code>,
+<code><a href="measures.html">npv</a></code>, <code><a href="measures.html">ppv</a></code>, <code><a href="measures.html">rmse</a></code>,
+<code><a href="measures.html">sae</a></code>, <code><a href="measures.html">sse</a></code>,
+<code><a href="measures.html">timeboth</a></code>, <code><a href="measures.html">timepredict</a></code>,
+<code><a href="measures.html">timetrain</a></code>, <code><a href="measures.html">tn</a></code>,
+<code><a href="measures.html">tnr</a></code>, <code><a href="measures.html">tp</a></code>, <code><a href="measures.html">tpr</a></code>;
+<code><a href="makeCostMeasure.html">makeCostMeasure</a></code>;
+<code><a href="makeCustomResampledMeasure.html">makeCustomResampledMeasure</a></code>
 </p>
 
 
 <h3>Examples</h3>
 
-<pre><code class="r">
-training.set &lt;- seq(1, nrow(iris), by = 2)
-test.set &lt;- seq(2, nrow(iris), by = 2)
+<pre><code class="r">training.set = seq(1, nrow(iris), by = 2)
+test.set = seq(2, nrow(iris), by = 2)
 
-task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
-lrn &lt;- makeLearner(&quot;classif.lda&quot;)
-mod &lt;- train(lrn, task, subset = training.set)
-pred &lt;- predict(mod, newdata = iris[test.set, ])
+task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+lrn = makeLearner(&quot;classif.lda&quot;)
+mod = train(lrn, task, subset = training.set)
+pred = predict(mod, newdata = iris[test.set, ])
 performance(pred, measures = mmce)
 </code></pre>
 
@@ -81,19 +98,15 @@ performance(pred, measures = mmce)
 ## 0.04
 </code></pre>
 
-<pre><code class="r">
-# Compute multiple performance measures at once
-ms &lt;- list(&quot;mmce&quot; = mmce, &quot;acc&quot; = acc, &quot;timetrain&quot; = timetrain)
+<pre><code class="r"># Compute multiple performance measures at once
+ms = list(&quot;mmce&quot; = mmce, &quot;acc&quot; = acc, &quot;timetrain&quot; = timetrain)
 performance(pred, measures = ms, task, mod)
 </code></pre>
 
 <pre><code>##           mmce.mmce             acc.acc timetrain.timetrain 
-##               0.040               0.960               0.003
-</code></pre>
-
-<pre><code class="r">
+##               0.040               0.960               0.004
 </code></pre>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

@@ -31,8 +31,9 @@ setHyperPars(learner, ..., par.vals)
 <table summary="R argblock">
 <tr valign="top"><td><code>learner</code></td>
 <td>
-<p>[<code><a href="makeLearner.html">Learner</a></code>]<br>
-The learner.</p>
+<p>[<code><a href="makeLearner.html">Learner</a></code> | <code>character(1)</code>]<br>
+The learner.
+If you pass a string the learner will be created via <code><a href="makeLearner.html">makeLearner</a></code>.</p>
 </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
@@ -51,24 +52,22 @@ Optional list of named (hyper)parameter settings. The arguments in
 
 <h3>Value</h3>
 
-<p>[<code><a href="makeLearner.html">Learner</a></code>] with changed hyperparameters.
+<p>[<code><a href="makeLearner.html">Learner</a></code>].
 </p>
 
 
 <h3>See Also</h3>
 
-<p>See <code><a href="getHyperPars.html">getHyperPars</a></code> for a function to retrieve
-the currently set hyperparameters. To get a list of all hyperparameters of
-a learner, see the <code>par.set</code> slot of the <code><a href="makeLearner.html">Learner</a></code>
-object.
+<p>Other learner: <code><a href="getHyperPars.html">getHyperPars</a></code>;
+<code><a href="getParamSet.html">getParamSet</a></code>; <code><a href="setId.html">setId</a></code>;
+<code><a href="setPredictType.html">setPredictType</a></code>; <code><a href="showHyperPars.html">showHyperPars</a></code>
 </p>
 
 
 <h3>Examples</h3>
 
-<pre><code class="r">
-cl1 &lt;- makeLearner(&quot;classif.ksvm&quot;, sigma=1)
-cl2 &lt;- setHyperPars(cl1, sigma=10, par.vals=list(C=2))
+<pre><code class="r">cl1 = makeLearner(&quot;classif.ksvm&quot;, sigma = 1)
+cl2 = setHyperPars(cl1, sigma = 10, par.vals = list(C = 2))
 print(cl1)
 </code></pre>
 
@@ -92,9 +91,6 @@ print(cl2)
 ## Hyperparameters: fit=FALSE,sigma=10,C=2
 </code></pre>
 
-<pre><code class="r">
-</code></pre>
 
-
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

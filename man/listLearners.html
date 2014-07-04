@@ -13,9 +13,6 @@
 <p>Returns the class names of learning algorithms which have specific characteristics, e.g.
 whether they supports missing values, case weights, etc.
 </p>
-<p><code>listLearnersForTask</code> returns all learners that are in principle applicable
-for a given task.
-</p>
 <p>Note that the packages of all learners are loaded during the search.
 </p>
 
@@ -24,35 +21,35 @@ for a given task.
 
 <pre>
 listLearners(obj = NA_character_, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE)
+  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
 
 ## Default S3 method:
 listLearners(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE)
+  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
 
 ## S3 method for class 'character'
 listLearners(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE)
+  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
 
 ## S3 method for class 'SupervisedTask'
 listLearners(obj, properties = character(0L),
-  warn.missing.packages = TRUE)
+  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
 </pre>
 
 
 <h3>Arguments</h3>
 
 <table summary="R argblock">
-<tr valign="top"><td><code>type</code></td>
+<tr valign="top"><td><code>obj</code></td>
 <td>
-<p>[<code>character(1)</code>]<br>
-Type of the learning algorithm, one of &ldquo;classif&rdquo;, &ldquo;regr&rdquo;
-or &ldquo;surv&rdquo;.
+<p>[<code>character(1)</code> | <code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+Either a task or the type of the task, in the latter case one of:
+&ldquo;classif&rdquo;, &ldquo;regr&rdquo;,  &ldquo;surv&rdquo;, dQuotecostsens.
 Default is <code>NA</code>, matching all types.</p>
 </td></tr>
 <tr valign="top"><td><code>properties</code></td>
 <td>
-<p>[<code>character)</code>]<br>
+<p>[<code>character</code>]<br>
 Set of required properties to filter for. Default is <code>character(0)</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>quiet</code></td>
@@ -60,27 +57,29 @@ Set of required properties to filter for. Default is <code>character(0)</code>.<
 <p>[<code>logical(1)</code>]<br>
 Construct learners quietly to check their properties, shows no package startup messages.
 Turn off if you suspect errors.
-Default is codeTRUE.</p>
+Default is <code>TRUE</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>warn.missing.packages</code></td>
 <td>
 <p>[<code>logical(1)</code>]<br>
 If some learner cannot be constructed because its package is missing,
 should a warning be shown?
-Default is codeTRUE.</p>
+Default is <code>TRUE</code>.</p>
 </td></tr>
-<tr valign="top"><td><code>task</code></td>
+<tr valign="top"><td><code>create</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
-The task.</p>
+<p>[<code>logical(1)</code>]<br>
+Instantiate objects (or return strings)?
+Default is <code>FALSE</code>.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>[<code>character</code>]. Class names of matching learners.
+<p>[<code>character</code> | <code>list</code> of <code><a href="makeLearner.html">Learner</a></code>]. Class names of matching
+learners or instantiated objects.
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

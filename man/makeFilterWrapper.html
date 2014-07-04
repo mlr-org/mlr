@@ -75,16 +75,15 @@ See <code><a href="filterFeatures.html">filterFeatures</a></code>.</p>
 <p>Other filter: <code><a href="getFilterResult.html">FilterResult</a></code>,
 <code><a href="getFilterResult.html">getFilterResult</a></code>;
 <code><a href="FilterValues.html">FilterValues</a></code>; <code><a href="filterFeatures.html">filterFeatures</a></code>;
-<code><a href="getFilterMethods.html">getFilterMethods</a></code>;
 <code><a href="getFilterValues.html">getFilterValues</a></code>;
-<code><a href="getFilteredFeatures.html">getFilteredFeatures</a></code>
+<code><a href="getFilteredFeatures.html">getFilteredFeatures</a></code>;
+<code><a href="listFilterMethods.html">listFilterMethods</a></code>
 </p>
 
 
 <h3>Examples</h3>
 
-<pre><code class="r">
-task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+<pre><code class="r">task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.lda&quot;)
 inner = makeResampleDesc(&quot;Holdout&quot;)
 outer = makeResampleDesc(&quot;CV&quot;, iters = 2)
@@ -109,22 +108,19 @@ r = resample(lrn, task, outer, extract = function(model) {
 
 <pre><code>## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
-## [Resample] Result: mmce.test.mean=0.0467
+## [Resample] Result: mmce.test.mean=0.04
 </code></pre>
 
 <pre><code class="r">print(r$extract)
 </code></pre>
 
 <pre><code>## [[1]]
-## [1] &quot;Petal.Width&quot;  &quot;Petal.Length&quot;
+## [1] &quot;Petal.Length&quot; &quot;Petal.Width&quot; 
 ## 
 ## [[2]]
-## [1] &quot;Petal.Length&quot; &quot;Petal.Width&quot;
-</code></pre>
-
-<pre><code class="r">
+## [1] &quot;Petal.Width&quot;  &quot;Petal.Length&quot;
 </code></pre>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

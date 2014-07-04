@@ -13,41 +13,58 @@
 <p>Returns the matching measures which have specific characteristics, e.g.
 whether they supports classification or regression.
 </p>
-<p><code>listMeasuresForTask</code> returns all learners that are in principle applicable
-for a given task.
-</p>
 
 
 <h3>Usage</h3>
 
 <pre>
-listMeasures(properties = character(0L))
+listMeasures(obj, properties = character(0L), create = FALSE)
 
-listMeasuresForTask(task, properties = character(0L))
+## Default S3 method:
+listMeasures(obj, properties = character(0L),
+  create = FALSE)
+
+## S3 method for class 'character'
+listMeasures(obj, properties = character(0L),
+  create = FALSE)
+
+## S3 method for class 'SupervisedTask'
+listMeasures(obj, properties = character(0L),
+  create = FALSE)
 </pre>
 
 
 <h3>Arguments</h3>
 
 <table summary="R argblock">
+<tr valign="top"><td><code>obj</code></td>
+<td>
+<p>[<code>character(1)</code> | <code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+Either a task or the type of the task, in the latter case one of:
+&ldquo;classif&rdquo;, &ldquo;regr&rdquo;,  &ldquo;surv&rdquo;, dQuotecostsens.
+Default is <code>NA</code>, matching all types.</p>
+</td></tr>
 <tr valign="top"><td><code>properties</code></td>
 <td>
-<p>[<code>character)</code>]<br>
-Set of required properties to filter for. Default is <code>character(0)</code>.
-See <a href="makeMeasure.html">Measure</a> for some standardized properties.</p>
+<p>[<code>character</code>]<br>
+Set of required properties to filter for.
+See <code><a href="makeMeasure.html">Measure</a></code> for some standardized properties.
+Default is <code>character(0)</code>.</p>
 </td></tr>
-<tr valign="top"><td><code>task</code></td>
+<tr valign="top"><td><code>create</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
-The task.</p>
+<p>[<code>logical(1)</code>]<br>
+Instantiate objects (or return strings)?
+Default is <code>FALSE</code>.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p>[<code>character</code>]. Class names of matching learners.
+<p>[<code>character</code> | <code>list</code> of <code><a href="makeMeasure.html">Measure</a></code>]. Class names of matching
+measures or instantiated objects.
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

@@ -200,30 +200,29 @@ this &lt;measure&gt;.&lt;aggregation&gt;.</p>
 
 <h3>Examples</h3>
 
-<pre><code class="r">
-task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
-rdesc &lt;- makeResampleDesc(&quot;CV&quot;, iters = 2)
-r &lt;- resample(makeLearner(&quot;classif.qda&quot;), task, rdesc)
+<pre><code class="r">task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 2)
+r = resample(makeLearner(&quot;classif.qda&quot;), task, rdesc)
 </code></pre>
 
 <pre><code>## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
-## [Resample] Result: mmce.test.mean=0.02
+## [Resample] Result: mmce.test.mean=0.0467
 </code></pre>
 
 <pre><code class="r">print(r$aggr)
 </code></pre>
 
 <pre><code>## mmce.test.mean 
-##           0.02
+##        0.04667
 </code></pre>
 
 <pre><code class="r">print(r$measures.test)
 </code></pre>
 
 <pre><code>##   iter    mmce
-## 1    1 0.01333
-## 2    2 0.02667
+## 1    1 0.04000
+## 2    2 0.05333
 </code></pre>
 
 <pre><code class="r">print(r$pred)
@@ -237,17 +236,14 @@ r &lt;- resample(makeLearner(&quot;classif.qda&quot;), task, rdesc)
 ## threshold: 
 ## time (mean): 0.00
 ##   id  truth response iter  set
-## 1  8 setosa   setosa    1 test
-## 2 10 setosa   setosa    1 test
-## 3 11 setosa   setosa    1 test
-## 4 13 setosa   setosa    1 test
-## 5 14 setosa   setosa    1 test
-## 6 15 setosa   setosa    1 test
-</code></pre>
-
-<pre><code class="r">
+## 1  3 setosa   setosa    1 test
+## 2  4 setosa   setosa    1 test
+## 3  5 setosa   setosa    1 test
+## 4  6 setosa   setosa    1 test
+## 5 10 setosa   setosa    1 test
+## 6 12 setosa   setosa    1 test
 </code></pre>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

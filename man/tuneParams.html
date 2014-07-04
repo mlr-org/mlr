@@ -10,11 +10,14 @@
 
 <h3>Description</h3>
 
-<p>Optimizes the hyperparameters of a learner for a classification or regression problem.
+<p>Optimizes the hyperparameters of a learner.
 Allows for different optimization methods, such as grid search, evolutionary strategies, etc.
 You can select such an algorithm (and its settings)
 by passing a corresponding control object. For a complete list of implemented algorithms look at
 <code><a href="TuneControl.html">TuneControl</a></code>.
+</p>
+<p>Note that if tranformations are associated with the parameters, the returned result will contain
+transformed values in the optimal result and the path.
 </p>
 
 
@@ -73,13 +76,6 @@ Default is set via <code><a href="configureMlr.html">configureMlr</a></code>.</p
 </table>
 
 
-<h3>Details</h3>
-
-<p>Note that if tranformations are associated with the parameters, the returned result will contain
-transformed values in the optimal result and the path.
-</p>
-
-
 <h3>Value</h3>
 
 <p>[<code><a href="TuneResult.html">TuneResult</a></code>].
@@ -97,9 +93,9 @@ transformed values in the optimal result and the path.
 <code><a href="TuneControl.html">TuneControlOptim</a></code>,
 <code><a href="TuneControl.html">TuneControlRandom</a></code>,
 <code><a href="TuneControl.html">makeTuneControlCMAES</a></code>,
+<code><a href="TuneControl.html">makeTuneControlGenSA</a></code>,
 <code><a href="TuneControl.html">makeTuneControlGrid</a></code>,
 <code><a href="TuneControl.html">makeTuneControlIrace</a></code>,
-<code><a href="TuneControl.html">makeTuneControlOptim</a></code>,
 <code><a href="TuneControl.html">makeTuneControlRandom</a></code>;
 <code><a href="getTuneResult.html">getTuneResult</a></code>;
 <code><a href="makeModelMultiplexerParamSet.html">makeModelMultiplexerParamSet</a></code>;
@@ -107,5 +103,5 @@ transformed values in the optimal result and the path.
 <code><a href="tuneThreshold.html">tuneThreshold</a></code>
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

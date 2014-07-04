@@ -30,7 +30,7 @@ with the base learner id, i.e. &ldquo;[learner.id].[parameter.name]&rdquo;.
 <h3>Usage</h3>
 
 <pre>
-makeModelMultiplexer(base.learners, id = "ModelMultiplexer")
+makeModelMultiplexer(base.learners)
 </pre>
 
 
@@ -41,12 +41,6 @@ makeModelMultiplexer(base.learners, id = "ModelMultiplexer")
 <td>
 <p>[<code>list</code> of <code><a href="makeLearner.html">Learner</a></code>]<br>
 List of Learners with unique IDs.</p>
-</td></tr>
-<tr valign="top"><td><code>id</code></td>
-<td>
-<p>[<code>character(1)</code>]<br>
-Identifier for constructed ModelMultiplexer.
-Default is &ldquo;ModelMultiplexer&rdquo;.</p>
 </td></tr>
 </table>
 
@@ -75,9 +69,9 @@ I.e., the artificial prefix before parameter names is suppressed.
 <code><a href="TuneControl.html">TuneControlOptim</a></code>,
 <code><a href="TuneControl.html">TuneControlRandom</a></code>,
 <code><a href="TuneControl.html">makeTuneControlCMAES</a></code>,
+<code><a href="TuneControl.html">makeTuneControlGenSA</a></code>,
 <code><a href="TuneControl.html">makeTuneControlGrid</a></code>,
 <code><a href="TuneControl.html">makeTuneControlIrace</a></code>,
-<code><a href="TuneControl.html">makeTuneControlOptim</a></code>,
 <code><a href="TuneControl.html">makeTuneControlRandom</a></code>;
 <code><a href="getTuneResult.html">getTuneResult</a></code>;
 <code><a href="makeModelMultiplexerParamSet.html">makeModelMultiplexerParamSet</a></code>;
@@ -88,8 +82,7 @@ I.e., the artificial prefix before parameter names is suppressed.
 
 <h3>Examples</h3>
 
-<pre><code class="r">
-bls = list(
+<pre><code class="r">bls = list(
   makeLearner(&quot;classif.ksvm&quot;),
   makeLearner(&quot;classif.randomForest&quot;)
 )
@@ -105,7 +98,7 @@ bls = list(
 # parameter names are prefixed automatically and the &#39;requires&#39;
 # element is set, too, to make all paramaters subordinate to &#39;selected.learner&#39;
 ps = makeModelMultiplexerParamSet(lrn,
-  makeNumericParam(&quot;sigma&quot;, lower=-10, upper = 10, trafo = function(x) 2^x),
+  makeNumericParam(&quot;sigma&quot;, lower = -10, upper = 10, trafo = function(x) 2^x),
   makeIntegerParam(&quot;ntree&quot;, lower = 1L, upper = 500L)
 )
 print(ps)
@@ -138,41 +131,41 @@ res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)
 ## classif.ksvm.sigma                                 -10 to 10   Y     Y
 ## classif.randomForest.ntree                          1 to 500   Y     -
 ## With control class: TuneControlRandom
-## [Tune] 1: selected.learner=classif.randomForest; ntree=22 : mmce.test.mean=0.04
-## [Tune] 2: selected.learner=classif.randomForest; ntree=211 : mmce.test.mean=0.0467
-## [Tune] 3: selected.learner=classif.ksvm; sigma=0.00239 : mmce.test.mean=0.427
-## [Tune] 4: selected.learner=classif.ksvm; sigma=0.216 : mmce.test.mean=0.0533
-## [Tune] Result: selected.learner=classif.randomForest; classif.randomForest.ntree=22 : mmce.test.mean=0.04
+## Imputation value: 1
+## [Tune] 1: selected.learner=classif.randomForest; ntree=488 : mmce.test.mean=0.0533
+## [Tune] 2: selected.learner=classif.ksvm; sigma=0.00229 : mmce.test.mean=0.527
+## [Tune] 3: selected.learner=classif.ksvm; sigma=10.5 : mmce.test.mean=0.173
+## [Tune] 4: selected.learner=classif.ksvm; sigma=1.53 : mmce.test.mean=0.06
+## [Tune] Result: selected.learner=classif.randomForest; classif.randomForest.ntree=488 : mmce.test.mean=0.0533
 </code></pre>
 
 <pre><code class="r">print(res)
 </code></pre>
 
 <pre><code>## Tune result:
-## Op. pars: selected.learner=classif.randomForest; classif.randomForest.ntree=22
-## mmce.test.mean=0.04
+## Op. pars: selected.learner=classif.randomForest; classif.randomForest.ntree=488
+## mmce.test.mean=0.0533
 </code></pre>
 
 <pre><code class="r">print(head(as.data.frame(res$opt.path)))
 </code></pre>
 
 <pre><code>##       selected.learner classif.ksvm.sigma classif.randomForest.ntree
-## 1 classif.randomForest                 NA                         22
-## 2 classif.randomForest                 NA                        211
-## 3         classif.ksvm           0.002391                         NA
-## 4         classif.ksvm           0.215967                         NA
-##   mmce.test.mean dob eol
-## 1        0.04000   1  NA
-## 2        0.04667   2  NA
-## 3        0.42667   3  NA
-## 4        0.05333   4  NA
+## 1 classif.randomForest                 NA                        488
+## 2         classif.ksvm           0.002293                         NA
+## 3         classif.ksvm          10.512496                         NA
+## 4         classif.ksvm           1.532583                         NA
+##   mmce.test.mean dob eol error.message exec.time
+## 1        0.05333   1  NA          &lt;NA&gt;     0.062
+## 2        0.52667   2  NA          &lt;NA&gt;     0.042
+## 3        0.17333   3  NA          &lt;NA&gt;     0.044
+## 4        0.06000   4  NA          &lt;NA&gt;     0.042
 </code></pre>
 
-<pre><code class="r">
-# more unique and reliable way to construct the param set
+<pre><code class="r"># more unique and reliable way to construct the param set
 ps = makeModelMultiplexerParamSet(lrn,
   classif.ksvm = makeParamSet(
-    makeNumericParam(&quot;sigma&quot;, lower=-10, upper = 10, trafo = function(x) 2^x)
+    makeNumericParam(&quot;sigma&quot;, lower = -10, upper = 10, trafo = function(x) 2^x)
   ),
   classif.randomForest = makeParamSet(
     makeIntegerParam(&quot;ntree&quot;, lower = 1L, upper = 500L)
@@ -182,16 +175,15 @@ ps = makeModelMultiplexerParamSet(lrn,
 # this is how you would construct the param set manually, works too
 ps = makeParamSet(
   makeDiscreteParam(&quot;selected.learner&quot;, values = extractSubList(bls, &quot;id&quot;)),
-  makeNumericParam(&quot;classif.ksvm.sigma&quot;, lower=-10, upper = 10, trafo = function(x) 2^x,
+  makeNumericParam(&quot;classif.ksvm.sigma&quot;, lower = -10, upper = 10, trafo = function(x) 2^x,
     requires = quote(selected.learner == &quot;classif.ksvm&quot;)),
   makeIntegerParam(&quot;classif.randomForest.ntree&quot;, lower = 1L, upper = 500L,
     requires = quote(selected.learner == &quot;classif.randomForst&quot;))
 )
 
 # all three ps-objects are exactly the same internally.
-
 </code></pre>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

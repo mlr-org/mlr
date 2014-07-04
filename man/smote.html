@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Synthetic Minority Oversampling Technique to handle class...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for smote {mlr}"><tr><td>smote {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Synthetic Minority Oversampling Technique to handle class imbalancy in binary classification.</h2>
+
+<h3>Description</h3>
+
+<p>In each iteration, samples one minority class element x1, then one of x1's nearest neighbors: x2.
+Both points are now interpolated / convex-combined, resulting in a new virtual data point x3
+for the minority class.
+</p>
+<p>The method handles factor features, too. The gower distance is used for nearest neighbor
+calculation, see <code><a href="../../cluster/html/daisy.html">daisy</a></code>.
+For interpolation, the new factor level for x3
+is sampled from the two given levels of x1 and x2 per feature.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+smote(task, rate, nn = 5L)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>task</code></td>
+<td>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+The task.</p>
+</td></tr>
+<tr valign="top"><td><code>rate</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br>
+Factor to upsample the smaller class.
+Must be between 1 and <code>Inf</code>,
+where 1 means no oversampling and 2 would mean doubling the class size.</p>
+</td></tr>
+<tr valign="top"><td><code>nn</code></td>
+<td>
+<p>[<code>integer(1)</code>]<br>
+Number of nearest neighbors to consider.
+Default is 5.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>].
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other imbalancy: <code><a href="makeOverBaggingWrapper.html">makeOverBaggingWrapper</a></code>;
+<code><a href="makeUndersampleWrapper.html">makeOversampleWrapper</a></code>,
+<code><a href="makeUndersampleWrapper.html">makeUndersampleWrapper</a></code>;
+<code><a href="oversample.html">oversample</a></code>, <code><a href="oversample.html">undersample</a></code>
+</p>
+
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

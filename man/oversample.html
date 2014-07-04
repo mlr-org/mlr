@@ -19,25 +19,19 @@
 <h3>Usage</h3>
 
 <pre>
-oversample(obj, target, rate)
+oversample(task, rate)
 
-undersample(obj, target, rate)
+undersample(task, rate)
 </pre>
 
 
 <h3>Arguments</h3>
 
 <table summary="R argblock">
-<tr valign="top"><td><code>obj</code></td>
+<tr valign="top"><td><code>task</code></td>
 <td>
-<p>[<code>data.frame</code> | <code><a href="SupervisedTask.html">ClassifTask</a></code>]<br>
-Input data.</p>
-</td></tr>
-<tr valign="top"><td><code>target</code></td>
-<td>
-<p>[<code>character(1)</code>]<br>
-Name of the column specifying the response.
-Only used when <code>obj</code> is a data.frame, otherwise ignored.</p>
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+The task.</p>
 </td></tr>
 <tr valign="top"><td><code>rate</code></td>
 <td>
@@ -54,15 +48,16 @@ where 1 means no oversampling and 2 would mean doubling the class size.</p>
 
 <h3>Value</h3>
 
-<p>[<code>data.frame</code> | <code><a href="SupervisedTask.html">ClassifTask</a></code>]. Same type as <code>obj</code>.
+<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>].
 </p>
 
 
 <h3>See Also</h3>
 
-<p>Other OverUndersample: <code><a href="makeUndersampleWrapper.html">makeOversampleWrapper</a></code>,
-<code><a href="makeUndersampleWrapper.html">makeUndersampleWrapper</a></code>
+<p>Other imbalancy: <code><a href="makeOverBaggingWrapper.html">makeOverBaggingWrapper</a></code>;
+<code><a href="makeUndersampleWrapper.html">makeOversampleWrapper</a></code>,
+<code><a href="makeUndersampleWrapper.html">makeUndersampleWrapper</a></code>; <code><a href="smote.html">smote</a></code>
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

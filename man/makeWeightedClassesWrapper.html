@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Wraps a classifier for weighted fitting where each class...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for makeWeightedClassesWrapper {mlr}"><tr><td>makeWeightedClassesWrapper {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Wraps a classifier for weighted fitting where each class receives a weight.</h2>
+
+<h3>Description</h3>
+
+<p>Creates a wrapper, which can be used like any other learner object.
+</p>
+<p>Fitting is performed in a weighted fashion where each observation receives a weight,
+depending on the class is belongs to, see <code>wcw.weight</code>.
+This might help to mitigate problems in imbalanced classification problems.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+makeWeightedClassesWrapper(learner, wcw.weight)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>learner</code></td>
+<td>
+<p>[<code><a href="makeLearner.html">Learner</a></code> | <code>character(1)</code>]<br>
+The classification learner.
+If you pass a string the learner will be created via <code><a href="makeLearner.html">makeLearner</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>wcw.weight</code></td>
+<td>
+<p>[<code>numeric</code>]<br>
+Weight for each class.
+Must be a vector of the same number of elements as classes are in task,
+and must also be in the same order as the class levels are in
+<code>task$task.desc$class.levels</code>.
+For convenience, one must pass a single number in case of binary classification, which
+is then taken as the weight of the positive class, while the negative class receives a weight
+of 1.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>[<code><a href="makeLearner.html">Learner</a></code>].
+</p>
+
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

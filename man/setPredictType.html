@@ -15,6 +15,9 @@ Classification: Labels or class probabilities (including labels).
 Regression: Numeric or response or standard errors (including numeric response).
 Survival: Linear predictor or survival probability.
 </p>
+<p>For complex wrappers the predict type is usually also passed down the
+encapsulated learner in a recursive fashion.
+</p>
 
 
 <h3>Usage</h3>
@@ -29,8 +32,9 @@ setPredictType(learner, predict.type)
 <table summary="R argblock">
 <tr valign="top"><td><code>learner</code></td>
 <td>
-<p>[<code><a href="makeLearner.html">Learner</a></code>]<br>
-The learner.</p>
+<p>[<code><a href="makeLearner.html">Learner</a></code> | <code>character(1)</code>]<br>
+The learner.
+If you pass a string the learner will be created via <code><a href="makeLearner.html">makeLearner</a></code>.</p>
 </td></tr>
 <tr valign="top"><td><code>predict.type</code></td>
 <td>
@@ -45,14 +49,19 @@ Default is &ldquo;response&rdquo;.</p>
 
 <h3>Value</h3>
 
-<p>[<code><a href="makeLearner.html">Learner</a></code>] with changed prediction behaviour.
+<p>[<code><a href="makeLearner.html">Learner</a></code>].
 </p>
 
 
 <h3>See Also</h3>
 
-<p><code><a href="setThreshold.html">setThreshold</a></code> to alter the threshold used for prediction.
+<p>Other learner: <code><a href="getHyperPars.html">getHyperPars</a></code>;
+<code><a href="getParamSet.html">getParamSet</a></code>; <code><a href="setHyperPars.html">setHyperPars</a></code>;
+<code><a href="setId.html">setId</a></code>; <code><a href="showHyperPars.html">showHyperPars</a></code>
+</p>
+<p>Other predict: <code><a href="getProbabilities.html">getProbabilities</a></code>;
+<code><a href="predict.WrappedModel.html">predict.WrappedModel</a></code>
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

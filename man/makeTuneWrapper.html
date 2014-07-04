@@ -96,9 +96,9 @@ Default is set via <code><a href="configureMlr.html">configureMlr</a></code>.</p
 <code><a href="TuneControl.html">TuneControlOptim</a></code>,
 <code><a href="TuneControl.html">TuneControlRandom</a></code>,
 <code><a href="TuneControl.html">makeTuneControlCMAES</a></code>,
+<code><a href="TuneControl.html">makeTuneControlGenSA</a></code>,
 <code><a href="TuneControl.html">makeTuneControlGrid</a></code>,
 <code><a href="TuneControl.html">makeTuneControlIrace</a></code>,
-<code><a href="TuneControl.html">makeTuneControlOptim</a></code>,
 <code><a href="TuneControl.html">makeTuneControlRandom</a></code>;
 <code><a href="getTuneResult.html">getTuneResult</a></code>;
 <code><a href="makeModelMultiplexerParamSet.html">makeModelMultiplexerParamSet</a></code>;
@@ -108,8 +108,7 @@ Default is set via <code><a href="configureMlr.html">configureMlr</a></code>.</p
 
 <h3>Examples</h3>
 
-<pre><code class="r">
-task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+<pre><code class="r">task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.ksvm&quot;)
 # stupid mini grid
 ps = makeParamSet(
@@ -128,19 +127,20 @@ mod = train(lrn, task)
 ## C     discrete   -   -    1,2   -     -
 ## sigma discrete   -   -    1,2   -     -
 ## With control class: TuneControlGrid
-## [Tune] 1: C=1; sigma=1 : mmce.test.mean=0.02
-## [Tune] 2: C=2; sigma=1 : mmce.test.mean=0.02
-## [Tune] 3: C=1; sigma=2 : mmce.test.mean=0.04
-## [Tune] 4: C=2; sigma=2 : mmce.test.mean=0.04
-## [Tune] Result: C=2; sigma=1 : mmce.test.mean=0.02
+## Imputation value: 1
+## [Tune] 1: C=1; sigma=1 : mmce.test.mean=   0
+## [Tune] 2: C=2; sigma=1 : mmce.test.mean=   0
+## [Tune] 3: C=1; sigma=2 : mmce.test.mean=   0
+## [Tune] 4: C=2; sigma=2 : mmce.test.mean=   0
+## [Tune] Result: C=1; sigma=1 : mmce.test.mean=   0
 </code></pre>
 
 <pre><code class="r">print(getTuneResult(mod))
 </code></pre>
 
 <pre><code>## Tune result:
-## Op. pars: C=2; sigma=1
-## mmce.test.mean=0.02
+## Op. pars: C=1; sigma=1
+## mmce.test.mean=   0
 </code></pre>
 
 <pre><code class="r"># nested resampling for evaluation
@@ -154,23 +154,25 @@ r = resample(lrn, task, outer, extract = getTuneResult)
 ## C     discrete   -   -    1,2   -     -
 ## sigma discrete   -   -    1,2   -     -
 ## With control class: TuneControlGrid
-## [Tune] 1: C=1; sigma=1 : mmce.test.mean=0.04
-## [Tune] 2: C=2; sigma=1 : mmce.test.mean=0.04
-## [Tune] 3: C=1; sigma=2 : mmce.test.mean=0.12
+## Imputation value: 1
+## [Tune] 1: C=1; sigma=1 : mmce.test.mean=0.08
+## [Tune] 2: C=2; sigma=1 : mmce.test.mean=0.08
+## [Tune] 3: C=1; sigma=2 : mmce.test.mean=0.08
 ## [Tune] 4: C=2; sigma=2 : mmce.test.mean=0.12
-## [Tune] Result: C=2; sigma=1 : mmce.test.mean=0.04
+## [Tune] Result: C=2; sigma=1 : mmce.test.mean=0.08
 ## [Resample] cross-validation iter: 2
 ## [Tune] Started tuning learner classif.ksvm for parameter set:
 ##           Type len Def Constr Req Trafo
 ## C     discrete   -   -    1,2   -     -
 ## sigma discrete   -   -    1,2   -     -
 ## With control class: TuneControlGrid
-## [Tune] 1: C=1; sigma=1 : mmce.test.mean=0.08
-## [Tune] 2: C=2; sigma=1 : mmce.test.mean=0.08
-## [Tune] 3: C=1; sigma=2 : mmce.test.mean=0.04
-## [Tune] 4: C=2; sigma=2 : mmce.test.mean=0.16
-## [Tune] Result: C=1; sigma=2 : mmce.test.mean=0.04
-## [Resample] Result: mmce.test.mean=0.0733
+## Imputation value: 1
+## [Tune] 1: C=1; sigma=1 : mmce.test.mean= 0.2
+## [Tune] 2: C=2; sigma=1 : mmce.test.mean=0.16
+## [Tune] 3: C=1; sigma=2 : mmce.test.mean=0.24
+## [Tune] 4: C=2; sigma=2 : mmce.test.mean= 0.2
+## [Tune] Result: C=2; sigma=1 : mmce.test.mean=0.16
+## [Resample] Result: mmce.test.mean=0.06
 </code></pre>
 
 <pre><code class="r">print(r$extract)
@@ -179,17 +181,14 @@ r = resample(lrn, task, outer, extract = getTuneResult)
 <pre><code>## [[1]]
 ## Tune result:
 ## Op. pars: C=2; sigma=1
-## mmce.test.mean=0.04
+## mmce.test.mean=0.08
 ## 
 ## [[2]]
 ## Tune result:
-## Op. pars: C=1; sigma=2
-## mmce.test.mean=0.04
-</code></pre>
-
-<pre><code class="r">
+## Op. pars: C=2; sigma=1
+## mmce.test.mean=0.16
 </code></pre>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

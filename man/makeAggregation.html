@@ -78,13 +78,11 @@ A function with following signature: <code>function(task, perf.test, perf.train,
 
 <h3>Examples</h3>
 
-<pre><code class="r">
-# computes the interquartile range on all performance values
-test.iqr = makeAggregation(id=&quot;test.iqr&quot;,
+<pre><code class="r"># computes the interquartile range on all performance values
+test.iqr = makeAggregation(id = &quot;test.iqr&quot;,
   fun = function (task, perf.test, perf.train, measure, group, pred) IQR(perf.test))
-
 </code></pre>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

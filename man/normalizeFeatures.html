@@ -11,14 +11,15 @@
 <h3>Description</h3>
 
 <p>Normalize features by different methods. Internally <code><a href="../../BBmisc/html/normalize.html">normalize</a></code> is used.
+Non numerical features will be left untouched and passed to the result.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-normalizeFeatures(obj, target = NULL, method = "standardize",
-  exclude = NULL, range = c(0, 1))
+normalizeFeatures(obj, target = character(0L), method = "standardize",
+  exclude = character(0L), range = c(0, 1))
 </pre>
 
 
@@ -27,13 +28,13 @@ normalizeFeatures(obj, target = NULL, method = "standardize",
 <table summary="R argblock">
 <tr valign="top"><td><code>obj</code></td>
 <td>
-<p>[<code>data.frame</code> | <code><a href="SupervisedTask.html">SupervisedTask</a></code> | <code>numeric</code>]<br>
+<p>[<code>data.frame</code> | <code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
 Input data.</p>
 </td></tr>
 <tr valign="top"><td><code>target</code></td>
 <td>
 <p>[<code>character(1)</code>]<br>
-Name of the column specifying the response.
+Name of the column(s) specifying the response.
 Only used when <code>obj</code> is a data.frame, otherwise ignored.</p>
 </td></tr>
 <tr valign="top"><td><code>method</code></td>
@@ -49,7 +50,9 @@ Available are:<br>
 <tr valign="top"><td><code>exclude</code></td>
 <td>
 <p>[<code>character</code>]<br>
-Names of the columns to exclude.</p>
+Names of the columns to exclude.
+The target does not have to be included here.
+Default is none.</p>
 </td></tr>
 <tr valign="top"><td><code>range</code></td>
 <td>
@@ -61,7 +64,7 @@ Range the features should be scaled to. Default is <code>c(0,1)</code>.</p>
 
 <h3>Value</h3>
 
-<p>[<code>data.frame</code> | <code><a href="SupervisedTask.html">SupervisedTask</a></code> | <code>numeric</code>]. Same type as <code>obj</code>.
+<p>[<code>data.frame</code> | <code><a href="SupervisedTask.html">SupervisedTask</a></code>]. Same type as <code>obj</code>.
 </p>
 
 
@@ -70,5 +73,5 @@ Range the features should be scaled to. Default is <code>c(0,1)</code>.</p>
 <p><code><a href="../../BBmisc/html/normalize.html">normalize</a></code>
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

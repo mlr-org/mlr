@@ -1,18 +1,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>R: Fuse learner with simple over/undersampling for binary...</title>
+<html><head><title>R: Fuse learner with simple ove/underrsampling for imbalancy...</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="R.css">
 </head><body>
 
 <table width="100%" summary="page for makeUndersampleWrapper {mlr}"><tr><td>makeUndersampleWrapper {mlr}</td><td align="right">R Documentation</td></tr></table>
 
-<h2>Fuse learner with simple over/undersampling for binary classification.</h2>
+<h2>Fuse learner with simple ove/underrsampling for imbalancy correction in binary classification.</h2>
 
 <h3>Description</h3>
 
 <p>Creates a learner object, which can be
 used like any other learner object.
 Internally uses <code><a href="oversample.html">oversample</a></code> or <code><a href="oversample.html">undersample</a></code> before every model fit.
+</p>
+<p>Note that observation weights do not influence the sampling and are simply passed
+down to the next learner.
 </p>
 
 
@@ -30,8 +33,9 @@ makeOversampleWrapper(learner, osw.rate)
 <table summary="R argblock">
 <tr valign="top"><td><code>learner</code></td>
 <td>
-<p>[<code><a href="makeLearner.html">Learner</a></code>]<br>
-The learner.</p>
+<p>[<code><a href="makeLearner.html">Learner</a></code> | <code>character(1)</code>]<br>
+The learner.
+If you pass a string the learner will be created via <code><a href="makeLearner.html">makeLearner</a></code>.</p>
 </td></tr>
 <tr valign="top"><td><code>usw.rate</code></td>
 <td>
@@ -49,13 +53,6 @@ where 1 means no oversampling and 2 would mean doubling the class size.</p>
 </table>
 
 
-<h3>Details</h3>
-
-<p>Note that observation weights do not influence the sampling and are simply passed
-down to the next learner.
-</p>
-
-
 <h3>Value</h3>
 
 <p>[<code><a href="makeLearner.html">Learner</a></code>].
@@ -64,9 +61,10 @@ down to the next learner.
 
 <h3>See Also</h3>
 
-<p>Other OverUndersample: <code><a href="oversample.html">oversample</a></code>,
-<code><a href="oversample.html">undersample</a></code>
+<p>Other imbalancy: <code><a href="makeOverBaggingWrapper.html">makeOverBaggingWrapper</a></code>;
+<code><a href="oversample.html">oversample</a></code>, <code><a href="oversample.html">undersample</a></code>;
+<code><a href="smote.html">smote</a></code>
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

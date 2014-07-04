@@ -18,7 +18,7 @@
 
 <pre>
 makeCostMeasure(id = "costs", minimize = TRUE, costs, task,
-  aggregate = mean)
+  combine = mean, best = NULL, worst = NULL)
 </pre>
 
 
@@ -28,12 +28,15 @@ makeCostMeasure(id = "costs", minimize = TRUE, costs, task,
 <tr valign="top"><td><code>id</code></td>
 <td>
 <p>[<code>character(1)</code>]<br>
-Name of measure. Default is &ldquo;costs&rdquo;.</p>
+Name of measure.
+Default is &ldquo;costs&rdquo;.</p>
 </td></tr>
 <tr valign="top"><td><code>minimize</code></td>
 <td>
 <p>[<code>logical(1)</code>]<br>
-Should the measure be minimized? Default is TRUE. Otherwise you are effectively specifying a benefits matrix.</p>
+Should the measure be minimized?
+Otherwise you are effectively specifying a benefits matrix.
+Default is <code>TRUE</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>costs</code></td>
 <td>
@@ -46,11 +49,25 @@ Rows indicate true classes, columns predicted classes.</p>
 <p>[<code><a href="SupervisedTask.html">ClassifTask</a></code>]<br>
 Classification task. Has to be passed, so validity of matrix names can be checked.</p>
 </td></tr>
-<tr valign="top"><td><code>aggregate</code></td>
+<tr valign="top"><td><code>combine</code></td>
 <td>
-<p>[<code>logical(1)</code>]<br>
-How to aggregate costs over all cases in one test set prediction?
+<p>[<code>function</code>]<br>
+How to combine costs over all cases for a SINGLE test set?
+Note this is not the same as the <code>aggregate</code> argument in <code><a href="makeMeasure.html">makeMeasure</a></code>
+You can set this as well via <code><a href="setAggregation.html">setAggregation</a></code>, as for any measure.
 Default is <code><a href="../../base/html/mean.html">mean</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>best</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br>
+Best obtainable value for measure.
+Default is -<code>Inf</code> or <code>Inf</code>, depending on <code>minimize</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>worst</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br>
+Worst obtainable value for measure.
+Default is <code>Inf</code> or -<code>Inf</code>, depending on <code>minimize</code>.</p>
 </td></tr>
 </table>
 
@@ -63,8 +80,26 @@ Default is <code><a href="../../base/html/mean.html">mean</a></code>.</p>
 
 <h3>See Also</h3>
 
-<p><code><a href="measures.html">measures</a></code>, <code><a href="makeMeasure.html">makeMeasure</a></code>
+<p>Other performance: <code><a href="makeMeasure.html">Measure</a></code>,
+<code><a href="makeMeasure.html">makeMeasure</a></code>; <code><a href="measures.html">acc</a></code>,
+<code><a href="../../glmnet/html/glmnet-internal.html">auc</a></code>, <code><a href="measures.html">ber</a></code>,
+<code><a href="measures.html">cindex</a></code>, <code><a href="measures.html">f1</a></code>,
+<code><a href="measures.html">fdr</a></code>, <code><a href="measures.html">featperc</a></code>,
+<code><a href="measures.html">fn</a></code>, <code><a href="measures.html">fnr</a></code>, <code><a href="measures.html">fp</a></code>,
+<code><a href="measures.html">fpr</a></code>, <code><a href="measures.html">gmean</a></code>,
+<code><a href="measures.html">gpr</a></code>, <code><a href="measures.html">mae</a></code>, <code><a href="measures.html">mcc</a></code>,
+<code><a href="measures.html">mcp</a></code>, <code><a href="measures.html">meancosts</a></code>,
+<code><a href="measures.html">measures</a></code>, <code><a href="measures.html">medae</a></code>,
+<code><a href="measures.html">medse</a></code>, <code><a href="measures.html">mmce</a></code>,
+<code><a href="measures.html">mse</a></code>, <code><a href="measures.html">multiclass.auc</a></code>,
+<code><a href="measures.html">npv</a></code>, <code><a href="measures.html">ppv</a></code>, <code><a href="measures.html">rmse</a></code>,
+<code><a href="measures.html">sae</a></code>, <code><a href="measures.html">sse</a></code>,
+<code><a href="measures.html">timeboth</a></code>, <code><a href="measures.html">timepredict</a></code>,
+<code><a href="measures.html">timetrain</a></code>, <code><a href="measures.html">tn</a></code>,
+<code><a href="measures.html">tnr</a></code>, <code><a href="measures.html">tp</a></code>, <code><a href="measures.html">tpr</a></code>;
+<code><a href="makeCustomResampledMeasure.html">makeCustomResampledMeasure</a></code>;
+<code><a href="performance.html">performance</a></code>
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

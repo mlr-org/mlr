@@ -27,73 +27,16 @@ For integers the internally proposed numeric values are automatically rounded.</
 </dd>
 <dt>makeTuneControlCMAES</dt><dd><p>CMA Evolution Strategy with method <code><a href="../../cmaes/html/cma_es.html">cma_es</a></code>.
 Can handle numeric(vector) and integer(vector) hyperparameters.
-For integers the internally proposed numeric values are automatically rounded.</p>
+For integers the internally proposed numeric values are automatically rounded.
+The sigma variance parameter is initialized to 1/4 of the span of box-constraints per
+parameter dimension.</p>
 </dd>
 <dt>makeTuneControlIrace</dt><dd><p>Tuning with iterated F-Racing with method <code><a href="../../irace/html/irace.html">irace</a></code>.
-All kinds of parameter types can be handled.</p>
+All kinds of parameter types can be handled. We return the best of the final elite
+candidates found by irace in the last race. Its estimated performance is the mean of all
+evaluations ever done for that candidate.</p>
 </dd>
 </dl>
-
-
-
-<h3>Usage</h3>
-
-<pre>
-makeTuneControlCMAES(same.resampling.instance = TRUE, start, ...)
-
-makeTuneControlGrid(same.resampling.instance = TRUE)
-
-makeTuneControlIrace(n.instances = 100L, show.irace.output = FALSE, ...)
-
-makeTuneControlOptim(same.resampling.instance = TRUE, start, ...)
-
-makeTuneControlRandom(same.resampling.instance = TRUE, maxit = 100L)
-</pre>
-
-
-<h3>Arguments</h3>
-
-<table summary="R argblock">
-<tr valign="top"><td><code>same.resampling.instance</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br>
-Should the same resampling instance be used for all evaluations to reduce variance?
-Default is <code>TRUE</code>.</p>
-</td></tr>
-<tr valign="top"><td><code>start</code></td>
-<td>
-<p>[<code>numeric</code>]<br>
-Named list of initial parameter values.</p>
-</td></tr>
-<tr valign="top"><td><code>n.instances</code></td>
-<td>
-<p>[<code>integer(1)</code>]<br>
-Number of random resampling instances for irace, see details.
-Default is 100.</p>
-</td></tr>
-<tr valign="top"><td><code>maxit</code></td>
-<td>
-<p>[<code>integer(1)</code>]<br>
-Number of iterations for random search.
-Default is 100.</p>
-</td></tr>
-<tr valign="top"><td><code>show.irace.output</code></td>
-<td>
-<p>[<code>logical(1)</code>]<br>
-Show console output of irace while tuning?
-Default is <code>FALSE</code>.</p>
-</td></tr>
-<tr valign="top"><td><code>...</code></td>
-<td>
-<p>[any]<br>
-Further control parameters passed to the <code>control</code> argument of <code><a href="../../stats/html/optim.html">optim</a></code>,
-the <code>control</code> argument of <code><a href="../../cmaes/html/cma_es.html">cma_es</a></code>, <code>tunerConfig</code>
-argument of <code><a href="../../irace/html/irace.html">irace</a></code>.</p>
-</td></tr>
-</table>
-
-
-<h3>Details</h3>
 
 <p>Dependent parameters can currently only be handled by random search and irace.
 </p>
@@ -105,6 +48,89 @@ in <code><a href="../../irace/html/irace.html">irace</a></code>). Also note that
 store its tuning results in a file on disk, see the package documentation for details on this
 and how to change the file path.
 </p>
+
+
+<h3>Usage</h3>
+
+<pre>
+makeTuneControlCMAES(same.resampling.instance = TRUE, impute.val = Inf,
+  start = NULL, ...)
+
+makeTuneControlGenSA(same.resampling.instance = TRUE, impute.val = Inf,
+  start = NULL, ...)
+
+makeTuneControlGrid(same.resampling.instance = TRUE, impute.val = Inf,
+  resolution = 10L)
+
+makeTuneControlIrace(impute.val = Inf, n.instances = 100L,
+  show.irace.output = FALSE, ...)
+
+makeTuneControlRandom(same.resampling.instance = TRUE, impute.val = Inf,
+  maxit = 100L)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>resolution</code></td>
+<td>
+<p>[<code>integer</code>]<br>
+Resolution of the grid for each numeric/integer parameter in <code>par.set</code>.
+For vector parameters, it is the resolution per dimension.
+Either pass one resolution for all parameters, or a named vector.
+See <code><a href="../../ParamHelpers/html/generateGridDesign.html">generateGridDesign</a></code>.
+Default is 10.</p>
+</td></tr>
+<tr valign="top"><td><code>n.instances</code></td>
+<td>
+<p>[<code>integer(1)</code>]<br>
+Number of random resampling instances for irace, see details.
+Default is 100.</p>
+</td></tr>
+<tr valign="top"><td><code>show.irace.output</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br>
+Show console output of irace while tuning?
+Default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>same.resampling.instance</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br>
+Should the same resampling instance be used for all evaluations to reduce variance?
+Default is <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>impute.val</code></td>
+<td>
+<p>[<code>numeric(1)</code>]<br>
+If something goes wrong during optimization (e.g, the learner crashes),
+this value is fed back to the tuner, so the tuning algorithm does not abort.
+It is not stored in the optimization path, an NA and a corresponding error message are
+logged instead.
+Note that this value is later multiplied by -1 for maximization measures internally, so you
+need to enter a larger positive value for maximization here as well.
+Default is the worst obtainable value of the performance measure you optimize for when
+you aggregate by mean value, or <code>Inf</code> instead.</p>
+</td></tr>
+<tr valign="top"><td><code>start</code></td>
+<td>
+<p>[<code>numeric</code>]<br>
+Named list of initial parameter values.</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>[any]<br>
+Further control parameters passed to the <code>control</code> argument of <code><a href="../../stats/html/optim.html">optim</a></code>,
+the <code>control</code> argument of <code><a href="../../cmaes/html/cma_es.html">cma_es</a></code>, <code>tunerConfig</code>
+argument of <code><a href="../../irace/html/irace.html">irace</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>maxit</code></td>
+<td>
+<p>[<code>integer(1)</code>]<br>
+Number of iterations for random search.
+Default is 100.</p>
+</td></tr>
+</table>
 
 
 <h3>Value</h3>
@@ -125,5 +151,5 @@ and how to change the file path.
 <code><a href="tuneThreshold.html">tuneThreshold</a></code>
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

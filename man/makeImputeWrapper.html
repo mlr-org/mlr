@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Fuse learner with an imputation method.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="R.css">
+</head><body>
+
+<table width="100%" summary="page for makeImputeWrapper {mlr}"><tr><td>makeImputeWrapper {mlr}</td><td align="right">R Documentation</td></tr></table>
+
+<h2>Fuse learner with an imputation method.</h2>
+
+<h3>Description</h3>
+
+<p>Fuses a base learner with an imputation method. Creates a learner object, which can be
+used like any other learner object.
+Internally uses <code><a href="../../e1071/html/impute.html">impute</a></code> before training the learner and <code><a href="reimpute.html">reimpute</a></code>
+before predicting.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+makeImputeWrapper(learner, classes = list(), cols = list(),
+  dummy.cols = character(0L), dummy.type = "factor",
+  impute.new.levels = TRUE, recode.factor.levels = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>learner</code></td>
+<td>
+<p>[<code><a href="makeLearner.html">Learner</a></code> | <code>character(1)</code>]<br>
+The learner.
+If you pass a string the learner will be created via <code><a href="makeLearner.html">makeLearner</a></code>.</p>
+</td></tr>
+<tr valign="top"><td><code>classes</code></td>
+<td>
+<p>[<code>named list</code>]<br>
+Named list containing imputation techniques for classes of columns.
+E.g. <code>list(numeric = imputeMedian())</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>cols</code></td>
+<td>
+<p>[<code>named list</code>]<br>
+Named list containing names of imputation methods to impute missing values
+in the data column referenced by the list element's name. Overwrites imputation set via
+<code>classes</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>dummy.cols</code></td>
+<td>
+<p>[<code>character</code>]<br>
+Column names to create dummy columns (containing binary missing indicator) for.
+Default is <code>character(0)</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>dummy.type</code></td>
+<td>
+<p>[<code>character(1)</code>]<br>
+How dummy columns are encoded. Either as 0/1 with type &ldquo;numeric&rdquo;
+or as &ldquo;factor&rdquo;.
+Default is &ldquo;factor&rdquo;.</p>
+</td></tr>
+<tr valign="top"><td><code>impute.new.levels</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br>
+If new, unencountered factor level occur during reimputation,
+should these be handled as NAs and then be imputed the same way?
+Default is <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>recode.factor.levels</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br>
+Recode factor levels after reimputation, so they match the respective element of
+<code>lvls</code> (in the description object) and therefore match the levels of the
+feature factor in the training data after imputation?.
+Default is <code>TRUE</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>[<code><a href="makeLearner.html">Learner</a></code>].
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other impute: <code><a href="imputations.html">imputations</a></code>,
+<code><a href="imputations.html">imputeConstant</a></code>, <code><a href="imputations.html">imputeHist</a></code>,
+<code><a href="imputations.html">imputeLearner</a></code>, <code><a href="imputations.html">imputeMax</a></code>,
+<code><a href="imputations.html">imputeMean</a></code>, <code><a href="imputations.html">imputeMedian</a></code>,
+<code><a href="imputations.html">imputeMin</a></code>, <code><a href="imputations.html">imputeMode</a></code>,
+<code><a href="imputations.html">imputeNormal</a></code>, <code><a href="imputations.html">imputeUniform</a></code>;
+<code><a href="../../e1071/html/impute.html">impute</a></code>; <code><a href="makeImputeMethod.html">makeImputeMethod</a></code>;
+<code><a href="reimpute.html">reimpute</a></code>
+</p>
+
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

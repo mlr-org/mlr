@@ -93,13 +93,13 @@ imputeMin(multiplier = 1)
 
 imputeMax(multiplier = 1)
 
-imputeUniform(min, max)
+imputeUniform(min = NA_real_, max = NA_real_)
 
-imputeNormal(mu, sd)
+imputeNormal(mu = NA_real_, sd = NA_real_)
 
 imputeHist(breaks, use.mids = TRUE)
 
-imputeLearner(learner, preimpute = list())
+imputeLearner(learner, features = NULL)
 </pre>
 
 
@@ -119,12 +119,14 @@ Value that stored minimum or maximum is multiplied with when imputation is done.
 <tr valign="top"><td><code>min</code></td>
 <td>
 <p>[<code>numeric(1)</code>]<br>
-Lower bound for uniform distribution. If missing it will be estimated from the data.</p>
+Lower bound for uniform distribution.
+If NA (default), it will be estimated from the data.</p>
 </td></tr>
 <tr valign="top"><td><code>max</code></td>
 <td>
 <p>[<code>numeric(1)</code>]<br>
-Upper bound for uniform distribution. If missing it will be estimated from the data.</p>
+Upper bound for uniform distribution.
+If NA (default), it will be estimated from the data.</p>
 </td></tr>
 <tr valign="top"><td><code>mu</code></td>
 <td>
@@ -151,17 +153,25 @@ or instead draw uniformly distributed samples within bin range.</p>
 <tr valign="top"><td><code>learner</code></td>
 <td>
 <p>[<code>Learner</code>]<br>
-Classification or regression learner. Its predictions will be used for imputations.
+Supervised learner. Its predictions will be used for imputations.
 Note that the target column is not available for this operation.</p>
 </td></tr>
-<tr valign="top"><td><code>preimpute</code></td>
+<tr valign="top"><td><code>features</code></td>
 <td>
-<p>[<code>list</code>]<br>
-Arguments for inner call to <code><a href="../../e1071/html/impute.html">impute</a></code> in scenarios where
-<code>learner</code> itself cannot handle missing values.
-Default is <code>list()</code>.</p>
+<p>[<code>character</code>]<br>
+Features to use in <code>learner</code> for prediction.
+Default is <code>NULL</code> which uses all available features except the target column
+of the original task.</p>
 </td></tr>
 </table>
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+
+<h3>See Also</h3>
+
+<p>Other impute: <code><a href="../../e1071/html/impute.html">impute</a></code>;
+<code><a href="makeImputeMethod.html">makeImputeMethod</a></code>;
+<code><a href="makeImputeWrapper.html">makeImputeWrapper</a></code>; <code><a href="reimpute.html">reimpute</a></code>
+</p>
+
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

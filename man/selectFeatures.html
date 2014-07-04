@@ -107,26 +107,30 @@ Default is set via <code><a href="configureMlr.html">configureMlr</a></code>.</p
 <code><a href="FeatSelControl.html">makeFeatSelControlRandom</a></code>,
 <code><a href="FeatSelControl.html">makeFeatSelControlSequential</a></code>;
 <code><a href="analyzeFeatSelResult.html">analyzeFeatSelResult</a></code>;
+<code><a href="getFeatSelResult.html">getFeatSelResult</a></code>;
 <code><a href="makeFeatSelWrapper.html">makeFeatSelWrapper</a></code>
 </p>
 
 
 <h3>Examples</h3>
 
-<pre><code class="r">
-rdesc = makeResampleDesc(&quot;Holdout&quot;)
+<pre><code class="r">rdesc = makeResampleDesc(&quot;Holdout&quot;)
 ctrl = makeFeatSelControlSequential(method = &quot;sfs&quot;, maxit = NA)
 res = selectFeatures(&quot;classif.rpart&quot;, iris.task, rdesc, control = ctrl)
 </code></pre>
 
-<pre><code>## [selectFeatures] 1: 0 bits: mmce.test.mean=0.78
-## [selectFeatures] 2: 1 bits: mmce.test.mean=0.38
-## [selectFeatures] 2: 1 bits: mmce.test.mean=0.54
-## [selectFeatures] 2: 1 bits: mmce.test.mean=0.08
-## [selectFeatures] 2: 1 bits: mmce.test.mean=0.04
-## [selectFeatures] 3: 2 bits: mmce.test.mean=0.04
-## [selectFeatures] 3: 2 bits: mmce.test.mean=0.04
-## [selectFeatures] 3: 2 bits: mmce.test.mean=0.08
+<pre><code>## [FeatSel] Started selecting features for learner &#39;classif.rpart&#39;
+## With control class: FeatSelControlSequential
+## Imputation value: 1
+## [FeatSel] 1: 0 bits: mmce.test.mean=0.64
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.32
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.36
+## [FeatSel] 2: 1 bits: mmce.test.mean= 0.1
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.04
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.04
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.04
+## [FeatSel] 3: 2 bits: mmce.test.mean= 0.1
+## [FeatSel] Result: 1 bits : mmce.test.mean=0.04
 </code></pre>
 
 <pre><code class="r">analyzeFeatSelResult(res)
@@ -137,15 +141,12 @@ res = selectFeatures(&quot;classif.rpart&quot;, iris.task, rdesc, control = ctrl
 ## Petal.Width
 ## 
 ## Path to optimum:
-## - Features:    0  Init   :                       Perf = 0.78  Diff: NA  *
-## - Features:    1  Add    : Petal.Width           Perf = 0.04  Diff: 0.74  *
+## - Features:    0  Init   :                       Perf = 0.64  Diff: NA  *
+## - Features:    1  Add    : Petal.Width           Perf = 0.04  Diff: 0.6  *
 ## 
 ## Stopped, because no improving feature was found.
 </code></pre>
 
-<pre><code class="r">
-</code></pre>
 
-
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

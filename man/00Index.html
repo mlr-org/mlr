@@ -10,7 +10,7 @@
 <div align="center">
 <a href="http://stat.ethz.ch/R-manual/R-devel/doc/html/packages.html"><img src="http://stat.ethz.ch/R-manual/R-devel/doc/html/left.jpg" alt="[Up]" width="30" height="30" border="0"></a>
 <a href="http://stat.ethz.ch/R-manual/R-devel/doc/html/index.html"><img src="http://stat.ethz.ch/R-manual/R-devel/doc/html/up.jpg" alt="[Top]" width="30" height="30" border="0"></a>
-</div><h2>Documentation for package &lsquo;mlr&rsquo; version 1.2</h2>
+</div><h2>Documentation for package &lsquo;mlr&rsquo; version 2.0</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 <li><a href="../NEWS">Package NEWS</a>.</li>
@@ -97,6 +97,8 @@
 <td>Configures the behavior of the package.</td></tr>
 <tr><td width="25%"><a href="SupervisedTask.html">CostSensTask</a></td>
 <td>Create a classification, regression, survival or cost-sensitive classification task.</td></tr>
+<tr><td width="25%"><a href="createDummyFeatures.html">createDummyFeatures</a></td>
+<td>Generate dummy variables for factor features.</td></tr>
 <tr><td width="25%"><a href="crossover.html">crossover</a></td>
 <td>crossover</td></tr>
 <tr><td width="25%"><a href="resample.html">crossval</a></td>
@@ -161,7 +163,7 @@
 <h2><a name="G">-- G --</a></h2>
 
 <table width="100%">
-<tr><td width="25%"><a href="getAggrMeasures.html">getAggrMeasures</a></td>
+<tr><td width="25%"><a href="getAggrPerformances.html">getAggrPerformances</a></td>
 <td>Extract the aggregated measures of a benchmark result.</td></tr>
 <tr><td width="25%"><a href="getBaggingModels.html">getBaggingModels</a></td>
 <td>Returns the list of models fitted in bagging.</td></tr>
@@ -177,8 +179,6 @@
 <td>Returns the selected feature set and optimization path after training or benchmarking.</td></tr>
 <tr><td width="25%"><a href="getFilteredFeatures.html">getFilteredFeatures</a></td>
 <td>Returns the filtered features.</td></tr>
-<tr><td width="25%"><a href="getFilterMethods.html">getFilterMethods</a></td>
-<td>Returns all available feature filter methods.</td></tr>
 <tr><td width="25%"><a href="getFilterResult.html">getFilterResult</a></td>
 <td>Returns a filter result after training or benchmarking.</td></tr>
 <tr><td width="25%"><a href="getFilterValues.html">getFilterValues</a></td>
@@ -187,12 +187,12 @@
 <td>Get current parameter settings for a learner.</td></tr>
 <tr><td width="25%"><a href="getLearnerModel.html">getLearnerModel</a></td>
 <td>Get underlying R model of learner integrated into mlr.</td></tr>
-<tr><td width="25%"><a href="getMeasures.html">getMeasures</a></td>
-<td>Extract performance measures of bechmark result.</td></tr>
 <tr><td width="25%"><a href="getMlrOptions.html">getMlrOptions</a></td>
 <td>Returns a list of mlr's options</td></tr>
 <tr><td width="25%"><a href="getParamSet.html">getParamSet</a></td>
 <td>Get a description of all possible parameter settings for a learner.</td></tr>
+<tr><td width="25%"><a href="getPerformances.html">getPerformances</a></td>
+<td>Extract performance measures of bechmark result.</td></tr>
 <tr><td width="25%"><a href="getPredictions.html">getPredictions</a></td>
 <td>Extract the predictions from a benchmark result.</td></tr>
 <tr><td width="25%"><a href="getProbabilities.html">getProbabilities</a></td>
@@ -259,6 +259,8 @@
 <td>Iris classification task</td></tr>
 <tr><td width="25%"><a href="mlr.iris.html">iris.task</a></td>
 <td>Iris classification task</td></tr>
+<tr><td width="25%"><a href="isFailureModel.html">isFailureModel</a></td>
+<td>Is the model a FailureModel?</td></tr>
 </table>
 
 <h2><a name="L">-- L --</a></h2>
@@ -272,6 +274,8 @@
 <td>Set, add, remove or query properties of learners</td></tr>
 <tr><td width="25%"><a href="learners.html">learners</a></td>
 <td>List of supported learning algorithms.</td></tr>
+<tr><td width="25%"><a href="listFilterMethods.html">listFilterMethods</a></td>
+<td>Returns all available feature filter methods.</td></tr>
 <tr><td width="25%"><a href="listLearners.html">listLearners</a></td>
 <td>Find matching learning algorithms.</td></tr>
 <tr><td width="25%"><a href="listLearners.html">listLearners.character</a></td>
@@ -282,7 +286,11 @@
 <td>Find matching learning algorithms.</td></tr>
 <tr><td width="25%"><a href="listMeasures.html">listMeasures</a></td>
 <td>Find matching measures.</td></tr>
-<tr><td width="25%"><a href="listMeasures.html">listMeasuresForTask</a></td>
+<tr><td width="25%"><a href="listMeasures.html">listMeasures.character</a></td>
+<td>Find matching measures.</td></tr>
+<tr><td width="25%"><a href="listMeasures.html">listMeasures.default</a></td>
+<td>Find matching measures.</td></tr>
+<tr><td width="25%"><a href="listMeasures.html">listMeasures.SupervisedTask</a></td>
 <td>Find matching measures.</td></tr>
 </table>
 
@@ -327,6 +335,8 @@
 <td>Generate a fixed holdout instance for resampling.</td></tr>
 <tr><td width="25%"><a href="makeImputeMethod.html">makeImputeMethod</a></td>
 <td>Create a custom imputation method.</td></tr>
+<tr><td width="25%"><a href="makeImputeWrapper.html">makeImputeWrapper</a></td>
+<td>Fuse learner with an imputation method.</td></tr>
 <tr><td width="25%"><a href="makeLearner.html">makeLearner</a></td>
 <td>Create learner object.</td></tr>
 <tr><td width="25%"><a href="makeMeasure.html">makeMeasure</a></td>
@@ -335,8 +345,10 @@
 <td>Create model multiplexer for model selection to tune over multiple possible models.</td></tr>
 <tr><td width="25%"><a href="makeModelMultiplexerParamSet.html">makeModelMultiplexerParamSet</a></td>
 <td>Creates a parameter set for model multiplexer tuning.</td></tr>
+<tr><td width="25%"><a href="makeOverBaggingWrapper.html">makeOverBaggingWrapper</a></td>
+<td>Fuse learner with the bagging technique and oversampling for imbalancy correction.</td></tr>
 <tr><td width="25%"><a href="makeUndersampleWrapper.html">makeOversampleWrapper</a></td>
-<td>Fuse learner with simple over/undersampling for binary classification.</td></tr>
+<td>Fuse learner with simple ove/underrsampling for imbalancy correction in binary classification.</td></tr>
 <tr><td width="25%"><a href="makePreprocWrapper.html">makePreprocWrapper</a></td>
 <td>Fuse learner with preprocessing.</td></tr>
 <tr><td width="25%"><a href="SupervisedTask.html">makeRegrTask</a></td>
@@ -353,22 +365,26 @@
 <td>Internal construction / wrapping of learner object.</td></tr>
 <tr><td width="25%"><a href="RLearner.html">makeRLearnerSurv</a></td>
 <td>Internal construction / wrapping of learner object.</td></tr>
+<tr><td width="25%"><a href="makeSMOTEWrapper.html">makeSMOTEWrapper</a></td>
+<td>Fuse learner with SMOTE oversampling for imbalancy correction in binary classification.</td></tr>
 <tr><td width="25%"><a href="SupervisedTask.html">makeSurvTask</a></td>
 <td>Create a classification, regression, survival or cost-sensitive classification task.</td></tr>
 <tr><td width="25%"><a href="TuneControl.html">makeTuneControlCMAES</a></td>
 <td>Create control structures for tuning.</td></tr>
+<tr><td width="25%"><a href="TuneControl.html">makeTuneControlGenSA</a></td>
+<td>Create control structures for tuning.</td></tr>
 <tr><td width="25%"><a href="TuneControl.html">makeTuneControlGrid</a></td>
 <td>Create control structures for tuning.</td></tr>
 <tr><td width="25%"><a href="TuneControl.html">makeTuneControlIrace</a></td>
-<td>Create control structures for tuning.</td></tr>
-<tr><td width="25%"><a href="TuneControl.html">makeTuneControlOptim</a></td>
 <td>Create control structures for tuning.</td></tr>
 <tr><td width="25%"><a href="TuneControl.html">makeTuneControlRandom</a></td>
 <td>Create control structures for tuning.</td></tr>
 <tr><td width="25%"><a href="makeTuneWrapper.html">makeTuneWrapper</a></td>
 <td>Fuse learner with tuning.</td></tr>
 <tr><td width="25%"><a href="makeUndersampleWrapper.html">makeUndersampleWrapper</a></td>
-<td>Fuse learner with simple over/undersampling for binary classification.</td></tr>
+<td>Fuse learner with simple ove/underrsampling for imbalancy correction in binary classification.</td></tr>
+<tr><td width="25%"><a href="makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a></td>
+<td>Wraps a classifier for weighted fitting where each class receives a weight.</td></tr>
 <tr><td width="25%"><a href="makeWrappedModel.html">makeWrappedModel</a></td>
 <td>Induced model of learner.</td></tr>
 <tr><td width="25%"><a href="measures.html">mcc</a></td>
@@ -391,8 +407,6 @@
 <td>Iris classification task</td></tr>
 <tr><td width="25%"><a href="mlr.sonar.html">mlr.sonar</a></td>
 <td>Sonar classification task</td></tr>
-<tr><td width="25%"><a href="mlr.wpbc.html">mlr.wpbc</a></td>
-<td>Wisonsin Prognostic Breast Cancer (WPBC) survival task</td></tr>
 <tr><td width="25%"><a href="measures.html">mmce</a></td>
 <td>Performance measures.</td></tr>
 <tr><td width="25%"><a href="makeModelMultiplexer.html">ModelMultiplexer</a></td>
@@ -486,6 +500,8 @@
 <td>Set the hyperparameters of a learner object.</td></tr>
 <tr><td width="25%"><a href="setHyperPars2.html">setHyperPars2</a></td>
 <td>Only exported for internal use.</td></tr>
+<tr><td width="25%"><a href="setId.html">setId</a></td>
+<td>Set the id of a learner object.</td></tr>
 <tr><td width="25%"><a href="setPredictType.html">setPredictType</a></td>
 <td>Set the type of predictions the learner should return.</td></tr>
 <tr><td width="25%"><a href="LearnerProperties.html">setProperties</a></td>
@@ -494,6 +510,8 @@
 <td>Set threshold of prediction object.</td></tr>
 <tr><td width="25%"><a href="showHyperPars.html">showHyperPars</a></td>
 <td>Display all possible hyperparameter settings for a learner that mlr knows.</td></tr>
+<tr><td width="25%"><a href="smote.html">smote</a></td>
+<td>Synthetic Minority Oversampling Technique to handle class imbalancy in binary classification.</td></tr>
 <tr><td width="25%"><a href="mlr.sonar.html">sonar.rin</a></td>
 <td>Sonar classification task</td></tr>
 <tr><td width="25%"><a href="mlr.sonar.html">sonar.task</a></td>
@@ -597,10 +615,6 @@
 <h2><a name="W">-- W --</a></h2>
 
 <table width="100%">
-<tr><td width="25%"><a href="mlr.wpbc.html">wpbc.rin</a></td>
-<td>Wisonsin Prognostic Breast Cancer (WPBC) survival task</td></tr>
-<tr><td width="25%"><a href="mlr.wpbc.html">wpbc.task</a></td>
-<td>Wisonsin Prognostic Breast Cancer (WPBC) survival task</td></tr>
 <tr><td width="25%"><a href="makeWrappedModel.html">WrappedModel</a></td>
 <td>Induced model of learner.</td></tr>
 </table>

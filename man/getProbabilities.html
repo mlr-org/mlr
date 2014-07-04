@@ -52,18 +52,18 @@ Order of columns is defined by <code>cl</code>.
 
 <h3>See Also</h3>
 
-<p><code><a href="predict.WrappedModel.html">predict.WrappedModel</a></code>
+<p>Other predict: <code><a href="predict.WrappedModel.html">predict.WrappedModel</a></code>;
+<code><a href="setPredictType.html">setPredictType</a></code>
 </p>
 
 
 <h3>Examples</h3>
 
-<pre><code class="r">
-task &lt;- makeClassifTask(data = iris, target = &quot;Species&quot;)
-lrn &lt;- makeLearner(&quot;classif.lda&quot;, predict.type = &quot;prob&quot;)
-mod &lt;- train(lrn, task)
+<pre><code class="r">task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+lrn = makeLearner(&quot;classif.lda&quot;, predict.type = &quot;prob&quot;)
+mod = train(lrn, task)
 # predict probabilities
-pred &lt;- predict(mod, newdata = iris)
+pred = predict(mod, newdata = iris)
 
 # Get probabilities for all classes
 head(getProbabilities(pred))
@@ -78,8 +78,7 @@ head(getProbabilities(pred))
 ## 6      1  3.883e-21 4.567e-40
 </code></pre>
 
-<pre><code class="r">
-# Get probabilities for a subset of classes
+<pre><code class="r"># Get probabilities for a subset of classes
 head(getProbabilities(pred, c(&quot;setosa&quot;, &quot;virginica&quot;)))
 </code></pre>
 
@@ -92,9 +91,6 @@ head(getProbabilities(pred, c(&quot;setosa&quot;, &quot;virginica&quot;)))
 ## 6      1 4.567e-40
 </code></pre>
 
-<pre><code class="r">
-</code></pre>
 
-
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

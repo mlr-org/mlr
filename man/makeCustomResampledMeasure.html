@@ -21,7 +21,8 @@ for every single training / test set, implement your own <code><a href="makeMeas
 
 <pre>
 makeCustomResampledMeasure(id, minimize = TRUE, properties = character(0L),
-  allowed.pred.types = character(0L), fun, extra.args = list())
+  allowed.pred.types = character(0L), fun, extra.args = list(),
+  best = NULL, worst = NULL)
 </pre>
 
 
@@ -33,11 +34,23 @@ makeCustomResampledMeasure(id, minimize = TRUE, properties = character(0L),
 <p>[<code>character(1)</code>]<br>
 Name of aggregated measure.</p>
 </td></tr>
+<tr valign="top"><td><code>fun</code></td>
+<td>
+<p>[<code>function(task, pred, group, pred, extra.args)</code>]<br>
+Calculates performance value from <code><a href="ResamplePrediction.html">ResamplePrediction</a></code> object.
+For rare case you can also use the task, the grouping or the extra arguments <code>extra.args</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>extra.args</code></td>
+<td>
+<p>[<code>list</code>]<br>
+List of extra arguments which will always be passed to <code>fun</code>.
+Default is empty list.</p>
+</td></tr>
 <tr valign="top"><td><code>minimize</code></td>
 <td>
 <p>[<code>logical(1)</code>]<br>
 Should the measure be minimized?
-Default is <code>TRUE</code>.</p>
+Default is in <code>TRUE</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>properties</code></td>
 <td>
@@ -62,30 +75,53 @@ Set of measure properties. Some standard property names include:
 </td></tr>
 <tr valign="top"><td><code>allowed.pred.types</code></td>
 <td>
-<p>[<code>character</code>]
+<p>[<code>character</code>]<br>
 Which prediction types are allowed for this measure?
-Subset of &ldquo;response&rdquo;,&ldquo;prob&rdquo;,&ldquo;se&rdquo;.
-Default is none.</p>
+Subset of &ldquo;response&rdquo;,&ldquo;prob&rdquo;, &ldquo;se&rdquo;.
+Default is <code>character(0)</code>.</p>
 </td></tr>
-<tr valign="top"><td><code>fun</code></td>
+<tr valign="top"><td><code>best</code></td>
 <td>
-<p>[<code>function(task, pred, group, pred, extra.args)</code>]<br>
-Calculates performance value from <code><a href="ResamplePrediction.html">ResamplePrediction</a></code> object.
-For rare case you can also use the task, the grouping or the extra arguments <code>extra.args</code>.</p>
+<p>[<code>numeric(1)</code>]<br>
+Best obtainable value for measure.
+Default is -<code>Inf</code> or <code>Inf</code>, depending on <code>minimize</code>.</p>
 </td></tr>
-<tr valign="top"><td><code>extra.args</code></td>
+<tr valign="top"><td><code>worst</code></td>
 <td>
-<p>[<code>list</code>]<br>
-List of extra arguments which will always be passed to <code>fun</code>.
-Default is empty list.</p>
+<p>[<code>numeric(1)</code>]<br>
+Worst obtainable value for measure.
+Default is <code>Inf</code> or -<code>Inf</code>, depending on <code>minimize</code>.</p>
 </td></tr>
 </table>
 
 
 <h3>Value</h3>
 
-<p><code><a href="makeMeasure.html">Measure</a></code>
+<p>[<code><a href="makeMeasure.html">Measure</a></code>].
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+
+<h3>See Also</h3>
+
+<p>Other performance: <code><a href="makeMeasure.html">Measure</a></code>,
+<code><a href="makeMeasure.html">makeMeasure</a></code>; <code><a href="measures.html">acc</a></code>,
+<code><a href="../../glmnet/html/glmnet-internal.html">auc</a></code>, <code><a href="measures.html">ber</a></code>,
+<code><a href="measures.html">cindex</a></code>, <code><a href="measures.html">f1</a></code>,
+<code><a href="measures.html">fdr</a></code>, <code><a href="measures.html">featperc</a></code>,
+<code><a href="measures.html">fn</a></code>, <code><a href="measures.html">fnr</a></code>, <code><a href="measures.html">fp</a></code>,
+<code><a href="measures.html">fpr</a></code>, <code><a href="measures.html">gmean</a></code>,
+<code><a href="measures.html">gpr</a></code>, <code><a href="measures.html">mae</a></code>, <code><a href="measures.html">mcc</a></code>,
+<code><a href="measures.html">mcp</a></code>, <code><a href="measures.html">meancosts</a></code>,
+<code><a href="measures.html">measures</a></code>, <code><a href="measures.html">medae</a></code>,
+<code><a href="measures.html">medse</a></code>, <code><a href="measures.html">mmce</a></code>,
+<code><a href="measures.html">mse</a></code>, <code><a href="measures.html">multiclass.auc</a></code>,
+<code><a href="measures.html">npv</a></code>, <code><a href="measures.html">ppv</a></code>, <code><a href="measures.html">rmse</a></code>,
+<code><a href="measures.html">sae</a></code>, <code><a href="measures.html">sse</a></code>,
+<code><a href="measures.html">timeboth</a></code>, <code><a href="measures.html">timepredict</a></code>,
+<code><a href="measures.html">timetrain</a></code>, <code><a href="measures.html">tn</a></code>,
+<code><a href="measures.html">tnr</a></code>, <code><a href="measures.html">tp</a></code>, <code><a href="measures.html">tpr</a></code>;
+<code><a href="makeCostMeasure.html">makeCostMeasure</a></code>; <code><a href="performance.html">performance</a></code>
+</p>
+
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

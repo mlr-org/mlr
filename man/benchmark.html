@@ -20,7 +20,8 @@ Furhtermore, your learners can be automatically tuned using <code><a href="makeT
 <h3>Usage</h3>
 
 <pre>
-benchmark(learners, tasks, resamplings, measures)
+benchmark(learners, tasks, resamplings, measures,
+  show.info = getMlrOption("show.info"))
 </pre>
 
 
@@ -50,6 +51,12 @@ If missing, a 10-fold cross validation is used.</p>
 Performance measures for all tasks.
 If missing, the default measure of the first task is used.</p>
 </td></tr>
+<tr valign="top"><td><code>show.info</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br>
+Print verbose output on console?
+Default is set via <code><a href="configureMlr.html">configureMlr</a></code>.</p>
+</td></tr>
 </table>
 
 
@@ -61,9 +68,14 @@ If missing, the default measure of the first task is used.</p>
 
 <h3>See Also</h3>
 
-<p>Other benchmark: <code><a href="getAggrMeasures.html">getAggrMeasures</a></code>;
-<code><a href="getMeasures.html">getMeasures</a></code>; <code><a href="getPredictions.html">getPredictions</a></code>
+<p>Other benchmark: <code><a href="BenchmarkResult.html">BenchmarkResult</a></code>;
+<code><a href="getFilterResult.html">FilterResult</a></code>,
+<code><a href="getFilterResult.html">getFilterResult</a></code>;
+<code><a href="getAggrPerformances.html">getAggrPerformances</a></code>;
+<code><a href="getFeatSelResult.html">getFeatSelResult</a></code>;
+<code><a href="getPerformances.html">getPerformances</a></code>;
+<code><a href="getPredictions.html">getPredictions</a></code>; <code><a href="getTuneResult.html">getTuneResult</a></code>
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

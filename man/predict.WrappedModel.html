@@ -71,16 +71,16 @@ Currently ignored.</p>
 </p>
 
 
-<h3>Note</h3>
+<h3>See Also</h3>
 
-<p>To extract probabilities use <code><a href="getProbabilities.html">getProbabilities</a></code>.
+<p>Other predict: <code><a href="getProbabilities.html">getProbabilities</a></code>;
+<code><a href="setPredictType.html">setPredictType</a></code>
 </p>
 
 
 <h3>Examples</h3>
 
-<pre><code class="r">
-# train and predict
+<pre><code class="r"># train and predict
 train.set = seq(1, 150, 2)
 test.set = seq(2, 150, 2)
 model = train(&quot;classif.lda&quot;, iris.task, subset = train.set)
@@ -117,8 +117,7 @@ print(p)
 ## 6 12 setosa   setosa
 </code></pre>
 
-<pre><code class="r">
-# predict now probabiliies instead of class labels
+<pre><code class="r"># predict now probabiliies instead of class labels
 lrn = makeLearner(&quot;classif.lda&quot;, predict.type = &quot;prob&quot;)
 model = train(lrn, iris.task, subset = train.set)
 p = predict(model, task = iris.task, subset = test.set)
@@ -219,9 +218,6 @@ print(p)
 ## 150 1.747e-31  6.121e-02 9.388e-01
 </code></pre>
 
-<pre><code class="r">
-</code></pre>
 
-
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

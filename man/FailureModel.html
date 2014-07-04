@@ -28,8 +28,7 @@ The following code shows how to access the message.
 
 <h3>Examples</h3>
 
-<pre><code class="r">
-configureMlr(on.learner.error = &quot;warn&quot;)
+<pre><code class="r">configureMlr(on.learner.error = &quot;warn&quot;)
 data = iris
 data$newfeat = 1 # will make LDA crash
 task = makeClassifTask(data = data, target = &quot;Species&quot;)
@@ -46,7 +45,7 @@ m = train(&quot;classif.lda&quot;, task) # LDA crashed, but mlr catches this
 <pre><code class="r">print(m)
 </code></pre>
 
-<pre><code>## Model for id=classif.lda class=classif.lda
+<pre><code>## Model for id = classif.lda class = classif.lda
 ## Trained on obs: 150
 ## Used features: 5
 ## Hyperparameters: 
@@ -85,9 +84,8 @@ print(p)
 </code></pre>
 
 <pre><code class="r">configureMlr(on.learner.error = &quot;stop&quot;)
-
 </code></pre>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>

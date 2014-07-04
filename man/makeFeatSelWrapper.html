@@ -103,14 +103,14 @@ Default is set via <code><a href="configureMlr.html">configureMlr</a></code>.</p
 <code><a href="FeatSelControl.html">makeFeatSelControlRandom</a></code>,
 <code><a href="FeatSelControl.html">makeFeatSelControlSequential</a></code>;
 <code><a href="analyzeFeatSelResult.html">analyzeFeatSelResult</a></code>;
+<code><a href="getFeatSelResult.html">getFeatSelResult</a></code>;
 <code><a href="selectFeatures.html">selectFeatures</a></code>
 </p>
 
 
 <h3>Examples</h3>
 
-<pre><code class="r">
-# nested resampling with feature selection (with a pretty stupid algorithm for selection)
+<pre><code class="r"># nested resampling with feature selection (with a pretty stupid algorithm for selection)
 outer = makeResampleDesc(&quot;CV&quot;, iters = 2L)
 inner = makeResampleDesc(&quot;Holdout&quot;)
 ctrl = makeFeatSelControlRandom(maxit = 3)
@@ -125,59 +125,64 @@ r = resample(lrn, iris.task, outer, extract = getFeatSelResult)
 </code></pre>
 
 <pre><code>## [Resample] cross-validation iter: 1
+## [FeatSel] Started selecting features for learner &#39;classif.ksvm&#39;
+## With control class: FeatSelControlRandom
+## Imputation value: 1
 </code></pre>
 
 <pre><code>## Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
-<pre><code>## [selectFeatures] 1: 1 bits: mmce.test.mean= 0.2
+<pre><code>## [FeatSel] 1: 2 bits: mmce.test.mean=0.24
 </code></pre>
 
 <pre><code>## Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
-<pre><code>## [selectFeatures] 1: 4 bits: mmce.test.mean=0.04
+<pre><code>## [FeatSel] 1: 3 bits: mmce.test.mean=0.04
 </code></pre>
 
 <pre><code>## Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
-<pre><code>## [selectFeatures] 1: 3 bits: mmce.test.mean=0.08
+<pre><code>## [FeatSel] 1: 1 bits: mmce.test.mean=0.04
+## [FeatSel] Result: 1 bits : mmce.test.mean=0.04
 </code></pre>
 
 <pre><code>## Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
 <pre><code>## [Resample] cross-validation iter: 2
+## [FeatSel] Started selecting features for learner &#39;classif.ksvm&#39;
+## With control class: FeatSelControlRandom
+## Imputation value: 1
 </code></pre>
 
 <pre><code>## Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
-<pre><code>## [selectFeatures] 1: 2 bits: mmce.test.mean=0.32
+<pre><code>## [FeatSel] 1: 3 bits: mmce.test.mean=0.24
 </code></pre>
 
 <pre><code>## Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
-<pre><code>## [selectFeatures] 1: 2 bits: mmce.test.mean=0.08
+<pre><code>## [FeatSel] 1: 3 bits: mmce.test.mean=0.28
 </code></pre>
 
 <pre><code>## Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
-<pre><code>## [selectFeatures] 1: 1 bits: mmce.test.mean=0.08
+<pre><code>## [FeatSel] 1: 2 bits: mmce.test.mean=0.36
+## [FeatSel] Result: 3 bits : mmce.test.mean=0.24
 </code></pre>
 
 <pre><code>## Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
-<pre><code>## [Resample] Result: mmce.test.mean=0.0467
-</code></pre>
-
-<pre><code class="r">
+<pre><code>## [Resample] Result: mmce.test.mean=0.0667
 </code></pre>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 1.2 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
 </body></html>
