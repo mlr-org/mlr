@@ -81,3 +81,9 @@ test_that("ResampleInstance can bew created from string", {
   expect_equal(rin$desc$iters, 17)
 })
 
+test_that("resample checks constraints", {
+  expect_error(makeResampleInstance("CV", iters = 20, size = 10), "more folds")
+  expect_error(makeResampleInstance("RepCV", folds = 20, reps = 2L, size = 10), "more folds")
+})
+
+

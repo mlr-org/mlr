@@ -8,6 +8,8 @@ instantiateResampleInstance.HoldoutDesc = function(desc, size) {
 }
 
 instantiateResampleInstance.CVDesc = function(desc, size) {
+  if (desc$iters > size)
+    stopf("Cannot use more folds (%i) than size (%i)!", desc$iters, size)
   test.inds = chunk(seq_len(size), shuffle = TRUE, n.chunks = desc$iters)
   makeResampleInstanceInternal(desc, size, test.inds = test.inds)
 }
