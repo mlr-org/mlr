@@ -28,6 +28,6 @@ makeImputeWrapper = function(learner, classes = list(), cols = list(),
   }
 
   lrn = makePreprocWrapper(learner, trainfun, predictfun, par.vals = args)
-  lrn$missings = TRUE
+  lrn = addProperties(lrn, "missings")
   lrn
 }
