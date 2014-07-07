@@ -22,7 +22,12 @@
 #'   and the second column the estimated standard errors.
 #' @export
 predictLearner = function(.learner, .model, .newdata, ...) {
-  UseMethod("predictLearner")
+  lmod = getLearnerModel(.model)
+  if (inherits(lmod, "NoFeaturesModel")) {
+    predict_nofeatures(.model, .newdata)
+  } else {
+    UseMethod("predictLearner")
+  }
 }
 
 predictLearner2 = function(.learner, .model, .newdata, ...) {

@@ -80,7 +80,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
   }
 
   # was there an error in building the model? --> return NAs
-  if(inherits(model, "FailureModel")) {
+  if (inherits(model, "FailureModel")) {
     p = predictFailureModel(model, newdata)
     time.predict = NA_real_
   } else {
@@ -92,41 +92,36 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
     )
     pars = c(pars, getHyperPars(learner, "predict"))
     debug.seed = getMlrOption("debug.seed", NULL)
-    if(!is.null(debug.seed))
+    if (!is.null(debug.seed))
       set.seed(debug.seed)
-    if(inherits(getLearnerModel(model), "NoFeaturesModel")) {
-      p = predict_nofeatures(model, newdata)
-      time.predict = 0
-    } else {
-      opt.ole = getMlrOption("on.learner.error")
-      if (getMlrOption("show.learner.output"))
-        fun1 = identity
-      else
-        fun1 = capture.output
-      if (opt.ole == "stop")
-        fun2 = identity
-      else
-        fun2 = function(x) try(x, silent = TRUE)
-      old.warn.opt = getOption("warn")
-      on.exit(options(warn = old.warn.opt))
-      if (getMlrOption("on.learner.warning") == "quiet") {
-        options(warn = -1L)
-      }
-      st = system.time(fun1(p <- fun2(do.call(predictLearner2, pars))), gcFirst = FALSE)
-      time.predict = as.numeric(st[3L])
-      # was there an error during prediction?
-      if(is.error(p)) {
-        if (opt.ole == "warn")
-          warningf("Could not predict with learner %s: %s", learner$id, as.character(p))
-        p = predictFailureModel(model, newdata)
-        time.predict = NA_real_
-      }
+    opt.ole = getMlrOption("on.learner.error")
+    if (getMlrOption("show.learner.output"))
+      fun1 = identity
+    else
+      fun1 = capture.output
+    if (opt.ole == "stop")
+      fun2 = identity
+    else
+      fun2 = function(x) try(x, silent = TRUE)
+    old.warn.opt = getOption("warn")
+    on.exit(options(warn = old.warn.opt))
+    if (getMlrOption("on.learner.warning") == "quiet") {
+      options(warn = -1L)
     }
+    st = system.time(fun1(p <- fun2(do.call(predictLearner2, pars))), gcFirst = FALSE)
+    time.predict = as.numeric(st[3L])
+    # was there an error during prediction?
+    if (is.error(p)) {
+      if (opt.ole == "warn")
+        warningf("Could not predict with learner %s: %s", learner$id, as.character(p))
+      p = predictFailureModel(model, newdata)
+      time.predict = NA_real_
+    }
+    if (missing(task))
+      ids = NULL
+    else
+      ids = subset
+    makePrediction(task.desc = td, id = ids, truth = truth,
+      predict.type = learner$predict.type, y = p, time = time.predict)
   }
-  if (missing(task))
-    ids = NULL
-  else
-    ids = subset
-  makePrediction(task.desc = td, id = ids, truth = truth,
-    predict.type = learner$predict.type, y = p, time = time.predict)
 }

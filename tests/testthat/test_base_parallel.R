@@ -1,3 +1,5 @@
+library(parallelMap)
+
 context("parallel resampling")
 
 if (isExpensiveExampleOk()) {
