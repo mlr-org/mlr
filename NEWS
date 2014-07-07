@@ -1,4 +1,7 @@
 mlr_2.0:
+- fix a bug when feature filtering resulted in a NoFeatureModel 
+
+mlr_2.0:
 - mlr now supports survival analysis models (experimental)
 - mlr now supports cost-sensitive learning with example-specific costs (experimental)
 - mlr now suppo
