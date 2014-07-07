@@ -117,11 +117,11 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
       p = predictFailureModel(model, newdata)
       time.predict = NA_real_
     }
-    if (missing(task))
-      ids = NULL
-    else
-      ids = subset
-    makePrediction(task.desc = td, id = ids, truth = truth,
-      predict.type = learner$predict.type, y = p, time = time.predict)
   }
+  if (missing(task))
+    ids = NULL
+  else
+    ids = subset
+  makePrediction(task.desc = td, id = ids, truth = truth,
+    predict.type = learner$predict.type, y = p, time = time.predict)
 }
