@@ -49,7 +49,7 @@ train = function(learner, task, subset, weights = NULL) {
   pars = list(.learner = learner, .task = task, .subset = subset)
 
   # FIXME: code is bad here, set weights, the simply check it in checktasklearner
-  if(!is.null(weights)) {
+  if (!is.null(weights)) {
     assertNumeric(weights, len = length(subset), any.missing = FALSE, lower = 0)
   } else {
     weights = task$weights
@@ -72,7 +72,7 @@ train = function(learner, task, subset, weights = NULL) {
     opt.ole = getMlrOption("on.learner.error")
     # set the seed
     debug.seed = getMlrOption("debug.seed", NULL)
-    if(!is.null(debug.seed))
+    if (!is.null(debug.seed))
       set.seed(debug.seed)
     # for optwrappers we want to see the tuning / varsel logging
     # FIXME is case really ok for optwrapper? can we supppress then too?
