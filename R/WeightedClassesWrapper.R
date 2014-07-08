@@ -5,7 +5,7 @@
 #'
 #' Fitting is performed in a weighted fashion where each observation receives a weight,
 #' depending on the class it belongs to, see \code{wcw.weight}.
-#' This might help to mitigate problems caused by imbalanced classification.
+#' This might help to mitigate problems caused by imbalanced class distributions.
 #'
 #' @template arg_learner_classif
 #' @param wcw.weight [\code{numeric}]\cr
