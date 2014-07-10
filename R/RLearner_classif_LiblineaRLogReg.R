@@ -13,14 +13,17 @@ makeRLearner.classif.LiblineaRLogReg = function() {
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L),
       makeLogicalLearnerParam(id = "verbose", default = FALSE)
     ),
-  properties = c("twoclass", "numerics", "prob")
+  properties = c("twoclass", "numerics", "prob", "weights")
   )
 }
 
 #' @export
 trainLearner.classif.LiblineaRLogReg = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
-  LiblineaR(data = d$data, labels = d$target, ...)
+  if (!is.null(.weights)) {
+    .weights = .weights[unique(names(.weights))]
+  }
+  LiblineaR(data = d$data, labels = d$target, wi = .weights, ...)
 }
 
 #' @export
