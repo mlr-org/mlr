@@ -14,6 +14,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   if (inherits(control, "TuneControl")) {
     log.fun = logFunTune
     state2 = if (remove.nas) removeMissingValues(state) else state
+    state2 = setValueCNames(par.set, state2)
     learner2 = try(setHyperPars(learner, par.vals = state2))
     # if somebody above (eg tuner) prodcued bad settings, we catch this here and dont eval
     if (is.error(learner2)) {
