@@ -26,7 +26,7 @@ of 1.}
 Creates a wrapper, which can be used like any other learner object.
 
 Fitting is performed in a weighted fashion where each observation receives a weight,
-depending on the class is belongs to, see \code{wcw.weight}.
-This might help to mitigate problems in imbalanced classification problems.
+depending on the class it belongs to, see \code{wcw.weight}.
+This might help to mitigate problems caused by imbalanced class distributions.
 }
 
