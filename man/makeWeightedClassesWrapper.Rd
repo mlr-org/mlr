@@ -3,12 +3,19 @@
 \alias{makeWeightedClassesWrapper}
 \title{Wraps a classifier for weighted fitting where each class receives a weight.}
 \usage{
-makeWeightedClassesWrapper(learner, wcw.weight)
+makeWeightedClassesWrapper(learner, wcw.param = NULL, wcw.weight = 1)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
 The classification learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+
+\item{wcw.param}{[\code{character(1)}]\cr
+Name of already existing learner param which allows class weighting.
+Or \code{NULL} if such a param does not exist.
+Must during training accept a named vector of class weights,
+where length equals the number of classes.
+Default is \code{NULL}.}
 
 \item{wcw.weight}{[\code{numeric}]\cr
 Weight for each class.
@@ -28,5 +35,44 @@ Creates a wrapper, which can be used like any other learner object.
 Fitting is performed in a weighted fashion where each observation receives a weight,
 depending on the class it belongs to, see \code{wcw.weight}.
 This might help to mitigate problems caused by imbalanced class distributions.
+
+This weighted fitting can be achieved in two ways:
+
+a) The learner already has a parameter for class weighting, so one weight can directly be defined
+per class. Example: \dQuote{classif.ksvm} and parameter \code{class.weights}.
+In this case we don't really do anything fancy. We convert \code{wcw.weight} a bit,
+but basically simply bind its value to the class weighting param.
+The wrapper in this case simply offers a convenient, consistent fashion for class weighting -
+and tuning! See example below.
+
+b) The learner does not have a direct parameter to support class weighting, but
+supports observation weights, so \code{hasProperties(learner, 'weights')} is \code{TRUE}.
+This means that an individual, arbitrary weight can be set per observation during training.
+We set this weight depending on the class internally in the wrapper. Basically we introduce
+something like a new \dQuote{class.weights} parameter for the learner via observation weights.
+}
+\examples{
+# using the direct parameter of the SVM
+lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.param = "class.weights", wcw.weight = 0.01)
+res = holdout(lrn, sonar.task)
+print(getConfMatrix(res$pred))
+
+# using the observation weights of logreg
+lrn = makeWeightedClassesWrapper("classif.logreg", wcw.weight = 0.01)
+res = holdout(lrn, sonar.task)
+print(getConfMatrix(res$pred))
+
+# tuning the imbalancy param and the SVM param in one go
+lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.param = "class.weights")
+ps = makeParamSet(
+  makeNumericParam("wcw.weight", lower = 1, upper = 10),
+  makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
+  makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x)
+)
+ctrl = makeTuneControlRandom(maxit = 3L)
+rdesc = makeResampleDesc("CV", iters = 2L, stratify = TRUE)
+res = tuneParams(lrn, sonar.task, rdesc, par.set = ps, control = ctrl)
+print(res)
+print(res$opt.path)
 }
 

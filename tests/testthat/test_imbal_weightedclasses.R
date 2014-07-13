@@ -2,16 +2,22 @@ context("WeightedClassesWrapper")
 
 test_that("WeightedClassesWrapper, binary",  {
   pos = binaryclass.task$task.desc$positive
-  f = function(w) {
-    lrn1 = makeLearner("classif.rpart")
-    lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
+  f = function(lrn, param = NULL, w) {
+    lrn1 = makeLearner(lrn)
+    lrn2 = makeWeightedClassesWrapper(lrn1, wcw.param = param, wcw.weight = w)
     m = train(lrn2, binaryclass.task)
     p = predict(m, binaryclass.task)
     cm = getConfMatrix(p)
   }
-  cm1 = f(0.001)
-  cm2 = f(1)
-  cm3 = f(1000)
+  cm1 = f("classif.rpart", NULL, 0.001)
+  cm2 = f("classif.rpart", NULL, 1)
+  cm3 = f("classif.rpart", NULL, 1000)
+  expect_true(all(cm1[, pos] < cm2[, pos]))
+  expect_true(all(cm2[, pos] < cm3[, pos]))
+
+  cm1 = f("classif.ksvm", "class.weights", 0.001)
+  cm2 = f("classif.ksvm", "class.weights", 1)
+  cm3 = f("classif.ksvm", "class.weights", 1000)
   expect_true(all(cm1[, pos] < cm2[, pos]))
   expect_true(all(cm2[, pos] < cm3[, pos]))
 })
