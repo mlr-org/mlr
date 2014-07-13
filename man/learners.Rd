@@ -63,6 +63,7 @@
 
 \itemize{
   \item{\bold{regr.blackboost}}{\cr Gradient boosting with regression trees from mboost package: \code{\link[mboost]{blackboost}}}
+  \item{\bold{regr.cforest}}{\cr Random forest based on conditional inference trees from party package: \code{\link[party]{cforest}}}
   \item{\bold{regr.crs}}{\cr Regression Splines from crs package: \code{\link[crs]{crs}}}
   \item{\bold{regr.earth}}{\cr Multivariate Adaptive Regression Splines from earth package: \code{\link[earth]{earth}}}
   \item{\bold{regr.fnn}}{\cr Fast k-Nearest Neighbor from FNN package: \code{\link[FNN]{knn}}}
