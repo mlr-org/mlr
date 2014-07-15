@@ -18,9 +18,10 @@
 #'   In some cases, problems occur in underlying learners for factor features during prediction.
 #'   If the new features have LESS factor levels than during training (a strict subset),
 #'   the learner might produce an  error like
-#'   'type of predictors in new data do not match that of the training data'.
-#'   In this case one can repair this problem by setting this option to true.
-#'   We will simply add the missing factor levels to that factor feature.
+#'   \dQuote{type of predictors in new data do not match that of the training data}.
+#'   In this case one can repair this problem by setting this option to \code{TRUE}.
+#'   We will simply add the missing factor levels missing from the test feature
+#'   (but present in training) to that feature.
 #'   Default is \code{FALSE}.
 #' @param ... [any]\cr
 #'   Optional named (hyper)parameters.
