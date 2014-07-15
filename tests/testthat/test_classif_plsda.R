@@ -1,16 +1,16 @@
-context("classif_plsda_caret")
+context("classif_plsda")
 
-test_that("classif_plsda_caret", {  
+test_that("classif_plsda", {
   library(caret)
   parset.list = list(
     list(),
     list(ncomp = 4),
-    list(probMethod = 'Bayes')
+    list(probMethod = "Bayes")
   )
-  
+
   old.predicts.list = list()
   old.probs.list = list()
-  
+
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     x = binaryclass.train
@@ -29,10 +29,10 @@ test_that("classif_plsda_caret", {
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = p2
   }
-  
-  testSimpleParsets("classif.plsda_caret", binaryclass.df, binaryclass.target, binaryclass.train.inds,
-                    old.predicts.list, parset.list)
-  testProbParsets ("classif.plsda_caret", binaryclass.df, binaryclass.target, binaryclass.train.inds,
-                    old.probs.list, parset.list)
-  
+
+  testSimpleParsets("classif.plsda", binaryclass.df, binaryclass.target, binaryclass.train.inds,
+    old.predicts.list, parset.list)
+  testProbParsets ("classif.plsda", binaryclass.df, binaryclass.target, binaryclass.train.inds,
+    old.probs.list, parset.list)
+
 })
