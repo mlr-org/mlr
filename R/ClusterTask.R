@@ -1,6 +1,6 @@
 #' @title Create a clustering task.
 #' @name ClusterTask
-#' @rdname ClusterTask
+#' @rdname UnsupervisedTask
 #' @export
 makeClusterTask = function(id, data, weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE) {

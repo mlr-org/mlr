@@ -1,6 +1,6 @@
 #' @title Create an unsupervised (e.g. clustering) task.
 #' @name UnsupervisedTask
-#' @rdname UnsupervisedTask
+#' @rdname Task
 
 makeUnsupervisedTask = function(type, data, weights = NULL, blocking = NULL) {
   env = new.env(parent = emptyenv())
