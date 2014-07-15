@@ -5,6 +5,9 @@ mlr_2.1:
 - new learners:
 -- regr.cforest
 
+- new measures
+-- bac
+
 mlr_2.0:
 - mlr now supports survival analysis models (experimental)
 - mlr now supports cost-sensitive learning with example-specific costs (experimental)

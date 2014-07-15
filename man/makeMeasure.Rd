@@ -87,21 +87,22 @@ makeMeasure(id = "my.sse", minimize = TRUE, properties = c("regr", "response"), 
 }
 \seealso{
 Other performance: \code{\link{acc}}, \code{\link{auc}},
-  \code{\link{ber}}, \code{\link{cindex}},
-  \code{\link{f1}}, \code{\link{fdr}},
-  \code{\link{featperc}}, \code{\link{fn}},
-  \code{\link{fnr}}, \code{\link{fp}}, \code{\link{fpr}},
-  \code{\link{gmean}}, \code{\link{gpr}},
-  \code{\link{mae}}, \code{\link{mcc}}, \code{\link{mcp}},
-  \code{\link{meancosts}}, \code{\link{measures}},
-  \code{\link{medae}}, \code{\link{medse}},
-  \code{\link{mmce}}, \code{\link{mse}},
-  \code{\link{multiclass.auc}}, \code{\link{npv}},
-  \code{\link{ppv}}, \code{\link{rmse}}, \code{\link{sae}},
-  \code{\link{sse}}, \code{\link{timeboth}},
-  \code{\link{timepredict}}, \code{\link{timetrain}},
-  \code{\link{tn}}, \code{\link{tnr}}, \code{\link{tp}},
-  \code{\link{tpr}}; \code{\link{makeCostMeasure}};
+  \code{\link{bac}}, \code{\link{ber}},
+  \code{\link{cindex}}, \code{\link{f1}},
+  \code{\link{fdr}}, \code{\link{featperc}},
+  \code{\link{fn}}, \code{\link{fnr}}, \code{\link{fp}},
+  \code{\link{fpr}}, \code{\link{gmean}},
+  \code{\link{gpr}}, \code{\link{mae}}, \code{\link{mcc}},
+  \code{\link{mcp}}, \code{\link{meancosts}},
+  \code{\link{measures}}, \code{\link{medae}},
+  \code{\link{medse}}, \code{\link{mmce}},
+  \code{\link{mse}}, \code{\link{multiclass.auc}},
+  \code{\link{npv}}, \code{\link{ppv}}, \code{\link{rmse}},
+  \code{\link{sae}}, \code{\link{sse}},
+  \code{\link{timeboth}}, \code{\link{timepredict}},
+  \code{\link{timetrain}}, \code{\link{tn}},
+  \code{\link{tnr}}, \code{\link{tp}}, \code{\link{tpr}};
+  \code{\link{makeCostMeasure}};
   \code{\link{makeCustomResampledMeasure}};
   \code{\link{performance}}
 }

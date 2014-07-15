@@ -13,6 +13,7 @@
 #' \itemize{
 #'   \item{\bold{mmce}}{\cr Mean misclassification error.}
 #'   \item{\bold{acc}}{\cr Accuracy.}
+#'   \item{\bold{bac}}{\cr Balanced accuracy. Mean of true positive rate and true negative rate}
 #'   \item{\bold{ber}}{\cr Balanced error rate. Mean of misclassification error rates on all individual classes.}
 #'   \item{\bold{tp}}{\cr True positives.}
 #'   \item{\bold{tpr}}{\cr True positive rate, also called hit rate or recall.}
@@ -286,6 +287,19 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
       return(NA_real_)
     rpreds = asROCRPrediction(pred)
     ROCR::performance(rpreds, "auc")@y.values[[1L]]
+  }
+)
+
+#' @export bac
+#' @rdname measures
+#' @usage none
+#' @format none
+bac = makeMeasure(id = "bac", minimize = FALSE, best = 1, worst = 0,
+  properties = c("classif"),
+  allowed.pred.types = c("response", "prob"),
+  fun = function(task, model, pred, extra.args) {
+    mean(c(tp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive),
+           tn$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$negative)))
   }
 )
 

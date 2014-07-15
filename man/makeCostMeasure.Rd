@@ -46,7 +46,7 @@ Creates a measure for non-standard misclassification costs.
 \seealso{
 Other performance: \code{\link{Measure}},
   \code{\link{makeMeasure}}; \code{\link{acc}},
-  \code{\link{auc}}, \code{\link{ber}},
+  \code{\link{auc}}, \code{\link{bac}}, \code{\link{ber}},
   \code{\link{cindex}}, \code{\link{f1}},
   \code{\link{fdr}}, \code{\link{featperc}},
   \code{\link{fn}}, \code{\link{fnr}}, \code{\link{fp}},

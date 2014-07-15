@@ -3,6 +3,7 @@
 \name{measures}
 \alias{acc}
 \alias{auc}
+\alias{bac}
 \alias{ber}
 \alias{cindex}
 \alias{f1}
@@ -105,6 +106,8 @@ none
 
 none
 
+none
+
 meancosts
 
 mcp
@@ -121,6 +124,7 @@ Classification:
 \itemize{
   \item{\bold{mmce}}{\cr Mean misclassification error.}
   \item{\bold{acc}}{\cr Accuracy.}
+  \item{\bold{bac}}{\cr Balanced accuracy. Mean of true positive rate and true negative rate}
   \item{\bold{ber}}{\cr Balanced error rate. Mean of misclassification error rates on all individual classes.}
   \item{\bold{tp}}{\cr True positives.}
   \item{\bold{tpr}}{\cr True positive rate, also called hit rate or recall.}

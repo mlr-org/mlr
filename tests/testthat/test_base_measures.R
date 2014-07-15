@@ -9,7 +9,7 @@ test_that("measures", {
       1
     }
   )
-  ms = list(mmce, acc, tp, fp, tn, fn, tpr, fpr, tnr, fnr, ppv, npv, mcc, f1, mymeasure)
+  ms = list(mmce, acc, bac, tp, fp, tn, fn, tpr, fpr, tnr, fnr, ppv, npv, mcc, f1, mymeasure)
 
   res = makeResampleDesc("CV", iters = 3)
   lrn = makeLearner("classif.rpart")
@@ -19,7 +19,7 @@ test_that("measures", {
 
   r = resample(lrn, ct, res, measures = ms)
   expect_equal(names(r$measures.test),
-    c("iter", "mmce", "acc", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr", "fnr", "ppv", "npv", "mcc", "f1", "foo"))
+    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr", "fnr", "ppv", "npv", "mcc", "f1", "foo"))
 
   # Test multiclass auc
   lrn = makeLearner("classif.randomForest",predict.type = "prob")
