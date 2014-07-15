@@ -1,6 +1,6 @@
-context("classif_plsda")
+context("classif_plsdaCaret")
 
-test_that("classif_plsda", {
+test_that("classif_plsdaCaret", {
   library(caret)
   parset.list = list(
     list(),
@@ -30,9 +30,9 @@ test_that("classif_plsda", {
     old.probs.list[[i]] = p2
   }
 
-  testSimpleParsets("classif.plsda", binaryclass.df, binaryclass.target, binaryclass.train.inds,
+  testSimpleParsets("classif.plsdaCaret", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.predicts.list, parset.list)
-  testProbParsets ("classif.plsda", binaryclass.df, binaryclass.target, binaryclass.train.inds,
+  testProbParsets ("classif.plsdaCaret", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.probs.list, parset.list)
 
 })
