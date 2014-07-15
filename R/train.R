@@ -32,7 +32,7 @@
 #' print(mod)
 train = function(learner, task, subset, weights = NULL) {
   learner = checkLearner(learner)
-  assertClass(task, classes = "SupervisedTask")
+  assertClass(task, classes = "Task")
   if (missing(subset)) {
     subset = seq_len(task$task.desc$size)
   } else {
