@@ -99,10 +99,10 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL
 predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
   models = getBaggingModels(.model)
   g = if (.learner$type == "classif") as.character else identity
-  p = sapply(models, function(m) {
+  p = asMatrixCols(lapply(models, function(m) {
     nd = .newdata[, m$features, drop = FALSE]
     g(predict(m, newdata = nd, ...)$data$response)
-  })
+  }))
   if (.learner$predict.type == "response") {
     g = if (.learner$type == "classif")
       as.factor(apply(p, 1L, computeMode))
