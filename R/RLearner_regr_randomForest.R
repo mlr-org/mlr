@@ -17,8 +17,7 @@ makeRLearner.regr.randomForest = function() {
       makeIntegerLearnerParam(id = "maxnodes", lower = 1L),
       makeLogicalLearnerParam(id = "importance", default = FALSE),
       makeLogicalLearnerParam(id = "localImp", default = FALSE),
-      makeLogicalLearnerParam(id = "keep.inbag", default = FALSE),
-      makeLogicalLearnerParam(id = "fix.factors", default = FALSE)
+      makeLogicalLearnerParam(id = "keep.inbag", default = FALSE)
     ),
     par.vals = list(
       fix.factors = FALSE,
@@ -65,12 +64,6 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
 
 #' @export
 predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
-  if (.learner$par.vals$fix.factors) {
-    factors = Filter(is.character, .model$learner.model$forest$xlevels)
-    .newdata[names(factors)] = mapply(factor, x = .newdata[names(factors)],
-      levels = factors, SIMPLIFY = FALSE)
-  }
-
   if (.learner$predict.type == "se") {
     se.fun = switch(.learner$par.vals$se.method,
       bootstrap = bootstrapStandardError,

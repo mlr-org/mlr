@@ -15,10 +15,8 @@ makeRLearner.classif.randomForest = function() {
       makeLogicalLearnerParam(id = "importance", default = FALSE),
       makeLogicalLearnerParam(id = "localImp", default = FALSE),
       makeLogicalLearnerParam(id = "norm.votes", default = TRUE),
-      makeLogicalLearnerParam(id = "keep.inbag", default = FALSE),
-      makeLogicalLearnerParam(id = "fix.factors", default = FALSE)
+      makeLogicalLearnerParam(id = "keep.inbag", default = FALSE)
     ),
-    par.vals = list(fix.factors = FALSE),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
   )
 }
@@ -40,10 +38,5 @@ trainLearner.classif.randomForest = function(.learner, .task, .subset, .weights 
 #' @export
 predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type=="response", "response", "prob")
-  if (.learner$par.vals$fix.factors) {
-    factors = Filter(is.character, .model$learner.model$forest$xlevels)
-    .newdata[names(factors)] = mapply(factor, x = .newdata[names(factors)],
-       levels = factors, SIMPLIFY = FALSE)
-  }
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }

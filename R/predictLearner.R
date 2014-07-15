@@ -31,6 +31,12 @@ predictLearner = function(.learner, .model, .newdata, ...) {
 }
 
 predictLearner2 = function(.learner, .model, .newdata, ...) {
+  # if we have that option enabled, set factor levels to complete levels from task
+  if (.learner$fix.factors) {
+    factors = Filter(is.character, .model$learner.model$forest$xlevels)
+    .newdata[names(factors)] = mapply(factor, x = .newdata[names(factors)],
+       levels = factors, SIMPLIFY = FALSE)
+  }
   p = predictLearner(.learner, .model, .newdata, ...)
   p = checkPredictLearnerOutput(.learner, .model, p)
   return(p)

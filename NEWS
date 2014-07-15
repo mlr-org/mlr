@@ -1,6 +1,9 @@
 mlr_2.1:
 - fix a bug when feature filtering resulted in a NoFeatureModel 
 - improve makeWeightedClassesWrapper: Hyperparams for class weighting are now supported, too.
+- removed fix.factors option from randomForest, but added it in general to makeLearner,
+  so it now works for all learners. 
+  Helps when feature factor levels where dropped in newdata prediction data.frames
 
 - new learners:
 -- regr.cforest

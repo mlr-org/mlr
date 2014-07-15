@@ -15,6 +15,7 @@ makeBaseWrapper = function(id, next.learner, package = character(0L), par.set = 
     par.set = par.set,
     par.vals = par.vals,
     properties = next.learner$properties,
+    fix.factors = FALSE,
     next.learner = next.learner
   )
 }

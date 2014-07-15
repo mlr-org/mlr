@@ -12,7 +12,7 @@ test_that("regr_randomForest", {
 
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(formula=regr.formula, data = regr.train)
+    pars = list(formula = regr.formula, data = regr.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(randomForest, pars)
@@ -37,11 +37,11 @@ test_that("fix factors work", {
   data = iris
   train = sample(1:n, floor(n * 0.9))
   test = setdiff(1:n, train)
-  
-  task = makeRegrTask(data=data[train, ], target="Sepal.Length")
-  learner = makeLearner("regr.randomForest", fix.factors=TRUE)
+
+  task = makeRegrTask(data = data[train, ], target = "Sepal.Length")
+  learner = makeLearner("regr.randomForest", fix.factors = TRUE)
   model = train(learner, task)
   newdata = data[head(test, 1L), ]
   newdata$Species = droplevels(newdata$Species)
-  expect_is(predict(model, newdata=newdata), "Prediction")
+  expect_is(predict(model, newdata = newdata), "Prediction")
 })
