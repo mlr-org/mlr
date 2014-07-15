@@ -48,6 +48,7 @@
 #'   \item{\bold{classif.plr}}{\cr Logistic regression with a L2 penalty from stepPlr package: \code{\link[stepPlr]{plr}}\cr
 #'     Note that AIC and BIC penalty types can be selected via the new parameter \code{cp.type}}.
 #'   \item{\bold{classif.plsDA}}{\cr Partial Least Squares (PLS) Discriminant Analysis from DiscriMiner package: \code{\link[DiscriMiner]{plsDA}}}
+#'   \item{\bold{classif.plsda_caret}}{\cr Partial Least Squares (PLS) Discriminant Analysis from caret package: \code{\link[caret]{plsda}}}
 #'   \item{\bold{classif.qda}}{\cr Quadratic Discriminant Analysis from MASS package: \code{\link[MASS]{qda}}}
 #'   \item{\bold{classif.quaDA}}{\cr Quadratic Discriminant Analysis from DiscriMiner package: \code{\link[DiscriMiner]{quaDA}}}
 #'   \item{\bold{classif.randomForest}}{\cr Random Forest from randomForest package: \code{\link[randomForest]{randomForest}}.\cr

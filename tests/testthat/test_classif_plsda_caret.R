@@ -1,0 +1,38 @@
+context("classif_plsda_caret")
+
+test_that("classif_plsda_caret", {  
+  library(caret)
+  parset.list = list(
+    list(),
+    list(ncomp = 4),
+    list(probMethod = 'Bayes')
+  )
+  
+  old.predicts.list = list()
+  old.probs.list = list()
+  
+  for (i in 1:length(parset.list)) {
+    parset = parset.list[[i]]
+    x = binaryclass.train
+    y = x[, binaryclass.class.col]
+    x[, binaryclass.class.col] = NULL
+    pars = list(x = x, y = y)
+    pars = c(pars, parset)
+    set.seed(getOption("mlr.debug.seed"))
+    m = do.call(plsda, pars)
+    newx = binaryclass.test
+    newx[, binaryclass.class.col] = NULL
+    set.seed(getOption("mlr.debug.seed"))
+    p = predict(m, newdata = newx, type = "class")
+    set.seed(getOption("mlr.debug.seed"))
+    p2 = predict(m, newdata = newx, type = "prob")[,1,1]
+    old.predicts.list[[i]] = p
+    old.probs.list[[i]] = p2
+  }
+  
+  testSimpleParsets("classif.plsda_caret", binaryclass.df, binaryclass.target, binaryclass.train.inds,
+                    old.predicts.list, parset.list)
+  testProbParsets ("classif.plsda_caret", binaryclass.df, binaryclass.target, binaryclass.train.inds,
+                    old.probs.list, parset.list)
+  
+})

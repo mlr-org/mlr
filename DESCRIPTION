@@ -32,6 +32,7 @@ Suggests:
     testthat,
     ada,
     adabag,
+    caret,
     class,
     cluster,
     cmaes,
