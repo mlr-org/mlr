@@ -22,11 +22,11 @@ multiclass.test  = multiclass.df[multiclass.test.inds, ]
 multiclass.class.col = 5
 multiclass.task = makeClassifTask("multiclass", data = multiclass.df, target = multiclass.target)
 
-noclass.df = iris
+noclass.df = iris[,-5]
 noclass.train.inds = c(1:30, 51:80, 101:130)
-noclass.test.inds  = setdiff(1:150, multiclass.train.inds)
-noclass.train = multiclass.df[multiclass.train.inds, ]
-noclass.test  = multiclass.df[multiclass.test.inds, ]
+noclass.test.inds  = setdiff(1:150, noclass.train.inds)
+noclass.train = noclass.df[noclass.train.inds, ]
+noclass.test  = noclass.df[noclass.test.inds, ]
 noclass.task = makeClusterTask("noclass", data = noclass.df)
 
 data(BostonHousing)

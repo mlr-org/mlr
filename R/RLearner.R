@@ -95,3 +95,12 @@ makeRLearnerSurv = function(cl, package, par.set, par.vals = list(), properties 
   )
 }
 
+#' @export
+#' @rdname RLearner
+makeRLearnerCluster = function(cl, package, par.set, par.vals = list(), properties = character(0L)) {
+  addClasses(
+    makeRLearnerInternal(cl, "cluster", package, par.set, par.vals, properties),
+    c(cl, "RLearnerCluster")
+  )
+}
+
