@@ -4,8 +4,8 @@
 \alias{makeLearner}
 \title{Create learner object.}
 \usage{
-makeLearner(cl, id = cl, predict.type = "response", ...,
-  par.vals = list())
+makeLearner(cl, id = cl, predict.type = "response", fix.factors = FALSE,
+  ..., par.vals = list())
 }
 \arguments{
 \item{cl}{[\code{character(1)}]\cr
@@ -24,6 +24,15 @@ Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities a
 Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
 Survival: \dQuote{response} (= some sort of orderable risk) or \dQuote{prob} (= time dependent probabilities).
 Default is \dQuote{response}.}
+
+\item{fix.factors}{[\code{logical(1)}]\cr
+In some cases, problems occur in underlying learners for factor features during prediction.
+If the new features have LESS factor levels than during training (a strict subset),
+the learner might produce an  error like
+'type of predictors in new data do not match that of the training data'.
+In this case one can repair this problem by setting this option to true.
+We will simply add the missing factor levels to that factor feature.
+Default is \code{FALSE}.}
 
 \item{...}{[any]\cr
 Optional named (hyper)parameters.

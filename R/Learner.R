@@ -14,6 +14,14 @@
 #'   Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
 #'   Survival: \dQuote{response} (= some sort of orderable risk) or \dQuote{prob} (= time dependent probabilities).
 #'   Default is \dQuote{response}.
+#' @param fix.factors [\code{logical(1)}]\cr
+#'   In some cases, problems occur in underlying learners for factor features during prediction.
+#'   If the new features have LESS factor levels than during training (a strict subset),
+#'   the learner might produce an  error like
+#'   'type of predictors in new data do not match that of the training data'.
+#'   In this case one can repair this problem by setting this option to true.
+#'   We will simply add the missing factor levels to that factor feature.
+#'   Default is \code{FALSE}.
 #' @param ... [any]\cr
 #'   Optional named (hyper)parameters.
 #'   Alternatively these can be given using the \code{par.vals} argument.
@@ -31,8 +39,9 @@
 #' makeLearner("classif.lda", predict.type = "prob")
 #' lrn = makeLearner("classif.lda", method = "t", nu = 10)
 #' print(lrn$par.vals)
-makeLearner = function(cl, id = cl, predict.type = "response", ..., par.vals = list()) {
+makeLearner = function(cl, id = cl, predict.type = "response", fix.factors = FALSE, ..., par.vals = list()) {
   assertString(cl)
+  assertFlag(fix.factors)
   constructor = getS3method("makeRLearner", class = cl)
   wl = do.call(constructor, list())
 
@@ -47,6 +56,7 @@ makeLearner = function(cl, id = cl, predict.type = "response", ..., par.vals = l
     stop("Learner must be a basic RLearner!")
   wl = setHyperPars(learner = wl, ..., par.vals = par.vals)
   wl = setPredictType(learner = wl, predict.type = predict.type)
+  wl$fix.factors = fix.factors
   return(wl)
 }
 
