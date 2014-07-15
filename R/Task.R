@@ -1,13 +1,9 @@
-#' @title Create a classification, regression, survival or cost-sensitive classification task.
+#' @title Create a machine learning task.
 #'
 #' @description
 #' The task encapsulates the data and specifies - through its subclasses -
 #' the type of the task.
 #' It also contains a description object detailing further aspects of the data.
-#'
-#' Useful operators are: \code{\link{getTaskFormula}}, \code{\link{getTaskFormulaAsString}},
-#' \code{\link{getTaskFeatureNames}}, \code{\link{getTaskData}}, \code{\link{getTaskTargets}},
-#' \code{\link{subsetTask}}.
 #'
 #' Object members:
 #' \describe{
@@ -22,11 +18,7 @@
 #'   Id string for object.
 #'   Default is the name of R variable passed to \code{data}.
 #' @param data [\code{data.frame}]\cr
-#'   A data frame containing the features and target variable(s).
-#' @param target [\code{character(1)} | \code{character(2)}]\cr
-#'   Name of the target variable.
-#'   For survival analysis these are the names of the survival time and event columns,
-#'   so it has length 2.
+#'   A data frame containing the features.
 #' @param costs [\code{data.frame}]\cr
 #'   A numeric matrix or data frame containing the costs of misclassification.
 #'   We assume the general case of observation specific costs.
@@ -45,9 +37,6 @@
 #'   Specifically, they are either put all in the training or the test set
 #'   during a resampling iteration.
 #'   Default is \code{NULL} which means no blocking.
-#' @param positive [\code{character(1)}]\cr
-#'   Positive class for binary classification.
-#'   Default is the first factor level of the target attribute.
 #' @param fixup.data [\code{character(1)}]\cr
 #'   Should some basic cleaning up of data be performed?
 #'   Currently this means removing empty factor levels for the columns.
@@ -60,28 +49,18 @@
 #'   Should sanity of data be checked initially at task creation?
 #'   You should have good reasons to turn this off (one might be speed).
 #'   Default is \code{TRUE}
-#' @return [\code{\link{SupervisedTask}}].
-#' @name SupervisedTask
-#' @rdname SupervisedTask
-#' @aliases ClassifTask RegrTask SurvTask CostSensTask
+#' @return [\code{\link{Task}}].
+#' @name Task
+#' @rdname Task
 #' @examples
-#' library(mlbench)
-#' data(BostonHousing)
-#' data(Ionosphere)
-#'
-#' makeClassifTask(data = iris, target = "Species")
-#' makeRegrTask(data = BostonHousing, target = "medv")
-#' # an example of a classification task with more than those standard arguments:
-#' blocking = factor(c(rep(1, 51), rep(2, 300)))
-#' makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
-#'   positive = "good", blocking = blocking)
+#' makeClusterTask(data = iris)
 NULL
 
-makeSupervisedTask = function(type, data, target, weights = NULL, blocking = NULL) {
+makeTask = function(type, data, weights = NULL, blocking = NULL) {
   env = new.env(parent = emptyenv())
   assertDataFrame(data)
   env$data = data
-  makeS3Obj(c("SupervisedTask", "Task"),
+  makeS3Obj("Task",
     env = env,
     weights = weights,
     blocking = blocking,
@@ -92,30 +71,54 @@ makeSupervisedTask = function(type, data, target, weights = NULL, blocking = NUL
 #FIXME: it would probably be better to have: pre-check, fixup, post-check!
 
 #' @export
-checkTaskCreation.SupervisedTask = function(task, target, ...) {
-  NextMethod("checkTaskCreation")
+checkTaskCreation.Task = function(task, ...) {
+  checkColumnNames(task$env$data, 'data')
+  if (!is.null(task$env$weights))
+    assertNumeric(weights, len = nrow(task$env$data), any.missing = FALSE, lower = 0)
+  if (!is.null(task$blocking)) {
+    assertFactor(task$blocking, len = nrow(task$env$data), any.missing = FALSE)
+    if(length(task$blocking) && length(task$blocking) != nrow(task$env$data))
+      stop("Blocking has to be of the same length as number of rows in data! Or pass none at all.")
+  }
 
-  w = which.first(target %nin% colnames(task$env$data))
-  if (length(w) > 0L)
-    stopf("Column names of data doesn't contain target var: %s", target[w])
-  for (tt in target) {
-    if (any(is.na(task$env$data[[tt]])))
-      stopf("Target column '%s' contains missing values!", tt)
+  checkColumn = function(x, cn) {
+    if (is.numeric(x)) {
+      if (any(is.infinite(x)))
+        stopf("Data contains infinite values in: %s", cn)
+      if (any(is.nan(x)))
+        stopf("Data contains NaN values in: %s", cn)
+    } else if (is.factor(x)) {
+      if (any(table(x) == 0L))
+        stopf("Data contains empty factor levels in: %s", cn)
+    } else {
+      stopf("Unsupported feature type in: %s, %s", cn, class(x)[1L])
+    }
+  }
+  Map(checkColumn, x = task$env$data, cn = colnames(task$env$data))
+}
+
+#' @export
+fixupData.Task = function(task, target, choice) {
+  if (choice == "quiet") {
+    task$env$data = droplevels(task$env$data)
+  } else if (choice == "warn") {
+    # the next lines look a bit complicated, we calculate the warning info message
+    cns = colnames(task$env$data)
+    levs1 = lapply(task$env$data, function(x) if (is.factor(x)) levels(x) else NULL)
+    data = droplevels(task$env$data)
+    levs2 = lapply(data, function(x) if (is.factor(x)) levels(x) else NULL)
+    j = vlapply(cns, function(cn) !setequal(levs1[[cn]], levs2[[cn]]))
+    if (any(j))
+      warningf("Empty factor levels were dropped for columns: %s", collapse(cns[j]))
+    task$env$data = droplevels(task$env$data)
   }
 }
 
 #' @export
-fixupData.SupervisedTask = function(task, target, choice) {
-  NextMethod("fixupData")
-}
-
-#' @export
-print.SupervisedTask = function(x, print.target = TRUE, print.weights = TRUE, ...) {
+print.Task = function(x, print.weights = TRUE, ...) {
   td = x$task.desc
-  catf("Supervised task: %s", td$id)
+  catf("Task: %s", td$id)
   catf("Type: %s", td$type)
-  if (print.target)
-    catf("Target: %s", collapse(td$target))
   catf("Observations: %i", td$size)
   catf("Features:")
   catf(printToChar(td$n.feat, collapse = "\n"))
@@ -123,4 +126,17 @@ print.SupervisedTask = function(x, print.target = TRUE, print.weights = TRUE, ..
   if (print.weights)
     catf("Has weights: %s", td$has.weights)
   catf("Has blocking: %s", td$has.blocking)
+}
+
+# either guess task id from variable name of data or check it
+checkOrGuessId = function(id, data) {
+  if (missing(id)) {
+    # go up to user frame for heuristic to get name of data
+    id = deparse(substitute(data, env = parent.frame(1L)))
+    if (!is.character(id) || length(id) != 1L)
+      stop("Cannot infer id for task automatically. Please set it manually!")
+  } else {
+    assertString(id)
+  }
+  return(id)
 }

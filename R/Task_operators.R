@@ -240,6 +240,7 @@ changeData = function(task, data, costs, weights) {
   task$task.desc = switch(td$type,
     "classif" = makeTaskDesc(task, td$id, td$target, td$positive),
     "surv" = makeTaskDesc(task, td$id, td$target, td$surv.type),
+    "cluster" = makeTaskDesc(task, td$id),
     makeTaskDesc(task, td$id, td$target))
   return(task)
 }
