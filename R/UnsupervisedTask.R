@@ -1,0 +1,40 @@
+#' @title Create an unsupervised (e.g. clustering) task.
+#' @rdname Task
+
+makeUnsupervisedTask = function(type, data, weights = NULL, blocking = NULL) {
+  env = new.env(parent = emptyenv())
+  assertDataFrame(data)
+  env$data = data
+  makeS3Obj(c("UnsupervisedTask", "Task"),
+    env = env,
+    weights = weights,
+    blocking = blocking,
+    task.desc = NA
+  )
+}
+
+#FIXME: it would probably be better to have: pre-check, fixup, post-check!
+
+#' @export
+checkTaskCreation.UnsupervisedTask = function(task, ...) {
+  NextMethod("checkTaskCreation")
+}
+
+#' @export
+fixupData.UnsupervisedTask = function(task, target, choice) {
+  NextMethod("fixupData")
+}
+
+#' @export
+print.UnsupervisedTask = function(x, print.weights = TRUE, ...) {
+  td = x$task.desc
+  catf("Unsupervised task: %s", td$id)
+  catf("Type: %s", td$type)
+  catf("Observations: %i", td$size)
+  catf("Features:")
+  catf(printToChar(td$n.feat, collapse = "\n"))
+  catf("Missings: %s", td$has.missings)
+  if (print.weights)
+    catf("Has weights: %s", td$has.weights)
+  catf("Has blocking: %s", td$has.blocking)
+}
