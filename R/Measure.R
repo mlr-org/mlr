@@ -116,7 +116,8 @@ default.measures = function(x) {
     classif = list(mmce),
     regr = list(mse),
     costsens = list(mcp),
-    surv = list(cindex)
+    surv = list(cindex),
+    cluster = list(db)
   )
 }
 

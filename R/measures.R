@@ -58,6 +58,11 @@
 #'     costs of oracle and model prediction.}
 #' }
 #'
+#' Clustering:
+#' \itemize{
+#'   \item{\bold{db}}{\cr Davies-Bouldin cluster separation measure}
+#' }
+#'
 #' General:
 #' \itemize{
 #'   \item{\bold{timetrain}}{\cr Time of fitting the model}
@@ -536,3 +541,20 @@ mcp = makeMeasure(id = "mcp", minimize = TRUE, best = 0, worst = Inf,
     mc - oc
   }
 )
+
+###############################################################################
+### clustering ###
+###############################################################################
+#' @export db
+#' @rdname measures
+#' @usage none
+#' @format none
+db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
+  properties = "cluster",
+  allowed.pred.types = c("response"),
+  fun = function(task, model, pred, extra.args) {
+    requirePackages("clusterSim")
+    index.DB(task$env$data, pred$data$response)$DB
+  }
+)
+
