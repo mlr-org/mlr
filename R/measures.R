@@ -60,7 +60,7 @@
 #'
 #' Clustering:
 #' \itemize{
-#'   \item{\bold{db}}{\cr Davies-Bouldin cluster separation measure}
+#'   \item{\bold{db}}{\cr Davies-Bouldin cluster separation measure, see \code{\link[clusterSim]{index.DB}}}
 #' }
 #'
 #' General:
