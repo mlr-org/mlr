@@ -78,7 +78,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   extract, show.info = getMlrOption("show.info")) {
 
   learner = checkLearner(learner)
-  assertClass(task, classes = "SupervisedTask")
+  assertClass(task, classes = "Task")
   # instantiate resampling
   if (inherits(resampling, "ResampleDesc"))
     resampling = makeResampleInstance(resampling, task = task)

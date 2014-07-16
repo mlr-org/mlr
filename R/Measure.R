@@ -108,7 +108,7 @@ makeMeasure = function(id, minimize, properties = character(0L), allowed.pred.ty
 default.measures = function(x) {
   type = if (inherits(x, "TaskDesc"))
     x$type
-  else if (inherits(x, "SupervisedTask"))
+  else if (inherits(x, "Task"))
     x$task.desc$type
   else if (inherits(x, "Learner"))
     x$type
