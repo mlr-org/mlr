@@ -61,7 +61,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   err.col = "orange") {
 
   learner = checkLearner(learner)
-  assertClass(task, classes = "SupervisedTask")
+  assertClass(task, classes = "Task")
   td = task$task.desc
 
   # features and dimensionality
@@ -76,6 +76,8 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   taskdim = length(features)
   if (td$type == "classif" && taskdim != 2L)
     stopf("Classification: currently only 2D plots supported, not: %i", taskdim)
+  if (td$type == "cluster" && taskdim != 2L)
+    stopf("Clustering: currently only 2D plots supported, not: %i", taskdim)
   if (td$type == "regr" && taskdim %nin% 1:2)
     stopf("Regression: currently only 1D and 2D plots supported, not: %i", taskdim)
 
@@ -117,7 +119,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   mod = train(learner, task)
   pred.train = predict(mod, task)
   yhat = pred.train$data$response
-  perf.train = performance(pred.train, measures = measures)
+  perf.train = performance(pred.train, task = task, measures = measures)
   if (cv > 0L) {
     cv = crossval(learner, task, iters = 10L, measures = measures, show.info = FALSE)
     perf.cv = cv$aggr
@@ -173,6 +175,12 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
           size = pointsize + 1, col = err.col, show_guide = FALSE)
       }
       p  = p + guides(alpha = FALSE)
+    }
+  } else if (td$type == "cluster") {
+    if (taskdim == 2L) {
+      data$response = factor(yhat)
+      p = ggplot(data, aes_string(x = x1n, y = x2n, col = "response"))
+      p = p + geom_point(size = pointsize)
     }
   } else if (td$type == "regr") {
     if (taskdim == 1L) {
