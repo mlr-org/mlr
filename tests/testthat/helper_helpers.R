@@ -39,7 +39,9 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset=list(
   test = df[-inds,]
 
   lrn = do.call("makeLearner", c(list(t.name), parset))
-  if (is.numeric(df[, target]))
+  if (length(target) == 0)
+    task = makeClusterTask(data=df)
+  else if (is.numeric(df[, target]))
     task = makeRegrTask(data=df, target=target)
   else if (is.factor(df[, target]))
     task = makeClassifTask(data=df, target=target)

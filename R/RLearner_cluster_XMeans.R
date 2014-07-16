@@ -7,7 +7,7 @@ makeRLearner.cluster.XMeans = function() {
       makeIntegerLearnerParam(id = "I", default = 1L, lower = 1L)
       # FIXME: add missing params
     ),
-    properties = c("missings", "numerics", "factors")
+    properties = c("numerics")
   )
 }
 
@@ -19,6 +19,7 @@ trainLearner.cluster.XMeans = function(.learner, .task, .subset, .weights = NULL
 
 #' @export
 predictLearner.cluster.XMeans = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata = .newdata, ...)
+  # XMeans returns cluster indices (i.e. starting from 0, which some tools don't like
+  predict(.model$learner.model, .newdata, ...) + 1
 }
 
