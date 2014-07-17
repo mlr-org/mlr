@@ -92,7 +92,8 @@ makeModelMultiplexer = function(base.learners) {
     par.set = par.set,
     par.vals = list(selected.learner = ids[1L]),
     properties = Reduce(intersect, extractSubList(base.learners, "properties", simplify = FALSE)),
-    predict.type = "response"
+    predict.type = "response",
+    fix.factors = TRUE
   )
 
   lrn$base.learners = setNames(base.learners, ids)
