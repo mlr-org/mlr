@@ -1,10 +1,6 @@
 \name{Task}
 \alias{Task}
-\alias{makeUnsupervisedTask}
 \title{Create a machine learning task.}
-\usage{
-makeUnsupervisedTask(type, data, weights = NULL, blocking = NULL)
-}
 \arguments{
   \item{id}{[\code{character(1)}]\cr Id string for object.
   Default is the name of R variable passed to \code{data}.}
