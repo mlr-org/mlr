@@ -9,7 +9,7 @@ getTaskFormulaAsString(x, target = getTargetNames(x))
 getTaskFormula(x, target = getTargetNames(x), env = NULL)
 }
 \arguments{
-\item{x}{[\code{\link{SupervisedTask}} | \code{\link{TaskDesc}}]\cr
+\item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
 Task or its description object.}
 
 \item{target}{[\code{character(1)}]\cr

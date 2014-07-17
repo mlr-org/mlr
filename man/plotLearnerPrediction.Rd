@@ -13,7 +13,7 @@ plotLearnerPrediction(learner, task, features = NULL, measures, cv = 10L,
 The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
-\item{task}{[\code{\link{SupervisedTask}}]\cr
+\item{task}{[\code{\link{Task}}]\cr
 The task.}
 
 \item{features}{[\code{character}]\cr

@@ -7,7 +7,7 @@ filterFeatures(task, method = "random.forest.importance", select = "perc",
   val, ...)
 }
 \arguments{
-\item{task}{[\code{\link{SupervisedTask}}]\cr
+\item{task}{[\code{\link{Task}}]\cr
 The task.}
 
 \item{method}{[\code{character(1)}]\cr

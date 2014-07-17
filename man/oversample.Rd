@@ -9,7 +9,7 @@ oversample(task, rate)
 undersample(task, rate)
 }
 \arguments{
-\item{task}{[\code{\link{SupervisedTask}}]\cr
+\item{task}{[\code{\link{Task}}]\cr
 The task.}
 
 \item{rate}{[\code{numeric(1)}]\cr

@@ -11,7 +11,7 @@ tuneParams(learner, task, resampling, measures, par.set, control,
 The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
-\item{task}{[\code{\link{SupervisedTask}}]\cr
+\item{task}{[\code{\link{Task}}]\cr
 The task.}
 
 \item{resampling}{[\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr

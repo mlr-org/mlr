@@ -39,7 +39,7 @@ resample(learner, task, resampling, measures, weights = NULL,
 The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
-\item{task}{[\code{\link{SupervisedTask}}]\cr
+\item{task}{[\code{\link{Task}}]\cr
 The task.}
 
 \item{resampling}{[\code{\link{ResampleDesc}} or \code{\link{ResampleInstance}}]\cr

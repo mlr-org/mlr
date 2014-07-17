@@ -12,7 +12,7 @@ Prediction object.}
 \item{measure}{[\code{\link{Measure}}]\cr
 Performance measure to optimize.}
 
-\item{task}{[\code{\link{SupervisedTask}}]\cr
+\item{task}{[\code{\link{Task}}]\cr
 Learning task. Rarely neeeded,
 only when required for the performance measure.}
 
