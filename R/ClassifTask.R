@@ -1,5 +1,5 @@
 #' @export
-#' @rdname SupervisedTask
+#' @rdname Task
 makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
   positive, fixup.data = "warn", check.data = TRUE) {
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
