@@ -11,7 +11,7 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
   # FIXME: use ... in mbo
   tff = function(x) tunerFitnFun(x, learner = learner, task = task, resampling = resampling, measures = measures,
     par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
-    trafo = FALSE, convertx = cx, remove.nas = TRUE)
+    convertx = cx, remove.nas = TRUE)
 
   #FIXME remove this when mbo on cran
   mbofun = get("mbo", envir = getNamespace("mlrMBO"))

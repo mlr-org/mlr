@@ -107,7 +107,7 @@
 
 \itemize{
   \item{\bold{cluster.SimpleKMeans}}{\cr k-means clustering from RWeka package: \code{\link[RWeka]{SimpleKMeans}}}
-  \item{\bold{cluster.EM}}{\cr Expectation-maximization clustering from RWeka package: \code{\link[RWeka]{EM}}}
+  \item{\bold{cluster.EM}}{\cr Expectation-maximization clustering from RWeka package: \code{\link[RWeka]{make_Weka_clusterer}}}
   \item{\bold{cluster.XMeans}}{\cr XMeans (k-means with automatic determination of k) clustering from RWeka package: \code{\link[RWeka]{XMeans}}
     Note that you might have to install the Weka package: \code{WPM("install-package", "XMeans")}}
 }
