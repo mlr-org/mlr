@@ -109,8 +109,8 @@
 #'   \item{\bold{cluster.EM}}{\cr Expectation-maximization clustering from RWeka package: \code{\link[RWeka]{EM}}}
 #'   \item{\bold{cluster.XMeans}}{\cr XMeans (k-means with automatic determination of k) clustering from RWeka package: \code{\link[RWeka]{XMeans}}
 #'     Note that you might have to install the Weka package: \code{WPM("install-package", "XMeans")}}
-#'   \item{\bold{cluster.DBScan}}{\cr DBScan density-based clustering from RWeka package: \code{\link[RWeka]{DBScan}}
-#'     Note that you might have to install the Weka package: \code{WPM("install-package", "DBScan")}}
+#   \item{\bold{cluster.DBScan}}{\cr DBScan density-based clustering from RWeka package: \code{\link[RWeka]{DBScan}}
+#     Note that you might have to install the Weka package: \code{WPM("install-package", "optics_dbScan")}}
 #' }
 #' @name learners
 #' @rdname learners

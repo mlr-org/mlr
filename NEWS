@@ -1,4 +1,5 @@
 mlr_2.1:
+- mlr now supports cluster analysis
 - fix a bug when feature filtering resulted in a NoFeatureModel 
 - improve makeWeightedClassesWrapper: Hyperparams for class weighting are now supported, too.
 - removed fix.factors option from randomForest, but added it in general to makeLearner,
@@ -12,9 +13,16 @@ mlr_2.1:
 -- classif.plsdaCaret
 -- regr.cforest
 -- regr.svm
+-- cluster.SimpleKMeans
+-- cluster.EM
+-- cluster.XMeans
 
 - new measures
 -- bac
+-- db, g1, g2, silhouette
+
+- new functions
+-- makeClusterTask
 
 mlr_2.0:
 - mlr now supports survival analysis models (experimental)
