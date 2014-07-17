@@ -2,7 +2,7 @@
 #' @param surv.type [\code{character(1)}]\cr
 #'  Survival type. Allowed are \dQuote{right} (default), \dQuote{left} and \dQuote{interval2}.
 #'  See \code{\link[survival]{Surv}} for details.
-#' @rdname SupervisedTask
+#' @rdname Task
 makeSurvTask = function(id, data, target, surv.type = "right", weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE) {
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
@@ -21,14 +21,12 @@ makeSurvTask = function(id, data, target, surv.type = "right", weights = NULL, b
   return(task)
 }
 
-#' @export
 checkTaskCreation.SurvTask = function(task, target, ...) {
   NextMethod("checkTaskCreation")
   assertCharacter(target, len = 2L, any.missing = FALSE)
   ### TODO: more checks here
 }
 
-#' @export
 fixupData.SurvTask = function(task, target, choice, ...) {
   NextMethod("fixupData")
   if (is.integer(task$env$data[[target[1L]]]))
@@ -37,7 +35,6 @@ fixupData.SurvTask = function(task, target, choice, ...) {
     task$env$data[[target[2L]]] = as.integer(as.logical(task$env$data[[target[2L]]]))
 }
 
-#' @export
 makeTaskDesc.SurvTask = function(task, id, target, surv.type) {
   td = makeTaskDescInternal(task, "surv", id, target)
   td$surv.type = surv.type

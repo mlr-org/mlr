@@ -1,7 +1,3 @@
-#' @title Create an unsupervised (e.g. clustering) task.
-#' @name UnsupervisedTask
-#' @rdname Task
-
 makeUnsupervisedTask = function(type, data, weights = NULL, blocking = NULL) {
   env = new.env(parent = emptyenv())
   assertDataFrame(data)
@@ -14,14 +10,10 @@ makeUnsupervisedTask = function(type, data, weights = NULL, blocking = NULL) {
   )
 }
 
-#FIXME: it would probably be better to have: pre-check, fixup, post-check!
-
-#' @export
 checkTaskCreation.UnsupervisedTask = function(task, ...) {
   NextMethod("checkTaskCreation")
 }
 
-#' @export
 fixupData.UnsupervisedTask = function(task, target, choice) {
   NextMethod("fixupData")
 }

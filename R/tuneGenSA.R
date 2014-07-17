@@ -12,7 +12,7 @@ tuneGenSA = function(learner, task, resampling, measures, par.set, control, opt.
   or = GenSA(par = start, fn = tunerFitnFun, lower = low, upper = upp, control = ctrl.gensa,
     learner = learner, task = task, resampling = resampling, measures = measures,
     par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
-    trafo = TRUE, convertx = identity, remove.nas = FALSE)
+    convertx = identity, remove.nas = FALSE)
   i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), ties = "random")
   e = getOptPathEl(opt.path, i)
   makeTuneResult(learner, control, e$x, e$y, opt.path)

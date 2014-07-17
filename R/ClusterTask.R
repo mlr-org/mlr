@@ -1,5 +1,3 @@
-#' @title Create a clustering task.
-#' @name ClusterTask
 #' @rdname Task
 #' @export
 makeClusterTask = function(id, data, weights = NULL, blocking = NULL,
@@ -17,17 +15,14 @@ makeClusterTask = function(id, data, weights = NULL, blocking = NULL,
   return(task)
 }
 
-#' @export
 checkTaskCreation.ClusterTask = function(task, ...) {
   NextMethod("checkTaskCreation")
 }
 
-#' @export
 fixupData.ClusterTask = function(task, target, choice, ...) {
   NextMethod("fixupData")
 }
 
-#' @export
 makeTaskDesc.ClusterTask = function(task, id) {
   target = character(0L)
   td = makeTaskDescInternal(task, "cluster", id, target)

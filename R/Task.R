@@ -1,9 +1,13 @@
-#' @title Create a machine learning task.
+#' @title Create a classification, regression, survival, cluster, or cost-sensitive classification task.
 #'
 #' @description
 #' The task encapsulates the data and specifies - through its subclasses -
 #' the type of the task.
 #' It also contains a description object detailing further aspects of the data.
+#'
+#' Useful operators are: \code{\link{getTaskFormula}}, \code{\link{getTaskFormulaAsString}},
+#' \code{\link{getTaskFeatureNames}}, \code{\link{getTaskData}}, \code{\link{getTaskTargets}},
+#' \code{\link{subsetTask}}.
 #'
 #' Object members:
 #' \describe{
@@ -18,7 +22,11 @@
 #'   Id string for object.
 #'   Default is the name of R variable passed to \code{data}.
 #' @param data [\code{data.frame}]\cr
-#'   A data frame containing the features.
+#'   A data frame containing the features and target variable(s).
+#' @param target [\code{character(1)} | \code{character(2)}]\cr
+#'   Name of the target variable.
+#'   For survival analysis these are the names of the survival time and event columns,
+#'   so it has length 2.
 #' @param costs [\code{data.frame}]\cr
 #'   A numeric matrix or data frame containing the costs of misclassification.
 #'   We assume the general case of observation specific costs.
@@ -37,6 +45,9 @@
 #'   Specifically, they are either put all in the training or the test set
 #'   during a resampling iteration.
 #'   Default is \code{NULL} which means no blocking.
+#' @param positive [\code{character(1)}]\cr
+#'   Positive class for binary classification.
+#'   Default is the first factor level of the target attribute.
 #' @param fixup.data [\code{character(1)}]\cr
 #'   Should some basic cleaning up of data be performed?
 #'   Currently this means removing empty factor levels for the columns.
@@ -52,8 +63,19 @@
 #' @return [\code{\link{Task}}].
 #' @name Task
 #' @rdname Task
+#' @aliases ClassifTask RegrTask SurvTask CostSensTask ClusterTask
 #' @examples
-#' makeClusterTask(data = iris)
+#' library(mlbench)
+#' data(BostonHousing)
+#' data(Ionosphere)
+#'
+#' makeClassifTask(data = iris, target = "Species")
+#' makeRegrTask(data = BostonHousing, target = "medv")
+#' # an example of a classification task with more than those standard arguments:
+#' blocking = factor(c(rep(1, 51), rep(2, 300)))
+#' makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
+#'   positive = "good", blocking = blocking)
+#' makeClusterTask(data = iris[, -5L])
 NULL
 
 makeTask = function(type, data, weights = NULL, blocking = NULL) {
@@ -70,7 +92,6 @@ makeTask = function(type, data, weights = NULL, blocking = NULL) {
 
 #FIXME: it would probably be better to have: pre-check, fixup, post-check!
 
-#' @export
 checkTaskCreation.Task = function(task, ...) {
   checkColumnNames(task$env$data, 'data')
   if (!is.null(task$env$weights))
@@ -97,7 +118,6 @@ checkTaskCreation.Task = function(task, ...) {
   Map(checkColumn, x = task$env$data, cn = colnames(task$env$data))
 }
 
-#' @export
 fixupData.Task = function(task, target, choice) {
   if (choice == "quiet") {
     task$env$data = droplevels(task$env$data)
