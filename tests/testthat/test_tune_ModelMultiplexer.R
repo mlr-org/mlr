@@ -43,8 +43,8 @@ test_that("ModelMultiplexer", {
   rdesc = makeResampleDesc("CV", iters = 2L)
   res = resample(lrn, binaryclass.task, rdesc)
 
-  lrn = setHyperPars(lrn, selected.learner = "classif.rpart", classif.rpart.minsplit = 100)
-  expect_true(setequal(names(getHyperPars(lrn)), c("selected.learner", "classif.rpart.minsplit")))
+  lrn2 = setHyperPars(lrn, selected.learner = "classif.rpart", classif.rpart.minsplit = 100)
+  expect_true(setequal(names(getHyperPars(lrn2)), c("selected.learner", "classif.rpart.minsplit")))
 
   tune.ps = makeModelMultiplexerParamSet(lrn,
     makeIntegerParam("minsplit", lower = 1, upper = 50))
