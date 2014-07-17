@@ -4,7 +4,7 @@
 #'
 #' @template arg_pred
 #' @template arg_measures
-#' @param task [\code{\link{SupervisedTask}}, \code{\link{UnsupervisedTask}}]\cr
+#' @param task [\code{\link{Task}}]\cr
 #'   Learning task, might be requested by performance measure, usually not needed except for clustering.
 #' @param model [\code{\link{WrappedModel}}]\cr
 #'   Model built on training data, might be requested by performance measure, usually not needed.

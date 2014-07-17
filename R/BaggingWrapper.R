@@ -41,7 +41,7 @@
 #' @export
 makeBaggingWrapper = function(learner, bw.iters = 10L, bw.replace = TRUE, bw.size, bw.feats = 1) {
 
-  learner = checkLearner(learner)
+  learner = checkLearner(learner, type=c("classif", "regr"))
   bw.iters = asInt(bw.iters, lower = 1L)
   assertFlag(bw.replace)
   if (missing(bw.size)) {

@@ -8,8 +8,8 @@ trainLearner(.learner, .task, .subset, .weights = NULL, ...)
   \item{.learner}{[\code{\link{RLearner}}]\cr Wrapped
   learner.}
 
-  \item{.task}{[\code{\link{SupervisedTask}}]\cr Task to
-  train learner on.}
+  \item{.task}{[\code{\link{Task}}]\cr Task to train
+  learner on.}
 
   \item{.subset}{[\code{integer}]\cr Subset of cases for
   training set, index the task with this.  You probably

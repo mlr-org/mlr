@@ -1,6 +1,14 @@
-\name{Task}
+\name{ClusterTask}
+\alias{ClusterTask}
 \alias{Task}
-\title{Create a machine learning task.}
+\alias{UnsupervisedTask}
+\title{Create a clustering task.}
+\usage{
+makeClusterTask(id, data, weights = NULL, blocking = NULL,
+  fixup.data = "warn", check.data = TRUE)
+
+makeUnsupervisedTask(type, data, weights = NULL, blocking = NULL)
+}
 \arguments{
   \item{id}{[\code{character(1)}]\cr Id string for object.
   Default is the name of R variable passed to \code{data}.}
@@ -46,6 +54,8 @@
 [\code{\link{Task}}].
 }
 \description{
+Create a clustering task.
+
 The task encapsulates the data and specifies - through its subclasses -
 the type of the task.
 It also contains a description object detailing further aspects of the data.
@@ -58,6 +68,7 @@ Object members:
 \item{blocking [\code{factor}]}{See argument above. \code{NULL} if not present.}
 \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
 }
+
 Create an unsupervised (e.g. clustering) task.
 }
 \examples{

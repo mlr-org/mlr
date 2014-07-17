@@ -66,7 +66,7 @@
 makeModelMultiplexer = function(base.learners) {
   id = "ModelMultiplexer"
   assertList(base.learners, min.len = 1L)
-  checkListElementClass(base.learners, "Learner")
+  lapply(base.learners, function(learner) { learner = checkLearner(learner, type=c("classif", "regr")) })
   ids = unique(extractSubList(base.learners, "id"))
   if (length(ids) != length(base.learners))
     stop("Base learners must all have unique ids!")

@@ -4,7 +4,7 @@
 #' Normalize features by different methods. Internally \code{\link{normalize}} is used.
 #' Non numerical features will be left untouched and passed to the result.
 #'
-#' @param obj [\code{data.frame} | \code{\link{SupervisedTask}}]\cr
+#' @param obj [\code{data.frame} | \code{\link{Task}}]\cr
 #'   Input data.
 #' @param target [\code{character(1)}]\cr
 #'   Name of the column(s) specifying the response.
@@ -19,7 +19,7 @@
 #' @template arg_exclude
 #' @param range [\code{numeric(2)}]\cr
 #'   Range the features should be scaled to. Default is \code{c(0,1)}.
-#' @return [\code{data.frame} | \code{\link{SupervisedTask}}]. Same type as \code{obj}.
+#' @return [\code{data.frame} | \code{\link{Task}}]. Same type as \code{obj}.
 #' @seealso \code{\link{normalize}}
 #' @export
 
@@ -46,7 +46,7 @@ normalizeFeatures.data.frame = function(obj, target = character(0L), method = "s
 }
 
 #' @export
-normalizeFeatures.SupervisedTask = function(obj, target = character(0L), method = "standardize", exclude = character(0L), range = c(0,1)) {
+normalizeFeatures.Task = function(obj, target = character(0L), method = "standardize", exclude = character(0L), range = c(0,1)) {
   d = normalizeFeatures(obj = getTaskData(obj), target = obj$task.desc$target, method = method, exclude = exclude, range = range)
   changeData(obj, d)
 }

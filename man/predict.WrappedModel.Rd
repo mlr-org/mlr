@@ -8,8 +8,8 @@
   \item{object}{[\code{\link{WrappedModel}}]\cr Wrapped
   model, result of \code{\link{train}}.}
 
-  \item{task}{[\code{\link{SupervisedTask}}]\cr The task.
-  If this is passed, data from this task is predicted.}
+  \item{task}{[\code{\link{Task}}]\cr The task. If this is
+  passed, data from this task is predicted.}
 
   \item{newdata}{[\code{data.frame}]\cr New observations
   which should be predicted.  Pass this alternatively

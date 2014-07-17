@@ -12,8 +12,7 @@ performance(pred, measures, task, model)
   \code{\link{Measure}}]\cr Performance measure(s) to
   evaluate.}
 
-  \item{task}{[\code{\link{SupervisedTask}},
-  \code{\link{UnsupervisedTask}}]\cr Learning task, might
+  \item{task}{[\code{\link{Task}}]\cr Learning task, might
   be requested by performance measure, usually not needed
   except for clustering.}
 

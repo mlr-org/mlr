@@ -1,6 +1,6 @@
 \name{listLearners}
 \alias{listLearners}
-\alias{listLearners.SupervisedTask}
+\alias{listLearners.Task}
 \alias{listLearners.character}
 \alias{listLearners.default}
 \title{Find matching learning algorithms.}
@@ -14,8 +14,8 @@ listLearners(obj = NA_character_, properties = character(0L),
 \method{listLearners}{character}(obj, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
 
-\method{listLearners}{SupervisedTask}(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
+\method{listLearners}{Task}(obj, properties = character(0L), quiet = TRUE,
+  warn.missing.packages = TRUE, create = FALSE)
 }
 \arguments{
   \item{obj}{[\code{character(1)} |

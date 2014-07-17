@@ -103,6 +103,13 @@
 #'   \item{\bold{surv.glmnet}}{\cr GLM with regularization from glmnet package: \code{\link[glmnet]{glmnet}}}
 #'   \item{\bold{surv.randomForestSRC}}{\cr Random Forests for Survival from randomForestSRC package: \code{\link[randomForestSRC]{randomForestSRC}}}
 #' }
+#'
+#' \itemize{
+#'   \item{\bold{cluster.DBScan}}{\cr DBScan density-based clustering from RWeka package: \code{\link[RWeka]{DBScan}}}
+#'   \item{\bold{cluster.EM}}{\cr Expectation-maximization clustering from RWeka package: \code{\link[RWeka]{EM}}}
+#'   \item{\bold{cluster.SimpleKMeans}}{\cr k-means clustering from RWeka package: \code{\link[RWeka]{SimpleKMeans}}}
+#'   \item{\bold{cluster.XMeans}}{\cr XMeans (k-means with automatic determination of k) clustering from RWeka package: \code{\link[RWeka]{XMeans}}}
+#' }
 #' @name learners
 #' @rdname learners
 NULL

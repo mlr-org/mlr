@@ -21,14 +21,14 @@ train(learner, task, subset, weights = NULL)
   must be of same length as \code{subset} and in
   corresponding order.  By default \code{NULL} which means
   no weights are used unless specified in the task
-  ([\code{\link{SupervisedTask}}]).  Weights from the task
-  will be overwritten.}
+  ([\code{\link{Task}}]).  Weights from the task will be
+  overwritten.}
 }
 \value{
 [\code{\link{WrappedModel}}].
 }
 \description{
-Given a \code{\link{SupervisedTask}}, creates a model for the learning machine
+Given a \code{\link{Task}}, creates a model for the learning machine
 which can be used for predictions on new data.
 }
 \examples{

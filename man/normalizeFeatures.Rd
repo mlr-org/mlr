@@ -6,8 +6,8 @@ normalizeFeatures(obj, target = character(0L), method = "standardize",
   exclude = character(0L), range = c(0, 1))
 }
 \arguments{
-  \item{obj}{[\code{data.frame} |
-  \code{\link{SupervisedTask}}]\cr Input data.}
+  \item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
+  Input data.}
 
   \item{target}{[\code{character(1)}]\cr Name of the
   column(s) specifying the response.  Only used when
@@ -27,7 +27,7 @@ normalizeFeatures(obj, target = character(0L), method = "standardize",
   should be scaled to. Default is \code{c(0,1)}.}
 }
 \value{
-[\code{data.frame} | \code{\link{SupervisedTask}}]. Same type as \code{obj}.
+[\code{data.frame} | \code{\link{Task}}]. Same type as \code{obj}.
 }
 \description{
 Normalize features by different methods. Internally \code{\link{normalize}} is used.

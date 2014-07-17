@@ -24,7 +24,8 @@ makeLearner(cl, id = cl, predict.type = "response", fix.factors = FALSE,
   \dQuote{response} (= mean response) or \dQuote{se} (=
   standard errors and mean response).  Survival:
   \dQuote{response} (= some sort of orderable risk) or
-  \dQuote{prob} (= time dependent probabilities).  Default
+  \dQuote{prob} (= time dependent probabilities).
+  Clustering: \dQuote{response} (= cluster IDs).  Default
   is \dQuote{response}.}
 
   \item{fix.factors}{[\code{logical(1)}]\cr In some cases,

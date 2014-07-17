@@ -8,3 +8,32 @@ test_that("clustering resample",  {
   expect_true(all(!is.na(res$measures.test)))
   expect_false(is.na(res$aggr))
 })
+
+test_that("clustering benchmark", {
+  task.names = c("noclass")
+  tasks = list(noclass.task)
+  learner.names = c("cluster.XMeans", "cluster.SimpleKMeans")
+  learners = lapply(learner.names, makeLearner)
+  rin = makeResampleDesc("CV", iters = 3L)
+
+  res = benchmark(learners = learners, task = tasks)
+  expect_true("BenchmarkResult" %in% class(res))
+})
+
+test_that("clustering downsample", {
+  down.tsk = downsample(noclass.task, perc = 1/3)
+  expect_equal(down.tsk$task.desc$size, 50L)
+})
+
+test_that("clustering tune", {
+  lrn = makeLearner("cluster.SimpleKMeans")
+  rdesc = makeResampleDesc("Holdout")
+  ps = makeParamSet(
+    makeIntegerParam("N", lower = 2, upper = 10)
+  )
+
+  ctrl = makeTuneControlRandom(maxit = 5)
+  tr = tuneParams(lrn, noclass.task, rdesc, par.set = ps, control = ctrl)
+  expect_equal(getOptPathLength(tr$opt.path), 5)
+  expect_true(!is.na(tr$y))
+})

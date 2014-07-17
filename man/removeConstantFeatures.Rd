@@ -8,7 +8,7 @@ removeConstantFeatures(x, target, perc = 0, dont.rm = character(0L),
 }
 \arguments{
   \item{x}{[\code{\link{data.frame}} |
-  \code{\link{SupervisedTask}}]\cr The data set or task.}
+  \code{\link{Task}}]\cr The data set or task.}
 
   \item{target}{[\code{character}]\cr Name of the column(s)
   specifying the response if you passed a
@@ -40,7 +40,7 @@ removeConstantFeatures(x, target, perc = 0, dont.rm = character(0L),
   \code{\link{configureMlr}}.}
 }
 \value{
-[\code{\link{data.frame}} | \code{\link{SupervisedTask}}].
+[\code{\link{data.frame}} | \code{\link{Task}}].
 }
 \description{
 Constant features can lead to errors in some models and obviously provide

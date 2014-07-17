@@ -6,7 +6,7 @@
 #' features for which less than \dQuote{perc} percent of the observations
 #' differ from the mode value.
 #'
-#' @param x [\code{\link{data.frame}} | \code{\link{SupervisedTask}}]\cr
+#' @param x [\code{\link{data.frame}} | \code{\link{Task}}]\cr
 #'   The data set or task.
 #' @param target [\code{character}]\cr
 #'   Name of the column(s) specifying the response if you passed a \code{data.frame}.
@@ -27,7 +27,7 @@
 #'   Variables stored as \code{double} will get rounded accordingly before computing the mode.
 #'   Default is \code{sqrt(.Maschine$double.eps)}.
 #' @template arg_showinfo
-#' @return [\code{\link{data.frame}} | \code{\link{SupervisedTask}}].
+#' @return [\code{\link{data.frame}} | \code{\link{Task}}].
 #' @export
 removeConstantFeatures = function(x, target, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = getMlrOption("show.info")) {
@@ -77,9 +77,9 @@ removeConstantFeatures.data.frame = function(x, target, perc = 0, dont.rm = char
   dropNamed(x, dropcols)
 }
 
-#' @method removeConstantFeatures SupervisedTask
+#' @method removeConstantFeatures Task
 #' @export
-removeConstantFeatures.SupervisedTask = function(x, target, perc = 0, dont.rm = character(0L),
+removeConstantFeatures.Task = function(x, target, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = TRUE) {
 
   if (!missing(target))

@@ -1,6 +1,6 @@
 \name{listMeasures}
 \alias{listMeasures}
-\alias{listMeasures.SupervisedTask}
+\alias{listMeasures.Task}
 \alias{listMeasures.character}
 \alias{listMeasures.default}
 \title{Find matching measures.}
@@ -13,8 +13,7 @@ listMeasures(obj, properties = character(0L), create = FALSE)
 \method{listMeasures}{character}(obj, properties = character(0L),
   create = FALSE)
 
-\method{listMeasures}{SupervisedTask}(obj, properties = character(0L),
-  create = FALSE)
+\method{listMeasures}{Task}(obj, properties = character(0L), create = FALSE)
 }
 \arguments{
   \item{obj}{[\code{character(1)} |
