@@ -52,15 +52,16 @@ listLearners.character  = function(obj, properties = character(0L),
   type = obj
   meths = as.character(methods("makeRLearner"))
   res = err = vector("list", length(meths))
+  learner.classes = sapply(strsplit(meths, "makeRLearner\\."), function(x) x[2L])
   for (i in seq_along(meths)) {
-    m = meths[[i]]
+    cl = learner.classes[[i]]
     if (quiet)
-      suppressAll(lrn <- try(do.call(m, list()), silent = TRUE))
+      suppressAll(lrn <- try(makeLearner(cl), silent = TRUE))
     else
-      lrn = try(do.call(m, list()))
+      lrn = try(makeLearner(cl))
 
     if (is.error(lrn)) {
-      err[[i]] = strsplit(as.character(m), "makeRLearner.")[[1L]][2L]
+      err[[i]] = cl
     } else if ((is.na(type) || type == lrn$type) && all(properties %in% lrn$properties)) {
         res[[i]] = lrn
     }
