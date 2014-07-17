@@ -31,20 +31,14 @@ test_that("listLearners for task", {
 
 test_that("learners work", {
   # binary classif
-  task = subsetTask(binaryclass.task, subset = c(1:50, 150:208),
-    features = getTaskFeatureNames(binaryclass.task)[1:2])
-  lrns = listLearners(task)
-  lrns = lapply(lrns, makeLearner)
-  lapply(lrns, function(lrn) {
-    # there seems to be some numerical problem with plsDA on the subsetted data...?
-    task2 = if (lrn == "classif.plsDA")
-      subsetTask(binaryclass.task, subset = c(1:50, 150:208),
-        features = getTaskFeatureNames(binaryclass.task)[1:15])
-    else
-      task
-    m = train(lrn, task2)
-    p = predict(m, task2)
-  })
+  task = subsetTask(binaryclass.task, subset = c(10:50, 180:208),
+    features = getTaskFeatureNames(binaryclass.task)[12:15])
+  lrns = listLearners(task, create = TRUE)
+  for (lrn in lrns) {
+    m = train(lrn, task)
+    p = predict(m, task)
+    expect_true(!is.na(performance(p)))
+  }
 
   # binary classif with prob
   task = subsetTask(binaryclass.task, subset = c(1:50, 150:208),
@@ -65,6 +59,17 @@ test_that("learners work", {
   lapply(lrns, function(lrn) {
     m = train(lrn, task, weights = 1:task$task.desc$size)
     p = predict(m, task)
+  })
+
+  # classif with missing
+  d = binaryclass.df[c(1:50, 120:170), c(1:2, binaryclass.class.col)]
+  d[1, 1] = NA
+  task = makeClassifTask(data = d, target = binaryclass.target)
+  lrns = listLearners(task, create = TRUE)
+  lapply(lrns, function(lrn) {
+    m = train(lrn, task)
+    p = predict(m, task)
+    expect_true(!is.na(performance(p)))
   })
 
   # normal regr
@@ -102,6 +107,18 @@ test_that("learners work", {
     m = train(lrn, task, weights = 1:task$task.desc$size)
     p = predict(m, task)
   })
+
+  # regr with missing
+  d = regr.df[1:100, c(getTaskFeatureNames(regr.task)[1:2], regr.target)]
+  d[1, 1] = NA
+  task = makeRegrTask(data = d, target = regr.target)
+  lrns = listLearners(task, create = TRUE)
+  lapply(lrns, function(lrn) {
+    m = train(lrn, task)
+    p = predict(m, task)
+    expect_true(!is.na(performance(p)))
+  })
+
 })
 
 }
