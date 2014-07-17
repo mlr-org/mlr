@@ -4,8 +4,18 @@ makeRLearner.cluster.XMeans = function() {
     cl = "cluster.XMeans",
     package = "RWeka",
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id = "I", default = 1L, lower = 1L)
-      # FIXME: add missing params
+      makeNumericLearnerParam(id = "B", default = 1, lower = 0),
+      makeNumericLearnerParam(id = "C", default = 0, lower = 0),
+      makeUntypedLearnerParam(id = "D", default = "weka.core.EuclideanDistance"),
+      makeIntegerLearnerParam(id = "H", default = 4L, lower = 1L),
+      makeIntegerLearnerParam(id = "I", default = 1L, lower = 1L),
+      makeIntegerLearnerParam(id = "J", default = 1000L, lower = 1L),
+      makeUntypedLearnerParam(id = "K", default = ""),
+      makeIntegerLearnerParam(id = "L", default = 2L, lower = 1L),
+      makeIntegerLearnerParam(id = "M", default = 1000L, lower = 1L),
+      makeIntegerLearnerParam(id = "S", default = 10L, lower = 1L),
+      makeIntegerLearnerParam(id = "U", default = 0L, lower = 0L),
+      makeLogicalLearnerParam(id = "use-kdtree")
     ),
     properties = c("numerics")
   )
