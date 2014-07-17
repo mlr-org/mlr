@@ -6,7 +6,7 @@ makeRLearner.regr.penalized.lasso = function() {
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "lambda1", default = 0, lower = 0)
     ),
-    properties = c("missings", "numerics", "factors")
+    properties = c("numerics", "factors")
   )
 }
 
