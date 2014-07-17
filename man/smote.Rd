@@ -19,7 +19,7 @@ Number of nearest neighbors to consider.
 Default is 5.}
 }
 \value{
-[\code{\link{SupervisedTask}}].
+[\code{\link{Task}}].
 }
 \description{
 In each iteration, samples one minority class element x1, then one of x1's nearest neighbors: x2.

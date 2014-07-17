@@ -13,7 +13,7 @@ The task.}
 Features to drop.}
 }
 \value{
-[\code{\link{SupervisedTask}}].
+[\code{\link{Task}}].
 }
 \description{
 Drop some features of task.

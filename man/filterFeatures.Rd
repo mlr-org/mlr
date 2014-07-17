@@ -29,7 +29,7 @@ Either a percentage from [0, 1], a number of features or a threshold value for t
 Passed down to selected method.}
 }
 \value{
-[\code{\link{SupervisedTask}}].
+[\code{\link{Task}}].
 }
 \description{
 First, calls \code{\link{getFilterValues}}.
