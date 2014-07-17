@@ -6,8 +6,9 @@ mlr_2.1:
   Helps when feature factor levels where dropped in newdata prediction data.frames
 
 - new learners:
--- regr.cforest
 -- classif.plsdaCaret
+-- regr.cforest
+-- regr.svm
 
 - new measures
 -- bac
