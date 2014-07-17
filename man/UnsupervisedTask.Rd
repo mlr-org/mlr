@@ -1,7 +1,10 @@
-\name{makeClusterTask}
-\alias{makeClusterTask}
+\name{UnsupervisedTask}
+\alias{UnsupervisedTask}
+\title{Create an unsupervised (e.g. clustering) task.}
 \usage{
-makeClusterTask(id, data, weights = NULL, blocking = NULL,
-  fixup.data = "warn", check.data = TRUE)
+makeUnsupervisedTask(type, data, weights = NULL, blocking = NULL)
+}
+\description{
+Create an unsupervised (e.g. clustering) task.
 }
 

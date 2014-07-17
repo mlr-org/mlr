@@ -1,5 +1,7 @@
+#' @title Create a clustering task.
+#' @name ClusterTask
+#' @rdname ClusterTask
 #' @export
-#' @rdname UnsupervisedTask
 makeClusterTask = function(id, data, weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE) {
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
