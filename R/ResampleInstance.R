@@ -18,7 +18,7 @@
 #' @param desc [\code{\link{ResampleDesc}} | \code{character(1)}]\cr
 #'   Resampling description object or name of resampling strategy.
 #'   In the latter case \code{\link{makeResampleDesc}} will be called internally on the string.
-#' @param task [\code{\link{SupervisedTask}}]\cr
+#' @param task [\code{\link{Task}}]\cr
 #'   Data of task to resample from.
 #'   Prefer to pass this instead of \code{size}.
 #' @param size [\code{\link{integer}}]\cr
@@ -45,7 +45,7 @@ makeResampleInstance = function(desc, task, size, ...) {
   if (is.character(desc))
     desc = makeResampleDesc(desc, ...)
   if (!missing(task)) {
-    assertClass(task, classes = "SupervisedTask")
+    assertClass(task, classes = "Task")
     size = task$task.desc$size
     blocking = task$blocking
   } else {

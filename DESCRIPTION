@@ -36,6 +36,7 @@ Suggests:
     caret,
     class,
     cluster,
+    clusterSim,
     cmaes,
     CoxBoost,
     crs,

@@ -1,4 +1,5 @@
 #' @title Create an unsupervised (e.g. clustering) task.
+#' @name UnsupervisedTask
 #' @rdname Task
 
 makeUnsupervisedTask = function(type, data, weights = NULL, blocking = NULL) {

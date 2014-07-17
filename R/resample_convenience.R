@@ -44,7 +44,7 @@ bootstrapOOB = function(learner, task, iters = 30, stratify = FALSE, measures, m
 #' @export
 bootstrapB632 = function(learner, task, iters = 30, stratify = FALSE, measures, models = FALSE, ..., show.info = TRUE) {
   learner = checkLearner(learner, ...)
-  assertClass(task, classes = "SupervisedTask")
+  assertClass(task, classes = "Task")
   rdesc = makeResampleDesc("Bootstrap", predict = "both", iters = iters, stratify = stratify)
   measures = checkMeasures(measures, task, aggr = b632)
   resample(learner, task, rdesc, measures = measures, models = models, show.info = show.info)
@@ -54,7 +54,7 @@ bootstrapB632 = function(learner, task, iters = 30, stratify = FALSE, measures, 
 #' @export
 bootstrapB632plus = function(learner, task, iters = 30, stratify = FALSE, measures, models = FALSE, ..., show.info = TRUE) {
   learner = checkLearner(learner, ...)
-  assertClass(task, classes = "SupervisedTask")
+  assertClass(task, classes = "Task")
   rdesc = makeResampleDesc("Bootstrap", predict = "both", iters = iters, stratify = stratify)
   measures = checkMeasures(measures, task, aggr = b632plus)
   resample(learner, task, rdesc, measures = measures, models = models, show.info = show.info)

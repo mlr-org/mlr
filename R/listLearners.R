@@ -27,7 +27,7 @@ listLearners  = function(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, create = FALSE) {
 
   if (!missing(obj))
-    assert(checkCharacter(obj), checkClass(obj, "SupervisedTask"))
+    assert(checkCharacter(obj), checkClass(obj, "Task"))
   assertCharacter(properties, any.missing = FALSE)
   assertFlag(warn.missing.packages)
   assertFlag(create)
@@ -48,7 +48,7 @@ listLearners.default  = function(obj, properties = character(0L),
 listLearners.character  = function(obj, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, create = FALSE) {
 
-  assertChoice(obj, choices = c("classif", "regr", "surv", "costsens", NA_character_))
+  assertChoice(obj, choices = c("classif", "regr", "surv", "costsens", "cluster", NA_character_))
   type = obj
   meths = as.character(methods("makeRLearner"))
   res = err = vector("list", length(meths))
@@ -78,7 +78,7 @@ listLearners.character  = function(obj, properties = character(0L),
 
 #' @export
 #' @rdname listLearners
-listLearners.SupervisedTask = function(obj, properties = character(0L),
+listLearners.Task = function(obj, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, create = FALSE) {
 
   task = obj

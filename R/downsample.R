@@ -4,7 +4,7 @@
 #' Decrease the observations in a \code{task} or a \code{ResampleInstance}
 #' to a given percentage of observations.
 #'
-#' @param obj [\code{\link{SupervisedTask}} | \code{\link{ResampleInstance}}]\cr
+#' @param obj [\code{\link{Task}} | \code{\link{ResampleInstance}}]\cr
 #'   Input data or a \code{ResampleInstance}.
 #' @param perc [\code{numeric(1)}]\cr
 #'   Percentage from [0, 1].
@@ -14,7 +14,7 @@
 #'   Should the downsampled data be stratified according to the target classes?
 #'   Default is \code{FALSE}.
 #' @seealso \code{\link{makeResampleInstance}}
-#' @return [\code{data.frame} | \code{\link{SupervisedTask}} | \code{\link{ResampleInstance}}]. Same type as \code{obj}.
+#' @return [\code{data.frame} | \code{\link{Task}} | \code{\link{ResampleInstance}}]. Same type as \code{obj}.
 #' @family downsample
 #' @export
 downsample = function(obj, perc = 1, stratify = FALSE) {
@@ -24,7 +24,7 @@ downsample = function(obj, perc = 1, stratify = FALSE) {
 }
 
 #' @export
-downsample.SupervisedTask = function(obj, perc = 1, stratify = FALSE) {
+downsample.Task = function(obj, perc = 1, stratify = FALSE) {
   rin = makeResampleInstance("Holdout", stratify = stratify, split = perc, task = obj)
   subsetTask(task = obj, subset = rin$train.inds[[1L]])
 }
