@@ -7,7 +7,7 @@
 #'
 #' @param learners [(list of) \code{\link{Learner}}]\cr
 #'   Learning algorithms which should be compared.
-#' @param tasks [(list of) \code{\link{SupervisedTask}}]\cr
+#' @param tasks [(list of) \code{\link{Task}}]\cr
 #'   Tasks that learners should be run on.
 #' @param resamplings [(list of) \code{\link{ResampleDesc}} | \code{\link{ResampleInstance}}]\cr
 #'   Resampling strategy for each tasks.

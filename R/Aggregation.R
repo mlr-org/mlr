@@ -29,7 +29,7 @@ NULL
 #' @param fun [\code{function}]\cr
 #'   A function with following signature: \code{function(task, perf.test, perf.train, measure, group, pred)}
 #'   \itemize{
-#'    \item{\bold{task}}: task (\code{\link{SupervisedTask}}) object
+#'    \item{\bold{task}}: task (\code{\link{Task}}) object
 #'    \item{\bold{perf.test}}: numerical vector of \link{performance} results on the test data set
 #'    \item{\bold{perf.train}}. numerical vector of \link{performance} results on the train data set
 #'    \item{\bold{measure}}: \code{\link{Measure}} object.
