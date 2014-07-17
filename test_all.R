@@ -11,6 +11,10 @@ library(MASS)
 library(ROCR)
 library(pROC)
 library(pls) # otherwise pls shadows crossval
+library(party)
+library(LiblineaR)
+library(stepPlr)
+library(FNN)
 
 if (interactive()) {
   load_all(".")
