@@ -1,5 +1,7 @@
 \docType{data}
 \name{measures}
+\alias{G1}
+\alias{G2}
 \alias{acc}
 \alias{auc}
 \alias{bac}
@@ -29,6 +31,7 @@
 \alias{ppv}
 \alias{rmse}
 \alias{sae}
+\alias{silhouette}
 \alias{sse}
 \alias{timeboth}
 \alias{timepredict}
@@ -113,6 +116,12 @@ meancosts
 mcp
 
 none
+
+none
+
+none
+
+none
 }
 \description{
 A performance measure is evaluated after a single train/predict step and returns a single number to assess the quality
@@ -174,6 +183,9 @@ Cost-sensitive:
 Clustering:
 \itemize{
   \item{\bold{db}}{\cr Davies-Bouldin cluster separation measure, see \code{\link[clusterSim]{index.DB}}}
+  \item{\bold{G1}}{\cr Calinski-Harabasz pseudo F statistic, see \code{\link[clusterSim]{index.G1}}}
+  \item{\bold{G2}}{\cr Baker and Hubert adaptation of Goodman-Kruskal's gamma statistic, see \code{\link[clusterSim]{index.G2}}}
+  \item{\bold{silhouette}}{\cr Rousseeuw's silhouette internal cluster quality index, see \code{\link[clusterSim]{index.S}}}
 }
 
 General:
