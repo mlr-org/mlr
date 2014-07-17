@@ -13,7 +13,11 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   learner2 = learner
   if (inherits(control, "TuneControl")) {
     log.fun = logFunTune
+    # set names before trafo
     state = setValueCNames(par.set, state)
+    # transform parameters
+    state = trafoValue(par.set, state)
+    # remove NAs for dependencies
     state2 = if (remove.nas) removeMissingValues(state) else state
     learner2 = try(setHyperPars(learner, par.vals = state2))
     # if somebody above (eg tuner) prodcued bad settings, we catch this here and dont eval

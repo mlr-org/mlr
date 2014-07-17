@@ -20,7 +20,7 @@ tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.
   or = cma_es(par = start, fn = tunerFitnFunVectorized, lower = low, upper = upp, control = ctrl.cmaes,
     learner = learner, task = task, resampling = resampling, measures = measures,
     par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
-    trafo = TRUE, convertx = cx, remove.nas = FALSE)
+    convertx = cx, remove.nas = FALSE)
 
   i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), ties = "random")
   e = getOptPathEl(opt.path, i)

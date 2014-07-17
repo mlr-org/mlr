@@ -7,7 +7,7 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
     rin = instance
     tunerFitnFun(candidate$values, learner = learner, task = task, resampling = rin, measures = measures,
       par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
-      trafo = TRUE, convertx = identity, remove.nas = TRUE)
+      convertx = identity, remove.nas = TRUE)
   }
   n.instances = control$extra.args$n.instances
   control$extra.args$n.instances = NULL
@@ -26,15 +26,15 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
     stop("irace produced no result, possibly the budget was set too low?")
   id = or[1,1]
   # get best candidate
-  x = as.list(removeCandidatesMetaData(or[1,]))
-  x = trafoValue(par.set, x)
+  x1 = as.list(removeCandidatesMetaData(or[1,]))
+  x2 = trafoValue(par.set, x1)
   # we need chars, not factors, so we can match 'x'
   d = convertDfCols(as.data.frame(opt.path), factors.as.char = TRUE)
-  par.names = names(x)
+  par.names = names(x1)
   # get all lines in opt.path which correspond to x and average their perf values
-  j = sapply(1:nrow(d), function(i) isTRUE(all.equal(as.list(d[i, par.names, drop = FALSE]), x)))
+  j = sapply(1:nrow(d), function(i) isTRUE(all.equal(as.list(d[i, par.names, drop = FALSE]), x1)))
   if (!any(j))
     stop("No matching rows for final elite candidate found in opt.path! This cannot be!")
   y = colMeans(d[j, opt.path$y.names, drop = FALSE])
-  makeTuneResult(learner, control, removeMissingValues(x), y, opt.path)
+  makeTuneResult(learner, control, removeMissingValues(x2), y, opt.path)
 }

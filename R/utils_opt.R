@@ -18,7 +18,7 @@ makeOptPathDFFromMeasures = function(par.set, measures) {
     length(intersect(ns, getParamIds(par.set, repeated = TRUE, with.nr = TRUE))) > 0)
     stop("Cannot create OptPath, measures ids and dimension names of input space overlap!")
   minimize = sapply(measures, function(m) m$minimize)
-  makeOptPathDF(par.set, ns, minimize, add.transformed.x = TRUE,
+  makeOptPathDF(par.set, ns, minimize, add.transformed.x = FALSE,
     include.error.message = TRUE, include.exec.time = TRUE)
 }
 

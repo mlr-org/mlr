@@ -96,6 +96,7 @@
   \item{\bold{regr.rvm}}{\cr Relevance Vector Machine from package kernlab: \code{\link[kernlab]{rvm}}\cr
     Note that kernel parameters have to be passed directly and not by using the kpar list in rvm.\cr
     Note that \code{fit} has been set to \code{FALSE} by default for speed.}
+  \item{\bold{regr.svm}}{\cr Support Vector Machines (libsvm) from e1071 package: \code{\link[e1071]{svm}}}
 }
 \itemize{
   \item{\bold{surv.CoxBoost}}{\cr Cox proportional hazards model with componentwise likelhood based boosting from CoxBoost package: \code{\link[CoxBoost]{CoxBoost}}}
