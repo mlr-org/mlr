@@ -25,6 +25,14 @@ makeTuneResult = function(learner, control, x, y, opt.path) {
   makeOptResult(learner, control, x, y, opt.path, "TuneResult")
 }
 
+makeTuneResultFromOptPath = function(learner, par.set, measures, control, opt.path) {
+  i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), ties = "random")
+  e = getOptPathEl(opt.path, i)
+  x = trafoValue(par.set, e$x)
+  x = removeMissingValues(x)
+  makeTuneResult(learner, control, x, e$y, opt.path)
+}
+
 
 #'@export
 print.TuneResult = function(x, ...) {

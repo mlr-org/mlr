@@ -22,7 +22,5 @@ tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.
     par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
     convertx = cx, remove.nas = FALSE)
 
-  i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), ties = "random")
-  e = getOptPathEl(opt.path, i)
-  makeTuneResult(learner, control, e$x, e$y, opt.path)
+  makeTuneResultFromOptPath(learner, par.set, measures, control, opt.path)
 }

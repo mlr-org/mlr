@@ -18,13 +18,13 @@ test_that("TuneWrapper", {
   expect_true(!any(is.na(p$data$response)))
 
   ps2 = makeParamSet(
-    makeNumericParam(id = "C", trafo = function(x) 2^x),
-    makeNumericParam(id = "epsilon", trafo = function(x) 2^x),
-    makeNumericParam(id = "sigma", trafo = function(x) 2^x)
+    makeNumericParam(id = "C", lower = -5, upper = 5, trafo = function(x) 2^x),
+    makeNumericParam(id = "epsilon", lower = 0.1, upper = 1),
+    makeNumericParam(id = "sigma", lower = -5, upper = 5, trafo = function(x) 2^x)
   )
   lrn1b = makeLearner("regr.ksvm")
   lrn2 = makeTuneWrapper(lrn1b, resampling = inner, par.set = ps2, control =
-    makeTuneControlGenSA(start = list(C = 0, epsilon = 0, sigma = 0), max.call = 5))
+    makeTuneControlGenSA(start = list(C = 0, epsilon = 0.1, sigma = 0), max.call = 5))
 
   m = train(lrn2, task = regr.task)
   or = m$learner.model$opt.result
