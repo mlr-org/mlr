@@ -2,6 +2,7 @@
 \name{makeTuneControlCMAES}
 \alias{TuneControl}
 \alias{TuneControlCMAES}
+\alias{TuneControlGenSA}
 \alias{TuneControlGrid}
 \alias{TuneControlIrace}
 \alias{TuneControlRandom}

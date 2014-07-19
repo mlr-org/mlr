@@ -56,17 +56,15 @@ Further control parameters passed to the \code{control} argument of \code{\link[
 \description{
 The following tuners are available:
 \describe{
-  \item{makeTuneMultiCritControlGrid}{Grid search. All kinds of parameter types can be handled,
-    but you have discretize them yourself by always using
-    \code{\link[ParamHelpers]{makeDiscreteParam}} in the \code{par.set}
-    passed to \code{\link{tuneParams}}.}
+  \item{makeTuneControlGrid}{Grid search. All kinds of parameter types can be handled.
+    You can either use their correct param type and \code{resolution},
+    or discretize them yourself by always using \code{\link[ParamHelpers]{makeDiscreteParam}}
+    in the \code{par.set} passed to \code{\link{tuneParams}}.}
   \item{makeTuneMultiCritControlRandom}{Random search. All kinds of parameter types can be handled.}
   \item{makeTuneMultiCritControlNSGA2}{Evolutionary method \code{\link[mco]{nsga2}}.
-    Can handle numeric(vector) and integer(vector) hyperparameters.
+    Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
     For integers the internally proposed numeric values are automatically rounded.}
 }
-
-Dependent parameters can currently only be handled by random search and grid search.
 }
 \seealso{
 Other tune_multicrit: \code{\link{plotTuneMultiCritResult}};

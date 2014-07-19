@@ -46,7 +46,7 @@
 #' @family tune
 #' @name TuneControl
 #' @rdname TuneControl
-#' @aliases TuneControlGrid TuneControlRandom TuneControlCMAES TuneControlIrace
+#' @aliases TuneControlGrid TuneControlRandom TuneControlCMAES TuneControlGenSA TuneControlIrace
 NULL
 
 makeTuneControl = function(same.resampling.instance, impute.val = Inf, start = NULL, ..., cl) {

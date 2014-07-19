@@ -44,7 +44,7 @@ by passing a corresponding control object. For a complete list of implemented al
 \code{\link{TuneMultiCritControl}}.
 }
 \examples{
-multi-criteria optimization of (tpr, fpr) with NGSA-II
+# multi-criteria optimization of (tpr, fpr) with NGSA-II
 lrn =  makeLearner("classif.ksvm")
 rdesc = makeResampleDesc("Holdout")
 ps = makeParamSet(

@@ -25,7 +25,7 @@
 #' @family tune_multicrit
 #' @export
 #' @examples
-#' multi-criteria optimization of (tpr, fpr) with NGSA-II
+#' # multi-criteria optimization of (tpr, fpr) with NGSA-II
 #' lrn =  makeLearner("classif.ksvm")
 #' rdesc = makeResampleDesc("Holdout")
 #' ps = makeParamSet(

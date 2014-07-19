@@ -16,24 +16,21 @@
 #'   Which column of \code{res$opt.path} should be mapped to ggplot2 shape?
 #'   Default is \code{NULL}, which means none.
 #' @param pointsize [\code{numeric(1)}]\cr
-#'   Pointsize for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
+#'   Point size for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
 #'   Default is 2.
 #' @template ret_gg2
 #' @family tune_multicrit
 #' @examples
 #' # see tuneParamsMultiCrit
 plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, pointsize = 2) {
-
   assertClass(res, "TuneMultiCritResult")
   assertFlag(path)
   op1 = res$opt.path
   op2 = as.data.frame(op1)
-
   if (!is.null(col))
     assertChoice(col, choices = colnames(op2))
   if (!is.null(shape))
     assertChoice(shape, colnames(op2))
-
   requirePackages("ggplot2", why = "plotTuneMultiCritResult")
 
   names.y = colnames(res$y)

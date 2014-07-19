@@ -24,7 +24,7 @@ Which column of \code{res$opt.path} should be mapped to ggplot2 shape?
 Default is \code{NULL}, which means none.}
 
 \item{pointsize}{[\code{numeric(1)}]\cr
-Pointsize for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
+Point size for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
 Default is 2.}
 }
 \value{

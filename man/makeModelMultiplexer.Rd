@@ -76,6 +76,7 @@ Other multiplexer: \code{\link{makeModelMultiplexerParamSet}}
 
 Other tune: \code{\link{TuneControl}},
   \code{\link{TuneControlCMAES}},
+  \code{\link{TuneControlGenSA}},
   \code{\link{TuneControlGrid}},
   \code{\link{TuneControlIrace}},
   \code{\link{TuneControlRandom}},
