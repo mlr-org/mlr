@@ -11,10 +11,12 @@ The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
 \item{dw.perc}{[\code{numeric(1)}]\cr
-See \code{\link{downsample}}.}
+See \code{\link{downsample}}.
+Default is 1.}
 
 \item{dw.stratify}{[\code{logical(1)}]\cr
-See \code{\link{downsample}}.}
+See \code{\link{downsample}}.
+Default is \code{FALSE}.}
 }
 \value{
 [\code{\link{Learner}}].
