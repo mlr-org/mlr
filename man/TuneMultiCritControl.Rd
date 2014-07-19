@@ -45,9 +45,8 @@ See \code{\link[ParamHelpers]{generateGridDesign}}.
 Default is 10.}
 
 \item{...}{[any]\cr
-Further control parameters passed to the \code{control} argument of \code{\link[stats]{optim}},
-the \code{control} argument of \code{\link[cmaes]{cma_es}}, \code{tunerConfig}
-argument of \code{\link[irace]{irace}}.}
+Further control parameters passed to the \code{control} argument of \code{\link[cmaes]{cma_es}} and
+\code{tunerConfig} argument of \code{\link[irace]{irace}}.}
 }
 \value{
 [\code{\link{TuneMultiCritControl}}]. The specific subclass is one of

@@ -1,4 +1,3 @@
-#' @inheritParams TuneControlGrid
 #' @export
 #' @rdname TuneMultiCritControl
 makeTuneMultiCritControlGrid = function(same.resampling.instance = TRUE, impute.val = Inf, resolution = 10L) {

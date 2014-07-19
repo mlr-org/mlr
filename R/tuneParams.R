@@ -9,6 +9,8 @@
 #' by passing a corresponding control object. For a complete list of implemented algorithms look at
 #' \code{\link{TuneControl}}.
 #'
+#' Multi-criteria tuning can be done with \code{\link{tuneParamsMultiCrit}}.
+#'
 #' @template arg_learner
 #' @template arg_task
 #' @param resampling [\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr

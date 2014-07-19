@@ -43,6 +43,8 @@ Allows for different optimization methods, such as grid search, evolutionary str
 iterated F-race, etc. You can select such an algorithm (and its settings)
 by passing a corresponding control object. For a complete list of implemented algorithms look at
 \code{\link{TuneControl}}.
+
+Multi-criteria tuning can be done with \code{\link{tuneParamsMultiCrit}}.
 }
 \examples{
 # a grid search for an SVM (with a tiny number of points...)
@@ -84,7 +86,6 @@ Other tune: \code{\link{ModelMultiplexer}},
   \code{\link{TuneControlCMAES}},
   \code{\link{TuneControlGrid}},
   \code{\link{TuneControlIrace}},
-  \code{\link{TuneControlOptim}},
   \code{\link{TuneControlRandom}},
   \code{\link{makeTuneControlCMAES}},
   \code{\link{makeTuneControlGenSA}},

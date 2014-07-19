@@ -7,14 +7,35 @@
 #' by passing a corresponding control object. For a complete list of implemented algorithms look at
 #' \code{\link{TuneMultiCritControl}}.
 #'
-#' @inheritParams tuneParams
+#' @template arg_learner
+#' @template arg_task
+#' @param resampling [\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
+#'   Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
+#'   it is instantiated once at the beginning by default, so all points are
+#'   evaluated on the same training/test sets.
+#'   If you want to change that behavior, look at \code{\link{TuneMultiCritControl}}.
+#' @param par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
+#'   Collection of parameters and their constraints for optimization.
 #' @param measures [list of \code{\link{Measure}}]\cr
 #'   Performance measures to optimize simultaneously.
 #' @param control [\code{\link{TuneMultiCritControl}}]\cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.
+#' @template arg_showinfo
 #' @return [\code{\link{TuneMultiCritResult}}].
 #' @family tune_multicrit
 #' @export
+#' @examples
+#' multi-criteria optimization of (tpr, fpr) with NGSA-II
+#' lrn =  makeLearner("classif.ksvm")
+#' rdesc = makeResampleDesc("Holdout")
+#' ps = makeParamSet(
+#'   makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
+#'   makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x)
+#' )
+#' ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 5L)
+#' res = tuneParamsMultiCrit(lrn, sonar.task, rdesc, par.set = ps,
+#'   measures = list(tpr, fpr), control = ctrl)
+#' plotTuneMultiCritResult(res, path = TRUE)
 tuneParamsMultiCrit = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")

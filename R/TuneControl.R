@@ -3,26 +3,24 @@
 #' @description
 #' The following tuners are available:
 #' \describe{
-#'   \item{makeTuneControlGrid}{Grid search. All kinds of parameter types can be handled,
-#'     but you have discretize them yourself by always using
-#'     \code{\link[ParamHelpers]{makeDiscreteParam}} in the \code{par.set}
-#'     passed to \code{\link{tuneParams}}.}
+#'   \item{makeTuneControlGrid}{Grid search. All kinds of parameter types can be handled.
+#'     You can either use their correct param type and \code{resolution},
+#'     or discretize them yourself by always using \code{\link[ParamHelpers]{makeDiscreteParam}}
+#'     in the \code{par.set} passed to \code{\link{tuneParams}}.}
 #'   \item{makeTuneControlRandom}{Random search. All kinds of parameter types can be handled.}
-#'   \item{makeTuneControlOptim}{Tuning with \code{\link[stats]{optim}}.
-#'     Can handle numeric(vector) and integer(vector) hyperparameters.
-#'     For integers the internally proposed numeric values are automatically rounded.}
 #'   \item{makeTuneControlCMAES}{CMA Evolution Strategy with method \code{\link[cmaes]{cma_es}}.
-#'     Can handle numeric(vector) and integer(vector) hyperparameters.
+#'     Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
 #'     For integers the internally proposed numeric values are automatically rounded.
 #'     The sigma variance parameter is initialized to 1/4 of the span of box-constraints per
 #'     parameter dimension.}
+#'   \item{makeTuneControlGenSA}{Generalized simulated annealing with method \code{\link[GenSA]{GenSA}}.
+#'     Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
+#'     For integers the internally proposed numeric values are automatically rounded.}
 #'   \item{makeTuneControlIrace}{Tuning with iterated F-Racing with method \code{\link[irace]{irace}}.
 #'     All kinds of parameter types can be handled. We return the best of the final elite
 #'     candidates found by irace in the last race. Its estimated performance is the mean of all
 #'     evaluations ever done for that candidate.}
 #' }
-#'
-#' Dependent parameters can currently only be handled by random search and irace.
 #'
 #' Some notes on irace: For resampling you have to pass a \code{\link{ResampleDesc}},
 #' not a \code{\link{ResampleInstance}}.
@@ -39,16 +37,16 @@
 #' @param start [\code{numeric}]\cr
 #'   Named list of initial parameter values.
 #' @param ... [any]\cr
-#'   Further control parameters passed to the \code{control} argument of \code{\link[stats]{optim}},
-#'   the \code{control} argument of \code{\link[cmaes]{cma_es}}, \code{tunerConfig}
-#'   argument of \code{\link[irace]{irace}}.
+#'   Further control parameters passed to the \code{control} argument of \code{\link[cmaes]{cma_es}} and
+#'   \code{tunerConfig} argument of \code{\link[irace]{irace}}.
 #' @return [\code{\link{TuneControl}}]. The specific subclass is one of
-#'   \code{\link{TuneControlGrid}}, \code{\link{TuneControlRandom}}, \code{\link{TuneControlOptim}},
-#'   \code{\link{TuneControlCMAES}}, \code{\link{TuneControlIrace}}.
+#'   \code{\link{TuneControlGrid}}, \code{\link{TuneControlRandom}},
+#'   \code{\link{TuneControlCMAES}}, \code{\link{TuneControlGenSA}},
+#'   \code{\link{TuneControlIrace}}.
 #' @family tune
 #' @name TuneControl
 #' @rdname TuneControl
-#' @aliases TuneControlGrid TuneControlRandom TuneControlOptim TuneControlCMAES TuneControlIrace
+#' @aliases TuneControlGrid TuneControlRandom TuneControlCMAES TuneControlIrace
 NULL
 
 makeTuneControl = function(same.resampling.instance, impute.val = Inf, start = NULL, ..., cl) {
