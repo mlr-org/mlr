@@ -1,6 +1,6 @@
 mlr_2.1:
 - mlr now supports multi-criteria tuning
-- mlr now supports cluster analysis
+- mlr now supports cluster analysis (experimental)
 - fix a bug when feature filtering resulted in a NoFeatureModel 
 - improve makeWeightedClassesWrapper: Hyperparams for class weighting are now supported, too.
 - removed fix.factors option from randomForest, but added it in general to makeLearner,

@@ -20,6 +20,7 @@
 #'   Default is 2.
 #' @template ret_gg2
 #' @family tune_multicrit
+#' @export
 #' @examples
 #' # see tuneParamsMultiCrit
 plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, pointsize = 2) {
