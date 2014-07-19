@@ -13,6 +13,8 @@
 #' @template arg_learner_classif
 #' @template ret_learner
 #' @export
+#' @family costsens
+#' @aliases CostSensClassifWrapper CostSensClassifModel
 makeCostSensClassifWrapper = function(learner) {
   learner = checkLearnerClassif(learner)
   learner = setPredictType(learner, "response")

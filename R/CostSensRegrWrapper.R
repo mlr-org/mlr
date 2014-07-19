@@ -10,6 +10,8 @@
 #' @template arg_learner_regr
 #' @template ret_learner
 #' @export
+#' @family costsens
+#' @aliases CostSensRegrWrapper CostSensRegrModel
 makeCostSensRegrWrapper = function(learner) {
   learner = checkLearnerRegr(learner)
   # we cannot make use of 'se' here

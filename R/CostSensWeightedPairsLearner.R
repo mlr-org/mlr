@@ -17,6 +17,8 @@
 #' @template arg_learner_classif
 #' @return [\code{\link[mlr]{Learner}}].
 #' @export
+#' @family costsens
+#' @aliases CostSensWeightedPairsWrapper CostSensWeightedPairsModel
 makeCostSensWeightedPairsWrapper = function(learner) {
   learner = checkLearnerClassif(learner, weights = TRUE)
   learner = setPredictType(learner, "response")
