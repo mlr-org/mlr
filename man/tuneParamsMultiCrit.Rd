@@ -7,6 +7,12 @@ tuneParamsMultiCrit(learner, task, resampling, measures, par.set, control,
   show.info = getMlrOption("show.info"))
 }
 \arguments{
+\item{measures}{[list of \code{\link{Measure}}]\cr
+Performance measures to optimize simultaneously.}
+
+\item{control}{[\code{\link{TuneMultiCritControl}}]\cr
+Control object for search method. Also selects the optimization algorithm for tuning.}
+
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
 The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
@@ -18,17 +24,10 @@ The task.}
 Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
 it is instantiated once at the beginning by default, so all points are
 evaluated on the same training/test sets.
-If you want to change that behaviour, look at \code{\link{TuneControl}}.}
-
-\item{measures}{[list of \code{\link{Measure}} | \code{\link{Measure}}]\cr
-Performance measures to evaluate. The first measure, aggregated by the first aggregation function
-is optimized, others are simply evaluated.}
+If you want to change that behavior, look at \code{\link{TuneControl}}.}
 
 \item{par.set}{[\code{\link[ParamHelpers]{ParamSet}}]\cr
 Collection of parameters and their constraints for optimization.}
-
-\item{control}{[\code{\link{TuneMultiCritControl}}]\cr
-Control object for search method. Also selects the optimization algorithm for tuning.}
 
 \item{show.info}{[\code{logical(1)}]\cr
 Print verbose output on console?
@@ -38,7 +37,7 @@ Default is set via \code{\link{configureMlr}}.}
 [\code{\link{TuneMultiCritResult}}].
 }
 \description{
-Optimizes the hyperparameters of a learner.
+Optimizes the hyperparameters of a learner in a multi-criteria fasion.
 Allows for different optimization methods, such as grid search, evolutionary strategies, etc.
 You can select such an algorithm (and its settings)
 by passing a corresponding control object. For a complete list of implemented algorithms look at
@@ -47,6 +46,7 @@ by passing a corresponding control object. For a complete list of implemented al
 \seealso{
 Other tune_multicrit: \code{\link{TuneMultiCritControl}},
   \code{\link{TuneMultiCritControlGrid}},
+  \code{\link{TuneMultiCritControlNSGA2}},
   \code{\link{TuneMultiCritControlRandom}},
   \code{\link{makeTuneMultiCritControlGrid}},
   \code{\link{makeTuneMultiCritControlNSGA2}},

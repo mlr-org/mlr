@@ -1,25 +1,17 @@
 #' @title Hyperparameter tuning for multiple measures at once.
 #'
 #' @description
-#' Optimizes the hyperparameters of a learner.
+#' Optimizes the hyperparameters of a learner in a multi-criteria fasion.
 #' Allows for different optimization methods, such as grid search, evolutionary strategies, etc.
 #' You can select such an algorithm (and its settings)
 #' by passing a corresponding control object. For a complete list of implemented algorithms look at
 #' \code{\link{TuneMultiCritControl}}.
 #'
-#' @template arg_learner
-#' @template arg_task
-#' @param resampling [\code{\link{ResampleInstance}} | \code{\link{ResampleDesc}}]\cr
-#'   Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
-#'   it is instantiated once at the beginning by default, so all points are
-#'   evaluated on the same training/test sets.
-#'   If you want to change that behaviour, look at \code{\link{TuneControl}}.
-#' @template arg_measures_opt
-#' @param par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
-#'   Collection of parameters and their constraints for optimization.
+#' @inheritParams tuneParams
+#' @param measures [list of \code{\link{Measure}}]\cr
+#'   Performance measures to optimize simultaneously.
 #' @param control [\code{\link{TuneMultiCritControl}}]\cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.
-#' @template arg_showinfo
 #' @return [\code{\link{TuneMultiCritResult}}].
 #' @family tune_multicrit
 #' @export

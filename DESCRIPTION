@@ -2,12 +2,12 @@ Package: mlr
 Title: mlr: Machine Learning in R.
 Description: Interface to a large number of classification and regression
     techniques, including machine-readable parameter descriptions. There is
-    also an experimental extension for surival analysis, clustering and 
-    general, example-specific cost-sensitive learning. 
-    Generic resampling, including cross-validation, bootstrapping and
-    subsampling. Hyperparameter tuning with modern optimization techniques,
-    for single- and multi-objective problems. Filter and wrapper methods for feature selection. 
-    Extension of basic learners with additional operations common in machine learning, also
+    also an experimental extension for surival analysis, clustering and
+    general, example-specific cost-sensitive learning. Generic resampling,
+    including cross-validation, bootstrapping and subsampling. Hyperparameter
+    tuning with modern optimization techniques, for single- and multi-objective
+    problems. Filter and wrapper methods for feature selection. Extension of
+    basic learners with additional operations common in machine learning, also
     allowing for easy nested resampling. Most operations can be parallelized.
 Authors@R: c(person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role =
     c("aut", "cre")), person("Michel", "Lang", email =

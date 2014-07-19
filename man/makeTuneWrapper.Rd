@@ -15,7 +15,7 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
 it is instantiated once at the beginning by default, so all points are
 evaluated on the same training/test sets.
-If you want to change that behaviour, look at \code{\link{TuneControl}}.}
+If you want to change that behavior, look at \code{\link{TuneControl}}.}
 
 \item{measures}{[list of \code{\link{Measure}} | \code{\link{Measure}}]\cr
 Performance measures to evaluate. The first measure, aggregated by the first aggregation function
