@@ -6,6 +6,10 @@
 #'
 #' Note that the packages of all learners are loaded during the search.
 #'
+#' Note that for general cost-sensitive learning, mlr currently supports mainly
+#' \dQuote{wrapper} approaches like \code{\link{CostSensWeightedPairsLearner}},
+#' which are not listed, as they are not basic R learning algorithms.
+#'
 #' @template arg_task_or_type
 #' @param properties [\code{character}]\cr
 #'   Set of required properties to filter for. Default is \code{character(0)}.
