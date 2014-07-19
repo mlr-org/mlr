@@ -52,7 +52,7 @@ whether they supports missing values, case weights, etc.
 Note that the packages of all learners are loaded during the search.
 
 Note that for general cost-sensitive learning, mlr currently supports mainly
-\dQuote{wrapper} approaches like \code{\link{CostSensWeightedPairsLearner}},
+\dQuote{wrapper} approaches like \code{\link{CostSensWeightedPairsWrapper}},
 which are not listed, as they are not basic R learning algorithms.
 }
 

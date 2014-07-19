@@ -37,6 +37,7 @@
 #'   For convenience, one must pass a single number in case of binary classification, which
 #'   is then taken as the weight of the positive class, while the negative class receives a weight
 #'   of 1.
+#'   Default is 1.
 #' @template ret_learner
 #' @export
 #' @examples
@@ -64,18 +65,21 @@
 #' print(res$opt.path)
 makeWeightedClassesWrapper = function(learner, wcw.param = NULL, wcw.weight = 1) {
   learner = checkLearnerClassif(learner)
+  pv = list()
   if (is.null(wcw.param)) {
     if (!hasProperties(learner, "weights"))
       stopf("Learner '%s' does not support observation weights. You have to set 'wcw.param' to the learner param which allows to set class weights! (which hopefully exists...)", learner$id)
   } else {
     assertSubset(wcw.param, getParamIds(learner$par.set))
   }
-
+  if (!missing(wcw.weight)) {
+    assertNumeric(wcw.weight, lower = 0, any.missing = FALSE)
+    pv$wcw.weight = wcw.weight
+  }
   id = paste("weightedclasses", learner$id, sep = ".")
   ps = makeParamSet(
     makeNumericVectorLearnerParam(id = "wcw.weight", len = NA_integer_, lower = 0)
   )
-  pv = list(wcw.weight = wcw.weight)
   x = makeBaseWrapper(id, learner, package = learner$package, par.set = ps, par.vals = pv,
     cl = "WeightedClassesWrapper")
   x$wcw.param = wcw.param
@@ -83,7 +87,7 @@ makeWeightedClassesWrapper = function(learner, wcw.param = NULL, wcw.weight = 1)
 }
 
 #' @export
-trainLearner.WeightedClassesWrapper = function(.learner, .task, .subset, .weights, wcw.weight, ...) {
+trainLearner.WeightedClassesWrapper = function(.learner, .task, .subset, .weights, wcw.weight = 1, ...) {
   .task = subsetTask(.task, .subset)
   td = .task$task.desc
   levs = td$class.levels
