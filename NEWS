@@ -28,6 +28,7 @@ mlr_2.1:
 -- tuneParamsMultiCrit
 -- makeTuneMultiCritControlGrid, makeTuneMultiCritControlRandom, makeTuneMultiCritControlNSGA2
 -- plotTuneMultiCritResult 
+-- getFailuremodelMsg
 
 mlr_2.0:
 - mlr now supports survival analysis models (experimental)
