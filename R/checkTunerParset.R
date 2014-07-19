@@ -33,9 +33,16 @@ checkTunerParset = function(learner, par.set, control) {
     checkParsOk("CMAES", c("numeric", "integer", "numericvector", "integervector"))
     checkStart()
   }
+  if (inherits(control, "TuneControlGenSA")) {
+    checkParsOk("GenSA", c("numeric", "integer", "numericvector", "integervector"))
+    checkStart()
+  }
+  if (inherits(control, "TuneControlNSGA2")) {
+    checkParsOk("NSGA2", c("numeric", "integer", "numericvector", "integervector"))
+  }
 
   # check requires / dependent params
   if (hasRequires(par.set) && cl %nin% c("TuneControlRandom", "TuneControlGrid",
-      "TuneControlIrace", "TuneControlMBO"))
-    stopf("Tuning algorithm for '%s' cannot handle dependent parameters!")
+      "TuneControlIrace", "TuneControlMBO", "TuneMultiCritControlRandom"))
+    stopf("Tuning algorithm for '%s' cannot handle dependent parameters!", cl)
 }

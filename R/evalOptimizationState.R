@@ -11,7 +11,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   exec.time = NA_real_
   evalok = TRUE
   learner2 = learner
-  if (inherits(control, "TuneControl")) {
+  if (inherits(control, "TuneControl") || inherits(control, "TuneMultiCritControl")) {
     log.fun = logFunTune
     # set names before trafo
     state = setValueCNames(par.set, state)

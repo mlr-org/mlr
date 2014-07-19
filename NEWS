@@ -1,4 +1,5 @@
 mlr_2.1:
+- mlr now supports multi-criteria tuning
 - mlr now supports cluster analysis
 - fix a bug when feature filtering resulted in a NoFeatureModel 
 - improve makeWeightedClassesWrapper: Hyperparams for class weighting are now supported, too.
@@ -24,6 +25,9 @@ mlr_2.1:
 - new functions
 -- makeClusterTask
 -- removeHyperPars
+-- tuneParamsMultiCrit
+-- makeTuneMultiCritControlGrid, makeTuneMultiCritControlRandom, makeTuneMultiCritControlNSGA2
+-- plotTuneMultiCritResult 
 
 mlr_2.0:
 - mlr now supports survival analysis models (experimental)

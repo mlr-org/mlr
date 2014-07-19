@@ -59,6 +59,7 @@ Suggests:
     klaR,
     LiblineaR,
     mboost,
+    mco,
     mda,
     mlbench,
     mRMRe,
