@@ -20,4 +20,17 @@ Models can easily be accessed via \code{\link{getCostSensRegrModels}}.
 For each class in the task, an individual regression model is fitted for the costs of that class.
 During prediction, the class with the lowest predicted costs is selected.
 }
+\seealso{
+Other costsens: \code{\link{ClassifTask}},
+  \code{\link{ClusterTask}}, \code{\link{CostSensTask}},
+  \code{\link{RegrTask}}, \code{\link{SurvTask}},
+  \code{\link{Task}}, \code{\link{makeClassifTask}},
+  \code{\link{makeClusterTask}},
+  \code{\link{makeCostSensTask}},
+  \code{\link{makeRegrTask}}, \code{\link{makeSurvTask}};
+  \code{\link{CostSensWeightedPairsLearner}},
+  \code{\link{CostSensWeightedPairsModel}},
+  \code{\link{makeCostSensWeightedPairsWrapper}};
+  \code{\link{makeCostSensClassifWrapper}}
+}
 

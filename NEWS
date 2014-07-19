@@ -23,6 +23,7 @@ mlr_2.1:
 
 - new functions
 -- makeClusterTask
+-- removeHyperPars
 
 mlr_2.0:
 - mlr now supports survival analysis models (experimental)

@@ -23,4 +23,17 @@ the label for each case is the name of class with minimal costs.
 preferred.)
 Then the classifier is fitted to that data and subsequently used for prediction.
 }
+\seealso{
+Other costsens: \code{\link{ClassifTask}},
+  \code{\link{ClusterTask}}, \code{\link{CostSensTask}},
+  \code{\link{RegrTask}}, \code{\link{SurvTask}},
+  \code{\link{Task}}, \code{\link{makeClassifTask}},
+  \code{\link{makeClusterTask}},
+  \code{\link{makeCostSensTask}},
+  \code{\link{makeRegrTask}}, \code{\link{makeSurvTask}};
+  \code{\link{CostSensWeightedPairsLearner}},
+  \code{\link{CostSensWeightedPairsModel}},
+  \code{\link{makeCostSensWeightedPairsWrapper}};
+  \code{\link{makeCostSensRegrWrapper}}
+}
 
