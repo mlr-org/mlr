@@ -2,12 +2,22 @@ context("learners")
 
 if (isExpensiveExampleOk()) {
 
+mylist = function(..., create = FALSE) {
+  lrns = listLearners(..., create = create)
+  if (create) {
+    ids = extractSubList(lrns, "id")
+  } else {
+    ids = lrns
+  }
+  lrns[ids != "classif.mock"]
+}
+
 test_that("listLearners", {
-  x1 = listLearners()
-  x2 = listLearners("classif")
-  x3 = listLearners("regr")
-  x4 = listLearners("surv")
-  x5 = listLearners("cluster")
+  x1 = mylist()
+  x2 = mylist("classif")
+  x3 = mylist("regr")
+  x4 = mylist("surv")
+  x5 = mylist("cluster")
   expect_true(length(x1) > 40)
   expect_true(length(x2) > 20)
   expect_true(length(x3) > 10)
@@ -15,14 +25,14 @@ test_that("listLearners", {
   expect_true(length(x5) > 1)
   expect_true(setequal(x1, c(x2, x3, x4, x5)))
 
-  x5 = listLearners("classif", properties = c("multiclass", "factors", "prob"))
+  x5 = mylist("classif", properties = c("multiclass", "factors", "prob"))
   expect_true(length(x5) > 10 && all(x5 %in% x2))
 })
 
 test_that("listLearners for task", {
-  x1 = listLearners(binaryclass.task)
-  x2 = listLearners(multiclass.task)
-  x3 = listLearners(regr.task)
+  x1 = mylist(binaryclass.task)
+  x2 = mylist(multiclass.task)
+  x3 = mylist(regr.task)
   expect_true(length(x1) > 10)
   expect_true(length(x2) > 10)
   expect_true(length(x3) > 10)
@@ -35,7 +45,7 @@ test_that("learners work", {
   # binary classif
   task = subsetTask(binaryclass.task, subset = c(10:50, 180:208),
     features = getTaskFeatureNames(binaryclass.task)[12:15])
-  lrns = listLearners(task, create = TRUE)
+  lrns = mylist(task, create = TRUE)
   for (lrn in lrns) {
     m = train(lrn, task)
     p = predict(m, task)
@@ -45,7 +55,7 @@ test_that("learners work", {
   # binary classif with prob
   task = subsetTask(binaryclass.task, subset = c(1:50, 150:208),
     features = getTaskFeatureNames(binaryclass.task)[1:2])
-  lrns = listLearners(task, properties = "prob")
+  lrns = mylist(task, properties = "prob")
   lrns = lapply(lrns, makeLearner, predict.type = "prob")
   lapply(lrns, function(lrn) {
     m = train(lrn, task)
@@ -56,7 +66,7 @@ test_that("learners work", {
   # binary classif with weights
   task = makeClassifTask(data = binaryclass.df, target = binaryclass.target)
   task = subsetTask(task, subset = c(1:50, 150:208), features = getTaskFeatureNames(task)[1:2])
-  lrns = listLearners(task, properties = "weights")
+  lrns = mylist(task, properties = "weights")
   lrns = lapply(lrns, makeLearner)
   lapply(lrns, function(lrn) {
     m = train(lrn, task, weights = 1:task$task.desc$size)
@@ -67,7 +77,7 @@ test_that("learners work", {
   d = binaryclass.df[c(1:50, 120:170), c(1:2, binaryclass.class.col)]
   d[1, 1] = NA
   task = makeClassifTask(data = d, target = binaryclass.target)
-  lrns = listLearners(task, create = TRUE)
+  lrns = mylist(task, create = TRUE)
   lapply(lrns, function(lrn) {
     m = train(lrn, task)
     p = predict(m, task)
@@ -77,7 +87,7 @@ test_that("learners work", {
   # normal regr
   task = subsetTask(regr.task, subset = c(1:70),
     features = getTaskFeatureNames(regr.task)[1:2])
-  lrns = listLearners(task)
+  lrns = mylist(task)
   lrns = lapply(lrns, makeLearner)
   lapply(lrns, function(lrn) {
     if (lrn$id == "regr.km")
@@ -89,7 +99,7 @@ test_that("learners work", {
   # regr with se
   task = subsetTask(regr.task, subset = c(1:70),
   features = getTaskFeatureNames(regr.task)[1:2])
-  lrns = listLearners(task, properties = "se")
+  lrns = mylist(task, properties = "se")
   lrns = lapply(lrns, makeLearner, predict.type = "se")
   lapply(lrns, function(lrn) {
     if (lrn$id == "regr.km")
@@ -101,7 +111,7 @@ test_that("learners work", {
 
   # regr with weights
   task = subsetTask(regr.task, subset = 1:70, features = getTaskFeatureNames(regr.task)[1:2])
-  lrns = listLearners(task, properties = "weights")
+  lrns = mylist(task, properties = "weights")
   lrns = lapply(lrns, makeLearner)
   lapply(lrns, function(lrn) {
     if (lrn$id == "regr.km")
@@ -114,7 +124,7 @@ test_that("learners work", {
   d = regr.df[1:100, c(getTaskFeatureNames(regr.task)[1:2], regr.target)]
   d[1, 1] = NA
   task = makeRegrTask(data = d, target = regr.target)
-  lrns = listLearners(task, create = TRUE)
+  lrns = mylist(task, create = TRUE)
   lapply(lrns, function(lrn) {
     m = train(lrn, task)
     p = predict(m, task)
