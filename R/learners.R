@@ -71,6 +71,7 @@
 #'   \item{\bold{regr.fnn}}{\cr Fast k-Nearest Neighbor from FNN package: \code{\link[FNN]{knn}}}
 #'   \item{\bold{regr.gbm}}{\cr Gradient boosting machine from gbm package: \code{\link[gbm]{gbm}}\cr
 #'     Note that \code{distribution} has been set to \dQuote{gaussian} by default.}
+#'   \item{\bold{regr.glmnet}}{\cr GLM with lasso or elasticnet regularization from glmnet package: \code{\link[glmnet]{glmnet}}}
 #'   \item{\bold{regr.IBk}}{\cr K-nearest neighbours from RWeka package: \code{\link[RWeka]{IBk}}}
 #'   \item{\bold{regr.kknn}}{\cr K-Nearest-Neighbor regression from kknn package: \code{\link[kknn]{kknn}}}
 #'    \item{\bold{regr.km}}{\cr Kriging from DiceKriging package: \code{\link[DiceKriging]{km}}}
@@ -100,6 +101,7 @@
 #'   \item{\bold{regr.svm}}{\cr Support Vector Machines (libsvm) from e1071 package: \code{\link[e1071]{svm}}}
 #' }
 #' \itemize{
+#'    \item{\bold{surv.cforest}}{\cr Random forest based on conditional inference trees from party package: \code{\link[party]{cforest}}}
 #'   \item{\bold{surv.CoxBoost}}{\cr Cox proportional hazards model with componentwise likelhood based boosting from CoxBoost package: \code{\link[CoxBoost]{CoxBoost}}}
 #'   \item{\bold{surv.coxph}}{\cr Cox proportional hazard model from survival package: \code{\link[survival]{coxph}}}
 #'   \item{\bold{surv.glmnet}}{\cr GLM with regularization from glmnet package: \code{\link[glmnet]{glmnet}}}
