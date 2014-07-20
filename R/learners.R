@@ -101,6 +101,7 @@
 #'   \item{\bold{regr.svm}}{\cr Support Vector Machines (libsvm) from e1071 package: \code{\link[e1071]{svm}}}
 #' }
 #' \itemize{
+#'    \item{\bold{surv.cforest}}{\cr Random forest based on conditional inference trees from party package: \code{\link[party]{cforest}}}
 #'   \item{\bold{surv.CoxBoost}}{\cr Cox proportional hazards model with componentwise likelhood based boosting from CoxBoost package: \code{\link[CoxBoost]{CoxBoost}}}
 #'   \item{\bold{surv.coxph}}{\cr Cox proportional hazard model from survival package: \code{\link[survival]{coxph}}}
 #'   \item{\bold{surv.glmnet}}{\cr GLM with regularization from glmnet package: \code{\link[glmnet]{glmnet}}}
