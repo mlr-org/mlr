@@ -1,5 +1,6 @@
 #' @export
 #' @rdname Task
+#' @family costsens
 makeCostSensTask = function(id, data, costs, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)

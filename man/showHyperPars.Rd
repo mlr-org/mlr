@@ -18,7 +18,8 @@ Useful for a quick overview, also does not foce you to create the learner.
 }
 \seealso{
 Other learner: \code{\link{getHyperPars}};
-  \code{\link{getParamSet}}; \code{\link{setHyperPars}};
-  \code{\link{setId}}; \code{\link{setPredictType}}
+  \code{\link{getParamSet}}; \code{\link{removeHyperPars}};
+  \code{\link{setHyperPars}}; \code{\link{setId}};
+  \code{\link{setPredictType}}
 }
 

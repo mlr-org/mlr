@@ -4,7 +4,7 @@
 \title{Fuse learner with a feature filter method.}
 \usage{
 makeFilterWrapper(learner, fw.method = "random.forest.importance",
-  fw.select = "perc", fw.val)
+  fw.select = "perc", fw.val = 1)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -20,7 +20,8 @@ See \code{\link{filterFeatures}}.
 Default is \dQuote{perc}.}
 
 \item{fw.val}{[\code{numeric(1)}]\cr
-See \code{\link{filterFeatures}}.}
+See \code{\link{filterFeatures}}.
+Default is 1.}
 }
 \value{
 [\code{\link{Learner}}].

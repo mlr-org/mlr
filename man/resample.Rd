@@ -98,6 +98,10 @@ List of:
     see general description above.}
   \item{aggr [\code{numeric}]}{Named vector of aggregated performance values. Names are coded like
     this <measure>.<aggregation>.}
+  \item{err.msgs [\code{data.frame}]}{Number of rows equals resampling iterations
+    and columns are: \dQuote{iter}, \dQuote{train}, \dQuote{predict}.
+    Stores error messages generated during train or predict, if these were caught
+    via \code{\link{configureMlr}}.}
   \item{pred [\code{\link{ResamplePrediction}}]}{Container for all predictions during resampling.}
   \item{models [list of \code{\link{WrappedModel}}]}{List of fitted models or \code{NULL}.}
   \item{extract [\code{list}]}{List of extracted parts from fitted models or \code{NULL}.}

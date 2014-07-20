@@ -58,3 +58,22 @@ test_that("tuning works with infeasible pars", {
   expect_true(!is.na(d[2L, "error.message"]))
 })
 
+test_that("tuning works with errors", {
+  configureMlr(on.learner.error = "quiet")
+  ps = makeParamSet(
+    makeDiscreteParam("alpha", values = c(1, 0))
+  )
+  lrn = makeLearner("classif.mock2")
+  rdesc = makeResampleDesc("Holdout")
+  ctrl = makeTuneControlGrid()
+  z = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
+  d = as.data.frame(z$opt.path)
+  expect_true(is.finite(d[1L, "mmce.test.mean"]))
+  expect_true(is.na(d[1L, "error.message"]))
+  expect_true(is.na(d[2L, "mmce.test.mean"]))
+  expect_true(grep("foo", d[2L, "error.message"]) == 1L)
+  configureMlr(on.learner.error = "stop")
+})
+
+
+

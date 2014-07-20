@@ -8,6 +8,7 @@ test_that("FailureModel", {
   m = train(lrn, multiclass.task, subset = c(1,51,101))
   expect_true(inherits(m, "FailureModel"))
   expect_true(!is.null(m$learner.model))
+  expect_true(grep("some group is too small", getFailureModelMsg(m)) == 1L)
   p = predict(m, newdata = iris)
   expect_true(all(is.na(p$data$response)))
 
@@ -15,6 +16,7 @@ test_that("FailureModel", {
   lrn = makeLearner("classif.qda", predict.type = "prob")
   m = train(lrn, multiclass.task, subset = c(1,51,101))
   expect_true(inherits(m, "FailureModel"))
+  expect_true(grep("some group is too small", getFailureModelMsg(m)) == 1L)
   expect_true(!is.null(m$learner.model))
   p = predict(m, newdata = iris)
   expect_true(all(is.na(p$data$response)))
@@ -44,6 +46,7 @@ test_that("FailureModel", {
   m = train(lrn, costsens.task, subset = c(1,51,101))
   expect_true(isFailureModel(m))
   expect_true(!is.null(m$learner.model))
+  expect_true(grep("some group is too small", getFailureModelMsg(m)) == 1L)
   p = predict(m, newdata = iris)
   expect_true(all(is.na(p$data$response)))
 

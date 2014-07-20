@@ -3,7 +3,7 @@
 \alias{makeOverBaggingWrapper}
 \title{Fuse learner with the bagging technique and oversampling for imbalancy correction.}
 \usage{
-makeOverBaggingWrapper(learner, obw.iters = 10L, obw.rate,
+makeOverBaggingWrapper(learner, obw.iters = 10L, obw.rate = 1,
   obw.maxcl = "boot")
 }
 \arguments{
@@ -18,7 +18,8 @@ Default is 10.}
 \item{obw.rate}{[\code{numeric(1)}]\cr
 Factor to upsample the smaller class in each bag.
 Must be between 1 and \code{Inf},
-where 1 means no oversampling and 2 would mean doubling the class size.}
+where 1 means no oversampling and 2 would mean doubling the class size.
+Default is 1.}
 
 \item{obw.maxcl}{[\code{character(1)}]\cr
 character value that controls how to sample majority class.

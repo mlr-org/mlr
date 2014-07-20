@@ -24,6 +24,16 @@ setHyperPars2.BaseWrapper = function(learner, par.vals) {
   return(learner)
 }
 
+#' @export
+removeHyperPars.BaseWrapper = function(learner, ids) {
+  i = intersect(names(learner$par.vals), ids)
+  if (length(i) > 0L)
+    learner = removeHyperPars.Learner(learner, i)
+  learner$next.learner = removeHyperPars.Learner(learner$next.learner, setdiff(ids, i))
+  return(learner)
+}
+
+
 
 getLeafLearner = function(learner) {
   if (inherits(learner, "BaseWrapper"))

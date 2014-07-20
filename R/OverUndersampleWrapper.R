@@ -13,41 +13,47 @@
 #'   Factor to downsample the bigger class. Must be between 0 and 1,
 #'   where 1 means no downsampling, 0.5 implies reduction to 50 percent
 #'   and 0 would imply reduction to 0 observations.
+#'   Default is 1.
 #' @param osw.rate [\code{numeric(1)}]\cr
 #'   Factor to oversample the smaller class. Must be between 1 and \code{Inf},
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
+#'   Default is 1.
 #' @template ret_learner
 #' @family imbalancy
 #' @export
-makeUndersampleWrapper = function(learner, usw.rate) {
+makeUndersampleWrapper = function(learner, usw.rate = 1) {
   # FIXME: check binary classif
   learner = checkLearner(learner, "classif")
-  assertNumber(usw.rate, lower = 0, upper = 1)
-
+  pv = list()
+  if (!missing(usw.rate)) {
+    assertNumber(usw.rate, lower = 0, upper = 1)
+    pv$usw.rate = usw.rate
+  }
   id = paste(learner$id, "undersampled", sep = ".")
   ps = makeParamSet(
     makeNumericLearnerParam(id = "usw.rate")
   )
-  pv = list(usw.rate = usw.rate)
   makeBaseWrapper(id, learner, package = "mlr", par.set = ps, par.vals = pv, cl = "UndersampleWrapper")
 }
 
 #' @rdname makeUndersampleWrapper
 #' @export
-makeOversampleWrapper = function(learner, osw.rate) {
+makeOversampleWrapper = function(learner, osw.rate = 1) {
   learner = checkLearner(learner, "classif")
-  assertNumber(osw.rate, lower = 1)
-
+  pv = list()
+  if (!missing(osw.rate)) {
+    assertNumber(osw.rate, lower = 1)
+    pv$osw.rate = osw.rate
+  }
   id = paste(learner$id, "oversampled", sep = ".")
   ps = makeParamSet (
     makeNumericLearnerParam(id = "osw.rate")
   )
-  pv = list(osw.rate = osw.rate)
   makeBaseWrapper(id, learner, package = "mlr", par.set = ps, par.vals = pv, cl = "OversampleWrapper")
 }
 
 #' @export
-trainLearner.UndersampleWrapper = function(.learner, .task, .subset, .weights = NULL, usw.rate, ...) {
+trainLearner.UndersampleWrapper = function(.learner, .task, .subset, .weights = NULL, usw.rate = 1, ...) {
   .task = subsetTask(.task, .subset)
   .task = undersample(.task, rate = usw.rate)
   m = train(.learner$next.learner, .task, weights = .weights)
@@ -55,7 +61,7 @@ trainLearner.UndersampleWrapper = function(.learner, .task, .subset, .weights = 
 }
 
 #' @export
-trainLearner.OversampleWrapper = function(.learner, .task, .subset, .weights = NULL, osw.rate, ...) {
+trainLearner.OversampleWrapper = function(.learner, .task, .subset, .weights = NULL, osw.rate = 1, ...) {
   .task = subsetTask(.task, .subset)
   .task = oversample(.task, rate = osw.rate)
   m = train(.learner$next.learner, .task, weights = .weights)

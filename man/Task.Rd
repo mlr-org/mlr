@@ -118,4 +118,15 @@ makeClassifTask(id = "myIonosphere", data = Ionosphere, target = "Class",
   positive = "good", blocking = blocking)
 makeClusterTask(data = iris[, -5L])
 }
+\seealso{
+Other costsens: \code{\link{CostSensClassifModel}},
+  \code{\link{CostSensClassifWrapper}},
+  \code{\link{makeCostSensClassifWrapper}};
+  \code{\link{CostSensRegrModel}},
+  \code{\link{CostSensRegrWrapper}},
+  \code{\link{makeCostSensRegrWrapper}};
+  \code{\link{CostSensWeightedPairsModel}},
+  \code{\link{CostSensWeightedPairsWrapper}},
+  \code{\link{makeCostSensWeightedPairsWrapper}}
+}
 
