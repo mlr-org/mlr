@@ -18,6 +18,7 @@ mlr_2.1:
 -- regr.cforest
 -- regr.glmnet
 -- regr.svm
+-- surv.cforest
 -- cluster.SimpleKMeans
 -- cluster.EM
 -- cluster.XMeans
