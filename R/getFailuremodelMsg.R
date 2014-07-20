@@ -30,5 +30,11 @@ getFailureModelMsg.BaggingModel = function(model) {
   ifelse(j == 0L, NA_character_ , msgs[j])
 }
 
-
+#' @export
+getFailureModelMsg.CostSensWeightedPairsModel = function(model) {
+  mods = getCostSensWeightedPairsModels(model, learner.models = FALSE)
+  msgs = sapply(mods, getFailureModelMsg)
+  j = which.first(!is.na(msgs))
+  ifelse(j == 0L, NA_character_ , msgs[j])
+}
 

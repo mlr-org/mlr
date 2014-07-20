@@ -29,4 +29,12 @@ isFailureModel.BaggingModel = function(model) {
   return(any(isit))
 }
 
+#' @export
+isFailureModel.CostSensWeightedPairsModel = function(model) {
+  mods = getCostSensWeightedPairsModels(model, learner.models = FALSE)
+  isit = sapply(mods, isFailureModel)
+  return(any(isit))
+}
+
+
 

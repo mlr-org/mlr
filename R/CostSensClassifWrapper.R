@@ -40,7 +40,8 @@ trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset, ...) {
   newy = cns[newy]
   # if all equal, predict one class, stupid fringe case
   if (length(unique(newy)) == 1) {
-    model = newy[1]
+    model = makeWrappedModel.Learner(.learner, newy[1], .task$task.desc, .subset, getTaskFeatureNames(.task),
+      getTaskFactorLevels(.task), 0)
   } else {
     data = cbind(feats, ..y.. = newy)
     task = makeClassifTask(data = data, target = "..y..",
@@ -54,8 +55,8 @@ trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset, ...) {
 predictLearner.CostSensClassifWrapper = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model$next.model
   # handle constant prediction
-  if (is.character(m))
-    return(as.factor(rep(m, nrow(.newdata))))
+  if (is.character(m$learner.model))
+    return(as.factor(rep(m$learner.model, nrow(.newdata))))
   NextMethod()
 }
 
