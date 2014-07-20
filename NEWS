@@ -16,6 +16,7 @@ mlr_2.1:
 -- classif.glmnet
 -- classif.plsdaCaret
 -- regr.cforest
+-- regr.glmnet
 -- regr.svm
 -- cluster.SimpleKMeans
 -- cluster.EM
