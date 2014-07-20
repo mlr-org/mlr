@@ -2,7 +2,7 @@ Package: mlr
 Title: mlr: Machine Learning in R.
 Description: Interface to a large number of classification and regression
     techniques, including machine-readable parameter descriptions. There is
-    also an experimental extension for surival analysis, clustering and
+    also an experimental extension for survival analysis, clustering and
     general, example-specific cost-sensitive learning. Generic resampling,
     including cross-validation, bootstrapping and subsampling. Hyperparameter
     tuning with modern optimization techniques, for single- and multi-objective
