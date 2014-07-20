@@ -61,6 +61,7 @@
 #' Clustering:
 #' \itemize{
 #'   \item{\bold{db}}{\cr Davies-Bouldin cluster separation measure, see \code{\link[clusterSim]{index.DB}}}
+#'   \item{\bold{dunn}}{\cr Dunn index, see \code{\link[clValid]{dunn}}}
 #'   \item{\bold{G1}}{\cr Calinski-Harabasz pseudo F statistic, see \code{\link[clusterSim]{index.G1}}}
 #'   \item{\bold{G2}}{\cr Baker and Hubert adaptation of Goodman-Kruskal's gamma statistic, see \code{\link[clusterSim]{index.G2}}}
 #'   \item{\bold{silhouette}}{\cr Rousseeuw's silhouette internal cluster quality index, see \code{\link[clusterSim]{index.S}}}
@@ -559,6 +560,20 @@ db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
     requirePackages("clusterSim")
     d = task$env$data
     index.DB(d[pred$data$id,, drop = FALSE], pred$data$response)$DB
+  }
+)
+
+#' @export dunn
+#' @rdname measures
+#' @usage none
+#' @format none
+dunn = makeMeasure(id = "dunn", minimize = FALSE, best = Inf, worst = 0,
+  properties = "cluster",
+  allowed.pred.types = c("response"),
+  fun = function(task, model, pred, extra.args) {
+    requirePackages("clValid")
+    d = task$env$data
+    dunn(Data = d[pred$data$id,, drop = FALSE], clusters = pred$data$response)
   }
 )
 
