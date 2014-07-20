@@ -37,3 +37,15 @@ test_that("clustering tune", {
   expect_equal(getOptPathLength(tr$opt.path), 2)
   expect_true(!is.na(tr$y))
 })
+
+test_that("clustering performance",  {
+  lrn = makeLearner("cluster.SimpleKMeans")
+  model = train(lrn, noclass.task)
+  pred = predict(model, task = noclass.task)
+
+  expect_true(is.numeric(performance(pred, task = noclass.task, measures = db)))
+  expect_true(is.numeric(performance(pred, task = noclass.task, measures = dunn)))
+  expect_true(is.numeric(performance(pred, task = noclass.task, measures = G1)))
+  expect_true(is.numeric(performance(pred, task = noclass.task, measures = G2)))
+  expect_true(is.numeric(performance(pred, task = noclass.task, measures = silhouette)))
+})
