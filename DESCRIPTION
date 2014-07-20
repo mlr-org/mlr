@@ -48,6 +48,7 @@ Suggests:
     DiscriMiner,
     e1071,
     earth,
+    emoa,
     FNN,
     FSelector,
     gbm,

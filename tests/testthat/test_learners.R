@@ -9,7 +9,7 @@ mylist = function(..., create = FALSE) {
   } else {
     ids = lrns
   }
-  lrns[ids != "classif.mock"]
+  lrns[ids %nin% c("classif.mock1", "classif.mock2")]
 }
 
 test_that("listLearners", {
