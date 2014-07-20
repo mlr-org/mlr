@@ -10,6 +10,7 @@ mlr_2.1:
   the original scale.
 
 - new learners:
+-- classif.glmnet
 -- classif.plsdaCaret
 -- regr.cforest
 -- regr.svm
