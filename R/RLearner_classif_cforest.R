@@ -49,8 +49,8 @@ trainLearner.classif.cforest = function(.learner, .task, .subset, .weights = NUL
 #' @export
 predictLearner.classif.cforest = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type == "prob") {
-    p = predict(.model$learner.model, newdata = .newdata, type = 'prob', ...)
-    p = t(sapply(p, '['))
+    p = predict(.model$learner.model, newdata = .newdata, type = "prob", ...)
+    p = t(sapply(p, "["))
     colnames(p) = .model$task.desc$class.levels
   } else {
     p = predict(.model$learner.model, newdata = .newdata, ...) 
