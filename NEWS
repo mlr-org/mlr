@@ -12,6 +12,7 @@ mlr_2.1:
 - resample now returns a data.frame "err.mgs" or error messages that might have occurred during resampling
 
 - new learners:
+-- classif.cforest
 -- classif.glmnet
 -- classif.plsdaCaret
 -- regr.cforest

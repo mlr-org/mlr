@@ -7,6 +7,7 @@
 #'   \item{\bold{classif.boosting}}{\cr Boosting from adabag package: \code{\link[adabag]{boosting}}\cr
 #'     Note that \code{xval} has been set to 0 by default for speed.}
 #'   \item{\bold{classif.blackboost}}{\cr Gradient boosting with regression trees from mboost package: \code{\link[mboost]{blackboost}}}
+#'   \item{\bold{classif.cforest}}{\cr Random forest based on conditional inference trees from party package: \code{\link[party]{cforest}}}
 #'   \item{\bold{classif.ctree}}{\cr Conditional Inference Trees from party package: \code{\link[party]{ctree}}}
 #'   \item{\bold{classif.fnn}}{\cr Fast k-Nearest Neighbor from FNN package: \code{\link[FNN]{knn}}}
 #'   \item{\bold{classif.gbm}}{\cr Gradient boosting machine from gbm package: \code{\link[gbm]{gbm}}}
