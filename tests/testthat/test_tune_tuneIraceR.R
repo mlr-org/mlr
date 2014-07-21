@@ -39,6 +39,20 @@ test_that("tuneIrace works with dependent params", {
   tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
   expect_true(getOptPathLength(tr$opt.path) >= 30 && getOptPathLength(tr$opt.path) <= 100)
   expect_true(!is.na(tr$y))
+
+  # another complex example
+  ps = makeParamSet(
+    makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
+    makeDiscreteParam("kernel", values = c("vanilladot", "polydot", "rbfdot")),
+    makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x,
+      requires = quote(kernel == "rbfdot")),
+    makeIntegerParam("degree", lower = 2L, upper = 5L,
+      requires = quote(kernel == "polydot"))
+  )
+  ctrl = makeTuneControlRandom(maxit = 5L)
+  rdesc = makeResampleDesc("Holdout")
+  res = tuneParams("classif.ksvm", sonar.task, rdesc, par.set = ps, control = ctrl)
+
 })
 
 
