@@ -70,7 +70,7 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
   if (inherits(resampling, "ResampleDesc") && control$same.resampling.instance)
     resampling = makeResampleInstance(resampling, task = task)
   assertFlag(show.info)
-  checkTunerParset(learner, par.set, control)
+  checkTunerParset(learner, par.set, measures, control)
   control = setDefaultImputeVal(control, measures)
 
   cl = getClass1(control)

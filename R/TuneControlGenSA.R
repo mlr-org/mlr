@@ -1,6 +1,6 @@
 #' @export
 #' @rdname TuneControl
-makeTuneControlGenSA = function(same.resampling.instance = TRUE, impute.val = Inf, start = NULL, ...) {
+makeTuneControlGenSA = function(same.resampling.instance = TRUE, impute.val = NULL, start = NULL, ...) {
   args = list(...)
   default = list(smooth = FALSE)
   default = list()

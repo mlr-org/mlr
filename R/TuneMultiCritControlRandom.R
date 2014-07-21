@@ -3,9 +3,9 @@
 #'   Default is 100.
 #' @export
 #' @rdname TuneMultiCritControl
-makeTuneMultiCritControlRandom = function(same.resampling.instance = TRUE, impute.val = Inf, maxit = 100L) {
+makeTuneMultiCritControlRandom = function(same.resampling.instance = TRUE, maxit = 100L) {
   maxit = asCount(maxit)
-  makeTuneMultiCritControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val,
+  makeTuneMultiCritControl(same.resampling.instance = same.resampling.instance,
     maxit = maxit, cl = "TuneMultiCritControlRandom")
 }
 

@@ -10,13 +10,13 @@
 \title{Create control structures for multi-criteria tuning.}
 \usage{
 makeTuneMultiCritControlGrid(same.resampling.instance = TRUE,
-  impute.val = Inf, resolution = 10L)
+  resolution = 10L)
 
 makeTuneMultiCritControlNSGA2(same.resampling.instance = TRUE,
-  impute.val = Inf, ...)
+  impute.val = NULL, ...)
 
 makeTuneMultiCritControlRandom(same.resampling.instance = TRUE,
-  impute.val = Inf, maxit = 100L)
+  maxit = 100L)
 }
 \arguments{
 \item{maxit}{[\code{integer(1)}]\cr
@@ -27,6 +27,13 @@ Default is 100.}
 Should the same resampling instance be used for all evaluations to reduce variance?
 Default is \code{TRUE}.}
 
+\item{resolution}{[\code{integer}]\cr
+Resolution of the grid for each numeric/integer parameter in \code{par.set}.
+For vector parameters, it is the resolution per dimension.
+Either pass one resolution for all parameters, or a named vector.
+See \code{\link[ParamHelpers]{generateGridDesign}}.
+Default is 10.}
+
 \item{impute.val}{[\code{numeric(1)}]\cr
 If something goes wrong during optimization (e.g, the learner crashes),
 this value is fed back to the tuner, so the tuning algorithm does not abort.
@@ -36,13 +43,6 @@ Note that this value is later multiplied by -1 for maximization measures interna
 need to enter a larger positive value for maximization here as well.
 Default is the worst obtainable value of the performance measure you optimize for when
 you aggregate by mean value, or \code{Inf} instead.}
-
-\item{resolution}{[\code{integer}]\cr
-Resolution of the grid for each numeric/integer parameter in \code{par.set}.
-For vector parameters, it is the resolution per dimension.
-Either pass one resolution for all parameters, or a named vector.
-See \code{\link[ParamHelpers]{generateGridDesign}}.
-Default is 10.}
 
 \item{...}{[any]\cr
 Further control parameters passed to the \code{control} argument of \code{\link[cmaes]{cma_es}} and

@@ -13,20 +13,19 @@
 \alias{makeTuneControlRandom}
 \title{Create control structures for tuning.}
 \usage{
-makeTuneControlCMAES(same.resampling.instance = TRUE, impute.val = Inf,
+makeTuneControlCMAES(same.resampling.instance = TRUE, impute.val = NULL,
   start = NULL, ...)
 
-makeTuneControlGenSA(same.resampling.instance = TRUE, impute.val = Inf,
+makeTuneControlGenSA(same.resampling.instance = TRUE, impute.val = NULL,
   start = NULL, ...)
 
-makeTuneControlGrid(same.resampling.instance = TRUE, impute.val = Inf,
+makeTuneControlGrid(same.resampling.instance = TRUE, impute.val = NULL,
   resolution = 10L)
 
-makeTuneControlIrace(impute.val = Inf, n.instances = 100L,
+makeTuneControlIrace(impute.val = NULL, n.instances = 100L,
   show.irace.output = FALSE, ...)
 
-makeTuneControlRandom(same.resampling.instance = TRUE, impute.val = Inf,
-  maxit = 100L)
+makeTuneControlRandom(same.resampling.instance = TRUE, maxit = 100L)
 }
 \arguments{
 \item{resolution}{[\code{integer}]\cr
