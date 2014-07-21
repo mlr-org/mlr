@@ -33,12 +33,20 @@ tunerFitnFunVectorized = function(xs, learner, task, resampling, measures, par.s
 
 # short helper that imputes illegal values and also negates for maximization problems
 convertYForTuner = function(y, measures, ctrl) {
-  # can be a vector
-  y = y[[1L]]
-  # if there was any problem we return the imputed value that the user selected
-  if (is.na(y) || is.nan(y) || is.infinite(y))
-    y = ctrl$impute.val
-  # we now negate values for maximization
-  y = y * ifelse(measures[[1]]$minimize, 1 , -1)
-  return(y)
+  is.multicrit = inherits(ctrl, "TuneMultiCritControl")
+  k = ifelse(is.multicrit, length(y), 1L)
+  for (j in 1:k) {
+    z = y[[j]]
+    # if there was any problem we return the imputed value that the user selected
+    if (is.na(z) || is.nan(z) || is.infinite(z))
+      z = ctrl$impute.val[[j]]
+    # we now negate values for maximization
+    z = z * ifelse(measures[[j]]$minimize, 1 , -1)
+    y[[j]] = z
+  }
+  # for multicrit, return vector (without names), otherwise just scalar y
+  if (inherits(ctrl, "TuneMultiCritControl"))
+    return(as.numeric(y))
+  else
+    return(y[[1L]])
 }
