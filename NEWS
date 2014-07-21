@@ -10,6 +10,7 @@ mlr_2.1:
   the original scale.
 - fix a bug when feature filtering resulted in a NoFeatureModel 
 - resample now returns a data.frame "err.mgs" or error messages that might have occurred during resampling
+- stratified resampling for survival
 
 - new learners:
 -- classif.cforest
