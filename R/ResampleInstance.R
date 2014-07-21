@@ -73,15 +73,24 @@ makeResampleInstance = function(desc, task, size, ...) {
   } else if (desc$stratify) {
     if (is.null(task))
       stop("Stratification always needs the task!")
-    if (task$task.desc$type != "classif")
-      stop("Stratification is currently only supported for classification!")
-    y = getTaskTargets(task)
+
+    grp = switch(task$task.desc$type,
+      "classif" = {
+        y = getTaskTargets(task)
+        lapply(task$task.desc$class.levels, function(x) which(x == y))
+      },
+      "surv" = {
+        y = getTaskTargets(task)
+        lapply(0:1, function(x) which(x == y[, 2L]))
+      },
+      stopf("Stratification for tasks of type '%s' not supported", task$task.desc$type)
+    )
+
     # resample on every class
-    class.inds = lapply(task$task.desc$class.levels, function(x) which(x == y))
-    train.inds = vector("list", length(class.inds))
-    test.inds = vector("list", length(class.inds))
-    for (i in seq_along(class.inds)) {
-      ci = class.inds[[i]]
+    train.inds = vector("list", length(grp))
+    test.inds = vector("list", length(grp))
+    for (i in seq_along(grp)) {
+      ci = grp[[i]]
       if (length(ci)) {
         inst = instantiateResampleInstance(desc, length(ci))
         train.inds[[i]] = lapply(inst$train.inds, function(j) ci[j])
