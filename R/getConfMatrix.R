@@ -13,23 +13,18 @@
 #' @export
 #' @seealso \code{\link{predict.WrappedModel}}
 #' @examples
-#' ## create classification task and use linear discriminant analysis for classification
-#' task = makeClassifTask(data = iris, target = "Species")
-#' lrn = makeLearner("classif.lda")
-#'
-#' ## set up training and test data
-#' n = nrow(iris)
-#' mixed.set = sample(1:n)
-#' training.set = mixed.set[1:(n/2)]
-#' test.set = mixed.set[(n/2 + 1):n]
-#'
-#' ## train model
-#' mod = train(lrn, task, subset = training.set)
-#'
-#' ## get predictions and show calculate confusion matrix
-#' pred = predict(mod, newdata = iris[test.set, ])
+#' # get confusion matrix after simple manual prediction
+#' allinds = 1:150
+#' train = sample(allinds, 75)
+#' test = setdiff(allinds, train)
+#' mod = train("classif.lda", iris.task, subset = train)
+#' pred = predict(mod, iris.task, subset = test)
 #' print(getConfMatrix(pred))
 #' print(getConfMatrix(pred, relative = TRUE))
+#'
+#' # now after cross-validation
+#' r = crossval("classif.lda", iris.task, iters = 2L)
+#' print(getConfMatrix(r$pred))
 getConfMatrix = function(pred, relative = FALSE) {
   assertClass(pred, classes = "Prediction")
   assertFlag(relative)
