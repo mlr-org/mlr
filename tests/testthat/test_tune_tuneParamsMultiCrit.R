@@ -40,3 +40,20 @@ test_that("tuneParamsMultiCrit", {
 })
 
 
+test_that("tuneParamsMultiCrit works with low number of evals and dependencies", {
+  # we had a bug here triggered thru code in PH
+  ps = makeParamSet(
+    makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
+    makeDiscreteParam("kernel", values = c("vanilladot", "polydot", "rbfdot")),
+    makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x,
+      requires = quote(kernel == "rbfdot")),
+    makeIntegerParam("degree", lower = 2L, upper = 5L,
+      requires = quote(kernel == "polydot"))
+  )
+  ctrl = makeTuneMultiCritControlRandom(maxit = 1L)
+  rdesc = makeResampleDesc("Holdout")
+  res = tuneParamsMultiCrit("classif.ksvm", sonar.task, rdesc, par.set = ps,
+    measures = list(tpr, fpr), control = ctrl)
+})
+
+

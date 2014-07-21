@@ -80,6 +80,7 @@ compare.diff = function(state1, state2, control, measure, threshold) {
   ifelse(measure$minimize, 1, -1) * (state1$y[1] - state2$y[1]) > threshold
 }
 
+# FIXME: remove this when PH is fixed on CRAN
 addOptPathElFixed = function(op, x, y, dob = getOptPathLength(op) + 1L, eol = as.integer(NA),
     error.message = NA_character_, exec.time = NA_real_, extra = NULL,
     check.feasible = !op$add.transformed.x) {
