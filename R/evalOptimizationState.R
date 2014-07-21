@@ -73,7 +73,7 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
   # add stuff to opt.path
   for (i in seq_len(n)) {
     res = res.list[[i]]
-    addOptPathEl(opt.path, x = as.list(states[[i]]), y = res$y, exec.time = res$exec.time,
+    addOptPathElFixed(opt.path, x = as.list(states[[i]]), y = res$y, exec.time = res$exec.time,
       error.message = res$errmsg, dob = dobs[i], eol = eols[i], check.feasible = FALSE)
   }
   return(res.list)

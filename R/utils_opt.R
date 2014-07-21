@@ -80,3 +80,18 @@ compare.diff = function(state1, state2, control, measure, threshold) {
   ifelse(measure$minimize, 1, -1) * (state1$y[1] - state2$y[1]) > threshold
 }
 
+addOptPathElFixed = function(op, x, y, dob = getOptPathLength(op) + 1L, eol = as.integer(NA),
+    error.message = NA_character_, exec.time = NA_real_, extra = NULL,
+    check.feasible = !op$add.transformed.x) {
+
+  addOptPathEl(op = op, x = x, y = y, dob = dob, eol = eol, error.message = error.message,
+    exec.time = exec.time, extra = extra, check.feasible = check.feasible)
+  types = getParamTypes(op$par.set, df.cols = TRUE, df.discretes.as.factor = FALSE)
+  # print(types)
+  for (j in seq_along(types)) {
+    type = types[j]
+    g = get(sprintf("as.%s", type))
+    op$env$path[, j] = g(op$env$path[, j])
+  }
+}
+
