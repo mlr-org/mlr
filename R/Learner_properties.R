@@ -6,8 +6,12 @@
 #' @return \code{setProperties}, \code{addProperties} and \code{removeProperties}
 #'  return an updated \code{\link{Learner}}.
 #'  \code{hasProperties} returns a logical vector of the same length of \code{props}.
-#' @export
 #' @name LearnerProperties
+#' @rdname LearnerProperties
+NULL
+
+#' @rdname LearnerProperties
+#' @export
 setProperties = function(learner, props) {
   learner = checkLearner(learner)
   assertCharacter(props, any.missing = FALSE)
