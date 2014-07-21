@@ -25,7 +25,7 @@ mlr_2.1:
 
 - new measures
 -- bac
--- db, g1, g2, silhouette
+-- db, dunn, g1, g2, silhouette
 
 - new functions
 -- makeClusterTask
