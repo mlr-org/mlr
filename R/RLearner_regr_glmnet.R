@@ -12,14 +12,14 @@ makeRLearner.regr.glmnet = function() {
       makeNumericVectorLearnerParam(id = "lambda"),
       makeLogicalLearnerParam(id = "standardize", default = TRUE),
       makeLogicalLearnerParam(id = "intercept", default = TRUE),
-      makeNumericLearnerParam(id = "threshold", default = 1e-07, lower = 0),
+      makeNumericLearnerParam(id = "thresh", default = 1e-07, lower = 0),
       makeIntegerLearnerParam(id = "dfmax", lower = 0L),
       makeIntegerLearnerParam(id = "pmax", lower = 0L),
       makeIntegerVectorLearnerParam(id = "exclude", lower = 1L),
       makeNumericVectorLearnerParam(id = "penalty.factor", lower = 0, upper = 1),
       makeNumericVectorLearnerParam(id = "lower.limits", upper = 0),
       makeNumericVectorLearnerParam(id = "upper.limits", lower = 0),
-      makeIntegerLearnerParam(id = "maxit", default = 10^5, lower = 1L),
+      makeIntegerLearnerParam(id = "maxit", default = 100000L, lower = 1L),
       makeDiscreteLearnerParam(id = "type.gaussian", values = c("covariance","naive")),
       makeLogicalLearnerParam(id = "standardize.response", default = FALSE),
       makeNumericLearnerParam(id = "fdev", default = 1.0e-5, lower = 0, upper = 1),
@@ -28,9 +28,9 @@ makeRLearner.regr.glmnet = function() {
       makeNumericLearnerParam(id = "big", default = 9.9e35),
       makeIntegerLearnerParam(id = "mnlam", default = 5, lower = 1),
       makeNumericLearnerParam(id = "pmin", default = 1.0e-9, lower = 0, upper = 1),
-      makeNumericLearnerParam(id = "exmx", default = 250.0),
+      makeNumericLearnerParam(id = "exmx", default = 250),
       makeNumericLearnerParam(id = "prec", default = 1e-10),
-      makeIntegerLearnerParam(id = "mxit", default = 100, lower = 1)
+      makeIntegerLearnerParam(id = "mxit", default = 100L, lower = 1L)
     ),
     properties = c("numerics", "prob", "twoclass", "multiclass", "weights"),
     par.vals = list(s = 0.01)
@@ -41,21 +41,22 @@ makeRLearner.regr.glmnet = function() {
 trainLearner.regr.glmnet = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   args = c(list(x = as.matrix(d$data), y = d$target, family = "gaussian"), list(...))
-  if (!is.null(.weights)) {
+  rm(d)
+  if (!is.null(.weights))
     args$weights = .weights
+
+  saved.ctrl = glmnet.control()
+  is.ctrl.arg = names(args) %in% names(saved.ctrl)
+  if (any(is.ctrl.arg)) {
+    on.exit(do.call(glmnet.control, saved.ctrl))
+    do.call(glmnet.control, args[is.ctrl.arg])
+    args = args[!is.ctrl.arg]
   }
-  ctrl.args = names(formals(glmnet.control))
-  if (any(names(args) %in% ctrl.args)) {
-    do.call(glmnet.control, args[names(args) %in% ctrl.args])
-    mod = do.call(glmnet, args[!names(args) %in% ctrl.args])  
-    glmnet.control(factory = TRUE)
-  } else {
-    mod = do.call(glmnet, args) 
-  }
-  mod
+
+  do.call(glmnet, args)
 }
 
 #' @export
 predictLearner.regr.glmnet = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newx = as.matrix(.newdata), ...)[,1]
+  predict(.model$learner.model, newx = as.matrix(.newdata), ...)[, 1L]
 }
