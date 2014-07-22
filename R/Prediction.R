@@ -89,8 +89,8 @@ makePrediction.TaskDescSurv = function(task.desc, id, truth, predict.type, y, ti
   data = namedList(c("id", "truth.time", "truth.event", "response"))
   data$id = id
   # FIXME: recode times
-  data$truth.time = truth[, 1L]
-  data$truth.event = truth[, 2L]
+  data$truth.time1 = truth[, 1L]
+  data$truth.time2 = truth[, 2L]
   data$response = y
 
   makeS3Obj(c("PredictionSurv", "Prediction"),

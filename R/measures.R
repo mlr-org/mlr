@@ -508,9 +508,12 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
   properties = "surv",
   allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
+    if (task$task.desc$surv.type != "right") {
+      stopf("Cannot compute C index for %s censored data. Must be right censored.", 
+        task$task.desc$surv.type)
+    }
     requirePackages("Hmisc")
-    # FIXME: this will break after switch to interval2 format
-    s = Surv(pred$data$truth.time, pred$data$truth.event)
+    s = recodeInterval2Data(pred$data[c("truth.time1", "truth.time2")], type = "right")
     rcorr.cens(-1 * pred$data$response, s)[["C Index"]]
   }
 )
