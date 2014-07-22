@@ -64,43 +64,54 @@ Default is <code>FALSE</code>.</p>
 
 <h3>Examples</h3>
 
-<pre><code class="r">## create classification task and use linear discriminant analysis for classification
-task = makeClassifTask(data = iris, target = &quot;Species&quot;)
-lrn = makeLearner(&quot;classif.lda&quot;)
-
-## set up training and test data
-n = nrow(iris)
-mixed.set = sample(1:n)
-training.set = mixed.set[1:(n/2)]
-test.set = mixed.set[(n/2 + 1):n]
-
-## train model
-mod = train(lrn, task, subset = training.set)
-
-## get predictions and show calculate confusion matrix
-pred = predict(mod, newdata = iris[test.set, ])
+<pre><code class="r"># get confusion matrix after simple manual prediction
+allinds = 1:150
+train = sample(allinds, 75)
+test = setdiff(allinds, train)
+mod = train(&quot;classif.lda&quot;, iris.task, subset = train)
+pred = predict(mod, iris.task, subset = test)
 print(getConfMatrix(pred))
 </code></pre>
 
 <pre><code>##             predicted
 ## true         setosa versicolor virginica -SUM-
-##   setosa         27          0         0     0
-##   versicolor      0         18         1     1
-##   virginica       0          3        26     3
-##   -SUM-           0          3         1     4
+##   setosa         26          0         0     0
+##   versicolor      0         26         0     0
+##   virginica       0          0        23     0
+##   -SUM-           0          0         0     0
 </code></pre>
 
 <pre><code class="r">print(getConfMatrix(pred, relative = TRUE))
 </code></pre>
 
 <pre><code>##             predicted
-## true         setosa versicolor virginica   -SUM-
-##   setosa          1     0.0000   0.00000 0.00000
-##   versicolor      0     0.9474   0.05263 0.05263
-##   virginica       0     0.1034   0.89655 0.10345
-##   -SUM-           0     0.7500   0.25000 0.05333
+## true         setosa versicolor virginica -SUM-
+##   setosa          1          0         0     0
+##   versicolor      0          1         0     0
+##   virginica       0          0         1     0
+##   -SUM-           0          0         0     0
+</code></pre>
+
+<pre><code class="r"># now after cross-validation
+r = crossval(&quot;classif.lda&quot;, iris.task, iters = 2L)
+</code></pre>
+
+<pre><code>## [Resample] cross-validation iter: 1
+## [Resample] cross-validation iter: 2
+## [Resample] Result: mmce.test.mean=0.0333
+</code></pre>
+
+<pre><code class="r">print(getConfMatrix(r$pred))
+</code></pre>
+
+<pre><code>##             predicted
+## true         setosa versicolor virginica -SUM-
+##   setosa         50          0         0     0
+##   versicolor      0         48         2     2
+##   virginica       0          3        47     3
+##   -SUM-           0          3         2     5
 </code></pre>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>
 </body></html>

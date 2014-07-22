@@ -2,6 +2,11 @@
 <html><head><title>R: Hyperparameter tuning.</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="R.css">
+
+<link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/languages/r.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 </head><body>
 
 <table width="100%" summary="page for tuneParams {mlr}"><tr><td>tuneParams {mlr}</td><td align="right">R Documentation</td></tr></table>
@@ -11,13 +16,12 @@
 <h3>Description</h3>
 
 <p>Optimizes the hyperparameters of a learner.
-Allows for different optimization methods, such as grid search, evolutionary strategies, etc.
-You can select such an algorithm (and its settings)
+Allows for different optimization methods, such as grid search, evolutionary strategies,
+iterated F-race, etc. You can select such an algorithm (and its settings)
 by passing a corresponding control object. For a complete list of implemented algorithms look at
 <code><a href="TuneControl.html">TuneControl</a></code>.
 </p>
-<p>Note that if tranformations are associated with the parameters, the returned result will contain
-transformed values in the optimal result and the path.
+<p>Multi-criteria tuning can be done with <code><a href="tuneParamsMultiCrit.html">tuneParamsMultiCrit</a></code>.
 </p>
 
 
@@ -40,7 +44,7 @@ If you pass a string the learner will be created via <code><a href="makeLearner.
 </td></tr>
 <tr valign="top"><td><code>task</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+<p>[<code><a href="Task.html">Task</a></code>]<br>
 The task.</p>
 </td></tr>
 <tr valign="top"><td><code>resampling</code></td>
@@ -49,7 +53,7 @@ The task.</p>
 Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
 it is instantiated once at the beginning by default, so all points are
 evaluated on the same training/test sets.
-If you want to change that behaviour, look at <code><a href="TuneControl.html">TuneControl</a></code>.</p>
+If you want to change that behavior, look at <code><a href="TuneControl.html">TuneControl</a></code>.</p>
 </td></tr>
 <tr valign="top"><td><code>measures</code></td>
 <td>
@@ -88,9 +92,9 @@ Default is set via <code><a href="configureMlr.html">configureMlr</a></code>.</p
 <code><a href="makeModelMultiplexer.html">makeModelMultiplexer</a></code>;
 <code><a href="TuneControl.html">TuneControl</a></code>,
 <code><a href="TuneControl.html">TuneControlCMAES</a></code>,
+<code><a href="TuneControl.html">TuneControlGenSA</a></code>,
 <code><a href="TuneControl.html">TuneControlGrid</a></code>,
 <code><a href="TuneControl.html">TuneControlIrace</a></code>,
-<code><a href="TuneControl.html">TuneControlOptim</a></code>,
 <code><a href="TuneControl.html">TuneControlRandom</a></code>,
 <code><a href="TuneControl.html">makeTuneControlCMAES</a></code>,
 <code><a href="TuneControl.html">makeTuneControlGenSA</a></code>,
@@ -103,5 +107,81 @@ Default is set via <code><a href="configureMlr.html">configureMlr</a></code>.</p
 <code><a href="tuneThreshold.html">tuneThreshold</a></code>
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+
+<h3>Examples</h3>
+
+<pre><code class="r"># a grid search for an SVM (with a tiny number of points...)
+# note how easily we can optimize on a log-scale
+ps = makeParamSet(
+  makeNumericParam(&quot;C&quot;, lower = -12, upper = 12, trafo = function(x) 2^x),
+  makeNumericParam(&quot;sigma&quot;, lower = -12, upper = 12, trafo = function(x) 2^x)
+)
+ctrl = makeTuneControlGrid(resolution = 2L)
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 2L)
+res = tuneParams(&quot;classif.ksvm&quot;, iris.task, rdesc, par.set = ps, control = ctrl)
+</code></pre>
+
+<pre><code>## [Tune] Started tuning learner classif.ksvm for parameter set:
+##          Type len Def    Constr Req Trafo
+## C     numeric   -   - -12 to 12   -     Y
+## sigma numeric   -   - -12 to 12   -     Y
+## With control class: TuneControlGrid
+## Imputation value: 1
+## [Tune] 1: C=0.000244; sigma=0.000244 : mmce.test.mean=0.72
+## [Tune] 2: C=4.1e+03; sigma=0.000244 : mmce.test.mean=0.04
+## [Tune] 3: C=0.000244; sigma=4.1e+03 : mmce.test.mean=0.72
+## [Tune] 4: C=4.1e+03; sigma=4.1e+03 : mmce.test.mean=0.707
+## [Tune] Result: C=4.1e+03; sigma=0.000244 : mmce.test.mean=0.04
+</code></pre>
+
+<pre><code class="r">print(res)
+</code></pre>
+
+<pre><code>## Tune result:
+## Op. pars: C=4.1e+03; sigma=0.000244
+## mmce.test.mean=0.04
+</code></pre>
+
+<pre><code class="r">print(as.data.frame(res$opt.path))
+</code></pre>
+
+<pre><code>##     C sigma mmce.test.mean dob eol error.message exec.time
+## 1 -12   -12         0.7200   1  NA          &lt;NA&gt;     0.038
+## 2  12   -12         0.0400   2  NA          &lt;NA&gt;     0.034
+## 3 -12    12         0.7200   3  NA          &lt;NA&gt;     0.036
+## 4  12    12         0.7067   4  NA          &lt;NA&gt;     0.036
+</code></pre>
+
+<pre><code class="r">print(as.data.frame(trafoOptPath(res$opt.path)))
+</code></pre>
+
+<pre><code>##           C     sigma mmce.test.mean dob eol
+## 1 2.441e-04 2.441e-04         0.7200   1  NA
+## 2 4.096e+03 2.441e-04         0.0400   2  NA
+## 3 2.441e-04 4.096e+03         0.7200   3  NA
+## 4 4.096e+03 4.096e+03         0.7067   4  NA
+</code></pre>
+
+<pre><code class="r">## Not run: 
+##D # we optimize the SVM over 3 kernels simultanously
+##D # note how we use dependent params (requires = ...) and iterated F-racing here
+##D ps = makeParamSet(
+##D   makeNumericParam(&quot;C&quot;, lower = -12, upper = 12, trafo = function(x) 2^x),
+##D   makeDiscreteParam(&quot;kernel&quot;, values = c(&quot;vanilladot&quot;, &quot;polydot&quot;, &quot;rbfdot&quot;)),
+##D   makeNumericParam(&quot;sigma&quot;, lower = -12, upper = 12, trafo = function(x) 2^x,
+##D     requires = quote(kernel == &quot;rbfdot&quot;)),
+##D   makeIntegerParam(&quot;degree&quot;, lower = 2L, upper = 5L,
+##D     requires = quote(kernel == &quot;polydot&quot;))
+##D )
+##D print(ps)
+##D ctrl = makeTuneControlIrace(maxExperiments = 200L)
+##D rdesc = makeResampleDesc(&quot;Holdout&quot;)
+##D res = tuneParams(&quot;classif.ksvm&quot;, iris.task, rdesc, par.set = ps, control = ctrl)
+##D print(res)
+##D print(head(as.data.frame(res$opt.path)))
+## End(Not run)
+</code></pre>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>
 </body></html>

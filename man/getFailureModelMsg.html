@@ -1,25 +1,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>R: Is the model a FailureModel?</title>
+<html><head><title>R: Return error message of FailureModel.</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="R.css">
 </head><body>
 
-<table width="100%" summary="page for isFailureModel {mlr}"><tr><td>isFailureModel {mlr}</td><td align="right">R Documentation</td></tr></table>
+<table width="100%" summary="page for getFailureModelMsg {mlr}"><tr><td>getFailureModelMsg {mlr}</td><td align="right">R Documentation</td></tr></table>
 
-<h2>Is the model a FailureModel?</h2>
+<h2>Return error message of FailureModel.</h2>
 
 <h3>Description</h3>
 
 <p>Such a model is created when one sets the corresponding option in <code><a href="configureMlr.html">configureMlr</a></code>.
+If no failure occurred, <code>NA</code> is returned.
 </p>
-<p>For complex wrappers this getter returns <code>TRUE</code> if ANY model contained in it failed.
+<p>For complex wrappers this getter returns the first error essage encountered in ANY model that failed.
 </p>
 
 
 <h3>Usage</h3>
 
 <pre>
-isFailureModel(model)
+getFailureModelMsg(model)
 </pre>
 
 
@@ -36,7 +37,7 @@ The model.</p>
 
 <h3>Value</h3>
 
-<p>[<code>logical(1)</code>].
+<p>[<code>character(1)</code>].
 </p>
 
 <hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>

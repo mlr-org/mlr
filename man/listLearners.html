@@ -15,6 +15,10 @@ whether they supports missing values, case weights, etc.
 </p>
 <p>Note that the packages of all learners are loaded during the search.
 </p>
+<p>Note that for general cost-sensitive learning, mlr currently supports mainly
+&ldquo;wrapper&rdquo; approaches like <code><a href="makeCostSensWeightedPairsWrapper.html">CostSensWeightedPairsWrapper</a></code>,
+which are not listed, as they are not basic R learning algorithms.
+</p>
 
 
 <h3>Usage</h3>
@@ -31,9 +35,9 @@ listLearners(obj, properties = character(0L),
 listLearners(obj, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
 
-## S3 method for class 'SupervisedTask'
-listLearners(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
+## S3 method for class 'Task'
+listLearners(obj, properties = character(0L), quiet = TRUE,
+  warn.missing.packages = TRUE, create = FALSE)
 </pre>
 
 
@@ -42,9 +46,9 @@ listLearners(obj, properties = character(0L),
 <table summary="R argblock">
 <tr valign="top"><td><code>obj</code></td>
 <td>
-<p>[<code>character(1)</code> | <code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+<p>[<code>character(1)</code> | <code><a href="Task.html">Task</a></code>]<br>
 Either a task or the type of the task, in the latter case one of:
-&ldquo;classif&rdquo;, &ldquo;regr&rdquo;,  &ldquo;surv&rdquo;, dQuotecostsens.
+&ldquo;classif&rdquo;, &ldquo;regr&rdquo;,  &ldquo;surv&rdquo;, &ldquo;costsens&rdquo;, &ldquo;cluster&rdquo;.
 Default is <code>NA</code>, matching all types.</p>
 </td></tr>
 <tr valign="top"><td><code>properties</code></td>
@@ -81,5 +85,5 @@ Default is <code>FALSE</code>.</p>
 learners or instantiated objects.
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>
 </body></html>

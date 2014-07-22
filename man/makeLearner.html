@@ -25,8 +25,8 @@ value selects the label. The threshold used to assign the label can later be cha
 <h3>Usage</h3>
 
 <pre>
-makeLearner(cl, id = cl, predict.type = "response", ...,
-  par.vals = list())
+makeLearner(cl, id = cl, predict.type = "response", fix.factors = FALSE,
+  ..., par.vals = list())
 </pre>
 
 
@@ -54,7 +54,20 @@ Default is <code>cl</code>.</p>
 Classification: &ldquo;response&rdquo; (= labels) or &ldquo;prob&rdquo; (= probabilities and labels by selecting the ones with maximal probability).
 Regression: &ldquo;response&rdquo; (= mean response) or &ldquo;se&rdquo; (= standard errors and mean response).
 Survival: &ldquo;response&rdquo; (= some sort of orderable risk) or &ldquo;prob&rdquo; (= time dependent probabilities).
+Clustering: &ldquo;response&rdquo; (= cluster IDs).
 Default is &ldquo;response&rdquo;.</p>
+</td></tr>
+<tr valign="top"><td><code>fix.factors</code></td>
+<td>
+<p>[<code>logical(1)</code>]<br>
+In some cases, problems occur in underlying learners for factor features during prediction.
+If the new features have LESS factor levels than during training (a strict subset),
+the learner might produce an  error like
+&ldquo;type of predictors in new data do not match that of the training data&rdquo;.
+In this case one can repair this problem by setting this option to <code>TRUE</code>.
+We will simply add the missing factor levels missing from the test feature
+(but present in training) to that feature.
+Default is <code>FALSE</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
@@ -124,5 +137,5 @@ print(lrn$par.vals)
 </code></pre>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>
 </body></html>

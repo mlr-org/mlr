@@ -22,6 +22,9 @@ Note that <code>xval</code> has been set to 0 by default for speed.
 <li><p><B>classif.blackboost</B><br> Gradient boosting with regression trees from mboost package: <code><a href="../../mboost/html/blackboost.html">blackboost</a></code>
 </p>
 </li>
+<li><p><B>classif.cforest</B><br> Random forest based on conditional inference trees from party package: <code><a href="../../party/html/cforest.html">cforest</a></code>
+</p>
+</li>
 <li><p><B>classif.ctree</B><br> Conditional Inference Trees from party package: <code><a href="../../party/html/ctree.html">ctree</a></code>
 </p>
 </li>
@@ -29,6 +32,9 @@ Note that <code>xval</code> has been set to 0 by default for speed.
 </p>
 </li>
 <li><p><B>classif.gbm</B><br> Gradient boosting machine from gbm package: <code><a href="../../gbm/html/gbm.html">gbm</a></code>
+</p>
+</li>
+<li><p><B>classif.glmnet</B><br> GLM with lasso or elasticnet regularization from glmnet package: <code><a href="../../glmnet/html/glmnet.html">glmnet</a></code>
 </p>
 </li>
 <li><p><B>classif.geoDA</B><br> Geometric Predictive Discriminant Analysis from DiscriMiner package: <code><a href="../../DiscriMiner/html/geoDA.html">geoDA</a></code>
@@ -117,6 +123,9 @@ Note that AIC and BIC penalty types can be selected via the new parameter <code>
 <li><p><B>classif.plsDA</B><br> Partial Least Squares (PLS) Discriminant Analysis from DiscriMiner package: <code><a href="../../DiscriMiner/html/plsDA.html">plsDA</a></code>
 </p>
 </li>
+<li><p><B>classif.plsdaCaret</B><br> Partial Least Squares (PLS) Discriminant Analysis from caret package: <code><a href="../../caret/html/plsda.html">plsda</a></code>
+</p>
+</li>
 <li><p><B>classif.qda</B><br> Quadratic Discriminant Analysis from MASS package: <code><a href="../../MASS/html/qda.html">qda</a></code>
 </p>
 </li>
@@ -145,6 +154,9 @@ Note that <code>xval</code> has been set to 0 by default for speed.
 <li><p><B>regr.blackboost</B><br> Gradient boosting with regression trees from mboost package: <code><a href="../../mboost/html/blackboost.html">blackboost</a></code>
 </p>
 </li>
+<li><p><B>regr.cforest</B><br> Random forest based on conditional inference trees from party package: <code><a href="../../party/html/cforest.html">cforest</a></code>
+</p>
+</li>
 <li><p><B>regr.crs</B><br> Regression Splines from crs package: <code><a href="../../crs/html/crs.html">crs</a></code>
 </p>
 </li>
@@ -156,6 +168,9 @@ Note that <code>xval</code> has been set to 0 by default for speed.
 </li>
 <li><p><B>regr.gbm</B><br> Gradient boosting machine from gbm package: <code><a href="../../gbm/html/gbm.html">gbm</a></code><br>
 Note that <code>distribution</code> has been set to &ldquo;gaussian&rdquo; by default.
+</p>
+</li>
+<li><p><B>regr.glmnet</B><br> GLM with lasso or elasticnet regularization from glmnet package: <code><a href="../../glmnet/html/glmnet.html">glmnet</a></code>
 </p>
 </li>
 <li><p><B>regr.IBk</B><br> K-nearest neighbours from RWeka package: <code><a href="../../RWeka/html/IBk.html">IBk</a></code>
@@ -213,10 +228,16 @@ Note that you select the order of the regression by using modelfun = &quot;FO&qu
 Note that kernel parameters have to be passed directly and not by using the kpar list in rvm.<br>
 Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.
 </p>
+</li>
+<li><p><B>regr.svm</B><br> Support Vector Machines (libsvm) from e1071 package: <code><a href="../../e1071/html/svm.html">svm</a></code>
+</p>
 </li></ul>
 
 
 <ul>
+<li><p><B>surv.cforest</B><br> Random forest based on conditional inference trees from party package: <code><a href="../../party/html/cforest.html">cforest</a></code>
+</p>
+</li>
 <li><p><B>surv.CoxBoost</B><br> Cox proportional hazards model with componentwise likelhood based boosting from CoxBoost package: <code><a href="../../CoxBoost/html/CoxBoost.html">CoxBoost</a></code>
 </p>
 </li>
@@ -231,5 +252,18 @@ Note that <code>fit</code> has been set to <code>FALSE</code> by default for spe
 </li></ul>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+<ul>
+<li><p><B>cluster.SimpleKMeans</B><br> k-means clustering from RWeka package: <code><a href="../../RWeka/html/SimpleKMeans.html">SimpleKMeans</a></code>
+</p>
+</li>
+<li><p><B>cluster.EM</B><br> Expectation-maximization clustering from RWeka package: <code><a href="../../RWeka/html/make_Weka_clusterer.html">make_Weka_clusterer</a></code>
+</p>
+</li>
+<li><p><B>cluster.XMeans</B><br> XMeans (k-means with automatic determination of k) clustering from RWeka package: <code><a href="../../RWeka/html/XMeans.html">XMeans</a></code>
+Note that you might have to install the Weka package: <code>WPM("install-package", "XMeans")</code>
+</p>
+</li></ul>
+
+
+<hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>
 </body></html>

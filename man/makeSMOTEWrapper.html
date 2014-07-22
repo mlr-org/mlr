@@ -22,7 +22,7 @@ down to the next learner.
 <h3>Usage</h3>
 
 <pre>
-makeSMOTEWrapper(learner, sw.rate, sw.nn = 5L)
+makeSMOTEWrapper(learner, sw.rate = 1, sw.nn = 5L)
 </pre>
 
 
@@ -39,7 +39,8 @@ If you pass a string the learner will be created via <code><a href="makeLearner.
 <td>
 <p>[<code>numeric(1)</code>]<br>
 Factor to oversample the smaller class. Must be between 1 and <code>Inf</code>,
-where 1 means no oversampling and 2 would mean doubling the class size.</p>
+where 1 means no oversampling and 2 would mean doubling the class size.
+Default is 1.</p>
 </td></tr>
 <tr valign="top"><td><code>sw.nn</code></td>
 <td>
@@ -55,5 +56,5 @@ Default is 5.</p>
 <p>[<code><a href="makeLearner.html">Learner</a></code>].
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>
 </body></html>

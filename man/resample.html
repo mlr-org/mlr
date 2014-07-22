@@ -75,7 +75,7 @@ If you pass a string the learner will be created via <code><a href="makeLearner.
 </td></tr>
 <tr valign="top"><td><code>task</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+<p>[<code><a href="Task.html">Task</a></code>]<br>
 The task.</p>
 </td></tr>
 <tr valign="top"><td><code>resampling</code></td>
@@ -173,6 +173,13 @@ see general description above.</p>
 <p>Named vector of aggregated performance values. Names are coded like
 this &lt;measure&gt;.&lt;aggregation&gt;.</p>
 </td></tr>
+<tr valign="top"><td><code>err.msgs [<code>data.frame</code>]</code></td>
+<td>
+<p>Number of rows equals resampling iterations
+and columns are: &ldquo;iter&rdquo;, &ldquo;train&rdquo;, &ldquo;predict&rdquo;.
+Stores error messages generated during train or predict, if these were caught
+via <code><a href="configureMlr.html">configureMlr</a></code>.</p>
+</td></tr>
 <tr valign="top"><td><code>pred [<code><a href="ResamplePrediction.html">ResamplePrediction</a></code>]</code></td>
 <td>
 <p>Container for all predictions during resampling.</p>
@@ -207,22 +214,22 @@ r = resample(makeLearner(&quot;classif.qda&quot;), task, rdesc)
 
 <pre><code>## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
-## [Resample] Result: mmce.test.mean=0.0467
+## [Resample] Result: mmce.test.mean=0.02
 </code></pre>
 
 <pre><code class="r">print(r$aggr)
 </code></pre>
 
 <pre><code>## mmce.test.mean 
-##        0.04667
+##           0.02
 </code></pre>
 
 <pre><code class="r">print(r$measures.test)
 </code></pre>
 
 <pre><code>##   iter    mmce
-## 1    1 0.04000
-## 2    2 0.05333
+## 1    1 0.01333
+## 2    2 0.02667
 </code></pre>
 
 <pre><code class="r">print(r$pred)
@@ -236,14 +243,14 @@ r = resample(makeLearner(&quot;classif.qda&quot;), task, rdesc)
 ## threshold: 
 ## time (mean): 0.00
 ##   id  truth response iter  set
-## 1  3 setosa   setosa    1 test
-## 2  4 setosa   setosa    1 test
-## 3  5 setosa   setosa    1 test
-## 4  6 setosa   setosa    1 test
+## 1  1 setosa   setosa    1 test
+## 2  5 setosa   setosa    1 test
+## 3  6 setosa   setosa    1 test
+## 4  8 setosa   setosa    1 test
 ## 5 10 setosa   setosa    1 test
-## 6 12 setosa   setosa    1 test
+## 6 11 setosa   setosa    1 test
 </code></pre>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>
 </body></html>

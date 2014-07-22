@@ -32,7 +32,7 @@ probabilities are predicted by considering the proportions of all predicted labe
 <h3>Usage</h3>
 
 <pre>
-makeOverBaggingWrapper(learner, obw.iters = 10L, obw.rate,
+makeOverBaggingWrapper(learner, obw.iters = 10L, obw.rate = 1,
   obw.maxcl = "boot")
 </pre>
 
@@ -57,7 +57,8 @@ Default is 10.</p>
 <p>[<code>numeric(1)</code>]<br>
 Factor to upsample the smaller class in each bag.
 Must be between 1 and <code>Inf</code>,
-where 1 means no oversampling and 2 would mean doubling the class size.</p>
+where 1 means no oversampling and 2 would mean doubling the class size.
+Default is 1.</p>
 </td></tr>
 <tr valign="top"><td><code>obw.maxcl</code></td>
 <td>
@@ -84,5 +85,5 @@ Default is &ldquo;boot&rdquo;.</p>
 <code><a href="smote.html">smote</a></code>
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>
 </body></html>

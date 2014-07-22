@@ -14,22 +14,22 @@
 </p>
 
 <dl>
-<dt>makeTuneControlGrid</dt><dd><p>Grid search. All kinds of parameter types can be handled,
-but you have discretize them yourself by always using
-<code><a href="../../ParamHelpers/html/makeDiscreteParam.html">makeDiscreteParam</a></code> in the <code>par.set</code>
-passed to <code><a href="tuneParams.html">tuneParams</a></code>.</p>
+<dt>makeTuneControlGrid</dt><dd><p>Grid search. All kinds of parameter types can be handled.
+You can either use their correct param type and <code>resolution</code>,
+or discretize them yourself by always using <code><a href="../../ParamHelpers/html/makeDiscreteParam.html">makeDiscreteParam</a></code>
+in the <code>par.set</code> passed to <code><a href="tuneParams.html">tuneParams</a></code>.</p>
 </dd>
 <dt>makeTuneControlRandom</dt><dd><p>Random search. All kinds of parameter types can be handled.</p>
 </dd>
-<dt>makeTuneControlOptim</dt><dd><p>Tuning with <code><a href="../../stats/html/optim.html">optim</a></code>.
-Can handle numeric(vector) and integer(vector) hyperparameters.
-For integers the internally proposed numeric values are automatically rounded.</p>
-</dd>
 <dt>makeTuneControlCMAES</dt><dd><p>CMA Evolution Strategy with method <code><a href="../../cmaes/html/cma_es.html">cma_es</a></code>.
-Can handle numeric(vector) and integer(vector) hyperparameters.
+Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
 For integers the internally proposed numeric values are automatically rounded.
 The sigma variance parameter is initialized to 1/4 of the span of box-constraints per
 parameter dimension.</p>
+</dd>
+<dt>makeTuneControlGenSA</dt><dd><p>Generalized simulated annealing with method <code><a href="../../GenSA/html/GenSA.html">GenSA</a></code>.
+Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
+For integers the internally proposed numeric values are automatically rounded.</p>
 </dd>
 <dt>makeTuneControlIrace</dt><dd><p>Tuning with iterated F-Racing with method <code><a href="../../irace/html/irace.html">irace</a></code>.
 All kinds of parameter types can be handled. We return the best of the final elite
@@ -38,8 +38,6 @@ evaluations ever done for that candidate.</p>
 </dd>
 </dl>
 
-<p>Dependent parameters can currently only be handled by random search and irace.
-</p>
 <p>Some notes on irace: For resampling you have to pass a <code><a href="makeResampleDesc.html">ResampleDesc</a></code>,
 not a <code><a href="makeResampleInstance.html">ResampleInstance</a></code>.
 The resampling strategy is randomly instantiated <code>n.instances</code> times and
@@ -53,20 +51,19 @@ and how to change the file path.
 <h3>Usage</h3>
 
 <pre>
-makeTuneControlCMAES(same.resampling.instance = TRUE, impute.val = Inf,
+makeTuneControlCMAES(same.resampling.instance = TRUE, impute.val = NULL,
   start = NULL, ...)
 
-makeTuneControlGenSA(same.resampling.instance = TRUE, impute.val = Inf,
+makeTuneControlGenSA(same.resampling.instance = TRUE, impute.val = NULL,
   start = NULL, ...)
 
-makeTuneControlGrid(same.resampling.instance = TRUE, impute.val = Inf,
+makeTuneControlGrid(same.resampling.instance = TRUE, impute.val = NULL,
   resolution = 10L)
 
-makeTuneControlIrace(impute.val = Inf, n.instances = 100L,
+makeTuneControlIrace(impute.val = NULL, n.instances = 100L,
   show.irace.output = FALSE, ...)
 
-makeTuneControlRandom(same.resampling.instance = TRUE, impute.val = Inf,
-  maxit = 100L)
+makeTuneControlRandom(same.resampling.instance = TRUE, maxit = 100L)
 </pre>
 
 
@@ -102,7 +99,7 @@ Default is <code>TRUE</code>.</p>
 </td></tr>
 <tr valign="top"><td><code>impute.val</code></td>
 <td>
-<p>[<code>numeric(1)</code>]<br>
+<p>[<code>numeric</code>]<br>
 If something goes wrong during optimization (e.g, the learner crashes),
 this value is fed back to the tuner, so the tuning algorithm does not abort.
 It is not stored in the optimization path, an NA and a corresponding error message are
@@ -110,7 +107,9 @@ logged instead.
 Note that this value is later multiplied by -1 for maximization measures internally, so you
 need to enter a larger positive value for maximization here as well.
 Default is the worst obtainable value of the performance measure you optimize for when
-you aggregate by mean value, or <code>Inf</code> instead.</p>
+you aggregate by mean value, or <code>Inf</code> instead.
+For multi-criteria optimization pass a vector of imputation values, one for each of your measures,
+in the same order as your measures.</p>
 </td></tr>
 <tr valign="top"><td><code>start</code></td>
 <td>
@@ -120,9 +119,8 @@ Named list of initial parameter values.</p>
 <tr valign="top"><td><code>...</code></td>
 <td>
 <p>[any]<br>
-Further control parameters passed to the <code>control</code> argument of <code><a href="../../stats/html/optim.html">optim</a></code>,
-the <code>control</code> argument of <code><a href="../../cmaes/html/cma_es.html">cma_es</a></code>, <code>tunerConfig</code>
-argument of <code><a href="../../irace/html/irace.html">irace</a></code>.</p>
+Further control parameters passed to the <code>control</code> argument of <code><a href="../../cmaes/html/cma_es.html">cma_es</a></code> and
+<code>tunerConfig</code> argument of <code><a href="../../irace/html/irace.html">irace</a></code>.</p>
 </td></tr>
 <tr valign="top"><td><code>maxit</code></td>
 <td>
@@ -136,8 +134,9 @@ Default is 100.</p>
 <h3>Value</h3>
 
 <p>[<code><a href="TuneControl.html">TuneControl</a></code>]. The specific subclass is one of
-<code><a href="TuneControl.html">TuneControlGrid</a></code>, <code><a href="TuneControl.html">TuneControlRandom</a></code>, <code><a href="TuneControl.html">TuneControlOptim</a></code>,
-<code><a href="TuneControl.html">TuneControlCMAES</a></code>, <code><a href="TuneControl.html">TuneControlIrace</a></code>.
+<code><a href="TuneControl.html">TuneControlGrid</a></code>, <code><a href="TuneControl.html">TuneControlRandom</a></code>,
+<code><a href="TuneControl.html">TuneControlCMAES</a></code>, <code><a href="TuneControl.html">TuneControlGenSA</a></code>,
+<code><a href="TuneControl.html">TuneControlIrace</a></code>.
 </p>
 
 
@@ -151,5 +150,5 @@ Default is 100.</p>
 <code><a href="tuneThreshold.html">tuneThreshold</a></code>
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>
 </body></html>

@@ -28,9 +28,8 @@ listMeasures(obj, properties = character(0L),
 listMeasures(obj, properties = character(0L),
   create = FALSE)
 
-## S3 method for class 'SupervisedTask'
-listMeasures(obj, properties = character(0L),
-  create = FALSE)
+## S3 method for class 'Task'
+listMeasures(obj, properties = character(0L), create = FALSE)
 </pre>
 
 
@@ -39,9 +38,9 @@ listMeasures(obj, properties = character(0L),
 <table summary="R argblock">
 <tr valign="top"><td><code>obj</code></td>
 <td>
-<p>[<code>character(1)</code> | <code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+<p>[<code>character(1)</code> | <code><a href="Task.html">Task</a></code>]<br>
 Either a task or the type of the task, in the latter case one of:
-&ldquo;classif&rdquo;, &ldquo;regr&rdquo;,  &ldquo;surv&rdquo;, dQuotecostsens.
+&ldquo;classif&rdquo;, &ldquo;regr&rdquo;,  &ldquo;surv&rdquo;, &ldquo;costsens&rdquo;, &ldquo;cluster&rdquo;.
 Default is <code>NA</code>, matching all types.</p>
 </td></tr>
 <tr valign="top"><td><code>properties</code></td>
@@ -66,5 +65,5 @@ Default is <code>FALSE</code>.</p>
 measures or instantiated objects.
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>
 </body></html>

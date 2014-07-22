@@ -52,7 +52,7 @@ If you pass a string the learner will be created via <code><a href="makeLearner.
 Resampling strategy to evaluate points in hyperparameter space. If you pass a description,
 it is instantiated once at the beginning by default, so all points are
 evaluated on the same training/test sets.
-If you want to change that behaviour, look at <code><a href="TuneControl.html">TuneControl</a></code>.</p>
+If you want to change that behavior, look at <code><a href="TuneControl.html">TuneControl</a></code>.</p>
 </td></tr>
 <tr valign="top"><td><code>measures</code></td>
 <td>
@@ -91,9 +91,9 @@ Default is set via <code><a href="configureMlr.html">configureMlr</a></code>.</p
 <code><a href="makeModelMultiplexer.html">makeModelMultiplexer</a></code>;
 <code><a href="TuneControl.html">TuneControl</a></code>,
 <code><a href="TuneControl.html">TuneControlCMAES</a></code>,
+<code><a href="TuneControl.html">TuneControlGenSA</a></code>,
 <code><a href="TuneControl.html">TuneControlGrid</a></code>,
 <code><a href="TuneControl.html">TuneControlIrace</a></code>,
-<code><a href="TuneControl.html">TuneControlOptim</a></code>,
 <code><a href="TuneControl.html">TuneControlRandom</a></code>,
 <code><a href="TuneControl.html">makeTuneControlCMAES</a></code>,
 <code><a href="TuneControl.html">makeTuneControlGenSA</a></code>,
@@ -128,19 +128,19 @@ mod = train(lrn, task)
 ## sigma discrete   -   -    1,2   -     -
 ## With control class: TuneControlGrid
 ## Imputation value: 1
-## [Tune] 1: C=1; sigma=1 : mmce.test.mean=   0
-## [Tune] 2: C=2; sigma=1 : mmce.test.mean=   0
-## [Tune] 3: C=1; sigma=2 : mmce.test.mean=   0
-## [Tune] 4: C=2; sigma=2 : mmce.test.mean=   0
-## [Tune] Result: C=1; sigma=1 : mmce.test.mean=   0
+## [Tune] 1: C=1; sigma=1 : mmce.test.mean=0.06
+## [Tune] 2: C=2; sigma=1 : mmce.test.mean=0.04
+## [Tune] 3: C=1; sigma=2 : mmce.test.mean=0.06
+## [Tune] 4: C=2; sigma=2 : mmce.test.mean=0.06
+## [Tune] Result: C=2; sigma=1 : mmce.test.mean=0.04
 </code></pre>
 
 <pre><code class="r">print(getTuneResult(mod))
 </code></pre>
 
 <pre><code>## Tune result:
-## Op. pars: C=1; sigma=1
-## mmce.test.mean=   0
+## Op. pars: C=2; sigma=1
+## mmce.test.mean=0.04
 </code></pre>
 
 <pre><code class="r"># nested resampling for evaluation
@@ -155,10 +155,10 @@ r = resample(lrn, task, outer, extract = getTuneResult)
 ## sigma discrete   -   -    1,2   -     -
 ## With control class: TuneControlGrid
 ## Imputation value: 1
-## [Tune] 1: C=1; sigma=1 : mmce.test.mean=0.08
+## [Tune] 1: C=1; sigma=1 : mmce.test.mean=0.12
 ## [Tune] 2: C=2; sigma=1 : mmce.test.mean=0.08
-## [Tune] 3: C=1; sigma=2 : mmce.test.mean=0.08
-## [Tune] 4: C=2; sigma=2 : mmce.test.mean=0.12
+## [Tune] 3: C=1; sigma=2 : mmce.test.mean=0.12
+## [Tune] 4: C=2; sigma=2 : mmce.test.mean=0.16
 ## [Tune] Result: C=2; sigma=1 : mmce.test.mean=0.08
 ## [Resample] cross-validation iter: 2
 ## [Tune] Started tuning learner classif.ksvm for parameter set:
@@ -167,12 +167,12 @@ r = resample(lrn, task, outer, extract = getTuneResult)
 ## sigma discrete   -   -    1,2   -     -
 ## With control class: TuneControlGrid
 ## Imputation value: 1
-## [Tune] 1: C=1; sigma=1 : mmce.test.mean= 0.2
-## [Tune] 2: C=2; sigma=1 : mmce.test.mean=0.16
-## [Tune] 3: C=1; sigma=2 : mmce.test.mean=0.24
-## [Tune] 4: C=2; sigma=2 : mmce.test.mean= 0.2
-## [Tune] Result: C=2; sigma=1 : mmce.test.mean=0.16
-## [Resample] Result: mmce.test.mean=0.06
+## [Tune] 1: C=1; sigma=1 : mmce.test.mean=   0
+## [Tune] 2: C=2; sigma=1 : mmce.test.mean=   0
+## [Tune] 3: C=1; sigma=2 : mmce.test.mean=0.04
+## [Tune] 4: C=2; sigma=2 : mmce.test.mean=0.04
+## [Tune] Result: C=2; sigma=1 : mmce.test.mean=   0
+## [Resample] Result: mmce.test.mean=0.0533
 </code></pre>
 
 <pre><code class="r">print(r$extract)
@@ -186,9 +186,9 @@ r = resample(lrn, task, outer, extract = getTuneResult)
 ## [[2]]
 ## Tune result:
 ## Op. pars: C=2; sigma=1
-## mmce.test.mean=0.16
+## mmce.test.mean=   0
 </code></pre>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>
 </body></html>

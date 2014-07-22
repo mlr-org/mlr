@@ -41,8 +41,8 @@ Performance measure(s) to evaluate.</p>
 </td></tr>
 <tr valign="top"><td><code>task</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
-Learning task, might be requested by performance measure, usually not needed.</p>
+<p>[<code><a href="Task.html">Task</a></code>]<br>
+Learning task, might be requested by performance measure, usually not needed except for clustering.</p>
 </td></tr>
 <tr valign="top"><td><code>model</code></td>
 <td>
@@ -60,24 +60,25 @@ Model built on training data, might be requested by performance measure, usually
 
 <h3>See Also</h3>
 
-<p>Other performance: <code><a href="makeMeasure.html">Measure</a></code>,
-<code><a href="makeMeasure.html">makeMeasure</a></code>; <code><a href="measures.html">acc</a></code>,
-<code><a href="../../glmnet/html/glmnet-internal.html">auc</a></code>, <code><a href="measures.html">ber</a></code>,
-<code><a href="measures.html">cindex</a></code>, <code><a href="measures.html">f1</a></code>,
+<p>Other performance: <code><a href="measures.html">G1</a></code>, <code><a href="measures.html">G2</a></code>,
+<code><a href="measures.html">acc</a></code>, <code><a href="../../glmnet/html/glmnet-internal.html">auc</a></code>, <code><a href="measures.html">bac</a></code>,
+<code><a href="measures.html">ber</a></code>, <code><a href="measures.html">cindex</a></code>,
+<code><a href="measures.html">db</a></code>, <code><a href="../../clValid/html/dunn.html">dunn</a></code>, <code><a href="measures.html">f1</a></code>,
 <code><a href="measures.html">fdr</a></code>, <code><a href="measures.html">featperc</a></code>,
 <code><a href="measures.html">fn</a></code>, <code><a href="measures.html">fnr</a></code>, <code><a href="measures.html">fp</a></code>,
 <code><a href="measures.html">fpr</a></code>, <code><a href="measures.html">gmean</a></code>,
 <code><a href="measures.html">gpr</a></code>, <code><a href="measures.html">mae</a></code>, <code><a href="measures.html">mcc</a></code>,
 <code><a href="measures.html">mcp</a></code>, <code><a href="measures.html">meancosts</a></code>,
-<code><a href="measures.html">measures</a></code>, <code><a href="measures.html">medae</a></code>,
+<code><a href="../../clValid/html/clValid-class.html">measures</a></code>, <code><a href="measures.html">medae</a></code>,
 <code><a href="measures.html">medse</a></code>, <code><a href="measures.html">mmce</a></code>,
 <code><a href="measures.html">mse</a></code>, <code><a href="measures.html">multiclass.auc</a></code>,
 <code><a href="measures.html">npv</a></code>, <code><a href="measures.html">ppv</a></code>, <code><a href="measures.html">rmse</a></code>,
-<code><a href="measures.html">sae</a></code>, <code><a href="measures.html">sse</a></code>,
-<code><a href="measures.html">timeboth</a></code>, <code><a href="measures.html">timepredict</a></code>,
-<code><a href="measures.html">timetrain</a></code>, <code><a href="measures.html">tn</a></code>,
-<code><a href="measures.html">tnr</a></code>, <code><a href="measures.html">tp</a></code>, <code><a href="measures.html">tpr</a></code>;
-<code><a href="makeCostMeasure.html">makeCostMeasure</a></code>;
+<code><a href="measures.html">sae</a></code>, <code><a href="../../cluster/html/silhouette.html">silhouette</a></code>,
+<code><a href="measures.html">sse</a></code>, <code><a href="measures.html">timeboth</a></code>,
+<code><a href="measures.html">timepredict</a></code>, <code><a href="measures.html">timetrain</a></code>,
+<code><a href="measures.html">tn</a></code>, <code><a href="measures.html">tnr</a></code>, <code><a href="measures.html">tp</a></code>,
+<code><a href="measures.html">tpr</a></code>; <code><a href="makeMeasure.html">Measure</a></code>,
+<code><a href="makeMeasure.html">makeMeasure</a></code>; <code><a href="makeCostMeasure.html">makeCostMeasure</a></code>;
 <code><a href="makeCustomResampledMeasure.html">makeCustomResampledMeasure</a></code>
 </p>
 
@@ -104,9 +105,9 @@ performance(pred, measures = ms, task, mod)
 </code></pre>
 
 <pre><code>##           mmce.mmce             acc.acc timetrain.timetrain 
-##               0.040               0.960               0.004
+##               0.040               0.960               0.003
 </code></pre>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>
 </body></html>

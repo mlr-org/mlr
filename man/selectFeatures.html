@@ -46,7 +46,7 @@ If you pass a string the learner will be created via <code><a href="makeLearner.
 </td></tr>
 <tr valign="top"><td><code>task</code></td>
 <td>
-<p>[<code><a href="SupervisedTask.html">SupervisedTask</a></code>]<br>
+<p>[<code><a href="Task.html">Task</a></code>]<br>
 The task.</p>
 </td></tr>
 <tr valign="top"><td><code>resampling</code></td>
@@ -122,31 +122,31 @@ res = selectFeatures(&quot;classif.rpart&quot;, iris.task, rdesc, control = ctrl
 <pre><code>## [FeatSel] Started selecting features for learner &#39;classif.rpart&#39;
 ## With control class: FeatSelControlSequential
 ## Imputation value: 1
-## [FeatSel] 1: 0 bits: mmce.test.mean=0.64
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.32
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.36
-## [FeatSel] 2: 1 bits: mmce.test.mean= 0.1
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.04
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.04
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.04
-## [FeatSel] 3: 2 bits: mmce.test.mean= 0.1
-## [FeatSel] Result: 1 bits : mmce.test.mean=0.04
+## [FeatSel] 1: 0 bits: mmce.test.mean= 0.6
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.26
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.56
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.06
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.02
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.02
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.02
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.06
+## [FeatSel] Result: 1 bits : mmce.test.mean=0.02
 </code></pre>
 
 <pre><code class="r">analyzeFeatSelResult(res)
 </code></pre>
 
 <pre><code>## Features         : 1
-## Performance      : mmce.test.mean=0.04
+## Performance      : mmce.test.mean=0.02
 ## Petal.Width
 ## 
 ## Path to optimum:
-## - Features:    0  Init   :                       Perf = 0.64  Diff: NA  *
-## - Features:    1  Add    : Petal.Width           Perf = 0.04  Diff: 0.6  *
+## - Features:    0  Init   :                       Perf = 0.6  Diff: NA  *
+## - Features:    1  Add    : Petal.Width           Perf = 0.02  Diff: 0.58  *
 ## 
 ## Stopped, because no improving feature was found.
 </code></pre>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>
 </body></html>

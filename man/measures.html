@@ -27,6 +27,9 @@ If you want to implement your own measure, look at <code><a href="makeMeasure.ht
 <li><p><B>acc</B><br> Accuracy.
 </p>
 </li>
+<li><p><B>bac</B><br> Balanced accuracy. Mean of true positive rate and true negative rate
+</p>
+</li>
 <li><p><B>ber</B><br> Balanced error rate. Mean of misclassification error rates on all individual classes.
 </p>
 </li>
@@ -130,6 +133,26 @@ costs of oracle and model prediction.
 </p>
 </li></ul>
 
+<p>Clustering:
+</p>
+
+<ul>
+<li><p><B>db</B><br> Davies-Bouldin cluster separation measure, see <code><a href="../../clusterSim/html/index.DB.html">index.DB</a></code>
+</p>
+</li>
+<li><p><B>dunn</B><br> Dunn index, see <code><a href="../../clValid/html/dunn.html">dunn</a></code>
+</p>
+</li>
+<li><p><B>G1</B><br> Calinski-Harabasz pseudo F statistic, see <code><a href="../../clusterSim/html/index.G1.html">index.G1</a></code>
+</p>
+</li>
+<li><p><B>G2</B><br> Baker and Hubert adaptation of Goodman-Kruskal's gamma statistic, see <code><a href="../../clusterSim/html/index.G2.html">index.G2</a></code>
+</p>
+</li>
+<li><p><B>silhouette</B><br> Rousseeuw's silhouette internal cluster quality index, see <code><a href="../../clusterSim/html/index.S.html">index.S</a></code>
+</p>
+</li></ul>
+
 <p>General:
 </p>
 
@@ -218,9 +241,21 @@ none
 
 none
 
+none
+
 meancosts
 
 mcp
+
+none
+
+none
+
+none
+
+none
+
+none
 </pre>
 
 
@@ -237,5 +272,5 @@ mcp
 <code><a href="performance.html">performance</a></code>
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>
 </body></html>

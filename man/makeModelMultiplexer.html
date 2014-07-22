@@ -64,9 +64,9 @@ I.e., the artificial prefix before parameter names is suppressed.
 </p>
 <p>Other tune: <code><a href="TuneControl.html">TuneControl</a></code>,
 <code><a href="TuneControl.html">TuneControlCMAES</a></code>,
+<code><a href="TuneControl.html">TuneControlGenSA</a></code>,
 <code><a href="TuneControl.html">TuneControlGrid</a></code>,
 <code><a href="TuneControl.html">TuneControlIrace</a></code>,
-<code><a href="TuneControl.html">TuneControlOptim</a></code>,
 <code><a href="TuneControl.html">TuneControlRandom</a></code>,
 <code><a href="TuneControl.html">makeTuneControlCMAES</a></code>,
 <code><a href="TuneControl.html">makeTuneControlGenSA</a></code>,
@@ -117,7 +117,7 @@ print(ps)
 <pre><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 2L)
 # to save some time we use random search. but you probably want something like this:
 # ctrl = makeTuneControlIrace(maxExperiments = 500L)
-ctrl = makeTuneControlRandom(maxit = 4L)
+ctrl = makeTuneControlRandom(maxit = 10L)
 res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)
 </code></pre>
 
@@ -132,34 +132,44 @@ res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)
 ## classif.randomForest.ntree                          1 to 500   Y     -
 ## With control class: TuneControlRandom
 ## Imputation value: 1
-## [Tune] 1: selected.learner=classif.randomForest; ntree=488 : mmce.test.mean=0.0533
-## [Tune] 2: selected.learner=classif.ksvm; sigma=0.00229 : mmce.test.mean=0.527
-## [Tune] 3: selected.learner=classif.ksvm; sigma=10.5 : mmce.test.mean=0.173
-## [Tune] 4: selected.learner=classif.ksvm; sigma=1.53 : mmce.test.mean=0.06
-## [Tune] Result: selected.learner=classif.randomForest; classif.randomForest.ntree=488 : mmce.test.mean=0.0533
+## [Tune] 1: selected.learner=classif.randomForest; ntree=443 : mmce.test.mean=0.04
+## [Tune] 2: selected.learner=classif.ksvm; sigma=0.0482 : mmce.test.mean=0.08
+## [Tune] 3: selected.learner=classif.randomForest; ntree=17 : mmce.test.mean=0.0467
+## [Tune] 4: selected.learner=classif.ksvm; sigma=734 : mmce.test.mean=0.573
+## [Tune] 5: selected.learner=classif.ksvm; sigma=3.92 : mmce.test.mean=0.12
+## [Tune] 6: selected.learner=classif.randomForest; ntree=156 : mmce.test.mean=0.04
+## [Tune] 7: selected.learner=classif.ksvm; sigma=0.00121 : mmce.test.mean= 0.6
+## [Tune] 8: selected.learner=classif.ksvm; sigma=0.0346 : mmce.test.mean=0.0933
+## [Tune] 9: selected.learner=classif.randomForest; ntree=497 : mmce.test.mean=0.04
+## [Tune] 10: selected.learner=classif.randomForest; ntree=224 : mmce.test.mean=0.04
+## [Tune] Result: selected.learner=classif.randomForest; classif.randomForest.ntree=224 : mmce.test.mean=0.04
 </code></pre>
 
 <pre><code class="r">print(res)
 </code></pre>
 
 <pre><code>## Tune result:
-## Op. pars: selected.learner=classif.randomForest; classif.randomForest.ntree=488
-## mmce.test.mean=0.0533
+## Op. pars: selected.learner=classif.randomForest; classif.randomForest.ntree=224
+## mmce.test.mean=0.04
 </code></pre>
 
 <pre><code class="r">print(head(as.data.frame(res$opt.path)))
 </code></pre>
 
 <pre><code>##       selected.learner classif.ksvm.sigma classif.randomForest.ntree
-## 1 classif.randomForest                 NA                        488
-## 2         classif.ksvm           0.002293                         NA
-## 3         classif.ksvm          10.512496                         NA
-## 4         classif.ksvm           1.532583                         NA
+## 1 classif.randomForest                 NA                        443
+## 2         classif.ksvm             -4.375                         NA
+## 3 classif.randomForest                 NA                         17
+## 4         classif.ksvm              9.520                         NA
+## 5         classif.ksvm              1.971                         NA
+## 6 classif.randomForest                 NA                        156
 ##   mmce.test.mean dob eol error.message exec.time
-## 1        0.05333   1  NA          &lt;NA&gt;     0.062
-## 2        0.52667   2  NA          &lt;NA&gt;     0.042
-## 3        0.17333   3  NA          &lt;NA&gt;     0.044
-## 4        0.06000   4  NA          &lt;NA&gt;     0.042
+## 1        0.04000   1  NA          &lt;NA&gt;     0.059
+## 2        0.08000   2  NA          &lt;NA&gt;     0.040
+## 3        0.04667   3  NA          &lt;NA&gt;     0.024
+## 4        0.57333   4  NA          &lt;NA&gt;     0.042
+## 5        0.12000   5  NA          &lt;NA&gt;     0.042
+## 6        0.04000   6  NA          &lt;NA&gt;     0.034
 </code></pre>
 
 <pre><code class="r"># more unique and reliable way to construct the param set
@@ -185,5 +195,5 @@ ps = makeParamSet(
 </code></pre>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>
 </body></html>

@@ -31,7 +31,7 @@ down to the next learner.
 
 <pre>
 makeFilterWrapper(learner, fw.method = "random.forest.importance",
-  fw.select = "perc", fw.val)
+  fw.select = "perc", fw.val = 1)
 </pre>
 
 
@@ -59,7 +59,8 @@ Default is &ldquo;perc&rdquo;.</p>
 <tr valign="top"><td><code>fw.val</code></td>
 <td>
 <p>[<code>numeric(1)</code>]<br>
-See <code><a href="filterFeatures.html">filterFeatures</a></code>.</p>
+See <code><a href="filterFeatures.html">filterFeatures</a></code>.
+Default is 1.</p>
 </td></tr>
 </table>
 
@@ -108,19 +109,19 @@ r = resample(lrn, task, outer, extract = function(model) {
 
 <pre><code>## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
-## [Resample] Result: mmce.test.mean=0.04
+## [Resample] Result: mmce.test.mean=0.0467
 </code></pre>
 
 <pre><code class="r">print(r$extract)
 </code></pre>
 
 <pre><code>## [[1]]
-## [1] &quot;Petal.Length&quot; &quot;Petal.Width&quot; 
+## [1] &quot;Petal.Width&quot;  &quot;Petal.Length&quot;
 ## 
 ## [[2]]
-## [1] &quot;Petal.Width&quot;  &quot;Petal.Length&quot;
+## [1] &quot;Petal.Length&quot; &quot;Petal.Width&quot;
 </code></pre>
 
 
-<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>
 </body></html>

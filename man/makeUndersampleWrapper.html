@@ -22,9 +22,9 @@ down to the next learner.
 <h3>Usage</h3>
 
 <pre>
-makeUndersampleWrapper(learner, usw.rate)
+makeUndersampleWrapper(learner, usw.rate = 1)
 
-makeOversampleWrapper(learner, osw.rate)
+makeOversampleWrapper(learner, osw.rate = 1)
 </pre>
 
 
@@ -42,13 +42,15 @@ If you pass a string the learner will be created via <code><a href="makeLearner.
 <p>[<code>numeric(1)</code>]<br>
 Factor to downsample the bigger class. Must be between 0 and 1,
 where 1 means no downsampling, 0.5 implies reduction to 50 percent
-and 0 would imply reduction to 0 observations.</p>
+and 0 would imply reduction to 0 observations.
+Default is 1.</p>
 </td></tr>
 <tr valign="top"><td><code>osw.rate</code></td>
 <td>
 <p>[<code>numeric(1)</code>]<br>
 Factor to oversample the smaller class. Must be between 1 and <code>Inf</code>,
-where 1 means no oversampling and 2 would mean doubling the class size.</p>
+where 1 means no oversampling and 2 would mean doubling the class size.
+Default is 1.</p>
 </td></tr>
 </table>
 
@@ -66,5 +68,5 @@ where 1 means no oversampling and 2 would mean doubling the class size.</p>
 <code><a href="smote.html">smote</a></code>
 </p>
 
-<hr><div align="center">[Package <em>mlr</em> version 2.0 <a href="00Index.html">Index</a>]</div>
+<hr><div align="center">[Package <em>mlr</em> version 2.1 <a href="00Index.html">Index</a>]</div>
 </body></html>

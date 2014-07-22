@@ -10,7 +10,7 @@
 <div align="center">
 <a href="http://stat.ethz.ch/R-manual/R-devel/doc/html/packages.html"><img src="http://stat.ethz.ch/R-manual/R-devel/doc/html/left.jpg" alt="[Up]" width="30" height="30" border="0"></a>
 <a href="http://stat.ethz.ch/R-manual/R-devel/doc/html/index.html"><img src="http://stat.ethz.ch/R-manual/R-devel/doc/html/up.jpg" alt="[Top]" width="30" height="30" border="0"></a>
-</div><h2>Documentation for package &lsquo;mlr&rsquo; version 2.0</h2>
+</div><h2>Documentation for package &lsquo;mlr&rsquo; version 2.1</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
 <li><a href="../NEWS">Package NEWS</a>.</li>
@@ -68,6 +68,8 @@
 <td>Aggregation methods.</td></tr>
 <tr><td width="25%"><a href="aggregations.html">b632plus</a></td>
 <td>Aggregation methods.</td></tr>
+<tr><td width="25%"><a href="measures.html">bac</a></td>
+<td>Performance measures.</td></tr>
 <tr><td width="25%"><a href="benchmark.html">benchmark</a></td>
 <td>Benchmark experiment for multiple learners and tasks.</td></tr>
 <tr><td width="25%"><a href="BenchmarkResult.html">BenchmarkResult</a></td>
@@ -91,12 +93,26 @@
 <table width="100%">
 <tr><td width="25%"><a href="measures.html">cindex</a></td>
 <td>Performance measures.</td></tr>
-<tr><td width="25%"><a href="SupervisedTask.html">ClassifTask</a></td>
-<td>Create a classification, regression, survival or cost-sensitive classification task.</td></tr>
+<tr><td width="25%"><a href="Task.html">ClassifTask</a></td>
+<td>Create a classification, regression, survival, cluster, or cost-sensitive classification task.</td></tr>
+<tr><td width="25%"><a href="Task.html">ClusterTask</a></td>
+<td>Create a classification, regression, survival, cluster, or cost-sensitive classification task.</td></tr>
 <tr><td width="25%"><a href="configureMlr.html">configureMlr</a></td>
 <td>Configures the behavior of the package.</td></tr>
-<tr><td width="25%"><a href="SupervisedTask.html">CostSensTask</a></td>
-<td>Create a classification, regression, survival or cost-sensitive classification task.</td></tr>
+<tr><td width="25%"><a href="makeCostSensClassifWrapper.html">CostSensClassifModel</a></td>
+<td>Wraps a classification learner for use in cost-sensitive learning.</td></tr>
+<tr><td width="25%"><a href="makeCostSensClassifWrapper.html">CostSensClassifWrapper</a></td>
+<td>Wraps a classification learner for use in cost-sensitive learning.</td></tr>
+<tr><td width="25%"><a href="makeCostSensRegrWrapper.html">CostSensRegrModel</a></td>
+<td>Wraps a regression learner for use in cost-sensitive learning.</td></tr>
+<tr><td width="25%"><a href="makeCostSensRegrWrapper.html">CostSensRegrWrapper</a></td>
+<td>Wraps a regression learner for use in cost-sensitive learning.</td></tr>
+<tr><td width="25%"><a href="Task.html">CostSensTask</a></td>
+<td>Create a classification, regression, survival, cluster, or cost-sensitive classification task.</td></tr>
+<tr><td width="25%"><a href="makeCostSensWeightedPairsWrapper.html">CostSensWeightedPairsModel</a></td>
+<td>Wraps a classifier for cost-sensitive learning to produce a weighted pairs model.</td></tr>
+<tr><td width="25%"><a href="makeCostSensWeightedPairsWrapper.html">CostSensWeightedPairsWrapper</a></td>
+<td>Wraps a classifier for cost-sensitive learning to produce a weighted pairs model.</td></tr>
 <tr><td width="25%"><a href="createDummyFeatures.html">createDummyFeatures</a></td>
 <td>Generate dummy variables for factor features.</td></tr>
 <tr><td width="25%"><a href="crossover.html">crossover</a></td>
@@ -108,10 +124,14 @@
 <h2><a name="D">-- D --</a></h2>
 
 <table width="100%">
+<tr><td width="25%"><a href="measures.html">db</a></td>
+<td>Performance measures.</td></tr>
 <tr><td width="25%"><a href="downsample.html">downsample</a></td>
 <td>Downsample (subsample) a task or a data.frame.</td></tr>
 <tr><td width="25%"><a href="dropFeatures.html">dropFeatures</a></td>
 <td>Drop some features of task.</td></tr>
+<tr><td width="25%"><a href="measures.html">dunn</a></td>
+<td>Performance measures.</td></tr>
 </table>
 
 <h2><a name="E">-- E --</a></h2>
@@ -163,6 +183,10 @@
 <h2><a name="G">-- G --</a></h2>
 
 <table width="100%">
+<tr><td width="25%"><a href="measures.html">G1</a></td>
+<td>Performance measures.</td></tr>
+<tr><td width="25%"><a href="measures.html">G2</a></td>
+<td>Performance measures.</td></tr>
 <tr><td width="25%"><a href="getAggrPerformances.html">getAggrPerformances</a></td>
 <td>Extract the aggregated measures of a benchmark result.</td></tr>
 <tr><td width="25%"><a href="getBaggingModels.html">getBaggingModels</a></td>
@@ -175,6 +199,8 @@
 <td>Returns the list of fitted models.</td></tr>
 <tr><td width="25%"><a href="getCostSensWeightedPairsModels.html">getCostSensWeightedPairsModels</a></td>
 <td>Returns the list of fitted models.</td></tr>
+<tr><td width="25%"><a href="getFailureModelMsg.html">getFailureModelMsg</a></td>
+<td>Return error message of FailureModel.</td></tr>
 <tr><td width="25%"><a href="getFeatSelResult.html">getFeatSelResult</a></td>
 <td>Returns the selected feature set and optimization path after training or benchmarking.</td></tr>
 <tr><td width="25%"><a href="getFilteredFeatures.html">getFilteredFeatures</a></td>
@@ -282,7 +308,7 @@
 <td>Find matching learning algorithms.</td></tr>
 <tr><td width="25%"><a href="listLearners.html">listLearners.default</a></td>
 <td>Find matching learning algorithms.</td></tr>
-<tr><td width="25%"><a href="listLearners.html">listLearners.SupervisedTask</a></td>
+<tr><td width="25%"><a href="listLearners.html">listLearners.Task</a></td>
 <td>Find matching learning algorithms.</td></tr>
 <tr><td width="25%"><a href="listMeasures.html">listMeasures</a></td>
 <td>Find matching measures.</td></tr>
@@ -290,7 +316,7 @@
 <td>Find matching measures.</td></tr>
 <tr><td width="25%"><a href="listMeasures.html">listMeasures.default</a></td>
 <td>Find matching measures.</td></tr>
-<tr><td width="25%"><a href="listMeasures.html">listMeasures.SupervisedTask</a></td>
+<tr><td width="25%"><a href="listMeasures.html">listMeasures.Task</a></td>
 <td>Find matching measures.</td></tr>
 </table>
 
@@ -303,16 +329,18 @@
 <td>Specifiy your own aggregation of measures</td></tr>
 <tr><td width="25%"><a href="makeBaggingWrapper.html">makeBaggingWrapper</a></td>
 <td>Fuse learner with the bagging technique.</td></tr>
-<tr><td width="25%"><a href="SupervisedTask.html">makeClassifTask</a></td>
-<td>Create a classification, regression, survival or cost-sensitive classification task.</td></tr>
+<tr><td width="25%"><a href="Task.html">makeClassifTask</a></td>
+<td>Create a classification, regression, survival, cluster, or cost-sensitive classification task.</td></tr>
+<tr><td width="25%"><a href="Task.html">makeClusterTask</a></td>
+<td>Create a classification, regression, survival, cluster, or cost-sensitive classification task.</td></tr>
 <tr><td width="25%"><a href="makeCostMeasure.html">makeCostMeasure</a></td>
 <td>Creates a measure for non-standard misclassification costs.</td></tr>
 <tr><td width="25%"><a href="makeCostSensClassifWrapper.html">makeCostSensClassifWrapper</a></td>
 <td>Wraps a classification learner for use in cost-sensitive learning.</td></tr>
 <tr><td width="25%"><a href="makeCostSensRegrWrapper.html">makeCostSensRegrWrapper</a></td>
 <td>Wraps a regression learner for use in cost-sensitive learning.</td></tr>
-<tr><td width="25%"><a href="SupervisedTask.html">makeCostSensTask</a></td>
-<td>Create a classification, regression, survival or cost-sensitive classification task.</td></tr>
+<tr><td width="25%"><a href="Task.html">makeCostSensTask</a></td>
+<td>Create a classification, regression, survival, cluster, or cost-sensitive classification task.</td></tr>
 <tr><td width="25%"><a href="makeCostSensWeightedPairsWrapper.html">makeCostSensWeightedPairsWrapper</a></td>
 <td>Wraps a classifier for cost-sensitive learning to produce a weighted pairs model.</td></tr>
 <tr><td width="25%"><a href="makeCustomResampledMeasure.html">makeCustomResampledMeasure</a></td>
@@ -351,8 +379,8 @@
 <td>Fuse learner with simple ove/underrsampling for imbalancy correction in binary classification.</td></tr>
 <tr><td width="25%"><a href="makePreprocWrapper.html">makePreprocWrapper</a></td>
 <td>Fuse learner with preprocessing.</td></tr>
-<tr><td width="25%"><a href="SupervisedTask.html">makeRegrTask</a></td>
-<td>Create a classification, regression, survival or cost-sensitive classification task.</td></tr>
+<tr><td width="25%"><a href="Task.html">makeRegrTask</a></td>
+<td>Create a classification, regression, survival, cluster, or cost-sensitive classification task.</td></tr>
 <tr><td width="25%"><a href="makeResampleDesc.html">makeResampleDesc</a></td>
 <td>Create a description object for a resampling strategy.</td></tr>
 <tr><td width="25%"><a href="makeResampleInstance.html">makeResampleInstance</a></td>
@@ -361,14 +389,16 @@
 <td>Internal construction / wrapping of learner object.</td></tr>
 <tr><td width="25%"><a href="RLearner.html">makeRLearnerClassif</a></td>
 <td>Internal construction / wrapping of learner object.</td></tr>
+<tr><td width="25%"><a href="RLearner.html">makeRLearnerCluster</a></td>
+<td>Internal construction / wrapping of learner object.</td></tr>
 <tr><td width="25%"><a href="RLearner.html">makeRLearnerRegr</a></td>
 <td>Internal construction / wrapping of learner object.</td></tr>
 <tr><td width="25%"><a href="RLearner.html">makeRLearnerSurv</a></td>
 <td>Internal construction / wrapping of learner object.</td></tr>
 <tr><td width="25%"><a href="makeSMOTEWrapper.html">makeSMOTEWrapper</a></td>
 <td>Fuse learner with SMOTE oversampling for imbalancy correction in binary classification.</td></tr>
-<tr><td width="25%"><a href="SupervisedTask.html">makeSurvTask</a></td>
-<td>Create a classification, regression, survival or cost-sensitive classification task.</td></tr>
+<tr><td width="25%"><a href="Task.html">makeSurvTask</a></td>
+<td>Create a classification, regression, survival, cluster, or cost-sensitive classification task.</td></tr>
 <tr><td width="25%"><a href="TuneControl.html">makeTuneControlCMAES</a></td>
 <td>Create control structures for tuning.</td></tr>
 <tr><td width="25%"><a href="TuneControl.html">makeTuneControlGenSA</a></td>
@@ -379,6 +409,12 @@
 <td>Create control structures for tuning.</td></tr>
 <tr><td width="25%"><a href="TuneControl.html">makeTuneControlRandom</a></td>
 <td>Create control structures for tuning.</td></tr>
+<tr><td width="25%"><a href="TuneMultiCritControl.html">makeTuneMultiCritControlGrid</a></td>
+<td>Create control structures for multi-criteria tuning.</td></tr>
+<tr><td width="25%"><a href="TuneMultiCritControl.html">makeTuneMultiCritControlNSGA2</a></td>
+<td>Create control structures for multi-criteria tuning.</td></tr>
+<tr><td width="25%"><a href="TuneMultiCritControl.html">makeTuneMultiCritControlRandom</a></td>
+<td>Create control structures for multi-criteria tuning.</td></tr>
 <tr><td width="25%"><a href="makeTuneWrapper.html">makeTuneWrapper</a></td>
 <td>Fuse learner with tuning.</td></tr>
 <tr><td width="25%"><a href="makeUndersampleWrapper.html">makeUndersampleWrapper</a></td>
@@ -444,6 +480,8 @@
 <td>Visualizes a learning algorithm on a 1D or 2D data set.</td></tr>
 <tr><td width="25%"><a href="plotThreshVsPerf.html">plotThreshVsPerf</a></td>
 <td>Plot threshold vs. performance(s) for 2-class classification.</td></tr>
+<tr><td width="25%"><a href="plotTuneMultiCritResult.html">plotTuneMultiCritResult</a></td>
+<td>Plots multi-criteria results after tuning.</td></tr>
 <tr><td width="25%"><a href="measures.html">ppv</a></td>
 <td>Performance measures.</td></tr>
 <tr><td width="25%"><a href="predict.WrappedModel.html">predict.WrappedModel</a></td>
@@ -457,12 +495,14 @@
 <h2><a name="R">-- R --</a></h2>
 
 <table width="100%">
-<tr><td width="25%"><a href="SupervisedTask.html">RegrTask</a></td>
-<td>Create a classification, regression, survival or cost-sensitive classification task.</td></tr>
+<tr><td width="25%"><a href="Task.html">RegrTask</a></td>
+<td>Create a classification, regression, survival, cluster, or cost-sensitive classification task.</td></tr>
 <tr><td width="25%"><a href="reimpute.html">reimpute</a></td>
 <td>Re-impute a data set</td></tr>
 <tr><td width="25%"><a href="removeConstantFeatures.html">removeConstantFeatures</a></td>
 <td>Remove constant features from a data set.</td></tr>
+<tr><td width="25%"><a href="removeHyperPars.html">removeHyperPars</a></td>
+<td>Remove hyperparameters settings of a learner.</td></tr>
 <tr><td width="25%"><a href="LearnerProperties.html">removeProperties</a></td>
 <td>Set, add, remove or query properties of learners</td></tr>
 <tr><td width="25%"><a href="resample.html">repcv</a></td>
@@ -510,6 +550,8 @@
 <td>Set threshold of prediction object.</td></tr>
 <tr><td width="25%"><a href="showHyperPars.html">showHyperPars</a></td>
 <td>Display all possible hyperparameter settings for a learner that mlr knows.</td></tr>
+<tr><td width="25%"><a href="measures.html">silhouette</a></td>
+<td>Performance measures.</td></tr>
 <tr><td width="25%"><a href="smote.html">smote</a></td>
 <td>Synthetic Minority Oversampling Technique to handle class imbalancy in binary classification.</td></tr>
 <tr><td width="25%"><a href="mlr.sonar.html">sonar.rin</a></td>
@@ -522,15 +564,15 @@
 <td>Fit models according to a resampling strategy.</td></tr>
 <tr><td width="25%"><a href="subsetTask.html">subsetTask</a></td>
 <td>Subset data in task.</td></tr>
-<tr><td width="25%"><a href="SupervisedTask.html">SupervisedTask</a></td>
-<td>Create a classification, regression, survival or cost-sensitive classification task.</td></tr>
-<tr><td width="25%"><a href="SupervisedTask.html">SurvTask</a></td>
-<td>Create a classification, regression, survival or cost-sensitive classification task.</td></tr>
+<tr><td width="25%"><a href="Task.html">SurvTask</a></td>
+<td>Create a classification, regression, survival, cluster, or cost-sensitive classification task.</td></tr>
 </table>
 
 <h2><a name="T">-- T --</a></h2>
 
 <table width="100%">
+<tr><td width="25%"><a href="Task.html">Task</a></td>
+<td>Create a classification, regression, survival, cluster, or cost-sensitive classification task.</td></tr>
 <tr><td width="25%"><a href="TaskDesc.html">TaskDesc</a></td>
 <td>Description object for task.</td></tr>
 <tr><td width="25%"><a href="aggregations.html">test.max</a></td>
@@ -589,16 +631,28 @@
 <td>Create control structures for tuning.</td></tr>
 <tr><td width="25%"><a href="TuneControl.html">TuneControlCMAES</a></td>
 <td>Create control structures for tuning.</td></tr>
+<tr><td width="25%"><a href="TuneControl.html">TuneControlGenSA</a></td>
+<td>Create control structures for tuning.</td></tr>
 <tr><td width="25%"><a href="TuneControl.html">TuneControlGrid</a></td>
 <td>Create control structures for tuning.</td></tr>
 <tr><td width="25%"><a href="TuneControl.html">TuneControlIrace</a></td>
 <td>Create control structures for tuning.</td></tr>
-<tr><td width="25%"><a href="TuneControl.html">TuneControlOptim</a></td>
-<td>Create control structures for tuning.</td></tr>
 <tr><td width="25%"><a href="TuneControl.html">TuneControlRandom</a></td>
 <td>Create control structures for tuning.</td></tr>
+<tr><td width="25%"><a href="TuneMultiCritControl.html">TuneMultiCritControl</a></td>
+<td>Create control structures for multi-criteria tuning.</td></tr>
+<tr><td width="25%"><a href="TuneMultiCritControl.html">TuneMultiCritControlGrid</a></td>
+<td>Create control structures for multi-criteria tuning.</td></tr>
+<tr><td width="25%"><a href="TuneMultiCritControl.html">TuneMultiCritControlNSGA2</a></td>
+<td>Create control structures for multi-criteria tuning.</td></tr>
+<tr><td width="25%"><a href="TuneMultiCritControl.html">TuneMultiCritControlRandom</a></td>
+<td>Create control structures for multi-criteria tuning.</td></tr>
+<tr><td width="25%"><a href="TuneMultiCritResult.html">TuneMultiCritResult</a></td>
+<td>Result of multi-criteria tuning.</td></tr>
 <tr><td width="25%"><a href="tuneParams.html">tuneParams</a></td>
 <td>Hyperparameter tuning.</td></tr>
+<tr><td width="25%"><a href="tuneParamsMultiCrit.html">tuneParamsMultiCrit</a></td>
+<td>Hyperparameter tuning for multiple measures at once.</td></tr>
 <tr><td width="25%"><a href="TuneResult.html">TuneResult</a></td>
 <td>Result of tuning.</td></tr>
 <tr><td width="25%"><a href="tuneThreshold.html">tuneThreshold</a></td>
