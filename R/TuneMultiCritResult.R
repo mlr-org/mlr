@@ -34,6 +34,7 @@ makeTuneMultiCritResultFromOptPath = function(learner, par.set, measures, contro
   xs = lapply(xs, trafoValue, par = par.set)
   xs = lapply(xs, removeMissingValues)
   ys = extractSubList(els, "y", simplify = "rows")
+  colnames(ys) = opt.path$y.names
   makeTuneMultiCritResult(learner, j, xs, ys, control, opt.path)
 }
 

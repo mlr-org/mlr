@@ -23,8 +23,8 @@ test_that("tuneParamsMultiCrit", {
     measures = list(tpr, fpr), control = ctrl)
   mycheck(res, 2)
   # and check plotting
-  plotTuneMultiCritResult(res, path = TRUE)
-  plotTuneMultiCritResult(res, path = FALSE)
+  print(plotTuneMultiCritResult(res, path = TRUE))
+  print(plotTuneMultiCritResult(res, path = FALSE))
 
   # grid search
   ctrl = makeTuneMultiCritControlGrid(resolution = 2L)

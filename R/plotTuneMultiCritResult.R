@@ -49,5 +49,6 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
   p = p + geom_point(size = pointsize)
   if (path)
     p = p + geom_point(data = front, size = pointsize * 1.5)
+  return(p)
 }
 
