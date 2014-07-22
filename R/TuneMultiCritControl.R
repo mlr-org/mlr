@@ -23,9 +23,10 @@
 #' @aliases TuneMultiCritControlGrid TuneMultiCritControlRandom TuneMultiCritControlNSGA2
 NULL
 
-makeTuneMultiCritControl = function(same.resampling.instance, impute.val = Inf, ..., cl) {
+makeTuneMultiCritControl = function(measures, same.resampling.instance, impute.val = NULL, ..., cl) {
   assertFlag(same.resampling.instance)
-  assertNumber(impute.val)
+  if (!is.null(impute.val))
+    assertNumeric(impute.val, any.missing = FALSE)
   x = makeOptControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val, ...)
   addClasses(x, c(cl, "TuneMultiCritControl"))
 }

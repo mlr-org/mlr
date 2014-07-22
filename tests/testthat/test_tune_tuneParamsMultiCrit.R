@@ -56,4 +56,22 @@ test_that("tuneParamsMultiCrit works with low number of evals and dependencies",
     measures = list(tpr, fpr), control = ctrl)
 })
 
+# FIXME: I am not sure how we can check wich value is imputed for theoptimizer?
+test_that("y imputing works", {
+  configureMlr(on.learner.error = "quiet")
+  lrn = makeLearner("classif.mock2")
+  rdesc = makeResampleDesc("Holdout")
+  ps = makeParamSet(
+    makeNumericParam("alpha", lower = 0, upper = 1)
+  )
+  ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 1L)
+  res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
+    measures = list(tpr, fpr), control = ctrl)
+  ctrl = makeTuneMultiCritControlNSGA2(impute.val = c(100, 100), popsize = 4L, generations = 1L)
+  res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
+    measures = list(tpr, fpr), control = ctrl)
+
+  configureMlr(on.learner.error = "stop")
+})
+
 

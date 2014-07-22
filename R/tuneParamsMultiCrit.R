@@ -47,9 +47,9 @@ tuneParamsMultiCrit = function(learner, task, resampling, measures, par.set, con
   if (inherits(resampling, "ResampleDesc") && control$same.resampling.instance)
     resampling = makeResampleInstance(resampling, task = task)
   assertFlag(show.info)
-  checkTunerParset(learner, par.set, control)
-  requirePackages("emoa", why = "tuneParamsMultiCrit")
   control = setDefaultImputeVal(control, measures)
+  checkTunerParset(learner, par.set, measures, control)
+  requirePackages("emoa", why = "tuneParamsMultiCrit")
 
   cl = getClass1(control)
   sel.func = switch(cl,

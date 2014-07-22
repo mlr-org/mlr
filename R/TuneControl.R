@@ -49,9 +49,10 @@
 #' @aliases TuneControlGrid TuneControlRandom TuneControlCMAES TuneControlGenSA TuneControlIrace
 NULL
 
-makeTuneControl = function(same.resampling.instance, impute.val = Inf, start = NULL, ..., cl) {
+makeTuneControl = function(same.resampling.instance, impute.val = NULL, start = NULL, ..., cl) {
   assertFlag(same.resampling.instance)
-  assertNumber(impute.val)
+  if (!is.null(impute.val))
+    assertNumber(impute.val)
   if (!is.null(start)) {
     assertList(start)
     if (!isProperlyNamed(start))

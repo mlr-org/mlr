@@ -46,7 +46,7 @@ makeTuneWrapper = function(learner, resampling, measures, par.set, control, show
   id = paste(learner$id, "tuned", sep = ".")
   x = makeOptWrapper(id, learner, resampling, measures, par.set, character(0L),
     function(){}, control, show.info, "TuneWrapper")
-  checkTunerParset(learner, par.set, control)
+  checkTunerParset(learner, par.set, measures, control)
   return(x)
 }
 

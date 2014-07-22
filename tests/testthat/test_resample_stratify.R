@@ -66,4 +66,4 @@ test_that("stratification with survival works", {
   rin = makeResampleInstance(rdesc, task=task)
   expect_true(setequal(df$event[rin$train.inds[[1]]], 0:1))
   expect_true(setequal(df$event[rin$test.inds[[1]]], 0:1))
-}
+})
