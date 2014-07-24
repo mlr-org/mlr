@@ -10,23 +10,13 @@ perfsToString = function(y) {
   paste(paste(names(y), "=", formatC(y, digits = 3L), sep = ""), collapse = ",")
 }
 
-recodeInterval2Data = function(y, type) {
-  if (type == "left") 
-    ind = 2L
-  else ind = 1L
-  time = y[, ind]
-  event = as.integer(y[, -ind] == time)
-  return(Surv(time = time, event = event, type = type))
-}
-
 recodeY = function(y, type, positive) {
+  # FIXME: support left, right and interval for surv
   switch(type,
     "no" = y,
     "01" = as.numeric(y == positive),
     "-1+1" = as.numeric(2L*(y == positive)-1L),
-    "interval" = Surv(time = y[, 1L], time2 = y[, 2L], type = "interval2"),
-    "left" = recodeInterval2Data(y, "left"),
-    "right" = recodeInterval2Data(y, "right"),
+    "surv" = Surv(time = y[, 1L], event = y[, 2L], type = "right"),
     stop("Unknown value for 'type'"))
 }
 

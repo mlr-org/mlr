@@ -19,7 +19,7 @@ makeRLearner.surv.coxph = function() {
 #' @export
 trainLearner.surv.coxph = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = as.formula(getTaskFormulaAsString(.task))
-  data = getTaskData(.task, subset = .subset, recode.target = .task$task.desc$surv.type)
+  data = getTaskData(.task, subset = .subset)
   if (is.null(.weights)) {
     mod = coxph(formula = f, data = data, ...)
   } else  {
