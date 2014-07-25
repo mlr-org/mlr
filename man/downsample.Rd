@@ -6,7 +6,7 @@
 downsample(obj, perc = 1, stratify = FALSE)
 }
 \arguments{
-\item{obj}{[\code{\link{SupervisedTask}} | \code{\link{ResampleInstance}}]\cr
+\item{obj}{[\code{\link{Task}} | \code{\link{ResampleInstance}}]\cr
 Input data or a \code{ResampleInstance}.}
 
 \item{perc}{[\code{numeric(1)}]\cr
@@ -19,7 +19,7 @@ Should the downsampled data be stratified according to the target classes?
 Default is \code{FALSE}.}
 }
 \value{
-[\code{data.frame} | \code{\link{SupervisedTask}} | \code{\link{ResampleInstance}}]. Same type as \code{obj}.
+[\code{data.frame} | \code{\link{Task}} | \code{\link{ResampleInstance}}]. Same type as \code{obj}.
 }
 \description{
 Decrease the observations in a \code{task} or a \code{ResampleInstance}

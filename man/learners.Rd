@@ -8,9 +8,11 @@
   \item{\bold{classif.boosting}}{\cr Boosting from adabag package: \code{\link[adabag]{boosting}}\cr
     Note that \code{xval} has been set to 0 by default for speed.}
   \item{\bold{classif.blackboost}}{\cr Gradient boosting with regression trees from mboost package: \code{\link[mboost]{blackboost}}}
+  \item{\bold{classif.cforest}}{\cr Random forest based on conditional inference trees from party package: \code{\link[party]{cforest}}}
   \item{\bold{classif.ctree}}{\cr Conditional Inference Trees from party package: \code{\link[party]{ctree}}}
   \item{\bold{classif.fnn}}{\cr Fast k-Nearest Neighbor from FNN package: \code{\link[FNN]{knn}}}
   \item{\bold{classif.gbm}}{\cr Gradient boosting machine from gbm package: \code{\link[gbm]{gbm}}}
+  \item{\bold{classif.glmnet}}{\cr GLM with lasso or elasticnet regularization from glmnet package: \code{\link[glmnet]{glmnet}}}
   \item{\bold{classif.geoDA}}{\cr Geometric Predictive Discriminant Analysis from DiscriMiner package: \code{\link[DiscriMiner]{geoDA}}}
   \item{\bold{classif.glmboost}}{\cr Boosting for GLMs from mboost package: \code{\link[mboost]{glmboost}}\cr
     Note that \code{family} has been set to \code{Binomial()} by default.}
@@ -70,6 +72,7 @@
   \item{\bold{regr.fnn}}{\cr Fast k-Nearest Neighbor from FNN package: \code{\link[FNN]{knn}}}
   \item{\bold{regr.gbm}}{\cr Gradient boosting machine from gbm package: \code{\link[gbm]{gbm}}\cr
     Note that \code{distribution} has been set to \dQuote{gaussian} by default.}
+  \item{\bold{regr.glmnet}}{\cr GLM with lasso or elasticnet regularization from glmnet package: \code{\link[glmnet]{glmnet}}}
   \item{\bold{regr.IBk}}{\cr K-nearest neighbours from RWeka package: \code{\link[RWeka]{IBk}}}
   \item{\bold{regr.kknn}}{\cr K-Nearest-Neighbor regression from kknn package: \code{\link[kknn]{kknn}}}
    \item{\bold{regr.km}}{\cr Kriging from DiceKriging package: \code{\link[DiceKriging]{km}}}
@@ -96,12 +99,21 @@
   \item{\bold{regr.rvm}}{\cr Relevance Vector Machine from package kernlab: \code{\link[kernlab]{rvm}}\cr
     Note that kernel parameters have to be passed directly and not by using the kpar list in rvm.\cr
     Note that \code{fit} has been set to \code{FALSE} by default for speed.}
+  \item{\bold{regr.svm}}{\cr Support Vector Machines (libsvm) from e1071 package: \code{\link[e1071]{svm}}}
 }
 \itemize{
+   \item{\bold{surv.cforest}}{\cr Random forest based on conditional inference trees from party package: \code{\link[party]{cforest}}}
   \item{\bold{surv.CoxBoost}}{\cr Cox proportional hazards model with componentwise likelhood based boosting from CoxBoost package: \code{\link[CoxBoost]{CoxBoost}}}
   \item{\bold{surv.coxph}}{\cr Cox proportional hazard model from survival package: \code{\link[survival]{coxph}}}
   \item{\bold{surv.glmnet}}{\cr GLM with regularization from glmnet package: \code{\link[glmnet]{glmnet}}}
   \item{\bold{surv.randomForestSRC}}{\cr Random Forests for Survival from randomForestSRC package: \code{\link[randomForestSRC]{randomForestSRC}}}
+}
+
+\itemize{
+  \item{\bold{cluster.SimpleKMeans}}{\cr k-means clustering from RWeka package: \code{\link[RWeka]{SimpleKMeans}}}
+  \item{\bold{cluster.EM}}{\cr Expectation-maximization clustering from RWeka package: \code{\link[RWeka]{make_Weka_clusterer}}}
+  \item{\bold{cluster.XMeans}}{\cr XMeans (k-means with automatic determination of k) clustering from RWeka package: \code{\link[RWeka]{XMeans}}
+    Note that you might have to install the Weka package: \code{WPM("install-package", "XMeans")}}
 }
 }
 

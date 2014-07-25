@@ -18,7 +18,7 @@
 #' @param desc [\code{\link{ResampleDesc}} | \code{character(1)}]\cr
 #'   Resampling description object or name of resampling strategy.
 #'   In the latter case \code{\link{makeResampleDesc}} will be called internally on the string.
-#' @param task [\code{\link{SupervisedTask}}]\cr
+#' @param task [\code{\link{Task}}]\cr
 #'   Data of task to resample from.
 #'   Prefer to pass this instead of \code{size}.
 #' @param size [\code{\link{integer}}]\cr
@@ -45,7 +45,7 @@ makeResampleInstance = function(desc, task, size, ...) {
   if (is.character(desc))
     desc = makeResampleDesc(desc, ...)
   if (!missing(task)) {
-    assertClass(task, classes = "SupervisedTask")
+    assertClass(task, classes = "Task")
     size = task$task.desc$size
     blocking = task$blocking
   } else {
@@ -73,15 +73,24 @@ makeResampleInstance = function(desc, task, size, ...) {
   } else if (desc$stratify) {
     if (is.null(task))
       stop("Stratification always needs the task!")
-    if (task$task.desc$type != "classif")
-      stop("Stratification is currently only supported for classification!")
-    y = getTaskTargets(task)
+
+    grp = switch(task$task.desc$type,
+      "classif" = {
+        y = getTaskTargets(task)
+        lapply(task$task.desc$class.levels, function(x) which(x == y))
+      },
+      "surv" = {
+        y = getTaskTargets(task)
+        lapply(0:1, function(x) which(x == y[, 2L]))
+      },
+      stopf("Stratification for tasks of type '%s' not supported", task$task.desc$type)
+    )
+
     # resample on every class
-    class.inds = lapply(task$task.desc$class.levels, function(x) which(x == y))
-    train.inds = vector("list", length(class.inds))
-    test.inds = vector("list", length(class.inds))
-    for (i in seq_along(class.inds)) {
-      ci = class.inds[[i]]
+    train.inds = vector("list", length(grp))
+    test.inds = vector("list", length(grp))
+    for (i in seq_along(grp)) {
+      ci = grp[[i]]
       if (length(ci)) {
         inst = instantiateResampleInstance(desc, length(ci))
         train.inds[[i]] = lapply(inst$train.inds, function(j) ci[j])

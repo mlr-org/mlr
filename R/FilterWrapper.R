@@ -20,6 +20,7 @@
 #'   Default is \dQuote{perc}.
 #' @param fw.val [\code{numeric(1)}]\cr
 #'   See \code{\link{filterFeatures}}.
+#'   Default is 1.
 #' @template ret_learner
 #' @export
 #' @family filter
@@ -36,23 +37,32 @@
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
-makeFilterWrapper = function(learner, fw.method = "random.forest.importance", fw.select = "perc", fw.val) {
+makeFilterWrapper = function(learner, fw.method = "random.forest.importance", fw.select = "perc", fw.val = 1) {
   learner = checkLearner(learner)
-  assertChoice(fw.method, choices = listFilterMethods())
+  pv = list()
+  if (!missing(fw.method)) {
+    assertChoice(fw.method, choices = listFilterMethods())
+    pv$fw.method = fw.method
+  }
   checkFilterArguments(select = fw.select, val = fw.val)
+  if (!missing(fw.select))
+    pv$fw.select = fw.select
+  if (!missing(fw.val))
+    pv$fw.val = fw.val
   id = paste(learner$id, "filtered", sep = ".")
   ps = makeParamSet(
     makeDiscreteLearnerParam(id = "fw.method", values = listFilterMethods()),
     makeDiscreteLearnerParam(id = "fw.select", values = c("perc", "abs", "threshold")),
     makeNumericLearnerParam(id = "fw.val")
   )
-  pv = list(fw.method = fw.method, fw.select = fw.select, fw.val = fw.val)
   makeBaseWrapper(id, learner, package = "FSelector", par.set = ps, par.vals = pv, cl = "FilterWrapper")
 }
 
 
 #' @export
-trainLearner.FilterWrapper = function(.learner, .task, .subset, .weights = NULL, fw.method = "random.forest.importance", fw.select = "perc", fw.val, ...) {
+trainLearner.FilterWrapper = function(.learner, .task, .subset, .weights = NULL,
+  fw.method = "random.forest.importance", fw.select = "perc", fw.val = 1, ...) {
+
   .task = subsetTask(.task, subset = .subset)
   .task = filterFeatures(.task, method = fw.method, select = fw.select, val = fw.val)
   m = train(.learner$next.learner, .task, weights = .weights)

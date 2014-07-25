@@ -9,7 +9,7 @@ trainLearner(.learner, .task, .subset, .weights = NULL, ...)
 \item{.learner}{[\code{\link{RLearner}}]\cr
 Wrapped learner.}
 
-\item{.task}{[\code{\link{SupervisedTask}}]\cr
+\item{.task}{[\code{\link{Task}}]\cr
 Task to train learner on.}
 
 \item{.subset}{[\code{integer}]\cr

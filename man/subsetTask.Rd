@@ -6,7 +6,7 @@
 subsetTask(task, subset, features)
 }
 \arguments{
-\item{task}{[\code{\link{SupervisedTask}}]\cr
+\item{task}{[\code{\link{Task}}]\cr
 The task.}
 
 \item{subset}{[\code{integer}]\cr
@@ -19,7 +19,7 @@ resulting task, you should not pass it here.
 Default is all features.}
 }
 \value{
-[\code{\link{SupervisedTask}}]. Task with subsetted data.
+[\code{\link{Task}}]. Task with subsetted data.
 }
 \description{
 Subset data in task.

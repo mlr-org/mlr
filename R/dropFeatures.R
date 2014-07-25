@@ -6,7 +6,7 @@
 #' @template ret_task
 #' @export
 dropFeatures = function(task, features) {
-  assertClass(task, classes = "SupervisedTask")
+  assertClass(task, classes = "Task")
   f = getTaskFeatureNames(task)
   assertSubset(features, choices = f)
   subsetTask(task, features = setdiff(f, features))

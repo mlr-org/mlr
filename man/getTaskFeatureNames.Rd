@@ -6,7 +6,7 @@
 getTaskFeatureNames(task)
 }
 \arguments{
-\item{task}{[\code{\link{SupervisedTask}}]\cr
+\item{task}{[\code{\link{Task}}]\cr
 The task.}
 }
 \value{

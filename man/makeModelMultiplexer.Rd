@@ -45,7 +45,7 @@ print(ps)
 rdesc = makeResampleDesc("CV", iters = 2L)
 # to save some time we use random search. but you probably want something like this:
 # ctrl = makeTuneControlIrace(maxExperiments = 500L)
-ctrl = makeTuneControlRandom(maxit = 4L)
+ctrl = makeTuneControlRandom(maxit = 10L)
 res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)
 print(res)
 print(head(as.data.frame(res$opt.path)))
@@ -76,9 +76,9 @@ Other multiplexer: \code{\link{makeModelMultiplexerParamSet}}
 
 Other tune: \code{\link{TuneControl}},
   \code{\link{TuneControlCMAES}},
+  \code{\link{TuneControlGenSA}},
   \code{\link{TuneControlGrid}},
   \code{\link{TuneControlIrace}},
-  \code{\link{TuneControlOptim}},
   \code{\link{TuneControlRandom}},
   \code{\link{makeTuneControlCMAES}},
   \code{\link{makeTuneControlGenSA}},

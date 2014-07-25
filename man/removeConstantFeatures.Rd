@@ -8,7 +8,7 @@ removeConstantFeatures(x, target, perc = 0, dont.rm = character(0L),
   show.info = getMlrOption("show.info"))
 }
 \arguments{
-\item{x}{[\code{\link{data.frame}} | \code{\link{SupervisedTask}}]\cr
+\item{x}{[\code{\link{data.frame}} | \code{\link{Task}}]\cr
 The data set or task.}
 
 \item{target}{[\code{character}]\cr
@@ -39,7 +39,7 @@ Print verbose output on console?
 Default is set via \code{\link{configureMlr}}.}
 }
 \value{
-[\code{\link{data.frame}} | \code{\link{SupervisedTask}}].
+[\code{\link{data.frame}} | \code{\link{Task}}].
 }
 \description{
 Constant features can lead to errors in some models and obviously provide

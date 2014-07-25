@@ -62,7 +62,11 @@
 #'     see general description above.}
 #'   \item{aggr [\code{numeric}]}{Named vector of aggregated performance values. Names are coded like
 #'     this <measure>.<aggregation>.}
-#'   \item{pred [\code{\link{ResamplePrediction}}]}{Container for all predictions during resampling.}
+#'   \item{err.msgs [\code{data.frame}]}{Number of rows equals resampling iterations
+#'     and columns are: \dQuote{iter}, \dQuote{train}, \dQuote{predict}.
+#'     Stores error messages generated during train or predict, if these were caught
+#'     via \code{\link{configureMlr}}.}
+##'   \item{pred [\code{\link{ResamplePrediction}}]}{Container for all predictions during resampling.}
 #'   \item{models [list of \code{\link{WrappedModel}}]}{List of fitted models or \code{NULL}.}
 #'   \item{extract [\code{list}]}{List of extracted parts from fitted models or \code{NULL}.}
 #' @family resample
@@ -78,7 +82,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   extract, show.info = getMlrOption("show.info")) {
 
   learner = checkLearner(learner)
-  assertClass(task, classes = "SupervisedTask")
+  assertClass(task, classes = "Task")
   # instantiate resampling
   if (inherits(resampling, "ResampleDesc"))
     resampling = makeResampleInstance(resampling, task = task)
@@ -120,7 +124,10 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   train.i = rin$train.inds[[i]]
   test.i = rin$test.inds[[i]]
 
+  err.msgs = c(NA_character_, NA_character_)
   m = train(learner, task, subset = train.i, weights = weights[train.i])
+  if (isFailureModel(m))
+    err.msgs[1L] = getFailureModelMsg(m)
 
   # does a measure require to calculate pred.train?
   ms.train = rep(NA, length(measures))
@@ -147,6 +154,7 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
     model = if (model) m else NULL,
     pred.test = pred.test,
     pred.train = pred.train,
+    err.msgs = err.msgs,
     extract = ex
   )
 }
@@ -161,10 +169,9 @@ mergeResampleResult = function(task, iter.results, measures, rin, models, extrac
   rownames(ms.test) = NULL
   ms.test = cbind(iter = seq_len(iters), ms.test)
 
-  ms.train = extractSubList(iter.results, "measures.train", simplify = FALSE)
-  ms.train = as.data.frame(do.call(rbind, ms.train))
-  colnames(ms.train) = mids
+  ms.train = as.data.frame(extractSubList(iter.results, "measures.train", simplify = "rows"))
   rownames(ms.train) = NULL
+  colnames(ms.train) = mids
   ms.train = cbind(iter = 1:iters, ms.train)
 
   preds.test = extractSubList(iter.results, "pred.test", simplify = FALSE)
@@ -173,6 +180,12 @@ mergeResampleResult = function(task, iter.results, measures, rin, models, extrac
 
   aggr = sapply(measures, function(m)  m$aggr$fun(task, ms.test[, m$id], ms.train[, m$id], m, rin$group, pred))
   names(aggr) = sapply(measures, measureAggrName)
+
+  err.msgs = as.data.frame(extractSubList(iter.results, "err.msgs", simplify = "rows"))
+  rownames(err.msgs) = NULL
+  colnames(err.msgs) = c("train", "predict")
+  err.msgs = cbind(iter = 1:iters, err.msgs)
+
   if (show.info) {
     messagef("[Resample] Result: %s", perfsToString(aggr))
   }
@@ -181,7 +194,8 @@ mergeResampleResult = function(task, iter.results, measures, rin, models, extrac
     measures.test = ms.test,
     aggr = aggr,
     pred = pred,
-    models = if(models) lapply(iter.results, function(x) x$model) else NULL,
+    models = if (models) lapply(iter.results, function(x) x$model) else NULL,
+    err.msgs = err.msgs,
     extract = if(is.function(extract)) extractSubList(iter.results, "extract", simplify = FALSE) else NULL
   )
 }

@@ -6,6 +6,7 @@
 \alias{RLearnerSurv}
 \alias{makeRLearner}
 \alias{makeRLearnerClassif}
+\alias{makeRLearnerCluster}
 \alias{makeRLearnerRegr}
 \alias{makeRLearnerSurv}
 \title{Internal construction / wrapping of learner object.}
@@ -19,6 +20,9 @@ makeRLearnerRegr(cl, package, par.set, par.vals = list(),
   properties = character(0L))
 
 makeRLearnerSurv(cl, package, par.set, par.vals = list(),
+  properties = character(0L))
+
+makeRLearnerCluster(cl, package, par.set, par.vals = list(),
   properties = character(0L))
 }
 \arguments{

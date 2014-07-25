@@ -9,7 +9,7 @@ oversample(task, rate)
 undersample(task, rate)
 }
 \arguments{
-\item{task}{[\code{\link{SupervisedTask}}]\cr
+\item{task}{[\code{\link{Task}}]\cr
 The task.}
 
 \item{rate}{[\code{numeric(1)}]\cr
@@ -21,7 +21,7 @@ For oversampling: Must be between 1 and \code{Inf},
 where 1 means no oversampling and 2 would mean doubling the class size.}
 }
 \value{
-[\code{\link{SupervisedTask}}].
+[\code{\link{Task}}].
 }
 \description{
 Oversampling: From the smaller class, observations are randomly drawn with repetitions.

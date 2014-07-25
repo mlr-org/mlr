@@ -7,7 +7,7 @@ getTaskData(task, subset, features, target.extra = FALSE,
   recode.target = "no")
 }
 \arguments{
-\item{task}{[\code{\link{SupervisedTask}}]\cr
+\item{task}{[\code{\link{Task}}]\cr
 The task.}
 
 \item{subset}{[\code{integer}]\cr

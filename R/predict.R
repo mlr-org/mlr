@@ -9,7 +9,7 @@
 #'
 #' @param object [\code{\link{WrappedModel}}]\cr
 #'   Wrapped model, result of \code{\link{train}}.
-#' @param task [\code{\link{SupervisedTask}}]\cr
+#' @param task [\code{\link{Task}}]\cr
 #'   The task. If this is passed, data from this task is predicted.
 #' @param newdata [\code{data.frame}]\cr
 #'   New observations which should be predicted.
@@ -48,7 +48,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
 
   # FIXME: cleanup if cases
   if (missing(newdata)) {
-    assertClass(task, classes = "SupervisedTask")
+    assertClass(task, classes = "Task")
     size = task$task.desc$size
   } else {
     assertDataFrame(newdata, min.rows = 1L)

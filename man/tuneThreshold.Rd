@@ -12,7 +12,7 @@ Prediction object.}
 \item{measure}{[\code{\link{Measure}}]\cr
 Performance measure to optimize.}
 
-\item{task}{[\code{\link{SupervisedTask}}]\cr
+\item{task}{[\code{\link{Task}}]\cr
 Learning task. Rarely neeeded,
 only when required for the performance measure.}
 
@@ -42,9 +42,9 @@ Other tune: \code{\link{ModelMultiplexer}},
   \code{\link{makeModelMultiplexer}};
   \code{\link{TuneControl}},
   \code{\link{TuneControlCMAES}},
+  \code{\link{TuneControlGenSA}},
   \code{\link{TuneControlGrid}},
   \code{\link{TuneControlIrace}},
-  \code{\link{TuneControlOptim}},
   \code{\link{TuneControlRandom}},
   \code{\link{makeTuneControlCMAES}},
   \code{\link{makeTuneControlGenSA}},

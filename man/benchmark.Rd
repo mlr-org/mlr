@@ -10,7 +10,7 @@ benchmark(learners, tasks, resamplings, measures,
 \item{learners}{[(list of) \code{\link{Learner}}]\cr
 Learning algorithms which should be compared.}
 
-\item{tasks}{[(list of) \code{\link{SupervisedTask}}]\cr
+\item{tasks}{[(list of) \code{\link{Task}}]\cr
 Tasks that learners should be run on.}
 
 \item{resamplings}{[(list of) \code{\link{ResampleDesc}} | \code{\link{ResampleInstance}}]\cr

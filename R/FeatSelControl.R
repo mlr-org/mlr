@@ -86,9 +86,10 @@
 #' @aliases FeatSelControlExhaustive FeatSelControlRandom FeatSelControlSequential FeatSelControlGA
 NULL
 
-makeFeatSelControl = function(same.resampling.instance, impute.val = Inf, maxit, max.features, ..., cl) {
+makeFeatSelControl = function(same.resampling.instance, impute.val = NULL, maxit, max.features, ..., cl) {
   assertFlag(same.resampling.instance)
-  assertNumber(impute.val)
+  if (!is.null(impute.val))
+    assertNumber(impute.val)
   maxit = asCount(maxit, na.ok = TRUE, positive = TRUE)
   max.features = asCount(max.features, na.ok = TRUE, positive = TRUE)
   x = makeOptControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val, ...)

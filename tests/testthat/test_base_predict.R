@@ -72,14 +72,8 @@ test_that("predict works with strange class labels", {
 })
 
 
-test_that("predict works when error are thrown in predict", {
-  df = na.omit(BreastCancer[,-1])
-  task = makeClassifTask(data = df, target = "Class")
-  rdesc = makeResampleDesc("CV", iters = 10)
-  capture.output(
-    expect_error(resample(makeLearner("classif.randomForest"), task, rdesc),
-      "New factor levels not present in the training data")
-  )
+test_that("predict correctly propagates exception in predictLearner", {
+  capture.output(expect_error(holdout("classif.mock1", multiclass.task), "foo"))
 })
 
 test_that("predict works with newdata / subset", {

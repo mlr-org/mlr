@@ -37,7 +37,7 @@
 #' rdesc = makeResampleDesc("CV", iters = 2L)
 #' # to save some time we use random search. but you probably want something like this:
 #' # ctrl = makeTuneControlIrace(maxExperiments = 500L)
-#' ctrl = makeTuneControlRandom(maxit = 4L)
+#' ctrl = makeTuneControlRandom(maxit = 10L)
 #' res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)
 #' print(head(as.data.frame(res$opt.path)))
@@ -66,7 +66,7 @@
 makeModelMultiplexer = function(base.learners) {
   id = "ModelMultiplexer"
   assertList(base.learners, min.len = 1L)
-  checkListElementClass(base.learners, "Learner")
+  lapply(base.learners, function(learner) { learner = checkLearner(learner, type=c("classif", "regr")) })
   ids = unique(extractSubList(base.learners, "id"))
   if (length(ids) != length(base.learners))
     stop("Base learners must all have unique ids!")
@@ -92,7 +92,8 @@ makeModelMultiplexer = function(base.learners) {
     par.set = par.set,
     par.vals = list(selected.learner = ids[1L]),
     properties = Reduce(intersect, extractSubList(base.learners, "properties", simplify = FALSE)),
-    predict.type = "response"
+    predict.type = "response",
+    fix.factors = TRUE
   )
 
   lrn$base.learners = setNames(base.learners, ids)

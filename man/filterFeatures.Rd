@@ -7,7 +7,7 @@ filterFeatures(task, method = "random.forest.importance", select = "perc",
   val, ...)
 }
 \arguments{
-\item{task}{[\code{\link{SupervisedTask}}]\cr
+\item{task}{[\code{\link{Task}}]\cr
 The task.}
 
 \item{method}{[\code{character(1)}]\cr
@@ -29,7 +29,7 @@ Either a percentage from [0, 1], a number of features or a threshold value for t
 Passed down to selected method.}
 }
 \value{
-[\code{\link{SupervisedTask}}].
+[\code{\link{Task}}].
 }
 \description{
 First, calls \code{\link{getFilterValues}}.

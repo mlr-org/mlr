@@ -1,3 +1,3 @@
-#' @param task [\code{\link{SupervisedTask}}]\cr
+#' @param task [\code{\link{Task}}]\cr
 #'   The task.
 

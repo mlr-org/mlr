@@ -25,7 +25,7 @@ test_that("makeModelMultiplexerParamSet works", {
       requires = quote(selected.learner == "classif.ksvm")),
     makeIntegerParam("classif.randomForest.ntree", lower = 1L, upper = 500L,
       requires = quote(selected.learner == "classif.randomForest"))
-   )
+  )
 
   expect_equal(ps1, ps2)
   expect_equal(ps2, ps3)
@@ -34,7 +34,7 @@ test_that("makeModelMultiplexerParamSet works", {
 
 
 test_that("ModelMultiplexer", {
-  bls = list(makeLearner("classif.lda"), makeLearner("classif.rpart"))
+  bls = list(makeLearner("classif.knn"), makeLearner("classif.rpart"))
   lrn = makeModelMultiplexer(bls)
   expect_equal(class(lrn), c("ModelMultiplexer", "Learner"))
   mod = train(lrn, task = binaryclass.task)
@@ -43,8 +43,8 @@ test_that("ModelMultiplexer", {
   rdesc = makeResampleDesc("CV", iters = 2L)
   res = resample(lrn, binaryclass.task, rdesc)
 
-  lrn = setHyperPars(lrn, selected.learner = "classif.rpart", classif.rpart.minsplit = 100)
-  expect_true(setequal(names(getHyperPars(lrn)), c("selected.learner", "classif.rpart.minsplit")))
+  lrn2 = setHyperPars(lrn, selected.learner = "classif.rpart", classif.rpart.minsplit = 100)
+  expect_true(setequal(names(getHyperPars(lrn2)), c("selected.learner", "classif.rpart.minsplit")))
 
   tune.ps = makeModelMultiplexerParamSet(lrn,
     makeIntegerParam("minsplit", lower = 1, upper = 50))
@@ -55,8 +55,9 @@ test_that("ModelMultiplexer", {
   y = getOptPathY(res$opt.path)
   expect_true(!is.na(y) && is.finite(y))
   # tune with irace
-  ctrl = makeTuneControlIrace(maxExperiments = 80L)
-  res = tuneParams(lrn, binaryclass.task, rdesc, par.set = tune.ps, control = ctrl)
+  task = subsetTask(binaryclass.task, subset = c(1:20, 150:170))
+  ctrl = makeTuneControlIrace(maxExperiments = 40L, nbIterations = 2L, minNbSurvival = 1L)
+  res = tuneParams(lrn, task, rdesc, par.set = tune.ps, control = ctrl)
   expect_true(setequal(class(res), c("TuneResult", "OptResult")))
   y = getOptPathY(res$opt.path)
   expect_true(!is.na(y) && is.finite(y))

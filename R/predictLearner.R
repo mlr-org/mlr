@@ -33,9 +33,14 @@ predictLearner = function(.learner, .model, .newdata, ...) {
 predictLearner2 = function(.learner, .model, .newdata, ...) {
   # if we have that option enabled, set factor levels to complete levels from task
   if (.learner$fix.factors) {
-    factors = Filter(is.character, .model$learner.model$forest$xlevels)
-    .newdata[names(factors)] = mapply(factor, x = .newdata[names(factors)],
-       levels = factors, SIMPLIFY = FALSE)
+    fls = .model$factor.levels
+    ns = names(fls)
+    # only take objects in .newdata
+    ns = intersect(colnames(.newdata), ns)
+    fls = fls[ns]
+    if (length(ns) > 0L)
+      .newdata[ns] = mapply(factor, x = .newdata[ns],
+         levels = fls, SIMPLIFY = FALSE)
   }
   p = predictLearner(.learner, .model, .newdata, ...)
   p = checkPredictLearnerOutput(.learner, .model, p)

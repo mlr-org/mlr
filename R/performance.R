@@ -4,8 +4,8 @@
 #'
 #' @template arg_pred
 #' @template arg_measures
-#' @param task [\code{\link{SupervisedTask}}]\cr
-#'   Learning task, might be requested by performance measure, usually not needed.
+#' @param task [\code{\link{Task}}]\cr
+#'   Learning task, might be requested by performance measure, usually not needed except for clustering.
 #' @param model [\code{\link{WrappedModel}}]\cr
 #'   Model built on training data, might be requested by performance measure, usually not needed.
 #' @return [named \code{numeric}]. Performance value(s), named by measure(s).
@@ -53,7 +53,7 @@ doPerformaceIteration = function(measure, pred, task, model, td){
   if (m$req.task) {
     if (missing(task))
       stopf("You need to pass task for measure %s!", m$id)
-    assertClass(task, classes = "SupervisedTask")
+    assertClass(task, classes = "Task")
     task2 = task
     td = task$desc
   } else {

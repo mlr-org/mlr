@@ -4,7 +4,7 @@
 # - algo can handle these parameters
 # - algo can handle dependencies
 
-checkTunerParset = function(learner, par.set, control) {
+checkTunerParset = function(learner, par.set, measures, control) {
   cl = getClass1(control)
 
   if (getParamNr(par.set) == 0L)
@@ -33,9 +33,22 @@ checkTunerParset = function(learner, par.set, control) {
     checkParsOk("CMAES", c("numeric", "integer", "numericvector", "integervector"))
     checkStart()
   }
+  if (inherits(control, "TuneControlGenSA")) {
+    checkParsOk("GenSA", c("numeric", "integer", "numericvector", "integervector"))
+    checkStart()
+  }
+  if (inherits(control, "TuneControlNSGA2")) {
+    checkParsOk("NSGA2", c("numeric", "integer", "numericvector", "integervector"))
+  }
 
   # check requires / dependent params
   if (hasRequires(par.set) && cl %nin% c("TuneControlRandom", "TuneControlGrid",
-      "TuneControlIrace", "TuneControlMBO"))
-    stopf("Tuning algorithm for '%s' cannot handle dependent parameters!")
+      "TuneControlIrace", "TuneControlMBO", "TuneMultiCritControlRandom"))
+    stopf("Tuning algorithm for '%s' cannot handle dependent parameters!", cl)
+
+  if (inherits(control, "TuneMultiCritControl"))
+    if (length(control$impute.val) != length(measures))
+      stop("Length of 'impute.val' must coincide with number of measures!")
+
+
 }

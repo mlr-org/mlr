@@ -6,26 +6,38 @@ if (interactive()) {
 
 test_that("tuneMBO", {
   library(mlrMBO)
-  res = makeResampleDesc("Subsample", iters=4)
-  ps1 = makeParamSet(
-    makeIntegerParam("ntree", lower=1, upper=5)
+  res = makeResampleDesc("Holdout")
+  ps = makeParamSet(
+    makeNumericParam("cp", lower = 0, upper = 1),
+    makeIntegerParam("minsplit", lower = 1, upper = 20)
   )
-  
-  n1 = 10; n2=2;
-  mbo.ctrl = makeMBOControl(init.design.points=n1, iters=n2)
-  ctrl = makeTuneControlMBO(learner=makeLearner("regr.randomForest"), mbo.control=mbo.ctrl)
-  tr1 = tuneParams(makeLearner("classif.randomForest"), multiclass.task, res, par.set=ps1, control=ctrl)
-  expect_equal(getOptPathLength(tr1$opt.path), n1+n2)
-  expect_equal(dim(as.data.frame(tr1$opt.path)), c(n1+n2, 1+1+2))
-  
-  ps2 = makeParamSet(
-    makeIntegerParam("ntree", lower=10, upper=50),
-    makeNumericVectorParam("cutoff", len=3, lower=0.001, upper=1, trafo=function(x) 0.9*x/sum(x)) 
-  )
-  tr2 = tuneParams(makeLearner("classif.randomForest"), multiclass.task, res, par.set=ps2, control=ctrl)
-  expect_equal(getOptPathLength(tr2$opt.path), n1+n2)
-})
 
+  n1 = 10; n2 = 2;
+  mbo.ctrl = makeMBOControl(init.design.points = n1, iters = n2, save.on.disk.at = integer(0L))
+  ctrl = makeTuneControlMBO(learner = makeLearner("regr.lm"), mbo.control = mbo.ctrl)
+  tr = tuneParams(makeLearner("classif.rpart"), multiclass.task, res, par.set = ps, control = ctrl)
+  expect_equal(getOptPathLength(tr$opt.path), n1+n2)
+  expect_equal(dim(as.data.frame(tr$opt.path)), c(n1 + n2, 2 + 1 + 4))
+
+  ps = makeParamSet(
+    makeNumericParam("sigma", lower = -10, upper = -1, trafo = function(x) 2^x)
+  )
+  tr = tuneParams("classif.ksvm", multiclass.task, res, par.set = ps, control = ctrl)
+  expect_equal(getOptPathLength(tr$opt.path), n1 + n2)
+  expect_true(is.list(tr$x) && all(names(tr$x) == "sigma"))
+  expect_true(tr$x$sigma > 0)
+  df1 = as.data.frame(tr$opt.path)
+  df2 = as.data.frame(trafoOptPath(tr$opt.path))
+  expect_true(all(df1$sigma < 0))
+  expect_true(all(df2$sigma > 0))
+
+  ps = makeParamSet(
+    makeIntegerParam("ntree", lower = 10, upper = 50),
+    makeNumericVectorParam("cutoff", len = 3, lower = 0.001, upper = 1, trafo = function(x) 0.9*x/sum(x))
+  )
+  tr = tuneParams("classif.randomForest", multiclass.task, res, par.set = ps, control = ctrl)
+  expect_equal(getOptPathLength(tr$opt.path), n1 + n2)
+})
 
 }
 

@@ -4,7 +4,7 @@
 #' Replace all factor features with their dummy variables. Internally \code{\link{model.matrix}} is used.
 #' Non factor features will be left untouched and passed to the result.
 #'
-#' @param obj [\code{data.frame} | \code{\link{SupervisedTask}}]\cr
+#' @param obj [\code{data.frame} | \code{\link{Task}}]\cr
 #'   Input data.
 #' @param target [\code{character()}]\cr
 #'   Name of the column(s) specifying the response.
@@ -14,7 +14,7 @@
 #'   \dQuote{1-of-n}: For n factor levels there will be n dummy variables.\cr
 #'   \dQuote{reference}: There will be n-1 dummy variables leaving out the first factor level of each variable.\cr
 #' @template arg_exclude
-#' @return [\code{data.frame} | \code{\link{SupervisedTask}}]. Same type as
+#' @return [\code{data.frame} | \code{\link{Task}}]. Same type as
 #'   \code{obj}.
 #' @seealso \code{\link{model.matrix}}
 #' @export

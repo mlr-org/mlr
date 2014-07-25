@@ -14,8 +14,8 @@ test_that("tuneGrid", {
   ctrl = makeTuneControlGrid()
   tr1 = tuneParams(lrn, multiclass.task, rin, par.set = ps1, control = ctrl)
   op1 = as.data.frame(tr1$opt.path)
-  op1$C = as.numeric(op1$C)
-  op1$sigma = as.numeric(op1$sigma)
+  op1$C = as.numeric(as.character(op1$C))
+  op1$sigma = as.numeric(as.character(op1$sigma))
 
   # normal param set
   ps2 = makeParamSet(
@@ -24,8 +24,8 @@ test_that("tuneGrid", {
   )
   ctrl = makeTuneControlGrid(resolution = reso)
   tr2 = tuneParams(lrn, multiclass.task, rin, par.set = ps2, control = ctrl)
-  op2 = as.data.frame(tr2$opt.path)
-  op1$exec.time = op2$exec.time = NULL
+  op2 = as.data.frame(trafoOptPath(tr2$opt.path))
+  op1$exec.time = op2$exec.time = op1$error.message = NULL
   expect_equal(sortByCol(op1, c("C", "sigma")), sortByCol(op2, c("C", "sigma")))
 
 })

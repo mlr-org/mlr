@@ -1,5 +1,6 @@
 #' @export
-#' @rdname SupervisedTask
+#' @rdname Task
+#' @family costsens
 makeCostSensTask = function(id, data, costs, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)
@@ -20,7 +21,6 @@ makeCostSensTask = function(id, data, costs, blocking = NULL, fixup.data = "warn
   return(task)
 }
 
-#' @export
 checkTaskCreation.CostSensTask = function(task, target, ...) {
   NextMethod("checkTaskCreation")
   assert(checkMatrix(task$env$costs, any.missing = FALSE), checkDataFrame(task$env$costs, any.missing = FALSE))
@@ -39,13 +39,11 @@ checkTaskCreation.CostSensTask = function(task, target, ...) {
     stopf("The name '..y..' is currently reserved for costsens tasks. You can use it neither for features nor labels!")
 }
 
-#' @export
 fixupData.CostSensTask = function(task, target, choice, ...) {
   # FIXME: move fixes from checkTaskCreation here?
   NextMethod("fixupData")
 }
 
-#' @export
 makeTaskDesc.CostSensTask = function(task, id, target) {
   td = makeTaskDescInternal(task, "costsens", id, target)
   td$class.levels = colnames(task$env$costs)

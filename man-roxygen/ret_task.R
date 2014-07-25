@@ -1,2 +1,2 @@
-#' @return [\code{\link{SupervisedTask}}].
+#' @return [\code{\link{Task}}].
 

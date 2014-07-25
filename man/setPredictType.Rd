@@ -30,8 +30,9 @@ encapsulated learner in a recursive fashion.
 }
 \seealso{
 Other learner: \code{\link{getHyperPars}};
-  \code{\link{getParamSet}}; \code{\link{setHyperPars}};
-  \code{\link{setId}}; \code{\link{showHyperPars}}
+  \code{\link{getParamSet}}; \code{\link{removeHyperPars}};
+  \code{\link{setHyperPars}}; \code{\link{setId}};
+  \code{\link{showHyperPars}}
 
 Other predict: \code{\link{getProbabilities}};
   \code{\link{predict.WrappedModel}}

@@ -1,5 +1,5 @@
 #' @export
-#' @rdname SupervisedTask
+#' @rdname Task
 makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
   positive, fixup.data = "warn", check.data = TRUE) {
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
@@ -28,7 +28,6 @@ makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
   return(task)
 }
 
-#' @export
 checkTaskCreation.ClassifTask = function(task, target, ...) {
   NextMethod("checkTaskCreation")
   assertString(target)
@@ -37,7 +36,6 @@ checkTaskCreation.ClassifTask = function(task, target, ...) {
   }
 }
 
-#' @export
 fixupData.ClassifTask = function(task, target, choice, ...) {
   NextMethod("fixupData")
   x = task$env$data[[target]]
@@ -45,7 +43,6 @@ fixupData.ClassifTask = function(task, target, choice, ...) {
     task$env$data[[target]] = as.factor(x)
 }
 
-#' @export
 makeTaskDesc.ClassifTask = function(task, id, target, positive) {
   td = makeTaskDescInternal(task, "classif", id, target)
   td$class.levels = levels(task$env$data[, target])

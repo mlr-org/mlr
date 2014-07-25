@@ -51,6 +51,8 @@ predictFailureModel = function(model, newdata) {
   } else if (type == "costsens") {
     levs = model$task.desc$class.levels
     res = factor(rep(NA_character_, n), levels = levs)
+  } else if (type == "cluster") {
+    res = rep(NA_character_, n)
   }
   return(res)
 }

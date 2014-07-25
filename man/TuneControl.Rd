@@ -2,9 +2,9 @@
 \name{makeTuneControlCMAES}
 \alias{TuneControl}
 \alias{TuneControlCMAES}
+\alias{TuneControlGenSA}
 \alias{TuneControlGrid}
 \alias{TuneControlIrace}
-\alias{TuneControlOptim}
 \alias{TuneControlRandom}
 \alias{makeTuneControlCMAES}
 \alias{makeTuneControlGenSA}
@@ -13,20 +13,19 @@
 \alias{makeTuneControlRandom}
 \title{Create control structures for tuning.}
 \usage{
-makeTuneControlCMAES(same.resampling.instance = TRUE, impute.val = Inf,
+makeTuneControlCMAES(same.resampling.instance = TRUE, impute.val = NULL,
   start = NULL, ...)
 
-makeTuneControlGenSA(same.resampling.instance = TRUE, impute.val = Inf,
+makeTuneControlGenSA(same.resampling.instance = TRUE, impute.val = NULL,
   start = NULL, ...)
 
-makeTuneControlGrid(same.resampling.instance = TRUE, impute.val = Inf,
+makeTuneControlGrid(same.resampling.instance = TRUE, impute.val = NULL,
   resolution = 10L)
 
-makeTuneControlIrace(impute.val = Inf, n.instances = 100L,
+makeTuneControlIrace(impute.val = NULL, n.instances = 100L,
   show.irace.output = FALSE, ...)
 
-makeTuneControlRandom(same.resampling.instance = TRUE, impute.val = Inf,
-  maxit = 100L)
+makeTuneControlRandom(same.resampling.instance = TRUE, maxit = 100L)
 }
 \arguments{
 \item{resolution}{[\code{integer}]\cr
@@ -48,7 +47,7 @@ Default is \code{FALSE}.}
 Should the same resampling instance be used for all evaluations to reduce variance?
 Default is \code{TRUE}.}
 
-\item{impute.val}{[\code{numeric(1)}]\cr
+\item{impute.val}{[\code{numeric}]\cr
 If something goes wrong during optimization (e.g, the learner crashes),
 this value is fed back to the tuner, so the tuning algorithm does not abort.
 It is not stored in the optimization path, an NA and a corresponding error message are
@@ -56,15 +55,16 @@ logged instead.
 Note that this value is later multiplied by -1 for maximization measures internally, so you
 need to enter a larger positive value for maximization here as well.
 Default is the worst obtainable value of the performance measure you optimize for when
-you aggregate by mean value, or \code{Inf} instead.}
+you aggregate by mean value, or \code{Inf} instead.
+For multi-criteria optimization pass a vector of imputation values, one for each of your measures,
+in the same order as your measures.}
 
 \item{start}{[\code{numeric}]\cr
 Named list of initial parameter values.}
 
 \item{...}{[any]\cr
-Further control parameters passed to the \code{control} argument of \code{\link[stats]{optim}},
-the \code{control} argument of \code{\link[cmaes]{cma_es}}, \code{tunerConfig}
-argument of \code{\link[irace]{irace}}.}
+Further control parameters passed to the \code{control} argument of \code{\link[cmaes]{cma_es}} and
+\code{tunerConfig} argument of \code{\link[irace]{irace}}.}
 
 \item{maxit}{[\code{integer(1)}]\cr
 Number of iterations for random search.
@@ -72,32 +72,31 @@ Default is 100.}
 }
 \value{
 [\code{\link{TuneControl}}]. The specific subclass is one of
-  \code{\link{TuneControlGrid}}, \code{\link{TuneControlRandom}}, \code{\link{TuneControlOptim}},
-  \code{\link{TuneControlCMAES}}, \code{\link{TuneControlIrace}}.
+  \code{\link{TuneControlGrid}}, \code{\link{TuneControlRandom}},
+  \code{\link{TuneControlCMAES}}, \code{\link{TuneControlGenSA}},
+  \code{\link{TuneControlIrace}}.
 }
 \description{
 The following tuners are available:
 \describe{
-  \item{makeTuneControlGrid}{Grid search. All kinds of parameter types can be handled,
-    but you have discretize them yourself by always using
-    \code{\link[ParamHelpers]{makeDiscreteParam}} in the \code{par.set}
-    passed to \code{\link{tuneParams}}.}
+  \item{makeTuneControlGrid}{Grid search. All kinds of parameter types can be handled.
+    You can either use their correct param type and \code{resolution},
+    or discretize them yourself by always using \code{\link[ParamHelpers]{makeDiscreteParam}}
+    in the \code{par.set} passed to \code{\link{tuneParams}}.}
   \item{makeTuneControlRandom}{Random search. All kinds of parameter types can be handled.}
-  \item{makeTuneControlOptim}{Tuning with \code{\link[stats]{optim}}.
-    Can handle numeric(vector) and integer(vector) hyperparameters.
-    For integers the internally proposed numeric values are automatically rounded.}
   \item{makeTuneControlCMAES}{CMA Evolution Strategy with method \code{\link[cmaes]{cma_es}}.
-    Can handle numeric(vector) and integer(vector) hyperparameters.
+    Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
     For integers the internally proposed numeric values are automatically rounded.
     The sigma variance parameter is initialized to 1/4 of the span of box-constraints per
     parameter dimension.}
+  \item{makeTuneControlGenSA}{Generalized simulated annealing with method \code{\link[GenSA]{GenSA}}.
+    Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
+    For integers the internally proposed numeric values are automatically rounded.}
   \item{makeTuneControlIrace}{Tuning with iterated F-Racing with method \code{\link[irace]{irace}}.
     All kinds of parameter types can be handled. We return the best of the final elite
     candidates found by irace in the last race. Its estimated performance is the mean of all
     evaluations ever done for that candidate.}
 }
-
-Dependent parameters can currently only be handled by random search and irace.
 
 Some notes on irace: For resampling you have to pass a \code{\link{ResampleDesc}},
 not a \code{\link{ResampleInstance}}.

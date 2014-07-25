@@ -21,7 +21,8 @@ Set the id of a learner object.
 }
 \seealso{
 Other learner: \code{\link{getHyperPars}};
-  \code{\link{getParamSet}}; \code{\link{setHyperPars}};
-  \code{\link{setPredictType}}; \code{\link{showHyperPars}}
+  \code{\link{getParamSet}}; \code{\link{removeHyperPars}};
+  \code{\link{setHyperPars}}; \code{\link{setPredictType}};
+  \code{\link{showHyperPars}}
 }
 

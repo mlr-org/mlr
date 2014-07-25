@@ -9,16 +9,20 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   y = setNames(rep(NA_real_, length(measures)), sapply(measures, measureAggrName))
   errmsg = NA_character_
   exec.time = NA_real_
-  evalok = TRUE
+  set.pars.ok = TRUE
   learner2 = learner
-  if (inherits(control, "TuneControl")) {
+  if (inherits(control, "TuneControl") || inherits(control, "TuneMultiCritControl")) {
     log.fun = logFunTune
+    # set names before trafo
     state = setValueCNames(par.set, state)
+    # transform parameters
+    state = trafoValue(par.set, state)
+    # remove NAs for dependencies
     state2 = if (remove.nas) removeMissingValues(state) else state
     learner2 = try(setHyperPars(learner, par.vals = state2))
     # if somebody above (eg tuner) prodcued bad settings, we catch this here and dont eval
     if (is.error(learner2)) {
-      evalok = FALSE
+      set.pars.ok = FALSE
       errmsg = as.character(learner2)
     }
   } else if (inherits(control, "FeatSelControl")) {
@@ -27,11 +31,16 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   }
 
   # if no problems: resample + measure time
-  if (evalok) {
+  if (set.pars.ok) {
     exec.time = system.time({
       r = resample(learner2, task, resampling, measures = measures, show.info = FALSE)
     })
     y = r$aggr
+    # sort msgs by iters, so iter1, iter2, ...
+    errmsgs = as.character(t(r$err.msgs[,-1L]))
+    notna = !is.na(errmsgs)
+    if (any(notna))
+      errmsg = errmsgs[notna][1L]
     exec.time = exec.time[3L]
   }
   # if eval was not ok, everything should have been initailized to NAs
@@ -64,7 +73,7 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
   # add stuff to opt.path
   for (i in seq_len(n)) {
     res = res.list[[i]]
-    addOptPathEl(opt.path, x = as.list(states[[i]]), y = res$y, exec.time = res$exec.time,
+    addOptPathElFixed(opt.path, x = as.list(states[[i]]), y = res$y, exec.time = res$exec.time,
       error.message = res$errmsg, dob = dobs[i], eol = eols[i], check.feasible = FALSE)
   }
   return(res.list)

@@ -1,3 +1,3 @@
-#' @param x [\code{\link{SupervisedTask}} | \code{\link{TaskDesc}}]\cr
+#' @param x [\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
 #'   Task or its description object.
 

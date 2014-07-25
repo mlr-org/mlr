@@ -10,7 +10,7 @@ train(learner, task, subset, weights = NULL)
 The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
-\item{task}{[\code{\link{SupervisedTask}}]\cr
+\item{task}{[\code{\link{Task}}]\cr
 The task.}
 
 \item{subset}{[\code{integer}]\cr
@@ -20,14 +20,14 @@ By default the complete data set is used.}
 \item{weights}{[\code{numeric}]\cr
 Optional, non-negative case weight vector to be used during fitting.
 If given, must be of same length as \code{subset} and in corresponding order.
-By default \code{NULL} which means no weights are used unless specified in the task ([\code{\link{SupervisedTask}}]).
+By default \code{NULL} which means no weights are used unless specified in the task ([\code{\link{Task}}]).
 Weights from the task will be overwritten.}
 }
 \value{
 [\code{\link{WrappedModel}}].
 }
 \description{
-Given a \code{\link{SupervisedTask}}, creates a model for the learning machine
+Given a \code{\link{Task}}, creates a model for the learning machine
 which can be used for predictions on new data.
 }
 \examples{

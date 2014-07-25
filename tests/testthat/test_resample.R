@@ -86,4 +86,27 @@ test_that("resample checks constraints", {
   expect_error(makeResampleInstance("RepCV", folds = 20, reps = 2L, size = 10), "more folds")
 })
 
+test_that("resample returns errors", {
+  configureMlr(on.learner.error = "quiet")
+
+  lrn = makeLearner("classif.mock2", alpha = 1)
+  z = holdout(lrn, multiclass.task)
+  expect_true(!is.na(z$aggr))
+  expect_true(is.data.frame(z$err.msgs))
+  expect_true(nrow(z$err.msgs) == 1L)
+  expect_true(all(is.na(z$err.msgs$train)))
+  expect_true(all(is.na(z$err.msgs$predict)))
+
+  lrn = makeLearner("classif.mock2", alpha = 0)
+  z = crossval(lrn, multiclass.task, iters = 2L)
+  expect_true(is.na(z$aggr))
+  expect_true(is.data.frame(z$err.msgs))
+  expect_true(nrow(z$err.msgs) == 2L)
+  expect_true(all(!is.na(z$err.msgs$train)))
+  expect_true(all(is.na(z$err.msgs$predict)))
+
+  configureMlr(on.learner.error = "stop")
+})
+
+
 

@@ -7,7 +7,7 @@
 #' @template arg_pred
 #' @param measure [\code{\link{Measure}}]\cr
 #'   Performance measure to optimize.
-#' @param task [\code{\link{SupervisedTask}}]\cr
+#' @param task [\code{\link{Task}}]\cr
 #'   Learning task. Rarely neeeded,
 #'   only when required for the performance measure.
 #' @param model [\code{\link{WrappedModel}}]\cr

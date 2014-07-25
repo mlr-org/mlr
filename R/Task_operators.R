@@ -43,6 +43,8 @@ getTaskFormulaAsString = function(x, target = getTargetNames(x)) {
     target = sprintf("Surv(%s, %s)", target[1L], target[2L])
   else if (type == "costsens")
     stop("There is no formula available for cost-sensitive learning.")
+  else if (type == "cluster")
+    stop("There is no formula available for clustering.")
   paste(target, "~.")
 }
 
@@ -90,6 +92,8 @@ getTaskTargets = function(task, subset, recode.target = "no") {
   #FIXME: argument checks currently not done for speed
   if (task$task.desc$type == "costsens")
     stop("There is no target available for cost-sensitive learning.")
+  if (task$task.desc$type == "cluster")
+    stop("There is no target available for cluster.")
   y = task$env$data[subset, task$task.desc$target]
   recodeY(y, recode.target, task$task.desc$positive)
 }
@@ -193,7 +197,7 @@ getTaskCosts = function(task, subset) {
 
 #' Subset data in task.
 #'
-#' @param task [\code{\link{SupervisedTask}}]\cr
+#' @param task [\code{\link{Task}}]\cr
 #'   The task.
 #' @param subset [\code{integer}]\cr
 #'   Selected cases.
@@ -202,7 +206,7 @@ getTaskCosts = function(task, subset) {
 #'   Selected inputs. Note that target feature is always included in the
 #'   resulting task, you should not pass it here.
 #'   Default is all features.
-#' @return [\code{\link{SupervisedTask}}]. Task with subsetted data.
+#' @return [\code{\link{Task}}]. Task with subsetted data.
 #' @family task
 #' @export
 #' @examples
@@ -240,6 +244,7 @@ changeData = function(task, data, costs, weights) {
   task$task.desc = switch(td$type,
     "classif" = makeTaskDesc(task, td$id, td$target, td$positive),
     "surv" = makeTaskDesc(task, td$id, td$target, td$surv.type),
+    "cluster" = makeTaskDesc(task, td$id),
     makeTaskDesc(task, td$id, td$target))
   return(task)
 }

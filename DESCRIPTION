@@ -2,11 +2,13 @@ Package: mlr
 Title: mlr: Machine Learning in R.
 Description: Interface to a large number of classification and regression
     techniques, including machine-readable parameter descriptions. There is
-    also a n experimental extension for surival analysis and cost-sensitive
-    learning. Generic resampling, including cross-validation, bootstrapping and
-    subsampling. Hyperparameter tuning with modern optimization techniques.
-    Filter and wrapper methods for feature selection. Extension of basic
-    learners with additional operations common in machine learning.
+    also an experimental extension for survival analysis, clustering and
+    general, example-specific cost-sensitive learning. Generic resampling,
+    including cross-validation, bootstrapping and subsampling. Hyperparameter
+    tuning with modern optimization techniques, for single- and multi-objective
+    problems. Filter and wrapper methods for feature selection. Extension of
+    basic learners with additional operations common in machine learning, also
+    allowing for easy nested resampling. Most operations can be parallelized.
 Authors@R: c(person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role =
     c("aut", "cre")), person("Michel", "Lang", email =
     "lang@statistik.tu-dortmund.de", role = "aut"), person("Jakob", "Bossek",
@@ -14,7 +16,8 @@ Authors@R: c(person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role =
     "Judt", email = "leonard.judt@tu-dortmund.de", role = "aut"),
     person("Jakob", "Richter", email = "code@jakob-r.de", role = "aut"),
     person("Tobias", "Kuehn", email = "tobi.kuehn@gmx.de", role = "aut"),
-    person("Erich", "Studerus", email = "erich.studerus@upkbs.ch", role = "aut"))
+    person("Erich", "Studerus", email = "erich.studerus@upkbs.ch", role =
+    "aut"))
 URL: https://github.com/berndbischl/mlr
 BugReports: https://github.com/berndbischl/mlr/issues
 License: BSD_3_clause + file LICENSE
@@ -36,6 +39,8 @@ Suggests:
     caret,
     class,
     cluster,
+    clusterSim,
+    clValid,
     cmaes,
     CoxBoost,
     crs,
@@ -44,6 +49,7 @@ Suggests:
     DiscriMiner,
     e1071,
     earth,
+    emoa,
     FNN,
     FSelector,
     gbm,
@@ -57,6 +63,7 @@ Suggests:
     klaR,
     LiblineaR,
     mboost,
+    mco,
     mda,
     mlbench,
     mRMRe,

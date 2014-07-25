@@ -126,3 +126,21 @@ print.Prediction = function(x, ...) {
   catf("time: %.2f", x$time)
   print(head(as.data.frame(x)))
 }
+
+#' @export
+makePrediction.TaskDescCluster = function(task.desc, id, truth, predict.type, y, time) {
+  data = namedList(c("id", "response"))
+  data$id = id
+  data$response = y
+
+  makeS3Obj(c("PredictionCluster", "Prediction"),
+    predict.type = predict.type,
+    data = as.data.frame(filterNull(data)),
+    threshold = NA_real_,
+    task.desc = task.desc,
+    time = time
+  )
+}
+
+
+

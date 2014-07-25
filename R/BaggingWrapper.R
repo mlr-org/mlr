@@ -41,15 +41,24 @@
 #' @export
 makeBaggingWrapper = function(learner, bw.iters = 10L, bw.replace = TRUE, bw.size, bw.feats = 1) {
 
-  learner = checkLearner(learner)
-  bw.iters = asInt(bw.iters, lower = 1L)
-  assertFlag(bw.replace)
-  if (missing(bw.size)) {
-    bw.size = if (bw.replace) 1 else 0.632
-  } else {
-    assertNumber(bw.size, lower = 0, upper = 1)
+  learner = checkLearner(learner, type=c("classif", "regr"))
+  pv = list()
+  if (!missing(bw.iters)) {
+    bw.iters = asInt(bw.iters, lower = 1L)
+    pv$bw.iters = bw.iters
   }
-  assertNumber(bw.feats, lower = 0, upper = 1)
+  if (!missing(bw.replace)) {
+    assertFlag(bw.replace)
+    pv$bw.replace = bw.replace
+  }
+  if (!missing(bw.size)) {
+    assertNumber(bw.size, lower = 0, upper = 1)
+    pv$bw.size = bw.size
+  }
+  if (!missing(bw.feats)) {
+    assertNumber(bw.feats, lower = 0, upper = 1)
+    pv$bw.feats = bw.feats
+  }
   if (learner$predict.type != "response")
     stop("Predict type of the basic learner must be 'response'.")
   id = paste(learner$id, "bagged", sep = ".")
@@ -60,8 +69,6 @@ makeBaggingWrapper = function(learner, bw.iters = 10L, bw.replace = TRUE, bw.siz
     makeNumericLearnerParam(id = "bw.size", lower = 0, upper = 1),
     makeNumericLearnerParam(id = "bw.feats", lower = 0, upper = 1, default = 2/3)
   )
-  pv = list(bw.iters = bw.iters, bw.replace = bw.replace,
-    bw.size = bw.size, bw.feats = bw.feats)
   x = makeBaseWrapper(id, learner, packs, par.set = ps, par.vals = pv, cl = "BaggingWrapper")
   x = switch(x$type,
     "classif" = addProperties(x, "prob"),
@@ -70,9 +77,11 @@ makeBaggingWrapper = function(learner, bw.iters = 10L, bw.replace = TRUE, bw.siz
 }
 
 #' @export
-trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL, bw.iters, bw.replace,
-  bw.size, bw.feats, ...) {
+trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL,
+  bw.iters = 10, bw.replace = TRUE, bw.size, bw.feats = 1, ...) {
 
+  if (missing(bw.size))
+    bw.size = if (bw.replace) 1 else 0.632
   .task = subsetTask(.task, subset = .subset)
   n = .task$task.desc$size
   m = round(n * bw.size)

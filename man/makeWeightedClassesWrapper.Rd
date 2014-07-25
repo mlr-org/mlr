@@ -24,7 +24,8 @@ and must also be in the same order as the class levels are in
 \code{task$task.desc$class.levels}.
 For convenience, one must pass a single number in case of binary classification, which
 is then taken as the weight of the positive class, while the negative class receives a weight
-of 1.}
+of 1.
+Default is 1.}
 }
 \value{
 [\code{\link{Learner}}].

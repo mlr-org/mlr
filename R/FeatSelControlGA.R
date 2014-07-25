@@ -1,6 +1,6 @@
 #' @export
 #' @rdname FeatSelControl
-makeFeatSelControlGA = function(same.resampling.instance = TRUE, impute.val = Inf,
+makeFeatSelControlGA = function(same.resampling.instance = TRUE, impute.val = NULL,
   maxit = NA_integer_, max.features = NA_integer_, comma = FALSE, mu = 10L, lambda, crossover.rate = 0.5, mutation.rate = 0.05) {
 
   maxit = asCount(maxit, positive = TRUE)

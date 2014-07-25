@@ -1,17 +1,40 @@
 mlr_2.1:
-- fix a bug when feature filtering resulted in a NoFeatureModel 
+- mlr now supports multi-criteria tuning
+- mlr now supports cluster analysis (experimental)
 - improve makeWeightedClassesWrapper: Hyperparams for class weighting are now supported, too.
 - removed fix.factors option from randomForest, but added it in general to makeLearner,
   so it now works for all learners. 
   Helps when feature factor levels where dropped in newdata prediction data.frames
+- more consistent results for tuning algorithms and parameters with "trafos" : 
+  we always return the optimal settings on the transformed scale, but in the opt.path in
+  the original scale.
+- fix a bug when feature filtering resulted in a NoFeatureModel 
+- resample now returns a data.frame "err.mgs" or error messages that might have occurred during resampling
+- stratified resampling for survival
 
 - new learners:
+-- classif.cforest
+-- classif.glmnet
 -- classif.plsdaCaret
 -- regr.cforest
+-- regr.glmnet
 -- regr.svm
+-- surv.cforest
+-- cluster.SimpleKMeans
+-- cluster.EM
+-- cluster.XMeans
 
 - new measures
 -- bac
+-- db, dunn, g1, g2, silhouette
+
+- new functions
+-- makeClusterTask
+-- removeHyperPars
+-- tuneParamsMultiCrit
+-- makeTuneMultiCritControlGrid, makeTuneMultiCritControlRandom, makeTuneMultiCritControlNSGA2
+-- plotTuneMultiCritResult 
+-- getFailureModelMsg
 
 mlr_2.0:
 - mlr now supports survival analysis models (experimental)

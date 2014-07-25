@@ -1,5 +1,5 @@
 #' @export
-#' @rdname SupervisedTask
+#' @rdname Task
 makeRegrTask = function(id, data, target, weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE) {
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
@@ -16,7 +16,6 @@ makeRegrTask = function(id, data, target, weights = NULL, blocking = NULL,
   return(task)
 }
 
-#' @export
 checkTaskCreation.RegrTask = function(task, target, ...) {
   NextMethod("checkTaskCreation")
   assertString(target)
@@ -24,7 +23,6 @@ checkTaskCreation.RegrTask = function(task, target, ...) {
     stopf("Target column '%s' must be numeric", target)
 }
 
-#' @export
 fixupData.RegrTask = function(task, target, choice, ...) {
   NextMethod("fixupData")
   x = task$env$data[[target]]
@@ -32,7 +30,6 @@ fixupData.RegrTask = function(task, target, choice, ...) {
     task$env$data[[target]] = as.numeric(x)
 }
 
-#' @export
 makeTaskDesc.RegrTask = function(task, id, target) {
   addClasses(makeTaskDescInternal(task, "regr", id, target), "TaskDescRegr")
 }

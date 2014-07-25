@@ -1,6 +1,6 @@
 #' Train a learning algorithm.
 #'
-#' Given a \code{\link{SupervisedTask}}, creates a model for the learning machine
+#' Given a \code{\link{Task}}, creates a model for the learning machine
 #' which can be used for predictions on new data.
 #'
 #' @template arg_learner
@@ -11,7 +11,7 @@
 #' @param weights [\code{numeric}]\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
 #'   If given, must be of same length as \code{subset} and in corresponding order.
-#'   By default \code{NULL} which means no weights are used unless specified in the task ([\code{\link{SupervisedTask}}]).
+#'   By default \code{NULL} which means no weights are used unless specified in the task ([\code{\link{Task}}]).
 #'   Weights from the task will be overwritten.
 #' @return [\code{\link{WrappedModel}}].
 #' @export
@@ -32,7 +32,7 @@
 #' print(mod)
 train = function(learner, task, subset, weights = NULL) {
   learner = checkLearner(learner)
-  assertClass(task, classes = "SupervisedTask")
+  assertClass(task, classes = "Task")
   if (missing(subset)) {
     subset = seq_len(task$task.desc$size)
   } else {

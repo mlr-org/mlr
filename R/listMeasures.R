@@ -17,7 +17,7 @@
 #' @export
 listMeasures = function(obj, properties = character(0L), create = FALSE) {
   if (!missing(obj))
-    assert(checkCharacter(obj), checkClass(obj, "SupervisedTask"))
+    assert(checkCharacter(obj), checkClass(obj, "Task"))
   assertCharacter(properties, any.missing = FALSE)
   assertFlag(create)
   UseMethod("listMeasures")
@@ -32,7 +32,7 @@ listMeasures.default = function(obj, properties = character(0L), create = FALSE)
 #' @rdname listMeasures
 #' @export
 listMeasures.character = function(obj, properties = character(0L), create = FALSE) {
-  assertChoice(obj, choices = c("classif", "regr", "surv", "costsens", NA_character_))
+  assertChoice(obj, choices = c("classif", "regr", "surv", "costsens", "cluster", NA_character_))
   if (is.na(obj))
     obj = character(0L)
   listMeasures2(union(obj, properties), create)
@@ -40,7 +40,7 @@ listMeasures.character = function(obj, properties = character(0L), create = FALS
 
 #' @rdname listMeasures
 #' @export
-listMeasures.SupervisedTask = function(obj, properties = character(0L), create = FALSE) {
+listMeasures.Task = function(obj, properties = character(0L), create = FALSE) {
   td = obj$task.desc
   if (td$type == "classif" && length(td$class.levels) > 2L)
     properties = union(properties, "classif.multi")

@@ -9,7 +9,7 @@
 #'
 #' @param .learner [\code{\link{RLearner}}]\cr
 #'   Wrapped learner.
-#' @param .task [\code{\link{SupervisedTask}}]\cr
+#' @param .task [\code{\link{Task}}]\cr
 #'   Task to train learner on.
 #' @param .subset [\code{integer}]\cr
 #'   Subset of cases for training set, index the task with this.

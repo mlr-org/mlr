@@ -26,6 +26,7 @@
 #'   Factor to upsample the smaller class in each bag.
 #'   Must be between 1 and \code{Inf},
 #'   where 1 means no oversampling and 2 would mean doubling the class size.
+#'   Default is 1.
 #' @param obw.maxcl [\code{character(1)}]\cr
 #'   character value that controls how to sample majority class.
 #'   \dQuote{all} means every instance of the majority class gets in each bag,
@@ -34,12 +35,22 @@
 #' @template ret_learner
 #' @family imbalancy
 #' @export
-makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate, obw.maxcl = "boot") {
+makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 1, obw.maxcl = "boot") {
 
   learner = checkLearner(learner, "classif")
-  obw.iters = asCount(obw.iters, positive = TRUE)
-  assertNumber(obw.rate, lower = 1)
-  assertChoice(obw.maxcl, choices = c("boot", "all"))
+  pv = list()
+  if (!missing(obw.iters)) {
+    obw.iters = asCount(obw.iters, positive = TRUE)
+    pv$obw.iters = obw.iters
+  }
+  if (!missing(obw.rate)) {
+    assertNumber(obw.rate, lower = 1)
+    pv$obw.rate = obw.rate
+  }
+  if (!missing(obw.maxcl)) {
+    assertChoice(obw.maxcl, choices = c("boot", "all"))
+    pv$obw.maxcl = obw.maxcl
+  }
 
   if (learner$predict.type != "response")
     stop("Predict type of the basic learner must be response.")
@@ -50,17 +61,14 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate, obw.maxcl 
     makeNumericLearnerParam(id = "obw.rate", lower = 1),
     makeDiscreteLearnerParam(id = "obw.maxcl", c("boot", "all"))
   )
-  pv = list(obw.iters = obw.iters, obw.rate = obw.rate, obw.maxcl = obw.maxcl)
   x = makeBaseWrapper(id, learner, packs, par.set = ps, par.vals = pv,
     cl = c("OverBaggingWrapper", "BaggingWrapper"))
-  x = addProperties(x, "prob")
-
-  return(x)
+  addProperties(x, "prob")
 }
 
 #' @export
 trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, .weights = NULL,
-   obw.iters, obw.rate, obw.maxcl, ...) {
+   obw.iters = 10L, obw.rate = 1, obw.maxcl = "boot", ...) {
 
   .task = subsetTask(.task, subset = .subset)
   y = getTaskTargets(.task)
