@@ -15,6 +15,7 @@ library(party)
 library(LiblineaR)
 library(stepPlr)
 library(FNN)
+library(randomForestSRC)
 
 if (interactive()) {
   load_all(".")
