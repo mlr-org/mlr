@@ -27,6 +27,7 @@
     Note that kernel parameters have to be passed directly and not by using the kpar list in ksvm.\cr
     Note that \code{fit} has been set to \code{FALSE} by default for speed.}
   \item{\bold{classif.lda}}{\cr Linear Discriminant Analysis from MASS package: \code{\link[MASS]{lda}}}
+   \item{\bold{classif.lqa}}{\cr Penalized Likelihood Inference for GLMs from lqa package: \code{\link[lqa]{lqa}}}
   \item{\bold{classif.LiblineaRBinary}}{\cr Regularized Binary Linear Predictive Models Estimation from LiblineaR package: \code{\link[LiblineaR]{LiblineaR}}
     Note that this model subsumes the types 1,2,3,5}
   \item{\bold{classif.LiblineaRLogReg}}{\cr Regularized Logistic Regression from LiblineaR package: \code{\link[LiblineaR]{LiblineaR}}
