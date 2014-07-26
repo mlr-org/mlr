@@ -61,6 +61,7 @@ Suggests:
     kernlab,
     kknn,
     klaR,
+    lqa,
     LiblineaR,
     mboost,
     mco,
