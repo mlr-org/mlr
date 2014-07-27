@@ -58,6 +58,7 @@
 #'   \item{\bold{classif.randomForest}}{\cr Random Forest from randomForest package: \code{\link[randomForest]{randomForest}}.\cr
 #'     The argument \code{fix.factors} restores the factor levels seen in the training data before prediction to circumvent
 #'     randomForest's internal sanity checks. Default is \code{FALSE}.}
+#'   \item{\bold{classif.randomForestSRC}}{\cr Random Forest from randomForestSRC package: \code{\link[randomForestSRC]{randomForestSRC}}}
 #'   \item{\bold{classif.rda}}{\cr Regularized Discriminant Analysis from klaR package: \code{\link[klaR]{rda}}\cr
 #'     Note that \code{estimate.error} has been set to \code{FALSE} by default for speed.}
 #'   \item{\bold{classif.rpart}}{\cr Decision Tree from rpart package: \code{\link[rpart]{rpart}}\cr

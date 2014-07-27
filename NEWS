@@ -1,6 +1,7 @@
 mlr_2.2
 - new learners:
 -- classif.lqa
+-- classif.randomForestSRC
 -- regr.plsr
 -- regr.randomForestSRC
 
