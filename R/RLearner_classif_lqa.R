@@ -30,7 +30,7 @@ makeRLearner.classif.lqa = function() {
       makeIntegerLearnerParam(id = "digits", default = 5L, lower = 1L)
     ),
     properties = c("numerics", "prob", "twoclass", "weights"),
-    par.vals = list()
+    par.vals = list(penalty = 'lasso', lambda = 0.1)
   )
 }
 
@@ -42,6 +42,10 @@ trainLearner.classif.lqa = function(.learner, .task, .subset, .weights = NULL,
   d = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "01")
   args = c(list(x = d$data, y = d$target, family = binomial(), control = ctrl), list(...))
   rm(d)
+  if (!args$penalty %in% c("adaptive.lasso", "ao", "bridge", "genet", "lasso",
+                           "oscar", "penalreg", "ridge", "scad")) {
+    args$lambda = NULL
+  }
   is.tune.param = names(args) %in% c("lambda", "gamma", "alpha", "c", "a", "lambda1", "lambda2")
   args$penalty = do.call(args$penalty, list(lambda = unlist(args[is.tune.param])))
   args = args[!is.tune.param]
