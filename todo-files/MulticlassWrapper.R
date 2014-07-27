@@ -51,16 +51,14 @@ trainLearner.MulticlassWrapper = function(.learner, .task, .subset, .weights = N
     ct = changeData(.task, data2)
     train(.learner$next.learner, ct)
   })
-  models$cm = cm
-  makeChainModel(next.model = models, cl = "MulticlassModel")
+  makeChainModel(next.model = list(models = models, cm = cm), cl = "MulticlassModel")
 }
 
 
 #' @export 
 predictLearner.MulticlassModel = function(.learner, .model, .newdata, ...) {
-  models = .model$learner.model$next.model
-  cm = models$cm
-  models = models[names(models) != "cm"]
+  models = .model$learner.model$next.model$models
+  cm = .model$learner.model$next.model$cm
   # we use hamming decoding here
   p = sapply(models, function(m) {
     nd = .newdata[, m$features, drop = FALSE]
