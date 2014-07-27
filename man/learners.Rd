@@ -90,6 +90,7 @@
     Note that \code{size} has been set to 3 by default.}
   \item{\bold{regr.pcr}}{\cr Principal component regression from pls package: \code{\link[pls]{pcr}}\cr
     Note that \code{model} has been set to \code{FALSE} by default for speed.}
+  \item{\bold{regr.plsr}}{\cr Partial least squares regression from pls package: \code{\link[pls]{plsr}}}
   \item{\bold{regr.randomForest}}{\cr Random Forest from randomForest package: \code{\link[randomForest]{randomForest}}.
     The argument \code{fix.factors} restores the factor levels seen in the training data before prediction to circumvent
     randomForest's internal sanity checks. Default is \code{FALSE}.}
