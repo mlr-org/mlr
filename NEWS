@@ -2,6 +2,7 @@ mlr_2.2
 - new learners:
 -- classif.lqa
 -- regr.plsr
+-- regr.randomForestSRC
 
 mlr_2.1:
 - mlr now supports multi-criteria tuning

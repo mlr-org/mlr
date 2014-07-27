@@ -93,6 +93,7 @@
 #'   \item{\bold{regr.randomForest}}{\cr Random Forest from randomForest package: \code{\link[randomForest]{randomForest}}.
 #'     The argument \code{fix.factors} restores the factor levels seen in the training data before prediction to circumvent
 #'     randomForest's internal sanity checks. Default is \code{FALSE}.}
+#'   \item{\bold{regr.randomForestSRC}}{\cr Random Forest from randomForestSRC package: \code{\link[randomForestSRC]{randomForestSRC}}}.
 #'   \item{\bold{regr.penalized.ridge}}{\cr Ridge regression from penalized package: \code{\link[penalized]{penalized}}}
 #'   \item{\bold{regr.rpart}}{\cr Decision Tree from rpart package: \code{\link[rpart]{rpart}}\cr
 #'     Note that \code{xval} has been set to 0 by default for speed.}
