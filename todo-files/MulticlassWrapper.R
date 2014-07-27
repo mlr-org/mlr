@@ -82,7 +82,6 @@ makeWrappedModel.MulticlassWrapper = function(learner, learner.model, task.desc,
   addClasses(x, "MulticlassModel")
 }
 
-
 buildCMatrix = function (mcw.custom, mcw.method, .task) {
   # build codematrix
   if (isSet(mcw.custom)) {
