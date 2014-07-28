@@ -30,6 +30,13 @@ isFailureModel.BaggingModel = function(model) {
 }
 
 #' @export
+isFailureModel.MulticlassModel = function(model) {
+  mods = model$learner.model$next.model$models
+  isit = sapply(mods, isFailureModel)
+  return(any(isit))
+}
+
+#' @export
 isFailureModel.CostSensWeightedPairsModel = function(model) {
   mods = getCostSensWeightedPairsModels(model, learner.models = FALSE)
   isit = sapply(mods, isFailureModel)
