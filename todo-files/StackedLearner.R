@@ -1,7 +1,9 @@
 
+
+
 makeStackedLearner = function(id="StackedLearner", method, base.learners, super.learner, resampling) {
-  checkArg(id, "character", len=1L, na.ok=FALSE)
-  checkArg(method, choices=c("average", "stack.nocv"))
+  assert(id, "character", len=1L, na.ok=FALSE)
+  assertChoice(method, c("average", "stack.nocv"))
   checkArg(base.learners, "list")
   checkListElementClass(base.learners, "Learner")
   checkArg(super.learner, "Learner")
@@ -14,9 +16,9 @@ makeStackedLearner = function(id="StackedLearner", method, base.learners, super.
     stop("Base learners must all predict probabilities!")
   if (super.learner$type != "classif")
     stop("Super learner must be classifier!")
-  if (!inherits(resampling, "CVDesc")) 
+  if (!inherits(resampling, "CVDesc"))
     stop("Currently only CV is allowed for resampling!")
-  
+
   lrn = structure(list(
     id = id,
     type = "classif",
@@ -43,15 +45,15 @@ makeStackedLearner = function(id="StackedLearner", method, base.learners, super.
 
 trainLearner.StackedLearner = function(.learner, .task, .subset,  ...) {
   tn = .task$task.desc$target
-  bls = .learner$base.learners 
+  bls = .learner$base.learners
   ids = extractSubList(bls, "id")
   sl = .learner$super.learner
   # reduce to subset we want to train ensemble on
-  .task = subsetTask(.task, subset=.subset)  
+  .task = subsetTask(.task, subset=.subset)
   # init prob result matrix, where base learners store predictions
   probs = as.data.frame(matrix(NA, nrow=.task$task.desc$size, ncol=length(bls)))
   colnames(probs) = ids  #
-  switch(.learner$method, 
+  switch(.learner$method,
     average = averageBaseLearners(.task, bls, sl, probs),
     stack.nocv = stackNoCV(.task, bls, sl, probs)
   )
@@ -62,13 +64,13 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
   k = length(bms)
   probs = as.data.frame(matrix(NA, nrow=nrow(.newdata), ncol=k))
   colnames(probs) = extractSubList(.learner$base.learners, "id")
-  
+
   # predict prob vectors with each base model
   for (i in 1:k) {
     pred = predict(bms[[i]], newdata=.newdata)
     probs[,i] = getProbabilities(pred)
   }
-  
+
   if (.learner$method == "average") {
     prob = rowMeans(probs)
     td = .model$task.desc
@@ -88,7 +90,7 @@ average = function(task, base.learners, super.learner, probs) {
     model = train(bl, task)
     base.models[[i]] = model
   }
-  list(base.models = base.models, super.model = NULL)    
+  list(base.models = base.models, super.model = NULL)
 }
 
 
@@ -105,20 +107,20 @@ stackNoCV = function(task, base.learners, super.learner, probs) {
   probs[[task$task.desc$target]] = getTaskTargets(task)
   super.task = makeClassifTask(data=probs, target=task$task.desc$target)
   super.model = train(super.learner, super.task)
-  list(base.models = base.models, super.model = super.model)    
+  list(base.models = base.models, super.model = super.model)
 }
 
-# 
+#
 # train
-# 
+#
 # instantiate CV, so all base learners see the same training sets
 #rin = makeResampleInstance(.learner$resampling, .task)
 # get the order of the test observations
-#inds = do.call(c, rin$test.inds) 
-# 
+#inds = do.call(c, rin$test.inds)
+#
 # k = length(bls)
-# 
-# # cross-validate all base learners and get a prob vector for the whole dataset 
+#
+# # cross-validate all base learners and get a prob vector for the whole dataset
 # # for each learners
 # probs = as.data.frame(matrix(0, nrow=.task$task.desc$size, ncol=k))
 # # name probs cols with learner ids
@@ -137,8 +139,8 @@ stackNoCV = function(task, base.learners, super.learner, probs) {
 # super.task = makeClassifTask(data=probs, target=tn)
 # super.model = train(.learner$super.learner, super.task)
 # list(base.models=base.models, super.model=super.model)
-# 
-# 
-# 
-# 
-# 
+#
+#
+#
+#
+#
