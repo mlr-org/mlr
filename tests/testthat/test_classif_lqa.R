@@ -7,23 +7,31 @@ test_that("classif_lqa", {
     list(penalty = 'lasso', lambda = 0.01),
     list(penalty = 'fused.lasso', lambda1 = 0.001, lambda2 = 0.01)
   )
+  parset.list.lqa = list(
+    list(family = binomial(), penalty = lasso(0.1)),
+    list(family = binomial(), penalty = lasso(0.01)),
+    list(family = binomial(), penalty = fused.lasso(c(0.001, 0.01)))
+  )
 
   old.predicts.list = list()
   old.probs.list = list()
-
-  x = binaryclass.train
-  y = as.numeric(x[, binaryclass.class.col]) - 1
-  x[, binaryclass.class.col] = NULL
-  newx = cbind(1, binaryclass.test)
-  newx[, binaryclass.target] = NULL
   
-  old.probs.list[[1]] = predict(lqa(x, y, family = binomial(), penalty = lasso(0.1)), newx)$mu.new
-  old.probs.list[[2]] = predict(lqa(x, y, family = binomial(), penalty = lasso(0.01)), newx)$mu.new
-  old.probs.list[[3]] = predict(lqa(x, y, family = binomial(), penalty = fused.lasso(c(0.001, 0.01))), newx)$mu.new
-  
-  old.predicts.list[[1]] =  factor(old.probs.list[[1]] > 0.5, c(TRUE, FALSE), binaryclass.class.levs)
-  old.predicts.list[[2]] =  factor(old.probs.list[[2]] > 0.5, c(TRUE, FALSE), binaryclass.class.levs)
-  old.predicts.list[[3]] =  factor(old.probs.list[[3]] > 0.5, c(TRUE, FALSE), binaryclass.class.levs)
+  for (i in seq_along(parset.list.lqa)) {
+    parset = parset.list.lqa[[i]]
+    x = binaryclass.train
+    y = as.numeric(x[, binaryclass.class.col] == binaryclass.class.levs[1L])
+    x[, binaryclass.class.col] = NULL
+    pars = list(x = x, y = y)
+    pars = c(pars, parset)
+    m = do.call(lqa, pars)
+    newx = binaryclass.test
+    newx[, binaryclass.class.col] = NULL
+    newx = cbind(1, newx)
+    p = predict(m, newx)$mu.new
+    p2 = ifelse(p > 0.5, binaryclass.class.levs[1L], binaryclass.class.levs[2L])
+    old.predicts.list[[i]] = p2
+    old.probs.list[[i]] = p
+  }
 
 
   testSimpleParsets("classif.lqa", binaryclass.df, binaryclass.target, binaryclass.train.inds,
