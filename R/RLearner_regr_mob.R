@@ -15,7 +15,10 @@ makeRLearner.regr.mob = function() {
       makeUntypedLearnerParam(id = "term.feats")
     ),
     par.vals = list(),
-    properties = c("numerics", "factors", "weights")
+    properties = c("numerics", "factors", "weights"),
+    name = "regr.mob",
+    short.name = "regr.mob",
+    note = ""
   )
 }
 

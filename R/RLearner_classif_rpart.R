@@ -17,7 +17,10 @@ makeRLearner.classif.rpart = function() {
       makeUntypedLearnerParam(id = "parms")
     ),
     par.vals = list(xval = 0L),
-    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights")
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights"),
+    name = "classif.rpart",
+    short.name = "classif.rpart",
+    note = ""
   )
 }
 

@@ -7,7 +7,10 @@ makeRLearner.classif.naiveBayes = function() {
       makeNumericLearnerParam(id = "laplace", default = 0, lower = 0)
       # makeNumericLearnerParam(id = "threshold", default = 0.001, lower = 0)
     ),
-    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob")
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
+    name = "classif.naiveBayes",
+    short.name = "classif.naiveBayes",
+    note = ""
   )
 }
 

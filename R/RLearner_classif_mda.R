@@ -15,7 +15,10 @@ makeRLearner.classif.mda = function() {
       makeIntegerLearnerParam(id = "tries", default = 5L, lower = 1L)
     ),
     par.vals = list(keep.fitted = FALSE),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
+    name = "classif.mda",
+    short.name = "classif.mda",
+    note = ""
   )
 }
 

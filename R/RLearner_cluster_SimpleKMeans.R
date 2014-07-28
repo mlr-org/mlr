@@ -21,7 +21,10 @@ makeRLearner.cluster.SimpleKMeans = function() {
       makeNumericLearnerParam(id = "t1", default = -1.5),
       makeLogicalLearnerParam(id = "V")
     ),
-    properties = c("numerics")
+    properties = c("numerics"),
+    name = "cluster.SimpleKMeans",
+    short.name = "cluster.SimpleKMeans",
+    note = ""
   )
 }
 

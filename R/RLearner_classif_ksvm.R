@@ -29,7 +29,10 @@ makeRLearner.classif.ksvm = function() {
       makeLogicalLearnerParam(id = "fit", default = TRUE)
     ),
     par.vals = list(fit = FALSE),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
+    name = "classif.ksvm",
+    short.name = "classif.ksvm",
+    note = ""
   )
 }
 

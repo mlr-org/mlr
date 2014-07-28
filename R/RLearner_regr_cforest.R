@@ -28,7 +28,10 @@ makeRLearner.regr.cforest = function() {
       makeLogicalLearnerParam(id = "savesplitstats", default = FALSE)
     ),
     properties = c('numerics', 'factors', 'weights'),
-    par.vals = list()
+    par.vals = list(),
+    name = "regr.cforest",
+    short.name = "regr.cforest",
+    note = ""
   )
 }
 

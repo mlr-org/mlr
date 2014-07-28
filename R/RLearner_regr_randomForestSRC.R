@@ -12,7 +12,10 @@ makeRLearner.regr.randomForestSRC = function() {
       makeIntegerLearnerParam(id = "nimpute", default = 1L, lower = 1L),
       makeNumericVectorLearnerParam(id = "xwar.wt", lower = 0)
     ),
-    properties = c("missings", "numerics", "factors")
+    properties = c("missings", "numerics", "factors"),
+    name = "regr.randomForestSRC",
+    short.name = "regr.randomForestSRC",
+    note = ""
   )
 }
 

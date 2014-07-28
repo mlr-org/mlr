@@ -15,7 +15,10 @@ makeRLearner.surv.CoxBoost = function() {
       makeDiscreteLearnerParam(id = "sf.scheme", default = "sigmoid", values = c("sigmoid", "linear"))
       # FIXME still missing some arguments
     ),
-    properties = c("numerics", "weights", "rcens")
+    properties = c("numerics", "weights", "rcens"),
+    name = "surv.CoxBoost",
+    short.name = "surv.CoxBoost",
+    note = ""
   )
 }
 

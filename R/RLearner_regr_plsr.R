@@ -8,7 +8,11 @@ makeRLearner.regr.plsr = function() {
         values = c("kernelpls", "widekernelpls", "simpls", "oscorespls")),
       makeLogicalLearnerParam(id = "scale", default = TRUE)
     ),
-    properties = c("numerics", "factors"))
+    properties = c("numerics", "factors"),
+    name = "regr.plsr",
+    short.name = "regr.plsr",
+    note = ""
+  )
 }
 
 #' @export

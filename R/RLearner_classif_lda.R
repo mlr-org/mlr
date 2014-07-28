@@ -8,7 +8,10 @@ makeRLearner.classif.lda = function() {
       makeNumericLearnerParam(id = "nu", lower = 2, requires = expression(method=="t")),
       makeNumericLearnerParam(id = "tol", default = 1e-4, lower = 0)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
+    name = "classif.lda",
+    short.name = "classif.lda",
+    note = ""
   )
 }
 

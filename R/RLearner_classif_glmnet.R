@@ -33,7 +33,10 @@ makeRLearner.classif.glmnet = function() {
       makeIntegerLearnerParam(id = "mxit", default = 100L, lower = 1L)
     ),
     properties = c("numerics", "prob", "twoclass", "multiclass", "weights"),
-    par.vals = list(s = 0.01)
+    par.vals = list(s = 0.01),
+    name = "classif.glmnet",
+    short.name = "classif.glmnet",
+    note = ""
   )
 }
 

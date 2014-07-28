@@ -20,7 +20,10 @@ makeRLearner.regr.blackboost = function() {
       makeLogicalLearnerParam(id = "savesplitstats", default = TRUE),
       makeIntegerLearnerParam(id = "maxdepth", default = 0L, lower = 0L)
     ),
-    properties = c("numerics", "factors", "weights")
+    properties = c("numerics", "factors", "weights"),
+    name = "regr.blackboost",
+    short.name = "regr.blackboost",
+    note = ""
   )
 }
 

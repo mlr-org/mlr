@@ -16,7 +16,10 @@ makeRLearner.regr.rpart = function() {
       makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L)
     ),
     par.vals = list(xval = 0L),
-    properties = c("missings", "numerics", "factors", "weights")
+    properties = c("missings", "numerics", "factors", "weights"),
+    name = "regr.rpart",
+    short.name = "regr.rpart",
+    note = ""
   )
 }
 

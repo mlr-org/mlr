@@ -13,7 +13,10 @@ makeRLearner.regr.gbm = function() {
       makeNumericLearnerParam(id = "train.fraction", default = 1, lower = 0, upper = 1)
     ),
     par.vals = list(distribution = "gaussian"),
-    properties = c("missings", "numerics", "factors", "weights")
+    properties = c("missings", "numerics", "factors", "weights"),
+    name = "regr.gbm",
+    short.name = "regr.gbm",
+    note = ""
   )
 }
 

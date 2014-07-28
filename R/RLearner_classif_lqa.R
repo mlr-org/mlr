@@ -30,7 +30,10 @@ makeRLearner.classif.lqa = function() {
       makeIntegerLearnerParam(id = "digits", default = 5L, lower = 1L)
     ),
     properties = c("numerics", "prob", "twoclass", "weights"),
-    par.vals = list(penalty = 'lasso', lambda = 0.1)
+    par.vals = list(penalty = 'lasso', lambda = 0.1),
+    name = "classif.lqa",
+    short.name = "classif.lqa",
+    note = ""
   )
 }
 

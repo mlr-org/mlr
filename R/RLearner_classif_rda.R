@@ -22,7 +22,10 @@ makeRLearner.classif.rda = function() {
       makeLogicalLearnerParam(id = "estimate.error", default = TRUE)
     ),
     par.vals = list(estimate.error = FALSE),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
+    name = "classif.rda",
+    short.name = "classif.rda",
+    note = ""
   )
 }
 

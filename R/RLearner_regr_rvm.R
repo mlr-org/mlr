@@ -27,7 +27,10 @@ makeRLearner.regr.rvm = function() {
       makeLogicalLearnerParam(id = "fit", default = TRUE)
     ),
     par.vals = list(fit = FALSE),
-    properties = c("numerics", "factors")
+    properties = c("numerics", "factors"),
+    name = "regr.rvm",
+    short.name = "regr.rvm",
+    note = ""
   )
 }
 

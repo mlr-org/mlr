@@ -20,7 +20,10 @@ makeRLearner.regr.nnet = function() {
       makeNumericLearnerParam(id = "reltoll", default = 1.0e-8)
     ),
     par.vals = list(size = 3L),
-    properties = c("numerics", "factors", "weights")
+    properties = c("numerics", "factors", "weights"),
+    name = "regr.nnet",
+    short.name = "regr.nnet",
+    note = ""
   )
 }
 

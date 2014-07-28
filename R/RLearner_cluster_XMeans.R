@@ -17,7 +17,10 @@ makeRLearner.cluster.XMeans = function() {
       makeIntegerLearnerParam(id = "U", default = 0L, lower = 0L),
       makeLogicalLearnerParam(id = "use-kdtree")
     ),
-    properties = c("numerics")
+    properties = c("numerics"),
+    name = "cluster.XMeans",
+    short.name = "cluster.XMeans",
+    note = ""
   )
 }
 

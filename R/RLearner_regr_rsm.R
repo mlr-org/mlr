@@ -7,7 +7,10 @@ makeRLearner.regr.rsm = function() {
       makeDiscreteLearnerParam(id = "modelfun", default = "FO", values = c("FO", "TWI", "SO"))
     ),
     par.vals = list(modelfun = "FO"),
-    properties = c("numerics")
+    properties = c("numerics"),
+    name = "regr.rsm",
+    short.name = "regr.rsm",
+    note = ""
   )
 }
 

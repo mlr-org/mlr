@@ -13,7 +13,10 @@ makeRLearner.classif.LiblineaRBinary = function() {
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L),
       makeLogicalLearnerParam(id = "verbose", default = FALSE)
     ),
-    properties = c("twoclass", "numerics")
+    properties = c("twoclass", "numerics"),
+    name = "classif.LiblineaRBinary",
+    short.name = "classif.LiblineaRBinary",
+    note = ""
   )
 }
 

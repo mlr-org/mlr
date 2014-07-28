@@ -11,7 +11,10 @@ makeRLearner.classif.rrlda = function() {
       makeIntegerLearnerParam(id = "maxit", default = 50L, lower = 1L),
       makeDiscreteLearnerParam(id = "penalty", default = "L2", values = c("L1", "L2"))
     ),
-    properties = c("twoclass", "multiclass", "numerics")
+    properties = c("twoclass", "multiclass", "numerics"),
+    name = "classif.rrlda",
+    short.name = "classif.rrlda",
+    note = ""
   )
 }
 

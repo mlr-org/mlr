@@ -9,7 +9,10 @@ makeRLearner.regr.kknn = function() {
       makeDiscreteLearnerParam(id = "kernel", default = "triangular",
         values = list("rectangular", "triangular", "epanechnikov", "biweight", "triweight", "cos", "inv", "gaussian"))
     ),
-    properties = c("numerics", "factors")
+    properties = c("numerics", "factors"),
+    name = "regr.kknn",
+    short.name = "regr.kknn",
+    note = ""
   )
 }
 

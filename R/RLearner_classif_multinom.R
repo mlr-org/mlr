@@ -15,7 +15,10 @@ makeRLearner.classif.multinom = function() {
       makeNumericLearnerParam(id = "abstoll", default = 1.0e-4),
       makeNumericLearnerParam(id = "reltoll", default = 1.0e-8)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights")
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
+    name = "classif.multinom",
+    short.name = "classif.multinom",
+    note = ""
   )
 }
 

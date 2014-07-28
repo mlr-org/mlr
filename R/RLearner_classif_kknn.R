@@ -10,7 +10,10 @@ makeRLearner.classif.kknn = function() {
       makeDiscreteLearnerParam(id = "kernel", default = "triangular",
         values = list("rectangular", "triangular", "epanechnikov", "biweight", "triweight", "cos", "inv", "gaussian"))
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
+    name = "classif.kknn",
+    short.name = "classif.kknn",
+    note = ""
   )
 }
 

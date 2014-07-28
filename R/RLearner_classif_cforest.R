@@ -26,7 +26,10 @@ makeRLearner.classif.cforest = function() {
       makeLogicalLearnerParam(id = "savesplitstats", default = FALSE)
     ),
     properties = c("twoclass", "multiclass", "prob", "factors", "numerics", "weights"),
-    par.vals = list()
+    par.vals = list(),
+    name = "classif.cforest",
+    short.name = "classif.cforest",
+    note = ""
   )
 }
 

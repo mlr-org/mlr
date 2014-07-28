@@ -12,7 +12,10 @@ makeRLearner.classif.PART = function() {
       makeLogicalLearnerParam(id = "U"),
       makeLogicalLearnerParam(id = "J")
     ),
-    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob")
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
+    name = "classif.PART",
+    short.name = "classif.PART",
+    note = ""
   )
 }
 
