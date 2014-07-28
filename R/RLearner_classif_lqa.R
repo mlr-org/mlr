@@ -59,10 +59,10 @@ trainLearner.classif.lqa = function(.learner, .task, .subset, .weights = NULL,
 predictLearner.classif.lqa = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, new.x = cbind(1, .newdata), ...)$mu.new
   if(.learner$predict.type == "prob"){
-    p = cbind(1 - p, p)
+    p = cbind(p, 1-p)
     colnames(p) = .model$task.desc$class.levels
   } else {
-    p = factor(p > 0.5, c(FALSE, TRUE), .model$task.desc$class.levels)
+    p = factor(p < 0.5, c(FALSE, TRUE), .model$task.desc$class.levels)
   }
   return(p)
 }
