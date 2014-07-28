@@ -58,11 +58,17 @@ trainLearner.classif.lqa = function(.learner, .task, .subset, .weights = NULL,
 #' @export
 predictLearner.classif.lqa = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, new.x = cbind(1, .newdata), ...)$mu.new
+  levs = c(.model$task.desc$negative, .model$task.desc$positive)
   if(.learner$predict.type == "prob"){
-    p = cbind(p, 1-p)
-    colnames(p) = .model$task.desc$class.levels
+    y = matrix(0, ncol = 2, nrow = nrow(.newdata))
+    colnames(y) = levs
+    y[, 1L] = 1 - p
+    y[, 2L] = p
+    return(y)
   } else {
-    p = factor(p < 0.5, c(FALSE, TRUE), .model$task.desc$class.levels)
+    p = as.factor(ifelse(p > 0.5, levs[2L], levs[1L]))
+    names(p) = NULL
+    return(p)
   }
   return(p)
 }
