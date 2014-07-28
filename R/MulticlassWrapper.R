@@ -30,8 +30,9 @@ makeMulticlassWrapper = function(learner, mcw.method="onevsrest") {
   id = paste(learner$id, "multiclass", sep = ".")
   
   x = makeBaseWrapper(id = id, next.learner = learner, package = learner$package, par.set = ps, par.vals = pv, cl = "MulticlassWrapper")
-  addProperties(x, props = "multiclass")
-  removeProperties(x, props = "prob")
+  x = addProperties(x, props = "multiclass")
+  x = removeProperties(x, props = "prob")
+  x = setPredictType(x, predict.type = "response")
   return(x)
 }
 
@@ -44,25 +45,30 @@ trainLearner.MulticlassWrapper = function(.learner, .task, .subset, .weights = N
   cm = buildCMatrix(mcw.custom = mcw.custom, mcw.method = mcw.method, .task = .task)
   x = multi.to.binary(y, cm)
   # now fit models
-  k = length(x$row.inds) 
-  models = lapply(seq_len(k), function(i) {
+  models = lapply(seq_along(x$row.inds), function(i) {
     data2 = d[x$row.inds[[i]], ]
     data2[, tn] = x$targets[[i]] 
-    ct = changeData(.task, data2)
-    train(.learner$next.learner, ct)
+    #ct = changeData(.task, data2) #doing this can cause an invalid task
+    #FIXME: Do we lose some informations here?
+    ct = makeClassifTask(data = data2, target = .task$task.desc$target, weights = .task$weights, blocking = .task$blocking, positive = "1")
+    train(.learner$next.learner, ct, weights = .weights)
   })
   makeChainModel(next.model = list(models = models, cm = cm), cl = "MulticlassModel")
 }
 
 
 #' @export 
-predictLearner.MulticlassModel = function(.learner, .model, .newdata, ...) {
+predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, ...) {
   models = .model$learner.model$next.model$models
   cm = .model$learner.model$next.model$cm
   # we use hamming decoding here
   p = sapply(models, function(m) {
     nd = .newdata[, m$features, drop = FALSE]
-    as.integer(predict(m, newdata = nd, ...)$data$response)
+    pred = predict(m, newdata = nd, ...)$data$response
+    if(is.factor(pred)) {
+      pred = as.integer(as.character(pred))
+    }
+    pred
   })
   rns = rownames(cm)
   y = apply(p, 1, function(v) {
