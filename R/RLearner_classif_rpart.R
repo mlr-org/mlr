@@ -20,7 +20,7 @@ makeRLearner.classif.rpart = function() {
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights"),
     name = "classif.rpart",
     short.name = "classif.rpart",
-    note = ""
+    note = "Note that \\code{xval} has been set to 0 by default for speed."
   )
 }
 

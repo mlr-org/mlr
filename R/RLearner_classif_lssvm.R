@@ -27,7 +27,7 @@ makeRLearner.classif.lssvm = function() {
     properties = c("twoclass", "multiclass", "numerics", "factors"),
     name = "classif.lssvm",
     short.name = "classif.lssvm",
-    note = ""
+    note = "Note that \\code{fitted} has been set to \\code{FALSE} by default for speed."
   )
 }
 

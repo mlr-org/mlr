@@ -10,7 +10,7 @@ makeRLearner.regr.rsm = function() {
     properties = c("numerics"),
     name = "regr.rsm",
     short.name = "regr.rsm",
-    note = ""
+    note = "Note that you select the order of the regression by using modelfun = \"FO\" (first order), \"TWI\" (two-way interactions, this is with 1st oder terms!) and \"SO\" (full second order)"
   )
 }
 

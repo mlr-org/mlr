@@ -9,7 +9,10 @@ makeRLearner.cluster.DBScan = function() {
       makeUntypedLearnerParam(id = "I", default = "weka.clusterers.forOPTICSAndDBScan.Databases.SequentialDatabase"),
       makeIntegerLearnerParam(id = "M", default = 6L, lower = 1L)
     ),
-    properties = c("numerics")
+    properties = c("numerics"),
+    name = "cluster.DBScan",
+    short.name = "cluster.DBScan",
+    note = "Note that you might have to install the Weka package: \\code{WPM(\"install-package\", \"DBScan\")}"
   )
 }
 

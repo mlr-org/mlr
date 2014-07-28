@@ -25,7 +25,7 @@ makeRLearner.classif.rda = function() {
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "classif.rda",
     short.name = "classif.rda",
-    note = ""
+    note = "Note that \\code{estimate.error} has been set to \\code{FALSE} by default for speed."
   )
 }
 

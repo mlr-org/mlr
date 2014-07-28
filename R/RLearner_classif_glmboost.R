@@ -13,7 +13,7 @@ makeRLearner.classif.glmboost = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "classif.glmboost",
     short.name = "classif.glmboost",
-    note = ""
+    note = "Note that \\code{family} has been set to \\code{Binomial()} by default."
   )
 }
 

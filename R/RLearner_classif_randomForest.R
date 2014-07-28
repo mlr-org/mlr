@@ -20,7 +20,7 @@ makeRLearner.classif.randomForest = function() {
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "classif.randomForest",
     short.name = "classif.randomForest",
-    note = ""
+    note = "The argument \\code{fix.factors} restores the factor levels seen in the training data before prediction to circumvent randomForest's internal sanity checks. Default is \\code{FALSE}."
   )
 }
 

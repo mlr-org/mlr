@@ -31,7 +31,7 @@ makeRLearner.regr.ksvm = function() {
     properties = c("numerics", "factors"),
     name = "regr.ksvm",
     short.name = "regr.ksvm",
-    note = ""
+    note = "Note that kernel parameters have to be passed directly and not by using the kpar list in ksvm.\\cr Note that \\code{fit} has been set to \\code{FALSE} by default for speed."
   )
 }
 

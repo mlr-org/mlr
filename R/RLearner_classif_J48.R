@@ -20,7 +20,7 @@ makeRLearner.classif.J48 = function() {
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
     name = "classif.J48",
     short.name = "classif.J48",
-    note = ""
+    note = "Note that NAs are directly passed to WEKA with \\code{na.action = na.pass}"
   )
 }
 

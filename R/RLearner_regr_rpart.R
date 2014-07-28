@@ -19,7 +19,7 @@ makeRLearner.regr.rpart = function() {
     properties = c("missings", "numerics", "factors", "weights"),
     name = "regr.rpart",
     short.name = "regr.rpart",
-    note = ""
+    note = "Note that \\code{xval} has been set to 0 by default for speed."
   )
 }
 

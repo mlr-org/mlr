@@ -11,7 +11,7 @@ makeRLearner.classif.plr = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "classif.plr",
     short.name = "classif.plr",
-    note = ""
+    note = "Note that AIC and BIC penalty types can be selected via the new parameter \\code{cp.type}"
   )
 }
 

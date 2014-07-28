@@ -23,7 +23,7 @@ makeRLearner.regr.nnet = function() {
     properties = c("numerics", "factors", "weights"),
     name = "regr.nnet",
     short.name = "regr.nnet",
-    note = ""
+    note = "Note that \\code{size} has been set to 3 by default."
   )
 }
 

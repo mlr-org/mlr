@@ -16,7 +16,7 @@ makeRLearner.regr.pcr = function() {
     properties = c("numerics", "factors"),
     name = "regr.pcr",
     short.name = "regr.pcr",
-    note = ""
+    note = "Note that \\code{model} has been set to \\code{FALSE} by default for speed."
   )
 }
 

@@ -16,7 +16,7 @@ makeRLearner.regr.gbm = function() {
     properties = c("missings", "numerics", "factors", "weights"),
     name = "regr.gbm",
     short.name = "regr.gbm",
-    note = ""
+    note = "Note that \\code{distribution} has been set to \\dQuote{gaussian} by default."
   )
 }
 
