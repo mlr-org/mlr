@@ -2,58 +2,79 @@ Integrated Learners
 ===================
 
 ```{r echo=FALSE,results='hide'}
-## Stupid startup banners! GAH!
-library("gbm")
-library("grplasso")
+library(xtable)
 
-printf <- function(format, ...) cat(sprintf(format, ...), "\n")
-
-show_learners <- function(learners) {
-  learner_descriptions <- NULL
-  
-  for (learner in learners) {
-    l <- makeLearner(learner)
-    package_link <- if (all(l$package != "stats")) {
-      sprintf("`%s <http://cran.r-project.org/web/packages/%s/index.html>`_",
-              l$package,l$package)
-    } else {
-      l$package
-    }
-    package_link <- paste(package_link, collapse=", ")
-
-    description <- as.data.frame(cbind(name=learner, 
-                                       package=package_link))
-    learner_descriptions <- rbind(learner_descriptions, description)
-    #description <- as.data.frame(c(name=learner, 
-    #                               package=package_link, 
-    #                               l@properties))
-    #learner_descriptions <- rbind(learner_descriptions, description)
-  }
-  
-  ## Remove all constant columns:
-  for (column_name in names(learner_descriptions)) {
-    column <- learner_descriptions[[column_name]]
-    if (all(column[[1]] == column)) 
-      learner_descriptions[[column_name]] <- NULL
-  }
-  
-  print(ascii(learner_descriptions, include.rownames=FALSE, frame="topbot"), 
-        type="rest")
+createPackageLink = function(p) {
+  if (p %nin% "stats") 
+    sprintf("`<a href = 'http://cran.r-project.org/web/packages/%s/index.html'>%s</a>", p, p)
+  else 
+    p
 }
-```
 
-List of currently integrated classifiers
-----------------------------------------
+createPackagesLinks = function(ps) {
+  links = sapply(ps, createPackageLink)
+  collapse(links, ", ")
+}
 
-```{r echo=FALSE,results='asis'}
-library("mlr")
-show_learners(listLearners(type="classif"))
+convBool = function(x) {
+  ifelse(x, "X", "")
+}
+
+printCell = function(s, align = "center") {
+  catf("<td align=\"%s\">%s</td>", align, s)
+}
+
+printCellHeader = function(s, align = "center") {
+  catf("<th align=\"%s\">%s</th>", align, s)
+}
+
+printHeader = function(header) {
+  catf("<tr>")
+  printCellHeader("Id", align = "left")
+  printCellHeader("Name", align = "left")
+  printCellHeader("Packages", align = "left")
+  printCellHeader("prob / se ")
+  printCellHeader("Numerics")
+  printCellHeader("Factors")
+  printCellHeader("NAs")
+  catf("</tr>")
+}
+    
+printLine = function() {
+  catf("<tr><td colspan=6><hr></td></tr>")
+}
+
+printLearnersTab = function(type) {
+  lrns = listLearners(type, create = TRUE)
+
+  catf("<table cellpadding=5>")
+  printHeader(colnames(d))
+  old = list(type = "classif")
+  for (x in lrns) {
+    if (old$type != x$type)
+      printLine()
+    catf("<tr>")
+    printCell(x$id, align = "left")
+    printCell(x$name, align = "left")
+    printCell(createPackagesLinks(x$package), align = "left")
+    printCell(convBool(any(hasProperties(x, c("prob", "se")))))
+    printCell(convBool(hasProperties(x, "numerics")))
+    printCell(convBool(hasProperties(x, "factors")))
+    printCell(convBool(hasProperties(x, "missings")))
+    catf("</tr>")
+    old = x
+  }
+  catf("</table>")
+}
 ``` 
 
-List of currently integrated regression methods
------------------------------------------------
-
 ```{r echo=FALSE,results='asis'}
-library("mlr")
-show_learners(listLearners(type="regr"))
+printLearnersTab(NA_character_)
 ``` 
+
+
+
+
+
+
+
