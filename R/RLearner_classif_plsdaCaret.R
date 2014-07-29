@@ -7,7 +7,7 @@ makeRLearner.classif.plsdaCaret = function() {
       makeDiscreteLearnerParam(id = "probMethod", values = c("softmax", "Bayes"), default = "softmax")
     ),
     properties = c("numerics", "prob", "twoclass"),
-    name = "classif.plsdaCaret",
+    name = "Partial Least Squares (PLS) Discriminant Analysis",
     short.name = "plsdaCaret",
     note = ""
   )

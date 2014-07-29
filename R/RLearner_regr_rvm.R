@@ -28,7 +28,7 @@ makeRLearner.regr.rvm = function() {
     ),
     par.vals = list(fit = FALSE),
     properties = c("numerics", "factors"),
-    name = "regr.rvm",
+    name = "Relevance Vector Machine",
     short.name = "rvm",
     note = "Note that kernel parameters have to be passed directly and not by using the kpar list in rvm.\\cr Note that \\code{fit} has been set to \\code{FALSE} by default for speed."
   )

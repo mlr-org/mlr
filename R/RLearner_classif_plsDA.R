@@ -9,7 +9,7 @@ makeRLearner.classif.plsDA = function() {
       makeLogicalLearnerParam(id = "retain.models", default = FALSE)
       ),
     properties = c("twoclass", "multiclass", "numerics"),
-    name = "classif.plsDA",
+    name = "Partial Least Squares (PLS) Discriminant Analysis",
     short.name = "plsDA",
     note = ""
   )

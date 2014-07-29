@@ -9,7 +9,7 @@ makeRLearner.classif.lda = function() {
       makeNumericLearnerParam(id = "tol", default = 1e-4, lower = 0)
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
-    name = "classif.lda",
+    name = "Linear Discriminant Analysis",
     short.name = "lda",
     note = ""
   )

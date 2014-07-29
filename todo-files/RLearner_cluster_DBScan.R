@@ -10,8 +10,8 @@ makeRLearner.cluster.DBScan = function() {
       makeIntegerLearnerParam(id = "M", default = 6L, lower = 1L)
     ),
     properties = c("numerics"),
-    name = "cluster.DBScan",
-    short.name = "cluster.DBScan",
+    name = "DBScan density-based clustering",
+    short.name = "DBScan",
     note = "Note that you might have to install the Weka package: \\code{WPM(\"install-package\", \"DBScan\")}"
   )
 }

@@ -9,7 +9,7 @@ makeRLearner.regr.lm = function() {
       makeNumericLearnerParam(id = "tol", default = 1.0e-4, lower = 0)
     ),
     properties = c("numerics", "factors", "se", "weights"),
-    name = "regr.lm",
+    name = "Simple linear regression",
     short.name = "lm",
     note = ""
   )

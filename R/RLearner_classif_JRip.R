@@ -11,7 +11,7 @@ makeRLearner.classif.JRip = function() {
       makeLogicalLearnerParam(id = "P", default = FALSE)
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
-    name = "classif.JRip",
+    name = "Propositional Rule Learner",
     short.name = "JRip",
     note = "Note that NAs are directly passed to WEKA with \\code{na.action = na.pass}"
   )

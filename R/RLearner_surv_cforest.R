@@ -27,8 +27,8 @@ makeRLearner.surv.cforest = function() {
     ),
     properties = c("twoclass", "multiclass", "prob", "factors", "numerics", "weights"),
     par.vals = list(),
-    name = "surv.cforest",
-    short.name = "cforest",
+    name = "Random forest based on conditional inference trees",
+    short.name = "cRF",
     note = ""
   )
 }

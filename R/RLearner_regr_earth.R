@@ -9,7 +9,7 @@ makeRLearner.regr.earth = function() {
       makeIntegerLearnerParam(id = "nprune")
       ),
     properties = c("numerics", "factors"),
-    name = "regr.earth",
+    name = "Multivariate Adaptive Regression Splines",
     short.name = "earth",
     note = ""
   )

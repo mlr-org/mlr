@@ -18,7 +18,7 @@ makeRLearner.classif.J48 = function() {
       makeLogicalLearnerParam(id = "J")
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
-    name = "classif.J48",
+    name = "J48 Decision Trees",
     short.name = "J48",
     note = "Note that NAs are directly passed to WEKA with \\code{na.action = na.pass}"
   )

@@ -7,7 +7,7 @@ makeRLearner.classif.quaDA = function() {
       #makeNumericVectorLearnerParam(id = "prior", lower = 0, upper = 1, default = NULL),
       ),
     properties = c("twoclass", "multiclass", "numerics"),
-    name = "classif.quaDA",
+    name = "Quadratic Discriminant Analysis",
     short.name = "quaDA",
     note = ""
   )

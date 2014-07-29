@@ -8,8 +8,8 @@ makeRLearner.classif.naiveBayes = function() {
       # makeNumericLearnerParam(id = "threshold", default = 0.001, lower = 0)
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
-    name = "classif.naiveBayes",
-    short.name = "naiveBayes",
+    name = "Naive Bayes",
+    short.name = "nBayes",
     note = ""
   )
 }

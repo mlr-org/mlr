@@ -18,7 +18,7 @@ makeRLearner.classif.rpart = function() {
     ),
     par.vals = list(xval = 0L),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights"),
-    name = "classif.rpart",
+    name = "Decision Tree",
     short.name = "rpart",
     note = "Note that \\code{xval} has been set to 0 by default for speed."
   )

@@ -13,8 +13,8 @@ makeRLearner.classif.randomForestSRC = function() {
       makeNumericVectorLearnerParam(id = "xwar.wt", lower = 0)
     ),
     properties = c("missings", "numerics", "factors", "prob", "twoclass", "multiclass"),
-    name = "classif.randomForestSRC",
-    short.name = "randomForestSRC",
+    name = "Random Forest",
+    short.name = "RFsrc",
     note = ""
   )
 }

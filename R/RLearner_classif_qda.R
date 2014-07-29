@@ -8,7 +8,7 @@ makeRLearner.classif.qda = function() {
       makeNumericLearnerParam(id = "nu", default = 5 , lower = 2, requires = expression(method == "t"))
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
-    name = "classif.qda",
+    name = "Quadratic Discriminant Analysis",
     short.name = "qda",
     note = ""
   )

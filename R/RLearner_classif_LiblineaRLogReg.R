@@ -14,8 +14,8 @@ makeRLearner.classif.LiblineaRLogReg = function() {
       makeLogicalLearnerParam(id = "verbose", default = FALSE)
     ),
   properties = c("twoclass", "numerics", "prob"),
-  name = "classif.LiblineaRLogReg",
-  short.name = "LiblineaRLogReg",
+  name = "Regularized Logistic Regression",
+  short.name = "RegLReg",
   note = "Note that this model subsumes type 0,6,7."
   )
 }

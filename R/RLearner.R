@@ -67,7 +67,7 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
     stop("Argument par.vals must be a properly named list!")
   assertString(name)
   assertString(short.name)
-  assertString(note)
+  assertCharacter(a, max.len = 1L)
 
   learner = setClasses(list(
     id = id,

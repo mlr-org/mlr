@@ -11,7 +11,7 @@ makeRLearner.classif.kknn = function() {
         values = list("rectangular", "triangular", "epanechnikov", "biweight", "triweight", "cos", "inv", "gaussian"))
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
-    name = "classif.kknn",
+    name = "k-Nearest Neighbor",
     short.name = "kknn",
     note = ""
   )

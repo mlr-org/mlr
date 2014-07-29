@@ -16,7 +16,7 @@ makeRLearner.classif.multinom = function() {
       makeNumericLearnerParam(id = "reltoll", default = 1.0e-8)
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
-    name = "classif.multinom",
+    name = "Multinomial Regression",
     short.name = "multinom",
     note = ""
   )

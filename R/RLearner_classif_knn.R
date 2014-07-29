@@ -11,7 +11,7 @@ makeRLearner.classif.knn = function() {
     # knn cannot really return probs, only for the winning class (yeah well done BR)
     # knn also cannot handle factors in features apparantly
     properties = c("twoclass", "multiclass", "numerics"),
-    name = "classif.knn",
+    name = "k-Nearest Neighbor",
     short.name = "knn",
     note = ""
   )

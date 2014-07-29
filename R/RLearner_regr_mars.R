@@ -12,7 +12,7 @@ makeRLearner.regr.mars = function() {
       makeLogicalLearnerParam(id = "forward.step", default = TRUE)
     ),
     properties = c("numerics"),
-    name = "regr.mars",
+    name = "Multivariate Adaptive Regression Splines",
     short.name = "mars",
     note = ""
   )

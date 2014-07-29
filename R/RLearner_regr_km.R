@@ -18,7 +18,7 @@ makeRLearner.regr.km = function() {
     ),
     par.vals = list(jitter = FALSE),
     properties = c("numerics", "se"),
-    name = "regr.km",
+    name = "Kriging",
     short.name = "km",
     note = ""
   )

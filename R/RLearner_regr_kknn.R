@@ -10,7 +10,7 @@ makeRLearner.regr.kknn = function() {
         values = list("rectangular", "triangular", "epanechnikov", "biweight", "triweight", "cos", "inv", "gaussian"))
     ),
     properties = c("numerics", "factors"),
-    name = "regr.kknn",
+    name = "K-Nearest-Neighbor regression",
     short.name = "kknn",
     note = ""
   )

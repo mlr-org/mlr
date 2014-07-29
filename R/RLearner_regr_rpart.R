@@ -17,7 +17,7 @@ makeRLearner.regr.rpart = function() {
     ),
     par.vals = list(xval = 0L),
     properties = c("missings", "numerics", "factors", "weights"),
-    name = "regr.rpart",
+    name = "Decision Tree",
     short.name = "rpart",
     note = "Note that \\code{xval} has been set to 0 by default for speed."
   )

@@ -29,7 +29,7 @@ makeRLearner.regr.cforest = function() {
     ),
     properties = c('numerics', 'factors', 'weights'),
     par.vals = list(),
-    name = "regr.cforest",
+    name = "Random forest based on conditional inference trees",
     short.name = "cforest",
     note = ""
   )

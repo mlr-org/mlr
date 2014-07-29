@@ -13,7 +13,7 @@ makeRLearner.regr.IBk = function() {
       makeUntypedLearnerParam(id = "A", default = "weka.core.neighboursearch.LinearNNSearch")
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
-    name = "regr.IBk",
+    name = "K-nearest neighbours",
     short.name = "IBk",
     note = ""
   )

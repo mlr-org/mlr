@@ -18,7 +18,7 @@ makeRLearner.classif.svm = function() {
 
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
-    name = "classif.svm",
+    name = "Support Vector Machines (libsvm)",
     short.name = "svm",
     note = ""
   )

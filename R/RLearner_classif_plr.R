@@ -9,7 +9,7 @@ makeRLearner.classif.plr = function() {
       makeNumericLearnerParam(id = "cp", lower = 0, default = 2)
     ),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
-    name = "classif.plr",
+    name = "Logistic regression with a L2 penalty",
     short.name = "plr",
     note = "Note that AIC and BIC penalty types can be selected via the new parameter \\code{cp.type}"
   )

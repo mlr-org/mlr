@@ -12,8 +12,8 @@ makeRLearner.surv.randomForestSRC = function() {
       makeDiscreteLearnerParam(id = "na.action", values = c("na.omit", "na.impute"), default = "na.omit")
     ),
     properties = c("missings", "numerics", "factors", "rcens"),
-    name = "surv.randomForestSRC",
-    short.name = "randomForestSRC",
+    name = "Random Forests for Survival",
+    short.name = "RFsrc",
     note = ""
   )
 }

@@ -18,7 +18,7 @@ makeRLearner.regr.svm = function() {
 
     ),
     properties = c("numerics", "factors"),
-    name = "regr.svm",
+    name = "Support Vector Machines (libsvm)",
     short.name = "svm",
     note = ""
   )
