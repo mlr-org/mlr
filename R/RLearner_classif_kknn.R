@@ -12,7 +12,7 @@ makeRLearner.classif.kknn = function() {
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "classif.kknn",
-    short.name = "classif.kknn",
+    short.name = "kknn",
     note = ""
   )
 }

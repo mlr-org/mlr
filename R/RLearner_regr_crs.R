@@ -37,7 +37,7 @@ makeRLearner.regr.crs = function() {
     par.vals = list(),
     properties = c("numerics", "factors", "se", "weights"),
     name = "regr.crs",
-    short.name = "regr.crs",
+    short.name = "crs",
     note = ""
   )
 }

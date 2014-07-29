@@ -17,7 +17,7 @@ makeRLearner.regr.mob = function() {
     par.vals = list(),
     properties = c("numerics", "factors", "weights"),
     name = "regr.mob",
-    short.name = "regr.mob",
+    short.name = "mob",
     note = ""
   )
 }

@@ -10,7 +10,7 @@ makeRLearner.regr.plsr = function() {
     ),
     properties = c("numerics", "factors"),
     name = "regr.plsr",
-    short.name = "regr.plsr",
+    short.name = "plsr",
     note = ""
   )
 }

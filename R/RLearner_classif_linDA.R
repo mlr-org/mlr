@@ -8,7 +8,7 @@ makeRLearner.classif.linDA = function() {
       ),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "classif.linDA",
-    short.name = "classif.linDA",
+    short.name = "linDA",
     note = ""
   )
 }

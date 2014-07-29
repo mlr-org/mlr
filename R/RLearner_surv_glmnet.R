@@ -32,7 +32,7 @@ makeRLearner.surv.glmnet = function() {
     ),
     properties = c("numerics", "weights", "rcens"),
     name = "surv.glmnet",
-    short.name = "surv.glmnet",
+    short.name = "glmnet",
     note = ""
   )
 }

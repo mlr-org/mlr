@@ -14,7 +14,7 @@ makeRLearner.classif.randomForestSRC = function() {
     ),
     properties = c("missings", "numerics", "factors", "prob", "twoclass", "multiclass"),
     name = "classif.randomForestSRC",
-    short.name = "classif.randomForestSRC",
+    short.name = "randomForestSRC",
     note = ""
   )
 }

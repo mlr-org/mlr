@@ -11,8 +11,8 @@ makeRLearner.classif.glmboost = function() {
     ),
     par.vals = list(family = Binomial()),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
-    name = "classif.glmboost",
-    short.name = "classif.glmboost",
+    name = "Boosting for GLMs",
+    short.name = "glmbst",
     note = "Note that \\code{family} has been set to \\code{Binomial()} by default."
   )
 }

@@ -12,7 +12,7 @@ makeRLearner.surv.penalized = function() {
     ),
     properties = c("numerics", "factors", "rcens"),
     name = "surv.penalized",
-    short.name = "surv.penalized",
+    short.name = "penalized",
     note = ""
   )
 }

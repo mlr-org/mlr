@@ -8,7 +8,7 @@ makeRLearner.regr.penalized.ridge = function() {
     ),
     properties = c("numerics", "factors"),
     name = "regr.penalized.ridge",
-    short.name = "regr.penalized.ridge",
+    short.name = "ridge",
     note = ""
   )
 }

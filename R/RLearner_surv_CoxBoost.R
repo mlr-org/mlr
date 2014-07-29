@@ -17,7 +17,7 @@ makeRLearner.surv.CoxBoost = function() {
     ),
     properties = c("numerics", "weights", "rcens"),
     name = "surv.CoxBoost",
-    short.name = "surv.CoxBoost",
+    short.name = "CoxBoost",
     note = ""
   )
 }

@@ -7,7 +7,7 @@ makeRLearner.classif.lvq1 = function() {
     par.set = makeParamSet(),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "classif.lvq1",
-    short.name = "classif.lvq1",
+    short.name = "lvq1",
     note = ""
   )
 }

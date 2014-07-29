@@ -22,7 +22,7 @@ makeRLearner.regr.blackboost = function() {
     ),
     properties = c("numerics", "factors", "weights"),
     name = "regr.blackboost",
-    short.name = "regr.blackboost",
+    short.name = "blackboost",
     note = ""
   )
 }

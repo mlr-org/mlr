@@ -15,7 +15,7 @@ makeRLearner.classif.LiblineaRLogReg = function() {
     ),
   properties = c("twoclass", "numerics", "prob"),
   name = "classif.LiblineaRLogReg",
-  short.name = "classif.LiblineaRLogReg",
+  short.name = "LiblineaRLogReg",
   note = "Note that this model subsumes type 0,6,7."
   )
 }

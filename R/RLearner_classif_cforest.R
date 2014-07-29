@@ -27,8 +27,8 @@ makeRLearner.classif.cforest = function() {
     ),
     properties = c("twoclass", "multiclass", "prob", "factors", "numerics", "weights"),
     par.vals = list(),
-    name = "classif.cforest",
-    short.name = "classif.cforest",
+    name = "Random forest based on conditional inference trees",
+    short.name = "cforest",
     note = ""
   )
 }

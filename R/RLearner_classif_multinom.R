@@ -17,7 +17,7 @@ makeRLearner.classif.multinom = function() {
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
     name = "classif.multinom",
-    short.name = "classif.multinom",
+    short.name = "multinom",
     note = ""
   )
 }

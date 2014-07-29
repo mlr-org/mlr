@@ -10,7 +10,7 @@ makeRLearner.classif.plsDA = function() {
       ),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "classif.plsDA",
-    short.name = "classif.plsDA",
+    short.name = "plsDA",
     note = ""
   )
 }

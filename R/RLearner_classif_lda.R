@@ -10,7 +10,7 @@ makeRLearner.classif.lda = function() {
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "classif.lda",
-    short.name = "classif.lda",
+    short.name = "lda",
     note = ""
   )
 }

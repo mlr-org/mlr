@@ -19,7 +19,7 @@ makeRLearner.classif.svm = function() {
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "classif.svm",
-    short.name = "classif.svm",
+    short.name = "svm",
     note = ""
   )
 }

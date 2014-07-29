@@ -14,7 +14,7 @@ makeRLearner.regr.IBk = function() {
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "regr.IBk",
-    short.name = "regr.IBk",
+    short.name = "IBk",
     note = ""
   )
 }

@@ -11,7 +11,7 @@ makeRLearner.regr.kknn = function() {
     ),
     properties = c("numerics", "factors"),
     name = "regr.kknn",
-    short.name = "regr.kknn",
+    short.name = "kknn",
     note = ""
   )
 }

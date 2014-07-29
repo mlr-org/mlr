@@ -13,7 +13,7 @@ makeRLearner.regr.mars = function() {
     ),
     properties = c("numerics"),
     name = "regr.mars",
-    short.name = "regr.mars",
+    short.name = "mars",
     note = ""
   )
 }

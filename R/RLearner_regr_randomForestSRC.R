@@ -14,7 +14,7 @@ makeRLearner.regr.randomForestSRC = function() {
     ),
     properties = c("missings", "numerics", "factors"),
     name = "regr.randomForestSRC",
-    short.name = "regr.randomForestSRC",
+    short.name = "randomForestSRC",
     note = ""
   )
 }

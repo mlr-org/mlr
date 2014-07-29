@@ -30,7 +30,7 @@ makeRLearner.regr.cforest = function() {
     properties = c('numerics', 'factors', 'weights'),
     par.vals = list(),
     name = "regr.cforest",
-    short.name = "regr.cforest",
+    short.name = "cforest",
     note = ""
   )
 }

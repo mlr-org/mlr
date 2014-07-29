@@ -8,7 +8,7 @@ makeRLearner.classif.plsdaCaret = function() {
     ),
     properties = c("numerics", "prob", "twoclass"),
     name = "classif.plsdaCaret",
-    short.name = "classif.plsdaCaret",
+    short.name = "plsdaCaret",
     note = ""
   )
 }

@@ -17,7 +17,7 @@ makeRLearner.classif.mda = function() {
     par.vals = list(keep.fitted = FALSE),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "classif.mda",
-    short.name = "classif.mda",
+    short.name = "mda",
     note = "Note that \\code{keep.fitted} has been set to \\code{FALSE} by default for speed."
   )
 }

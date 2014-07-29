@@ -19,7 +19,7 @@ makeRLearner.regr.svm = function() {
     ),
     properties = c("numerics", "factors"),
     name = "regr.svm",
-    short.name = "regr.svm",
+    short.name = "svm",
     note = ""
   )
 }

@@ -13,7 +13,7 @@ makeRLearner.classif.rrlda = function() {
     ),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "classif.rrlda",
-    short.name = "classif.rrlda",
+    short.name = "rrlda",
     note = ""
   )
 }

@@ -14,7 +14,7 @@ makeRLearner.surv.coxph = function() {
     ),
     properties = c("missings", "numerics", "factors", "weights", "prob", "rcens"),
     name = "surv.coxph",
-    short.name = "surv.coxph",
+    short.name = "coxph",
     note = ""
   )
 }

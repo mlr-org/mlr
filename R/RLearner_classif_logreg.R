@@ -6,7 +6,7 @@ makeRLearner.classif.logreg = function() {
     par.set = makeParamSet(),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
     name = "classif.logreg",
-    short.name = "classif.logreg",
+    short.name = "logreg",
     note = ""
   )
 }

@@ -17,7 +17,7 @@ makeRLearner.cluster.EM = function() {
     ),
     properties = c("numerics"),
     name = "cluster.EM",
-    short.name = "cluster.EM",
+    short.name = "EM",
     note = ""
   )
 }

@@ -17,8 +17,8 @@ makeRLearner.classif.ctree = function() {
       makeIntegerLearnerParam(id = "maxdepth", default = 0L, lower = 0L)
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights"),
-    name = "classif.ctree",
-    short.name = "classif.ctree",
+    name = "Conditional Inference Trees",
+    short.name = "ctree",
     note = ""
   )
 }

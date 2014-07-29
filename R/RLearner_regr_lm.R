@@ -10,7 +10,7 @@ makeRLearner.regr.lm = function() {
     ),
     properties = c("numerics", "factors", "se", "weights"),
     name = "regr.lm",
-    short.name = "regr.lm",
+    short.name = "lm",
     note = ""
   )
 }

@@ -23,7 +23,7 @@ makeRLearner.classif.nnet = function() {
     par.vals = list(size = 3L),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
     name = "classif.nnet",
-    short.name = "classif.nnet",
+    short.name = "nnet",
     note = "Note that \\code{size} has been set to 3 by default."
   )
 }

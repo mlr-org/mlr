@@ -31,7 +31,7 @@ makeRLearner.classif.ksvm = function() {
     par.vals = list(fit = FALSE),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "classif.ksvm",
-    short.name = "classif.ksvm",
+    short.name = "ksvm",
     note = "Note that kernel parameters have to be passed directly and not by using the kpar list in ksvm.\\cr Note that \\code{fit} has been set to \\code{FALSE} by default for speed."
   )
 }

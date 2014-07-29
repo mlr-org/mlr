@@ -12,7 +12,7 @@ makeRLearner.surv.glmboost = function() {
     ),
     properties = c("numerics", "factors", "weights", "rcens"),
     name = "surv.glmboost",
-    short.name = "surv.glmboost",
+    short.name = "glmboost",
     note = ""
   )
 }

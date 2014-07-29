@@ -12,7 +12,7 @@ makeRLearner.classif.knn = function() {
     # knn also cannot handle factors in features apparantly
     properties = c("twoclass", "multiclass", "numerics"),
     name = "classif.knn",
-    short.name = "classif.knn",
+    short.name = "knn",
     note = ""
   )
 }

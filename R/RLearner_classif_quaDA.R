@@ -8,7 +8,7 @@ makeRLearner.classif.quaDA = function() {
       ),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "classif.quaDA",
-    short.name = "classif.quaDA",
+    short.name = "quaDA",
     note = ""
   )
 }

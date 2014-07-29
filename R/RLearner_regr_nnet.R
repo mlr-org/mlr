@@ -22,7 +22,7 @@ makeRLearner.regr.nnet = function() {
     par.vals = list(size = 3L),
     properties = c("numerics", "factors", "weights"),
     name = "regr.nnet",
-    short.name = "regr.nnet",
+    short.name = "nnet",
     note = "Note that \\code{size} has been set to 3 by default."
   )
 }

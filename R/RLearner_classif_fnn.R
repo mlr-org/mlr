@@ -10,8 +10,8 @@ makeRLearner.classif.fnn = function() {
       makeDiscreteLearnerParam(id = "algorithm", default = "cover_tree", values = list("cover_tree", "kd_tree", "VR"))
     ),
     properties = c("twoclass", "multiclass", "numerics"),
-    name = "classif.fnn",
-    short.name = "classif.fnn",
+    name = "Fast k-Nearest Neighbor",
+    short.name = "fnn",
     note = ""
   )
 }

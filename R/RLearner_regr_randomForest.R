@@ -26,7 +26,7 @@ makeRLearner.regr.randomForest = function() {
     ),
     properties = c("numerics", "factors", "se"),
     name = "regr.randomForest",
-    short.name = "regr.randomForest",
+    short.name = "randomForest",
     note = "The argument \\code{fix.factors} restores the factor levels seen in the training data before prediction to circumvent randomForest's internal sanity checks. Default is \\code{FALSE}."
   )
 }

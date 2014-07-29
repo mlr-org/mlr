@@ -26,7 +26,7 @@ makeRLearner.classif.lssvm = function() {
     par.vals = list(fitted = FALSE),
     properties = c("twoclass", "multiclass", "numerics", "factors"),
     name = "classif.lssvm",
-    short.name = "classif.lssvm",
+    short.name = "lssvm",
     note = "Note that \\code{fitted} has been set to \\code{FALSE} by default for speed."
   )
 }

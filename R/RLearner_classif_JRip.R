@@ -12,7 +12,7 @@ makeRLearner.classif.JRip = function() {
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
     name = "classif.JRip",
-    short.name = "classif.JRip",
+    short.name = "JRip",
     note = "Note that NAs are directly passed to WEKA with \\code{na.action = na.pass}"
   )
 }

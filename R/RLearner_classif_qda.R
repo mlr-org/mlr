@@ -9,7 +9,7 @@ makeRLearner.classif.qda = function() {
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "classif.qda",
-    short.name = "classif.qda",
+    short.name = "qda",
     note = ""
   )
 }

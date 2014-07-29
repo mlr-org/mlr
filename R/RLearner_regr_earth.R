@@ -10,7 +10,7 @@ makeRLearner.regr.earth = function() {
       ),
     properties = c("numerics", "factors"),
     name = "regr.earth",
-    short.name = "regr.earth",
+    short.name = "earth",
     note = ""
   )
 }

@@ -11,7 +11,7 @@ makeRLearner.regr.fnn = function() {
     ),
     properties = c("numerics"),
     name = "regr.fnn",
-    short.name = "regr.fnn",
+    short.name = "fnn",
     note = ""
   )
 }

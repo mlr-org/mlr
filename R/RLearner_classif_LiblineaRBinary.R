@@ -15,7 +15,7 @@ makeRLearner.classif.LiblineaRBinary = function() {
     ),
     properties = c("twoclass", "numerics"),
     name = "classif.LiblineaRBinary",
-    short.name = "classif.LiblineaRBinary",
+    short.name = "LiblineaRBinary",
     note = "Note that this model subsumes the types 1,2,3,5."
   )
 }

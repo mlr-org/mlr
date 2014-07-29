@@ -15,7 +15,7 @@ makeRLearner.classif.LiblineaRMultiClass = function() {
     par.vals = list(type = 4),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "classif.LiblineaRMultiClass",
-    short.name = "classif.LiblineaRMultiClass",
+    short.name = "LiblineaRMultiClass",
     note = "Note that this model is type 4."
   )
 }

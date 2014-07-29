@@ -35,7 +35,7 @@ makeRLearner.regr.glmnet = function() {
     properties = c("numerics", "prob", "twoclass", "multiclass", "weights"),
     par.vals = list(s = 0.01),
     name = "regr.glmnet",
-    short.name = "regr.glmnet",
+    short.name = "glmnet",
     note = ""
   )
 }

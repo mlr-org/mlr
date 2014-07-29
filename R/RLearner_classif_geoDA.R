@@ -5,8 +5,8 @@ makeRLearner.classif.geoDA = function() {
     package = "DiscriMiner",
     par.set = makeParamSet(),
     properties = c("twoclass", "multiclass", "numerics"),
-    name = "classif.geoDA",
-    short.name = "classif.geoDA",
+    name = "Geometric Predictive Discriminant Analysis",
+    short.name = "geoDA",
     note = ""
   )
 }
