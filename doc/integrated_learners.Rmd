@@ -32,11 +32,13 @@ printHeader = function(header) {
   catf("<tr>")
   printCellHeader("Id", align = "left")
   printCellHeader("Name", align = "left")
+  printCellHeader("Short", align = "left")
   printCellHeader("Packages", align = "left")
   printCellHeader("prob / se ")
   printCellHeader("Numerics")
   printCellHeader("Factors")
   printCellHeader("NAs")
+  printCellHeader("Note")
   catf("</tr>")
 }
     
@@ -56,11 +58,13 @@ printLearnersTab = function(type) {
     catf("<tr>")
     printCell(x$id, align = "left")
     printCell(x$name, align = "left")
+    printCell(x$short.name, align = "left")
     printCell(createPackagesLinks(x$package), align = "left")
     printCell(convBool(any(hasProperties(x, c("prob", "se")))))
     printCell(convBool(hasProperties(x, "numerics")))
     printCell(convBool(hasProperties(x, "factors")))
     printCell(convBool(hasProperties(x, "missings")))
+    printCell(x$note, align = "left")
     catf("</tr>")
     old = x
   }
