@@ -14,19 +14,19 @@
 makeRLearner()
 
 makeRLearnerClassif(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name, short.name = name,
+  properties = character(0L), name = cl, short.name = name,
   note = character(0L))
 
 makeRLearnerRegr(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name, short.name = name,
+  properties = character(0L), name = cl, short.name = name,
   note = character(0L))
 
 makeRLearnerSurv(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name, short.name = name,
+  properties = character(0L), name = cl, short.name = name,
   note = character(0L))
 
 makeRLearnerCluster(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name, short.name = name,
+  properties = character(0L), name = cl, short.name = name,
   note = character(0L))
 }
 \arguments{
@@ -61,7 +61,8 @@ The values can later be overwritten when the user sets hyperparameters.
 Default is empty list.}
 
 \item{name}{[\code{character(1)}]
-Unique meaningful name of the learner}
+Unique meaningful name of the learner.
+Default is \code{cl}.}
 
 \item{short.name}{Short name for the learner.
 Default is \code{name}.}
