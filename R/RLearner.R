@@ -31,14 +31,15 @@
 #'   The values can later be overwritten when the user sets hyperparameters.
 #'   Default is empty list.
 #' @param name [\code{character(1)}]
-#'   Unique meaningful name of the learner.
-#'   Default is \code{cl}.
-#' @param short.name
-#'   Short name for the learner. 
-#'   Default is \code{name}.
-#' @param note
-#'   Additional notes for the usage of the learner.
-#'   Default is \code{character(0)}.
+#'   Meaningful name for learner.
+#'   Default is \code{id}.
+#' @param short.name [\code{character(1)}]
+#'   Short name for learner.
+#'   Should only be a few characters so it can be used in plots and tables.
+#'   Default is \code{id}.
+#' @param note [\code{character(1)}]
+#'   Additional notes regarding the learner and its integration in mlr.
+#'   Default is \dQuote{}.
 #' @return [\code{\link{RLearnerClassif}}, \code{\link{RLearnerRegr}} or \code{\link{RLearnerSurv}}].
 #' @name RLearner
 #' @rdname RLearner
@@ -51,7 +52,9 @@ makeRLearner = function() {
   UseMethod("makeRLearner")
 }
 
-makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties, name, short.name, note) {
+makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties,
+  name = id, short.name = id, note = "") {
+
   # must do that before accessing par.set
   # one case where lazy eval is actually helpful...
   assertCharacter(package, any.missing = FALSE)
@@ -67,7 +70,7 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
     stop("Argument par.vals must be a properly named list!")
   assertString(name)
   assertString(short.name)
-  assertCharacter(a, max.len = 1L)
+  assertString(note)
 
   learner = setClasses(list(
     id = id,
