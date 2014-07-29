@@ -35,7 +35,10 @@ makeRLearner.regr.crs = function() {
 
     ),
     par.vals = list(),
-    properties = c("numerics", "factors", "se", "weights")
+    properties = c("numerics", "factors", "se", "weights"),
+    name = "Regression Splines",
+    short.name = "crs",
+    note = ""
   )
 }
 

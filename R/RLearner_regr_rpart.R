@@ -16,7 +16,10 @@ makeRLearner.regr.rpart = function() {
       makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L)
     ),
     par.vals = list(xval = 0L),
-    properties = c("missings", "numerics", "factors", "weights")
+    properties = c("missings", "numerics", "factors", "weights"),
+    name = "Decision Tree",
+    short.name = "rpart",
+    note = "Note that \\code{xval} has been set to 0 by default for speed."
   )
 }
 

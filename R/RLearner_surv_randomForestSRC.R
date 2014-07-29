@@ -11,7 +11,10 @@ makeRLearner.surv.randomForestSRC = function() {
       makeDiscreteLearnerParam(id = "splitrule", values = c("logrank", "logrankscore"), default = "logrank"),
       makeDiscreteLearnerParam(id = "na.action", values = c("na.omit", "na.impute"), default = "na.omit")
     ),
-    properties = c("missings", "numerics", "factors", "rcens")
+    properties = c("missings", "numerics", "factors", "rcens"),
+    name = "Random Forests for Survival",
+    short.name = "RFsrc",
+    note = ""
   )
 }
 

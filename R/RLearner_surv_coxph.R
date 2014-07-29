@@ -12,7 +12,10 @@ makeRLearner.surv.coxph = function() {
       makeNumericLearnerParam(id = "toler.inf", default = sqrt(.Machine$double.eps^0.75), lower = 0),
       makeIntegerLearnerParam(id = "outer.max", default = 10L, lower = 1L)
     ),
-    properties = c("missings", "numerics", "factors", "weights", "prob", "rcens")
+    properties = c("missings", "numerics", "factors", "weights", "prob", "rcens"),
+    name = "Cox proportional hazard model",
+    short.name = "coxph",
+    note = ""
   )
 }
 

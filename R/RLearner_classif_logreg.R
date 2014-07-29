@@ -4,7 +4,10 @@ makeRLearner.classif.logreg = function() {
     cl = "classif.logreg",
     package = "stats",
     par.set = makeParamSet(),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights")
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
+    name = "Logistic Regression",
+    short.name = "logreg",
+    note = ""
   )
 }
 

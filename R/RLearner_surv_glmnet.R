@@ -30,7 +30,10 @@ makeRLearner.surv.glmnet = function() {
       makeNumericLearnerParam(id = "prec", default = 1e-10),
       makeIntegerLearnerParam(id = "mxit", default = 100, lower = 1)
     ),
-    properties = c("numerics", "weights", "rcens")
+    properties = c("numerics", "weights", "rcens"),
+    name = "GLM with regularization",
+    short.name = "glmnet",
+    note = ""
   )
 }
 

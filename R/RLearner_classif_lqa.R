@@ -30,7 +30,10 @@ makeRLearner.classif.lqa = function() {
       makeIntegerLearnerParam(id = "digits", default = 5L, lower = 1L)
     ),
     properties = c("numerics", "prob", "twoclass", "weights"),
-    par.vals = list(penalty = 'lasso', lambda = 0.1)
+    par.vals = list(penalty = 'lasso', lambda = 0.1),
+    name = "classif.lqa",
+    short.name = "lqa",
+    note = "Note that \\code{penalty} has been set to \\dQuote{lasso} and \\code{lambda} to 0.1 by default."
   )
 }
 

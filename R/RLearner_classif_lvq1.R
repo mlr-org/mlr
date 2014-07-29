@@ -5,7 +5,10 @@ makeRLearner.classif.lvq1 = function() {
     cl = "classif.lvq1",
     package = "class",
     par.set = makeParamSet(),
-    properties = c("twoclass", "multiclass", "numerics")
+    properties = c("twoclass", "multiclass", "numerics"),
+    name = "Learning Vector Quantization",
+    short.name = "lvq1",
+    note = ""
   )
 }
 

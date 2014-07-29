@@ -8,7 +8,10 @@ makeRLearner.classif.plsDA = function() {
       makeIntegerLearnerParam(id = "comps", lower = 1L, default = 2L, requires = expression(autosel==TRUE)),
       makeLogicalLearnerParam(id = "retain.models", default = FALSE)
       ),
-    properties = c("twoclass", "multiclass", "numerics")
+    properties = c("twoclass", "multiclass", "numerics"),
+    name = "Partial Least Squares (PLS) Discriminant Analysis",
+    short.name = "plsDA",
+    note = ""
   )
 }
 

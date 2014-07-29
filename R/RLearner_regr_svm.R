@@ -17,7 +17,10 @@ makeRLearner.regr.svm = function() {
       makeNumericLearnerParam(id = "cachesize", default = 40L)
 
     ),
-    properties = c("numerics", "factors")
+    properties = c("numerics", "factors"),
+    name = "Support Vector Machines (libsvm)",
+    short.name = "svm",
+    note = ""
   )
 }
 

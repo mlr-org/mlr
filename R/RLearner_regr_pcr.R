@@ -13,7 +13,10 @@ makeRLearner.regr.pcr = function() {
       makeLogicalLearnerParam(id = "y", default = FALSE)
     ),
     par.vals = list(model = FALSE),
-    properties = c("numerics", "factors")
+    properties = c("numerics", "factors"),
+    name = "Principal component regression",
+    short.name = "pcr",
+    note = "Note that \\code{model} has been set to \\code{FALSE} by default for speed."
   )
 }
 

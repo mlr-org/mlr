@@ -17,7 +17,10 @@ makeRLearner.classif.svm = function() {
       makeNumericLearnerParam(id = "cachesize", default = 40L)
 
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
+    name = "Support Vector Machines (libsvm)",
+    short.name = "svm",
+    note = ""
   )
 }
 

@@ -21,7 +21,10 @@ makeRLearner.classif.blackboost = function() {
       makeIntegerLearnerParam(id = "maxdepth", default = 0L, lower = 0L)
     ),
     par.vals = list(family = Binomial()),
-    properties = c("twoclass", "missings", "numerics", "factors", "prob", "weights")
+    properties = c("twoclass", "missings", "numerics", "factors", "prob", "weights"),
+    name = "Gradient boosting with regression trees",
+    short.name = "blackbst",
+    note = ""
   )
 }
 

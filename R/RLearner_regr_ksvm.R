@@ -28,7 +28,10 @@ makeRLearner.regr.ksvm = function() {
       makeLogicalLearnerParam(id = "fit", default = TRUE)
     ),
     par.vals = list(fit = FALSE),
-    properties = c("numerics", "factors")
+    properties = c("numerics", "factors"),
+    name = "Support Vector Machines",
+    short.name = "ksvm",
+    note = "Note that kernel parameters have to be passed directly and not by using the kpar list in ksvm.\\cr Note that \\code{fit} has been set to \\code{FALSE} by default for speed."
   )
 }
 

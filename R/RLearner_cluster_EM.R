@@ -15,7 +15,10 @@ makeRLearner.cluster.EM = function() {
       makeIntegerLearnerParam(id = "X", default = 10L, lower = 1L),
       makeLogicalLearnerParam(id = "V")
     ),
-    properties = c("numerics")
+    properties = c("numerics"),
+    name = "Expectation-maximization clustering",
+    short.name = "EM",
+    note = ""
   )
 }
 

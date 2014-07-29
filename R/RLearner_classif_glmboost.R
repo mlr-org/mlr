@@ -10,7 +10,10 @@ makeRLearner.classif.glmboost = function() {
       makeLogicalLearnerParam(id = "center", default = FALSE)
     ),
     par.vals = list(family = Binomial()),
-    properties = c("twoclass", "numerics", "factors", "prob", "weights")
+    properties = c("twoclass", "numerics", "factors", "prob", "weights"),
+    name = "Boosting for GLMs",
+    short.name = "glmbst",
+    note = "Note that \\code{family} has been set to \\code{Binomial()} by default."
   )
 }
 

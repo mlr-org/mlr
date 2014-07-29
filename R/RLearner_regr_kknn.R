@@ -9,7 +9,10 @@ makeRLearner.regr.kknn = function() {
       makeDiscreteLearnerParam(id = "kernel", default = "triangular",
         values = list("rectangular", "triangular", "epanechnikov", "biweight", "triweight", "cos", "inv", "gaussian"))
     ),
-    properties = c("numerics", "factors")
+    properties = c("numerics", "factors"),
+    name = "K-Nearest-Neighbor regression",
+    short.name = "kknn",
+    note = ""
   )
 }
 

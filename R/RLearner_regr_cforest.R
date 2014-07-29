@@ -28,7 +28,10 @@ makeRLearner.regr.cforest = function() {
       makeLogicalLearnerParam(id = "savesplitstats", default = FALSE)
     ),
     properties = c('numerics', 'factors', 'weights'),
-    par.vals = list()
+    par.vals = list(),
+    name = "Random forest based on conditional inference trees",
+    short.name = "cforest",
+    note = ""
   )
 }
 

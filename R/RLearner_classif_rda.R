@@ -22,7 +22,10 @@ makeRLearner.classif.rda = function() {
       makeLogicalLearnerParam(id = "estimate.error", default = TRUE)
     ),
     par.vals = list(estimate.error = FALSE),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
+    name = "Regularized Discriminant Analysis",
+    short.name = "rda",
+    note = "Note that \\code{estimate.error} has been set to \\code{FALSE} by default for speed."
   )
 }
 

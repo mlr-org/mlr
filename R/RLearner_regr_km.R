@@ -17,7 +17,10 @@ makeRLearner.regr.km = function() {
       makeLogicalLearnerParam(id = "jitter", default = FALSE, when = "predict")
     ),
     par.vals = list(jitter = FALSE),
-    properties = c("numerics", "se")
+    properties = c("numerics", "se"),
+    name = "Kriging",
+    short.name = "km",
+    note = ""
   )
 }
 

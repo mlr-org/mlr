@@ -24,7 +24,10 @@ makeRLearner.classif.lssvm = function() {
       makeLogicalLearnerParam(id = "fitted", default = TRUE)
     ),
     par.vals = list(fitted = FALSE),
-    properties = c("twoclass", "multiclass", "numerics", "factors")
+    properties = c("twoclass", "multiclass", "numerics", "factors"),
+    name = "Least Squares Support Vector Machine",
+    short.name = "lssvm",
+    note = "Note that \\code{fitted} has been set to \\code{FALSE} by default for speed."
   )
 }
 

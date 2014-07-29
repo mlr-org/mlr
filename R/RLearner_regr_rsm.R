@@ -7,7 +7,10 @@ makeRLearner.regr.rsm = function() {
       makeDiscreteLearnerParam(id = "modelfun", default = "FO", values = c("FO", "TWI", "SO"))
     ),
     par.vals = list(modelfun = "FO"),
-    properties = c("numerics")
+    properties = c("numerics"),
+    name = "Response surface regression",
+    short.name = "rsm",
+    note = "Note that you select the order of the regression by using modelfun = \"FO\" (first order), \"TWI\" (two-way interactions, this is with 1st oder terms!) and \"SO\" (full second order)"
   )
 }
 

@@ -9,7 +9,10 @@ makeRLearner.regr.fnn = function() {
       makeLogicalLearnerParam(id = "use.all", default = TRUE, requires = expression(algorithm == "VR")),
       makeDiscreteLearnerParam(id = "algorithm", default = "cover_tree", values = list("cover_tree", "kd_tree", "VR"))
     ),
-    properties = c("numerics")
+    properties = c("numerics"),
+    name = "Fast k-Nearest Neighbor",
+    short.name = "fnn",
+    note = ""
   )
 }
 

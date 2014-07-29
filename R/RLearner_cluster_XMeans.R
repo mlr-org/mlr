@@ -17,7 +17,10 @@ makeRLearner.cluster.XMeans = function() {
       makeIntegerLearnerParam(id = "U", default = 0L, lower = 0L),
       makeLogicalLearnerParam(id = "use-kdtree")
     ),
-    properties = c("numerics")
+    properties = c("numerics"),
+    name = "XMeans (k-means with automatic determination of k)",
+    short.name = "XMeans",
+    note = "Note that you might have to install the Weka package: \\code{WPM(\"install-package\", \"XMeans\")}"
   )
 }
 

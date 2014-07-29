@@ -6,7 +6,10 @@ makeRLearner.classif.linDA = function() {
     par.set = makeParamSet(
       #makeNumericVectorLearnerParam(id = "prior", lower = 0, upper = 1, default = NULL),
       ),
-    properties = c("twoclass", "multiclass", "numerics")
+    properties = c("twoclass", "multiclass", "numerics"),
+    name = "Linear Discriminant Analysis",
+    short.name = "linDA",
+    note = ""
   )
 }
 

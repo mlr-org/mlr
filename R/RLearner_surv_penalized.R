@@ -10,7 +10,10 @@ makeRLearner.surv.penalized = function() {
       makeLogicalLearnerParam(id = "standardize", default = FALSE),
       makeIntegerLearnerParam(id = "maxiter", default = 25L)
     ),
-    properties = c("numerics", "factors", "rcens")
+    properties = c("numerics", "factors", "rcens"),
+    name = "surv.penalized",
+    short.name = "penalized",
+    note = ""
   )
 }
 
