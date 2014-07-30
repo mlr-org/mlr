@@ -1,5 +1,4 @@
-Integrated Learners
-===================
+## Integrated Learners
 
 ```{r echo=FALSE,results='hide'}
 library(xtable)
@@ -20,51 +19,57 @@ convBool = function(x) {
   ifelse(x, "X", "")
 }
 
-printCell = function(s, align = "center") {
-  catf("<td align=\"%s\">%s</td>", align, s)
+printCell = function(s, align = "center", width = 5) {
+  w = if (is.null(width)) "" else paste0('width="', width, '%"')
+  cat(paste0('<td ', w, ' align="', align, '">', s, '</td>\n'))
 }
 
 printCellHeader = function(s, align = "center") {
   catf("<th align=\"%s\">%s</th>", align, s)
 }
 
-printHeader = function(header) {
+printHeader = function() {
   catf("<tr>")
   printCellHeader("Id", align = "left")
   printCellHeader("Name", align = "left")
   printCellHeader("Short", align = "left")
   printCellHeader("Packages", align = "left")
   printCellHeader("prob / se ")
-  printCellHeader("Numerics")
-  printCellHeader("Factors")
+  printCellHeader("Num.")
+  printCellHeader("Fact.")
   printCellHeader("NAs")
+  printCellHeader("Weights")
+  printCellHeader("Further")
   printCellHeader("Note")
   catf("</tr>")
 }
     
 printLine = function() {
-  catf("<tr><td colspan=6><hr></td></tr>")
+  catf("<tr><td colspan=12><hr></td></tr>")
 }
 
 printLearnersTab = function(type) {
   lrns = listLearners(type, create = TRUE)
 
-  catf("<table cellpadding=5>")
-  printHeader(colnames(d))
+  cat('<table cellpadding=2>\n')
+  printHeader()
   old = list(type = "classif")
   for (x in lrns) {
     if (old$type != x$type)
       printLine()
+    fprops = setdiff(x$properties, c("prob", "se", "numerics", "factors", "missings", "weights"))
     catf("<tr>")
-    printCell(x$id, align = "left")
-    printCell(x$name, align = "left")
-    printCell(x$short.name, align = "left")
-    printCell(createPackagesLinks(x$package), align = "left")
-    printCell(convBool(any(hasProperties(x, c("prob", "se")))))
-    printCell(convBool(hasProperties(x, "numerics")))
-    printCell(convBool(hasProperties(x, "factors")))
-    printCell(convBool(hasProperties(x, "missings")))
-    printCell(x$note, align = "left")
+    printCell(x$id, align = "left", width = 5)
+    printCell(x$name, align = "left", 10)
+    printCell(x$short.name, align = "left", width = 5)
+    printCell(createPackagesLinks(x$package), align = "left", width = 5)
+    printCell(convBool(any(hasProperties(x, c("prob", "se")))), width = 3)
+    printCell(convBool(hasProperties(x, "numerics")), width = 3)
+    printCell(convBool(hasProperties(x, "factors")), width = 3)
+    printCell(convBool(hasProperties(x, "missings")), width = 3)
+    printCell(convBool(hasProperties(x, "weights")), width = 3)
+    printCell(collapse(fprops), width = 5)
+    printCell(x$note, align = "left", width = 55)
     catf("</tr>")
     old = x
   }
