@@ -6,6 +6,7 @@
 #'   Indices for test set.
 #' @param size [\code{integer(1)}]\cr
 #'   Size of the data set to resample.
+#'   The function needs to know the largest possible index of the whole data set.
 #' @return [\code{\link{ResampleInstance}}].
 #' @export
 makeFixedHoldoutInstance = function(train.inds, test.inds, size) {
