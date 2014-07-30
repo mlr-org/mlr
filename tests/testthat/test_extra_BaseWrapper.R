@@ -1,6 +1,5 @@
 context("BaseWrapper")
 
-if (interactive()) {
 test_that("BaseWrapper", {
   lrn1 = makeLearner("classif.rpart", minsplit = 2L)
   ps = makeParamSet(makeNumericLearnerParam("foo"))
@@ -12,4 +11,3 @@ test_that("BaseWrapper", {
   lrn2 = setHyperPars(lrn2, foo = 12)
   expect_equal(getHyperPars(lrn2), list(xval = 0L, minsplit = 11L, foo = 12))
 })
-}

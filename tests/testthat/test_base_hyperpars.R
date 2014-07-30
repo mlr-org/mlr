@@ -15,9 +15,8 @@ test_that("hyperpars", {
   # check warnings
   configureMlr(on.par.without.desc="warn", show.learner.output=FALSE)
   expect_warning(makeLearner("classif.rpart", foo=1), "Setting parameter foo without")
-  #FIXME can only check this when testthat is updated
-  #configureMlr(on.par.without.desc="quiet")
-  #expect_warning(makeLearner("classif.rpart", foo=1), FALSE)
+  configureMlr(on.par.without.desc="quiet")
+  expect_that(makeLearner("classif.rpart", foo=1), not(gives_warning()))
   configureMlr(show.learner.output=FALSE)
 })
 

@@ -1,7 +1,5 @@
 context("helpers")
 
-if (interactive()) {
-
 test_that("makeOptPathDFFromMeasures", {
   measures = list(mae, auc)
   par.set = makeParamSet(
@@ -14,5 +12,3 @@ test_that("makeOptPathDFFromMeasures", {
   supposed.names = sapply(measures, function(m) paste(m$id, m$aggr$id, sep="."))
   expect_equal(names(res$y), supposed.names)
 })
-
-}
