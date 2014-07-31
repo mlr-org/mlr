@@ -1,6 +1,6 @@
-context("resample: subsampling")
+context("resample: subsampling extra")
 
-test_that("subsampling instance works", {
+test_that("subsampling instance is stochastic", {
   rin = makeResampleInstance(makeResampleDesc("Subsample", iters=2, split=0.25), size=20)
 	iters <- rin$desc$iters
   expect_equal(iters, 2)
@@ -16,4 +16,7 @@ test_that("subsampling instance works", {
     expect_true(max(i2) <= 20)
 		expect_equal(sort(c(i1, i2)), 1:20)
 	}
+  rin1 = makeResampleInstance(makeResampleDesc("Subsample", iters=3), size=500)
+  rin2 = makeResampleInstance(makeResampleDesc("Subsample", iters=3), size=500)
+  expect_true(!all(sort(rin1$test.inds[[1]])== sort(rin2$test.inds[[1]])))
 })

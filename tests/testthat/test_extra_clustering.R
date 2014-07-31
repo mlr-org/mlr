@@ -1,4 +1,4 @@
-context("clustering")
+context("clustering extra")
 
 test_that("clustering resample",  {
   rdesc = makeResampleDesc("Bootstrap", iters = 5)

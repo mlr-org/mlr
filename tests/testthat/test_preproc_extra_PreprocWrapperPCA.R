@@ -1,8 +1,5 @@
 context("PreprocWrapperPCA")
 
-#FIXME enable if export
-if (interactive()) {
-  
 test_that("PreprocWrapperPCA", {
   lrn1 = makeLearner("classif.rpart", minsplit=10)
   lrn2 = makePreprocWrapperPCA(lrn1)
@@ -22,8 +19,7 @@ test_that("PreprocWrapperPCA works with factors", {
   m = train(lrn2, task)  
   p = predict(m, task)
   perf = performance(p, mmce)
-  if (interactive())
-    expect_equal(getLeafModel(m)$features, c("x1", "PC1", "PC2"))
+  expect_equal(getLeafModel(m)$features, c("x1", "PC1", "PC2"))
   expect_true(!is.na(perf))
   
   f = function() as.factor(sample(1:2, 100, replace=TRUE))
@@ -34,8 +30,7 @@ test_that("PreprocWrapperPCA works with factors", {
   m = train(lrn2, task)  
   p = predict(m, task)
   perf = performance(p, mmce)
-  if (interactive())
-    expect_equal(getLeafModel(m)$features, c("x1", "PC1"))
+  expect_equal(getLeafModel(m)$features, c("x1", "PC1"))
   expect_true(!is.na(perf))
   
   f = function() as.factor(sample(1:2, 100, replace=TRUE))
@@ -46,9 +41,6 @@ test_that("PreprocWrapperPCA works with factors", {
   m = train(lrn2, task)  
   p = predict(m, task)
   perf = performance(p, mmce)
-  if (interactive())
-    expect_equal(getLeafModel(m)$features, c("x1", "x2"))
+  expect_equal(getLeafModel(m)$features, c("x1", "x2"))
   expect_true(!is.na(perf))
 })
-
-}
