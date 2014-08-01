@@ -1,8 +1,5 @@
 context("PreprocWrapperRemoveOutliers")
 
-#FIXME enable if export
-if (interactive()) {
-  
 test_that("PreprocWrapperRemoveOutliers", {
   lrn1 = makeLearner("classif.rpart", minsplit=10)
   lrn2 = makePreprocWrapperRemoveOutliers(lrn1, ro.alpha=1)
@@ -16,10 +13,7 @@ test_that("PreprocWrapperRemoveOutliers", {
   lrn2 = setHyperPars(lrn2, ro.alpha=0.5)
   m = train(lrn2, multiclass.task)  
   p = predict(m, multiclass.task)
-  # fixme: export getLeaf?
-  if (interactive()) {
   expect_true(getLeafModel(m)$task.desc$size < 150)
-  }
 })
 
 test_that("PreprocWrapperPCA works with factors", {
@@ -53,5 +47,3 @@ test_that("PreprocWrapperPCA works with factors", {
   perf = performance(p, mmce)
   expect_true(!is.na(perf))
 })
-
-}

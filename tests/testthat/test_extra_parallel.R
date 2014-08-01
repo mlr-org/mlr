@@ -2,8 +2,6 @@ library(parallelMap)
 
 context("parallel resampling")
 
-if (isExpensiveExampleOk()) {
-
 test_that("parallel resampling", {
   doit = function(mode, level) {
     lrn = makeLearner("classif.rpart")
@@ -85,5 +83,3 @@ test_that("parallel exporting of options works", {
   # make sure
   configureMlr(on.learner.error = "stop")
 })
-
-}

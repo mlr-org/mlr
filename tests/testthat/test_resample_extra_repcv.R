@@ -1,6 +1,6 @@
-context("resample: repcv")
+context("resample: repcv extra")
 
-test_that("repcv instance works", {
+test_that("repcv instance is stochastic", {
   rin = makeResampleInstance(makeResampleDesc("RepCV", folds = 10, reps = 3), task = multiclass.task)
 
   iters = rin$desc$iters
@@ -20,11 +20,7 @@ test_that("repcv instance works", {
     }
     expect_equal(sort(unique(bag)), 1:150)
   }
+  rin1 = makeResampleInstance(makeResampleDesc("RepCV", folds = 2, reps = 2), size = 500)
+  rin2 = makeResampleInstance(makeResampleDesc("RepCV", folds = 2, reps = 2), size = 500)
+  expect_true(!all(sort(rin1$test.inds[[1]]) == sort(rin2$test.inds[[1]])))
 })
-
-test_that("repcv resampling works", {
-  rdesc = makeResampleDesc("RepCV", folds = 2, reps = 2)
-  m = setAggregation(mmce, testgroup.mean)
-  resample(makeLearner("classif.lda"), multiclass.task, rdesc)
-})
-

@@ -1,7 +1,5 @@
 context("learners")
 
-if (isExpensiveExampleOk()) {
-
 mylist = function(..., create = FALSE) {
   lrns = listLearners(..., create = create)
   if (create) {
@@ -132,5 +130,3 @@ test_that("learners work", {
   })
 
 })
-
-}
