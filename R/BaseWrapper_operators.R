@@ -47,7 +47,6 @@ getLeafLearner = function(learner) {
 #' @export
 setPredictType.BaseWrapper = function(learner, predict.type) {
   learner$next.learner = setPredictType(learner$next.learner, predict.type)
-  learner = setPredictType.Learner(learner, predict.type)
-  return(learner)
+  setPredictType.Learner(learner, predict.type)
 }
 
