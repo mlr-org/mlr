@@ -85,7 +85,7 @@ makeModelMultiplexer = function(base.learners) {
 trainLearner.ModelMultiplexer = function(.learner, .task, .subset, .weights = NULL, selected.learner, ...) {
   # train selected learner model and remove prefix from its param settings
   bl = .learner$base.learners[[selected.learner]]#
-  m = train(bl, tas = .task, subset = .subset, weights = .weights)
+  m = train(bl, task = .task, subset = .subset, weights = .weights)
 }
 
 #' @export
