@@ -35,7 +35,7 @@ Content
 9. [Benchmark experiments](benchmark_experiments.md)
 10. [Benchmark analysis](benchmark_analysis.md)
 11. [ROC analysis](roc_analysis.md)
-12. [List of all integrated learners](http://berndbischl.github.io/mlr/man/learners.html)
+12. [List of all integrated learners](integrated_learners.md)
 13. Cool Stuff - Various short examples of cool stuff we have put into **mlr**.
   * [Generic bagging](makeBaggingWrapper.md) You can wrap all learners supported by **mlr** in a nice bagging method improving stability of the predictions and allowing you to get standard error estimations.
   * [Over and undersampling](over_and_undersampling.md) Oversample minority classes or vice versa.
