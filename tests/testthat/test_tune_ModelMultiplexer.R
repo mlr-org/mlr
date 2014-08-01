@@ -32,19 +32,36 @@ test_that("makeModelMultiplexerParamSet works", {
   expect_equal(ps1, ps3)
 })
 
+# this is more or less a test for BaseEnsemble, that hyperpars work and so on
+test_that("ModelMultiplexer basic stuff works", {
+  lrn = makeModelMultiplexer(c("classif.lda", "classif.rpart"))
+  expect_equal(class(lrn), c("ModelMultiplexer", "BaseEnsemble", "Learner"))
 
-test_that("ModelMultiplexer", {
-  bls = list(makeLearner("classif.knn"), makeLearner("classif.rpart"))
-  lrn = makeModelMultiplexer(bls)
-  expect_equal(class(lrn), c("ModelMultiplexer", "Learner"))
-  mod = train(lrn, task = binaryclass.task)
-  expect_equal(class(mod), "WrappedModel")
+  # check hyper par setting and so on
+  lrn2 = setHyperPars(lrn, selected.learner = "classif.rpart", classif.rpart.minsplit = 10000L)
+  xs = getHyperPars(lrn2)
+  expect_true(setequal(names(xs), c("selected.learner", "classif.rpart.minsplit", "classif.rpart.xval")))
+  expect_equal(xs$classif.rpart.minsplit, 10000L)
+  mod = train(lrn2, task = binaryclass.task)
+  expect_equal(mod$learner.model$learner.model$control$minsplit, 10000L)
+
+  # check removal
+  lrn3 = removeHyperPars(lrn2, "classif.rpart.minsplit")
+  xs = getHyperPars(lrn3)
+  expect_true(setequal(names(xs), c("selected.learner", "classif.rpart.xval")))
+
+  # check predict.type
+  lrn2 = setPredictType(lrn, "prob")
+  mod = train(lrn2, task = binaryclass.task)
+  p = predict(mod, task = binaryclass.task)
+  getProbabilities(p)
+})
+
+
+test_that("ModelMultiplexer tuning", {
+  lrn = makeModelMultiplexer(c("classif.knn", "classif.rpart"))
 
   rdesc = makeResampleDesc("CV", iters = 2L)
-  res = resample(lrn, binaryclass.task, rdesc)
-
-  lrn2 = setHyperPars(lrn, selected.learner = "classif.rpart", classif.rpart.minsplit = 100)
-  expect_true(setequal(names(getHyperPars(lrn2)), c("selected.learner", "classif.rpart.minsplit")))
 
   tune.ps = makeModelMultiplexerParamSet(lrn,
     makeIntegerParam("minsplit", lower = 1, upper = 50))

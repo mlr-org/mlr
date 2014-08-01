@@ -64,53 +64,34 @@
 #' # all three ps-objects are exactly the same internally.
 #'
 makeModelMultiplexer = function(base.learners) {
-  id = "ModelMultiplexer"
-  assertList(base.learners, min.len = 1L)
-  lapply(base.learners, function(learner) { learner = checkLearner(learner, type=c("classif", "regr")) })
-  ids = unique(extractSubList(base.learners, "id"))
-  if (length(ids) != length(base.learners))
-    stop("Base learners must all have unique ids!")
-  type = unique(extractSubList(base.learners, "type"))
-  if (length(type) > 1L)
-    stopf("Base learners must all be of same type, but have: %s", collapse(type))
-
-  # construct combined param set
-  par.set = makeParamSet(makeDiscreteLearnerParam("selected.learner", values = ids))
-  for (i in seq_along(base.learners)) {
-    ps = base.learners[[i]]$par.set
-    pids = sprintf("%s.%s", ids[i], names(ps$pars))
-    for (j in seq_along(ps$pars))
-      ps$pars[[j]]$id = pids[[j]]
-    names(ps$pars) = pids
-    par.set = c(par.set, ps)
-  }
-
-  lrn = makeS3Obj(c("ModelMultiplexer", "Learner"),
-    id = id,
-    type = type,
-    package = unique(extractSubList(base.learners, "package")),
-    par.set = par.set,
-    par.vals = list(selected.learner = ids[1L]),
-    properties = Reduce(intersect, extractSubList(base.learners, "properties", simplify = FALSE)),
-    predict.type = "response",
-    fix.factors = TRUE
+  lrn = makeBaseEnsemble(
+    id = "ModelMultiplexer",
+    short.name = "MM",
+    base.learners = base.learners,
+    bls.type = c("classif", "regr"),
+    ens.type = NULL,
+    cl = "ModelMultiplexer"
   )
-
-  lrn$base.learners = setNames(base.learners, ids)
+  # add extra param to parset, after we did all checks and so on in the base function
+  ps = makeParamSet(makeDiscreteLearnerParam("selected.learner", values = names(lrn$base.learners)))
+  lrn$par.set = c(lrn$par.set, ps)
+  lrn$par.set.ens = ps
+  lrn$fix.factors = TRUE
+  lrn = setHyperPars(lrn, selected.learner = names(lrn$base.learners)[1L])
   return(lrn)
 }
 
 #' @export
 trainLearner.ModelMultiplexer = function(.learner, .task, .subset, .weights = NULL, selected.learner, ...) {
-  bl = .learner$base.learners[[selected.learner]]
-  args = list(...)
-  names(args) = substring(names(args), nchar(bl$id) + 2L)
-  do.call(trainLearner, c(list(bl, .task, .subset, .weights), args))
+  # train selected learner model and remove prefix from its param settings
+  bl = .learner$base.learners[[selected.learner]]#
+  m = train(bl, tas = .task, subset = .subset, weights = .weights)
 }
 
 #' @export
 predictLearner.ModelMultiplexer = function(.learner, .model, .newdata, ...) {
+  # simply predict with the model
   sl = .learner$par.vals$selected.learner
   bl = .learner$base.learners[[sl]]
-  predictLearner(bl, .model, .newdata)
+  predictLearner(bl, .model$learner.model, .newdata)
 }
