@@ -16,6 +16,10 @@ SEXP c_smote(SEXP s_x, SEXP s_isnum, SEXP s_nn, SEXP s_res) {
     /* select a random minority obs and random neighbor */
     j_sel = runif(0, nrow_x);
     j_nn = runif(0, ncol_nn);
+	/* matrix nn contains indexes of ncol_nn nearest neighbors for each minoriy obs (= rows); 
+	// as the indexes originate from R they are one-based, so the randomly chosen index has
+    // to be subtracted by one in order to select the right row (j_nn) of zero-based matrix x
+	*/
     j_nn = nn[j_sel + j_nn * nrow_nn] - 1;
     lambda = unif_rand();
     for (R_len_t col = 0; col < ncol_x; col++) {
