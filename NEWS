@@ -10,6 +10,10 @@ mlr_2.2
 -- regr.plsr
 -- regr.randomForestSRC
 
+- new functions
+-- summarizeColumns
+-- capLargeValues
+
 mlr_2.1:
 - mlr now supports multi-criteria tuning
 - mlr now supports cluster analysis (experimental)
