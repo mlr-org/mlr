@@ -8,6 +8,14 @@ test_that("smote works",  {
   tab2 = table(df[, binaryclass.target])
   expect_equal(tab2["M"], tab1["M"])
   expect_equal(tab2["R"], tab1["R"] * 2)
+
+  # check trivial error check
+  d = data.frame(
+    x1 = rep(c("a", "b"), 3, replace = TRUE),
+    y = rep(c("a", "b"), 3, replace = TRUE)
+  )
+  task = makeClassifTask(data = d, target = "y")
+  expect_error(smote(task, rate = 2), "minimal class has size 3")
 })
 
 test_that("smote works with rate 1 (no new examples)",  {
@@ -18,6 +26,18 @@ test_that("smote works with rate 1 (no new examples)",  {
   tab2 = table(df[, binaryclass.target])
   expect_equal(tab2["M"], tab1["M"])
   expect_equal(tab2["R"], tab1["R"])
+})
+
+test_that("smote works with only factor fetaures",  {
+  n = 10
+  d = data.frame(
+    x1 = sample(c("a", "b"), n, replace = TRUE),
+    x2 = sample(c("a", "b"), n, replace = TRUE),
+    y = sample(c("a", "b"), n, replace = TRUE)
+  )
+  task = makeClassifTask(data = d, target = "y")
+  task2 = smote(task, rate = 1.2, nn = 2L)
+  expect_equal(task2$task.desc$size, 11)
 })
 
 test_that("smote wrapper",  {

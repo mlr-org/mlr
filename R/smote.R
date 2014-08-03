@@ -40,6 +40,8 @@ smote = function(task, rate, nn = 5L) {
   y = data[, target]
   x = dropNamed(data, target)
   z = getMinMaxClass(y)
+  if (z$min.size < nn)
+    stopf("You cannot set nn = %i, when the minimal class has size %i!", nn, z$min.size)
   x.min = x[z$min.inds, , drop = FALSE]
   n.min = nrow(x.min)
   n.new  = round(rate * n.min) - n.min
@@ -50,14 +52,13 @@ smote = function(task, rate, nn = 5L) {
   # convert xmin to matrix, so we can handle it better in C
   # factors are integer levels
   x.min.matrix = x.min
-  if (any(is.num)) {
+  if (any(!is.num)) {
     for (i in 1:ncol(x.min.matrix)) {
       if (!is.num[i])
-        x.min.matrix[, i] = as.integer(x.min.matrix[, i])
+        x.min.matrix[, i] = as.numeric(as.integer(x.min.matrix[, i]))
     }
   }
   x.min.matrix = as.matrix(x.min.matrix)
-
   # dist matrix on smaller class, diag = 0 so we dont find x as neighnor of x
   minclass.dist = as.matrix(daisy(x.min))
   diag(minclass.dist) = NA
@@ -69,7 +70,7 @@ smote = function(task, rate, nn = 5L) {
   res = as.data.frame(res)
 
   # convert ints back to factors
-  if (any(is.num)) {
+  if (any(!is.num)) {
     for (i in 1:ncol(res)) {
       if (!is.num[i])
         res[, i] = as.factor(as.integer(res[, i]))
