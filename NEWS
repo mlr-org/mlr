@@ -12,6 +12,8 @@ mlr_2.2
 
 - new functions
 -- makeMulticlassWrapper
+-- summarizeColumns
+-- capLargeValues
 
 mlr_2.1:
 - mlr now supports multi-criteria tuning
