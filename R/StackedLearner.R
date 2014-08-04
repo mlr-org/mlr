@@ -3,11 +3,15 @@
 # - do we really need probability predictions from classif base.learners? not really?
 # - line  probs[,i] = getProbabilities(r$pred) in stackNoCV and stackCV does not work for multiclass
 # - allow regression as well
-# - add option to use normal features in super learner
 # - benchmark stuff on openml
 
+# - allow base.learners to be character of learners (not only list of learners)
+# - return predictions from each single base learner
+
+# - DONE: add option to use normal features in super learner
+
 makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv",
-  resampling = makeResampleDesc("CV", iters= 5L, stratify = TRUE)) {
+  resampling = makeResampleDesc("CV", iters= 5L, stratify = TRUE), use.feat=FALSE) {
 
   lrn =  makeBaseEnsemble(
     id = "stack",
@@ -16,6 +20,7 @@ makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv
     cl = "StackedLearner"
   )
   lrn$fix.factors = TRUE
+  lrn$use.feat = use.feat
 
   assertChoice(method, c("average", "stack.nocv", "stack.cv"))
   super.learner = checkLearner(super.learner)
@@ -28,6 +33,8 @@ makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv
     stop("Super learner must be classifier!")
   if (!inherits(resampling, "CVDesc"))
     stop("Currently only CV is allowed for resampling!")
+  if (use.feat && method=="average")
+    stop("You can not use the original features for this method")
 
   lrn$method = method
   lrn$super.learner = super.learner
@@ -51,23 +58,36 @@ trainLearner.StackedLearner = function(.learner, .task, .subset,  ...) {
 }
 
 predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
+  use.feat = .model$learner$use.feat
   bms = .model$learner.model$base.models
   probs = makeDataFrame(nrow = nrow(.newdata), ncol = length(bms), col.types = "numeric",
     col.names = names(.learner$base.learners))
-
+  #probs = as.list(probs)
+  
   # predict prob vectors with each base model
   for (i in seq_along(bms)) {
     pred = predict(bms[[i]], newdata = .newdata)
     probs[,i] = getProbabilities(pred)
   }
-
+  
+  #probs = as.data.frame(probs)
   if (.learner$method == "average") {
     prob = rowMeans(probs)
     td = .model$task.desc
     factor(ifelse(prob > 0.5, td$positive, td$negative), td$class.levels)
   } else {
     # feed probs into super model and we are done
-    predict(.model$learner.model$super.model, newdata = probs)$data$response
+    if(use.feat){
+      if (missing(.newdata)) {
+        feat = getTaskData(task)
+        feat = feat[, !colnames(feat)%in%.model$task.desc$target, drop=FALSE]
+      } else {
+        feat = .newdata[,!colnames(.newdata)%in%.model$task.desc$target, drop=FALSE]
+      }
+      predict(.model$learner.model$super.model, newdata =  cbind(probs, feat))$data$response
+    } else{
+      predict(.model$learner.model$super.model, newdata = probs)$data$response
+    }
   }
 }
 
@@ -88,6 +108,7 @@ averageBaseLearners = function(learner, task, probs) {
 # stacking where we predict the training set in-sample, then super-learn on that
 stackNoCV = function(learner, task, probs) {
   bls = learner$base.learners
+  use.feat = learner$use.feat
   base.models = vector("list", length(bls))
   for (i in seq_along(bls)) {
      bl = bls[[i]]
@@ -98,7 +119,13 @@ stackNoCV = function(learner, task, probs) {
   }
   # now fit the super learner for predicted_probs --> target
   probs[[task$task.desc$target]] = getTaskTargets(task)
-  super.task = makeClassifTask(data = probs, target = task$task.desc$target)
+  if(use.feat){
+    feat = getTaskData(task)
+    feat = feat[, !colnames(feat)%in%task$task.desc$target, drop=FALSE]
+    super.task = makeClassifTask(data = cbind(probs, feat), target = task$task.desc$target)
+  }else{
+    super.task = makeClassifTask(data = probs, target = task$task.desc$target)
+  }
   super.model = train(learner$super.learner, super.task)
   list(base.models = base.models, super.model = super.model)
 }
@@ -106,6 +133,7 @@ stackNoCV = function(learner, task, probs) {
 # stacking where we crossval the training set with the base learners, then super-learn on that
 stackCV = function(learner, task, probs) {
   bls = learner$base.learners
+  use.feat = learner$use.feat
   # cross-validate all base learners and get a prob vector for the whole dataset for each learner
   base.models = vector("list", length(bls))
   rin = makeResampleInstance(learner$resampling, task = task)
@@ -121,7 +149,14 @@ stackCV = function(learner, task, probs) {
   test.inds = unlist(rin$test.inds)
   probs[[tn]] = getTaskTargets(task)[test.inds]
   # now fit the super learner for predicted_probs --> target
-  super.task = makeClassifTask(data = probs, target = tn)
+  
+  if(use.feat){
+    feat = getTaskData(task)
+    feat = feat[, !colnames(feat)%in%tn, drop=FALSE]
+    super.task = makeClassifTask(data = cbind(probs, feat[test.inds,]), target = tn)
+  }else{
+    super.task = makeClassifTask(data = probs, target = tn)
+  }
   super.model = train(learner$super.learner, super.task)
   list(base.models = base.models, super.model = super.model)
 }
