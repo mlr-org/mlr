@@ -7,3 +7,4 @@ staticdocs
 src/*.so
 src/*.o
 .RData
+src/*.dll
