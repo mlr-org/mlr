@@ -9,32 +9,24 @@
 # - return predictions from each single base learner
 
 # - DONE: add option to use normal features in super learner
-<<<<<<< HEAD
-=======
 
-makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv",
-  resampling = makeResampleDesc("CV", iters= 5L, stratify = TRUE), use.feat=FALSE) {
->>>>>>> f749f75c58864287c777c46870017deedcb86509
-
-makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv",
-                              resampling = makeResampleDesc("CV", iters= 5L, stratify = TRUE), use.feat=FALSE) {
+makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv", use.feat = FALSE,
+                              resampling = makeResampleDesc("CV", iters= 5L, stratify = TRUE)) {
+  
+  assertChoice(method, c("average", "stack.nocv", "stack.cv"))
+  assertClass(resampling, "ResampleDesc")
+  super.learner = checkLearner(super.learner)
+  # get type from super learner
+  bls.type = super.learner$type
   
   lrn =  makeBaseEnsemble(
     id = "stack",
     base.learners = base.learners,
-    bls.type = "classif",
+    bls.type = bls.type,
     cl = "StackedLearner"
   )
   lrn$fix.factors = TRUE
   lrn$use.feat = use.feat
-<<<<<<< HEAD
-  
-=======
-
->>>>>>> f749f75c58864287c777c46870017deedcb86509
-  assertChoice(method, c("average", "stack.nocv", "stack.cv"))
-  super.learner = checkLearner(super.learner)
-  assertClass(resampling, "ResampleDesc")
   
   pts = unique(extractSubList(base.learners, "predict.type"))
   if (!identical(pts, "prob"))
@@ -43,20 +35,16 @@ makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv
     stop("Super learner must be classifier!")
   if (!inherits(resampling, "CVDesc"))
     stop("Currently only CV is allowed for resampling!")
-  if (use.feat && method=="average")
+  if (use.feat & method == "average")
     stop("You can not use the original features for this method")
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> f749f75c58864287c777c46870017deedcb86509
   lrn$method = method
   lrn$super.learner = super.learner
   lrn$resampling = resampling
   return(lrn)
 }
 
-trainLearner.StackedLearner = function(.learner, .task, .subset,  ...) {
+trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
   bls = .learner$base.learners
   ids = names(bls)
   # reduce to subset we want to train ensemble on
@@ -75,35 +63,29 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
   use.feat = .model$learner$use.feat
   bms = .model$learner.model$base.models
   probs = makeDataFrame(nrow = nrow(.newdata), ncol = length(bms), col.types = "numeric",
-<<<<<<< HEAD
                         col.names = names(.learner$base.learners))
-=======
-    col.names = names(.learner$base.learners))
->>>>>>> f749f75c58864287c777c46870017deedcb86509
-  #probs = as.list(probs)
-  
+
   # predict prob vectors with each base model
   for (i in seq_along(bms)) {
     pred = predict(bms[[i]], newdata = .newdata)
     probs[,i] = getProbabilities(pred)
   }
   
-  #probs = as.data.frame(probs)
   if (.learner$method == "average") {
     prob = rowMeans(probs)
     td = .model$task.desc
     factor(ifelse(prob > 0.5, td$positive, td$negative), td$class.levels)
   } else {
     # feed probs into super model and we are done
-    if(use.feat){
+    if (use.feat) {
       if (missing(.newdata)) {
         feat = getTaskData(task)
         feat = feat[, !colnames(feat)%in%.model$task.desc$target, drop=FALSE]
       } else {
-        feat = .newdata[,!colnames(.newdata)%in%.model$task.desc$target, drop=FALSE]
+        feat = .newdata[, !colnames(.newdata)%in%.model$task.desc$target, drop=FALSE]
       }
       predict(.model$learner.model$super.model, newdata =  cbind(probs, feat))$data$response
-    } else{
+    } else {
       predict(.model$learner.model$super.model, newdata = probs)$data$response
     }
   }
@@ -137,11 +119,12 @@ stackNoCV = function(learner, task, probs) {
   }
   # now fit the super learner for predicted_probs --> target
   probs[[task$task.desc$target]] = getTaskTargets(task)
-  if(use.feat){
+  if (use.feat) {
+    # add data with normal features
     feat = getTaskData(task)
     feat = feat[, !colnames(feat)%in%task$task.desc$target, drop=FALSE]
     super.task = makeClassifTask(data = cbind(probs, feat), target = task$task.desc$target)
-  }else{
+  } else {
     super.task = makeClassifTask(data = probs, target = task$task.desc$target)
   }
   super.model = train(learner$super.learner, super.task)
@@ -168,11 +151,12 @@ stackCV = function(learner, task, probs) {
   probs[[tn]] = getTaskTargets(task)[test.inds]
   # now fit the super learner for predicted_probs --> target
   
-  if(use.feat){
-    feat = getTaskData(task)
+  if (use.feat) {
+    # add data with normal features IN CORRECT ORDER
+    feat = getTaskData(task)[test.inds, ]
     feat = feat[, !colnames(feat)%in%tn, drop=FALSE]
-    super.task = makeClassifTask(data = cbind(probs, feat[test.inds,]), target = tn)
-  }else{
+    super.task = makeClassifTask(data = cbind(probs, feat), target = tn)
+  } else {
     super.task = makeClassifTask(data = probs, target = tn)
   }
   super.model = train(learner$super.learner, super.task)
