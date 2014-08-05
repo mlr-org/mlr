@@ -9,8 +9,9 @@
 # - all params of base.learners get new name <learnerid>.<paramid> to avoid name clashes
 # - predict.type = response by default
 # - train and predict we cannot really define, must be done in derived class
-makeBaseEnsemble = function(id, name = id, short.name = id, base.learners, bls.type = NULL,
-  ens.type = NULL, package = character(0), par.set = makeParamSet(), par.vals = list(), cl) {
+makeBaseEnsemble = function(id, name = id, short.name = id, base.learners, super.learner, 
+  bls.type = NULL, ens.type = NULL, package = character(0), par.set = makeParamSet(), 
+  par.vals = list(), cl) {
 
   assertString(id)
   assertVector(base.learners, min.len = 1L)
@@ -47,7 +48,7 @@ makeBaseEnsemble = function(id, name = id, short.name = id, base.learners, bls.t
     par.set = par.set.all,
     par.vals = par.vals,
     properties = Reduce(intersect, extractSubList(base.learners, "properties", simplify = FALSE)),
-    predict.type = "response"
+    predict.type = super.learner$predict.type
   )
 
   lrn$base.learners = setNames(base.learners, ids)

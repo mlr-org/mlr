@@ -9,6 +9,7 @@
 # - return predictions from each single base learner
 
 # - DONE: add option to use normal features in super learner
+# - DONE: super learner can also return predicted probabilites 
 
 makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv", use.feat = FALSE,
                               resampling = makeResampleDesc("CV", iters= 5L, stratify = TRUE)) {
@@ -17,12 +18,12 @@ makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv
   assertClass(resampling, "ResampleDesc")
   super.learner = checkLearner(super.learner)
   # get type from super learner
-  bls.type = super.learner$type
+  # bls.type = super.learner$type
   
   lrn =  makeBaseEnsemble(
     id = "stack",
     base.learners = base.learners,
-    bls.type = bls.type,
+    super.learner = super.learner,
     cl = "StackedLearner"
   )
   lrn$fix.factors = TRUE
@@ -36,7 +37,7 @@ makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv
   if (!inherits(resampling, "CVDesc"))
     stop("Currently only CV is allowed for resampling!")
   if (use.feat & method == "average")
-    stop("You can not use the original features for this method")
+    stop("The original features can not be used for this method")
 
   lrn$method = method
   lrn$super.learner = super.learner
@@ -62,6 +63,8 @@ trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
 predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
   use.feat = .model$learner$use.feat
   bms = .model$learner.model$base.models
+  sm = .model$learner.model$super.model
+  levs = .model$task.desc$class.levels
   probs = makeDataFrame(nrow = nrow(.newdata), ncol = length(bms), col.types = "numeric",
                         col.names = names(.learner$base.learners))
 
@@ -77,17 +80,29 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     factor(ifelse(prob > 0.5, td$positive, td$negative), td$class.levels)
   } else {
     # feed probs into super model and we are done
-    if (use.feat) {
-      if (missing(.newdata)) {
-        feat = getTaskData(task)
-        feat = feat[, !colnames(feat)%in%.model$task.desc$target, drop=FALSE]
-      } else {
-        feat = .newdata[, !colnames(.newdata)%in%.model$task.desc$target, drop=FALSE]
-      }
-      predict(.model$learner.model$super.model, newdata =  cbind(probs, feat))$data$response
+    if (missing(.newdata)) {
+      feat = getTaskData(task)
+      feat = feat[, !colnames(feat)%in%.model$task.desc$target, drop=FALSE]
     } else {
-      predict(.model$learner.model$super.model, newdata = probs)$data$response
+      feat = .newdata[, !colnames(.newdata)%in%.model$task.desc$target, drop=FALSE]
     }
+    
+    if (use.feat) {
+      predData = cbind(probs, feat)
+    } else {
+      predData = probs
+    }
+    
+    pred = predict(sm, newdata = predData)$data
+    if (sm$learner$predict.type == "prob") {
+      # return predicted probabilities from super learner
+      predProb = as.matrix(subset(pred, select=-response))
+      colnames(predProb) = levs
+      return(predProb)
+    } else {
+      return(pred$response)
+    }
+  
   }
 }
 
