@@ -14,8 +14,8 @@
 # - DONE: super learner can also return predicted probabilites 
 # - DONE: allow regression as well
 
-makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv", use.feat = FALSE,
-                              resampling = NULL) {
+makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv", 
+                              use.feat = FALSE, resampling = NULL) {
   
   baseType = unique(extractSubList(base.learners, "type"))
   if (is.null(resampling)) {
@@ -42,6 +42,9 @@ makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv
   #     stop("Base learners must all predict probabilities!")
   #   if (super.learner$type != "classif")
   #     stop("Super learner must be classifier!")
+  if (method == "average" & super.learner$predict.type == "prob")
+    messagef("super learner is replaced by method average")
+  #  stop("Currently predicting probabilities are not allowed for this method")
   if (!inherits(resampling, "CVDesc"))
     stop("Currently only CV is allowed for resampling!")
   if (use.feat & method == "average")
@@ -85,7 +88,19 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
   if (.learner$method == "average") {
     prob = rowMeans(probs)
     td = .model$task.desc
-    factor(ifelse(prob > 0.5, td$positive, td$negative), td$class.levels)
+    if (td$type == "classif"){
+      if (sm$predict.type == "prob") {
+        y = matrix(0, ncol = 2L, nrow = nrow(.newdata))
+        colnames(y) = levs
+        y[,1L] = prob
+        y[,2L] = 1-prob
+        return(y)
+      } else {
+        return(factor(ifelse(prob > 0.5, td$positive, td$negative), td$class.levels))
+      }
+    } else {
+      return(prob)
+    }
   } else {
     # feed probs into super model and we are done
     if (missing(.newdata)) {
@@ -125,7 +140,10 @@ averageBaseLearners = function(learner, task, probs) {
     model = train(bl, task)
     base.models[[i]] = model
   }
-  list(base.models = base.models, super.model = NULL)
+  # replace super.learner because it is not needed, however, predict.type is kept
+  sl = list(method = "averaged", 
+            predict.type = learner$super.learner$predict.type)
+  list(base.models = base.models, super.model = sl)
 }
 
 # stacking where we predict the training set in-sample, then super-learn on that
