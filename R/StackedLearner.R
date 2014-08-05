@@ -9,6 +9,12 @@
 # - return predictions from each single base learner
 
 # - DONE: add option to use normal features in super learner
+<<<<<<< HEAD
+=======
+
+makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv",
+  resampling = makeResampleDesc("CV", iters= 5L, stratify = TRUE), use.feat=FALSE) {
+>>>>>>> f749f75c58864287c777c46870017deedcb86509
 
 makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv",
                               resampling = makeResampleDesc("CV", iters= 5L, stratify = TRUE), use.feat=FALSE) {
@@ -21,7 +27,11 @@ makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv
   )
   lrn$fix.factors = TRUE
   lrn$use.feat = use.feat
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> f749f75c58864287c777c46870017deedcb86509
   assertChoice(method, c("average", "stack.nocv", "stack.cv"))
   super.learner = checkLearner(super.learner)
   assertClass(resampling, "ResampleDesc")
@@ -35,7 +45,11 @@ makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv
     stop("Currently only CV is allowed for resampling!")
   if (use.feat && method=="average")
     stop("You can not use the original features for this method")
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> f749f75c58864287c777c46870017deedcb86509
   lrn$method = method
   lrn$super.learner = super.learner
   lrn$resampling = resampling
@@ -61,7 +75,11 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
   use.feat = .model$learner$use.feat
   bms = .model$learner.model$base.models
   probs = makeDataFrame(nrow = nrow(.newdata), ncol = length(bms), col.types = "numeric",
+<<<<<<< HEAD
                         col.names = names(.learner$base.learners))
+=======
+    col.names = names(.learner$base.learners))
+>>>>>>> f749f75c58864287c777c46870017deedcb86509
   #probs = as.list(probs)
   
   # predict prob vectors with each base model
