@@ -10,7 +10,7 @@ macros = list(
 library(BBmisc)
 library(knitr)
 library(stringr)
- library(digest)
+library(digest)
 library(mlr)
 options(warn = 2L)
 opts_knit$set(upload.fun = image_uri)
@@ -40,6 +40,8 @@ for (f in list.files(src, pattern = "\\.Rmd$")) {
     exit(1L, "Error knitting file '%s':\n%s", f, as.character(ok))
 }
 
+if (!isDirectory("docs"))
+  dir.create("docs")
 ok = system3("mkdocs", "build")
 catf("\nBuild %s\n", ifelse(ok$exit.code == 0L, "successfull", "failed"))
 
