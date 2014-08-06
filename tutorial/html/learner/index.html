@@ -230,17 +230,9 @@ lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;)
 <pre class="prettyprint well"><code>## Loading required package: rpart
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
-</code></pre>
-
 <pre class="prettyprint well"><code class="r"># regression
 lrn = makeLearner(&quot;regr.rpart&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
-</code></pre>
-
-<pre class="prettyprint well"><code class="r"># gradient boosting machine with hyperparameters and custon name
+# gradient boosting machine with hyperparameters and custon name
 lrn = makeLearner(&quot;regr.gbm&quot;, id = &quot;mygbm&quot;, n.trees = 500, interaction.depth = 3)
 </code></pre>
 
@@ -250,9 +242,6 @@ lrn = makeLearner(&quot;regr.gbm&quot;, id = &quot;mygbm&quot;, n.trees = 500, i
 ## Loading required package: lattice
 ## Loading required package: parallel
 ## Loaded gbm 2.1
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
 </code></pre>
 
 <p>The first argument specifies which algorithm to use.
@@ -269,22 +258,33 @@ what can be output during prediction, whether multi-class problems,
 observations weights or missing values are supported and so on.</p>
 <pre class="prettyprint well"><code class="r"># classifier, set it up for prediction probabilities
 lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;, minsplit = 20)
+lrn
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">lrn
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'lrn' not found
+<pre class="prettyprint well"><code>## Learner classif.rpart from package rpart
+## Type: classif
+## Name: Decision Tree; Short name: rpart
+## Class: classif.rpart
+## Properties: twoclass,multiclass,missings,numerics,factors,prob,weights
+## Predict-Type: prob
+## Hyperparameters: xval=0,minsplit=20
 </code></pre>
 
 <pre class="prettyprint well"><code class="r"># display stored information for hyperparameters
 lrn$par.set
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'lrn' not found
+<pre class="prettyprint well"><code>##                    Type len  Def   Constr Req Trafo
+## minsplit        integer   -   20 1 to Inf   -     -
+## minbucket       integer   -    - 1 to Inf   -     -
+## cp              numeric   - 0.01   0 to 1   -     -
+## maxcompete      integer   -    4 0 to Inf   -     -
+## maxsurrogate    integer   -    5 0 to Inf   -     -
+## usesurrogate   discrete   -    2    0,1,2   -     -
+## surrogatestyle discrete   -    0      0,1   -     -
+## maxdepth        integer   -   30  1 to 30   -     -
+## xval            integer   -   10 0 to Inf   -     -
+## parms           untyped   -    -        -   -     -
 </code></pre>
 
 </div>

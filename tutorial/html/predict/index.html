@@ -225,25 +225,22 @@ lrn = makeLearner(&quot;classif.lda&quot;)
 <pre class="prettyprint well"><code>## Loading required package: MASS
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
-</code></pre>
-
 <pre class="prettyprint well"><code class="r">mod = train(lrn, task = task)
+pred = predict(mod, newdata = iris)
+pred
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'lrn' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">pred = predict(mod, newdata = iris)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'mod' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">pred
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>## Prediction:
+## predict.type: response
+## threshold: 
+## time: 0.00
+##    truth response
+## 1 setosa   setosa
+## 2 setosa   setosa
+## 3 setosa   setosa
+## 4 setosa   setosa
+## 5 setosa   setosa
+## 6 setosa   setosa
 </code></pre>
 
 <h3 id="regression-example">Regression example</h3>
@@ -255,21 +252,21 @@ data(BostonHousing)
 
 task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
 lrn = makeLearner(&quot;regr.lm&quot;)
+mod = train(lrn, task)
+predict(mod, newdata = BostonHousing)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'lrn' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">predict(mod, newdata = BostonHousing)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Prediction:
+## predict.type: response
+## threshold: 
+## time: 0.00
+##   truth response
+## 1  24.0    30.00
+## 2  21.6    25.03
+## 3  34.7    30.57
+## 4  33.4    28.61
+## 5  36.2    27.94
+## 6  28.7    25.26
 </code></pre>
 
 <h3 id="clustering-example">Clustering example</h3>
@@ -283,19 +280,22 @@ lrn = makeLearner(&quot;cluster.XMeans&quot;)
 <pre class="prettyprint well"><code>## Loading required package: RWeka
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
-</code></pre>
-
 <pre class="prettyprint well"><code class="r">mod = train(lrn, task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'lrn' not found
+<pre class="prettyprint well"><code>## Error: Required Weka package 'XMeans' is not installed.
+</code></pre>
+
+<pre class="prettyprint well"><code>## Timing stopped at: 0.1 0.004 0.07
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">predict(mod, newdata = iris[,-5])
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Error: object 'crim' not found
+</code></pre>
+
+<pre class="prettyprint well"><code>## Timing stopped at: 0 0 0.001
 </code></pre>
 
 <h2 id="further-information">Further information</h2>
@@ -328,45 +328,42 @@ lrn = makeLearner(&quot;classif.rpart&quot;)
 <pre class="prettyprint well"><code>## Loading required package: rpart
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
-</code></pre>
-
 <pre class="prettyprint well"><code class="r"># Split the iris data into a training set for learning and a test set
 training.set = seq(from = 1, to = nrow(iris), by = 2)
 test.set = seq(from = 2, to = nrow(iris), by = 2)
 
 # Now, we can train a decision tree using only the observations in train.set
 mod = train(lrn, task, subset = training.set)
-</code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'lrn' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r"># Finally, predict the label on new values using the predict method
+# Finally, predict the label on new values using the predict method
 pred = predict(mod, newdata = iris, subset = test.set)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'mod' not found
 </code></pre>
 
 <p>A <code>data.frame</code> that contains the true and predicted class labels can be accessed via</p>
 <pre class="prettyprint well"><code class="r">head(pred$data)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>##     truth response
+## 2  setosa   setosa
+## 4  setosa   setosa
+## 6  setosa   setosa
+## 8  setosa   setosa
+## 10 setosa   setosa
+## 12 setosa   setosa
 </code></pre>
 
 <p>Alternatively, we can also predict directly from a <code>task</code>:</p>
 <pre class="prettyprint well"><code class="r">pred = predict(mod, task = task, subset = test.set)
+head(as.data.frame(pred))
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'mod' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">head(as.data.frame(pred))
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>##    id  truth response
+## 2   2 setosa   setosa
+## 4   4 setosa   setosa
+## 6   6 setosa   setosa
+## 8   8 setosa   setosa
+## 10 10 setosa   setosa
+## 12 12 setosa   setosa
 </code></pre>
 
 <p>When predicting from a <code>task</code>, the resulting <code>data.frame</code> contains an additional column,
@@ -375,27 +372,18 @@ corresponds to. In the iris example the IDs and the rownames coincide.</p>
 <p>In order to get predicted posterior probabilities, we have to change the <code>predict.type</code>
 of the learner.</p>
 <pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;)
+mod = train(lrn, task)
+pred = predict(mod, newdata = iris, subset = test.set)
+head(pred$data)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'lrn' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">pred = predict(mod, newdata = iris, subset = test.set)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'mod' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">head(pred$data)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>##     truth prob.setosa prob.versicolor prob.virginica response
+## 2  setosa           1               0              0   setosa
+## 4  setosa           1               0              0   setosa
+## 6  setosa           1               0              0   setosa
+## 8  setosa           1               0              0   setosa
+## 10 setosa           1               0              0   setosa
+## 12 setosa           1               0              0   setosa
 </code></pre>
 
 <p>As you can see, in addition to the predicted probabilities, a response
@@ -405,7 +393,13 @@ breaking ties at random.</p>
 <pre class="prettyprint well"><code class="r">head(getProbabilities(pred))
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>##    setosa versicolor virginica
+## 2       1          0         0
+## 4       1          0         0
+## 6       1          0         0
+## 8       1          0         0
+## 10      1          0         0
+## 12      1          0         0
 </code></pre>
 
 <h3 id="binary-classification">Binary classification</h3>
@@ -423,48 +417,41 @@ data(Sonar)
 
 task = makeClassifTask(data = Sonar, target = &quot;Class&quot;, positive = &quot;M&quot;)
 lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;)
+mod = train(lrn, task = task)
+pred = predict(mod, task = task)
+head(pred$data)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod = train(lrn, task = task)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'lrn' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">pred = predict(mod, task = task)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'mod' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">head(pred$data)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>##   id truth prob.M prob.R response
+## 1  1     R 0.1061 0.8939        R
+## 2  2     R 0.7333 0.2667        M
+## 3  3     R 0.0000 1.0000        R
+## 4  4     R 0.1061 0.8939        R
+## 5  5     R 0.9250 0.0750        M
+## 6  6     R 0.0000 1.0000        R
 </code></pre>
 
 <p>In a binary classification setting, we can adjust the threshold, used
 to map probabilities to class labels using <a href="../../../man/setThreshold.html">setThreshold</a>. Here, we set
 the threshold for the <em>positive</em> class to 0.8:</p>
 <pre class="prettyprint well"><code class="r">pred = setThreshold(pred, 0.8)
+head(pred$data)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">head(pred$data)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>##   id truth prob.M prob.R response
+## 1  1     R 0.1061 0.8939        R
+## 2  2     R 0.7333 0.2667        R
+## 3  3     R 0.0000 1.0000        R
+## 4  4     R 0.1061 0.8939        R
+## 5  5     R 0.9250 0.0750        M
+## 6  6     R 0.0000 1.0000        R
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">pred$threshold
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>##   M   R 
+## 0.8 0.2
 </code></pre>
 
 <h3 id="regression-example_1">Regression example</h3>
@@ -491,25 +478,20 @@ lrn = makeLearner(&quot;regr.gbm&quot;, n.trees = 100)
 ## Loaded gbm 2.1
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
-</code></pre>
-
 <pre class="prettyprint well"><code class="r">mod = train(lrn, task, subset = training.set)
+
+pred = predict(mod, newdata = BostonHousing, subset = test.set)
+
+head(pred$data)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'lrn' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">pred = predict(mod, newdata = BostonHousing, subset = test.set)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'mod' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">head(pred$data)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>##   truth response
+## 1  21.6    22.23
+## 2  33.4    23.29
+## 3  28.7    22.32
+## 4  27.1    22.14
+## 5  18.9    22.14
+## 6  18.9    22.15
 </code></pre>
 
 </div>

@@ -236,25 +236,14 @@ lrn = makeLearner(&quot;classif.lda&quot;)
 <pre class="prettyprint well"><code>## Loading required package: MASS
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
-</code></pre>
-
 <pre class="prettyprint well"><code class="r">mod = train(lrn, task = task, subset = seq(1,150,2))
+pred = predict(mod, task = task, subset = seq(2,150,2))
+
+performance(pred, measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'lrn' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">pred = predict(mod, task = task, subset = seq(2,150,2))
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'mod' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">performance(pred, measures = mmce)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>## mmce 
+## 0.04
 </code></pre>
 
 <p>Let's have a look at some more performance measures. Note that in order to assess
@@ -262,25 +251,29 @@ the time needed for training, the fitted model has to be passed.</p>
 <pre class="prettyprint well"><code class="r">performance(pred, measures = acc)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>##  acc 
+## 0.96
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(pred = pred, measures = timepredict)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>## timepredict 
+##       0.003
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(pred = pred, measures = timetrain, model = mod)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>## timetrain 
+##     0.008
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(pred = pred, measures = timeboth, model = mod)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>## timeboth 
+##    0.011
 </code></pre>
 
 <p>Of course we can also calculate multiple performance measures at once by simply using a list of measures which can also include <a href="../create_measure/">your own measure</a>.</p>
@@ -288,7 +281,10 @@ the time needed for training, the fitted model has to be passed.</p>
 performance(pred = pred, measures = ms, model = mod)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>##           mmce.mmce             acc.acc timetrain.timetrain 
+##               0.040               0.960               0.008 
+##   timeboth.timeboth 
+##               0.011
 </code></pre>
 
 <h2 id="binary-classification">Binary classification</h2>
@@ -304,25 +300,14 @@ lrn = makeLearner(&quot;classif.rpart&quot;)
 <pre class="prettyprint well"><code>## Loading required package: rpart
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
-</code></pre>
-
 <pre class="prettyprint well"><code class="r">mod = train(lrn, task = task)
+pred = predict(mod, task = task)
+
+performance(pred, measures = list(acc, fpr, fnr))
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'lrn' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">pred = predict(mod, task = task)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'mod' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">performance(pred, measures = list(acc, fpr, fnr))
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>##    acc    fpr    fnr 
+## 0.8750 0.1031 0.1441
 </code></pre>
 
 <p>Note that in order to calculate AUC -- the area under the ROC (receiver
@@ -333,27 +318,18 @@ data(Sonar)
 
 task = makeClassifTask(data = Sonar, target = &quot;Class&quot;, positive = &quot;M&quot;)
 lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;)
+mod = train(lrn, task = task)
+pred = predict(mod, task = task)
+
+performance(pred, measures = auc)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+<pre class="prettyprint well"><code>## KernSmooth 2.23 loaded
+## Copyright M. P. Wand 1997-2009
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">mod = train(lrn, task = task)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'lrn' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">pred = predict(mod, task = task)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'mod' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">performance(pred, measures = auc)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>##    auc 
+## 0.9224
 </code></pre>
 
 <p>For more information on ROC analysis, see section <a href="../roc_analysis/">ROC Analysis</a>.</p>
@@ -382,28 +358,18 @@ lrn = makeLearner(&quot;regr.gbm&quot;, n.trees = 1000)
 ## Loaded gbm 2.1
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
-</code></pre>
-
 <pre class="prettyprint well"><code class="r">mod = train(lrn, task, subset = training.set)
-</code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'lrn' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">## Prediction on test set data
+## Prediction on test set data
 pred = predict(mod, newdata = BostonHousing[test.set, ])
-</code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'mod' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">## Compare predicted and true labels using measures MSE and MAE
+## Compare predicted and true labels using measures MSE and MAE
 ms = list(&quot;mse&quot; = mse, &quot;mae&quot; = mae)
 sapply(ms, function(meas) performance(pred, measures = meas))
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'pred' not found
+<pre class="prettyprint well"><code>## mse.mse mae.mae 
+##  42.804   4.553
 </code></pre>
 
 <p>For the other task and learning types, the performance measures work in the same

@@ -226,14 +226,13 @@ lrn = makeLearner(&quot;classif.lda&quot;)
 <pre class="prettyprint well"><code>## Loading required package: MASS
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
-</code></pre>
-
 <pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 4)
 r = resample(lrn, task, rdesc)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'lrn' not found
+<pre class="prettyprint well"><code>## Exporting objects to slaves for mode socket: .mlr.slave.options
+## Mapping in parallel: mode = socket; cpus = 2; elements = 4.
+## [Resample] Result: mmce.test.mean=0.0201
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">parallelStop()

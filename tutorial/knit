@@ -1,8 +1,7 @@
 #!/usr/bin/env Rscript
 
-src = "src"
 dest = "docs"
-f = basename(commandArgs(TRUE)[1L])
+f = commandArgs(TRUE)[1L]
 macros = list(
   list(pattern = "\\\\man\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\1.html)"),
   list(pattern = "\\\\man2\\[([[:alnum:]()]+)\\]\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\2.html)")
@@ -32,14 +31,17 @@ objToSeed = function(x, algo="crc32") {
 if (!isDirectory("docs"))
   dir.create("docs")
 
-lines = readLines(file.path(src, f))
+lines = readLines(f)
 for (macro in macros)
   lines = str_replace_all(lines, macro$pattern, macro$replacement)
 cache.path = paste0(file.path("cache", f), .Platform$file.sep)
 
 opts_chunk$set(cache = TRUE, cache.path = cache.path)
 set.seed(objToSeed(f))
-ok = try(knit(text = lines, output = file.path(dest, str_replace(f, "\\.Rmd$", "\\.md")), quiet = TRUE))
+ok = try(knit(
+    text = lines,
+    output = file.path(dest, str_replace(basename(f), "\\.Rmd$", "\\.md")),
+    quiet = TRUE))
 if (inherits(ok, "try-error"))
   exit(1L, "Error knitting file '%s':\n%s", f, as.character(ok))
 exit(0L)

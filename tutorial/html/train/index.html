@@ -223,19 +223,14 @@ lrn = makeLearner(&quot;classif.lda&quot;)
 <pre class="prettyprint well"><code>## Loading required package: MASS
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
-</code></pre>
-
 <pre class="prettyprint well"><code class="r">mod = train(lrn, task)
+mod
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'lrn' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Model for id = classif.lda class = classif.lda
+## Trained on obs: 150
+## Used features: 4
+## Hyperparameters:
 </code></pre>
 
 <h3 id="regression-example">Regression example</h3>
@@ -246,21 +241,14 @@ data(BostonHousing)
 
 task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
 lrn = makeLearner(&quot;regr.lm&quot;)
+mod = train(lrn, task)
+mod
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'lrn' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Model for id = regr.lm class = regr.lm
+## Trained on obs: 506
+## Used features: 13
+## Hyperparameters:
 </code></pre>
 
 <h3 id="clustering-example">Clustering example</h3>
@@ -273,19 +261,22 @@ lrn = makeLearner(&quot;cluster.XMeans&quot;)
 <pre class="prettyprint well"><code>## Loading required package: RWeka
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
-</code></pre>
-
 <pre class="prettyprint well"><code class="r">mod = train(lrn, task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'lrn' not found
+<pre class="prettyprint well"><code>## Error: Required Weka package 'XMeans' is not installed.
+</code></pre>
+
+<pre class="prettyprint well"><code>## Timing stopped at: 0.095 0.003 0.069
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Model for id = regr.lm class = regr.lm
+## Trained on obs: 506
+## Used features: 13
+## Hyperparameters:
 </code></pre>
 
 <h2 id="further-information">Further information</h2>
