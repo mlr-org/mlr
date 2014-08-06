@@ -96,8 +96,7 @@ model on a training set and calculate the mean of squared errors and the mean of
 absolute errors on the test data set.
 
 ```{r}
-library(mlbench)
-data(BostonHousing)
+data(BostonHousing, package = "mlbench")
 
 task = makeRegrTask(data = BostonHousing, target = "medv")
 

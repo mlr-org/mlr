@@ -6,6 +6,7 @@ macros = list(
   list(pattern = "\\\\man\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\1.html)"),
   list(pattern = "\\\\man2\\[([[:alnum:]()]+)\\]\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\2.html)")
 )
+conflicting = "caret"
 
 library(methods)
 library(BBmisc)
@@ -13,6 +14,7 @@ library(knitr)
 library(stringr)
 library(digest)
 library(mlr)
+
 options(warn = 2L)
 opts_knit$set(upload.fun = image_uri)
 
@@ -42,6 +44,8 @@ for (f in list.files(src, pattern = "\\.Rmd$")) {
       envir = new.env(), quiet = TRUE))
   if (inherits(ok, "try-error"))
     exit(1L, "Error knitting file '%s':\n%s", f, as.character(ok))
+  unload = conflicting[conflicting %in% loadedNamespaces()]
+  lapply(unload, unloadNamespace)
 }
 
 ok = system3("mkdocs", "build")
