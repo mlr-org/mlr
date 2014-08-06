@@ -7,8 +7,10 @@
 # TODOs Giuseppe:
 # - allow base.learners to be character of learners (not only list of learners)
 # - return predictions from each single base learner
-# - check if base learner type is equal to super learner type
+# - check if base learner type is equal to super learner type (and also predict.type)
 # - rename probs into preds
+# - allow predict.type = "response" for classif using majority vote (for super learner predict type "response")
+#   and using average for super learner predict type "prob".
 
 # - DONE: add option to use normal features in super learner
 # - DONE: super learner can also return predicted probabilites 
@@ -31,15 +33,16 @@ makeStackedLearner = function(base.learners, super.learner, method = "stack.nocv
   lrn =  makeBaseEnsemble(
     id = "stack",
     base.learners = base.learners,
-    super.learner = super.learner,
     cl = "StackedLearner"
   )
+  lrn = setPredictType2(lrn, predict.type = super.learner$predict.type)
   lrn$fix.factors = TRUE
   lrn$use.feat = use.feat
   
-  #  pts = unique(extractSubList(base.learners, "predict.type"))
-  #   if (!identical(pts, "prob"))
-  #     stop("Base learners must all predict probabilities!")
+  pts = unique(extractSubList(base.learners, "predict.type"))
+  bltype = unique(extractSubList(base.learners, "type"))
+  if (bltype == "classif" & !identical(pts, "prob"))
+    stop("Base learners must all predict probabilities!")
   #   if (super.learner$type != "classif")
   #     stop("Super learner must be classifier!")
   if (method == "average" & super.learner$predict.type == "prob")
@@ -103,12 +106,7 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     }
   } else {
     # feed probs into super model and we are done
-    if (missing(.newdata)) {
-      feat = getTaskData(task)
-      feat = feat[, !colnames(feat)%in%.model$task.desc$target, drop=FALSE]
-    } else {
-      feat = .newdata[, !colnames(.newdata)%in%.model$task.desc$target, drop=FALSE]
-    }
+    feat = .newdata[, !colnames(.newdata)%in%.model$task.desc$target, drop=FALSE]
     
     if (use.feat) {
       predData = cbind(probs, feat)
@@ -205,8 +203,10 @@ stackCV = function(learner, task, probs) {
   list(base.models = base.models, super.model = super.model)
 }
 
+
+
 getResponse = function(pred) {
-  if (pred$task.desc$type == "classif") {
+  if (pred$predict.type == "prob") {
     getProbabilities(pred)
     # if multiclass get ...
     
@@ -221,4 +221,11 @@ makeSuperLearnerTask = function(learner, data, target) {
   } else {
     makeRegrTask(data = data, target = target)
   }
+}
+
+setPredictType2 = function(learner, predict.type) {
+  # this does the check for the prop
+  lrn = setPredictType.Learner(learner, predict.type)
+  lrn$predict.type = predict.type
+  return(lrn)
 }

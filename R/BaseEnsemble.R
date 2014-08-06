@@ -9,24 +9,23 @@
 # - all params of base.learners get new name <learnerid>.<paramid> to avoid name clashes
 # - predict.type = response by default
 # - train and predict we cannot really define, must be done in derived class
-makeBaseEnsemble = function(id, name = id, short.name = id, base.learners, super.learner, 
-  bls.type = NULL, ens.type = NULL, package = character(0), par.set = makeParamSet(), 
-  par.vals = list(), cl) {
-
+makeBaseEnsemble = function(id, name = id, short.name = id, base.learners, bls.type = NULL,
+                            ens.type = NULL, package = character(0), par.set = makeParamSet(), par.vals = list(), cl) {
+  
   assertString(id)
   assertVector(base.learners, min.len = 1L)
   base.learners = lapply(base.learners, checkLearner, type = bls.type)
-
+  
   tt = unique(extractSubList(base.learners, "type"))
   if (length(tt) > 1L)
     stopf("Base learners must all be of same type, but have: %s", collapse(tt))
   if (is.null(ens.type))
     ens.type = tt
-
+  
   ids = unique(extractSubList(base.learners, "id"))
   if (length(ids) != length(base.learners))
     stop("Base learners must all have unique ids!")
-
+  
   # join all parsets of base.learners + prefix param names with base learner id
   par.set.bls = makeParamSet()
   for (i in seq_along(base.learners)) {
@@ -38,23 +37,21 @@ makeBaseEnsemble = function(id, name = id, short.name = id, base.learners, super
     par.set.bls = c(par.set.bls, ps)
   }
   par.set.all = c(par.set.bls, par.set)
-
+  
   lrn = makeS3Obj(c(cl, "BaseEnsemble", "Learner"),
-    id = id,
-    name = name,
-    short.name = short.name,
-    type = ens.type,
-    package = unique(extractSubList(base.learners, "package")),
-    par.set = par.set.all,
-    par.vals = par.vals,
-    properties = Reduce(intersect, extractSubList(base.learners, "properties", simplify = FALSE)),
-    predict.type = super.learner$predict.type
+                  id = id,
+                  name = name,
+                  short.name = short.name,
+                  type = ens.type,
+                  package = unique(extractSubList(base.learners, "package")),
+                  par.set = par.set.all,
+                  par.vals = par.vals,
+                  properties = Reduce(intersect, extractSubList(base.learners, "properties", simplify = FALSE)),
+                  predict.type = "response"
   )
-
+  
   lrn$base.learners = setNames(base.learners, ids)
   lrn$par.set.bls = par.set.bls
   lrn$par.set.ens = par.set
   return(lrn)
 }
-
-
