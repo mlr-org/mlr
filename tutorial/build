@@ -7,9 +7,10 @@ macros = list(
   list(pattern = "\\\\man2\\[([[:alnum:]()]+)\\]\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\2.html)")
 )
 
-library(knitr)
 library(BBmisc)
+library(knitr)
 library(stringr)
+ library(digest)
 library(mlr)
 options(warn = 2L)
 opts_knit$set(upload.fun = image_uri)
@@ -20,6 +21,11 @@ exit = function(status, msg, ...) {
   quit(save = "no", status = status)
 }
 
+objToSeed = function(x, algo="crc32") {
+ hash = digest(x, algo = algo)
+ strtoi(sprintf("0x%s", substr(hash, 1L, 7L)))
+}
+
 for (f in list.files(src, pattern = "\\.Rmd$")) {
   catf("### Knitting '%s' ...\n", f)
   lines = readLines(file.path(src, f))
@@ -27,7 +33,8 @@ for (f in list.files(src, pattern = "\\.Rmd$")) {
     lines = str_replace_all(lines, macro$pattern, macro$replacement)
   head(lines, 20)
   cache.path = paste0(file.path("cache", f), .Platform$file.sep)
-  opts_chunk$set(cache = TRUE, autodep = TRUE, cache.path = cache.path)
+  opts_chunk$set(cache = TRUE, cache.path = cache.path)
+  set.seed(objToSeed(f))
   ok = try(knit(text = lines, output = file.path(dest, str_replace(f, "\\.Rmd$", "\\.md"))))
   if (inherits(ok, "try-error"))
     exit(1L, "Error knitting file '%s':\n%s", f, as.character(ok))

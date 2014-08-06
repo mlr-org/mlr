@@ -269,7 +269,7 @@ rsres$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code>## mmce.test.mean 
-##        0.04667
+##        0.05333
 </code></pre>
 
 <p>You may want to know which features have been used. Luckily, we have called
@@ -308,12 +308,12 @@ tuneRes = tuneParams(lrnFiltered, task=task, resampling=makeResampleDesc(&quot;C
 ## fw.val discrete   -   - 0.2,0.25,0.3,0.35,0.4   -     -
 ## With control class: TuneControlGrid
 ## Imputation value: 1
-## [Tune] 1: fw.val=0.2 : mmce.test.mean=0.293
-## [Tune] 2: fw.val=0.25 : mmce.test.mean=0.293
-## [Tune] 3: fw.val=0.3 : mmce.test.mean=0.288
-## [Tune] 4: fw.val=0.35 : mmce.test.mean=0.337
-## [Tune] 5: fw.val=0.4 : mmce.test.mean=0.308
-## [Tune] Result: fw.val=0.3 : mmce.test.mean=0.288
+## [Tune] 1: fw.val=0.2 : mmce.test.mean=0.25
+## [Tune] 2: fw.val=0.25 : mmce.test.mean=0.25
+## [Tune] 3: fw.val=0.3 : mmce.test.mean=0.25
+## [Tune] 4: fw.val=0.35 : mmce.test.mean=0.289
+## [Tune] 5: fw.val=0.4 : mmce.test.mean=0.323
+## [Tune] Result: fw.val=0.3 : mmce.test.mean=0.25
 </code></pre>
 
 <h2 id="wrapper">Wrapper</h2>
@@ -336,43 +336,43 @@ sfSeq = selectFeatures(learner=lrn, task=task, resampling=rdesc, control=ctrlSeq
 ## With control class: FeatSelControlSequential
 ## Imputation value: 1
 ## [FeatSel] 1: 0 bits: mmce.test.mean=0.72
-## [FeatSel] 2: 1 bits: mmce.test.mean= 0.3
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.56
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.12
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.08
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.08
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.08
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.08
-## [FeatSel] Result: 1 bits : mmce.test.mean=0.08
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.42
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.52
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.06
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.06
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.06
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.06
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.06
+## [FeatSel] Result: 1 bits : mmce.test.mean=0.06
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">sfSeq
 </code></pre>
 
 <pre class="prettyprint well"><code>## FeatSel result:
-## Features (1): Petal.Width
-## mmce.test.mean=0.08
+## Features (1): Petal.Length
+## mmce.test.mean=0.06
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">analyzeFeatSelResult(sfSeq, reduce=FALSE)
 </code></pre>
 
 <pre class="prettyprint well"><code>## Features         : 1
-## Performance      : mmce.test.mean=0.08
-## Petal.Width
+## Performance      : mmce.test.mean=0.06
+## Petal.Length
 ## 
 ## Path to optimum:
 ## --------------------------------------------------------------------------------
 ## - Features:    0  Init   :                       Perf = 0.72  Diff: NA  *
 ## --------------------------------------------------------------------------------
-## - Features:    1  Add    : Sepal.Length          Perf = 0.3  Diff: 0.42   
-## - Features:    1  Add    : Sepal.Width           Perf = 0.56  Diff: 0.16   
-## - Features:    1  Add    : Petal.Length          Perf = 0.12  Diff: 0.6   
-## - Features:    1  Add    : Petal.Width           Perf = 0.08  Diff: 0.64  *
+## - Features:    1  Add    : Sepal.Length          Perf = 0.42  Diff: 0.3   
+## - Features:    1  Add    : Sepal.Width           Perf = 0.52  Diff: 0.2   
+## - Features:    1  Add    : Petal.Length          Perf = 0.06  Diff: 0.66   
+## - Features:    1  Add    : Petal.Width           Perf = 0.06  Diff: 0.66  *
 ## --------------------------------------------------------------------------------
-## - Features:    2  Add    : Sepal.Length          Perf = 0.08  Diff: 0   
-## - Features:    2  Add    : Sepal.Width           Perf = 0.08  Diff: 0   
-## - Features:    2  Add    : Petal.Length          Perf = 0.08  Diff: 0   
+## - Features:    2  Add    : Sepal.Length          Perf = 0.06  Diff: 0   
+## - Features:    2  Add    : Sepal.Width           Perf = 0.06  Diff: 0   
+## - Features:    2  Add    : Petal.Length          Perf = 0.06  Diff: 0   
 ## 
 ## Stopped, because no improving feature was found.
 </code></pre>
@@ -394,8 +394,8 @@ sfGA
 </code></pre>
 
 <pre class="prettyprint well"><code>## FeatSel result:
-## Features (7): indus, nox, rm, dis, tax, ptratio, b
-## mse.test.mean=23.6
+## Features (10): crim, zn, indus, chas, nox, rm, dis, tax, ptratio, b
+## mse.test.mean=31.3
 </code></pre>
 
 </div>
