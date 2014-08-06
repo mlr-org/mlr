@@ -73,10 +73,6 @@
                             </li>
                         
                             <li >
-                                <a href="../integrated_learners/">Integrated Learners</a>
-                            </li>
-                        
-                            <li >
                                 <a href="../train/">Train</a>
                             </li>
                         
@@ -233,7 +229,7 @@ pred
 <pre class="prettyprint well"><code>## Prediction:
 ## predict.type: response
 ## threshold: 
-## time: 0.00
+## time: 0.01
 ##    truth response
 ## 1 setosa   setosa
 ## 2 setosa   setosa
@@ -286,7 +282,7 @@ lrn = makeLearner(&quot;cluster.XMeans&quot;)
 <pre class="prettyprint well"><code>## Error: Required Weka package 'XMeans' is not installed.
 </code></pre>
 
-<pre class="prettyprint well"><code>## Timing stopped at: 0.1 0.004 0.07
+<pre class="prettyprint well"><code>## Timing stopped at: 0.06 0.003 0.037
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">predict(mod, newdata = iris[,-5])
@@ -295,7 +291,7 @@ lrn = makeLearner(&quot;cluster.XMeans&quot;)
 <pre class="prettyprint well"><code>## Error: object 'crim' not found
 </code></pre>
 
-<pre class="prettyprint well"><code>## Timing stopped at: 0 0 0.001
+<pre class="prettyprint well"><code>## Timing stopped at: 0.001 0 0.001
 </code></pre>
 
 <h2 id="further-information">Further information</h2>

@@ -32,8 +32,7 @@ The naming convention is ``classif.<R_method_name>`` for
 classification methods, ``regr.<R_method_name>`` for regression methods,
 ``surv.<R_method_name>`` for survival analysis, and ``cluster.<R_method_name>``
 for clustering methods.
-The tables in [IntegratedLearners](integrated_learners.md) provide more
-information on the properties for all integrated learning methods.
+
 
 ## Further information
 
@@ -48,4 +47,54 @@ lrn = makeLearner("classif.rpart", predict.type = "prob", minsplit = 20)
 lrn
 # display stored information for hyperparameters
 lrn$par.set
+```
+
+## Integrated Learners
+```{r include=FALSE}
+library(pander)
+
+linkPkg = function(x) {
+  collapse(sprintf("[%1$s](http://cran.r-project.org/web/packages/%1$s/)", x))
+}
+
+getTab = function(type) {
+  lrns = listLearners(type, create = TRUE, warn.missing.packages = FALSE)
+  cols = c("ID", "Name", "Packages", "Num.", "Fac.", "NAs", "Weights", "Props")
+  df = makeDataFrame(nrow = length(lrns), ncol = length(cols),
+    col.types = c("character", "character", "character", "logical", "logical", "logical", "logical", "character"))
+  names(df) = cols
+
+  cn = function(x) if (is.null(x)) NA else x
+
+  for (i in seq_along(lrns)) {
+    lrn = lrns[[i]]
+    df[i, 1] = lrn$id
+    df[i, 2] = cn(lrn$name)
+    df[i, 3] = linkPkg(lrn$package)
+    df[i, 4] = hasProperties(lrn, "numerics")
+    df[i, 5] = hasProperties(lrn, "factors")
+    df[i, 6] = hasProperties(lrn, "missings")
+    df[i, 7] = hasProperties(lrn, "weights")
+    df[i, 8] = collapse(setdiff(lrn$properties, c("numerics", "factors", "missings", "weights")))
+  }
+  logicals = vlapply(df, is.logical)
+  df[logicals] = lapply(df[logicals], function(x) ifelse(x, "X", ""))
+  pandoc.table(df, style = "rmarkdown", split.tables = Inf, split.cells = Inf,
+    justify = c("left", "left", "left", "center", "center", "center", "center", "right"))
+}
+```
+
+### Classification Learner
+```{r echo=FALSE,results="asis"}
+getTab("classif")
+```
+
+### Regression Learner
+```{r echo=FALSE,results="asis"}
+getTab("regr")
+```
+
+### Survival Learner
+```{r echo=FALSE,results="asis"}
+getTab("surv")
 ```

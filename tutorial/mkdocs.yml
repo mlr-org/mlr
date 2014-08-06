@@ -5,7 +5,6 @@ pages:
 - ["index.md", "Home"]
 - ["task.md", "Basics", "Tasks"]
 - ["learner.md", "Basics", "Learner"]
-- ["integrated_learners.md", "Basics", "Integrated Learners"]
 - ["train.md", "Basics", "Train"]
 - ["predict.md", "Basics", "Predict"]
 - ["performance.md", "Basics", "Performance"]
