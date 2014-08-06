@@ -232,7 +232,15 @@ testData = as.data.frame(mlbench.2dnormals(100, sd = 2))
 ## Define a learning task and an appropriate learner
 task = makeClassifTask(data = testData, target = &quot;classes&quot;)
 lrn1 = makeLearner(&quot;classif.lda&quot;, predict.type = &quot;prob&quot;)
-lrn2 = makeLearner(&quot;classif.ksvm&quot;, predict.type = &quot;prob&quot;)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: MASS
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">lrn2 = makeLearner(&quot;classif.ksvm&quot;, predict.type = &quot;prob&quot;)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: kernlab
 </code></pre>
 
 <p>Afterwards, we perform <a href="../resample/">resampling</a> to obtain predictions for each fold.</p>
@@ -240,6 +248,18 @@ lrn2 = makeLearner(&quot;classif.ksvm&quot;, predict.type = &quot;prob&quot;)
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
 r1 = resample(lrn1, task, rdesc, show.info = FALSE)
 r2 = resample(lrn2, task, rdesc, show.info = FALSE)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
 <p>Now we have to convert each prediction within the resample-result to a ROCR

@@ -1,62 +1,7 @@
-#!/usr/bin/env Rscript
+#!/bin/bash
 
-src = "src"
-dest = "docs"
-macros = list(
-  list(pattern = "\\\\man\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\1.html)"),
-  list(pattern = "\\\\man2\\[([[:alnum:]()]+)\\]\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\2.html)")
-)
-conflicting = "caret"
-
-library(methods)
-library(BBmisc)
-library(knitr)
-library(stringr)
-library(digest)
-library(mlr)
-
-options(warn = 2L)
-opts_knit$set(upload.fun = image_uri)
-
-exit = function(status, msg, ...) {
-  if (!missing(msg))
-    cat(sprintf(msg, ...), "\n\n", sep = "")
-  quit(save = "no", status = status)
-}
-
-objToSeed = function(x, algo="crc32") {
- hash = digest(x, algo = algo)
- strtoi(sprintf("0x%s", substr(hash, 1L, 7L)))
-}
-
-if (!isDirectory("docs"))
-  dir.create("docs")
-
-for (f in list.files(src, pattern = "\\.Rmd$")) {
-  catf("### Knitting '%s' ...\n", f)
-  lines = readLines(file.path(src, f))
-  for (macro in macros)
-    lines = str_replace_all(lines, macro$pattern, macro$replacement)
-  cache.path = paste0(file.path("cache", f), .Platform$file.sep)
-  opts_chunk$set(cache = TRUE, cache.path = cache.path)
-  set.seed(objToSeed(f))
-  ok = try(knit(text = lines, output = file.path(dest, str_replace(f, "\\.Rmd$", "\\.md")),
-      envir = new.env(), quiet = TRUE))
-  if (inherits(ok, "try-error"))
-    exit(1L, "Error knitting file '%s':\n%s", f, as.character(ok))
-  unload = conflicting[conflicting %in% loadedNamespaces()]
-  lapply(unload, unloadNamespace)
-}
-
-ok = system3("mkdocs", "build")
-if (ok$exit.code > 0L) {
-  cat("\nBuild failed\n")
-  exit(ok$exit.code)
-}
-
-cat("\nBuild successfull\n")
-unlink("figure", recursive = TRUE)
-unlink("docs", recursive = TRUE)
-exit(0L)
-
-# vim: set ft=r:
+for f in src/*.Rmd; do
+    echo "Knitting '${f}'"
+    ./knit "$f" || exit 1
+done
+mkdocs build || echo "Build failed!" && exit 2

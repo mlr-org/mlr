@@ -251,7 +251,9 @@ described by the <code>rdesc</code> variable.</p>
 <pre class="prettyprint well"><code class="r">r = tuneParams(makeLearner(&quot;classif.ksvm&quot;), task=task, resampling=rdesc, par.set=ps, control=ctrl, measures=list(mmce, setAggregation(mmce, test.sd)))
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Tune] Started tuning learner classif.ksvm for parameter set:
+<pre class="prettyprint well"><code>## Loading required package: kernlab
+## Loading required package: methods
+## [Tune] Started tuning learner classif.ksvm for parameter set:
 ##           Type len Def         Constr Req Trafo
 ## C     discrete   -   - 0.25,0.5,1,2,4   -     -
 ## sigma discrete   -   - 0.25,0.5,1,2,4   -     -
@@ -294,12 +296,12 @@ head((opt.grid = as.data.frame(r$opt.path)))
 </code></pre>
 
 <pre class="prettyprint well"><code>##      C sigma mmce.test.mean mmce.test.sd dob eol error.message exec.time
-## 1 0.25  0.25        0.04667      0.02309   1  NA          &lt;NA&gt;     0.101
-## 2  0.5  0.25        0.04667      0.01155   2  NA          &lt;NA&gt;     0.102
-## 3    1  0.25        0.04000      0.02000   3  NA          &lt;NA&gt;     0.094
-## 4    2  0.25        0.04667      0.02309   4  NA          &lt;NA&gt;     0.095
-## 5    4  0.25        0.04667      0.02309   5  NA          &lt;NA&gt;     0.093
-## 6 0.25   0.5        0.06000      0.00000   6  NA          &lt;NA&gt;     0.100
+## 1 0.25  0.25        0.04667      0.02309   1  NA          &lt;NA&gt;     0.078
+## 2  0.5  0.25        0.04667      0.01155   2  NA          &lt;NA&gt;     0.059
+## 3    1  0.25        0.04000      0.02000   3  NA          &lt;NA&gt;     0.056
+## 4    2  0.25        0.04667      0.02309   4  NA          &lt;NA&gt;     0.056
+## 5    4  0.25        0.04667      0.02309   5  NA          &lt;NA&gt;     0.057
+## 6 0.25   0.5        0.06000      0.00000   6  NA          &lt;NA&gt;     0.057
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">g = ggplot(opt.grid, aes(x=C, y=sigma, fill=mmce.test.mean, label=round(mmce.test.sd,3)))

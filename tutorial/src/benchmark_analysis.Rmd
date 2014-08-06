@@ -1,25 +1,58 @@
-# Benchmark Analysis
 
-This section is concerned with the statistical evaluation of benchmark
-experiments and interpreting the results in a proper way. Common questions
-are (after selecting a performance measure):
+R version 3.1.1 (2014-07-10) -- "Sock it to Me"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
 
-* Is classifier A significantly better than classifier B?
-* Given a group of classifiers, can we identify relations where ...
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
 
-We won't go into the theoretical details here, but link to some helpful papers:
+  Natural language support but running in an English locale
 
-<!--- * [[Salzberg1997]](../literature.md#[Salzberg1997]) is a good introduction to the topic.
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
 
-* [[Dietterich1998]](../literature.md#[Dietterich1998]) FIXME
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
 
-* [[Hornik1998]](../literature.md#[Hornik1998]) tries to establish a general, statistically valid framework of the theory. Also contains a good overview and critique of previous methods and tests.
--->
-
-* The [benchmarking group](http://www.stat.uni-muenchen.de/institut/ag/leisch/work/benchmarking.html) at LMU.
-
-* [Exploratory and Inferential Analysis of Benchmark Experiments](http://epub.ub.uni-muenchen.de/4134/).
-  Expands on the above paper, mostly with regard to practical issues.
-
-* The [benchmark](http://r-forge.r-project.org/projects/benchmark/) package by Eugster et.al.
-
+> #!/usr/bin/env Rscript
+> 
+> src = "src"
+> dest = "docs"
+> f = basename(commandArgs(TRUE)[1L])
+> macros = list(
++   list(pattern = "\\\\man\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\1.html)"),
++   list(pattern = "\\\\man2\\[([[:alnum:]()]+)\\]\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\2.html)")
++ )
+> 
+> library(methods)
+> library(BBmisc, quietly = TRUE)
+> library(knitr, quietly = TRUE)
+> library(stringr, quietly = TRUE)
+> library(digest, quietly = TRUE)
+> library(mlr, quietly = TRUE)
+> 
+> options(warn = 2L)
+> opts_knit$set(upload.fun = image_uri)
+> 
+> exit = function(status, msg, ...) {
++   if (!missing(msg))
++     cat(sprintf(msg, ...), "\n\n", sep = "")
++   quit(save = "no", status = status)
++ }
+> 
+> objToSeed = function(x, algo="crc32") {
++  hash = digest(x, algo = algo)
++  strtoi(sprintf("0x%s", substr(hash, 1L, 7L)))
++ }
+> 
+> if (!isDirectory("docs"))
++   dir.create("docs")
+> 
+> lines = readLines(file.path(src, f))
+Error in file(con, "r") : 
+  (converted from warning) cannot open file 'src/NA': No such file or directory
+Calls: readLines -> file
+Execution halted

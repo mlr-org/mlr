@@ -220,16 +220,24 @@ and pass the data to be predicted.</p>
 for the same data set.</p>
 <pre class="prettyprint well"><code class="r">task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.lda&quot;)
-mod = train(lrn, task = task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: argument &quot;y&quot; is missing, with no default
+<pre class="prettyprint well"><code>## Loading required package: MASS
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task = task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">pred = predict(mod, newdata = iris)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Error: object 'mod' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">pred
@@ -247,17 +255,21 @@ data(BostonHousing)
 
 task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
 lrn = makeLearner(&quot;regr.lm&quot;)
-mod = train(lrn, task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;regr.lm&quot;, &quot;RLearnerRegr&quot;, &quot;RLearner&quot;,
-## &quot;Learner&quot;)&quot; to a data.frame
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">predict(mod, newdata = BostonHousing)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Error: object 'mod' not found
 </code></pre>
 
 <h3 id="clustering-example">Clustering example</h3>
@@ -266,17 +278,24 @@ the same data.</p>
 <pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
 task = makeClusterTask(data = iris[,-5])
 lrn = makeLearner(&quot;cluster.XMeans&quot;)
-mod = train(lrn, task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;cluster.XMeans&quot;, &quot;RLearnerCluster&quot;,
-## &quot;RLearner&quot;, &quot;Learner&quot;)&quot; to a data.frame
+<pre class="prettyprint well"><code>## Loading required package: RWeka
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">predict(mod, newdata = iris[,-5])
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Error: object 'mod' not found
 </code></pre>
 
 <h2 id="further-information">Further information</h2>
@@ -304,8 +323,15 @@ task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 
 # Define the learning algorithm
 lrn = makeLearner(&quot;classif.rpart&quot;)
+</code></pre>
 
-# Split the iris data into a training set for learning and a test set
+<pre class="prettyprint well"><code>## Loading required package: rpart
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r"># Split the iris data into a training set for learning and a test set
 training.set = seq(from = 1, to = nrow(iris), by = 2)
 test.set = seq(from = 2, to = nrow(iris), by = 2)
 
@@ -313,36 +339,34 @@ test.set = seq(from = 2, to = nrow(iris), by = 2)
 mod = train(lrn, task, subset = training.set)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;classif.rpart&quot;, &quot;RLearnerClassif&quot;,
-## &quot;RLearner&quot;, &quot;Learner&quot;)&quot; to a data.frame
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r"># Finally, predict the label on new values using the predict method
 pred = predict(mod, newdata = iris, subset = test.set)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Error: object 'mod' not found
 </code></pre>
 
 <p>A <code>data.frame</code> that contains the true and predicted class labels can be accessed via</p>
 <pre class="prettyprint well"><code class="r">head(pred$data)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'pred' not found
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
 </code></pre>
 
 <p>Alternatively, we can also predict directly from a <code>task</code>:</p>
 <pre class="prettyprint well"><code class="r">pred = predict(mod, task = task, subset = test.set)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Error: object 'mod' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">head(as.data.frame(pred))
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'x' in selecting a method for function 'head': Error in as.data.frame(pred) : 
-##   error in evaluating the argument 'x' in selecting a method for function 'as.data.frame': Error: object 'pred' not found
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
 </code></pre>
 
 <p>When predicting from a <code>task</code>, the resulting <code>data.frame</code> contains an additional column,
@@ -351,23 +375,27 @@ corresponds to. In the iris example the IDs and the rownames coincide.</p>
 <p>In order to get predicted posterior probabilities, we have to change the <code>predict.type</code>
 of the learner.</p>
 <pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;)
-mod = train(lrn, task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;classif.rpart&quot;, &quot;RLearnerClassif&quot;,
-## &quot;RLearner&quot;, &quot;Learner&quot;)&quot; to a data.frame
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">pred = predict(mod, newdata = iris, subset = test.set)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Error: object 'mod' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">head(pred$data)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'pred' not found
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
 </code></pre>
 
 <p>As you can see, in addition to the predicted probabilities, a response
@@ -377,8 +405,7 @@ breaking ties at random.</p>
 <pre class="prettyprint well"><code class="r">head(getProbabilities(pred))
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'x' in selecting a method for function 'head': Error in checkClass(x, classes, ordered) : object 'pred' not found
-## Calls: getProbabilities -&gt; assertClass -&gt; checkClass
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
 </code></pre>
 
 <h3 id="binary-classification">Binary classification</h3>
@@ -396,22 +423,27 @@ data(Sonar)
 
 task = makeClassifTask(data = Sonar, target = &quot;Class&quot;, positive = &quot;M&quot;)
 lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;)
-mod = train(lrn, task = task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: argument &quot;y&quot; is missing, with no default
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task = task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">pred = predict(mod, task = task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Error: object 'mod' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">head(pred$data)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'pred' not found
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
 </code></pre>
 
 <p>In a binary classification setting, we can adjust the threshold, used
@@ -426,7 +458,7 @@ the threshold for the <em>positive</em> class to 0.8:</p>
 <pre class="prettyprint well"><code class="r">head(pred$data)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'pred' not found
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">pred$threshold
@@ -449,23 +481,35 @@ training.set = seq(from = 1, to = nrow(BostonHousing), by = 2)
 test.set = seq(from = 2, to = nrow(BostonHousing), by = 2)
 
 lrn = makeLearner(&quot;regr.gbm&quot;, n.trees = 100)
-mod = train(lrn, task, subset = training.set)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;regr.gbm&quot;, &quot;RLearnerRegr&quot;, &quot;RLearner&quot;,
-## &quot;Learner&quot;)&quot; to a data.frame
+<pre class="prettyprint well"><code>## Loading required package: gbm
+## Loading required package: survival
+## Loading required package: splines
+## Loading required package: lattice
+## Loading required package: parallel
+## Loaded gbm 2.1
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task, subset = training.set)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">pred = predict(mod, newdata = BostonHousing, subset = test.set)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Error: object 'mod' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">head(pred$data)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'pred' not found
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
 </code></pre>
 
 </div>

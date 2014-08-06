@@ -260,87 +260,99 @@ task = makeClassifTask(data=data, target=&quot;class&quot;)
 task.over = oversample(task, rate=4)
 task.under = undersample(task, rate=1/4)
 lrn = makeLearner(&quot;classif.PART&quot;)
-mod = train(lrn, task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;classif.PART&quot;, &quot;RLearnerClassif&quot;,
-## &quot;RLearner&quot;, &quot;Learner&quot;)&quot; to a data.frame
+<pre class="prettyprint well"><code>## Loading required package: RWeka
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod.over = train(lrn, task.over)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;classif.PART&quot;, &quot;RLearnerClassif&quot;,
-## &quot;RLearner&quot;, &quot;Learner&quot;)&quot; to a data.frame
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod.under = train(lrn, task.under)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;classif.PART&quot;, &quot;RLearnerClassif&quot;,
-## &quot;RLearner&quot;, &quot;Learner&quot;)&quot; to a data.frame
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod, newdata = data.even), measures=mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Error: object 'mod' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.over, newdata = data.even), measures=mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod.over' not found
+<pre class="prettyprint well"><code>## Error: object 'mod.over' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures=mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod.under' not found
+<pre class="prettyprint well"><code>## Error: object 'mod.under' not found
 </code></pre>
 
 <h2 id="learners">Learners</h2>
 <p>Note that it is <em>highly dependent</em> on the learner if over- or undersampling will
 be useful. You are also able to wrap the over- and undersampling within the learner.</p>
 <pre class="prettyprint well"><code class="r">lrn.over = makeOversampleWrapper(lrn, osw.rate=4)
-lrn.under = makeUndersampleWrapper(lrn, usw.rate=1/4)
-mod = train(lrn, task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;classif.PART&quot;, &quot;RLearnerClassif&quot;,
-## &quot;RLearner&quot;, &quot;Learner&quot;)&quot; to a data.frame
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">lrn.under = makeUndersampleWrapper(lrn, usw.rate=1/4)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod.over = train(lrn.over, task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;OversampleWrapper&quot;, &quot;BaseWrapper&quot;,
-## &quot;Learner&quot;)&quot; to a data.frame
+<pre class="prettyprint well"><code>## Error: object 'lrn.over' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod.under = train(lrn.under, task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;UndersampleWrapper&quot;, &quot;BaseWrapper&quot;,
-## &quot;Learner&quot;)&quot; to a data.frame
+<pre class="prettyprint well"><code>## Error: object 'lrn.under' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod, newdata = data.even), measures=mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Error: object 'mod' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.over, newdata = data.even), measures=mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod.over' not found
+<pre class="prettyprint well"><code>## Error: object 'mod.over' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures=mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod.under' not found
+<pre class="prettyprint well"><code>## Error: object 'mod.under' not found
 </code></pre>
 
 </div>

@@ -218,11 +218,18 @@ with a learner and a suitable <a href="../../../man/Task.html">Task</a>.</p>
 <pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
 task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.lda&quot;)
-mod = train(lrn, task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;classif.lda&quot;, &quot;RLearnerClassif&quot;,
-## &quot;RLearner&quot;, &quot;Learner&quot;)&quot; to a data.frame
+<pre class="prettyprint well"><code>## Loading required package: MASS
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod
@@ -239,11 +246,15 @@ data(BostonHousing)
 
 task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
 lrn = makeLearner(&quot;regr.lm&quot;)
-mod = train(lrn, task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;regr.lm&quot;, &quot;RLearnerRegr&quot;, &quot;RLearner&quot;,
-## &quot;Learner&quot;)&quot; to a data.frame
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod
@@ -257,11 +268,18 @@ mod = train(lrn, task)
 <pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
 task = makeClusterTask(data = iris[,-5])
 lrn = makeLearner(&quot;cluster.XMeans&quot;)
-mod = train(lrn, task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;cluster.XMeans&quot;, &quot;RLearnerCluster&quot;,
-## &quot;RLearner&quot;, &quot;Learner&quot;)&quot; to a data.frame
+<pre class="prettyprint well"><code>## Loading required package: RWeka
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod

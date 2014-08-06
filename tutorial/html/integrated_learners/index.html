@@ -205,6 +205,11 @@
             <div class="col-md-9" role="main">
 
 <h2 id="integrated-learners">Integrated Learners</h2>
+<pre class="prettyprint well"><code>## Warning: The following learners could not be constructed, probably because their packages are not installed:
+## classif.lqa
+## Check ?learners to see which packages you need or install mlr with all suggestions.
+</code></pre>
+
 <table>
 <thead>
 <tr>
@@ -224,6 +229,8 @@
 <tbody>
 <tr>
 <td align="right">classif.IBk</td>
+<td align="right">K-nearest neighbours</td>
+<td align="right">IBk</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -231,12 +238,12 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
-<td align="right"></td>
-<td align="right"></td>
 <td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.J48</td>
+<td align="right">J48 Decision Trees</td>
+<td align="right">J48</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -244,12 +251,12 @@
 <td align="right">X</td>
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that NAs are directly passed to WEKA with \code{na.action = na.pass}</td>
 </tr>
 <tr>
 <td align="right">classif.JRip</td>
+<td align="right">Propositional Rule Learner</td>
+<td align="right">JRip</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -257,12 +264,12 @@
 <td align="right">X</td>
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that NAs are directly passed to WEKA with \code{na.action = na.pass}</td>
 </tr>
 <tr>
 <td align="right">classif.LiblineaRBinary</td>
+<td align="right">Regularized Binary Linear Predictive Models Estimation</td>
+<td align="right">LiblineaRBinary</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/LiblineaR/index.html">LiblineaR</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -270,12 +277,12 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right">twoclass</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that this model subsumes the types 1,2,3,5.</td>
 </tr>
 <tr>
 <td align="right">classif.LiblineaRLogReg</td>
+<td align="right">Regularized Logistic Regression</td>
+<td align="right">RegLReg</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/LiblineaR/index.html">LiblineaR</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -283,12 +290,12 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right">twoclass</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that this model subsumes type 0,6,7.</td>
 </tr>
 <tr>
 <td align="right">classif.LiblineaRMultiClass</td>
+<td align="right">Multi-class Support Vector Classification by Crammer and Singer</td>
+<td align="right">mcsvc</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/LiblineaR/index.html">LiblineaR</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -296,12 +303,12 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that this model is type 4.</td>
 </tr>
 <tr>
 <td align="right">classif.OneR</td>
+<td align="right">1-R classifier</td>
+<td align="right">OneR</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -309,12 +316,12 @@
 <td align="right">X</td>
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that NAs are directly passed to WEKA with \code{na.action = na.pass}</td>
 </tr>
 <tr>
 <td align="right">classif.PART</td>
+<td align="right">PART decision lists</td>
+<td align="right">PART</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -322,12 +329,12 @@
 <td align="right">X</td>
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that NAs are directly passed to WEKA with \code{na.action = na.pass}</td>
 </tr>
 <tr>
 <td align="right">classif.ada</td>
+<td align="right">ada Boosting</td>
+<td align="right">ada</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/ada/index.html">ada</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -336,11 +343,11 @@
 <td align="right">X</td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.blackboost</td>
+<td align="right">Gradient boosting with regression trees</td>
+<td align="right">blackbst</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/mboost/index.html">mboost</a>, <a href="http://cran.r-project.org/web/packages/party/index.html">party</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -349,11 +356,11 @@
 <td align="right">X</td>
 <td align="right">twoclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.boosting</td>
+<td align="right">Adabag Boosting</td>
+<td align="right">adabag</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/adabag/index.html">adabag</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -361,12 +368,12 @@
 <td align="right">X</td>
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that \code{xval} has been set to 0 by default for speed.</td>
 </tr>
 <tr>
 <td align="right">classif.cforest</td>
+<td align="right">Random forest based on conditional inference trees</td>
+<td align="right">cforest</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/party/index.html">party</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -374,12 +381,12 @@
 <td align="right"></td>
 <td align="right">X</td>
 <td align="right">twoclass,multiclass</td>
-<td align="right"></td>
-<td align="right"></td>
 <td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.ctree</td>
+<td align="right">Conditional Inference Trees</td>
+<td align="right">ctree</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/party/index.html">party</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -388,11 +395,11 @@
 <td align="right">X</td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.fnn</td>
+<td align="right">Fast k-Nearest Neighbor</td>
+<td align="right">fnn</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/FNN/index.html">FNN</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -401,11 +408,11 @@
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.gbm</td>
+<td align="right">Gradient boosting machine</td>
+<td align="right">gbm</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/gbm/index.html">gbm</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -414,11 +421,11 @@
 <td align="right">X</td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.geoDA</td>
+<td align="right">Geometric Predictive Discriminant Analysis</td>
+<td align="right">geoDA</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/DiscriMiner/index.html">DiscriMiner</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -427,11 +434,11 @@
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.glmboost</td>
+<td align="right">Boosting for GLMs</td>
+<td align="right">glmbst</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/mboost/index.html">mboost</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -439,12 +446,12 @@
 <td align="right"></td>
 <td align="right">X</td>
 <td align="right">twoclass</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that \code{family} has been set to \code{Binomial()} by default.</td>
 </tr>
 <tr>
 <td align="right">classif.glmnet</td>
+<td align="right">GLM with lasso or elasticnet regularization</td>
+<td align="right">glmnet</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/glmnet/index.html">glmnet</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -453,11 +460,11 @@
 <td align="right">X</td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.kknn</td>
+<td align="right">k-Nearest Neighbor</td>
+<td align="right">kknn</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/kknn/index.html">kknn</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -466,11 +473,11 @@
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.knn</td>
+<td align="right">k-Nearest Neighbor</td>
+<td align="right">knn</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/class/index.html">class</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -479,11 +486,11 @@
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.ksvm</td>
+<td align="right">Support Vector Machines</td>
+<td align="right">ksvm</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/kernlab/index.html">kernlab</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -491,12 +498,12 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that kernel parameters have to be passed directly and not by using the kpar list in ksvm.\cr Note that \code{fit} has been set to \code{FALSE} by default for speed.</td>
 </tr>
 <tr>
 <td align="right">classif.lda</td>
+<td align="right">Linear Discriminant Analysis</td>
+<td align="right">lda</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/MASS/index.html">MASS</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -505,11 +512,11 @@
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.linDA</td>
+<td align="right">Linear Discriminant Analysis</td>
+<td align="right">linDA</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/DiscriMiner/index.html">DiscriMiner</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -518,24 +525,24 @@
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.logreg</td>
+<td align="right">Logistic Regression</td>
+<td align="right">logreg</td>
 <td align="right">stats</td>
 <td align="right">X</td>
 <td align="right">X</td>
 <td align="right">X</td>
 <td align="right"></td>
 <td align="right">X</td>
-<td align="right">twoclass,multiclass</td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">twoclass</td>
 <td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.lssvm</td>
+<td align="right">Least Squares Support Vector Machine</td>
+<td align="right">lssvm</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/kernlab/index.html">kernlab</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -543,12 +550,12 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that \code{fitted} has been set to \code{FALSE} by default for speed.</td>
 </tr>
 <tr>
 <td align="right">classif.lvq1</td>
+<td align="right">Learning Vector Quantization</td>
+<td align="right">lvq1</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/class/index.html">class</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -557,11 +564,11 @@
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.mda</td>
+<td align="right">Mixture Discriminant Analysis</td>
+<td align="right">mda</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/mda/index.html">mda</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -569,12 +576,12 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that \code{keep.fitted} has been set to \code{FALSE} by default for speed.</td>
 </tr>
 <tr>
 <td align="right">classif.multinom</td>
+<td align="right">Multinomial Regression</td>
+<td align="right">multinom</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/nnet/index.html">nnet</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -583,11 +590,11 @@
 <td align="right">X</td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.naiveBayes</td>
+<td align="right">Naive Bayes</td>
+<td align="right">nBayes</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/e1071/index.html">e1071</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -596,11 +603,11 @@
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.nnet</td>
+<td align="right">Neural Network</td>
+<td align="right">nnet</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/nnet/index.html">nnet</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -608,12 +615,12 @@
 <td align="right"></td>
 <td align="right">X</td>
 <td align="right">twoclass,multiclass</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that \code{size} has been set to 3 by default.</td>
 </tr>
 <tr>
 <td align="right">classif.plr</td>
+<td align="right">Logistic regression with a L2 penalty</td>
+<td align="right">plr</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/stepPlr/index.html">stepPlr</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -621,12 +628,12 @@
 <td align="right"></td>
 <td align="right">X</td>
 <td align="right">twoclass</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that AIC and BIC penalty types can be selected via the new parameter \code{cp.type}</td>
 </tr>
 <tr>
 <td align="right">classif.plsDA</td>
+<td align="right">Partial Least Squares (PLS) Discriminant Analysis</td>
+<td align="right">plsDA</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/DiscriMiner/index.html">DiscriMiner</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -635,11 +642,11 @@
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.plsdaCaret</td>
+<td align="right">Partial Least Squares (PLS) Discriminant Analysis</td>
+<td align="right">plsdaCaret</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/caret/index.html">caret</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -648,11 +655,11 @@
 <td align="right"></td>
 <td align="right">twoclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.qda</td>
+<td align="right">Quadratic Discriminant Analysis</td>
+<td align="right">qda</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/MASS/index.html">MASS</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -661,11 +668,11 @@
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.quaDA</td>
+<td align="right">Quadratic Discriminant Analysis</td>
+<td align="right">quaDA</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/DiscriMiner/index.html">DiscriMiner</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -674,11 +681,11 @@
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.randomForest</td>
+<td align="right">Random Forest</td>
+<td align="right">RF</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/randomForest/index.html">randomForest</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -686,12 +693,25 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
+<td align="right">The argument \code{fix.factors} restores the factor levels seen in the training data before prediction to circumvent randomForest's internal sanity checks. Default is \code{FALSE}.</td>
+</tr>
+<tr>
+<td align="right">classif.randomForestSRC</td>
+<td align="right">Random Forest</td>
+<td align="right">RFsrc</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/randomForestSRC/index.html">randomForestSRC</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
 <td align="right"></td>
-<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
 <td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.rda</td>
+<td align="right">Regularized Discriminant Analysis</td>
+<td align="right">rda</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/klaR/index.html">klaR</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -699,12 +719,12 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that \code{estimate.error} has been set to \code{FALSE} by default for speed.</td>
 </tr>
 <tr>
 <td align="right">classif.rpart</td>
+<td align="right">Decision Tree</td>
+<td align="right">rpart</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/rpart/index.html">rpart</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -712,12 +732,12 @@
 <td align="right">X</td>
 <td align="right">X</td>
 <td align="right">twoclass,multiclass</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that \code{xval} has been set to 0 by default for speed.</td>
 </tr>
 <tr>
 <td align="right">classif.rrlda</td>
+<td align="right">classif.rrlda</td>
+<td align="right">rrlda</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/rrlda/index.html">rrlda</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -726,11 +746,11 @@
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">classif.svm</td>
+<td align="right">Support Vector Machines (libsvm)</td>
+<td align="right">svm</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/e1071/index.html">e1071</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -739,16 +759,14 @@
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">cluster.EM</td>
+<td align="right">Expectation-maximization clustering</td>
+<td align="right">EM</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
 <td align="right"></td>
 <td align="right">X</td>
-<td align="right"></td>
-<td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
@@ -757,11 +775,11 @@
 </tr>
 <tr>
 <td align="right">cluster.SimpleKMeans</td>
+<td align="right">k-means clustering</td>
+<td align="right">SimpleKMeans</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
 <td align="right"></td>
 <td align="right">X</td>
-<td align="right"></td>
-<td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
@@ -770,6 +788,8 @@
 </tr>
 <tr>
 <td align="right">cluster.XMeans</td>
+<td align="right">XMeans (k-means with automatic determination of k)</td>
+<td align="right">XMeans</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -777,12 +797,12 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that you might have to install the Weka package: \code{WPM("install-package", "XMeans")}</td>
 </tr>
 <tr>
 <td align="right">regr.IBk</td>
+<td align="right">K-nearest neighbours</td>
+<td align="right">IBk</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -791,11 +811,11 @@
 <td align="right"></td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">regr.blackboost</td>
+<td align="right">Gradient boosting with regression trees</td>
+<td align="right">blackbst</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/mboost/index.html">mboost</a>, <a href="http://cran.r-project.org/web/packages/party/index.html">party</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -804,11 +824,11 @@
 <td align="right">X</td>
 <td align="right"></td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">regr.cforest</td>
+<td align="right">Random forest based on conditional inference trees</td>
+<td align="right">cforest</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/party/index.html">party</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -817,11 +837,11 @@
 <td align="right">X</td>
 <td align="right"></td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">regr.crs</td>
+<td align="right">Regression Splines</td>
+<td align="right">crs</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/crs/index.html">crs</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -830,11 +850,11 @@
 <td align="right">X</td>
 <td align="right"></td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">regr.earth</td>
+<td align="right">Multivariate Adaptive Regression Splines</td>
+<td align="right">earth</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/earth/index.html">earth</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -843,11 +863,11 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">regr.fnn</td>
+<td align="right">Fast k-Nearest Neighbor</td>
+<td align="right">fnn</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/FNN/index.html">FNN</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -856,11 +876,11 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">regr.gbm</td>
+<td align="right">Gradient boosting machine</td>
+<td align="right">gbm</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/gbm/index.html">gbm</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -868,12 +888,12 @@
 <td align="right">X</td>
 <td align="right">X</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that \code{distribution} has been set to \dQuote{gaussian} by default.</td>
 </tr>
 <tr>
 <td align="right">regr.glmnet</td>
+<td align="right">GLM with lasso or elasticnet regularization</td>
+<td align="right">glmnet</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/glmnet/index.html">glmnet</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -882,11 +902,11 @@
 <td align="right">X</td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">regr.kknn</td>
+<td align="right">K-Nearest-Neighbor regression</td>
+<td align="right">kknn</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/kknn/index.html">kknn</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -895,11 +915,11 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">regr.km</td>
+<td align="right">Kriging</td>
+<td align="right">km</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/DiceKriging/index.html">DiceKriging</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -908,11 +928,11 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">regr.ksvm</td>
+<td align="right">Support Vector Machines</td>
+<td align="right">ksvm</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/kernlab/index.html">kernlab</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -920,12 +940,12 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that kernel parameters have to be passed directly and not by using the kpar list in ksvm.\cr Note that \code{fit} has been set to \code{FALSE} by default for speed.</td>
 </tr>
 <tr>
 <td align="right">regr.lm</td>
+<td align="right">Simple linear regression</td>
+<td align="right">lm</td>
 <td align="right">stats</td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -934,11 +954,11 @@
 <td align="right">X</td>
 <td align="right"></td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">regr.mars</td>
+<td align="right">Multivariate Adaptive Regression Splines</td>
+<td align="right">mars</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/mda/index.html">mda</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -947,11 +967,11 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">regr.mob</td>
+<td align="right">Model-based recursive partitioning  yielding a tree with fitted models associated with each terminal node</td>
+<td align="right">mob</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/party/index.html">party</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -960,11 +980,11 @@
 <td align="right">X</td>
 <td align="right"></td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">regr.nnet</td>
+<td align="right">Neural Network</td>
+<td align="right">nnet</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/nnet/index.html">nnet</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -972,12 +992,51 @@
 <td align="right"></td>
 <td align="right">X</td>
 <td align="right"></td>
+<td align="right">Note that \code{size} has been set to 3 by default.</td>
+</tr>
+<tr>
+<td align="right">regr.pcr</td>
+<td align="right">Principal component regression</td>
+<td align="right">pcr</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/pls/index.html">pls</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">Note that \code{model} has been set to \code{FALSE} by default for speed.</td>
+</tr>
+<tr>
+<td align="right">regr.penalized.lasso</td>
+<td align="right">Lasso regression</td>
+<td align="right">lasso</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/penalized/index.html">penalized</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
 </tr>
 <tr>
-<td align="right">regr.pcr</td>
+<td align="right">regr.penalized.ridge</td>
+<td align="right">regr.penalized.ridge</td>
+<td align="right">ridge</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/penalized/index.html">penalized</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.plsr</td>
+<td align="right">Partial least squares regression</td>
+<td align="right">plsr</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/pls/index.html">pls</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -986,37 +1045,11 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="right">regr.penalized.lasso</td>
-<td align="right"><a href="http://cran.r-project.org/web/packages/penalized/index.html">penalized</a></td>
-<td align="right"></td>
-<td align="right">X</td>
-<td align="right">X</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="right">regr.penalized.ridge</td>
-<td align="right"><a href="http://cran.r-project.org/web/packages/penalized/index.html">penalized</a></td>
-<td align="right"></td>
-<td align="right">X</td>
-<td align="right">X</td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">regr.randomForest</td>
+<td align="right">Random Forest</td>
+<td align="right">RF</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/randomForest/index.html">randomForest</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -1024,12 +1057,25 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
+<td align="right">The argument \code{fix.factors} restores the factor levels seen in the training data before prediction to circumvent randomForest's internal sanity checks. Default is \code{FALSE}.</td>
+</tr>
+<tr>
+<td align="right">regr.randomForestSRC</td>
+<td align="right">Random Forest</td>
+<td align="right">RFsrc</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/randomForestSRC/index.html">randomForestSRC</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
 <td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
 </tr>
 <tr>
 <td align="right">regr.rpart</td>
+<td align="right">Decision Tree</td>
+<td align="right">rpart</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/rpart/index.html">rpart</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -1037,12 +1083,12 @@
 <td align="right">X</td>
 <td align="right">X</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that \code{xval} has been set to 0 by default for speed.</td>
 </tr>
 <tr>
 <td align="right">regr.rsm</td>
+<td align="right">Response surface regression</td>
+<td align="right">rsm</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/rsm/index.html">rsm</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -1050,12 +1096,12 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that you select the order of the regression by using modelfun = "FO" (first order), "TWI" (two-way interactions, this is with 1st oder terms!) and "SO" (full second order)</td>
 </tr>
 <tr>
 <td align="right">regr.rvm</td>
+<td align="right">Relevance Vector Machine</td>
+<td align="right">rvm</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/kernlab/index.html">kernlab</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -1063,12 +1109,12 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
+<td align="right">Note that kernel parameters have to be passed directly and not by using the kpar list in rvm.\cr Note that \code{fit} has been set to \code{FALSE} by default for speed.</td>
 </tr>
 <tr>
 <td align="right">regr.svm</td>
+<td align="right">Support Vector Machines (libsvm)</td>
+<td align="right">svm</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/e1071/index.html">e1071</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -1077,11 +1123,11 @@
 <td align="right"></td>
 <td align="right"></td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">surv.CoxBoost</td>
+<td align="right">Cox proportional hazards model with componentwise likelhood based boosting</td>
+<td align="right">CoxBoost</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/CoxBoost/index.html">CoxBoost</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -1090,11 +1136,11 @@
 <td align="right">X</td>
 <td align="right">rcens</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">surv.cforest</td>
+<td align="right">Random forest based on conditional inference trees</td>
+<td align="right">cRF</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/party/index.html">party</a>, <a href="http://cran.r-project.org/web/packages/survival/index.html">survival</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -1103,11 +1149,11 @@
 <td align="right">X</td>
 <td align="right">twoclass,multiclass</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">surv.coxph</td>
+<td align="right">Cox proportional hazard model</td>
+<td align="right">coxph</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/survival/index.html">survival</a></td>
 <td align="right">X</td>
 <td align="right">X</td>
@@ -1116,11 +1162,11 @@
 <td align="right">X</td>
 <td align="right">rcens</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">surv.glmboost</td>
+<td align="right">surv.glmboost</td>
+<td align="right">glmboost</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/mboost/index.html">mboost</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -1129,11 +1175,11 @@
 <td align="right">X</td>
 <td align="right">rcens</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">surv.glmnet</td>
+<td align="right">GLM with regularization</td>
+<td align="right">glmnet</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/glmnet/index.html">glmnet</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -1142,11 +1188,11 @@
 <td align="right">X</td>
 <td align="right">rcens</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">surv.penalized</td>
+<td align="right">surv.penalized</td>
+<td align="right">penalized</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/penalized/index.html">penalized</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -1155,11 +1201,11 @@
 <td align="right"></td>
 <td align="right">rcens</td>
 <td align="right"></td>
-<td align="right"></td>
-<td align="right"></td>
 </tr>
 <tr>
 <td align="right">surv.randomForestSRC</td>
+<td align="right">Random Forests for Survival</td>
+<td align="right">RFsrc</td>
 <td align="right"><a href="http://cran.r-project.org/web/packages/randomForestSRC/index.html">randomForestSRC</a></td>
 <td align="right"></td>
 <td align="right">X</td>
@@ -1167,8 +1213,6 @@
 <td align="right">X</td>
 <td align="right"></td>
 <td align="right">rcens</td>
-<td align="right"></td>
-<td align="right"></td>
 <td align="right"></td>
 </tr>
 </tbody>

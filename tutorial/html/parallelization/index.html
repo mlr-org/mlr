@@ -216,17 +216,24 @@ parallelStartSocket(2)
 </code></pre>
 
 <pre class="prettyprint well"><code>## Starting parallelization in mode=socket with cpus=2.
+## Loading required package: parallel
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.lda&quot;)
-rdesc = makeResampleDesc(&quot;CV&quot;, iters = 4)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: MASS
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 4)
 r = resample(lrn, task, rdesc)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Exporting objects to slaves for mode socket: .mlr.slave.options
-## Mapping in parallel: mode = socket; cpus = 2; elements = 4.
-## [Resample] Result: mmce.test.mean=0.0197
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">parallelStop()

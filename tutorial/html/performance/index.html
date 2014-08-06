@@ -231,16 +231,24 @@ In order to calculate the performance measures, the function <a href="../../../m
 the mean misclassification error (mmce) on the test data set.</p>
 <pre class="prettyprint well"><code class="r">task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.lda&quot;)
-mod = train(lrn, task = task, subset = seq(1,150,2))
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: argument &quot;y&quot; is missing, with no default
+<pre class="prettyprint well"><code>## Loading required package: MASS
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task = task, subset = seq(1,150,2))
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">pred = predict(mod, task = task, subset = seq(2,150,2))
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Error: object 'mod' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(pred, measures = mmce)
@@ -291,16 +299,24 @@ data(Sonar)
 
 task = makeClassifTask(data = Sonar, target = &quot;Class&quot;, positive = &quot;M&quot;)
 lrn = makeLearner(&quot;classif.rpart&quot;)
-mod = train(lrn, task = task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: argument &quot;y&quot; is missing, with no default
+<pre class="prettyprint well"><code>## Loading required package: rpart
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task = task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">pred = predict(mod, task = task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Error: object 'mod' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(pred, measures = list(acc, fpr, fnr))
@@ -317,16 +333,21 @@ data(Sonar)
 
 task = makeClassifTask(data = Sonar, target = &quot;Class&quot;, positive = &quot;M&quot;)
 lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;)
-mod = train(lrn, task = task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: argument &quot;y&quot; is missing, with no default
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task = task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">pred = predict(mod, task = task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Error: object 'mod' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(pred, measures = auc)
@@ -341,8 +362,7 @@ mod = train(lrn, task = task)
 We again use the <code>BostonHousing</code> data set, fit a Gradient Boosting Machine
 model on a training set and calculate the mean of squared errors and the mean of
 absolute errors on the test data set.</p>
-<pre class="prettyprint well"><code class="r">library(mlbench)
-data(BostonHousing)
+<pre class="prettyprint well"><code class="r">data(BostonHousing, package = &quot;mlbench&quot;)
 
 task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
 
@@ -352,18 +372,30 @@ test.set = seq(from = 2, to = nrow(BostonHousing), by = 2)
 
 ## Gradient Boosting Machine on training set
 lrn = makeLearner(&quot;regr.gbm&quot;, n.trees = 1000)
-mod = train(lrn, task, subset = training.set)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;regr.gbm&quot;, &quot;RLearnerRegr&quot;, &quot;RLearner&quot;,
-## &quot;Learner&quot;)&quot; to a data.frame
+<pre class="prettyprint well"><code>## Loading required package: gbm
+## Loading required package: survival
+## Loading required package: splines
+## Loading required package: lattice
+## Loading required package: parallel
+## Loaded gbm 2.1
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task, subset = training.set)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Prediction on test set data
 pred = predict(mod, newdata = BostonHousing[test.set, ])
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+<pre class="prettyprint well"><code>## Error: object 'mod' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Compare predicted and true labels using measures MSE and MAE

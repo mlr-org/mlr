@@ -197,41 +197,60 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#benchmark-analysis">Benchmark Analysis</a></li>
+        <li class="main active"><a href="#usrbinenv-rscript">!/usr/bin/env Rscript</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h1 id="benchmark-analysis">Benchmark Analysis</h1>
-<p>This section is concerned with the statistical evaluation of benchmark
-experiments and interpreting the results in a proper way. Common questions
-are (after selecting a performance measure):</p>
-<ul>
-<li>Is classifier A significantly better than classifier B?</li>
-<li>Given a group of classifiers, can we identify relations where ...</li>
-</ul>
-<p>We won't go into the theoretical details here, but link to some helpful papers:</p>
-<!--- * [[Salzberg1997]](../literature.md#[Salzberg1997]) is a good introduction to the topic.
-
-* [[Dietterich1998]](../literature.md#[Dietterich1998]) FIXME
-
-* [[Hornik1998]](../literature.md#[Hornik1998]) tries to establish a general, statistically valid framework of the theory. Also contains a good overview and critique of previous methods and tests.
--->
-
-<ul>
-<li>
-<p>The <a href="http://www.stat.uni-muenchen.de/institut/ag/leisch/work/benchmarking.html">benchmarking group</a> at LMU.</p>
-</li>
-<li>
-<p><a href="http://epub.ub.uni-muenchen.de/4134/">Exploratory and Inferential Analysis of Benchmark Experiments</a>.
-  Expands on the above paper, mostly with regard to practical issues.</p>
-</li>
-<li>
-<p>The <a href="http://r-forge.r-project.org/projects/benchmark/">benchmark</a> package by Eugster et.al.</p>
-</li>
-</ul>
+<p>R version 3.1.1 (2014-07-10) -- "Sock it to Me"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)</p>
+<p>R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.</p>
+<p>Natural language support but running in an English locale</p>
+<p>R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.</p>
+<p>Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.</p>
+<blockquote>
+<h1 id="usrbinenv-rscript">!/usr/bin/env Rscript</h1>
+<p>src = "src"
+dest = "docs"
+f = basename(commandArgs(TRUE)[1L])
+macros = list(
++   list(pattern = "\\man\[([[:alnum:]]+)\]", replacement = "<a href="../../../man/\1.html">\1</a>"),
++   list(pattern = "\\man2\[([<a href="">:alnum:</a>]+)\]\[([[:alnum:]]+)\]", replacement = "<a href="../../../man/\2.html">\1</a>")
++ )</p>
+<p>library(methods)
+library(BBmisc, quietly = TRUE)
+library(knitr, quietly = TRUE)
+library(stringr, quietly = TRUE)
+library(digest, quietly = TRUE)
+library(mlr, quietly = TRUE)</p>
+<p>options(warn = 2L)
+opts_knit$set(upload.fun = image_uri)</p>
+<p>exit = function(status, msg, ...) {
++   if (!missing(msg))
++     cat(sprintf(msg, ...), "\n\n", sep = "")
++   quit(save = "no", status = status)
++ }</p>
+<p>objToSeed = function(x, algo="crc32") {
++  hash = digest(x, algo = algo)
++  strtoi(sprintf("0x%s", substr(hash, 1L, 7L)))
++ }</p>
+<p>if (!isDirectory("docs"))
++   dir.create("docs")</p>
+<p>lines = readLines(file.path(src, f))
+Error in file(con, "r") : 
+  (converted from warning) cannot open file 'src/NA': No such file or directory
+Calls: readLines -&gt; file
+Execution halted</p>
+</blockquote>
 </div>
         </div>
 

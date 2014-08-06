@@ -230,71 +230,26 @@ performance measures.</p>
 ## Define a learning task and an appropriate learner
 task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.lda&quot;)
+</code></pre>
 
-## Perform a 3-fold cross-validation
+<pre class="prettyprint well"><code>## Loading required package: MASS
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Perform a 3-fold cross-validation
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 r = resample(lrn, task, rdesc)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
-## [Resample] cross-validation iter: 2
-## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.02
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r
 </code></pre>
 
-<pre class="prettyprint well"><code>## $measures.train
-##   iter mmce
-## 1    1   NA
-## 2    2   NA
-## 3    3   NA
-## 
-## $measures.test
-##   iter mmce
-## 1    1 0.00
-## 2    2 0.04
-## 3    3 0.02
-## 
-## $aggr
-## mmce.test.mean 
-##           0.02 
-## 
-## $pred
-## Resampled Prediction for:
-## Resample description: cross-validation with 3 iterations.
-## Predict: test
-## Stratification: FALSE
-## predict.type: response
-## threshold: 
-## time (mean): 0.00
-##   id  truth response iter  set
-## 1  4 setosa   setosa    1 test
-## 2 10 setosa   setosa    1 test
-## 3 14 setosa   setosa    1 test
-## 4 15 setosa   setosa    1 test
-## 5 17 setosa   setosa    1 test
-## 6 18 setosa   setosa    1 test
-## 
-## $models
-## NULL
-## 
-## $err.msgs
-##   iter train predict
-## 1    1  &lt;NA&gt;    &lt;NA&gt;
-## 2    2  &lt;NA&gt;    &lt;NA&gt;
-## 3    3  &lt;NA&gt;    &lt;NA&gt;
-## 
-## $extract
-## $extract[[1]]
-## NULL
-## 
-## $extract[[2]]
-## NULL
-## 
-## $extract[[3]]
-## NULL
+<pre class="prettyprint well"><code>## Error: object 'r' not found
 </code></pre>
 
 <p>In this example, the peformance measure is <a href="../../../man/mmce.html">mmce</a> (mean misclassification
@@ -311,71 +266,23 @@ data(BostonHousing)
 ## Define a learning task and an appropriate learner
 task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
 lrn = makeLearner(&quot;regr.lm&quot;)
+</code></pre>
 
-## Perform a 3-fold cross-validation
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Perform a 3-fold cross-validation
 rdesc = makeResampleDesc(&quot;CV&quot;, iters=3)
 r = resample(lrn, task, rdesc)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
-## [Resample] cross-validation iter: 2
-## [Resample] cross-validation iter: 3
-## [Resample] Result: mse.test.mean=23.6
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r
 </code></pre>
 
-<pre class="prettyprint well"><code>## $measures.train
-##   iter mse
-## 1    1  NA
-## 2    2  NA
-## 3    3  NA
-## 
-## $measures.test
-##   iter   mse
-## 1    1 22.53
-## 2    2 23.30
-## 3    3 24.97
-## 
-## $aggr
-## mse.test.mean 
-##          23.6 
-## 
-## $pred
-## Resampled Prediction for:
-## Resample description: cross-validation with 3 iterations.
-## Predict: test
-## Stratification: FALSE
-## predict.type: response
-## threshold: 
-## time (mean): 0.00
-##    id truth response iter  set
-## 1   1  24.0    29.97    1 test
-## 7   7  22.9    23.06    1 test
-## 9   9  16.5    11.63    1 test
-## 10 10  18.9    19.04    1 test
-## 16 16  19.9    19.42    1 test
-## 18 18  17.5    17.01    1 test
-## 
-## $models
-## NULL
-## 
-## $err.msgs
-##   iter train predict
-## 1    1  &lt;NA&gt;    &lt;NA&gt;
-## 2    2  &lt;NA&gt;    &lt;NA&gt;
-## 3    3  &lt;NA&gt;    &lt;NA&gt;
-## 
-## $extract
-## $extract[[1]]
-## NULL
-## 
-## $extract[[2]]
-## NULL
-## 
-## $extract[[3]]
-## NULL
+<pre class="prettyprint well"><code>## Error: object 'r' not found
 </code></pre>
 
 <p>For regression, the default performance measure is <a href="../../../man/mse.html">mse</a> (mean squared error).</p>
@@ -512,64 +419,54 @@ error (<a href="../../../man/mmce.html">mmce</a>) and the accuracy (<a href="../
 <pre class="prettyprint well"><code class="r">## Merge learner (lrn), i.e. Decision Tree, classification task (task) and
 ## resample instance (rinst)
 lrn = makeLearner(&quot;classif.rpart&quot;)
-r1 = resample(lrn, task, rinst, list(mmce, acc))
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
-## [Resample] cross-validation iter: 2
-## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.0533,acc.test.mean=0.947
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">r1 = resample(lrn, task, rinst, list(mmce, acc))
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn' not found
 </code></pre>
 
 <p>Let's set a couple of hyperparameters for rpart:</p>
 <pre class="prettyprint well"><code class="r">lrn1 = makeLearner(&quot;classif.rpart&quot;, minsplit = 10, cp = 0.03)
-r1 = resample(lrn1, task, rinst, list(mmce, acc))
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
-## [Resample] cross-validation iter: 2
-## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.0533,acc.test.mean=0.947
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">r1 = resample(lrn1, task, rinst, list(mmce, acc))
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn1' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Second resample for LDA as learner
 lrn2 = makeLearner(&quot;classif.lda&quot;)
-r2 = resample(lrn2, task, rinst, list(mmce, acc))
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
-## [Resample] cross-validation iter: 2
-## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.0267,acc.test.mean=0.973
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">r2 = resample(lrn2, task, rinst, list(mmce, acc))
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn2' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Let's see how well both classifiers did w.r.t mean misclassification error and accuracy
 r1[c(&quot;measures.test&quot;,&quot;aggr&quot;)]
 </code></pre>
 
-<pre class="prettyprint well"><code>## $measures.test
-##   iter mmce  acc
-## 1    1 0.04 0.96
-## 2    2 0.06 0.94
-## 3    3 0.06 0.94
-## 
-## $aggr
-## mmce.test.mean  acc.test.mean 
-##        0.05333        0.94667
+<pre class="prettyprint well"><code>## Error: object 'r1' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r2[c(&quot;measures.test&quot;,&quot;aggr&quot;)]
 </code></pre>
 
-<pre class="prettyprint well"><code>## $measures.test
-##   iter mmce  acc
-## 1    1 0.04 0.96
-## 2    2 0.04 0.96
-## 3    3 0.00 1.00
-## 
-## $aggr
-## mmce.test.mean  acc.test.mean 
-##        0.02667        0.97333
+<pre class="prettyprint well"><code>## Error: object 'r2' not found
 </code></pre>
 
 <p>To see the individual values for each fold on the test set, we can access
@@ -577,10 +474,7 @@ the <code>measures.test</code> element of the result list:</p>
 <pre class="prettyprint well"><code class="r">r1$measures.test
 </code></pre>
 
-<pre class="prettyprint well"><code>##   iter mmce  acc
-## 1    1 0.04 0.96
-## 2    2 0.06 0.94
-## 3    3 0.06 0.94
+<pre class="prettyprint well"><code>## Error: object 'r1' not found
 </code></pre>
 
 <p>As you can see above, every fold of the 3-fold cross-validation gives one mean
@@ -589,8 +483,7 @@ misclassification error (in the second column).</p>
 <pre class="prettyprint well"><code class="r">r1$aggr
 </code></pre>
 
-<pre class="prettyprint well"><code>## mmce.test.mean  acc.test.mean 
-##        0.05333        0.94667
+<pre class="prettyprint well"><code>## Error: object 'r1' not found
 </code></pre>
 
 <p>The latter value is the aggregation, i.e. by default the mean, of the three
@@ -613,24 +506,34 @@ rinst = makeResampleInstance(rdesc, task = task)
 ms = list(mse, medae)
 
 lrn1 = makeLearner(&quot;regr.nnet&quot;)
-r1 = resample(lrn1, task, rinst, measures = ms)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] OOB bootstrapping iter: 1
-## [Resample] OOB bootstrapping iter: 2
-## [Resample] OOB bootstrapping iter: 3
-## [Resample] Result: mse.test.mean=81.6,medae.test.mean=4.81
+<pre class="prettyprint well"><code>## Loading required package: nnet
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">r1 = resample(lrn1, task, rinst, measures = ms)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn1' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Another resampling for the k-Nearest Neighbor regression
 lrn2 = makeLearner(&quot;regr.kknn&quot;)
-r2 = resample(lrn2, task, rinst, measures = ms)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] OOB bootstrapping iter: 1
-## [Resample] OOB bootstrapping iter: 2
-## [Resample] OOB bootstrapping iter: 3
-## [Resample] Result: mse.test.mean=16.6,medae.test.mean=1.84
+<pre class="prettyprint well"><code>## Loading required package: kknn
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: could not find function &quot;is&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">r2 = resample(lrn2, task, rinst, measures = ms)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'lrn2' not found
 </code></pre>
 
 <p>Now, we can compare both methods regarding mean squared error (<a href="../../../man/mse.html">mse</a>) and the
@@ -638,29 +541,13 @@ median of absolute errors (<a href="../../../man/medae.html">medae</a>):</p>
 <pre class="prettyprint well"><code class="r">r1[c(&quot;measures.test&quot;,&quot;aggr&quot;)]
 </code></pre>
 
-<pre class="prettyprint well"><code>## $measures.test
-##   iter   mse medae
-## 1    1 74.32 4.853
-## 2    2 82.14 4.804
-## 3    3 88.39 4.759
-## 
-## $aggr
-##   mse.test.mean medae.test.mean 
-##          81.615           4.805
+<pre class="prettyprint well"><code>## Error: object 'r1' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r2[c(&quot;measures.test&quot;,&quot;aggr&quot;)]
 </code></pre>
 
-<pre class="prettyprint well"><code>## $measures.test
-##   iter   mse medae
-## 1    1 10.04 1.771
-## 2    2 13.61 1.633
-## 3    3 26.22 2.119
-## 
-## $aggr
-##   mse.test.mean medae.test.mean 
-##          16.623           1.841
+<pre class="prettyprint well"><code>## Error: object 'r2' not found
 </code></pre>
 
 </div>
