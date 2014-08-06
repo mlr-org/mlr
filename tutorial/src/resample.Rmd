@@ -84,7 +84,7 @@ choose the resampling method are:
   class, but you do not have to touch any methods that use the
   resampling strategy.
 
-![Resampling Figure](../../_images/resampling.png "Resampling Figure")
+![Resampling Figure](../../../images/resampling.png "Resampling Figure")
 
 
 ## Resample descriptions and resample instances
