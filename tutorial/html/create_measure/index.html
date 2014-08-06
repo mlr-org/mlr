@@ -221,7 +221,7 @@ in a <a href="../../../man/Measure.html">Measure</a> object. Then, we work with 
 <a href="http://berndbischl.github.io/mlr/man/performance.html">performance</a> function.
 See the R documentation of the <a href="../../../man/makeMeasure.html">makeMeasure</a> function for details on the
 various parameters.</p>
-<pre class="prettyprint well"><code class="splus"># Define the measure.
+<pre class="prettyprint well"><code class="r"># Define the measure.
 my.mmce = function(task, model, pred, extra.args) {
   tb = table(pred$data$response, pred$data$truth)
   1 - sum(diag(tb)) / sum(tb)
@@ -251,7 +251,7 @@ matrix you want to use and include all class labels. The cost matrix can then be
 wrapped in a <a href="../../../man/Measure.html">Measure</a> object and a prediction can be evaluated as usual with the
 <a href="../../../man/performance.html">performance</a> function. See the R documentation of the <a href="../../../man/makeCostMeasure.html">makeCostMeasure</a> function for
 details on the various parameters.</p>
-<pre class="prettyprint well"><code class="splus"># Create misclassification cost matrix.
+<pre class="prettyprint well"><code class="r"># Create misclassification cost matrix.
 mcm = matrix(c(0, 2, 2, 3, 0, 2, 1, 1, 0), ncol=3,
               dimnames = list(c(&quot;setosa&quot;, &quot;versicolor&quot;, &quot;virginica&quot;),
                               c(&quot;setosa&quot;, &quot;versicolor&quot;, &quot;virginica&quot;)))

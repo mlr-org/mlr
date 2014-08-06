@@ -18,7 +18,7 @@ in a \man[Measure] object. Then, we work with it as usual with the
 See the R documentation of the \man[makeMeasure] function for details on the
 various parameters.
 
-```{splus}
+```r
 # Define the measure.
 my.mmce = function(task, model, pred, extra.args) {
   tb = table(pred$data$response, pred$data$truth)
@@ -53,7 +53,7 @@ wrapped in a \man[Measure] object and a prediction can be evaluated as usual wit
 \man[performance] function. See the R documentation of the \man[makeCostMeasure] function for
 details on the various parameters.
 
-```{splus}
+```r
 # Create misclassification cost matrix.
 mcm = matrix(c(0, 2, 2, 3, 0, 2, 1, 1, 0), ncol=3,
               dimnames = list(c("setosa", "versicolor", "virginica"),
