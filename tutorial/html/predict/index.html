@@ -218,9 +218,7 @@ and pass the data to be predicted.</p>
 <h3 id="classification-example">Classification example</h3>
 <p>Let's train a Linear Discriminant Analysis on the <code>iris</code> data and make predictions
 for the same data set.</p>
-<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
-
-task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+<pre class="prettyprint well"><code class="r">task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.lda&quot;)
 mod = train(lrn, task = task)
 </code></pre>

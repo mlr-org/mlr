@@ -7,6 +7,7 @@ macros = list(
   list(pattern = "\\\\man2\\[([[:alnum:]()]+)\\]\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\2.html)")
 )
 
+library(methods)
 library(BBmisc)
 library(knitr)
 library(stringr)
@@ -34,19 +35,24 @@ for (f in list.files(src, pattern = "\\.Rmd$")) {
   lines = readLines(file.path(src, f))
   for (macro in macros)
     lines = str_replace_all(lines, macro$pattern, macro$replacement)
-  head(lines, 20)
   cache.path = paste0(file.path("cache", f), .Platform$file.sep)
   opts_chunk$set(cache = TRUE, cache.path = cache.path)
   set.seed(objToSeed(f))
-  ok = try(knit(text = lines, output = file.path(dest, str_replace(f, "\\.Rmd$", "\\.md"))))
+  ok = try(knit(text = lines, output = file.path(dest, str_replace(f, "\\.Rmd$", "\\.md")),
+      envir = new.env()))
   if (inherits(ok, "try-error"))
     exit(1L, "Error knitting file '%s':\n%s", f, as.character(ok))
 }
 
 ok = system3("mkdocs", "build")
-catf("\nBuild %s\n", ifelse(ok$exit.code == 0L, "successfull", "failed"))
+if (ok$exit.code > 0L) {
+  cat("\nBuild failed\n")
+  exit(ok$exit.code)
+}
 
+cat("\nBuild successfull\n")
 unlink("figure", recursive = TRUE)
-exit(ok$exit.code)
+unlink("docs", recursive = TRUE)
+exit(0L)
 
 # vim: set ft=r:

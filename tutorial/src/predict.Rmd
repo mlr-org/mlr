@@ -15,8 +15,6 @@ Let's train a Linear Discriminant Analysis on the ``iris`` data and make predict
 for the same data set.
 
 ```{r}
-library("mlr")
-
 task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.lda")
 mod = train(lrn, task = task)
