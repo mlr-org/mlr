@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+        <title>Tasks - mlr tutorial</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../css/prettify-1.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li class="active">
+                                <a href="./">Tasks</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../learner/">Learner</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../train/">Train</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../predict/">Predict</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../performance/">Performance</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../resample/">Resampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_experiments/">Benchmark Experiments</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../parallelization/">Parallelization</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../configureMlr/">Configuration</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../feature_selection/">Feature selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../multicriteria_evaluation/">Multicriteria Evaluation</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../tune/">Tuning</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../create_learner/">Create custom learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../create_measure/">Create custom measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                <li >
+                    <a rel="next" href="..">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../learner/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a href="https://github.com/berndbischl/mlr/">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#learning-tasks">Learning Tasks</a></li>
+        
+            <li><a href="#further-information">Further information</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h1 id="learning-tasks">Learning Tasks</h1>
+<p>Learning tasks are the basic elements of the package to encapsulate the
+data set and all relevant information regarding the purpose of the
+task, e.g, the target variable.</p>
+<p>The tasks are organised in a hierarchy, with the generic
+<a href="../../../man/Task.html">Task</a> at the top.
+The concrete tasks that can be instantiated are <a href="../../../man/Task.html">ClassifTask</a> for classification,
+<a href="../../../man/Task.html">RegrTask</a> for regression, <a href="../../../man/Task.html">SurvTask</a> for survival
+analysis, <a href="../../../man/Task.html">CostSensTask</a> for
+cost-sensitive learning, and <a href="../../../man/Task.html">ClusterTask</a> for clustering.</p>
+<p>There are dedicated functions to create these tasks given data and other
+relevant information. These are <a href="../../../man/Task.html">makeClassifTask</a>,
+<a href="../../../man/Task.html">makeRegrTask</a>,
+<a href="../../../man/Task.html">makeSurvTask</a>, <a href="../../../man/Task.html">makeCostSensTask</a>, and
+<a href="../../../man/Task.html">makeClusterTask</a>.</p>
+<p>In the following example, we define a classification task for the data
+set <code>BreastCancer</code> (from the package mlbench) and exclude the ID
+variable from all further model fitting and evaluation.</p>
+<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
+library(&quot;mlbench&quot;)
+data(BreastCancer)
+
+df = BreastCancer
+df$Id = NULL
+classif.task = makeClassifTask(id = &quot;BreastCancer&quot;, data = df, target = &quot;Class&quot;)
+classif.task
+</code></pre>
+
+<pre class="prettyprint well"><code>## Supervised task: BreastCancer
+## Type: classif
+## Target: Class
+## Observations: 699
+## Features:
+## numerics  factors 
+##        0        4 
+## Missings: TRUE
+## Has weights: FALSE
+## Has blocking: FALSE
+## Classes: 2
+##    benign malignant 
+##       458       241 
+## Positive class: benign
+</code></pre>
+
+<p>As we can see, the task records basic information about the data set,
+e.g. the types of the features, the number of observations, whether
+missing values are present, the number of observations per class and so on.</p>
+<p>In many of the regression examples in this tutorial, we will use the <code>BostonHousing</code> data set:</p>
+<pre class="prettyprint well"><code class="r">data(BostonHousing)
+regr.task = makeRegrTask(id = &quot;BostonHousing&quot;, data = BostonHousing, target = &quot;medv&quot;)
+regr.task
+</code></pre>
+
+<pre class="prettyprint well"><code>## Supervised task: BostonHousing
+## Type: regr
+## Target: medv
+## Observations: 506
+## Features:
+## numerics  factors 
+##       12        1 
+## Missings: FALSE
+## Has weights: FALSE
+## Has blocking: FALSE
+</code></pre>
+
+<h2 id="further-information">Further information</h2>
+<p>Let's have another look at the classification example.</p>
+<p>As this is a binary problem, we see that a positive class is selected
+by default. This will generally be auto-selected, but you might
+want to do this manually for your application. It mainly concerns ROC analysis, where in order
+to talk about something like a true positive rate, we need to know which of the two classes is the positive
+one.</p>
+<pre class="prettyprint well"><code class="r">classif.task = makeClassifTask(id = &quot;BreastCancer&quot;, data = df, target = &quot;Class&quot;,
+  positive = &quot;malignant&quot;)
+</code></pre>
+
+<p>There are also some convenient methods to access properties and parts of the task.
+The most important ones are listed in <a href="../../../man/Task.html">Task</a>.</p>
+<p>Here are some examples.</p>
+<pre class="prettyprint well"><code class="r"># get the names of the input variables:
+getTaskFeatureNames(classif.task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## [1] &quot;Cl.thickness&quot;    &quot;Cell.size&quot;       &quot;Cell.shape&quot;      &quot;Marg.adhesion&quot;  
+## [5] &quot;Epith.c.size&quot;    &quot;Bare.nuclei&quot;     &quot;Bl.cromatin&quot;     &quot;Normal.nucleoli&quot;
+## [9] &quot;Mitoses&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r"># get values of the target variable for all observations:
+head(getTaskTargets(classif.task))
+</code></pre>
+
+<pre class="prettyprint well"><code>## [1] benign    benign    benign    benign    benign    malignant
+## Levels: benign malignant
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">head(getTaskTargets(regr.task))
+</code></pre>
+
+<pre class="prettyprint well"><code>## [1] 24.0 21.6 34.7 33.4 36.2 28.7
+</code></pre>
+
+<pre class="prettyprint well"><code class="r"># accessing the data set:
+str(getTaskData(classif.task))
+</code></pre>
+
+<pre class="prettyprint well"><code>## 'data.frame':    699 obs. of  10 variables:
+##  $ Cl.thickness   : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 5 5 3 6 4 8 1 2 2 4 ...
+##  $ Cell.size      : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 1 4 1 8 1 10 1 1 1 2 ...
+##  $ Cell.shape     : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 1 4 1 8 1 10 1 2 1 1 ...
+##  $ Marg.adhesion  : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 1 5 1 1 3 8 1 1 1 1 ...
+##  $ Epith.c.size   : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 2 7 2 3 2 7 2 2 2 2 ...
+##  $ Bare.nuclei    : Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 10 2 4 1 10 10 1 1 1 ...
+##  $ Bl.cromatin    : Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 3 3 3 3 3 9 3 3 1 2 ...
+##  $ Normal.nucleoli: Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 2 1 7 1 7 1 1 1 1 ...
+##  $ Mitoses        : Factor w/ 9 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 1 1 1 1 1 1 1 5 1 ...
+##  $ Class          : Factor w/ 2 levels &quot;benign&quot;,&quot;malignant&quot;: 1 1 1 1 1 2 1 1 1 1 ...
+</code></pre>
+
+<p>Note the many options <a href="../../../man/getTaskData.html">getTaskData</a> provides to convert the data set into a convenient format.
+This is especially handy when you integrate a learner from another package into
+<strong>mlr</strong>.</p>
+<p>If you are more technically minded, you could also access
+the information directly stored in the slot called <code>task$task.desc</code>,
+which stands for "description" and is of class <a href="../../../man/TaskDesc.html">TaskDesc</a>.</p>
+<pre class="prettyprint well"><code class="r">str(classif.task$task.desc)
+</code></pre>
+
+<pre class="prettyprint well"><code>## List of 11
+##  $ id          : chr &quot;BreastCancer&quot;
+##  $ type        : chr &quot;classif&quot;
+##  $ target      : chr &quot;Class&quot;
+##  $ size        : int 699
+##  $ n.feat      : Named int [1:2] 0 4
+##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;numerics&quot; &quot;factors&quot;
+##  $ has.missings: logi TRUE
+##  $ has.weights : logi FALSE
+##  $ has.blocking: logi FALSE
+##  $ class.levels: chr [1:2] &quot;benign&quot; &quot;malignant&quot;
+##  $ positive    : chr &quot;malignant&quot;
+##  $ negative    : chr &quot;benign&quot;
+##  - attr(*, &quot;class&quot;)= chr [1:2] &quot;TaskDescClassif&quot; &quot;TaskDesc&quot;
+</code></pre>
+
+<p>The <a href="../../../man/Task.html">Task</a> help page also lists several other arguments
+to describe further details of the problem.</p>
+<p>For example, we could include a blocking factor into the task.
+This would tell the task that some observations "belong together", and should
+not be separated when splitting into training and test sets during a resampling iteration.
+Another possibility is to weight observations according to their importance.</p>
+</div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        
+
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/base.js"></script>
+        
+    </body>
+</html>

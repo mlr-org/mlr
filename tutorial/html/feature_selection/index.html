@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+        <title>Feature selection - mlr tutorial</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../css/prettify-1.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../task/">Tasks</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../learner/">Learner</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../train/">Train</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../predict/">Predict</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../performance/">Performance</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../resample/">Resampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_experiments/">Benchmark Experiments</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../parallelization/">Parallelization</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../configureMlr/">Configuration</a>
+                            </li>
+                        
+                            <li class="active">
+                                <a href="./">Feature selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../multicriteria_evaluation/">Multicriteria Evaluation</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../tune/">Tuning</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../create_learner/">Create custom learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../create_measure/">Create custom measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                <li >
+                    <a rel="next" href="../configureMlr/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../roc_analysis/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a href="https://github.com/berndbischl/mlr/">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#feature-selection">Feature Selection</a></li>
+        
+            <li><a href="#filters">Filters</a></li>
+        
+            <li><a href="#wrapper">Wrapper</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h1 id="feature-selection">Feature Selection</h1>
+<p>Often, data sets include a large number of features and it is desirable to reduce them. 
+The technique of selecting a subset of relevant features is called feature selection. 
+Feature selection can make the model better interpretable, the learning process
+faster, and the fitted model more general by removing irrelevant features.
+Different approaches exist, in order to figure out, which the relevant features
+are. <strong>mlr</strong> supports <a href="#Filter">filters</a> and <a href="#Wrapper">wrappers</a>.</p>
+<h2 id="filters">Filters</h2>
+<p>Filters are the simplest approach to find features that do not contain a lot of
+additional information given the other features and can be left out.
+Different methods are built into <strong>mlr</strong>'s function <a href="../../../man/getFeatureFilterValues.html">getFeatureFilterValues</a>
+and all access filter algorithms from the package <code>FSelector</code>.
+The function is given a <a href="../../../man/Task.html">Task</a> and simply returns a vector characterising
+the importance of the different features.</p>
+<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
+task = makeClassifTask(data=iris, target=&quot;Species&quot;)
+importance = getFilterValues(task, method=&quot;information.gain&quot;)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: FSelector
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">importance
+</code></pre>
+
+<pre class="prettyprint well"><code>## FilterValues:
+## Task: iris
+## Method: information.gain
+##                      name    val    type
+## Sepal.Length Sepal.Length 0.6523 numeric
+## Sepal.Width   Sepal.Width 0.3856 numeric
+## Petal.Length Petal.Length 1.3565 numeric
+## Petal.Width   Petal.Width 1.3784 numeric
+</code></pre>
+
+<p>According to this filter, <code>Petal.Width</code> and <code>Petal.Length</code> contain the most information.
+With <strong>mlr</strong>'s function <a href="../../../man/filterFeatures.html">filterFeatures</a>, you can now filter the features in
+the task by leaving out all but a given number of features with the highest
+feature importance.</p>
+<pre class="prettyprint well"><code class="r">filtered.task = filterFeatures(task, method=&quot;information.gain&quot;, select=&quot;abs&quot;, val=2)
+</code></pre>
+
+<p>Other filter options in <a href="../../../man/filterFeatures.html">filterFeatures</a> are to require a percentage of
+features to be filtered instead or to set a threshold for the numerical importance
+values.</p>
+<p>In a proper experimental set up you might want to automate the selection of the
+features so that it can be part of the validation method of your choice.
+We will use the standard 10-fold cross validation.</p>
+<pre class="prettyprint well"><code class="r">learner = makeLearner(&quot;classif.fnn&quot;)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: FNN
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">learnerFiltered = makeFilterWrapper(learner=learner, fw.method=&quot;information.gain&quot;, fw.select=&quot;perc&quot;, fw.val=0.7)
+rdesc = makeResampleDesc(&quot;CV&quot;, iters=10) 
+rsres = resample(learner=learnerFiltered, task=task, resampling=rdesc, show.info=FALSE, models=TRUE)
+rsres$aggr
+</code></pre>
+
+<pre class="prettyprint well"><code>## mmce.test.mean 
+##        0.04667
+</code></pre>
+
+<p>You may want to know which features have been used. Luckily, we have called
+<code>resample</code> with the argument <code>models=TRUE</code>, which means that <code>rsres$models</code>
+contains a <code>list</code> of each model used for a fold.
+In this case the <a href="../../../man/Learner.html">Learner</a> is also of the class <a href="../../../man/FilterWrapper.html">FilterWrapper</a> and we can call
+<a href="../../../man/getFilteredFeatures.html">getFilteredFeatures</a> on each model.</p>
+<pre class="prettyprint well"><code class="r">sfeats = sapply(rsres$models, getFilteredFeatures)
+table(sfeats)
+</code></pre>
+
+<pre class="prettyprint well"><code>## sfeats
+## Petal.Length  Petal.Width Sepal.Length 
+##           10           10           10
+</code></pre>
+
+<p>The selection of features seems to be very stable.
+The <code>Sepal.Width</code> did not make it into a single fold.</p>
+<h3 id="tuning-the-threshold">Tuning the threshold</h3>
+<pre class="prettyprint well"><code class="r">library(&quot;mlbench&quot;)
+data(Sonar)
+task = makeClassifTask(data = Sonar, target = &quot;Class&quot;, positive = &quot;M&quot;)
+lrn = makeLearner(&quot;classif.rpart&quot;)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: rpart
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">lrnFiltered = makeFilterWrapper(learner=lrn, fw.method=&quot;chi.squared&quot;, fw.select=&quot;threshold&quot;, fw.val=0)
+ps = makeParamSet(makeDiscreteParam(&quot;fw.val&quot;, values = seq(from=0.2, 0.4, by=0.05)))
+tuneRes = tuneParams(lrnFiltered, task=task, resampling=makeResampleDesc(&quot;CV&quot;, iters=5), par.set=ps, control=makeTuneControlGrid())
+</code></pre>
+
+<pre class="prettyprint well"><code>## [Tune] Started tuning learner classif.rpart.filtered for parameter set:
+##            Type len Def                Constr Req Trafo
+## fw.val discrete   -   - 0.2,0.25,0.3,0.35,0.4   -     -
+## With control class: TuneControlGrid
+## Imputation value: 1
+## [Tune] 1: fw.val=0.2 : mmce.test.mean=0.293
+## [Tune] 2: fw.val=0.25 : mmce.test.mean=0.293
+## [Tune] 3: fw.val=0.3 : mmce.test.mean=0.288
+## [Tune] 4: fw.val=0.35 : mmce.test.mean=0.337
+## [Tune] 5: fw.val=0.4 : mmce.test.mean=0.308
+## [Tune] Result: fw.val=0.3 : mmce.test.mean=0.288
+</code></pre>
+
+<h2 id="wrapper">Wrapper</h2>
+<p>Unlike the filters, wrappers use the performance a learner can
+achieve on a given subset of the features in the data to do the filtering.</p>
+<h4 id="classification-example">Classification example</h4>
+<p>Let's train a decision tree on the <code>iris</code> data and use a sequential forward
+search to find the best set of features w.r.t. the mean misclassification error
+(<a href="../../../man/mmce.html">mmce</a>).</p>
+<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
+task = makeClassifTask(data=iris, target=&quot;Species&quot;)
+lrn = makeLearner(&quot;classif.rpart&quot;)
+rdesc = makeResampleDesc(&quot;Holdout&quot;) 
+
+ctrlSeq = makeFeatSelControlSequential(method=&quot;sfs&quot;)
+sfSeq = selectFeatures(learner=lrn, task=task, resampling=rdesc, control=ctrlSeq)
+</code></pre>
+
+<pre class="prettyprint well"><code>## [FeatSel] Started selecting features for learner 'classif.rpart'
+## With control class: FeatSelControlSequential
+## Imputation value: 1
+## [FeatSel] 1: 0 bits: mmce.test.mean=0.72
+## [FeatSel] 2: 1 bits: mmce.test.mean= 0.3
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.56
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.12
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.08
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.08
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.08
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.08
+## [FeatSel] Result: 1 bits : mmce.test.mean=0.08
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">sfSeq
+</code></pre>
+
+<pre class="prettyprint well"><code>## FeatSel result:
+## Features (1): Petal.Width
+## mmce.test.mean=0.08
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">analyzeFeatSelResult(sfSeq, reduce=FALSE)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Features         : 1
+## Performance      : mmce.test.mean=0.08
+## Petal.Width
+## 
+## Path to optimum:
+## --------------------------------------------------------------------------------
+## - Features:    0  Init   :                       Perf = 0.72  Diff: NA  *
+## --------------------------------------------------------------------------------
+## - Features:    1  Add    : Sepal.Length          Perf = 0.3  Diff: 0.42   
+## - Features:    1  Add    : Sepal.Width           Perf = 0.56  Diff: 0.16   
+## - Features:    1  Add    : Petal.Length          Perf = 0.12  Diff: 0.6   
+## - Features:    1  Add    : Petal.Width           Perf = 0.08  Diff: 0.64  *
+## --------------------------------------------------------------------------------
+## - Features:    2  Add    : Sepal.Length          Perf = 0.08  Diff: 0   
+## - Features:    2  Add    : Sepal.Width           Perf = 0.08  Diff: 0   
+## - Features:    2  Add    : Petal.Length          Perf = 0.08  Diff: 0   
+## 
+## Stopped, because no improving feature was found.
+</code></pre>
+
+<h4 id="regression-example">Regression example</h4>
+<p>We fit a simple linear regression model to the <code>BostonHousing</code> data set and
+use a genetic algorithm to find a feature set that minimises the mean squared
+error (<a href="../../../man/mse.html">mse</a>).</p>
+<pre class="prettyprint well"><code class="r">library(&quot;mlbench&quot;)
+data(BostonHousing)
+
+task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
+lrn = makeLearner(&quot;regr.lm&quot;)
+rdesc = makeResampleDesc(&quot;Holdout&quot;) 
+
+ctrlGA = makeFeatSelControlGA(maxit=10)
+sfGA = selectFeatures(learner=lrn, task=task, resampling=rdesc, control=ctrlGA, show.info=FALSE)
+sfGA
+</code></pre>
+
+<pre class="prettyprint well"><code>## FeatSel result:
+## Features (7): indus, nox, rm, dis, tax, ptratio, b
+## mse.test.mean=23.6
+</code></pre>
+
+</div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        
+
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/base.js"></script>
+        
+    </body>
+</html>

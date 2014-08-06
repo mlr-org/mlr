@@ -1,0 +1,41 @@
+#!/usr/bin/env Rscript
+
+src = "src"
+dest = "docs"
+macros = list(
+  list(pattern = "\\\\man\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\1.html)"),
+  list(pattern = "\\\\man2\\[([[:alnum:]()]+)\\]\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\2.html)")
+)
+
+library(knitr)
+library(BBmisc)
+library(stringr)
+library(mlr)
+options(warn = 2L)
+opts_knit$set(upload.fun = image_uri)
+
+exit = function(status, msg, ...) {
+  if (!missing(msg))
+    cat(sprintf(msg, ...), "\n\n", sep = "")
+  quit(save = "no", status = status)
+}
+
+for (f in list.files(src, pattern = "\\.Rmd$")) {
+  catf("### Knitting '%s' ...\n", f)
+  lines = readLines(file.path(src, f))
+  for (macro in macros)
+    lines = str_replace_all(lines, macro$pattern, macro$replacement)
+  head(lines, 20)
+  cache.path = paste0(file.path("cache", f), .Platform$file.sep)
+  opts_chunk$set(cache = TRUE, autodep = TRUE, cache.path = cache.path)
+  ok = try(knit(text = lines, output = file.path(dest, str_replace(f, "\\.Rmd$", "\\.md"))))
+  if (inherits(ok, "try-error"))
+    exit(1L, "Error knitting file '%s':\n%s", f, as.character(ok))
+}
+
+ok = system3("mkdocs", "build")
+catf("\nBuild %s\n", ifelse(ok$exit.code == 0L, "successfull", "failed"))
+
+exit(ok$exit.code)
+
+# vim: set ft=r:

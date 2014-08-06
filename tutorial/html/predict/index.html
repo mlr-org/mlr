@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+        <title>Predict - mlr tutorial</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../css/prettify-1.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../task/">Tasks</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../learner/">Learner</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../train/">Train</a>
+                            </li>
+                        
+                            <li class="active">
+                                <a href="./">Predict</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../performance/">Performance</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../resample/">Resampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_experiments/">Benchmark Experiments</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../parallelization/">Parallelization</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../configureMlr/">Configuration</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../feature_selection/">Feature selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../multicriteria_evaluation/">Multicriteria Evaluation</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../tune/">Tuning</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../create_learner/">Create custom learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../create_measure/">Create custom measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                <li >
+                    <a rel="next" href="../train/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../performance/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a href="https://github.com/berndbischl/mlr/">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#predicting-outcomes-for-new-data">Predicting Outcomes for New Data</a></li>
+        
+            <li><a href="#quick-start">Quick start</a></li>
+        
+            <li><a href="#further-information">Further information</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h1 id="predicting-outcomes-for-new-data">Predicting Outcomes for New Data</h1>
+<p>Predicting the target values for new observations is
+implemented the same way as most of the other predict methods in <em>R</em>.
+In general, all you need to do is
+call \man2[predict][predict.WrappedModel] on the object returned by <a href="../../../man/train.html">train</a>
+and pass the data to be predicted.</p>
+<h2 id="quick-start">Quick start</h2>
+<h3 id="classification-example">Classification example</h3>
+<p>Let's train a Linear Discriminant Analysis on the <code>iris</code> data and make predictions 
+for the same data set.</p>
+<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
+
+task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+lrn = makeLearner(&quot;classif.lda&quot;)
+mod = train(lrn, task = task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: argument &quot;y&quot; is missing, with no default
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">pred = predict(mod, newdata = iris)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">pred
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
+</code></pre>
+
+<h3 id="regression-example">Regression example</h3>
+<p>We fit a simple linear regression model to the <code>BostonHousing</code> data set and predict
+on the training data.</p>
+<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
+library(&quot;mlbench&quot;)
+data(BostonHousing)
+
+task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
+lrn = makeLearner(&quot;regr.lm&quot;)
+mod = train(lrn, task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;regr.lm&quot;, &quot;RLearnerRegr&quot;, &quot;RLearner&quot;,
+## &quot;Learner&quot;)&quot; to a data.frame
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">predict(mod, newdata = BostonHousing)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+</code></pre>
+
+<h3 id="clustering-example">Clustering example</h3>
+<p>We cluster the <code>iris</code> data set without the target variable and predict using
+the same data.</p>
+<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
+task = makeClusterTask(data = iris[,-5])
+lrn = makeLearner(&quot;cluster.XMeans&quot;)
+mod = train(lrn, task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;cluster.XMeans&quot;, &quot;RLearnerCluster&quot;,
+## &quot;RLearner&quot;, &quot;Learner&quot;)&quot; to a data.frame
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">predict(mod, newdata = iris[,-5])
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+</code></pre>
+
+<h2 id="further-information">Further information</h2>
+<p>There are several possibilities to pass the observations for which to make
+predictions.
+The first possibility is via the <code>newdata</code> argument and was already shown in the 
+examples above.
+If the data for which predictions are required are already contained in 
+the <a href="../../../man/makeLearner.html">Learner</a>, it is also possible to pass the task and optionally specify 
+the subset argument that contains the indices of the test observations.</p>
+<p>Predictions are encapsulated in a special <a href="../../../man/Prediction.html">Prediction</a> object. The available
+accessors are documented in the man page for <a href="../../../man/Prediction.html">Prediction</a>.</p>
+<h3 id="classification-example_1">Classification example</h3>
+<p>In case of a classification task, the result of
+\man2[predict][predict.WrappedModel] depends on the predict type, which was set
+when generating the <a href="../../../man/makeLearner.html">Learner</a>. The default is to predict class
+labels.</p>
+<p>We start again by loading <strong>mlr</strong> and creating a classification task for the 
+<code>iris</code> data set. We select two subsets of the data. We train a decision tree on the
+first one and predict the class labels on the test set.</p>
+<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
+
+# Define the classification task
+task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+
+# Define the learning algorithm
+lrn = makeLearner(&quot;classif.rpart&quot;)
+
+# Split the iris data into a training set for learning and a test set
+training.set = seq(from = 1, to = nrow(iris), by = 2)
+test.set = seq(from = 2, to = nrow(iris), by = 2)
+
+# Now, we can train a decision tree using only the observations in train.set
+mod = train(lrn, task, subset = training.set)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;classif.rpart&quot;, &quot;RLearnerClassif&quot;,
+## &quot;RLearner&quot;, &quot;Learner&quot;)&quot; to a data.frame
+</code></pre>
+
+<pre class="prettyprint well"><code class="r"># Finally, predict the label on new values using the predict method
+pred = predict(mod, newdata = iris, subset = test.set)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+</code></pre>
+
+<p>A <code>data.frame</code> that contains the true and predicted class labels can be accessed via</p>
+<pre class="prettyprint well"><code class="r">head(pred$data)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'pred' not found
+</code></pre>
+
+<p>Alternatively, we can also predict directly from a <code>task</code>:</p>
+<pre class="prettyprint well"><code class="r">pred = predict(mod, task = task, subset = test.set)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">head(as.data.frame(pred))
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'x' in selecting a method for function 'head': Error in as.data.frame(pred) : 
+##   error in evaluating the argument 'x' in selecting a method for function 'as.data.frame': Error: object 'pred' not found
+</code></pre>
+
+<p>When predicting from a <code>task</code>, the resulting <code>data.frame</code> contains an additional column, 
+called <em>ID</em>, which tells us which element in the original data set the prediction 
+corresponds to. In the iris example the IDs and the rownames coincide.</p>
+<p>In order to get predicted posterior probabilities, we have to change the <code>predict.type</code>
+of the learner.</p>
+<pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;)
+mod = train(lrn, task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;classif.rpart&quot;, &quot;RLearnerClassif&quot;,
+## &quot;RLearner&quot;, &quot;Learner&quot;)&quot; to a data.frame
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">pred = predict(mod, newdata = iris, subset = test.set)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">head(pred$data)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'pred' not found
+</code></pre>
+
+<p>As you can see, in addition to the predicted probabilities, a response
+is produced by choosing the class with the maximum probability and
+breaking ties at random.</p>
+<p>The predicted posterior probabilities can be accessed via the <a href="../../../man/getProbabilities.html">getProbabilities</a> function.</p>
+<pre class="prettyprint well"><code class="r">head(getProbabilities(pred))
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'x' in selecting a method for function 'head': Error in checkClass(x, classes, ordered) : object 'pred' not found
+## Calls: getProbabilities -&gt; assertClass -&gt; checkClass
+</code></pre>
+
+<h3 id="binary-classification">Binary classification</h3>
+<p>In case of binary classification, two things are worth mentioning. As you may recall, 
+we can specify a positive class when generating the task. Moreover, we can set the
+threshold value that is used to assign class labels based on the predicted 
+posteriors.</p>
+<p>To illustrate binary classification, we use the Sonar data set from the
+<a href="http://cran.r-project.org/web/packages/mlbench/index.html">mlbench</a> package. 
+Again we create a classification task and a learner which predicts
+probabilities, train the learner and then predict the class labels based on the
+probabilities.</p>
+<pre class="prettyprint well"><code class="r">library(&quot;mlbench&quot;)
+data(Sonar)
+
+task = makeClassifTask(data = Sonar, target = &quot;Class&quot;, positive = &quot;M&quot;)
+lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;)
+mod = train(lrn, task = task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: argument &quot;y&quot; is missing, with no default
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">pred = predict(mod, task = task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">head(pred$data)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'pred' not found
+</code></pre>
+
+<p>In a binary classification setting, we can adjust the threshold, used
+to map probabilities to class labels using <a href="../../../man/setThreshold.html">setThreshold</a>. Here, we set
+the threshold for the <em>positive</em> class to 0.8:</p>
+<pre class="prettyprint well"><code class="r">pred = setThreshold(pred, 0.8)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">head(pred$data)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'pred' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">pred$threshold
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
+</code></pre>
+
+<h3 id="regression-example_1">Regression example</h3>
+<p>We again use the BostonHousing data set and learn a Gradient Boosting Machine
+model. We take all observations with an odd index as training and all
+observations with an even index as test. The procedure is the same as in the
+classification case.</p>
+<pre class="prettyprint well"><code class="r">library(mlbench)
+data(BostonHousing)
+
+task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
+
+training.set = seq(from = 1, to = nrow(BostonHousing), by = 2)
+test.set = seq(from = 2, to = nrow(BostonHousing), by = 2)
+
+lrn = makeLearner(&quot;regr.gbm&quot;, n.trees = 100)
+mod = train(lrn, task, subset = training.set) 
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;regr.gbm&quot;, &quot;RLearnerRegr&quot;, &quot;RLearner&quot;,
+## &quot;Learner&quot;)&quot; to a data.frame
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">pred = predict(mod, newdata = BostonHousing, subset = test.set)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">head(pred$data)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'x' in selecting a method for function 'head': Error: object 'pred' not found
+</code></pre>
+
+</div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        
+
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/base.js"></script>
+        
+    </body>
+</html>

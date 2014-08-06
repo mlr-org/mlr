@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+        <title>Resampling - mlr tutorial</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../css/prettify-1.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../task/">Tasks</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../learner/">Learner</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../train/">Train</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../predict/">Predict</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../performance/">Performance</a>
+                            </li>
+                        
+                            <li class="active">
+                                <a href="./">Resampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_experiments/">Benchmark Experiments</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../parallelization/">Parallelization</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../configureMlr/">Configuration</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../feature_selection/">Feature selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../multicriteria_evaluation/">Multicriteria Evaluation</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../tune/">Tuning</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../create_learner/">Create custom learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../create_measure/">Create custom measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                <li >
+                    <a rel="next" href="../performance/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../benchmark_experiments/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a href="https://github.com/berndbischl/mlr/">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#resampling">Resampling</a></li>
+        
+            <li><a href="#quick-start">Quick start</a></li>
+        
+            <li><a href="#further-information">Further information</a></li>
+        
+            <li><a href="#resample-descriptions-and-resample-instances">Resample descriptions and resample instances</a></li>
+        
+            <li><a href="#included-resampling-strategies">Included resampling strategies</a></li>
+        
+            <li><a href="#evaluation-of-predictions-after-resampling">Evaluation of Predictions after Resampling</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h1 id="resampling">Resampling</h1>
+<p>In order to assess the performance of a learning algorithm, resampling 
+strategies are usually used. Resampling is a means of splitting the entire data
+set into training and tet. There are various methods for doing this, for example
+cross-validation and bootstrap, to mention just two popular approaches. 
+In <strong>mlr</strong>, the <a href="../../../man/resample.html">resample</a> function, depending on the chosen resampling strategy, 
+fits the selected learner using the corresponding training sets and performs 
+predictions for the corresponding training/test sets and calculates the chosen
+performance measures.</p>
+<h2 id="quick-start">Quick start</h2>
+<h3 id="classification-example">Classification example</h3>
+<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
+
+## Define a learning task and an appropriate learner
+task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+lrn = makeLearner(&quot;classif.lda&quot;)
+
+## Perform a 3-fold cross-validation 
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+r = resample(lrn, task, rdesc)
+</code></pre>
+
+<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
+## [Resample] cross-validation iter: 2
+## [Resample] cross-validation iter: 3
+## [Resample] Result: mmce.test.mean=0.02
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">r
+</code></pre>
+
+<pre class="prettyprint well"><code>## $measures.train
+##   iter mmce
+## 1    1   NA
+## 2    2   NA
+## 3    3   NA
+## 
+## $measures.test
+##   iter mmce
+## 1    1 0.02
+## 2    2 0.04
+## 3    3 0.00
+## 
+## $aggr
+## mmce.test.mean 
+##           0.02 
+## 
+## $pred
+## Resampled Prediction for:
+## Resample description: cross-validation with 3 iterations.
+## Predict: test
+## Stratification: FALSE
+## predict.type: response
+## threshold: 
+## time (mean): 0.00
+##   id  truth response iter  set
+## 1  1 setosa   setosa    1 test
+## 2  3 setosa   setosa    1 test
+## 3  6 setosa   setosa    1 test
+## 4  7 setosa   setosa    1 test
+## 5 10 setosa   setosa    1 test
+## 6 15 setosa   setosa    1 test
+## 
+## $models
+## NULL
+## 
+## $err.msgs
+##   iter train predict
+## 1    1  &lt;NA&gt;    &lt;NA&gt;
+## 2    2  &lt;NA&gt;    &lt;NA&gt;
+## 3    3  &lt;NA&gt;    &lt;NA&gt;
+## 
+## $extract
+## $extract[[1]]
+## NULL
+## 
+## $extract[[2]]
+## NULL
+## 
+## $extract[[3]]
+## NULL
+</code></pre>
+
+<p>In this example, the peformance measure is <a href="../../../man/mmce.html">mmce</a> (mean misclassification
+error), the default for classification. See the documentation for
+<a href="../../../man/measures.html">measures</a> for a complete list of performance measures available in <strong>mlr</strong>.
+More explanations, concerning the evaluation of learning methods, are given in
+section <a href="../performance/">Evaluating Learner Performance</a>.</p>
+<h3 id="regression-example">Regression example</h3>
+<p>As an example with regression, we use the <code>BostonHousing</code> data set again.</p>
+<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
+library(&quot;mlbench&quot;)
+data(BostonHousing)
+
+## Define a learning task and an appropriate learner
+task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
+lrn = makeLearner(&quot;regr.lm&quot;)
+
+## Perform a 3-fold cross-validation
+rdesc = makeResampleDesc(&quot;CV&quot;, iters=3)
+r = resample(lrn, task, rdesc)
+</code></pre>
+
+<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
+## [Resample] cross-validation iter: 2
+## [Resample] cross-validation iter: 3
+## [Resample] Result: mse.test.mean=22.8
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">r
+</code></pre>
+
+<pre class="prettyprint well"><code>## $measures.train
+##   iter mse
+## 1    1  NA
+## 2    2  NA
+## 3    3  NA
+## 
+## $measures.test
+##   iter   mse
+## 1    1 22.61
+## 2    2 23.60
+## 3    3 22.24
+## 
+## $aggr
+## mse.test.mean 
+##         22.82 
+## 
+## $pred
+## Resampled Prediction for:
+## Resample description: cross-validation with 3 iterations.
+## Predict: test
+## Stratification: FALSE
+## predict.type: response
+## threshold: 
+## time (mean): 0.00
+##    id truth response iter  set
+## 2   2  21.6    25.33    1 test
+## 6   6  28.7    25.32    1 test
+## 8   8  27.1    20.08    1 test
+## 9   9  16.5    12.24    1 test
+## 13 13  21.7    20.96    1 test
+## 19 19  20.2    15.67    1 test
+## 
+## $models
+## NULL
+## 
+## $err.msgs
+##   iter train predict
+## 1    1  &lt;NA&gt;    &lt;NA&gt;
+## 2    2  &lt;NA&gt;    &lt;NA&gt;
+## 3    3  &lt;NA&gt;    &lt;NA&gt;
+## 
+## $extract
+## $extract[[1]]
+## NULL
+## 
+## $extract[[2]]
+## NULL
+## 
+## $extract[[3]]
+## NULL
+</code></pre>
+
+<p>For regression, the default performance measure is <a href="../../../man/mse.html">mse</a> (mean squared error).</p>
+<h2 id="further-information">Further information</h2>
+<p>Resampling strategies concern the process of sampling new data sets that are
+subsets of the main data set <em>D</em>. One wants to generate various training sets
+that the learning method can fit models to and test sets that those models can
+be evaluated on. We assume that every resampling strategy consists of a
+number of iterations and each one defines a set of indices into <em>D</em> that determine
+the respective training and test sets. These iterations are implemented by
+storing the index set in a so called
+<a href="../../../man/makeResampleInstance.html">ResampleInstance</a> object. The reasons for having the
+user create this data explicitly and not just set an option in an R function to
+choose the resampling method are:</p>
+<ul>
+<li>It is easier to create paired experiments, where you train and test
+  different methods on exactly the same sets, especially when you want
+  to add another method to a comparison experiment you already did.</li>
+<li>It is easy to add other resampling methods later on. You can
+  simply use S4 inheritance and derive from the <a href="../../../man/makeResampleInstance.html">ResampleInstance</a>
+  class, but you do not have to touch any methods that use the
+  resampling strategy.</li>
+</ul>
+<p><img alt="Resampling Figure" src="../../_images/resampling.png" title="Resampling Figure" /></p>
+<h2 id="resample-descriptions-and-resample-instances">Resample descriptions and resample instances</h2>
+<p>There are two types of objects: a <a href="../../../man/makeResampleDesc.html">ResampleDesc</a> object, which represents
+a resample description, e.g. a 10-fold cross-validation, and a
+<a href="../../../man/makeResampleInstance.html">ResampleInstance</a>
+object, which creates a resample instance for a specific task based on a resample
+description. These can be generated by means of the factory methods <a href="../../../man/makeResampleDesc.html">makeResampleDesc</a>
+and <a href="../../../man/makeResampleInstance.html">makeResampleInstance</a>.</p>
+<p>For every resampling strategy, there is a description class that inherits
+from <a href="../../../man/makeResampleDesc.html">ResampleDesc</a> and completely specifies the necessary
+parameters, and a class inheriting from
+<a href="../../../man/makeResampleInstance.html">ResampleInstance</a>.
+This latter class takes the description object and performs the random
+drawing of indices to separate the data into training and test. While this seems
+overly complicated, it is necessary as sometimes one only wants to describe the
+drawing process, while in other instances one wants to create the specific index
+sets. There are convenient methods to make the construction process as
+easy as possible.</p>
+<pre class="prettyprint well"><code class="r">## get the cv.instance directly 
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
+rinst  = makeResampleInstance(rdesc, size = nrow(iris))
+</code></pre>
+
+<p>Asking the <a href="../../../man/makeResampleDesc.html">ResampleDesc</a> or
+<a href="../../../man/makeResampleInstance.html">ResampleInstance</a> objects for further information is
+easy, just inspect the list elements by using the $ operator.</p>
+<pre class="prettyprint well"><code class="r">## description object
+## number of iterations
+rdesc$iters
+
+## resample.instance object
+## number of iterations
+rinst$desc$iters
+
+rinst$train.inds[[3]]
+rinst$test.inds[[3]]
+</code></pre>
+
+<p>Please refer to the help pages of the specific classes for a complete
+list of getters.</p>
+<h2 id="included-resampling-strategies">Included resampling strategies</h2>
+<p>The package comes with a number of predefined strategies.</p>
+<ul>
+<li>'Subsample' for subsampling,</li>
+<li>'Holdout' for holdout (training/test),</li>
+<li>'CV' for cross-validation, </li>
+<li>'LOO' for leave-one-out, </li>
+<li>'StratCV' for stratified cross-validation, </li>
+<li>'RepCV' for repeated cross-validation,</li>
+<li>'Bootstrap' for out-of-bag bootstrap.</li>
+</ul>
+<h3 id="subsampling">Subsampling</h3>
+<p>In each iteration <em>i</em> the data set <em>D</em> is randomly partitioned into a
+training and a test set according to a given percentage, e.g. 2/3
+training and 1/3 test set. If there is just one iteration, the strategy
+is commonly called <code>holdout</code> or <code>test sample estimation</code>.</p>
+<pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;Subsample&quot;, iters = 10, split = 2/3)
+rdesc = makeResampleDesc(&quot;Subsample&quot;, iters = 1, split = 2/3)
+</code></pre>
+
+<h3 id="k-fold-cross-validation">k-fold cross-validation</h3>
+<p>The data set is partitioned into <em>k</em> subsets of (approximately) equal size. 
+In the <em>i</em>-th step of the <em>k</em> iterations, the <em>i</em>-th subset is 
+used as for testing, while the union of the remaining parts forms the training
+set.</p>
+<pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
+</code></pre>
+
+<h3 id="bootstrapping">Bootstrapping</h3>
+<p><em>B</em> new data sets <em>D_1</em> to <em>D_B</em> are drawn from
+<em>D</em> with replacement, each of the same size as <em>D</em>. 
+In the <em>i</em>-th iteration <em>D_i</em> forms the training set, 
+while the remaining elements from <em>D</em>, i.e. elements not 
+in the training set, form the test set.</p>
+<pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;Bootstrap&quot;, iters = 10)
+</code></pre>
+
+<!--(
+                     |resampling_desc_figure|
+
+                     |resampling_nested_resampling_figure|
+)-->
+
+<h2 id="evaluation-of-predictions-after-resampling">Evaluation of Predictions after Resampling</h2>
+<p>The <a href="../../../man/resample.html">resample</a> function evaluates the performance of your learner using
+a certain resampling strategy for a given machine learning task.</p>
+<p>When you use a resampling strategy, <strong>mlr</strong> offers the following
+possibilities to evaluate your predictions. Every single resampling
+iteration is handled as described in the explanation above, i.e. you
+train a model on the training part of the data set, predict on the test set
+and compare predicted and true labels to compute some performance
+measure. This is done in every iteration so that you have
+e.g. ten performance values in the case of 10-fold cross-validation.
+The question arises of how to aggregate those values. You can specify
+that explicitly, the default is to use the mean. Let's have a look at an
+example.</p>
+<h3 id="classification-example_1">Classification example</h3>
+<p>For the example code, we use the standard <code>iris</code> data set and compare a 
+decision tree and the Linear Discriminant Analysis based on a 3-fold
+cross-validation:</p>
+<pre class="prettyprint well"><code class="r">## Classification task
+task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+
+## Resample instance for Cross-validation
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+rinst = makeResampleInstance(rdesc, task = task)
+</code></pre>
+
+<p>Now, we fit a decision tree for each fold and measure both the mean misclassification 
+error (<a href="../../../man/mmce.html">mmce</a>) and the accuracy (<a href="../../../man/acc.html">acc</a>):</p>
+<pre class="prettyprint well"><code class="r">## Merge learner (lrn), i.e. Decision Tree, classification task (task) and 
+## resample instance (rinst)
+lrn = makeLearner(&quot;classif.rpart&quot;)
+r1 = resample(lrn, task, rinst, list(mmce, acc))
+</code></pre>
+
+<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
+## [Resample] cross-validation iter: 2
+## [Resample] cross-validation iter: 3
+## [Resample] Result: mmce.test.mean=0.0667,acc.test.mean=0.933
+</code></pre>
+
+<p>Let's set a couple of hyperparameters for rpart:</p>
+<pre class="prettyprint well"><code class="r">lrn1 = makeLearner(&quot;classif.rpart&quot;, minsplit = 10, cp = 0.03)
+r1 = resample(lrn1, task, rinst, list(mmce, acc))  
+</code></pre>
+
+<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
+## [Resample] cross-validation iter: 2
+## [Resample] cross-validation iter: 3
+## [Resample] Result: mmce.test.mean=0.0467,acc.test.mean=0.953
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Second resample for LDA as learner
+lrn2 = makeLearner(&quot;classif.lda&quot;)
+r2 = resample(lrn2, task, rinst, list(mmce, acc))   
+</code></pre>
+
+<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
+## [Resample] cross-validation iter: 2
+## [Resample] cross-validation iter: 3
+## [Resample] Result: mmce.test.mean=0.0267,acc.test.mean=0.973
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Let's see how well both classifiers did w.r.t mean misclassification error and accuracy
+r1[c(&quot;measures.test&quot;,&quot;aggr&quot;)]
+</code></pre>
+
+<pre class="prettyprint well"><code>## $measures.test
+##   iter mmce  acc
+## 1    1 0.02 0.98
+## 2    2 0.08 0.92
+## 3    3 0.04 0.96
+## 
+## $aggr
+## mmce.test.mean  acc.test.mean 
+##        0.04667        0.95333
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">r2[c(&quot;measures.test&quot;,&quot;aggr&quot;)]
+</code></pre>
+
+<pre class="prettyprint well"><code>## $measures.test
+##   iter mmce  acc
+## 1    1 0.02 0.98
+## 2    2 0.04 0.96
+## 3    3 0.02 0.98
+## 
+## $aggr
+## mmce.test.mean  acc.test.mean 
+##        0.02667        0.97333
+</code></pre>
+
+<p>To see the individual values for each fold on the test set, we can access 
+the <code>measures.test</code> element of the result list:</p>
+<pre class="prettyprint well"><code class="r">r1$measures.test
+</code></pre>
+
+<pre class="prettyprint well"><code>##   iter mmce  acc
+## 1    1 0.02 0.98
+## 2    2 0.08 0.92
+## 3    3 0.04 0.96
+</code></pre>
+
+<p>As you can see above, every fold of the 3-fold cross-validation gives one mean
+misclassification error (in the second column).</p>
+<p>The aggregated performance values are stored in the <code>aggr</code> list element:</p>
+<pre class="prettyprint well"><code class="r">r1$aggr
+</code></pre>
+
+<pre class="prettyprint well"><code>## mmce.test.mean  acc.test.mean 
+##        0.04667        0.95333
+</code></pre>
+
+<p>The latter value is the aggregation, i.e. by default the mean, of the three 
+misclassification errors from the table above.
+Getting the single losses is of course possible as well.</p>
+<h3 id="regression-example_1">Regression example</h3>
+<p>Now, we use the <code>BostonHousing</code> data and compare the results of a neural net
+and a k-nearest neighbour regression using out-of-bag bootstraping.</p>
+<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
+library(&quot;mlbench&quot;)
+data(BostonHousing)
+
+## Regression task
+task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
+
+## Resample instance for bootstraping
+rdesc = makeResampleDesc(&quot;Bootstrap&quot;, iters = 3)
+rinst = makeResampleInstance(rdesc, task = task)
+
+ms = list(mse, medae)
+
+lrn1 = makeLearner(&quot;regr.nnet&quot;)
+r1 = resample(lrn1, task, rinst, measures = ms)
+</code></pre>
+
+<pre class="prettyprint well"><code>## [Resample] OOB bootstrapping iter: 1
+## [Resample] OOB bootstrapping iter: 2
+## [Resample] OOB bootstrapping iter: 3
+## [Resample] Result: mse.test.mean=81.1,medae.test.mean=4.69
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Another resampling for the k-Nearest Neighbor regression
+lrn2 = makeLearner(&quot;regr.kknn&quot;)
+r2 = resample(lrn2, task, rinst, measures = ms)
+</code></pre>
+
+<pre class="prettyprint well"><code>## [Resample] OOB bootstrapping iter: 1
+## [Resample] OOB bootstrapping iter: 2
+## [Resample] OOB bootstrapping iter: 3
+## [Resample] Result: mse.test.mean=19.6,medae.test.mean=1.63
+</code></pre>
+
+<p>Now, we can compare both methods regarding mean squared error (<a href="../../../man/mse.html">mse</a>) and the
+median of absolute errors (<a href="../../../man/medae.html">medae</a>):</p>
+<pre class="prettyprint well"><code class="r">r1[c(&quot;measures.test&quot;,&quot;aggr&quot;)]
+</code></pre>
+
+<pre class="prettyprint well"><code>## $measures.test
+##   iter   mse medae
+## 1    1 71.68 4.360
+## 2    2 85.24 4.596
+## 3    3 86.27 5.106
+## 
+## $aggr
+##   mse.test.mean medae.test.mean 
+##          81.064           4.687
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">r2[c(&quot;measures.test&quot;,&quot;aggr&quot;)]
+</code></pre>
+
+<pre class="prettyprint well"><code>## $measures.test
+##   iter   mse medae
+## 1    1 11.27 1.708
+## 2    2 18.56 1.616
+## 3    3 29.07 1.564
+## 
+## $aggr
+##   mse.test.mean medae.test.mean 
+##          19.633           1.629
+</code></pre>
+
+<!--(
+
+.. |resampling_figure| image:: /_images/resampling.png
+     :align: middle
+     :width: 40em
+     :alt: Resampling illustration
+
+.. |resampling_desc_figure| image:: /_images/resampling_desc_and_instance.png
+     :align: middle
+     :width: 40em
+     :alt: Resampling description and instance
+
+.. |nested_resampling_figure| image:: /_images/nested_resampling.png
+     :align: middle
+     :width: 60em
+     :alt: Nested resampling illustration
+
+)-->
+
+</div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        
+
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/base.js"></script>
+        
+    </body>
+</html>

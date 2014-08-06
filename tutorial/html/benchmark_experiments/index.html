@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+        <title>Benchmark Experiments - mlr tutorial</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../css/prettify-1.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../task/">Tasks</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../learner/">Learner</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../train/">Train</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../predict/">Predict</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../performance/">Performance</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../resample/">Resampling</a>
+                            </li>
+                        
+                            <li class="active">
+                                <a href="./">Benchmark Experiments</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../parallelization/">Parallelization</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../configureMlr/">Configuration</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../feature_selection/">Feature selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../multicriteria_evaluation/">Multicriteria Evaluation</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../tune/">Tuning</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../create_learner/">Create custom learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../create_measure/">Create custom measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                <li >
+                    <a rel="next" href="../resample/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../benchmark_analysis/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a href="https://github.com/berndbischl/mlr/">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#benchmark-experiments">Benchmark Experiments</a></li>
+        
+            <li><a href="#example-1-one-task-two-learners-no-tuning">Example 1: One task, two learners, no tuning</a></li>
+        
+            <li><a href="#example-2-one-task-one-learner-tuning">Example 2: One task, one learner, tuning</a></li>
+        
+            <li><a href="#example-3-three-tasks-three-learners-tuning">Example 3: Three tasks, three learners, tuning</a></li>
+        
+            <li><a href="#example-4-one-task-two-learners-variable-selection">Example 4: One task, two learners, variable selection</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h1 id="benchmark-experiments">Benchmark Experiments</h1>
+<p>In order to get an unbiased estimate of the performance on new data,
+it is generally not enough to simply use repeated cross-validation
+for a given set of hyperparameters and methods (see section <a href="../tune/">tuning</a>), 
+as this might produce an overly optimistic result.</p>
+<p>A better (although more time-consuming) approach is to nest two
+resampling methods. To keep it simple, let's take
+cross-validations, which in this case is also called "double cross-validation".
+In the so called "outer" cross-validation the data is split repeatedly
+into a (larger) training set and a (smaller) test set in the usual
+way. Now, in every outer iteration the learner is tuned on the
+training set by performing an "inner" cross-validation. The best
+hyperparameters are selected and afterwards used for fitting the learner 
+to the complete "outer" training set. The resulting model is used to
+on the (outer) test set. This results in much more reliable
+estimates of the true performance distribution of the learner for unseen
+data. These can now be used to estimate locations (e.g. of the mean
+or median performance value) and compare learning methods in a fair
+way.</p>
+<p>In the following we will see four examples to show different benchmark settings:</p>
+<ul>
+<li>One data set  +   two classification algorithms</li>
+<li>One data set  +   one classification algorithm    +   tuning</li>
+<li>Three data sets   +   three classification algorithms +   tuning</li>
+<li>One data set  +   two classification algorithms   +   variable selection</li>
+</ul>
+<h2 id="example-1-one-task-two-learners-no-tuning">Example 1: One task, two learners, no tuning</h2>
+<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
+
+## Classification task with iris data set 
+task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+
+## Two learners to be compared 
+learners = c(&quot;classif.lda&quot;, &quot;classif.qda&quot;)
+
+## Define cross-validation indices 
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 5)
+
+res = bench.exp(learners, task, rdesc)
+</code></pre>
+
+<p>The above code should be self-explanatory. In the result every
+column corresponds to one learner. The entries show the mean test
+error and its standard deviation for the final fitted model.</p>
+<p>But the benchmark results contain much more information, which you can
+access if you want to see details. Let's have a look at the benchmark
+result from the example above:</p>
+<pre class="prettyprint well"><code class="r">## Access further information 
+## The single performances of the cross-validation runs 
+res[&quot;perf&quot;]
+
+## Confusion matrices - one for each learner
+res[&quot;conf.mats&quot;]
+</code></pre>
+
+<h2 id="example-2-one-task-one-learner-tuning">Example 2: One task, one learner, tuning</h2>
+<p>Now we have a learner with hyperparameters and we want to find the best ones. In
+that case we have two resampling levels.</p>
+<p>We show an example with outer bootstrap and inner cross-validation,
+our learner will be k-nearest neighbour.</p>
+<pre class="prettyprint well"><code class="r">## Classification task with iris data set 
+task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+
+## Range of hyperparameter k  
+ps = makeParameterSet(makeDiscreteParameter(&quot;k&quot;, 1:5))
+ctrl = makeTuneControlGrid(ranges = ps)
+
+## Define &quot;inner&quot; cross-validation indices
+inner.rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)   
+
+## Tune k-nearest neighbour
+lrn = makeTuneWrapper(&quot;classif.kknn&quot;,
+                               resampling = inner.rdesc, 
+                               control = ctrl)
+
+## Define &quot;outer&quot; bootstrap indices 
+rdesc = makeResampleDesc(&quot;BS&quot;, iters = 5)
+
+## Merge it into a benchmark experiment 
+## Choose accuracy instead of default measure mean misclassification error
+res = bench.exp(lrn, task, rdesc, measure = acc)
+
+## What performances did we get in the single runs? 
+res[&quot;perf&quot;]
+
+## What parameter setting achieved this performances? 
+res[&quot;tuned.par&quot;]
+
+## What does the confusion matrix look like? 
+res[&quot;conf.mats&quot;]
+</code></pre>
+
+<p>Of course everything works the same way if we change the resampling
+strategy either in the outer or inner run. They can be mixed as desired.</p>
+<h2 id="example-3-three-tasks-three-learners-tuning">Example 3: Three tasks, three learners, tuning</h2>
+<p>Now we look at an extensive example that shows a benchmark experiment with three data
+sets, three learners and tuning.</p>
+<pre class="prettyprint well"><code class="r">library(&quot;dprep&quot;)
+library(&quot;mlbench&quot;)
+data(BreastCancer)
+data(Vehicle)
+
+## Classification task with three data sets 
+task1 = makeClassifTask(&quot;Iris&quot;, data = iris, target = &quot;Species&quot;)
+task2 = makeClassifTask(&quot;Vehicle&quot;, data = Vehicle, target = &quot;Class&quot;)
+task3 = makeClassifTask(&quot;BreastCancer&quot;, data = na.omit(BreastCancer), 
+                         target = &quot;Class&quot;, excluded = &quot;Id&quot;)
+
+## Merge to one task
+tasks = list(task1 , task2 , task3)
+
+## Very small grid for SVM hyperparameters  
+ps = makeParameterSet(makeDiscreteParameter(&quot;C&quot;, 2^seq(-1,1)), 
+                      makeDiscreteParameter(&quot;sigma&quot;, 2^seq(-1,1)))
+ctrl = makeTuneControlGrid(ranges = ps)
+
+## Define &quot;inner&quot; cross-validation indices
+inner.rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)   
+
+## Tune a SVM
+lrn = makeTuneWrapper(&quot;classif.ksvm&quot;, method = &quot;grid&quot;, resampling = inner.rdesc, 
+                       control = ctrl)
+
+## Three learners to be compared 
+learners = c(&quot;classif.lda&quot;, &quot;classif.rpart&quot;, lrn)
+
+## Define &quot;outer&quot; cross-validation indices 
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 5)
+
+## Merge it to a benchmark experiment 
+res = bench.exp(learners, tasks, rdesc)
+
+## Only for one task
+res[&quot;perf&quot;, task = &quot;Iris&quot;]
+
+## Only for one learner
+res[&quot;perf&quot;, learner = &quot;classif.lda&quot;]
+
+## Tuned parameter for SVM
+res[&quot;tuned.par&quot;, learner = &quot;classif.ksvm&quot;]
+
+## Confusion matrix for one learner and one task
+res[&quot;conf.mats&quot;, learner = &quot;classif.rpart&quot;, task = &quot;BreastCancer&quot;]
+
+## Optimal performance of the inner (!) resampling, i.e. here 3-fold cross-validation
+res[&quot;opt.perf&quot;, learner = &quot;classif.ksvm&quot;]
+</code></pre>
+
+<h2 id="example-4-one-task-two-learners-variable-selection">Example 4: One task, two learners, variable selection</h2>
+<p>Let's see how we can do <a href="../feature_selection/">feature selection</a> in
+a benchmark experiment:</p>
+<pre class="prettyprint well"><code class="r">## Classification task with iris data set 
+task = makeClassifTask(&quot;iris&quot;, data=iris, target = &quot;Species&quot;)  
+
+## Control object for feature selection
+ctrl = makeFeatselControlSequential(beta = 100, method=&quot;sfs&quot;)
+
+## Inner resampling
+inner.rdesc = makeResampleDesc(&quot;CV&quot;, iter=2)
+
+## Feature selection with Sequential Forward Search
+lrn = makeFeatselWrapper(&quot;classif.lda&quot;, resampling = inner.rdesc, control = ctrl)
+
+## Let's compare two learners
+learners = c(&quot;classif.rpart&quot;, lrn)
+
+## Define outer resampling 
+rdesc = makeResampleDesc(&quot;subsample&quot;, iter = 3)
+
+## Merge to a benchmark experiment
+res = bench.exp(tasks = task, learners = learners, resampling = rdesc)
+
+## Which features have been selected (in the outer resampling steps)?
+res[&quot;sel.var&quot;, learner=&quot;classif.lda&quot;]
+</code></pre>
+
+<!--(
+.. |benchmark_processing| image:: /_images/benchmark_processing.png
+     :align: middle
+     :width: 40em
+     :alt: Benchmark processing pipeline
+)-->
+
+</div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        
+
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/base.js"></script>
+        
+    </body>
+</html>

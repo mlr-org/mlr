@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+        <title>Learner - mlr tutorial</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../css/prettify-1.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../task/">Tasks</a>
+                            </li>
+                        
+                            <li class="active">
+                                <a href="./">Learner</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../train/">Train</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../predict/">Predict</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../performance/">Performance</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../resample/">Resampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_experiments/">Benchmark Experiments</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../parallelization/">Parallelization</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../configureMlr/">Configuration</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../feature_selection/">Feature selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../multicriteria_evaluation/">Multicriteria Evaluation</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../tune/">Tuning</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../create_learner/">Create custom learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../create_measure/">Create custom measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                <li >
+                    <a rel="next" href="../task/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../integrated_learners/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a href="https://github.com/berndbischl/mlr/">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#learners">Learners</a></li>
+        
+            <li><a href="#further-information">Further information</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h1 id="learners">Learners</h1>
+<p>These classes provide a unified interface to all machine learning methods in R
+-- classification, regression, survival analysis, and clustering.
+Many are already integrated,
+others are not, but the package is specifically designed to make
+extensions simple. If your favorite methods is missing, either
+send the <strong>mlr</strong> maintainers an email or see the part of the tutorial
+on <a href="../create_learner/">how to extend the package yourself</a>.</p>
+<p>To see which learners are already implemented, have a look at the <a href="../../../man/learners.html">learners</a> documentation page.</p>
+<p>A learner in <strong>mlr</strong> is constructed by calling <a href="../../../man/makeLearner.html">makeLearner</a>.
+In the constructor you can do the following things:</p>
+<ul>
+<li>Set hyperparameters.</li>
+<li>Set the ID to name the object (some methods will later use this ID to name results).</li>
+<li>Control the output for later prediction, e.g. for classification
+  whether you want a factor for predicted classes or probabilities.</li>
+</ul>
+<pre class="prettyprint well"><code class="r"># classifier, set it up for prediction probabilities
+lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;)
+# regression
+lrn = makeLearner(&quot;regr.rpart&quot;)
+# gradient boosting machine with hyperparameters and custon name
+lrn = makeLearner(&quot;regr.gbm&quot;, id = &quot;mygbm&quot;, n.trees = 500, interaction.depth = 3)
+</code></pre>
+
+<p>The first argument specifies which algorithm to use.
+The naming convention is <code>classif.&lt;R_method_name&gt;</code> for
+classification methods, <code>regr.&lt;R_method_name&gt;</code> for regression methods,
+<code>surv.&lt;R_method_name&gt;</code> for survival analysis, and <code>cluster.&lt;R_method_name&gt;</code>
+for clustering methods.
+The tables in <a href="../integrated_learners/">IntegratedLearners</a> provide more
+information on the properties for all integrated learning methods.</p>
+<h2 id="further-information">Further information</h2>
+<p>The generated learner is an object of class <a href="../../../man/makeLearner.html">Learner</a>.
+It contains the properties the method, e.g. which types of features it can handle,
+what can be output during prediction, whether multi-class problems,
+observations weights or missing values are supported and so on.</p>
+<pre class="prettyprint well"><code class="r"># classifier, set it up for prediction probabilities
+lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;, minsplit = 20)
+lrn
+</code></pre>
+
+<pre class="prettyprint well"><code>## Learner classif.rpart from package rpart
+## Type: classif
+## Class: classif.rpart
+## Properties: twoclass,multiclass,missings,numerics,factors,prob,weights
+## Predict-Type: prob
+## Hyperparameters: xval=0,minsplit=20
+</code></pre>
+
+<pre class="prettyprint well"><code class="r"># display stored information for hyperparameters
+lrn$par.set
+</code></pre>
+
+<pre class="prettyprint well"><code>##                    Type len  Def   Constr Req Trafo
+## minsplit        integer   -   20 1 to Inf   -     -
+## minbucket       integer   -    - 1 to Inf   -     -
+## cp              numeric   - 0.01   0 to 1   -     -
+## maxcompete      integer   -    4 0 to Inf   -     -
+## maxsurrogate    integer   -    5 0 to Inf   -     -
+## usesurrogate   discrete   -    2    0,1,2   -     -
+## surrogatestyle discrete   -    0      0,1   -     -
+## maxdepth        integer   -   30  1 to 30   -     -
+## xval            integer   -   10 0 to Inf   -     -
+## parms           untyped   -    -        -   -     -
+</code></pre>
+
+</div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        
+
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/base.js"></script>
+        
+    </body>
+</html>

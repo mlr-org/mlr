@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+        <title>Integrated Learners - mlr tutorial</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../css/prettify-1.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../task/">Tasks</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../learner/">Learner</a>
+                            </li>
+                        
+                            <li class="active">
+                                <a href="./">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../train/">Train</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../predict/">Predict</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../performance/">Performance</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../resample/">Resampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_experiments/">Benchmark Experiments</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../parallelization/">Parallelization</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../configureMlr/">Configuration</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../feature_selection/">Feature selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../multicriteria_evaluation/">Multicriteria Evaluation</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../tune/">Tuning</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../create_learner/">Create custom learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../create_measure/">Create custom measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                <li >
+                    <a rel="next" href="../learner/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../train/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a href="https://github.com/berndbischl/mlr/">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#integrated-learners">Integrated Learners</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h2 id="integrated-learners">Integrated Learners</h2>
+<pre class="prettyprint well"><code>## Error: there is no package called 'xtable'
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th align="right">Id</th>
+<th align="right">Name</th>
+<th align="right">Short</th>
+<th align="right">Packages</th>
+<th align="right">prob / se</th>
+<th align="right">Num.</th>
+<th align="right">Fact.</th>
+<th align="right">NAs</th>
+<th align="right">Weights</th>
+<th align="right">Further</th>
+<th align="right">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="right">classif.IBk</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.J48</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.JRip</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.LiblineaRBinary</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/LiblineaR/index.html">LiblineaR</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.LiblineaRLogReg</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/LiblineaR/index.html">LiblineaR</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.LiblineaRMultiClass</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/LiblineaR/index.html">LiblineaR</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.OneR</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.PART</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.ada</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/ada/index.html">ada</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.blackboost</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/mboost/index.html">mboost</a>, <a href="http://cran.r-project.org/web/packages/party/index.html">party</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">twoclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.boosting</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/adabag/index.html">adabag</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.cforest</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/party/index.html">party</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.ctree</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/party/index.html">party</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.fnn</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/FNN/index.html">FNN</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.gbm</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/gbm/index.html">gbm</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.geoDA</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/DiscriMiner/index.html">DiscriMiner</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.glmboost</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/mboost/index.html">mboost</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">twoclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.glmnet</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/glmnet/index.html">glmnet</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.kknn</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/kknn/index.html">kknn</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.knn</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/class/index.html">class</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.ksvm</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/kernlab/index.html">kernlab</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.lda</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/MASS/index.html">MASS</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.linDA</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/DiscriMiner/index.html">DiscriMiner</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.logreg</td>
+<td align="right">stats</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.lssvm</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/kernlab/index.html">kernlab</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.lvq1</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/class/index.html">class</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.mda</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/mda/index.html">mda</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.multinom</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/nnet/index.html">nnet</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.naiveBayes</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/e1071/index.html">e1071</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.nnet</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/nnet/index.html">nnet</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.plr</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/stepPlr/index.html">stepPlr</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">twoclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.plsDA</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/DiscriMiner/index.html">DiscriMiner</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.plsdaCaret</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/caret/index.html">caret</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.qda</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/MASS/index.html">MASS</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.quaDA</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/DiscriMiner/index.html">DiscriMiner</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.randomForest</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/randomForest/index.html">randomForest</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.rda</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/klaR/index.html">klaR</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.rpart</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/rpart/index.html">rpart</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.rrlda</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/rrlda/index.html">rrlda</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">classif.svm</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/e1071/index.html">e1071</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">cluster.EM</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">cluster.SimpleKMeans</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">cluster.XMeans</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.IBk</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/RWeka/index.html">RWeka</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.blackboost</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/mboost/index.html">mboost</a>, <a href="http://cran.r-project.org/web/packages/party/index.html">party</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.cforest</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/party/index.html">party</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.crs</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/crs/index.html">crs</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.earth</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/earth/index.html">earth</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.fnn</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/FNN/index.html">FNN</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.gbm</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/gbm/index.html">gbm</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.glmnet</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/glmnet/index.html">glmnet</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.kknn</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/kknn/index.html">kknn</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.km</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/DiceKriging/index.html">DiceKriging</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.ksvm</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/kernlab/index.html">kernlab</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.lm</td>
+<td align="right">stats</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.mars</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/mda/index.html">mda</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.mob</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/party/index.html">party</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.nnet</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/nnet/index.html">nnet</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.pcr</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/pls/index.html">pls</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.penalized.lasso</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/penalized/index.html">penalized</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.penalized.ridge</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/penalized/index.html">penalized</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.randomForest</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/randomForest/index.html">randomForest</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.rpart</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/rpart/index.html">rpart</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.rsm</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/rsm/index.html">rsm</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.rvm</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/kernlab/index.html">kernlab</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">regr.svm</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/e1071/index.html">e1071</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">surv.CoxBoost</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/CoxBoost/index.html">CoxBoost</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">rcens</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">surv.cforest</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/party/index.html">party</a>, <a href="http://cran.r-project.org/web/packages/survival/index.html">survival</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">twoclass,multiclass</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">surv.coxph</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/survival/index.html">survival</a></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">rcens</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">surv.glmboost</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/mboost/index.html">mboost</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">rcens</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">surv.glmnet</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/glmnet/index.html">glmnet</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">rcens</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">surv.penalized</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/penalized/index.html">penalized</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right">rcens</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="right">surv.randomForestSRC</td>
+<td align="right"><a href="http://cran.r-project.org/web/packages/randomForestSRC/index.html">randomForestSRC</a></td>
+<td align="right"></td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right">X</td>
+<td align="right"></td>
+<td align="right">rcens</td>
+<td align="right"></td>
+<td align="right"></td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table>
+</div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        
+
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/base.js"></script>
+        
+    </body>
+</html>

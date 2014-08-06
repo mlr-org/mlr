@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+        <title>Over- and Undersampling - mlr tutorial</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../css/prettify-1.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../task/">Tasks</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../learner/">Learner</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../train/">Train</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../predict/">Predict</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../performance/">Performance</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../resample/">Resampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_experiments/">Benchmark Experiments</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../parallelization/">Parallelization</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../configureMlr/">Configuration</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../feature_selection/">Feature selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../multicriteria_evaluation/">Multicriteria Evaluation</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../tune/">Tuning</a>
+                            </li>
+                        
+                            <li class="active">
+                                <a href="./">Over- and Undersampling</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../create_learner/">Create custom learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../create_measure/">Create custom measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                <li >
+                    <a rel="next" href="../tune/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../create_learner/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a href="https://github.com/berndbischl/mlr/">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#over-and-undersampling">Over- and Undersampling</a></li>
+        
+            <li><a href="#dataframe">data.frame</a></li>
+        
+            <li><a href="#tasks">Tasks</a></li>
+        
+            <li><a href="#learners">Learners</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h1 id="over-and-undersampling">Over- and Undersampling</h1>
+<p>For unevenly distributed classes in the data, it might be useful to oversample
+the minority or undersample the majority class.</p>
+<h2 id="dataframe"><code>data.frame</code></h2>
+<p>First we show how it is done for <code>data.frame</code>s:</p>
+<pre class="prettyprint well"><code class="r">library(mlr)
+classA = data.frame(x = rnorm(20, mean=1), class=&quot;A&quot;)
+classB = data.frame(x = rnorm(80, mean=2), class=&quot;B&quot;)
+data = rbind(classA, classB)
+table(data$class)
+</code></pre>
+
+<pre class="prettyprint well"><code>## 
+##  A  B 
+## 20 80
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">data.over = oversample(data, &quot;class&quot;, rate=4)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: unused argument (&quot;class&quot;)
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">table(data.over$class)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'data.over' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">data.under = undersample(data, &quot;class&quot;, rate=1/4)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: unused argument (&quot;class&quot;)
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">table(data.under$class)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'data.under' not found
+</code></pre>
+
+<h2 id="tasks">Tasks</h2>
+<p>Now let's see what the effect is for a classification task:</p>
+<pre class="prettyprint well"><code class="r">data.even = rbind(
+  data.frame(x = rnorm(50, mean=1), class=&quot;A&quot;),
+  data.frame(x = rnorm(50, mean=2), class=&quot;B&quot;))
+task = makeClassifTask(data=data, target=&quot;class&quot;)
+task.over = oversample(task, rate=4)
+task.under = undersample(task, rate=1/4)
+lrn = makeLearner(&quot;classif.PART&quot;)
+mod = train(lrn, task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;classif.PART&quot;, &quot;RLearnerClassif&quot;,
+## &quot;RLearner&quot;, &quot;Learner&quot;)&quot; to a data.frame
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod.over = train(lrn, task.over)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;classif.PART&quot;, &quot;RLearnerClassif&quot;,
+## &quot;RLearner&quot;, &quot;Learner&quot;)&quot; to a data.frame
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod.under = train(lrn, task.under)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;classif.PART&quot;, &quot;RLearnerClassif&quot;,
+## &quot;RLearner&quot;, &quot;Learner&quot;)&quot; to a data.frame
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">performance(predict(mod, newdata = data.even), measures=mmce)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">performance(predict(mod.over, newdata = data.even), measures=mmce)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod.over' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures=mmce)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod.under' not found
+</code></pre>
+
+<h2 id="learners">Learners</h2>
+<p>Note that it is <em>highly dependent</em> on the learner if over- or undersampling will
+be useful. You are also able to wrap the over- and undersampling within the learner.</p>
+<pre class="prettyprint well"><code class="r">lrn.over = makeOversampleWrapper(lrn, osw.rate=4)
+lrn.under = makeUndersampleWrapper(lrn, usw.rate=1/4)
+mod = train(lrn, task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;classif.PART&quot;, &quot;RLearnerClassif&quot;,
+## &quot;RLearner&quot;, &quot;Learner&quot;)&quot; to a data.frame
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod.over = train(lrn.over, task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;OversampleWrapper&quot;, &quot;BaseWrapper&quot;,
+## &quot;Learner&quot;)&quot; to a data.frame
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod.under = train(lrn.under, task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;UndersampleWrapper&quot;, &quot;BaseWrapper&quot;,
+## &quot;Learner&quot;)&quot; to a data.frame
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">performance(predict(mod, newdata = data.even), measures=mmce)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">performance(predict(mod.over, newdata = data.even), measures=mmce)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod.over' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures=mmce)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod.under' not found
+</code></pre>
+
+</div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        
+
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/base.js"></script>
+        
+    </body>
+</html>

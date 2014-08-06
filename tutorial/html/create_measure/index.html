@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+        <title>Create custom measures - mlr tutorial</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../css/prettify-1.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../task/">Tasks</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../learner/">Learner</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../train/">Train</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../predict/">Predict</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../performance/">Performance</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../resample/">Resampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_experiments/">Benchmark Experiments</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../parallelization/">Parallelization</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../configureMlr/">Configuration</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../feature_selection/">Feature selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../multicriteria_evaluation/">Multicriteria Evaluation</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../tune/">Tuning</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../create_learner/">Create custom learners</a>
+                            </li>
+                        
+                            <li class="active">
+                                <a href="./">Create custom measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                <li >
+                    <a rel="next" href="../create_learner/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a rel="prev" >
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a href="https://github.com/berndbischl/mlr/">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#preload-mlr-for-all-coming-blocks">Preload mlr for all coming blocks</a></li>
+        
+    
+        <li class="main "><a href="#construct-measure-for-non-standard-misclassification-costs">Construct measure for non-standard misclassification costs</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<p>```{splus echo=FALSE}</p>
+<h2 id="preload-mlr-for-all-coming-blocks">Preload mlr for all coming blocks</h2>
+<p>library("mlr")</p>
+<pre class="prettyprint well"><code>
+Integrating another measure
+===========================
+
+Maybe you want to evaluate a prediction with a measure which is not yet implemented 
+in **mlr**. This could be either a performance measure which is not included in the in **mlr**
+list of [measures](../../../man/measures.html) or a measure that uses a non-standard misclassification cost matrix.
+
+
+Construct performance measure
+-----------------------------
+
+The [makeMeasure](../../../man/makeMeasure.html) function provides a simple way of constructing your own performance 
+measure. Below, this is exemplified by an implementation of the mean 
+misclassification error (mmce) for the iris dataset. For this purpose we write a simple 
+function that computes the measure on the basis of the predictions and subsequently wrap it 
+in a [Measure](../../../man/Measure.html) object. Then, we work with it as usual with the
+[performance](http://berndbischl.github.io/mlr/man/performance.html) function.
+See the R documentation of the [makeMeasure](../../../man/makeMeasure.html) function for details on the
+various parameters.
+
+```{splus}
+# Define the measure.
+my.mmce = function(task, model, pred, extra.args) {
+  tb = table(pred$data$response, pred$data$truth)
+  1 - sum(diag(tb)) / sum(tb)
+}
+
+# Encapsulate the function with a Measure object.
+my.mmce = makeMeasure(id = &quot;my.mmce&quot;, minimize = TRUE, classif = TRUE, 
+                       allowed.pred.types = &quot;response&quot;, fun = my.mmce)
+
+# Create classification task and learner
+task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+lrn = makeLearner(&quot;classif.lda&quot;)
+mod = train(lrn, task)
+pred = predict(mod, newdata= iris)
+
+# Compare predicted and true label with our measure.
+performance(pred, measures = my.mmce)
+
+# Apparently the result coincides with the mlr implementaion.
+performance(pred, measures = mmce)
+</code></pre>
+
+<h2 id="construct-measure-for-non-standard-misclassification-costs">Construct measure for non-standard misclassification costs</h2>
+<p>To create a measure that involves non-standard misclassification costs you can use
+the <a href="../../../man/makeCostMeasure.html">makeCostMeasure</a> function. In order to do this, you first need to define the cost
+matrix you want to use and include all class labels. The cost matrix can then be 
+wrapped in a <a href="../../../man/Measure.html">Measure</a> object and a prediction can be evaluated as usual with the
+<a href="../../../man/performance.html">performance</a> function. See the R documentation of the <a href="../../../man/makeCostMeasure.html">makeCostMeasure</a> function for 
+details on the various parameters.</p>
+<pre class="prettyprint well"><code class="splus"># Create misclassification cost matrix.
+mcm = matrix(c(0, 2, 2, 3, 0, 2, 1, 1, 0), ncol=3, 
+              dimnames = list(c(&quot;setosa&quot;, &quot;versicolor&quot;, &quot;virginica&quot;),
+                              c(&quot;setosa&quot;, &quot;versicolor&quot;, &quot;virginica&quot;)))
+
+# Create classification task and learner
+task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+lrn = makeLearner(&quot;classif.lda&quot;)
+mod = train(lrn, task)
+pred = predict(mod, newdata= iris)
+
+# Encapsulate the cost matrix in a Measure object.                             
+my.costs = makeCostMeasure(id = &quot;costs&quot;, minimize = TRUE, costs=mcm, task, aggregate = mean)
+
+# Compare predicted and true label with our measure.
+performance(pred, measures = my.costs)
+</code></pre>
+
+</div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        
+
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/base.js"></script>
+        
+    </body>
+</html>

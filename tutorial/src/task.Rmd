@@ -1,0 +1,100 @@
+# Learning Tasks
+
+Learning tasks are the basic elements of the package to encapsulate the
+data set and all relevant information regarding the purpose of the
+task, e.g, the target variable.
+
+The tasks are organised in a hierarchy, with the generic
+\man[Task] at the top.
+The concrete tasks that can be instantiated are \man2[ClassifTask][Task] for classification,
+\man2[RegrTask][Task] for regression, \man2[SurvTask][Task] for survival
+analysis, \man2[CostSensTask][Task] for
+cost-sensitive learning, and \man2[ClusterTask][Task] for clustering.
+
+There are dedicated functions to create these tasks given data and other
+relevant information. These are \man2[makeClassifTask][Task],
+\man2[makeRegrTask][Task],
+\man2[makeSurvTask][Task], \man2[makeCostSensTask][Task], and
+\man2[makeClusterTask][Task].
+
+In the following example, we define a classification task for the data
+set ``BreastCancer`` (from the package mlbench) and exclude the ID
+variable from all further model fitting and evaluation.
+
+```{r}
+library("mlr")
+library("mlbench")
+data(BreastCancer)
+
+df = BreastCancer
+df$Id = NULL
+classif.task = makeClassifTask(id = "BreastCancer", data = df, target = "Class")
+classif.task
+```
+
+As we can see, the task records basic information about the data set,
+e.g. the types of the features, the number of observations, whether
+missing values are present, the number of observations per class and so on.
+
+
+In many of the regression examples in this tutorial, we will use the ``BostonHousing`` data set:
+
+```{r}
+data(BostonHousing)
+regr.task = makeRegrTask(id = "BostonHousing", data = BostonHousing, target = "medv")
+regr.task
+```
+
+Further information
+-------------------
+
+Let's have another look at the classification example.
+
+As this is a binary problem, we see that a positive class is selected
+by default. This will generally be auto-selected, but you might
+want to do this manually for your application. It mainly concerns ROC analysis, where in order
+to talk about something like a true positive rate, we need to know which of the two classes is the positive
+one.
+
+```{r}
+classif.task = makeClassifTask(id = "BreastCancer", data = df, target = "Class",
+  positive = "malignant")
+```
+
+There are also some convenient methods to access properties and parts of the task.
+The most important ones are listed in \man[Task].
+
+Here are some examples.
+
+
+```{r}
+# get the names of the input variables:
+getTaskFeatureNames(classif.task)
+
+# get values of the target variable for all observations:
+head(getTaskTargets(classif.task))
+head(getTaskTargets(regr.task))
+
+# accessing the data set:
+str(getTaskData(classif.task))
+```
+
+Note the many options \man[getTaskData] provides to convert the data set into a convenient format.
+This is especially handy when you integrate a learner from another package into
+**mlr**.
+
+If you are more technically minded, you could also access
+the information directly stored in the slot called `task$task.desc`,
+which stands for "description" and is of class \man[TaskDesc].
+
+```{r}
+str(classif.task$task.desc)
+```
+
+The \man[Task] help page also lists several other arguments
+to describe further details of the problem.
+
+For example, we could include a blocking factor into the task.
+This would tell the task that some observations "belong together", and should
+not be separated when splitting into training and test sets during a resampling iteration.
+Another possibility is to weight observations according to their importance.

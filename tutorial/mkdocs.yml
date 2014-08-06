@@ -1,0 +1,23 @@
+site_name: mlr tutorial
+site_dir: html
+repo_url: https://github.com/berndbischl/mlr/
+pages:
+- ["index.md", "Home"]
+- ["task.md", "Basics", "Tasks"]
+- ["learner.md", "Basics", "Learner"]
+- ["integrated_learners.md", "Basics", "Integrated Learners"]
+- ["train.md", "Basics", "Train"]
+- ["predict.md", "Basics", "Predict"]
+- ["performance.md", "Basics", "Performance"]
+- ["resample.md", "Basics", "Resampling"]
+- ["benchmark_experiments.md", "Basics", "Benchmark Experiments"]
+- ["benchmark_analysis.md", "Basics", "Benchmark Analysis"]
+- ["parallelization.md", "Basics", "Parallelization"]
+- ["configureMlr.md", "Advanced", "Configuration"]
+- ["feature_selection.md", "Advanced", "Feature selection"]
+- ["roc_analysis.md", "Advanced", "ROC analysis"]
+- ["multicriteria_evaluation.md", "Advanced", "Multicriteria Evaluation"]
+- ["tune.md", "Advanced", "Tuning"]
+- ["over_and_undersampling.md", "Advanced", "Over- and Undersampling"]
+- ["create_learner.md", "Developers", "Create custom learners"]
+- ["create_measure.md", "Developers", "Create custom measures"]

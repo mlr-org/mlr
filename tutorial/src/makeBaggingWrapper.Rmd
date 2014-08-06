@@ -1,0 +1,77 @@
+```{r makeBaggingWrapper_init,include=FALSE}
+set.seed(1)
+```
+
+Generic bagging
+========================================================
+
+One reason why random forests perform so well is that they are using bagging as
+a technique to gain more stability. But why do you want to limit yourself to the
+classifiers already implemented in well known random forests when it is
+really easy to build your with **mlr**?
+
+Just bag one learner already supported in **mlr** with \man[makeBaggingWrapper].
+
+As in a random forest, we need a Learner which is trained on a subset of the
+data during each iteration of the bagging process.
+The subsets are chosen according to the parameters given to \man[makeBaggingWrapper]:
+* `bag.iters` On how many subsets (samples) do we want to train our learner?
+* `bw.replace` Sample with replacement (also known as *bootstrapping*)?
+* `bw.size` Percentage size of the samples. If `bw.replace=TRUE`, `bag.size=1` is the default. This does not mean that one sample will contain all the observations as observations will occur multiple times in each sample.
+* `bw.feats` Percentage size of randomly selected features for each iteration. 
+
+Of course we also need a `learner` which we have to pass to
+\man[makeBaggingWrapper].
+
+```{r makeBaggingWrapper_setup}
+library(mlr)
+library(mlbench) #for the datasets
+data(Sonar)
+tsk = makeClassifTask(data=Sonar, target="Class")
+lrn = makeLearner("classif.PART")
+rsmpl = makeResampleDesc("CV", iters=10)
+bagLrn = makeBaggingWrapper(lrn, bag.iters=50, bw.replace=TRUE, bw.size=0.8, bw.feats=3/4, predict.type="prob")
+```
+Now we can compare the performance with and without bagging.
+First let's try it without bagging:
+```{r makeBaggingWrapper_without}
+result = resample(learner=lrn, task=tsk, resampling=rsmpl, show.info=FALSE)
+result$aggr
+```
+And now with bagging:
+```{r makeBaggingWrapper_with}
+result = resultBagging = resample(learner=bagLrn, task=tsk, resampling=rsmpl, show.info=FALSE)
+result$aggr
+```
+Training more learners takes more time, but can outperform pure learners
+on noisy data with many features.
+
+
+
+Additional Measures
+-------------------
+With bagging, you can get an estimated standard deviation regardless of the
+wrapped learner. Below, we give a small example for regression.
+
+```{r makeBaggingWrapper_regression}
+data(BostonHousing)
+train.inds = seq(1, 506, 3)
+test.inds  = setdiff(1:nrow(BostonHousing), train.inds)
+task = makeRegrTask("regrtask", data=BostonHousing, target="medv") 
+lrn = makeLearner("regr.randomForest")
+bagLrn = makeBaggingWrapper(lrn, predict.type="se")
+mod = train(learner=bagLrn, task=task, subset=train.inds)
+pred = predict(mod, newdata=BostonHousing, subset=test.inds)
+head(pred$data)
+```
+In the column labelled `se`, the standard deviation for each prediction (`response`) is given.
+
+Let's visualise this a bit using [ggplot2](http://ggplot2.org/).
+Here we plot the percentage of lower status of the population (`lstat`) against the prediction.
+```{r makeBaggingWrapper_regressionPlot}
+library("ggplot2")
+library("reshape2")
+data = cbind(pred$data, BostonHousing[test.inds,])
+g = ggplot(data, aes(x=lstat, y=response, ymin=response-se, ymax=response+se, col=age))
+g + geom_point() + geom_linerange(alpha=0.5)
+```

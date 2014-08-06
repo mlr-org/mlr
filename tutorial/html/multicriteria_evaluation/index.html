@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+        <title>Multicriteria Evaluation - mlr tutorial</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../css/prettify-1.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../task/">Tasks</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../learner/">Learner</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../train/">Train</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../predict/">Predict</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../performance/">Performance</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../resample/">Resampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_experiments/">Benchmark Experiments</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../parallelization/">Parallelization</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../configureMlr/">Configuration</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../feature_selection/">Feature selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC analysis</a>
+                            </li>
+                        
+                            <li class="active">
+                                <a href="./">Multicriteria Evaluation</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../tune/">Tuning</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../create_learner/">Create custom learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../create_measure/">Create custom measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                <li >
+                    <a rel="next" href="../roc_analysis/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../tune/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a href="https://github.com/berndbischl/mlr/">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#multi-criteria-evaluation">Multi-criteria Evaluation</a></li>
+        
+            <li><a href="#practical-example-evaluate-the-range-of-measures">Practical Example: Evaluate the Range of Measures</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h1 id="multi-criteria-evaluation">Multi-criteria Evaluation</h1>
+<p>In this example, we have to deal with some of the implementation details of
+<strong>mlr</strong> and the characteristics of different measures.
+In a lot of cases you get more than just one measure value but are interested in
+just one aggregated value.
+For example, a 10-fold cross validation computes 10 values for the chosen
+performance measure.
+The aggregated value is the mean of these 10 numbers.
+<strong>mlr</strong> knows how to handle it because each <code>measure</code> knows how it is aggregated:</p>
+<pre class="prettyprint well"><code class="r">library(mlr)
+mmce$aggr #Mean misclassification error
+</code></pre>
+
+<pre class="prettyprint well"><code>## Aggregation function: test.mean
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">rmse$aggr #Root mean square error
+</code></pre>
+
+<pre class="prettyprint well"><code>## Aggregation function: test.sqrt.of.mean
+</code></pre>
+
+<p>You can also create a new <code>measure</code> by using a different aggregation (see <a href="../../../man/aggregations.html">aggregations</a>).</p>
+<pre class="prettyprint well"><code class="r">mmceAggrBySd = setAggregation(mmce, test.sd)
+
+task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+lrn = makeLearner(&quot;classif.rpart&quot;)
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 5)
+r = resample(lrn, task, rdesc, measures = list(mmce, mmceAggrBySd))
+</code></pre>
+
+<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
+## [Resample] cross-validation iter: 2
+## [Resample] cross-validation iter: 3
+## [Resample] cross-validation iter: 4
+## [Resample] cross-validation iter: 5
+## [Resample] Result: mmce.test.mean=0.0733,mmce.test.sd=0.0279
+</code></pre>
+
+<p>It is even possible to create your own aggregation function by calling the
+internal <strong>mlr</strong> function <a href="../../../man/makeAggregation.html">makeAggregation</a>.
+You can use internal (not exported) functions of R packages by prefixing the
+name of the function with the name of the package, i.e. <code>packagename:::function()</code>.
+In this case:</p>
+<pre class="prettyprint well"><code class="r">mlr:::makeAggregation(id = &quot;some.name&quot;, 
+  fun = function (task, perf.test, perf.train, measure, group, pred) {
+    #stuff you want to do with perf.test or perf.train
+  })
+</code></pre>
+
+<pre class="prettyprint well"><code>## Aggregation function: some.name
+</code></pre>
+
+<p>Remember: it is important that the head of the function looks exactly as above!
+<code>perf.test</code> and <code>perf.train</code> are both numerical vectors containing the measure values.
+In the usual case (e.g. cross validation), the <code>perf.train</code> vector is empty.</p>
+<h2 id="practical-example-evaluate-the-range-of-measures">Practical Example: Evaluate the Range of Measures</h2>
+<p>Let's say you are interested in the range of the obtained measures:</p>
+<pre class="prettyprint well"><code class="r">my.range.aggr = mlr:::makeAggregation(id=&quot;test.range&quot;, 
+  fun = function (task, perf.test, perf.train, measure, group, pred) diff(range(perf.test)))
+</code></pre>
+
+<p>Now we can run a feature selection based on the first measure in the provided
+list and see how the other measures turn out.</p>
+<pre class="prettyprint well"><code class="r">library(ggplot2)
+ms1 = mmce
+ms2 = setAggregation(ms1, my.range.aggr)
+ms1min = setAggregation(ms1, test.min)
+ms1max = setAggregation(ms1, test.max)
+(res = selectFeatures(lrn, task, rdesc, measures=list(ms1, ms2, ms1min, ms1max),  control=makeFeatSelControlExhaustive(), show.info=FALSE))
+</code></pre>
+
+<pre class="prettyprint well"><code>## FeatSel result:
+## Features (2): Sepal.Width, Petal.Width
+## mmce.test.mean=0.0467,mmce.test.range=0.0333,mmce.test.min=0.0333,mmce.test.max=0.0667
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">perf.data = as.data.frame(res$opt.path)
+p = ggplot(aes(x=mmce.test.mean, y=mmce.test.range, xmax=mmce.test.max, xmin=mmce.test.min, color=as.factor(Sepal.Width), pch=as.factor(Petal.Width)), data=perf.data) + 
+  geom_point(size=4) +
+  geom_errorbarh(height=0)
+print(p)
+</code></pre>
+
+<p><img alt="plot of chunk MulticriteriaEvaluation" src="data:image/png;base64,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" /> </p>
+</div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        
+
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/base.js"></script>
+        
+    </body>
+</html>

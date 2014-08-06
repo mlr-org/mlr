@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+        <title>Performance - mlr tutorial</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../css/prettify-1.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../task/">Tasks</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../learner/">Learner</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../train/">Train</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../predict/">Predict</a>
+                            </li>
+                        
+                            <li class="active">
+                                <a href="./">Performance</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../resample/">Resampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_experiments/">Benchmark Experiments</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../parallelization/">Parallelization</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../configureMlr/">Configuration</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../feature_selection/">Feature selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC analysis</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../multicriteria_evaluation/">Multicriteria Evaluation</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../tune/">Tuning</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../create_learner/">Create custom learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../create_measure/">Create custom measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                <li >
+                    <a rel="next" href="../predict/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../resample/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a href="https://github.com/berndbischl/mlr/">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#evaluating-learner-performance">Evaluating Learner Performance</a></li>
+        
+            <li><a href="#classification-example">Classification example</a></li>
+        
+            <li><a href="#binary-classification">Binary classification</a></li>
+        
+            <li><a href="#regression-example">Regression example</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h1 id="evaluating-learner-performance">Evaluating Learner Performance</h1>
+<p>The quality of the predictions of a model in <strong>mlr</strong> can be assessed w.r.t. a
+number of different performance measures.</p>
+<p>Typical performance measures are mean misclassification error (<a href="../../../man/mmce.html">mmce</a>),
+accuracy (<a href="../../../man/acc.html">acc</a>) or measures based on ROC analysis for classification and mean
+of squared errors (<a href="../../../man/mse.html">mse</a>) or mean of absolute errors (<a href="../../../man/mae.html">mae</a>) for regression. 
+For clustering tasks, measures such as the Dunn index (<a href="../../../man/dunn.html">dunn</a>) are provided,
+while for survival predictions, the Concordance Index (<a href="../../../man/cindex.html">cindex</a>) is
+supported, and for cost-sensitive predictions the misclassification penalty
+(<a href="../../../man/mcp.html">mcp</a>) and others. It is also possible to access the time to train the
+model, the time to compute the prediction and their sum as performance measures.</p>
+<p>To see which performance measures are implemented, have a look at <a href="../../../man/measures.html">measures</a>. 
+If you want to implement an additional measure or include a measure with
+non-standard misclassification costs, go to section
+<a href="../create_measure/">create_measure</a>. 
+In order to calculate the performance measures, the function <a href="../../../man/performance.html">performance</a> is used.</p>
+<h2 id="classification-example">Classification example</h2>
+<p>We fit a Linear Discriminant Analysis on a subset of the <code>iris</code> data set and calculate
+the mean misclassification error (mmce) on the test data set.</p>
+<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
+
+task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+lrn = makeLearner(&quot;classif.lda&quot;)
+mod = train(lrn, task = task, subset = seq(1,150,2))
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: argument &quot;y&quot; is missing, with no default
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">pred = predict(mod, task = task, subset = seq(2,150,2))
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">performance(pred, measures = mmce)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
+</code></pre>
+
+<p>Let's have a look at some more performance measures. Note that in order to assess 
+the time needed for training, the fitted model has to be passed.</p>
+<pre class="prettyprint well"><code class="r">performance(pred, measures = acc)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">performance(pred = pred, measures = timepredict)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">performance(pred = pred, measures = timetrain, model = mod)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">performance(pred = pred, measures = timeboth, model = mod)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
+</code></pre>
+
+<p>Of course we can also calculate multiple performance measures at once by simply using a list of measures which can also include <a href="../create_measure/">your own measure</a>.</p>
+<pre class="prettyprint well"><code class="r">ms = list(&quot;mmce&quot; = mmce, &quot;acc&quot; = acc, &quot;timetrain&quot; = timetrain, &quot;timeboth&quot; = timeboth)
+performance(pred = pred, measures = ms, model = mod)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
+</code></pre>
+
+<h2 id="binary-classification">Binary classification</h2>
+<p>In the two-class case many more measures are available. In the following example,
+the accuracy as well as the false positive and false negative rates are computed.</p>
+<pre class="prettyprint well"><code class="r">library(&quot;mlbench&quot;)
+data(Sonar)
+
+task = makeClassifTask(data = Sonar, target = &quot;Class&quot;, positive = &quot;M&quot;)
+lrn = makeLearner(&quot;classif.rpart&quot;)
+mod = train(lrn, task = task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: argument &quot;y&quot; is missing, with no default
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">pred = predict(mod, task = task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">performance(pred, measures = list(acc, fpr, fnr))
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
+</code></pre>
+
+<p>Note that in order to calculate AUC -- the area under the ROC (receiver 
+operating characteristic) curve, we have to make sure that posterior
+probabilities are predicted, i.e. set the predict type of the <a href="http://berndbischl.github.io/mlr/man/makeLearner.html">Learner</a> to "prob".</p>
+<pre class="prettyprint well"><code class="r">library(&quot;mlbench&quot;)
+data(Sonar)
+
+task = makeClassifTask(data = Sonar, target = &quot;Class&quot;, positive = &quot;M&quot;)
+lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;)
+mod = train(lrn, task = task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: argument &quot;y&quot; is missing, with no default
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">pred = predict(mod, task = task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">performance(pred, measures = auc)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
+</code></pre>
+
+<p>For more information on ROC analysis, see section <a href="../roc_analysis/">ROC Analysis</a>.</p>
+<h2 id="regression-example">Regression example</h2>
+<p>In regression, everything works in the same way as in the above examples.
+We again use the <code>BostonHousing</code> data set, fit a Gradient Boosting Machine
+model on a training set and calculate the mean of squared errors and the mean of
+absolute errors on the test data set.</p>
+<pre class="prettyprint well"><code class="r">library(mlbench)
+data(BostonHousing)
+
+task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
+
+## Training and test set indices 
+training.set = seq(from = 1, to = nrow(BostonHousing), by = 2)
+test.set = seq(from = 2, to = nrow(BostonHousing), by = 2)
+
+## Gradient Boosting Machine on training set 
+lrn = makeLearner(&quot;regr.gbm&quot;, n.trees = 1000)
+mod = train(lrn, task, subset = training.set) 
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;regr.gbm&quot;, &quot;RLearnerRegr&quot;, &quot;RLearner&quot;,
+## &quot;Learner&quot;)&quot; to a data.frame
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Prediction on test set data 
+pred = predict(mod, newdata = BostonHousing[test.set, ])
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: error in evaluating the argument 'object' in selecting a method for function 'predict': Error: object 'mod' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Compare predicted and true labels using measures MSE and MAE
+ms = list(&quot;mse&quot; = mse, &quot;mae&quot; = mae)
+sapply(ms, function(meas) performance(pred, measures = meas))
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
+</code></pre>
+
+<p>For the other task and learning types, the performance measures work in the same
+way.</p>
+</div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        
+
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/base.js"></script>
+        
+    </body>
+</html>

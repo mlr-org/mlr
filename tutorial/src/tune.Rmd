@@ -1,0 +1,200 @@
+Tuning Hyperparameters
+======================
+
+Many machine learning algorithms have hyperparameters that need to be set.
+They can either be selected by the user or through resampling,
+e.g. cross-validation. Setting them by hand was already covered in the
+section about [training](train.md) and [resampling](resample.md) -- simply use the
+`par.val` argument in the \man[makeLearner] method.
+
+Grid search is one of the standard -- albeit slow -- ways to choose an
+appropriate set of parameters from a given range of values.
+
+
+Classification example
+----------------------
+
+We again use the ``iris`` data set, included in R, but now we want to
+set the parameters of a SVM with a polynomial kernel.
+
+### Simple Grid Search with cross validation
+
+We start by loading the *mlr* package and creating a classification
+task (see the part on [training](train.md) for more information):
+
+```{r}
+library("mlr")
+task = makeClassifTask(data=iris, target="Species")
+```
+
+Next, we need to create a \man2[ParamSet][makeParamSet] object that describes
+the parameter space we wish to search. This is done through the function
+\man[makeParamSet]. We add discrete parameters for the `C` and `sigma` parameter
+of the SVM to the parameter set. More details concerning parameter sets are
+explained in section parameters (FIXME).
+
+```{r}
+ps = makeParamSet(makeDiscreteParam("C", values=2^(-2:2)),
+                   makeDiscreteParam("sigma", values=2^(-2:2)))
+```
+
+We will use cross-validation to assess the quality of a specific parameter
+setting. For this we need to create a resampling description just
+like in the [resampling](resample.md) part of the tutorial:
+
+```{r}
+rdesc = makeResampleDesc("CV", iters=3)
+```
+
+Before we can actually tune our classifier and identify the best parameter
+setting, we need an instance of a \man[TuneControl] object. These describe the
+optimization strategy used. Here we use a grid search:
+
+```{r}
+ctrl = makeTuneControlGrid()
+```
+
+Finally, combining all the previous pieces, we can tune the SVM
+using our \man[TuneControl] instance and the resampling strategy
+described by the `rdesc` variable.
+
+```{r}
+r = tuneParams(makeLearner("classif.ksvm"), task=task, resampling=rdesc, par.set=ps, control=ctrl, measures=list(mmce, setAggregation(mmce, test.sd)))
+```
+
+We used a trick, also described [here](multicriteria_evaluation.md), to
+obtain the standard deviation in addition to the default by adding a second
+measure. A quick visualization of the Grid Search can be achieved by accessing
+the ``opt.path`` as follows.
+
+```{r tune_gridSearchVisualized}
+library(ggplot2)
+head((opt.grid = as.data.frame(r$opt.path)))
+g = ggplot(opt.grid, aes(x=C, y=sigma, fill=mmce.test.mean, label=round(mmce.test.sd,3)))
+g + geom_tile() + geom_text(color="white")
+```
+
+Let's take a closer look at the example above. The parameter grid has to be a
+named list and every entry has to be named according to the corresponding
+parameter of the underlying R function (in this case "ksvm" from the kernlab
+package, see its respective help page). The value of each entry is a vector of
+feasible values for this hyperparameter. The complete grid is simply the
+cross-product of all feasible values.
+
+Please note that whenever parameters in the underlying R functions should be
+passed within a list structure, **mlr** tries to give you direct access to
+each parameter and get rid of the list structure. This is the case for example
+with `ksvm`.
+
+Tune now simply performs the cross-validation for every element of the
+cross-product and selects the one with the best mean performance
+measure.
+
+Unfortunately, it's not clear how reliable the results are. One might
+want to find out if the configurations vary for slightly different data sets.
+A good approach for getting a better feeling of the best parameter setting
+is a nested cross-validation.
+
+### Nested Cross Validation
+
+Let's run a nested CV with 5 folds in the outer loop and 3 folds in the
+inner loop on the above example.
+
+```{r}
+task = makeClassifTask(data=iris, target="Species")
+ps = makeParamSet(makeDiscreteParam("C", values=2^(-2:2)),
+                   makeDiscreteParam("sigma", values=2^(-2:2)))
+ctrl = makeTuneControlGrid()
+
+rin = makeResampleDesc("CV", iters=3)
+rout = makeResampleDesc("CV", iters=5)
+
+lrn = makeTuneWrapper(makeLearner("classif.ksvm"), resampling=rin,
+                       par.set=ps, control=ctrl, show.info=FALSE)
+```
+
+Now we can run our nested CV. For further evaluations, we may
+want to extract the results of the tuning run as well. Please note that storing
+entire models may be expensive.
+
+```{r}
+r = resample(lrn, task, resampling = rout, extract = getTuneResult, show.info = FALSE)
+```
+
+Finally, we can compare the results obtained in the different iterations. We
+receive one optimal setting for each of the 5 outer folds, including the
+corresponding mmce on the inner cross-validations:
+
+```{r}
+r$extract
+```
+
+As you can see, the optimal configuration usually depends on the data. You may
+be able to identify a *range* of parameter settings that achieve good
+performance though, e.g. the values for C should be at least 1 and the values
+for sigma should be between 0 and 1.
+
+If we want to find out how good those configurations are on the entire data
+set, we can still look at the measures that we already know from
+[Resampling](resample.md).
+
+```{r}
+r$measures.test
+r$aggr
+```
+
+Thus, we receive 5 misclassification errors (one for each optimal parameter
+configuration per outer fold) and one aggregated version, i.e. the mean,
+of those 5 values.
+
+#### Visualization
+
+To extract the `opt.path`s we have to access the inner cross validations.
+
+```{r tune_nestedGridSearchVisualized}
+opt.paths = lapply(r$extract, function(x) as.data.frame(x$opt.path))
+opt.mmce = lapply(opt.paths, function(x) x$mmce.test.mean)
+opt.grid = opt.paths[[1]][,1:2]
+opt.grid$mmce.test.mean = apply(simplify2array(opt.mmce),1, mean)
+g = ggplot(opt.grid, aes(x=C, y=sigma, fill=mmce.test.mean))
+g + geom_tile()
+```
+
+Regression example
+------------------
+
+Let's tune `k` of a `k`-nearest neighbour regression model (implemented
+in package ``kknn``) on the ``BostonHousing`` data set.
+
+```{r eval=FALSE}
+library("mlbench")
+data(BostonHousing)
+
+task = makeRegrTask(data = BostonHousing, target = "medv")
+
+## Range of the value k
+ps = makeParamSet(makeDiscreteParam("k", 1:7))
+
+## Evaluate with 5-fold cross-validation
+rdesc = makeResampleDesc("CV", iters = 5)
+
+## Create a grid tuner:
+ctrl = makeTuneControlGrid()
+
+## Create a learner:
+lrn = makeLearner("regr.kknn")
+
+## Tune k-nearest neighbour regression with mean squared error as default measure
+tuneParams(learner=lrn, task=task, resampling=rdesc, par.set=ps, control=ctrl, measures=mse)
+```
+
+
+
+
+<!--(
+.. |tune-varsel_processing| image:: /_images/tune-varsel_processing.png
+     :align: middle
+     :width: 50em
+     :alt: Variable selection as a tuning.
+
+)-->

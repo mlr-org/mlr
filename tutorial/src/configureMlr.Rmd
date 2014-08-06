@@ -1,0 +1,45 @@
+Configure mlr
+=============
+
+If you really know what you are doing you may think **mlr** is limiting you in
+certain ways.
+Actually **mlr** is just designed to make errors due to typos or
+invalid parameter values as unlikely as possible. But sometimes you want to
+break those barriers and get full access. For all parameters, simply refer
+to the documentation of \man[configureMlr].
+
+You are bothered by all the output on the console like in this example?
+```{r}
+library("mlr")
+
+## Define a learning task and an appropriate learner
+task = makeClassifTask(data = iris, target = "Species")
+lrn = makeLearner("classif.ksvm")
+
+## Perform a 3-fold cross-validation
+rdesc = makeResampleDesc("CV", iters=3)
+r = resample(lrn, task, rdesc)
+```
+
+Just try the following:
+
+```{r}
+configureMlr(show.learner.output=FALSE)
+r = resample(lrn, task, rdesc)
+```
+
+In an additional scenario, you want to access a new parameter of a learner which
+is already available in **mlr**, but the parameter is not implemented in **mlr** yet.
+If this is the case you might want to [contact
+us](https://github.com/berndbischl/mlr#get-in-touch) or [open an issue](https://github.com/berndbischl/mlr/issues/new) as well!
+But until then you can turn off **mlr**'s paramater checking like this:
+
+```{r}
+library("mlr")
+lrn = makeLearner("classif.ksvm", newPar = 3)
+lrn = makeLearner("classif.ksvm", epsilon = -3)
+configureMlr(on.par.without.desc="quiet")
+lrn = makeLearner("classif.ksvm", newPar = 3)
+lrn = makeLearner("classif.ksvm", epsilon = -3)
+```
+

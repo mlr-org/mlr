@@ -1,0 +1,54 @@
+Learners
+========
+
+These classes provide a unified interface to all machine learning methods in R
+-- classification, regression, survival analysis, and clustering.
+Many are already integrated,
+others are not, but the package is specifically designed to make
+extensions simple. If your favorite methods is missing, either
+send the **mlr** maintainers an email or see the part of the tutorial
+on [how to extend the package yourself](create_learner.md).
+
+To see which learners are already implemented, have a look at the \man[learners] documentation page.
+
+A learner in **mlr** is constructed by calling \man[makeLearner].
+In the constructor you can do the following things:
+
+* Set hyperparameters.
+* Set the ID to name the object (some methods will later use this ID to name results).
+* Control the output for later prediction, e.g. for classification
+  whether you want a factor for predicted classes or probabilities.
+
+```{r}
+# classifier, set it up for prediction probabilities
+lrn = makeLearner("classif.rpart", predict.type = "prob")
+# regression
+lrn = makeLearner("regr.rpart")
+# gradient boosting machine with hyperparameters and custon name
+lrn = makeLearner("regr.gbm", id = "mygbm", n.trees = 500, interaction.depth = 3)
+```
+
+The first argument specifies which algorithm to use.
+The naming convention is ``classif.<R_method_name>`` for
+classification methods, ``regr.<R_method_name>`` for regression methods,
+``surv.<R_method_name>`` for survival analysis, and ``cluster.<R_method_name>``
+for clustering methods.
+The tables in [IntegratedLearners](integrated_learners.md) provide more
+information on the properties for all integrated learning methods.
+
+Further information
+-------------------
+
+The generated learner is an object of class \man2[Learner][makeLearner].
+It contains the properties the method, e.g. which types of features it can handle,
+what can be output during prediction, whether multi-class problems,
+observations weights or missing values are supported and so on.
+
+```{r}
+# classifier, set it up for prediction probabilities
+lrn = makeLearner("classif.rpart", predict.type = "prob", minsplit = 20)
+lrn
+# display stored information for hyperparameters
+lrn$par.set
+```
+
