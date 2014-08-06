@@ -43,6 +43,7 @@ for (f in list.files(src, pattern = "\\.Rmd$")) {
 ok = system3("mkdocs", "build")
 catf("\nBuild %s\n", ifelse(ok$exit.code == 0L, "successfull", "failed"))
 
+unlink("figure", recursive = TRUE)
 exit(ok$exit.code)
 
 # vim: set ft=r:
