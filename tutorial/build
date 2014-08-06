@@ -26,6 +26,9 @@ objToSeed = function(x, algo="crc32") {
  strtoi(sprintf("0x%s", substr(hash, 1L, 7L)))
 }
 
+if (!isDirectory("docs"))
+  dir.create("docs")
+
 for (f in list.files(src, pattern = "\\.Rmd$")) {
   catf("### Knitting '%s' ...\n", f)
   lines = readLines(file.path(src, f))
@@ -40,8 +43,6 @@ for (f in list.files(src, pattern = "\\.Rmd$")) {
     exit(1L, "Error knitting file '%s':\n%s", f, as.character(ok))
 }
 
-if (!isDirectory("docs"))
-  dir.create("docs")
 ok = system3("mkdocs", "build")
 catf("\nBuild %s\n", ifelse(ok$exit.code == 0L, "successfull", "failed"))
 
