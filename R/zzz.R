@@ -1,3 +1,4 @@
+#' @import methods
 #' @import BBmisc
 #' @import parallelMap
 #' @import ParamHelpers
