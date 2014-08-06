@@ -45,8 +45,7 @@ regr.task = makeRegrTask(id = "BostonHousing", data = BostonHousing, target = "m
 regr.task
 ```
 
-Further information
--------------------
+## Further information
 
 Let's have another look at the classification example.
 

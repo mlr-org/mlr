@@ -216,7 +216,7 @@ call \man2[predict][predict.WrappedModel] on the object returned by <a href="../
 and pass the data to be predicted.</p>
 <h2 id="quick-start">Quick start</h2>
 <h3 id="classification-example">Classification example</h3>
-<p>Let's train a Linear Discriminant Analysis on the <code>iris</code> data and make predictions 
+<p>Let's train a Linear Discriminant Analysis on the <code>iris</code> data and make predictions
 for the same data set.</p>
 <pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
 
@@ -284,10 +284,10 @@ mod = train(lrn, task)
 <h2 id="further-information">Further information</h2>
 <p>There are several possibilities to pass the observations for which to make
 predictions.
-The first possibility is via the <code>newdata</code> argument and was already shown in the 
+The first possibility is via the <code>newdata</code> argument and was already shown in the
 examples above.
-If the data for which predictions are required are already contained in 
-the <a href="../../../man/makeLearner.html">Learner</a>, it is also possible to pass the task and optionally specify 
+If the data for which predictions are required are already contained in
+the <a href="../../../man/makeLearner.html">Learner</a>, it is also possible to pass the task and optionally specify
 the subset argument that contains the indices of the test observations.</p>
 <p>Predictions are encapsulated in a special <a href="../../../man/Prediction.html">Prediction</a> object. The available
 accessors are documented in the man page for <a href="../../../man/Prediction.html">Prediction</a>.</p>
@@ -296,7 +296,7 @@ accessors are documented in the man page for <a href="../../../man/Prediction.ht
 \man2[predict][predict.WrappedModel] depends on the predict type, which was set
 when generating the <a href="../../../man/makeLearner.html">Learner</a>. The default is to predict class
 labels.</p>
-<p>We start again by loading <strong>mlr</strong> and creating a classification task for the 
+<p>We start again by loading <strong>mlr</strong> and creating a classification task for the
 <code>iris</code> data set. We select two subsets of the data. We train a decision tree on the
 first one and predict the class labels on the test set.</p>
 <pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
@@ -347,8 +347,8 @@ pred = predict(mod, newdata = iris, subset = test.set)
 ##   error in evaluating the argument 'x' in selecting a method for function 'as.data.frame': Error: object 'pred' not found
 </code></pre>
 
-<p>When predicting from a <code>task</code>, the resulting <code>data.frame</code> contains an additional column, 
-called <em>ID</em>, which tells us which element in the original data set the prediction 
+<p>When predicting from a <code>task</code>, the resulting <code>data.frame</code> contains an additional column,
+called <em>ID</em>, which tells us which element in the original data set the prediction
 corresponds to. In the iris example the IDs and the rownames coincide.</p>
 <p>In order to get predicted posterior probabilities, we have to change the <code>predict.type</code>
 of the learner.</p>
@@ -384,12 +384,12 @@ breaking ties at random.</p>
 </code></pre>
 
 <h3 id="binary-classification">Binary classification</h3>
-<p>In case of binary classification, two things are worth mentioning. As you may recall, 
+<p>In case of binary classification, two things are worth mentioning. As you may recall,
 we can specify a positive class when generating the task. Moreover, we can set the
-threshold value that is used to assign class labels based on the predicted 
+threshold value that is used to assign class labels based on the predicted
 posteriors.</p>
 <p>To illustrate binary classification, we use the Sonar data set from the
-<a href="http://cran.r-project.org/web/packages/mlbench/index.html">mlbench</a> package. 
+<a href="http://cran.r-project.org/web/packages/mlbench/index.html">mlbench</a> package.
 Again we create a classification task and a learner which predicts
 probabilities, train the learner and then predict the class labels based on the
 probabilities.</p>
@@ -451,7 +451,7 @@ training.set = seq(from = 1, to = nrow(BostonHousing), by = 2)
 test.set = seq(from = 2, to = nrow(BostonHousing), by = 2)
 
 lrn = makeLearner(&quot;regr.gbm&quot;, n.trees = 100)
-mod = train(lrn, task, subset = training.set) 
+mod = train(lrn, task, subset = training.set)
 </code></pre>
 
 <pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;regr.gbm&quot;, &quot;RLearnerRegr&quot;, &quot;RLearner&quot;,

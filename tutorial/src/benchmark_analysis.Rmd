@@ -1,5 +1,4 @@
-Benchmark Analysis
-==================
+# Benchmark Analysis
 
 This section is concerned with the statistical evaluation of benchmark
 experiments and interpreting the results in a proper way. Common questions

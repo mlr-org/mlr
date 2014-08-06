@@ -1,13 +1,11 @@
-Integrating another measure
-===========================
+# Integrating another measure
 
 Maybe you want to evaluate a prediction with a measure which is not yet implemented
 in **mlr**. This could be either a performance measure which is not included in the in **mlr**
 list of \man[measures] or a measure that uses a non-standard misclassification cost matrix.
 
 
-Construct performance measure
------------------------------
+## Construct performance measure
 
 The \man[makeMeasure] function provides a simple way of constructing your own performance
 measure. Below, this is exemplified by an implementation of the mean
@@ -43,8 +41,7 @@ performance(pred, measures = mmce)
 ```
 
 
-Construct measure for non-standard misclassification costs
-----------------------------------------------------------
+## Construct measure for non-standard misclassification costs
 
 To create a measure that involves non-standard misclassification costs you can use
 the \man[makeCostMeasure] function. In order to do this, you first need to define the cost

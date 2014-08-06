@@ -215,7 +215,7 @@
 <h1 id="benchmark-experiments">Benchmark Experiments</h1>
 <p>In order to get an unbiased estimate of the performance on new data,
 it is generally not enough to simply use repeated cross-validation
-for a given set of hyperparameters and methods (see section <a href="../tune/">tuning</a>), 
+for a given set of hyperparameters and methods (see section <a href="../tune/">tuning</a>),
 as this might produce an overly optimistic result.</p>
 <p>A better (although more time-consuming) approach is to nest two
 resampling methods. To keep it simple, let's take
@@ -224,7 +224,7 @@ In the so called "outer" cross-validation the data is split repeatedly
 into a (larger) training set and a (smaller) test set in the usual
 way. Now, in every outer iteration the learner is tuned on the
 training set by performing an "inner" cross-validation. The best
-hyperparameters are selected and afterwards used for fitting the learner 
+hyperparameters are selected and afterwards used for fitting the learner
 to the complete "outer" training set. The resulting model is used to
 on the (outer) test set. This results in much more reliable
 estimates of the true performance distribution of the learner for unseen
@@ -241,13 +241,13 @@ way.</p>
 <h2 id="example-1-one-task-two-learners-no-tuning">Example 1: One task, two learners, no tuning</h2>
 <pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
 
-## Classification task with iris data set 
+## Classification task with iris data set
 task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 
-## Two learners to be compared 
+## Two learners to be compared
 learners = c(&quot;classif.lda&quot;, &quot;classif.qda&quot;)
 
-## Define cross-validation indices 
+## Define cross-validation indices
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 5)
 
 res = bench.exp(learners, task, rdesc)
@@ -259,8 +259,8 @@ error and its standard deviation for the final fitted model.</p>
 <p>But the benchmark results contain much more information, which you can
 access if you want to see details. Let's have a look at the benchmark
 result from the example above:</p>
-<pre class="prettyprint well"><code class="r">## Access further information 
-## The single performances of the cross-validation runs 
+<pre class="prettyprint well"><code class="r">## Access further information
+## The single performances of the cross-validation runs
 res[&quot;perf&quot;]
 
 ## Confusion matrices - one for each learner
@@ -272,35 +272,35 @@ res[&quot;conf.mats&quot;]
 that case we have two resampling levels.</p>
 <p>We show an example with outer bootstrap and inner cross-validation,
 our learner will be k-nearest neighbour.</p>
-<pre class="prettyprint well"><code class="r">## Classification task with iris data set 
+<pre class="prettyprint well"><code class="r">## Classification task with iris data set
 task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 
-## Range of hyperparameter k  
+## Range of hyperparameter k
 ps = makeParameterSet(makeDiscreteParameter(&quot;k&quot;, 1:5))
 ctrl = makeTuneControlGrid(ranges = ps)
 
 ## Define &quot;inner&quot; cross-validation indices
-inner.rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)   
+inner.rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 
 ## Tune k-nearest neighbour
 lrn = makeTuneWrapper(&quot;classif.kknn&quot;,
-                               resampling = inner.rdesc, 
+                               resampling = inner.rdesc,
                                control = ctrl)
 
-## Define &quot;outer&quot; bootstrap indices 
+## Define &quot;outer&quot; bootstrap indices
 rdesc = makeResampleDesc(&quot;BS&quot;, iters = 5)
 
-## Merge it into a benchmark experiment 
+## Merge it into a benchmark experiment
 ## Choose accuracy instead of default measure mean misclassification error
 res = bench.exp(lrn, task, rdesc, measure = acc)
 
-## What performances did we get in the single runs? 
+## What performances did we get in the single runs?
 res[&quot;perf&quot;]
 
-## What parameter setting achieved this performances? 
+## What parameter setting achieved this performances?
 res[&quot;tuned.par&quot;]
 
-## What does the confusion matrix look like? 
+## What does the confusion matrix look like?
 res[&quot;conf.mats&quot;]
 </code></pre>
 
@@ -314,34 +314,34 @@ library(&quot;mlbench&quot;)
 data(BreastCancer)
 data(Vehicle)
 
-## Classification task with three data sets 
+## Classification task with three data sets
 task1 = makeClassifTask(&quot;Iris&quot;, data = iris, target = &quot;Species&quot;)
 task2 = makeClassifTask(&quot;Vehicle&quot;, data = Vehicle, target = &quot;Class&quot;)
-task3 = makeClassifTask(&quot;BreastCancer&quot;, data = na.omit(BreastCancer), 
+task3 = makeClassifTask(&quot;BreastCancer&quot;, data = na.omit(BreastCancer),
                          target = &quot;Class&quot;, excluded = &quot;Id&quot;)
 
 ## Merge to one task
 tasks = list(task1 , task2 , task3)
 
-## Very small grid for SVM hyperparameters  
-ps = makeParameterSet(makeDiscreteParameter(&quot;C&quot;, 2^seq(-1,1)), 
+## Very small grid for SVM hyperparameters
+ps = makeParameterSet(makeDiscreteParameter(&quot;C&quot;, 2^seq(-1,1)),
                       makeDiscreteParameter(&quot;sigma&quot;, 2^seq(-1,1)))
 ctrl = makeTuneControlGrid(ranges = ps)
 
 ## Define &quot;inner&quot; cross-validation indices
-inner.rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)   
+inner.rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 
 ## Tune a SVM
-lrn = makeTuneWrapper(&quot;classif.ksvm&quot;, method = &quot;grid&quot;, resampling = inner.rdesc, 
+lrn = makeTuneWrapper(&quot;classif.ksvm&quot;, method = &quot;grid&quot;, resampling = inner.rdesc,
                        control = ctrl)
 
-## Three learners to be compared 
+## Three learners to be compared
 learners = c(&quot;classif.lda&quot;, &quot;classif.rpart&quot;, lrn)
 
-## Define &quot;outer&quot; cross-validation indices 
+## Define &quot;outer&quot; cross-validation indices
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 5)
 
-## Merge it to a benchmark experiment 
+## Merge it to a benchmark experiment
 res = bench.exp(learners, tasks, rdesc)
 
 ## Only for one task
@@ -363,8 +363,8 @@ res[&quot;opt.perf&quot;, learner = &quot;classif.ksvm&quot;]
 <h2 id="example-4-one-task-two-learners-variable-selection">Example 4: One task, two learners, variable selection</h2>
 <p>Let's see how we can do <a href="../feature_selection/">feature selection</a> in
 a benchmark experiment:</p>
-<pre class="prettyprint well"><code class="r">## Classification task with iris data set 
-task = makeClassifTask(&quot;iris&quot;, data=iris, target = &quot;Species&quot;)  
+<pre class="prettyprint well"><code class="r">## Classification task with iris data set
+task = makeClassifTask(&quot;iris&quot;, data=iris, target = &quot;Species&quot;)
 
 ## Control object for feature selection
 ctrl = makeFeatselControlSequential(beta = 100, method=&quot;sfs&quot;)
@@ -378,7 +378,7 @@ lrn = makeFeatselWrapper(&quot;classif.lda&quot;, resampling = inner.rdesc, cont
 ## Let's compare two learners
 learners = c(&quot;classif.rpart&quot;, lrn)
 
-## Define outer resampling 
+## Define outer resampling
 rdesc = makeResampleDesc(&quot;subsample&quot;, iter = 3)
 
 ## Merge to a benchmark experiment
@@ -387,13 +387,6 @@ res = bench.exp(tasks = task, learners = learners, resampling = rdesc)
 ## Which features have been selected (in the outer resampling steps)?
 res[&quot;sel.var&quot;, learner=&quot;classif.lda&quot;]
 </code></pre>
-
-<!--(
-.. |benchmark_processing| image:: /_images/benchmark_processing.png
-     :align: middle
-     :width: 40em
-     :alt: Benchmark processing pipeline
-)-->
 
 </div>
         </div>

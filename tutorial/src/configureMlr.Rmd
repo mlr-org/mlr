@@ -1,5 +1,4 @@
-Configure mlr
-=============
+# Configure mlr
 
 If you really know what you are doing you may think **mlr** is limiting you in
 certain ways.
@@ -42,4 +41,3 @@ configureMlr(on.par.without.desc="quiet")
 lrn = makeLearner("classif.ksvm", newPar = 3)
 lrn = makeLearner("classif.ksvm", epsilon = -3)
 ```
-

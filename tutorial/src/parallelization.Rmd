@@ -1,5 +1,4 @@
-Parallelization
-===============
+# Parallelization
 
 *R* by default doesn't make use of multiple cores.
 With the integration of

@@ -1,5 +1,4 @@
-Learners
-========
+# Learners
 
 These classes provide a unified interface to all machine learning methods in R
 -- classification, regression, survival analysis, and clustering.
@@ -36,8 +35,7 @@ for clustering methods.
 The tables in [IntegratedLearners](integrated_learners.md) provide more
 information on the properties for all integrated learning methods.
 
-Further information
--------------------
+## Further information
 
 The generated learner is an object of class \man2[Learner][makeLearner].
 It contains the properties the method, e.g. which types of features it can handle,
@@ -51,4 +49,3 @@ lrn
 # display stored information for hyperparameters
 lrn$par.set
 ```
-

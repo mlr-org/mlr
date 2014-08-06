@@ -209,8 +209,8 @@
             <div class="col-md-9" role="main">
 
 <h1 id="feature-selection">Feature Selection</h1>
-<p>Often, data sets include a large number of features and it is desirable to reduce them. 
-The technique of selecting a subset of relevant features is called feature selection. 
+<p>Often, data sets include a large number of features and it is desirable to reduce them.
+The technique of selecting a subset of relevant features is called feature selection.
 Feature selection can make the model better interpretable, the learning process
 faster, and the fitted model more general by removing irrelevant features.
 Different approaches exist, in order to figure out, which the relevant features
@@ -257,13 +257,8 @@ values.</p>
 features so that it can be part of the validation method of your choice.
 We will use the standard 10-fold cross validation.</p>
 <pre class="prettyprint well"><code class="r">learner = makeLearner(&quot;classif.fnn&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: FNN
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">learnerFiltered = makeFilterWrapper(learner=learner, fw.method=&quot;information.gain&quot;, fw.select=&quot;perc&quot;, fw.val=0.7)
-rdesc = makeResampleDesc(&quot;CV&quot;, iters=10) 
+learnerFiltered = makeFilterWrapper(learner=learner, fw.method=&quot;information.gain&quot;, fw.select=&quot;perc&quot;, fw.val=0.7)
+rdesc = makeResampleDesc(&quot;CV&quot;, iters=10)
 rsres = resample(learner=learnerFiltered, task=task, resampling=rdesc, show.info=FALSE, models=TRUE)
 rsres$aggr
 </code></pre>
@@ -319,14 +314,14 @@ tuneRes = tuneParams(lrnFiltered, task=task, resampling=makeResampleDesc(&quot;C
 <h2 id="wrapper">Wrapper</h2>
 <p>Unlike the filters, wrappers use the performance a learner can
 achieve on a given subset of the features in the data to do the filtering.</p>
-<h4 id="classification-example">Classification example</h4>
+<h3 id="classification-example">Classification example</h3>
 <p>Let's train a decision tree on the <code>iris</code> data and use a sequential forward
 search to find the best set of features w.r.t. the mean misclassification error
 (<a href="../../../man/mmce.html">mmce</a>).</p>
 <pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
 task = makeClassifTask(data=iris, target=&quot;Species&quot;)
 lrn = makeLearner(&quot;classif.rpart&quot;)
-rdesc = makeResampleDesc(&quot;Holdout&quot;) 
+rdesc = makeResampleDesc(&quot;Holdout&quot;)
 
 ctrlSeq = makeFeatSelControlSequential(method=&quot;sfs&quot;)
 sfSeq = selectFeatures(learner=lrn, task=task, resampling=rdesc, control=ctrlSeq)
@@ -377,7 +372,7 @@ sfSeq = selectFeatures(learner=lrn, task=task, resampling=rdesc, control=ctrlSeq
 ## Stopped, because no improving feature was found.
 </code></pre>
 
-<h4 id="regression-example">Regression example</h4>
+<h3 id="regression-example">Regression example</h3>
 <p>We fit a simple linear regression model to the <code>BostonHousing</code> data set and
 use a genetic algorithm to find a feature set that minimises the mean squared
 error (<a href="../../../man/mse.html">mse</a>).</p>
@@ -386,7 +381,7 @@ data(BostonHousing)
 
 task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
 lrn = makeLearner(&quot;regr.lm&quot;)
-rdesc = makeResampleDesc(&quot;Holdout&quot;) 
+rdesc = makeResampleDesc(&quot;Holdout&quot;)
 
 ctrlGA = makeFeatSelControlGA(maxit=10)
 sfGA = selectFeatures(learner=lrn, task=task, resampling=rdesc, control=ctrlGA, show.info=FALSE)

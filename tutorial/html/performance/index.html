@@ -215,16 +215,16 @@
 number of different performance measures.</p>
 <p>Typical performance measures are mean misclassification error (<a href="../../../man/mmce.html">mmce</a>),
 accuracy (<a href="../../../man/acc.html">acc</a>) or measures based on ROC analysis for classification and mean
-of squared errors (<a href="../../../man/mse.html">mse</a>) or mean of absolute errors (<a href="../../../man/mae.html">mae</a>) for regression. 
+of squared errors (<a href="../../../man/mse.html">mse</a>) or mean of absolute errors (<a href="../../../man/mae.html">mae</a>) for regression.
 For clustering tasks, measures such as the Dunn index (<a href="../../../man/dunn.html">dunn</a>) are provided,
 while for survival predictions, the Concordance Index (<a href="../../../man/cindex.html">cindex</a>) is
 supported, and for cost-sensitive predictions the misclassification penalty
 (<a href="../../../man/mcp.html">mcp</a>) and others. It is also possible to access the time to train the
 model, the time to compute the prediction and their sum as performance measures.</p>
-<p>To see which performance measures are implemented, have a look at <a href="../../../man/measures.html">measures</a>. 
+<p>To see which performance measures are implemented, have a look at <a href="../../../man/measures.html">measures</a>.
 If you want to implement an additional measure or include a measure with
 non-standard misclassification costs, go to section
-<a href="../create_measure/">create_measure</a>. 
+<a href="../create_measure/">create_measure</a>.
 In order to calculate the performance measures, the function <a href="../../../man/performance.html">performance</a> is used.</p>
 <h2 id="classification-example">Classification example</h2>
 <p>We fit a Linear Discriminant Analysis on a subset of the <code>iris</code> data set and calculate
@@ -251,7 +251,7 @@ mod = train(lrn, task = task, subset = seq(1,150,2))
 <pre class="prettyprint well"><code>## Error: object 'pred' not found
 </code></pre>
 
-<p>Let's have a look at some more performance measures. Note that in order to assess 
+<p>Let's have a look at some more performance measures. Note that in order to assess
 the time needed for training, the fitted model has to be passed.</p>
 <pre class="prettyprint well"><code class="r">performance(pred, measures = acc)
 </code></pre>
@@ -311,7 +311,7 @@ mod = train(lrn, task = task)
 <pre class="prettyprint well"><code>## Error: object 'pred' not found
 </code></pre>
 
-<p>Note that in order to calculate AUC -- the area under the ROC (receiver 
+<p>Note that in order to calculate AUC -- the area under the ROC (receiver
 operating characteristic) curve, we have to make sure that posterior
 probabilities are predicted, i.e. set the predict type of the <a href="http://berndbischl.github.io/mlr/man/makeLearner.html">Learner</a> to "prob".</p>
 <pre class="prettyprint well"><code class="r">library(&quot;mlbench&quot;)
@@ -348,20 +348,20 @@ data(BostonHousing)
 
 task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
 
-## Training and test set indices 
+## Training and test set indices
 training.set = seq(from = 1, to = nrow(BostonHousing), by = 2)
 test.set = seq(from = 2, to = nrow(BostonHousing), by = 2)
 
-## Gradient Boosting Machine on training set 
+## Gradient Boosting Machine on training set
 lrn = makeLearner(&quot;regr.gbm&quot;, n.trees = 1000)
-mod = train(lrn, task, subset = training.set) 
+mod = train(lrn, task, subset = training.set)
 </code></pre>
 
 <pre class="prettyprint well"><code>## Error: cannot coerce class &quot;c(&quot;regr.gbm&quot;, &quot;RLearnerRegr&quot;, &quot;RLearner&quot;,
 ## &quot;Learner&quot;)&quot; to a data.frame
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">## Prediction on test set data 
+<pre class="prettyprint well"><code class="r">## Prediction on test set data
 pred = predict(mod, newdata = BostonHousing[test.set, ])
 </code></pre>
 

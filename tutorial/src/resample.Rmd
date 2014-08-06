@@ -1,27 +1,22 @@
-```{r echo=FALSE}
-## Preload mlr for all coming blocks
-library("mlr")
-
-# Not strictly necessary, but otherwise we might get NAs later on 
+```{r include=FALSE}
+# Not strictly necessary, but otherwise we might get NAs later on
 ## if 'rpart' is not installed.
-library("rpart") 
-``` 
+library("rpart")
+```
 
-Resampling
-==========
+# Resampling
 
-In order to assess the performance of a learning algorithm, resampling 
+In order to assess the performance of a learning algorithm, resampling
 strategies are usually used. Resampling is a means of splitting the entire data
 set into training and tet. There are various methods for doing this, for example
-cross-validation and bootstrap, to mention just two popular approaches. 
-In **mlr**, the \man[resample] function, depending on the chosen resampling strategy, 
-fits the selected learner using the corresponding training sets and performs 
+cross-validation and bootstrap, to mention just two popular approaches.
+In **mlr**, the \man[resample] function, depending on the chosen resampling strategy,
+fits the selected learner using the corresponding training sets and performs
 predictions for the corresponding training/test sets and calculates the chosen
 performance measures.
 
 
-Quick start
------------
+## Quick start
 
 ### Classification example
 
@@ -33,7 +28,7 @@ library("mlr")
 task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.lda")
 
-## Perform a 3-fold cross-validation 
+## Perform a 3-fold cross-validation
 rdesc = makeResampleDesc("CV", iters = 3)
 r = resample(lrn, task, rdesc)
 r
@@ -68,8 +63,7 @@ r
 For regression, the default performance measure is \man[mse] (mean squared error).
 
 
-Further information
--------------------
+## Further information
 
 Resampling strategies concern the process of sampling new data sets that are
 subsets of the main data set *D*. One wants to generate various training sets
@@ -91,10 +85,9 @@ choose the resampling method are:
   resampling strategy.
 
 ![Resampling Figure](../../_images/resampling.png "Resampling Figure")
-                     
-                     
-Resample descriptions and resample instances
---------------------------------------------
+
+
+## Resample descriptions and resample instances
 
 There are two types of objects: a \man2[ResampleDesc][makeResampleDesc] object, which represents
 a resample description, e.g. a 10-fold cross-validation, and a
@@ -115,10 +108,10 @@ sets. There are convenient methods to make the construction process as
 easy as possible.
 
 ```{r eval=FALSE}
-## get the cv.instance directly 
+## get the cv.instance directly
 rdesc = makeResampleDesc("CV", iters = 10)
 rinst  = makeResampleInstance(rdesc, size = nrow(iris))
-``` 
+```
 
 Asking the \man2[ResampleDesc][makeResampleDesc] or
 \man2[ResampleInstance][makeResampleInstance] objects for further information is
@@ -128,29 +121,28 @@ easy, just inspect the list elements by using the $ operator.
 ## description object
 ## number of iterations
 rdesc$iters
-  
+
 ## resample.instance object
 ## number of iterations
 rinst$desc$iters
 
 rinst$train.inds[[3]]
 rinst$test.inds[[3]]
-``` 
+```
 
 Please refer to the help pages of the specific classes for a complete
 list of getters.
 
 
-Included resampling strategies
-------------------------------
+## Included resampling strategies
 
 The package comes with a number of predefined strategies.
 
 * 'Subsample' for subsampling,
 * 'Holdout' for holdout (training/test),
-* 'CV' for cross-validation, 
-* 'LOO' for leave-one-out, 
-* 'StratCV' for stratified cross-validation, 
+* 'CV' for cross-validation,
+* 'LOO' for leave-one-out,
+* 'StratCV' for stratified cross-validation,
 * 'RepCV' for repeated cross-validation,
 * 'Bootstrap' for out-of-bag bootstrap.
 
@@ -166,30 +158,30 @@ is commonly called `holdout` or `test sample estimation`.
 ```{r eval=FALSE}
 rdesc = makeResampleDesc("Subsample", iters = 10, split = 2/3)
 rdesc = makeResampleDesc("Subsample", iters = 1, split = 2/3)
-``` 
+```
 
 ### k-fold cross-validation
 
-The data set is partitioned into *k* subsets of (approximately) equal size. 
-In the *i*-th step of the *k* iterations, the *i*-th subset is 
+The data set is partitioned into *k* subsets of (approximately) equal size.
+In the *i*-th step of the *k* iterations, the *i*-th subset is
 used as for testing, while the union of the remaining parts forms the training
 set.
 
 ```{r eval=FALSE}
 rdesc = makeResampleDesc("CV", iters = 10)
-``` 
+```
 
 ### Bootstrapping
 
 *B* new data sets *D_1* to *D_B* are drawn from
-*D* with replacement, each of the same size as *D*. 
-In the *i*-th iteration *D_i* forms the training set, 
-while the remaining elements from *D*, i.e. elements not 
+*D* with replacement, each of the same size as *D*.
+In the *i*-th iteration *D_i* forms the training set,
+while the remaining elements from *D*, i.e. elements not
 in the training set, form the test set.
 
 ```{r eval=FALSE}
 rdesc = makeResampleDesc("Bootstrap", iters = 10)
-``` 
+```
 
 <!--(
                      |resampling_desc_figure|
@@ -197,8 +189,7 @@ rdesc = makeResampleDesc("Bootstrap", iters = 10)
                      |resampling_nested_resampling_figure|
 )-->
 
-Evaluation of Predictions after Resampling
-------------------------------------------
+## Evaluation of Predictions after Resampling
 
 The \man[resample] function evaluates the performance of your learner using
 a certain resampling strategy for a given machine learning task.
@@ -217,7 +208,7 @@ example.
 
 ### Classification example
 
-For the example code, we use the standard ``iris`` data set and compare a 
+For the example code, we use the standard ``iris`` data set and compare a
 decision tree and the Linear Discriminant Analysis based on a 3-fold
 cross-validation:
 
@@ -230,11 +221,11 @@ rdesc = makeResampleDesc("CV", iters = 3)
 rinst = makeResampleInstance(rdesc, task = task)
 ```
 
-Now, we fit a decision tree for each fold and measure both the mean misclassification 
+Now, we fit a decision tree for each fold and measure both the mean misclassification
 error (\man[mmce]) and the accuracy (\man[acc]):
 
 ```{r}
-## Merge learner (lrn), i.e. Decision Tree, classification task (task) and 
+## Merge learner (lrn), i.e. Decision Tree, classification task (task) and
 ## resample instance (rinst)
 lrn = makeLearner("classif.rpart")
 r1 = resample(lrn, task, rinst, list(mmce, acc))
@@ -244,24 +235,24 @@ Let's set a couple of hyperparameters for rpart:
 
 ```{r}
 lrn1 = makeLearner("classif.rpart", minsplit = 10, cp = 0.03)
-r1 = resample(lrn1, task, rinst, list(mmce, acc))  
+r1 = resample(lrn1, task, rinst, list(mmce, acc))
 
 
 ## Second resample for LDA as learner
 lrn2 = makeLearner("classif.lda")
-r2 = resample(lrn2, task, rinst, list(mmce, acc))	
+r2 = resample(lrn2, task, rinst, list(mmce, acc))
 
 ## Let's see how well both classifiers did w.r.t mean misclassification error and accuracy
 r1[c("measures.test","aggr")]
 r2[c("measures.test","aggr")]
-``` 
+```
 
-To see the individual values for each fold on the test set, we can access 
+To see the individual values for each fold on the test set, we can access
 the `measures.test` element of the result list:
 
 ```{r}
 r1$measures.test
-``` 
+```
 
 As you can see above, every fold of the 3-fold cross-validation gives one mean
 misclassification error (in the second column).
@@ -270,9 +261,9 @@ The aggregated performance values are stored in the `aggr` list element:
 
 ```{r}
 r1$aggr
-``` 
+```
 
-The latter value is the aggregation, i.e. by default the mean, of the three 
+The latter value is the aggregation, i.e. by default the mean, of the three
 misclassification errors from the table above.
 Getting the single losses is of course possible as well.
 
@@ -310,23 +301,3 @@ median of absolute errors (\man[medae]):
 r1[c("measures.test","aggr")]
 r2[c("measures.test","aggr")]
 ```
-
-
-<!--( 
-
-.. |resampling_figure| image:: /_images/resampling.png
-     :align: middle
-     :width: 40em
-     :alt: Resampling illustration
-     
-.. |resampling_desc_figure| image:: /_images/resampling_desc_and_instance.png
-     :align: middle
-     :width: 40em
-     :alt: Resampling description and instance
-     
-.. |nested_resampling_figure| image:: /_images/nested_resampling.png
-     :align: middle
-     :width: 60em
-     :alt: Nested resampling illustration
-     
-)-->

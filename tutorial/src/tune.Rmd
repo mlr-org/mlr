@@ -1,5 +1,4 @@
-Tuning Hyperparameters
-======================
+# Tuning Hyperparameters
 
 Many machine learning algorithms have hyperparameters that need to be set.
 They can either be selected by the user or through resampling,
@@ -11,8 +10,7 @@ Grid search is one of the standard -- albeit slow -- ways to choose an
 appropriate set of parameters from a given range of values.
 
 
-Classification example
-----------------------
+## Classification example
 
 We again use the ``iris`` data set, included in R, but now we want to
 set the parameters of a SVM with a polynomial kernel.
@@ -147,7 +145,7 @@ Thus, we receive 5 misclassification errors (one for each optimal parameter
 configuration per outer fold) and one aggregated version, i.e. the mean,
 of those 5 values.
 
-#### Visualization
+### Visualization
 
 To extract the `opt.path`s we have to access the inner cross validations.
 
@@ -160,8 +158,8 @@ g = ggplot(opt.grid, aes(x=C, y=sigma, fill=mmce.test.mean))
 g + geom_tile()
 ```
 
-Regression example
-------------------
+### Regression example
+
 
 Let's tune `k` of a `k`-nearest neighbour regression model (implemented
 in package ``kknn``) on the ``BostonHousing`` data set.
@@ -187,14 +185,3 @@ lrn = makeLearner("regr.kknn")
 ## Tune k-nearest neighbour regression with mean squared error as default measure
 tuneParams(learner=lrn, task=task, resampling=rdesc, par.set=ps, control=ctrl, measures=mse)
 ```
-
-
-
-
-<!--(
-.. |tune-varsel_processing| image:: /_images/tune-varsel_processing.png
-     :align: middle
-     :width: 50em
-     :alt: Variable selection as a tuning.
-
-)-->

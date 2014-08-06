@@ -272,11 +272,11 @@ mod = train(lrn, task)
 
 <h2 id="further-information">Further information</h2>
 <p>As already mentioned, we can train a learner simply by
-calling the function <a href="../../../man/train.html">train</a>, passing it a <a href="../../../man/Learner.html">Learner</a> and a <a href="../../../man/Task.html">Task</a>. 
-In the examples above, the machine learning method was specified 
+calling the function <a href="../../../man/train.html">train</a>, passing it a <a href="../../../man/Learner.html">Learner</a> and a <a href="../../../man/Task.html">Task</a>.
+In the examples above, the machine learning method was specified
 through special <a href="../../../man/makeLearner.html">Learner</a> objects. Creating a separate object
 allows to set the hyperparameters of the learner before training for example.</p>
-<p>Optionally, only a subset of the data, specified by an index set, can be used to 
+<p>Optionally, only a subset of the data, specified by an index set, can be used to
 train the learner. This set is passed using the <code>subset</code> argument of <a href="../../../man/train.html">train</a>.</p>
 <p>The return value is always an object of class <a href="../../../man/WrappedModel.html">WrappedModel</a>, which wraps the
 particular model of the used R classification or regression method. It

@@ -1,15 +1,13 @@
-Feature Selection
-==================
+# Feature Selection
 
-Often, data sets include a large number of features and it is desirable to reduce them. 
-The technique of selecting a subset of relevant features is called feature selection. 
+Often, data sets include a large number of features and it is desirable to reduce them.
+The technique of selecting a subset of relevant features is called feature selection.
 Feature selection can make the model better interpretable, the learning process
 faster, and the fitted model more general by removing irrelevant features.
 Different approaches exist, in order to figure out, which the relevant features
 are. **mlr** supports [filters](#Filter) and [wrappers](#Wrapper).
 
-Filters
--------
+## Filters
 
 Filters are the simplest approach to find features that do not contain a lot of
 additional information given the other features and can be left out.
@@ -45,7 +43,7 @@ We will use the standard 10-fold cross validation.
 ```{r}
 learner = makeLearner("classif.fnn")
 learnerFiltered = makeFilterWrapper(learner=learner, fw.method="information.gain", fw.select="perc", fw.val=0.7)
-rdesc = makeResampleDesc("CV", iters=10) 
+rdesc = makeResampleDesc("CV", iters=10)
 rsres = resample(learner=learnerFiltered, task=task, resampling=rdesc, show.info=FALSE, models=TRUE)
 rsres$aggr
 ```
@@ -75,13 +73,12 @@ ps = makeParamSet(makeDiscreteParam("fw.val", values = seq(from=0.2, 0.4, by=0.0
 tuneRes = tuneParams(lrnFiltered, task=task, resampling=makeResampleDesc("CV", iters=5), par.set=ps, control=makeTuneControlGrid())
 ```
 
-Wrapper
--------
+## Wrapper
 
 Unlike the filters, wrappers use the performance a learner can
 achieve on a given subset of the features in the data to do the filtering.
 
-#### Classification example
+### Classification example
 
 Let's train a decision tree on the ``iris`` data and use a sequential forward
 search to find the best set of features w.r.t. the mean misclassification error
@@ -91,16 +88,16 @@ search to find the best set of features w.r.t. the mean misclassification error
 library("mlr")
 task = makeClassifTask(data=iris, target="Species")
 lrn = makeLearner("classif.rpart")
-rdesc = makeResampleDesc("Holdout") 
+rdesc = makeResampleDesc("Holdout")
 
 ctrlSeq = makeFeatSelControlSequential(method="sfs")
 sfSeq = selectFeatures(learner=lrn, task=task, resampling=rdesc, control=ctrlSeq)
 sfSeq
 analyzeFeatSelResult(sfSeq, reduce=FALSE)
-``` 
+```
 
 
-#### Regression example
+### Regression example
 
 We fit a simple linear regression model to the ``BostonHousing`` data set and
 use a genetic algorithm to find a feature set that minimises the mean squared
@@ -112,10 +109,9 @@ data(BostonHousing)
 
 task = makeRegrTask(data = BostonHousing, target = "medv")
 lrn = makeLearner("regr.lm")
-rdesc = makeResampleDesc("Holdout") 
+rdesc = makeResampleDesc("Holdout")
 
 ctrlGA = makeFeatSelControlGA(maxit=10)
 sfGA = selectFeatures(learner=lrn, task=task, resampling=rdesc, control=ctrlGA, show.info=FALSE)
 sfGA
 ```
-

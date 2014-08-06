@@ -1,5 +1,4 @@
-Generic bagging
-========================================================
+# Generic bagging
 
 One reason why random forests perform so well is that they are using bagging as
 a technique to gain more stability. But why do you want to limit yourself to the
@@ -44,8 +43,7 @@ on noisy data with many features.
 
 
 
-Additional Measures
--------------------
+## Additional Measures
 With bagging, you can get an estimated standard deviation regardless of the
 wrapped learner. Below, we give a small example for regression.
 

@@ -215,12 +215,12 @@
             <div class="col-md-9" role="main">
 
 <h1 id="resampling">Resampling</h1>
-<p>In order to assess the performance of a learning algorithm, resampling 
+<p>In order to assess the performance of a learning algorithm, resampling
 strategies are usually used. Resampling is a means of splitting the entire data
 set into training and tet. There are various methods for doing this, for example
-cross-validation and bootstrap, to mention just two popular approaches. 
-In <strong>mlr</strong>, the <a href="../../../man/resample.html">resample</a> function, depending on the chosen resampling strategy, 
-fits the selected learner using the corresponding training sets and performs 
+cross-validation and bootstrap, to mention just two popular approaches.
+In <strong>mlr</strong>, the <a href="../../../man/resample.html">resample</a> function, depending on the chosen resampling strategy,
+fits the selected learner using the corresponding training sets and performs
 predictions for the corresponding training/test sets and calculates the chosen
 performance measures.</p>
 <h2 id="quick-start">Quick start</h2>
@@ -231,7 +231,7 @@ performance measures.</p>
 task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.lda&quot;)
 
-## Perform a 3-fold cross-validation 
+## Perform a 3-fold cross-validation
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 r = resample(lrn, task, rdesc)
 </code></pre>
@@ -417,7 +417,7 @@ overly complicated, it is necessary as sometimes one only wants to describe the
 drawing process, while in other instances one wants to create the specific index
 sets. There are convenient methods to make the construction process as
 easy as possible.</p>
-<pre class="prettyprint well"><code class="r">## get the cv.instance directly 
+<pre class="prettyprint well"><code class="r">## get the cv.instance directly
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
 rinst  = makeResampleInstance(rdesc, size = nrow(iris))
 </code></pre>
@@ -444,9 +444,9 @@ list of getters.</p>
 <ul>
 <li>'Subsample' for subsampling,</li>
 <li>'Holdout' for holdout (training/test),</li>
-<li>'CV' for cross-validation, </li>
-<li>'LOO' for leave-one-out, </li>
-<li>'StratCV' for stratified cross-validation, </li>
+<li>'CV' for cross-validation,</li>
+<li>'LOO' for leave-one-out,</li>
+<li>'StratCV' for stratified cross-validation,</li>
 <li>'RepCV' for repeated cross-validation,</li>
 <li>'Bootstrap' for out-of-bag bootstrap.</li>
 </ul>
@@ -460,8 +460,8 @@ rdesc = makeResampleDesc(&quot;Subsample&quot;, iters = 1, split = 2/3)
 </code></pre>
 
 <h3 id="k-fold-cross-validation">k-fold cross-validation</h3>
-<p>The data set is partitioned into <em>k</em> subsets of (approximately) equal size. 
-In the <em>i</em>-th step of the <em>k</em> iterations, the <em>i</em>-th subset is 
+<p>The data set is partitioned into <em>k</em> subsets of (approximately) equal size.
+In the <em>i</em>-th step of the <em>k</em> iterations, the <em>i</em>-th subset is
 used as for testing, while the union of the remaining parts forms the training
 set.</p>
 <pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
@@ -469,9 +469,9 @@ set.</p>
 
 <h3 id="bootstrapping">Bootstrapping</h3>
 <p><em>B</em> new data sets <em>D_1</em> to <em>D_B</em> are drawn from
-<em>D</em> with replacement, each of the same size as <em>D</em>. 
-In the <em>i</em>-th iteration <em>D_i</em> forms the training set, 
-while the remaining elements from <em>D</em>, i.e. elements not 
+<em>D</em> with replacement, each of the same size as <em>D</em>.
+In the <em>i</em>-th iteration <em>D_i</em> forms the training set,
+while the remaining elements from <em>D</em>, i.e. elements not
 in the training set, form the test set.</p>
 <pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;Bootstrap&quot;, iters = 10)
 </code></pre>
@@ -496,7 +496,7 @@ The question arises of how to aggregate those values. You can specify
 that explicitly, the default is to use the mean. Let's have a look at an
 example.</p>
 <h3 id="classification-example_1">Classification example</h3>
-<p>For the example code, we use the standard <code>iris</code> data set and compare a 
+<p>For the example code, we use the standard <code>iris</code> data set and compare a
 decision tree and the Linear Discriminant Analysis based on a 3-fold
 cross-validation:</p>
 <pre class="prettyprint well"><code class="r">## Classification task
@@ -507,9 +507,9 @@ rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 rinst = makeResampleInstance(rdesc, task = task)
 </code></pre>
 
-<p>Now, we fit a decision tree for each fold and measure both the mean misclassification 
+<p>Now, we fit a decision tree for each fold and measure both the mean misclassification
 error (<a href="../../../man/mmce.html">mmce</a>) and the accuracy (<a href="../../../man/acc.html">acc</a>):</p>
-<pre class="prettyprint well"><code class="r">## Merge learner (lrn), i.e. Decision Tree, classification task (task) and 
+<pre class="prettyprint well"><code class="r">## Merge learner (lrn), i.e. Decision Tree, classification task (task) and
 ## resample instance (rinst)
 lrn = makeLearner(&quot;classif.rpart&quot;)
 r1 = resample(lrn, task, rinst, list(mmce, acc))
@@ -523,7 +523,7 @@ r1 = resample(lrn, task, rinst, list(mmce, acc))
 
 <p>Let's set a couple of hyperparameters for rpart:</p>
 <pre class="prettyprint well"><code class="r">lrn1 = makeLearner(&quot;classif.rpart&quot;, minsplit = 10, cp = 0.03)
-r1 = resample(lrn1, task, rinst, list(mmce, acc))  
+r1 = resample(lrn1, task, rinst, list(mmce, acc))
 </code></pre>
 
 <pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
@@ -534,7 +534,7 @@ r1 = resample(lrn1, task, rinst, list(mmce, acc))
 
 <pre class="prettyprint well"><code class="r">## Second resample for LDA as learner
 lrn2 = makeLearner(&quot;classif.lda&quot;)
-r2 = resample(lrn2, task, rinst, list(mmce, acc))   
+r2 = resample(lrn2, task, rinst, list(mmce, acc))
 </code></pre>
 
 <pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
@@ -572,7 +572,7 @@ r1[c(&quot;measures.test&quot;,&quot;aggr&quot;)]
 ##        0.02667        0.97333
 </code></pre>
 
-<p>To see the individual values for each fold on the test set, we can access 
+<p>To see the individual values for each fold on the test set, we can access
 the <code>measures.test</code> element of the result list:</p>
 <pre class="prettyprint well"><code class="r">r1$measures.test
 </code></pre>
@@ -593,7 +593,7 @@ misclassification error (in the second column).</p>
 ##        0.05333        0.94667
 </code></pre>
 
-<p>The latter value is the aggregation, i.e. by default the mean, of the three 
+<p>The latter value is the aggregation, i.e. by default the mean, of the three
 misclassification errors from the table above.
 Getting the single losses is of course possible as well.</p>
 <h3 id="regression-example_1">Regression example</h3>
@@ -662,25 +662,6 @@ median of absolute errors (<a href="../../../man/medae.html">medae</a>):</p>
 ##   mse.test.mean medae.test.mean 
 ##          16.623           1.841
 </code></pre>
-
-<!--(
-
-.. |resampling_figure| image:: /_images/resampling.png
-     :align: middle
-     :width: 40em
-     :alt: Resampling illustration
-
-.. |resampling_desc_figure| image:: /_images/resampling_desc_and_instance.png
-     :align: middle
-     :width: 40em
-     :alt: Resampling description and instance
-
-.. |nested_resampling_figure| image:: /_images/nested_resampling.png
-     :align: middle
-     :width: 60em
-     :alt: Nested resampling illustration
-
-)-->
 
 </div>
         </div>

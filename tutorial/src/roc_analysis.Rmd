@@ -1,5 +1,4 @@
-ROC Analysis
-============
+# ROC Analysis
 
 The receiver operating characteristic curve (ROC) is a graphical plot
 for a binary classifier and mainly used in signal detection theory. It
@@ -15,8 +14,7 @@ fact that it can compare the performance of an imbalanced data set
 with a modified version. The following functions are created by
 including the features of the [ROCR](http://cran.r-project.org/web/packages/ROCR/index.html) package.
 
-Comparing to learners
----------------------
+## Comparing to learners
 
 We can compare the performance of two learners in **mlr** with the help of `ROCR`.
 First we create a scenario with two different [learners](learner.md) capable of
@@ -77,4 +75,3 @@ perf2 = ROCR::performance(p2,"tpr","fpr")
 plot(perf1, col="blue")
 plot(perf2, col="red", add=TRUE)
 ```
-
