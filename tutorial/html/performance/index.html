@@ -229,9 +229,7 @@ In order to calculate the performance measures, the function <a href="../../../m
 <h2 id="classification-example">Classification example</h2>
 <p>We fit a Linear Discriminant Analysis on a subset of the <code>iris</code> data set and calculate
 the mean misclassification error (mmce) on the test data set.</p>
-<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
-
-task = makeClassifTask(data = iris, target = &quot;Species&quot;)
+<pre class="prettyprint well"><code class="r">task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.lda&quot;)
 mod = train(lrn, task = task, subset = seq(1,150,2))
 </code></pre>

@@ -39,7 +39,7 @@ for (f in list.files(src, pattern = "\\.Rmd$")) {
   opts_chunk$set(cache = TRUE, cache.path = cache.path)
   set.seed(objToSeed(f))
   ok = try(knit(text = lines, output = file.path(dest, str_replace(f, "\\.Rmd$", "\\.md")),
-      envir = new.env()))
+      envir = new.env(), quiet = TRUE))
   if (inherits(ok, "try-error"))
     exit(1L, "Error knitting file '%s':\n%s", f, as.character(ok))
 }
