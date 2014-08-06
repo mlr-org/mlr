@@ -197,49 +197,38 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#preload-mlr-for-all-coming-blocks">Preload mlr for all coming blocks</a></li>
+        <li class="main active"><a href="#integrating-another-measure">Integrating another measure</a></li>
         
-    
-        <li class="main "><a href="#construct-measure-for-non-standard-misclassification-costs">Construct measure for non-standard misclassification costs</a></li>
+            <li><a href="#construct-performance-measure">Construct performance measure</a></li>
+        
+            <li><a href="#construct-measure-for-non-standard-misclassification-costs">Construct measure for non-standard misclassification costs</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<p>```{splus echo=FALSE}</p>
-<h2 id="preload-mlr-for-all-coming-blocks">Preload mlr for all coming blocks</h2>
-<p>library("mlr")</p>
-<pre class="prettyprint well"><code>
-Integrating another measure
-===========================
-
-Maybe you want to evaluate a prediction with a measure which is not yet implemented 
-in **mlr**. This could be either a performance measure which is not included in the in **mlr**
-list of [measures](../../../man/measures.html) or a measure that uses a non-standard misclassification cost matrix.
-
-
-Construct performance measure
------------------------------
-
-The [makeMeasure](../../../man/makeMeasure.html) function provides a simple way of constructing your own performance 
-measure. Below, this is exemplified by an implementation of the mean 
-misclassification error (mmce) for the iris dataset. For this purpose we write a simple 
-function that computes the measure on the basis of the predictions and subsequently wrap it 
-in a [Measure](../../../man/Measure.html) object. Then, we work with it as usual with the
-[performance](http://berndbischl.github.io/mlr/man/performance.html) function.
-See the R documentation of the [makeMeasure](../../../man/makeMeasure.html) function for details on the
-various parameters.
-
-```{splus}
-# Define the measure.
+<h1 id="integrating-another-measure">Integrating another measure</h1>
+<p>Maybe you want to evaluate a prediction with a measure which is not yet implemented
+in <strong>mlr</strong>. This could be either a performance measure which is not included in the in <strong>mlr</strong>
+list of <a href="../../../man/measures.html">measures</a> or a measure that uses a non-standard misclassification cost matrix.</p>
+<h2 id="construct-performance-measure">Construct performance measure</h2>
+<p>The <a href="../../../man/makeMeasure.html">makeMeasure</a> function provides a simple way of constructing your own performance
+measure. Below, this is exemplified by an implementation of the mean
+misclassification error (mmce) for the iris dataset. For this purpose we write a simple
+function that computes the measure on the basis of the predictions and subsequently wrap it
+in a <a href="../../../man/Measure.html">Measure</a> object. Then, we work with it as usual with the
+<a href="http://berndbischl.github.io/mlr/man/performance.html">performance</a> function.
+See the R documentation of the <a href="../../../man/makeMeasure.html">makeMeasure</a> function for details on the
+various parameters.</p>
+<pre class="prettyprint well"><code class="splus"># Define the measure.
 my.mmce = function(task, model, pred, extra.args) {
   tb = table(pred$data$response, pred$data$truth)
   1 - sum(diag(tb)) / sum(tb)
 }
 
 # Encapsulate the function with a Measure object.
-my.mmce = makeMeasure(id = &quot;my.mmce&quot;, minimize = TRUE, classif = TRUE, 
+my.mmce = makeMeasure(id = &quot;my.mmce&quot;, minimize = TRUE, classif = TRUE,
                        allowed.pred.types = &quot;response&quot;, fun = my.mmce)
 
 # Create classification task and learner
@@ -258,12 +247,12 @@ performance(pred, measures = mmce)
 <h2 id="construct-measure-for-non-standard-misclassification-costs">Construct measure for non-standard misclassification costs</h2>
 <p>To create a measure that involves non-standard misclassification costs you can use
 the <a href="../../../man/makeCostMeasure.html">makeCostMeasure</a> function. In order to do this, you first need to define the cost
-matrix you want to use and include all class labels. The cost matrix can then be 
+matrix you want to use and include all class labels. The cost matrix can then be
 wrapped in a <a href="../../../man/Measure.html">Measure</a> object and a prediction can be evaluated as usual with the
-<a href="../../../man/performance.html">performance</a> function. See the R documentation of the <a href="../../../man/makeCostMeasure.html">makeCostMeasure</a> function for 
+<a href="../../../man/performance.html">performance</a> function. See the R documentation of the <a href="../../../man/makeCostMeasure.html">makeCostMeasure</a> function for
 details on the various parameters.</p>
 <pre class="prettyprint well"><code class="splus"># Create misclassification cost matrix.
-mcm = matrix(c(0, 2, 2, 3, 0, 2, 1, 1, 0), ncol=3, 
+mcm = matrix(c(0, 2, 2, 3, 0, 2, 1, 1, 0), ncol=3,
               dimnames = list(c(&quot;setosa&quot;, &quot;versicolor&quot;, &quot;virginica&quot;),
                               c(&quot;setosa&quot;, &quot;versicolor&quot;, &quot;virginica&quot;)))
 
@@ -273,7 +262,7 @@ lrn = makeLearner(&quot;classif.lda&quot;)
 mod = train(lrn, task)
 pred = predict(mod, newdata= iris)
 
-# Encapsulate the cost matrix in a Measure object.                             
+# Encapsulate the cost matrix in a Measure object.
 my.costs = makeCostMeasure(id = &quot;costs&quot;, minimize = TRUE, costs=mcm, task, aggregate = mean)
 
 # Compare predicted and true label with our measure.
