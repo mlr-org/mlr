@@ -257,7 +257,12 @@ values.</p>
 features so that it can be part of the validation method of your choice.
 We will use the standard 10-fold cross validation.</p>
 <pre class="prettyprint well"><code class="r">learner = makeLearner(&quot;classif.fnn&quot;)
-learnerFiltered = makeFilterWrapper(learner=learner, fw.method=&quot;information.gain&quot;, fw.select=&quot;perc&quot;, fw.val=0.7)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: FNN
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">learnerFiltered = makeFilterWrapper(learner=learner, fw.method=&quot;information.gain&quot;, fw.select=&quot;perc&quot;, fw.val=0.7)
 rdesc = makeResampleDesc(&quot;CV&quot;, iters=10)
 rsres = resample(learner=learnerFiltered, task=task, resampling=rdesc, show.info=FALSE, models=TRUE)
 rsres$aggr
