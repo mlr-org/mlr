@@ -57,12 +57,12 @@ suppressPackageStartupMessages({
   # required to build
   library(methods)
   library(parallel)
-  library(pander, quietly = TRUE)
-  library(BBmisc, quietly = TRUE)
-  library(knitr, quietly = TRUE)
-  library(stringr, quietly = TRUE)
-  library(digest, quietly = TRUE)
-  library(mlr, quietly = TRUE)
+  library(pander)
+  library(BBmisc)
+  library(knitr)
+  library(stringr)
+  library(digest)
+  library(mlr)
 })
 
 # turn warnings to errors, we don't want to miss them
