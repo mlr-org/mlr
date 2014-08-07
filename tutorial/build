@@ -5,14 +5,14 @@ src = "src"
 dest = "docs"
 
 # macros to link to docs:
-# - [NAME](&PACKAGE/FUNCTION)
+# - [NAME](&PACKAGE::FUNCTION)
 # - [NAME](&FUNCTION) (mlr documentation)
-# - [&PACKAGE/FUNCTION]
+# - [&PACKAGE::FUNCTION]
 # - [&FUNCTION] (mlr documentation)
 macros = list(
-  list(pattern = "\\[([[:alnum:]()]+)\\]\\(&([[:alnum:]]+)/([[:alnum:]]+)\\)", replacement = "[\\1](http://www.rdocumentation.org/packages/\\2/functions/\\3.html"),
-  list(pattern = "\\[([[:alnum:]()]+)\\]\\(&([[:alnum:]]+)\\)", replacement = "[\\1](http://www.rdocumentation.org/packages/mlr/functions/\\2.html"),
-  list(pattern = "\\[&([[:alnum:]]+)/([[:alnum:]]+)\\]", replacement = "[\\1::\\2](http://www.rdocumentation.org/packages/\\1/functions/\\2.html"),
+  list(pattern = "\\[(.+)\\]\\(&([[:alnum:]]+)::([[:alnum:]]+)\\)", replacement = "[\\1](http://www.rdocumentation.org/packages/\\2/functions/\\3.html)"),
+  list(pattern = "\\[(.+)\\]\\(&([[:alnum:]]+)\\)", replacement = "[\\1](http://www.rdocumentation.org/packages/mlr/functions/\\2.html)"),
+  list(pattern = "\\[&([[:alnum:]]+)::([[:alnum:]]+)\\]", replacement = "[\\1::\\2](http://www.rdocumentation.org/packages/\\1/functions/\\2.html)"),
   list(pattern = "\\[&([[:alnum:]]+)\\]", replacement = "[\\1](http://www.rdocumentation.org/packages/mlr/functions/\\1.html)")
 )
 
