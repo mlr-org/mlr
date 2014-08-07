@@ -22,10 +22,10 @@ way.
 
 In the following we will see four examples to show different benchmark settings:
 
-* One data set  +	two classification algorithms
-* One data set	+	one classification algorithm	+	tuning
-* Three data sets	+	three classification algorithms	+	tuning
-* One data set	+	two classification algorithms	+	variable selection
+* One data set + two classification algorithms
+* One data set + one classification algorithm + tuning
+* Three data sets + three classification algorithms + tuning
+* One data set + two classification algorithms + variable selection
 
 
 ## Example 1: One task, two learners, no tuning

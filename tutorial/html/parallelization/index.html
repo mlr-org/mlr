@@ -201,7 +201,7 @@
 With the integration of <a href="https://github.com/berndbischl/parallelMap">parallelMap</a> into <strong>mlr</strong>, it becomes easy to activate the parallel computing capabilities already supported by <strong>mlr</strong>.</p>
 <p>All you have to do is select an interface by calling one of the <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart*</a> functions.
 The first annotated loop <strong>mlr</strong> encounters will then be automatically parallelized.
-Afterwards it is good practice to call <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStop.html">parallelMap::parallelStop</a>.</p>
+Afterwards it is good practice to call <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStop.html">parallelStop</a>.</p>
 <pre class="prettyprint well"><code class="r">library(&quot;parallelMap&quot;)
 parallelStartSocket(2)
 </code></pre>

@@ -3,7 +3,7 @@
 For unevenly distributed classes in the data, it might be useful to oversample
 the minority or undersample the majority class.
 
-## ``data.frame``
+## Data frames
 
 First we show how it is done for `data.frame`s:
 

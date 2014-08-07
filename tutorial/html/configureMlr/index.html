@@ -197,12 +197,10 @@
             <div class="col-md-9" role="main">
 
 <h1 id="configure-mlr">Configure mlr</h1>
-<p>If you really know what you are doing you may think <strong>mlr</strong> is limiting you in
-certain ways.
-Actually <strong>mlr</strong> is just designed to make errors due to typos or
-invalid parameter values as unlikely as possible. But sometimes you want to
-break those barriers and get full access. For all parameters, simply refer
-to the documentation of <a href="http://www.rdocumentation.org/packages/mlr/functions/configureMlr.html">configureMlr</a>.</p>
+<p>If you really know what you are doing you may think <strong>mlr</strong> is limiting you in certain ways.
+Actually <strong>mlr</strong> is just designed to make errors due to typos or invalid parameter values as unlikely as possible.
+But sometimes you want to break those barriers and get full access.
+For all parameters, simply refer to the documentation of <a href="http://www.rdocumentation.org/packages/mlr/functions/configureMlr.html">configureMlr</a>.</p>
 <p>You are bothered by all the output on the console like in this example?</p>
 <pre class="prettyprint well"><code class="r">## Define a learning task and an appropriate learner
 task = makeClassifTask(data = iris, target = &quot;Species&quot;)
@@ -239,7 +237,7 @@ r = resample(lrn, task, rdesc)
 </code></pre>
 
 <p>Just try the following:</p>
-<pre class="prettyprint well"><code class="r">configureMlr(show.learner.output=FALSE)
+<pre class="prettyprint well"><code class="r">configureMlr(show.learner.output = FALSE)
 r = resample(lrn, task, rdesc)
 </code></pre>
 
@@ -251,8 +249,7 @@ r = resample(lrn, task, rdesc)
 
 <p>In an additional scenario, you want to access a new parameter of a learner which
 is already available in <strong>mlr</strong>, but the parameter is not implemented in <strong>mlr</strong> yet.
-If this is the case you might want to <a href="https://github.com/berndbischl/mlr#get-in-touch">contact
-us</a> or <a href="https://github.com/berndbischl/mlr/issues/new">open an issue</a> as well!
+If this is the case you might want to <a href="https://github.com/berndbischl/mlr#get-in-touch">contact us</a> or <a href="https://github.com/berndbischl/mlr/issues/new">open an issue</a> as well!
 But until then you can turn off <strong>mlr</strong>'s paramater checking like this:</p>
 <pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;classif.ksvm&quot;, newPar = 3)
 </code></pre>

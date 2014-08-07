@@ -12,7 +12,7 @@ measure. Below, this is exemplified by an implementation of the mean
 misclassification error (mmce) for the iris dataset. For this purpose we write a simple
 function that computes the measure on the basis of the predictions and subsequently wrap it
 in a [&Measure] object. Then, we work with it as usual with the
-[performance](http://berndbischl.github.io/mlr/man/performance.html) function.
+[&performance] function.
 See the R documentation of the [&makeMeasure] function for details on the
 various parameters.
 

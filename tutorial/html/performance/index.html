@@ -303,7 +303,7 @@ performance(pred, measures = list(acc, fpr, fnr))
 
 <p>Note that in order to calculate AUC -- the area under the ROC (receiver
 operating characteristic) curve, we have to make sure that posterior
-probabilities are predicted, i.e. set the predict type of the <a href="http://berndbischl.github.io/mlr/man/makeLearner.html">Learner</a> to "prob".</p>
+probabilities are predicted, i.e. set the predict type of the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> to "prob".</p>
 <pre class="prettyprint well"><code class="r">data(Sonar, package = &quot;mlbench&quot;)
 
 task = makeClassifTask(data = Sonar, target = &quot;Class&quot;, positive = &quot;M&quot;)
