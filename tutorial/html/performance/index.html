@@ -205,19 +205,19 @@
 <h1 id="evaluating-learner-performance">Evaluating Learner Performance</h1>
 <p>The quality of the predictions of a model in <strong>mlr</strong> can be assessed w.r.t. a
 number of different performance measures.</p>
-<p>Typical performance measures are mean misclassification error (<a href="../../../man/mmce.html">mmce</a>),
-accuracy (<a href="../../../man/acc.html">acc</a>) or measures based on ROC analysis for classification and mean
-of squared errors (<a href="../../../man/mse.html">mse</a>) or mean of absolute errors (<a href="../../../man/mae.html">mae</a>) for regression.
-For clustering tasks, measures such as the Dunn index (<a href="../../../man/dunn.html">dunn</a>) are provided,
-while for survival predictions, the Concordance Index (<a href="../../../man/cindex.html">cindex</a>) is
+<p>Typical performance measures are mean misclassification error (<a href="http://www.rdocumentation.org/packages/mlr/functions/mmce.html">mmce</a>),
+accuracy (<a href="http://www.rdocumentation.org/packages/mlr/functions/acc.html">acc</a>) or measures based on ROC analysis for classification and mean
+of squared errors (<a href="http://www.rdocumentation.org/packages/mlr/functions/mse.html">mse</a>) or mean of absolute errors (<a href="http://www.rdocumentation.org/packages/mlr/functions/mae.html">mae</a>) for regression.
+For clustering tasks, measures such as the Dunn index (<a href="http://www.rdocumentation.org/packages/mlr/functions/dunn.html">dunn</a>) are provided,
+while for survival predictions, the Concordance Index (<a href="http://www.rdocumentation.org/packages/mlr/functions/cindex.html">cindex</a>) is
 supported, and for cost-sensitive predictions the misclassification penalty
-(<a href="../../../man/mcp.html">mcp</a>) and others. It is also possible to access the time to train the
+(<a href="http://www.rdocumentation.org/packages/mlr/functions/mcp.html">mcp</a>) and others. It is also possible to access the time to train the
 model, the time to compute the prediction and their sum as performance measures.</p>
-<p>To see which performance measures are implemented, have a look at <a href="../../../man/measures.html">measures</a>.
+<p>To see which performance measures are implemented, have a look at <a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">measures</a>.
 If you want to implement an additional measure or include a measure with
 non-standard misclassification costs, go to section
 <a href="../create_measure/">create_measure</a>.
-In order to calculate the performance measures, the function <a href="../../../man/performance.html">performance</a> is used.</p>
+In order to calculate the performance measures, the function <a href="http://www.rdocumentation.org/packages/mlr/functions/performance.html">performance</a> is used.</p>
 <h2 id="classification-example">Classification example</h2>
 <p>We fit a Linear Discriminant Analysis on a subset of the <code>iris</code> data set and calculate
 the mean misclassification error (mmce) on the test data set.</p>

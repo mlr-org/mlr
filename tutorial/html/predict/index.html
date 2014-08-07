@@ -204,7 +204,7 @@
 <p>Predicting the target values for new observations is
 implemented the same way as most of the other predict methods in <em>R</em>.
 In general, all you need to do is
-call [predict][&amp;predict.WrappedModel] on the object returned by <a href="../../../man/train.html">train</a>
+call [predict][&amp;predict.WrappedModel] on the object returned by <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a>
 and pass the data to be predicted.</p>
 <h2 id="quick-start">Quick start</h2>
 <h3 id="classification-example">Classification example</h3>
@@ -293,14 +293,14 @@ predictions.
 The first possibility is via the <code>newdata</code> argument and was already shown in the
 examples above.
 If the data for which predictions are required are already contained in
-the [Learner]<a href="../../../man/makeLearner.html">makeLearner</a>, it is also possible to pass the task and optionally specify
+the [Learner]<a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">makeLearner</a>, it is also possible to pass the task and optionally specify
 the subset argument that contains the indices of the test observations.</p>
-<p>Predictions are encapsulated in a special <a href="../../../man/Prediction.html">Prediction</a> object. The available
-accessors are documented in the man page for <a href="../../../man/Prediction.html">Prediction</a>.</p>
+<p>Predictions are encapsulated in a special <a href="http://www.rdocumentation.org/packages/mlr/functions/Prediction.html">Prediction</a> object. The available
+accessors are documented in the man page for <a href="http://www.rdocumentation.org/packages/mlr/functions/Prediction.html">Prediction</a>.</p>
 <h3 id="classification-example_1">Classification example</h3>
 <p>In case of a classification task, the result of
 [predict][&amp;predict.WrappedModel] depends on the predict type, which was set
-when generating the [Learner]<a href="../../../man/makeLearner.html">makeLearner</a>. The default is to predict class
+when generating the [Learner]<a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">makeLearner</a>. The default is to predict class
 labels.</p>
 <p>We start again by loading <strong>mlr</strong> and creating a classification task for the
 <code>iris</code> data set. We select two subsets of the data. We train a decision tree on the
@@ -376,7 +376,7 @@ head(pred$data)
 <p>As you can see, in addition to the predicted probabilities, a response
 is produced by choosing the class with the maximum probability and
 breaking ties at random.</p>
-<p>The predicted posterior probabilities can be accessed via the <a href="../../../man/getProbabilities.html">getProbabilities</a> function.</p>
+<p>The predicted posterior probabilities can be accessed via the <a href="http://www.rdocumentation.org/packages/mlr/functions/getProbabilities.html">getProbabilities</a> function.</p>
 <pre class="prettyprint well"><code class="r">head(getProbabilities(pred))
 </code></pre>
 
@@ -418,7 +418,7 @@ head(pred$data)
 </code></pre>
 
 <p>In a binary classification setting, we can adjust the threshold, used
-to map probabilities to class labels using <a href="../../../man/setThreshold.html">setThreshold</a>. Here, we set
+to map probabilities to class labels using <a href="http://www.rdocumentation.org/packages/mlr/functions/setThreshold.html">setThreshold</a>. Here, we set
 the threshold for the <em>positive</em> class to 0.8:</p>
 <pre class="prettyprint well"><code class="r">pred = setThreshold(pred, 0.8)
 head(pred$data)

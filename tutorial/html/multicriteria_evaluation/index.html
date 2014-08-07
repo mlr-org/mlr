@@ -219,7 +219,7 @@ The aggregated value is the mean of these 10 numbers.
 <pre class="prettyprint well"><code>## Aggregation function: test.sqrt.of.mean
 </code></pre>
 
-<p>You can also create a new <code>measure</code> by using a different aggregation (see <a href="../../../man/aggregations.html">aggregations</a>).</p>
+<p>You can also create a new <code>measure</code> by using a different aggregation (see <a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations.html">aggregations</a>).</p>
 <pre class="prettyprint well"><code class="r">mmceAggrBySd = setAggregation(mmce, test.sd)
 
 task = makeClassifTask(data = iris, target = &quot;Species&quot;)
@@ -242,7 +242,7 @@ r = resample(lrn, task, rdesc, measures = list(mmce, mmceAggrBySd))
 </code></pre>
 
 <p>It is even possible to create your own aggregation function by calling the
-internal <strong>mlr</strong> function <a href="../../../man/makeAggregation.html">makeAggregation</a>.
+internal <strong>mlr</strong> function <a href="http://www.rdocumentation.org/packages/mlr/functions/makeAggregation.html">makeAggregation</a>.
 You can use internal (not exported) functions of R packages by prefixing the
 name of the function with the name of the package, i.e. <code>packagename:::function()</code>.
 In this case:</p>

@@ -1,10 +1,11 @@
 # Parallelization
 
 *R* by default doesn't make use of multiple cores.
-With the integration of
-[parallelMap](https://github.com/berndbischl/parallelMap) into **mlr**, it
-becomes easy to activate the parallel computing capabilities already supported
-by **mlr**.
+With the integration of [parallelMap](https://github.com/berndbischl/parallelMap) into **mlr**, it becomes easy to activate the parallel computing capabilities already supported by **mlr**.
+
+All you have to do is select an interface by calling one of the `parallelStart*` functions.
+The first annotated loop **mlr** encounters will then be automatically parallelized.
+Afterwards it is good practice to call `parallelStop()`.
 
 ```{r}
 library("parallelMap")
@@ -17,6 +18,11 @@ parallelStop()
 ```
 
 In Linux or Mac OS X, you may want to use `parallelStartMulticore()` instead.
+We over different parallelization levels for fine grain control over the parallelization.
+E.g., if you do not want to parallelize the `benchmark()` function because it has only very few iterations but want to parallelize the resampling of each learner instead, you can specifically pass the level `"resample"` to the `parallelStart*` function.
+Currently the following levels are supported:
+```{r}
+parallelShowRegisteredLevels()
+```
 
-For further ways of parallelizing your computations, consult the [parallelMap
-tutorial](https://github.com/berndbischl/parallelMap#parallelmap) and help.
+For further ways of parallelizing your computations, consult the [parallelMap tutorial](https://github.com/berndbischl/parallelMap#parallelmap) and help.

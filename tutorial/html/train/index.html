@@ -202,8 +202,8 @@
 
 <h1 id="training-a-learner">Training a Learner</h1>
 <p>Training a learner means fitting a model to a given data set.
-In the <strong>mlr</strong> package this can be done by calling the function <a href="../../../man/train.html">train</a>
-with a learner and a suitable <a href="../../../man/Task.html">Task</a>.</p>
+In the <strong>mlr</strong> package this can be done by calling the function <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a>
+with a learner and a suitable <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
 <h2 id="quick-start">Quick start</h2>
 <h3 id="classification-example">Classification example</h3>
 <p>We start with a basic example and train a Linear Discriminant Analysis on the <code>iris</code> data set.</p>
@@ -270,13 +270,13 @@ lrn = makeLearner(&quot;cluster.XMeans&quot;)
 
 <h2 id="further-information">Further information</h2>
 <p>As already mentioned, we can train a learner simply by
-calling the function <a href="../../../man/train.html">train</a>, passing it a <a href="../../../man/Learner.html">Learner</a> and a <a href="../../../man/Task.html">Task</a>.
+calling the function <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a>, passing it a <a href="http://www.rdocumentation.org/packages/mlr/functions/Learner.html">Learner</a> and a <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.
 In the examples above, the machine learning method was specified
-through special [Learner]<a href="../../../man/makeLearner.html">makeLearner</a> objects. Creating a separate object
+through special [Learner]<a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">makeLearner</a> objects. Creating a separate object
 allows to set the hyperparameters of the learner before training for example.</p>
 <p>Optionally, only a subset of the data, specified by an index set, can be used to
-train the learner. This set is passed using the <code>subset</code> argument of <a href="../../../man/train.html">train</a>.</p>
-<p>The return value is always an object of class <a href="../../../man/WrappedModel.html">WrappedModel</a>, which wraps the
+train the learner. This set is passed using the <code>subset</code> argument of <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a>.</p>
+<p>The return value is always an object of class <a href="http://www.rdocumentation.org/packages/mlr/functions/WrappedModel.html">WrappedModel</a>, which wraps the
 particular model of the used R classification or regression method. It
 can subsequently be used to perform a [prediction][&amp;predict.WrappedModel] for new observations.</p>
 </div>

@@ -203,15 +203,15 @@
 <h1 id="integrating-another-measure">Integrating another measure</h1>
 <p>Maybe you want to evaluate a prediction with a measure which is not yet implemented
 in <strong>mlr</strong>. This could be either a performance measure which is not included in the in <strong>mlr</strong>
-list of <a href="../../../man/measures.html">measures</a> or a measure that uses a non-standard misclassification cost matrix.</p>
+list of <a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">measures</a> or a measure that uses a non-standard misclassification cost matrix.</p>
 <h2 id="construct-performance-measure">Construct performance measure</h2>
-<p>The <a href="../../../man/makeMeasure.html">makeMeasure</a> function provides a simple way of constructing your own performance
+<p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/makeMeasure.html">makeMeasure</a> function provides a simple way of constructing your own performance
 measure. Below, this is exemplified by an implementation of the mean
 misclassification error (mmce) for the iris dataset. For this purpose we write a simple
 function that computes the measure on the basis of the predictions and subsequently wrap it
-in a <a href="../../../man/Measure.html">Measure</a> object. Then, we work with it as usual with the
+in a <a href="http://www.rdocumentation.org/packages/mlr/functions/Measure.html">Measure</a> object. Then, we work with it as usual with the
 <a href="http://berndbischl.github.io/mlr/man/performance.html">performance</a> function.
-See the R documentation of the <a href="../../../man/makeMeasure.html">makeMeasure</a> function for details on the
+See the R documentation of the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeMeasure.html">makeMeasure</a> function for details on the
 various parameters.</p>
 <pre class="prettyprint well"><code class="r"># Define the measure.
 my.mmce = function(task, model, pred, extra.args) {
@@ -238,10 +238,10 @@ performance(pred, measures = mmce)
 
 <h2 id="construct-measure-for-non-standard-misclassification-costs">Construct measure for non-standard misclassification costs</h2>
 <p>To create a measure that involves non-standard misclassification costs you can use
-the <a href="../../../man/makeCostMeasure.html">makeCostMeasure</a> function. In order to do this, you first need to define the cost
+the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeCostMeasure.html">makeCostMeasure</a> function. In order to do this, you first need to define the cost
 matrix you want to use and include all class labels. The cost matrix can then be
-wrapped in a <a href="../../../man/Measure.html">Measure</a> object and a prediction can be evaluated as usual with the
-<a href="../../../man/performance.html">performance</a> function. See the R documentation of the <a href="../../../man/makeCostMeasure.html">makeCostMeasure</a> function for
+wrapped in a <a href="http://www.rdocumentation.org/packages/mlr/functions/Measure.html">Measure</a> object and a prediction can be evaluated as usual with the
+<a href="http://www.rdocumentation.org/packages/mlr/functions/performance.html">performance</a> function. See the R documentation of the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeCostMeasure.html">makeCostMeasure</a> function for
 details on the various parameters.</p>
 <pre class="prettyprint well"><code class="r"># Create misclassification cost matrix.
 mcm = matrix(c(0, 2, 2, 3, 0, 2, 1, 1, 0), ncol=3,

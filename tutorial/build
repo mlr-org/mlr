@@ -5,13 +5,15 @@ src = "src"
 dest = "docs"
 
 # macros to link to docs:
-# - \man[PAGE], \man2[NAME][PAGE]
-# - [&PAGE] and [NAME](&PAGE)
+# - [NAME](&PACKAGE/FUNCTION)
+# - [NAME](&FUNCTION) (mlr documentation)
+# - [&PACKAGE/FUNCTION]
+# - [&FUNCTION] (mlr documentation)
 macros = list(
-  list(pattern = "\\\\man\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\1.html)"),
-  list(pattern = "\\\\man2\\[([[:alnum:]()]+)\\]\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\2.html)"),
-  list(pattern = "\\(&([[:alnum:]]+)\\)", replacement = "(../../../man/\\1.html)"),
-  list(pattern = "\\[&([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\1.html)")
+  list(pattern = "\\[([[:alnum:]()]+)\\]\\(&([[:alnum:]]+)/([[:alnum:]]+)\\)", replacement = "[\\1](http://www.rdocumentation.org/packages/\\2/functions/\\3.html"),
+  list(pattern = "\\[([[:alnum:]()]+)\\]\\(&([[:alnum:]]+)\\)", replacement = "[\\1](http://www.rdocumentation.org/packages/mlr/functions/\\2.html"),
+  list(pattern = "\\[&([[:alnum:]]+)/([[:alnum:]]+)\\]", replacement = "[\\1::\\2](http://www.rdocumentation.org/packages/\\1/functions/\\2.html"),
+  list(pattern = "\\[&([[:alnum:]]+)\\]", replacement = "[\\1](http://www.rdocumentation.org/packages/mlr/functions/\\1.html)")
 )
 
 # helper functions #############################################################
@@ -34,6 +36,7 @@ knitIt = function(f) {
   lines = readLines(file.path(src, f))
   for (macro in macros)
     lines = str_replace_all(lines, macro$pattern, macro$replacement)
+
   cache.path = paste0(file.path("cache", f), .Platform$file.sep)
 
   opts_chunk$set(cache = TRUE, cache.path = cache.path)
@@ -83,7 +86,6 @@ if(ok$exit.code == 0L) {
   message("Build successfull!")
   # clean up
   unlink("figure", recursive = TRUE)
-  unlink("docs", recursive = TRUE)
   exit(0L)
 }
 

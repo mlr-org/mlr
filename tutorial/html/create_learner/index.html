@@ -209,7 +209,7 @@ Below, an example of how the Linear Discriminant Analysis from <code>MASS</code>
 <h2 id="initialization">Initialization</h2>
 <p>For initialization, all the information you need is the name of the learner, its package, the parameter set, and the set of properties of your learner.</p>
 <p>First, name your learner. The naming conventions in <strong>mlr</strong> are <code>classif.&lt;R_method_name&gt;</code> for classification, <code>regr.&lt;R_method_name&gt;</code> for regression, <code>surv.&lt;R_method_name&gt;</code> for survival analysis, <code>costsens.&lt;R_method_name&gt;</code> for cost sensitive learning, and <code>cluster.&lt;R_method_name&gt;</code> for clustering.
-Second, use [makeDiscreteLearnerParam]<a href="../../../man/LearnerParam.html">LearnerParam</a> and [makeNumericLearnerParam]<a href="../../../man/LearnerParam.html">LearnerParam</a> to incorporate the complete description of the parameters.
+Second, use [makeDiscreteLearnerParam]<a href="http://www.rdocumentation.org/packages/mlr/functions/LearnerParam.html">LearnerParam</a> and [makeNumericLearnerParam]<a href="http://www.rdocumentation.org/packages/mlr/functions/LearnerParam.html">LearnerParam</a> to incorporate the complete description of the parameters.
 Include all possible values for discrete parameters and lower and upper bounds for numeric parameters.
 Add information for the properties (see also the section about <a href="../learner/">Learners</a>).
 Which types of predictors that are supported (numerics, factors)?
@@ -243,10 +243,10 @@ It can predict posterior probabilities.</p>
 <h2 id="creating-the-training-function-of-the-learner">Creating the training function of the learner</h2>
 <p>This must fit a model on the data of the task <code>.task</code> with regard to the subset defined in the integer vector <code>.subset</code> and the parameters passed in the <code>...</code> arguments.
 It must return the fitted model, no special data type is assumed for this.
-Further information can be found in the documentation of <a href="../../../man/getTaskData.html">getTaskData</a>.</p>
+Further information can be found in the documentation of <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskData.html">getTaskData</a>.</p>
 <p>In the example, replace <code>lda</code> with the name of the training function of your method.
 Pass all required arguments to the training function.
-The data can be extracted from the task via the <a href="../../../man/getTaskData.html">getTaskData</a> function.
+The data can be extracted from the task via the <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskData.html">getTaskData</a> function.
 Pass further arguments like case weights via <code>.weights</code> to the training method.</p>
 <pre class="prettyprint well"><code class="r">trainLearner.classif.lda = function(.learner, .task, .subset, .weights,  ...) {
   f = getTaskFormula(.task)

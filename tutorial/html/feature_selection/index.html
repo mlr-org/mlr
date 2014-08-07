@@ -210,9 +210,9 @@ are. <strong>mlr</strong> supports <a href="#Filter">filters</a> and <a href="#W
 <h2 id="filters">Filters</h2>
 <p>Filters are the simplest approach to find features that do not contain a lot of
 additional information given the other features and can be left out.
-Different methods are built into <strong>mlr</strong>'s function <a href="../../../man/getFeatureFilterValues.html">getFeatureFilterValues</a>
+Different methods are built into <strong>mlr</strong>'s function <a href="http://www.rdocumentation.org/packages/mlr/functions/getFeatureFilterValues.html">getFeatureFilterValues</a>
 and all access filter algorithms from the package <code>FSelector</code>.
-The function is given a <a href="../../../man/Task.html">Task</a> and simply returns a vector characterising
+The function is given a <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> and simply returns a vector characterising
 the importance of the different features.</p>
 <pre class="prettyprint well"><code class="r">task = makeClassifTask(data=iris, target=&quot;Species&quot;)
 importance = getFilterValues(task, method=&quot;information.gain&quot;)
@@ -235,13 +235,13 @@ importance = getFilterValues(task, method=&quot;information.gain&quot;)
 </code></pre>
 
 <p>According to this filter, <code>Petal.Width</code> and <code>Petal.Length</code> contain the most information.
-With <strong>mlr</strong>'s function <a href="../../../man/filterFeatures.html">filterFeatures</a>, you can now filter the features in
+With <strong>mlr</strong>'s function <a href="http://www.rdocumentation.org/packages/mlr/functions/filterFeatures.html">filterFeatures</a>, you can now filter the features in
 the task by leaving out all but a given number of features with the highest
 feature importance.</p>
 <pre class="prettyprint well"><code class="r">filtered.task = filterFeatures(task, method=&quot;information.gain&quot;, select=&quot;abs&quot;, val=2)
 </code></pre>
 
-<p>Other filter options in <a href="../../../man/filterFeatures.html">filterFeatures</a> are to require a percentage of
+<p>Other filter options in <a href="http://www.rdocumentation.org/packages/mlr/functions/filterFeatures.html">filterFeatures</a> are to require a percentage of
 features to be filtered instead or to set a threshold for the numerical importance
 values.</p>
 <p>In a proper experimental set up you might want to automate the selection of the
@@ -266,8 +266,8 @@ rsres$aggr
 <p>You may want to know which features have been used. Luckily, we have called
 <code>resample</code> with the argument <code>models=TRUE</code>, which means that <code>rsres$models</code>
 contains a <code>list</code> of each model used for a fold.
-In this case the <a href="../../../man/Learner.html">Learner</a> is also of the class <a href="../../../man/FilterWrapper.html">FilterWrapper</a> and we can call
-<a href="../../../man/getFilteredFeatures.html">getFilteredFeatures</a> on each model.</p>
+In this case the <a href="http://www.rdocumentation.org/packages/mlr/functions/Learner.html">Learner</a> is also of the class <a href="http://www.rdocumentation.org/packages/mlr/functions/FilterWrapper.html">FilterWrapper</a> and we can call
+<a href="http://www.rdocumentation.org/packages/mlr/functions/getFilteredFeatures.html">getFilteredFeatures</a> on each model.</p>
 <pre class="prettyprint well"><code class="r">sfeats = sapply(rsres$models, getFilteredFeatures)
 table(sfeats)
 </code></pre>
@@ -312,7 +312,7 @@ achieve on a given subset of the features in the data to do the filtering.</p>
 <h3 id="classification-example">Classification example</h3>
 <p>Let's train a decision tree on the <code>iris</code> data and use a sequential forward
 search to find the best set of features w.r.t. the mean misclassification error
-(<a href="../../../man/mmce.html">mmce</a>).</p>
+(<a href="http://www.rdocumentation.org/packages/mlr/functions/mmce.html">mmce</a>).</p>
 <pre class="prettyprint well"><code class="r">task = makeClassifTask(data=iris, target=&quot;Species&quot;)
 lrn = makeLearner(&quot;classif.rpart&quot;)
 rdesc = makeResampleDesc(&quot;Holdout&quot;)
@@ -369,7 +369,7 @@ sfSeq = selectFeatures(learner=lrn, task=task, resampling=rdesc, control=ctrlSeq
 <h3 id="regression-example">Regression example</h3>
 <p>We fit a simple linear regression model to the <code>BostonHousing</code> data set and
 use a genetic algorithm to find a feature set that minimises the mean squared
-error (<a href="../../../man/mse.html">mse</a>).</p>
+error (<a href="http://www.rdocumentation.org/packages/mlr/functions/mse.html">mse</a>).</p>
 <pre class="prettyprint well"><code class="r">data(BostonHousing, package = &quot;mlbench&quot;)
 
 task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)

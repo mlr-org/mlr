@@ -203,7 +203,7 @@
 They can either be selected by the user or through resampling,
 e.g. cross-validation. Setting them by hand was already covered in the
 section about <a href="../train/">training</a> and <a href="../resample/">resampling</a> -- simply use the
-<code>par.val</code> argument in the <a href="../../../man/makeLearner.html">makeLearner</a> method.</p>
+<code>par.val</code> argument in the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">makeLearner</a> method.</p>
 <p>Grid search is one of the standard -- albeit slow -- ways to choose an
 appropriate set of parameters from a given range of values.</p>
 <h2 id="classification-example">Classification example</h2>
@@ -215,9 +215,9 @@ task (see the part on <a href="../train/">training</a> for more information):</p
 <pre class="prettyprint well"><code class="r">task = makeClassifTask(data=iris, target=&quot;Species&quot;)
 </code></pre>
 
-<p>Next, we need to create a [ParamSet]<a href="../../../man/makeParamSet.html">makeParamSet</a> object that describes
+<p>Next, we need to create a [ParamSet]<a href="http://www.rdocumentation.org/packages/mlr/functions/makeParamSet.html">makeParamSet</a> object that describes
 the parameter space we wish to search. This is done through the function
-<a href="../../../man/makeParamSet.html">makeParamSet</a>. We add discrete parameters for the <code>C</code> and <code>sigma</code> parameter
+<a href="http://www.rdocumentation.org/packages/mlr/functions/makeParamSet.html">makeParamSet</a>. We add discrete parameters for the <code>C</code> and <code>sigma</code> parameter
 of the SVM to the parameter set. More details concerning parameter sets are
 explained in section parameters (FIXME).</p>
 <pre class="prettyprint well"><code class="r">ps = makeParamSet(makeDiscreteParam(&quot;C&quot;, values=2^(-2:2)),
@@ -231,13 +231,13 @@ like in the <a href="../resample/">resampling</a> part of the tutorial:</p>
 </code></pre>
 
 <p>Before we can actually tune our classifier and identify the best parameter
-setting, we need an instance of a <a href="../../../man/TuneControl.html">TuneControl</a> object. These describe the
+setting, we need an instance of a <a href="http://www.rdocumentation.org/packages/mlr/functions/TuneControl.html">TuneControl</a> object. These describe the
 optimization strategy used. Here we use a grid search:</p>
 <pre class="prettyprint well"><code class="r">ctrl = makeTuneControlGrid()
 </code></pre>
 
 <p>Finally, combining all the previous pieces, we can tune the SVM
-using our <a href="../../../man/TuneControl.html">TuneControl</a> instance and the resampling strategy
+using our <a href="http://www.rdocumentation.org/packages/mlr/functions/TuneControl.html">TuneControl</a> instance and the resampling strategy
 described by the <code>rdesc</code> variable.</p>
 <pre class="prettyprint well"><code class="r">r = tuneParams(makeLearner(&quot;classif.ksvm&quot;), task=task, resampling=rdesc, par.set=ps, control=ctrl, measures=list(mmce, setAggregation(mmce, test.sd)))
 </code></pre>

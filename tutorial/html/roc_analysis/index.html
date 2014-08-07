@@ -255,7 +255,7 @@ r2 = resample(lrn2, task, rdesc, show.info = FALSE)
 </code></pre>
 
 <p>Now we have to convert each prediction within the resample-result to a ROCR
-prediction using the <a href="../../../man/asROCRPrediction.html">asROCRPrediction</a> function.
+prediction using the <a href="http://www.rdocumentation.org/packages/mlr/functions/asROCRPrediction.html">asROCRPrediction</a> function.
 Afterwards we let <code>ROCR</code> calculate the performance measures and plot the ROC.
 As we have one curve for each learner and each cross validation fold we might want to average the curves from the cross validation by using <code>avg="threshold"</code>.
 Otherwise, [&amp;plot.performance] will draw a curve for each fold.

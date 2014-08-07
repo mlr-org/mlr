@@ -203,16 +203,16 @@
 data set and all relevant information regarding the purpose of the
 task, e.g, the target variable.</p>
 <p>The tasks are organised in a hierarchy, with the generic
-<a href="../../../man/Task.html">Task</a> at the top.
-The concrete tasks that can be instantiated are [ClassifTask]<a href="../../../man/Task.html">Task</a> for classification,
-[RegrTask]<a href="../../../man/Task.html">Task</a> for regression, [SurvTask]<a href="../../../man/Task.html">Task</a> for survival
-analysis, [CostSensTask]<a href="../../../man/Task.html">Task</a> for
-cost-sensitive learning, and [ClusterTask]<a href="../../../man/Task.html">Task</a> for clustering.</p>
+<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> at the top.
+The concrete tasks that can be instantiated are [ClassifTask]<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> for classification,
+[RegrTask]<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> for regression, [SurvTask]<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> for survival
+analysis, [CostSensTask]<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> for
+cost-sensitive learning, and [ClusterTask]<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> for clustering.</p>
 <p>There are dedicated functions to create these tasks given data and other
-relevant information. These are [makeClassifTask]<a href="../../../man/Task.html">Task</a>,
-[makeRegrTask]<a href="../../../man/Task.html">Task</a>,
-[makeSurvTask]<a href="../../../man/Task.html">Task</a>, [makeCostSensTask]<a href="../../../man/Task.html">Task</a>, and
-[makeClusterTask]<a href="../../../man/Task.html">Task</a>.</p>
+relevant information. These are [makeClassifTask]<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>,
+[makeRegrTask]<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>,
+[makeSurvTask]<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>, [makeCostSensTask]<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>, and
+[makeClusterTask]<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
 <p>In the following example, we define a classification task for the data
 set <code>BreastCancer</code> (from the package mlbench) and exclude the ID
 variable from all further model fitting and evaluation.</p>
@@ -274,7 +274,7 @@ one.</p>
 </code></pre>
 
 <p>There are also some convenient methods to access properties and parts of the task.
-The most important ones are listed in <a href="../../../man/Task.html">Task</a>.</p>
+The most important ones are listed in <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
 <p>Here are some examples.</p>
 <pre class="prettyprint well"><code class="r"># get the names of the input variables:
 getTaskFeatureNames(classif.task)
@@ -316,12 +316,12 @@ str(getTaskData(classif.task))
 ##  $ Class          : Factor w/ 2 levels &quot;benign&quot;,&quot;malignant&quot;: 1 1 1 1 1 2 1 1 1 1 ...
 </code></pre>
 
-<p>Note the many options <a href="../../../man/getTaskData.html">getTaskData</a> provides to convert the data set into a convenient format.
+<p>Note the many options <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskData.html">getTaskData</a> provides to convert the data set into a convenient format.
 This is especially handy when you integrate a learner from another package into
 <strong>mlr</strong>.</p>
 <p>If you are more technically minded, you could also access
 the information directly stored in the slot called <code>task$task.desc</code>,
-which stands for "description" and is of class <a href="../../../man/TaskDesc.html">TaskDesc</a>.</p>
+which stands for "description" and is of class <a href="http://www.rdocumentation.org/packages/mlr/functions/TaskDesc.html">TaskDesc</a>.</p>
 <pre class="prettyprint well"><code class="r">str(classif.task$task.desc)
 </code></pre>
 
@@ -341,7 +341,7 @@ which stands for "description" and is of class <a href="../../../man/TaskDesc.ht
 ##  - attr(*, &quot;class&quot;)= chr [1:2] &quot;TaskDescClassif&quot; &quot;TaskDesc&quot;
 </code></pre>
 
-<p>The <a href="../../../man/Task.html">Task</a> help page also lists several other arguments
+<p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> help page also lists several other arguments
 to describe further details of the problem.</p>
 <p>For example, we could include a blocking factor into the task.
 This would tell the task that some observations "belong together", and should
