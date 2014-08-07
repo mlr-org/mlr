@@ -219,21 +219,27 @@ table(data$class)
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">data.over = oversample(data, &quot;class&quot;, rate=4)
-table(data.over$class)
 </code></pre>
 
-<pre class="prettyprint well"><code>## 
-##  A  B 
-## 80 80
+<pre class="prettyprint well"><code>## Error: unused argument (&quot;class&quot;)
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">table(data.over$class)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'data.over' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">data.under = undersample(data, &quot;class&quot;, rate=1/4)
-table(data.under$class)
 </code></pre>
 
-<pre class="prettyprint well"><code>## 
-##  A  B 
-## 20 20
+<pre class="prettyprint well"><code>## Error: unused argument (&quot;class&quot;)
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">table(data.under$class)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'data.under' not found
 </code></pre>
 
 <h2 id="tasks">Tasks</h2>
@@ -264,14 +270,14 @@ performance(predict(mod, newdata = data.even), measures=mmce)
 </code></pre>
 
 <pre class="prettyprint well"><code>## mmce 
-## 0.39
+## 0.38
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures=mmce)
 </code></pre>
 
 <pre class="prettyprint well"><code>## mmce 
-## 0.39
+##  0.5
 </code></pre>
 
 <h2 id="learners">Learners</h2>
@@ -293,14 +299,14 @@ performance(predict(mod, newdata = data.even), measures=mmce)
 </code></pre>
 
 <pre class="prettyprint well"><code>## mmce 
-##  0.3
+## 0.55
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures=mmce)
 </code></pre>
 
 <pre class="prettyprint well"><code>## mmce 
-## 0.39
+##  0.4
 </code></pre>
 
 </div>

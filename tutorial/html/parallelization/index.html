@@ -207,7 +207,6 @@ parallelStartSocket(2)
 </code></pre>
 
 <pre class="prettyprint well"><code>## Starting parallelization in mode=socket with cpus=2.
-## Loading required package: parallel
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">task = makeClassifTask(data = iris, target = &quot;Species&quot;)
@@ -221,8 +220,9 @@ lrn = makeLearner(&quot;classif.lda&quot;)
 r = resample(lrn, task, rdesc)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Mapping in parallel: mode = socket; cpus = 2; elements = 4.
-## [Resample] Result: mmce.test.mean=0.0201
+<pre class="prettyprint well"><code>## Exporting objects to slaves for mode socket: .mlr.slave.options
+## Mapping in parallel: mode = socket; cpus = 2; elements = 4.
+## [Resample] Result: mmce.test.mean=0.0197
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">parallelStop()

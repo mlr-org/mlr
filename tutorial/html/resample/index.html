@@ -247,9 +247,9 @@ r = resample(lrn, task, rdesc)
 ## 
 ## $measures.test
 ##   iter mmce
-## 1    1 0.02
+## 1    1 0.00
 ## 2    2 0.04
-## 3    3 0.00
+## 3    3 0.02
 ## 
 ## $aggr
 ## mmce.test.mean 
@@ -263,15 +263,22 @@ r = resample(lrn, task, rdesc)
 ## predict.type: response
 ## threshold: 
 ## time (mean): 0.00
-## 'data.frame':    150 obs. of  5 variables:
-##  $ id      : int  3 5 6 7 9 10 12 14 18 21 ...
-##  $ truth   : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ response: Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
-##  $ set     : Factor w/ 1 level &quot;test&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##   id  truth response iter  set
+## 1  4 setosa   setosa    1 test
+## 2 10 setosa   setosa    1 test
+## 3 14 setosa   setosa    1 test
+## 4 15 setosa   setosa    1 test
+## 5 17 setosa   setosa    1 test
+## 6 18 setosa   setosa    1 test
 ## 
 ## $models
 ## NULL
+## 
+## $err.msgs
+##   iter train predict
+## 1    1  &lt;NA&gt;    &lt;NA&gt;
+## 2    2  &lt;NA&gt;    &lt;NA&gt;
+## 3    3  &lt;NA&gt;    &lt;NA&gt;
 ## 
 ## $extract
 ## $extract[[1]]
@@ -305,7 +312,7 @@ r = resample(lrn, task, rdesc)
 <pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mse.test.mean=24.5
+## [Resample] Result: mse.test.mean=23.6
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r
@@ -319,13 +326,13 @@ r = resample(lrn, task, rdesc)
 ## 
 ## $measures.test
 ##   iter   mse
-## 1    1 20.42
-## 2    2 29.01
-## 3    3 24.01
+## 1    1 22.53
+## 2    2 23.30
+## 3    3 24.97
 ## 
 ## $aggr
 ## mse.test.mean 
-##         24.48 
+##          23.6 
 ## 
 ## $pred
 ## Resampled Prediction for:
@@ -335,15 +342,22 @@ r = resample(lrn, task, rdesc)
 ## predict.type: response
 ## threshold: 
 ## time (mean): 0.00
-## 'data.frame':    506 obs. of  5 variables:
-##  $ id      : int  6 12 14 15 19 20 24 25 31 35 ...
-##  $ truth   : num  28.7 18.9 20.4 18.2 20.2 18.2 14.5 15.6 12.7 13.5 ...
-##  $ response: num  25 22.7 19.2 19.1 16 ...
-##  $ iter    : int  1 1 1 1 1 1 1 1 1 1 ...
-##  $ set     : Factor w/ 1 level &quot;test&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##    id truth response iter  set
+## 1   1  24.0    29.97    1 test
+## 7   7  22.9    23.06    1 test
+## 9   9  16.5    11.63    1 test
+## 10 10  18.9    19.04    1 test
+## 16 16  19.9    19.42    1 test
+## 18 18  17.5    17.01    1 test
 ## 
 ## $models
 ## NULL
+## 
+## $err.msgs
+##   iter train predict
+## 1    1  &lt;NA&gt;    &lt;NA&gt;
+## 2    2  &lt;NA&gt;    &lt;NA&gt;
+## 3    3  &lt;NA&gt;    &lt;NA&gt;
 ## 
 ## $extract
 ## $extract[[1]]
@@ -496,7 +510,7 @@ r1 = resample(lrn, task, rinst, list(mmce, acc))
 <pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.06,acc.test.mean=0.94
+## [Resample] Result: mmce.test.mean=0.0533,acc.test.mean=0.947
 </code></pre>
 
 <p>Let's set a couple of hyperparameters for rpart:</p>
@@ -507,7 +521,7 @@ r1 = resample(lrn1, task, rinst, list(mmce, acc))
 <pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.06,acc.test.mean=0.94
+## [Resample] Result: mmce.test.mean=0.0533,acc.test.mean=0.947
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Second resample for LDA as learner
@@ -527,13 +541,13 @@ r1[c(&quot;measures.test&quot;,&quot;aggr&quot;)]
 
 <pre class="prettyprint well"><code>## $measures.test
 ##   iter mmce  acc
-## 1    1 0.08 0.92
+## 1    1 0.04 0.96
 ## 2    2 0.06 0.94
-## 3    3 0.04 0.96
+## 3    3 0.06 0.94
 ## 
 ## $aggr
 ## mmce.test.mean  acc.test.mean 
-##           0.06           0.94
+##        0.05333        0.94667
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r2[c(&quot;measures.test&quot;,&quot;aggr&quot;)]
@@ -542,8 +556,8 @@ r1[c(&quot;measures.test&quot;,&quot;aggr&quot;)]
 <pre class="prettyprint well"><code>## $measures.test
 ##   iter mmce  acc
 ## 1    1 0.04 0.96
-## 2    2 0.02 0.98
-## 3    3 0.02 0.98
+## 2    2 0.04 0.96
+## 3    3 0.00 1.00
 ## 
 ## $aggr
 ## mmce.test.mean  acc.test.mean 
@@ -556,9 +570,9 @@ the <code>measures.test</code> element of the result list:</p>
 </code></pre>
 
 <pre class="prettyprint well"><code>##   iter mmce  acc
-## 1    1 0.08 0.92
+## 1    1 0.04 0.96
 ## 2    2 0.06 0.94
-## 3    3 0.04 0.96
+## 3    3 0.06 0.94
 </code></pre>
 
 <p>As you can see above, every fold of the 3-fold cross-validation gives one mean
@@ -568,7 +582,7 @@ misclassification error (in the second column).</p>
 </code></pre>
 
 <pre class="prettyprint well"><code>## mmce.test.mean  acc.test.mean 
-##           0.06           0.94
+##        0.05333        0.94667
 </code></pre>
 
 <p>The latter value is the aggregation, i.e. by default the mean, of the three
@@ -601,8 +615,8 @@ lrn1 = makeLearner(&quot;regr.nnet&quot;)
 </code></pre>
 
 <pre class="prettyprint well"><code>## # weights:  46
-## initial  value 307161.783359 
-## final  value 46090.389486 
+## initial  value 325390.086386 
+## final  value 45636.341126 
 ## converged
 </code></pre>
 
@@ -610,8 +624,8 @@ lrn1 = makeLearner(&quot;regr.nnet&quot;)
 </code></pre>
 
 <pre class="prettyprint well"><code>## # weights:  46
-## initial  value 252205.075180 
-## final  value 37327.206502 
+## initial  value 308038.132453 
+## final  value 44145.272095 
 ## converged
 </code></pre>
 
@@ -619,12 +633,12 @@ lrn1 = makeLearner(&quot;regr.nnet&quot;)
 </code></pre>
 
 <pre class="prettyprint well"><code>## # weights:  46
-## initial  value 301000.200230 
-## final  value 43174.617154 
+## initial  value 308861.385221 
+## final  value 40138.723182 
 ## converged
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] Result: mse.test.mean=80.2,medae.test.mean= 4.3
+<pre class="prettyprint well"><code>## [Resample] Result: mse.test.mean=81.6,medae.test.mean=4.81
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Another resampling for the k-Nearest Neighbor regression
@@ -632,6 +646,12 @@ lrn2 = makeLearner(&quot;regr.kknn&quot;)
 </code></pre>
 
 <pre class="prettyprint well"><code>## Loading required package: kknn
+## 
+## Attaching package: 'kknn'
+## 
+## The following object is masked from 'package:caret':
+## 
+##     contr.dummy
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r2 = resample(lrn2, task, rinst, measures = ms)
@@ -640,7 +660,7 @@ lrn2 = makeLearner(&quot;regr.kknn&quot;)
 <pre class="prettyprint well"><code>## [Resample] OOB bootstrapping iter: 1
 ## [Resample] OOB bootstrapping iter: 2
 ## [Resample] OOB bootstrapping iter: 3
-## [Resample] Result: mse.test.mean=20.3,medae.test.mean=1.85
+## [Resample] Result: mse.test.mean=16.6,medae.test.mean=1.84
 </code></pre>
 
 <p>Now, we can compare both methods regarding mean squared error (<a href="../../../man/mse.html">mse</a>) and the
@@ -650,13 +670,13 @@ median of absolute errors (<a href="../../../man/medae.html">medae</a>):</p>
 
 <pre class="prettyprint well"><code>## $measures.test
 ##   iter   mse medae
-## 1    1 72.96 4.979
-## 2    2 90.06 4.087
-## 3    3 77.46 3.848
+## 1    1 74.32 4.853
+## 2    2 82.14 4.804
+## 3    3 88.39 4.759
 ## 
 ## $aggr
 ##   mse.test.mean medae.test.mean 
-##          80.158           4.304
+##          81.615           4.805
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r2[c(&quot;measures.test&quot;,&quot;aggr&quot;)]
@@ -664,13 +684,13 @@ median of absolute errors (<a href="../../../man/medae.html">medae</a>):</p>
 
 <pre class="prettyprint well"><code>## $measures.test
 ##   iter   mse medae
-## 1    1 18.98 1.729
-## 2    2 20.37 2.188
-## 3    3 21.57 1.644
+## 1    1 10.04 1.771
+## 2    2 13.61 1.633
+## 3    3 26.22 2.119
 ## 
 ## $aggr
 ##   mse.test.mean medae.test.mean 
-##          20.308           1.854
+##          16.623           1.841
 </code></pre>
 
 </div>

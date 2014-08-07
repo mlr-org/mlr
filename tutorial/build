@@ -1,7 +1,72 @@
-#!/bin/bash
+#!/usr/bin/env Rscript
 
-for f in src/*.Rmd; do
-    echo "Knitting '${f}'"
-    ./knit "$f" || exit 1
-done
-mkdocs build || echo "Build failed!" && exit 2
+src = "src"
+dest = "docs"
+macros = list(
+  list(pattern = "\\\\man\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\1.html)"),
+  list(pattern = "\\\\man2\\[([[:alnum:]()]+)\\]\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\2.html)")
+)
+
+message("Loading required packages ...")
+suppressPackageStartupMessages({
+# conflicting packages loaded first
+library(caret)
+library(ROCR)
+
+# required to build
+library(methods)
+library(parallel)
+library(pander, quietly = TRUE)
+library(BBmisc, quietly = TRUE)
+library(knitr, quietly = TRUE)
+library(stringr, quietly = TRUE)
+library(digest, quietly = TRUE)
+library(mlr, quietly = TRUE)
+})
+
+options(warn = 2L)
+opts_knit$set(upload.fun = image_uri)
+
+exit = function(status, msg, ...) {
+  if (!missing(msg))
+    cat(sprintf(msg, ...), "\n\n", sep = "")
+  quit(save = "no", status = status)
+}
+
+objToSeed = function(x, algo="crc32") {
+ hash = digest(x, algo = algo)
+ strtoi(sprintf("0x%s", substr(hash, 1L, 7L)))
+}
+
+knitIt = function(f) {
+  messagef("Knitting file '%s' ...", f)
+  lines = readLines(file.path(src, f))
+  for (macro in macros)
+    lines = str_replace_all(lines, macro$pattern, macro$replacement)
+  cache.path = paste0(file.path("cache", f), .Platform$file.sep)
+
+  opts_chunk$set(cache = TRUE, cache.path = cache.path)
+  set.seed(objToSeed(f))
+  ok = try(knit(
+      text = lines,
+      output = file.path(dest, str_replace(f, "\\.Rmd$", "\\.md")),
+      quiet = TRUE))
+  if (inherits(ok, "try-error"))
+    exit(1L, "Error knitting file '%s':\n%s", f, as.character(ok))
+}
+
+if (!isDirectory("docs"))
+  dir.create("docs")
+
+ok = mclapply(list.files(src, pattern = "\\.Rmd$"), knitIt, mc.preschedule = FALSE)
+
+ok = system3("mkdocs", "build")
+if(ok$exit.code == 0L) {
+  message("Build successfull!")
+  exit(0L)
+}
+
+messagef("Build failed!")
+exit(ok$exit.code)
+
+# vim: set ft=r:

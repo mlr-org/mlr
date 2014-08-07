@@ -219,7 +219,7 @@ lrn = makeLearner(&quot;classif.lda&quot;)
 mod
 </code></pre>
 
-<pre class="prettyprint well"><code>## Learner model for id=classif.lda class=classif.lda
+<pre class="prettyprint well"><code>## Model for id = classif.lda class = classif.lda
 ## Trained on obs: 150
 ## Used features: 4
 ## Hyperparameters:
@@ -235,7 +235,7 @@ mod = train(lrn, task)
 mod
 </code></pre>
 
-<pre class="prettyprint well"><code>## Learner model for id=regr.lm class=regr.lm
+<pre class="prettyprint well"><code>## Model for id = regr.lm class = regr.lm
 ## Trained on obs: 506
 ## Used features: 13
 ## Hyperparameters:
@@ -244,22 +244,25 @@ mod
 <h3 id="clustering-example">Clustering example</h3>
 <p>We cluster the <code>iris</code> data set without the target variable.</p>
 <pre class="prettyprint well"><code class="r">task = makeClusterTask(data = iris[,-5])
+lrn = makeLearner(&quot;cluster.XMeans&quot;)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;makeClusterTask&quot;
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;cluster.XMeans&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: S3 method 'makeRLearner.cluster.XMeans' not found
+<pre class="prettyprint well"><code>## Loading required package: RWeka
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod = train(lrn, task)
-mod
 </code></pre>
 
-<pre class="prettyprint well"><code>## Learner model for id=regr.lm class=regr.lm
+<pre class="prettyprint well"><code>## Error: Required Weka package 'XMeans' is not installed.
+</code></pre>
+
+<pre class="prettyprint well"><code>## Timing stopped at: 0.109 0.005 0.077
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod
+</code></pre>
+
+<pre class="prettyprint well"><code>## Model for id = regr.lm class = regr.lm
 ## Trained on obs: 506
 ## Used features: 13
 ## Hyperparameters:

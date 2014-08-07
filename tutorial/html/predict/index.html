@@ -226,9 +226,13 @@ pred
 ## predict.type: response
 ## threshold: 
 ## time: 0.00
-## 'data.frame':    150 obs. of  2 variables:
-##  $ truth   : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
-##  $ response: Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##    truth response
+## 1 setosa   setosa
+## 2 setosa   setosa
+## 3 setosa   setosa
+## 4 setosa   setosa
+## 5 setosa   setosa
+## 6 setosa   setosa
 </code></pre>
 
 <h3 id="regression-example">Regression example</h3>
@@ -245,35 +249,42 @@ predict(mod, newdata = BostonHousing)
 <pre class="prettyprint well"><code>## Prediction:
 ## predict.type: response
 ## threshold: 
-## time: 0.03
-## 'data.frame':    506 obs. of  2 variables:
-##  $ truth   : num  24 21.6 34.7 33.4 36.2 28.7 22.9 27.1 16.5 18.9 ...
-##  $ response: num  30 25 30.6 28.6 27.9 ...
+## time: 0.00
+##   truth response
+## 1  24.0    30.00
+## 2  21.6    25.03
+## 3  34.7    30.57
+## 4  33.4    28.61
+## 5  36.2    27.94
+## 6  28.7    25.26
 </code></pre>
 
 <h3 id="clustering-example">Clustering example</h3>
 <p>We cluster the <code>iris</code> data set without the target variable and predict using
 the same data.</p>
 <pre class="prettyprint well"><code class="r">task = makeClusterTask(data = iris[,-5])
+lrn = makeLearner(&quot;cluster.XMeans&quot;)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: could not find function &quot;makeClusterTask&quot;
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;cluster.XMeans&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: S3 method 'makeRLearner.cluster.XMeans' not found
+<pre class="prettyprint well"><code>## Loading required package: RWeka
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod = train(lrn, task)
-predict(mod, newdata = iris[,-5])
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: Required Weka package 'XMeans' is not installed.
+</code></pre>
+
+<pre class="prettyprint well"><code>## Timing stopped at: 0.092 0.007 0.072
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">predict(mod, newdata = iris[,-5])
 </code></pre>
 
 <pre class="prettyprint well"><code>## Error: object 'crim' not found
 </code></pre>
 
-<pre class="prettyprint well"><code>## Timing stopped at: 0 0 0
+<pre class="prettyprint well"><code>## Timing stopped at: 0.001 0 0.001
 </code></pre>
 
 <h2 id="further-information">Further information</h2>
@@ -447,8 +458,13 @@ lrn = makeLearner(&quot;regr.gbm&quot;, n.trees = 100)
 <pre class="prettyprint well"><code>## Loading required package: gbm
 ## Loading required package: survival
 ## Loading required package: splines
-## Loading required package: lattice
-## Loading required package: parallel
+## 
+## Attaching package: 'survival'
+## 
+## The following object is masked from 'package:caret':
+## 
+##     cluster
+## 
 ## Loaded gbm 2.1
 </code></pre>
 
@@ -460,9 +476,9 @@ head(pred$data)
 </code></pre>
 
 <pre class="prettyprint well"><code>##   truth response
-## 1  21.6    22.23
-## 2  33.4    23.29
-## 3  28.7    22.32
+## 1  21.6    22.22
+## 2  33.4    23.17
+## 3  28.7    22.33
 ## 4  27.1    22.14
 ## 5  18.9    22.14
 ## 6  18.9    22.15

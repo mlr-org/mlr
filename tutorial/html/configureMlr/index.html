@@ -207,8 +207,12 @@ to the documentation of <a href="../../../man/configureMlr.html">configureMlr</a
 <pre class="prettyprint well"><code class="r">## Define a learning task and an appropriate learner
 task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.ksvm&quot;)
+</code></pre>
 
-## Perform a 3-fold cross-validation
+<pre class="prettyprint well"><code>## Loading required package: kernlab
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Perform a 3-fold cross-validation
 rdesc = makeResampleDesc(&quot;CV&quot;, iters=3)
 r = resample(lrn, task, rdesc)
 </code></pre>
@@ -231,7 +235,7 @@ r = resample(lrn, task, rdesc)
 <pre class="prettyprint well"><code>## Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] Result: mmce.test.mean=0.0533
+<pre class="prettyprint well"><code>## [Resample] Result: mmce.test.mean=0.06
 </code></pre>
 
 <p>Just try the following:</p>

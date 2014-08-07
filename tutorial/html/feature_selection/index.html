@@ -216,11 +216,22 @@ The function is given a <a href="../../../man/Task.html">Task</a> and simply ret
 the importance of the different features.</p>
 <pre class="prettyprint well"><code class="r">task = makeClassifTask(data=iris, target=&quot;Species&quot;)
 importance = getFilterValues(task, method=&quot;information.gain&quot;)
-importance
 </code></pre>
 
-<pre class="prettyprint well"><code>## Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
-##       0.6523       0.3856       1.3565       1.3784
+<pre class="prettyprint well"><code>## Loading required package: FSelector
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">importance
+</code></pre>
+
+<pre class="prettyprint well"><code>## FilterValues:
+## Task: iris
+## Method: information.gain
+##                      name    val    type
+## Sepal.Length Sepal.Length 0.6523 numeric
+## Sepal.Width   Sepal.Width 0.3856 numeric
+## Petal.Length Petal.Length 1.3565 numeric
+## Petal.Width   Petal.Width 1.3784 numeric
 </code></pre>
 
 <p>According to this filter, <code>Petal.Width</code> and <code>Petal.Length</code> contain the most information.
@@ -249,7 +260,7 @@ rsres$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code>## mmce.test.mean 
-##        0.07333
+##        0.05333
 </code></pre>
 
 <p>You may want to know which features have been used. Luckily, we have called
@@ -272,7 +283,12 @@ The <code>Sepal.Width</code> did not make it into a single fold.</p>
 <pre class="prettyprint well"><code class="r">data(Sonar, package = &quot;mlbench&quot;)
 task = makeClassifTask(data = Sonar, target = &quot;Class&quot;, positive = &quot;M&quot;)
 lrn = makeLearner(&quot;classif.rpart&quot;)
-lrnFiltered = makeFilterWrapper(learner=lrn, fw.method=&quot;chi.squared&quot;, fw.select=&quot;threshold&quot;, fw.val=0)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: rpart
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">lrnFiltered = makeFilterWrapper(learner=lrn, fw.method=&quot;chi.squared&quot;, fw.select=&quot;threshold&quot;, fw.val=0)
 ps = makeParamSet(makeDiscreteParam(&quot;fw.val&quot;, values = seq(from=0.2, 0.4, by=0.05)))
 tuneRes = tuneParams(lrnFiltered, task=task, resampling=makeResampleDesc(&quot;CV&quot;, iters=5), par.set=ps, control=makeTuneControlGrid())
 </code></pre>
@@ -281,12 +297,13 @@ tuneRes = tuneParams(lrnFiltered, task=task, resampling=makeResampleDesc(&quot;C
 ##            Type len Def                Constr Req Trafo
 ## fw.val discrete   -   - 0.2,0.25,0.3,0.35,0.4   -     -
 ## With control class: TuneControlGrid
-## [Tune] 1: fw.val=0.2 : mmce.test.mean=0.294
-## [Tune] 1: fw.val=0.25 : mmce.test.mean=0.294
-## [Tune] 1: fw.val=0.3 : mmce.test.mean=0.274
-## [Tune] 1: fw.val=0.35 : mmce.test.mean=0.274
-## [Tune] 1: fw.val=0.4 : mmce.test.mean=0.288
-## [Tune] Result: fw.val=0.35 : mmce.test.mean=0.274
+## Imputation value: 1
+## [Tune] 1: fw.val=0.2 : mmce.test.mean=0.25
+## [Tune] 2: fw.val=0.25 : mmce.test.mean=0.25
+## [Tune] 3: fw.val=0.3 : mmce.test.mean=0.25
+## [Tune] 4: fw.val=0.35 : mmce.test.mean=0.289
+## [Tune] 5: fw.val=0.4 : mmce.test.mean=0.323
+## [Tune] Result: fw.val=0.3 : mmce.test.mean=0.25
 </code></pre>
 
 <h2 id="wrapper">Wrapper</h2>
@@ -304,14 +321,18 @@ ctrlSeq = makeFeatSelControlSequential(method=&quot;sfs&quot;)
 sfSeq = selectFeatures(learner=lrn, task=task, resampling=rdesc, control=ctrlSeq)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [selectFeatures] 1: 0 bits: mmce.test.mean= 0.7
-## [selectFeatures] 2: 1 bits: mmce.test.mean= 0.3
-## [selectFeatures] 2: 1 bits: mmce.test.mean=0.48
-## [selectFeatures] 2: 1 bits: mmce.test.mean=0.06
-## [selectFeatures] 2: 1 bits: mmce.test.mean= 0.1
-## [selectFeatures] 3: 2 bits: mmce.test.mean=0.06
-## [selectFeatures] 3: 2 bits: mmce.test.mean=0.06
-## [selectFeatures] 3: 2 bits: mmce.test.mean= 0.1
+<pre class="prettyprint well"><code>## [FeatSel] Started selecting features for learner 'classif.rpart'
+## With control class: FeatSelControlSequential
+## Imputation value: 1
+## [FeatSel] 1: 0 bits: mmce.test.mean=0.72
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.42
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.52
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.06
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.06
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.06
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.06
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.06
+## [FeatSel] Result: 1 bits : mmce.test.mean=0.06
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">sfSeq
@@ -331,16 +352,16 @@ sfSeq = selectFeatures(learner=lrn, task=task, resampling=rdesc, control=ctrlSeq
 ## 
 ## Path to optimum:
 ## --------------------------------------------------------------------------------
-## - Features:    0  Init   :                       Perf = 0.7  Diff: NA  *
+## - Features:    0  Init   :                       Perf = 0.72  Diff: NA  *
 ## --------------------------------------------------------------------------------
-## - Features:    1  Add    : Sepal.Length          Perf = 0.3  Diff: 0.4   
-## - Features:    1  Add    : Sepal.Width           Perf = 0.48  Diff: 0.22   
-## - Features:    1  Add    : Petal.Length          Perf = 0.06  Diff: 0.64  *
-## - Features:    1  Add    : Petal.Width           Perf = 0.1  Diff: 0.6   
+## - Features:    1  Add    : Sepal.Length          Perf = 0.42  Diff: 0.3   
+## - Features:    1  Add    : Sepal.Width           Perf = 0.52  Diff: 0.2   
+## - Features:    1  Add    : Petal.Length          Perf = 0.06  Diff: 0.66   
+## - Features:    1  Add    : Petal.Width           Perf = 0.06  Diff: 0.66  *
 ## --------------------------------------------------------------------------------
 ## - Features:    2  Add    : Sepal.Length          Perf = 0.06  Diff: 0   
 ## - Features:    2  Add    : Sepal.Width           Perf = 0.06  Diff: 0   
-## - Features:    2  Add    : Petal.Width           Perf = 0.1  Diff: -0.04   
+## - Features:    2  Add    : Petal.Length          Perf = 0.06  Diff: 0   
 ## 
 ## Stopped, because no improving feature was found.
 </code></pre>
@@ -361,8 +382,8 @@ sfGA
 </code></pre>
 
 <pre class="prettyprint well"><code>## FeatSel result:
-## Features (9): crim, zn, indus, chas, nox, rm, dis, ptratio, lstat
-## mse.test.mean=31.6
+## Features (10): crim, zn, indus, chas, nox, rm, dis, tax, ptratio, b
+## mse.test.mean=31.3
 </code></pre>
 
 </div>

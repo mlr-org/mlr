@@ -251,21 +251,21 @@ the time needed for training, the fitted model has to be passed.</p>
 </code></pre>
 
 <pre class="prettyprint well"><code>## timepredict 
-##       0.002
+##       0.004
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(pred = pred, measures = timetrain, model = mod)
 </code></pre>
 
 <pre class="prettyprint well"><code>## timetrain 
-##     0.006
+##     0.011
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(pred = pred, measures = timeboth, model = mod)
 </code></pre>
 
 <pre class="prettyprint well"><code>## timeboth 
-##    0.008
+##    0.015
 </code></pre>
 
 <p>Of course we can also calculate multiple performance measures at once by simply using a list of measures which can also include <a href="../create_measure/">your own measure</a>.</p>
@@ -274,9 +274,9 @@ performance(pred = pred, measures = ms, model = mod)
 </code></pre>
 
 <pre class="prettyprint well"><code>##           mmce.mmce             acc.acc timetrain.timetrain 
-##               0.040               0.960               0.006 
+##               0.040               0.960               0.011 
 ##   timeboth.timeboth 
-##               0.008
+##               0.015
 </code></pre>
 
 <h2 id="binary-classification">Binary classification</h2>
@@ -314,10 +314,6 @@ pred = predict(mod, task = task)
 performance(pred, measures = auc)
 </code></pre>
 
-<pre class="prettyprint well"><code>## KernSmooth 2.23 loaded
-## Copyright M. P. Wand 1997-2009
-</code></pre>
-
 <pre class="prettyprint well"><code>##    auc 
 ## 0.9224
 </code></pre>
@@ -343,8 +339,13 @@ lrn = makeLearner(&quot;regr.gbm&quot;, n.trees = 1000)
 <pre class="prettyprint well"><code>## Loading required package: gbm
 ## Loading required package: survival
 ## Loading required package: splines
-## Loading required package: lattice
-## Loading required package: parallel
+## 
+## Attaching package: 'survival'
+## 
+## The following object is masked from 'package:caret':
+## 
+##     cluster
+## 
 ## Loaded gbm 2.1
 </code></pre>
 
@@ -359,7 +360,7 @@ sapply(ms, function(meas) performance(pred, measures = meas))
 </code></pre>
 
 <pre class="prettyprint well"><code>## mse.mse mae.mae 
-##  42.804   4.553
+##  42.993   4.562
 </code></pre>
 
 <p>For the other task and learning types, the performance measures work in the same
