@@ -17,7 +17,6 @@ The function is given a \man[Task] and simply returns a vector characterising
 the importance of the different features.
 
 ```{r}
-library("mlr")
 task = makeClassifTask(data=iris, target="Species")
 importance = getFilterValues(task, method="information.gain")
 importance
@@ -64,8 +63,7 @@ The `Sepal.Width` did not make it into a single fold.
 
 ### Tuning the threshold
 ```{r}
-library("mlbench")
-data(Sonar)
+data(Sonar, package = "mlbench")
 task = makeClassifTask(data = Sonar, target = "Class", positive = "M")
 lrn = makeLearner("classif.rpart")
 lrnFiltered = makeFilterWrapper(learner=lrn, fw.method="chi.squared", fw.select="threshold", fw.val=0)
@@ -85,7 +83,6 @@ search to find the best set of features w.r.t. the mean misclassification error
 (\man[mmce]).
 
 ```{r}
-library("mlr")
 task = makeClassifTask(data=iris, target="Species")
 lrn = makeLearner("classif.rpart")
 rdesc = makeResampleDesc("Holdout")
@@ -104,8 +101,7 @@ use a genetic algorithm to find a feature set that minimises the mean squared
 error (\man[mse]).
 
 ```{r}
-library("mlbench")
-data(BostonHousing)
+data(BostonHousing, package = "mlbench")
 
 task = makeRegrTask(data = BostonHousing, target = "medv")
 lrn = makeLearner("regr.lm")

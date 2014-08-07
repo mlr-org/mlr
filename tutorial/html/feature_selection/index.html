@@ -93,10 +93,6 @@
                             </li>
                         
                             <li >
-                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
-                            </li>
-                        
-                            <li >
                                 <a href="../parallelization/">Parallelization</a>
                             </li>
                         
@@ -218,25 +214,13 @@ Different methods are built into <strong>mlr</strong>'s function <a href="../../
 and all access filter algorithms from the package <code>FSelector</code>.
 The function is given a <a href="../../../man/Task.html">Task</a> and simply returns a vector characterising
 the importance of the different features.</p>
-<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
-task = makeClassifTask(data=iris, target=&quot;Species&quot;)
+<pre class="prettyprint well"><code class="r">task = makeClassifTask(data=iris, target=&quot;Species&quot;)
 importance = getFilterValues(task, method=&quot;information.gain&quot;)
+importance
 </code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: FSelector
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">importance
-</code></pre>
-
-<pre class="prettyprint well"><code>## FilterValues:
-## Task: iris
-## Method: information.gain
-##                      name    val    type
-## Sepal.Length Sepal.Length 0.6523 numeric
-## Sepal.Width   Sepal.Width 0.3856 numeric
-## Petal.Length Petal.Length 1.3565 numeric
-## Petal.Width   Petal.Width 1.3784 numeric
+<pre class="prettyprint well"><code>## Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
+##       0.6523       0.3856       1.3565       1.3784
 </code></pre>
 
 <p>According to this filter, <code>Petal.Width</code> and <code>Petal.Length</code> contain the most information.
@@ -285,16 +269,10 @@ table(sfeats)
 <p>The selection of features seems to be very stable.
 The <code>Sepal.Width</code> did not make it into a single fold.</p>
 <h3 id="tuning-the-threshold">Tuning the threshold</h3>
-<pre class="prettyprint well"><code class="r">library(&quot;mlbench&quot;)
-data(Sonar)
+<pre class="prettyprint well"><code class="r">data(Sonar, package = &quot;mlbench&quot;)
 task = makeClassifTask(data = Sonar, target = &quot;Class&quot;, positive = &quot;M&quot;)
 lrn = makeLearner(&quot;classif.rpart&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: rpart
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">lrnFiltered = makeFilterWrapper(learner=lrn, fw.method=&quot;chi.squared&quot;, fw.select=&quot;threshold&quot;, fw.val=0)
+lrnFiltered = makeFilterWrapper(learner=lrn, fw.method=&quot;chi.squared&quot;, fw.select=&quot;threshold&quot;, fw.val=0)
 ps = makeParamSet(makeDiscreteParam(&quot;fw.val&quot;, values = seq(from=0.2, 0.4, by=0.05)))
 tuneRes = tuneParams(lrnFiltered, task=task, resampling=makeResampleDesc(&quot;CV&quot;, iters=5), par.set=ps, control=makeTuneControlGrid())
 </code></pre>
@@ -303,12 +281,11 @@ tuneRes = tuneParams(lrnFiltered, task=task, resampling=makeResampleDesc(&quot;C
 ##            Type len Def                Constr Req Trafo
 ## fw.val discrete   -   - 0.2,0.25,0.3,0.35,0.4   -     -
 ## With control class: TuneControlGrid
-## Imputation value: 1
 ## [Tune] 1: fw.val=0.2 : mmce.test.mean=0.294
-## [Tune] 2: fw.val=0.25 : mmce.test.mean=0.294
-## [Tune] 3: fw.val=0.3 : mmce.test.mean=0.274
-## [Tune] 4: fw.val=0.35 : mmce.test.mean=0.274
-## [Tune] 5: fw.val=0.4 : mmce.test.mean=0.288
+## [Tune] 1: fw.val=0.25 : mmce.test.mean=0.294
+## [Tune] 1: fw.val=0.3 : mmce.test.mean=0.274
+## [Tune] 1: fw.val=0.35 : mmce.test.mean=0.274
+## [Tune] 1: fw.val=0.4 : mmce.test.mean=0.288
 ## [Tune] Result: fw.val=0.35 : mmce.test.mean=0.274
 </code></pre>
 
@@ -319,8 +296,7 @@ achieve on a given subset of the features in the data to do the filtering.</p>
 <p>Let's train a decision tree on the <code>iris</code> data and use a sequential forward
 search to find the best set of features w.r.t. the mean misclassification error
 (<a href="../../../man/mmce.html">mmce</a>).</p>
-<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
-task = makeClassifTask(data=iris, target=&quot;Species&quot;)
+<pre class="prettyprint well"><code class="r">task = makeClassifTask(data=iris, target=&quot;Species&quot;)
 lrn = makeLearner(&quot;classif.rpart&quot;)
 rdesc = makeResampleDesc(&quot;Holdout&quot;)
 
@@ -328,18 +304,14 @@ ctrlSeq = makeFeatSelControlSequential(method=&quot;sfs&quot;)
 sfSeq = selectFeatures(learner=lrn, task=task, resampling=rdesc, control=ctrlSeq)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [FeatSel] Started selecting features for learner 'classif.rpart'
-## With control class: FeatSelControlSequential
-## Imputation value: 1
-## [FeatSel] 1: 0 bits: mmce.test.mean= 0.7
-## [FeatSel] 2: 1 bits: mmce.test.mean= 0.3
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.48
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.06
-## [FeatSel] 2: 1 bits: mmce.test.mean= 0.1
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.06
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.06
-## [FeatSel] 3: 2 bits: mmce.test.mean= 0.1
-## [FeatSel] Result: 1 bits : mmce.test.mean=0.06
+<pre class="prettyprint well"><code>## [selectFeatures] 1: 0 bits: mmce.test.mean= 0.7
+## [selectFeatures] 2: 1 bits: mmce.test.mean= 0.3
+## [selectFeatures] 2: 1 bits: mmce.test.mean=0.48
+## [selectFeatures] 2: 1 bits: mmce.test.mean=0.06
+## [selectFeatures] 2: 1 bits: mmce.test.mean= 0.1
+## [selectFeatures] 3: 2 bits: mmce.test.mean=0.06
+## [selectFeatures] 3: 2 bits: mmce.test.mean=0.06
+## [selectFeatures] 3: 2 bits: mmce.test.mean= 0.1
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">sfSeq
@@ -377,8 +349,7 @@ sfSeq = selectFeatures(learner=lrn, task=task, resampling=rdesc, control=ctrlSeq
 <p>We fit a simple linear regression model to the <code>BostonHousing</code> data set and
 use a genetic algorithm to find a feature set that minimises the mean squared
 error (<a href="../../../man/mse.html">mse</a>).</p>
-<pre class="prettyprint well"><code class="r">library(&quot;mlbench&quot;)
-data(BostonHousing)
+<pre class="prettyprint well"><code class="r">data(BostonHousing, package = &quot;mlbench&quot;)
 
 task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
 lrn = makeLearner(&quot;regr.lm&quot;)

@@ -93,10 +93,6 @@
                             </li>
                         
                             <li >
-                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
-                            </li>
-                        
-                            <li >
                                 <a href="../parallelization/">Parallelization</a>
                             </li>
                         
@@ -211,8 +207,7 @@
 the minority or undersample the majority class.</p>
 <h2 id="dataframe"><code>data.frame</code></h2>
 <p>First we show how it is done for <code>data.frame</code>s:</p>
-<pre class="prettyprint well"><code class="r">library(mlr)
-classA = data.frame(x = rnorm(20, mean=1), class=&quot;A&quot;)
+<pre class="prettyprint well"><code class="r">classA = data.frame(x = rnorm(20, mean=1), class=&quot;A&quot;)
 classB = data.frame(x = rnorm(80, mean=2), class=&quot;B&quot;)
 data = rbind(classA, classB)
 table(data$class)
@@ -224,27 +219,21 @@ table(data$class)
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">data.over = oversample(data, &quot;class&quot;, rate=4)
+table(data.over$class)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: unused argument (&quot;class&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">table(data.over$class)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'data.over' not found
+<pre class="prettyprint well"><code>## 
+##  A  B 
+## 80 80
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">data.under = undersample(data, &quot;class&quot;, rate=1/4)
+table(data.under$class)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: unused argument (&quot;class&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">table(data.under$class)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'data.under' not found
+<pre class="prettyprint well"><code>## 
+##  A  B 
+## 20 20
 </code></pre>
 
 <h2 id="tasks">Tasks</h2>
@@ -275,7 +264,7 @@ performance(predict(mod, newdata = data.even), measures=mmce)
 </code></pre>
 
 <pre class="prettyprint well"><code>## mmce 
-## 0.34
+## 0.39
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures=mmce)
@@ -304,14 +293,14 @@ performance(predict(mod, newdata = data.even), measures=mmce)
 </code></pre>
 
 <pre class="prettyprint well"><code>## mmce 
-## 0.39
+##  0.3
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures=mmce)
 </code></pre>
 
 <pre class="prettyprint well"><code>## mmce 
-## 0.34
+## 0.39
 </code></pre>
 
 </div>

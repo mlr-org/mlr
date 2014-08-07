@@ -93,10 +93,6 @@
                             </li>
                         
                             <li >
-                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
-                            </li>
-                        
-                            <li >
                                 <a href="../parallelization/">Parallelization</a>
                             </li>
                         
@@ -220,9 +216,7 @@ relevant information. These are <a href="../../../man/Task.html">makeClassifTask
 <p>In the following example, we define a classification task for the data
 set <code>BreastCancer</code> (from the package mlbench) and exclude the ID
 variable from all further model fitting and evaluation.</p>
-<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
-library(&quot;mlbench&quot;)
-data(BreastCancer)
+<pre class="prettyprint well"><code class="r">data(BreastCancer, package = &quot;mlbench&quot;)
 
 df = BreastCancer
 df$Id = NULL
@@ -251,20 +245,21 @@ e.g. the types of the features, the number of observations, whether
 missing values are present, the number of observations per class and so on.</p>
 <p>In many of the regression examples in this tutorial, we will use the <code>BostonHousing</code> data set:</p>
 <pre class="prettyprint well"><code class="r">data(BostonHousing)
-regr.task = makeRegrTask(id = &quot;BostonHousing&quot;, data = BostonHousing, target = &quot;medv&quot;)
-regr.task
 </code></pre>
 
-<pre class="prettyprint well"><code>## Supervised task: BostonHousing
-## Type: regr
-## Target: medv
-## Observations: 506
-## Features:
-## numerics  factors 
-##       12        1 
-## Missings: FALSE
-## Has weights: FALSE
-## Has blocking: FALSE
+<pre class="prettyprint well"><code>## Warning: data set 'BostonHousing' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">regr.task = makeRegrTask(id = &quot;BostonHousing&quot;, data = BostonHousing, target = &quot;medv&quot;)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'BostonHousing' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">regr.task
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'regr.task' not found
 </code></pre>
 
 <h2 id="further-information">Further information</h2>
@@ -301,7 +296,7 @@ head(getTaskTargets(classif.task))
 <pre class="prettyprint well"><code class="r">head(getTaskTargets(regr.task))
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] 24.0 21.6 34.7 33.4 36.2 28.7
+<pre class="prettyprint well"><code>## Error: object 'regr.task' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r"># accessing the data set:

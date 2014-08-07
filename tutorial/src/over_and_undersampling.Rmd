@@ -8,7 +8,6 @@ the minority or undersample the majority class.
 First we show how it is done for `data.frame`s:
 
 ```{r overundersampling}
-library(mlr)
 classA = data.frame(x = rnorm(20, mean=1), class="A")
 classB = data.frame(x = rnorm(80, mean=2), class="B")
 data = rbind(classA, classB)

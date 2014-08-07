@@ -21,7 +21,6 @@ We start by loading the *mlr* package and creating a classification
 task (see the part on [training](train.md) for more information):
 
 ```{r}
-library("mlr")
 task = makeClassifTask(data=iris, target="Species")
 ```
 
@@ -67,7 +66,7 @@ the ``opt.path`` as follows.
 
 ```{r tune_gridSearchVisualized}
 library(ggplot2)
-head((opt.grid = as.data.frame(r$opt.path)))
+head(opt.grid = as.data.frame(r$opt.path))
 g = ggplot(opt.grid, aes(x=C, y=sigma, fill=mmce.test.mean, label=round(mmce.test.sd,3)))
 g + geom_tile() + geom_text(color="white")
 ```
@@ -165,8 +164,7 @@ Let's tune `k` of a `k`-nearest neighbour regression model (implemented
 in package ``kknn``) on the ``BostonHousing`` data set.
 
 ```{r eval=FALSE}
-library("mlbench")
-data(BostonHousing)
+data(BostonHousing, package = "mlbench")
 
 task = makeRegrTask(data = BostonHousing, target = "medv")
 

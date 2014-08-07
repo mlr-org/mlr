@@ -93,10 +93,6 @@
                             </li>
                         
                             <li >
-                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
-                            </li>
-                        
-                            <li >
                                 <a href="../parallelization/">Parallelization</a>
                             </li>
                         
@@ -208,17 +204,11 @@ invalid parameter values as unlikely as possible. But sometimes you want to
 break those barriers and get full access. For all parameters, simply refer
 to the documentation of <a href="../../../man/configureMlr.html">configureMlr</a>.</p>
 <p>You are bothered by all the output on the console like in this example?</p>
-<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
-
-## Define a learning task and an appropriate learner
+<pre class="prettyprint well"><code class="r">## Define a learning task and an appropriate learner
 task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.ksvm&quot;)
-</code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: kernlab
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">## Perform a 3-fold cross-validation
+## Perform a 3-fold cross-validation
 rdesc = makeResampleDesc(&quot;CV&quot;, iters=3)
 r = resample(lrn, task, rdesc)
 </code></pre>
@@ -260,8 +250,7 @@ is already available in <strong>mlr</strong>, but the parameter is not implement
 If this is the case you might want to <a href="https://github.com/berndbischl/mlr#get-in-touch">contact
 us</a> or <a href="https://github.com/berndbischl/mlr/issues/new">open an issue</a> as well!
 But until then you can turn off <strong>mlr</strong>'s paramater checking like this:</p>
-<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
-lrn = makeLearner(&quot;classif.ksvm&quot;, newPar = 3)
+<pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;classif.ksvm&quot;, newPar = 3)
 </code></pre>
 
 <pre class="prettyprint well"><code>## Error: classif.ksvm: Setting parameter newPar without available description object!

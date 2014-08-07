@@ -93,10 +93,6 @@
                             </li>
                         
                             <li >
-                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
-                            </li>
-                        
-                            <li >
                                 <a href="../parallelization/">Parallelization</a>
                             </li>
                         
@@ -229,22 +225,16 @@ pred
 <pre class="prettyprint well"><code>## Prediction:
 ## predict.type: response
 ## threshold: 
-## time: 0.01
-##    truth response
-## 1 setosa   setosa
-## 2 setosa   setosa
-## 3 setosa   setosa
-## 4 setosa   setosa
-## 5 setosa   setosa
-## 6 setosa   setosa
+## time: 0.00
+## 'data.frame':    150 obs. of  2 variables:
+##  $ truth   : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ response: Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
 </code></pre>
 
 <h3 id="regression-example">Regression example</h3>
 <p>We fit a simple linear regression model to the <code>BostonHousing</code> data set and predict
 on the training data.</p>
-<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
-library(&quot;mlbench&quot;)
-data(BostonHousing)
+<pre class="prettyprint well"><code class="r">data(BostonHousing, package = &quot;mlbench&quot;)
 
 task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
 lrn = makeLearner(&quot;regr.lm&quot;)
@@ -255,43 +245,35 @@ predict(mod, newdata = BostonHousing)
 <pre class="prettyprint well"><code>## Prediction:
 ## predict.type: response
 ## threshold: 
-## time: 0.00
-##   truth response
-## 1  24.0    30.00
-## 2  21.6    25.03
-## 3  34.7    30.57
-## 4  33.4    28.61
-## 5  36.2    27.94
-## 6  28.7    25.26
+## time: 0.03
+## 'data.frame':    506 obs. of  2 variables:
+##  $ truth   : num  24 21.6 34.7 33.4 36.2 28.7 22.9 27.1 16.5 18.9 ...
+##  $ response: num  30 25 30.6 28.6 27.9 ...
 </code></pre>
 
 <h3 id="clustering-example">Clustering example</h3>
 <p>We cluster the <code>iris</code> data set without the target variable and predict using
 the same data.</p>
-<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
-task = makeClusterTask(data = iris[,-5])
-lrn = makeLearner(&quot;cluster.XMeans&quot;)
+<pre class="prettyprint well"><code class="r">task = makeClusterTask(data = iris[,-5])
 </code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: RWeka
+<pre class="prettyprint well"><code>## Error: could not find function &quot;makeClusterTask&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;cluster.XMeans&quot;)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: S3 method 'makeRLearner.cluster.XMeans' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod = train(lrn, task)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: Required Weka package 'XMeans' is not installed.
-</code></pre>
-
-<pre class="prettyprint well"><code>## Timing stopped at: 0.06 0.003 0.037
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">predict(mod, newdata = iris[,-5])
+predict(mod, newdata = iris[,-5])
 </code></pre>
 
 <pre class="prettyprint well"><code>## Error: object 'crim' not found
 </code></pre>
 
-<pre class="prettyprint well"><code>## Timing stopped at: 0.001 0 0.001
+<pre class="prettyprint well"><code>## Timing stopped at: 0 0 0
 </code></pre>
 
 <h2 id="further-information">Further information</h2>
@@ -312,9 +294,7 @@ labels.</p>
 <p>We start again by loading <strong>mlr</strong> and creating a classification task for the
 <code>iris</code> data set. We select two subsets of the data. We train a decision tree on the
 first one and predict the class labels on the test set.</p>
-<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
-
-# Define the classification task
+<pre class="prettyprint well"><code class="r"># Define the classification task
 task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 
 # Define the learning algorithm
@@ -408,8 +388,7 @@ posteriors.</p>
 Again we create a classification task and a learner which predicts
 probabilities, train the learner and then predict the class labels based on the
 probabilities.</p>
-<pre class="prettyprint well"><code class="r">library(&quot;mlbench&quot;)
-data(Sonar)
+<pre class="prettyprint well"><code class="r">data(Sonar, package = &quot;mlbench&quot;)
 
 task = makeClassifTask(data = Sonar, target = &quot;Class&quot;, positive = &quot;M&quot;)
 lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;)
@@ -455,8 +434,7 @@ head(pred$data)
 model. We take all observations with an odd index as training and all
 observations with an even index as test. The procedure is the same as in the
 classification case.</p>
-<pre class="prettyprint well"><code class="r">library(mlbench)
-data(BostonHousing)
+<pre class="prettyprint well"><code class="r">data(BostonHousing, package = &quot;mlbench&quot;)
 
 task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
 

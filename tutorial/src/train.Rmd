@@ -25,9 +25,7 @@ mod
 We fit a simple linear regression model to the ``BostonHousing`` data set.
 
 ```{r}
-library("mlr")
-library("mlbench")
-data(BostonHousing)
+data(BostonHousing, package = "mlbench")
 
 task = makeRegrTask(data = BostonHousing, target = "medv")
 lrn = makeLearner("regr.lm")
@@ -40,7 +38,6 @@ mod
 We cluster the ``iris`` data set without the target variable.
 
 ```{r}
-library("mlr")
 task = makeClusterTask(data = iris[,-5])
 lrn = makeLearner("cluster.XMeans")
 mod = train(lrn, task)

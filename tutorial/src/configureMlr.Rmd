@@ -9,8 +9,6 @@ to the documentation of \man[configureMlr].
 
 You are bothered by all the output on the console like in this example?
 ```{r}
-library("mlr")
-
 ## Define a learning task and an appropriate learner
 task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.ksvm")
@@ -34,7 +32,6 @@ us](https://github.com/berndbischl/mlr#get-in-touch) or [open an issue](https://
 But until then you can turn off **mlr**'s paramater checking like this:
 
 ```{r}
-library("mlr")
 lrn = makeLearner("classif.ksvm", newPar = 3)
 lrn = makeLearner("classif.ksvm", epsilon = -3)
 configureMlr(on.par.without.desc="quiet")

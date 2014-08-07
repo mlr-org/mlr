@@ -19,9 +19,7 @@ Of course we also need a `learner` which we have to pass to
 \man[makeBaggingWrapper].
 
 ```{r makeBaggingWrapper_setup}
-library(mlr)
-library(mlbench) #for the datasets
-data(Sonar)
+data(Sonar, package = "mlbench")
 tsk = makeClassifTask(data=Sonar, target="Class")
 lrn = makeLearner("classif.PART")
 rsmpl = makeResampleDesc("CV", iters=10)

@@ -22,9 +22,7 @@ set ``BreastCancer`` (from the package mlbench) and exclude the ID
 variable from all further model fitting and evaluation.
 
 ```{r}
-library("mlr")
-library("mlbench")
-data(BreastCancer)
+data(BreastCancer, package = "mlbench")
 
 df = BreastCancer
 df$Id = NULL

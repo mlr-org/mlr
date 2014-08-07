@@ -93,10 +93,6 @@
                             </li>
                         
                             <li >
-                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
-                            </li>
-                        
-                            <li >
                                 <a href="../parallelization/">Parallelization</a>
                             </li>
                         
@@ -255,21 +251,21 @@ the time needed for training, the fitted model has to be passed.</p>
 </code></pre>
 
 <pre class="prettyprint well"><code>## timepredict 
-##       0.003
+##       0.002
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(pred = pred, measures = timetrain, model = mod)
 </code></pre>
 
 <pre class="prettyprint well"><code>## timetrain 
-##     0.008
+##     0.006
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(pred = pred, measures = timeboth, model = mod)
 </code></pre>
 
 <pre class="prettyprint well"><code>## timeboth 
-##    0.011
+##    0.008
 </code></pre>
 
 <p>Of course we can also calculate multiple performance measures at once by simply using a list of measures which can also include <a href="../create_measure/">your own measure</a>.</p>
@@ -278,16 +274,15 @@ performance(pred = pred, measures = ms, model = mod)
 </code></pre>
 
 <pre class="prettyprint well"><code>##           mmce.mmce             acc.acc timetrain.timetrain 
-##               0.040               0.960               0.008 
+##               0.040               0.960               0.006 
 ##   timeboth.timeboth 
-##               0.011
+##               0.008
 </code></pre>
 
 <h2 id="binary-classification">Binary classification</h2>
 <p>In the two-class case many more measures are available. In the following example,
 the accuracy as well as the false positive and false negative rates are computed.</p>
-<pre class="prettyprint well"><code class="r">library(&quot;mlbench&quot;)
-data(Sonar)
+<pre class="prettyprint well"><code class="r">data(Sonar, package = &quot;mlbench&quot;)
 
 task = makeClassifTask(data = Sonar, target = &quot;Class&quot;, positive = &quot;M&quot;)
 lrn = makeLearner(&quot;classif.rpart&quot;)
@@ -309,8 +304,7 @@ performance(pred, measures = list(acc, fpr, fnr))
 <p>Note that in order to calculate AUC -- the area under the ROC (receiver
 operating characteristic) curve, we have to make sure that posterior
 probabilities are predicted, i.e. set the predict type of the <a href="http://berndbischl.github.io/mlr/man/makeLearner.html">Learner</a> to "prob".</p>
-<pre class="prettyprint well"><code class="r">library(&quot;mlbench&quot;)
-data(Sonar)
+<pre class="prettyprint well"><code class="r">data(Sonar, package = &quot;mlbench&quot;)
 
 task = makeClassifTask(data = Sonar, target = &quot;Class&quot;, positive = &quot;M&quot;)
 lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;)

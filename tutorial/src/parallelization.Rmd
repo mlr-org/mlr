@@ -7,7 +7,6 @@ becomes easy to activate the parallel computing capabilities already supported
 by **mlr**.
 
 ```{r}
-library("mlr")
 library("parallelMap")
 parallelStartSocket(2)
 task = makeClassifTask(data = iris, target = "Species")

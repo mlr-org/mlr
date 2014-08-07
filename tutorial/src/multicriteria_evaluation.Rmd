@@ -10,7 +10,6 @@ The aggregated value is the mean of these 10 numbers.
 **mlr** knows how to handle it because each `measure` knows how it is aggregated:
 
 ```{r MulticriteriaEvaluation_aggr}
-library(mlr)
 mmce$aggr #Mean misclassification error
 rmse$aggr #Root mean square error
 ```

@@ -8,6 +8,7 @@ macros = list(
 )
 
 library(methods)
+library(pander, quietly = TRUE)
 library(BBmisc, quietly = TRUE)
 library(knitr, quietly = TRUE)
 library(stringr, quietly = TRUE)
@@ -34,7 +35,7 @@ if (!isDirectory("docs"))
 lines = readLines(f)
 for (macro in macros)
   lines = str_replace_all(lines, macro$pattern, macro$replacement)
-cache.path = paste0(file.path("cache", f), .Platform$file.sep)
+cache.path = paste0(file.path("cache", basename(f)), .Platform$file.sep)
 
 opts_chunk$set(cache = TRUE, cache.path = cache.path)
 set.seed(objToSeed(f))

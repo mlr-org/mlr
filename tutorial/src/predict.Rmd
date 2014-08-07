@@ -29,9 +29,7 @@ We fit a simple linear regression model to the ``BostonHousing`` data set and pr
 on the training data.
 
 ```{r}
-library("mlr")
-library("mlbench")
-data(BostonHousing)
+data(BostonHousing, package = "mlbench")
 
 task = makeRegrTask(data = BostonHousing, target = "medv")
 lrn = makeLearner("regr.lm")
@@ -45,7 +43,6 @@ We cluster the ``iris`` data set without the target variable and predict using
 the same data.
 
 ```{r}
-library("mlr")
 task = makeClusterTask(data = iris[,-5])
 lrn = makeLearner("cluster.XMeans")
 mod = train(lrn, task)
@@ -79,8 +76,6 @@ We start again by loading **mlr** and creating a classification task for the
 first one and predict the class labels on the test set.
 
 ```{r}
-library("mlr")
-
 # Define the classification task
 task = makeClassifTask(data = iris, target = "Species")
 
@@ -150,8 +145,7 @@ probabilities, train the learner and then predict the class labels based on the
 probabilities.
 
 ```{r}
-library("mlbench")
-data(Sonar)
+data(Sonar, package = "mlbench")
 
 task = makeClassifTask(data = Sonar, target = "Class", positive = "M")
 lrn = makeLearner("classif.rpart", predict.type = "prob")
@@ -179,8 +173,7 @@ observations with an even index as test. The procedure is the same as in the
 classification case.
 
 ```{r}
-library(mlbench)
-data(BostonHousing)
+data(BostonHousing, package = "mlbench")
 
 task = makeRegrTask(data = BostonHousing, target = "medv")
 

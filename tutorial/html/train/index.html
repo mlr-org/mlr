@@ -93,10 +93,6 @@
                             </li>
                         
                             <li >
-                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
-                            </li>
-                        
-                            <li >
                                 <a href="../parallelization/">Parallelization</a>
                             </li>
                         
@@ -223,7 +219,7 @@ lrn = makeLearner(&quot;classif.lda&quot;)
 mod
 </code></pre>
 
-<pre class="prettyprint well"><code>## Model for id = classif.lda class = classif.lda
+<pre class="prettyprint well"><code>## Learner model for id=classif.lda class=classif.lda
 ## Trained on obs: 150
 ## Used features: 4
 ## Hyperparameters:
@@ -231,9 +227,7 @@ mod
 
 <h3 id="regression-example">Regression example</h3>
 <p>We fit a simple linear regression model to the <code>BostonHousing</code> data set.</p>
-<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
-library(&quot;mlbench&quot;)
-data(BostonHousing)
+<pre class="prettyprint well"><code class="r">data(BostonHousing, package = &quot;mlbench&quot;)
 
 task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
 lrn = makeLearner(&quot;regr.lm&quot;)
@@ -241,7 +235,7 @@ mod = train(lrn, task)
 mod
 </code></pre>
 
-<pre class="prettyprint well"><code>## Model for id = regr.lm class = regr.lm
+<pre class="prettyprint well"><code>## Learner model for id=regr.lm class=regr.lm
 ## Trained on obs: 506
 ## Used features: 13
 ## Hyperparameters:
@@ -249,27 +243,23 @@ mod
 
 <h3 id="clustering-example">Clustering example</h3>
 <p>We cluster the <code>iris</code> data set without the target variable.</p>
-<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
-task = makeClusterTask(data = iris[,-5])
-lrn = makeLearner(&quot;cluster.XMeans&quot;)
+<pre class="prettyprint well"><code class="r">task = makeClusterTask(data = iris[,-5])
 </code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: RWeka
+<pre class="prettyprint well"><code>## Error: could not find function &quot;makeClusterTask&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;cluster.XMeans&quot;)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: S3 method 'makeRLearner.cluster.XMeans' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod = train(lrn, task)
+mod
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Required Weka package 'XMeans' is not installed.
-</code></pre>
-
-<pre class="prettyprint well"><code>## Timing stopped at: 0.06 0.003 0.039
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod
-</code></pre>
-
-<pre class="prettyprint well"><code>## Model for id = regr.lm class = regr.lm
+<pre class="prettyprint well"><code>## Learner model for id=regr.lm class=regr.lm
 ## Trained on obs: 506
 ## Used features: 13
 ## Hyperparameters:

@@ -22,8 +22,6 @@ performance measures.
 
 
 ```{r}
-library("mlr")
-
 ## Define a learning task and an appropriate learner
 task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.lda")
@@ -46,9 +44,7 @@ section [Evaluating Learner Performance](performance.md).
 As an example with regression, we use the ``BostonHousing`` data set again.
 
 ```{r}
-library("mlr")
-library("mlbench")
-data(BostonHousing)
+data(BostonHousing, package = "mlbench")
 
 ## Define a learning task and an appropriate learner
 task = makeRegrTask(data = BostonHousing, target = "medv")
@@ -273,9 +269,7 @@ Now, we use the ``BostonHousing`` data and compare the results of a neural net
 and a k-nearest neighbour regression using out-of-bag bootstraping.
 
 ```{r}
-library("mlr")
-library("mlbench")
-data(BostonHousing)
+data(BostonHousing, package = "mlbench")
 
 ## Regression task
 task = makeRegrTask(data = BostonHousing, target = "medv")

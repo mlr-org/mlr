@@ -10,7 +10,6 @@ pages:
 - ["performance.md", "Basics", "Performance"]
 - ["resample.md", "Basics", "Resampling"]
 - ["benchmark_experiments.md", "Basics", "Benchmark Experiments"]
-- ["benchmark_analysis.md", "Basics", "Benchmark Analysis"]
 - ["parallelization.md", "Basics", "Parallelization"]
 - ["configureMlr.md", "Advanced", "Configuration"]
 - ["feature_selection.md", "Advanced", "Feature selection"]

@@ -58,8 +58,7 @@ In the two-class case many more measures are available. In the following example
 the accuracy as well as the false positive and false negative rates are computed.
 
 ```{r}
-library("mlbench")
-data(Sonar)
+data(Sonar, package = "mlbench")
 
 task = makeClassifTask(data = Sonar, target = "Class", positive = "M")
 lrn = makeLearner("classif.rpart")
@@ -74,8 +73,7 @@ operating characteristic) curve, we have to make sure that posterior
 probabilities are predicted, i.e. set the predict type of the [Learner](http://berndbischl.github.io/mlr/man/makeLearner.html) to "prob".
 
 ```{r}
-library("mlbench")
-data(Sonar)
+data(Sonar, package = "mlbench")
 
 task = makeClassifTask(data = Sonar, target = "Class", positive = "M")
 lrn = makeLearner("classif.rpart", predict.type = "prob")

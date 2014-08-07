@@ -93,10 +93,6 @@
                             </li>
                         
                             <li >
-                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
-                            </li>
-                        
-                            <li >
                                 <a href="../parallelization/">Parallelization</a>
                             </li>
                         
@@ -168,7 +164,7 @@
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../benchmark_analysis/">
+                    <a rel="prev" href="../parallelization/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -235,9 +231,7 @@ way.</p>
 <li>One data set  +   two classification algorithms   +   variable selection</li>
 </ul>
 <h2 id="example-1-one-task-two-learners-no-tuning">Example 1: One task, two learners, no tuning</h2>
-<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
-
-## Classification task with iris data set
+<pre class="prettyprint well"><code class="r">## Classification task with iris data set
 task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 
 ## Two learners to be compared
@@ -306,9 +300,8 @@ strategy either in the outer or inner run. They can be mixed as desired.</p>
 <p>Now we look at an extensive example that shows a benchmark experiment with three data
 sets, three learners and tuning.</p>
 <pre class="prettyprint well"><code class="r">library(&quot;dprep&quot;)
-library(&quot;mlbench&quot;)
-data(BreastCancer)
-data(Vehicle)
+data(BreastCancer, package = &quot;mlbench&quot;)
+data(Vehicle, package = &quot;mlbench&quot;)
 
 ## Classification task with three data sets
 task1 = makeClassifTask(&quot;Iris&quot;, data = iris, target = &quot;Species&quot;)

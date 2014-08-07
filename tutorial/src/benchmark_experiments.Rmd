@@ -31,8 +31,6 @@ In the following we will see four examples to show different benchmark settings:
 ## Example 1: One task, two learners, no tuning
 
 ```{r eval=FALSE}
-library("mlr")
-
 ## Classification task with iris data set
 task = makeClassifTask(data = iris, target = "Species")
 
@@ -114,9 +112,8 @@ sets, three learners and tuning.
 
 ```{r eval=FALSE}
 library("dprep")
-library("mlbench")
-data(BreastCancer)
-data(Vehicle)
+data(BreastCancer, package = "mlbench")
+data(Vehicle, package = "mlbench")
 
 ## Classification task with three data sets
 task1 = makeClassifTask("Iris", data = iris, target = "Species")

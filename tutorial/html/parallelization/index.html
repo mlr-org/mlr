@@ -92,10 +92,6 @@
                                 <a href="../benchmark_experiments/">Benchmark Experiments</a>
                             </li>
                         
-                            <li >
-                                <a href="../benchmark_analysis/">Benchmark Analysis</a>
-                            </li>
-                        
                             <li class="active">
                                 <a href="./">Parallelization</a>
                             </li>
@@ -163,7 +159,7 @@
                 
                 
                 <li >
-                    <a rel="next" href="../benchmark_analysis/">
+                    <a rel="next" href="../benchmark_experiments/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
@@ -206,8 +202,7 @@ With the integration of
 <a href="https://github.com/berndbischl/parallelMap">parallelMap</a> into <strong>mlr</strong>, it
 becomes easy to activate the parallel computing capabilities already supported
 by <strong>mlr</strong>.</p>
-<pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
-library(&quot;parallelMap&quot;)
+<pre class="prettyprint well"><code class="r">library(&quot;parallelMap&quot;)
 parallelStartSocket(2)
 </code></pre>
 
@@ -226,8 +221,7 @@ lrn = makeLearner(&quot;classif.lda&quot;)
 r = resample(lrn, task, rdesc)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Exporting objects to slaves for mode socket: .mlr.slave.options
-## Mapping in parallel: mode = socket; cpus = 2; elements = 4.
+<pre class="prettyprint well"><code>## Mapping in parallel: mode = socket; cpus = 2; elements = 4.
 ## [Resample] Result: mmce.test.mean=0.0201
 </code></pre>
 
