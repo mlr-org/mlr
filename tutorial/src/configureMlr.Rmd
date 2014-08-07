@@ -5,7 +5,7 @@ certain ways.
 Actually **mlr** is just designed to make errors due to typos or
 invalid parameter values as unlikely as possible. But sometimes you want to
 break those barriers and get full access. For all parameters, simply refer
-to the documentation of \man[configureMlr].
+to the documentation of [&configureMlr].
 
 You are bothered by all the output on the console like in this example?
 ```{r}

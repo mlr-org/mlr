@@ -45,11 +45,11 @@ r2 = resample(lrn2, task, rdesc, show.info = FALSE)
 ```
 
 Now we have to convert each prediction within the resample-result to a ROCR
-prediction using the \man[asROCRPrediction] function.
+prediction using the [&asROCRPrediction] function.
 Afterwards we let `ROCR` calculate the performance measures and plot the ROC.
 As we have one curve for each learner and each cross validation fold we might want to average the curves from the cross validation by using `avg="threshold"`.
-Otherwise, \man[plot.performance] will draw a curve for each fold.
-For details, see \man[plot.performance].
+Otherwise, [&plot.performance] will draw a curve for each fold.
+For details, see [&plot.performance].
 
 ```{r ROCRaverage}
 p1 = asROCRPrediction(r1$pred)

@@ -5,18 +5,18 @@ a technique to gain more stability. But why do you want to limit yourself to the
 classifiers already implemented in well known random forests when it is
 really easy to build your with **mlr**?
 
-Just bag one learner already supported in **mlr** with \man[makeBaggingWrapper].
+Just bag one learner already supported in **mlr** with [&makeBaggingWrapper].
 
 As in a random forest, we need a Learner which is trained on a subset of the
 data during each iteration of the bagging process.
-The subsets are chosen according to the parameters given to \man[makeBaggingWrapper]:
+The subsets are chosen according to the parameters given to [&makeBaggingWrapper]:
 * `bag.iters` On how many subsets (samples) do we want to train our learner?
 * `bw.replace` Sample with replacement (also known as *bootstrapping*)?
 * `bw.size` Percentage size of the samples. If `bw.replace=TRUE`, `bag.size=1` is the default. This does not mean that one sample will contain all the observations as observations will occur multiple times in each sample.
 * `bw.feats` Percentage size of randomly selected features for each iteration.
 
 Of course we also need a `learner` which we have to pass to
-\man[makeBaggingWrapper].
+[&makeBaggingWrapper].
 
 ```{r makeBaggingWrapper_setup}
 data(Sonar, package = "mlbench")

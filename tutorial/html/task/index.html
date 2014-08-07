@@ -135,7 +135,7 @@
                 
                 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Extend <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             <li >
@@ -204,15 +204,15 @@ data set and all relevant information regarding the purpose of the
 task, e.g, the target variable.</p>
 <p>The tasks are organised in a hierarchy, with the generic
 <a href="../../../man/Task.html">Task</a> at the top.
-The concrete tasks that can be instantiated are <a href="../../../man/Task.html">ClassifTask</a> for classification,
-<a href="../../../man/Task.html">RegrTask</a> for regression, <a href="../../../man/Task.html">SurvTask</a> for survival
-analysis, <a href="../../../man/Task.html">CostSensTask</a> for
-cost-sensitive learning, and <a href="../../../man/Task.html">ClusterTask</a> for clustering.</p>
+The concrete tasks that can be instantiated are [ClassifTask]<a href="../../../man/Task.html">Task</a> for classification,
+[RegrTask]<a href="../../../man/Task.html">Task</a> for regression, [SurvTask]<a href="../../../man/Task.html">Task</a> for survival
+analysis, [CostSensTask]<a href="../../../man/Task.html">Task</a> for
+cost-sensitive learning, and [ClusterTask]<a href="../../../man/Task.html">Task</a> for clustering.</p>
 <p>There are dedicated functions to create these tasks given data and other
-relevant information. These are <a href="../../../man/Task.html">makeClassifTask</a>,
-<a href="../../../man/Task.html">makeRegrTask</a>,
-<a href="../../../man/Task.html">makeSurvTask</a>, <a href="../../../man/Task.html">makeCostSensTask</a>, and
-<a href="../../../man/Task.html">makeClusterTask</a>.</p>
+relevant information. These are [makeClassifTask]<a href="../../../man/Task.html">Task</a>,
+[makeRegrTask]<a href="../../../man/Task.html">Task</a>,
+[makeSurvTask]<a href="../../../man/Task.html">Task</a>, [makeCostSensTask]<a href="../../../man/Task.html">Task</a>, and
+[makeClusterTask]<a href="../../../man/Task.html">Task</a>.</p>
 <p>In the following example, we define a classification task for the data
 set <code>BreastCancer</code> (from the package mlbench) and exclude the ID
 variable from all further model fitting and evaluation.</p>

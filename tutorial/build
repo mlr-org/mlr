@@ -1,43 +1,34 @@
 #!/usr/bin/env Rscript
 
+# config #######################################################################
 src = "src"
 dest = "docs"
+
+# macros to link to docs:
+# - \man[PAGE], \man2[NAME][PAGE]
+# - [&PAGE] and [NAME](&PAGE)
 macros = list(
   list(pattern = "\\\\man\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\1.html)"),
-  list(pattern = "\\\\man2\\[([[:alnum:]()]+)\\]\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\2.html)")
+  list(pattern = "\\\\man2\\[([[:alnum:]()]+)\\]\\[([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\2.html)"),
+  list(pattern = "\\(&([[:alnum:]]+)\\)", replacement = "(../../../man/\\1.html)"),
+  list(pattern = "\\[&([[:alnum:]]+)\\]", replacement = "[\\1](../../../man/\\1.html)")
 )
 
-message("Loading required packages ...")
-suppressPackageStartupMessages({
-# conflicting packages loaded first
-library(caret)
-library(ROCR)
-
-# required to build
-library(methods)
-library(parallel)
-library(pander, quietly = TRUE)
-library(BBmisc, quietly = TRUE)
-library(knitr, quietly = TRUE)
-library(stringr, quietly = TRUE)
-library(digest, quietly = TRUE)
-library(mlr, quietly = TRUE)
-})
-
-options(warn = 2L)
-opts_knit$set(upload.fun = image_uri)
-
+# helper functions #############################################################
+# generate useful exit status
 exit = function(status, msg, ...) {
   if (!missing(msg))
     cat(sprintf(msg, ...), "\n\n", sep = "")
   quit(save = "no", status = status)
 }
 
-objToSeed = function(x, algo="crc32") {
+# set seed depending on file name
+setSeed = function(x, algo = "crc32") {
  hash = digest(x, algo = algo)
- strtoi(sprintf("0x%s", substr(hash, 1L, 7L)))
+ set.seed(strtoi(sprintf("0x%s", substr(hash, 1L, 7L))))
 }
 
+# worker function
 knitIt = function(f) {
   messagef("Knitting file '%s' ...", f)
   lines = readLines(file.path(src, f))
@@ -46,7 +37,7 @@ knitIt = function(f) {
   cache.path = paste0(file.path("cache", f), .Platform$file.sep)
 
   opts_chunk$set(cache = TRUE, cache.path = cache.path)
-  set.seed(objToSeed(f))
+  setSeed(f)
   ok = try(knit(
       text = lines,
       output = file.path(dest, str_replace(f, "\\.Rmd$", "\\.md")),
@@ -55,14 +46,44 @@ knitIt = function(f) {
     exit(1L, "Error knitting file '%s':\n%s", f, as.character(ok))
 }
 
+
+# start #######################################################################
+message("Loading required packages ...")
+suppressPackageStartupMessages({
+  # conflicting packages loaded first
+  library(caret)
+  library(ROCR)
+
+  # required to build
+  library(methods)
+  library(parallel)
+  library(pander, quietly = TRUE)
+  library(BBmisc, quietly = TRUE)
+  library(knitr, quietly = TRUE)
+  library(stringr, quietly = TRUE)
+  library(digest, quietly = TRUE)
+  library(mlr, quietly = TRUE)
+})
+
+# turn warnings to errors, we don't want to miss them
+options(warn = 2L)
+# embed images in HTML
+opts_knit$set(upload.fun = image_uri)
+
+# create output directory
 if (!isDirectory("docs"))
   dir.create("docs")
 
+# apply worker in parallel
 ok = mclapply(list.files(src, pattern = "\\.Rmd$"), knitIt, mc.preschedule = FALSE)
 
+# build docs with mkdocs
 ok = system3("mkdocs", "build")
 if(ok$exit.code == 0L) {
   message("Build successfull!")
+  # clean up
+  unlink("figure", recursive = TRUE)
+  unlink("docs", recursive = TRUE)
   exit(0L)
 }
 

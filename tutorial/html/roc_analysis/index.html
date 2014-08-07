@@ -135,7 +135,7 @@
                 
                 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Extend <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             <li >
@@ -258,8 +258,8 @@ r2 = resample(lrn2, task, rdesc, show.info = FALSE)
 prediction using the <a href="../../../man/asROCRPrediction.html">asROCRPrediction</a> function.
 Afterwards we let <code>ROCR</code> calculate the performance measures and plot the ROC.
 As we have one curve for each learner and each cross validation fold we might want to average the curves from the cross validation by using <code>avg="threshold"</code>.
-Otherwise, \man[plot.performance] will draw a curve for each fold.
-For details, see \man[plot.performance].</p>
+Otherwise, [&amp;plot.performance] will draw a curve for each fold.
+For details, see [&amp;plot.performance].</p>
 <pre class="prettyprint well"><code class="r">p1 = asROCRPrediction(r1$pred)
 p2 = asROCRPrediction(r2$pred)
 perf1 = ROCR::performance(p1,&quot;tpr&quot;,&quot;fpr&quot;)

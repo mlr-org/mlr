@@ -4,7 +4,7 @@ Many machine learning algorithms have hyperparameters that need to be set.
 They can either be selected by the user or through resampling,
 e.g. cross-validation. Setting them by hand was already covered in the
 section about [training](train.md) and [resampling](resample.md) -- simply use the
-`par.val` argument in the \man[makeLearner] method.
+`par.val` argument in the [&makeLearner] method.
 
 Grid search is one of the standard -- albeit slow -- ways to choose an
 appropriate set of parameters from a given range of values.
@@ -24,9 +24,9 @@ task (see the part on [training](train.md) for more information):
 task = makeClassifTask(data=iris, target="Species")
 ```
 
-Next, we need to create a \man2[ParamSet][makeParamSet] object that describes
+Next, we need to create a [ParamSet][&makeParamSet] object that describes
 the parameter space we wish to search. This is done through the function
-\man[makeParamSet]. We add discrete parameters for the `C` and `sigma` parameter
+[&makeParamSet]. We add discrete parameters for the `C` and `sigma` parameter
 of the SVM to the parameter set. More details concerning parameter sets are
 explained in section parameters (FIXME).
 
@@ -44,7 +44,7 @@ rdesc = makeResampleDesc("CV", iters=3)
 ```
 
 Before we can actually tune our classifier and identify the best parameter
-setting, we need an instance of a \man[TuneControl] object. These describe the
+setting, we need an instance of a [&TuneControl] object. These describe the
 optimization strategy used. Here we use a grid search:
 
 ```{r}
@@ -52,7 +52,7 @@ ctrl = makeTuneControlGrid()
 ```
 
 Finally, combining all the previous pieces, we can tune the SVM
-using our \man[TuneControl] instance and the resampling strategy
+using our [&TuneControl] instance and the resampling strategy
 described by the `rdesc` variable.
 
 ```{r}

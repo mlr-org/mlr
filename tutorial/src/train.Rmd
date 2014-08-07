@@ -1,8 +1,8 @@
 # Training a Learner
 
 Training a learner means fitting a model to a given data set.
-In the **mlr** package this can be done by calling the function \man[train]
-with a learner and a suitable \man[Task].
+In the **mlr** package this can be done by calling the function [&train]
+with a learner and a suitable [&Task].
 
 
 ## Quick start
@@ -47,14 +47,14 @@ mod
 ## Further information
 
 As already mentioned, we can train a learner simply by
-calling the function \man[train], passing it a \man[Learner] and a \man[Task].
+calling the function [&train], passing it a [&Learner] and a [&Task].
 In the examples above, the machine learning method was specified
-through special \man2[Learner][makeLearner] objects. Creating a separate object
+through special [Learner][&makeLearner] objects. Creating a separate object
 allows to set the hyperparameters of the learner before training for example.
 
 Optionally, only a subset of the data, specified by an index set, can be used to
-train the learner. This set is passed using the ``subset`` argument of \man[train].
+train the learner. This set is passed using the ``subset`` argument of [&train].
 
-The return value is always an object of class \man[WrappedModel], which wraps the
+The return value is always an object of class [&WrappedModel], which wraps the
 particular model of the used R classification or regression method. It
-can subsequently be used to perform a \man2[prediction][predict.WrappedModel] for new observations.
+can subsequently be used to perform a [prediction][&predict.WrappedModel] for new observations.

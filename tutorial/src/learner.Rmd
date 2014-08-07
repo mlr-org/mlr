@@ -8,9 +8,9 @@ extensions simple. If your favorite methods is missing, either
 send the **mlr** maintainers an email or see the part of the tutorial
 on [how to extend the package yourself](create_learner.md).
 
-To see which learners are already implemented, have a look at the \man[learners] documentation page.
+To see which learners are already implemented, have a look at the [&learners] documentation page.
 
-A learner in **mlr** is constructed by calling \man[makeLearner].
+A learner in **mlr** is constructed by calling [&makeLearner].
 In the constructor you can do the following things:
 
 * Set hyperparameters.
@@ -36,7 +36,7 @@ for clustering methods.
 
 ## Further information
 
-The generated learner is an object of class \man2[Learner][makeLearner].
+The generated learner is an object of class [Learner](&makeLearner).
 It contains the properties the method, e.g. which types of features it can handle,
 what can be output during prediction, whether multi-class problems,
 observations weights or missing values are supported and so on.

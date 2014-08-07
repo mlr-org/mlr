@@ -135,7 +135,7 @@
                 
                 
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Developers <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Extend <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             <li >
@@ -272,13 +272,13 @@ lrn = makeLearner(&quot;cluster.XMeans&quot;)
 <p>As already mentioned, we can train a learner simply by
 calling the function <a href="../../../man/train.html">train</a>, passing it a <a href="../../../man/Learner.html">Learner</a> and a <a href="../../../man/Task.html">Task</a>.
 In the examples above, the machine learning method was specified
-through special <a href="../../../man/makeLearner.html">Learner</a> objects. Creating a separate object
+through special [Learner]<a href="../../../man/makeLearner.html">makeLearner</a> objects. Creating a separate object
 allows to set the hyperparameters of the learner before training for example.</p>
 <p>Optionally, only a subset of the data, specified by an index set, can be used to
 train the learner. This set is passed using the <code>subset</code> argument of <a href="../../../man/train.html">train</a>.</p>
 <p>The return value is always an object of class <a href="../../../man/WrappedModel.html">WrappedModel</a>, which wraps the
 particular model of the used R classification or regression method. It
-can subsequently be used to perform a \man2[prediction][predict.WrappedModel] for new observations.</p>
+can subsequently be used to perform a [prediction][&amp;predict.WrappedModel] for new observations.</p>
 </div>
         </div>
 

@@ -17,5 +17,5 @@ pages:
 - ["multicriteria_evaluation.md", "Advanced", "Multicriteria Evaluation"]
 - ["tune.md", "Advanced", "Tuning"]
 - ["over_and_undersampling.md", "Advanced", "Over- and Undersampling"]
-- ["create_learner.md", "Developers", "Create custom learners"]
-- ["create_measure.md", "Developers", "Create custom measures"]
+- ["create_learner.md", "Extend", "Create custom learners"]
+- ["create_measure.md", "Extend", "Create custom measures"]

@@ -5,17 +5,17 @@ data set and all relevant information regarding the purpose of the
 task, e.g, the target variable.
 
 The tasks are organised in a hierarchy, with the generic
-\man[Task] at the top.
-The concrete tasks that can be instantiated are \man2[ClassifTask][Task] for classification,
-\man2[RegrTask][Task] for regression, \man2[SurvTask][Task] for survival
-analysis, \man2[CostSensTask][Task] for
-cost-sensitive learning, and \man2[ClusterTask][Task] for clustering.
+[&Task] at the top.
+The concrete tasks that can be instantiated are [ClassifTask][&Task] for classification,
+[RegrTask][&Task] for regression, [SurvTask][&Task] for survival
+analysis, [CostSensTask][&Task] for
+cost-sensitive learning, and [ClusterTask][&Task] for clustering.
 
 There are dedicated functions to create these tasks given data and other
-relevant information. These are \man2[makeClassifTask][Task],
-\man2[makeRegrTask][Task],
-\man2[makeSurvTask][Task], \man2[makeCostSensTask][Task], and
-\man2[makeClusterTask][Task].
+relevant information. These are [makeClassifTask][&Task],
+[makeRegrTask][&Task],
+[makeSurvTask][&Task], [makeCostSensTask][&Task], and
+[makeClusterTask][&Task].
 
 In the following example, we define a classification task for the data
 set ``BreastCancer`` (from the package mlbench) and exclude the ID
@@ -59,7 +59,7 @@ classif.task = makeClassifTask(id = "BreastCancer", data = df, target = "Class",
 ```
 
 There are also some convenient methods to access properties and parts of the task.
-The most important ones are listed in \man[Task].
+The most important ones are listed in [&Task].
 
 Here are some examples.
 
@@ -76,19 +76,19 @@ head(getTaskTargets(regr.task))
 str(getTaskData(classif.task))
 ```
 
-Note the many options \man[getTaskData] provides to convert the data set into a convenient format.
+Note the many options [&getTaskData] provides to convert the data set into a convenient format.
 This is especially handy when you integrate a learner from another package into
 **mlr**.
 
 If you are more technically minded, you could also access
 the information directly stored in the slot called `task$task.desc`,
-which stands for "description" and is of class \man[TaskDesc].
+which stands for "description" and is of class [&TaskDesc].
 
 ```{r}
 str(classif.task$task.desc)
 ```
 
-The \man[Task] help page also lists several other arguments
+The [&Task] help page also lists several other arguments
 to describe further details of the problem.
 
 For example, we could include a blocking factor into the task.

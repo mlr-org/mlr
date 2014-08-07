@@ -14,7 +14,7 @@ mmce$aggr #Mean misclassification error
 rmse$aggr #Root mean square error
 ```
 
-You can also create a new `measure` by using a different aggregation (see \man[aggregations]).
+You can also create a new `measure` by using a different aggregation (see [&aggregations]).
 
 ```{r MulticriteriaEvaluation_NewAggr}
 mmceAggrBySd = setAggregation(mmce, test.sd)
@@ -26,7 +26,7 @@ r = resample(lrn, task, rdesc, measures = list(mmce, mmceAggrBySd))
 ```
 
 It is even possible to create your own aggregation function by calling the
-internal **mlr** function \man[makeAggregation].
+internal **mlr** function [&makeAggregation].
 You can use internal (not exported) functions of R packages by prefixing the
 name of the function with the name of the package, i.e. `packagename:::function()`.
 In this case:

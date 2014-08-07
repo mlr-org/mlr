@@ -9,7 +9,7 @@ Below, an example of how the Linear Discriminant Analysis from ``MASS`` package 
 For initialization, all the information you need is the name of the learner, its package, the parameter set, and the set of properties of your learner.
 
 First, name your learner. The naming conventions in **mlr** are ``classif.<R_method_name>`` for classification, ``regr.<R_method_name>`` for regression, ``surv.<R_method_name>`` for survival analysis, ``costsens.<R_method_name>`` for cost sensitive learning, and ``cluster.<R_method_name>`` for clustering.
-Second, use \man2[makeDiscreteLearnerParam][LearnerParam] and \man2[makeNumericLearnerParam][LearnerParam] to incorporate the complete description of the parameters.
+Second, use [makeDiscreteLearnerParam][&LearnerParam] and [makeNumericLearnerParam][&LearnerParam] to incorporate the complete description of the parameters.
 Include all possible values for discrete parameters and lower and upper bounds for numeric parameters.
 Add information for the properties (see also the section about [Learners](learner.md)).
 Which types of predictors that are supported (numerics, factors)?
@@ -47,11 +47,11 @@ makeRLearner.classif.lda = function() {
 
 This must fit a model on the data of the task ``.task`` with regard to the subset defined in the integer vector ``.subset`` and the parameters passed in the ``...`` arguments.
 It must return the fitted model, no special data type is assumed for this.
-Further information can be found in the documentation of \man[getTaskData].
+Further information can be found in the documentation of [&getTaskData].
 
 In the example, replace ``lda`` with the name of the training function of your method.
 Pass all required arguments to the training function.
-The data can be extracted from the task via the \man[getTaskData] function.
+The data can be extracted from the task via the [&getTaskData] function.
 Pass further arguments like case weights via ``.weights`` to the training method.
 ```{r}
 trainLearner.classif.lda = function(.learner, .task, .subset, .weights,  ...) {
