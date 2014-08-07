@@ -25,7 +25,7 @@ makeRLearner.surv.cforest = function() {
       makeIntegerLearnerParam(id = "maxdepth", lower = 0L, default = 0L),
       makeLogicalLearnerParam(id = "savesplitstats", default = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "prob", "factors", "numerics", "weights"),
+    properties = c("factors", "numerics", "weights"),
     par.vals = list(),
     name = "Random forest based on conditional inference trees",
     short.name = "cRF",
@@ -35,7 +35,7 @@ makeRLearner.surv.cforest = function() {
 
 #' @export
 trainLearner.surv.cforest = function(.learner, .task, .subset, .weights = NULL,
-                                     ntree, mtry, replace, fraction, trace, pvalue, 
+                                     ntree, mtry, replace, fraction, trace, pvalue,
                                      teststat, testtype, mincriterion, minprob,
                                      minsplit, minbucket, stump, randomsplits,
                                      nresample, maxsurrogate, maxdepth,

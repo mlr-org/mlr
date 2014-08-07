@@ -32,7 +32,7 @@ makeRLearner.regr.glmnet = function() {
       makeNumericLearnerParam(id = "prec", default = 1e-10),
       makeIntegerLearnerParam(id = "mxit", default = 100L, lower = 1L)
     ),
-    properties = c("numerics", "prob", "twoclass", "multiclass", "weights"),
+    properties = c("numerics", "weights"),
     par.vals = list(s = 0.01),
     name = "GLM with lasso or elasticnet regularization",
     short.name = "glmnet",
