@@ -61,6 +61,7 @@ trainLearner.MulticlassWrapper = function(.learner, .task, .subset, .weights = N
     data2[, tn] = x$targets[[i]]
     ct = changeData(.task, data2)
     ct$task.desc$positive = "1"
+    ct$task.desc$negative = "-1"
     train(.learner$next.learner, ct, weights = .weights)
   })
   makeChainModel(next.model = list(models = models, cm = cm), cl = "MulticlassModel")
