@@ -13,8 +13,8 @@
 \alias{makeSurvTask}
 \title{Create a classification, regression, survival, cluster, or cost-sensitive classification task.}
 \usage{
-makeClassifTask(id, data, target, weights = NULL, blocking = NULL, positive,
-  fixup.data = "warn", check.data = TRUE)
+makeClassifTask(id, data, target, weights = NULL, blocking = NULL,
+  positive = NA_character_, fixup.data = "warn", check.data = TRUE)
 
 makeClusterTask(id, data, weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE)
@@ -67,7 +67,7 @@ during a resampling iteration.
 Default is \code{NULL} which means no blocking.}
 
 \item{positive}{[\code{character(1)}]\cr
-Positive class for binary classification.
+Positive class for binary classification (otherwise ignored and set to NA).
 Default is the first factor level of the target attribute.}
 
 \item{fixup.data}{[\code{character(1)}]\cr
