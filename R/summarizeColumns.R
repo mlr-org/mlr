@@ -14,7 +14,7 @@
 #'   \item{type}{Data type of column.}
 #'   \item{na}{Number of NAs in column.}
 #'   \item{disp}{Measure of dispersion, for numerics and integers \code{\link{sd}} is used, for
-#'     categorical columns the unstandardized index of qualitative variation M1 is computed.}
+#'     categorical columns the qualitative variation.}
 #'   \item{mean}{Mean value of column, NA for categorical columns}
 #'   \item{median}{Median value of column, NA for categorical columns.}
 #'   \item{min}{Minimal value of column, for categorical columns the size of the smallest category.}
@@ -36,10 +36,7 @@ summarizeColumns.Task = function(obj) {
 #' @export
 summarizeColumns.data.frame = function(obj) {
   iqv = function(x) {
-    print(prop.table(table(x)))
-    print(prop.table(table(x))^2)
-    print(sum(prop.table(table(x))^2))
-    1 - sum(prop.table(table(x))^2)
+    1 - mean(x == computeMode(x))
   }
   n = ncol(obj)
   cns = colnames(obj)

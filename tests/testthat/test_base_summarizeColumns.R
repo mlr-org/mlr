@@ -16,10 +16,5 @@ test_that("summarizeColumns", {
   s = summarizeColumns(d)
   expect_equal(s$na, c(1, 0, 0, 0, 0))
 
-  d = iris
-  levels(d$Species) = c(levels(d$Species), "foo")
-  s = summarizeColumns(d)
-  expect_equal(s$na, c(1, 0, 0, 0, 0))
 })
-
 

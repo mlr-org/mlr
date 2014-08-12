@@ -12,7 +12,7 @@ mlr_2.2
 
 - new functions
 -- makeMulticlassWrapper
--- summarizeColumns
+-- summarizeColumns, summarizeLevels
 -- capLargeValues
 
 mlr_2.1:

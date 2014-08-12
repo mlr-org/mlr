@@ -5,9 +5,9 @@
 #' Only numeric/integer columns are affected.
 #'
 #' @template arg_taskdf
-#' @param cols [\code{character} | \code{integer}]
+#' @param cols [\code{character}]
 #'   Which columns to convert.
-#'   Default is all numeric columns
+#'   Default is all numeric columns.
 #' @param threshold [\code{numeric(1)}]\cr
 #'   Threshold for capping.
 #'   Every entry whose absolute value is equal or larger is converted.
@@ -19,8 +19,8 @@
 #' @param what [character(1)]
 #'   What kind of entries are affected?
 #'   \dQuote{abs} means \code{abs(x) > threshold},
-#'   \dQuote{high} means \code{x > threshold},
-#'   \dQuote{low} means \code{x < -threshold}
+#'   \dQuote{pos} means \code{abs(x) > threshold && x > 0},
+#'   \dQuote{pos} means \code{abs(x) > threshold && x < 0},
 #'   Default is \dQuote{abs}
 #' @return [\code{data.frame}]
 #' @export
@@ -30,12 +30,14 @@
 capLargeValues = function(obj, cols = NULL, threshold = Inf, impute = threshold, what = "abs") {
   assertNumber(threshold, lower = 0)
   assertNumber(impute, lower = 0)
+  assertChoice(what, c("abs", "pos", "neg"))
   UseMethod("capLargeValues")
 }
 
 #' @export
 capLargeValues.Task = function(obj, cols = NULL, threshold = Inf, impute = threshold, what = "abs") {
-  capLargeValues.data.frame(obj$env$obj, cols = cols, threshold = threshold, impute = impute)
+  d = capLargeValues.data.frame(obj$env$obj, cols = cols, threshold = threshold, impute = impute)
+  changeData(obj, data = d)
 }
 
 #' @export
@@ -43,22 +45,18 @@ capLargeValues.data.frame = function(obj, cols = NULL, threshold = Inf, impute =
   cns = colnames(obj)
   # select numeric and int cols
   numcols = sapply(obj, function(x) is.numeric(x))
-  if (!any(numcols))
-    return(obj)
   numcols = cns[numcols]
-
   if (is.null(cols)) {
     cols = numcols
   } else {
-    assert(
-      checkSubset(cols, numcols),
-      checkIntegerish(cols, lower = 1L, upper = length(cns))
-    )
+    assertSubset(cols, numcols)
   }
+  if (length(cols) == 0L)
+    return(obj)
   selfun = switch(what,
     abs = function(x) abs(x) > threshold,
-    high = function(x) x > threshold,
-    low = function(x) x < threshold
+    pos = function(x) abs(x) > threshold & x > 0,
+    neg = function(x) abs(x) > threshold & x < 0
   )
   for (k in cols) {
     x = obj[, k]
