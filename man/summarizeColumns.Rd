@@ -16,8 +16,9 @@ Input data.}
   \item{na}{Number of NAs in column.}
   \item{disp}{Measure of dispersion, for numerics and integers \code{\link{sd}} is used, for
     categorical columns the qualitative variation.}
-  \item{mean}{Mean value of column, NA for categorical columns}
+  \item{mean}{Mean value of column, NA for categorical columns.}
   \item{median}{Median value of column, NA for categorical columns.}
+  \item{mad}{MAD of column, NA for categorical columns.}
   \item{min}{Minimal value of column, for categorical columns the size of the smallest category.}
   \item{max}{Maximal value of column, for categorical columns the size of the largest category.}
   \item{nlevs}{For categorical columns, the number of factor levels, NA else.}
@@ -34,6 +35,7 @@ Characters and logicals will be treated as factors.
 summarizeColumns(iris)
 }
 \seealso{
-Other eda_and_preprocess: \code{\link{capLargeValues}}
+Other eda_and_preprocess: \code{\link{capLargeValues}};
+  \code{\link{mergeSmallFactorLevels}}
 }
 

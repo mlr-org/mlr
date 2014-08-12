@@ -7,10 +7,10 @@ test_that("summarizeLevels", {
   data4 = data.frame(fac1 = as.factor(1))
 
   expect_error(summarizeLevels(data, "num"))
+  expect_equal(length(summarizeLevels(data)), 1L)
+  expect_equal(length(summarizeLevels(data, "fac")), 1L)
   expect_equal(as.numeric(summarizeLevels(data)[[1]]), rep(1, 6))
   expect_equal(as.numeric(summarizeLevels(data2)[[1]]), rep(1,6))
   expect_equal(as.numeric(summarizeLevels(data3)[[1]]), c(1000, 100000))
   expect_equal(as.numeric(summarizeLevels(data4)[[1]]), 1)
 })
-
-

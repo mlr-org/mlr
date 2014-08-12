@@ -20,7 +20,7 @@
 #'   What kind of entries are affected?
 #'   \dQuote{abs} means \code{abs(x) > threshold},
 #'   \dQuote{pos} means \code{abs(x) > threshold && x > 0},
-#'   \dQuote{pos} means \code{abs(x) > threshold && x < 0},
+#'   \dQuote{neg} means \code{abs(x) > threshold && x < 0},
 #'   Default is \dQuote{abs}
 #' @return [\code{data.frame}]
 #' @export
@@ -42,31 +42,22 @@ capLargeValues.Task = function(obj, cols = NULL, threshold = Inf, impute = thres
 
 #' @export
 capLargeValues.data.frame = function(obj, cols = NULL, threshold = Inf, impute = threshold, what = "abs") {
-  cns = colnames(obj)
-  # select numeric and int cols
-  numcols = sapply(obj, function(x) is.numeric(x))
-  numcols = cns[numcols]
-  if (is.null(cols)) {
-    cols = numcols
-  } else {
-    assertSubset(cols, numcols)
+  cns = colnames(obj)[vlapply(obj, is.numeric)]
+  if (!is.null(cols)) {
+    assertSubset(cols, cns)
+    cns = intersect(cns, cols)
   }
-  if (length(cols) == 0L)
-    return(obj)
-  selfun = switch(what,
+  fun = switch(what,
     abs = function(x) abs(x) > threshold,
     pos = function(x) abs(x) > threshold & x > 0,
     neg = function(x) abs(x) > threshold & x < 0
   )
-  for (k in cols) {
-    x = obj[, k]
-    inds = selfun(x)
-    if (any(inds)) {
-      inds1 = inds & x > threshold
-      inds2 = inds & x < threshold
-      obj[inds1, k] = impute
-      obj[inds2, k] = -impute
-    }
+
+  for (cn in cns) {
+    x = obj[[cn]]
+    ind = which(fun(x))
+    if (length(ind) > 0L)
+      obj[ind, cn] = ifelse(x[ind] > threshold, impute, -impute)
   }
   return(obj)
 }

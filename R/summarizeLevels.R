@@ -16,23 +16,17 @@ summarizeLevels = function(obj, cols = NULL) {
 }
 
 #' @export
-summarizeLevels.Task = function(obj, cols) {
-  summarizeLevels.data.frame(obj$env$data, cols = NULL)
+summarizeLevels.Task = function(obj, cols = NULL) {
+  summarizeLevels.data.frame(obj$env$data, cols = cols)
 }
 
 #' @export
 summarizeLevels.data.frame = function(obj, cols = NULL) {
-  n = ncol(obj)
-  cns = colnames(obj)
   pred = function(x) is.factor(x) || is.logical(x) || is.character(x)
-  okcols = Filter(function(x) pred(obj[,x]), cns)
-  if (is.null(cols))
-    cols = okcols
-  else
-    assertSubset(cols, okcols)
-  res = list()
-  for (x in cols) {
-     res[[x]] = table(as.factor(obj[,x]))
+  cns = colnames(obj)[vlapply(obj, pred)]
+  if (!is.null(cols)) {
+    assertSubset(cols, cns)
+    cns = intersect(cns, cols)
   }
-  return(res)
+  lapply(obj[cns], function(x) table(as.factor(x)))
 }

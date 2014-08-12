@@ -5,7 +5,7 @@ test_that("summarizeColumns", {
    z = c(TRUE, TRUE, TRUE, FALSE, FALSE), stringsAsFactors = FALSE)
 
   s = summarizeColumns(d)
-  expect_equal(dim(s), c(ncol(d), 9L))
+  expect_equal(dim(s), c(ncol(d), 10L))
   expect_equal(s$na, c(0, 0, 0))
   expect_equal(s$mean, c(3, NA, NA))
 
@@ -15,6 +15,4 @@ test_that("summarizeColumns", {
   d[1L, 1L] = NA_real_
   s = summarizeColumns(d)
   expect_equal(s$na, c(1, 0, 0, 0, 0))
-
 })
-
