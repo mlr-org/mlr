@@ -251,21 +251,21 @@ the time needed for training, the fitted model has to be passed.</p>
 </code></pre>
 
 <pre class="prettyprint well"><code>## timepredict 
-##       0.004
+##       0.005
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(pred = pred, measures = timetrain, model = mod)
 </code></pre>
 
 <pre class="prettyprint well"><code>## timetrain 
-##     0.011
+##     0.022
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(pred = pred, measures = timeboth, model = mod)
 </code></pre>
 
 <pre class="prettyprint well"><code>## timeboth 
-##    0.015
+##    0.027
 </code></pre>
 
 <p>Of course we can also calculate multiple performance measures at once by simply using a list of measures which can also include <a href="../create_measure/">your own measure</a>.</p>
@@ -274,9 +274,9 @@ performance(pred = pred, measures = ms, model = mod)
 </code></pre>
 
 <pre class="prettyprint well"><code>##           mmce.mmce             acc.acc timetrain.timetrain 
-##               0.040               0.960               0.011 
+##               0.040               0.960               0.022 
 ##   timeboth.timeboth 
-##               0.015
+##               0.027
 </code></pre>
 
 <h2 id="binary-classification">Binary classification</h2>

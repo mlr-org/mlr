@@ -256,7 +256,7 @@ lrn = makeLearner(&quot;cluster.XMeans&quot;)
 <pre class="prettyprint well"><code>## Error: Required Weka package 'XMeans' is not installed.
 </code></pre>
 
-<pre class="prettyprint well"><code>## Timing stopped at: 0.109 0.005 0.077
+<pre class="prettyprint well"><code>## Timing stopped at: 0.092 0.004 0.079
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod
@@ -272,13 +272,13 @@ lrn = makeLearner(&quot;cluster.XMeans&quot;)
 <p>As already mentioned, we can train a learner simply by
 calling the function <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a>, passing it a <a href="http://www.rdocumentation.org/packages/mlr/functions/Learner.html">Learner</a> and a <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.
 In the examples above, the machine learning method was specified
-through special [Learner]<a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">makeLearner</a> objects. Creating a separate object
+through special <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> objects. Creating a separate object
 allows to set the hyperparameters of the learner before training for example.</p>
 <p>Optionally, only a subset of the data, specified by an index set, can be used to
 train the learner. This set is passed using the <code>subset</code> argument of <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a>.</p>
 <p>The return value is always an object of class <a href="http://www.rdocumentation.org/packages/mlr/functions/WrappedModel.html">WrappedModel</a>, which wraps the
 particular model of the used R classification or regression method. It
-can subsequently be used to perform a [prediction][&amp;predict.WrappedModel] for new observations.</p>
+can subsequently be used to perform a <a href="&amp;predict.WrappedModel">prediction</a> for new observations.</p>
 </div>
         </div>
 

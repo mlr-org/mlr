@@ -24,7 +24,7 @@ task (see the part on [training](train.md) for more information):
 task = makeClassifTask(data=iris, target="Species")
 ```
 
-Next, we need to create a [ParamSet][&makeParamSet] object that describes
+Next, we need to create a [ParamSet](&makeParamSet) object that describes
 the parameter space we wish to search. This is done through the function
 [&makeParamSet]. We add discrete parameters for the `C` and `sigma` parameter
 of the SVM to the parameter set. More details concerning parameter sets are

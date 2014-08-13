@@ -6,16 +6,16 @@ task, e.g, the target variable.
 
 The tasks are organised in a hierarchy, with the generic
 [&Task] at the top.
-The concrete tasks that can be instantiated are [ClassifTask][&Task] for classification,
-[RegrTask][&Task] for regression, [SurvTask][&Task] for survival
-analysis, [CostSensTask][&Task] for
-cost-sensitive learning, and [ClusterTask][&Task] for clustering.
+The concrete tasks that can be instantiated are [ClassifTask](&Task) for classification,
+[RegrTask](&Task) for regression, [SurvTask](&Task) for survival
+analysis, [CostSensTask](&Task) for
+cost-sensitive learning, and [ClusterTask](&Task) for clustering.
 
 There are dedicated functions to create these tasks given data and other
-relevant information. These are [makeClassifTask][&Task],
-[makeRegrTask][&Task],
-[makeSurvTask][&Task], [makeCostSensTask][&Task], and
-[makeClusterTask][&Task].
+relevant information. These are [makeClassifTask](&Task),
+[makeRegrTask](&Task),
+[makeSurvTask](&Task), [makeCostSensTask](&Task), and
+[makeClusterTask](&Task).
 
 In the following example, we define a classification task for the data
 set ``BreastCancer`` (from the package mlbench) and exclude the ID

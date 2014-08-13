@@ -204,7 +204,7 @@
 <p>Predicting the target values for new observations is
 implemented the same way as most of the other predict methods in <em>R</em>.
 In general, all you need to do is
-call [predict][&amp;predict.WrappedModel] on the object returned by <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a>
+call <a href="&amp;predict.WrappedModel">predict</a> on the object returned by <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a>
 and pass the data to be predicted.</p>
 <h2 id="quick-start">Quick start</h2>
 <h3 id="classification-example">Classification example</h3>
@@ -249,7 +249,7 @@ predict(mod, newdata = BostonHousing)
 <pre class="prettyprint well"><code>## Prediction:
 ## predict.type: response
 ## threshold: 
-## time: 0.00
+## time: 0.03
 ##   truth response
 ## 1  24.0    30.00
 ## 2  21.6    25.03
@@ -275,7 +275,7 @@ lrn = makeLearner(&quot;cluster.XMeans&quot;)
 <pre class="prettyprint well"><code>## Error: Required Weka package 'XMeans' is not installed.
 </code></pre>
 
-<pre class="prettyprint well"><code>## Timing stopped at: 0.092 0.007 0.072
+<pre class="prettyprint well"><code>## Timing stopped at: 0.096 0.004 0.08
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">predict(mod, newdata = iris[,-5])
@@ -284,7 +284,7 @@ lrn = makeLearner(&quot;cluster.XMeans&quot;)
 <pre class="prettyprint well"><code>## Error: object 'crim' not found
 </code></pre>
 
-<pre class="prettyprint well"><code>## Timing stopped at: 0.001 0 0.001
+<pre class="prettyprint well"><code>## Timing stopped at: 0.001 0 0
 </code></pre>
 
 <h2 id="further-information">Further information</h2>
@@ -293,14 +293,14 @@ predictions.
 The first possibility is via the <code>newdata</code> argument and was already shown in the
 examples above.
 If the data for which predictions are required are already contained in
-the [Learner]<a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">makeLearner</a>, it is also possible to pass the task and optionally specify
+the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>, it is also possible to pass the task and optionally specify
 the subset argument that contains the indices of the test observations.</p>
 <p>Predictions are encapsulated in a special <a href="http://www.rdocumentation.org/packages/mlr/functions/Prediction.html">Prediction</a> object. The available
 accessors are documented in the man page for <a href="http://www.rdocumentation.org/packages/mlr/functions/Prediction.html">Prediction</a>.</p>
 <h3 id="classification-example_1">Classification example</h3>
 <p>In case of a classification task, the result of
-[predict][&amp;predict.WrappedModel] depends on the predict type, which was set
-when generating the [Learner]<a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">makeLearner</a>. The default is to predict class
+<a href="&amp;predict.WrappedModel">predict</a> depends on the predict type, which was set
+when generating the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>. The default is to predict class
 labels.</p>
 <p>We start again by loading <strong>mlr</strong> and creating a classification task for the
 <code>iris</code> data set. We select two subsets of the data. We train a decision tree on the

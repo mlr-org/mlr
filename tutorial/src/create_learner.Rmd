@@ -9,7 +9,7 @@ Below, an example of how the Linear Discriminant Analysis from ``MASS`` package 
 For initialization, all the information you need is the name of the learner, its package, the parameter set, and the set of properties of your learner.
 
 First, name your learner. The naming conventions in **mlr** are ``classif.<R_method_name>`` for classification, ``regr.<R_method_name>`` for regression, ``surv.<R_method_name>`` for survival analysis, ``costsens.<R_method_name>`` for cost sensitive learning, and ``cluster.<R_method_name>`` for clustering.
-Second, use [makeDiscreteLearnerParam][&LearnerParam] and [makeNumericLearnerParam][&LearnerParam] to incorporate the complete description of the parameters.
+Second, use [makeDiscreteLearnerParam](&LearnerParam) and [makeNumericLearnerParam](&LearnerParam) to incorporate the complete description of the parameters.
 Include all possible values for discrete parameters and lower and upper bounds for numeric parameters.
 Add information for the properties (see also the section about [Learners](learner.md)).
 Which types of predictors that are supported (numerics, factors)?
