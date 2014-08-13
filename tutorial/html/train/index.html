@@ -210,12 +210,7 @@ with a learner and a suitable <a href="http://www.rdocumentation.org/packages/ml
 <pre class="prettyprint well"><code class="r">library(&quot;mlr&quot;)
 task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.lda&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: MASS
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
+mod = train(lrn, task)
 mod
 </code></pre>
 
@@ -245,18 +240,13 @@ mod
 <p>We cluster the <code>iris</code> data set without the target variable.</p>
 <pre class="prettyprint well"><code class="r">task = makeClusterTask(data = iris[,-5])
 lrn = makeLearner(&quot;cluster.XMeans&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: RWeka
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
+mod = train(lrn, task)
 </code></pre>
 
 <pre class="prettyprint well"><code>## Error: Required Weka package 'XMeans' is not installed.
 </code></pre>
 
-<pre class="prettyprint well"><code>## Timing stopped at: 0.092 0.004 0.079
+<pre class="prettyprint well"><code>## Timing stopped at: 0.089 0.005 0.071
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod

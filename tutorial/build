@@ -38,8 +38,7 @@ knitIt = function(f) {
     lines = str_replace_all(lines, macro$pattern, macro$replacement)
 
   cache.path = paste0(file.path("cache", f), .Platform$file.sep)
-
-  opts_chunk$set(cache = TRUE, cache.path = cache.path)
+  opts_chunk$set(cache = TRUE, cache.path = cache.path, dev = "svg")
   setSeed(f)
   ok = try(knit(
       text = lines,

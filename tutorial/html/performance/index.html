@@ -223,12 +223,7 @@ In order to calculate the performance measures, the function <a href="http://www
 the mean misclassification error (mmce) on the test data set.</p>
 <pre class="prettyprint well"><code class="r">task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.lda&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: MASS
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod = train(lrn, task = task, subset = seq(1,150,2))
+mod = train(lrn, task = task, subset = seq(1,150,2))
 pred = predict(mod, task = task, subset = seq(2,150,2))
 
 performance(pred, measures = mmce)
@@ -251,21 +246,21 @@ the time needed for training, the fitted model has to be passed.</p>
 </code></pre>
 
 <pre class="prettyprint well"><code>## timepredict 
-##       0.005
+##       0.004
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(pred = pred, measures = timetrain, model = mod)
 </code></pre>
 
 <pre class="prettyprint well"><code>## timetrain 
-##     0.022
+##      0.01
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(pred = pred, measures = timeboth, model = mod)
 </code></pre>
 
 <pre class="prettyprint well"><code>## timeboth 
-##    0.027
+##    0.014
 </code></pre>
 
 <p>Of course we can also calculate multiple performance measures at once by simply using a list of measures which can also include <a href="../create_measure/">your own measure</a>.</p>
@@ -274,9 +269,9 @@ performance(pred = pred, measures = ms, model = mod)
 </code></pre>
 
 <pre class="prettyprint well"><code>##           mmce.mmce             acc.acc timetrain.timetrain 
-##               0.040               0.960               0.022 
+##               0.040               0.960               0.010 
 ##   timeboth.timeboth 
-##               0.027
+##               0.014
 </code></pre>
 
 <h2 id="binary-classification">Binary classification</h2>
@@ -286,12 +281,7 @@ the accuracy as well as the false positive and false negative rates are computed
 
 task = makeClassifTask(data = Sonar, target = &quot;Class&quot;, positive = &quot;M&quot;)
 lrn = makeLearner(&quot;classif.rpart&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: rpart
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod = train(lrn, task = task)
+mod = train(lrn, task = task)
 pred = predict(mod, task = task)
 
 performance(pred, measures = list(acc, fpr, fnr))
@@ -334,22 +324,7 @@ test.set = seq(from = 2, to = nrow(BostonHousing), by = 2)
 
 ## Gradient Boosting Machine on training set
 lrn = makeLearner(&quot;regr.gbm&quot;, n.trees = 1000)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: gbm
-## Loading required package: survival
-## Loading required package: splines
-## 
-## Attaching package: 'survival'
-## 
-## The following object is masked from 'package:caret':
-## 
-##     cluster
-## 
-## Loaded gbm 2.1
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod = train(lrn, task, subset = training.set)
+mod = train(lrn, task, subset = training.set)
 
 ## Prediction on test set data
 pred = predict(mod, newdata = BostonHousing[test.set, ])

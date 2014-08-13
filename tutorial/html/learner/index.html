@@ -219,28 +219,10 @@ In the constructor you can do the following things:</p>
 </ul>
 <pre class="prettyprint well"><code class="r"># classifier, set it up for prediction probabilities
 lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: rpart
-</code></pre>
-
-<pre class="prettyprint well"><code class="r"># regression
+# regression
 lrn = makeLearner(&quot;regr.rpart&quot;)
 # gradient boosting machine with hyperparameters and custon name
 lrn = makeLearner(&quot;regr.gbm&quot;, id = &quot;mygbm&quot;, n.trees = 500, interaction.depth = 3)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: gbm
-## Loading required package: survival
-## Loading required package: splines
-## 
-## Attaching package: 'survival'
-## 
-## The following object is masked from 'package:caret':
-## 
-##     cluster
-## 
-## Loaded gbm 2.1
 </code></pre>
 
 <p>The first argument specifies which algorithm to use.

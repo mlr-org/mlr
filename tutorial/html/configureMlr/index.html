@@ -205,12 +205,8 @@ For all parameters, simply refer to the documentation of <a href="http://www.rdo
 <pre class="prettyprint well"><code class="r">## Define a learning task and an appropriate learner
 task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.ksvm&quot;)
-</code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: kernlab
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">## Perform a 3-fold cross-validation
+## Perform a 3-fold cross-validation
 rdesc = makeResampleDesc(&quot;CV&quot;, iters=3)
 r = resample(lrn, task, rdesc)
 </code></pre>

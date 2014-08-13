@@ -220,12 +220,8 @@ performance measures.</p>
 <pre class="prettyprint well"><code class="r">## Define a learning task and an appropriate learner
 task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.lda&quot;)
-</code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: MASS
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">## Perform a 3-fold cross-validation
+## Perform a 3-fold cross-validation
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 r = resample(lrn, task, rdesc)
 </code></pre>
@@ -603,12 +599,7 @@ rinst = makeResampleInstance(rdesc, task = task)
 ms = list(mse, medae)
 
 lrn1 = makeLearner(&quot;regr.nnet&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: nnet
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">r1 = resample(lrn1, task, rinst, measures = ms)
+r1 = resample(lrn1, task, rinst, measures = ms)
 </code></pre>
 
 <pre class="prettyprint well"><code>## [Resample] OOB bootstrapping iter: 1
@@ -643,18 +634,7 @@ lrn1 = makeLearner(&quot;regr.nnet&quot;)
 
 <pre class="prettyprint well"><code class="r">## Another resampling for the k-Nearest Neighbor regression
 lrn2 = makeLearner(&quot;regr.kknn&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: kknn
-## 
-## Attaching package: 'kknn'
-## 
-## The following object is masked from 'package:caret':
-## 
-##     contr.dummy
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">r2 = resample(lrn2, task, rinst, measures = ms)
+r2 = resample(lrn2, task, rinst, measures = ms)
 </code></pre>
 
 <pre class="prettyprint well"><code>## [Resample] OOB bootstrapping iter: 1

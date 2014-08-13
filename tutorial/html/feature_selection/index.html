@@ -216,12 +216,7 @@ The function is given a <a href="http://www.rdocumentation.org/packages/mlr/func
 the importance of the different features.</p>
 <pre class="prettyprint well"><code class="r">task = makeClassifTask(data=iris, target=&quot;Species&quot;)
 importance = getFilterValues(task, method=&quot;information.gain&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: FSelector
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">importance
+importance
 </code></pre>
 
 <pre class="prettyprint well"><code>## FilterValues:
@@ -248,12 +243,7 @@ values.</p>
 features so that it can be part of the validation method of your choice.
 We will use the standard 10-fold cross validation.</p>
 <pre class="prettyprint well"><code class="r">learner = makeLearner(&quot;classif.fnn&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: FNN
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">learnerFiltered = makeFilterWrapper(learner=learner, fw.method=&quot;information.gain&quot;, fw.select=&quot;perc&quot;, fw.val=0.7)
+learnerFiltered = makeFilterWrapper(learner=learner, fw.method=&quot;information.gain&quot;, fw.select=&quot;perc&quot;, fw.val=0.7)
 rdesc = makeResampleDesc(&quot;CV&quot;, iters=10)
 rsres = resample(learner=learnerFiltered, task=task, resampling=rdesc, show.info=FALSE, models=TRUE)
 rsres$aggr
@@ -283,12 +273,7 @@ The <code>Sepal.Width</code> did not make it into a single fold.</p>
 <pre class="prettyprint well"><code class="r">data(Sonar, package = &quot;mlbench&quot;)
 task = makeClassifTask(data = Sonar, target = &quot;Class&quot;, positive = &quot;M&quot;)
 lrn = makeLearner(&quot;classif.rpart&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: rpart
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">lrnFiltered = makeFilterWrapper(learner=lrn, fw.method=&quot;chi.squared&quot;, fw.select=&quot;threshold&quot;, fw.val=0)
+lrnFiltered = makeFilterWrapper(learner=lrn, fw.method=&quot;chi.squared&quot;, fw.select=&quot;threshold&quot;, fw.val=0)
 ps = makeParamSet(makeDiscreteParam(&quot;fw.val&quot;, values = seq(from=0.2, 0.4, by=0.05)))
 tuneRes = tuneParams(lrnFiltered, task=task, resampling=makeResampleDesc(&quot;CV&quot;, iters=5), par.set=ps, control=makeTuneControlGrid())
 </code></pre>

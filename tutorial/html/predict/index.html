@@ -212,12 +212,7 @@ and pass the data to be predicted.</p>
 for the same data set.</p>
 <pre class="prettyprint well"><code class="r">task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.lda&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: MASS
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod = train(lrn, task = task)
+mod = train(lrn, task = task)
 pred = predict(mod, newdata = iris)
 pred
 </code></pre>
@@ -249,7 +244,7 @@ predict(mod, newdata = BostonHousing)
 <pre class="prettyprint well"><code>## Prediction:
 ## predict.type: response
 ## threshold: 
-## time: 0.03
+## time: 0.00
 ##   truth response
 ## 1  24.0    30.00
 ## 2  21.6    25.03
@@ -264,18 +259,13 @@ predict(mod, newdata = BostonHousing)
 the same data.</p>
 <pre class="prettyprint well"><code class="r">task = makeClusterTask(data = iris[,-5])
 lrn = makeLearner(&quot;cluster.XMeans&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: RWeka
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
+mod = train(lrn, task)
 </code></pre>
 
 <pre class="prettyprint well"><code>## Error: Required Weka package 'XMeans' is not installed.
 </code></pre>
 
-<pre class="prettyprint well"><code>## Timing stopped at: 0.096 0.004 0.08
+<pre class="prettyprint well"><code>## Timing stopped at: 0.093 0.004 0.08
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">predict(mod, newdata = iris[,-5])
@@ -284,7 +274,7 @@ lrn = makeLearner(&quot;cluster.XMeans&quot;)
 <pre class="prettyprint well"><code>## Error: object 'crim' not found
 </code></pre>
 
-<pre class="prettyprint well"><code>## Timing stopped at: 0.001 0 0
+<pre class="prettyprint well"><code>## Timing stopped at: 0.001 0 0.001
 </code></pre>
 
 <h2 id="further-information">Further information</h2>
@@ -310,12 +300,8 @@ task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 
 # Define the learning algorithm
 lrn = makeLearner(&quot;classif.rpart&quot;)
-</code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: rpart
-</code></pre>
-
-<pre class="prettyprint well"><code class="r"># Split the iris data into a training set for learning and a test set
+# Split the iris data into a training set for learning and a test set
 training.set = seq(from = 1, to = nrow(iris), by = 2)
 test.set = seq(from = 2, to = nrow(iris), by = 2)
 
@@ -453,22 +439,7 @@ training.set = seq(from = 1, to = nrow(BostonHousing), by = 2)
 test.set = seq(from = 2, to = nrow(BostonHousing), by = 2)
 
 lrn = makeLearner(&quot;regr.gbm&quot;, n.trees = 100)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: gbm
-## Loading required package: survival
-## Loading required package: splines
-## 
-## Attaching package: 'survival'
-## 
-## The following object is masked from 'package:caret':
-## 
-##     cluster
-## 
-## Loaded gbm 2.1
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod = train(lrn, task, subset = training.set)
+mod = train(lrn, task, subset = training.set)
 
 pred = predict(mod, newdata = BostonHousing, subset = test.set)
 

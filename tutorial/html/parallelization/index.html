@@ -211,12 +211,7 @@ parallelStartSocket(2)
 
 <pre class="prettyprint well"><code class="r">task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.lda&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: MASS
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 4)
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 4)
 r = resample(lrn, task, rdesc)
 </code></pre>
 

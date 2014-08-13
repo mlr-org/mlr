@@ -227,12 +227,7 @@ data(iris)
 tsk = makeClassifTask(id = &quot;tutorial&quot;, data = iris, target = &quot;Species&quot;)
 # Define the Learner:
 lrn = makeLearner(&quot;classif.lda&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: MASS
-</code></pre>
-
-<pre class="prettyprint well"><code class="r"># Define the Resampling Strategy:
+# Define the Resampling Strategy:
 rsm = makeResampleDesc(method = &quot;CV&quot;, stratify = TRUE)
 # Do the resampling:
 res = resample(learner = lrn, task = tsk, resampling = rsm, show.info = FALSE)
