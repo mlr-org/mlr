@@ -7,9 +7,9 @@ URL: http://berndbischl.github.io/mlr/tutorial/html/
   Install R dependencies as required
 * Only edit R markdown files in src
 * Markdown basics
-  Basic Markdown: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
-  RStudio Support: https://support.rstudio.com/hc/en-us/articles/200552086-Using-R-Markdown,
-  Knitr options: http://yihui.name/knitr/options
+  * Basic Markdown: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+  * RStudio Support: https://support.rstudio.com/hc/en-us/articles/200552086-Using-R-Markdown,
+  * Knitr options: http://yihui.name/knitr/options
 * Put additional images in ../imgages
 * Link to mlr manual: [&function] and [name](&function)
 * Link to other manuals: [&pkg::function] and [name](&pkg::function)
