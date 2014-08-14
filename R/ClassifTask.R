@@ -1,7 +1,7 @@
 #' @export
 #' @rdname Task
 makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
-  positive, fixup.data = "warn", check.data = TRUE) {
+  positive = NA_character_, fixup.data = "warn", check.data = TRUE) {
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)
 
@@ -13,16 +13,6 @@ makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
   # we expect the target to be a factor from here on
   levs = levels(task$env$data[, target])
   m = length(levs)
-  if (missing(positive)) {
-    if (m <= 2L)
-      positive = levs[1L]
-    else
-      positive = NA_character_
-  } else {
-    if (m > 2L)
-      stop("Cannot set a positive class for a multiclass problem!")
-    assertChoice(positive, choices = levs)
-  }
   id = checkOrGuessId(id, data)
   task$task.desc = makeTaskDesc.ClassifTask(task, id, target, positive)
   return(task)
@@ -44,8 +34,18 @@ fixupData.ClassifTask = function(task, target, choice, ...) {
 }
 
 makeTaskDesc.ClassifTask = function(task, id, target, positive) {
+  levs = levels(task$env$data[, target])
+  m = length(levs)
+  if (is.na(positive)) {
+    if (m <= 2L)
+      positive = levs[1L]
+  } else {
+    if (m > 2L)
+      stop("Cannot set a positive class for a multiclass problem!")
+    assertChoice(positive, choices = levs)
+  }
   td = makeTaskDescInternal(task, "classif", id, target)
-  td$class.levels = levels(task$env$data[, target])
+  td$class.levels = levs
   td$positive = positive
   td$negative = NA_character_
   if (length(td$class.levels) == 1L)
