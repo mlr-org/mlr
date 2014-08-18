@@ -25,23 +25,20 @@ isFailureModel.WrappedModel = function(model) {
 #' @export
 isFailureModel.BaggingModel = function(model) {
   mods = getBaggingModels(model, learner.models = FALSE)
-  isit = sapply(mods, isFailureModel)
+  isit = vlapply(mods, isFailureModel)
   return(any(isit))
 }
 
 #' @export
 isFailureModel.MulticlassModel = function(model) {
   mods = model$learner.model$next.model$models
-  isit = sapply(mods, isFailureModel)
+  isit = vlapply(mods, isFailureModel)
   return(any(isit))
 }
 
 #' @export
 isFailureModel.CostSensWeightedPairsModel = function(model) {
   mods = getCostSensWeightedPairsModels(model, learner.models = FALSE)
-  isit = sapply(mods, isFailureModel)
+  isit = vlapply(mods, isFailureModel)
   return(any(isit))
 }
-
-
-

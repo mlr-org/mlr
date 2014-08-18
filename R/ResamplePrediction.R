@@ -1,4 +1,4 @@
-#FIXME where does time exactly come from? only test preds?
+#FIXME: where does time exactly come from? only test preds?
 
 #' Prediction from resampling.
 #'

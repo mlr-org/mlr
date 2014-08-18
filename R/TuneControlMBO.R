@@ -1,6 +1,6 @@
 #FIXME: docu check
 
-#FIXME export when mbo is on cran
+#FIXME: export when mbo is on cran
 
 # @param learner [\code{\link{Learner}}] \cr
 #   Regression learner to model performance landscape.

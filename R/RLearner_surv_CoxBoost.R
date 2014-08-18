@@ -13,7 +13,7 @@ makeRLearner.surv.CoxBoost = function() {
       makeDiscreteLearnerParam(id = "criterion", default = "pscore", values = c("pscore", "score", "hpscore", "hscore")),
       makeNumericLearnerParam(id = "stepsize.factor", default = 1, lower = 0),
       makeDiscreteLearnerParam(id = "sf.scheme", default = "sigmoid", values = c("sigmoid", "linear"))
-      # FIXME still missing some arguments
+      # FIXME: still missing some arguments
     ),
     properties = c("numerics", "weights", "rcens"),
     name = "Cox proportional hazards model with componentwise likelhood based boosting",
@@ -26,7 +26,7 @@ makeRLearner.surv.CoxBoost = function() {
 trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL,  ...) {
   # FIXME: after recodeY is updated ...
   # data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "right")
-  # FIXME use model.matrix to allow factors
+  # FIXME: use model.matrix to allow factors
   data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "no")
   if (is.null(.weights))
     .weights = NULL

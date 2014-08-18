@@ -39,8 +39,8 @@ makeRLearner.classif.ksvm = function() {
 #' @export
 trainLearner.classif.ksvm = function(.learner, .task, .subset, .weights = NULL, degree, offset, scale, sigma, order, length, lambda, normalized,  ...) {
 
-  # FIXME custom kernel. freezes? check mailing list
-  # FIXME unify cla + regr, test all sigma stuff
+  # FIXME: custom kernel. freezes? check mailing list
+  # FIXME: unify cla + regr, test all sigma stuff
 
 #     # there's a strange behaviour in r semantics here wgich forces this, see do.call and the comment about substitute
 #     if (!is.null(args$kernel) && is.function(args$kernel) && !is(args$kernel,"kernel")) {

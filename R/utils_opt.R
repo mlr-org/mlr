@@ -9,20 +9,20 @@ setDefaultImputeVal = function(control, measures) {
       Inf
   }
   if (is.null(control$impute.val))
-    control$impute.val = sapply(measures, getDefVal)
+    control$impute.val = vnapply(measures, getDefVal)
   return(control)
 }
 
 
 ##### tuning #####
 makeOptPathDFFromMeasures = function(par.set, measures) {
-  ns = sapply(measures, measureAggrName)
-  if (any(duplicated(ns)))
+  ns = vcapply(measures, measureAggrName)
+  if (anyDuplicated(ns))
     stop("Cannot create OptPath, measures do not have unique ids!")
-  if (length(intersect(ns, names(par.set$pars))) > 0 ||
-    length(intersect(ns, getParamIds(par.set, repeated = TRUE, with.nr = TRUE))) > 0)
+  if (length(intersect(ns, names(par.set$pars))) > 0L ||
+    length(intersect(ns, getParamIds(par.set, repeated = TRUE, with.nr = TRUE))) > 0L)
     stop("Cannot create OptPath, measures ids and dimension names of input space overlap!")
-  minimize = sapply(measures, function(m) m$minimize)
+  minimize = vlapply(measures, function(m) m$minimize)
   makeOptPathDF(par.set, ns, minimize, add.transformed.x = FALSE,
     include.error.message = TRUE, include.exec.time = TRUE)
 }
@@ -49,6 +49,7 @@ logFunSelFeatures = function(learner, task, resampling, measures, par.set, contr
 
 featuresToLogical = function(vars, all.vars) {
   if (is.list(vars)) {
+    # FIXME: use asMatrixCols / asMatrixRows
     y = t(sapply(vars, function(x) all.vars %in% x))
     colnames(y) = all.vars
   } else {

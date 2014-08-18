@@ -28,7 +28,7 @@ performance = function(pred, measures, task, model) {
   if (!missing(pred))
     assertClass(pred, classes = "Prediction")
   measures = checkMeasures(measures, pred$task.desc)
-  sapply(measures, doPerformaceIteration, pred = pred, task = task, model = model, td = NULL)
+  vnapply(measures, doPerformaceIteration, pred = pred, task = task, model = model, td = NULL)
 }
 
 doPerformaceIteration = function(measure, pred, task, model, td){

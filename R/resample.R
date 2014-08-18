@@ -137,15 +137,15 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   pp = rin$desc$predict
   if (pp == "train") {
     pred.train = predict(m, task, subset = train.i)
-    ms.train = sapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
+    ms.train = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
   } else if (pp == "test") {
     pred.test = predict(m, task, subset = test.i)
-    ms.test = sapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
+    ms.test = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
   } else { # "both"
     pred.train = predict(m, task, subset = train.i)
-    ms.train = sapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
+    ms.train = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
     pred.test = predict(m, task, subset = test.i)
-    ms.test = sapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
+    ms.test = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
   }
   ex = extract(m)
   list(
@@ -161,25 +161,25 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
 
 mergeResampleResult = function(task, iter.results, measures, rin, models, extract, show.info) {
   iters = length(iter.results)
-  mids = sapply(measures, function(m) m$id)
+  mids = vcapply(measures, function(m) m$id)
 
   ms.test = extractSubList(iter.results, "measures.test", simplify = FALSE)
   ms.test = as.data.frame(do.call(rbind, ms.test))
-  colnames(ms.test) = sapply(measures, function(pm) pm$id)
+  colnames(ms.test) = mids
   rownames(ms.test) = NULL
   ms.test = cbind(iter = seq_len(iters), ms.test)
 
   ms.train = as.data.frame(extractSubList(iter.results, "measures.train", simplify = "rows"))
-  rownames(ms.train) = NULL
   colnames(ms.train) = mids
-  ms.train = cbind(iter = 1:iters, ms.train)
+  rownames(ms.train) = NULL
+  ms.train = cbind(iter = seq_len(iters), ms.train)
 
   preds.test = extractSubList(iter.results, "pred.test", simplify = FALSE)
   preds.train = extractSubList(iter.results, "pred.train", simplify = FALSE)
   pred = makeResamplePrediction(instance = rin, preds.test = preds.test, preds.train = preds.train)
 
-  aggr = sapply(measures, function(m)  m$aggr$fun(task, ms.test[, m$id], ms.train[, m$id], m, rin$group, pred))
-  names(aggr) = sapply(measures, measureAggrName)
+  aggr = vnapply(measures, function(m) m$aggr$fun(task, ms.test[, m$id], ms.train[, m$id], m, rin$group, pred))
+  names(aggr) = vcapply(measures, measureAggrName)
 
   err.msgs = as.data.frame(extractSubList(iter.results, "err.msgs", simplify = "rows"))
   rownames(err.msgs) = NULL

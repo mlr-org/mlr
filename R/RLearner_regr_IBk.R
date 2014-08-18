@@ -27,7 +27,7 @@ trainLearner.regr.IBk = function(.learner, .task, .subset, .weights = NULL,  ...
 
 #' @export
 predictLearner.regr.IBk = function(.learner, .model, .newdata, ...) {
-  # FIXME cannot be correct! prob?
+  # FIXME: cannot be correct! prob?
   type = switch(.learner$predict.type, prob = "prob", "class")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }

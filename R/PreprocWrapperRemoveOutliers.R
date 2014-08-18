@@ -9,7 +9,7 @@ makePreprocWrapperRemoveOutliers = function(learner, ro.alpha = 0.5) {
   trainfun = function(data, target, args) {
     require(robustbase)
     cns = colnames(data)
-    nums = setdiff(cns[sapply(data, is.numeric)], target)
+    nums = setdiff(cns[vlapply(data, is.numeric)], target)
     # we must have at least n = 2*p obs
     if (length(nums) && nrow(data) >= 2L*length(nums)) {
       x = data[, nums]

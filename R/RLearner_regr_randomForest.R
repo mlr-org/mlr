@@ -1,4 +1,4 @@
-# FIXME document BS options
+# FIXME: document BS options
 
 #' @export
 makeRLearner.regr.randomForest = function() {

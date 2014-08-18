@@ -25,7 +25,7 @@ createDummyFeatures = function(obj, target = character(0L), method = "1-of-n", e
 createDummyFeatures.data.frame = function(obj, target = character(0L), method = "1-of-n", exclude = character(0L)) {
   assertSubset(exclude, choices = colnames(obj))
   # extract obj to work on
-  work.cols = colnames(obj)[sapply(obj, is.factor)]
+  work.cols = colnames(obj)[vlapply(obj, is.factor)]
   work.cols = setdiff(work.cols, exclude)
   work.cols = setdiff(work.cols, target)
   dummies = lapply(work.cols, function(colname) {

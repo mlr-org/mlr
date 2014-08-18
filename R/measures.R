@@ -272,7 +272,7 @@ multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, 
     resp = pred$data$response
     predP = getProbabilities(pred)
     # choose the probablity of the choosen response
-    predV = sapply(seq_row(predP), function(i) {
+    predV = vnapply(seq_row(predP), function(i) {
       predP[i, resp[i]]
     })
     auc = multiclass.roc(response = resp, predictor = predV)$auc

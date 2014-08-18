@@ -289,7 +289,7 @@ imputeLearner = function(learner, features = NULL) {
     impute = function(data, target, col, model, features) {
       x = data[[col]]
       ind = is.na(x)
-      # FIXME we do we get a list instead of a data.frame?
+      # FIXME: we do we get a list instead of a data.frame?
       newdata = as.data.frame(data)[ind, features, drop = FALSE]
      p =  predict(model, newdata = newdata)$data$response
      replace(x, ind, p)

@@ -73,6 +73,7 @@ predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, ...) {
   models = .model$learner.model$next.model$models
   cm = .model$learner.model$next.model$cm
   # predict newdata with every binary model, get n x n.models matrix of +1,-1
+  # FIXME: this will break for length(models) == 1? do not use sapply!
   p = sapply(models, function(m) {
     pred = predict(m, newdata = .newdata, ...)$data$response
     if (is.factor(pred))
@@ -81,8 +82,8 @@ predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, ...) {
   })
   rns = rownames(cm)
   # we use hamming decoding here, see http://jmlr.org/papers/volume11/escalera10a/escalera10a.pdf
-  y = apply(p, 1, function(v) {
-    d = apply(cm, 1, function(z) sum((1 - sign(v * z)) / 2))
+  y = apply(p, 1L, function(v) {
+    d = apply(cm, 1L, function(z) sum((1 - sign(v * z)) / 2))
     rns[getMinIndex(d)]
   })
   as.factor(y)

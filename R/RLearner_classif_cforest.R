@@ -35,7 +35,7 @@ makeRLearner.classif.cforest = function() {
 
 #' @export
 trainLearner.classif.cforest = function(.learner, .task, .subset, .weights = NULL,
-                                     ntree, mtry, replace, fraction, trace, pvalue, 
+                                     ntree, mtry, replace, fraction, trace, pvalue,
                                      teststat, testtype, mincriterion, minprob,
                                      minsplit, minbucket, stump, randomsplits,
                                      nresample, maxsurrogate, maxdepth,
@@ -53,10 +53,11 @@ trainLearner.classif.cforest = function(.learner, .task, .subset, .weights = NUL
 predictLearner.classif.cforest = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type == "prob") {
     p = predict(.model$learner.model, newdata = .newdata, type = "prob", ...)
+    # FIXME: this will break for nrow(.newdata) == 1? do not use sapply!
     p = t(sapply(p, "["))
     colnames(p) = .model$task.desc$class.levels
   } else {
-    p = predict(.model$learner.model, newdata = .newdata, ...) 
+    p = predict(.model$learner.model, newdata = .newdata, ...)
   }
   p
 }

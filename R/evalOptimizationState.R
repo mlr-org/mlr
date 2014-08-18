@@ -6,7 +6,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   opt.path, show.info, dob, state, remove.nas) {
 
   setSlaveOptions()
-  y = setNames(rep(NA_real_, length(measures)), sapply(measures, measureAggrName))
+  y = setNames(rep(NA_real_, length(measures)), vcapply(measures, measureAggrName))
   errmsg = NA_character_
   exec.time = NA_real_
   set.pars.ok = TRUE

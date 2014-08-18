@@ -147,7 +147,7 @@ b632 = makeAggregation(
 )
 
 
-#FIXME read this again properly and double check it
+#FIXME: read this again properly and double check it
 #' @export
 #' @rdname aggregations
 b632plus = makeAggregation(
@@ -177,6 +177,6 @@ b632plus = makeAggregation(
 testgroup.mean = makeAggregation(
   id = "testgroup.mean",
   fun = function(task, perf.test, perf.train, measure, group, pred) {
-    mean(sapply(split(perf.test, group), mean))
+    mean(vnapply(split(perf.test, group), mean))
   }
 )

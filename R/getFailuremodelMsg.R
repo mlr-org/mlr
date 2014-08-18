@@ -25,7 +25,7 @@ getFailureModelMsg.WrappedModel = function(model) {
 #' @export
 getFailureModelMsg.BaggingModel = function(model) {
   mods = getBaggingModels(model, learner.models = FALSE)
-  msgs = sapply(mods, getFailureModelMsg)
+  msgs = vcapply(mods, getFailureModelMsg)
   j = which.first(!is.na(msgs))
   ifelse(j == 0L, NA_character_ , msgs[j])
 }
@@ -33,7 +33,7 @@ getFailureModelMsg.BaggingModel = function(model) {
 #' @export
 getFailureModelMsg.CostSensWeightedPairsModel = function(model) {
   mods = getCostSensWeightedPairsModels(model, learner.models = FALSE)
-  msgs = sapply(mods, getFailureModelMsg)
+  msgs = vcapply(mods, getFailureModelMsg)
   j = which.first(!is.na(msgs))
   ifelse(j == 0L, NA_character_ , msgs[j])
 }

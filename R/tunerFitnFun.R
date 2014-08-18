@@ -28,6 +28,7 @@ tunerFitnFunVectorized = function(xs, learner, task, resampling, measures, par.s
     opt.path, show.info, xs, dobs = dob, eols = NA, remove.nas = remove.nas)
   ys = extractSubList(res.list, "y")
   # we return a numeric vec of y-values
+  # FIXME: convertYForTuner can return vectors! do not use sapply!
   sapply(ys, convertYForTuner, measures = measures, ctrl = ctrl)
 }
 
@@ -35,14 +36,13 @@ tunerFitnFunVectorized = function(xs, learner, task, resampling, measures, par.s
 convertYForTuner = function(y, measures, ctrl) {
   is.multicrit = inherits(ctrl, "TuneMultiCritControl")
   k = ifelse(is.multicrit, length(y), 1L)
-  for (j in 1:k) {
+  for (j in seq_len(k)) {
     z = y[[j]]
     # if there was any problem we return the imputed value that the user selected
     if (is.na(z) || is.nan(z) || is.infinite(z))
       z = ctrl$impute.val[[j]]
     # we now negate values for maximization
-    z = z * ifelse(measures[[j]]$minimize, 1 , -1)
-    y[[j]] = z
+    y[[j]] = z * ifelse(measures[[j]]$minimize, 1 , -1)
   }
   # for multicrit, return vector (without names), otherwise just scalar y
   if (inherits(ctrl, "TuneMultiCritControl"))

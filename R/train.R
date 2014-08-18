@@ -75,7 +75,7 @@ train = function(learner, task, subset, weights = NULL) {
     if (!is.null(debug.seed))
       set.seed(debug.seed)
     # for optwrappers we want to see the tuning / varsel logging
-    # FIXME is case really ok for optwrapper? can we supppress then too?
+    # FIXME: is case really ok for optwrapper? can we supppress then too?
     if (opt.slo || inherits(learner, "OptWrapper"))
       fun1 = identity
     else

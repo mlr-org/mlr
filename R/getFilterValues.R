@@ -73,7 +73,7 @@ getFilterValues = function(task, method = "random.forest.importance", ...) {
     y = y[,1L]
   }
 
-  types = sapply(data[, ns, drop = FALSE], getClass1)
+  types = vcapply(data[, ns, drop = FALSE], getClass1)
   makeS3Obj("FilterValues",
     task.desc = task$task.desc,
     method = method,

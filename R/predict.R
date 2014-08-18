@@ -84,7 +84,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
     p = predictFailureModel(model, newdata)
     time.predict = NA_real_
   } else {
-    #FIXME this copies newdata
+    #FIXME: this copies newdata
     pars = list(
       .learner = learner,
       .model = model,

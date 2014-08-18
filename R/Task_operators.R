@@ -21,7 +21,7 @@ getTargetNames = function(x) {
 #' @family task
 #' @export
 getTaskFeatureNames = function(task) {
-  #FIXME argument checks currently not done for speed
+  #FIXME: argument checks currently not done for speed
   setdiff(colnames(task$env$data), task$task.desc$target)
 }
 

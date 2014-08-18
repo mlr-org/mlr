@@ -47,7 +47,7 @@ smote = function(task, rate, nn = 5L) {
   n.new  = round(rate * n.min) - n.min
   if (n.new <= 0L)
     return(task)
-  is.num = sapply(x, is.numeric)
+  is.num = vlapply(x, is.numeric)
   res = matrix(0, n.new, ncol(x))
   # convert xmin to matrix, so we can handle it better in C
   # factors are integer levels
