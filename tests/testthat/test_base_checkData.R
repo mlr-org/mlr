@@ -6,15 +6,15 @@ test_that("checkData", {
   # y contains missings
   df = multiclass.df
   df[1, multiclass.target] = NA
-  expect_error(makeClassifTask(data = df, target = multiclass.target), "'Species' contains missing values")
+  expect_error(makeClassifTask(data = df, target = multiclass.target), "missing values")
   df = regr.df
   df[1, regr.target] = NaN
-  expect_error(makeRegrTask(data = df, target = regr.target), "'medv' contains missing values")
+  expect_error(makeRegrTask(data = df, target = regr.target), "missing values")
 
   # data contains infs
   df = regr.df
   df[1, regr.target] = Inf
-  expect_error(makeRegrTask(data = df, target = regr.target), "Data contains infinite")
+  expect_error(makeRegrTask(data = df, target = regr.target), "be finite")
   df = regr.df
   df[1, getTaskFeatureNames(regr.task)[1]] = Inf
   expect_error(makeRegrTask(data = df, target = regr.target), "Data contains infinite")

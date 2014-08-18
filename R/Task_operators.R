@@ -243,7 +243,7 @@ changeData = function(task, data, costs, weights) {
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
     "classif" = makeTaskDesc(task, td$id, td$target, td$positive),
-    "surv" = makeTaskDesc(task, td$id, td$target, td$surv.type),
+    "surv" = makeTaskDesc(task, td$id, td$target, td$censoring),
     "cluster" = makeTaskDesc(task, td$id),
     makeTaskDesc(task, td$id, td$target))
   return(task)

@@ -39,13 +39,14 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset=list(
   test = df[-inds,]
 
   lrn = do.call("makeLearner", c(list(t.name), parset))
+  # FIXME this heuristic will backfire eventually
   if (length(target) == 0)
     task = makeClusterTask(data=df)
   else if (is.numeric(df[, target]))
     task = makeRegrTask(data=df, target=target)
   else if (is.factor(df[, target]))
     task = makeClassifTask(data=df, target=target)
-  else if (is.data.frame(df[, target]) && is.numeric(df[, target[1L]]) && is.numeric(df[, target[2L]]))
+  else if (is.data.frame(df[, target]) && is.numeric(df[, target[1L]]) && is.logical(df[, target[2L]]))
     task = makeSurvTask(data=df, target=target)
   else
     stop("Should not happen!")

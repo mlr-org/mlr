@@ -39,7 +39,7 @@ regr.train = regr.df[regr.train.inds, ]
 regr.test  = regr.df[regr.test.inds, ]
 regr.task = makeRegrTask("regrtask", data = regr.df, target = regr.target)
 
-surv.df = cbind(time = rexp(150, 1/20)+1, event = sample(0:1, 150, replace = TRUE), iris)
+surv.df = cbind(time = rexp(150, 1/20)+1, event = sample(c(TRUE, FALSE), 150, replace = TRUE), iris)
 surv.formula = Surv(time,event) ~ .
 surv.target = c("time", "event")
 surv.train.inds = c(1:30, 51:80, 101:130)

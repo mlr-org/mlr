@@ -21,9 +21,10 @@ makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
 checkTaskCreation.ClassifTask = function(task, target, ...) {
   NextMethod("checkTaskCreation")
   assertString(target)
-  if (!is.factor(task$env$data[[target]])) {
+  if (!is.factor(task$env$data[[target]]))
     stopf("Target column '%s' must be a factor", target)
-  }
+  if (anyMissing(task$env$data[[target]]))
+    stopf("Target column '%s' contains missing values!", target)
 }
 
 fixupData.ClassifTask = function(task, target, choice, ...) {

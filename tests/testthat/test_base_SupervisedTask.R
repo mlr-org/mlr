@@ -27,7 +27,7 @@ test_that("SupervisedTask", {
   expect_error(makeClassifTask(data = regr.df, target = regr.target),
     "must be a factor")
   expect_error(makeRegrTask(data = multiclass.df, target = multiclass.target),
-    "must be numeric")
+    "Must be numeric")
 
   # wrong vars
   expect_error(subsetTask(multiclass.task, vars = c("Sepal.Length", "x", "y")))
@@ -65,6 +65,3 @@ test_that("SupervisedTask does not drop positive class", {
   expect_warning({task = makeClassifTask(data = data, target = "Species")}, "Empty factor levels")
   expect_true(setequal(c(task$task.desc$positive, task$task.desc$negative), unique(data$Species)))
 })
-
-
-

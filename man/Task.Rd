@@ -25,12 +25,12 @@ makeCostSensTask(id, data, costs, blocking = NULL, fixup.data = "warn",
 makeRegrTask(id, data, target, weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE)
 
-makeSurvTask(id, data, target, surv.type = "right", weights = NULL,
+makeSurvTask(id, data, target, censoring = "right", weights = NULL,
   blocking = NULL, fixup.data = "warn", check.data = TRUE)
 }
 \arguments{
-\item{surv.type}{[\code{character(1)}]\cr
-Survival type. Allowed are \dQuote{right} (default), \dQuote{left} and \dQuote{interval2}.
+\item{censoring}{[\code{character(1)}]\cr
+Censoring type. Allowed choices are \dQuote{right} (default), \dQuote{left} and \dQuote{interval2}.
 See \code{\link[survival]{Surv}} for details.}
 
 \item{id}{[\code{character(1)}]\cr
