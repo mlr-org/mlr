@@ -16,6 +16,7 @@ library(LiblineaR)
 library(stepPlr)
 library(FNN)
 library(randomForestSRC)
+library(glmnet) # otherwise auc is shadowed
 
 if (interactive()) {
   load_all(".")
