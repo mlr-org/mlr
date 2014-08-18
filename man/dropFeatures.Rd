@@ -18,4 +18,9 @@ Features to drop.}
 \description{
 Drop some features of task.
 }
+\seealso{
+Other eda_preproc: \code{\link{createDummyFeatures}};
+  \code{\link{normalizeFeatures}};
+  \code{\link{removeConstantFeatures}}
+}
 

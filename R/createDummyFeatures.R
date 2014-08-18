@@ -16,8 +16,8 @@
 #' @template arg_exclude
 #' @return [\code{data.frame} | \code{\link{Task}}]. Same type as
 #'   \code{obj}.
-#' @seealso \code{\link{model.matrix}}
 #' @export
+#' @family eda_preproc
 createDummyFeatures = function(obj, target = character(0L), method = "1-of-n", exclude = character(0L)) {
   assertChoice(method, choices = c("1-of-n", "reference"))
   assertCharacter(target)

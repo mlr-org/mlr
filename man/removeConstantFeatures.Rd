@@ -48,4 +48,9 @@ With the argument \dQuote{perc}, there is a possibility to also remove
 features for which less than \dQuote{perc} percent of the observations
 differ from the mode value.
 }
+\seealso{
+Other eda_preproc: \code{\link{createDummyFeatures}};
+  \code{\link{dropFeatures}};
+  \code{\link{normalizeFeatures}}
+}
 

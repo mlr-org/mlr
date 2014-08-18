@@ -29,6 +29,7 @@
 #' @template arg_showinfo
 #' @return [\code{\link{data.frame}} | \code{\link{Task}}].
 #' @export
+#' @family eda_preproc
 removeConstantFeatures = function(x, target, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = getMlrOption("show.info")) {
   assertNumber(perc, lower = 0, upper = 1)

@@ -39,5 +39,9 @@ Non numerical features will be left untouched and passed to the result.
 }
 \seealso{
 \code{\link{normalize}}
+
+Other eda_preproc: \code{\link{createDummyFeatures}};
+  \code{\link{dropFeatures}};
+  \code{\link{removeConstantFeatures}}
 }
 

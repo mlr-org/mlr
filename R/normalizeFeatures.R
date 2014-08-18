@@ -22,7 +22,7 @@
 #' @return [\code{data.frame} | \code{\link{Task}}]. Same type as \code{obj}.
 #' @seealso \code{\link{normalize}}
 #' @export
-
+#' @family eda_preproc
 normalizeFeatures = function(obj, target = character(0L), method = "standardize", exclude = character(0L), range = c(0,1)) {
   assertChoice(method, choices = c("range", "standardize", "center", "scale"))
   assertCharacter(target)

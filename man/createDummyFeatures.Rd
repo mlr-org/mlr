@@ -33,6 +33,8 @@ Replace all factor features with their dummy variables. Internally \code{\link{m
 Non factor features will be left untouched and passed to the result.
 }
 \seealso{
-\code{\link{model.matrix}}
+Other eda_preproc: \code{\link{dropFeatures}};
+  \code{\link{normalizeFeatures}};
+  \code{\link{removeConstantFeatures}}
 }
 
