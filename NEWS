@@ -12,6 +12,7 @@ mlr_2.2
 
 - new functions
 -- makeMulticlassWrapper
+-- joinClassLevels
 
 mlr_2.1:
 - mlr now supports multi-criteria tuning

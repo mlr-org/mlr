@@ -4,8 +4,8 @@
 #' Replace all factor features with their dummy variables. Internally \code{\link{model.matrix}} is used.
 #' Non factor features will be left untouched and passed to the result.
 #'
-#' @template taskdf
-#' @template taskdf_target
+#' @template arg_taskdf
+#' @template arg_taskdf_target
 #' @param method [\code{character(1)}]\cr
 #'   Available are:\cr
 #'   \dQuote{1-of-n}: For n factor levels there will be n dummy variables.\cr

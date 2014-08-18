@@ -4,8 +4,8 @@
 #' Normalize features by different methods. Internally \code{\link{normalize}} is used.
 #' Non numerical features will be left untouched and passed to the result.
 #'
-#' @template taskdf
-#' @template taskdf_target
+#' @template arg_taskdf
+#' @template arg_taskdf_target
 #' @param method [\code{character(1)}]\cr
 #'   Normalizing method.\cr
 #'   Available are:\cr

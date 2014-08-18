@@ -8,13 +8,14 @@ removeConstantFeatures(x, target, perc = 0, dont.rm = character(0L),
   show.info = getMlrOption("show.info"))
 }
 \arguments{
-\item{x}{[\code{\link{data.frame}} | \code{\link{Task}}]\cr
-The data set or task.}
+\item{obj}{[\code{data.frame} | \code{\link{SupervisedTask}}]\cr
+Input data.}
 
-\item{target}{[\code{character}]\cr
-Name of the column(s) specifying the response if you passed a \code{data.frame}.
-User input is ignored if you pass a task and \code{target} is automatically set.
-Never removed.}
+\item{target}{[\code{character(1)} | \code{character(2)}]\cr
+Name of the target variable(s).
+Only used when \code{obj} is a data.frame, otherwise ignored.
+If survival analysis is applicable, these are the names of the survival time and event columns,
+so it has length 2.}
 
 \item{perc}{[\code{numeric(1)}]\cr
 The percentage of a feature values in [0, 1) that must differ from the mode value.
@@ -39,7 +40,7 @@ Print verbose output on console?
 Default is set via \code{\link{configureMlr}}.}
 }
 \value{
-[\code{\link{data.frame}} | \code{\link{Task}}].
+[\code{data.frame} | \code{\link{Task}}]. Same type as \code{obj}.
 }
 \description{
 Constant features can lead to errors in some models and obviously provide

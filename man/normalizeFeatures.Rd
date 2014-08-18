@@ -7,12 +7,14 @@ normalizeFeatures(obj, target = character(0L), method = "standardize",
   exclude = character(0L), range = c(0, 1))
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
+\item{obj}{[\code{data.frame} | \code{\link{SupervisedTask}}]\cr
 Input data.}
 
-\item{target}{[\code{character(1)}]\cr
-Name of the column(s) specifying the response.
-Only used when \code{obj} is a data.frame, otherwise ignored.}
+\item{target}{[\code{character(1)} | \code{character(2)}]\cr
+Name of the target variable(s).
+Only used when \code{obj} is a data.frame, otherwise ignored.
+If survival analysis is applicable, these are the names of the survival time and event columns,
+so it has length 2.}
 
 \item{method}{[\code{character(1)}]\cr
 Normalizing method.\cr
@@ -38,8 +40,6 @@ Normalize features by different methods. Internally \code{\link{normalize}} is u
 Non numerical features will be left untouched and passed to the result.
 }
 \seealso{
-\code{\link{normalize}}
-
 Other eda_preproc: \code{\link{createDummyFeatures}};
   \code{\link{dropFeatures}};
   \code{\link{removeConstantFeatures}}

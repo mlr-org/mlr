@@ -7,8 +7,8 @@
 #' features for which less than \dQuote{perc} percent of the observations
 #' differ from the mode value.
 #'
-#' @template taskdf
-#' @template taskdf_target
+#' @template arg_taskdf
+#' @template arg_taskdf_target
 #' @param perc [\code{numeric(1)}]\cr
 #'   The percentage of a feature values in [0, 1) that must differ from the mode value.
 #'   Default is 0, which means only constant features with exactly one observed level are removed.
@@ -36,7 +36,6 @@ removeConstantFeatures = function(x, target, perc = 0, dont.rm = character(0L),
   UseMethod("removeConstantFeatures")
 }
 
-#' @method removeConstantFeatures data.frame
 #' @export
 removeConstantFeatures.data.frame = function(x, target, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = TRUE) {
@@ -75,7 +74,6 @@ removeConstantFeatures.data.frame = function(x, target, perc = 0, dont.rm = char
   dropNamed(x, dropcols)
 }
 
-#' @method removeConstantFeatures Task
 #' @export
 removeConstantFeatures.Task = function(x, target, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = TRUE) {

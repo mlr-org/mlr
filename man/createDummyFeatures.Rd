@@ -7,12 +7,14 @@ createDummyFeatures(obj, target = character(0L), method = "1-of-n",
   exclude = character(0L))
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
+\item{obj}{[\code{data.frame} | \code{\link{SupervisedTask}}]\cr
 Input data.}
 
-\item{target}{[\code{character()}]\cr
-Name of the column(s) specifying the response.
-Only used when \code{obj} is a data.frame, otherwise ignored.}
+\item{target}{[\code{character(1)} | \code{character(2)}]\cr
+Name of the target variable(s).
+Only used when \code{obj} is a data.frame, otherwise ignored.
+If survival analysis is applicable, these are the names of the survival time and event columns,
+so it has length 2.}
 
 \item{method}{[\code{character(1)}]\cr
 Available are:\cr
@@ -25,8 +27,7 @@ The target does not have to be included here.
 Default is none.}
 }
 \value{
-[\code{data.frame} | \code{\link{Task}}]. Same type as
-  \code{obj}.
+[\code{data.frame} | \code{\link{Task}}]. Same type as \code{obj}.
 }
 \description{
 Replace all factor features with their dummy variables. Internally \code{\link{model.matrix}} is used.
