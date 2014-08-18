@@ -14,9 +14,10 @@
 #'   \item{type}{Data type of column.}
 #'   \item{na}{Number of NAs in column.}
 #'   \item{disp}{Measure of dispersion, for numerics and integers \code{\link{sd}} is used, for
-#'     categorical columns the unstandardized index of qualitative variation M1 is computed.}
-#'   \item{mean}{Mean value of column, NA for categorical columns}
+#'     categorical columns the qualitative variation.}
+#'   \item{mean}{Mean value of column, NA for categorical columns.}
 #'   \item{median}{Median value of column, NA for categorical columns.}
+#'   \item{mad}{MAD of column, NA for categorical columns.}
 #'   \item{min}{Minimal value of column, for categorical columns the size of the smallest category.}
 #'   \item{max}{Maximal value of column, for categorical columns the size of the largest category.}
 #'   \item{nlevs}{For categorical columns, the number of factor levels, NA else.}
@@ -36,51 +37,24 @@ summarizeColumns.Task = function(obj) {
 #' @export
 summarizeColumns.data.frame = function(obj) {
   iqv = function(x) {
-    print(prop.table(table(x)))
-    print(prop.table(table(x))^2)
-    print(sum(prop.table(table(x))^2))
-    1 - sum(prop.table(table(x))^2)
+    1 - mean(x == computeMode(x))
   }
-  n = ncol(obj)
-  cns = colnames(obj)
-  res = data.frame(
-    name = character(n),
-    type = character(n),
-    na = integer(n),
-    disp = numeric(n),
-    mean = numeric(n),
-    median = numeric(n),
-    min = numeric(n),
-    max = numeric(n),
-    nlevs = integer(n),
-    stringsAsFactors = FALSE
-  )
+  ifn = function(obj, x, y) {
+    if (is.numeric(obj)) y = x
+    if (is.function(y)) y(obj) else y
+  }
 
-  for (i in 1:n) {
-    x = obj[,i]
-    res[i, "na"] = sum(is.na(x))
-    x = na.omit(x)
-    res[i, "name"] = cns[i]
-    res[i, "type"] = class(x)[1]
-    if (is.numeric(x) | is.integer(x)) {
-      res[i, "disp"] = sd(x)
-      res[i, "mean"] = mean(x)
-      res[i, "median"] = median(x)
-      res[i, "min"] = min(x)
-      res[i, "max"] = max(x)
-      res[i, "nlevs"] = as.integer(NA)
-    } else if (is.factor(x) | is.logical(x) | is.character(x)) {
-      x = as.factor(x)
-      tab = table(x)
-      res[i, "disp"] = iqv(x)
-      res[i, "mean"] = NA
-      res[i, "median"] = NA
-      res[i, "min"] = min(tab)
-      res[i, "max"] = max(tab)
-      res[i, "nlevs"] = length(levels(x))
-    } else {
-      stop("Unsupported column class: ", class(x))
-    }
-  }
-  return(res)
+  res = namedList(c("name", "type", "na", "mean", "disp", "median", "mad", "min", "max", "nlevs"))
+  res$name = colnames(obj)
+  res$type = vcapply(obj, function(x) class(x)[1L], use.names = FALSE)
+  res$na = viapply(obj, function(x) sum(is.na(x)), use.names = FALSE)
+  res$mean = vnapply(obj, ifn, mean, NA, use.names = FALSE)
+  res$disp = vnapply(obj, ifn, sd, iqv, use.names = FALSE)
+  res$median = vnapply(obj, ifn, median, NA, use.names = FALSE)
+  res$mad = vnapply(obj, ifn, mad, NA, use.names = FALSE)
+  res$min = vnapply(obj, ifn, min, NA, use.names = FALSE)
+  res$max = vnapply(obj, ifn, max, NA, use.names = FALSE)
+  res$nlevs = viapply(obj, ifn, 0L, function(x) length(levels(factor(x))), use.names = FALSE)
+
+  as.data.frame(res, stringsAsFactors = FALSE)
 }

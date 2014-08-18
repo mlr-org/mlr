@@ -45,6 +45,7 @@ test_that("learners work", {
     features = getTaskFeatureNames(binaryclass.task)[12:15])
   lrns = mylist(task, create = TRUE)
   for (lrn in lrns) {
+    expect_output(print(lrn), lrn$id)
     m = train(lrn, task)
     p = predict(m, task)
     expect_true(!is.na(performance(p)))
@@ -88,6 +89,7 @@ test_that("learners work", {
   lrns = mylist(task)
   lrns = lapply(lrns, makeLearner)
   lapply(lrns, function(lrn) {
+    expect_output(print(lrn), lrn$id)
     if (lrn$id == "regr.km")
       lrn = setHyperPars(lrn, nugget.estim = TRUE)
     m = train(lrn, task)

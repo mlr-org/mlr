@@ -1,30 +1,32 @@
-#' Summarizes factors of a data.frame by tabling them.
+#' @title Summarizes factors of a data.frame by tabling them.
 #'
-#' @param data [\code{data.frame}]\cr 
-#'   Data to summarize. 
-#'   Characters and logicals will be treated as factors.   
-#' @param which [\code{character}]\cr
-#'   Restrict result to columns in \code{which}. 
-#'   Default is all factor, character and logical columns of \code{data}.   
-#' @return A named list of tables.
-#' 
+#' @description
+#' Characters and logicals will be treated as factors.
+#'
+#' @template arg_taskdf
+#' @param cols [\code{character}]\cr
+#'   Restrict result to columns in \code{cols}.
+#'   Default is all factor, character and logical columns of \code{obj}.
+#' @return [\code{list}]. Named list of tables.
 #' @export
-#' @title Summarize factors of a data.frame.
+#' @family eda_and_preprocess
+#' summarizeLevels(iris)
+summarizeLevels = function(obj, cols = NULL) {
+  UseMethod("summarizeLevels")
+}
 
-summarizeLevels = function(data, which) {
-  n = ncol(data)
-  cns = colnames(data)
-  res = list()
-  pred = function(x) is.factor(x) || is.logical(x) || is.character(x)    
-  if (missing(which)) 
-    which = Filter(function(x) pred(data[,x]), cns)
-  else
-    if (!all(which %in% cns)) 
-      stop("Undefined columns selected!")
-  for (x in which) {
-    if (!pred(data[,x]))
-      stop(x, " is not a factor, logical or character!")
-     res[[x]] = table(as.factor(data[,x]))
+#' @export
+summarizeLevels.Task = function(obj, cols = NULL) {
+  summarizeLevels.data.frame(obj$env$data, cols = cols)
+}
+
+#' @export
+summarizeLevels.data.frame = function(obj, cols = NULL) {
+  pred = function(x) is.factor(x) || is.logical(x) || is.character(x)
+  cns = colnames(obj)[vlapply(obj, pred)]
+  if (!is.null(cols)) {
+    assertSubset(cols, cns)
+    cns = intersect(cns, cols)
   }
-  return(res)
+  lapply(obj[cns], function(x) table(as.factor(x)))
 }
