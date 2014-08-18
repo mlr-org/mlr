@@ -4,11 +4,8 @@
 #' Normalize features by different methods. Internally \code{\link{normalize}} is used.
 #' Non numerical features will be left untouched and passed to the result.
 #'
-#' @param obj [\code{data.frame} | \code{\link{Task}}]\cr
-#'   Input data.
-#' @param target [\code{character(1)}]\cr
-#'   Name of the column(s) specifying the response.
-#'   Only used when \code{obj} is a data.frame, otherwise ignored.
+#' @template taskdf
+#' @template taskdf_target
 #' @param method [\code{character(1)}]\cr
 #'   Normalizing method.\cr
 #'   Available are:\cr
@@ -19,8 +16,7 @@
 #' @template arg_exclude
 #' @param range [\code{numeric(2)}]\cr
 #'   Range the features should be scaled to. Default is \code{c(0,1)}.
-#' @return [\code{data.frame} | \code{\link{Task}}]. Same type as \code{obj}.
-#' @seealso \code{\link{normalize}}
+#' @template ret_taskdf
 #' @export
 #' @family eda_preproc
 normalizeFeatures = function(obj, target = character(0L), method = "standardize", exclude = character(0L), range = c(0,1)) {
