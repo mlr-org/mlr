@@ -114,7 +114,7 @@ buildCMatrix = function (mcw.method, .task) {
 # Function for Multi to Binary Problem Conversion
 multi.to.binary = function(target, codematrix) {
 
-  if (any(is.na(codematrix)) )
+  if (anyMissing(codematrix))
     stop("Code matrix contains missing values!")
   levs = levels(target)
   no.class = length(levs)

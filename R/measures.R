@@ -292,7 +292,7 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
   allowed.pred.types = "prob",
   fun = function(task, model, pred, extra.args) {
     # ROCR does not work with NAs
-    if (any(is.na(pred$data$response)) || length(unique(pred$data$truth)) == 1L)
+    if (anyMissing(pred$data$response) || length(unique(pred$data$truth)) == 1L)
       return(NA_real_)
     rpreds = asROCRPrediction(pred)
     ROCR::performance(rpreds, "auc")@y.values[[1L]]

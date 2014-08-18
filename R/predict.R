@@ -71,7 +71,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
 
   # get truth and drop target col, if target in newdata
   if (!all(is.na(t.col))) {
-    if (length(t.col) > 1L && any(is.na(t.col)))
+    if (length(t.col) > 1L && anyMissing(t.col))
       stop("Some but not all target columns found in data")
     truth = newdata[, t.col, drop = TRUE]
     newdata = newdata[, -t.col, drop = FALSE]
