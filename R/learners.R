@@ -55,9 +55,7 @@
 #'   \item{\bold{classif.plsdaCaret}}{\cr Partial Least Squares (PLS) Discriminant Analysis from caret package: \code{\link[caret]{plsda}}}
 #'   \item{\bold{classif.qda}}{\cr Quadratic Discriminant Analysis from MASS package: \code{\link[MASS]{qda}}}
 #'   \item{\bold{classif.quaDA}}{\cr Quadratic Discriminant Analysis from DiscriMiner package: \code{\link[DiscriMiner]{quaDA}}}
-#'   \item{\bold{classif.randomForest}}{\cr Random Forest from randomForest package: \code{\link[randomForest]{randomForest}}.\cr
-#'     The argument \code{fix.factors} restores the factor levels seen in the training data before prediction to circumvent
-#'     randomForest's internal sanity checks. Default is \code{FALSE}.}
+#'   \item{\bold{classif.randomForest}}{\cr Random Forest from randomForest package: \code{\link[randomForest]{randomForest}}}
 #'   \item{\bold{classif.randomForestSRC}}{\cr Random Forest from randomForestSRC package: \code{\link[randomForestSRC]{randomForestSRC}}}
 #'   \item{\bold{classif.rda}}{\cr Regularized Discriminant Analysis from klaR package: \code{\link[klaR]{rda}}\cr
 #'     Note that \code{estimate.error} has been set to \code{FALSE} by default for speed.}
@@ -91,9 +89,7 @@
 #'   \item{\bold{regr.pcr}}{\cr Principal component regression from pls package: \code{\link[pls]{pcr}}\cr
 #'     Note that \code{model} has been set to \code{FALSE} by default for speed.}
 #'   \item{\bold{regr.plsr}}{\cr Partial least squares regression from pls package: \code{\link[pls]{plsr}}}
-#'   \item{\bold{regr.randomForest}}{\cr Random Forest from randomForest package: \code{\link[randomForest]{randomForest}}.
-#'     The argument \code{fix.factors} restores the factor levels seen in the training data before prediction to circumvent
-#'     randomForest's internal sanity checks. Default is \code{FALSE}.}
+#'   \item{\bold{regr.randomForest}}{\cr Random Forest from randomForest package: \code{\link[randomForest]{randomForest}}}
 #'   \item{\bold{regr.randomForestSRC}}{\cr Random Forest from randomForestSRC package: \code{\link[randomForestSRC]{randomForestSRC}}}.
 #'   \item{\bold{regr.penalized.ridge}}{\cr Ridge regression from penalized package: \code{\link[penalized]{penalized}}}
 #'   \item{\bold{regr.rpart}}{\cr Decision Tree from rpart package: \code{\link[rpart]{rpart}}\cr
