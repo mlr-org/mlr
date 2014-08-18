@@ -186,7 +186,7 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
 getTaskCosts = function(task, subset) {
   if (task$task.desc$type != "costsens")
     return(NULL)
-  ms = missing(subset) || identical(subset, 1:task$task.desc$size)
+  ms = missing(subset) || identical(subset, seq_len(task$task.desc$size))
   d = if (ms)
     task$env$costs
   else

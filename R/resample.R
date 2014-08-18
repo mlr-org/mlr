@@ -184,7 +184,7 @@ mergeResampleResult = function(task, iter.results, measures, rin, models, extrac
   err.msgs = as.data.frame(extractSubList(iter.results, "err.msgs", simplify = "rows"))
   rownames(err.msgs) = NULL
   colnames(err.msgs) = c("train", "predict")
-  err.msgs = cbind(iter = 1:iters, err.msgs)
+  err.msgs = cbind(iter = seq_len(iters), err.msgs)
 
   if (show.info) {
     messagef("[Resample] Result: %s", perfsToString(aggr))

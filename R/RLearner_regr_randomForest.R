@@ -46,7 +46,7 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
       bootstrapSize = nrow(train)
 
       # generate bootstrap samples
-      samplesIdx = replicate(numberOfBootstraps, sample(1:bootstrapSize, replace = TRUE))
+      samplesIdx = replicate(numberOfBootstraps, sample(seq_len(bootstrapSize), replace = TRUE))
 
       # determine whether we work with reduced ensemble size (noisy bootstrap) or not
       ntree = if (par.vals$se.method == "bootstrap") par.vals$ntree else par.vals$ntree.for.se

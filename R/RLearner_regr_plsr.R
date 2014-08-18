@@ -4,7 +4,7 @@ makeRLearner.regr.plsr = function() {
     package = "pls",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "ncomp", lower = 1),
-      makeDiscreteLearnerParam(id = "method", default = "kernelpls", 
+      makeDiscreteLearnerParam(id = "method", default = "kernelpls",
         values = c("kernelpls", "widekernelpls", "simpls", "oscorespls")),
       makeLogicalLearnerParam(id = "scale", default = TRUE)
     ),
@@ -24,5 +24,5 @@ trainLearner.regr.plsr = function(.learner, .task, .subset, .weights, ...) {
 
 #' @export
 predictLearner.regr.plsr = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata = .newdata, comps = 1:.model$learner.model$ncomp, ...)[,1]
+  predict(.model$learner.model, newdata = .newdata, comps = seq_len(.model$learner.model$ncomp), ...)[, 1L]
 }

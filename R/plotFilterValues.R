@@ -31,7 +31,7 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
     d = sortByCol(d, "val", asc = (sort == "inc"))
   # resort for ggplot
   d$name = factor(d$name, levels = d$name)
-  d = d[1:n.show,, drop = FALSE]
+  d = d[seq_len(n.show),, drop = FALSE]
   if (!is.null(feat.type.cols)) {
     assertCharacter(feat.type.cols, len = 2L, any.missing = FALSE)
     mp = aes_string(x = "name", y = "val", fill = "type")
