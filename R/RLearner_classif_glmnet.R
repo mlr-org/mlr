@@ -72,7 +72,7 @@ predictLearner.classif.glmnet = function(.learner, .model, .newdata, ...) {
       p = p[,,1]
     }
   } else {
-    p = predict(.model$learner.model, newx = as.matrix(.newdata), type = "class", ...)[,1]
+    p = predict(.model$learner.model, newx = as.matrix(.newdata), type = "class", ...)[, 1L]
     p = factor(p, .model$task.desc$class.levels)
   }
   p

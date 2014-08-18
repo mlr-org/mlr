@@ -53,7 +53,7 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
 
       # fit models on the bootstrap samples
       models = apply(samplesIdx, 2, function(bootstrapIdx) {
-        randomForest(f, data = train[bootstrapIdx,],...)
+        randomForest(f, data = train[bootstrapIdx,, drop = FALSE],...)
       })
 
       # save models in attrribute
@@ -112,17 +112,17 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
         bias = 0
         for (b in seq_len(B)) {
           for (r in seq_len(R)) {
-            bias = bias + (ind.responses[[b]][i,r] - aggr.responses[i,b])^2
+            bias = bias + (ind.responses[[b]][i, r] - aggr.responses[i,b])^2
           }
         }
 
         bias = bias * const
-        res[i,2L] = res[i,2L] - bias
+        res[i, 2L] = res[i, 2L] - bias
       }
     }
 
     # var --> sd
-    res[,2L] = sqrt(res[,2L])
+    res[, 2L] = sqrt(res[, 2L])
     return(res)
 }
 
@@ -142,15 +142,15 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
 
     # determine number of participating ensembles
     # FIXME: formula looks strange. proof read ALL code in this file!
-    M = lapply(seq_len(n), function(i) sum(abs(inbag[i,]-1)))
+    M = lapply(seq_len(n), function(i) sum(abs(inbag[i, ] - 1)))
     # determine ensemlbe members, where observation i is not included
-    idx = lapply(seq_len(n), function(i) which(inbag[i,] == 0L))
+    idx = lapply(seq_len(n), function(i) which(inbag[i, ] == 0L))
 
     # estimate
     res = matrix(NA_real_, ncol = n, nrow = nrow(.newdata))
     for (j in seq_row(.newdata)) {
       for (i in seq_len(n)) {
-        res[j,i] = sum(rf.preds$individual[j, idx[[i]]]) / M[[i]]
+        res[j, i] = sum(rf.preds$individual[j, idx[[i]]]) / M[[i]]
       }
     }
 

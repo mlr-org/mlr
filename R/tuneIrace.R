@@ -23,7 +23,7 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
   unlink(log.file)
   if (nrow(or) == 0L)
     stop("irace produced no result, possibly the budget was set too low?")
-  id = or[1L,1L]
+  id = or[1L, 1L]
   # get best candidate
   x1 = as.list(removeCandidatesMetaData(or[1L,]))
   x2 = trafoValue(par.set, x1)

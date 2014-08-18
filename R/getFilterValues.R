@@ -70,7 +70,7 @@ getFilterValues = function(task, method = "random.forest.importance", ...) {
 
     y = fun(as.formula(f), data, ...)
     ns = rownames(y)
-    y = y[,1L]
+    y = y[, 1L]
   }
 
   types = vcapply(data[, ns, drop = FALSE], getClass1)

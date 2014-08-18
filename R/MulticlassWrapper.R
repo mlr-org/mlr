@@ -57,7 +57,7 @@ trainLearner.MulticlassWrapper = function(.learner, .task, .subset, .weights = N
   x = multi.to.binary(y, cm)
   # now fit models
   models = lapply(seq_along(x$row.inds), function(i) {
-    data2 = d[x$row.inds[[i]], ]
+    data2 = d[x$row.inds[[i]], , drop = FALSE]
     data2[, tn] = x$targets[[i]]
     ct = changeData(.task, data2)
     ct$task.desc$positive = "1"
@@ -123,7 +123,7 @@ multi.to.binary = function(target, codematrix) {
   if (is.null(rns) || !setequal(rns, levs))
     stop("Rownames of code matrix have to be the class levels!")
 
-  binary.targets = as.data.frame(codematrix[target,])
+  binary.targets = as.data.frame(codematrix[target,, drop = FALSE])
   row.inds = lapply(binary.targets, function(v) which(v != 0))
   names(row.inds) = NULL
   targets = Map(function(y, i) factor(y[i]), binary.targets, row.inds)
@@ -143,7 +143,7 @@ cm.onevsone = function(task) {
   cm = matrix(0, n, choose(n, 2))
   combs = combn(n, 2)
   for (i in seq_col(combs)) {
-    j = combs[,i]
+    j = combs[, i]
     cm[j, i] = c(1, -1)
   }
   rownames(cm) = task$task.desc$class.levels

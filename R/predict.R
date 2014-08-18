@@ -62,7 +62,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
   if (missing(newdata)) {
     newdata = getTaskData(task, subset)
   } else {
-    newdata = newdata[subset,,drop = FALSE]
+    newdata = newdata[subset,, drop = FALSE]
   }
 
   # if we saved a model and loaded it later just for prediction this is necessary

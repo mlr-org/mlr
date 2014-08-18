@@ -94,7 +94,7 @@ getTaskTargets = function(task, subset, recode.target = "no") {
     stop("There is no target available for cost-sensitive learning.")
   if (task$task.desc$type == "cluster")
     stop("There is no target available for cluster.")
-  y = task$env$data[subset, task$task.desc$target]
+  y = task$env$data[subset, task$task.desc$target, drop = TRUE]
   recodeY(y, recode.target, task$task.desc$positive)
 }
 

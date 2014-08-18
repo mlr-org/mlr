@@ -43,7 +43,7 @@ getProbabilities = function(pred, cl) {
   cl2 = paste("prob", cl, sep = ".")
   if (!all(cl2 %in% cns))
     stopf("Trying to get probabilities for nonexistant classes: %s", collapse(cl))
-  y = pred$data[, cl2]
+  y = pred$data[, cl2, drop = FALSE]
   if (length(cl) > 1L)
     colnames(y) = cl
   return(y)

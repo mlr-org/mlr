@@ -101,4 +101,3 @@ addOptPathElFixed = function(op, x, y, dob = getOptPathLength(op) + 1L, eol = as
     op$env$path[, j] = g(op$env$path[, j])
   }
 }
-

@@ -17,8 +17,8 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
   pop.inds = seq_len(mu)
   for(i in seq_len(control$maxit)) {
     # get all mu elements which are alive, ie the current pop and their bit vecs as matrix
-    pop.df = as.data.frame(opt.path)[pop.inds, ]
-    pop.featmat = as.matrix(pop.df[, bit.names]); mode(pop.featmat) = "integer"
+    pop.df = as.data.frame(opt.path)[pop.inds, , drop = FALSE]
+    pop.featmat = as.matrix(pop.df[, bit.names, drop = FALSE]); mode(pop.featmat) = "integer"
     pop.y = pop.df[, yname]
     # create lambda offspring and eval
     kids.list = replicate(lambda, generateKid(pop.featmat, control), simplify = FALSE)
@@ -52,7 +52,7 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
 generateKid = function(featmat, control) {
   parents = sample(seq_row(featmat), 2L, replace = TRUE)
   while(TRUE) {
-    kid = crossover(featmat[parents[1],], featmat[parents[2],], control$extra.args$crossover.rate)
+    kid = crossover(featmat[parents[1L], ], featmat[parents[2L], ], control$extra.args$crossover.rate)
     kid = mutateBits(kid, control$extra.args$mutation.rate)
     if(is.na(control$max.features) || sum(kid) <= control$max.features)
       break

@@ -156,7 +156,7 @@ b632plus = makeAggregation(
     df = as.data.frame(pred)
     a = numeric(length(perf.test))
     for (i in seq_along(a)) {
-      df2 = df[df$iter == i, ]
+      df2 = df[df$iter == i,, drop = FALSE]
       y1 = df2$truth
       y2 = df2$response
       grid = expand.grid(y1, y2, KEEP.OUT.ATTRS = FALSE)

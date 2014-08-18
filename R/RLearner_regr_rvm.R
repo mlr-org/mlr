@@ -46,5 +46,5 @@ trainLearner.regr.rvm = function(.learner, .task, .subset, .weights = NULL, degr
 
 #' @export
 predictLearner.regr.rvm = function(.learner, .model, .newdata, ...) {
-  kernlab::predict(.model$learner.model, newdata = .newdata, ...)[,1]
+  kernlab::predict(.model$learner.model, newdata = .newdata, ...)[, 1L]
 }

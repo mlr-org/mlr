@@ -25,8 +25,8 @@ predictLearner.classif.logreg = function(.learner, .model, .newdata, ...) {
     # FIXME: this should be a helper function
     y = matrix(0, ncol = 2L, nrow = nrow(.newdata))
     colnames(y) = levs
-    y[,1L] = 1-x
-    y[,2L] = x
+    y[, 1L] = 1-x
+    y[, 2L] = x
     return(y)
   } else {
     levs = .model$task.desc$class.levels

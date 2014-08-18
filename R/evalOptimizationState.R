@@ -37,7 +37,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
     })
     y = r$aggr
     # sort msgs by iters, so iter1, iter2, ...
-    errmsgs = as.character(t(r$err.msgs[,-1L]))
+    errmsgs = as.character(t(r$err.msgs[, -1L]))
     notna = !is.na(errmsgs)
     if (any(notna))
       errmsg = errmsgs[notna][1L]

@@ -9,7 +9,7 @@ makePreprocWrapperPCA = function(learner) {
     if (!length(nums))
       return(list(data = data, control = list()))
 
-    x = data[, nums]
+    x = data[, nums, drop = FALSE]
     pca = prcomp(x, scale = TRUE)
     data = data[, setdiff(cns, nums), drop = FALSE]
     data = cbind(data, as.data.frame(pca$x))

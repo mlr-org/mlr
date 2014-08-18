@@ -28,7 +28,7 @@ removeFromDots = function(ns, ...) {
 
 
 filterNull = function(x) {
-  x[!vapply(x, is.null, logical(1L))]
+  x[!vlapply(x, is.null)]
 }
 
 attachTrainingInfo = function(x, info) {

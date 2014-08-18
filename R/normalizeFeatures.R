@@ -32,12 +32,12 @@ normalizeFeatures.data.frame = function(obj, target = character(0L), method = "s
   work.cols = colnames(obj)[vlapply(obj, is.numeric)]
   work.cols = setdiff(work.cols, exclude)
   work.cols = setdiff(work.cols, target)
-  work.obj = obj[,work.cols]
+  work.obj = obj[, work.cols, drop = FALSE]
 
   work.obj = normalize(x = obj, method = method, range = range)
 
   # bring back work.obj into obj
-  obj[,work.cols] = work.obj
+  obj[, work.cols] = work.obj
   obj
 }
 
