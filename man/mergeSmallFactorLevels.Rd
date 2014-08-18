@@ -32,6 +32,10 @@ Merges small levels of factors into new level.
 }
 \seealso{
 Other eda_and_preprocess: \code{\link{capLargeValues}};
+  \code{\link{createDummyFeatures}};
+  \code{\link{dropFeatures}};
+  \code{\link{normalizeFeatures}};
+  \code{\link{removeConstantFeatures}};
   \code{\link{summarizeColumns}}
 }
 

@@ -50,8 +50,11 @@ features for which less than \dQuote{perc} percent of the observations
 differ from the mode value.
 }
 \seealso{
-Other eda_preproc: \code{\link{createDummyFeatures}};
+Other eda_and_preprocess: \code{\link{capLargeValues}};
+  \code{\link{createDummyFeatures}};
   \code{\link{dropFeatures}};
-  \code{\link{normalizeFeatures}}
+  \code{\link{mergeSmallFactorLevels}};
+  \code{\link{normalizeFeatures}};
+  \code{\link{summarizeColumns}}
 }
 

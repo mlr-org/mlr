@@ -34,8 +34,11 @@ Replace all factor features with their dummy variables. Internally \code{\link{m
 Non factor features will be left untouched and passed to the result.
 }
 \seealso{
-Other eda_preproc: \code{\link{dropFeatures}};
+Other eda_and_preprocess: \code{\link{capLargeValues}};
+  \code{\link{dropFeatures}};
+  \code{\link{mergeSmallFactorLevels}};
   \code{\link{normalizeFeatures}};
-  \code{\link{removeConstantFeatures}}
+  \code{\link{removeConstantFeatures}};
+  \code{\link{summarizeColumns}}
 }
 

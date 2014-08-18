@@ -270,16 +270,11 @@ S3method(setPredictType,BaggingWrapper)
 S3method(setPredictType,BaseEnsemble)
 S3method(setPredictType,BaseWrapper)
 S3method(setPredictType,Learner)
-<<<<<<< HEAD
 S3method(setPredictType,StackedLearner)
-S3method(summarizeColumns,Task)
-S3method(summarizeColumns,data.frame)
-=======
 S3method(summarizeColumns,Task)
 S3method(summarizeColumns,data.frame)
 S3method(summarizeLevels,Task)
 S3method(summarizeLevels,data.frame)
->>>>>>> mlrEDA
 S3method(trainLearner,BaggingWrapper)
 S3method(trainLearner,CostSensClassifWrapper)
 S3method(trainLearner,CostSensRegrWrapper)
@@ -510,11 +505,7 @@ export(mcp)
 export(meancosts)
 export(medae)
 export(medse)
-<<<<<<< HEAD
-export(mergeFactorLevelsBySize)
-=======
 export(mergeSmallFactorLevels)
->>>>>>> mlrEDA
 export(mmce)
 export(mse)
 export(multiclass.auc)

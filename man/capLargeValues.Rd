@@ -10,15 +10,9 @@ capLargeValues(obj, cols = NULL, threshold = Inf, impute = threshold,
 \item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
 Input data.}
 
-<<<<<<< HEAD
-\item{cols}{[\code{character} | \code{integer}]
-Which columns to convert.
-Default is all numeric columns}
-=======
 \item{cols}{[\code{character}]
 Which columns to convert.
 Default is all numeric columns.}
->>>>>>> mlrEDA
 
 \item{threshold}{[\code{numeric(1)}]\cr
 Threshold for capping.
@@ -33,13 +27,8 @@ Default is \code{threshold}.}
 \item{what}{[character(1)]
 What kind of entries are affected?
 \dQuote{abs} means \code{abs(x) > threshold},
-<<<<<<< HEAD
-\dQuote{high} means \code{x > threshold},
-\dQuote{low} means \code{x < -threshold}
-=======
 \dQuote{pos} means \code{abs(x) > threshold && x > 0},
 \dQuote{neg} means \code{abs(x) > threshold && x < 0},
->>>>>>> mlrEDA
 Default is \dQuote{abs}}
 }
 \value{
@@ -53,11 +42,11 @@ Only numeric/integer columns are affected.
 capLargeValues(iris, threshold = 5, impute = 5)
 }
 \seealso{
-<<<<<<< HEAD
-Other eda_and_preprocess: \code{\link{summarizeColumns}}
-=======
-Other eda_and_preprocess: \code{\link{mergeSmallFactorLevels}};
+Other eda_and_preprocess: \code{\link{createDummyFeatures}};
+  \code{\link{dropFeatures}};
+  \code{\link{mergeSmallFactorLevels}};
+  \code{\link{normalizeFeatures}};
+  \code{\link{removeConstantFeatures}};
   \code{\link{summarizeColumns}}
->>>>>>> mlrEDA
 }
 
