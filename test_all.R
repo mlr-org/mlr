@@ -17,6 +17,7 @@ library(stepPlr)
 library(FNN)
 library(randomForestSRC)
 library(glmnet) # otherwise auc is shadowed
+library(caret) # otherwise train shadowed
 
 if (interactive()) {
   load_all(".")

@@ -10,6 +10,12 @@ mergeSmallFactorLevels(obj, target = NULL, cols = NULL, min.perc = 0.01,
 \item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
 Input data.}
 
+\item{target}{[\code{character(1)} | \code{character(2)}]\cr
+Name of the target variable(s).
+Only used when \code{obj} is a data.frame, otherwise ignored.
+If survival analysis is applicable, these are the names of the survival time and event columns,
+so it has length 2.}
+
 \item{cols}{[\code{character}]
 Which columns to convert.
 Default is all factor and character columns.}
