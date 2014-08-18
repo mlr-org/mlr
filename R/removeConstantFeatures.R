@@ -26,7 +26,7 @@
 #' @template arg_showinfo
 #' @template ret_taskdf
 #' @export
-#' @family eda_preproc
+#' @family eda_and_preprocess
 removeConstantFeatures = function(obj, target, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = getMlrOption("show.info")) {
   assertNumber(perc, lower = 0, upper = 1)

@@ -13,7 +13,7 @@
 #' @template arg_exclude
 #' @template ret_taskdf
 #' @export
-#' @family eda_preproc
+#' @family eda_and_preprocess
 createDummyFeatures = function(obj, target = character(0L), method = "1-of-n", exclude = character(0L)) {
   assertChoice(method, choices = c("1-of-n", "reference"))
   assertCharacter(target)

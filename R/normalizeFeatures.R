@@ -18,7 +18,7 @@
 #'   Range the features should be scaled to. Default is \code{c(0,1)}.
 #' @template ret_taskdf
 #' @export
-#' @family eda_preproc
+#' @family eda_and_preprocess
 normalizeFeatures = function(obj, target = character(0L), method = "standardize", exclude = character(0L), range = c(0,1)) {
   assertChoice(method, choices = c("range", "standardize", "center", "scale"))
   assertCharacter(target)
