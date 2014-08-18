@@ -12,7 +12,9 @@ mlr_2.2
 
 - new functions
 -- makeMulticlassWrapper
--- joinClassLevels
+-- joinClassLevels  
+-- summarizeColumns, summarizeLevels
+-- capLargeValues, mergeFactorLevelsBySize
 
 mlr_2.1:
 - mlr now supports multi-criteria tuning
