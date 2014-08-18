@@ -7,7 +7,7 @@ normalizeFeatures(obj, target = character(0L), method = "standardize",
   exclude = character(0L), range = c(0, 1))
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{SupervisedTask}}]\cr
+\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
 Input data.}
 
 \item{target}{[\code{character(1)} | \code{character(2)}]\cr

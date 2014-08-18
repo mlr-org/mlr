@@ -7,7 +7,7 @@ createDummyFeatures(obj, target = character(0L), method = "1-of-n",
   exclude = character(0L))
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{SupervisedTask}}]\cr
+\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
 Input data.}
 
 \item{target}{[\code{character(1)} | \code{character(2)}]\cr

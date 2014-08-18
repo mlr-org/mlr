@@ -13,11 +13,13 @@ joinClassLevels = function(obj, target, new.levels) {
   UseMethod("joinClassLevels")
 }
 
+#' @export
 joinClassLevels.ClassifTask = function(obj, target, new.levels) {
   d = joinClassLevels(obj = getTaskData(obj), target = obj$task.desc$target, new.levels = new.levels)
   changeData(obj, d)
 }
 
+#' @export
 joinClassLevels.data.frame = function(obj, target, new.levels) {
   assertClass(obj, "data.frame")
   cns = colnames(obj)
@@ -25,7 +27,7 @@ joinClassLevels.data.frame = function(obj, target, new.levels) {
   y = obj[, target]
   if (!(is.factor(y) || is.character(y)))
     stopf("Target column '%s' must be a factor or character vector, not a: %s", target, class(y)[1L])
-  assertList(new.levels, type = "character", names = "unique")
+  assertList(new.levels, types = "character", names = "unique")
   y = as.character(y)
   nls1 = unlist(new.levels)
   nls2 = unique(nls1)

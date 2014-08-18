@@ -6,7 +6,7 @@
 joinClassLevels(obj, target, new.levels)
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{SupervisedTask}}]\cr
+\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
 Input data.}
 
 \item{target}{[\code{character(1)} | \code{character(2)}]\cr

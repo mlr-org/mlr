@@ -3,12 +3,12 @@
 \alias{removeConstantFeatures}
 \title{Remove constant features from a data set.}
 \usage{
-removeConstantFeatures(x, target, perc = 0, dont.rm = character(0L),
+removeConstantFeatures(obj, target, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^0.5,
   show.info = getMlrOption("show.info"))
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{SupervisedTask}}]\cr
+\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
 Input data.}
 
 \item{target}{[\code{character(1)} | \code{character(2)}]\cr
