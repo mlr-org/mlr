@@ -42,11 +42,13 @@ test_that("FailureModel", {
   expect_true(all(is.na(p$data$se)))
 
   # costens: response
-  lrn = makeCostSensClassifWrapper("classif.qda")
-  m = train(lrn, costsens.task, subset = c(1,51,101))
+  lrn = makeCostSensClassifWrapper("classif.mock3")
+  m = train(lrn, costsens.task)
   expect_true(isFailureModel(m))
   expect_true(!is.null(m$learner.model))
-  expect_true(grep("some group is too small", getFailureModelMsg(m)) == 1L)
+  expect_true(grep("foo", getFailureModelMsg(m)) == 1L)
+  expect_output(print(m), "Training failed")
+  expect_output(print(m), "foo")
   p = predict(m, newdata = iris)
   expect_true(all(is.na(p$data$response)))
 

@@ -80,7 +80,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
   }
 
   # was there an error in building the model? --> return NAs
-  if (inherits(model, "FailureModel")) {
+  if (isFailureModel(model)) {
     p = predictFailureModel(model, newdata)
     time.predict = NA_real_
   } else {

@@ -1,3 +1,4 @@
+# learner with error "foo" in predict
 makeRLearner.classif.mock1 = function() {
   makeRLearnerClassif(
     cl = "classif.mock1", package = character(0L), par.set = makeParamSet(),
@@ -32,4 +33,16 @@ registerS3method("makeRLearner", "classif.mock2", makeRLearner.classif.mock2)
 registerS3method("trainLearner", "classif.mock2", trainLearner.classif.mock2)
 registerS3method("predictLearner", "classif.mock2", predictLearner.classif.mock2)
 
+# learner with error "foo" in train
+makeRLearner.classif.mock3 = function() {
+  makeRLearnerClassif(
+    cl = "classif.mock3", package = character(0L), par.set = makeParamSet(),
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob")
+  )
+}
+trainLearner.classif.mock3 = function(.learner, .task, .subset, .weights = NULL,  ...) stop("foo")
+predictLearner.classif.mock3 = function(.learner, .model, .newdata, ...) 1L
+registerS3method("makeRLearner", "classif.mock3", makeRLearner.classif.mock3)
+registerS3method("trainLearner", "classif.mock3", trainLearner.classif.mock3)
+registerS3method("predictLearner", "classif.mock3", predictLearner.classif.mock3)
 
