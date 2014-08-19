@@ -39,7 +39,7 @@ makeRLearner.surv.glmnet = function() {
 
 #' @export
 trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  d = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "surv")
+  d = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "rcens")
   args = c(list(x = as.matrix(d$data), y = d$target, family = "cox"), list(...))
   rm(d)
   if (!is.null(.weights))
