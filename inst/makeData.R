@@ -25,10 +25,10 @@ sonar.task = makeClassifTask("Sonar-example", data = Sonar, target = "Class")
 sonar.rin = makeResampleInstance(makeResampleDesc("CV", iters = 3), task = sonar.task)
 save(sonar.task, sonar.rin, file = file.path(dn, "mlr.sonar.RData"), compress = "xz")
 
-# set.seed(DATASEED)
-# data(wpbc, package = "mboost")
-# wpbc$status = ifelse(wpbc$status == "R", 1L, 0L)
-# wpbc = wpbc[complete.cases(wpbc), ]
-# wpbc.task = makeSurvTask("wpbc-example", data = wpbc, target = c("time", "status"))
-# wpbc.rin = makeResampleInstance(makeResampleDesc("CV", iters = 3), task = wpbc.task)
-# save(wpbc.task, wpbc.rin, file = file.path(dn, "mlr.wpbc.RData"), compress = "xz")
+set.seed(DATASEED)
+data(wpbc, package = "TH.data")
+wpbc$status = ifelse(wpbc$status == "R", 1L, 0L)
+wpbc = wpbc[complete.cases(wpbc), ]
+wpbc.task = makeSurvTask("wpbc-example", data = wpbc, target = c("time", "status"))
+wpbc.rin = makeResampleInstance(makeResampleDesc("CV", iters = 3), task = wpbc.task)
+save(wpbc.task, wpbc.rin, file = file.path(dn, "mlr.wpbc.RData"), compress = "xz")
