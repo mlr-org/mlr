@@ -46,8 +46,7 @@ checkTaskCreationLearner = function(task, learner, weights) {
         stopf("Task '%s' is a multiclass-problem, but learner '%s' does not support that!", td$id, learner$id)
     }
   } else if (td$type == "surv") {
-    lookup = setNames(c("lcens", "rcens", "icens"), c("left", "right", "interval2"))
-    if (!hasProperties(learner, lookup[td$censoring]))
+    if (!hasProperties(learner, td$censoring))
       stopf("Task '%s' is %s censored, but learner '%s' does not support that!", td$id, td$censoring, learner$id)
   }
   invisible(NULL)

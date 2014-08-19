@@ -1,11 +1,13 @@
 #' @rdname Task
 #' @param censoring [\code{character(1)}]\cr
-#'  Censoring type. Allowed choices are \dQuote{right} (default), \dQuote{left} and \dQuote{interval2}.
+#'  Censoring type. Allowed choices are \dQuote{rcens} for right censored data (default),
+#'  \dQuote{lcens} for left censored and \dQuote{icens} for interval censored data using
+#'  the \dQuote{interval2} format.
 #'  See \code{\link[survival]{Surv}} for details.
 #' @export
-makeSurvTask = function(id, data, target, censoring = "right", weights = NULL, blocking = NULL,
+makeSurvTask = function(id, data, target, censoring = "rcens", weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE) {
-  assertChoice(censoring, choices = c("right", "left", "interval2"))
+  assertChoice(censoring, choices = c("rcens", "lcens", "icens"))
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)
 
@@ -23,12 +25,12 @@ makeSurvTask = function(id, data, target, censoring = "right", weights = NULL, b
 checkTaskCreation.SurvTask = function(task, target, ..., censoring) {
   NextMethod("checkTaskCreation")
   assertCharacter(target, len = 2L, any.missing = FALSE)
-  if (censoring %in% c("left", "right")) {
+  if (censoring %in% c("lcens", "rcens")) {
     time = task$env$data[[target[1L]]]
     event = task$env$data[[target[2L]]]
     assertNumeric(time, lower = 0, finite = TRUE, any.missing = FALSE, .var.name = "target column time")
     assertLogical(event, any.missing = FALSE, .var.name = "target column event")
-  } else { # interval2
+  } else { # icens
     time1 = task$env$data[[target[1L]]]
     time2 = task$env$data[[target[2L]]]
     assertNumeric(time1, any.missing = TRUE, finite = FALSE, .var.name = "target column time1")
@@ -38,7 +40,7 @@ checkTaskCreation.SurvTask = function(task, target, ..., censoring) {
 
 fixupData.SurvTask = function(task, target, choice, ..., censoring) {
   NextMethod("fixupData")
-  if (censoring %in% c("left", "right")) {
+  if (censoring %in% c("lcens", "rcens")) {
     time = task$env$data[[target[1L]]]
     event = task$env$data[[target[2L]]]
 
@@ -59,7 +61,7 @@ fixupData.SurvTask = function(task, target, choice, ..., censoring) {
         }
       }
     }
-  } else { # interval2
+  } else { # icens
     time1 = task$env$data[[target[1L]]]
     time2 = task$env$data[[target[2L]]]
 
