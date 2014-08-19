@@ -1,15 +1,16 @@
-getTaskType = function(x) {
+getTaskDescription = function(x) {
   if (inherits(x, "TaskDesc"))
-    x$type
+    x
   else
-    x$task.desc$type
+    x$task.desc
+}
+
+getTaskType = function(x) {
+  getTaskDescription(x)$type
 }
 
 getTargetNames = function(x) {
-  if (inherits(x, "TaskDesc"))
-    x$target
-  else
-    x$task.desc$target
+  getTaskDescription(x)$target
 }
 
 #' Get feature names of task.
@@ -38,9 +39,10 @@ getTaskNFeats = function(task) {
 #' @export
 #' @rdname getTaskFormula
 getTaskFormulaAsString = function(x, target = getTargetNames(x)) {
-  type = getTaskType(x)
+  td = getTaskDescription(x)
+  type = td$type
   if (type == "surv")
-    target = sprintf("Surv(%s, %s)", target[1L], target[2L])
+    target = sprintf("Surv(%s, %s, type = \"%s\")", target[1L], target[2L], td$censoring)
   else if (type == "costsens")
     stop("There is no formula available for cost-sensitive learning.")
   else if (type == "cluster")
