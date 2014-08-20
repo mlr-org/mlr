@@ -9,7 +9,7 @@ makeRLearner.classif.OneR = function() {
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
     name = "1-R classifier",
     short.name = "OneR",
-    note = "Note that NAs are directly passed to WEKA with \\code{na.action = na.pass}"
+    note = "NAs are directly passed to WEKA with `na.action = na.pass`"
   )
 }
 

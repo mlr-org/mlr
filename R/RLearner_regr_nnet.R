@@ -23,7 +23,7 @@ makeRLearner.regr.nnet = function() {
     properties = c("numerics", "factors", "weights"),
     name = "Neural Network",
     short.name = "nnet",
-    note = "Note that \\code{size} has been set to 3 by default."
+    note = "`size` has been set to 3 by default."
   )
 }
 

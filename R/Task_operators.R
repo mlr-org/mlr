@@ -1,15 +1,16 @@
-getTaskType = function(x) {
+getTaskDescription = function(x) {
   if (inherits(x, "TaskDesc"))
-    x$type
+    x
   else
-    x$task.desc$type
+    x$task.desc
+}
+
+getTaskType = function(x) {
+  getTaskDescription(x)$type
 }
 
 getTargetNames = function(x) {
-  if (inherits(x, "TaskDesc"))
-    x$target
-  else
-    x$task.desc$target
+  getTaskDescription(x)$target
 }
 
 #' Get feature names of task.
@@ -38,13 +39,16 @@ getTaskNFeats = function(task) {
 #' @export
 #' @rdname getTaskFormula
 getTaskFormulaAsString = function(x, target = getTargetNames(x)) {
-  type = getTaskType(x)
-  if (type == "surv")
-    target = sprintf("Surv(%s, %s)", target[1L], target[2L])
-  else if (type == "costsens")
+  td = getTaskDescription(x)
+  type = td$type
+  if (type == "surv") {
+    lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
+    target = sprintf("Surv(%s, %s, type = \"%s\")", target[1L], target[2L], lookup[td$censoring])
+  } else if (type == "costsens") {
     stop("There is no formula available for cost-sensitive learning.")
-  else if (type == "cluster")
+  } else if (type == "cluster") {
     stop("There is no formula available for clustering.")
+  }
   paste(target, "~.")
 }
 
@@ -67,7 +71,6 @@ getTaskFormulaAsString = function(x, target = getTargetNames(x)) {
 getTaskFormula = function(x, target = getTargetNames(x), env = NULL) {
   as.formula(getTaskFormulaAsString(x, target = target), env = env)
 }
-
 
 #' Get target column of task.
 #'
@@ -95,7 +98,7 @@ getTaskTargets = function(task, subset, recode.target = "no") {
   if (task$task.desc$type == "cluster")
     stop("There is no target available for cluster.")
   y = task$env$data[subset, task$task.desc$target, drop = TRUE]
-  recodeY(y, recode.target, task$task.desc$positive)
+  recodeY(y, recode.target, task$task.desc)
 }
 
 
@@ -155,7 +158,7 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
       features = task.features
     res = list(
       data = indexHelper(task$env$data, subset, setdiff(features, tn), drop = FALSE),
-      target = recodeY(indexHelper(task$env$data, subset, tn), type = recode.target, positive = task$task.desc$positive)
+      target = recodeY(indexHelper(task$env$data, subset, tn), type = recode.target, task$task.desc)
     )
   } else {
     if (missing(features) || identical(features, task.features))
@@ -165,10 +168,58 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
 
     res = indexHelper(task$env$data, subset, features, drop = FALSE)
     if (recode.target %nin% c("no", "surv")) {
-      res[, tn] = recodeY(res[, tn], type = recode.target, positive = task$task.desc$positive)
+      res[, tn] = recodeY(res[, tn], type = recode.target, task$task.desc)
     }
   }
   res
+}
+
+recodeY = function(y, type, td) {
+  if (type == "no")
+    return(y)
+  if (type == "01")
+    return(as.numeric(y == td$positive))
+  if (type == "-1+1")
+    return(as.numeric(2L * (y == td$positive) - 1L))
+  if (type %in% c("lcens", "rcens", "icens"))
+    return(recodeSurvivalTimes(y, from = td$censoring, to = type))
+  stopf("Unknown value for 'type': %s", type)
+}
+
+recodeSurvivalTimes = function(y, from, to) {
+  if.neg.infinite = function(x) is.infinite(x) & x < 0
+  if.pos.infinite = function(x) is.infinite(x) & x > 0
+  lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
+
+  if (from == to)
+    return(Surv(y[, 1L], y[, 2L], type = lookup[to]))
+  if (setequal(c(from, to), c("lcens", "rcens")))
+    stop("Converting left censored to right censored data (or vice versa) is not possible")
+
+  switch(from,
+    rcens = {
+      time1 = y[, 1L]
+      time2 = ifelse(y[, 2L], y[, 1L], Inf)
+    },
+    lcens = {
+      time1 = ifelse(y[, 2L], y[, 1L], -Inf)
+      time2 = y[, 1L]
+    },
+    icens = {
+      if (to == "lcens") {
+        if (!all(is.neg.infinite(y[, 1L] | y[, 1L] == y[, 2L])))
+          stop("Could not convert interval2 survival data to left censored data")
+        time1 = y[, 2L]
+        time2 = is.infinite(y[, 1L])
+      } else {
+        if (!all(is.pos.infinite(y[, 2L] | y[, 2L] == y[, 1L])))
+          stop("Could not convert interval2 survival data to right censored data")
+        time1 = y[, 1L]
+        time2 = is.infinite(y[, 2L])
+      }
+    }
+  )
+  Surv(time1, time2, type = lookup[to])
 }
 
 #' Extract costs in task.

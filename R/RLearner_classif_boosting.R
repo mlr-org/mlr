@@ -24,7 +24,7 @@ makeRLearner.classif.boosting = function() {
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
     name = "Adabag Boosting",
     short.name = "adabag",
-    note = "Note that \\code{xval} has been set to 0 by default for speed."
+    note = "`xval` has been set to 0 by default for speed."
   )
 }
 

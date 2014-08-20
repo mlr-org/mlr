@@ -22,3 +22,5 @@ notifications:
   email:
     on_success: change
     on_failure: change
+after_script:
+  - ./travis.sh dump_logs

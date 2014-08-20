@@ -33,7 +33,7 @@ makeRLearner.classif.lqa = function() {
     par.vals = list(penalty = 'lasso', lambda = 0.1),
     name = "classif.lqa",
     short.name = "lqa",
-    note = "Note that \\code{penalty} has been set to \\dQuote{lasso} and \\code{lambda} to 0.1 by default."
+    note = "`penalty` has been set to *lasso* and `lambda` to 0.1 by default."
   )
 }
 
