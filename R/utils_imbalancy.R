@@ -31,7 +31,10 @@ sampleBinaryClass = function(y, rate, cl, minreplace = TRUE, maxreplace = TRUE) 
   inds1 = switch(cl, min = z$min.inds, max = z$max.inds)
   inds2 = switch(cl, min = z$max.inds, max = z$min.inds)
   newsize = round(length(inds1) * rate)
-  newinds1 = sample(inds1, newsize, replace = minreplace)
+  # oversample: take existing inds and sample additional inds with replacement
+  # undersample: sampling with replacement
+  newinds1 = switch(cl, min = c(inds1, sample(inds1, newsize-length(inds1), replace = minreplace)), 
+    max = sample(inds1, newsize, replace = minreplace))
   newinds2 = sample(inds2, length(inds2), replace = maxreplace)
   c(newinds1, newinds2)
 }
