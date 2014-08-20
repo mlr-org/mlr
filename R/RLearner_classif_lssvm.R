@@ -27,7 +27,7 @@ makeRLearner.classif.lssvm = function() {
     properties = c("twoclass", "multiclass", "numerics", "factors"),
     name = "Least Squares Support Vector Machine",
     short.name = "lssvm",
-    note = "Note that \\code{fitted} has been set to \\code{FALSE} by default for speed."
+    note = "Note that `fitted` has been set to `FALSE` by default for speed."
   )
 }
 

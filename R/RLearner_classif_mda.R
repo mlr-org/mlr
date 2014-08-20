@@ -18,7 +18,7 @@ makeRLearner.classif.mda = function() {
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "Mixture Discriminant Analysis",
     short.name = "mda",
-    note = "Note that \\code{keep.fitted} has been set to \\code{FALSE} by default for speed."
+    note = "Note that `keep.fitted` has been set to `FALSE` by default for speed."
   )
 }
 

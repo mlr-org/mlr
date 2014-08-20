@@ -16,7 +16,7 @@ makeRLearner.regr.gbm = function() {
     properties = c("missings", "numerics", "factors", "weights"),
     name = "Gradient boosting machine",
     short.name = "gbm",
-    note = "Note that \\code{distribution} has been set to \\dQuote{gaussian} by default."
+    note = "Note that `distribution` has been set to *gaussian* by default."
   )
 }
 

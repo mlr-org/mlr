@@ -25,7 +25,7 @@ makeRLearner.classif.rda = function() {
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "Regularized Discriminant Analysis",
     short.name = "rda",
-    note = "Note that \\code{estimate.error} has been set to \\code{FALSE} by default for speed."
+    note = "Note that `estimate.error` has been set to `FALSE` by default for speed."
   )
 }
 

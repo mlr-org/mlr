@@ -13,7 +13,7 @@ makeRLearner.classif.JRip = function() {
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
     name = "Propositional Rule Learner",
     short.name = "JRip",
-    note = "Note that NAs are directly passed to WEKA with \\code{na.action = na.pass}"
+    note = "Note that NAs are directly passed to WEKA with `na.action = na.pass`"
   )
 }
 
