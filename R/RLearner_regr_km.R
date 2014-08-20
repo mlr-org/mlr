@@ -20,7 +20,7 @@ makeRLearner.regr.km = function() {
     properties = c("numerics", "se"),
     name = "Kriging",
     short.name = "km",
-    note = ""
+    note = "In predict, we currently always use type = 'SK'."
   )
 }
 
