@@ -25,12 +25,14 @@ makeCostSensTask(id, data, costs, blocking = NULL, fixup.data = "warn",
 makeRegrTask(id, data, target, weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE)
 
-makeSurvTask(id, data, target, censoring = "right", weights = NULL,
+makeSurvTask(id, data, target, censoring = "rcens", weights = NULL,
   blocking = NULL, fixup.data = "warn", check.data = TRUE)
 }
 \arguments{
 \item{censoring}{[\code{character(1)}]\cr
-Censoring type. Allowed choices are \dQuote{right} (default), \dQuote{left} and \dQuote{interval2}.
+Censoring type. Allowed choices are \dQuote{rcens} for right censored data (default),
+\dQuote{lcens} for left censored and \dQuote{icens} for interval censored data using
+the \dQuote{interval2} format.
 See \code{\link[survival]{Surv}} for details.}
 
 \item{id}{[\code{character(1)}]\cr
