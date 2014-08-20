@@ -13,7 +13,7 @@ makeRLearner.classif.sda = function() {
     properties = c("twoclass", "multiclass", "numerics", "prob"),
     name = "Shrinkage Discriminant Analysis",
     short.name = "sda",
-     note = ""
+    note = ""
   )
 }
 
