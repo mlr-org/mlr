@@ -20,7 +20,7 @@ makeRLearner.cluster.XMeans = function() {
     properties = c("numerics"),
     name = "XMeans (k-means with automatic determination of k)",
     short.name = "XMeans",
-    note = "Note that you might have to install the Weka package: `WPM('install-package', 'XMeans')`"
+    note = "You might have to install the Weka package: `WPM('install-package', 'XMeans')`"
   )
 }
 

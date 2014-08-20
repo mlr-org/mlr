@@ -11,7 +11,7 @@ makeRLearner.classif.plr = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Logistic regression with a L2 penalty",
     short.name = "plr",
-    note = "Note that AIC and BIC penalty types can be selected via the new parameter `cp.type`"
+    note = "AIC and BIC penalty types can be selected via the new parameter `cp.type`"
   )
 }
 

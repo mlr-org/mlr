@@ -16,7 +16,7 @@ makeRLearner.classif.LiblineaRMultiClass = function() {
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Multi-class Support Vector Classification by Crammer and Singer",
     short.name = "mcsvc",
-    note = "Note that this model is type 4."
+    note = "This model is type 4."
   )
 }
 
