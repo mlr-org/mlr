@@ -3,7 +3,7 @@
 # we check that col names dont contain weird chars and are unique
 checkColumnNames = function(data, name) {
   cns = colnames(data)
-  sapply(cns, function(cn) {
+  lapply(cns, function(cn) {
     if (!deparse(as.name(cn), backtick = TRUE) == cn)
       stopf("Column name contains special characters: %s", cn)
   })
@@ -11,4 +11,3 @@ checkColumnNames = function(data, name) {
   if (any(dup))
     stopf("Duplicated column names in '%s' are not allowed: %s", name, collapse(unique(cns[dup])))
 }
-

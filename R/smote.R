@@ -47,13 +47,13 @@ smote = function(task, rate, nn = 5L) {
   n.new  = round(rate * n.min) - n.min
   if (n.new <= 0L)
     return(task)
-  is.num = sapply(x, is.numeric)
+  is.num = vlapply(x, is.numeric)
   res = matrix(0, n.new, ncol(x))
   # convert xmin to matrix, so we can handle it better in C
   # factors are integer levels
   x.min.matrix = x.min
   if (any(!is.num)) {
-    for (i in 1:ncol(x.min.matrix)) {
+    for (i in seq_col(x.min.matrix)) {
       if (!is.num[i])
         x.min.matrix[, i] = as.numeric(as.integer(x.min.matrix[, i]))
     }
@@ -64,14 +64,14 @@ smote = function(task, rate, nn = 5L) {
   diag(minclass.dist) = NA
   # get n nearest neighbors, we have an index matrix now
   # nearneigh[7, 3] is 3rd nearest neighbor of observation 7
-  nearneigh = t(apply(minclass.dist, 1, order))
-  nearneigh = nearneigh[, 1:nn, drop = FALSE]
+  nearneigh = t(apply(minclass.dist, 1L, order))
+  nearneigh = nearneigh[, seq_len(nn), drop = FALSE]
   res = .Call(c_smote, x.min.matrix, is.num, nearneigh, res)
   res = as.data.frame(res)
 
   # convert ints back to factors
   if (any(!is.num)) {
-    for (i in 1:ncol(res)) {
+    for (i in seq_col(res)) {
       if (!is.num[i])
         res[, i] = as.factor(as.integer(res[, i]))
       levels(res[, i]) = levels(x[, i])

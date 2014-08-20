@@ -43,8 +43,8 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
     if (.learner$predict.type == "prob") {
       y = matrix(0, ncol = 2, nrow = nrow(.newdata))
       colnames(y) = levs
-      y[,1L] = 1-p
-      y[,2L] = p
+      y[, 1L] = 1-p
+      y[, 2L] = p
       return(y)
     } else {
       p = as.factor(ifelse(p > 0.5, levs[2L], levs[1L]))
@@ -52,7 +52,7 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
       return(p)
     }
   } else {
-    p = p[,,1]
+    p = p[,,1L]
     if (.learner$predict.type == "prob") {
       return(p)
     } else {
@@ -61,5 +61,4 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
       return(factor(cns[ind], levels = cns))
     }
   }
-
 }

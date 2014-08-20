@@ -46,12 +46,12 @@ analyzeFeatSelResult = function(res, reduce = TRUE) {
   df$sel = (is.na(df$eol) | (df$dob < df$eol))
   df$opt = is.na(df$eol)
   # number of features in set are sum of bits which are 1
-  df$n.feats = rowSums(df[,features])
+  df$n.feats = rowSums(df[, features, drop = FALSE])
   if(reduce)
-    df = df[df$sel, ]
+    df = df[df$sel,, drop =FALSE]
 
   ### Initialize some variables
-  old.feats = features[df[1L, features] == 1]
+  old.feats = features[df[1L, features, drop = TRUE] == 1]
   old.perf = NA_real_
 
   ### Iterate over all dobs / steps per dob and print info for each
@@ -83,7 +83,7 @@ analyzeFeatSelResult = function(res, reduce = TRUE) {
     }
     # in last block be might not have selected any state because no improvement
     if (nrow(df.sel) > 0L) {
-      old.feats = features[df.sel[,features] == 1L]
+      old.feats = features[df.sel[, features, drop = TRUE] == 1L]
       old.perf = df.sel[, measure]
     }
   }

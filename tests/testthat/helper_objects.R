@@ -10,7 +10,7 @@ binaryclass.train = binaryclass.df[binaryclass.train.inds, ]
 binaryclass.test  = binaryclass.df[binaryclass.test.inds, ]
 binaryclass.class.col = 61
 binaryclass.class.levs = levels(binaryclass.df[, binaryclass.class.col])
-binaryclass.task = makeClassifTask("binary", data=binaryclass.df, target = binaryclass.target)
+binaryclass.task = makeClassifTask("binary", data = binaryclass.df, target = binaryclass.target)
 
 multiclass.df = iris
 multiclass.formula = Species~.
@@ -37,9 +37,9 @@ regr.train.inds = seq(1, 506, 3)
 regr.test.inds  = setdiff(1:nrow(regr.df), regr.train.inds)
 regr.train = regr.df[regr.train.inds, ]
 regr.test  = regr.df[regr.test.inds, ]
-regr.task = makeRegrTask("regrtask", data = regr.df, target=regr.target)
+regr.task = makeRegrTask("regrtask", data = regr.df, target = regr.target)
 
-surv.df = cbind(time=rexp(150, 1/20)+1, event = sample(0:1, 150, replace = TRUE), iris)
+surv.df = cbind(time = rexp(150, 1/20)+1, event = sample(c(TRUE, FALSE), 150, replace = TRUE), iris)
 surv.formula = Surv(time,event) ~ .
 surv.target = c("time", "event")
 surv.train.inds = c(1:30, 51:80, 101:130)

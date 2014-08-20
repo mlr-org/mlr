@@ -62,7 +62,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
   if (missing(newdata)) {
     newdata = getTaskData(task, subset)
   } else {
-    newdata = newdata[subset,,drop = FALSE]
+    newdata = newdata[subset,, drop = FALSE]
   }
 
   # if we saved a model and loaded it later just for prediction this is necessary
@@ -71,7 +71,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
 
   # get truth and drop target col, if target in newdata
   if (!all(is.na(t.col))) {
-    if (length(t.col) > 1L && any(is.na(t.col)))
+    if (length(t.col) > 1L && anyMissing(t.col))
       stop("Some but not all target columns found in data")
     truth = newdata[, t.col, drop = TRUE]
     newdata = newdata[, -t.col, drop = FALSE]
@@ -80,11 +80,11 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
   }
 
   # was there an error in building the model? --> return NAs
-  if (inherits(model, "FailureModel")) {
+  if (isFailureModel(model)) {
     p = predictFailureModel(model, newdata)
     time.predict = NA_real_
   } else {
-    #FIXME this copies newdata
+    #FIXME: this copies newdata
     pars = list(
       .learner = learner,
       .model = model,

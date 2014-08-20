@@ -46,7 +46,7 @@ makeTaskDescInternal = function(task, type, id, target, ...) {
     target = target,
     size = nrow(data),
     n.feat = n.feat,
-    has.missings = any(is.na(data)),
+    has.missings = anyMissing(data),
     has.weights = !is.null(task$weights),
     has.blocking = !is.null(task$blocking)
   )

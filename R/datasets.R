@@ -46,15 +46,15 @@ NULL
 #' @docType data
 NULL
 
-# Wisonsin Prognostic Breast Cancer (WPBC) survival task
-#
-# Contains the task (\code{wpbc.task}) and a matching resample instance
-# (\code{wpbc.rin}).
-#
-# @name mlr.wpbc
-# @aliases wpbc.task wpbc.rin
-# @references Integrated from package mboost. Four incomplete cases
-#   have been removed from the task.
-# @keywords data
-# @docType data
+#' Wisonsin Prognostic Breast Cancer (WPBC) survival task
+#'
+#' Contains the task (\code{wpbc.task}) and a matching resample instance
+#' (\code{wpbc.rin}).
+#'
+#' @name mlr.wpbc
+#' @aliases wpbc.task wpbc.rin
+#' @references See \code{\link[TH.data]{wpbc}}.
+#'  Incomplete cases have been removed from the task.
+#' @keywords data
+#' @docType data
 NULL

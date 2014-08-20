@@ -272,7 +272,7 @@ multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, 
     resp = pred$data$response
     predP = getProbabilities(pred)
     # choose the probablity of the choosen response
-    predV = sapply(seq_row(predP), function(i) {
+    predV = vnapply(seq_row(predP), function(i) {
       predP[i, resp[i]]
     })
     auc = multiclass.roc(response = resp, predictor = predV)$auc
@@ -292,7 +292,7 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
   allowed.pred.types = "prob",
   fun = function(task, model, pred, extra.args) {
     # ROCR does not work with NAs
-    if (any(is.na(pred$data$response)) || length(unique(pred$data$truth)) == 1L)
+    if (anyMissing(pred$data$response) || length(unique(pred$data$truth)) == 1L)
       return(NA_real_)
     rpreds = asROCRPrediction(pred)
     ROCR::performance(rpreds, "auc")@y.values[[1L]]
@@ -509,7 +509,7 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
   allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, extra.args) {
     requirePackages("Hmisc")
-    # FIXME: this will break after switch to interval2 format
+    # FIXME: we need to ensure the censoring here
     s = Surv(pred$data$truth.time, pred$data$truth.event)
     rcorr.cens(-1 * pred$data$response, s)[["C Index"]]
   }

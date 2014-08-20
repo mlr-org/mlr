@@ -56,7 +56,7 @@ listLearners.character  = function(obj, properties = character(0L),
   type = obj
   meths = as.character(methods("makeRLearner"))
   res = err = vector("list", length(meths))
-  learner.classes = sapply(strsplit(meths, "makeRLearner\\."), function(x) x[2L])
+  learner.classes = vcapply(strsplit(meths, "makeRLearner\\."), function(x) x[2L])
   for (i in seq_along(meths)) {
     cl = learner.classes[[i]]
     if (quiet)

@@ -29,8 +29,8 @@ trainLearner.regr.mob = function(.learner, .task, .subset, .weights = NULL, alph
   cntrl = learnerArgsToControl(mob_control, alpha, bonferroni, minsplit, trim, breakties)
 
   feats = getTaskFeatureNames(.task)
-  # FIXME document stuff
-  # FIXME think about these defaults, also ask julia
+  # FIXME: document stuff
+  # FIXME: think about these defaults, also ask julia
   if (missing(part.feats))
     part.feats = feats
   if (missing(term.feats))

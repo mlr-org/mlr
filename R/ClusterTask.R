@@ -9,13 +9,13 @@ makeClusterTask = function(id, data, weights = NULL, blocking = NULL,
   if (fixup.data != "no")
     fixupData(task, character(0L), fixup.data)
   if (check.data)
-    checkTaskCreation(task)
+    checkTaskCreation(task, target = character(0L))
   id = checkOrGuessId(id, data)
   task$task.desc = makeTaskDesc.ClusterTask(task, id)
   return(task)
 }
 
-checkTaskCreation.ClusterTask = function(task, ...) {
+checkTaskCreation.ClusterTask = function(task, target, ...) {
   NextMethod("checkTaskCreation")
 }
 

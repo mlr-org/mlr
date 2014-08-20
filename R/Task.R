@@ -46,7 +46,7 @@
 #'   during a resampling iteration.
 #'   Default is \code{NULL} which means no blocking.
 #' @param positive [\code{character(1)}]\cr
-#'   Positive class for binary classification.
+#'   Positive class for binary classification (otherwise ignored and set to NA).
 #'   Default is the first factor level of the target attribute.
 #' @param fixup.data [\code{character(1)}]\cr
 #'   Should some basic cleaning up of data be performed?
@@ -91,8 +91,7 @@ makeTask = function(type, data, weights = NULL, blocking = NULL) {
 }
 
 #FIXME: it would probably be better to have: pre-check, fixup, post-check!
-
-checkTaskCreation.Task = function(task, ...) {
+checkTaskCreation.Task = function(task, target, ...) {
   checkColumnNames(task$env$data, 'data')
   if (!is.null(task$env$weights))
     assertNumeric(weights, len = nrow(task$env$data), any.missing = FALSE, lower = 0)
@@ -115,10 +114,11 @@ checkTaskCreation.Task = function(task, ...) {
       stopf("Unsupported feature type in: %s, %s", cn, class(x)[1L])
     }
   }
-  Map(checkColumn, x = task$env$data, cn = colnames(task$env$data))
+  cols = setdiff(colnames(task$env$data), target)
+  Map(checkColumn, x = task$env$data[cols], cn = cols)
 }
 
-fixupData.Task = function(task, target, choice) {
+fixupData.Task = function(task, target, choice, ...) {
   if (choice == "quiet") {
     task$env$data = droplevels(task$env$data)
   } else if (choice == "warn") {

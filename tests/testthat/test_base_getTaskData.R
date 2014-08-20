@@ -51,7 +51,7 @@ test_that("getTaskData survival", {
   expect_equal(names(x$target), surv.target)
   expect_true(setequal(names(x$data), setdiff(names(surv.df), surv.target)))
 
-  x = getTaskData(surv.task, target.extra=TRUE, recode.target="surv")
+  x = getTaskData(surv.task, target.extra=TRUE, recode.target="rcens")
   expect_true(is.Surv(x$target))
   expect_equal(dim(x$target), c(150L, 2L))
 })

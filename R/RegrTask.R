@@ -19,8 +19,8 @@ makeRegrTask = function(id, data, target, weights = NULL, blocking = NULL,
 checkTaskCreation.RegrTask = function(task, target, ...) {
   NextMethod("checkTaskCreation")
   assertString(target)
-  if (!is.numeric(task$env$data[[target]]))
-    stopf("Target column '%s' must be numeric", target)
+  assertNumeric(task$env$data[[target]], any.missing = FALSE, finite = TRUE,
+    .var.name = target)
 }
 
 fixupData.RegrTask = function(task, target, choice, ...) {

@@ -72,6 +72,7 @@ predictLearner.CostSensWeightedPairsWrapper = function(.learner, .model, .newdat
     else
       as.character(predict(mod, newdata = .newdata, ...)$data$response)
   })
+  # FIXME: this will break for length(models) == 1? do not use sapply!
   factor(apply(preds, 1L, computeMode), levels = classes)
 }
 

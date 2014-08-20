@@ -6,7 +6,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   opt.path, show.info, dob, state, remove.nas) {
 
   setSlaveOptions()
-  y = setNames(rep(NA_real_, length(measures)), sapply(measures, measureAggrName))
+  y = setNames(rep(NA_real_, length(measures)), vcapply(measures, measureAggrName))
   errmsg = NA_character_
   exec.time = NA_real_
   set.pars.ok = TRUE
@@ -37,7 +37,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
     })
     y = r$aggr
     # sort msgs by iters, so iter1, iter2, ...
-    errmsgs = as.character(t(r$err.msgs[,-1L]))
+    errmsgs = as.character(t(r$err.msgs[, -1L]))
     notna = !is.na(errmsgs)
     if (any(notna))
       errmsg = errmsgs[notna][1L]

@@ -13,8 +13,8 @@
 \alias{makeSurvTask}
 \title{Create a classification, regression, survival, cluster, or cost-sensitive classification task.}
 \usage{
-makeClassifTask(id, data, target, weights = NULL, blocking = NULL, positive,
-  fixup.data = "warn", check.data = TRUE)
+makeClassifTask(id, data, target, weights = NULL, blocking = NULL,
+  positive = NA_character_, fixup.data = "warn", check.data = TRUE)
 
 makeClusterTask(id, data, weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE)
@@ -25,12 +25,14 @@ makeCostSensTask(id, data, costs, blocking = NULL, fixup.data = "warn",
 makeRegrTask(id, data, target, weights = NULL, blocking = NULL,
   fixup.data = "warn", check.data = TRUE)
 
-makeSurvTask(id, data, target, surv.type = "right", weights = NULL,
+makeSurvTask(id, data, target, censoring = "rcens", weights = NULL,
   blocking = NULL, fixup.data = "warn", check.data = TRUE)
 }
 \arguments{
-\item{surv.type}{[\code{character(1)}]\cr
-Survival type. Allowed are \dQuote{right} (default), \dQuote{left} and \dQuote{interval2}.
+\item{censoring}{[\code{character(1)}]\cr
+Censoring type. Allowed choices are \dQuote{rcens} for right censored data (default),
+\dQuote{lcens} for left censored and \dQuote{icens} for interval censored data using
+the \dQuote{interval2} format.
 See \code{\link[survival]{Surv}} for details.}
 
 \item{id}{[\code{character(1)}]\cr
@@ -67,7 +69,7 @@ during a resampling iteration.
 Default is \code{NULL} which means no blocking.}
 
 \item{positive}{[\code{character(1)}]\cr
-Positive class for binary classification.
+Positive class for binary classification (otherwise ignored and set to NA).
 Default is the first factor level of the target attribute.}
 
 \item{fixup.data}{[\code{character(1)}]\cr

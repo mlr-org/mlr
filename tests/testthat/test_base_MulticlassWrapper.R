@@ -1,10 +1,10 @@
 context("MulticlassWrapper")
 
 test_that("MulticlassWrapper", {
-  lrn1 = makeLearner("classif.lqa")
-  lrn2 = makeLearner("classif.rpart", predict.type="prob")
+  lrn1 = makeLearner("classif.rpart")
+  lrn2 = makeLearner("classif.lqa")
   lrn1.w = makeMulticlassWrapper(lrn1)
-  lrn2.w = makeMulticlassWrapper(lrn2, mcw.method = "onevsone") 
+  lrn2.w = makeMulticlassWrapper(lrn2, mcw.method = "onevsone")
   m1 = train(lrn1.w, multiclass.task)
   m2 = train(lrn2.w, multiclass.task)
   expect_true(!inherits(m1, "FailureModel"))

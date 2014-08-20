@@ -20,4 +20,6 @@ print.BaseWrapperModel = function(x, ...) {
   catf("[model] Trained on obs: %i", length(leafm$subset))
   catf("[model] Used features: %i", length(leafm$features))
   catf("Hyperparameters: %s", getHyperParsString(x$learner))
+  if (isFailureModel(x))
+    catf("Training failed: %s", getFailureModelMsg(x))
 }

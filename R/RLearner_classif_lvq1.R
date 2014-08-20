@@ -1,4 +1,4 @@
-# FIXME parset
+# FIXME: parset
 #' @export
 makeRLearner.classif.lvq1 = function() {
   makeRLearnerClassif(

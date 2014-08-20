@@ -10,6 +10,12 @@ mlr_2.2
 -- regr.plsr
 -- regr.randomForestSRC
 
+- new functions
+-- makeMulticlassWrapper
+-- joinClassLevels  
+-- summarizeColumns, summarizeLevels
+-- capLargeValues, mergeFactorLevelsBySize
+
 mlr_2.1:
 - mlr now supports multi-criteria tuning
 - mlr now supports cluster analysis (experimental)
@@ -100,7 +106,7 @@ mlr_2.0:
 --  meancosts, mcp
 
 - new functions
--- removeConstantFeatures, normalizeFeatures, dropFeatures
+-- removeConstantFeatures, normalizeFeatures, dropFeatures, createDummyFeatures
 -- getTaskNFeats
 -- hasProperties, getProperties, setProperties, addProperties, removeProperties
 -- showHyperPars
@@ -121,8 +127,6 @@ mlr_2.0:
 -- makeModelMultiplexer, makeModelMultiplexerParamSet
 -- makeCostSensTask, makeCostSensClassifWrapper, makeCostSensRegrWrapper, makeCostsSensWeightedPairsLearner
 -- makeSurvTask
--- normalizeFeatures
--- createDummyFeatures
 -- impute, reimpute, makeImputeWrapper, lots of impute<Method>, makeImputeMethod 
 
 mlr_1.1:

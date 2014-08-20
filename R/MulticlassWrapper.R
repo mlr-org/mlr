@@ -1,35 +1,46 @@
 #' @title Fuse learner with multiclass method.
-#' 
-#' @description
-#' Fuses a base learner with a multi-class method. Creates a learner object, which can be used like any other learner object. This way learners which can only handle binary classification will be able to handle multi-class problems too.
 #'
-#' @template arg_learner 
+#' @description
+#' Fuses a base learner with a multi-class method.
+#' Creates a learner object, which can be used like any other learner object.
+#' This way learners which can only handle binary classification will be able to
+#' handle multi-class problems, too.
+#'
+#' We use a multiclass-to-binary reduction principle, where multiple binary
+#' problems are created from the multiclass task. How these binary problems
+#' are generated is defined by an error-correcting-output-code (ECOC) code book.
+#' This also allows the simple and well-known one-vs-one and one-vs-rest
+#' approaches. Decoding is currently done via Hamming decoding, see
+#' e.g. here \url{http://jmlr.org/papers/volume11/escalera10a/escalera10a.pdf}.
+#'
+#' Currently, the approach always operates on the discrete predicted labels
+#' of the binary base models (instead of their probabilities) and the created
+#' wrapper cannot predict posterior probabilities.
+#'
+#' @template arg_learner
 #' @param mcw.method [character(1) | function] \cr
-#'   "onevsone" or "onevsrest". Default is "onevsrest".
+#'   \dQuote{onevsone} or \dQuote{onevsrest}.
 #'   You can also pass a function, with signature \code{function(task)} and which
-#'   returns a ECOC codematrix with entries +1,-1,0. 
-#'   Columns define new binary problems, rows correspond to classes (rows must be named). 
-#'   0 means class is not included in binary problem.   
+#'   returns a ECOC codematrix with entries +1,-1,0.
+#'   Columns define new binary problems, rows correspond to classes (rows must be named).
+#'   0 means class is not included in binary problem.
+#'   Default is \dQuote{onevsrest}.
 #' @template ret_learner
-#' 
 #' @export
-makeMulticlassWrapper = function(learner, mcw.method="onevsrest") {
+makeMulticlassWrapper = function(learner, mcw.method = "onevsrest") {
   learner = checkLearner(learner)
   ps = makeParamSet(
-    makeDiscreteLearnerParam(id="mcw.method", values=c("onevsone", "onevsrest"), default="onevsrest"),
-    makeFunctionLearnerParam(id="mcw.custom")
+    makeUntypedLearnerParam(id = "mcw.method", default = "onevsrest")
   )
-  if (is.function(mcw.method)) {
-    if (any(names(formals(mcw.method)) != c("task")))
-      stop("Arguments in multiclass codematrix function have to be: task")   
-    pv = list(mcw.custom=mcw.method)
-  } else {
-    pv = list(mcw.method=mcw.method)
-  }
-  
+  assert(
+    checkChoice(mcw.method, c("onevsrest", "onevsone")),
+    checkFunction(mcw.method, args = "task")
+  )
+  pv = list(mcw.method = mcw.method)
   id = paste(learner$id, "multiclass", sep = ".")
-  
-  x = makeBaseWrapper(id = id, next.learner = learner, package = learner$package, par.set = ps, par.vals = pv, cl = "MulticlassWrapper")
+
+  x = makeBaseWrapper(id = id, next.learner = learner, package = learner$package,
+    par.set = ps, par.vals = pv, cl = "MulticlassWrapper")
   x = addProperties(x, props = "multiclass")
   x = removeProperties(x, props = "prob")
   x = setPredictType(x, predict.type = "response")
@@ -37,47 +48,43 @@ makeMulticlassWrapper = function(learner, mcw.method="onevsrest") {
 }
 
 #' @export
-trainLearner.MulticlassWrapper = function(.learner, .task, .subset, .weights = NULL, mcw.method, mcw.custom, ...) {
+trainLearner.MulticlassWrapper = function(.learner, .task, .subset, .weights = NULL, mcw.method, ...) {
   .task = subsetTask(.task, .subset)
   tn = .task$task.desc$target
   d = getTaskData(.task)
   y = getTaskTargets(.task)
-  cm = buildCMatrix(mcw.custom = mcw.custom, mcw.method = mcw.method, .task = .task)
+  cm = buildCMatrix(mcw.method, .task)
   x = multi.to.binary(y, cm)
   # now fit models
   models = lapply(seq_along(x$row.inds), function(i) {
-    data2 = d[x$row.inds[[i]], ]
-    data2[, tn] = x$targets[[i]] 
-    #ct = changeData(.task, data2) #doing this can cause an invalid task
-    #FIXME: Do we lose some informations here?
-    ct = makeClassifTask(data = data2, target = .task$task.desc$target, weights = .task$weights, blocking = .task$blocking, positive = "1")
+    data2 = d[x$row.inds[[i]], , drop = FALSE]
+    data2[, tn] = x$targets[[i]]
+    ct = changeData(.task, data2)
+    ct$task.desc$positive = "1"
+    ct$task.desc$negative = "-1"
     train(.learner$next.learner, ct, weights = .weights)
   })
   makeChainModel(next.model = list(models = models, cm = cm), cl = "MulticlassModel")
 }
 
 
-#' @export 
+#' @export
 predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, ...) {
   models = .model$learner.model$next.model$models
   cm = .model$learner.model$next.model$cm
-  # we use hamming decoding here
+  # predict newdata with every binary model, get n x n.models matrix of +1,-1
+  # FIXME: this will break for length(models) == 1? do not use sapply!
   p = sapply(models, function(m) {
-    nd = .newdata[, m$features, drop = FALSE]
-    pred = predict(m, newdata = nd, ...)$data$response
-    if(is.factor(pred)) {
-      pred = as.integer(as.character(pred))
-    }
+    pred = predict(m, newdata = .newdata, ...)$data$response
+    if (is.factor(pred))
+      pred = as.numeric(pred == "1") * 2 - 1
     pred
   })
   rns = rownames(cm)
-  y = apply(p, 1, function(v) {
-    # todo: break ties
-    #j = which.min(apply(cm, 1, function(z) sum(abs(z - v))))
-    d = apply(cm, 1, function(z) sum(abs(z - v)))
-    j = which(d == min(d))
-    j = sample(rep(j,2), size = 1)
-    rns[j]
+  # we use hamming decoding here, see http://jmlr.org/papers/volume11/escalera10a/escalera10a.pdf
+  y = apply(p, 1L, function(v) {
+    d = apply(cm, 1L, function(z) sum((1 - sign(v * z)) / 2))
+    rns[getMinIndex(d)]
   })
   as.factor(y)
 }
@@ -88,14 +95,13 @@ makeWrappedModel.MulticlassWrapper = function(learner, learner.model, task.desc,
   addClasses(x, "MulticlassModel")
 }
 
-buildCMatrix = function (mcw.custom, mcw.method, .task) {
-  # build codematrix
-  if (isSet(mcw.custom)) {
-    meth = mcw.custom
+buildCMatrix = function (mcw.method, .task) {
+  if (is.function(mcw.method)) {
+    meth = mcw.method
   } else {
     meth = switch(mcw.method,
-                  onevsrest = cm.onevsrest,
-                  onevsone = cm.onevsone)
+      onevsrest = cm.onevsrest,
+      onevsone = cm.onevsone)
   }
   levs = getTaskFactorLevels(.task)[[1]]
   cm = meth(.task)
@@ -107,25 +113,21 @@ buildCMatrix = function (mcw.custom, mcw.method, .task) {
 }
 
 # Function for Multi to Binary Problem Conversion
-multi.to.binary = function(target, codematrix){
-  
-  if (any(is.na(codematrix)) ) {
+multi.to.binary = function(target, codematrix) {
+
+  if (anyMissing(codematrix))
     stop("Code matrix contains missing values!")
-  }
   levs = levels(target)
   no.class = length(levs)
   rns = rownames(codematrix)
-  if (is.null(rns) || !setequal(rns, levs)) {
+  if (is.null(rns) || !setequal(rns, levs))
     stop("Rownames of code matrix have to be the class levels!")
-  }
-  
-  binary.targets = as.data.frame(codematrix[target,])
+
+  binary.targets = as.data.frame(codematrix[target,, drop = FALSE])
   row.inds = lapply(binary.targets, function(v) which(v != 0))
   names(row.inds) = NULL
-  targets = Map(function(y, i) factor(y[i]),
-                binary.targets, row.inds)
-  
-  return(list(row.inds=row.inds, targets=targets))
+  targets = Map(function(y, i) factor(y[i]), binary.targets, row.inds)
+  return(list(row.inds = row.inds, targets = targets))
 }
 
 cm.onevsrest = function(task) {
@@ -134,17 +136,17 @@ cm.onevsrest = function(task) {
   diag(cm) = 1
   rownames(cm) = task$task.desc$class.levels
   return(cm)
-} 
+}
 
 cm.onevsone = function(task) {
   n = length(task$task.desc$class.levels)
   cm = matrix(0, n, choose(n, 2))
   combs = combn(n, 2)
-  for (i in 1:ncol(combs)) {
-    j = combs[,i]
-    cm[j, i] = c(1, -1) 
+  for (i in seq_col(combs)) {
+    j = combs[, i]
+    cm[j, i] = c(1, -1)
   }
   rownames(cm) = task$task.desc$class.levels
   return(cm)
-} 
+}
 

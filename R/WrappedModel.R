@@ -76,4 +76,6 @@ print.WrappedModel = function(x, ...) {
     "Hyperparameters: ", getHyperParsString(x$learner), "\n",
     sep = ""
   )
+  if (isFailureModel(x))
+    catf("Training failed: %s", getFailureModelMsg(x))
 }

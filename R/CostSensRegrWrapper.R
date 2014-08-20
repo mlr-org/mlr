@@ -41,7 +41,6 @@ trainLearner.CostSensRegrWrapper = function(.learner, .task, .subset, ...) {
   makeChainModel(next.model = models, cl = "CostSensRegrModel")
 }
 
-
 #' @export
 predictLearner.CostSensRegrWrapper = function(.learner, .model, .newdata, ...) {
   classes = .model$task.desc$class.levels
@@ -49,6 +48,7 @@ predictLearner.CostSensRegrWrapper = function(.learner, .model, .newdata, ...) {
   preds = sapply(models, function(mod) {
     predict(mod, newdata = .newdata, ...)$data$response
   })
+  # FIXME: this will break for length(models) == 1? do not use sapply!
   preds = apply(preds, 1L, getMinIndex)
   return(factor(classes[preds], levels = classes))
 }
@@ -59,8 +59,7 @@ makeWrappedModel.CostSensRegrWrapper = function(learner, learner.model, task.des
   factor.levels, time) {
 
   x = NextMethod()
-  class(x) = c("CostSensRegrModel", class(x))
-  return(x)
+  addClasses(x, "CostSensRegrModel")
 }
 
 
@@ -82,5 +81,3 @@ getCostSensRegrModels = function(model, learner.models = FALSE) {
   else
     ms
 }
-
-

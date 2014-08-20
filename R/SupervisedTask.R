@@ -17,14 +17,10 @@ checkTaskCreation.SupervisedTask = function(task, target, ...) {
   w = which.first(target %nin% colnames(task$env$data))
   if (length(w) > 0L)
     stopf("Column names of data doesn't contain target var: %s", target[w])
-  for (tt in target) {
-    if (any(is.na(task$env$data[[tt]])))
-      stopf("Target column '%s' contains missing values!", tt)
-  }
   NextMethod("checkTaskCreation")
 }
 
-fixupData.SupervisedTask = function(task, target, choice) {
+fixupData.SupervisedTask = function(task, target, choice, ...) {
   NextMethod("fixupData")
 }
 

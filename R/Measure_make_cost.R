@@ -47,7 +47,7 @@ makeCostMeasure = function(id = "costs", minimize = TRUE, costs, task, combine =
       costs = extra.args[[1L]]
       # cannot index with NA
       r = pred$data$response
-      if (any(is.na(r)))
+      if (anyMissing(is.na(r)))
         return(NA_real_)
       cc = function(truth, pred) {
         costs[truth, pred]

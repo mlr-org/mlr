@@ -16,7 +16,7 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
 
   # remove trafos for mbo, we do this in tunerFitnFun
   ps2 = par.set
-  for (i in 1:length(ps2$pars))
+  for (i in seq_along(ps2$pars))
     ps2$pars[[i]]$trafo = NULL
 
   or = mbofun(tff, ps2, design = NULL, learner = control$learner, control = mbo.control, show.info = FALSE)

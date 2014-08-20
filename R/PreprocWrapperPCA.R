@@ -5,11 +5,11 @@ makePreprocWrapperPCA = function(learner) {
 
   trainfun = function(data, target, args) {
     cns = colnames(data)
-    nums = setdiff(cns[sapply(data, is.numeric)], target)
+    nums = setdiff(cns[vlapply(data, is.numeric)], target)
     if (!length(nums))
       return(list(data = data, control = list()))
 
-    x = data[, nums]
+    x = data[, nums, drop = FALSE]
     pca = prcomp(x, scale = TRUE)
     data = data[, setdiff(cns, nums), drop = FALSE]
     data = cbind(data, as.data.frame(pca$x))
@@ -23,7 +23,7 @@ makePreprocWrapperPCA = function(learner) {
       return(data)
 
     cns = colnames(data)
-    nums = cns[sapply(data, is.numeric)]
+    nums = cns[vlapply(data, is.numeric)]
     x = as.matrix(data[, nums, drop = FALSE])
     x = scale(x, center = control$center, scale = control$scale)
     x = x %*% control$rotation
