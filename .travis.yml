@@ -1,7 +1,7 @@
 # travis config, based on https://github.com/craigcitro/r-travis
 
 language: c
-script: ./travis-tool.sh run_tests
+script: travis_wait ./travis-tool.sh run_tests
 before_install:
   - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
   - chmod 755 ./travis-tool.sh
