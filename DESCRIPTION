@@ -82,7 +82,9 @@ Suggests:
     rsm,
     RWeka,
     ROCR,
-    stepPlr
+    sda,
+    stepPlr,
+    TH.data
 LazyData: yes
 ByteCompile: yes
 Version: 2.2
