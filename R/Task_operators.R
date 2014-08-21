@@ -187,8 +187,8 @@ recodeY = function(y, type, td) {
 }
 
 recodeSurvivalTimes = function(y, from, to) {
-  if.neg.infinite = function(x) is.infinite(x) & x < 0
-  if.pos.infinite = function(x) is.infinite(x) & x > 0
+  is.neg.infinite = function(x) is.infinite(x) & x < 0
+  is.pos.infinite = function(x) is.infinite(x) & x > 0
   lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
 
   if (from == to)
