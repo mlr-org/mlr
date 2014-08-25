@@ -15,6 +15,7 @@ install:
   - ./travis-tool.sh github_package berndbischl/parallelMap
   - ./travis-tool.sh github_package berndbischl/ParamHelpers
   - ./travis-tool.sh install_deps
+  - java -cp `R RHOME`/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package XMeans
 branches:
   except:
    - /-expt$/
