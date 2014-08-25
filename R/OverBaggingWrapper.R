@@ -73,7 +73,8 @@ trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, .weights = 
   .task = subsetTask(.task, subset = .subset)
   y = getTaskTargets(.task)
   models = lapply(seq_len(obw.iters), function(i) {
-    bag = sampleBinaryClass(y, obw.rate, cl = "min", minreplace = TRUE, maxreplace = (obw.maxcl == "boot"))
+    bag = sampleBinaryClass(y, obw.rate, cl = "min", clreplace = TRUE, 
+      othreplace = (obw.maxcl == "boot"), bagging = TRUE)
     train(.learner$next.learner, .task, subset = bag, weights = .weights)
   })
   makeChainModel(next.model = models, cl = "BaggingModel")

@@ -42,6 +42,6 @@ test_that("over and undersample works with weights", {
 test_that("oversampling keeps all min obs", {
   y = binaryclass.df[, binaryclass.target]
   z = getMinMaxClass(y)
-  new.inds = sampleBinaryClass(y, 1.1, cl = "min", minreplace = TRUE, maxreplace = FALSE)
+  new.inds = sampleBinaryClass(y, 1.05, cl = "min", clreplace = TRUE, othreplace = FALSE)
   expect_true(setequal(intersect(z$min.inds, new.inds), z$min.inds))
 })
