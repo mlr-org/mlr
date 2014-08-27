@@ -19,5 +19,5 @@ test_that("bs instance is stochastic", {
   }
   rin1 = makeResampleInstance(makeResampleDesc("Bootstrap", iters = 3), size = 500)
   rin2 = makeResampleInstance(makeResampleDesc("Bootstrap", iters = 3), size = 500)
-  expect_true(!all(sort(rin1$train.inds[[1]]) = = sort(rin2$train.inds[[1]])))
+  expect_true(!all(sort(rin1$train.inds[[1]]) == sort(rin2$train.inds[[1]])))
 })
