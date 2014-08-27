@@ -8,3 +8,5 @@ src/*.so
 src/*.o
 .RData
 src/*.dll
+testinfo.RData
+

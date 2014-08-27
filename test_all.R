@@ -31,8 +31,10 @@ source("tests/testthat/helper_objects.R")
 args = commandArgs()
 file = args[which(args == "--args") + 1L]
 if (length(file) == 0 || is.na(file)) {
-  test_dir("tests/testthat")
+  test.info = test_dir("tests/testthat", filter = "onv")
 } else {
   catf("Run test for file %s", file.path("tests", "testthat", file))
-  test_file(file.path("tests", "testthat", file))
+  test.info = test_file(file.path("tests", "testthat", file))
 }
+save2(file = "testinfo.RData", test.info)
+
