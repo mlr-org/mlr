@@ -36,13 +36,17 @@
 #'   Input data.
 #' @param target [\code{character}]\cr
 #'   Name of the column(s) specifying the response.
+#'   Default is \code{character(0)}.
 #' @param classes [\code{named list}]\cr
 #'   Named list containing imputation techniques for classes of columns.
 #'   E.g. \code{list(numeric = imputeMedian())}.
 #' @param cols [\code{named list}]\cr
 #'   Named list containing names of imputation methods to impute missing values
-#'   in the data column referenced by the list element's name. Overwrites imputation set via
+#'   in the data column referenced by the list element's name. Overrules imputation set via
 #'   \code{classes}.
+#' @param dummy.classes [\code{character}]\cr
+#'   Classes of columns to create dummy columns for.
+#'   Default is \code{character(0)}.
 #' @param dummy.cols [\code{character}]\cr
 #'   Column names to create dummy columns (containing binary missing indicator) for.
 #'   Default is \code{character(0)}.
@@ -50,6 +54,12 @@
 #'   How dummy columns are encoded. Either as 0/1 with type \dQuote{numeric}
 #'   or as \dQuote{factor}.
 #'   Default is \dQuote{factor}.
+#' @param force.dummies [\code{logical(1)}]\cr
+#'   Force dummy creation even if the respective data column does not
+#'   contain any NAs. Note that (a) most learners will complain about
+#'   constant columns created this way but (b) your feature set might
+#'   be stochastic if you turn this off.
+#'   Default is \codde{FALSE}.
 #' @param impute.new.levels [\code{logical(1)}]\cr
 #'   If new, unencountered factor level occur during reimputation,
 #'   should these be handled as NAs and then be imputed the same way?
@@ -69,43 +79,45 @@
 #' imputed = impute(df, target = character(0), cols = list(x = 99, y = imputeMode()))
 #' print(imputed$data)
 #' reimpute(data.frame(x = NA), imputed$desc)
-impute = function(data, target, classes = list(), cols = list(),
-  dummy.cols = character(0L), dummy.type = "factor", impute.new.levels = TRUE, recode.factor.levels = TRUE) {
+impute = function(data, target = character(0L), classes = list(), cols = list(),
+  dummy.classes = character(0L), dummy.cols = character(0L), dummy.type = "factor",
+  force.dummies = FALSE, impute.new.levels = TRUE, recode.factor.levels = TRUE) {
 
+  allowed.classes = c("logical", "integer", "numeric", "complex", "character", "factor")
   assertDataFrame(data)
   assertCharacter(target, any.missing = FALSE)
-  assertList(classes)
-  assertList(cols)
-  assertCharacter(dummy.cols, any.missing = FALSE)
-  assertChoice(dummy.type, c("factor", "numeric"))
-
   if (length(target)) {
-    not.ok = target %nin% names(data)
-    if (any(not.ok))
-      stopf("Target column '%s' must be present in data", target[which.first(not.ok)])
-    not.ok = target %in% names(cols)
-    if (any(not.ok))
-      stopf("Imputation of target column '%s' not possible", target[which.first(not.ok)])
-    not.ok = target %in% names(dummy.cols)
-    if (any(not.ok))
-      stopf("Dummy creation of target column '%s' not possible", target[which.first(not.ok)])
+    not.ok = which.first(target %nin% names(data))
+    if (length(not.ok))
+      stopf("Target column '%s' must be present in data", target[not.ok])
+    not.ok = which.first(target %in% names(cols))
+    if (length(not.ok))
+      stopf("Imputation of target column '%s' not possible", target[not.ok])
+    not.ok = which.first(target %in% names(dummy.cols))
+    if (length(not.ok))
+      stopf("Dummy creation of target column '%s' not possible", target[not.ok])
   }
-  not.ok = names(cols) %nin% names(data)
-  if (any(not.ok))
-    stopf("Column for imputation not present in data: %s", names(cols)[which.first(not.ok)])
-  not.ok = dummy.cols %nin% names(data)
-  if (any(not.ok))
-    stopf("Column for dummy creation not present in data: %s", names(cols)[which.first(not.ok)])
+  assertList(classes)
+  not.ok = which.first(names(classes) %nin% allowed.classes)
+  if (length(not.ok))
+    stopf("Column class '%s' for imputation not recognized", names(classes)[not.ok])
+  assertList(cols)
+  not.ok = which.first(names(cols) %nin% names(data))
+  if (length(not.ok))
+    stopf("Column for imputation not present in data: %s", names(cols)[not.ok])
+  assertSubset(dummy.classes, choices = allowed.classes)
+  assertCharacter(dummy.cols, any.missing = FALSE)
+  not.ok = which.first(dummy.cols %nin% names(data))
+  if (length(not.ok))
+    stopf("Column for dummy creation not present in data: %s", dummy.cols[not.ok])
+  assertCharacter(dummy.classes, any.missing = FALSE)
+  assertFlag(force.dummies)
+  assertChoice(dummy.type, c("factor", "numeric"))
   assertFlag(impute.new.levels)
   assertFlag(recode.factor.levels)
 
-  allowed.classes = c("logical", "integer", "numeric", "complex", "character", "factor")
-  not.ok = any(names(classes) %nin% allowed.classes)
-  if (any(not.ok))
-    stopf("Column class '%s' for imputation not recognized", names(cols)[which.first(not.ok)])
-
   features = setdiff(names(data), target)
-  feature.classes = vcapply(data[features], class)
+  feature.classes = vcapply(data[features], function(x) class(x)[1L])
 
   # some elements need to be set to a non-harmful
   # setting for the first iteration of impute
@@ -117,19 +129,22 @@ impute = function(data, target, classes = list(), cols = list(),
     impute = namedList(features),
     dummies = character(0L),
     dummy.type = dummy.type,
+    force.dummies = force.dummies,
     impute.new.levels = FALSE,
     recode.factor.levels = FALSE
   )
 
   # handle classes -> insert into desc
-  cl2 = feature.classes[feature.classes %in% names(classes) & names(feature.classes) %nin% names(cols)]
+  cl2 = feature.classes[feature.classes %in% names(classes)]
   desc$impute[names(cl2)] = classes[cl2]
 
   # handle cols -> insert into desc
   desc$impute[names(cols)] = cols
 
   # handle dummies
-  desc$dummies = dummy.cols
+  desc$dummies = union(names(feature.classes[feature.classes %in% dummy.classes]), dummy.cols)
+  if (!desc$force.dummies)
+    desc$dummies = desc$dummies[vlapply(data[desc$dummies], anyMissing)]
 
   # cleanup
   desc$impute = Filter(Negate(is.null), desc$impute)
@@ -211,14 +226,16 @@ reimpute.data.frame = function(x, desc) {
   # restore dropped columns
   x[setdiff(desc$features, names(x))] = NA
 
-  # calculate dummies, these nums or factors (see option), where NAs occured in input
-  f = if (desc$dummy.type == "numeric")
-    function(x) as.numeric(is.na(x))
-  else
-    function(x) as.factor(is.na(x))
-  dummy.cols = lapply(x[desc$dummies], f)
+  # calculate dummies as nums or factors (see option)
+  dummy.cols = lapply(x[desc$dummies], is.na)
   names(dummy.cols) = sprintf("%s.dummy", desc$dummies)
-
+  not.ok = which.first(names(dummy.cols) %in% names(x))
+  if (length(not.ok))
+    stopf("Dummy column '%s' already present in data", names(dummy.cols)[not.ok])
+  dummy.cols = if (desc$dummy.type == "numeric")
+    lapply(dummy.cols, as.numeric)
+  else
+    lapply(dummy.cols, factor, levels = c("FALSE", "TRUE"))
 
   # check for new levels and replace with NAs
   if (desc$impute.new.levels) {

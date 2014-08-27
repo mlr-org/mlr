@@ -4,6 +4,10 @@ mlr_2.2
   (notes regarding slight changes for the mlr integration of the learner and such).
 - fix a bug in "smote" when only factor features are present
 - change to oversampling: sample new observations only (with replacement)
+- Additional arguments for imputation functions to allow a more fine-grain
+  control of dummy column creation
+- imputeMin and imputeMax now subtract or add a multiple of the range of
+  the data from the minimum or to the maximum, respectively.
 
 - new learners:
 -- classif.lqa

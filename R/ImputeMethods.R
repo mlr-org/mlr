@@ -47,8 +47,10 @@ simpleImpute = function(data, target, col, const) {
 #'   \item \code{imputeConstant(const)} for imputation using a constant value,
 #'   \item \code{imputeMedian()} for imputation using the median,
 #'   \item \code{imputeMode()} for imputation using the mode,
-#'   \item \code{imputeMin(multiplier)} for imputation using the minimum,
-#'   \item \code{imputeMax(multiplier)} for imputation using the maximum,
+#'   \item \code{imputeMin(multiplier)} for imputing constant values shifted below the minimum
+#'     using \code{min(x) - multiplier * diff(range(x))},
+#'   \item \code{imputeMin(multiplier)} for imputing constant values shifted above the maximum
+#'     using \code{max(x) + multiplier * diff(range(x))},
 #'   \item \code{imputeNormal(mean, sd)} for imputation using normally
 #'     distributed random values. Mean and standard deviation will be calculated
 #'     from the data if not provided.
@@ -109,7 +111,10 @@ imputeMode = function() {
 imputeMin = function(multiplier = 1) {
   assertNumber(multiplier)
   makeImputeMethod(
-    learn = function(data, target, col, multiplier) multiplier*min(data[[col]], na.rm = TRUE),
+    learn = function(data, target, col, multiplier) {
+      r = range(data[[col]], na.rm = TRUE)
+      r[1L] - multiplier * diff(r)
+    },
     impute = simpleImpute,
     args = list(multiplier = multiplier)
   )
@@ -120,7 +125,10 @@ imputeMin = function(multiplier = 1) {
 imputeMax = function(multiplier = 1) {
   assertNumber(multiplier)
   makeImputeMethod(
-    learn = function(data, target, col, multiplier) multiplier*max(data[[col]], na.rm = TRUE),
+    learn = function(data, target, col, multiplier) {
+      r = range(data[[col]], na.rm = TRUE)
+      r[2L] + multiplier * diff(r)
+    },
     impute = simpleImpute,
     args = list(multiplier = multiplier)
   )
@@ -261,26 +269,19 @@ imputeLearner = function(learner, features = NULL) {
 
   makeImputeMethod(
     learn = function(data, target, col, learner, features) {
-      # FIXME: we need a helper for this
-      # FIXME: this does not work if wrapped more than once
-      if (inherits(learner, "BaseWrapper"))
-        cl = class(learner$next.learner)
-      else
-        cl = class(learner)
-      if ("RLearnerRegr" %in% cl) {
-        constructor = makeRegrTask
-      } else if ("RLearnerClassif" %in% cl) {
-        constructor = makeClassifTask
-      } else if ("RLearnerSurv" %in% cl) {
-        constructor = makeSurvTask
+      constructor = getTaskConstructorForLearner(learner)
+      if (is.null(features)) {
+        features = setdiff(names(data), target)
       } else {
-        stop("Unknown learner class for impute")
+        not.ok = which(features %nin% names(data))
+        if (length(not.ok))
+          stopf("Features for imputation not found in data: '%s'", collapse(features[not.ok]))
+        not.ok = which.first(target %in% names(data))
+        if (length(not.ok))
+          stopf("Target column used as feature for imputation: '%s'", target[not.ok])
+        if (col %nin% features)
+          features = c(col, features)
       }
-      if (is.null(features))
-        features = names(data)
-      features = setdiff(features, target)
-      # FIXME: check columns here
-
       task = constructor("impute", data = subset(data, select = features), target = col,
         check.data = FALSE, fixup.data = "quiet")
       list(model = train(learner, subsetTask(task, features = features)), features = features)
@@ -289,9 +290,9 @@ imputeLearner = function(learner, features = NULL) {
     impute = function(data, target, col, model, features) {
       x = data[[col]]
       ind = is.na(x)
-      # FIXME: we do we get a list instead of a data.frame?
+      # FIXME: we do get a list instead of a data.frame?
       newdata = as.data.frame(data)[ind, features, drop = FALSE]
-     p =  predict(model, newdata = newdata)$data$response
+     p = predict(model, newdata = newdata)$data$response
      replace(x, ind, p)
     },
     args = list(learner = learner, features = features)

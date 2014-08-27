@@ -17,9 +17,12 @@ test_that("Impute data frame", {
   expect_equal(imputed$y[6], 3)
 
   # min / max
-  imputed = impute(data, target, cols = list(x = imputeMin(2), y = imputeMax(2)))$data
-  expect_equal(imputed$x[6], 2)
-  expect_equal(imputed$y[6], 8)
+  imputed = impute(data, target, cols = list(x = imputeMin(2), y = imputeMax(0)))$data
+  expect_equal(imputed$x[6], 1)
+  expect_equal(imputed$y[6], max(data$y, na.rm = TRUE))
+  imputed = impute(data, target, classes = list(numeric = imputeMax()))$data
+  expect_equal(imputed$x[6], 1)
+  expect_equal(imputed$y[6], max(data$y, na.rm = TRUE) + diff(range(data$y, na.rm = TRUE)))
 
   # normal
   imputed = impute(data, target, cols = list(x = imputeNormal(), y = imputeNormal()))$data
@@ -61,8 +64,20 @@ test_that("Impute data frame", {
   expect_equal(x$data[["x.dummy"]], as.numeric(c(rep(FALSE, 5), TRUE)))
   expect_equal(reimpute(data, x$desc), x$data)
 
-  # dummies
-  x = impute(data, target, classes = list(factor = imputeMode(), numeric = imputeMedian(), integer = imputeMedian()))
+  x = impute(data, target, dummy.classes = c("numeric"))$data
+  expect_true(setequal(names(x), c(names(data), "x.dummy", "y.dummy")))
+  x = impute(data, target, dummy.classes = c("numeric"), dummy.cols = "z")$data
+  expect_true(setequal(names(x), c(names(data), "x.dummy", "y.dummy", "z.dummy")))
+
+  x = impute(data, target, classes = list(factor = imputeMode(), numeric = imputeMedian(), integer = imputeMedian(), logical = imputeConstant(1)))
+  expect_true(all(!is.na(x)))
+
+  data2 = data[1:5, ]
+  x = impute(data2, target, dummy.classes = c("numeric", "logical", "factor"), force.dummies = TRUE)
+  expect_true(setequal(x$desc$dummies, c("f", "x", "y")))
+  x = impute(data2, target, dummy.classes = c("numeric", "logical", "factor"), force.dummies = FALSE)
+  expect_true(setequal(x$desc$dummies, character(0)))
+
 
   # learner
   data = data.frame(f = letters[c(1,1,1,1,2)], x = rep(1., 5), y = c(1, 2, 3, 3, 4))
