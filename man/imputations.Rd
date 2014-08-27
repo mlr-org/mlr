@@ -17,8 +17,10 @@ The built-ins are:
   \item \code{imputeConstant(const)} for imputation using a constant value,
   \item \code{imputeMedian()} for imputation using the median,
   \item \code{imputeMode()} for imputation using the mode,
-  \item \code{imputeMin(multiplier)} for imputation using the minimum,
-  \item \code{imputeMax(multiplier)} for imputation using the maximum,
+  \item \code{imputeMin(multiplier)} for imputing constant values shifted below the minimum
+    using \code{min(x) - multiplier * diff(range(x))},
+  \item \code{imputeMin(multiplier)} for imputing constant values shifted above the maximum
+    using \code{max(x) + multiplier * diff(range(x))},
   \item \code{imputeNormal(mean, sd)} for imputation using normally
     distributed random values. Mean and standard deviation will be calculated
     from the data if not provided.
@@ -93,8 +95,10 @@ The built-ins are:
   \item \code{imputeConstant(const)} for imputation using a constant value,
   \item \code{imputeMedian()} for imputation using the median,
   \item \code{imputeMode()} for imputation using the mode,
-  \item \code{imputeMin(multiplier)} for imputation using the minimum,
-  \item \code{imputeMax(multiplier)} for imputation using the maximum,
+  \item \code{imputeMin(multiplier)} for imputing constant values shifted below the minimum
+    using \code{min(x) - multiplier * diff(range(x))},
+  \item \code{imputeMin(multiplier)} for imputing constant values shifted above the maximum
+    using \code{max(x) + multiplier * diff(range(x))},
   \item \code{imputeNormal(mean, sd)} for imputation using normally
     distributed random values. Mean and standard deviation will be calculated
     from the data if not provided.
