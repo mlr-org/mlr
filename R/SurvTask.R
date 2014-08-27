@@ -56,8 +56,8 @@ fixupData.SurvTask = function(task, target, choice, ..., censoring) {
       if (length(lvls) == 2L) {
         if (all(lvls %in% c("TRUE", "FALSE"))) {
           task$env$data[[target[2L]]] = (event == "TRUE")
-        } else if (all(lvls) %in% c("0", "1")) {
-          task$env$data[[target[2L]]] = (event == "1")
+        } else if (all(lvls %in% c("0", "1"))) {
+          task$env$data[[target[2L]]] = (as.character(event) == "1")
         }
       }
     }
