@@ -1,3 +1,5 @@
+library(e1071)
+
 e1071CVToMlrCV = function(e1071.tune.result) {
   tr = e1071.tune.result
   inds = tr$train.ind
