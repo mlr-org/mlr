@@ -1,4 +1,4 @@
 library(testthat)
 if (identical(Sys.getenv("TRAVIS"), "true")) {
-  test_check("mlr", "_imbal_")
+  # test_check("mlr", "_imbal_")
 }
