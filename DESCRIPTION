@@ -38,6 +38,7 @@ Suggests:
     adabag,
     caret,
     class,
+    clue,
     cluster,
     clusterSim,
     clValid,

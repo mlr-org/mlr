@@ -43,7 +43,7 @@ Force dummy creation even if the respective data column does not
 contain any NAs. Note that (a) most learners will complain about
 constant columns created this way but (b) your feature set might
 be stochastic if you turn this off.
-Default is \codde{FALSE}.}
+Default is \code{FALSE}.}
 
 \item{impute.new.levels}{[\code{logical(1)}]\cr
 If new, unencountered factor level occur during reimputation,
