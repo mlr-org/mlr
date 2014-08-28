@@ -8,14 +8,13 @@ makeRLearner.cluster.kmeans = function() {
       makeIntegerLearnerParam(id = "iter.max", default = 10L, lower = 1L),
       makeIntegerLearnerParam(id = "nstart", default = 1L, lower = 1L),
       makeDiscreteLearnerParam(id = "algorithm",
-                               values = c("Hartigan-Wong", "Lloyd", "Forgy",
-                                          "MacQueen"),
-                               default = 'Hartigan-Wong'),
+        values = c("Hartigan-Wong", "Lloyd", "Forgy", "MacQueen"), default = 'Hartigan-Wong'),
       makeLogicalLearnerParam(id = "trace")
     ),
+    par.vals = list(centers = 2L),
     properties = c("numerics"),
     name = "k-means",
-    note = "The 'predict' method uses 'cl_predict' from the 'clue' package to compute the cluster memberships for new data.",
+    note = "The 'predict' method uses 'cl_predict' from the 'clue' package to compute the cluster memberships for new data. The default 'centers=2' is added so the method runs without setting params, but this must in reality of course be changed by the user.",
     short.name = "kmeans"
   )
 }
