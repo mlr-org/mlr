@@ -14,6 +14,7 @@
 #'   Classification: \dQuote{response} or \dQuote{prob}.
 #'   Regression: \dQuote{response} or \dQuote{se}.
 #'   Survival: \dQuote{response} (linear predictor) or \dQuote{prob}.
+#'   Clustering: \dQuote{response} or \dQuote{prob}.
 #'   Default is \dQuote{response}.
 #' @template ret_learner
 #' @family predict

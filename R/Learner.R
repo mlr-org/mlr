@@ -13,7 +13,7 @@
 #'   Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
 #'   Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
 #'   Survival: \dQuote{response} (= some sort of orderable risk) or \dQuote{prob} (= time dependent probabilities).
-#'   Clustering: \dQuote{response} (= cluster IDs).
+#'   Clustering: \dQuote{response} (= cluster IDS) or \dQuote{prob} (= fuzzy cluster membership probabilities).
 #'   Default is \dQuote{response}.
 #' @param fix.factors [\code{logical(1)}]\cr
 #'   In some cases, problems occur in underlying learners for factor features during prediction.
