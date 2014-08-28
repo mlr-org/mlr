@@ -15,6 +15,7 @@ mlr_2.2
 -- classif.sda
 -- regr.plsr
 -- regr.randomForestSRC
+-- cluster.cmeans
 
 - new functions
 -- makeMulticlassWrapper
