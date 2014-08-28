@@ -5,8 +5,8 @@ makeRLearner.cluster.kmeans = function() {
     package = c("stats", "clue"),
     par.set = makeParamSet(
       makeUntypedLearnerParam(id = "centers"),
-      makeNumericLearnerParam(id = "iter.max", default = 10, lower = 1),
-      makeNumericLearnerParam(id = "nstart", default = 1, lower = 1),
+      makeIntegerLearnerParam(id = "iter.max", default = 10L, lower = 1L),
+      makeIntegerLearnerParam(id = "nstart", default = 1L, lower = 1L),
       makeDiscreteLearnerParam(id = "algorithm",
                                values = c("Hartigan-Wong", "Lloyd", "Forgy",
                                           "MacQueen"),
