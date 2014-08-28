@@ -12,7 +12,7 @@ makeRLearner.cluster.cmeans = function() {
       makeUntypedLearnerParam(id = "control"),
       makeLogicalLearnerParam(id = "verbose")
     ),
-    properties = c("numerics"),
+    properties = c("numerics", "prob"),
     name = "fuzzy c-means clustering",
     note = "The 'predict' method uses 'cl_predict' from the 'clue' package to compute the cluster memberships for new data.",
     short.name = "cmeans"
@@ -26,6 +26,9 @@ trainLearner.cluster.cmeans = function(.learner, .task, .subset, .weights = NULL
 
 #' @export
 predictLearner.cluster.cmeans = function(.learner, .model, .newdata, ...) {
-  as.integer(cl_predict(.model$learner.model, newdata = .newdata, type = "class_ids"))
+  switch(.learner$predict.type,
+    response = as.integer(cl_predict(.model$learner.model, newdata = .newdata, type = "class_ids", ...)),
+    prob = as.matrix(cl_predict(.model$learner.model, newdata = .newdata, type = "memberships", ...))
+  )
 }
 

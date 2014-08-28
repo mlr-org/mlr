@@ -129,18 +129,29 @@ print.Prediction = function(x, ...) {
 
 #' @export
 makePrediction.TaskDescCluster = function(task.desc, id, truth, predict.type, y, time) {
-  data = namedList(c("id", "response"))
+  data = namedList(c("id", "response", "prob"))
   data$id = id
-  data$response = y
-
-  makeS3Obj(c("PredictionCluster", "Prediction"),
+  if (predict.type == "response") {
+    data$response = y
+    data = as.data.frame(filterNull(data))
+  } else {
+    # this is a bit uncool, but as long we only use cl_predict we are OK I guess
+    class(y) = "matrix"
+    data$prob = y
+    data = as.data.frame(filterNull(data))
+  }
+  p = makeS3Obj(c("PredictionCluster", "Prediction"),
     predict.type = predict.type,
-    data = as.data.frame(filterNull(data)),
+    data = data,
     threshold = NA_real_,
     task.desc = task.desc,
     time = time
   )
+  return(p)
 }
+
+
+
 
 
 
