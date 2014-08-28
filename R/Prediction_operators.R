@@ -27,8 +27,9 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
 #' head(getProbabilities(pred, c("setosa", "virginica")))
 getProbabilities = function(pred, cl) {
   assertClass(pred, classes = "Prediction")
-  if (pred$task.desc$type != "classif")
-    stop("Prediction was not generated from a ClassifTask!")
+  ttype = pred$task.desc$type
+  if (ttype %nin% c("classif", "cluster"))
+    stop("Prediction was not generated from a ClassifTask or ClusterTask!")
   if (missing(cl)) {
     if (length(pred$task.desc$class.levels) == 2L)
       cl = pred$task.desc$positive
@@ -40,12 +41,17 @@ getProbabilities = function(pred, cl) {
   if (pred$predict.type != "prob")
     stop("Probabilities not present in Prediction object!")
   cns = colnames(pred$data)
-  cl2 = paste("prob", cl, sep = ".")
-  if (!all(cl2 %in% cns))
-    stopf("Trying to get probabilities for nonexistant classes: %s", collapse(cl))
-  y = pred$data[, cl2]
-  if (length(cl) > 1L)
-    colnames(y) = cl
+  if (ttype == "classif") {
+    cl2 = paste("prob", cl, sep = ".")
+    if (!all(cl2 %in% cns))
+      stopf("Trying to get probabilities for nonexistant classes: %s", collapse(cl))
+    y = pred$data[, cl2]
+    if (length(cl) > 1L)
+      colnames(y) = cl
+  } else {
+    y = pred$data[, grepl("prob\\.", cns)]
+    colnames(y) = seq_col(y)
+  }
   return(y)
 }
 
