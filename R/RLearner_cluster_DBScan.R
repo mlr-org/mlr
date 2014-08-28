@@ -11,7 +11,8 @@ makeRLearner.cluster.DBScan = function() {
     ),
     properties = c("numerics"),
     name = "DBScan clustering",
-    short.name = "DBScan"
+    short.name = "DBScan",
+    note = "You might have to install the Weka package: WPM('install-package', 'optics_dbScan')"
   )
 }
 
