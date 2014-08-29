@@ -25,7 +25,7 @@ test_that("classif_kknn", {
 
   testSimpleParsets("classif.kknn", multiclass.df, multiclass.target, multiclass.train.inds,
     old.predicts.list, parset.list)
-  testProbParsets  ("classif.kknn", multiclass.df, multiclass.target, multiclass.train.inds,
+  testProbParsets("classif.kknn", multiclass.df, multiclass.target, multiclass.train.inds,
     old.probs.list, parset.list)
 
   tt = function (formula, data, k = 7) {

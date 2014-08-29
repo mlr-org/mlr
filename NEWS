@@ -11,6 +11,7 @@ mlr_2.2
 - cluster methods now have property 'prob' when they support fuzzy cluster membership probabilities,
   and also then support predict.type = 'prob'. Everything basically works the same as for posterior
   probabilities in classif.* methods.
+- predict preserves the rownames of the input in its output
 
 - new learners:
 -- classif.lqa
