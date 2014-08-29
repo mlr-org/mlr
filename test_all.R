@@ -21,11 +21,7 @@ library(caret) # otherwise train shadowed
 library(plyr)
 library(survival)
 
-if (interactive()) {
-  load_all(".")
-} else {
-  library(mlr)
-}
+load_all(".")
 
 source("tests/testthat/helper_helpers.R")
 source("tests/testthat/helper_objects.R")
