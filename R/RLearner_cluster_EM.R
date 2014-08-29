@@ -17,8 +17,7 @@ makeRLearner.cluster.EM = function() {
     ),
     properties = c("numerics"),
     name = "Expectation-maximization clustering",
-    short.name = "EM",
-    note = ""
+    short.name = "EM"
   )
 }
 
