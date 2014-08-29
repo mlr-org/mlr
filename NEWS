@@ -20,6 +20,8 @@ mlr_2.2
 -- regr.plsr
 -- regr.randomForestSRC
 -- cluster.cmeans
+-- cluster.Cobweb
+-- cluster.FarthestFirst
 
 - new functions
 -- makeMulticlassWrapper
