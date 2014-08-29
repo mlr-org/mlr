@@ -122,6 +122,6 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
     ids = NULL
   else
     ids = subset
-  makePrediction(task.desc = td, id = ids, truth = truth,
+  makePrediction(task.desc = td, row.names = rownames(newdata), id = ids, truth = truth,
     predict.type = learner$predict.type, y = p, time = time.predict)
 }

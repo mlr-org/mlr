@@ -25,12 +25,12 @@
 #' @rdname Prediction
 NULL
 
-makePrediction = function(task.desc, id, truth, predict.type, y, time) {
+makePrediction = function(task.desc, row.names, id, truth, predict.type, y, time) {
   UseMethod("makePrediction")
 }
 
 #' @export
-makePrediction.TaskDescRegr = function(task.desc, id, truth, predict.type, y, time) {
+makePrediction.TaskDescRegr = function(task.desc, row.names, id, truth, predict.type, y, time) {
   data = namedList(c("id", "truth", "response", "se"))
   data$id = id
   data$truth = truth
@@ -43,7 +43,7 @@ makePrediction.TaskDescRegr = function(task.desc, id, truth, predict.type, y, ti
 
   makeS3Obj(c("PredictionRegr", "Prediction"),
     predict.type = predict.type,
-    data = as.data.frame(filterNull(data)),
+    data = setRowNames(as.data.frame(filterNull(data)), row.names),
     threshold = NA_real_,
     task.desc = task.desc,
     time = time
@@ -51,7 +51,7 @@ makePrediction.TaskDescRegr = function(task.desc, id, truth, predict.type, y, ti
 }
 
 #' @export
-makePrediction.TaskDescClassif = function(task.desc, id, truth, predict.type, y, time) {
+makePrediction.TaskDescClassif = function(task.desc, row.names, id, truth, predict.type, y, time) {
   data = namedList(c("id", "truth", "response", "prob"))
   data$id = id
   data$truth = truth
@@ -69,7 +69,7 @@ makePrediction.TaskDescClassif = function(task.desc, id, truth, predict.type, y,
 
   p = makeS3Obj(c("PredictionClassif", "Prediction"),
     predict.type = predict.type,
-    data = data,
+    data = setRowNames(data, row.names),
     threshold = NA_real_,
     task.desc = task.desc,
     time = time
@@ -85,7 +85,7 @@ makePrediction.TaskDescClassif = function(task.desc, id, truth, predict.type, y,
 }
 
 #' @export
-makePrediction.TaskDescSurv = function(task.desc, id, truth, predict.type, y, time) {
+makePrediction.TaskDescSurv = function(task.desc, row.names, id, truth, predict.type, y, time) {
   data = namedList(c("id", "truth.time", "truth.event", "response"))
   data$id = id
   # FIXME: recode times
@@ -95,7 +95,7 @@ makePrediction.TaskDescSurv = function(task.desc, id, truth, predict.type, y, ti
 
   makeS3Obj(c("PredictionSurv", "Prediction"),
     predict.type = predict.type,
-    data = as.data.frame(filterNull(data)),
+    data = setRowNames(as.data.frame(filterNull(data)), row.names),
     threshold = NA_real_,
     task.desc = task.desc,
     time = time
@@ -103,15 +103,37 @@ makePrediction.TaskDescSurv = function(task.desc, id, truth, predict.type, y, ti
 }
 
 #' @export
-makePrediction.TaskDescCostSens = function(task.desc, id, truth, predict.type, y, time) {
+makePrediction.TaskDescCluster = function(task.desc, row.names, id, truth, predict.type, y, time) {
+  data = namedList(c("id", "response", "prob"))
+  data$id = id
+  if (predict.type == "response") {
+    data$response = y
+    data = as.data.frame(filterNull(data))
+  } else {
+    # this is a bit uncool, but as long we only use cl_predict we are OK I guess
+    class(y) = "matrix"
+    data$prob = y
+    data = as.data.frame(filterNull(data))
+  }
+  p = makeS3Obj(c("PredictionCluster", "Prediction"),
+    predict.type = predict.type,
+    data = setRowNames(data, row.names),
+    threshold = NA_real_,
+    task.desc = task.desc,
+    time = time
+  )
+  return(p)
+}
+
+#' @export
+makePrediction.TaskDescCostSens = function(task.desc, row.names, id, truth, predict.type, y, time) {
   data = namedList(c("id", "response"))
   data$id = id
   data$response = y
-  data = as.data.frame(filterNull(data))
 
   makeS3Obj(c("PredictionCostSens", "Prediction"),
     predict.type = predict.type,
-    data = data,
+    data = setRowNames(as.data.frame(filterNull(data)), row.names),
     threshold = NA_real_,
     task.desc = task.desc,
     time = time
@@ -126,32 +148,4 @@ print.Prediction = function(x, ...) {
   catf("time: %.2f", x$time)
   print(head(as.data.frame(x)))
 }
-
-#' @export
-makePrediction.TaskDescCluster = function(task.desc, id, truth, predict.type, y, time) {
-  data = namedList(c("id", "response", "prob"))
-  data$id = id
-  if (predict.type == "response") {
-    data$response = y
-    data = as.data.frame(filterNull(data))
-  } else {
-    # this is a bit uncool, but as long we only use cl_predict we are OK I guess
-    class(y) = "matrix"
-    data$prob = y
-    data = as.data.frame(filterNull(data))
-  }
-  p = makeS3Obj(c("PredictionCluster", "Prediction"),
-    predict.type = predict.type,
-    data = data,
-    threshold = NA_real_,
-    task.desc = task.desc,
-    time = time
-  )
-  return(p)
-}
-
-
-
-
-
 
