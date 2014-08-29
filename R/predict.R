@@ -1,11 +1,14 @@
-#' Predict new data.
+#' @title Predict new data.
 #'
+#' @description
 #' Predict the target variable of new data using a fitted model.
 #' What is stored exactly in the [\code{\link{Prediction}}] object depends
 #' on the \code{predict.type} setting of the \code{\link{Learner}}.
 #' If \code{predict.type} was set to \dQuote{prob} probability thresholding
 #' can be done calling the \code{\link{setThreshold}} function on the
 #' prediction object.
+#'
+#' The row names of the input \code{task} or \code{newdata} are preserved in the output.
 #'
 #' @param object [\code{\link{WrappedModel}}]\cr
 #'   Wrapped model, result of \code{\link{train}}.
