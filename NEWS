@@ -20,6 +20,7 @@ mlr_2.2
 -- regr.plsr
 -- regr.randomForestSRC
 -- cluster.cmeans
+-- cluster.kmeans
 -- cluster.Cobweb
 -- cluster.FarthestFirst
 
