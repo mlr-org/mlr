@@ -1,6 +1,7 @@
 library(methods)
 library(BBmisc)
-library(mlr)
+library(devtools)
+load_all("..")
 
 dn = "../data"
 stopifnot(isDirectory(dn))
