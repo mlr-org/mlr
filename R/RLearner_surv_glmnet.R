@@ -31,6 +31,7 @@ makeRLearner.surv.glmnet = function() {
       makeIntegerLearnerParam(id = "mxit", default = 100, lower = 1)
     ),
     properties = c("numerics", "weights", "rcens"),
+    par.vals = list(s = 0.01),
     name = "GLM with regularization",
     short.name = "glmnet",
     note = ""
@@ -57,10 +58,8 @@ trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights = NULL,  
 }
 
 #' @export
-predictLearner.surv.glmnet = function(.learner, .model, .newdata, s, ...) {
-  if (missing(s))
-    s = 0.01
+predictLearner.surv.glmnet = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response")
-    return(as.numeric(predict(.model$learner.model, newx = as.matrix(.newdata), type = "link", s = s, ...)))
+    return(as.numeric(predict(.model$learner.model, newx = as.matrix(.newdata), type = "link", ...)))
   stop("Unknown predict type")
 }

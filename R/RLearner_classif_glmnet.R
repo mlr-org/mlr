@@ -62,18 +62,16 @@ trainLearner.classif.glmnet = function(.learner, .task, .subset, .weights = NULL
 }
 
 #' @export
-predictLearner.classif.glmnet = function(.learner, .model, .newdata, s, ...) {
-  if (missing(s))
-    s = 0.01
+predictLearner.classif.glmnet = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "prob"){
-    p = predict(.model$learner.model, newx = as.matrix(.newdata), type = "response", s = s, ...)
+    p = predict(.model$learner.model, newx = as.matrix(.newdata), type = "response",  ...)
     if (length(.model$task.desc$class.levels) == 2) {
       p = setColNames(cbind(1 - p, p), .model$task.desc$class.levels)
     } else {
       p = p[,,1]
     }
   } else {
-    p = drop(predict(.model$learner.model, newx = as.matrix(.newdata), type = "class", s = s, ...))
+    p = drop(predict(.model$learner.model, newx = as.matrix(.newdata), type = "class", ...))
     p = factor(p, .model$task.desc$class.levels)
   }
   p
