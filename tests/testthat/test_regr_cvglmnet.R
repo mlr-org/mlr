@@ -1,6 +1,6 @@
-context("regr_glmnet")
+context("regr_cvglmnet")
 
-test_that("regr_glmnet", {
+test_that("regr_cvglmnet", {
   library(glmnet)
   parset.list = list(
     list(),
@@ -25,10 +25,10 @@ test_that("regr_glmnet", {
     set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
       do.call(glmnet.control, pars[names(pars) %in% ctrl.args])
-      m = do.call(glmnet, pars[!names(pars) %in% ctrl.args])
+      m = do.call(cv.glmnet, pars[!names(pars) %in% ctrl.args])
       glmnet.control(factory = TRUE)
     } else {
-      m = do.call(glmnet, pars)
+      m = do.call(cv.glmnet, pars)
     }
     newx = regr.test[,-ind]
     newx$chas = as.numeric(newx$chas)
@@ -36,5 +36,5 @@ test_that("regr_glmnet", {
   }
   test.dat = regr.df
   test.dat$chas = as.numeric(test.dat$chas)
-  testSimpleParsets("regr.glmnet", test.dat, regr.target, regr.train.inds, old.predicts.list, parset.list)
+  testSimpleParsets("regr.cvglmnet", test.dat, regr.target, regr.train.inds, old.predicts.list, parset.list)
 })

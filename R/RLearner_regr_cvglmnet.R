@@ -1,7 +1,7 @@
 #' @export
-makeRLearner.regr.cv.glmnet = function() {
+makeRLearner.regr.cvglmnet = function() {
   makeRLearnerRegr(
-    cl = "regr.cv.glmnet",
+    cl = "regr.cvglmnet",
     package = "glmnet",
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
@@ -38,13 +38,13 @@ makeRLearner.regr.cv.glmnet = function() {
     properties = c("numerics", "weights"),
     par.vals = list(s = 0.01),
     name = "GLM with lasso or elasticnet regularization",
-    short.name = "cv.glmnet",
+    short.name = "cvglmnet",
     note = ""
   )
 }
 
 #' @export
-trainLearner.regr.cv.glmnet = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.regr.cvglmnet = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   args = c(list(x = as.matrix(d$data), y = d$target, family = "gaussian", parallel = FALSE), list(...))
   rm(d)
@@ -63,6 +63,6 @@ trainLearner.regr.cv.glmnet = function(.learner, .task, .subset, .weights = NULL
 }
 
 #' @export
-predictLearner.regr.cv.glmnet = function(.learner, .model, .newdata, ...) {
+predictLearner.regr.cvglmnet = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, newx = as.matrix(.newdata), ...)[, 1L]
 }

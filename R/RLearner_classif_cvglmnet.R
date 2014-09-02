@@ -1,7 +1,7 @@
 #' @export
-makeRLearner.classif.cv.glmnet = function() {
+makeRLearner.classif.cvglmnet = function() {
   makeRLearnerClassif(
-    cl = "classif.cv.glmnet",
+    cl = "classif.cvglmnet",
     package = "glmnet",
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
@@ -38,13 +38,13 @@ makeRLearner.classif.cv.glmnet = function() {
     properties = c("numerics", "prob", "twoclass", "multiclass", "weights"),
     par.vals = list(s = 0.01),
     name = "GLM with lasso or elasticnet regularization",
-    short.name = "cv.glmnet",
+    short.name = "cvglmnet",
     note = ""
   )
 }
 
 #' @export
-trainLearner.classif.cv.glmnet = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.classif.cvglmnet = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   args = c(list(x = as.matrix(d$data), y = d$target, parallel = FALSE, family = character(0L)), list(...))
   rm(d)
@@ -65,7 +65,7 @@ trainLearner.classif.cv.glmnet = function(.learner, .task, .subset, .weights = N
 }
 
 #' @export
-predictLearner.classif.cv.glmnet = function(.learner, .model, .newdata, ...) {
+predictLearner.classif.cvglmnet = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "prob"){
     p = drop(predict(.model$learner.model, newx = as.matrix(.newdata), type = "response", ...))
     if (length(.model$task.desc$class.levels) == 2) {
@@ -74,7 +74,7 @@ predictLearner.classif.cv.glmnet = function(.learner, .model, .newdata, ...) {
       p = p[,,1]
     }
   } else {
-    p = predict(.model$learner.model, newx = as.matrix(.newdata), type = "class", ...)[, 1L]
+    p = predict(.model$learner.model, newx = as.matrix(.newdata), type = "class", ...)
     p = factor(drop(p), .model$task.desc$class.levels)
   }
   p

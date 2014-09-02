@@ -1,7 +1,7 @@
 #' @export
-makeRLearner.surv.cv.glmnet = function() {
+makeRLearner.surv.cvglmnet = function() {
   makeRLearnerSurv(
-    cl = "surv.cv.glmnet",
+    cl = "surv.cvglmnet",
     package = "glmnet",
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
@@ -34,13 +34,13 @@ makeRLearner.surv.cv.glmnet = function() {
     ),
     properties = c("numerics", "weights", "rcens"),
     name = "GLM with regularization (cross validated lambda)",
-    short.name = "cv.glmnet",
+    short.name = "cvglmnet",
     note = ""
   )
 }
 
 #' @export
-trainLearner.surv.cv.glmnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.surv.cvglmnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "rcens")
   args = c(list(x = as.matrix(d$data), y = d$target, family = "cox", parallel = FALSE), list(...))
   rm(d)
@@ -59,7 +59,7 @@ trainLearner.surv.cv.glmnet = function(.learner, .task, .subset, .weights = NULL
 }
 
 #' @export
-predictLearner.surv.cv.glmnet = function(.learner, .model, .newdata, ...) {
+predictLearner.surv.cvglmnet = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response")
     return(as.numeric(predict(.model$learner.model, newx = as.matrix(.newdata), type = "link", ...)))
   stop("Unknown predict type")

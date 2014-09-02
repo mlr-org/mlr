@@ -1,11 +1,11 @@
-context("classif_glmnet")
+context("classif_cvglmnet")
 
-test_that("classif_glmnet", {
+test_that("classif_cvglmnet", {
   library(glmnet)
   parset.list = list(
     list(),
     list(alpha = 0.5),
-    list(s = 0.1),
+    # list(s = "lambda.min"),
     list(devmax = 0.8)
   )
 
@@ -23,25 +23,25 @@ test_that("classif_glmnet", {
     pars = list(x = as.matrix(x), y = y, family = "binomial")
     pars = c(pars, parset)
     ctrl.args = names(formals(glmnet.control))
+
     set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
       do.call(glmnet.control, pars[names(pars) %in% ctrl.args])
-      m = do.call(glmnet, pars[!names(pars) %in% ctrl.args])
+      m = do.call(cv.glmnet, pars[!names(pars) %in% ctrl.args])
       glmnet.control(factory = TRUE)
     } else {
-      m = do.call(glmnet, pars)
+      m = do.call(cv.glmnet, pars)
     }
     newx = binaryclass.test
     newx[, binaryclass.class.col] = NULL
-    p = factor(predict(m, as.matrix(newx), type = "class", s = s)[,1])
-    p2 = predict(m, as.matrix(newx), type = "response", s = s)[,1]
+    p = factor(predict(m, as.matrix(newx), type = "class", s = s))
+    p2 = predict(m, as.matrix(newx), type = "response", s = s)
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = 1 - p2
   }
 
-  testSimpleParsets("classif.glmnet", binaryclass.df, binaryclass.target,
+  testSimpleParsets("classif.cvglmnet", binaryclass.df, binaryclass.target,
                     binaryclass.train.inds, old.predicts.list, parset.list)
-  testProbParsets ("classif.glmnet", binaryclass.df, binaryclass.target,
+  testProbParsets ("classif.cvglmnet", binaryclass.df, binaryclass.target,
                    binaryclass.train.inds, old.probs.list, parset.list)
-
 })
