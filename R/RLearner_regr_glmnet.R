@@ -60,6 +60,8 @@ trainLearner.regr.glmnet = function(.learner, .task, .subset, .weights = NULL, .
 }
 
 #' @export
-predictLearner.regr.glmnet = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newx = as.matrix(.newdata), ...)[, 1L]
+predictLearner.regr.glmnet = function(.learner, .model, .newdata, s = s, ...) {
+  if (missing(s))
+    s = 0.01
+  drop(predict(.model$learner.model, newx = as.matrix(.newdata), s = s, ...))
 }

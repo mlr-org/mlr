@@ -5,7 +5,7 @@ makeRLearner.surv.glmnet = function() {
     package = "glmnet",
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
-      # makeNumericLearnerParam(id = "s", default = 0.01, lower = 0, upper = 1, when = "predict"),
+      makeNumericLearnerParam(id = "s", default = 0.01, lower = 0, upper = 1, when = "predict"),
       makeLogicalLearnerParam(id = "exact", default = FALSE, when = "predict"),
       makeIntegerLearnerParam(id = "nlambda", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "lambda.min.ratio", lower = 0, upper = 1),
@@ -57,8 +57,10 @@ trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights = NULL,  
 }
 
 #' @export
-predictLearner.surv.glmnet = function(.learner, .model, .newdata, ...) {
+predictLearner.surv.glmnet = function(.learner, .model, .newdata, s, ...) {
+  if (missing(s))
+    s = 0.01
   if(.learner$predict.type == "response")
-    return(as.numeric(predict(.model$learner.model, newx = as.matrix(.newdata), type = "link", ...)))
+    return(as.numeric(predict(.model$learner.model, newx = as.matrix(.newdata), type = "link", s = s, ...)))
   stop("Unknown predict type")
 }
