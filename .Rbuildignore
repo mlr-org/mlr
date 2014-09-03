@@ -24,3 +24,4 @@ testinfo.RData
 ^\.Rproj\.user$
 
 ^man-roxygen
+^.editorconfig$
