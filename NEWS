@@ -24,6 +24,9 @@ mlr_2.2
 -- cluster.Cobweb
 -- cluster.FarthestFirst
 
+- new filters:
+-- carscore
+
 - new functions
 -- makeMulticlassWrapper
 -- joinClassLevels  

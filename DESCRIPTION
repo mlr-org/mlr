@@ -37,6 +37,7 @@ Suggests:
     testthat,
     ada,
     adabag,
+    care,
     caret,
     class,
     clue,
