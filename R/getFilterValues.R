@@ -66,7 +66,6 @@ getFilterValues = function(task, method = "random.forest.importance", ...) {
     y = as.vector(scores(res)[[1]])
     ns = res@feature_names[as.vector(solutions(res)[[1]])]
   } else if (method == "carscore") {
-    browser()
     requirePackages("care", why = "getFilterValues")
     target.ind = which(getTargetNames(task) == colnames(data))
     y = carscore(Xtrain = data[, -target.ind], Ytrain = data[, target.ind], verbose = FALSE)
