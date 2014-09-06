@@ -31,11 +31,11 @@ createDummyFeatures.data.frame = function(obj, target = character(0L), method = 
   dummies = lapply(work.cols, function(colname) {
     if (method == "1-of-n") {
       form = paste0("~",colname,"-1")
-      res = model.matrix(as.formula(form), data = obj)
+      res = model.matrix(as.formula(form), data = obj, na.action = "na.pass")
       colnames(res) = levels(obj[[colname]])
     } else {
       form = paste0("~",colname,"-1")
-      res = model.matrix(as.formula(form), data = obj)[, -1, drop = FALSE]
+      res = model.matrix(as.formula(form), data = obj, na.action = "na.pass")[, -1, drop = FALSE]
       colnames(res) = tail(levels(obj[[colname]]), -1)
     }
     if (ncol(res) == 1) {
