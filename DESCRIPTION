@@ -37,6 +37,7 @@ Suggests:
     testthat,
     ada,
     adabag,
+    bartMachine,
     care,
     caret,
     class,

@@ -14,6 +14,7 @@ mlr_2.2
 - predict preserves the rownames of the input in its output
 
 - new learners:
+-- classif.bartMachine
 -- classif.lqa
 -- classif.randomForestSRC
 -- classif.sda
