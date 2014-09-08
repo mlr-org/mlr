@@ -68,7 +68,7 @@ makeModelMultiplexer = function(base.learners) {
     id = "ModelMultiplexer",
     short.name = "MM",
     base.learners = base.learners,
-    bls.type = c("classif", "regr"),
+    bls.type = NULL,
     ens.type = NULL,
     cl = "ModelMultiplexer"
   )

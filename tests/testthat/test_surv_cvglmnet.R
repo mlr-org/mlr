@@ -1,6 +1,6 @@
-context("surv_glmnet")
+context("surv_cvglmnet")
 
-test_that("surv_glmnet", {
+test_that("surv_cvglmnet", {
   library(survival)
   library(glmnet)
   parset.list = list(
@@ -23,16 +23,16 @@ test_that("surv_glmnet", {
     set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
       do.call(glmnet.control, pars[names(pars) %in% ctrl.args])
-      m = do.call(glmnet, pars[!names(pars) %in% ctrl.args])
+      m = do.call(cv.glmnet, pars[!names(pars) %in% ctrl.args])
       glmnet.control(factory = TRUE)
     } else {
-      m = do.call(glmnet, pars)
+      m = do.call(cv.glmnet, pars)
     }
-    p  = predict(m, newx = as.matrix(surv.test[, -c(1,2,7)]), type = "link", s = 0.01)
+    p  = predict(m, newx = as.matrix(surv.test[, -c(1,2,7)]), type = "link")
     old.predicts.list[[i]] = as.numeric(p)
   }
 
-  testSimpleParsets("surv.glmnet", surv.df[, -7], surv.target, surv.train.inds, old.predicts.list, parset.list)
+  testSimpleParsets("surv.cvglmnet", surv.df[, -7], surv.target, surv.train.inds, old.predicts.list, parset.list)
 
   # check that we restored the factory default
   expect_true(glmnet.control()$prec < 1e-4) # should be ==1e-5

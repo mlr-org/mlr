@@ -28,6 +28,10 @@ createDummyFeatures.data.frame = function(obj, target = character(0L), method = 
   work.cols = colnames(obj)[vlapply(obj, is.factor)]
   work.cols = setdiff(work.cols, exclude)
   work.cols = setdiff(work.cols, target)
+  # prevent function model.matrix from dropping rows with missing values
+  old.na.action = options()$na.action
+  on.exit(options(na.action = old.na.action))
+  options(na.action = "na.pass")
   dummies = lapply(work.cols, function(colname) {
     if (method == "1-of-n") {
       form = paste0("~",colname,"-1")

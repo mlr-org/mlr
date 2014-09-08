@@ -1,0 +1,26 @@
+context("regr_ctree")
+
+test_that("regr_ctree", {
+  library(party)
+  parset.list = list(
+    list(),
+    list(minsplit = 10, mincriterion = 0.005),
+    list(minsplit = 50, mincriterion = 0.05),
+    list(minsplit = 50, mincriterion = 0.999),
+    list(minsplit = 1, mincriterion = 0.0005)
+  )
+
+  old.predicts.list = list()
+
+  for (i in 1:length(parset.list)) {
+    parset = parset.list[[i]]
+    ctrl = do.call(ctree_control, parset)
+    set.seed(getOption("mlr.debug.seed"))
+    m = ctree(formula = regr.formula, data = regr.train, control = ctrl)
+    p  = predict(m, newdata = regr.test, type = "response")[, 1L]
+    old.predicts.list[[i]] = p
+  }
+
+  testSimpleParsets("regr.ctree", regr.df, regr.target, regr.train.inds, 
+    old.predicts.list, parset.list)
+})

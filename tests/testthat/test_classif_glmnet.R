@@ -8,10 +8,10 @@ test_that("classif_glmnet", {
     list(s = 0.1),
     list(devmax = 0.8)
   )
-  
+
   old.predicts.list = list()
   old.probs.list = list()
-  
+
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     s = parset[["s"]]
@@ -23,12 +23,13 @@ test_that("classif_glmnet", {
     pars = list(x = as.matrix(x), y = y, family = "binomial")
     pars = c(pars, parset)
     ctrl.args = names(formals(glmnet.control))
+    set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
       do.call(glmnet.control, pars[names(pars) %in% ctrl.args])
-      m = do.call(glmnet, pars[!names(pars) %in% ctrl.args])  
+      m = do.call(glmnet, pars[!names(pars) %in% ctrl.args])
       glmnet.control(factory = TRUE)
     } else {
-      m = do.call(glmnet, pars) 
+      m = do.call(glmnet, pars)
     }
     newx = binaryclass.test
     newx[, binaryclass.class.col] = NULL
@@ -37,10 +38,10 @@ test_that("classif_glmnet", {
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = 1 - p2
   }
-  
+
   testSimpleParsets("classif.glmnet", binaryclass.df, binaryclass.target,
                     binaryclass.train.inds, old.predicts.list, parset.list)
   testProbParsets ("classif.glmnet", binaryclass.df, binaryclass.target,
                    binaryclass.train.inds, old.probs.list, parset.list)
-  
+
 })

@@ -14,7 +14,8 @@ listFilterMethods = function() {
     "random.forest.importance",
     "relief",
     "oneR",
-    "mRMR.classic"
+    "mRMR.classic",
+    "carscore"
   )
 }
 

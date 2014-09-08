@@ -1,7 +1,7 @@
 # find the learner for a given param name, so <learnerid>.<paramid>
 matchBaseEnsembleLearner = function(ensemble, pn) {
   patterns = paste0("^", names(ensemble$base.learners), "\\.")
-  j = which(vlapply(patterns, grepl, x = pn))
+  j = which(vlapply(patterns, function(p) grepl(p, pn)))
   par.id = sub(patterns[j], "", pn)
   list(index = j, par.id = par.id)
 }

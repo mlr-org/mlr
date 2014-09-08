@@ -64,15 +64,14 @@ trainLearner.classif.glmnet = function(.learner, .task, .subset, .weights = NULL
 #' @export
 predictLearner.classif.glmnet = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "prob"){
-    p = predict(.model$learner.model, newx = as.matrix(.newdata), type = "response", ...)
+    p = predict(.model$learner.model, newx = as.matrix(.newdata), type = "response",  ...)
     if (length(.model$task.desc$class.levels) == 2) {
-      p = cbind(1 - p, p)
-      colnames(p) = .model$task.desc$class.levels
+      p = setColNames(cbind(1 - p, p), .model$task.desc$class.levels)
     } else {
       p = p[,,1]
     }
   } else {
-    p = predict(.model$learner.model, newx = as.matrix(.newdata), type = "class", ...)[, 1L]
+    p = drop(predict(.model$learner.model, newx = as.matrix(.newdata), type = "class", ...))
     p = factor(p, .model$task.desc$class.levels)
   }
   p

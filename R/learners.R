@@ -4,6 +4,7 @@
 #'
 #' \itemize{
 #'   \item{\bold{classif.ada}}{\cr Boosting from ada package: \code{\link[ada]{ada}}}
+#'   \item{\bold{classif.bartMachine}}{\cr Bayesian additive regression trees from bartMachine package: \code{\link[bartMachine]{bartMachine}}}
 #'   \item{\bold{classif.boosting}}{\cr Boosting from adabag package: \code{\link[adabag]{boosting}}\cr
 #'     Note that \code{xval} has been set to 0 by default for speed.}
 #'   \item{\bold{classif.blackboost}}{\cr Gradient boosting with regression trees from mboost package: \code{\link[mboost]{blackboost}}}

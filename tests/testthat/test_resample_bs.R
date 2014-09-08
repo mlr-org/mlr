@@ -1,11 +1,11 @@
 context("resample: bs")
 
 test_that("bs instance works", {
-  rin = makeResampleInstance(makeResampleDesc("Bootstrap", iters=3), size=25)
-  
+  rin = makeResampleInstance(makeResampleDesc("Bootstrap", iters = 3), size = 25)
+
   iters = rin$desc$iters
   expect_equal(iters, 3)
-  
+
   for (i in 1:iters) {
     i1 = rin$train.inds[[i]]
     i2 = rin$test.inds[[i]]
@@ -22,13 +22,13 @@ test_that("bs instance works", {
 test_that("bs resampling works", {
   data = multiclass.df
   formula = multiclass.formula
-  parset = list(minsplit=12, cp=0.09)
-  
+  parset = list(minsplit = 12, cp = 0.09)
+
   tt = function(formula, data, subset) {
-    rpart(formula, data=data[subset,], minsplit=12, cp=0.09)
-  }  
+    rpart(formula, data = data[subset,], minsplit = 12, cp = 0.09)
+  }
   tp = function(model, newdata) {
-    predict(model, newdata, type="class")
-  }  
-  testBootstrap("classif.rpart", multiclass.df, multiclass.target, tune.train=tt, tune.predict=tp, parset=parset)
-})  
+    predict(model, newdata, type = "class")
+  }
+  testBootstrap("classif.rpart", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset = parset)
+})

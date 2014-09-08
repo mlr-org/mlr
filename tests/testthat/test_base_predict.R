@@ -81,3 +81,18 @@ test_that("predict works with newdata / subset", {
   p = predict(mod, newdata = multiclass.df, subset = 1:10)
   expect_equal(nrow(p$data), 10)
 })
+
+test_that("predict preserves rownames", {
+  data = multiclass.df
+  rownames(data) = nrow(data):1
+  task = makeClassifTask(data = data, target = multiclass.target)
+  # kknn (or its mlr intergration) seems to NOT preserve rownames, issue 142 was reported
+  mod = train("classif.kknn", task = task)
+  nd = data[1:2, ]
+  p = predict(mod, task = task, subset = 1:2)
+  expect_equal(rownames(as.data.frame(p)), as.character(c(nrow(data), nrow(data) - 1L)))
+  p = predict(mod, newdata = nd, subset = 2)
+  expect_equal(rownames(as.data.frame(p)), as.character(nrow(data) - 1L))
+})
+
+

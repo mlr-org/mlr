@@ -8,13 +8,25 @@ mlr_2.2
   control of dummy column creation
 - imputeMin and imputeMax now subtract or add a multiple of the range of
   the data from the minimum or to the maximum, respectively.
+- cluster methods now have property 'prob' when they support fuzzy cluster membership probabilities,
+  and also then support predict.type = 'prob'. Everything basically works the same as for posterior
+  probabilities in classif.* methods.
+- predict preserves the rownames of the input in its output
 
 - new learners:
+-- classif.bartMachine
 -- classif.lqa
 -- classif.randomForestSRC
 -- classif.sda
 -- regr.plsr
 -- regr.randomForestSRC
+-- cluster.cmeans
+-- cluster.kmeans
+-- cluster.Cobweb
+-- cluster.FarthestFirst
+
+- new filters:
+-- carscore
 
 - new functions
 -- makeMulticlassWrapper

@@ -7,9 +7,9 @@ test_that("regr_glmnet", {
     list(alpha = 0.7),
     list(s = 0.3)
   )
-  
+
   old.predicts.list = list()
-  
+
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     s = parset[["s"]]
@@ -22,12 +22,13 @@ test_that("regr_glmnet", {
     pars = list(x = as.matrix(x), y = y, family = "gaussian")
     pars = c(pars, parset)
     ctrl.args = names(formals(glmnet.control))
+    set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
       do.call(glmnet.control, pars[names(pars) %in% ctrl.args])
-      m = do.call(glmnet, pars[!names(pars) %in% ctrl.args])  
+      m = do.call(glmnet, pars[!names(pars) %in% ctrl.args])
       glmnet.control(factory = TRUE)
     } else {
-      m = do.call(glmnet, pars) 
+      m = do.call(glmnet, pars)
     }
     newx = regr.test[,-ind]
     newx$chas = as.numeric(newx$chas)

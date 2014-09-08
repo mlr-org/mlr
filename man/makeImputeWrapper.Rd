@@ -18,7 +18,7 @@ E.g. \code{list(numeric = imputeMedian())}.}
 
 \item{cols}{[\code{named list}]\cr
 Named list containing names of imputation methods to impute missing values
-in the data column referenced by the list element's name. Overwrites imputation set via
+in the data column referenced by the list element's name. Overrules imputation set via
 \code{classes}.}
 
 \item{dummy.cols}{[\code{character}]\cr

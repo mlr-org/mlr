@@ -1,0 +1,27 @@
+#' @export
+makeRLearner.cluster.FarthestFirst = function() {
+  makeRLearnerCluster(
+    cl = "cluster.FarthestFirst",
+    package = "RWeka",
+    par.set = makeParamSet(
+      makeIntegerLearnerParam(id = "N", default = 2L, lower = 1L),
+      makeIntegerLearnerParam(id = "S", default = 1L, lower = 1L)
+    ),
+    properties = c("numerics"),
+    name = "FarthestFirst clustering algorithm",
+    short.name = "FarthestFirst"
+  )
+}
+
+#' @export
+trainLearner.cluster.FarthestFirst = function(.learner, .task, .subset, .weights = NULL,  ...) {
+  ctrl = Weka_control(...)
+  FarthestFirst(getTaskData(.task, .subset), control = ctrl)
+}
+
+#' @export
+predictLearner.cluster.FarthestFirst = function(.learner, .model, .newdata, ...) {
+  # RWeka returns cluster indices (i.e. starting from 0, which some tools don't like
+  predict(.model$learner.model, .newdata, ...) + 1
+}
+

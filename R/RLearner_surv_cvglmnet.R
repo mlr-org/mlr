@@ -1,15 +1,16 @@
 #' @export
-makeRLearner.surv.glmnet = function() {
+makeRLearner.surv.cvglmnet = function() {
   makeRLearnerSurv(
-    cl = "surv.glmnet",
+    cl = "surv.cvglmnet",
     package = "glmnet",
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
-      makeNumericLearnerParam(id = "s", default = 0.01, lower = 0, upper = 1, when = "predict"),
+      makeIntegerLearnerParam(id = "nfolds", default = 10L, lower = 3L),
+      makeDiscreteLearnerParam(id = "type.measure", values = c("deviance"), default = "deviance"),
       makeLogicalLearnerParam(id = "exact", default = FALSE, when = "predict"),
+      makeDiscreteLearnerParam(id = "s", values = c("lambda.1se", "lambda.min"), default = "lambda.1se", when = "predict"),
       makeIntegerLearnerParam(id = "nlambda", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "lambda.min.ratio", lower = 0, upper = 1),
-      makeNumericVectorLearnerParam(id = "lambda"),
       makeLogicalLearnerParam(id = "standardize", default = TRUE),
       makeLogicalLearnerParam(id = "intercept", default = TRUE),
       makeNumericLearnerParam(id = "thresh", default = 1e-07, lower = 0),
@@ -31,17 +32,16 @@ makeRLearner.surv.glmnet = function() {
       makeIntegerLearnerParam(id = "mxit", default = 100, lower = 1)
     ),
     properties = c("numerics", "weights", "rcens"),
-    par.vals = list(s = 0.01),
-    name = "GLM with regularization",
-    short.name = "glmnet",
+    name = "GLM with regularization (cross validated lambda)",
+    short.name = "cvglmnet",
     note = ""
   )
 }
 
 #' @export
-trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.surv.cvglmnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "rcens")
-  args = c(list(x = as.matrix(d$data), y = d$target, family = "cox"), list(...))
+  args = c(list(x = as.matrix(d$data), y = d$target, family = "cox", parallel = FALSE), list(...))
   rm(d)
   if (!is.null(.weights))
     args$weights = .weights
@@ -54,11 +54,11 @@ trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights = NULL,  
     args = args[!is.ctrl.arg]
   }
 
-  do.call(glmnet, args)
+  do.call(cv.glmnet, args)
 }
 
 #' @export
-predictLearner.surv.glmnet = function(.learner, .model, .newdata, ...) {
+predictLearner.surv.cvglmnet = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response")
     return(as.numeric(predict(.model$learner.model, newx = as.matrix(.newdata), type = "link", ...)))
   stop("Unknown predict type")

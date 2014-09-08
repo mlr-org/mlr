@@ -3,16 +3,18 @@
 \alias{impute}
 \title{Impute and re-impute data}
 \usage{
-impute(data, target, classes = list(), cols = list(),
-  dummy.cols = character(0L), dummy.type = "factor",
-  impute.new.levels = TRUE, recode.factor.levels = TRUE)
+impute(data, target = character(0L), classes = list(), cols = list(),
+  dummy.classes = character(0L), dummy.cols = character(0L),
+  dummy.type = "factor", force.dummies = FALSE, impute.new.levels = TRUE,
+  recode.factor.levels = TRUE)
 }
 \arguments{
 \item{data}{[\code{data.frame}]\cr
 Input data.}
 
 \item{target}{[\code{character}]\cr
-Name of the column(s) specifying the response.}
+Name of the column(s) specifying the response.
+Default is \code{character(0)}.}
 
 \item{classes}{[\code{named list}]\cr
 Named list containing imputation techniques for classes of columns.
@@ -20,8 +22,12 @@ E.g. \code{list(numeric = imputeMedian())}.}
 
 \item{cols}{[\code{named list}]\cr
 Named list containing names of imputation methods to impute missing values
-in the data column referenced by the list element's name. Overwrites imputation set via
+in the data column referenced by the list element's name. Overrules imputation set via
 \code{classes}.}
+
+\item{dummy.classes}{[\code{character}]\cr
+Classes of columns to create dummy columns for.
+Default is \code{character(0)}.}
 
 \item{dummy.cols}{[\code{character}]\cr
 Column names to create dummy columns (containing binary missing indicator) for.
@@ -31,6 +37,13 @@ Default is \code{character(0)}.}
 How dummy columns are encoded. Either as 0/1 with type \dQuote{numeric}
 or as \dQuote{factor}.
 Default is \dQuote{factor}.}
+
+\item{force.dummies}{[\code{logical(1)}]\cr
+Force dummy creation even if the respective data column does not
+contain any NAs. Note that (a) most learners will complain about
+constant columns created this way but (b) your feature set might
+be stochastic if you turn this off.
+Default is \code{FALSE}.}
 
 \item{impute.new.levels}{[\code{logical(1)}]\cr
 If new, unencountered factor level occur during reimputation,

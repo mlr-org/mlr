@@ -18,7 +18,10 @@ todo.txt
 src/*.o
 src/*.so
 
+testinfo.RData
+
 ^.*\.Rproj$
 ^\.Rproj\.user$
 
 ^man-roxygen
+^.editorconfig$

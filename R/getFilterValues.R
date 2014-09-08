@@ -30,6 +30,8 @@
 #'     \code{\link[RWeka]{OneR}} assocation rule \cr
 #'   mRMR.classic               \tab R     \tab N     \tab
 #'     MRMR algorithm, see \code{\link[mRMRe]{mRMR.classic}} from \code{mRMRe} package \cr
+#'   carscore                   \tab R     \tab N     \tab
+#'     CAR score, see \code{\link[care]{carscore}} from \code{care} package \cr
 #' }
 #'
 #' @template arg_task
@@ -45,7 +47,7 @@ getFilterValues = function(task, method = "random.forest.importance", ...) {
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"))
   assertChoice(method, choices = listFilterMethods())
 
-  if (method %in% c("linear.correlation", "rank.correlation", "mRMR.classic")) {
+  if (method %in% c("linear.correlation", "rank.correlation", "mRMR.classic", "carscore")) {
     if (!inherits(task, "RegrTask") || (task$task.desc$n.feat["factors"] > 0L))
       stopf("Method '%s' can only be applied for a regression task with numerical data!", method)
   }
@@ -63,6 +65,12 @@ getFilterValues = function(task, method = "random.forest.importance", ...) {
 
     y = as.vector(scores(res)[[1]])
     ns = res@feature_names[as.vector(solutions(res)[[1]])]
+  } else if (method == "carscore") {
+    requirePackages("care", why = "getFilterValues")
+    target.ind = which(getTargetNames(task) == colnames(data))
+    y = carscore(Xtrain = data[, -target.ind], Ytrain = data[, target.ind], verbose = FALSE)
+    ns = names(y)
+    y = as.vector(y)
   } else {
     requirePackages("FSelector", why = "getFilterValues")
     fun = get(method, envir = getNamespace("FSelector"))

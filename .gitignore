@@ -8,3 +8,6 @@ src/*.so
 src/*.o
 .RData
 src/*.dll
+tests/testthat/Rplots.pdf
+testinfo.RData
+

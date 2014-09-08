@@ -17,7 +17,8 @@ Authors@R: c(person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role =
     person("Jakob", "Richter", email = "code@jakob-r.de", role = "aut"),
     person("Tobias", "Kuehn", email = "tobi.kuehn@gmx.de", role = "aut"),
     person("Erich", "Studerus", email = "erich.studerus@upkbs.ch", role =
-    "aut"))
+    "aut"), person("Lars", "Kotthoff", email =
+    "lars.kotthoff@insight-centre.org", role = "aut"))
 URL: https://github.com/berndbischl/mlr
 BugReports: https://github.com/berndbischl/mlr/issues
 License: BSD_3_clause + file LICENSE
@@ -36,8 +37,11 @@ Suggests:
     testthat,
     ada,
     adabag,
+    bartMachine,
+    care,
     caret,
     class,
+    clue,
     cluster,
     clusterSim,
     clValid,
