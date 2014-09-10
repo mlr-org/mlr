@@ -14,7 +14,8 @@ getAggrPerformances.BenchmarkResult = function(object) {
   learner.names = unname(lapply(object, names))
   df = data.frame(
     task = rep.int(task.names, viapply(learner.names, length)),
-    learner = unlist(learner.names)
+    learner = unlist(learner.names),
+    stringsAsFactors = FALSE
   )
   aggr = rowLapply(df, function(x) t(object[[x$task]][[x$learner]]$aggr))
   cbind(df, do.call(rbind, aggr))
