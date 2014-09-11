@@ -26,7 +26,7 @@ sampleBinaryClass = function(y, rate, cl, clreplace = TRUE, othreplace = TRUE, b
   # undersampling (cl = "max"): sampling of all inds of maxClass (but newsize <= max.size)
   # oversampling (cl = "min" and bagging = FALSE): take existing inds and sample add. inds with repl.
   # overbagging (cl = "min" and bagging = TRUE): sampling of all inds of minClass  
-  newinds1 = if(cl == "max" || bagging) { sample(inds1, newsize, replace = clreplace) 
+  newinds1 = if( (cl == "max") || bagging ) { sample(inds1, newsize, replace = clreplace) 
   } else { c(inds1, sample(inds1, newsize-length(inds1), replace = clreplace)) }
   newinds2 = sample(inds2, length(inds2), replace = othreplace)
   c(newinds1, newinds2)
