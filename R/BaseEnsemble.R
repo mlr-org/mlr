@@ -45,7 +45,7 @@ makeBaseEnsemble = function(id, name = id, short.name = id, base.learners, bls.t
     name = name,
     short.name = short.name,
     type = ens.type,
-    package = unique(extractSubList(base.learners, "package")),
+    package = unique(unlist(extractSubList(base.learners, "package"))),
     par.set = par.set.all,
     par.vals = par.vals,
     properties = Reduce(intersect, extractSubList(base.learners, "properties", simplify = FALSE)),
