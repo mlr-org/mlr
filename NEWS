@@ -12,6 +12,10 @@ mlr_2.2
   and also then support predict.type = 'prob'. Everything basically works the same as for posterior
   probabilities in classif.* methods.
 - predict preserves the rownames of the input in its output
+- fixed a bug in getAggrPerformances.BenchmarkResult that caused performance measures to be
+  extracted in a different order than the learner/task names. Thus, learner/task names in the
+  output of benchmark experiments sometimes did not correspond with the printed performance measures.
+- fixed a bug in createDummyFeatures that caused an error when the data contained missing values.
 
 - new learners:
 -- classif.bartMachine
