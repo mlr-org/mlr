@@ -3,7 +3,7 @@
 \alias{makeStackedLearner}
 \title{Create a stacked learner object}
 \usage{
-makeStackedLearner(base.learners, super.learner = NULL,
+makeStackedLearner(base.learners, super.learner = NULL, predict.type = NULL,
   method = "stack.nocv", use.feat = FALSE, resampling = NULL)
 }
 \arguments{
@@ -11,7 +11,7 @@ makeStackedLearner(base.learners, super.learner = NULL,
   A list of learners created with \code{makeLearner}.}
 
 \item{super.learner}{[\code{\link{Learner} | character(1)}]\cr
-  The super learner. If you pass a string the super learner will be created via \code{makeLearner}.
+  The super learner. If you pass a string, the super learner will be created via \code{makeLearner}.
   Not used for \code{method = 'average'}. Default is \code{NULL}.}
 
 \item{method}{[\code{character(1)}]\cr
