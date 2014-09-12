@@ -160,7 +160,7 @@ b632plus = makeAggregation(
       y1 = df2$truth
       y2 = df2$response
       grid = expand.grid(y1, y2, KEEP.OUT.ATTRS = FALSE)
-      pred2 = makePrediction(task.desc = pred$task.desc,
+      pred2 = makePrediction(task.desc = pred$task.desc, row.names = rownames(grid),
         id = NULL, truth = grid[, 1L], predict.type = "response", y = grid[, 2L],
         time = NA_real_)
       gamma = performance(pred2, measures = measure)
