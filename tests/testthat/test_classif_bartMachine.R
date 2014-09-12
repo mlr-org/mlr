@@ -3,8 +3,8 @@ context("classif_bartMachine")
 test_that("classif_bartMachine", {
   library(bartMachine)
   parset.list = list(
-    list(),
-    list(alpha = 0.8, num_trees = 25L)
+    list(num_burn_in = 20L, num_iterations_after_burn_in = 50L),
+    list(num_burn_in = 20L, num_iterations_after_burn_in = 50L, alpha = 0.8, num_trees = 25L)
   )
 
   old.predicts.list = list()
@@ -30,13 +30,14 @@ test_that("classif_bartMachine", {
     old.probs.list[[i]] = p2
   }
 
+  # FIXME:
   #Does not yet work because we can not yet set the seed for bartMachine, see
   #https://github.com/kapelner/bartMachine/issues/2
   #testSimpleParsets("classif.bartMachine", binaryclass.df, binaryclass.target, binaryclass.train.inds,
   #  old.predicts.list, parset.list)
   #testProbParsets ("classif.bartMachine", binaryclass.df, binaryclass.target, binaryclass.train.inds,
   #  old.probs.list, parset.list)
-  
+
   for(i in 1:length(parset.list)){
     expect_true(length(old.predicts.list[[i]]) == nrow(binaryclass.test))
     expect_true(length(old.probs.list[[i]]) == nrow(binaryclass.test))
