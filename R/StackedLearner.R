@@ -56,7 +56,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
     id = "stack",
     base.learners = base.learners,
     cl = "StackedLearner"
-    )
+  )
 
   # get predict.type from super learner or from predict.type
   if (!is.null(super.learner)) {
