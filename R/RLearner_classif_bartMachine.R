@@ -29,7 +29,6 @@ makeRLearner.classif.bartMachine = function() {
     name = "Bayesian Additive Regression Trees",
     short.name = "bartMachine",
     note = "The learner can handle missing values in features, but you need to actively switch that behavior on by setting e.g. 'use_missing_data'. See its doc page for further details."
-    "
   )
 }
 
