@@ -11,8 +11,22 @@ makeStackedLearner(base.learners, super.learner = NULL, predict.type = NULL,
 A list of learners created with \code{makeLearner}.}
 
 \item{super.learner}{[\code{\link{Learner} | character(1)}]\cr
-The super learner. If you pass a string, the super learner will be created via \code{makeLearner}.
+The super learner that makes the final prediction based on the base learners.
+If you pass a string, the super learner will be created via \code{makeLearner}.
 Not used for \code{method = 'average'}. Default is \code{NULL}.}
+
+\item{predict.type}{[\code{character(1)}]\cr
+Sets the type of the final prediction for \code{method = 'average'}.
+If the type of the base learner predictions is
+\describe{
+ \item{\code{"prob"}}{the final prediciton will be the average (for \code{predict.type = 'prob'},)
+ or the class with highest probability (for \code{predict.type = 'response'}).}
+ \item{\code{"response"}}{the final prediction will be the relative frequency based on
+ the predicted base learner classes (for \code{predict.type = 'prob'}). For
+ \code{predict.type = 'response'} the final prediction is based on majority vote of the
+ base learner predictions.}
+}
+For other methods, the predict type should be set within the \code{super.learner}.}
 
 \item{method}{[\code{character(1)}]\cr
 \dQuote{average} for averaging the predictions of the base learners,
@@ -33,5 +47,13 @@ The default \code{NULL} uses 5-fold CV.}
 \description{
 A stacked learner uses predictions of several base learners and fits
 a super learner using these predictions as features in order to predict the outcome.
+The following stacking methods are available:
+
+ \describe{
+  \item{\code{average}}{Averaging of base learner predictions without weights.}
+  \item{\code{stack.nocv}}{Fits the super learner, where in-sample predictions of the base learners are used.}
+  \item{\code{stack.cv}}{Fits the super learner, where the base learner predictions are computed
+  by crossvalidated predictions (the resampling strategy can be set via the \code{resampling} argument).}
+ }
 }
 
