@@ -18,17 +18,20 @@
 #'   If you pass a string, the super learner will be created via \code{makeLearner}.
 #'   Not used for \code{method = 'average'}. Default is \code{NULL}.
 #' @param predict.type [\code{character(1)}]\cr 
-#'   Sets the type of the final prediction for \code{method = 'average'}. 
-#'   If the type of the base learner predictions is  
+#'   Sets the type of the final prediction for \code{method = 'average'}.
+#'   For other methods, the predict type should be set within \code{super.learner}.
+#'   If the type of the base learner prediction, which is set up within \code{base.learners}), is
 #'   \describe{
-#'    \item{\code{"prob"}}{the final prediciton will be the average (for \code{predict.type = 'prob'},) 
-#'    or the class with highest probability (for \code{predict.type = 'response'}).}
-#'    \item{\code{"response"}}{the final prediction will be the relative frequency based on 
-#'    the predicted base learner classes (for \code{predict.type = 'prob'}). For
-#'    \code{predict.type = 'response'} the final prediction is based on majority vote of the 
-#'    base learner predictions.}
+#'    \item{\code{"prob"}}{then \code{predict.type = 'prob'} will use the average of all 
+#'    bease learner predictions and \code{predict.type = 'response'} will use
+#'    the class with highest probability as final prediction.}
+#'    \item{\code{"response"}}{then, for classification tasks with \code{predict.type = 'prob'},
+#'    the final prediction will be the relative frequency based on the predicted base learner classes 
+#'    and classification tasks with \code{predict.type = 'response'} will use majority vote of the base
+#'    learner predictions to determine the final prediction.
+#'    For regression tasks, the final prediction will be the average of the base learner predictions.}
 #'   }
-#'   For other methods, the predict type should be set within the \code{super.learner}.
+#'   
 #' @param method [\code{character(1)}]\cr
 #'   \dQuote{average} for averaging the predictions of the base learners,
 #'   \dQuote{stack.nocv} for building a super learner using the predictions of the base learners and
@@ -98,12 +101,14 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
 # Returns predictions for each base learner (depending on selected method)
 # FIXME: I am not happy with this function, but don't know how to make it better.
 #'
-#' @title Get predictions of base learners.
+#' @title Returns the predictions for each base learner.
 #' 
-#' @description Get predictions of base learners.
+#' @description Returns the predictions for each base learner.
 #' 
 #' @param model [\code{WrappedModel}]\cr Wrapped model, result of train.
-#' @param newdata [\code{data.frame}]\cr New observations which should be predicted.
+#' @param newdata [\code{data.frame}]\cr 
+#' New observations, for which the predictions using the specified base learners should be returned. 
+#' Default is \code{NULL} and extracts the base learner predictions that were made during the training. 
 #' 
 #' @details None.
 #' 
@@ -118,7 +123,7 @@ getBaseLearnerPredictions = function(model, newdata = NULL) {
     probs = model$learner.model$pred.train
   } else {
     if (model == "stack.cv") 
-      warning("Crossvalidated predictions for new data are not possible for this method")
+      warning("Crossvalidated predictions for new data is not possible for this method.")
     # predict prob vectors with each base model
     probs = vector("list", length(bms))
     for (i in seq_along(bms)) {
@@ -165,7 +170,6 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
 
   # predict prob vectors with each base model
-  # FIXME: does this work correctly for CV-methods?
   probs = getBaseLearnerPredictions(model = .model, newdata = .newdata)
 
   if (.learner$method == "average") {

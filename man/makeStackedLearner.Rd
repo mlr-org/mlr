@@ -16,17 +16,19 @@ If you pass a string, the super learner will be created via \code{makeLearner}.
 Not used for \code{method = 'average'}. Default is \code{NULL}.}
 
 \item{predict.type}{[\code{character(1)}]\cr
-Sets the type of the final prediction for \code{method = 'average'}.
-If the type of the base learner predictions is
-\describe{
- \item{\code{"prob"}}{the final prediciton will be the average (for \code{predict.type = 'prob'},)
- or the class with highest probability (for \code{predict.type = 'response'}).}
- \item{\code{"response"}}{the final prediction will be the relative frequency based on
- the predicted base learner classes (for \code{predict.type = 'prob'}). For
- \code{predict.type = 'response'} the final prediction is based on majority vote of the
- base learner predictions.}
-}
-For other methods, the predict type should be set within the \code{super.learner}.}
+  Sets the type of the final prediction for \code{method = 'average'}.
+  For other methods, the predict type should be set within \code{super.learner}.
+  If the type of the base learner prediction, which is set up within \code{base.learners}), is
+  \describe{
+   \item{\code{"prob"}}{then \code{predict.type = 'prob'} will use the average of all
+   bease learner predictions and \code{predict.type = 'response'} will use
+   the class with highest probability as final prediction.}
+   \item{\code{"response"}}{then, for classification tasks with \code{predict.type = 'prob'},
+   the final prediction will be the relative frequency based on the predicted base learner classes
+   and classification tasks with \code{predict.type = 'response'} will use majority vote of the base
+   learner predictions to determine the final prediction.
+   For regression tasks, the final prediction will be the average of the base learner predictions.}
+  }}
 
 \item{method}{[\code{character(1)}]\cr
 \dQuote{average} for averaging the predictions of the base learners,
