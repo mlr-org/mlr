@@ -32,6 +32,8 @@ mlr_2.2
 
 - new filters:
 -- carscore
+-- randomForestSRC.importance
+-- randomForestSRC.minimal.depth
 
 - new functions
 -- makeMulticlassWrapper

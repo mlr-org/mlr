@@ -4,33 +4,37 @@
 #' Calculates numerical filter values for all features.
 #' Look at package \code{\link[FSelector]{FSelector}} for details on the filter algorithms.
 #'
-#' Currently only supports classification (C) and regression (R). Allowed feature types are abbreviated
-#' in table as numerics (N) and factors (F).
+#' Currently only supports classification (C), regression (R) and survival (S) tasks. Allowed
+#' feature types are abbreviated in table as numerics (N) and factors (F).
 #'
 #' Available \code{method}s are:
 #' \tabular{llll}{
-#'   Method                     \tab Tasks \tab Feats \tab Description \cr
-#'   linear.correlation         \tab R     \tab N     \tab
+#'   Method                      \tab Tasks \tab Feats \tab Description \cr
+#'   linear.correlation           \tab R     \tab N     \tab
 #'     Pearson's correlation between feature and target \cr
-#'   rank.correlation           \tab R     \tab N     \tab
+#'   rank.correlation             \tab R     \tab N     \tab
 #'     Spearman's correlation between feature and target \cr
-#'   information.gain           \tab C,R   \tab N,F   \tab
+#'   information.gain             \tab C,R   \tab N,F   \tab
 #'     Entropy-based information gain between feature and target \cr
-#'   gain.ratio                 \tab C,R   \tab N,F   \tab
+#'   gain.ratio                   \tab C,R   \tab N,F   \tab
 #'     Entropy-based gain ratio between feature and target \cr
-#'   symmetrical.uncertainty    \tab C,R   \tab N,F   \tab
+#'   symmetrical.uncertainty      \tab C,R   \tab N,F   \tab
 #'     Entropy-based symmetrical uncertainty between feature and target \cr
-#'   chi.squared                \tab C,R   \tab N,F   \tab
+#'   chi.squared                  \tab C,R   \tab N,F   \tab
 #'     Chi-squared statistic of independence between feature and target \cr
-#'   random.forest.importance   \tab C,R   \tab N,F   \tab
+#'   random.forest.importance     \tab C,R   \tab N,F   \tab
 #'     See \code{\link[randomForest]{importance}} \cr
-#'   relief                     \tab C,R   \tab N,F   \tab
+#'   randomForstSRC.importance    \tab C,R,S \tab N,F   \tab
+#'     See \code{\link[randomForestSRC]{vimp}} \cr
+#'   randomForstSRC.minimal.depth \tab C,R,S \tab N,F   \tab
+#'     See \code{\link[randomForestSRC]{var.select}} \cr
+#'   relief                       \tab C,R   \tab N,F   \tab
 #'     RELIEF algorithm \cr
-#'   oneR                       \tab C,R   \tab N,F   \tab
+#'   oneR                         \tab C,R   \tab N,F   \tab
 #'     \code{\link[RWeka]{OneR}} assocation rule \cr
-#'   mRMR.classic               \tab R     \tab N     \tab
+#'   mRMR.classic                 \tab R     \tab N     \tab
 #'     MRMR algorithm, see \code{\link[mRMRe]{mRMR.classic}} from \code{mRMRe} package \cr
-#'   carscore                   \tab R     \tab N     \tab
+#'   carscore                     \tab R     \tab N     \tab
 #'     CAR score, see \code{\link[care]{carscore}} from \code{care} package \cr
 #' }
 #'
@@ -44,12 +48,15 @@
 #' @family filter
 #' @export
 getFilterValues = function(task, method = "random.forest.importance", ...) {
-  assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"))
+  assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
   assertChoice(method, choices = listFilterMethods())
 
   if (method %in% c("linear.correlation", "rank.correlation", "mRMR.classic", "carscore")) {
     if (!inherits(task, "RegrTask") || (task$task.desc$n.feat["factors"] > 0L))
       stopf("Method '%s' can only be applied for a regression task with numerical data!", method)
+  }
+  if (!grepl('randomForestSRC', method) & inherits(task, "SurvTask")) {
+     stopf("Method '%s' can not be applied for a survival task!", method)
   }
 
   data = getTaskData(task)
@@ -71,6 +78,21 @@ getFilterValues = function(task, method = "random.forest.importance", ...) {
     y = carscore(Xtrain = data[, -target.ind], Ytrain = data[, target.ind], verbose = FALSE)
     ns = names(y)
     y = as.vector(y)
+  } else if (method == "randomForestSRC.importance"){
+    requirePackages("randomForestSRC", why = "getFilterValues")
+    im = rfsrc(getTaskFormula(task), data = data, proximity = FALSE, forest = FALSE, ...)$importance
+    if (inherits(task, "ClassifTask")) {
+      ns = rownames(im)
+      y = im[,"all"] 
+    } else {
+      ns = names(im)
+      y = unname(im)
+    }
+  } else if (method == "randomForestSRC.minimal.depth"){
+    requirePackages("randomForestSRC", why = "getFilterValues")
+    im = var.select(getTaskFormula(task), data, method = "md", verbose = FALSE)$md.obj$order
+    ns = rownames(im)
+    y = -im[,1]
   } else {
     requirePackages("FSelector", why = "getFilterValues")
     fun = get(method, envir = getNamespace("FSelector"))

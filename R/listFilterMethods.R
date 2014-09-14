@@ -12,6 +12,8 @@ listFilterMethods = function() {
     "symmetrical.uncertainty",
     "chi.squared",
     "random.forest.importance",
+    "randomForestSRC.importance",
+    "randomForestSRC.minimal.depth",
     "relief",
     "oneR",
     "mRMR.classic",
