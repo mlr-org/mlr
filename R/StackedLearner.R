@@ -101,8 +101,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
   return(lrn)
 }
 
-# Returns predictions for each base learner (depending on selected method)
-# FIXME: I am not happy with this function, but don't know how to make it better.
+# FIXME: see FIXME in predict.StackedLearner I don't know how to make it better.
 #'
 #' @title Returns the predictions for each base learner.
 #' 
@@ -155,6 +154,8 @@ trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
   )
 }
 
+# FIXME: if newdata is the same data that was also used by training, then getBaseLearnerPrediction 
+# won't use the crossvalidated predictions (for method = "stack.cv").
 #' @export
 predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
   use.feat = .model$learner$use.feat
