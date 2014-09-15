@@ -61,6 +61,9 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
   assertClass(resampling, "ResampleDesc")
 
   pts = unique(extractSubList(base.learners, "predict.type"))
+  if ("se"%in%pts | (!is.null(predict.type) && predict.type == "se") | 
+        (!is.null(super.learner) && super.learner$predict.type == "se"))
+    stop("Predicting standard errors currently not supported.")
   if (length(pts) > 1L)
     stop("Base learner must all have the same predict type!")
   if (method == "average" & (!is.null(super.learner) | is.null(predict.type)) )
