@@ -380,8 +380,9 @@ makeSuperLearnerTask = function(learner, data, target) {
 # - document + test + export
 # - benchmark stuff on openml
 # - allow base.learners to be character of learners (not only list of learners)
+# - rename 'probs' in code into 'preds'
+# - allow option to remove predictions for one class in multiclass tasks (to avoid collinearity)
 # - DONE: return predictions from each single base learner
-# - rename probs into preds
 # - DONE: allow predict.type = "response" for classif using majority vote (for super learner predict type "response")
 #   and using average for super learner predict type "prob".
 # - DONE: add option to use normal features in super learner
