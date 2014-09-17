@@ -1,6 +1,6 @@
 #' Display all possible hyperparameter settings for a learner that mlr knows.
 #'
-#' Useful for a quick overview, also does not foce you to create the learner.
+#' Useful for a quick overview, also does not force you to create the learner.
 #' @template arg_learner
 #' @template ret_inv_null
 #' @family learner
