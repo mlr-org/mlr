@@ -16,6 +16,9 @@ mlr_2.2
   extracted in a different order than the learner/task names. Thus, learner/task names in the
   output of benchmark experiments sometimes did not correspond with the printed performance measures.
 - fixed a bug in createDummyFeatures that caused an error when the data contained missing values.
+- extension to smote algorithm (sampling): minority class observations in binary classification
+  are either chosen via sampling or alternatively, each minority class observation is used an
+  equal number of times
 
 - new learners:
 -- classif.bartMachine
