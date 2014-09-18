@@ -14,7 +14,7 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 [\code{invisible(NULL)}].
 }
 \description{
-Useful for a quick overview, also does not foce you to create the learner.
+Useful for a quick overview, also does not force you to create the learner.
 }
 \seealso{
 Other learner: \code{\link{getHyperPars}};

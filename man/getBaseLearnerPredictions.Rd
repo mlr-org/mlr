@@ -17,5 +17,7 @@ Returns the predictions for each base learner.
 }
 \details{
 
+
+None.
 }
 
