@@ -41,13 +41,13 @@ test_that("smote works with only factor features",  {
   d = data.frame(
     x1 = sample(c("a", "b"), n, replace = TRUE),
     x2 = sample(c("a", "b"), n, replace = TRUE),
-    y = sample(c("a", "b"), n, replace = TRUE)
+    y = c(rep("a",2),rep("b",8))
   )
   task = makeClassifTask(data = d, target = "y")
-  task2 = smote(task, rate = 1.2, nn = 2L)
+  task2 = smote(task, rate = 1.4, nn = 2L)
   expect_equal(task2$task.desc$size, 11)
   task3 = smote(task, rate = 2, nn = 2L, useAltLogic = TRUE)
-  expect_equal(task3$task.desc$size, 15)
+  expect_equal(task3$task.desc$size, 12)
 })
 
 test_that("smote wrapper",  {
