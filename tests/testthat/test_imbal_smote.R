@@ -16,6 +16,8 @@ test_that("smote works",  {
   )
   task = makeClassifTask(data = d, target = "y")
   expect_error(smote(task, rate = 2), "minimal class has size 3")
+  expect_error(smote(task, rate = 2, standardize = TRUE), "minimal class has size 3")
+  expect_error(smote(task, rate = 2, useAltLogic = TRUE), "minimal class has size 3")
 })
 
 test_that("smote works with rate 1 (no new examples)",  {
@@ -26,9 +28,15 @@ test_that("smote works with rate 1 (no new examples)",  {
   tab2 = table(df[, binaryclass.target])
   expect_equal(tab2["M"], tab1["M"])
   expect_equal(tab2["R"], tab1["R"])
+  
+  taskAlt = smote(binaryclass.task, rate = 1, useAltLogic = TRUE)
+  dfAlt = getTaskData(taskAlt)
+  tab2Alt = table(dfAlt[, binaryclass.target])
+  expect_equal(tab2Alt["M"], tab1["M"])
+  expect_equal(tab2Alt["R"], tab1["R"])
 })
 
-test_that("smote works with only factor fetaures",  {
+test_that("smote works with only factor features",  {
   n = 10
   d = data.frame(
     x1 = sample(c("a", "b"), n, replace = TRUE),
@@ -38,6 +46,8 @@ test_that("smote works with only factor fetaures",  {
   task = makeClassifTask(data = d, target = "y")
   task2 = smote(task, rate = 1.2, nn = 2L)
   expect_equal(task2$task.desc$size, 11)
+  task3 = smote(task, rate = 2, nn = 2L, useAltLogic = TRUE)
+  expect_equal(task3$task.desc$size, 15)
 })
 
 test_that("smote wrapper",  {
@@ -45,5 +55,11 @@ test_that("smote wrapper",  {
   lrn1 = makeLearner("classif.rpart")
   lrn2 = makeSMOTEWrapper(lrn1, sw.rate = 2)
   r = resample(lrn2, binaryclass.task, rdesc)
-  expect_true(!is.na(r$aggr))
+  expect_true(!is.na(r$aggr))  
+  lrn3 = makeSMOTEWrapper(lrn1, sw.rate = 2, sw.standardize = TRUE)
+  r = resample(lrn3, binaryclass.task, rdesc)
+  expect_true(!is.na(r$aggr))  
+  lrn4 = makeSMOTEWrapper(lrn1, sw.rate = 2, sw.useAltLogic = TRUE)
+  r = resample(lrn4, binaryclass.task, rdesc)
+  expect_true(!is.na(r$aggr))  
 })

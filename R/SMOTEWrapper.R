@@ -18,7 +18,9 @@
 #'   Default is 5.
 #' @template ret_learner
 #' @export
-makeSMOTEWrapper = function(learner, sw.rate = 1, sw.nn = 5L) {
+makeSMOTEWrapper = function(learner, sw.rate = 1, sw.nn = 5L, 
+  sw.standardize = TRUE, sw.useAltLogic = FALSE) {
+  
   learner = checkLearner(learner, "classif")
   pv = list()
   if (!missing(sw.rate)) {
@@ -29,20 +31,28 @@ makeSMOTEWrapper = function(learner, sw.rate = 1, sw.nn = 5L) {
     sw.nn = asCount(sw.nn, positive = TRUE)
     pv$sw.nn = sw.nn
   }
-  id = paste(learner$id, "undersampled", sep = ".")
+  if (!missing(sw.standardize)) {
+    pv$sw.standardize = sw.standardize
+  }
+  if (!missing(sw.useAltLogic)) {
+    pv$sw.useAltLogic = sw.useAltLogic
+  }
+  id = paste(learner$id, "smoted", sep = ".")
   ps = makeParamSet(
     makeNumericLearnerParam(id = "sw.rate", lower = 1),
-    makeIntegerLearnerParam(id = "sw.nn", lower = 1L)
+    makeIntegerLearnerParam(id = "sw.nn", lower = 1L),
+    makeLogicalLearnerParam(id = "sw.standardize"),
+    makeLogicalLearnerParam(id = "sw.useAltLogic")
   )
   makeBaseWrapper(id, learner, package = learner$package, par.set = ps, par.vals = pv, cl = "SMOTEWrapper")
 }
 
 #' @export
-trainLearner.SMOTEWrapper = function(.learner, .task, .subset, .weights = NULL, sw.rate = 1, ...) {
+trainLearner.SMOTEWrapper = function(.learner, .task, .subset, .weights = NULL, sw.rate = 1,
+  sw.standardize = TRUE, sw.useAltLogic = FALSE, ...) {
+  
   .task = subsetTask(.task, .subset)
-  .task = smote(.task, rate = sw.rate)
+  .task = smote(.task, rate = sw.rate, standardize = sw.standardize, useAltLogic = sw.useAltLogic)  
   m = train(.learner$next.learner, .task, weights = .weights)
   makeChainModel(next.model = m, cl = "SMOTEModel")
 }
-
-
