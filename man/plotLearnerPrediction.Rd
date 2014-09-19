@@ -77,7 +77,7 @@ For regression, 1D and 2D plots are supported. 1D shows the data, the estimated 
 the estimated standard error. 2D does not show estimated standard error,
 but only the estimated mean via background color.
 
-The plot title displays the model id, its parameters, the test training performance
+The plot title displays the model id, its parameters, the training performance
 and the cross-validation performance.
 }
 

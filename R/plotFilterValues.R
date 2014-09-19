@@ -1,7 +1,7 @@
 #' Plot filter values.
 #'
 #' @param fvalues [\code{\link{FilterValues}}]\cr
-#'   Filtr values.
+#'   Filter values.
 #' @param sort [\code{character(1)}]\cr
 #'   Sort features like this.
 #'   \dQuote{dec} = decreasing, \dQuote{inc} = increasing, \dQuote{none} = no sorting.

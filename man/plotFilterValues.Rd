@@ -8,7 +8,7 @@ plotFilterValues(fvalues, sort = "dec", n.show = 20L,
 }
 \arguments{
 \item{fvalues}{[\code{\link{FilterValues}}]\cr
-Filtr values.}
+Filter values.}
 
 \item{sort}{[\code{character(1)}]\cr
 Sort features like this.

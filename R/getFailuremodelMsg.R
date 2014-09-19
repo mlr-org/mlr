@@ -4,7 +4,7 @@
 #' Such a model is created when one sets the corresponding option in \code{\link{configureMlr}}.
 #' If no failure occurred, \code{NA} is returned.
 #'
-#' For complex wrappers this getter returns the first error essage encountered in ANY model that failed.
+#' For complex wrappers this getter returns the first error message encountered in ANY model that failed.
 #'
 #' @template arg_wrappedmod
 #' @return [\code{character(1)}].
