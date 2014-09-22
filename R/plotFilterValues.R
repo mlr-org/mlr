@@ -25,7 +25,7 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
   n.show = asCount(n.show)
 
   data = fvalues$data
-  n.show = min(n.show, sum(!is.na(scores)))
+  n.show = min(n.show, sum(!is.na(data$val)))
   if (sort != "none")
     data = head(sortByCol(data, "val", asc = (sort == "inc")), n.show)
 

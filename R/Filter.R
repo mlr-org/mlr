@@ -17,7 +17,7 @@ getFilterRegister = function() {
 #'  Source package where the filter is implemented.
 #' @param supported.tasks [\code{character}]\cr
 #'  Task types supported.
-#' @param supported.tasks [\code{character}]\cr
+#' @param supported.features [\code{character}]\cr
 #'  Feature types supported.
 #' @param fun [\code{function(task, nselect, ...}]\cr
 #'  Function which takes a task and returns a named numeric vector of scores,

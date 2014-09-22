@@ -18,6 +18,9 @@ Source package where the filter is implemented.}
 \item{supported.tasks}{[\code{character}]\cr
 Task types supported.}
 
+\item{supported.features}{[\code{character}]\cr
+Feature types supported.}
+
 \item{fun}{[\code{function(task, nselect, ...}]\cr
 Function which takes a task and returns a named numeric vector of scores,
 one score for each feature of \code{task}.
@@ -25,9 +28,6 @@ Higher scores mean higher importance of the feature.
 At least \code{nselect} features must be calculated, the remaining may be
 set to \code{NA} or omitted, and thus will not be selected.
 the original order will be restored if necessary.}
-
-\item{supported.tasks}{[\code{character}]\cr
-Feature types supported.}
 }
 \value{
 Object of class \dQuote{Filter}.

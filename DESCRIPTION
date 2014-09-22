@@ -11,7 +11,7 @@ Description: Interface to a large number of classification and regression
     allowing for easy nested resampling. Most operations can be parallelized.
 Authors@R: c(person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role =
     c("aut", "cre")), person("Michel", "Lang", email =
-    "lang@statistik.tu-dortmund.de", role = "aut"), person("Jakob", "Bossek",
+    "michellang@gmail.com", role = "aut"), person("Jakob", "Bossek",
     email = "jakob.bossek@tu-dortmund.de", role = "aut"), person("Leonard",
     "Judt", email = "leonard.judt@tu-dortmund.de", role = "aut"),
     person("Jakob", "Richter", email = "code@jakob-r.de", role = "aut"),
@@ -22,6 +22,7 @@ Authors@R: c(person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role =
 URL: https://github.com/berndbischl/mlr
 BugReports: https://github.com/berndbischl/mlr/issues
 License: BSD_3_clause + file LICENSE
+Encoding: UTF-8
 Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 3.0.0),

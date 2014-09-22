@@ -112,7 +112,7 @@ NULL
 #'   The cost matrix was generated artificially following
 #'
 #'   Tu, H.-H. and Lin, H.-T. (2010), One-sided support vector regression for multiclass cost-sensitive classification.
-#'   In ICML, J. Fürnkranz and T. Joachims, Eds., Omnipress, 1095--1102. 
+#'   In ICML, J. Fürnkranz and T. Joachims, Eds., Omnipress, 1095--1102.
 #' @keywords data
 #' @docType data
 NULL
