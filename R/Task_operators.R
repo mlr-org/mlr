@@ -26,7 +26,7 @@ getTaskFeatureNames = function(task) {
   setdiff(colnames(task$env$data), task$task.desc$target)
 }
 
-#' Get number of feature in task.
+#' Get number of features in task.
 #'
 #' @template arg_task
 #' @return [\code{integer(1)}].

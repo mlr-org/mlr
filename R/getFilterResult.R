@@ -24,4 +24,3 @@ getFilterResult.WrappedModel = function(object) {
 getFilterResult.BenchmarkResult = function(object) {
   getExtract(object, "FilterResult")
 }
-
