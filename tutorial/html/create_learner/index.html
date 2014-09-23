@@ -110,7 +110,7 @@
                             </li>
                         
                             <li >
-                                <a href="../wrapper/">Wrapper</a>
+                                <a href="../wrapper/">Wrapped Learners</a>
                             </li>
                         
                             <li >
@@ -130,7 +130,7 @@
                             </li>
                         
                             <li >
-                                <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                                <a href="../over_and_undersampling/">Imbalanced Classification Problems</a>
                             </li>
                         
                             <li >
@@ -168,7 +168,7 @@
                             </li>
                         
                             <li >
-                                <a href="../measures/">Performance Measures</a>
+                                <a href="../measures/">Implemented Performance Measures</a>
                             </li>
                         
                         </ul>
@@ -229,32 +229,44 @@
 
 <h1 id="integrating-another-learner">Integrating another learner</h1>
 <p>In order to create a new learner in <strong>mlr</strong>, interface code to the <strong>R</strong> function must be written.
-This can be done by either inheriting from <code>rlearner.classif</code>, <code>rlearner.regr</code>, <code>rlearner.surv</code>, <code>rlearner.costsens</code>, or <code>rlearner.cluster</code>.
-Below, an example of how the Linear Discriminant Analysis from <code>MASS</code> package has been integrated into the classification learner <code>classif.lda</code> in <strong>mlr</strong> is shown.</p>
+This can be done by either inheriting from <code>rlearner.classif</code>, <code>rlearner.regr</code>, <code>rlearner.surv</code>, 
+<code>rlearner.costsens</code>, or <code>rlearner.cluster</code>.</p>
+<p>Below, an example of how the <a href="http://www.rdocumentation.org/packages/MASS/functions/lda.html">Linear Discriminant Analysis</a> from package 
+<a href="http://www.rdocumentation.org/packages/MASS">MASS</a>
+has been integrated into the classification learner <code>classif.lda</code> in <strong>mlr</strong> is shown.</p>
 <h2 id="initialization">Initialization</h2>
-<p>For initialization, all the information you need is the name of the learner, its package, the parameter set, and the set of properties of your learner.</p>
-<p>First, name your learner. The naming conventions in <strong>mlr</strong> are <code>classif.&lt;R_method_name&gt;</code> for classification, <code>regr.&lt;R_method_name&gt;</code> for regression, <code>surv.&lt;R_method_name&gt;</code> for survival analysis, <code>costsens.&lt;R_method_name&gt;</code> for cost sensitive learning, and <code>cluster.&lt;R_method_name&gt;</code> for clustering.
-Second, use <a href="&amp;LearnerParam">makeDiscreteLearnerParam</a> and <a href="http://www.rdocumentation.org/packages/mlr/functions/LearnerParam.html">makeNumericLearnerParam</a> to incorporate the complete description of the parameters.
-Include all possible values for discrete parameters and lower and upper bounds for numeric parameters.
-Add information for the properties (see also the section about <a href="../learner/">Learners</a>).
+<p>For initialization, all the information you need is the name of the learner, its package, 
+the parameter set, and the set of properties of your learner.</p>
+<p>First, name your learner. The naming conventions in <strong>mlr</strong> are <code>classif.&lt;R_method_name&gt;</code> 
+for classification, <code>regr.&lt;R_method_name&gt;</code> for regression, <code>surv.&lt;R_method_name&gt;</code> for 
+survival analysis, <code>costsens.&lt;R_method_name&gt;</code> for cost sensitive learning, 
+and <code>cluster.&lt;R_method_name&gt;</code> for clustering.</p>
+<p>Second, use <a href="http://www.rdocumentation.org/packages/ParamHelpers/functions/LearnerParam.html">makeDiscreteLearnerParam</a> and 
+<a href="http://www.rdocumentation.org/packages/ParamHelpers/functions/LearnerParam.html">makeNumericLearnerParam</a> to incorporate the complete description 
+of the parameters.
+Include all possible values for discrete parameters and lower and upper bounds for numeric parameters.</p>
+<p>Add information for the properties (see also the section about <a href="../learner/">Learners</a>).
 Which types of predictors that are supported (numerics, factors)?
-Are case weights supported? Can the method deal with missing values in the features and deal with NAs in a meaningful way (not <code>na.omit</code>)?
+Are case weights supported? Can the method deal with missing values in the features and deal 
+with NAs in a meaningful way (not <code>na.omit</code>)?
 Are one-class, two-class, multi-class problems supported?
 Can the learner predict posterior probabilities?
 In the regression case, you do not need to take care of the latter properties.
 For the other types of learners, not all of these properties are relevant.</p>
 <p>In the following example, you see the <strong>R</strong> code for Linear Discriminant Analysis.
-The name is <code>"classif.lda"</code> from the package <code>MASS</code>. LDA has one discrete parameter, <code>method</code>, and two continuous ones, <code>nu</code> and <code>tol</code>.
-It supports classification problems with two or more classes and can deal with numeric and factor explanatory variables.
+The name is <code>"classif.lda"</code> from the package <a href="http://www.rdocumentation.org/packages/MASS">MASS</a>. 
+LDA has one discrete parameter, <code>method</code>, and two continuous ones, <code>nu</code> and <code>tol</code>.
+It supports classification problems with two or more classes and can deal with numeric 
+and factor explanatory variables.
 It can predict posterior probabilities.</p>
 <pre class="prettyprint well"><code class="r">makeRLearner.classif.lda = function() {
   makeRLearnerClassif(
     cl = &quot;classif.lda&quot;,
     package = &quot;MASS&quot;,
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id=&quot;method&quot;, default=&quot;moment&quot;, values=c(&quot;moment&quot;, &quot;mle&quot;, &quot;mve&quot;, &quot;t&quot;)),
-      makeNumericLearnerParam(id=&quot;nu&quot;, lower=2, requires=expression(method==&quot;t&quot;)),
-      makeNumericLearnerParam(id=&quot;tol&quot;, default=1.0e-4, lower=0)
+      makeDiscreteLearnerParam(id = &quot;method&quot;, default = &quot;moment&quot;, values = c(&quot;moment&quot;, &quot;mle&quot;, &quot;mve&quot;, &quot;t&quot;)),
+      makeNumericLearnerParam(id = &quot;nu&quot;, lower = 2, requires = expression(method == &quot;t&quot;)),
+      makeNumericLearnerParam(id = &quot;tol&quot;, default = 1.0e-4, lower = 0)
     ),
     twoclass = TRUE,
     multiclass = TRUE,
@@ -275,20 +287,23 @@ The data can be extracted from the task via the <a href="http://www.rdocumentati
 Pass further arguments like case weights via <code>.weights</code> to the training method.</p>
 <pre class="prettyprint well"><code class="r">trainLearner.classif.lda = function(.learner, .task, .subset, .weights,  ...) {
   f = getTaskFormula(.task)
-  lda(f, data=getTaskData(.task, .subset), ...)
+  lda(f, data = getTaskData(.task, .subset), ...)
 }
 </code></pre>
 
 <h2 id="creating-the-prediction-method">Creating the prediction method</h2>
 <p>This must predict for the new observations in the <code>data.frame</code> <code>.newdata</code> with the wrapped model <code>.model</code>.
-Simply access the real fitted model by <code>.model$learner.model</code>.
-For regression you have to return a numeric vector of predicted response values.
-For classification you have to return a factor of predicted classes if <code>.learner$predict.type</code> is <code>"response"</code>, or you have return a matrix of predicted probabilities if
+Simply access the real fitted model by <code>.model$learner.model</code>.</p>
+<p>For regression you have to return a numeric vector of predicted response values.</p>
+<p>For classification you have to return a factor of predicted classes if <code>.learner$predict.type</code> 
+is <code>"response"</code>, or you have return a matrix of predicted probabilities if
 <code>.learner$predict.type</code> is <code>"prob"</code>.
-In the latter case the matrix must have the same number of columns as there are classes in the task and the columns have to be named by the class names.
-For clustering, you have to return a numeric vector with the IDs of the clusters that the respective datum has been assigned to.</p>
+In the latter case the matrix must have the same number of columns as there are classes in 
+the task and the columns have to be named by the class names.</p>
+<p>For clustering, you have to return a numeric vector with the IDs of the clusters that the 
+respective datum has been assigned to.</p>
 <pre class="prettyprint well"><code class="r">predictLearner.classif.lda = function(.learner, .model, .newdata, ...) {
-  p = predict(.model$learner.model, newdata=.newdata, ...)
+  p = predict(.model$learner.model, newdata = .newdata, ...)
   if(.learner$predict.type == &quot;response&quot;)
     return(p$class)
   else
