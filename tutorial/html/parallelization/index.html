@@ -227,7 +227,7 @@ With the integration of <a href="https://github.com/berndbischl/parallelMap">par
 <strong>mlr</strong>, it becomes easy to activate the parallel computing capabilities already
 supported by <strong>mlr</strong>.</p>
 <p>All you have to do is select an interface by calling one of the
-<a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart&lt;*&gt;</a> functions.
+<a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart*</a> functions.
 The first annotated loop <strong>mlr</strong> encounters will then be automatically parallelized.
 Afterwards it is good practice to call <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStop.html">parallelStop</a>.</p>
 <pre class="prettyprint well"><code class="r">library(&quot;parallelMap&quot;)
@@ -257,7 +257,7 @@ We offer different parallelization levels for fine grain control over the parall
 E.g., if you do not want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/benchmark.html">benchmark</a> function because it has only very
 few iterations but want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resampling</a> of each learner instead,
 you can specifically pass the <code>level</code> <code>"resample"</code> to the
-<a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart&lt;*&gt;</a> function.
+<a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart*</a> function.
 Currently the following levels are supported:</p>
 <pre class="prettyprint well"><code class="r">parallelShowRegisteredLevels()
 </code></pre>
