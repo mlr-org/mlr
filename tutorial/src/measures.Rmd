@@ -13,7 +13,7 @@ the [WrappedModel](&makeWrappedModel) and/or the [&Task].
 
 **Aggr** shows the default aggregation method.
 
-In case of classification column **MultiClass** indicates if a measure is suitable for 
+In case of *classification* column **MultiClass** indicates if a measure is suitable for 
 multi-class problems. If not the measure can only be used for binary classification problems.
 
 
