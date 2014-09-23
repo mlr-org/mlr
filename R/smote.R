@@ -24,27 +24,29 @@
 #'   Standardize input variables before calculating the nearest neighbors
 #'   for data sets with numeric input variables only. For mixed variables
 #'   (numeric and factor) the gower distance is used and variables are
-#'   standardized anyway. Default is TRUE.
+#'   standardized anyway.
+#'   Default is \code{TRUE}.
 #' @param useAltLogic [\code{integer(1)}]\cr
 #'   Use an alternative logic for selection of minority class observations.
 #'   Instead of sampling a minority class element AND one of its nearest
-#'   neighbors, each minority class element is taken multiple times (depending 
+#'   neighbors, each minority class element is taken multiple times (depending
 #'   on rate) for the interpolation and only the corresponding nearest neighbor
-#'   is sampled. Default is FALSE.
+#'   is sampled.
+#'   Default is \code{FALSE}.
 #' @template ret_task
 #' @family imbalancy
 #' @export
 #' @useDynLib mlr c_smote
-smote = function(task, rate, nn = 5L, standardize = TRUE, useAltLogic = FALSE) {  
+smote = function(task, rate, nn = 5L, standardize = TRUE, useAltLogic = FALSE) {
   checkTask(task, binary = TRUE)
   assertNumber(rate, lower = 1)
   nn = asInt(nn, lower = 1L)
-  
+
   requirePackages("cluster", why = "smote")
   # check for changeData later
   if (!is.null(task$weights))
     stopf("SMOTE cannot be used with weights in task!")
-  
+
   # shortcuts
   data = getTaskData(task)
   target = task$task.desc$target
@@ -59,7 +61,7 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, useAltLogic = FALSE) {
   if (n.new <= 0L)
     return(task)
   res = matrix(0, n.new, ncol(x))
-    
+
   is.num = vlapply(x, is.numeric)
   # convert xmin to matrix, so we can handle it better in C
   # factors are integer levels
@@ -71,14 +73,14 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, useAltLogic = FALSE) {
     }
   }
   x.min.matrix = as.matrix(x.min.matrix)
-  
-  if (useAltLogic == TRUE) {  
+
+  if (useAltLogic == TRUE) {
     n.xmin = dim(x.min.matrix)[1]
     p = dim(x.min.matrix)[2]
-    
+
     # range per variable
     ranges = apply(x.min.matrix, 2, max) - apply(x.min.matrix, 2, min)
-      
+
     # loop for each member of x.min
     for(i in 1:n.xmin) {
       # calculate nn next neighbors of element x.min.matrix[i,]
@@ -91,15 +93,15 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, useAltLogic = FALSE) {
       }
       dist = drop(x.scaled^2 %*% rep(1, ncol(x.scaled)))
       kNNs = order(dist)[2:(nn+1)]
-        
+
       # new cases per min obs
       n.new.obs = n.new / n.xmin
-          
+
       # loop for each new member
       for(n in 1:n.new.obs) {
         # randomly select one of the kNNs
-        neigh = sample(1:nn, 1)          
-        
+        neigh = sample(1:nn, 1)
+
         diffs = x.min.matrix[kNNs[neigh],] - x.min.matrix[i,]
         res[(i-1)*n.new.obs+n,] = x.min.matrix[i,] + runif(1)*diffs
         if (any(!is.num)) {
@@ -121,8 +123,8 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, useAltLogic = FALSE) {
     nearneigh = t(apply(minclass.dist, 1, order))
     nearneigh = nearneigh[, 1:nn, drop = FALSE]
     res = .Call(c_smote, x.min.matrix, is.num, nearneigh, res)
-  } 
-  
+  }
+
   res = as.data.frame(res)
   # convert ints back to factors
   if (any(!is.num)) {
@@ -132,9 +134,9 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, useAltLogic = FALSE) {
       levels(res[, i]) = levels(x[, i])
     }
   }
-  
-  colnames(res) = colnames(x)  
-  res[[target]] = z$min.name  
+
+  colnames(res) = colnames(x)
+  res[[target]] = z$min.name
   data2 = rbind(data, res)
   # we can neither allow costssens (!= classif anyway nor weights)
   changeData(task, data2)

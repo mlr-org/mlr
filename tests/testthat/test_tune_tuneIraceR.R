@@ -55,4 +55,19 @@ test_that("tuneIrace works with dependent params", {
 
 })
 
+# we had a bug here
+test_that("tuneIrace works with logical params", {
+  ps = makeParamSet(
+    makeLogicalParam("scaled")
+  )
+  lrn = makeLearner("classif.ksvm", kernel = "vanilladot")
+  rdesc = makeResampleDesc("Holdout", split = 0.3, stratify = TRUE)
+  ctrl = makeTuneControlIrace(maxExperiments = 20, nbIterations = 1, minNbSurvival = 1)
+  task = subsetTask(multiclass.task, c(1:10, 50:60, 100:110))
+  tr = tuneParams(lrn, task, rdesc, par.set = ps, control = ctrl)
+  expect_true(getOptPathLength(tr$opt.path) >= 15 && getOptPathLength(tr$opt.path) <= 20)
+  expect_true(!is.na(tr$y))
+})
+
+
 
