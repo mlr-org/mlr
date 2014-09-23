@@ -1,76 +1,100 @@
 # ROC Analysis
 
-The receiver operating characteristic curve (ROC) is a graphical plot
-for a binary classifier and mainly used in signal detection theory. It
-compares the false positive rate (fall-out) on the horizontal axis to
-the true positive rate (sensitivity) on the vertical axis by varying
-the threshold that determines when a datum will be classified as positive and
-when as negative. Sometimes, the costs of misclassification are unknown.
-In contrast to other performance measures, where only one performance value can
-be calculated, a ROC for one classifier shows an area of
-performance values in relation to different false positive and true
-positive rates. Another benefit of this graphical plot is the
-fact that it can compare the performance of an imbalanced data set
-with a modified version. The following functions are created by
-including the features of the [ROCR](http://cran.r-project.org/web/packages/ROCR/index.html) package.
+The receiver operating characteristic (ROC) curve is a graphical plot
+that illustrates the performance of a binary classifier.
+It plots the false positive rate (fall-out) on the horizontal axis versus
+the true positive rate (sensitivity) on the vertical axis for various settings of
+the threshold that maps predicted posterior probabilities to class labels.
 
-## Comparing to learners
+A ROC curve is useful if one is unsure about the threshold setting, for example if the
+misclassification costs (that would allow to calculate an optimal threshold value) are unknown. 
 
-We can compare the performance of two learners in **mlr** with the help of `ROCR`.
-First we create a scenario with two different [learners](learner.md) capable of
-predicting probabilities (Tip: run `listLearners(prob=TRUE)` to get a list of
-all learners that support this).
-```{r, echo=FALSE, message=FALSE, warning=FALSE, results='hide'}
-library("mlbench")
-library("ROCR")
-```
+The AUC (area under curve) summarizes the performance of the learner over all possible threshold
+values.
+**mlr** provides the [&auc] performance measure for binary classification and also a
+generalization of the AUC for the multi-class case ([&muticlass.auc]) from package
+[pROC](&http://cran.r-project.org/web/packages/pROC/index.html).
+
+
+## Plotting the ROC curve
+
+The **mlr** function [&asROCRPrediction] converts predictions (resulting from
+calling [predict](predict.WrapperModel), [&resample], or [&benchmark]) to a format that
+[ROCR](http://cran.r-project.org/web/packages/ROCR/index.html) can handle.
+Then functions in [ROCR](http://cran.r-project.org/web/packages/ROCR/index.html) are used
+to plot the ROC curve.
+
+In the following example we show how to compare the performance of two learners.
+
+### Comparing two learners
+
+Note that the [learners](learner.md) have to be capable of predicting probabilities.
+(Have a look at the [table of learners](integrated_learners.md)
+or run `listLearners(prob = TRUE)` to get a list of all learners that support this).
+We use the [BreastCancer](&mlbench::BreastCancer) data set from package
+[mlbench](&http://cran.r-project.org/web/packages/mlbench/index.html)
 
 ```{r}
-## Generate 2 class problem with mlbench
-set.seed(1)
-testData = as.data.frame(mlbench.2dnormals(100, sd = 2))
-
-## Define a learning task and an appropriate learner
-task = makeClassifTask(data = testData, target = "classes")
+## Linear discriminant analysis and support vector machine with RBF kernel
 lrn1 = makeLearner("classif.lda", predict.type = "prob")
 lrn2 = makeLearner("classif.ksvm", predict.type = "prob")
 ```
 
 Afterwards, we perform [resampling](resample.md) to obtain predictions for each fold.
+
 ```{r}
 ## Perform a 10-fold cross-validation
 rdesc = makeResampleDesc("CV", iters = 10)
-r1 = resample(lrn1, task, rdesc, show.info = FALSE)
-r2 = resample(lrn2, task, rdesc, show.info = FALSE)
+rin = makeResampleInstance(rdesc, bc.task)
+## Calculate the error rate (for threshold 0.5) and the AUC
+ms = list(mmce, auc)
+r1 = resample(lrn1, bc.task, rin, measures = ms, show.info = FALSE)
+r2 = resample(lrn2, bc.task, rin, measures = ms, show.info = FALSE)
 ```
 
-Now we have to convert each prediction within the resample-result to a ROCR
-prediction using the [&asROCRPrediction] function.
-Afterwards we let `ROCR` calculate the performance measures and plot the ROC.
-As we have one curve for each learner and each cross validation fold we might want to average the curves from the cross validation by using `avg="threshold"`.
-Otherwise, [&plot.performance] will draw a curve for each fold.
-For details, see [&plot.performance].
+Now we have to convert each prediction within the resample result to a
+[ROCR prediction](&ROCR::prediction-class) using the [&asROCRPrediction] function.
+Afterwards we let [ROCR](http://cran.r-project.org/web/packages/ROCR/index.html)
+calculate the [performance](&ROCR::performance) measures and plot the ROC curve.
+As we have one curve for each learner and each cross validation fold we might want to
+average the curves from the cross validation by using `avg = "threshold"`.
+Otherwise, [&ROCR::plot.performance] will draw one curve for each fold.
+For details, see [&ROCR::plot.performance].
 
 ```{r ROCRaverage}
-p1 = asROCRPrediction(r1$pred)
-p2 = asROCRPrediction(r2$pred)
-perf1 = ROCR::performance(p1,"tpr","fpr")
-perf2 = ROCR::performance(p2,"tpr","fpr")
-plot(perf1, col="blue", avg="threshold")
-plot(perf2, col="red", avg="threshold", add=TRUE)
-legend("bottomright",legend=c("lda","ksvm"), lty=1, col=c("blue","red"))
+pred1 = asROCRPrediction(r1$pred)
+pred2 = asROCRPrediction(r2$pred)
+perf1 = ROCR::performance(pred1, "tpr", "fpr")
+perf2 = ROCR::performance(pred2, "tpr", "fpr")
+plot(perf1, col = "blue", avg = "threshold")
+plot(perf2, col = "red", avg = "threshold", add = TRUE)
+legend("bottomright", legend = c("lda", "ksvm"), lty = 1, col = c("blue", "red"))
 ```
 
-We can also cheat a bit and create pooled ROCs by manually setting the class attribute from the prediction object from `ResamplePrediction` to `Prediction`.
+In order to create pooled ROC curves we can also cheat a bit by manually setting the class attribute
+of the prediction object from [&ResamplePrediction] to [&Prediction].
 ```{r ROCRpooled}
 r1p = r1$pred
 r2p = r2$pred
 class(r1p) = "Prediction"
 class(r2p) = "Prediction"
-p1 = asROCRPrediction(r1p)
-p2 = asROCRPrediction(r2p)
-perf1 = ROCR::performance(p1,"tpr","fpr")
-perf2 = ROCR::performance(p2,"tpr","fpr")
-plot(perf1, col="blue")
-plot(perf2, col="red", add=TRUE)
+pred1 = asROCRPrediction(r1p)
+pred2 = asROCRPrediction(r2p)
+perf1 = ROCR::performance(pred1, "tpr", "fpr")
+perf2 = ROCR::performance(pred2, "tpr", "fpr")
+plot(perf1, col = "blue")
+plot(perf2, col = "red", add = TRUE)
+```
+
+
+## Further performance plots
+
+Note that you can easily create other standard evaluation plots like *lift charts* by
+calling [&ROCR::performance] with the appropriate performance measures.
+```{r Liftaverage}
+perf1 = ROCR::performance(pred1, "lift", "rpp")
+perf2 = ROCR::performance(pred2, "lift", "rpp")
+plot(perf1, col = "blue", avg = "threshold")
+plot(perf2, col = "red", avg = "threshold", add = TRUE)
+legend("topright", legend = c("lda", "ksvm"), lty = 1, col = c("blue", "red"))
 ```

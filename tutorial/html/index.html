@@ -110,15 +110,11 @@
                             </li>
                         
                             <li >
-                                <a href="feature_selection/">Feature selection</a>
+                                <a href="wrapper/">Wrapper</a>
                             </li>
                         
                             <li >
-                                <a href="roc_analysis/">ROC analysis</a>
-                            </li>
-                        
-                            <li >
-                                <a href="multicriteria_evaluation/">Multicriteria Evaluation</a>
+                                <a href="makeBaggingWrapper/">Bagging</a>
                             </li>
                         
                             <li >
@@ -126,7 +122,19 @@
                             </li>
                         
                             <li >
+                                <a href="feature_selection/">Feature Selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="cost_sensitive_classif/">Cost-Sensitive Classification</a>
+                            </li>
+                        
+                            <li >
                                 <a href="over_and_undersampling/">Over- and Undersampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="roc_analysis/">ROC Analysis</a>
                             </li>
                         
                         </ul>
@@ -139,11 +147,28 @@
                         <ul class="dropdown-menu">
                         
                             <li >
-                                <a href="create_learner/">Create custom learners</a>
+                                <a href="create_learner/">Create Custom Learners</a>
                             </li>
                         
                             <li >
-                                <a href="create_measure/">Create custom measures</a>
+                                <a href="create_measure/">Create Custom Measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Appendix <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="measures/">Performance Measures</a>
                             </li>
                         
                         </ul>
@@ -201,9 +226,10 @@
 <h1 id="mlr-tutorial">mlr Tutorial</h1>
 <p>This web page will provide you with an in-depth introduction on how to
 use the <strong>mlr</strong> framework for machine learning experiments and
-optimization in R.</p>
+optimization in <strong>R</strong>.</p>
 <p>Our focus is on your comprehension of the basic functions and applications.
-For detailed technical information and manual pages, please refer to the package's <a href="http://berndbischl.github.io/mlr/man/">manual pages</a>.
+For detailed technical information and manual pages, please refer to the package's
+<a href="http://berndbischl.github.io/mlr/man/">manual pages</a>.
 They are regularly updated and reflect the documentation of the current package version on CRAN.</p>
 <p>The tutorial explains the basic analysis of a data set step by step:</p>
 <ul>
@@ -223,15 +249,20 @@ package.</p>
 <p>A simple stratified cross-validation of the <em>linear discriminant analysis</em> with <strong>mlr</strong>.</p>
 <pre class="prettyprint well"><code class="r">library(mlr)
 data(iris)
-# Define the Task:
-tsk = makeClassifTask(id = &quot;tutorial&quot;, data = iris, target = &quot;Species&quot;)
-# Define the Learner:
+## Define the task:
+task = makeClassifTask(id = &quot;tutorial&quot;, data = iris, target = &quot;Species&quot;)
+## Define the learner:
 lrn = makeLearner(&quot;classif.lda&quot;)
-# Define the Resampling Strategy:
-rsm = makeResampleDesc(method = &quot;CV&quot;, stratify = TRUE)
-# Do the resampling:
-res = resample(learner = lrn, task = tsk, resampling = rsm, show.info = FALSE)
-# Get the mean misclassification error:
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: MASS
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Define the resampling strategy:
+rdesc = makeResampleDesc(method = &quot;CV&quot;, stratify = TRUE)
+## Do the resampling:
+res = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE)
+## Get the mean misclassification error:
 res$aggr
 </code></pre>
 

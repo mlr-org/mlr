@@ -1,6 +1,6 @@
 # Integrating another learner
 
-In order to create a new learner in **mlr**, interface code to the R function must be written.
+In order to create a new learner in **mlr**, interface code to the **R** function must be written.
 This can be done by either inheriting from ``rlearner.classif``, ``rlearner.regr``, ``rlearner.surv``, ``rlearner.costsens``, or ``rlearner.cluster``.
 Below, an example of how the Linear Discriminant Analysis from ``MASS`` package has been integrated into the classification learner ``classif.lda`` in **mlr** is shown.
 
@@ -19,7 +19,7 @@ Can the learner predict posterior probabilities?
 In the regression case, you do not need to take care of the latter properties.
 For the other types of learners, not all of these properties are relevant.
 
-In the following example, you see the R code for Linear Discriminant Analysis.
+In the following example, you see the **R** code for Linear Discriminant Analysis.
 The name is ``"classif.lda"`` from the package ``MASS``. LDA has one discrete parameter, ``method``, and two continuous ones, ``nu`` and ``tol``.
 It supports classification problems with two or more classes and can deal with numeric and factor explanatory variables.
 It can predict posterior probabilities.

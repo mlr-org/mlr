@@ -2,59 +2,98 @@
 
 Training a learner means fitting a model to a given data set.
 In the **mlr** package this can be done by calling the function [&train]
-with a learner and a suitable [&Task].
+with a [Learner](&makeLearner) and a suitable [&Task].
 
-
-## Quick start
-
-
-### Classification example
-
-We start with a basic example and train a Linear Discriminant Analysis on the ``iris`` data set.
+We start with a survival analysis example and train a
+[Cox proportional hazards model](&survival::coxph) on the [lung](&survival::lung) data set.
 
 ```{r}
-library("mlr")
-task = makeClassifTask(data = iris, target = "Species")
-lrn = makeLearner("classif.lda")
+data(lung, package = "survival")
+lung$status = lung$status - 1
+task = makeSurvTask(data = lung, target = c("time", "status"))
+lrn = makeLearner("surv.coxph")
+
 mod = train(lrn, task)
 mod
 ```
 
-### Regression example
-
-We fit a simple linear regression model to the ``BostonHousing`` data set.
+In the above example, creating a [Learner](&makeLearner) is not strictly necessary.
+Generally, you have to generate a [Learner](&makeLearner) if you want to change any defaults
+by, e.g., setting hyperparameter values or changing the type of prediction.
+Otherwise, [&train] and many other functions accept a character string naming the learning
+method.
 
 ```{r}
-data(BostonHousing, package = "mlbench")
-
-task = makeRegrTask(data = BostonHousing, target = "medv")
-lrn = makeLearner("regr.lm")
-mod = train(lrn, task)
+mod = train("surv.coxph", task)
 mod
 ```
 
-### Clustering example
-
-We cluster the ``iris`` data set without the target variable.
+Training a learning method works the same for every type of [&Task].
+Here is a cluster analysis example using the data set [mtcars](&dataset::mtcars).
+Since we want to set a hyperparameter value we have to create a [Learner](&makeLearner).
 
 ```{r}
-task = makeClusterTask(data = iris[,-5])
-lrn = makeLearner("cluster.XMeans")
+task = makeClusterTask(data = mtcars)
+lrn = makeLearner("cluster.SimpleKMeans", N = 3)
+
 mod = train(lrn, task)
 mod
 ```
-
-## Further information
-
-As already mentioned, we can train a learner simply by
-calling the function [&train], passing it a [&Learner] and a [&Task].
-In the examples above, the machine learning method was specified
-through special [Learner](&makeLearner) objects. Creating a separate object
-allows to set the hyperparameters of the learner before training for example.
 
 Optionally, only a subset of the data, specified by an index set, can be used to
 train the learner. This set is passed using the ``subset`` argument of [&train].
 
-The return value is always an object of class [&WrappedModel], which wraps the
-particular model of the used R classification or regression method. It
-can subsequently be used to perform a [prediction](&predict.WrappedModel) for new observations.
+We fit a simple linear regression model to the [BostonHousing](&mlbench::BostonHousing) data set.
+The object [bh.task](&mlr.bh) is the regression [&Task] on the [BostonHousing](&mlbench::BostonHousing)
+data set provided by **mlr**.
+
+```{r}
+## Number of observations
+n = bh.task$task.desc$size
+## Use 1/3 of the observations for training 
+train.set = sample(n, size = n/3)
+## Train the learner
+mod = train("regr.lm", bh.task, subset = train.set)
+mod
+```
+
+Moreover, if the [Learner](&makeLearner) supports this, you can specify observation ``weights``
+that reflect the relevance of examples in the training process.
+
+For example, in the [BreastCancer](&mlbench::BreastCancer) data set class benign is almost
+twice as frequent as class malignant.
+If both classes should have equal importance in training the classifier we can weigh the
+examples according to the class frequencies in the data set as shown in the following
+**R** code (see also the section about [imbalanced classification problems](&over_and_undersampling.md)).
+
+```{r}
+## Calculate the observation weights
+tar = getTaskTargets(bc.task)
+tab = as.numeric(table(tar))
+w = 1/tab[tar]
+
+train("classif.cforest", task = bc.task, weights = w)
+```
+
+As you may recall, it is also possible to specify observation weights when creating the 
+[&Task].
+Naturally, it makes sense to specify ``weights`` in [make<type>Task](&Task) if those weights
+should always be used for the learning task and in [&train] if this is not the case since, e.g.,
+some of the learners you want to use cannot deal with weights or you want to try different weights.
+The weights in [&train] overwrite the weights in [&Task].
+
+
+## Wrapped models
+
+[&train] returns an object of class [&WrappedModel], which wraps the
+particular model (i.e., contains the output) of the underlying **R** learning method.
+It can subsequently be used to perform a [prediction](&predict.WrappedModel) for new observations.
+
+
+In order to access the underlying model we can use the function [&getLearnerModel].
+In the following example we get an object of class ["lm"](&stats::lm).
+
+```{r}
+mod = train("regr.lm", bh.task, subset = train.set)
+getLearnerModel(mod)
+```

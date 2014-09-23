@@ -1,0 +1,71 @@
+# Wrapper
+
+fuse a [&Learner] with one or more further operations, methods
+
+* Data preprocessing
+* Imputation
+* Bagging
+* Tuning
+* Feature selection
+* Cost-sensitive classification
+* Over- and undersampling for imbalanced classification problems
+
+result is Learner
+training 
+
+tuning the learner is called several times for different hyperparameter settings
+bagging the base learner is called several times on bootstrap samples of the data
+
+
+build whole chains
+several layers
+For example compare different preprocessing methods and their impact on the performance of
+several learners
+
+
+**mlr** provides 
+naming convention ``make<method_to_fuse>Wrapper`` 
+result is again a [&Learner]
+proceed normally, that is call train, resample, benchmark
+
+In the following example we build a bagging wrapper.
+
+```{r}
+## 
+lrn = makeLearner("classif.rpart", cp = 0.05)
+lrn = makeBaggingWrapper(lrn, bw.iters = 50, bw.replace = TRUE, bw.size = 0.8, bw.feats = 3/4)
+lrn
+
+## Get current parameter settings
+getHyperPars(lrn)
+
+## Get a description of all possible parameter settings
+getParamSet(lrn)
+```
+
+The functions [&getHyperPars] and [&getParamSet] access the hyperparameter values and
+the hyperparameter set of the base learner (``cp``) as well as the fused method.
+
+
+
+
+makePreprocWrapper
+
+makeImputeWrapper
+
+makeBaggingWrapper
+
+makeTuneWrapper
+
+makeFeatSelWrapper
+makeFilterWrapper
+
+makeCostSensClassifWrapper
+makeCostSensRegrWrapper
+makeCostSensWeightedPairsWrapper
+
+makeDownsampleWrapper
+makeOverBaggingWrapper
+makeSMOTEWrapper
+makeUndersampleWrapper
+makeWeightedClassesWrapper

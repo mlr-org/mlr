@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../img/favicon.ico">
 
-        <title>Create custom learners - mlr tutorial</title>
+        <title>Create Custom Learners - mlr tutorial</title>
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -110,15 +110,11 @@
                             </li>
                         
                             <li >
-                                <a href="../feature_selection/">Feature selection</a>
+                                <a href="../wrapper/">Wrapper</a>
                             </li>
                         
                             <li >
-                                <a href="../roc_analysis/">ROC analysis</a>
-                            </li>
-                        
-                            <li >
-                                <a href="../multicriteria_evaluation/">Multicriteria Evaluation</a>
+                                <a href="../makeBaggingWrapper/">Bagging</a>
                             </li>
                         
                             <li >
@@ -126,7 +122,19 @@
                             </li>
                         
                             <li >
+                                <a href="../feature_selection/">Feature Selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../cost_sensitive_classif/">Cost-Sensitive Classification</a>
+                            </li>
+                        
+                            <li >
                                 <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC Analysis</a>
                             </li>
                         
                         </ul>
@@ -139,11 +147,28 @@
                         <ul class="dropdown-menu">
                         
                             <li class="active">
-                                <a href="./">Create custom learners</a>
+                                <a href="./">Create Custom Learners</a>
                             </li>
                         
                             <li >
-                                <a href="../create_measure/">Create custom measures</a>
+                                <a href="../create_measure/">Create Custom Measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Appendix <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../measures/">Performance Measures</a>
                             </li>
                         
                         </ul>
@@ -159,7 +184,7 @@
                 
                 
                 <li >
-                    <a rel="next" href="../over_and_undersampling/">
+                    <a rel="next" href="../roc_analysis/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
@@ -203,7 +228,7 @@
             <div class="col-md-9" role="main">
 
 <h1 id="integrating-another-learner">Integrating another learner</h1>
-<p>In order to create a new learner in <strong>mlr</strong>, interface code to the R function must be written.
+<p>In order to create a new learner in <strong>mlr</strong>, interface code to the <strong>R</strong> function must be written.
 This can be done by either inheriting from <code>rlearner.classif</code>, <code>rlearner.regr</code>, <code>rlearner.surv</code>, <code>rlearner.costsens</code>, or <code>rlearner.cluster</code>.
 Below, an example of how the Linear Discriminant Analysis from <code>MASS</code> package has been integrated into the classification learner <code>classif.lda</code> in <strong>mlr</strong> is shown.</p>
 <h2 id="initialization">Initialization</h2>
@@ -218,7 +243,7 @@ Are one-class, two-class, multi-class problems supported?
 Can the learner predict posterior probabilities?
 In the regression case, you do not need to take care of the latter properties.
 For the other types of learners, not all of these properties are relevant.</p>
-<p>In the following example, you see the R code for Linear Discriminant Analysis.
+<p>In the following example, you see the <strong>R</strong> code for Linear Discriminant Analysis.
 The name is <code>"classif.lda"</code> from the package <code>MASS</code>. LDA has one discrete parameter, <code>method</code>, and two continuous ones, <code>nu</code> and <code>tol</code>.
 It supports classification problems with two or more classes and can deal with numeric and factor explanatory variables.
 It can predict posterior probabilities.</p>

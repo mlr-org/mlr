@@ -59,7 +59,7 @@ described by the `rdesc` variable.
 r = tuneParams(makeLearner("classif.ksvm"), task=task, resampling=rdesc, par.set=ps, control=ctrl, measures=list(mmce, setAggregation(mmce, test.sd)))
 ```
 
-We used a trick, also described [here](multicriteria_evaluation.md), to
+We used a trick, also described in FIXME multicriteria_evaluation.md, to
 obtain the standard deviation in addition to the default by adding a second
 measure. A quick visualization of the Grid Search can be achieved by accessing
 the ``opt.path`` as follows.
@@ -73,12 +73,12 @@ g + geom_tile() + geom_text(color="white")
 
 Let's take a closer look at the example above. The parameter grid has to be a
 named list and every entry has to be named according to the corresponding
-parameter of the underlying R function (in this case "ksvm" from the kernlab
+parameter of the underlying **R** function (in this case "ksvm" from the kernlab
 package, see its respective help page). The value of each entry is a vector of
 feasible values for this hyperparameter. The complete grid is simply the
 cross-product of all feasible values.
 
-Please note that whenever parameters in the underlying R functions should be
+Please note that whenever parameters in the underlying **R** functions should be
 passed within a list structure, **mlr** tries to give you direct access to
 each parameter and get rid of the list structure. This is the case for example
 with `ksvm`.

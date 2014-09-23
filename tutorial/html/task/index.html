@@ -110,15 +110,11 @@
                             </li>
                         
                             <li >
-                                <a href="../feature_selection/">Feature selection</a>
+                                <a href="../wrapper/">Wrapper</a>
                             </li>
                         
                             <li >
-                                <a href="../roc_analysis/">ROC analysis</a>
-                            </li>
-                        
-                            <li >
-                                <a href="../multicriteria_evaluation/">Multicriteria Evaluation</a>
+                                <a href="../makeBaggingWrapper/">Bagging</a>
                             </li>
                         
                             <li >
@@ -126,7 +122,19 @@
                             </li>
                         
                             <li >
+                                <a href="../feature_selection/">Feature Selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../cost_sensitive_classif/">Cost-Sensitive Classification</a>
+                            </li>
+                        
+                            <li >
                                 <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC Analysis</a>
                             </li>
                         
                         </ul>
@@ -139,11 +147,28 @@
                         <ul class="dropdown-menu">
                         
                             <li >
-                                <a href="../create_learner/">Create custom learners</a>
+                                <a href="../create_learner/">Create Custom Learners</a>
                             </li>
                         
                             <li >
-                                <a href="../create_measure/">Create custom measures</a>
+                                <a href="../create_measure/">Create Custom Measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Appendix <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../measures/">Performance Measures</a>
                             </li>
                         
                         </ul>
@@ -191,7 +216,13 @@
     
         <li class="main active"><a href="#learning-tasks">Learning Tasks</a></li>
         
-            <li><a href="#further-information">Further information</a></li>
+            <li><a href="#creating-a-learning-task">Creating a learning task</a></li>
+        
+            <li><a href="#accessing-a-learning-task">Accessing a learning task</a></li>
+        
+            <li><a href="#modifying-a-learning-task">Modifying a learning task</a></li>
+        
+            <li><a href="#pre-defined-tasks">Pre-defined tasks</a></li>
         
     
     </ul>
@@ -199,23 +230,85 @@
             <div class="col-md-9" role="main">
 
 <h1 id="learning-tasks">Learning Tasks</h1>
-<p>Learning tasks are the basic elements of the package to encapsulate the
+<p>Learning tasks are the basic elements of the package that encapsulate the
 data set and all relevant information regarding the purpose of the
-task, e.g, the target variable.</p>
+task, e.g., the target variable.</p>
 <p>The tasks are organised in a hierarchy, with the generic
 <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> at the top.
 The concrete tasks that can be instantiated are <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">ClassifTask</a> for classification,
 <a href="&amp;Task">RegrTask</a> for regression, <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">SurvTask</a> for survival
 analysis, <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">CostSensTask</a> for
-cost-sensitive learning, and <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">ClusterTask</a> for clustering.</p>
-<p>There are dedicated functions to create these tasks given data and other
-relevant information. These are <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeClassifTask</a>,
+cost-sensitive classification, and <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">ClusterTask</a> for clustering.</p>
+<h2 id="creating-a-learning-task">Creating a learning task</h2>
+<p>There are dedicated functions to create these tasks:
+<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeClassifTask</a>,
 <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeRegrTask</a>,
 <a href="&amp;Task">makeSurvTask</a>, <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeCostSensTask</a>, and
-<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeClusterTask</a>.</p>
-<p>In the following example, we define a classification task for the data
-set <code>BreastCancer</code> (from the package mlbench) and exclude the ID
-variable from all further model fitting and evaluation.</p>
+<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeClusterTask</a>.
+These require the data set and, depending on the 
+nature of the learning problem, further information.</p>
+<h3 id="cluster-tasks">Cluster tasks</h3>
+<p>In order to generate a task for a cluster analysis problem <code>data</code> is the only mandatory argument.
+In the following example we create a learning task from the data set <a href="http://www.rdocumentation.org/packages/datasets/functions/mtcars.html">mtcars</a>.</p>
+<pre class="prettyprint well"><code class="r">cluster.task = makeClusterTask(id = &quot;cars&quot;, data = mtcars)
+cluster.task
+</code></pre>
+
+<pre class="prettyprint well"><code>## Unsupervised task: cars
+## Type: cluster
+## Observations: 32
+## Features:
+## numerics  factors 
+##       11        0 
+## Missings: FALSE
+## Has weights: FALSE
+## Has blocking: FALSE
+</code></pre>
+
+<p>The argument <code>id</code> is optional and allows to specify a custom name for the task.
+It will be later used to name results, for example of
+<a href="&amp;benchmark_experiments.md">benchmark experiments</a>.
+If not specified the <code>id</code> defaults to the name of the <strong>R</strong> object passed to <code>data</code>,
+in the above example <code>"mtcars"</code>.</p>
+<h3 id="regression-tasks">Regression tasks</h3>
+<p>In case of supervised learning like regression (as well as classification and
+survival analysis) we, additional to <code>data</code>, have to specify the name of the numeric <code>target</code>
+variable.</p>
+<pre class="prettyprint well"><code class="r">data(BostonHousing, package = &quot;mlbench&quot;)
+
+regr.task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
+regr.task
+</code></pre>
+
+<pre class="prettyprint well"><code>## Supervised task: BostonHousing
+## Type: regr
+## Target: medv
+## Observations: 506
+## Features:
+## numerics  factors 
+##       12        1 
+## Missings: FALSE
+## Has weights: FALSE
+## Has blocking: FALSE
+</code></pre>
+
+<p>As you can see, the task records the type of the learning problem and basic information about
+the data set, e.g., the types of the features (numeric vectors or factors),
+the number of observations, or whether missing values are present.</p>
+<p>Creating tasks for (cost-sensitive) classification problems and survival analysis
+follows the same scheme.
+For each of these learning problems there are some specifics worth mentioning and described
+in the following.</p>
+<h3 id="classification-tasks">Classification tasks</h3>
+<p>In case of classification the target variable has to be a <code>factor</code>.</p>
+<p>In binary classification it is customary to refer to the two classes as <em>positive</em> and
+<em>negative</em> class.
+This is for example relevant with regard to certain <a href="&amp;performance.md">performance measures</a>
+like the <em>true positive rate</em>.
+By default the first factor level of the target variable is selected as the positive class.</p>
+<p>In the following example, we define a classification task for the data set 
+<a href="http://www.rdocumentation.org/packages/mlbench/functions/BreastCancer.html">BreastCancer</a> and exclude the variable <code>Id</code> from all further
+model fitting and evaluation.</p>
 <pre class="prettyprint well"><code class="r">data(BreastCancer, package = &quot;mlbench&quot;)
 
 df = BreastCancer
@@ -240,66 +333,149 @@ classif.task
 ## Positive class: benign
 </code></pre>
 
-<p>As we can see, the task records basic information about the data set,
-e.g. the types of the features, the number of observations, whether
-missing values are present, the number of observations per class and so on.</p>
-<p>In many of the regression examples in this tutorial, we will use the <code>BostonHousing</code> data set:</p>
-<pre class="prettyprint well"><code class="r">data(BostonHousing)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Warning: data set 'BostonHousing' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">regr.task = makeRegrTask(id = &quot;BostonHousing&quot;, data = BostonHousing, target = &quot;medv&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'BostonHousing' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">regr.task
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'regr.task' not found
-</code></pre>
-
-<h2 id="further-information">Further information</h2>
-<p>Let's have another look at the classification example.</p>
-<p>As this is a binary problem, we see that a positive class is selected
-by default. This will generally be auto-selected, but you might
-want to do this manually for your application. It mainly concerns ROC analysis, where in order
-to talk about something like a true positive rate, we need to know which of the two classes is the positive
-one.</p>
+<p>The positive class is benign.
+Class malignant can be manually selected as the positive class:</p>
 <pre class="prettyprint well"><code class="r">classif.task = makeClassifTask(id = &quot;BreastCancer&quot;, data = df, target = &quot;Class&quot;,
-  positive = &quot;malignant&quot;)
+    positive = &quot;malignant&quot;)
 </code></pre>
 
-<p>There are also some convenient methods to access properties and parts of the task.
-The most important ones are listed in <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
-<p>Here are some examples.</p>
-<pre class="prettyprint well"><code class="r"># get the names of the input variables:
-getTaskFeatureNames(classif.task)
+<h3 id="survival-analysis">Survival analysis</h3>
+<p>In case of survival analysis <code>target</code> specifies the names of the survival time and event
+columns in <code>data</code> and therefore is a character vector of length 2.
+Note that the event column has to be a logical vector.
+For details see the documentation of function <a href="http://www.rdocumentation.org/packages/survival/functions/Surv.html">Surv</a>.</p>
+<pre class="prettyprint well"><code class="r">data(lung, package = &quot;survival&quot;)
+## Coerce the event column to a logical vector
+lung$status = lung$status - 1
+
+surv.task = makeSurvTask(data = lung, target = c(&quot;time&quot;, &quot;status&quot;))
+surv.task
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] &quot;Cl.thickness&quot;    &quot;Cell.size&quot;       &quot;Cell.shape&quot;      &quot;Marg.adhesion&quot;  
-## [5] &quot;Epith.c.size&quot;    &quot;Bare.nuclei&quot;     &quot;Bl.cromatin&quot;     &quot;Normal.nucleoli&quot;
-## [9] &quot;Mitoses&quot;
+<pre class="prettyprint well"><code>## Supervised task: lung
+## Type: surv
+## Target: time,status
+## Observations: 228
+## Features:
+## numerics  factors 
+##        8        0 
+## Missings: TRUE
+## Has weights: FALSE
+## Has blocking: FALSE
 </code></pre>
 
-<pre class="prettyprint well"><code class="r"># get values of the target variable for all observations:
-head(getTaskTargets(classif.task))
+<p>The type of censoring can be specified via the argument <code>censoring</code> which defaults to
+<code>"rcens"</code> for right censored data.</p>
+<h3 id="cost-sensitive-classification">Cost-sensitive classification</h3>
+<p>In regular classification, as addressed above, the aim when training a classifier is to 
+minimize the misclassification rate.
+Thus, it is implicitly assumed that all types of misclassification errors are equally severe.
+In <em>cost-sensitive classification</em> the costs associated with assigning an object with true
+class <em>y</em> to class <em>k</em> can be different depending on the true and predicted class labels
+<em>y</em> and <em>k</em>.</p>
+<p>A further generalization is <em>cost-sensitive learning with example-specific costs</em>.
+In this scenario, the misclassification costs do not only depend on the true and predicted
+class labels, but also on the feature values <em>x</em>.
+Thus, in case of a <em>K</em>-class problem, each example (<em>x</em>, <em>y</em>) is associated with a vector
+of costs for predicting classes 1,...,<em>K</em> given the true class label <em>y</em>.
+The cost of the true class label <em>y</em> is minimal.
+Therefore, if the cost matrix is given, the true values <em>y</em> of the target variable are 
+automatically known.</p>
+<p>Thus, in order to create a cost-sensitive classification task, the feature values <em>x</em> and
+a <code>cost</code> matrix that contains the cost vectors for all examples in the data set are required. </p>
+<pre class="prettyprint well"><code class="r">## We use the iris data and generate an artificial cost matrix
+## (following Beygelzimer et al. (2005))
+df = iris
+cost = matrix(runif(150 * 3, 0, 2000), 150) * (1 - diag(3))[df$Species,]
+df$Species = NULL
+
+costsens.task = makeCostSensTask(data = df, cost = cost)
+costsens.task
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] benign    benign    benign    benign    benign    malignant
-## Levels: benign malignant
+<pre class="prettyprint well"><code>## Supervised task: df
+## Type: costsens
+## Observations: 150
+## Features:
+## numerics  factors 
+##        4        0 
+## Missings: FALSE
+## Has blocking: FALSE
+## Classes: 3
+## y1, y2, y3
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">head(getTaskTargets(regr.task))
+<p>Beygelzimer, A., Dani, V., Hayes, T., Langford, J., and Zadrozny, B.
+Error limiting reductions between classification tasks.
+In Machine Learning: Proceedings of the 22rd International Conference, pp. 49–56. ACM, 2005.</p>
+<p>For more details see the section about <a href="&amp;cost_sensitive_classification.md">cost-sensitive classification</a>.</p>
+<h3 id="further-details">Further details</h3>
+<p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> help page also lists several other arguments to describe further details of the
+problem.</p>
+<p>For example, we could include a <code>blocking</code> factor into the task.
+This would tell the task that some observations "belong together", and should
+not be separated when splitting into training and test sets during a resampling iteration.</p>
+<p>Another possibility is to <code>weight</code> observations according to their importance.</p>
+<h2 id="accessing-a-learning-task">Accessing a learning task</h2>
+<p><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> is a <code>list</code> and the main properties of the learning task are stored in element
+<code>"task.desc"</code> which is of class <a href="http://www.rdocumentation.org/packages/mlr/functions/TaskDesc.html">TaskDesc</a>.</p>
+<pre class="prettyprint well"><code class="r">str(regr.task$task.desc)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'regr.task' not found
+<pre class="prettyprint well"><code>## List of 8
+##  $ id          : chr &quot;BostonHousing&quot;
+##  $ type        : chr &quot;regr&quot;
+##  $ target      : chr &quot;medv&quot;
+##  $ size        : int 506
+##  $ n.feat      : Named int [1:2] 12 1
+##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;numerics&quot; &quot;factors&quot;
+##  $ has.missings: logi FALSE
+##  $ has.weights : logi FALSE
+##  $ has.blocking: logi FALSE
+##  - attr(*, &quot;class&quot;)= chr [1:2] &quot;TaskDescRegr&quot; &quot;TaskDesc&quot;
 </code></pre>
 
-<pre class="prettyprint well"><code class="r"># accessing the data set:
+<p>Moreover, there are some functions, following the naming convention
+<code>getTask&lt;what_to_extract&gt;</code>, to access the data set and some of its
+properties.
+The most important ones are listed in the documentation of <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.
+Here are some examples.</p>
+<pre class="prettyprint well"><code class="r">## Get the number of input variables in cluster.task:
+getTaskNFeats(cluster.task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## [1] 11
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Get the names of the input variables in cluster.task:
+getTaskFeatureNames(cluster.task)
+</code></pre>
+
+<pre class="prettyprint well"><code>##  [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
+## [11] &quot;carb&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Get the values of the target variable in regr.task:
+head(getTaskTargets(regr.task))
+</code></pre>
+
+<pre class="prettyprint well"><code>## [1] 24.0 21.6 34.7 33.4 36.2 28.7
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Get the cost matrix in costsens.task:
+head(getTaskCosts(costsens.task))
+</code></pre>
+
+<pre class="prettyprint well"><code>##      y1     y2      y3
+## [1,]  0 1589.6  674.44
+## [2,]  0 1173.4  828.41
+## [3,]  0  942.8 1095.34
+## [4,]  0 1049.6  477.82
+## [5,]  0 1121.9   90.85
+## [6,]  0 1820.0  841.07
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Accessing the data set in classif.task:
 str(getTaskData(classif.task))
 </code></pre>
 
@@ -317,36 +493,120 @@ str(getTaskData(classif.task))
 </code></pre>
 
 <p>Note the many options <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskData.html">getTaskData</a> provides to convert the data set into a convenient format.
-This is especially handy when you integrate a learner from another package into
-<strong>mlr</strong>.</p>
-<p>If you are more technically minded, you could also access
-the information directly stored in the slot called <code>task$task.desc</code>,
-which stands for "description" and is of class <a href="http://www.rdocumentation.org/packages/mlr/functions/TaskDesc.html">TaskDesc</a>.</p>
-<pre class="prettyprint well"><code class="r">str(classif.task$task.desc)
+This is especially handy when you <a href="&amp;create_learner.md">integrate a learner</a> from another <strong>R</strong>
+package into <strong>mlr</strong>.
+In this regard the functions <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskFormula.html">getTaskFormula</a> and <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskFormulaAsString.html">getTaskFormulaAsString</a> are also useful.</p>
+<h2 id="modifying-a-learning-task">Modifying a learning task</h2>
+<p><strong>mlr</strong> provides several functions to alter an existing <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> which is often more
+convenient than creating a new <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> from scratch.
+Here are some examples.</p>
+<pre class="prettyprint well"><code class="r">## Select observations and features:
+cluster.task = subsetTask(cluster.task, subset = 4:17)
+
+## It may happen, especially after selecting observations, that features are constant.
+## These should be removed.
+removeConstantFeatures(cluster.task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## List of 11
-##  $ id          : chr &quot;BreastCancer&quot;
-##  $ type        : chr &quot;classif&quot;
-##  $ target      : chr &quot;Class&quot;
-##  $ size        : int 699
-##  $ n.feat      : Named int [1:2] 0 4
-##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;numerics&quot; &quot;factors&quot;
-##  $ has.missings: logi TRUE
-##  $ has.weights : logi FALSE
-##  $ has.blocking: logi FALSE
-##  $ class.levels: chr [1:2] &quot;benign&quot; &quot;malignant&quot;
-##  $ positive    : chr &quot;malignant&quot;
-##  $ negative    : chr &quot;benign&quot;
-##  - attr(*, &quot;class&quot;)= chr [1:2] &quot;TaskDescClassif&quot; &quot;TaskDesc&quot;
+<pre class="prettyprint well"><code>## Removing 1 columns: am
 </code></pre>
 
-<p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> help page also lists several other arguments
-to describe further details of the problem.</p>
-<p>For example, we could include a blocking factor into the task.
-This would tell the task that some observations "belong together", and should
-not be separated when splitting into training and test sets during a resampling iteration.
-Another possibility is to weight observations according to their importance.</p>
+<pre class="prettyprint well"><code>## Unsupervised task: cars
+## Type: cluster
+## Observations: 14
+## Features:
+## numerics  factors 
+##       10        0 
+## Missings: FALSE
+## Has weights: FALSE
+## Has blocking: FALSE
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Remove selected features:
+dropFeatures(surv.task, c(&quot;meal.cal&quot;, &quot;wt.loss&quot;))
+</code></pre>
+
+<pre class="prettyprint well"><code>## Supervised task: lung
+## Type: surv
+## Target: time,status
+## Observations: 228
+## Features:
+## numerics  factors 
+##        6        0 
+## Missings: TRUE
+## Has weights: FALSE
+## Has blocking: FALSE
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Standardize numerical features:
+normalizeFeatures(classif.task, method = &quot;standardize&quot;)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Supervised task: BreastCancer
+## Type: classif
+## Target: Class
+## Observations: 699
+## Features:
+## numerics  factors 
+##        0        4 
+## Missings: TRUE
+## Has weights: FALSE
+## Has blocking: FALSE
+## Classes: 2
+##    benign malignant 
+##       458       241 
+## Positive class: malignant
+</code></pre>
+
+<h2 id="pre-defined-tasks">Pre-defined tasks</h2>
+<p>For your convenience <strong>mlr</strong> provides pre-defined <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>s for each type of learning problem.
+These are used throughout this tutorial in order to get shorter and more readable code.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Task</th>
+<th align="left">Title</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">agri.task (mlr.agri)</td>
+<td align="left">European Union Agricultural Workforces clustering task</td>
+</tr>
+<tr>
+<td align="left">bc.task (mlr.bc)</td>
+<td align="left">Wisconsin Breast Cancer classification task</td>
+</tr>
+<tr>
+<td align="left">bh.task (mlr.bh)</td>
+<td align="left">Boston Housing regression task</td>
+</tr>
+<tr>
+<td align="left">costIris.task (mlr.costIris)</td>
+<td align="left">Iris cost-sensitive classification task</td>
+</tr>
+<tr>
+<td align="left">iris.task (mlr.iris)</td>
+<td align="left">Iris classification task</td>
+</tr>
+<tr>
+<td align="left">lung.task (mlr.lung)</td>
+<td align="left">NCCTG Lung Cancer survival task</td>
+</tr>
+<tr>
+<td align="left">mtcars.task (mlr.mtcars)</td>
+<td align="left">Motor Trend Car Road Tests clustering task</td>
+</tr>
+<tr>
+<td align="left">sonar.task (mlr.sonar)</td>
+<td align="left">Sonar classification task</td>
+</tr>
+<tr>
+<td align="left">wpbc.task (mlr.wpbc)</td>
+<td align="left">Wisonsin Prognostic Breast Cancer (WPBC) survival task</td>
+</tr>
+</tbody>
+</table>
 </div>
         </div>
 

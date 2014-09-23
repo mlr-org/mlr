@@ -110,23 +110,31 @@
                             </li>
                         
                             <li >
-                                <a href="../feature_selection/">Feature selection</a>
+                                <a href="../wrapper/">Wrapper</a>
                             </li>
                         
                             <li >
-                                <a href="../roc_analysis/">ROC analysis</a>
-                            </li>
-                        
-                            <li >
-                                <a href="../multicriteria_evaluation/">Multicriteria Evaluation</a>
+                                <a href="../makeBaggingWrapper/">Bagging</a>
                             </li>
                         
                             <li >
                                 <a href="../tune/">Tuning</a>
                             </li>
                         
+                            <li >
+                                <a href="../feature_selection/">Feature Selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../cost_sensitive_classif/">Cost-Sensitive Classification</a>
+                            </li>
+                        
                             <li class="active">
                                 <a href="./">Over- and Undersampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC Analysis</a>
                             </li>
                         
                         </ul>
@@ -139,11 +147,28 @@
                         <ul class="dropdown-menu">
                         
                             <li >
-                                <a href="../create_learner/">Create custom learners</a>
+                                <a href="../create_learner/">Create Custom Learners</a>
                             </li>
                         
                             <li >
-                                <a href="../create_measure/">Create custom measures</a>
+                                <a href="../create_measure/">Create Custom Measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Appendix <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../measures/">Performance Measures</a>
                             </li>
                         
                         </ul>
@@ -159,12 +184,12 @@
                 
                 
                 <li >
-                    <a rel="next" href="../tune/">
+                    <a rel="next" href="../cost_sensitive_classif/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../create_learner/">
+                    <a rel="prev" href="../roc_analysis/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -189,7 +214,7 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#over-and-undersampling">Over- and Undersampling</a></li>
+        <li class="main active"><a href="#imbalanced-classification-problems-over-and-undersampling">Imbalanced Classification Problems: Over- and Undersampling</a></li>
         
             <li><a href="#data-frames">Data frames</a></li>
         
@@ -202,13 +227,13 @@
 </div></div>
             <div class="col-md-9" role="main">
 
-<h1 id="over-and-undersampling">Over- and Undersampling</h1>
+<h1 id="imbalanced-classification-problems-over-and-undersampling">Imbalanced Classification Problems: Over- and Undersampling</h1>
 <p>For unevenly distributed classes in the data, it might be useful to oversample
 the minority or undersample the majority class.</p>
 <h2 id="data-frames">Data frames</h2>
 <p>First we show how it is done for <code>data.frame</code>s:</p>
-<pre class="prettyprint well"><code class="r">classA = data.frame(x = rnorm(20, mean=1), class=&quot;A&quot;)
-classB = data.frame(x = rnorm(80, mean=2), class=&quot;B&quot;)
+<pre class="prettyprint well"><code class="r">classA = data.frame(x = rnorm(20, mean=1), class = &quot;A&quot;)
+classB = data.frame(x = rnorm(80, mean=2), class = &quot;B&quot;)
 data = rbind(classA, classB)
 table(data$class)
 </code></pre>
@@ -218,90 +243,89 @@ table(data$class)
 ## 20 80
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">data.over = oversample(data, &quot;class&quot;, rate=4)
+<pre class="prettyprint well"><code class="r">data.over = oversample(data, &quot;class&quot;, rate = 4)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: unused argument (&quot;class&quot;)
+<pre class="prettyprint well"><code>## Error: unbenutztes Argument (&quot;class&quot;)
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">table(data.over$class)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'data.over' not found
+<pre class="prettyprint well"><code>## Error: Objekt 'data.over' nicht gefunden
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">data.under = undersample(data, &quot;class&quot;, rate=1/4)
+<pre class="prettyprint well"><code class="r">data.under = undersample(data, &quot;class&quot;, rate = 1/4)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: unused argument (&quot;class&quot;)
+<pre class="prettyprint well"><code>## Error: unbenutztes Argument (&quot;class&quot;)
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">table(data.under$class)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'data.under' not found
+<pre class="prettyprint well"><code>## Error: Objekt 'data.under' nicht gefunden
 </code></pre>
 
 <h2 id="tasks">Tasks</h2>
 <p>Now let's see what the effect is for a classification task:</p>
 <pre class="prettyprint well"><code class="r">data.even = rbind(
-  data.frame(x = rnorm(50, mean=1), class=&quot;A&quot;),
-  data.frame(x = rnorm(50, mean=2), class=&quot;B&quot;))
-task = makeClassifTask(data=data, target=&quot;class&quot;)
-task.over = oversample(task, rate=4)
-task.under = undersample(task, rate=1/4)
+  data.frame(x = rnorm(50, mean=1), class = &quot;A&quot;),
+  data.frame(x = rnorm(50, mean=2), class = &quot;B&quot;))
+task = makeClassifTask(data = data, target = &quot;class&quot;)
+task.over = oversample(task, rate = 4)
+task.under = undersample(task, rate = 1/4)
 lrn = makeLearner(&quot;classif.PART&quot;)
-mod = train(lrn, task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: RWeka
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
 mod.over = train(lrn, task.over)
 mod.under = train(lrn, task.under)
-performance(predict(mod, newdata = data.even), measures=mmce)
+performance(predict(mod, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## mmce 
-##  0.5
+<pre class="prettyprint well"><code>## [1] 0.5
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">performance(predict(mod.over, newdata = data.even), measures=mmce)
+<pre class="prettyprint well"><code class="r">performance(predict(mod.over, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## mmce 
-## 0.38
+<pre class="prettyprint well"><code>## [1] 0.29
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures=mmce)
+<pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## mmce 
-##  0.5
+<pre class="prettyprint well"><code>## [1] 0.4
 </code></pre>
 
 <h2 id="learners">Learners</h2>
 <p>Note that it is <em>highly dependent</em> on the learner if over- or undersampling will
 be useful. You are also able to wrap the over- and undersampling within the learner.</p>
-<pre class="prettyprint well"><code class="r">lrn.over = makeOversampleWrapper(lrn, osw.rate=4)
-lrn.under = makeUndersampleWrapper(lrn, usw.rate=1/4)
+<pre class="prettyprint well"><code class="r">lrn.over = makeOversampleWrapper(lrn, osw.rate = 4)
+lrn.under = makeUndersampleWrapper(lrn, usw.rate = 1/4)
 mod = train(lrn, task)
 mod.over = train(lrn.over, task)
 mod.under = train(lrn.under, task)
-performance(predict(mod, newdata = data.even), measures=mmce)
+performance(predict(mod, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## mmce 
-##  0.5
+<pre class="prettyprint well"><code>## [1] 0.5
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">performance(predict(mod.over, newdata = data.even), measures=mmce)
+<pre class="prettyprint well"><code class="r">performance(predict(mod.over, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## mmce 
-## 0.55
+<pre class="prettyprint well"><code>## [1] 0.38
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures=mmce)
+<pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## mmce 
-##  0.4
+<pre class="prettyprint well"><code>## [1] 0.34
 </code></pre>
 
 </div>

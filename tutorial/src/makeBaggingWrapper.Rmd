@@ -1,39 +1,36 @@
-# Generic bagging
+# Generic Bagging
 
 One reason why random forests perform so well is that they are using bagging as
 a technique to gain more stability. But why do you want to limit yourself to the
 classifiers already implemented in well known random forests when it is
-really easy to build your with **mlr**?
+really easy to build your own with **mlr**?
 
-Just bag one learner already supported in **mlr** with [&makeBaggingWrapper].
+Just bag a learner already supported in **mlr** with [&makeBaggingWrapper].
 
-As in a random forest, we need a Learner which is trained on a subset of the
+As in a random forest, we need a [Learner](&makeLearner) which is trained on a subset of the
 data during each iteration of the bagging process.
 The subsets are chosen according to the parameters given to [&makeBaggingWrapper]:
-* `bag.iters` On how many subsets (samples) do we want to train our learner?
+* `bw.iters` On how many subsets (samples) do we want to train our [Learner](&makeLearner)?
 * `bw.replace` Sample with replacement (also known as *bootstrapping*)?
-* `bw.size` Percentage size of the samples. If `bw.replace=TRUE`, `bag.size=1` is the default. This does not mean that one sample will contain all the observations as observations will occur multiple times in each sample.
+* `bw.size` Percentage size of the samples. If `bw.replace = TRUE`, `bw.size = 1` is the default. This does not mean that one sample will contain all the observations as observations will occur multiple times in each sample.
 * `bw.feats` Percentage size of randomly selected features for each iteration.
 
-Of course we also need a `learner` which we have to pass to
+Of course we also need a [Learner](&makeLearner) which we have to pass to
 [&makeBaggingWrapper].
 
 ```{r makeBaggingWrapper_setup}
-data(Sonar, package = "mlbench")
-tsk = makeClassifTask(data=Sonar, target="Class")
 lrn = makeLearner("classif.PART")
-rsmpl = makeResampleDesc("CV", iters=10)
-bagLrn = makeBaggingWrapper(lrn, bag.iters=50, bw.replace=TRUE, bw.size=0.8, bw.feats=3/4, predict.type="prob")
+bagLrn = makeBaggingWrapper(lrn, bw.iters = 50, bw.replace = TRUE, bw.size = 0.8, bw.feats = 3/4)
 ```
 Now we can compare the performance with and without bagging.
 First let's try it without bagging:
 ```{r makeBaggingWrapper_without}
-result = resample(learner=lrn, task=tsk, resampling=rsmpl, show.info=FALSE)
-result$aggr
+r = resample(learner = lrn, task = sonar.task, resampling = sonar.rin, show.info = FALSE)
+r$aggr
 ```
 And now with bagging:
 ```{r makeBaggingWrapper_with}
-result = resultBagging = resample(learner=bagLrn, task=tsk, resampling=rsmpl, show.info=FALSE)
+result = resultBagging = resample(learner = bagLrn, task = sonar.task, resampling = sonar.rin, show.info = FALSE)
 result$aggr
 ```
 Training more learners takes more time, but can outperform pure learners
@@ -46,14 +43,13 @@ With bagging, you can get an estimated standard deviation regardless of the
 wrapped learner. Below, we give a small example for regression.
 
 ```{r makeBaggingWrapper_regression}
-data(BostonHousing)
-train.inds = seq(1, 506, 3)
-test.inds  = setdiff(1:nrow(BostonHousing), train.inds)
-task = makeRegrTask("regrtask", data=BostonHousing, target="medv")
+n = bh.task$task.desc$size
+train.inds = seq(1, n, 3)
+test.inds  = setdiff(1:n, train.inds)
 lrn = makeLearner("regr.randomForest")
-bagLrn = makeBaggingWrapper(lrn, predict.type="se")
-mod = train(learner=bagLrn, task=task, subset=train.inds)
-pred = predict(mod, newdata=BostonHousing, subset=test.inds)
+bagLrn = makeBaggingWrapper(lrn, predict.type = "se")
+mod = train(learner = bagLrn, task = bh.task, subset = train.inds)
+pred = predict(mod, task = bh.task, subset = test.inds)
 head(pred$data)
 ```
 In the column labelled `se`, the standard deviation for each prediction (`response`) is given.
@@ -67,3 +63,9 @@ data = cbind(pred$data, BostonHousing[test.inds,])
 g = ggplot(data, aes(x=lstat, y=response, ymin=response-se, ymax=response+se, col=age))
 g + geom_point() + geom_linerange(alpha=0.5)
 ```
+
+
+
+
+
+FIXME: getBaggingModels

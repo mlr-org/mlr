@@ -1,0 +1,68 @@
+# Integrated Learners
+
+In the following the learning methods already integrated into **mlr** are listed.
+
+Columns **Num.**, **Fac.**, **NAs**, and **Weights** indicate if a method can cope with
+numerical and factor predictors, if ``NA``s in the data are allowed and if observation
+weights are supported.
+
+Column **Props** shows further properties of the learning methods.
+For *classification* you can see if binary and/or multi-class problems are supported.
+In case of *survival analysis* the censoring type is shown. 
+For example *rcens* means that the Learner can deal with right censored data.
+Moreover, the type of prediction is displayed.
+For *classification* and *survival analysis* *prob* indicates that probabilities can be predicted.
+In case of regression *se* means that standard errors and the mean response can be predicted.
+
+
+```{r include=FALSE}
+linkPkg = function(x) {
+  collapse(sprintf("[%1$s](http://cran.r-project.org/web/packages/%1$s/)", x))
+}
+
+getTab = function(type) {
+  lrns = listLearners(type, create = TRUE, warn.missing.packages = FALSE)
+  cols = c("ID", "Name", "Packages", "Num.", "Fac.", "NAs", "Weights", "Props")
+  df = makeDataFrame(nrow = length(lrns), ncol = length(cols),
+    col.types = c("character", "character", "character", "logical", "logical", "logical", "logical", "character"))
+  names(df) = cols
+
+  cn = function(x) if (is.null(x)) NA else x
+
+  for (i in seq_along(lrns)) {
+    lrn = lrns[[i]]
+    df[i, 1] = lrn$id
+    df[i, 2] = cn(lrn$name)
+    df[i, 3] = linkPkg(lrn$package)
+    df[i, 4] = hasProperties(lrn, "numerics")
+    df[i, 5] = hasProperties(lrn, "factors")
+    df[i, 6] = hasProperties(lrn, "missings")
+    df[i, 7] = hasProperties(lrn, "weights")
+    df[i, 8] = collapse(setdiff(lrn$properties, c("numerics", "factors", "missings", "weights")))
+  }
+  logicals = vlapply(df, is.logical)
+  df[logicals] = lapply(df[logicals], function(x) ifelse(x, "X", ""))
+  pandoc.table(df, style = "rmarkdown", split.tables = Inf, split.cells = Inf,
+    justify = c("left", "left", "left", "center", "center", "center", "center", "right"))
+}
+```
+
+### Classification
+```{r echo=FALSE,results="asis"}
+getTab("classif")
+```
+
+### Regression
+```{r echo=FALSE,results="asis"}
+getTab("regr")
+```
+
+### Survival analysis
+```{r echo=FALSE,results="asis"}
+getTab("surv")
+```
+
+### Cluster analysis
+```{r echo=FALSE,results="asis"}
+getTab("cluster")
+```

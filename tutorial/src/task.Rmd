@@ -1,25 +1,81 @@
 # Learning Tasks
 
-Learning tasks are the basic elements of the package to encapsulate the
+Learning tasks are the basic elements of the package that encapsulate the
 data set and all relevant information regarding the purpose of the
-task, e.g, the target variable.
+task, e.g., the target variable.
 
 The tasks are organised in a hierarchy, with the generic
 [&Task] at the top.
 The concrete tasks that can be instantiated are [ClassifTask](&Task) for classification,
 [RegrTask](&Task) for regression, [SurvTask](&Task) for survival
 analysis, [CostSensTask](&Task) for
-cost-sensitive learning, and [ClusterTask](&Task) for clustering.
+cost-sensitive classification, and [ClusterTask](&Task) for clustering.
 
-There are dedicated functions to create these tasks given data and other
-relevant information. These are [makeClassifTask](&Task),
+
+## Creating a learning task
+
+There are dedicated functions to create these tasks:
+[makeClassifTask](&Task),
 [makeRegrTask](&Task),
 [makeSurvTask](&Task), [makeCostSensTask](&Task), and
 [makeClusterTask](&Task).
+These require the data set and, depending on the 
+nature of the learning problem, further information.
 
-In the following example, we define a classification task for the data
-set ``BreastCancer`` (from the package mlbench) and exclude the ID
-variable from all further model fitting and evaluation.
+
+### Cluster tasks
+
+In order to generate a task for a cluster analysis problem ``data`` is the only mandatory argument.
+In the following example we create a learning task from the data set [mtcars](&datasets::mtcars).
+
+```{r}
+cluster.task = makeClusterTask(id = "cars", data = mtcars)
+cluster.task
+```
+
+The argument ``id`` is optional and allows to specify a custom name for the task.
+It will be later used to name results, for example of
+[benchmark experiments](&benchmark_experiments.md).
+If not specified the ``id`` defaults to the name of the **R** object passed to ``data``,
+in the above example ``"mtcars"``.
+
+
+### Regression tasks
+
+In case of supervised learning like regression (as well as classification and
+survival analysis) we, additional to ``data``, have to specify the name of the numeric ``target``
+variable.
+
+```{r}
+data(BostonHousing, package = "mlbench")
+
+regr.task = makeRegrTask(data = BostonHousing, target = "medv")
+regr.task
+```
+
+As you can see, the task records the type of the learning problem and basic information about
+the data set, e.g., the types of the features (numeric vectors or factors),
+the number of observations, or whether missing values are present.
+
+Creating tasks for (cost-sensitive) classification problems and survival analysis
+follows the same scheme.
+For each of these learning problems there are some specifics worth mentioning and described
+in the following.
+
+
+### Classification tasks
+
+In case of classification the target variable has to be a ``factor``.
+
+In binary classification it is customary to refer to the two classes as *positive* and
+*negative* class.
+This is for example relevant with regard to certain [performance measures](&performance.md)
+like the *true positive rate*.
+By default the first factor level of the target variable is selected as the positive class.
+
+In the following example, we define a classification task for the data set 
+[BreastCancer](&mlbench::BreastCancer) and exclude the variable ``Id`` from all further
+model fitting and evaluation.
 
 ```{r}
 data(BreastCancer, package = "mlbench")
@@ -30,68 +86,157 @@ classif.task = makeClassifTask(id = "BreastCancer", data = df, target = "Class")
 classif.task
 ```
 
-As we can see, the task records basic information about the data set,
-e.g. the types of the features, the number of observations, whether
-missing values are present, the number of observations per class and so on.
-
-
-In many of the regression examples in this tutorial, we will use the ``BostonHousing`` data set:
-
-```{r}
-data(BostonHousing)
-regr.task = makeRegrTask(id = "BostonHousing", data = BostonHousing, target = "medv")
-regr.task
-```
-
-## Further information
-
-Let's have another look at the classification example.
-
-As this is a binary problem, we see that a positive class is selected
-by default. This will generally be auto-selected, but you might
-want to do this manually for your application. It mainly concerns ROC analysis, where in order
-to talk about something like a true positive rate, we need to know which of the two classes is the positive
-one.
+The positive class is benign.
+Class malignant can be manually selected as the positive class:
 
 ```{r}
 classif.task = makeClassifTask(id = "BreastCancer", data = df, target = "Class",
-  positive = "malignant")
+    positive = "malignant")
 ```
 
-There are also some convenient methods to access properties and parts of the task.
-The most important ones are listed in [&Task].
 
-Here are some examples.
+### Survival analysis
+
+In case of survival analysis ``target`` specifies the names of the survival time and event
+columns in ``data`` and therefore is a character vector of length 2.
+Note that the event column has to be a logical vector.
+For details see the documentation of function [Surv](&survival::Surv).
+
+```{r}
+data(lung, package = "survival")
+## Coerce the event column to a logical vector
+lung$status = lung$status - 1
+
+surv.task = makeSurvTask(data = lung, target = c("time", "status"))
+surv.task
+```
+
+The type of censoring can be specified via the argument ``censoring`` which defaults to
+``"rcens"`` for right censored data.
+
+
+### Cost-sensitive classification
+
+In regular classification, as addressed above, the aim when training a classifier is to 
+minimize the misclassification rate.
+Thus, it is implicitly assumed that all types of misclassification errors are equally severe.
+In *cost-sensitive classification* the costs associated with assigning an object with true
+class *y* to class *k* can be different depending on the true and predicted class labels
+*y* and *k*.
+
+A further generalization is *cost-sensitive learning with example-specific costs*.
+In this scenario, the misclassification costs do not only depend on the true and predicted
+class labels, but also on the feature values *x*.
+Thus, in case of a *K*-class problem, each example (*x*, *y*) is associated with a vector
+of costs for predicting classes 1,...,*K* given the true class label *y*.
+The cost of the true class label *y* is minimal.
+Therefore, if the cost matrix is given, the true values *y* of the target variable are 
+automatically known.
+
+Thus, in order to create a cost-sensitive classification task, the feature values *x* and
+a ``cost`` matrix that contains the cost vectors for all examples in the data set are required. 
 
 
 ```{r}
-# get the names of the input variables:
-getTaskFeatureNames(classif.task)
+## We use the iris data and generate an artificial cost matrix
+## (following Beygelzimer et al. (2005))
+df = iris
+cost = matrix(runif(150 * 3, 0, 2000), 150) * (1 - diag(3))[df$Species,]
+df$Species = NULL
 
-# get values of the target variable for all observations:
-head(getTaskTargets(classif.task))
+costsens.task = makeCostSensTask(data = df, cost = cost)
+costsens.task
+```
+
+Beygelzimer, A., Dani, V., Hayes, T., Langford, J., and Zadrozny, B.
+Error limiting reductions between classification tasks.
+In Machine Learning: Proceedings of the 22rd International Conference, pp. 49–56. ACM, 2005.
+
+For more details see the section about [cost-sensitive classification](&cost_sensitive_classification.md).
+
+
+### Further details
+
+The [&Task] help page also lists several other arguments to describe further details of the
+problem.
+
+For example, we could include a ``blocking`` factor into the task.
+This would tell the task that some observations "belong together", and should
+not be separated when splitting into training and test sets during a resampling iteration.
+
+Another possibility is to ``weight`` observations according to their importance.
+
+
+## Accessing a learning task
+
+[&Task] is a ``list`` and the main properties of the learning task are stored in element
+``"task.desc"`` which is of class [&TaskDesc].
+
+```{r}
+str(regr.task$task.desc)
+```
+
+Moreover, there are some functions, following the naming convention
+``getTask<what_to_extract>``, to access the data set and some of its
+properties.
+The most important ones are listed in the documentation of [&Task].
+Here are some examples.
+
+```{r}
+## Get the number of input variables in cluster.task:
+getTaskNFeats(cluster.task)
+
+## Get the names of the input variables in cluster.task:
+getTaskFeatureNames(cluster.task)
+
+## Get the values of the target variable in regr.task:
 head(getTaskTargets(regr.task))
 
-# accessing the data set:
+## Get the cost matrix in costsens.task:
+head(getTaskCosts(costsens.task))
+
+## Accessing the data set in classif.task:
 str(getTaskData(classif.task))
 ```
 
 Note the many options [&getTaskData] provides to convert the data set into a convenient format.
-This is especially handy when you integrate a learner from another package into
-**mlr**.
+This is especially handy when you [integrate a learner](&create_learner.md) from another **R**
+package into **mlr**.
+In this regard the functions [&getTaskFormula] and [&getTaskFormulaAsString] are also useful.
 
-If you are more technically minded, you could also access
-the information directly stored in the slot called `task$task.desc`,
-which stands for "description" and is of class [&TaskDesc].
+
+## Modifying a learning task
+
+**mlr** provides several functions to alter an existing [&Task] which is often more
+convenient than creating a new [&Task] from scratch.
+Here are some examples.
 
 ```{r}
-str(classif.task$task.desc)
+## Select observations and features:
+cluster.task = subsetTask(cluster.task, subset = 4:17)
+
+## It may happen, especially after selecting observations, that features are constant.
+## These should be removed.
+removeConstantFeatures(cluster.task)
+
+## Remove selected features:
+dropFeatures(surv.task, c("meal.cal", "wt.loss"))
+
+## Standardize numerical features:
+normalizeFeatures(classif.task, method = "standardize")
 ```
 
-The [&Task] help page also lists several other arguments
-to describe further details of the problem.
 
-For example, we could include a blocking factor into the task.
-This would tell the task that some observations "belong together", and should
-not be separated when splitting into training and test sets during a resampling iteration.
-Another possibility is to weight observations according to their importance.
+## Pre-defined tasks
+
+For your convenience **mlr** provides pre-defined [&Task]s for each type of learning problem.
+These are used throughout this tutorial in order to get shorter and more readable code.
+
+```{r echo=FALSE, results="asis"}
+d = data(package = "mlr")
+d = d$results
+df = as.data.frame(d[seq(2,nrow(d),2), c("Item", "Title")])
+names(df)[1] = "Task"
+pandoc.table(df, style = "rmarkdown", split.tables = Inf, split.cells = Inf,
+	justify = c("left", "left"))
+```

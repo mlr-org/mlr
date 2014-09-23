@@ -110,15 +110,11 @@
                             </li>
                         
                             <li >
-                                <a href="../feature_selection/">Feature selection</a>
+                                <a href="../wrapper/">Wrapper</a>
                             </li>
                         
                             <li >
-                                <a href="../roc_analysis/">ROC analysis</a>
-                            </li>
-                        
-                            <li >
-                                <a href="../multicriteria_evaluation/">Multicriteria Evaluation</a>
+                                <a href="../makeBaggingWrapper/">Bagging</a>
                             </li>
                         
                             <li >
@@ -126,7 +122,19 @@
                             </li>
                         
                             <li >
+                                <a href="../feature_selection/">Feature Selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../cost_sensitive_classif/">Cost-Sensitive Classification</a>
+                            </li>
+                        
+                            <li >
                                 <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC Analysis</a>
                             </li>
                         
                         </ul>
@@ -139,11 +147,28 @@
                         <ul class="dropdown-menu">
                         
                             <li >
-                                <a href="../create_learner/">Create custom learners</a>
+                                <a href="../create_learner/">Create Custom Learners</a>
                             </li>
                         
                             <li >
-                                <a href="../create_measure/">Create custom measures</a>
+                                <a href="../create_measure/">Create Custom Measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Appendix <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../measures/">Performance Measures</a>
                             </li>
                         
                         </ul>
@@ -164,7 +189,7 @@
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../feature_selection/">
+                    <a rel="prev" href="../wrapper/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -191,6 +216,14 @@
     
         <li class="main active"><a href="#configure-mlr">Configure mlr</a></li>
         
+            <li><a href="#example-reduce-the-output-on-the-console">Example: Reduce the output on the console</a></li>
+        
+            <li><a href="#access-the-current-configuration">Access the current configuration</a></li>
+        
+            <li><a href="#example-turn-off-parameter-checking">Example: Turn off parameter checking</a></li>
+        
+            <li><a href="#example-handle-errors-in-an-underlying-learning-method">Example: Handle errors in an underlying learning method</a></li>
+        
     
     </ul>
 </div></div>
@@ -198,20 +231,18 @@
 
 <h1 id="configure-mlr">Configure mlr</h1>
 <p>If you really know what you are doing you may think <strong>mlr</strong> is limiting you in certain ways.
-Actually <strong>mlr</strong> is just designed to make errors due to typos or invalid parameter values as unlikely as possible.
+Actually <strong>mlr</strong> is just designed to make errors due to typos or invalid parameter values
+as unlikely as possible.
 But sometimes you want to break those barriers and get full access.
 For all parameters, simply refer to the documentation of <a href="http://www.rdocumentation.org/packages/mlr/functions/configureMlr.html">configureMlr</a>.</p>
+<h2 id="example-reduce-the-output-on-the-console">Example: Reduce the output on the console</h2>
 <p>You are bothered by all the output on the console like in this example?</p>
-<pre class="prettyprint well"><code class="r">## Define a learning task and an appropriate learner
-task = makeClassifTask(data = iris, target = &quot;Species&quot;)
-lrn = makeLearner(&quot;classif.ksvm&quot;)
-
-## Perform a 3-fold cross-validation
-rdesc = makeResampleDesc(&quot;CV&quot;, iters=3)
-r = resample(lrn, task, rdesc)
+<pre class="prettyprint well"><code class="r">## Perform a 3-fold cross-validation
+r = resample(&quot;classif.ksvm&quot;, iris.task, iris.rin)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
+<pre class="prettyprint well"><code>## Loading required package: kernlab
+## [Resample] cross-validation iter: 1
 </code></pre>
 
 <pre class="prettyprint well"><code>## Using automatic sigma estimation (sigest) for RBF or laplace kernel
@@ -229,23 +260,46 @@ r = resample(lrn, task, rdesc)
 <pre class="prettyprint well"><code>## Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] Result: mmce.test.mean=0.06
+<pre class="prettyprint well"><code>## [Resample] Result: mmce.test.mean=0.04
 </code></pre>
 
 <p>Just try the following:</p>
 <pre class="prettyprint well"><code class="r">configureMlr(show.learner.output = FALSE)
-r = resample(lrn, task, rdesc)
+r = resample(&quot;classif.ksvm&quot;, iris.task, iris.rin)
 </code></pre>
 
 <pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.0533
+## [Resample] Result: mmce.test.mean=0.04
 </code></pre>
 
-<p>In an additional scenario, you want to access a new parameter of a learner which
+<h2 id="access-the-current-configuration">Access the current configuration</h2>
+<p>Function <a href="http://www.rdocumentation.org/packages/mlr/functions/getMlrOptions.html">getMlrOptions</a> returns a <code>list</code> that shows the current configuration:</p>
+<pre class="prettyprint well"><code class="r">getMlrOptions()
+</code></pre>
+
+<pre class="prettyprint well"><code>## $on.learner.error
+## [1] &quot;stop&quot;
+## 
+## $on.learner.warning
+## [1] &quot;warn&quot;
+## 
+## $on.par.without.desc
+## [1] &quot;stop&quot;
+## 
+## $show.info
+## [1] TRUE
+## 
+## $show.learner.output
+## [1] FALSE
+</code></pre>
+
+<h2 id="example-turn-off-parameter-checking">Example: Turn off parameter checking</h2>
+<p>In an additional scenario, you want to access a new parameter of a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLEarner.html">Learner</a> which
 is already available in <strong>mlr</strong>, but the parameter is not implemented in <strong>mlr</strong> yet.
-If this is the case you might want to <a href="https://github.com/berndbischl/mlr#get-in-touch">contact us</a> or <a href="https://github.com/berndbischl/mlr/issues/new">open an issue</a> as well!
+If this is the case you might want to <a href="https://github.com/berndbischl/mlr#get-in-touch">contact us</a>
+or <a href="https://github.com/berndbischl/mlr/issues/new">open an issue</a> as well!
 But until then you can turn off <strong>mlr</strong>'s paramater checking like this:</p>
 <pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;classif.ksvm&quot;, newPar = 3)
 </code></pre>
@@ -261,11 +315,84 @@ But until then you can turn off <strong>mlr</strong>'s paramater checking like t
 ## You can switch off this check by using configureMlr!
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">configureMlr(on.par.without.desc=&quot;quiet&quot;)
+<pre class="prettyprint well"><code class="r">configureMlr(on.par.without.desc = &quot;quiet&quot;)
 lrn = makeLearner(&quot;classif.ksvm&quot;, newPar = 3)
 lrn = makeLearner(&quot;classif.ksvm&quot;, epsilon = -3)
 </code></pre>
 
+<h2 id="example-handle-errors-in-an-underlying-learning-method">Example: Handle errors in an underlying learning method</h2>
+<p>Another not uncommon situation is that a particular learning method throws an error.
+The default behavior of <strong>mlr</strong> is to generate an exception as well.
+However, in some situations, for example if you conduct a <a href="&amp;benchmark_experiments.md">benchmark study</a>
+with multiple data sets and learners, you normally do not want to terminate the whole
+benchmark experiment due to one error.
+The following example shows how to prevent this:</p>
+<pre class="prettyprint well"><code class="r">## This call gives an error caused by the low number of observations in class `virginica`
+train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: some group is too small for 'qda'
+</code></pre>
+
+<pre class="prettyprint well"><code>## Timing stopped at: 0.009 0.001 0.011
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">configureMlr(on.learner.error = &quot;warn&quot;)
+mod = train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Warning: Could not train learner classif.qda: Error in qda.default(x, grouping, ...) : 
+##   some group is too small for 'qda'
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod
+</code></pre>
+
+<pre class="prettyprint well"><code>## Model for id = classif.qda class = classif.qda
+## Trained on obs: 104
+## Used features: 4
+## Hyperparameters: 
+## Training failed: Error in qda.default(x, grouping, ...) : 
+##   some group is too small for 'qda'
+## 
+## Training failed: Error in qda.default(x, grouping, ...) : 
+##   some group is too small for 'qda'
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## mod is an object of class FailureModel
+isFailureModel(mod)
+</code></pre>
+
+<pre class="prettyprint well"><code>## [1] TRUE
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Get the error message
+getFailureModelMsg(mod)
+</code></pre>
+
+<pre class="prettyprint well"><code>## [1] &quot;Error in qda.default(x, grouping, ...) : \n  some group is too small for 'qda'\n&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## NAs are predicted
+predict(mod, iris.task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Prediction:
+## predict.type: response
+## threshold: 
+## time: NA
+##   id  truth response
+## 1  1 setosa     &lt;NA&gt;
+## 2  2 setosa     &lt;NA&gt;
+## 3  3 setosa     &lt;NA&gt;
+## 4  4 setosa     &lt;NA&gt;
+## 5  5 setosa     &lt;NA&gt;
+## 6  6 setosa     &lt;NA&gt;
+</code></pre>
+
+<p>Instead of an exception a warning is issued and a <a href="http://www.rdocumentation.org/packages/mlr/functions/FailureModel.html">FailureModel</a> is created that predicts
+<code>NA</code>s for all new observations. Function <a href="http://www.rdocumentation.org/packages/mlr/functions/getFailureModelMsg.html">getFailureModelMsg</a> extracts the error
+message.</p>
 </div>
         </div>
 

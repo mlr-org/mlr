@@ -2,10 +2,11 @@
 
 This web page will provide you with an in-depth introduction on how to
 use the **mlr** framework for machine learning experiments and
-optimization in R.
+optimization in **R**.
 
 Our focus is on your comprehension of the basic functions and applications.
-For detailed technical information and manual pages, please refer to the package's [manual pages](http://berndbischl.github.io/mlr/man/).
+For detailed technical information and manual pages, please refer to the package's
+[manual pages](http://berndbischl.github.io/mlr/man/).
 They are regularly updated and reflect the documentation of the current package version on CRAN.
 
 
@@ -32,14 +33,14 @@ A simple stratified cross-validation of the *linear discriminant analysis* with 
 ```{r}
 library(mlr)
 data(iris)
-# Define the Task:
-tsk = makeClassifTask(id = "tutorial", data = iris, target = "Species")
-# Define the Learner:
+## Define the task:
+task = makeClassifTask(id = "tutorial", data = iris, target = "Species")
+## Define the learner:
 lrn = makeLearner("classif.lda")
-# Define the Resampling Strategy:
-rsm = makeResampleDesc(method = "CV", stratify = TRUE)
-# Do the resampling:
-res = resample(learner = lrn, task = tsk, resampling = rsm, show.info = FALSE)
-# Get the mean misclassification error:
+## Define the resampling strategy:
+rdesc = makeResampleDesc(method = "CV", stratify = TRUE)
+## Do the resampling:
+res = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE)
+## Get the mean misclassification error:
 res$aggr
 ```

@@ -4,77 +4,112 @@ Often, data sets include a large number of features and it is desirable to reduc
 The technique of selecting a subset of relevant features is called feature selection.
 Feature selection can make the model better interpretable, the learning process
 faster, and the fitted model more general by removing irrelevant features.
-Different approaches exist, in order to figure out, which the relevant features
-are. **mlr** supports [filters](#Filter) and [wrappers](#Wrapper).
+There exist different approaches to identify the relevant features.
+**mlr** supports [filters](#Filter) and [wrappers](#Wrapper).
+
 
 ## Filters
 
+only regression and classification [&Task]s
 Filters are the simplest approach to find features that do not contain a lot of
 additional information given the other features and can be left out.
-Different methods are built into **mlr**'s function [&getFeatureFilterValues]
-and all access filter algorithms from the package `FSelector`.
-The function is given a [&Task] and simply returns a vector characterising
+Different methods are built into **mlr**'s function [&getFilterValues]
+and all access filter algorithms from the package
+[FSelector](&http://cran.r-project.org/web/packages/FSelector/index.html).
+
+The currently available methods are
+```{r}
+listFilterMethods()
+```
+
+The function [&getFilterValues] is given a [&Task] and simply returns a vector characterising
 the importance of the different features.
 
 ```{r}
-task = makeClassifTask(data=iris, target="Species")
-importance = getFilterValues(task, method="information.gain")
-importance
+fv = getFilterValues(iris.task, method = "information.gain")
+fv
+```
+
+class [&FilterValues]
+
+A barplot of importance values for the individuals features can be obtained via the 
+function [&plotFilterValues].
+```{r}
+plotFilterValues(fv)
 ```
 
 According to this filter, `Petal.Width` and `Petal.Length` contain the most information.
-With **mlr**'s function [&filterFeatures], you can now filter the features in
-the task by leaving out all but a given number of features with the highest
+With **mlr**'s function [&filterFeatures], you can now create a new task
+by leaving out all but a given number of features with the highest
 feature importance.
 
 ```{r}
-filtered.task = filterFeatures(task, method="information.gain", select="abs", val=2)
+filtered.task = filterFeatures(iris.task, method = "information.gain", select = "abs", val = 2)
 ```
 
+``select``
+``val``
 Other filter options in [&filterFeatures] are to require a percentage of
 features to be filtered instead or to set a threshold for the numerical importance
 values.
 
-In a proper experimental set up you might want to automate the selection of the
+In a proper experimental setup you might want to automate the selection of the
 features so that it can be part of the validation method of your choice.
 We will use the standard 10-fold cross validation.
 
+[&makeFilterWrapper]
+
 ```{r}
-learner = makeLearner("classif.fnn")
-learnerFiltered = makeFilterWrapper(learner=learner, fw.method="information.gain", fw.select="perc", fw.val=0.7)
-rdesc = makeResampleDesc("CV", iters=10)
-rsres = resample(learner=learnerFiltered, task=task, resampling=rdesc, show.info=FALSE, models=TRUE)
-rsres$aggr
+lrn = makeFilterWrapper(learner = "classif.fnn", fw.method = "information.gain", fw.select = "perc", fw.val = 0.7)
+rdesc = makeResampleDesc("CV", iters = 10)
+r = resample(learner = lrn, task = iris.task, resampling = rdesc, show.info = FALSE, models = TRUE)
+r$aggr
+
+
+#m = train(lrn, iris.task)
+#getFilterResult(m)
+#getFilteredFeatures(m)
+#benchmark
 ```
 
 You may want to know which features have been used. Luckily, we have called
-`resample` with the argument `models=TRUE`, which means that `rsres$models`
+`resample` with the argument `models = TRUE`, which means that `r$models`
 contains a `list` of each model used for a fold.
 In this case the [&Learner] is also of the class [&FilterWrapper] and we can call
 [&getFilteredFeatures] on each model.
 
 ```{r}
-sfeats = sapply(rsres$models, getFilteredFeatures)
+#sapply(r$models, getFilterResult)
+sfeats = sapply(r$models, getFilteredFeatures)
 table(sfeats)
 ```
 
 The selection of features seems to be very stable.
 The `Sepal.Width` did not make it into a single fold.
 
+
 ### Tuning the threshold
 ```{r}
-data(Sonar, package = "mlbench")
-task = makeClassifTask(data = Sonar, target = "Class", positive = "M")
-lrn = makeLearner("classif.rpart")
-lrnFiltered = makeFilterWrapper(learner=lrn, fw.method="chi.squared", fw.select="threshold", fw.val=0)
-ps = makeParamSet(makeDiscreteParam("fw.val", values = seq(from=0.2, 0.4, by=0.05)))
-tuneRes = tuneParams(lrnFiltered, task=task, resampling=makeResampleDesc("CV", iters=5), par.set=ps, control=makeTuneControlGrid())
+lrn = makeFilterWrapper(learner = "classif.rpart", fw.method = "chi.squared", fw.select = "threshold", fw.val = 0)
+ps = makeParamSet(makeDiscreteParam("fw.val", values = seq(0.2, 0.4, 0.05)))
+tuneRes = tuneParams(lrn, task = sonar.task, resampling = sonar.rin, par.set = ps, control = makeTuneControlGrid())
 ```
+
+benchmark experiment
+[FilterResult](&getFilterResult)
+
 
 ## Wrapper
 
 Unlike the filters, wrappers use the performance a learner can
 achieve on a given subset of the features in the data to do the filtering.
+which learning tasks?
+
+apply learner repeatedly to the task with different sets of features included and choose the
+subset which leads to the best learner performance.
+choose performance measure and search strategy [&FeatSelControl]
+exhaustive search, forward and backward search, search via a genetic algorithm
+
 
 ### Classification example
 
@@ -111,3 +146,9 @@ ctrlGA = makeFeatSelControlGA(maxit=10)
 sfGA = selectFeatures(learner=lrn, task=task, resampling=rdesc, control=ctrlGA, show.info=FALSE)
 sfGA
 ```
+
+makeFeatSelWrapper
+getFeatSelResult
+FeatSelResult
+
+

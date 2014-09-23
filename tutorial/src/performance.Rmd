@@ -2,117 +2,131 @@
 
 The quality of the predictions of a model in **mlr** can be assessed w.r.t. a
 number of different performance measures.
+In order to calculate the performance measures, call [&performance] on the object
+returned by [predict](&predict.WrappedModel) and specify the desired performance measure(s).
 
-Typical performance measures are mean misclassification error ([&mmce]),
-accuracy ([&acc]) or measures based on ROC analysis for classification and mean
-of squared errors ([&mse]) or mean of absolute errors ([&mae]) for regression.
-For clustering tasks, measures such as the Dunn index ([&dunn]) are provided,
-while for survival predictions, the Concordance Index ([&cindex]) is
-supported, and for cost-sensitive predictions the misclassification penalty
+**mlr** provides a large number of performance measures for all types of learning problems.
+Typical performance measures for *classification* are mean misclassification error ([&mmce]),
+accuracy ([&acc]) or measures based on [ROC analysis](&roc_analysis.md).
+For *regression* usually mean of squared errors ([&mse]) or mean of absolute errors ([&mae])
+are considered.
+For *clustering* tasks, measures such as the Dunn index ([&dunn]) are provided,
+while for *survival* predictions, the Concordance Index ([&cindex]) is
+supported, and for *cost-sensitive* predictions the misclassification penalty
 ([&mcp]) and others. It is also possible to access the time to train the
-model, the time to compute the prediction and their sum as performance measures.
+learner ([&timetrain]), the time to compute the prediction ([&timepredict]) and their 
+sum ([&timeboth]) as performance measures.
 
-To see which performance measures are implemented, have a look at [&measures].
+To see which performance measures are implemented, have a look at the
+[table of performance measures](measures.md) and the [&measures] documentation page.
+
 If you want to implement an additional measure or include a measure with
 non-standard misclassification costs, go to section
-[create_measure](create_measure.md).
-In order to calculate the performance measures, the function [&performance] is used.
+[Create Custom Measures](&create_measure.md).
 
 
-## Classification example
-
-We fit a Linear Discriminant Analysis on a subset of the ``iris`` data set and calculate
-the mean misclassification error (mmce) on the test data set.
+In the following example we fit a [gradient boosting machine](&gbm::gbm) on a subset of the
+[BostonHousing](&mlbench::BostonHousing) data set and calculate the mean squared error
+([&mse]) on the remaining observations.
 
 ```{r}
-task = makeClassifTask(data = iris, target = "Species")
-lrn = makeLearner("classif.lda")
-mod = train(lrn, task = task, subset = seq(1,150,2))
-pred = predict(mod, task = task, subset = seq(2,150,2))
+n = bh.task$task.desc$size
+lrn = makeLearner("regr.gbm", n.trees = 1000)
+mod = train(lrn, task = bh.task, subset = seq(1,n,2))
+pred = predict(mod, task = bh.task, subset = seq(2,n,2))
 
-performance(pred, measures = mmce)
+## The default performance measure is the mean squared error (mse)
+performance(pred)
+## Calculate the median of squared errors (medse) instead
+performance(pred, measures = medse)
 ```
 
-Let's have a look at some more performance measures. Note that in order to assess
-the time needed for training, the fitted model has to be passed.
+Of course we can also calculate multiple performance measures at once by simply using a 
+list of measures which can also include [your own measure](create_measure.md).
 
 ```{r}
-performance(pred, measures = acc)
-
-performance(pred = pred, measures = timepredict)
-
-performance(pred = pred, measures = timetrain, model = mod)
-performance(pred = pred, measures = timeboth, model = mod)
+## Calculate mean squared error, median squared error and mean absolute error
+performance(pred, measures = list(mse, medse, mae))
 ```
 
-Of course we can also calculate multiple performance measures at once by simply using a list of measures which can also include [your own measure](create_measure.md).
+For the other types of learning problems and measures, calculating the performance basically 
+works in the same way.
 
+Note that for some performance measures it is required that you pass the [&Task] or the
+[fitted model](&WrappedModel).
+
+For example in order to assess the time needed for training, the fitted model has to be passed.
 ```{r}
-ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain, "timeboth" = timeboth)
-performance(pred = pred, measures = ms, model = mod)
+performance(pred, measures = timetrain, model = mod)
 ```
 
-## Binary classification
-
-In the two-class case many more measures are available. In the following example,
-the accuracy as well as the false positive and false negative rates are computed.
-
+For many performance measures in cluster analysis the [&Task] is required.
 ```{r}
-data(Sonar, package = "mlbench")
+lrn = makeLearner("cluster.SimpleKMeans", N = 3)
+mod = train(lrn, mtcars.task)
+pred = predict(mod, task = mtcars.task)
 
-task = makeClassifTask(data = Sonar, target = "Class", positive = "M")
-lrn = makeLearner("classif.rpart")
-mod = train(lrn, task = task)
-pred = predict(mod, task = task)
-
-performance(pred, measures = list(acc, fpr, fnr))
+## Calculate the Dunn index
+performance(pred, measures = dunn, task = mtcars.task)
 ```
 
-Note that in order to calculate AUC -- the area under the ROC (receiver
+Moreover, some measures may require a certain type of prediction.
+For example in order to calculate the AUC ([&auc]) - the area under the ROC (receiver
 operating characteristic) curve, we have to make sure that posterior
-probabilities are predicted, i.e. set the predict type of the [Learner](&makeLearner) to "prob".
+probabilities are predicted.
+For more information on ROC analysis, see section [ROC Analysis](roc_analysis.md).
 
 ```{r}
-data(Sonar, package = "mlbench")
-
-task = makeClassifTask(data = Sonar, target = "Class", positive = "M")
 lrn = makeLearner("classif.rpart", predict.type = "prob")
-mod = train(lrn, task = task)
-pred = predict(mod, task = task)
+mod = train(lrn, task = sonar.task)
+pred = predict(mod, task = sonar.task)
 
 performance(pred, measures = auc)
 ```
 
-For more information on ROC analysis, see section [ROC Analysis](roc_analysis.md).
+Also bear in mind that many of the performance measures available for classification as,
+e.g., the false positive rate ([&fpr]) are only suitable for binary problems.
 
+The requirements of the individual measures are shown in the
+[table of performance measures](&measures.md).
 
-## Regression example
-
-In regression, everything works in the same way as in the above examples.
-We again use the ``BostonHousing`` data set, fit a Gradient Boosting Machine
-model on a training set and calculate the mean of squared errors and the mean of
-absolute errors on the test data set.
-
+If you are interested in the properties of a single measure you can access them directly.
+See the help page about [Measure](&makeMeasure) for information on the individual slots.
 ```{r}
-data(BostonHousing, package = "mlbench")
-
-task = makeRegrTask(data = BostonHousing, target = "medv")
-
-## Training and test set indices
-training.set = seq(from = 1, to = nrow(BostonHousing), by = 2)
-test.set = seq(from = 2, to = nrow(BostonHousing), by = 2)
-
-## Gradient Boosting Machine on training set
-lrn = makeLearner("regr.gbm", n.trees = 1000)
-mod = train(lrn, task, subset = training.set)
-
-## Prediction on test set data
-pred = predict(mod, newdata = BostonHousing[test.set, ])
-
-## Compare predicted and true labels using measures MSE and MAE
-ms = list("mse" = mse, "mae" = mae)
-sapply(ms, function(meas) performance(pred, measures = meas))
+## Mean misclassification error
+str(mmce)
 ```
 
-For the other task and learning types, the performance measures work in the same
-way.
+If you would like a list of available measures with certain properties use the function
+[&listMeasures].
+```{r}
+## Performance measures for classification with multiple classes
+listMeasures("classif", properties = "classif.multi")
+## Performance measure suitable for the iris classification task
+listMeasures(iris.task)
+```
+
+
+## Binary classification: Plot performance(s) versus threshold
+
+As you may recall (see the previous section about [making predictions](&predict.md))
+in binary classification we can adjust the threshold used to map probabilities to class labels.
+Helpful in this regard is function [&plotThreshVsPerf] that generates a plot of the
+learner performance versus the threshold.
+Later on we will show how to find an optimal threshold value by [tuning](tune.md).
+
+In the following example we consider the [BreastCancer](&mlbench::BreastCancer) data set and
+plot the false positive rate ([&fpr]), the false negative rate ([&fnr]) as well as the
+misclassification rate ([&mmce]) for all possible threshold values.
+
+```{r}
+lrn = makeLearner("classif.rpart", predict.type = "prob")
+n = bc.task$task.desc$size
+mod = train(lrn, task = bc.task, subset = seq(1,n,2))
+pred = predict(mod, task = bc.task, subset = seq(2,n,2))
+
+## Performance for the default threshold 0.5
+performance(pred, measures = list(fpr, fnr, mmce))
+## Plot false negative and positive rates as well as the error rate versus the threshold
+plotThreshVsPerf(pred, measures = list(fpr, fnr, mmce))
+```

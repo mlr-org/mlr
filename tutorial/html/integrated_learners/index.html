@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+        <title>Integrated Learners - mlr tutorial</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../css/prettify-1.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../task/">Tasks</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../learner/">Learner</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../train/">Train</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../predict/">Predict</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../performance/">Performance</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../resample/">Resampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_experiments/">Benchmark Experiments</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../parallelization/">Parallelization</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../configureMlr/">Configuration</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../wrapper/">Wrapper</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../makeBaggingWrapper/">Bagging</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../tune/">Tuning</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../feature_selection/">Feature Selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../cost_sensitive_classif/">Cost-Sensitive Classification</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC Analysis</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Extend <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../create_learner/">Create Custom Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../create_measure/">Create Custom Measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Appendix <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li class="active">
+                                <a href="./">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../measures/">Performance Measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                <li >
+                    <a rel="next" href="../create_measure/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../measures/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a href="https://github.com/berndbischl/mlr/">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#integrated-learners">Integrated Learners</a></li>
+        
+            <li><a href="#classification">Classification</a></li>
+        
+            <li><a href="#regression">Regression</a></li>
+        
+            <li><a href="#survival-analysis">Survival analysis</a></li>
+        
+            <li><a href="#cluster-analysis">Cluster analysis</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h1 id="integrated-learners">Integrated Learners</h1>
+<p>In the following the learning methods already integrated into <strong>mlr</strong> are listed.</p>
+<p>Columns <strong>Num.</strong>, <strong>Fac.</strong>, <strong>NAs</strong>, and <strong>Weights</strong> indicate if a method can cope with
+numerical and factor predictors, if <code>NA</code>s in the data are allowed and if observation
+weights are supported.</p>
+<p>Column <strong>Props</strong> shows further properties of the learning methods.
+For <em>classification</em> you can see if binary and/or multi-class problems are supported.
+In case of <em>survival analysis</em> the censoring type is shown. 
+For example <em>rcens</em> means that the Learner can deal with right censored data.
+Moreover, the type of prediction is displayed.
+For <em>classification</em> and <em>survival analysis</em> <em>prob</em> indicates that probabilities can be predicted.
+In case of regression <em>se</em> means that standard errors and the mean response can be predicted.</p>
+<h3 id="classification">Classification</h3>
+<table>
+<thead>
+<tr>
+<th align="left">ID</th>
+<th align="left">Name</th>
+<th align="left">Packages</th>
+<th align="center">Num.</th>
+<th align="center">Fac.</th>
+<th align="center">NAs</th>
+<th align="center">Weights</th>
+<th align="right">Props</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">classif.ada</td>
+<td align="left">ada Boosting</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/ada/">ada</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.bartMachine</td>
+<td align="left">Bayesian Additive Regression Trees</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/bartMachine/">bartMachine</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="right">prob,twoclass</td>
+</tr>
+<tr>
+<td align="left">classif.blackboost</td>
+<td align="left">Gradient boosting with regression trees</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/mboost/">mboost</a>,<a href="http://cran.r-project.org/web/packages/party/">party</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="right">twoclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.boosting</td>
+<td align="left">Adabag Boosting</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/adabag/">adabag</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.cforest</td>
+<td align="left">Random forest based on conditional inference trees</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/party/">party</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.ctree</td>
+<td align="left">Conditional Inference Trees</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/party/">party</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.fnn</td>
+<td align="left">Fast k-Nearest Neighbor</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/FNN/">FNN</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass</td>
+</tr>
+<tr>
+<td align="left">classif.gbm</td>
+<td align="left">Gradient boosting machine</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/gbm/">gbm</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.geoDA</td>
+<td align="left">Geometric Predictive Discriminant Analysis</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/DiscriMiner/">DiscriMiner</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass</td>
+</tr>
+<tr>
+<td align="left">classif.glmboost</td>
+<td align="left">Boosting for GLMs</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/mboost/">mboost</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">twoclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.glmnet</td>
+<td align="left">GLM with lasso or elasticnet regularization</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/glmnet/">glmnet</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">prob,twoclass,multiclass</td>
+</tr>
+<tr>
+<td align="left">classif.IBk</td>
+<td align="left">K-nearest neighbours</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.J48</td>
+<td align="left">J48 Decision Trees</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.JRip</td>
+<td align="left">Propositional Rule Learner</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.kknn</td>
+<td align="left">k-Nearest Neighbor</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/kknn/">kknn</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.knn</td>
+<td align="left">k-Nearest Neighbor</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/class/">class</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass</td>
+</tr>
+<tr>
+<td align="left">classif.ksvm</td>
+<td align="left">Support Vector Machines</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/kernlab/">kernlab</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.lda</td>
+<td align="left">Linear Discriminant Analysis</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/MASS/">MASS</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.LiblineaRBinary</td>
+<td align="left">Regularized Binary Linear Predictive Models Estimation</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/LiblineaR/">LiblineaR</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass</td>
+</tr>
+<tr>
+<td align="left">classif.LiblineaRLogReg</td>
+<td align="left">Regularized Logistic Regression</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/LiblineaR/">LiblineaR</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.LiblineaRMultiClass</td>
+<td align="left">Multi-class Support Vector Classification by Crammer and Singer</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/LiblineaR/">LiblineaR</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass</td>
+</tr>
+<tr>
+<td align="left">classif.linDA</td>
+<td align="left">Linear Discriminant Analysis</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/DiscriMiner/">DiscriMiner</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass</td>
+</tr>
+<tr>
+<td align="left">classif.logreg</td>
+<td align="left">Logistic Regression</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/stats/">stats</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">twoclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.lqa</td>
+<td align="left">classif.lqa</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/lqa/">lqa</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">prob,twoclass</td>
+</tr>
+<tr>
+<td align="left">classif.lssvm</td>
+<td align="left">Least Squares Support Vector Machine</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/kernlab/">kernlab</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass</td>
+</tr>
+<tr>
+<td align="left">classif.lvq1</td>
+<td align="left">Learning Vector Quantization</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/class/">class</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass</td>
+</tr>
+<tr>
+<td align="left">classif.mda</td>
+<td align="left">Mixture Discriminant Analysis</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/mda/">mda</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.multinom</td>
+<td align="left">Multinomial Regression</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/nnet/">nnet</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.naiveBayes</td>
+<td align="left">Naive Bayes</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/e1071/">e1071</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.nnet</td>
+<td align="left">Neural Network</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/nnet/">nnet</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.OneR</td>
+<td align="left">1-R classifier</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.PART</td>
+<td align="left">PART decision lists</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.plr</td>
+<td align="left">Logistic regression with a L2 penalty</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/stepPlr/">stepPlr</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">twoclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.plsDA</td>
+<td align="left">Partial Least Squares (PLS) Discriminant Analysis</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/DiscriMiner/">DiscriMiner</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass</td>
+</tr>
+<tr>
+<td align="left">classif.plsdaCaret</td>
+<td align="left">Partial Least Squares (PLS) Discriminant Analysis</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/caret/">caret</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">prob,twoclass</td>
+</tr>
+<tr>
+<td align="left">classif.qda</td>
+<td align="left">Quadratic Discriminant Analysis</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/MASS/">MASS</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.quaDA</td>
+<td align="left">Quadratic Discriminant Analysis</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/DiscriMiner/">DiscriMiner</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass</td>
+</tr>
+<tr>
+<td align="left">classif.randomForest</td>
+<td align="left">Random Forest</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/randomForest/">randomForest</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.randomForestSRC</td>
+<td align="left">Random Forest</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/randomForestSRC/">randomForestSRC</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="right">prob,twoclass,multiclass</td>
+</tr>
+<tr>
+<td align="left">classif.rda</td>
+<td align="left">Regularized Discriminant Analysis</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/klaR/">klaR</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.rpart</td>
+<td align="left">Decision Tree</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/rpart/">rpart</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.rrlda</td>
+<td align="left">classif.rrlda</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/rrlda/">rrlda</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass</td>
+</tr>
+<tr>
+<td align="left">classif.sda</td>
+<td align="left">Shrinkage Discriminant Analysis</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/sda/">sda</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+<tr>
+<td align="left">classif.svm</td>
+<td align="left">Support Vector Machines (libsvm)</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/e1071/">e1071</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass,multiclass,prob</td>
+</tr>
+</tbody>
+</table>
+<h3 id="regression">Regression</h3>
+<table>
+<thead>
+<tr>
+<th align="left">ID</th>
+<th align="left">Name</th>
+<th align="left">Packages</th>
+<th align="center">Num.</th>
+<th align="center">Fac.</th>
+<th align="center">NAs</th>
+<th align="center">Weights</th>
+<th align="right">Props</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">regr.blackboost</td>
+<td align="left">Gradient boosting with regression trees</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/mboost/">mboost</a>,<a href="http://cran.r-project.org/web/packages/party/">party</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.cforest</td>
+<td align="left">Random forest based on conditional inference trees</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/party/">party</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.crs</td>
+<td align="left">Regression Splines</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/crs/">crs</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">se</td>
+</tr>
+<tr>
+<td align="left">regr.ctree</td>
+<td align="left">Conditional Inference Trees</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/party/">party</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.earth</td>
+<td align="left">Multivariate Adaptive Regression Splines</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/earth/">earth</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.fnn</td>
+<td align="left">Fast k-Nearest Neighbor</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/FNN/">FNN</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.gbm</td>
+<td align="left">Gradient boosting machine</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/gbm/">gbm</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.glmnet</td>
+<td align="left">GLM with lasso or elasticnet regularization</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/glmnet/">glmnet</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.IBk</td>
+<td align="left">K-nearest neighbours</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">prob</td>
+</tr>
+<tr>
+<td align="left">regr.kknn</td>
+<td align="left">K-Nearest-Neighbor regression</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/kknn/">kknn</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.km</td>
+<td align="left">Kriging</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/DiceKriging/">DiceKriging</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">se</td>
+</tr>
+<tr>
+<td align="left">regr.ksvm</td>
+<td align="left">Support Vector Machines</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/kernlab/">kernlab</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.lm</td>
+<td align="left">Simple linear regression</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/stats/">stats</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">se</td>
+</tr>
+<tr>
+<td align="left">regr.mars</td>
+<td align="left">Multivariate Adaptive Regression Splines</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/mda/">mda</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.mob</td>
+<td align="left">Model-based recursive partitioning yielding a tree with fitted models associated with each terminal node</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/party/">party</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.nnet</td>
+<td align="left">Neural Network</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/nnet/">nnet</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.pcr</td>
+<td align="left">Principal component regression</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/pls/">pls</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.penalized.lasso</td>
+<td align="left">Lasso regression</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/penalized/">penalized</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.penalized.ridge</td>
+<td align="left">regr.penalized.ridge</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/penalized/">penalized</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.plsr</td>
+<td align="left">Partial least squares regression</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/pls/">pls</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.randomForest</td>
+<td align="left">Random Forest</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/randomForest/">randomForest</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">se</td>
+</tr>
+<tr>
+<td align="left">regr.randomForestSRC</td>
+<td align="left">Random Forest</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/randomForestSRC/">randomForestSRC</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.rpart</td>
+<td align="left">Decision Tree</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/rpart/">rpart</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.rsm</td>
+<td align="left">Response surface regression</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/rsm/">rsm</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.rvm</td>
+<td align="left">Relevance Vector Machine</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/kernlab/">kernlab</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">regr.svm</td>
+<td align="left">Support Vector Machines (libsvm)</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/e1071/">e1071</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="survival-analysis">Survival analysis</h3>
+<table>
+<thead>
+<tr>
+<th align="left">ID</th>
+<th align="left">Name</th>
+<th align="left">Packages</th>
+<th align="center">Num.</th>
+<th align="center">Fac.</th>
+<th align="center">NAs</th>
+<th align="center">Weights</th>
+<th align="right">Props</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">surv.cforest</td>
+<td align="left">Random forest based on conditional inference trees</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/party/">party</a>,<a href="http://cran.r-project.org/web/packages/survival/">survival</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">rcens</td>
+</tr>
+<tr>
+<td align="left">surv.CoxBoost</td>
+<td align="left">Cox proportional hazards model with componentwise likelhood based boosting</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/CoxBoost/">CoxBoost</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">rcens</td>
+</tr>
+<tr>
+<td align="left">surv.coxph</td>
+<td align="left">Cox proportional hazard model</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/survival/">survival</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="right">prob,rcens</td>
+</tr>
+<tr>
+<td align="left">surv.cvglmnet</td>
+<td align="left">GLM with regularization (cross validated lambda)</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/glmnet/">glmnet</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">rcens</td>
+</tr>
+<tr>
+<td align="left">surv.glmboost</td>
+<td align="left">surv.glmboost</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/mboost/">mboost</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">rcens</td>
+</tr>
+<tr>
+<td align="left">surv.glmnet</td>
+<td align="left">GLM with regularization</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/glmnet/">glmnet</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">rcens</td>
+</tr>
+<tr>
+<td align="left">surv.penalized</td>
+<td align="left">surv.penalized</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/penalized/">penalized</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">rcens</td>
+</tr>
+<tr>
+<td align="left">surv.randomForestSRC</td>
+<td align="left">Random Forests for Survival</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/randomForestSRC/">randomForestSRC</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="right">rcens</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cluster-analysis">Cluster analysis</h3>
+<table>
+<thead>
+<tr>
+<th align="left">ID</th>
+<th align="left">Name</th>
+<th align="left">Packages</th>
+<th align="center">Num.</th>
+<th align="center">Fac.</th>
+<th align="center">NAs</th>
+<th align="center">Weights</th>
+<th align="right">Props</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">cluster.cmeans</td>
+<td align="left">fuzzy c-means clustering</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/e1071/">e1071</a>,<a href="http://cran.r-project.org/web/packages/clue/">clue</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">prob</td>
+</tr>
+<tr>
+<td align="left">cluster.Cobweb</td>
+<td align="left">Cobweb clustering algorithm</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">cluster.DBScan</td>
+<td align="left">DBScan clustering</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">cluster.EM</td>
+<td align="left">Expectation-maximization clustering</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">cluster.FarthestFirst</td>
+<td align="left">FarthestFirst clustering algorithm</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">cluster.kmeans</td>
+<td align="left">k-means</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/stats/">stats</a>,<a href="http://cran.r-project.org/web/packages/clue/">clue</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">cluster.SimpleKMeans</td>
+<td align="left">k-means clustering</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+<tr>
+<td align="left">cluster.XMeans</td>
+<td align="left">XMeans (k-means with automatic determination of k)</td>
+<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table>
+</div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        
+
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/base.js"></script>
+        
+    </body>
+</html>

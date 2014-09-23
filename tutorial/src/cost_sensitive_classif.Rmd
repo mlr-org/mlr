@@ -1,0 +1,19 @@
+# Cost-Sensitive Classification
+
+[&makeCostMeasure]
+
+
+weighting
+
+[&tuneThreshold]
+
+
+over/undersampling
+
+[&makeCostSensClassifWrapper]
+[&makeCostSensRegrWrapper]
+[&makeCostSensWeightedPairsWrapper]
+[&getCostSensClassifModel]
+[&getCostSensRegrModels]
+[&getCostSensWeightedPairsModels]
+

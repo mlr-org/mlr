@@ -110,15 +110,11 @@
                             </li>
                         
                             <li >
-                                <a href="../feature_selection/">Feature selection</a>
+                                <a href="../wrapper/">Wrapper</a>
                             </li>
                         
                             <li >
-                                <a href="../roc_analysis/">ROC analysis</a>
-                            </li>
-                        
-                            <li >
-                                <a href="../multicriteria_evaluation/">Multicriteria Evaluation</a>
+                                <a href="../makeBaggingWrapper/">Bagging</a>
                             </li>
                         
                             <li >
@@ -126,7 +122,19 @@
                             </li>
                         
                             <li >
+                                <a href="../feature_selection/">Feature Selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../cost_sensitive_classif/">Cost-Sensitive Classification</a>
+                            </li>
+                        
+                            <li >
                                 <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC Analysis</a>
                             </li>
                         
                         </ul>
@@ -139,11 +147,28 @@
                         <ul class="dropdown-menu">
                         
                             <li >
-                                <a href="../create_learner/">Create custom learners</a>
+                                <a href="../create_learner/">Create Custom Learners</a>
                             </li>
                         
                             <li >
-                                <a href="../create_measure/">Create custom measures</a>
+                                <a href="../create_measure/">Create Custom Measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Appendix <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../measures/">Performance Measures</a>
                             </li>
                         
                         </ul>
@@ -197,9 +222,12 @@
             <div class="col-md-9" role="main">
 
 <h1 id="parallelization">Parallelization</h1>
-<p><em>R</em> by default doesn't make use of multiple cores.
-With the integration of <a href="https://github.com/berndbischl/parallelMap">parallelMap</a> into <strong>mlr</strong>, it becomes easy to activate the parallel computing capabilities already supported by <strong>mlr</strong>.</p>
-<p>All you have to do is select an interface by calling one of the <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart*</a> functions.
+<p><strong>R</strong> by default doesn't make use of multiple cores.
+With the integration of <a href="https://github.com/berndbischl/parallelMap">parallelMap</a> into
+<strong>mlr</strong>, it becomes easy to activate the parallel computing capabilities already
+supported by <strong>mlr</strong>.</p>
+<p>All you have to do is select an interface by calling one of the
+<a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart&lt;*&gt;</a> functions.
 The first annotated loop <strong>mlr</strong> encounters will then be automatically parallelized.
 Afterwards it is good practice to call <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStop.html">parallelStop</a>.</p>
 <pre class="prettyprint well"><code class="r">library(&quot;parallelMap&quot;)
@@ -209,15 +237,12 @@ parallelStartSocket(2)
 <pre class="prettyprint well"><code>## Starting parallelization in mode=socket with cpus=2.
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">task = makeClassifTask(data = iris, target = &quot;Species&quot;)
-lrn = makeLearner(&quot;classif.lda&quot;)
-rdesc = makeResampleDesc(&quot;CV&quot;, iters = 4)
-r = resample(lrn, task, rdesc)
+<pre class="prettyprint well"><code class="r">r = resample(&quot;classif.lda&quot;, iris.task, iris.rin)
 </code></pre>
 
 <pre class="prettyprint well"><code>## Exporting objects to slaves for mode socket: .mlr.slave.options
-## Mapping in parallel: mode = socket; cpus = 2; elements = 4.
-## [Resample] Result: mmce.test.mean=0.0197
+## Mapping in parallel: mode = socket; cpus = 2; elements = 3.
+## [Resample] Result: mmce.test.mean=0.02
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">parallelStop()
@@ -226,9 +251,13 @@ r = resample(lrn, task, rdesc)
 <pre class="prettyprint well"><code>## Stopped parallelization. All cleaned up.
 </code></pre>
 
-<p>In Linux or Mac OS X, you may want to use <code>parallelStartMulticore()</code> instead.
-We over different parallelization levels for fine grain control over the parallelization.
-E.g., if you do not want to parallelize the <code>benchmark()</code> function because it has only very few iterations but want to parallelize the resampling of each learner instead, you can specifically pass the level <code>"resample"</code> to the <code>parallelStart*</code> function.
+<p>In Linux or Mac OS X, you may want to use
+<a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStartMulticore.html">parallelStartMulticore</a> instead.
+We offer different parallelization levels for fine grain control over the parallelization.
+E.g., if you do not want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/benchmark.html">benchmark</a> function because it has only very
+few iterations but want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resampling</a> of each learner instead,
+you can specifically pass the <code>level</code> <code>"resample"</code> to the
+<a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart&lt;*&gt;</a> function.
 Currently the following levels are supported:</p>
 <pre class="prettyprint well"><code class="r">parallelShowRegisteredLevels()
 </code></pre>
@@ -236,7 +265,8 @@ Currently the following levels are supported:</p>
 <pre class="prettyprint well"><code>## mlr                 : benchmark,resample,selectFeatures,tuneParams
 </code></pre>
 
-<p>For further ways of parallelizing your computations, consult the <a href="https://github.com/berndbischl/parallelMap#parallelmap">parallelMap tutorial</a> and help.</p>
+<p>For further ways of parallelizing your computations, consult the
+<a href="https://github.com/berndbischl/parallelMap#parallelmap">parallelMap tutorial</a> and help.</p>
 </div>
         </div>
 

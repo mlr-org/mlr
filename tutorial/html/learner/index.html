@@ -110,15 +110,11 @@
                             </li>
                         
                             <li >
-                                <a href="../feature_selection/">Feature selection</a>
+                                <a href="../wrapper/">Wrapper</a>
                             </li>
                         
                             <li >
-                                <a href="../roc_analysis/">ROC analysis</a>
-                            </li>
-                        
-                            <li >
-                                <a href="../multicriteria_evaluation/">Multicriteria Evaluation</a>
+                                <a href="../makeBaggingWrapper/">Bagging</a>
                             </li>
                         
                             <li >
@@ -126,7 +122,19 @@
                             </li>
                         
                             <li >
+                                <a href="../feature_selection/">Feature Selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../cost_sensitive_classif/">Cost-Sensitive Classification</a>
+                            </li>
+                        
+                            <li >
                                 <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC Analysis</a>
                             </li>
                         
                         </ul>
@@ -139,11 +147,28 @@
                         <ul class="dropdown-menu">
                         
                             <li >
-                                <a href="../create_learner/">Create custom learners</a>
+                                <a href="../create_learner/">Create Custom Learners</a>
                             </li>
                         
                             <li >
-                                <a href="../create_measure/">Create custom measures</a>
+                                <a href="../create_measure/">Create Custom Measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Appendix <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../measures/">Performance Measures</a>
                             </li>
                         
                         </ul>
@@ -191,9 +216,11 @@
     
         <li class="main active"><a href="#learners">Learners</a></li>
         
-            <li><a href="#further-information">Further information</a></li>
+            <li><a href="#constructing-a-learner">Constructing a learner</a></li>
         
-            <li><a href="#integrated-learners">Integrated Learners</a></li>
+            <li><a href="#accessing-a-learner">Accessing a learner</a></li>
+        
+            <li><a href="#modifying-a-learner">Modifying a learner</a></li>
         
     
     </ul>
@@ -201,28 +228,33 @@
             <div class="col-md-9" role="main">
 
 <h1 id="learners">Learners</h1>
-<p>These classes provide a unified interface to all machine learning methods in R
--- classification, regression, survival analysis, and clustering.
-Many are already integrated,
-others are not, but the package is specifically designed to make
-extensions simple. If your favorite methods is missing, either
-send the <strong>mlr</strong> maintainers an email or see the part of the tutorial
-on <a href="../create_learner/">how to extend the package yourself</a>.</p>
-<p>To see which learners are already implemented, have a look at the <a href="http://www.rdocumentation.org/packages/mlr/functions/learners.html">learners</a> documentation page.</p>
-<p>A learner in <strong>mlr</strong> is constructed by calling <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">makeLearner</a>.
+<p>These classes provide a unified interface to all machine learning methods in <strong>R</strong>
+- (cost-sensitive) classification, regression, survival analysis, and clustering.
+Many are already integrated, others are not, but the package is specifically designed to make
+extensions simple. If your favorite method is missing, either send the <strong>mlr</strong> maintainers
+an email or see the part of the tutorial on <a href="../create_learner/">how to extend the package yourself</a>.</p>
+<p>The <a href="../integrated_learners/">table of integrated learners</a> shows the already 
+implemented machine learning methods and their properties.</p>
+<h2 id="constructing-a-learner">Constructing a learner</h2>
+<p>A learner in <strong>mlr</strong> is generated by calling <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">makeLearner</a>.
 In the constructor you can do the following things:</p>
 <ul>
 <li>Set hyperparameters.</li>
-<li>Set the ID to name the object (some methods will later use this ID to name results).</li>
-<li>Control the output for later prediction, e.g. for classification
-  whether you want a factor for predicted classes or probabilities.</li>
+<li>Control the output for later prediction, e.g., for classification
+  whether you want a factor of predicted class labels or probabilities.</li>
+<li>Set an ID to name the object (some methods will later use this ID to name results or annotate plots).</li>
 </ul>
-<pre class="prettyprint well"><code class="r"># classifier, set it up for prediction probabilities
-lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;)
-# regression
-lrn = makeLearner(&quot;regr.rpart&quot;)
-# gradient boosting machine with hyperparameters and custon name
-lrn = makeLearner(&quot;regr.gbm&quot;, id = &quot;mygbm&quot;, n.trees = 500, interaction.depth = 3)
+<pre class="prettyprint well"><code class="r">## Cox proportional hazards model with custom name
+surv.lrn = makeLearner(&quot;surv.coxph&quot;, id = &quot;coxph&quot;)
+
+## K-means with 5 clusters
+cluster.lrn = makeLearner(&quot;cluster.SimpleKMeans&quot;, N = 5)
+
+## Regression gradient boosting machine, specify hyperparameters via a list
+regr.lrn = makeLearner(&quot;regr.gbm&quot;, par.vals = list(n.trees = 500, interaction.depth = 3))
+
+## Classification tree, set it up for predicting probabilities
+classif.lrn = makeLearner(&quot;classif.randomForest&quot;, predict.type = &quot;prob&quot;, fix.factors = TRUE)
 </code></pre>
 
 <p>The first argument specifies which algorithm to use.
@@ -230,834 +262,169 @@ The naming convention is <code>classif.&lt;R_method_name&gt;</code> for
 classification methods, <code>regr.&lt;R_method_name&gt;</code> for regression methods,
 <code>surv.&lt;R_method_name&gt;</code> for survival analysis, and <code>cluster.&lt;R_method_name&gt;</code>
 for clustering methods.</p>
-<h2 id="further-information">Further information</h2>
-<p>The generated learner is an object of class <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>.
-It contains the properties the method, e.g. which types of features it can handle,
-what can be output during prediction, whether multi-class problems,
-observations weights or missing values are supported and so on.</p>
-<pre class="prettyprint well"><code class="r"># classifier, set it up for prediction probabilities
-lrn = makeLearner(&quot;classif.rpart&quot;, predict.type = &quot;prob&quot;, minsplit = 20)
-lrn
+<p>Hyperparameter values can be specified either via the <code>...</code> argument or as <code>list</code> via
+<code>par.vals</code>.</p>
+<p>Occasionally, <code>factor</code> features may cause problems when less levels are present in the
+test data than in the training data.
+By setting <code>fix.factors = TRUE</code> these are avoided by adding the missing factor levels in
+the test data set.</p>
+<p>Let's have a look at two of the learners created above.</p>
+<pre class="prettyprint well"><code class="r">surv.lrn
 </code></pre>
 
-<pre class="prettyprint well"><code>## Learner classif.rpart from package rpart
+<pre class="prettyprint well"><code>## Learner coxph from package survival
+## Type: surv
+## Name: Cox proportional hazard model; Short name: coxph
+## Class: surv.coxph
+## Properties: missings,numerics,factors,weights,prob,rcens
+## Predict-Type: response
+## Hyperparameters:
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">classif.lrn
+</code></pre>
+
+<pre class="prettyprint well"><code>## Learner classif.randomForest from package randomForest
 ## Type: classif
-## Name: Decision Tree; Short name: rpart
-## Class: classif.rpart
-## Properties: twoclass,multiclass,missings,numerics,factors,prob,weights
+## Name: Random Forest; Short name: RF
+## Class: classif.randomForest
+## Properties: twoclass,multiclass,numerics,factors,prob
 ## Predict-Type: prob
-## Hyperparameters: xval=0,minsplit=20
+## Hyperparameters:
 </code></pre>
 
-<pre class="prettyprint well"><code class="r"># display stored information for hyperparameters
-lrn$par.set
+<p>The generated learner is an object of class <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>.
+It contains the properties of the method, e.g., which types of features it can handle,
+what can be output during prediction, and whether multi-class problems,
+observations weights or missing values are supported.</p>
+<p>As you might have noticed, there is no special learner class for cost-sensitive classification.
+There exist several ways to generate cost-sensitive learners from regression and classification
+learners. This is explained in greater detail in the section about
+<a href="&amp;cost_sensitive_classif.md">cost-sensitive classification</a>.</p>
+<h2 id="accessing-a-learner">Accessing a learner</h2>
+<p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> object is a <code>list</code>and the following elements contain 
+information regarding the hyperparameters and the type of prediction.</p>
+<pre class="prettyprint well"><code class="r">## Get the selected hyperparameter values:
+cluster.lrn$par.vals
 </code></pre>
 
-<pre class="prettyprint well"><code>##                    Type len  Def   Constr Req Trafo
-## minsplit        integer   -   20 1 to Inf   -     -
-## minbucket       integer   -    - 1 to Inf   -     -
-## cp              numeric   - 0.01   0 to 1   -     -
-## maxcompete      integer   -    4 0 to Inf   -     -
-## maxsurrogate    integer   -    5 0 to Inf   -     -
-## usesurrogate   discrete   -    2    0,1,2   -     -
-## surrogatestyle discrete   -    0      0,1   -     -
-## maxdepth        integer   -   30  1 to 30   -     -
-## xval            integer   -   10 0 to Inf   -     -
-## parms           untyped   -    -        -   -     -
+<pre class="prettyprint well"><code>## $N
+## [1] 5
 </code></pre>
 
-<h2 id="integrated-learners">Integrated Learners</h2>
-<h3 id="classification-learner">Classification Learner</h3>
-<table>
-<thead>
-<tr>
-<th align="left">ID</th>
-<th align="left">Name</th>
-<th align="left">Packages</th>
-<th align="center">Num.</th>
-<th align="center">Fac.</th>
-<th align="center">NAs</th>
-<th align="center">Weights</th>
-<th align="right">Props</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">classif.IBk</td>
-<td align="left">K-nearest neighbours</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.J48</td>
-<td align="left">J48 Decision Trees</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.JRip</td>
-<td align="left">Propositional Rule Learner</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.LiblineaRBinary</td>
-<td align="left">Regularized Binary Linear Predictive Models Estimation</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/LiblineaR/">LiblineaR</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass</td>
-</tr>
-<tr>
-<td align="left">classif.LiblineaRLogReg</td>
-<td align="left">Regularized Logistic Regression</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/LiblineaR/">LiblineaR</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.LiblineaRMultiClass</td>
-<td align="left">Multi-class Support Vector Classification by Crammer and Singer</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/LiblineaR/">LiblineaR</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass</td>
-</tr>
-<tr>
-<td align="left">classif.OneR</td>
-<td align="left">1-R classifier</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.PART</td>
-<td align="left">PART decision lists</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.ada</td>
-<td align="left">ada Boosting</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/ada/">ada</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.blackboost</td>
-<td align="left">Gradient boosting with regression trees</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/mboost/">mboost</a>,<a href="http://cran.r-project.org/web/packages/party/">party</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="right">twoclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.boosting</td>
-<td align="left">Adabag Boosting</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/adabag/">adabag</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.cforest</td>
-<td align="left">Random forest based on conditional inference trees</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/party/">party</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.ctree</td>
-<td align="left">Conditional Inference Trees</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/party/">party</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.fnn</td>
-<td align="left">Fast k-Nearest Neighbor</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/FNN/">FNN</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass</td>
-</tr>
-<tr>
-<td align="left">classif.gbm</td>
-<td align="left">Gradient boosting machine</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/gbm/">gbm</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.geoDA</td>
-<td align="left">Geometric Predictive Discriminant Analysis</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/DiscriMiner/">DiscriMiner</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass</td>
-</tr>
-<tr>
-<td align="left">classif.glmboost</td>
-<td align="left">Boosting for GLMs</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/mboost/">mboost</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right">twoclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.glmnet</td>
-<td align="left">GLM with lasso or elasticnet regularization</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/glmnet/">glmnet</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right">prob,twoclass,multiclass</td>
-</tr>
-<tr>
-<td align="left">classif.kknn</td>
-<td align="left">k-Nearest Neighbor</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/kknn/">kknn</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.knn</td>
-<td align="left">k-Nearest Neighbor</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/class/">class</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass</td>
-</tr>
-<tr>
-<td align="left">classif.ksvm</td>
-<td align="left">Support Vector Machines</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/kernlab/">kernlab</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.lda</td>
-<td align="left">Linear Discriminant Analysis</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/MASS/">MASS</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.linDA</td>
-<td align="left">Linear Discriminant Analysis</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/DiscriMiner/">DiscriMiner</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass</td>
-</tr>
-<tr>
-<td align="left">classif.logreg</td>
-<td align="left">Logistic Regression</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/stats/">stats</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right">twoclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.lqa</td>
-<td align="left">classif.lqa</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/lqa/">lqa</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right">prob,twoclass</td>
-</tr>
-<tr>
-<td align="left">classif.lssvm</td>
-<td align="left">Least Squares Support Vector Machine</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/kernlab/">kernlab</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass</td>
-</tr>
-<tr>
-<td align="left">classif.lvq1</td>
-<td align="left">Learning Vector Quantization</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/class/">class</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass</td>
-</tr>
-<tr>
-<td align="left">classif.mda</td>
-<td align="left">Mixture Discriminant Analysis</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/mda/">mda</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.multinom</td>
-<td align="left">Multinomial Regression</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/nnet/">nnet</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.naiveBayes</td>
-<td align="left">Naive Bayes</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/e1071/">e1071</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.nnet</td>
-<td align="left">Neural Network</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/nnet/">nnet</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.plr</td>
-<td align="left">Logistic regression with a L2 penalty</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/stepPlr/">stepPlr</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right">twoclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.plsDA</td>
-<td align="left">Partial Least Squares (PLS) Discriminant Analysis</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/DiscriMiner/">DiscriMiner</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass</td>
-</tr>
-<tr>
-<td align="left">classif.plsdaCaret</td>
-<td align="left">Partial Least Squares (PLS) Discriminant Analysis</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/caret/">caret</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">prob,twoclass</td>
-</tr>
-<tr>
-<td align="left">classif.qda</td>
-<td align="left">Quadratic Discriminant Analysis</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/MASS/">MASS</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.quaDA</td>
-<td align="left">Quadratic Discriminant Analysis</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/DiscriMiner/">DiscriMiner</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass</td>
-</tr>
-<tr>
-<td align="left">classif.randomForest</td>
-<td align="left">Random Forest</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/randomForest/">randomForest</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.randomForestSRC</td>
-<td align="left">Random Forest</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/randomForestSRC/">randomForestSRC</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="right">prob,twoclass,multiclass</td>
-</tr>
-<tr>
-<td align="left">classif.rda</td>
-<td align="left">Regularized Discriminant Analysis</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/klaR/">klaR</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.rpart</td>
-<td align="left">Decision Tree</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/rpart/">rpart</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-<tr>
-<td align="left">classif.rrlda</td>
-<td align="left">classif.rrlda</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/rrlda/">rrlda</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass</td>
-</tr>
-<tr>
-<td align="left">classif.svm</td>
-<td align="left">Support Vector Machines (libsvm)</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/e1071/">e1071</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass,multiclass,prob</td>
-</tr>
-</tbody>
-</table>
-<h3 id="regression-learner">Regression Learner</h3>
-<table>
-<thead>
-<tr>
-<th align="left">ID</th>
-<th align="left">Name</th>
-<th align="left">Packages</th>
-<th align="center">Num.</th>
-<th align="center">Fac.</th>
-<th align="center">NAs</th>
-<th align="center">Weights</th>
-<th align="right">Props</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">regr.IBk</td>
-<td align="left">K-nearest neighbours</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">prob</td>
-</tr>
-<tr>
-<td align="left">regr.blackboost</td>
-<td align="left">Gradient boosting with regression trees</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/mboost/">mboost</a>,<a href="http://cran.r-project.org/web/packages/party/">party</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.cforest</td>
-<td align="left">Random forest based on conditional inference trees</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/party/">party</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.crs</td>
-<td align="left">Regression Splines</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/crs/">crs</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right">se</td>
-</tr>
-<tr>
-<td align="left">regr.earth</td>
-<td align="left">Multivariate Adaptive Regression Splines</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/earth/">earth</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.fnn</td>
-<td align="left">Fast k-Nearest Neighbor</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/FNN/">FNN</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.gbm</td>
-<td align="left">Gradient boosting machine</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/gbm/">gbm</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.glmnet</td>
-<td align="left">GLM with lasso or elasticnet regularization</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/glmnet/">glmnet</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.kknn</td>
-<td align="left">K-Nearest-Neighbor regression</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/kknn/">kknn</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.km</td>
-<td align="left">Kriging</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/DiceKriging/">DiceKriging</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">se</td>
-</tr>
-<tr>
-<td align="left">regr.ksvm</td>
-<td align="left">Support Vector Machines</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/kernlab/">kernlab</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.lm</td>
-<td align="left">Simple linear regression</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/stats/">stats</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right">se</td>
-</tr>
-<tr>
-<td align="left">regr.mars</td>
-<td align="left">Multivariate Adaptive Regression Splines</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/mda/">mda</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.mob</td>
-<td align="left">Model-based recursive partitioning yielding a tree with fitted models associated with each terminal node</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/party/">party</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.nnet</td>
-<td align="left">Neural Network</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/nnet/">nnet</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.pcr</td>
-<td align="left">Principal component regression</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/pls/">pls</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.penalized.lasso</td>
-<td align="left">Lasso regression</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/penalized/">penalized</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.penalized.ridge</td>
-<td align="left">regr.penalized.ridge</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/penalized/">penalized</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.plsr</td>
-<td align="left">Partial least squares regression</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/pls/">pls</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.randomForest</td>
-<td align="left">Random Forest</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/randomForest/">randomForest</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">se</td>
-</tr>
-<tr>
-<td align="left">regr.randomForestSRC</td>
-<td align="left">Random Forest</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/randomForestSRC/">randomForestSRC</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.rpart</td>
-<td align="left">Decision Tree</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/rpart/">rpart</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.rsm</td>
-<td align="left">Response surface regression</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/rsm/">rsm</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.rvm</td>
-<td align="left">Relevance Vector Machine</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/kernlab/">kernlab</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">regr.svm</td>
-<td align="left">Support Vector Machines (libsvm)</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/e1071/">e1071</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-</tr>
-</tbody>
-</table>
-<h3 id="survival-learner">Survival Learner</h3>
-<table>
-<thead>
-<tr>
-<th align="left">ID</th>
-<th align="left">Name</th>
-<th align="left">Packages</th>
-<th align="center">Num.</th>
-<th align="center">Fac.</th>
-<th align="center">NAs</th>
-<th align="center">Weights</th>
-<th align="right">Props</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">surv.CoxBoost</td>
-<td align="left">Cox proportional hazards model with componentwise likelhood based boosting</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/CoxBoost/">CoxBoost</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right">rcens</td>
-</tr>
-<tr>
-<td align="left">surv.cforest</td>
-<td align="left">Random forest based on conditional inference trees</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/party/">party</a>,<a href="http://cran.r-project.org/web/packages/survival/">survival</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right"></td>
-</tr>
-<tr>
-<td align="left">surv.coxph</td>
-<td align="left">Cox proportional hazard model</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/survival/">survival</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="right">prob,rcens</td>
-</tr>
-<tr>
-<td align="left">surv.glmboost</td>
-<td align="left">surv.glmboost</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/mboost/">mboost</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right">rcens</td>
-</tr>
-<tr>
-<td align="left">surv.glmnet</td>
-<td align="left">GLM with regularization</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/glmnet/">glmnet</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right">rcens</td>
-</tr>
-<tr>
-<td align="left">surv.penalized</td>
-<td align="left">surv.penalized</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/penalized/">penalized</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">rcens</td>
-</tr>
-<tr>
-<td align="left">surv.randomForestSRC</td>
-<td align="left">Random Forests for Survival</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/randomForestSRC/">randomForestSRC</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="right">rcens</td>
-</tr>
-</tbody>
-</table>
+<pre class="prettyprint well"><code class="r">## Get the set of hyperparameters:
+classif.lrn$par.set
+</code></pre>
+
+<pre class="prettyprint well"><code>##                     Type  len   Def   Constr Req Trafo
+## ntree            integer    -   500 1 to Inf   -     -
+## mtry             integer    -     - 1 to Inf   -     -
+## replace          logical    -  TRUE        -   -     -
+## classwt    numericvector &lt;NA&gt;     - 0 to Inf   -     -
+## cutoff     numericvector &lt;NA&gt;     -   0 to 1   -     -
+## sampsize         integer    -     - 1 to Inf   -     -
+## nodesize         integer    -     1 1 to Inf   -     -
+## maxnodes         integer    -     - 1 to Inf   -     -
+## importance       logical    - FALSE        -   -     -
+## localImp         logical    - FALSE        -   -     -
+## norm.votes       logical    -  TRUE        -   -     -
+## keep.inbag       logical    - FALSE        -   -     -
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Get the type of prediction:
+regr.lrn$predict.type
+</code></pre>
+
+<pre class="prettyprint well"><code>## [1] &quot;response&quot;
+</code></pre>
+
+<p><code>classif.lrn$par.set</code> is an object of class <a href="http://www.rdocumentation.org/packages/ParamHelpers/functions/makeParamSet.html">ParamSet</a>.
+It contains, among others, the type of parameters (e.g., numeric, logical), potential
+default values and the range of allowed values.</p>
+<p>Moreover, <strong>mlr</strong> provides functions to access the selected hyperparameter values
+and the parameter set.
+These are particularly useful in case of a wrapped <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>,
+for example if a learner is fused with a feature selection strategy and both, the learner
+as well the feature selection method, have hyperparameters. 
+For details see section <a href="&amp;wrapper.md">Wrapper</a>.</p>
+<pre class="prettyprint well"><code class="r">## Get current parameter settings
+getHyperPars(cluster.lrn)
+</code></pre>
+
+<pre class="prettyprint well"><code>## $N
+## [1] 5
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Get a description of all possible parameter settings
+getParamSet(classif.lrn)
+</code></pre>
+
+<pre class="prettyprint well"><code>##                     Type  len   Def   Constr Req Trafo
+## ntree            integer    -   500 1 to Inf   -     -
+## mtry             integer    -     - 1 to Inf   -     -
+## replace          logical    -  TRUE        -   -     -
+## classwt    numericvector &lt;NA&gt;     - 0 to Inf   -     -
+## cutoff     numericvector &lt;NA&gt;     -   0 to 1   -     -
+## sampsize         integer    -     - 1 to Inf   -     -
+## nodesize         integer    -     1 1 to Inf   -     -
+## maxnodes         integer    -     - 1 to Inf   -     -
+## importance       logical    - FALSE        -   -     -
+## localImp         logical    - FALSE        -   -     -
+## norm.votes       logical    -  TRUE        -   -     -
+## keep.inbag       logical    - FALSE        -   -     -
+</code></pre>
+
+<p>With function <a href="http://www.rdocumentation.org/packages/mlr/functions/showHyperPars.html">showHyperPars</a> we can get a quick overview about the available hyperparameters
+and defaults of a learning method.
+In contrast to <a href="http://www.rdocumentation.org/packages/mlr/functions/getParamSet.html">getParamSet</a> it takes a character string naming a learning method
+and is therefore useful to get an overview about all hyperparameters before actually creating
+the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>.</p>
+<pre class="prettyprint well"><code class="r">showHyperPars(&quot;classif.randomForest&quot;)
+</code></pre>
+
+<pre class="prettyprint well"><code>##                     Type  len   Def   Constr Req
+## ntree            integer    -   500 1 to Inf   -
+## mtry             integer    -     - 1 to Inf   -
+## replace          logical    -  TRUE        -   -
+## classwt    numericvector &lt;NA&gt;     - 0 to Inf   -
+## cutoff     numericvector &lt;NA&gt;     -   0 to 1   -
+## sampsize         integer    -     - 1 to Inf   -
+## nodesize         integer    -     1 1 to Inf   -
+## maxnodes         integer    -     - 1 to Inf   -
+## importance       logical    - FALSE        -   -
+## localImp         logical    - FALSE        -   -
+## norm.votes       logical    -  TRUE        -   -
+## keep.inbag       logical    - FALSE        -   -
+</code></pre>
+
+<h2 id="modifying-a-learner">Modifying a learner</h2>
+<p>There are also some functions that enable you to change certain aspects
+of a <a href="&amp;makeLearner">Learner</a> without needing to create a new <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> from scratch.
+Here are some examples.</p>
+<pre class="prettyprint well"><code class="r">## Change the ID:
+surv.lrn = setId(surv.lrn, &quot;CoxModel&quot;)
+surv.lrn
+</code></pre>
+
+<pre class="prettyprint well"><code>## Learner CoxModel from package survival
+## Type: surv
+## Name: Cox proportional hazard model; Short name: coxph
+## Class: surv.coxph
+## Properties: missings,numerics,factors,weights,prob,rcens
+## Predict-Type: response
+## Hyperparameters:
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Change the prediction type, predict a factor with class labels instead of probabilities:
+classif.lrn = setPredictType(classif.lrn, &quot;response&quot;)
+
+## Change hyperparameter values:
+cluster.lrn = setHyperPars(cluster.lrn, N = 4)
+
+## Go back to default hyperparameter values:
+regr.lrn = removeHyperPars(regr.lrn, c(&quot;n.trees&quot;, &quot;interaction.depth&quot;))
+</code></pre>
+
 </div>
         </div>
 
