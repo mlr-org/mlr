@@ -1,40 +1,42 @@
 # Benchmark Experiments
 
-compare the performance of several learners on multiple data sets
+In a benchmark experiment different learning methods are applied to one or several data sets.
+The aim is normally to compare and rank the algorithms with respect to one or more
+performance measures.
 
-function [&benchmark]
+In **mlr** a benchmark experiment can be conducted by calling function [&benchmark] on a
+list of [Learner](&makeLearner)s and [&Task]s.
+Moreover, you can specify which performance measures to calculate and choose a resampling
+strategy for each [&Task].
 
+### Example: Two tasks and two learners
 
-### Example 1: Two tasks and two learners
-
-```{r eval=FALSE}
+```{r}
 ## Two learners to be compared
 lrns = list(makeLearner("classif.lda"), makeLearner("classif.rpart"))
 
 ## Two classification tasks
 tasks = list(iris.task, bc.task)
 
-## Define cross-validation indices
+## Use 5-fold cross-validation for both tasks
 rdesc = makeResampleDesc("CV", iters = 5)
 
-## Benchmark experiment
-res = benchmark(lrns, tasks, rdesc)
+## Conduct the benchmark experiment
+res = benchmark(lrns, tasks, rdesc, show.info = FALSE)
 res
 ```
 
 The above code should be self-explanatory. In the result every row corresponds to one [&Task]
 set with one [Learner](&makeLearner).
-In the printed table tasks and learners are referred to by their ids.
+In the printed table the individual tasks and learners are referred to by their IDs.
+The entries show the 5-fold cross-validated mean misclassification error ([&mmce]) which
+is the default performance measure for classification.
 
+The result is an object of class [&BenchmarkResult] and **mlr** provides several accessor 
+functions.
+Let's have a look at the benchmark result from the example above:
 
-The entries show the cross-validated mean misclassification error.
-
-[&BenchmarkResult]
-The benchmark results contain much more information, which you can
-access if you want to see details. Let's have a look at the benchmark
-result from the example above:
-
-```{r eval=FALSE}
+```{r}
 ## Individual performances of the 5 cross-validation runs
 getPerformances(res)
 
@@ -43,10 +45,10 @@ getAggrPerformances(res)
 
 ## Predictions
 pred = getPredictions(res)
+names(pred)
 head(pred$`iris-example`)
 ```
-Note that the task ids are used to name the elements of ``pred``.
-
+Note that the task IDs are used to name the elements of ``pred``.
 
 
 ## Nested resampling
@@ -75,10 +77,10 @@ In the following we will see three examples to show different benchmark settings
 
 * One data set + one classification algorithm + tuning
 * Three data sets + two classification algorithms + tuning
-* One data set + two classification algorithms + variable selection
+* One data set + two classification algorithms + feature selection
 
 
-## Example 2: One task, one learner, tuning
+### Example 1: One task, one learner, tuning
 
 Now we have a [Learner](&makeLearner) with hyperparameters and we want to find the best ones. In
 that case we have two resampling levels.
@@ -114,7 +116,7 @@ getPerformances(res)
 Of course everything works the same way if we change the resampling
 strategy either in the outer or inner run. They can be mixed as desired.
 
-## Example 3: Two tasks, three learners, tuning
+### Example 2: Two tasks, three learners, tuning
 
 Now we look at an extensive example that shows a benchmark experiment with two data
 sets, three [Learners](&makeLearner) and [tuning](&tune.md).
@@ -141,7 +143,7 @@ lrns = list(makeLearner("classif.lda"), makeLearner("classif.rpart"), lrn)
 rdesc = makeResampleDesc("CV", iters = 5)
 
 ## Merge it to a benchmark experiment
-res = benchmark(lrns, tasks, rdesc)
+res = benchmark(lrns, tasks, rdesc, show.info = FALSE)
 
 ## Only for one task
 getPerformances(res)
@@ -153,12 +155,12 @@ getTuneResult(res)
 #res["opt.perf", learner = "classif.ksvm"]
 ```
 
-## Example 4: One task, two learners, variable selection
+### Example 3: One task, two learners, feature selection
 
 Let's see how we can do [feature selection](feature_selection.md) in
 a benchmark experiment:
 
-```{r eval=FALSE}
+```{r}
 ## Control object for feature selection
 ctrl = makeFeatSelControlSequential(beta = 100, method = "sfs")
 
@@ -166,7 +168,8 @@ ctrl = makeFeatSelControlSequential(beta = 100, method = "sfs")
 inner.rdesc = makeResampleDesc("CV", iter = 2)
 
 ## Feature selection with sequential forward search (sfs)
-lrn = makeFeatSelWrapper("classif.lda", resampling = inner.rdesc, control = ctrl)
+lrn = makeFeatSelWrapper("classif.lda", resampling = inner.rdesc, control = ctrl,
+    show.info = FALSE)
 
 ## Let's compare two learners
 lrns = list(makeLearner("classif.rpart"), lrn)
@@ -175,7 +178,8 @@ lrns = list(makeLearner("classif.rpart"), lrn)
 rdesc = makeResampleDesc("Subsample", iter = 3)
 
 ## Benchmark experiment
-res = benchmark(tasks = iris.task, learners = lrns, resampling = rdesc)
+res = benchmark(tasks = iris.task, learners = lrns, resampling = rdesc, show.info = FALSE)
+res
 
 ## Which features have been selected (in the outer resampling steps)?
 getFeatSelResult(res)
