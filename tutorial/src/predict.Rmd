@@ -5,17 +5,19 @@ implemented the same way as most of the other predict methods in **R**.
 In general, all you need to do is call [predict](&predict.WrappedModel) on the object
 returned by [&train] and pass the data to be predicted.
 
-There are two possibilities to pass the data.
+There are two ways to pass the data:
 
-* Either pass the [&Task] via the ``task`` argument
-* or pass a ``data.frame`` via the ``newdata`` argument.
+* Either pass the [&Task] via the ``task`` argument or
+* pass a ``data.frame`` via the ``newdata`` argument.
 
 The first way is preferable if you want predictions for data already included in the [&Task].
+
 Just as [&train], the [predict](&predict.WrappedModel) function has a ``subset`` argument,
 so you can set aside different portions of the data in [&Task] for training and prediction.
+
 In the following example we fit a [gradient boosting machine](&gbm::gbm) to every second
 observation of the [BostonHousing](&mlbench::BostonHousing) data set and make predictions
-on the remaining data.
+on the remaining data in [bh.task](&mlr.bh).
 
 ```{r}
 n = bh.task$task.desc$size
@@ -29,22 +31,26 @@ task.pred
 ```
 
 The second way is useful if you want to predict data not included in the [&Task].
+
 In the following we cluster the ``iris`` data set without the target variable.
 All observations with an odd index are included in the [&Task] and used for training.
 Predictions are made for the remaining observations.
 
 ```{r}
 n = nrow(iris)
-train.set = seq(1, n, 2)
-test.set = seq(2, n, 2)
-task = makeClusterTask(data = iris[train.set,-5])
+iris.train = iris[seq(1, n, 2), -5]
+iris.test = iris[seq(2, n, 2), -5]
+task = makeClusterTask(data = iris.train)
 mod = train("cluster.XMeans", task)
 
-newdata.pred = predict(mod, newdata = iris[,-5], subset = test.set)
+newdata.pred = predict(mod, newdata = iris.test)
 newdata.pred
 ```
 
-The result of [predict](&predict.WrappedModel) naturally depends on the nature of the [&Task]
+
+## Changing the type of prediction
+
+The result of [predict](&predict.WrappedModel) depends on the nature of the [&Task]
 and the type of prediction chosen when creating the [Learner](&makeLearner).
 For example in case of survival analysis the default is to predict the response.
 For the [Cox proportional hazards model](&Surv::coxph) we get the values of the linear
@@ -82,10 +88,15 @@ supervised learning problems) and the predictions.
 
 In the following the predictions on the [BostonHousing](&mlbench::BostonHousing) and the
 [iris](&datasets::iris) data sets are shown.
+As you may recall, the predictions in the first case were made from a [&Task] and in the
+second case from a ``data.frame``.
 
 ```{r}
+## Result of predict with data passed via task argument
 head(task.pred$data)
 
+
+## Result of predict with data passed via newdata argument
 head(newdata.pred$data)
 ```
 
@@ -93,12 +104,27 @@ As you can see when predicting from a [&Task], the resulting ``data.frame`` cont
 additional column, called ``id``, which tells us which element in the original data set
 the prediction corresponds to.
 
-In case of classification problems there are some more functions to access the [&Prediction].
 
+### Extract Probabilities
+
+The predicted probabilities can be extracted from the [&Prediction] using function
+[&getProbabilities].
+Here is another cluster analysis example. We use [fuzzy c-means clustering](&e1071::cmeans)
+on the [mtcars](&datasets::mtcars) data set.
+
+```{r}
+lrn = makeLearner("cluster.cmeans", predict.type = "prob")
+mod = train(lrn, mtcars.task)
+
+pred = predict(mod, task = mtcars.task)
+head(getProbabilities(pred))
+```
+
+In case of classification problems there are some more things worth mentioning.
 
 ### Classification
 
-In case of classification, per default, class labels are predicted.
+Per default, class labels are predicted.
 
 ```{r}
 ## Linear discriminant analysis on the iris data set
@@ -124,16 +150,17 @@ pred = predict(mod, newdata = iris)
 head(pred$data)
 ```
 
-As you can see, in addition to the probabilities, class labels are predicted
+In addition to the probabilities, class labels are predicted
 by choosing the class with the maximum probability and breaking ties at random.
 
-The predicted posterior probabilities can be accessed via the [&getProbabilities] function.
+As mentioned above, the predicted posterior probabilities can be accessed via the
+[&getProbabilities] function.
 ```{r}
 head(getProbabilities(pred))
 ```
 
 
-### Binary classification
+## Adjusting the threshold in binary classification
 
 In case of binary classification, two things are worth mentioning. As you may recall,
 we can specify which of the two classes should be considered as positive class when
@@ -158,11 +185,16 @@ pred$threshold
 As you can see the default threshold is 0.5, that is an example is assigned to the class
 with maximum posterior probability.
 
-We can adjust the threshold used using the function [&setThreshold].
+We can adjust the threshold using the function [&setThreshold].
 Now, we set the threshold for the *positive* class to 0.8 (that is, an example is assigned
-to the positive class if its posterior probability exceeds 0.8):
+to the positive class if its posterior probability exceeds 0.8).
+Which of the two classes is the positive one can be seen by accessing the [&Task].
 
 ```{r}
+## Label of the positive class
+bc.task$task.desc$positive
+
+## Set the threshold value for the positive class
 pred = setThreshold(pred, 0.8)
 pred
 pred$threshold
@@ -181,19 +213,19 @@ head(getProbabilities(pred))
 Function [&plotLearnerPrediction] allows to visualize predictions, e.g., for teaching purposes
 or exploring models.
 It trains the chosen learning method for 1 or 2 selected features and then displays the
-predictions via [ggplot](ggplot2::ggplot). 
+predictions via [ggplot](&ggplot2::ggplot). 
 
-For *classification*, we get a scatterplot of 2 features (per default the first 2 in the data set).
+For *classification*, we get a scatter plot of 2 features (per default the first 2 in the data set).
 The plotting symbols show the true class labels of the data points.
-The color indicates misclassified observations.
+The color indicates if observations are misclassified.
 The posterior probabilities (if the learner under consideration supports this)
 are represented by the background color.
 
-The plot title displays the ID of the learner (in the following example CART),
+The plot title displays the ID of the [Learner](&makeLearner) (in the following example CART),
 its parameters, its training performance and its cross-validation performance.
 [&mmce] stands for *mean misclassification error*, i.e., the error rate.
-See the sections about [assessing the performance of a learner](&performance.md) and
-[resampling](&resample.md) for further explanations.
+See the sections [Performance](&performance.md) and
+[Resampling](&resample.md) for further explanations.
 
 ```{r}
 lrn = makeLearner("classif.rpart", id = "CART")
@@ -202,14 +234,15 @@ plotLearnerPrediction(lrn, task = iris.task)
 
 For *regression*, there exist two types of plots.
 The 1D plot shows the target values in dependence of 1 feature, the regression curve and
-potentially (if the chosen learner supports this) the estimated standard error.
+if the chosen learner supports this the estimated standard error.
 
 ```{r}
 plotLearnerPrediction("regr.lm", features = "lstat", task = bh.task)
 ```
 
-The 2D variant, as in the classification case, generates a scatterplot of 2 features.
-The estimated mean is shown via the background color.
+The 2D variant, as in the classification case, generates a scatter plot of 2 features.
+The fill color of the dots illustrates the value of the target variable ``"medv"``, the 
+background colors show the estimated mean.
 The plot does not represent the estimated standard error.
 
 ```{r}
