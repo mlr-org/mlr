@@ -247,7 +247,7 @@ cost-sensitive classification, and <a href="http://www.rdocumentation.org/packag
 <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeClusterTask</a>.
 These require the data set and, depending on the 
 nature of the learning problem, further information.</p>
-<h3 id="cluster-tasks">Cluster tasks</h3>
+<h3 id="cluster-analysis">Cluster analysis</h3>
 <p>In order to generate a task for a cluster analysis problem <code>data</code> is the only mandatory argument.
 In the following example we create a learning task from the data set <a href="http://www.rdocumentation.org/packages/datasets/functions/mtcars.html">mtcars</a>.</p>
 <pre class="prettyprint well"><code class="r">cluster.task = makeClusterTask(id = &quot;cars&quot;, data = mtcars)
@@ -270,7 +270,7 @@ It will be later used to name results, for example of
 <a href="&amp;benchmark_experiments.md">benchmark experiments</a>.
 If not specified the <code>id</code> defaults to the name of the <strong>R</strong> object passed to <code>data</code>,
 in the above example <code>"mtcars"</code>.</p>
-<h3 id="regression-tasks">Regression tasks</h3>
+<h3 id="regression">Regression</h3>
 <p>In case of supervised learning like regression (as well as classification and
 survival analysis) we, additional to <code>data</code>, have to specify the name of the numeric <code>target</code>
 variable.</p>
@@ -299,7 +299,7 @@ the number of observations, or whether missing values are present.</p>
 follows the same scheme.
 For each of these learning problems there are some specifics worth mentioning and described
 in the following.</p>
-<h3 id="classification-tasks">Classification tasks</h3>
+<h3 id="classification">Classification</h3>
 <p>In case of classification the target variable has to be a <code>factor</code>.</p>
 <p>In binary classification it is customary to refer to the two classes as <em>positive</em> and
 <em>negative</em> class.
@@ -370,18 +370,16 @@ surv.task
 <p>In regular classification, as addressed above, the aim when training a classifier is to 
 minimize the misclassification rate.
 Thus, it is implicitly assumed that all types of misclassification errors are equally severe.
-In <em>cost-sensitive classification</em> the costs associated with assigning an object with true
-class <em>y</em> to class <em>k</em> can be different depending on the true and predicted class labels
-<em>y</em> and <em>k</em>.</p>
+In <em>cost-sensitive classification</em> the costs of misclassifying an object with true
+class <em>y</em> as class <em>k</em> can be different depending on <em>y</em> and <em>k</em>.</p>
 <p>A further generalization is <em>cost-sensitive learning with example-specific costs</em>.
 In this scenario, the misclassification costs do not only depend on the true and predicted
 class labels, but also on the feature values <em>x</em>.
 Thus, in case of a <em>K</em>-class problem, each example (<em>x</em>, <em>y</em>) is associated with a vector
 of costs for predicting classes 1,...,<em>K</em> given the true class label <em>y</em>.
-The cost of the true class label <em>y</em> is minimal.
-Therefore, if the cost matrix is given, the true values <em>y</em> of the target variable are 
-automatically known.</p>
-<p>Thus, in order to create a cost-sensitive classification task, the feature values <em>x</em> and
+If the cost vectors are given, the true values <em>y</em> of the target variable not needed anymore.
+Naturally, it is assumed that the cost of the true class label <em>y</em> is minimal.</p>
+<p>Hence, in order to create a cost-sensitive classification task, the feature values <em>x</em> and
 a <code>cost</code> matrix that contains the cost vectors for all examples in the data set are required. </p>
 <pre class="prettyprint well"><code class="r">## We use the iris data and generate an artificial cost matrix
 ## (following Beygelzimer et al. (2005))
@@ -417,7 +415,7 @@ This would tell the task that some observations "belong together", and should
 not be separated when splitting into training and test sets during a resampling iteration.</p>
 <p>Another possibility is to <code>weight</code> observations according to their importance.</p>
 <h2 id="accessing-a-learning-task">Accessing a learning task</h2>
-<p><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> is a <code>list</code> and the main properties of the learning task are stored in element
+<p><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> is a <code>list</code> and its main properties are stored in element
 <code>"task.desc"</code> which is of class <a href="http://www.rdocumentation.org/packages/mlr/functions/TaskDesc.html">TaskDesc</a>.</p>
 <pre class="prettyprint well"><code class="r">str(regr.task$task.desc)
 </code></pre>

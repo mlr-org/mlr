@@ -23,7 +23,7 @@ These require the data set and, depending on the
 nature of the learning problem, further information.
 
 
-### Cluster tasks
+### Cluster analysis
 
 In order to generate a task for a cluster analysis problem ``data`` is the only mandatory argument.
 In the following example we create a learning task from the data set [mtcars](&datasets::mtcars).
@@ -40,7 +40,7 @@ If not specified the ``id`` defaults to the name of the **R** object passed to `
 in the above example ``"mtcars"``.
 
 
-### Regression tasks
+### Regression
 
 In case of supervised learning like regression (as well as classification and
 survival analysis) we, additional to ``data``, have to specify the name of the numeric ``target``
@@ -63,7 +63,7 @@ For each of these learning problems there are some specifics worth mentioning an
 in the following.
 
 
-### Classification tasks
+### Classification
 
 In case of classification the target variable has to be a ``factor``.
 
@@ -120,20 +120,18 @@ The type of censoring can be specified via the argument ``censoring`` which defa
 In regular classification, as addressed above, the aim when training a classifier is to 
 minimize the misclassification rate.
 Thus, it is implicitly assumed that all types of misclassification errors are equally severe.
-In *cost-sensitive classification* the costs associated with assigning an object with true
-class *y* to class *k* can be different depending on the true and predicted class labels
-*y* and *k*.
+In *cost-sensitive classification* the costs of misclassifying an object with true
+class *y* as class *k* can be different depending on *y* and *k*.
 
 A further generalization is *cost-sensitive learning with example-specific costs*.
 In this scenario, the misclassification costs do not only depend on the true and predicted
 class labels, but also on the feature values *x*.
 Thus, in case of a *K*-class problem, each example (*x*, *y*) is associated with a vector
 of costs for predicting classes 1,...,*K* given the true class label *y*.
-The cost of the true class label *y* is minimal.
-Therefore, if the cost matrix is given, the true values *y* of the target variable are 
-automatically known.
+If the cost vectors are given, the true values *y* of the target variable not needed anymore.
+Naturally, it is assumed that the cost of the true class label *y* is minimal.
 
-Thus, in order to create a cost-sensitive classification task, the feature values *x* and
+Hence, in order to create a cost-sensitive classification task, the feature values *x* and
 a ``cost`` matrix that contains the cost vectors for all examples in the data set are required. 
 
 
@@ -169,7 +167,7 @@ Another possibility is to ``weight`` observations according to their importance.
 
 ## Accessing a learning task
 
-[&Task] is a ``list`` and the main properties of the learning task are stored in element
+[&Task] is a ``list`` and its main properties are stored in element
 ``"task.desc"`` which is of class [&TaskDesc].
 
 ```{r}
