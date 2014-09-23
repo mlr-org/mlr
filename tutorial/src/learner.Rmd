@@ -87,12 +87,12 @@ regr.lrn$predict.type
 It contains, among others, the type of parameters (e.g., numeric, logical), potential
 default values and the range of allowed values.
 
-Moreover, **mlr** provides functions to access the selected hyperparameter values
-and the parameter set.
+Moreover, **mlr** provides functions [&getHyperPars] and [&getParamSet] to access the
+selected hyperparameter values and the parameter set.
 These are particularly useful in case of a wrapped [Learner](&makeLearner),
 for example if a learner is fused with a feature selection strategy and both, the learner
 as well the feature selection method, have hyperparameters. 
-For details see section [Wrapper](&wrapper.md).
+For details see section [Wrapped Learners](&wrapper.md).
 
 ```{r}
 ## Get current parameter settings

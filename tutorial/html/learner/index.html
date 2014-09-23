@@ -341,12 +341,12 @@ regr.lrn$predict.type
 <p><code>classif.lrn$par.set</code> is an object of class <a href="http://www.rdocumentation.org/packages/ParamHelpers/functions/makeParamSet.html">ParamSet</a>.
 It contains, among others, the type of parameters (e.g., numeric, logical), potential
 default values and the range of allowed values.</p>
-<p>Moreover, <strong>mlr</strong> provides functions to access the selected hyperparameter values
-and the parameter set.
+<p>Moreover, <strong>mlr</strong> provides functions <a href="http://www.rdocumentation.org/packages/mlr/functions/getHyperPars.html">getHyperPars</a> and <a href="http://www.rdocumentation.org/packages/mlr/functions/getParamSet.html">getParamSet</a> to access the
+selected hyperparameter values and the parameter set.
 These are particularly useful in case of a wrapped <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>,
 for example if a learner is fused with a feature selection strategy and both, the learner
 as well the feature selection method, have hyperparameters. 
-For details see section <a href="&amp;wrapper.md">Wrapper</a>.</p>
+For details see section <a href="&amp;wrapper.md">Wrapped Learners</a>.</p>
 <pre class="prettyprint well"><code class="r">## Get current parameter settings
 getHyperPars(cluster.lrn)
 </code></pre>

@@ -9,10 +9,10 @@ weights are supported.
 Column **Props** shows further properties of the learning methods.
 For *classification* you can see if binary and/or multi-class problems are supported.
 In case of *survival analysis* the censoring type is shown. 
-For example *rcens* means that the Learner can deal with right censored data.
-Moreover, the type of prediction is displayed.
-For *classification* and *survival analysis* *prob* indicates that probabilities can be predicted.
-In case of regression *se* means that standard errors and the mean response can be predicted.
+For example *rcens* means that the learning method can deal with right censored data.
+Moreover, the type of prediction is displayed where *prob* indicates that probabilities
+can be predicted.
+In case of *regression* *se* means that standard errors and the mean response can be predicted.
 
 
 ```{r include=FALSE}
