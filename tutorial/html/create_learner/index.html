@@ -253,7 +253,7 @@ It can predict posterior probabilities.</p>
     package = &quot;MASS&quot;,
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id=&quot;method&quot;, default=&quot;moment&quot;, values=c(&quot;moment&quot;, &quot;mle&quot;, &quot;mve&quot;, &quot;t&quot;)),
-        makeNumericLearnerParam(id=&quot;nu&quot;, lower=2, requires=expression(method==&quot;t&quot;)),
+      makeNumericLearnerParam(id=&quot;nu&quot;, lower=2, requires=expression(method==&quot;t&quot;)),
       makeNumericLearnerParam(id=&quot;tol&quot;, default=1.0e-4, lower=0)
     ),
     twoclass = TRUE,
@@ -288,11 +288,11 @@ For classification you have to return a factor of predicted classes if <code>.le
 In the latter case the matrix must have the same number of columns as there are classes in the task and the columns have to be named by the class names.
 For clustering, you have to return a numeric vector with the IDs of the clusters that the respective datum has been assigned to.</p>
 <pre class="prettyprint well"><code class="r">predictLearner.classif.lda = function(.learner, .model, .newdata, ...) {
-    p = predict(.model$learner.model, newdata=.newdata, ...)
-    if(.learner$predict.type == &quot;response&quot;)
-        return(p$class)
-    else
-        return(p$posterior)
+  p = predict(.model$learner.model, newdata=.newdata, ...)
+  if(.learner$predict.type == &quot;response&quot;)
+    return(p$class)
+  else
+    return(p$posterior)
 }
 </code></pre>
 
