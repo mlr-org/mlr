@@ -39,7 +39,7 @@ In an additional scenario, you want to access a new parameter of a [Learner](&ma
 is already available in **mlr**, but the parameter is not implemented in **mlr** yet.
 If this is the case you might want to [contact us](https://github.com/berndbischl/mlr#get-in-touch)
 or [open an issue](https://github.com/berndbischl/mlr/issues/new) as well!
-But until then you can turn off **mlr**'s paramater checking like this:
+But until then you can turn off **mlr**'s parameter checking like this:
 
 ```{r}
 lrn = makeLearner("classif.ksvm", newPar = 3)
