@@ -12,8 +12,8 @@ misclassification costs (that would allow to calculate an optimal threshold valu
 The AUC (area under curve) summarizes the performance of the learner over all possible threshold
 values.
 **mlr** provides the [&auc] performance measure for binary classification and also a
-generalization of the AUC for the multi-class case ([&muticlass.auc]) from package
-[pROC](&http://cran.r-project.org/web/packages/pROC/index.html).
+generalization of the AUC for the multi-class case ([multiclass.auc](&pROC::muticlass.auc))
+from package [pROC](&http://cran.r-project.org/web/packages/pROC/index.html).
 
 
 ## Plotting the ROC curve
@@ -32,7 +32,7 @@ Note that the [learners](learner.md) have to be capable of predicting probabilit
 (Have a look at the [table of learners](integrated_learners.md)
 or run `listLearners(prob = TRUE)` to get a list of all learners that support this).
 We use the [BreastCancer](&mlbench::BreastCancer) data set from package
-[mlbench](&http://cran.r-project.org/web/packages/mlbench/index.html)
+[mlbench](&http://cran.r-project.org/web/packages/mlbench/index.html).
 
 ```{r}
 ## Linear discriminant analysis and support vector machine with RBF kernel
@@ -55,11 +55,12 @@ r2 = resample(lrn2, bc.task, rin, measures = ms, show.info = FALSE)
 Now we have to convert each prediction within the resample result to a
 [ROCR prediction](&ROCR::prediction-class) using the [&asROCRPrediction] function.
 Afterwards we let [ROCR](http://cran.r-project.org/web/packages/ROCR/index.html)
-calculate the [performance](&ROCR::performance) measures and plot the ROC curve.
+calculate the true and false positive rate using function [performance](&ROCR::performance)
+and [plot](&ROCR::plot.performance) the ROC curve.
 As we have one curve for each learner and each cross validation fold we might want to
 average the curves from the cross validation by using `avg = "threshold"`.
-Otherwise, [&ROCR::plot.performance] will draw one curve for each fold.
-For details, see [&ROCR::plot.performance].
+Otherwise, the plot method will draw one curve for each fold.
+For details, see [plot.performance](&ROCR::plot.performance).
 
 ```{r ROCRaverage}
 pred1 = asROCRPrediction(r1$pred)

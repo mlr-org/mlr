@@ -236,8 +236,8 @@ misclassification costs (that would allow to calculate an optimal threshold valu
 <p>The AUC (area under curve) summarizes the performance of the learner over all possible threshold
 values.
 <strong>mlr</strong> provides the <a href="http://www.rdocumentation.org/packages/mlr/functions/auc.html">auc</a> performance measure for binary classification and also a
-generalization of the AUC for the multi-class case ([&amp;muticlass.auc]) from package
-<a href="&amp;http://cran.r-project.org/web/packages/pROC/index.html">pROC</a>.</p>
+generalization of the AUC for the multi-class case (<a href="&amp;pROC::muticlass.auc">multiclass.auc</a>)
+from package <a href="&amp;http://cran.r-project.org/web/packages/pROC/index.html">pROC</a>.</p>
 <h2 id="plotting-the-roc-curve">Plotting the ROC curve</h2>
 <p>The <strong>mlr</strong> function <a href="http://www.rdocumentation.org/packages/mlr/functions/asROCRPrediction.html">asROCRPrediction</a> converts predictions (resulting from
 calling <a href="predict.WrapperModel">predict</a>, <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a>, or <a href="http://www.rdocumentation.org/packages/mlr/functions/benchmark.html">benchmark</a>) to a format that
@@ -250,7 +250,7 @@ to plot the ROC curve.</p>
 (Have a look at the <a href="../integrated_learners/">table of learners</a>
 or run <code>listLearners(prob = TRUE)</code> to get a list of all learners that support this).
 We use the <a href="http://www.rdocumentation.org/packages/mlbench/functions/BreastCancer.html">BreastCancer</a> data set from package
-<a href="&amp;http://cran.r-project.org/web/packages/mlbench/index.html">mlbench</a></p>
+<a href="&amp;http://cran.r-project.org/web/packages/mlbench/index.html">mlbench</a>.</p>
 <pre class="prettyprint well"><code class="r">## Linear discriminant analysis and support vector machine with RBF kernel
 lrn1 = makeLearner(&quot;classif.lda&quot;, predict.type = &quot;prob&quot;)
 lrn2 = makeLearner(&quot;classif.ksvm&quot;, predict.type = &quot;prob&quot;)
@@ -281,11 +281,12 @@ r2 = resample(lrn2, bc.task, rin, measures = ms, show.info = FALSE)
 <p>Now we have to convert each prediction within the resample result to a
 <a href="&amp;ROCR::prediction-class">ROCR prediction</a> using the <a href="http://www.rdocumentation.org/packages/mlr/functions/asROCRPrediction.html">asROCRPrediction</a> function.
 Afterwards we let <a href="http://cran.r-project.org/web/packages/ROCR/index.html">ROCR</a>
-calculate the <a href="http://www.rdocumentation.org/packages/ROCR/functions/performance.html">performance</a> measures and plot the ROC curve.
+calculate the true and false positive rate using function <a href="http://www.rdocumentation.org/packages/ROCR/functions/performance.html">performance</a>
+and <a href="&amp;ROCR::plot.performance">plot</a> the ROC curve.
 As we have one curve for each learner and each cross validation fold we might want to
 average the curves from the cross validation by using <code>avg = "threshold"</code>.
-Otherwise, [&amp;ROCR::plot.performance] will draw one curve for each fold.
-For details, see [&amp;ROCR::plot.performance].</p>
+Otherwise, the plot method will draw one curve for each fold.
+For details, see <a href="&amp;ROCR::plot.performance">plot.performance</a>.</p>
 <pre class="prettyprint well"><code class="r">pred1 = asROCRPrediction(r1$pred)
 pred2 = asROCRPrediction(r2$pred)
 perf1 = ROCR::performance(pred1, &quot;tpr&quot;, &quot;fpr&quot;)
