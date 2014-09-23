@@ -110,7 +110,7 @@
                             </li>
                         
                             <li >
-                                <a href="../wrapper/">Wrapper</a>
+                                <a href="../wrapper/">Wrapped Learners</a>
                             </li>
                         
                             <li >
@@ -130,7 +130,7 @@
                             </li>
                         
                             <li >
-                                <a href="../over_and_undersampling/">Over- and Undersampling</a>
+                                <a href="../over_and_undersampling/">Imbalanced Classification Problems</a>
                             </li>
                         
                             <li >
@@ -168,7 +168,7 @@
                             </li>
                         
                             <li >
-                                <a href="../measures/">Performance Measures</a>
+                                <a href="../measures/">Implemented Performance Measures</a>
                             </li>
                         
                         </ul>
@@ -216,13 +216,13 @@
     
         <li class="main active"><a href="#resampling">Resampling</a></li>
         
-            <li><a href="#accessing-individual-learner-models">Accessing individual learner models</a></li>
-        
             <li><a href="#stratified-resampling">Stratified resampling</a></li>
+        
+            <li><a href="#accessing-individual-learner-models">Accessing individual learner models</a></li>
         
             <li><a href="#resample-descriptions-and-resample-instances">Resample descriptions and resample instances</a></li>
         
-            <li><a href="#aggregation">Aggregation</a></li>
+            <li><a href="#aggregating-performance-values">Aggregating performance values</a></li>
         
             <li><a href="#convenience-functions">Convenience functions</a></li>
         
@@ -254,7 +254,7 @@ The supported resampling strategies are:</p>
 <li>Holdout (training/test) (<code>"Holdout"</code>).</li>
 </ul>
 <p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a> function then evaluates the performance of a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLEarner.html">Learner</a> using
-the specified resampling strategy for a given machine learning task.</p>
+the specified resampling strategy for a given machine learning <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
 <p>In the following example the performance of the
 <a href="http://www.rdocumentation.org/packages/survival/functions/coxph.html">Cox proportional hazards model</a> on the 
 <a href="http://www.rdocumentation.org/packages/survival/functions/lung.html">lung</a> data set is calculated using <em>3-fold cross-validation</em>.
@@ -337,13 +337,12 @@ data sets.
 <code>r$aggr</code> shows the aggregated performance value.
 Its name <code>"cindex.test.mean"</code> indicates the performance measure, <a href="http://www.rdocumentation.org/packages/mlr/functions/cindex.html">cindex</a>, and the method used
 to aggregate the 3 individual performances.
-[&amp;test.mean] is the default method and, as the name implies, takes the mean over the
+<a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations.html">test.mean</a> is the default method and, as the name implies, takes the mean over the
 performances on the 3 test data sets.
-Since for cross-validation no predictions on the training data sets are necessary
-<code>r$measures.train</code> contains <code>NA</code>s.</p>
-<p>If predictions for the training set are required, too, <code>predict = "train"</code>or <code>predict = "both"</code>
-in <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleDesc.html">makeResampleDesc</a>
-FIXME b632, b632+ bootstrap examples later.</p>
+No predictions on the training data sets were made and thus <code>r$measures.train</code> contains <code>NA</code>s.</p>
+<p>If predictions for the training set are required, too, set <code>predict = "train"</code>or <code>predict = "both"</code>
+in <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleDesc.html">makeResampleDesc</a>. This is necessary for some bootstrap methods (<em>b632</em> and <em>b632+</em>) and 
+we will see some examples later on.</p>
 <p><code>r$pred</code> is an object of class <a href="http://www.rdocumentation.org/packages/mlr/functions/ResamplePrediction.html">ResamplePrediction</a>.
 Just as a <a href="http://www.rdocumentation.org/packages/mlr/functions/Prediction.html">Prediction</a> object (see the section about <a href="&amp;predict.md">making predictions</a>)
 <code>r$pred</code> has an element called <code>"data"</code> which is a <code>data.frame</code> that contains the
@@ -361,9 +360,9 @@ variable.</p>
 ## 22 14         81        TRUE  -0.1874    1 test
 </code></pre>
 
-<p>The columns <code>iter</code> and <code>set</code>indicate the iteration of the resampling strategy and
-if the prediction was made on the test or the training data set.</p>
-<p>In the above example the peformance measure is the concordance index (<a href="http://www.rdocumentation.org/packages/mlr/functions/cindex.html">cindex</a>).
+<p>The columns <code>iter</code> and <code>set</code>indicate the resampling iteration and
+if an individual prediction was made on the test or the training data set.</p>
+<p>In the above example the performance measure is the concordance index (<a href="http://www.rdocumentation.org/packages/mlr/functions/cindex.html">cindex</a>).
 Of course, it is  possible to compute multiple performance measures at once by 
 passing a list of measures
 (see also the previous section about <a href="../performance/">evaluating learner performance</a>).</p>
@@ -376,7 +375,7 @@ training and 1/3 test set. If there is just one iteration, the strategy
 is commonly called <em>holdout</em> or <em>test sample estimation</em>.</p>
 <pre class="prettyprint well"><code class="r">## Subsampling with 5 iterations and default split 2/3
 rdesc = makeResampleDesc(&quot;Subsample&quot;, iters = 5)
-## Subsampling with 5 iterations and 4/5 splits
+## Subsampling with 5 iterations and 4/5 training data
 rdesc = makeResampleDesc(&quot;Subsample&quot;, iters = 5, split = 4/5)
 
 ## Calculate the three performance measures
@@ -387,143 +386,38 @@ r = resample(&quot;cluster.XMeans&quot;, mtcars.task, rdesc, measures = list(dun
 ## types: Measure
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">r
+<pre class="prettyprint well"><code class="r">r$aggr
 </code></pre>
 
-<pre class="prettyprint well"><code>## $measures.train
-##   iter cindex
-## 1    1     NA
-## 2    2     NA
-## 3    3     NA
-## 
-## $measures.test
-##   iter cindex
-## 1    1 0.5783
-## 2    2 0.6324
-## 3    3 0.6706
-## 
-## $aggr
-## cindex.test.mean 
-##           0.6271 
-## 
-## $pred
-## Resampled Prediction for:
-## Resample description: cross-validation with 3 iterations.
-## Predict: test
-## Stratification: FALSE
-## predict.type: response
-## threshold: 
-## time (mean): 0.00
-##    id truth.time truth.event response iter  set
-## 2   1        455        TRUE  -0.4952    1 test
-## 4   2        210        TRUE   0.9574    1 test
-## 7   4        310        TRUE   0.8069    1 test
-## 17 10        613        TRUE   0.1918    1 test
-## 19 12         61        TRUE   0.6639    1 test
-## 22 14         81        TRUE  -0.1874    1 test
-## 
-## $models
-## NULL
-## 
-## $err.msgs
-##   iter train predict
-## 1    1  &lt;NA&gt;    &lt;NA&gt;
-## 2    2  &lt;NA&gt;    &lt;NA&gt;
-## 3    3  &lt;NA&gt;    &lt;NA&gt;
-## 
-## $extract
-## $extract[[1]]
-## NULL
-## 
-## $extract[[2]]
-## NULL
-## 
-## $extract[[3]]
-## NULL
+<pre class="prettyprint well"><code>## cindex.test.mean 
+##           0.6271
+</code></pre>
+
+<h2 id="stratified-resampling">Stratified resampling</h2>
+<p>In classification stratified resampling makes sure that in each training set 
+the proportion of classes is the same as in the original data set.
+This is particularly useful in case of imbalanced classes. Otherwise it may happen for example 
+that observations of less frequent classes are missing in some of the training sets which can
+decrease the performance of the learner.
+In order to conduct stratified resampling set <code>stratify = TRUE</code> when calling <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleDesc.html">makeResampleDesc</a>.</p>
+<pre class="prettyprint well"><code class="r">## 3-fold cross-validation
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3, stratify = TRUE)
+
+r = resample(&quot;classif.lda&quot;, iris.task, rdesc)
+</code></pre>
+
+<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
+## [Resample] cross-validation iter: 2
+## [Resample] cross-validation iter: 3
+## [Resample] Result: mmce.test.mean=0.0197
 </code></pre>
 
 <h2 id="accessing-individual-learner-models">Accessing individual learner models</h2>
 <p>In each resampling iteration a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> is fitted on the respective training set.
 By default, the resulting <a href="http://www.rdocumentation.org/packages/mlr/functions/WrappedModel.html">WrappedModel</a>s are not returned by <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a>.
-If you want to keep them set <code>models = TRUE</code>.</p>
+If you want to keep them set <code>models = TRUE</code> when calling <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a>.</p>
 <pre class="prettyprint well"><code class="r">## 3-fold cross-validation
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
-
-r = resample(&quot;classif.lda&quot;, iris.task, rdesc, models = TRUE)
-</code></pre>
-
-<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
-## [Resample] cross-validation iter: 2
-## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.0267
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">r$models
-</code></pre>
-
-<pre class="prettyprint well"><code>## [[1]]
-## Model for id = classif.lda class = classif.lda
-## Trained on obs: 100
-## Used features: 4
-## Hyperparameters: 
-## 
-## [[2]]
-## Model for id = classif.lda class = classif.lda
-## Trained on obs: 100
-## Used features: 4
-## Hyperparameters: 
-## 
-## [[3]]
-## Model for id = classif.lda class = classif.lda
-## Trained on obs: 100
-## Used features: 4
-## Hyperparameters:
-</code></pre>
-
-<p>Keeping only certain information instead of entire <a href="http://www.rdocumentation.org/packages/mlr/functions/WrappedModel.html">models</a>, for example the
-variable importance in a regression tree, can be achieved using the <code>extract</code> argument.</p>
-<pre class="prettyprint well"><code class="r">## 3-fold cross-validation
-rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
-
-## Extract the variable importance in a regression tree
-r = resample(&quot;regr.rpart&quot;, bh.task, rdesc,
-    extract = function(x) x$learner.model$variable.importance)
-</code></pre>
-
-<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
-## [Resample] cross-validation iter: 2
-## [Resample] cross-validation iter: 3
-## [Resample] Result: mse.test.mean=23.7
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">r$extract
-</code></pre>
-
-<pre class="prettyprint well"><code>## [[1]]
-##      rm   lstat ptratio    crim     tax     dis     age     nox   indus 
-## 17071.8 10878.3  3220.2  3128.4  2757.3  2696.6  2599.6  2583.0  2087.1 
-##      zn     rad 
-##   976.9   761.6 
-## 
-## [[2]]
-##   lstat      rm   indus    crim     nox      zn     dis     tax     rad 
-## 14694.3 11825.2  9037.4  8126.9  7757.9  5720.5  2965.0  1255.8  1043.8 
-##     age ptratio 
-##   774.3   295.3 
-## 
-## [[3]]
-##      rm   lstat   indus    crim     nox     age     dis ptratio      zn 
-## 16736.1 12345.6  5683.4  5433.5  4314.3  4304.5  3819.6  3598.2  1435.2 
-##     tax       b     rad 
-##   774.7   644.6   153.0
-</code></pre>
-
-<p>The function passed to <code>extract</code> is applied to each <a href="http://www.rdocumentation.org/packages/mlr/functions/WrappedModel.html">model</a> fitted on one of
-the 3 training sets.</p>
-<h2 id="stratified-resampling">Stratified resampling</h2>
-<p>For classification <code>`stratify</code> ... FIXME</p>
-<pre class="prettyprint well"><code class="r">## 3-fold cross-validation
-rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3, stratify = TRUE)
 
 r = resample(&quot;classif.lda&quot;, iris.task, rdesc, models = TRUE)
 </code></pre>
@@ -556,15 +450,47 @@ r = resample(&quot;classif.lda&quot;, iris.task, rdesc, models = TRUE)
 ## Hyperparameters:
 </code></pre>
 
+<p>Keeping only certain information instead of entire <a href="http://www.rdocumentation.org/packages/mlr/functions/WrappedModel.html">models</a>, for example the
+variable importance in a regression tree, can be achieved using the <code>extract</code> argument.
+The function passed to <code>extract</code> is applied to each <a href="http://www.rdocumentation.org/packages/mlr/functions/WrappedModel.html">model</a> fitted on one of
+the 3 training sets.</p>
+<pre class="prettyprint well"><code class="r">## 3-fold cross-validation
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+
+## Extract the variable importance in a regression tree
+r = resample(&quot;regr.rpart&quot;, bh.task, rdesc,
+    extract = function(x) x$learner.model$variable.importance)
+</code></pre>
+
+<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
+## [Resample] cross-validation iter: 2
+## [Resample] cross-validation iter: 3
+## [Resample] Result: mse.test.mean=21.6
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">r$extract
+</code></pre>
+
+<pre class="prettyprint well"><code>## [[1]]
+##   lstat      rm     nox     age    crim   indus     tax     dis     rad 
+## 15632.0 11547.1  9089.6  7550.9  7354.8  7125.5  2232.5  2014.4  1283.5 
+## ptratio      zn 
+##  1073.1   117.3 
+## 
+## [[2]]
+##    lstat       rm      nox    indus      dis     crim      age      tax 
+## 18683.64  9153.96  3245.18  3136.51  2956.10  2879.65  2831.96  2576.20 
+##  ptratio       zn      rad        b 
+##  1784.05  1358.84   656.07    50.41 
+## 
+## [[3]]
+##      rm   lstat   indus     nox     dis     age    crim ptratio     tax 
+## 17652.3 12489.0  4966.9  3488.2  3441.6  3334.1  3207.1  2834.8  2612.6 
+##      zn     rad       b 
+##  1820.9   520.4   307.2
+</code></pre>
+
 <h2 id="resample-descriptions-and-resample-instances">Resample descriptions and resample instances</h2>
-<p>--
-Resampling strategies concern the process of sampling new data sets that are
-subsets of the main data set <em>D</em>. One wants to generate various training sets
-that the learning method can fit models to and test sets that those models can
-be evaluated on. We assume that every resampling strategy consists of a
-number of iterations and each one defines a set of indices into <em>D</em> that determine
-the respective training and test sets.
---</p>
 <p>As shown above the function <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleDesc.html">makeResampleDesc</a> is used to specify the resampling strategy.</p>
 <pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 str(rdesc)
@@ -580,19 +506,20 @@ str(rdesc)
 
 <p>The result <code>rdesc</code>is an object of class <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleDesc.html">ResampleDesc</a> and contains,
 as the name implies, a description of the resampling strategy.
-Basically, this is an instruction for randomly drawing training and test sets including
+In principle, this is an instruction for drawing training and test sets including
 the necessary parameters like the number of iterations, the sizes of the training and test
 sets etc.</p>
 <p>Based on this description, the data set is randomly separated into multiple training and
 test sets.
-The resulting set of index vectors indicating the training and test examples for each iteration
-is stored in a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleInstance.html">ResampleInstance</a>.</p>
-<p>If a <a href="http://www.rdocumentation.org/packages/mlr/functions/ResampleDesc.html">ResampleDesc</a> is passed to <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a> it is instantiated internally.
-It is also possible to pass a <a href="http://www.rdocumentation.org/packages/mlr/functions/ResampleInstance.html">ResampleInstance</a> to <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a>.</p>
-<p>A resample instance can be created by function <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleInstance.html">makeResampleInstance</a> given a resample
-description and either the size of the data set at hand or the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.
-It basically takes the description object and performs the random
-drawing of indices to separate the data into training and test.</p>
+For each iteration we get a set of index vectors indicating the training and test examples.
+These are stored in a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleInstance.html">ResampleInstance</a>.</p>
+<p>If a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleDesc.html">ResampleDesc</a> is passed to <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a> it is instantiated internally.
+Naturally, it is also possible to pass a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleInstance.html">ResampleInstance</a> directly.</p>
+<p>A <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleInstance.html">ResampleInstance</a> can be created by function 
+<a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleInstance.html">makeResampleInstance</a> given a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleDesc.html">ResampleDesc</a> and either the size of 
+the data set at hand or the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.
+It basically performs the random drawing of indices to separate the data into training and 
+test sets according to the description.</p>
 <pre class="prettyprint well"><code class="r">## Create a resample instance based an a task
 rin = makeResampleInstance(rdesc, task = iris.task)
 rin
@@ -604,7 +531,7 @@ rin
 ## Stratification: FALSE
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">## Create a resample instance given the size of a data set
+<pre class="prettyprint well"><code class="r">## Create a resample instance given the size of the data set
 rin = makeResampleInstance(rdesc, size = nrow(iris))
 str(rin)
 </code></pre>
@@ -641,39 +568,43 @@ rin$train.inds[[3]]
 ##  [86]  24 122 119   5  76  14  63  23 114 145  60  67  79 147 107
 </code></pre>
 
-<p>While having all those separate objects, resample descriptions, instances and the resample
+<p>While having two separate objects, resample descriptions and instances as well as the <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a>
 function seems overly complicated, it has several advantages:</p>
 <ul>
-<li>Having resample instances allows for paired experiments, that is comparing the performance
+<li>Resample instances allow for paired experiments, that is comparing the performance
   of several learners on exactly the same training and test sets.
   This is particularly useful if you want to add another method to a comparison experiment
   you already did.</li>
 </ul>
-<p>```r
-  rdesc = makeResampleDesc("CV", iters = 3)
-  rin = makeResampleInstance(rdesc, task = iris.task)</p>
-<p>## Calculate the performance of two learners based on the same resample instance
-  r.lda = resample("classif.lda", iris.task, rin)
-  ```</p>
-<p><code>## [Resample] cross-validation iter: 1
-  ## [Resample] cross-validation iter: 2
-  ## [Resample] cross-validation iter: 3
-  ## [Resample] Result: mmce.test.mean=0.0267</code></p>
-<p><code>r
-  r.rpart = resample("classif.rpart", iris.task, rin)</code></p>
-<p><code>## [Resample] cross-validation iter: 1
-  ## [Resample] cross-validation iter: 2
-  ## [Resample] cross-validation iter: 3
-  ## [Resample] Result: mmce.test.mean=0.0467</code>
-* It is easy to add other resampling methods later on. You can
+<pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+rin = makeResampleInstance(rdesc, task = iris.task)
+
+## Calculate the performance of two learners based on the same resample instance
+r.lda = resample(&quot;classif.lda&quot;, iris.task, rin, show.info = FALSE)
+r.rpart = resample(&quot;classif.rpart&quot;, iris.task, rin, show.info = FALSE)
+r.lda$aggr
+</code></pre>
+
+<pre class="prettyprint well"><code>## mmce.test.mean 
+##        0.02667
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">r.rpart$aggr
+</code></pre>
+
+<pre class="prettyprint well"><code>## mmce.test.mean 
+##        0.04667
+</code></pre>
+
+<ul>
+<li>It is easy to add other resampling methods later on. You can
   simply derive from the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleInstance.html">ResampleInstance</a>
   class, but you do not have to touch any methods that use the
-  resampling strategy.</p>
-<p>FIXME: Sometimes one only wants to describe the drawing process, while in other instances one wants
-to create the specific index sets.</p>
+  resampling strategy.</li>
+</ul>
 <p>As mentioned above, when calling <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleInstance.html">makeResampleInstance</a> the index sets are drawn randomly.
-Mainly, for <em>holdout</em> (test/train) estimation you may want to specify the training and test
-sets manually.
+Mainly for <em>holdout</em> (<em>test sample</em>) <em>estimation</em> you might want full control about the training
+and tests set and specify them manually.
 This can be done using function <a href="http://www.rdocumentation.org/packages/mlr/functions/makeFixedHoldoutInstance.html">makeFixedHoldoutInstance</a>.</p>
 <pre class="prettyprint well"><code class="r">rin = makeFixedHoldoutInstance(train.inds = 1:100, test.inds = 101:150, size = 150)
 rin
@@ -685,21 +616,16 @@ rin
 ## Stratification: FALSE
 </code></pre>
 
-<h2 id="aggregation">Aggregation</h2>
-<p>performance values resulting from individual iterations have to be aggregated.
-default mean</p>
-<p>Every single resampling
-iteration is handled as described in the explanation above, i.e. you
-train a model on the training part of the data set, predict on the test set
-and compare predicted and true labels to compute some performance
-measure. This is done in every iteration so that you have
-e.g. ten performance values in the case of 10-fold cross-validation.
-The question arises of how to aggregate those values. You can specify
-that explicitly, the default is to use the mean.</p>
+<h2 id="aggregating-performance-values">Aggregating performance values</h2>
+<p>In resampling we get (for each measure we wish to calculate) one performance 
+value (on the test set, training set, or both) for each iteration.
+Subsequently, these are aggregated.
+As mentioned above, mainly the mean about the performance values on the test data sets
+(<a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations.html">test.mean</a>) is calculated.</p>
 <p>For example, a 10-fold cross validation computes 10 values for the chosen
 performance measure.
 The aggregated value is the mean of these 10 numbers.
-<strong>mlr</strong> knows how to handle it because each <a href="http://www.rdocumentation.org/packages/mlr/functions/Measure.html">Measure</a> knows how it is aggregated:</p>
+<strong>mlr</strong> knows how to handle it because each <a href="http://www.rdocumentation.org/packages/mlr/functions/makeMeasure.html">Measure</a> knows how it is aggregated:</p>
 <pre class="prettyprint well"><code class="r">## Mean misclassification error
 mmce$aggr
 </code></pre>
@@ -714,45 +640,73 @@ rmse$aggr
 <pre class="prettyprint well"><code>## Aggregation function: test.sqrt.of.mean
 </code></pre>
 
-<p>change via function <a href="http://www.rdocumentation.org/packages/mlr/functions/setAggregation.html">setAggregation</a>
-<a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations.html">aggregations</a> for available methods</p>
-<p>You can also create a new <a href="http://www.rdocumentation.org/packages/mlr/functions/Measure.html">Measure</a> by using a different aggregation (see <a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations.html">aggregations</a>).
-<a href="http://www.rdocumentation.org/packages/mlr/functions/setAggregation.html">setAggregation</a></p>
+<p>The aggregation method of a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeMeasure.html">Measure</a> can be changed via function <a href="http://www.rdocumentation.org/packages/mlr/functions/setAggregation.html">setAggregation</a>.
+See the documentation page <a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations.html">aggregations</a> for available methods.</p>
 <h3 id="example-calculating-mean-and-standard-deviation-of-the-error-rate">Example: Calculating mean and standard deviation of the error rate</h3>
+<p><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations.html">test.sd</a> computes the standard deviation of performance values on the test sets.</p>
 <pre class="prettyprint well"><code class="r">mmce.test.sd = setAggregation(mmce, test.sd)
-r = resample(&quot;classif.rpart&quot;, iris.task, iris.rin, measures = list(mmce, mmce.test.sd))
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+r = resample(&quot;classif.rpart&quot;, iris.task, rdesc, measures = list(mmce, mmce.test.sd))
 </code></pre>
 
 <pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.06,mmce.test.sd=0.02
+## [Resample] Result: mmce.test.mean=0.0733,mmce.test.sd=0.0115
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code>## mmce.test.mean   mmce.test.sd 
-##           0.06           0.02
+##        0.07333        0.01155
 </code></pre>
 
 <h3 id="example-calculating-the-training-error">Example: Calculating the training error</h3>
+<p>In the following we calculate the mean misclassification error (<a href="http://www.rdocumentation.org/packages/mlr/functions/mmce.html">mmce</a>) on the training and the test
+data sets. Note that we have to set <code>predict = "both"</code>when calling <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleDesc.html">makeResampleDesc</a>
+in order to get predictions on both, training and test, data sets.</p>
+<pre class="prettyprint well"><code class="r">mmce.train.mean = setAggregation(mmce, train.mean)
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3, predict = &quot;both&quot;)
+r = resample(&quot;classif.rpart&quot;, iris.task, rdesc, measures = list(mmce, mmce.train.mean))
+</code></pre>
+
+<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
+## [Resample] cross-validation iter: 2
+## [Resample] cross-validation iter: 3
+## [Resample] Result: mmce.test.mean=0.0533,mmce.train.mean=0.0367
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">r$measures.train
+</code></pre>
+
+<pre class="prettyprint well"><code>##   iter mmce mmce
+## 1    1 0.05 0.05
+## 2    2 0.03 0.03
+## 3    3 0.03 0.03
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">r$aggr
+</code></pre>
+
+<pre class="prettyprint well"><code>##  mmce.test.mean mmce.train.mean 
+##         0.05333         0.03667
+</code></pre>
+
 <h3 id="example-bootstrap">Example: Bootstrap</h3>
-<p><em>B</em> new data sets <em>D_1</em> to <em>D_B</em> are drawn from
-<em>D</em> with replacement, each of the same size as <em>D</em>.
-In the <em>i</em>-th iteration <em>D_i</em> forms the training set,
-while the remaining elements from <em>D</em>, i.e., elements not
-in the training set, form the test set.</p>
+<p>In <em>out-of-bag bootstrap estimation</em> <em>B</em> new data sets <em>D_1</em> to <em>D_B</em> are drawn from the 
+data set <em>D</em> with replacement, each of the same size as <em>D</em>.
+In the <em>i</em>-th iteration <em>D_i</em> forms the training set, while the remaining elements from 
+<em>D</em>, i.e., elements not in the training set, form the test set.</p>
 <!--(
                      |resampling_desc_figure|
 
                      |resampling_nested_resampling_figure|
 )-->
 
-<p>b632 linear combination of the training error and the bootstrap error
-b632+</p>
-<p>predictions on the training set
-aggregation strategy</p>
+<p>The variants <em>b632</em> and <em>b632+</em> calculate a convex combination of the training performance and
+the out-of-bag bootstrap performance and thus require predictions on the training sets and an
+appropriate aggregation strategy.</p>
 <pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;Bootstrap&quot;, predict = &quot;both&quot;, iters = 10)
 b632.mmce = setAggregation(mmce, b632)
 b632plus.mmce = setAggregation(mmce, b632plus)
@@ -772,51 +726,37 @@ head(r$measures.train)
 </code></pre>
 
 <pre class="prettyprint well"><code>##   iter    mmce    mmce    mmce
-## 1    1 0.02667 0.02667 0.02667
+## 1    1 0.04000 0.04000 0.04000
 ## 2    2 0.02667 0.02667 0.02667
-## 3    3 0.04000 0.04000 0.04000
-## 4    4 0.02667 0.02667 0.02667
-## 5    5 0.04000 0.04000 0.04000
-## 6    6 0.02667 0.02667 0.02667
+## 3    3 0.02667 0.02667 0.02667
+## 4    4 0.04000 0.04000 0.04000
+## 5    5 0.02667 0.02667 0.02667
+## 6    6 0.04000 0.04000 0.04000
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code>## mmce.test.mean      mmce.b632  mmce.b632plus 
-##        0.03993        0.03701        0.03739
+##        0.05029        0.04307        0.04361
 </code></pre>
 
 <h2 id="convenience-functions">Convenience functions</h2>
-<p><strong>mlr</strong> provides some convenience functions for the frequently used resampling strategies,
-for example <a href="http://www.rdocumentation.org/packages/mlr/functions/holdout.html">holdout</a>, <a href="http://www.rdocumentation.org/packages/mlr/functions/crossval.html">crossval</a> or <a href="http://www.rdocumentation.org/packages/mlr/functions/bootstrapB632.html">bootstrap</a>.</p>
-<pre class="prettyprint well"><code class="r">r = holdout(&quot;regr.lm&quot;, bh.task, measures = list(mse, msa))
+<p>When you just quickly want to try out some learners it can get tedious to write the <strong>R</strong> code
+for generating a resample instance, setting the aggregation strategy and so on. 
+For this reason <strong>mlr</strong> provides some convenience functions for the frequently used resampling strategies,
+for example <a href="$resample">holdout</a>, <a href="&amp;resample">crossval</a> or <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">bootstrapB632</a>.
+But note that you do not have as much control and flexibility than when using <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a> 
+with a resample description or instance.</p>
+<pre class="prettyprint well"><code class="r">holdout(&quot;regr.lm&quot;, bh.task, measures = list(mse, mae))
+crossval(&quot;classif.lda&quot;, iris.task, iters = 3, measures = list(mmce, ber))
+bootstrapB632(&quot;surv.coxph&quot;, lung.task, iters = 20)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Objekt 'msa' nicht gefunden
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">r = crossval(&quot;classif.lda&quot;, iris.task, iters = 3, measures = list(mmce, ber))
-</code></pre>
-
-<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
-## [Resample] cross-validation iter: 2
-## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.02,ber.test.mean=0.0218
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">r = bootstrapB632()
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: Argument &quot;learner&quot; fehlt (ohne Standardwert)
-</code></pre>
-
-<p>recommended way is resample, 
-maximal control, resample descs and instances</p>
 <h2 id="pre-defined-resample-instances">Pre-defined resample instances</h2>
-<p>For each of the pre-defined <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>s <strong>mlr</strong> provides pre-defined resample instances for
-3-fold cross-validation. 
-These instances are occasionally used in this tutorial.</p>
+<p>For each of the pre-defined <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>s <strong>mlr</strong> provides pre-defined 
+<a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleInstance.html">ResampleInstance</a>s for 3-fold cross-validation. 
+These instances are occasionally used in the remainder of this tutorial.</p>
 <table>
 <thead>
 <tr>
