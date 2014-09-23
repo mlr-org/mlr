@@ -1,4 +1,4 @@
-# Integrated Performance Measures
+# Implemented Performance Measures
 
 The following tables show the performance measures available for the different types of
 learning problems.

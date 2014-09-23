@@ -5,6 +5,9 @@ number of different performance measures.
 In order to calculate the performance measures, call [&performance] on the object
 returned by [predict](&predict.WrappedModel) and specify the desired performance measure(s).
 
+
+## Implemented performance measures
+
 **mlr** provides a large number of performance measures for all types of learning problems.
 Typical performance measures for *classification* are mean misclassification error ([&mmce]),
 accuracy ([&acc]) or measures based on [ROC analysis](&roc_analysis.md).
@@ -25,6 +28,8 @@ non-standard misclassification costs, go to section
 [Create Custom Measures](&create_measure.md).
 
 
+## Calculate performance measures
+
 In the following example we fit a [gradient boosting machine](&gbm::gbm) on a subset of the
 [BostonHousing](&mlbench::BostonHousing) data set and calculate the mean squared error
 ([&mse]) on the remaining observations.
@@ -35,27 +40,38 @@ lrn = makeLearner("regr.gbm", n.trees = 1000)
 mod = train(lrn, task = bh.task, subset = seq(1,n,2))
 pred = predict(mod, task = bh.task, subset = seq(2,n,2))
 
-## The default performance measure is the mean squared error (mse)
 performance(pred)
-## Calculate the median of squared errors (medse) instead
+```
+
+For each type of learning problem there is a default performance measure.
+For regression the mean squared error ([&mse]) is calculated.
+
+Compute the median of squared errors ([&medse]) instead.
+
+```{r}
 performance(pred, measures = medse)
 ```
 
-Of course we can also calculate multiple performance measures at once by simply using a 
+Of course, we can also calculate multiple performance measures at once by simply passing a 
 list of measures which can also include [your own measure](create_measure.md).
 
+Calculate the mean squared error, median squared error and mean absolute error ([&mae]).
+
 ```{r}
-## Calculate mean squared error, median squared error and mean absolute error
 performance(pred, measures = list(mse, medse, mae))
 ```
 
 For the other types of learning problems and measures, calculating the performance basically 
 works in the same way.
 
-Note that for some performance measures it is required that you pass the [&Task] or the
-[fitted model](&WrappedModel).
 
-For example in order to assess the time needed for training, the fitted model has to be passed.
+### Requirements of performance measures
+
+Note that in order to calculate some performance measures it is required that you pass the 
+[&Task] or the [fitted model](&makeWrappedModel) additionally to the [&Prediction].
+
+For example in order to assess the time needed for training ([&timetrain]), the fitted
+model has to be passed.
 ```{r}
 performance(pred, measures = timetrain, model = mod)
 ```
@@ -70,9 +86,9 @@ pred = predict(mod, task = mtcars.task)
 performance(pred, measures = dunn, task = mtcars.task)
 ```
 
-Moreover, some measures may require a certain type of prediction.
-For example in order to calculate the AUC ([&auc]) - the area under the ROC (receiver
-operating characteristic) curve, we have to make sure that posterior
+Moreover, some measures require a certain type of prediction.
+For example in binary classification in order to calculate the AUC ([&auc]) - the area
+under the ROC (receiver operating characteristic) curve, we have to make sure that posterior
 probabilities are predicted.
 For more information on ROC analysis, see section [ROC Analysis](roc_analysis.md).
 
@@ -87,18 +103,27 @@ performance(pred, measures = auc)
 Also bear in mind that many of the performance measures available for classification as,
 e.g., the false positive rate ([&fpr]) are only suitable for binary problems.
 
-The requirements of the individual measures are shown in the
-[table of performance measures](&measures.md).
 
-If you are interested in the properties of a single measure you can access them directly.
-See the help page about [Measure](&makeMeasure) for information on the individual slots.
+## Access a performance measure
+
+Performance measures in **mlr** are objects of class [Measure](&makeMeasure).
+If you are interested in the properties/requirements of a single measure you can access it directly.
+See the help page of [Measure](&makeMeasure) for information on the individual slots.
+
 ```{r}
 ## Mean misclassification error
 str(mmce)
 ```
 
-If you would like a list of available measures with certain properties use the function
-[&listMeasures].
+
+## Find a suitable performance measure
+
+The properties and requirements of the individual measures are shown in the
+[table of performance measures](&measures.md).
+
+If you would like a list of available measures with certain properties or suitable for a
+certain learning [&Task] use the function [&listMeasures].
+
 ```{r}
 ## Performance measures for classification with multiple classes
 listMeasures("classif", properties = "classif.multi")
@@ -120,7 +145,7 @@ plot the false positive rate ([&fpr]), the false negative rate ([&fnr]) as well 
 misclassification rate ([&mmce]) for all possible threshold values.
 
 ```{r}
-lrn = makeLearner("classif.rpart", predict.type = "prob")
+lrn = makeLearner("classif.lda", predict.type = "prob")
 n = bc.task$task.desc$size
 mod = train(lrn, task = bc.task, subset = seq(1,n,2))
 pred = predict(mod, task = bc.task, subset = seq(2,n,2))
