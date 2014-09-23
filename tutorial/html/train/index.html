@@ -228,7 +228,8 @@
 In the <strong>mlr</strong> package this can be done by calling the function <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a>
 with a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> and a suitable <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
 <p>We start with a survival analysis example and train a
-<a href="&amp;survival::coxph">Cox proportional hazards model</a> on the <a href="http://www.rdocumentation.org/packages/survival/functions/lung.html">lung</a> data set.</p>
+<a href="http://www.rdocumentation.org/packages/survival/functions/coxph.html">Cox proportional hazards model</a>
+on the <a href="http://www.rdocumentation.org/packages/survival/functions/lung.html">lung</a> data set.</p>
 <pre class="prettyprint well"><code class="r">data(lung, package = &quot;survival&quot;)
 lung$status = lung$status - 1
 task = makeSurvTask(data = lung, target = c(&quot;time&quot;, &quot;status&quot;))
@@ -244,21 +245,19 @@ mod
 ## Hyperparameters:
 </code></pre>
 
-<p>In the above example, creating a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> is not strictly necessary.
-Generally, you have to generate a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> if you want to change any defaults
+<p>In the above example, generating a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> is not strictly necessary.
+Generally, you have to create a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> if you want to change any defaults
 by, e.g., setting hyperparameter values or changing the type of prediction.
 Otherwise, <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a> and many other functions accept a character string naming the learning
 method.</p>
 <pre class="prettyprint well"><code class="r">mod = train(&quot;surv.coxph&quot;, task)
+mod
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Objekt 'task' nicht gefunden
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: Objekt 'mod' nicht gefunden
+<pre class="prettyprint well"><code>## Model for id = surv.coxph class = surv.coxph
+## Trained on obs: 228
+## Used features: 8
+## Hyperparameters:
 </code></pre>
 
 <p>Training a learning method works the same for every type of <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.
@@ -345,7 +344,7 @@ train(&quot;classif.cforest&quot;, task = bc.task, weights = w)
 ## Hyperparameters:
 </code></pre>
 
-<p>As you may recall, it is also possible to specify observation weights when creating the 
+<p>As you may recall, it is also possible to pass observation weights when creating the 
 <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.
 Naturally, it makes sense to specify <code>weights</code> in <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">make<type>Task</a> if those weights
 should always be used for the learning task and in <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a> if this is not the case since, e.g.,

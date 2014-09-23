@@ -5,7 +5,8 @@ In the **mlr** package this can be done by calling the function [&train]
 with a [Learner](&makeLearner) and a suitable [&Task].
 
 We start with a survival analysis example and train a
-[Cox proportional hazards model](&survival::coxph) on the [lung](&survival::lung) data set.
+[Cox proportional hazards model](&survival::coxph)
+on the [lung](&survival::lung) data set.
 
 ```{r}
 data(lung, package = "survival")
@@ -17,8 +18,8 @@ mod = train(lrn, task)
 mod
 ```
 
-In the above example, creating a [Learner](&makeLearner) is not strictly necessary.
-Generally, you have to generate a [Learner](&makeLearner) if you want to change any defaults
+In the above example, generating a [Learner](&makeLearner) is not strictly necessary.
+Generally, you have to create a [Learner](&makeLearner) if you want to change any defaults
 by, e.g., setting hyperparameter values or changing the type of prediction.
 Otherwise, [&train] and many other functions accept a character string naming the learning
 method.
@@ -75,7 +76,7 @@ w = 1/tab[tar]
 train("classif.cforest", task = bc.task, weights = w)
 ```
 
-As you may recall, it is also possible to specify observation weights when creating the 
+As you may recall, it is also possible to pass observation weights when creating the 
 [&Task].
 Naturally, it makes sense to specify ``weights`` in [make<type>Task](&Task) if those weights
 should always be used for the learning task and in [&train] if this is not the case since, e.g.,
