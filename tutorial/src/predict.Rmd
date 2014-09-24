@@ -160,15 +160,14 @@ head(getProbabilities(pred))
 ```
 
 
-## Adjusting the threshold in binary classification
-
-In case of binary classification, two things are worth mentioning. As you may recall,
-we can specify which of the two classes should be considered as positive class when
-generating the [&Task]. Moreover, we can set the threshold value that is used 
-to map the predicted posterior probabilities to class labels.
+## Adjusting the threshold
+We can set the threshold value that is used to map the predicted posterior probabilities to class labels.
 Note that for this purpose we need to create a [Learner](&makeLearner) that predicts
 probabilities.
-
+For binary classification you set the threshold for the *positive* class.
+The default is 0.5.
+Now, we set the threshold for the *positive* class to 0.8 (that is, an example is assigned to the positive class if its posterior probability exceeds 0.8).
+Which of the two classes is the positive one can be seen by accessing the [&Task].
 To illustrate binary classification, we use the [BreastCancer](&mlbench::BreastCancer)
 data set from the
 [mlbench](http://cran.r-project.org/web/packages/mlbench/index.html) package.
@@ -176,37 +175,36 @@ data set from the
 ```{r}
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 mod = train(lrn, task = bc.task)
-
-pred = predict(mod, task = bc.task)
-pred
-pred$threshold
-```
-
-As you can see the default threshold is 0.5, that is an example is assigned to the class
-with maximum posterior probability.
-
-We can adjust the threshold using the function [&setThreshold].
-Now, we set the threshold for the *positive* class to 0.8 (that is, an example is assigned
-to the positive class if its posterior probability exceeds 0.8).
-Which of the two classes is the positive one can be seen by accessing the [&Task].
-
-```{r}
 ## Label of the positive class
 bc.task$task.desc$positive
-
+## default threshold
+pred = predict(mod, bc.task)
+pred$threshold
 ## Set the threshold value for the positive class
 pred = setThreshold(pred, 0.8)
-pred
 pred$threshold
+pred
 ```
-
 Note that in the binary case [&getProbabilities] extracts the posterior probabilities
 of the positive class only.
-
 ```{r}
 head(getProbabilities(pred))
 ```
 
+It works similar for multiclass classification.
+The threshold has to be given by a named vector specifying the values by which each probability will be divided. 
+The class with the maximum resulting value is then selected.
+
+```{r}
+lrn = makeLearner("classif.rpart", predict.type = "prob")
+mod = train(lrn, iris.task)
+pred = predict(mod, newdata = iris)
+pred$threshold
+table(as.data.frame(pred)$response)
+pred = setThreshold(pred, c(setosa=0.01, versicolor=50, virginica=1))
+pred$threshold
+table(as.data.frame(pred)$response)
+```
 
 ## Visualizing the prediction
 
