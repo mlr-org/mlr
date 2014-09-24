@@ -39,9 +39,8 @@
 #' print(r$extract)
 makeFilterWrapper = function(learner, fw.method = "rf.importance", fw.select = "perc", fw.val = 1) {
   learner = checkLearner(learner)
-  filters = getFilterRegister()
-  assertChoice(fw.method, choices = ls(filters))
-  filter = filters[[fw.method]]
+  assertChoice(fw.method, choices = ls(.FilterRegister))
+  filter = .FilterRegister[[fw.method]]
   checkFilterArguments(select = fw.select, val = fw.val)
 
   makeBaseWrapper(
@@ -49,7 +48,7 @@ makeFilterWrapper = function(learner, fw.method = "rf.importance", fw.select = "
     next.learner = learner,
     package = filter$pkg,
     par.set  = makeParamSet(
-      makeDiscreteLearnerParam(id = "fw.method", values = ls(filters)),
+      makeDiscreteLearnerParam(id = "fw.method", values = ls(.FilterRegister)),
       makeDiscreteLearnerParam(id = "fw.select", values = c("perc", "abs", "threshold")),
       makeNumericLearnerParam(id = "fw.val")
     ),

@@ -22,14 +22,16 @@ Default is 5.}
 Standardize input variables before calculating the nearest neighbors
 for data sets with numeric input variables only. For mixed variables
 (numeric and factor) the gower distance is used and variables are
-standardized anyway. Default is TRUE.}
+standardized anyway.
+Default is \code{TRUE}.}
 
 \item{useAltLogic}{[\code{integer(1)}]\cr
 Use an alternative logic for selection of minority class observations.
 Instead of sampling a minority class element AND one of its nearest
 neighbors, each minority class element is taken multiple times (depending
 on rate) for the interpolation and only the corresponding nearest neighbor
-is sampled. Default is FALSE.}
+is sampled.
+Default is \code{FALSE}.}
 }
 \value{
 [\code{\link{Task}}].

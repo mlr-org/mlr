@@ -1,9 +1,5 @@
 .FilterRegister = new.env()
 
-getFilterRegister = function() {
-  get(".FilterRegister", envir = getNamespace("mlr"))
-}
-
 #' Create a feature filter
 #'
 #' Creates and registers custom feature filters. Implemented filters
@@ -43,8 +39,7 @@ makeFilter = function(name, desc, pkg, supported.tasks, supported.features, fun)
     supported.features = supported.features,
     fun = fun
   )
-  ee = getFilterRegister()
-  ee[[name]] = obj
+  .FilterRegister[[name]] = obj
   obj
 }
 
@@ -72,7 +67,7 @@ listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE) {
   assertFlag(tasks)
   assertFlag(features)
 
-  filters = as.list(getFilterRegister())
+  filters = as.list(.FilterRegister)
   df = data.frame(
     id = names(filters),
     package = extractSubList(filters, "pkg")

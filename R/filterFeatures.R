@@ -23,8 +23,7 @@
 #' @export
 #' @family filter
 filterFeatures = function(task, method = "rf.importance", select = "perc", val, ...) {
-  filters = getFilterRegister()
-  assertChoice(method, choices = ls(filters))
+  assertChoice(method, choices = ls(.FilterRegister))
   checkFilterArguments(select = select, val = val)
 
   p = getTaskNFeats(task)

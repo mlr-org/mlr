@@ -17,10 +17,9 @@
 #' @export
 getFilterValues = function(task, method = "rf.importance", nselect = getTaskNFeats(task), ...) {
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
-  filters = getFilterRegister()
-  assertChoice(method, choices = ls(filters))
+  assertChoice(method, choices = ls(.FilterRegister))
   td = task$task.desc
-  filter = filters[[method]]
+  filter = .FilterRegister[[method]]
 
   if (!isScalarNA(filter$pkg))
     requirePackages(filter$pkg, why = "getFilterValues")

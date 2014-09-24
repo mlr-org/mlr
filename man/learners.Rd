@@ -57,7 +57,7 @@
   \item{\bold{classif.plsdaCaret}}{\cr Partial Least Squares (PLS) Discriminant Analysis from caret package: \code{\link[caret]{plsda}}}
   \item{\bold{classif.qda}}{\cr Quadratic Discriminant Analysis from MASS package: \code{\link[MASS]{qda}}}
   \item{\bold{classif.quaDA}}{\cr Quadratic Discriminant Analysis from DiscriMiner package: \code{\link[DiscriMiner]{quaDA}}}
-  \item{\bold{classif.randomForest}}{\cr Random Forest from randomForest package: \code{\link[randomForest]{rfsrc}}}
+  \item{\bold{classif.randomForest}}{\cr Random Forest from randomForest package: \code{\link[randomForest]{randomForest}}}
   \item{\bold{classif.randomForestSRC}}{\cr Random Forest from randomForestSRC package: \code{\link[randomForestSRC]{rfsrc}}}
   \item{\bold{classif.rda}}{\cr Regularized Discriminant Analysis from klaR package: \code{\link[klaR]{rda}}\cr
     Note that \code{estimate.error} has been set to \code{FALSE} by default for speed.}
@@ -92,7 +92,7 @@
     Note that \code{model} has been set to \code{FALSE} by default for speed.}
   \item{\bold{regr.plsr}}{\cr Partial least squares regression from pls package: \code{\link[pls]{plsr}}}
   \item{\bold{regr.randomForest}}{\cr Random Forest from randomForest package: \code{\link[randomForest]{randomForest}}}
-  \item{\bold{regr.randomForestSRC}}{\cr Random Forest from randomForestSRC package: \code{\link[randomForestSRC]{randomForestSRC}}}.
+  \item{\bold{regr.randomForestSRC}}{\cr Random Forest from randomForestSRC package: \code{\link[randomForestSRC]{rfsrc}}}.
   \item{\bold{regr.penalized.ridge}}{\cr Ridge regression from penalized package: \code{\link[penalized]{penalized}}}
   \item{\bold{regr.rpart}}{\cr Decision Tree from rpart package: \code{\link[rpart]{rpart}}\cr
     Note that \code{xval} has been set to 0 by default for speed.}
@@ -108,7 +108,7 @@
   \item{\bold{surv.CoxBoost}}{\cr Cox proportional hazards model with componentwise likelhood based boosting from CoxBoost package: \code{\link[CoxBoost]{CoxBoost}}}
   \item{\bold{surv.coxph}}{\cr Cox proportional hazard model from survival package: \code{\link[survival]{coxph}}}
   \item{\bold{surv.glmnet}}{\cr GLM with regularization from glmnet package: \code{\link[glmnet]{glmnet}}}
-  \item{\bold{surv.randomForestSRC}}{\cr Random Forests for Survival from randomForestSRC package: \code{\link[randomForestSRC]{randomForestSRC}}}
+  \item{\bold{surv.randomForestSRC}}{\cr Random Forests for Survival from randomForestSRC package: \code{\link[randomForestSRC]{rfsrc}}}
 }
 
 \itemize{
