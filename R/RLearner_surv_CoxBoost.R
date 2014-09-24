@@ -17,7 +17,7 @@ makeRLearner.surv.CoxBoost = function() {
     ),
     properties = c("numerics", "weights", "rcens"),
     name = "Cox Proportional Hazards Model with Componentwise Likelihood based Boosting",
-    short.name = "CoxBoost",
+    short.name = "coxboost",
     note = ""
   )
 }

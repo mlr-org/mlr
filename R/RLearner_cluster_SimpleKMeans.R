@@ -23,7 +23,7 @@ makeRLearner.cluster.SimpleKMeans = function() {
     ),
     properties = c("numerics"),
     name = "K-Means Clustering",
-    short.name = "SimpleKMeans"
+    short.name = "simplekmeans"
   )
 }
 

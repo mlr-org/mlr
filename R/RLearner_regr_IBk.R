@@ -14,7 +14,7 @@ makeRLearner.regr.IBk = function() {
     ),
     properties = c("numerics", "factors", "prob"),
     name = "K-Nearest Neighbours",
-    short.name = "IBk",
+    short.name = "ibk",
     note = ""
   )
 }

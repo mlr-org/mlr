@@ -25,7 +25,7 @@ makeRLearner.regr.randomForest = function() {
     ),
     properties = c("numerics", "factors", "se"),
     name = "Random Forest",
-    short.name = "RF"
+    short.name = "rf"
   )
 }
 

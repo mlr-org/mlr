@@ -9,7 +9,7 @@ makeRLearner.cluster.FarthestFirst = function() {
     ),
     properties = c("numerics"),
     name = "FarthestFirst Clustering Algorithm",
-    short.name = "FarthestFirst"
+    short.name = "farthestfirst"
   )
 }
 
