@@ -2,6 +2,7 @@
 
 language: c
 script: travis_wait ./travis-tool.sh run_tests
+env: R_CHECK_TIMINGS=0
 before_install:
   - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
   - chmod 755 ./travis-tool.sh
