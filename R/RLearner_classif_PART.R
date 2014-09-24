@@ -13,7 +13,7 @@ makeRLearner.classif.PART = function() {
       makeLogicalLearnerParam(id = "J")
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
-    name = "PART decision lists",
+    name = "PART Decision Lists",
     short.name = "PART",
     note = "NAs are directly passed to WEKA with `na.action = na.pass`"
   )

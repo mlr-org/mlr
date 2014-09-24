@@ -7,7 +7,7 @@ makeRLearner.regr.penalized.lasso = function() {
       makeNumericLearnerParam(id = "lambda1", default = 0, lower = 0)
     ),
     properties = c("numerics", "factors"),
-    name = "Lasso regression",
+    name = "Lasso Regression",
     short.name = "lasso",
     note = ""
   )

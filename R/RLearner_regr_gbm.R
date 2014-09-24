@@ -14,7 +14,7 @@ makeRLearner.regr.gbm = function() {
     ),
     par.vals = list(distribution = "gaussian"),
     properties = c("missings", "numerics", "factors", "weights"),
-    name = "Gradient boosting machine",
+    name = "Gradient Boosting Machine",
     short.name = "gbm",
     note = "`distribution` has been set to *gaussian* by default."
   )

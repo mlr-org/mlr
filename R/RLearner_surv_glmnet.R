@@ -32,7 +32,7 @@ makeRLearner.surv.glmnet = function() {
     ),
     properties = c("numerics", "weights", "rcens"),
     par.vals = list(s = 0.01),
-    name = "GLM with regularization",
+    name = "GLM with Regularization",
     short.name = "glmnet",
     note = ""
   )

@@ -14,7 +14,7 @@ makeRLearner.regr.pcr = function() {
     ),
     par.vals = list(model = FALSE),
     properties = c("numerics", "factors"),
-    name = "Principal component regression",
+    name = "Principal Component Regression",
     short.name = "pcr",
     note = "`model` has been set to `FALSE` by default for speed."
   )

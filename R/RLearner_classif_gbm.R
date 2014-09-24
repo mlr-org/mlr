@@ -13,7 +13,7 @@ makeRLearner.classif.gbm = function() {
       makeNumericLearnerParam(id = "train.fraction", default = 1, lower = 0, upper = 1)
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights"),
-    name = "Gradient boosting machine",
+    name = "Gradient Boosting Machine",
     short.name = "gbm",
     note = ""
   )

@@ -7,7 +7,7 @@ makeRLearner.classif.OneR = function() {
       makeIntegerLearnerParam(id = "B", default = 6L, lower = 1L)
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
-    name = "1-R classifier",
+    name = "1-R Classifier",
     short.name = "OneR",
     note = "NAs are directly passed to WEKA with `na.action = na.pass`"
   )

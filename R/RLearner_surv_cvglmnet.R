@@ -32,7 +32,7 @@ makeRLearner.surv.cvglmnet = function() {
       makeIntegerLearnerParam(id = "mxit", default = 100, lower = 1)
     ),
     properties = c("numerics", "weights", "rcens"),
-    name = "GLM with regularization (cross validated lambda)",
+    name = "GLM with Regularization (Cross Validated Lambda)",
     short.name = "cvglmnet",
     note = ""
   )

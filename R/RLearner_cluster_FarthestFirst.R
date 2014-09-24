@@ -8,7 +8,7 @@ makeRLearner.cluster.FarthestFirst = function() {
       makeIntegerLearnerParam(id = "S", default = 1L, lower = 1L)
     ),
     properties = c("numerics"),
-    name = "FarthestFirst clustering algorithm",
+    name = "FarthestFirst Clustering Algorithm",
     short.name = "FarthestFirst"
   )
 }

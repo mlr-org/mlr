@@ -21,7 +21,7 @@ makeRLearner.regr.blackboost = function() {
       makeIntegerLearnerParam(id = "maxdepth", default = 0L, lower = 0L)
     ),
     properties = c("numerics", "factors", "weights"),
-    name = "Gradient boosting with regression trees",
+    name = "Gradient Boosting with Regression Trees",
     short.name = "blackbst",
     note = ""
   )

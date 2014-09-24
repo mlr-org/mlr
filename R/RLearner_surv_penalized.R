@@ -11,7 +11,7 @@ makeRLearner.surv.penalized = function() {
       makeIntegerLearnerParam(id = "maxiter", default = 25L)
     ),
     properties = c("numerics", "factors", "rcens"),
-    name = "surv.penalized",
+    name = "Penalized Regression",
     short.name = "penalized",
     note = ""
   )

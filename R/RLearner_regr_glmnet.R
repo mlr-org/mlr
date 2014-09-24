@@ -34,7 +34,7 @@ makeRLearner.regr.glmnet = function() {
     ),
     properties = c("numerics", "weights"),
     par.vals = list(s = 0.01),
-    name = "GLM with lasso or elasticnet regularization",
+    name = "GLM with Lasso or Elasticnet Regularization",
     short.name = "glmnet",
     note = ""
   )

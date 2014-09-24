@@ -16,7 +16,7 @@ makeRLearner.regr.mob = function() {
     ),
     par.vals = list(),
     properties = c("numerics", "factors", "weights"),
-    name = "Model-based recursive partitioning  yielding a tree with fitted models associated with each terminal node",
+    name = "Model-based Recursive Partitioning  Yielding a Tree with Fitted Models Associated with each Terminal Node",
     short.name = "mob",
     note = ""
   )

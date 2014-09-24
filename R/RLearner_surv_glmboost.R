@@ -11,7 +11,7 @@ makeRLearner.surv.glmboost = function() {
       makeLogicalLearnerParam(id = "center", default = FALSE)
     ),
     properties = c("numerics", "factors", "weights", "rcens"),
-    name = "surv.glmboost",
+    name = "Gradient Boosting with Componentwise Linear Models",
     short.name = "glmboost",
     note = ""
   )

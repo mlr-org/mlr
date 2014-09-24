@@ -22,7 +22,7 @@ makeRLearner.classif.blackboost = function() {
     ),
     par.vals = list(family = Binomial()),
     properties = c("twoclass", "missings", "numerics", "factors", "prob", "weights"),
-    name = "Gradient boosting with regression trees",
+    name = "Gradient Boosting With Regression Trees",
     short.name = "blackbst",
     note = ""
   )
