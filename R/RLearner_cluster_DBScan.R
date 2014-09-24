@@ -10,8 +10,8 @@ makeRLearner.cluster.DBScan = function() {
       makeUntypedLearnerParam(id = "D", default = "weka.clusterers.forOPTICSAndDBScan.DataObjects.EuclideanDataObject")
     ),
     properties = c("numerics"),
-    name = "DBScan clustering",
-    short.name = "DBScan",
+    name = "DBScan Clustering",
+    short.name = "dbscan",
     note = "You might have to install the Weka package: WPM('install-package', 'optics_dbScan')"
   )
 }

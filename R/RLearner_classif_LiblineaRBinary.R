@@ -15,7 +15,7 @@ makeRLearner.classif.LiblineaRBinary = function() {
     ),
     properties = c("twoclass", "numerics"),
     name = "Regularized Binary Linear Predictive Models Estimation",
-    short.name = "LiblineaRBinary",
+    short.name = "liblinearbinary",
     note = "This model subsumes the types 1,2,3,5."
   )
 }

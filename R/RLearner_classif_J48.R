@@ -19,7 +19,7 @@ makeRLearner.classif.J48 = function() {
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
     name = "J48 Decision Trees",
-    short.name = "J48",
+    short.name = "j48",
     note = "NAs are directly passed to WEKA with `na.action = na.pass`"
   )
 }

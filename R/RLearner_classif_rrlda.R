@@ -12,7 +12,7 @@ makeRLearner.classif.rrlda = function() {
       makeDiscreteLearnerParam(id = "penalty", default = "L2", values = c("L1", "L2"))
     ),
     properties = c("twoclass", "multiclass", "numerics"),
-    name = "classif.rrlda",
+    name = "Robust Regularized Linear Discriminant Analysis",
     short.name = "rrlda",
     note = ""
   )

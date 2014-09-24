@@ -31,7 +31,7 @@ makeRLearner.classif.lqa = function() {
     ),
     properties = c("numerics", "prob", "twoclass", "weights"),
     par.vals = list(penalty = 'lasso', lambda = 0.1),
-    name = "classif.lqa",
+    name = "Fitting penalized Generalized Linear Models with the LQA algorithm",
     short.name = "lqa",
     note = "`penalty` has been set to *lasso* and `lambda` to 0.1 by default."
   )

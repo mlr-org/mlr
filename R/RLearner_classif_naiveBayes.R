@@ -9,7 +9,7 @@ makeRLearner.classif.naiveBayes = function() {
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
     name = "Naive Bayes",
-    short.name = "nBayes",
+    short.name = "nbayes",
     note = ""
   )
 }

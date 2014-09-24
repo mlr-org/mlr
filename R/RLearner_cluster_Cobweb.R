@@ -9,8 +9,8 @@ makeRLearner.cluster.Cobweb = function() {
       makeIntegerLearnerParam(id = "S", default = 42L, lower = 1L)
     ),
     properties = c("numerics"),
-    name = "Cobweb clustering algorithm",
-    short.name = "Cobweb"
+    name = "Cobweb Clustering Algorithm",
+    short.name = "cobweb"
   )
 }
 

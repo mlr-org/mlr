@@ -13,7 +13,7 @@ makeRLearner.surv.randomForestSRC = function() {
     ),
     properties = c("missings", "numerics", "factors", "rcens"),
     name = "Random Forests for Survival",
-    short.name = "RFsrc",
+    short.name = "rfsrc",
     note = ""
   )
 }

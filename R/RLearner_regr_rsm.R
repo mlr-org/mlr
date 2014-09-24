@@ -8,7 +8,7 @@ makeRLearner.regr.rsm = function() {
     ),
     par.vals = list(modelfun = "FO"),
     properties = c("numerics"),
-    name = "Response surface regression",
+    name = "Response Surface Regression",
     short.name = "rsm",
     note = "You select the order of the regression by using modelfun = \"FO\" (first order), \"TWI\" (two-way interactions, this is with 1st oder terms!) and \"SO\" (full second order)"
   )

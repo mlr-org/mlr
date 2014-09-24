@@ -7,7 +7,7 @@ makeRLearner.regr.penalized.ridge = function() {
       makeNumericLearnerParam(id = "lambda2", default = 0, lower = 0)
     ),
     properties = c("numerics", "factors"),
-    name = "regr.penalized.ridge",
+    name = "Penalized Ridge Regression",
     short.name = "ridge",
     note = ""
   )

@@ -55,4 +55,9 @@ Note that for general cost-sensitive learning, mlr currently supports mainly
 \dQuote{wrapper} approaches like \code{\link{CostSensWeightedPairsWrapper}},
 which are not listed, as they are not basic R learning algorithms.
 }
+\examples{
+data = iris
+task = makeClassifTask(data = data, target = "Species")
+listLearners(task)
+}
 

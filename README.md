@@ -5,7 +5,7 @@ mlr: Machine Learning in R
   http://cran.r-project.org/web/packages/mlr/index.html
 
 * Detailed Tutorial:
-  https://github.com/berndbischl/mlr/blob/master/doc/knitted/tutorial/README.md
+  http://berndbischl.github.io/mlr/tutorial/html/
 
 * R Documentation in HTML:
   http://berndbischl.github.io/mlr/man/

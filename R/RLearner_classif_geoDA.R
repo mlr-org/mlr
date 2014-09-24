@@ -6,7 +6,7 @@ makeRLearner.classif.geoDA = function() {
     par.set = makeParamSet(),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Geometric Predictive Discriminant Analysis",
-    short.name = "geoDA",
+    short.name = "geoda",
     note = ""
   )
 }

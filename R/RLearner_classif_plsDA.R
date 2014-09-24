@@ -10,7 +10,7 @@ makeRLearner.classif.plsDA = function() {
       ),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Partial Least Squares (PLS) Discriminant Analysis",
-    short.name = "plsDA",
+    short.name = "plsda",
     note = ""
   )
 }

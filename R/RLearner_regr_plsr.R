@@ -9,7 +9,7 @@ makeRLearner.regr.plsr = function() {
       makeLogicalLearnerParam(id = "scale", default = TRUE)
     ),
     properties = c("numerics", "factors"),
-    name = "Partial least squares regression",
+    name = "Partial Least Squares Regression",
     short.name = "plsr",
     note = ""
   )
