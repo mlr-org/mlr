@@ -236,8 +236,13 @@ strategy for each <a href="http://www.rdocumentation.org/packages/mlr/functions/
 <h3 id="example-two-tasks-and-two-learners">Example: Two tasks and two learners</h3>
 <pre class="prettyprint well"><code class="r">## Two learners to be compared
 lrns = list(makeLearner(&quot;classif.lda&quot;), makeLearner(&quot;classif.rpart&quot;))
+</code></pre>
 
-## Two classification tasks
+<pre class="prettyprint well"><code>## Loading required package: MASS
+## Loading required package: rpart
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Two classification tasks
 tasks = list(iris.task, bc.task)
 
 ## Use 5-fold cross-validation for both tasks
@@ -434,49 +439,48 @@ res = benchmark(tasks = iris.task, learners = lrns, resampling = rdesc, show.inf
 <pre class="prettyprint well"><code>## [FeatSel] Started selecting features for learner 'classif.lda'
 ## With control class: FeatSelControlSequential
 ## Imputation value: 1
-## [FeatSel] 1: 0 bits: mmce.test.mean=0.65
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.23
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.53
+## [FeatSel] 1: 0 bits: mmce.test.mean=0.68
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.26
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.46
 ## [FeatSel] 2: 1 bits: mmce.test.mean=0.05
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.05
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.03
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.04
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.03
-## [FeatSel] 4: 3 bits: mmce.test.mean=0.03
-## [FeatSel] 4: 3 bits: mmce.test.mean=0.01
-## [FeatSel] 5: 4 bits: mmce.test.mean=0.03
-## [FeatSel] Result: 3 bits : mmce.test.mean=0.01
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.02
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.02
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.01
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.02
+## [FeatSel] Result: 1 bits : mmce.test.mean=0.02
 ## [FeatSel] Started selecting features for learner 'classif.lda'
 ## With control class: FeatSelControlSequential
 ## Imputation value: 1
-## [FeatSel] 1: 0 bits: mmce.test.mean=0.63
+## [FeatSel] 1: 0 bits: mmce.test.mean=0.62
 ## [FeatSel] 2: 1 bits: mmce.test.mean=0.29
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.48
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.42
 ## [FeatSel] 2: 1 bits: mmce.test.mean=0.05
 ## [FeatSel] 2: 1 bits: mmce.test.mean=0.04
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.04
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.07
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.06
-## [FeatSel] Result: 1 bits : mmce.test.mean=0.04
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.05
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.03
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.03
+## [FeatSel] 4: 3 bits: mmce.test.mean=0.05
+## [FeatSel] 4: 3 bits: mmce.test.mean=0.04
+## [FeatSel] Result: 2 bits : mmce.test.mean=0.03
 ## [FeatSel] Started selecting features for learner 'classif.lda'
 ## With control class: FeatSelControlSequential
 ## Imputation value: 1
 ## [FeatSel] 1: 0 bits: mmce.test.mean=0.61
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.31
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.42
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.06
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.03
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.03
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.03
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.03
-## [FeatSel] Result: 1 bits : mmce.test.mean=0.03
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.24
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.44
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.05
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.04
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.05
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.04
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.06
+## [FeatSel] Result: 1 bits : mmce.test.mean=0.04
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">res
 </code></pre>
 
 <pre class="prettyprint well"><code>##           task             learner mmce.test.mean
-## 1 iris-example       classif.rpart        0.06667
+## 1 iris-example       classif.rpart        0.06000
 ## 2 iris-example classif.lda.featsel        0.04667
 </code></pre>
 
@@ -491,18 +495,18 @@ getFeatSelResult(res)
 ## $`iris-example`$classif.lda.featsel
 ## $`iris-example`$classif.lda.featsel[[1]]
 ## FeatSel result:
-## Features (3): Sepal.Length, Petal.Length, Petal.Width
-## mmce.test.mean=0.01
+## Features (1): Petal.Width
+## mmce.test.mean=0.02
 ## 
 ## $`iris-example`$classif.lda.featsel[[2]]
 ## FeatSel result:
-## Features (1): Petal.Width
-## mmce.test.mean=0.04
+## Features (2): Sepal.Width, Petal.Width
+## mmce.test.mean=0.03
 ## 
 ## $`iris-example`$classif.lda.featsel[[3]]
 ## FeatSel result:
 ## Features (1): Petal.Width
-## mmce.test.mean=0.03
+## mmce.test.mean=0.04
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Performances on individual test data sets
@@ -511,9 +515,9 @@ getPerformances(res)
 
 <pre class="prettyprint well"><code>## $`iris-example`
 ##   iter classif.rpart.mmce classif.lda.featsel.mmce
-## 1    1               0.10                     0.04
+## 1    1               0.08                     0.08
 ## 2    2               0.04                     0.04
-## 3    3               0.06                     0.06
+## 3    3               0.06                     0.02
 </code></pre>
 
 </div>

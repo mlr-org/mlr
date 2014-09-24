@@ -16,37 +16,49 @@ In case of *regression* *se* means that standard errors and the mean response ca
 
 
 ```{r include=FALSE}
+library("mlr")
+library("pander")
 linkPkg = function(x) {
-  collapse(sprintf("[%1$s](http://cran.r-project.org/web/packages/%1$s/)", x))
+  collapse(sprintf("[%1$s](http://cran.r-project.org/web/packages/%1$s/)", x), sep = "<br />")
 }
 
 getTab = function(type) {
   lrns = listLearners(type, create = TRUE, warn.missing.packages = FALSE)
-  cols = c("ID", "Short Name", "Name", "Packages", "Num.", "Fac.", "NAs", "Weights", "Props")
+  cols = c("ID / Short Name", "Name", "Packages", "Num.", "Fac.", "NAs", "Weights", "Props", "Note")
   df = makeDataFrame(nrow = length(lrns), ncol = length(cols),
-    col.types = c("character", "character", "character", "character", "logical", "logical", "logical", "logical", "character"))
+    col.types = c("character", "character", "character", "logical", "logical", "logical", "logical", "character", "character"))
   names(df) = cols
 
   cn = function(x) if (is.null(x)) NA else x
 
   for (i in seq_along(lrns)) {
     lrn = lrns[[i]]
-    df[i, 1] = lrn$id
-    df[i, 2] = cn(lrn$short.name)
-    df[i, 3] = cn(lrn$name)
-    df[i, 4] = linkPkg(lrn$package)
-    df[i, 5] = hasProperties(lrn, "numerics")
-    df[i, 6] = hasProperties(lrn, "factors")
-    df[i, 7] = hasProperties(lrn, "missings")
-    df[i, 8] = hasProperties(lrn, "weights")
-    df[i, 9] = collapse(setdiff(lrn$properties, c("numerics", "factors", "missings", "weights")))
+    df[i, 1] = paste0("**",lrn$id,"** <br />", cn(lrn$short.name))
+    df[i, 2] = cn(lrn$name)
+    df[i, 3] = linkPkg(lrn$package)
+    df[i, 4] = hasProperties(lrn, "numerics")
+    df[i, 5] = hasProperties(lrn, "factors")
+    df[i, 6] = hasProperties(lrn, "missings")
+    df[i, 7] = hasProperties(lrn, "weights")
+    df[i, 8] = collapse(setdiff(lrn$properties, c("numerics", "factors", "missings", "weights")), sep = "<br />")
+    df[i, 9] = cn(lrn$note)
   }
   logicals = vlapply(df, is.logical)
   df[logicals] = lapply(df[logicals], function(x) ifelse(x, "X", ""))
   pandoc.table(df, style = "rmarkdown", split.tables = Inf, split.cells = Inf,
-    justify = c("left", "left", "left", "left", "center", "center", "center", "center", "right"))
+    justify = c("left", "left", "left", "center", "center", "center", "center", "right", "left"))
 }
 ```
+
+<style type="text/css">
+<!--
+.col-md-9 td {
+border: solid 1px #ccc;
+padding: 0.1em;
+vertical-align: top;
+}
+-->
+</style>
 
 ### Classification
 ```{r echo=FALSE,results="asis"}

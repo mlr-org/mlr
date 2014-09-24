@@ -247,7 +247,12 @@ proceed normally, that is call train, resample, benchmark</p>
 <p>In the following example we build a bagging wrapper.</p>
 <pre class="prettyprint well"><code class="r">## 
 lrn = makeLearner(&quot;classif.rpart&quot;, cp = 0.05)
-lrn = makeBaggingWrapper(lrn, bw.iters = 50, bw.replace = TRUE, bw.size = 0.8, bw.feats = 3/4)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: rpart
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">lrn = makeBaggingWrapper(lrn, bw.iters = 50, bw.replace = TRUE, bw.size = 0.8, bw.feats = 3/4)
 lrn
 </code></pre>
 

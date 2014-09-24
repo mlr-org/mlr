@@ -246,15 +246,40 @@ In the constructor you can do the following things:</p>
 </ul>
 <pre class="prettyprint well"><code class="r">## Cox proportional hazards model with custom name
 surv.lrn = makeLearner(&quot;surv.coxph&quot;, id = &quot;coxph&quot;)
+</code></pre>
 
-## K-means with 5 clusters
+<pre class="prettyprint well"><code>## Loading required package: survival
+## Loading required package: splines
+## 
+## Attaching package: 'survival'
+## 
+## Das folgende Objekt ist maskiert from 'package:caret':
+## 
+##     cluster
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## K-means with 5 clusters
 cluster.lrn = makeLearner(&quot;cluster.SimpleKMeans&quot;, N = 5)
+</code></pre>
 
-## Regression gradient boosting machine, specify hyperparameters via a list
+<pre class="prettyprint well"><code>## Loading required package: RWeka
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Regression gradient boosting machine, specify hyperparameters via a list
 regr.lrn = makeLearner(&quot;regr.gbm&quot;, par.vals = list(n.trees = 500, interaction.depth = 3))
+</code></pre>
 
-## Classification tree, set it up for predicting probabilities
+<pre class="prettyprint well"><code>## Loading required package: gbm
+## Loaded gbm 2.1
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Classification tree, set it up for predicting probabilities
 classif.lrn = makeLearner(&quot;classif.randomForest&quot;, predict.type = &quot;prob&quot;, fix.factors = TRUE)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: randomForest
+## randomForest 4.6-7
+## Type rfNews() to see new features/changes/bug fixes.
 </code></pre>
 
 <p>The first argument specifies which algorithm to use.
@@ -274,7 +299,7 @@ the test data set.</p>
 
 <pre class="prettyprint well"><code>## Learner coxph from package survival
 ## Type: surv
-## Name: Cox proportional hazard model; Short name: coxph
+## Name: Cox Proportional Hazard Model; Short name: coxph
 ## Class: surv.coxph
 ## Properties: missings,numerics,factors,weights,prob,rcens
 ## Predict-Type: response
@@ -286,7 +311,7 @@ the test data set.</p>
 
 <pre class="prettyprint well"><code>## Learner classif.randomForest from package randomForest
 ## Type: classif
-## Name: Random Forest; Short name: RF
+## Name: Random Forest; Short name: rf
 ## Class: classif.randomForest
 ## Properties: twoclass,multiclass,numerics,factors,prob
 ## Predict-Type: prob
@@ -408,7 +433,7 @@ surv.lrn
 
 <pre class="prettyprint well"><code>## Learner CoxModel from package survival
 ## Type: surv
-## Name: Cox proportional hazard model; Short name: coxph
+## Name: Cox Proportional Hazard Model; Short name: coxph
 ## Class: surv.coxph
 ## Properties: missings,numerics,factors,weights,prob,rcens
 ## Predict-Type: response
