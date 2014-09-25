@@ -180,7 +180,7 @@ makeFilter(
   name = "rank.correlation",
   desc = "Spearman's correlation between feature and target",
   pkg  = "FSelector",
-  supported.tasks = c("classif", "regr"),
+  supported.tasks = c("regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
     y = FSelector::rank.correlation(getTaskFormula(task), data = getTaskData(task))
@@ -272,18 +272,52 @@ makeFilter(
     if (length(measure) != 1L)
       stop("Exactly one measure must be provided")
     if (is.null(resampling))
-      rdesc = makeResampleDesc("Subsample", iters = 1L, split = 0.67)
-    if (!inherits(task, learner$type))
+      resampling = makeResampleDesc("Subsample", iters = 1L, split = 0.67)
+    if (getTaskType(task) != learner$type)
       stopf("Expected task of type '%s', not '%s'", getTaskType(task), learner$type)
 
     fns = getTaskFeatureNames(task)
     res = double(length(fns))
     for (i in seq_along(fns)) {
-      subtask = subsetTask(subtask, features = fns[-i])
+      subtask = subsetTask(task, features = fns[-i])
       res[i] = resample(learner = learner, task = subtask, resampling = resampling, measures = measure)$aggr
     }
     if (measure[[1L]]$minimize)
       res = -1.0 * res
     setNames(res, fns)
+  }
+)
+
+
+makeFilter(
+  name = "anova.test",
+  desc = "ANOVA Test for binary and multiclass classification tasks",
+  pkg = NA_character_,
+  supported.tasks = c("classif"),
+  supported.features = c("numerics"),
+  fun = function(task, nselect, ...) {
+    data = getTaskData(task)
+    sapply(getTaskFeatureNames(task), function(feat.name) {
+      f = as.formula(paste0(feat.name,"~",getTargetNames(task)))
+      aov.t = aov(f, data = data)
+      summary(aov.t)[[1]][1,'F value']
+    })
+  }
+)
+
+makeFilter(
+  name = "kruskal.test",
+  desc = "Kurskal Test for binary and multiclass classification tasks",
+  pkg = NA_character_,
+  supported.tasks = c("classif"),
+  supported.features = c("numerics", "factors"),
+  fun = function(task, nselect, ...) {
+    data = getTaskData(task)
+    res = sapply(getTaskFeatureNames(task), function(feat.name) {
+      f = as.formula(paste0(feat.name,"~",getTargetNames(task)))
+      t = kruskal.test(f, data = data)
+      t$statistic
+    })
+    setNames(res, getTaskFeatureNames(task))
   }
 )
