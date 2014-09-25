@@ -12,7 +12,10 @@
 * Comments in R code start with ## and the first word is capitalized. 
   No dot at the end except the comment is a proper sentence
 * Use blanks around binary operators (=, -, *, etc.) and after commas.
-* Names of frequently used R objects
+* Composite names are separated by a dot, for example cluster.task, filtered.task, 
+bag.lrn (for bagged learner), etc.
+
+Names of frequently used R objects
 
 task | Task
 tasks | list of Tasks
@@ -35,5 +38,3 @@ ps | ParamSet
 ctrl | control object
 df | some data.frame
 
-* Composite names are separated by a dot, for example cluster.task, filtered.task, 
-bag.lrn (for bagged learner), etc.
