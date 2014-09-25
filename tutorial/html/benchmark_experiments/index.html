@@ -227,9 +227,9 @@
 
 <h1 id="benchmark-experiments">Benchmark Experiments</h1>
 <p>In a benchmark experiment different learning methods are applied to one or several data sets.
-The aim is normally to compare and rank the algorithms with respect to one or more
+The aim is usually to compare and rank the algorithms with respect to one or more
 performance measures.</p>
-<p>In <strong>mlr</strong> a benchmark experiment can be conducted by calling function <a href="http://www.rdocumentation.org/packages/mlr/functions/benchmark.html">benchmark</a> on a
+<p>In <strong>mlr</strong> a benchmark experiment can be conducted by calling the function <a href="http://www.rdocumentation.org/packages/mlr/functions/benchmark.html">benchmark</a> on a
 list of <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>s and <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>s.
 Moreover, you can specify which performance measures to calculate and choose a resampling
 strategy for each <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
@@ -244,26 +244,31 @@ lrns = list(makeLearner(&quot;classif.lda&quot;), makeLearner(&quot;classif.rpar
 
 <pre class="prettyprint well"><code class="r">## Two classification tasks
 tasks = list(iris.task, bc.task)
+</code></pre>
 
-## Use 5-fold cross-validation for both tasks
+<pre class="prettyprint well"><code>## Error: object 'bc.task' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">## Use 5-fold cross-validation for both tasks
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 5)
 
 ## Conduct the benchmark experiment
 res = benchmark(lrns, tasks, rdesc, show.info = FALSE)
-res
 </code></pre>
 
-<pre class="prettyprint well"><code>##                   task       learner mmce.test.mean
-## 1 BreastCancer-example   classif.lda        0.04243
-## 2 BreastCancer-example classif.rpart        0.05706
-## 3         iris-example   classif.lda        0.04000
-## 4         iris-example classif.rpart        0.06667
+<pre class="prettyprint well"><code>## Error: object 'tasks' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">res
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'res' not found
 </code></pre>
 
 <p>The above code should be self-explanatory. In the result every row corresponds to one <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>
 set with one <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>.
 In the printed table the individual tasks and learners are referred to by their IDs.
-The entries show the 5-fold cross-validated mean misclassification error (<a href="http://www.rdocumentation.org/packages/mlr/functions/mmce.html">mmce</a>) which
+The entries show the 5-fold cross-validated mean misclassification error (<a href="http://www.rdocumentation.org/packages/mlr/functions/mmce.html">mmce</a>), which
 is the default performance measure for classification.</p>
 <p>The result is an object of class <a href="http://www.rdocumentation.org/packages/mlr/functions/BenchmarkResult.html">BenchmarkResult</a> and <strong>mlr</strong> provides several accessor 
 functions.
@@ -272,75 +277,56 @@ Let's have a look at the benchmark result from the example above:</p>
 getPerformances(res)
 </code></pre>
 
-<pre class="prettyprint well"><code>## $`BreastCancer-example`
-##   iter classif.lda.mmce classif.rpart.mmce
-## 1    1          0.02206            0.04412
-## 2    2          0.04412            0.04412
-## 3    3          0.04380            0.08029
-## 4    4          0.07299            0.07299
-## 5    5          0.02920            0.04380
-## 
-## $`iris-example`
-##   iter classif.lda.mmce classif.rpart.mmce
-## 1    1          0.03333            0.06667
-## 2    2          0.00000            0.06667
-## 3    3          0.00000            0.00000
-## 4    4          0.00000            0.03333
-## 5    5          0.16667            0.16667
+<pre class="prettyprint well"><code>## Error: object 'res' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Aggregated performances
 getAggrPerformances(res)
 </code></pre>
 
-<pre class="prettyprint well"><code>##                   task       learner mmce.test.mean
-## 1 BreastCancer-example   classif.lda        0.04243
-## 2 BreastCancer-example classif.rpart        0.05706
-## 3         iris-example   classif.lda        0.04000
-## 4         iris-example classif.rpart        0.06667
+<pre class="prettyprint well"><code>## Error: object 'res' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Predictions
 pred = getPredictions(res)
-names(pred)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] &quot;BreastCancer-example&quot; &quot;iris-example&quot;
+<pre class="prettyprint well"><code>## Error: object 'res' not found
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">names(pred)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">head(pred$`iris-example`)
 </code></pre>
 
-<pre class="prettyprint well"><code>##    id  truth iter  set response.classif.lda response.classif.rpart
-## 3   3 setosa    1 test               setosa                 setosa
-## 7   7 setosa    1 test               setosa                 setosa
-## 10 10 setosa    1 test               setosa                 setosa
-## 13 13 setosa    1 test               setosa                 setosa
-## 22 22 setosa    1 test               setosa                 setosa
-## 36 36 setosa    1 test               setosa                 setosa
+<pre class="prettyprint well"><code>## Error: object 'pred' not found
 </code></pre>
 
 <p>Note that the task IDs are used to name the elements of <code>pred</code>.</p>
 <h2 id="nested-resampling">Nested resampling</h2>
 <p>In order to get an unbiased estimate of the performance on new data,
 it is generally not enough to simply use repeated cross-validation
-for a given set of hyperparameters and methods (see section <a href="../tune/">tuning</a>),
+for a given set of hyperparameters and methods (see the section on <a href="../tune/">tuning</a>),
 as this might produce an overly optimistic result.</p>
 <p>A better (although more time-consuming) approach is to nest two
 resampling methods. To keep it simple, let's take
 cross-validations, which in this case is also called "double cross-validation".
-In the so called "outer" cross-validation the data is split repeatedly
+In the so called "outer" cross-validation, the data is split repeatedly
 into a (larger) training set and a (smaller) test set in the usual
 way. Now, in every outer iteration the learner is tuned on the
 training set by performing an "inner" cross-validation. The best
 hyperparameters are selected and afterwards used for fitting the learner
 to the complete "outer" training set. The resulting model is used to
-on the (outer) test set. This results in much more reliable
+on the "outer" test set. This results in much more reliable
 estimates of the true performance distribution of the learner for unseen
 data. These can now be used to estimate locations (e.g. of the mean
 or median performance value) and compare learning methods in a fair
 way.</p>
-<p>In the following we will see three examples to show different benchmark settings:</p>
+<p>We will see three examples to show different benchmark settings:</p>
 <ul>
 <li>One data set + one classification algorithm + tuning</li>
 <li>Three data sets + two classification algorithms + tuning</li>
@@ -379,7 +365,7 @@ getPerformances(res)
 strategy either in the outer or inner run. They can be mixed as desired.</p>
 <h3 id="example-2-two-tasks-three-learners-tuning">Example 2: Two tasks, three learners, tuning</h3>
 <p>Now we look at an extensive example that shows a benchmark experiment with two data
-sets, three <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learners</a> and <a href="&amp;tune.md">tuning</a>.</p>
+sets, three <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learners</a> and <a href="../tune/">tuning</a>.</p>
 <pre class="prettyprint well"><code class="r">## List of learning tasks
 tasks = list(iris.task, bc.task)
 
@@ -439,49 +425,50 @@ res = benchmark(tasks = iris.task, learners = lrns, resampling = rdesc, show.inf
 <pre class="prettyprint well"><code>## [FeatSel] Started selecting features for learner 'classif.lda'
 ## With control class: FeatSelControlSequential
 ## Imputation value: 1
-## [FeatSel] 1: 0 bits: mmce.test.mean=0.68
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.26
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.46
+## [FeatSel] 1: 0 bits: mmce.test.mean=0.65
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.23
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.53
 ## [FeatSel] 2: 1 bits: mmce.test.mean=0.05
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.02
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.02
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.01
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.02
-## [FeatSel] Result: 1 bits : mmce.test.mean=0.02
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.05
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.03
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.04
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.03
+## [FeatSel] 4: 3 bits: mmce.test.mean=0.03
+## [FeatSel] 4: 3 bits: mmce.test.mean=0.01
+## [FeatSel] 5: 4 bits: mmce.test.mean=0.03
+## [FeatSel] Result: 3 bits : mmce.test.mean=0.01
 ## [FeatSel] Started selecting features for learner 'classif.lda'
 ## With control class: FeatSelControlSequential
 ## Imputation value: 1
-## [FeatSel] 1: 0 bits: mmce.test.mean=0.62
+## [FeatSel] 1: 0 bits: mmce.test.mean=0.63
 ## [FeatSel] 2: 1 bits: mmce.test.mean=0.29
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.42
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.48
 ## [FeatSel] 2: 1 bits: mmce.test.mean=0.05
 ## [FeatSel] 2: 1 bits: mmce.test.mean=0.04
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.05
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.03
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.03
-## [FeatSel] 4: 3 bits: mmce.test.mean=0.05
-## [FeatSel] 4: 3 bits: mmce.test.mean=0.04
-## [FeatSel] Result: 2 bits : mmce.test.mean=0.03
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.04
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.07
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.06
+## [FeatSel] Result: 1 bits : mmce.test.mean=0.04
 ## [FeatSel] Started selecting features for learner 'classif.lda'
 ## With control class: FeatSelControlSequential
 ## Imputation value: 1
 ## [FeatSel] 1: 0 bits: mmce.test.mean=0.61
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.24
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.44
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.05
-## [FeatSel] 2: 1 bits: mmce.test.mean=0.04
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.05
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.04
-## [FeatSel] 3: 2 bits: mmce.test.mean=0.06
-## [FeatSel] Result: 1 bits : mmce.test.mean=0.04
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.31
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.42
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.06
+## [FeatSel] 2: 1 bits: mmce.test.mean=0.03
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.03
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.03
+## [FeatSel] 3: 2 bits: mmce.test.mean=0.03
+## [FeatSel] Result: 1 bits : mmce.test.mean=0.03
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">res
 </code></pre>
 
 <pre class="prettyprint well"><code>##           task             learner mmce.test.mean
-## 1 iris-example       classif.rpart        0.06000
-## 2 iris-example classif.lda.featsel        0.04667
+## 1 iris-example       classif.rpart        0.04667
+## 2 iris-example classif.lda.featsel        0.06667
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Which features have been selected (in the outer resampling steps)?
@@ -495,18 +482,18 @@ getFeatSelResult(res)
 ## $`iris-example`$classif.lda.featsel
 ## $`iris-example`$classif.lda.featsel[[1]]
 ## FeatSel result:
-## Features (1): Petal.Width
-## mmce.test.mean=0.02
+## Features (3): Sepal.Length, Petal.Length, Petal.Width
+## mmce.test.mean=0.01
 ## 
 ## $`iris-example`$classif.lda.featsel[[2]]
 ## FeatSel result:
-## Features (2): Sepal.Width, Petal.Width
-## mmce.test.mean=0.03
+## Features (1): Petal.Width
+## mmce.test.mean=0.04
 ## 
 ## $`iris-example`$classif.lda.featsel[[3]]
 ## FeatSel result:
 ## Features (1): Petal.Width
-## mmce.test.mean=0.04
+## mmce.test.mean=0.03
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Performances on individual test data sets
@@ -515,9 +502,9 @@ getPerformances(res)
 
 <pre class="prettyprint well"><code>## $`iris-example`
 ##   iter classif.rpart.mmce classif.lda.featsel.mmce
-## 1    1               0.08                     0.08
+## 1    1               0.10                     0.04
 ## 2    2               0.04                     0.04
-## 3    3               0.06                     0.02
+## 3    3               0.06                     0.06
 </code></pre>
 
 </div>

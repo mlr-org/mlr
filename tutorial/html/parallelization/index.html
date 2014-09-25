@@ -232,29 +232,19 @@ The first annotated loop <strong>mlr</strong> encounters will then be automatica
 Afterwards it is good practice to call <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStop.html">parallelStop</a>.</p>
 <pre class="prettyprint well"><code class="r">library(&quot;parallelMap&quot;)
 parallelStartSocket(2)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Starting parallelization in mode=socket with cpus=2.
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">r = resample(&quot;classif.lda&quot;, iris.task, iris.rin)
+r = resample(&quot;classif.lda&quot;, iris.task, iris.rin)
 </code></pre>
 
 <pre class="prettyprint well"><code>## Loading required package: MASS
-## Exporting objects to slaves for mode socket: .mlr.slave.options
-## Mapping in parallel: mode = socket; cpus = 2; elements = 3.
 ## [Resample] Result: mmce.test.mean=0.02
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">parallelStop()
 </code></pre>
 
-<pre class="prettyprint well"><code>## Stopped parallelization. All cleaned up.
-</code></pre>
-
-<p>In Linux or Mac OS X, you may want to use
+<p>On Linux or Mac OS X, you may want to use
 <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStartMulticore.html">parallelStartMulticore</a> instead.
-We offer different parallelization levels for fine grain control over the parallelization.
+We offer different parallelization levels for fine grained control over the parallelization.
 E.g., if you do not want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/benchmark.html">benchmark</a> function because it has only very
 few iterations but want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resampling</a> of each learner instead,
 you can specifically pass the <code>level</code> <code>"resample"</code> to the

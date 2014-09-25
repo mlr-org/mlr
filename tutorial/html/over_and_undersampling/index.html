@@ -241,13 +241,13 @@ task = makeClassifTask(data = data, target = &quot;class&quot;)
 <pre class="prettyprint well"><code class="r">task.over = oversample(task, rate = 4)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Objekt 'task' nicht gefunden
+<pre class="prettyprint well"><code>## Error: object 'task' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">task.under = undersample(task, rate = 1/4)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Objekt 'task' nicht gefunden
+<pre class="prettyprint well"><code>## Error: object 'task' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;classif.PART&quot;)
@@ -259,37 +259,37 @@ task = makeClassifTask(data = data, target = &quot;class&quot;)
 <pre class="prettyprint well"><code class="r">mod = train(lrn, task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Objekt 'task' nicht gefunden
+<pre class="prettyprint well"><code>## Error: object 'task' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod.over = train(lrn, task.over)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Objekt 'task.over' nicht gefunden
+<pre class="prettyprint well"><code>## Error: object 'task.over' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod.under = train(lrn, task.under)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Objekt 'task.under' nicht gefunden
+<pre class="prettyprint well"><code>## Error: object 'task.under' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Objekt 'mod' nicht gefunden
+<pre class="prettyprint well"><code>## Error: object 'mod' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.over, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Objekt 'mod.over' nicht gefunden
+<pre class="prettyprint well"><code>## Error: object 'mod.over' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Objekt 'mod.under' nicht gefunden
+<pre class="prettyprint well"><code>## Error: object 'mod.under' not found
 </code></pre>
 
 <h3 id="learners">Learners</h3>
@@ -300,37 +300,37 @@ lrn.under = makeUndersampleWrapper(lrn, usw.rate = 1/4)
 mod = train(lrn, task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Objekt 'task' nicht gefunden
+<pre class="prettyprint well"><code>## Error: object 'task' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod.over = train(lrn.over, task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Objekt 'task' nicht gefunden
+<pre class="prettyprint well"><code>## Error: object 'task' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod.under = train(lrn.under, task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Objekt 'task' nicht gefunden
+<pre class="prettyprint well"><code>## Error: object 'task' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Objekt 'mod' nicht gefunden
+<pre class="prettyprint well"><code>## Error: object 'mod' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.over, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Objekt 'mod.over' nicht gefunden
+<pre class="prettyprint well"><code>## Error: object 'mod.over' not found
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Objekt 'mod.under' nicht gefunden
+<pre class="prettyprint well"><code>## Error: object 'mod.under' not found
 </code></pre>
 
 <h3 id="smote">SMOTE</h3>

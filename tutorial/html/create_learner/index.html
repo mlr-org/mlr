@@ -245,7 +245,7 @@ and <code>cluster.&lt;R_method_name&gt;</code> for clustering.</p>
 <a href="http://www.rdocumentation.org/packages/ParamHelpers/functions/LearnerParam.html">makeNumericLearnerParam</a> to incorporate the complete description 
 of the parameters.
 Include all possible values for discrete parameters and lower and upper bounds for numeric parameters.</p>
-<p>Add information for the properties (see also the section about <a href="../learner/">Learners</a>).
+<p>Add information for the properties (see also the section on <a href="../learner/">learners</a>).
 Which types of predictors that are supported (numerics, factors)?
 Are case weights supported? Can the method deal with missing values in the features and deal 
 with NAs in a meaningful way (not <code>na.omit</code>)?
@@ -293,15 +293,15 @@ Pass further arguments like case weights via <code>.weights</code> to the traini
 
 <h2 id="creating-the-prediction-method">Creating the prediction method</h2>
 <p>This must predict for the new observations in the <code>data.frame</code> <code>.newdata</code> with the wrapped model <code>.model</code>.
-Simply access the real fitted model by <code>.model$learner.model</code>.</p>
-<p>For regression you have to return a numeric vector of predicted response values.</p>
-<p>For classification you have to return a factor of predicted classes if <code>.learner$predict.type</code> 
-is <code>"response"</code>, or you have return a matrix of predicted probabilities if
+Simply access the real fitted model through <code>.model$learner.model</code>.</p>
+<p>For regression, you have to return a numeric vector of predicted response values.</p>
+<p>For classification, you have to return a factor of predicted classes if <code>.learner$predict.type</code> 
+is <code>"response"</code>, or a matrix of predicted probabilities if
 <code>.learner$predict.type</code> is <code>"prob"</code>.
 In the latter case the matrix must have the same number of columns as there are classes in 
 the task and the columns have to be named by the class names.</p>
-<p>For clustering, you have to return a numeric vector with the IDs of the clusters that the 
-respective datum has been assigned to.</p>
+<p>For clustering, you have to return a numeric vector with the IDs of the clusters
+that the respective datum has been assigned to. The numbering should start at 1.</p>
 <pre class="prettyprint well"><code class="r">predictLearner.classif.lda = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, ...)
   if(.learner$predict.type == &quot;response&quot;)

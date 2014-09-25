@@ -17,7 +17,7 @@ set the parameters of a SVM with a polynomial kernel.
 
 ### Simple Grid Search with cross validation
 
-We start by loading the *mlr* package and creating a classification
+We start by creating a classification
 task (see the part on [training](train.md) for more information):
 
 ```{r}
@@ -61,7 +61,7 @@ r = tuneParams(makeLearner("classif.ksvm"), task=task, resampling=rdesc, par.set
 
 We used a trick, also described in FIXME multicriteria_evaluation.md, to
 obtain the standard deviation in addition to the default by adding a second
-measure. A quick visualization of the Grid Search can be achieved by accessing
+measure. A quick visualization of the search can be achieved by accessing
 the ``opt.path`` as follows.
 
 ```{r tune_gridSearchVisualized}
@@ -79,7 +79,7 @@ feasible values for this hyperparameter. The complete grid is simply the
 cross-product of all feasible values.
 
 Please note that whenever parameters in the underlying **R** functions should be
-passed within a list structure, **mlr** tries to give you direct access to
+passed in a list structure, **mlr** tries to give you direct access to
 each parameter and get rid of the list structure. This is the case for example
 with `ksvm`.
 
@@ -89,8 +89,8 @@ measure.
 
 Unfortunately, it's not clear how reliable the results are. One might
 want to find out if the configurations vary for slightly different data sets.
-A good approach for getting a better feeling of the best parameter setting
-is a nested cross-validation.
+A good approach for getting a better feeling for the best parameter setting
+is to do a nested cross-validation.
 
 ### Nested Cross Validation
 
@@ -133,7 +133,7 @@ for sigma should be between 0 and 1.
 
 If we want to find out how good those configurations are on the entire data
 set, we can still look at the measures that we already know from
-[Resampling](resample.md).
+[resampling](resample.md).
 
 ```{r}
 r$measures.test

@@ -1,7 +1,7 @@
 # Configure mlr
 
 If you really know what you are doing you may think **mlr** is limiting you in certain ways.
-Actually **mlr** is just designed to make errors due to typos or invalid parameter values
+Actually **mlr** is just designed to make errors because of typos or invalid parameter values
 as unlikely as possible.
 But sometimes you want to break those barriers and get full access.
 For all parameters, simply refer to the documentation of [&configureMlr].
@@ -53,7 +53,7 @@ lrn = makeLearner("classif.ksvm", epsilon = -3)
 
 ## Example: Handle errors in an underlying learning method
 
-Another not uncommon situation is that a particular learning method throws an error.
+Another common situation is that a particular learning method throws an error.
 The default behavior of **mlr** is to generate an exception as well.
 However, in some situations, for example if you conduct a [benchmark study](&benchmark_experiments.md)
 with multiple data sets and learners, you normally do not want to terminate the whole
@@ -78,6 +78,6 @@ getFailureModelMsg(mod)
 predict(mod, iris.task)
 ```
 
-Instead of an exception a warning is issued and a [&FailureModel] is created that predicts
+Instead of an exception, a warning is issued and a [&FailureModel] is created that predicts
 ``NA``s for all new observations. Function [&getFailureModelMsg] extracts the error
 message.

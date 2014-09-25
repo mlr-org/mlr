@@ -35,15 +35,15 @@ cluster.task
 
 The argument ``id`` is optional and allows to specify a custom name for the task.
 It will be later used to name results, for example of
-[benchmark experiments](&benchmark_experiments.md).
+[benchmark experiments](benchmark_experiments.md).
 If not specified the ``id`` defaults to the name of the **R** object passed to ``data``,
 in the above example ``"mtcars"``.
 
 
 ### Regression
 
-In case of supervised learning like regression (as well as classification and
-survival analysis) we, additional to ``data``, have to specify the name of the numeric ``target``
+For supervised learning like regression (as well as classification and
+survival analysis) we, in addition to ``data``, have to specify the name of the ``target``
 variable.
 
 ```{r}
@@ -58,18 +58,17 @@ the data set, e.g., the types of the features (numeric vectors or factors),
 the number of observations, or whether missing values are present.
 
 Creating tasks for (cost-sensitive) classification problems and survival analysis
-follows the same scheme.
-For each of these learning problems there are some specifics worth mentioning and described
-in the following.
+follows the same scheme, except that the target variable is a factor instead of a numeric quantity of course.
+For each of these learning problems, some specifics are described below.
 
 
 ### Classification
 
-In case of classification the target variable has to be a ``factor``.
+For classification the target variable has to be a ``factor``.
 
 In binary classification it is customary to refer to the two classes as *positive* and
 *negative* class.
-This is for example relevant with regard to certain [performance measures](&performance.md)
+This is for example relevant with regard to certain [performance measures](performance.md)
 like the *true positive rate*.
 By default the first factor level of the target variable is selected as the positive class.
 
@@ -97,7 +96,7 @@ classif.task = makeClassifTask(id = "BreastCancer", data = df, target = "Class",
 
 ### Survival analysis
 
-In case of survival analysis ``target`` specifies the names of the survival time and event
+For survival analysis ``target`` specifies the names of the survival time and event
 columns in ``data`` and therefore is a character vector of length 2.
 Note that the event column has to be a logical vector.
 For details see the documentation of function [Surv](&survival::Surv).
@@ -126,7 +125,7 @@ class *y* as class *k* can be different depending on *y* and *k*.
 A further generalization is *cost-sensitive learning with example-specific costs*.
 In this scenario, the misclassification costs do not only depend on the true and predicted
 class labels, but also on the feature values *x*.
-Thus, in case of a *K*-class problem, each example (*x*, *y*) is associated with a vector
+Thus, for a *K*-class problem, each example (*x*, *y*) is associated with a vector
 of costs for predicting classes 1,...,*K* given the true class label *y*.
 If the cost vectors are given, the true values *y* of the target variable not needed anymore.
 Naturally, it is assumed that the cost of the true class label *y* is minimal.
@@ -150,7 +149,7 @@ Beygelzimer, A., Dani, V., Hayes, T., Langford, J., and Zadrozny, B.
 Error limiting reductions between classification tasks.
 In Machine Learning: Proceedings of the 22rd International Conference, pp. 49–56. ACM, 2005.
 
-For more details see the section about [cost-sensitive classification](&cost_sensitive_classification.md).
+For more details see the section about [cost-sensitive classification FIXME](FIXME).
 
 
 ### Further details

@@ -5,7 +5,7 @@ a technique to gain more stability. But why do you want to limit yourself to the
 classifiers already implemented in well known random forests when it is
 really easy to build your own with **mlr**?
 
-Just bag a learner already supported in **mlr** with [&makeBaggingWrapper].
+Just bag an **mlr** learner already [&makeBaggingWrapper].
 
 As in a random forest, we need a [Learner](&makeLearner) which is trained on a subset of the
 data during each iteration of the bagging process.
@@ -69,7 +69,7 @@ bag.lrn = setPredictType(bag.lrn, predict.type = "se")
 mod = train(learner = bag.lrn, task = bh.task, subset = train.inds)
 ```
 
-With function [&getBaggingModels] you can access the models fitted in the individual iterations.
+With the function [&getBaggingModels], you can access the models fitted in the individual iterations.
 ```{r}
 head(getBaggingModels(mod), 2)
 ```

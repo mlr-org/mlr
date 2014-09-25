@@ -1,6 +1,6 @@
 # Integrating another Measure
 
-Maybe you want to evaluate a prediction with a measure which is not yet implemented
+In some cases, you may want to evaluate a prediction with a measure which is not yet implemented
 in **mlr**. This could be either a performance measure which is not included in the in **mlr**
 list of [&measures] or a measure that uses a non-standard misclassification cost matrix.
 
@@ -9,7 +9,7 @@ list of [&measures] or a measure that uses a non-standard misclassification cost
 
 The [&makeMeasure] function provides a simple way of constructing your own performance
 measure. Below, this is exemplified by an implementation of the mean
-misclassification error ([&mmce]) for the iris dataset. For this purpose we write a simple
+misclassification error ([&mmce]) for the iris dataset. We write a simple
 function that computes the measure on the basis of the predictions and subsequently wrap it
 in a [&Measure] object. Then, we work with it as usual with the
 [&performance] function.
