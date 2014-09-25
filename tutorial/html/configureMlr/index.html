@@ -231,7 +231,7 @@
 
 <h1 id="configure-mlr">Configure mlr</h1>
 <p>If you really know what you are doing you may think <strong>mlr</strong> is limiting you in certain ways.
-Actually <strong>mlr</strong> is just designed to make errors due to typos or invalid parameter values
+Actually <strong>mlr</strong> is just designed to make errors because of typos or invalid parameter values
 as unlikely as possible.
 But sometimes you want to break those barriers and get full access.
 For all parameters, simply refer to the documentation of <a href="http://www.rdocumentation.org/packages/mlr/functions/configureMlr.html">configureMlr</a>.</p>
@@ -321,7 +321,7 @@ lrn = makeLearner(&quot;classif.ksvm&quot;, epsilon = -3)
 </code></pre>
 
 <h2 id="example-handle-errors-in-an-underlying-learning-method">Example: Handle errors in an underlying learning method</h2>
-<p>Another not uncommon situation is that a particular learning method throws an error.
+<p>Another common situation is that a particular learning method throws an error.
 The default behavior of <strong>mlr</strong> is to generate an exception as well.
 However, in some situations, for example if you conduct a <a href="&amp;benchmark_experiments.md">benchmark study</a>
 with multiple data sets and learners, you normally do not want to terminate the whole
@@ -337,7 +337,7 @@ train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
 <pre class="prettyprint well"><code>## Error: some group is too small for 'qda'
 </code></pre>
 
-<pre class="prettyprint well"><code>## Timing stopped at: 0.007 0 0.009
+<pre class="prettyprint well"><code>## Timing stopped at: 0.006 0 0.008
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">configureMlr(on.learner.error = &quot;warn&quot;)
@@ -393,7 +393,7 @@ predict(mod, iris.task)
 ## 6  6 setosa     &lt;NA&gt;
 </code></pre>
 
-<p>Instead of an exception a warning is issued and a <a href="http://www.rdocumentation.org/packages/mlr/functions/FailureModel.html">FailureModel</a> is created that predicts
+<p>Instead of an exception, a warning is issued and a <a href="http://www.rdocumentation.org/packages/mlr/functions/FailureModel.html">FailureModel</a> is created that predicts
 <code>NA</code>s for all new observations. Function <a href="http://www.rdocumentation.org/packages/mlr/functions/getFailureModelMsg.html">getFailureModelMsg</a> extracts the error
 message.</p>
 </div>

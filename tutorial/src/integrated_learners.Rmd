@@ -1,18 +1,18 @@
 # Integrated Learners
 
-In the following the learning methods already integrated into **mlr** are listed.
+Here, the learning methods already integrated into **mlr** are listed.
 
 Columns **Num.**, **Fac.**, **NAs**, and **Weights** indicate if a method can cope with
 numerical and factor predictors, if ``NA``s in the data are allowed and if observation
-weights are supported.
+weights are supported, respectively.
 
 Column **Props** shows further properties of the learning methods.
-For *classification* you can see if binary and/or multi-class problems are supported.
-In case of *survival analysis* the censoring type is shown. 
+For *classification*, you can see if binary and/or multi-class problems are supported.
+For *survival analysis*, the censoring type is shown. 
 For example *rcens* means that the learning method can deal with right censored data.
-Moreover, the type of prediction is displayed where *prob* indicates that probabilities
+Moreover, the type of prediction is displayed, where *prob* indicates that probabilities
 can be predicted.
-In case of *regression* *se* means that standard errors and the mean response can be predicted.
+For *regression*, *se* means that standard errors and the mean response can be predicted.
 
 
 ```{r include=FALSE}

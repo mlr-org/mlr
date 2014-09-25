@@ -17,9 +17,9 @@ r = resample("classif.lda", iris.task, iris.rin)
 parallelStop()
 ```
 
-In Linux or Mac OS X, you may want to use
+On Linux or Mac OS X, you may want to use
 [parallelStartMulticore](&parallelMap::parallelStartMulticore) instead.
-We offer different parallelization levels for fine grain control over the parallelization.
+We offer different parallelization levels for fine grained control over the parallelization.
 E.g., if you do not want to parallelize the [&benchmark] function because it has only very
 few iterations but want to parallelize the [resampling](&resample) of each learner instead,
 you can specifically pass the ``level`` `"resample"` to the

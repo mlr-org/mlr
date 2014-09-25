@@ -230,17 +230,17 @@
             <div class="col-md-9" role="main">
 
 <h1 id="integrated-learners">Integrated Learners</h1>
-<p>In the following the learning methods already integrated into <strong>mlr</strong> are listed.</p>
+<p>Here, the learning methods already integrated into <strong>mlr</strong> are listed.</p>
 <p>Columns <strong>Num.</strong>, <strong>Fac.</strong>, <strong>NAs</strong>, and <strong>Weights</strong> indicate if a method can cope with
 numerical and factor predictors, if <code>NA</code>s in the data are allowed and if observation
-weights are supported.</p>
+weights are supported, respectively.</p>
 <p>Column <strong>Props</strong> shows further properties of the learning methods.
-For <em>classification</em> you can see if binary and/or multi-class problems are supported.
-In case of <em>survival analysis</em> the censoring type is shown. 
+For <em>classification</em>, you can see if binary and/or multi-class problems are supported.
+For <em>survival analysis</em>, the censoring type is shown. 
 For example <em>rcens</em> means that the learning method can deal with right censored data.
-Moreover, the type of prediction is displayed where <em>prob</em> indicates that probabilities
+Moreover, the type of prediction is displayed, where <em>prob</em> indicates that probabilities
 can be predicted.
-In case of <em>regression</em> <em>se</em> means that standard errors and the mean response can be predicted.</p>
+For <em>regression</em>, <em>se</em> means that standard errors and the mean response can be predicted.</p>
 <style type="text/css">
 <!--
 .col-md-9 td {
@@ -280,7 +280,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>classif.blackboost</strong> <br />blackbst</td>
-<td align="left">Gradient Boosting With Regression Trees</td>
+<td align="left">Gradient boosting with regression trees</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/mboost/">mboost</a><br /><a href="http://cran.r-project.org/web/packages/party/">party</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -324,7 +324,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>classif.fnn</strong> <br />fnn</td>
-<td align="left">Fast k-Nearest Neighbour</td>
+<td align="left">Fast k-Nearest Neighbor</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/FNN/">FNN</a></td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -335,7 +335,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>classif.gbm</strong> <br />gbm</td>
-<td align="left">Gradient Boosting Machine</td>
+<td align="left">Gradient boosting machine</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/gbm/">gbm</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -345,7 +345,7 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>classif.geoDA</strong> <br />geoda</td>
+<td align="left"><strong>classif.geoDA</strong> <br />geoDA</td>
 <td align="left">Geometric Predictive Discriminant Analysis</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/DiscriMiner/">DiscriMiner</a></td>
 <td align="center">X</td>
@@ -368,7 +368,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>classif.glmnet</strong> <br />glmnet</td>
-<td align="left">GLM with Lasso or Elasticnet Regularization</td>
+<td align="left">GLM with lasso or elasticnet regularization</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/glmnet/">glmnet</a></td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -378,8 +378,8 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>classif.IBk</strong> <br />ibk</td>
-<td align="left">k-Nearest Neighbours</td>
+<td align="left"><strong>classif.IBk</strong> <br />IBk</td>
+<td align="left">K-nearest neighbours</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -389,7 +389,7 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>classif.J48</strong> <br />j48</td>
+<td align="left"><strong>classif.J48</strong> <br />J48</td>
 <td align="left">J48 Decision Trees</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
 <td align="center">X</td>
@@ -400,7 +400,7 @@ vertical-align: top;
 <td align="left">NAs are directly passed to WEKA with <code>na.action = na.pass</code></td>
 </tr>
 <tr>
-<td align="left"><strong>classif.JRip</strong> <br />jrip</td>
+<td align="left"><strong>classif.JRip</strong> <br />JRip</td>
 <td align="left">Propositional Rule Learner</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
 <td align="center">X</td>
@@ -455,7 +455,7 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>classif.LiblineaRBinary</strong> <br />liblinearbinary</td>
+<td align="left"><strong>classif.LiblineaRBinary</strong> <br />LiblineaRBinary</td>
 <td align="left">Regularized Binary Linear Predictive Models Estimation</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/LiblineaR/">LiblineaR</a></td>
 <td align="center">X</td>
@@ -466,7 +466,7 @@ vertical-align: top;
 <td align="left">This model subsumes the types 1,2,3,5.</td>
 </tr>
 <tr>
-<td align="left"><strong>classif.LiblineaRLogReg</strong> <br />reglreg</td>
+<td align="left"><strong>classif.LiblineaRLogReg</strong> <br />RegLReg</td>
 <td align="left">Regularized Logistic Regression</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/LiblineaR/">LiblineaR</a></td>
 <td align="center">X</td>
@@ -488,7 +488,7 @@ vertical-align: top;
 <td align="left">This model is type 4.</td>
 </tr>
 <tr>
-<td align="left"><strong>classif.linDA</strong> <br />linda</td>
+<td align="left"><strong>classif.linDA</strong> <br />linDA</td>
 <td align="left">Linear Discriminant Analysis</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/DiscriMiner/">DiscriMiner</a></td>
 <td align="center">X</td>
@@ -511,7 +511,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>classif.lqa</strong> <br />lqa</td>
-<td align="left">Fitting penalized Generalized Linear Models with the LQA algorithm</td>
+<td align="left">classif.lqa</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/lqa/">lqa</a></td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -565,7 +565,7 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>classif.naiveBayes</strong> <br />nbayes</td>
+<td align="left"><strong>classif.naiveBayes</strong> <br />nBayes</td>
 <td align="left">Naive Bayes</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/e1071/">e1071</a></td>
 <td align="center">X</td>
@@ -587,8 +587,8 @@ vertical-align: top;
 <td align="left"><code>size</code> has been set to 3 by default.</td>
 </tr>
 <tr>
-<td align="left"><strong>classif.OneR</strong> <br />oner</td>
-<td align="left">1-R Classifier</td>
+<td align="left"><strong>classif.OneR</strong> <br />OneR</td>
+<td align="left">1-R classifier</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -598,8 +598,8 @@ vertical-align: top;
 <td align="left">NAs are directly passed to WEKA with <code>na.action = na.pass</code></td>
 </tr>
 <tr>
-<td align="left"><strong>classif.PART</strong> <br />part</td>
-<td align="left">PART Decision Lists</td>
+<td align="left"><strong>classif.PART</strong> <br />PART</td>
+<td align="left">PART decision lists</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -610,7 +610,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>classif.plr</strong> <br />plr</td>
-<td align="left">Logistic Regression with a L2 Penalty</td>
+<td align="left">Logistic regression with a L2 penalty</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/stepPlr/">stepPlr</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -620,7 +620,7 @@ vertical-align: top;
 <td align="left">AIC and BIC penalty types can be selected via the new parameter <code>cp.type</code></td>
 </tr>
 <tr>
-<td align="left"><strong>classif.plsDA</strong> <br />plsda</td>
+<td align="left"><strong>classif.plsDA</strong> <br />plsDA</td>
 <td align="left">Partial Least Squares (PLS) Discriminant Analysis</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/DiscriMiner/">DiscriMiner</a></td>
 <td align="center">X</td>
@@ -631,7 +631,7 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>classif.plsdaCaret</strong> <br />plsdacaret</td>
+<td align="left"><strong>classif.plsdaCaret</strong> <br />plsdaCaret</td>
 <td align="left">Partial Least Squares (PLS) Discriminant Analysis</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/caret/">caret</a></td>
 <td align="center">X</td>
@@ -653,7 +653,7 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>classif.quaDA</strong> <br />quada</td>
+<td align="left"><strong>classif.quaDA</strong> <br />quaDA</td>
 <td align="left">Quadratic Discriminant Analysis</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/DiscriMiner/">DiscriMiner</a></td>
 <td align="center">X</td>
@@ -664,7 +664,7 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>classif.randomForest</strong> <br />rf</td>
+<td align="left"><strong>classif.randomForest</strong> <br />RF</td>
 <td align="left">Random Forest</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/randomForest/">randomForest</a></td>
 <td align="center">X</td>
@@ -675,7 +675,7 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>classif.randomForestSRC</strong> <br />rfsrc</td>
+<td align="left"><strong>classif.randomForestSRC</strong> <br />RFsrc</td>
 <td align="left">Random Forest</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/randomForestSRC/">randomForestSRC</a></td>
 <td align="center">X</td>
@@ -709,7 +709,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>classif.rrlda</strong> <br />rrlda</td>
-<td align="left">Robust Regularized Linear Discriminant Analysis</td>
+<td align="left">classif.rrlda</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/rrlda/">rrlda</a></td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -749,7 +749,7 @@ vertical-align: top;
 <tbody>
 <tr>
 <td align="left"><strong>regr.blackboost</strong> <br />blackbst</td>
-<td align="left">Gradient Boosting with Regression Trees</td>
+<td align="left">Gradient boosting with regression trees</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/mboost/">mboost</a><br /><a href="http://cran.r-project.org/web/packages/party/">party</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -760,7 +760,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>regr.cforest</strong> <br />cforest</td>
-<td align="left">Random Forest Based on Conditional Inference Trees</td>
+<td align="left">Random forest based on conditional inference trees</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/party/">party</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -778,17 +778,6 @@ vertical-align: top;
 <td align="center"></td>
 <td align="center">X</td>
 <td align="right">se</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left"><strong>regr.ctree</strong> <br />ctree</td>
-<td align="left">Conditional Inference Trees</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/party/">party</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="right"></td>
 <td align="left"></td>
 </tr>
 <tr>
@@ -815,7 +804,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>regr.gbm</strong> <br />gbm</td>
-<td align="left">Gradient Boosting Machine</td>
+<td align="left">Gradient boosting machine</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/gbm/">gbm</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -826,7 +815,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>regr.glmnet</strong> <br />glmnet</td>
-<td align="left">GLM with Lasso or Elasticnet Regularization</td>
+<td align="left">GLM with lasso or elasticnet regularization</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/glmnet/">glmnet</a></td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -836,8 +825,8 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>regr.IBk</strong> <br />ibk</td>
-<td align="left">K-Nearest Neighbours</td>
+<td align="left"><strong>regr.IBk</strong> <br />IBk</td>
+<td align="left">K-nearest neighbours</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -881,7 +870,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>regr.lm</strong> <br />lm</td>
-<td align="left">Simple Linear Regression</td>
+<td align="left">Simple linear regression</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/stats/">stats</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -903,7 +892,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>regr.mob</strong> <br />mob</td>
-<td align="left">Model-based Recursive Partitioning Yielding a Tree with Fitted Models Associated with each Terminal Node</td>
+<td align="left">Model-based recursive partitioning yielding a tree with fitted models associated with each terminal node</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/party/">party</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -925,7 +914,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>regr.pcr</strong> <br />pcr</td>
-<td align="left">Principal Component Regression</td>
+<td align="left">Principal component regression</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/pls/">pls</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -936,7 +925,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>regr.penalized.lasso</strong> <br />lasso</td>
-<td align="left">Lasso Regression</td>
+<td align="left">Lasso regression</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/penalized/">penalized</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -947,7 +936,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>regr.penalized.ridge</strong> <br />ridge</td>
-<td align="left">Penalized Ridge Regression</td>
+<td align="left">regr.penalized.ridge</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/penalized/">penalized</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -958,7 +947,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>regr.plsr</strong> <br />plsr</td>
-<td align="left">Partial Least Squares Regression</td>
+<td align="left">Partial least squares regression</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/pls/">pls</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -968,7 +957,7 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>regr.randomForest</strong> <br />rf</td>
+<td align="left"><strong>regr.randomForest</strong> <br />RF</td>
 <td align="left">Random Forest</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/randomForest/">randomForest</a></td>
 <td align="center">X</td>
@@ -979,7 +968,7 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>regr.randomForestSRC</strong> <br />rfsrc</td>
+<td align="left"><strong>regr.randomForestSRC</strong> <br />RFsrc</td>
 <td align="left">Random Forest</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/randomForestSRC/">randomForestSRC</a></td>
 <td align="center">X</td>
@@ -1002,7 +991,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>regr.rsm</strong> <br />rsm</td>
-<td align="left">Response Surface Regression</td>
+<td align="left">Response surface regression</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/rsm/">rsm</a></td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -1052,8 +1041,8 @@ vertical-align: top;
 </thead>
 <tbody>
 <tr>
-<td align="left"><strong>surv.cforest</strong> <br />crf</td>
-<td align="left">Random Forest based on Conditional Inference Trees</td>
+<td align="left"><strong>surv.cforest</strong> <br />cRF</td>
+<td align="left">Random forest based on conditional inference trees</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/party/">party</a><br /><a href="http://cran.r-project.org/web/packages/survival/">survival</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -1063,8 +1052,8 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>surv.CoxBoost</strong> <br />coxboost</td>
-<td align="left">Cox Proportional Hazards Model with Componentwise Likelihood based Boosting</td>
+<td align="left"><strong>surv.CoxBoost</strong> <br />CoxBoost</td>
+<td align="left">Cox proportional hazards model with componentwise likelhood based boosting</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/CoxBoost/">CoxBoost</a></td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -1075,7 +1064,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>surv.coxph</strong> <br />coxph</td>
-<td align="left">Cox Proportional Hazard Model</td>
+<td align="left">Cox proportional hazard model</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/survival/">survival</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -1085,19 +1074,8 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>surv.cvglmnet</strong> <br />cvglmnet</td>
-<td align="left">GLM with Regularization (Cross Validated Lambda)</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/glmnet/">glmnet</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right">rcens</td>
-<td align="left"></td>
-</tr>
-<tr>
 <td align="left"><strong>surv.glmboost</strong> <br />glmboost</td>
-<td align="left">Gradient Boosting with Componentwise Linear Models</td>
+<td align="left">surv.glmboost</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/mboost/">mboost</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -1108,7 +1086,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>surv.glmnet</strong> <br />glmnet</td>
-<td align="left">GLM with Regularization</td>
+<td align="left">GLM with regularization</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/glmnet/">glmnet</a></td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -1119,7 +1097,7 @@ vertical-align: top;
 </tr>
 <tr>
 <td align="left"><strong>surv.penalized</strong> <br />penalized</td>
-<td align="left">Penalized Regression</td>
+<td align="left">surv.penalized</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/penalized/">penalized</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -1129,7 +1107,7 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>surv.randomForestSRC</strong> <br />rfsrc</td>
+<td align="left"><strong>surv.randomForestSRC</strong> <br />RFsrc</td>
 <td align="left">Random Forests for Survival</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/randomForestSRC/">randomForestSRC</a></td>
 <td align="center">X</td>
@@ -1158,8 +1136,8 @@ vertical-align: top;
 </thead>
 <tbody>
 <tr>
-<td align="left"><strong>cluster.Cobweb</strong> <br />cobweb</td>
-<td align="left">Cobweb Clustering Algorithm</td>
+<td align="left"><strong>cluster.EM</strong> <br />EM</td>
+<td align="left">Expectation-maximization clustering</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -1169,19 +1147,8 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>cluster.DBScan</strong> <br />dbscan</td>
-<td align="left">DBScan Clustering</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="left">You might have to install the Weka package: WPM('install-package', 'optics_dbScan')</td>
-</tr>
-<tr>
-<td align="left"><strong>cluster.EM</strong> <br />em</td>
-<td align="left">Expectation-Maximization Clustering</td>
+<td align="left"><strong>cluster.SimpleKMeans</strong> <br />SimpleKMeans</td>
+<td align="left">k-means clustering</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -1191,29 +1158,7 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>cluster.FarthestFirst</strong> <br />farthestfirst</td>
-<td align="left">FarthestFirst Clustering Algorithm</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left"><strong>cluster.SimpleKMeans</strong> <br />simplekmeans</td>
-<td align="left">K-Means Clustering</td>
-<td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left"><strong>cluster.XMeans</strong> <br />xmeans</td>
+<td align="left"><strong>cluster.XMeans</strong> <br />XMeans</td>
 <td align="left">XMeans (k-means with automatic determination of k)</td>
 <td align="left"><a href="http://cran.r-project.org/web/packages/RWeka/">RWeka</a></td>
 <td align="center">X</td>
@@ -1221,7 +1166,7 @@ vertical-align: top;
 <td align="center"></td>
 <td align="center"></td>
 <td align="right"></td>
-<td align="left">You may have to install the XMeans Weka package: WPM('install-package', 'XMeans').</td>
+<td align="left">You might have to install the Weka package: <code>WPM('install-package', 'XMeans')</code></td>
 </tr>
 </tbody>
 </table>

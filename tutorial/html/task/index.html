@@ -267,12 +267,12 @@ cluster.task
 
 <p>The argument <code>id</code> is optional and allows to specify a custom name for the task.
 It will be later used to name results, for example of
-<a href="&amp;benchmark_experiments.md">benchmark experiments</a>.
+<a href="../benchmark_experiments/">benchmark experiments</a>.
 If not specified the <code>id</code> defaults to the name of the <strong>R</strong> object passed to <code>data</code>,
 in the above example <code>"mtcars"</code>.</p>
 <h3 id="regression">Regression</h3>
-<p>In case of supervised learning like regression (as well as classification and
-survival analysis) we, additional to <code>data</code>, have to specify the name of the numeric <code>target</code>
+<p>For supervised learning like regression (as well as classification and
+survival analysis) we, in addition to <code>data</code>, have to specify the name of the <code>target</code>
 variable.</p>
 <pre class="prettyprint well"><code class="r">data(BostonHousing, package = &quot;mlbench&quot;)
 
@@ -296,14 +296,13 @@ regr.task
 the data set, e.g., the types of the features (numeric vectors or factors),
 the number of observations, or whether missing values are present.</p>
 <p>Creating tasks for (cost-sensitive) classification problems and survival analysis
-follows the same scheme.
-For each of these learning problems there are some specifics worth mentioning and described
-in the following.</p>
+follows the same scheme, except that the target variable is a factor instead of a numeric quantity of course.
+For each of these learning problems, some specifics are described below.</p>
 <h3 id="classification">Classification</h3>
-<p>In case of classification the target variable has to be a <code>factor</code>.</p>
+<p>For classification the target variable has to be a <code>factor</code>.</p>
 <p>In binary classification it is customary to refer to the two classes as <em>positive</em> and
 <em>negative</em> class.
-This is for example relevant with regard to certain <a href="&amp;performance.md">performance measures</a>
+This is for example relevant with regard to certain <a href="../performance/">performance measures</a>
 like the <em>true positive rate</em>.
 By default the first factor level of the target variable is selected as the positive class.</p>
 <p>In the following example, we define a classification task for the data set 
@@ -340,7 +339,7 @@ Class malignant can be manually selected as the positive class:</p>
 </code></pre>
 
 <h3 id="survival-analysis">Survival analysis</h3>
-<p>In case of survival analysis <code>target</code> specifies the names of the survival time and event
+<p>For survival analysis <code>target</code> specifies the names of the survival time and event
 columns in <code>data</code> and therefore is a character vector of length 2.
 Note that the event column has to be a logical vector.
 For details see the documentation of function <a href="http://www.rdocumentation.org/packages/survival/functions/Surv.html">Surv</a>.</p>
@@ -375,7 +374,7 @@ class <em>y</em> as class <em>k</em> can be different depending on <em>y</em> an
 <p>A further generalization is <em>cost-sensitive learning with example-specific costs</em>.
 In this scenario, the misclassification costs do not only depend on the true and predicted
 class labels, but also on the feature values <em>x</em>.
-Thus, in case of a <em>K</em>-class problem, each example (<em>x</em>, <em>y</em>) is associated with a vector
+Thus, for a <em>K</em>-class problem, each example (<em>x</em>, <em>y</em>) is associated with a vector
 of costs for predicting classes 1,...,<em>K</em> given the true class label <em>y</em>.
 If the cost vectors are given, the true values <em>y</em> of the target variable not needed anymore.
 Naturally, it is assumed that the cost of the true class label <em>y</em> is minimal.</p>
@@ -406,7 +405,7 @@ costsens.task
 <p>Beygelzimer, A., Dani, V., Hayes, T., Langford, J., and Zadrozny, B.
 Error limiting reductions between classification tasks.
 In Machine Learning: Proceedings of the 22rd International Conference, pp. 49–56. ACM, 2005.</p>
-<p>For more details see the section about <a href="&amp;cost_sensitive_classification.md">cost-sensitive classification</a>.</p>
+<p>For more details see the section about <a href="FIXME">cost-sensitive classification FIXME</a>.</p>
 <h3 id="further-details">Further details</h3>
 <p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> help page also lists several other arguments to describe further details of the
 problem.</p>
@@ -568,32 +567,12 @@ These are used throughout this tutorial in order to get shorter and more readabl
 </thead>
 <tbody>
 <tr>
-<td align="left">agri.task (mlr.agri)</td>
-<td align="left">European Union Agricultural Workforces clustering task</td>
-</tr>
-<tr>
-<td align="left">bc.task (mlr.bc)</td>
-<td align="left">Wisconsin Breast Cancer classification task</td>
-</tr>
-<tr>
 <td align="left">bh.task (mlr.bh)</td>
 <td align="left">Boston Housing regression task</td>
 </tr>
 <tr>
-<td align="left">costIris.task (mlr.costIris)</td>
-<td align="left">Iris cost-sensitive classification task</td>
-</tr>
-<tr>
 <td align="left">iris.task (mlr.iris)</td>
 <td align="left">Iris classification task</td>
-</tr>
-<tr>
-<td align="left">lung.task (mlr.lung)</td>
-<td align="left">NCCTG Lung Cancer survival task</td>
-</tr>
-<tr>
-<td align="left">mtcars.task (mlr.mtcars)</td>
-<td align="left">Motor Trend Car Road Tests clustering task</td>
 </tr>
 <tr>
 <td align="left">sonar.task (mlr.sonar)</td>

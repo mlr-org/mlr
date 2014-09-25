@@ -1,10 +1,10 @@
 # Benchmark Experiments
 
 In a benchmark experiment different learning methods are applied to one or several data sets.
-The aim is normally to compare and rank the algorithms with respect to one or more
+The aim is usually to compare and rank the algorithms with respect to one or more
 performance measures.
 
-In **mlr** a benchmark experiment can be conducted by calling function [&benchmark] on a
+In **mlr** a benchmark experiment can be conducted by calling the function [&benchmark] on a
 list of [Learner](&makeLearner)s and [&Task]s.
 Moreover, you can specify which performance measures to calculate and choose a resampling
 strategy for each [&Task].
@@ -29,7 +29,7 @@ res
 The above code should be self-explanatory. In the result every row corresponds to one [&Task]
 set with one [Learner](&makeLearner).
 In the printed table the individual tasks and learners are referred to by their IDs.
-The entries show the 5-fold cross-validated mean misclassification error ([&mmce]) which
+The entries show the 5-fold cross-validated mean misclassification error ([&mmce]), which
 is the default performance measure for classification.
 
 The result is an object of class [&BenchmarkResult] and **mlr** provides several accessor 
@@ -55,25 +55,25 @@ Note that the task IDs are used to name the elements of ``pred``.
 
 In order to get an unbiased estimate of the performance on new data,
 it is generally not enough to simply use repeated cross-validation
-for a given set of hyperparameters and methods (see section [tuning](tune.md)),
+for a given set of hyperparameters and methods (see the section on [tuning](tune.md)),
 as this might produce an overly optimistic result.
 
 A better (although more time-consuming) approach is to nest two
 resampling methods. To keep it simple, let's take
 cross-validations, which in this case is also called "double cross-validation".
-In the so called "outer" cross-validation the data is split repeatedly
+In the so called "outer" cross-validation, the data is split repeatedly
 into a (larger) training set and a (smaller) test set in the usual
 way. Now, in every outer iteration the learner is tuned on the
 training set by performing an "inner" cross-validation. The best
 hyperparameters are selected and afterwards used for fitting the learner
 to the complete "outer" training set. The resulting model is used to
-on the (outer) test set. This results in much more reliable
+on the "outer" test set. This results in much more reliable
 estimates of the true performance distribution of the learner for unseen
 data. These can now be used to estimate locations (e.g. of the mean
 or median performance value) and compare learning methods in a fair
 way.
 
-In the following we will see three examples to show different benchmark settings:
+We will see three examples to show different benchmark settings:
 
 * One data set + one classification algorithm + tuning
 * Three data sets + two classification algorithms + tuning
@@ -121,7 +121,7 @@ strategy either in the outer or inner run. They can be mixed as desired.
 ### Example 2: Two tasks, three learners, tuning
 
 Now we look at an extensive example that shows a benchmark experiment with two data
-sets, three [Learners](&makeLearner) and [tuning](&tune.md).
+sets, three [Learners](&makeLearner) and [tuning](tune.md).
 
 ```{r}
 ## List of learning tasks

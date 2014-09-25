@@ -27,7 +27,7 @@ The supported resampling strategies are:
 * Subsampling (``"Subsample"``),
 * Holdout (training/test) (``"Holdout"``).
 
-The [&resample] function then evaluates the performance of a [Learner](&makeLEarner) using
+The [&resample] function then evaluates the performance of a [Learner](&makeLearner) using
 the specified resampling strategy for a given machine learning [&Task].
 
 In the following example the performance of the
@@ -36,7 +36,7 @@ In the following example the performance of the
 Generally, in *K-fold cross-validation* the data set *D* is partitioned into *K* subsets of
 (approximately) equal size.
 In the *i*-th step of the *K* iterations, the *i*-th subset is
-used as for testing, while the union of the remaining parts forms the training
+used for testing, while the union of the remaining parts forms the training
 set.
 The default performance measure in survival analysis is the concordance index ([&cindex]).
 
@@ -52,7 +52,7 @@ r
 ``r$measures.test`` gives the value of the performance measure on the 3 individual test
 data sets.
 ``r$aggr`` shows the aggregated performance value.
-Its name ``"cindex.test.mean"`` indicates the performance measure, [&cindex], and the method used
+Its name, ``"cindex.test.mean"``, indicates the performance measure, [&cindex], and the method used
 to aggregate the 3 individual performances.
 [test.mean](&aggregations) is the default method and, as the name implies, takes the mean over the
 performances on the 3 test data sets.
@@ -63,7 +63,7 @@ in [&makeResampleDesc]. This is necessary for some bootstrap methods (*b632* and
 we will see some examples later on.
 
 ``r$pred`` is an object of class [&ResamplePrediction].
-Just as a [&Prediction] object (see the section about [making predictions](&predict.md))
+Just as a [&Prediction] object (see the section on [making predictions](predict.md))
 ``r$pred`` has an element called ``"data"`` which is a ``data.frame`` that contains the
 predictions and in case of a supervised learning problem the true values of the target
 variable.
@@ -79,7 +79,7 @@ if an individual prediction was made on the test or the training data set.
 In the above example the performance measure is the concordance index ([&cindex]).
 Of course, it is  possible to compute multiple performance measures at once by 
 passing a list of measures
-(see also the previous section about [evaluating learner performance](performance.md)).
+(see also the previous section on [evaluating learner performance](performance.md)).
 
 In the following we estimate the Dunn index ([&dunn]), the Davies-Bouldin cluster
 separation measure ([&db]), and the time for training the learner ([&timetrain])
@@ -103,12 +103,11 @@ r$aggr
 
 ## Stratified resampling
 
-In classification stratified resampling makes sure that in each training set 
-the proportion of classes is the same as in the original data set.
+For classification, it is usually desirable to have the same proportion of the classes in all of the partitions of the original data set. Stratified resampling ensures this.
 This is particularly useful in case of imbalanced classes. Otherwise it may happen for example 
 that observations of less frequent classes are missing in some of the training sets which can
 decrease the performance of the learner.
-In order to conduct stratified resampling set ``stratify = TRUE`` when calling [&makeResampleDesc].
+In order to conduct stratified resampling, set ``stratify = TRUE`` when calling [&makeResampleDesc].
 
 ```{r}
 ## 3-fold cross-validation
@@ -122,7 +121,7 @@ r = resample("classif.lda", iris.task, rdesc)
 
 In each resampling iteration a [Learner](&makeLearner) is fitted on the respective training set.
 By default, the resulting [&WrappedModel]s are not returned by [&resample].
-If you want to keep them set ``models = TRUE`` when calling [&resample].
+If you want to keep them, set ``models = TRUE`` when calling [&resample].
 
 ```{r}
 ## 3-fold cross-validation
@@ -150,7 +149,7 @@ r$extract
 
 ## Resample descriptions and resample instances
 
-As shown above the function [&makeResampleDesc] is used to specify the resampling strategy.
+As shown above, the function [&makeResampleDesc] is used to specify the resampling strategy.
 
 ```{r}
 rdesc = makeResampleDesc("CV", iters = 3)
@@ -163,15 +162,15 @@ In principle, this is an instruction for drawing training and test sets includin
 the necessary parameters like the number of iterations, the sizes of the training and test
 sets etc.
 
-Based on this description, the data set is randomly separated into multiple training and
+Based on this description, the data set is randomly partitioned into multiple training and
 test sets.
-For each iteration we get a set of index vectors indicating the training and test examples.
+For each iteration, we get a set of index vectors indicating the training and test examples.
 These are stored in a [ResampleInstance](&makeResampleInstance).
 
-If a [ResampleDesc](&makeResampleDesc) is passed to [&resample] it is instantiated internally.
+If a [ResampleDesc](&makeResampleDesc) is passed to [&resample], it is instantiated internally.
 Naturally, it is also possible to pass a [ResampleInstance](&makeResampleInstance) directly.
 
-A [ResampleInstance](&makeResampleInstance) can be created by function 
+A [ResampleInstance](&makeResampleInstance) can be created through the function 
 [&makeResampleInstance] given a [ResampleDesc](&makeResampleDesc) and either the size of 
 the data set at hand or the [&Task].
 It basically performs the random drawing of indices to separate the data into training and 
@@ -218,7 +217,7 @@ r.rpart$aggr
 As mentioned above, when calling [&makeResampleInstance] the index sets are drawn randomly.
 Mainly for *holdout* (*test sample*) *estimation* you might want full control about the training
 and tests set and specify them manually.
-This can be done using function [&makeFixedHoldoutInstance].
+This can be done using the function [&makeFixedHoldoutInstance].
 
 ```{r}
 rin = makeFixedHoldoutInstance(train.inds = 1:100, test.inds = 101:150, size = 150)
@@ -231,7 +230,7 @@ rin
 In resampling we get (for each measure we wish to calculate) one performance 
 value (on the test set, training set, or both) for each iteration.
 Subsequently, these are aggregated.
-As mentioned above, mainly the mean about the performance values on the test data sets
+As mentioned above, mainly the mean over the performance values on the test data sets
 ([test.mean](&aggregations)) is calculated.
 
 For example, a 10-fold cross validation computes 10 values for the chosen
@@ -247,8 +246,8 @@ mmce$aggr
 rmse$aggr 
 ```
 
-The aggregation method of a [Measure](&makeMeasure) can be changed via function [&setAggregation].
-See the documentation page [&aggregations] for available methods.
+The aggregation method of a [Measure](&makeMeasure) can be changed via the function [&setAggregation].
+See the documentation of [&aggregations] for available methods.
 
 ### Example: Calculating mean and standard deviation of the error rate
 
@@ -263,9 +262,9 @@ r$aggr
 
 ### Example: Calculating the training error
 
-In the following we calculate the mean misclassification error ([&mmce]) on the training and the test
+Here we calculate the mean misclassification error ([&mmce]) on the training and the test
 data sets. Note that we have to set ``predict = "both"``when calling [&makeResampleDesc]
-in order to get predictions on both, training and test, data sets.
+in order to get predictions on both data sets, training and test.
 
 ```{r}
 mmce.train.mean = setAggregation(mmce, train.mean)
@@ -280,7 +279,7 @@ r$aggr
 
 In *out-of-bag bootstrap estimation* *B* new data sets *D_1* to *D_B* are drawn from the 
 data set *D* with replacement, each of the same size as *D*.
-In the *i*-th iteration *D_i* forms the training set, while the remaining elements from 
+In the *i*-th iteration, *D_i* forms the training set, while the remaining elements from 
 *D*, i.e., elements not in the training set, form the test set.
 
 <!--(
@@ -309,12 +308,13 @@ r$aggr
 
 ## Convenience functions
 
-When you just quickly want to try out some learners it can get tedious to write the **R** code
-for generating a resample instance, setting the aggregation strategy and so on. 
-For this reason **mlr** provides some convenience functions for the frequently used resampling strategies,
-for example [holdout]($resample), [crossval](&resample) or [bootstrapB632](&resample).
-But note that you do not have as much control and flexibility than when using [&resample] 
-with a resample description or instance.
+When quickly trying out some learners, it can get tedious to write the **R**
+code for generating a resample instance, setting the aggregation strategy and so
+on. For this reason **mlr** provides some convenience functions for the
+frequently used resampling strategies, for example [holdout]($resample),
+[crossval](&resample) or [bootstrapB632](&resample). But note that you do not
+have as much control and flexibility than when using [&resample] with a resample
+description or instance.
 
 ```{r, eval = FALSE}
 holdout("regr.lm", bh.task, measures = list(mse, mae))
