@@ -16,10 +16,23 @@
 #' @param sw.nn [\code{integer(1)}]\cr
 #'   Number of nearest neighbors to consider.
 #'   Default is 5.
+#' @param sw.standardize [\code{logical(1)}]\cr
+#'   Standardize input variables before calculating the nearest neighbors
+#'   for data sets with numeric input variables only. For mixed variables
+#'   (numeric and factor) the gower distance is used and variables are
+#'   standardized anyway.
+#'   Default is \code{TRUE}.
+#' @param sw.alt.logic [\code{logical(1)}]\cr
+#'   Use an alternative logic for selection of minority class observations.
+#'   Instead of sampling a minority class element AND one of its nearest
+#'   neighbors, each minority class element is taken multiple times (depending
+#'   on rate) for the interpolation and only the corresponding nearest neighbor
+#'   is sampled.
+#'   Default is \code{FALSE}.
 #' @template ret_learner
 #' @export
 makeSMOTEWrapper = function(learner, sw.rate = 1, sw.nn = 5L, 
-  sw.standardize = TRUE, sw.useAltLogic = FALSE) {
+  sw.standardize = TRUE, sw.alt.logic = FALSE) {
   
   learner = checkLearner(learner, "classif")
   pv = list()
@@ -34,25 +47,25 @@ makeSMOTEWrapper = function(learner, sw.rate = 1, sw.nn = 5L,
   if (!missing(sw.standardize)) {
     pv$sw.standardize = sw.standardize
   }
-  if (!missing(sw.useAltLogic)) {
-    pv$sw.useAltLogic = sw.useAltLogic
+  if (!missing(sw.alt.logic)) {
+    pv$sw.alt.logic = sw.alt.logic
   }
   id = paste(learner$id, "smoted", sep = ".")
   ps = makeParamSet(
     makeNumericLearnerParam(id = "sw.rate", lower = 1),
     makeIntegerLearnerParam(id = "sw.nn", lower = 1L),
     makeLogicalLearnerParam(id = "sw.standardize"),
-    makeLogicalLearnerParam(id = "sw.useAltLogic")
+    makeLogicalLearnerParam(id = "sw.alt.logic")
   )
   makeBaseWrapper(id, learner, package = learner$package, par.set = ps, par.vals = pv, cl = "SMOTEWrapper")
 }
 
 #' @export
 trainLearner.SMOTEWrapper = function(.learner, .task, .subset, .weights = NULL, sw.rate = 1,
-  sw.standardize = TRUE, sw.useAltLogic = FALSE, ...) {
+  sw.standardize = TRUE, sw.alt.logic = FALSE, ...) {
   
   .task = subsetTask(.task, .subset)
-  .task = smote(.task, rate = sw.rate, standardize = sw.standardize, useAltLogic = sw.useAltLogic)  
+  .task = smote(.task, rate = sw.rate, standardize = sw.standardize, alt.logic = sw.alt.logic)  
   m = train(.learner$next.learner, .task, weights = .weights)
   makeChainModel(next.model = m, cl = "SMOTEModel")
 }
