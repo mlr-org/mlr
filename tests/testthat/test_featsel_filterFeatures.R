@@ -33,4 +33,19 @@ test_that("filterFeatures", {
   expect_true(setequal(names(res), c("classif.rpart.filtered", "classif.randomForest.filtered")))
   res = res[[1]]
   expect_is(res[[1]], "FilterResult")
+  
+  ## Loop through all filters
+  filter.list = listFilterMethods(desc = FALSE, tasks = TRUE, features = FALSE)
+  filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
+  filter.list.classif = setdiff(filter.list.classif, "univariate") #make extra test
+  for (filter in filter.list.classif) {
+    filterFeatures(task = multiclass.task, method = filter, val = 0.5)
+  }
+  filter.list.regr = as.character(filter.list$id)[!filter.list$task.classif & filter.list$task.regr]
+  for (filter in filter.list.regr) {
+    filterFeatures(task = regr.task, method = filter, val = 0.5)
+  }
+  
+  ## extra test of univariate filter
+  filterFeatures(task = multiclass.task, method = "univariate", val = 0.5, learner = makeLearner("classif.rpart"), measures = mmce)
 })
