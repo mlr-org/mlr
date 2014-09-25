@@ -9,6 +9,7 @@ pkgs <- c(
   "ada", 
   "adabag", 
   "cmaes",
+  "care",
   "CoxBoost",
   "crs",
   "DiceKriging", 
