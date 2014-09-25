@@ -241,7 +241,12 @@ The subsets are chosen according to the parameters given to <a href="http://www.
 <p>Of course we also need a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> which we have to pass to
 <a href="http://www.rdocumentation.org/packages/mlr/functions/makeBaggingWrapper.html">makeBaggingWrapper</a>.</p>
 <pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;classif.PART&quot;)
-bag.lrn = makeBaggingWrapper(lrn, bw.iters = 50, bw.replace = TRUE, bw.size = 0.8, bw.feats = 3/4)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: RWeka
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">bag.lrn = makeBaggingWrapper(lrn, bw.iters = 50, bw.replace = TRUE, bw.size = 0.8, bw.feats = 3/4)
 </code></pre>
 
 <p>Now we can compare the performance with and without bagging.

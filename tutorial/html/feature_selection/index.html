@@ -243,13 +243,34 @@ and all access filter algorithms from the package
 <pre class="prettyprint well"><code class="r">listFilterMethods()
 </code></pre>
 
-<pre class="prettyprint well"><code>##  [1] &quot;linear.correlation&quot;            &quot;rank.correlation&quot;             
-##  [3] &quot;information.gain&quot;              &quot;gain.ratio&quot;                   
-##  [5] &quot;symmetrical.uncertainty&quot;       &quot;chi.squared&quot;                  
-##  [7] &quot;random.forest.importance&quot;      &quot;randomForestSRC.importance&quot;   
-##  [9] &quot;randomForestSRC.minimal.depth&quot; &quot;relief&quot;                       
-## [11] &quot;oneR&quot;                          &quot;mRMR.classic&quot;                 
-## [13] &quot;carscore&quot;
+<pre class="prettyprint well"><code>##                         id         package
+## 1                 carscore            care
+## 2              chi.squared       FSelector
+## 3               gain.ratio       FSelector
+## 4         information.gain       FSelector
+## 5       linear.correlation       FSelector
+## 6                     mrmr           mRMRe
+## 7                     oneR       FSelector
+## 8         rank.correlation       FSelector
+## 9                   relief       FSelector
+## 10           rf.importance randomForestSRC
+## 11            rf.min.depth randomForestSRC
+## 12 symmetrical.uncertainty       FSelector
+## 13              univariate            &lt;NA&gt;
+##                                                                  desc
+## 1                                                          CAR scores
+## 2    Chi-squared statistic of independence between feature and target
+## 3                 Entropy-based gain ratio between feature and target
+## 4           Entropy-based information gain between feature and target
+## 5                      Pearson correlation between feature and target
+## 6                        Minimum redundancy, maximum relevance filter
+## 7                                                oneR assocation rule
+## 8                   Spearman's correlation between feature and target
+## 9                                                    RELIEF algorithm
+## 10                                       Importance of random forests
+## 11 Minimal depth of random forest fitted in package 'randomForestSRC'
+## 12   Entropy-based symmetrical uncertainty between feature and target
+## 13          Construct a simple performance filter using a mlr learner
 </code></pre>
 
 <p>The function <a href="http://www.rdocumentation.org/packages/mlr/functions/getFilterValues.html">getFilterValues</a> is given a <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> and simply returns a vector characterising
@@ -266,11 +287,11 @@ the importance of the different features.</p>
 <pre class="prettyprint well"><code>## FilterValues:
 ## Task: iris-example
 ## Method: information.gain
-##                      name    val    type
-## Sepal.Length Sepal.Length 0.6523 numeric
-## Sepal.Width   Sepal.Width 0.3856 numeric
-## Petal.Length Petal.Length 1.3565 numeric
-## Petal.Width   Petal.Width 1.3784 numeric
+##           name    val    type
+## 1 Sepal.Length 0.6523 numeric
+## 2  Sepal.Width 0.3856 numeric
+## 3 Petal.Length 1.3565 numeric
+## 4  Petal.Width 1.3784 numeric
 </code></pre>
 
 <p>class <a href="http://www.rdocumentation.org/packages/mlr/functions/FilterValues.html">FilterValues</a></p>
@@ -350,9 +371,12 @@ tuneRes = tuneParams(lrn, task = sonar.task, resampling = sonar.rin, par.set = p
 ## fw.val discrete   -   - 0.2,0.25,0.3,0.35,0.4   -     -
 ## With control class: TuneControlGrid
 ## Imputation value: 1
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: konnte Funktion &quot;setValueCNames&quot; nicht finden
+## [Tune] 1: fw.val=0.2 : mmce.test.mean=0.317
+## [Tune] 2: fw.val=0.25 : mmce.test.mean=0.317
+## [Tune] 3: fw.val=0.3 : mmce.test.mean=0.317
+## [Tune] 4: fw.val=0.35 : mmce.test.mean=0.327
+## [Tune] 5: fw.val=0.4 : mmce.test.mean=0.317
+## [Tune] Result: fw.val=0.4 : mmce.test.mean=0.317
 </code></pre>
 
 <p>benchmark experiment

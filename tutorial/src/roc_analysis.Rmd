@@ -7,7 +7,7 @@ the true positive rate (sensitivity) on the vertical axis for various settings o
 the threshold that maps predicted posterior probabilities to class labels.
 
 A ROC curve is useful if one is unsure about the threshold setting, for example if the
-misclassification costs (that would allow to calculate an optimal threshold value) are unknown. 
+classifications costs (that would allow to calculate an optimal threshold value) are unknown. 
 
 The AUC (area under curve) summarizes the performance of the learner over all possible threshold
 values.
@@ -98,4 +98,18 @@ perf2 = ROCR::performance(pred2, "lift", "rpp")
 plot(perf1, col = "blue", avg = "threshold")
 plot(perf2, col = "red", avg = "threshold", add = TRUE)
 legend("topright", legend = c("lda", "ksvm"), lty = 1, col = c("blue", "red"))
+```
+
+## Tuning the threshold
+
+Of course you can also select a threshold without the help of a ROC-Curve by directly tuning it the following way:
+```{r}
+## Area Under the Curve and Mean Missclassification Error before the tuning.
+performance(r1$pred, measures = list(auc,mmce))
+r1$pred$threshold
+## Tuning the threshold.
+(tune.res = tuneThreshold(pred = r1$pred, measure = mmce))
+pred.tuned = setThreshold(r1$pred, tune.res$th)
+## Performance after the tuning.
+performance(pred.tuned, measures = list(auc,mmce))
 ```

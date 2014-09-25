@@ -234,8 +234,19 @@ on the <a href="http://www.rdocumentation.org/packages/survival/functions/lung.h
 lung$status = lung$status - 1
 task = makeSurvTask(data = lung, target = c(&quot;time&quot;, &quot;status&quot;))
 lrn = makeLearner(&quot;surv.coxph&quot;)
+</code></pre>
 
-mod = train(lrn, task)
+<pre class="prettyprint well"><code>## Loading required package: survival
+## Loading required package: splines
+## 
+## Attaching package: 'survival'
+## 
+## The following object is masked from 'package:caret':
+## 
+##     cluster
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
 mod
 </code></pre>
 
