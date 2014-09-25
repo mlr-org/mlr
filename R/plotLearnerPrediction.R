@@ -50,7 +50,10 @@
 #'   Default is \code{TRUE}.
 #' @param err.col [\code{character(1)}]\cr
 #'   For classification: Color of misclassified data points.
-#'   Default is \dQuote{orange}
+#'   Default is \dQuote{white}
+#' @param greyscale [\code{logical(1)}]\cr
+#'   Should the plot be greyscale completely? 
+#'   Default is \code{FALSE}.
 #' @return The ggplot2 object.
 #' @export
 plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 10L,  ...,
@@ -58,7 +61,8 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   prob.alpha = TRUE, se.band = TRUE,
   err.mark = "train",
   bg.cols = c("darkblue", "green", "darkred"),
-  err.col = "orange") {
+  err.col = "white",
+  greyscale = FALSE) {
 
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
@@ -94,6 +98,8 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   assertFlag(se.band)
   assertChoice(err.mark, choices = c("train", "cv", "none"))
   assertString(err.col)
+  assertLogical(greyscale)
+  
   if (td$type == "classif" && err.mark == "cv" && cv == 0L)
     stopf("Classification: CV must be switched on, with 'cv' > 0, for err.type = 'cv'!")
 
@@ -163,17 +169,20 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
         grid$.prob.pred.class = prob
         p = p + geom_tile(data = grid, mapping = aes_string(fill = target, alpha = ".prob.pred.class"),
           show_guide = TRUE)
-        p = p + scale_alpha(range = range(grid$.prob.pred.class))
+        p = p + scale_alpha(limits = range(grid$.prob.pred.class))
       } else {
         p = p + geom_tile(mapping = aes_string(fill = target))
       }
-      p = p + geom_point(data = data, mapping = aes_string(x = x1n, y = x2n, shape = target),
-        size = pointsize)
       if (err.mark != "none" && any(data$.err)) {
         p = p + geom_point(data = subset(data, data$.err),
-          mapping = aes_string(x = x1n, y = x2n, shape = target),
-          size = pointsize + 1, col = err.col, show_guide = FALSE)
+                           mapping = aes_string(x = x1n, y = x2n, shape = target),
+                           size = pointsize + 1.5, show_guide = FALSE)
+        p = p + geom_point(data = subset(data, data$.err),
+                           mapping = aes_string(x = x1n, y = x2n, shape = target),
+                           size = pointsize + 1, col = err.col, show_guide = FALSE)
       }
+      p = p + geom_point(data = data, mapping = aes_string(x = x1n, y = x2n, shape = target),
+        size = pointsize)
       p  = p + guides(alpha = FALSE)
     }
   } else if (td$type == "cluster") {
@@ -216,6 +225,11 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   title = sprintf("%s: %s", learner$id, paramValueToString(learner$par.set, learner$par.vals))
   title = sprintf("%s\nTrain: %s; CV: %s", title, perfsToString(perf.train), perfsToString(perf.cv))
   p = p + ggtitle(title)
+  
+  # deal with greyscale
+  if (greyscale) {
+    p = p + scale_fill_grey()
+  }
   return(p)
 }
 
