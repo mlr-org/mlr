@@ -102,7 +102,7 @@ legend("topright", legend = c("lda", "ksvm"), lty = 1, col = c("blue", "red"))
 
 ## Tuning the threshold
 
-Of course you can also select a threshold without the help of a ROC-Curve by directly tuning it the following way:
+Of course you can also select a threshold without the help of a ROC curve by directly tuning it the following way:
 ```{r}
 ## Area Under the Curve and Mean Missclassification Error before the tuning.
 performance(r1$pred, measures = list(auc,mmce))
