@@ -197,7 +197,7 @@ str(getTaskData(classif.task))
 ```
 
 Note the many options [&getTaskData] provides to convert the data set into a convenient format.
-This is especially handy when you [integrate a learner](&create_learner.md) from another **R**
+This is especially handy when you [integrate a learner](create_learner.md) from another **R**
 package into **mlr**.
 In this regard the functions [&getTaskFormula] and [&getTaskFormulaAsString] are also useful.
 
