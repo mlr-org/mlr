@@ -4,7 +4,7 @@
 \title{Fuse learner with SMOTE oversampling for imbalancy correction in binary classification.}
 \usage{
 makeSMOTEWrapper(learner, sw.rate = 1, sw.nn = 5L, sw.standardize = TRUE,
-  sw.useAltLogic = FALSE)
+  sw.alt.logic = FALSE)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -19,6 +19,21 @@ Default is 1.}
 \item{sw.nn}{[\code{integer(1)}]\cr
 Number of nearest neighbors to consider.
 Default is 5.}
+
+\item{sw.standardize}{[\code{logical(1)}]\cr
+Standardize input variables before calculating the nearest neighbors
+for data sets with numeric input variables only. For mixed variables
+(numeric and factor) the gower distance is used and variables are
+standardized anyway.
+Default is \code{TRUE}.}
+
+\item{sw.alt.logic}{[\code{logical(1)}]\cr
+Use an alternative logic for selection of minority class observations.
+Instead of sampling a minority class element AND one of its nearest
+neighbors, each minority class element is taken multiple times (depending
+on rate) for the interpolation and only the corresponding nearest neighbor
+is sampled.
+Default is \code{FALSE}.}
 }
 \value{
 [\code{\link{Learner}}].
