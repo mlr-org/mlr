@@ -232,29 +232,34 @@ the minority or undersample the majority class.</p>
 <pre class="prettyprint well"><code class="r">data.even = rbind(
     data.frame(x = rnorm(50, mean = 1), class = &quot;A&quot;),
     data.frame(x = rnorm(50, mean = 2), class = &quot;B&quot;))
-task = makeClassifTask(data = data, target = &quot;class&quot;)
+task = makeClassifTask(data = data.even, target = &quot;class&quot;)
 task.over = oversample(task, rate = 4)
 task.under = undersample(task, rate = 1/4)
 lrn = makeLearner(&quot;classif.PART&quot;)
-mod = train(lrn, task)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: RWeka
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
 mod.over = train(lrn, task.over)
 mod.under = train(lrn, task.under)
 performance(predict(mod, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] 0.5
+<pre class="prettyprint well"><code>## [1] 0.32
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.over, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] 0.29
+<pre class="prettyprint well"><code>## [1] 0.38
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] 0.4
+<pre class="prettyprint well"><code>## [1] 0.5
 </code></pre>
 
 <h3 id="learners">Learners</h3>
@@ -268,19 +273,19 @@ mod.under = train(lrn.under, task)
 performance(predict(mod, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] 0.5
+<pre class="prettyprint well"><code>## [1] 0.32
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.over, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] 0.38
+<pre class="prettyprint well"><code>## [1] 0.43
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] 0.34
+<pre class="prettyprint well"><code>## [1] 0.41
 </code></pre>
 
 <h3 id="smote">SMOTE</h3>
