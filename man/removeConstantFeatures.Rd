@@ -4,7 +4,8 @@
 \title{Remove constant features from a data set.}
 \usage{
 removeConstantFeatures(task, perc = 0, dont.rm = character(0L),
-  na.ignore = FALSE, tol = .Machine$double.eps^0.5, show.info = TRUE)
+  na.ignore = FALSE, tol = .Machine$double.eps^0.5,
+  show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
