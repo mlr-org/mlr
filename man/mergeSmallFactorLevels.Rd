@@ -3,18 +3,12 @@
 \alias{mergeSmallFactorLevels}
 \title{Merges small levels of factors into new level.}
 \usage{
-mergeSmallFactorLevels(obj, target = NULL, cols = NULL, min.perc = 0.01,
+mergeSmallFactorLevels(task, cols = NULL, min.perc = 0.01,
   new.level = ".merged")
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
-Input data.}
-
-\item{target}{[\code{character(1)} | \code{character(2)}]\cr
-Name of the target variable(s).
-Only used when \code{obj} is a data.frame, otherwise ignored.
-If survival analysis is applicable, these are the names of the survival time and event columns,
-so it has length 2.}
+\item{task}{[\code{\link{Task}}]\cr
+The task.}
 
 \item{cols}{[\code{character}]
 Which columns to convert.
@@ -31,7 +25,7 @@ New name of merged level.
 Default is \dQuote{.merged}}
 }
 \value{
-\code{factor}, where merged levels are combined into a new level of name \code{new.level}.
+\code{Task}, where merged levels are combined into a new level of name \code{new.level}.
 }
 \description{
 Merges small levels of factors into new level.

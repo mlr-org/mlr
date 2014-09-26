@@ -1,7 +1,6 @@
 #' @title Merges small levels of factors into new level.
 #'
-#' @template arg_taskdf
-#' @template arg_taskdf_target
+#' @template arg_task
 #' @param cols [\code{character}]
 #'   Which columns to convert.
 #'   Default is all factor and character columns.
@@ -13,43 +12,32 @@
 #' @param new.level [\code{character(1)}]\cr
 #'   New name of merged level.
 #'   Default is \dQuote{.merged}
-#' @return \code{factor}, where merged levels are combined into a new level of name \code{new.level}.
+#' @return \code{Task}, where merged levels are combined into a new level of name \code{new.level}.
 #' @family eda_and_preprocess
 #' @export
-mergeSmallFactorLevels = function(obj, target = NULL, cols = NULL, min.perc = 0.01, new.level = ".merged") {
+mergeSmallFactorLevels = function(task, cols = NULL, min.perc = 0.01, new.level = ".merged") {
+  assertClass(task, "Task")
   assertNumber(min.perc, lower = 0, upper = 1)
   assertString(new.level)
-  UseMethod("mergeSmallFactorLevels")
-}
 
-#' @export
-mergeSmallFactorLevels.Task = function(obj, target = NULL, cols = NULL, min.perc = 0.01, new.level = ".merged") {
-  d = mergeSmallFactorLevels.data.frame(obj$env$data, obj$task.desc$target, cols, min.perc, new.level)
-  changeData(obj, data = d)
-}
-
-#' @export
-mergeSmallFactorLevels.data.frame = function(obj, target = NULL, cols = NULL, min.perc = 0.01, new.level = ".merged") {
+  data = getTaskData(task)
   pred = function(x) is.factor(x) | is.character(x)
-  cns = colnames(obj)[vlapply(obj, pred)]
+  cns = colnames(data)[vlapply(data, pred)]
   if (!is.null(cols)) {
     assertSubset(cols, cns)
     cns = intersect(cns, cols)
   }
-  if (!is.null(target)) {
-    assertSubset(target, colnames(obj))
-    cns = setdiff(cns, target)
-  }
+  cns = setdiff(cns, getTargetNames(task))
 
   for (cn in cns) {
-    x = as.factor(obj[[cn]])
+    x = as.factor(data[[cn]])
     if (new.level %in% levels(x))
       stopf("Value of new.level = '%s' is already a level of column '%s'!", new.level, cn)
     j = which(prop.table(table(x)) < min.perc)
     if (length(j) > 0L) {
       levels(x)[levels(x) %in% names(j)] = new.level
-      obj[[cn]] = x
+      data[[cn]] = x
     }
   }
-  return(obj)
+  changeData(task, data = data)
 }
