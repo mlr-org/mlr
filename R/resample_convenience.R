@@ -2,7 +2,7 @@
 
 #' @rdname resample
 #' @export
-crossval = function(learner, task, iters = 10L, stratify = FALSE, measures, models = FALSE, ..., show.info = TRUE) {
+crossval = function(learner, task, iters = 10L, stratify = FALSE, measures, models = FALSE, ..., show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner, ...)
   rdesc = makeResampleDesc("CV", iters = iters, stratify = stratify)
   resample(learner, task, rdesc, measures = measures, models = models, show.info = show.info)
@@ -10,7 +10,7 @@ crossval = function(learner, task, iters = 10L, stratify = FALSE, measures, mode
 
 #' @rdname resample
 #' @export
-repcv = function(learner, task, folds = 10L, reps = 10L, stratify = FALSE, measures, models = FALSE, ..., show.info = TRUE) {
+repcv = function(learner, task, folds = 10L, reps = 10L, stratify = FALSE, measures, models = FALSE, ..., show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner, ...)
   rdesc = makeResampleDesc("RepCV", folds = folds, reps = reps, stratify = stratify)
   resample(learner, task, rdesc, measures = measures, models = models, show.info = show.info)
@@ -18,7 +18,7 @@ repcv = function(learner, task, folds = 10L, reps = 10L, stratify = FALSE, measu
 
 #' @rdname resample
 #' @export
-holdout = function(learner, task, split = 2/3, stratify = FALSE, measures, models = FALSE, ..., show.info = TRUE) {
+holdout = function(learner, task, split = 2/3, stratify = FALSE, measures, models = FALSE, ..., show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner, ...)
   rdesc = makeResampleDesc("Holdout", split = split, stratify = stratify)
   resample(learner, task, rdesc, measures = measures, models = models, show.info = show.info)
@@ -26,7 +26,7 @@ holdout = function(learner, task, split = 2/3, stratify = FALSE, measures, model
 
 #' @rdname resample
 #' @export
-subsample = function(learner, task, iters = 30, split = 2/3, stratify = FALSE, measures, models = FALSE, ..., show.info = TRUE) {
+subsample = function(learner, task, iters = 30, split = 2/3, stratify = FALSE, measures, models = FALSE, ..., show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner, ...)
   rdesc = makeResampleDesc("Subsample", iters = iters, split = split, stratify = stratify)
   resample(learner, task, rdesc, measures = measures, models = models, show.info = show.info)
@@ -34,7 +34,7 @@ subsample = function(learner, task, iters = 30, split = 2/3, stratify = FALSE, m
 
 #' @rdname resample
 #' @export
-bootstrapOOB = function(learner, task, iters = 30, stratify = FALSE, measures, models = FALSE, ..., show.info = TRUE) {
+bootstrapOOB = function(learner, task, iters = 30, stratify = FALSE, measures, models = FALSE, ..., show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner, ...)
   rdesc = makeResampleDesc("Bootstrap", iters = iters, stratify = stratify)
   resample(learner, task, rdesc, measures = measures, models = models, show.info = show.info)
@@ -42,7 +42,7 @@ bootstrapOOB = function(learner, task, iters = 30, stratify = FALSE, measures, m
 
 #' @rdname resample
 #' @export
-bootstrapB632 = function(learner, task, iters = 30, stratify = FALSE, measures, models = FALSE, ..., show.info = TRUE) {
+bootstrapB632 = function(learner, task, iters = 30, stratify = FALSE, measures, models = FALSE, ..., show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner, ...)
   assertClass(task, classes = "Task")
   rdesc = makeResampleDesc("Bootstrap", predict = "both", iters = iters, stratify = stratify)
@@ -52,7 +52,7 @@ bootstrapB632 = function(learner, task, iters = 30, stratify = FALSE, measures, 
 
 #' @rdname resample
 #' @export
-bootstrapB632plus = function(learner, task, iters = 30, stratify = FALSE, measures, models = FALSE, ..., show.info = TRUE) {
+bootstrapB632plus = function(learner, task, iters = 30, stratify = FALSE, measures, models = FALSE, ..., show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner, ...)
   assertClass(task, classes = "Task")
   rdesc = makeResampleDesc("Bootstrap", predict = "both", iters = iters, stratify = stratify)
