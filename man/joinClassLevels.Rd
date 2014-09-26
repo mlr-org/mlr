@@ -3,24 +3,18 @@
 \alias{joinClassLevels}
 \title{Join some class existing levels to new, larger class levels for classification problems.}
 \usage{
-joinClassLevels(obj, target, new.levels)
+joinClassLevels(task, new.levels)
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
-Input data.}
-
-\item{target}{[\code{character(1)} | \code{character(2)}]\cr
-Name of the target variable(s).
-Only used when \code{obj} is a data.frame, otherwise ignored.
-If survival analysis is applicable, these are the names of the survival time and event columns,
-so it has length 2.}
+\item{task}{[\code{\link{Task}}]\cr
+The task.}
 
 \item{new.levels}{[\code{list} of \code{character}]\cr
 Element names specify the new class levels to create, while the corresponding element
 character vector specifies the existing class levels which will be joined to the new one.}
 }
 \value{
-[\code{data.frame} | \code{\link{Task}}]. Same type as \code{obj}.
+[\code{\link{Task}}].
 }
 \description{
 Join some class existing levels to new, larger class levels for classification problems.
