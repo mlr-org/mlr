@@ -1,2 +1,2 @@
-options(mlr.debug.seed=123L)
-configureMlr(show.learner.output=FALSE)
+options(mlr.debug.seed = 123L)
+configureMlr(show.info = FALSE, show.learner.output = FALSE)
