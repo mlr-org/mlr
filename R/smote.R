@@ -1,5 +1,3 @@
-# FIXME: add paper reference
-
 #' @title Synthetic Minority Oversampling Technique to handle class imbalancy in binary classification.
 #'
 #' @description
@@ -26,7 +24,7 @@
 #'   (numeric and factor) the gower distance is used and variables are
 #'   standardized anyway.
 #'   Default is \code{TRUE}.
-#' @param useAltLogic [\code{integer(1)}]\cr
+#' @param alt.logic [\code{integer(1)}]\cr
 #'   Use an alternative logic for selection of minority class observations.
 #'   Instead of sampling a minority class element AND one of its nearest
 #'   neighbors, each minority class element is taken multiple times (depending
@@ -34,10 +32,15 @@
 #'   is sampled.
 #'   Default is \code{FALSE}.
 #' @template ret_task
+#' @references
+#' Chawla, N., Bowyer, K., Hall, L., & Kegelmeyer, P. (2000)
+#' \emph{SMOTE: Synthetic Minority Over-sampling TEchnique.}
+#' In International Conference of Knowledge Based Computer Systems, pp. 46-57. 
+#' National Center for Software Technology, Mumbai, India, Allied Press.
 #' @family imbalancy
 #' @export
-#' @useDynLib mlr c_smote
-smote = function(task, rate, nn = 5L, standardize = TRUE, useAltLogic = FALSE) {
+#' @useDynLib mlr c_smote 
+smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
   checkTask(task, binary = TRUE)
   assertNumber(rate, lower = 1)
   nn = asInt(nn, lower = 1L)
@@ -57,7 +60,7 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, useAltLogic = FALSE) {
     stopf("You cannot set nn = %i, when the minimal class has size %i!", nn, z$min.size)
   x.min = x[z$min.inds, , drop = FALSE]
   n.min = nrow(x.min) # number of NEW cases
-  n.new = ifelse(useAltLogic, as.integer(rate-1)*n.min, round((rate-1)*n.min))
+  n.new = ifelse(alt.logic, as.integer(rate-1)*n.min, round((rate-1)*n.min))
   if (n.new <= 0L)
     return(task)
   res = matrix(0, n.new, ncol(x))
@@ -74,7 +77,7 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, useAltLogic = FALSE) {
   }
   x.min.matrix = as.matrix(x.min.matrix)
 
-  if (useAltLogic == TRUE) {
+  if (alt.logic == TRUE) {
     n.xmin = dim(x.min.matrix)[1]
     p = dim(x.min.matrix)[2]
 

@@ -1,34 +1,22 @@
 #' Join some class existing levels to new, larger class levels for classification problems.
 #'
-#' @template arg_taskdf
-#' @template arg_taskdf_target
+#' @template arg_task
 #' @param new.levels [\code{list} of \code{character}]\cr
 #'   Element names specify the new class levels to create, while the corresponding element
 #'   character vector specifies the existing class levels which will be joined to the new one.
-#' @template ret_taskdf
+#' @template ret_task
 #' @export
 #' @examples
 #' joinClassLevels(iris.task, new.levels = list(foo = c("setosa", "virginica")))
-joinClassLevels = function(obj, target, new.levels) {
+joinClassLevels = function(task, new.levels) {
   UseMethod("joinClassLevels")
 }
 
 #' @export
-joinClassLevels.ClassifTask = function(obj, target, new.levels) {
-  d = joinClassLevels(obj = getTaskData(obj), target = obj$task.desc$target, new.levels = new.levels)
-  changeData(obj, d)
-}
-
-#' @export
-joinClassLevels.data.frame = function(obj, target, new.levels) {
-  assertClass(obj, "data.frame")
-  cns = colnames(obj)
-  assertSubset(target, cns)
-  y = obj[, target]
-  if (!(is.factor(y) || is.character(y)))
-    stopf("Target column '%s' must be a factor or character vector, not a: %s", target, class(y)[1L])
+joinClassLevels.ClassifTask = function(task, new.levels) {
   assertList(new.levels, types = "character", names = "unique")
-  y = as.character(y)
+  target = getTargetNames(task)
+  y = as.character(getTarget(task))
   nls1 = unlist(new.levels)
   nls2 = unique(nls1)
   d = setdiff(nls2, unique(y))
@@ -41,8 +29,8 @@ joinClassLevels.data.frame = function(obj, target, new.levels) {
     levs = new.levels[[nn]]
     y[y %in% levs] = nn
   }
-  obj[, target] = as.factor(y)
-  return(obj)
+
+  data = getTaskData(task)
+  data[[target]] = as.factor(y)
+  changeData(task, data)
 }
-
-

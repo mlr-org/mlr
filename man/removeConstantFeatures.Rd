@@ -3,19 +3,12 @@
 \alias{removeConstantFeatures}
 \title{Remove constant features from a data set.}
 \usage{
-removeConstantFeatures(obj, target, perc = 0, dont.rm = character(0L),
-  na.ignore = FALSE, tol = .Machine$double.eps^0.5,
-  show.info = getMlrOption("show.info"))
+removeConstantFeatures(task, perc = 0, dont.rm = character(0L),
+  na.ignore = FALSE, tol = .Machine$double.eps^0.5, show.info = TRUE)
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
-Input data.}
-
-\item{target}{[\code{character(1)} | \code{character(2)}]\cr
-Name of the target variable(s).
-Only used when \code{obj} is a data.frame, otherwise ignored.
-If survival analysis is applicable, these are the names of the survival time and event columns,
-so it has length 2.}
+\item{task}{[\code{\link{Task}}]\cr
+The task.}
 
 \item{perc}{[\code{numeric(1)}]\cr
 The percentage of a feature values in [0, 1) that must differ from the mode value.
@@ -40,7 +33,7 @@ Print verbose output on console?
 Default is set via \code{\link{configureMlr}}.}
 }
 \value{
-[\code{data.frame} | \code{\link{Task}}]. Same type as \code{obj}.
+[\code{\link{Task}}].
 }
 \description{
 Constant features can lead to errors in some models and obviously provide

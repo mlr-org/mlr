@@ -13,6 +13,10 @@ getTargetNames = function(x) {
   getTaskDescription(x)$target
 }
 
+getTarget = function(x) {
+  x$env$data[[getTargetNames(x)]]
+}
+
 #' Get feature names of task.
 #'
 #' Target column name is not included.

@@ -1,14 +1,14 @@
-mlr: Machine Learning in R 
+mlr: Machine Learning in R
 ==========================
 
-* Offical CRAN release site: 
+* Offical CRAN release site:
   http://cran.r-project.org/web/packages/mlr/index.html
 
 * Detailed Tutorial:
   http://berndbischl.github.io/mlr/tutorial/html/
 
 * R Documentation in HTML:
-  http://berndbischl.github.io/mlr/man/
+  http://www.rdocumentation.org/packages/mlr
 
 * Run this in R to install the current GitHub version:
   ```splus
@@ -23,16 +23,16 @@ mlr: Machine Learning in R
 Introduction
 ============
 
-R does not define a standardized interface for all its machine learning algorithms. Therefore, for any 
-non-trivial experiments, you need to write lengthy, tedious and error-prone wrappers to call the different 
-algorithms and unify their respective output. Additionally you need to implement infrastructure to resample 
-your models, optimize hyperparameters, select features, cope with pre- and post-processing of data and 
+R does not define a standardized interface for all its machine learning algorithms. Therefore, for any
+non-trivial experiments, you need to write lengthy, tedious and error-prone wrappers to call the different
+algorithms and unify their respective output. Additionally you need to implement infrastructure to resample
+your models, optimize hyperparameters, select features, cope with pre- and post-processing of data and
 compare models in a statistically meaningful way.
-As this becomes computationally expensive, you might want to parallelize your experiments as well. This 
-often forces users to make crummy trade-offs in their experiments due to time constraints or lacking expert 
+As this becomes computationally expensive, you might want to parallelize your experiments as well. This
+often forces users to make crummy trade-offs in their experiments due to time constraints or lacking expert
 programming skills. **mlr** provides this infrastructure so that you can focus on your experiments!
-The framework currently focuses on supervised methods like classification, regression and survival analysis and 
-their corresponding evaluation and optimization. It is written in a way that you can extend it yourself or 
+The framework currently focuses on supervised methods like classification, regression and survival analysis and
+their corresponding evaluation and optimization. It is written in a way that you can extend it yourself or
 deviate from the implemented convenience methods and construct your own complex experiments or algorithms.
 
 Features
@@ -65,7 +65,7 @@ https://groups.google.com/forum/?hl=de#!forum/mlr-devel
 
 mlr-devel@googlegroups.com
 
-The github-service-hook will also send commit messages to this list. 
+The github-service-hook will also send commit messages to this list.
 
 
 Get in touch

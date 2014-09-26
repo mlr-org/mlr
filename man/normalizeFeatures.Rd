@@ -3,18 +3,12 @@
 \alias{normalizeFeatures}
 \title{Normalize features}
 \usage{
-normalizeFeatures(obj, target = character(0L), method = "standardize",
-  exclude = character(0L), range = c(0, 1))
+normalizeFeatures(task, method = "standardize", exclude = character(0L),
+  range = c(0, 1))
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
-Input data.}
-
-\item{target}{[\code{character(1)} | \code{character(2)}]\cr
-Name of the target variable(s).
-Only used when \code{obj} is a data.frame, otherwise ignored.
-If survival analysis is applicable, these are the names of the survival time and event columns,
-so it has length 2.}
+\item{task}{[\code{\link{Task}}]\cr
+The task.}
 
 \item{method}{[\code{character(1)}]\cr
 Normalizing method.\cr
@@ -33,7 +27,7 @@ Default is none.}
 Range the features should be scaled to. Default is \code{c(0,1)}.}
 }
 \value{
-[\code{data.frame} | \code{\link{Task}}]. Same type as \code{obj}.
+[\code{\link{Task}}].
 }
 \description{
 Normalize features by different methods. Internally \code{\link{normalize}} is used.

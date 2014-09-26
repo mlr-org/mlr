@@ -3,7 +3,7 @@
 \alias{smote}
 \title{Synthetic Minority Oversampling Technique to handle class imbalancy in binary classification.}
 \usage{
-smote(task, rate, nn = 5L, standardize = TRUE, useAltLogic = FALSE)
+smote(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE)
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
@@ -25,7 +25,7 @@ for data sets with numeric input variables only. For mixed variables
 standardized anyway.
 Default is \code{TRUE}.}
 
-\item{useAltLogic}{[\code{integer(1)}]\cr
+\item{alt.logic}{[\code{integer(1)}]\cr
 Use an alternative logic for selection of minority class observations.
 Instead of sampling a minority class element AND one of its nearest
 neighbors, each minority class element is taken multiple times (depending
@@ -45,6 +45,12 @@ The method handles factor features, too. The gower distance is used for nearest 
 calculation, see \code{\link[cluster]{daisy}}.
 For interpolation, the new factor level for x3
 is sampled from the two given levels of x1 and x2 per feature.
+}
+\references{
+Chawla, N., Bowyer, K., Hall, L., & Kegelmeyer, P. (2000)
+\emph{SMOTE: Synthetic Minority Over-sampling TEchnique.}
+In International Conference of Knowledge Based Computer Systems, pp. 46-57.
+National Center for Software Technology, Mumbai, India, Allied Press.
 }
 \seealso{
 Other imbalancy: \code{\link{makeOverBaggingWrapper}};
