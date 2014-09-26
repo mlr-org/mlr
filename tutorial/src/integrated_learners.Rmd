@@ -19,7 +19,7 @@ For *regression*, *se* means that standard errors and the mean response can be p
 library("mlr")
 library("pander")
 linkPkg = function(x) {
-  collapse(sprintf("[%1$s](http://cran.r-project.org/web/packages/%1$s/)", x), sep = "<br />")
+  collapse(sprintf("[%1$s](http://www.rdocumentation.org/packages/%1$s/)", x), sep = "<br />")
 }
 
 getTab = function(type) {
