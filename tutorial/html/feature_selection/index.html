@@ -392,7 +392,12 @@ factor features.</p>
 <p>As mentioned above the feature importance can be calculated by function <a href="http://www.rdocumentation.org/packages/mlr/functions/getFilterValues.html">getFilterValues</a> 
 given the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> and a character string specifying the filter method. </p>
 <pre class="prettyprint well"><code class="r">fv = getFilterValues(iris.task, method = &quot;information.gain&quot;)
-fv
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: FSelector
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">fv
 </code></pre>
 
 <pre class="prettyprint well"><code>## FilterValues:
@@ -479,7 +484,12 @@ In each resampling iteration feature selection is carried out on the correspondi
 data set before fitting the learner.</p>
 <pre class="prettyprint well"><code class="r">lrn = makeFilterWrapper(learner = &quot;classif.fnn&quot;, fw.method = &quot;information.gain&quot;, 
     fw.select = &quot;abs&quot;, fw.val = 2)
-rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: FNN
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
 r = resample(learner = lrn, task = iris.task, resampling = rdesc, show.info = FALSE, models = TRUE)
 r$aggr
 </code></pre>
@@ -551,12 +561,12 @@ res = tuneParams(lrn, task = bh.task, resampling = bh.rin, par.set = ps,
 </code></pre>
 
 <pre class="prettyprint well"><code>##   fw.val mse.test.mean dob eol error.message exec.time
-## 1   0.05         32.89   1  NA          &lt;NA&gt;     0.418
-## 2    0.1         32.89   2  NA          &lt;NA&gt;     0.546
-## 3   0.15         27.06   3  NA          &lt;NA&gt;     0.455
-## 4    0.2         29.07   4  NA          &lt;NA&gt;     0.489
-## 5   0.25         29.07   5  NA          &lt;NA&gt;     0.336
-## 6    0.3         29.21   6  NA          &lt;NA&gt;     0.397
+## 1    0.2         33.79   1  NA          &lt;NA&gt;     0.734
+## 2   0.25         33.79   2  NA          &lt;NA&gt;     0.801
+## 3    0.3         33.35   3  NA          &lt;NA&gt;     0.989
+## 4   0.35         32.30   4  NA          &lt;NA&gt;     0.871
+## 5    0.4         32.30   5  NA          &lt;NA&gt;     0.610
+## 6   0.45         28.77   6  NA          &lt;NA&gt;     0.431
 </code></pre>
 
 <p>The optimal percentage and the corresponding performance can be accessed as follows:</p>
@@ -564,14 +574,14 @@ res = tuneParams(lrn, task = bh.task, resampling = bh.rin, par.set = ps,
 </code></pre>
 
 <pre class="prettyprint well"><code>## $fw.val
-## [1] 0.7
+## [1] 0.45
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">res$y
 </code></pre>
 
 <pre class="prettyprint well"><code>## mse.test.mean 
-##         22.45
+##         28.77
 </code></pre>
 
 <p>After tuning we can generate a new wrapped learner with the optimal percentage value for
@@ -586,16 +596,15 @@ mod
 ## [chain] Trained on obs: 506
 ## [chain] Used features: 13
 ## [model] Trained on obs: 506
-## [model] Used features: 12
-## Hyperparameters: fw.method=chi.squared,fw.select=threshold,fw.val=0.35
+## [model] Used features: 7
+## Hyperparameters: fw.method=chi.squared,fw.select=threshold,fw.val=0.45
 </code></pre>
 
 <pre class="prettyprint well"><code class="r"># getFilterResult(mod)
 getFilteredFeatures(mod)
 </code></pre>
 
-<pre class="prettyprint well"><code>##  [1] &quot;rad&quot;     &quot;lstat&quot;   &quot;dis&quot;     &quot;crim&quot;    &quot;zn&quot;      &quot;rm&quot;      &quot;b&quot;      
-##  [8] &quot;ptratio&quot; &quot;tax&quot;     &quot;indus&quot;   &quot;nox&quot;     &quot;age&quot;
+<pre class="prettyprint well"><code>## [1] &quot;rad&quot;   &quot;lstat&quot; &quot;dis&quot;   &quot;crim&quot;  &quot;zn&quot;    &quot;rm&quot;    &quot;b&quot;
 </code></pre>
 
 <p>Here is another example using <a href="../tune/">multi-criteria tuning</a>.
@@ -607,11 +616,27 @@ minimized. As search strategy we choose a random search
 (see <a href="http://www.rdocumentation.org/packages/mlr/functions/TuneMultiCritControl.html">makeTuneMultiCritControlRandom</a>).</p>
 <pre class="prettyprint well"><code class="r">lrn = makeFilterWrapper(learner = &quot;classif.lda&quot;, fw.method = &quot;chi.squared&quot;, 
     fw.select = &quot;threshold&quot;)
-ps = makeParamSet(makeNumericParam(&quot;fw.val&quot;, lower = 0.1, upper = 0.9))
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: MASS
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">ps = makeParamSet(makeNumericParam(&quot;fw.val&quot;, lower = 0.1, upper = 0.9))
 res = tuneParamsMultiCrit(lrn, task = sonar.task, resampling = sonar.rin, par.set = ps, 
     measures = list(fpr, fnr), control = makeTuneMultiCritControlRandom(maxit = 50L), 
     show.info = FALSE)
-res
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: emoa
+## 
+## Attaching package: 'emoa'
+## 
+## The following object is masked from 'package:BBmisc':
+## 
+##     coalesce
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">res
 </code></pre>
 
 <pre class="prettyprint well"><code>## Tune multicrit result:
@@ -622,12 +647,12 @@ res
 </code></pre>
 
 <pre class="prettyprint well"><code>##   fw.val fpr.test.mean fnr.test.mean dob eol error.message exec.time
-## 1 0.3768        0.2880        0.3071   1  NA          &lt;NA&gt;     0.971
-## 2 0.2470        0.2569        0.2533   2  NA          &lt;NA&gt;     0.915
-## 3 0.3248        0.2667        0.2343   3  NA          &lt;NA&gt;     0.926
-## 4 0.1104        0.2569        0.2533   4  NA          &lt;NA&gt;     0.921
-## 5 0.3510        0.2782        0.2369   5  NA          &lt;NA&gt;     0.913
-## 6 0.7470        0.4713        0.4246   6  NA          &lt;NA&gt;     0.882
+## 1 0.3768        0.2880        0.3071   1  NA          &lt;NA&gt;     1.451
+## 2 0.2470        0.2569        0.2533   2  NA          &lt;NA&gt;     1.271
+## 3 0.3248        0.2667        0.2343   3  NA          &lt;NA&gt;     1.423
+## 4 0.1104        0.2569        0.2533   4  NA          &lt;NA&gt;     2.495
+## 5 0.3510        0.2782        0.2369   5  NA          &lt;NA&gt;     1.264
+## 6 0.7470        0.4713        0.4246   6  NA          &lt;NA&gt;     1.579
 </code></pre>
 
 <p>The results can be visualized with function <a href="http://www.rdocumentation.org/packages/mlr/functions/plotTuneMultiCritResult.html">plotTuneMultiCritResult</a>.
@@ -685,7 +710,44 @@ rdesc = makeResampleDesc(&quot;Holdout&quot;)
 ## Select features
 sfeats = selectFeatures(learner = &quot;surv.coxph&quot;, task = wpbc.task, resampling = rdesc, 
     control = ctrl, show.info = FALSE)
-sfeats
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: survival
+## Loading required package: splines
+## 
+## Attaching package: 'survival'
+## 
+## The following object is masked from 'package:caret':
+## 
+##     cluster
+## 
+## Loading required package: Hmisc
+## Loading required package: grid
+## 
+## Attaching package: 'grid'
+## 
+## The following object is masked from 'package:BBmisc':
+## 
+##     explode
+## 
+## Loading required package: Formula
+## 
+## Attaching package: 'Hmisc'
+## 
+## The following object is masked from 'package:mlr':
+## 
+##     impute
+## 
+## The following object is masked from 'package:BBmisc':
+## 
+##     %nin%
+## 
+## The following objects are masked from 'package:base':
+## 
+##     format.pval, round.POSIXt, trunc.POSIXt, units
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">sfeats
 </code></pre>
 
 <pre class="prettyprint well"><code>## FeatSel result:
@@ -772,22 +834,17 @@ mod = train(lrn, task = wpbc.task)
 <pre class="prettyprint well"><code>## [FeatSel] Started selecting features for learner 'surv.coxph'
 ## With control class: FeatSelControlRandom
 ## Imputation value: -0
-## [FeatSel] 1: 14 bits: cindex.test.mean=0.662
-## [FeatSel] 1: 15 bits: cindex.test.mean=0.585
-## [FeatSel] 1: 14 bits: cindex.test.mean=0.585
-## [FeatSel] 1: 18 bits: cindex.test.mean=0.603
-## [FeatSel] 1: 20 bits: cindex.test.mean=0.633
-</code></pre>
-
-<pre class="prettyprint well"><code>## Warning: Ran out of iterations and did not converge
-</code></pre>
-
-<pre class="prettyprint well"><code>## [FeatSel] 1: 21 bits: cindex.test.mean=0.538
-## [FeatSel] 1: 17 bits: cindex.test.mean=0.625
-## [FeatSel] 1: 16 bits: cindex.test.mean=0.62
-## [FeatSel] 1: 16 bits: cindex.test.mean=0.567
-## [FeatSel] 1: 16 bits: cindex.test.mean=0.636
-## [FeatSel] Result: 14 bits : cindex.test.mean=0.662
+## [FeatSel] 1: 18 bits: cindex.test.mean=0.606
+## [FeatSel] 1: 16 bits: cindex.test.mean=0.624
+## [FeatSel] 1: 17 bits: cindex.test.mean=0.617
+## [FeatSel] 1: 16 bits: cindex.test.mean=0.664
+## [FeatSel] 1: 15 bits: cindex.test.mean=0.631
+## [FeatSel] 1: 16 bits: cindex.test.mean=0.592
+## [FeatSel] 1: 23 bits: cindex.test.mean=0.657
+## [FeatSel] 1: 15 bits: cindex.test.mean=0.624
+## [FeatSel] 1: 13 bits: cindex.test.mean=0.617
+## [FeatSel] 1: 17 bits: cindex.test.mean=0.669
+## [FeatSel] Result: 17 bits : cindex.test.mean=0.669
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod
@@ -800,8 +857,8 @@ mod = train(lrn, task = wpbc.task)
 ## 
 ## Optimization result:
 ## FeatSel result:
-## Features (14): mean_texture, mean_perimeter, mean_concavity, SE_perimeter, SE_compactness, SE_concavepoints, worst_texture, worst_area, worst_compactness, worst_concavity, worst_concavepoints, worst_symmetry, worst_fractaldim, pnodes
-## cindex.test.mean=0.662
+## Features (17): mean_radius, mean_perimeter, mean_area, mean_smoothness, mean_compactness, mean_symmetry, mean_fractaldim, SE_texture, SE_area, SE_fractaldim, worst_radius, worst_perimeter, worst_area, worst_smoothness, worst_concavity, tsize, pnodes
+## cindex.test.mean=0.669
 </code></pre>
 
 <p>The result of the feature selection can be extracted by function <a href="http://www.rdocumentation.org/packages/mlr/functions/getFeatSelResult.html">getFeatSelResult</a>.</p>
@@ -810,19 +867,20 @@ sfeats
 </code></pre>
 
 <pre class="prettyprint well"><code>## FeatSel result:
-## Features (14): mean_texture, mean_perimeter, mean_concavity, SE_perimeter, SE_compactness, SE_concavepoints, worst_texture, worst_area, worst_compactness, worst_concavity, worst_concavepoints, worst_symmetry, worst_fractaldim, pnodes
-## cindex.test.mean=0.662
+## Features (17): mean_radius, mean_perimeter, mean_area, mean_smoothness, mean_compactness, mean_symmetry, mean_fractaldim, SE_texture, SE_area, SE_fractaldim, worst_radius, worst_perimeter, worst_area, worst_smoothness, worst_concavity, tsize, pnodes
+## cindex.test.mean=0.669
 </code></pre>
 
 <p>The selected features are:</p>
 <pre class="prettyprint well"><code class="r">sfeats$x
 </code></pre>
 
-<pre class="prettyprint well"><code>##  [1] &quot;mean_smoothness&quot;    &quot;mean_compactness&quot;   &quot;mean_concavepoints&quot;
-##  [4] &quot;mean_symmetry&quot;      &quot;mean_fractaldim&quot;    &quot;SE_texture&quot;        
-##  [7] &quot;SE_compactness&quot;     &quot;SE_concavity&quot;       &quot;SE_fractaldim&quot;     
-## [10] &quot;worst_radius&quot;       &quot;worst_compactness&quot;  &quot;worst_symmetry&quot;    
-## [13] &quot;pnodes&quot;
+<pre class="prettyprint well"><code>##  [1] &quot;mean_radius&quot;      &quot;mean_perimeter&quot;   &quot;mean_area&quot;       
+##  [4] &quot;mean_smoothness&quot;  &quot;mean_compactness&quot; &quot;mean_symmetry&quot;   
+##  [7] &quot;mean_fractaldim&quot;  &quot;SE_texture&quot;       &quot;SE_area&quot;         
+## [10] &quot;SE_fractaldim&quot;    &quot;worst_radius&quot;     &quot;worst_perimeter&quot; 
+## [13] &quot;worst_area&quot;       &quot;worst_smoothness&quot; &quot;worst_concavity&quot; 
+## [16] &quot;tsize&quot;            &quot;pnodes&quot;
 </code></pre>
 
 <p>The 5-fold cross-validated performance of the learner specified above can be computed as
@@ -836,100 +894,95 @@ r = resample(learner = lrn, task = wpbc.task, resampling = out.rdesc, models = T
 <pre class="prettyprint well"><code>## [FeatSel] Started selecting features for learner 'surv.coxph'
 ## With control class: FeatSelControlRandom
 ## Imputation value: -0
-## [FeatSel] 1: 16 bits: cindex.test.mean=0.585
-## [FeatSel] 1: 18 bits: cindex.test.mean=0.687
-## [FeatSel] 1: 17 bits: cindex.test.mean=0.583
+## [FeatSel] 1: 15 bits: cindex.test.mean=0.561
+## [FeatSel] 1: 12 bits: cindex.test.mean=0.486
+## [FeatSel] 1: 15 bits: cindex.test.mean=0.588
+## [FeatSel] 1: 16 bits: cindex.test.mean=0.581
+## [FeatSel] 1: 19 bits: cindex.test.mean=0.589
+## [FeatSel] 1: 15 bits: cindex.test.mean=0.643
+## [FeatSel] 1: 14 bits: cindex.test.mean=0.543
+## [FeatSel] 1: 12 bits: cindex.test.mean=0.518
+## [FeatSel] 1: 14 bits: cindex.test.mean=0.568
 </code></pre>
 
 <pre class="prettyprint well"><code>## Warning: Ran out of iterations and did not converge
 </code></pre>
 
-<pre class="prettyprint well"><code>## [FeatSel] 1: 16 bits: cindex.test.mean=0.623
-## [FeatSel] 1: 19 bits: cindex.test.mean=0.624
-## [FeatSel] 1: 16 bits: cindex.test.mean=0.59
-</code></pre>
-
-<pre class="prettyprint well"><code>## Warning: Ran out of iterations and did not converge
-</code></pre>
-
-<pre class="prettyprint well"><code>## [FeatSel] 1: 14 bits: cindex.test.mean=0.656
-## [FeatSel] 1: 17 bits: cindex.test.mean=0.685
-## [FeatSel] 1: 17 bits: cindex.test.mean=0.62
-## [FeatSel] 1: 16 bits: cindex.test.mean=0.654
-## [FeatSel] Result: 18 bits : cindex.test.mean=0.687
+<pre class="prettyprint well"><code>## [FeatSel] 1: 17 bits: cindex.test.mean=0.545
+## [FeatSel] Result: 15 bits : cindex.test.mean=0.643
 ## [FeatSel] Started selecting features for learner 'surv.coxph'
 ## With control class: FeatSelControlRandom
 ## Imputation value: -0
-## [FeatSel] 1: 18 bits: cindex.test.mean=0.63
-## [FeatSel] 1: 15 bits: cindex.test.mean=0.668
-## [FeatSel] 1: 18 bits: cindex.test.mean=0.678
+## [FeatSel] 1: 16 bits: cindex.test.mean= 0.7
+## [FeatSel] 1: 16 bits: cindex.test.mean=0.702
+## [FeatSel] 1: 18 bits: cindex.test.mean=0.666
+## [FeatSel] 1: 21 bits: cindex.test.mean=0.681
+## [FeatSel] 1: 17 bits: cindex.test.mean=0.654
+## [FeatSel] 1: 18 bits: cindex.test.mean=0.719
+## [FeatSel] 1: 18 bits: cindex.test.mean=0.685
+## [FeatSel] 1: 11 bits: cindex.test.mean=0.673
 </code></pre>
 
 <pre class="prettyprint well"><code>## Warning: Ran out of iterations and did not converge
 </code></pre>
 
-<pre class="prettyprint well"><code>## [FeatSel] 1: 20 bits: cindex.test.mean=0.643
-## [FeatSel] 1: 14 bits: cindex.test.mean=0.705
-## [FeatSel] 1: 16 bits: cindex.test.mean=0.67
-## [FeatSel] 1: 16 bits: cindex.test.mean=0.711
-## [FeatSel] 1: 15 bits: cindex.test.mean=0.69
-## [FeatSel] 1: 14 bits: cindex.test.mean=0.694
-## [FeatSel] 1: 19 bits: cindex.test.mean=0.67
-## [FeatSel] Result: 16 bits : cindex.test.mean=0.711
+<pre class="prettyprint well"><code>## [FeatSel] 1: 20 bits: cindex.test.mean=0.715
+## [FeatSel] 1: 15 bits: cindex.test.mean=0.658
+## [FeatSel] Result: 18 bits : cindex.test.mean=0.719
 ## [FeatSel] Started selecting features for learner 'surv.coxph'
 ## With control class: FeatSelControlRandom
 ## Imputation value: -0
-## [FeatSel] 1: 24 bits: cindex.test.mean=0.622
-## [FeatSel] 1: 14 bits: cindex.test.mean=0.668
-## [FeatSel] 1: 13 bits: cindex.test.mean=0.663
-## [FeatSel] 1: 15 bits: cindex.test.mean=0.58
-## [FeatSel] 1: 18 bits: cindex.test.mean=0.628
-## [FeatSel] 1: 9 bits: cindex.test.mean= 0.6
-## [FeatSel] 1: 16 bits: cindex.test.mean=0.572
-## [FeatSel] 1: 13 bits: cindex.test.mean=0.646
-## [FeatSel] 1: 14 bits: cindex.test.mean=0.612
 </code></pre>
 
 <pre class="prettyprint well"><code>## Warning: Ran out of iterations and did not converge
 </code></pre>
 
-<pre class="prettyprint well"><code>## [FeatSel] 1: 15 bits: cindex.test.mean=0.703
+<pre class="prettyprint well"><code>## [FeatSel] 1: 18 bits: cindex.test.mean=0.595
+## [FeatSel] 1: 15 bits: cindex.test.mean=0.533
+## [FeatSel] 1: 15 bits: cindex.test.mean=0.611
+## [FeatSel] 1: 15 bits: cindex.test.mean= 0.6
+## [FeatSel] 1: 16 bits: cindex.test.mean=0.588
+## [FeatSel] 1: 16 bits: cindex.test.mean=0.57
+## [FeatSel] 1: 22 bits: cindex.test.mean=0.539
+## [FeatSel] 1: 18 bits: cindex.test.mean=0.48
+## [FeatSel] 1: 12 bits: cindex.test.mean=0.56
+## [FeatSel] 1: 16 bits: cindex.test.mean=0.55
+## [FeatSel] Result: 15 bits : cindex.test.mean=0.611
+## [FeatSel] Started selecting features for learner 'surv.coxph'
+## With control class: FeatSelControlRandom
+## Imputation value: -0
+## [FeatSel] 1: 16 bits: cindex.test.mean=0.523
+## [FeatSel] 1: 21 bits: cindex.test.mean=0.534
+## [FeatSel] 1: 17 bits: cindex.test.mean=0.508
+## [FeatSel] 1: 13 bits: cindex.test.mean=0.505
+## [FeatSel] 1: 17 bits: cindex.test.mean=0.447
+## [FeatSel] 1: 16 bits: cindex.test.mean=0.457
+## [FeatSel] 1: 17 bits: cindex.test.mean=0.498
+## [FeatSel] 1: 18 bits: cindex.test.mean=0.502
+## [FeatSel] 1: 17 bits: cindex.test.mean=0.459
+## [FeatSel] 1: 16 bits: cindex.test.mean=0.483
+## [FeatSel] Result: 21 bits : cindex.test.mean=0.534
+## [FeatSel] Started selecting features for learner 'surv.coxph'
+## With control class: FeatSelControlRandom
+## Imputation value: -0
+## [FeatSel] 1: 20 bits: cindex.test.mean=0.617
+## [FeatSel] 1: 19 bits: cindex.test.mean=0.665
+## [FeatSel] 1: 15 bits: cindex.test.mean=0.671
+## [FeatSel] 1: 15 bits: cindex.test.mean=0.703
+## [FeatSel] 1: 13 bits: cindex.test.mean=0.605
+## [FeatSel] 1: 18 bits: cindex.test.mean=0.674
+## [FeatSel] 1: 16 bits: cindex.test.mean=0.584
+## [FeatSel] 1: 18 bits: cindex.test.mean=0.613
+## [FeatSel] 1: 25 bits: cindex.test.mean=0.662
+## [FeatSel] 1: 9 bits: cindex.test.mean=0.69
 ## [FeatSel] Result: 15 bits : cindex.test.mean=0.703
-## [FeatSel] Started selecting features for learner 'surv.coxph'
-## With control class: FeatSelControlRandom
-## Imputation value: -0
-## [FeatSel] 1: 12 bits: cindex.test.mean=0.581
-## [FeatSel] 1: 16 bits: cindex.test.mean=0.606
-## [FeatSel] 1: 19 bits: cindex.test.mean=0.626
-## [FeatSel] 1: 14 bits: cindex.test.mean=0.518
-## [FeatSel] 1: 11 bits: cindex.test.mean=0.612
-## [FeatSel] 1: 16 bits: cindex.test.mean=0.555
-## [FeatSel] 1: 17 bits: cindex.test.mean=0.635
-## [FeatSel] 1: 10 bits: cindex.test.mean=0.615
-## [FeatSel] 1: 14 bits: cindex.test.mean=0.621
-## [FeatSel] 1: 16 bits: cindex.test.mean=0.514
-## [FeatSel] Result: 17 bits : cindex.test.mean=0.635
-## [FeatSel] Started selecting features for learner 'surv.coxph'
-## With control class: FeatSelControlRandom
-## Imputation value: -0
-## [FeatSel] 1: 20 bits: cindex.test.mean=0.476
-## [FeatSel] 1: 15 bits: cindex.test.mean=0.431
-## [FeatSel] 1: 18 bits: cindex.test.mean=0.432
-## [FeatSel] 1: 12 bits: cindex.test.mean=0.419
-## [FeatSel] 1: 16 bits: cindex.test.mean=0.441
-## [FeatSel] 1: 19 bits: cindex.test.mean= 0.4
-## [FeatSel] 1: 16 bits: cindex.test.mean=0.442
-## [FeatSel] 1: 15 bits: cindex.test.mean=0.527
-## [FeatSel] 1: 19 bits: cindex.test.mean=0.448
-## [FeatSel] 1: 17 bits: cindex.test.mean=0.516
-## [FeatSel] Result: 15 bits : cindex.test.mean=0.527
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code>## cindex.test.mean 
-##           0.5735
+##           0.5482
 </code></pre>
 
 <p>The selected feature sets in the individual resampling iterations can be extracted as follows:</p>
@@ -938,28 +991,28 @@ r = resample(learner = lrn, task = wpbc.task, resampling = out.rdesc, models = T
 
 <pre class="prettyprint well"><code>## [[1]]
 ## FeatSel result:
-## Features (18): mean_radius, mean_perimeter, mean_concavepoints, mean_symmetry, mean_fractaldim, SE_texture, SE_smoothness, SE_concavepoints, SE_symmetry, worst_radius, worst_texture, worst_perimeter, worst_compactness, worst_concavity, worst_concavepoints, worst_symmetry, worst_fractaldim, tsize
-## cindex.test.mean=0.687
+## Features (15): mean_radius, mean_texture, mean_smoothness, mean_compactness, mean_symmetry, mean_fractaldim, SE_radius, SE_texture, SE_perimeter, SE_area, SE_concavepoints, SE_fractaldim, worst_texture, worst_symmetry, worst_fractaldim
+## cindex.test.mean=0.643
 ## 
 ## [[2]]
 ## FeatSel result:
-## Features (16): mean_radius, mean_texture, mean_perimeter, mean_smoothness, mean_fractaldim, SE_smoothness, SE_compactness, SE_concavity, SE_concavepoints, SE_symmetry, worst_radius, worst_perimeter, worst_smoothness, worst_compactness, worst_concavity, pnodes
-## cindex.test.mean=0.711
+## Features (18): mean_radius, mean_texture, mean_perimeter, mean_concavepoints, mean_fractaldim, SE_radius, SE_texture, SE_perimeter, SE_area, SE_compactness, SE_concavity, SE_concavepoints, worst_area, worst_compactness, worst_concavity, worst_concavepoints, worst_symmetry, tsize
+## cindex.test.mean=0.719
 ## 
 ## [[3]]
 ## FeatSel result:
-## Features (15): mean_radius, mean_texture, mean_perimeter, mean_area, mean_smoothness, mean_compactness, mean_symmetry, mean_fractaldim, SE_symmetry, SE_fractaldim, worst_texture, worst_area, worst_smoothness, worst_compactness, pnodes
-## cindex.test.mean=0.703
+## Features (15): mean_smoothness, mean_concavity, mean_symmetry, SE_perimeter, SE_compactness, SE_concavity, SE_concavepoints, SE_symmetry, SE_fractaldim, worst_texture, worst_perimeter, worst_area, worst_concavity, worst_symmetry, pnodes
+## cindex.test.mean=0.611
 ## 
 ## [[4]]
 ## FeatSel result:
-## Features (17): mean_radius, mean_area, mean_compactness, mean_concavity, mean_concavepoints, mean_fractaldim, SE_radius, SE_texture, SE_perimeter, SE_concavity, SE_concavepoints, SE_fractaldim, worst_radius, worst_texture, worst_perimeter, worst_area, worst_symmetry
-## cindex.test.mean=0.635
+## Features (21): mean_texture, mean_perimeter, mean_area, mean_smoothness, mean_compactness, mean_fractaldim, SE_radius, SE_texture, SE_smoothness, SE_compactness, SE_concavity, SE_concavepoints, SE_fractaldim, worst_texture, worst_area, worst_smoothness, worst_compactness, worst_concavity, worst_concavepoints, worst_symmetry, tsize
+## cindex.test.mean=0.534
 ## 
 ## [[5]]
 ## FeatSel result:
-## Features (15): mean_texture, mean_compactness, mean_concavepoints, mean_symmetry, mean_fractaldim, SE_radius, SE_perimeter, SE_concavity, SE_concavepoints, SE_symmetry, worst_texture, worst_perimeter, worst_concavepoints, worst_fractaldim, tsize
-## cindex.test.mean=0.527
+## Features (15): mean_radius, mean_compactness, mean_concavepoints, SE_radius, SE_texture, SE_area, SE_smoothness, SE_compactness, SE_concavepoints, worst_perimeter, worst_concavepoints, worst_symmetry, worst_fractaldim, tsize, pnodes
+## cindex.test.mean=0.703
 </code></pre>
 
 </div>

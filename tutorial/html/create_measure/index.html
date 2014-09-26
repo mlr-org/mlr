@@ -322,7 +322,12 @@ ms1min = setAggregation(ms1, test.min)
 ms1max = setAggregation(ms1, test.max)
 res = selectFeatures(&quot;classif.rpart&quot;, iris.task, iris.rin, measures = list(ms1, ms2, ms1min, ms1max), 
     control = makeFeatSelControlExhaustive(), show.info = FALSE)
-perf.data = as.data.frame(res$opt.path)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Loading required package: rpart
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">perf.data = as.data.frame(res$opt.path)
 p = ggplot(aes(x = mmce.test.mean, y = mmce.test.range, xmax = mmce.test.max, xmin = mmce.test.min, 
     color = as.factor(Sepal.Width), pch = as.factor(Petal.Width)), data = perf.data) +
     geom_point(size = 4) +
