@@ -2,35 +2,30 @@ context("removeConstantFeatures")
 
 test_that("removeConstantFeatures", {
 
-  testData = data.frame(
+  data = data.frame(
     a = c(1L, 2L),
     b = as.factor(1:2),
     c = c("a", "b"),
-    d = c(TRUE, FALSE),
+    d = as.factor(c(TRUE, FALSE)),
     e = c(NA, 1),
     f = c(1, NA),
     g = c(1, 1),
     n = c(0, 1 - 0.7 - 0.3),
     target = as.factor(1:2)
   )
-  testData = testData[c(rep(1, 9), 2),]
-  testData$safe = seq_row(testData)
+  data = data[c(rep(1, 9), 2),]
+  data$safe = seq_row(data)
+  task = makeClassifTask("test", data = data, target = "target")
 
-  testData_task = testData
-  testData_task$d = as.factor(testData_task$d)
-  task = makeClassifTask("test", data = testData_task, target = "target")
+  res = getTaskData(removeConstantFeatures(task, perc = 0.1, dont.rm = "g"))
+  expect_equal(colnames(res), c("g", "target", "safe"))
 
-  task_res = getTaskData(removeConstantFeatures(task, perc = 0.1, dont.rm = "g"))
-  testData_res = removeConstantFeatures(testData, perc = 0.1, dont.rm = c("g", "target"))
-  expect_equal(testData_res, task_res)
-  expect_equal(colnames(testData_res), c("g", "target", "safe"))
+  res = getTaskData(removeConstantFeatures(task, na.ignore = TRUE))
+  expect_equal(colnames(res), c("a", "b", "c", "d", "target", "safe"))
 
-  testData_res = removeConstantFeatures(testData, na.ignore = TRUE)
-  expect_equal(colnames(testData_res), c("a", "b", "c", "d", "target", "safe"))
+  res = getTaskData(removeConstantFeatures(task, tol = 0, na.ignore = TRUE))
+  expect_true(setequal(colnames(res), c("a", "b", "c", "d", "target", "safe", "n")))
 
-  testData_res = removeConstantFeatures(testData, tol = 0, na.ignore = TRUE)
-  expect_true(setequal(colnames(testData_res), c("a", "b", "c", "d", "target", "safe", "n")))
-
-  testData_res = removeConstantFeatures(testData, na.ignore = FALSE, perc = 0.2)
-  expect_equal(colnames(testData_res), "safe")
+  res = getTaskData(removeConstantFeatures(task, na.ignore = FALSE, perc = 0.2))
+  expect_equal(colnames(res), c("target", "safe"))
 })

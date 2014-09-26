@@ -7,8 +7,7 @@
 #' features for which less than \dQuote{perc} percent of the observations
 #' differ from the mode value.
 #'
-#' @template arg_taskdf
-#' @template arg_taskdf_target
+#' @template arg_task
 #' @param perc [\code{numeric(1)}]\cr
 #'   The percentage of a feature values in [0, 1) that must differ from the mode value.
 #'   Default is 0, which means only constant features with exactly one observed level are removed.
@@ -24,40 +23,29 @@
 #'   Variables stored as \code{double} will get rounded accordingly before computing the mode.
 #'   Default is \code{sqrt(.Maschine$double.eps)}.
 #' @template arg_showinfo
-#' @template ret_taskdf
+#' @template ret_task
 #' @export
 #' @family eda_and_preprocess
-removeConstantFeatures = function(obj, target, perc = 0, dont.rm = character(0L),
-  na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = getMlrOption("show.info")) {
-  assertNumber(perc, lower = 0, upper = 1)
-  assertCharacter(dont.rm, any.missing = FALSE)
-  assertFlag(na.ignore)
-  assertFlag(show.info)
-  UseMethod("removeConstantFeatures")
-}
-
-#' @export
-removeConstantFeatures.data.frame = function(obj, target, perc = 0, dont.rm = character(0L),
+removeConstantFeatures = function(task, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = TRUE) {
+  data = getTaskData(task)
+  assertNumber(perc, lower = 0, upper = 1)
+  assertSubset(dont.rm, choices = names(data))
+  assertFlag(na.ignore)
+  assertNumber(tol, lower = 0)
+  assertFlag(show.info)
+  dont.rm = union(dont.rm, getTargetNames(task))
 
-  assertSubset(dont.rm, choices = colnames(obj))
-  if (!missing(target)) {
-    assertSubset(target, choices = colnames(obj))
-    dont.rm = union(dont.rm, target)
-  }
-
-  if (any(!dim(obj)))
-    return(obj)
+  if (any(!dim(data)))
+    return(task)
 
   isEqual = function(x, y) {
     res = (x == y) | (is.na(x) & is.na(y))
     replace(res, is.na(res), FALSE)
   }
-
   digits = ceiling(log10(1 / tol))
-
-  cns = setdiff(colnames(obj), dont.rm)
-  ratio = vnapply(obj[, cns, drop = FALSE], function(x) {
+  cns = setdiff(colnames(data), dont.rm)
+  ratio = vnapply(data[cns], function(x) {
     if (is.double(x))
       x = round(x, digits = digits)
     m = computeMode(x, na.rm = na.ignore)
@@ -71,15 +59,5 @@ removeConstantFeatures.data.frame = function(obj, target, perc = 0, dont.rm = ch
   dropcols = cns[ratio <= perc]
   if (show.info && length(dropcols))
     messagef("Removing %i columns: %s", length(dropcols), collapse(dropcols))
-  dropNamed(obj, dropcols)
-}
-
-#' @export
-removeConstantFeatures.Task = function(obj, target, perc = 0, dont.rm = character(0L),
-  na.ignore = FALSE, tol = .Machine$double.eps^.5, show.info = TRUE) {
-
-  if (!missing(target))
-    stop("Do not pass 'target' when you pass a task!")
-  res = removeConstantFeatures(getTaskData(obj), getTargetNames(obj), perc, dont.rm, na.ignore, tol, show.info)
-  changeData(task = obj, data = res)
+  changeData(task = task, data = dropNamed(data, dropcols))
 }
