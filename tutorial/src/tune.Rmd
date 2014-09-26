@@ -15,10 +15,6 @@ appropriate set of parameters from a given range of values.
 We again use the [iris](&datasets::iris) data set, included in **R**, but now we want to
 set the parameters of a SVM with a polynomial kernel.
 
-### Simple Grid Search with cross validation
-
-We start by creating a classification
-task (see the part on [training](train.md) for more information):
 
 ### Simple Grid Search with cross validation
 
