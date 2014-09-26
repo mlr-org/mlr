@@ -43,7 +43,7 @@ test_that("filterFeatures", {
   }
   filter.list.regr = as.character(filter.list$id)[!filter.list$task.classif & filter.list$task.regr]
   for (filter in filter.list.regr) {
-    filterFeatures(task = regr.task, method = filter, val = 0.5)
+    filterFeatures(task = regr.num.task, method = filter, val = 0.5)
   }
   
   ## extra test of univariate filter
