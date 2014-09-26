@@ -234,19 +234,8 @@ on the <a href="http://www.rdocumentation.org/packages/survival/functions/lung.h
 lung$status = lung$status - 1
 task = makeSurvTask(data = lung, target = c(&quot;time&quot;, &quot;status&quot;))
 lrn = makeLearner(&quot;surv.coxph&quot;)
-</code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: survival
-## Loading required package: splines
-## 
-## Attaching package: 'survival'
-## 
-## The following object is masked from 'package:caret':
-## 
-##     cluster
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
+mod = train(lrn, task)
 mod
 </code></pre>
 
@@ -320,24 +309,10 @@ examples according to the class frequencies in the data set as shown in the foll
 <strong>R</strong> code (see also the section about <a href="../over_and_undersampling/">imbalanced classification problems</a>).</p>
 <pre class="prettyprint well"><code class="r">## Calculate the observation weights
 tar = getTaskTargets(bc.task)
-</code></pre>
+tab = as.numeric(table(tar))
+w = 1/tab[tar]
 
-<pre class="prettyprint well"><code>## Error: object 'bc.task' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">tab = as.numeric(table(tar))
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: unique() applies only to vectors
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">w = 1/tab[tar]
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'tab' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">train(&quot;classif.cforest&quot;, task = bc.task, weights = w)
+train(&quot;classif.cforest&quot;, task = bc.task, weights = w)
 </code></pre>
 
 <pre class="prettyprint well"><code>## Loading required package: party
@@ -363,7 +338,10 @@ tar = getTaskTargets(bc.task)
 ## Loading required package: stats4
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'bc.task' not found
+<pre class="prettyprint well"><code>## Model for id = classif.cforest class = classif.cforest
+## Trained on obs: 683
+## Used features: 9
+## Hyperparameters:
 </code></pre>
 
 <p>As you may recall, it is also possible to pass observation weights when creating the 

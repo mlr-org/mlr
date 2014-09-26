@@ -233,63 +233,28 @@ the minority or undersample the majority class.</p>
     data.frame(x = rnorm(50, mean = 1), class = &quot;A&quot;),
     data.frame(x = rnorm(50, mean = 2), class = &quot;B&quot;))
 task = makeClassifTask(data = data, target = &quot;class&quot;)
+task.over = oversample(task, rate = 4)
+task.under = undersample(task, rate = 1/4)
+lrn = makeLearner(&quot;classif.PART&quot;)
+mod = train(lrn, task)
+mod.over = train(lrn, task.over)
+mod.under = train(lrn, task.under)
+performance(predict(mod, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: Assertion on 'data' failed: Must be a data frame
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">task.over = oversample(task, rate = 4)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'task' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">task.under = undersample(task, rate = 1/4)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'task' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;classif.PART&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: RWeka
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'task' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod.over = train(lrn, task.over)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'task.over' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod.under = train(lrn, task.under)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'task.under' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">performance(predict(mod, newdata = data.even), measures = mmce)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'mod' not found
+<pre class="prettyprint well"><code>## [1] 0.5
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.over, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'mod.over' not found
+<pre class="prettyprint well"><code>## [1] 0.29
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'mod.under' not found
+<pre class="prettyprint well"><code>## [1] 0.4
 </code></pre>
 
 <h3 id="learners">Learners</h3>
@@ -298,39 +263,24 @@ be useful. You are also able to wrap the over- and undersampling within the lear
 <pre class="prettyprint well"><code class="r">lrn.over = makeOversampleWrapper(lrn, osw.rate = 4)
 lrn.under = makeUndersampleWrapper(lrn, usw.rate = 1/4)
 mod = train(lrn, task)
+mod.over = train(lrn.over, task)
+mod.under = train(lrn.under, task)
+performance(predict(mod, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'task' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod.over = train(lrn.over, task)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'task' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod.under = train(lrn.under, task)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'task' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">performance(predict(mod, newdata = data.even), measures = mmce)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'mod' not found
+<pre class="prettyprint well"><code>## [1] 0.5
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.over, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'mod.over' not found
+<pre class="prettyprint well"><code>## [1] 0.38
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: object 'mod.under' not found
+<pre class="prettyprint well"><code>## [1] 0.34
 </code></pre>
 
 <h3 id="smote">SMOTE</h3>

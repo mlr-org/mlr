@@ -246,40 +246,15 @@ In the constructor you can do the following things, apart from selecting the typ
 </ul>
 <pre class="prettyprint well"><code class="r">## Cox proportional hazards model with custom name
 surv.lrn = makeLearner(&quot;surv.coxph&quot;, id = &quot;coxph&quot;)
-</code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: survival
-## Loading required package: splines
-## 
-## Attaching package: 'survival'
-## 
-## The following object is masked from 'package:caret':
-## 
-##     cluster
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">## K-means with 5 clusters
+## K-means with 5 clusters
 cluster.lrn = makeLearner(&quot;cluster.SimpleKMeans&quot;, N = 5)
-</code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: RWeka
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">## Regression gradient boosting machine, specify hyperparameters via a list
+## Regression gradient boosting machine, specify hyperparameters via a list
 regr.lrn = makeLearner(&quot;regr.gbm&quot;, par.vals = list(n.trees = 500, interaction.depth = 3))
-</code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: gbm
-## Loaded gbm 2.1
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">## Classification tree, set it up for predicting probabilities
+## Classification tree, set it up for predicting probabilities
 classif.lrn = makeLearner(&quot;classif.randomForest&quot;, predict.type = &quot;prob&quot;, fix.factors = TRUE)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: randomForest
-## randomForest 4.6-7
-## Type rfNews() to see new features/changes/bug fixes.
 </code></pre>
 
 <p>The first argument specifies which algorithm to use.

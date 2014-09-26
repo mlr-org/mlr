@@ -231,7 +231,6 @@ The technique of extracting a subset of relevant features is called feature sele
 Feature selection can enhance the interpretability of the model, speed up the learning
 process and improve the learner performance.
 There exist different approaches to identify the relevant features.
-<<<<<<< HEAD
 <strong>mlr</strong> supports <em>filter</em> and <em>wrapper methods</em>.</p>
 <h2 id="filter-methods">Filter methods</h2>
 <p>Filter methods assign an importance value to each feature.
@@ -394,42 +393,16 @@ factor features.</p>
 given the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> and a character string specifying the filter method. </p>
 <pre class="prettyprint well"><code class="r">fv = getFilterValues(iris.task, method = &quot;information.gain&quot;)
 fv
-=======
-<strong>mlr</strong> supports <a href="#Filter">filters</a> and <a href="#Wrapper">wrappers</a>.</p>
-<h2 id="filters">Filters</h2>
-<p>only regression and classification <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>s
-Filters are the simplest approach to find features that do not contain a lot of
-additional information given the other features and can be left out.
-Different methods are built into <strong>mlr</strong>'s function <a href="http://www.rdocumentation.org/packages/mlr/functions/getFilterValues.html">getFilterValues</a>
-and all access filter algorithms from the package
-<a href="&amp;http://cran.r-project.org/web/packages/FSelector/index.html">FSelector</a>.</p>
-<p>The currently available methods are</p>
-<pre class="prettyprint well"><code class="r">listFilterMethods()
 </code></pre>
 
-<pre class="prettyprint well"><code>##  [1] &quot;linear.correlation&quot;       &quot;rank.correlation&quot;        
-##  [3] &quot;information.gain&quot;         &quot;gain.ratio&quot;              
-##  [5] &quot;symmetrical.uncertainty&quot;  &quot;chi.squared&quot;             
-##  [7] &quot;random.forest.importance&quot; &quot;relief&quot;                  
-##  [9] &quot;oneR&quot;                     &quot;mRMR.classic&quot;
-</code></pre>
-
-<p>The function <a href="http://www.rdocumentation.org/packages/mlr/functions/getFilterValues.html">getFilterValues</a> is given a <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> and simply returns a vector characterising
-the importance of the different features.</p>
-<pre class="prettyprint well"><code class="r">fv = getFilterValues(iris.task, method = &quot;information.gain&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: FSelector
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: sum not meaningful for factors
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">fv
->>>>>>> e7841a5c2941fe2f69ab28a1b0918aff1053ae42
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'fv' not found
+<pre class="prettyprint well"><code>## FilterValues:
+## Task: iris-example
+## Method: information.gain
+##           name    val    type
+## 1 Sepal.Length 0.6523 numeric
+## 2  Sepal.Width 0.3856 numeric
+## 3 Petal.Length 1.3565 numeric
+## 4  Petal.Width 1.3784 numeric
 </code></pre>
 
 <p><code>fv</code> is a <a href="http://www.rdocumentation.org/packages/mlr/functions/FilterValues.html">FilterValues</a> object and <code>fv$data</code> contains a <code>data.frame</code> that gives the
@@ -437,7 +410,6 @@ importance values for all features.</p>
 <pre class="prettyprint well"><code class="r">fv$data
 </code></pre>
 
-<<<<<<< HEAD
 <pre class="prettyprint well"><code>##           name    val    type
 ## 1 Sepal.Length 0.6523 numeric
 ## 2  Sepal.Width 0.3856 numeric
@@ -473,31 +445,6 @@ filtered.task = filterFeatures(iris.task, method = &quot;information.gain&quot;,
 filtered.task = filterFeatures(iris.task, method = &quot;information.gain&quot;, select = &quot;threshold&quot;, 
     val = 0.5)
 filtered.task
-=======
-<pre class="prettyprint well"><code>## Error: object 'fv' not found
-</code></pre>
-
-<p>According to this filter, <code>Petal.Width</code> and <code>Petal.Length</code> contain the most information.
-With <strong>mlr</strong>'s function <a href="http://www.rdocumentation.org/packages/mlr/functions/filterFeatures.html">filterFeatures</a>, you can now create a new task
-by leaving out all but a given number of features with the highest
-feature importance.</p>
-<pre class="prettyprint well"><code class="r">filtered.task = filterFeatures(iris.task, method = &quot;information.gain&quot;, select = &quot;abs&quot;, val = 2)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: sum not meaningful for factors
-</code></pre>
-
-<p><code>select</code>
-<code>val</code>
-Other filter options in <a href="http://www.rdocumentation.org/packages/mlr/functions/filterFeatures.html">filterFeatures</a> are to require a percentage of
-features to be filtered instead or to set a threshold for the numerical importance
-values.</p>
-<p>In a proper experimental setup you might want to automate the selection of the
-features so that it can be part of the validation method of your choice.
-We will use the standard 10-fold cross validation.</p>
-<p><a href="http://www.rdocumentation.org/packages/mlr/functions/makeFilterWrapper.html">makeFilterWrapper</a></p>
-<pre class="prettyprint well"><code class="r">lrn = makeFilterWrapper(learner = &quot;classif.fnn&quot;, fw.method = &quot;information.gain&quot;, fw.select = &quot;perc&quot;, fw.val = 0.7)
->>>>>>> e7841a5c2941fe2f69ab28a1b0918aff1053ae42
 </code></pre>
 
 <pre class="prettyprint well"><code>## Supervised task: iris-example
@@ -534,29 +481,11 @@ data set before fitting the learner.</p>
     fw.select = &quot;abs&quot;, fw.val = 2)
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
 r = resample(learner = lrn, task = iris.task, resampling = rdesc, show.info = FALSE, models = TRUE)
+r$aggr
 </code></pre>
 
-<<<<<<< HEAD
 <pre class="prettyprint well"><code>## mmce.test.mean 
 ##           0.04
-=======
-<pre class="prettyprint well"><code>## Error: sum not meaningful for factors
-</code></pre>
-
-<pre class="prettyprint well"><code>## Timing stopped at: 0.05 0 0.048
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">r$aggr
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'r' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">#m = train(lrn, iris.task)
-#getFilterResult(m)
-#getFilteredFeatures(m)
-#benchmark
->>>>>>> e7841a5c2941fe2f69ab28a1b0918aff1053ae42
 </code></pre>
 
 <p>You may want to know which features have been used. Luckily, we have called
@@ -565,21 +494,12 @@ contains a <code>list</code> of <a href="http://www.rdocumentation.org/packages/
 In order to access the selected feature subsets we can call <a href="http://www.rdocumentation.org/packages/mlr/functions/getFilteredFeatures.html">getFilteredFeatures</a> on each model.</p>
 <pre class="prettyprint well"><code class="r"># sapply(r$models, getFilterResult)
 sfeats = sapply(r$models, getFilteredFeatures)
+table(sfeats)
 </code></pre>
 
-<<<<<<< HEAD
 <pre class="prettyprint well"><code>## sfeats
 ## Petal.Length  Petal.Width 
 ##           10           10
-=======
-<pre class="prettyprint well"><code>## Error: object 'r' not found
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">table(sfeats)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Error: object 'sfeats' not found
->>>>>>> e7841a5c2941fe2f69ab28a1b0918aff1053ae42
 </code></pre>
 
 <p>FIXME difference between getFilterResult and getFilteredFeatures? <a href="http://www.rdocumentation.org/packages/mlr/functions/getFilterResult.html">FilterResult</a></p>
