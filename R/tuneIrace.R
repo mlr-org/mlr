@@ -37,5 +37,9 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
   if (!any(j))
     stop("No matching rows for final elite candidate found in opt.path! This cannot be!")
   y = colMeans(d[j, opt.path$y.names, drop = FALSE])
-  makeTuneResult(learner, control, removeMissingValues(x2), y, opt.path)
+  # take first index of mating lines to get recommended x
+  e = getOptPathEl(opt.path, which.first(j))
+  x = trafoValue(par.set, e$x)
+  x = removeMissingValues(x)
+  makeTuneResult(learner, control, x, y, opt.path)
 }

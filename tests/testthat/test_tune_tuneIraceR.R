@@ -67,6 +67,11 @@ test_that("tuneIrace works with logical params", {
   tr = tuneParams(lrn, task, rdesc, par.set = ps, control = ctrl)
   expect_true(getOptPathLength(tr$opt.path) >= 15 && getOptPathLength(tr$opt.path) <= 20)
   expect_true(!is.na(tr$y))
+
+  lrn2 = makeTuneWrapper(lrn, rdesc, par.set = ps, control = ctrl)
+  z = holdout(lrn2, task, split = 0.5, stratify = TRUE)
+  expect_true(getOptPathLength(tr$opt.path) >= 15 && getOptPathLength(tr$opt.path) <= 20)
+  expect_true(!is.na(tr$y))
 })
 
 
