@@ -19,6 +19,8 @@ mlr_2.2
 - extension to smote algorithm (sampling): minority class observations in binary classification
   are either chosen via sampling or alternatively, each minority class observation is used an
   equal number of times
+- fixed a bug in filter methods of the FSelector package that caused an error when variable names
+  contained accented letters
 
 - new learners:
 -- classif.bartMachine
