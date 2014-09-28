@@ -118,7 +118,6 @@ makeFilter(
 })
 
 makeFilter(
-  # FIXME: see ?carscore for processing of scores (square etc)
   # FIXME: catscore is in package st
   name = "carscore",
   desc = "CAR scores",
@@ -127,7 +126,7 @@ makeFilter(
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
     data = getTaskData(task, target.extra = TRUE)
-    y = care::carscore(Xtrain = data$data, Ytrain = data$target, verbose = FALSE, ...)
+    y = care::carscore(Xtrain = data$data, Ytrain = data$target, verbose = FALSE, ...)^2
     setNames(as.double(y), names(y))
   }
 )
