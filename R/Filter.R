@@ -171,7 +171,7 @@ makeFilter(
   supported.features = "numerics",
   fun = function(task, nselect, ...) {
     y = FSelector::linear.correlation(getTaskFormula(task), data = getTaskData(task))
-    setNames(y[["attr_importance"]], rownames(y))
+    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   }
 )
 
@@ -183,7 +183,7 @@ makeFilter(
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
     y = FSelector::rank.correlation(getTaskFormula(task), data = getTaskData(task))
-    setNames(y[["attr_importance"]], rownames(y))
+    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   }
 )
 
@@ -195,7 +195,7 @@ makeFilter(
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
     y = FSelector::information.gain(getTaskFormula(task), data = getTaskData(task))
-    setNames(y[["attr_importance"]], rownames(y))
+    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   }
 )
 
@@ -207,7 +207,7 @@ makeFilter(
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
     y = FSelector::gain.ratio(getTaskFormula(task), data = getTaskData(task))
-    setNames(y[["attr_importance"]], rownames(y))
+    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   }
 )
 
@@ -219,7 +219,7 @@ makeFilter(
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
     y = FSelector::symmetrical.uncertainty(getTaskFormula(task), data = getTaskData(task))
-    setNames(y[["attr_importance"]], rownames(y))
+    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   }
 )
 
@@ -231,7 +231,7 @@ makeFilter(
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
     y = FSelector::chi.squared(getTaskFormula(task), data = getTaskData(task))
-    setNames(y[["attr_importance"]], rownames(y))
+    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   }
 )
 
@@ -243,7 +243,7 @@ makeFilter(
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
     y = FSelector::relief(getTaskFormula(task), data = getTaskData(task))
-    setNames(y[["attr_importance"]], rownames(y))
+    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   }
 )
 
@@ -255,7 +255,7 @@ makeFilter(
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
     y = FSelector::oneR(getTaskFormula(task), data = getTaskData(task))
-    setNames(y[["attr_importance"]], rownames(y))
+    setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   }
 )
 
