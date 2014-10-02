@@ -540,7 +540,7 @@ mcp = makeMeasure(id = "mcp", minimize = TRUE, best = 0, worst = Inf,
   properties = "costsens",
   allowed.pred.types = "response",
   fun = function(task, model, pred, feats, extra.args) {
-    mc = meancosts$fun(task, NULL, pred, feats, extra.args)
+    mc = meancosts$fun(task, NULL, pred, NULL, extra.args)
     oc = mean(apply(task$env$costs, 1L, min))
     mc - oc
   }

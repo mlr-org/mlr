@@ -43,7 +43,7 @@ makeCostMeasure = function(id = "costs", minimize = TRUE, costs, task, combine =
     properties = c("classif", "classif.multi"),
     allowed.pred.types = c("response", "prob"),
     best = best, worst = worst,
-    fun = function(task, model, pred, extra.args) {
+    fun = function(task, model, pred, feats, extra.args) {
       costs = extra.args[[1L]]
       # cannot index with NA
       r = pred$data$response
