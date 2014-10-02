@@ -41,7 +41,7 @@ If this is the case you might want to [contact us](https://github.com/berndbisch
 or [open an issue](https://github.com/berndbischl/mlr/issues/new) as well!
 But until then you can turn off [%mlr]'s parameter checking like this:
 
-```{r}
+```{r error=TRUE}
 lrn = makeLearner("classif.ksvm", newPar = 3)
 lrn = makeLearner("classif.ksvm", epsilon = -3)
 
@@ -60,7 +60,7 @@ with multiple data sets and learners, you normally do not want to terminate the 
 benchmark experiment due to one error.
 The following example shows how to prevent this:
 
-```{r}
+```{r error=TRUE}
 ## This call gives an error caused by the low number of observations in class `virginica`
 train("classif.qda", task = iris.task, subset = 1:104)
 

@@ -58,6 +58,9 @@ suppressPackageStartupMessages({
   # conflicting packages loaded first
   library(caret)
   library(ROCR)
+  library(glmnet) # auc
+  library(pROC) # auc
+  library(clValid) # dunn
 
   # required to build
   library(methods)
