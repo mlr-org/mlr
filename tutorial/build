@@ -83,7 +83,7 @@ if (!isDirectory("docs"))
   dir.create("docs")
 
 # do lapply for now. with mclapply it seems unclear how to stop best on error. this was 100% broken before
-lapply(list.files(src, pattern = "\\.Rmd$"), knitIt)
+dummy = lapply(list.files(src, pattern = "\\.Rmd$"), knitIt)
 
 # build docs with mkdocs
 ok = system3("mkdocs", "build")
