@@ -236,13 +236,8 @@ strategy for each <a href="http://www.rdocumentation.org/packages/mlr/functions/
 <h3 id="example-two-tasks-and-two-learners">Example: Two tasks and two learners</h3>
 <pre class="prettyprint well"><code class="r">## Two learners to be compared
 lrns = list(makeLearner(&quot;classif.lda&quot;), makeLearner(&quot;classif.rpart&quot;))
-</code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: MASS
-## Loading required package: rpart
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">## Two classification tasks
+## Two classification tasks
 tasks = list(iris.task, bc.task)
 
 ## Use 5-fold cross-validation for both tasks
@@ -361,18 +356,8 @@ in.rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 ## Tune k-nearest neighbor
 lrn = makeTuneWrapper(&quot;classif.kknn&quot;, resampling = in.rdesc, par.set = ps, control = ctrl,
     show.info = FALSE)
-</code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: kknn
-## 
-## Attaching package: 'kknn'
-## 
-## The following object is masked from 'package:caret':
-## 
-##     contr.dummy
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">## Define &quot;outer&quot; bootstrap indices
+## Define &quot;outer&quot; bootstrap indices
 out.rdesc = makeResampleDesc(&quot;Bootstrap&quot;, iters = 5)
 
 ## Merge it into a benchmark experiment
@@ -449,12 +434,8 @@ in.rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 ## Tune a SVM
 lrn = makeTuneWrapper(&quot;classif.ksvm&quot;, resampling = in.rdesc, par.set = ps, control = ctrl,
     show.info = FALSE)
-</code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: kernlab
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">## Three learners to be compared
+## Three learners to be compared
 lrns = list(makeLearner(&quot;classif.lda&quot;), makeLearner(&quot;classif.rpart&quot;), lrn)
 
 ## Define &quot;outer&quot; cross-validation indices

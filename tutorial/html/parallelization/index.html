@@ -232,23 +232,13 @@ The first annotated loop <a href="http://www.rdocumentation.org/packages/mlr/">m
 Afterwards it is good practice to call <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStop.html">parallelStop</a>.</p>
 <pre class="prettyprint well"><code class="r">library(&quot;parallelMap&quot;)
 parallelStartSocket(2)
+r = resample(&quot;classif.lda&quot;, iris.task, iris.rin)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Starting parallelization in mode=socket with cpus=2.
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">r = resample(&quot;classif.lda&quot;, iris.task, iris.rin)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Exporting objects to slaves for mode socket: .mlr.slave.options
-## Mapping in parallel: mode = socket; cpus = 2; elements = 3.
-## [Resample] Result: mmce.test.mean=0.02
+<pre class="prettyprint well"><code>## [Resample] Result: mmce.test.mean=0.02
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">parallelStop()
-</code></pre>
-
-<pre class="prettyprint well"><code>## Stopped parallelization. All cleaned up.
 </code></pre>
 
 <p>On Linux or Mac OS X, you may want to use

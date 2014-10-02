@@ -383,7 +383,6 @@ r = resample(&quot;cluster.XMeans&quot;, mtcars.task, rdesc, measures = list(dun
 </code></pre>
 
 <pre class="prettyprint well"><code>## [Resample] subsampling iter: 1
-## Loading required package: clusterSim
 ## [Resample] subsampling iter: 2
 ## [Resample] subsampling iter: 3
 </code></pre>
@@ -412,14 +411,14 @@ r = resample(&quot;cluster.XMeans&quot;, mtcars.task, rdesc, measures = list(dun
 ## Warning: no non-missing arguments to max; returning -Inf
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.156
+<pre class="prettyprint well"><code>## [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.0484
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code>##      dunn.test.mean        db.test.mean timetrain.test.mean 
-##              0.9576              0.4254              0.1558
+##              0.9576              0.4254              0.0484
 </code></pre>
 
 <h2 id="stratified-resampling">Stratified resampling</h2>
