@@ -228,16 +228,16 @@
             <div class="col-md-9" role="main">
 
 <h1 id="integrating-another-learner">Integrating another learner</h1>
-<p>In order to create a new learner in <strong>mlr</strong>, interface code to the <strong>R</strong> function must be written.
+<p>In order to create a new learner in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>, interface code to the <strong>R</strong> function must be written.
 This can be done by either inheriting from <code>rlearner.classif</code>, <code>rlearner.regr</code>, <code>rlearner.surv</code>, 
 <code>rlearner.costsens</code>, or <code>rlearner.cluster</code>.</p>
 <p>Below, an example of how the <a href="http://www.rdocumentation.org/packages/MASS/functions/lda.html">Linear Discriminant Analysis</a> from package 
 <a href="http://www.rdocumentation.org/packages/MASS">MASS</a>
-has been integrated into the classification learner <code>classif.lda</code> in <strong>mlr</strong> is shown.</p>
+has been integrated into the classification learner <code>classif.lda</code> in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> is shown.</p>
 <h2 id="initialization">Initialization</h2>
 <p>For initialization, all the information you need is the name of the learner, its package, 
 the parameter set, and the set of properties of your learner.</p>
-<p>First, name your learner. The naming conventions in <strong>mlr</strong> are <code>classif.&lt;R_method_name&gt;</code> 
+<p>First, name your learner. The naming conventions in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> are <code>classif.&lt;R_method_name&gt;</code> 
 for classification, <code>regr.&lt;R_method_name&gt;</code> for regression, <code>surv.&lt;R_method_name&gt;</code> for 
 survival analysis, <code>costsens.&lt;R_method_name&gt;</code> for cost sensitive learning, 
 and <code>cluster.&lt;R_method_name&gt;</code> for clustering.</p>

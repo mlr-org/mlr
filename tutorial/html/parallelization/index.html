@@ -224,11 +224,11 @@
 <h1 id="parallelization">Parallelization</h1>
 <p><strong>R</strong> by default doesn't make use of multiple cores.
 With the integration of <a href="https://github.com/berndbischl/parallelMap">parallelMap</a> into
-<strong>mlr</strong>, it becomes easy to activate the parallel computing capabilities already
-supported by <strong>mlr</strong>.</p>
+<a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>, it becomes easy to activate the parallel computing capabilities already
+supported by <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.</p>
 <p>All you have to do is select an interface by calling one of the
 <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart*</a> functions.
-The first annotated loop <strong>mlr</strong> encounters will then be automatically parallelized.
+The first annotated loop <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> encounters will then be automatically parallelized.
 Afterwards it is good practice to call <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStop.html">parallelStop</a>.</p>
 <pre class="prettyprint well"><code class="r">library(&quot;parallelMap&quot;)
 parallelStartSocket(2)
@@ -240,8 +240,7 @@ parallelStartSocket(2)
 <pre class="prettyprint well"><code class="r">r = resample(&quot;classif.lda&quot;, iris.task, iris.rin)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: MASS
-## Exporting objects to slaves for mode socket: .mlr.slave.options
+<pre class="prettyprint well"><code>## Exporting objects to slaves for mode socket: .mlr.slave.options
 ## Mapping in parallel: mode = socket; cpus = 2; elements = 3.
 ## [Resample] Result: mmce.test.mean=0.02
 </code></pre>

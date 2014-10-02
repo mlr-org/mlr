@@ -230,8 +230,8 @@
             <div class="col-md-9" role="main">
 
 <h1 id="configure-mlr">Configure mlr</h1>
-<p>If you really know what you are doing you may think <strong>mlr</strong> is limiting you in certain ways.
-Actually <strong>mlr</strong> is just designed to make errors because of typos or invalid parameter values
+<p>If you really know what you are doing you may think <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> is limiting you in certain ways.
+Actually <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> is just designed to make errors because of typos or invalid parameter values
 as unlikely as possible.
 But sometimes you want to break those barriers and get full access.
 For all parameters, simply refer to the documentation of <a href="http://www.rdocumentation.org/packages/mlr/functions/configureMlr.html">configureMlr</a>.</p>
@@ -241,8 +241,7 @@ For all parameters, simply refer to the documentation of <a href="http://www.rdo
 r = resample(&quot;classif.ksvm&quot;, iris.task, iris.rin)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: kernlab
-## [Resample] cross-validation iter: 1
+<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
 </code></pre>
 
 <pre class="prettyprint well"><code>## Using automatic sigma estimation (sigest) for RBF or laplace kernel
@@ -297,10 +296,10 @@ r = resample(&quot;classif.ksvm&quot;, iris.task, iris.rin)
 
 <h2 id="example-turn-off-parameter-checking">Example: Turn off parameter checking</h2>
 <p>In an additional scenario, you want to access a new parameter of a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLEarner.html">Learner</a> which
-is already available in <strong>mlr</strong>, but the parameter is not implemented in <strong>mlr</strong> yet.
+is already available in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>, but the parameter is not implemented in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> yet.
 If this is the case you might want to <a href="https://github.com/berndbischl/mlr#get-in-touch">contact us</a>
 or <a href="https://github.com/berndbischl/mlr/issues/new">open an issue</a> as well!
-But until then you can turn off <strong>mlr</strong>'s parameter checking like this:</p>
+But until then you can turn off <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>'s parameter checking like this:</p>
 <pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;classif.ksvm&quot;, newPar = 3)
 </code></pre>
 
@@ -322,7 +321,7 @@ lrn = makeLearner(&quot;classif.ksvm&quot;, epsilon = -3)
 
 <h2 id="example-handle-errors-in-an-underlying-learning-method">Example: Handle errors in an underlying learning method</h2>
 <p>Another common situation is that a particular learning method throws an error.
-The default behavior of <strong>mlr</strong> is to generate an exception as well.
+The default behavior of <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> is to generate an exception as well.
 However, in some situations, for example if you conduct a <a href="&amp;benchmark_experiments.md">benchmark study</a>
 with multiple data sets and learners, you normally do not want to terminate the whole
 benchmark experiment due to one error.
@@ -331,13 +330,10 @@ The following example shows how to prevent this:</p>
 train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: MASS
-</code></pre>
-
 <pre class="prettyprint well"><code>## Error: some group is too small for 'qda'
 </code></pre>
 
-<pre class="prettyprint well"><code>## Timing stopped at: 0.007 0 0.012
+<pre class="prettyprint well"><code>## Timing stopped at: 0.004 0.004 0.007
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">configureMlr(on.learner.error = &quot;warn&quot;)
