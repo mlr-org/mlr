@@ -28,7 +28,7 @@ makeCustomResampledMeasure = function(id, minimize = TRUE, properties = characte
   assertList(extra.args)
 
   force(fun)
-  fun1 = function(task, model, pred, extra.args) NA_real_
+  fun1 = function(task, model, pred, feats, extra.args) NA_real_
   # args are checked here
   custom = makeMeasure(id = "custom", minimize, properties, allowed.pred.types, fun1, extra.args,
    best = best, worst = worst)
