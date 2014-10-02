@@ -8,6 +8,8 @@
 #'   Learning task, might be requested by performance measure, usually not needed except for clustering.
 #' @param model [\code{\link{WrappedModel}}]\cr
 #'   Model built on training data, might be requested by performance measure, usually not needed.
+#' @param feats\cr
+#'   Features of test data, usually not needed except for clustering.
 #' @return [named \code{numeric}]. Performance value(s), named by measure(s).
 #' @export
 #' @family performance
@@ -24,14 +26,14 @@
 #' # Compute multiple performance measures at once
 #' ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 #' performance(pred, measures = ms, task, mod)
-performance = function(pred, measures, task, model) {
+performance = function(pred, measures, task, model, feats = NULL) {
   if (!missing(pred))
     assertClass(pred, classes = "Prediction")
   measures = checkMeasures(measures, pred$task.desc)
-  vnapply(measures, doPerformaceIteration, pred = pred, task = task, model = model, td = NULL)
+  vnapply(measures, doPerformaceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats)
 }
 
-doPerformaceIteration = function(measure, pred, task, model, td){
+doPerformaceIteration = function(measure, pred, task, model, td, feats){
   m = measure
   if (m$req.pred) {
     if (missing(pred))
@@ -50,7 +52,7 @@ doPerformaceIteration = function(measure, pred, task, model, td){
   } else {
     model2 = NULL
   }
-  if (m$req.task) {
+  if (m$req.task && !m$req.feats) {
     if (missing(task))
       stopf("You need to pass task for measure %s!", m$id)
     assertClass(task, classes = "Task")
@@ -58,6 +60,13 @@ doPerformaceIteration = function(measure, pred, task, model, td){
     td = task$desc
   } else {
     task2 = NULL
+  }
+  if (m$req.feats) {
+    if (missing(task) && missing(feats)) {
+      stopf("You need to pass features for measure %s!", m$id)
+    } else if (missing(feats)) {
+      feats = task$env$data[pred$data$id,, drop = FALSE]
+    }
   }
   # null only happens in custom resampled measure when we do no individual measurements
   if (!is.null(td)) {
@@ -69,7 +78,7 @@ doPerformaceIteration = function(measure, pred, task, model, td){
       stopf("Measure %s is only allowed for predictions of type: %s!",
         m$id, collapse(m$allowed.pred.types))
   }
-  res = measure$fun(task2, model2, pred2, m$extra.args)
+  res = measure$fun(task2, model2, pred2, feats, m$extra.args)
   names(res) = measure$id
   res
 }

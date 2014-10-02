@@ -16,11 +16,12 @@
 #'   \item{properties [\code{character}]}{See argument.}
 #'   \item{allowed.pred.types [\code{character}]}{See argument.}
 #'   \item{req.pred [\code{logical(1)}]}{Is prediction object required in calculation?}
-#'   \item{req.task [\code{logical(1)}]}{Is task object required in calculation?.}
+#'   \item{req.task [\code{logical(1)}]}{Is task object required in calculation?}
 #'   \item{req.model [\code{logical(1)}]}{Is model object required in calculation?}
+#'   \item{req.feats [\code{logical(1)}]}{Is feature object required in calculation?}
 #'   \item{fun [\code{function}]}{See argument.}
 #'   \item{extra.args [\code{list}]}{See argument.}
-#'   \item{aggr [\code{\link{Aggregation}}]}{See argument.}.
+#'   \item{aggr [\code{\link{Aggregation}}]}{See argument.}
 #'   \item{best [\code{numeric(1)}]}{See argument.}
 #'   \item{worst [\code{numeric(1)}]}{See argument.}
 #' }
@@ -97,6 +98,7 @@ makeMeasure = function(id, minimize, properties = character(0L), allowed.pred.ty
     req.pred = "pred" %in% v,
     req.model = "model" %in% v,
     req.task = "task" %in% v,
+    req.feats = "feats" %in% v,
     fun = fun,
     extra.args = extra.args,
     best = best,

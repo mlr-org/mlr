@@ -4,7 +4,7 @@ test_that("measures", {
   ct = binaryclass.task
 
   mymeasure = makeMeasure(id = "foo", minimize = TRUE, properties = c("classif", "classif.multi", "regr"), allowed.pred.types = c("response", "prob"),
-    fun = function(task, model, pred, extra.args) {
+    fun = function(task, model, pred, feats, extra.args) {
       tt = pred
       1
     }
