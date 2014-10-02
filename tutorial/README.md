@@ -21,3 +21,7 @@ URL: http://berndbischl.github.io/mlr/tutorial/html/
   and updates the docs on change.
 * Sometimes function names collide. These packages must be loaded _first_
   in "build". That way mlr overwrites these functions again, e.g. caret::train.
+* The build caches the output of running the R commands in the cache/ directory.
+  If your R setup has changed (e.g. new version of mlr), you should delete
+  everything in the cache directory to make sure that the tutorial is
+  regenerated with the new code.
