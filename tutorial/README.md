@@ -13,6 +13,7 @@ URL: http://berndbischl.github.io/mlr/tutorial/html/
 * Put additional images in `../images`.
 * Link to mlr manual: `[&function]` and `[name](&function)`.
 * Link to other manuals: `[&pkg::function]` and `[name](&pkg::function)`.
+* Link to packages: `[%pkg]` and `[name](%pkg)`.
 * Run `./build` to generate new static HTML.
 * Commit and push all changes in `html/` and `src/` to update the tutorial.
 
