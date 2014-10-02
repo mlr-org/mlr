@@ -26,17 +26,17 @@
 #' # Compute multiple performance measures at once
 #' ms = list("mmce" = mmce, "acc" = acc, "timetrain" = timetrain)
 #' performance(pred, measures = ms, task, mod)
-performance = function(pred, measures, task, model, feats = NULL) {
-  if (!missing(pred))
+performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) {
+  if (!is.null(pred))
     assertClass(pred, classes = "Prediction")
   measures = checkMeasures(measures, pred$task.desc)
   vnapply(measures, doPerformaceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats)
 }
 
-doPerformaceIteration = function(measure, pred, task, model, td, feats){
+doPerformaceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL) {
   m = measure
   if (m$req.pred) {
-    if (missing(pred))
+    if (is.null(pred))
       stopf("You need to pass pred for measure %s!", m$id)
     pred2 = pred
     td = pred$task.desc
@@ -44,7 +44,7 @@ doPerformaceIteration = function(measure, pred, task, model, td, feats){
     pred2 = NULL
   }
   if (m$req.model) {
-    if (missing(model))
+    if (is.null(model))
       stopf("You need to pass model for measure %s!", m$id)
     assertClass(model, classes = "WrappedModel")
     model2 = model
@@ -53,7 +53,7 @@ doPerformaceIteration = function(measure, pred, task, model, td, feats){
     model2 = NULL
   }
   if (m$req.task && !m$req.feats) {
-    if (missing(task))
+    if (is.null(task))
       stopf("You need to pass task for measure %s!", m$id)
     assertClass(task, classes = "Task")
     task2 = task
@@ -62,9 +62,9 @@ doPerformaceIteration = function(measure, pred, task, model, td, feats){
     task2 = NULL
   }
   if (m$req.feats) {
-    if (missing(task) && missing(feats)) {
+    if (is.null(task) && is.null(feats)) {
       stopf("You need to pass features for measure %s!", m$id)
-    } else if (missing(feats)) {
+    } else if (is.null(feats)) {
       feats = task$env$data[pred$data$id,, drop = FALSE]
     }
   }
