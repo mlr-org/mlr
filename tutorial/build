@@ -42,14 +42,13 @@ knitIt = function(f) {
     lines = str_replace_all(lines, macro$pattern, macro$replacement)
 
   cache.path = paste0(file.path("cache", f), .Platform$file.sep)
-  opts_chunk$set(cache = TRUE, cache.path = cache.path, dev = "svg")
+  opts_chunk$set(cache = TRUE, cache.path = cache.path, dev = "svg", error = FALSE)
   setSeed(f)
-  ok = try(knit(
-      text = lines,
-      output = file.path(dest, str_replace(f, "\\.Rmd$", "\\.md")),
-      quiet = TRUE))
-  if (inherits(ok, "try-error"))
-    exit(1L, "Error knitting file '%s':\n%s", f, as.character(ok))
+  knit(
+    text = lines,
+    output = file.path(dest, str_replace(f, "\\.Rmd$", "\\.md")),
+    quiet = TRUE
+  )
 }
 
 
@@ -80,8 +79,8 @@ opts_knit$set(upload.fun = image_uri)
 if (!isDirectory("docs"))
   dir.create("docs")
 
-# apply worker in parallel
-ok = mclapply(list.files(src, pattern = "\\.Rmd$"), knitIt, mc.preschedule = FALSE)
+# do lapply for now. with mclapply it seems unclear how to stop best on error. this was 100% broken before
+lapply(list.files(src, pattern = "\\.Rmd$"), knitIt)
 
 # build docs with mkdocs
 ok = system3("mkdocs", "build")
