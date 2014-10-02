@@ -1,7 +1,7 @@
 # mlr Tutorial
 
 This web page will provide you with an in-depth introduction on how to
-use the **mlr** framework for machine learning experiments and
+use the [%mlr] framework for machine learning experiments and
 optimization in **R**.
 
 Our focus is on your comprehension of the basic functions and applications.
@@ -29,7 +29,7 @@ Enjoy reading!
 
 ## Quick start
 
-A simple stratified cross-validation of the *linear discriminant analysis* with **mlr**.
+A simple stratified cross-validation of the *linear discriminant analysis* with [%mlr].
 ```{r}
 library(mlr)
 data(iris)

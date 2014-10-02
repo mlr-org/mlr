@@ -17,7 +17,7 @@ cross-validation and bootstrap, to mention just two popular approaches.
 
 ![Resampling Figure](../../../images/resampling.png "Resampling Figure")
 
-In **mlr** the resampling strategy can be chosen via the function [&makeResampleDesc].
+In [%mlr] the resampling strategy can be chosen via the function [&makeResampleDesc].
 The supported resampling strategies are:
 
 * Cross-validation (``"CV"``),
@@ -236,7 +236,7 @@ As mentioned above, mainly the mean over the performance values on the test data
 For example, a 10-fold cross validation computes 10 values for the chosen
 performance measure.
 The aggregated value is the mean of these 10 numbers.
-**mlr** knows how to handle it because each [Measure](&makeMeasure) knows how it is aggregated:
+[%mlr] knows how to handle it because each [Measure](&makeMeasure) knows how it is aggregated:
 
 ```{r}
 ## Mean misclassification error
@@ -310,7 +310,7 @@ r$aggr
 
 When quickly trying out some learners, it can get tedious to write the **R**
 code for generating a resample instance, setting the aggregation strategy and so
-on. For this reason **mlr** provides some convenience functions for the
+on. For this reason [%mlr] provides some convenience functions for the
 frequently used resampling strategies, for example [holdout]($resample),
 [crossval](&resample) or [bootstrapB632](&resample). But note that you do not
 have as much control and flexibility than when using [&resample] with a resample
@@ -325,7 +325,7 @@ bootstrapB632("surv.coxph", lung.task, iters = 20)
 
 ## Pre-defined resample instances
 
-For each of the pre-defined [&Task]s **mlr** provides pre-defined 
+For each of the pre-defined [&Task]s [%mlr] provides pre-defined 
 [ResampleInstance](&makeResampleInstance)s for 3-fold cross-validation. 
 These instances are occasionally used in the remainder of this tutorial.
 

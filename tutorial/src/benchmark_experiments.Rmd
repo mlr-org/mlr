@@ -4,7 +4,7 @@ In a benchmark experiment different learning methods are applied to one or sever
 The aim is usually to compare and rank the algorithms with respect to one or more
 performance measures.
 
-In **mlr** a benchmark experiment can be conducted by calling the function [&benchmark] on a
+In [%mlr] a benchmark experiment can be conducted by calling the function [&benchmark] on a
 list of [Learner](&makeLearner)s and [&Task]s.
 Moreover, you can specify which performance measures to calculate and choose a resampling
 strategy for each [&Task].
@@ -32,7 +32,7 @@ In the printed table the individual tasks and learners are referred to by their 
 The entries show the 5-fold cross-validated mean misclassification error ([&mmce]), which
 is the default performance measure for classification.
 
-The result is an object of class [&BenchmarkResult] and **mlr** provides several accessor 
+The result is an object of class [&BenchmarkResult] and [%mlr] provides several accessor 
 functions.
 Let's have a look at the benchmark result from the example above:
 

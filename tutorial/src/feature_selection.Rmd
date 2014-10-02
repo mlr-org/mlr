@@ -5,7 +5,7 @@ The technique of extracting a subset of relevant features is called feature sele
 Feature selection can enhance the interpretability of the model, speed up the learning
 process and improve the learner performance.
 There exist different approaches to identify the relevant features.
-**mlr** supports *filter* and *wrapper methods*.
+[%mlr] supports *filter* and *wrapper methods*.
 
 
 ## Filter methods
@@ -16,7 +16,7 @@ Based on these values the features can be ranked and a feature subset can be sel
 
 ### Calculating the feature importance
 
-Different methods for calculating the feature importance are built into **mlr**'s function
+Different methods for calculating the feature importance are built into [%mlr]'s function
 [&getFilterValues].
 
 The following table shows the available methods.
@@ -68,7 +68,7 @@ contain the most information about the target variable `Species`.
 
 ### Selecting a feature subset
 
-With **mlr**'s function [&filterFeatures] you can create a new [&Task] by leaving out 
+With [%mlr]'s function [&filterFeatures] you can create a new [&Task] by leaving out 
 features of lower importance.
 
 There are several ways to select a feature subset based on feature importance values:

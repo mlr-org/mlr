@@ -1,7 +1,7 @@
 # Integrating another Measure
 
 In some cases, you may want to evaluate a prediction with a measure which is not yet implemented
-in **mlr**. This could be either a performance measure which is not included in the in **mlr**
+in [%mlr]. This could be either a performance measure which is not included in the in **mlr**
 list of [&measures] or a measure that uses a non-standard misclassification cost matrix.
 
 
@@ -73,7 +73,7 @@ performance(pred, measures = my.costs)
 ## Create an aggregation function
 
 It is possible to create your own aggregation function by calling the
-internal **mlr** function [&makeAggregation].
+internal [%mlr] function [&makeAggregation].
 You can use internal (not exported) functions of **R** packages by prefixing the
 name of the function with the name of the package, i.e., `packagename:::function()`.
 In this case:
