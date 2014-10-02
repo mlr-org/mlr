@@ -36,7 +36,7 @@ getMlrOptions()
 ## Example: Turn off parameter checking
 
 In an additional scenario, you want to access a new parameter of a [Learner](&makeLEarner) which
-is already available in [%mlr], but the parameter is not implemented in **mlr** yet.
+is already available in [%mlr], but the parameter is not implemented in [%mlr] yet.
 If this is the case you might want to [contact us](https://github.com/berndbischl/mlr#get-in-touch)
 or [open an issue](https://github.com/berndbischl/mlr/issues/new) as well!
 But until then you can turn off [%mlr]'s parameter checking like this:

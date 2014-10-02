@@ -1,7 +1,7 @@
 # Integrating another Measure
 
 In some cases, you may want to evaluate a prediction with a measure which is not yet implemented
-in [%mlr]. This could be either a performance measure which is not included in the in **mlr**
+in [%mlr]. This could be either a performance measure which is not included in the in [%mlr]
 list of [&measures] or a measure that uses a non-standard misclassification cost matrix.
 
 
