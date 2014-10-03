@@ -558,8 +558,6 @@ db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
   allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
-    ff <<- feats
-    pp <<- pred
     index.DB(feats, pred$data$response)$DB
   }
 )
