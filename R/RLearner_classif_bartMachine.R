@@ -1,3 +1,7 @@
+#FIXME: I have no idea which routine internally prints to which fucking stream
+# but neither verbose=FALSE can sicth off the iteration  output in all case, nor
+# can I suppress it with capture.output or suppressMessages
+
 #' @export
 makeRLearner.classif.bartMachine = function() {
   makeRLearnerClassif(
