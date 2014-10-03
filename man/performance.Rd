@@ -3,7 +3,7 @@
 \alias{performance}
 \title{Measure performance of prediction.}
 \usage{
-performance(pred, measures, task, model)
+performance(pred, measures, task = NULL, model = NULL, feats = NULL)
 }
 \arguments{
 \item{pred}{[\code{\link{Prediction}}]\cr
@@ -17,6 +17,8 @@ Learning task, might be requested by performance measure, usually not needed exc
 
 \item{model}{[\code{\link{WrappedModel}}]\cr
 Model built on training data, might be requested by performance measure, usually not needed.}
+
+\item{feats\cr}{Features of test data, usually not needed except for clustering.}
 }
 \value{
 [named \code{numeric}]. Performance value(s), named by measure(s).

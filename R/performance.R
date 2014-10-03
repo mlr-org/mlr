@@ -8,8 +8,10 @@
 #'   Learning task, might be requested by performance measure, usually not needed except for clustering.
 #' @param model [\code{\link{WrappedModel}}]\cr
 #'   Model built on training data, might be requested by performance measure, usually not needed.
-#' @param feats\cr
-#'   Features of test data, usually not needed except for clustering.
+#' @param feats [\code{data.frame}]\cr
+#'   Features of predicted data, usually not needed except for clustering.
+#'   If the prediction was generated from a \code{task}, you can also pass this instead and the features
+#'   are extracted from it.
 #' @return [named \code{numeric}]. Performance value(s), named by measure(s).
 #' @export
 #' @family performance
@@ -62,11 +64,12 @@ doPerformaceIteration = function(measure, pred = NULL, task = NULL, model = NULL
     task2 = NULL
   }
   if (m$req.feats) {
-    if (is.null(task) && is.null(feats)) {
+    if (is.null(task) && is.null(feats))
       stopf("You need to pass features for measure %s!", m$id)
-    } else if (is.null(feats)) {
+    else if (is.null(feats))
       feats = task$env$data[pred$data$id,, drop = FALSE]
-    }
+    else
+      assertClass(feats, "data.frame")
   }
   # null only happens in custom resampled measure when we do no individual measurements
   if (!is.null(td)) {
