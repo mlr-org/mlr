@@ -241,7 +241,7 @@ in a <a href="http://www.rdocumentation.org/packages/mlr/functions/Measure.html"
 See the <strong>R</strong> documentation of the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeMeasure.html">makeMeasure</a> function for details on the
 various parameters.</p>
 <pre class="prettyprint well"><code class="r">## Define the measure
-my.mmce = function(task, model, pred, extra.args) {
+my.mmce = function(task, model, pred, feats, extra.args) {
     tb = table(pred$data$response, pred$data$truth)
     1 - sum(diag(tb)) / sum(tb)
 }

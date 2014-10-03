@@ -18,7 +18,7 @@ various parameters.
 
 ```r
 ## Define the measure
-my.mmce = function(task, model, pred, extra.args) {
+my.mmce = function(task, model, pred, feats, extra.args) {
     tb = table(pred$data$response, pred$data$truth)
     1 - sum(diag(tb)) / sum(tb)
 }
