@@ -45,6 +45,9 @@ test_that("learners work", {
     features = getTaskFeatureNames(binaryclass.task)[12:15])
   lrns = mylist(task, create = TRUE)
   for (lrn in lrns) {
+    # this boosting is slow
+    if (lrn$id == "classif.boosting")
+      lrn = setHyperPars(lrn, mfinal = 2L)
     expect_output(print(lrn), lrn$id)
     m = train(lrn, task)
     p = predict(m, task)
