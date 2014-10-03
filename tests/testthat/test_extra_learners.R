@@ -48,6 +48,8 @@ test_that("learners work", {
     # this boosting is slow
     if (lrn$id == "classif.boosting")
       lrn = setHyperPars(lrn, mfinal = 2L)
+    if (lrn$id == "classif.cforest") # we only have 4 features, we dont want a warn
+      lrn = setHyperPars(lrn, mtry = 1L)
     expect_output(print(lrn), lrn$id)
     m = train(lrn, task)
     p = predict(m, task)
@@ -60,9 +62,15 @@ test_that("learners work", {
   lrns = mylist(task, properties = "prob")
   lrns = lapply(lrns, makeLearner, predict.type = "prob")
   lapply(lrns, function(lrn) {
+    # this boosting is slow
+    if (lrn$id == "classif.boosting")
+      lrn = setHyperPars(lrn, mfinal = 2L)
+    if (lrn$id == "classif.cforest") # we only have 4 features, we dont want a warn
+      lrn = setHyperPars(lrn, mtry = 1L)
     m = train(lrn, task)
     p = predict(m, task)
     getProbabilities(p)
+    expect_true(!is.na(performance(p)))
   })
 
   # binary classif with weights
@@ -71,8 +79,14 @@ test_that("learners work", {
   lrns = mylist(task, properties = "weights")
   lrns = lapply(lrns, makeLearner)
   lapply(lrns, function(lrn) {
+    # this boosting is slow
+    if (lrn$id == "classif.boosting")
+      lrn = setHyperPars(lrn, mfinal = 2L)
+    if (lrn$id == "classif.cforest") # we only have 4 features, we dont want a warn
+      lrn = setHyperPars(lrn, mtry = 1L)
     m = train(lrn, task, weights = 1:task$task.desc$size)
     p = predict(m, task)
+    expect_true(!is.na(performance(p)))
   })
 
   # classif with missing
@@ -99,8 +113,11 @@ test_that("learners work", {
     expect_output(print(lrn), lrn$id)
     if (lrn$id == "regr.km")
       lrn = setHyperPars(lrn, nugget.estim = TRUE)
+    if (lrn$id == "regr.cforest") # we only have 2 features, we dont want a warn
+      lrn = setHyperPars(lrn, mtry = 1L)
     m = train(lrn, task)
     p = predict(m, task)
+    expect_true(!is.na(performance(p)))
   })
 
   # regr with se
@@ -111,9 +128,12 @@ test_that("learners work", {
   lapply(lrns, function(lrn) {
     if (lrn$id == "regr.km")
       lrn = setHyperPars(lrn, nugget.estim = TRUE)
+    if (lrn$id == "regr.cforest") # we only have 2 features, we dont want a warn
+      lrn = setHyperPars(lrn, mtry = 1L)
     m = train(lrn, task)
     p = predict(m, task)
     expect_equal(length(p$data$se), 70)
+    expect_true(!is.na(performance(p)))
   })
 
   # regr with weights
@@ -123,8 +143,11 @@ test_that("learners work", {
   lapply(lrns, function(lrn) {
     if (lrn$id == "regr.km")
       lrn = setHyperPars(lrn, nugget.estim = TRUE)
-    m = train(lrn, task, weights = 1:task$task.desc$size)
+    if (lrn$id == "regr.cforest") # we only have 2 features, we dont want a warn
+      lrn = setHyperPars(lrn, mtry = 1L)
+    m = train(lrn, task, weights = rep(1:2, 35))
     p = predict(m, task)
+    expect_true(!is.na(performance(p)))
   })
 
   # regr with missing
@@ -160,5 +183,6 @@ test_that("learners work", {
     m = train(lrn, task)
     p = predict(m, task)
     getProbabilities(p)
+    expect_true(!is.na(performance(p, task = task)))
   })
 })
