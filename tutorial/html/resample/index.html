@@ -243,7 +243,7 @@ Then the individual performance values are aggregated, typically by calculating 
 There exist various different resampling strategies, for example
 cross-validation and bootstrap, to mention just two popular approaches.</p>
 <p><img alt="Resampling Figure" src="../../../images/resampling.png" title="Resampling Figure" /></p>
-<p>In <strong>mlr</strong> the resampling strategy can be chosen via the function <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleDesc.html">makeResampleDesc</a>.
+<p>In <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> the resampling strategy can be chosen via the function <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleDesc.html">makeResampleDesc</a>.
 The supported resampling strategies are:</p>
 <ul>
 <li>Cross-validation (<code>"CV"</code>),</li>
@@ -271,41 +271,7 @@ rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 r = resample(&quot;surv.coxph&quot;, lung.task, rdesc)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: survival
-## Loading required package: splines
-## 
-## Attaching package: 'survival'
-## 
-## The following object is masked from 'package:caret':
-## 
-##     cluster
-## 
-## [Resample] cross-validation iter: 1
-## Loading required package: Hmisc
-## Loading required package: grid
-## 
-## Attaching package: 'grid'
-## 
-## The following object is masked from 'package:BBmisc':
-## 
-##     explode
-## 
-## Loading required package: Formula
-## 
-## Attaching package: 'Hmisc'
-## 
-## The following object is masked from 'package:mlr':
-## 
-##     impute
-## 
-## The following object is masked from 'package:BBmisc':
-## 
-##     %nin%
-## 
-## The following objects are masked from 'package:base':
-## 
-##     format.pval, round.POSIXt, trunc.POSIXt, units
-## 
+<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
 ## [Resample] cross-validation iter: 2
 ## [Resample] cross-validation iter: 3
 ## [Resample] Result: cindex.test.mean=0.627
@@ -416,48 +382,43 @@ rdesc = makeResampleDesc(&quot;Subsample&quot;, iters = 5, split = 4/5)
 r = resample(&quot;cluster.XMeans&quot;, mtcars.task, rdesc, measures = list(dunn, db, timetrain))
 </code></pre>
 
-<pre class="prettyprint well"><code>## Loading required package: RWeka
-## [Resample] subsampling iter: 1
-## Loading required package: clValid
-## Loading required package: cluster
-## Loading required package: clusterSim
-## Loading required package: MASS
+<pre class="prettyprint well"><code>## [Resample] subsampling iter: 1
 ## [Resample] subsampling iter: 2
 ## [Resample] subsampling iter: 3
 </code></pre>
 
-<pre class="prettyprint well"><code>## Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
-## Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
-## Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
-## Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
+<pre class="prettyprint well"><code>## Warning: no non-missing arguments to min; returning Inf
+## Warning: no non-missing arguments to max; returning -Inf
+## Warning: no non-missing arguments to min; returning Inf
+## Warning: no non-missing arguments to max; returning -Inf
 </code></pre>
 
 <pre class="prettyprint well"><code>## [Resample] subsampling iter: 4
 </code></pre>
 
-<pre class="prettyprint well"><code>## Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
-## Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
-## Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
-## Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
+<pre class="prettyprint well"><code>## Warning: no non-missing arguments to max; returning -Inf
+## Warning: no non-missing arguments to min; returning Inf
+## Warning: no non-missing arguments to min; returning Inf
+## Warning: no non-missing arguments to max; returning -Inf
 </code></pre>
 
 <pre class="prettyprint well"><code>## [Resample] subsampling iter: 5
 </code></pre>
 
-<pre class="prettyprint well"><code>## Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
-## Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
-## Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
-## Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
+<pre class="prettyprint well"><code>## Warning: no non-missing arguments to min; returning Inf
+## Warning: no non-missing arguments to max; returning -Inf
+## Warning: no non-missing arguments to min; returning Inf
+## Warning: no non-missing arguments to max; returning -Inf
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.124
+<pre class="prettyprint well"><code>## [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.0484
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code>##      dunn.test.mean        db.test.mean timetrain.test.mean 
-##              0.9576              0.4254              0.1238
+##              0.9576              0.4254              0.0484
 </code></pre>
 
 <h2 id="stratified-resampling">Stratified resampling</h2>
@@ -691,7 +652,7 @@ As mentioned above, mainly the mean over the performance values on the test data
 <p>For example, a 10-fold cross validation computes 10 values for the chosen
 performance measure.
 The aggregated value is the mean of these 10 numbers.
-<strong>mlr</strong> knows how to handle it because each <a href="http://www.rdocumentation.org/packages/mlr/functions/makeMeasure.html">Measure</a> knows how it is aggregated:</p>
+<a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> knows how to handle it because each <a href="http://www.rdocumentation.org/packages/mlr/functions/makeMeasure.html">Measure</a> knows how it is aggregated:</p>
 <pre class="prettyprint well"><code class="r">## Mean misclassification error
 mmce$aggr
 </code></pre>
@@ -810,9 +771,9 @@ head(r$measures.train)
 <h2 id="convenience-functions">Convenience functions</h2>
 <p>When quickly trying out some learners, it can get tedious to write the <strong>R</strong>
 code for generating a resample instance, setting the aggregation strategy and so
-on. For this reason <strong>mlr</strong> provides some convenience functions for the
+on. For this reason <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides some convenience functions for the
 frequently used resampling strategies, for example <a href="$resample">holdout</a>,
-<a href="&amp;resample">crossval</a> or <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">bootstrapB632</a>. But note that you do not
+<a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">crossval</a> or <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">bootstrapB632</a>. But note that you do not
 have as much control and flexibility than when using <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a> with a resample
 description or instance.</p>
 <pre class="prettyprint well"><code class="r">holdout(&quot;regr.lm&quot;, bh.task, measures = list(mse, mae))
@@ -821,7 +782,7 @@ bootstrapB632(&quot;surv.coxph&quot;, lung.task, iters = 20)
 </code></pre>
 
 <h2 id="pre-defined-resample-instances">Pre-defined resample instances</h2>
-<p>For each of the pre-defined <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>s <strong>mlr</strong> provides pre-defined 
+<p>For each of the pre-defined <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>s <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides pre-defined 
 <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleInstance.html">ResampleInstance</a>s for 3-fold cross-validation. 
 These instances are occasionally used in the remainder of this tutorial.</p>
 <table>

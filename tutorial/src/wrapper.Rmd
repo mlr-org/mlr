@@ -23,7 +23,7 @@ For example compare different preprocessing methods and their impact on the perf
 several learners
 
 
-**mlr** provides 
+[%mlr] provides 
 naming convention ``make<method_to_fuse>Wrapper`` 
 result is again a [&Learner]
 proceed normally, that is call train, resample, benchmark

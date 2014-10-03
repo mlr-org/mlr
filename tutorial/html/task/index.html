@@ -236,14 +236,14 @@ task, e.g., the target variable.</p>
 <p>The tasks are organised in a hierarchy, with the generic
 <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> at the top.
 The concrete tasks that can be instantiated are <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">ClassifTask</a> for classification,
-<a href="&amp;Task">RegrTask</a> for regression, <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">SurvTask</a> for survival
+<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">RegrTask</a> for regression, <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">SurvTask</a> for survival
 analysis, <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">CostSensTask</a> for
 cost-sensitive classification, and <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">ClusterTask</a> for clustering.</p>
 <h2 id="creating-a-learning-task">Creating a learning task</h2>
 <p>There are dedicated functions to create these tasks:
 <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeClassifTask</a>,
 <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeRegrTask</a>,
-<a href="&amp;Task">makeSurvTask</a>, <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeCostSensTask</a>, and
+<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeSurvTask</a>, <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeCostSensTask</a>, and
 <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeClusterTask</a>.
 These require the data set and, depending on the 
 nature of the learning problem, further information.</p>
@@ -405,7 +405,7 @@ costsens.task
 <p>Beygelzimer, A., Dani, V., Hayes, T., Langford, J., and Zadrozny, B.
 Error limiting reductions between classification tasks.
 In Machine Learning: Proceedings of the 22rd International Conference, pp. 49–56. ACM, 2005.</p>
-<p>For more details see the section about <a href="FIXME">cost-sensitive classification FIXME</a>.</p>
+<p>For more details see the section about <a href="../cost_sensitive_classif/">cost-sensitive classification</a>.</p>
 <h3 id="further-details">Further details</h3>
 <p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> help page also lists several other arguments to describe further details of the
 problem.</p>
@@ -491,10 +491,10 @@ str(getTaskData(classif.task))
 
 <p>Note the many options <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskData.html">getTaskData</a> provides to convert the data set into a convenient format.
 This is especially handy when you <a href="../create_learner/">integrate a learner</a> from another <strong>R</strong>
-package into <strong>mlr</strong>.
+package into <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.
 In this regard the functions <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskFormula.html">getTaskFormula</a> and <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskFormulaAsString.html">getTaskFormulaAsString</a> are also useful.</p>
 <h2 id="modifying-a-learning-task">Modifying a learning task</h2>
-<p><strong>mlr</strong> provides several functions to alter an existing <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> which is often more
+<p><a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides several functions to alter an existing <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> which is often more
 convenient than creating a new <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> from scratch.
 Here are some examples.</p>
 <pre class="prettyprint well"><code class="r">## Select observations and features:
@@ -556,7 +556,7 @@ normalizeFeatures(classif.task, method = &quot;standardize&quot;)
 </code></pre>
 
 <h2 id="pre-defined-tasks">Pre-defined tasks</h2>
-<p>For your convenience <strong>mlr</strong> provides pre-defined <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>s for each type of learning problem.
+<p>For your convenience <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides pre-defined <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>s for each type of learning problem.
 These are used throughout this tutorial in order to get shorter and more readable code.</p>
 <table>
 <thead>

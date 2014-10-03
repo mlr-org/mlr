@@ -11,14 +11,14 @@ classifications costs (that would allow to calculate an optimal threshold value)
 
 The AUC (area under curve) summarizes the performance of the learner over all possible threshold
 values.
-**mlr** provides the [&auc] performance measure for binary classification and also a
+[%mlr] provides the [&auc] performance measure for binary classification and also a
 generalization of the AUC for the multi-class case ([multiclass.auc](&pROC::muticlass.auc))
 from package [pROC](http://cran.r-project.org/web/packages/pROC/index.html).
 
 
 ## Plotting the ROC curve
 
-The **mlr** function [&asROCRPrediction] converts predictions (resulting from
+The [%mlr] function [&asROCRPrediction] converts predictions (resulting from
 calling [predict](predict.WrapperModel), [&resample], or [&benchmark]) to a format that
 [ROCR](http://cran.r-project.org/web/packages/ROCR/index.html) can handle.
 Then functions in [ROCR](http://cran.r-project.org/web/packages/ROCR/index.html) are used

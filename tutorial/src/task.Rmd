@@ -149,7 +149,7 @@ Beygelzimer, A., Dani, V., Hayes, T., Langford, J., and Zadrozny, B.
 Error limiting reductions between classification tasks.
 In Machine Learning: Proceedings of the 22rd International Conference, pp. 49–56. ACM, 2005.
 
-For more details see the section about [cost-sensitive classification FIXME](FIXME).
+For more details see the section about [cost-sensitive classification](cost_sensitive_classif.md).
 
 
 ### Further details
@@ -198,13 +198,13 @@ str(getTaskData(classif.task))
 
 Note the many options [&getTaskData] provides to convert the data set into a convenient format.
 This is especially handy when you [integrate a learner](create_learner.md) from another **R**
-package into **mlr**.
+package into [%mlr].
 In this regard the functions [&getTaskFormula] and [&getTaskFormulaAsString] are also useful.
 
 
 ## Modifying a learning task
 
-**mlr** provides several functions to alter an existing [&Task] which is often more
+[%mlr] provides several functions to alter an existing [&Task] which is often more
 convenient than creating a new [&Task] from scratch.
 Here are some examples.
 
@@ -226,7 +226,7 @@ normalizeFeatures(classif.task, method = "standardize")
 
 ## Pre-defined tasks
 
-For your convenience **mlr** provides pre-defined [&Task]s for each type of learning problem.
+For your convenience [%mlr] provides pre-defined [&Task]s for each type of learning problem.
 These are used throughout this tutorial in order to get shorter and more readable code.
 
 ```{r echo=FALSE, results="asis"}

@@ -1,19 +1,19 @@
 # Integrating another learner
 
-In order to create a new learner in **mlr**, interface code to the **R** function must be written.
+In order to create a new learner in [%mlr], interface code to the **R** function must be written.
 This can be done by either inheriting from ``rlearner.classif``, ``rlearner.regr``, ``rlearner.surv``, 
 ``rlearner.costsens``, or ``rlearner.cluster``.
 
 Below, an example of how the [Linear Discriminant Analysis](&MASS::lda) from package 
 [MASS](http://www.rdocumentation.org/packages/MASS)
-has been integrated into the classification learner ``classif.lda`` in **mlr** is shown.
+has been integrated into the classification learner ``classif.lda`` in [%mlr] is shown.
 
 ## Initialization
 
 For initialization, all the information you need is the name of the learner, its package, 
 the parameter set, and the set of properties of your learner.
 
-First, name your learner. The naming conventions in **mlr** are ``classif.<R_method_name>`` 
+First, name your learner. The naming conventions in [%mlr] are ``classif.<R_method_name>`` 
 for classification, ``regr.<R_method_name>`` for regression, ``surv.<R_method_name>`` for 
 survival analysis, ``costsens.<R_method_name>`` for cost sensitive learning, 
 and ``cluster.<R_method_name>`` for clustering.

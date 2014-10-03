@@ -225,7 +225,7 @@
 
 <h1 id="mlr-tutorial">mlr Tutorial</h1>
 <p>This web page will provide you with an in-depth introduction on how to
-use the <strong>mlr</strong> framework for machine learning experiments and
+use the <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> framework for machine learning experiments and
 optimization in <strong>R</strong>.</p>
 <p>Our focus is on your comprehension of the basic functions and applications.
 For detailed technical information and manual pages, please refer to the package's
@@ -246,19 +246,14 @@ during this tutorial to illustrate the main features of the
 package.</p>
 <p>Enjoy reading!</p>
 <h2 id="quick-start">Quick start</h2>
-<p>A simple stratified cross-validation of the <em>linear discriminant analysis</em> with <strong>mlr</strong>.</p>
+<p>A simple stratified cross-validation of the <em>linear discriminant analysis</em> with <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.</p>
 <pre class="prettyprint well"><code class="r">library(mlr)
 data(iris)
 ## Define the task:
 task = makeClassifTask(id = &quot;tutorial&quot;, data = iris, target = &quot;Species&quot;)
 ## Define the learner:
 lrn = makeLearner(&quot;classif.lda&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: MASS
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">## Define the resampling strategy:
+## Define the resampling strategy:
 rdesc = makeResampleDesc(method = &quot;CV&quot;, stratify = TRUE)
 ## Do the resampling:
 res = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE)

@@ -3,9 +3,9 @@
 One reason why random forests perform so well is that they are using bagging as
 a technique to gain more stability. But why do you want to limit yourself to the
 classifiers already implemented in well known random forests when it is
-really easy to build your own with **mlr**?
+really easy to build your own with [%mlr]?
 
-Just bag an **mlr** learner already [&makeBaggingWrapper].
+Just bag an [%mlr] learner already [&makeBaggingWrapper].
 
 As in a random forest, we need a [Learner](&makeLearner) which is trained on a subset of the
 data during each iteration of the bagging process.

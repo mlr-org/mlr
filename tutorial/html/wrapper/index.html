@@ -240,19 +240,14 @@ bagging the base learner is called several times on bootstrap samples of the dat
 several layers
 For example compare different preprocessing methods and their impact on the performance of
 several learners</p>
-<p><strong>mlr</strong> provides 
+<p><a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides 
 naming convention <code>make&lt;method_to_fuse&gt;Wrapper</code> 
 result is again a <a href="http://www.rdocumentation.org/packages/mlr/functions/Learner.html">Learner</a>
 proceed normally, that is call train, resample, benchmark</p>
 <p>In the following example we build a bagging wrapper.</p>
 <pre class="prettyprint well"><code class="r">## 
 lrn = makeLearner(&quot;classif.rpart&quot;, cp = 0.05)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: rpart
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">lrn = makeBaggingWrapper(lrn, bw.iters = 50, bw.replace = TRUE, bw.size = 0.8, bw.feats = 3/4)
+lrn = makeBaggingWrapper(lrn, bw.iters = 50, bw.replace = TRUE, bw.size = 0.8, bw.feats = 3/4)
 lrn
 </code></pre>
 

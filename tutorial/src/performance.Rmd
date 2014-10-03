@@ -1,6 +1,6 @@
 # Evaluating Learner Performance
 
-The quality of the predictions of a model in **mlr** can be assessed with respect to a
+The quality of the predictions of a model in [%mlr] can be assessed with respect to a
 number of different performance measures.
 In order to calculate the performance measures, call [&performance] on the object
 returned by [predict](&predict.WrappedModel) and specify the desired performance measure(s).
@@ -8,7 +8,7 @@ returned by [predict](&predict.WrappedModel) and specify the desired performance
 
 ## Available performance measures
 
-**mlr** provides a large number of performance measures for all types of learning problems.
+[%mlr] provides a large number of performance measures for all types of learning problems.
 Typical performance measures for *classification* are the mean misclassification error ([&mmce]),
 accuracy ([&acc]) or measures based on [ROC analysis](roc_analysis.md).
 For *regression* the mean of squared errors ([&mse]) or mean of absolute errors ([&mae])
@@ -106,7 +106,7 @@ e.g., the false positive rate ([&fpr]), are only suitable for binary problems.
 
 ## Access a performance measure
 
-Performance measures in **mlr** are objects of class [Measure](&makeMeasure).
+Performance measures in [%mlr] are objects of class [Measure](&makeMeasure).
 If you are interested in the properties/requirements of a single measure you can access it directly.
 See the help page of [Measure](&makeMeasure) for information on the individual slots.
 

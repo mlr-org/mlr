@@ -1,6 +1,6 @@
 # Integrated Learners
 
-Here, the learning methods already integrated into **mlr** are listed.
+Here, the learning methods already integrated into [%mlr] are listed.
 
 Columns **Num.**, **Fac.**, **NAs**, and **Weights** indicate if a method can cope with
 numerical and factor predictors, if ``NA``s in the data are allowed and if observation

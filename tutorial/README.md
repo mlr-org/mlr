@@ -13,6 +13,7 @@ URL: http://berndbischl.github.io/mlr/tutorial/html/
 * Put additional images in `../images`.
 * Link to mlr manual: `[&function]` and `[name](&function)`.
 * Link to other manuals: `[&pkg::function]` and `[name](&pkg::function)`.
+* Link to packages: `[%pkg]` and `[name](%pkg)`.
 * Run `./build` to generate new static HTML.
 * Commit and push all changes in `html/` and `src/` to update the tutorial.
 
@@ -21,3 +22,7 @@ URL: http://berndbischl.github.io/mlr/tutorial/html/
   and updates the docs on change.
 * Sometimes function names collide. These packages must be loaded _first_
   in "build". That way mlr overwrites these functions again, e.g. caret::train.
+* The build caches the output of running the R commands in the cache/ directory.
+  If your R setup has changed (e.g. new version of mlr), you should delete
+  everything in the cache directory to make sure that the tutorial is
+  regenerated with the new code.

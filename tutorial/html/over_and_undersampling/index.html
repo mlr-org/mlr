@@ -236,12 +236,7 @@ task = makeClassifTask(data = data.even, target = &quot;class&quot;)
 task.over = oversample(task, rate = 4)
 task.under = undersample(task, rate = 1/4)
 lrn = makeLearner(&quot;classif.PART&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>## Loading required package: RWeka
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">mod = train(lrn, task)
+mod = train(lrn, task)
 mod.over = train(lrn, task.over)
 mod.under = train(lrn, task.under)
 performance(predict(mod, newdata = data.even), measures = mmce)

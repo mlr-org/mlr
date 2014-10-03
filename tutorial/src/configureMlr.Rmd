@@ -1,7 +1,7 @@
 # Configure mlr
 
-If you really know what you are doing you may think **mlr** is limiting you in certain ways.
-Actually **mlr** is just designed to make errors because of typos or invalid parameter values
+If you really know what you are doing you may think [%mlr] is limiting you in certain ways.
+Actually [%mlr] is just designed to make errors because of typos or invalid parameter values
 as unlikely as possible.
 But sometimes you want to break those barriers and get full access.
 For all parameters, simply refer to the documentation of [&configureMlr].
@@ -36,12 +36,12 @@ getMlrOptions()
 ## Example: Turn off parameter checking
 
 In an additional scenario, you want to access a new parameter of a [Learner](&makeLEarner) which
-is already available in **mlr**, but the parameter is not implemented in **mlr** yet.
+is already available in [%mlr], but the parameter is not implemented in [%mlr] yet.
 If this is the case you might want to [contact us](https://github.com/berndbischl/mlr#get-in-touch)
 or [open an issue](https://github.com/berndbischl/mlr/issues/new) as well!
-But until then you can turn off **mlr**'s parameter checking like this:
+But until then you can turn off [%mlr]'s parameter checking like this:
 
-```{r}
+```{r error=TRUE}
 lrn = makeLearner("classif.ksvm", newPar = 3)
 lrn = makeLearner("classif.ksvm", epsilon = -3)
 
@@ -54,13 +54,13 @@ lrn = makeLearner("classif.ksvm", epsilon = -3)
 ## Example: Handle errors in an underlying learning method
 
 Another common situation is that a particular learning method throws an error.
-The default behavior of **mlr** is to generate an exception as well.
+The default behavior of [%mlr] is to generate an exception as well.
 However, in some situations, for example if you conduct a [benchmark study](&benchmark_experiments.md)
 with multiple data sets and learners, you normally do not want to terminate the whole
 benchmark experiment due to one error.
 The following example shows how to prevent this:
 
-```{r}
+```{r error=TRUE}
 ## This call gives an error caused by the low number of observations in class `virginica`
 train("classif.qda", task = iris.task, subset = 1:104)
 

@@ -48,7 +48,7 @@ ctrl = makeTuneControlGrid()
 Finally, combining all the previous pieces, we can tune the SVM
 using our [&TuneControl] instance and the resampling strategy
 described by the `rdesc` variable.
-We use the [iris.task](&mlr.iris) provided by **mlr**.
+We use the [iris.task](&mlr.iris) provided by [%mlr].
 
 ```{r}
 res = tuneParams("classif.ksvm", task = iris.task, resampling = rdesc, par.set = ps, 
@@ -76,7 +76,7 @@ The value of each entry is a vector of feasible values for this hyperparameter.
 The complete grid is simply the cross-product of all feasible values.
 
 Please note that whenever parameters in the underlying **R** functions should be
-passed in a list structure, **mlr** tries to give you direct access to
+passed in a list structure, [%mlr] tries to give you direct access to
 each parameter and get rid of the list structure. This is the case for example
 with [ksvm](&kernlab::ksvm).
 

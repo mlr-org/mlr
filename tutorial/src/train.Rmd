@@ -1,7 +1,7 @@
 # Training a Learner
 
 Training a learner means fitting a model to a given data set.
-In the **mlr** package this can be done by calling the function [&train]
+In the [%mlr] package this can be done by calling the function [&train]
 with a [Learner](&makeLearner) and a suitable [&Task].
 
 We start with a survival analysis example and train a
@@ -46,7 +46,7 @@ train the learner. This set is passed using the ``subset`` argument of [&train].
 
 We fit a simple linear regression model to the [BostonHousing](&mlbench::BostonHousing) data set.
 The object [bh.task](&mlr.bh) is the regression [&Task] on the [BostonHousing](&mlbench::BostonHousing)
-data set provided by **mlr**.
+data set provided by [%mlr].
 
 ```{r}
 ## Number of observations
