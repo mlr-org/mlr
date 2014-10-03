@@ -36,7 +36,7 @@ test_that("tuneParamsMultiCrit", {
   ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 1L)
   res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
     measures = list(tpr, fpr), control = ctrl)
-  mycheck(res, 12L)
+  mycheck(res, 8L)
 })
 
 
