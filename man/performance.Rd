@@ -18,7 +18,10 @@ Learning task, might be requested by performance measure, usually not needed exc
 \item{model}{[\code{\link{WrappedModel}}]\cr
 Model built on training data, might be requested by performance measure, usually not needed.}
 
-\item{feats\cr}{Features of test data, usually not needed except for clustering.}
+\item{feats}{[\code{data.frame}]\cr
+Features of predicted data, usually not needed except for clustering.
+If the prediction was generated from a \code{task}, you can also pass this instead and the features
+are extracted from it.}
 }
 \value{
 [named \code{numeric}]. Performance value(s), named by measure(s).

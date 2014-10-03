@@ -1,2 +1,5 @@
 library(testthat)
-test_check("mlr", "_resample_")
+
+if (identical(Sys.getenv("TRAVIS"), "true")) {
+  test_check("mlr", filter = "_resample_")
+})
