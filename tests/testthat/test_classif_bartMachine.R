@@ -18,7 +18,9 @@ test_that("classif_bartMachine", {
     pars = list(X = x, y = y, verbose = FALSE)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(bartMachine, pars)
+    capture.output({
+      m = do.call(bartMachine, pars)
+    })
     newx = binaryclass.test
     newx[, binaryclass.class.col] = NULL
     set.seed(getOption("mlr.debug.seed"))
