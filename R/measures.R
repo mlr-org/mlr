@@ -555,9 +555,11 @@ mcp = makeMeasure(id = "mcp", minimize = TRUE, best = 0, worst = Inf,
 #' @format none
 db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
   properties = "cluster",
-  allowed.pred.types = c("response"),
+  allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
+    ff <<- feats
+    pp <<- pred
     index.DB(feats, pred$data$response)$DB
   }
 )
@@ -568,7 +570,7 @@ db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
 #' @format none
 dunn = makeMeasure(id = "dunn", minimize = FALSE, best = Inf, worst = 0,
   properties = "cluster",
-  allowed.pred.types = c("response"),
+  allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clValid")
     dunn(Data = feats, clusters = pred$data$response)
@@ -581,7 +583,7 @@ dunn = makeMeasure(id = "dunn", minimize = FALSE, best = Inf, worst = 0,
 #' @format none
 G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,
   properties = "cluster",
-  allowed.pred.types = c("response"),
+  allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
     index.G1(feats, pred$data$response)
@@ -594,7 +596,7 @@ G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,
 #' @format none
 G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0,
   properties = "cluster",
-  allowed.pred.types = c("response"),
+  allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
     index.G2(dist.GDM(feats), pred$data$response)
@@ -607,7 +609,7 @@ G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0,
 #' @format none
 silhouette = makeMeasure(id = "silhouette", minimize = FALSE, best = Inf, worst = 0,
   properties = "cluster",
-  allowed.pred.types = c("response"),
+  allowed.pred.types = c("response", "prob"),
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
     index.S(dist.GDM(feats), pred$data$response)

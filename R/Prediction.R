@@ -113,6 +113,7 @@ makePrediction.TaskDescCluster = function(task.desc, row.names, id, truth, predi
     # this is a bit uncool, but as long we only use cl_predict we are OK I guess
     class(y) = "matrix"
     data$prob = y
+    data$response = getMaxIndexOfRows(y)
     data = as.data.frame(filterNull(data))
   }
   p = makeS3Obj(c("PredictionCluster", "Prediction"),
