@@ -18,6 +18,7 @@ library(FNN)
 library(randomForestSRC)
 library(glmnet) # otherwise auc is shadowed
 library(caret) # otherwise train shadowed
+library(cluster) # otherwise silhouette is shadowed
 library(plyr)
 library(survival)
 
