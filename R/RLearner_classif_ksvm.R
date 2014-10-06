@@ -32,9 +32,7 @@ makeRLearner.classif.ksvm = function() {
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "Support Vector Machines",
     short.name = "ksvm",
-    note = "Kernel parameters have to be passed directly and not by using the kpar list in ksvm.
-
- Note that `fit` has been set to `FALSE` by default for speed."
+    note = "Kernel parameters have to be passed directly and not by using the kpar list in ksvm. Note that `fit` has been set to `FALSE` by default for speed."
   )
 }
 
