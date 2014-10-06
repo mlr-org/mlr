@@ -26,6 +26,7 @@
 #'   0 means class is not included in binary problem.
 #'   Default is \dQuote{onevsrest}.
 #' @template ret_learner
+#' @family wrapper
 #' @export
 makeMulticlassWrapper = function(learner, mcw.method = "onevsrest") {
   learner = checkLearner(learner)

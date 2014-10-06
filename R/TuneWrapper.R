@@ -18,6 +18,7 @@
 #' @template ret_learner
 #' @export
 #' @family tune
+#' @family wrapper
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn = makeLearner("classif.ksvm")

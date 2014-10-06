@@ -10,6 +10,7 @@
 #' @inheritParams impute
 #' @export
 #' @family impute
+#' @family wrapper
 #' @template ret_learner
 makeImputeWrapper = function(learner, classes = list(), cols = list(),
   dummy.cols = character(0L), dummy.type = "factor", impute.new.levels = TRUE, recode.factor.levels = TRUE) {

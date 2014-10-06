@@ -20,6 +20,7 @@
 #'   Default is 1.
 #' @template ret_learner
 #' @family imbalancy
+#' @family wrapper
 #' @export
 makeUndersampleWrapper = function(learner, usw.rate = 1) {
   # FIXME: check binary classif

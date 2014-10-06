@@ -16,6 +16,7 @@
 #' @inheritParams selectFeatures
 #' @template ret_learner
 #' @family featsel
+#' @family wrapper
 #' @export
 #' @examples
 #' # nested resampling with feature selection (with a pretty stupid algorithm for selection)

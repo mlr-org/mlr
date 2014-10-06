@@ -11,6 +11,7 @@
 #' @template ret_learner
 #' @export
 #' @family costsens
+#' @family wrapper
 #' @aliases CostSensRegrWrapper CostSensRegrModel
 makeCostSensRegrWrapper = function(learner) {
   learner = checkLearnerRegr(learner)

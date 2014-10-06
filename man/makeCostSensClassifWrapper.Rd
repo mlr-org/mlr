@@ -39,5 +39,22 @@ Other costsens: \code{\link{ClassifTask}},
   \code{\link{CostSensWeightedPairsModel}},
   \code{\link{CostSensWeightedPairsWrapper}},
   \code{\link{makeCostSensWeightedPairsWrapper}}
+
+Other wrapper: \code{\link{CostSensRegrModel}},
+  \code{\link{CostSensRegrWrapper}},
+  \code{\link{makeCostSensRegrWrapper}};
+  \code{\link{makeBaggingWrapper}};
+  \code{\link{makeDownsampleWrapper}};
+  \code{\link{makeFeatSelWrapper}};
+  \code{\link{makeFilterWrapper}};
+  \code{\link{makeImputeWrapper}};
+  \code{\link{makeMulticlassWrapper}};
+  \code{\link{makeOverBaggingWrapper}};
+  \code{\link{makeOversampleWrapper}},
+  \code{\link{makeUndersampleWrapper}};
+  \code{\link{makePreprocWrapper}};
+  \code{\link{makeSMOTEWrapper}};
+  \code{\link{makeTuneWrapper}};
+  \code{\link{makeWeightedClassesWrapper}}
 }
 

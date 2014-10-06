@@ -59,5 +59,24 @@ Other impute: \code{\link{imputations}},
   \code{\link{imputeNormal}}, \code{\link{imputeUniform}};
   \code{\link{impute}}; \code{\link{makeImputeMethod}};
   \code{\link{reimpute}}
+
+Other wrapper: \code{\link{CostSensClassifModel}},
+  \code{\link{CostSensClassifWrapper}},
+  \code{\link{makeCostSensClassifWrapper}};
+  \code{\link{CostSensRegrModel}},
+  \code{\link{CostSensRegrWrapper}},
+  \code{\link{makeCostSensRegrWrapper}};
+  \code{\link{makeBaggingWrapper}};
+  \code{\link{makeDownsampleWrapper}};
+  \code{\link{makeFeatSelWrapper}};
+  \code{\link{makeFilterWrapper}};
+  \code{\link{makeMulticlassWrapper}};
+  \code{\link{makeOverBaggingWrapper}};
+  \code{\link{makeOversampleWrapper}},
+  \code{\link{makeUndersampleWrapper}};
+  \code{\link{makePreprocWrapper}};
+  \code{\link{makeSMOTEWrapper}};
+  \code{\link{makeTuneWrapper}};
+  \code{\link{makeWeightedClassesWrapper}}
 }
 

@@ -38,4 +38,24 @@ Currently, the approach always operates on the discrete predicted labels
 of the binary base models (instead of their probabilities) and the created
 wrapper cannot predict posterior probabilities.
 }
+\seealso{
+Other wrapper: \code{\link{CostSensClassifModel}},
+  \code{\link{CostSensClassifWrapper}},
+  \code{\link{makeCostSensClassifWrapper}};
+  \code{\link{CostSensRegrModel}},
+  \code{\link{CostSensRegrWrapper}},
+  \code{\link{makeCostSensRegrWrapper}};
+  \code{\link{makeBaggingWrapper}};
+  \code{\link{makeDownsampleWrapper}};
+  \code{\link{makeFeatSelWrapper}};
+  \code{\link{makeFilterWrapper}};
+  \code{\link{makeImputeWrapper}};
+  \code{\link{makeOverBaggingWrapper}};
+  \code{\link{makeOversampleWrapper}},
+  \code{\link{makeUndersampleWrapper}};
+  \code{\link{makePreprocWrapper}};
+  \code{\link{makeSMOTEWrapper}};
+  \code{\link{makeTuneWrapper}};
+  \code{\link{makeWeightedClassesWrapper}}
+}
 

@@ -38,6 +38,7 @@
 #'   Percentage size of randomly selected features in bags.
 #'   Default is 1.
 #' @template ret_learner
+#' @family wrapper
 #' @export
 makeBaggingWrapper = function(learner, bw.iters = 10L, bw.replace = TRUE, bw.size, bw.feats = 1) {
 

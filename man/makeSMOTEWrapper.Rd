@@ -46,4 +46,24 @@ Internally uses \code{\link{smote}} before every model fit.
 Note that observation weights do not influence the sampling and are simply passed
 down to the next learner.
 }
+\seealso{
+Other wrapper: \code{\link{CostSensClassifModel}},
+  \code{\link{CostSensClassifWrapper}},
+  \code{\link{makeCostSensClassifWrapper}};
+  \code{\link{CostSensRegrModel}},
+  \code{\link{CostSensRegrWrapper}},
+  \code{\link{makeCostSensRegrWrapper}};
+  \code{\link{makeBaggingWrapper}};
+  \code{\link{makeDownsampleWrapper}};
+  \code{\link{makeFeatSelWrapper}};
+  \code{\link{makeFilterWrapper}};
+  \code{\link{makeImputeWrapper}};
+  \code{\link{makeMulticlassWrapper}};
+  \code{\link{makeOverBaggingWrapper}};
+  \code{\link{makeOversampleWrapper}},
+  \code{\link{makeUndersampleWrapper}};
+  \code{\link{makePreprocWrapper}};
+  \code{\link{makeTuneWrapper}};
+  \code{\link{makeWeightedClassesWrapper}}
+}
 

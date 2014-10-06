@@ -73,5 +73,24 @@ Other featsel: \code{\link{FeatSelControl}},
   \code{\link{analyzeFeatSelResult}};
   \code{\link{getFeatSelResult}};
   \code{\link{selectFeatures}}
+
+Other wrapper: \code{\link{CostSensClassifModel}},
+  \code{\link{CostSensClassifWrapper}},
+  \code{\link{makeCostSensClassifWrapper}};
+  \code{\link{CostSensRegrModel}},
+  \code{\link{CostSensRegrWrapper}},
+  \code{\link{makeCostSensRegrWrapper}};
+  \code{\link{makeBaggingWrapper}};
+  \code{\link{makeDownsampleWrapper}};
+  \code{\link{makeFilterWrapper}};
+  \code{\link{makeImputeWrapper}};
+  \code{\link{makeMulticlassWrapper}};
+  \code{\link{makeOverBaggingWrapper}};
+  \code{\link{makeOversampleWrapper}},
+  \code{\link{makeUndersampleWrapper}};
+  \code{\link{makePreprocWrapper}};
+  \code{\link{makeSMOTEWrapper}};
+  \code{\link{makeTuneWrapper}};
+  \code{\link{makeWeightedClassesWrapper}}
 }
 

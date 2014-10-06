@@ -24,6 +24,7 @@
 #' @template ret_learner
 #' @export
 #' @family filter
+#' @family wrapper
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn = makeLearner("classif.lda")

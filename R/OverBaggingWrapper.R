@@ -34,6 +34,7 @@
 #'   Default is \dQuote{boot}.
 #' @template ret_learner
 #' @family imbalancy
+#' @family wrapper
 #' @export
 makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 1, obw.maxcl = "boot") {
 
@@ -73,7 +74,7 @@ trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, .weights = 
   .task = subsetTask(.task, subset = .subset)
   y = getTaskTargets(.task)
   models = lapply(seq_len(obw.iters), function(i) {
-    bag = sampleBinaryClass(y, obw.rate, cl = "min", clreplace = TRUE, 
+    bag = sampleBinaryClass(y, obw.rate, cl = "min", clreplace = TRUE,
       othreplace = (obw.maxcl == "boot"), bagging = TRUE)
     train(.learner$next.learner, .task, subset = bag, weights = .weights)
   })

@@ -14,6 +14,7 @@
 #' @template ret_learner
 #' @export
 #' @family costsens
+#' @family wrapper
 #' @aliases CostSensClassifWrapper CostSensClassifModel
 makeCostSensClassifWrapper = function(learner) {
   learner = checkLearnerClassif(learner)

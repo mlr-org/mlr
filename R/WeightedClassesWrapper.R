@@ -39,6 +39,7 @@
 #'   of 1.
 #'   Default is 1.
 #' @template ret_learner
+#' @family wrapper
 #' @export
 #' @examples
 #' # using the direct parameter of the SVM

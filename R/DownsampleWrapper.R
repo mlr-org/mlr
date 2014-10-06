@@ -13,6 +13,7 @@
 #'   Default is \code{FALSE}.
 #' @template ret_learner
 #' @family downsample
+#' @family wrapper
 #' @export
 makeDownsampleWrapper = function(learner, dw.perc = 1, dw.stratify = FALSE) {
   learner = checkLearner(learner)

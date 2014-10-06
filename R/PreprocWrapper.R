@@ -28,6 +28,7 @@
 #'   Named list of default values for params in \code{args} repectively \code{par.set}.
 #'   Default is empty list.
 #' @return [\code{\link{Learner}}].
+#' @family wrapper
 #' @export
 makePreprocWrapper = function(learner, train, predict, par.set = makeParamSet(), par.vals = list()) {
   learner = checkLearner(learner)
