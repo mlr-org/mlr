@@ -106,11 +106,13 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   checkTaskCreationLearner(task, learner, weights)
 
   rin = resampling
-  more.args = list(learner = learner, task = task, rin = rin,
+  more.args = list(learner = learner, task = task, rin = rin, weights = NULL,
     measures = measures, model = models, extract = extract, show.info = show.info)
-  if (is.null(weights))
-    weights = task$weights
-  more.args$weights = weights
+  if (!is.null(weights)) {
+    more.args$weights = weights
+  } else if (!is.null(task$weights)) {
+    more.args$weights = task$weights
+  }
   parallelLibrary("mlr", master = FALSE, level = "mlr.resample", show.info = FALSE)
   exportMlrOptions(level = "mlr.resample")
   iter.results = parallelMap(doResampleIteration, seq_len(rin$desc$iters), level = "mlr.resample", more.args = more.args)
