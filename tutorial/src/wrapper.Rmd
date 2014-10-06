@@ -48,7 +48,7 @@ getParamSet(wrapped.lrn)
 ```
 We choose to tune the parameters `minsplit` and `bw.feats` for the [mmce](&measures) using a [random search](&makeTuneControlRandom) in a 3-fold CV:
 ```{r}
-ctrl = makeTuneControlRandom()
+ctrl = makeTuneControlRandom(maxit = 10)
 rdesc = makeResampleDesc("CV", iters = 3)
 par.set = makeParamSet(
   makeIntegerParam("minsplit", lower = 1, upper = 10),
@@ -57,10 +57,16 @@ par.set = makeParamSet(
 tuned.lrn = makeTuneWrapper(wrapped.lrn, rdesc, mmce, par.set, ctrl)
 print(tuned.lrn)
 ```
-By calling the train method of the newly constructed learner performs the following steps:
+
+Calling the train method of the newly constructed learner performs the following steps:
 
 1. The tuning wrapper sets parameters for the underlying model in slot `$next.learner` and calls its train method.
 2. Next learner is the bagging wrapper. The passed down argument `bw.feats` is used in the bagging wrapper training function, the argument `minsplit` gets passed down to `$next.learner`.
    The base wrapper function calls the base learner `bw.iters` times and stores the resulting models.
 3. The bagged models are evaluated using the mean `mmce` (default aggregation for this performance measure) and new parameters are selected using the tuning method.
 4. This is repeated until the tuner terminates. Output is a tuned bagged learner.
+
+```{r}
+lrn = train(tuned.lrn, task = task)
+print(lrn)
+```
