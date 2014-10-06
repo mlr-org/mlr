@@ -28,10 +28,3 @@ test_that("cv resampling works", {
 
   testCV("classif.rpart", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset = parset)
 })
-
-
-
-
-
-
-
