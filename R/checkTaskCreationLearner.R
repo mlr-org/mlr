@@ -31,7 +31,7 @@ checkTaskCreationLearner = function(task, learner, weights) {
   }
 
   if (td$has.weights && !hasProperties(learner, "weights")) {
-    warning("Task '%s' contains weights but these are not used by learner '%s'!", td$id, learner$id)
+    warningf("Task '%s' contains weights but these are not used by learner '%s'!", td$id, learner$id)
   }
 
   if (td$type == "classif") {
