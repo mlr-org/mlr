@@ -37,7 +37,7 @@ print(wrapped.lrn)
 As we can see in the output, the wrapped learner inherited all properties from the base learner, especially the "weights" attribute is still present.
 We can use this newly constructed learner like all base learners, i.e. we can use it in [&train], [&benchmark], [&resample], etc.
 ```{r}
-# benchmark(tasks = task, learners = list(base.lrn, wrapped.lrn))
+benchmark(tasks = task, learners = list(base.lrn, wrapped.lrn))
 ```
 
 That far we are quite happy with our new learner.
