@@ -44,6 +44,8 @@ test_that("resample", {
   ct = makeClassifTask(data = iris[,c("Species", "Petal.Width")], target = "Species")
   fit = resample(lrn1, ct, makeResampleDesc("CV", iters = 2))
 
+  expect_error(resample("classif.rpart", multiclass.task, makeResampleDesc("Holdout"),
+      measures = list()), "length >= 1")
 })
 
 test_that("resampling, predicting train set works", {
