@@ -52,7 +52,7 @@
 #'   For classification: Color of misclassified data points.
 #'   Default is \dQuote{white}
 #' @param greyscale [\code{logical(1)}]\cr
-#'   Should the plot be greyscale completely? 
+#'   Should the plot be greyscale completely?
 #'   Default is \code{FALSE}.
 #' @return The ggplot2 object.
 #' @export
@@ -99,7 +99,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   assertChoice(err.mark, choices = c("train", "cv", "none"))
   assertString(err.col)
   assertLogical(greyscale)
-  
+
   if (td$type == "classif" && err.mark == "cv" && cv == 0L)
     stopf("Classification: CV must be switched on, with 'cv' > 0, for err.type = 'cv'!")
 
@@ -225,7 +225,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   title = sprintf("%s: %s", learner$id, paramValueToString(learner$par.set, learner$par.vals))
   title = sprintf("%s\nTrain: %s; CV: %s", title, perfsToString(perf.train), perfsToString(perf.cv))
   p = p + ggtitle(title)
-  
+
   # deal with greyscale
   if (greyscale) {
     p = p + scale_fill_grey()

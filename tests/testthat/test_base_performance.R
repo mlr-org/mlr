@@ -32,6 +32,7 @@ test_that("performance", {
   res = performance(r$pred, measures = list(ber, acc, tp), task = binaryclass.task)
   expect_true(!any(is.na(res)))
   expect_true(length(res) == 3)
+  expect_equal(names(res), c("ber", "acc", "tp"))
 
   # custom measure
 

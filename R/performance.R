@@ -32,7 +32,8 @@ performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) 
   if (!is.null(pred))
     assertClass(pred, classes = "Prediction")
   measures = checkMeasures(measures, pred$task.desc)
-  vnapply(measures, doPerformaceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats)
+  res = vnapply(measures, doPerformaceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats)
+  setNames(res, extractSubList(measures, "id"))
 }
 
 doPerformaceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL) {
@@ -81,7 +82,5 @@ doPerformaceIteration = function(measure, pred = NULL, task = NULL, model = NULL
       stopf("Measure %s is only allowed for predictions of type: %s!",
         m$id, collapse(m$allowed.pred.types))
   }
-  res = measure$fun(task2, model2, pred2, feats, m$extra.args)
-  names(res) = measure$id
-  res
+  measure$fun(task2, model2, pred2, feats, m$extra.args)
 }

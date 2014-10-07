@@ -24,7 +24,7 @@ test_that("clustering performance",  {
 })
 
 test_that("clustering resample",  {
-  rdesc = makeResampleDesc("Bootstrap", iters = 5)
+  rdesc = makeResampleDesc("Subsample", split = 0.3, iters = 2)
   lrn = makeLearner("cluster.SimpleKMeans")
   res = resample(lrn, noclass.task, rdesc)
 
@@ -37,7 +37,7 @@ test_that("clustering benchmark", {
   tasks = list(noclass.task)
   learner.names = c("cluster.SimpleKMeans")
   learners = lapply(learner.names, makeLearner)
-  rin = makeResampleDesc("CV", iters = 3L)
+  rin = makeResampleDesc("CV", iters = 2L)
 
   res = benchmark(learners = learners, task = tasks, resamplings = makeResampleDesc("CV", iters = 2L))
   expect_true("BenchmarkResult" %in% class(res))

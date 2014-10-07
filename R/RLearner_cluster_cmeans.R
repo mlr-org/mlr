@@ -22,6 +22,9 @@ makeRLearner.cluster.cmeans = function() {
 
 #' @export
 trainLearner.cluster.cmeans = function(.learner, .task, .subset, .weights = NULL, ...) {
+  xx <<- .task
+  yy <<- .subset
+
   cmeans(getTaskData(.task, .subset), method = "cmeans", ...)
 }
 
