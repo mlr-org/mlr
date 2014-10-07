@@ -58,12 +58,12 @@ trainLearner.FeatSelWrapper = function(.learner, .task, .subset,  ...) {
     #FIXME: really look at bitnames / bits.to.features stuff and test it.
     # do we need the extra case here?
     or = selectFeatures(.learner$next.learner, task, .learner$resampling,
-      measures = .learner$measures, control = .learner$control)
+      measures = .learner$measures, control = .learner$control, show.info = .learner$show.info)
   else
     or = selectFeatures(.learner$next.learner, task, .learner$resampling,
       measures = .learner$measures,
       bit.names = .learner$bit.names, bits.to.features = .learner$bits.to.features,
-      control = .learner$control)
+      control = .learner$control, show.info =.learner$show.info)
   task = subsetTask(task, features = or$x)
   m = train(.learner$next.learner, task)
   x = makeChainModel(next.model = m, cl = "FeatSelModel")
