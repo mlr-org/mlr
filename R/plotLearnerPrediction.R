@@ -4,7 +4,7 @@
 #' Trains the model for 1 or 2 selected features, then displays it via \code{\link[ggplot2]{ggplot}}.
 #' Good for teaching or exploring models.
 #'
-#' For classification, only 2D plots are supported. The data points, the classification and
+#' For classification and clustering, only 2D plots are supported. The data points, the classification and
 #' potentially through color alpha blending the posterior probabilities are shown.
 #'
 #' For regression, 1D and 2D plots are supported. 1D shows the data, the estimated mean and potentially
@@ -65,7 +65,11 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   greyscale = FALSE) {
 
   learner = checkLearner(learner)
-  assertClass(task, classes = "Task")
+  assert(
+    checkClass(task, "ClassifTask"),
+    checkClass(task, "RegrTask"),
+    checkClass(task, "ClusterTask")
+  )
   td = task$task.desc
 
   # features and dimensionality
@@ -78,10 +82,8 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
     assertSubset(features, choices = fns)
   }
   taskdim = length(features)
-  if (td$type == "classif" && taskdim != 2L)
-    stopf("Classification: currently only 2D plots supported, not: %i", taskdim)
-  if (td$type == "cluster" && taskdim != 2L)
-    stopf("Clustering: currently only 2D plots supported, not: %i", taskdim)
+  if (td$type %in% c("classif", "cluster") && taskdim != 2L)
+    stopf("Classification and clustering: currently only 2D plots supported, not: %i", taskdim)
   if (td$type == "regr" && taskdim %nin% 1:2)
     stopf("Regression: currently only 1D and 2D plots supported, not: %i", taskdim)
 
@@ -112,7 +114,8 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   # some shortcut names
   target = td$target
   data = getTaskData(task)
-  y = getTaskTargets(task)
+  if (td$type != "cluster")
+    y = getTaskTargets(task)
   x1n = features[1L]
   x1 = data[, x1n]
 

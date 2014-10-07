@@ -8,4 +8,6 @@ test_that("plotLearnerPrediction", {
   plotLearnerPrediction("regr.rpart", regr.task, gridsize = gs)
   plotLearnerPrediction("regr.lm", regr.task,
     features = getTaskFeatureNames(regr.task)[1], gridsize = gs)
+
+  plotLearnerPrediction("cluster.kmeans", noclass.task, gridsize = gs)
 })
