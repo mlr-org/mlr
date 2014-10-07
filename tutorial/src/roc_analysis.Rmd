@@ -7,7 +7,7 @@ the true positive rate (sensitivity) on the vertical axis for various settings o
 the threshold that maps predicted posterior probabilities to class labels.
 
 A ROC curve is useful if one is unsure about the threshold setting, for example if the
-classifications costs (that would allow to calculate an optimal threshold value) are unknown. 
+classifications costs (that would allow to calculate an optimal threshold value) are unknown.
 
 The AUC (area under curve) summarizes the performance of the learner over all possible threshold
 values.
@@ -46,6 +46,7 @@ Afterwards, we perform [resampling](resample.md) to obtain predictions for each 
 ## Perform a 10-fold cross-validation
 rdesc = makeResampleDesc("CV", iters = 10)
 rin = makeResampleInstance(rdesc, bc.task)
+
 ## Calculate the error rate (for threshold 0.5) and the AUC
 ms = list(mmce, auc)
 r1 = resample(lrn1, bc.task, rin, measures = ms, show.info = FALSE)
@@ -107,9 +108,11 @@ Of course you can also select a threshold without the help of a ROC curve by dir
 ## Area Under the Curve and Mean Missclassification Error before the tuning.
 performance(r1$pred, measures = list(auc,mmce))
 r1$pred$threshold
+
 ## Tuning the threshold.
 (tune.res = tuneThreshold(pred = r1$pred, measure = mmce))
 pred.tuned = setThreshold(r1$pred, tune.res$th)
+
 ## Performance after the tuning.
 performance(pred.tuned, measures = list(auc,mmce))
 ```

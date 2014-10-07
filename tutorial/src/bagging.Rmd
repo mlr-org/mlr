@@ -31,8 +31,7 @@ r$aggr
 ```
 And now with bagging:
 ```{r makeBaggingWrapper_with}
-result = resample(learner = bag.lrn, task = sonar.task, resampling = sonar.rin,
-    show.info = FALSE)
+result = resample(learner = bag.lrn, task = sonar.task, resampling = sonar.rin, show.info = FALSE)
 result$aggr
 ```
 Training more learners takes more time, but can outperform pure learners
@@ -43,7 +42,7 @@ on noisy data with many features.
 
 In case of a *classification* problem the predicted class labels are determined by majority
 voting over the predictions of the individual models.
-Additionally, posterior probabilities can be estimated as the relative proportions 
+Additionally, posterior probabilities can be estimated as the relative proportions
 of the predicted class labels.
 For this purpose you have to change the predict type of the *bagging learner* as follows.
 
@@ -83,7 +82,7 @@ head(pred$data)
 
 In the column labelled ``se`` the standard deviation for each prediction is given.
 
-Let's visualise this a bit using [ggplot2](http://ggplot2.org/).
+Let's visualise this a bit using [%ggplot2].
 Here we plot the percentage of lower status of the population (`lstat`) against the prediction.
 ```{r makeBaggingWrapper_regressionPlot}
 library("ggplot2")

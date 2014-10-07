@@ -1,14 +1,13 @@
 # Parallelization
 
-**R** by default doesn't make use of multiple cores.
-With the integration of [parallelMap](https://github.com/berndbischl/parallelMap) into
-[%mlr], it becomes easy to activate the parallel computing capabilities already
-supported by [%mlr].
+**R** by default doesn't make use of parallelization.
+With the integration of [%parallelMap] into [%mlr], it becomes easy to activate the parallel computing capabilities already supported by [%mlr].
+[%parallelMap] supports all major parallelization backends: local multicore execution using [%parallel], socket and MPI clusters using [%snow], makeshift SSH-cluster using [%BatchJobs] and high performance computing clusters (managed by a scheduler like SLURM, Torque/PBS, SGE or LSF) also using [%BatchJobs].
 
-All you have to do is select an interface by calling one of the
+All you have to do is select a backend by calling one of the
 [parallelStart*](&parallelMap::parallelStart) functions.
-The first annotated loop [%mlr] encounters will then be automatically parallelized.
-Afterwards it is good practice to call [parallelStop](&parallelMap::parallelStop).
+The first loop [%mlr] encounters which is marked for possible parallel execution will then be automatically parallelized.
+It is good practice to call [parallelStop](&parallelMap::parallelStop) at the end of your script.
 
 ```{r}
 library("parallelMap")

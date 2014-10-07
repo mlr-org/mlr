@@ -33,14 +33,19 @@ A simple stratified cross-validation of the *linear discriminant analysis* with 
 ```{r}
 library(mlr)
 data(iris)
+
 ## Define the task:
 task = makeClassifTask(id = "tutorial", data = iris, target = "Species")
+
 ## Define the learner:
 lrn = makeLearner("classif.lda")
+
 ## Define the resampling strategy:
 rdesc = makeResampleDesc(method = "CV", stratify = TRUE)
+
 ## Do the resampling:
 res = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE)
+
 ## Get the mean misclassification error:
 res$aggr
 ```

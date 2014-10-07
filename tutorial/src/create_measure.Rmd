@@ -19,13 +19,13 @@ various parameters.
 ```r
 ## Define the measure
 my.mmce = function(task, model, pred, feats, extra.args) {
-    tb = table(pred$data$response, pred$data$truth)
-    1 - sum(diag(tb)) / sum(tb)
+  tb = table(pred$data$response, pred$data$truth)
+  1 - sum(diag(tb)) / sum(tb)
 }
 
 ## Encapsulate the function with a Measure object
 my.mmce = makeMeasure(id = "my.mmce", minimize = TRUE, classif = TRUE,
-    allowed.pred.types = "response", fun = my.mmce)
+  allowed.pred.types = "response", fun = my.mmce)
 
 ## Create classification task and learner
 task = makeClassifTask(data = iris, target = "Species")
@@ -52,9 +52,8 @@ details on the various parameters.
 
 ```r
 ## Create misclassification cost matrix
-mcm = matrix(c(0, 2, 2, 3, 0, 2, 1, 1, 0), ncol=3,
-              dimnames = list(c("setosa", "versicolor", "virginica"),
-                              c("setosa", "versicolor", "virginica")))
+mcm = matrix(c(0, 2, 2, 3, 0, 2, 1, 1, 0), ncol=3)
+rownames(mcm) = colnames(mcm) = c("setosa", "versicolor", "virginica")
 
 ## Create classification task and learner
 task = makeClassifTask(data = iris, target = "Species")
@@ -80,9 +79,9 @@ In this case:
 
 ```{r}
 mlr:::makeAggregation(id = "some.name",
-    fun = function (task, perf.test, perf.train, measure, group, pred) {
-        ## stuff you want to do with perf.test or perf.train
-    }
+  fun = function (task, perf.test, perf.train, measure, group, pred) {
+    ## stuff you want to do with perf.test or perf.train
+  }
 )
 ```
 
@@ -96,7 +95,7 @@ In the usual case (e.g. cross validation), the `perf.train` vector is empty.
 Let's say you are interested in the range of the obtained measures:
 ```{r}
 my.range.aggr = mlr:::makeAggregation(id = "test.range",
-    fun = function (task, perf.test, perf.train, measure, group, pred) diff(range(perf.test)))
+  fun = function (task, perf.test, perf.train, measure, group, pred) diff(range(perf.test)))
 ```
 
 Now we can run a feature selection based on the first measure in the provided
@@ -107,12 +106,12 @@ ms1 = mmce
 ms2 = setAggregation(ms1, my.range.aggr)
 ms1min = setAggregation(ms1, test.min)
 ms1max = setAggregation(ms1, test.max)
-res = selectFeatures("classif.rpart", iris.task, iris.rin, measures = list(ms1, ms2, ms1min, ms1max), 
-    control = makeFeatSelControlExhaustive(), show.info = FALSE)
+res = selectFeatures("classif.rpart", iris.task, iris.rin, measures = list(ms1, ms2, ms1min, ms1max),
+  control = makeFeatSelControlExhaustive(), show.info = FALSE)
 perf.data = as.data.frame(res$opt.path)
-p = ggplot(aes(x = mmce.test.mean, y = mmce.test.range, xmax = mmce.test.max, xmin = mmce.test.min, 
-    color = as.factor(Sepal.Width), pch = as.factor(Petal.Width)), data = perf.data) +
-    geom_point(size = 4) +
-    geom_errorbarh(height = 0)
+p = ggplot(aes(x = mmce.test.mean, y = mmce.test.range, xmax = mmce.test.max, xmin = mmce.test.min,
+  color = as.factor(Sepal.Width), pch = as.factor(Petal.Width)), data = perf.data) +
+  geom_point(size = 4) +
+  geom_errorbarh(height = 0)
 print(p)
 ```

@@ -13,7 +13,7 @@ the [WrappedModel](&makeWrappedModel) and/or the [&Task].
 
 **Aggr** shows the default aggregation method.
 
-For *classification*, column **MultiClass** indicates if a measure is suitable for 
+For *classification*, column **MultiClass** indicates if a measure is suitable for
 multi-class problems. If not, the measure can only be used for binary classification problems.
 
 
@@ -22,13 +22,13 @@ getTab = function(type) {
   m = list(timetrain = timetrain, timepredict = timepredict, timeboth = timeboth, featperc = featperc)
 
   if (type == "general") {
-  	meas = m
+    meas = m
   } else {
     meas = listMeasures(type, create = TRUE)
     keep = setdiff(names(meas), names(m))
     meas = meas[keep]
   }
-  
+
   cols = c("Measure", "Minim.", "Best", "Worst", "MultiClass", "PredType", "Pred", "Model", "Task", "Aggr")
   df = makeDataFrame(nrow = length(meas), ncol = length(cols),
     col.types = c("character", "logical", "numeric", "numeric", "logical", "character", "logical", "logical", "logical", "character"))
@@ -37,24 +37,24 @@ getTab = function(type) {
   for (i in seq_along(meas)) {
     mea = meas[[i]]
     df[i, 1] = mea$id
-    df[i, 2] = mea$minimize    
+    df[i, 2] = mea$minimize
     df[i, 3] = mea$best
     df[i, 4] = mea$worst
-	df[i, 5] = "classif.multi" %in% mea$properties
-	df[i, 6] = collapse(mea$allowed.pred.types)
-	df[i, 7] = mea$req.pred
-	df[i, 8] = mea$req.model
-	df[i, 9] = mea$req.task
-	df[i, 10] = mea$aggr$id
+    df[i, 5] = "classif.multi" %in% mea$properties
+    df[i, 6] = collapse(mea$allowed.pred.types)
+    df[i, 7] = mea$req.pred
+    df[i, 8] = mea$req.model
+    df[i, 9] = mea$req.task
+    df[i, 10] = mea$aggr$id
   }
 
   just = c("left", "center", "right", "right", "right", "right", "center", "center", "center", "right")
 
   if (type != "classif") {
     df$MultiClass = NULL
-    just = just[-5] 
-  }			  
-  
+    just = just[-5]
+  }
+
   logicals = vlapply(df, is.logical)
   df[logicals] = lapply(df[logicals], function(x) ifelse(x, "X", ""))
   pandoc.table(df, style = "rmarkdown", split.tables = Inf, split.cells = Inf,

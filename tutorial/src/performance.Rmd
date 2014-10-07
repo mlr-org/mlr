@@ -3,7 +3,7 @@
 The quality of the predictions of a model in [%mlr] can be assessed with respect to a
 number of different performance measures.
 In order to calculate the performance measures, call [&performance] on the object
-returned by [predict](&predict.WrappedModel) and specify the desired performance measure(s).
+returned by [predict](&predict.WrappedModel) and specify the desired performance measures.
 
 
 ## Available performance measures
@@ -17,7 +17,7 @@ For *clustering* tasks, measures such as the Dunn index ([&dunn]) are provided,
 while for *survival* predictions, the Concordance Index ([&cindex]) is
 supported, and for *cost-sensitive* predictions the misclassification penalty
 ([&mcp]) and others. It is also possible to access the time to train the
-learner ([&timetrain]), the time to compute the prediction ([&timepredict]) and their 
+learner ([&timetrain]), the time to compute the prediction ([&timepredict]) and their
 sum ([&timeboth]) as performance measures.
 
 To see which performance measures are implemented, have a look at the
@@ -52,7 +52,7 @@ The following code computes the median of squared errors ([&medse]) instead.
 performance(pred, measures = medse)
 ```
 
-Of course, we can also calculate multiple performance measures at once by simply passing a 
+Of course, we can also calculate multiple performance measures at once by simply passing a
 list of measures which can also include [your own measure](create_measure.md).
 
 Calculate the mean squared error, median squared error and mean absolute error ([&mae]).
@@ -61,13 +61,13 @@ Calculate the mean squared error, median squared error and mean absolute error (
 performance(pred, measures = list(mse, medse, mae))
 ```
 
-For the other types of learning problems and measures, calculating the performance basically 
+For the other types of learning problems and measures, calculating the performance basically
 works in the same way.
 
 
 ### Requirements of performance measures
 
-Note that in order to calculate some performance measures it is required that you pass the 
+Note that in order to calculate some performance measures it is required that you pass the
 [&Task] or the [fitted model](&makeWrappedModel) in addition to the [&Prediction].
 
 For example in order to assess the time needed for training ([&timetrain]), the fitted
@@ -147,8 +147,8 @@ misclassification rate ([&mmce]) for all possible threshold values.
 ```{r}
 lrn = makeLearner("classif.lda", predict.type = "prob")
 n = bc.task$task.desc$size
-mod = train(lrn, task = bc.task, subset = seq(1,n,2))
-pred = predict(mod, task = bc.task, subset = seq(2,n,2))
+mod = train(lrn, task = bc.task, subset = seq(1, n, by = 2))
+pred = predict(mod, task = bc.task, subset = seq(2, n, by = 2))
 
 ## Performance for the default threshold 0.5
 performance(pred, measures = list(fpr, fnr, mmce))

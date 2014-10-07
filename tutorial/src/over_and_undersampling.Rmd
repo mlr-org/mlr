@@ -12,8 +12,9 @@ the minority or undersample the majority class.
 Now let's see what the effect is for a classification task:
 ```{r oversampling_classif}
 data.even = rbind(
-    data.frame(x = rnorm(50, mean = 1), class = "A"),
-    data.frame(x = rnorm(50, mean = 2), class = "B"))
+  data.frame(x = rnorm(50, mean = 1), class = "A"),
+  data.frame(x = rnorm(50, mean = 2), class = "B")
+)
 task = makeClassifTask(data = data.even, target = "class")
 task.over = oversample(task, rate = 4)
 task.under = undersample(task, rate = 1/4)
