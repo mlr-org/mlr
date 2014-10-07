@@ -49,6 +49,12 @@
 makeStackedLearner = function(base.learners, super.learner = NULL, predict.type = NULL, 
   method = "stack.nocv", use.feat = FALSE, resampling = NULL) {
 
+  if (is.character(base.learners)) base.learners = lapply(base.learners, checkLearner)
+  if (!is.null(super.learner)) {
+    super.learner = checkLearner(super.learner)
+    if (!is.null(predict.type)) super.learner = setPredictType(super.learner, predict.type)
+  }
+  
   baseType = unique(extractSubList(base.learners, "type"))
   if (!is.null(resampling) & method != "stack.cv") {
     stop("No resampling needed for this method")
@@ -70,8 +76,8 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
     stop("No super learner needed for this method or the 'predict.type' is not specified.")
   if (method != "average" & is.null(super.learner))
     stop("You have to specify a super learner for this method.")
-  if (method != "average" & !is.null(predict.type))
-    stop("Predict type has to be specified within the super learner.")
+  #if (method != "average" & !is.null(predict.type))
+  #  stop("Predict type has to be specified within the super learner.")
   if (method == "average" & use.feat)
     stop("The original features can not be used for this method")
   if (!inherits(resampling, "CVDesc"))
@@ -86,7 +92,6 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
 
   # get predict.type from super learner or from predict.type
   if (!is.null(super.learner)) {
-    super.learner = checkLearner(super.learner)
     lrn = setPredictType(lrn, predict.type = super.learner$predict.type)
   } else {
     lrn = setPredictType(lrn, predict.type = predict.type)
@@ -124,8 +129,7 @@ getBaseLearnerPredictions = function(model, newdata = NULL) {
   if (is.null(newdata)) {
     probs = model$learner.model$pred.train
   } else {
-    if (model == "stack.cv") 
-      warning("Crossvalidated predictions for new data is not possible for this method.")
+    # if (model == "stack.cv") warning("Crossvalidated predictions for new data is not possible for this method.")
     # predict prob vectors with each base model
     probs = vector("list", length(bms))
     for (i in seq_along(bms)) {
