@@ -3,7 +3,7 @@
 #' @description
 #' The following tuners are available:
 #' \describe{
-#'   \item{makeTuneControlGrid}{Grid search. All kinds of parameter types can be handled.
+#'   \item{makeTuneMultiCritControlGrid}{Grid search. All kinds of parameter types can be handled.
 #'     You can either use their correct param type and \code{resolution},
 #'     or discretize them yourself by always using \code{\link[ParamHelpers]{makeDiscreteParam}}
 #'     in the \code{par.set} passed to \code{\link{tuneParams}}.}

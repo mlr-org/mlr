@@ -1,7 +1,7 @@
 #' @title Hyperparameter tuning for multiple measures at once.
 #'
 #' @description
-#' Optimizes the hyperparameters of a learner in a multi-criteria fasion.
+#' Optimizes the hyperparameters of a learner in a multi-criteria fashion.
 #' Allows for different optimization methods, such as grid search, evolutionary strategies, etc.
 #' You can select such an algorithm (and its settings)
 #' by passing a corresponding control object. For a complete list of implemented algorithms look at
