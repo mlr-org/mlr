@@ -114,7 +114,15 @@
                             </li>
                         
                             <li >
-                                <a href="../makeBaggingWrapper/">Bagging</a>
+                                <a href="../preproc/">Preprocessing</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../impute/">Imputations</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../bagging/">Bagging</a>
                             </li>
                         
                             <li >
@@ -222,23 +230,32 @@
             <div class="col-md-9" role="main">
 
 <h1 id="parallelization">Parallelization</h1>
-<p><strong>R</strong> by default doesn't make use of multiple cores.
-With the integration of <a href="https://github.com/berndbischl/parallelMap">parallelMap</a> into
-<a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>, it becomes easy to activate the parallel computing capabilities already
-supported by <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.</p>
-<p>All you have to do is select an interface by calling one of the
+<p><strong>R</strong> by default doesn't make use of parallelization.
+With the integration of <a href="http://www.rdocumentation.org/packages/parallelMap/">parallelMap</a> into <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>, it becomes easy to activate the parallel computing capabilities already supported by <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.
+<a href="http://www.rdocumentation.org/packages/parallelMap/">parallelMap</a> supports all major parallelization backends: local multicore execution using <a href="http://www.rdocumentation.org/packages/parallel/">parallel</a>, socket and MPI clusters using <a href="http://www.rdocumentation.org/packages/snow/">snow</a>, makeshift SSH-cluster using <a href="http://www.rdocumentation.org/packages/BatchJobs/">BatchJobs</a> and high performance computing clusters (managed by a scheduler like SLURM, Torque/PBS, SGE or LSF) also using <a href="http://www.rdocumentation.org/packages/BatchJobs/">BatchJobs</a>.</p>
+<p>All you have to do is select a backend by calling one of the
 <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart*</a> functions.
-The first annotated loop <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> encounters will then be automatically parallelized.
-Afterwards it is good practice to call <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStop.html">parallelStop</a>.</p>
+The first loop <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> encounters which is marked for possible parallel execution will then be automatically parallelized.
+It is good practice to call <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStop.html">parallelStop</a> at the end of your script.</p>
 <pre class="prettyprint well"><code class="r">library(&quot;parallelMap&quot;)
 parallelStartSocket(2)
-r = resample(&quot;classif.lda&quot;, iris.task, iris.rin)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] Result: mmce.test.mean=0.02
+<pre class="prettyprint well"><code>## Starting parallelization in mode=socket with cpus=2.
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">r = resample(&quot;classif.lda&quot;, iris.task, iris.rin)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Exporting objects to slaves for mode socket: .mlr.slave.options
+## Mapping in parallel: mode = socket; cpus = 2; elements = 3.
+## [Resample] Result: mmce.test.mean=0.02
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">parallelStop()
+</code></pre>
+
+<pre class="prettyprint well"><code>## Stopped parallelization. All cleaned up.
 </code></pre>
 
 <p>On Linux or Mac OS X, you may want to use

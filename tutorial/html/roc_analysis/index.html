@@ -114,7 +114,15 @@
                             </li>
                         
                             <li >
-                                <a href="../makeBaggingWrapper/">Bagging</a>
+                                <a href="../preproc/">Preprocessing</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../impute/">Imputations</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../bagging/">Bagging</a>
                             </li>
                         
                             <li >
@@ -234,7 +242,7 @@ It plots the false positive rate (fall-out) on the horizontal axis versus
 the true positive rate (sensitivity) on the vertical axis for various settings of
 the threshold that maps predicted posterior probabilities to class labels.</p>
 <p>A ROC curve is useful if one is unsure about the threshold setting, for example if the
-classifications costs (that would allow to calculate an optimal threshold value) are unknown. </p>
+classifications costs (that would allow to calculate an optimal threshold value) are unknown.</p>
 <p>The AUC (area under curve) summarizes the performance of the learner over all possible threshold
 values.
 <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides the <a href="http://www.rdocumentation.org/packages/mlr/functions/auc.html">auc</a> performance measure for binary classification and also a
@@ -262,10 +270,23 @@ lrn2 = makeLearner(&quot;classif.ksvm&quot;, predict.type = &quot;prob&quot;)
 <pre class="prettyprint well"><code class="r">## Perform a 10-fold cross-validation
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
 rin = makeResampleInstance(rdesc, bc.task)
+
 ## Calculate the error rate (for threshold 0.5) and the AUC
 ms = list(mmce, auc)
 r1 = resample(lrn1, bc.task, rin, measures = ms, show.info = FALSE)
 r2 = resample(lrn2, bc.task, rin, measures = ms, show.info = FALSE)
+</code></pre>
+
+<pre class="prettyprint well"><code>## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel 
+## Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
 <p>Now we have to convert each prediction within the resample result to a
@@ -341,6 +362,7 @@ performance(r1$pred, measures = list(auc,mmce))
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">pred.tuned = setThreshold(r1$pred, tune.res$th)
+
 ## Performance after the tuning.
 performance(pred.tuned, measures = list(auc,mmce))
 </code></pre>

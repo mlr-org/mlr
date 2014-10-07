@@ -114,7 +114,15 @@
                             </li>
                         
                             <li >
-                                <a href="../makeBaggingWrapper/">Bagging</a>
+                                <a href="../preproc/">Preprocessing</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../impute/">Imputations</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../bagging/">Bagging</a>
                             </li>
                         
                             <li class="active">
@@ -184,7 +192,7 @@
                 
                 
                 <li >
-                    <a rel="next" href="../makeBaggingWrapper/">
+                    <a rel="next" href="../bagging/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
@@ -308,12 +316,12 @@ head(opt.grid)
 </code></pre>
 
 <pre class="prettyprint well"><code>##      C sigma mmce.test.mean mmce.test.sd dob eol error.message exec.time
-## 1 0.25  0.25        0.04667      0.02309   1  NA          &lt;NA&gt;     0.068
-## 2  0.5  0.25        0.04667      0.01155   2  NA          &lt;NA&gt;     0.069
-## 3    1  0.25        0.04000      0.02000   3  NA          &lt;NA&gt;     0.067
-## 4    2  0.25        0.04667      0.02309   4  NA          &lt;NA&gt;     0.066
-## 5    4  0.25        0.04667      0.02309   5  NA          &lt;NA&gt;     0.067
-## 6 0.25   0.5        0.06000      0.00000   6  NA          &lt;NA&gt;     0.068
+## 1 0.25  0.25        0.04667      0.02309   1  NA          &lt;NA&gt;     0.099
+## 2  0.5  0.25        0.04667      0.01155   2  NA          &lt;NA&gt;     0.102
+## 3    1  0.25        0.04000      0.02000   3  NA          &lt;NA&gt;     0.100
+## 4    2  0.25        0.04667      0.02309   4  NA          &lt;NA&gt;     0.094
+## 5    4  0.25        0.04667      0.02309   5  NA          &lt;NA&gt;     0.093
+## 6 0.25   0.5        0.06000      0.00000   6  NA          &lt;NA&gt;     0.094
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">g = ggplot(opt.grid, aes(x = C, y = sigma, fill = mmce.test.mean, label = round(mmce.test.sd,3)))
