@@ -52,7 +52,7 @@ ctrl = makeTuneControlRandom(maxit = 10)
 rdesc = makeResampleDesc("CV", iters = 3)
 par.set = makeParamSet(
   makeIntegerParam("minsplit", lower = 1, upper = 10),
-  makeNumericParam("bw.feats", lower = 0, upper = 1)
+  makeNumericParam("bw.feats", lower = 0.25, upper = 1)
 )
 tuned.lrn = makeTuneWrapper(wrapped.lrn, rdesc, mmce, par.set, ctrl)
 print(tuned.lrn)
