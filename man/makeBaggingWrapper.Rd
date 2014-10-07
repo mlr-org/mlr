@@ -25,7 +25,8 @@ Default is 1 for bootstrapping and 0.632 for subsampling.}
 
 \item{bw.feats}{[\code{numeric(1)}]\cr
 Percentage size of randomly selected features in bags.
-Default is 1.}
+Default is 1.
+At least one feature will always be selected.}
 }
 \value{
 [\code{\link{Learner}}].

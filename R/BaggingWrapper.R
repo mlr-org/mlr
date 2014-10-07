@@ -37,29 +37,23 @@
 #' @param bw.feats [\code{numeric(1)}]\cr
 #'   Percentage size of randomly selected features in bags.
 #'   Default is 1.
+#'   At least one feature will always be selected.
 #' @template ret_learner
 #' @family wrapper
 #' @export
 makeBaggingWrapper = function(learner, bw.iters = 10L, bw.replace = TRUE, bw.size, bw.feats = 1) {
-
-  learner = checkLearner(learner, type=c("classif", "regr"))
-  pv = list()
-  if (!missing(bw.iters)) {
-    bw.iters = asInt(bw.iters, lower = 1L)
-    pv$bw.iters = bw.iters
-  }
-  if (!missing(bw.replace)) {
-    assertFlag(bw.replace)
-    pv$bw.replace = bw.replace
-  }
-  if (!missing(bw.size)) {
+  learner = checkLearner(learner, type = c("classif", "regr"))
+  bw.iters = asInt(bw.iters, lower = 1L)
+  assertFlag(bw.replace)
+  if (missing(bw.size)) {
+    bw.size = if (bw.replace) 1 else 0.632
+  } else {
     assertNumber(bw.size, lower = 0, upper = 1)
-    pv$bw.size = bw.size
   }
-  if (!missing(bw.feats)) {
-    assertNumber(bw.feats, lower = 0, upper = 1)
-    pv$bw.feats = bw.feats
-  }
+  assertNumber(bw.feats, lower = 0, upper = 1)
+
+  pv = list(bw.iters = bw.iters, bw.replace = bw.replace, bw.size = bw.size, bw.feats = bw.feats)
+
   if (learner$predict.type != "response")
     stop("Predict type of the basic learner must be 'response'.")
   id = paste(learner$id, "bagged", sep = ".")
@@ -89,7 +83,7 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL
   allinds = seq_len(n)
   if (bw.feats < 1) {
     feats = getTaskFeatureNames(.task)
-    k = round(bw.feats * length(feats))
+    k = max(round(bw.feats * length(feats)), 1)
   }
   models = lapply(seq_len(bw.iters), function(i) {
     bag = sample(allinds, m, replace = bw.replace)
@@ -98,7 +92,7 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL
       feats2 = sample(feats, k, replace = FALSE)
       .task2 = subsetTask(.task, features = feats2)
       train(.learner$next.learner, .task2, subset = bag, weights = w)
-  } else {
+    } else {
       train(.learner$next.learner, .task, subset = bag, weights = w)
     }
   })
@@ -154,5 +148,3 @@ setPredictType.BaggingWrapper = function(learner, predict.type) {
   learner = setPredictType.Learner(learner, predict.type)
   return(learner)
 }
-
-
