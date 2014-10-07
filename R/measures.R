@@ -88,7 +88,7 @@ NULL
 #' @format none
 featperc = makeMeasure(id = "featperc", minimize = TRUE, best = 0, worst = 1,
   properties = c("classif", "classif.multi", "regr", "surv", "costsens", "cluster"),
-  allowed.pred.types = c("response", "prob"),
+  allowed.pred.types = c("response", "prob", "se"),
   fun = function(task, model, pred, feats, extra.args) {
     length(model$features) / sum(pred$task.desc$n.feat)
   }
@@ -100,7 +100,7 @@ featperc = makeMeasure(id = "featperc", minimize = TRUE, best = 0, worst = 1,
 #' @format none
 timetrain = makeMeasure(id = "timetrain", minimize = TRUE, best = 0, worst = Inf,
   properties = c("classif", "classif.multi", "regr", "surv", "costsens", "cluster"),
-  allowed.pred.types = c("response", "prob"),
+  allowed.pred.types = c("response", "prob", "se"),
   fun = function(task, model, pred, feats, extra.args) {
     model$time
   }
@@ -112,7 +112,7 @@ timetrain = makeMeasure(id = "timetrain", minimize = TRUE, best = 0, worst = Inf
 #' @format none
 timepredict = makeMeasure(id = "timepredict", minimize = TRUE, best = 0, worst = Inf,
   properties = c("classif", "classif.multi", "regr", "surv", "costsens", "cluster"),
-  allowed.pred.types = c("response", "prob"),
+  allowed.pred.types = c("response", "prob", "se"),
   fun = function(task, model, pred, feats, extra.args) {
     pred$time
   }
@@ -124,7 +124,7 @@ timepredict = makeMeasure(id = "timepredict", minimize = TRUE, best = 0, worst =
 #' @format none
 timeboth = makeMeasure(id = "timeboth", minimize = TRUE, best = 0, worst = Inf,
   properties = c("classif", "classif.multi", "regr", "surv", "costsens", "cluster"),
-  allowed.pred.types = c("response", "prob"),
+  allowed.pred.types = c("response", "prob", "se"),
   fun = function(task, model, pred, feats, extra.args) {
     model$time + pred$time
   }
