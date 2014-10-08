@@ -16,4 +16,7 @@ test_that("Learner", {
   expect_error(makeLearner("regr.lm", predict.type = "prob"), "'predict.type'")
   wl = makeLearner("classif.lvq1")
   expect_error(setPredictType(wl, "prob"), "Trying to predict probs, but")
+
+  wl = makeLearner("regr.lm", config = list(on.learner.error = "quiet"))
+  expect_equal(wl$config$on.learner.error, "quiet")
 })

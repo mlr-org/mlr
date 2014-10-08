@@ -32,6 +32,9 @@
 #'   \code{...} take precedence over values in this list. We strongly
 #'   encourage you to use one or the other to pass (hyper)parameters
 #'   to the learner but not both.
+#' @param config [\code{named list}]\cr
+#'   Named list of config option to overwrite global settings set via \code{\link{configureMlr}}
+#'   for this specific learner.
 #' @return [\code{\link{Learner}}].
 #' @export
 #' @aliases Learner
@@ -41,7 +44,7 @@
 #' makeLearner("classif.lda", predict.type = "prob")
 #' lrn = makeLearner("classif.lda", method = "t", nu = 10)
 #' print(lrn$par.vals)
-makeLearner = function(cl, id = cl, predict.type = "response", fix.factors = FALSE, ..., par.vals = list()) {
+makeLearner = function(cl, id = cl, predict.type = "response", fix.factors = FALSE, ..., par.vals = list(), config = list()) {
   assertString(cl)
   assertFlag(fix.factors)
   constructor = getS3method("makeRLearner", class = cl)
@@ -52,6 +55,7 @@ makeLearner = function(cl, id = cl, predict.type = "response", fix.factors = FAL
     wl$id = id
   }
   assertList(par.vals)
+  assertList(config, names = "named")
   if (!nzchar(cl))
     stop("Cannot create learner from empty string!")
   if (!inherits(wl, "RLearner"))
@@ -59,6 +63,7 @@ makeLearner = function(cl, id = cl, predict.type = "response", fix.factors = FAL
   wl = setHyperPars(learner = wl, ..., par.vals = par.vals)
   wl = setPredictType(learner = wl, predict.type = predict.type)
   wl$fix.factors = fix.factors
+  wl$config = config
   return(wl)
 }
 

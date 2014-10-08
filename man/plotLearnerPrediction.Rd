@@ -74,7 +74,7 @@ The ggplot2 object.
 Trains the model for 1 or 2 selected features, then displays it via \code{\link[ggplot2]{ggplot}}.
 Good for teaching or exploring models.
 
-For classification, only 2D plots are supported. The data points, the classification and
+For classification and clustering, only 2D plots are supported. The data points, the classification and
 potentially through color alpha blending the posterior probabilities are shown.
 
 For regression, 1D and 2D plots are supported. 1D shows the data, the estimated mean and potentially

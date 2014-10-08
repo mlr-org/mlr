@@ -3,7 +3,7 @@
 \alias{setHyperPars}
 \title{Set the hyperparameters of a learner object.}
 \usage{
-setHyperPars(learner, ..., par.vals)
+setHyperPars(learner, ..., par.vals = list())
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
