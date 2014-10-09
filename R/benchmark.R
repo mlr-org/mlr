@@ -89,10 +89,10 @@ benchmark = function(learners, tasks, resamplings, measures, show.info = getMlrO
 #'
 #' Container for results of benchmarked experiments using \code{\link{benchmark}}.
 #' The structure of the object itself is rather complicated, it is recommended to
-#' retrive required information via \code{link{getAggrPerformances}}, \code{link{getPredictions}},
+#' retrive required information via \code{\link{getAggrPerformances}}, \code{\link{getPredictions}},
 #' \code{\link{getPerformances}}, \code{\link{getFeatSelResult}}, \code{\link{getTuneResult}} or
 #' \code{\link{getFilterResult}}. Alternatively, you can convert the object using
-#' \code{\link[base]{as.data.frame}}
+#' \code{\link[base]{as.data.frame}}.
 #'
 #' @name BenchmarkResult
 #' @rdname BenchmarkResult
