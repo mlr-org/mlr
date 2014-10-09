@@ -26,14 +26,14 @@ Encoding: UTF-8
 Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 3.0.0),
-    ParamHelpers (>= 1.2),
+    ParamHelpers (>= 1.4),
     BBmisc (>= 1.7),
     stats
 Imports:
     parallelMap (>= 1.1),
     codetools,
     survival,
-    checkmate (>= 1.1)
+    checkmate (>= 1.4)
 Suggests:
     testthat,
     ada,
