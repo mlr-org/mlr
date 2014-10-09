@@ -15,7 +15,7 @@
 #'  For \dQuote{costsens} ist has length 0, as there is no target column, but a cost matrix instead.}
 #' \item{size [\code{integer(1)}]}{Number of cases in data set.}
 #' \item{n.feat [\code{integer(2)}]}{Number of features, named vector with entries:
-#'   \dQuote{numerics}, \dQuote{factors}.}
+#'   \dQuote{numerics}, \dQuote{factors}, \dQuote{ordered}.}
 #' \item{has.missings [\code{logical(1)}]}{Are missing values present?}
 #' \item{has.weights [\code{logical(1)}]}{Are weights specified for each observation?}
 #' \item{has.blocking [\code{logical(1)}]}{Is a blocking factor for cases available in the task?}
@@ -39,7 +39,11 @@ makeTaskDescInternal = function(task, type, id, target, ...) {
   # get classes of feature cols
   cl = vapply(data, function(x) head(class(x), 1L), character(1L))
   cl = dropNamed(cl, target)
-  n.feat = c(numerics = sum(cl %in% c("integer", "numeric")), factors = sum(cl == "factor"))
+  n.feat = c(
+    numerics = sum(cl %in% c("integer", "numeric")),
+    factors = sum(cl == "factor"),
+    ordered = sum(cl == "ordered")
+  )
   makeS3Obj("TaskDesc",
     id = id,
     type = type,

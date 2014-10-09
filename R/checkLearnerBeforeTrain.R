@@ -26,6 +26,11 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
     stopf("Task '%s' has factor inputs in '%s', but learner '%s' does not support that!", td$id, wrong.cols, learner$id)
   }
 
+  if (td$n.feat["ordered"] > 0L && !hasProperties(learner, "ordered")) {
+    wrong.cols = getColNames(task, is.factor)
+    stopf("Task '%s' has ordered factor inputs in '%s', but learner '%s' does not support that!", td$id, wrong.cols, learner$id)
+  }
+
   if (!(missing(weights) || is.null(weights)) && !hasProperties(learner, "weights")) {
     stopf("Weights vector passed to train, but learner '%s' does not support that!", learner$id)
   }

@@ -96,6 +96,7 @@ listLearners.Task = function(obj, properties = character(0L),
   props = character(0L)
   if (td$n.feat["numerics"] > 0L) props = c(props, "numerics")
   if (td$n.feat["factors"] > 0L) props = c(props, "factors")
+  if (td$n.feat["ordered"] > 0L) props = c(props, "ordered")
   if (td$has.missings) props = c(props, "missings")
   if (td$type == "classif") {
     if (length(td$class.levels) == 1L) props = c(props, "oneclass")
