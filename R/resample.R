@@ -103,7 +103,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   if (n != r)
     stop(paste("Size of data set:", n, "and resampling instance:", r, "differ!"))
 
-  checkTaskCreationLearner(task, learner, weights)
+  checkLearnerBeforeTrain(task, learner, weights)
 
   rin = resampling
   more.args = list(learner = learner, task = task, rin = rin, weights = NULL,
