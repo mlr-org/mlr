@@ -8,6 +8,11 @@
 #' @param method [\code{character(1)}]\cr
 #'   See \code{\link{listFilterMethods}}.
 #'   Default is \dQuote{rf.importance}.
+#' @param fval [\code{\link{FilterValues}}]\cr
+#'   Result of \code{\link{getFilterValues}}.
+#'   If you pass this, the filter values in the object are used for feature filtering.
+#'   \code{method} and \code{...} are ignored then.
+#'   Default is \code{NULL} and not used.
 #' @param select [\code{character(1)}]\cr
 #'   How to select top-scoring features.
 #'   \dQuote{perc} = select top-scoring percentage, \dQuote{abs} = select absolute number
@@ -22,17 +27,22 @@
 #' @template ret_task
 #' @export
 #' @family filter
-filterFeatures = function(task, method = "rf.importance", select = "perc", val, ...) {
+filterFeatures = function(task, method = "rf.importance", fval = NULL, select = "perc", val, ...) {
+  assertClass(task, "SupervisedTask")
   assertChoice(method, choices = ls(.FilterRegister))
   checkFilterArguments(select = select, val = val)
-
   p = getTaskNFeats(task)
   nselect = switch(select,
     perc = round(val * p),
     abs = min(val, p),
     threshold = p
   )
-  fval = getFilterValues(task = task, method = method, nselect = nselect, ...)$data
+
+  if (is.null(fval)) {
+    fval = getFilterValues(task = task, method = method, nselect = nselect, ...)$data
+  } else {
+    assertClass(fval, "FilterResult")
+  }
   if (select == "threshold")
     nselect = sum(fval$val >= val, na.rm = TRUE)
   features = as.character(head(sortByCol(fval, "val", asc = FALSE)$name, nselect))
