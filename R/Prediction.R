@@ -143,7 +143,7 @@ makePrediction.TaskDescCostSens = function(task.desc, row.names, id, truth, pred
 
 #' @export
 print.Prediction = function(x, ...) {
-  catf("Prediction:")
+  catf("Prediction: %i observations", nrow(x$data))
   catf("predict.type: %s", x$predict.type)
   catf("threshold: %s", collapse(sprintf("%s=%.2f", names(x$threshold), x$threshold)))
   catf("time: %.2f", x$time)
