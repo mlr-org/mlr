@@ -95,4 +95,15 @@ test_that("predict preserves rownames", {
   expect_equal(rownames(as.data.frame(p)), as.character(nrow(data) - 1L))
 })
 
+test_that("setThreshold does not produce NAs for extreme thresholds", {
+  # we had bug / issue 168 here
+  data(GermanCredit, package = "caret")
+  credit.task = makeClassifTask(data = GermanCredit, target = "Class")
+  lrn = makeLearner("classif.rpart", predict.type = "prob")
+  mod = train(lrn, credit.task)
+  p1 = predict(mod, task = credit.task)
+  p2 = setThreshold(pred, 0)
+  expect_true(!any(is.na(p2$data$response)))
+})
+
 

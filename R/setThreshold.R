@@ -1,5 +1,6 @@
-#' Set threshold of prediction object.
+#' @title Set threshold of prediction object.
 #'
+#' @description
 #' Set threshold of prediction object for classification.
 #' Creates corresponding discrete class response for the newly set threshold.
 #' For binary classification: The positive class is predicted if the probability value exceeds the threshold.
@@ -48,8 +49,12 @@ setThreshold = function(pred, threshold) {
   p = getProbabilities(pred, cl = levs)
   # resort so we have same order in threshold and p
   threshold = threshold[levs]
-  #FIXME: use BBmisc functuion for max.col here
-  pred$data$response = factor(max.col(t(t(p) / threshold)), levels = seq_along(levs), labels = levs)
+  # divide all rows by threshold then get max el
+  p = sweep(as.matrix(p), MARGIN = 2, FUN = "/", threshold)
+  # 0 / 0 can produce NaNs. For a 0 threshold we always want Inf weight for that class
+  p[is.nan(p)] = Inf
+  ind = getMaxIndexOfRows(p)
+  pred$data$response = factor(ind, levels = seq_along(levs), labels = levs)
   pred$threshold = threshold
   return(pred)
 }
