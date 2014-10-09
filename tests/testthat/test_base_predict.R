@@ -102,7 +102,7 @@ test_that("setThreshold does not produce NAs for extreme thresholds", {
   lrn = makeLearner("classif.rpart", predict.type = "prob")
   mod = train(lrn, credit.task)
   p1 = predict(mod, task = credit.task)
-  p2 = setThreshold(pred, 0)
+  p2 = setThreshold(p2, 0)
   expect_true(!any(is.na(p2$data$response)))
 })
 
