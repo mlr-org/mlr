@@ -1,4 +1,4 @@
-checkTaskCreationLearner = function(task, learner, weights) {
+checkLearnerBeforeTrain = function(task, learner, weights) {
   getColNames =  function(task, property){
     .data = getTaskData(task)
     has.it = vlapply(.data, function(x) any(property(x)))
