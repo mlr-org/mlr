@@ -17,7 +17,7 @@ makeRLearner.classif.rpart = function() {
       makeUntypedLearnerParam(id = "parms")
     ),
     par.vals = list(xval = 0L),
-    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights"),
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "ordered", "prob", "weights"),
     name = "Decision Tree",
     short.name = "rpart",
     note = "`xval` has been set to 0 by default for speed."

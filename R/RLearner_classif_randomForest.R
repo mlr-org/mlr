@@ -17,7 +17,7 @@ makeRLearner.classif.randomForest = function() {
       makeLogicalLearnerParam(id = "norm.votes", default = TRUE),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob"),
     name = "Random Forest",
     short.name = "rf"
     )
