@@ -5,7 +5,7 @@
 \title{Create learner object.}
 \usage{
 makeLearner(cl, id = cl, predict.type = "response", fix.factors = FALSE,
-  ..., par.vals = list())
+  ..., par.vals = list(), config = list())
 }
 \arguments{
 \item{cl}{[\code{character(1)}]\cr
@@ -46,6 +46,10 @@ Optional list of named (hyper)parameters. The arguments in
 \code{...} take precedence over values in this list. We strongly
 encourage you to use one or the other to pass (hyper)parameters
 to the learner but not both.}
+
+\item{config}{[\code{named list}]\cr
+Named list of config option to overwrite global settings set via \code{\link{configureMlr}}
+for this specific learner.}
 }
 \value{
 [\code{\link{Learner}}].

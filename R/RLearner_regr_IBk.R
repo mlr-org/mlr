@@ -12,7 +12,7 @@ makeRLearner.regr.IBk = function() {
       makeLogicalLearnerParam(id = "X"),
       makeUntypedLearnerParam(id = "A", default = "weka.core.neighboursearch.LinearNNSearch")
     ),
-    properties = c("numerics", "factors", "prob"),
+    properties = c("numerics", "factors"),
     name = "K-Nearest Neighbours",
     short.name = "ibk",
     note = ""
@@ -27,7 +27,5 @@ trainLearner.regr.IBk = function(.learner, .task, .subset, .weights = NULL,  ...
 
 #' @export
 predictLearner.regr.IBk = function(.learner, .model, .newdata, ...) {
-  # FIXME: cannot be correct! prob?
-  type = switch(.learner$predict.type, prob = "prob", "class")
-  predict(.model$learner.model, newdata = .newdata, type = type, ...)
+  predict(.model$learner.model, newdata = .newdata, type = "class", ...)
 }

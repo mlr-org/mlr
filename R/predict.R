@@ -97,25 +97,19 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
     debug.seed = getMlrOption("debug.seed", NULL)
     if (!is.null(debug.seed))
       set.seed(debug.seed)
-    opt.ole = getMlrOption("on.learner.error")
-    if (getMlrOption("show.learner.output"))
-      fun1 = identity
-    else
-      fun1 = capture.output
-    if (opt.ole == "stop")
-      fun2 = identity
-    else
-      fun2 = function(x) try(x, silent = TRUE)
-    old.warn.opt = getOption("warn")
-    on.exit(options(warn = old.warn.opt))
-    if (getMlrOption("on.learner.warning") == "quiet") {
+    opts = getLearnerOptions(learner, c("show.learner.output", "on.learner.error", "on.learner.warning"))
+    fun1 = if (opts$show.learner.output) identity else capture.output
+    fun2 = if (opts$on.learner.error == "stop") identity else function(x) try(x, silent = TRUE)
+    if (opts$on.learner.warning == "quiet") {
+      old.warn.opt = getOption("warn")
+      on.exit(options(warn = old.warn.opt))
       options(warn = -1L)
     }
     st = system.time(fun1(p <- fun2(do.call(predictLearner2, pars))), gcFirst = FALSE)
     time.predict = as.numeric(st[3L])
     # was there an error during prediction?
     if (is.error(p)) {
-      if (opt.ole == "warn")
+      if (opts$on.learner.warning == "warn")
         warningf("Could not predict with learner %s: %s", learner$id, as.character(p))
       p = predictFailureModel(model, newdata)
       time.predict = NA_real_

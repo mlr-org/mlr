@@ -15,11 +15,6 @@ removeFromDots = function(ns, ...) {
   args[setdiff(names(args), ns)]
 }
 
-
-filterNull = function(x) {
-  x[!vlapply(x, is.null)]
-}
-
 attachTrainingInfo = function(x, info) {
   attr(x, "mlr.train.info") = info
   x
@@ -29,10 +24,11 @@ getTrainingInfo = function(x) {
   attr(x, "mlr.train.info")
 }
 
-isNotSet = function(x) {
-  missing(x) || is.null(x)
+"%??%" = function(lhs, rhs) {
+  if (is.null(lhs)) rhs else lhs
 }
 
-isSet = function(x) {
-  !isNotSet(x)
+getLearnerOptions = function(lrn, opts) {
+  lrn.opts = getLeafLearner(lrn)$config
+  setNames(lapply(opts, function(x) lrn.opts[[x]] %??% getMlrOption(x)), opts)
 }

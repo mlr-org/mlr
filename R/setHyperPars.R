@@ -16,22 +16,12 @@
 #' print(cl1)
 #' # note the now set and altered hyperparameters:
 #' print(cl2)
-setHyperPars = function(learner, ..., par.vals) {
-  assertClass(learner, classes = "Learner")
+setHyperPars = function(learner, ..., par.vals = list()) {
   args = list(...)
-  if (missing(par.vals)) {
-    par.vals = list()
-  } else {
-    assertList(par.vals)
-    if(!isProperlyNamed(par.vals))
-      stop("All parameter settings have to be named arguments!")
-  }
-  if (length(args)) {
-    if(!isProperlyNamed(args))
-      stop("All parameter settings have to be named arguments!")
-    par.vals = insert(par.vals, args)
-  }
-  setHyperPars2(learner, par.vals)
+  assertClass(learner, classes = "Learner")
+  assertList(args, names = "named", .var.name = "parameter settings")
+  assertList(par.vals, names = "named", .var.name = "parameter settings")
+  setHyperPars2(learner, insert(par.vals, args))
 }
 
 #' Only exported for internal use.
@@ -48,6 +38,7 @@ setHyperPars2 = function(learner, par.vals) {
 setHyperPars2.Learner = function(learner, par.vals) {
   ns = names(par.vals)
   pars = learner$par.set$pars
+  opwd = getLearnerOptions(learner, "on.par.without.desc")[[1L]]
   for (i in seq_along(par.vals)) {
     n = ns[i]
     p = par.vals[[i]]
@@ -55,7 +46,6 @@ setHyperPars2.Learner = function(learner, par.vals) {
     if (is.null(pd)) {
       # no description: stop warn or quiet
       msg = sprintf("%s: Setting parameter %s without available description object!\nYou can switch off this check by using configureMlr!", learner$id, n)
-      opwd = getOption("mlr.on.par.without.desc")
       if (opwd == "stop")
         stop(msg)
       if (opwd == "warn")
@@ -74,4 +64,3 @@ setHyperPars2.Learner = function(learner, par.vals) {
   }
   return(learner)
 }
-
