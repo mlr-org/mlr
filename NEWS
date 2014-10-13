@@ -29,7 +29,7 @@ mlr_2.2:
   contained accented letters
 - We dropped the data.frame version of some preprocessing operations like mergeFactorLevelsBySize,
   joinClassLevels and removeConstantFeatures for consistency. These now always require tasks as input.
-- We support a pretty generic framework for stacking / super-learning now
+- We support a pretty generic framework for stacking / super-learning now, see makeStackedLearner
 - imbalancy correction + smote:
   -- fix a bug in "smote" when only factor features are present
   -- change to oversampling: sample new observations only (with replacement)

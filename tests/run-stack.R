@@ -1,2 +1,4 @@
 library(testthat)
-test_check("mlr", filter = "stack")
+if (identical(Sys.getenv("TRAVIS"), "true")) {
+  test_check("mlr", filter = "stack")
+}
