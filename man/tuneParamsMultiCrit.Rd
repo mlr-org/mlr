@@ -51,7 +51,7 @@ ps = makeParamSet(
   makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
   makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x)
 )
-ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 5L)
+ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 1L)
 res = tuneParamsMultiCrit(lrn, sonar.task, rdesc, par.set = ps,
   measures = list(tpr, fpr), control = ctrl)
 plotTuneMultiCritResult(res, path = TRUE)
