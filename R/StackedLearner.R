@@ -1,9 +1,9 @@
 #' @title Create a stacked learner object.
 #'
 #' @description A stacked learner uses predictions of several base learners and fits
-#' a super learner using these predictions as features in order to predict the outcome. 
+#' a super learner using these predictions as features in order to predict the outcome.
 #' The following stacking methods are available:
-#' 
+#'
 #'  \describe{
 #'   \item{\code{average}}{Averaging of base learner predictions without weights.}
 #'   \item{\code{stack.nocv}}{Fits the super learner, where in-sample predictions of the base learners are used.}
@@ -17,21 +17,21 @@
 #'   The super learner that makes the final prediction based on the base learners.
 #'   If you pass a string, the super learner will be created via \code{makeLearner}.
 #'   Not used for \code{method = 'average'}. Default is \code{NULL}.
-#' @param predict.type [\code{character(1)}]\cr 
+#' @param predict.type [\code{character(1)}]\cr
 #'   Sets the type of the final prediction for \code{method = 'average'}.
 #'   For other methods, the predict type should be set within \code{super.learner}.
 #'   If the type of the base learner prediction, which is set up within \code{base.learners}), is
 #'   \describe{
-#'    \item{\code{"prob"}}{then \code{predict.type = 'prob'} will use the average of all 
+#'    \item{\code{"prob"}}{then \code{predict.type = 'prob'} will use the average of all
 #'    bease learner predictions and \code{predict.type = 'response'} will use
 #'    the class with highest probability as final prediction.}
 #'    \item{\code{"response"}}{then, for classification tasks with \code{predict.type = 'prob'},
-#'    the final prediction will be the relative frequency based on the predicted base learner classes 
+#'    the final prediction will be the relative frequency based on the predicted base learner classes
 #'    and classification tasks with \code{predict.type = 'response'} will use majority vote of the base
 #'    learner predictions to determine the final prediction.
 #'    For regression tasks, the final prediction will be the average of the base learner predictions.}
 #'   }
-#'   
+#'
 #' @param method [\code{character(1)}]\cr
 #'   \dQuote{average} for averaging the predictions of the base learners,
 #'   \dQuote{stack.nocv} for building a super learner using the predictions of the base learners and
@@ -46,7 +46,7 @@
 #'   Currently only CV is allowed for resampling.
 #'   The default \code{NULL} uses 5-fold CV.
 #' @export
-makeStackedLearner = function(base.learners, super.learner = NULL, predict.type = NULL, 
+makeStackedLearner = function(base.learners, super.learner = NULL, predict.type = NULL,
   method = "stack.nocv", use.feat = FALSE, resampling = NULL) {
 
   if (is.character(base.learners)) base.learners = lapply(base.learners, checkLearner)
@@ -54,7 +54,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
     super.learner = checkLearner(super.learner)
     if (!is.null(predict.type)) super.learner = setPredictType(super.learner, predict.type)
   }
-  
+
   baseType = unique(extractSubList(base.learners, "type"))
   if (!is.null(resampling) & method != "stack.cv") {
     stop("No resampling needed for this method")
@@ -67,7 +67,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
   assertClass(resampling, "ResampleDesc")
 
   pts = unique(extractSubList(base.learners, "predict.type"))
-  if ("se"%in%pts | (!is.null(predict.type) && predict.type == "se") | 
+  if ("se"%in%pts | (!is.null(predict.type) && predict.type == "se") |
         (!is.null(super.learner) && super.learner$predict.type == "se"))
     stop("Predicting standard errors currently not supported.")
   if (length(pts) > 1L)
@@ -109,23 +109,23 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
 # FIXME: see FIXME in predict.StackedLearner I don't know how to make it better.
 #'
 #' @title Returns the predictions for each base learner.
-#' 
+#'
 #' @description Returns the predictions for each base learner.
-#' 
+#'
 #' @param model [\code{WrappedModel}]\cr Wrapped model, result of train.
-#' @param newdata [\code{data.frame}]\cr 
-#' New observations, for which the predictions using the specified base learners should be returned. 
-#' Default is \code{NULL} and extracts the base learner predictions that were made during the training. 
-#' 
+#' @param newdata [\code{data.frame}]\cr
+#' New observations, for which the predictions using the specified base learners should be returned.
+#' Default is \code{NULL} and extracts the base learner predictions that were made during the training.
+#'
 #' @details None.
-#' 
+#'
 #' @export
-#' 
-getBaseLearnerPredictions = function(model, newdata = NULL) {
+#'
+getStackedBaseLearnerPredictions = function(model, newdata = NULL) {
   # get base learner and predict type
   bms = model$learner.model$base.models
   method = model$learner.model$method
-  
+
   if (is.null(newdata)) {
     probs = model$learner.model$pred.train
   } else {
@@ -136,7 +136,7 @@ getBaseLearnerPredictions = function(model, newdata = NULL) {
       pred = predict(bms[[i]], newdata = newdata)
       probs[[i]] = getResponse(pred, full.matrix = ifelse(method == "average", TRUE, FALSE))
     }
-    
+
     names(probs) = sapply(bms, function(X) X$learner$id) #names(.learner$base.learners)
   }
   return(probs)
@@ -158,7 +158,7 @@ trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
   )
 }
 
-# FIXME: if newdata is the same data that was also used by training, then getBaseLearnerPrediction 
+# FIXME: if newdata is the same data that was also used by training, then getBaseLearnerPrediction
 # won't use the crossvalidated predictions (for method = "stack.cv").
 #' @export
 predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
@@ -178,7 +178,7 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
 
   # predict prob vectors with each base model
-  probs = getBaseLearnerPredictions(model = .model, newdata = .newdata)
+  probs = getStackedBaseLearnerPredictions(model = .model, newdata = .newdata)
 
   if (.learner$method == "average") {
     if (bms.pt == "prob") {
@@ -252,12 +252,12 @@ averageBaseLearners = function(learner, task) {
     bl = bls[[i]]
     model = train(bl, task)
     base.models[[i]] = model
-    # 
+    #
     pred = predict(model, task = task)
     probs[[i]] = getResponse(pred, full.matrix = TRUE)
   }
   names(probs) = names(bls)
-  list(method="average", base.models = base.models, super.model = NULL, 
+  list(method = "average", base.models = base.models, super.model = NULL,
        pred.train = probs)
 }
 
@@ -278,7 +278,7 @@ stackNoCV = function(learner, task) {
   names(probs) = names(bls)
 
   pred.train = probs
-  
+
   if (type == "regr" | type == "classif") {
     probs = as.data.frame(probs)
   } else {
@@ -298,7 +298,7 @@ stackNoCV = function(learner, task) {
     super.task = makeSuperLearnerTask(learner, data = probs, target = task$task.desc$target)
   }
   super.model = train(learner$super.learner, super.task)
-  list(method="stack.no.cv", base.models = base.models, 
+  list(method = "stack.no.cv", base.models = base.models,
        super.model = super.model, pred.train = pred.train)
 }
 
@@ -319,7 +319,7 @@ stackCV = function(learner, task) {
     base.models[[i]] = train(bl, task)
   }
   names(probs) = names(bls)
-  
+
   if (type == "regr" | type == "classif") {
     probs = as.data.frame(probs)
   } else {
@@ -329,9 +329,9 @@ stackCV = function(learner, task) {
   # add true target column IN CORRECT ORDER
   tn = task$task.desc$target
   test.inds = unlist(rin$test.inds)
-  
+
   pred.train = as.list(probs[order(test.inds), , drop = FALSE])
-  
+
   probs[[tn]] = getTaskTargets(task)[test.inds]
 
   # now fit the super learner for predicted_probs --> target
@@ -346,7 +346,7 @@ stackCV = function(learner, task) {
     super.task = makeSuperLearnerTask(learner, data = probs, target = tn)
   }
   super.model = train(learner$super.learner, super.task)
-  list(method="stack.cv", base.models = base.models, 
+  list(method = "stack.cv", base.models = base.models,
        super.model = super.model, pred.train = pred.train)
 }
 

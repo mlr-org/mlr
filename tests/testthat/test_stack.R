@@ -6,20 +6,20 @@ checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
     super = makeLearner(super, predict.type = sm.pt)
     # sm.pt = NULL
   }
-  
+
   slrn = makeStackedLearner(base, super, method = method, use.feat = use.feat, predict.type = sm.pt)
   tr = train(slrn, task)
   pr = predict(tr, task)
-  
+
   if (sm.pt == "prob") {
     expect_equal(ncol(pr$data[,grepl("prob", colnames(pr$data))]),
-                 length(task$task.desc$class.levels))
+      length(task$task.desc$class.levels))
   }
-  
+
   if (method != "stack.cv") {
     expect_equal(
-      getBaseLearnerPredictions(tr),
-      getBaseLearnerPredictions(tr, newdata=getTaskData(task))
+      getStackedBaseLearnerPredictions(tr),
+      getStackedBaseLearnerPredictions(tr, newdata = getTaskData(task))
     )
   }
 }
@@ -41,7 +41,7 @@ test_that("Stacking works", {
       for (use.feat in ufs) {
         for (sm.pt in pts) {
           for (bms.pt in pts) {
-            #cat(task$task.desc$type, task$task.desc$id, method, use.feat, sm.pt, bms.pt, fill=TRUE)
+            #cat(task$task.desc$type, task$task.desc$id, method, use.feat, sm.pt, bms.pt, fill = TRUE)
             checkStack(task, method, base, super, bms.pt, sm.pt, use.feat)
           }
         }
