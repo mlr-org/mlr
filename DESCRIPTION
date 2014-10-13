@@ -1,5 +1,5 @@
 Package: mlr
-Title: mlr: Machine Learning in R.
+Title: Machine Learning in R.
 Description: Interface to a large number of classification and regression
     techniques, including machine-readable parameter descriptions. There is
     also an experimental extension for survival analysis, clustering and

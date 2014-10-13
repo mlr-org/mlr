@@ -56,8 +56,11 @@ Note that for general cost-sensitive learning, mlr currently supports mainly
 which are not listed, as they are not basic R learning algorithms.
 }
 \examples{
+\dontrun{
+listLearners("classif", properties = c("multiclass", "prob"))
 data = iris
 task = makeClassifTask(data = data, target = "Species")
 listLearners(task)
+}
 }
 
