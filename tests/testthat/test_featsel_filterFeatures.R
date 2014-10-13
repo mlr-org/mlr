@@ -11,6 +11,10 @@ test_that("filterFeatures", {
   expect_equal(ns, feat.imp$data$name)
   f = filterFeatures(binaryclass.task, method = "chi.squared", select = "abs", val = 5L)
   expect_equal(getTaskFeatureNames(f), head(sortByCol(feat.imp$data, "val", asc = FALSE), 5L)$name)
+  # now check that we get the same result by operating on getFilterValues
+  feat.imp = getFilterValues(binaryclass.task)
+  ff = filterFeatures(binaryclass.task, fval = feat.imp, select = "abs", val = 5L)
+  expect_equal(f, ff)
 
   f1 = filterFeatures(multiclass.task, select = "abs", val = round(0.5 * ncol(multiclass.df)))
   f2 = filterFeatures(multiclass.task, val = 0.5)
@@ -33,7 +37,7 @@ test_that("filterFeatures", {
   expect_true(setequal(names(res), c("classif.rpart.filtered", "classif.randomForest.filtered")))
   res = res[[1]]
   expect_is(res[[1]], "FilterResult")
-  
+
   ## Loop through all filters
   filter.list = listFilterMethods(desc = FALSE, tasks = TRUE, features = FALSE)
   filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
@@ -45,7 +49,7 @@ test_that("filterFeatures", {
   for (filter in filter.list.regr) {
     filterFeatures(task = regr.num.task, method = filter, val = 0.5)
   }
-  
+
   ## extra test of univariate filter
   filterFeatures(task = multiclass.task, method = "univariate", val = 0.5, learner = makeLearner("classif.rpart"), measures = mmce)
 })

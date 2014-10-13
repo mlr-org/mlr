@@ -41,7 +41,8 @@ filterFeatures = function(task, method = "rf.importance", fval = NULL, select = 
   if (is.null(fval)) {
     fval = getFilterValues(task = task, method = method, nselect = nselect, ...)$data
   } else {
-    assertClass(fval, "FilterResult")
+    assertClass(fval, "FilterValues")
+    fval = fval$data
   }
   if (select == "threshold")
     nselect = sum(fval$val >= val, na.rm = TRUE)

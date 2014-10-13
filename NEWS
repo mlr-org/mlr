@@ -27,6 +27,7 @@ mlr_2.2:
 - the whole object-oriented structure behind feature filtering was much improved
 - fixed a bug in filter methods of the FSelector package that caused an error when variable names
   contained accented letters
+- filterFeatures can now be also applied to the result of getFilterValues
 - We dropped the data.frame version of some preprocessing operations like mergeFactorLevelsBySize,
   joinClassLevels and removeConstantFeatures for consistency. These now always require tasks as input.
 - We support a pretty generic framework for stacking / super-learning now, see makeStackedLearner
