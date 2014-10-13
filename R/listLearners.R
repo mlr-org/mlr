@@ -27,9 +27,12 @@
 #' @return [\code{character} | \code{list} of \code{\link{Learner}}]. Class names of matching
 #'   learners or instantiated objects.
 #' @examples
+#' \dontrun{
+#' listLearners("classif", properties = c("multiclass", "prob"))
 #' data = iris
 #' task = makeClassifTask(data = data, target = "Species")
 #' listLearners(task)
+#' }
 #' @export
 listLearners  = function(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, create = FALSE) {

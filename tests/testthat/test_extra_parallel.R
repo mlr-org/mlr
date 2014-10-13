@@ -7,7 +7,7 @@ test_that("parallel resampling", {
     lrn = makeLearner("classif.rpart")
     rdesc = makeResampleDesc("CV", iters = 2L)
     on.exit(parallelStop())
-    parallelStart(mode = mode, cpus = 2L, level = level)
+    parallelStart(mode = mode, cpus = 2L, level = level, show.info = FALSE)
     r = resample(lrn, multiclass.task, rdesc)
     expect_true(!is.na(r$aggr[1]))
   }
@@ -29,7 +29,7 @@ test_that("parallel tuning", {
     ps = makeParamSet(makeDiscreteParam("cp", values = c(0.01, 0.05)))
     ctrl = makeTuneControlGrid()
     on.exit(parallelStop())
-    parallelStart(mode = mode, cpus = 2L, level = level)
+    parallelStart(mode = mode, cpus = 2L, level = level, show.info = FALSE)
     res = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
     expect_true(!is.na(res$y))
   }
@@ -50,7 +50,7 @@ test_that("parallel featsel", {
     rdesc = makeResampleDesc("CV", iters = 2L)
     ctrl = makeFeatSelControlRandom(maxit = 2L)
     on.exit(parallelStop())
-    parallelStart(mode = mode, cpus = 2L, level = level)
+    parallelStart(mode = mode, cpus = 2L, level = level, show.info = FALSE)
     res = selectFeatures(lrn, multiclass.task, rdesc, control = ctrl)
     expect_true(!is.na(res$y))
   }
@@ -74,7 +74,7 @@ test_that("parallel exporting of options works", {
     rdesc = makeResampleDesc("CV", iters = 3)
     configureMlr(on.learner.error = "warn")
     on.exit(configureMlr(on.learner.error = "stop"))
-    parallelStart(mode = mode, cpus = 2L, level = level)
+    parallelStart(mode = mode, cpus = 2L, level = level, show.info = FALSE)
     on.exit(parallelStop())
     # if the option is not exported, we cannot pass the next line without error on slave
     r = resample(lrn, task, rdesc)

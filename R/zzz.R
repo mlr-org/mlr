@@ -1,7 +1,8 @@
 #' @import BBmisc
+#' @import checkmate
 #' @import parallelMap
 #' @import ParamHelpers
-#' @import checkmate
+#' @import ggplot2
 #' @importFrom stats predict
 #' @importFrom codetools findGlobals
 #' @importFrom survival Surv

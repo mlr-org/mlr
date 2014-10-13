@@ -33,7 +33,8 @@ Imports:
     parallelMap (>= 1.1),
     codetools,
     survival,
-    checkmate (>= 1.4)
+    checkmate (>= 1.4),
+    ggplot2
 Suggests:
     testthat,
     ada,
@@ -59,7 +60,6 @@ Suggests:
     FSelector,
     gbm,
     GenSA,
-    ggplot2,
     glmnet,
     Hmisc,
     irace,

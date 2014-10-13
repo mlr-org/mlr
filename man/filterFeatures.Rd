@@ -3,7 +3,8 @@
 \alias{filterFeatures}
 \title{Filter features by thresholding filter values.}
 \usage{
-filterFeatures(task, method = "rf.importance", select = "perc", val, ...)
+filterFeatures(task, method = "rf.importance", fval = NULL,
+  select = "perc", val, ...)
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
@@ -12,6 +13,12 @@ The task.}
 \item{method}{[\code{character(1)}]\cr
 See \code{\link{listFilterMethods}}.
 Default is \dQuote{rf.importance}.}
+
+\item{fval}{[\code{\link{FilterValues}}]\cr
+Result of \code{\link{getFilterValues}}.
+If you pass this, the filter values in the object are used for feature filtering.
+\code{method} and \code{...} are ignored then.
+Default is \code{NULL} and not used.}
 
 \item{select}{[\code{character(1)}]\cr
 How to select top-scoring features.
