@@ -26,6 +26,6 @@ predictLearner.regr.kknn = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   f = getTaskFormula(.model$task.desc)
   pars = c(list(formula = f, train = m$data, test = .newdata), m$parset, list(...))
-  m = do.call(kknn, pars)
+  m = do.call(kknn::kknn, pars)
   return(m$fitted.values)
 }

@@ -34,7 +34,7 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
   f = getTaskFormula(.task)
   par.vals = .learner$par.vals
 
-  m = randomForest(f, data = getTaskData(.task, .subset), ...)
+  m = randomForest::randomForest(f, data = getTaskData(.task, .subset), ...)
 
   # we have to do some preprocessing here if we need the standard error
   if (.learner$predict.type == "se") {
@@ -53,7 +53,7 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
 
       # fit models on the bootstrap samples
       models = apply(samplesIdx, 2, function(bootstrapIdx) {
-        randomForest(f, data = train[bootstrapIdx,, drop = FALSE],...)
+        randomForest::randomForest(f, data = train[bootstrapIdx,, drop = FALSE],...)
       })
 
       # save models in attrribute

@@ -30,7 +30,7 @@ trainLearner.classif.plr = function(.learner, .task, .subset, .weights = NULL, c
   if (!is.null(.weights))
     args$weights = .weights
   args = c(args, list(...))
-  do.call(plr, args)
+  do.call(stepPlr::plr, args)
 }
 
 #' @export

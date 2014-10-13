@@ -41,9 +41,9 @@ trainLearner.regr.rvm = function(.learner, .task, .subset, .weights = NULL, degr
   kpar = learnerArgsToControl(list, degree, offset, scale, sigma, order, length, lambda, normalized)
   f = getTaskFormula(.task)
   if (base::length(kpar))
-    rvm(f, data = getTaskData(.task, .subset), kpar = kpar, ...)
+    kernlab::rvm(f, data = getTaskData(.task, .subset), kpar = kpar, ...)
   else
-    rvm(f, data = getTaskData(.task, .subset), ...)
+    kernlab::rvm(f, data = getTaskData(.task, .subset), ...)
 }
 
 #' @export

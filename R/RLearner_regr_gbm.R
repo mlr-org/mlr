@@ -25,10 +25,10 @@ trainLearner.regr.gbm = function(.learner, .task, .subset, .weights = NULL,  ...
   f = getTaskFormula(.task)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
-    gbm(f, data = getTaskData(.task, .subset), keep.data = FALSE, ...)
+    gbm::gbm(f, data = getTaskData(.task, .subset), keep.data = FALSE, ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
-    gbm(f, data = getTaskData(.task, .subset), keep.data = FALSE, weights = .weights, ...)
+    gbm::gbm(f, data = getTaskData(.task, .subset), keep.data = FALSE, weights = .weights, ...)
   }
 }
 

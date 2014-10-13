@@ -119,7 +119,7 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
   }
   else {
     # dist matrix on smaller class, diag = 0 so we dont find x as neighbor of x
-    minclass.dist = as.matrix(daisy(x.min, stand = standardize))
+    minclass.dist = as.matrix(cluster::daisy(x.min, stand = standardize))
     diag(minclass.dist) = NA
     # get n nearest neighbors, we have an index matrix now
     # nearneigh[7, 3] is 3rd nearest neighbor of observation 7

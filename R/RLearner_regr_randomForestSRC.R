@@ -22,7 +22,7 @@ makeRLearner.regr.randomForestSRC = function() {
 #' @export
 trainLearner.regr.randomForestSRC = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  rfsrc(f, data = getTaskData(.task, .subset), importance = "none", proximity = FALSE, forest = TRUE, ...)
+  randomForestSRC::rfsrc(f, data = getTaskData(.task, .subset), importance = "none", proximity = FALSE, forest = TRUE, ...)
 }
 
 #' @export

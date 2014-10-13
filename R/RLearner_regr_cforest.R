@@ -44,11 +44,11 @@ trainLearner.regr.cforest = function(.learner, .task, .subset, .weights = NULL,
                                      savesplitstats,...) {
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
-  ctrl = learnerArgsToControl(cforest_unbiased, ntree, mtry, replace, fraction,
+  ctrl = learnerArgsToControl(party::cforest_unbiased, ntree, mtry, replace, fraction,
                               trace, pvalue, teststat, testtype, mincriterion,
                               minprob, minsplit, minbucket, stump, randomsplits,
                               nresample, maxsurrogate, maxdepth, savesplitstats)
-  cforest(f, data = d, controls = ctrl, weights = .weights, ...)
+  party::cforest(f, data = d, controls = ctrl, weights = .weights, ...)
 }
 
 #' @export

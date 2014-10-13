@@ -15,8 +15,8 @@ makeRLearner.cluster.FarthestFirst = function() {
 
 #' @export
 trainLearner.cluster.FarthestFirst = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  ctrl = Weka_control(...)
-  FarthestFirst(getTaskData(.task, .subset), control = ctrl)
+  ctrl = RWeka::Weka_control(...)
+  RWeka::FarthestFirst(getTaskData(.task, .subset), control = ctrl)
 }
 
 #' @export

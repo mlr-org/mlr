@@ -28,17 +28,17 @@ trainLearner.classif.ctree = function(.learner, .task, .subset, .weights = NULL,
   mincriterion, minsplit, minbucket, stump, nresample, maxsurrogate, mtry,
   savesplitstats, maxdepth, ...) {
 
-  ctrl = learnerArgsToControl(ctree_control, teststat, testtype, mincriterion, minsplit,
+  ctrl = learnerArgsToControl(party::ctree_control, teststat, testtype, mincriterion, minsplit,
     minbucket, stump, nresample, maxsurrogate, mtry, savesplitstats, maxdepth)
   f = getTaskFormula(.task)
-  ctree(f, data = getTaskData(.task, .subset), controls = ctrl, ...)
+  party::ctree(f, data = getTaskData(.task, .subset), controls = ctrl, ...)
 }
 
 #' @export
 predictLearner.classif.ctree = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type == "prob") {
     m = .model$learner.model
-    p = treeresponse(m, newdata = .newdata, ...)
+    p = party::treeresponse(m, newdata = .newdata, ...)
     p = do.call(rbind, p)
     rownames(p) = NULL
     colnames(p) = m@responses@levels[[.model$task.desc$target]]

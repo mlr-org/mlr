@@ -34,7 +34,7 @@ plotThreshVsPerf = function(pred, measures, mark.th = NA_real_, gridsize = 100L,
     performance(pp, measures = measures)
   }), col.names = mids)
   grid = cbind(grid, perf)
-  grid = melt(grid, measure.vars = mids,
+  grid = reshape2::melt(grid, measure.vars = mids,
     variable.name = "measure", value.name = "perf")
   p = ggplot(data = grid, mapping = aes_string(x = "threshold", y = "perf", col = "measure"))
   p = p + geom_line(size = linesize)

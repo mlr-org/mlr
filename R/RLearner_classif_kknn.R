@@ -28,7 +28,7 @@ predictLearner.classif.kknn = function(.learner, .model, .newdata, ...) {
   f = getTaskFormula(.model$task.desc)
   pars = list(formula = f, train = m$data, test = .newdata)
   pars = c(pars, m$parset, list(...))
-  m = do.call(kknn, pars)
+  m = do.call(kknn::kknn, pars)
   if (.learner$predict.type == "response")
     return(m$fitted.values)
   else

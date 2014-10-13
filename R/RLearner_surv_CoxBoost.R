@@ -29,7 +29,7 @@ trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL,
   if (is.null(.weights))
     .weights = NULL
 
-  cb = optimCoxBoostPenalty(
+  cb = CoxBoost::optimCoxBoostPenalty(
     time = data$target[, 1L],
     status = data$target[, 2L],
     x = as.matrix(data$data),
@@ -40,7 +40,7 @@ trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL,
   if (cb$cv.res$optimal.step == 0L)
     stop("Error modeling CoxBoost")
 
-  CoxBoost(
+  CoxBoost::CoxBoost(
     time = data$target[, 1L],
     status = data$target[, 2L],
     x = as.matrix(data$data),

@@ -32,7 +32,7 @@ makeRLearner.classif.rda = function() {
 #' @export
 trainLearner.classif.rda = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  rda(f, data = getTaskData(.task, .subset), ...)
+  klaR::rda(f, data = getTaskData(.task, .subset), ...)
 }
 
 #' @export

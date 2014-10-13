@@ -28,7 +28,7 @@ trainLearner.regr.rsm = function(.learner, .task, .subset, .weights = NULL,  ...
   f = as.formula(paste(.task$task.desc$target, "~", mf))
   myargs = list(f, getTaskData(.task, .subset))
   # strange behaviour in rsm forces us to use do.call...
-  do.call(rsm, myargs)
+  do.call(rsm::rsm, myargs)
 }
 
 #' @export

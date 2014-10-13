@@ -20,10 +20,10 @@ trainLearner.regr.lm = function(.learner, .task, .subset, .weights = NULL,  ...)
   d = getTaskData(.task, .subset)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
-    lm(f, data = d, ...)
+    stats::lm(f, data = d, ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
-    lm(f, data = d, weights = .weights, ...)
+    stats::lm(f, data = d, weights = .weights, ...)
   }
 }
 

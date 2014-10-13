@@ -18,16 +18,16 @@ trainLearner.classif.lvq1 = function(.learner, .task, .subset, .weights = NULL, 
   cdbk.args = insert(list(), list(...), c("size", "k", "prior"))
   cdbk.args$x = d$data
   cdbk.args$cl = d$target
-  codebk = do.call(lvqinit, cdbk.args)
+  codebk = do.call(class::lvqinit, cdbk.args)
 
   lvq.args = insert(list(), list(...), c("niter", "alpha"))
   lvq.args$x = d$data
   lvq.args$cl = d$target
   lvq.args$codebk = codebk
-  do.call(lvq1, lvq.args)
+  do.call(class::lvq1, lvq.args)
 }
 
 #' @export
 predictLearner.classif.lvq1 = function(.learner, .model, .newdata, ...) {
-  lvqtest(.model$learner.model, test = .newdata, ...)
+  class::lvqtest(.model$learner.model, test = .newdata, ...)
 }

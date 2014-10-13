@@ -16,8 +16,8 @@ makeRLearner.classif.OneR = function() {
 #' @export
 trainLearner.classif.OneR = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  ctrl = Weka_control(...)
-	OneR(f, data = getTaskData(.task, .subset), control = ctrl, na.action = na.pass)
+  ctrl = RWeka::Weka_control(...)
+	RWeka::OneR(f, data = getTaskData(.task, .subset), control = ctrl, na.action = na.pass)
 }
 
 #' @export

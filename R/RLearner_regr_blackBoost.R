@@ -4,7 +4,7 @@ makeRLearner.regr.blackboost = function() {
     cl = "regr.blackboost",
     package = c("mboost", "party"),
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "family", default = Gaussian(), values = list(Gaussian = Gaussian(), Huber = Huber(), Laplace = Laplace())),
+      makeDiscreteLearnerParam(id = "family", default = mboost::Gaussian(), values = list(Gaussian = mboost::Gaussian(), Huber = mboost::Huber(), Laplace = mboost::Laplace())),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeDiscreteLearnerParam(id = "risk", default = "inbag", values = c("inbag", "oobag", "none")),
@@ -28,13 +28,13 @@ makeRLearner.regr.blackboost = function() {
 }
 
 trainLearner.regr.blackboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, risk, teststat, testtype, mincriterion, maxdepth, ...) {
-  ctrl = learnerArgsToControl(boost_control, mstop, nu, risk)
-  tc = learnerArgsToControl(ctree_control, teststat, testtype, mincriterion, maxdepth)
+  ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk)
+  tc = learnerArgsToControl(mboost::ctree_control, teststat, testtype, mincriterion, maxdepth)
   f = getTaskFormula(.task)
   if (!is.null(.weights))
-    blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, weights = .weights)
+    mboost::blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc, weights = .weights)
   else
-    blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc)
+    mboost::blackboost(f, data = getTaskData(.task, .subset), control = ctrl, tree_controls = tc)
 }
 
 predictLearner.regr.blackboost = function(.learner, .model, .newdata, ...) {

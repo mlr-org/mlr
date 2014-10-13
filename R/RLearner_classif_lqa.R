@@ -41,7 +41,7 @@ makeRLearner.classif.lqa = function() {
 trainLearner.classif.lqa = function(.learner, .task, .subset, .weights = NULL,
   var.eps, max.steps, conv.eps, conv.stop, c1, digits, ...) {
 
-  ctrl = learnerArgsToControl(lqa.control, var.eps, max.steps, conv.eps, conv.stop, c1, digits)
+  ctrl = learnerArgsToControl(lqa::lqa.control, var.eps, max.steps, conv.eps, conv.stop, c1, digits)
   d = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "01")
   args = c(list(x = d$data, y = d$target, family = binomial(), control = ctrl), list(...))
   rm(d)
@@ -55,7 +55,7 @@ trainLearner.classif.lqa = function(.learner, .task, .subset, .weights = NULL,
   if (!is.null(.weights))
     args$weights = .weights
 
-  do.call(lqa, args)
+  do.call(lqa::lqa, args)
 }
 
 #' @export

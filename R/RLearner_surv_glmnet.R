@@ -46,15 +46,15 @@ trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights = NULL,  
   if (!is.null(.weights))
     args$weights = .weights
 
-  saved.ctrl = glmnet.control()
+  saved.ctrl = glmnet::glmnet.control()
   is.ctrl.arg = names(args) %in% names(saved.ctrl)
   if (any(is.ctrl.arg)) {
-    on.exit(do.call(glmnet.control, saved.ctrl))
-    do.call(glmnet.control, args[is.ctrl.arg])
+    on.exit(do.call(glmnet::glmnet.control, saved.ctrl))
+    do.call(glmnet::glmnet.control, args[is.ctrl.arg])
     args = args[!is.ctrl.arg]
   }
 
-  do.call(glmnet, args)
+  do.call(glmnet::glmnet, args)
 }
 
 #' @export

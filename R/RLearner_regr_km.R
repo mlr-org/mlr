@@ -27,7 +27,7 @@ makeRLearner.regr.km = function() {
 #' @export
 trainLearner.regr.km = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
-  km(design = d$data, response = d$target, ...)
+  DiceKriging::km(design = d$data, response = d$target, ...)
 }
 
 #' @export

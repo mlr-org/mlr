@@ -21,7 +21,7 @@ makeRLearner.classif.rrlda = function() {
 #' @export
 trainLearner.classif.rrlda = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
-  rrlda(x = d$data, grouping = d$target, ...)
+  rrlda::rrlda(x = d$data, grouping = d$target, ...)
 }
 
 #' @export

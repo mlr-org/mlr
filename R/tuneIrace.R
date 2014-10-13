@@ -20,13 +20,13 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
   tuner.config = c(list(hookRun = hookRun, instances = instances, logFile = log.file), control$extra.args)
 
   g = if (show.irace.output) identity else capture.output
-  g(or <- irace(tunerConfig = tuner.config, parameters = parameters))
+  g(or <- irace::irace(tunerConfig = tuner.config, parameters = parameters))
   unlink(log.file)
   if (nrow(or) == 0L)
     stop("irace produced no result, possibly the budget was set too low?")
   id = or[1L, 1L]
   # get best candidate
-  x1 = as.list(removeCandidatesMetaData(or[1L,]))
+  x1 = as.list(irace::removeCandidatesMetaData(or[1L,]))
   x2 = trafoValue(par.set, x1)
   # we need chars, not factors / logicals, so we can match 'x'
   d = convertDfCols(as.data.frame(opt.path), logicals.as.factor = TRUE)

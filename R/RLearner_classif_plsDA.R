@@ -18,13 +18,13 @@ makeRLearner.classif.plsDA = function() {
 #' @export
 trainLearner.classif.plsDA = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
-  plsDA(variables = d$data, group = d$target, ...)
+  DiscriMiner::plsDA(variables = d$data, group = d$target, ...)
 }
 
 #' @export
 predictLearner.classif.plsDA = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
-  p = classify(m, newdata = .newdata)
+  p = DiscriMiner::classify(m, newdata = .newdata)
   #p$scores #we loose this information
   p$pred_class
 }

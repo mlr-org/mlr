@@ -26,8 +26,8 @@ makeRLearner.cluster.XMeans = function() {
 
 #' @export
 trainLearner.cluster.XMeans = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  ctrl = Weka_control(...)
-  XMeans(getTaskData(.task, .subset), control = ctrl)
+  ctrl = RWeka::Weka_control(...)
+  RWeka::XMeans(getTaskData(.task, .subset), control = ctrl)
 }
 
 #' @export

@@ -8,8 +8,8 @@ makeRLearner.classif.mda = function() {
       makeUntypedLearnerParam(id = "subclasses", default = 2L),
       makeIntegerLearnerParam(id = "iter", default = 5L, lower = 1L),
       makeIntegerLearnerParam(id = "dimension", lower = 1L),
-      makeDiscreteLearnerParam(id = "method", default = polyreg,
-        values = list(polyreg = polyreg, mars = mars, bruto = bruto, gen.ridge = gen.ridge)),
+      makeDiscreteLearnerParam(id = "method", default = mda::polyreg,
+        values = list(polyreg = mda::polyreg, mars = mda::mars, bruto = mda::bruto, gen.ridge = mda::gen.ridge)),
       makeLogicalLearnerParam(id = "trace", default = FALSE),
       makeLogicalLearnerParam(id = "keep.fitted", default = TRUE),
       makeIntegerLearnerParam(id = "tries", default = 5L, lower = 1L)
@@ -25,7 +25,7 @@ makeRLearner.classif.mda = function() {
 #' @export
 trainLearner.classif.mda = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  mda(f, data = getTaskData(.task, .subset), ...)
+  mda::mda(f, data = getTaskData(.task, .subset), ...)
 }
 
 #' @export

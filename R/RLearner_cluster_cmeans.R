@@ -22,14 +22,14 @@ makeRLearner.cluster.cmeans = function() {
 
 #' @export
 trainLearner.cluster.cmeans = function(.learner, .task, .subset, .weights = NULL, ...) {
-  cmeans(getTaskData(.task, .subset), method = "cmeans", ...)
+  e1071::cmeans(getTaskData(.task, .subset), method = "cmeans", ...)
 }
 
 #' @export
 predictLearner.cluster.cmeans = function(.learner, .model, .newdata, ...) {
   switch(.learner$predict.type,
-    response = as.integer(cl_predict(.model$learner.model, newdata = .newdata, type = "class_ids", ...)),
-    prob = as.matrix(cl_predict(.model$learner.model, newdata = .newdata, type = "memberships", ...))
+    response = as.integer(clue::cl_predict(.model$learner.model, newdata = .newdata, type = "class_ids", ...)),
+    prob = as.matrix(clue::cl_predict(.model$learner.model, newdata = .newdata, type = "memberships", ...))
   )
 }
 

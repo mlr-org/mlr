@@ -39,7 +39,7 @@ makeRLearner.classif.bartMachine = function() {
 #' @export
 trainLearner.classif.bartMachine = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
-  bartMachine(X = d$data, y = d$target, ...)
+  bartMachine::bartMachine(X = d$data, y = d$target, ...)
 }
 
 #' @export
@@ -55,6 +55,6 @@ predictLearner.classif.bartMachine = function(.learner, .model, .newdata, ...) {
     y = predict(.model$learner.model, new_data = .newdata, type = "class", ...)
     y = factor(y, levs)
   }
-  destroy_bart_machine(.model$learner.model)
+  bartMachine::destroy_bart_machine(.model$learner.model)
   return(y)
 }

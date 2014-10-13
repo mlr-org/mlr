@@ -23,7 +23,7 @@ makeRLearner.regr.pcr = function() {
 #' @export
 trainLearner.regr.pcr = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  pcr(f, data = getTaskData(.task, .subset), ...)
+  pls::pcr(f, data = getTaskData(.task, .subset), ...)
 }
 
 #' @export

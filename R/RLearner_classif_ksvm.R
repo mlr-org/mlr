@@ -50,9 +50,9 @@ trainLearner.classif.ksvm = function(.learner, .task, .subset, .weights = NULL, 
   f = getTaskFormula(.task)
   pm = .learner$predict.type == "prob"
   if (base::length(kpar) > 0L)
-    ksvm(f, data = getTaskData(.task, .subset), kpar = kpar, prob.model = pm, ...)
+    kernlab::ksvm(f, data = getTaskData(.task, .subset), kpar = kpar, prob.model = pm, ...)
   else
-    ksvm(f, data = getTaskData(.task, .subset), prob.model = pm, ...)
+    kernlab::ksvm(f, data = getTaskData(.task, .subset), prob.model = pm, ...)
 }
 
 #' @export

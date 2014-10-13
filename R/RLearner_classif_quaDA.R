@@ -16,13 +16,13 @@ makeRLearner.classif.quaDA = function() {
 #' @export
 trainLearner.classif.quaDA = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
-  quaDA(variables = d$data, group = d$target, ...)
+  DiscriMiner::quaDA(variables = d$data, group = d$target, ...)
 }
 
 #' @export
 predictLearner.classif.quaDA = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
-  p = classify(m, newdata = .newdata)
+  p = DiscriMiner::classify(m, newdata = .newdata)
   #p$scores #we loose this information
   p$pred_class
 }

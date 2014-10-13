@@ -28,10 +28,10 @@ trainLearner.regr.rpart = function(.learner, .task, .subset, .weights = NULL,  .
   d = getTaskData(.task, .subset)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
-    rpart(f, data = d, ...)
+    rpart::rpart(f, data = d, ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
-    rpart(f, data = d, weights = .weights, ...)
+    rpart::rpart(f, data = d, weights = .weights, ...)
   }
 }
 

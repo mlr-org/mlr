@@ -32,10 +32,10 @@ makeRLearner.classif.nnet = function() {
 trainLearner.classif.nnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
-    nnet(f, data = getTaskData(.task, .subset), ...)
+    nnet::nnet(f, data = getTaskData(.task, .subset), ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
-    nnet(f, data = getTaskData(.task, .subset), weights = .weights, ...)
+    nnet::nnet(f, data = getTaskData(.task, .subset), weights = .weights, ...)
   }
 }
 

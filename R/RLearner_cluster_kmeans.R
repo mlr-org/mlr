@@ -21,11 +21,11 @@ makeRLearner.cluster.kmeans = function() {
 
 #' @export
 trainLearner.cluster.kmeans = function(.learner, .task, .subset, .weights = NULL, ...) {
-  kmeans(getTaskData(.task, .subset), ...)
+  stats::kmeans(getTaskData(.task, .subset), ...)
 }
 
 #' @export
 predictLearner.cluster.kmeans = function(.learner, .model, .newdata, ...) {
-  as.integer(cl_predict(.model$learner.model, newdata = .newdata, type = "class_ids"))
+  as.integer(clue::cl_predict(.model$learner.model, newdata = .newdata, type = "class_ids"))
 }
 

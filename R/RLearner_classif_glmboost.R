@@ -4,12 +4,12 @@ makeRLearner.classif.glmboost = function() {
     cl = "classif.glmboost",
     package = "mboost",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "family", default = Binomial(), values = list(AdaExp = AdaExp(), Binomial = Binomial())),
+      makeDiscreteLearnerParam(id = "family", default = mboost::Binomial(), values = list(AdaExp = mboost::AdaExp(), Binomial = mboost::Binomial())),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "center", default = FALSE)
     ),
-    par.vals = list(family = Binomial()),
+    par.vals = list(family = mboost::Binomial()),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Boosting for GLMs",
     short.name = "glmbst",
@@ -19,13 +19,13 @@ makeRLearner.classif.glmboost = function() {
 
 #' @export
 trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, risk, ...) {
-  ctrl = learnerArgsToControl(boost_control, mstop, nu, risk)
+  ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
-    glmboost(f, data = getTaskData(.task, .subset), control = ctrl, , ...)
+    mboost::glmboost(f, data = getTaskData(.task, .subset), control = ctrl, , ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
-    glmboost(f, data = getTaskData(.task, .subset), control = ctrl, weights = .weights, ...)
+    mboost::glmboost(f, data = getTaskData(.task, .subset), control = ctrl, weights = .weights, ...)
   }
 }
 

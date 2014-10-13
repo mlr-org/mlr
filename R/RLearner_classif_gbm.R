@@ -27,10 +27,10 @@ trainLearner.classif.gbm = function(.learner, .task, .subset, .weights = NULL,  
     d = getTaskData(.task, .subset)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
-    gbm(f, data = d, keep.data = FALSE, verbose = FALSE, ...)
+    gbm::gbm(f, data = d, keep.data = FALSE, verbose = FALSE, ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
-    gbm(f, data = d, keep.data = FALSE, verbose = FALSE, weights = .weights, ...)
+    gbm::gbm(f, data = d, keep.data = FALSE, verbose = FALSE, weights = .weights, ...)
   }
 }
 

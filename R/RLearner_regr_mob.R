@@ -9,8 +9,8 @@ makeRLearner.regr.mob = function() {
       makeIntegerLearnerParam(id = "minsplit", default = 20L, lower = 1L),
       makeNumericLearnerParam(id = "trim", default = 0.1, lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "breakties", default = FALSE),
-      makeDiscreteLearnerParam(id = "model", default = glinearModel,
-        values = list(glinearModel = glinearModel, linearModel = linearModel)),
+      makeDiscreteLearnerParam(id = "model", default = party::glinearModel,
+        values = list(glinearModel = party::glinearModel, linearModel = party::linearModel)),
       makeUntypedLearnerParam(id = "part.feats"),
       makeUntypedLearnerParam(id = "term.feats")
     ),
@@ -26,7 +26,7 @@ makeRLearner.regr.mob = function() {
 trainLearner.regr.mob = function(.learner, .task, .subset, .weights = NULL, alpha, bonferroni, minsplit,
   trim, breakties, part.feats, term.feats, ...) {
 
-  cntrl = learnerArgsToControl(mob_control, alpha, bonferroni, minsplit, trim, breakties)
+  cntrl = learnerArgsToControl(party::mob_control, alpha, bonferroni, minsplit, trim, breakties)
 
   feats = getTaskFeatureNames(.task)
   # FIXME: document stuff
@@ -40,9 +40,9 @@ trainLearner.regr.mob = function(.learner, .task, .subset, .weights = NULL, alph
   f = as.formula(paste(target, "~", collapse(term.feats, sep = " + "), "|", collapse(part.feats, sep = " + ")))
 
   if (is.null(.weights)) {
-    mob(f, data = getTaskData(.task, .subset), control = cntrl, ...)
+    party::mob(f, data = getTaskData(.task, .subset), control = cntrl, ...)
   } else  {
-    mob(f, data = getTaskData(.task, .subset), control = cntrl, weights = .weights, ...)
+    party::mob(f, data = getTaskData(.task, .subset), control = cntrl, weights = .weights, ...)
   }
 }
 

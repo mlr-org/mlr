@@ -57,7 +57,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
   } else {
     requirePackages("cmaes", "tuneThreshold")
     start = rep(0.5, k)
-    or = cma_es(par = start, fn = fitn, lower = 0, upper = 1, control = control)
+    or = cmaes::cma_es(par = start, fn = fitn, lower = 0, upper = 1, control = control)
     th = or$par / sum(or$par)
     names(th) = cls
     perf = or$val

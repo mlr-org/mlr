@@ -26,10 +26,10 @@ makeRLearner.classif.multinom = function() {
 trainLearner.classif.multinom = function(.learner, .task, .subset, .weights = NULL,  ...) {
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
-    multinom(f, data = getTaskData(.task, .subset), ...)
+    nnet::multinom(f, data = getTaskData(.task, .subset), ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
-    multinom(f, data = getTaskData(.task, .subset), weights = .weights, ...)
+    nnet::multinom(f, data = getTaskData(.task, .subset), weights = .weights, ...)
   }
 }
 
