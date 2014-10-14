@@ -49,7 +49,6 @@ mlr_2.2:
 -- cluster.cmeans
 -- cluster.DBScan
 -- cluster.kmeans
--- cluster.Cobweb
 -- cluster.FarthestFirst
 -- surv.cvglmnet
 
