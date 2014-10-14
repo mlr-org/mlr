@@ -221,14 +221,11 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
       predData = probs
     }
 
-    pred = predict(sm, newdata = predData)$data
+    pred = predict(sm, newdata = predData)
     if (sm.pt == "prob") {
-      # return predicted probabilities from super learner
-      predProb = as.matrix(subset(pred, select = -response))
-      colnames(predProb) = levs
-      return(predProb)
+      return(as.matrix(getProbabilities(pred, cl = .model$task.desc$class.levels)))
     } else {
-      return(pred$response)
+      return(pred$data$response)
     }
   }
 }
