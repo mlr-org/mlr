@@ -15,6 +15,6 @@ tuneMultiCritNSGA2 = function(learner, task, resampling, measures, par.set, cont
 
   or = do.call(mco::nsga2, args)
 
-  mco::makeTuneMultiCritResultFromOptPath(learner, par.set, measures, control, opt.path)
+  makeTuneMultiCritResultFromOptPath(learner, par.set, measures, control, opt.path)
 }
 
