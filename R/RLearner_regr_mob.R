@@ -9,8 +9,8 @@ makeRLearner.regr.mob = function() {
       makeIntegerLearnerParam(id = "minsplit", default = 20L, lower = 1L),
       makeNumericLearnerParam(id = "trim", default = 0.1, lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "breakties", default = FALSE),
-      makeDiscreteLearnerParam(id = "model", default = party::glinearModel,
-        values = list(glinearModel = party::glinearModel, linearModel = party::linearModel)),
+      makeDiscreteLearnerParam(id = "model", default = modeltools::glinearModel,
+        values = list(glinearModel = modeltools::glinearModel, linearModel = modeltools::linearModel)),
       makeUntypedLearnerParam(id = "part.feats"),
       makeUntypedLearnerParam(id = "term.feats")
     ),
