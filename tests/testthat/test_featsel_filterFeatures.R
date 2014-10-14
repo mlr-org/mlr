@@ -41,7 +41,7 @@ test_that("filterFeatures", {
   ## Loop through all filters
   filter.list = listFilterMethods(desc = FALSE, tasks = TRUE, features = FALSE)
   filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
-  filter.list.classif = setdiff(filter.list.classif, "univariate") #make extra test
+  filter.list.classif = setdiff(filter.list.classif, c("univariate")) #make extra test
   for (filter in filter.list.classif) {
     filterFeatures(task = multiclass.task, method = filter, val = 0.5)
   }
