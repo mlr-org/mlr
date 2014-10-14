@@ -28,9 +28,14 @@ makeBaseEnsemble = function(id, name = id, short.name = id, base.learners, bls.t
     stop("Base learners must all have unique ids!")
 
   # join all parsets of base.learners + prefix param names with base learner id
+  # (we could also do this operation on-the.fly in getParamSet.BaseEnsemble,
+  # like we do in getParamSet.BaseWrapper, but this would require expensive (?)
+  # recomputation of the joined parset each time we need it, I guess.
+  # as long as we do not change the structure of the baselearners
+  # after construction of the ensemble we should be fine)
   par.set.bls = makeParamSet()
   for (i in seq_along(base.learners)) {
-    ps = base.learners[[i]]$par.set
+    ps = getParamSet(base.learners[[i]])
     pids = sprintf("%s.%s", ids[i], names(ps$pars))
     for (j in seq_along(ps$pars))
       ps$pars[[j]]$id = pids[[j]]
