@@ -2,7 +2,7 @@
 
 language: c
 script: travis_wait ./travis-tool.sh run_tests
-env: 
+env:
    global:
      - _R_CHECK_TIMINGS_=0
 before_install:
@@ -21,8 +21,8 @@ install:
   - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package XMeans
   - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package optics_dbScan
 branches:
-  except:
-   - /-expt$/
+  only:
+   - master
 notifications:
   email:
     on_success: change
