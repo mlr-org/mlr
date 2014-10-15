@@ -294,7 +294,11 @@ changeData = function(task, data, costs, weights) {
   task$env = new.env(parent = emptyenv())
   task$env$data = data
   task$env$costs = costs
-  task$weights = weights
+  # FIXME: I hate R
+  if (is.null(weights))
+    task["weights"] = list(NULL)
+  else
+    task$weights = weights
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
