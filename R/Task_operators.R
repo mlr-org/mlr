@@ -270,7 +270,8 @@ getTaskCosts = function(task, subset) {
 subsetTask = function(task, subset, features) {
   # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
   # FIXME: maybe we want this independent of changeData?
-  task = changeData(task, getTaskData(task, subset, features), getTaskCosts(task, subset))
+  td = task$desc
+  task = changeData(task, getTaskData(task, subset, features), getTaskCosts(task, subset), task$weights)
   if (!missing(subset)) {
     if (task$task.desc$has.blocking)
       task$blocking = task$blocking[subset]
@@ -293,7 +294,7 @@ changeData = function(task, data, costs, weights) {
   task$env = new.env(parent = emptyenv())
   task$env$data = data
   task$env$costs = costs
-  task$env$weights = weights
+  task$weights = weights
   td = task$task.desc
   # FIXME: this is bad style but I see no other way right now
   task$task.desc = switch(td$type,
