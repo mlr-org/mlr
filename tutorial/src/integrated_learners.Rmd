@@ -7,6 +7,7 @@ numerical and factor predictors, if ``NA``s in the data are allowed and if obser
 weights are supported, respectively.
 
 Column **Props** shows further properties of the learning methods.
+*ordered* indicates that a method can deal with ordered factor features.
 For *classification*, you can see if binary and/or multi-class problems are supported.
 For *survival analysis*, the censoring type is shown.
 For example *rcens* means that the learning method can deal with right censored data.
@@ -40,7 +41,7 @@ getTab = function(type) {
     df[i, 5] = hasProperties(lrn, "factors")
     df[i, 6] = hasProperties(lrn, "missings")
     df[i, 7] = hasProperties(lrn, "weights")
-    df[i, 8] = collapse(setdiff(lrn$properties, c("numerics", "factors", "missings", "weights")), sep = "<br />")
+    df[i, 8] = collapse(sort(setdiff(lrn$properties, c("numerics", "factors", "missings", "weights"))), sep = "<br />")
     df[i, 9] = cn(lrn$note)
   }
   logicals = vlapply(df, is.logical)
