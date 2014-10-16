@@ -198,7 +198,7 @@ minimized. As search strategy we choose a random search
 lrn = makeFilterWrapper(learner = "classif.lda", fw.method = "chi.squared",
   fw.select = "threshold")
 ps = makeParamSet(makeNumericParam("fw.val", lower = 0.1, upper = 0.9))
-rin = makeResamplingDesc("CV", iters = 10)
+rin = makeResampleDesc("CV", iters = 10)
 res = tuneParamsMultiCrit(lrn, task = sonar.task, resampling = rin, par.set = ps,
     measures = list(fpr, fnr), control = makeTuneMultiCritControlRandom(maxit = 50L),
     show.info = FALSE)

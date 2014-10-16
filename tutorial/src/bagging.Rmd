@@ -26,13 +26,13 @@ bag.lrn = makeBaggingWrapper(lrn, bw.iters = 50, bw.replace = TRUE, bw.size = 0.
 Now we can compare the performance with and without bagging.
 First let's try it without bagging:
 ```{r makeBaggingWrapper_without}
-rin = makeResamplingDesc("CV", iters = 10)
+rin = makeResampleDesc("CV", iters = 10)
 r = resample(learner = lrn, task = sonar.task, resampling = rin, show.info = FALSE)
 r$aggr
 ```
 And now with bagging:
 ```{r makeBaggingWrapper_with}
-rin = makeResamplingDesc("CV", iters = 10)
+rin = makeResampleDesc("CV", iters = 10)
 result = resample(learner = bag.lrn, task = sonar.task, resampling = rin, show.info = FALSE)
 result$aggr
 ```
