@@ -31,7 +31,7 @@ In the following example we show how to compare the performance of two learners.
 Note that the [learners](learner.md) have to be capable of predicting probabilities.
 Have a look at the [table of learners](integrated_learners.md)
 or run `listLearners(prob = TRUE)` to get a list of all learners that support this.
-We use the [BreastCancer](&mlbench::BreastCancer) data set from package
+We use the [Sonar](&mlbench::Sonar) data set from package
 [mlbench](http://cran.r-project.org/web/packages/mlbench/index.html).
 
 ```{r}
@@ -45,12 +45,12 @@ Afterwards, we perform [resampling](resample.md) to obtain predictions for each 
 ```{r}
 ## Perform a 10-fold cross-validation
 rdesc = makeResampleDesc("CV", iters = 10)
-rin = makeResampleInstance(rdesc, bc.task)
+rin = makeResampleInstance(rdesc, sonar.task)
 
 ## Calculate the error rate (for threshold 0.5) and the AUC
 ms = list(mmce, auc)
-r1 = resample(lrn1, bc.task, rin, measures = ms, show.info = FALSE)
-r2 = resample(lrn2, bc.task, rin, measures = ms, show.info = FALSE)
+r1 = resample(lrn1, sonar.task, rin, measures = ms, show.info = FALSE)
+r2 = resample(lrn2, sonar.task, rin, measures = ms, show.info = FALSE)
 ```
 
 Now we have to convert each prediction within the resample result to a
