@@ -16,7 +16,7 @@ makeRLearner.regr.ctree = function() {
       makeLogicalLearnerParam(id = "savesplitstats", default = TRUE),
       makeIntegerLearnerParam(id = "maxdepth", default = 0L, lower = 0L)
     ),
-    properties = c("missings", "numerics", "factors", "weights"),
+    properties = c("missings", "numerics", "factors", "ordered", "weights"),
     name = "Conditional Inference Trees",
     short.name = "ctree",
     note = ""
