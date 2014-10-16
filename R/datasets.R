@@ -29,6 +29,17 @@ NULL
 #' @docType data
 NULL
 
+#' PimaIndiansDiabetes classification task
+#'
+#' Contains the task (\code{pid.task}).
+#'
+#' @name pid.task
+#' @references See \code{\link[mlbench]{PimaIndiansDiabetes}}.
+#'   Note that this is the uncorrected version from mlbench.
+#' @keywords data
+#' @docType data
+NULL
+
 #' Boston Housing regression task
 #'
 #' Contains the task (\code{bh.task}).
