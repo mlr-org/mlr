@@ -1,18 +1,27 @@
+## Example Tasks
+
 For your convenience [%mlr] provides pre-defined [&Task]s for each type of learning problem.
 These are used throughout this tutorial in order to get shorter and more readable code.
 
+<style type="text/css">
+<!--
+td {
+border: solid 1px #ccc;
+padding: 0.5em;
+vertical-align: top;
+}
+-->
+</style>
+
 ```{r echo=FALSE, results="asis"}
 linkTask = function(x) {
-	x = unlist(strsplit(as.character(x), split = " "))
-	x[2] = gsub("[(]", "", x[2])
-	x[2] = gsub("[)]", "", x[2])
-    collapse(sprintf("[%1$s](http://www.rdocumentation.org/packages/mlr/functions/%2$s/)", x[1], x[2]), sep = "<br />")
+  collapse(sprintf("[%1$s](http://www.rdocumentation.org/packages/mlr/functions/%1$s/)", x), sep = "<br />")
 }
 d = data(package = "mlr")
 d = d$results
-df = as.data.frame(d[seq(2,nrow(d),2), c("Item", "Title")])
+df = as.data.frame(d[ ,c("Item", "Title")])
 df$Item = sapply(df$Item, linkTask)
 names(df)[1] = "Task"
 pandoc.table(df, style = "rmarkdown", split.tables = Inf, split.cells = Inf,
-	justify = c("left", "left"))
-
+  justify = c("left", "left"))
+```

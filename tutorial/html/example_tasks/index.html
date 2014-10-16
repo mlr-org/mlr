@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+        <title>Example Tasks - mlr tutorial</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../css/prettify-1.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../task/">Tasks</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../learner/">Learner</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../train/">Train</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../predict/">Predict</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../performance/">Performance</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../resample/">Resampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_experiments/">Benchmark Experiments</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../parallelization/">Parallelization</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../configureMlr/">Configuration</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../wrapper/">Wrapped Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../preproc/">Preprocessing</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../impute/">Imputations</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../bagging/">Bagging</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../tune/">Tuning</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../feature_selection/">Feature Selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../cost_sensitive_classif/">Cost-Sensitive Classification</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../over_and_undersampling/">Imbalanced Classification Problems</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC Analysis</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Extend <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../create_learner/">Create Custom Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../create_measure/">Create Custom Measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Appendix <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li class="active">
+                                <a href="./">Example Tasks</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../measures/">Implemented Performance Measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                <li >
+                    <a rel="next" href="../create_measure/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../integrated_learners/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a href="https://github.com/berndbischl/mlr/">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#example-tasks">Example Tasks</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h2 id="example-tasks">Example Tasks</h2>
+<p>For your convenience <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides pre-defined <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>s for each type of learning problem.
+These are used throughout this tutorial in order to get shorter and more readable code.</p>
+<style type="text/css">
+<!--
+td {
+border: solid 1px #ccc;
+padding: 0.5em;
+vertical-align: top;
+}
+-->
+</style>
+
+<table>
+<thead>
+<tr>
+<th align="left">Task</th>
+<th align="left">Title</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/agri.task/">agri.task</a></td>
+<td align="left">European Union Agricultural Workforces clustering task</td>
+</tr>
+<tr>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/bc.task/">bc.task</a></td>
+<td align="left">Wisconsin Breast Cancer classification task</td>
+</tr>
+<tr>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/bh.task/">bh.task</a></td>
+<td align="left">Boston Housing regression task</td>
+</tr>
+<tr>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/costiris.task/">costiris.task</a></td>
+<td align="left">Iris cost-sensitive classification task</td>
+</tr>
+<tr>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/iris.task/">iris.task</a></td>
+<td align="left">Iris classification task</td>
+</tr>
+<tr>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/lung.task/">lung.task</a></td>
+<td align="left">NCCTG Lung Cancer survival task</td>
+</tr>
+<tr>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/mtcars.task/">mtcars.task</a></td>
+<td align="left">Motor Trend Car Road Tests clustering task</td>
+</tr>
+<tr>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/pid.task/">pid.task</a></td>
+<td align="left">PimaIndiansDiabetes classification task</td>
+</tr>
+<tr>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/sonar.task/">sonar.task</a></td>
+<td align="left">Sonar classification task</td>
+</tr>
+<tr>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/wpbc.task/">wpbc.task</a></td>
+<td align="left">Wisonsin Prognostic Breast Cancer (WPBC) survival task</td>
+</tr>
+</tbody>
+</table>
+</div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        
+
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/base.js"></script>
+        
+    </body>
+</html>
