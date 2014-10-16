@@ -146,15 +146,15 @@ with regard to the learner performance can be found by [tuning](tune.md).
 
 In the following regression example we consider the [BostonHousing](&mlbench::BostonHousing) data set.
 We use a [linear regression model](&stats::lm) and determine the optimal percentage value for feature selection
-such that the 3-fold cross-validated mean squared error (see [bh.rin](&mlr.bh) and [&mse])
-of the learner is minimal.
+such that the 3-fold cross-validated [mean squared error](&mse) of the learner is minimal.
 As search strategy for tuning a grid search is used.
 
 ```{r}
 lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared",
   fw.select = "perc")
 ps = makeParamSet(makeDiscreteParam("fw.val", values = seq(0.2, 0.5, 0.05)))
-res = tuneParams(lrn, task = bh.task, resampling = bh.rin, par.set = ps,
+rdesc = makeResampleDesc("CV", iters = 3)
+res = tuneParams(lrn, task = rdesc, resampling = rdesc, par.set = ps,
   control = makeTuneControlGrid())
 res
 ```
@@ -198,8 +198,8 @@ minimized. As search strategy we choose a random search
 lrn = makeFilterWrapper(learner = "classif.lda", fw.method = "chi.squared",
   fw.select = "threshold")
 ps = makeParamSet(makeNumericParam("fw.val", lower = 0.1, upper = 0.9))
-rin = makeResampleDesc("CV", iters = 10)
-res = tuneParamsMultiCrit(lrn, task = sonar.task, resampling = rin, par.set = ps,
+rdesc = makeResampleDesc("CV", iters = 10)
+res = tuneParamsMultiCrit(lrn, task = sonar.task, resampling = rdesc, par.set = ps,
     measures = list(fpr, fnr), control = makeTuneMultiCritControlRandom(maxit = 50L),
     show.info = FALSE)
 res
@@ -290,7 +290,8 @@ The search is stopped if the improvement is smaller than ``alpha = 0.02``.
 ctrl = makeFeatSelControlSequential(method = "sfs", alpha = 0.02)
 
 ## Select features
-sfeats = selectFeatures(learner = "regr.lm", task = bh.task, resampling = bh.rin, control = ctrl,
+rdesc = makeResampleDesc("CV", iters = 10)
+sfeats = selectFeatures(learner = "regr.lm", task = bh.task, resampling = rdesc, control = ctrl,
     show.info = FALSE)
 sfeats
 ```

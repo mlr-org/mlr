@@ -106,7 +106,8 @@ ms1 = mmce
 ms2 = setAggregation(ms1, my.range.aggr)
 ms1min = setAggregation(ms1, test.min)
 ms1max = setAggregation(ms1, test.max)
-res = selectFeatures("classif.rpart", iris.task, iris.rin, measures = list(ms1, ms2, ms1min, ms1max),
+rdesc = makeResampleDesc("CV", iters = 3)
+res = selectFeatures("classif.rpart", iris.task, rdesc, measures = list(ms1, ms2, ms1min, ms1max),
   control = makeFeatSelControlExhaustive(), show.info = FALSE)
 perf.data = as.data.frame(res$opt.path)
 p = ggplot(aes(x = mmce.test.mean, y = mmce.test.range, xmax = mmce.test.max, xmin = mmce.test.min,
