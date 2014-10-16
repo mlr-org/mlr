@@ -168,19 +168,19 @@ For binary classification, the threshold determines when the *positive* class is
 The default is 0.5.
 Now, we set the threshold for the positive class to 0.8 (that is, an example is assigned to the positive class if its posterior probability exceeds 0.8).
 Which of the two classes is the positive one can be seen by accessing the [&Task].
-To illustrate binary classification, we use the [BreastCancer](&mlbench::BreastCancer)
+To illustrate binary classification, we use the [Sonar](&mlbench::Sonar)
 data set from the
 [mlbench](http://cran.r-project.org/web/packages/mlbench/index.html) package.
 
 ```{r}
 lrn = makeLearner("classif.rpart", predict.type = "prob")
-mod = train(lrn, task = bc.task)
+mod = train(lrn, task = sonar.task)
 
 ## Label of the positive class
-bc.task$task.desc$positive
+sonar.task$task.desc$positive
 
 ## default threshold
-pred = predict(mod, bc.task)
+pred = predict(mod, sonar.task)
 pred$threshold
 
 ## Set the threshold value for the positive class

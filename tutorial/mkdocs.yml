@@ -26,3 +26,5 @@ pages:
 - ["create_measure.md", "Extend", "Create Custom Measures"]
 - ["integrated_learners.md", "Appendix", "Integrated Learners"]
 - ["measures.md", "Appendix", "Implemented Performance Measures"]
+- ["example_tasks.md", "Appendix", "Example Tasks"]
+

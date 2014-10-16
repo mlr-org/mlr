@@ -140,15 +140,15 @@ Helpful in this regard is the function [&plotThreshVsPerf], which generates a pl
 learner performance versus the threshold.
 Later on we will show how to find an optimal threshold value by [tuning](tune.md).
 
-In the following example we consider the [BreastCancer](&mlbench::BreastCancer) data set and
+In the following example we consider the [Sonar](&mlbench::Sonar) data set and
 plot the false positive rate ([&fpr]), the false negative rate ([&fnr]) as well as the
 misclassification rate ([&mmce]) for all possible threshold values.
 
 ```{r}
 lrn = makeLearner("classif.lda", predict.type = "prob")
-n = bc.task$task.desc$size
-mod = train(lrn, task = bc.task, subset = seq(1, n, by = 2))
-pred = predict(mod, task = bc.task, subset = seq(2, n, by = 2))
+n = sonar.task$task.desc$size
+mod = train(lrn, task = sonar.task, subset = seq(1, n, by = 2))
+pred = predict(mod, task = sonar.task, subset = seq(2, n, by = 2))
 
 ## Performance for the default threshold 0.5
 performance(pred, measures = list(fpr, fnr, mmce))

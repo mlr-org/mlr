@@ -16,7 +16,7 @@ strategy for each [&Task].
 lrns = list(makeLearner("classif.lda"), makeLearner("classif.rpart"))
 
 ## Two classification tasks
-tasks = list(iris.task, bc.task)
+tasks = list(iris.task, sonar.task)
 
 ## Use 5-fold cross-validation for both tasks
 rdesc = makeResampleDesc("CV", iters = 5)
@@ -125,7 +125,7 @@ sets, three [Learners](&makeLearner) and [tuning](tune.md).
 
 ```{r}
 ## List of learning tasks
-tasks = list(iris.task, bc.task)
+tasks = list(iris.task, sonar.task)
 
 ## Very small grid for SVM hyperparameters
 ps = makeParamSet(makeDiscreteParam("C", 2^seq(-1,1)),

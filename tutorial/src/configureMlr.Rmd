@@ -13,14 +13,16 @@ You are bothered by all the output on the console like in this example?
 
 ```{r}
 ## Perform a 3-fold cross-validation
-r = resample("classif.ksvm", iris.task, iris.rin)
+rdesc = makeResampleDesc("CV", iters = 3)
+r = resample("classif.ksvm", iris.task, rdesc)
 ```
 
 Just try the following:
 
 ```{r}
 configureMlr(show.learner.output = FALSE)
-r = resample("classif.ksvm", iris.task, iris.rin)
+rdesc = makeResampleDesc("CV", iters = 3)
+r = resample("classif.ksvm", iris.task, rdesc)
 ```
 
 
