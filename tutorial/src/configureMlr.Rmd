@@ -22,7 +22,7 @@ Just try the following:
 ```{r}
 configureMlr(show.learner.output = FALSE)
 rdesc = makeResampleDesc("CV", iters = 3)
-r = resample("classif.ksvm", iris.task, reesc)
+r = resample("classif.ksvm", iris.task, rdesc)
 ```
 
 
