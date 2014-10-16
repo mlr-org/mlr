@@ -172,6 +172,10 @@
                         <ul class="dropdown-menu">
                         
                             <li >
+                                <a href="../example_tasks/">Example Tasks</a>
+                            </li>
+                        
+                            <li >
                                 <a href="../integrated_learners/">Integrated Learners</a>
                             </li>
                         
@@ -251,19 +255,22 @@ mod.under = train(lrn, task.under)
 performance(predict(mod, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] 0.32
+<pre class="prettyprint well"><code>#&gt; mmce 
+#&gt; 0.32
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.over, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] 0.38
+<pre class="prettyprint well"><code>#&gt; mmce 
+#&gt; 0.38
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] 0.5
+<pre class="prettyprint well"><code>#&gt; mmce 
+#&gt;  0.5
 </code></pre>
 
 <h3 id="learners">Learners</h3>
@@ -277,19 +284,22 @@ mod.under = train(lrn.under, task)
 performance(predict(mod, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] 0.32
+<pre class="prettyprint well"><code>#&gt; mmce 
+#&gt; 0.32
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.over, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] 0.43
+<pre class="prettyprint well"><code>#&gt; mmce 
+#&gt; 0.43
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">performance(predict(mod.under, newdata = data.even), measures = mmce)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] 0.41
+<pre class="prettyprint well"><code>#&gt; mmce 
+#&gt; 0.41
 </code></pre>
 
 <h3 id="smote">SMOTE</h3>

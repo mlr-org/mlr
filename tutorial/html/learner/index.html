@@ -172,6 +172,10 @@
                         <ul class="dropdown-menu">
                         
                             <li >
+                                <a href="../example_tasks/">Example Tasks</a>
+                            </li>
+                        
+                            <li >
                                 <a href="../integrated_learners/">Integrated Learners</a>
                             </li>
                         
@@ -280,25 +284,25 @@ the test data set.</p>
 <pre class="prettyprint well"><code class="r">surv.lrn
 </code></pre>
 
-<pre class="prettyprint well"><code>## Learner coxph from package survival
-## Type: surv
-## Name: Cox Proportional Hazard Model; Short name: coxph
-## Class: surv.coxph
-## Properties: missings,numerics,factors,weights,prob,rcens
-## Predict-Type: response
-## Hyperparameters:
+<pre class="prettyprint well"><code>#&gt; Learner coxph from package survival
+#&gt; Type: surv
+#&gt; Name: Cox Proportional Hazard Model; Short name: coxph
+#&gt; Class: surv.coxph
+#&gt; Properties: missings,numerics,factors,weights,prob,rcens
+#&gt; Predict-Type: response
+#&gt; Hyperparameters:
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">classif.lrn
 </code></pre>
 
-<pre class="prettyprint well"><code>## Learner classif.randomForest from package randomForest
-## Type: classif
-## Name: Random Forest; Short name: rf
-## Class: classif.randomForest
-## Properties: twoclass,multiclass,numerics,factors,prob
-## Predict-Type: prob
-## Hyperparameters:
+<pre class="prettyprint well"><code>#&gt; Learner classif.randomForest from package randomForest
+#&gt; Type: classif
+#&gt; Name: Random Forest; Short name: rf
+#&gt; Class: classif.randomForest
+#&gt; Properties: twoclass,multiclass,numerics,factors,ordered,prob
+#&gt; Predict-Type: prob
+#&gt; Hyperparameters:
 </code></pre>
 
 <p>The generated learner is an object of class <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>.
@@ -316,34 +320,34 @@ information regarding the hyperparameters and the type of prediction.</p>
 cluster.lrn$par.vals
 </code></pre>
 
-<pre class="prettyprint well"><code>## $N
-## [1] 5
+<pre class="prettyprint well"><code>#&gt; $N
+#&gt; [1] 5
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Get the set of hyperparameters:
 classif.lrn$par.set
 </code></pre>
 
-<pre class="prettyprint well"><code>##                     Type  len   Def   Constr Req Trafo
-## ntree            integer    -   500 1 to Inf   -     -
-## mtry             integer    -     - 1 to Inf   -     -
-## replace          logical    -  TRUE        -   -     -
-## classwt    numericvector &lt;NA&gt;     - 0 to Inf   -     -
-## cutoff     numericvector &lt;NA&gt;     -   0 to 1   -     -
-## sampsize         integer    -     - 1 to Inf   -     -
-## nodesize         integer    -     1 1 to Inf   -     -
-## maxnodes         integer    -     - 1 to Inf   -     -
-## importance       logical    - FALSE        -   -     -
-## localImp         logical    - FALSE        -   -     -
-## norm.votes       logical    -  TRUE        -   -     -
-## keep.inbag       logical    - FALSE        -   -     -
+<pre class="prettyprint well"><code>#&gt;                     Type  len   Def   Constr Req Trafo
+#&gt; ntree            integer    -   500 1 to Inf   -     -
+#&gt; mtry             integer    -     - 1 to Inf   -     -
+#&gt; replace          logical    -  TRUE        -   -     -
+#&gt; classwt    numericvector &lt;NA&gt;     - 0 to Inf   -     -
+#&gt; cutoff     numericvector &lt;NA&gt;     -   0 to 1   -     -
+#&gt; sampsize         integer    -     - 1 to Inf   -     -
+#&gt; nodesize         integer    -     1 1 to Inf   -     -
+#&gt; maxnodes         integer    -     - 1 to Inf   -     -
+#&gt; importance       logical    - FALSE        -   -     -
+#&gt; localImp         logical    - FALSE        -   -     -
+#&gt; norm.votes       logical    -  TRUE        -   -     -
+#&gt; keep.inbag       logical    - FALSE        -   -     -
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Get the type of prediction:
 regr.lrn$predict.type
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] &quot;response&quot;
+<pre class="prettyprint well"><code>#&gt; [1] &quot;response&quot;
 </code></pre>
 
 <p><code>classif.lrn$par.set</code> is an object of class <a href="http://www.rdocumentation.org/packages/ParamHelpers/functions/makeParamSet.html">ParamSet</a>.
@@ -359,27 +363,27 @@ For details see the section on <a href="../wrapper/">wrapped learners</a>.</p>
 getHyperPars(cluster.lrn)
 </code></pre>
 
-<pre class="prettyprint well"><code>## $N
-## [1] 5
+<pre class="prettyprint well"><code>#&gt; $N
+#&gt; [1] 5
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Get a description of all possible parameter settings
 getParamSet(classif.lrn)
 </code></pre>
 
-<pre class="prettyprint well"><code>##                     Type  len   Def   Constr Req Trafo
-## ntree            integer    -   500 1 to Inf   -     -
-## mtry             integer    -     - 1 to Inf   -     -
-## replace          logical    -  TRUE        -   -     -
-## classwt    numericvector &lt;NA&gt;     - 0 to Inf   -     -
-## cutoff     numericvector &lt;NA&gt;     -   0 to 1   -     -
-## sampsize         integer    -     - 1 to Inf   -     -
-## nodesize         integer    -     1 1 to Inf   -     -
-## maxnodes         integer    -     - 1 to Inf   -     -
-## importance       logical    - FALSE        -   -     -
-## localImp         logical    - FALSE        -   -     -
-## norm.votes       logical    -  TRUE        -   -     -
-## keep.inbag       logical    - FALSE        -   -     -
+<pre class="prettyprint well"><code>#&gt;                     Type  len   Def   Constr Req Trafo
+#&gt; ntree            integer    -   500 1 to Inf   -     -
+#&gt; mtry             integer    -     - 1 to Inf   -     -
+#&gt; replace          logical    -  TRUE        -   -     -
+#&gt; classwt    numericvector &lt;NA&gt;     - 0 to Inf   -     -
+#&gt; cutoff     numericvector &lt;NA&gt;     -   0 to 1   -     -
+#&gt; sampsize         integer    -     - 1 to Inf   -     -
+#&gt; nodesize         integer    -     1 1 to Inf   -     -
+#&gt; maxnodes         integer    -     - 1 to Inf   -     -
+#&gt; importance       logical    - FALSE        -   -     -
+#&gt; localImp         logical    - FALSE        -   -     -
+#&gt; norm.votes       logical    -  TRUE        -   -     -
+#&gt; keep.inbag       logical    - FALSE        -   -     -
 </code></pre>
 
 <p>With the function <a href="http://www.rdocumentation.org/packages/mlr/functions/showHyperPars.html">showHyperPars</a> we can get a quick overview about the available hyperparameters
@@ -390,19 +394,19 @@ the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.ht
 <pre class="prettyprint well"><code class="r">showHyperPars(&quot;classif.randomForest&quot;)
 </code></pre>
 
-<pre class="prettyprint well"><code>##                     Type  len   Def   Constr Req
-## ntree            integer    -   500 1 to Inf   -
-## mtry             integer    -     - 1 to Inf   -
-## replace          logical    -  TRUE        -   -
-## classwt    numericvector &lt;NA&gt;     - 0 to Inf   -
-## cutoff     numericvector &lt;NA&gt;     -   0 to 1   -
-## sampsize         integer    -     - 1 to Inf   -
-## nodesize         integer    -     1 1 to Inf   -
-## maxnodes         integer    -     - 1 to Inf   -
-## importance       logical    - FALSE        -   -
-## localImp         logical    - FALSE        -   -
-## norm.votes       logical    -  TRUE        -   -
-## keep.inbag       logical    - FALSE        -   -
+<pre class="prettyprint well"><code>#&gt;                     Type  len   Def   Constr Req
+#&gt; ntree            integer    -   500 1 to Inf   -
+#&gt; mtry             integer    -     - 1 to Inf   -
+#&gt; replace          logical    -  TRUE        -   -
+#&gt; classwt    numericvector &lt;NA&gt;     - 0 to Inf   -
+#&gt; cutoff     numericvector &lt;NA&gt;     -   0 to 1   -
+#&gt; sampsize         integer    -     - 1 to Inf   -
+#&gt; nodesize         integer    -     1 1 to Inf   -
+#&gt; maxnodes         integer    -     - 1 to Inf   -
+#&gt; importance       logical    - FALSE        -   -
+#&gt; localImp         logical    - FALSE        -   -
+#&gt; norm.votes       logical    -  TRUE        -   -
+#&gt; keep.inbag       logical    - FALSE        -   -
 </code></pre>
 
 <h2 id="modifying-a-learner">Modifying a learner</h2>
@@ -414,13 +418,13 @@ surv.lrn = setId(surv.lrn, &quot;CoxModel&quot;)
 surv.lrn
 </code></pre>
 
-<pre class="prettyprint well"><code>## Learner CoxModel from package survival
-## Type: surv
-## Name: Cox Proportional Hazard Model; Short name: coxph
-## Class: surv.coxph
-## Properties: missings,numerics,factors,weights,prob,rcens
-## Predict-Type: response
-## Hyperparameters:
+<pre class="prettyprint well"><code>#&gt; Learner CoxModel from package survival
+#&gt; Type: surv
+#&gt; Name: Cox Proportional Hazard Model; Short name: coxph
+#&gt; Class: surv.coxph
+#&gt; Properties: missings,numerics,factors,weights,prob,rcens
+#&gt; Predict-Type: response
+#&gt; Hyperparameters:
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Change the prediction type, predict a factor with class labels instead of probabilities:

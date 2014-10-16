@@ -172,6 +172,10 @@
                         <ul class="dropdown-menu">
                         
                             <li >
+                                <a href="../example_tasks/">Example Tasks</a>
+                            </li>
+                        
+                            <li >
                                 <a href="../integrated_learners/">Integrated Learners</a>
                             </li>
                         
@@ -247,10 +251,10 @@ mod = train(lrn, task)
 mod
 </code></pre>
 
-<pre class="prettyprint well"><code>## Model for id = surv.coxph class = surv.coxph
-## Trained on obs: 228
-## Used features: 8
-## Hyperparameters:
+<pre class="prettyprint well"><code>#&gt; Model for id = surv.coxph class = surv.coxph
+#&gt; Trained on obs: 228
+#&gt; Used features: 8
+#&gt; Hyperparameters:
 </code></pre>
 
 <p>In the above example, creating a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> explicitly is not strictly necessary.
@@ -262,10 +266,10 @@ method.</p>
 mod
 </code></pre>
 
-<pre class="prettyprint well"><code>## Model for id = surv.coxph class = surv.coxph
-## Trained on obs: 228
-## Used features: 8
-## Hyperparameters:
+<pre class="prettyprint well"><code>#&gt; Model for id = surv.coxph class = surv.coxph
+#&gt; Trained on obs: 228
+#&gt; Used features: 8
+#&gt; Hyperparameters:
 </code></pre>
 
 <p>Training a learner works the same way for every type of <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.
@@ -278,10 +282,10 @@ mod = train(lrn, task)
 mod
 </code></pre>
 
-<pre class="prettyprint well"><code>## Model for id = cluster.SimpleKMeans class = cluster.SimpleKMeans
-## Trained on obs: 32
-## Used features: 11
-## Hyperparameters: N=3
+<pre class="prettyprint well"><code>#&gt; Model for id = cluster.SimpleKMeans class = cluster.SimpleKMeans
+#&gt; Trained on obs: 32
+#&gt; Used features: 11
+#&gt; Hyperparameters: N=3
 </code></pre>
 
 <p>Optionally, only a subset of the data, specified by an index set, can be used to
@@ -298,10 +302,10 @@ mod = train(&quot;regr.lm&quot;, bh.task, subset = train.set)
 mod
 </code></pre>
 
-<pre class="prettyprint well"><code>## Model for id = regr.lm class = regr.lm
-## Trained on obs: 168
-## Used features: 13
-## Hyperparameters:
+<pre class="prettyprint well"><code>#&gt; Model for id = regr.lm class = regr.lm
+#&gt; Trained on obs: 168
+#&gt; Used features: 13
+#&gt; Hyperparameters:
 </code></pre>
 
 <p>Moreover, if the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> supports this, you can specify observation <code>weights</code>
@@ -319,10 +323,10 @@ w = 1/tab[tar]
 train(&quot;classif.cforest&quot;, task = bc.task, weights = w)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Model for id = classif.cforest class = classif.cforest
-## Trained on obs: 683
-## Used features: 9
-## Hyperparameters:
+<pre class="prettyprint well"><code>#&gt; Model for id = classif.cforest class = classif.cforest
+#&gt; Trained on obs: 683
+#&gt; Used features: 9
+#&gt; Hyperparameters:
 </code></pre>
 
 <p>As you may recall, it is also possible to pass observation weights when creating the 
@@ -341,17 +345,17 @@ In the following example we get an object of class <a href="http://www.rdocument
 getLearnerModel(mod)
 </code></pre>
 
-<pre class="prettyprint well"><code>## 
-## Call:
-## lm(formula = f, data = d)
-## 
-## Coefficients:
-## (Intercept)         crim           zn        indus        chas1  
-##    35.59334      0.05010      0.05877     -0.01044      3.29268  
-##         nox           rm          age          dis          rad  
-##   -26.04828      3.96483      0.02812     -1.56092      0.19935  
-##         tax      ptratio            b        lstat  
-##    -0.00505     -0.79820      0.00884     -0.67426
+<pre class="prettyprint well"><code>#&gt; 
+#&gt; Call:
+#&gt; stats::lm(formula = f, data = d)
+#&gt; 
+#&gt; Coefficients:
+#&gt; (Intercept)         crim           zn        indus        chas1  
+#&gt;    35.59334      0.05010      0.05877     -0.01044      3.29268  
+#&gt;         nox           rm          age          dis          rad  
+#&gt;   -26.04828      3.96483      0.02812     -1.56092      0.19935  
+#&gt;         tax      ptratio            b        lstat  
+#&gt;    -0.00505     -0.79820      0.00884     -0.67426
 </code></pre>
 
 </div>

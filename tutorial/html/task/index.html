@@ -172,6 +172,10 @@
                         <ul class="dropdown-menu">
                         
                             <li >
+                                <a href="../example_tasks/">Example Tasks</a>
+                            </li>
+                        
+                            <li >
                                 <a href="../integrated_learners/">Integrated Learners</a>
                             </li>
                         
@@ -262,15 +266,15 @@ In the following example we create a learning task from the data set <a href="ht
 cluster.task
 </code></pre>
 
-<pre class="prettyprint well"><code>## Unsupervised task: cars
-## Type: cluster
-## Observations: 32
-## Features:
-## numerics  factors 
-##       11        0 
-## Missings: FALSE
-## Has weights: FALSE
-## Has blocking: FALSE
+<pre class="prettyprint well"><code>#&gt; Unsupervised task: cars
+#&gt; Type: cluster
+#&gt; Observations: 32
+#&gt; Features:
+#&gt; numerics  factors  ordered 
+#&gt;       11        0        0 
+#&gt; Missings: FALSE
+#&gt; Has weights: FALSE
+#&gt; Has blocking: FALSE
 </code></pre>
 
 <p>The argument <code>id</code> is optional and allows to specify a custom name for the task.
@@ -288,16 +292,16 @@ regr.task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
 regr.task
 </code></pre>
 
-<pre class="prettyprint well"><code>## Supervised task: BostonHousing
-## Type: regr
-## Target: medv
-## Observations: 506
-## Features:
-## numerics  factors 
-##       12        1 
-## Missings: FALSE
-## Has weights: FALSE
-## Has blocking: FALSE
+<pre class="prettyprint well"><code>#&gt; Supervised task: BostonHousing
+#&gt; Type: regr
+#&gt; Target: medv
+#&gt; Observations: 506
+#&gt; Features:
+#&gt; numerics  factors  ordered 
+#&gt;       12        1        0 
+#&gt; Missings: FALSE
+#&gt; Has weights: FALSE
+#&gt; Has blocking: FALSE
 </code></pre>
 
 <p>As you can see, the task records the type of the learning problem and basic information about
@@ -324,20 +328,20 @@ classif.task = makeClassifTask(id = &quot;BreastCancer&quot;, data = df, target 
 classif.task
 </code></pre>
 
-<pre class="prettyprint well"><code>## Supervised task: BreastCancer
-## Type: classif
-## Target: Class
-## Observations: 699
-## Features:
-## numerics  factors 
-##        0        4 
-## Missings: TRUE
-## Has weights: FALSE
-## Has blocking: FALSE
-## Classes: 2
-##    benign malignant 
-##       458       241 
-## Positive class: benign
+<pre class="prettyprint well"><code>#&gt; Supervised task: BreastCancer
+#&gt; Type: classif
+#&gt; Target: Class
+#&gt; Observations: 699
+#&gt; Features:
+#&gt; numerics  factors  ordered 
+#&gt;        0        4        5 
+#&gt; Missings: TRUE
+#&gt; Has weights: FALSE
+#&gt; Has blocking: FALSE
+#&gt; Classes: 2
+#&gt;    benign malignant 
+#&gt;       458       241 
+#&gt; Positive class: benign
 </code></pre>
 
 <p>The positive class is benign.
@@ -359,16 +363,16 @@ surv.task = makeSurvTask(data = lung, target = c(&quot;time&quot;, &quot;status&
 surv.task
 </code></pre>
 
-<pre class="prettyprint well"><code>## Supervised task: lung
-## Type: surv
-## Target: time,status
-## Observations: 228
-## Features:
-## numerics  factors 
-##        8        0 
-## Missings: TRUE
-## Has weights: FALSE
-## Has blocking: FALSE
+<pre class="prettyprint well"><code>#&gt; Supervised task: lung
+#&gt; Type: surv
+#&gt; Target: time,status
+#&gt; Observations: 228
+#&gt; Features:
+#&gt; numerics  factors  ordered 
+#&gt;        8        0        0 
+#&gt; Missings: TRUE
+#&gt; Has weights: FALSE
+#&gt; Has blocking: FALSE
 </code></pre>
 
 <p>The type of censoring can be specified via the argument <code>censoring</code> which defaults to
@@ -398,16 +402,16 @@ costsens.task = makeCostSensTask(data = df, cost = cost)
 costsens.task
 </code></pre>
 
-<pre class="prettyprint well"><code>## Supervised task: df
-## Type: costsens
-## Observations: 150
-## Features:
-## numerics  factors 
-##        4        0 
-## Missings: FALSE
-## Has blocking: FALSE
-## Classes: 3
-## y1, y2, y3
+<pre class="prettyprint well"><code>#&gt; Supervised task: df
+#&gt; Type: costsens
+#&gt; Observations: 150
+#&gt; Features:
+#&gt; numerics  factors  ordered 
+#&gt;        4        0        0 
+#&gt; Missings: FALSE
+#&gt; Has blocking: FALSE
+#&gt; Classes: 3
+#&gt; y1, y2, y3
 </code></pre>
 
 <p>Beygelzimer, A., Dani, V., Hayes, T., Langford, J., and Zadrozny, B.
@@ -427,17 +431,17 @@ not be separated when splitting into training and test sets during a resampling 
 <pre class="prettyprint well"><code class="r">str(regr.task$task.desc)
 </code></pre>
 
-<pre class="prettyprint well"><code>## List of 8
-##  $ id          : chr &quot;BostonHousing&quot;
-##  $ type        : chr &quot;regr&quot;
-##  $ target      : chr &quot;medv&quot;
-##  $ size        : int 506
-##  $ n.feat      : Named int [1:2] 12 1
-##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;numerics&quot; &quot;factors&quot;
-##  $ has.missings: logi FALSE
-##  $ has.weights : logi FALSE
-##  $ has.blocking: logi FALSE
-##  - attr(*, &quot;class&quot;)= chr [1:2] &quot;TaskDescRegr&quot; &quot;TaskDesc&quot;
+<pre class="prettyprint well"><code>#&gt; List of 8
+#&gt;  $ id          : chr &quot;BostonHousing&quot;
+#&gt;  $ type        : chr &quot;regr&quot;
+#&gt;  $ target      : chr &quot;medv&quot;
+#&gt;  $ size        : int 506
+#&gt;  $ n.feat      : Named int [1:3] 12 1 0
+#&gt;   ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;numerics&quot; &quot;factors&quot; &quot;ordered&quot;
+#&gt;  $ has.missings: logi FALSE
+#&gt;  $ has.weights : logi FALSE
+#&gt;  $ has.blocking: logi FALSE
+#&gt;  - attr(*, &quot;class&quot;)= chr [1:2] &quot;TaskDescRegr&quot; &quot;TaskDesc&quot;
 </code></pre>
 
 <p>Moreover, there are some functions, following the naming convention
@@ -449,52 +453,52 @@ Here are some examples.</p>
 getTaskNFeats(cluster.task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] 11
+<pre class="prettyprint well"><code>#&gt; [1] 11
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Get the names of the input variables in cluster.task:
 getTaskFeatureNames(cluster.task)
 </code></pre>
 
-<pre class="prettyprint well"><code>##  [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
-## [11] &quot;carb&quot;
+<pre class="prettyprint well"><code>#&gt;  [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
+#&gt; [11] &quot;carb&quot;
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Get the values of the target variable in regr.task:
 head(getTaskTargets(regr.task))
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] 24.0 21.6 34.7 33.4 36.2 28.7
+<pre class="prettyprint well"><code>#&gt; [1] 24.0 21.6 34.7 33.4 36.2 28.7
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Get the cost matrix in costsens.task:
 head(getTaskCosts(costsens.task))
 </code></pre>
 
-<pre class="prettyprint well"><code>##      y1     y2      y3
-## [1,]  0 1589.6  674.44
-## [2,]  0 1173.4  828.41
-## [3,]  0  942.8 1095.34
-## [4,]  0 1049.6  477.82
-## [5,]  0 1121.9   90.85
-## [6,]  0 1820.0  841.07
+<pre class="prettyprint well"><code>#&gt;      y1     y2      y3
+#&gt; [1,]  0 1589.6  674.44
+#&gt; [2,]  0 1173.4  828.41
+#&gt; [3,]  0  942.8 1095.34
+#&gt; [4,]  0 1049.6  477.82
+#&gt; [5,]  0 1121.9   90.85
+#&gt; [6,]  0 1820.0  841.07
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Accessing the data set in classif.task:
 str(getTaskData(classif.task))
 </code></pre>
 
-<pre class="prettyprint well"><code>## 'data.frame':    699 obs. of  10 variables:
-##  $ Cl.thickness   : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 5 5 3 6 4 8 1 2 2 4 ...
-##  $ Cell.size      : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 1 4 1 8 1 10 1 1 1 2 ...
-##  $ Cell.shape     : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 1 4 1 8 1 10 1 2 1 1 ...
-##  $ Marg.adhesion  : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 1 5 1 1 3 8 1 1 1 1 ...
-##  $ Epith.c.size   : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 2 7 2 3 2 7 2 2 2 2 ...
-##  $ Bare.nuclei    : Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 10 2 4 1 10 10 1 1 1 ...
-##  $ Bl.cromatin    : Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 3 3 3 3 3 9 3 3 1 2 ...
-##  $ Normal.nucleoli: Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 2 1 7 1 7 1 1 1 1 ...
-##  $ Mitoses        : Factor w/ 9 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 1 1 1 1 1 1 1 5 1 ...
-##  $ Class          : Factor w/ 2 levels &quot;benign&quot;,&quot;malignant&quot;: 1 1 1 1 1 2 1 1 1 1 ...
+<pre class="prettyprint well"><code>#&gt; 'data.frame':    699 obs. of  10 variables:
+#&gt;  $ Cl.thickness   : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 5 5 3 6 4 8 1 2 2 4 ...
+#&gt;  $ Cell.size      : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 1 4 1 8 1 10 1 1 1 2 ...
+#&gt;  $ Cell.shape     : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 1 4 1 8 1 10 1 2 1 1 ...
+#&gt;  $ Marg.adhesion  : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 1 5 1 1 3 8 1 1 1 1 ...
+#&gt;  $ Epith.c.size   : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 2 7 2 3 2 7 2 2 2 2 ...
+#&gt;  $ Bare.nuclei    : Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 10 2 4 1 10 10 1 1 1 ...
+#&gt;  $ Bl.cromatin    : Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 3 3 3 3 3 9 3 3 1 2 ...
+#&gt;  $ Normal.nucleoli: Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 2 1 7 1 7 1 1 1 1 ...
+#&gt;  $ Mitoses        : Factor w/ 9 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 1 1 1 1 1 1 1 5 1 ...
+#&gt;  $ Class          : Factor w/ 2 levels &quot;benign&quot;,&quot;malignant&quot;: 1 1 1 1 1 2 1 1 1 1 ...
 </code></pre>
 
 <p>Note the many options <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskData.html">getTaskData</a> provides to convert the data set into a convenient format.
@@ -513,54 +517,54 @@ cluster.task = subsetTask(cluster.task, subset = 4:17)
 removeConstantFeatures(cluster.task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Removing 1 columns: am
+<pre class="prettyprint well"><code>#&gt; Removing 1 columns: am
 </code></pre>
 
-<pre class="prettyprint well"><code>## Unsupervised task: cars
-## Type: cluster
-## Observations: 14
-## Features:
-## numerics  factors 
-##       10        0 
-## Missings: FALSE
-## Has weights: FALSE
-## Has blocking: FALSE
+<pre class="prettyprint well"><code>#&gt; Unsupervised task: cars
+#&gt; Type: cluster
+#&gt; Observations: 14
+#&gt; Features:
+#&gt; numerics  factors  ordered 
+#&gt;       10        0        0 
+#&gt; Missings: FALSE
+#&gt; Has weights: FALSE
+#&gt; Has blocking: FALSE
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Remove selected features:
 dropFeatures(surv.task, c(&quot;meal.cal&quot;, &quot;wt.loss&quot;))
 </code></pre>
 
-<pre class="prettyprint well"><code>## Supervised task: lung
-## Type: surv
-## Target: time,status
-## Observations: 228
-## Features:
-## numerics  factors 
-##        6        0 
-## Missings: TRUE
-## Has weights: FALSE
-## Has blocking: FALSE
+<pre class="prettyprint well"><code>#&gt; Supervised task: lung
+#&gt; Type: surv
+#&gt; Target: time,status
+#&gt; Observations: 228
+#&gt; Features:
+#&gt; numerics  factors  ordered 
+#&gt;        6        0        0 
+#&gt; Missings: TRUE
+#&gt; Has weights: FALSE
+#&gt; Has blocking: FALSE
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Standardize numerical features:
 normalizeFeatures(classif.task, method = &quot;standardize&quot;)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Supervised task: BreastCancer
-## Type: classif
-## Target: Class
-## Observations: 699
-## Features:
-## numerics  factors 
-##        0        4 
-## Missings: TRUE
-## Has weights: FALSE
-## Has blocking: FALSE
-## Classes: 2
-##    benign malignant 
-##       458       241 
-## Positive class: malignant
+<pre class="prettyprint well"><code>#&gt; Supervised task: BreastCancer
+#&gt; Type: classif
+#&gt; Target: Class
+#&gt; Observations: 699
+#&gt; Features:
+#&gt; numerics  factors  ordered 
+#&gt;        0        4        5 
+#&gt; Missings: TRUE
+#&gt; Has weights: FALSE
+#&gt; Has blocking: FALSE
+#&gt; Classes: 2
+#&gt;    benign malignant 
+#&gt;       458       241 
+#&gt; Positive class: malignant
 </code></pre>
 
 <h2 id="pre-defined-tasks">Pre-defined tasks</h2>
@@ -575,39 +579,23 @@ These are used throughout this tutorial in order to get shorter and more readabl
 </thead>
 <tbody>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/mlr.agri/">agri.task</a></td>
-<td align="left">European Union Agricultural Workforces clustering task</td>
-</tr>
-<tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/mlr.bc/">bc.task</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/NA/">bc.task</a></td>
 <td align="left">Wisconsin Breast Cancer classification task</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/mlr.bh/">bh.task</a></td>
-<td align="left">Boston Housing regression task</td>
-</tr>
-<tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/mlr.costIris/">costIris.task</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/NA/">costiris.task</a></td>
 <td align="left">Iris cost-sensitive classification task</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/mlr.iris/">iris.task</a></td>
-<td align="left">Iris classification task</td>
-</tr>
-<tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/mlr.lung/">lung.task</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/NA/">lung.task</a></td>
 <td align="left">NCCTG Lung Cancer survival task</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/mlr.mtcars/">mtcars.task</a></td>
-<td align="left">Motor Trend Car Road Tests clustering task</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/NA/">pid.task</a></td>
+<td align="left">PimaIndiansDiabetes classification task</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/mlr.sonar/">sonar.task</a></td>
-<td align="left">Sonar classification task</td>
-</tr>
-<tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/mlr.wpbc/">wpbc.task</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/NA/">wpbc.task</a></td>
 <td align="left">Wisonsin Prognostic Breast Cancer (WPBC) survival task</td>
 </tr>
 </tbody>

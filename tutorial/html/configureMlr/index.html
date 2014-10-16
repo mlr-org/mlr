@@ -172,6 +172,10 @@
                         <ul class="dropdown-menu">
                         
                             <li >
+                                <a href="../example_tasks/">Example Tasks</a>
+                            </li>
+                        
+                            <li >
                                 <a href="../integrated_learners/">Integrated Learners</a>
                             </li>
                         
@@ -246,39 +250,41 @@ For all parameters, simply refer to the documentation of <a href="http://www.rdo
 <h2 id="example-reduce-the-output-on-the-console">Example: Reduce the output on the console</h2>
 <p>You are bothered by all the output on the console like in this example?</p>
 <pre class="prettyprint well"><code class="r">## Perform a 3-fold cross-validation
-r = resample(&quot;classif.ksvm&quot;, iris.task, iris.rin)
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+r = resample(&quot;classif.ksvm&quot;, iris.task, rdesc)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
+<pre class="prettyprint well"><code>#&gt; [Resample] cross-validation iter: 1
 </code></pre>
 
-<pre class="prettyprint well"><code>## Using automatic sigma estimation (sigest) for RBF or laplace kernel
+<pre class="prettyprint well"><code>#&gt; Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 2
+<pre class="prettyprint well"><code>#&gt; [Resample] cross-validation iter: 2
 </code></pre>
 
-<pre class="prettyprint well"><code>## Using automatic sigma estimation (sigest) for RBF or laplace kernel
+<pre class="prettyprint well"><code>#&gt; Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 3
+<pre class="prettyprint well"><code>#&gt; [Resample] cross-validation iter: 3
 </code></pre>
 
-<pre class="prettyprint well"><code>## Using automatic sigma estimation (sigest) for RBF or laplace kernel
+<pre class="prettyprint well"><code>#&gt; Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] Result: mmce.test.mean=0.04
+<pre class="prettyprint well"><code>#&gt; [Resample] Result: mmce.test.mean=0.06
 </code></pre>
 
 <p>Just try the following:</p>
 <pre class="prettyprint well"><code class="r">configureMlr(show.learner.output = FALSE)
-r = resample(&quot;classif.ksvm&quot;, iris.task, iris.rin)
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+r = resample(&quot;classif.ksvm&quot;, iris.task, rdesc)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [Resample] cross-validation iter: 1
-## [Resample] cross-validation iter: 2
-## [Resample] cross-validation iter: 3
-## [Resample] Result: mmce.test.mean=0.04
+<pre class="prettyprint well"><code>#&gt; [Resample] cross-validation iter: 1
+#&gt; [Resample] cross-validation iter: 2
+#&gt; [Resample] cross-validation iter: 3
+#&gt; [Resample] Result: mmce.test.mean=0.0533
 </code></pre>
 
 <h2 id="access-the-current-configuration">Access the current configuration</h2>
@@ -286,20 +292,20 @@ r = resample(&quot;classif.ksvm&quot;, iris.task, iris.rin)
 <pre class="prettyprint well"><code class="r">getMlrOptions()
 </code></pre>
 
-<pre class="prettyprint well"><code>## $on.learner.error
-## [1] &quot;stop&quot;
-## 
-## $on.learner.warning
-## [1] &quot;warn&quot;
-## 
-## $on.par.without.desc
-## [1] &quot;stop&quot;
-## 
-## $show.info
-## [1] TRUE
-## 
-## $show.learner.output
-## [1] FALSE
+<pre class="prettyprint well"><code>#&gt; $on.learner.error
+#&gt; [1] &quot;stop&quot;
+#&gt; 
+#&gt; $on.learner.warning
+#&gt; [1] &quot;warn&quot;
+#&gt; 
+#&gt; $on.par.without.desc
+#&gt; [1] &quot;stop&quot;
+#&gt; 
+#&gt; $show.info
+#&gt; [1] TRUE
+#&gt; 
+#&gt; $show.learner.output
+#&gt; [1] FALSE
 </code></pre>
 
 <h2 id="example-turn-off-parameter-checking">Example: Turn off parameter checking</h2>
@@ -311,15 +317,15 @@ But until then you can turn off <a href="http://www.rdocumentation.org/packages/
 <pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;classif.ksvm&quot;, newPar = 3)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: classif.ksvm: Setting parameter newPar without available description object!
-## You can switch off this check by using configureMlr!
+<pre class="prettyprint well"><code>#&gt; Error: classif.ksvm: Setting parameter newPar without available description object!
+#&gt; You can switch off this check by using configureMlr!
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;classif.ksvm&quot;, epsilon = -3)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: classif.ksvm: Setting parameter epsilon without available description object!
-## You can switch off this check by using configureMlr!
+<pre class="prettyprint well"><code>#&gt; Error: classif.ksvm: Setting parameter epsilon without available description object!
+#&gt; You can switch off this check by using configureMlr!
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">configureMlr(on.par.without.desc = &quot;quiet&quot;)
@@ -338,63 +344,63 @@ The following example shows how to prevent this:</p>
 train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Error: some group is too small for 'qda'
+<pre class="prettyprint well"><code>#&gt; Error: some group is too small for 'qda'
 </code></pre>
 
-<pre class="prettyprint well"><code>## Timing stopped at: 0.004 0 0.005
+<pre class="prettyprint well"><code>#&gt; Timing stopped at: 0.006 0 0.005
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">configureMlr(on.learner.error = &quot;warn&quot;)
 mod = train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Warning: Could not train learner classif.qda: Error in qda.default(x, grouping, ...) : 
-##   some group is too small for 'qda'
+<pre class="prettyprint well"><code>#&gt; Warning: Could not train learner classif.qda: Error in qda.default(x, grouping, ...) : 
+#&gt;   some group is too small for 'qda'
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod
 </code></pre>
 
-<pre class="prettyprint well"><code>## Model for id = classif.qda class = classif.qda
-## Trained on obs: 104
-## Used features: 4
-## Hyperparameters: 
-## Training failed: Error in qda.default(x, grouping, ...) : 
-##   some group is too small for 'qda'
-## 
-## Training failed: Error in qda.default(x, grouping, ...) : 
-##   some group is too small for 'qda'
+<pre class="prettyprint well"><code>#&gt; Model for id = classif.qda class = classif.qda
+#&gt; Trained on obs: 104
+#&gt; Used features: 4
+#&gt; Hyperparameters: 
+#&gt; Training failed: Error in qda.default(x, grouping, ...) : 
+#&gt;   some group is too small for 'qda'
+#&gt; 
+#&gt; Training failed: Error in qda.default(x, grouping, ...) : 
+#&gt;   some group is too small for 'qda'
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## mod is an object of class FailureModel
 isFailureModel(mod)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] TRUE
+<pre class="prettyprint well"><code>#&gt; [1] TRUE
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Get the error message
 getFailureModelMsg(mod)
 </code></pre>
 
-<pre class="prettyprint well"><code>## [1] &quot;Error in qda.default(x, grouping, ...) : \n  some group is too small for 'qda'\n&quot;
+<pre class="prettyprint well"><code>#&gt; [1] &quot;Error in qda.default(x, grouping, ...) : \n  some group is too small for 'qda'\n&quot;
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## NAs are predicted
 predict(mod, iris.task)
 </code></pre>
 
-<pre class="prettyprint well"><code>## Prediction:
-## predict.type: response
-## threshold: 
-## time: NA
-##   id  truth response
-## 1  1 setosa     &lt;NA&gt;
-## 2  2 setosa     &lt;NA&gt;
-## 3  3 setosa     &lt;NA&gt;
-## 4  4 setosa     &lt;NA&gt;
-## 5  5 setosa     &lt;NA&gt;
-## 6  6 setosa     &lt;NA&gt;
+<pre class="prettyprint well"><code>#&gt; Prediction: 150 observations
+#&gt; predict.type: response
+#&gt; threshold: 
+#&gt; time: NA
+#&gt;   id  truth response
+#&gt; 1  1 setosa     &lt;NA&gt;
+#&gt; 2  2 setosa     &lt;NA&gt;
+#&gt; 3  3 setosa     &lt;NA&gt;
+#&gt; 4  4 setosa     &lt;NA&gt;
+#&gt; 5  5 setosa     &lt;NA&gt;
+#&gt; 6  6 setosa     &lt;NA&gt;
 </code></pre>
 
 <p>Instead of an exception, a warning is issued and a <a href="http://www.rdocumentation.org/packages/mlr/functions/FailureModel.html">FailureModel</a> is created that predicts
