@@ -321,26 +321,3 @@ holdout("regr.lm", bh.task, measures = list(mse, mae))
 crossval("classif.lda", iris.task, iters = 3, measures = list(mmce, ber))
 bootstrapB632("surv.coxph", lung.task, iters = 20)
 ```
-
-
-## Pre-defined resample instances
-
-For each of the pre-defined [&Task]s [%mlr] provides pre-defined 
-[ResampleInstance](&makeResampleInstance)s for 3-fold cross-validation. 
-These instances are occasionally used in the remainder of this tutorial.
-
-```{r echo=FALSE, results="asis"}
-linkTask = function(x) {
-	x = unlist(strsplit(as.character(x), split = " "))
-	x[2] = gsub("[(]", "", x[2])
-	x[2] = gsub("[)]", "", x[2])
-    collapse(sprintf("[%1$s](http://www.rdocumentation.org/packages/mlr/functions/%2$s/)", x[1], x[2]), sep = "<br />")
-}
-d = data(package = "mlr")
-d = d$results
-df = as.data.frame(d[seq(1,nrow(d),2), c("Item", "Title")])
-df$Item = sapply(df$Item, linkTask)
-names(df)[1] = "Task"
-pandoc.table(df, style = "rmarkdown", split.tables = Inf, split.cells = Inf,
-	justify = c("left", "left"))
-```
