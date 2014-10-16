@@ -1,17 +1,17 @@
 # Implemented Performance Measures
 
 The following tables show the performance measures available for the different types of
-learning problems.
+learning problems in alphabetical order.
 
-Column **Minim.** indicates if the measure should be minimized when, e.g., tuning a learner
-or during feature selection.
+Column **Minimize** indicates if the measure is minimized during, e.g., tuning or
+feature selection.
 **Best** and **Worst** show the best and worst values the performance measure can attain.
 
 **PredType** shows the supported type of prediction.
-Columns **Pred**, **Model**, and **Task** indicate if the measure requires the [&Prediction],
+Columns **Prediction**, **Model**, and **Task** indicate if the measure requires the [&Prediction],
 the [WrappedModel](&makeWrappedModel) and/or the [&Task].
 
-**Aggr** shows the default aggregation method.
+**Aggregation** shows the default aggregation method.
 
 For *classification*, column **MultiClass** indicates if a measure is suitable for
 multi-class problems. If not, the measure can only be used for binary classification problems.
@@ -19,17 +19,19 @@ multi-class problems. If not, the measure can only be used for binary classifica
 
 ```{r include=FALSE}
 getTab = function(type) {
-  m = list(timetrain = timetrain, timepredict = timepredict, timeboth = timeboth, featperc = featperc)
+  m = list(featperc = featperc, timeboth = timeboth, timepredict = timepredict, timetrain = timetrain)
 
   if (type == "general") {
     meas = m
   } else {
     meas = listMeasures(type, create = TRUE)
+    ord = order(names(meas))
+    meas = meas[ord]
     keep = setdiff(names(meas), names(m))
     meas = meas[keep]
   }
 
-  cols = c("Measure", "Minim.", "Best", "Worst", "MultiClass", "PredType", "Pred", "Model", "Task", "Aggr")
+  cols = c("Measure", "Minimize", "Best", "Worst", "MultiClass", "PredType", "Prediction", "Model", "Task", "Aggregation")
   df = makeDataFrame(nrow = length(meas), ncol = length(cols),
     col.types = c("character", "logical", "numeric", "numeric", "logical", "character", "logical", "logical", "logical", "character"))
   names(df) = cols
@@ -41,14 +43,14 @@ getTab = function(type) {
     df[i, 3] = mea$best
     df[i, 4] = mea$worst
     df[i, 5] = "classif.multi" %in% mea$properties
-    df[i, 6] = collapse(mea$allowed.pred.types)
+    df[i, 6] = collapse(mea$allowed.pred.types, sep = "<br />")
     df[i, 7] = mea$req.pred
     df[i, 8] = mea$req.model
     df[i, 9] = mea$req.task
     df[i, 10] = mea$aggr$id
   }
 
-  just = c("left", "center", "right", "right", "right", "right", "center", "center", "center", "right")
+  just = c("left", "center", "right", "right", "center", "left", "center", "center", "center", "left")
 
   if (type != "classif") {
     df$MultiClass = NULL
@@ -61,6 +63,19 @@ getTab = function(type) {
     justify = just)
 }
 ```
+
+<style type="text/css">
+<!--
+.col-md-9 th {
+padding: 0.5em;
+}
+.col-md-9 td {
+border: solid 1px #ccc;
+padding: 0.5em;
+vertical-align: top;
+}
+-->
+</style>
 
 ### Classification
 ```{r echo=FALSE,results="asis"}

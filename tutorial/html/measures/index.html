@@ -243,284 +243,297 @@
 
 <h1 id="implemented-performance-measures">Implemented Performance Measures</h1>
 <p>The following tables show the performance measures available for the different types of
-learning problems.</p>
-<p>Column <strong>Minim.</strong> indicates if the measure should be minimized when, e.g., tuning a learner
-or during feature selection.
+learning problems in alphabetical order.</p>
+<p>Column <strong>Minimize</strong> indicates if the measure is minimized during, e.g., tuning or
+feature selection.
 <strong>Best</strong> and <strong>Worst</strong> show the best and worst values the performance measure can attain.</p>
 <p><strong>PredType</strong> shows the supported type of prediction.
-Columns <strong>Pred</strong>, <strong>Model</strong>, and <strong>Task</strong> indicate if the measure requires the <a href="http://www.rdocumentation.org/packages/mlr/functions/Prediction.html">Prediction</a>,
+Columns <strong>Prediction</strong>, <strong>Model</strong>, and <strong>Task</strong> indicate if the measure requires the <a href="http://www.rdocumentation.org/packages/mlr/functions/Prediction.html">Prediction</a>,
 the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeWrappedModel.html">WrappedModel</a> and/or the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
-<p><strong>Aggr</strong> shows the default aggregation method.</p>
+<p><strong>Aggregation</strong> shows the default aggregation method.</p>
 <p>For <em>classification</em>, column <strong>MultiClass</strong> indicates if a measure is suitable for
 multi-class problems. If not, the measure can only be used for binary classification problems.</p>
+<style type="text/css">
+<!--
+.col-md-9 th {
+padding: 0.5em;
+}
+.col-md-9 td {
+border: solid 1px #ccc;
+padding: 0.5em;
+vertical-align: top;
+}
+-->
+</style>
+
 <h3 id="classification">Classification</h3>
 <table>
 <thead>
 <tr>
 <th align="left">Measure</th>
-<th align="center">Minim.</th>
+<th align="center">Minimize</th>
 <th align="right">Best</th>
 <th align="right">Worst</th>
-<th align="right">MultiClass</th>
-<th align="right">PredType</th>
-<th align="center">Pred</th>
+<th align="center">MultiClass</th>
+<th align="left">PredType</th>
+<th align="center">Prediction</th>
 <th align="center">Model</th>
 <th align="center">Task</th>
-<th align="right">Aggr</th>
+<th align="left">Aggregation</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">gpr</td>
-<td align="center"></td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right"></td>
-<td align="right">response,prob</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.mean</td>
-</tr>
-<tr>
-<td align="left">npv</td>
-<td align="center"></td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right"></td>
-<td align="right">response,prob</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.mean</td>
-</tr>
-<tr>
-<td align="left">multiclass.auc</td>
-<td align="center"></td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">X</td>
-<td align="right">response,prob</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.mean</td>
-</tr>
-<tr>
-<td align="left">mmce</td>
-<td align="center">X</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">X</td>
-<td align="right">response,prob</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.mean</td>
-</tr>
 <tr>
 <td align="left">acc</td>
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">0</td>
-<td align="right">X</td>
-<td align="right">response,prob</td>
+<td align="center">X</td>
+<td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">test.mean</td>
-</tr>
-<tr>
-<td align="left">bac</td>
-<td align="center"></td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right"></td>
-<td align="right">response,prob</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.mean</td>
-</tr>
-<tr>
-<td align="left">f1</td>
-<td align="center"></td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right"></td>
-<td align="right">response,prob</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.mean</td>
-</tr>
-<tr>
-<td align="left">gmean</td>
-<td align="center"></td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right"></td>
-<td align="right">response,prob</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.mean</td>
-</tr>
-<tr>
-<td align="left">fnr</td>
-<td align="center">X</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right"></td>
-<td align="right">response,prob</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.mean</td>
-</tr>
-<tr>
-<td align="left">tnr</td>
-<td align="center"></td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right"></td>
-<td align="right">response,prob</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.mean</td>
-</tr>
-<tr>
-<td align="left">mcc</td>
-<td align="center"></td>
-<td align="right">1</td>
-<td align="right">-1</td>
-<td align="right"></td>
-<td align="right">response,prob</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.mean</td>
-</tr>
-<tr>
-<td align="left">ppv</td>
-<td align="center"></td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right"></td>
-<td align="right">response,prob</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
 </tr>
 <tr>
 <td align="left">auc</td>
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">0</td>
-<td align="right"></td>
-<td align="right">prob</td>
+<td align="center"></td>
+<td align="left">prob</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left">fn</td>
-<td align="center">X</td>
+<td align="left">bac</td>
+<td align="center"></td>
+<td align="right">1</td>
 <td align="right">0</td>
-<td align="right">Inf</td>
-<td align="right"></td>
-<td align="right">response,prob</td>
+<td align="center"></td>
+<td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
 </tr>
 <tr>
 <td align="left">ber</td>
 <td align="center">X</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right">X</td>
-<td align="right">response,prob</td>
+<td align="center">X</td>
+<td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left">fp</td>
-<td align="center">X</td>
-<td align="right">0</td>
-<td align="right">Inf</td>
-<td align="right"></td>
-<td align="right">response,prob</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.mean</td>
-</tr>
-<tr>
-<td align="left">fpr</td>
-<td align="center">X</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right"></td>
-<td align="right">response,prob</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.mean</td>
-</tr>
-<tr>
-<td align="left">tpr</td>
+<td align="left">f1</td>
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">0</td>
-<td align="right"></td>
-<td align="right">response,prob</td>
+<td align="center"></td>
+<td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
 </tr>
 <tr>
 <td align="left">fdr</td>
 <td align="center">X</td>
 <td align="right">0</td>
 <td align="right">1</td>
-<td align="right"></td>
-<td align="right">response,prob</td>
+<td align="center"></td>
+<td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">fn</td>
+<td align="center">X</td>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="center"></td>
+<td align="left">response<br />prob</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">fnr</td>
+<td align="center">X</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="center"></td>
+<td align="left">response<br />prob</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">fp</td>
+<td align="center">X</td>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="center"></td>
+<td align="left">response<br />prob</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">fpr</td>
+<td align="center">X</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="center"></td>
+<td align="left">response<br />prob</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">gmean</td>
+<td align="center"></td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="center"></td>
+<td align="left">response<br />prob</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">gpr</td>
+<td align="center"></td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="center"></td>
+<td align="left">response<br />prob</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">mcc</td>
+<td align="center"></td>
+<td align="right">1</td>
+<td align="right">-1</td>
+<td align="center"></td>
+<td align="left">response<br />prob</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">mmce</td>
+<td align="center">X</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="center">X</td>
+<td align="left">response<br />prob</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">multiclass.auc</td>
+<td align="center"></td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="center">X</td>
+<td align="left">response<br />prob</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">npv</td>
+<td align="center"></td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="center"></td>
+<td align="left">response<br />prob</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">ppv</td>
+<td align="center"></td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="center"></td>
+<td align="left">response<br />prob</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">test.mean</td>
 </tr>
 <tr>
 <td align="left">tn</td>
 <td align="center"></td>
 <td align="right">Inf</td>
 <td align="right">0</td>
-<td align="right"></td>
-<td align="right">response,prob</td>
+<td align="center"></td>
+<td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">tnr</td>
+<td align="center"></td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="center"></td>
+<td align="left">response<br />prob</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">test.mean</td>
 </tr>
 <tr>
 <td align="left">tp</td>
 <td align="center"></td>
 <td align="right">Inf</td>
 <td align="right">0</td>
-<td align="right"></td>
-<td align="right">response,prob</td>
+<td align="center"></td>
+<td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">tpr</td>
+<td align="center"></td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="center"></td>
+<td align="left">response<br />prob</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">test.mean</td>
 </tr>
 </tbody>
 </table>
@@ -529,93 +542,93 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <thead>
 <tr>
 <th align="left">Measure</th>
-<th align="center">Minim.</th>
+<th align="center">Minimize</th>
 <th align="right">Best</th>
 <th align="right">Worst</th>
-<th align="right">PredType</th>
-<th align="center">Pred</th>
+<th align="left">PredType</th>
+<th align="center">Prediction</th>
 <th align="center">Model</th>
 <th align="center">Task</th>
-<th align="right">Aggr</th>
+<th align="left">Aggregation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">sae</td>
+<td align="left">mae</td>
 <td align="center">X</td>
 <td align="right">0</td>
 <td align="right">Inf</td>
-<td align="right">response,se</td>
+<td align="left">response<br />se</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
 </tr>
 <tr>
 <td align="left">medae</td>
 <td align="center">X</td>
 <td align="right">0</td>
 <td align="right">Inf</td>
-<td align="right">response,se</td>
+<td align="left">response<br />se</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">test.mean</td>
-</tr>
-<tr>
-<td align="left">rmse</td>
-<td align="center">X</td>
-<td align="right">0</td>
-<td align="right">Inf</td>
-<td align="right">response,se</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.sqrt.of.mean</td>
-</tr>
-<tr>
-<td align="left">mae</td>
-<td align="center">X</td>
-<td align="right">0</td>
-<td align="right">Inf</td>
-<td align="right">response,se</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.mean</td>
-</tr>
-<tr>
-<td align="left">sse</td>
-<td align="center">X</td>
-<td align="right">0</td>
-<td align="right">Inf</td>
-<td align="right">response,se</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
 </tr>
 <tr>
 <td align="left">medse</td>
 <td align="center">X</td>
 <td align="right">0</td>
 <td align="right">Inf</td>
-<td align="right">response,se</td>
+<td align="left">response<br />se</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
 </tr>
 <tr>
 <td align="left">mse</td>
 <td align="center">X</td>
 <td align="right">0</td>
 <td align="right">Inf</td>
-<td align="right">response,se</td>
+<td align="left">response<br />se</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">rmse</td>
+<td align="center">X</td>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">response<br />se</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">test.sqrt.of.mean</td>
+</tr>
+<tr>
+<td align="left">sae</td>
+<td align="center">X</td>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">response<br />se</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">sse</td>
+<td align="center">X</td>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">response<br />se</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">test.mean</td>
 </tr>
 </tbody>
 </table>
@@ -624,14 +637,14 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <thead>
 <tr>
 <th align="left">Measure</th>
-<th align="center">Minim.</th>
+<th align="center">Minimize</th>
 <th align="right">Best</th>
 <th align="right">Worst</th>
-<th align="right">PredType</th>
-<th align="center">Pred</th>
+<th align="left">PredType</th>
+<th align="center">Prediction</th>
 <th align="center">Model</th>
 <th align="center">Task</th>
-<th align="right">Aggr</th>
+<th align="left">Aggregation</th>
 </tr>
 </thead>
 <tbody>
@@ -640,11 +653,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">0</td>
-<td align="right">response,prob</td>
+<td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
 </tr>
 </tbody>
 </table>
@@ -653,71 +666,71 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <thead>
 <tr>
 <th align="left">Measure</th>
-<th align="center">Minim.</th>
+<th align="center">Minimize</th>
 <th align="right">Best</th>
 <th align="right">Worst</th>
-<th align="right">PredType</th>
-<th align="center">Pred</th>
+<th align="left">PredType</th>
+<th align="center">Prediction</th>
 <th align="center">Model</th>
 <th align="center">Task</th>
-<th align="right">Aggr</th>
+<th align="left">Aggregation</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">dunn</td>
-<td align="center"></td>
-<td align="right">Inf</td>
-<td align="right">0</td>
-<td align="right">response,prob</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.mean</td>
-</tr>
 <tr>
 <td align="left">db</td>
 <td align="center">X</td>
 <td align="right">0</td>
 <td align="right">Inf</td>
-<td align="right">response,prob</td>
+<td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left">silhouette</td>
+<td align="left">dunn</td>
 <td align="center"></td>
 <td align="right">Inf</td>
 <td align="right">0</td>
-<td align="right">response,prob</td>
+<td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
 </tr>
 <tr>
 <td align="left">G1</td>
 <td align="center"></td>
 <td align="right">Inf</td>
 <td align="right">0</td>
-<td align="right">response,prob</td>
+<td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
 </tr>
 <tr>
 <td align="left">G2</td>
 <td align="center"></td>
 <td align="right">Inf</td>
 <td align="right">0</td>
-<td align="right">response,prob</td>
+<td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">silhouette</td>
+<td align="center"></td>
+<td align="right">Inf</td>
+<td align="right">0</td>
+<td align="left">response<br />prob</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left">test.mean</td>
 </tr>
 </tbody>
 </table>
@@ -726,38 +739,38 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <thead>
 <tr>
 <th align="left">Measure</th>
-<th align="center">Minim.</th>
+<th align="center">Minimize</th>
 <th align="right">Best</th>
 <th align="right">Worst</th>
-<th align="right">PredType</th>
-<th align="center">Pred</th>
+<th align="left">PredType</th>
+<th align="center">Prediction</th>
 <th align="center">Model</th>
 <th align="center">Task</th>
-<th align="right">Aggr</th>
+<th align="left">Aggregation</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td align="left">meancosts</td>
-<td align="center">X</td>
-<td align="right">0</td>
-<td align="right">Inf</td>
-<td align="right">response</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right">test.mean</td>
-</tr>
 <tr>
 <td align="left">mcp</td>
 <td align="center">X</td>
 <td align="right">0</td>
 <td align="right">Inf</td>
-<td align="right">response</td>
+<td align="left">response</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">meancosts</td>
+<td align="center">X</td>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">response</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left">test.mean</td>
 </tr>
 </tbody>
 </table>
@@ -766,60 +779,60 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <thead>
 <tr>
 <th align="left">Measure</th>
-<th align="center">Minim.</th>
+<th align="center">Minimize</th>
 <th align="right">Best</th>
 <th align="right">Worst</th>
-<th align="right">PredType</th>
-<th align="center">Pred</th>
+<th align="left">PredType</th>
+<th align="center">Prediction</th>
 <th align="center">Model</th>
 <th align="center">Task</th>
-<th align="right">Aggr</th>
+<th align="left">Aggregation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">timetrain</td>
+<td align="left">featperc</td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="right">Inf</td>
-<td align="right">response,prob</td>
-<td align="center"></td>
+<td align="right">1</td>
+<td align="left">response<br />prob<br />se</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
-<td align="right">test.mean</td>
-</tr>
-<tr>
-<td align="left">timepredict</td>
-<td align="center">X</td>
-<td align="right">0</td>
-<td align="right">Inf</td>
-<td align="right">response,prob</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
 </tr>
 <tr>
 <td align="left">timeboth</td>
 <td align="center">X</td>
 <td align="right">0</td>
 <td align="right">Inf</td>
-<td align="right">response,prob</td>
+<td align="left">response<br />prob<br />se</td>
 <td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
-<td align="right">test.mean</td>
+<td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left">featperc</td>
+<td align="left">timepredict</td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="right">1</td>
-<td align="right">response,prob</td>
-<td align="center">X</td>
+<td align="right">Inf</td>
+<td align="left">response<br />prob<br />se</td>
 <td align="center">X</td>
 <td align="center"></td>
-<td align="right">test.mean</td>
+<td align="center"></td>
+<td align="left">test.mean</td>
+</tr>
+<tr>
+<td align="left">timetrain</td>
+<td align="center">X</td>
+<td align="right">0</td>
+<td align="right">Inf</td>
+<td align="left">response<br />prob<br />se</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="left">test.mean</td>
 </tr>
 </tbody>
 </table>
