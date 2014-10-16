@@ -114,7 +114,15 @@
                             </li>
                         
                             <li >
-                                <a href="../makeBaggingWrapper/">Bagging</a>
+                                <a href="../preproc/">Preprocessing</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../impute/">Imputations</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../bagging/">Bagging</a>
                             </li>
                         
                             <li >
@@ -230,8 +238,9 @@ the minority or undersample the majority class.</p>
 <h3 id="tasks">Tasks</h3>
 <p>Now let's see what the effect is for a classification task:</p>
 <pre class="prettyprint well"><code class="r">data.even = rbind(
-    data.frame(x = rnorm(50, mean = 1), class = &quot;A&quot;),
-    data.frame(x = rnorm(50, mean = 2), class = &quot;B&quot;))
+  data.frame(x = rnorm(50, mean = 1), class = &quot;A&quot;),
+  data.frame(x = rnorm(50, mean = 2), class = &quot;B&quot;)
+)
 task = makeClassifTask(data = data.even, target = &quot;class&quot;)
 task.over = oversample(task, rate = 4)
 task.under = undersample(task, rate = 1/4)

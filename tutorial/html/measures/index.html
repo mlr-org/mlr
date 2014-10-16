@@ -114,7 +114,15 @@
                             </li>
                         
                             <li >
-                                <a href="../makeBaggingWrapper/">Bagging</a>
+                                <a href="../preproc/">Preprocessing</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../impute/">Imputations</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../bagging/">Bagging</a>
                             </li>
                         
                             <li >
@@ -243,7 +251,7 @@ or during feature selection.
 Columns <strong>Pred</strong>, <strong>Model</strong>, and <strong>Task</strong> indicate if the measure requires the <a href="http://www.rdocumentation.org/packages/mlr/functions/Prediction.html">Prediction</a>,
 the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeWrappedModel.html">WrappedModel</a> and/or the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
 <p><strong>Aggr</strong> shows the default aggregation method.</p>
-<p>For <em>classification</em>, column <strong>MultiClass</strong> indicates if a measure is suitable for 
+<p>For <em>classification</em>, column <strong>MultiClass</strong> indicates if a measure is suitable for
 multi-class problems. If not, the measure can only be used for binary classification problems.</p>
 <h3 id="classification">Classification</h3>
 <table>
@@ -661,10 +669,10 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="center"></td>
 <td align="right">Inf</td>
 <td align="right">0</td>
-<td align="right">response</td>
+<td align="right">response,prob</td>
 <td align="center">X</td>
 <td align="center"></td>
-<td align="center">X</td>
+<td align="center"></td>
 <td align="right">test.mean</td>
 </tr>
 <tr>
@@ -672,10 +680,10 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="center">X</td>
 <td align="right">0</td>
 <td align="right">Inf</td>
-<td align="right">response</td>
+<td align="right">response,prob</td>
 <td align="center">X</td>
 <td align="center"></td>
-<td align="center">X</td>
+<td align="center"></td>
 <td align="right">test.mean</td>
 </tr>
 <tr>
@@ -683,10 +691,10 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="center"></td>
 <td align="right">Inf</td>
 <td align="right">0</td>
-<td align="right">response</td>
+<td align="right">response,prob</td>
 <td align="center">X</td>
 <td align="center"></td>
-<td align="center">X</td>
+<td align="center"></td>
 <td align="right">test.mean</td>
 </tr>
 <tr>
@@ -694,10 +702,10 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="center"></td>
 <td align="right">Inf</td>
 <td align="right">0</td>
-<td align="right">response</td>
+<td align="right">response,prob</td>
 <td align="center">X</td>
 <td align="center"></td>
-<td align="center">X</td>
+<td align="center"></td>
 <td align="right">test.mean</td>
 </tr>
 <tr>
@@ -705,10 +713,10 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="center"></td>
 <td align="right">Inf</td>
 <td align="right">0</td>
-<td align="right">response</td>
+<td align="right">response,prob</td>
 <td align="center">X</td>
 <td align="center"></td>
-<td align="center">X</td>
+<td align="center"></td>
 <td align="right">test.mean</td>
 </tr>
 </tbody>

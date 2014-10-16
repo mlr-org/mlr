@@ -21,8 +21,8 @@ on the remaining data in [bh.task](&mlr.bh).
 
 ```{r}
 n = bh.task$task.desc$size
-train.set = seq(1, n, 2)
-test.set = seq(2, n, 2)
+train.set = seq(1, n, by = 2)
+test.set = seq(2, n, by = 2)
 lrn = makeLearner("regr.gbm", n.trees = 100)
 mod = train(lrn, bh.task, subset = train.set)
 
@@ -38,8 +38,8 @@ Predictions are made for the remaining observations.
 
 ```{r}
 n = nrow(iris)
-iris.train = iris[seq(1, n, 2), -5]
-iris.test = iris[seq(2, n, 2), -5]
+iris.train = iris[seq(1, n, by = 2), -5]
+iris.test = iris[seq(2, n, by = 2), -5]
 task = makeClusterTask(data = iris.train)
 mod = train("cluster.XMeans", task)
 
@@ -58,8 +58,8 @@ predictor as shown below.
 
 ```{r}
 n = lung.task$task.desc$size
-train.set = seq(1, n, 2)
-test.set = seq(2, n, 2)
+train.set = seq(1, n, by = 2)
+test.set = seq(2, n, by = 2)
 mod = train("surv.coxph", lung.task, subset = train.set)
 
 pred = predict(mod, task = lung.task, subset = test.set)
@@ -74,7 +74,7 @@ lrn = makeLearner("surv.coxph", predict.type = "prob")
 mod = train(lrn, lung.task, subset = train.set)
 
 pred = predict(mod, task = lung.task, subset = test.set)
-head(pred$data[,1:8])
+head(pred$data[, 1:8])
 ```
 
 Predictions are encapsulated in a special [&Prediction] object.
@@ -175,11 +175,14 @@ data set from the
 ```{r}
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 mod = train(lrn, task = bc.task)
+
 ## Label of the positive class
 bc.task$task.desc$positive
+
 ## default threshold
 pred = predict(mod, bc.task)
 pred$threshold
+
 ## Set the threshold value for the positive class
 pred = setThreshold(pred, 0.8)
 pred$threshold
@@ -192,7 +195,7 @@ head(getProbabilities(pred))
 ```
 
 It works similarly for multiclass classification.
-The threshold has to be given by a named vector specifying the values by which each probability will be divided. 
+The threshold has to be given by a named vector specifying the values by which each probability will be divided.
 The class with the maximum resulting value is then selected.
 
 ```{r}
@@ -211,7 +214,7 @@ table(as.data.frame(pred)$response)
 The function [&plotLearnerPrediction] allows to visualize predictions, e.g., for teaching purposes
 or exploring models.
 It trains the chosen learning method for 1 or 2 selected features and then displays the
-predictions with [ggplot](&ggplot2::ggplot). 
+predictions with [ggplot](&ggplot2::ggplot).
 
 For *classification*, we get a scatter plot of 2 features (by default the first 2 in the data set).
 The type of symbol shows the true class labels of the data points.
@@ -239,7 +242,7 @@ plotLearnerPrediction("regr.lm", features = "lstat", task = bh.task)
 ```
 
 The 2D variant, as in the classification case, generates a scatter plot of 2 features.
-The fill color of the dots illustrates the value of the target variable ``"medv"``, the 
+The fill color of the dots illustrates the value of the target variable ``"medv"``, the
 background colors show the estimated mean.
 The plot does not represent the estimated standard error.
 

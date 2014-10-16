@@ -114,7 +114,15 @@
                             </li>
                         
                             <li >
-                                <a href="../makeBaggingWrapper/">Bagging</a>
+                                <a href="../preproc/">Preprocessing</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../impute/">Imputations</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../bagging/">Bagging</a>
                             </li>
                         
                             <li >
@@ -241,14 +249,14 @@ in a <a href="http://www.rdocumentation.org/packages/mlr/functions/Measure.html"
 See the <strong>R</strong> documentation of the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeMeasure.html">makeMeasure</a> function for details on the
 various parameters.</p>
 <pre class="prettyprint well"><code class="r">## Define the measure
-my.mmce = function(task, model, pred, extra.args) {
-    tb = table(pred$data$response, pred$data$truth)
-    1 - sum(diag(tb)) / sum(tb)
+my.mmce = function(task, model, pred, feats, extra.args) {
+  tb = table(pred$data$response, pred$data$truth)
+  1 - sum(diag(tb)) / sum(tb)
 }
 
 ## Encapsulate the function with a Measure object
 my.mmce = makeMeasure(id = &quot;my.mmce&quot;, minimize = TRUE, classif = TRUE,
-    allowed.pred.types = &quot;response&quot;, fun = my.mmce)
+  allowed.pred.types = &quot;response&quot;, fun = my.mmce)
 
 ## Create classification task and learner
 task = makeClassifTask(data = iris, target = &quot;Species&quot;)
@@ -271,9 +279,8 @@ wrapped in a <a href="http://www.rdocumentation.org/packages/mlr/functions/Measu
 <a href="http://www.rdocumentation.org/packages/mlr/functions/performance.html">performance</a> function. See the <strong>R</strong> documentation of the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeCostMeasure.html">makeCostMeasure</a> function for
 details on the various parameters.</p>
 <pre class="prettyprint well"><code class="r">## Create misclassification cost matrix
-mcm = matrix(c(0, 2, 2, 3, 0, 2, 1, 1, 0), ncol=3,
-              dimnames = list(c(&quot;setosa&quot;, &quot;versicolor&quot;, &quot;virginica&quot;),
-                              c(&quot;setosa&quot;, &quot;versicolor&quot;, &quot;virginica&quot;)))
+mcm = matrix(c(0, 2, 2, 3, 0, 2, 1, 1, 0), ncol=3)
+rownames(mcm) = colnames(mcm) = c(&quot;setosa&quot;, &quot;versicolor&quot;, &quot;virginica&quot;)
 
 ## Create classification task and learner
 task = makeClassifTask(data = iris, target = &quot;Species&quot;)
@@ -295,9 +302,9 @@ You can use internal (not exported) functions of <strong>R</strong> packages by 
 name of the function with the name of the package, i.e., <code>packagename:::function()</code>.
 In this case:</p>
 <pre class="prettyprint well"><code class="r">mlr:::makeAggregation(id = &quot;some.name&quot;,
-    fun = function (task, perf.test, perf.train, measure, group, pred) {
-        ## stuff you want to do with perf.test or perf.train
-    }
+  fun = function (task, perf.test, perf.train, measure, group, pred) {
+    ## stuff you want to do with perf.test or perf.train
+  }
 )
 </code></pre>
 
@@ -310,7 +317,7 @@ In the usual case (e.g. cross validation), the <code>perf.train</code> vector is
 <h3 id="example-evaluate-the-range-of-measures">Example: Evaluate the range of measures</h3>
 <p>Let's say you are interested in the range of the obtained measures:</p>
 <pre class="prettyprint well"><code class="r">my.range.aggr = mlr:::makeAggregation(id = &quot;test.range&quot;,
-    fun = function (task, perf.test, perf.train, measure, group, pred) diff(range(perf.test)))
+  fun = function (task, perf.test, perf.train, measure, group, pred) diff(range(perf.test)))
 </code></pre>
 
 <p>Now we can run a feature selection based on the first measure in the provided
@@ -320,13 +327,13 @@ ms1 = mmce
 ms2 = setAggregation(ms1, my.range.aggr)
 ms1min = setAggregation(ms1, test.min)
 ms1max = setAggregation(ms1, test.max)
-res = selectFeatures(&quot;classif.rpart&quot;, iris.task, iris.rin, measures = list(ms1, ms2, ms1min, ms1max), 
-    control = makeFeatSelControlExhaustive(), show.info = FALSE)
+res = selectFeatures(&quot;classif.rpart&quot;, iris.task, iris.rin, measures = list(ms1, ms2, ms1min, ms1max),
+  control = makeFeatSelControlExhaustive(), show.info = FALSE)
 perf.data = as.data.frame(res$opt.path)
-p = ggplot(aes(x = mmce.test.mean, y = mmce.test.range, xmax = mmce.test.max, xmin = mmce.test.min, 
-    color = as.factor(Sepal.Width), pch = as.factor(Petal.Width)), data = perf.data) +
-    geom_point(size = 4) +
-    geom_errorbarh(height = 0)
+p = ggplot(aes(x = mmce.test.mean, y = mmce.test.range, xmax = mmce.test.max, xmin = mmce.test.min,
+  color = as.factor(Sepal.Width), pch = as.factor(Petal.Width)), data = perf.data) +
+  geom_point(size = 4) +
+  geom_errorbarh(height = 0)
 print(p)
 </code></pre>
 

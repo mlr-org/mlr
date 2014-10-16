@@ -8,7 +8,7 @@ weights are supported, respectively.
 
 Column **Props** shows further properties of the learning methods.
 For *classification*, you can see if binary and/or multi-class problems are supported.
-For *survival analysis*, the censoring type is shown. 
+For *survival analysis*, the censoring type is shown.
 For example *rcens* means that the learning method can deal with right censored data.
 Moreover, the type of prediction is displayed, where *prob* indicates that probabilities
 can be predicted.
@@ -29,7 +29,7 @@ getTab = function(type) {
     col.types = c("character", "character", "character", "logical", "logical", "logical", "logical", "character", "character"))
   names(df) = cols
 
-  cn = function(x) if (is.null(x)) NA else x
+  cn = function(x) if (is.null(x)) NA else gsub("\\n", " ", x)
 
   for (i in seq_along(lrns)) {
     lrn = lrns[[i]]

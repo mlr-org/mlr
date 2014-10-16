@@ -114,7 +114,15 @@
                             </li>
                         
                             <li >
-                                <a href="../makeBaggingWrapper/">Bagging</a>
+                                <a href="../preproc/">Preprocessing</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../impute/">Imputations</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../bagging/">Bagging</a>
                             </li>
                         
                             <li >
@@ -236,7 +244,7 @@ numerical and factor predictors, if <code>NA</code>s in the data are allowed and
 weights are supported, respectively.</p>
 <p>Column <strong>Props</strong> shows further properties of the learning methods.
 For <em>classification</em>, you can see if binary and/or multi-class problems are supported.
-For <em>survival analysis</em>, the censoring type is shown. 
+For <em>survival analysis</em>, the censoring type is shown.
 For example <em>rcens</em> means that the learning method can deal with right censored data.
 Moreover, the type of prediction is displayed, where <em>prob</em> indicates that probabilities
 can be predicted.
@@ -268,6 +276,94 @@ vertical-align: top;
 </thead>
 <tbody>
 <tr>
+<td align="left"><strong>classif.IBk</strong> <br />ibk</td>
+<td align="left">k-Nearest Neighbours</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass<br />multiclass<br />prob</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.J48</strong> <br />j48</td>
+<td align="left">J48 Decision Trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="right">twoclass<br />multiclass<br />prob</td>
+<td align="left">NAs are directly passed to WEKA with <code>na.action = na.pass</code></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.JRip</strong> <br />jrip</td>
+<td align="left">Propositional Rule Learner</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="right">twoclass<br />multiclass<br />prob</td>
+<td align="left">NAs are directly passed to WEKA with <code>na.action = na.pass</code></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.LiblineaRBinary</strong> <br />liblinearbinary</td>
+<td align="left">Regularized Binary Linear Predictive Models Estimation</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/LiblineaR/">LiblineaR</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass</td>
+<td align="left">This model subsumes the types 1,2,3,5.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.LiblineaRLogReg</strong> <br />reglreg</td>
+<td align="left">Regularized Logistic Regression</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/LiblineaR/">LiblineaR</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass<br />prob</td>
+<td align="left">This model subsumes type 0,6,7.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.LiblineaRMultiClass</strong> <br />mcsvc</td>
+<td align="left">Multi-class Support Vector Classification by Crammer and Singer</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/LiblineaR/">LiblineaR</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass<br />multiclass</td>
+<td align="left">This model is type 4.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.OneR</strong> <br />oner</td>
+<td align="left">1-R Classifier</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="right">twoclass<br />multiclass<br />prob</td>
+<td align="left">NAs are directly passed to WEKA with <code>na.action = na.pass</code></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.PART</strong> <br />part</td>
+<td align="left">PART Decision Lists</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="right">twoclass<br />multiclass<br />prob</td>
+<td align="left">NAs are directly passed to WEKA with <code>na.action = na.pass</code></td>
+</tr>
+<tr>
 <td align="left"><strong>classif.ada</strong> <br />ada</td>
 <td align="left">ada Boosting</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/ada/">ada</a></td>
@@ -277,6 +373,17 @@ vertical-align: top;
 <td align="center">X</td>
 <td align="right">twoclass<br />multiclass<br />prob</td>
 <td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.bartMachine</strong> <br />bartmachine</td>
+<td align="left">Bayesian Additive Regression Trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/bartMachine/">bartMachine</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="right">prob<br />twoclass</td>
+<td align="left">The learner can handle missing values in features, but you need to actively switch that behavior on by setting e.g. 'use_missing_data'. See its doc page for further details.</td>
 </tr>
 <tr>
 <td align="left"><strong>classif.blackboost</strong> <br />blackbst</td>
@@ -378,39 +485,6 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>classif.IBk</strong> <br />ibk</td>
-<td align="left">k-Nearest Neighbours</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass<br />multiclass<br />prob</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left"><strong>classif.J48</strong> <br />j48</td>
-<td align="left">J48 Decision Trees</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="right">twoclass<br />multiclass<br />prob</td>
-<td align="left">NAs are directly passed to WEKA with <code>na.action = na.pass</code></td>
-</tr>
-<tr>
-<td align="left"><strong>classif.JRip</strong> <br />jrip</td>
-<td align="left">Propositional Rule Learner</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="right">twoclass<br />multiclass<br />prob</td>
-<td align="left">NAs are directly passed to WEKA with <code>na.action = na.pass</code></td>
-</tr>
-<tr>
 <td align="left"><strong>classif.kknn</strong> <br />kknn</td>
 <td align="left">k-Nearest Neighbor</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/kknn/">kknn</a></td>
@@ -441,7 +515,7 @@ vertical-align: top;
 <td align="center"></td>
 <td align="center"></td>
 <td align="right">twoclass<br />multiclass<br />prob</td>
-<td align="left">Kernel parameters have to be passed directly and not by using the kpar list in ksvm.   Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
+<td align="left">Kernel parameters have to be passed directly and not by using the kpar list in ksvm. Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
 </tr>
 <tr>
 <td align="left"><strong>classif.lda</strong> <br />lda</td>
@@ -453,39 +527,6 @@ vertical-align: top;
 <td align="center"></td>
 <td align="right">twoclass<br />multiclass<br />prob</td>
 <td align="left"></td>
-</tr>
-<tr>
-<td align="left"><strong>classif.LiblineaRBinary</strong> <br />liblinearbinary</td>
-<td align="left">Regularized Binary Linear Predictive Models Estimation</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/LiblineaR/">LiblineaR</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass</td>
-<td align="left">This model subsumes the types 1,2,3,5.</td>
-</tr>
-<tr>
-<td align="left"><strong>classif.LiblineaRLogReg</strong> <br />reglreg</td>
-<td align="left">Regularized Logistic Regression</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/LiblineaR/">LiblineaR</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass<br />prob</td>
-<td align="left">This model subsumes type 0,6,7.</td>
-</tr>
-<tr>
-<td align="left"><strong>classif.LiblineaRMultiClass</strong> <br />mcsvc</td>
-<td align="left">Multi-class Support Vector Classification by Crammer and Singer</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/LiblineaR/">LiblineaR</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">twoclass<br />multiclass</td>
-<td align="left">This model is type 4.</td>
 </tr>
 <tr>
 <td align="left"><strong>classif.linDA</strong> <br />linda</td>
@@ -585,28 +626,6 @@ vertical-align: top;
 <td align="center">X</td>
 <td align="right">twoclass<br />multiclass<br />prob</td>
 <td align="left"><code>size</code> has been set to 3 by default.</td>
-</tr>
-<tr>
-<td align="left"><strong>classif.OneR</strong> <br />oner</td>
-<td align="left">1-R Classifier</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="right">twoclass<br />multiclass<br />prob</td>
-<td align="left">NAs are directly passed to WEKA with <code>na.action = na.pass</code></td>
-</tr>
-<tr>
-<td align="left"><strong>classif.PART</strong> <br />part</td>
-<td align="left">PART Decision Lists</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="right">twoclass<br />multiclass<br />prob</td>
-<td align="left">NAs are directly passed to WEKA with <code>na.action = na.pass</code></td>
 </tr>
 <tr>
 <td align="left"><strong>classif.plr</strong> <br />plr</td>
@@ -719,6 +738,17 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
+<td align="left"><strong>classif.sda</strong> <br />sda</td>
+<td align="left">Shrinkage Discriminant Analysis</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/sda/">sda</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass<br />multiclass<br />prob</td>
+<td align="left"></td>
+</tr>
+<tr>
 <td align="left"><strong>classif.svm</strong> <br />svm</td>
 <td align="left">Support Vector Machines (libsvm)</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/e1071/">e1071</a></td>
@@ -747,6 +777,17 @@ vertical-align: top;
 </tr>
 </thead>
 <tbody>
+<tr>
+<td align="left"><strong>regr.IBk</strong> <br />ibk</td>
+<td align="left">K-Nearest Neighbours</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">prob</td>
+<td align="left"></td>
+</tr>
 <tr>
 <td align="left"><strong>regr.blackboost</strong> <br />blackbst</td>
 <td align="left">Gradient Boosting with Regression Trees</td>
@@ -836,17 +877,6 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>regr.IBk</strong> <br />ibk</td>
-<td align="left">K-Nearest Neighbours</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">prob</td>
-<td align="left"></td>
-</tr>
-<tr>
 <td align="left"><strong>regr.kknn</strong> <br />kknn</td>
 <td align="left">K-Nearest-Neighbor regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/kknn/">kknn</a></td>
@@ -877,7 +907,7 @@ vertical-align: top;
 <td align="center"></td>
 <td align="center"></td>
 <td align="right"></td>
-<td align="left">Kernel parameters have to be passed directly and not by using the kpar list in ksvm.   Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
+<td align="left">Kernel parameters have to be passed directly and not by using the kpar list in ksvm. Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
 </tr>
 <tr>
 <td align="left"><strong>regr.lm</strong> <br />lm</td>
@@ -1020,7 +1050,7 @@ vertical-align: top;
 <td align="center"></td>
 <td align="center"></td>
 <td align="right"></td>
-<td align="left">Kernel parameters have to be passed directly and not by using the kpar list in rvm.   Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
+<td align="left">Kernel parameters have to be passed directly and not by using the kpar list in rvm.  Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
 </tr>
 <tr>
 <td align="left"><strong>regr.svm</strong> <br />svm</td>
@@ -1052,22 +1082,22 @@ vertical-align: top;
 </thead>
 <tbody>
 <tr>
-<td align="left"><strong>surv.cforest</strong> <br />crf</td>
-<td align="left">Random Forest based on Conditional Inference Trees</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/party/">party</a><br /><a href="http://www.rdocumentation.org/packages/survival/">survival</a></td>
+<td align="left"><strong>surv.CoxBoost</strong> <br />coxboost</td>
+<td align="left">Cox Proportional Hazards Model with Componentwise Likelihood based Boosting</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/CoxBoost/">CoxBoost</a></td>
 <td align="center">X</td>
-<td align="center">X</td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center">X</td>
 <td align="right">rcens</td>
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>surv.CoxBoost</strong> <br />coxboost</td>
-<td align="left">Cox Proportional Hazards Model with Componentwise Likelihood based Boosting</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/CoxBoost/">CoxBoost</a></td>
+<td align="left"><strong>surv.cforest</strong> <br />crf</td>
+<td align="left">Random Forest based on Conditional Inference Trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/party/">party</a><br /><a href="http://www.rdocumentation.org/packages/survival/">survival</a></td>
 <td align="center">X</td>
-<td align="center"></td>
+<td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
 <td align="right">rcens</td>
@@ -1158,17 +1188,6 @@ vertical-align: top;
 </thead>
 <tbody>
 <tr>
-<td align="left"><strong>cluster.cmeans</strong> <br />cmeans</td>
-<td align="left">Fuzzy C-Means Clustering</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/e1071/">e1071</a><br /><a href="http://www.rdocumentation.org/packages/clue/">clue</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">prob</td>
-<td align="left">The 'predict' method uses 'cl_predict' from the 'clue' package to compute the cluster memberships for new data. The default 'centers=2' is added so the method runs without setting params, but this must in reality of course be changed by the user.</td>
-</tr>
-<tr>
 <td align="left"><strong>cluster.Cobweb</strong> <br />cobweb</td>
 <td align="left">Cobweb Clustering Algorithm</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
@@ -1213,17 +1232,6 @@ vertical-align: top;
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>cluster.kmeans</strong> <br />kmeans</td>
-<td align="left">K-Means</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/stats/">stats</a><br /><a href="http://www.rdocumentation.org/packages/clue/">clue</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="left">The 'predict' method uses 'cl_predict' from the 'clue' package to compute the cluster memberships for new data. The default 'centers=2' is added so the method runs without setting params, but this must in reality of course be changed by the user.</td>
-</tr>
-<tr>
 <td align="left"><strong>cluster.SimpleKMeans</strong> <br />simplekmeans</td>
 <td align="left">K-Means Clustering</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
@@ -1244,6 +1252,28 @@ vertical-align: top;
 <td align="center"></td>
 <td align="right"></td>
 <td align="left">You may have to install the XMeans Weka package: WPM('install-package', 'XMeans').</td>
+</tr>
+<tr>
+<td align="left"><strong>cluster.cmeans</strong> <br />cmeans</td>
+<td align="left">Fuzzy C-Means Clustering</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/e1071/">e1071</a><br /><a href="http://www.rdocumentation.org/packages/clue/">clue</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">prob</td>
+<td align="left">The 'predict' method uses 'cl_predict' from the 'clue' package to compute the cluster memberships for new data. The default 'centers=2' is added so the method runs without setting params, but this must in reality of course be changed by the user.</td>
+</tr>
+<tr>
+<td align="left"><strong>cluster.kmeans</strong> <br />kmeans</td>
+<td align="left">K-Means</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/stats/">stats</a><br /><a href="http://www.rdocumentation.org/packages/clue/">clue</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="left">The 'predict' method uses 'cl_predict' from the 'clue' package to compute the cluster memberships for new data. The default 'centers=2' is added so the method runs without setting params, but this must in reality of course be changed by the user.</td>
 </tr>
 </tbody>
 </table>

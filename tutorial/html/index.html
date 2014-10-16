@@ -114,7 +114,15 @@
                             </li>
                         
                             <li >
-                                <a href="makeBaggingWrapper/">Bagging</a>
+                                <a href="preproc/">Preprocessing</a>
+                            </li>
+                        
+                            <li >
+                                <a href="impute/">Imputations</a>
+                            </li>
+                        
+                            <li >
+                                <a href="bagging/">Bagging</a>
                             </li>
                         
                             <li >
@@ -249,14 +257,19 @@ package.</p>
 <p>A simple stratified cross-validation of the <em>linear discriminant analysis</em> with <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.</p>
 <pre class="prettyprint well"><code class="r">library(mlr)
 data(iris)
+
 ## Define the task:
 task = makeClassifTask(id = &quot;tutorial&quot;, data = iris, target = &quot;Species&quot;)
+
 ## Define the learner:
 lrn = makeLearner(&quot;classif.lda&quot;)
+
 ## Define the resampling strategy:
 rdesc = makeResampleDesc(method = &quot;CV&quot;, stratify = TRUE)
+
 ## Do the resampling:
 res = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE)
+
 ## Get the mean misclassification error:
 res$aggr
 </code></pre>

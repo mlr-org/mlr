@@ -27,7 +27,7 @@ factor features.
 
 ```{r, echo = FALSE, results = "asis"}
 linkPkg = function(x) {
-    ifelse(is.na(x), "", collapse(sprintf("[%1$s](http://www.rdocumentation.org/packages/%1$s/)", x), sep = "<br />"))
+  ifelse(is.na(x), "", collapse(sprintf("[%1$s](http://www.rdocumentation.org/packages/%1$s/)", x), sep = "<br />"))
 }
 df = listFilterMethods(desc = TRUE, tasks = TRUE, features = TRUE)
 df$package = sapply(df$package, linkPkg)
@@ -39,8 +39,8 @@ just = rep(c("left", "center"), c(3, 5))
 pandoc.table(df, style = "rmarkdown", split.tables = Inf, split.cells = Inf, justify = just)
 ```
 
-As mentioned above the feature importance can be calculated by function [&getFilterValues] 
-given the [&Task] and a character string specifying the filter method. 
+As mentioned above the feature importance can be calculated by function [&getFilterValues]
+given the [&Task] and a character string specifying the filter method.
 
 ```{r}
 fv = getFilterValues(iris.task, method = "information.gain")
@@ -55,26 +55,26 @@ importance values for all features.
 fv$data
 ```
 
-A bar plot of importance values for the individual features can be obtained using 
+A bar plot of importance values for the individual features can be obtained using
 function [&plotFilterValues].
 
 ```{r}
 plotFilterValues(fv)
 ```
 
-According to the ``"information.gain"`` measure, `Petal.Width` and `Petal.Length` 
+According to the ``"information.gain"`` measure, `Petal.Width` and `Petal.Length`
 contain the most information about the target variable `Species`.
 
 
 ### Selecting a feature subset
 
-With [%mlr]'s function [&filterFeatures] you can create a new [&Task] by leaving out 
+With [%mlr]'s function [&filterFeatures] you can create a new [&Task] by leaving out
 features of lower importance.
 
 There are several ways to select a feature subset based on feature importance values:
 
 * Keep a certain *absolute number* of features with highest importance.
-* Keep a certain *percentage* of features with highest importance. 
+* Keep a certain *percentage* of features with highest importance.
 * Keep all features whose importance exceeds a certain *threshold value*.
 
 Function [&filterFeatures] supports these three methods as shown in the following example:
@@ -87,7 +87,7 @@ filtered.task = filterFeatures(iris.task, method = "information.gain", select = 
 filtered.task = filterFeatures(iris.task, method = "information.gain", select = "perc", val = 0.25)
 
 ## Keep all features with importance greater than 0.5
-filtered.task = filterFeatures(iris.task, method = "information.gain", select = "threshold", 
+filtered.task = filterFeatures(iris.task, method = "information.gain", select = "threshold",
     val = 0.5)
 filtered.task
 ```
@@ -95,24 +95,24 @@ filtered.task
 
 ### Fuse a learner with a filter method
 
-Often feature selection based on a filter method is part of the data preprocessing and in 
+Often feature selection based on a filter method is part of the data preprocessing and in
 a subsequent step a learning method is applied to the filtered data.
 In a proper experimental setup you might want to automate the selection of the
 features so that it can be part of the validation method of your choice.
 A [Learner](&makeLearner) can be fused with a filter method by function [&makeFilterWrapper].
 The resulting [Learner](&makeLearner) has the additional class attribute [&FilterWrapper].
 
-In the following example we calculate the 10-fold cross-validated error rate ([&mmce]) of the 
-[k nearest neighbor classifier](&FNN::fnn) with preceding feature selection on the 
+In the following example we calculate the 10-fold cross-validated error rate ([&mmce]) of the
+[k nearest neighbor classifier](&FNN::fnn) with preceding feature selection on the
 [iris](&datasets::iris) data set.
-We use ``"information.gain"`` as importance measure and select the 2 features with 
+We use ``"information.gain"`` as importance measure and select the 2 features with
 highest importance.
-In each resampling iteration feature selection is carried out on the corresponding training 
+In each resampling iteration feature selection is carried out on the corresponding training
 data set before fitting the learner.
 
 ```{r}
-lrn = makeFilterWrapper(learner = "classif.fnn", fw.method = "information.gain", 
-    fw.select = "abs", fw.val = 2)
+lrn = makeFilterWrapper(learner = "classif.fnn", fw.method = "information.gain",
+  fw.select = "abs", fw.val = 2)
 rdesc = makeResampleDesc("CV", iters = 10)
 r = resample(learner = lrn, task = iris.task, resampling = rdesc, show.info = FALSE, models = TRUE)
 r$aggr
@@ -141,21 +141,21 @@ FIXME also show benchmark experiment, train?
 
 In the above examples the number/percentage of features to select or the threshold value
 have been arbitrarily chosen.
-If filtering is a preprocessing step before applying a learning method optimal values 
+If filtering is a preprocessing step before applying a learning method optimal values
 with regard to the learner performance can be found by [tuning](tune.md).
 
 In the following regression example we consider the [BostonHousing](&mlbench::BostonHousing) data set.
-We use a [linear regression model](&stats::lm) and determine the optimal percentage value for feature selection 
-such that the 3-fold cross-validated mean squared error (see [bh.rin](&mlr.bh) and [&mse]) 
+We use a [linear regression model](&stats::lm) and determine the optimal percentage value for feature selection
+such that the 3-fold cross-validated mean squared error (see [bh.rin](&mlr.bh) and [&mse])
 of the learner is minimal.
 As search strategy for tuning a grid search is used.
 
 ```{r}
-lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared", 
-    fw.select = "perc")
+lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared",
+  fw.select = "perc")
 ps = makeParamSet(makeDiscreteParam("fw.val", values = seq(0.2, 0.5, 0.05)))
-res = tuneParams(lrn, task = bh.task, resampling = bh.rin, par.set = ps, 
-    control = makeTuneControlGrid())
+res = tuneParams(lrn, task = bh.task, resampling = bh.rin, par.set = ps,
+  control = makeTuneControlGrid())
 res
 ```
 
@@ -176,8 +176,8 @@ After tuning we can generate a new wrapped learner with the optimal percentage v
 further use.
 
 ```{r}
-lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared", 
-    fw.select = "threshold", fw.val = res$x$fw.val)
+lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared",
+  fw.select = "threshold", fw.val = res$x$fw.val)
 mod = train(lrn, bh.task)
 mod
 
@@ -187,19 +187,19 @@ getFilteredFeatures(mod)
 
 
 Here is another example using [multi-criteria tuning](tune.md).
-We consider [linear discriminant analysis](&MASS::lda) with precedent feature selection based on 
+We consider [linear discriminant analysis](&MASS::lda) with precedent feature selection based on
 the Chi-squared statistic of independence (``"chi.squared"``) on the [Sonar](&mlbench::sonar)
 data set and tune the threshold value.
 During tuning both, the false positive and the false negative rate ([&fpr] and [&fnr]), are
-minimized. As search strategy we choose a random search 
+minimized. As search strategy we choose a random search
 (see [makeTuneMultiCritControlRandom](&TuneMultiCritControl)).
 
 ```{r}
-lrn = makeFilterWrapper(learner = "classif.lda", fw.method = "chi.squared", 
-    fw.select = "threshold")
+lrn = makeFilterWrapper(learner = "classif.lda", fw.method = "chi.squared",
+  fw.select = "threshold")
 ps = makeParamSet(makeNumericParam("fw.val", lower = 0.1, upper = 0.9))
-res = tuneParamsMultiCrit(lrn, task = sonar.task, resampling = sonar.rin, par.set = ps, 
-    measures = list(fpr, fnr), control = makeTuneMultiCritControlRandom(maxit = 50L), 
+res = tuneParamsMultiCrit(lrn, task = sonar.task, resampling = sonar.rin, par.set = ps,
+    measures = list(fpr, fnr), control = makeTuneMultiCritControlRandom(maxit = 50L),
     show.info = FALSE)
 res
 head(as.data.frame(res$opt.path))
@@ -216,19 +216,19 @@ plotTuneMultiCritResult(res)
 
 ## Wrapper methods
 
-Wrapper methods use the performance of a learning algorithm to assess the usefulness of 
+Wrapper methods use the performance of a learning algorithm to assess the usefulness of
 a feature set.
 In order to select a feature subset a learner is trained repeatedly on different feature subsets
 and the subset which leads to the best learner performance is chosen.
 
 In order to use the wrapper approach we have to decide:
 
-* How to assess the performance: This involves choosing a performance measure that serves 
+* How to assess the performance: This involves choosing a performance measure that serves
   as feature selection criterion and a resampling strategy.
 * Which learning method to use.
 * How to search the space of possible feature subsets.
 
-The search strategy is defined by functions following the naming convention 
+The search strategy is defined by functions following the naming convention
 ``makeFeatSelControl<search_strategy``.
 The following search strategies are available:
 
@@ -242,8 +242,8 @@ The following search strategies are available:
 
 Feature selection can be conducted with function [&selectFeatures].
 
-In the following example we perform an exhaustive search on the 
-[Wisconsin Prognostic Breast Cancer](&TH.data::wpbc) data set. 
+In the following example we perform an exhaustive search on the
+[Wisconsin Prognostic Breast Cancer](&TH.data::wpbc) data set.
 As learning method we use the [Cox proportional hazards model](&survival::coxph).
 The performance is assessed by the holdout estimate of the concordance index ([&cindex]).
 
@@ -261,7 +261,7 @@ and potential parameter values.
 rdesc = makeResampleDesc("Holdout")
 
 ## Select features
-sfeats = selectFeatures(learner = "surv.coxph", task = wpbc.task, resampling = rdesc, 
+sfeats = selectFeatures(learner = "surv.coxph", task = wpbc.task, resampling = rdesc,
     control = ctrl, show.info = FALSE)
 sfeats
 ```
@@ -275,7 +275,7 @@ sfeats$y
 ```
 
 
-In a second example we fit a simple linear regression model to the [BostonHousing](&mlbench::BostonHousing) 
+In a second example we fit a simple linear regression model to the [BostonHousing](&mlbench::BostonHousing)
 data set and use a sequential search to find a feature set that minimizes the mean squared
 error ([&mse]).
 ``method = "sfs"`` indicates that we want to conduct a sequential forward search where features
@@ -289,12 +289,12 @@ The search is stopped if the improvement is smaller than ``alpha = 0.02``.
 ctrl = makeFeatSelControlSequential(method = "sfs", alpha = 0.02)
 
 ## Select features
-sfeats = selectFeatures(learner = "regr.lm", task = bh.task, resampling = bh.rin, control = ctrl, 
+sfeats = selectFeatures(learner = "regr.lm", task = bh.task, resampling = bh.rin, control = ctrl,
     show.info = FALSE)
 sfeats
 ```
 
-Further information about the sequential feature selection process can be obtained by 
+Further information about the sequential feature selection process can be obtained by
 function [&analyzeFeatSelResult].
 
 ```{r}
@@ -304,15 +304,15 @@ analyzeFeatSelResult(sfeats)
 
 ### Fuse a learner with feature selection
 
-A [Learner](&makeLearner) can be fused with a feature selection strategy (i.e., a search 
+A [Learner](&makeLearner) can be fused with a feature selection strategy (i.e., a search
 strategy, a performance measure and a resampling strategy) by function [&makeFeatSelWrapper].
-During training features are selected according to the specified selection scheme. Then, the 
+During training features are selected according to the specified selection scheme. Then, the
 learner is trained on the selected feature subset.
 
 ```{r}
 rdesc = makeResampleDesc("CV", iters = 3)
-lrn = makeFeatSelWrapper("surv.coxph", resampling = rdesc, 
-    control = makeFeatSelControlRandom(maxit = 10L), show.info = FALSE)
+lrn = makeFeatSelWrapper("surv.coxph", resampling = rdesc,
+  control = makeFeatSelControlRandom(maxit = 10), show.info = FALSE)
 mod = train(lrn, task = wpbc.task)
 mod
 ```
@@ -336,7 +336,7 @@ follows:
 ```{r}
 out.rdesc = makeResampleDesc("CV", iters = 5)
 
-r = resample(learner = lrn, task = wpbc.task, resampling = out.rdesc, models = TRUE, 
+r = resample(learner = lrn, task = wpbc.task, resampling = out.rdesc, models = TRUE,
     show.info = FALSE)
 r$aggr
 ```
