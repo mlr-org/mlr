@@ -1,7 +1,7 @@
 # Implemented Performance Measures
 
 The following tables show the performance measures available for the different types of
-learning problems in alphabetical order.
+learning problems as well as general performance measures in alphabetical order.
 
 Column **Minimize** indicates if the measure is minimized during, e.g., tuning or
 feature selection.
@@ -18,6 +18,10 @@ multi-class problems. If not, the measure can only be used for binary classifica
 
 
 ```{r include=FALSE}
+linkFct = function(x) {
+  collapse(sprintf("[%1$s](http://www.rdocumentation.org/packages/mlr/functions/measures)", x), sep = "<br />")
+}
+
 getTab = function(type) {
   m = list(featperc = featperc, timeboth = timeboth, timepredict = timepredict, timetrain = timetrain)
 
@@ -38,12 +42,12 @@ getTab = function(type) {
 
   for (i in seq_along(meas)) {
     mea = meas[[i]]
-    df[i, 1] = mea$id
+    df[i, 1] = linkFct(mea$id)
     df[i, 2] = mea$minimize
     df[i, 3] = mea$best
     df[i, 4] = mea$worst
     df[i, 5] = "classif.multi" %in% mea$properties
-    df[i, 6] = collapse(mea$allowed.pred.types, sep = "<br />")
+    df[i, 6] = sort(collapse(mea$allowed.pred.types, sep = "<br />"))
     df[i, 7] = mea$req.pred
     df[i, 8] = mea$req.model
     df[i, 9] = mea$req.task
