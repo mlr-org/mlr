@@ -12,7 +12,8 @@ It is good practice to call [parallelStop](&parallelMap::parallelStop) at the en
 ```{r}
 library("parallelMap")
 parallelStartSocket(2)
-r = resample("classif.lda", iris.task, iris.rin)
+rdesc = makeResampleDesc("CV", iters = 3)
+r = resample("classif.lda", iris.task, rdesc)
 parallelStop()
 ```
 

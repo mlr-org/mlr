@@ -45,12 +45,12 @@ Afterwards, we perform [resampling](resample.md) to obtain predictions for each 
 ```{r}
 ## Perform a 10-fold cross-validation
 rdesc = makeResampleDesc("CV", iters = 10)
-rin = makeResampleInstance(rdesc, sonar.task)
+rdesc = makeResampleInstance(rdesc, sonar.task)
 
 ## Calculate the error rate (for threshold 0.5) and the AUC
 ms = list(mmce, auc)
-r1 = resample(lrn1, sonar.task, rin, measures = ms, show.info = FALSE)
-r2 = resample(lrn2, sonar.task, rin, measures = ms, show.info = FALSE)
+r1 = resample(lrn1, sonar.task, rdesc, measures = ms, show.info = FALSE)
+r2 = resample(lrn2, sonar.task, rdesc, measures = ms, show.info = FALSE)
 ```
 
 Now we have to convert each prediction within the resample result to a
