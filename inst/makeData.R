@@ -29,10 +29,8 @@ save(bc.task, file = file.path(dn, "bc.task.RData"), compress = "xz")
 
 set.seed(DATASEED)
 data(PimaIndiansDiabetes, package = "mlbench")
-BreastCancer$Id = NULL
-BreastCancer = BreastCancer[complete.cases(BreastCancer), ]
-bc.task = makeClassifTask("BreastCancer-example", data = BreastCancer, target = "Class")
-save(bc.task, file = file.path(dn, "bc.task.RData"), compress = "xz")
+pid.task = makeClassifTask("PimaIndiansDiabetes-example", data = PimaIndiansDiabetes, target = "diabetes")
+save(pid.task, file = file.path(dn, "pid.task.RData"), compress = "xz")
 
 # regression
 set.seed(DATASEED)
