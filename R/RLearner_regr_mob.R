@@ -9,6 +9,7 @@ makeRLearner.regr.mob = function() {
       makeIntegerLearnerParam(id = "minsplit", default = 20L, lower = 1L),
       makeNumericLearnerParam(id = "trim", default = 0.1, lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "breakties", default = FALSE),
+      makeLogicalLearnerParam(id = "verbose", default = FALSE),
       makeDiscreteLearnerParam(id = "model", default = modeltools::glinearModel,
         values = list(glinearModel = modeltools::glinearModel, linearModel = modeltools::linearModel)),
       makeUntypedLearnerParam(id = "part.feats"),
@@ -24,9 +25,9 @@ makeRLearner.regr.mob = function() {
 
 #' @export
 trainLearner.regr.mob = function(.learner, .task, .subset, .weights = NULL, alpha, bonferroni, minsplit,
-  trim, breakties, part.feats, term.feats, ...) {
+  trim, breakties, verbose, part.feats, term.feats, ...) {
 
-  cntrl = learnerArgsToControl(party::mob_control, alpha, bonferroni, minsplit, trim, breakties)
+  cntrl = learnerArgsToControl(party::mob_control, alpha, bonferroni, minsplit, trim, breakties, verbose)
 
   feats = getTaskFeatureNames(.task)
   # FIXME: document stuff
