@@ -311,7 +311,7 @@ r$aggr
 When quickly trying out some learners, it can get tedious to write the **R**
 code for generating a resample instance, setting the aggregation strategy and so
 on. For this reason [%mlr] provides some convenience functions for the
-frequently used resampling strategies, for example [holdout]($resample),
+frequently used resampling strategies, for example [holdout](&resample),
 [crossval](&resample) or [bootstrapB632](&resample). But note that you do not
 have as much control and flexibility than when using [&resample] with a resample
 description or instance.
