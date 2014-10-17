@@ -231,10 +231,7 @@ These are used throughout this tutorial in order to get shorter and more readabl
 
 ```{r echo=FALSE, results="asis"}
 linkTask = function(x) {
-	x = unlist(strsplit(as.character(x), split = " "))
-	x[2] = gsub("[(]", "", x[2])
-	x[2] = gsub("[)]", "", x[2])
-    collapse(sprintf("[%1$s](http://www.rdocumentation.org/packages/mlr/functions/%2$s/)", x[1], x[2]), sep = "<br />")
+    collapse(sprintf("[%1$s](http://www.rdocumentation.org/packages/mlr/functions/%2$s/)", x, x), sep = "<br />")
 }
 d = data(package = "mlr")
 d = d$results
