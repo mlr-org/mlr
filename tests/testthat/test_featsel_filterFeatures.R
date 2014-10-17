@@ -51,5 +51,5 @@ test_that("filterFeatures", {
   }
 
   ## extra test of univariate filter
-  filterFeatures(task = multiclass.task, method = "univariate", val = 0.5, learner = makeLearner("classif.rpart"), measures = mmce)
+  filterFeatures(task = multiclass.task, method = "univariate", val = 0.5, perf.learner = makeLearner("classif.rpart"), perf.measures = mmce)
 })

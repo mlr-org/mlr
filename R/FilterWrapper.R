@@ -21,6 +21,8 @@
 #' @param fw.val [\code{numeric(1)}]\cr
 #'   Threshold value. See \code{\link{filterFeatures}}.
 #'   Default is 1.
+#' @param ... [any]\cr
+#'   Additional parameters passed down to the filter.
 #' @template ret_learner
 #' @export
 #' @family filter
@@ -38,13 +40,15 @@
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
-makeFilterWrapper = function(learner, fw.method = "rf.importance", fw.select = "perc", fw.val = 1) {
+makeFilterWrapper = function(learner, fw.method = "rf.importance", fw.select = "perc", fw.val = 1, ...) {
   learner = checkLearner(learner)
   assertChoice(fw.method, choices = ls(.FilterRegister))
   filter = .FilterRegister[[fw.method]]
   checkFilterArguments(select = fw.select, val = fw.val)
+  ddd = list(...)
+  assertList(ddd, names = "named")
 
-  makeBaseWrapper(
+  lrn = makeBaseWrapper(
     id = paste(learner$id, "filtered", sep = "."),
     next.learner = learner,
     package = filter$pkg,
@@ -59,6 +63,8 @@ makeFilterWrapper = function(learner, fw.method = "rf.importance", fw.select = "
       fw.val = fw.val
     ),
     cl = "FilterWrapper")
+  lrn$more.args = ddd
+  lrn
 }
 
 #' @export
@@ -66,7 +72,7 @@ trainLearner.FilterWrapper = function(.learner, .task, .subset, .weights = NULL,
   fw.method = "rf.importance", fw.select = "perc", fw.val = 1, ...) {
 
   .task = subsetTask(.task, subset = .subset)
-  .task = filterFeatures(.task, method = fw.method, select = fw.select, val = fw.val)
+  .task = do.call(filterFeatures, c(list(task = .task, method = fw.method, select = fw.select, val = fw.val), .learner$more.args))
   m = train(.learner$next.learner, .task, weights = .weights)
   makeChainModel(next.model = m, cl = "FilterModel")
 }

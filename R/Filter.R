@@ -263,25 +263,25 @@ makeFilter(
   name = "univariate",
   desc = "Construct a simple performance filter using a mlr learner",
   pkg  = NA_character_,
-  supported.tasks = c("surv", "classif", "regr"),
+  supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors"),
-  fun = function(task, nselect, learner, measure, resampling = NULL, ...) {
-    learner = checkLearner(learner)
-    measure = checkMeasures(measure, learner)
-    if (length(measure) != 1L)
+  fun = function(task, nselect, perf.learner, perf.measure, perf.resampling = NULL, ...) {
+    perf.learner = checkLearner(perf.learner)
+    perf.measure = checkMeasures(perf.measure, perf.learner)
+    if (length(perf.measure) != 1L)
       stop("Exactly one measure must be provided")
-    if (is.null(resampling))
-      resampling = makeResampleDesc("Subsample", iters = 1L, split = 0.67)
-    if (getTaskType(task) != learner$type)
-      stopf("Expected task of type '%s', not '%s'", getTaskType(task), learner$type)
+    if (is.null(perf.resampling))
+      perf.resampling = makeResampleDesc("Subsample", iters = 1L, split = 0.67)
+    if (getTaskType(task) != perf.learner$type)
+      stopf("Expected task of type '%s', not '%s'", getTaskType(task), perf.learner$type)
 
     fns = getTaskFeatureNames(task)
     res = double(length(fns))
     for (i in seq_along(fns)) {
       subtask = subsetTask(task, features = fns[-i])
-      res[i] = resample(learner = learner, task = subtask, resampling = resampling, measures = measure)$aggr
+      res[i] = resample(learner = perf.learner, task = subtask, resampling = perf.resampling, measures = perf.measure, show.info = FALSE)$aggr
     }
-    if (measure[[1L]]$minimize)
+    if (perf.measure[[1L]]$minimize)
       res = -1.0 * res
     setNames(res, fns)
   }
