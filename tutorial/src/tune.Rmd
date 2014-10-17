@@ -55,7 +55,7 @@ res = tuneParams("classif.ksvm", task = iris.task, resampling = rdesc, par.set =
     control = ctrl, measures = list(mmce, setAggregation(mmce, test.sd)))
 ```
 
-We used a trick, also described in section [Resampling](&resample.md), to
+We used a trick, also described in the section on [resampling](resample.md), to
 obtain the standard deviation in addition to the default by adding a second
 measure. A quick visualization of the search can be achieved by accessing
 the ``opt.path`` as follows.

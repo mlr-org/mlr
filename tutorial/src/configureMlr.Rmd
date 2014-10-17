@@ -37,7 +37,7 @@ getMlrOptions()
 
 ## Example: Turn off parameter checking
 
-In an additional scenario, you want to access a new parameter of a [Learner](&makeLEarner) which
+In an additional scenario, you want to access a new parameter of a [Learner](&makeLearner) which
 is already available in [%mlr], but the parameter is not implemented in [%mlr] yet.
 If this is the case you might want to [contact us](https://github.com/berndbischl/mlr#get-in-touch)
 or [open an issue](https://github.com/berndbischl/mlr/issues/new) as well!
@@ -57,7 +57,7 @@ lrn = makeLearner("classif.ksvm", epsilon = -3)
 
 Another common situation is that a particular learning method throws an error.
 The default behavior of [%mlr] is to generate an exception as well.
-However, in some situations, for example if you conduct a [benchmark study](&benchmark_experiments.md)
+However, in some situations, for example if you conduct a [benchmark study](benchmark_experiments.md)
 with multiple data sets and learners, you normally do not want to terminate the whole
 benchmark experiment due to one error.
 The following example shows how to prevent this:
