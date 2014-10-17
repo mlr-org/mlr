@@ -1,7 +1,7 @@
 #' @title Creates a parameter set for model multiplexer tuning.
 #'
 #' @description
-#' Handy way to create the param set with too much typing.
+#' Handy way to create the param set with less typing.
 #'
 #' The following is done automatically:
 #' \itemize{
@@ -40,6 +40,8 @@ makeModelMultiplexerParamSet = function(multiplexer, ..., .check = TRUE) {
   new.ps = makeParamSet(
     makeDiscreteParam("selected.learner", values = bl.ids)
   )
+  if (length(args) == 0L)
+    return(new.ps)
 
   # if basic param were passed we now group them into param sets
   # we match each param in the base learners and add it to the correct parset
@@ -97,6 +99,3 @@ makeModelMultiplexerParamSet = function(multiplexer, ..., .check = TRUE) {
 
   return(new.ps)
 }
-
-
-
