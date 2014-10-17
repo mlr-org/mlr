@@ -235,7 +235,7 @@ the positive class has to be multiplied by
 Function [&makeWeightedClassesWrapper] allows to assign class weights to [Learner](&makeLearner)s
 that either support class weights or observation weights.
 
-Function [multinom]($nnet::multinom) accepts observation weights.
+Function [multinom](&nnet::multinom) accepts observation weights.
 The weight given to observations from the positive class is passed via argument ``wcw.weight``.
 Observations from the negative class automatically receive weight 1.
 
