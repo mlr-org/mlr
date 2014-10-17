@@ -422,14 +422,14 @@ r = resample(&quot;cluster.XMeans&quot;, mtcars.task, rdesc, measures = list(dun
 #&gt; Warning: no non-missing arguments to max; returning -Inf
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.111
+<pre class="prettyprint well"><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.051
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;      dunn.test.mean        db.test.mean timetrain.test.mean 
-#&gt;              0.9576              0.4254              0.1108
+#&gt;              0.9576              0.4254              0.0510
 </code></pre>
 
 <h2 id="stratified-resampling">Stratified resampling</h2>
@@ -783,7 +783,7 @@ head(r$measures.train)
 <p>When quickly trying out some learners, it can get tedious to write the <strong>R</strong>
 code for generating a resample instance, setting the aggregation strategy and so
 on. For this reason <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides some convenience functions for the
-frequently used resampling strategies, for example <a href="$resample">holdout</a>,
+frequently used resampling strategies, for example <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">holdout</a>,
 <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">crossval</a> or <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">bootstrapB632</a>. But note that you do not
 have as much control and flexibility than when using <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a> with a resample
 description or instance.</p>
