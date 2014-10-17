@@ -12,12 +12,12 @@ dest = "docs"
 # - [NAME](%PACKAGE)
 # - [%PACKAGE]
 macros = list(
-  list(pattern = "\\[(.+?)\\]\\(&([[:alnum:]]+?)::([[:alnum:]]+)\\)", replacement = "[\\1](http://www.rdocumentation.org/packages/\\2/functions/\\3.html)"),
-  list(pattern = "\\[(.+?)\\]\\(&([[:alnum:]]+?)\\)", replacement = "[\\1](http://www.rdocumentation.org/packages/mlr/functions/\\2.html)"),
-  list(pattern = "\\[&([[:alnum:]]+?)::([[:alnum:]]+?)\\]", replacement = "[\\1::\\2](http://www.rdocumentation.org/packages/\\1/functions/\\2.html)"),
-  list(pattern = "\\[&([[:alnum:]]+?)\\]", replacement = "[\\1](http://www.rdocumentation.org/packages/mlr/functions/\\1.html)"),
-  list(pattern = "\\[(.+?)\\]\\(%([[:alnum:]]+?)\\)", replacement = "[\\1](http://www.rdocumentation.org/packages/\\2/)"),
-  list(pattern = "\\[%([[:alnum:]]+?)\\]", replacement = "[\\1](http://www.rdocumentation.org/packages/\\1/)")
+  list(pattern = "\\[(.+?)\\]\\(&([A-Za-z0-9.]+?)::([A-Za-z0-9.]+)\\)", replacement = "[\\1](http://www.rdocumentation.org/packages/\\2/functions/\\3.html)"),
+  list(pattern = "\\[(.+?)\\]\\(&([A-Za-z0-9.]+?)\\)", replacement = "[\\1](http://www.rdocumentation.org/packages/mlr/functions/\\2.html)"),
+  list(pattern = "\\[&([A-Za-z0-9.]+?)::([A-Za-z0-9.]+?)\\]", replacement = "[\\1::\\2](http://www.rdocumentation.org/packages/\\1/functions/\\2.html)"),
+  list(pattern = "\\[&([A-Za-z0-9.]+?)\\]", replacement = "[\\1](http://www.rdocumentation.org/packages/mlr/functions/\\1.html)"),
+  list(pattern = "\\[(.+?)\\]\\(%([A-Za-z0-9.]+?)\\)", replacement = "[\\1](http://www.rdocumentation.org/packages/\\2/)"),
+  list(pattern = "\\[%([A-Za-z0-9.]+?)\\]", replacement = "[\\1](http://www.rdocumentation.org/packages/\\1/)")
 )
 
 # helper functions #############################################################
