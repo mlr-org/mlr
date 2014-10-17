@@ -52,6 +52,7 @@ mlr_2.2:
 -- cluster.kmeans
 -- cluster.FarthestFirst
 -- surv.cvglmnet
+-- surv.optimCoxBoostPenalty
 
 - new filters:
 -- variance
