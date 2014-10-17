@@ -8,7 +8,7 @@ makeRLearner.surv.CoxBoost = function() {
       makeIntegerLearnerParam(id = "K", default = 10, lower = 1),
       makeDiscreteLearnerParam(id = "type", default = "verweij", values = c("verweij", "naive")),
       makeIntegerLearnerParam(id = "stepno", default = 100L, lower = 1),
-      makeNumericLearnerParam(id = "penalty", default = NULL, lower = 0),
+      makeNumericLearnerParam(id = "penalty", lower = 0),
       makeLogicalLearnerParam(id = "standardize", default = TRUE),
       makeDiscreteLearnerParam(id = "criterion", default = "pscore", values = c("pscore", "score", "hpscore", "hscore")),
       makeNumericLearnerParam(id = "stepsize.factor", default = 1, lower = 0),
