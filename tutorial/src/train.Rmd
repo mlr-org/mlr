@@ -10,7 +10,7 @@ on the [lung](&survival::lung) data set.
 
 ```{r}
 data(lung, package = "survival")
-lung$status = lung$status - 1
+lung$status = (lung$status == 2)
 task = makeSurvTask(data = lung, target = c("time", "status"))
 lrn = makeLearner("surv.coxph")
 
@@ -51,12 +51,15 @@ data set provided by [%mlr].
 ```{r}
 ## Number of observations
 n = bh.task$task.desc$size
-## Use 1/3 of the observations for training 
+## Use 1/3 of the observations for training
 train.set = sample(n, size = n/3)
 ## Train the learner
 mod = train("regr.lm", bh.task, subset = train.set)
 mod
 ```
+
+Note that all standard [resampling strategies](resample.md) are supported.
+Therefore you usually do not have to subset the data yourself.
 
 Moreover, if the [Learner](&makeLearner) supports this, you can specify observation ``weights``
 that reflect the relevance of examples in the training process.
@@ -76,7 +79,7 @@ w = 1/tab[tar]
 train("classif.cforest", task = bc.task, weights = w)
 ```
 
-As you may recall, it is also possible to pass observation weights when creating the 
+As you may recall, it is also possible to pass observation weights when creating the
 [&Task].
 Naturally, it makes sense to specify ``weights`` in [make<type>Task](&Task) if those weights
 should always be used for the learning task and in [&train] if this is not the case since, e.g.,

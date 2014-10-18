@@ -7,7 +7,7 @@ library("rpart")
 # Resampling
 
 In order to assess the performance of a learning algorithm, resampling
-strategies are usually used. 
+strategies are usually used.
 The entire data set is split into (multiple) training and test sets.
 You train a learner on each training set, predict on the corresponding test set (sometimes
 on the training set as well) and calculate some performance measure.
@@ -31,7 +31,7 @@ The [&resample] function then evaluates the performance of a [Learner](&makeLear
 the specified resampling strategy for a given machine learning [&Task].
 
 In the following example the performance of the
-[Cox proportional hazards model](&survival::coxph) on the 
+[Cox proportional hazards model](&survival::coxph) on the
 [lung](&survival::lung) data set is calculated using *3-fold cross-validation*.
 Generally, in *K-fold cross-validation* the data set *D* is partitioned into *K* subsets of
 (approximately) equal size.
@@ -59,7 +59,7 @@ performances on the 3 test data sets.
 No predictions on the training data sets were made and thus ``r$measures.train`` contains ``NA``s.
 
 If predictions for the training set are required, too, set ``predict = "train"``or ``predict = "both"``
-in [&makeResampleDesc]. This is necessary for some bootstrap methods (*b632* and *b632+*) and 
+in [&makeResampleDesc]. This is necessary for some bootstrap methods (*b632* and *b632+*) and
 we will see some examples later on.
 
 ``r$pred`` is an object of class [&ResamplePrediction].
@@ -77,7 +77,7 @@ if an individual prediction was made on the test or the training data set.
 
 
 In the above example the performance measure is the concordance index ([&cindex]).
-Of course, it is  possible to compute multiple performance measures at once by 
+Of course, it is  possible to compute multiple performance measures at once by
 passing a list of measures
 (see also the previous section on [evaluating learner performance](performance.md)).
 
@@ -104,7 +104,7 @@ r$aggr
 ## Stratified resampling
 
 For classification, it is usually desirable to have the same proportion of the classes in all of the partitions of the original data set. Stratified resampling ensures this.
-This is particularly useful in case of imbalanced classes. Otherwise it may happen for example 
+This is particularly useful in case of imbalanced classes. Otherwise it may happen for example
 that observations of less frequent classes are missing in some of the training sets which can
 decrease the performance of the learner.
 In order to conduct stratified resampling, set ``stratify = TRUE`` when calling [&makeResampleDesc].
@@ -170,10 +170,10 @@ These are stored in a [ResampleInstance](&makeResampleInstance).
 If a [ResampleDesc](&makeResampleDesc) is passed to [&resample], it is instantiated internally.
 Naturally, it is also possible to pass a [ResampleInstance](&makeResampleInstance) directly.
 
-A [ResampleInstance](&makeResampleInstance) can be created through the function 
-[&makeResampleInstance] given a [ResampleDesc](&makeResampleDesc) and either the size of 
+A [ResampleInstance](&makeResampleInstance) can be created through the function
+[&makeResampleInstance] given a [ResampleDesc](&makeResampleDesc) and either the size of
 the data set at hand or the [&Task].
-It basically performs the random drawing of indices to separate the data into training and 
+It basically performs the random drawing of indices to separate the data into training and
 test sets according to the description.
 
 ```{r}
@@ -196,18 +196,18 @@ function seems overly complicated, it has several advantages:
   of several learners on exactly the same training and test sets.
   This is particularly useful if you want to add another method to a comparison experiment
   you already did.
-  
+
 ```{r}
 rdesc = makeResampleDesc("CV", iters = 3)
 rin = makeResampleInstance(rdesc, task = iris.task)
-  
+
 ## Calculate the performance of two learners based on the same resample instance
 r.lda = resample("classif.lda", iris.task, rin, show.info = FALSE)
 r.rpart = resample("classif.rpart", iris.task, rin, show.info = FALSE)
 r.lda$aggr
 r.rpart$aggr
 ```
-  
+
 * It is easy to add other resampling methods later on. You can
   simply derive from the [ResampleInstance](&makeResampleInstance)
   class, but you do not have to touch any methods that use the
@@ -227,7 +227,7 @@ rin
 
 ## Aggregating performance values
 
-In resampling we get (for each measure we wish to calculate) one performance 
+In resampling we get (for each measure we wish to calculate) one performance
 value (on the test set, training set, or both) for each iteration.
 Subsequently, these are aggregated.
 As mentioned above, mainly the mean over the performance values on the test data sets
@@ -243,7 +243,7 @@ The aggregated value is the mean of these 10 numbers.
 mmce$aggr
 
 ## Root mean square error
-rmse$aggr 
+rmse$aggr
 ```
 
 The aggregation method of a [Measure](&makeMeasure) can be changed via the function [&setAggregation].
@@ -277,9 +277,9 @@ r$aggr
 
 ### Example: Bootstrap
 
-In *out-of-bag bootstrap estimation* *B* new data sets *D_1* to *D_B* are drawn from the 
+In *out-of-bag bootstrap estimation* *B* new data sets *D_1* to *D_B* are drawn from the
 data set *D* with replacement, each of the same size as *D*.
-In the *i*-th iteration, *D_i* forms the training set, while the remaining elements from 
+In the *i*-th iteration, *D_i* forms the training set, while the remaining elements from
 *D*, i.e., elements not in the training set, form the test set.
 
 <!--(

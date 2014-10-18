@@ -3,11 +3,11 @@
 The following classes provide a unified interface to all machine learning methods in **R**
 -- (cost-sensitive) classification, regression, survival analysis, and clustering.
 Many are already integrated, others are not, but the package is specifically designed to make
-extensions simple. If your favorite method is missing, either [open an issue](https://github.com/berndbischl/mlr/issues)
-or see the part of the tutorial on [how to extend the package yourself](create_learner.md).
+extensions simple.
 
-The [table of integrated learners](integrated_learners.md) shows the already 
+The [table of integrated learners](integrated_learners.md) shows the already
 implemented machine learning methods and their properties.
+If your favorite method is missing, either [open an issue](https://github.com/berndbischl/mlr/issues) or see the part of the tutorial on [how to extend the package yourself](create_learner.md).
 
 
 ## Constructing a learner
@@ -21,17 +21,18 @@ In the constructor you can do the following things, apart from selecting the typ
 * Set an ID to name the object (some methods will later use this ID to name results or annotate plots).
 
 ```{r}
+## Regression gradient boosting machine, specify hyperparameters via a list
+regr.lrn = makeLearner("regr.gbm", par.vals = list(n.trees = 500, interaction.depth = 3))
+
+## Classification tree, set it up for predicting probabilities
+classif.lrn = makeLearner("classif.randomForest", predict.type = "prob", fix.factors = TRUE)
+
 ## Cox proportional hazards model with custom name
 surv.lrn = makeLearner("surv.coxph", id = "coxph")
 
 ## K-means with 5 clusters
 cluster.lrn = makeLearner("cluster.SimpleKMeans", N = 5)
 
-## Regression gradient boosting machine, specify hyperparameters via a list
-regr.lrn = makeLearner("regr.gbm", par.vals = list(n.trees = 500, interaction.depth = 3))
-
-## Classification tree, set it up for predicting probabilities
-classif.lrn = makeLearner("classif.randomForest", predict.type = "prob", fix.factors = TRUE)
 ```
 
 The first argument specifies which algorithm to use.
@@ -69,7 +70,7 @@ learners. This is explained in greater detail in the section about
 
 ## Accessing a learner
 
-The [Learner](&makeLearner) object is a ``list``and the following elements contain 
+The [Learner](&makeLearner) object is a ``list``and the following elements contain
 information regarding the hyperparameters and the type of prediction.
 
 ```{r}
@@ -91,7 +92,7 @@ Moreover, [%mlr] provides functions [&getHyperPars] and [&getParamSet] to access
 selected hyperparameter values and the parameter set.
 These are particularly useful in case of a wrapped [Learner](&makeLearner),
 for example if a learner is fused with a feature selection strategy and both, the learner
-as well the feature selection method, have hyperparameters. 
+as well the feature selection method, have hyperparameters.
 For details see the section on [wrapped learners](wrapper.md).
 
 ```{r}
