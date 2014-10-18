@@ -228,17 +228,7 @@
     
         <li class="main active"><a href="#learning-tasks">Learning Tasks</a></li>
         
-            <li><a href="#cluster-analysis">Cluster analysis</a></li>
-        
-            <li><a href="#regression">Regression</a></li>
-        
-            <li><a href="#classification">Classification</a></li>
-        
-            <li><a href="#survival-analysis">Survival analysis</a></li>
-        
-            <li><a href="#cost-sensitive-classification">Cost-sensitive classification</a></li>
-        
-            <li><a href="#further-details">Further details</a></li>
+            <li><a href="#task-types-and-creation">Task types and creation</a></li>
         
             <li><a href="#accessing-a-learning-task">Accessing a learning task</a></li>
         
@@ -255,6 +245,7 @@
 <p>Learning tasks are the basic elements of the package that encapsulate the
 data set and all relevant information regarding the purpose of the
 task, e.g., the target variable.</p>
+<h2 id="task-types-and-creation">Task types and creation</h2>
 <p>The tasks are organised in a hierarchy, with the generic
 <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> at the top.
 The following tasks can be instantiated and all inherit from a virtual superclass <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>:</p>
@@ -571,37 +562,8 @@ normalizeFeatures(classif.task, method = &quot;standardize&quot;)
 
 <h2 id="pre-defined-tasks">Pre-defined tasks</h2>
 <p>For your convenience <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides pre-defined <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>s for each type of learning problem.
-These are used throughout this tutorial in order to get shorter and more readable code.</p>
-<table>
-<thead>
-<tr>
-<th align="left">Task</th>
-<th align="left">Title</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/bc.task/">bc.task</a></td>
-<td align="left">Wisconsin Breast Cancer classification task</td>
-</tr>
-<tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/costiris.task/">costiris.task</a></td>
-<td align="left">Iris cost-sensitive classification task</td>
-</tr>
-<tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/lung.task/">lung.task</a></td>
-<td align="left">NCCTG Lung Cancer survival task</td>
-</tr>
-<tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/pid.task/">pid.task</a></td>
-<td align="left">PimaIndiansDiabetes classification task</td>
-</tr>
-<tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/wpbc.task/">wpbc.task</a></td>
-<td align="left">Wisonsin Prognostic Breast Cancer (WPBC) survival task</td>
-</tr>
-</tbody>
-</table>
+These are used throughout this tutorial in order to get shorter and more readable code.
+A list of all tasks can be found <a href="../example_tasks/">here</a>.</p>
 </div>
         </div>
 

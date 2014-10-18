@@ -4,6 +4,9 @@ Learning tasks are the basic elements of the package that encapsulate the
 data set and all relevant information regarding the purpose of the
 task, e.g., the target variable.
 
+
+## Task types and creation
+
 The tasks are organised in a hierarchy, with the generic
 [&Task] at the top.
 The following tasks can be instantiated and all inherit from a virtual superclass [&Task]:
@@ -19,7 +22,7 @@ All tasks require an identifier (argument ``id``) and a [data frame](&base::data
 If no ID is provided it is automatically generated using the name of the data.
 Depending on the nature if the learning problem, additional arguments may be required and are exemplified in the following subsections.
 
-## Cluster analysis
+### Cluster analysis
 
 Because cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the ``data``.
 In the following example we create a learning task from the data set [mtcars](&datasets::mtcars).
@@ -37,7 +40,7 @@ If not specified the ``id`` defaults to the name of the **R** object passed to `
 in the above example ``"mtcars"``.
 
 
-## Regression
+### Regression
 
 For supervised learning like regression (as well as classification and
 survival analysis) we, in addition to ``data``, have to specify the name of the ``target``
@@ -58,7 +61,7 @@ follows the same scheme, except that the target variable is a factor instead of 
 For each of these learning problems, some specifics are described below.
 
 
-## Classification
+### Classification
 
 For classification the target variable has to be a ``factor``.
 
@@ -89,7 +92,7 @@ classif.task = makeClassifTask(id = "BreastCancer", data = df, target = "Class",
 ```
 
 
-## Survival analysis
+### Survival analysis
 
 Survival tasks use two target columns.
 For left and right censored problems these consist of the survival time and a binary event indicator.
@@ -106,7 +109,7 @@ The type of censoring can be specified via the argument ``censoring`` which defa
 ``"rcens"`` for right censored data.
 
 
-## Cost-sensitive classification
+### Cost-sensitive classification
 
 In regular classification, as addressed above, the aim when training a classifier is to
 minimize the misclassification rate.
@@ -139,7 +142,7 @@ costsens.task
 For more details see the section about [cost-sensitive classification](cost_sensitive_classif.md).
 
 
-## Further details
+### Further details
 
 The [&Task] help page also lists several other arguments to describe further details of the
 problem.
@@ -215,16 +218,5 @@ normalizeFeatures(classif.task, method = "standardize")
 
 For your convenience [%mlr] provides pre-defined [&Task]s for each type of learning problem.
 These are used throughout this tutorial in order to get shorter and more readable code.
-
-```{r echo=FALSE, results="asis"}
-linkTask = function(x) {
-    collapse(sprintf("[%1$s](http://www.rdocumentation.org/packages/mlr/functions/%1$s/)", x), sep = "<br />")
-}
-d = data(package = "mlr")
-d = d$results
-df = as.data.frame(d[seq(2,nrow(d),2), c("Item", "Title")])
-df$Item = sapply(df$Item, linkTask)
-names(df)[1] = "Task"
-pandoc.table(df, style = "rmarkdown", split.tables = Inf, split.cells = Inf,
-  justify = c("left", "left"))
-```
+A list of all tasks can be found [here](example_tasks.md
+).
