@@ -56,6 +56,19 @@ Features
 * Combine different processing steps to a complex data mining chain; enables nested resampling of optimized models
 
 
+News
+====
+Most NEWS regarding extensions and changes of the packages can be accessed here for the 
+[release](http://cran.r-project.org/web/packages/mlr/NEWS) and here for the 
+[devel](https://github.com/berndbischl/mlr/blob/master/NEWS) version on Github.
+
+* 2014-10-18: 
+  * mlr 2.2 will be released to CRAN soon.
+  * We have improved the tutorial A LOT. It is also based on mkdocs and knitr now. Still fixing minor things and extending a bit. Take a look yourself.
+  * We might refactor the internal handling and OO structure of tasks a bit, so even more natural indexing and operations are possible. Michel is currently working on this in a branch.
+  * I will talk about mlr in connection with the [OpenML](http://www.openml.org) project next week. If you don't know this, take a look, a very cool initiative by Joaquin Vanschoren. We are developing a connector to R in general which also covers mlr [here](https://github.com/openml/r).
+
+
 Mailinglist and Email-Service-Hook
 ==================================
 
