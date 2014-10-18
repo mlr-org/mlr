@@ -320,12 +320,12 @@ head(opt.grid)
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;      C sigma mmce.test.mean mmce.test.sd dob eol error.message exec.time
-#&gt; 1 0.25  0.25        0.04667      0.02309   1  NA          &lt;NA&gt;     0.070
-#&gt; 2  0.5  0.25        0.04667      0.01155   2  NA          &lt;NA&gt;     0.070
-#&gt; 3    1  0.25        0.04000      0.02000   3  NA          &lt;NA&gt;     0.069
-#&gt; 4    2  0.25        0.04667      0.02309   4  NA          &lt;NA&gt;     0.070
-#&gt; 5    4  0.25        0.04667      0.02309   5  NA          &lt;NA&gt;     0.069
-#&gt; 6 0.25   0.5        0.06000      0.00000   6  NA          &lt;NA&gt;     0.074
+#&gt; 1 0.25  0.25        0.04667      0.02309   1  NA          &lt;NA&gt;     0.062
+#&gt; 2  0.5  0.25        0.04667      0.01155   2  NA          &lt;NA&gt;     0.060
+#&gt; 3    1  0.25        0.04000      0.02000   3  NA          &lt;NA&gt;     0.060
+#&gt; 4    2  0.25        0.04667      0.02309   4  NA          &lt;NA&gt;     0.058
+#&gt; 5    4  0.25        0.04667      0.02309   5  NA          &lt;NA&gt;     0.059
+#&gt; 6 0.25   0.5        0.06000      0.00000   6  NA          &lt;NA&gt;     0.059
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">g = ggplot(opt.grid, aes(x = C, y = sigma, fill = mmce.test.mean, label = round(mmce.test.sd,3)))

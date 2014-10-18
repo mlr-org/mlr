@@ -243,7 +243,7 @@ with a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner
 <a href="http://www.rdocumentation.org/packages/survival/functions/coxph.html">Cox proportional hazards model</a>
 on the <a href="http://www.rdocumentation.org/packages/survival/functions/lung.html">lung</a> data set.</p>
 <pre class="prettyprint well"><code class="r">data(lung, package = &quot;survival&quot;)
-lung$status = lung$status - 1
+lung$status = (lung$status == 2)
 task = makeSurvTask(data = lung, target = c(&quot;time&quot;, &quot;status&quot;))
 lrn = makeLearner(&quot;surv.coxph&quot;)
 
@@ -295,7 +295,7 @@ The object <a href="http://www.rdocumentation.org/packages/mlr/functions/mlr.bh.
 data set provided by <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.</p>
 <pre class="prettyprint well"><code class="r">## Number of observations
 n = bh.task$task.desc$size
-## Use 1/3 of the observations for training 
+## Use 1/3 of the observations for training
 train.set = sample(n, size = n/3)
 ## Train the learner
 mod = train(&quot;regr.lm&quot;, bh.task, subset = train.set)
@@ -308,6 +308,8 @@ mod
 #&gt; Hyperparameters:
 </code></pre>
 
+<p>Note that all standard <a href="../resample/">resampling strategies</a> are supported.
+Therefore you usually do not have to subset the data yourself.</p>
 <p>Moreover, if the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> supports this, you can specify observation <code>weights</code>
 that reflect the relevance of examples in the training process.</p>
 <p>For example, in the <a href="http://www.rdocumentation.org/packages/mlbench/functions/BreastCancer.html">BreastCancer</a> data set class benign is almost
@@ -329,7 +331,7 @@ train(&quot;classif.cforest&quot;, task = bc.task, weights = w)
 #&gt; Hyperparameters:
 </code></pre>
 
-<p>As you may recall, it is also possible to pass observation weights when creating the 
+<p>As you may recall, it is also possible to pass observation weights when creating the
 <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.
 Naturally, it makes sense to specify <code>weights</code> in <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">make<type>Task</a> if those weights
 should always be used for the learning task and in <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a> if this is not the case since, e.g.,

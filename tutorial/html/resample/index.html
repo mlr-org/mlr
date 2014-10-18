@@ -245,7 +245,7 @@
 
 <h1 id="resampling">Resampling</h1>
 <p>In order to assess the performance of a learning algorithm, resampling
-strategies are usually used. 
+strategies are usually used.
 The entire data set is split into (multiple) training and test sets.
 You train a learner on each training set, predict on the corresponding test set (sometimes
 on the training set as well) and calculate some performance measure.
@@ -266,7 +266,7 @@ The supported resampling strategies are:</p>
 <p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a> function then evaluates the performance of a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> using
 the specified resampling strategy for a given machine learning <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
 <p>In the following example the performance of the
-<a href="http://www.rdocumentation.org/packages/survival/functions/coxph.html">Cox proportional hazards model</a> on the 
+<a href="http://www.rdocumentation.org/packages/survival/functions/coxph.html">Cox proportional hazards model</a> on the
 <a href="http://www.rdocumentation.org/packages/survival/functions/lung.html">lung</a> data set is calculated using <em>3-fold cross-validation</em>.
 Generally, in <em>K-fold cross-validation</em> the data set <em>D</em> is partitioned into <em>K</em> subsets of
 (approximately) equal size.
@@ -351,7 +351,7 @@ to aggregate the 3 individual performances.
 performances on the 3 test data sets.
 No predictions on the training data sets were made and thus <code>r$measures.train</code> contains <code>NA</code>s.</p>
 <p>If predictions for the training set are required, too, set <code>predict = "train"</code>or <code>predict = "both"</code>
-in <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleDesc.html">makeResampleDesc</a>. This is necessary for some bootstrap methods (<em>b632</em> and <em>b632+</em>) and 
+in <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleDesc.html">makeResampleDesc</a>. This is necessary for some bootstrap methods (<em>b632</em> and <em>b632+</em>) and
 we will see some examples later on.</p>
 <p><code>r$pred</code> is an object of class <a href="http://www.rdocumentation.org/packages/mlr/functions/ResamplePrediction.html">ResamplePrediction</a>.
 Just as a <a href="http://www.rdocumentation.org/packages/mlr/functions/Prediction.html">Prediction</a> object (see the section on <a href="../predict/">making predictions</a>)
@@ -373,7 +373,7 @@ variable.</p>
 <p>The columns <code>iter</code> and <code>set</code>indicate the resampling iteration and
 if an individual prediction was made on the test or the training data set.</p>
 <p>In the above example the performance measure is the concordance index (<a href="http://www.rdocumentation.org/packages/mlr/functions/cindex.html">cindex</a>).
-Of course, it is  possible to compute multiple performance measures at once by 
+Of course, it is  possible to compute multiple performance measures at once by
 passing a list of measures
 (see also the previous section on <a href="../performance/">evaluating learner performance</a>).</p>
 <p>In the following we estimate the Dunn index (<a href="http://www.rdocumentation.org/packages/mlr/functions/dunn.html">dunn</a>), the Davies-Bouldin cluster
@@ -422,19 +422,19 @@ r = resample(&quot;cluster.XMeans&quot;, mtcars.task, rdesc, measures = list(dun
 #&gt; Warning: no non-missing arguments to max; returning -Inf
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.051
+<pre class="prettyprint well"><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.0736
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;      dunn.test.mean        db.test.mean timetrain.test.mean 
-#&gt;              0.9576              0.4254              0.0510
+#&gt;              0.9576              0.4254              0.0736
 </code></pre>
 
 <h2 id="stratified-resampling">Stratified resampling</h2>
 <p>For classification, it is usually desirable to have the same proportion of the classes in all of the partitions of the original data set. Stratified resampling ensures this.
-This is particularly useful in case of imbalanced classes. Otherwise it may happen for example 
+This is particularly useful in case of imbalanced classes. Otherwise it may happen for example
 that observations of less frequent classes are missing in some of the training sets which can
 decrease the performance of the learner.
 In order to conduct stratified resampling, set <code>stratify = TRUE</code> when calling <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleDesc.html">makeResampleDesc</a>.</p>
@@ -553,10 +553,10 @@ For each iteration, we get a set of index vectors indicating the training and te
 These are stored in a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleInstance.html">ResampleInstance</a>.</p>
 <p>If a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleDesc.html">ResampleDesc</a> is passed to <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a>, it is instantiated internally.
 Naturally, it is also possible to pass a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleInstance.html">ResampleInstance</a> directly.</p>
-<p>A <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleInstance.html">ResampleInstance</a> can be created through the function 
-<a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleInstance.html">makeResampleInstance</a> given a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleDesc.html">ResampleDesc</a> and either the size of 
+<p>A <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleInstance.html">ResampleInstance</a> can be created through the function
+<a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleInstance.html">makeResampleInstance</a> given a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleDesc.html">ResampleDesc</a> and either the size of
 the data set at hand or the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.
-It basically performs the random drawing of indices to separate the data into training and 
+It basically performs the random drawing of indices to separate the data into training and
 test sets according to the description.</p>
 <pre class="prettyprint well"><code class="r">## Create a resample instance based an a task
 rin = makeResampleInstance(rdesc, task = iris.task)
@@ -655,7 +655,7 @@ rin
 </code></pre>
 
 <h2 id="aggregating-performance-values">Aggregating performance values</h2>
-<p>In resampling we get (for each measure we wish to calculate) one performance 
+<p>In resampling we get (for each measure we wish to calculate) one performance
 value (on the test set, training set, or both) for each iteration.
 Subsequently, these are aggregated.
 As mentioned above, mainly the mean over the performance values on the test data sets
@@ -672,7 +672,7 @@ mmce$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Root mean square error
-rmse$aggr 
+rmse$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; Aggregation function: test.sqrt.of.mean
@@ -732,9 +732,9 @@ r = resample(&quot;classif.rpart&quot;, iris.task, rdesc, measures = list(mmce, 
 </code></pre>
 
 <h3 id="example-bootstrap">Example: Bootstrap</h3>
-<p>In <em>out-of-bag bootstrap estimation</em> <em>B</em> new data sets <em>D_1</em> to <em>D_B</em> are drawn from the 
+<p>In <em>out-of-bag bootstrap estimation</em> <em>B</em> new data sets <em>D_1</em> to <em>D_B</em> are drawn from the
 data set <em>D</em> with replacement, each of the same size as <em>D</em>.
-In the <em>i</em>-th iteration, <em>D_i</em> forms the training set, while the remaining elements from 
+In the <em>i</em>-th iteration, <em>D_i</em> forms the training set, while the remaining elements from
 <em>D</em>, i.e., elements not in the training set, form the test set.</p>
 <!--(
                      |resampling_desc_figure|

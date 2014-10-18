@@ -603,12 +603,12 @@ res = tuneParams(lrn, task = bh.task, resampling = rdesc, par.set = ps,
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;   fw.val mse.test.mean dob eol error.message exec.time
-#&gt; 1    0.2         40.60   1  NA          &lt;NA&gt;     0.224
-#&gt; 2   0.25         40.60   2  NA          &lt;NA&gt;     0.222
-#&gt; 3    0.3         37.06   3  NA          &lt;NA&gt;     0.241
-#&gt; 4   0.35         35.84   4  NA          &lt;NA&gt;     0.231
-#&gt; 5    0.4         35.84   5  NA          &lt;NA&gt;     0.230
-#&gt; 6   0.45         27.40   6  NA          &lt;NA&gt;     0.226
+#&gt; 1    0.2         40.60   1  NA          &lt;NA&gt;     0.186
+#&gt; 2   0.25         40.60   2  NA          &lt;NA&gt;     0.181
+#&gt; 3    0.3         37.06   3  NA          &lt;NA&gt;     0.178
+#&gt; 4   0.35         35.84   4  NA          &lt;NA&gt;     0.177
+#&gt; 5    0.4         35.84   5  NA          &lt;NA&gt;     0.180
+#&gt; 6   0.45         27.40   6  NA          &lt;NA&gt;     0.182
 </code></pre>
 
 <p>The optimal percentage and the corresponding performance can be accessed as follows:</p>
@@ -685,12 +685,12 @@ res = tuneParamsMultiCrit(lrn, task = sonar.task, resampling = rdesc, par.set = 
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;   fw.val fpr.test.mean fnr.test.mean dob eol error.message exec.time
-#&gt; 1 0.4892        0.3093        0.2639   1  NA          &lt;NA&gt;     2.064
-#&gt; 2 0.2482        0.2045        0.2320   2  NA          &lt;NA&gt;     2.148
-#&gt; 3 0.7692        0.5128        0.3460   3  NA          &lt;NA&gt;     2.032
-#&gt; 4 0.1470        0.2045        0.2320   4  NA          &lt;NA&gt;     2.117
-#&gt; 5 0.5958        0.5028        0.5240   5  NA          &lt;NA&gt;     2.120
-#&gt; 6 0.6892        0.6324        0.4481   6  NA          &lt;NA&gt;     2.019
+#&gt; 1 0.4892        0.3093        0.2639   1  NA          &lt;NA&gt;     1.777
+#&gt; 2 0.2482        0.2045        0.2320   2  NA          &lt;NA&gt;     1.845
+#&gt; 3 0.7692        0.5128        0.3460   3  NA          &lt;NA&gt;     1.687
+#&gt; 4 0.1470        0.2045        0.2320   4  NA          &lt;NA&gt;     1.812
+#&gt; 5 0.5958        0.5028        0.5240   5  NA          &lt;NA&gt;     1.678
+#&gt; 6 0.6892        0.6324        0.4481   6  NA          &lt;NA&gt;     1.683
 </code></pre>
 
 <p>The results can be visualized with function <a href="http://www.rdocumentation.org/packages/mlr/functions/plotTuneMultiCritResult.html">plotTuneMultiCritResult</a>.

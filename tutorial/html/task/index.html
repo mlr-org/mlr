@@ -228,7 +228,17 @@
     
         <li class="main active"><a href="#learning-tasks">Learning Tasks</a></li>
         
-            <li><a href="#creating-a-learning-task">Creating a learning task</a></li>
+            <li><a href="#cluster-analysis">Cluster analysis</a></li>
+        
+            <li><a href="#regression">Regression</a></li>
+        
+            <li><a href="#classification">Classification</a></li>
+        
+            <li><a href="#survival-analysis">Survival analysis</a></li>
+        
+            <li><a href="#cost-sensitive-classification">Cost-sensitive classification</a></li>
+        
+            <li><a href="#further-details">Further details</a></li>
         
             <li><a href="#accessing-a-learning-task">Accessing a learning task</a></li>
         
@@ -247,22 +257,23 @@ data set and all relevant information regarding the purpose of the
 task, e.g., the target variable.</p>
 <p>The tasks are organised in a hierarchy, with the generic
 <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> at the top.
-The concrete tasks that can be instantiated are <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">ClassifTask</a> for classification,
-<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">RegrTask</a> for regression, <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">SurvTask</a> for survival
-analysis, <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">CostSensTask</a> for
-cost-sensitive classification, and <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">ClusterTask</a> for clustering.</p>
-<h2 id="creating-a-learning-task">Creating a learning task</h2>
-<p>There are dedicated functions to create these tasks:
-<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeClassifTask</a>,
-<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeRegrTask</a>,
-<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeSurvTask</a>, <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeCostSensTask</a>, and
-<a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeClusterTask</a>.
-These require the data set and, depending on the 
-nature of the learning problem, further information.</p>
+The following tasks can be instantiated and all inherit from a virtual superclass <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>:</p>
+<ul>
+<li><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">ClassifTask</a> for binary and multi-class classification problems</li>
+<li><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">RegrTask</a> for regression problems</li>
+<li><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">SurvTask</a> for survival analysis</li>
+<li><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">CostSensTask</a> for cost-sensitive classification</li>
+<li><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">ClusterTask</a> for cluster analysis</li>
+</ul>
+<p>To create a task, just call <code>make[TaskType]</code>, e.g. <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeClassifTask</a>.
+All tasks require an identifier (argument <code>id</code>) and a <a href="http://www.rdocumentation.org/packages/base/functions/data.frame.html">data frame</a> (argument <code>data</code>).
+If no ID is provided it is automatically generated using the name of the data.
+Depending on the nature if the learning problem, additional arguments may be required and are exemplified in the following subsections.</p>
 <h3 id="cluster-analysis">Cluster analysis</h3>
-<p>In order to generate a task for a cluster analysis problem <code>data</code> is the only mandatory argument.
+<p>Because cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the <code>data</code>.
 In the following example we create a learning task from the data set <a href="http://www.rdocumentation.org/packages/datasets/functions/mtcars.html">mtcars</a>.</p>
-<pre class="prettyprint well"><code class="r">cluster.task = makeClusterTask(id = &quot;cars&quot;, data = mtcars)
+<pre class="prettyprint well"><code class="r">data(mtcars, package = &quot;datasets&quot;)
+cluster.task = makeClusterTask(id = &quot;cars&quot;, data = mtcars)
 cluster.task
 </code></pre>
 
@@ -287,7 +298,6 @@ in the above example <code>"mtcars"</code>.</p>
 survival analysis) we, in addition to <code>data</code>, have to specify the name of the <code>target</code>
 variable.</p>
 <pre class="prettyprint well"><code class="r">data(BostonHousing, package = &quot;mlbench&quot;)
-
 regr.task = makeRegrTask(data = BostonHousing, target = &quot;medv&quot;)
 regr.task
 </code></pre>
@@ -317,11 +327,10 @@ For each of these learning problems, some specifics are described below.</p>
 This is for example relevant with regard to certain <a href="../performance/">performance measures</a>
 like the <em>true positive rate</em>.
 By default the first factor level of the target variable is selected as the positive class.</p>
-<p>In the following example, we define a classification task for the data set 
+<p>In the following example, we define a classification task for the data set
 <a href="http://www.rdocumentation.org/packages/mlbench/functions/BreastCancer.html">BreastCancer</a> and exclude the variable <code>Id</code> from all further
 model fitting and evaluation.</p>
 <pre class="prettyprint well"><code class="r">data(BreastCancer, package = &quot;mlbench&quot;)
-
 df = BreastCancer
 df$Id = NULL
 classif.task = makeClassifTask(id = &quot;BreastCancer&quot;, data = df, target = &quot;Class&quot;)
@@ -351,14 +360,11 @@ Class malignant can be manually selected as the positive class:</p>
 </code></pre>
 
 <h3 id="survival-analysis">Survival analysis</h3>
-<p>For survival analysis <code>target</code> specifies the names of the survival time and event
-columns in <code>data</code> and therefore is a character vector of length 2.
-Note that the event column has to be a logical vector.
-For details see the documentation of function <a href="http://www.rdocumentation.org/packages/survival/functions/Surv.html">Surv</a>.</p>
+<p>Survival tasks use two target columns.
+For left and right censored problems these consist of the survival time and a binary event indicator.
+For interval censored data the two target columns must be specified in the <code>"interval2"</code> format (see <a href="http://www.rdocumentation.org/packages/survival/functions/Surv.html">Surv</a>).</p>
 <pre class="prettyprint well"><code class="r">data(lung, package = &quot;survival&quot;)
-## Coerce the event column to a logical vector
-lung$status = lung$status - 1
-
+lung$status = (lung$status == 2) # convert to logical
 surv.task = makeSurvTask(data = lung, target = c(&quot;time&quot;, &quot;status&quot;))
 surv.task
 </code></pre>
@@ -378,7 +384,7 @@ surv.task
 <p>The type of censoring can be specified via the argument <code>censoring</code> which defaults to
 <code>"rcens"</code> for right censored data.</p>
 <h3 id="cost-sensitive-classification">Cost-sensitive classification</h3>
-<p>In regular classification, as addressed above, the aim when training a classifier is to 
+<p>In regular classification, as addressed above, the aim when training a classifier is to
 minimize the misclassification rate.
 Thus, it is implicitly assumed that all types of misclassification errors are equally severe.
 In <em>cost-sensitive classification</em> the costs of misclassifying an object with true
@@ -391,10 +397,9 @@ of costs for predicting classes 1,...,<em>K</em> given the true class label <em>
 If the cost vectors are given, the true values <em>y</em> of the target variable not needed anymore.
 Naturally, it is assumed that the cost of the true class label <em>y</em> is minimal.</p>
 <p>Hence, in order to create a cost-sensitive classification task, the feature values <em>x</em> and
-a <code>cost</code> matrix that contains the cost vectors for all examples in the data set are required. </p>
-<pre class="prettyprint well"><code class="r">## We use the iris data and generate an artificial cost matrix
-## (following Beygelzimer et al. (2005))
-df = iris
+a <code>cost</code> matrix that contains the cost vectors for all examples in the data set are required.</p>
+<p>We use the iris data and generate an artificial cost matrix (following <a href="http://dx.doi.org/10.1145/1102351.1102358">Beygelzimer et al. (2005)</a>):</p>
+<pre class="prettyprint well"><code class="r">df = iris
 cost = matrix(runif(150 * 3, 0, 2000), 150) * (1 - diag(3))[df$Species,]
 df$Species = NULL
 
@@ -414,9 +419,6 @@ costsens.task
 #&gt; y1, y2, y3
 </code></pre>
 
-<p>Beygelzimer, A., Dani, V., Hayes, T., Langford, J., and Zadrozny, B.
-Error limiting reductions between classification tasks.
-In Machine Learning: Proceedings of the 22rd International Conference, pp. 49–56. ACM, 2005.</p>
 <p>For more details see the section about <a href="../cost_sensitive_classif/">cost-sensitive classification</a>.</p>
 <h3 id="further-details">Further details</h3>
 <p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> help page also lists several other arguments to describe further details of the

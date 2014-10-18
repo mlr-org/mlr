@@ -417,7 +417,7 @@ pred
 <pre class="prettyprint well"><code>#&gt; Prediction: 1000 observations
 #&gt; predict.type: prob
 #&gt; threshold: Bad=0.50,Good=0.50
-#&gt; time: 0.02
+#&gt; time: 0.01
 #&gt;   id truth prob.Bad prob.Good response
 #&gt; 1  1  Good  0.03525    0.9647     Good
 #&gt; 2  2   Bad  0.63222    0.3678      Bad
@@ -453,7 +453,7 @@ pred.th
 <pre class="prettyprint well"><code>#&gt; Prediction: 1000 observations
 #&gt; predict.type: prob
 #&gt; threshold: Bad=0.17,Good=0.83
-#&gt; time: 0.02
+#&gt; time: 0.01
 #&gt;   id truth prob.Bad prob.Good response
 #&gt; 1  1  Good  0.03525    0.9647     Good
 #&gt; 2  2   Bad  0.63222    0.3678      Bad
@@ -768,8 +768,8 @@ Since the scaling of the threshold vector does not change the predicted class la
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; $th
-#&gt;       1       2       3 
-#&gt; 0.07472 0.40874 0.51655 
+#&gt;      1      2      3 
+#&gt; 0.1165 0.4986 0.3849 
 #&gt; 
 #&gt; $perf
 #&gt; [1] 3.314
@@ -801,8 +801,8 @@ tune.res
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; Tune result:
-#&gt; Op. pars: wcw.weight=36.7,8.29,6.47
-#&gt; wf.costs.test.mean=3.43,mmce.test.mean=0.222
+#&gt; Op. pars: wcw.weight=83.1,1.9,30.2
+#&gt; wf.costs.test.mean=3.45,mmce.test.mean=0.236
 </code></pre>
 
 <h2 id="example-dependent-misclassification-costs">Example-dependent misclassification costs</h2>
@@ -920,7 +920,7 @@ pred
 <pre class="prettyprint well"><code>#&gt; Prediction: 150 observations
 #&gt; predict.type: response
 #&gt; threshold: 
-#&gt; time: 0.05
+#&gt; time: 0.04
 #&gt;   id response
 #&gt; 1  1   setosa
 #&gt; 2  2   setosa
@@ -934,7 +934,7 @@ pred
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; meancosts       mcp 
-#&gt;     130.0     124.5
+#&gt;     161.2     156.1
 </code></pre>
 
 </div>
