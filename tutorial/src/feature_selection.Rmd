@@ -22,8 +22,8 @@ Different methods for calculating the feature importance are built into [%mlr]'s
 The following table shows the available methods.
 Columns **Classif**, **Regr** and **Surv** indicate if classification, regression or survival
 analysis problems are supported.
-Columns **Fac.** and **Num.** show if a particular importance measure can deal with numeric and
-factor features.
+Columns **Fac.** and **Num.** show if a particular importance measure can deal with factor and
+numeric features.
 
 ```{r, echo = FALSE, results = "asis"}
 linkPkg = function(x) {
@@ -84,13 +84,16 @@ Function [&filterFeatures] supports these three methods as shown in the followin
 filtered.task = filterFeatures(iris.task, method = "information.gain", select = "abs", val = 2)
 
 ## Keep the 25% most important features
-filtered.task = filterFeatures(iris.task, method = "information.gain", select = "perc", val = 0.25)
+filtered.task = filterFeatures(iris.task, fval = fv, select = "perc", val = 0.25)
 
 ## Keep all features with importance greater than 0.5
-filtered.task = filterFeatures(iris.task, method = "information.gain", select = "threshold",
+filtered.task = filterFeatures(iris.task, fval = fv, select = "threshold",
     val = 0.5)
 filtered.task
 ```
+
+You can either specify the ``method`` for calculating the feature importance or you can
+use previously computed importance values via argument ``fval``.
 
 
 ### Fuse a learner with a filter method
@@ -121,15 +124,12 @@ r$aggr
 You may want to know which features have been used. Luckily, we have called
 `resample` with the argument `models = TRUE`, which means that `r$models`
 contains a `list` of [models](&makeWrappedModel) fitted in the individual resampling iterations.
-In order to access the selected feature subsets we can call [&getFilteredFeatures] on each model.
+In order to access the selected feature subsets we can call [&getFilterResult] on each model.
 
 ```{r}
-# sapply(r$models, getFilterResult)
-sfeats = sapply(r$models, getFilteredFeatures)
+sfeats = sapply(r$models, getFilterResult)
 table(sfeats)
 ```
-
-FIXME difference between getFilterResult and getFilteredFeatures? [FilterResult](&getFilterResult)
 
 The selection of features seems to be very stable.
 The features `Sepal.Length` and `Sepal.Width` did not make it into a single fold.
@@ -181,8 +181,7 @@ lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared",
 mod = train(lrn, bh.task)
 mod
 
-# getFilterResult(mod)
-getFilteredFeatures(mod)
+getFilterResult(mod)
 ```
 
 
