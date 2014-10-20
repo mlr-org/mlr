@@ -25,7 +25,7 @@ Default is \code{TRUE}}
 [\code{\link[ParamHelpers]{ParamSet}}].
 }
 \description{
-Handy way to create the param set with too much typing.
+Handy way to create the param set with less typing.
 
 The following is done automatically:
 \itemize{

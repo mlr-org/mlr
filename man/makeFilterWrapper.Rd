@@ -4,7 +4,7 @@
 \title{Fuse learner with a feature filter method.}
 \usage{
 makeFilterWrapper(learner, fw.method = "rf.importance", fw.select = "perc",
-  fw.val = 1)
+  fw.val = 1, ...)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -22,6 +22,9 @@ Default is \dQuote{perc}.}
 \item{fw.val}{[\code{numeric(1)}]\cr
 Threshold value. See \code{\link{filterFeatures}}.
 Default is 1.}
+
+\item{...}{[any]\cr
+Additional parameters passed down to the filter.}
 }
 \value{
 [\code{\link{Learner}}].
