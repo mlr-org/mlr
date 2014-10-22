@@ -436,7 +436,7 @@ given the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.htm
 <pre class="prettyprint well"><code class="r">fv = getFilterValues(iris.task, method = &quot;information.gain&quot;)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Loading required package: FSelector
+<pre class="prettyprint well"><code>#&gt; Lade nötiges Paket: FSelector
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">fv
@@ -530,7 +530,7 @@ data set before fitting the learner.</p>
   fw.select = &quot;abs&quot;, fw.val = 2)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Loading required package: FNN
+<pre class="prettyprint well"><code>#&gt; Lade nötiges Paket: FNN
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
@@ -603,12 +603,12 @@ res = tuneParams(lrn, task = bh.task, resampling = rdesc, par.set = ps,
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;   fw.val mse.test.mean dob eol error.message exec.time
-#&gt; 1    0.2         40.60   1  NA          &lt;NA&gt;     0.404
-#&gt; 2   0.25         40.60   2  NA          &lt;NA&gt;     0.348
-#&gt; 3    0.3         37.06   3  NA          &lt;NA&gt;     0.384
-#&gt; 4   0.35         35.84   4  NA          &lt;NA&gt;     0.342
-#&gt; 5    0.4         35.84   5  NA          &lt;NA&gt;     0.341
-#&gt; 6   0.45         27.40   6  NA          &lt;NA&gt;     0.329
+#&gt; 1    0.2         40.60   1  NA          &lt;NA&gt;     0.345
+#&gt; 2   0.25         40.60   2  NA          &lt;NA&gt;     0.573
+#&gt; 3    0.3         37.06   3  NA          &lt;NA&gt;     0.598
+#&gt; 4   0.35         35.84   4  NA          &lt;NA&gt;     0.351
+#&gt; 5    0.4         35.84   5  NA          &lt;NA&gt;     0.331
+#&gt; 6   0.45         27.40   6  NA          &lt;NA&gt;     0.343
 </code></pre>
 
 <p>The optimal percentage and the corresponding performance can be accessed as follows:</p>
@@ -666,9 +666,9 @@ res = tuneParamsMultiCrit(lrn, task = sonar.task, resampling = rdesc, par.set = 
     show.info = FALSE)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Loading required package: emoa
+<pre class="prettyprint well"><code>#&gt; Lade nötiges Paket: emoa
 #&gt; 
-#&gt; Attaching package: 'emoa'
+#&gt; Attache Paket: 'emoa'
 #&gt; 
 #&gt; The following object is masked from 'package:BBmisc':
 #&gt; 
@@ -686,12 +686,12 @@ res = tuneParamsMultiCrit(lrn, task = sonar.task, resampling = rdesc, par.set = 
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;   fw.val fpr.test.mean fnr.test.mean dob eol error.message exec.time
-#&gt; 1 0.4892        0.3093        0.2639   1  NA          &lt;NA&gt;     3.493
-#&gt; 2 0.2482        0.2045        0.2320   2  NA          &lt;NA&gt;     3.451
-#&gt; 3 0.7692        0.5128        0.3460   3  NA          &lt;NA&gt;     3.190
-#&gt; 4 0.1470        0.2045        0.2320   4  NA          &lt;NA&gt;     3.433
-#&gt; 5 0.5958        0.5028        0.5240   5  NA          &lt;NA&gt;     3.163
-#&gt; 6 0.6892        0.6324        0.4481   6  NA          &lt;NA&gt;     3.149
+#&gt; 1 0.4892        0.3093        0.2639   1  NA          &lt;NA&gt;     6.697
+#&gt; 2 0.2482        0.2045        0.2320   2  NA          &lt;NA&gt;     5.281
+#&gt; 3 0.7692        0.5128        0.3460   3  NA          &lt;NA&gt;     4.105
+#&gt; 4 0.1470        0.2045        0.2320   4  NA          &lt;NA&gt;     6.407
+#&gt; 5 0.5958        0.5028        0.5240   5  NA          &lt;NA&gt;     5.037
+#&gt; 6 0.6892        0.6324        0.4481   6  NA          &lt;NA&gt;     9.052
 </code></pre>
 
 <p>The results can be visualized with function <a href="http://www.rdocumentation.org/packages/mlr/functions/plotTuneMultiCritResult.html">plotTuneMultiCritResult</a>.
@@ -751,27 +751,27 @@ sfeats = selectFeatures(learner = &quot;surv.coxph&quot;, task = wpbc.task, resa
     control = ctrl, show.info = FALSE)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Loading required package: survival
-#&gt; Loading required package: splines
+<pre class="prettyprint well"><code>#&gt; Lade nötiges Paket: survival
+#&gt; Lade nötiges Paket: splines
 #&gt; 
-#&gt; Attaching package: 'survival'
+#&gt; Attache Paket: 'survival'
 #&gt; 
 #&gt; The following object is masked from 'package:caret':
 #&gt; 
 #&gt;     cluster
 #&gt; 
-#&gt; Loading required package: Hmisc
-#&gt; Loading required package: grid
+#&gt; Lade nötiges Paket: Hmisc
+#&gt; Lade nötiges Paket: grid
 #&gt; 
-#&gt; Attaching package: 'grid'
+#&gt; Attache Paket: 'grid'
 #&gt; 
 #&gt; The following object is masked from 'package:BBmisc':
 #&gt; 
 #&gt;     explode
 #&gt; 
-#&gt; Loading required package: Formula
+#&gt; Lade nötiges Paket: Formula
 #&gt; 
-#&gt; Attaching package: 'Hmisc'
+#&gt; Attache Paket: 'Hmisc'
 #&gt; 
 #&gt; The following object is masked from 'package:mlr':
 #&gt; 
