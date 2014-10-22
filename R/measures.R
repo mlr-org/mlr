@@ -8,72 +8,7 @@
 #' See below for a list of already implemented measures.
 #' If you want a measure for a misclassification cost matrix, look at \code{\link{makeCostMeasure}}.
 #' If you want to implement your own measure, look at \code{\link{makeMeasure}}.
-#'
-#' Classification:
-#' \itemize{
-#'   \item{\bold{mmce}}{\cr Mean misclassification error.}
-#'   \item{\bold{acc}}{\cr Accuracy.}
-#'   \item{\bold{bac}}{\cr Balanced accuracy. Mean of true positive rate and true negative rate}
-#'   \item{\bold{ber}}{\cr Balanced error rate. Mean of misclassification error rates on all individual classes.}
-#'   \item{\bold{tp}}{\cr True positives.}
-#'   \item{\bold{tpr}}{\cr True positive rate, also called hit rate or recall.}
-#'   \item{\bold{fp}}{\cr False positives, also called false alarms.}
-#'   \item{\bold{fpr}}{\cr False positive rate, also called false alarm rate or fall-out.}
-#'   \item{\bold{tn}}{\cr True negatives, also called correct rejections.}
-#'   \item{\bold{tnr}}{\cr True negative rate. Also called specificity.}
-#'   \item{\bold{fn}}{\cr False negatives, also called misses.}
-#'   \item{\bold{fnr}}{\cr False negative rate.}
-#'   \item{\bold{ppv}}{\cr Positive predictive value, also called precision.}
-#'   \item{\bold{npv}}{\cr Negative predictive value.}
-#'   \item{\bold{fdr}}{\cr False discovery rate.}
-#'   \item{\bold{f1}}{\cr F1 measure.}
-#'   \item{\bold{mcc}}{\cr Matthews correlation coefficient.}
-#'   \item{\bold{gmean}}{\cr G-mean, geometric mean of recall and specificity.}
-#'   \item{\bold{gpr}}{\cr Geometric mean of precision and recall.}
-#'   \item{\bold{auc}}{\cr Area under the curve.}
-#'   \item{\bold{multiclass.auc}}{\cr Area under the curve for multiclass problems. Calls \code{pROC::multiclass.roc}.}
-#' }
-#' Only \code{mmce}, \code{acc}, \code{multiclass.auc} and \code{ber} can be used for multiclass problems.
-#'
-#' Regression:
-#' \itemize{
-#'   \item{\bold{sse}}{\cr Sum of squared errors}
-#'   \item{\bold{mse}}{\cr Mean of squared errors}
-#'   \item{\bold{medse}}{\cr Median of squared errors}
-#'   \item{\bold{sae}}{\cr Sum of absolute errors}
-#'   \item{\bold{mae}}{\cr Mean of absolute errors}
-#'   \item{\bold{medae}}{\cr Median of absolute errors}
-#'   \item{\bold{rmse}}{\cr Root mean square error}
-#' }
-#'
-#' Survival:
-#' \itemize{
-#'   \item{\bold{cindex}}{\cr Concordance index}
-#' }
-#'
-#' Cost-sensitive:
-#' \itemize{
-#'   \item{\bold{meancosts}}{\cr Mean costs of the predicted choices.}
-#'   \item{\bold{mcp}}{\cr Misclassification penalty, i.e. average difference between
-#'     costs of oracle and model prediction.}
-#' }
-#'
-#' Clustering:
-#' \itemize{
-#'   \item{\bold{db}}{\cr Davies-Bouldin cluster separation measure, see \code{\link[clusterSim]{index.DB}}}
-#'   \item{\bold{dunn}}{\cr Dunn index, see \code{\link[clValid]{dunn}}}
-#'   \item{\bold{G1}}{\cr Calinski-Harabasz pseudo F statistic, see \code{\link[clusterSim]{index.G1}}}
-#'   \item{\bold{G2}}{\cr Baker and Hubert adaptation of Goodman-Kruskal's gamma statistic, see \code{\link[clusterSim]{index.G2}}}
-#'   \item{\bold{silhouette}}{\cr Rousseeuw's silhouette internal cluster quality index, see \code{\link[clusterSim]{index.S}}}
-#' }
-#'
-#' General:
-#' \itemize{
-#'   \item{\bold{timetrain}}{\cr Time of fitting the model}
-#'   \item{\bold{timepredict}}{\cr Time of predicting test set}
-#'   \item{\bold{timeboth}}{\cr timetrain + trainpredict}
-#'   \item{\bold{featperc}}{\cr Percentage of original features used for model, useful for feature selection.}
-#' }
+#' @seealso \code{\link{listMeasures}}
 #' @usage none
 #' @format none
 #' @family performance
@@ -89,6 +24,7 @@ NULL
 featperc = makeMeasure(id = "featperc", minimize = TRUE, best = 0, worst = 1,
   properties = c("classif", "classif.multi", "regr", "surv", "costsens", "cluster"),
   allowed.pred.types = c("response", "prob", "se"),
+  note = "Percentage of original features used for model, useful for feature selection.",
   fun = function(task, model, pred, feats, extra.args) {
     length(model$features) / sum(pred$task.desc$n.feat)
   }
@@ -101,6 +37,7 @@ featperc = makeMeasure(id = "featperc", minimize = TRUE, best = 0, worst = 1,
 timetrain = makeMeasure(id = "timetrain", minimize = TRUE, best = 0, worst = Inf,
   properties = c("classif", "classif.multi", "regr", "surv", "costsens", "cluster"),
   allowed.pred.types = c("response", "prob", "se"),
+  note = "Time of fitting the model",
   fun = function(task, model, pred, feats, extra.args) {
     model$time
   }
@@ -113,6 +50,7 @@ timetrain = makeMeasure(id = "timetrain", minimize = TRUE, best = 0, worst = Inf
 timepredict = makeMeasure(id = "timepredict", minimize = TRUE, best = 0, worst = Inf,
   properties = c("classif", "classif.multi", "regr", "surv", "costsens", "cluster"),
   allowed.pred.types = c("response", "prob", "se"),
+  note = "Time of predicting test set",
   fun = function(task, model, pred, feats, extra.args) {
     pred$time
   }
@@ -125,6 +63,7 @@ timepredict = makeMeasure(id = "timepredict", minimize = TRUE, best = 0, worst =
 timeboth = makeMeasure(id = "timeboth", minimize = TRUE, best = 0, worst = Inf,
   properties = c("classif", "classif.multi", "regr", "surv", "costsens", "cluster"),
   allowed.pred.types = c("response", "prob", "se"),
+  note = "timetrain + trainpredict",
   fun = function(task, model, pred, feats, extra.args) {
     model$time + pred$time
   }
@@ -140,6 +79,7 @@ timeboth = makeMeasure(id = "timeboth", minimize = TRUE, best = 0, worst = Inf,
 sse = makeMeasure(id = "sse", minimize = TRUE, best = 0, worst = Inf,
   properties = "regr",
   allowed.pred.types = c("response", "se"),
+  note = "Sum of squared errors",
   fun = function(task, model, pred, feats, extra.args) {
     sum((pred$data$response - pred$data$truth)^2)
   }
@@ -152,6 +92,7 @@ sse = makeMeasure(id = "sse", minimize = TRUE, best = 0, worst = Inf,
 mse = makeMeasure(id = "mse", minimize = TRUE, best = 0, worst = Inf,
   properties = "regr",
   allowed.pred.types = c("response", "se"),
+  note = "Mean of squared errors",
   fun = function(task, model, pred, feats, extra.args) {
     mean((pred$data$response - pred$data$truth)^2)
   }
@@ -165,6 +106,7 @@ mse = makeMeasure(id = "mse", minimize = TRUE, best = 0, worst = Inf,
 rmse = makeMeasure(id = "rmse", minimize = TRUE, best = 0, worst = Inf,
   properties = "regr",
   allowed.pred.types = c("response", "se"),
+  note = "Root mean square error",
   fun = function(task, model, pred, feats, extra.args) {
     mean((pred$data$response - pred$data$truth)^2)
   },
@@ -178,6 +120,7 @@ rmse = makeMeasure(id = "rmse", minimize = TRUE, best = 0, worst = Inf,
 medse = makeMeasure(id = "medse", minimize = TRUE, best = 0, worst = Inf,
   properties = "regr",
   allowed.pred.types = c("response", "se"),
+  note = "Median of squared errors",
   fun = function(task, model, pred, feats, extra.args) {
     median((pred$data$response - pred$data$truth)^2)
   }
@@ -190,6 +133,7 @@ medse = makeMeasure(id = "medse", minimize = TRUE, best = 0, worst = Inf,
 sae = makeMeasure(id = "sae", minimize = TRUE, best = 0, worst = Inf,
   properties = "regr",
   allowed.pred.types = c("response", "se"),
+  note = "Sum of absolute errors",
   fun = function(task, model, pred, feats, extra.args) {
     sum(abs(pred$data$response - pred$data$truth))
   }
@@ -202,6 +146,7 @@ sae = makeMeasure(id = "sae", minimize = TRUE, best = 0, worst = Inf,
 mae = makeMeasure(id = "mae", minimize = TRUE, best = 0, worst = Inf,
   properties = "regr",
   allowed.pred.types = c("response", "se"),
+  note = "Mean of absolute errors",
   fun = function(task, model, pred, feats, extra.args) {
     mean(abs(pred$data$response - pred$data$truth))
   }
@@ -214,6 +159,7 @@ mae = makeMeasure(id = "mae", minimize = TRUE, best = 0, worst = Inf,
 medae = makeMeasure(id = "medae", minimize = TRUE, best = 0, worst = Inf,
   properties = "regr",
   allowed.pred.types = c("response", "se"),
+  note = "Median of absolute errors",
   fun = function(task, model, pred, feats, extra.args) {
     median(abs(pred$data$response - pred$data$truth))
   }
@@ -229,6 +175,7 @@ medae = makeMeasure(id = "medae", minimize = TRUE, best = 0, worst = Inf,
 mmce = makeMeasure(id = "mmce", minimize = TRUE, best = 0, worst = 1,
   properties = c("classif", "classif.multi"),
   allowed.pred.types = c("response", "prob"),
+  note = "Mean misclassification error",
   fun = function(task, model, pred, feats, extra.args) {
     mean(pred$data$response != pred$data$truth)
   }
@@ -241,6 +188,7 @@ mmce = makeMeasure(id = "mmce", minimize = TRUE, best = 0, worst = 1,
 acc = makeMeasure(id = "acc", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "classif.multi"),
   allowed.pred.types = c("response", "prob"),
+  note = "Accuracy",
   fun = function(task, model, pred, feats, extra.args) {
     mean(pred$data$response == pred$data$truth)
   }
@@ -253,6 +201,7 @@ acc = makeMeasure(id = "acc", minimize = FALSE, best = 1, worst = 0,
 ber = makeMeasure(id = "ber", minimize = TRUE, best = 0, worst = 1,
   properties = c("classif", "classif.multi"),
   allowed.pred.types = c("response", "prob"),
+  note = "Balanced error rate. Mean of misclassification error rates on all individual classes.",
   fun = function(task, model, pred, feats, extra.args) {
     n = length(pred$task.desc$class.levels) + 1L
     mean(getConfMatrix(pred, relative = TRUE)[-n, n])
@@ -266,6 +215,7 @@ ber = makeMeasure(id = "ber", minimize = TRUE, best = 0, worst = 1,
 multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "classif.multi"),
   allowed.pred.types = c("response", "prob"),
+  note = "Area under the curve for multiclass problems. Calls `pROC::multiclass.roc`.",
   fun = function(task, model, pred, feats, extra.args) {
     # pROC does allow NAs
     requirePackages("pROC", "multiclass.auc")
@@ -290,6 +240,7 @@ multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, 
 auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
   properties = "classif",
   allowed.pred.types = "prob",
+  note = "Area under the curve",
   fun = function(task, model, pred, feats, extra.args) {
     # ROCR does not work with NAs
     if (anyMissing(pred$data$response) || length(unique(pred$data$truth)) == 1L)
@@ -306,6 +257,7 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
 bac = makeMeasure(id = "bac", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif"),
   allowed.pred.types = c("response", "prob"),
+  note = "Balanced accuracy. Mean of true positive rate and true negative rate", 
   fun = function(task, model, pred, feats, extra.args) {
     mean(c(tp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive),
            tn$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$negative)))
@@ -319,6 +271,7 @@ bac = makeMeasure(id = "bac", minimize = FALSE, best = 1, worst = 0,
 tp = makeMeasure(id = "tp", minimize = FALSE, best = Inf, worst = 0,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
+  note = "True positives", 
   fun = function(task, model, pred, feats, extra.args) {
     sum(pred$data$truth == pred$data$response & pred$data$response == pred$task.desc$positive)
   }
@@ -331,6 +284,7 @@ tp = makeMeasure(id = "tp", minimize = FALSE, best = Inf, worst = 0,
 tn = makeMeasure(id = "tn", minimize = FALSE, best = Inf, worst = 0,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
+  note = "rue negatives, also called correct rejections.", 
   fun = function(task, model, pred, feats, extra.args) {
     sum(pred$data$truth == pred$data$response & pred$data$response == pred$task.desc$negative)
   }
@@ -343,6 +297,7 @@ tn = makeMeasure(id = "tn", minimize = FALSE, best = Inf, worst = 0,
 fp = makeMeasure(id = "fp", minimize = TRUE, best = 0, worst = Inf,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
+  note = "False positives, also called false alarms.", 
   fun = function(task, model, pred, feats, extra.args) {
     sum(pred$data$truth != pred$data$response & pred$data$response == pred$task.desc$positive)
   }
@@ -355,6 +310,7 @@ fp = makeMeasure(id = "fp", minimize = TRUE, best = 0, worst = Inf,
 fn = makeMeasure(id = "fn", minimize = TRUE, best = 0, worst = Inf,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
+  note = "False negatives, also called misses.", 
   fun = function(task, model, pred, feats, extra.args) {
     sum(pred$data$truth != pred$data$response & pred$data$response == pred$task.desc$negative)
   }
@@ -367,6 +323,7 @@ fn = makeMeasure(id = "fn", minimize = TRUE, best = 0, worst = Inf,
 tpr = makeMeasure(id = "tpr", minimize = FALSE, best = 1, worst = 0,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
+  note = "True positive rate, also called hit rate or recall.", 
   fun = function(task, model, pred, feats, extra.args) {
     tp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive)
   }
@@ -379,6 +336,7 @@ tpr = makeMeasure(id = "tpr", minimize = FALSE, best = 1, worst = 0,
 tnr = makeMeasure(id = "tnr", minimize = FALSE, best = 1, worst = 0,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
+ 	note = "True negative rate. Also called specificity.",
   fun = function(task, model, pred, feats, extra.args) {
     tn$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$negative)
   }
@@ -391,6 +349,7 @@ tnr = makeMeasure(id = "tnr", minimize = FALSE, best = 1, worst = 0,
 fpr = makeMeasure(id = "fpr", minimize = TRUE, best = 0, worst = 1,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
+ 	note = "False positive rate, also called false alarm rate or fall-out.",
   fun = function(task, model, pred, feats, extra.args) {
     fp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$negative)
   }
@@ -403,6 +362,7 @@ fpr = makeMeasure(id = "fpr", minimize = TRUE, best = 0, worst = 1,
 fnr = makeMeasure(id = "fnr", minimize = TRUE, best = 0, worst = 1,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
+  note = "False negative rate", 
   fun = function(task, model, pred, feats, extra.args) {
     fn$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive)
   }
@@ -415,6 +375,7 @@ fnr = makeMeasure(id = "fnr", minimize = TRUE, best = 0, worst = 1,
 ppv = makeMeasure(id = "ppv", minimize = FALSE, best = 1, worst = 0,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
+  note = "Positive predictive value, also called precision.", 
   fun = function(task, model, pred, feats, extra.args) {
     tp$fun(pred = pred) / sum(pred$data$response == pred$task.desc$positive)
   }
@@ -427,6 +388,7 @@ ppv = makeMeasure(id = "ppv", minimize = FALSE, best = 1, worst = 0,
 npv = makeMeasure(id = "npv", minimize = FALSE, best = 1, worst = 0,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
+  note = "Negative predictive value", 
   fun = function(task, model, pred, feats, extra.args) {
     tn$fun(pred = pred) / sum(pred$data$response == pred$task.desc$negative)
   }
@@ -439,6 +401,7 @@ npv = makeMeasure(id = "npv", minimize = FALSE, best = 1, worst = 0,
 fdr = makeMeasure(id = "fdr", minimize = TRUE, best = 0, worst = 1,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
+  note = "False discovery rate",
   fun = function(task, model, pred, feats, extra.args) {
     fp$fun(pred = pred) / sum(pred$data$response == pred$task.desc$positive)
   }
@@ -451,6 +414,7 @@ fdr = makeMeasure(id = "fdr", minimize = TRUE, best = 0, worst = 1,
 mcc = makeMeasure(id = "mcc", minimize = FALSE,
   properties = "classif",
   allowed.pred.types = c("response", "prob"), best = 1, worst = -1,
+  note = "Matthews correlation coefficient", 
   fun = function(task, model, pred, feats, extra.args) {
     (tp$fun(pred = pred) *
     tn$fun(pred = pred) -
@@ -467,6 +431,7 @@ mcc = makeMeasure(id = "mcc", minimize = FALSE,
 f1 = makeMeasure(id = "f1", minimize = FALSE, best = 1, worst = 0,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
+  note = "F1 measure", 
   fun = function(task, model, pred, feats, extra.args) {
     2 * tp$fun(pred = pred) /
       (sum(pred$data$truth == pred$task.desc$positive) + sum(pred$data$response == pred$task.desc$positive))
@@ -480,6 +445,7 @@ f1 = makeMeasure(id = "f1", minimize = FALSE, best = 1, worst = 0,
 gmean = makeMeasure(id = "gmean", minimize = FALSE, best = 1, worst = 0,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
+  note = "G-mean, geometric mean of recall and specificity.", 
   fun = function(task, model, pred, feats, extra.args) {
     sqrt(tpr$fun(pred = pred) * tnr$fun(pred = pred))
   }
@@ -492,6 +458,7 @@ gmean = makeMeasure(id = "gmean", minimize = FALSE, best = 1, worst = 0,
 gpr = makeMeasure(id = "gpr", minimize = FALSE, best = 1, worst = 0,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
+  note = "Geometric mean of precision and recall", 
   fun = function(task, model, pred, feats, extra.args) {
     sqrt(ppv$fun(pred = pred) * tpr$fun(pred = pred))
   }
@@ -507,6 +474,7 @@ gpr = makeMeasure(id = "gpr", minimize = FALSE, best = 1, worst = 0,
 cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
   properties = "surv",
   allowed.pred.types = c("response", "prob"),
+  note = "Concordance index", 
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("Hmisc")
     # FIXME: we need to ensure the censoring here
@@ -523,6 +491,7 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
 meancosts = makeMeasure(id = "meancosts", minimize = TRUE, best = 0, worst = Inf,
   properties = "costsens",
   allowed.pred.types = "response",
+  note = "Mean costs of the predicted choices.", 
   fun = function(task, model, pred, feats, extra.args) {
     classes = as.character(pred$data$response)
     ids = pred$data$id
@@ -539,6 +508,7 @@ meancosts = makeMeasure(id = "meancosts", minimize = TRUE, best = 0, worst = Inf
 mcp = makeMeasure(id = "mcp", minimize = TRUE, best = 0, worst = Inf,
   properties = "costsens",
   allowed.pred.types = "response",
+  note = "Misclassification penalty, i.e. average difference between costs of oracle and model prediction.", 
   fun = function(task, model, pred, feats, extra.args) {
     mc = meancosts$fun(task, NULL, pred, NULL, extra.args)
     oc = mean(apply(task$env$costs, 1L, min))
@@ -556,6 +526,7 @@ mcp = makeMeasure(id = "mcp", minimize = TRUE, best = 0, worst = Inf,
 db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
   properties = "cluster",
   allowed.pred.types = c("response", "prob"),
+  note = "Davies-Bouldin cluster separation measure, see `?clusterSim::index.DB`", 
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
     index.DB(feats, pred$data$response)$DB
@@ -569,6 +540,7 @@ db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
 dunn = makeMeasure(id = "dunn", minimize = FALSE, best = Inf, worst = 0,
   properties = "cluster",
   allowed.pred.types = c("response", "prob"),
+  note = "Dunn index, see `?clValid::dunn`", 
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clValid")
     dunn(Data = feats, clusters = pred$data$response)
@@ -582,6 +554,7 @@ dunn = makeMeasure(id = "dunn", minimize = FALSE, best = Inf, worst = 0,
 G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,
   properties = "cluster",
   allowed.pred.types = c("response", "prob"),
+  note = "Calinski-Harabasz pseudo F statistic, see `?clusterSim::index.G1`", 
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
     index.G1(feats, pred$data$response)
@@ -595,6 +568,7 @@ G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,
 G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0,
   properties = "cluster",
   allowed.pred.types = c("response", "prob"),
+  note = "Baker and Hubert adaptation of Goodman-Kruskal's gamma statistic, see `?clusterSim::index.G2`", 
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
     index.G2(dist.GDM(feats), pred$data$response)
@@ -608,6 +582,7 @@ G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0,
 silhouette = makeMeasure(id = "silhouette", minimize = FALSE, best = Inf, worst = 0,
   properties = "cluster",
   allowed.pred.types = c("response", "prob"),
+  note = "Rousseeuw's silhouette internal cluster quality index, see `?clusterSim::index.S`", 
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
     index.S(dist.GDM(feats), pred$data$response)
