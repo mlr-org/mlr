@@ -1,7 +1,8 @@
 pkgs <- c(
   "devtools",
   "roxygen2",
-  "testthat"
+  "testthat",
+  "Rmpi"
 )
 
 # Determine missing packages 
@@ -20,3 +21,6 @@ if(length(missing.pkgs) > 0) {
 library("devtools")
 install_deps(".", TRUE)
 
+#Rweka packages
+library("RWeka")
+WPM("install-package", "Xmeans")
