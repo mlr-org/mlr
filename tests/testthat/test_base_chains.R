@@ -2,7 +2,7 @@ context("chains")
 
 test_that("chains", {
   lrn1 = makeLearner("classif.rpart", minsplit = 10)
-  lrn4 = makeFilterWrapper(lrn1, fw.val = 0.5)
+  lrn4 = makeFilterWrapper(lrn1, fw.perc = 0.5)
 
   m = train(lrn4, multiclass.task)
 
@@ -15,7 +15,7 @@ test_that("chains", {
 
   ps = makeParamSet(
     makeDiscreteParam(id = "minsplit", values = c(5,10)),
-    makeDiscreteParam(id = "fw.val", values = c(0.8, 1))
+    makeDiscreteParam(id = "fw.perc", values = c(0.8, 1))
   )
 
   lrn5 = makeTuneWrapper(lrn4, resampling = inner, par.set = ps,

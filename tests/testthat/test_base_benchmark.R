@@ -31,7 +31,7 @@ test_that("benchmark", {
   learners = c(learners, list(
     makeFeatSelWrapper(learners[[1L]], resampling = rin, control = makeFeatSelControlRandom(maxit = 3)),
     makeTuneWrapper(learners[[2L]], resampling = rin, par.set = ps, control = makeTuneControlGrid()),
-    makeFilterWrapper(learners[[1L]], fw.val = 0.5)
+    makeFilterWrapper(learners[[1L]], fw.perc = 0.5)
   ))
   resamplings = list(rin, makeResampleDesc("Bootstrap", iters = 3))
   measures = list(mmce, acc)
