@@ -44,20 +44,8 @@ makeFilterWrapper = function(learner, fw.method = "rf.importance", fw.perc = NUL
   learner = checkLearner(learner)
   assertChoice(fw.method, choices = ls(.FilterRegister))
   filter = .FilterRegister[[fw.method]]
-  select = checkFilterArguments(fw.perc, fw.abs, fw.threshold)
   ddd = list(...)
   assertList(ddd, names = "named")
-
-  if (select == "perc") {
-    param = makeNumericLearnerParam(id = "fw.perc", lower = 0, upper = 1)
-    pv = list(fw.perc = fw.perc)
-  } else if (select == "abs") {
-    param = makeIntegerLearnerParam(id = "fw.abs", lower = 0)
-    pv = list(fw.abs = fw.abs)
-  } else {
-    param = makeNumericLearnerParam(id = "fw.threshold")
-    pv = list(fw.threshold = fw.threshold)
-  }
 
   lrn = makeBaseWrapper(
     id = paste(learner$id, "filtered", sep = "."),
