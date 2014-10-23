@@ -41,7 +41,7 @@ trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL,
 }
 
 #' @export
-predictLearner.surv.optimCoxBoostPenalty = function(.learner, .model, .newdata, ...) {
+predictLearner.surv.CoxBoost = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response")
     as.numeric(predict(.model$learner.model, newdata = as.matrix(.newdata), type = "lp"))
   else
