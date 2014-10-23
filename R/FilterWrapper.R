@@ -15,12 +15,15 @@
 #' @param fw.method [\code{character(1)}]\cr
 #'   Filter method. See \code{\link{listFilterMethods}}.
 #'   Default is \dQuote{rf.importance}.
-#' @param fw.select [\code{character(1)}]\cr
-#'   Type of thresholding. See \code{\link{filterFeatures}}.
-#'   Default is \dQuote{perc}.
-#' @param fw.val [\code{numeric(1)}]\cr
-#'   Threshold value. See \code{\link{filterFeatures}}.
-#'   Default is 1.
+#' @param fw.perc [\code{numeric(1)}]\cr
+#'   If set, select \code{fw.perc}*100 top scoring features.
+#'   Mutually exclusive with arguments \code{fw.abs} and \code{fw.threshold}.
+#' @param fw.abs [\code{numeric(1)}]\cr
+#'   If set, select \code{fw.abs} top scoring features.
+#'   Mutually exclusive with arguments \code{fw.perc} and \code{fw.threshold}.
+#' @param fw.threshold [\code{numeric(1)}]\cr
+#'   If set, select features whose score exceeds \code{fw.threshold}.
+#'   Mutually exclusive with arguments \code{fw.perc} and \code{fw.abs}.
 #' @param ... [any]\cr
 #'   Additional parameters passed down to the filter.
 #' @template ret_learner
@@ -32,7 +35,7 @@
 #' lrn = makeLearner("classif.lda")
 #' inner = makeResampleDesc("Holdout")
 #' outer = makeResampleDesc("CV", iters = 2)
-#' lrn = makeFilterWrapper(lrn, fw.val = 0.5)
+#' lrn = makeFilterWrapper(lrn, fw.perc = 0.5)
 #' mod = train(lrn, task)
 #' print(getFilteredFeatures(mod))
 #' # now nested resampling, where we extract the features that the filter method selected
@@ -53,8 +56,9 @@ makeFilterWrapper = function(learner, fw.method = "rf.importance", fw.perc = NUL
     package = filter$pkg,
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "fw.method", values = ls(.FilterRegister)),
-      makeDiscreteLearnerParam(id = "fw.select", values = c("perc", "abs", "threshold")),
-      makeNumericLearnerParam(id = "fw.val")
+      makeNumericLearnerParam(id = "fw.perc", lower = 0, upper = 1),
+      makeIntegerLearnerParam(id = "fw.abs", lower = 0),
+      makeNumericLearnerParam(id = "fw.threshold")
     ),
     par.vals = filterNull(list(fw.method = fw.method, fw.perc = fw.perc, fw.abs = fw.abs, fw.threshold = fw.threshold)),
     cl = "FilterWrapper")

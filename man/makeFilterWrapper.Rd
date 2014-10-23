@@ -15,16 +15,20 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 Filter method. See \code{\link{listFilterMethods}}.
 Default is \dQuote{rf.importance}.}
 
+\item{fw.perc}{[\code{numeric(1)}]\cr
+If set, select \code{fw.perc}*100 top scoring features.
+Mutually exclusive with arguments \code{fw.abs} and \code{fw.threshold}.}
+
+\item{fw.abs}{[\code{numeric(1)}]\cr
+If set, select \code{fw.abs} top scoring features.
+Mutually exclusive with arguments \code{fw.perc} and \code{fw.threshold}.}
+
+\item{fw.threshold}{[\code{numeric(1)}]\cr
+If set, select features whose score exceeds \code{fw.threshold}.
+Mutually exclusive with arguments \code{fw.perc} and \code{fw.abs}.}
+
 \item{...}{[any]\cr
 Additional parameters passed down to the filter.}
-
-\item{fw.select}{[\code{character(1)}]\cr
-Type of thresholding. See \code{\link{filterFeatures}}.
-Default is \dQuote{perc}.}
-
-\item{fw.val}{[\code{numeric(1)}]\cr
-Threshold value. See \code{\link{filterFeatures}}.
-Default is 1.}
 }
 \value{
 [\code{\link{Learner}}].
@@ -45,7 +49,7 @@ task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.lda")
 inner = makeResampleDesc("Holdout")
 outer = makeResampleDesc("CV", iters = 2)
-lrn = makeFilterWrapper(lrn, fw.val = 0.5)
+lrn = makeFilterWrapper(lrn, fw.perc = 0.5)
 mod = train(lrn, task)
 print(getFilteredFeatures(mod))
 # now nested resampling, where we extract the features that the filter method selected
