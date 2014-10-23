@@ -38,9 +38,7 @@ generateLearningCurve = function(lrn, task, test.size = 0.3, test.inds = NULL,
     inds.last = integer(0L)
     for (j in 1:k) {
       m = n.seq[j]
-      # FIXME: Shouldn't it be
-      #        more = (m - m.last) * (n - length(test.inds))?
-      more = (m - m.last) * n
+      more = (m - m.last) * (n - length(test.inds))
       inds.new = sample(rest, more)
       inds.cur = c(inds.last, inds.new)
       if (repl == 1) {
@@ -76,6 +74,13 @@ plotLearningCurve = function(res) {
 }
 
 
-# r = generateLearningCurve(lrn = list("classif.rpart", "classif.lda", "classif.knn"),
+# r1 = generateLearningCurve(lrn = list("classif.rpart", "classif.lda", "classif.knn"),
 #                           task = iris.task, measures = list(mmce, acc), repls = 12L)
-# plotLearningCurve(r)
+# plotLearningCurve(r1)
+
+# r2 = generateLearningCurve(lrn = list("classif.rpart", "classif.knn", "classif.naiveBayes",
+#                                       "classif.svm", "classif.plr", "classif.randomForest"),
+#                            task = sonar.task, test.size = 0.25, n.seq = seq(0.2, 1, by = 0.2),
+#                            measures = list(tp, fp, tn, fn), repls = 6L)
+# plotLearningCurve(r2)
+
