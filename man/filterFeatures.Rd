@@ -3,8 +3,8 @@
 \alias{filterFeatures}
 \title{Filter features by thresholding filter values.}
 \usage{
-filterFeatures(task, method = "rf.importance", fval = NULL,
-  select = "perc", val, ...)
+filterFeatures(task, method = "rf.importance", fval = NULL, perc = NULL,
+  abs = NULL, threshold = NULL, ...)
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
@@ -20,16 +20,17 @@ If you pass this, the filter values in the object are used for feature filtering
 \code{method} and \code{...} are ignored then.
 Default is \code{NULL} and not used.}
 
-\item{select}{[\code{character(1)}]\cr
-How to select top-scoring features.
-\dQuote{perc} = select top-scoring percentage, \dQuote{abs} = select absolute number
-of top-scoring features, \dQuote{threshold} = select all features whose
-criterion value is >= \code{val}.
-Default is \dQuote{perc}.}
+\item{perc}{[\code{numeric(1)}]\cr
+If set, select \code{perc}*100 top scoring features.
+Mutually exclusive with arguments \code{abs} and \code{threshold}.}
 
-\item{val}{[\code{numeric(1)}]\cr
-Depends on \code{select}:
-Either a percentage from [0, 1], a number of features or a threshold value for the criterion.}
+\item{abs}{[\code{numeric(1)}]\cr
+If set, select \code{abs} top scoring features.
+Mutually exclusive with arguments \code{perc} and \code{threshold}.}
+
+\item{threshold}{[\code{numeric(1)}]\cr
+If set, select features whose score exceeds \code{threshold}.
+Mutually exclusive with arguments \code{perc} and \code{abs}.}
 
 \item{...}{[any]\cr
 Passed down to selected filter method.}

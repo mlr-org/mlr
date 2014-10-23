@@ -13,28 +13,28 @@
 #'   If you pass this, the filter values in the object are used for feature filtering.
 #'   \code{method} and \code{...} are ignored then.
 #'   Default is \code{NULL} and not used.
-#' @param select [\code{character(1)}]\cr
-#'   How to select top-scoring features.
-#'   \dQuote{perc} = select top-scoring percentage, \dQuote{abs} = select absolute number
-#'   of top-scoring features, \dQuote{threshold} = select all features whose
-#'   criterion value is >= \code{val}.
-#'   Default is \dQuote{perc}.
-#' @param val [\code{numeric(1)}]\cr
-#'   Depends on \code{select}:
-#'   Either a percentage from [0, 1], a number of features or a threshold value for the criterion.
+#' @param perc [\code{numeric(1)}]\cr
+#'   If set, select \code{perc}*100 top scoring features.
+#'   Mutually exclusive with arguments \code{abs} and \code{threshold}.
+#' @param abs [\code{numeric(1)}]\cr
+#'   If set, select \code{abs} top scoring features.
+#'   Mutually exclusive with arguments \code{perc} and \code{threshold}.
+#' @param threshold [\code{numeric(1)}]\cr
+#'   If set, select features whose score exceeds \code{threshold}.
+#'   Mutually exclusive with arguments \code{perc} and \code{abs}.
 #' @param ... [any]\cr
 #'   Passed down to selected filter method.
 #' @template ret_task
 #' @export
 #' @family filter
-filterFeatures = function(task, method = "rf.importance", fval = NULL, select = "perc", val, ...) {
+filterFeatures = function(task, method = "rf.importance", fval = NULL, perc = NULL, abs = NULL, threshold = NULL, ...) {
   assertClass(task, "SupervisedTask")
   assertChoice(method, choices = ls(.FilterRegister))
-  checkFilterArguments(select = select, val = val)
+  select = checkFilterArguments(perc, abs, threshold)
   p = getTaskNFeats(task)
   nselect = switch(select,
-    perc = round(val * p),
-    abs = min(val, p),
+    perc = round(perc * p),
+    abs = min(abs, p),
     threshold = p
   )
 
@@ -45,15 +45,28 @@ filterFeatures = function(task, method = "rf.importance", fval = NULL, select = 
     fval = fval$data
   }
   if (select == "threshold")
-    nselect = sum(fval$val >= val, na.rm = TRUE)
+    nselect = sum(fval$val >= threshold, na.rm = TRUE)
   features = as.character(head(sortByCol(fval, "val", asc = FALSE)$name, nselect))
   subsetTask(task, features = features)
 }
 
-checkFilterArguments = function(select, val) {
-  switch(select,
-    perc = assertNumber(val, lower = 0, upper = 1),
-    abs = assertCount(val),
-    threshold = assertNumber(val)
-  )
+checkFilterArguments = function(perc, abs, threshold) {
+  sum.null = sum(!is.null(perc), !is.null(abs), !is.null(threshold))
+  if (sum.null == 0L)
+    stop("At least one of 'perc', 'abs' or 'threshold' must be not NULL")
+  if (sum.null >= 2L)
+    stop("Arguments 'perc', 'abs' and 'threshold' are mutually exclusive")
+
+  if (!is.null(perc)) {
+    assertNumber(perc, lower = 0, upper = 1)
+    return("perc")
+  }
+  if (!is.null(abs)) {
+    assertCount(abs)
+    return("abs")
+  }
+  if (!is.null(threshold)) {
+    assertNumber(threshold)
+    return("threshold")
+  }
 }

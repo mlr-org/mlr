@@ -6,7 +6,7 @@
 \usage{
 makeMeasure(id, minimize, properties = character(0L),
   allowed.pred.types = character(0L), fun, extra.args = list(),
-  aggr = test.mean, best = NULL, worst = NULL)
+  aggr = test.mean, best = NULL, worst = NULL, note = "")
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -51,6 +51,9 @@ Default is -\code{Inf} or \code{Inf}, depending on \code{minimize}.}
 \item{worst}{[\code{numeric(1)}]\cr
 Worst obtainable value for measure.
 Default is \code{Inf} or -\code{Inf}, depending on \code{minimize}.}
+
+\item{note}{[\code{character}] \cr
+Name (and description) of the measure. Default is \dQuote{}.}
 }
 \value{
 [\code{\link{Measure}}].

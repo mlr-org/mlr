@@ -40,28 +40,35 @@
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
-makeFilterWrapper = function(learner, fw.method = "rf.importance", fw.select = "perc", fw.val = 1, ...) {
+makeFilterWrapper = function(learner, fw.method = "rf.importance", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, ...) {
   learner = checkLearner(learner)
   assertChoice(fw.method, choices = ls(.FilterRegister))
   filter = .FilterRegister[[fw.method]]
-  checkFilterArguments(select = fw.select, val = fw.val)
+  select = checkFilterArguments(fw.perc, fw.abs, fw.threshold)
   ddd = list(...)
   assertList(ddd, names = "named")
+
+  if (select == "perc") {
+    param = makeNumericLearnerParam(id = "fw.perc", lower = 0, upper = 1)
+    pv = list(fw.perc = fw.perc)
+  } else if (select == "abs") {
+    param = makeIntegerLearnerParam(id = "fw.abs", lower = 0)
+    pv = list(fw.abs = fw.abs)
+  } else {
+    param = makeNumericLearnerParam(id = "fw.threshold")
+    pv = list(fw.threshold = fw.threshold)
+  }
 
   lrn = makeBaseWrapper(
     id = paste(learner$id, "filtered", sep = "."),
     next.learner = learner,
     package = filter$pkg,
-    par.set  = makeParamSet(
+    par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "fw.method", values = ls(.FilterRegister)),
       makeDiscreteLearnerParam(id = "fw.select", values = c("perc", "abs", "threshold")),
       makeNumericLearnerParam(id = "fw.val")
     ),
-    par.vals = list(
-      fw.method = fw.method,
-      fw.select = fw.select,
-      fw.val = fw.val
-    ),
+    par.vals = filterNull(list(fw.method = fw.method, fw.perc = fw.perc, fw.abs = fw.abs, fw.threshold = fw.threshold)),
     cl = "FilterWrapper")
   lrn$more.args = ddd
   lrn
@@ -69,10 +76,10 @@ makeFilterWrapper = function(learner, fw.method = "rf.importance", fw.select = "
 
 #' @export
 trainLearner.FilterWrapper = function(.learner, .task, .subset, .weights = NULL,
-  fw.method = "rf.importance", fw.select = "perc", fw.val = 1, ...) {
+  fw.method = "rf.importance", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, ...) {
 
   .task = subsetTask(.task, subset = .subset)
-  .task = do.call(filterFeatures, c(list(task = .task, method = fw.method, select = fw.select, val = fw.val), .learner$more.args))
+  .task = do.call(filterFeatures, c(list(task = .task, method = fw.method, perc = fw.perc, abs = fw.abs, threshold = fw.threshold), .learner$more.args))
   m = train(.learner$next.learner, .task, weights = .weights)
   makeChainModel(next.model = m, cl = "FilterModel")
 }

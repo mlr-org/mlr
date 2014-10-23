@@ -24,7 +24,9 @@ mlr_2.2:
   output of benchmark experiments sometimes did not correspond with the printed performance measures.
 - fixed a bug in createDummyFeatures that caused an error when the data contained missing values.
 - plotLearnerPrediction works for clustering and allows greyscale plots (for printing or articles)
-- the whole object-oriented structure behind feature filtering was much improved
+- the whole object-oriented structure behind feature filtering was much
+  improved. Smaller changes in the signature of makeFilterWrapper and
+  filterFeatures have become necessary.
 - fixed a bug in filter methods of the FSelector package that caused an error when variable names
   contained accented letters
 - filterFeatures can now be also applied to the result of getFilterValues
@@ -60,6 +62,7 @@ mlr_2.2:
 -- carscore
 -- rf.importance, rf.min.depth
 -- anova.test, kruskal.test
+-- mrmr
 
 - new functions
 -- makeMulticlassWrapper

@@ -3,8 +3,8 @@
 \alias{makeFilterWrapper}
 \title{Fuse learner with a feature filter method.}
 \usage{
-makeFilterWrapper(learner, fw.method = "rf.importance", fw.select = "perc",
-  fw.val = 1, ...)
+makeFilterWrapper(learner, fw.method = "rf.importance", fw.perc = NULL,
+  fw.abs = NULL, fw.threshold = NULL, ...)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -15,6 +15,9 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 Filter method. See \code{\link{listFilterMethods}}.
 Default is \dQuote{rf.importance}.}
 
+\item{...}{[any]\cr
+Additional parameters passed down to the filter.}
+
 \item{fw.select}{[\code{character(1)}]\cr
 Type of thresholding. See \code{\link{filterFeatures}}.
 Default is \dQuote{perc}.}
@@ -22,9 +25,6 @@ Default is \dQuote{perc}.}
 \item{fw.val}{[\code{numeric(1)}]\cr
 Threshold value. See \code{\link{filterFeatures}}.
 Default is 1.}
-
-\item{...}{[any]\cr
-Additional parameters passed down to the filter.}
 }
 \value{
 [\code{\link{Learner}}].
