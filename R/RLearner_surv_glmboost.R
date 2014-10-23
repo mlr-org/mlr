@@ -10,6 +10,9 @@ makeRLearner.surv.glmboost = function() {
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "center", default = FALSE)
     ),
+    par.vals = list(
+      family = mboost::CoxPH()
+    ),
     properties = c("numerics", "factors", "weights", "rcens"),
     name = "Gradient Boosting with Componentwise Linear Models",
     short.name = "glmboost",
@@ -22,7 +25,7 @@ trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL,
   f = getTaskFormula(.task, env = as.environment("package:survival"))
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
   if (is.null(.weights)) {
-    mboost::glmboost(f, data = getTaskData(.task, .subset), control = ctrl, family = mboost::CoxPH())
+    mboost::glmboost(f, data = getTaskData(.task, .subset), control = ctrl, ...)
   } else  {
     mboost::glmboost(f, data = getTaskData(.task, .subset), control = ctrl, weights = .weights, ...)
   }
