@@ -113,12 +113,14 @@ makeFilter(
     data[ind] = lapply(data[ind], as.double)
     data = mRMR.data(data = data)
 
+    threads.before = mRMRe::get.thread.count()
+    on.exit(mRMRe::set.thread.count(threads.before))
+    mRMRe::set.thread.count(1L)
     res = mRMRe::mRMR.classic(data = data, target_indices = target.ind, feature_count = nselect, ...)
     setNames(as.numeric(scores(res)[[1L]]), res@feature_names[as.integer(solutions(res)[[1L]])])
 })
 
 makeFilter(
-  # FIXME: catscore is in package st
   name = "carscore",
   desc = "CAR scores",
   pkg  = "care",
