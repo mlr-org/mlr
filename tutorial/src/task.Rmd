@@ -17,10 +17,10 @@ The following tasks can be instantiated and all inherit from a virtual superclas
 * [CostSensTask](&Task) for cost-sensitive classification
 * [ClusterTask](&Task) for cluster analysis
 
-To create a task, just call ``make[TaskType]``, e.g. [makeClassifTask](&Task).
+To create a task, just call ``make[TaskType]``, e.g., [makeClassifTask](&Task).
 All tasks require an identifier (argument ``id``) and a [data frame](&base::data.frame) (argument ``data``).
 If no ID is provided it is automatically generated using the name of the data.
-Depending on the nature if the learning problem, additional arguments may be required and are exemplified in the following subsections.
+Depending on the nature of the learning problem, additional arguments may be required and are exemplified in the following subsections.
 
 ### Cluster analysis
 
@@ -111,24 +111,27 @@ The type of censoring can be specified via the argument ``censoring`` which defa
 
 ### Cost-sensitive classification
 
-In regular classification, as addressed above, the aim when training a classifier is to
-minimize the misclassification rate.
-Thus, it is implicitly assumed that all types of misclassification errors are equally severe.
-In *cost-sensitive classification* the costs of misclassifying an object with true
-class *y* as class *k* can be different depending on *y* and *k*.
+The standard objective in classification is to obtain a high prediction accuracy, i.e., to
+minimize the number of errors. Thereby, all types of misclassification errors are deemed
+equally severe. However, in many applications different kinds of errors cause different costs
+that should be taken into consideration.
 
-A further generalization is *cost-sensitive learning with example-specific costs*.
-In this scenario, the misclassification costs do not only depend on the true and predicted
-class labels, but also on the feature values *x*.
-Thus, for a *K*-class problem, each example (*x*, *y*) is associated with a vector
-of costs for predicting classes 1,...,*K* given the true class label *y*.
-If the cost vectors are given, the true values *y* of the target variable not needed anymore.
-Naturally, it is assumed that the cost of the true class label *y* is minimal.
+There exist different types of misclassification costs.
+In case of *class-dependent costs* that depend on the actual and predicted class labels it
+is sufficient to create an ordinary [ClassifTask](&Task).
 
-Hence, in order to create a cost-sensitive classification task, the feature values *x* and
-a ``cost`` matrix that contains the cost vectors for all examples in the data set are required.
+In order to handle *example-specific costs* it is necessary to generate a [CostSensTask](&Task).
+In this scenario, each example (*x*, *y*) is associated with an individual cost vector of length
+*K* where *K* denotes the number of classes. The *k*-th component indicates the cost of assigning
+*x* to class *k*. Naturally, it is assumed that the cost of the intended class label *y* is
+minimal.
 
-We use the iris data and generate an artificial cost matrix (following [Beygelzimer et al. (2005)](http://dx.doi.org/10.1145/1102351.1102358)):
+As the cost vector contains all relevant information about the intended class label *y*, only
+the feature values *x* and a ``cost`` matrix that contains the cost vectors for all examples in the data
+set are required to create the [CostSensTask](&Task).
+
+In the following example we use the [iris data](&datasets::iris) and generate an artificial cost matrix
+(following [Beygelzimer et al. (2005)](http://dx.doi.org/10.1145/1102351.1102358)):
 
 ```{r}
 df = iris
@@ -151,13 +154,13 @@ For example, we could include a ``blocking`` factor into the task.
 This would tell the task that some observations "belong together", and should
 not be separated when splitting into training and test sets during a resampling iteration.
 
-Another possibility is to ``weight`` observations according to their importance.
+Another possibility is to assign ``weights`` to observations according to their importance.
 
 
 ## Accessing a learning task
 
-[&Task] is a ``list`` and its main properties are stored in element
-``"task.desc"`` which is of class [&TaskDesc].
+The [&Task] object is a ``list`` and its main properties are stored in element
+``$task.desc`` which is of class [&TaskDesc].
 
 ```{r}
 str(regr.task$task.desc)

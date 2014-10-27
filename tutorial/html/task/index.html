@@ -256,10 +256,10 @@ The following tasks can be instantiated and all inherit from a virtual superclas
 <li><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">CostSensTask</a> for cost-sensitive classification</li>
 <li><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">ClusterTask</a> for cluster analysis</li>
 </ul>
-<p>To create a task, just call <code>make[TaskType]</code>, e.g. <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeClassifTask</a>.
+<p>To create a task, just call <code>make[TaskType]</code>, e.g., <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeClassifTask</a>.
 All tasks require an identifier (argument <code>id</code>) and a <a href="http://www.rdocumentation.org/packages/base/functions/data.frame.html">data frame</a> (argument <code>data</code>).
 If no ID is provided it is automatically generated using the name of the data.
-Depending on the nature if the learning problem, additional arguments may be required and are exemplified in the following subsections.</p>
+Depending on the nature of the learning problem, additional arguments may be required and are exemplified in the following subsections.</p>
 <h3 id="cluster-analysis">Cluster analysis</h3>
 <p>Because cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the <code>data</code>.
 In the following example we create a learning task from the data set <a href="http://www.rdocumentation.org/packages/datasets/functions/mtcars.html">mtcars</a>.</p>
@@ -375,21 +375,23 @@ surv.task
 <p>The type of censoring can be specified via the argument <code>censoring</code> which defaults to
 <code>"rcens"</code> for right censored data.</p>
 <h3 id="cost-sensitive-classification">Cost-sensitive classification</h3>
-<p>In regular classification, as addressed above, the aim when training a classifier is to
-minimize the misclassification rate.
-Thus, it is implicitly assumed that all types of misclassification errors are equally severe.
-In <em>cost-sensitive classification</em> the costs of misclassifying an object with true
-class <em>y</em> as class <em>k</em> can be different depending on <em>y</em> and <em>k</em>.</p>
-<p>A further generalization is <em>cost-sensitive learning with example-specific costs</em>.
-In this scenario, the misclassification costs do not only depend on the true and predicted
-class labels, but also on the feature values <em>x</em>.
-Thus, for a <em>K</em>-class problem, each example (<em>x</em>, <em>y</em>) is associated with a vector
-of costs for predicting classes 1,...,<em>K</em> given the true class label <em>y</em>.
-If the cost vectors are given, the true values <em>y</em> of the target variable not needed anymore.
-Naturally, it is assumed that the cost of the true class label <em>y</em> is minimal.</p>
-<p>Hence, in order to create a cost-sensitive classification task, the feature values <em>x</em> and
-a <code>cost</code> matrix that contains the cost vectors for all examples in the data set are required.</p>
-<p>We use the iris data and generate an artificial cost matrix (following <a href="http://dx.doi.org/10.1145/1102351.1102358">Beygelzimer et al. (2005)</a>):</p>
+<p>The standard objective in classification is to obtain a high prediction accuracy, i.e., to
+minimize the number of errors. Thereby, all types of misclassification errors are deemed
+equally severe. However, in many applications different kinds of errors cause different costs
+that should be taken into consideration.</p>
+<p>There exist different types of misclassification costs.
+In case of <em>class-dependent costs</em> that depend on the actual and predicted class labels it
+is sufficient to create an ordinary <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">ClassifTask</a>.</p>
+<p>In order to handle <em>example-specific costs</em> it is necessary to generate a <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">CostSensTask</a>.
+In this scenario, each example (<em>x</em>, <em>y</em>) is associated with an individual cost vector of length
+<em>K</em> where <em>K</em> denotes the number of classes. The <em>k</em>-th component indicates the cost of assigning
+<em>x</em> to class <em>k</em>. Naturally, it is assumed that the cost of the intended class label <em>y</em> is
+minimal.</p>
+<p>As the cost vector contains all relevant information about the intended class label <em>y</em>, only
+the feature values <em>x</em> and a <code>cost</code> matrix that contains the cost vectors for all examples in the data
+set are required to create the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">CostSensTask</a>.</p>
+<p>In the following example we use the <a href="http://www.rdocumentation.org/packages/datasets/functions/iris.html">iris data</a> and generate an artificial cost matrix
+(following <a href="http://dx.doi.org/10.1145/1102351.1102358">Beygelzimer et al. (2005)</a>):</p>
 <pre class="prettyprint well"><code class="r">df = iris
 cost = matrix(runif(150 * 3, 0, 2000), 150) * (1 - diag(3))[df$Species,]
 df$Species = NULL
@@ -417,10 +419,10 @@ problem.</p>
 <p>For example, we could include a <code>blocking</code> factor into the task.
 This would tell the task that some observations "belong together", and should
 not be separated when splitting into training and test sets during a resampling iteration.</p>
-<p>Another possibility is to <code>weight</code> observations according to their importance.</p>
+<p>Another possibility is to assign <code>weights</code> to observations according to their importance.</p>
 <h2 id="accessing-a-learning-task">Accessing a learning task</h2>
-<p><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> is a <code>list</code> and its main properties are stored in element
-<code>"task.desc"</code> which is of class <a href="http://www.rdocumentation.org/packages/mlr/functions/TaskDesc.html">TaskDesc</a>.</p>
+<p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> object is a <code>list</code> and its main properties are stored in element
+<code>$task.desc</code> which is of class <a href="http://www.rdocumentation.org/packages/mlr/functions/TaskDesc.html">TaskDesc</a>.</p>
 <pre class="prettyprint well"><code class="r">str(regr.task$task.desc)
 </code></pre>
 
