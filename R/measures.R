@@ -63,7 +63,7 @@ timepredict = makeMeasure(id = "timepredict", minimize = TRUE, best = 0, worst =
 timeboth = makeMeasure(id = "timeboth", minimize = TRUE, best = 0, worst = Inf,
   properties = c("classif", "classif.multi", "regr", "surv", "costsens", "cluster"),
   allowed.pred.types = c("response", "prob", "se"),
-  note = "timetrain + trainpredict",
+  note = "timetrain + timepredict",
   fun = function(task, model, pred, feats, extra.args) {
     model$time + pred$time
   }
@@ -284,7 +284,7 @@ tp = makeMeasure(id = "tp", minimize = FALSE, best = Inf, worst = 0,
 tn = makeMeasure(id = "tn", minimize = FALSE, best = Inf, worst = 0,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
-  note = "rue negatives, also called correct rejections.", 
+  note = "True negatives, also called correct rejections.", 
   fun = function(task, model, pred, feats, extra.args) {
     sum(pred$data$truth == pred$data$response & pred$data$response == pred$task.desc$negative)
   }
