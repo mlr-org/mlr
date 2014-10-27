@@ -66,7 +66,7 @@ that reflect the relevance of examples in the training process.
 
 For example, in the [BreastCancer](&mlbench::BreastCancer) data set class benign is almost
 twice as frequent as class malignant.
-If both classes should have equal importance in training the classifier we can weigh the
+If both classes should have equal importance in training the classifier we can weight the
 examples according to the class frequencies in the data set as shown in the following
 **R** code (see also the section about [imbalanced classification problems](over_and_undersampling.md)).
 
