@@ -228,9 +228,7 @@
     
         <li class="main active"><a href="#data-preprocessing">Data Preprocessing</a></li>
         
-            <li><a href="#standardization">Standardization</a></li>
-        
-            <li><a href="#filtering">Filtering</a></li>
+            <li><a href="#fusing-a-learner-with-preprocessing">Fusing a learner with preprocessing</a></li>
         
     
     </ul>
@@ -238,12 +236,135 @@
             <div class="col-md-9" role="main">
 
 <h1 id="data-preprocessing">Data Preprocessing</h1>
-<h2 id="standardization">Standardization</h2>
-<h2 id="filtering">Filtering</h2>
-<h2></h2>
-<p>makePreprocWrapper</p>
-<p>example PCA</p>
-<p>TBC</p>
+<p><a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> offers several options for data preprocessing:</p>
+<ul>
+<li>Some simple options to modify a <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> described in section <a href="../task/">Learning tasks</a></li>
+<li><a href="../feature_selection/">Feature selection</a></li>
+<li><a href="../impute/">Imputation of missing values</a></li>
+</ul>
+<p>Moreover, <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> permits to fuse a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> with any preprocessing method of
+your choice like any kind of data transformation, normalization, dimensionality reduction or
+outlier removal.
+Parameters controlling the preprocessing as, e.g., the percentage of outliers to be removed
+can be <a href="../tune/">tuned</a> alongside the base learner parameters.</p>
+<h2 id="fusing-a-learner-with-preprocessing">Fusing a learner with preprocessing</h2>
+<p>A <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> can be coupled with a preprocessing method by function 
+<a href="http://www.rdocumentation.org/packages/mlr/functions/makePreprocWrapper.html">makePreprocWrapper</a>.
+As described in the section about <a href="../wrapper/">wrapped learners</a> wrappers are implemented
+using a <em>train</em> and a <em>predict</em> method.
+In case of preprocessing these methods specify how to transform the data before training
+and prediction and are completely defined by the user.</p>
+<p>Let's have a look at a simple example:
+Some learning methods as e.g. k nearest neighbors, support vector machines or neural networks
+usually require scaled features.
+Many, but not all have a built-in scaling option where the training data set is scaled before
+model fitting and the test data set is scaled before making predictions, thereby using the
+scaling parameters from the training stage.
+In the following we show how to couple a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> with function
+<a href="http://www.rdocumentation.org/packages/base/functions/scale.html">scale</a>.</p>
+<h3 id="specifying-the-train-method">Specifying the train method</h3>
+<p>The <em>train</em> function has to be a function with the following arguments:</p>
+<ul>
+<li><code>data</code> is a <a href="http://www.rdocumentation.org/packages/base/functions/data.frame.html">data.frame</a> with values of all features and
+  the target variable.</li>
+<li><code>target</code> is a string and denotes the name of the target variable in <code>data</code>.</li>
+<li><code>args</code> is a <a href="http://www.rdocumentation.org/packages/base/functions/list.html">list</a> of further arguments and parameters that influence the
+  preprocessing.</li>
+</ul>
+<p>It must return a <a href="http://www.rdocumentation.org/packages/base/functions/list.html">list</a> with elements <code>$data</code> and <code>$control</code>,
+where <code>$data</code> is the preprocessed data set and <code>$control</code> stores all information required
+to preprocess the data before prediction.</p>
+<p>The <em>train</em> function for the scaling example is given below. It calls <a href="http://www.rdocumentation.org/packages/base/functions/scale.html">scale</a> on the
+numerical features and returns the scaled training data and the corresponding scaling parameters.
+<code>args</code> contains the <code>center</code> and <code>scale</code> arguments of function <a href="http://www.rdocumentation.org/packages/base/functions/scale.html">scale</a>
+and slot <code>$control</code> stores the scaling parameters.</p>
+<pre class="prettyprint well"><code class="r">tr.fun = function(data, target, args = list(center, scale)) {
+  cns = colnames(data)
+  nums = setdiff(cns[sapply(data, is.numeric)], target)
+  x = as.matrix(data[, nums, drop = FALSE])
+  x = scale(x, center = args$center, scale = args$scale)
+  ctrl = args
+  if (is.logical(ctrl$center) &amp;&amp; ctrl$center)
+    ctrl$center = attr(x, &quot;scaled:center&quot;)
+  if (is.logical(ctrl$scale) &amp;&amp; ctrl$scale)
+    ctrl$scale = attr(x, &quot;scaled:scale&quot;)
+  data = data[, setdiff(cns, nums), drop = FALSE]
+  data = cbind(data, as.data.frame(x))
+  return(list(data = data, control = ctrl))
+}
+</code></pre>
+
+<h3 id="specifying-the-predict-method">Specifying the predict method</h3>
+<p>The <em>predict</em> function has the following arguments:</p>
+<ul>
+<li><code>data</code> is a <a href="http://www.rdocumentation.org/packages/base/functions/data.frame.html">data.frame</a> with feature values.
+  (Naturally, it does not contain values of the target variable.)</li>
+<li><code>target</code> is a string indicating the name of the target variable.</li>
+<li><code>args</code> are the <code>args</code> that were passed to the <em>train</em> function.</li>
+<li><code>control</code> is the object returned by the <em>train</em> function.</li>
+</ul>
+<p>It returns the preprocessed data.</p>
+<p>In our running example the <em>predict</em> function scales the numerical features using the
+parameters from the training stage stored in <code>control</code>.</p>
+<pre class="prettyprint well"><code class="r">pr.fun = function(data, target, args, control) {
+  cns = colnames(data)
+  nums = cns[sapply(data, is.numeric)]
+  x = as.matrix(data[, nums, drop = FALSE])
+  x = scale(x, center = control$center, scale = control$scale)
+  data = data[, setdiff(cns, nums), drop = FALSE]  
+  data = cbind(data, as.data.frame(x))
+  return(data)
+}
+</code></pre>
+
+<h3 id="creating-the-preprocessing-wrapper">Creating the preprocessing wrapper</h3>
+<p>Below we create a preprocessing wrapper with a <a href="http://www.rdocumentation.org/packages/nnet/functions/nnet.html">regression neural network</a> (which
+itself does not have a scaling option) as base learner.</p>
+<p>The <em>train</em> and <em>predict</em> functions defined above are passed to <a href="http://www.rdocumentation.org/packages/mlr/functions/makePreprocWrapper.html">makePreprocWrapper</a> via
+the <code>train</code> and <code>predict</code> arguments.
+<code>par.vals</code> is a <a href="http://www.rdocumentation.org/packages/base/functions/list.html">list</a> of parameter values that is relayed to the <code>args</code>
+argument of the <em>train</em> function.</p>
+<pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;regr.nnet&quot;, trace = FALSE, decay = 1e-02)
+</code></pre>
+
+<pre class="prettyprint well"><code>#&gt; Loading required package: nnet
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">lrn = makePreprocWrapper(lrn, train = tr.fun, predict = pr.fun,
+  par.vals = list(center = TRUE, scale = TRUE))
+lrn
+</code></pre>
+
+<pre class="prettyprint well"><code>#&gt; Learner regr.nnet.preproc from package nnet
+#&gt; Type: regr
+#&gt; Name: ; Short name: 
+#&gt; Class: PreprocWrapper
+#&gt; Properties: numerics,factors,weights
+#&gt; Predict-Type: response
+#&gt; Hyperparameters: size=3,trace=FALSE,decay=0.01
+</code></pre>
+
+<p>Let's compare the cross-validated mean squared error (<a href="http://www.rdocumentation.org/packages/mlr/functions/mse.html">mse</a>) on the
+<a href="http://www.rdocumentation.org/packages/mlbench/functions/BostonHousing.html">Boston Housing data set</a> with and without scaling.</p>
+<pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
+
+r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
+r$aggr
+</code></pre>
+
+<pre class="prettyprint well"><code>#&gt; mse.test.mean 
+#&gt;         19.36
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;regr.nnet&quot;, trace = FALSE, decay = 1e-02)
+r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
+r$aggr
+</code></pre>
+
+<pre class="prettyprint well"><code>#&gt; mse.test.mean 
+#&gt;         53.16
+</code></pre>
+
 </div>
         </div>
 

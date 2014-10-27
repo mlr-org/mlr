@@ -1,16 +1,130 @@
 # Data Preprocessing
 
+[%mlr] offers several options for data preprocessing:
 
-## Standardization
+* Some simple options to modify a [&Task] described in section [Learning tasks](task.md)
+* [Feature selection](feature_selection.md)
+* [Imputation of missing values](impute.md)
+
+Moreover, [%mlr] permits to fuse a [Learner](&makeLearner) with any preprocessing method of
+your choice like any kind of data transformation, normalization, dimensionality reduction or
+outlier removal.
+Parameters controlling the preprocessing as, e.g., the percentage of outliers to be removed
+can be [tuned](tune.md) alongside the base learner parameters.
 
 
-## Filtering
+## Fusing a learner with preprocessing
+
+A [Learner](&makeLearner) can be coupled with a preprocessing method by function 
+[&makePreprocWrapper].
+As described in the section about [wrapped learners](wrapper.md) wrappers are implemented
+using a *train* and a *predict* method.
+In case of preprocessing these methods specify how to transform the data before training
+and prediction and are completely defined by the user.
+
+Let's have a look at a simple example:
+Some learning methods as e.g. k nearest neighbors, support vector machines or neural networks
+usually require scaled features.
+Many, but not all have a built-in scaling option where the training data set is scaled before
+model fitting and the test data set is scaled before making predictions, thereby using the
+scaling parameters from the training stage.
+In the following we show how to couple a [Learner](&makeLearner) with function
+[scale](&base::scale).
 
 
+### Specifying the train method
 
-##
-makePreprocWrapper
+The *train* function has to be a function with the following arguments:
 
-example PCA
+* ``data`` is a [data.frame](&base::data.frame) with values of all features and
+  the target variable.
+* ``target`` is a string and denotes the name of the target variable in ``data``.
+* ``args`` is a [list](&base::list) of further arguments and parameters that influence the
+  preprocessing.
 
-TBC
+It must return a [list](&base::list) with elements ``$data`` and ``$control``,
+where ``$data`` is the preprocessed data set and ``$control`` stores all information required
+to preprocess the data before prediction.
+
+The *train* function for the scaling example is given below. It calls [scale](&base::scale) on the
+numerical features and returns the scaled training data and the corresponding scaling parameters.
+``args`` contains the ``center`` and ``scale`` arguments of function [scale](&base::scale)
+and slot ``$control`` stores the scaling parameters.
+
+
+```{r}
+tr.fun = function(data, target, args = list(center, scale)) {
+  cns = colnames(data)
+  nums = setdiff(cns[sapply(data, is.numeric)], target)
+  x = as.matrix(data[, nums, drop = FALSE])
+  x = scale(x, center = args$center, scale = args$scale)
+  ctrl = args
+  if (is.logical(ctrl$center) && ctrl$center)
+    ctrl$center = attr(x, "scaled:center")
+  if (is.logical(ctrl$scale) && ctrl$scale)
+    ctrl$scale = attr(x, "scaled:scale")
+  data = data[, setdiff(cns, nums), drop = FALSE]
+  data = cbind(data, as.data.frame(x))
+  return(list(data = data, control = ctrl))
+}
+```
+
+
+### Specifying the predict method
+
+The *predict* function has the following arguments:
+
+* ``data`` is a [data.frame](&base::data.frame) with feature values.
+  (Naturally, it does not contain values of the target variable.)
+* ``target`` is a string indicating the name of the target variable.
+* ``args`` are the ``args`` that were passed to the *train* function.
+* ``control`` is the object returned by the *train* function.
+
+It returns the preprocessed data.
+
+In our running example the *predict* function scales the numerical features using the
+parameters from the training stage stored in ``control``.
+
+```{r}
+pr.fun = function(data, target, args, control) {
+  cns = colnames(data)
+  nums = cns[sapply(data, is.numeric)]
+  x = as.matrix(data[, nums, drop = FALSE])
+  x = scale(x, center = control$center, scale = control$scale)
+  data = data[, setdiff(cns, nums), drop = FALSE]  
+  data = cbind(data, as.data.frame(x))
+  return(data)
+}
+```
+
+
+### Creating the preprocessing wrapper
+
+Below we create a preprocessing wrapper with a [regression neural network](&nnet::nnet) (which
+itself does not have a scaling option) as base learner.
+
+The *train* and *predict* functions defined above are passed to [&makePreprocWrapper] via
+the ``train`` and ``predict`` arguments.
+``par.vals`` is a [list](&base::list) of parameter values that is relayed to the ``args``
+argument of the *train* function.
+
+```{r}
+lrn = makeLearner("regr.nnet", trace = FALSE, decay = 1e-02)
+lrn = makePreprocWrapper(lrn, train = tr.fun, predict = pr.fun,
+  par.vals = list(center = TRUE, scale = TRUE))
+lrn
+```
+
+Let's compare the cross-validated mean squared error ([&mse]) on the
+[Boston Housing data set](&mlbench::BostonHousing) with and without scaling.
+
+```{r}
+rdesc = makeResampleDesc("CV", iters = 10)
+
+r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
+r$aggr
+
+lrn = makeLearner("regr.nnet", trace = FALSE, decay = 1e-02)
+r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
+r$aggr
+```{r}
