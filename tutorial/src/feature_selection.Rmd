@@ -17,38 +17,19 @@ Based on these values the features can be ranked and a feature subset can be sel
 ### Calculating the feature importance
 
 Different methods for calculating the feature importance are built into [%mlr]'s function
-[&getFilterValues].
+[&getFilterValues]. Currently, classification, regression and survival analysis tasks
+are supported. A table showing all available methods can be found [here](filter_methods.md).
 
-The following table shows the available methods.
-Columns **Classif**, **Regr** and **Surv** indicate if classification, regression or survival
-analysis problems are supported.
-Columns **Fac.** and **Num.** show if a particular importance measure can deal with factor and
-numeric features.
-
-```{r, echo = FALSE, results = "asis"}
-linkPkg = function(x) {
-  ifelse(is.na(x), "", collapse(sprintf("[%1$s](http://www.rdocumentation.org/packages/%1$s/)", x), sep = "<br />"))
-}
-df = listFilterMethods(desc = TRUE, tasks = TRUE, features = TRUE)
-df$package = sapply(df$package, linkPkg)
-
-logicals = vlapply(df, is.logical)
-df[logicals] = lapply(df[logicals], function(x) ifelse(x, "X", ""))
-names(df) = c("ID", "Package", "Description", "Classif", "Regr", "Surv", "Fac.", "Num.")
-just = rep(c("left", "center"), c(3, 5))
-pandoc.table(df, style = "rmarkdown", split.tables = Inf, split.cells = Inf, justify = just)
-```
-
-As mentioned above the feature importance can be calculated by function [&getFilterValues]
-given the [&Task] and a character string specifying the filter method.
+Function [&getFilterValues] requires the [&Task] and a character string specifying the filter
+method.
 
 ```{r}
 fv = getFilterValues(iris.task, method = "information.gain")
 fv
 ```
 
-``fv`` is a [&FilterValues] object and ``fv$data`` contains a ``data.frame`` that gives the
-importance values for all features.
+``fv`` is a [&FilterValues] object and ``fv$data`` contains a [data.frame](&base::data.frame)
+that gives the importance values for all features.
 
 
 ```{r}
@@ -73,27 +54,25 @@ features of lower importance.
 
 There are several ways to select a feature subset based on feature importance values:
 
-* Keep a certain *absolute number* of features with highest importance.
-* Keep a certain *percentage* of features with highest importance.
-* Keep all features whose importance exceeds a certain *threshold value*.
+* Keep a certain *absolute number* (``abs``) of features with highest importance.
+* Keep a certain *percentage* (``perc`) of features with highest importance.
+* Keep all features whose importance exceeds a certain *threshold value* (``threshold``).
 
-Function [&filterFeatures] supports these three methods as shown in the following example:
+Function [&filterFeatures] supports these three methods as shown in the following example.
+Moreover, you can either specify the ``method`` for calculating the feature importance or you can
+use previously computed importance values via argument ``fval``.
 
 ```{r}
 ## Keep the 2 most important features
-filtered.task = filterFeatures(iris.task, method = "information.gain", select = "abs", val = 2)
+filtered.task = filterFeatures(iris.task, method = "information.gain", abs = 2)
 
 ## Keep the 25% most important features
-filtered.task = filterFeatures(iris.task, fval = fv, select = "perc", val = 0.25)
+filtered.task = filterFeatures(iris.task, fval = fv, perc = 0.25)
 
 ## Keep all features with importance greater than 0.5
-filtered.task = filterFeatures(iris.task, fval = fv, select = "threshold",
-    val = 0.5)
+filtered.task = filterFeatures(iris.task, fval = fv, threshold = 0.5)
 filtered.task
 ```
-
-You can either specify the ``method`` for calculating the feature importance or you can
-use previously computed importance values via argument ``fval``.
 
 
 ### Fuse a learner with a filter method
@@ -114,16 +93,15 @@ In each resampling iteration feature selection is carried out on the correspondi
 data set before fitting the learner.
 
 ```{r}
-lrn = makeFilterWrapper(learner = "classif.fnn", fw.method = "information.gain",
-  fw.select = "abs", fw.val = 2)
+lrn = makeFilterWrapper(learner = "classif.fnn", fw.method = "information.gain", fw.abs = 2)
 rdesc = makeResampleDesc("CV", iters = 10)
 r = resample(learner = lrn, task = iris.task, resampling = rdesc, show.info = FALSE, models = TRUE)
 r$aggr
 ```
 
 You may want to know which features have been used. Luckily, we have called
-`resample` with the argument `models = TRUE`, which means that `r$models`
-contains a `list` of [models](&makeWrappedModel) fitted in the individual resampling iterations.
+[&resample] with the argument `models = TRUE`, which means that `r$models`
+contains a [list](&base::list) of [models](&makeWrappedModel) fitted in the individual resampling iterations.
 In order to access the selected feature subsets we can call [&getFilterResult] on each model.
 
 ```{r}
@@ -133,8 +111,6 @@ table(sfeats)
 
 The selection of features seems to be very stable.
 The features `Sepal.Length` and `Sepal.Width` did not make it into a single fold.
-
-FIXME also show benchmark experiment, train?
 
 
 ### Tuning the size of the feature subset
@@ -150,9 +126,8 @@ such that the 3-fold cross-validated [mean squared error](&mse) of the learner i
 As search strategy for tuning a grid search is used.
 
 ```{r}
-lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared",
-  fw.select = "perc")
-ps = makeParamSet(makeDiscreteParam("fw.val", values = seq(0.2, 0.5, 0.05)))
+lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared")
+ps = makeParamSet(makeDiscreteParam("fw.perc", values = seq(0.2, 0.5, 0.05)))
 rdesc = makeResampleDesc("CV", iters = 3)
 res = tuneParams(lrn, task = bh.task, resampling = rdesc, par.set = ps,
   control = makeTuneControlGrid())
@@ -162,7 +137,7 @@ res
 The performance of all percentage values visited during tuning is:
 
 ```{r}
-head(as.data.frame(res$opt.path))
+as.data.frame(res$opt.path)
 ```
 
 The optimal percentage and the corresponding performance can be accessed as follows:
@@ -176,8 +151,7 @@ After tuning we can generate a new wrapped learner with the optimal percentage v
 further use.
 
 ```{r}
-lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared",
-  fw.select = "threshold", fw.val = res$x$fw.val)
+lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared", fw.perc = res$x$fw.perc)
 mod = train(lrn, bh.task)
 mod
 
@@ -194,13 +168,12 @@ minimized. As search strategy we choose a random search
 (see [makeTuneMultiCritControlRandom](&TuneMultiCritControl)).
 
 ```{r}
-lrn = makeFilterWrapper(learner = "classif.lda", fw.method = "chi.squared",
-  fw.select = "threshold")
-ps = makeParamSet(makeNumericParam("fw.val", lower = 0.1, upper = 0.9))
+lrn = makeFilterWrapper(learner = "classif.lda", fw.method = "chi.squared")
+ps = makeParamSet(makeNumericParam("fw.threshold", lower = 0.1, upper = 0.9))
 rdesc = makeResampleDesc("CV", iters = 10)
 res = tuneParamsMultiCrit(lrn, task = sonar.task, resampling = rdesc, par.set = ps,
-    measures = list(fpr, fnr), control = makeTuneMultiCritControlRandom(maxit = 50L),
-    show.info = FALSE)
+  measures = list(fpr, fnr), control = makeTuneMultiCritControlRandom(maxit = 50L),
+  show.info = FALSE)
 res
 head(as.data.frame(res$opt.path))
 ```

@@ -183,6 +183,10 @@
                                 <a href="../measures/">Implemented Performance Measures</a>
                             </li>
                         
+                            <li >
+                                <a href="../filter_methods/">Integrated Filter Methods</a>
+                            </li>
+                        
                         </ul>
                     </li>
                 
@@ -250,7 +254,7 @@ strategy for each <a href="http://www.rdocumentation.org/packages/mlr/functions/
 lrns = list(makeLearner(&quot;classif.lda&quot;), makeLearner(&quot;classif.rpart&quot;))
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Lade nötiges Paket: MASS
+<pre class="prettyprint well"><code>#&gt; Loading required package: MASS
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Two classification tasks
@@ -374,9 +378,9 @@ lrn = makeTuneWrapper(&quot;classif.kknn&quot;, resampling = in.rdesc, par.set =
     show.info = FALSE)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Lade nötiges Paket: kknn
+<pre class="prettyprint well"><code>#&gt; Loading required package: kknn
 #&gt; 
-#&gt; Attache Paket: 'kknn'
+#&gt; Attaching package: 'kknn'
 #&gt; 
 #&gt; The following object is masked from 'package:caret':
 #&gt; 
@@ -462,7 +466,7 @@ lrn = makeTuneWrapper(&quot;classif.ksvm&quot;, resampling = in.rdesc, par.set =
     show.info = FALSE)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Lade nötiges Paket: kernlab
+<pre class="prettyprint well"><code>#&gt; Loading required package: kernlab
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Three learners to be compared

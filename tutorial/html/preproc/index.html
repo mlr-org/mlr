@@ -183,6 +183,10 @@
                                 <a href="../measures/">Implemented Performance Measures</a>
                             </li>
                         
+                            <li >
+                                <a href="../filter_methods/">Integrated Filter Methods</a>
+                            </li>
+                        
                         </ul>
                     </li>
                 
@@ -325,12 +329,7 @@ the <code>train</code> and <code>predict</code> arguments.
 <code>par.vals</code> is a <a href="http://www.rdocumentation.org/packages/base/functions/list.html">list</a> of parameter values that is relayed to the <code>args</code>
 argument of the <em>train</em> function.</p>
 <pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;regr.nnet&quot;, trace = FALSE, decay = 1e-02)
-</code></pre>
-
-<pre class="prettyprint well"><code>#&gt; Loading required package: nnet
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">lrn = makePreprocWrapper(lrn, train = tr.fun, predict = pr.fun,
+lrn = makePreprocWrapper(lrn, train = tr.fun, predict = pr.fun,
   par.vals = list(center = TRUE, scale = TRUE))
 lrn
 </code></pre>

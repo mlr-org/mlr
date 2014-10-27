@@ -183,6 +183,10 @@
                                 <a href="../measures/">Implemented Performance Measures</a>
                             </li>
                         
+                            <li >
+                                <a href="../filter_methods/">Integrated Filter Methods</a>
+                            </li>
+                        
                         </ul>
                     </li>
                 
@@ -255,7 +259,7 @@ The subsets are chosen according to the parameters given to <a href="http://www.
 <pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;classif.PART&quot;)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Lade nötiges Paket: RWeka
+<pre class="prettyprint well"><code>#&gt; Loading required package: RWeka
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">bag.lrn = makeBaggingWrapper(lrn, bw.iters = 50, bw.replace = TRUE, bw.size = 0.8, bw.feats = 3/4)
@@ -305,7 +309,7 @@ test.inds  = setdiff(1:n, train.inds)
 lrn = makeLearner(&quot;regr.rpart&quot;)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Lade nötiges Paket: rpart
+<pre class="prettyprint well"><code>#&gt; Loading required package: rpart
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">bag.lrn = makeBaggingWrapper(lrn)

@@ -183,6 +183,10 @@
                                 <a href="../measures/">Implemented Performance Measures</a>
                             </li>
                         
+                            <li >
+                                <a href="../filter_methods/">Integrated Filter Methods</a>
+                            </li>
+                        
                         </ul>
                     </li>
                 
@@ -406,7 +410,7 @@ costs
 lrn = makeLearner(&quot;classif.multinom&quot;, predict.type = &quot;prob&quot;, trace = FALSE)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Lade nötiges Paket: nnet
+<pre class="prettyprint well"><code>#&gt; Loading required package: nnet
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod = train(lrn, credit.task)
@@ -762,7 +766,7 @@ Since the scaling of the threshold vector does not change the predicted class la
 <pre class="prettyprint well"><code class="r">tune.res = tuneThreshold(pred = pred, measure = wf.costs)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Lade nötiges Paket: cmaes
+<pre class="prettyprint well"><code>#&gt; Loading required package: cmaes
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">tune.res
@@ -921,7 +925,7 @@ pred
 <pre class="prettyprint well"><code>#&gt; Prediction: 150 observations
 #&gt; predict.type: response
 #&gt; threshold: 
-#&gt; time: 0.07
+#&gt; time: 0.08
 #&gt;   id response
 #&gt; 1  1   setosa
 #&gt; 2  2   setosa

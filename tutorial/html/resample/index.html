@@ -183,6 +183,10 @@
                                 <a href="../measures/">Implemented Performance Measures</a>
                             </li>
                         
+                            <li >
+                                <a href="../filter_methods/">Integrated Filter Methods</a>
+                            </li>
+                        
                         </ul>
                     </li>
                 
@@ -393,43 +397,43 @@ r = resample(&quot;cluster.XMeans&quot;, mtcars.task, rdesc, measures = list(dun
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; [Resample] subsampling iter: 1
-#&gt; Lade nötiges Paket: clusterSim
+#&gt; Loading required package: clusterSim
 #&gt; [Resample] subsampling iter: 2
 #&gt; [Resample] subsampling iter: 3
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
-#&gt; Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
-#&gt; Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
-#&gt; Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
+<pre class="prettyprint well"><code>#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to max; returning -Inf
+#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to max; returning -Inf
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; [Resample] subsampling iter: 4
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
-#&gt; Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
-#&gt; Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
-#&gt; Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
+<pre class="prettyprint well"><code>#&gt; Warning: no non-missing arguments to max; returning -Inf
+#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to max; returning -Inf
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; [Resample] subsampling iter: 5
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
-#&gt; Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
-#&gt; Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
-#&gt; Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
+<pre class="prettyprint well"><code>#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to max; returning -Inf
+#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to max; returning -Inf
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.225
+<pre class="prettyprint well"><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.114
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;      dunn.test.mean        db.test.mean timetrain.test.mean 
-#&gt;              0.9576              0.4254              0.2254
+#&gt;              0.9576              0.4254              0.1136
 </code></pre>
 
 <h2 id="stratified-resampling">Stratified resampling</h2>

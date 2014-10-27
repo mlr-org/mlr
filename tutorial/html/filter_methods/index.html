@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+        <title>Integrated Filter Methods - mlr tutorial</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link href="../css/prettify-1.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">mlr tutorial</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../task/">Tasks</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../learner/">Learner</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../train/">Train</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../predict/">Predict</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../performance/">Performance</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../resample/">Resampling</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../benchmark_experiments/">Benchmark Experiments</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../parallelization/">Parallelization</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Advanced <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../configureMlr/">Configuration</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../wrapper/">Wrapped Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../preproc/">Preprocessing</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../impute/">Imputations</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../bagging/">Bagging</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../tune/">Tuning</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../feature_selection/">Feature Selection</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../cost_sensitive_classif/">Cost-Sensitive Classification</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../over_and_undersampling/">Imbalanced Classification Problems</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../roc_analysis/">ROC Analysis</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Extend <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../create_learner/">Create Custom Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../create_measure/">Create Custom Measures</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Appendix <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            <li >
+                                <a href="../example_tasks/">Example Tasks</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../integrated_learners/">Integrated Learners</a>
+                            </li>
+                        
+                            <li >
+                                <a href="../measures/">Implemented Performance Measures</a>
+                            </li>
+                        
+                            <li class="active">
+                                <a href="./">Integrated Filter Methods</a>
+                            </li>
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+
+            
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                
+                
+                <li >
+                    <a rel="next" href="../measures/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li class="disabled">
+                    <a rel="prev" >
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                
+                <li>
+                    <a href="https://github.com/berndbischl/mlr/">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#integrated-filter-methods">Integrated Filter Methods</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<style type="text/css">
+<!--
+.col-md-9 th {
+padding: 0.5em;
+}
+.col-md-9 td {
+border: solid 1px #ccc;
+padding: 0.5em;
+vertical-align: top;
+}
+-->
+</style>
+
+<h1 id="integrated-filter-methods">Integrated Filter Methods</h1>
+<p>The following table shows the available methods for calculating the feature importance.
+Columns <strong>Classif</strong>, <strong>Regr</strong> and <strong>Surv</strong> indicate if classification, regression or survival
+analysis problems are supported.
+Columns <strong>Fac.</strong> and <strong>Num.</strong> show if a particular method can deal with factor and
+numeric features.</p>
+<table>
+<thead>
+<tr>
+<th align="left">ID</th>
+<th align="left">Package</th>
+<th align="left">Description</th>
+<th align="center">Classif</th>
+<th align="center">Regr</th>
+<th align="center">Surv</th>
+<th align="center">Fac.</th>
+<th align="center">Num.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">anova.test</td>
+<td align="left"></td>
+<td align="left">ANOVA Test for binary and multiclass classification tasks</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="left">carscore</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/care/">care</a></td>
+<td align="left">CAR scores</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="left">chi.squared</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/FSelector/">FSelector</a></td>
+<td align="left">Chi-squared statistic of independence between feature and target</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="left">gain.ratio</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/FSelector/">FSelector</a></td>
+<td align="left">Entropy-based gain ratio between feature and target</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="left">information.gain</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/FSelector/">FSelector</a></td>
+<td align="left">Entropy-based information gain between feature and target</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="left">kruskal.test</td>
+<td align="left"></td>
+<td align="left">Kurskal Test for binary and multiclass classification tasks</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="left">linear.correlation</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/FSelector/">FSelector</a></td>
+<td align="left">Pearson correlation between feature and target</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="left">mrmr</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mRMRe/">mRMRe</a></td>
+<td align="left">Minimum redundancy, maximum relevance filter</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="left">oneR</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/FSelector/">FSelector</a></td>
+<td align="left">oneR assocation rule</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="left">rank.correlation</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/FSelector/">FSelector</a></td>
+<td align="left">Spearman's correlation between feature and target</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="left">relief</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/FSelector/">FSelector</a></td>
+<td align="left">RELIEF algorithm</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="left">rf.importance</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/randomForestSRC/">randomForestSRC</a></td>
+<td align="left">Importance of random forests</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="left">rf.min.depth</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/randomForestSRC/">randomForestSRC</a></td>
+<td align="left">Minimal depth of random forest fitted in package 'randomForestSRC'</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="left">symmetrical.uncertainty</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/FSelector/">FSelector</a></td>
+<td align="left">Entropy-based symmetrical uncertainty between feature and target</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="left">univariate</td>
+<td align="left"></td>
+<td align="left">Construct a simple performance filter using a mlr learner</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+</tr>
+<tr>
+<td align="left">variance</td>
+<td align="left"></td>
+<td align="left">A simple variance filter</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+</tr>
+</tbody>
+</table>
+</div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        
+
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/base.js"></script>
+        
+    </body>
+</html>
