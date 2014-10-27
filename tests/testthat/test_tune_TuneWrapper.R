@@ -38,4 +38,9 @@ test_that("TuneWrapper", {
   expect_equal(lrn2$predict.type, "prob")
   r = resample(lrn2, binaryclass.task, makeResampleDesc("Holdout"), measures = mlr::auc)
   expect_true(!is.na(r$aggr[["auc.test.mean"]]))
+  
+  # check that tune.threshold works
+  lrn2.tt = makeTuneWrapper(lrn1, resampling = makeResampleDesc("Holdout"), par.set = ps1, control = makeTuneControlGrid(), tune.threshold = TRUE)
+  r = resample(lrn2.tt, binaryclass.task, makeResampleDesc("Holdout"), measures = mlr::mmce)
+  expect_true(!is.na(r$aggr[["mmce.test.mean"]]))
 })
