@@ -55,7 +55,7 @@ features of lower importance.
 There are several ways to select a feature subset based on feature importance values:
 
 * Keep a certain *absolute number* (``abs``) of features with highest importance.
-* Keep a certain *percentage* (``perc`) of features with highest importance.
+* Keep a certain *percentage* (``perc``) of features with highest importance.
 * Keep all features whose importance exceeds a certain *threshold value* (``threshold``).
 
 Function [&filterFeatures] supports these three methods as shown in the following example.
