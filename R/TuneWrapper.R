@@ -16,8 +16,6 @@
 #' @template arg_learner
 #' @inheritParams tuneParams
 #' @template ret_learner
-#' @param tune.threshod [\code{logical(1)}]\cr
-#'   Activate seperate tuning of the threshold via \code{\link{tuneThreshold}}. Default is \code{FALSE}.
 #' @export
 #' @family tune
 #' @family wrapper
@@ -39,23 +37,16 @@
 #' # we also extract tuned hyper pars in each iteration
 #' r = resample(lrn, task, outer, extract = getTuneResult)
 #' print(r$extract)
-makeTuneWrapper = function(learner, resampling, measures, par.set, control, tune.threshold = FALSE, show.info = getMlrOption("show.info")) {
+makeTuneWrapper = function(learner, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)
   assert(checkClass(resampling, "ResampleDesc"), checkClass(resampling, "ResampleInstance"))
   measures = checkMeasures(measures, learner)
   assertClass(par.set, classes = "ParamSet")
   assertClass(control, classes = "TuneControl")
-  assertLogical(tune.threshold)
-  if(tune.threshold) {
-    if(hasProperties(learner, "prob")) 
-      learner = setPredictType(learner, "prob")
-    else
-      stopf("Learner '%s' does not support predictType: prob. Hence threshold cannot be tuned", learner$id)
-  }
   assertFlag(show.info)
   id = paste(learner$id, "tuned", sep = ".")
   x = makeOptWrapper(id, learner, resampling, measures, par.set, character(0L),
-    function(){}, control, tune.threshold, show.info, "TuneWrapper")
+    function(){}, control, show.info, "TuneWrapper")
   checkTunerParset(learner, par.set, measures, control)
   return(x)
 }
@@ -77,15 +68,5 @@ predictLearner.TuneWrapper = function(.learner, .model, .newdata, ...) {
   lrn = setHyperPars(.learner$next.learner,
     par.vals = .model$learner.model$opt.result$x)
   predictLearner(lrn, .model$learner.model$next.model, .newdata)
-}
-
-predict.TuneModel = function(object, task, newdata, subset, ...) {
-  res = predict.WrappedModel(object, task, newdata, subset, ...)
-  if( object$learner$tune.threshold){
-    tune.res = tuneThreshold(pred = res, measure = getFirst(object$learner$measures), model = object, task = task)
-    setThreshold(res, tune.res$th)
-  } else {
-    res
-  }
 }
 
