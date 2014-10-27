@@ -250,7 +250,7 @@ strategy for each <a href="http://www.rdocumentation.org/packages/mlr/functions/
 lrns = list(makeLearner(&quot;classif.lda&quot;), makeLearner(&quot;classif.rpart&quot;))
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Loading required package: MASS
+<pre class="prettyprint well"><code>#&gt; Lade nötiges Paket: MASS
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Two classification tasks
@@ -265,10 +265,10 @@ res
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;            task       learner mmce.test.mean
-#&gt; 1 Sonar-example   classif.lda        0.23577
-#&gt; 2 Sonar-example classif.rpart        0.26980
-#&gt; 3  iris-example   classif.lda        0.04000
-#&gt; 4  iris-example classif.rpart        0.06667
+#&gt; 1  iris-example   classif.lda        0.04000
+#&gt; 2  iris-example classif.rpart        0.06667
+#&gt; 3 Sonar-example   classif.lda        0.23577
+#&gt; 4 Sonar-example classif.rpart        0.26980
 </code></pre>
 
 <p>The above code should be self-explanatory. In the result every row corresponds to one <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>
@@ -283,21 +283,21 @@ Let's have a look at the benchmark result from the example above:</p>
 getPerformances(res)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; $`Sonar-example`
-#&gt;   iter classif.lda.mmce classif.rpart.mmce
-#&gt; 1    1           0.2619             0.2857
-#&gt; 2    2           0.1905             0.1905
-#&gt; 3    3           0.2143             0.2143
-#&gt; 4    4           0.2195             0.2927
-#&gt; 5    5           0.2927             0.3659
-#&gt; 
-#&gt; $`iris-example`
+<pre class="prettyprint well"><code>#&gt; $`iris-example`
 #&gt;   iter classif.lda.mmce classif.rpart.mmce
 #&gt; 1    1          0.03333            0.06667
 #&gt; 2    2          0.00000            0.06667
 #&gt; 3    3          0.00000            0.00000
 #&gt; 4    4          0.00000            0.03333
 #&gt; 5    5          0.16667            0.16667
+#&gt; 
+#&gt; $`Sonar-example`
+#&gt;   iter classif.lda.mmce classif.rpart.mmce
+#&gt; 1    1           0.2619             0.2857
+#&gt; 2    2           0.1905             0.1905
+#&gt; 3    3           0.2143             0.2143
+#&gt; 4    4           0.2195             0.2927
+#&gt; 5    5           0.2927             0.3659
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Aggregated performances
@@ -305,10 +305,10 @@ getAggrPerformances(res)
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;            task       learner mmce.test.mean
-#&gt; 1 Sonar-example   classif.lda        0.23577
-#&gt; 2 Sonar-example classif.rpart        0.26980
-#&gt; 3  iris-example   classif.lda        0.04000
-#&gt; 4  iris-example classif.rpart        0.06667
+#&gt; 1  iris-example   classif.lda        0.04000
+#&gt; 2  iris-example classif.rpart        0.06667
+#&gt; 3 Sonar-example   classif.lda        0.23577
+#&gt; 4 Sonar-example classif.rpart        0.26980
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Predictions
@@ -316,7 +316,7 @@ pred = getPredictions(res)
 names(pred)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [1] &quot;Sonar-example&quot; &quot;iris-example&quot;
+<pre class="prettyprint well"><code>#&gt; [1] &quot;iris-example&quot;  &quot;Sonar-example&quot;
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">head(pred$`iris-example`)
@@ -374,9 +374,9 @@ lrn = makeTuneWrapper(&quot;classif.kknn&quot;, resampling = in.rdesc, par.set =
     show.info = FALSE)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Loading required package: kknn
+<pre class="prettyprint well"><code>#&gt; Lade nötiges Paket: kknn
 #&gt; 
-#&gt; Attaching package: 'kknn'
+#&gt; Attache Paket: 'kknn'
 #&gt; 
 #&gt; The following object is masked from 'package:caret':
 #&gt; 
@@ -462,7 +462,7 @@ lrn = makeTuneWrapper(&quot;classif.ksvm&quot;, resampling = in.rdesc, par.set =
     show.info = FALSE)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Loading required package: kernlab
+<pre class="prettyprint well"><code>#&gt; Lade nötiges Paket: kernlab
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Three learners to be compared
@@ -477,75 +477,40 @@ res
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;            task            learner mmce.test.mean
-#&gt; 1 Sonar-example        classif.lda        0.25494
-#&gt; 2 Sonar-example      classif.rpart        0.33113
-#&gt; 3 Sonar-example classif.ksvm.tuned        0.50918
-#&gt; 4  iris-example        classif.lda        0.02000
-#&gt; 5  iris-example      classif.rpart        0.07333
-#&gt; 6  iris-example classif.ksvm.tuned        0.04000
+#&gt; 1  iris-example        classif.lda        0.02000
+#&gt; 2  iris-example      classif.rpart        0.07333
+#&gt; 3  iris-example classif.ksvm.tuned        0.04000
+#&gt; 4 Sonar-example        classif.lda        0.25494
+#&gt; 5 Sonar-example      classif.rpart        0.33113
+#&gt; 6 Sonar-example classif.ksvm.tuned        0.50918
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Performance values in individual runs
 getPerformances(res)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; $`Sonar-example`
-#&gt;   iter classif.lda.mmce classif.rpart.mmce classif.ksvm.tuned.mmce
-#&gt; 1    1           0.2381             0.3810                  0.4286
-#&gt; 2    2           0.2439             0.2439                  0.3415
-#&gt; 3    3           0.2857             0.4524                  0.6429
-#&gt; 4    4           0.2927             0.2927                  0.5854
-#&gt; 5    5           0.2143             0.2857                  0.5476
-#&gt; 
-#&gt; $`iris-example`
+<pre class="prettyprint well"><code>#&gt; $`iris-example`
 #&gt;   iter classif.lda.mmce classif.rpart.mmce classif.ksvm.tuned.mmce
 #&gt; 1    1          0.00000            0.13333                 0.03333
 #&gt; 2    2          0.03333            0.06667                 0.06667
 #&gt; 3    3          0.06667            0.06667                 0.03333
 #&gt; 4    4          0.00000            0.06667                 0.06667
 #&gt; 5    5          0.00000            0.03333                 0.00000
+#&gt; 
+#&gt; $`Sonar-example`
+#&gt;   iter classif.lda.mmce classif.rpart.mmce classif.ksvm.tuned.mmce
+#&gt; 1    1           0.2381             0.3810                  0.4286
+#&gt; 2    2           0.2439             0.2439                  0.3415
+#&gt; 3    3           0.2857             0.4524                  0.6429
+#&gt; 4    4           0.2927             0.2927                  0.5854
+#&gt; 5    5           0.2143             0.2857                  0.5476
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Tuned parameter for SVM
 getTuneResult(res)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; $`Sonar-example`
-#&gt; $`Sonar-example`$classif.lda
-#&gt; NULL
-#&gt; 
-#&gt; $`Sonar-example`$classif.rpart
-#&gt; NULL
-#&gt; 
-#&gt; $`Sonar-example`$classif.ksvm.tuned
-#&gt; $`Sonar-example`$classif.ksvm.tuned[[1]]
-#&gt; Tune result:
-#&gt; Op. pars: C=2; sigma=0.5
-#&gt; mmce.test.mean= 0.5
-#&gt; 
-#&gt; $`Sonar-example`$classif.ksvm.tuned[[2]]
-#&gt; Tune result:
-#&gt; Op. pars: C=2; sigma=0.5
-#&gt; mmce.test.mean=0.509
-#&gt; 
-#&gt; $`Sonar-example`$classif.ksvm.tuned[[3]]
-#&gt; Tune result:
-#&gt; Op. pars: C=2; sigma=0.5
-#&gt; mmce.test.mean=0.428
-#&gt; 
-#&gt; $`Sonar-example`$classif.ksvm.tuned[[4]]
-#&gt; Tune result:
-#&gt; Op. pars: C=2; sigma=0.5
-#&gt; mmce.test.mean=0.425
-#&gt; 
-#&gt; $`Sonar-example`$classif.ksvm.tuned[[5]]
-#&gt; Tune result:
-#&gt; Op. pars: C=2; sigma=0.5
-#&gt; mmce.test.mean=0.567
-#&gt; 
-#&gt; 
-#&gt; 
-#&gt; $`iris-example`
+<pre class="prettyprint well"><code>#&gt; $`iris-example`
 #&gt; $`iris-example`$classif.lda
 #&gt; NULL
 #&gt; 
@@ -577,6 +542,41 @@ getTuneResult(res)
 #&gt; Tune result:
 #&gt; Op. pars: C=1; sigma=1
 #&gt; mmce.test.mean=0.0333
+#&gt; 
+#&gt; 
+#&gt; 
+#&gt; $`Sonar-example`
+#&gt; $`Sonar-example`$classif.lda
+#&gt; NULL
+#&gt; 
+#&gt; $`Sonar-example`$classif.rpart
+#&gt; NULL
+#&gt; 
+#&gt; $`Sonar-example`$classif.ksvm.tuned
+#&gt; $`Sonar-example`$classif.ksvm.tuned[[1]]
+#&gt; Tune result:
+#&gt; Op. pars: C=2; sigma=0.5
+#&gt; mmce.test.mean= 0.5
+#&gt; 
+#&gt; $`Sonar-example`$classif.ksvm.tuned[[2]]
+#&gt; Tune result:
+#&gt; Op. pars: C=2; sigma=0.5
+#&gt; mmce.test.mean=0.509
+#&gt; 
+#&gt; $`Sonar-example`$classif.ksvm.tuned[[3]]
+#&gt; Tune result:
+#&gt; Op. pars: C=2; sigma=0.5
+#&gt; mmce.test.mean=0.428
+#&gt; 
+#&gt; $`Sonar-example`$classif.ksvm.tuned[[4]]
+#&gt; Tune result:
+#&gt; Op. pars: C=2; sigma=0.5
+#&gt; mmce.test.mean=0.425
+#&gt; 
+#&gt; $`Sonar-example`$classif.ksvm.tuned[[5]]
+#&gt; Tune result:
+#&gt; Op. pars: C=2; sigma=0.5
+#&gt; mmce.test.mean=0.567
 </code></pre>
 
 <h3 id="example-3-one-task-two-learners-feature-selection">Example 3: One task, two learners, feature selection</h3>

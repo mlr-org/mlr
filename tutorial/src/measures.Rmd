@@ -42,7 +42,7 @@ getTab = function(type) {
 
   for (i in seq_along(meas)) {
     mea = meas[[i]]
-    df[i, 1] = linkFct(mea$id)
+    df[i, 1] = paste0(linkFct(mea$id), " - ", mea$note)
     df[i, 2] = mea$minimize
     df[i, 3] = mea$best
     df[i, 4] = mea$worst

@@ -393,43 +393,43 @@ r = resample(&quot;cluster.XMeans&quot;, mtcars.task, rdesc, measures = list(dun
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; [Resample] subsampling iter: 1
-#&gt; Loading required package: clusterSim
+#&gt; Lade nötiges Paket: clusterSim
 #&gt; [Resample] subsampling iter: 2
 #&gt; [Resample] subsampling iter: 3
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Warning: no non-missing arguments to min; returning Inf
-#&gt; Warning: no non-missing arguments to max; returning -Inf
-#&gt; Warning: no non-missing arguments to min; returning Inf
-#&gt; Warning: no non-missing arguments to max; returning -Inf
+<pre class="prettyprint well"><code>#&gt; Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
+#&gt; Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
+#&gt; Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
+#&gt; Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; [Resample] subsampling iter: 4
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Warning: no non-missing arguments to max; returning -Inf
-#&gt; Warning: no non-missing arguments to min; returning Inf
-#&gt; Warning: no non-missing arguments to min; returning Inf
-#&gt; Warning: no non-missing arguments to max; returning -Inf
+<pre class="prettyprint well"><code>#&gt; Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
+#&gt; Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
+#&gt; Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
+#&gt; Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; [Resample] subsampling iter: 5
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Warning: no non-missing arguments to min; returning Inf
-#&gt; Warning: no non-missing arguments to max; returning -Inf
-#&gt; Warning: no non-missing arguments to min; returning Inf
-#&gt; Warning: no non-missing arguments to max; returning -Inf
+<pre class="prettyprint well"><code>#&gt; Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
+#&gt; Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
+#&gt; Warning: kein nicht-fehlendes Argument für min; gebe Inf zurück
+#&gt; Warning: kein nicht-fehlendes Argument für max; gebe -Inf zurück
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.0736
+<pre class="prettyprint well"><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.225
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;      dunn.test.mean        db.test.mean timetrain.test.mean 
-#&gt;              0.9576              0.4254              0.0736
+#&gt;              0.9576              0.4254              0.2254
 </code></pre>
 
 <h2 id="stratified-resampling">Stratified resampling</h2>
@@ -756,6 +756,7 @@ b632.mmce
 #&gt; Minimize: TRUE
 #&gt; Best: 0; Worst: 1
 #&gt; Aggregated by: b632
+#&gt; Note: Mean misclassification error
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r = resample(&quot;classif.rpart&quot;, iris.task, rdesc,

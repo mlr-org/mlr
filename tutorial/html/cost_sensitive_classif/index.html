@@ -406,7 +406,7 @@ costs
 lrn = makeLearner(&quot;classif.multinom&quot;, predict.type = &quot;prob&quot;, trace = FALSE)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Loading required package: nnet
+<pre class="prettyprint well"><code>#&gt; Lade nötiges Paket: nnet
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">mod = train(lrn, credit.task)
@@ -478,6 +478,7 @@ credit.costs
 #&gt; Minimize: TRUE
 #&gt; Best: 0; Worst: 5
 #&gt; Aggregated by: test.mean
+#&gt; Note:
 </code></pre>
 
 <p>Then the average costs can be computed by function <a href="http://www.rdocumentation.org/packages/mlr/functions/performance.html">performance</a>.
@@ -761,7 +762,7 @@ Since the scaling of the threshold vector does not change the predicted class la
 <pre class="prettyprint well"><code class="r">tune.res = tuneThreshold(pred = pred, measure = wf.costs)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Loading required package: cmaes
+<pre class="prettyprint well"><code>#&gt; Lade nötiges Paket: cmaes
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">tune.res
