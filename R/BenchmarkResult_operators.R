@@ -132,14 +132,14 @@ getBMRAggrPerformances = function(bmr, task.ids = NULL, learner.ids = NULL, as.d
 
 
 getBMROptResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE,
-  wrapper.class) {
+  wrapper.class, fun) {
 
   f = if (as.df) {
     function(x) {
       niters = nrow(x$measures.test)
       if (inherits(x$learner, wrapper.class)) {
         # FIXME: this wont work for vector params?
-        xs = lapply(x$extract, function(z) as.data.frame(z$x))
+        xs = lapply(x$extract, fun)
         cbind(iter = 1:niters, do.call(rbind.fill, xs))
       } else {
         NULL
@@ -171,7 +171,9 @@ getBMROptResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FA
 #' @export
 #' @family benchmark
 getBMRTuneResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE) {
-  getBMROptResults(bmr, task.ids, learner.ids, as.df, "TuneWrapper")
+  getBMROptResults(bmr, task.ids, learner.ids, as.df, "TuneWrapper", function(x) {
+    as.data.frame(x$x)
+  })
 }
 
 #' @title Extract the feature selection results from a benchmark result.
@@ -189,7 +191,28 @@ getBMRTuneResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = F
 #' @export
 #' @family benchmark
 getBMRFeatSelResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE) {
-  getBMROptResults(bmr, task.ids, learner.ids, as.df, "FeatSelWrapper")
+  getBMROptResults(bmr, task.ids, learner.ids, as.df, "FeatSelWrapper", function(x) {
+    as.data.frame(x$x)
+  })
 }
 
+#' @title Extract the feature selection results from a benchmark result.
+#'
+#' @description
+#' Returns a list of lists of \dQuote{measure.test} data.frames, as returned by
+#' \code{\link{resample}}, or these objects are rbind-ed with extra columns
+#' \dQuote{task.id} and \dQuote{learner.id}.
+#'
+#' @template arg_bmr
+#' @template arg_bmr_taskids
+#' @template arg_bmr_learnerids
+#' @template arg_bmr_asdf
+#' @template ret_bmr_list_or_df
+#' @export
+#' @family benchmark
+getBMRFilteredFeatures = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE) {
+  getBMROptResults(bmr, task.ids, learner.ids, as.df, "FilterWrapper", function(x) {
+    as.data.frame(x$x)
+  })
+}
 

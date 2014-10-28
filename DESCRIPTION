@@ -34,7 +34,7 @@ Imports:
     codetools,
     ggplot2,
     parallelMap (>= 1.1),
-    plyr, 
+    plyr,
     survival
 Suggests:
     testthat,

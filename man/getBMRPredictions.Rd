@@ -34,10 +34,11 @@ Other benchmark: \code{\link{BenchmarkResult}};
   \code{\link{FilterResult}},
   \code{\link{getFilterResult}}; \code{\link{benchmark}};
   \code{\link{getBMRAggrPerformances}};
+  \code{\link{getBMRFeatSelResults}};
+  \code{\link{getBMRFilteredFeatures}};
   \code{\link{getBMRLearnerIds}};
   \code{\link{getBMRPerformances}};
   \code{\link{getBMRTaskIds}};
-  \code{\link{getBMRTuneResults}};
-  \code{\link{getFeatSelResult}}
+  \code{\link{getBMRTuneResults}}
 }
 

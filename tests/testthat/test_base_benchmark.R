@@ -105,5 +105,5 @@ test_that("benchmark", {
 
   f(getBMRFeatSelResults(res), "FeatSelResult")
   f(getBMRTuneResults(res), "TuneResult")
-  f(getBMRFilterResults(res), "FilterResult")
+  f(getBMRFilteredFeatures(res), "character")
 })

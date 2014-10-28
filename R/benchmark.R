@@ -110,7 +110,7 @@ benchmarkParallel = function(index, learners, tasks, resamplings, measures, show
   } else if("TuneWrapper" %in% cl) {
     extract.this = getTuneResult
   } else if("FilterWrapper" %in% cl) {
-    extract.this = getFilterResult
+    extract.this = getFilteredFeatures
   } else {
     extract.this = function(model) { NULL }
   }
