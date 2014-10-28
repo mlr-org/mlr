@@ -22,8 +22,7 @@ Return learner ids used in benchmark.
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}};
-  \code{\link{FilterResult}},
-  \code{\link{getFilterResult}}; \code{\link{benchmark}};
+  \code{\link{benchmark}};
   \code{\link{getBMRAggrPerformances}};
   \code{\link{getBMRFeatSelResults}};
   \code{\link{getBMRFilteredFeatures}};

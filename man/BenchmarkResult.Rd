@@ -9,8 +9,7 @@ retrive required information via the \code{getBMR*} getter functions.
 You can also convert the object using \code{\link[base]{as.data.frame}}.
 }
 \seealso{
-Other benchmark: \code{\link{FilterResult}},
-  \code{\link{getFilterResult}}; \code{\link{benchmark}};
+Other benchmark: \code{\link{benchmark}};
   \code{\link{getBMRAggrPerformances}};
   \code{\link{getBMRFeatSelResults}};
   \code{\link{getBMRFilteredFeatures}};

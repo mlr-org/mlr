@@ -11,9 +11,7 @@
 }
 }
 \seealso{
-Other filter: \code{\link{FilterResult}},
-  \code{\link{getFilterResult}};
-  \code{\link{filterFeatures}};
+Other filter: \code{\link{filterFeatures}};
   \code{\link{getFilterValues}};
   \code{\link{getFilteredFeatures}};
   \code{\link{makeFilterWrapper}}

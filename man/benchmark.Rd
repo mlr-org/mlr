@@ -37,8 +37,6 @@ Furhtermore, your learners can be automatically tuned using \code{\link{makeTune
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}};
-  \code{\link{FilterResult}},
-  \code{\link{getFilterResult}};
   \code{\link{getBMRAggrPerformances}};
   \code{\link{getBMRFeatSelResults}};
   \code{\link{getBMRFilteredFeatures}};

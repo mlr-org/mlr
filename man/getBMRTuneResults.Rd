@@ -31,8 +31,7 @@ Returns a list of lists of \dQuote{measure.test} data.frames, as returned by
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}};
-  \code{\link{FilterResult}},
-  \code{\link{getFilterResult}}; \code{\link{benchmark}};
+  \code{\link{benchmark}};
   \code{\link{getBMRAggrPerformances}};
   \code{\link{getBMRFeatSelResults}};
   \code{\link{getBMRFilteredFeatures}};
