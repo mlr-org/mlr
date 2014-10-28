@@ -43,8 +43,10 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
   res = lapply(task.ids, function(tid) {
     xs = lapply(learner.ids, function(lid) {
       p = fun(bmr[[tid]][[lid]])
-      if (as.df)
-        p = as.data.frame(cbind(task.id = tid, learner.id = lid, p))
+      if (as.df) {
+        if (!is.null(p))
+          p = as.data.frame(cbind(task.id = tid, learner.id = lid, p))
+      }
       return(p)
     })
     if (as.df)
@@ -150,7 +152,7 @@ getBMRTuneResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = F
         xs = lapply(x$extract, function(z) as.data.frame(z$x))
         cbind(iter = 1:niters, do.call(rbind.fill, xs))
       } else {
-        data.frame(iter = 1:niters)
+        NULL
       }
     }
   } else {
