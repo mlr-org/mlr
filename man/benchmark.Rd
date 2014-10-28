@@ -39,9 +39,12 @@ Furhtermore, your learners can be automatically tuned using \code{\link{makeTune
 Other benchmark: \code{\link{BenchmarkResult}};
   \code{\link{FilterResult}},
   \code{\link{getFilterResult}};
-  \code{\link{getAggrPerformances}};
-  \code{\link{getFeatSelResult}};
-  \code{\link{getPerformances}};
-  \code{\link{getPredictions}}; \code{\link{getTuneResult}}
+  \code{\link{getBMRAggrPerformances}};
+  \code{\link{getBMRLearnerIds}};
+  \code{\link{getBMRPerformances}};
+  \code{\link{getBMRPredictions}};
+  \code{\link{getBMRTaskIds}};
+  \code{\link{getBMRTuneResults}};
+  \code{\link{getFeatSelResult}}
 }
 

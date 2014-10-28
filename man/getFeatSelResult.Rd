@@ -20,9 +20,12 @@ Returns the selected feature set and optimization path after training or benchma
 Other benchmark: \code{\link{BenchmarkResult}};
   \code{\link{FilterResult}},
   \code{\link{getFilterResult}}; \code{\link{benchmark}};
-  \code{\link{getAggrPerformances}};
-  \code{\link{getPerformances}};
-  \code{\link{getPredictions}}; \code{\link{getTuneResult}}
+  \code{\link{getBMRAggrPerformances}};
+  \code{\link{getBMRLearnerIds}};
+  \code{\link{getBMRPerformances}};
+  \code{\link{getBMRPredictions}};
+  \code{\link{getBMRTaskIds}};
+  \code{\link{getBMRTuneResults}}
 
 Other featsel: \code{\link{FeatSelControl}},
   \code{\link{FeatSelControlExhaustive}},

@@ -19,10 +19,13 @@ Returns a filter result after training or benchmarking.
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}};
   \code{\link{benchmark}};
-  \code{\link{getAggrPerformances}};
-  \code{\link{getFeatSelResult}};
-  \code{\link{getPerformances}};
-  \code{\link{getPredictions}}; \code{\link{getTuneResult}}
+  \code{\link{getBMRAggrPerformances}};
+  \code{\link{getBMRLearnerIds}};
+  \code{\link{getBMRPerformances}};
+  \code{\link{getBMRPredictions}};
+  \code{\link{getBMRTaskIds}};
+  \code{\link{getBMRTuneResults}};
+  \code{\link{getFeatSelResult}}
 
 Other filter: \code{\link{FilterValues}};
   \code{\link{filterFeatures}};
