@@ -1,5 +1,6 @@
-#' Benchmark experiment for multiple learners and tasks.
+#' @title Benchmark experiment for multiple learners and tasks.
 #'
+#' @description
 #' Complete benchmark experiment to compare different learning algorithms across one or more tasks
 #' w.r.t. a given resampling strategy. Experiments are paired, meaning always the same
 #' training / test sets are used for the different learners.
@@ -124,11 +125,11 @@ benchmarkParallel = function(index, learners, tasks, resamplings, measures, show
 
 #' @export
 print.BenchmarkResult = function(x, ...) {
-  print(getBMRAggrPerformances(x))
+  print(getBMRAggrPerformances(x, as.df = TRUE))
 }
 
 #' @export
 as.data.frame.BenchmarkResult = function(x, ...) {
-  getBMRPerformances(x)
+  getBMRPerformances(x, as.df = TRUE)
 }
 
