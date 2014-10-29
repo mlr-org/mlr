@@ -255,6 +255,7 @@ lrns = list(makeLearner(&quot;classif.lda&quot;), makeLearner(&quot;classif.rpar
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; Loading required package: MASS
+#&gt; Loading required package: rpart
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Two classification tasks
@@ -268,7 +269,7 @@ res = benchmark(lrns, tasks, rdesc, show.info = FALSE)
 res
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;            task       learner mmce.test.mean
+<pre class="prettyprint well"><code>#&gt;         task.id    learner.id mmce.test.mean
 #&gt; 1  iris-example   classif.lda        0.04000
 #&gt; 2  iris-example classif.rpart        0.06667
 #&gt; 3 Sonar-example   classif.lda        0.23577
@@ -284,39 +285,71 @@ is the default performance measure for classification.</p>
 functions.
 Let's have a look at the benchmark result from the example above:</p>
 <pre class="prettyprint well"><code class="r">## Individual performances of the 5 cross-validation runs
-getPerformances(res)
+getBMRPerformances(res)
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; $`iris-example`
-#&gt;   iter classif.lda.mmce classif.rpart.mmce
-#&gt; 1    1          0.03333            0.06667
-#&gt; 2    2          0.00000            0.06667
-#&gt; 3    3          0.00000            0.00000
-#&gt; 4    4          0.00000            0.03333
-#&gt; 5    5          0.16667            0.16667
+#&gt; $`iris-example`$classif.lda
+#&gt;   iter    mmce
+#&gt; 1    1 0.03333
+#&gt; 2    2 0.00000
+#&gt; 3    3 0.00000
+#&gt; 4    4 0.00000
+#&gt; 5    5 0.16667
+#&gt; 
+#&gt; $`iris-example`$classif.rpart
+#&gt;   iter    mmce
+#&gt; 1    1 0.06667
+#&gt; 2    2 0.06667
+#&gt; 3    3 0.00000
+#&gt; 4    4 0.03333
+#&gt; 5    5 0.16667
+#&gt; 
 #&gt; 
 #&gt; $`Sonar-example`
-#&gt;   iter classif.lda.mmce classif.rpart.mmce
-#&gt; 1    1           0.2619             0.2857
-#&gt; 2    2           0.1905             0.1905
-#&gt; 3    3           0.2143             0.2143
-#&gt; 4    4           0.2195             0.2927
-#&gt; 5    5           0.2927             0.3659
+#&gt; $`Sonar-example`$classif.lda
+#&gt;   iter   mmce
+#&gt; 1    1 0.2619
+#&gt; 2    2 0.1905
+#&gt; 3    3 0.2143
+#&gt; 4    4 0.2195
+#&gt; 5    5 0.2927
+#&gt; 
+#&gt; $`Sonar-example`$classif.rpart
+#&gt;   iter   mmce
+#&gt; 1    1 0.2857
+#&gt; 2    2 0.1905
+#&gt; 3    3 0.2143
+#&gt; 4    4 0.2927
+#&gt; 5    5 0.3659
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Aggregated performances
-getAggrPerformances(res)
+getBMRAggrPerformances(res)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;            task       learner mmce.test.mean
-#&gt; 1  iris-example   classif.lda        0.04000
-#&gt; 2  iris-example classif.rpart        0.06667
-#&gt; 3 Sonar-example   classif.lda        0.23577
-#&gt; 4 Sonar-example classif.rpart        0.26980
+<pre class="prettyprint well"><code>#&gt; $`iris-example`
+#&gt; $`iris-example`$classif.lda
+#&gt; mmce.test.mean 
+#&gt;           0.04 
+#&gt; 
+#&gt; $`iris-example`$classif.rpart
+#&gt; mmce.test.mean 
+#&gt;        0.06667 
+#&gt; 
+#&gt; 
+#&gt; $`Sonar-example`
+#&gt; $`Sonar-example`$classif.lda
+#&gt; mmce.test.mean 
+#&gt;         0.2358 
+#&gt; 
+#&gt; $`Sonar-example`$classif.rpart
+#&gt; mmce.test.mean 
+#&gt;         0.2698
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Predictions
-pred = getPredictions(res)
+pred = getBMRPredictions(res)
 names(pred)
 </code></pre>
 
@@ -326,20 +359,44 @@ names(pred)
 <pre class="prettyprint well"><code class="r">head(pred$`iris-example`)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;    id  truth iter  set response.classif.lda response.classif.rpart
-#&gt; 3   3 setosa    1 test               setosa                 setosa
-#&gt; 7   7 setosa    1 test               setosa                 setosa
-#&gt; 10 10 setosa    1 test               setosa                 setosa
-#&gt; 13 13 setosa    1 test               setosa                 setosa
-#&gt; 22 22 setosa    1 test               setosa                 setosa
-#&gt; 36 36 setosa    1 test               setosa                 setosa
+<pre class="prettyprint well"><code>#&gt; $classif.lda
+#&gt; Resampled Prediction for:
+#&gt; Resample description: cross-validation with 5 iterations.
+#&gt; Predict: test
+#&gt; Stratification: FALSE
+#&gt; predict.type: response
+#&gt; threshold: 
+#&gt; time (mean): 0.05
+#&gt;    id  truth response iter  set
+#&gt; 3   3 setosa   setosa    1 test
+#&gt; 7   7 setosa   setosa    1 test
+#&gt; 10 10 setosa   setosa    1 test
+#&gt; 13 13 setosa   setosa    1 test
+#&gt; 22 22 setosa   setosa    1 test
+#&gt; 36 36 setosa   setosa    1 test
+#&gt; 
+#&gt; $classif.rpart
+#&gt; Resampled Prediction for:
+#&gt; Resample description: cross-validation with 5 iterations.
+#&gt; Predict: test
+#&gt; Stratification: FALSE
+#&gt; predict.type: response
+#&gt; threshold: 
+#&gt; time (mean): 0.00
+#&gt;    id  truth response iter  set
+#&gt; 3   3 setosa   setosa    1 test
+#&gt; 7   7 setosa   setosa    1 test
+#&gt; 10 10 setosa   setosa    1 test
+#&gt; 13 13 setosa   setosa    1 test
+#&gt; 22 22 setosa   setosa    1 test
+#&gt; 36 36 setosa   setosa    1 test
 </code></pre>
 
 <p>Note that the task IDs are used to name the elements of <code>pred</code>.</p>
 <h2 id="nested-resampling">Nested resampling</h2>
 <p>In order to get an unbiased estimate of the performance on new data,
 it is generally not enough to simply use repeated cross-validation
-for a given set of hyperparameters and methods (see the section on <a href="../tune/">tuning</a>),
+for a given set of hyperparameters and methods (see the section about <a href="../tune/">tuning</a>),
 as this might produce an overly optimistic result.</p>
 <p>A better (although more time-consuming) approach is to nest two
 resampling methods. To keep it simple, let's take
@@ -365,7 +422,7 @@ way.</p>
 <p>Now we have a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> with hyperparameters and we want to find the best ones. In
 that case we have two resampling levels.</p>
 <p>We show an example with outer bootstrap and inner cross-validation,
-our <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> will be k-nearest neighbour.</p>
+our <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> will be <a href="http://www.rdocumentation.org/packages/kknn/functions/kknn.html">k-nearest neighbour</a>.</p>
 <pre class="prettyprint well"><code class="r">## Range of hyperparameter k
 ps = makeParamSet(makeDiscreteParam(&quot;k&quot;, 1:5))
 ctrl = makeTuneControlGrid()
@@ -375,7 +432,7 @@ in.rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 
 ## Tune k-nearest neighbor
 lrn = makeTuneWrapper(&quot;classif.kknn&quot;, resampling = in.rdesc, par.set = ps, control = ctrl,
-    show.info = FALSE)
+  show.info = FALSE)
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; Loading required package: kknn
@@ -396,12 +453,12 @@ res = benchmark(lrn, iris.task, out.rdesc, measure = acc, show.info = FALSE)
 res
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;           task            learner acc.test.mean
+<pre class="prettyprint well"><code>#&gt;        task.id         learner.id acc.test.mean
 #&gt; 1 iris-example classif.kknn.tuned        0.9157
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## What parameter setting achieved this performances?
-getTuneResult(res)
+getBMRTuneResults(res)
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; $`iris-example`
@@ -433,16 +490,17 @@ getTuneResult(res)
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## What performances did we get in the single runs?
-getPerformances(res)
+getBMRPerformances(res)
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; $`iris-example`
-#&gt;   iter classif.kknn.tuned.acc
-#&gt; 1    1                 0.9074
-#&gt; 2    2                 0.9630
-#&gt; 3    3                 0.9000
-#&gt; 4    4                 0.9153
-#&gt; 5    5                 0.8929
+#&gt; $`iris-example`$classif.kknn.tuned
+#&gt;   iter    acc
+#&gt; 1    1 0.9074
+#&gt; 2    2 0.9630
+#&gt; 3    3 0.9000
+#&gt; 4    4 0.9153
+#&gt; 5    5 0.8929
 </code></pre>
 
 <p>Of course everything works the same way if we change the resampling
@@ -455,7 +513,7 @@ tasks = list(iris.task, sonar.task)
 
 ## Very small grid for SVM hyperparameters
 ps = makeParamSet(makeDiscreteParam(&quot;C&quot;, 2^seq(-1,1)),
-    makeDiscreteParam(&quot;sigma&quot;, 2^seq(-1,1)))
+  makeDiscreteParam(&quot;sigma&quot;, 2^seq(-1,1)))
 ctrl = makeTuneControlGrid()
 
 ## Define &quot;inner&quot; cross-validation indices
@@ -463,7 +521,7 @@ in.rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 
 ## Tune a SVM
 lrn = makeTuneWrapper(&quot;classif.ksvm&quot;, resampling = in.rdesc, par.set = ps, control = ctrl,
-    show.info = FALSE)
+  show.info = FALSE)
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; Loading required package: kernlab
@@ -480,7 +538,7 @@ res = benchmark(lrns, tasks, out.rdesc, show.info = FALSE)
 res
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;            task            learner mmce.test.mean
+<pre class="prettyprint well"><code>#&gt;         task.id         learner.id mmce.test.mean
 #&gt; 1  iris-example        classif.lda        0.02000
 #&gt; 2  iris-example      classif.rpart        0.07333
 #&gt; 3  iris-example classif.ksvm.tuned        0.04000
@@ -490,28 +548,63 @@ res
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Performance values in individual runs
-getPerformances(res)
+getBMRPerformances(res)
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; $`iris-example`
-#&gt;   iter classif.lda.mmce classif.rpart.mmce classif.ksvm.tuned.mmce
-#&gt; 1    1          0.00000            0.13333                 0.03333
-#&gt; 2    2          0.03333            0.06667                 0.06667
-#&gt; 3    3          0.06667            0.06667                 0.03333
-#&gt; 4    4          0.00000            0.06667                 0.06667
-#&gt; 5    5          0.00000            0.03333                 0.00000
+#&gt; $`iris-example`$classif.lda
+#&gt;   iter    mmce
+#&gt; 1    1 0.00000
+#&gt; 2    2 0.03333
+#&gt; 3    3 0.06667
+#&gt; 4    4 0.00000
+#&gt; 5    5 0.00000
+#&gt; 
+#&gt; $`iris-example`$classif.rpart
+#&gt;   iter    mmce
+#&gt; 1    1 0.13333
+#&gt; 2    2 0.06667
+#&gt; 3    3 0.06667
+#&gt; 4    4 0.06667
+#&gt; 5    5 0.03333
+#&gt; 
+#&gt; $`iris-example`$classif.ksvm.tuned
+#&gt;   iter    mmce
+#&gt; 1    1 0.03333
+#&gt; 2    2 0.06667
+#&gt; 3    3 0.03333
+#&gt; 4    4 0.06667
+#&gt; 5    5 0.00000
+#&gt; 
 #&gt; 
 #&gt; $`Sonar-example`
-#&gt;   iter classif.lda.mmce classif.rpart.mmce classif.ksvm.tuned.mmce
-#&gt; 1    1           0.2381             0.3810                  0.4286
-#&gt; 2    2           0.2439             0.2439                  0.3415
-#&gt; 3    3           0.2857             0.4524                  0.6429
-#&gt; 4    4           0.2927             0.2927                  0.5854
-#&gt; 5    5           0.2143             0.2857                  0.5476
+#&gt; $`Sonar-example`$classif.lda
+#&gt;   iter   mmce
+#&gt; 1    1 0.2381
+#&gt; 2    2 0.2439
+#&gt; 3    3 0.2857
+#&gt; 4    4 0.2927
+#&gt; 5    5 0.2143
+#&gt; 
+#&gt; $`Sonar-example`$classif.rpart
+#&gt;   iter   mmce
+#&gt; 1    1 0.3810
+#&gt; 2    2 0.2439
+#&gt; 3    3 0.4524
+#&gt; 4    4 0.2927
+#&gt; 5    5 0.2857
+#&gt; 
+#&gt; $`Sonar-example`$classif.ksvm.tuned
+#&gt;   iter   mmce
+#&gt; 1    1 0.4286
+#&gt; 2    2 0.3415
+#&gt; 3    3 0.6429
+#&gt; 4    4 0.5854
+#&gt; 5    5 0.5476
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Tuned parameter for SVM
-getTuneResult(res)
+getBMRTuneResults(res)
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; $`iris-example`
@@ -594,7 +687,7 @@ in.rdesc = makeResampleDesc(&quot;CV&quot;, iter = 2)
 
 ## Feature selection with sequential forward search (sfs)
 lrn = makeFeatSelWrapper(&quot;classif.lda&quot;, resampling = in.rdesc, control = ctrl, 
-    show.info = FALSE)
+  show.info = FALSE)
 
 ## Let's compare two learners
 lrns = list(makeLearner(&quot;classif.rpart&quot;), lrn)
@@ -607,13 +700,13 @@ res = benchmark(tasks = iris.task, learners = lrns, resampling = out.rdesc, show
 res
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;           task             learner mmce.test.mean
+<pre class="prettyprint well"><code>#&gt;        task.id          learner.id mmce.test.mean
 #&gt; 1 iris-example       classif.rpart        0.06667
 #&gt; 2 iris-example classif.lda.featsel        0.04667
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Which features have been selected (in the outer resampling steps)?
-getFeatSelResult(res)
+getBMRFeatSelResults(res)
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; $`iris-example`
@@ -638,14 +731,21 @@ getFeatSelResult(res)
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Performances on individual test data sets
-getPerformances(res)
+getBMRPerformances(res)
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; $`iris-example`
-#&gt;   iter classif.rpart.mmce classif.lda.featsel.mmce
-#&gt; 1    1               0.06                     0.06
-#&gt; 2    2               0.04                     0.04
-#&gt; 3    3               0.10                     0.04
+#&gt; $`iris-example`$classif.rpart
+#&gt;   iter mmce
+#&gt; 1    1 0.06
+#&gt; 2    2 0.04
+#&gt; 3    3 0.10
+#&gt; 
+#&gt; $`iris-example`$classif.lda.featsel
+#&gt;   iter mmce
+#&gt; 1    1 0.06
+#&gt; 2    2 0.04
+#&gt; 3    3 0.04
 </code></pre>
 
 </div>
