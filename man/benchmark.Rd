@@ -27,13 +27,14 @@ Print verbose output on console?
 Default is set via \code{\link{configureMlr}}.}
 }
 \value{
-[\code{BenchmarkResult}].
+[\code{\link{BenchmarkResult}}].
 }
 \description{
 Complete benchmark experiment to compare different learning algorithms across one or more tasks
 w.r.t. a given resampling strategy. Experiments are paired, meaning always the same
 training / test sets are used for the different learners.
-Furhtermore, your learners can be automatically tuned using \code{\link{makeTuneWrapper}}.
+Furthermore, you can of course pass \dQuote{enhanced} learners via wrappers, e.g., a
+learner can be automatically tuned using \code{\link{makeTuneWrapper}}.
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}};

@@ -1,3 +1,9 @@
+mlr_2.3:
+- mlr supports ViperCharts plots now
+
+- new functions
+-- plotViperCharts
+
 mlr_2.2:
 - The web tutorial was MUCH improved!
 - more example tasks and data sets

@@ -39,7 +39,9 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setHyperPars}}; \code{\link{setId}};
   \code{\link{showHyperPars}}
 
-Other predict: \code{\link{getProbabilities}};
+Other predict: \code{\link{asROCRPrediction}};
+  \code{\link{getProbabilities}};
+  \code{\link{plotViperCharts}};
   \code{\link{predict.WrappedModel}}
 }
 

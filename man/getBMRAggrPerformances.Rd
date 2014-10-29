@@ -26,7 +26,7 @@ Default is \code{FALSE}}
 [\code{list} | \code{data.frame}]. See above.
 }
 \description{
-Either a list of lists of \dQuote{measure.test} data.frames, as returned by
+Either a list of lists of \dQuote{aggr} numeric vectors, as returned by
 \code{\link{resample}}, or these objects are rbind-ed with extra columns
 \dQuote{task.id} and \dQuote{learner.id}.
 }

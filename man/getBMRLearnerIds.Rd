@@ -10,7 +10,7 @@ getBMRLearnerIds(bmr, join = FALSE)
 Benchmark result.}
 
 \item{join}{[\code{logical(1)}]\cr
-For \code{FALSE}: Get list od character vectors, named by task.ids.
+For \code{FALSE}: Get list of character vectors, named by task.ids.
 For \code{TRUE}: Join these char vectors and make them unique.
 Default is \code{FALSE}.}
 }

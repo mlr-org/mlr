@@ -53,7 +53,9 @@ print(p)
 getProbabilities(p)
 }
 \seealso{
-Other predict: \code{\link{getProbabilities}};
+Other predict: \code{\link{asROCRPrediction}};
+  \code{\link{getProbabilities}};
+  \code{\link{plotViperCharts}};
   \code{\link{setPredictType}}
 }
 

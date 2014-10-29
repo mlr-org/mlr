@@ -26,14 +26,14 @@ Encoding: UTF-8
 Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 3.0.0),
-    ParamHelpers (>= 1.4),
+    ParamHelpers (>= 1.5),
     BBmisc (>= 1.7),
     stats
 Imports:
-    checkmate (>= 1.4),
+    checkmate (>= 1.5),
     codetools,
     ggplot2,
-    parallelMap (>= 1.1),
+    parallelMap (>= 1.2),
     plyr,
     survival
 Suggests:
@@ -95,4 +95,4 @@ Suggests:
     TH.data
 LazyData: yes
 ByteCompile: yes
-Version: 2.2
+Version: 2.3
