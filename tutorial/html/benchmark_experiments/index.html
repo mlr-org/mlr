@@ -281,8 +281,10 @@ set with one <a href="http://www.rdocumentation.org/packages/mlr/functions/makeL
 In the printed table the individual tasks and learners are referred to by their IDs.
 The entries show the 5-fold cross-validated mean misclassification error (<a href="http://www.rdocumentation.org/packages/mlr/functions/mmce.html">mmce</a>), which
 is the default performance measure for classification.</p>
-<p>The result is an object of class <a href="http://www.rdocumentation.org/packages/mlr/functions/BenchmarkResult.html">BenchmarkResult</a> and <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides several accessor 
-functions.
+<p>The result is an object of class <a href="http://www.rdocumentation.org/packages/mlr/functions/BenchmarkResult.html">BenchmarkResult</a>.
+<a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides several accessor functions, follow the naming convention
+<code>getBMR&lt;what_to_extract&gt;</code>, that allow to extract e.g. the performances or the predictions
+of the learning algorithms under consideration.
 Let's have a look at the benchmark result from the example above:</p>
 <pre class="prettyprint well"><code class="r">## Individual performances of the 5 cross-validation runs
 getBMRPerformances(res)
@@ -392,7 +394,24 @@ names(pred)
 #&gt; 36 36 setosa   setosa    1 test
 </code></pre>
 
-<p>Note that the task IDs are used to name the elements of <code>pred</code>.</p>
+<p>Note that in the examples above the task and learner IDs are used to name the list elements.
+The IDs can be accessed as follows:</p>
+<pre class="prettyprint well"><code class="r">getBMRTaskIds(res)
+</code></pre>
+
+<pre class="prettyprint well"><code>#&gt; [1] &quot;iris-example&quot;  &quot;Sonar-example&quot;
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">getBMRLearnerIds(res)
+</code></pre>
+
+<pre class="prettyprint well"><code>#&gt; $`iris-example`
+#&gt; [1] &quot;classif.lda&quot;   &quot;classif.rpart&quot;
+#&gt; 
+#&gt; $`Sonar-example`
+#&gt; [1] &quot;classif.lda&quot;   &quot;classif.rpart&quot;
+</code></pre>
+
 <h2 id="nested-resampling">Nested resampling</h2>
 <p>In order to get an unbiased estimate of the performance on new data,
 it is generally not enough to simply use repeated cross-validation
@@ -433,18 +452,8 @@ in.rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 ## Tune k-nearest neighbor
 lrn = makeTuneWrapper(&quot;classif.kknn&quot;, resampling = in.rdesc, par.set = ps, control = ctrl,
   show.info = FALSE)
-</code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Loading required package: kknn
-#&gt; 
-#&gt; Attaching package: 'kknn'
-#&gt; 
-#&gt; The following object is masked from 'package:caret':
-#&gt; 
-#&gt;     contr.dummy
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">## Define &quot;outer&quot; bootstrap indices
+## Define &quot;outer&quot; bootstrap indices
 out.rdesc = makeResampleDesc(&quot;Bootstrap&quot;, iters = 5)
 
 ## Merge it into a benchmark experiment
@@ -522,12 +531,8 @@ in.rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 ## Tune a SVM
 lrn = makeTuneWrapper(&quot;classif.ksvm&quot;, resampling = in.rdesc, par.set = ps, control = ctrl,
   show.info = FALSE)
-</code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Loading required package: kernlab
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">## Three learners to be compared
+## Three learners to be compared
 lrns = list(makeLearner(&quot;classif.lda&quot;), makeLearner(&quot;classif.rpart&quot;), lrn)
 
 ## Define &quot;outer&quot; cross-validation indices

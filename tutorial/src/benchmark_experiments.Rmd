@@ -32,8 +32,10 @@ In the printed table the individual tasks and learners are referred to by their 
 The entries show the 5-fold cross-validated mean misclassification error ([&mmce]), which
 is the default performance measure for classification.
 
-The result is an object of class [&BenchmarkResult] and [%mlr] provides several accessor 
-functions.
+The result is an object of class [&BenchmarkResult].
+[%mlr] provides several accessor functions, follow the naming convention
+``getBMR<what_to_extract>``, that allow to extract e.g. the performances or the predictions
+of the learning algorithms under consideration.
 Let's have a look at the benchmark result from the example above:
 
 ```{r}
@@ -48,7 +50,14 @@ pred = getBMRPredictions(res)
 names(pred)
 head(pred$`iris-example`)
 ```
-Note that the task IDs are used to name the elements of ``pred``.
+
+Note that in the examples above the task and learner IDs are used to name the list elements.
+The IDs can be accessed as follows:
+
+```{r}
+getBMRTaskIds(res)
+getBMRLearnerIds(res)
+```
 
 
 ## Nested resampling
