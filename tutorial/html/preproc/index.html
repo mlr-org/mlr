@@ -232,7 +232,7 @@
     
         <li class="main active"><a href="#data-preprocessing">Data Preprocessing</a></li>
         
-            <li><a href="#fusing-a-learner-with-preprocessing">Fusing a learner with preprocessing</a></li>
+            <li><a href="#fusing-a-learner-with-data-preprocessing">Fusing a learner with data preprocessing</a></li>
         
     
     </ul>
@@ -240,32 +240,55 @@
             <div class="col-md-9" role="main">
 
 <h1 id="data-preprocessing">Data Preprocessing</h1>
-<p><a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> offers several options for data preprocessing:</p>
+<p><a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> offers several options for data preprocessing.</p>
+<p>Some of the following simple methods were already mentioned in section
+<a href="../task/">Learning tasks</a>:</p>
 <ul>
-<li>Some simple options to modify a <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> described in section <a href="../task/">Learning tasks</a></li>
-<li><a href="../feature_selection/">Feature selection</a></li>
-<li><a href="../impute/">Imputation of missing values</a></li>
+<li><a href="http://www.rdocumentation.org/packages/mlr/functions/capLargeValues.html">capLargeValues</a>: Convert large/infinite numeric values in a <a href="http://www.rdocumentation.org/packages/base/functions/data.frame.html">data.frame</a>
+  or <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</li>
+<li><a href="http://www.rdocumentation.org/packages/mlr/functions/createDummyFeatures.html">createDummyFeatures</a>: Generate dummy variables for factor features in a
+  <a href="http://www.rdocumentation.org/packages/base/functions/data.frame.html">data.frame</a> or <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</li>
+<li><a href="http://www.rdocumentation.org/packages/mlr/functions/dropFeatures.html">dropFeatures</a>: Remove some features from a <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</li>
+<li><a href="http://www.rdocumentation.org/packages/mlr/functions/joinClassLevels.html">joinClassLevels</a>: Only for classification: Merge existing classes in a <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> to
+  new, larger classes.</li>
+<li><a href="http://www.rdocumentation.org/packages/mlr/functions/mergeSmallFactorLevels.html">mergeSmallFactorLevels</a>: Merge infrequent levels of factor features in a <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</li>
+<li><a href="http://www.rdocumentation.org/packages/mlr/functions/normalizeFeatures.html">normalizeFeatures</a>: Normalize features in a <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> by different methods, e.g.,
+  standardization or scaling to a certain range.</li>
+<li><a href="http://www.rdocumentation.org/packages/mlr/functions/removeConstantFeatures.html">removeConstantFeatures</a>: Remove constant features from a <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</li>
+<li><a href="http://www.rdocumentation.org/packages/mlr/functions/subsetTask.html">subsetTask</a>: Remove observations and/or features from a <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</li>
 </ul>
-<p>Moreover, <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> permits to fuse a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> with any preprocessing method of
-your choice like any kind of data transformation, normalization, dimensionality reduction or
-outlier removal.
-Parameters controlling the preprocessing as, e.g., the percentage of outliers to be removed
-can be <a href="../tune/">tuned</a> alongside the base learner parameters.</p>
-<h2 id="fusing-a-learner-with-preprocessing">Fusing a learner with preprocessing</h2>
+<p>Moreover, distinct sections in this tutorial are devoted to</p>
+<ul>
+<li><a href="../feature_selection/">Feature selection</a> and</li>
+<li><a href="../impute/">Imputation of missing values</a>.</li>
+</ul>
+<p>Additionally, <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> permits to fuse a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> with any preprocessing method
+of your choice like any kind of data transformation, normalization, dimensionality reduction
+or outlier removal.</p>
+<h2 id="fusing-a-learner-with-data-preprocessing">Fusing a learner with data preprocessing</h2>
 <p>A <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> can be coupled with a preprocessing method by function 
-<a href="http://www.rdocumentation.org/packages/mlr/functions/makePreprocWrapper.html">makePreprocWrapper</a>.
-As described in the section about <a href="../wrapper/">wrapped learners</a> wrappers are implemented
+<a href="http://www.rdocumentation.org/packages/mlr/functions/makePreprocWrapper.html">makePreprocWrapper</a>.</p>
+<p>As described in the section about <a href="../wrapper/">wrapped learners</a> wrappers are implemented
 using a <em>train</em> and a <em>predict</em> method.
-In case of preprocessing these methods specify how to transform the data before training
-and prediction and are completely defined by the user.</p>
-<p>Let's have a look at a simple example:
+In case of preprocessing wrappers these methods specify how to transform the data before
+training and prediction and are <em>completely defined by the user</em>.</p>
+<p>The specified preprocessing steps then "belong" to the wrapped <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>.
+In contrast to the preprocessing options listed above like <a href="http://www.rdocumentation.org/packages/mlr/functions/normalizeFeatures.html">normalizeFeatures</a></p>
+<ul>
+<li>the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> itself remains unchanged,</li>
+<li>the preprocessing is not done globally, i.e., for the whole data set, but for every pair of
+  training/test data sets in e.g. resampling,</li>
+<li>any parameters controlling the preprocessing as, e.g., the percentage of outliers to be removed
+  can be <a href="../tune/">tuned</a> together with the base learner parameters.</li>
+</ul>
+<p>Let's see how to create a preprocessing wrapper using the following simple example:
 Some learning methods as e.g. k nearest neighbors, support vector machines or neural networks
 usually require scaled features.
-Many, but not all have a built-in scaling option where the training data set is scaled before
-model fitting and the test data set is scaled before making predictions, thereby using the
-scaling parameters from the training stage.
-In the following we show how to couple a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> with function
-<a href="http://www.rdocumentation.org/packages/base/functions/scale.html">scale</a>.</p>
+Many, but not all, have a built-in scaling option where the training data set is scaled before
+model fitting and the test data set is scaled accordingly, that is by using the scaling
+parameters from the training stage, before making predictions.
+In the following we show how to add a scaling option to a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> by coupling
+it with function <a href="http://www.rdocumentation.org/packages/base/functions/scale.html">scale</a>.</p>
 <h3 id="specifying-the-train-method">Specifying the train method</h3>
 <p>The <em>train</em> function has to be a function with the following arguments:</p>
 <ul>

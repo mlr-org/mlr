@@ -1,35 +1,60 @@
 # Data Preprocessing
 
-[%mlr] offers several options for data preprocessing:
+[%mlr] offers several options for data preprocessing.
 
-* Some simple options to modify a [&Task] described in section [Learning tasks](task.md)
-* [Feature selection](feature_selection.md)
-* [Imputation of missing values](impute.md)
+Some of the following simple methods were already mentioned in section
+[Learning tasks](task.md):
 
-Moreover, [%mlr] permits to fuse a [Learner](&makeLearner) with any preprocessing method of
-your choice like any kind of data transformation, normalization, dimensionality reduction or
-outlier removal.
-Parameters controlling the preprocessing as, e.g., the percentage of outliers to be removed
-can be [tuned](tune.md) alongside the base learner parameters.
+* [&capLargeValues]: Convert large/infinite numeric values in a [data.frame](&base::data.frame)
+  or [&Task].
+* [&createDummyFeatures]: Generate dummy variables for factor features in a
+  [data.frame](&base::data.frame) or [&Task].
+* [&dropFeatures]: Remove some features from a [&Task].
+* [&joinClassLevels]: Only for classification: Merge existing classes in a [&Task] to
+  new, larger classes.
+* [&mergeSmallFactorLevels]: Merge infrequent levels of factor features in a [&Task].
+* [&normalizeFeatures]: Normalize features in a [&Task] by different methods, e.g.,
+  standardization or scaling to a certain range.
+* [&removeConstantFeatures]: Remove constant features from a [&Task].
+* [&subsetTask]: Remove observations and/or features from a [&Task].
+
+Moreover, distinct sections in this tutorial are devoted to
+
+* [Feature selection](feature_selection.md) and
+* [Imputation of missing values](impute.md).
+
+Additionally, [%mlr] permits to fuse a [Learner](&makeLearner) with any preprocessing method
+of your choice like any kind of data transformation, normalization, dimensionality reduction
+or outlier removal.
 
 
-## Fusing a learner with preprocessing
+## Fusing a learner with data preprocessing
 
 A [Learner](&makeLearner) can be coupled with a preprocessing method by function 
 [&makePreprocWrapper].
+
 As described in the section about [wrapped learners](wrapper.md) wrappers are implemented
 using a *train* and a *predict* method.
-In case of preprocessing these methods specify how to transform the data before training
-and prediction and are completely defined by the user.
+In case of preprocessing wrappers these methods specify how to transform the data before
+training and prediction and are *completely defined by the user*.
 
-Let's have a look at a simple example:
+The specified preprocessing steps then "belong" to the wrapped [Learner](&makeLearner).
+In contrast to the preprocessing options listed above like [&normalizeFeatures]
+
+* the [&Task] itself remains unchanged,
+* the preprocessing is not done globally, i.e., for the whole data set, but for every pair of
+  training/test data sets in e.g. resampling,
+* any parameters controlling the preprocessing as, e.g., the percentage of outliers to be removed
+  can be [tuned](tune.md) together with the base learner parameters.
+
+Let's see how to create a preprocessing wrapper using the following simple example:
 Some learning methods as e.g. k nearest neighbors, support vector machines or neural networks
 usually require scaled features.
-Many, but not all have a built-in scaling option where the training data set is scaled before
-model fitting and the test data set is scaled before making predictions, thereby using the
-scaling parameters from the training stage.
-In the following we show how to couple a [Learner](&makeLearner) with function
-[scale](&base::scale).
+Many, but not all, have a built-in scaling option where the training data set is scaled before
+model fitting and the test data set is scaled accordingly, that is by using the scaling
+parameters from the training stage, before making predictions.
+In the following we show how to add a scaling option to a [Learner](&makeLearner) by coupling
+it with function [scale](&base::scale).
 
 
 ### Specifying the train method
