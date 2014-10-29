@@ -32,7 +32,11 @@ print(cl1)
 print(cl2)
 }
 \seealso{
-Other learner: \code{\link{getHyperPars}};
+Other learner: \code{\link{LearnerProperties}},
+  \code{\link{addProperties}}, \code{\link{hasProperties}},
+  \code{\link{removeProperties}},
+  \code{\link{setProperties}}; \code{\link{Learner}},
+  \code{\link{makeLearner}}; \code{\link{getHyperPars}};
   \code{\link{getParamSet}}; \code{\link{removeHyperPars}};
   \code{\link{setId}}; \code{\link{setPredictType}};
   \code{\link{showHyperPars}}

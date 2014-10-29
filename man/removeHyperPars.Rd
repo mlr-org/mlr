@@ -22,7 +22,11 @@ Remove settings (previously set through mlr) for some parameters.
 Which means that the default behavior for that param will now be used.
 }
 \seealso{
-Other learner: \code{\link{getHyperPars}};
+Other learner: \code{\link{LearnerProperties}},
+  \code{\link{addProperties}}, \code{\link{hasProperties}},
+  \code{\link{removeProperties}},
+  \code{\link{setProperties}}; \code{\link{Learner}},
+  \code{\link{makeLearner}}; \code{\link{getHyperPars}};
   \code{\link{getParamSet}}; \code{\link{setHyperPars}};
   \code{\link{setId}}; \code{\link{setPredictType}};
   \code{\link{showHyperPars}}
