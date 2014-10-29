@@ -30,11 +30,12 @@ Depends:
     BBmisc (>= 1.7),
     stats
 Imports:
-    parallelMap (>= 1.1),
-    codetools,
-    survival,
     checkmate (>= 1.4),
-    ggplot2
+    codetools,
+    ggplot2,
+    parallelMap (>= 1.1),
+    plyr,
+    survival
 Suggests:
     testthat,
     ada,

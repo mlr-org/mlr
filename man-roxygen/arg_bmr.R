@@ -1,3 +1,3 @@
-#' @param object [\code{\link{BenchmarkResult}}]\cr
+#' @param bmr [\code{\link{BenchmarkResult}}]\cr
 #'   Benchmark result.
 

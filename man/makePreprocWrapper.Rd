@@ -32,7 +32,7 @@ parameters in \code{args}.
 Default is empty set.}
 
 \item{par.vals}{[\code{list}]\cr
-Named list of default values for params in \code{args} repectively \code{par.set}.
+Named list of default values for params in \code{args} respectively \code{par.set}.
 Default is empty list.}
 }
 \value{

@@ -1,26 +1,12 @@
-#' Returns the optimal hyperparameters and optimization path after training or benchmarking.
+#' Returns the optimal hyperparameters and optimization path after training.
 #'
-#' @param object [\code{\link{WrappedModel}} | \code{BenchmarkResult}]\cr
-#'   Trained Model created with \code{\link{makeTuneWrapper}} or benchmark result created with \code{\link{benchmark}}.
-#' @return [\code{\link{TuneResult}} or list of \code{\link{TuneResult}}s].
-#'   \code{NULL}, if no tuning was performed.
+#' @param object [\code{\link{WrappedModel}}]\cr
+#'   Trained Model created with \code{\link{makeTuneWrapper}}.
+#' @return [\code{\link{TuneResult}}].
 #' @family tune
-#' @family benchmark
 #' @export
 getTuneResult = function(object) {
-  UseMethod("getTuneResult")
-}
-
-#' @export
-getTuneResult.WrappedModel = function(object) {
-  if (inherits(object, "TuneModel"))
-    object$learner.model$opt.result
-  else
-    NULL
-}
-
-#' @export
-getTuneResult.BenchmarkResult = function(object) {
-  getExtract(object, "TuneResult")
+  assertClass(object, "TuneModel")
+  object$learner.model$opt.result
 }
 

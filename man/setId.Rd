@@ -20,7 +20,11 @@ New id for learner.}
 Set the id of a learner object.
 }
 \seealso{
-Other learner: \code{\link{getHyperPars}};
+Other learner: \code{\link{LearnerProperties}},
+  \code{\link{addProperties}}, \code{\link{hasProperties}},
+  \code{\link{removeProperties}},
+  \code{\link{setProperties}}; \code{\link{Learner}},
+  \code{\link{makeLearner}}; \code{\link{getHyperPars}};
   \code{\link{getParamSet}}; \code{\link{removeHyperPars}};
   \code{\link{setHyperPars}}; \code{\link{setPredictType}};
   \code{\link{showHyperPars}}

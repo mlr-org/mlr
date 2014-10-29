@@ -29,6 +29,14 @@ Vector of properties to set, add, remove or query.}
  \code{hasProperties} returns a logical vector of the same length of \code{props}.
 }
 \description{
-Set, add, remove or query properties of learners
+Properties can be accessed with \code{learner$properties}, which returns a
+character vector.
+}
+\seealso{
+Other learner: \code{\link{Learner}},
+  \code{\link{makeLearner}}; \code{\link{getHyperPars}};
+  \code{\link{getParamSet}}; \code{\link{removeHyperPars}};
+  \code{\link{setHyperPars}}; \code{\link{setId}};
+  \code{\link{setPredictType}}; \code{\link{showHyperPars}}
 }
 

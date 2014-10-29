@@ -37,6 +37,7 @@ Other task: \code{\link{getTaskCosts}};
   \code{\link{getTaskFeatureNames}};
   \code{\link{getTaskFormula}},
   \code{\link{getTaskFormulaAsString}};
-  \code{\link{getTaskNFeats}}; \code{\link{subsetTask}}
+  \code{\link{getTaskNFeats}}; \code{\link{getTaskType}};
+  \code{\link{subsetTask}}
 }
 

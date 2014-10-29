@@ -45,99 +45,98 @@
 \title{Performance measures.}
 \format{none}
 \usage{
-none
+featperc
 
-none
+timetrain
 
-none
+timepredict
 
-none
+timeboth
 
-none
+sse
 
-none
+mse
 
-none
+rmse
 
-none
+medse
 
-none
+sae
 
-none
+mae
 
-none
+medae
 
-none
+mmce
 
-none
+acc
 
-none
+ber
 
-none
+multiclass.auc
 
-none
+auc
 
-none
+bac
 
-none
+tp
 
-none
+tn
 
-none
+fp
 
-none
+fn
 
-none
+tpr
 
-none
+tnr
 
-none
+fpr
 
-none
+fnr
 
-none
+ppv
 
-none
+npv
 
-none
+fdr
 
-none
+mcc
 
-none
+f1
 
-none
+gmean
 
-none
+gpr
 
-none
-
-none
+cindex
 
 meancosts
 
 mcp
 
-none
+db
 
-none
+dunn
 
-none
+G1
 
-none
+G2
 
-none
+silhouette
 }
 \description{
 A performance measure is evaluated after a single train/predict step and returns a single number to assess the quality
 of the prediction (or maybe only the model, think AIC).
 The measure itself knows whether it wants to be minimized or maximized and for what tasks it is applicable.
-See below for a list of already implemented measures.
+
+All supported measures can be found by \code{\link{listMeasures}} or as a table
+in the tutorial appendix: \url{http://berndbischl.github.io/mlr/tutorial/html/measures/}.
+
 If you want a measure for a misclassification cost matrix, look at \code{\link{makeCostMeasure}}.
 If you want to implement your own measure, look at \code{\link{makeMeasure}}.
 }
 \seealso{
-\code{\link{listMeasures}}
-
 Other performance: \code{\link{Measure}},
   \code{\link{makeMeasure}}; \code{\link{makeCostMeasure}};
   \code{\link{makeCustomResampledMeasure}};

@@ -5,6 +5,12 @@ getTaskDescription = function(x) {
     x$task.desc
 }
 
+#' Get the type of the task.
+#'
+#' @template arg_task
+#' @return [\code{character}].
+#' @export
+#' @family task
 getTaskType = function(x) {
   getTaskDescription(x)$type
 }
@@ -293,8 +299,9 @@ changeData = function(task, data, costs, weights) {
     weights = task$env$weights
   task$env = new.env(parent = emptyenv())
   task$env$data = data
-  task$env$costs = costs
-  # FIXME: I hate R
+  # FIXME: I hate R, this is all bad
+  if (!is.null(costs))
+    task$env$costs = costs
   if (is.null(weights))
     task["weights"] = list(NULL)
   else
