@@ -5,6 +5,12 @@ getTaskDescription = function(x) {
     x$task.desc
 }
 
+#' Get the type of the task.
+#'
+#' @template arg_task
+#' @return [\code{character}].
+#' @export
+#' @family task
 getTaskType = function(x) {
   getTaskDescription(x)$type
 }
