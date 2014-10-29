@@ -102,10 +102,10 @@ r$aggr
 You may want to know which features have been used. Luckily, we have called
 [&resample] with the argument `models = TRUE`, which means that `r$models`
 contains a [list](&base::list) of [models](&makeWrappedModel) fitted in the individual resampling iterations.
-In order to access the selected feature subsets we can call [&getFilterResult] on each model.
+In order to access the selected feature subsets we can call [&getFilteredFeatures] on each model.
 
 ```{r}
-sfeats = sapply(r$models, getFilterResult)
+sfeats = sapply(r$models, getFilteredFeatures)
 table(sfeats)
 ```
 
@@ -155,7 +155,7 @@ lrn = makeFilterWrapper(learner = "regr.lm", fw.method = "chi.squared", fw.perc 
 mod = train(lrn, bh.task)
 mod
 
-getFilterResult(mod)
+getFilteredFeatures(mod)
 ```
 
 
@@ -235,7 +235,7 @@ rdesc = makeResampleDesc("Holdout")
 
 ## Select features
 sfeats = selectFeatures(learner = "surv.coxph", task = wpbc.task, resampling = rdesc,
-    control = ctrl, show.info = FALSE)
+  control = ctrl, show.info = FALSE)
 sfeats
 ```
 
@@ -264,7 +264,7 @@ ctrl = makeFeatSelControlSequential(method = "sfs", alpha = 0.02)
 ## Select features
 rdesc = makeResampleDesc("CV", iters = 10)
 sfeats = selectFeatures(learner = "regr.lm", task = bh.task, resampling = rdesc, control = ctrl,
-    show.info = FALSE)
+  show.info = FALSE)
 sfeats
 ```
 
@@ -311,7 +311,7 @@ follows:
 out.rdesc = makeResampleDesc("CV", iters = 5)
 
 r = resample(learner = lrn, task = wpbc.task, resampling = out.rdesc, models = TRUE,
-    show.info = FALSE)
+  show.info = FALSE)
 r$aggr
 ```
 

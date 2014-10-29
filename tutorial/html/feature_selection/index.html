@@ -367,8 +367,8 @@ r$aggr
 <p>You may want to know which features have been used. Luckily, we have called
 <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a> with the argument <code>models = TRUE</code>, which means that <code>r$models</code>
 contains a <a href="http://www.rdocumentation.org/packages/base/functions/list.html">list</a> of <a href="http://www.rdocumentation.org/packages/mlr/functions/makeWrappedModel.html">models</a> fitted in the individual resampling iterations.
-In order to access the selected feature subsets we can call <a href="http://www.rdocumentation.org/packages/mlr/functions/getFilterResult.html">getFilterResult</a> on each model.</p>
-<pre class="prettyprint well"><code class="r">sfeats = sapply(r$models, getFilterResult)
+In order to access the selected feature subsets we can call <a href="http://www.rdocumentation.org/packages/mlr/functions/getFilteredFeatures.html">getFilteredFeatures</a> on each model.</p>
+<pre class="prettyprint well"><code class="r">sfeats = sapply(r$models, getFilteredFeatures)
 table(sfeats)
 </code></pre>
 
@@ -423,13 +423,13 @@ res = tuneParams(lrn, task = bh.task, resampling = rdesc, par.set = ps,
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;   fw.perc mse.test.mean dob eol error.message exec.time
-#&gt; 1     0.2         40.60   1  NA          &lt;NA&gt;     0.756
-#&gt; 2    0.25         40.60   2  NA          &lt;NA&gt;     0.521
-#&gt; 3     0.3         37.06   3  NA          &lt;NA&gt;     0.719
-#&gt; 4    0.35         35.84   4  NA          &lt;NA&gt;     0.395
-#&gt; 5     0.4         35.84   5  NA          &lt;NA&gt;     0.393
-#&gt; 6    0.45         27.40   6  NA          &lt;NA&gt;     0.414
-#&gt; 7     0.5         27.40   7  NA          &lt;NA&gt;     0.618
+#&gt; 1     0.2         40.60   1  NA          &lt;NA&gt;     0.422
+#&gt; 2    0.25         40.60   2  NA          &lt;NA&gt;     0.373
+#&gt; 3     0.3         37.06   3  NA          &lt;NA&gt;     0.352
+#&gt; 4    0.35         35.84   4  NA          &lt;NA&gt;     0.412
+#&gt; 5     0.4         35.84   5  NA          &lt;NA&gt;     0.331
+#&gt; 6    0.45         27.40   6  NA          &lt;NA&gt;     0.347
+#&gt; 7     0.5         27.40   7  NA          &lt;NA&gt;     0.341
 </code></pre>
 
 <p>The optimal percentage and the corresponding performance can be accessed as follows:</p>
@@ -462,12 +462,10 @@ mod
 #&gt; Hyperparameters: fw.method=chi.squared,fw.perc=0.5
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">getFilterResult(mod)
+<pre class="prettyprint well"><code class="r">getFilteredFeatures(mod)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [1] &quot;rad&quot;   &quot;lstat&quot; &quot;dis&quot;   &quot;crim&quot;  &quot;zn&quot;    &quot;rm&quot;   
-#&gt; attr(,&quot;class&quot;)
-#&gt; [1] &quot;FilterResult&quot; &quot;character&quot;
+<pre class="prettyprint well"><code>#&gt; [1] &quot;rad&quot;   &quot;lstat&quot; &quot;dis&quot;   &quot;crim&quot;  &quot;zn&quot;    &quot;rm&quot;
 </code></pre>
 
 <p>Here is another example using <a href="../tune/">multi-criteria tuning</a>.
@@ -478,12 +476,7 @@ During tuning both, the false positive and the false negative rate (<a href="htt
 minimized. As search strategy we choose a random search
 (see <a href="http://www.rdocumentation.org/packages/mlr/functions/TuneMultiCritControl.html">makeTuneMultiCritControlRandom</a>).</p>
 <pre class="prettyprint well"><code class="r">lrn = makeFilterWrapper(learner = &quot;classif.lda&quot;, fw.method = &quot;chi.squared&quot;)
-</code></pre>
-
-<pre class="prettyprint well"><code>#&gt; Loading required package: MASS
-</code></pre>
-
-<pre class="prettyprint well"><code class="r">ps = makeParamSet(makeNumericParam(&quot;fw.threshold&quot;, lower = 0.1, upper = 0.9))
+ps = makeParamSet(makeNumericParam(&quot;fw.threshold&quot;, lower = 0.1, upper = 0.9))
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
 res = tuneParamsMultiCrit(lrn, task = sonar.task, resampling = rdesc, par.set = ps,
   measures = list(fpr, fnr), control = makeTuneMultiCritControlRandom(maxit = 50L),
@@ -510,12 +503,12 @@ res = tuneParamsMultiCrit(lrn, task = sonar.task, resampling = rdesc, par.set = 
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;   fw.threshold fpr.test.mean fnr.test.mean dob eol error.message exec.time
-#&gt; 1       0.4892        0.3093        0.2639   1  NA          &lt;NA&gt;     5.322
-#&gt; 2       0.2482        0.2045        0.2320   2  NA          &lt;NA&gt;     5.112
-#&gt; 3       0.7692        0.5128        0.3460   3  NA          &lt;NA&gt;     5.815
-#&gt; 4       0.1470        0.2045        0.2320   4  NA          &lt;NA&gt;     5.783
-#&gt; 5       0.5958        0.5028        0.5240   5  NA          &lt;NA&gt;     4.194
-#&gt; 6       0.6892        0.6324        0.4481   6  NA          &lt;NA&gt;     4.673
+#&gt; 1       0.4892        0.3093        0.2639   1  NA          &lt;NA&gt;     3.618
+#&gt; 2       0.2482        0.2045        0.2320   2  NA          &lt;NA&gt;     3.714
+#&gt; 3       0.7692        0.5128        0.3460   3  NA          &lt;NA&gt;     3.375
+#&gt; 4       0.1470        0.2045        0.2320   4  NA          &lt;NA&gt;     3.852
+#&gt; 5       0.5958        0.5028        0.5240   5  NA          &lt;NA&gt;     3.331
+#&gt; 6       0.6892        0.6324        0.4481   6  NA          &lt;NA&gt;     3.484
 </code></pre>
 
 <p>The results can be visualized with function <a href="http://www.rdocumentation.org/packages/mlr/functions/plotTuneMultiCritResult.html">plotTuneMultiCritResult</a>.
@@ -572,7 +565,7 @@ rdesc = makeResampleDesc(&quot;Holdout&quot;)
 
 ## Select features
 sfeats = selectFeatures(learner = &quot;surv.coxph&quot;, task = wpbc.task, resampling = rdesc,
-    control = ctrl, show.info = FALSE)
+  control = ctrl, show.info = FALSE)
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; Loading required package: survival
@@ -652,7 +645,7 @@ ctrl = makeFeatSelControlSequential(method = &quot;sfs&quot;, alpha = 0.02)
 ## Select features
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
 sfeats = selectFeatures(learner = &quot;regr.lm&quot;, task = bh.task, resampling = rdesc, control = ctrl,
-    show.info = FALSE)
+  show.info = FALSE)
 sfeats
 </code></pre>
 
@@ -738,7 +731,7 @@ follows:</p>
 <pre class="prettyprint well"><code class="r">out.rdesc = makeResampleDesc(&quot;CV&quot;, iters = 5)
 
 r = resample(learner = lrn, task = wpbc.task, resampling = out.rdesc, models = TRUE,
-    show.info = FALSE)
+  show.info = FALSE)
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; Warning: Ran out of iterations and did not converge
