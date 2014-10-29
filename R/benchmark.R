@@ -4,7 +4,8 @@
 #' Complete benchmark experiment to compare different learning algorithms across one or more tasks
 #' w.r.t. a given resampling strategy. Experiments are paired, meaning always the same
 #' training / test sets are used for the different learners.
-#' Furhtermore, your learners can be automatically tuned using \code{\link{makeTuneWrapper}}.
+#' Furthermore, you can of course pass \dQuote{enhanced} learners via wrappers, e.g., a
+#' learner can be automatically tuned using \code{\link{makeTuneWrapper}}.
 #'
 #' @param learners [(list of) \code{\link{Learner}}]\cr
 #'   Learning algorithms which should be compared.
@@ -18,7 +19,7 @@
 #'   Performance measures for all tasks.
 #'   If missing, the default measure of the first task is used.
 #' @template arg_showinfo
-#' @return [\code{BenchmarkResult}].
+#' @return [\code{\link{BenchmarkResult}}].
 #' @family benchmark
 #' @export
 benchmark = function(learners, tasks, resamplings, measures, show.info = getMlrOption("show.info")) {
