@@ -26,6 +26,7 @@ predictLearner = function(.learner, .model, .newdata, ...) {
   if (inherits(lmod, "NoFeaturesModel")) {
     predict_nofeatures(.model, .newdata)
   } else {
+    assertDataFrame(.newdata, min.rows = 1L, min.cols = 1L)
     UseMethod("predictLearner")
   }
 }

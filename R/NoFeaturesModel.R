@@ -22,7 +22,7 @@ predict_nofeatures = function(model, newdata) {
   }
   if (type == "surv") {
     if (model$learner$predict.type == "response")
-      return(runif(nrow(y)))
+      return(runif(nrow(newdata)))
     # FIXME: probs / brier for survival should use something like median survival time
   }
   stopf("NoFeaturesModel for learner type '%s' not implemented", type)

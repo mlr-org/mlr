@@ -79,7 +79,8 @@ trainLearner.FilterWrapper = function(.learner, .task, .subset, .weights = NULL,
 
 #' @export
 predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
-  NextMethod(.newdata = .newdata[, .model$learner.model$next.model$features, drop = FALSE])
+  features = getFilteredFeatures(.model)
+  NextMethod(.newdata = .newdata[, features, drop = FALSE])
 }
 
 #' Returns the filtered features.
