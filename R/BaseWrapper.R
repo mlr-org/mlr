@@ -11,7 +11,7 @@ makeBaseWrapper = function(id, next.learner, package = character(0L), par.set = 
     id = id,
     type = next.learner$type,
     predict.type = next.learner$predict.type,
-    package = c(package, next.learner$package),
+    package = union(package, next.learner$package),
     par.set = par.set,
     par.vals = par.vals,
     properties = next.learner$properties,
