@@ -24,7 +24,7 @@ makeBaseWrapper = function(id, next.learner, package = character(0L), par.set = 
 predictLearner.BaseWrapper = function(.learner, .model, .newdata, ...) {
   args = removeFromDots(names(.learner$par.vals), ...)
   do.call(predictLearner, c(
-    list(.learner$next.learner, .model$learner.model$next.model, .newdata),
+    list(.learner = .learner$next.learner, .model = .model$learner.model$next.model, .newdata = .newdata),
     args)
   )
 }
