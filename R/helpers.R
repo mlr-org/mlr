@@ -32,3 +32,12 @@ getLearnerOptions = function(lrn, opts) {
   lrn.opts = getLeafLearner(lrn)$config
   setNames(lapply(opts, function(x) lrn.opts[[x]] %??% getMlrOption(x)), opts)
 }
+
+# FIXME: remove after BBmisc update
+requirePackages = function(..., suppressStartup = TRUE) {
+  if (suppressStartup) {
+    suppressPackageStartupMessages(BBmisc::requirePackages(...))
+  } else {
+    BBmisc::requirePackages(...)
+  }
+}
