@@ -120,7 +120,7 @@ r = resample("classif.lda", iris.task, rdesc)
 ## Accessing individual learner models
 
 In each resampling iteration a [Learner](&makeLearner) is fitted on the respective training set.
-By default, the resulting [&WrappedModel]s are not returned by [&resample].
+By default, the resulting [&makeWrappedModel]s are not returned by [&resample].
 If you want to keep them, set ``models = TRUE`` when calling [&resample].
 
 ```{r}
@@ -131,9 +131,9 @@ r = resample("classif.lda", iris.task, rdesc, models = TRUE)
 r$models
 ```
 
-Keeping only certain information instead of entire [models](&WrappedModel), for example the
+Keeping only certain information instead of entire [models](&makeWrappedModel), for example the
 variable importance in a regression tree, can be achieved using the ``extract`` argument.
-The function passed to ``extract`` is applied to each [model](&WrappedModel) fitted on one of
+The function passed to ``extract`` is applied to each [model](&makeWrappedModel) fitted on one of
 the 3 training sets.
 
 ```{r}

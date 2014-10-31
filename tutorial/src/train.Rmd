@@ -89,7 +89,7 @@ The weights in [&train] overwrite the weights in [&Task].
 
 ## Wrapped models
 
-[&train] returns an object of class [&WrappedModel], which wraps the
+[&train] returns an object of class [&makeWrappedModel], which wraps the
 particular model of the underlying **R** learning method. The wrapped model contains the output as well as the actual model.
 It can subsequently be used to perform a [prediction](&predict.WrappedModel) for new observations.
 
