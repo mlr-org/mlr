@@ -32,7 +32,7 @@ makeRLearner.classif.glmnet = function() {
       makeNumericLearnerParam(id = "prec", default = 1e-10),
       makeIntegerLearnerParam(id = "mxit", default = 100L, lower = 1L)
     ),
-    properties = c("numerics", "prob", "twoclass", "multiclass", "weights"),
+    properties = c("numerics", "factors", "prob", "twoclass", "multiclass", "weights"),
     par.vals = list(s = 0.01),
     name = "GLM with Lasso or Elasticnet Regularization",
     short.name = "glmnet",
@@ -43,7 +43,11 @@ makeRLearner.classif.glmnet = function() {
 #' @export
 trainLearner.classif.glmnet = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
-  args = c(list(x = as.matrix(d$data), y = d$target), list(...))
+  if (ncol(d$data) <= 1L) {
+    # glmnet needs at least two columns
+    return(makeNoFeaturesModel(d$target, .task$task.desc))
+  }
+  args = c(list(x = data.matrix(d$data), y = d$target), list(...))
   rm(d)
   if (!is.null(.weights))
     args$weights = .weights
@@ -64,14 +68,14 @@ trainLearner.classif.glmnet = function(.learner, .task, .subset, .weights = NULL
 #' @export
 predictLearner.classif.glmnet = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "prob"){
-    p = predict(.model$learner.model, newx = as.matrix(.newdata), type = "response",  ...)
+    p = predict(.model$learner.model, newx = data.matrix(.newdata), type = "response",  ...)
     if (length(.model$task.desc$class.levels) == 2) {
       p = setColNames(cbind(1 - p, p), .model$task.desc$class.levels)
     } else {
       p = p[,,1]
     }
   } else {
-    p = drop(predict(.model$learner.model, newx = as.matrix(.newdata), type = "class", ...))
+    p = drop(predict(.model$learner.model, newx = data.matrix(.newdata), type = "class", ...))
     p = factor(p, .model$task.desc$class.levels)
   }
   p
