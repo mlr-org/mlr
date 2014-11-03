@@ -21,14 +21,6 @@ Default is \dQuote{rocc}.}
 Open ViperCharts plot in web browser? If not you simple get the URL returned.
 Calls \code{\link{browseURL}}.
 Default is \code{TRUE}.}
-
-\item{embedded}{[\code{logical(1)}]\cr
-Display a legend in plot?
-Default is \code{FALSE}.}
-
-\item{legend}{[\code{logical(1)}]\cr
-Display a legend in plot?
-Default is \code{TRUE}.}
 }
 \value{
 [\code{character(1)}]. Invisibly returns the ViperCharts URL.

@@ -11,6 +11,8 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   exec.time = NA_real_
   set.pars.ok = TRUE
   learner2 = learner
+  threshold = NULL
+
   if (inherits(control, "TuneControl") || inherits(control, "TuneMultiCritControl")) {
     log.fun = logFunTune
     # set names before trafo
@@ -41,7 +43,6 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
       threshold = tune.th.res$th
     } else {
       y = r$aggr
-      threshold = NULL
     }
     # sort msgs by iters, so iter1, iter2, ...
     errmsgs = as.character(t(r$err.msgs[, -1L]))
