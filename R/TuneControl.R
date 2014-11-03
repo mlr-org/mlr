@@ -38,7 +38,7 @@
 #'   Named list of initial parameter values.
 #' @param tune.threshold [\code{logical(1)}]\cr
 #'   Should the threshold be tuned for the measure at hand, after each hyperparameter evaluation,
-#'   via \code\{\link{tuneThreshold}}?
+#'   via \code{\link{tuneThreshold}}?
 #'   Only works for classification if the predict type is \dQuote{prob}.
 #'   Default is \code{FALSE}.
 #' @param ... [any]\cr

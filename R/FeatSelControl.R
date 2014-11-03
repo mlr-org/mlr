@@ -50,7 +50,7 @@
 #'   Maximal number of features.
 #' @param tune.threshold [\code{logical(1)}]\cr
 #'   Should the threshold be tuned for the measure at hand, after each feature set evaluation,
-#'   via \code\{\link{tuneThreshold}}?
+#'   via \code{\link{tuneThreshold}}?
 #'   Only works for classification if the predict type is \dQuote{prob}.
 #'   Default is \code{FALSE}.
 #' @param prob [\code{numeric(1)}]\cr
