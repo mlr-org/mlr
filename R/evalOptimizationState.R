@@ -36,11 +36,9 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
       r = resample(learner2, task, resampling, measures = measures, show.info = FALSE)
     })
     if (control$tune.threshold) {
-      if (!learner2$predict.type == "prob")
-        stop("'tune.threshold = TRUE' requires a learner with the predict.type prob")
-      tune.th.r = tuneThreshold(r$pred, getFirst(measures))
-      y = tune.th.r$perf
-      threshold = tune.th.r$th
+      tune.th.res = tuneThreshold(r$pred, getFirst(measures))
+      y = tune.th.res$perf
+      threshold = tune.th.res$th
     } else {
       y = r$aggr
       threshold = NULL
@@ -83,8 +81,9 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
   for (i in seq_len(n)) {
     res = res.list[[i]]
     if (control$tune.threshold) {
+      # add class names to threshold, if longer than 1
       extra = as.list(res$threshold)
-      names(extra) = paste0("threshold", ifelse(length(extra)>1, "_", ""), names(extra))
+      names(extra) = paste0("threshold", ifelse(length(extra) > 1L, "_", ""), names(extra))
     } else {
       extra = NULL
     }

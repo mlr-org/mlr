@@ -48,6 +48,11 @@
 #'   of function evaluations.
 #' @param max.features [\code{integer(1)}]\cr
 #'   Maximal number of features.
+#' @param tune.threshold [\code{logical(1)}]\cr
+#'   Should the threshold be tuned for the measure at hand, after each feature set evaluation,
+#'   via \code\{\link{tuneThreshold}}?
+#'   Only works for classification if the predict type is \dQuote{prob}.
+#'   Default is \code{FALSE}.
 #' @param prob [\code{numeric(1)}]\cr
 #'   Parameter of the random feature selection. Probability of choosing a feature.
 #' @param method [\code{character(1)}]\cr
@@ -86,13 +91,12 @@
 #' @aliases FeatSelControlExhaustive FeatSelControlRandom FeatSelControlSequential FeatSelControlGA
 NULL
 
-makeFeatSelControl = function(same.resampling.instance, impute.val = NULL, maxit, max.features, ..., cl) {
-  assertFlag(same.resampling.instance)
-  if (!is.null(impute.val))
-    assertNumber(impute.val)
+makeFeatSelControl = function(same.resampling.instance, impute.val = NULL, maxit, max.features,
+  tune.threshold = FALSE, ..., cl) {
+
   maxit = asCount(maxit, na.ok = TRUE, positive = TRUE)
   max.features = asCount(max.features, na.ok = TRUE, positive = TRUE)
-  x = makeOptControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val, ...)
+  x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, ...)
   x$maxit = maxit
   x$max.features = max.features
   class(x) = c(cl, "FeatSelControl", class(x))
@@ -110,6 +114,7 @@ print.FeatSelControl = function(x, ...) {
   else
     catf("Max. features: %i", x$max.features)
   catf("Max. iterations: %i", x$maxit)
+  catf("Tune threshold: %s", x$tune.threshold)
   if (length(x$extra.args))
     catf("Further arguments: %s", convertToShortString(x$extra.args))
   else

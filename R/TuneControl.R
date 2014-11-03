@@ -36,9 +36,10 @@
 #' @template arg_imputey
 #' @param start [\code{numeric}]\cr
 #'   Named list of initial parameter values.
-#' @param tune.threshold [\code{logical(1)}]
-#'   Should the threshold be tuned during \code{tuneParams}.
-#'   Only works for classification if the predict type is \code{prob}.
+#' @param tune.threshold [\code{logical(1)}]\cr
+#'   Should the threshold be tuned for the measure at hand, after each hyperparameter evaluation,
+#'   via \code\{\link{tuneThreshold}}?
+#'   Only works for classification if the predict type is \dQuote{prob}.
 #'   Default is \code{FALSE}.
 #' @param ... [any]\cr
 #'   Further control parameters passed to the \code{control} argument of \code{\link[cmaes]{cma_es}} and
@@ -54,16 +55,12 @@
 NULL
 
 makeTuneControl = function(same.resampling.instance, impute.val = NULL, start = NULL, tune.threshold = FALSE, ..., cl) {
-  assertFlag(same.resampling.instance)
-  if (!is.null(impute.val))
-    assertNumber(impute.val)
   if (!is.null(start)) {
-    assertList(start)
+    assertList(start, names = "unique")
     if (!isProperlyNamed(start))
       stop("'start' must be a properly named list!")
   }
-  assertLogical(tune.threshold, len = 1)
-  x = makeOptControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val, tune.threshold = tune.threshold, ...)
+  x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, ...)
   x$start = start
   addClasses(x, c(cl, "TuneControl"))
 }
