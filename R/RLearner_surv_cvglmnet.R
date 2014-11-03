@@ -31,7 +31,7 @@ makeRLearner.surv.cvglmnet = function() {
       makeNumericLearnerParam(id = "prec", default = 1e-10),
       makeIntegerLearnerParam(id = "mxit", default = 100, lower = 1)
     ),
-    properties = c("numerics", "factors", "weights", "rcens"),
+    properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     name = "GLM with Regularization (Cross Validated Lambda)",
     short.name = "cvglmnet",
     note = ""
@@ -41,11 +41,8 @@ makeRLearner.surv.cvglmnet = function() {
 #' @export
 trainLearner.surv.cvglmnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "rcens")
-  if (ncol(d$data) <= 1L) {
-    # glmnet needs at least two columns
-    return(makeNoFeaturesModel(d$target, .task$task.desc))
-  }
-  args = c(list(x = data.matrix(d$data), y = d$target, family = "cox", parallel = FALSE), list(...))
+  info = getFixDataInfo(d$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
+  args = c(list(x = as.matrix(fixDataForLearner(d$data, info)), y = d$target, family = "cox", parallel = FALSE), list(...))
   rm(d)
   if (!is.null(.weights))
     args$weights = .weights
@@ -58,12 +55,14 @@ trainLearner.surv.cvglmnet = function(.learner, .task, .subset, .weights = NULL,
     args = args[!is.ctrl.arg]
   }
 
-  do.call(glmnet::cv.glmnet, args)
+  attachTrainingInfo(do.call(glmnet::cv.glmnet, args), info)
 }
 
 #' @export
 predictLearner.surv.cvglmnet = function(.learner, .model, .newdata, ...) {
+  info = getTrainingInfo(.model)
+  .newdata = as.matrix(fixDataForLearner(.newdata, info))
   if(.learner$predict.type == "response")
-    return(as.numeric(predict(.model$learner.model, newx = data.matrix(.newdata), type = "link", ...)))
+    return(as.numeric(predict(.model$learner.model, newx = .newdata, type = "link", ...)))
   stop("Unknown predict type")
 }

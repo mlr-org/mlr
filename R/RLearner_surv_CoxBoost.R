@@ -13,9 +13,8 @@ makeRLearner.surv.CoxBoost = function() {
       makeDiscreteLearnerParam(id = "criterion", default = "pscore", values = c("pscore", "score", "hpscore", "hscore")),
       makeNumericLearnerParam(id = "stepsize.factor", default = 1, lower = 0),
       makeDiscreteLearnerParam(id = "sf.scheme", default = "sigmoid", values = c("sigmoid", "linear"))
-      # FIXME: still missing some arguments
     ),
-    properties = c("numerics", "weights", "rcens"),
+    properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     name = "Cox Proportional Hazards Model with Componentwise Likelihood based Boosting",
     short.name = "coxboost",
     note = ""
@@ -24,26 +23,29 @@ makeRLearner.surv.CoxBoost = function() {
 
 #' @export
 trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL, penalty = NULL, ...) {
-  # FIXME: use model.matrix to allow factors
   data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "rcens")
+  info = getFixDataInfo(data$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
+  data$data = as.matrix(fixDataForLearner(data$data, info))
 
   if (is.null(penalty))
     penalty = 9 * sum(data$target[, 2L])
 
-  CoxBoost::CoxBoost(
+  attachTrainingInfo(CoxBoost::CoxBoost(
     time = data$target[, 1L],
     status = data$target[, 2L],
-    x = as.matrix(data$data),
+    x = data$data,
     weights = .weights,
     penalty = penalty,
     ...
-  )
+  ), info)
 }
 
 #' @export
 predictLearner.surv.CoxBoost = function(.learner, .model, .newdata, ...) {
+  info = getTrainingInfo(.model)
+  .newdata = as.matrix(fixDataForLearner(.newdata, info))
   if(.learner$predict.type == "response")
-    as.numeric(predict(.model$learner.model, newdata = as.matrix(.newdata), type = "lp"))
+    as.numeric(predict(.model$learner.model, newdata = .newdata, type = "lp"))
   else
     stop("Unknown predict type")
 }

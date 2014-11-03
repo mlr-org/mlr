@@ -21,11 +21,11 @@ attachTrainingInfo = function(x, info) {
 }
 
 getTrainingInfo = function(x) {
-  attr(x, "mlr.train.info")
+  attr(x, "mlr.train.info") %??% attr(x$learner.model, "mlr.train.info")
 }
 
 "%??%" = function(lhs, rhs) {
-  if (is.null(lhs)) rhs else lhs
+  if (missing(lhs) || is.null(lhs)) rhs else lhs
 }
 
 getLearnerOptions = function(lrn, opts) {
