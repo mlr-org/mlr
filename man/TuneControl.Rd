@@ -14,18 +14,19 @@
 \title{Create control structures for tuning.}
 \usage{
 makeTuneControlCMAES(same.resampling.instance = TRUE, impute.val = NULL,
-  start = NULL, ...)
+  start = NULL, tune.threshold = FALSE, ...)
 
 makeTuneControlGenSA(same.resampling.instance = TRUE, impute.val = NULL,
-  start = NULL, ...)
+  start = NULL, tune.threshold = FALSE, ...)
 
 makeTuneControlGrid(same.resampling.instance = TRUE, impute.val = NULL,
-  resolution = 10L)
+  resolution = 10L, tune.threshold = FALSE)
 
 makeTuneControlIrace(impute.val = NULL, n.instances = 100L,
-  show.irace.output = FALSE, ...)
+  show.irace.output = FALSE, tune.threshold = FALSE, ...)
 
-makeTuneControlRandom(same.resampling.instance = TRUE, maxit = 100L)
+makeTuneControlRandom(same.resampling.instance = TRUE, maxit = 100L,
+  tune.threshold = FALSE)
 }
 \arguments{
 \item{same.resampling.instance}{[\code{logical(1)}]\cr
@@ -46,6 +47,12 @@ in the same order as your measures.}
 
 \item{start}{[\code{numeric}]\cr
 Named list of initial parameter values.}
+
+\item{tune.threshold}{[\code{logical(1)}]\cr
+Should the threshold be tuned for the measure at hand, after each hyperparameter evaluation,
+via \code{\link{tuneThreshold}}?
+Only works for classification if the predict type is \dQuote{prob}.
+Default is \code{FALSE}.}
 
 \item{...}{[any]\cr
 Further control parameters passed to the \code{control} argument of \code{\link[cmaes]{cma_es}} and
