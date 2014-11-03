@@ -1,3 +1,4 @@
+# start is a named list, flatten it to an unnamed num vec, of correct order as in par.set
 convertStartToNumeric = function(start, par.set) {
   ids = getParamIds(par.set, repeated = FALSE)
   start = start[ids]

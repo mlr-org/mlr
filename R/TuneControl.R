@@ -34,7 +34,7 @@
 #'   Should the same resampling instance be used for all evaluations to reduce variance?
 #'   Default is \code{TRUE}.
 #' @template arg_imputey
-#' @param start [\code{numeric}]\cr
+#' @param start [\code{list}]\cr
 #'   Named list of initial parameter values.
 #' @param tune.threshold [\code{logical(1)}]\cr
 #'   Should the threshold be tuned for the measure at hand, after each hyperparameter evaluation,
@@ -55,11 +55,8 @@
 NULL
 
 makeTuneControl = function(same.resampling.instance, impute.val = NULL, start = NULL, tune.threshold = FALSE, ..., cl) {
-  if (!is.null(start)) {
-    assertList(start, names = "unique")
-    if (!isProperlyNamed(start))
-      stop("'start' must be a properly named list!")
-  }
+  if (!is.null(start))
+    assertList(start, min.len = 1L, names = "unique")
   x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, ...)
   x$start = start
   addClasses(x, c(cl, "TuneControl"))
