@@ -34,7 +34,10 @@ test_that("tune", {
 
   # check multiple measures
   ms = c("acc", "mmce", "timefit")
-  tr2 = tuneParams(lrn, multiclass.task, cv.instance, par.set = ps1, control = ctrl)
+  lrn2 = setPredictType(learner = lrn, predict.type = "prob")
+  ctrl = makeTuneControlGrid(tune.threshold = TRUE)
+  tr2 = tuneParams(lrn2, binaryclass.task, makeResampleDesc("CV", iters = 2), par.set = ps1, control = ctrl)
+  expect_true(is.numeric(as.data.frame(tr2$opt.path)$threshold))
 
   expect_error(tuneParams(lrn, multiclass.task, cv.instance, par.set = makeParamSet(), control = ctrl))
 })

@@ -15,7 +15,7 @@ setDefaultImputeVal = function(control, measures) {
 
 
 ##### tuning #####
-makeOptPathDFFromMeasures = function(par.set, measures) {
+makeOptPathDFFromMeasures = function(par.set, measures, ...) {
   ns = vcapply(measures, measureAggrName)
   if (anyDuplicated(ns))
     stop("Cannot create OptPath, measures do not have unique ids!")
@@ -24,7 +24,7 @@ makeOptPathDFFromMeasures = function(par.set, measures) {
     stop("Cannot create OptPath, measures ids and dimension names of input space overlap!")
   minimize = vlapply(measures, function(m) m$minimize)
   makeOptPathDF(par.set, ns, minimize, add.transformed.x = FALSE,
-    include.error.message = TRUE, include.exec.time = TRUE)
+    include.error.message = TRUE, include.exec.time = TRUE, ...)
 }
 
 

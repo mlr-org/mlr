@@ -6,8 +6,8 @@
 #'   Default is \code{FALSE}.
 #' @export
 #' @rdname TuneControl
-makeTuneControlIrace = function(impute.val = NULL, n.instances = 100L, show.irace.output = FALSE, ...) {
+makeTuneControlIrace = function(impute.val = NULL, n.instances = 100L, show.irace.output = FALSE, tune.threshold = FALSE, ...) {
   makeTuneControl(same.resampling.instance = FALSE, impute.val = impute.val,
     n.instances = n.instances, show.irace.output = show.irace.output,
-   start = NULL, ..., cl = "TuneControlIrace")
+   start = NULL, tune.threshold = tune.threshold, ..., cl = "TuneControlIrace")
 }

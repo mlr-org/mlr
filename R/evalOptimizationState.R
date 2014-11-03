@@ -35,7 +35,16 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
     exec.time = system.time({
       r = resample(learner2, task, resampling, measures = measures, show.info = FALSE)
     })
-    y = r$aggr
+    if (control$tune.threshold) {
+      if (!learner2$predict.type == "prob")
+        stop("'tune.threshold = TRUE' requires a learner with the predict.type prob")
+      tune.th.r = tuneThreshold(r$pred, getFirst(measures))
+      y = tune.th.r$perf
+      threshold = tune.th.r$th
+    } else {
+      y = r$aggr
+      threshold = NULL
+    }
     # sort msgs by iters, so iter1, iter2, ...
     errmsgs = as.character(t(r$err.msgs[, -1L]))
     notna = !is.na(errmsgs)
@@ -47,7 +56,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
 
   if (show.info)
     log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob, state, y, remove.nas)
-  list(y = y, exec.time = exec.time, errmsg = errmsg)
+  list(y = y, exec.time = exec.time, errmsg = errmsg, threshold = threshold)
 }
 
 # evaluates a list of states by calling evalOptimizationState
@@ -73,8 +82,15 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
   # add stuff to opt.path
   for (i in seq_len(n)) {
     res = res.list[[i]]
+    if (control$tune.threshold) {
+      extra = as.list(res$threshold)
+      names(extra) = paste0("threshold", ifelse(length(extra)>1, "_", ""), names(extra))
+    } else {
+      extra = NULL
+    }
     addOptPathEl(opt.path, x = as.list(states[[i]]), y = res$y, exec.time = res$exec.time,
-      error.message = res$errmsg, dob = dobs[i], eol = eols[i], check.feasible = FALSE)
+      error.message = res$errmsg, dob = dobs[i], eol = eols[i], check.feasible = FALSE,
+      extra = extra)
   }
   return(res.list)
 }

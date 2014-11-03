@@ -36,6 +36,10 @@
 #' @template arg_imputey
 #' @param start [\code{numeric}]\cr
 #'   Named list of initial parameter values.
+#' @param tune.threshold [\code{logical(1)}]
+#'   Should the threshold be tuned during \code{tuneParams}.
+#'   Only works for classification if the predict type is \code{prob}.
+#'   Default is \code{FALSE}.
 #' @param ... [any]\cr
 #'   Further control parameters passed to the \code{control} argument of \code{\link[cmaes]{cma_es}} and
 #'   \code{tunerConfig} argument of \code{\link[irace]{irace}}.
@@ -49,7 +53,7 @@
 #' @aliases TuneControlGrid TuneControlRandom TuneControlCMAES TuneControlGenSA TuneControlIrace
 NULL
 
-makeTuneControl = function(same.resampling.instance, impute.val = NULL, start = NULL, ..., cl) {
+makeTuneControl = function(same.resampling.instance, impute.val = NULL, start = NULL, tune.threshold = FALSE, ..., cl) {
   assertFlag(same.resampling.instance)
   if (!is.null(impute.val))
     assertNumber(impute.val)
@@ -58,7 +62,8 @@ makeTuneControl = function(same.resampling.instance, impute.val = NULL, start = 
     if (!isProperlyNamed(start))
       stop("'start' must be a properly named list!")
   }
-  x = makeOptControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val, ...)
+  assertLogical(tune.threshold, len = 1)
+  x = makeOptControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val, tune.threshold = tune.threshold, ...)
   x$start = start
   addClasses(x, c(cl, "TuneControl"))
 }
@@ -69,5 +74,6 @@ print.TuneControl = function(x, ...) {
   catf("Same resampling instance: %s", x$same.resampling.instance)
   catf("Imputation value: %g", x$impute.val)
   catf("Start: %s", convertToShortString(x$start))
+  catf("Tune threshold: %s", x$tune.threshold)
   catf("Further arguments: %s", convertToShortString(x$extra.args))
 }
