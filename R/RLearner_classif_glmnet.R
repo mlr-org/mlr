@@ -43,11 +43,8 @@ makeRLearner.classif.glmnet = function() {
 #' @export
 trainLearner.classif.glmnet = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
-  if (ncol(d$data) <= 1L) {
-    # glmnet needs at least two columns
-    return(makeNoFeaturesModel(d$target, .task$task.desc))
-  }
-  args = c(list(x = data.matrix(d$data), y = d$target), list(...))
+  info = getFixDataInfo(d$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
+  args = c(list(x = as.matrix(fixDataForLearner(d$data, info)), y = d$target), list(...))
   rm(d)
   if (!is.null(.weights))
     args$weights = .weights
@@ -62,20 +59,22 @@ trainLearner.classif.glmnet = function(.learner, .task, .subset, .weights = NULL
     args = args[!is.ctrl.arg]
   }
 
-  do.call(glmnet::glmnet, args)
+  attachTrainingInfo(do.call(glmnet::glmnet, args), info)
 }
 
 #' @export
 predictLearner.classif.glmnet = function(.learner, .model, .newdata, ...) {
-  if(.learner$predict.type == "prob"){
-    p = predict(.model$learner.model, newx = data.matrix(.newdata), type = "response",  ...)
+  info = getTrainingInfo(.model)
+  .newdata = as.matrix(fixDataForLearner(.newdata, info))
+  if(.learner$predict.type == "prob") {
+    p = predict(.model$learner.model, newx = .newdata, type = "response",  ...)
     if (length(.model$task.desc$class.levels) == 2) {
       p = setColNames(cbind(1 - p, p), .model$task.desc$class.levels)
     } else {
       p = p[,,1]
     }
   } else {
-    p = drop(predict(.model$learner.model, newx = data.matrix(.newdata), type = "class", ...))
+    p = drop(predict(.model$learner.model, newx = .newdata, type = "class", ...))
     p = factor(p, .model$task.desc$class.levels)
   }
   p
