@@ -87,11 +87,11 @@ dummy = lapply(list.files(src, pattern = "\\.Rmd$"), knitIt)
 
 # build docs with mkdocs
 ok = system3("mkdocs", "build")
-if(ok$exit.code == 0L) {
+if (ok$exit.code == 0L) {
   message("Build successfull!")
   message("Now zip everything!")
   setwd("html/")
-  zip("../tutorial.zip", files = "/")
+  zip("../tutorial.zip", files = ".")
   setwd("../")
   # clean up
   unlink("figure", recursive = TRUE)

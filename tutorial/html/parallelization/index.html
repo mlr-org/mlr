@@ -15,7 +15,6 @@
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
         <link href="../css/prettify-1.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
-        
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -44,7 +43,7 @@
             
 
             <!-- Main title -->
-            <a class="navbar-brand" href="..">mlr tutorial</a>
+            <a class="navbar-brand" href="../index.html">mlr tutorial</a>
         </div>
 
         <!-- Expanded navigation -->
@@ -54,46 +53,40 @@
                 <ul class="nav navbar-nav">
                 
                 
-                    <li >
-                        <a href="..">Home</a>
-                    </li>
-                
-                
-                
                     <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Basics <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             <li >
-                                <a href="../task/">Tasks</a>
+                                <a href="../task/index.html">Tasks</a>
                             </li>
                         
                             <li >
-                                <a href="../learner/">Learner</a>
+                                <a href="../learner/index.html">Learner</a>
                             </li>
                         
                             <li >
-                                <a href="../train/">Train</a>
+                                <a href="../train/index.html">Train</a>
                             </li>
                         
                             <li >
-                                <a href="../predict/">Predict</a>
+                                <a href="../predict/index.html">Predict</a>
                             </li>
                         
                             <li >
-                                <a href="../performance/">Performance</a>
+                                <a href="../performance/index.html">Performance</a>
                             </li>
                         
                             <li >
-                                <a href="../resample/">Resampling</a>
+                                <a href="../resample/index.html">Resampling</a>
                             </li>
                         
                             <li >
-                                <a href="../benchmark_experiments/">Benchmark Experiments</a>
+                                <a href="../benchmark_experiments/index.html">Benchmark Experiments</a>
                             </li>
                         
                             <li class="active">
-                                <a href="./">Parallelization</a>
+                                <a href="index.html">Parallelization</a>
                             </li>
                         
                         </ul>
@@ -106,43 +99,43 @@
                         <ul class="dropdown-menu">
                         
                             <li >
-                                <a href="../configureMlr/">Configuration</a>
+                                <a href="../configureMlr/index.html">Configuration</a>
                             </li>
                         
                             <li >
-                                <a href="../wrapper/">Wrapped Learners</a>
+                                <a href="../wrapper/index.html">Wrapped Learners</a>
                             </li>
                         
                             <li >
-                                <a href="../preproc/">Preprocessing</a>
+                                <a href="../preproc/index.html">Preprocessing</a>
                             </li>
                         
                             <li >
-                                <a href="../impute/">Imputations</a>
+                                <a href="../impute/index.html">Imputations</a>
                             </li>
                         
                             <li >
-                                <a href="../bagging/">Bagging</a>
+                                <a href="../bagging/index.html">Bagging</a>
                             </li>
                         
                             <li >
-                                <a href="../tune/">Tuning</a>
+                                <a href="../tune/index.html">Tuning</a>
                             </li>
                         
                             <li >
-                                <a href="../feature_selection/">Feature Selection</a>
+                                <a href="../feature_selection/index.html">Feature Selection</a>
                             </li>
                         
                             <li >
-                                <a href="../cost_sensitive_classif/">Cost-Sensitive Classification</a>
+                                <a href="../cost_sensitive_classif/index.html">Cost-Sensitive Classification</a>
                             </li>
                         
                             <li >
-                                <a href="../over_and_undersampling/">Imbalanced Classification Problems</a>
+                                <a href="../over_and_undersampling/index.html">Imbalanced Classification Problems</a>
                             </li>
                         
                             <li >
-                                <a href="../roc_analysis/">ROC Analysis</a>
+                                <a href="../roc_analysis/index.html">ROC Analysis</a>
                             </li>
                         
                         </ul>
@@ -155,11 +148,11 @@
                         <ul class="dropdown-menu">
                         
                             <li >
-                                <a href="../create_learner/">Create Custom Learners</a>
+                                <a href="../create_learner/index.html">Create Custom Learners</a>
                             </li>
                         
                             <li >
-                                <a href="../create_measure/">Create Custom Measures</a>
+                                <a href="../create_measure/index.html">Create Custom Measures</a>
                             </li>
                         
                         </ul>
@@ -172,19 +165,19 @@
                         <ul class="dropdown-menu">
                         
                             <li >
-                                <a href="../example_tasks/">Example Tasks</a>
+                                <a href="../example_tasks/index.html">Example Tasks</a>
                             </li>
                         
                             <li >
-                                <a href="../integrated_learners/">Integrated Learners</a>
+                                <a href="../integrated_learners/index.html">Integrated Learners</a>
                             </li>
                         
                             <li >
-                                <a href="../measures/">Implemented Performance Measures</a>
+                                <a href="../measures/index.html">Implemented Performance Measures</a>
                             </li>
                         
                             <li >
-                                <a href="../filter_methods/">Integrated Filter Methods</a>
+                                <a href="../filter_methods/index.html">Integrated Filter Methods</a>
                             </li>
                         
                         </ul>
@@ -200,12 +193,12 @@
                 
                 
                 <li >
-                    <a rel="next" href="../benchmark_experiments/">
+                    <a rel="next" href="../benchmark_experiments/index.html">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../configureMlr/">
+                    <a rel="prev" href="../configureMlr/index.html">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -238,12 +231,12 @@
             <div class="col-md-9" role="main">
 
 <h1 id="parallelization">Parallelization</h1>
-<p><strong>R</strong> by default doesn't make use of parallelization.
+<p><strong>R</strong> by default does not make use of parallelization.
 With the integration of <a href="http://www.rdocumentation.org/packages/parallelMap/">parallelMap</a> into <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>, it becomes easy to activate the parallel computing capabilities already supported by <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.
 <a href="http://www.rdocumentation.org/packages/parallelMap/">parallelMap</a> supports all major parallelization backends: local multicore execution using <a href="http://www.rdocumentation.org/packages/parallel/">parallel</a>, socket and MPI clusters using <a href="http://www.rdocumentation.org/packages/snow/">snow</a>, makeshift SSH-cluster using <a href="http://www.rdocumentation.org/packages/BatchJobs/">BatchJobs</a> and high performance computing clusters (managed by a scheduler like SLURM, Torque/PBS, SGE or LSF) also using <a href="http://www.rdocumentation.org/packages/BatchJobs/">BatchJobs</a>.</p>
 <p>All you have to do is select a backend by calling one of the
 <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart*</a> functions.
-The first loop <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> encounters which is marked for possible parallel execution will then be automatically parallelized.
+The first loop <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> encounters which is marked as parallel executable will be automatically parallelized.
 It is good practice to call <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStop.html">parallelStop</a> at the end of your script.</p>
 <pre class="prettyprint well"><code class="r">library(&quot;parallelMap&quot;)
 parallelStartSocket(2)
@@ -270,15 +263,13 @@ r = resample(&quot;classif.lda&quot;, iris.task, rdesc)
 <p>On Linux or Mac OS X, you may want to use
 <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStartMulticore.html">parallelStartMulticore</a> instead.
 We offer different parallelization levels for fine grained control over the parallelization.
-E.g., if you do not want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/benchmark.html">benchmark</a> function because it has only very
-few iterations but want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resampling</a> of each learner instead,
-you can specifically pass the <code>level</code> <code>"resample"</code> to the
-<a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart*</a> function.
+E.g., if you do not want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/benchmark.html">benchmark</a> function because it has only very few iterations but want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resampling</a> of each learner instead,
+you can specifically pass the <code>level</code> <code>"mlr.resample"</code> to the <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart*</a> function.
 Currently the following levels are supported:</p>
 <pre class="prettyprint well"><code class="r">parallelShowRegisteredLevels()
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; mlr                 : benchmark,resample,selectFeatures,tuneParams
+<pre class="prettyprint well"><code>#&gt; mlr                 : mlr.benchmark,mlr.resample,mlr.selectFeatures,mlr.tuneParams
 </code></pre>
 
 <p>For further ways of parallelizing your computations, consult the
@@ -298,6 +289,5 @@ Currently the following levels are supported:</p>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
         <script src="../js/prettify-1.0.min.js"></script>
         <script src="../js/base.js"></script>
-        
     </body>
 </html>
