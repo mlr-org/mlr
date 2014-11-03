@@ -3,8 +3,7 @@
 \alias{plotViperCharts}
 \title{Visualize binary classification predictions via ViperCharts system.}
 \usage{
-plotViperCharts(obj, chart = "rocc", browse = TRUE, embedded = FALSE,
-  legend = TRUE, fontsize = NULL)
+plotViperCharts(obj, chart = "rocc", browse = TRUE)
 }
 \arguments{
 \item{obj}{[(list of) \code{\link{Prediction}} | \code{\link{BenchmarkResult}}]\cr

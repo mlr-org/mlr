@@ -3,7 +3,7 @@
 \alias{getTaskType}
 \title{Get the type of the task.}
 \usage{
-getTaskType(x)
+getTaskType(task)
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr

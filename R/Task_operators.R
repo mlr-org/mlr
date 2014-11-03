@@ -11,8 +11,8 @@ getTaskDescription = function(x) {
 #' @return [\code{character}].
 #' @export
 #' @family task
-getTaskType = function(x) {
-  getTaskDescription(x)$type
+getTaskType = function(task) {
+  getTaskDescription(task)$type
 }
 
 getTargetNames = function(x) {
