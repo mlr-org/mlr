@@ -1,17 +1,3 @@
-<style type="text/css">
-<!--
-.col-md-9 th {
-padding: 0.5em;
-}
-.col-md-9 td {
-border: solid 1px #ccc;
-padding: 0.5em;
-vertical-align: top;
-}
--->
-</style>
-
-
 # Integrated Filter Methods
 
 The following table shows the available methods for calculating the feature importance.

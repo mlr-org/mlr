@@ -1,13 +1,3 @@
-<style type="text/css">
-<!--
-.col-md-9 td {
-border: solid 1px #ccc;
-padding: 0.8em;
-vertical-align: top;
-}
--->
-</style>
-
 # Cost-Sensitive Classification
 
 In *regular classification* the aim is to minimize the misclassification rate and
