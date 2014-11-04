@@ -414,7 +414,7 @@ According to the cost matrix we should predict class Good only if we are very su
 increase the threshold for class Good and decrease the threshold for class Bad.</p>
 <h5 id="i-theoretical-thresholding">i. Theoretical thresholding</h5>
 <p>The theoretical threshold for the <em>positive</em> class is
-<img alt="theoretic threshold" src="../../../../images/theoretic_threshold.png" title="theoretic threshold" />
+<img alt="theoretic threshold" src="../../../images/theoretic_threshold.png" title="theoretic threshold" />
 For more details see <a href="http://www.cs.iastate.edu/~honavar/elkan.pdf">Elkan (2001)</a>.</p>
 <p>In the following the theoretical threshold for the <a href="http://www.rdocumentation.org/packages/caret/functions/GermanCredit.html">German credit example</a>
 is calculated and used to predict class labels.
@@ -531,14 +531,14 @@ Alternatively, <em>over- and undersampling</em> techniques can be used.</p>
 cost matrix.
 If <em>t</em> is the target threshold and <em>t</em><sub>0</sub> the original threshold for the positive class the
 proportion of observations in the positive class has to be multiplied by
-<img alt="weight positive" src="../../../../images/weight_positive.png" title="weight positive" />
+<img alt="weight positive" src="../../../images/weight_positive.png" title="weight positive" />
 Alternatively, the proportion of observations in the negative class can be multiplied by
 the inverse.
 A proof is given by <a href="http://www.cs.iastate.edu/~honavar/elkan.pdf">Elkan (2001)</a>.</p>
 <p>In most cases, the original threshold <em>t</em><sub>0</sub> is 0.5 and thus the second factor vanishes.
 If additionally <em>t</em> equals the theoretical threshold <em>t</em><sup>*</sup> the proportion of observations in
 the positive class has to be multiplied by
-<img alt="theoretic weight positive" src="../../../../images/theoretic_weight_positive.png" title="theoretic weight positive" /></p>
+<img alt="theoretic weight positive" src="../../../images/theoretic_weight_positive.png" title="theoretic weight positive" /></p>
 <p>Function <a href="http://www.rdocumentation.org/packages/mlr/functions/makeWeightedClassesWrapper.html">makeWeightedClassesWrapper</a> allows to assign class weights to <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>s
 that either support class weights or observation weights.</p>
 <p>Function <a href="http://www.rdocumentation.org/packages/nnet/functions/multinom.html">multinom</a> accepts observation weights.

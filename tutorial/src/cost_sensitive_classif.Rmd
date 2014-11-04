@@ -121,7 +121,7 @@ increase the threshold for class Good and decrease the threshold for class Bad.
 ##### i. Theoretical thresholding
 
 The theoretical threshold for the *positive* class is
-![theoretic threshold](../../../images/theoretic_threshold.png "theoretic threshold")
+![theoretic threshold](../../images/theoretic_threshold.png "theoretic threshold")
 For more details see [Elkan (2001)](http://www.cs.iastate.edu/~honavar/elkan.pdf).
 
 In the following the theoretical threshold for the [German credit example](&caret::GermanCredit)
@@ -212,7 +212,7 @@ Similar to *theoretical thresholding*, *theoretical weights* can be calculated f
 cost matrix.
 If *t* is the target threshold and *t*<sub>0</sub> the original threshold for the positive class the
 proportion of observations in the positive class has to be multiplied by
-![weight positive](../../../images/weight_positive.png "weight positive")
+![weight positive](../../images/weight_positive.png "weight positive")
 Alternatively, the proportion of observations in the negative class can be multiplied by
 the inverse.
 A proof is given by [Elkan (2001)](http://www.cs.iastate.edu/~honavar/elkan.pdf).
@@ -220,7 +220,7 @@ A proof is given by [Elkan (2001)](http://www.cs.iastate.edu/~honavar/elkan.pdf)
 In most cases, the original threshold *t*<sub>0</sub> is 0.5 and thus the second factor vanishes.
 If additionally *t* equals the theoretical threshold *t*<sup>*</sup> the proportion of observations in
 the positive class has to be multiplied by
-![theoretic weight positive](../../../images/theoretic_weight_positive.png "theoretic weight positive")
+![theoretic weight positive](../../images/theoretic_weight_positive.png "theoretic weight positive")
 
 Function [&makeWeightedClassesWrapper] allows to assign class weights to [Learner](&makeLearner)s
 that either support class weights or observation weights.

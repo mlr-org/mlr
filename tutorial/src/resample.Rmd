@@ -15,7 +15,7 @@ Then the individual performance values are aggregated, typically by calculating 
 There exist various different resampling strategies, for example
 cross-validation and bootstrap, to mention just two popular approaches.
 
-![Resampling Figure](../../../images/resampling.png "Resampling Figure")
+![Resampling Figure](../../images/resampling.png "Resampling Figure")
 
 In [%mlr] the resampling strategy can be chosen via the function [&makeResampleDesc].
 The supported resampling strategies are:
