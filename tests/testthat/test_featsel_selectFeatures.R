@@ -92,3 +92,17 @@ test_that("selectFeatures", {
   expect_equal(nrow(df), 15 + 5 * 6)
 })
 
+test_that("threshold tuning with feature selection", {
+  lrn = makeLearner("classif.rpart", predict.type = "prob")
+  ctrl = makeFeatSelControlRandom(maxit = 3, tune.threshold = TRUE)
+  inner = makeResampleDesc("CV", iter = 2)
+  fr = selectFeatures(lrn2, task = multiclass.task, resampling = inner, control = ctrl, show.info = FALSE)
+  df = as.data.frame(fr$opt.path)
+  expect_true(all(sapply(df[,paste0("threshold_", levels(multiclass.df[,multiclass.target]))], is.numeric)))
+  
+  ctrl = makeFeatSelControlGA(maxit = 5, lambda = 6, mu = 15, tune.threshold = TRUE)
+  fr = selectFeatures(lrn2, task = binaryclass.task, resampling = inner, control = ctrl, show.info = FALSE)
+  df = as.data.frame(fr$opt.path)
+  expect_true(is.numeric(df$threshold))
+})
+

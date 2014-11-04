@@ -1,16 +1,17 @@
 #' @export
 #' @rdname FeatSelControl
 makeFeatSelControlSequential = function(same.resampling.instance = TRUE, impute.val = NULL, method,
-  alpha = 0.01, beta = -0.001, maxit = NA_integer_, max.features = NA_integer_) {
+  alpha = 0.01, beta = -0.001, maxit = NA_integer_, max.features = NA_integer_, tune.threshold = FALSE) {
 
   makeFeatSelControl(
-    cl = "FeatSelControlSequential",
     same.resampling.instance = same.resampling.instance,
     impute.val = impute.val,
     maxit = maxit,
     max.features = max.features,
     method = method,
     alpha = alpha,
-    beta = beta
+    beta = beta,
+    tune.threshold = tune.threshold,
+    cl = "FeatSelControlSequential"
   )
 }

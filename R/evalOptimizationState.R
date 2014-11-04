@@ -41,6 +41,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
       tune.th.res = tuneThreshold(r$pred, getFirst(measures))
       y = tune.th.res$perf
       threshold = tune.th.res$th
+      names(y) = names(r$aggr)
     } else {
       y = r$aggr
     }
