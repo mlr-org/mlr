@@ -17,7 +17,7 @@ makeRLearner.surv.CoxBoost = function() {
     properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     name = "Cox Proportional Hazards Model with Componentwise Likelihood based Boosting",
     short.name = "coxboost",
-    note = ""
+    note = "Factors automatically get converted to dummy columns, ordered factors to integer"
   )
 }
 
