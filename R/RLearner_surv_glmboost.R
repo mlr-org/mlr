@@ -12,7 +12,7 @@ makeRLearner.surv.glmboost = function() {
     par.vals = list(
       family = "CoxPH"
     ),
-    properties = c("numerics", "factors", "weights", "rcens"),
+    properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     name = "Gradient Boosting with Componentwise Linear Models",
     short.name = "glmboost",
     note = ""
