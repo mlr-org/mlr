@@ -34,7 +34,7 @@ makeRLearner.surv.glmnet = function() {
     par.vals = list(s = 0.01),
     name = "GLM with Regularization",
     short.name = "glmnet",
-    note = ""
+    note = "Factors automatically get converted to dummy columns, ordered factors to integer"
   )
 }
 
