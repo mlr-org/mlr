@@ -35,26 +35,27 @@ getTab = function(type) {
     meas = meas[keep]
   }
 
-  cols = c("Measure", "Minimize", "Best", "Worst", "MultiClass", "PredType", "Prediction", "Model", "Task", "Aggregation")
+  cols = c("Measure", "Note, "Minimize", "Best", "Worst", "MultiClass", "PredType", "Prediction", "Model", "Task", "Aggregation")
   df = makeDataFrame(nrow = length(meas), ncol = length(cols),
     col.types = c("character", "logical", "numeric", "numeric", "logical", "character", "logical", "logical", "logical", "character"))
   names(df) = cols
 
   for (i in seq_along(meas)) {
     mea = meas[[i]]
-    df[i, 1] = paste0(linkFct(mea$id), " - ", mea$note)
-    df[i, 2] = mea$minimize
-    df[i, 3] = mea$best
-    df[i, 4] = mea$worst
-    df[i, 5] = "classif.multi" %in% mea$properties
-    df[i, 6] = sort(collapse(mea$allowed.pred.types, sep = "<br />"))
-    df[i, 7] = mea$req.pred
-    df[i, 8] = mea$req.model
-    df[i, 9] = mea$req.task
-    df[i, 10] = mea$aggr$id
+    df[i, 1] = paste0(linkFct(mea$id), " - ", mea$name)
+    df[i, 2] = mea$note
+    df[i, 3] = mea$minimize
+    df[i, 4] = mea$best
+    df[i, 5] = mea$worst
+    df[i, 6] = "classif.multi" %in% mea$properties
+    df[i, 7] = sort(collapse(mea$allowed.pred.types, sep = "<br />"))
+    df[i, 8] = mea$req.pred
+    df[i, 9] = mea$req.model
+    df[i, 10] = mea$req.task
+    df[i, 11] = mea$aggr$id
   }
 
-  just = c("left", "center", "right", "right", "center", "left", "center", "center", "center", "left")
+  just = c("left", "left", "center", "right", "right", "center", "left", "center", "center", "center", "left")
 
   if (type != "classif") {
     df$MultiClass = NULL
