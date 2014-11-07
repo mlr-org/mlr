@@ -114,7 +114,7 @@ predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
     g(predict(m, newdata = nd, ...)$data$response)
   }))
   if (.learner$predict.type == "response") {
-    g = if (.learner$type == "classif")
+    if (.learner$type == "classif")
       as.factor(apply(p, 1L, computeMode))
     else
       rowMeans(p)
