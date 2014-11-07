@@ -386,7 +386,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center"></td>
 <td align="center">X</td>
 <td align="right">multiclass<br />prob<br />twoclass</td>
-<td align="left"></td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
 </tr>
 <tr>
 <td align="left"><strong>classif.IBk</strong> <br />ibk</td>
@@ -751,6 +751,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="right">multiclass<br />prob<br />twoclass</td>
 <td align="left"></td>
 </tr>
+<tr>
+<td align="left"><strong>classif.xgboost</strong> <br />xgb</td>
+<td align="left">eXtreme Gradient Boosting</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/xgboost/">xgboost</a></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">multiclass<br />twoclass</td>
+<td align="left"><code>nround</code> should be set to value higher then 1 for more accuracy.</td>
+</tr>
 </tbody>
 </table>
 <h3 id="regression">Regression</h3>
@@ -854,8 +865,8 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right"></td>
-<td align="left"></td>
+<td align="right">ordered</td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
 </tr>
 <tr>
 <td align="left"><strong>regr.IBk</strong> <br />ibk</td>
@@ -1089,11 +1100,11 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left">Cox Proportional Hazards Model with Componentwise Likelihood based Boosting</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/CoxBoost/">CoxBoost</a></td>
 <td align="center">X</td>
-<td align="center"></td>
+<td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right">rcens</td>
-<td align="left"></td>
+<td align="right">ordered<br />rcens</td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
 </tr>
 <tr>
 <td align="left"><strong>surv.coxph</strong> <br />coxph</td>
@@ -1114,8 +1125,8 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right">rcens</td>
-<td align="left"></td>
+<td align="right">ordered<br />rcens</td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
 </tr>
 <tr>
 <td align="left"><strong>surv.glmboost</strong> <br />glmboost</td>
@@ -1125,7 +1136,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right">rcens</td>
+<td align="right">ordered<br />rcens</td>
 <td align="left"></td>
 </tr>
 <tr>
@@ -1136,19 +1147,8 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right">rcens</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left"><strong>surv.optimCoxBoostPenalty</strong> <br />coxboost</td>
-<td align="left">Cox Proportional Hazards Model with Componentwise Likelihood based Boosting</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/CoxBoost/">CoxBoost</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="right">rcens</td>
-<td align="left"></td>
+<td align="right">ordered<br />rcens</td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
 </tr>
 <tr>
 <td align="left"><strong>surv.penalized</strong> <br />penalized</td>
@@ -1158,8 +1158,8 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">rcens</td>
-<td align="left"></td>
+<td align="right">ordered<br />rcens</td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
 </tr>
 <tr>
 <td align="left"><strong>surv.randomForestSRC</strong> <br />rfsrc</td>
@@ -1169,7 +1169,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
-<td align="right">rcens</td>
+<td align="right">ordered<br />rcens</td>
 <td align="left"></td>
 </tr>
 </tbody>

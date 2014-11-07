@@ -35,9 +35,9 @@ getTab = function(type) {
     meas = meas[keep]
   }
 
-  cols = c("Measure", "Note, "Minimize", "Best", "Worst", "MultiClass", "PredType", "Prediction", "Model", "Task", "Aggregation")
+  cols = c("Measure", "Note", "Minimize", "Best", "Worst", "MultiClass", "PredType", "Prediction", "Model", "Task", "Aggregation")
   df = makeDataFrame(nrow = length(meas), ncol = length(cols),
-    col.types = c("character", "logical", "numeric", "numeric", "logical", "character", "logical", "logical", "logical", "character"))
+    col.types = c("character", "character", "logical", "numeric", "numeric", "logical", "character", "logical", "logical", "logical", "character"))
   names(df) = cols
 
   for (i in seq_along(meas)) {
