@@ -32,18 +32,19 @@ makeRLearner.classif.glmnet = function() {
       makeNumericLearnerParam(id = "prec", default = 1e-10),
       makeIntegerLearnerParam(id = "mxit", default = 100L, lower = 1L)
     ),
-    properties = c("numerics", "prob", "twoclass", "multiclass", "weights"),
+    properties = c("numerics", "factors", "prob", "twoclass", "multiclass", "weights"),
     par.vals = list(s = 0.01),
     name = "GLM with Lasso or Elasticnet Regularization",
     short.name = "glmnet",
-    note = ""
+    note = "Factors automatically get converted to dummy columns, ordered factors to integer"
   )
 }
 
 #' @export
 trainLearner.classif.glmnet = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
-  args = c(list(x = as.matrix(d$data), y = d$target), list(...))
+  info = getFixDataInfo(d$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
+  args = c(list(x = as.matrix(fixDataForLearner(d$data, info)), y = d$target), list(...))
   rm(d)
   if (!is.null(.weights))
     args$weights = .weights
@@ -58,20 +59,22 @@ trainLearner.classif.glmnet = function(.learner, .task, .subset, .weights = NULL
     args = args[!is.ctrl.arg]
   }
 
-  do.call(glmnet::glmnet, args)
+  attachTrainingInfo(do.call(glmnet::glmnet, args), info)
 }
 
 #' @export
 predictLearner.classif.glmnet = function(.learner, .model, .newdata, ...) {
-  if(.learner$predict.type == "prob"){
-    p = predict(.model$learner.model, newx = as.matrix(.newdata), type = "response",  ...)
+  info = getTrainingInfo(.model)
+  .newdata = as.matrix(fixDataForLearner(.newdata, info))
+  if(.learner$predict.type == "prob") {
+    p = predict(.model$learner.model, newx = .newdata, type = "response",  ...)
     if (length(.model$task.desc$class.levels) == 2) {
       p = setColNames(cbind(1 - p, p), .model$task.desc$class.levels)
     } else {
       p = p[,,1]
     }
   } else {
-    p = drop(predict(.model$learner.model, newx = as.matrix(.newdata), type = "class", ...))
+    p = drop(predict(.model$learner.model, newx = .newdata, type = "class", ...))
     p = factor(p, .model$task.desc$class.levels)
   }
   p

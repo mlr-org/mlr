@@ -30,12 +30,18 @@ For complex wrappers the predict type is usually also passed down the
 encapsulated learner in a recursive fashion.
 }
 \seealso{
-Other learner: \code{\link{getHyperPars}};
+Other learner: \code{\link{LearnerProperties}},
+  \code{\link{addProperties}}, \code{\link{hasProperties}},
+  \code{\link{removeProperties}},
+  \code{\link{setProperties}}; \code{\link{Learner}},
+  \code{\link{makeLearner}}; \code{\link{getHyperPars}};
   \code{\link{getParamSet}}; \code{\link{removeHyperPars}};
   \code{\link{setHyperPars}}; \code{\link{setId}};
   \code{\link{showHyperPars}}
 
-Other predict: \code{\link{getProbabilities}};
+Other predict: \code{\link{asROCRPrediction}};
+  \code{\link{getProbabilities}};
+  \code{\link{plotViperCharts}};
   \code{\link{predict.WrappedModel}}
 }
 

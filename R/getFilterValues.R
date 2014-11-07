@@ -29,7 +29,7 @@ getFilterValues = function(task, method = "rf.importance", nselect = getTaskNFea
   if (length(unsupported) > 0L)
     stopf("Filter '%s' does not support features of type '%s'", filter$name, unsupported[1L])
   assertCount(nselect)
-  
+
   res = do.call(filter$fun, c(list(task = task, nselect = nselect), list(...)))
 
   fn = getTaskFeatureNames(task)

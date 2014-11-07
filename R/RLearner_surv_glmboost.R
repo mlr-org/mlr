@@ -4,13 +4,15 @@ makeRLearner.surv.glmboost = function() {
     cl = "surv.glmboost",
     package = "mboost",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "family", default = mboost::CoxPH(), values = list(CoxPH = mboost::CoxPH(), Weibull = mboost::Weibull(), Loglog = mboost::Loglog(), Lognormal = mboost::Lognormal())),
-      # makeDiscreteLearnerParam(id = "family", values = c("CoxPH", "Weibull", "Loglog", "Lognormal"), default = "CoxPH"),
+      makeDiscreteLearnerParam(id = "family", values = c("CoxPH", "Weibull", "Loglog", "Lognormal"), default = "CoxPH"),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "center", default = FALSE)
     ),
-    properties = c("numerics", "factors", "weights", "rcens"),
+    par.vals = list(
+      family = "CoxPH"
+    ),
+    properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     name = "Gradient Boosting with Componentwise Linear Models",
     short.name = "glmboost",
     note = ""
@@ -18,13 +20,15 @@ makeRLearner.surv.glmboost = function() {
 }
 
 #' @export
-trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, ...) {
+trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL, family, mstop, nu, ...) {
+  family = "CoxPH"
+  family = do.call(get(family, mode = "function", envir = as.environment("package:mboost")), list())
   f = getTaskFormula(.task, env = as.environment("package:survival"))
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
   if (is.null(.weights)) {
-    mboost::glmboost(f, data = getTaskData(.task, .subset), control = ctrl, family = mboost::CoxPH())
+    mboost::glmboost(f, data = getTaskData(.task, .subset), control = ctrl, family = family, ...)
   } else  {
-    mboost::glmboost(f, data = getTaskData(.task, .subset), control = ctrl, weights = .weights, ...)
+    mboost::glmboost(f, data = getTaskData(.task, .subset), control = ctrl, weights = .weights, family = family, ...)
   }
 }
 

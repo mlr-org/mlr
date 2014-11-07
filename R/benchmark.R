@@ -1,9 +1,11 @@
-#' Benchmark experiment for multiple learners and tasks.
+#' @title Benchmark experiment for multiple learners and tasks.
 #'
+#' @description
 #' Complete benchmark experiment to compare different learning algorithms across one or more tasks
 #' w.r.t. a given resampling strategy. Experiments are paired, meaning always the same
 #' training / test sets are used for the different learners.
-#' Furhtermore, your learners can be automatically tuned using \code{\link{makeTuneWrapper}}.
+#' Furthermore, you can of course pass \dQuote{enhanced} learners via wrappers, e.g., a
+#' learner can be automatically tuned using \code{\link{makeTuneWrapper}}.
 #'
 #' @param learners [(list of) \code{\link{Learner}}]\cr
 #'   Learning algorithms which should be compared.
@@ -17,7 +19,7 @@
 #'   Performance measures for all tasks.
 #'   If missing, the default measure of the first task is used.
 #' @template arg_showinfo
-#' @return [\code{BenchmarkResult}].
+#' @return [\code{\link{BenchmarkResult}}].
 #' @family benchmark
 #' @export
 benchmark = function(learners, tasks, resamplings, measures, show.info = getMlrOption("show.info")) {
@@ -89,10 +91,8 @@ benchmark = function(learners, tasks, resamplings, measures, show.info = getMlrO
 #'
 #' Container for results of benchmarked experiments using \code{\link{benchmark}}.
 #' The structure of the object itself is rather complicated, it is recommended to
-#' retrive required information via \code{\link{getAggrPerformances}}, \code{\link{getPredictions}},
-#' \code{\link{getPerformances}}, \code{\link{getFeatSelResult}}, \code{\link{getTuneResult}} or
-#' \code{\link{getFilterResult}}. Alternatively, you can convert the object using
-#' \code{\link[base]{as.data.frame}}.
+#' retrive required information via the \code{getBMR*} getter functions.
+#' You can also convert the object using \code{\link[base]{as.data.frame}}.
 #'
 #' @name BenchmarkResult
 #' @rdname BenchmarkResult
@@ -111,35 +111,26 @@ benchmarkParallel = function(index, learners, tasks, resamplings, measures, show
   } else if("TuneWrapper" %in% cl) {
     extract.this = getTuneResult
   } else if("FilterWrapper" %in% cl) {
-    extract.this = getFilterResult
+    extract.this = getFilteredFeatures
   } else {
     extract.this = function(model) { NULL }
   }
-  resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]],
+  lrn = learners[[ind.learner]]
+  r = resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]],
     measures = measures, models = TRUE, extract = extract.this, show.info = show.info)
+  # store used learner in result
+  r$learner = lrn
+  return(r)
 }
 
 
 #' @export
 print.BenchmarkResult = function(x, ...) {
-  print(getAggrPerformances.BenchmarkResult(x))
+  print(getBMRAggrPerformances(x, as.df = TRUE))
 }
 
 #' @export
 as.data.frame.BenchmarkResult = function(x, ...) {
-  getAggrPerformances.BenchmarkResult(x)
+  getBMRPerformances(x, as.df = TRUE)
 }
 
-
-getExtract = function(object, what, within = "extract") {
-  if(missing(what))
-    what = NULL
-  lapply(object, function(task) {
-    t.res = lapply(task, function(learner) {
-      if (is.null(what) || what %in% class(learner[[within]][[1L]]))
-        learner[[within]]
-      else
-        NULL
-    })
-  })
-}

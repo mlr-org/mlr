@@ -1,6 +1,12 @@
+mlr_2.3:
+- mlr supports ViperCharts plots now
+
+- new functions
+-- plotViperCharts
+
 mlr_2.2:
 - The web tutorial was MUCH improved!
-- Some example tasks and data sets were added for simple access
+- more example tasks and data sets
 - Learners and tasks now support ordered factors as features.
   The task description knows whether ordered factors are present and it is checked whether the learner
   supports such a feature. We have set this property 'ordered' very conservatively, so very
@@ -19,12 +25,11 @@ mlr_2.2:
   and also then support predict.type = 'prob'. Everything basically works the same as for posterior
   probabilities in classif.* methods.
 - predict preserves the rownames of the input in its output
-- fixed a bug in getAggrPerformances.BenchmarkResult that caused performance measures to be
-  extracted in a different order than the learner/task names. Thus, learner/task names in the
-  output of benchmark experiments sometimes did not correspond with the printed performance measures.
 - fixed a bug in createDummyFeatures that caused an error when the data contained missing values.
 - plotLearnerPrediction works for clustering and allows greyscale plots (for printing or articles)
-- the whole object-oriented structure behind feature filtering was much improved
+- the whole object-oriented structure behind feature filtering was much
+  improved. Smaller changes in the signature of makeFilterWrapper and
+  filterFeatures have become necessary.
 - fixed a bug in filter methods of the FSelector package that caused an error when variable names
   contained accented letters
 - filterFeatures can now be also applied to the result of getFilterValues
@@ -37,6 +42,11 @@ mlr_2.2:
   --- extension to smote algorithm (sampling): minority class observations in binary classification
       are either chosen via sampling or alternatively, each minority class observation is used an
       equal number of times
+- made the getters for BenchmarkResult more consistent. These are now:
+  getBMRTaskIds, getBMRLearnerIds, getBMRPredictions, getBMRPerformances, getBMRAggrPerformances
+  getBMRTuneResults, getFeatSelResults, getBMRFilteredFeatures
+  The following methods do not work for BenchmarkResult anymore: getTuneResult, getFeatSelResult
+- Removed getFilterResult, because it does the same as getFilteredFeatures
 
 - new learners:
 -- classif.bartMachine
@@ -49,9 +59,9 @@ mlr_2.2:
 -- cluster.cmeans
 -- cluster.DBScan
 -- cluster.kmeans
--- cluster.Cobweb
 -- cluster.FarthestFirst
 -- surv.cvglmnet
+-- surv.optimCoxBoostPenalty
 
 - new filters:
 -- variance
@@ -59,6 +69,7 @@ mlr_2.2:
 -- carscore
 -- rf.importance, rf.min.depth
 -- anova.test, kruskal.test
+-- mrmr
 
 - new functions
 -- makeMulticlassWrapper
@@ -108,7 +119,7 @@ mlr_2.1:
 mlr_2.0:
 - mlr now supports survival analysis models (experimental)
 - mlr now supports cost-sensitive learning with example-specific costs (experimental)
-- mlr now suppo
+- Some example tasks and data sets were added for simple access
 - added FeatSelWrapper and getFeatSelResult
 - performance functions now allows to compute multiple measures
 - added multiclass.roc performance measure

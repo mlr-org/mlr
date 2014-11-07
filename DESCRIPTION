@@ -1,5 +1,5 @@
 Package: mlr
-Title: Machine Learning in R.
+Title: Machine Learning in R
 Description: Interface to a large number of classification and regression
     techniques, including machine-readable parameter descriptions. There is
     also an experimental extension for survival analysis, clustering and
@@ -26,15 +26,16 @@ Encoding: UTF-8
 Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 3.0.0),
-    ParamHelpers (>= 1.4),
+    ParamHelpers (>= 1.5),
     BBmisc (>= 1.7),
     stats
 Imports:
-    parallelMap (>= 1.1),
+    checkmate (>= 1.5),
     codetools,
-    survival,
-    checkmate (>= 1.4),
-    ggplot2
+    ggplot2,
+    parallelMap (>= 1.2),
+    plyr,
+    survival
 Suggests:
     testthat,
     ada,
@@ -82,16 +83,18 @@ Suggests:
     pROC,
     randomForest,
     randomForestSRC,
+    RCurl,
     reshape2,
-    rrlda,
+    rjson,
     robustbase,
+    ROCR,
     rpart,
+    rrlda,
     rsm,
     RWeka,
-    ROCR,
     sda,
     stepPlr,
     TH.data
 LazyData: yes
 ByteCompile: yes
-Version: 2.2
+Version: 2.3

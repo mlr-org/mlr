@@ -30,18 +30,19 @@ makeRLearner.surv.glmnet = function() {
       makeNumericLearnerParam(id = "prec", default = 1e-10),
       makeIntegerLearnerParam(id = "mxit", default = 100, lower = 1)
     ),
-    properties = c("numerics", "weights", "rcens"),
+    properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     par.vals = list(s = 0.01),
     name = "GLM with Regularization",
     short.name = "glmnet",
-    note = ""
+    note = "Factors automatically get converted to dummy columns, ordered factors to integer"
   )
 }
 
 #' @export
 trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "rcens")
-  args = c(list(x = as.matrix(d$data), y = d$target, family = "cox"), list(...))
+  info = getFixDataInfo(d$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
+  args = c(list(x = as.matrix(fixDataForLearner(d$data, info)), y = d$target, family = "cox"), list(...))
   rm(d)
   if (!is.null(.weights))
     args$weights = .weights
@@ -54,12 +55,14 @@ trainLearner.surv.glmnet = function(.learner, .task, .subset, .weights = NULL,  
     args = args[!is.ctrl.arg]
   }
 
-  do.call(glmnet::glmnet, args)
+  attachTrainingInfo(do.call(glmnet::glmnet, args), info)
 }
 
 #' @export
 predictLearner.surv.glmnet = function(.learner, .model, .newdata, ...) {
+  info = getTrainingInfo(.model)
+  .newdata = as.matrix(fixDataForLearner(.newdata, info))
   if(.learner$predict.type == "response")
-    return(as.numeric(predict(.model$learner.model, newx = as.matrix(.newdata), type = "link", ...)))
+    return(as.numeric(predict(.model$learner.model, newx = .newdata, type = "link", ...)))
   stop("Unknown predict type")
 }

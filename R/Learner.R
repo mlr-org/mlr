@@ -36,6 +36,7 @@
 #'   Named list of config option to overwrite global settings set via \code{\link{configureMlr}}
 #'   for this specific learner.
 #' @return [\code{\link{Learner}}].
+#' @family learner
 #' @export
 #' @aliases Learner
 #' @seealso [\code{\link{resample}}], [\code{\link{predict.WrappedModel}}]

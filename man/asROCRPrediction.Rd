@@ -12,4 +12,12 @@ Prediction object.}
 \description{
 Converts predictions to a format package ROCR can handle.
 }
+\seealso{
+Other predict: \code{\link{getProbabilities}};
+  \code{\link{plotViperCharts}};
+  \code{\link{predict.WrappedModel}};
+  \code{\link{setPredictType}}
+
+Other roc: \code{\link{plotViperCharts}}
+}
 

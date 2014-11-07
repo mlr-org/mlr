@@ -28,9 +28,8 @@ Calculates numerical filter values for features.
 For a list of features, use \code{\link{listFilterMethods}}.
 }
 \seealso{
-Other filter: \code{\link{FilterResult}},
-  \code{\link{getFilterResult}};
-  \code{\link{FilterValues}}; \code{\link{filterFeatures}};
+Other filter: \code{\link{FilterValues}};
+  \code{\link{filterFeatures}};
   \code{\link{getFilteredFeatures}};
   \code{\link{makeFilterWrapper}}
 }

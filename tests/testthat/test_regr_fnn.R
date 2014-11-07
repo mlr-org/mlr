@@ -8,14 +8,14 @@ test_that("regr_fnn", {
     list(k=4),
     list(k=10)
   )
-  
+
   rdf = regr.df[,-4]
   rtrain = regr.train[,-4]
   rtest = regr.test[,-4]
-  rtask = makeRegrTask("regrtask", data=rdf, target="medv")  
-  
+  rtask = makeRegrTask("regrtask", data=rdf, target="medv")
+
   old.predicts.list1 = list()
-  
+
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     j = which(colnames(rtrain) == regr.target)
@@ -24,9 +24,9 @@ test_that("regr_fnn", {
     set.seed(getOption("mlr.debug.seed"))
     old.predicts.list1[[i]] = do.call(FNN::knn.reg, pars)$pred
   }
-  
+
   testSimpleParsets("regr.fnn", rdf, regr.target, regr.train.inds, old.predicts.list1, parset.list)
-  
+
   tt = function (formula, data, k=3) {
     j = which(colnames(data) == as.character(formula)[2])
     list(train=data[,-j], y=data[,j], k=k, target=j)
@@ -35,6 +35,6 @@ test_that("regr_fnn", {
     newdata = newdata[, -model$target]
     FNN::knn.reg(train=model$train, test=newdata, y=model$y, k=model$k)$pred
   }
-  
+
   testCVParsets("regr.fnn", rdf, regr.target, tune.train=tt, tune.predict=tp, parset.list=parset.list)
 })

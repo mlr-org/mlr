@@ -24,6 +24,8 @@
 #'   \item{aggr [\code{\link{Aggregation}}]}{See argument.}
 #'   \item{best [\code{numeric(1)}]}{See argument.}
 #'   \item{worst [\code{numeric(1)}]}{See argument.}
+#'   \item{name [\code{character(1)}]}{See argument.}
+#'   \item{note [\code{character(1)}]}{See argument.}
 #' }
 #'
 #' @param id [\code{character(1)}]\cr
@@ -60,6 +62,10 @@
 #' @param worst [\code{numeric(1)}]\cr
 #'   Worst obtainable value for measure.
 #'   Default is \code{Inf} or -\code{Inf}, depending on \code{minimize}.
+#' @param name [\code{character}] \cr
+#'   Name of the measure. Default is \code{id}.
+#' @param note [\code{character}] \cr
+#'   Description and additional notes for the learner. Default is \dQuote{}.
 #' @template ret_measure
 #' @export
 #' @family performance
@@ -69,13 +75,14 @@
 #'   sum((pred$data$response - pred$data$truth)^2)
 #' makeMeasure(id = "my.sse", minimize = TRUE, properties = c("regr", "response"), fun = f)
 makeMeasure = function(id, minimize, properties = character(0L), allowed.pred.types = character(0L),
-  fun, extra.args = list(), aggr = test.mean, best = NULL, worst = NULL) {
+  fun, extra.args = list(), aggr = test.mean, best = NULL, worst = NULL, name = id, note = "") {
   assertString(id)
   assertFlag(minimize)
   assertCharacter(properties, any.missing = FALSE)
   assertSubset(allowed.pred.types, choices = c("response", "prob", "se"))
   assertFunction(fun)
   assertList(extra.args)
+  assertString(note)
   if (is.null(best))
     best = ifelse(minimize, -Inf, Inf)
   else
@@ -102,7 +109,9 @@ makeMeasure = function(id, minimize, properties = character(0L), allowed.pred.ty
     fun = fun,
     extra.args = extra.args,
     best = best,
-    worst = worst
+    worst = worst,
+    name = name,
+    note = note
   )
   setAggregation(m, aggr)
 }
@@ -142,9 +151,11 @@ setAggregation = function(measure, aggr) {
 
 #' @export
 print.Measure = function(x, ...) {
+  catf("Name: %s", x$name)
   catf("Performance measure: %s", x$id)
   catf("Properties: %s", collapse(x$properties))
   catf("Minimize: %s", x$minimize)
   catf("Best: %g; Worst: %g", x$best, x$worst)
   catf("Aggregated by: %s", x$aggr$id)
+  catf("Note: %s", x$note)
 }

@@ -1,6 +1,7 @@
 # check this:
 # - tune algo exists
 # - parameters are not empty
+# - threshold tuning can be done
 # - algo can handle these parameters
 # - algo can handle dependencies
 
@@ -27,6 +28,9 @@ checkTunerParset = function(learner, par.set, measures, control) {
         stopf("'start' contains parameters for which no learner parameters exist: %s", collapse(x))
     }
   }
+
+  if (control$tune.threshold && (learner$type != "classif" || learner$predict.type != "prob"))
+    stop("Using 'tune.threshold' requires a classif learner with predict.type = 'prob'!")
 
   # check special conditions for some tuners
   if (inherits(control, "TuneControlCMAES")) {

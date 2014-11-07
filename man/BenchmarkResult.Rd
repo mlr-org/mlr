@@ -5,17 +5,18 @@
 \description{
 Container for results of benchmarked experiments using \code{\link{benchmark}}.
 The structure of the object itself is rather complicated, it is recommended to
-retrive required information via \code{\link{getAggrPerformances}}, \code{\link{getPredictions}},
-\code{\link{getPerformances}}, \code{\link{getFeatSelResult}}, \code{\link{getTuneResult}} or
-\code{\link{getFilterResult}}. Alternatively, you can convert the object using
-\code{\link[base]{as.data.frame}}.
+retrive required information via the \code{getBMR*} getter functions.
+You can also convert the object using \code{\link[base]{as.data.frame}}.
 }
 \seealso{
-Other benchmark: \code{\link{FilterResult}},
-  \code{\link{getFilterResult}}; \code{\link{benchmark}};
-  \code{\link{getAggrPerformances}};
-  \code{\link{getFeatSelResult}};
-  \code{\link{getPerformances}};
-  \code{\link{getPredictions}}; \code{\link{getTuneResult}}
+Other benchmark: \code{\link{benchmark}};
+  \code{\link{getBMRAggrPerformances}};
+  \code{\link{getBMRFeatSelResults}};
+  \code{\link{getBMRFilteredFeatures}};
+  \code{\link{getBMRLearnerIds}};
+  \code{\link{getBMRPerformances}};
+  \code{\link{getBMRPredictions}};
+  \code{\link{getBMRTaskIds}};
+  \code{\link{getBMRTuneResults}}
 }
 

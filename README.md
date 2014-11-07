@@ -56,22 +56,37 @@ Features
 * Combine different processing steps to a complex data mining chain; enables nested resampling of optimized models
 
 
-Mailinglist and Email-Service-Hook
-==================================
+News
+====
+Most NEWS regarding extensions and changes of the packages can be accessed here for the
+[release](http://cran.r-project.org/web/packages/mlr/NEWS) and here for the
+[devel](https://github.com/berndbischl/mlr/blob/master/NEWS) version on Github.
 
-Developers use this mailing list:
+* 2014-10-28:
+  * mlr 2.2 released to CRAN.
+  * The popular Java tool WEKA uses mlr in its [RPlugin](http://weka.sourceforge.net/packageMetaData/RPlugin/index.html).
+* 2014-10-18:
+  * We have improved the tutorial A LOT. It is also based on mkdocs and knitr now. Still fixing minor things and extending a bit. Take a look yourself.
+  * We might refactor the internal handling and OO structure of tasks a bit, so even more natural indexing and operations are possible. Michel is currently working on this in a branch.
+  * I will talk about mlr in connection with the [OpenML](http://www.openml.org) project next week. If you don't know this, take a look, a very cool initiative by Joaquin Vanschoren. We are developing a connector to R in general which also covers mlr [here](https://github.com/openml/r).
+
+
+Get in Touch: Tracker and Mailinglists
+======================================
+We have used mailing lists in the past and there still is (mainly for devel)
 
 https://groups.google.com/forum/?hl=de#!forum/mlr-devel
 
 mlr-devel@googlegroups.com
 
-The github-service-hook will also send commit messages to this list.
+But we strongly prefer to use the Github issue tracker now, because it is simply easier to handle and we do not forget your issues as easily as when they come in emails. 
+We use this ourselves a lot and mainly communicate there, not that much on the mailing list. 
+We also do not hate beginners and it is perfectly valid to mark a issue as "Question". 
+But please don't forget that all of us work in academia and put a lot of work into this project, simply because we like it, not because we are specifically paid for it.
 
+If you are interested in seeing a new feature, also use the tracker. 
+We also welcome pull requests or new developers.
 
-Get in touch
-============
+For everything else the maintainer Bernd Bischl can be reached here: bernd_bischl@gmx.net.
+He (=me) is sometimes busy, so please use the other channels for appropriate stuff first, so you get quicker responses ;-)
 
-If you are interested in the package, have a question regarding the usage or a feature request,
-or maybe want to help improving **mlr**, please send a mail to the list at
-mlr-general@lists.r-forge.r-project.org or to the maintainer Bernd Bischl
-at bischl@statistik.uni-dortmund.de.

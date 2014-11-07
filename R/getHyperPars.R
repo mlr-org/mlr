@@ -1,4 +1,4 @@
-#' Get current parameter settings for a learner.
+#' @title Get current parameter settings for a learner.
 #'
 #' @template arg_learner
 #' @param for.fun [\code{character(1)}]\cr

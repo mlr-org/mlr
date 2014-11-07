@@ -32,9 +32,18 @@ test_that("tune", {
   # test printing
   expect_output(print(tr2), "mmce.test.mean=")
 
-  # check multiple measures
+  # check multiple measures and binary thresholding
   ms = c("acc", "mmce", "timefit")
-  tr2 = tuneParams(lrn, multiclass.task, cv.instance, par.set = ps1, control = ctrl)
+  lrn2 = makeLearner("classif.rpart", predict.type = "prob")
+  ctrl = makeTuneControlGrid(tune.threshold = TRUE)
+  tr2 = tuneParams(lrn2, binaryclass.task, makeResampleDesc("CV", iters = 2), par.set = ps1, control = ctrl)
+  expect_true(is.numeric(as.data.frame(tr2$opt.path)$threshold))
+  
+  # check multiclass thresholding
+  tr3 = tuneParams(lrn2, multiclass.task, makeResampleDesc("CV", iters = 2), par.set = ps1, control = ctrl)
+  op.df = as.data.frame(tr3$opt.path)
+  op.df = op.df[,grepl("threshold_", colnames(op.df))]
+  expect_true(all(sapply(op.df, is.numeric)))
 
   expect_error(tuneParams(lrn, multiclass.task, cv.instance, par.set = makeParamSet(), control = ctrl))
 })

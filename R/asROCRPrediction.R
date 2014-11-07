@@ -2,6 +2,8 @@
 #'
 #' @template arg_pred
 #' @export
+#' @family roc
+#' @family predict
 asROCRPrediction = function(pred) {
   UseMethod("asROCRPrediction")
 }

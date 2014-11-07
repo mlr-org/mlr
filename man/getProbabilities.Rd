@@ -34,7 +34,9 @@ head(getProbabilities(pred))
 head(getProbabilities(pred, c("setosa", "virginica")))
 }
 \seealso{
-Other predict: \code{\link{predict.WrappedModel}};
+Other predict: \code{\link{asROCRPrediction}};
+  \code{\link{plotViperCharts}};
+  \code{\link{predict.WrappedModel}};
   \code{\link{setPredictType}}
 }
 

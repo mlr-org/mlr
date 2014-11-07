@@ -1,6 +1,7 @@
 context("BaggingWrapper")
 
 test_that("BaggingWrapper", {
+  # classification
   lrn1 = makeLearner("classif.rpart")
   lrn2 = makeBaggingWrapper(lrn1, bw.iters = 3L)
   m = train(lrn2, multiclass.task)
@@ -30,6 +31,7 @@ test_that("BaggingWrapper", {
   getProbabilities(p)
   r = resample(lrn2, binaryclass.task, rdesc, measures = auc)
 
+  # regression
   lrn1 = makeLearner("regr.rpart")
   lrn2 = makeBaggingWrapper(lrn1, bw.iters = 3L)
   m = train(lrn2, regr.task)
@@ -39,6 +41,8 @@ test_that("BaggingWrapper", {
   lrn2 = setPredictType(lrn2, "se")
   m = train(lrn2, regr.task)
   p = predict(m, regr.task)
+  
+  # blocking for BaggingWrapper is testet ind test_base_blocking.R
 })
 
 test_that("BaggingWrapper works with feature subsampling", {

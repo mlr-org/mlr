@@ -86,6 +86,12 @@ Parameter of the sequential feature selection.
 Minimal required value of improvement difference for a backward / removing step.
 Negative values imply that you allow a slight decrease for the removal of a feature.
 Default is -0.001.}
+
+\item{tune.threshold}{[\code{logical(1)}]\cr
+Should the threshold be tuned for the measure at hand, after each feature set evaluation,
+via \code{\link{tuneThreshold}}?
+Only works for classification if the predict type is \dQuote{prob}.
+Default is \code{FALSE}.}
 }
 \value{
 [\code{\link{FeatSelControl}}]. The specific subclass is one of

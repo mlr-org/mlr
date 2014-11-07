@@ -104,9 +104,9 @@ test_that("learners work", {
     expect_true(!is.na(performance(p)))
   })
 
-  # normal regr
+  # normal regr, dont use feature 2, it is nearly always 0
   task = subsetTask(regr.task, subset = c(1:70),
-    features = getTaskFeatureNames(regr.task)[1:2])
+    features = getTaskFeatureNames(regr.task)[c(1, 3)])
   lrns = mylist(task)
   lrns = lapply(lrns, makeLearner)
   lapply(lrns, function(lrn) {
@@ -122,7 +122,7 @@ test_that("learners work", {
 
   # regr with se
   task = subsetTask(regr.task, subset = c(1:70),
-  features = getTaskFeatureNames(regr.task)[1:2])
+  features = getTaskFeatureNames(regr.task)[c(1, 3)])
   lrns = mylist(task, properties = "se")
   lrns = lapply(lrns, makeLearner, predict.type = "se")
   lapply(lrns, function(lrn) {
@@ -137,7 +137,7 @@ test_that("learners work", {
   })
 
   # regr with weights
-  task = subsetTask(regr.task, subset = 1:70, features = getTaskFeatureNames(regr.task)[1:2])
+  task = subsetTask(regr.task, subset = 1:70, features = getTaskFeatureNames(regr.task)[c(1, 3)])
   lrns = mylist(task, properties = "weights")
   lrns = lapply(lrns, makeLearner)
   lapply(lrns, function(lrn) {
@@ -151,7 +151,7 @@ test_that("learners work", {
   })
 
   # regr with missing
-  d = regr.df[1:100, c(getTaskFeatureNames(regr.task)[1:2], regr.target)]
+  d = regr.df[1:100, c(getTaskFeatureNames(regr.task)[c(1, 3)], regr.target)]
   d[1, 1] = NA
   task = makeRegrTask(data = d, target = regr.target)
   lrns = mylist(task, create = TRUE)

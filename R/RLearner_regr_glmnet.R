@@ -32,18 +32,19 @@ makeRLearner.regr.glmnet = function() {
       makeNumericLearnerParam(id = "prec", default = 1e-10),
       makeIntegerLearnerParam(id = "mxit", default = 100L, lower = 1L)
     ),
-    properties = c("numerics", "weights"),
+    properties = c("numerics", "factors", "ordered", "weights"),
     par.vals = list(s = 0.01),
     name = "GLM with Lasso or Elasticnet Regularization",
     short.name = "glmnet",
-    note = ""
+    note = "Factors automatically get converted to dummy columns, ordered factors to integer"
   )
 }
 
 #' @export
 trainLearner.regr.glmnet = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
-  args = c(list(x = as.matrix(d$data), y = d$target, family = "gaussian"), list(...))
+  info = getFixDataInfo(d$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
+  args = c(list(x = as.matrix(fixDataForLearner(d$data, info)), y = d$target, family = "gaussian"), list(...))
   rm(d)
   if (!is.null(.weights))
     args$weights = .weights
@@ -56,10 +57,12 @@ trainLearner.regr.glmnet = function(.learner, .task, .subset, .weights = NULL, .
     args = args[!is.ctrl.arg]
   }
 
-  do.call(glmnet::glmnet, args)
+  attachTrainingInfo(do.call(glmnet::glmnet, args), info)
 }
 
 #' @export
 predictLearner.regr.glmnet = function(.learner, .model, .newdata, ...) {
-  drop(predict(.model$learner.model, newx = as.matrix(.newdata), ...))
+  info = getTrainingInfo(.model)
+  .newdata = as.matrix(fixDataForLearner(.newdata, info))
+  drop(predict(.model$learner.model, newx = .newdata, ...))
 }

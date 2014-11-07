@@ -21,6 +21,7 @@ Other task: \code{\link{getTaskCosts}};
   \code{\link{getTaskFeatureNames}};
   \code{\link{getTaskFormula}},
   \code{\link{getTaskFormulaAsString}};
-  \code{\link{getTaskTargets}}; \code{\link{subsetTask}}
+  \code{\link{getTaskTargets}}; \code{\link{getTaskType}};
+  \code{\link{subsetTask}}
 }
 

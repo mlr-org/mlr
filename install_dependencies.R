@@ -2,49 +2,7 @@ pkgs <- c(
   "devtools",
   "roxygen2",
   "testthat",
-  "checkmate",
-  "abind", 
-  "BBmisc", 
-  "codetools", 
-  "ada", 
-  "adabag", 
-  "cmaes",
-  "care",
-  "CoxBoost",
-  "crs",
-  "DiceKriging", 
-  "DiscriMiner",
-  "e1071",
-  "earth", 
-  "FNN",
-  "FSelector",
-  "gbm",
-  "GenSA",
-  "glmnet",
-  "kernlab", 
-  "kknn", 
-  "klaR",
-  "LiblineaR",
-  "lqa", 
-  "mboost", 
-  "mco", 
-  "mda",
-  "mRMRe",
-  "nnet", 
-  "ParamHelpers", 
-  "party",
-  "penalized", 
-  "pls",
-  "randomForest",
-  "randomForestSRC",
-  "robustbase",
-  "rpart", 
-  "rrlda",
-  "ROCR",
-  "pROC",
-  "rsm",
-  "RWeka",
-  "stepPlr"
+  "Rmpi"
 )
 
 # Determine missing packages 
@@ -59,4 +17,10 @@ if(length(missing.pkgs) > 0) {
   cat("All packages installed!\n")
 }
 
+#install everything from 
+library("devtools")
+install_deps(".", TRUE)
 
+#Rweka packages
+library("RWeka")
+WPM("install-package", "Xmeans")

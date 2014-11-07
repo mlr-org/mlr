@@ -1,27 +1,13 @@
-#' Returns the selected feature set and optimization path after training or benchmarking.
+#' Returns the selected feature set and optimization path after training.
 #'
-#' @param object [\code{\link{WrappedModel}} | \code{BenchmarkResult}]\cr
-#'   Trained Model created with \code{\link{makeFeatSelWrapper}} or benchmark result created with \code{\link{benchmark}}.
-#' @return [\code{\link{FeatSelResult}} or list of \code{\link{FeatSelResult}}s].
-#'   \code{NULL}, if no feature selection was performed.
+#' @param object [\code{\link{WrappedModel}}]\cr
+#'   Trained Model created with \code{\link{makeFeatSelWrapper}}.
+#' @return [\code{\link{FeatSelResult}}].
 #' @export
 #' @family featsel
-#' @family benchmark
 getFeatSelResult = function(object) {
-  UseMethod("getFeatSelResult")
-}
-
-#' @export
-getFeatSelResult.WrappedModel = function(object) {
-  if (inherits(object, "FeatSelModel"))
-    object$learner.model$opt.result
-  else
-    NULL
-}
-
-#' @export
-getFeatSelResult.BenchmarkResult = function(object) {
-  getExtract(object, "FeatSelResult")
+  assertClass(object, "FeatSelModel")
+  object$learner.model$opt.result
 }
 
 
