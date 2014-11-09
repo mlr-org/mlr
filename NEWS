@@ -1,5 +1,6 @@
 mlr_2.3:
 - mlr supports ViperCharts plots now
+- all mlr measures now have name and a note slot
 
 - new functions
 -- plotViperCharts
