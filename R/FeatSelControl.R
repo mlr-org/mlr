@@ -53,7 +53,7 @@
 #'   via \code{\link{tuneThreshold}}?
 #'   Only works for classification if the predict type is \dQuote{prob}.
 #'   Default is \code{FALSE}.
-#' @param featsel.log.fun [\code{function} | \code{NULL}]\cr
+#' @param log.fun [\code{function} | \code{NULL}]\cr
 #'   Function used for logging. If set to \code{NULL}, the internal default will be used.
 #'   Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
 #'   \code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
@@ -97,19 +97,20 @@
 NULL
 
 makeFeatSelControl = function(same.resampling.instance, impute.val = NULL, maxit, max.features,
-  tune.threshold = FALSE, featsel.log.fun = NULL, ..., cl) {
+  tune.threshold = FALSE, log.fun = NULL, ..., cl) {
 
   maxit = asCount(maxit, na.ok = TRUE, positive = TRUE)
   max.features = asCount(max.features, na.ok = TRUE, positive = TRUE)
-  if (is.null(featsel.log.fun)) {
-    featsel.log.fun = logFunFeatSel
+  if (is.null(log.fun)) {
+    log.fun = logFunFeatSel
   } else {
-    assertFunction(featsel.log.fun, args = c("learner", "task", "resampling", "measures", "par.set", "control", "opt.path", "dob", "x", "y", "remove.nas"))
+    assertFunction(log.fun,
+      args = c("learner", "task", "resampling", "measures", "par.set", "control", "opt.path", "dob", "x", "y", "remove.nas", "stage"))
   }
   x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, ...)
   x$maxit = maxit
   x$max.features = max.features
-  x$log.fun = featsel.log.fun
+  x$log.fun = log.fun
   class(x) = c(cl, "FeatSelControl", class(x))
   return(x)
 }
