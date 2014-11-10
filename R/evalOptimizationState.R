@@ -12,9 +12,9 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   set.pars.ok = TRUE
   learner2 = learner
   threshold = NULL
+  log.fun = control$log.fun
 
   if (inherits(control, "TuneControl") || inherits(control, "TuneMultiCritControl")) {
-    log.fun = logFunTune
     # set names before trafo
     state = setValueCNames(par.set, state)
     # transform parameters
@@ -28,15 +28,18 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
       errmsg = as.character(learner2)
     }
   } else if (inherits(control, "FeatSelControl")) {
-    log.fun = logFunSelFeatures
     task = subsetTask(task, features = bits.to.features(state, task))
   }
 
   # if no problems: resample + measure time
   if (set.pars.ok) {
+    if (show.info)
+      log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob, state, y, remove.nas, stage = 1L)
+
     exec.time = system.time({
       r = resample(learner2, task, resampling, measures = measures, show.info = FALSE)
     })
+
     if (control$tune.threshold) {
       tune.th.res = tuneThreshold(r$pred, getFirst(measures))
       y = tune.th.res$perf
@@ -55,7 +58,7 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   # if eval was not ok, everything should have been initailized to NAs
 
   if (show.info)
-    log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob, state, y, remove.nas)
+    log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob, state, y, remove.nas, stage = 2L)
   list(y = y, exec.time = exec.time, errmsg = errmsg, threshold = threshold)
 }
 

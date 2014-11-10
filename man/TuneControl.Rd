@@ -76,6 +76,12 @@ Default is \code{FALSE}.}
 \item{maxit}{[\code{integer(1)}]\cr
 Number of iterations for random search.
 Default is 100.}
+
+\item{tune.log.fun}{[\code{function} | \code{NULL}]\cr
+Function used for logging. If set to \code{NULL}, the internal default will be used.
+Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
+\code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
+and \code{stage} is expected. See the implementation for details.}
 }
 \value{
 [\code{\link{TuneControl}}]. The specific subclass is one of

@@ -6,7 +6,7 @@
 \usage{
 makeMeasure(id, minimize, properties = character(0L),
   allowed.pred.types = character(0L), fun, extra.args = list(),
-  aggr = test.mean, best = NULL, worst = NULL, note = "")
+  aggr = test.mean, best = NULL, worst = NULL, name = id, note = "")
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -52,8 +52,11 @@ Default is -\code{Inf} or \code{Inf}, depending on \code{minimize}.}
 Worst obtainable value for measure.
 Default is \code{Inf} or -\code{Inf}, depending on \code{minimize}.}
 
+\item{name}{[\code{character}] \cr
+Name of the measure. Default is \code{id}.}
+
 \item{note}{[\code{character}] \cr
-Name (and description) of the measure. Default is \dQuote{}.}
+Description and additional notes for the learner. Default is \dQuote{}.}
 }
 \value{
 [\code{\link{Measure}}].
@@ -82,6 +85,8 @@ Object slots:
   \item{aggr [\code{\link{Aggregation}}]}{See argument.}
   \item{best [\code{numeric(1)}]}{See argument.}
   \item{worst [\code{numeric(1)}]}{See argument.}
+  \item{name [\code{character(1)}]}{See argument.}
+  \item{note [\code{character(1)}]}{See argument.}
 }
 }
 \examples{

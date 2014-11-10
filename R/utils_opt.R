@@ -28,25 +28,7 @@ makeOptPathDFFromMeasures = function(par.set, measures, ...) {
 }
 
 
-# evals a set of var-lists and return the corresponding states
-logFunTune = function(learner, task, resampling, measures, par.set, control, opt.path, dob, x, y, remove.nas) {
-  if (!inherits(learner, "ModelMultiplexer")) {
-    messagef("[Tune] %i: %s : %s", dob,
-      paramValueToString(par.set, x, show.missing.values = !remove.nas), perfsToString(y))
-  } else {
-    # shorten tuning logging a bit. we remove the sel.learner prefix from params
-    s = paramValueToString(par.set, x, show.missing.values = !remove.nas)
-    s = gsub(paste0(x$selected.learner, "\\."), "", s)
-    messagef("[Tune] %i: %s : %s", dob, s, perfsToString(y))
-  }
-}
-
 ##### featsel #####
-
-logFunSelFeatures = function(learner, task, resampling, measures, par.set, control, opt.path, dob, x, y, remove.nas) {
-  messagef("[FeatSel] %i: %i bits: %s", dob, sum(x), perfsToString(y))
-}
-
 featuresToLogical = function(vars, all.vars) {
   if (is.list(vars)) {
     # FIXME: use asMatrixCols / asMatrixRows

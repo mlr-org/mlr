@@ -93,6 +93,12 @@ Parameter of the sequential feature selection.
 Minimal required value of improvement difference for a backward / removing step.
 Negative values imply that you allow a slight decrease for the removal of a feature.
 Default is -0.001.}
+
+\item{featsel.log.fun}{[\code{function} | \code{NULL}]\cr
+Function used for logging. If set to \code{NULL}, the internal default will be used.
+Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
+\code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
+and \code{stage} is expected. See the implementation for details.}
 }
 \value{
 [\code{\link{FeatSelControl}}]. The specific subclass is one of

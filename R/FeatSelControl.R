@@ -53,6 +53,11 @@
 #'   via \code{\link{tuneThreshold}}?
 #'   Only works for classification if the predict type is \dQuote{prob}.
 #'   Default is \code{FALSE}.
+#' @param featsel.log.fun [\code{function} | \code{NULL}]\cr
+#'   Function used for logging. If set to \code{NULL}, the internal default will be used.
+#'   Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
+#'   \code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
+#'   and \code{stage} is expected. See the implementation for details.
 #' @param prob [\code{numeric(1)}]\cr
 #'   Parameter of the random feature selection. Probability of choosing a feature.
 #' @param method [\code{character(1)}]\cr
@@ -92,13 +97,19 @@
 NULL
 
 makeFeatSelControl = function(same.resampling.instance, impute.val = NULL, maxit, max.features,
-  tune.threshold = FALSE, ..., cl) {
+  tune.threshold = FALSE, featsel.log.fun = NULL, ..., cl) {
 
   maxit = asCount(maxit, na.ok = TRUE, positive = TRUE)
   max.features = asCount(max.features, na.ok = TRUE, positive = TRUE)
+  if (is.null(featsel.log.fun)) {
+    featsel.log.fun = logFunFeatSel
+  } else {
+    assertFunction(featsel.log.fun, args = c("learner", "task", "resampling", "measures", "par.set", "control", "opt.path", "dob", "x", "y", "remove.nas"))
+  }
   x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, ...)
   x$maxit = maxit
   x$max.features = max.features
+  x$log.fun = featsel.log.fun
   class(x) = c(cl, "FeatSelControl", class(x))
   return(x)
 }
@@ -119,4 +130,10 @@ print.FeatSelControl = function(x, ...) {
     catf("Further arguments: %s", convertToShortString(x$extra.args))
   else
     catf("Further arguments: <not used>")
+}
+
+logFunFeatSel = function(learner, task, resampling, measures, par.set, control, opt.path, dob, x, y, remove.nas, stage = 0L) {
+  if (stage == 1L) {
+    messagef("[FeatSel] %i: %i bits: %s", dob, sum(x), perfsToString(y))
+  }
 }

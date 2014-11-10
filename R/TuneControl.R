@@ -41,6 +41,11 @@
 #'   via \code{\link{tuneThreshold}}?
 #'   Only works for classification if the predict type is \dQuote{prob}.
 #'   Default is \code{FALSE}.
+#' @param tune.log.fun [\code{function} | \code{NULL}]\cr
+#'   Function used for logging. If set to \code{NULL}, the internal default will be used.
+#'   Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
+#'   \code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
+#'   and \code{stage} is expected. See the implementation for details.
 #' @param ... [any]\cr
 #'   Further control parameters passed to the \code{control} argument of \code{\link[cmaes]{cma_es}} and
 #'   \code{tunerConfig} argument of \code{\link[irace]{irace}}.
@@ -54,11 +59,17 @@
 #' @aliases TuneControlGrid TuneControlRandom TuneControlCMAES TuneControlGenSA TuneControlIrace
 NULL
 
-makeTuneControl = function(same.resampling.instance, impute.val = NULL, start = NULL, tune.threshold = FALSE, ..., cl) {
+makeTuneControl = function(same.resampling.instance, impute.val = NULL, start = NULL, tune.threshold = FALSE, tune.log.fun = NULL, ..., cl) {
   if (!is.null(start))
     assertList(start, min.len = 1L, names = "unique")
+  if (is.null(tune.log.fun)) {
+    tune.log.fun = logFunTune
+  } else {
+    assertFunction(tune.log.fun, args = c("learner", "task", "resampling", "measures", "par.set", "control", "opt.path", "dob", "x", "y", "remove.nas"))
+  }
   x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, ...)
   x$start = start
+  x$log.fun = tune.log.fun
   addClasses(x, c(cl, "TuneControl"))
 }
 
@@ -70,4 +81,18 @@ print.TuneControl = function(x, ...) {
   catf("Start: %s", convertToShortString(x$start))
   catf("Tune threshold: %s", x$tune.threshold)
   catf("Further arguments: %s", convertToShortString(x$extra.args))
+}
+
+logFunTune = function(learner, task, resampling, measures, par.set, control, opt.path, dob, x, y, remove.nas, stage = 0L) {
+  if (stage == 1L) {
+    if (!inherits(learner, "ModelMultiplexer")) {
+      messagef("[Tune] %i: %s : %s", dob,
+        paramValueToString(par.set, x, show.missing.values = !remove.nas), perfsToString(y))
+    } else {
+      # shorten tuning logging a bit. we remove the sel.learner prefix from params
+      s = paramValueToString(par.set, x, show.missing.values = !remove.nas)
+      s = gsub(paste0(x$selected.learner, "\\."), "", s)
+      messagef("[Tune] %i: %s : %s", dob, s, perfsToString(y))
+    }
+  }
 }
