@@ -3,6 +3,10 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
 
   requirePackages(c("mlrMBO"), "tuneMBO")
   mbo.control = control$mbo.control
+
+  if (any(!mbo.control$minimize))
+    stop("Maximization is handled by mlr, set all elements of 'minimize' to 'TRUE' in mbo.control.")
+
   # set final evals to 0 to save time. we dont really need final evals in this context.
   mbo.control$final.evals = 0L
   cx = identity
