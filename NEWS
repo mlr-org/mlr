@@ -5,6 +5,10 @@ mlr_2.3:
 - new functions
 -- plotViperCharts
 
+- new learners:
+-- surv.rpart
+
+
 mlr_2.2:
 - The web tutorial was MUCH improved!
 - more example tasks and data sets
