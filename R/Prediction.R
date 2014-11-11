@@ -54,6 +54,8 @@ makePrediction.TaskDescRegr = function(task.desc, row.names, id, truth, predict.
 makePrediction.TaskDescClassif = function(task.desc, row.names, id, truth, predict.type, y, time) {
   data = namedList(c("id", "truth", "response", "prob"))
   data$id = id
+  # truth can come from a simple "newdata" df. then there might not be all factor levels present
+  levels(truth) = union(levels(truth), task.desc$class.levels)
   data$truth = truth
   if (predict.type == "response") {
     data$response = y
@@ -61,7 +63,7 @@ makePrediction.TaskDescClassif = function(task.desc, row.names, id, truth, predi
   } else {
     data$prob = y
     data = as.data.frame(filterNull(data))
-    # fix columnnames for prob if strage chars are in factor levels
+    # fix columnnames for prob if strange chars are in factor levels
     i = grep("prob.", names(data), fixed = TRUE)
     if (length(i))
       names(data)[i] = paste0("prob.", colnames(y))
