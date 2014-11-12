@@ -2,7 +2,7 @@ context("summarizeColumns")
 
 test_that("summarizeColumns", {
   d = data.frame(x = 1:5, y = c("a","b", "c", "d", "e"),
-   z = c(TRUE, TRUE, TRUE, FALSE, FALSE), stringsAsFactors = FALSE)
+    z = c(TRUE, TRUE, TRUE, FALSE, FALSE), stringsAsFactors = FALSE)
 
   s = summarizeColumns(d)
   expect_equal(dim(s), c(ncol(d), 10L))
@@ -15,4 +15,12 @@ test_that("summarizeColumns", {
   d[1L, 1L] = NA_real_
   s = summarizeColumns(d)
   expect_equal(s$na, c(1, 0, 0, 0, 0))
+  expect_equal(s[5L, "min"], 50L)
+  expect_equal(s[5L, "max"], 50L)
+  d = iris
+  d[1L, 5L] = NA_real_
+  s = summarizeColumns(d)
+  expect_equal(s$na, c(0, 0, 0, 0, 1))
+  expect_equal(s[5L, "min"], 49L)
+  expect_equal(s[5L, "max"], 50L)
 })
