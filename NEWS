@@ -1,9 +1,11 @@
 mlr_2.3:
 - mlr supports ViperCharts plots now
-- all mlr measures now have name and a note slot
+- all mlr measures now have slots "name" and "note"
+- exported a few very simple "getters" for tasks, see below
 
 - new functions
 -- plotViperCharts
+-- getTaskType, getTaskId, getTaskTargetNames
 
 - new learners:
 -- surv.rpart

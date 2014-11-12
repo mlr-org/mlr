@@ -8,23 +8,31 @@ getTaskDescription = function(x) {
 #' Get the type of the task.
 #'
 #' @template arg_task
-#' @return [\code{character}].
+#' @return [\code{character(1)}].
 #' @export
 #' @family task
 getTaskType = function(task) {
   getTaskDescription(task)$type
 }
 
+#' Get the id of the task.
+#'
+#' @template arg_task
+#' @return [\code{character(1)}].
+#' @export
+#' @family task
 getTaskId = function(task) {
   getTaskDescription(task)$id
 }
 
-getTargetNames = function(x) {
+#' Get the name(s) of the target column(s).
+#'
+#' @template arg_task
+#' @return [\code{character}].
+#' @export
+#' @family task
+getTaskTargetNames = function(x) {
   getTaskDescription(x)$target
-}
-
-getTarget = function(x) {
-  x$env$data[[getTargetNames(x)]]
 }
 
 #' Get feature names of task.
