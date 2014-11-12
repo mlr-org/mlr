@@ -3,7 +3,7 @@
 \alias{plotViperCharts}
 \title{Visualize binary classification predictions via ViperCharts system.}
 \usage{
-plotViperCharts(obj, chart = "rocc", browse = TRUE)
+plotViperCharts(obj, chart = "rocc", browse = TRUE, auth.key = NULL)
 }
 \arguments{
 \item{obj}{[(list of) \code{\link{Prediction}} | \code{\link{BenchmarkResult}}]\cr
@@ -21,6 +21,11 @@ Default is \dQuote{rocc}.}
 Open ViperCharts plot in web browser? If not you simple get the URL returned.
 Calls \code{\link{browseURL}}.
 Default is \code{TRUE}.}
+
+\item{auth.key}{[\code{character(1)}]\cr
+API key to use for call to Viper charts website. Only required if you want the chart
+to be private.
+Default is \code{NULL}.}
 }
 \value{
 [\code{character(1)}]. Invisibly returns the ViperCharts URL.
@@ -28,6 +33,11 @@ Default is \code{TRUE}.}
 \description{
 This includes ROC, lift charts, cost curves, and so on.
 Please got to \url{http://viper.ijs.si} for further info.
+
+For resampled learners, the predictions from different iterations are combined into one.
+That is, for example for cross-validation, the predictions appear on
+a single line even though they were made by different models. There is currently
+no facility to separate the predictions for different resampling iterations.
 }
 \examples{
 \dontrun{
@@ -36,6 +46,10 @@ lrn2 = makeLearner("classif.rpart", predict.type = "prob")
 b = benchmark(list(lrn1, lrn2), pid.task)
 z = plotViperCharts(b, chart = "lift", browse = TRUE)
 }
+}
+\references{
+Sluban and Lavrač - ViperCharts: Visual Performance Evaluation Platform,
+ECML PKDD 2013, pp. 650-653, LNCS 8190, Springer, 2013.
 }
 \seealso{
 Other predict: \code{\link{asROCRPrediction}};

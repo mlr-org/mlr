@@ -20,9 +20,6 @@ Default is \code{FALSE}.}
 Calculates confusion matrix for (possibly resampled) prediction.
 Rows indicate true classes, columns predicted classes.
 }
-\details{
-Code inspired by \code{\link[klaR]{errormatrix}}.
-}
 \examples{
 # get confusion matrix after simple manual prediction
 allinds = 1:150
