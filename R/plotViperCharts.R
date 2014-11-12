@@ -1,6 +1,3 @@
-# FIXME:
-# document averaging / cv issue. is this hanlded by VC?
-
 #' @title Visualize binary classification predictions via ViperCharts system.
 #'
 #' @description
@@ -18,8 +15,8 @@
 #'   name the list with the names you want to see in the plots, probably
 #'   learner shortnames or ids.
 #' @param chart [\code{character(1)}]\cr
-#'   First chart to display in focus in browser for non-embedded view,
-#'   or displayed chart for embedded mode.
+#'   First chart to display in focus in browser.
+#'   All other charts can be displayed by clicking on the browser page menu.
 #'   Default is \dQuote{rocc}.
 #' @param browse [\code{logical(1)}]\cr
 #'   Open ViperCharts plot in web browser? If not you simple get the URL returned.
@@ -68,14 +65,12 @@ plotViperCharts.list = function(obj, chart = "rocc", browse = TRUE, auth.key = N
     list(name = s, actual = a, predicted = getProbabilities(p))
   }, obj, names(obj), SIMPLIFY = FALSE, USE.NAMES = FALSE)
   inp = list(
-    chart = chart, data = inp
+    chart = chart, data = inp, embedded = FALSE,
   )
   url = "http://viper.ijs.si/api/"
-  headers = list('Accept' = 'application/json',
-    'Content-Type' = 'application/json')
-  if(!is.null(auth.key)) {
+  headers = list('Accept' = 'application/json', 'Content-Type' = 'application/json')
+  if(!is.null(auth.key))
     headers['AUTH-KEY'] = auth.key
-  }
   resp = RCurl::postForm(url, .opts = list(postfields = rjson::toJSON(inp), httpheader = headers))
   resp = rjson::fromJSON(resp)
   if (resp$url == "")
