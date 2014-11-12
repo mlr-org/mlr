@@ -39,6 +39,7 @@ summarizeColumns.data.frame = function(obj) {
   iqv = function(x) {
     1 - mean(x == computeMode(x))
   }
+  #
   ifn = function(obj, x, y) {
     if (is.numeric(obj)) y = x
     if (is.function(y)) y(obj) else y
@@ -52,8 +53,8 @@ summarizeColumns.data.frame = function(obj) {
   res$disp = vnapply(obj, ifn, sd, iqv, use.names = FALSE)
   res$median = vnapply(obj, ifn, median, NA, use.names = FALSE)
   res$mad = vnapply(obj, ifn, mad, NA, use.names = FALSE)
-  res$min = vnapply(obj, ifn, min, NA, use.names = FALSE)
-  res$max = vnapply(obj, ifn, max, NA, use.names = FALSE)
+  res$min = vnapply(obj, ifn, min, function(x) min(table(x), na.rm = TRUE), use.names = FALSE)
+  res$max = vnapply(obj, ifn, max, function(x) max(table(x), na.rm = TRUE), use.names = FALSE)
   res$nlevs = viapply(obj, ifn, 0L, function(x) length(levels(factor(x))), use.names = FALSE)
 
   as.data.frame(res, stringsAsFactors = FALSE)
