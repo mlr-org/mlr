@@ -15,6 +15,10 @@ getTaskType = function(task) {
   getTaskDescription(task)$type
 }
 
+getTaskId = function(task) {
+  getTaskDescription(task)$id
+}
+
 getTargetNames = function(x) {
   getTaskDescription(x)$target
 }
