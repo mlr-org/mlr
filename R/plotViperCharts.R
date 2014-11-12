@@ -47,12 +47,14 @@ plotViperCharts = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL) 
   UseMethod("plotViperCharts")
 }
 
+#' @export
 plotViperCharts.Prediction = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL) {
   l = list(obj)
   names(l) = getTaskId(obj)
   plotViperCharts.list(l, chart, browse, auth.key)
 }
 
+#' @export
 plotViperCharts.list = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL) {
 
   assertChoice(chart, c("prs", "rocs", "prc", "lift", "rocc", "roch", "ROC", "cost",
@@ -83,6 +85,7 @@ plotViperCharts.list = function(obj, chart = "rocc", browse = TRUE, auth.key = N
   invisible(resp$url)
 }
 
+#' @export
 plotViperCharts.BenchmarkResult = function(obj, task.id = NULL, chart = "rocc", browse = TRUE, auth.key = NULL) {
   tids = getBMRTaskIds(obj)
   if (is.null(task.id))
