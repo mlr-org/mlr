@@ -294,14 +294,14 @@ r = resample(&quot;surv.coxph&quot;, lung.task, rdesc)
 #&gt; 3    3     NA
 #&gt; 
 #&gt; $measures.test
-#&gt;   iter    cindex
-#&gt; 1    1 0.5783027
-#&gt; 2    2 0.6324074
-#&gt; 3    3 0.6706444
+#&gt;   iter cindex
+#&gt; 1    1 0.5783
+#&gt; 2    2 0.6324
+#&gt; 3    3 0.6706
 #&gt; 
 #&gt; $aggr
 #&gt; cindex.test.mean 
-#&gt;        0.6271182 
+#&gt;           0.6271 
 #&gt; 
 #&gt; $pred
 #&gt; Resampled Prediction for:
@@ -311,13 +311,13 @@ r = resample(&quot;surv.coxph&quot;, lung.task, rdesc)
 #&gt; predict.type: response
 #&gt; threshold: 
 #&gt; time (mean): 0.00
-#&gt;    id truth.time truth.event   response iter  set
-#&gt; 2   1        455        TRUE -0.4951788    1 test
-#&gt; 4   2        210        TRUE  0.9573824    1 test
-#&gt; 7   4        310        TRUE  0.8069059    1 test
-#&gt; 17 10        613        TRUE  0.1918188    1 test
-#&gt; 19 12         61        TRUE  0.6638736    1 test
-#&gt; 22 14         81        TRUE -0.1873917    1 test
+#&gt;    id truth.time truth.event response iter  set
+#&gt; 2   1        455        TRUE  -0.4952    1 test
+#&gt; 4   2        210        TRUE   0.9574    1 test
+#&gt; 7   4        310        TRUE   0.8069    1 test
+#&gt; 17 10        613        TRUE   0.1918    1 test
+#&gt; 19 12         61        TRUE   0.6639    1 test
+#&gt; 22 14         81        TRUE  -0.1874    1 test
 #&gt; 
 #&gt; $models
 #&gt; NULL
@@ -358,13 +358,13 @@ variable.</p>
 <pre class="prettyprint well"><code class="r">head(r$pred$data)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;    id truth.time truth.event   response iter  set
-#&gt; 2   1        455        TRUE -0.4951788    1 test
-#&gt; 4   2        210        TRUE  0.9573824    1 test
-#&gt; 7   4        310        TRUE  0.8069059    1 test
-#&gt; 17 10        613        TRUE  0.1918188    1 test
-#&gt; 19 12         61        TRUE  0.6638736    1 test
-#&gt; 22 14         81        TRUE -0.1873917    1 test
+<pre class="prettyprint well"><code>#&gt;    id truth.time truth.event response iter  set
+#&gt; 2   1        455        TRUE  -0.4952    1 test
+#&gt; 4   2        210        TRUE   0.9574    1 test
+#&gt; 7   4        310        TRUE   0.8069    1 test
+#&gt; 17 10        613        TRUE   0.1918    1 test
+#&gt; 19 12         61        TRUE   0.6639    1 test
+#&gt; 22 14         81        TRUE  -0.1874    1 test
 </code></pre>
 
 <p>The columns <code>iter</code> and <code>set</code>indicate the resampling iteration and
@@ -390,72 +390,43 @@ r = resample(&quot;cluster.XMeans&quot;, mtcars.task, rdesc, measures = list(dun
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; [Resample] subsampling iter: 1
+#&gt; Loading required package: clusterSim
 #&gt; [Resample] subsampling iter: 2
 #&gt; [Resample] subsampling iter: 3
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Warning in min(distance[c1, c2]): kein nicht-fehlendes Argument für min;
-#&gt; gebe Inf zurück
-</code></pre>
-
-<pre class="prettyprint well"><code>#&gt; Warning in max(distance[c1, c1]): kein nicht-fehlendes Argument für max;
-#&gt; gebe -Inf zurück
-</code></pre>
-
-<pre class="prettyprint well"><code>#&gt; Warning in min(distance[c1, c2]): kein nicht-fehlendes Argument für min;
-#&gt; gebe Inf zurück
-</code></pre>
-
-<pre class="prettyprint well"><code>#&gt; Warning in max(R[i, ][is.finite(R[i, ])]): kein nicht-fehlendes Argument
-#&gt; für max; gebe -Inf zurück
+<pre class="prettyprint well"><code>#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to max; returning -Inf
+#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to max; returning -Inf
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; [Resample] subsampling iter: 4
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Warning in max(distance[c1, c1]): kein nicht-fehlendes Argument für max;
-#&gt; gebe -Inf zurück
-</code></pre>
-
-<pre class="prettyprint well"><code>#&gt; Warning in min(distance[c1, c2]): kein nicht-fehlendes Argument für min;
-#&gt; gebe Inf zurück
-</code></pre>
-
-<pre class="prettyprint well"><code>#&gt; Warning in min(distance[c1, c2]): kein nicht-fehlendes Argument für min;
-#&gt; gebe Inf zurück
-</code></pre>
-
-<pre class="prettyprint well"><code>#&gt; Warning in max(R[i, ][is.finite(R[i, ])]): kein nicht-fehlendes Argument
-#&gt; für max; gebe -Inf zurück
+<pre class="prettyprint well"><code>#&gt; Warning: no non-missing arguments to max; returning -Inf
+#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to max; returning -Inf
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; [Resample] subsampling iter: 5
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Warning in min(distance[c1, c2]): kein nicht-fehlendes Argument für min;
-#&gt; gebe Inf zurück
+<pre class="prettyprint well"><code>#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to max; returning -Inf
+#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to max; returning -Inf
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Warning in max(distance[c1, c1]): kein nicht-fehlendes Argument für max;
-#&gt; gebe -Inf zurück
-</code></pre>
-
-<pre class="prettyprint well"><code>#&gt; Warning in min(distance[c1, c2]): kein nicht-fehlendes Argument für min;
-#&gt; gebe Inf zurück
-</code></pre>
-
-<pre class="prettyprint well"><code>#&gt; Warning in max(R[i, ][is.finite(R[i, ])]): kein nicht-fehlendes Argument
-#&gt; für max; gebe -Inf zurück
-</code></pre>
-
-<pre class="prettyprint well"><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.109
+<pre class="prettyprint well"><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.051
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;      dunn.test.mean        db.test.mean timetrain.test.mean 
-#&gt;           0.9576313           0.4253807           0.1094000
+#&gt;              0.9576              0.4254              0.0510
 </code></pre>
 
 <h2 id="stratified-resampling">Stratified resampling</h2>
@@ -536,22 +507,22 @@ r = resample(&quot;regr.rpart&quot;, bh.task, rdesc,
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; [[1]]
-#&gt;      lstat         rm        nox        age       crim      indus 
-#&gt; 15632.0452 11547.1441  9089.6005  7550.8703  7354.7545  7125.5388 
-#&gt;        tax        dis        rad    ptratio         zn 
-#&gt;  2232.4655  2014.4190  1283.4597  1073.0603   117.2866 
+#&gt;   lstat      rm     nox     age    crim   indus     tax     dis     rad 
+#&gt; 15632.0 11547.1  9089.6  7550.9  7354.8  7125.5  2232.5  2014.4  1283.5 
+#&gt; ptratio      zn 
+#&gt;  1073.1   117.3 
 #&gt; 
 #&gt; [[2]]
-#&gt;       lstat          rm         nox       indus         dis        crim 
-#&gt; 18683.63849  9153.95640  3245.18155  3136.50997  2956.09528  2879.65454 
-#&gt;         age         tax     ptratio          zn         rad           b 
-#&gt;  2831.96128  2576.19701  1784.04552  1358.83558   656.07350    50.40518 
+#&gt;    lstat       rm      nox    indus      dis     crim      age      tax 
+#&gt; 18683.64  9153.96  3245.18  3136.51  2956.10  2879.65  2831.96  2576.20 
+#&gt;  ptratio       zn      rad        b 
+#&gt;  1784.05  1358.84   656.07    50.41 
 #&gt; 
 #&gt; [[3]]
-#&gt;         rm      lstat      indus        nox        dis        age 
-#&gt; 17652.2795 12488.9875  4966.9382  3488.1809  3441.5938  3334.1037 
-#&gt;       crim    ptratio        tax         zn        rad          b 
-#&gt;  3207.0757  2834.8339  2612.5557  1820.9145   520.3700   307.2145
+#&gt;      rm   lstat   indus     nox     dis     age    crim ptratio     tax 
+#&gt; 17652.3 12489.0  4966.9  3488.2  3441.6  3334.1  3207.1  2834.8  2612.6 
+#&gt;      zn     rad       b 
+#&gt;  1820.9   520.4   307.2
 </code></pre>
 
 <h2 id="resample-descriptions-and-resample-instances">Resample descriptions and resample instances</h2>
@@ -723,7 +694,7 @@ r = resample(&quot;classif.rpart&quot;, iris.task, rdesc, measures = list(mmce, 
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; mmce.test.mean   mmce.test.sd 
-#&gt;     0.06000000     0.03464102
+#&gt;        0.06000        0.03464
 </code></pre>
 
 <h3 id="example-calculating-the-training-error">Example: Calculating the training error</h3>
@@ -754,7 +725,7 @@ r = resample(&quot;classif.rpart&quot;, iris.task, rdesc, measures = list(mmce, 
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;  mmce.test.mean mmce.train.mean 
-#&gt;      0.06000000      0.03333333
+#&gt;         0.06000         0.03333
 </code></pre>
 
 <h3 id="example-bootstrap">Example: Bootstrap</h3>
@@ -777,13 +748,11 @@ b632plus.mmce = setAggregation(mmce, b632plus)
 b632.mmce
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Name: Mean misclassification error
-#&gt; Performance measure: mmce
+<pre class="prettyprint well"><code>#&gt; Performance measure: mmce
 #&gt; Properties: classif,classif.multi
 #&gt; Minimize: TRUE
 #&gt; Best: 0; Worst: 1
 #&gt; Aggregated by: b632
-#&gt; Note:
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r = resample(&quot;classif.rpart&quot;, iris.task, rdesc,
@@ -791,20 +760,20 @@ b632.mmce
 head(r$measures.train)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;   iter       mmce       mmce       mmce
-#&gt; 1    1 0.04000000 0.04000000 0.04000000
-#&gt; 2    2 0.02666667 0.02666667 0.02666667
-#&gt; 3    3 0.02666667 0.02666667 0.02666667
-#&gt; 4    4 0.04000000 0.04000000 0.04000000
-#&gt; 5    5 0.02666667 0.02666667 0.02666667
-#&gt; 6    6 0.02666667 0.02666667 0.02666667
+<pre class="prettyprint well"><code>#&gt;   iter    mmce    mmce    mmce
+#&gt; 1    1 0.04000 0.04000 0.04000
+#&gt; 2    2 0.02667 0.02667 0.02667
+#&gt; 3    3 0.02667 0.02667 0.02667
+#&gt; 4    4 0.04000 0.04000 0.04000
+#&gt; 5    5 0.02667 0.02667 0.02667
+#&gt; 6    6 0.02667 0.02667 0.02667
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; mmce.test.mean      mmce.b632  mmce.b632plus 
-#&gt;     0.04856817     0.04148975     0.04203781
+#&gt;        0.04857        0.04149        0.04204
 </code></pre>
 
 <h2 id="convenience-functions">Convenience functions</h2>

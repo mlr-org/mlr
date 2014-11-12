@@ -264,7 +264,7 @@ wrapped.lrn = makeBaggingWrapper(base.lrn, bw.iters = 100, bw.feats = 0.5)
 print(wrapped.lrn)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Learner classif.rpart.bagged from package rpart
+<pre class="prettyprint well"><code>#&gt; Learner classif.rpart.bagged from package rpart,rpart
 #&gt; Type: classif
 #&gt; Name: ; Short name: 
 #&gt; Class: BaggingWrapper
@@ -304,9 +304,9 @@ We can use this newly constructed learner like all base learners, i.e. we can us
 #&gt; [Resample] Result: mmce.test.mean=0.06
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;   task.id           learner.id mmce.test.mean
-#&gt; 1    iris        classif.rpart     0.06666667
-#&gt; 2    iris classif.rpart.bagged     0.06000000
+<pre class="prettyprint well"><code>#&gt;   task              learner mmce.test.mean
+#&gt; 1 iris        classif.rpart        0.06667
+#&gt; 2 iris classif.rpart.bagged        0.06000
 </code></pre>
 
 <p>That far we are quite happy with our new learner.
@@ -343,7 +343,7 @@ tuned.lrn = makeTuneWrapper(wrapped.lrn, rdesc, mmce, par.set, ctrl)
 print(tuned.lrn)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Learner classif.rpart.bagged.tuned from package rpart
+<pre class="prettyprint well"><code>#&gt; Learner classif.rpart.bagged.tuned from package rpart,rpart
 #&gt; Type: classif
 #&gt; Name: ; Short name: 
 #&gt; Class: TuneWrapper
