@@ -60,7 +60,7 @@ getTaskNFeats = function(task) {
 
 #' @export
 #' @rdname getTaskFormula
-getTaskFormulaAsString = function(x, target = getTargetNames(x)) {
+getTaskFormulaAsString = function(x, target = getTaskTargetNames(x)) {
   td = getTaskDescription(x)
   type = td$type
   if (type == "surv") {
@@ -90,7 +90,7 @@ getTaskFormulaAsString = function(x, target = getTargetNames(x)) {
 #' @return [\code{formula} | \code{character(1)}].
 #' @family task
 #' @export
-getTaskFormula = function(x, target = getTargetNames(x), env = NULL) {
+getTaskFormula = function(x, target = getTaskTargetNames(x), env = NULL) {
   as.formula(getTaskFormulaAsString(x, target = target), env = env)
 }
 

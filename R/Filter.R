@@ -103,7 +103,7 @@ makeFilter(
       target.ind = 1L
     } else {
       data = getTaskData(task)
-      target.ind = match(getTargetNames(task), colnames(data))
+      target.ind = match(getTaskTargetNames(task), colnames(data))
     }
 
     # some required conversions
@@ -298,7 +298,7 @@ makeFilter(
   fun = function(task, nselect, ...) {
     data = getTaskData(task)
     sapply(getTaskFeatureNames(task), function(feat.name) {
-      f = as.formula(paste0(feat.name,"~",getTargetNames(task)))
+      f = as.formula(paste0(feat.name,"~",getTaskTargetNames(task)))
       aov.t = aov(f, data = data)
       summary(aov.t)[[1]][1,'F value']
     })
@@ -314,7 +314,7 @@ makeFilter(
   fun = function(task, nselect, ...) {
     data = getTaskData(task)
     sapply(getTaskFeatureNames(task), function(feat.name) {
-      f = as.formula(paste0(feat.name,"~", getTargetNames(task)))
+      f = as.formula(paste0(feat.name,"~", getTaskTargetNames(task)))
       t = kruskal.test(f, data = data)
       unname(t$statistic)
     })

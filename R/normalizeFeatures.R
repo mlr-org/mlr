@@ -21,7 +21,7 @@
 normalizeFeatures = function(task, method = "standardize", exclude = character(0L), range = c(0, 1)) {
   assertClass(task, "Task")
   data = getTaskData(task)
-  target = getTargetNames(task)
+  target = getTaskTargetNames(task)
   assertChoice(method, choices = c("range", "standardize", "center", "scale"))
   assertCharacter(exclude)
   assertNumeric(range, len = 2L, any.missing = FALSE)

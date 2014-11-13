@@ -35,7 +35,7 @@ removeConstantFeatures = function(task, perc = 0, dont.rm = character(0L),
   assertFlag(na.ignore)
   assertNumber(tol, lower = 0)
   assertFlag(show.info)
-  dont.rm = union(dont.rm, getTargetNames(task))
+  dont.rm = union(dont.rm, getTaskTargetNames(task))
 
   if (any(!dim(data)))
     return(task)

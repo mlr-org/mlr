@@ -27,7 +27,7 @@ mergeSmallFactorLevels = function(task, cols = NULL, min.perc = 0.01, new.level 
     assertSubset(cols, cns)
     cns = intersect(cns, cols)
   }
-  cns = setdiff(cns, getTargetNames(task))
+  cns = setdiff(cns, getTaskTargetNames(task))
 
   for (cn in cns) {
     x = as.factor(data[[cn]])

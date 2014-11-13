@@ -15,8 +15,8 @@ joinClassLevels = function(task, new.levels) {
 #' @export
 joinClassLevels.ClassifTask = function(task, new.levels) {
   assertList(new.levels, types = "character", names = "unique")
-  target = getTargetNames(task)
-  y = as.character(getTarget(task))
+  target = getTaskTargetNames(task)
+  y = as.character(getTaskTargets(task))
   nls1 = unlist(new.levels)
   nls2 = unique(nls1)
   d = setdiff(nls2, unique(y))
