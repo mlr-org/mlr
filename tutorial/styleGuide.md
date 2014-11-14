@@ -2,7 +2,7 @@
 
 * Please write **R** when referring to R.
 * Please write [%mlr] and [%package] referring to mlr or any other package. This will link to 
-  rdocumentation.org
+  rdocumentation.org.
 
 ## Headers
 
@@ -13,9 +13,10 @@
 
 * Comments in R code start with ## and the first word is capitalized. 
   No dot at the end except the comment is a proper sentence
-* Use blanks around binary operators (=, -, *, etc.) and after commas.
-* Composite names are separated by a dot, for example cluster.task, filtered.task, 
-bag.lrn (for bagged learner), etc.
+* Adhere to the [style guide](https://github.com/tudo-r/PackagesInfo/wiki/R-Style-Guide),
+  e.g., regarding tabs, indentation, spaces around operators and commas.
+* Composite names are separated by a dot, for example cluster.task, filtered.task,
+  bag.lrn (for bagged learner), etc.
 
 Names of frequently used **R** objects
 
