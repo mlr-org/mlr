@@ -118,7 +118,6 @@ makeFeatSelControl = function(same.resampling.instance, impute.val = NULL, maxit
   return(x)
 }
 
-
 #' @export
 print.FeatSelControl = function(x, ...) {
   catf("FeatSel control: %s", class(x)[1])
