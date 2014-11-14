@@ -3,7 +3,7 @@ context("tune")
 test_that("tune", {
   library(e1071)
   cp = c(0.05, 0.9)
-  minsplit = 1:3
+  minsplit = 1:2
   ps1 = makeParamSet(
     makeDiscreteParam("cp", values = cp),
     makeDiscreteParam("minsplit", values = minsplit)
@@ -33,11 +33,12 @@ test_that("tune", {
   rdesc = makeResampleDesc("Holdout")
   ms = c("acc", "mmce", "timefit")
   lrn2 = makeLearner("classif.rpart", predict.type = "prob")
-  ctrl = makeTuneControlGrid(tune.threshold = TRUE)
+  ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(nsub = 2L))
   tr2 = tuneParams(lrn2, binaryclass.task, rdesc, par.set = ps1, control = ctrl)
   expect_true(is.numeric(as.data.frame(tr2$opt.path)$threshold))
 
   # check multiclass thresholding
+  ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(control = list(maxit = 2)))
   tr3 = tuneParams(lrn2, multiclass.task, rdesc, par.set = ps1, control = ctrl)
   op.df = as.data.frame(tr3$opt.path)
   op.df = op.df[,grepl("threshold_", colnames(op.df))]
