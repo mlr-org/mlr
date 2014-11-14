@@ -77,7 +77,7 @@ makeTuneControl = function(same.resampling.instance, impute.val = NULL, start = 
 print.TuneControl = function(x, ...) {
   catf("Tune control: %s", class(x)[1])
   catf("Same resampling instance: %s", x$same.resampling.instance)
-  catf("Imputation value: %g", x$impute.val)
+  catf("Imputation value: %s", ifelse(is.null(x$impute.val), "<worst>", sprintf("%g", x$impute.val)))
   catf("Start: %s", convertToShortString(x$start))
   catf("Tune threshold: %s", x$tune.threshold)
   catf("Further arguments: %s", convertToShortString(x$extra.args))

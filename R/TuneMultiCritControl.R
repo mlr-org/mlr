@@ -35,7 +35,7 @@ makeTuneMultiCritControl = function(measures, same.resampling.instance, impute.v
 print.TuneMultiCritControl = function(x, ...) {
   catf("Tune multicrit control: %s", class(x)[1])
   catf("Same resampling instance: %s", x$same.resampling.instance)
-  catf("Imputation value: %g", x$impute.val)
+  catf("Imputation value: %s", ifelse(is.null(x$impute.val), "<worst>", collapse(sprintf("%g", x$impute.val))))
   catf("Further arguments: %s", convertToShortString(x$extra.args))
 }
 
