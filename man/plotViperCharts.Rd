@@ -26,6 +26,10 @@ Default is \code{TRUE}.}
 API key to use for call to Viper charts website.
 Only required if you want the chart to be private.
 Default is \code{NULL}.}
+
+\item{task.id}{[\code{character(1)}]\cr
+Selected task in \code{\link{BenchmarkResult}} to do plots for.
+Default is first taks.}
 }
 \value{
 [\code{character(1)}]. Invisibly returns the ViperCharts URL.
