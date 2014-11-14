@@ -1,7 +1,5 @@
 context("tune")
 
-# FIXME: test tuning of chain, maybe in mlrChains
-
 test_that("tune", {
   library(e1071)
   cp = c(0.05, 0.9)
@@ -21,8 +19,7 @@ test_that("tune", {
   m2 = setAggregation(mmce, test.sd)
   tr2 = tuneParams(lrn, multiclass.task, cv.instance, par.set = ps1, control = ctrl, measures = list(m1, m2))
   pp = as.data.frame(tr2$opt.path)
-  # todo test scale with tune.e1071 and scaled grid!
-  for(i in 1:nrow(tr$performances)) {
+  for (i in 1:nrow(tr$performances)) {
     cp = tr$performances[i,"cp"]
     ms = tr$performances[i,"minsplit"]
     j = which(pp$cp == cp & pp$minsplit == ms )
@@ -33,14 +30,15 @@ test_that("tune", {
   expect_output(print(tr2), "mmce.test.mean=")
 
   # check multiple measures and binary thresholding
+  rdesc = makeResampleDesc("Holdout")
   ms = c("acc", "mmce", "timefit")
   lrn2 = makeLearner("classif.rpart", predict.type = "prob")
   ctrl = makeTuneControlGrid(tune.threshold = TRUE)
-  tr2 = tuneParams(lrn2, binaryclass.task, makeResampleDesc("CV", iters = 2), par.set = ps1, control = ctrl)
+  tr2 = tuneParams(lrn2, binaryclass.task, rdesc, par.set = ps1, control = ctrl)
   expect_true(is.numeric(as.data.frame(tr2$opt.path)$threshold))
-  
+
   # check multiclass thresholding
-  tr3 = tuneParams(lrn2, multiclass.task, makeResampleDesc("CV", iters = 2), par.set = ps1, control = ctrl)
+  tr3 = tuneParams(lrn2, multiclass.task, rdesc, par.set = ps1, control = ctrl)
   op.df = as.data.frame(tr3$opt.path)
   op.df = op.df[,grepl("threshold_", colnames(op.df))]
   expect_true(all(sapply(op.df, is.numeric)))
