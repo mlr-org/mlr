@@ -27,6 +27,9 @@ test_that("tune", {
     expect_equal(tr$performances[i,"dispersion"], pp[j,"mmce.test.sd"])
   }
   # test printing
+  expect_output(print(ctrl), "Imputation value: <worst>")
+  ctrl$impute.val = 10
+  expect_output(print(ctrl), "Imputation value: 10")
   expect_output(print(tr2), "mmce.test.mean=")
 
   # check multiple measures and binary thresholding
