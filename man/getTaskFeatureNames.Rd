@@ -19,7 +19,8 @@ Target column name is not included.
 Other task: \code{\link{getTaskCosts}};
   \code{\link{getTaskData}}; \code{\link{getTaskFormula}},
   \code{\link{getTaskFormulaAsString}};
-  \code{\link{getTaskNFeats}};
+  \code{\link{getTaskId}}; \code{\link{getTaskNFeats}};
+  \code{\link{getTaskTargetNames}};
   \code{\link{getTaskTargets}}; \code{\link{getTaskType}};
   \code{\link{subsetTask}}
 }

@@ -53,6 +53,9 @@
 #'   via \code{\link{tuneThreshold}}?
 #'   Only works for classification if the predict type is \dQuote{prob}.
 #'   Default is \code{FALSE}.
+#' @param tune.threshold.args [\code{list}]\cr
+#'   Further arguments for threshold tuning that are passed down to \code{\link{tuneThreshold}}.
+#'   Default is none.
 #' @param log.fun [\code{function} | \code{NULL}]\cr
 #'   Function used for logging. If set to \code{NULL}, the internal default will be used.
 #'   Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},

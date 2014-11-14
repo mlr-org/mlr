@@ -14,19 +14,23 @@
 \title{Create control structures for tuning.}
 \usage{
 makeTuneControlCMAES(same.resampling.instance = TRUE, impute.val = NULL,
-  start = NULL, tune.threshold = FALSE, ...)
+  start = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
+  log.fun = NULL, ...)
 
 makeTuneControlGenSA(same.resampling.instance = TRUE, impute.val = NULL,
-  start = NULL, tune.threshold = FALSE, ...)
+  start = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
+  log.fun = NULL, ...)
 
 makeTuneControlGrid(same.resampling.instance = TRUE, impute.val = NULL,
-  resolution = 10L, tune.threshold = FALSE, log.fun = NULL)
+  resolution = 10L, tune.threshold = FALSE, tune.threshold.args = list(),
+  log.fun = NULL)
 
 makeTuneControlIrace(impute.val = NULL, n.instances = 100L,
-  show.irace.output = FALSE, tune.threshold = FALSE, log.fun = NULL, ...)
+  show.irace.output = FALSE, tune.threshold = FALSE,
+  tune.threshold.args = list(), log.fun = NULL, ...)
 
 makeTuneControlRandom(same.resampling.instance = TRUE, maxit = 100L,
-  tune.threshold = FALSE, log.fun = NULL)
+  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL)
 }
 \arguments{
 \item{same.resampling.instance}{[\code{logical(1)}]\cr
@@ -54,6 +58,16 @@ via \code{\link{tuneThreshold}}?
 Only works for classification if the predict type is \dQuote{prob}.
 Default is \code{FALSE}.}
 
+\item{tune.threshold.args}{[\code{list}]\cr
+Further arguments for threshold tuning that are passed down to \code{\link{tuneThreshold}}.
+Default is none.}
+
+\item{log.fun}{[\code{function} | \code{NULL}]\cr
+Function used for logging. If set to \code{NULL}, the internal default will be used.
+Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
+\code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
+and \code{stage} is expected. See the implementation for details.}
+
 \item{...}{[any]\cr
 Further control parameters passed to the \code{control} argument of \code{\link[cmaes]{cma_es}} and
 \code{tunerConfig} argument of \code{\link[irace]{irace}}.}
@@ -64,12 +78,6 @@ For vector parameters, it is the resolution per dimension.
 Either pass one resolution for all parameters, or a named vector.
 See \code{\link[ParamHelpers]{generateGridDesign}}.
 Default is 10.}
-
-\item{log.fun}{[\code{function} | \code{NULL}]\cr
-Function used for logging. If set to \code{NULL}, the internal default will be used.
-Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
-\code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
-and \code{stage} is expected. See the implementation for details.}
 
 \item{n.instances}{[\code{integer(1)}]\cr
 Number of random resampling instances for irace, see details.

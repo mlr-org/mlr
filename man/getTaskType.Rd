@@ -10,7 +10,7 @@ getTaskType(task)
 The task.}
 }
 \value{
-[\code{character}].
+[\code{character(1)}].
 }
 \description{
 Get the type of the task.
@@ -21,7 +21,8 @@ Other task: \code{\link{getTaskCosts}};
   \code{\link{getTaskFeatureNames}};
   \code{\link{getTaskFormula}},
   \code{\link{getTaskFormulaAsString}};
-  \code{\link{getTaskNFeats}};
+  \code{\link{getTaskId}}; \code{\link{getTaskNFeats}};
+  \code{\link{getTaskTargetNames}};
   \code{\link{getTaskTargets}}; \code{\link{subsetTask}}
 }
 

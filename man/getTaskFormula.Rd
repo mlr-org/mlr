@@ -4,9 +4,9 @@
 \alias{getTaskFormulaAsString}
 \title{Get formula of a task.}
 \usage{
-getTaskFormulaAsString(x, target = getTargetNames(x))
+getTaskFormulaAsString(x, target = getTaskTargetNames(x))
 
-getTaskFormula(x, target = getTargetNames(x), env = NULL)
+getTaskFormula(x, target = getTaskTargetNames(x), env = NULL)
 }
 \arguments{
 \item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
@@ -31,7 +31,8 @@ This is simply \dQuote{<target> ~ .}.
 Other task: \code{\link{getTaskCosts}};
   \code{\link{getTaskData}};
   \code{\link{getTaskFeatureNames}};
-  \code{\link{getTaskNFeats}};
+  \code{\link{getTaskId}}; \code{\link{getTaskNFeats}};
+  \code{\link{getTaskTargetNames}};
   \code{\link{getTaskTargets}}; \code{\link{getTaskType}};
   \code{\link{subsetTask}}
 }
