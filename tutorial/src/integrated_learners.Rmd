@@ -51,15 +51,6 @@ getTab = function(type) {
 }
 ```
 
-<style type="text/css">
-<!--
-.col-md-9 td {
-border: solid 1px #ccc;
-padding: 0.1em;
-vertical-align: top;
-}
--->
-</style>
 
 ### Classification
 ```{r echo=FALSE,results="asis"}

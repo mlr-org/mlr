@@ -88,6 +88,12 @@ plot(perf1, col = "blue")
 plot(perf2, col = "red", add = TRUE)
 ```
 
+[%mlr] also supports [ViperCharts](http://viper.ijs.si/) for plotting ROC
+curves. In this case, we can use the predictions directly.
+```{r}
+z = plotViperCharts(list(lda=r1$pred, ksvm=r2$pred), chart = "rocc", browse = FALSE)
+```
+You can see the plot created this way [here](`r z`). For details, see [&plotViperCharts].
 
 ## Further performance plots
 

@@ -2,6 +2,8 @@ site_name: mlr tutorial
 site_dir: html
 repo_url: https://github.com/berndbischl/mlr/
 use_directory_urls: False
+theme: 'mkdocs'
+theme_dir: 'custom_theme'
 pages:
 - ["index.md", "Home"]
 - ["task.md", "Basics", "Tasks"]

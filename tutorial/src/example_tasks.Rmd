@@ -3,16 +3,6 @@
 For your convenience [%mlr] provides pre-defined [&Task]s for each type of learning problem.
 These are used throughout this tutorial in order to get shorter and more readable code.
 
-<style type="text/css">
-<!--
-td {
-border: solid 1px #ccc;
-padding: 0.5em;
-vertical-align: top;
-}
--->
-</style>
-
 ```{r echo=FALSE, results="asis"}
 linkTask = function(x) {
   collapse(sprintf("[%1$s](http://www.rdocumentation.org/packages/mlr/functions/%1$s/)", x), sep = "<br />")

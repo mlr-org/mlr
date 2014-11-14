@@ -1,4 +1,4 @@
-.com { color: #93a1a1; }
+.com { color: #467447; }
 .lit { color: #195f91; }
 .pun, .opn, .clo { color: #93a1a1; }
 .fun { color: #dc322f; }
@@ -25,4 +25,14 @@ ol.linenums li {
   color: #bebec5;
   line-height: 20px;
   text-shadow: 0 1px 0 #fff;
+}
+
+.col-md-9 td {
+border: solid 1px #ccc;
+padding: 0.5em;
+vertical-align: top;
+}
+
+.col-md-9 th {
+padding: 0.5em;
 }
