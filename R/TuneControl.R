@@ -67,12 +67,8 @@ makeTuneControl = function(same.resampling.instance, impute.val = NULL, start = 
 
   if (!is.null(start))
     assertList(start, min.len = 1L, names = "unique")
-  if (is.null(log.fun)) {
+  if (is.null(log.fun))
     log.fun = logFunTune
-  } else {
-    assertFunction(log.fun,
-      args = c("learner", "task", "resampling", "measures", "par.set", "control", "opt.path", "dob", "x", "y", "remove.nas", "stage"))
-  }
   x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, tune.threshold.args, log.fun, ...)
   x$start = start
   addClasses(x, c(cl, "TuneControl"))

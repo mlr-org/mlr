@@ -27,13 +27,9 @@ makeTuneMultiCritControl = function(measures, same.resampling.instance, impute.v
   assertFlag(same.resampling.instance)
   if (!is.null(impute.val))
     assertNumeric(impute.val, any.missing = FALSE)
-  if (is.null(log.fun)) {
+  if (is.null(log.fun))
     log.fun = logFunTune
-  } else {
-    assertFunction(log.fun,
-      args = c("learner", "task", "resampling", "measures", "par.set", "control", "opt.path", "dob", "x", "y", "remove.nas", "stage"))
-  }
-  x = makeOptControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val, log.fun = log.fun, ...)
+  x = makeOptControl(same.resampling.instance, impute.val, log.fun = log.fun, ...)
   addClasses(x, c(cl, "TuneMultiCritControl"))
 }
 

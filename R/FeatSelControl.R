@@ -104,16 +104,11 @@ makeFeatSelControl = function(same.resampling.instance, impute.val = NULL, maxit
 
   maxit = asCount(maxit, na.ok = TRUE, positive = TRUE)
   max.features = asCount(max.features, na.ok = TRUE, positive = TRUE)
-  if (is.null(log.fun)) {
+  if (is.null(log.fun))
     log.fun = logFunFeatSel
-  } else {
-    assertFunction(log.fun,
-      args = c("learner", "task", "resampling", "measures", "par.set", "control", "opt.path", "dob", "x", "y", "remove.nas", "stage"))
-  }
-  x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, tune.threshold.args, ...)
+  x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, tune.threshold.args, log.fun, ...)
   x$maxit = maxit
   x$max.features = max.features
-  x$log.fun = log.fun
   class(x) = c(cl, "FeatSelControl", class(x))
   return(x)
 }
