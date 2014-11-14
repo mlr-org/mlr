@@ -6,7 +6,11 @@
 #'   Default is 10.
 #' @export
 #' @rdname TuneControl
-makeTuneControlGrid = function(same.resampling.instance = TRUE, impute.val = NULL, resolution = 10L, tune.threshold = FALSE, log.fun = NULL) {
+makeTuneControlGrid = function(same.resampling.instance = TRUE, impute.val = NULL, resolution = 10L,
+  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL) {
+
   makeTuneControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val,
-    start = NULL, resolution = resolution, tune.threshold = tune.threshold, log.fun = log.fun, cl = "TuneControlGrid")
+    start = NULL, resolution = resolution,
+    tune.threshold = tune.threshold, tune.threshold.args = tune.threshold.args,
+    log.fun = log.fun, cl = "TuneControlGrid")
 }
