@@ -68,7 +68,7 @@ plotViperCharts.list = function(obj, chart = "rocc", browse = TRUE, auth.key = N
     list(name = s, actual = a, predicted = getProbabilities(p))
   }, obj, names(obj), SIMPLIFY = FALSE, USE.NAMES = FALSE)
   inp = list(
-    chart = chart, data = inp, embedded = FALSE,
+    chart = chart, data = inp, embedded = FALSE
   )
   url = "http://viper.ijs.si/api/"
   headers = list('Accept' = 'application/json', 'Content-Type' = 'application/json')
