@@ -3,7 +3,7 @@
 \alias{plotViperCharts}
 \title{Visualize binary classification predictions via ViperCharts system.}
 \usage{
-plotViperCharts(obj, chart = "rocc", browse = TRUE, auth.key = NULL)
+plotViperCharts(obj, chart = "rocc", browse = TRUE, auth.key = NULL, ...)
 }
 \arguments{
 \item{obj}{[(list of) \code{\link{Prediction}} | \code{\link{BenchmarkResult}}]\cr
@@ -13,8 +13,8 @@ name the list with the names you want to see in the plots, probably
 learner shortnames or ids.}
 
 \item{chart}{[\code{character(1)}]\cr
-First chart to display in focus in browser for non-embedded view,
-or displayed chart for embedded mode.
+First chart to display in focus in browser.
+All other charts can be displayed by clicking on the browser page menu.
 Default is \dQuote{rocc}.}
 
 \item{browse}{[\code{logical(1)}]\cr
@@ -23,8 +23,8 @@ Calls \code{\link{browseURL}}.
 Default is \code{TRUE}.}
 
 \item{auth.key}{[\code{character(1)}]\cr
-API key to use for call to Viper charts website. Only required if you want the chart
-to be private.
+API key to use for call to Viper charts website.
+Only required if you want the chart to be private.
 Default is \code{NULL}.}
 }
 \value{

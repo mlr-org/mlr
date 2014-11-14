@@ -10,13 +10,13 @@
 \title{Create control structures for multi-criteria tuning.}
 \usage{
 makeTuneMultiCritControlGrid(same.resampling.instance = TRUE,
-  resolution = 10L)
+  resolution = 10L, log.fun = NULL)
 
 makeTuneMultiCritControlNSGA2(same.resampling.instance = TRUE,
-  impute.val = NULL, ...)
+  impute.val = NULL, log.fun = NULL, ...)
 
 makeTuneMultiCritControlRandom(same.resampling.instance = TRUE,
-  maxit = 100L)
+  maxit = 100L, log.fun = NULL)
 }
 \arguments{
 \item{same.resampling.instance}{[\code{logical(1)}]\cr
@@ -29,6 +29,12 @@ For vector parameters, it is the resolution per dimension.
 Either pass one resolution for all parameters, or a named vector.
 See \code{\link[ParamHelpers]{generateGridDesign}}.
 Default is 10.}
+
+\item{log.fun}{[\code{function} | \code{NULL}]\cr
+Function used for logging. If set to \code{NULL}, the internal default will be used.
+Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
+\code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
+and \code{stage} is expected. See the implementation for details.}
 
 \item{impute.val}{[\code{numeric}]\cr
 If something goes wrong during optimization (e.g, the learner crashes),

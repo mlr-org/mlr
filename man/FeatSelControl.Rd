@@ -13,21 +13,21 @@
 \usage{
 makeFeatSelControlExhaustive(same.resampling.instance = TRUE,
   maxit = NA_integer_, max.features = NA_integer_, tune.threshold = FALSE,
-  log.fun = NULL)
+  tune.threshold.args = list(), log.fun = NULL)
 
 makeFeatSelControlGA(same.resampling.instance = TRUE, impute.val = NULL,
   maxit = NA_integer_, max.features = NA_integer_, comma = FALSE,
   mu = 10L, lambda, crossover.rate = 0.5, mutation.rate = 0.05,
-  tune.threshold = FALSE, log.fun = NULL)
+  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL)
 
 makeFeatSelControlRandom(same.resampling.instance = TRUE, maxit = 100L,
   max.features = NA_integer_, prob = 0.5, tune.threshold = FALSE,
-  log.fun = NULL)
+  tune.threshold.args = list(), log.fun = NULL)
 
 makeFeatSelControlSequential(same.resampling.instance = TRUE,
   impute.val = NULL, method, alpha = 0.01, beta = -0.001,
   maxit = NA_integer_, max.features = NA_integer_, tune.threshold = FALSE,
-  log.fun = NULL)
+  tune.threshold.args = list(), log.fun = NULL)
 }
 \arguments{
 \item{same.resampling.instance}{[\code{logical(1)}]\cr
@@ -46,6 +46,10 @@ Should the threshold be tuned for the measure at hand, after each feature set ev
 via \code{\link{tuneThreshold}}?
 Only works for classification if the predict type is \dQuote{prob}.
 Default is \code{FALSE}.}
+
+\item{tune.threshold.args}{[\code{list}]\cr
+Further arguments for threshold tuning that are passed down to \code{\link{tuneThreshold}}.
+Default is none.}
 
 \item{log.fun}{[\code{function} | \code{NULL}]\cr
 Function used for logging. If set to \code{NULL}, the internal default will be used.

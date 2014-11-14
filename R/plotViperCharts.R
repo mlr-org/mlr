@@ -23,9 +23,12 @@
 #'   Calls \code{\link{browseURL}}.
 #'   Default is \code{TRUE}.
 #' @param auth.key [\code{character(1)}]\cr
-#'   API key to use for call to Viper charts website. Only required if you want the chart
-#'   to be private.
+#'   API key to use for call to Viper charts website.
+#'   Only required if you want the chart to be private.
 #'   Default is \code{NULL}.
+#' @param task.id [\code{character(1)}]\cr
+#'   Selected task in \code{\link{BenchmarkResult}} to do plots for.
+#'   Default is first taks.
 #' @return [\code{character(1)}]. Invisibly returns the ViperCharts URL.
 #' @family roc
 #' @family predict
@@ -40,19 +43,19 @@
 #' b = benchmark(list(lrn1, lrn2), pid.task)
 #' z = plotViperCharts(b, chart = "lift", browse = TRUE)
 #' }
-plotViperCharts = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL) {
+plotViperCharts = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL, ...) {
   UseMethod("plotViperCharts")
 }
 
 #' @export
-plotViperCharts.Prediction = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL) {
+plotViperCharts.Prediction = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL, ...) {
   l = list(obj)
   names(l) = getTaskId(obj)
   plotViperCharts.list(l, chart, browse, auth.key)
 }
 
 #' @export
-plotViperCharts.list = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL) {
+plotViperCharts.list = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL, ...) {
 
   assertChoice(chart, c("prs", "rocs", "prc", "lift", "rocc", "roch", "ROC", "cost",
     "ratedriven", "kendall", "column"))
@@ -81,7 +84,7 @@ plotViperCharts.list = function(obj, chart = "rocc", browse = TRUE, auth.key = N
 }
 
 #' @export
-plotViperCharts.BenchmarkResult = function(obj, task.id = NULL, chart = "rocc", browse = TRUE, auth.key = NULL) {
+plotViperCharts.BenchmarkResult = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL, task.id = NULL, ...) {
   tids = getBMRTaskIds(obj)
   if (is.null(task.id))
     task.id = tids[1L]
