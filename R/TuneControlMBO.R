@@ -8,11 +8,14 @@
 #   Control object for model-based optimization tuning.
 # @export
 # @rdname TuneControl
-makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL, learner, mbo.control, tune.threshold = FALSE, log.fun = NULL) {
+makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL, learner, mbo.control,
+  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL) {
+
   assertClass(learner, classes = "Learner")
   assertClass(mbo.control, "MBOControl")
   x = makeTuneControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val,
-    start = NULL, tune.threshold = tune.threshold, cl = "TuneControlMBO", log.fun = log.fun)
+    start = NULL, tune.threshold = tune.threshold, tune.threshold.args = tune.threshold.args,
+    cl = "TuneControlMBO", log.fun = log.fun)
   x$learner = learner
   x$mbo.control = mbo.control
   return(x)

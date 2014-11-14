@@ -41,6 +41,9 @@
 #'   via \code{\link{tuneThreshold}}?
 #'   Only works for classification if the predict type is \dQuote{prob}.
 #'   Default is \code{FALSE}.
+#' @param tune.threshold.args [\code{list}]\cr
+#'   Further arguments for threshold tuning that are passed down to \code{\link{tuneThreshold}}.
+#'   Default is none.
 #' @param log.fun [\code{function} | \code{NULL}]\cr
 #'   Function used for logging. If set to \code{NULL}, the internal default will be used.
 #'   Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
@@ -59,10 +62,12 @@
 #' @aliases TuneControlGrid TuneControlRandom TuneControlCMAES TuneControlGenSA TuneControlIrace
 NULL
 
-makeTuneControl = function(same.resampling.instance, impute.val = NULL, start = NULL, tune.threshold = FALSE, log.fun = NULL, ..., cl) {
+makeTuneControl = function(same.resampling.instance, impute.val = NULL, start = NULL,
+  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL, ..., cl) {
+
   if (!is.null(start))
     assertList(start, min.len = 1L, names = "unique")
-  x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, log.fun, ...)
+  x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, tune.threshold.args, log.fun, ...)
   x$start = start
   x$log.fun = log.fun
   addClasses(x, c(cl, "TuneControl"))
