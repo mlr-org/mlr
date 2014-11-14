@@ -55,7 +55,7 @@ makePrediction.TaskDescClassif = function(task.desc, row.names, id, truth, predi
   data = namedList(c("id", "truth", "response", "prob"))
   data$id = id
   # truth can come from a simple "newdata" df. then there might not be all factor levels present
-  levels(truth) = union(levels(truth), task.desc$class.levels)
+  # levels(truth) = union(levels(truth), task.desc$class.levels)
   data$truth = truth
   if (predict.type == "response") {
     data$response = y

@@ -62,13 +62,7 @@ NULL
 makeTuneControl = function(same.resampling.instance, impute.val = NULL, start = NULL, tune.threshold = FALSE, log.fun = NULL, ..., cl) {
   if (!is.null(start))
     assertList(start, min.len = 1L, names = "unique")
-  if (is.null(log.fun)) {
-    log.fun = logFunTune
-  } else {
-    assertFunction(log.fun,
-      args = c("learner", "task", "resampling", "measures", "par.set", "control", "opt.path", "dob", "x", "y", "remove.nas", "stage"))
-  }
-  x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, ...)
+  x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, log.fun, ...)
   x$start = start
   x$log.fun = log.fun
   addClasses(x, c(cl, "TuneControl"))
@@ -82,18 +76,4 @@ print.TuneControl = function(x, ...) {
   catf("Start: %s", convertToShortString(x$start))
   catf("Tune threshold: %s", x$tune.threshold)
   catf("Further arguments: %s", convertToShortString(x$extra.args))
-}
-
-logFunTune = function(learner, task, resampling, measures, par.set, control, opt.path, dob, x, y, remove.nas, stage = 0L) {
-  if (stage == 1L) {
-    if (!inherits(learner, "ModelMultiplexer")) {
-      messagef("[Tune] %i: %s : %s", dob,
-        paramValueToString(par.set, x, show.missing.values = !remove.nas), perfsToString(y))
-    } else {
-      # shorten tuning logging a bit. we remove the sel.learner prefix from params
-      s = paramValueToString(par.set, x, show.missing.values = !remove.nas)
-      s = gsub(paste0(x$selected.learner, "\\."), "", s)
-      messagef("[Tune] %i: %s : %s", dob, s, perfsToString(y))
-    }
-  }
 }
