@@ -41,10 +41,10 @@ classification methods, ``regr.<R_method_name>`` for regression methods,
 ``surv.<R_method_name>`` for survival analysis, and ``cluster.<R_method_name>``
 for clustering methods.
 
-Hyperparameter values can be specified either via the ``...`` argument or as a ``list`` via
-``par.vals``.
+Hyperparameter values can be specified either via the ``...`` argument or as a [list](&base::list)
+via ``par.vals``.
 
-Occasionally, ``factor`` features may cause problems when fewer levels are present in the
+Occasionally, [factor](&base::factor) features may cause problems when fewer levels are present in the
 test data than in the training data.
 By setting ``fix.factors = TRUE`` these are avoided by adding the missing factor levels in
 the test data set.
@@ -62,7 +62,7 @@ It contains the properties of the method, e.g., which types of features it can h
 what can be output during prediction, and whether multi-class problems,
 observations weights or missing values are supported.
 
-As you might have noticed, there is no special learner class for cost-sensitive classification.
+As you might have noticed, there is currently no special learner class for cost-sensitive classification.
 There are several ways to generate cost-sensitive learners from regression and classification
 learners. This is explained in greater detail in the section about
 [cost-sensitive classification](cost_sensitive_classif.md).
@@ -70,7 +70,7 @@ learners. This is explained in greater detail in the section about
 
 ## Accessing a learner
 
-The [Learner](&makeLearner) object is a ``list``and the following elements contain
+The [Learner](&makeLearner) object is a [list](&base::list) and the following elements contain
 information regarding the hyperparameters and the type of prediction.
 
 ```{r}
@@ -84,14 +84,14 @@ classif.lrn$par.set
 regr.lrn$predict.type
 ```
 
-``classif.lrn$par.set`` is an object of class [ParamSet](&ParamHelpers::makeParamSet).
+Slot ``$par.set`` is an object of class [ParamSet](&ParamHelpers::makeParamSet).
 It contains, among others, the type of parameters (e.g., numeric, logical), potential
 default values and the range of allowed values.
 
 Moreover, [%mlr] provides functions [&getHyperPars] and [&getParamSet] to access the
 selected hyperparameter values and the parameter set.
 These are particularly useful in case of a wrapped [Learner](&makeLearner),
-for example if a learner is fused with a feature selection strategy and both, the learner
+for example if a learner is fused with a feature selection strategy, and both, the learner
 as well the feature selection method, have hyperparameters.
 For details see the section on [wrapped learners](wrapper.md).
 

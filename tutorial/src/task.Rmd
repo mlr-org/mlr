@@ -1,26 +1,28 @@
 # Learning Tasks
 
-Learning tasks are the basic elements of the package that encapsulate the
-data set and all relevant information regarding the purpose of the
-task, e.g., the target variable.
+Learning tasks encapsulate the data set and further relevant information about a machine
+learning problem, for example the name of the target variable.
 
 
 ## Task types and creation
 
-The tasks are organised in a hierarchy, with the generic
-[&Task] at the top.
+The tasks are organised in a hierarchy, with the generic [&Task] at the top.
 The following tasks can be instantiated and all inherit from a virtual superclass [&Task]:
 
-* [ClassifTask](&Task) for binary and multi-class classification problems
-* [RegrTask](&Task) for regression problems
-* [SurvTask](&Task) for survival analysis
-* [CostSensTask](&Task) for cost-sensitive classification
-* [ClusterTask](&Task) for cluster analysis
+* [ClassifTask](&Task) for binary and multi-class classification problems,
+* [RegrTask](&Task) for regression problems,
+* [SurvTask](&Task) for survival analysis,
+* [CostSensTask](&Task) for cost-sensitive classification,
+* [ClusterTask](&Task) for cluster analysis.
 
-To create a task, just call ``make[TaskType]``, e.g., [makeClassifTask](&Task).
+To create a task, just call ``make<TaskType>``, e.g., [makeClassifTask](&Task).
 All tasks require an identifier (argument ``id``) and a [data frame](&base::data.frame) (argument ``data``).
 If no ID is provided it is automatically generated using the name of the data.
-Depending on the nature of the learning problem, additional arguments may be required and are exemplified in the following subsections.
+It will be later used to name results, for example of
+[benchmark experiments](benchmark_experiments.md).
+Depending on the nature of the learning problem, additional arguments may be required and
+are exemplified in the following subsections.
+
 
 ### Cluster analysis
 
@@ -29,15 +31,9 @@ In the following example we create a learning task from the data set [mtcars](&d
 
 ```{r}
 data(mtcars, package = "datasets")
-cluster.task = makeClusterTask(id = "cars", data = mtcars)
+cluster.task = makeClusterTask(data = mtcars)
 cluster.task
 ```
-
-The argument ``id`` is optional and allows to specify a custom name for the task.
-It will be later used to name results, for example of
-[benchmark experiments](benchmark_experiments.md).
-If not specified the ``id`` defaults to the name of the **R** object passed to ``data``,
-in the above example ``"mtcars"``.
 
 
 ### Regression
@@ -48,22 +44,22 @@ variable.
 
 ```{r}
 data(BostonHousing, package = "mlbench")
-regr.task = makeRegrTask(data = BostonHousing, target = "medv")
+regr.task = makeRegrTask(id = "bh", data = BostonHousing, target = "medv")
 regr.task
 ```
 
-As you can see, the task records the type of the learning problem and basic information about
-the data set, e.g., the types of the features (numeric vectors or factors),
+As you can see, the [&Task] records the type of the learning problem and basic information about
+the data set, e.g., the types of the features (numeric vectors, factors or ordered factors),
 the number of observations, or whether missing values are present.
 
-Creating tasks for (cost-sensitive) classification problems and survival analysis
-follows the same scheme, except that the target variable is a factor instead of a numeric quantity of course.
+Creating tasks for classification problems and survival analysis follows the same scheme,
+except the type of the target variables.
 For each of these learning problems, some specifics are described below.
 
 
 ### Classification
 
-For classification the target variable has to be a ``factor``.
+For classification the target variable has to be a [factor](&base::factor).
 
 In binary classification it is customary to refer to the two classes as *positive* and
 *negative* class.
@@ -71,8 +67,8 @@ This is for example relevant with regard to certain [performance measures](perfo
 like the *true positive rate*.
 By default the first factor level of the target variable is selected as the positive class.
 
-In the following example, we define a classification task for the data set
-[BreastCancer](&mlbench::BreastCancer) and exclude the variable ``Id`` from all further
+In the following example, we define a classification task for the
+[BreastCancer](&mlbench::BreastCancer) data set and exclude the variable ``Id`` from all further
 model fitting and evaluation.
 
 ```{r}
@@ -88,7 +84,7 @@ Class malignant can be manually selected as the positive class:
 
 ```{r}
 classif.task = makeClassifTask(id = "BreastCancer", data = df, target = "Class",
-    positive = "malignant")
+  positive = "malignant")
 ```
 
 
@@ -159,7 +155,7 @@ Another possibility is to assign ``weights`` to observations according to their 
 
 ## Accessing a learning task
 
-The [&Task] object is a ``list`` and its main properties are stored in element
+The [&Task] object is a [list](base::list) and its main properties are stored in element
 ``$task.desc`` which is of class [&TaskDesc].
 
 ```{r}
@@ -167,8 +163,7 @@ str(regr.task$task.desc)
 ```
 
 Moreover, there are some functions, following the naming convention
-``getTask<what_to_extract>``, to access the data set and some of its
-properties.
+``getTask<what_to_extract>``, to access the [&Task] and the encapsulated data.
 The most important ones are listed in the documentation of [&Task].
 Here are some examples.
 
@@ -178,6 +173,9 @@ getTaskNFeats(cluster.task)
 
 ## Get the names of the input variables in cluster.task:
 getTaskFeatureNames(cluster.task)
+
+## Get the names of the target columns:
+getTaskTargetNames(surv.task)
 
 ## Get the values of the target variable in regr.task:
 head(getTaskTargets(regr.task))
@@ -190,9 +188,10 @@ str(getTaskData(classif.task))
 ```
 
 Note the many options [&getTaskData] provides to convert the data set into a convenient format.
-This is especially handy when you [integrate a learner](create_learner.md) from another **R**
+This especially comes in handy when you [integrate a learner](create_learner.md) from another **R**
 package into [%mlr].
-In this regard the functions [&getTaskFormula] and [getTaskFormulaAsString](&getTaskFormula) are also useful.
+In this regard the functions [&getTaskFormula] and [getTaskFormulaAsString](&getTaskFormula)
+are also useful.
 
 
 ## Modifying a learning task
@@ -216,10 +215,11 @@ dropFeatures(surv.task, c("meal.cal", "wt.loss"))
 normalizeFeatures(classif.task, method = "standardize")
 ```
 
+For more information see also the section about [data preprocessing](preproc.md).
 
-## Pre-defined tasks
+
+## Example tasks
 
 For your convenience [%mlr] provides pre-defined [&Task]s for each type of learning problem.
 These are used throughout this tutorial in order to get shorter and more readable code.
-A list of all tasks can be found [here](example_tasks.md
-).
+A list of all [&Task]s can be found [here](example_tasks.md).

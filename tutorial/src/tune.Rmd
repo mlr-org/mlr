@@ -48,7 +48,7 @@ ctrl = makeTuneControlGrid()
 Finally, combining all the previous pieces, we can tune the SVM
 using our [&TuneControl] instance and the resampling strategy
 described by the `rdesc` variable.
-We use the [iris.task](&mlr.iris) provided by [%mlr].
+We use the [&iris.task] provided by [%mlr].
 
 ```{r}
 res = tuneParams("classif.ksvm", task = iris.task, resampling = rdesc, par.set = ps, 
