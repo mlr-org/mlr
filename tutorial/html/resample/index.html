@@ -155,6 +155,10 @@
                                 <a href="../create_measure/index.html">Create Custom Measures</a>
                             </li>
                         
+                            <li >
+                                <a href="../create_imputation/index.html">Create an Imputation Method</a>
+                            </li>
+                        
                         </ul>
                     </li>
                 
@@ -390,7 +394,6 @@ r = resample(&quot;cluster.XMeans&quot;, mtcars.task, rdesc, measures = list(dun
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; [Resample] subsampling iter: 1
-#&gt; Loading required package: clusterSim
 #&gt; [Resample] subsampling iter: 2
 #&gt; [Resample] subsampling iter: 3
 </code></pre>
@@ -419,14 +422,14 @@ r = resample(&quot;cluster.XMeans&quot;, mtcars.task, rdesc, measures = list(dun
 #&gt; Warning: no non-missing arguments to max; returning -Inf
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.051
+<pre class="prettyprint well"><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.16
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;      dunn.test.mean        db.test.mean timetrain.test.mean 
-#&gt;              0.9576              0.4254              0.0510
+#&gt;              0.9576              0.4254              0.1596
 </code></pre>
 
 <h2 id="stratified-resampling">Stratified resampling</h2>
@@ -748,11 +751,13 @@ b632plus.mmce = setAggregation(mmce, b632plus)
 b632.mmce
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Performance measure: mmce
+<pre class="prettyprint well"><code>#&gt; Name: Mean misclassification error
+#&gt; Performance measure: mmce
 #&gt; Properties: classif,classif.multi
 #&gt; Minimize: TRUE
 #&gt; Best: 0; Worst: 1
 #&gt; Aggregated by: b632
+#&gt; Note:
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r = resample(&quot;classif.rpart&quot;, iris.task, rdesc,

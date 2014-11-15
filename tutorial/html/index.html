@@ -155,6 +155,10 @@
                                 <a href="create_measure/index.html">Create Custom Measures</a>
                             </li>
                         
+                            <li >
+                                <a href="create_imputation/index.html">Create an Imputation Method</a>
+                            </li>
+                        
                         </ul>
                     </li>
                 
@@ -239,7 +243,8 @@ optimization in <strong>R</strong>.</p>
 <p>Our focus is on your comprehension of the basic functions and applications.
 For detailed technical information and manual pages, please refer to the package's
 <a href="http://berndbischl.github.io/mlr/man/">manual pages</a>.
-They are regularly updated and reflect the documentation of the current package version on CRAN.</p>
+They are regularly updated and reflect the documentation of the
+<a href="http://cran.r-project.org/web/packages/mlr/index.html">current package version on CRAN</a>.</p>
 <p>The tutorial explains the basic analysis of a data set step by step:</p>
 <ul>
 <li>What is your data and the aim of your analysis? <a href="task/index.html">Tasks</a></li>
@@ -250,8 +255,8 @@ They are regularly updated and reflect the documentation of the current package 
 <li>How to select important features? <a href="feature_selection/index.html">Feature Selection</a></li>
 <li>How to conduct a comparison study? <a href="benchmark_experiments/index.html">Benchmark Experiments</a></li>
 </ul>
-<p>We present various simple examples from classification and regression
-during this tutorial to illustrate the main features of the
+<p>We present various simple examples from classification, regression, cluster and survival
+analysis during this tutorial to illustrate the main features of the
 package.</p>
 <p>Enjoy reading!</p>
 <h2 id="quick-start">Quick start</h2>
@@ -269,10 +274,10 @@ lrn = makeLearner(&quot;classif.lda&quot;)
 rdesc = makeResampleDesc(method = &quot;CV&quot;, stratify = TRUE)
 
 ## Do the resampling:
-res = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE)
+r = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE)
 
 ## Get the mean misclassification error:
-res$aggr
+r$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; mmce.test.mean 

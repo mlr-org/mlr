@@ -155,6 +155,10 @@
                                 <a href="../create_measure/index.html">Create Custom Measures</a>
                             </li>
                         
+                            <li >
+                                <a href="../create_imputation/index.html">Create an Imputation Method</a>
+                            </li>
+                        
                         </ul>
                     </li>
                 
@@ -255,7 +259,7 @@ mod
 </code></pre>
 
 <p>In the above example, creating a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> explicitly is not strictly necessary.
-Generally, you have to create a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> if you want to change any defaults
+As a general rule, you have to create a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> if you want to change any defaults
 by, e.g., setting hyperparameter values or changing the type of prediction.
 Otherwise, <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a> and many other functions accept a character string naming the learning
 method.</p>
@@ -288,7 +292,7 @@ mod
 <p>Optionally, only a subset of the data, specified by an index set, can be used to
 train the learner. This set is passed using the <code>subset</code> argument of <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a>.</p>
 <p>We fit a simple linear regression model to the <a href="http://www.rdocumentation.org/packages/mlbench/functions/BostonHousing.html">BostonHousing</a> data set.
-The object <a href="http://www.rdocumentation.org/packages/mlr/functions/mlr.bh.html">bh.task</a> is the regression <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> on the <a href="http://www.rdocumentation.org/packages/mlbench/functions/BostonHousing.html">BostonHousing</a>
+The object <a href="http://www.rdocumentation.org/packages/mlr/functions/bh.task.html">bh.task</a> is the regression <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> on the <a href="http://www.rdocumentation.org/packages/mlbench/functions/BostonHousing.html">BostonHousing</a>
 data set provided by <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.</p>
 <pre class="prettyprint well"><code class="r">## Number of observations
 n = bh.task$task.desc$size
@@ -335,11 +339,11 @@ should always be used for the learning task and in <a href="http://www.rdocument
 some of the learners you want to use cannot deal with weights or you want to try different weights.
 The weights in <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a> overwrite the weights in <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
 <h2 id="wrapped-models">Wrapped models</h2>
-<p><a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a> returns an object of class <a href="http://www.rdocumentation.org/packages/mlr/functions/makeWrappedModel.html">makeWrappedModel</a>, which wraps the
+<p><a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a> returns an object of class <a href="http://www.rdocumentation.org/packages/mlr/functions/makeWrappedModel.html">WrappedModel</a>, which wraps the
 particular model of the underlying <strong>R</strong> learning method. The wrapped model contains the output as well as the actual model.
 It can subsequently be used to perform a <a href="http://www.rdocumentation.org/packages/mlr/functions/predict.WrappedModel.html">prediction</a> for new observations.</p>
 <p>In order to access the underlying model we can use the function <a href="http://www.rdocumentation.org/packages/mlr/functions/getLearnerModel.html">getLearnerModel</a>.
-In the following example we get an object of class <a href="http://www.rdocumentation.org/packages/stats/functions/lm.html">"lm"</a>.</p>
+In the following example we get an object of class <a href="http://www.rdocumentation.org/packages/stats/functions/lm.html">lm</a>.</p>
 <pre class="prettyprint well"><code class="r">mod = train(&quot;regr.lm&quot;, bh.task, subset = train.set)
 getLearnerModel(mod)
 </code></pre>
