@@ -1,22 +1,16 @@
 mlr: Machine Learning in R
 ==========================
 
-* Offical CRAN release site:
-  http://cran.r-project.org/web/packages/mlr/index.html
+* [Offical CRAN release site](http://cran.r-project.org/web/packages/mlr/)
+* [Detailed Tutorial](http://berndbischl.github.io/mlr/tutorial/html/) ([Download](http://berndbischl.github.io/mlr/tutorial/tutorial.zip))
+* [R Documentation in HTML](http://www.rdocumentation.org/packages/mlr)
+* Install the development version
 
-* Detailed Tutorial:
-  http://berndbischl.github.io/mlr/tutorial/html/
-
-* R Documentation in HTML:
-  http://www.rdocumentation.org/packages/mlr
-
-* Run this in R to install the current GitHub version:
-  ```splus
-  devtools::install_github("berndbischl/mlr")
-  ```
+    ```splus
+    devtools::install_github("berndbischl/mlr")
+    ```
 
 * [Further installation instructions](https://github.com/tudo-r/PackagesInfo/wiki/Installation-Information)
-
 * Travis CI: [![Build Status](https://travis-ci.org/berndbischl/mlr.png)](https://travis-ci.org/berndbischl/mlr)
 
 
@@ -79,12 +73,12 @@ https://groups.google.com/forum/?hl=de#!forum/mlr-devel
 
 mlr-devel@googlegroups.com
 
-But we strongly prefer to use the Github issue tracker now, because it is simply easier to handle and we do not forget your issues as easily as when they come in emails. 
-We use this ourselves a lot and mainly communicate there, not that much on the mailing list. 
-We also do not hate beginners and it is perfectly valid to mark a issue as "Question". 
+But we strongly prefer to use the Github issue tracker now, because it is simply easier to handle and we do not forget your issues as easily as when they come in emails.
+We use this ourselves a lot and mainly communicate there, not that much on the mailing list.
+We also do not hate beginners and it is perfectly valid to mark a issue as "Question".
 But please don't forget that all of us work in academia and put a lot of work into this project, simply because we like it, not because we are specifically paid for it.
 
-If you are interested in seeing a new feature, also use the tracker. 
+If you are interested in seeing a new feature, also use the tracker.
 We also welcome pull requests or new developers.
 
 For everything else the maintainer Bernd Bischl can be reached here: bernd_bischl@gmx.net.
