@@ -31,8 +31,8 @@ getTaskId = function(task) {
 #' @return [\code{character}].
 #' @export
 #' @family task
-getTaskTargetNames = function(x) {
-  getTaskDescription(x)$target
+getTaskTargetNames = function(task) {
+  getTaskDescription(task)$target
 }
 
 #' Get feature names of task.

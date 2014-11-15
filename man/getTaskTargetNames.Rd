@@ -3,7 +3,7 @@
 \alias{getTaskTargetNames}
 \title{Get the name(s) of the target column(s).}
 \usage{
-getTaskTargetNames(x)
+getTaskTargetNames(task)
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr

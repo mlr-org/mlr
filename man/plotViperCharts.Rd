@@ -3,7 +3,8 @@
 \alias{plotViperCharts}
 \title{Visualize binary classification predictions via ViperCharts system.}
 \usage{
-plotViperCharts(obj, chart = "rocc", browse = TRUE, auth.key = NULL, ...)
+plotViperCharts(obj, chart = "rocc", browse = TRUE, auth.key = NULL,
+  task.id = NULL)
 }
 \arguments{
 \item{obj}{[(list of) \code{\link{Prediction}} | \code{\link{BenchmarkResult}}]\cr
@@ -28,7 +29,7 @@ Only required if you want the chart to be private.
 Default is \code{NULL}.}
 
 \item{task.id}{[\code{character(1)}]\cr
-Selected task in \code{\link{BenchmarkResult}} to do plots for.
+Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
 Default is first taks.}
 }
 \value{
