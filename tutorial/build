@@ -91,7 +91,7 @@ if (ok$exit.code == 0L) {
   message("Build successfull!")
   message("Now zip everything!")
   setwd("html/")
-  zip("../tutorial.zip", files = ".")
+  zip("../mlr_tutorial.zip", files = ".")
   setwd("../")
   # clean up
   unlink("figure", recursive = TRUE)

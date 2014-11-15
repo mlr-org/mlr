@@ -10,6 +10,9 @@ For detailed technical information and manual pages, please refer to the package
 They are regularly updated and reflect the documentation of the current package version on CRAN.
 
 
+An offline version of this of this tutorial is available to [download here](http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip).
+
+
 The tutorial explains the basic analysis of a data set step by step:
 
 * What is your data and the aim of your analysis? [Tasks](task.md)
