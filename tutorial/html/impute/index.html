@@ -439,7 +439,7 @@ This can be achieved by creating an imputation wrapper.</p>
 has the same formal arguments as <a href="http://www.rdocumentation.org/packages/mlr/functions/impute.html">impute</a>.
 Like in the example above we impute <code>Solar.R</code> by random numbers from its empirical distribution,
 <code>Wind</code> by the predictions of a classification tree and generate dummy variables for both features.</p>
-<pre class="prettyprint well"><code class="r">lrn = makeImputeWrapper(makeLearner(&quot;regr.lm&quot;), cols = list(Solar.R = imputeHist(),
+<pre class="prettyprint well"><code class="r">lrn = makeImputeWrapper(&quot;regr.lm&quot;, cols = list(Solar.R = imputeHist(),
   Wind = imputeLearner(makeLearner(&quot;classif.rpart&quot;))), dummy.cols = c(&quot;Solar.R&quot;, &quot;Wind&quot;))
 lrn
 </code></pre>
@@ -472,32 +472,49 @@ r$aggr
 #&gt;         524.3
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">r$models
+<pre class="prettyprint well"><code class="r">lapply(r$models, getLearnerModel)
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; [[1]]
-#&gt; Learner model for id=regr.lm.preproc chain=PreprocWrapper
-#&gt; [chain] Trained on obs: 77
-#&gt; [chain] Used features: 3
-#&gt; [model] Trained on obs: 77
-#&gt; [model] Used features: 5
-#&gt; Hyperparameters: 
+#&gt; 
+#&gt; Call:
+#&gt; stats::lm(formula = f, data = d)
+#&gt; 
+#&gt; Coefficients:
+#&gt;       (Intercept)            Solar.R         Wind(8,16]  
+#&gt;         -117.0954             0.0853           -27.6763  
+#&gt;       Wind(16,24]               Temp  Solar.R.dummyTRUE  
+#&gt;           -9.0988             2.0505           -27.4152  
+#&gt;    Wind.dummyTRUE  
+#&gt;            2.2535  
+#&gt; 
 #&gt; 
 #&gt; [[2]]
-#&gt; Learner model for id=regr.lm.preproc chain=PreprocWrapper
-#&gt; [chain] Trained on obs: 78
-#&gt; [chain] Used features: 3
-#&gt; [model] Trained on obs: 78
-#&gt; [model] Used features: 5
-#&gt; Hyperparameters: 
+#&gt; 
+#&gt; Call:
+#&gt; stats::lm(formula = f, data = d)
+#&gt; 
+#&gt; Coefficients:
+#&gt;       (Intercept)            Solar.R         Wind(8,16]  
+#&gt;          -94.8454             0.0394           -16.2626  
+#&gt;       Wind(16,24]               Temp  Solar.R.dummyTRUE  
+#&gt;           -7.0071             1.7951           -11.0858  
+#&gt;    Wind.dummyTRUE  
+#&gt;           -0.6834  
+#&gt; 
 #&gt; 
 #&gt; [[3]]
-#&gt; Learner model for id=regr.lm.preproc chain=PreprocWrapper
-#&gt; [chain] Trained on obs: 77
-#&gt; [chain] Used features: 3
-#&gt; [model] Trained on obs: 77
-#&gt; [model] Used features: 5
-#&gt; Hyperparameters:
+#&gt; 
+#&gt; Call:
+#&gt; stats::lm(formula = f, data = d)
+#&gt; 
+#&gt; Coefficients:
+#&gt;       (Intercept)            Solar.R         Wind(8,16]  
+#&gt;          -57.3044             0.0743           -30.7074  
+#&gt;       Wind(16,24]               Temp  Solar.R.dummyTRUE  
+#&gt;          -18.2506             1.3590            -2.1665  
+#&gt;    Wind.dummyTRUE  
+#&gt;           -5.5640
 </code></pre>
 
 </div>

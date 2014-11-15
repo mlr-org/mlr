@@ -140,7 +140,7 @@ Like in the example above we impute ``Solar.R`` by random numbers from its empir
 ``Wind`` by the predictions of a classification tree and generate dummy variables for both features.
 
 ```{r}
-lrn = makeImputeWrapper(makeLearner("regr.lm"), cols = list(Solar.R = imputeHist(),
+lrn = makeImputeWrapper("regr.lm", cols = list(Solar.R = imputeHist(),
   Wind = imputeLearner(makeLearner("classif.rpart"))), dummy.cols = c("Solar.R", "Wind"))
 lrn
 ```
@@ -166,5 +166,5 @@ r$aggr
 ```
 
 ```{r}
-r$models
+lapply(r$models, getLearnerModel)
 ```
