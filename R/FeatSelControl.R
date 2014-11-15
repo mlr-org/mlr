@@ -117,7 +117,7 @@ makeFeatSelControl = function(same.resampling.instance, impute.val = NULL, maxit
 print.FeatSelControl = function(x, ...) {
   catf("FeatSel control: %s", class(x)[1])
   catf("Same resampling instance: %s", x$same.resampling.instance)
-  catf("Imputation value: %g", x$impute.val)
+  catf("Imputation value: %s", ifelse(is.null(x$impute.val), "<worst>", sprintf("%g", x$impute.val)))
   if (is.na(x$max.features))
     catf("Max. features: <not used>")
   else
