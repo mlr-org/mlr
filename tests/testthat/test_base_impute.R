@@ -69,7 +69,8 @@ test_that("Impute data frame", {
   x = impute(data, target, dummy.classes = c("numeric"), dummy.cols = "z")$data
   expect_true(setequal(names(x), c(names(data), "x.dummy", "y.dummy", "z.dummy")))
 
-  x = impute(data, target, classes = list(factor = imputeMode(), numeric = imputeMedian(), integer = imputeMedian(), logical = imputeConstant(1)))
+  x = impute(data, target, classes = list(factor = imputeMode(), numeric = imputeMedian(),
+      integer = imputeMedian(), logical = imputeConstant(1)))
   expect_true(all(!is.na(x)))
 
   data2 = data[1:5, ]
@@ -77,12 +78,19 @@ test_that("Impute data frame", {
   expect_true(setequal(x$desc$dummies, c("f", "x", "y")))
   x = impute(data2, target, dummy.classes = c("numeric", "logical", "factor"), force.dummies = FALSE)
   expect_true(setequal(x$desc$dummies, character(0)))
-
-
-  # learner
-  data = data.frame(f = letters[c(1,1,1,1,2)], x = rep(1., 5), y = c(1, 2, 3, 3, 4))
-  target = "f"
-  data[5, 3] = NA
-  learner = makeImputeWrapper(makeLearner("regr.rpart"), classes = list(numeric = imputeMedian()))
-  impute(data, target, cols = list(y = imputeLearner(learner)))
 })
+
+test_that("ImputeWrapper", {
+  d = iris[seq(1, 150, 3), ]
+  d[1,1] = NA_real_
+  task = makeClassifTask(data = d, target = "Species")
+  lrn = makeImputeWrapper("classif.rpart", classes = list(numeric = imputeMedian()))
+  m = train(lrn, task)
+  p = predict(m, task)
+  expect_true(!any(is.na(p$data$response)))
+  mm = getLearnerModel(m)
+  expect_is(mm, "rpart")
+})
+
+
+

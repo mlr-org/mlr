@@ -14,7 +14,7 @@
 #' @template ret_learner
 makeImputeWrapper = function(learner, classes = list(), cols = list(),
   dummy.cols = character(0L), dummy.type = "factor", impute.new.levels = TRUE, recode.factor.levels = TRUE) {
-  assertClass(learner, classes = "Learner")
+  learner = checkLearner(learner)
   args = list(classes = classes, cols = cols,
     dummy.cols = dummy.cols, dummy.type = dummy.type, impute.new.levels = impute.new.levels,
     recode.factor.levels = recode.factor.levels)
@@ -29,6 +29,5 @@ makeImputeWrapper = function(learner, classes = list(), cols = list(),
   }
 
   lrn = makePreprocWrapper(learner, trainfun, predictfun, par.vals = args)
-  lrn = addProperties(lrn, "missings")
-  lrn
+  addProperties(lrn, "missings")
 }

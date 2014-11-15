@@ -29,7 +29,6 @@ predictLearner.BaseWrapper = function(.learner, .model, .newdata, ...) {
   )
 }
 
-# FIXME: test
 #' @export
 print.BaseWrapper = function(x, ...) {
   s = ""
