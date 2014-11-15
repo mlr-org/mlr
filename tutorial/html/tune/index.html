@@ -155,6 +155,10 @@
                                 <a href="../create_measure/index.html">Create Custom Measures</a>
                             </li>
                         
+                            <li >
+                                <a href="../create_imputation/index.html">Create an Imputation Method</a>
+                            </li>
+                        
                         </ul>
                     </li>
                 
@@ -268,7 +272,7 @@ optimization strategy used. Here we use a grid search:</p>
 <p>Finally, combining all the previous pieces, we can tune the SVM
 using our <a href="http://www.rdocumentation.org/packages/mlr/functions/TuneControl.html">TuneControl</a> instance and the resampling strategy
 described by the <code>rdesc</code> variable.
-We use the <a href="http://www.rdocumentation.org/packages/mlr/functions/mlr.iris.html">iris.task</a> provided by <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.</p>
+We use the <a href="http://www.rdocumentation.org/packages/mlr/functions/iris.task.html">iris.task</a> provided by <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.</p>
 <pre class="prettyprint well"><code class="r">res = tuneParams(&quot;classif.ksvm&quot;, task = iris.task, resampling = rdesc, par.set = ps, 
     control = ctrl, measures = list(mmce, setAggregation(mmce, test.sd)))
 </code></pre>
@@ -279,31 +283,31 @@ We use the <a href="http://www.rdocumentation.org/packages/mlr/functions/mlr.iri
 #&gt; sigma discrete   -   - 0.25,0.5,1,2,4   -     -
 #&gt; With control class: TuneControlGrid
 #&gt; Imputation value: 1Imputation value: Inf
-#&gt; [Tune] 1: C=0.25; sigma=0.25 : mmce.test.mean=0.0467,mmce.test.sd=0.0231
-#&gt; [Tune] 2: C=0.5; sigma=0.25 : mmce.test.mean=0.0467,mmce.test.sd=0.0115
-#&gt; [Tune] 3: C=1; sigma=0.25 : mmce.test.mean=0.04,mmce.test.sd=0.02
-#&gt; [Tune] 4: C=2; sigma=0.25 : mmce.test.mean=0.0467,mmce.test.sd=0.0231
-#&gt; [Tune] 5: C=4; sigma=0.25 : mmce.test.mean=0.0467,mmce.test.sd=0.0231
-#&gt; [Tune] 6: C=0.25; sigma=0.5 : mmce.test.mean=0.06,mmce.test.sd=   0
-#&gt; [Tune] 7: C=0.5; sigma=0.5 : mmce.test.mean=0.04,mmce.test.sd=0.02
-#&gt; [Tune] 8: C=1; sigma=0.5 : mmce.test.mean=0.04,mmce.test.sd=0.02
-#&gt; [Tune] 9: C=2; sigma=0.5 : mmce.test.mean=0.0467,mmce.test.sd=0.0231
-#&gt; [Tune] 10: C=4; sigma=0.5 : mmce.test.mean=0.0467,mmce.test.sd=0.0231
-#&gt; [Tune] 11: C=0.25; sigma=1 : mmce.test.mean=0.0533,mmce.test.sd=0.0115
-#&gt; [Tune] 12: C=0.5; sigma=1 : mmce.test.mean=0.04,mmce.test.sd=0.02
-#&gt; [Tune] 13: C=1; sigma=1 : mmce.test.mean=0.0467,mmce.test.sd=0.0231
-#&gt; [Tune] 14: C=2; sigma=1 : mmce.test.mean=0.0467,mmce.test.sd=0.0231
-#&gt; [Tune] 15: C=4; sigma=1 : mmce.test.mean=0.0533,mmce.test.sd=0.0306
-#&gt; [Tune] 16: C=0.25; sigma=2 : mmce.test.mean=0.0533,mmce.test.sd=0.0306
-#&gt; [Tune] 17: C=0.5; sigma=2 : mmce.test.mean=0.04,mmce.test.sd=0.0346
-#&gt; [Tune] 18: C=1; sigma=2 : mmce.test.mean=0.0333,mmce.test.sd=0.0306
-#&gt; [Tune] 19: C=2; sigma=2 : mmce.test.mean=0.04,mmce.test.sd=0.0346
-#&gt; [Tune] 20: C=4; sigma=2 : mmce.test.mean=0.0467,mmce.test.sd=0.0231
-#&gt; [Tune] 21: C=0.25; sigma=4 : mmce.test.mean=0.113,mmce.test.sd=0.0462
-#&gt; [Tune] 22: C=0.5; sigma=4 : mmce.test.mean=0.0667,mmce.test.sd=0.0115
-#&gt; [Tune] 23: C=1; sigma=4 : mmce.test.mean=0.0533,mmce.test.sd=0.0306
-#&gt; [Tune] 24: C=2; sigma=4 : mmce.test.mean=0.06,mmce.test.sd=0.04
-#&gt; [Tune] 25: C=4; sigma=4 : mmce.test.mean=0.0667,mmce.test.sd=0.0306
+#&gt; [Tune] 1: C=0.25; sigma=0.25 : =  NA
+#&gt; [Tune] 2: C=0.5; sigma=0.25 : =  NA
+#&gt; [Tune] 3: C=1; sigma=0.25 : =  NA
+#&gt; [Tune] 4: C=2; sigma=0.25 : =  NA
+#&gt; [Tune] 5: C=4; sigma=0.25 : =  NA
+#&gt; [Tune] 6: C=0.25; sigma=0.5 : =  NA
+#&gt; [Tune] 7: C=0.5; sigma=0.5 : =  NA
+#&gt; [Tune] 8: C=1; sigma=0.5 : =  NA
+#&gt; [Tune] 9: C=2; sigma=0.5 : =  NA
+#&gt; [Tune] 10: C=4; sigma=0.5 : =  NA
+#&gt; [Tune] 11: C=0.25; sigma=1 : =  NA
+#&gt; [Tune] 12: C=0.5; sigma=1 : =  NA
+#&gt; [Tune] 13: C=1; sigma=1 : =  NA
+#&gt; [Tune] 14: C=2; sigma=1 : =  NA
+#&gt; [Tune] 15: C=4; sigma=1 : =  NA
+#&gt; [Tune] 16: C=0.25; sigma=2 : =  NA
+#&gt; [Tune] 17: C=0.5; sigma=2 : =  NA
+#&gt; [Tune] 18: C=1; sigma=2 : =  NA
+#&gt; [Tune] 19: C=2; sigma=2 : =  NA
+#&gt; [Tune] 20: C=4; sigma=2 : =  NA
+#&gt; [Tune] 21: C=0.25; sigma=4 : =  NA
+#&gt; [Tune] 22: C=0.5; sigma=4 : =  NA
+#&gt; [Tune] 23: C=1; sigma=4 : =  NA
+#&gt; [Tune] 24: C=2; sigma=4 : =  NA
+#&gt; [Tune] 25: C=4; sigma=4 : =  NA
 #&gt; [Tune] Result: C=1; sigma=2 : mmce.test.mean=0.0333,mmce.test.sd=0.0306
 </code></pre>
 
@@ -317,12 +321,12 @@ head(opt.grid)
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;      C sigma mmce.test.mean mmce.test.sd dob eol error.message exec.time
-#&gt; 1 0.25  0.25     0.04666667   0.02309401   1  NA          &lt;NA&gt;     0.110
-#&gt; 2  0.5  0.25     0.04666667   0.01154701   2  NA          &lt;NA&gt;     0.100
-#&gt; 3    1  0.25     0.04000000   0.02000000   3  NA          &lt;NA&gt;     0.105
-#&gt; 4    2  0.25     0.04666667   0.02309401   4  NA          &lt;NA&gt;     0.102
-#&gt; 5    4  0.25     0.04666667   0.02309401   5  NA          &lt;NA&gt;     0.107
-#&gt; 6 0.25   0.5     0.06000000   0.00000000   6  NA          &lt;NA&gt;     0.099
+#&gt; 1 0.25  0.25        0.04667      0.02309   1  NA          &lt;NA&gt;     0.122
+#&gt; 2  0.5  0.25        0.04667      0.01155   2  NA          &lt;NA&gt;     0.107
+#&gt; 3    1  0.25        0.04000      0.02000   3  NA          &lt;NA&gt;     0.110
+#&gt; 4    2  0.25        0.04667      0.02309   4  NA          &lt;NA&gt;     0.108
+#&gt; 5    4  0.25        0.04667      0.02309   5  NA          &lt;NA&gt;     0.113
+#&gt; 6 0.25   0.5        0.06000      0.00000   6  NA          &lt;NA&gt;     0.108
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">g = ggplot(opt.grid, aes(x = C, y = sigma, fill = mmce.test.mean, label = round(mmce.test.sd,3)))
@@ -409,12 +413,12 @@ set, we can still look at the measures that we already know from
 <pre class="prettyprint well"><code class="r">r$measures.test
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;   iter       mmce
-#&gt; 1    1 0.03333333
-#&gt; 2    2 0.03333333
-#&gt; 3    3 0.03333333
-#&gt; 4    4 0.03333333
-#&gt; 5    5 0.06666667
+<pre class="prettyprint well"><code>#&gt;   iter    mmce
+#&gt; 1    1 0.03333
+#&gt; 2    2 0.03333
+#&gt; 3    3 0.03333
+#&gt; 4    4 0.03333
+#&gt; 5    5 0.06667
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r$aggr

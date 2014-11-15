@@ -8,7 +8,7 @@ returned by [&train] and pass the data to be predicted.
 There are two ways to pass the data:
 
 * Either pass the [&Task] via the ``task`` argument or
-* pass a ``data.frame`` via the ``newdata`` argument.
+* pass a [data frame](&base::data.frame) via the ``newdata`` argument.
 
 The first way is preferable if you want predictions for data already included in the [&Task].
 
@@ -17,7 +17,7 @@ so you can set aside different portions of the data in [&Task] for training and 
 
 In the following example we fit a [gradient boosting machine](&gbm::gbm) to every second
 observation of the [BostonHousing](&mlbench::BostonHousing) data set and make predictions
-on the remaining data in [bh.task](&mlr.bh).
+on the remaining data in [&bh.task].
 
 ```{r}
 n = bh.task$task.desc$size
@@ -82,14 +82,14 @@ Predictions are encapsulated in a special [&Prediction] object.
 
 ## Accessing the prediction
 
-A [&Prediction] object is a ``list``. The most important element is ``data`` which is a
-``data.frame`` that contains columns with the true values of the target variable (in case of
+A [&Prediction] object is a [list](&base::list). The most important element is ``data`` which is a
+[data frame](&base::data.frame) that contains columns with the true values of the target variable (in case of
 supervised learning problems) and the predictions.
 
 In the following the predictions on the [BostonHousing](&mlbench::BostonHousing) and the
 [iris](&datasets::iris) data sets are shown.
 As you may recall, the predictions in the first case were made from a [&Task] and in the
-second case from a ``data.frame``.
+second case from a [data frame](&base::data.frame).
 
 ```{r}
 ## Result of predict with data passed via task argument
@@ -100,8 +100,8 @@ head(task.pred$data)
 head(newdata.pred$data)
 ```
 
-As you can see when predicting from a [&Task], the resulting ``data.frame`` contains an
-additional column, called ``id``, which tells us which element in the original data set
+As you can see when predicting from a [&Task], the resulting `[data frame](&base::data.frame)
+contains an additional column, called ``id``, which tells us which element in the original data set
 the prediction corresponds to.
 
 

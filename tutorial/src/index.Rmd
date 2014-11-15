@@ -7,7 +7,8 @@ optimization in **R**.
 Our focus is on your comprehension of the basic functions and applications.
 For detailed technical information and manual pages, please refer to the package's
 [manual pages](http://berndbischl.github.io/mlr/man/).
-They are regularly updated and reflect the documentation of the current package version on CRAN.
+They are regularly updated and reflect the documentation of the
+[current package version on CRAN](http://cran.r-project.org/web/packages/mlr/index.html).
 
 
 An offline version of this of this tutorial is available to [download here](http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip).
@@ -23,8 +24,8 @@ The tutorial explains the basic analysis of a data set step by step:
 * How to select important features? [Feature Selection](feature_selection.md)
 * How to conduct a comparison study? [Benchmark Experiments](benchmark_experiments.md)
 
-We present various simple examples from classification and regression
-during this tutorial to illustrate the main features of the
+We present various simple examples from classification, regression, cluster and survival
+analysis during this tutorial to illustrate the main features of the
 package.
 
 Enjoy reading!
@@ -47,8 +48,8 @@ lrn = makeLearner("classif.lda")
 rdesc = makeResampleDesc(method = "CV", stratify = TRUE)
 
 ## Do the resampling:
-res = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE)
+r = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE)
 
 ## Get the mean misclassification error:
-res$aggr
+r$aggr
 ```

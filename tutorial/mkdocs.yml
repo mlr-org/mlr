@@ -26,6 +26,7 @@ pages:
 - ["roc_analysis.md", "Advanced", "ROC Analysis"]
 - ["create_learner.md", "Extend", "Create Custom Learners"]
 - ["create_measure.md", "Extend", "Create Custom Measures"]
+- ["create_imputation.md", "Extend", "Create an Imputation Method"]
 - ["example_tasks.md", "Appendix", "Example Tasks"]
 - ["integrated_learners.md", "Appendix", "Integrated Learners"]
 - ["measures.md", "Appendix", "Implemented Performance Measures"]

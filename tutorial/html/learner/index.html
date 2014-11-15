@@ -155,6 +155,10 @@
                                 <a href="../create_measure/index.html">Create Custom Measures</a>
                             </li>
                         
+                            <li >
+                                <a href="../create_imputation/index.html">Create an Imputation Method</a>
+                            </li>
+                        
                         </ul>
                     </li>
                 
@@ -271,9 +275,9 @@ The naming convention is <code>classif.&lt;R_method_name&gt;</code> for
 classification methods, <code>regr.&lt;R_method_name&gt;</code> for regression methods,
 <code>surv.&lt;R_method_name&gt;</code> for survival analysis, and <code>cluster.&lt;R_method_name&gt;</code>
 for clustering methods.</p>
-<p>Hyperparameter values can be specified either via the <code>...</code> argument or as a <code>list</code> via
-<code>par.vals</code>.</p>
-<p>Occasionally, <code>factor</code> features may cause problems when fewer levels are present in the
+<p>Hyperparameter values can be specified either via the <code>...</code> argument or as a <a href="http://www.rdocumentation.org/packages/base/functions/list.html">list</a>
+via <code>par.vals</code>.</p>
+<p>Occasionally, <a href="http://www.rdocumentation.org/packages/base/functions/factor.html">factor</a> features may cause problems when fewer levels are present in the
 test data than in the training data.
 By setting <code>fix.factors = TRUE</code> these are avoided by adding the missing factor levels in
 the test data set.</p>
@@ -306,12 +310,12 @@ the test data set.</p>
 It contains the properties of the method, e.g., which types of features it can handle,
 what can be output during prediction, and whether multi-class problems,
 observations weights or missing values are supported.</p>
-<p>As you might have noticed, there is no special learner class for cost-sensitive classification.
+<p>As you might have noticed, there is currently no special learner class for cost-sensitive classification.
 There are several ways to generate cost-sensitive learners from regression and classification
 learners. This is explained in greater detail in the section about
 <a href="../cost_sensitive_classif/index.html">cost-sensitive classification</a>.</p>
 <h2 id="accessing-a-learner">Accessing a learner</h2>
-<p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> object is a <code>list</code>and the following elements contain
+<p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> object is a <a href="http://www.rdocumentation.org/packages/base/functions/list.html">list</a> and the following elements contain
 information regarding the hyperparameters and the type of prediction.</p>
 <pre class="prettyprint well"><code class="r">## Get the selected hyperparameter values:
 cluster.lrn$par.vals
@@ -347,13 +351,13 @@ regr.lrn$predict.type
 <pre class="prettyprint well"><code>#&gt; [1] &quot;response&quot;
 </code></pre>
 
-<p><code>classif.lrn$par.set</code> is an object of class <a href="http://www.rdocumentation.org/packages/ParamHelpers/functions/makeParamSet.html">ParamSet</a>.
+<p>Slot <code>$par.set</code> is an object of class <a href="http://www.rdocumentation.org/packages/ParamHelpers/functions/makeParamSet.html">ParamSet</a>.
 It contains, among others, the type of parameters (e.g., numeric, logical), potential
 default values and the range of allowed values.</p>
 <p>Moreover, <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides functions <a href="http://www.rdocumentation.org/packages/mlr/functions/getHyperPars.html">getHyperPars</a> and <a href="http://www.rdocumentation.org/packages/mlr/functions/getParamSet.html">getParamSet</a> to access the
 selected hyperparameter values and the parameter set.
 These are particularly useful in case of a wrapped <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>,
-for example if a learner is fused with a feature selection strategy and both, the learner
+for example if a learner is fused with a feature selection strategy, and both, the learner
 as well the feature selection method, have hyperparameters.
 For details see the section on <a href="../wrapper/index.html">wrapped learners</a>.</p>
 <pre class="prettyprint well"><code class="r">## Get current parameter settings

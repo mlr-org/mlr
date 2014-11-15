@@ -155,6 +155,10 @@
                                 <a href="../create_measure/index.html">Create Custom Measures</a>
                             </li>
                         
+                            <li >
+                                <a href="../create_imputation/index.html">Create an Imputation Method</a>
+                            </li>
+                        
                         </ul>
                     </li>
                 
@@ -274,8 +278,8 @@ pred = predict(mod, task = bh.task, subset = seq(2,n,2))
 performance(pred)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;      mse 
-#&gt; 42.68414
+<pre class="prettyprint well"><code>#&gt;   mse 
+#&gt; 42.68
 </code></pre>
 
 <p>For each type of learning problem, there is a default performance measure.
@@ -284,8 +288,8 @@ For regression, the mean squared error (<a href="http://www.rdocumentation.org/p
 <pre class="prettyprint well"><code class="r">performance(pred, measures = medse)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;    medse 
-#&gt; 9.134965
+<pre class="prettyprint well"><code>#&gt; medse 
+#&gt; 9.135
 </code></pre>
 
 <p>Of course, we can also calculate multiple performance measures at once by simply passing a
@@ -294,8 +298,8 @@ list of measures which can also include <a href="../create_measure/index.html">y
 <pre class="prettyprint well"><code class="r">performance(pred, measures = list(mse, medse, mae))
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;       mse     medse       mae 
-#&gt; 42.684141  9.134965  4.536750
+<pre class="prettyprint well"><code>#&gt;    mse  medse    mae 
+#&gt; 42.684  9.135  4.537
 </code></pre>
 
 <p>For the other types of learning problems and measures, calculating the performance basically
@@ -309,7 +313,7 @@ model has to be passed.</p>
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; timetrain 
-#&gt;     0.137
+#&gt;     0.169
 </code></pre>
 
 <p>For many performance measures in cluster analysis the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> is required.</p>
@@ -321,8 +325,8 @@ pred = predict(mod, task = mtcars.task)
 performance(pred, measures = dunn, task = mtcars.task)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;       dunn 
-#&gt; 0.02847304
+<pre class="prettyprint well"><code>#&gt;    dunn 
+#&gt; 0.02847
 </code></pre>
 
 <p>Moreover, some measures require a certain type of prediction.
@@ -337,8 +341,8 @@ pred = predict(mod, task = sonar.task)
 performance(pred, measures = auc)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;       auc 
-#&gt; 0.9224018
+<pre class="prettyprint well"><code>#&gt;    auc 
+#&gt; 0.9224
 </code></pre>
 
 <p>Also bear in mind that many of the performance measures that are available for classification,
@@ -412,8 +416,8 @@ pred = predict(mod, task = sonar.task, subset = seq(2, n, by = 2))
 performance(pred, measures = list(fpr, fnr, mmce))
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;       fpr       fnr      mmce 
-#&gt; 0.2500000 0.3035714 0.2788462
+<pre class="prettyprint well"><code>#&gt;    fpr    fnr   mmce 
+#&gt; 0.2500 0.3036 0.2788
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Plot false negative and positive rates as well as the error rate versus the threshold

@@ -155,6 +155,10 @@
                                 <a href="../create_measure/index.html">Create Custom Measures</a>
                             </li>
                         
+                            <li >
+                                <a href="../create_imputation/index.html">Create an Imputation Method</a>
+                            </li>
+                        
                         </ul>
                     </li>
                 
@@ -275,7 +279,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right">multiclass<br />prob<br />twoclass</td>
+<td align="right">prob<br />twoclass</td>
 <td align="left"></td>
 </tr>
 <tr>
@@ -751,17 +755,6 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="right">multiclass<br />prob<br />twoclass</td>
 <td align="left"></td>
 </tr>
-<tr>
-<td align="left"><strong>classif.xgboost</strong> <br />xgb</td>
-<td align="left">eXtreme Gradient Boosting</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/xgboost/">xgboost</a></td>
-<td align="center"></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">multiclass<br />twoclass</td>
-<td align="left"><code>nround</code> should be set to value higher then 1 for more accuracy.</td>
-</tr>
 </tbody>
 </table>
 <h3 id="regression">Regression</h3>
@@ -936,7 +929,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 </tr>
 <tr>
 <td align="left"><strong>regr.mob</strong> <br />mob</td>
-<td align="left">Model-based Recursive Partitioning  Yielding a Tree with Fitted Models Associated with each Terminal Node</td>
+<td align="left">Model-based Recursive Partitioning Yielding a Tree with Fitted Models Associated with each Terminal Node</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/party/">party</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -1053,7 +1046,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center"></td>
 <td align="center"></td>
 <td align="right"></td>
-<td align="left">Kernel parameters have to be passed directly and not by using the kpar list in rvm.   Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
+<td align="left">Kernel parameters have to be passed directly and not by using the kpar list in rvm.  Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
 </tr>
 <tr>
 <td align="left"><strong>regr.svm</strong> <br />svm</td>
@@ -1171,6 +1164,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center"></td>
 <td align="right">ordered<br />rcens</td>
 <td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>surv.rpart</strong> <br />rpart</td>
+<td align="left">Survival Tree</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/rpart/">rpart</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="right">ordered<br />rcens</td>
+<td align="left"><code>xval</code> has been set to 0 by default for speed.</td>
 </tr>
 </tbody>
 </table>
