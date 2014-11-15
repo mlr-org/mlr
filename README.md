@@ -1,22 +1,16 @@
 mlr: Machine Learning in R
 ==========================
 
-* Offical CRAN release site:
-  http://cran.r-project.org/web/packages/mlr/index.html
+* [Offical CRAN release site](http://cran.r-project.org/web/packages/mlr/)
+* [Detailed Tutorial](http://berndbischl.github.io/mlr/tutorial/html/) ([Download](http://berndbischl.github.io/mlr/tutorial/tutorial.zip))
+* [R Documentation in HTML](http://www.rdocumentation.org/packages/mlr)
+* Install the development version
 
-* Detailed Tutorial:
-  http://berndbischl.github.io/mlr/tutorial/html/ ([Download](http://berndbischl.github.io/mlr/tutorial/tutorial.zip))
-
-* R Documentation in HTML:
-  http://www.rdocumentation.org/packages/mlr
-
-* Run this in R to install the current GitHub version:
-  ```splus
-  devtools::install_github("berndbischl/mlr")
-  ```
+    ```splus
+    devtools::install_github("berndbischl/mlr")
+    ```
 
 * [Further installation instructions](https://github.com/tudo-r/PackagesInfo/wiki/Installation-Information)
-
 * Travis CI: [![Build Status](https://travis-ci.org/berndbischl/mlr.png)](https://travis-ci.org/berndbischl/mlr)
 
 
