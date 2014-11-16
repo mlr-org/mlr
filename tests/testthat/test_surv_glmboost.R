@@ -6,8 +6,7 @@ test_that("surv_glmboost", {
   parset.list = list(
     list(mstop = 100L, nu = 0.1),
     list(mstop = 50L, nu = 1),
-    list(mstop = 200L, nu = 0.5),
-    list(mstop = 250L, nu = 0.05)
+    list(mstop = 100L, nu = 0.5)
   )
 
   old.predicts.list = list()
