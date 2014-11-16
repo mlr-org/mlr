@@ -2,7 +2,7 @@
 makeRLearner.surv.glmboost = function() {
   makeRLearnerSurv(
     cl = "surv.glmboost",
-    package = "mboost",
+    package = c("survival", "mboost"),
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "family", values = c("CoxPH", "Weibull", "Loglog", "Lognormal"), default = "CoxPH"),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),

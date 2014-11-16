@@ -2,7 +2,7 @@
 makeRLearner.surv.randomForestSRC = function() {
   makeRLearnerSurv(
     cl = "surv.randomForestSRC",
-    package = "randomForestSRC",
+    package = c("survival", "randomForestSRC"),
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "ntree", default = 1000L, lower = 1L),
       makeDiscreteLearnerParam(id = "bootstrap", values = c("by.root", "by.node", "none"), default = "by.root"),
