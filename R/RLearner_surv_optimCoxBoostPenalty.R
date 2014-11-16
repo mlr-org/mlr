@@ -13,7 +13,7 @@ makeRLearner.surv.optimCoxBoostPenalty = function() {
       makeDiscreteLearnerParam(id = "sf.scheme", default = "sigmoid", values = c("sigmoid", "linear"))
       # FIXME: still missing some arguments
     ),
-    properties = c("numerics", "weights", "rcens"),
+    properties = c("numerics", "factors", "weights", "rcens"),
     name = "Cox Proportional Hazards Model with Componentwise Likelihood based Boosting, automatic tuning enabled",
     short.name = "optimCoxBoostPenalty",
     note = "Factors automatically get converted to dummy columns, ordered factors to integer"
