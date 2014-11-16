@@ -14,21 +14,22 @@ makeRLearner.surv.optimCoxBoostPenalty = function() {
       # FIXME: still missing some arguments
     ),
     properties = c("numerics", "weights", "rcens"),
-    name = "Cox Proportional Hazards Model with Componentwise Likelihood based Boosting",
-    short.name = "coxboost",
-    note = ""
+    name = "Cox Proportional Hazards Model with Componentwise Likelihood based Boosting, automatic tuning enabled",
+    short.name = "optimCoxBoostPenalty",
+    note = "Factors automatically get converted to dummy columns, ordered factors to integer"
   )
 }
 
 #' @export
 trainLearner.surv.optimCoxBoostPenalty = function(.learner, .task, .subset, .weights = NULL, ...) {
-  # FIXME: use model.matrix to allow factors
   data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "rcens")
+  info = getFixDataInfo(data$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
+  data$data = as.matrix(fixDataForLearner(data$data, info))
 
   cb = CoxBoost::optimCoxBoostPenalty(
     time = data$target[, 1L],
     status = data$target[, 2L],
-    x = as.matrix(data$data),
+    x = data$data,
     weights = .weights,
     ...
   )
@@ -36,21 +37,23 @@ trainLearner.surv.optimCoxBoostPenalty = function(.learner, .task, .subset, .wei
   if (cb$cv.res$optimal.step == 0L)
     stop("Error modeling CoxBoost")
 
-  CoxBoost::CoxBoost(
+  attachTrainingInfo(CoxBoost::CoxBoost(
     time = data$target[, 1L],
     status = data$target[, 2L],
-    x = as.matrix(data$data),
+    x = data$data,
     weights = .weights,
     stepno = cb$cv.res$optimal.step,
     penalty = cb$penalty,
     ...
-  )
+  ), info)
 }
 
 #' @export
 predictLearner.surv.optimCoxBoostPenalty = function(.learner, .model, .newdata, ...) {
+  info = getTrainingInfo(.model)
+  .newdata = as.matrix(fixDataForLearner(.newdata, info))
   if(.learner$predict.type == "response")
-    as.numeric(predict(.model$learner.model, newdata = as.matrix(.newdata), type = "lp"))
+    as.numeric(predict(.model$learner.model, newdata = .newdata, type = "lp"))
   else
     stop("Unknown predict type")
 }
