@@ -12,3 +12,12 @@ test_that("makeOptPathDFFromMeasures", {
   supposed.names = sapply(measures, function(m) paste(m$id, m$aggr$id, sep = "."))
   expect_equal(names(res$y), supposed.names)
 })
+
+test_that("propVectorToMatrix", {
+  x = seq(0, 1, length.out = 11)
+  levs = LETTERS[1:2]
+  m = propVectorToMatrix(x, levs)
+  expect_equal(m[,2], x)
+  expect_equal(m[,1], 1 - x)
+  expect_equal(colnames(m), levs)
+})
