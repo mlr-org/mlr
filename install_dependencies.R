@@ -24,3 +24,11 @@ install_deps(".", TRUE)
 #Rweka packages
 library("RWeka")
 WPM("install-package", "Xmeans")
+
+if (FALSE){
+  # Update from github
+  install_github(repo = "berndbischl/parallelMap")  
+  install_github(repo = "berndbischl/ParamHelpers")
+}
+
+
