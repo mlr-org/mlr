@@ -25,8 +25,8 @@ makeRLearner.classif.glmboost = function() {
 trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, m, risk, ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk)
   if (is.null(.weights)) {
-    f = getTaskFormula(.task)
-    model = mboost::glmboost(f, data = getTaskData(.task, .subset), control = ctrl, , ...)
+    f = as.formula(getTaskFormulaAsString(.task))
+    model = mboost::glmboost(f, data = getTaskData(.task, .subset), control = ctrl, ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
     model = mboost::glmboost(f, data = getTaskData(.task, .subset), control = ctrl, weights = .weights, ...)
