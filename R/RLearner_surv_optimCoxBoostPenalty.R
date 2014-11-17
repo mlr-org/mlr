@@ -35,7 +35,7 @@ trainLearner.surv.optimCoxBoostPenalty = function(.learner, .task, .subset, .wei
   )
 
   if (cb$cv.res$optimal.step == 0L)
-    stop("Error modeling CoxBoost")
+    stop("Error modeling CoxBoost: Could not determine the optimal step number")
 
   attachTrainingInfo(CoxBoost::CoxBoost(
     time = data$target[, 1L],

@@ -27,7 +27,7 @@
 makeFilter = function(name, desc, pkg, supported.tasks, supported.features, fun) {
   assertString(name)
   assertString(desc)
-  assertString(pkg, na.ok = TRUE)
+  assertCharacter(pkg, any.missing = FALSE)
   assertCharacter(supported.tasks, any.missing = FALSE)
   assertCharacter(supported.features, any.missing = FALSE)
   assertFunction(fun, c("task", "nselect"))
@@ -70,7 +70,7 @@ listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE) {
   filters = as.list(.FilterRegister)
   df = data.frame(
     id = names(filters),
-    package = extractSubList(filters, "pkg")
+    package = vcapply(extractSubList(filters, "pkg"), collapse)
   )
   if (desc)
     df$desc = extractSubList(filters, "desc")
@@ -264,7 +264,7 @@ makeFilter(
 makeFilter(
   name = "univariate",
   desc = "Construct a simple performance filter using a mlr learner",
-  pkg  = NA_character_,
+  pkg  = character(0L),
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, perf.learner, perf.measure, perf.resampling = NULL, ...) {
@@ -292,7 +292,7 @@ makeFilter(
 makeFilter(
   name = "anova.test",
   desc = "ANOVA Test for binary and multiclass classification tasks",
-  pkg = NA_character_,
+  pkg = character(0L),
   supported.tasks = c("classif"),
   supported.features = c("numerics"),
   fun = function(task, nselect, ...) {
@@ -308,7 +308,7 @@ makeFilter(
 makeFilter(
   name = "kruskal.test",
   desc = "Kurskal Test for binary and multiclass classification tasks",
-  pkg = NA_character_,
+  pkg = character(0L),
   supported.tasks = c("classif"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
@@ -324,7 +324,7 @@ makeFilter(
 makeFilter(
   name = "variance",
   desc = "A simple variance filter",
-  pkg = NA_character_,
+  pkg = character(0L),
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics"),
   fun = function(task, nselect, na.rm = FALSE, ...) {
