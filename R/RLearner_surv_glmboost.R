@@ -26,7 +26,6 @@ makeRLearner.surv.glmboost = function() {
 
 #' @export
 trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL, family, mstop, nu, m, ...) {
-  family = "CoxPH"
   family = do.call(get(family, mode = "function", envir = as.environment("package:mboost")), list())
   f = getTaskFormula(.task, env = as.environment("package:survival"))
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
