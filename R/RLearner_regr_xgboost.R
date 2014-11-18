@@ -31,7 +31,7 @@ trainLearner.regr.xgboost = function(.learner, .task, .subset, .weights = NULL, 
   d = as.matrix(d)
   t = task.data$target
   d = xgboost::xgb.DMatrix(data = d, label = t)
-  xgb.train(data = d, objective = "reg:linear", ...)
+  xgboost::xgb.train(data = d, objective = "reg:linear", ...)
 }
 
 predictLearner.regr.xgboost = function(.learner, .model, .newdata, ...) {

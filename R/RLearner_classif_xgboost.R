@@ -4,54 +4,24 @@ makeRLearner.classif.xgboost = function() {
     cl = "classif.xgboost",
     package = "xgboost",
     par.set = makeParamSet(
-      # booster
-      # silent
-      # nthread
-      # num.pbuffer automaticaly
-      # num.feature automaticaly
-      # Tree booster:
-      # eta [default=0.3]
-      # gamma
-      # max.depth [default=6]
-      # min.child.weight [default=1]
-      # subsample [default=1]
-      # colsample.bytree [default=1]
-      # Linear Booster:
-      # lambda [default=0] L2 regularization term on weights
-      # alpha [default=0] L1 regularization term on weights
-      # lambda_bias L2 regularization term on bias, default 0(no L1 reg on bias because it is not important)
-      # what kind of
-      # objective [ default=reg:linear ]
-      #   reg:linear
-      #   reg:logistic
-      #   binary:logistic
-      #   binary:logitraw
-      #   multi:softmax
-      #   rank:pairwise
-      # https://github.com/tqchen/xgboost/wiki/Parameters
       makeDiscreteLearnerParam(id = "booster", default = "gbtree", values = list("gbtree", "gblinear")),
       makeIntegerLearnerParam(id = "nthread", lower = 1L),
       makeIntegerLearnerParam(id = "nrounds", lower = 1L),
-      
       makeNumericLearnerParam(id = "eta", lower = 0, default = 0.3, requires = expression(booster == "gbtree")),
       makeNumericLearnerParam(id = "gamma", lower = 0, requires = expression(booster == "gbtree")),
       makeIntegerLearnerParam(id = "max.depth", default = 6L, lower = 1L, requires = expression(booster == "gbtree")),
       makeIntegerLearnerParam(id = "min.child.weight", default = 1L, lower = 1L, requires = expression(booster == "gbtree")),
       makeNumericLearnerParam(id = "subsample", default = 1, lower = 0, upper = 1, requires = expression(booster == "gbtree")),
       makeNumericLearnerParam(id = "colsample.bytree", default = 1, lower = 0, upper = 1, requires = expression(booster == "gbtree")),
-
       makeNumericLearnerParam(id = "lambda", default = 0, requires = expression(booster == "gblinear")),
       makeNumericLearnerParam(id = "alpha", default = 0, requires = expression(booster == "gblinear")),
       makeNumericLearnerParam(id = "lambda.bias", default = 0, requires = expression(booster == "gblinear"))
-      
-      # makeDiscreteLearnerParam(id = "objective", values = list("binary:logistic", "multi:softmax"))
     ),
-    par.vals = list(
-      nrounds = 1L),
-    properties = c("twoclass", "multiclass", "numerics", "prob"), #"factors"),
+    par.vals = list(nrounds = 1L),
+    properties = c("twoclass", "multiclass", "numerics", "prob"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgb",
-    note = "`nround` should be set to value higher then 1 for more accuracy. Mulitclass will use `objective = multi:softmax`. Binaryclass will use `objective = binary:logistic`."
+    note = "`nround` should be set to value higher then 1 for more accuracy. Mulitclass will use `objective = 'multi:softmax'`. Binaryclass will use `objective = 'binary:logistic'`."
   )
 }
 
@@ -69,10 +39,10 @@ trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NUL
     } else {
       objective = "multi:softmax"
     }
-    xgb.train(data = d, objective = objective, num_class = k, ...)
+    xgboost::xgb.train(data = d, objective = objective, num_class = k, ...)
   }
   else if (k == 2) {
-    xgb.train(data = d, objective = "binary:logistic", ...)
+    xgboost::xgb.train(data = d, objective = "binary:logistic", ...)
   }
 }
 
