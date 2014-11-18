@@ -4,31 +4,6 @@ makeRLearner.regr.xgboost = function() {
     cl = "regr.xgboost",
     package = "xgboost",
     par.set = makeParamSet(
-      # booster
-      # silent
-      # nthread
-      # num.pbuffer automaticaly
-      # num.feature automaticaly
-      # Tree booster:
-      # eta [default=0.3]
-      # gamma
-      # max.depth [default=6]
-      # min.child.weight [default=1]
-      # subsample [default=1]
-      # colsample.bytree [default=1]
-      # Linear Booster:
-      # lambda [default=0] L2 regularization term on weights
-      # alpha [default=0] L1 regularization term on weights
-      # lambda_bias L2 regularization term on bias, default 0(no L1 reg on bias because it is not important)
-      # what kind of
-      # objective [ default=reg:linear ]
-      #   reg:linear
-      #   reg:logistic
-      #   binary:logistic
-      #   binary:logitraw
-      #   multi:softmax
-      #   rank:pairwise
-      # https://github.com/tqchen/xgboost/wiki/Parameters
       makeDiscreteLearnerParam(id = "booster", default = "gbtree", values = list("gbtree", "gblinear")),
       makeIntegerLearnerParam(id = "nthread", lower = 1L),
       makeIntegerLearnerParam(id = "nrounds", lower = 1L),    
@@ -46,7 +21,7 @@ makeRLearner.regr.xgboost = function() {
     properties = c("numerics"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgb",
-    note = "`nround` should be set to value higher then 1 for more accuracy. `objective = multireg:linear` set automatically for regression."
+    note = "`nround` should be set to value higher then 1 for more accuracy. `objective = 'multireg:linear'` set automatically for regression."
   )
 }
 
