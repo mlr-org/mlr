@@ -29,7 +29,7 @@ trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights 
   }
 
   f = getTaskFormula(.task, env = as.environment("package:survival"))
-  randomForestSRC::rfsrc(getTaskFormula(.task), data = data, importance = "none", proximity = FALSE, forest = TRUE,
+  randomForestSRC::rfsrc(f, data = data, importance = "none", proximity = FALSE, forest = TRUE,
     mtry = mtry, ...)
 }
 
