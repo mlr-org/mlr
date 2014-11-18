@@ -4,15 +4,17 @@ makeRLearner.surv.glmboost = function() {
     cl = "surv.glmboost",
     package = c("survival", "mboost"),
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "family", values = c("CoxPH", "Weibull", "Loglog", "Lognormal"), default = "CoxPH"),
+      makeDiscreteLearnerParam(id = "family", default = "CoxPH", values = c("CoxPH", "Weibull", "Loglog", "Lognormal")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "center", default = FALSE),
-      makeDiscreteLearnerParam(id = "m", default = "mstop", values = c("mstop", "cv"))
+      makeDiscreteLearnerParam(id = "m", default = "mstop", values = c("mstop", "cv")),
+      makeLogicalLearnerParam(id = "use.formula", default = TRUE, when = "train")
     ),
     par.vals = list(
       family = "CoxPH",
-      m = "mstop"
+      m = "mstop",
+      use.formula = TRUE
     ),
     properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     name = "Gradient Boosting with Componentwise Linear Models",
@@ -25,14 +27,26 @@ makeRLearner.surv.glmboost = function() {
 }
 
 #' @export
-trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL, family, mstop, nu, m, ...) {
+trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL, family, mstop, nu, m, use.formula, ...) {
   family = do.call(get(family, mode = "function", envir = as.environment("package:mboost")), list())
-  f = getTaskFormula(.task, env = as.environment("package:survival"))
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
-  if (is.null(.weights)) {
-    model = mboost::glmboost(f, data = getTaskData(.task, .subset), control = ctrl, family = family, ...)
-  } else  {
-    model = mboost::glmboost(f, data = getTaskData(.task, .subset), control = ctrl, weights = .weights, family = family, ...)
+  if (use.formula) {
+    f = getTaskFormula(.task, env = as.environment("package:survival"))
+    model = if (is.null(.weights)) {
+      mboost::glmboost(f, data = getTaskData(.task, .subset, recode.target = "rcens"), control = ctrl, family = family, ...)
+    } else  {
+      mboost::glmboost(f, data = getTaskData(.task, .subset, recode.target = "rcens"), control = ctrl, weights = .weights, family = family, ...)
+    }
+  } else {
+    data = getTaskData(.task, target.extra = TRUE, recode.target = "rcens")
+    info = getFixDataInfo(data$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
+    data$data = as.matrix(fixDataForLearner(data$data, info))
+    model = if (is.null(.weights)) {
+      mboost::glmboost(x = data$data, y = data$target, control = ctrl, family = family, ...)
+    } else {
+      mboost::glmboost(x = data$data, y = data$target, control = ctrl, weights = .weights, family = family, ...)
+    }
+    model = attachTrainingInfo(model, info)
   }
 
   if (m == "cv") {
@@ -43,6 +57,9 @@ trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL,
 
 #' @export
 predictLearner.surv.glmboost = function(.learner, .model, .newdata, ...) {
+  info = getTrainingInfo(.model)
+  if (!is.null(info))
+    .newdata = as.matrix(fixDataForLearner(.newdata, info))
   if(.learner$predict.type == "response")
     predict(.model$learner.model, newdata = .newdata, type = "link")
   else
