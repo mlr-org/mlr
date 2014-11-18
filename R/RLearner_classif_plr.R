@@ -38,7 +38,7 @@ predictLearner.classif.plr = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newx = .newdata, type = "response", ...)
   levs = c(.model$task.desc$negative, .model$task.desc$positive)
   if(.learner$predict.type == "prob"){
-    y = propVectorToMatrix(p, rev(levs))
+    y = propVectorToMatrix(p, levs)
     return(y)
   } else {
     p = as.factor(ifelse(p > 0.5, levs[2L], levs[1L]))

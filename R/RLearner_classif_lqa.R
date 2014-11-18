@@ -63,7 +63,7 @@ predictLearner.classif.lqa = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, new.x = cbind(1, .newdata), ...)$mu.new
   levs = c(.model$task.desc$negative, .model$task.desc$positive)
   if(.learner$predict.type == "prob"){
-    y = propVectorToMatrix(p, rev(levs))
+    y = propVectorToMatrix(p, levs)
     return(y)
     return(y)
   } else {

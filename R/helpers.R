@@ -62,12 +62,12 @@ requirePackages = function(packs, why = NULL, stop = TRUE, suppress.warnings = F
   return(packs.ok)
 }
 
-# p = probabilites for levs[1] => matrix with probs for levs[1] and levs[2]
+# p = probabilites for levs[2] => matrix with probs for levs[1] and levs[2]
 propVectorToMatrix = function(p, levs) {
   assertNumeric(p)
   y = matrix(0, ncol = 2L, nrow = length(p))
   colnames(y) = levs
-  y[, 1L] = x
-  y[, 2L] = 1-x
+  y[, 2L] = p
+  y[, 1L] = 1-p
   y
 }
