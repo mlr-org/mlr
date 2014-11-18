@@ -7,7 +7,7 @@ matchBaseEnsembleLearner = function(ensemble, pn) {
 }
 
 #' @export
-getHyperPars.BaseEnsemble = function(learner, for.fun = "train") {
+getHyperPars.BaseEnsemble = function(learner, for.fun = c("train", "predict", "both")) {
   pvs = lapply(learner$base.learners, function(lrn) {
     xs = getHyperPars.Learner(lrn, for.fun = for.fun)
     if (length(xs) > 0L)
