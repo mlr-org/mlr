@@ -9,7 +9,7 @@ makeRLearner.surv.glmboost = function() {
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "center", default = FALSE),
       makeDiscreteLearnerParam(id = "m", default = "mstop", values = c("mstop", "cv")),
-      makeLogicalLearnerParam(id = "use.formula", default = TRUE, when = "train")
+      makeLogicalLearnerParam(id = "use.formula", default = TRUE, when = "both")
     ),
     par.vals = list(
       family = "CoxPH",
@@ -56,10 +56,11 @@ trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL,
 }
 
 #' @export
-predictLearner.surv.glmboost = function(.learner, .model, .newdata, ...) {
-  info = getTrainingInfo(.model)
-  if (!is.null(info))
+predictLearner.surv.glmboost = function(.learner, .model, .newdata, use.formula, ...) {
+  if (!use.formula) {
+    info = getTrainingInfo(.model)
     .newdata = as.matrix(fixDataForLearner(.newdata, info))
+  }
   if(.learner$predict.type == "response")
     predict(.model$learner.model, newdata = .newdata, type = "link")
   else
