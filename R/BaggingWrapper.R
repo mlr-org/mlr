@@ -91,16 +91,8 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL
     feats = getTaskFeatureNames(.task)
     k = max(round(bw.feats * length(feats)), 1)
   }
-  blocking = .task$blocking
   models = lapply(seq_len(bw.iters), function(i) {
-    if (length(blocking)) {
-      levs = levels(blocking)
-      m.blocks = round(length(levs) * bw.size)
-      bag.blocks = sample(blocking, m.blocks, replace = bw.replace)
-      bag = sample(which(blocking %in% bag.blocks))
-    } else {
-      bag = sample(allinds, m, replace = bw.replace)
-    } 
+    bag = sample(allinds, m, replace = bw.replace)
     w = .weights[bag]
     if (bw.feats < 1) {
       feats2 = sample(feats, k, replace = FALSE)

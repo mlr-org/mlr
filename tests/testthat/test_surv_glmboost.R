@@ -24,4 +24,9 @@ test_that("surv_glmboost", {
   }
 
   testSimpleParsets("surv.glmboost", surv.df, surv.target, surv.train.inds, old.predicts.list, parset.list)
+
+  # test alternative matrix interface
+  mod1 = train(makeLearner("surv.glmboost", use.formula = FALSE, center = FALSE), wpbc.task)
+  mod2 = train(makeLearner("surv.glmboost", use.formula = TRUE, center = FALSE), wpbc.task)
+  expect_equal(coef(mod1$learner.model), coef(mod2$learner.model))
 })

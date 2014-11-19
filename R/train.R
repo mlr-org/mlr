@@ -59,7 +59,7 @@ train = function(learner, task, subset, weights = NULL) {
   pars$.weights = weights
 
   # only pass train hyper pars as basic rlearner in ...
-  pars = c(pars, getHyperPars(learner, "train"))
+  pars = c(pars, getHyperPars(learner, c("train", "both")))
 
   vars = getTaskFeatureNames(task)
   # no vars? then use no vars model

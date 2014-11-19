@@ -93,7 +93,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
       .model = model,
       .newdata = newdata
     )
-    pars = c(pars, getHyperPars(learner, "predict"))
+    pars = c(pars, getHyperPars(learner, c("predict", "both")))
     debug.seed = getMlrOption("debug.seed", NULL)
     if (!is.null(debug.seed))
       set.seed(debug.seed)

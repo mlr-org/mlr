@@ -5,7 +5,7 @@ getParamSet.BaseWrapper = function(learner) {
 
 
 #' @export
-getHyperPars.BaseWrapper = function(learner, for.fun = "train") {
+getHyperPars.BaseWrapper = function(learner, for.fun = c("train", "predict", "both")) {
   c(getHyperPars(learner$next.learner, for.fun), getHyperPars.Learner(learner, for.fun))
 }
 

@@ -31,16 +31,6 @@ test_that("blocking", {
   rdesc = makeResampleDesc("RepCV", folds=3, reps=2)
 	p = resample(lrn, ct, rdesc)$pred
 	mycheck(rdesc, p, b)
-  
-  # test blocking with bagging
-  lrn = makeLearner("classif.rpart")
-	lrn.bw = makeBaggingWrapper(lrn, bw.iters = 3)
-  blocks = factor(sample(letters[1:10], size = nrow(binaryclass.df), replace = TRUE))
-	task = makeClassifTask(id = "iris", data = binaryclass.df, target = binaryclass.target, blocking = blocks)
-	m = train(learner = lrn.bw, task = task)
-  subset.in = m$learner.model$next.model[[1]]$subset
-  subset.out = setdiff(m$subset, subset.in)
-  expect_equal(intersect(blocks[subset.in], blocks[subset.out]), character(0))
 })
 
 

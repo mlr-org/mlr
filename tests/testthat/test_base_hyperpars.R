@@ -39,4 +39,16 @@ test_that("removing par settings works", {
 
 })
 
+test_that("setting 'when' works for hyperpars", {
+  lrn = makeLearner("regr.mock4", p1 = 1, p2 = 2, p3 = 3)
+  hps = getHyperPars(lrn)
+  expect_equal(hps, list(p1 = 1, p2 = 2, p3 = 3))
+  # model stores p1 + p3 in fit, adds p2,p3 in predict to this (so it predicts constant val)
+  m = train(lrn, regr.task)
+  expect_equal(m$learner.model, list(foo = 1 + 3))
+  p = predict(m, regr.task)
+  expect_equal(p$data$response, rep(1+2+2*3, regr.task$task.desc$size))
+})
+
+
 
