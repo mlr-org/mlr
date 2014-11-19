@@ -85,7 +85,7 @@ print.TuneControl = function(x, ...) {
 }
 
 logFunTune = function(learner, task, resampling, measures, par.set, control, opt.path, dob, x, y, remove.nas, stage = 0L) {
-  if (stage == 1L) {
+  if (stage == 2L) {
     if (!inherits(learner, "ModelMultiplexer")) {
       messagef("[Tune] %i: %s : %s", dob,
         paramValueToString(par.set, x, show.missing.values = !remove.nas), perfsToString(y))
@@ -97,4 +97,3 @@ logFunTune = function(learner, task, resampling, measures, par.set, control, opt
     }
   }
 }
-
