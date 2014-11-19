@@ -12,7 +12,7 @@ test_that("classif_xgboost", {
   set.seed(getOption("mlr.debug.seed"))
   p = predict(m, newdata = as.matrix(Sonar[-train.inds,-61]))
   p.class = factor(ifelse(p < 0.5, "M", "R"))
-  p.mat = propVectorToMatrix(p = p, c("M", "M"))
+  p.mat = propVectorToMatrix(p, c("M", "R"))
   
   testSimple("classif.xgboost", Sonar, "Class", train.inds, p.class)
   testProb  ("classif.xgboost", Sonar, "Class", train.inds, p.mat[,1])

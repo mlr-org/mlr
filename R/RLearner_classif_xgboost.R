@@ -60,7 +60,7 @@ predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
     }
   } else {
     if (length(levs) == 2) {
-      res = factor(ifelse(p < 0.5, levs[1], levs[2]))
+      res = factor(ifelse(pred < 0.5, levs[1], levs[2]))
     } else {
       inds = as.integer(pred) + 1L
       # + 1 for index handling
