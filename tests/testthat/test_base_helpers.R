@@ -17,7 +17,7 @@ test_that("propVectorToMatrix", {
   x = seq(0, 1, length.out = 11)
   levs = LETTERS[1:2]
   m = propVectorToMatrix(x, levs)
-  expect_equal(m[,1], x)
-  expect_equal(m[,2], 1 - x)
+  expect_equal(m[,1], 1 - x)
+  expect_equal(m[,2], x)
   expect_equal(colnames(m), levs)
 })
