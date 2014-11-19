@@ -15,7 +15,7 @@ makeRLearner.classif.xgboost = function() {
       makeNumericLearnerParam(id = "colsample.bytree", default = 1, lower = 0, upper = 1, requires = expression(booster == "gbtree")),
       makeNumericLearnerParam(id = "lambda", default = 0, requires = expression(booster == "gblinear")),
       makeNumericLearnerParam(id = "alpha", default = 0, requires = expression(booster == "gblinear")),
-      makeNumericLearnerParam(id = "lambda.bias", default = 0, requires = expression(booster == "gblinear"))
+      makeNumericLearnerParam(id = "lambda.bias", requires = expression(booster == "gblinear"))
     ),
     par.vals = list(nrounds = 1L),
     properties = c("twoclass", "multiclass", "numerics", "prob"),

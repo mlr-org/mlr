@@ -18,26 +18,39 @@ test_that("classif_xgboost", {
   testProb  ("classif.xgboost", Sonar, "Class", train.inds, p.mat[,1])
   
   # mulit class
-  data = xgb.DMatrix(
-    data = as.matrix(multiclass.train[multiclass.train.inds,-multiclass.class.col]), 
-    label = as.integer(multiclass.train[multiclass.train.inds,multiclass.class.col]) - 1L)
+  lrn = makeLearner("classif.xgboost")
+  set.seed(getOption("mlr.debug.seed"))
+  m = train(learner = lrn, task = multiclass.task, subset = multiclass.train.inds)
   
+  lrn2 = setPredictType(lrn, "prob")
   set.seed(getOption("mlr.debug.seed"))
-  levs = levels(multiclass.df[, multiclass.class.col])
-  m1 = xgb.train(
-    data = data,
-    nrounds = 1, objective = "multi:softmax", num_class = length(levs))
+  m = train(learner = lrn2, task = multiclass.task, subset = multiclass.train.inds)
   set.seed(getOption("mlr.debug.seed"))
-  p = predict(m1, newdata = as.matrix(multiclass.test[,-multiclass.class.col]))
-  p.class = factor(levs[p + 1], levels = levs)
-  # testSimple("classif.xgboost", multiclass.df, multiclass.target, multiclass.train.inds, p.class)
+  p = predict(m, newdata = multiclass.test)
   
-  set.seed(getOption("mlr.debug.seed"))
-  m2 = xgb.train(
-    data = data,
-    nrounds = 1, objective = "multi:softprob", num_class = length(levs))
-  set.seed(getOption("mlr.debug.seed"))
-  p = predict(m2, newdata = as.matrix(multiclass.test[,-multiclass.class.col]))
-  p.probs = matrix(p, ncol = length(levs), byrow = TRUE)
-  # testProb  ("classif.xgboost", multiclass.df, multiclass.target, multiclass.train.inds, p.probs)
 })
+
+#   set.seed(getOption("mlr.debug.seed"))
+#   m2 = xgb.train(
+#     data = data,
+#     nrounds = 1, objective = "multi:softprob", num_class = length(levs),
+#     eta = 0.3, max.depth = 6, min.child.weight = 1, subsample = 1, colsample.bytree = 1, lambda = 0, alpha = 0)
+#   set.seed(getOption("mlr.debug.seed"))
+#   p = predict(m2, newdata = as.matrix(multiclass.test[,-multiclass.class.col]))
+#   p.probs = matrix(p, ncol = length(levs), byrow = TRUE)
+#   testProb  ("classif.xgboost", multiclass.df, multiclass.target, multiclass.train.inds, p.probs)
+#   data = xgb.DMatrix(
+#     data = as.matrix(multiclass.train[multiclass.train.inds,-multiclass.class.col]), 
+#     label = as.integer(multiclass.train[multiclass.train.inds,multiclass.class.col]) - 1L)
+#   
+#   set.seed(getOption("mlr.debug.seed"))
+#   levs = levels(multiclass.df[, multiclass.class.col])
+#   m1 = xgb.train(
+#     data = data,
+#     nrounds = 1, objective = "multi:softmax", num_class = length(levs))
+#   set.seed(getOption("mlr.debug.seed"))
+#   p = predict(m1, newdata = as.matrix(multiclass.test[,-multiclass.class.col]))
+#   p.class = factor(levs[p + 1], levels = levs)
+#   testSimple("classif.xgboost", multiclass.df, multiclass.target, multiclass.train.inds, p.class)
+
+
