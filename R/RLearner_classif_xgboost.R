@@ -25,6 +25,7 @@ makeRLearner.classif.xgboost = function() {
   )
 }
 
+#' @export
 trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NULL,  ...) {
   task.data = getTaskData(.task, subset = .subset, target.extra = TRUE)
   d = task.data$data
@@ -46,6 +47,7 @@ trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NUL
   }
 }
 
+#' @export
 predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
   d = xgb.DMatrix(data = as.matrix(.newdata))
   levs = .model$task.desc$class.levels
