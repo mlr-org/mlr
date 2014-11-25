@@ -32,9 +32,9 @@ trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NU
     model = mboost::glmboost(f, data = getTaskData(.task, .subset), control = ctrl, weights = .weights, ...)
   }
   if (m == "cv") {
-    mboost::mstop(model) = mstop(mboost::cvrisk(model, papply = lapply))
+    mboost::mstop(model) = mboost::mstop(mboost::cvrisk(model, papply = lapply))
   } else if (m == "aic") {
-    mboost::mstop(model) = mstop(AIC(model, method = "classical"))
+    mboost::mstop(model) = mboost::mstop(AIC(model, method = "classical"))
   }
   model
 }
