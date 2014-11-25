@@ -208,7 +208,7 @@ reimpute = function(x, desc) {
 
 #' @export
 reimpute.list = function(x, desc) {
-  UseMethod("reimpute", as.data.frame(x))
+  reimpute.data.frame(as.data.frame(x), desc)
 }
 
 #' @export

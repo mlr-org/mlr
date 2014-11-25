@@ -3,7 +3,7 @@
 #' @description
 #' The function \code{resample} fits a model specified by \link{Learner} on a \link{Task}
 #' and calculates predictions and performance \link{measures} for all training
-#' and all test sets specified by a either a resampling description (\link{ResamplingDesc})
+#' and all test sets specified by a either a resampling description (\link{ResampleDesc})
 #' or resampling instance (\link{ResampleInstance}).
 #'
 #' You are able to return all fitted models (parameter \code{models}) or extract specific parts
