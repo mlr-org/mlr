@@ -25,6 +25,7 @@ makeRLearner.regr.xgboost = function() {
   )
 }
 
+#' @export
 trainLearner.regr.xgboost = function(.learner, .task, .subset, .weights = NULL,  ...) {
   task.data = getTaskData(.task, subset = .subset, target.extra = TRUE)
   d = task.data$data
@@ -34,7 +35,8 @@ trainLearner.regr.xgboost = function(.learner, .task, .subset, .weights = NULL, 
   xgboost::xgb.train(data = d, objective = "reg:linear", ...)
 }
 
+#' @export
 predictLearner.regr.xgboost = function(.learner, .model, .newdata, ...) {
-  d = xgb.DMatrix(data = as.matrix(.newdata))
+  d = xgboost::xgb.DMatrix(data = as.matrix(.newdata))
   xgboost::predict(.model$learner.model, newdata = d, ...)
 }
