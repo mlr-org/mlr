@@ -88,23 +88,7 @@ during resampling.
 Default is to extract nothing.}
 }
 \value{
-List of:
-  \item{measures.test [\code{data.frame}]}{Gives you access to performance measurements
-    on the individual test sets. Rows correspond to sets in resampling iterations,
-    columns to performance measures.}
-  \item{measures.train [\code{data.frame}]}{Gives you access to performance measurements
-    on the individual training sets. Rows correspond to sets in resampling iterations,
-    columns to performance measures. Usually not available, only if specifically requested,
-    see general description above.}
-  \item{aggr [\code{numeric}]}{Named vector of aggregated performance values. Names are coded like
-    this <measure>.<aggregation>.}
-  \item{err.msgs [\code{data.frame}]}{Number of rows equals resampling iterations
-    and columns are: \dQuote{iter}, \dQuote{train}, \dQuote{predict}.
-    Stores error messages generated during train or predict, if these were caught
-    via \code{\link{configureMlr}}.}
-  \item{pred [\code{\link{ResamplePrediction}}]}{Container for all predictions during resampling.}
-  \item{models [list of \code{\link{WrappedModel}}]}{List of fitted models or \code{NULL}.}
-  \item{extract [\code{list}]}{List of extracted parts from fitted models or \code{NULL}.}
+[\code{\link{ResampleResult}}]. List of:
 }
 \description{
 The function \code{resample} fits a model specified by \link{Learner} on a \link{Task}
@@ -133,6 +117,7 @@ Other resample: \code{\link{ResampleDesc}},
   \code{\link{makeResampleDesc}};
   \code{\link{ResampleInstance}},
   \code{\link{makeResampleInstance}};
-  \code{\link{ResamplePrediction}}
+  \code{\link{ResamplePrediction}};
+  \code{\link{ResampleResult}}
 }
 

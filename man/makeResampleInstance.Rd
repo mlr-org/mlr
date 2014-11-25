@@ -57,6 +57,7 @@ rin = makeResampleInstance("CV", iters = 10, task = iris.task)
 Other resample: \code{\link{ResampleDesc}},
   \code{\link{makeResampleDesc}};
   \code{\link{ResamplePrediction}};
+  \code{\link{ResampleResult}};
   \code{\link{bootstrapB632}},
   \code{\link{bootstrapB632plus}},
   \code{\link{bootstrapOOB}}, \code{\link{crossval}},

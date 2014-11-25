@@ -16,6 +16,7 @@ Other resample: \code{\link{ResampleDesc}},
   \code{\link{makeResampleDesc}};
   \code{\link{ResampleInstance}},
   \code{\link{makeResampleInstance}};
+  \code{\link{ResampleResult}};
   \code{\link{bootstrapB632}},
   \code{\link{bootstrapB632plus}},
   \code{\link{bootstrapOOB}}, \code{\link{crossval}},

@@ -46,23 +46,7 @@
 #' @param ... [any]\cr
 #'   Further hyperparameters passed to \code{learner}.
 #' @template arg_showinfo
-#' @return List of:
-#'   \item{measures.test [\code{data.frame}]}{Gives you access to performance measurements
-#'     on the individual test sets. Rows correspond to sets in resampling iterations,
-#'     columns to performance measures.}
-#'   \item{measures.train [\code{data.frame}]}{Gives you access to performance measurements
-#'     on the individual training sets. Rows correspond to sets in resampling iterations,
-#'     columns to performance measures. Usually not available, only if specifically requested,
-#'     see general description above.}
-#'   \item{aggr [\code{numeric}]}{Named vector of aggregated performance values. Names are coded like
-#'     this <measure>.<aggregation>.}
-#'   \item{err.msgs [\code{data.frame}]}{Number of rows equals resampling iterations
-#'     and columns are: \dQuote{iter}, \dQuote{train}, \dQuote{predict}.
-#'     Stores error messages generated during train or predict, if these were caught
-#'     via \code{\link{configureMlr}}.}
-##'   \item{pred [\code{\link{ResamplePrediction}}]}{Container for all predictions during resampling.}
-#'   \item{models [list of \code{\link{WrappedModel}}]}{List of fitted models or \code{NULL}.}
-#'   \item{extract [\code{list}]}{List of extracted parts from fitted models or \code{NULL}.}
+#' @return [\code{\link{ResampleResult}}]. List of:
 #' @family resample
 #' @export
 #' @examples
@@ -110,7 +94,11 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   parallelLibrary("mlr", master = FALSE, level = "mlr.resample", show.info = FALSE)
   exportMlrOptions(level = "mlr.resample")
   iter.results = parallelMap(doResampleIteration, seq_len(rin$desc$iters), level = "mlr.resample", more.args = more.args)
-  mergeResampleResult(task, iter.results, measures, rin, models, extract, show.info)
+
+  addClasses(
+    mergeResampleResult(learner, task, iter.results, measures, rin, models, extract, show.info),
+    "ResampleResult"
+  )
 }
 
 doResampleIteration = function(learner, task, rin, i, measures, weights, model, extract, show.info) {
@@ -155,7 +143,7 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   )
 }
 
-mergeResampleResult = function(task, iter.results, measures, rin, models, extract, show.info) {
+mergeResampleResult = function(learner, task, iter.results, measures, rin, models, extract, show.info) {
   iters = length(iter.results)
   mids = vcapply(measures, function(m) m$id)
 
@@ -186,6 +174,8 @@ mergeResampleResult = function(task, iter.results, measures, rin, models, extrac
     messagef("[Resample] Result: %s", perfsToString(aggr))
   }
   list(
+    learner.id = learner$id,
+    task.id = getTaskId(task),
     measures.train = ms.train,
     measures.test = ms.test,
     aggr = aggr,

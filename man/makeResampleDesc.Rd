@@ -83,6 +83,7 @@ makeResampleDesc("Holdout")
 Other resample: \code{\link{ResampleInstance}},
   \code{\link{makeResampleInstance}};
   \code{\link{ResamplePrediction}};
+  \code{\link{ResampleResult}};
   \code{\link{bootstrapB632}},
   \code{\link{bootstrapB632plus}},
   \code{\link{bootstrapOOB}}, \code{\link{crossval}},
