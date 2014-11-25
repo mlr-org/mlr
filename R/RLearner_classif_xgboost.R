@@ -49,7 +49,7 @@ trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NUL
 
 #' @export
 predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
-  d = xgb.DMatrix(data = as.matrix(.newdata))
+  d = xgboost::xgb.DMatrix(data = as.matrix(.newdata))
   levs = .model$task.desc$class.levels
   # retourns 0,1 for binary, 0,1,2,... for multiclass
   pred = xgboost::predict(.model$learner.model, newdata = d, ...)
