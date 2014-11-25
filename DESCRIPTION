@@ -37,7 +37,6 @@ Imports:
     plyr,
     survival
 Suggests:
-    testthat,
     ada,
     adabag,
     bartMachine,
@@ -68,13 +67,14 @@ Suggests:
     kernlab,
     kknn,
     klaR,
-    lqa,
     LiblineaR,
+    lqa,
     MASS,
     mboost,
     mco,
     mda,
     mlbench,
+    mlrMBO,
     modeltools,
     mRMRe,
     nnet,
@@ -95,7 +95,9 @@ Suggests:
     RWeka,
     sda,
     stepPlr,
-    TH.data
+    testthat,
+    TH.data,
+    xgboost
 LazyData: yes
 ByteCompile: yes
 Version: 2.3

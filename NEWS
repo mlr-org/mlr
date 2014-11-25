@@ -6,6 +6,8 @@ mlr_2.3:
 - in the control objects for tuning and feature selection, the user can now define his own logging function
 - some minor bug fixes
 - updated some properties of some learners
+- regr.xgboost
+- surv.xgboost
 
 - new functions
 -- plotViperCharts

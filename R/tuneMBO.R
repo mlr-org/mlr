@@ -23,7 +23,7 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
   state = mbo.control$save.file.path
   if (control$continue && file.exists(state)) {
     messagef("Resuming previous MBO run using state in '%s'...", state)
-    or = mboContinue(state)
+    or = mlrMBO::mboContinue(state)
   } else {
     # FIXME: remove this when mbo on cran
     mbofun = get("mbo", envir = getNamespace("mlrMBO"))
