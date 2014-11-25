@@ -1,24 +1,18 @@
 #' @title Fit models according to a resampling strategy.
 #'
 #' @description
-#'
-#' \code{resample}:
-#' Given a resampling strategy, which defines sets of training and test indices,
-#' fits the selected learner using the training sets and performs predictions for
-#' the training/test sets. This depends on what you selected in the resampling strategy,
-#' see parameter \code{predict} in \code{\link{makeResampleDesc}}.
-#'
-#' Then performance measures are calculated on all respective data sets and aggregated.
+#' The function \code{resample} fits a model specified by \link{Learner} on a \link{Task}
+#' and calculates predictions and performance \link{measures} for all training
+#' and all test sets specified by a either a resampling description (\link{ResamplingDesc})
+#' or resampling instance (\link{ResampleInstance}).
 #'
 #' You are able to return all fitted models (parameter \code{models}) or extract specific parts
 #' of the models (parameter \code{extract}) as returning all of them completely
 #' might be memory intensive.
 #'
-#' For construction of the resampling strategies use the factory methods
-#' \code{\link{makeResampleDesc}} and \code{\link{makeResampleInstance}}.
-#'
 #' The remaining functions on this page are convenience wrappers for the various
-#' existing resampling strategies.
+#' existing resampling strategies. Note that if you need to work with precomputed training and
+#' test splits (i.e., resampling instances), you have to stick with \code{resample}.
 #'
 #' @template arg_learner
 #' @template arg_task
@@ -201,4 +195,3 @@ mergeResampleResult = function(task, iter.results, measures, rin, models, extrac
     extract = if(is.function(extract)) extractSubList(iter.results, "extract", simplify = FALSE) else NULL
   )
 }
-
