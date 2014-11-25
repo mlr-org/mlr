@@ -23,7 +23,6 @@
 #' @param ... [any]\cr
 #'   Currently ignored.
 #' @return [\code{\link{Prediction}}].
-#' @method predict WrappedModel
 #' @family predict
 #' @export
 #' @examples
