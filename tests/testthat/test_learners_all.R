@@ -7,7 +7,7 @@ mylist = function(..., create = FALSE) {
   } else {
     ids = lrns
   }
-  lrns[ids %nin% c("classif.mock1", "classif.mock2", "classif.mock3")]
+  lrns[!grepl("mock", ids)]
 }
 
 test_that("listLearners", {

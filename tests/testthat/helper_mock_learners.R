@@ -47,7 +47,7 @@ registerS3method("makeRLearner", "classif.mock3", makeRLearner.classif.mock3)
 registerS3method("trainLearner", "classif.mock3", trainLearner.classif.mock3)
 registerS3method("predictLearner", "classif.mock3", predictLearner.classif.mock3)
 
-# learner with differen "when" settings for hyperpars
+# learner with different "when" settings for hyperpars
 makeRLearner.regr.mock4 = function() {
   makeRLearnerRegr(
     cl = "regr.mock4", package = character(0L),
@@ -59,9 +59,11 @@ makeRLearner.regr.mock4 = function() {
     properties = c("missings", "numerics", "factors")
   )
 }
+
 trainLearner.regr.mock4 = function(.learner, .task, .subset, .weights = NULL, p1, p3, ...) {
   list(foo = p1 + p3)
 }
+
 predictLearner.regr.mock4 = function(.learner, .model, .newdata, p2, p3) {
   y = rep(1, nrow(.newdata))
   y * .model$learner.model$foo + p2 + p3
@@ -69,5 +71,3 @@ predictLearner.regr.mock4 = function(.learner, .model, .newdata, p2, p3) {
 registerS3method("makeRLearner", "regr.mock4", makeRLearner.regr.mock4)
 registerS3method("trainLearner", "regr.mock4", trainLearner.regr.mock4)
 registerS3method("predictLearner", "regr.mock4", predictLearner.regr.mock4)
-
-
