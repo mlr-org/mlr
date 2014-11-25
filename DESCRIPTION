@@ -74,7 +74,6 @@ Suggests:
     mco,
     mda,
     mlbench,
-    mlrMBO,
     modeltools,
     mRMRe,
     nnet,
