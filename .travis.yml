@@ -25,7 +25,12 @@ branches:
    - master
 notifications:
   email:
+    recipients:
+        - bernd_bischl@gmx.de
+        - michellang@gmail.com
+        - jakob1richter@gmail.com
+        - lars.kotthoff@insight-centre.org
     on_success: change
-    on_failure: change
+    on_failure: always
 after_failure:
   - ./travis-tool.sh dump_logs
