@@ -6,7 +6,7 @@ makeRLearner.regr.xgboost = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "booster", default = "gbtree", values = list("gbtree", "gblinear")),
       makeIntegerLearnerParam(id = "nthread", lower = 1L),
-      makeIntegerLearnerParam(id = "nrounds", lower = 1L),    
+      makeIntegerLearnerParam(id = "nrounds", lower = 1L),
       makeNumericLearnerParam(id = "eta", lower = 0, default = 0.3, requires = expression(booster == "gbtree")),
       makeNumericLearnerParam(id = "gamma", lower = 0, requires = expression(booster == "gbtree")),
       makeIntegerLearnerParam(id = "max.depth", default = 6L, lower = 1L, requires = expression(booster == "gbtree")),
