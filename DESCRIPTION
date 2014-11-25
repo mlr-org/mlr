@@ -95,7 +95,8 @@ Suggests:
     RWeka,
     sda,
     stepPlr,
-    TH.data
+    TH.data,
+    xgboost
 LazyData: yes
 ByteCompile: yes
 Version: 2.3

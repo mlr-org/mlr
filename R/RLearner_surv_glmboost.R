@@ -50,7 +50,7 @@ trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL,
   }
 
   if (m == "cv") {
-    mstop(model) = mstop(cvrisk(model, papply = lapply))
+    mboost::mstop(model) = mboost::mstop(mboost::cvrisk(model, papply = lapply))
   }
   model
 }
