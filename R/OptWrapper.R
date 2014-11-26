@@ -1,7 +1,7 @@
 makeOptWrapper = function(id, learner, resampling, measures, par.set, bit.names, bits.to.features,
-  control, show.info, cl) {
+  control, show.info, learner.subclass) {
 
-  x = makeBaseWrapper(id, learner, cl = c(cl, "OptWrapper"))
+  x = makeBaseWrapper(id, learner, learner.subclass = c(learner.subclass, "OptWrapper"), model.subclass = NULL)
   x$resampling = resampling
   x$measures = measures
   x$opt.pars = par.set
@@ -11,15 +11,6 @@ makeOptWrapper = function(id, learner, resampling, measures, par.set, bit.names,
   x$control = control
   x$show.info = show.info
   return(x)
-}
-
-#' @export
-makeWrappedModel.OptWrapper = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
-  x = NextMethod()
-  if (inherits(learner, "TuneWrapper"))
-    addClasses(x, c("TuneModel", "OptModel"))
-  else
-    addClasses(x, c("FeatSelModel", "OptModel"))
 }
 
 #' @export

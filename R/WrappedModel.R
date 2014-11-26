@@ -33,7 +33,7 @@ makeWrappedModel = function(learner, learner.model, task.desc, subset, features,
 
 #' @export
 makeWrappedModel.Learner = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
-  if(is.error(learner.model)) {
+  if (is.error(learner.model)) {
     learner.model = as.character(learner.model)
     time = NA_real_
     cl = c("FailureModel", "WrappedModel")
@@ -48,6 +48,17 @@ makeWrappedModel.Learner = function(learner, learner.model, task.desc, subset, f
     features = features,
     factor.levels = factor.levels,
     time = time
+  )
+}
+
+#' @export
+print.WrappedModel = function(x, ...) {
+  cat(
+    "Model for id = ", x$learner$id, " class = ", getClass1(x$learner), "\n",
+    "Trained on obs: ", length(x$subset), "\n",
+    "Used features: ", length(x$features), "\n",
+    "Hyperparameters: ", getHyperParsString(x$learner), "\n",
+    sep = ""
   )
 }
 
@@ -67,15 +78,23 @@ getLearnerModel.WrappedModel = function(model) {
   model$learner.model
 }
 
+#' @title Is the model a FailureModel?
+#'
+#' @description
+#' Such a model is created when one sets the corresponding option in \code{\link{configureMlr}}.
+#'
+#' For complex wrappers this getter returns \code{TRUE} if ANY model contained in it failed.
+#'
+#' @template arg_wrappedmod
+#' @return [\code{logical(1)}].
 #' @export
-print.WrappedModel = function(x, ...) {
-  cat(
-    "Model for id = ", x$learner$id, " class = ", getClass1(x$learner), "\n",
-    "Trained on obs: ", length(x$subset), "\n",
-    "Used features: ", length(x$features), "\n",
-    "Hyperparameters: ", getHyperParsString(x$learner), "\n",
-    sep = ""
-  )
-  if (isFailureModel(x))
-    catf("Training failed: %s", getFailureModelMsg(x))
+isFailureModel = function(model) {
+  UseMethod("isFailureModel")
 }
+
+#' @export
+# by default the model is never a failure. if a failure happens we have the derived class FailureModel
+isFailureModel.WrappedModel = function(model) {
+  return(FALSE)
+}
+

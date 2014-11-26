@@ -68,3 +68,8 @@ setPredictType.BaseEnsemble = function(learner, predict.type) {
   return(lrn)
 }
 
+#' @export
+makeWrappedModel.BaseEnsemble = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
+  x = NextMethod(x)
+  addClasses(x, "BaseEnsembleModel")
+}

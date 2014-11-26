@@ -62,8 +62,8 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 1, obw.ma
     makeNumericLearnerParam(id = "obw.rate", lower = 1),
     makeDiscreteLearnerParam(id = "obw.maxcl", c("boot", "all"))
   )
-  x = makeBaseWrapper(id, learner, packs, par.set = ps, par.vals = pv,
-    cl = c("OverBaggingWrapper", "BaggingWrapper"))
+  x = makeHomogeneousEnsemble(id, learner, packs, par.set = ps, par.vals = pv,
+     learner.subclass = c("OverBaggingWrapper", "BaggingWrapper"), model.subclass = "BaggingModel")
   addProperties(x, "prob")
 }
 
@@ -78,6 +78,6 @@ trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, .weights = 
       othreplace = (obw.maxcl == "boot"), bagging = TRUE)
     train(.learner$next.learner, .task, subset = bag, weights = .weights)
   })
-  makeChainModel(next.model = models, cl = "BaggingModel")
+  makeChainModel(next.model = models, cl = c("BaggingModel", "HomogeneousEnsembleModel"))
 }
 

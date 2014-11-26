@@ -23,7 +23,8 @@ makeCostSensWeightedPairsWrapper = function(learner) {
   learner = checkLearnerClassif(learner, weights = TRUE)
   learner = setPredictType(learner, "response")
   id = paste("costsens", learner$id, sep = ".")
-  x = makeBaseWrapper(id, learner, package = learner$package, cl = "CostSensWeightedPairsWrapper")
+  x = makeHomogeneousEnsemble(id, learner, package = learner$package,
+    learner.subclass = "CostSensWeightedPairsWrapper", model.subclass = "CostSensWeightedPairsModel")
   x$type = "costsens"
   removeProperties(x, c("weights", "se", "prob"))
 }
@@ -64,42 +65,7 @@ trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset, .
 #' @export
 predictLearner.CostSensWeightedPairsWrapper = function(.learner, .model, .newdata, ...) {
   classes = .model$task.desc$class.levels
-  models = getCostSensWeightedPairsModels(.model)
-  preds = sapply(models, function(mod) {
-    n = nrow(.newdata)
-    if (is.character(mod))
-       rep(mod, n)
-    else
-      as.character(predict(mod, newdata = .newdata, ...)$data$response)
-  })
-  # FIXME: this will break for length(models) == 1? do not use sapply!
+  preds = predictHomogeneousEnsemble(.learner, .model, .newdata, ...)
   factor(apply(preds, 1L, computeMode), levels = classes)
 }
 
-
-#' @export
-makeWrappedModel.CostSensWeightedPairsWrapper = function(learner, learner.model, task.desc, subset, features,
-  factor.levels, time) {
-  x = NextMethod()
-  addClasses(x, "CostSensWeightedPairsModel")
-}
-
-
-#' Returns the list of fitted models.
-#'
-#' @param model [\code{\link[mlr]{WrappedModel}}]\cr
-#'   Model produced by training a cost-sensitive regression learner.
-#' @param learner.models [\code{logical(1)}]\cr
-#'   Return underlying R models or wrapped
-#'   mlr models (\code{\link[mlr]{WrappedModel}}).
-#'   Default is \code{FALSE}.
-#' @return [\code{list}].
-#' @export
-getCostSensWeightedPairsModels = function(model, learner.models = FALSE) {
-  assertClass(model, classes = "CostSensWeightedPairsModel")
-  ms = model$learner.model$next.model
-  if (learner.models)
-    extractSubList(ms, "learner.model", simplify = FALSE)
-  else
-    ms
-}

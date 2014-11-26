@@ -61,7 +61,7 @@ makeFilterWrapper = function(learner, fw.method = "rf.importance", fw.perc = NUL
       makeNumericLearnerParam(id = "fw.threshold")
     ),
     par.vals = filterNull(list(fw.method = fw.method, fw.perc = fw.perc, fw.abs = fw.abs, fw.threshold = fw.threshold)),
-    cl = "FilterWrapper")
+    learner.subclass = "FilterWrapper", model.subclass = "FilterModel")
   lrn$more.args = ddd
   lrn
 }

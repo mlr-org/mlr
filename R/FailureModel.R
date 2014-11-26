@@ -57,9 +57,15 @@ predictFailureModel = function(model, newdata) {
   return(res)
 }
 
-
 #' @export
 print.FailureModel = function(x, ...) {
   print.WrappedModel(x)
-  catf("Training failed: %s", x$learner.model)
+  catf("Training failed: %s", getFailureModelMsg(x))
 }
+
+#' @export
+isFailureModel.FailureModel = function(model) {
+  return(TRUE)
+}
+
+

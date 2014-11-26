@@ -82,7 +82,7 @@ makeModelMultiplexer = function(base.learners) {
 #' @export
 trainLearner.ModelMultiplexer = function(.learner, .task, .subset, .weights = NULL, selected.learner, ...) {
   # train selected learner model and remove prefix from its param settings
-  bl = .learner$base.learners[[selected.learner]]#
+  bl = .learner$base.learners[[selected.learner]]
   m = train(bl, task = .task, subset = .subset, weights = .weights)
   makeChainModel(next.model = m, cl = "ModelMultiplexerModel")
 }
@@ -111,3 +111,4 @@ getLearnerModel.ModelMultiplexerModel = function(model) {
 isFailureModel.ModelMultiplexerModel = function(model) {
   isFailureModel(model$learner.model$next.model)
 }
+

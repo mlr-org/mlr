@@ -18,7 +18,8 @@ makeCostSensRegrWrapper = function(learner) {
   # we cannot make use of 'se' here
   learner = setPredictType(learner, "response")
   id = paste("costsens", learner$id, sep = ".")
-  x = makeBaseWrapper(id, learner, package = learner$package, cl = "CostSensRegrWrapper")
+  x = makeHomogeneousEnsemble(id, learner, package = learner$package,
+    learner.subclass = "CostSensRegrWrapper", model.subclass = "CostSensRegrModel")
   x$type = "costsens"
   removeProperties(x, c("weights", "se", "prob"))
 }
@@ -44,41 +45,11 @@ trainLearner.CostSensRegrWrapper = function(.learner, .task, .subset, ...) {
 
 #' @export
 predictLearner.CostSensRegrWrapper = function(.learner, .model, .newdata, ...) {
+  p = predictHomogeneousEnsemble(.learner, .model, .newdata, ...)
+  # get class per row with minimal estimated costs
+  p = apply(p, 1L, getMinIndex)
   classes = .model$task.desc$class.levels
-  models = getCostSensRegrModels(.model)
-  preds = sapply(models, function(mod) {
-    predict(mod, newdata = .newdata, ...)$data$response
-  })
-  # FIXME: this will break for length(models) == 1? do not use sapply!
-  preds = apply(preds, 1L, getMinIndex)
-  return(factor(classes[preds], levels = classes))
+  factor(classes[preds], levels = classes)
 }
 
 
-#' @export
-makeWrappedModel.CostSensRegrWrapper = function(learner, learner.model, task.desc, subset, features,
-  factor.levels, time) {
-
-  x = NextMethod()
-  addClasses(x, "CostSensRegrModel")
-}
-
-
-#' Returns the list of fitted models.
-#'
-#' @param model [\code{\link[mlr]{WrappedModel}}]\cr
-#'   Model produced by training a cost-sensitive regression learner.
-#' @param learner.models [\code{logical(1)}]\cr
-#'   Return underlying R models or wrapped
-#'   mlr models (\code{\link[mlr]{WrappedModel}}).
-#'   Default is \code{FALSE}.
-#' @return [\code{list}].
-#' @export
-getCostSensRegrModels = function(model, learner.models = FALSE) {
-  assertClass(model, classes = "CostSensRegrModel")
-  ms = model$learner.model$next.model
-  if (learner.models)
-    extractSubList(ms, "learner.model", simplify = FALSE)
-  else
-    ms
-}

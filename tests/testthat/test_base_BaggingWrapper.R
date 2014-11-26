@@ -5,6 +5,8 @@ test_that("BaggingWrapper", {
   lrn1 = makeLearner("classif.rpart")
   lrn2 = makeBaggingWrapper(lrn1, bw.iters = 3L)
   m = train(lrn2, multiclass.task)
+  expect_is(m, "BaggingModel")
+  expect_is(m, "HomogeneousEnsembleModel")
   expect_true(!inherits(m, "FailureModel"))
   bms = getBaggingModels(m, learner.models = FALSE)
   expect_true(is.list(bms) && length(bms) == lrn2$par.vals$bw.iters)
@@ -41,7 +43,7 @@ test_that("BaggingWrapper", {
   lrn2 = setPredictType(lrn2, "se")
   m = train(lrn2, regr.task)
   p = predict(m, regr.task)
-  
+
   # blocking for BaggingWrapper is testet ind test_base_blocking.R
 })
 
