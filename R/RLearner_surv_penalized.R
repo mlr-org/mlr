@@ -19,7 +19,7 @@ makeRLearner.surv.penalized = function() {
 
 #' @export
 trainLearner.surv.penalized = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  data = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "rcens")
+  data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "rcens")
   info = getFixDataInfo(data$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
   data$data = as.matrix(fixDataForLearner(data$data, info))
 

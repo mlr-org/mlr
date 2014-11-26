@@ -21,7 +21,7 @@ makeRLearner.surv.randomForestSRC = function() {
 
 #' @export
 trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, mtry = NULL, mtry.ratio = NULL, ...) {
-  data = getTaskData(.task, .subset)
+  data = getTaskData(.task, subset = .subset)
   if (!is.null(mtry.ratio)) {
     if (!is.null(mtry))
       stop("You cannot set both 'mtry' and 'mtry.ratio")

@@ -33,12 +33,12 @@ trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL,
   if (use.formula) {
     f = getTaskFormula(.task, env = as.environment("package:survival"))
     model = if (is.null(.weights)) {
-      mboost::glmboost(f, data = getTaskData(.task, .subset, recode.target = "rcens"), control = ctrl, family = family, ...)
+      mboost::glmboost(f, data = getTaskData(.task, subset = .subset, recode.target = "rcens"), control = ctrl, family = family, ...)
     } else  {
-      mboost::glmboost(f, data = getTaskData(.task, .subset, recode.target = "rcens"), control = ctrl, weights = .weights, family = family, ...)
+      mboost::glmboost(f, data = getTaskData(.task, subset = .subset, recode.target = "rcens"), control = ctrl, weights = .weights, family = family, ...)
     }
   } else {
-    data = getTaskData(.task, target.extra = TRUE, recode.target = "rcens")
+    data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "rcens")
     info = getFixDataInfo(data$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
     data$data = as.matrix(fixDataForLearner(data$data, info))
     model = if (is.null(.weights)) {
