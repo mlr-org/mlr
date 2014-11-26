@@ -18,7 +18,7 @@ test_that("MulticlassWrapper", {
       stop("Codematrix must only contain: -1,0,+1!")
     cm
   }
-  
+
   lrn1 = makeLearner("classif.rpart")
   lrn2 = makeLearner("classif.lqa")
   lrn3 = makeBaggingWrapper(learner = lrn1, bw.iters = 2)
@@ -28,9 +28,9 @@ test_that("MulticlassWrapper", {
   m1 = train(lrn1.w, multiclass.task)
   m2 = train(lrn2.w, multiclass.task)
   m3 = train(lrn3.w, multiclass.task)
-  expect_true(!inherits(m1, "FailureModel"))
-  expect_true(!inherits(m2, "FailureModel"))
-  expect_true(!inherits(m3, "FailureModel"))
+  expect_false(isFailureModel(m1))
+  expect_false(isFailureModel(m2))
+  expect_false(isFailureModel(m3))
   rdesc = makeResampleDesc("CV", iters = 2)
   r1 = resample(lrn1.w, multiclass.task, rdesc)
   r2 = resample(lrn2.w, multiclass.task, rdesc)
