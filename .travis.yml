@@ -28,7 +28,7 @@ notifications:
     recipients:
         - bernd_bischl@gmx.net
         - michellang@gmail.com
-        - jakob1richter@gmail.com
+        - travis.mlr@jakob-r.de
         - lars.kotthoff@insight-centre.org
     on_success: change
     on_failure: always
