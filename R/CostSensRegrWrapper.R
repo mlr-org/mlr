@@ -40,7 +40,7 @@ trainLearner.CostSensRegrWrapper = function(.learner, .task, .subset, ...) {
       check.data = FALSE, fixup.data = "quiet")
     models[[i]] = train(.learner$next.learner, task)
   }
-  makeChainModel(next.model = models, cl = "CostSensRegrModel")
+  m = makeHomChainModel(.learner, models)
 }
 
 #' @export

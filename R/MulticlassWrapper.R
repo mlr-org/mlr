@@ -65,14 +65,16 @@ trainLearner.MulticlassWrapper = function(.learner, .task, .subset, .weights = N
     ct$task.desc$negative = "-1"
     train(.learner$next.learner, ct, weights = .weights)
   })
-  makeChainModel(next.model = list(models = models, cm = cm), cl = c("MulticlassModel", "HomogeneousEnsembleModel"))
+  m = makeHomChainModel(.learner, models)
+  m$cm = cm
+  return(m)
 }
 
 
 #' @export
 predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, ...) {
-  models = .model$learner.model$next.model$models
-  cm = .model$learner.model$next.model$cm
+  models = .model$learner.model$next.model
+  cm = .model$learner.model$cm
   # predict newdata with every binary model, get n x n.models matrix of +1,-1
   # FIXME: this will break for length(models) == 1? do not use sapply!
   p = sapply(models, function(m) {

@@ -78,6 +78,6 @@ trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, .weights = 
       othreplace = (obw.maxcl == "boot"), bagging = TRUE)
     train(.learner$next.learner, .task, subset = bag, weights = .weights)
   })
-  makeChainModel(next.model = models, cl = c("BaggingModel", "HomogeneousEnsembleModel"))
+  m = makeHomChainModel(.learner, models)
 }
 

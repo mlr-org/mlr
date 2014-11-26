@@ -111,7 +111,7 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL
       train(.learner$next.learner, .task, subset = bag, weights = w)
     }
   })
-  makeChainModel(next.model = models, cl = c("BaggingModel", "HomogeneousEnsembleModel"))
+  m = makeHomChainModel(.learner, models)
 }
 
 #' @export

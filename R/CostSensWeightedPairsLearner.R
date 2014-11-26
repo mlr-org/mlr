@@ -58,7 +58,7 @@ trainLearner.CostSensWeightedPairsWrapper = function(.learner, .task, .subset, .
       counter = counter + 1L
     }
   }
-  makeChainModel(next.model = models, cl = "CostSensWeightedPairsModel")
+  m = makeHomChainModel(.learner, models)
 }
 
 
