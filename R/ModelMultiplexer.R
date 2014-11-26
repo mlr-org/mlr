@@ -62,7 +62,6 @@
 #' )
 #'
 #' # all three ps-objects are exactly the same internally.
-#'
 makeModelMultiplexer = function(base.learners) {
   lrn = makeBaseEnsemble(
     id = "ModelMultiplexer",
@@ -77,8 +76,7 @@ makeModelMultiplexer = function(base.learners) {
   lrn$par.set = c(lrn$par.set, ps)
   lrn$par.set.ens = ps
   lrn$fix.factors = TRUE
-  lrn = setHyperPars(lrn, selected.learner = names(lrn$base.learners)[1L])
-  return(lrn)
+  setHyperPars(lrn, selected.learner = names(lrn$base.learners)[1L])
 }
 
 #' @export
@@ -86,6 +84,7 @@ trainLearner.ModelMultiplexer = function(.learner, .task, .subset, .weights = NU
   # train selected learner model and remove prefix from its param settings
   bl = .learner$base.learners[[selected.learner]]#
   m = train(bl, task = .task, subset = .subset, weights = .weights)
+  makeChainModel(next.model = m, cl = "ModelMultiplexerModel")
 }
 
 #' @export
@@ -93,5 +92,22 @@ predictLearner.ModelMultiplexer = function(.learner, .model, .newdata, ...) {
   # simply predict with the model
   sl = .learner$par.vals$selected.learner
   bl = .learner$base.learners[[sl]]
-  predictLearner(bl, .model$learner.model, .newdata)
+  predictLearner(bl, .model$learner.model$next.model, .newdata)
+}
+
+#' @export
+makeWrappedModel.ModelMultiplexer = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
+  x = NextMethod()
+  class(x) = c("ModelMultiplexerModel", class(x))
+  return(x)
+}
+
+#' @export
+getLearnerModel.ModelMultiplexerModel = function(model) {
+  model$learner.model$next.model$learner.model
+}
+
+#' @export
+isFailureModel.ModelMultiplexerModel = function(model) {
+  isFailureModel(model$learner.model$next.model)
 }
