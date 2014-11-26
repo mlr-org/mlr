@@ -73,5 +73,3 @@ test_that("y imputing works", {
 
   configureMlr(on.learner.error = "stop")
 })
-
-

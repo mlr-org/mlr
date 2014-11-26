@@ -3,7 +3,7 @@ makeOptControl = function(same.resampling.instance, impute.val = NULL, tune.thre
 
   assertFlag(same.resampling.instance)
   if (!is.null(impute.val))
-    assertNumber(impute.val)
+    assertNumeric(impute.val)
   assertFunction(log.fun,
     args = c("learner", "task", "resampling", "measures", "par.set", "control", "opt.path", "dob", "x", "y", "remove.nas", "stage"))
   assertFlag(tune.threshold)
@@ -16,4 +16,3 @@ makeOptControl = function(same.resampling.instance, impute.val = NULL, tune.thre
     extra.args = list(...)
   )
 }
-
