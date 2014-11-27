@@ -360,7 +360,7 @@ fnr = makeMeasure(id = "fnr", minimize = TRUE, best = 0, worst = 1,
 ppv = makeMeasure(id = "ppv", minimize = FALSE, best = 1, worst = 0,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
-  name = "Positive predictive value", 
+  name = "Positive predictive value",
   note = "Also called precision.",
   fun = function(task, model, pred, feats, extra.args) {
     tp$fun(pred = pred) / sum(pred$data$response == pred$task.desc$positive)
@@ -457,9 +457,12 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
   name = "Concordance index",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("Hmisc")
+    resp = pred$data$response
+    if (anyMissing(resp))
+      return(NA_real_)
     # FIXME: we need to ensure the censoring here
     s = Surv(pred$data$truth.time, pred$data$truth.event)
-    rcorr.cens(-1 * pred$data$response, s)[["C Index"]]
+    rcorr.cens(-1 * resp, s)[["C Index"]]
   }
 )
 
@@ -488,7 +491,7 @@ meancosts = makeMeasure(id = "meancosts", minimize = TRUE, best = 0, worst = Inf
 mcp = makeMeasure(id = "mcp", minimize = TRUE, best = 0, worst = Inf,
   properties = "costsens",
   allowed.pred.types = "response",
-  name = "Misclassification penalty", 
+  name = "Misclassification penalty",
   note = "i.e. average difference between costs of oracle and model prediction.",
   fun = function(task, model, pred, feats, extra.args) {
     mc = meancosts$fun(task, NULL, pred, NULL, extra.args)
@@ -506,7 +509,7 @@ mcp = makeMeasure(id = "mcp", minimize = TRUE, best = 0, worst = Inf,
 db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
   properties = "cluster",
   allowed.pred.types = c("response", "prob"),
-  name = "Davies-Bouldin cluster separation measure", 
+  name = "Davies-Bouldin cluster separation measure",
   note ="see `?clusterSim::index.DB`",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
@@ -548,7 +551,7 @@ G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,
 G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0,
   properties = "cluster",
   allowed.pred.types = c("response", "prob"),
-  name = "Baker and Hubert adaptation of Goodman-Kruskal's gamma statistic", 
+  name = "Baker and Hubert adaptation of Goodman-Kruskal's gamma statistic",
   note = "see `?clusterSim::index.G2`",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
