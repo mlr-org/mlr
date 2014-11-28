@@ -11,6 +11,8 @@
 
 ## R code
 
+* To demonstrate the naming scheme for **R** functions/objects use brackets, e.g.,
+  ``make<TaskType>``.
 * Comments in R code start with ## and the first word is capitalized. 
   No dot at the end except the comment is a proper sentence
 * Adhere to the [style guide](https://github.com/tudo-r/PackagesInfo/wiki/R-Style-Guide),
