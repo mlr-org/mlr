@@ -1,77 +1,54 @@
 # Tuning Hyperparameters
 
 Many machine learning algorithms have hyperparameters that need to be set.
-They can either be selected by the user or through resampling,
-e.g., cross-validation. Setting them by hand was already covered in the
-section about [training](train.md) and [resampling](resample.md) - simply use the
-`par.val` argument in the [&makeLearner] method.
+If selected by the user they can be specified as explained in the section about
+[Learners](learner.md) -- simply pass them to [&makeLearner].
+Often suitable parameter values are not obvious and it is preferable to tune the hyperparameters,
+that is automatically select hyperparameter values that lead to the best performance.
 
-Grid search is one of the standard - albeit slow - ways to choose an
+
+## Basics
+
+For tuning you have to specify the
+
+* search space,
+* search strategy,
+* evaluation method, i.e., a resampling strategy and a performance measure.
+
+The last point is already covered in this tutorial in the parts about the
+[evaluation of learning methods](performance.md) and [resampling](resample.md).
+
+Below we show how to specify the search space and search strategy, how to do the
+tuning and how to access the tuning result.
+
+%Throughout this section classification examples. For the other types of learning problems
+tuning works analogous.
+
+We use the [iris classification task](&iris.task) (see also [iris](&datasets::iris) data set)
+for illustration and tune the hyperparameters of an SVM (function [ksvm](&kernlab::ksvm)
+from the [%kernlab] package) with a radial basis kernel.
+
+
+### Grid search with manual discretization
+
+Grid search is one of the standard -- albeit slow -- ways to choose an
 appropriate set of parameters from a given range of values.
 
+First, we create a [ParamSet](&ParamHelpers::makeParamSet) object, which describes the parameter space
+we wish to search.
+This is done via the function [makeParamSet](&ParamHelpers::makeParamSet).
+Since we will use a grid search strategy, we add discrete parameters for
+`C` and `sigma` of the SVM to the parameter set.
+The parameter names in the set have to match learner parameter names.
+The specified values have to be feasible settings
+and the complete grid is simply their cross-product.
 
-## Classification example
+---
 
-We again use the [iris](&datasets::iris) data set, included in **R**, but now we want to
-set the parameters of a SVM with a polynomial kernel.
-
-
-### Simple Grid Search with cross validation
-
-We need to create a [ParamSet](&makeParamSet) object that describes
-the parameter space we wish to search. This is done through the function
-[&makeParamSet]. We add discrete parameters for the `C` and `sigma` parameter
-of the SVM to the parameter set. More details concerning parameter sets are
-explained in section parameters (FIXME).
-
-```{r}
-ps = makeParamSet(makeDiscreteParam("C", values = 2^(-2:2)),
-    makeDiscreteParam("sigma", values = 2^(-2:2)))
-```
-
-We will use cross-validation to assess the quality of a specific parameter
-setting. For this we need to create a resampling description just
-like in the [resampling](resample.md) part of the tutorial:
-
-```{r}
-rdesc = makeResampleDesc("CV", iters = 3)
-```
-
-Before we can actually tune our classifier and identify the best parameter
-setting, we need an instance of a [&TuneControl] object. These describe the
-optimization strategy used. Here we use a grid search:
-
-```{r}
-ctrl = makeTuneControlGrid()
-```
-
-Finally, combining all the previous pieces, we can tune the SVM
-using our [&TuneControl] instance and the resampling strategy
-described by the `rdesc` variable.
-We use the [&iris.task] provided by [%mlr].
-
-```{r}
-res = tuneParams("classif.ksvm", task = iris.task, resampling = rdesc, par.set = ps, 
-    control = ctrl, measures = list(mmce, setAggregation(mmce, test.sd)))
-```
-
-We used a trick, also described in the section on [resampling](resample.md), to
-obtain the standard deviation in addition to the default by adding a second
-measure. A quick visualization of the search can be achieved by accessing
-the ``opt.path`` as follows.
-
-```{r tune_gridSearchVisualized}
-library(ggplot2)
-opt.grid = as.data.frame(res$opt.path)
-head(opt.grid)
-g = ggplot(opt.grid, aes(x = C, y = sigma, fill = mmce.test.mean, label = round(mmce.test.sd,3)))
-g + geom_tile() + geom_text(color = "white")
-```
-
-Let's take a closer look at the example above. The parameter grid has to be a
-named list and every entry has to be named according to the corresponding
+The parameter grid has to be a
+named [list](&base::list) and every entry has to be named according to the corresponding
 parameter of the underlying **R** function (in this case [ksvm](&kernlab::ksvm) from 
-the [kernlab](http://www.rdocumentation.org/packages/kernlab) package).
+the [%kernlab] package).
 The value of each entry is a vector of feasible values for this hyperparameter. 
 The complete grid is simply the cross-product of all feasible values.
 
@@ -80,47 +57,249 @@ passed in a list structure, [%mlr] tries to give you direct access to
 each parameter and get rid of the list structure. This is the case for example
 with [ksvm](&kernlab::ksvm).
 
-Tune now simply performs the cross-validation for every element of the
-cross-product and selects the one with the best mean performance
+---
+
+
+```{r}
+ps = makeParamSet(
+  makeDiscreteParam("C", values = 2^(-2:2)),
+  makeDiscreteParam("sigma", values = 2^(-2:2))
+)
+```
+
+Before we can actually tune our classifier and identify the best parameter
+setting, we need an instance of a [&TuneControl] object. These describe the
+optimization strategy/algorithm used and its settings. Here we use a grid search:
+
+```{r}
+ctrl = makeTuneControlGrid()
+```
+
+We will use cross-validation to assess the quality of a specific parameter
+setting. For this we need to create a resampling description just
+like in the [resampling](resample.md) part of the tutorial.
+
+```{r}
+rdesc = makeResampleDesc("CV", iters = 3L)
+```
+
+Finally, by combining all the previous pieces, we can tune the SVM by calling [&tuneParams].
+
+```{r}
+res = tuneParams("classif.ksvm", task = iris.task, resampling = rdesc, par.set = ps,
+  control = ctrl)
+res
+```
+
+[&tuneParams] simply performs the cross-validation for every element of the
+cross-product and selects the setting with the best mean performance.
+As no performance measure was specified, the default error rate ([mmce](&measures)).
+measure knows that it is minimized
+
+Of course, you can consider other measure, several measures, the first is used for tuning.
+In the following example we accuracy ([acc](&measures)) instead of error rate.
+We used a trick, also described in the section on [resampling](resample.md), to
+obtain the standard deviation in addition to the default by adding a second
 measure.
 
-Unfortunately, it's not clear how reliable the results are. One might
-want to find out if the configurations vary for slightly different data sets.
-A good approach for getting a better feeling for the best parameter setting
-is to do a nested cross-validation.
+```{r}
+res = tuneParams("classif.ksvm", task = iris.task, resampling = rdesc, par.set = ps,
+  control = ctrl, measures = list(acc, setAggregation(acc, test.sd)), show.info = FALSE)
+res
+```
 
 
-### Nested Cross Validation
+### Accessing the tuning result
 
-Let's run a nested CV with 5 folds in the outer loop and 3 folds in the
-inner loop on the above example.
+The result object [&TuneResult] allows you to access the best found settings `$x` and their
+estimated performance `$y`.
 
 ```{r}
-ps = makeParamSet(makeDiscreteParam("C", values = 2^(-2:2)),
-    makeDiscreteParam("sigma", values = 2^(-2:2)))
+res$x
+res$y
+```
+
+Moreover, we can also all points evaluated during the search `$opt.path`.
+[OptPath](&ParamHelpers::OptPath)
+
+```{r}
+res$opt.path
+opt.grid = as.data.frame(res$opt.path)
+head(opt.grid)
+```
+
+A quick visualization of the performance values on the search grid be accomplished as follows:
+
+```{r tune_gridSearchVisualized}
+library(ggplot2)
+g = ggplot(opt.grid, aes(x = C, y = sigma, fill = acc.test.mean, label = round(acc.test.sd, 3)))
+g + geom_tile() + geom_text(color = "white")
+```
+
+The color of the tiles display the achieved accuracy, the tile labels show the standard deviation.
+
+
+### learner
+
+learner with optimal hyperparameter setting for further use
+
+```{r}
+lrn = setHyperPars(makeLearner("classif.ksvm"), par.vals = res$x)
+lrn
+```
+
+
+
+```{r}
+m = train(lrn, iris.task)
+predict(m, task = iris.task)
+```
+
+
+### Grid search without manual discretization
+
+We can also specify the true numeric parameter types of `C` and `sigma` and use the `resolution`
+option of [makeTuneControlGrid](&TuneControl) to automatically discretize them.
+Note how we also make use of the `trafo` option when creating the parameter set to easily
+optimize on a log-scale. Trafos work like this: All optimizers basically see the parameters on their
+original scale (from -12 to 12) in this case and produce values on this scale during the search.
+Right before they are passed to the learning algorithm, the transformation function is applied.
+
+```{r}
+ps = makeParamSet(
+  makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
+  makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x)
+)
+ctrl = makeTuneControlGrid(resolution = 3L)
+rdesc = makeResampleDesc("CV", iters = 2L)
+res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
+res
+```
+
+``res$opt.path`` contains the *untransformed* parameter values.
+
+```{r}
+as.data.frame(res$opt.path)
+```
+
+In order to get the *transformed* parameter values instead use function
+[trafoOptPath](&ParamHelpers::trafoOptPath).
+
+```{r}
+as.data.frame(trafoOptPath(res$opt.path))
+```
+
+
+## Iterated F-Racing for mixed spaces and dependencies
+
+The package supports a larger number of tuning algorithms, which can all be looked up and
+selected via [&TuneControl]. One of the cooler algorithms is iterated F-racing from the 
+[%irace] package. This not only works for arbitrary parameter types (numeric, integer,
+discrete, logical), but also for so-called dependent / hierarchical parameters:
+
+```{r}
+ps = makeParamSet(
+  makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
+  makeDiscreteParam("kernel", values = c("vanilladot", "polydot", "rbfdot")),
+  makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x,
+    requires = quote(kernel == "rbfdot")),
+  makeIntegerParam("degree", lower = 2L, upper = 5L,
+    requires = quote(kernel == "polydot"))
+)
+ctrl = makeTuneControlIrace(maxExperiments = 200L)
+rdesc = makeResampleDesc("Holdout")
+res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl, show.info = FALSE)
+print(head(as.data.frame(res$opt.path)))
+```
+
+See how we made the kernel parameters like `sigma` and `degree` dependent on the `kernel`
+selection parameters? This approach allows you to tune of multiple kernels at once, 
+efficiently concentrating on the ones which work best for your given data set.
+
+
+## Tuning across whole model spaces with ModelMultiplexer
+
+We can now take the following example even one step further. If we use the
+[ModelMultiplexer](&makeModelMultiplexer) we can tune over different model classes at once,
+just as we did with the SVM kernels above:
+
+```{r}
+base.learners = list(
+  makeLearner("classif.ksvm"),
+  makeLearner("classif.randomForest")
+)
+lrn = makeModelMultiplexer(base.learners)
+# simple way to contruct param set for tuning
+# parameter names are prefixed automatically and the 'requires'
+# element is set, too, to make all paramaters subordinate to 'selected.learner'
+ps = makeModelMultiplexerParamSet(lrn,
+  makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x),
+  makeIntegerParam("ntree", lower = 1L, upper = 500L)
+)
+print(ps)
+rdesc = makeResampleDesc("CV", iters = 2L)
+ctrl = makeTuneControlIrace(maxExperiments = 200L)
+res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl, show.info = FALSE)
+print(head(as.data.frame(res$opt.path)))
+```
+
+
+## Nested resampling
+
+
+As we continually access and optimize over the same data during tuning, the estimated
+performance value `res$y` might be optimistically biased.
+A clean approach to ensure unbiased performance estimation is nested resampling,
+where we embed the whole model selection process into another outer resampling loop.
+
+Actually, we can get this for free without programming any looping by simply using the
+[wrapper functionality](wrapper.md) of [%mlr].
+See also function [&makeTuneWrapper].
+
+Let's use cross-validation with 2 folds in the outer loop and use simple
+holdout test set estimation during tuning in the inner loop.
+
+```{r}
+ps = makeParamSet(
+  makeDiscreteParam("C", values = 2^(-2:2)),
+  makeDiscreteParam("sigma", values = 2^(-2:2))
+)
 ctrl = makeTuneControlGrid()
-
-in.rdesc = makeResampleDesc("CV", iters = 3)
-out.rdesc = makeResampleDesc("CV", iters = 5)
-
-lrn = makeTuneWrapper("classif.ksvm", resampling = in.rdesc, par.set = ps, control = ctrl, 
-    show.info = FALSE)
+inner = makeResampleDesc("Holdout") #in.rdesc
+outer = makeResampleDesc("CV", iters = 2) #out.rdesc
+lrn = makeTuneWrapper("classif.ksvm", inner, par.set = ps, control = ctrl, show.info = FALSE)
+r = resample(lrn, iris.task, resampling = outer, extract = getTuneResult, show.info = FALSE)
 ```
 
-Now we can run our nested CV. For further evaluations, we may
-want to extract the results of the tuning run as well. Please note that storing
-entire models may be expensive.
+If we want to find out how good those configurations are on the entire data
+set, we can still look at the measures that we already know from [resampling](resample.md).
 
 ```{r}
-r = resample(lrn, iris.task, resampling = out.rdesc, extract = getTuneResult, show.info = FALSE)
+r$measures.test
+r$aggr
 ```
 
-Finally, we can compare the results obtained in the different iterations. We
-receive one optimal setting for each of the 5 outer folds, including the
-corresponding mmce on the inner cross-validations:
+Thus, we receive 2 misclassification errors (one for each optimal parameter
+configuration per outer fold) and one aggregated version, i.e., the mean,
+of those 2 values.
+
+
+### Accessing the tuning result
+
+For further evaluations, we want to keep the results of the tuning run as well.
+For example one might want to find out, if the best obtained configurations vary for the different outer splits.
+As storing entire models may be expensive we used the `extract` option of [&resample].
+Function [&getTuneResult] returns the optimal parameter setting and the optimization path
+for each iteration of the outer resampling loop.
+%We receive one optimal setting for each of the 5 outer folds, 
+%including the corresponding mmce on the inner cross-validations:
+%Finally, we can compare the results obtained in the different iterations. We
+%receive one optimal setting for each of the 2 outer folds, including the
+%corresponding mmce on the inner cross-validations:
 
 ```{r}
 r$extract
+r$extract[[1]]$opt.path
 ```
 
 As you can see, the optimal configuration usually depends on the data. You may
@@ -128,18 +307,6 @@ be able to identify a *range* of parameter settings that achieve good
 performance though, e.g., the values for `C` should be at least 1 and the values
 for `sigma` should be between 0 and 1.
 
-If we want to find out how good those configurations are on the entire data
-set, we can still look at the measures that we already know from
-[resampling](resample.md).
-
-```{r}
-r$measures.test
-r$aggr
-```
-
-Thus, we receive 5 misclassification errors (one for each optimal parameter
-configuration per outer fold) and one aggregated version, i.e., the mean,
-of those 5 values.
 
 
 ### Visualization
@@ -156,23 +323,50 @@ g + geom_tile()
 ```
 
 
-### Regression example
+## Multi-criteria evaluation and optimization
 
-Let's tune `k` of a [k-nearest neighbour regression model](&kknn::kknn) (implemented
-in package [kknn](http://www.rdocumentation.org/packages/kknn)) on the 
-[BostonHousing](&mlbench::BostonHousing) data set.
+optimize multiple, often conflicting measures
 
-```{r eval=FALSE}
-## Range of the value k
-ps = makeParamSet(makeDiscreteParam("k", 1:7))
+During tuning we aim to minimize both, the false positive and the false negative rate
+([fpr](&measures) and [fnr](&measures)).
+As search strategy we choose a random search (see [makeTuneMultiCritControlRandom](&TuneMultiCritControl)).
 
-## Evaluate with 5-fold cross-validation
-rdesc = makeResampleDesc("CV", iters = 5)
-
-## Create a grid tuner
-ctrl = makeTuneControlGrid()
-
-## Tune k-nearest neighbour regression with mean squared error as default measure
-tuneParams(learner = "regr.kknn", task = bh.task, resampling = rdesc, par.set = ps, 
-    control = ctrl, measures = mse)
+```{r}
+ps = makeParamSet(
+  makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
+  makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x)
+)
+ctrl = makeTuneMultiCritControlRandom(maxit = 30L)
+rdesc = makeResampleDesc("Holdout")
+res = tuneParamsMultiCrit("classif.ksvm", task = sonar.task, resampling = rdesc, par.set = ps,
+  measures = list(fpr, fnr), control = ctrl, show.info = FALSE)
+res
+head(as.data.frame(trafoOptPath(res$opt.path)))
 ```
+
+The results can be visualized with function [&plotTuneMultiCritResult].
+The plot shows the false positive and false negative rates for all parameter settings evaluated
+during tuning. The size of the points on the Pareto front is slightly increased.
+
+```{r}
+plotTuneMultiCritResult(res)
+```
+
+
+## Further comments
+
+* Tuning works for all other tasks like regression, survival analysis and so on in a completely
+  similar fashion.
+
+* In longer running tuning experiments it is very annoying if the computation stops due to
+  numerical or other errors. Have a look at `on.learner.error` in [&configureMlr] and the
+  further examples given in section [Configure mlr](configureMlr.md) of this tutorial.
+  You might also want to inform yourself about `impute.val` in [&TuneControl].
+
+<!--(
+.. |tune-varsel_processing| image:: /_images/tune-varsel_processing.png
+     :align: middle
+     :width: 50em
+     :alt: Variable selection as a tuning.
+     
+)-->
