@@ -1,6 +1,8 @@
 mlr_2.3:
 - resample now returns an object of class ResampleResult (downward compatible)
   to allow for a print method.
+- resampling on features now supported for an arbitrary number of factor
+  features
 - mlr supports ViperCharts plots now
 - all mlr measures now have slots "name" and "note"
 - exported a few very simple "getters" for tasks, see below

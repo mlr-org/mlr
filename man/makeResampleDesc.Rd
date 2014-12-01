@@ -4,7 +4,8 @@
 \alias{makeResampleDesc}
 \title{Create a description object for a resampling strategy.}
 \usage{
-makeResampleDesc(method, predict = "test", ..., stratify = FALSE)
+makeResampleDesc(method, predict = "test", ..., stratify = FALSE,
+  stratify.cols = NULL)
 }
 \arguments{
 \item{method}{[\code{character(1)}]\cr
@@ -30,10 +31,18 @@ Further parameters for strategies.\cr
 }}
 
 \item{stratify}{[\code{logical(1)}]\cr
-Should stratification be done for the classes in classification tasks?
-This means that the resampling strategy is applied to all classes individually and the resulting
-index sets are joined to make sure that the proportion of observations in each training set
-is as in the original data set. Useful for imbalanced class sizes.}
+Should stratification be done for the target variable?
+For classification tasks, this means that the resampling strategy is applied to all classes
+individually and the resulting index sets are joined to make sure that the proportion of
+observations in each training set is as in the original data set. Useful for imbalanced class sizes.
+For survival tasks stratification is done on the events, resulting training sets with comparable
+censoring rates.}
+
+\item{stratify.cols}{[\code{character}]\cr
+Stratify on specific columns referenced by name. All columns have to be factors.
+Note that you have to ensure yourself that stratification is possible, i.e.
+that each strata contains enough observations.
+This argument and \code{stratify} are mutually exclusive.}
 }
 \value{
 [\code{\link{ResampleDesc}}].

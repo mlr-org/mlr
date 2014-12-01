@@ -70,21 +70,27 @@ makeResampleInstance = function(desc, task, size, ...) {
     ti = sample(size)
     inst$test.inds = lapply(inst$train.inds, function(x) setdiff(ti, x))
     inst$size = size
-  } else if (desc$stratify) {
+  } else if (desc$stratify || !is.null(desc$stratify.cols)) {
     if (is.null(task))
       stop("Stratification always needs the task!")
+    if (desc$stratify) {
+      stratify.cols = switch(task$task.desc$type,
+        "classif" = getTaskTargetNames(task),
+        "surv" = getTaskTargetNames(task)[2L],
+        stopf("Stratification for tasks of type '%s' not supported", task$task.desc$type))
+    } else {
+      stratify.cols = desc$stratify.cols
+    }
 
-    grp = switch(task$task.desc$type,
-      "classif" = {
-        y = getTaskTargets(task)
-        lapply(task$task.desc$class.levels, function(x) which(x == y))
-      },
-      "surv" = {
-        y = getTaskTargets(task)
-        lapply(0:1, function(x) which(x == y[, 2L]))
-      },
-      stopf("Stratification for tasks of type '%s' not supported", task$task.desc$type)
-    )
+    cn = c(getTaskFeatureNames(task), getTaskTargetNames(task))
+    i = which(stratify.cols %nin% cn)
+    if (length(i) > 0L)
+      stopf("Columns specified for stratification, but not present in task: %s", collapse(stratify.cols[i]))
+    index = getTaskData(task, features = stratify.cols, target.extra = FALSE)[stratify.cols]
+    if (any(vlapply(index, is.numeric)))
+      stop("Stratification on numeric variables not possible")
+    grp = tapply(seq_row(index), index, simplify = FALSE)
+    grp = unname(split(seq_row(index), grp))
 
     # resample on every class
     train.inds = vector("list", length(grp))
