@@ -13,11 +13,12 @@ selectFeaturesRandom = function(learner, task, resampling, measures, bit.names, 
 # help function in order to respect max.features
 
 createStates = function(n, max.features, prob){
-  if(is.na(max.features)) return(rbinom(n, 1, prob) )
+  if (is.na(max.features))
+    return(rbinom(n, 1, prob) )
   run.loop = TRUE
-  while(run.loop) {
+  while (run.loop) {
     x = rbinom(n, 1, prob)
-    if(sum(x) <= max.features)
+    if (sum(x) <= max.features)
       run.loop = FALSE
   }
   return(x)

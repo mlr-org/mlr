@@ -47,4 +47,12 @@ test_that("threshold tuning with feature selection", {
   expect_true(is.numeric(df$threshold) && !any(is.na(df$threshold)))
 })
 
+test_that("show info works in selectFeatures", {
+  rdesc = makeResampleDesc("Holdout")
+  ctrl = makeFeatSelControlRandom(maxit = 1L)
+  expect_message({
+    z = selectFeatures("classif.rpart", task = iris.task, resampling = rdesc, control = ctrl, show.info = TRUE)
+  }, "1: [0-9] bits: mmce.test.mean=0.[0-9]+")
+})
+
 
