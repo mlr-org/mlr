@@ -28,7 +28,7 @@
 #'   Default is \code{NULL}.
 #' @param task.id [\code{character(1)}]\cr
 #'   Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
-#'   Default is first taks.
+#'   Default is first task.
 #' @return [\code{character(1)}]. Invisibly returns the ViperCharts URL.
 #' @family roc
 #' @family predict

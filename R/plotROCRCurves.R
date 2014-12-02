@@ -19,20 +19,17 @@
 #'   Default is \dQuote{threshold}.
 #' @param task.id [\code{character(1)}]\cr
 #'   Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
-#'   Default is first taks.
-#' @return [\code{character(1)}]. Invisibly returns the ViperCharts URL.
+#'   Default is first task.
+#' @template ret_inv_null
 #' @family roc
 #' @family predict
 #' @export
-#' @references
-#' Sluban and Lavrač - ViperCharts: Visual Performance Evaluation Platform,
-#' ECML PKDD 2013, pp. 650-653, LNCS 8190, Springer, 2013.
 #' @examples
 #' \dontrun{
 #' lrn1 = makeLearner("classif.logreg", predict.type = "prob")
 #' lrn2 = makeLearner("classif.rpart", predict.type = "prob")
 #' b = benchmark(list(lrn1, lrn2), pid.task)
-#' z = plotROCRCurves(b, chart = "lift", browse = TRUE)
+#' z = plotROCRCurves(b)
 #' }
 plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold", legpos = "bottomright", task.id = NULL) {
   # lets not check the value-names from ROCR here. they might be changed behind our back later...
