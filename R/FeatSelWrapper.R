@@ -46,7 +46,7 @@ makeFeatSelWrapper = function(learner, resampling, measures, bit.names, bits.to.
   assertFlag(show.info)
   id = paste(learner$id, "featsel", sep = ".")
   x = makeOptWrapper(id, learner, resampling, measures, makeParamSet(), bit.names,
-    bits.to.features, control, show.info, "FeatSelWrapper")
+    bits.to.features, control, show.info, "FeatSelWrapper", "FeatSelModel")
   # checkVarselParset(learner, par.set, bit.names, control)
   return(x)
 }
