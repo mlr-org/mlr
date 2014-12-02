@@ -4,7 +4,7 @@ Many machine learning algorithms have hyperparameters that need to be set.
 If selected by the user they can be specified as explained in the section about
 [Learners](learner.md) -- simply pass them to [&makeLearner].
 Often suitable parameter values are not obvious and it is preferable to tune the hyperparameters,
-that is automatically select hyperparameter values that lead to the best performance.
+that is automatically identify hyperparameter values that lead to the best performance.
 
 
 ## Basics
@@ -56,6 +56,7 @@ Please note that whenever parameters in the underlying **R** functions should be
 passed in a list structure, [%mlr] tries to give you direct access to
 each parameter and get rid of the list structure. This is the case for example
 with [ksvm](&kernlab::ksvm).
+[&learnerArgsToControl] argument `kpar` list of kernel parameters
 
 ---
 
