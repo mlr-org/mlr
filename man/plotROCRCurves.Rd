@@ -27,10 +27,10 @@ Default is \dQuote{threshold}.}
 
 \item{task.id}{[\code{character(1)}]\cr
 Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
-Default is first taks.}
+Default is first task.}
 }
 \value{
-[\code{character(1)}]. Invisibly returns the ViperCharts URL.
+[\code{invisible(NULL)}].
 }
 \description{
 Please see \code{\link[ROCR]{ROCR}} for further info regarding plots.
@@ -40,12 +40,8 @@ Please see \code{\link[ROCR]{ROCR}} for further info regarding plots.
 lrn1 = makeLearner("classif.logreg", predict.type = "prob")
 lrn2 = makeLearner("classif.rpart", predict.type = "prob")
 b = benchmark(list(lrn1, lrn2), pid.task)
-z = plotROCRCurves(b, chart = "lift", browse = TRUE)
+z = plotROCRCurves(b)
 }
-}
-\references{
-Sluban and Lavrač - ViperCharts: Visual Performance Evaluation Platform,
-ECML PKDD 2013, pp. 650-653, LNCS 8190, Springer, 2013.
 }
 \seealso{
 Other predict: \code{\link{asROCRPrediction}};

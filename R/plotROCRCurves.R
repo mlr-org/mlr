@@ -31,7 +31,9 @@
 #' b = benchmark(list(lrn1, lrn2), pid.task)
 #' z = plotROCRCurves(b)
 #' }
-plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold", legpos = "bottomright", task.id = NULL) {
+plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
+  legpos = "bottomright", task.id = NULL) {
+
   # lets not check the value-names from ROCR here. they might be changed behind our back later...
   assertString(legpos)
   assertString(meas1)
@@ -41,14 +43,18 @@ plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold", 
 }
 
 #' @export
-plotROCRCurves.Prediction = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold", legpos = "bottomright", task.id = NULL) {
+plotROCRCurves.Prediction = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
+  legpos = "bottomright", task.id = NULL) {
+
   l = list(obj)
   names(l) = getTaskId(obj)
   plotROCRCurves.list(l, meas1, meas2, avg, legpos)
 }
 
 #' @export
-plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold", legpos = "bottomright", task.id = NULL) {
+plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
+  legpos = "bottomright", task.id = NULL) {
+
   assertList(obj, "Prediction", min.len = 1L)
   k = length(obj)
   rocr.perfs = lapply(obj, function(x) {
@@ -65,7 +71,9 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "thresho
 }
 
 #' @export
-plotROCRCurves.BenchmarkResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold", legpos = "bottomright", task.id = NULL) {
+plotROCRCurves.BenchmarkResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
+  legpos = "bottomright", task.id = NULL) {
+
   tids = getBMRTaskIds(obj)
   if (is.null(task.id))
     task.id = tids[1L]
