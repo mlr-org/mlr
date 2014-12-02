@@ -119,12 +119,5 @@ getFailureModelMsg.WrappedModel = function(model) {
 }
 
 
-#' @export
-getFailureModelMsg.CostSensWeightedPairsModel = function(model) {
-  mods = getCostSensWeightedPairsModels(model, learner.models = FALSE)
-  msgs = vcapply(mods, getFailureModelMsg)
-  j = which.first(!is.na(msgs))
-  ifelse(j == 0L, NA_character_ , msgs[j])
-}
 
 
