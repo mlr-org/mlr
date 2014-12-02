@@ -58,7 +58,8 @@ makeSMOTEWrapper = function(learner, sw.rate = 1, sw.nn = 5L,
     makeLogicalLearnerParam(id = "sw.standardize"),
     makeLogicalLearnerParam(id = "sw.alt.logic")
   )
-  makeBaseWrapper(id, learner, package = learner$package, par.set = ps, par.vals = pv, cl = "SMOTEWrapper")
+  makeBaseWrapper(id, learner, package = learner$package, par.set = ps, par.vals = pv,
+    learner.subclass = "SMOTEWrapper", model.subclass = "SMOTEModel")
 }
 
 #' @export

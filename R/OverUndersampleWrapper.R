@@ -34,7 +34,8 @@ makeUndersampleWrapper = function(learner, usw.rate = 1) {
   ps = makeParamSet(
     makeNumericLearnerParam(id = "usw.rate")
   )
-  makeBaseWrapper(id, learner, package = "mlr", par.set = ps, par.vals = pv, cl = "UndersampleWrapper")
+  makeBaseWrapper(id, learner, package = "mlr", par.set = ps, par.vals = pv,
+    learner.subclass = "UndersampleWrapper", model.subclass = "UndersampleModel")
 }
 
 #' @rdname makeUndersampleWrapper
@@ -50,7 +51,8 @@ makeOversampleWrapper = function(learner, osw.rate = 1) {
   ps = makeParamSet (
     makeNumericLearnerParam(id = "osw.rate")
   )
-  makeBaseWrapper(id, learner, package = "mlr", par.set = ps, par.vals = pv, cl = "OversampleWrapper")
+  makeBaseWrapper(id, learner, package = "mlr", par.set = ps, par.vals = pv,
+    learner.subclass = "OversampleWrapper", model.subclass = "OversampleModel")
 }
 
 #' @export

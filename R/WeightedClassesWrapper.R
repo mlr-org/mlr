@@ -82,7 +82,7 @@ makeWeightedClassesWrapper = function(learner, wcw.param = NULL, wcw.weight = 1)
     makeNumericVectorLearnerParam(id = "wcw.weight", len = NA_integer_, lower = 0)
   )
   x = makeBaseWrapper(id, learner, package = learner$package, par.set = ps, par.vals = pv,
-    cl = "WeightedClassesWrapper")
+    learner.subclass = "WeightedClassesWrapper", model.subclass = "WeightedClassesModel")
   x$wcw.param = wcw.param
   removeProperties(x, "weights")
 }

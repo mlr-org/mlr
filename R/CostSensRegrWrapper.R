@@ -49,7 +49,7 @@ predictLearner.CostSensRegrWrapper = function(.learner, .model, .newdata, ...) {
   # get class per row with minimal estimated costs
   p = apply(p, 1L, getMinIndex)
   classes = .model$task.desc$class.levels
-  factor(classes[preds], levels = classes)
+  factor(classes[p], levels = classes)
 }
 
 
