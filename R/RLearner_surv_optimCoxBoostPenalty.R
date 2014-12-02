@@ -10,7 +10,8 @@ makeRLearner.surv.optimCoxBoostPenalty = function() {
       makeLogicalLearnerParam(id = "standardize", default = TRUE),
       makeDiscreteLearnerParam(id = "criterion", default = "pscore", values = c("pscore", "score", "hpscore", "hscore")),
       makeNumericLearnerParam(id = "stepsize.factor", default = 1, lower = 0),
-      makeDiscreteLearnerParam(id = "sf.scheme", default = "sigmoid", values = c("sigmoid", "linear"))
+      makeDiscreteLearnerParam(id = "sf.scheme", default = "sigmoid", values = c("sigmoid", "linear")),
+      makeIntegerLearnerParam(id = "iter.max", default = 10, lower = 1)
       # FIXME: still missing some arguments
     ),
     properties = c("numerics", "factors", "weights", "rcens"),
