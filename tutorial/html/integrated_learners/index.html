@@ -379,7 +379,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center"></td>
 <td align="center">X</td>
 <td align="right">prob<br />twoclass</td>
-<td align="left"><code>family</code> has been set to <code>Binomial()</code> by default.</td>
+<td align="left"><code>family</code> has been set to <code>Binomial()</code> by default. Maximum number of boosting iterations is set via 'mstop', the actual number used for prediction is controlled by 'm'.</td>
 </tr>
 <tr>
 <td align="left"><strong>classif.glmnet</strong> <br />glmnet</td>
@@ -1124,13 +1124,13 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <tr>
 <td align="left"><strong>surv.glmboost</strong> <br />glmboost</td>
 <td align="left">Gradient Boosting with Componentwise Linear Models</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mboost/">mboost</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/survival/">survival</a><br /><a href="http://www.rdocumentation.org/packages/mboost/">mboost</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
 <td align="right">ordered<br />rcens</td>
-<td align="left"></td>
+<td align="left"><code>family</code> has been set to <code>CoxPH()</code> by default. Maximum number of boosting iterations is set via 'mstop', the actual number used for prediction is controlled by 'm'.</td>
 </tr>
 <tr>
 <td align="left"><strong>surv.glmnet</strong> <br />glmnet</td>
@@ -1141,6 +1141,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center"></td>
 <td align="center">X</td>
 <td align="right">ordered<br />rcens</td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
+</tr>
+<tr>
+<td align="left"><strong>surv.optimCoxBoostPenalty</strong> <br />optimCoxBoostPenalty</td>
+<td align="left">Cox Proportional Hazards Model with Componentwise Likelihood based Boosting, automatic tuning enabled</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/CoxBoost/">CoxBoost</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">rcens</td>
 <td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
 </tr>
 <tr>
@@ -1157,7 +1168,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <tr>
 <td align="left"><strong>surv.randomForestSRC</strong> <br />rfsrc</td>
 <td align="left">Random Forests for Survival</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/randomForestSRC/">randomForestSRC</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/survival/">survival</a><br /><a href="http://www.rdocumentation.org/packages/randomForestSRC/">randomForestSRC</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
 <td align="center">X</td>

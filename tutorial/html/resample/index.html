@@ -291,56 +291,12 @@ r = resample(&quot;surv.coxph&quot;, lung.task, rdesc)
 <pre class="prettyprint well"><code class="r">r
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; $measures.train
-#&gt;   iter cindex
-#&gt; 1    1     NA
-#&gt; 2    2     NA
-#&gt; 3    3     NA
-#&gt; 
-#&gt; $measures.test
-#&gt;   iter cindex
-#&gt; 1    1 0.5783
-#&gt; 2    2 0.6324
-#&gt; 3    3 0.6706
-#&gt; 
-#&gt; $aggr
-#&gt; cindex.test.mean 
-#&gt;           0.6271 
-#&gt; 
-#&gt; $pred
-#&gt; Resampled Prediction for:
-#&gt; Resample description: cross-validation with 3 iterations.
-#&gt; Predict: test
-#&gt; Stratification: FALSE
-#&gt; predict.type: response
-#&gt; threshold: 
-#&gt; time (mean): 0.00
-#&gt;    id truth.time truth.event response iter  set
-#&gt; 2   1        455        TRUE  -0.4952    1 test
-#&gt; 4   2        210        TRUE   0.9574    1 test
-#&gt; 7   4        310        TRUE   0.8069    1 test
-#&gt; 17 10        613        TRUE   0.1918    1 test
-#&gt; 19 12         61        TRUE   0.6639    1 test
-#&gt; 22 14         81        TRUE  -0.1874    1 test
-#&gt; 
-#&gt; $models
-#&gt; NULL
-#&gt; 
-#&gt; $err.msgs
-#&gt;   iter train predict
-#&gt; 1    1  &lt;NA&gt;    &lt;NA&gt;
-#&gt; 2    2  &lt;NA&gt;    &lt;NA&gt;
-#&gt; 3    3  &lt;NA&gt;    &lt;NA&gt;
-#&gt; 
-#&gt; $extract
-#&gt; $extract[[1]]
-#&gt; NULL
-#&gt; 
-#&gt; $extract[[2]]
-#&gt; NULL
-#&gt; 
-#&gt; $extract[[3]]
-#&gt; NULL
+<pre class="prettyprint well"><code>#&gt; Resample Result
+#&gt; Task: lung-example
+#&gt; Learner: surv.coxph
+#&gt; cindex.aggr: 0.63
+#&gt; cindex.mean: 0.63
+#&gt; cindex.sd: 0.05
 </code></pre>
 
 <p><code>r$measures.test</code> gives the value of the performance measure on the 3 individual test
@@ -422,14 +378,14 @@ r = resample(&quot;cluster.XMeans&quot;, mtcars.task, rdesc, measures = list(dun
 #&gt; Warning: no non-missing arguments to max; returning -Inf
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.16
+<pre class="prettyprint well"><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.118
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">r$aggr
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;      dunn.test.mean        db.test.mean timetrain.test.mean 
-#&gt;              0.9576              0.4254              0.1596
+#&gt;              0.9576              0.4254              0.1184
 </code></pre>
 
 <h2 id="stratified-resampling">Stratified resampling</h2>

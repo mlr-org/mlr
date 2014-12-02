@@ -373,31 +373,28 @@ print(tuned.lrn)
 #&gt; bw.feats numeric   -   - 0.25 to 1   -     -
 #&gt; With control class: TuneControlRandom
 #&gt; Imputation value: 1
-#&gt; [Tune] 1: minsplit=5; bw.feats=0.935 : =  NA
-#&gt; [Tune] 2: minsplit=9; bw.feats=0.675 : =  NA
-#&gt; [Tune] 3: minsplit=2; bw.feats=0.847 : =  NA
-#&gt; [Tune] 4: minsplit=4; bw.feats=0.761 : =  NA
-#&gt; [Tune] 5: minsplit=6; bw.feats=0.338 : =  NA
-#&gt; [Tune] 6: minsplit=1; bw.feats=0.637 : =  NA
-#&gt; [Tune] 7: minsplit=1; bw.feats=0.998 : =  NA
-#&gt; [Tune] 8: minsplit=4; bw.feats=0.698 : =  NA
-#&gt; [Tune] 9: minsplit=3; bw.feats=0.836 : =  NA
-#&gt; [Tune] 10: minsplit=10; bw.feats=0.529 : =  NA
+#&gt; [Tune] 1: minsplit=5; bw.feats=0.935 : mmce.test.mean=0.0467
+#&gt; [Tune] 2: minsplit=9; bw.feats=0.675 : mmce.test.mean=0.0467
+#&gt; [Tune] 3: minsplit=2; bw.feats=0.847 : mmce.test.mean=0.0467
+#&gt; [Tune] 4: minsplit=4; bw.feats=0.761 : mmce.test.mean=0.0467
+#&gt; [Tune] 5: minsplit=6; bw.feats=0.338 : mmce.test.mean=0.0867
+#&gt; [Tune] 6: minsplit=1; bw.feats=0.637 : mmce.test.mean=0.0467
+#&gt; [Tune] 7: minsplit=1; bw.feats=0.998 : mmce.test.mean=0.0467
+#&gt; [Tune] 8: minsplit=4; bw.feats=0.698 : mmce.test.mean=0.0467
+#&gt; [Tune] 9: minsplit=3; bw.feats=0.836 : mmce.test.mean=0.0467
+#&gt; [Tune] 10: minsplit=10; bw.feats=0.529 : mmce.test.mean=0.0533
 #&gt; [Tune] Result: minsplit=1; bw.feats=0.998 : mmce.test.mean=0.0467
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">print(lrn)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Model for id = classif.rpart.bagged.tuned class = TuneWrapper
-#&gt; Trained on obs: 150
-#&gt; Used features: 4
+<pre class="prettyprint well"><code>#&gt; Learner model for id=classif.rpart.bagged.tuned chain=TuneWrapper
+#&gt; [chain] Trained on obs: 150
+#&gt; [chain] Used features: 4
+#&gt; [model] Trained on obs: 0
+#&gt; [model] Used features: 0
 #&gt; Hyperparameters: xval=0,bw.iters=100,bw.feats=0.5
-#&gt; 
-#&gt; Optimization result:
-#&gt; Tune result:
-#&gt; Op. pars: minsplit=1; bw.feats=0.998
-#&gt; mmce.test.mean=0.0467
 </code></pre>
 
 </div>
