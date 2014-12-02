@@ -54,3 +54,10 @@ makeWrappedModel.BaseWrapper = function(learner, learner.model, task.desc, subse
 isFailureModel.BaseWrapperModel = function(model) {
   return(isFailureModel(model$learner.model$next.model))
 }
+
+#' @export
+getFailureModelMsg.BaseWrapperModel = function(model) {
+  return(getFailureModelMsg(model$learner.model$next.model))
+}
+
+

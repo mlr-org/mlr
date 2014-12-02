@@ -15,6 +15,14 @@ isFailureModel.HomogeneousEnsembleModel = function(model) {
   any(vlapply(mods, isFailureModel))
 }
 
+#' @export
+getFailureModelMsg.HomogeneousEnsembleModel = function(model) {
+  mods = getHomogeneousEnsembleModels(model, learner.models = FALSE)
+  msgs = vcapply(mods, getFailureModelMsg)
+  j = which.first(!is.na(msgs))
+  ifelse(j == 0L, NA_character_ , msgs[j])
+}
+
 #' Returns the list of fitted models.
 #'
 #' @param model [\code{\link[mlr]{WrappedModel}}]\cr

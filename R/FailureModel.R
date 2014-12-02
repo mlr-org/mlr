@@ -68,4 +68,8 @@ isFailureModel.FailureModel = function(model) {
   return(TRUE)
 }
 
+#' @export
+getFailureModelMsg.FailureModel = function(model) {
+  return(as.character(model$learner.model))
+}
 
