@@ -11,11 +11,9 @@ makeRLearner.surv.optimCoxBoostPenalty = function() {
       makeDiscreteLearnerParam(id = "criterion", default = "pscore", values = c("pscore", "score", "hpscore", "hscore")),
       makeNumericLearnerParam(id = "stepsize.factor", default = 1, lower = 0),
       makeDiscreteLearnerParam(id = "sf.scheme", default = "sigmoid", values = c("sigmoid", "linear")),
-      makeIntegerLearnerParam(id = "iter.max", default = 10, lower = 1),
-      makeLogicalLearnerParam(id = "return.score", default = TRUE)
+      makeIntegerLearnerParam(id = "iter.max", default = 10, lower = 1)
       # FIXME: still missing some arguments
     ),
-    par.vals = list(return.score = FALSE),
     properties = c("numerics", "factors", "weights", "rcens"),
     name = "Cox Proportional Hazards Model with Componentwise Likelihood based Boosting, automatic tuning enabled",
     short.name = "optimCoxBoostPenalty",
