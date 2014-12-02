@@ -1,26 +1,27 @@
 mlr_2.3:
 - resample now returns an object of class ResampleResult (downward compatible)
   to allow for a print method.
-- resampling on features now supported for an arbitrary number of factor
-  features
+- resampling on features now supported for an arbitrary number of factor features
 - mlr supports ViperCharts plots now
+- ROC plot via ROCR can now be created automatically, before you had to call asROCRPrediction,
+  then construct the plots via ROCR your self. See plotROCRCurves
 - all mlr measures now have slots "name" and "note"
 - exported a few very simple "getters" for tasks, see below
 - in the control objects for tuning and feature selection, the user can now enable threshold tuning
 - in the control objects for tuning and feature selection, the user can now define his own logging function
 - some minor bug fixes
 - updated some properties of some learners
-- regr.xgboost
-- surv.xgboost
 
 - new functions
--- plotViperCharts
 -- getTaskType, getTaskId, getTaskTargetNames
+-- plotROCRCurves
+-- plotViperCharts
 
 - new learners:
+-- classif.xgboost
 -- regr.elmNN
+-- regr.xgboost
 -- surv.rpart
-
 
 mlr_2.2:
 - The web tutorial was MUCH improved!
