@@ -29,7 +29,7 @@ trainLearner.classif.LiblineaRLogReg = function(.learner, .task, .subset, .weigh
 #' @export
 predictLearner.classif.LiblineaRLogReg = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response")
-    p = as.factor(predict(.model$learner.model, newx = .newdata, ...)$predictions)
+    as.factor(predict(.model$learner.model, newx = .newdata, ...)$predictions)
   else
-    p = predict(.model$learner.model, newx = .newdata, proba = TRUE, ...)$probabilities
+    predict(.model$learner.model, newx = .newdata, proba = TRUE, ...)$probabilities
 }

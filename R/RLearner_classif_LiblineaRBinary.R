@@ -28,5 +28,5 @@ trainLearner.classif.LiblineaRBinary = function(.learner, .task, .subset, .weigh
 
 #' @export
 predictLearner.classif.LiblineaRBinary = function(.learner, .model, .newdata, ...) {
-  p = as.factor(predict(.model$learner.model, newx = .newdata, ...)$predictions)
+  as.factor(predict(.model$learner.model, newx = .newdata, ...)$predictions)
 }
