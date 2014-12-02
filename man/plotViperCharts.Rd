@@ -59,9 +59,11 @@ ECML PKDD 2013, pp. 650-653, LNCS 8190, Springer, 2013.
 \seealso{
 Other predict: \code{\link{asROCRPrediction}};
   \code{\link{getProbabilities}};
+  \code{\link{plotROCRCurves}};
   \code{\link{predict.WrappedModel}};
   \code{\link{setPredictType}}
 
-Other roc: \code{\link{asROCRPrediction}}
+Other roc: \code{\link{asROCRPrediction}};
+  \code{\link{plotROCRCurves}}
 }
 

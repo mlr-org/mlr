@@ -14,10 +14,12 @@ Converts predictions to a format package ROCR can handle.
 }
 \seealso{
 Other predict: \code{\link{getProbabilities}};
+  \code{\link{plotROCRCurves}};
   \code{\link{plotViperCharts}};
   \code{\link{predict.WrappedModel}};
   \code{\link{setPredictType}}
 
-Other roc: \code{\link{plotViperCharts}}
+Other roc: \code{\link{plotROCRCurves}};
+  \code{\link{plotViperCharts}}
 }
 

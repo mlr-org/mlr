@@ -41,6 +41,7 @@ Other learner: \code{\link{LearnerProperties}},
 
 Other predict: \code{\link{asROCRPrediction}};
   \code{\link{getProbabilities}};
+  \code{\link{plotROCRCurves}};
   \code{\link{plotViperCharts}};
   \code{\link{predict.WrappedModel}}
 }
