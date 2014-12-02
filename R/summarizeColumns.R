@@ -36,25 +36,26 @@ summarizeColumns.Task = function(obj) {
 
 #' @export
 summarizeColumns.data.frame = function(obj) {
-  iqv = function(x) {
+  iqv = function(x, ...) {
     1 - mean(x == computeMode(x))
   }
-  #
-  ifn = function(obj, x, y) {
+
+  # to be read as: is obj is numeric, return x, else call y(x)
+  ifn = function(obj, x, y, ...) {
     if (is.numeric(obj)) y = x
-    if (is.function(y)) y(obj) else y
+    if (is.function(y)) y(obj, ...) else y
   }
 
   res = namedList(c("name", "type", "na", "mean", "disp", "median", "mad", "min", "max", "nlevs"))
   res$name = colnames(obj)
   res$type = vcapply(obj, function(x) class(x)[1L], use.names = FALSE)
   res$na = viapply(obj, function(x) sum(is.na(x)), use.names = FALSE)
-  res$mean = vnapply(obj, ifn, mean, NA, use.names = FALSE)
-  res$disp = vnapply(obj, ifn, sd, iqv, use.names = FALSE)
-  res$median = vnapply(obj, ifn, median, NA, use.names = FALSE)
-  res$mad = vnapply(obj, ifn, mad, NA, use.names = FALSE)
-  res$min = vnapply(obj, ifn, min, function(x) min(table(x), na.rm = TRUE), use.names = FALSE)
-  res$max = vnapply(obj, ifn, max, function(x) max(table(x), na.rm = TRUE), use.names = FALSE)
+  res$mean = vnapply(obj, ifn, mean, NA, use.names = FALSE, na.rm = TRUE)
+  res$disp = vnapply(obj, ifn, sd, iqv, use.names = FALSE, na.rm = TRUE)
+  res$median = vnapply(obj, ifn, median, NA, use.names = FALSE, na.rm = TRUE)
+  res$mad = vnapply(obj, ifn, mad, NA, use.names = FALSE, na.rm = TRUE)
+  res$min = vnapply(obj, ifn, min, function(x, ...) min(table(x), ...), use.names = FALSE, na.rm = TRUE)
+  res$max = vnapply(obj, ifn, max, function(x, ...) max(table(x), ...), use.names = FALSE, na.rm = TRUE)
   res$nlevs = viapply(obj, ifn, 0L, function(x) length(levels(factor(x))), use.names = FALSE)
 
   as.data.frame(res, stringsAsFactors = FALSE)

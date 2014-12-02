@@ -15,6 +15,10 @@ test_that("summarizeColumns", {
   d[1L, 1L] = NA_real_
   s = summarizeColumns(d)
   expect_equal(s$na, c(1, 0, 0, 0, 0))
+  expect_false(is.na(s[1L, "mean"]))
+  expect_false(is.na(s[1L, "disp"]))
+  expect_false(is.na(s[1L, "mad"]))
+  expect_false(is.na(s[1L, "median"]))
   expect_equal(s[5L, "min"], 50L)
   expect_equal(s[5L, "max"], 50L)
   d = iris
