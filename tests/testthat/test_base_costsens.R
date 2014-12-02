@@ -24,7 +24,7 @@ test_that("costsens", {
   # check that hyperpars are propagated
   lrn2 = setHyperPars(lrn, minsplit = 50)
   m = train(lrn2, costsens.task)
-  m2 = getCostSensClassifModel(m, learner.model = TRUE)
+  m2 = m$learner.model$next.model$learner.model
   expect_equal(m2$control$minsplit, 50)
 
   lrn = makeCostSensWeightedPairsWrapper(makeLearner("classif.rpart"))

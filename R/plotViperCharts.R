@@ -9,11 +9,7 @@
 #' a single line even though they were made by different models. There is currently
 #' no facility to separate the predictions for different resampling iterations.
 #'
-#' @param obj [(list of) \code{\link{Prediction}} | \code{\link{BenchmarkResult}}]\cr
-#'   Single prediction object, list of them, or a benchmark result.
-#'   In case of a list probably produced by different learners you want to compare, then
-#'   name the list with the names you want to see in the plots, probably
-#'   learner shortnames or ids.
+#' @template arg_plotroc_obj
 #' @param chart [\code{character(1)}]\cr
 #'   First chart to display in focus in browser.
 #'   All other charts can be displayed by clicking on the browser page menu.
@@ -49,19 +45,29 @@ plotViperCharts = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL, 
 
 #' @export
 plotViperCharts.Prediction = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL, task.id = NULL) {
-  l = list(obj)
-  names(l) = getTaskId(obj)
+  l = namedList(names = getTaskId(obj), init = obj)
+  plotViperCharts.list(l, chart, browse, auth.key)
+}
+
+#' @export
+plotViperCharts.ResampleResult = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL, task.id = NULL) {
+  l = namedList(names = getTaskId(obj), init = obj)
   plotViperCharts.list(l, chart, browse, auth.key)
 }
 
 #' @export
 plotViperCharts.list = function(obj, chart = "rocc", browse = TRUE, auth.key = NULL, task.id = NULL) {
 
+  assertList(obj, c("Prediction", "ResampleResult"), min.len = 1L)
   assertChoice(chart, c("prs", "rocs", "prc", "lift", "rocc", "roch", "ROC", "cost",
     "ratedriven", "kendall", "column"))
-
   requirePackages(c("rjson", "RCurl"), why = "plotViperChart")
+
   inp = mapply(function(p, s) {
+    if (inherits(p, "ResampleResult")) {
+      s = p$learner.id
+      p = p$pred
+    }
     checkPrediction(p, "classif", "prob")
     a = p$data$truth
     a = as.numeric(a == p$task.desc$positive)
