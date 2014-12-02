@@ -5,7 +5,7 @@
 #' (i.e., similar to what a \code{randomForest} does).
 #' Creates a learner object, which can be
 #' used like any other learner object.
-#' Models can easily be accessed via \code{\link{getHomogeneousEnsembleModels}.
+#' Models can easily be accessed via \code{\link{getHomogeneousEnsembleModels}}.
 #'
 #' Bagging is implemented as follows:
 #' For each iteration a random data subset is sampled (with or without replacement)
