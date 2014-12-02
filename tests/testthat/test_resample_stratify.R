@@ -67,3 +67,14 @@ test_that("stratification with survival works", {
   expect_true(setequal(df$event[rin$train.inds[[1]]], 0:1))
   expect_true(setequal(df$event[rin$test.inds[[1]]], 0:1))
 })
+
+test_that("stratification on features work", {
+  df = data.frame(x = rep(c("a", "b"), each = 4), y = rep(c("a", "b"), times = 4), z = 1:8)
+  task = makeRegrTask(data = df, target = "z")
+  rdesc = makeResampleDesc("Holdout", split = 0.5, stratify.cols = c("x", "y"))
+  rin = makeResampleInstance(rdesc, task=task)
+  train = df[rin$train.inds[[1]], ]
+  test = df[rin$test.inds[[1]], ]
+  expect_true(setequal(apply(train[c("x", "y")], 1, collapse, sep = ""), c("aa", "ab", "ba", "bb")))
+  expect_true(setequal(apply(test[c("x", "y")], 1, collapse, sep = ""), c("aa", "ab", "ba", "bb")))
+})

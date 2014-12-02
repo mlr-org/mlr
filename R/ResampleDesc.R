@@ -49,10 +49,17 @@
 #'     Here \code{iters = folds * reps}. Default is 10.}
 #'   }
 #' @param stratify [\code{logical(1)}]\cr
-#'   Should stratification be done for the classes in classification tasks?
-#'   This means that the resampling strategy is applied to all classes individually and the resulting
-#'   index sets are joined to make sure that the proportion of observations in each training set
-#'   is as in the original data set. Useful for imbalanced class sizes.
+#'   Should stratification be done for the target variable?
+#'   For classification tasks, this means that the resampling strategy is applied to all classes
+#'   individually and the resulting index sets are joined to make sure that the proportion of
+#'   observations in each training set is as in the original data set. Useful for imbalanced class sizes.
+#'   For survival tasks stratification is done on the events, resulting training sets with comparable
+#'   censoring rates.
+#' @param stratify.cols [\code{character}]\cr
+#'   Stratify on specific columns referenced by name. All columns have to be factors.
+#'   Note that you have to ensure yourself that stratification is possible, i.e.
+#'   that each strata contains enough observations.
+#'   This argument and \code{stratify} are mutually exclusive.
 #' @return [\code{\link{ResampleDesc}}].
 #' @family resample
 #' @export
@@ -68,15 +75,18 @@
 #'
 #' # Holdout a.k.a. test sample estimation
 #' makeResampleDesc("Holdout")
-makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE) {
+makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, stratify.cols = NULL) {
   assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap"))
   assertChoice(predict, choices = c("train", "test", "both"))
   assertFlag(stratify)
   if (stratify && method == "LOO")
     stop("Stratification cannot be done for LOO!")
+  if (stratify && ! is.null(stratify.cols))
+    stop("Arguments 'stratify' and 'stratify.cols' are mutually exclusive!")
   d = do.call(paste0("makeResampleDesc", method), list(...))
   d$predict = predict
   d$stratify = stratify
+  d$stratify.cols = stratify.cols
   addClasses(d, paste0(method, "Desc"))
 }
 

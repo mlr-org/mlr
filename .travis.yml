@@ -30,6 +30,7 @@ notifications:
         - michellang@gmail.com
         - travis.mlr@jakob-r.de
         - lars.kotthoff@insight-centre.org
+        - schiffner@math.uni-duesseldorf.de
     on_success: change
     on_failure: always
 after_failure:

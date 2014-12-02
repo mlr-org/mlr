@@ -12,8 +12,10 @@ makeRLearner.surv.CoxBoost = function() {
       makeLogicalLearnerParam(id = "standardize", default = TRUE),
       makeDiscreteLearnerParam(id = "criterion", default = "pscore", values = c("pscore", "score", "hpscore", "hscore")),
       makeNumericLearnerParam(id = "stepsize.factor", default = 1, lower = 0),
-      makeDiscreteLearnerParam(id = "sf.scheme", default = "sigmoid", values = c("sigmoid", "linear"))
+      makeDiscreteLearnerParam(id = "sf.scheme", default = "sigmoid", values = c("sigmoid", "linear")),
+      makeLogicalLearnerParam(id = "return.score", default = TRUE)
     ),
+    par.vals = list(return.score = FALSE),
     properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     name = "Cox Proportional Hazards Model with Componentwise Likelihood based Boosting",
     short.name = "coxboost",
