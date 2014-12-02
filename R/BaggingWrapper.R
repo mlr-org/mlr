@@ -116,7 +116,7 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL
 
 #' @export
 predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
-  models = getBaggingModels(.model)
+  models = getHomogeneousEnsembleModels(.model, learner.model = FALSE)
   g = if (.learner$type == "classif") as.character else identity
   p = asMatrixCols(lapply(models, function(m) {
     nd = .newdata[, m$features, drop = FALSE]
