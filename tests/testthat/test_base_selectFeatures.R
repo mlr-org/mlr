@@ -48,11 +48,14 @@ test_that("threshold tuning with feature selection", {
 })
 
 test_that("show info works in selectFeatures", {
-  rdesc = makeResampleDesc("Holdout")
+  rdesc = makeResampleDesc("Holdout", split = 0.05, stratify = TRUE)
   ctrl = makeFeatSelControlRandom(maxit = 1L)
   expect_message({
     z = selectFeatures("classif.rpart", task = iris.task, resampling = rdesc, control = ctrl, show.info = TRUE)
-  }, "1: [0-9] bits: mmce.test.mean=0.[0-9]+")
+  }, "1: [01].*([0-9]+ bits)")
+  expect_message({
+    z = selectFeatures("classif.rpart", task = iris.task, resampling = rdesc, control = ctrl, show.info = TRUE)
+   }, "mmce.test.mean=0.[0-9]+")
 })
 
 
