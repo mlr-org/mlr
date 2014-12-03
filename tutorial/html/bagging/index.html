@@ -304,8 +304,9 @@ bag.lrn = setPredictType(bag.lrn, predict.type = &quot;se&quot;)
 mod = train(learner = bag.lrn, task = bh.task, subset = train.inds)
 </code></pre>
 
-<p>With the function <a href="http://www.rdocumentation.org/packages/mlr/functions/getBaggingModels.html">getBaggingModels</a>, you can access the models fitted in the individual iterations.</p>
-<pre class="prettyprint well"><code class="r">head(getBaggingModels(mod), 2)
+<p>With the function <a href="http://www.rdocumentation.org/packages/mlr/functions/getHomogeneousEnsembleModels.html">getHomogeneousEnsembleModels</a>, you can access the models fitted in the
+individual iterations.</p>
+<pre class="prettyprint well"><code class="r">head(getHomogeneousEnsembleModels(mod), 2)
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; [[1]]

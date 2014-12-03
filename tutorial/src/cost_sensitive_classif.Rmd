@@ -455,12 +455,10 @@ mod
 ```
 
 The models corresponding to the individual pairs can be accessed by function
-[&getCostSensWeightedPairsModels].
-Similar accessor functions ([&getCostSensClassifModel] and [&getCostSensRegrModels]) exist
-for the other two approaches.
+[&getHomogeneousEnsembleModels].
 
 ```{r}
-getCostSensWeightedPairsModels(mod)
+getHomogeneousEnsembleModels(mod)
 ```
 
 [%mlr] provides some performance measures for example-specific cost-sensitive classification.
