@@ -130,8 +130,3 @@ print.FeatSelControl = function(x, ...) {
     catf("Further arguments: <not used>")
 }
 
-logFunFeatSel = function(learner, task, resampling, measures, par.set, control, opt.path, dob, x, y, remove.nas, stage = 0L) {
-  if (stage == 2L) {
-    messagef("[FeatSel] %i: %i bits: %s", dob, sum(x), perfsToString(y))
-  }
-}

@@ -84,30 +84,3 @@ print.TuneControl = function(x, ...) {
   catf("Further arguments: %s", convertToShortString(x$extra.args))
 }
 
-logFunTune = function(learner, task, resampling, measures, par.set, control, opt.path, dob, x, y, remove.nas, stage, prev.stage) {
-  if (stage == 1L) {
-    gc(); gc(); gc()
-    start.mem = sum(gc(reset = TRUE)[, 6L])
-    start.time = Sys.time()
-    s = paramValueToString(par.set, x, show.missing.values = !remove.nas)
-    # shorten tuning logging a bit. we remove the sel.learner prefix from params
-    if (inherits(learner, "ModelMultiplexer"))
-      s = gsub(paste0(x$selected.learner, "\\."), "", s)
-    messagef("[Tune] %i: %s", dob, s)
-    return(list(start.mem = start.mem, start.time = start.time))
-  } else if (stage == 2L) {
-    end.mem = sum(gc(reset = TRUE)[, 6L])
-    end.time = Sys.time()
-    diff.mem = end.mem - prev.stage$start.mem
-    diff.time = end.time - prev.stage$start.time
-    messagef("[TuneResult]: %s; time: %.1f min; memory: %.1f Mb (+%.1f)",
-      perfsToString(y), diff.time, end.mem, diff.mem)
-    return(NULL)
-  }
-}
-
-# } else {
-# s = paramValueToString(par.set, x, show.missing.values = !remove.nas)
-# messagef("[Tune] %i: %s : %s", dob, s, perfsToString(y))
-# }
-

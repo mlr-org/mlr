@@ -81,6 +81,7 @@ selectFeatures = function(learner, task, resampling, measures,
   or = sel.func(learner, task, resampling, measures, bit.names,
     bits.to.features, control, opt.path, show.info)
   if (show.info)
-    messagef("[FeatSel] Result: %i bits : %s", length(or$x), perfsToString(or$y))
+    messagef("[FeatSel] Result: %s (%i bits)",
+      clipString(collapse(or$x, ""), 30L), length(or$x), perfsToString(or$y))
   return(or)
 }
