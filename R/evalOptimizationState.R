@@ -34,8 +34,8 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   # if no problems: resample + measure time
   if (set.pars.ok) {
     if (show.info)
-      log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob, state, NA_real_,
-        remove.nas, stage = 1L)
+      prev.stage = log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob,
+        state, NA_real_, remove.nas, stage = 1L)
 
     exec.time = system.time({
       r = resample(learner2, task, resampling, measures = measures, show.info = FALSE)
@@ -62,7 +62,8 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   # if eval was not ok, everything should have been initailized to NAs
 
   if (show.info)
-    log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob, state, y, remove.nas, stage = 2L)
+    log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob, state, y,
+      remove.nas, stage = 2L, prev.stage = prev.stage)
   list(y = y, exec.time = exec.time, errmsg = errmsg, threshold = threshold)
 }
 
