@@ -88,10 +88,13 @@ cross-product and selects the parameter setting with the best mean performance.
 As no performance measure was specified, by default the error rate ([mmce](&measures)) is
 used.
 
-Note that each [measure](&makeMeasure) knows if it is minimized or maximized during tuning.
+Note that each [measure](&makeMeasure) "knows" if it is minimized or maximized during tuning.
 
 ```{r}
+## error rate
 mmce$minimize
+
+## accuracy
 acc$minimize
 ```
 
@@ -100,7 +103,7 @@ In the latter case the first measure is optimized during tuning, the others are 
 If you are interested in optimizing several measures simultaneously have a look at the
 paragraph about multi-criteria tuning below.
 
-In the following example we calculate the accuracy ([acc](&measures)) instead of the error
+In the example below we calculate the accuracy ([acc](&measures)) instead of the error
 rate.
 We use function [&setAggregation], as described in the section on [resampling](resample.md),
 to additionally obtain the standard deviation of the accuracy.
@@ -144,7 +147,7 @@ The colors of the tiles display the achieved accuracy, the tile labels show the 
 
 ### Using the optimal parameter values
 
-After tuning you can generate a [Learner](&makeLearner) with optimal hyperparameter values
+After tuning you can generate a [Learner](&makeLearner) with optimal hyperparameter settings
 as follows:
 
 ```{r}
@@ -334,7 +337,7 @@ g + geom_tile()
 
 ## Multi-criteria evaluation and optimization
 
-During tuning you might want to optimize multiple, maybe conflicting, performance measures
+During tuning you might want to optimize multiple, potentially conflicting, performance measures
 simultaneously.
 
 In the following example we aim to minimize both, the false positive and the false negative rates
