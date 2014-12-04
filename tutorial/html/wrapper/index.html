@@ -309,8 +309,8 @@ We can use this newly constructed learner like all base learners, i.e. we can us
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;   task.id           learner.id mmce.test.mean
-#&gt; 1    iris        classif.rpart        0.06667
-#&gt; 2    iris classif.rpart.bagged        0.06000
+#&gt; 1    iris        classif.rpart     0.06666667
+#&gt; 2    iris classif.rpart.bagged     0.06000000
 </code></pre>
 
 <p>That far we are quite happy with our new learner.
@@ -373,16 +373,26 @@ print(tuned.lrn)
 #&gt; bw.feats numeric   -   - 0.25 to 1   -     -
 #&gt; With control class: TuneControlRandom
 #&gt; Imputation value: 1
-#&gt; [Tune] 1: minsplit=5; bw.feats=0.935 : mmce.test.mean=0.0467
-#&gt; [Tune] 2: minsplit=9; bw.feats=0.675 : mmce.test.mean=0.0467
-#&gt; [Tune] 3: minsplit=2; bw.feats=0.847 : mmce.test.mean=0.0467
-#&gt; [Tune] 4: minsplit=4; bw.feats=0.761 : mmce.test.mean=0.0467
-#&gt; [Tune] 5: minsplit=6; bw.feats=0.338 : mmce.test.mean=0.0867
-#&gt; [Tune] 6: minsplit=1; bw.feats=0.637 : mmce.test.mean=0.0467
-#&gt; [Tune] 7: minsplit=1; bw.feats=0.998 : mmce.test.mean=0.0467
-#&gt; [Tune] 8: minsplit=4; bw.feats=0.698 : mmce.test.mean=0.0467
-#&gt; [Tune] 9: minsplit=3; bw.feats=0.836 : mmce.test.mean=0.0467
-#&gt; [Tune] 10: minsplit=10; bw.feats=0.529 : mmce.test.mean=0.0533
+#&gt; [Tune-x] 1: minsplit=5; bw.feats=0.935
+#&gt; [Tune-y] 1: mmce.test.mean=0.0467; time: 4.5 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-x] 2: minsplit=9; bw.feats=0.675
+#&gt; [Tune-y] 2: mmce.test.mean=0.0467; time: 4.2 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-x] 3: minsplit=2; bw.feats=0.847
+#&gt; [Tune-y] 3: mmce.test.mean=0.0467; time: 4.2 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-x] 4: minsplit=4; bw.feats=0.761
+#&gt; [Tune-y] 4: mmce.test.mean=0.0467; time: 4.2 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-x] 5: minsplit=6; bw.feats=0.338
+#&gt; [Tune-y] 5: mmce.test.mean=0.0867; time: 4.1 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-x] 6: minsplit=1; bw.feats=0.637
+#&gt; [Tune-y] 6: mmce.test.mean=0.0467; time: 4.2 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-x] 7: minsplit=1; bw.feats=0.998
+#&gt; [Tune-y] 7: mmce.test.mean=0.0467; time: 4.3 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-x] 8: minsplit=4; bw.feats=0.698
+#&gt; [Tune-y] 8: mmce.test.mean=0.0467; time: 4.3 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-x] 9: minsplit=3; bw.feats=0.836
+#&gt; [Tune-y] 9: mmce.test.mean=0.0467; time: 4.2 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-x] 10: minsplit=10; bw.feats=0.529
+#&gt; [Tune-y] 10: mmce.test.mean=0.0533; time: 4.1 min; memory: 155.2 Mb (+0.0)
 #&gt; [Tune] Result: minsplit=1; bw.feats=0.998 : mmce.test.mean=0.0467
 </code></pre>
 
