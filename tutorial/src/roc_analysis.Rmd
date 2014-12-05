@@ -11,7 +11,7 @@ classifications costs (that would allow to calculate an optimal threshold value)
 
 The AUC (area under curve) summarizes the performance of the learner over all possible threshold
 values.
-[%mlr] provides the [&auc] performance measure for binary classification and also a
+[%mlr] provides the [auc](measures.md) performance measure for binary classification and also a
 generalization of the AUC for the multi-class case ([multiclass.auc](&pROC::muticlass.auc))
 from package [pROC](http://cran.r-project.org/web/packages/pROC/index.html).
 

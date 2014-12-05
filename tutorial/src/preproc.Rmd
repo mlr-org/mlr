@@ -140,7 +140,7 @@ lrn = makePreprocWrapper(lrn, train = tr.fun, predict = pr.fun,
 lrn
 ```
 
-Let's compare the cross-validated mean squared error ([mse](&measures)) on the
+Let's compare the cross-validated mean squared error ([mse](measures.md)) on the
 [Boston Housing data set](&mlbench::BostonHousing) with and without scaling.
 
 ```{r}

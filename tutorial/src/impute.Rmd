@@ -157,7 +157,7 @@ airq = subset(airq, subset = !is.na(airq$Ozone))
 task = makeRegrTask(data = airq, target = "Ozone")
 ```
 
-In the following the 3-fold cross-validated [mean squared error](&measures) is calculated.
+In the following the 3-fold cross-validated mean squared error ([mse](measures.md)) is calculated.
 
 ```{r}
 rdesc = makeResampleDesc("CV", iters = 3)

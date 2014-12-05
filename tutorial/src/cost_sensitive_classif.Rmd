@@ -151,7 +151,7 @@ credit.costs
 ```
 
 Then the average costs can be computed by function [&performance].
-We compare the average costs and the error rate ([&mmce]) of the learning algorithm
+We compare the average costs and the error rate ([mmce](measures.md)) of the learning algorithm
 with default thresholds 0.5 and the theoretical thresholds.
 
 ```{r}
@@ -406,7 +406,8 @@ tune.res
 
 ## Example-dependent misclassification costs
 
-In case of example-dependent costs we have to create a special [&Task] via function [&makeCostSensTask].
+In case of example-dependent costs we have to create a special [&Task] via function
+[&makeCostSensTask].
 For this purpose the feature values *x* and an *n* times *K* ``cost`` matrix that contains
 the cost vectors for all *n* examples in the data set are required.
 
@@ -462,11 +463,11 @@ getHomogeneousEnsembleModels(mod)
 ```
 
 [%mlr] provides some performance measures for example-specific cost-sensitive classification.
-In the following example we calculate the mean costs of the predicted class labels ([&meancosts]) and
-the misclassification penalty ([&mcp]).
+In the following example we calculate the mean costs of the predicted class labels
+([meancosts](measures.md)) and the misclassification penalty ([mcp](measures.md)).
 The latter measure is the average difference between the costs caused by the predicted
-class labels, i.e., [&meancosts], and the costs resulting from choosing the class with lowest
-cost for each observation.
+class labels, i.e., [meancosts](measures.md), and the costs resulting from choosing the class
+with lowest cost for each observation.
 In order to compute these measures the costs for the test observations are required and
 therefore the [&Task] has to be passed to [&performance].
 

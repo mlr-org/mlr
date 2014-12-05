@@ -318,14 +318,14 @@ But until then you can turn off <a href="http://www.rdocumentation.org/packages/
 <pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;classif.ksvm&quot;, newPar = 3)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter newPar without available description object!
+<pre class="prettyprint well"><code>#&gt; Error: classif.ksvm: Setting parameter newPar without available description object!
 #&gt; You can switch off this check by using configureMlr!
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;classif.ksvm&quot;, epsilon = -3)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter epsilon without available description object!
+<pre class="prettyprint well"><code>#&gt; Error: classif.ksvm: Setting parameter epsilon without available description object!
 #&gt; You can switch off this check by using configureMlr!
 </code></pre>
 
@@ -345,17 +345,17 @@ The following example shows how to prevent this:</p>
 train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Error in qda.default(x, grouping, ...): some group is too small for 'qda'
+<pre class="prettyprint well"><code>#&gt; Error: some group is too small for 'qda'
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Timing stopped at: 0.004 0 0.003
+<pre class="prettyprint well"><code>#&gt; Timing stopped at: 0.006 0 0.006
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">configureMlr(on.learner.error = &quot;warn&quot;)
 mod = train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Warning in train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104): Could not train learner classif.qda: Error in qda.default(x, grouping, ...) : 
+<pre class="prettyprint well"><code>#&gt; Warning: Could not train learner classif.qda: Error in qda.default(x, grouping, ...) : 
 #&gt;   some group is too small for 'qda'
 </code></pre>
 

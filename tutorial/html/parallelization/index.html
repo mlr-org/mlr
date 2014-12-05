@@ -244,14 +244,24 @@ The first loop <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> enc
 It is good practice to call <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStop.html">parallelStop</a> at the end of your script.</p>
 <pre class="prettyprint well"><code class="r">library(&quot;parallelMap&quot;)
 parallelStartSocket(2)
-rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+</code></pre>
+
+<pre class="prettyprint well"><code>#&gt; Starting parallelization in mode=socket with cpus=2.
+</code></pre>
+
+<pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 r = resample(&quot;classif.lda&quot;, iris.task, rdesc)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [Resample] Result: mmce.test.mean=0.02
+<pre class="prettyprint well"><code>#&gt; Exporting objects to slaves for mode socket: .mlr.slave.options
+#&gt; Mapping in parallel: mode = socket; cpus = 2; elements = 3.
+#&gt; [Resample] Result: mmce.test.mean=0.02
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">parallelStop()
+</code></pre>
+
+<pre class="prettyprint well"><code>#&gt; Stopped parallelization. All cleaned up.
 </code></pre>
 
 <p>On Linux or Mac OS X, you may want to use

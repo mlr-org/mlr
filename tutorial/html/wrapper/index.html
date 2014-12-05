@@ -250,7 +250,7 @@ The broad scope of operations and methods which are implemented as wrappers unde
 <li><a href="http://www.rdocumentation.org/packages/mlr/functions/makeMulticlassWrapper.html">Multiclass extension</a> for binary-class learners</li>
 </ul>
 <p>All these operations and methods have a few things in common:
-First, they all wrap around <a href="http://www.rdocumentation.org/packages/mlr/functions/mlr.html">mlr</a> <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">learners</a> and they return a new learner.
+First, they all wrap around <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">learners</a> and they return a new learner.
 Therefore learners can be wrapped multiple times.
 Second, they are implemented using a <em>train</em> (pre-model hook) and <em>predict</em> (post-model hook) method.</p>
 <h2 id="example-bagging-wrapper">Example: Bagging wrapper</h2>
@@ -309,8 +309,8 @@ We can use this newly constructed learner like all base learners, i.e. we can us
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;   task.id           learner.id mmce.test.mean
-#&gt; 1    iris        classif.rpart     0.06666667
-#&gt; 2    iris classif.rpart.bagged     0.06000000
+#&gt; 1    iris        classif.rpart        0.06667
+#&gt; 2    iris classif.rpart.bagged        0.06000
 </code></pre>
 
 <p>That far we are quite happy with our new learner.
@@ -336,7 +336,7 @@ Let's have a look at the available hyperparameters of the fused learner:</p>
 #&gt; parms           untyped   -     -        -   -     -
 </code></pre>
 
-<p>We choose to tune the parameters <code>minsplit</code> and <code>bw.feats</code> for the <a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">mmce</a> using a <a href="http://www.rdocumentation.org/packages/mlr/functions/TuneControl.html">random search</a> in a 3-fold CV:</p>
+<p>We choose to tune the parameters <code>minsplit</code> and <code>bw.feats</code> for the <a href="../measures/index.html">mmce</a> using a <a href="http://www.rdocumentation.org/packages/mlr/functions/TuneControl.html">random search</a> in a 3-fold CV:</p>
 <pre class="prettyprint well"><code class="r">ctrl = makeTuneControlRandom(maxit = 10)
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 par.set = makeParamSet(
@@ -361,7 +361,7 @@ print(tuned.lrn)
 <li>The tuning wrapper sets parameters for the underlying model in slot <code>$next.learner</code> and calls its train method.</li>
 <li>Next learner is the bagging wrapper. The passed down argument <code>bw.feats</code> is used in the bagging wrapper training function, the argument <code>minsplit</code> gets passed down to <code>$next.learner</code>.
    The base wrapper function calls the base learner <code>bw.iters</code> times and stores the resulting models.</li>
-<li>The bagged models are evaluated using the mean <a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">mmce</a> (default aggregation for this performance measure) and new parameters are selected using the tuning method.</li>
+<li>The bagged models are evaluated using the mean <a href="../measures/index.html">mmce</a> (default aggregation for this performance measure) and new parameters are selected using the tuning method.</li>
 <li>This is repeated until the tuner terminates. Output is a tuned bagged learner.</li>
 </ol>
 <pre class="prettyprint well"><code class="r">lrn = train(tuned.lrn, task = task)
@@ -374,25 +374,25 @@ print(tuned.lrn)
 #&gt; With control class: TuneControlRandom
 #&gt; Imputation value: 1
 #&gt; [Tune-x] 1: minsplit=5; bw.feats=0.935
-#&gt; [Tune-y] 1: mmce.test.mean=0.0467; time: 4.5 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-y] 1: mmce.test.mean=0.0467; time: 7.4 min; memory: 156.8 Mb (+0.0)
 #&gt; [Tune-x] 2: minsplit=9; bw.feats=0.675
-#&gt; [Tune-y] 2: mmce.test.mean=0.0467; time: 4.2 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-y] 2: mmce.test.mean=0.0467; time: 7.3 min; memory: 156.8 Mb (+0.0)
 #&gt; [Tune-x] 3: minsplit=2; bw.feats=0.847
-#&gt; [Tune-y] 3: mmce.test.mean=0.0467; time: 4.2 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-y] 3: mmce.test.mean=0.0467; time: 7.3 min; memory: 156.8 Mb (+0.0)
 #&gt; [Tune-x] 4: minsplit=4; bw.feats=0.761
-#&gt; [Tune-y] 4: mmce.test.mean=0.0467; time: 4.2 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-y] 4: mmce.test.mean=0.0467; time: 7.4 min; memory: 156.8 Mb (+0.0)
 #&gt; [Tune-x] 5: minsplit=6; bw.feats=0.338
-#&gt; [Tune-y] 5: mmce.test.mean=0.0867; time: 4.1 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-y] 5: mmce.test.mean=0.0867; time: 6.9 min; memory: 156.8 Mb (+0.0)
 #&gt; [Tune-x] 6: minsplit=1; bw.feats=0.637
-#&gt; [Tune-y] 6: mmce.test.mean=0.0467; time: 4.2 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-y] 6: mmce.test.mean=0.0467; time: 7.5 min; memory: 156.8 Mb (+0.0)
 #&gt; [Tune-x] 7: minsplit=1; bw.feats=0.998
-#&gt; [Tune-y] 7: mmce.test.mean=0.0467; time: 4.3 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-y] 7: mmce.test.mean=0.0467; time: 7.4 min; memory: 156.8 Mb (+0.0)
 #&gt; [Tune-x] 8: minsplit=4; bw.feats=0.698
-#&gt; [Tune-y] 8: mmce.test.mean=0.0467; time: 4.3 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-y] 8: mmce.test.mean=0.0467; time: 7.3 min; memory: 156.8 Mb (+0.0)
 #&gt; [Tune-x] 9: minsplit=3; bw.feats=0.836
-#&gt; [Tune-y] 9: mmce.test.mean=0.0467; time: 4.2 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-y] 9: mmce.test.mean=0.0467; time: 7.5 min; memory: 156.8 Mb (+0.0)
 #&gt; [Tune-x] 10: minsplit=10; bw.feats=0.529
-#&gt; [Tune-y] 10: mmce.test.mean=0.0533; time: 4.1 min; memory: 155.2 Mb (+0.0)
+#&gt; [Tune-y] 10: mmce.test.mean=0.0533; time: 7.0 min; memory: 156.8 Mb (+0.0)
 #&gt; [Tune] Result: minsplit=1; bw.feats=0.998 : mmce.test.mean=0.0467
 </code></pre>
 

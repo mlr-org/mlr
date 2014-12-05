@@ -29,8 +29,8 @@ res
 The above code should be self-explanatory. In the result every row corresponds to one [&Task]
 set with one [Learner](&makeLearner).
 In the printed table the individual tasks and learners are referred to by their IDs.
-The entries show the 5-fold cross-validated mean misclassification error ([&mmce]), which
-is the default performance measure for classification.
+The entries show the 5-fold cross-validated mean misclassification error ([mmce](measures.md)),
+which is the default performance measure for classification.
 
 The result is an object of class [&BenchmarkResult].
 [%mlr] provides several accessor functions, follow the naming convention

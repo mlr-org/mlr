@@ -85,7 +85,7 @@ res
 
 [&tuneParams] simply performs the cross-validation for every element of the
 cross-product and selects the parameter setting with the best mean performance.
-As no performance measure was specified, by default the error rate ([mmce](&measures)) is
+As no performance measure was specified, by default the error rate ([mmce](measures.md)) is
 used.
 
 Note that each [measure](&makeMeasure) "knows" if it is minimized or maximized during tuning.
@@ -103,7 +103,7 @@ In the latter case the first measure is optimized during tuning, the others are 
 If you are interested in optimizing several measures simultaneously have a look at the
 paragraph about multi-criteria tuning below.
 
-In the example below we calculate the accuracy ([acc](&measures)) instead of the error
+In the example below we calculate the accuracy ([acc](measures.md)) instead of the error
 rate.
 We use function [&setAggregation], as described in the section on [resampling](resample.md),
 to additionally obtain the standard deviation of the accuracy.
@@ -341,7 +341,7 @@ During tuning you might want to optimize multiple, potentially conflicting, perf
 simultaneously.
 
 In the following example we aim to minimize both, the false positive and the false negative rates
-([fpr](&measures) and [fnr](&measures)).
+([fpr](measures.md) and [fnr](measures.md)).
 We again tune the hyperparameters of an SVM (function [ksvm](&kernlab::ksvm)) with a radial
 basis kernel and use the [sonar classification task](&sonar.task) for illustration.
 As search strategy we choose a random search.
