@@ -55,6 +55,5 @@ predictLearner.classif.bartMachine = function(.learner, .model, .newdata, ...) {
     y = predict(.model$learner.model, new_data = .newdata, type = "class", ...)
     y = factor(y, levs)
   }
-  bartMachine::destroy_bart_machine(.model$learner.model)
   return(y)
 }
