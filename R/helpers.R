@@ -71,3 +71,13 @@ propVectorToMatrix = function(p, levs) {
   y[, 1L] = 1-p
   y
 }
+
+getLearnerProperties = function() {
+  available.properties = list(
+    classif = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights", "missings", "ordered"),
+    regr = c("ordered", "se"),
+    surv = c("ordered", "rcens", "prob"),
+    cluster = c("prob")
+  )
+  unique(unlist(available.properties))
+}
