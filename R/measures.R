@@ -70,6 +70,7 @@ timeboth = makeMeasure(id = "timeboth", minimize = TRUE, best = 0, worst = Inf,
 ###############################################################################
 ### regression ###
 ###############################################################################
+
 #' @export sse
 #' @rdname measures
 #' @format none
@@ -78,9 +79,13 @@ sse = makeMeasure(id = "sse", minimize = TRUE, best = 0, worst = Inf,
   allowed.pred.types = c("response", "se"),
   name = "Sum of squared errors",
   fun = function(task, model, pred, feats, extra.args) {
-    sum((pred$data$response - pred$data$truth)^2)
+    measureSSE(pred$data$truth, pred$data$response)
   }
 )
+
+measureSSE = function(truth, response) {
+  sum((response - truth)^2)
+}
 
 #' @export mse
 #' @rdname measures
@@ -90,9 +95,13 @@ mse = makeMeasure(id = "mse", minimize = TRUE, best = 0, worst = Inf,
   allowed.pred.types = c("response", "se"),
   name = "Mean of squared errors",
   fun = function(task, model, pred, feats, extra.args) {
-    mean((pred$data$response - pred$data$truth)^2)
+    measureMSE(pred$data$truth, pred$data$response)
   }
 )
+
+measureMSE = function(truth, response) {
+  mean((response - truth)^2)
+}
 
 #' @export rmse
 #' @format none
@@ -103,10 +112,14 @@ rmse = makeMeasure(id = "rmse", minimize = TRUE, best = 0, worst = Inf,
   allowed.pred.types = c("response", "se"),
   name = "Root mean square error",
   fun = function(task, model, pred, feats, extra.args) {
-    mean((pred$data$response - pred$data$truth)^2)
+    measureRMSE(pred$data$truth, pred$data$response)
   },
   aggr = test.sqrt.of.mean
 )
+
+measureRMSE = function(truth, response) {
+  mean((response - truth)^2)
+}
 
 #' @export medse
 #' @rdname measures
@@ -116,9 +129,13 @@ medse = makeMeasure(id = "medse", minimize = TRUE, best = 0, worst = Inf,
   allowed.pred.types = c("response", "se"),
   name = "Median of squared errors",
   fun = function(task, model, pred, feats, extra.args) {
-    median((pred$data$response - pred$data$truth)^2)
+    measureMEDSE(pred$data$truth, pred$data$response)
   }
 )
+
+measureMEDSE = function(truth, response) {
+  median((response - truth)^2)
+}
 
 #' @export sae
 #' @rdname measures
@@ -128,9 +145,13 @@ sae = makeMeasure(id = "sae", minimize = TRUE, best = 0, worst = Inf,
   allowed.pred.types = c("response", "se"),
   name = "Sum of absolute errors",
   fun = function(task, model, pred, feats, extra.args) {
-    sum(abs(pred$data$response - pred$data$truth))
+    measureSAE(pred$data$truth, pred$data$response)
   }
 )
+
+measureSAE = function(truth, response) {
+  sum(abs(response - truth))
+}
 
 #' @export mae
 #' @rdname measures
@@ -140,9 +161,13 @@ mae = makeMeasure(id = "mae", minimize = TRUE, best = 0, worst = Inf,
   allowed.pred.types = c("response", "se"),
   name = "Mean of absolute errors",
   fun = function(task, model, pred, feats, extra.args) {
-    mean(abs(pred$data$response - pred$data$truth))
+    measureMAE(pred$data$truth, pred$data$response)
   }
 )
+
+measureMAE = function(truth, response) {
+  mean(abs(response - truth))
+}
 
 #' @export medae
 #' @rdname measures
@@ -152,9 +177,13 @@ medae = makeMeasure(id = "medae", minimize = TRUE, best = 0, worst = Inf,
   allowed.pred.types = c("response", "se"),
   name = "Median of absolute errors",
   fun = function(task, model, pred, feats, extra.args) {
-    median(abs(pred$data$response - pred$data$truth))
+    measureMEDAE(pred$data$truth, pred$data$response)
   }
 )
+
+measureMEDAE = function(truth, response) {
+  median(abs(response - truth))
+}
 
 ###############################################################################
 ### classif multi ###
@@ -167,9 +196,13 @@ mmce = makeMeasure(id = "mmce", minimize = TRUE, best = 0, worst = 1,
   allowed.pred.types = c("response", "prob"),
   name = "Mean misclassification error",
   fun = function(task, model, pred, feats, extra.args) {
-    mean(pred$data$response != pred$data$truth)
+    measureMMCE(pred$data$truth, pred$data$response)
   }
 )
+
+measureMMCE = function(truth, response) {
+  mean(response != truth)
+}
 
 #' @export acc
 #' @rdname measures
@@ -179,9 +212,13 @@ acc = makeMeasure(id = "acc", minimize = FALSE, best = 1, worst = 0,
   allowed.pred.types = c("response", "prob"),
   name = "Accuracy",
   fun = function(task, model, pred, feats, extra.args) {
-    mean(pred$data$response == pred$data$truth)
+    measureACC(pred$data$truth, pred$data$response)
   }
 )
+
+measureACC = function(truth, response) {
+  mean(response == truth)
+}
 
 #' @export ber
 #' @rdname measures
@@ -260,9 +297,13 @@ tp = makeMeasure(id = "tp", minimize = FALSE, best = Inf, worst = 0,
   allowed.pred.types = c("response", "prob"),
   name = "True positives",
   fun = function(task, model, pred, feats, extra.args) {
-    sum(pred$data$truth == pred$data$response & pred$data$response == pred$task.desc$positive)
+    measureTP(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
 )
+
+measureTP = function(truth, response, positive) {
+  sum(truth == response & response == positive)
+}
 
 #' @export tn
 #' @rdname measures
@@ -273,9 +314,13 @@ tn = makeMeasure(id = "tn", minimize = FALSE, best = Inf, worst = 0,
   name = "True negatives",
   note = "Also called correct rejections.",
   fun = function(task, model, pred, feats, extra.args) {
-    sum(pred$data$truth == pred$data$response & pred$data$response == pred$task.desc$negative)
+    measureTN(pred$data$truth, pred$data$response, pred$task.desc$negative)
   }
 )
+
+measureTN = function(truth, response, negative) {
+  sum(truth == response & response == negative)
+}
 
 #' @export fp
 #' @rdname measures
@@ -286,9 +331,13 @@ fp = makeMeasure(id = "fp", minimize = TRUE, best = 0, worst = Inf,
   name = "False positives",
   note = "Also called false alarms.",
   fun = function(task, model, pred, feats, extra.args) {
-    sum(pred$data$truth != pred$data$response & pred$data$response == pred$task.desc$positive)
+    measureFP(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
 )
+
+measureFP = function(truth, response, positive) {
+  sum(truth != response & response == positive)
+}
 
 #' @export fn
 #' @rdname measures
@@ -299,9 +348,13 @@ fn = makeMeasure(id = "fn", minimize = TRUE, best = 0, worst = Inf,
   name = "False negatives",
   note = "Also called misses.",
   fun = function(task, model, pred, feats, extra.args) {
-    sum(pred$data$truth != pred$data$response & pred$data$response == pred$task.desc$negative)
+    measureFN(pred$data$truth, pred$data$response, pred$task.desc$negative)
   }
 )
+
+measureFN = function(truth, response, negative) {
+  sum(truth != response & response == negative)
+}
 
 #' @export tpr
 #' @rdname measures
