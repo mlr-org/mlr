@@ -7,7 +7,7 @@
 #' @param thresholds [\code{integer}]\cr
 #'   Number of thresholds at which ROC coordinates shall be averaged. This argument is only considered
 #'   if the function is applied to objects of class \code{\link{ResamplePrediction}}, 
-#'   \code{\link{ResampleResult}} and \code{\link{BenchmarkResult}}. Default is to use 50.
+#'   \code{\link{ResampleResult}} or \code{\link{BenchmarkResult}}. Default is to use 50.
 #' @family roc
 #' @export
 #' @examples
@@ -56,8 +56,7 @@ getROCCoord.Prediction = function(obj){
   n.pos = sum(truth == pos)
   n.neg = sum(truth != pos)
   dat = data.frame(thres = prob, TPR = cumsum(truth == pos)/n.pos, FPR = cumsum(truth != pos)/n.neg)
-  dat = dat[c(1, 1:nrow(dat)),]
-  dat[1L,] = c(1, 0, 0)
+  dat = rbind(data.frame(thres = 1, TPR = 0, FPR = 0), dat)
   dat = dat[!duplicated(dat$thres),]
   rownames(dat) = NULL
   dat
@@ -89,7 +88,7 @@ getROCCoord.ResamplePrediction = function(obj, thresholds = 50L){
   coord = lapply(split(dat, dat$set), getCoord)
   coord = do.call(rbind, coord)
   rownames(coord) = NULL
-  data.frame(task, set = rep(levels(dat$set), each = thresholds), coord, stringsAsFactors = F)
+  data.frame(task, set = rep(levels(dat$set), each = thresholds), coord, stringsAsFactors = FALSE)
 }
 
 #' @export
