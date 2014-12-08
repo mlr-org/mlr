@@ -26,7 +26,7 @@ makeCostSensWeightedPairsWrapper = function(learner) {
   x = makeHomogeneousEnsemble(id, learner, package = learner$package,
     learner.subclass = "CostSensWeightedPairsWrapper", model.subclass = "CostSensWeightedPairsModel")
   x$type = "costsens"
-  removeProperties(x, c("weights", "se", "prob"))
+  removeProperties(x, c("weights", "prob"))
 }
 
 #' @export

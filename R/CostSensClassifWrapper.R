@@ -23,7 +23,7 @@ makeCostSensClassifWrapper = function(learner) {
   x = makeBaseWrapper(id, learner, package = learner$package,
     learner.subclass = "CostSensClassifWrapper", model.subclass = "CostSensClassifModel")
   x$type = "costsens"
-  removeProperties(x, c("weights", "se", "prob"))
+  removeProperties(x, c("weights", "prob"))
 }
 
 #' @export
