@@ -19,7 +19,7 @@ NULL
 #' @export
 setProperties = function(learner, props) {
   learner = checkLearner(learner)
-  assertCharacter(props, any.missing = FALSE)
+  assertSubset(props, getSupportedLearnerProperties(learner$type))
   learner$properties = unique(props)
   learner
 }
@@ -28,7 +28,7 @@ setProperties = function(learner, props) {
 #' @export
 addProperties = function(learner, props) {
   learner = checkLearner(learner)
-  assertCharacter(props, any.missing = FALSE)
+  assertSubset(props, getSupportedLearnerProperties(learner$type))
   learner$properties = union(learner$properties, props)
   learner
 }
@@ -37,7 +37,7 @@ addProperties = function(learner, props) {
 #' @export
 removeProperties = function(learner, props) {
   learner = checkLearner(learner)
-  assertCharacter(props, any.missing = FALSE)
+  assertSubset(props, getSupportedLearnerProperties(learner$type))
   learner$properties = setdiff(learner$properties, props)
   learner
 }
@@ -46,6 +46,6 @@ removeProperties = function(learner, props) {
 #' @export
 hasProperties = function(learner, props) {
   learner = checkLearner(learner)
-  assertCharacter(props, any.missing = FALSE)
+  assertSubset(props, getSupportedLearnerProperties())
   props %in% learner$properties
 }

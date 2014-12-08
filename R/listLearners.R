@@ -39,7 +39,7 @@ listLearners  = function(obj = NA_character_, properties = character(0L),
 
   if (!missing(obj))
     assert(checkCharacter(obj), checkClass(obj, "Task"))
-  assertCharacter(properties, any.missing = FALSE)
+  assertSubset(properties, getSupportedLearnerProperties())
   assertFlag(warn.missing.packages)
   assertFlag(create)
   UseMethod("listLearners")
