@@ -33,6 +33,19 @@ print.BaseWrapper = function(x, ...) {
   print.Learner(x)
 }
 
+
+# trainLearner:
+# trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL, ...)
+# trainLearner is not implemented here, as no concrete code makes sense for this abstract base method.
+# One word wrt. hyper pars and the "..." varargs in inheriting methods:
+# train calls trainLearner, then passes ALL par.vals from all wrapped learner layers to "...".
+# In trainLearner.MyWrapper the params that are of interest are usually bound by name.
+# Then in trainLearner.MyWrapper usually "train" is called for next.learner.
+# This does not accept "..." and we do not pass "..." down any further.
+# But we do not need to do this, as the settings of learner$next.learner are
+# contained in next.learner$par.vals.
+
+
 #' @export
 predictLearner.BaseWrapper = function(.learner, .model, .newdata, ...) {
   args = removeFromDots(names(.learner$par.vals), ...)
