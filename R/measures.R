@@ -139,7 +139,7 @@ rmse = makeMeasure(id = "rmse", minimize = TRUE, best = 0, worst = Inf,
 #' @rdname measures
 #' @format none
 measureRMSE = function(truth, response) {
-  mean((response - truth)^2)
+  sqrt(measureMSE(truth, response))
 }
 
 #' @export medse
