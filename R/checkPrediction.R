@@ -1,7 +1,12 @@
-checkPrediction = function(pred, task.type = NULL, predict.type = NULL, check.truth = FALSE) {
+checkPrediction = function(pred, task.type = NULL, binary = FALSE, predict.type = NULL, check.truth = FALSE) {
   assertClass(pred, "Prediction")
   if (!is.null(task.type) && pred$task.desc$type %nin% task.type)
     stopf("Prediction must be one of '%s', but is: '%s'", collapse(task.type), pred$task.desc$type)
+  if (binary) {
+    nlevs = length(pred$task.desc$class.levels)
+    if (nlevs != 2L)
+      stopf("Prediction must be for binary classification, but has %i class levels!", nlevs)
+  }
   if (!is.null(predict.type) && pred$predict.type %nin% predict.type)
     stopf("predict.type must be one of '%s', but is: '%s'", collapse(predict.type), pred$predict.type)
   if (check.truth && is.null(pred$data$truth))
