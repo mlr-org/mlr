@@ -60,6 +60,8 @@ listLearners.character  = function(obj, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, create = FALSE) {
 
   assertChoice(obj, choices = c("classif", "regr", "surv", "costsens", "cluster", NA_character_))
+  assertSubset(properties, getSupportedLearnerProperties(obj))
+
   type = obj
   meths = as.character(methods("makeRLearner"))
   res = err = vector("list", length(meths))
@@ -93,7 +95,6 @@ listLearners.Task = function(obj, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, create = FALSE) {
 
   task = obj
-  assertCharacter(properties, any.missing = FALSE)
   td = task$task.desc
 
   props = character(0L)

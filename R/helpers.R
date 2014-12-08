@@ -72,12 +72,16 @@ propVectorToMatrix = function(p, levs) {
   y
 }
 
-getLearnerProperties = function() {
-  available.properties = list(
-    classif = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights", "missings", "ordered"),
-    regr = c("ordered", "se"),
-    surv = c("ordered", "rcens", "prob"),
-    cluster = c("prob")
+getSupportedLearnerProperties = function(type = NA_character_) {
+  p = list(
+    classif  = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass"),
+    regr     = c("numerics", "factors", "ordered", "missings", "weights", "se"),
+    cluster  = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
+    surv     = c("numerics", "factors", "ordered", "missings", "weights", "prob", "rcens"),
+    costsens = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass")
   )
-  unique(unlist(available.properties))
+  if (is.na(type))
+    unique(unlist(p))
+  else
+    p[[type]]
 }
