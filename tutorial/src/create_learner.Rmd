@@ -183,6 +183,63 @@ predictLearner.regr.earth = function(.learner, .model, .newdata, ...) {
 Again most of the data is passed straight through to/from the train/predict
 functions of the learner.
 
+## Survival Analysis
+
+For survival analysis, you have to return so-called linear predictors in order to compute the default measure for this task type, the ``cindex`` (for ``.learner$predict.type`` == ``"response"``). For ``.learner$predict.type`` == ``"prob"``, there is no substantially meaningful measure (yet). You may either ignore this case or return something like predicted survival curves (cf. example below).
+
+There are three properties that are specific to survival learners: "rcens", "lcens" and "icens", defining the type(s) of censoring a learner can handle -- right, left and/or interval censored.
+
+Let's have a look at how the [Cox Proportional Hazard Model](&survival::coxph) from
+package [survival](http://www.rdocumentation.org/packages/survival) has been integrated
+into the survival learner ``surv.coxph`` in [%mlr] as an example:
+
+```{r}
+makeRLearner.surv.coxph = function() {
+  makeRLearnerSurv(
+    cl = "surv.coxph",
+    package = "survival",
+    par.set = makeParamSet(
+      makeDiscreteLearnerParam(id = "ties", default = "efron", values = c("efron", "breslow", "exact")),
+      makeLogicalLearnerParam(id = "singular.ok", default = TRUE),
+      makeNumericLearnerParam(id = "eps", default = 1e-09, lower = 0),
+      makeNumericLearnerParam(id = "toler.chol", default = .Machine$double.eps^0.75, lower = 0),
+      makeIntegerLearnerParam(id = "iter.max", default = 20L, lower = 1L),
+      makeNumericLearnerParam(id = "toler.inf", default = sqrt(.Machine$double.eps^0.75), lower = 0),
+      makeIntegerLearnerParam(id = "outer.max", default = 10L, lower = 1L)
+    ),
+    properties = c("missings", "numerics", "factors", "weights", "prob", "rcens"),
+    name = "Cox Proportional Hazard Model",
+    short.name = "coxph",
+    note = ""
+  )
+}
+
+trainLearner.surv.coxph = function(.learner, .task, .subset, .weights = NULL,  ...) {
+  f = as.formula(getTaskFormulaAsString(.task))
+  data = getTaskData(.task, subset = .subset)
+  if (is.null(.weights)) {
+    mod = survival::coxph(formula = f, data = data, ...)
+  } else  {
+    mod = survival::coxph(formula = f, data = data, weights = .weights, ...)
+  }
+  if (.learner$predict.type == "prob")
+    mod = attachTrainingInfo(mod, list(surv.range = range(getTaskTargets(.task)[, 1L])))
+  mod
+}
+
+predictLearner.surv.coxph = function(.learner, .model, .newdata, ...) {
+  if(.learner$predict.type == "response") {
+    predict(.model$learner.model, newdata = .newdata, type = "lp", ...)
+  } else if (.learner$predict.type == "prob") {
+    surv.range = getTrainingInfo(.model$learner.model)$surv.range
+    times = seq(from = surv.range[1L], to = surv.range[2L], length.out = 1000)
+    t(summary(survival::survfit(.model$learner.model, newdata = .newdata, se.fit = FALSE, conf.int = FALSE), times = times)$surv)
+  } else {
+    stop("Unknown predict type")
+  }
+}
+```
+
 ## Clustering
 
 For clustering, you have to return a numeric vector with the IDs of the clusters
