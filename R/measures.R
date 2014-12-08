@@ -11,6 +11,18 @@
 #'
 #' If you want a measure for a misclassification cost matrix, look at \code{\link{makeCostMeasure}}.
 #' If you want to implement your own measure, look at \code{\link{makeMeasure}}.
+#' 
+#' Most measures can directly be accessed via the function named after the scheme measureX (e.g. measureSSE).
+#' @param truth [\code{factor}]\cr
+#'   Vector of the true class.
+#' @param response [\code{factor}]\cr
+#'   Vector of the predicted class.
+#' @param negative [\code{character(1)}]\cr
+#'   The name of the negative class.
+#' @param positive [\code{character(1)}]\cr
+#'   The name of the positove class.
+#' @param probabilites [\code{numeric}]\cr
+#'   The probabilites for the positive class.
 #' @name measures
 #' @rdname measures
 #' @family performance
@@ -83,6 +95,9 @@ sse = makeMeasure(id = "sse", minimize = TRUE, best = 0, worst = Inf,
   }
 )
 
+#' @export measureSSE
+#' @rdname measures
+#' @format none
 measureSSE = function(truth, response) {
   sum((response - truth)^2)
 }
@@ -99,6 +114,9 @@ mse = makeMeasure(id = "mse", minimize = TRUE, best = 0, worst = Inf,
   }
 )
 
+#' @export measureMSE
+#' @rdname measures
+#' @format none
 measureMSE = function(truth, response) {
   mean((response - truth)^2)
 }
@@ -117,6 +135,9 @@ rmse = makeMeasure(id = "rmse", minimize = TRUE, best = 0, worst = Inf,
   aggr = test.sqrt.of.mean
 )
 
+#' @export measureRMSE
+#' @rdname measures
+#' @format none
 measureRMSE = function(truth, response) {
   mean((response - truth)^2)
 }
@@ -133,6 +154,9 @@ medse = makeMeasure(id = "medse", minimize = TRUE, best = 0, worst = Inf,
   }
 )
 
+#' @export measureMEDSE
+#' @rdname measures
+#' @format none
 measureMEDSE = function(truth, response) {
   median((response - truth)^2)
 }
@@ -149,6 +173,9 @@ sae = makeMeasure(id = "sae", minimize = TRUE, best = 0, worst = Inf,
   }
 )
 
+#' @export measureSAE
+#' @rdname measures
+#' @format none
 measureSAE = function(truth, response) {
   sum(abs(response - truth))
 }
@@ -165,6 +192,9 @@ mae = makeMeasure(id = "mae", minimize = TRUE, best = 0, worst = Inf,
   }
 )
 
+#' @export measureMAE
+#' @rdname measures
+#' @format none
 measureMAE = function(truth, response) {
   mean(abs(response - truth))
 }
@@ -181,6 +211,9 @@ medae = makeMeasure(id = "medae", minimize = TRUE, best = 0, worst = Inf,
   }
 )
 
+#' @export measureMEDAE
+#' @rdname measures
+#' @format none
 measureMEDAE = function(truth, response) {
   median(abs(response - truth))
 }
@@ -200,6 +233,9 @@ mmce = makeMeasure(id = "mmce", minimize = TRUE, best = 0, worst = 1,
   }
 )
 
+#' @export measureMMCE
+#' @rdname measures
+#' @format none
 measureMMCE = function(truth, response) {
   mean(response != truth)
 }
@@ -216,6 +252,9 @@ acc = makeMeasure(id = "acc", minimize = FALSE, best = 1, worst = 0,
   }
 )
 
+#' @export measureACC
+#' @rdname measures
+#' @format none
 measureACC = function(truth, response) {
   mean(response == truth)
 }
@@ -270,10 +309,17 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
     # ROCR does not work with NAs
     if (anyMissing(pred$data$response) || length(unique(pred$data$truth)) == 1L)
       return(NA_real_)
-    rpreds = asROCRPrediction(pred)
-    ROCR::performance(rpreds, "auc")@y.values[[1L]]
+    measureAUC(getProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive)
   }
 )
+
+#' @export measureAUC
+#' @rdname measures
+#' @format none
+measureAUC = function(probabilites, truth, negative, positive) {
+  rpreds = asROCRPredictionIntern(probabilites, truth, negative, positive)
+  ROCR::performance(rpreds, "auc")@y.values[[1L]]
+}
 
 #' @export bac
 #' @rdname measures
@@ -289,6 +335,16 @@ bac = makeMeasure(id = "bac", minimize = FALSE, best = 1, worst = 0,
   }
 )
 
+#' @export measureBAC
+#' @rdname measures
+#' @format none
+measureBAC = function(truth, response, negative, positive) {
+  mean(c(
+    measureTP(truth, response, positive) / sum(truth == positive), 
+    measureTN(truth, response, negative) / sum(truth == negative)
+    ))
+}
+
 #' @export tp
 #' @rdname measures
 #' @format none
@@ -301,6 +357,9 @@ tp = makeMeasure(id = "tp", minimize = FALSE, best = Inf, worst = 0,
   }
 )
 
+#' @export measureTP
+#' @rdname measures
+#' @format none
 measureTP = function(truth, response, positive) {
   sum(truth == response & response == positive)
 }
@@ -318,6 +377,9 @@ tn = makeMeasure(id = "tn", minimize = FALSE, best = Inf, worst = 0,
   }
 )
 
+#' @export measureTN
+#' @rdname measures
+#' @format none
 measureTN = function(truth, response, negative) {
   sum(truth == response & response == negative)
 }
@@ -335,6 +397,9 @@ fp = makeMeasure(id = "fp", minimize = TRUE, best = 0, worst = Inf,
   }
 )
 
+#' @export measureFP
+#' @rdname measures
+#' @format none
 measureFP = function(truth, response, positive) {
   sum(truth != response & response == positive)
 }
@@ -352,6 +417,9 @@ fn = makeMeasure(id = "fn", minimize = TRUE, best = 0, worst = Inf,
   }
 )
 
+#' @export measureFN
+#' @rdname measures
+#' @format none
 measureFN = function(truth, response, negative) {
   sum(truth != response & response == negative)
 }
@@ -365,9 +433,16 @@ tpr = makeMeasure(id = "tpr", minimize = FALSE, best = 1, worst = 0,
   name = "True positive rate",
   note = "Also called hit rate or recall.",
   fun = function(task, model, pred, feats, extra.args) {
-    tp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive)
+    measureTPR(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
 )
+
+#' @export measureTPR
+#' @rdname measures
+#' @format none
+measureTPR = function(truth, response, positive) {
+  measureTP(truth, response, positive) / sum(truth == positive)
+}
 
 #' @export tnr
 #' @rdname measures
@@ -378,9 +453,16 @@ tnr = makeMeasure(id = "tnr", minimize = FALSE, best = 1, worst = 0,
  	name = "True negative rate",
   note = "Also called specificity.",
   fun = function(task, model, pred, feats, extra.args) {
-    tn$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$negative)
+    measureTNR(pred$data$truth, pred$data$response, pred$task.desc$negative)
   }
 )
+
+#' @export measureTNR
+#' @rdname measures
+#' @format none
+measureTNR = function(truth, response, negative) {
+  measureTN(truth, response, negative) / sum(truth == negative)
+}
 
 #' @export fpr
 #' @rdname measures
@@ -391,9 +473,16 @@ fpr = makeMeasure(id = "fpr", minimize = TRUE, best = 0, worst = 1,
  	name = "False positive rate",
   note = "Also called false alarm rate or fall-out.",
   fun = function(task, model, pred, feats, extra.args) {
-    fp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$negative)
+    measureFPR(pred$data$truth, pred$data$response, pred$task.desc$negative, pred$task.desc$positive)
   }
 )
+
+#' @export measureFPR
+#' @rdname measures
+#' @format none
+measureFPR = function(truth, response, negative, positive) {
+  measureFP(truth, response, positive) / sum(truth == negative)
+}
 
 #' @export fnr
 #' @rdname measures
@@ -403,9 +492,16 @@ fnr = makeMeasure(id = "fnr", minimize = TRUE, best = 0, worst = 1,
   allowed.pred.types = c("response", "prob"),
   name = "False negative rate",
   fun = function(task, model, pred, feats, extra.args) {
-    fn$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive)
+    measureFNR(pred$data$truth, pred$data$response, pred$task.desc$negative, pred$task.desc$positive)
   }
 )
+
+#' @export measureFNR
+#' @rdname measures
+#' @format none
+measureFNR = function(truth, response, positive, negative) {
+  measureFN(truth, response, negative) / sum(truth == positive)
+}
 
 #' @export ppv
 #' @rdname measures
@@ -416,9 +512,16 @@ ppv = makeMeasure(id = "ppv", minimize = FALSE, best = 1, worst = 0,
   name = "Positive predictive value",
   note = "Also called precision.",
   fun = function(task, model, pred, feats, extra.args) {
-    tp$fun(pred = pred) / sum(pred$data$response == pred$task.desc$positive)
+    measurePPV(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
 )
+
+#' @export measurePPV
+#' @rdname measures
+#' @format none
+measurePPV = function(truth, response, positive) {
+  measureTP(truth, response, positive) / sum(response == positive)
+}
 
 #' @export npv
 #' @rdname measures
@@ -428,9 +531,16 @@ npv = makeMeasure(id = "npv", minimize = FALSE, best = 1, worst = 0,
   allowed.pred.types = c("response", "prob"),
   name = "Negative predictive value",
   fun = function(task, model, pred, feats, extra.args) {
-    tn$fun(pred = pred) / sum(pred$data$response == pred$task.desc$negative)
+    measureNPV(pred$data$truth, pred$data$response, pred$task.desc$negative)
   }
 )
+
+#' @export measureNPV
+#' @rdname measures
+#' @format none
+measureNPV = function(truth, response, negative) {
+  measureTN(truth, response, negative) / sum(response == negative)
+}
 
 #' @export fdr
 #' @rdname measures
@@ -440,9 +550,16 @@ fdr = makeMeasure(id = "fdr", minimize = TRUE, best = 0, worst = 1,
   allowed.pred.types = c("response", "prob"),
   name = "False discovery rate",
   fun = function(task, model, pred, feats, extra.args) {
-    fp$fun(pred = pred) / sum(pred$data$response == pred$task.desc$positive)
+    measureFDR(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
 )
+
+#' @export measureFDR
+#' @rdname measures
+#' @format none
+measureFDR = function(truth, response, positive) {
+  measureFP(truth, response, positive) / sum(response == positive)
+}
 
 #' @export mcc
 #' @rdname measures
@@ -452,13 +569,20 @@ mcc = makeMeasure(id = "mcc", minimize = FALSE,
   allowed.pred.types = c("response", "prob"), best = 1, worst = -1,
   name = "Matthews correlation coefficient",
   fun = function(task, model, pred, feats, extra.args) {
-    (tp$fun(pred = pred) *
-    tn$fun(pred = pred) -
-    fp$fun(pred = pred) *
-    fn$fun(pred = pred)) /
-    sqrt(prod(table(pred$data$truth, pred$data$response)))
+    measureMCC(pred$data$truth, pred$data$response, pred$task.desc$negative, pred$task.desc$positive)
   }
 )
+
+#' @export measureMCC
+#' @rdname measures
+#' @format none
+measureMCC = function(truth, response, negative, positive) {
+  tn = measureTN(truth, response, negative)
+  tp = measureTP(truth, response, positive)
+  fn = measureFN(truth, response, negative)
+  fp = measureFP(truth, response, positive)
+  (tp * tn - fp * fn) / sqrt(prod(table(truth, response)))
+}
 
 #' @export f1
 #' @rdname measures
@@ -468,10 +592,14 @@ f1 = makeMeasure(id = "f1", minimize = FALSE, best = 1, worst = 0,
   allowed.pred.types = c("response", "prob"),
   name = "F1 measure",
   fun = function(task, model, pred, feats, extra.args) {
-    2 * tp$fun(pred = pred) /
-      (sum(pred$data$truth == pred$task.desc$positive) + sum(pred$data$response == pred$task.desc$positive))
+    measureF1(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
 )
+
+measureF1 = function(truth, response, positive) {
+  2 * measureTP(truth, response, positive) /
+    (sum(truth == positive) + sum(response == positive))
+}
 
 #' @export gmean
 #' @rdname measures
@@ -482,9 +610,16 @@ gmean = makeMeasure(id = "gmean", minimize = FALSE, best = 1, worst = 0,
   name = "G-mean",
   note = "Geometric mean of recall and specificity.",
   fun = function(task, model, pred, feats, extra.args) {
-    sqrt(tpr$fun(pred = pred) * tnr$fun(pred = pred))
+    measureGMEAN(pred$data$truth, pred$data$response, pred$task.desc$negative, pred$task.desc$positive)
   }
 )
+
+#' @export measureGMEAN
+#' @rdname measures
+#' @format none
+measureGMEAN = function(truth, response, negative, positive) {
+  sqrt(measureTP(truth, response, positive) * measureTN(truth, response, negative))
+}
 
 #' @export gpr
 #' @rdname measures
@@ -494,9 +629,16 @@ gpr = makeMeasure(id = "gpr", minimize = FALSE, best = 1, worst = 0,
   allowed.pred.types = c("response", "prob"),
   name = "Geometric mean of precision and recall",
   fun = function(task, model, pred, feats, extra.args) {
-    sqrt(ppv$fun(pred = pred) * tpr$fun(pred = pred))
+    measureGPR(pred$data$truth, pred$data$response, pred$task.desc$positive)
   }
 )
+
+#' @export measureGPR
+#' @rdname measures
+#' @format none
+measureGPR = function(truth, response, positive) {
+  sqrt(measurePPV(truth, response, positive) * measureTPR(truth, response, positive))
+}
 
 ###############################################################################
 ### survival ###

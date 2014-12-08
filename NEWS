@@ -11,12 +11,14 @@ mlr_2.3:
 - in the control objects for tuning and feature selection, the user can now define his own logging function
 - default console logging for tuneParams and selectFeatures is more informative, it displays time and memory info
 - updated some properties of some learners
+- externalized measure functions to be used on vectors.
 - some minor bug fixes
 
 - new functions
 -- getTaskType, getTaskId, getTaskTargetNames
 -- plotROCRCurves
 -- plotViperCharts
+-- measureSSE, measureMSE, measureRMSE, measureMEDSE, ...
 
 - new learners:
 -- classif.xgboost

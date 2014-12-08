@@ -23,6 +23,31 @@
 \alias{mcc}
 \alias{mcp}
 \alias{meancosts}
+\alias{measureACC}
+\alias{measureAUC}
+\alias{measureBAC}
+\alias{measureFDR}
+\alias{measureFN}
+\alias{measureFNR}
+\alias{measureFP}
+\alias{measureFPR}
+\alias{measureGMEAN}
+\alias{measureGPR}
+\alias{measureMAE}
+\alias{measureMCC}
+\alias{measureMEDAE}
+\alias{measureMEDSE}
+\alias{measureMMCE}
+\alias{measureMSE}
+\alias{measureNPV}
+\alias{measurePPV}
+\alias{measureRMSE}
+\alias{measureSAE}
+\alias{measureSSE}
+\alias{measureTN}
+\alias{measureTNR}
+\alias{measureTP}
+\alias{measureTPR}
 \alias{measures}
 \alias{medae}
 \alias{medse}
@@ -55,21 +80,39 @@ timeboth
 
 sse
 
+measureSSE(truth, response)
+
 mse
+
+measureMSE(truth, response)
 
 rmse
 
+measureRMSE(truth, response)
+
 medse
+
+measureMEDSE(truth, response)
 
 sae
 
+measureSAE(truth, response)
+
 mae
+
+measureMAE(truth, response)
 
 medae
 
+measureMEDAE(truth, response)
+
 mmce
 
+measureMMCE(truth, response)
+
 acc
+
+measureACC(truth, response)
 
 ber
 
@@ -77,37 +120,69 @@ multiclass.auc
 
 auc
 
+measureAUC(probabilites, truth, negative, positive)
+
 bac
+
+measureBAC(truth, response, negative, positive)
 
 tp
 
+measureTP(truth, response, positive)
+
 tn
+
+measureTN(truth, response, negative)
 
 fp
 
+measureFP(truth, response, positive)
+
 fn
+
+measureFN(truth, response, negative)
 
 tpr
 
+measureTPR(truth, response, positive)
+
 tnr
+
+measureTNR(truth, response, negative)
 
 fpr
 
+measureFPR(truth, response, negative, positive)
+
 fnr
+
+measureFNR(truth, response, positive, negative)
 
 ppv
 
+measurePPV(truth, response, positive)
+
 npv
+
+measureNPV(truth, response, negative)
 
 fdr
 
+measureFDR(truth, response, positive)
+
 mcc
+
+measureMCC(truth, response, negative, positive)
 
 f1
 
 gmean
 
+measureGMEAN(truth, response, negative, positive)
+
 gpr
+
+measureGPR(truth, response, positive)
 
 cindex
 
@@ -125,6 +200,22 @@ G2
 
 silhouette
 }
+\arguments{
+\item{truth}{[\code{factor}]\cr
+Vector of the true class.}
+
+\item{response}{[\code{factor}]\cr
+Vector of the predicted class.}
+
+\item{probabilites}{[\code{numeric}]\cr
+The probabilites for the positive class.}
+
+\item{negative}{[\code{character(1)}]\cr
+The name of the negative class.}
+
+\item{positive}{[\code{character(1)}]\cr
+The name of the positove class.}
+}
 \description{
 A performance measure is evaluated after a single train/predict step and returns a single number to assess the quality
 of the prediction (or maybe only the model, think AIC).
@@ -135,6 +226,8 @@ in the tutorial appendix: \url{http://berndbischl.github.io/mlr/tutorial/html/me
 
 If you want a measure for a misclassification cost matrix, look at \code{\link{makeCostMeasure}}.
 If you want to implement your own measure, look at \code{\link{makeMeasure}}.
+
+Most measures can directly be accessed via the function named after the scheme measureX (e.g. measureSSE).
 }
 \seealso{
 Other performance: \code{\link{Measure}},
