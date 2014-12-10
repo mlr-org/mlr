@@ -1,3 +1,5 @@
+context("plotViperCharts")
+
 test_that("plotViperCharts", {
   lrn1 = makeLearner("classif.rpart", predict.type = "prob")
   lrn2 = makeLearner("classif.lda", predict.type = "prob")
