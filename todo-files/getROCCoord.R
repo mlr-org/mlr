@@ -91,9 +91,9 @@ getROCCoords.BenchmarkResult = function(obj, thresholds = 50L) {
   for (i in seq_along(obj)) {
     x = obj[[i]]
     for (j in seq_along(x)) {
-      res[[k]] = rbind(learner = names(obj)[i], getROCCoords(x[[j]]$pred, thresholds))
+      res[[k]] = data.frame(learner = names(x)[i], getROCCoords(x[[j]]$pred, thresholds))
       k = k + 1L
     }
   }
-  do.call(rbind, coord)
+  do.call(rbind, res)
 }
