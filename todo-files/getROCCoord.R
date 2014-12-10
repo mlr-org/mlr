@@ -71,8 +71,9 @@ getROCCoords.ResamplePrediction = function(obj, thresholds = 50L) {
     n.pos = sum(is.pos)
     n.neg = sum(is.neg)
     prob = df[, paste0("prob.", pos)]
-    cbind(thres, tpr = vnapply(thres, function(i) sum(prob >= i & is.pos)/n.pos),
-      fpr = vnapply(thres, function(i) sum(prob >= i & is.neg)/n.neg))
+    tpr = vnapply(thres, function(i) sum(prob >= i & is.pos)/n.pos)
+    fpr = vnapply(thres, function(i) sum(prob >= i & is.neg)/n.neg)
+    cbind(thres, tpr, fpr)
   })
   ddply(coords, ~ set + thres, summarize, tpr = mean(tpr), fpr = mean(fpr))
 }
