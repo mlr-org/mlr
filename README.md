@@ -1,4 +1,4 @@
-mlr: Machine Learning in R
+![mlr](https://raw.githubusercontent.com/berndbischl/mlr/gh-pages/images/mlrLogo_blue_141x64.png): Machine Learning in R
 ==========================
 
 * [Offical CRAN release site](http://cran.r-project.org/web/packages/mlr/)
