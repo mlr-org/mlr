@@ -74,8 +74,7 @@ getROCCoords.ResamplePrediction = function(obj, thresholds = 50L) {
     cbind(thres, tpr = vnapply(thres, function(i) sum(prob >= i & is.pos)/n.pos),
       fpr = vnapply(thres, function(i) sum(prob >= i & is.neg)/n.neg))
   })
-  coords = ddply(coords, ~ set + thres, summarize, tpr = mean(tpr), fpr = mean(fpr))
-  data.frame(task = getTaskId(obj), coords, stringsAsFactors = FALSE)
+  ddply(coords, ~ set + thres, summarize, tpr = mean(tpr), fpr = mean(fpr))
 }
 
 #' @export
@@ -91,7 +90,7 @@ getROCCoords.BenchmarkResult = function(obj, thresholds = 50L) {
   for (i in seq_along(obj)) {
     x = obj[[i]]
     for (j in seq_along(x)) {
-      res[[k]] = data.frame(learner = names(x)[i], getROCCoords(x[[j]]$pred, thresholds))
+      res[[k]] = data.frame(task = names(obj)[i], learner = names(x)[j], getROCCoords(x[[j]]$pred, thresholds))
       k = k + 1L
     }
   }
