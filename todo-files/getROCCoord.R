@@ -60,23 +60,22 @@ getROCCoords.Prediction = function(obj, thresholds = 50L) {
 }
 
 #' @export
-getROCCoord.ResamplePrediction = function(obj, thresholds = 50L) {
+getROCCoords.ResamplePrediction = function(obj, thresholds = 50L) {
   checkPrediction(obj, task.type = "classif", predict.type = "prob", binary = TRUE)
   pos = obj$task.desc$positive
   thresholds = asInt(thresholds)
   thres = seq(0, 1, len = thresholds)
-  truth = obj$data$truth
-  prob = getProbabilities(obj)
-  dat = data.frame(truth = truth, prob = prob)
-  dat = obj$data[, c("truth", paste0("prob.", pos), "iter", "set")]
-  names(dat)[2L] = "prob"
-  z = ddply(dat, c("set", "iter"), function(d) {
-    data.frame(thres,
-      tpr = vnapply(thres, measureTPR, truth = d$truth, prob = d$prob),
-      fpr = vnapply(thres, measureFPR, truth = d$truth, prob = d$prob)
-    )
+  coords = ddply(obj$data, ~ set + iter, function(df) {
+    is.pos = df$truth == pos
+    is.neg = !is.pos
+    n.pos = sum(is.pos)
+    n.neg = sum(is.neg)
+    prob = df[, paste0("prob.", pos)]
+    cbind(thres, tpr = vnapply(thres, function(i) sum(prob >= i & is.pos)/n.pos),
+      fpr = vnapply(thres, function(i) sum(prob >= i & is.neg)/n.neg))
   })
-  data.frame(set = rep(levels(dat$set), each = thresholds), coord, stringsAsFactors = FALSE)
+  coords = ddply(coords, ~ set + thres, summarize, tpr = mean(tpr), fpr = mean(fpr))
+  data.frame(task = getTaskId(obj), coords, stringsAsFactors = FALSE)
 }
 
 #' @export
@@ -87,12 +86,13 @@ getROCCoords.ResampleResult = function(obj, thresholds = 50L) {
 #' @export
 getROCCoords.BenchmarkResult = function(obj, thresholds = 50L) {
   res = list()
+  k = 1L
   # for each task / learner combo rbind the df to res
   for (i in seq_along(obj)) {
     x = obj[[i]]
     for (j in seq_along(x)) {
-      res[[k]] = rbind(task = names(obj)[i], learner = x$learner, getROCCoords(x[[j]]$pred, thresholds))
-      k = k + 1
+      res[[k]] = rbind(learner = names(obj)[i], getROCCoords(x[[j]]$pred, thresholds))
+      k = k + 1L
     }
   }
   do.call(rbind, coord)
