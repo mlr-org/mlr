@@ -404,13 +404,13 @@ pred
 #&gt; predict.type: prob
 #&gt; threshold: Bad=0.50,Good=0.50
 #&gt; time: 0.02
-#&gt;   id truth prob.Bad prob.Good response
-#&gt; 1  1  Good  0.03525    0.9647     Good
-#&gt; 2  2   Bad  0.63222    0.3678      Bad
-#&gt; 3  3  Good  0.02807    0.9719     Good
-#&gt; 4  4  Good  0.25183    0.7482     Good
-#&gt; 5  5   Bad  0.75193    0.2481      Bad
-#&gt; 6  6  Good  0.26230    0.7377     Good
+#&gt;   id truth   prob.Bad prob.Good response
+#&gt; 1  1  Good 0.03525092 0.9647491     Good
+#&gt; 2  2   Bad 0.63222363 0.3677764      Bad
+#&gt; 3  3  Good 0.02807414 0.9719259     Good
+#&gt; 4  4  Good 0.25182703 0.7481730     Good
+#&gt; 5  5   Bad 0.75193275 0.2480673      Bad
+#&gt; 6  6  Good 0.26230149 0.7376985     Good
 </code></pre>
 
 <p>The default thresholds for both classes are 0.5.
@@ -428,7 +428,7 @@ th = costs[2,1]/(costs[2,1] + costs[1,2])
 th
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [1] 0.1667
+<pre class="prettyprint well"><code>#&gt; [1] 0.1666667
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Predict class labels according to the theoretical threshold
@@ -440,13 +440,13 @@ pred.th
 #&gt; predict.type: prob
 #&gt; threshold: Bad=0.17,Good=0.83
 #&gt; time: 0.02
-#&gt;   id truth prob.Bad prob.Good response
-#&gt; 1  1  Good  0.03525    0.9647     Good
-#&gt; 2  2   Bad  0.63222    0.3678      Bad
-#&gt; 3  3  Good  0.02807    0.9719     Good
-#&gt; 4  4  Good  0.25183    0.7482      Bad
-#&gt; 5  5   Bad  0.75193    0.2481      Bad
-#&gt; 6  6  Good  0.26230    0.7377      Bad
+#&gt;   id truth   prob.Bad prob.Good response
+#&gt; 1  1  Good 0.03525092 0.9647491     Good
+#&gt; 2  2   Bad 0.63222363 0.3677764      Bad
+#&gt; 3  3  Good 0.02807414 0.9719259     Good
+#&gt; 4  4  Good 0.25182703 0.7481730      Bad
+#&gt; 5  5   Bad 0.75193275 0.2480673      Bad
+#&gt; 6  6  Good 0.26230149 0.7376985      Bad
 </code></pre>
 
 <p>In order to calculate the average costs over the entire data set we first need to create a new
@@ -508,7 +508,7 @@ tune.res
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; $th
-#&gt; [1] 0.1331
+#&gt; [1] 0.1330648
 #&gt; 
 #&gt; $perf
 #&gt; credit.costs 
@@ -597,23 +597,23 @@ tune.res
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt;    wcw.weight credit.costs.test.mean mmce.test.mean
-#&gt; 1           4                 0.5639          0.332
-#&gt; 2        4.25                 0.5539          0.334
-#&gt; 3         4.5                 0.5420          0.334
-#&gt; 4        4.75                 0.5350          0.339
-#&gt; 5           5                 0.5330          0.345
-#&gt; 6        5.25                 0.5360          0.356
-#&gt; 7         5.5                 0.5120          0.352
-#&gt; 8        5.75                 0.5100          0.354
-#&gt; 9           6                 0.5090          0.357
-#&gt; 10       6.25                 0.5120          0.364
-#&gt; 11        6.5                 0.5100          0.370
-#&gt; 12       6.75                 0.5120          0.372
-#&gt; 13          7                 0.5070          0.375
-#&gt; 14       7.25                 0.5070          0.383
-#&gt; 15        7.5                 0.5120          0.388
-#&gt; 16       7.75                 0.5140          0.394
-#&gt; 17          8                 0.5130          0.397
+#&gt; 1           4              0.5639292      0.3319727
+#&gt; 2        4.25              0.5539432      0.3339747
+#&gt; 3         4.5              0.5419611      0.3339807
+#&gt; 4        4.75              0.5349781      0.3389857
+#&gt; 5           5              0.5329701      0.3449857
+#&gt; 6        5.25              0.5359551      0.3559787
+#&gt; 7         5.5              0.5119760      0.3519837
+#&gt; 8        5.75              0.5099681      0.3539797
+#&gt; 9           6              0.5089760      0.3569797
+#&gt; 10       6.25              0.5119701      0.3639778
+#&gt; 11        6.5              0.5099591      0.3699748
+#&gt; 12       6.75              0.5119611      0.3719768
+#&gt; 13          7              0.5069621      0.3749738
+#&gt; 14       7.25              0.5069561      0.3829758
+#&gt; 15        7.5              0.5119551      0.3879748
+#&gt; 16       7.75              0.5139691      0.3939808
+#&gt; 17          8              0.5129770      0.3969808
 </code></pre>
 
 <h5 id="ii-over-and-undersampling">ii. Over- and undersampling</h5>
@@ -751,8 +751,8 @@ tune.res
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; $th
-#&gt;       1       2       3 
-#&gt; 0.07472 0.40874 0.51655 
+#&gt;          1          2          3 
+#&gt; 0.07471603 0.40873793 0.51654604 
 #&gt; 
 #&gt; $perf
 #&gt; [1] 3.314
@@ -762,8 +762,8 @@ tune.res
 th/sum(th)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;       1       2       3 
-#&gt; 0.05172 0.63218 0.31609
+<pre class="prettyprint well"><code>#&gt;          1          2          3 
+#&gt; 0.05172414 0.63218391 0.31609195
 </code></pre>
 
 <h4 id="2-rebalancing_1">2. Rebalancing</h4>
@@ -903,7 +903,7 @@ pred
 <pre class="prettyprint well"><code>#&gt; Prediction: 150 observations
 #&gt; predict.type: response
 #&gt; threshold: 
-#&gt; time: 0.08
+#&gt; time: 0.07
 #&gt;   id response
 #&gt; 1  1   setosa
 #&gt; 2  2   setosa
@@ -917,7 +917,7 @@ pred
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; meancosts       mcp 
-#&gt;     136.4     131.6
+#&gt;  136.4426  131.5903
 </code></pre>
 
 </div>

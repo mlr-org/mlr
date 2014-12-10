@@ -424,7 +424,7 @@ not be separated when splitting into training and test sets during a resampling 
 </code></pre>
 
 <pre class="prettyprint well"><code>#&gt; List of 8
-#&gt;  $ id          : chr &quot;bh&quot;
+#&gt;  $ id          : chr &quot;BostonHousing&quot;
 #&gt;  $ type        : chr &quot;regr&quot;
 #&gt;  $ target      : chr &quot;medv&quot;
 #&gt;  $ size        : int 506
@@ -473,13 +473,13 @@ head(getTaskTargets(regr.task))
 head(getTaskCosts(costsens.task))
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;      y1     y2      y3
-#&gt; [1,]  0 1589.6  674.44
-#&gt; [2,]  0 1173.4  828.41
-#&gt; [3,]  0  942.8 1095.34
-#&gt; [4,]  0 1049.6  477.82
-#&gt; [5,]  0 1121.9   90.85
-#&gt; [6,]  0 1820.0  841.07
+<pre class="prettyprint well"><code>#&gt;      y1        y2         y3
+#&gt; [1,]  0 1589.5664  674.44434
+#&gt; [2,]  0 1173.4364  828.40682
+#&gt; [3,]  0  942.7611 1095.33713
+#&gt; [4,]  0 1049.5562  477.82496
+#&gt; [5,]  0 1121.8899   90.85237
+#&gt; [6,]  0 1819.9830  841.06686
 </code></pre>
 
 <pre class="prettyprint well"><code class="r">## Accessing the data set in classif.task:
@@ -519,7 +519,7 @@ removeConstantFeatures(cluster.task)
 <pre class="prettyprint well"><code>#&gt; Removing 1 columns: am
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Unsupervised task: mtcars
+<pre class="prettyprint well"><code>#&gt; Unsupervised task: cars
 #&gt; Type: cluster
 #&gt; Observations: 14
 #&gt; Features:
