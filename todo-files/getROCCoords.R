@@ -45,18 +45,16 @@ getROCCoords = function(obj, thresholds = 50L) {
 getROCCoords.Prediction = function(obj, thresholds = 50L) {
   checkPrediction(obj, task.type = "classif", predict.type = "prob", binary = TRUE)
   pos = obj$task.desc$positive
-  dat = data.frame(truth = obj$data$truth, prob = getProbabilities(obj))
-  dat = sortByCol(dat, "prob", asc = FALSE)
-  n.pos = sum(dat$truth == pos)
-  n.neg = nrow(dat) - n.pos
-  # FIXME: BB: is the calculation here really correct for ties? especially if
-  # we later remove dupliates (later dupls in the order)? this MUST be commented.
-  # actually: we rather need a test here
-  dat = data.frame(threshold = dat$prob, tpr = cumsum(dat$truth == pos)/n.pos, fpr = cumsum(dat$truth != pos)/n.neg)
+  data = data.frame(truth = obj$data$truth, prob = getProbabilities(obj))
+  data = sortByCol(data, "prob", asc = FALSE)
+  n.pos = sum(data$truth == pos)
+  n.neg = nrow(data) - n.pos
+  data = data.frame(threshold = data$prob, tpr = cumsum(data$truth == pos)/n.pos, fpr = cumsum(data$truth != pos)/n.neg)
   # forcefully add th = 0 and th = 1
-  dat = rbind(data.frame(threshold = 1, tpr = 0, fpr = 0), dat, data.frame(threshold = 0, tpr = 1, fpr = 1))
-  dat = dat[!duplicated(dat$thres),]
-  setRowNames(dat, NULL)
+  data = rbind(data.frame(threshold = 1, tpr = 0, fpr = 0), data, data.frame(threshold = 0, tpr = 1, fpr = 1))
+  data = data[!duplicated(data$thres, fromLast = TRUE),]
+  rownames(data) = NULL
+  makeS3Obj("ROCCoords", data = data)
 }
 
 #' @export
@@ -75,7 +73,8 @@ getROCCoords.ResamplePrediction = function(obj, thresholds = 50L) {
     fpr = vnapply(thres, function(i) sum(prob >= i & is.neg)/n.neg)
     cbind(thres, tpr, fpr)
   })
-  ddply(coords, ~ set + thres, summarize, tpr = mean(tpr), fpr = mean(fpr))
+  data = ddply(coords, ~ set + thres, summarize, tpr = mean(tpr), fpr = mean(fpr))
+  makeS3Obj("ROCCoords", data = data)
 }
 
 #' @export
@@ -96,4 +95,20 @@ getROCCoords.BenchmarkResult = function(obj, thresholds = 50L) {
     }
   }
   do.call(rbind, res)
+}
+
+#' @title Plot ROC coords with ggplot2.
+#'
+#' @description
+#' This function plots the coordinates of ROC curves with ggplot2.
+#'
+#' @family roc
+#' @export
+plotROCCords = function(coords, line.size = 0.5, coord.fixed = TRUE) {
+  pl = ggplot(coords, aes(x = fpr, y = tpr)) +
+  pl = pl + geom_segment(aes(x = 0, y = 0, xend = 1, yend = 1), color = "grey", size = line.size) +
+  pl = pl + geom_path(size = line.size)
+  if (coord.fixed)
+    pl = pl + coord_fixed(ratio = 1)
+  return(pl)
 }
