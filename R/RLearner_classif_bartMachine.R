@@ -20,7 +20,7 @@ makeRLearner.classif.bartMachine = function() {
       makeLogicalLearnerParam(id = "debug_log", default = FALSE),
       makeLogicalLearnerParam(id = "run_in_sample", default = TRUE),
       makeNumericVectorLearnerParam(id = "cov_prior_vec"),
-      makeLogicalLearnerParam(id = "use_missing_data", default = FALSE),
+      makeLogicalLearnerParam(id = "use_missing_data", default = TRUE),
       makeIntegerLearnerParam(id = "num_rand_samps_in_library", default = 10000, lower = 1),
       makeLogicalLearnerParam(id = "use_missing_data_dummies_as_covars", default = FALSE),
       makeLogicalLearnerParam(id = "replace_missing_data_with_x_j_bar", default = FALSE),
@@ -29,10 +29,11 @@ makeRLearner.classif.bartMachine = function() {
       makeLogicalLearnerParam(id = "mem_cache_for_speed", default = TRUE),
       makeLogicalLearnerParam(id = "verbose", default = TRUE)
     ),
+    par.vals = list("use_missing_data" = TRUE),
     properties = c("numerics", "prob", "twoclass", "factors", "missings"),
     name = "Bayesian Additive Regression Trees",
     short.name = "bartmachine",
-    note = "The learner can handle missing values in features, but you need to actively switch that behavior on by setting e.g. 'use_missing_data'. See its doc page for further details."
+    note = "'use_missing_data' has been set to TRUE by default to allow missing data support"
   )
 }
 
