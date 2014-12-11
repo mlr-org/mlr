@@ -41,10 +41,14 @@ trainLearner.regr.mob = function(.learner, .task, .subset, .weights = NULL, alph
   f = as.formula(paste(target, "~", collapse(term.feats, sep = " + "), "|", collapse(part.feats, sep = " + ")))
 
   if (is.null(.weights)) {
-    party::mob(f, data = getTaskData(.task, .subset), control = cntrl, ...)
+    model = party::mob(f, data = getTaskData(.task, .subset), control = cntrl, ...)
   } else  {
-    party::mob(f, data = getTaskData(.task, .subset), control = cntrl, weights = .weights, ...)
+    model = party::mob(f, data = getTaskData(.task, .subset), control = cntrl, weights = .weights, ...)
   }
+  # sometimes mob fails to fit a model but does not signal an exception.
+  if (anyMissing(coef(model)))
+    stop("Failed to fit party::mob. Some coefficients are estimated as NA")
+  model
 }
 
 #' @export
