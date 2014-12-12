@@ -11,7 +11,7 @@
 #'
 #' If you want a measure for a misclassification cost matrix, look at \code{\link{makeCostMeasure}}.
 #' If you want to implement your own measure, look at \code{\link{makeMeasure}}.
-#' 
+#'
 #' Most measures can directly be accessed via the function named after the scheme measureX (e.g. measureSSE).
 #' @param truth [\code{factor}]\cr
 #'   Vector of the true class.
@@ -340,9 +340,9 @@ bac = makeMeasure(id = "bac", minimize = FALSE, best = 1, worst = 0,
 #' @format none
 measureBAC = function(truth, response, negative, positive) {
   mean(c(
-    measureTP(truth, response, positive) / sum(truth == positive), 
+    measureTP(truth, response, positive) / sum(truth == positive),
     measureTN(truth, response, negative) / sum(truth == negative)
-    ))
+  ))
 }
 
 #' @export tp
@@ -708,7 +708,7 @@ db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
   note ="see `?clusterSim::index.DB`",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
-    index.DB(feats, pred$data$response)$DB
+    clusterSim::index.DB(feats, pred$data$response)$DB
   }
 )
 
@@ -722,7 +722,7 @@ dunn = makeMeasure(id = "dunn", minimize = FALSE, best = Inf, worst = 0,
   note = "see `?clValid::dunn`",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clValid")
-    dunn(Data = feats, clusters = pred$data$response)
+    clValid::dunn(Data = feats, clusters = pred$data$response)
   }
 )
 
@@ -736,7 +736,7 @@ G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,
   note = "see `?clusterSim::index.G1`",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
-    index.G1(feats, pred$data$response)
+    clusterSim::index.G1(feats, pred$data$response)
   }
 )
 
@@ -750,7 +750,7 @@ G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0,
   note = "see `?clusterSim::index.G2`",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
-    index.G2(dist.GDM(feats), pred$data$response)
+    clusterSim::index.G2(clusterSim::dist.GDM(feats), pred$data$response)
   }
 )
 
@@ -764,7 +764,7 @@ silhouette = makeMeasure(id = "silhouette", minimize = FALSE, best = Inf, worst 
   note = "see `?clusterSim::index.S`",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
-    index.S(dist.GDM(feats), pred$data$response)
+    clusterSim::index.S(clusterSim::dist.GDM(feats), pred$data$response)
   }
 )
 
