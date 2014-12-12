@@ -8,14 +8,15 @@ makeRLearner.regr.randomForestSRC = function() {
       makeDiscreteLearnerParam(id = "bootstrap", values = c("by.root", "by.node", "none"), default = "by.root"),
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
       makeIntegerLearnerParam(id = "nodesize", lower = 1L, default = 5L),
-      makeDiscreteLearnerParam(id = "na.action", values = c("na.omit", "na.impute"), default = "na.omit"),
+      makeDiscreteLearnerParam(id = "na.action", values = c("na.omit", "na.impute"), default = "na.impute", when = "both"),
       makeIntegerLearnerParam(id = "nimpute", default = 1L, lower = 1L),
       makeNumericVectorLearnerParam(id = "xwar.wt", lower = 0)
     ),
+    par.vals = list(na.action = "na.impute"),
     properties = c("missings", "numerics", "factors"),
     name = "Random Forest",
     short.name = "rfsrc",
-    note = ""
+    note = "na.action' has been set to 'na.impute' by default to allow missing data support"
   )
 }
 
@@ -27,5 +28,5 @@ trainLearner.regr.randomForestSRC = function(.learner, .task, .subset, .weights 
 
 #' @export
 predictLearner.regr.randomForestSRC = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata = .newdata, importance = "none", na.action = "na.impute", ...)$predicted
+  predict(.model$learner.model, newdata = .newdata, importance = "none", ...)$predicted
 }
