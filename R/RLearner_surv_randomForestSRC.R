@@ -10,12 +10,13 @@ makeRLearner.surv.randomForestSRC = function() {
       makeNumericLearnerParam(id = "mtry.ratio", lower = 0L, upper = 1L),
       makeIntegerLearnerParam(id = "nodesize", lower = 1L, default = 3L),
       makeDiscreteLearnerParam(id = "splitrule", values = c("logrank", "logrankscore"), default = "logrank"),
-      makeDiscreteLearnerParam(id = "na.action", values = c("na.omit", "na.impute"), default = "na.omit")
+      makeDiscreteLearnerParam(id = "na.action", values = c("na.omit", "na.impute"), default = "na.impute", when = "both")
     ),
+    par.vals = list(na.action = "na.impute"),
     properties = c("missings", "numerics", "factors", "ordered", "rcens"),
     name = "Random Forests for Survival",
     short.name = "rfsrc",
-    note = ""
+    note = "'na.action' has been set to 'na.impute' by default to allow missing data support"
   )
 }
 
@@ -36,7 +37,7 @@ trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights 
 #' @export
 predictLearner.surv.randomForestSRC = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response") {
-    predict(.model$learner.model, newdata = .newdata, importance = "none", na.action = "na.impute", ...)$predicted
+    predict(.model$learner.model, newdata = .newdata, importance = "none", ...)$predicted
   } else {
     stop("Unknown predict type")
   }
