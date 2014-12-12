@@ -8,7 +8,7 @@ makeRLearner.classif.randomForestSRC = function() {
       makeDiscreteLearnerParam(id = "bootstrap", values = c("by.root", "by.node", "none"), default = "by.root"),
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
       makeIntegerLearnerParam(id = "nodesize", lower = 1L, default = 1L),
-      makeDiscreteLearnerParam(id = "na.action", values = c("na.omit", "na.impute"), default = "na.impute"),
+      makeDiscreteLearnerParam(id = "na.action", values = c("na.omit", "na.impute"), default = "na.impute", when = "both"),
       makeIntegerLearnerParam(id = "nimpute", default = 1L, lower = 1L),
       makeNumericVectorLearnerParam(id = "xwar.wt", lower = 0)
     ),
