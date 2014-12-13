@@ -22,7 +22,6 @@ test_that("PreprocWrapperPCA works with factors", {
   expect_equal(getLeafModel(m)$features, c("x1", "PC1", "PC2"))
   expect_true(!is.na(perf))
   
-  f = function() as.factor(sample(1:2, 100, replace=TRUE))
   data = data.frame(x1=f(), x2=runif(100), y=f())
   task = makeClassifTask(data=data, target="y")
   lrn1 = makeLearner("classif.multinom")
@@ -33,7 +32,6 @@ test_that("PreprocWrapperPCA works with factors", {
   expect_equal(getLeafModel(m)$features, c("x1", "PC1"))
   expect_true(!is.na(perf))
   
-  f = function() as.factor(sample(1:2, 100, replace=TRUE))
   data = data.frame(x1=f(), x2=f(), y=f())
   task = makeClassifTask(data=data, target="y")
   lrn1 = makeLearner("classif.multinom")
