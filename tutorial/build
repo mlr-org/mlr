@@ -61,6 +61,7 @@ suppressPackageStartupMessages({
   library(glmnet) # auc
   library(pROC) # auc
   library(clValid) # dunn
+  library(Hmisc) #impute
 
   # required to build
   library(methods)
