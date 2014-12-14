@@ -50,6 +50,9 @@ test_that("learners work", {
       lrn = setHyperPars(lrn, mfinal = 2L)
     if (lrn$id == "classif.cforest") # we only have 4 features, we dont want a warn
       lrn = setHyperPars(lrn, mtry = 1L)
+    # increase speed and suppress output from bartMachine
+    if (lrn$id == "classif.bartMachine")
+      lrn = setHyperPars(lrn, verbose = FALSE, run_in_sample = FALSE, num_iterations_after_burn_in = 10L)
     expect_output(print(lrn), lrn$id)
     m = train(lrn, task)
     p = predict(m, task)
@@ -67,6 +70,9 @@ test_that("learners work", {
       lrn = setHyperPars(lrn, mfinal = 2L)
     if (lrn$id == "classif.cforest") # we only have 4 features, we dont want a warn
       lrn = setHyperPars(lrn, mtry = 1L)
+    # increase speed and suppress output from bartMachine
+    if (lrn$id == "classif.bartMachine")
+      lrn = setHyperPars(lrn, verbose = FALSE, run_in_sample = FALSE, num_iterations_after_burn_in = 10L)
     m = train(lrn, task)
     p = predict(m, task)
     getProbabilities(p)
@@ -95,10 +101,9 @@ test_that("learners work", {
   task = makeClassifTask(data = d, target = binaryclass.target)
   lrns = mylist(task, create = TRUE)
   lapply(lrns, function(lrn) {
-    # FIXME: bartMachine is flagged with property "missing" but we need to set a hyperpar to enable this
-    # this is not perfect, but we I am not sure if we should change the defaults
+    # increase speed and suppress output from bartMachine
     if (lrn$id == "classif.bartMachine")
-      lrn = setHyperPars(lrn, use_missing_data = TRUE)
+      lrn = setHyperPars(lrn, verbose = FALSE, run_in_sample = FALSE, num_iterations_after_burn_in = 10L)
     m = train(lrn, task)
     p = predict(m, task)
     expect_true(!is.na(performance(p)))
@@ -115,6 +120,9 @@ test_that("learners work", {
       lrn = setHyperPars(lrn, nugget.estim = TRUE)
     if (lrn$id == "regr.cforest") # we only have 2 features, we dont want a warn
       lrn = setHyperPars(lrn, mtry = 1L)
+    # increase speed and suppress output from bartMachine
+    if (lrn$id == "regr.bartMachine")
+      lrn = setHyperPars(lrn, verbose = FALSE, run_in_sample = FALSE, num_iterations_after_burn_in = 10L)
     m = train(lrn, task)
     p = predict(m, task)
     expect_true(!is.na(performance(p)))
@@ -156,6 +164,9 @@ test_that("learners work", {
   task = makeRegrTask(data = d, target = regr.target)
   lrns = mylist(task, create = TRUE)
   lapply(lrns, function(lrn) {
+    # increase speed and suppress output from bartMachine
+    if (lrn$id == "regr.bartMachine")
+      lrn = setHyperPars(lrn, verbose = FALSE, run_in_sample = FALSE, num_iterations_after_burn_in = 10L)
     m = train(lrn, task)
     p = predict(m, task)
     expect_true(!is.na(performance(p)))
