@@ -3,7 +3,7 @@
 #' @description
 #' Before training a PCA will be performed on all numeric columns in the trainings dataset.
 #' The PCA center, scale and rotation will be saved and applied to the test dataset.
-#' Internally uses \code{\link{prcomp}} with \code{scale = TRUE} before predicting.
+#' Internally uses \code{\link{prcomp}} with \code{scale = TRUE} before training.
 #'
 #' @template arg_learner
 #' @export
@@ -23,7 +23,6 @@ makePreprocWrapperPCA = function(learner) {
     data = data[, setdiff(cns, nums), drop = FALSE]
     data = cbind(data, as.data.frame(pca$x))
     ctrl = list(center = pca$center, scale = pca$scale, rotation = pca$rotation, pca.colnames = nums)
-    return(list(data = data, control = ctrl))
     list(data = data, control = ctrl)
   }
 
@@ -37,7 +36,7 @@ makePreprocWrapperPCA = function(learner) {
     x = scale(x, center = control$center, scale = control$scale)
     x = x %*% control$rotation
     data = data[, setdiff(cns, nums), drop = FALSE]
-    data = cbind(data, as.data.frame(x))
+    cbind(data, as.data.frame(x))
   }
   
   makePreprocWrapper(learner, trainfun, predictfun)
