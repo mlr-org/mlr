@@ -1,11 +1,7 @@
-#FIXME: I have no idea which routine internally prints to which fucking stream
-# but neither verbose=FALSE can sicth off the iteration  output in all case, nor
-# can I suppress it with capture.output or suppressMessages
-
 #' @export
-makeRLearner.classif.bartMachine = function() {
-  makeRLearnerClassif(
-    cl = "classif.bartMachine",
+makeRLearner.regr.bartMachine = function() {
+  makeRLearnerRegr(
+    cl = "regr.bartMachine",
     package = "bartMachine",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "num_trees", default = 50L, lower = 1L),
@@ -30,7 +26,7 @@ makeRLearner.classif.bartMachine = function() {
       makeLogicalLearnerParam(id = "verbose", default = TRUE)
     ),
     par.vals = list("use_missing_data" = TRUE),
-    properties = c("numerics", "prob", "twoclass", "factors", "missings"),
+    properties = c("numerics", "factors", "missings"),
     name = "Bayesian Additive Regression Trees",
     short.name = "bartmachine",
     note = "'use_missing_data' has been set to TRUE by default to allow missing data support"
@@ -38,23 +34,12 @@ makeRLearner.classif.bartMachine = function() {
 }
 
 #' @export
-trainLearner.classif.bartMachine = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.regr.bartMachine = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   bartMachine::bartMachine(X = d$data, y = d$target, ...)
 }
 
 #' @export
-predictLearner.classif.bartMachine = function(.learner, .model, .newdata, ...) {
-  levs = c(.model$task.desc$negative, .model$task.desc$positive)
-  if(.learner$predict.type == "prob"){
-    p = predict(.model$learner.model, new_data = .newdata, type = "prob", ...)
-    y = matrix(0, ncol = 2, nrow = nrow(.newdata))
-    colnames(y) = levs
-    y[, 1L] = 1-p
-    y[, 2L] = p
-  } else {
-    y = predict(.model$learner.model, new_data = .newdata, type = "class", ...)
-    y = factor(y, levs)
-  }
-  return(y)
+predictLearner.regr.bartMachine = function(.learner, .model, .newdata, ...) {
+  predict(.model$learner.model, new_data = .newdata, ...)
 }

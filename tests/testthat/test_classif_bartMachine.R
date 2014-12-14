@@ -3,8 +3,9 @@ context("classif_bartMachine")
 test_that("classif_bartMachine", {
   library(bartMachine)
   parset.list = list(
-    list(num_burn_in = 20L, num_iterations_after_burn_in = 50L),
-    list(num_burn_in = 20L, num_iterations_after_burn_in = 50L, alpha = 0.8, num_trees = 25L)
+    list(num_burn_in = 20L, num_iterations_after_burn_in = 50L, run_in_sample = FALSE),
+    list(num_burn_in = 20L, num_iterations_after_burn_in = 50L, alpha = 0.8, num_trees = 25L,
+         run_in_sample = FALSE)
   )
 
   old.predicts.list = list()

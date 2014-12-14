@@ -25,6 +25,7 @@ mlr_2.3:
 
 - new learners:
 -- classif.xgboost
+-- regr.bartMachine
 -- regr.elmNN
 -- regr.xgboost
 -- surv.rpart
