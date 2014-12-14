@@ -10,7 +10,7 @@ makeRLearner.classif.bartMachine = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "num_trees", default = 50L, lower = 1L),
       makeIntegerLearnerParam(id = "num_burn_in", default = 250L, lower = 0L),
-      makeIntegerLearnerParam(id = "num_interations_after_burn_in", default = 1000L, lower = 0L),
+      makeIntegerLearnerParam(id = "num_iterations_after_burn_in", default = 1000L, lower = 0L),
       makeNumericLearnerParam(id = "alpha", default = 0.95, lower = 0),
       makeNumericLearnerParam(id = "beta", default = 2, lower = 0),
       makeNumericLearnerParam(id = "k", default = 2, lower = 0),
