@@ -17,7 +17,7 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 \description{
 Before training a PCA will be performed on all numeric columns in the trainings dataset.
 The PCA center, scale and rotation will be saved and applied to the test dataset.
-Internally uses \code{\link{prcomp}} with \code(scale = TRUE) before predicting.
+Internally uses \code{\link{prcomp}} with \code{scale = TRUE} before predicting.
 }
 \seealso{
 Other wrapper: \code{\link{CostSensClassifModel}},
