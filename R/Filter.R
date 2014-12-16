@@ -111,7 +111,7 @@ makeFilter(
     data[ind] = lapply(data[ind], as.ordered)
     ind = which(vlapply(data, is.integer))
     data[ind] = lapply(data[ind], as.double)
-    data = mRMR.data(data = data)
+    data = mRMRe::mRMR.data(data = data)
 
     threads.before = mRMRe::get.thread.count()
     on.exit(mRMRe::set.thread.count(threads.before))

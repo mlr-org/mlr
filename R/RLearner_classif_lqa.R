@@ -50,26 +50,24 @@ trainLearner.classif.lqa = function(.learner, .task, .subset, .weights = NULL,
     args$lambda = NULL
   }
   is.tune.param = names(args) %in% c("lambda", "gamma", "alpha", "c", "a", "lambda1", "lambda2")
-  args$penalty = do.call(args$penalty, list(lambda = unlist(args[is.tune.param])))
+  penfun = getFromNamespace(args$penalty, "lqa")
+  args$penalty = do.call(penfun, list(lambda = unlist(args[is.tune.param])))
   args = args[!is.tune.param]
   if (!is.null(.weights))
     args$weights = .weights
 
-  do.call(lqa::lqa, args)
+  do.call(lqa::lqa.default, args)
 }
 
 #' @export
 predictLearner.classif.lqa = function(.learner, .model, .newdata, ...) {
-  p = predict(.model$learner.model, new.x = cbind(1, .newdata), ...)$mu.new
+  p = lqa::predict.lqa(.model$learner.model, new.x = cbind(1, .newdata), ...)$mu.new
   levs = c(.model$task.desc$negative, .model$task.desc$positive)
-  if(.learner$predict.type == "prob"){
-    y = propVectorToMatrix(p, levs)
-    return(y)
-    return(y)
+  if (.learner$predict.type == "prob") {
+    p = propVectorToMatrix(p, levs)
   } else {
     p = as.factor(ifelse(p > 0.5, levs[2L], levs[1L]))
     names(p) = NULL
-    return(p)
   }
   return(p)
 }

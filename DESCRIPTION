@@ -27,10 +27,10 @@ Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 3.0.0),
     ParamHelpers (>= 1.5),
-    BBmisc (>= 1.7),
+    BBmisc (>= 1.9),
     stats
 Imports:
-    checkmate (>= 1.5),
+    checkmate (>= 1.5.1),
     codetools,
     ggplot2,
     parallelMap (>= 1.2),
