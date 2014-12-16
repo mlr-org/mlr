@@ -11,15 +11,17 @@ test_that("parallel resampling", {
     r = resample(lrn, multiclass.task, rdesc)
     expect_true(!is.na(r$aggr[1]))
   }
-  doit("multicore", as.character(NA))
-  doit("multicore", "resample")
-  doit("multicore", "foo")
+  if (Sys.info()["sysname"] != "Windows") {
+    doit("multicore", as.character(NA))
+    doit("multicore", "resample")
+    doit("multicore", "tuneParams")
+    doit("mpi", as.character(NA))
+    doit("mpi", "resample")
+    doit("mpi", "tuneParams")
+  }
   doit("socket", as.character(NA))
   doit("socket", "resample")
-  doit("socket", "foo")
-  doit("mpi", as.character(NA))
-  doit("mpi", "resample")
-  doit("mpi", "foo")
+  doit("socket", "tuneParams")
 })
 
 test_that("parallel tuning", {
@@ -33,15 +35,17 @@ test_that("parallel tuning", {
     res = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
     expect_true(!is.na(res$y))
   }
-  doit("multicore", as.character(NA))
-  doit("multicore", "resample")
-  doit("multicore", "tuneParams")
+  if (Sys.info()["sysname"] != "Windows") {
+    doit("multicore", as.character(NA))
+    doit("multicore", "resample")
+    doit("multicore", "tuneParams")
+    doit("mpi", as.character(NA))
+    doit("mpi", "resample")
+    doit("mpi", "tuneParams")
+  }
   doit("socket", as.character(NA))
   doit("socket", "resample")
   doit("socket", "tuneParams")
-  doit("mpi", as.character(NA))
-  doit("mpi", "resample")
-  doit("mpi", "tuneParams")
 })
 
 test_that("parallel featsel", {
@@ -54,15 +58,17 @@ test_that("parallel featsel", {
     res = selectFeatures(lrn, multiclass.task, rdesc, control = ctrl)
     expect_true(!is.na(res$y))
   }
-  doit("multicore", as.character(NA))
-  doit("multicore", "resample")
-  doit("multicore", "selectFeatures")
+  if (Sys.info()["sysname"] != "Windows") {
+    doit("multicore", as.character(NA))
+    doit("multicore", "resample")
+    doit("multicore", "tuneParams")
+    doit("mpi", as.character(NA))
+    doit("mpi", "resample")
+    doit("mpi", "tuneParams")
+  }
   doit("socket", as.character(NA))
   doit("socket", "resample")
-  doit("socket", "selectFeatures")
-  doit("mpi", as.character(NA))
-  doit("mpi", "resample")
-  doit("mpi", "selectFeatures")
+  doit("socket", "tuneParams")
 })
 
 test_that("parallel exporting of options works", {
