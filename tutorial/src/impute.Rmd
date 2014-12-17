@@ -33,7 +33,7 @@ summary(airquality)
 
 There are 37 ``NA's`` in variable ``Ozone`` (ozone pollution) and 7 ``NA's`` in variable ``Solar.R`` (solar radiation).
 For demonstration purposes we insert artificial ``NA's`` in column ``Wind`` (wind speed) and coerce it into a
-[factor](base::factor).
+[factor](&base::factor).
 
 ```{r}
 airq = airquality

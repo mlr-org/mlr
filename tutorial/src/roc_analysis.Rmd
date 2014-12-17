@@ -19,7 +19,7 @@ from package [pROC](http://cran.r-project.org/web/packages/pROC/index.html).
 ## Plotting the ROC curve
 
 The [%mlr] function [&asROCRPrediction] converts predictions (resulting from
-calling [predict](predict.WrapperModel), [&resample], or [&benchmark]) to a format that
+calling [predict](&predict.WrapperModel), [&resample], or [&benchmark]) to a format that
 [ROCR](http://cran.r-project.org/web/packages/ROCR/index.html) can handle.
 Then functions in [ROCR](http://cran.r-project.org/web/packages/ROCR/index.html) are used
 to plot the ROC curve.

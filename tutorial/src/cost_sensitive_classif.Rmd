@@ -39,16 +39,16 @@ training data to take misclassification costs into account.
   are minimized.
   This requires a [Learner](&makeLearner) that can predict posterior probabilities.
   The costs are not taken into account during training.
-  
+
 2. **Rebalancing**:
   The idea is to change the proportion of the classes in the training data set, either by
   *weighting* or by *sampling*.
   This way, the costs are taken into account during training.
   Rebalancing does not require that the [Learner](&makeLearner) can predict probabilities.
-     
+
      i. *Weighting* requires a [Learner](&makeLearner) that supports class weights or observation
 	    weights.
-     
+
      ii. If the [Learner](&makeLearner) cannot deal with weights the proportion of classes can
          be changed by *over-* and *undersampling*.
 
@@ -423,7 +423,7 @@ costsens.task = makeCostSensTask(id = "iris", data = df, cost = cost)
 costsens.task
 ```
 
-[%mlr] provides several [wrappers](wrapper.Rmd) to create [Learner](&makeLearner)s that can
+[%mlr] provides several [wrappers](wrapper.md) to create [Learner](&makeLearner)s that can
 deal with example-dependent costs from regular classification and regression methods.
 
 * [&makeCostSensClassifWrapper] (wraps a classification [Learner](&makeLearner)):
