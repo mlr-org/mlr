@@ -45,10 +45,12 @@ makeRLearner.regr.crs = function() {
 #' @export
 trainLearner.regr.crs = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
+  # FIXME: see reported issue https://github.com/JeffreyRacine/R-Package-crs/issues/2
+  requirePackages("crs", namespace.only = FALSE)
   if (is.null(.weights)) {
-    crs::crs(f, data = getTaskData(.task, .subset), ...)
+    crs::crs(formula = f, data = getTaskData(.task, .subset), ...)
   } else  {
-    crs::crs(f, data = getTaskData(.task, .subset), weights = .weights, ...)
+    crs::crs(formula = f, data = getTaskData(.task, .subset), weights = .weights, ...)
   }
 }
 
