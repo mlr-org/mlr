@@ -15,6 +15,8 @@ mlr_2.3:
   have been changed to allow missing data support with default settings.
 - externalized measure functions to be used on vectors.
 - some minor bug fixes
+- required basic learner packages are not loaded into the global namespace anymore, requireNamespace
+  is used internally instead. this ensures less name clashes and name shadowing
 
 - new functions
 -- getTaskType, getTaskId, getTaskTargetNames
