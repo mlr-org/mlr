@@ -455,23 +455,20 @@ mod
 ```
 
 The models corresponding to the individual pairs can be accessed by function
-[&getCostSensWeightedPairsModels].
-Similar accessor functions ([&getCostSensClassifModel] and [&getCostSensRegrModels]) exist
-for the other two approaches.
+[&getHomogeneousEnsembleModels].
 
 ```{r}
-getCostSensWeightedPairsModels(mod)
+getHomogeneousEnsembleModels(mod)
 ```
 
 [%mlr] provides some performance measures for example-specific cost-sensitive classification.
-In the following example we calculate the mean costs of the predicted class labels ([&meancosts]) and
-the misclassification penalty ([&mcp]).
+In the following example we calculate the mean costs of the predicted class labels ([meancosts](&measures)) and
+the misclassification penalty ([mcp](&measures)).
 The latter measure is the average difference between the costs caused by the predicted
-class labels, i.e., [&meancosts], and the costs resulting from choosing the class with lowest
+class labels, i.e., [meancosts](&measures), and the costs resulting from choosing the class with lowest
 cost for each observation.
 In order to compute these measures the costs for the test observations are required and
 therefore the [&Task] has to be passed to [&performance].
-
 
 ```{r}
 pred = predict(mod, task = costsens.task)

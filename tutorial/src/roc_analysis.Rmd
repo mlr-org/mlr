@@ -64,6 +64,7 @@ Otherwise, the plot method will draw one curve for each fold.
 For details, see [plot.performance](&ROCR::plot.performance).
 
 ```{r ROCRaverage}
+library(ROCR)
 pred1 = asROCRPrediction(r1$pred)
 pred2 = asROCRPrediction(r2$pred)
 perf1 = ROCR::performance(pred1, "tpr", "fpr")

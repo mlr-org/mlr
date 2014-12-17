@@ -70,9 +70,9 @@ bag.lrn = setPredictType(bag.lrn, predict.type = "se")
 mod = train(learner = bag.lrn, task = bh.task, subset = train.inds)
 ```
 
-With the function [&getBaggingModels], you can access the models fitted in the individual iterations.
+With the function [&getHomogeneousEnsembleModels], you can access the models fitted in the individual iterations.
 ```{r}
-head(getBaggingModels(mod), 2)
+head(getHomogeneousEnsembleModels(mod), 2)
 ```
 
 Predict the response and calculate the standard deviation:

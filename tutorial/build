@@ -55,13 +55,8 @@ knitIt = function(f) {
 # start #######################################################################
 message("Loading required packages ...")
 suppressPackageStartupMessages({
-  # conflicting packages loaded first
-  library(caret)
+  # namespace conflicts
   library(ROCR)
-  library(glmnet) # auc
-  library(pROC) # auc
-  library(clValid) # dunn
-  library(Hmisc) #impute
 
   # required to build
   library(methods)
@@ -92,7 +87,7 @@ if (ok$exit.code == 0L) {
   message("Build successfull!")
   message("Now zip everything!")
   setwd("html/")
-  zip("../mlr_tutorial.zip", files = ".")
+  suppressAll(zip("../mlr_tutorial.zip", files = "."))
   setwd("../")
   # clean up
   unlink("figure", recursive = TRUE)
