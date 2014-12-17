@@ -117,7 +117,8 @@ makeFilter(
     on.exit(mRMRe::set.thread.count(threads.before))
     mRMRe::set.thread.count(1L)
     res = mRMRe::mRMR.classic(data = data, target_indices = target.ind, feature_count = nselect, ...)
-    setNames(as.numeric(scores(res)[[1L]]), res@feature_names[as.integer(mRMRe::solutions(res)[[1L]])])
+    scores = as.numeric(mRMRe::scores(res)[[1L]])
+    setNames(scores, res@feature_names[as.integer(mRMRe::solutions(res)[[1L]])])
 })
 
 makeFilter(
