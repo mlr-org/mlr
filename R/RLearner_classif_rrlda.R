@@ -21,6 +21,9 @@ makeRLearner.classif.rrlda = function() {
 #' @export
 trainLearner.classif.rrlda = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
+  #FIXME: we need to remove this, but I do not know why some functions are not found otherwise
+  # when we require the namespace
+  requirePackages(c("pcaPP", "mvoutlier", "glasso", "matrixcalc"), namespace.only = FALSE)
   rrlda::rrlda(x = d$data, grouping = d$target, ...)
 }
 

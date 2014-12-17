@@ -25,7 +25,7 @@ trainLearner.classif.sda = function(.learner, .task, .subset,  ...) {
 
 #' @export
 predictLearner.classif.sda = function(.learner, .model, .newdata, ...) {
-  p = predict(.model$learner.model, as.matrix(.newdata))
+  p = sda::predict.sda(.model$learner.model, as.matrix(.newdata))
   if(.learner$predict.type == "response")
     return(p$class)
   else

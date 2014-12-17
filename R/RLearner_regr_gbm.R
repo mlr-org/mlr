@@ -35,5 +35,5 @@ trainLearner.regr.gbm = function(.learner, .task, .subset, .weights = NULL,  ...
 #' @export
 predictLearner.regr.gbm = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
-  predict(m, newdata = .newdata, n.trees = length(m$trees), ...)
+  gbm::predict.gbm(m, newdata = .newdata, n.trees = length(m$trees), ...)
 }

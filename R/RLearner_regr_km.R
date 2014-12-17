@@ -40,7 +40,7 @@ predictLearner.regr.km = function(.learner, .model, .newdata, jitter, ...) {
     .newdata = .newdata + jit
   }
   se = (.learner$predict.type != "response")
-  p = predict(.model$learner.model, newdata = .newdata, type = "SK", se.compute = se)
+  p = DiceKriging::predict.km(.model$learner.model, newdata = .newdata, type = "SK", se.compute = se)
   if(!se)
     return(p$mean)
   else
