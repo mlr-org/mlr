@@ -659,7 +659,7 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
       return(NA_real_)
     # FIXME: we need to ensure the censoring here
     s = Surv(pred$data$truth.time, pred$data$truth.event)
-    rcorr.cens(-1 * resp, s)[["C Index"]]
+    Hmisc::rcorr.cens(-1 * resp, s)[["C Index"]]
   }
 )
 
