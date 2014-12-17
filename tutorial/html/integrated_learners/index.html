@@ -13,8 +13,8 @@
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="../css/prettify-1.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -224,7 +224,8 @@
 </div>
 
         <div class="container">
-            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
         <li class="main active"><a href="#integrated-learners">Integrated Learners</a></li>
@@ -240,7 +241,7 @@
     
     </ul>
 </div></div>
-            <div class="col-md-9" role="main">
+                <div class="col-md-9" role="main">
 
 <h1 id="integrated-learners">Integrated Learners</h1>
 <p>Here, the learning methods already integrated into <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> are listed.</p>
@@ -279,7 +280,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right">prob<br />twoclass</td>
+<td align="right">multiclass<br />prob<br />twoclass</td>
 <td align="left"></td>
 </tr>
 <tr>
@@ -386,11 +387,11 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left">GLM with Lasso or Elasticnet Regularization</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/glmnet/">glmnet</a></td>
 <td align="center">X</td>
-<td align="center">X</td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center">X</td>
 <td align="right">multiclass<br />prob<br />twoclass</td>
-<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
+<td align="left"></td>
 </tr>
 <tr>
 <td align="left"><strong>classif.IBk</strong> <br />ibk</td>
@@ -855,11 +856,11 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left">GLM with Lasso or Elasticnet Regularization</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/glmnet/">glmnet</a></td>
 <td align="center">X</td>
-<td align="center">X</td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right">ordered</td>
-<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
+<td align="right"></td>
+<td align="left"></td>
 </tr>
 <tr>
 <td align="left"><strong>regr.IBk</strong> <br />ibk</td>
@@ -929,7 +930,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 </tr>
 <tr>
 <td align="left"><strong>regr.mob</strong> <br />mob</td>
-<td align="left">Model-based Recursive Partitioning  Yielding a Tree with Fitted Models Associated with each Terminal Node</td>
+<td align="left">Model-based Recursive Partitioning Yielding a Tree with Fitted Models Associated with each Terminal Node</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/party/">party</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -1046,7 +1047,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center"></td>
 <td align="center"></td>
 <td align="right"></td>
-<td align="left">Kernel parameters have to be passed directly and not by using the kpar list in rvm.   Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
+<td align="left">Kernel parameters have to be passed directly and not by using the kpar list in rvm.  Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
 </tr>
 <tr>
 <td align="left"><strong>regr.svm</strong> <br />svm</td>
@@ -1093,11 +1094,11 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left">Cox Proportional Hazards Model with Componentwise Likelihood based Boosting</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/CoxBoost/">CoxBoost</a></td>
 <td align="center">X</td>
-<td align="center">X</td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right">ordered<br />rcens</td>
-<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
+<td align="right">rcens</td>
+<td align="left"></td>
 </tr>
 <tr>
 <td align="left"><strong>surv.coxph</strong> <br />coxph</td>
@@ -1115,11 +1116,11 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left">GLM with Regularization (Cross Validated Lambda)</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/glmnet/">glmnet</a></td>
 <td align="center">X</td>
-<td align="center">X</td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right">ordered<br />rcens</td>
-<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
+<td align="right">rcens</td>
+<td align="left"></td>
 </tr>
 <tr>
 <td align="left"><strong>surv.glmboost</strong> <br />glmboost</td>
@@ -1129,7 +1130,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right">ordered<br />rcens</td>
+<td align="right">rcens</td>
 <td align="left"></td>
 </tr>
 <tr>
@@ -1137,11 +1138,11 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left">GLM with Regularization</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/glmnet/">glmnet</a></td>
 <td align="center">X</td>
-<td align="center">X</td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right">ordered<br />rcens</td>
-<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
+<td align="right">rcens</td>
+<td align="left"></td>
 </tr>
 <tr>
 <td align="left"><strong>surv.penalized</strong> <br />penalized</td>
@@ -1151,8 +1152,8 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">ordered<br />rcens</td>
-<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
+<td align="right">rcens</td>
+<td align="left"></td>
 </tr>
 <tr>
 <td align="left"><strong>surv.randomForestSRC</strong> <br />rfsrc</td>
@@ -1162,19 +1163,8 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
-<td align="right">ordered<br />rcens</td>
+<td align="right">rcens</td>
 <td align="left"></td>
-</tr>
-<tr>
-<td align="left"><strong>surv.rpart</strong> <br />rpart</td>
-<td align="left">Survival Tree</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/rpart/">rpart</a></td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="right">ordered<br />rcens</td>
-<td align="left"><code>xval</code> has been set to 0 by default for speed.</td>
 </tr>
 </tbody>
 </table>
@@ -1274,6 +1264,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 </tbody>
 </table>
 </div>
+            
         </div>
 
         <footer class="col-md-12">
@@ -1287,6 +1278,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
         <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
         <script src="../js/base.js"></script>
     </body>
 </html>

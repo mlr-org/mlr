@@ -13,8 +13,8 @@
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="../css/prettify-1.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -224,7 +224,8 @@
 </div>
 
         <div class="container">
-            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
         <li class="main active"><a href="#imputation-of-missing-values">Imputation of Missing Values</a></li>
@@ -236,7 +237,7 @@
     
     </ul>
 </div></div>
-            <div class="col-md-9" role="main">
+                <div class="col-md-9" role="main">
 
 <h1 id="imputation-of-missing-values">Imputation of Missing Values</h1>
 <p><a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides several imputation methods which are listed on the help page <a href="http://www.rdocumentation.org/packages/mlr/functions/imputations.html">imputations</a>.
@@ -258,11 +259,11 @@ or for individual features.
 These allow to identify the patterns and reasons for missing data and permit to treat imputed and observed values
 differently in a subsequent analysis.</p>
 <p>Let's have a look at the <a href="http://www.rdocumentation.org/packages/datasets/functions/airquality.html">airquality</a> data set.</p>
-<pre class="prettyprint well"><code class="r">data(airquality)
+<pre><code class="r">data(airquality)
 summary(airquality)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;      Ozone           Solar.R           Wind             Temp      
+<pre><code>#&gt;      Ozone           Solar.R           Wind             Temp      
 #&gt;  Min.   :  1.00   Min.   :  7.0   Min.   : 1.700   Min.   :56.00  
 #&gt;  1st Qu.: 18.00   1st Qu.:115.8   1st Qu.: 7.400   1st Qu.:72.00  
 #&gt;  Median : 31.50   Median :205.0   Median : 9.700   Median :79.00  
@@ -283,14 +284,14 @@ summary(airquality)
 <p>There are 37 <code>NA's</code> in variable <code>Ozone</code> (ozone pollution) and 7 <code>NA's</code> in variable <code>Solar.R</code> (solar radiation).
 For demonstration purposes we insert artificial <code>NA's</code> in column <code>Wind</code> (wind speed) and coerce it into a
 <a href="base::factor">factor</a>.</p>
-<pre class="prettyprint well"><code class="r">airq = airquality
+<pre><code class="r">airq = airquality
 ind = sample(nrow(airq), 10)
 airq$Wind[ind] = NA
 airq$Wind = cut(airq$Wind, c(0,8,16,24))
 summary(airq)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;      Ozone           Solar.R           Wind         Temp      
+<pre><code>#&gt;      Ozone           Solar.R           Wind         Temp      
 #&gt;  Min.   :  1.00   Min.   :  7.0   (0,8]  :51   Min.   :56.00  
 #&gt;  1st Qu.: 18.00   1st Qu.:115.8   (8,16] :86   1st Qu.:72.00  
 #&gt;  Median : 31.50   Median :205.0   (16,24]: 6   Median :79.00  
@@ -311,17 +312,17 @@ summary(airq)
 <p>If you want to impute <code>NA's</code> in all integer features (these include <code>Ozone</code> and <code>Solar.R</code>) by the mean,
 in all factor features (<code>Wind</code>) by the mode and additionally generate dummy variables for all integer features,
 you can do this as follows:</p>
-<pre class="prettyprint well"><code class="r">imp = impute(airq, classes = list(integer = imputeMean(), factor = imputeMode()),
+<pre><code class="r">imp = impute(airq, classes = list(integer = imputeMean(), factor = imputeMode()),
   dummy.classes = &quot;integer&quot;)
 </code></pre>
 
 <p><a href="http://www.rdocumentation.org/packages/mlr/functions/impute.html">impute</a> returns a <a href="http://www.rdocumentation.org/packages/base/functions/list.html">list</a> where slot <code>$data</code> contains the imputed data set.
 Per default, the dummy variables are factors with levels <code>"TRUE"</code> and <code>"FALSE"</code>.
 It is also possible to create numeric zero-one indicator variables.</p>
-<pre class="prettyprint well"><code class="r">head(imp$data, 10)
+<pre><code class="r">head(imp$data, 10)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;       Ozone  Solar.R    Wind Temp Month Day Ozone.dummy Solar.R.dummy
+<pre><code>#&gt;       Ozone  Solar.R    Wind Temp Month Day Ozone.dummy Solar.R.dummy
 #&gt; 1  41.00000 190.0000   (0,8]   67     5   1       FALSE         FALSE
 #&gt; 2  36.00000 118.0000   (0,8]   72     5   2       FALSE         FALSE
 #&gt; 3  12.00000 149.0000  (8,16]   74     5   3       FALSE         FALSE
@@ -337,10 +338,10 @@ It is also possible to create numeric zero-one indicator variables.</p>
 <p>Slot <code>$desc</code> is an <a href="http://www.rdocumentation.org/packages/mlr/functions/impute.html">ImputationDesc</a> object that stores all relevant information about the
 imputation.
 For the current example this includes the means and the mode computed on the non-missing data.</p>
-<pre class="prettyprint well"><code class="r">imp$desc
+<pre><code class="r">imp$desc
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Imputation description
+<pre><code>#&gt; Imputation description
 #&gt; Target: 
 #&gt; Features: 6; Imputed: 6
 #&gt; impute.new.levels: TRUE
@@ -358,11 +359,11 @@ For <code>impute.new.levels</code> and <code>recode.factor.levels</code> see the
 A possible learning task associated with the <a href="http://www.rdocumentation.org/packages/datasets/functions/airquality.html">airquality</a> data is to predict the ozone
 pollution based on the meteorological features.
 Since we do not want to use columns <code>Day</code> and <code>Month</code> we remove them.</p>
-<pre class="prettyprint well"><code class="r">airq = subset(airq, select = 1:4)
+<pre><code class="r">airq = subset(airq, select = 1:4)
 </code></pre>
 
 <p>The first 100 observations are used as training data set.</p>
-<pre class="prettyprint well"><code class="r">airq.train = airq[1:100,]
+<pre><code class="r">airq.train = airq[1:100,]
 airq.test = airq[-c(1:100),]
 </code></pre>
 
@@ -382,12 +383,12 @@ be imputed (<code>Wind</code>) are used as features in the classification tree, 
 You can also select manually which columns to use.
 Note that <a href="http://www.rdocumentation.org/packages/rpart/functions/rpart.html">rpart</a> can deal with missing feature values, therefore the <code>NA's</code> in column <code>Solar.R</code>
 do not pose a problem.</p>
-<pre class="prettyprint well"><code class="r">imp = impute(airq.train, target = &quot;Ozone&quot;, cols = list(Solar.R = imputeHist(),
+<pre><code class="r">imp = impute(airq.train, target = &quot;Ozone&quot;, cols = list(Solar.R = imputeHist(),
   Wind = imputeLearner(makeLearner(&quot;classif.rpart&quot;))), dummy.cols = c(&quot;Solar.R&quot;, &quot;Wind&quot;))
 summary(imp$data)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;      Ozone           Solar.R            Wind         Temp      
+<pre><code>#&gt;      Ozone           Solar.R            Wind         Temp      
 #&gt;  Min.   :  1.00   Min.   :  7.00   (0,8]  :34   Min.   :56.00  
 #&gt;  1st Qu.: 16.00   1st Qu.: 98.75   (8,16] :61   1st Qu.:69.00  
 #&gt;  Median : 34.00   Median :221.50   (16,24]: 5   Median :79.50  
@@ -405,10 +406,10 @@ summary(imp$data)
 #&gt; 
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">imp$desc
+<pre><code class="r">imp$desc
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Imputation description
+<pre><code>#&gt; Imputation description
 #&gt; Target: Ozone
 #&gt; Features: 3; Imputed: 2
 #&gt; impute.new.levels: TRUE
@@ -418,11 +419,11 @@ summary(imp$data)
 
 <p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/impute.html">ImputationDesc</a> object can be used by function <a href="http://www.rdocumentation.org/packages/mlr/functions/reimpute.html">reimpute</a> to impute the test data set the same way
 as the training data.</p>
-<pre class="prettyprint well"><code class="r">airq.test.imp = reimpute(airq.test, imp$desc)
+<pre><code class="r">airq.test.imp = reimpute(airq.test, imp$desc)
 head(airq.test.imp)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;   Ozone Solar.R   Wind Temp Solar.R.dummy Wind.dummy
+<pre><code>#&gt;   Ozone Solar.R   Wind Temp Solar.R.dummy Wind.dummy
 #&gt; 1   110     207  (0,8]   90         FALSE      FALSE
 #&gt; 2    NA     222 (8,16]   92         FALSE      FALSE
 #&gt; 3    NA     137 (8,16]   86         FALSE      FALSE
@@ -439,12 +440,12 @@ This can be achieved by creating an imputation wrapper.</p>
 has the same formal arguments as <a href="http://www.rdocumentation.org/packages/mlr/functions/impute.html">impute</a>.
 Like in the example above we impute <code>Solar.R</code> by random numbers from its empirical distribution,
 <code>Wind</code> by the predictions of a classification tree and generate dummy variables for both features.</p>
-<pre class="prettyprint well"><code class="r">lrn = makeImputeWrapper(makeLearner(&quot;regr.lm&quot;), cols = list(Solar.R = imputeHist(),
+<pre><code class="r">lrn = makeImputeWrapper(makeLearner(&quot;regr.lm&quot;), cols = list(Solar.R = imputeHist(),
   Wind = imputeLearner(makeLearner(&quot;classif.rpart&quot;))), dummy.cols = c(&quot;Solar.R&quot;, &quot;Wind&quot;))
 lrn
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Learner regr.lm.preproc from package stats
+<pre><code>#&gt; Learner regr.lm.preproc from package stats
 #&gt; Type: regr
 #&gt; Name: ; Short name: 
 #&gt; Class: PreprocWrapper
@@ -458,24 +459,24 @@ Before prediction <a href="http://www.rdocumentation.org/packages/mlr/functions/
 from the training stage.</p>
 <p>We again aim to predict the ozone pollution from the meteorological variables.
 In order to create the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> we need to delete observations with missing values in the target variable.</p>
-<pre class="prettyprint well"><code class="r">airq = subset(airq, subset = !is.na(airq$Ozone))
+<pre><code class="r">airq = subset(airq, subset = !is.na(airq$Ozone))
 task = makeRegrTask(data = airq, target = &quot;Ozone&quot;)
 </code></pre>
 
 <p>In the following the 3-fold cross-validated <a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">mean squared error</a> is calculated.</p>
-<pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+<pre><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 r = resample(lrn, task, resampling = rdesc, show.info = FALSE, models = TRUE)
 r$aggr
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; mse.test.mean 
+<pre><code>#&gt; mse.test.mean 
 #&gt;      524.3392
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">r$models
+<pre><code class="r">r$models
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [[1]]
+<pre><code>#&gt; [[1]]
 #&gt; Learner model for id=regr.lm.preproc chain=PreprocWrapper
 #&gt; [chain] Trained on obs: 77
 #&gt; [chain] Used features: 3
@@ -501,6 +502,7 @@ r$aggr
 </code></pre>
 
 </div>
+            
         </div>
 
         <footer class="col-md-12">
@@ -514,6 +516,7 @@ r$aggr
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
         <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
         <script src="../js/base.js"></script>
     </body>
 </html>

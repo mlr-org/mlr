@@ -13,8 +13,8 @@
 
         <link href="./css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="./css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="./css/prettify-1.0.css" rel="stylesheet">
         <link href="./css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="./css/highlight.css">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -224,7 +224,8 @@
 </div>
 
         <div class="container">
-            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
         <li class="main active"><a href="#mlr-tutorial">mlr Tutorial</a></li>
@@ -234,18 +235,16 @@
     
     </ul>
 </div></div>
-            <div class="col-md-9" role="main">
+                <div class="col-md-9" role="main">
 
 <h1 id="mlr-tutorial">mlr Tutorial</h1>
-<p>This web page will provide you with an in-depth introduction on how to
+<p>This web page provides an in-depth introduction on how to
 use the <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> framework for machine learning experiments and
 optimization in <strong>R</strong>.</p>
-<p>Our focus is on your comprehension of the basic functions and applications.
-For detailed technical information and manual pages, please refer to the package's
-<a href="http://berndbischl.github.io/mlr/man/">manual pages</a>.
-They are regularly updated and reflect the documentation of the
-<a href="http://cran.r-project.org/web/packages/mlr/index.html">current package version on CRAN</a>.</p>
-<p>An offline version of this of this tutorial is available to <a href="http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip">download here</a>.</p>
+<p>We focus on the comprehension of the basic functions and applications.
+More detailed technical information can be found in the <a href="http://berndbischl.github.io/mlr/man/">manual pages</a> which
+are regularly updated and reflect the documentation of the <a href="http://cran.r-project.org/web/packages/mlr/index.html">current package version on CRAN</a>.</p>
+<p>An offline version of this of this tutorial is available for download <a href="http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip">here</a>.</p>
 <p>The tutorial explains the basic analysis of a data set step by step:</p>
 <ul>
 <li>What is your data and the aim of your analysis? <a href="task/index.html">Tasks</a></li>
@@ -262,7 +261,7 @@ package.</p>
 <p>Enjoy reading!</p>
 <h2 id="quick-start">Quick start</h2>
 <p>A simple stratified cross-validation of the <em>linear discriminant analysis</em> with <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.</p>
-<pre class="prettyprint well"><code class="r">library(mlr)
+<pre><code class="r">library(mlr)
 data(iris)
 
 ## Define the task:
@@ -281,11 +280,12 @@ r = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE)
 r$aggr
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; mmce.test.mean 
+<pre><code>#&gt; mmce.test.mean 
 #&gt;           0.02
 </code></pre>
 
 </div>
+            
         </div>
 
         <footer class="col-md-12">
@@ -299,6 +299,7 @@ r$aggr
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="./js/bootstrap-3.0.3.min.js"></script>
         <script src="./js/prettify-1.0.min.js"></script>
+        <script src="./js/highlight.pack.js"></script>
         <script src="./js/base.js"></script>
     </body>
 </html>

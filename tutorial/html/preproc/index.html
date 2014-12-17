@@ -13,8 +13,8 @@
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="../css/prettify-1.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -224,7 +224,8 @@
 </div>
 
         <div class="container">
-            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
         <li class="main active"><a href="#data-preprocessing">Data Preprocessing</a></li>
@@ -234,7 +235,7 @@
     
     </ul>
 </div></div>
-            <div class="col-md-9" role="main">
+                <div class="col-md-9" role="main">
 
 <h1 id="data-preprocessing">Data Preprocessing</h1>
 <p><a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> offers several options for data preprocessing.</p>
@@ -302,7 +303,7 @@ to preprocess the data before prediction.</p>
 numerical features and returns the scaled training data and the corresponding scaling parameters.
 <code>args</code> contains the <code>center</code> and <code>scale</code> arguments of function <a href="http://www.rdocumentation.org/packages/base/functions/scale.html">scale</a>
 and slot <code>$control</code> stores the scaling parameters.</p>
-<pre class="prettyprint well"><code class="r">tr.fun = function(data, target, args = list(center, scale)) {
+<pre><code class="r">tr.fun = function(data, target, args = list(center, scale)) {
   cns = colnames(data)
   nums = setdiff(cns[sapply(data, is.numeric)], target)
   x = as.matrix(data[, nums, drop = FALSE])
@@ -330,7 +331,7 @@ and slot <code>$control</code> stores the scaling parameters.</p>
 <p>It returns the preprocessed data.</p>
 <p>In our running example the <em>predict</em> function scales the numerical features using the
 parameters from the training stage stored in <code>control</code>.</p>
-<pre class="prettyprint well"><code class="r">pr.fun = function(data, target, args, control) {
+<pre><code class="r">pr.fun = function(data, target, args, control) {
   cns = colnames(data)
   nums = cns[sapply(data, is.numeric)]
   x = as.matrix(data[, nums, drop = FALSE])
@@ -348,13 +349,13 @@ itself does not have a scaling option) as base learner.</p>
 the <code>train</code> and <code>predict</code> arguments.
 <code>par.vals</code> is a <a href="http://www.rdocumentation.org/packages/base/functions/list.html">list</a> of parameter values that is relayed to the <code>args</code>
 argument of the <em>train</em> function.</p>
-<pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;regr.nnet&quot;, trace = FALSE, decay = 1e-02)
+<pre><code class="r">lrn = makeLearner(&quot;regr.nnet&quot;, trace = FALSE, decay = 1e-02)
 lrn = makePreprocWrapper(lrn, train = tr.fun, predict = pr.fun,
   par.vals = list(center = TRUE, scale = TRUE))
 lrn
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Learner regr.nnet.preproc from package nnet
+<pre><code>#&gt; Learner regr.nnet.preproc from package nnet
 #&gt; Type: regr
 #&gt; Name: ; Short name: 
 #&gt; Class: PreprocWrapper
@@ -365,26 +366,27 @@ lrn
 
 <p>Let's compare the cross-validated mean squared error (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">mse</a>) on the
 <a href="http://www.rdocumentation.org/packages/mlbench/functions/BostonHousing.html">Boston Housing data set</a> with and without scaling.</p>
-<pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
+<pre><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
 
 r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
 r$aggr
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; mse.test.mean 
+<pre><code>#&gt; mse.test.mean 
 #&gt;      20.98447
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;regr.nnet&quot;, trace = FALSE, decay = 1e-02)
+<pre><code class="r">lrn = makeLearner(&quot;regr.nnet&quot;, trace = FALSE, decay = 1e-02)
 r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
 r$aggr
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; mse.test.mean 
+<pre><code>#&gt; mse.test.mean 
 #&gt;      54.37792
 </code></pre>
 
 </div>
+            
         </div>
 
         <footer class="col-md-12">
@@ -398,6 +400,7 @@ r$aggr
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
         <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
         <script src="../js/base.js"></script>
     </body>
 </html>

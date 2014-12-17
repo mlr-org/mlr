@@ -13,8 +13,8 @@
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="../css/prettify-1.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -224,7 +224,8 @@
 </div>
 
         <div class="container">
-            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
         <li class="main active"><a href="#benchmark-experiments">Benchmark Experiments</a></li>
@@ -236,7 +237,7 @@
     
     </ul>
 </div></div>
-            <div class="col-md-9" role="main">
+                <div class="col-md-9" role="main">
 
 <h1 id="benchmark-experiments">Benchmark Experiments</h1>
 <p>In a benchmark experiment different learning methods are applied to one or several data sets.
@@ -247,7 +248,7 @@ list of <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearne
 Moreover, you can specify which performance measures to calculate and choose a resampling
 strategy for each <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
 <h3 id="example-two-tasks-and-two-learners">Example: Two tasks and two learners</h3>
-<pre class="prettyprint well"><code class="r">## Two learners to be compared
+<pre><code class="r">## Two learners to be compared
 lrns = list(makeLearner(&quot;classif.lda&quot;), makeLearner(&quot;classif.rpart&quot;))
 
 ## Two classification tasks
@@ -261,7 +262,7 @@ res = benchmark(lrns, tasks, rdesc, show.info = FALSE)
 res
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;         task.id    learner.id mmce.test.mean
+<pre><code>#&gt;            task       learner mmce.test.mean
 #&gt; 1  iris-example   classif.lda     0.04000000
 #&gt; 2  iris-example classif.rpart     0.06666667
 #&gt; 3 Sonar-example   classif.lda     0.23577236
@@ -278,11 +279,11 @@ is the default performance measure for classification.</p>
 <code>getBMR&lt;what_to_extract&gt;</code>, that allow to extract e.g. the performances or the predictions
 of the learning algorithms under consideration.
 Let's have a look at the benchmark result from the example above:</p>
-<pre class="prettyprint well"><code class="r">## Individual performances of the 5 cross-validation runs
+<pre><code class="r">## Individual performances of the 5 cross-validation runs
 getBMRPerformances(res)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; $`iris-example`
+<pre><code>#&gt; $`iris-example`
 #&gt; $`iris-example`$classif.lda
 #&gt;   iter       mmce
 #&gt; 1    1 0.03333333
@@ -318,11 +319,11 @@ getBMRPerformances(res)
 #&gt; 5    5 0.3658537
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">## Aggregated performances
+<pre><code class="r">## Aggregated performances
 getBMRAggrPerformances(res)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; $`iris-example`
+<pre><code>#&gt; $`iris-example`
 #&gt; $`iris-example`$classif.lda
 #&gt; mmce.test.mean 
 #&gt;           0.04 
@@ -342,18 +343,18 @@ getBMRAggrPerformances(res)
 #&gt;      0.2698026
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">## Predictions
+<pre><code class="r">## Predictions
 pred = getBMRPredictions(res)
 names(pred)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [1] &quot;iris-example&quot;  &quot;Sonar-example&quot;
+<pre><code>#&gt; [1] &quot;iris-example&quot;  &quot;Sonar-example&quot;
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">head(pred$`iris-example`)
+<pre><code class="r">head(pred$`iris-example`)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; $classif.lda
+<pre><code>#&gt; $classif.lda
 #&gt; Resampled Prediction for:
 #&gt; Resample description: cross-validation with 5 iterations.
 #&gt; Predict: test
@@ -388,16 +389,16 @@ names(pred)
 
 <p>Note that in the examples above the task and learner IDs are used to name the list elements.
 The IDs can be accessed as follows:</p>
-<pre class="prettyprint well"><code class="r">getBMRTaskIds(res)
+<pre><code class="r">getBMRTaskIds(res)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [1] &quot;iris-example&quot;  &quot;Sonar-example&quot;
+<pre><code>#&gt; [1] &quot;iris-example&quot;  &quot;Sonar-example&quot;
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">getBMRLearnerIds(res)
+<pre><code class="r">getBMRLearnerIds(res)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; $`iris-example`
+<pre><code>#&gt; $`iris-example`
 #&gt; [1] &quot;classif.lda&quot;   &quot;classif.rpart&quot;
 #&gt; 
 #&gt; $`Sonar-example`
@@ -434,7 +435,7 @@ way.</p>
 that case we have two resampling levels.</p>
 <p>We show an example with outer bootstrap and inner cross-validation,
 our <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> will be <a href="http://www.rdocumentation.org/packages/kknn/functions/kknn.html">k-nearest neighbour</a>.</p>
-<pre class="prettyprint well"><code class="r">## Range of hyperparameter k
+<pre><code class="r">## Range of hyperparameter k
 ps = makeParamSet(makeDiscreteParam(&quot;k&quot;, 1:5))
 ctrl = makeTuneControlGrid()
 
@@ -454,15 +455,15 @@ res = benchmark(lrn, iris.task, out.rdesc, measure = acc, show.info = FALSE)
 res
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;        task.id         learner.id acc.test.mean
+<pre><code>#&gt;        task.id         learner.id acc.test.mean
 #&gt; 1 iris-example classif.kknn.tuned     0.9156964
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">## What parameter setting achieved this performances?
+<pre><code class="r">## What parameter setting achieved this performances?
 getBMRTuneResults(res)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; $`iris-example`
+<pre><code>#&gt; $`iris-example`
 #&gt; $`iris-example`$classif.kknn.tuned
 #&gt; $`iris-example`$classif.kknn.tuned[[1]]
 #&gt; Tune result:
@@ -490,11 +491,11 @@ getBMRTuneResults(res)
 #&gt; mmce.test.mean=0.02
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">## What performances did we get in the single runs?
+<pre><code class="r">## What performances did we get in the single runs?
 getBMRPerformances(res)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; $`iris-example`
+<pre><code>#&gt; $`iris-example`
 #&gt; $`iris-example`$classif.kknn.tuned
 #&gt;   iter       acc
 #&gt; 1    1 0.9074074
@@ -509,7 +510,7 @@ strategy either in the outer or inner run. They can be mixed as desired.</p>
 <h3 id="example-2-two-tasks-three-learners-tuning">Example 2: Two tasks, three learners, tuning</h3>
 <p>Now we look at an extensive example that shows a benchmark experiment with two data
 sets, three <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learners</a> and <a href="../tune/index.html">tuning</a>.</p>
-<pre class="prettyprint well"><code class="r">## List of learning tasks
+<pre><code class="r">## List of learning tasks
 tasks = list(iris.task, sonar.task)
 
 ## Very small grid for SVM hyperparameters
@@ -535,7 +536,7 @@ res = benchmark(lrns, tasks, out.rdesc, show.info = FALSE)
 res
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;         task.id         learner.id mmce.test.mean
+<pre><code>#&gt;         task.id         learner.id mmce.test.mean
 #&gt; 1  iris-example        classif.lda     0.02000000
 #&gt; 2  iris-example      classif.rpart     0.07333333
 #&gt; 3  iris-example classif.ksvm.tuned     0.04000000
@@ -544,11 +545,11 @@ res
 #&gt; 6 Sonar-example classif.ksvm.tuned     0.50917538
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">## Performance values in individual runs
+<pre><code class="r">## Performance values in individual runs
 getBMRPerformances(res)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; $`iris-example`
+<pre><code>#&gt; $`iris-example`
 #&gt; $`iris-example`$classif.lda
 #&gt;   iter       mmce
 #&gt; 1    1 0.00000000
@@ -600,11 +601,11 @@ getBMRPerformances(res)
 #&gt; 5    5 0.5476190
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">## Tuned parameter for SVM
+<pre><code class="r">## Tuned parameter for SVM
 getBMRTuneResults(res)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; $`iris-example`
+<pre><code>#&gt; $`iris-example`
 #&gt; $`iris-example`$classif.lda
 #&gt; NULL
 #&gt; 
@@ -676,7 +677,7 @@ getBMRTuneResults(res)
 <h3 id="example-3-one-task-two-learners-feature-selection">Example 3: One task, two learners, feature selection</h3>
 <p>Let's see how we can do <a href="../feature_selection/index.html">feature selection</a> in
 a benchmark experiment:</p>
-<pre class="prettyprint well"><code class="r">## Control object for feature selection
+<pre><code class="r">## Control object for feature selection
 ctrl = makeFeatSelControlSequential(beta = 100, method = &quot;sfs&quot;)
 
 ## Inner resampling
@@ -697,16 +698,16 @@ res = benchmark(tasks = iris.task, learners = lrns, resampling = out.rdesc, show
 res
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;        task.id          learner.id mmce.test.mean
+<pre><code>#&gt;        task.id          learner.id mmce.test.mean
 #&gt; 1 iris-example       classif.rpart     0.06666667
 #&gt; 2 iris-example classif.lda.featsel     0.04666667
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">## Which features have been selected (in the outer resampling steps)?
+<pre><code class="r">## Which features have been selected (in the outer resampling steps)?
 getBMRFeatSelResults(res)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; $`iris-example`
+<pre><code>#&gt; $`iris-example`
 #&gt; $`iris-example`$classif.rpart
 #&gt; NULL
 #&gt; 
@@ -727,11 +728,11 @@ getBMRFeatSelResults(res)
 #&gt; mmce.test.mean=0.04
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">## Performances on individual test data sets
+<pre><code class="r">## Performances on individual test data sets
 getBMRPerformances(res)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; $`iris-example`
+<pre><code>#&gt; $`iris-example`
 #&gt; $`iris-example`$classif.rpart
 #&gt;   iter mmce
 #&gt; 1    1 0.06
@@ -746,6 +747,7 @@ getBMRPerformances(res)
 </code></pre>
 
 </div>
+            
         </div>
 
         <footer class="col-md-12">
@@ -759,6 +761,7 @@ getBMRPerformances(res)
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
         <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
         <script src="../js/base.js"></script>
     </body>
 </html>

@@ -13,8 +13,8 @@
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="../css/prettify-1.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -224,7 +224,8 @@
 </div>
 
         <div class="container">
-            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
         <li class="main active"><a href="#creating-an-imputation-method">Creating an Imputation Method</a></li>
@@ -232,7 +233,7 @@
     
     </ul>
 </div></div>
-            <div class="col-md-9" role="main">
+                <div class="col-md-9" role="main">
 
 <h1 id="creating-an-imputation-method">Creating an Imputation Method</h1>
 <p>Function <a href="http://www.rdocumentation.org/packages/mlr/functions/makeImputeMethod.html">makeImputeMethod</a> allows to create your own imputation method.
@@ -245,22 +246,22 @@ The <em>learn</em> and <em>impute</em> functions both have at least the followin
 <li><code>target</code> indicates the target variable(s) in a supervised learning task.</li>
 </ul>
 <p>Let's have a look at function <a href="http://www.rdocumentation.org/packages/mlr/functions/imputations.html">imputeMean</a>.</p>
-<pre class="prettyprint well"><code class="r">imputeMean
+<pre><code class="r">imputeMean
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; function () 
+<pre><code>#&gt; function () 
 #&gt; {
 #&gt;     makeImputeMethod(learn = function(data, target, col) mean(data[[col]], 
 #&gt;         na.rm = TRUE), impute = simpleImpute)
 #&gt; }
-#&gt; &lt;bytecode: 0x7f8387dd4640&gt;
+#&gt; &lt;bytecode: 0x7fdb92b522d8&gt;
 #&gt; &lt;environment: namespace:mlr&gt;
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">mlr:::simpleImpute
+<pre><code class="r">mlr:::simpleImpute
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; function (data, target, col, const) 
+<pre><code>#&gt; function (data, target, col, const) 
 #&gt; {
 #&gt;     if (is.na(const)) 
 #&gt;         stopf(&quot;Error imputing column '%s'. Maybe all input data was missing?&quot;, 
@@ -271,7 +272,7 @@ The <em>learn</em> and <em>impute</em> functions both have at least the followin
 #&gt;     }
 #&gt;     replace(x, is.na(x), const)
 #&gt; }
-#&gt; &lt;bytecode: 0x7f8387f5cb40&gt;
+#&gt; &lt;bytecode: 0x7fdb91fe36a0&gt;
 #&gt; &lt;environment: namespace:mlr&gt;
 </code></pre>
 
@@ -285,7 +286,7 @@ carried forward</em> (LOCF) where missing values are replaced by the most recent
 as well as the corresponding number of consecutive <code>NA's</code> (<code>times</code>).
 The <em>impute</em> function generates a vector where the entries in <code>values</code> are replicated
 according to <code>times</code> and replaces the <code>NA's</code> in feature <code>col</code>.</p>
-<pre class="prettyprint well"><code class="r">imputeLOCF = function() {
+<pre><code class="r">imputeLOCF = function() {
     makeImputeMethod(
       learn = function(data, target, col) {
         x = data[[col]]
@@ -307,13 +308,13 @@ according to <code>times</code> and replaces the <code>NA's</code> in feature <c
 
 <p>In the following the missing values in features <code>Ozone</code> and <code>Solar.R</code> in the <a href="http://www.rdocumentation.org/packages/datasets/functions/airquality.html">airquality</a> data set
 are imputed by LOCF.</p>
-<pre class="prettyprint well"><code class="r">data(airquality)
+<pre><code class="r">data(airquality)
 imp = impute(airquality, cols = list(Ozone = imputeLOCF(), Solar.R = imputeLOCF()),
   dummy.cols = c(&quot;Ozone&quot;, &quot;Solar.R&quot;))
 head(imp$data, 10)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt;    Ozone Solar.R Wind Temp Month Day Ozone.dummy Solar.R.dummy
+<pre><code>#&gt;    Ozone Solar.R Wind Temp Month Day Ozone.dummy Solar.R.dummy
 #&gt; 1     41     190  7.4   67     5   1       FALSE         FALSE
 #&gt; 2     36     118  8.0   72     5   2       FALSE         FALSE
 #&gt; 3     12     149 12.6   74     5   3       FALSE         FALSE
@@ -327,6 +328,7 @@ head(imp$data, 10)
 </code></pre>
 
 </div>
+            
         </div>
 
         <footer class="col-md-12">
@@ -340,6 +342,7 @@ head(imp$data, 10)
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
         <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
         <script src="../js/base.js"></script>
     </body>
 </html>

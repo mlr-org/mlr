@@ -13,8 +13,8 @@
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="../css/prettify-1.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -224,7 +224,8 @@
 </div>
 
         <div class="container">
-            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
         <li class="main active"><a href="#configure-mlr">Configure mlr</a></li>
@@ -240,7 +241,7 @@
     
     </ul>
 </div></div>
-            <div class="col-md-9" role="main">
+                <div class="col-md-9" role="main">
 
 <h1 id="configure-mlr">Configure mlr</h1>
 <p>If you really know what you are doing you may think <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> is limiting you in certain ways.
@@ -250,39 +251,39 @@ But sometimes you want to break those barriers and get full access.
 For all parameters, simply refer to the documentation of <a href="http://www.rdocumentation.org/packages/mlr/functions/configureMlr.html">configureMlr</a>.</p>
 <h2 id="example-reduce-the-output-on-the-console">Example: Reduce the output on the console</h2>
 <p>You are bothered by all the output on the console like in this example?</p>
-<pre class="prettyprint well"><code class="r">## Perform a 3-fold cross-validation
+<pre><code class="r">## Perform a 3-fold cross-validation
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 r = resample(&quot;classif.ksvm&quot;, iris.task, rdesc)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [Resample] cross-validation iter: 1
+<pre><code>#&gt; [Resample] cross-validation iter: 1
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Using automatic sigma estimation (sigest) for RBF or laplace kernel
+<pre><code>#&gt; Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [Resample] cross-validation iter: 2
+<pre><code>#&gt; [Resample] cross-validation iter: 2
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Using automatic sigma estimation (sigest) for RBF or laplace kernel
+<pre><code>#&gt; Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [Resample] cross-validation iter: 3
+<pre><code>#&gt; [Resample] cross-validation iter: 3
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Using automatic sigma estimation (sigest) for RBF or laplace kernel
+<pre><code>#&gt; Using automatic sigma estimation (sigest) for RBF or laplace kernel
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [Resample] Result: mmce.test.mean=0.06
+<pre><code>#&gt; [Resample] Result: mmce.test.mean=0.06
 </code></pre>
 
 <p>Just try the following:</p>
-<pre class="prettyprint well"><code class="r">configureMlr(show.learner.output = FALSE)
+<pre><code class="r">configureMlr(show.learner.output = FALSE)
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 r = resample(&quot;classif.ksvm&quot;, iris.task, rdesc)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [Resample] cross-validation iter: 1
+<pre><code>#&gt; [Resample] cross-validation iter: 1
 #&gt; [Resample] cross-validation iter: 2
 #&gt; [Resample] cross-validation iter: 3
 #&gt; [Resample] Result: mmce.test.mean=0.0533
@@ -290,10 +291,10 @@ r = resample(&quot;classif.ksvm&quot;, iris.task, rdesc)
 
 <h2 id="access-the-current-configuration">Access the current configuration</h2>
 <p>Function <a href="http://www.rdocumentation.org/packages/mlr/functions/getMlrOptions.html">getMlrOptions</a> returns a <code>list</code> that shows the current configuration:</p>
-<pre class="prettyprint well"><code class="r">getMlrOptions()
+<pre><code class="r">getMlrOptions()
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; $on.learner.error
+<pre><code>#&gt; $on.learner.error
 #&gt; [1] &quot;stop&quot;
 #&gt; 
 #&gt; $on.learner.warning
@@ -315,21 +316,21 @@ is already available in <a href="http://www.rdocumentation.org/packages/mlr/">ml
 If this is the case you might want to <a href="https://github.com/berndbischl/mlr#get-in-touch">contact us</a>
 or <a href="https://github.com/berndbischl/mlr/issues/new">open an issue</a> as well!
 But until then you can turn off <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>'s parameter checking like this:</p>
-<pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;classif.ksvm&quot;, newPar = 3)
+<pre><code class="r">lrn = makeLearner(&quot;classif.ksvm&quot;, newPar = 3)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter newPar without available description object!
+<pre><code>#&gt; Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter newPar without available description object!
 #&gt; You can switch off this check by using configureMlr!
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">lrn = makeLearner(&quot;classif.ksvm&quot;, epsilon = -3)
+<pre><code class="r">lrn = makeLearner(&quot;classif.ksvm&quot;, epsilon = -3)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter epsilon without available description object!
+<pre><code>#&gt; Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter epsilon without available description object!
 #&gt; You can switch off this check by using configureMlr!
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">configureMlr(on.par.without.desc = &quot;quiet&quot;)
+<pre><code class="r">configureMlr(on.par.without.desc = &quot;quiet&quot;)
 lrn = makeLearner(&quot;classif.ksvm&quot;, newPar = 3)
 lrn = makeLearner(&quot;classif.ksvm&quot;, epsilon = -3)
 </code></pre>
@@ -341,28 +342,28 @@ However, in some situations, for example if you conduct a <a href="../benchmark_
 with multiple data sets and learners, you normally do not want to terminate the whole
 benchmark experiment due to one error.
 The following example shows how to prevent this:</p>
-<pre class="prettyprint well"><code class="r">## This call gives an error caused by the low number of observations in class `virginica`
+<pre><code class="r">## This call gives an error caused by the low number of observations in class `virginica`
 train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Error in qda.default(x, grouping, ...): some group is too small for 'qda'
+<pre><code>#&gt; Error in qda.default(x, grouping, ...): some group is too small for 'qda'
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Timing stopped at: 0.01 0 0.011
+<pre><code>#&gt; Timing stopped at: 0.003 0 0.004
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">configureMlr(on.learner.error = &quot;warn&quot;)
+<pre><code class="r">configureMlr(on.learner.error = &quot;warn&quot;)
 mod = train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Warning in train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104): Could not train learner classif.qda: Error in qda.default(x, grouping, ...) : 
+<pre><code>#&gt; Warning in train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104): Could not train learner classif.qda: Error in qda.default(x, grouping, ...) : 
 #&gt;   some group is too small for 'qda'
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">mod
+<pre><code class="r">mod
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Model for id = classif.qda class = classif.qda
+<pre><code>#&gt; Model for id = classif.qda class = classif.qda
 #&gt; Trained on obs: 104
 #&gt; Used features: 4
 #&gt; Hyperparameters: 
@@ -373,25 +374,25 @@ mod = train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
 #&gt;   some group is too small for 'qda'
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">## mod is an object of class FailureModel
+<pre><code class="r">## mod is an object of class FailureModel
 isFailureModel(mod)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [1] TRUE
+<pre><code>#&gt; [1] TRUE
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">## Get the error message
+<pre><code class="r">## Get the error message
 getFailureModelMsg(mod)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; [1] &quot;Error in qda.default(x, grouping, ...) : \n  some group is too small for 'qda'\n&quot;
+<pre><code>#&gt; [1] &quot;Error in qda.default(x, grouping, ...) : \n  some group is too small for 'qda'\n&quot;
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">## NAs are predicted
+<pre><code class="r">## NAs are predicted
 predict(mod, iris.task)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Prediction: 150 observations
+<pre><code>#&gt; Prediction: 150 observations
 #&gt; predict.type: response
 #&gt; threshold: 
 #&gt; time: NA
@@ -408,6 +409,7 @@ predict(mod, iris.task)
 <code>NA</code>s for all new observations. Function <a href="http://www.rdocumentation.org/packages/mlr/functions/getFailureModelMsg.html">getFailureModelMsg</a> extracts the error
 message.</p>
 </div>
+            
         </div>
 
         <footer class="col-md-12">
@@ -421,6 +423,7 @@ message.</p>
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
         <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
         <script src="../js/base.js"></script>
     </body>
 </html>

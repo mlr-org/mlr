@@ -13,8 +13,8 @@
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="../css/prettify-1.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -224,7 +224,8 @@
 </div>
 
         <div class="container">
-            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
         <li class="main active"><a href="#parallelization">Parallelization</a></li>
@@ -232,7 +233,7 @@
     
     </ul>
 </div></div>
-            <div class="col-md-9" role="main">
+                <div class="col-md-9" role="main">
 
 <h1 id="parallelization">Parallelization</h1>
 <p><strong>R</strong> by default does not make use of parallelization.
@@ -242,26 +243,26 @@ With the integration of <a href="http://www.rdocumentation.org/packages/parallel
 <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart*</a> functions.
 The first loop <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> encounters which is marked as parallel executable will be automatically parallelized.
 It is good practice to call <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStop.html">parallelStop</a> at the end of your script.</p>
-<pre class="prettyprint well"><code class="r">library(&quot;parallelMap&quot;)
+<pre><code class="r">library(&quot;parallelMap&quot;)
 parallelStartSocket(2)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Starting parallelization in mode=socket with cpus=2.
+<pre><code>#&gt; Starting parallelization in mode=socket with cpus=2.
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+<pre><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 r = resample(&quot;classif.lda&quot;, iris.task, rdesc)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Exporting objects to slaves for mode socket: .mlr.slave.options
+<pre><code>#&gt; Exporting objects to slaves for mode socket: .mlr.slave.options
 #&gt; Mapping in parallel: mode = socket; cpus = 2; elements = 3.
 #&gt; [Resample] Result: mmce.test.mean=0.02
 </code></pre>
 
-<pre class="prettyprint well"><code class="r">parallelStop()
+<pre><code class="r">parallelStop()
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Stopped parallelization. All cleaned up.
+<pre><code>#&gt; Stopped parallelization. All cleaned up.
 </code></pre>
 
 <p>On Linux or Mac OS X, you may want to use
@@ -270,15 +271,16 @@ We offer different parallelization levels for fine grained control over the para
 E.g., if you do not want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/benchmark.html">benchmark</a> function because it has only very few iterations but want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resampling</a> of each learner instead,
 you can specifically pass the <code>level</code> <code>"mlr.resample"</code> to the <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart*</a> function.
 Currently the following levels are supported:</p>
-<pre class="prettyprint well"><code class="r">parallelShowRegisteredLevels()
+<pre><code class="r">parallelShowRegisteredLevels()
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; mlr                 : mlr.benchmark,mlr.resample,mlr.selectFeatures,mlr.tuneParams
+<pre><code>#&gt; mlr                 : benchmark,resample,selectFeatures,tuneParams
 </code></pre>
 
 <p>For further ways of parallelizing your computations, consult the
 <a href="https://github.com/berndbischl/parallelMap#parallelmap">parallelMap tutorial</a> and help.</p>
 </div>
+            
         </div>
 
         <footer class="col-md-12">
@@ -292,6 +294,7 @@ Currently the following levels are supported:</p>
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
         <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
         <script src="../js/base.js"></script>
     </body>
 </html>

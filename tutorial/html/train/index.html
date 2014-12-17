@@ -13,8 +13,8 @@
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="../css/prettify-1.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -224,7 +224,8 @@
 </div>
 
         <div class="container">
-            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
         <li class="main active"><a href="#training-a-learner">Training a Learner</a></li>
@@ -234,16 +235,16 @@
     
     </ul>
 </div></div>
-            <div class="col-md-9" role="main">
+                <div class="col-md-9" role="main">
 
 <h1 id="training-a-learner">Training a Learner</h1>
 <p>Training a learner means fitting a model to a given data set.
-In the <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> package this can be done by calling the function <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a>
-with a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> and a suitable <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
+In <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> this can be done by calling the function <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a>
+on a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> and a suitable <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
 <p>We start with a survival analysis example and train a
 <a href="http://www.rdocumentation.org/packages/survival/functions/coxph.html">Cox proportional hazards model</a>
 on the <a href="http://www.rdocumentation.org/packages/survival/functions/lung.html">lung</a> data set.</p>
-<pre class="prettyprint well"><code class="r">data(lung, package = &quot;survival&quot;)
+<pre><code class="r">data(lung, package = &quot;survival&quot;)
 lung$status = (lung$status == 2)
 task = makeSurvTask(data = lung, target = c(&quot;time&quot;, &quot;status&quot;))
 lrn = makeLearner(&quot;surv.coxph&quot;)
@@ -252,7 +253,7 @@ mod = train(lrn, task)
 mod
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Model for id = surv.coxph class = surv.coxph
+<pre><code>#&gt; Model for id = surv.coxph class = surv.coxph
 #&gt; Trained on obs: 228
 #&gt; Used features: 8
 #&gt; Hyperparameters:
@@ -263,11 +264,11 @@ As a general rule, you have to create a <a href="http://www.rdocumentation.org/p
 by, e.g., setting hyperparameter values or changing the type of prediction.
 Otherwise, <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a> and many other functions accept a character string naming the learning
 method.</p>
-<pre class="prettyprint well"><code class="r">mod = train(&quot;surv.coxph&quot;, task)
+<pre><code class="r">mod = train(&quot;surv.coxph&quot;, task)
 mod
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Model for id = surv.coxph class = surv.coxph
+<pre><code>#&gt; Model for id = surv.coxph class = surv.coxph
 #&gt; Trained on obs: 228
 #&gt; Used features: 8
 #&gt; Hyperparameters:
@@ -276,17 +277,17 @@ mod
 <p>Training a learner works the same way for every type of <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.
 Here is a cluster analysis example using the data set <a href="http://www.rdocumentation.org/packages/dataset/functions/mtcars.html">mtcars</a>.
 We create a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> because we want to set one of the hyperparameter values, the number of clusters.</p>
-<pre class="prettyprint well"><code class="r">task = makeClusterTask(data = mtcars)
-lrn = makeLearner(&quot;cluster.SimpleKMeans&quot;, N = 3)
+<pre><code class="r">task = makeClusterTask(data = mtcars)
+lrn = makeLearner(&quot;cluster.kmeans&quot;, centers = 3)
 
 mod = train(lrn, task)
 mod
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Model for id = cluster.SimpleKMeans class = cluster.SimpleKMeans
+<pre><code>#&gt; Model for id = cluster.kmeans class = cluster.kmeans
 #&gt; Trained on obs: 32
 #&gt; Used features: 11
-#&gt; Hyperparameters: N=3
+#&gt; Hyperparameters: centers=&lt;numeric&gt;
 </code></pre>
 
 <p>Optionally, only a subset of the data, specified by an index set, can be used to
@@ -294,8 +295,8 @@ train the learner. This set is passed using the <code>subset</code> argument of 
 <p>We fit a simple linear regression model to the <a href="http://www.rdocumentation.org/packages/mlbench/functions/BostonHousing.html">BostonHousing</a> data set.
 The object <a href="http://www.rdocumentation.org/packages/mlr/functions/bh.task.html">bh.task</a> is the regression <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> on the <a href="http://www.rdocumentation.org/packages/mlbench/functions/BostonHousing.html">BostonHousing</a>
 data set provided by <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.</p>
-<pre class="prettyprint well"><code class="r">## Number of observations
-n = bh.task$task.desc$size
+<pre><code class="r">## Number of observations
+n = getTaskDescription(bh.task)$size
 ## Use 1/3 of the observations for training
 train.set = sample(n, size = n/3)
 ## Train the learner
@@ -303,7 +304,7 @@ mod = train(&quot;regr.lm&quot;, bh.task, subset = train.set)
 mod
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Model for id = regr.lm class = regr.lm
+<pre><code>#&gt; Model for id = regr.lm class = regr.lm
 #&gt; Trained on obs: 168
 #&gt; Used features: 13
 #&gt; Hyperparameters:
@@ -318,18 +319,18 @@ twice as frequent as class malignant.
 If both classes should have equal importance in training the classifier we can weight the
 examples according to the class frequencies in the data set as shown in the following
 <strong>R</strong> code (see also the section about <a href="../over_and_undersampling/index.html">imbalanced classification problems</a>).</p>
-<pre class="prettyprint well"><code class="r">## Calculate the observation weights
-tar = getTaskTargets(bc.task)
-tab = as.numeric(table(tar))
-w = 1/tab[tar]
+<pre><code class="r">## Calculate the observation weights
+target = getTaskTargets(bc.task)
+tab = as.numeric(table(target))
+w = 1/tab[target]
 
-train(&quot;classif.cforest&quot;, task = bc.task, weights = w)
+train(&quot;classif.rpart&quot;, task = bc.task, weights = w)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; Model for id = classif.cforest class = classif.cforest
+<pre><code>#&gt; Model for id = classif.rpart class = classif.rpart
 #&gt; Trained on obs: 683
 #&gt; Used features: 9
-#&gt; Hyperparameters:
+#&gt; Hyperparameters: xval=0
 </code></pre>
 
 <p>As you may recall, it is also possible to pass observation weights when creating the
@@ -340,15 +341,16 @@ some of the learners you want to use cannot deal with weights or you want to try
 The weights in <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a> overwrite the weights in <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
 <h2 id="wrapped-models">Wrapped models</h2>
 <p><a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a> returns an object of class <a href="http://www.rdocumentation.org/packages/mlr/functions/makeWrappedModel.html">WrappedModel</a>, which wraps the
-particular model of the underlying <strong>R</strong> learning method. The wrapped model contains the output as well as the actual model.
+particular model of the underlying <strong>R</strong> learning method.
+This object contains the actual fitted model fit as returned by the <strong>R</strong> external package and additionally some informations about the learner and task.
 It can subsequently be used to perform a <a href="http://www.rdocumentation.org/packages/mlr/functions/predict.WrappedModel.html">prediction</a> for new observations.</p>
 <p>In order to access the underlying model we can use the function <a href="http://www.rdocumentation.org/packages/mlr/functions/getLearnerModel.html">getLearnerModel</a>.
 In the following example we get an object of class <a href="http://www.rdocumentation.org/packages/stats/functions/lm.html">lm</a>.</p>
-<pre class="prettyprint well"><code class="r">mod = train(&quot;regr.lm&quot;, bh.task, subset = train.set)
+<pre><code class="r">mod = train(&quot;regr.lm&quot;, bh.task, subset = train.set)
 getLearnerModel(mod)
 </code></pre>
 
-<pre class="prettyprint well"><code>#&gt; 
+<pre><code>#&gt; 
 #&gt; Call:
 #&gt; stats::lm(formula = f, data = d)
 #&gt; 
@@ -362,6 +364,7 @@ getLearnerModel(mod)
 </code></pre>
 
 </div>
+            
         </div>
 
         <footer class="col-md-12">
@@ -375,6 +378,7 @@ getLearnerModel(mod)
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
         <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
         <script src="../js/base.js"></script>
     </body>
 </html>

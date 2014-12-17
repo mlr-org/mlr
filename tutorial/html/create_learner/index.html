@@ -13,8 +13,8 @@
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="../css/prettify-1.0.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -224,7 +224,8 @@
 </div>
 
         <div class="container">
-            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
         <li class="main active"><a href="#integrating-another-learner">Integrating another learner</a></li>
@@ -238,7 +239,7 @@
     
     </ul>
 </div></div>
-            <div class="col-md-9" role="main">
+                <div class="col-md-9" role="main">
 
 <h1 id="integrating-another-learner">Integrating another learner</h1>
 <p>In order to create a new learner in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>, interface code to the <strong>R</strong> function must be written.
@@ -272,7 +273,7 @@ LDA has one discrete parameter, <code>method</code>, and two continuous ones, <c
 It supports classification problems with two or more classes and can deal with numeric 
 and factor explanatory variables.
 It can predict posterior probabilities.</p>
-<pre class="prettyprint well"><code class="r">makeRLearner.classif.lda = function() {
+<pre><code class="r">makeRLearner.classif.lda = function() {
   makeRLearnerClassif(
     cl = &quot;classif.lda&quot;,
     package = &quot;MASS&quot;,
@@ -298,7 +299,7 @@ Further information can be found in the documentation of <a href="http://www.rdo
 Pass all required arguments to the training function.
 The data can be extracted from the task via the <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskData.html">getTaskData</a> function.
 Pass further arguments like case weights via <code>.weights</code> to the training method.</p>
-<pre class="prettyprint well"><code class="r">trainLearner.classif.lda = function(.learner, .task, .subset, .weights,  ...) {
+<pre><code class="r">trainLearner.classif.lda = function(.learner, .task, .subset, .weights,  ...) {
   f = getTaskFormula(.task)
   lda(f, data = getTaskData(.task, .subset), ...)
 }
@@ -315,7 +316,7 @@ In the latter case the matrix must have the same number of columns as there are 
 the task and the columns have to be named by the class names.</p>
 <p>For clustering, you have to return a numeric vector with the IDs of the clusters
 that the respective datum has been assigned to. The numbering should start at 1.</p>
-<pre class="prettyprint well"><code class="r">predictLearner.classif.lda = function(.learner, .model, .newdata, ...) {
+<pre><code class="r">predictLearner.classif.lda = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, ...)
   if(.learner$predict.type == &quot;response&quot;)
     return(p$class)
@@ -325,6 +326,7 @@ that the respective datum has been assigned to. The numbering should start at 1.
 </code></pre>
 
 </div>
+            
         </div>
 
         <footer class="col-md-12">
@@ -338,6 +340,7 @@ that the respective datum has been assigned to. The numbering should start at 1.
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
         <script src="../js/prettify-1.0.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
         <script src="../js/base.js"></script>
     </body>
 </html>
