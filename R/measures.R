@@ -452,7 +452,7 @@ measureTPR = function(truth, response, positive) {
 tnr = makeMeasure(id = "tnr", minimize = FALSE, best = 1, worst = 0,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
- 	name = "True negative rate",
+  name = "True negative rate",
   note = "Also called specificity.",
   fun = function(task, model, pred, feats, extra.args) {
     measureTNR(pred$data$truth, pred$data$response, pred$task.desc$negative)
@@ -472,7 +472,7 @@ measureTNR = function(truth, response, negative) {
 fpr = makeMeasure(id = "fpr", minimize = TRUE, best = 0, worst = 1,
   properties = "classif",
   allowed.pred.types = c("response", "prob"),
- 	name = "False positive rate",
+  name = "False positive rate",
   note = "Also called false alarm rate or fall-out.",
   fun = function(task, model, pred, feats, extra.args) {
     measureFPR(pred$data$truth, pred$data$response, pred$task.desc$negative, pred$task.desc$positive)
