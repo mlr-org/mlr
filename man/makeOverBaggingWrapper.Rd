@@ -69,8 +69,6 @@ Other wrapper: \code{\link{CostSensClassifModel}},
   \code{\link{makeMulticlassWrapper}};
   \code{\link{makeOversampleWrapper}},
   \code{\link{makeUndersampleWrapper}};
-  \code{\link{makePreprocWrapperICA}};
-  \code{\link{makePreprocWrapperPCA}};
   \code{\link{makePreprocWrapper}};
   \code{\link{makeSMOTEWrapper}};
   \code{\link{makeTuneWrapper}};

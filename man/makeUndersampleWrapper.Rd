@@ -54,8 +54,6 @@ Other wrapper: \code{\link{CostSensClassifModel}},
   \code{\link{makeImputeWrapper}};
   \code{\link{makeMulticlassWrapper}};
   \code{\link{makeOverBaggingWrapper}};
-  \code{\link{makePreprocWrapperICA}};
-  \code{\link{makePreprocWrapperPCA}};
   \code{\link{makePreprocWrapper}};
   \code{\link{makeSMOTEWrapper}};
   \code{\link{makeTuneWrapper}};

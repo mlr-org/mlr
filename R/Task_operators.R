@@ -1,6 +1,6 @@
 #' Get a summarizing task description.
 #'
-#' @template arg_task
+#' @template arg_task_or_desc
 #' @return [\code{\link{TaskDesc}}].
 #' @export
 #' @family task
