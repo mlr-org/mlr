@@ -31,6 +31,7 @@ This is simply \dQuote{<target> ~ .}.
 \seealso{
 Other task: \code{\link{getTaskCosts}};
   \code{\link{getTaskData}};
+  \code{\link{getTaskDescription}};
   \code{\link{getTaskFeatureNames}};
   \code{\link{getTaskId}}; \code{\link{getTaskNFeats}};
   \code{\link{getTaskTargetNames}};

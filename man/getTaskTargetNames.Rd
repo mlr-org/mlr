@@ -19,6 +19,7 @@ Get the name(s) of the target column(s).
 \seealso{
 Other task: \code{\link{getTaskCosts}};
   \code{\link{getTaskData}};
+  \code{\link{getTaskDescription}};
   \code{\link{getTaskFeatureNames}};
   \code{\link{getTaskFormula}},
   \code{\link{getTaskFormulaAsString}};

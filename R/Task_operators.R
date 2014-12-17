@@ -1,3 +1,9 @@
+#' Get a summarizing task description.
+#'
+#' @template arg_task
+#' @return [\code{\link{TaskDesc}}].
+#' @export
+#' @family task
 getTaskDescription = function(x) {
   if (inherits(x, "TaskDesc"))
     x

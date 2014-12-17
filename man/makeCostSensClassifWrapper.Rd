@@ -53,6 +53,7 @@ Other wrapper: \code{\link{CostSensRegrModel}},
   \code{\link{makeOverBaggingWrapper}};
   \code{\link{makeOversampleWrapper}},
   \code{\link{makeUndersampleWrapper}};
+  \code{\link{makePreprocWrapperICA}};
   \code{\link{makePreprocWrapperPCA}};
   \code{\link{makePreprocWrapper}};
   \code{\link{makeSMOTEWrapper}};

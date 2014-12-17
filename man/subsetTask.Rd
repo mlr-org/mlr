@@ -32,6 +32,7 @@ subsetTask(task, subset = 1:100)
 \seealso{
 Other task: \code{\link{getTaskCosts}};
   \code{\link{getTaskData}};
+  \code{\link{getTaskDescription}};
   \code{\link{getTaskFeatureNames}};
   \code{\link{getTaskFormula}},
   \code{\link{getTaskFormulaAsString}};
