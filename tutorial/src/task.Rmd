@@ -1,13 +1,11 @@
 # Learning Tasks
-
 Learning tasks encapsulate the data set and further relevant information about a machine
 learning problem, for example the name of the target variable.
 
 
 ## Task types and creation
-
 The tasks are organised in a hierarchy, with the generic [&Task] at the top.
-The following tasks can be instantiated and all inherit from a virtual superclass [&Task]:
+The following tasks can be instantiated and all inherit from the virtual superclass [&Task]:
 
 * [ClassifTask](&Task) for binary and multi-class classification problems,
 * [RegrTask](&Task) for regression problems,
@@ -17,15 +15,14 @@ The following tasks can be instantiated and all inherit from a virtual superclas
 
 To create a task, just call ``make<TaskType>``, e.g., [makeClassifTask](&Task).
 All tasks require an identifier (argument ``id``) and a [data frame](&base::data.frame) (argument ``data``).
-If no ID is provided it is automatically generated using the name of the data.
+If no ID is provided it is automatically generated using the variable name of the data.
 It will be later used to name results, for example of
-[benchmark experiments](benchmark_experiments.md).
+[benchmark experiments](benchmark_experiments.md), or in generated plots.
 Depending on the nature of the learning problem, additional arguments may be required and
 are exemplified in the following subsections.
 
 
 ### Cluster analysis
-
 Because cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the ``data``.
 In the following example we create a learning task from the data set [mtcars](&datasets::mtcars).
 
@@ -34,10 +31,12 @@ data(mtcars, package = "datasets")
 cluster.task = makeClusterTask(data = mtcars)
 cluster.task
 ```
+As you can see, the [&Task] records the type of the learning problem and basic information about
+the data set, e.g., the types of the features (numeric vectors, factors or ordered factors),
+the number of observations, or whether missing values are present.
 
 
 ### Regression
-
 For supervised learning like regression (as well as classification and
 survival analysis) we, in addition to ``data``, have to specify the name of the ``target``
 variable.
@@ -48,17 +47,12 @@ regr.task = makeRegrTask(id = "bh", data = BostonHousing, target = "medv")
 regr.task
 ```
 
-As you can see, the [&Task] records the type of the learning problem and basic information about
-the data set, e.g., the types of the features (numeric vectors, factors or ordered factors),
-the number of observations, or whether missing values are present.
-
 Creating tasks for classification problems and survival analysis follows the same scheme,
 except the type of the target variables.
 For each of these learning problems, some specifics are described below.
 
 
 ### Classification
-
 For classification the target variable has to be a [factor](&base::factor).
 
 In binary classification it is customary to refer to the two classes as *positive* and
@@ -89,7 +83,6 @@ classif.task = makeClassifTask(id = "BreastCancer", data = df, target = "Class",
 
 
 ### Survival analysis
-
 Survival tasks use two target columns.
 For left and right censored problems these consist of the survival time and a binary event indicator.
 For interval censored data the two target columns must be specified in the ``"interval2"`` format (see [Surv](&survival::Surv)).
@@ -106,7 +99,6 @@ The type of censoring can be specified via the argument ``censoring`` which defa
 
 
 ### Cost-sensitive classification
-
 The standard objective in classification is to obtain a high prediction accuracy, i.e., to
 minimize the number of errors. Thereby, all types of misclassification errors are deemed
 equally severe. However, in many applications different kinds of errors cause different costs
@@ -142,7 +134,6 @@ For more details see the section about [cost-sensitive classification](cost_sens
 
 
 ### Further details
-
 The [&Task] help page also lists several other arguments to describe further details of the
 problem.
 
@@ -154,20 +145,20 @@ Another possibility is to assign ``weights`` to observations according to their 
 
 
 ## Accessing a learning task
-
-The [&Task] object is a [list](base::list) and its main properties are stored in element
-``$task.desc`` which is of class [&TaskDesc].
+We provide many operators to access the elements stored in a [&Task].
+For example, to access a [task description](&TaskDesc) you can use
 
 ```{r}
-str(regr.task$task.desc)
+getTaskDescription(regr.task)
 ```
 
-Moreover, there are some functions, following the naming convention
-``getTask<what_to_extract>``, to access the [&Task] and the encapsulated data.
-The most important ones are listed in the documentation of [&Task].
-Here are some examples.
+The most important operations are listed in the documentation of [&Task].
+Here are some more examples.
 
 ```{r}
+## Accessing the data set in classif.task:
+str(getTaskData(classif.task))
+
 ## Get the number of input variables in cluster.task:
 getTaskNFeats(cluster.task)
 
@@ -182,9 +173,6 @@ head(getTaskTargets(regr.task))
 
 ## Get the cost matrix in costsens.task:
 head(getTaskCosts(costsens.task))
-
-## Accessing the data set in classif.task:
-str(getTaskData(classif.task))
 ```
 
 Note the many options [&getTaskData] provides to convert the data set into a convenient format.
@@ -195,7 +183,6 @@ are also useful.
 
 
 ## Modifying a learning task
-
 [%mlr] provides several functions to alter an existing [&Task] which is often more
 convenient than creating a new [&Task] from scratch.
 Here are some examples.
@@ -215,11 +202,10 @@ dropFeatures(surv.task, c("meal.cal", "wt.loss"))
 normalizeFeatures(classif.task, method = "standardize")
 ```
 
-For more information see also the section about [data preprocessing](preproc.md).
+Some of these functions are covered and explained in more detail in the [data preprocessing](preproc.md) section.
 
 
 ## Example tasks
-
-For your convenience [%mlr] provides pre-defined [&Task]s for each type of learning problem.
+For your convenience [%mlr] provides pre-defined [tasks](&Task) for each type of learning problem.
 These are used throughout this tutorial in order to get shorter and more readable code.
-A list of all [&Task]s can be found [here](example_tasks.md).
+A list of all [tasks](&Task) can be found [here](example_tasks.md).

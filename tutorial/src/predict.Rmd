@@ -1,16 +1,15 @@
 # Predicting Outcomes for New Data
-
 Predicting the target values for new observations is
 implemented the same way as most of the other predict methods in **R**.
 In general, all you need to do is call [predict](&predict.WrappedModel) on the object
-returned by [&train] and pass the data to be predicted.
+returned by [&train] and pass the data you want predictions for.
 
 There are two ways to pass the data:
 
 * Either pass the [&Task] via the ``task`` argument or
 * pass a [data frame](&base::data.frame) via the ``newdata`` argument.
 
-The first way is preferable if you want predictions for data already included in the [&Task].
+The first way is preferable if you want predictions for data already included in a [&Task].
 
 Just as [&train], the [predict](&predict.WrappedModel) function has a ``subset`` argument,
 so you can set aside different portions of the data in [&Task] for training and prediction (more advanced methods for splitting the data in train and test set are described in the [section on resampling](resample.md)).
@@ -20,7 +19,7 @@ observation of the [BostonHousing](&mlbench::BostonHousing) data set and make pr
 on the remaining data in [&bh.task].
 
 ```{r}
-n = bh.task$task.desc$size
+n = getTaskDescription(bh.task)$size
 train.set = seq(1, n, by = 2)
 test.set = seq(2, n, by = 2)
 lrn = makeLearner("regr.gbm", n.trees = 100)
@@ -41,48 +40,18 @@ n = nrow(iris)
 iris.train = iris[seq(1, n, by = 2), -5]
 iris.test = iris[seq(2, n, by = 2), -5]
 task = makeClusterTask(data = iris.train)
-mod = train("cluster.XMeans", task)
+mod = train("cluster.kmeans", task)
 
 newdata.pred = predict(mod, newdata = iris.test)
 newdata.pred
 ```
 
-
-## Changing the type of prediction
-
-The result of [predict](&predict.WrappedModel) depends on the nature of the [&Task]
-and the type of prediction chosen when creating the [Learner](&makeLearner).
-For example in case of survival analysis the default is to predict the response.
-For the [Cox proportional hazards model](&Surv::coxph) we get the values of the linear
-predictor as shown below.
-
-```{r}
-n = lung.task$task.desc$size
-train.set = seq(1, n, by = 2)
-test.set = seq(2, n, by = 2)
-mod = train("surv.coxph", lung.task, subset = train.set)
-
-pred = predict(mod, task = lung.task, subset = test.set)
-pred
-```
-
-It is also possible to predict time-dependent probabilities.
-In order to do so you have to create a [Learner](&makeLearner) and set ``predict.type = "prob"``.
-
-```{r}
-lrn = makeLearner("surv.coxph", predict.type = "prob")
-mod = train(lrn, lung.task, subset = train.set)
-
-pred = predict(mod, task = lung.task, subset = test.set)
-head(pred$data[, 1:8])
-```
-
-Predictions are encapsulated in a special [&Prediction] object.
+Note that you do not have to remove the target columns from the data.
+These columns are automatically removed prior to calling the underlying ``predict`` method of the learner.
 
 
 ## Accessing the prediction
-
-A [&Prediction] object is a [list](&base::list). The most important element is ``data`` which is a
+The returned [&Prediction] object is a named [list](&base::list). The most important element is ``data`` which is a
 [data frame](&base::data.frame) that contains columns with the true values of the target variable (in case of
 supervised learning problems) and the predictions.
 
@@ -95,18 +64,16 @@ second case from a [data frame](&base::data.frame).
 ## Result of predict with data passed via task argument
 head(task.pred$data)
 
-
 ## Result of predict with data passed via newdata argument
 head(newdata.pred$data)
 ```
 
-As you can see when predicting from a [&Task], the resulting `[data frame](&base::data.frame)
+As you can see when predicting from a [&Task], the resulting [data frame](&base::data.frame)
 contains an additional column, called ``id``, which tells us which element in the original data set
 the prediction corresponds to.
 
 
 ### Extract Probabilities
-
 The predicted probabilities can be extracted from the [&Prediction] using the function
 [&getProbabilities].
 Here is another cluster analysis example. We use [fuzzy c-means clustering](&e1071::cmeans)
@@ -121,9 +88,6 @@ head(getProbabilities(pred))
 ```
 
 For classification problems there are some more things worth mentioning.
-
-### Classification
-
 By default, class labels are predicted.
 
 ```{r}
@@ -162,22 +126,18 @@ head(getProbabilities(pred))
 
 ## Adjusting the threshold
 We can set the threshold value that is used to map the predicted posterior probabilities to class labels.
-Note that for this purpose we need to create a [Learner](&makeLearner) that predicts
-probabilities.
+Note that for this purpose we need to create a [Learner](&makeLearner) that predicts probabilities.
 For binary classification, the threshold determines when the *positive* class is predicted.
 The default is 0.5.
 Now, we set the threshold for the positive class to 0.8 (that is, an example is assigned to the positive class if its posterior probability exceeds 0.8).
 Which of the two classes is the positive one can be seen by accessing the [&Task].
-To illustrate binary classification, we use the [Sonar](&mlbench::Sonar)
-data set from the
-[mlbench](http://cran.r-project.org/web/packages/mlbench/index.html) package.
-
+To illustrate binary classification, we use the [Sonar](&mlbench::Sonar) data set from the [%mlbench] package.
 ```{r}
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 mod = train(lrn, task = sonar.task)
 
 ## Label of the positive class
-sonar.task$task.desc$positive
+getTaskDescription(sonar.task)$positive
 
 ## default threshold
 pred = predict(mod, sonar.task)
@@ -188,8 +148,7 @@ pred = setThreshold(pred, 0.8)
 pred$threshold
 pred
 ```
-Note that in the binary case [&getProbabilities] extracts the posterior probabilities
-of the positive class only.
+Note that in the binary case [&getProbabilities] extracts the posterior probabilities of the positive class only.
 ```{r}
 head(getProbabilities(pred))
 ```
@@ -197,7 +156,6 @@ head(getProbabilities(pred))
 It works similarly for multiclass classification.
 The threshold has to be given by a named vector specifying the values by which each probability will be divided.
 The class with the maximum resulting value is then selected.
-
 ```{r}
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 mod = train(lrn, iris.task)
@@ -210,7 +168,6 @@ table(as.data.frame(pred)$response)
 ```
 
 ## Visualizing the prediction
-
 The function [&plotLearnerPrediction] allows to visualize predictions, e.g., for teaching purposes
 or exploring models.
 It trains the chosen learning method for 1 or 2 selected features and then displays the

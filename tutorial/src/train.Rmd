@@ -1,8 +1,8 @@
 # Training a Learner
 
 Training a learner means fitting a model to a given data set.
-In the [%mlr] package this can be done by calling the function [&train]
-with a [Learner](&makeLearner) and a suitable [&Task].
+In [%mlr] this can be done by calling the function [&train]
+on a [Learner](&makeLearner) and a suitable [&Task].
 
 We start with a survival analysis example and train a
 [Cox proportional hazards model](&survival::coxph)
@@ -35,7 +35,7 @@ We create a [Learner](&makeLearner) because we want to set one of the hyperparam
 
 ```{r}
 task = makeClusterTask(data = mtcars)
-lrn = makeLearner("cluster.SimpleKMeans", N = 3)
+lrn = makeLearner("cluster.kmeans", centers = 3)
 
 mod = train(lrn, task)
 mod
@@ -50,7 +50,7 @@ data set provided by [%mlr].
 
 ```{r}
 ## Number of observations
-n = bh.task$task.desc$size
+n = getTaskDescription(bh.task)$size
 ## Use 1/3 of the observations for training
 train.set = sample(n, size = n/3)
 ## Train the learner
@@ -72,11 +72,11 @@ examples according to the class frequencies in the data set as shown in the foll
 
 ```{r}
 ## Calculate the observation weights
-tar = getTaskTargets(bc.task)
-tab = as.numeric(table(tar))
-w = 1/tab[tar]
+target = getTaskTargets(bc.task)
+tab = as.numeric(table(target))
+w = 1/tab[target]
 
-train("classif.cforest", task = bc.task, weights = w)
+train("classif.rpart", task = bc.task, weights = w)
 ```
 
 As you may recall, it is also possible to pass observation weights when creating the
@@ -88,11 +88,10 @@ The weights in [&train] overwrite the weights in [&Task].
 
 
 ## Wrapped models
-
 [&train] returns an object of class [WrappedModel](&makeWrappedModel), which wraps the
-particular model of the underlying **R** learning method. The wrapped model contains the output as well as the actual model.
+particular model of the underlying **R** learning method.
+This object contains the actual fitted model fit as returned by the **R** external package and additionally some informations about the learner and task.
 It can subsequently be used to perform a [prediction](&predict.WrappedModel) for new observations.
-
 
 In order to access the underlying model we can use the function [&getLearnerModel].
 In the following example we get an object of class [lm](&stats::lm).

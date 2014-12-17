@@ -1,18 +1,13 @@
 # mlr Tutorial
-
-This web page will provide you with an in-depth introduction on how to
+This web page provides an in-depth introduction on how to
 use the [%mlr] framework for machine learning experiments and
 optimization in **R**.
 
-Our focus is on your comprehension of the basic functions and applications.
-For detailed technical information and manual pages, please refer to the package's
-[manual pages](http://berndbischl.github.io/mlr/man/).
-They are regularly updated and reflect the documentation of the
-[current package version on CRAN](http://cran.r-project.org/web/packages/mlr/index.html).
+We focus on the comprehension of the basic functions and applications.
+More detailed technical information can be found in the [manual pages](http://berndbischl.github.io/mlr/man/) which
+are regularly updated and reflect the documentation of the [current package version on CRAN](http://cran.r-project.org/web/packages/mlr/index.html).
 
-
-An offline version of this of this tutorial is available to [download here](http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip).
-
+An offline version of this of this tutorial is available for download [here](http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip).
 
 The tutorial explains the basic analysis of a data set step by step:
 
@@ -32,7 +27,6 @@ Enjoy reading!
 
 
 ## Quick start
-
 A simple stratified cross-validation of the *linear discriminant analysis* with [%mlr].
 ```{r}
 library(mlr)

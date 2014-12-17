@@ -38,7 +38,7 @@ Generally, in *K-fold cross-validation* the data set *D* is partitioned into *K*
 In the *i*-th step of the *K* iterations, the *i*-th subset is
 used for testing, while the union of the remaining parts forms the training
 set.
-The default performance measure in survival analysis is the concordance index ([&cindex]).
+The default performance measure in survival analysis is the concordance index ([cindex](&measures)).
 
 ```{r}
 ## Specify the resampling strategy (3-fold cross-validation)
@@ -56,7 +56,7 @@ Its name, ``"cindex.test.mean"``, indicates the performance measure, [&cindex], 
 to aggregate the 3 individual performances.
 [test.mean](&aggregations) is the default method and, as the name implies, takes the mean over the
 performances on the 3 test data sets.
-No predictions on the training data sets were made and thus ``r$measures.train`` contains ``NA``s.
+No predictions on the training data sets were made and thus ``r$measures.train`` contains missing values.
 
 If predictions for the training set are required, too, set ``predict = "train"``or ``predict = "both"``
 in [&makeResampleDesc]. This is necessary for some bootstrap methods (*b632* and *b632+*) and
@@ -76,13 +76,13 @@ The columns ``iter`` and ``set``indicate the resampling iteration and
 if an individual prediction was made on the test or the training data set.
 
 
-In the above example the performance measure is the concordance index ([&cindex]).
+In the above example the performance measure is the concordance index ([cindex](&measures)).
 Of course, it is  possible to compute multiple performance measures at once by
 passing a list of measures
 (see also the previous section on [evaluating learner performance](performance.md)).
 
-In the following we estimate the Dunn index ([&dunn]), the Davies-Bouldin cluster
-separation measure ([&db]), and the time for training the learner ([&timetrain])
+In the following we estimate the Dunn index ([dunn](&measures)), the Davies-Bouldin cluster
+separation measure ([db](&measures)), and the time for training the learner ([timetrain](&measures))
 by *subsampling* with 5 iterations.
 In each iteration the data set *D* is randomly partitioned into a
 training and a test set according to a given percentage, e.g., 2/3
@@ -102,7 +102,6 @@ r$aggr
 
 
 ## Stratified resampling
-
 For classification, it is usually desirable to have the same proportion of the classes in all of the partitions of the original data set. Stratified resampling ensures this.
 This is particularly useful in case of imbalanced classes. Otherwise it may happen for example
 that observations of less frequent classes are missing in some of the training sets which can
@@ -114,6 +113,16 @@ In order to conduct stratified resampling, set ``stratify = TRUE`` when calling 
 rdesc = makeResampleDesc("CV", iters = 3, stratify = TRUE)
 
 r = resample("classif.lda", iris.task, rdesc)
+```
+
+Stratification is also available for survival tasks.
+Here the stratification balances the censoring rate.
+
+Sometimes it is required to also stratify on the input data, e.g. to ensure that all subgroups are represented in all training and test sets.
+To stratify on the input columns, specify factor columns of your task data via ``stratify.cols``
+```{r}
+rdesc = makeResampleDesc("CV", iters = 3, stratify.cols = "chas")
+r = resample("regr.rpart", bh.task, rdesc)
 ```
 
 
