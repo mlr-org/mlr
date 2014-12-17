@@ -23,6 +23,7 @@ test_that("cv resampling works", {
   formula = multiclass.formula
   parset = list(minsplit = 12, cp = 0.09)
 
+  library(rpart)
   tt = "rpart"
   tp = function(model, newdata) predict(model, newdata, type = "class")
 
