@@ -35,7 +35,7 @@ trainLearner.classif.plr = function(.learner, .task, .subset, .weights = NULL, c
 
 #' @export
 predictLearner.classif.plr = function(.learner, .model, .newdata, ...) {
-  p = predict(.model$learner.model, newx = .newdata, type = "response", ...)
+  p = stepPlr::predict.plr(.model$learner.model, newx = .newdata, type = "response", ...)
   levs = c(.model$task.desc$negative, .model$task.desc$positive)
   if(.learner$predict.type == "prob"){
     y = propVectorToMatrix(p, levs)
