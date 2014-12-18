@@ -23,7 +23,7 @@ mlr_2.3:
 -- plotROCRCurves
 -- plotViperCharts
 -- measureSSE, measureMSE, measureRMSE, measureMEDSE, ...
--- PreprocWrapperPCA, PreprocWrapperICA
+-- PreprocWrapperCaret
 
 - new learners:
 -- classif.xgboost
