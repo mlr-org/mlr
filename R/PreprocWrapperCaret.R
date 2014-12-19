@@ -1,7 +1,7 @@
 #' @title Fuse learner with preprocessing
 #'
 #' @description
-#' Fuses a learner with  preprocessing methods proviced by \code{\link[caret]{preProcess}}.
+#' Fuses a learner with preprocessing methods provided by \code{\link[caret]{preProcess}}.
 #  Before training the preprocessing will be performed and the preprocessing model will be saved.
 #  Before prediction the preprocessing model will transform the test data according to the trained model.
 #'
