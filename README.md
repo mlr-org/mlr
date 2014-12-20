@@ -2,7 +2,7 @@
 ==========================
 
 * [Offical CRAN release site](http://cran.r-project.org/web/packages/mlr/)
-* [Detailed Tutorial](http://berndbischl.github.io/mlr/tutorial/html/) ([Download](http://berndbischl.github.io/mlr/tutorial/tutorial.zip))
+* [Detailed Tutorial](http://berndbischl.github.io/mlr/tutorial/html/) ([Download](http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip))
 * [R Documentation in HTML](http://www.rdocumentation.org/packages/mlr)
 * Install the development version
 
