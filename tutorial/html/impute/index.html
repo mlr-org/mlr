@@ -283,7 +283,7 @@ summary(airquality)
 
 <p>There are 37 <code>NA's</code> in variable <code>Ozone</code> (ozone pollution) and 7 <code>NA's</code> in variable <code>Solar.R</code> (solar radiation).
 For demonstration purposes we insert artificial <code>NA's</code> in column <code>Wind</code> (wind speed) and coerce it into a
-<a href="base::factor">factor</a>.</p>
+<a href="http://www.rdocumentation.org/packages/base/functions/factor.html">factor</a>.</p>
 <pre><code class="r">airq = airquality
 ind = sample(nrow(airq), 10)
 airq$Wind[ind] = NA

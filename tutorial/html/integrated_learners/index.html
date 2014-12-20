@@ -280,7 +280,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right">multiclass<br />prob<br />twoclass</td>
+<td align="right">prob<br />twoclass</td>
 <td align="left"></td>
 </tr>
 <tr>
@@ -292,7 +292,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center"></td>
 <td align="right">prob<br />twoclass</td>
-<td align="left">The learner can handle missing values in features, but you need to actively switch that behavior on by setting e.g. 'use_missing_data'. See its doc page for further details.</td>
+<td align="left">'use_missing_data' has been set to TRUE by default to allow missing data support</td>
 </tr>
 <tr>
 <td align="left"><strong>classif.blackboost</strong> <br />blackbst</td>
@@ -380,18 +380,18 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center"></td>
 <td align="center">X</td>
 <td align="right">prob<br />twoclass</td>
-<td align="left"><code>family</code> has been set to <code>Binomial()</code> by default.</td>
+<td align="left"><code>family</code> has been set to <code>Binomial()</code> by default. Maximum number of boosting iterations is set via 'mstop', the actual number used for prediction is controlled by 'm'.</td>
 </tr>
 <tr>
 <td align="left"><strong>classif.glmnet</strong> <br />glmnet</td>
 <td align="left">GLM with Lasso or Elasticnet Regularization</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/glmnet/">glmnet</a></td>
 <td align="center">X</td>
-<td align="center"></td>
+<td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
 <td align="right">multiclass<br />prob<br />twoclass</td>
-<td align="left"></td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
 </tr>
 <tr>
 <td align="left"><strong>classif.IBk</strong> <br />ibk</td>
@@ -699,7 +699,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center"></td>
 <td align="right">multiclass<br />prob<br />twoclass</td>
-<td align="left"></td>
+<td align="left">'na.action' has been set to 'na.impute' by default to allow missing data support</td>
 </tr>
 <tr>
 <td align="left"><strong>classif.rda</strong> <br />rda</td>
@@ -756,6 +756,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="right">multiclass<br />prob<br />twoclass</td>
 <td align="left"></td>
 </tr>
+<tr>
+<td align="left"><strong>classif.xgboost</strong> <br />xgb</td>
+<td align="left">eXtreme Gradient Boosting</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/xgboost/">xgboost</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">multiclass<br />prob<br />twoclass</td>
+<td align="left"><code>nround</code> should be set to value higher then 1 for more accuracy. Mulitclass will use <code>objective = 'multi:softmax'</code>. Binaryclass will use <code>objective = 'binary:logistic'</code>.</td>
+</tr>
 </tbody>
 </table>
 <h3 id="regression">Regression</h3>
@@ -774,6 +785,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 </tr>
 </thead>
 <tbody>
+<tr>
+<td align="left"><strong>regr.bartMachine</strong> <br />bartmachine</td>
+<td align="left">Bayesian Additive Regression Trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/bartMachine/">bartMachine</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="left">'use_missing_data' has been set to TRUE by default to allow missing data support</td>
+</tr>
 <tr>
 <td align="left"><strong>regr.blackboost</strong> <br />blackbst</td>
 <td align="left">Gradient Boosting with Regression Trees</td>
@@ -830,6 +852,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left"></td>
 </tr>
 <tr>
+<td align="left"><strong>regr.elmNN</strong> <br />elmNN</td>
+<td align="left">Extreme Learning Machine for Single Hidden Layer Feedforward Neural Networks</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/elmNN/">elmNN</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="left">nhid has been set to 1 and actfun has been set to "sig" by default</td>
+</tr>
+<tr>
 <td align="left"><strong>regr.fnn</strong> <br />fnn</td>
 <td align="left">Fast k-Nearest Neighbor</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/FNN/">FNN</a></td>
@@ -856,11 +889,11 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left">GLM with Lasso or Elasticnet Regularization</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/glmnet/">glmnet</a></td>
 <td align="center">X</td>
-<td align="center"></td>
+<td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right"></td>
-<td align="left"></td>
+<td align="right">ordered</td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
 </tr>
 <tr>
 <td align="left"><strong>regr.IBk</strong> <br />ibk</td>
@@ -930,7 +963,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 </tr>
 <tr>
 <td align="left"><strong>regr.mob</strong> <br />mob</td>
-<td align="left">Model-based Recursive Partitioning Yielding a Tree with Fitted Models Associated with each Terminal Node</td>
+<td align="left">Model-based Recursive Partitioning  Yielding a Tree with Fitted Models Associated with each Terminal Node</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/party/">party</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -1014,7 +1047,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center"></td>
 <td align="right"></td>
-<td align="left"></td>
+<td align="left">na.action' has been set to 'na.impute' by default to allow missing data support</td>
 </tr>
 <tr>
 <td align="left"><strong>regr.rpart</strong> <br />rpart</td>
@@ -1047,7 +1080,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center"></td>
 <td align="center"></td>
 <td align="right"></td>
-<td align="left">Kernel parameters have to be passed directly and not by using the kpar list in rvm.  Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
+<td align="left">Kernel parameters have to be passed directly and not by using the kpar list in rvm.   Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
 </tr>
 <tr>
 <td align="left"><strong>regr.svm</strong> <br />svm</td>
@@ -1059,6 +1092,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center"></td>
 <td align="right"></td>
 <td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.xgboost</strong> <br />xgb</td>
+<td align="left">eXtreme Gradient Boosting</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/xgboost/">xgboost</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="left"><code>nround</code> should be set to value higher then 1 for more accuracy. <code>objective = 'multireg:linear'</code> set automatically for regression.</td>
 </tr>
 </tbody>
 </table>
@@ -1094,11 +1138,11 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left">Cox Proportional Hazards Model with Componentwise Likelihood based Boosting</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/CoxBoost/">CoxBoost</a></td>
 <td align="center">X</td>
-<td align="center"></td>
+<td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right">rcens</td>
-<td align="left"></td>
+<td align="right">ordered<br />rcens</td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
 </tr>
 <tr>
 <td align="left"><strong>surv.coxph</strong> <br />coxph</td>
@@ -1116,33 +1160,44 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left">GLM with Regularization (Cross Validated Lambda)</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/glmnet/">glmnet</a></td>
 <td align="center">X</td>
-<td align="center"></td>
+<td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right">rcens</td>
-<td align="left"></td>
+<td align="right">ordered<br />rcens</td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
 </tr>
 <tr>
 <td align="left"><strong>surv.glmboost</strong> <br />glmboost</td>
 <td align="left">Gradient Boosting with Componentwise Linear Models</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mboost/">mboost</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/survival/">survival</a><br /><a href="http://www.rdocumentation.org/packages/mboost/">mboost</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
-<td align="right">rcens</td>
-<td align="left"></td>
+<td align="right">ordered<br />rcens</td>
+<td align="left"><code>family</code> has been set to <code>CoxPH()</code> by default. Maximum number of boosting iterations is set via 'mstop', the actual number used for prediction is controlled by 'm'.</td>
 </tr>
 <tr>
 <td align="left"><strong>surv.glmnet</strong> <br />glmnet</td>
 <td align="left">GLM with Regularization</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/glmnet/">glmnet</a></td>
 <td align="center">X</td>
+<td align="center">X</td>
 <td align="center"></td>
+<td align="center">X</td>
+<td align="right">ordered<br />rcens</td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
+</tr>
+<tr>
+<td align="left"><strong>surv.optimCoxBoostPenalty</strong> <br />optimCoxBoostPenalty</td>
+<td align="left">Cox Proportional Hazards Model with Componentwise Likelihood based Boosting, automatic tuning enabled</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/CoxBoost/">CoxBoost</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
 <td align="center"></td>
 <td align="center">X</td>
 <td align="right">rcens</td>
-<td align="left"></td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
 </tr>
 <tr>
 <td align="left"><strong>surv.penalized</strong> <br />penalized</td>
@@ -1152,19 +1207,30 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="right">rcens</td>
-<td align="left"></td>
+<td align="right">ordered<br />rcens</td>
+<td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
 </tr>
 <tr>
 <td align="left"><strong>surv.randomForestSRC</strong> <br />rfsrc</td>
 <td align="left">Random Forests for Survival</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/randomForestSRC/">randomForestSRC</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/survival/">survival</a><br /><a href="http://www.rdocumentation.org/packages/randomForestSRC/">randomForestSRC</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
-<td align="right">rcens</td>
-<td align="left"></td>
+<td align="right">ordered<br />rcens</td>
+<td align="left">'na.action' has been set to 'na.impute' by default to allow missing data support</td>
+</tr>
+<tr>
+<td align="left"><strong>surv.rpart</strong> <br />rpart</td>
+<td align="left">Survival Tree</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/rpart/">rpart</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="right">ordered<br />rcens</td>
+<td align="left"><code>xval</code> has been set to 0 by default for speed.</td>
 </tr>
 </tbody>
 </table>

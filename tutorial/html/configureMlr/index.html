@@ -349,7 +349,7 @@ train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
 <pre><code>#&gt; Error in qda.default(x, grouping, ...): some group is too small for 'qda'
 </code></pre>
 
-<pre><code>#&gt; Timing stopped at: 0.003 0 0.004
+<pre><code>#&gt; Timing stopped at: 0.005 0 0.005
 </code></pre>
 
 <pre><code class="r">configureMlr(on.learner.error = &quot;warn&quot;)
@@ -367,9 +367,6 @@ mod = train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
 #&gt; Trained on obs: 104
 #&gt; Used features: 4
 #&gt; Hyperparameters: 
-#&gt; Training failed: Error in qda.default(x, grouping, ...) : 
-#&gt;   some group is too small for 'qda'
-#&gt; 
 #&gt; Training failed: Error in qda.default(x, grouping, ...) : 
 #&gt;   some group is too small for 'qda'
 </code></pre>

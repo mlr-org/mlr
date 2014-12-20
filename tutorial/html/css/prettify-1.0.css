@@ -1,4 +1,4 @@
-.com { color: #467447; }
+.com { color: #93a1a1; }
 .lit { color: #195f91; }
 .pun, .opn, .clo { color: #93a1a1; }
 .fun { color: #dc322f; }
@@ -25,61 +25,4 @@ ol.linenums li {
   color: #bebec5;
   line-height: 20px;
   text-shadow: 0 1px 0 #fff;
-}
-
-.col-md-9 td {
-border: solid 1px #ccc;
-padding: 0.5em;
-vertical-align: top;
-}
-
-.col-md-9 th {
-padding: 0.5em;
-}
-
-/* Overwriting a lot of CSS here */
-.navbar {
-	background-image: -webkit-linear-gradient(#25135e , #1d4ba8 50%);
-	background-image: linear-gradient(#25135e , #1d4ba8 50%);
-	background-repeat: no-repeat;
-	border-bottomottom: 1px solid #25135e;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#25135e',endColorstr='#1d4ba8',GradientType=0);
-	filter: none;
-	-webkit-box-shadow: 0 1px 10px rgba(0,0,0,0.1);
-	box-shadow: 0 1px 10px rgba(0,0,0,0.1);
-}
-
-a.navbar-brand {
-	background-image: url("../../../images/mlrLogo_white_88x40.png");
-	background-repeat: no-repeat;
-	width: 88px;
-	height: 40px;
-	display: block;
-	overflow: hidden;
-	text-indent: 9999px;
-	margin-top: 5px;
-	margin-right: 45px;
-	white-space: nowrap;
-}
-
-body {
-	padding-top: 70px;
-	background-attachment: fixed;
-	background-color: #f8f8f8;
-	background-image: linear-gradient(#889BC2 50px, #C9D3E5 55px, #E3E6F4 60px, #f4f4f4 200px);
-}
-
-.bs-sidebar .nav > .active > a, .bs-sidebar .nav > .active:hover > a, .bs-sidebar .nav > .active:focus > a {
-    font-weight: inherit;
-    background-color: #f4f4f4;
-    border: none;
-}
-
-div.well, pre.well {
-	background-color: #e7e3ce;
-}
-
-@media (min-width: 768px) .navbar-nav>li>a {
-	padding-top: 25px;
-	padding-bottom: 5px;
 }

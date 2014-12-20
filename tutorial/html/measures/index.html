@@ -264,6 +264,7 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <thead>
 <tr>
 <th align="left">Measure</th>
+<th align="left">Note</th>
 <th align="center">Minimize</th>
 <th align="right">Best</th>
 <th align="right">Worst</th>
@@ -277,7 +278,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 </thead>
 <tbody>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">acc</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">acc</a> - Accuracy</td>
+<td align="left"></td>
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">0</td>
@@ -289,7 +291,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">auc</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">auc</a> - Area under the curve</td>
+<td align="left"></td>
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">0</td>
@@ -301,7 +304,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">bac</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">bac</a> - Balanced accuracy</td>
+<td align="left">Mean of true positive rate and true negative rate</td>
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">0</td>
@@ -313,7 +317,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">ber</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">ber</a> - Balanced error rate</td>
+<td align="left">Mean of misclassification error rates on all individual classes.</td>
 <td align="center">X</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -325,7 +330,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">f1</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">f1</a> - F1 measure</td>
+<td align="left"></td>
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">0</td>
@@ -337,7 +343,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">fdr</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">fdr</a> - False discovery rate</td>
+<td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -349,7 +356,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">fn</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">fn</a> - False negatives</td>
+<td align="left">Also called misses.</td>
 <td align="center">X</td>
 <td align="right">0</td>
 <td align="right">Inf</td>
@@ -361,7 +369,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">fnr</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">fnr</a> - False negative rate</td>
+<td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -373,7 +382,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">fp</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">fp</a> - False positives</td>
+<td align="left">Also called false alarms.</td>
 <td align="center">X</td>
 <td align="right">0</td>
 <td align="right">Inf</td>
@@ -385,7 +395,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">fpr</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">fpr</a> - False positive rate</td>
+<td align="left">Also called false alarm rate or fall-out.</td>
 <td align="center">X</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -397,7 +408,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">gmean</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">gmean</a> - G-mean</td>
+<td align="left">Geometric mean of recall and specificity.</td>
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">0</td>
@@ -409,7 +421,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">gpr</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">gpr</a> - Geometric mean of precision and recall</td>
+<td align="left"></td>
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">0</td>
@@ -421,7 +434,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">mcc</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">mcc</a> - Matthews correlation coefficient</td>
+<td align="left"></td>
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">-1</td>
@@ -433,7 +447,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">mmce</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">mmce</a> - Mean misclassification error</td>
+<td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
 <td align="right">1</td>
@@ -445,7 +460,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">multiclass.auc</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">multiclass.auc</a> - Multiclass Area under the curve</td>
+<td align="left">Calls <code>pROC::multiclass.roc</code>.</td>
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">0</td>
@@ -457,7 +473,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">npv</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">npv</a> - Negative predictive value</td>
+<td align="left"></td>
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">0</td>
@@ -469,7 +486,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">ppv</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">ppv</a> - Positive predictive value</td>
+<td align="left">Also called precision.</td>
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">0</td>
@@ -481,7 +499,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">tn</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">tn</a> - True negatives</td>
+<td align="left">Also called correct rejections.</td>
 <td align="center"></td>
 <td align="right">Inf</td>
 <td align="right">0</td>
@@ -493,7 +512,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">tnr</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">tnr</a> - True negative rate</td>
+<td align="left">Also called specificity.</td>
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">0</td>
@@ -505,7 +525,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">tp</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">tp</a> - True positives</td>
+<td align="left"></td>
 <td align="center"></td>
 <td align="right">Inf</td>
 <td align="right">0</td>
@@ -517,7 +538,8 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">tpr</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">tpr</a> - True positive rate</td>
+<td align="left">Also called hit rate or recall.</td>
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">0</td>
@@ -535,9 +557,10 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <thead>
 <tr>
 <th align="left">Measure</th>
+<th align="left">Note</th>
 <th align="center">Minimize</th>
 <th align="right">Best</th>
-<th align="right">Worst</th>
+<th align="center">Worst</th>
 <th align="left">PredType</th>
 <th align="center">Prediction</th>
 <th align="center">Model</th>
@@ -547,10 +570,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 </thead>
 <tbody>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">mae</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">mae</a> - Mean of absolute errors</td>
+<td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="right">Inf</td>
+<td align="center">Inf</td>
 <td align="left">response<br />se</td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -558,10 +582,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">medae</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">medae</a> - Median of absolute errors</td>
+<td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="right">Inf</td>
+<td align="center">Inf</td>
 <td align="left">response<br />se</td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -569,10 +594,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">medse</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">medse</a> - Median of squared errors</td>
+<td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="right">Inf</td>
+<td align="center">Inf</td>
 <td align="left">response<br />se</td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -580,10 +606,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">mse</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">mse</a> - Mean of squared errors</td>
+<td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="right">Inf</td>
+<td align="center">Inf</td>
 <td align="left">response<br />se</td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -591,10 +618,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">rmse</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">rmse</a> - Root mean square error</td>
+<td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="right">Inf</td>
+<td align="center">Inf</td>
 <td align="left">response<br />se</td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -602,10 +630,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.sqrt.of.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">sae</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">sae</a> - Sum of absolute errors</td>
+<td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="right">Inf</td>
+<td align="center">Inf</td>
 <td align="left">response<br />se</td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -613,10 +642,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">sse</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">sse</a> - Sum of squared errors</td>
+<td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="right">Inf</td>
+<td align="center">Inf</td>
 <td align="left">response<br />se</td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -630,9 +660,10 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <thead>
 <tr>
 <th align="left">Measure</th>
+<th align="left">Note</th>
 <th align="center">Minimize</th>
 <th align="right">Best</th>
-<th align="right">Worst</th>
+<th align="center">Worst</th>
 <th align="left">PredType</th>
 <th align="center">Prediction</th>
 <th align="center">Model</th>
@@ -642,10 +673,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 </thead>
 <tbody>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">cindex</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">cindex</a> - Concordance index</td>
+<td align="left"></td>
 <td align="center"></td>
 <td align="right">1</td>
-<td align="right">0</td>
+<td align="center">0</td>
 <td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -659,9 +691,10 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <thead>
 <tr>
 <th align="left">Measure</th>
+<th align="left">Note</th>
 <th align="center">Minimize</th>
 <th align="right">Best</th>
-<th align="right">Worst</th>
+<th align="center">Worst</th>
 <th align="left">PredType</th>
 <th align="center">Prediction</th>
 <th align="center">Model</th>
@@ -671,10 +704,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 </thead>
 <tbody>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">db</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">db</a> - Davies-Bouldin cluster separation measure</td>
+<td align="left">see <code>?clusterSim::index.DB</code></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="right">Inf</td>
+<td align="center">Inf</td>
 <td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -682,10 +716,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">dunn</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">dunn</a> - Dunn index</td>
+<td align="left">see <code>?clValid::dunn</code></td>
 <td align="center"></td>
 <td align="right">Inf</td>
-<td align="right">0</td>
+<td align="center">0</td>
 <td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -693,10 +728,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">G1</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">G1</a> - Calinski-Harabasz pseudo F statistic</td>
+<td align="left">see <code>?clusterSim::index.G1</code></td>
 <td align="center"></td>
 <td align="right">Inf</td>
-<td align="right">0</td>
+<td align="center">0</td>
 <td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -704,10 +740,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">G2</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">G2</a> - Baker and Hubert adaptation of Goodman-Kruskal's gamma statistic</td>
+<td align="left">see <code>?clusterSim::index.G2</code></td>
 <td align="center"></td>
 <td align="right">Inf</td>
-<td align="right">0</td>
+<td align="center">0</td>
 <td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -715,10 +752,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">silhouette</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">silhouette</a> - Rousseeuw's silhouette internal cluster quality index</td>
+<td align="left">see <code>?clusterSim::index.S</code></td>
 <td align="center"></td>
 <td align="right">Inf</td>
-<td align="right">0</td>
+<td align="center">0</td>
 <td align="left">response<br />prob</td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -732,9 +770,10 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <thead>
 <tr>
 <th align="left">Measure</th>
+<th align="left">Note</th>
 <th align="center">Minimize</th>
 <th align="right">Best</th>
-<th align="right">Worst</th>
+<th align="center">Worst</th>
 <th align="left">PredType</th>
 <th align="center">Prediction</th>
 <th align="center">Model</th>
@@ -744,10 +783,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 </thead>
 <tbody>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">mcp</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">mcp</a> - Misclassification penalty</td>
+<td align="left">i.e. average difference between costs of oracle and model prediction.</td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="right">Inf</td>
+<td align="center">Inf</td>
 <td align="left">response</td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -755,10 +795,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">meancosts</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">meancosts</a> - Mean costs of the predicted choices</td>
+<td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="right">Inf</td>
+<td align="center">Inf</td>
 <td align="left">response</td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -772,9 +813,10 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <thead>
 <tr>
 <th align="left">Measure</th>
+<th align="left">Note</th>
 <th align="center">Minimize</th>
 <th align="right">Best</th>
-<th align="right">Worst</th>
+<th align="center">Worst</th>
 <th align="left">PredType</th>
 <th align="center">Prediction</th>
 <th align="center">Model</th>
@@ -784,10 +826,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 </thead>
 <tbody>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">featperc</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">featperc</a> - Percentage of original features used for model, useful for feature selection.</td>
+<td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="right">1</td>
+<td align="center">1</td>
 <td align="left">response<br />prob<br />se</td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -795,10 +838,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">timeboth</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">timeboth</a> - timetrain + timepredict</td>
+<td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="right">Inf</td>
+<td align="center">Inf</td>
 <td align="left">response<br />prob<br />se</td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -806,10 +850,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">timepredict</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">timepredict</a> - Time of predicting test set</td>
+<td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="right">Inf</td>
+<td align="center">Inf</td>
 <td align="left">response<br />prob<br />se</td>
 <td align="center">X</td>
 <td align="center"></td>
@@ -817,10 +862,11 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left">test.mean</td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">timetrain</a></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">timetrain</a> - Time of fitting the model</td>
+<td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="right">Inf</td>
+<td align="center">Inf</td>
 <td align="left">response<br />prob<br />se</td>
 <td align="center"></td>
 <td align="center">X</td>

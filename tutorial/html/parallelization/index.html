@@ -266,7 +266,7 @@ r = resample(&quot;classif.lda&quot;, iris.task, rdesc)
 </code></pre>
 
 <p>On Linux or Mac OS X, you may want to use
-<a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStartMulticore.html">parallelStartMulticore</a> instead.
+<a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStartMulticore</a> instead.
 We offer different parallelization levels for fine grained control over the parallelization.
 E.g., if you do not want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/benchmark.html">benchmark</a> function because it has only very few iterations but want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resampling</a> of each learner instead,
 you can specifically pass the <code>level</code> <code>"mlr.resample"</code> to the <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart*</a> function.
@@ -274,7 +274,7 @@ Currently the following levels are supported:</p>
 <pre><code class="r">parallelShowRegisteredLevels()
 </code></pre>
 
-<pre><code>#&gt; mlr                 : benchmark,resample,selectFeatures,tuneParams
+<pre><code>#&gt; mlr                 : mlr.benchmark,mlr.resample,mlr.selectFeatures,mlr.tuneParams
 </code></pre>
 
 <p>For further ways of parallelizing your computations, consult the
