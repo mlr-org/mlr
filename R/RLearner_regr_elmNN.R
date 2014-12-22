@@ -5,8 +5,8 @@ makeRLearner.regr.elmNN = function() {
     package = "elmNN",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "nhid", default = 1L, lower = 1L),
-      makeDiscreteLearnerParam(id = "actfun", default = "sig", values = c("sig", "radbas", "hardlim",
-        "hardlims", "satlins", "tansig", "tribas", "poslin", "purelin"))
+      makeDiscreteLearnerParam(id = "actfun", default = "sig", values = c("sig", "sin", "radbas",
+        "hardlim", "hardlims", "satlins", "tansig", "tribas", "poslin", "purelin"))
     ),
     par.vals = list(nhid = 1L, actfun = "sig"),
     properties = c("numerics"),
