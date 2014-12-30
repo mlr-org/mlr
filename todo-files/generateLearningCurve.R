@@ -1,55 +1,38 @@
 
 #'
-generateLearningCurve = function(lrn, task, test.size = 0.3, test.inds = NULL,
-  n.seq = seq(0.1, 1, by = 0.1), measures, repls = 1L)  {
+#' @param resampling [\code{\link{ResampleDesc}} or \code{\link{ResampleInstance}}]\cr
+#'   Resampling strategy.
+#'   If a description is passed, it is instantiated automatically.
+#'   Default is Holdout.
+
+# repls deleted - can be done by resampling?!
+
+generateLearningCurve = function(lrns, task, resampling = NULL,
+  percs = seq(0.1, 1, by = 0.1), measures, stratify = FALSE)  {
 
   assertClass(task, "Task")
-  assertNumeric(test.size, lower = 0L, upper = 1L, len = 1)
-  assertNumeric(n.seq, lower = 0L, upper = 1L, min.len = 2L, any.missing = FALSE)
-  repls = asInt(repls, lower = 1L)
+  assertNumeric(percs, lower = 0L, upper = 1L, min.len = 2L, any.missing = FALSE)
   
-  if (is.null(test.inds)) {
-    test.inds = makeResampleInstance("Holdout", task = task, split = test.size)$train[[1L]]
-  } else {
-    test.inds = asInteger(test.inds)
+  if (is.null(resampling)) {
+    resampling = makeResampleInstance("Holdout", task = task)
+  } else if (inherits(resampling, "ResampleDesc")) {
+    resampling = makeResampleInstance(resampling, task = task)
   }
   
-  l = length(lrn)
-  for (i in 1:l) {
-    lrn[[i]] = checkLearner(lrn[[i]])
-  }
-  
-  m = length(measures)
+  lrns = lapply(lrns, checkLearner)
   measures = checkMeasures(measures, task)
-  
-  n = task$task.desc$size
-  k = length(n.seq)
-  inds.all = setdiff(1:n, test.inds)
-  
-  perfs = replicate(l, array(NA, dim = c(repls, k, m)), simplify = FALSE)
-  lrn.names = unlist(lapply(lrn, function(x) x$short.name))
-  measure.names = sapply(measures, measureAggrName)
-  names(perfs) = lrn.names
-  for (i in 1:l) {
-    dimnames(perfs[[i]]) = list(1:repls, n.seq, measure.names)
-  }
-  
-  more = diff(c(0, round(n.seq * (n - length(test.inds)))))
-  n.obs = cumsum(more)
-  for (repl in 1:repls) {
-    rest = inds.all
-    inds.last = integer(0L)
-    for (j in 1:k) {
-      inds.new = sample(rest, more[j])
-      inds.cur = c(inds.last, inds.new)
-      for (i in 1:l) {
-        mod = train(lrn[[i]], task, subset = inds.cur)
-        pred = predict(mod, task, subset = test.inds)
-        perfs[[i]][repl, j, ] = performance(pred, task = task, measures = measures)
-      }
-      inds.last = inds.cur
-    }
-  }
+
+  all.learners = lapply(lrns, function(lrn) {
+    lrn.downsampleds = lapply(percs, function(p){
+      lrn.downsampled = makeDownsampleWrapper(learner = lrn, dw.perc = p, dw.stratify = stratify)
+      lrn.downsampled$id = paste0(lrn.downsampled$id, ".", as.character(p))
+      lrn.downsampled
+    })
+  })
+  all.learners = unlist(all.learners, recursive = FALSE)
+  bench.res = benchmark(learners = all.learners, task = task, resamplings = resampling, measures = measures)
+  perfs = getBMRAggrPerformances(bench.res)[[task$task.desc$id]]
+  # continue here
   
   res = data.frame()
   for (j in 1:l) {
@@ -71,13 +54,12 @@ plotLearningCurve = function(res) {
 }
 
 
-# r1 = generateLearningCurve(lrn = list("classif.rpart", "classif.knn", "classif.svm"),
-#                           task = iris.task, measures = list(mmce, acc), repls = 12L)
-# plotLearningCurve(r1)
+r1 = generateLearningCurve(lrns = list("classif.rpart", "classif.knn", "classif.svm"), task = iris.task, measures = list(mmce, acc))
+plotLearningCurve(r1)
 
-# r2 = generateLearningCurve(lrn = list("classif.rpart", "classif.knn", "classif.naiveBayes",
+# r2 = generateLearningCurve(lrns = list("classif.rpart", "classif.knn", "classif.naiveBayes",
 #                                       "classif.svm", "classif.plr", "classif.randomForest"),
-#                            task = sonar.task, test.size = 0.25, n.seq = seq(0.2, 1, by = 0.2),
+#                            task = sonar.task, test.size = 0.25, percs = seq(0.2, 1, by = 0.2),
 #                            measures = list(tp, fp, tn, fn), repls = 6L)
 # plotLearningCurve(r2)
 
