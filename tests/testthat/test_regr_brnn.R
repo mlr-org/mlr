@@ -1,0 +1,24 @@
+context("regr_brnn")
+
+test_that("regr_brnn", {
+  library(brnn)
+  parset.list = list(
+    list(),
+    list(neurons = 3L),
+    list(mu = 0.001)
+  )
+
+  old.predicts.list = list()
+
+  for (i in 1:length(parset.list)) {
+    pars = list(formula = regr.formula, data = regr.train)
+    pars = c(pars, parset.list[[i]])
+    set.seed(getOption("mlr.debug.seed"))
+    capture.output({m = do.call(brnn, pars)})
+    p = predict(m, newdata = regr.test)
+    old.predicts.list[[i]] = p
+  }
+
+  testSimpleParsets("regr.brnn", regr.df, regr.target, regr.train.inds,
+    old.predicts.list, parset.list)
+})
