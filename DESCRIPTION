@@ -79,6 +79,7 @@ Suggests:
     modeltools,
     mRMRe,
     nnet,
+    nodeHarvest,
     party,
     penalized,
     pls,
