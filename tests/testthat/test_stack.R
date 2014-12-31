@@ -29,11 +29,11 @@ test_that("Stacking works", {
   for (task in tasks) {
     if (inherits(task, "ClassifTask")) {
       pts = c("response", "prob")
-      base = c("classif.rpart", "classif.kknn", "classif.svm")
+      base = c("classif.rpart", "classif.lda", "classif.svm")
       super = "classif.randomForest"
     } else {
       pts = "response"
-      base = c("regr.rpart", "regr.kknn", "regr.svm")
+      base = c("regr.rpart", "regr.lm", "regr.svm")
       super = "regr.randomForest"
     }
     for (method in c("average", "stack.cv", "stack.nocv")) {
