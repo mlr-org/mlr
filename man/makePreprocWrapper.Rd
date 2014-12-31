@@ -60,6 +60,7 @@ Other wrapper: \code{\link{CostSensClassifModel}},
   \code{\link{makeOverBaggingWrapper}};
   \code{\link{makeOversampleWrapper}},
   \code{\link{makeUndersampleWrapper}};
+  \code{\link{makePreprocWrapperCaret}};
   \code{\link{makeSMOTEWrapper}};
   \code{\link{makeTuneWrapper}};
   \code{\link{makeWeightedClassesWrapper}}
