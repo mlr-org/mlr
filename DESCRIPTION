@@ -70,6 +70,7 @@ Suggests:
     kernlab,
     kknn,
     klaR,
+    kohonen,
     LiblineaR,
     lqa,
     MASS,

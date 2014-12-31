@@ -26,11 +26,14 @@ mlr_2.3:
 -- PreprocWrapperCaret
 
 - new learners:
+-- classif.bdk
 -- classif.extraTrees
 -- classif.nodeHarvest
 -- classif.randomUniformForest
 -- classif.xgboost
+-- classif.xyf
 -- regr.bartMachine
+-- regr.bdk
 -- regr.brnn
 -- regr.cubist
 -- regr.elmNN
@@ -38,6 +41,7 @@ mlr_2.3:
 -- regr.nodeHarvest
 -- regr.randomUniformForest
 -- regr.xgboost
+-- regr.xyf
 -- surv.rpart
 
 mlr_2.2:
