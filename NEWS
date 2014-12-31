@@ -27,11 +27,13 @@ mlr_2.3:
 
 - new learners:
 -- classif.extraTrees
+-- classif.randomUniformForest
 -- classif.xgboost
 -- regr.bartMachine
 -- regr.cubist
 -- regr.elmNN
 -- regr.extraTrees
+-- regr.randomUniformForest
 -- regr.xgboost
 -- surv.rpart
 

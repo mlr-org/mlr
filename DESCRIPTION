@@ -85,6 +85,7 @@ Suggests:
     pROC,
     randomForest,
     randomForestSRC,
+    randomUniformForest,
     RCurl,
     reshape2,
     rjson,
