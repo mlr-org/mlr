@@ -58,6 +58,7 @@ Suggests:
     earth,
     elmNN,
     emoa,
+    extraTrees,
     FNN,
     FSelector,
     gbm,
