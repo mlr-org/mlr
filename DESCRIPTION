@@ -50,6 +50,7 @@ Suggests:
     cmaes,
     CoxBoost,
     crs,
+    Cubist,
     DiceKriging,
     DiceOptim,
     DiscriMiner,
