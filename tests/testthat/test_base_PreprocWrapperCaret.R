@@ -1,8 +1,3 @@
-library(devtools)
-library(testthat)
-load_all()
-source("tests/testthat/helper_objects.R")
-
 context("PreprocWrapperCaret")
 
 test_that("basic PreprocWrapperCaret works", {
