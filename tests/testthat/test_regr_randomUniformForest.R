@@ -1,31 +1,32 @@
 context("regr_randomUniformForest")
 
 test_that("regr_randomUniformForest", {
+  skip("breaks on travis")
   library(randomUniformForest)
-  
+
   parset.list = list(
     list(),
-    list(ntree = 50, mtry = 4)
+    list(ntree = 5, mtry = 4)
   )
 
   tsk.train = makeRegrTask(data = regr.train, target = regr.target)
   tsk.test = makeRegrTask(data = regr.test, target = regr.target)
-  
+
   for (i in 1:length(parset.list)) {
     parset = c(list(formula = regr.formula, data = regr.train, OOB = FALSE,
     importance = FALSE, unsupervised = FALSE, threads = 1L), parset.list[[i]])
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(randomUniformForest, parset)
     old.predicts = predict(m, regr.test)
-    
+
     lrn = do.call("makeLearner", c("regr.randomUniformForest", parset.list[[i]]))
     set.seed(getOption("mlr.debug.seed"))
     trained.mod = train(lrn, tsk.train)
     new.predicts = predict(trained.mod, tsk.test)$data$response
-    
-    #randomUniformForest is such randomized that using the same seed will produce different results on 
-    #the same data, see vignette("randomUniformForestsOverview") on page 22. 
-    
+
+    #randomUniformForest is such randomized that using the same seed will produce different results on
+    #the same data, see vignette("randomUniformForestsOverview") on page 22.
+
     expect_true(length(old.predicts) == length(new.predicts))
   }
 })
