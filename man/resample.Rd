@@ -12,7 +12,7 @@
 \title{Fit models according to a resampling strategy.}
 \usage{
 resample(learner, task, resampling, measures, weights = NULL,
-  models = FALSE, extract, show.info = getMlrOption("show.info"))
+  models = FALSE, extract, ..., show.info = getMlrOption("show.info"))
 
 crossval(learner, task, iters = 10L, stratify = FALSE, measures,
   models = FALSE, ..., show.info = getMlrOption("show.info"))
@@ -66,6 +66,9 @@ Is applied to every \code{\link{WrappedModel}} resulting from calls to \code{\li
 during resampling.
 Default is to extract nothing.}
 
+\item{...}{[any]\cr
+Further hyperparameters passed to \code{learner}.}
+
 \item{show.info}{[\code{logical(1)}]\cr
 Print verbose output on console?
 Default is set via \code{\link{configureMlr}}.}
@@ -75,9 +78,6 @@ See \code{\link{ResampleDesc}}.}
 
 \item{stratify}{[\code{logical(1)}]\cr
 See \code{\link{ResampleDesc}}.}
-
-\item{...}{[any]\cr
-Further hyperparameters passed to \code{learner}.}
 
 \item{folds}{[\code{integer(1)}]\cr
 See \code{\link{ResampleDesc}}.}

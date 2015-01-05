@@ -17,6 +17,7 @@ mlr_2.3:
 - some minor bug fixes
 - required basic learner packages are not loaded into the global namespace anymore, requireNamespace
   is used internally instead. this ensures less name clashes and name shadowing
+- resample passes dot arguments to the learner hyperpars
 
 - new functions
 -- getTaskType, getTaskId, getTaskTargetNames

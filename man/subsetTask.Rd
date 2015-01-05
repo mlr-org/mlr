@@ -10,7 +10,7 @@ subsetTask(task, subset, features)
 \item{task}{[\code{\link{Task}}]\cr
 The task.}
 
-\item{subset}{[\code{integer}]\cr
+\item{subset}{[\code{integer} | \code{logical(n)}]\cr
 Selected cases.
 Default is all cases.}
 

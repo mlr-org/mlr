@@ -57,9 +57,9 @@
 #' print(r$measures.test)
 #' print(r$pred)
 resample = function(learner, task, resampling, measures, weights = NULL, models = FALSE,
-  extract, show.info = getMlrOption("show.info")) {
+  extract, ..., show.info = getMlrOption("show.info")) {
 
-  learner = checkLearner(learner)
+  learner = checkLearner(learner, ...)
   assertClass(task, classes = "Task")
   # instantiate resampling
   if (inherits(resampling, "ResampleDesc"))
