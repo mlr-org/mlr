@@ -278,7 +278,7 @@ getTaskCosts = function(task, subset) {
 #'
 #' @param task [\code{\link{Task}}]\cr
 #'   The task.
-#' @param subset [\code{integer}]\cr
+#' @param subset [\code{integer} | \code{logical(n)}]\cr
 #'   Selected cases.
 #'   Default is all cases.
 #' @param features [character]\cr
@@ -295,6 +295,8 @@ subsetTask = function(task, subset, features) {
   # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
   # FIXME: maybe we want this independent of changeData?
   td = task$desc
+  if (!missing(subset))
+    assert(checkIntegerish(subset), checkLogical(subset, len = td$size))
   task = changeData(task, getTaskData(task, subset, features), getTaskCosts(task, subset), task$weights)
   if (!missing(subset)) {
     if (task$task.desc$has.blocking)
