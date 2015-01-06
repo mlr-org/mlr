@@ -11,8 +11,8 @@ makePreprocWrapperCaret(learner, ...)
 The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
-\item{...}{\cr
-see \code{\link[caret]{preProcess}} for parameters not listed above.
+\item{...}{[any]\cr
+See \code{\link[caret]{preProcess}} for parameters not listed above.
 If you use them you might want to define them in the \code{add.par.set} so that they can be tuned.}
 }
 \value{
