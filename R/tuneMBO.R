@@ -1,7 +1,7 @@
 tuneMBO = function(learner, task, resampling, measures, par.set, control,
   opt.path, show.info) {
 
-  requirePackages(c("mlrMBO"), "tuneMBO")
+  requirePackages("mlrMBO", "tuneMBO")
   mbo.control = control$mbo.control
 
   if (any(!mbo.control$minimize))

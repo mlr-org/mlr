@@ -2,7 +2,7 @@
 makeRLearner.classif.mda = function() {
   makeRLearnerClassif(
     cl = "classif.mda",
-    package = "mda",
+    package = "!mda",
     # FIXME: stringdot pars and check order, scale and offset limits
     par.set = makeParamSet(
       makeUntypedLearnerParam(id = "subclasses", default = 2L),
@@ -25,8 +25,6 @@ makeRLearner.classif.mda = function() {
 #' @export
 trainLearner.classif.mda = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  #FIXME: we need to remove this, but I do not know why some functions are not found otherwise when we require the namespace
-  requirePackages("class", namespace.only = FALSE)
   mda::mda(f, data = getTaskData(.task, .subset), ...)
 }
 
@@ -35,4 +33,3 @@ predictLearner.classif.mda = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type=="response", "class", "posterior")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }
-

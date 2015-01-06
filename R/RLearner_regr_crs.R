@@ -2,7 +2,7 @@
 makeRLearner.regr.crs = function() {
   makeRLearnerRegr(
     cl = "regr.crs",
-    package = "crs",
+    package = "!crs",
     par.set = makeParamSet(
       makeIntegerVectorLearnerParam(id = "degree", default = 3, lower = 0),
       makeIntegerVectorLearnerParam(id = "segments", default = 1, lower = 1),
@@ -45,8 +45,6 @@ makeRLearner.regr.crs = function() {
 #' @export
 trainLearner.regr.crs = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  # FIXME: see reported issue https://github.com/JeffreyRacine/R-Package-crs/issues/2
-  requirePackages("crs", namespace.only = FALSE)
   if (is.null(.weights)) {
     crs::crs(formula = f, data = getTaskData(.task, .subset), ...)
   } else  {

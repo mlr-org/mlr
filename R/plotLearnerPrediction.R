@@ -105,7 +105,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   if (td$type == "classif" && err.mark == "cv" && cv == 0L)
     stopf("Classification: CV must be switched on, with 'cv' > 0, for err.type = 'cv'!")
 
-  requirePackages("ggplot2", why = "plotLearnerPrediction")
+  requirePackages("!ggplot2", why = "plotLearnerPrediction")
 
   # subset to features, set hyperpars
   task = subsetTask(task, features = features)
@@ -235,7 +235,3 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   }
   return(p)
 }
-
-
-
-

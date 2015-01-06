@@ -22,7 +22,7 @@ plotThreshVsPerf = function(pred, measures, mark.th = NA_real_, gridsize = 100L,
   assertNumber(mark.th, na.ok = TRUE, lower = 0, upper = 1)
   assertNumber(linesize, lower = 0)
 
-  requirePackages(c("ggplot2", "reshape2"), why = "plotThreshVsPerf")
+  requirePackages(c("!ggplot2", "reshape2"), why = "plotThreshVsPerf")
 
   mids = extractSubList(measures, "id")
   # grid for predictions
@@ -34,15 +34,10 @@ plotThreshVsPerf = function(pred, measures, mark.th = NA_real_, gridsize = 100L,
     performance(pp, measures = measures)
   }), col.names = mids)
   grid = cbind(grid, perf)
-  grid = reshape2::melt(grid, measure.vars = mids,
-    variable.name = "measure", value.name = "perf")
+  grid = reshape2::melt(grid, measure.vars = mids, variable.name = "measure", value.name = "perf")
   p = ggplot(data = grid, mapping = aes_string(x = "threshold", y = "perf", col = "measure"))
   p = p + geom_line(size = linesize)
   if (!is.na(mark.th))
     p = p + geom_vline(xintercept = mark.th)
   return(p)
 }
-
-
-
-

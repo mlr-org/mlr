@@ -285,7 +285,7 @@ multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, 
     # pROC does allow NAs
     # FIXME: pROC seems not to mark auc() as S3method, which means that calling multiclass.roc wont find it in pRoc
     # reported issue here:  https://github.com/xrobin/pROC/issues/4
-    requirePackages("pROC", "multiclass.auc", namespace.only = FALSE)
+    requirePackages("!pROC", why = "multiclass.auc")
     resp = pred$data$response
     predP = getProbabilities(pred)
     # choose the probablity of the choosen response

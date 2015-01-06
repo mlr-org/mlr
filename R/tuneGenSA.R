@@ -1,5 +1,4 @@
 tuneGenSA = function(learner, task, resampling, measures, par.set, control, opt.path, show.info) {
-
   requirePackages("GenSA", why = "tuneGenSA")
 
   low = getLower(par.set)
@@ -16,4 +15,3 @@ tuneGenSA = function(learner, task, resampling, measures, par.set, control, opt.
     convertx = cx, remove.nas = FALSE)
   makeTuneResultFromOptPath(learner, par.set, measures, control, opt.path)
 }
-

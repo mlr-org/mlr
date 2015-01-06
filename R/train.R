@@ -42,7 +42,6 @@ train = function(learner, task, subset, weights = NULL) {
   # make sure that pack for learner is loaded, probably needed when learner is exported
   requireLearnerPackages(learner)
 
-
   tn = task$task.desc$target
 
   # make pars list for train call
