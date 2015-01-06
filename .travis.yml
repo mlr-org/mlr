@@ -12,8 +12,6 @@ before_install:
 install:
   - ./travis-tool.sh aptget_install r-cran-rjava
   - sudo R CMD javareconf
-  - ./travis-tool.sh github_package hadley/testthat
-  - ./travis-tool.sh github_package hadley/assertthat
   - ./travis-tool.sh github_package berndbischl/BBmisc
   - ./travis-tool.sh github_package berndbischl/parallelMap
   - ./travis-tool.sh github_package berndbischl/ParamHelpers
