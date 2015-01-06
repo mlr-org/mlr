@@ -4,7 +4,7 @@ makeRLearner.surv.glmboost = function() {
     cl = "surv.glmboost",
     package = c("survival", "mboost"),
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "family", default = "CoxPH", values = c("CoxPH", "Weibull", "Loglog", "Lognormal")),
+      makeDiscreteLearnerParam(id = "family", default = mboost::CoxPH(), values = list(CoxPH = mboost::CoxPH(), Weibull = mboost::Weibull(), Loglog = mboost::Loglog(), Lognormal = mboost::Lognormal())),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "center", default = FALSE),
@@ -28,10 +28,11 @@ makeRLearner.surv.glmboost = function() {
 
 #' @export
 trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL, family, mstop, nu, m, use.formula, ...) {
-  family = do.call(get(family, mode = "function", envir = as.environment("package:mboost")), list())
+  envir = loadNamespace("mboost")
+  family = do.call(get(family, mode = "function", envir = loadNamespace("mboost")), list())
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
   if (use.formula) {
-    f = getTaskFormula(.task, env = as.environment("package:survival"))
+    f = getTaskFormula(.task, env = loadNamespace("survival"))
     model = if (is.null(.weights)) {
       mboost::glmboost(f, data = getTaskData(.task, subset = .subset, recode.target = "rcens"), control = ctrl, family = family, ...)
     } else  {

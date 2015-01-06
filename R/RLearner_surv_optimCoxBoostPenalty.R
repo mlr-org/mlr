@@ -2,7 +2,7 @@
 makeRLearner.surv.optimCoxBoostPenalty = function() {
   makeRLearnerSurv(
     cl = "surv.optimCoxBoostPenalty",
-    package = "CoxBoost",
+    package = "!CoxBoost",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "maxstepno", default = 100, lower = 0),
       makeIntegerLearnerParam(id = "K", default = 10, lower = 1),

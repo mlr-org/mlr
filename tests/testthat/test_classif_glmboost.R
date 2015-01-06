@@ -1,15 +1,15 @@
 context("classif_glmboost")
 
 test_that("classif_glmboost", {
-  library(mboost)
+  requireNamespace("mboost")
   parset.list1 = list(
-    list(family=Binomial(), control=boost_control(nu=0.03)),
-    list(family=Binomial(), control=boost_control(mstop=600), center=TRUE)
+    list(family=mboost::Binomial(), control=mboost::boost_control(nu=0.03)),
+    list(family=mboost::Binomial(), control=mboost::boost_control(mstop=600), center=TRUE)
   )
 
   parset.list2 = list(
-    list(family=Binomial(), nu=0.03),
-    list(family=Binomial(), mstop=600, center=TRUE)
+    list(family=mboost::Binomial(), nu=0.03),
+    list(family=mboost::Binomial(), mstop=600, center=TRUE)
   )
 
   old.predicts.list = list()
@@ -20,7 +20,7 @@ test_that("classif_glmboost", {
     pars = list(binaryclass.formula, data=binaryclass.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(glmboost, pars)
+    m = do.call(mboost::glmboost, pars)
     set.seed(getOption("mlr.debug.seed"))
     old.predicts.list[[i]] = predict(m, newdata=binaryclass.test, type="class")
     set.seed(getOption("mlr.debug.seed"))
