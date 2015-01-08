@@ -32,11 +32,10 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   }
 
   # if no problems: resample + measure time
+  if (show.info)
+    prev.stage = log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob,
+      state, NA_real_, remove.nas, stage = 1L)
   if (set.pars.ok) {
-    if (show.info)
-      prev.stage = log.fun(learner, task, resampling, measures, par.set, control, opt.path, dob,
-        state, NA_real_, remove.nas, stage = 1L)
-
     exec.time = system.time({
       r = resample(learner2, task, resampling, measures = measures, show.info = FALSE)
     })
