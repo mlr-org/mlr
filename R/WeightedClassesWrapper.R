@@ -111,5 +111,3 @@ trainLearner.WeightedClassesWrapper = function(.learner, .task, .subset, .weight
   }
   makeChainModel(next.model = m, cl = "WeightedClassesModel")
 }
-
-

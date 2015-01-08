@@ -85,6 +85,3 @@ test_that("tuning works with errors", {
   expect_true(grep("foo", d[2L, "error.message"]) == 1L)
   configureMlr(on.learner.error = "stop")
 })
-
-
-

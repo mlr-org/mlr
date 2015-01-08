@@ -45,5 +45,3 @@ logFunFeatSel = function(learner, task, resampling, measures, par.set, control, 
     x.string, y, remove.nas, stage, prev.stage, prefixes = c("FeatSel-x", "FeatSel-y")
   )
 }
-
-

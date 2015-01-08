@@ -31,6 +31,12 @@
 #'   \dQuote{warn}: Warning, but parameter is still passed along to learner.\cr
 #'   \dQuote{quiet}: Same as \dQuote{warn} but without the warning.\cr
 #'   Default is \dQuote{stop}.
+#' @param on.par.out.of.bounds [\code{character(1)}]\cr
+#'   What should happen if a parameter of a learner is set to an out of bounds value.\cr
+#'   \dQuote{stop}: R exception is generated.\cr
+#'   \dQuote{warn}: Warning, but parameter is still passed along to learner.\cr
+#'   \dQuote{quiet}: Same as \dQuote{warn} but without the warning.\cr
+#'   Default is \dQuote{stop}.
 #' @param show.learner.output [\code{logical(1)}]\cr
 #'   Should the output of the learning algorithm during training and prediction be shown or captured and
 #'   suppressed?
@@ -38,13 +44,15 @@
 #' @template ret_inv_null
 #' @family configure
 #' @export
-configureMlr = function(show.info, on.learner.error, on.learner.warning, on.par.without.desc, show.learner.output) {
+configureMlr = function(show.info, on.learner.error, on.learner.warning,
+  on.par.without.desc, on.par.out.of.bounds, show.learner.output) {
 
   defaults = list(
     show.info = TRUE,
     on.learner.error = "stop",
     on.learner.warning = "warn",
     on.par.without.desc = "stop",
+    on.par.out.of.bounds = "stop",
     show.learner.output = TRUE
   )
 
@@ -69,13 +77,19 @@ configureMlr = function(show.info, on.learner.error, on.learner.warning, on.par.
     setMlrOption("on.par.without.desc", on.par.without.desc)
     any.change = TRUE
   }
+  if (!missing(on.par.out.of.bounds)) {
+    assertChoice(on.par.out.of.bounds, choices = c("quiet", "warn", "stop"))
+    setMlrOption("on.par.out.of.bounds", on.par.out.of.bounds)
+    any.change = TRUE
+  }
   if (!missing(show.learner.output)) {
     assertFlag(show.learner.output)
     setMlrOption("show.learner.output", show.learner.output)
     any.change = TRUE
   }
 
-  # na change, set everything to defaults
+  # no change, set everything to defaults
+  # FIXME: this is a horrible mechanism! How can I get a list of all mlr options?
   if (!any.change)
     Map(setMlrOption, names(defaults), defaults)
   invisible(NULL)
