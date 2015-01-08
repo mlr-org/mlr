@@ -14,7 +14,7 @@ makeRLearner.classif.ada = function() {
       makeNumericLearnerParam(id = "delta", default = 1e-10, lower = 0),
       makeIntegerLearnerParam(id = "minsplit", default = 20L, lower = 1L),
       makeIntegerLearnerParam(id = "minbucket", lower = 1L),
-      makeNumericLearnerParam(id = "cp", default = 0.01, lower = 0, upper = 1),
+      makeNumericLearnerParam(id = "cp", default = 0.01, lower = -1, upper = 1),
       makeIntegerLearnerParam(id = "maxcompete", default = 4L, lower = 0L),
       makeIntegerLearnerParam(id = "maxsurrogate", default = 5L, lower = 0L),
       makeDiscreteLearnerParam(id = "usesurrogate", default = 2L, values = 0:2),

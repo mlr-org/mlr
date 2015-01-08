@@ -5,7 +5,7 @@
 \title{Configures the behavior of the package.}
 \usage{
 configureMlr(show.info, on.learner.error, on.learner.warning,
-  on.par.without.desc, show.learner.output)
+  on.par.without.desc, on.par.out.of.bounds, show.learner.output)
 }
 \arguments{
 \item{show.info}{[\code{logical(1)}]\cr
@@ -31,6 +31,13 @@ Default is \dQuote{warn}.}
 \item{on.par.without.desc}{[\code{character(1)}]\cr
 What should happen if a parameter of a learner is set to a value, but no parameter description object exists,
 indicating a possibly wrong name:\cr
+\dQuote{stop}: R exception is generated.\cr
+\dQuote{warn}: Warning, but parameter is still passed along to learner.\cr
+\dQuote{quiet}: Same as \dQuote{warn} but without the warning.\cr
+Default is \dQuote{stop}.}
+
+\item{on.par.out.of.bounds}{[\code{character(1)}]\cr
+What should happen if a parameter of a learner is set to an out of bounds value.\cr
 \dQuote{stop}: R exception is generated.\cr
 \dQuote{warn}: Warning, but parameter is still passed along to learner.\cr
 \dQuote{quiet}: Same as \dQuote{warn} but without the warning.\cr

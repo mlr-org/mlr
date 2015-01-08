@@ -4,7 +4,9 @@
 \alias{setHyperPars}
 \title{Set the hyperparameters of a learner object.}
 \usage{
-setHyperPars(learner, ..., par.vals = list())
+setHyperPars(learner, ..., par.vals = list(),
+  on.par.without.desc = getMlrOption("on.par.without.desc"),
+  on.par.out.of.bounds = getMlrOption("on.par.out.of.bounds"))
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -18,6 +20,12 @@ using the \code{par.vals} argument.}
 \item{par.vals}{[\code{list}]\cr
 Optional list of named (hyper)parameter settings. The arguments in
 \code{...} take precedence over values in this list.}
+
+\item{on.par.without.desc}{[\code{character(1)}]\cr
+Locally overrule this option. See \code{\link{configureMlr}} for details.}
+
+\item{on.par.out.of.bounds}{[\code{character(1)}]\cr
+Locally overrule this option. See \code{\link{configureMlr}} for details.}
 }
 \value{
 [\code{\link{Learner}}].
