@@ -44,3 +44,14 @@ test_that("performance", {
   r = resample(lrn, binaryclass.task, rdesc, measures = list(mmce, mymeasure))
   expect_equal(as.numeric(r$aggr["mmce.test.mean"]), as.numeric(r$aggr["custom.mym"]))
 })
+
+
+test_that("performance checks for missing truth col", {
+  lrn = makeLearner("classif.rpart", predict.type = "prob")
+  m = train(lrn, binaryclass.task)
+  test.x = getTaskData(binaryclass.task, target.extra = TRUE)$data
+  pred = predict(m, newdata = test.x)
+
+  expect_error(performance(pred, measure = mmce), "need to have a 'truth' col")
+})
+
