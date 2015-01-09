@@ -1,24 +1,25 @@
 #' @export
-makeRLearner.classif.logreg = function() {
+makeRLearner.classif.probit = function() {
   makeRLearnerClassif(
-    cl = "classif.logreg",
+    cl = "classif.probit",
     package = "stats",
     par.set = makeParamSet(),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
-    name = "Logistic Regression",
-    short.name = "logreg",
-    note = "Delegates to glm with family binomial/logit."
+    name = "Probit Regression",
+    short.name = "probit",
+    note = "Delegates to glm with family binomial/probit."
   )
 }
 
 #' @export
-trainLearner.classif.logreg = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.probit = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  stats::glm(f, data = getTaskData(.task, .subset), model = FALSE, family = "binomial", ...)
+  stats::glm(f, data = getTaskData(.task, .subset), model = FALSE,
+    family = binomial(link = "probit"), ...)
 }
 
 #' @export
-predictLearner.classif.logreg = function(.learner, .model, .newdata, ...) {
+predictLearner.classif.probit = function(.learner, .model, .newdata, ...) {
   x = predict(.model$learner.model, newdata = .newdata, type = "response", ...)
   levs = .model$task.desc$class.levels
   if (.learner$predict.type == "prob") {
@@ -29,3 +30,4 @@ predictLearner.classif.logreg = function(.learner, .model, .newdata, ...) {
     unname(p)
   }
 }
+

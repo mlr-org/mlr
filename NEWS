@@ -32,8 +32,10 @@ mlr_2.3:
 
 - new learners:
 -- classif.bdk
+-- classif.binomial
 -- classif.extraTrees
 -- classif.nodeHarvest
+-- classif.probit
 -- classif.randomUniformForest
 -- classif.xgboost
 -- classif.xyf
