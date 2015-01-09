@@ -36,9 +36,10 @@ test_that("performance", {
 
   # custom measure
 
-  mymeasure = makeCustomResampledMeasure(id = "mym", fun = function(task, group, pred, feats, extra.args) {
-    mean(pred$data$truth != pred$data$response)
-  })
+  mymeasure = makeCustomResampledMeasure(id = "mym", properties = c("classif", "predtype.response"),
+    fun = function(task, group, pred, feats, extra.args) {
+      mean(pred$data$truth != pred$data$response)
+    })
   rdesc = makeResampleDesc("Holdout")
   r = resample(lrn, binaryclass.task, rdesc, measures = list(mmce, mymeasure))
   expect_equal(as.numeric(r$aggr["mmce.test.mean"]), as.numeric(r$aggr["custom.mym"]))

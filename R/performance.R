@@ -42,13 +42,15 @@ doPerformaceIteration = function(measure, pred = NULL, task = NULL, model = NULL
   if ("req.pred" %in% props) {
     if (is.null(pred))
       stopf("You need to pass pred for measure %s!", m$id)
-    td = pred$task.desc
+  }
+  if ("req.truth" %in% props) {
+    if (is.null(pred$data$truth))
+      stopf("You need to have a 'truth' column in your pred object for measure %s!", m$id)
   }
   if ("req.model" %in% props) {
     if (is.null(model))
       stopf("You need to pass model for measure %s!", m$id)
     assertClass(model, classes = "WrappedModel")
-    td = model$task.desc
   }
   if ("req.task" %in% props) {
     if (is.null(task))
@@ -64,6 +66,14 @@ doPerformaceIteration = function(measure, pred = NULL, task = NULL, model = NULL
     else
       assertClass(feats, "data.frame")
   }
+  # we need to find desc somewhere
+  td = if (!is.null(pred))
+    pred$task.desc
+  else if (!is.null(model))
+    model$task.desc
+  else if (!is.null(task))
+    task$desc
+
   # null only happens in custom resampled measure when we do no individual measurements
   if (!is.null(td)) {
     if (td$type %nin% props)
