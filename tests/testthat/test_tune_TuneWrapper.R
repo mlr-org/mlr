@@ -39,3 +39,16 @@ test_that("TuneWrapper", {
   r = resample(lrn2, binaryclass.task, makeResampleDesc("Holdout"), measures = mlr::auc)
   expect_true(!is.na(r$aggr[["auc.test.mean"]]))
 })
+
+# see bug in issue 205
+test_that("TuneWrapper passed predict hyper pars correctly to base learner", {
+  lrn = makeLearner("classif.glmnet", predict.type = "prob")
+  rdesc = makeResampleDesc("Holdout", split = 0.2)
+  ctrl = makeTuneControlRandom(maxit = 1L)
+  ps = makeParamSet(makeNumericParam("s", lower = 0.001, upper = 0.1))
+  tw = makeTuneWrapper(lrn, rdesc, par.set = ps, control = ctrl)
+  # this resulted in an error as "s" was not passed to predict
+  resample(tw, binaryclass.task, rdesc)
+})
+
+

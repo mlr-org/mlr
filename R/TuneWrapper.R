@@ -65,8 +65,7 @@ trainLearner.TuneWrapper = function(.learner, .task, .subset,  ...) {
 
 #' @export
 predictLearner.TuneWrapper = function(.learner, .model, .newdata, ...) {
-  lrn = setHyperPars(.learner$next.learner,
-    par.vals = .model$learner.model$opt.result$x)
-  predictLearner(lrn, .model$learner.model$next.model, .newdata)
+  lrn = setHyperPars(.learner$next.learner, par.vals = .model$learner.model$opt.result$x)
+  predictLearner(lrn, .model$learner.model$next.model, .newdata, ...)
 }
 
