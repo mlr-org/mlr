@@ -40,7 +40,6 @@ Suggests:
     ada,
     adabag,
     bartMachine,
-    brnn,
     care,
     caret,
     class,
