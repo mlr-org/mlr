@@ -19,7 +19,9 @@ mlr_2.3:
   is used internally instead. this ensures less name clashes and name shadowing
 - resample passes dot arguments to the learner hyperpars
 - new option "on.par.out.of.bounds" to disable out-of-bound checks for model
-  paramters
+  parameters
+- measures were slightly internally changed. they expose more properties (check ?Measure) and some
+  now unnecessary object slots were removed
 
 - new functions
 -- getTaskType, getTaskId, getTaskTargetNames

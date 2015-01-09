@@ -14,11 +14,6 @@
 #'   \item{id [\code{character(1)}]}{See argument.}
 #'   \item{minimize [\code{logical(1)}]}{See argument.}
 #'   \item{properties [\code{character}]}{See argument.}
-#'   \item{allowed.pred.types [\code{character}]}{See argument.}
-#'   \item{req.pred [\code{logical(1)}]}{Is prediction object required in calculation?}
-#'   \item{req.task [\code{logical(1)}]}{Is task object required in calculation?}
-#'   \item{req.model [\code{logical(1)}]}{Is model object required in calculation?}
-#'   \item{req.feats [\code{logical(1)}]}{Is feature object required in calculation?}
 #'   \item{fun [\code{function}]}{See argument.}
 #'   \item{extra.args [\code{list}]}{See argument.}
 #'   \item{aggr [\code{\link{Aggregation}}]}{See argument.}
@@ -40,12 +35,16 @@
 #'     \item{classif.multi}{Is the measure applicable for multi-class classification?}
 #'     \item{regr}{Is the measure applicable for regression?}
 #'     \item{surv}{Is the measure applicable for survival?}
-#'     \item{costsens}{Is the measure applicable for cost-sensitve learning?}
+#'     \item{costsens}{Is the measure applicable for cost-sensitive learning?}
+#'     \item{req.pred}{Is prediction object required in calculation? Usually the case.}
+#'     \item{req.truth}{Is truth column required in calculation? Usually the case.}
+#'     \item{req.task}{Is task object required in calculation? Usually not the case}
+#'     \item{req.model}{Is model object required in calculation? Usually not the case.}
+#'     \item{req.feats}{Are feature values required in calculation? Usually not the case.}
+#'     \item{predtype.response}{Is measure applicable to pred.type \dQuote{response}?}
+#'     \item{predtype.prob}{Is measure applicable to pred.type \dQuote{prob}?}
+#'     \item{predtype.se}{Is measure applicable to pred.type \dQuote{se}?}
 #'   }
-#'   Default is \code{character(0)}.
-#' @param allowed.pred.types [\code{character}]\cr
-#'   Which prediction types are allowed for this measure?
-#'   Subset of \dQuote{response},\dQuote{prob}, \dQuote{se}.
 #'   Default is \code{character(0)}.
 #' @param fun [\code{function(task, model, pred, extra.args)}]\cr
 #'   Calculates performance value.
@@ -74,12 +73,11 @@
 #' f = function(task, model, pred, extra.args)
 #'   sum((pred$data$response - pred$data$truth)^2)
 #' makeMeasure(id = "my.sse", minimize = TRUE, properties = c("regr", "response"), fun = f)
-makeMeasure = function(id, minimize, properties = character(0L), allowed.pred.types = character(0L),
+makeMeasure = function(id, minimize, properties = character(0L),
   fun, extra.args = list(), aggr = test.mean, best = NULL, worst = NULL, name = id, note = "") {
   assertString(id)
   assertFlag(minimize)
   assertCharacter(properties, any.missing = FALSE)
-  assertSubset(allowed.pred.types, choices = c("response", "prob", "se"))
   assertFunction(fun)
   assertList(extra.args)
   assertString(note)
@@ -92,20 +90,10 @@ makeMeasure = function(id, minimize, properties = character(0L), allowed.pred.ty
   else
     assertNumber(worst)
 
-  # FIXME: I think this is never used...
-  fun1 = fun
-  formals(fun1) = list()
-  v = codetools::findGlobals(fun1, merge = FALSE)$variables
-
   m = makeS3Obj("Measure",
     id = id,
     minimize = minimize,
     properties = properties,
-    allowed.pred.types = allowed.pred.types,
-    req.pred = "pred" %in% v,
-    req.model = "model" %in% v,
-    req.task = "task" %in% v,
-    req.feats = "feats" %in% v,
     fun = fun,
     extra.args = extra.args,
     best = best,

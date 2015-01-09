@@ -5,8 +5,7 @@
 \title{Construct your own resampled performance measure.}
 \usage{
 makeCustomResampledMeasure(id, minimize = TRUE, properties = character(0L),
-  allowed.pred.types = character(0L), fun, extra.args = list(),
-  best = NULL, worst = NULL)
+  fun, extra.args = list(), best = NULL, worst = NULL)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -23,13 +22,16 @@ Set of measure properties. Some standard property names include:
   \item{classif.multi}{Is the measure applicable for multi-class classification?}
   \item{regr}{Is the measure applicable for regression?}
   \item{surv}{Is the measure applicable for survival?}
-  \item{costsens}{Is the measure applicable for cost-sensitve learning?}
+  \item{costsens}{Is the measure applicable for cost-sensitive learning?}
+  \item{req.pred}{Is prediction object required in calculation? Usually the case.}
+  \item{req.truth}{Is truth column required in calculation? Usually the case.}
+  \item{req.task}{Is task object required in calculation? Usually not the case}
+  \item{req.model}{Is model object required in calculation? Usually not the case.}
+  \item{req.feats}{Are feature values required in calculation? Usually not the case.}
+  \item{predtype.response}{Is measure applicable to pred.type \dQuote{response}?}
+  \item{predtype.prob}{Is measure applicable to pred.type \dQuote{prob}?}
+  \item{predtype.se}{Is measure applicable to pred.type \dQuote{se}?}
 }
-Default is \code{character(0)}.}
-
-\item{allowed.pred.types}{[\code{character}]\cr
-Which prediction types are allowed for this measure?
-Subset of \dQuote{response},\dQuote{prob}, \dQuote{se}.
 Default is \code{character(0)}.}
 
 \item{fun}{[\code{function(task, pred, group, pred, extra.args)}]\cr

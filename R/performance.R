@@ -38,35 +38,27 @@ performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) 
 
 doPerformaceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL) {
   m = measure
-  if (m$req.pred) {
+  props = m$properties
+  if ("req.pred" %in% props) {
     if (is.null(pred))
       stopf("You need to pass pred for measure %s!", m$id)
-    pred2 = pred
     td = pred$task.desc
-  } else {
-    pred2 = NULL
   }
-  if (m$req.model) {
+  if ("req.model" %in% props) {
     if (is.null(model))
       stopf("You need to pass model for measure %s!", m$id)
     assertClass(model, classes = "WrappedModel")
-    model2 = model
     td = model$task.desc
-  } else {
-    model2 = NULL
   }
-  if (m$req.task && !m$req.feats) {
+  if ("req.task" %in% props) {
     if (is.null(task))
       stopf("You need to pass task for measure %s!", m$id)
     assertClass(task, classes = "Task")
-    task2 = task
     td = task$desc
-  } else {
-    task2 = NULL
   }
-  if (m$req.feats) {
+  if ("req.feats" %in% props) {
     if (is.null(task) && is.null(feats))
-      stopf("You need to pass features for measure %s!", m$id)
+      stopf("You need to pass either task or features for measure %s!", m$id)
     else if (is.null(feats))
       feats = task$env$data[pred$data$id,, drop = FALSE]
     else
@@ -74,13 +66,15 @@ doPerformaceIteration = function(measure, pred = NULL, task = NULL, model = NULL
   }
   # null only happens in custom resampled measure when we do no individual measurements
   if (!is.null(td)) {
-    if (td$type %nin% m$properties)
+    if (td$type %nin% props)
       stopf("Measure %s does not support task type %s!", m$id, td$type)
-    if (td$type == "classif" && length(td$class.levels) > 2L && "classif.multi" %nin% m$properties)
+    if (td$type == "classif" && length(td$class.levels) > 2L && "classif.multi" %nin% props)
       stopf("Multiclass problems cannot be used for measure %s!", m$id)
-    if (!is.null(pred2) && !(pred2$predict.type %in% m$allowed.pred.types))
+    allowed.pred.types = props[grepl("predtype.", props)]
+    allowed.pred.types = sub("predtype.", "", allowed.pred.types)
+    if (!is.null(pred) && !(pred$predict.type %in% allowed.pred.types))
       stopf("Measure %s is only allowed for predictions of type: %s!",
         m$id, collapse(m$allowed.pred.types))
   }
-  measure$fun(task2, model2, pred2, feats, m$extra.args)
+  measure$fun(task, model, pred, feats, m$extra.args)
 }

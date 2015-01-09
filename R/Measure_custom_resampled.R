@@ -1,5 +1,6 @@
-#' Construct your own resampled performance measure.
+#' @title Construct your own resampled performance measure.
 #'
+#' @description
 #' Construct your own performance measure, used after resampling.
 #' Note that individual training / test set performance values will be set to \code{NA}, you
 #' only calculate an aggregated value. If you can define a function that makes sense
@@ -18,19 +19,18 @@
 #' @family performance
 #' @export
 makeCustomResampledMeasure = function(id, minimize = TRUE, properties = character(0L),
-  allowed.pred.types = character(0L), fun, extra.args = list(), best = NULL, worst = NULL) {
+  fun, extra.args = list(), best = NULL, worst = NULL) {
 
   assertString(id)
   assertFlag(minimize)
   assertCharacter(properties, any.missing = FALSE)
-  assertSubset(allowed.pred.types, choices = c("response", "prob", "se"))
   assertFunction(fun)
   assertList(extra.args)
 
   force(fun)
   fun1 = function(task, model, pred, feats, extra.args) NA_real_
   # args are checked here
-  custom = makeMeasure(id = "custom", minimize, properties, allowed.pred.types, fun1, extra.args,
+  custom = makeMeasure(id = "custom", minimize, properties, fun1, extra.args,
    best = best, worst = worst)
   fun2 = function(task, perf.test, perf.train, measure, group, pred)
     fun(task, group, pred, extra.args)

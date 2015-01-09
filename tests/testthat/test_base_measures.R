@@ -3,7 +3,7 @@ context("measures")
 test_that("measures", {
   ct = binaryclass.task
 
-  mymeasure = makeMeasure(id = "foo", minimize = TRUE, properties = c("classif", "classif.multi", "regr"), allowed.pred.types = c("response", "prob"),
+  mymeasure = makeMeasure(id = "foo", minimize = TRUE, properties = c("classif", "classif.multi", "regr", "predtype.response", "predtype.prob"),
     fun = function(task, model, pred, feats, extra.args) {
       tt = pred
       1
@@ -29,7 +29,7 @@ test_that("measures", {
   perf = performance(pred, measures = ms, model = mod)
 
   # Test multiclass auc
-  lrn = makeLearner("classif.randomForest",predict.type = "prob")
+  lrn = makeLearner("classif.randomForest", predict.type = "prob")
   mod = train(lrn, task = multiclass.task, subset = multiclass.train.inds)
   pred = predict(mod, task = multiclass.task, subset = multiclass.test.inds)
   perf = performance(pred, measures = multiclass.auc)

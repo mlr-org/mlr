@@ -14,8 +14,8 @@ test_that("performance", {
   res = makeResampleDesc("CV", iters = 3)
   r = resample(lrn, task = binaryclass.task, resampling = res)
 
-  mymeasure = makeMeasure(id="mym", minimize=TRUE, properties = c("classif", "classif.multi"), allowed.pred.types = c("response"),
-    fun=function(task, model, pred, feats, extra.args) {
+  mymeasure = makeMeasure(id = "mym", minimize = TRUE, properties = c("classif", "classif.multi", "predtype.response"),
+    fun = function(task, model, pred, feats, extra.args) {
       # normal test error
       e1 = mean(pred$data$truth != pred$data$response)
       # we do this manually

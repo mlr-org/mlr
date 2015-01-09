@@ -5,7 +5,6 @@
 #' @import ParamHelpers
 #' @import plyr
 #' @importFrom stats predict
-#' @importFrom codetools findGlobals
 #' @importFrom survival Surv
 #' @importFrom survival is.Surv
 

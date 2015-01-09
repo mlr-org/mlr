@@ -40,8 +40,7 @@ makeCostMeasure = function(id = "costs", minimize = TRUE, costs, task, combine =
   }
 
   makeMeasure(id = id, minimize = minimize, extra.args = list(costs, combine),
-    properties = c("classif", "classif.multi"),
-    allowed.pred.types = c("response", "prob"),
+    properties = c("classif", "classif.multi", "req.pred", "req.truth", "predtype.response", "predtype.prob"),
     best = best, worst = worst,
     fun = function(task, model, pred, feats, extra.args) {
       costs = extra.args[[1L]]

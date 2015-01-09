@@ -31,7 +31,6 @@ Depends:
     stats
 Imports:
     checkmate (>= 1.5.1),
-    codetools,
     ggplot2,
     parallelMap (>= 1.2),
     plyr,
