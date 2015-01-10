@@ -31,6 +31,7 @@ mlr_2.3:
 -- plotViperCharts
 -- measureSSE, measureMSE, measureRMSE, measureMEDSE, ...
 -- PreprocWrapperCaret
+-- generateLearningCurve, plotLearningCurve
 
 - new learners:
 -- classif.bdk
