@@ -18,59 +18,68 @@ stratify = FALSE
 
 # repls deleted - can be done by resampling?!
 
-generateLearningCurve = function(lrns, task, resampling = NULL,
+generateLearningCurve = function(learners, task, resampling = NULL,
   percs = seq(0.1, 1, by = 0.1), measures, stratify = FALSE)  {
 
+  learners = lapply(learners, checkLearner)
   assertClass(task, "Task")
   assertNumeric(percs, lower = 0L, upper = 1L, min.len = 2L, any.missing = FALSE)
-  
-  if (is.null(resampling)) {
-    resampling = makeResampleInstance("Holdout", task = task)
-  } else if (inherits(resampling, "ResampleDesc")) { #maybe not necessary because in benchmark
-    resampling = makeResampleInstance(resampling, task = task)
-  }
-  
-  lrns = lapply(lrns, checkLearner)
   measures = checkMeasures(measures, task)
+  assertFlag(stratify)
+
+  if (is.null(resampling))
+    resampling = makeResampleInstance("Holdout", task = task)
+  else
+    assert(checkClasses(resampling, "ResampleDesc"), checkClasses(resampling, "ResampleInstance"))
+
   perc.ids = seq_along(percs)
 
-  all.learners = lapply(lrns, function(lrn) {
-    lrn.downsampleds = lapply(perc.ids, function(p.id){
-      lrn.downsampled = makeDownsampleWrapper(learner = lrn, dw.perc = percs[p.id], dw.stratify = stratify)
-      lrn.downsampled$id = paste0(lrn.downsampled$id, ".", p.id)
-      lrn.downsampled
+  # create downsampled versions for all learners
+  lrnds1 = lapply(learners, function(lrn) {
+    lrn.downsampleds = lapply(perc.ids, function(p.id) {
+      perc = percs[p.id]
+      dsw = makeDownsampleWrapper(learner = lrn, dw.perc = perc, dw.stratify = stratify)
+      list(
+        lrn = setId(dsw, paste0(lrn$id, ".", p.id)),
+        perc = perc
+      )
     })
   })
-  bench.res = benchmark(learners = unlist(all.learners, recursive = FALSE), task = task, resamplings = resampling, measures = measures)
-  
-  perfs = getBMRAggrPerformances(bench.res)[[task$task.desc$id]]
-  res = expand.grid(dw.perc.id = perc.ids, learner = extractSubList(lrns, "id"))
-  res = lapply(seq_row(res), function(i) {
-    #m = perfs[[paste0(res[i,"learner"], ".downsampled.", res[i, "dw.perc.id"]]] #FIXME: method a ...
-    m = perfs[[i]] #or method b ?
-    data.frame(dw.perc = percs[res[i, "dw.perc.id"]], learner = res[i,"learner"], performance = m, measure = names(m))
-    })
-  res = do.call(rbind, res)
-  rownames(res) = NULL
-  res
+  lrnds2 = unlist(lrnds1, recursive = FALSE)
+  dsws = extractSubList(lrnds2, "lrn", simplify = FALSE)
+
+  bench.res = benchmark(dsws, task, resampling,  measures)
+  perfs = getBMRAggrPerformances(bench.res, as.df = TRUE)
+
+  # get perc and learner col data
+  perc = extractSubList(lrnds2[perfs$learner.id], "perc")
+  learner = gsub("\\.\\d+$", "", perfs$learner.id)
+  perfs = dropNamed(perfs, c("task.id", "learner.id"))
+
+  # set short measures names and resort cols
+  mids = extractSubList(measures, "id")
+  colnames(perfs) = mids
+  cbind(learner = learner, perc = perc, perfs)
 }
 
 plotLearningCurve = function(res) {
   library(ggplot2)
-  ggplot(res, aes(x = dw.perc, y = performance, colour = learner)) + layer(geom = "point") +
+  ggdata = melt(res, id.vars = c("learner", "perc"), variable.name = "measure", value.name = "perf")
+  ggplot(ggdata, aes_string(x = "perc", y = "perf", colour = "learner")) + layer(geom = "point") +
     layer(geom = "line") + facet_wrap(~measure, scales = "free_y")
 }
 
 
-r1 = generateLearningCurve(lrns = list("classif.rpart", "classif.knn", "classif.svm"), task = iris.task, measures = list(mmce, timetrain))
-plotLearningCurve(r1)
+r1 = generateLearningCurve(list("classif.rpart", "classif.knn") , task = iris.task, measures = list(mmce, timetrain))
+print(plotLearningCurve(r1))
 
-r2 = generateLearningCurve(lrns = list("classif.rpart", "classif.knn", "classif.naiveBayes",
-                                       "classif.svm", "classif.randomForest"),
-                            task = sonar.task, percs = seq(0.2, 1, by = 0.2),
-                            measures = list(tp, fp, tn, fn), resampling = makeResampleDesc(method = "Subsample", iters = 6))
-plotLearningCurve(r2)
+# r2 = generateLearningCurve(list("classif.rpart", "classif.knn", "classif.naiveBayes",
+#     "classif.svm", "classif.randomForest"),
+#   task = sonar.task, percs = seq(0.2, 1, by = 0.2),
+#   measures = list(tp, fp, tn, fn), resampling = makeResampleDesc(method = "Subsample", iters = 6))
+# print(plotLearningCurve(r2))
 
-r3 = generateLearningCurve(lrns = list("regr.ctree", "regr.lm", "regr.svm"), task = regr.num.task, resampling = makeResampleDesc(method = "CV", iters = 5), measures = list(sse, timeboth))
-plotLearningCurve(r3)
+# r3 = generateLearningCurve(list("regr.ctree", "regr.lm", "regr.svm"), task = regr.num.task,
+  # resampling = makeResampleDesc(method = "CV", iters = 5), measures = list(sse, timeboth))
+# print(plotLearningCurve(r3))
 
