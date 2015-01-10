@@ -5,7 +5,7 @@
 \title{Fuse learner with a feature filter method.}
 \usage{
 makeFilterWrapper(learner, fw.method = "rf.importance", fw.perc = NULL,
-  fw.abs = NULL, fw.threshold = NULL, ...)
+  fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -27,6 +27,9 @@ Mutually exclusive with arguments \code{fw.perc} and \code{fw.threshold}.}
 \item{fw.threshold}{[\code{numeric(1)}]\cr
 If set, select features whose score exceeds \code{fw.threshold}.
 Mutually exclusive with arguments \code{fw.perc} and \code{fw.abs}.}
+
+\item{fw.mandatory.feat}{[\code{character}]\cr
+Mandatory features which are always included regardless of their scores}
 
 \item{...}{[any]\cr
 Additional parameters passed down to the filter.}

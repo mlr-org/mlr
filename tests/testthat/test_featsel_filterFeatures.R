@@ -15,6 +15,10 @@ test_that("filterFeatures", {
   feat.imp = getFilterValues(binaryclass.task)
   ff = filterFeatures(binaryclass.task, fval = feat.imp, abs = 5L)
   expect_equal(f, ff)
+  
+  f1 = filterFeatures(binaryclass.task, abs = 1L, mandatory.feat = "V1", ntree = 1L)
+  f2 = subsetTask(binaryclass.task, features = "V1")
+  expect_equal(f1, f2)
 
   f1 = filterFeatures(multiclass.task, abs = round(0.5 * ncol(multiclass.df)))
   f2 = filterFeatures(multiclass.task, perc = 0.5)

@@ -23,6 +23,7 @@ mlr_2.3:
 - measures were slightly internally changed. they expose more properties (check ?Measure) and some
   now unnecessary object slots were removed
 - classif.lda now has hyperpar "predict.method"
+- filerFeatures and makeFilterWrapper gain an argument for mandatory features
 
 - new functions
 -- getTaskType, getTaskId, getTaskTargetNames
