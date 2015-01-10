@@ -20,7 +20,7 @@ makeRLearner.regr.km = function() {
     properties = c("numerics", "se"),
     name = "Kriging",
     short.name = "km",
-    note = "In predict, we currently always use type = 'SK'."
+    note = "In predict, we currently always use type = 'SK'. The extra param 'jitter' (default is FALSE) enables adding a very small jitter (order 1e-12) to the x-values before prediction, as predict.km seems to reproduce the exact y-values of the training data points, when you pass them in, even if the nugget effect is turned on and regression is performed. This might likely be a bug in km and we only noticed that for the exact point used in training."
   )
 }
 
