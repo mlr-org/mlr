@@ -5,7 +5,7 @@
 \title{Filter features by thresholding filter values.}
 \usage{
 filterFeatures(task, method = "rf.importance", fval = NULL, perc = NULL,
-  abs = NULL, threshold = NULL, ...)
+  abs = NULL, threshold = NULL, mandatory.feat = NULL, ...)
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
@@ -32,6 +32,9 @@ Mutually exclusive with arguments \code{perc} and \code{threshold}.}
 \item{threshold}{[\code{numeric(1)}]\cr
 If set, select features whose score exceeds \code{threshold}.
 Mutually exclusive with arguments \code{perc} and \code{abs}.}
+
+\item{mandatory.feat}{[\code{character}]\cr
+Mandatory features which are always included regardless of their scores}
 
 \item{...}{[any]\cr
 Passed down to selected filter method.}

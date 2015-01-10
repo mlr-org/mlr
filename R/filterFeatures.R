@@ -22,12 +22,15 @@
 #' @param threshold [\code{numeric(1)}]\cr
 #'   If set, select features whose score exceeds \code{threshold}.
 #'   Mutually exclusive with arguments \code{perc} and \code{abs}.
+#' @param mandatory.feat [\code{character}]\cr
+#'   Mandatory features which are always included regardless of their scores
 #' @param ... [any]\cr
 #'   Passed down to selected filter method.
 #' @template ret_task
 #' @export
 #' @family filter
-filterFeatures = function(task, method = "rf.importance", fval = NULL, perc = NULL, abs = NULL, threshold = NULL, ...) {
+filterFeatures = function(task, method = "rf.importance", fval = NULL, perc = NULL, abs = NULL,
+                          threshold = NULL, mandatory.feat = NULL, ...) {
   assertClass(task, "SupervisedTask")
   assertChoice(method, choices = ls(.FilterRegister))
   select = checkFilterArguments(perc, abs, threshold)
@@ -43,6 +46,15 @@ filterFeatures = function(task, method = "rf.importance", fval = NULL, perc = NU
   } else {
     assertClass(fval, "FilterValues")
     fval = fval$data
+  }
+  if (!is.null(mandatory.feat)) {
+    assertCharacter(mandatory.feat)
+    if (!all(mandatory.feat %in% fval$name))
+      stop("At least one mandatory feature was not found in the task.")
+    if (select != "threshold" && nselect < length(mandatory.feat))
+      stop("The number of features to be filtered cannot be smaller than the number of mandatory features.")
+    #Set the the filter values of the mandatory features to infinity to always select them
+    fval[fval$name %in% mandatory.feat, "val"] = Inf
   }
   if (select == "threshold")
     nselect = sum(fval$val >= threshold, na.rm = TRUE)

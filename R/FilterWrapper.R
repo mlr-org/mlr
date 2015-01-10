@@ -24,6 +24,8 @@
 #' @param fw.threshold [\code{numeric(1)}]\cr
 #'   If set, select features whose score exceeds \code{fw.threshold}.
 #'   Mutually exclusive with arguments \code{fw.perc} and \code{fw.abs}.
+#' @param fw.mandatory.feat [\code{character}]\cr
+#'   Mandatory features which are always included regardless of their scores
 #' @param ... [any]\cr
 #'   Additional parameters passed down to the filter.
 #' @template ret_learner
@@ -43,7 +45,7 @@
 #'   getFilteredFeatures(model)
 #' })
 #' print(r$extract)
-makeFilterWrapper = function(learner, fw.method = "rf.importance", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, ...) {
+makeFilterWrapper = function(learner, fw.method = "rf.importance", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
   learner = checkLearner(learner)
   assertChoice(fw.method, choices = ls(.FilterRegister))
   filter = .FilterRegister[[fw.method]]
@@ -58,9 +60,10 @@ makeFilterWrapper = function(learner, fw.method = "rf.importance", fw.perc = NUL
       makeDiscreteLearnerParam(id = "fw.method", values = ls(.FilterRegister)),
       makeNumericLearnerParam(id = "fw.perc", lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "fw.abs", lower = 0),
-      makeNumericLearnerParam(id = "fw.threshold")
+      makeNumericLearnerParam(id = "fw.threshold"),
+      makeUntypedLearnerParam(id = "fw.mandatory.feat")
     ),
-    par.vals = filterNull(list(fw.method = fw.method, fw.perc = fw.perc, fw.abs = fw.abs, fw.threshold = fw.threshold)),
+    par.vals = filterNull(list(fw.method = fw.method, fw.perc = fw.perc, fw.abs = fw.abs, fw.threshold = fw.threshold, fw.mandatory.feat = fw.mandatory.feat)),
     learner.subclass = "FilterWrapper", model.subclass = "FilterModel")
   lrn$more.args = ddd
   lrn
@@ -68,10 +71,10 @@ makeFilterWrapper = function(learner, fw.method = "rf.importance", fw.perc = NUL
 
 #' @export
 trainLearner.FilterWrapper = function(.learner, .task, .subset, .weights = NULL,
-  fw.method = "rf.importance", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, ...) {
+  fw.method = "rf.importance", fw.perc = NULL, fw.abs = NULL, fw.threshold = NULL, fw.mandatory.feat = NULL, ...) {
 
   .task = subsetTask(.task, subset = .subset)
-  .task = do.call(filterFeatures, c(list(task = .task, method = fw.method, perc = fw.perc, abs = fw.abs, threshold = fw.threshold), .learner$more.args))
+  .task = do.call(filterFeatures, c(list(task = .task, method = fw.method, perc = fw.perc, abs = fw.abs, threshold = fw.threshold, mandatory.feat = fw.mandatory.feat), .learner$more.args))
   m = train(.learner$next.learner, .task, weights = .weights)
   makeChainModel(next.model = m, cl = "FilterModel")
 }
