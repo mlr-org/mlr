@@ -9,7 +9,9 @@
 #' @param resampling [\code{\link{ResampleDesc}} | \code{\link{ResampleInstance}}]\cr
 #'   Resampling strategy. If no strategy is given a default "Holdout" will be performed.
 #' @param percs [\code{numeric}]\cr
-#'   Vector of percentages to be drawn from the training split. Internally \code{\link{makeDownsampleWrapper}} is used. Thus the result will be noisy as the quality of the sample can differ.
+#'   Vector of percentages to be drawn from the training split.
+#'   Internally \code{\link{makeDownsampleWrapper}} is used.
+#'   Thus the result will be noisy as the quality of the sample can differ.
 #' @param measures [(list of) \code{\link{Measure}}]\cr
 #'   Performance measures for the task.
 #' @param stratify [\code{logical(1)}]\cr
@@ -17,12 +19,12 @@
 #'   Should the downsampled data be stratified according to the target classes?
 #' @template arg_showinfo
 #' @return [\code{data.frame}]
-#' @example
-#'  r = generateLearningCurve(list("classif.rpart", "classif.knn"),
-#'  task = sonar.task, percs = seq(0.2, 1, by = 0.2),
-#'  measures = list(tp, fp, tn, fn), resampling = makeResampleDesc(method = "Subsample", iters = 5),
-#'  show.info = FALSE)
-#'  print(plotLearningCurve(r))
+#' @examples
+#' r = generateLearningCurve(list("classif.rpart", "classif.knn"),
+#' task = sonar.task, percs = seq(0.2, 1, by = 0.2),
+#' measures = list(tp, fp, tn, fn), resampling = makeResampleDesc(method = "Subsample", iters = 5),
+#' show.info = FALSE)
+#' print(plotLearningCurve(r))
 #' @export
 generateLearningCurve = function(learners, task, resampling = NULL,
   percs = seq(0.1, 1, by = 0.1), measures, stratify = FALSE, show.info = getMlrOption("show.info"))  {
@@ -69,16 +71,27 @@ generateLearningCurve = function(learners, task, resampling = NULL,
   cbind(learner = learner, perc = perc, perfs)
 }
 
-#' @title Plot a learning curve
-#' @param x
-#'   The result of \code{\link{generateLearningCurve}}.
-#' @return ggplot2 plot
-#' @seealso \code{\link{generateLearningCurve}}
+#' @title Plot learning curve data.
+#'
+#' @description
+#' Visualizes data size (percentage used for model) vs. performance measure(s).
+#'
+#' @param obj [\code{LearningCurveData}]\cr
+#'   Result of \code{\link{generateLearningCurve}}.
+#' @param linesize [\code{numeric(1)}]\cr
+#'   Linesize for ggplot2 \code{\link[ggplot2]{geom_line}} for graphs.
+#'   Default is 1.5.
+#' @param pointsize [\code{numeric(1)}]\cr
+#'   Linesize for ggplot2 \code{\link[ggplot2]{geom_point}} for graphs.
+#'   Default is 1.5.
+#' @template ret_gg2
 #' @export
-plotLearningCurve = function(x) {
-  requirePackages(c("ggplot2", "reshape2"), why = "plotLearningCurve")
-  ggdata = melt(x, id.vars = c("learner", "perc"), variable.name = "measure", value.name = "perf")
-  ggplot(ggdata, aes_string(x = "perc", y = "perf", colour = "learner")) + layer(geom = "point") +
-    layer(geom = "line") + facet_wrap(~measure, scales = "free_y")
+plotLearningCurve = function(obj, linesize = 1.5, pointsize = 1.5) {
+  ggdata = melt(obj, id.vars = c("learner", "perc"), variable.name = "measure", value.name = "perf")
+  pl = ggplot(ggdata, aes_string(x = "perc", y = "perf", colour = "learner"))
+  pl = pl + layer(geom = "point", size = pointsize)
+  pl = pl + layer(geom = "line", size = linesize)
+  pl = pl + facet_wrap(~measure, scales = "free_y")
+  return(pl)
 }
 
