@@ -21,7 +21,6 @@
 plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols = c("darkgreen", "darkblue")) {
   assertClass(fvalues, classes = "FilterValues")
   assertChoice(sort, choices = c("dec", "inc", "none"))
-  requirePackages("!ggplot2", why = "getFilterValues")
   n.show = asCount(n.show)
 
   data = fvalues$data

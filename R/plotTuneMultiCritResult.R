@@ -32,7 +32,6 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
     assertChoice(col, choices = colnames(op2))
   if (!is.null(shape))
     assertChoice(shape, colnames(op2))
-  requirePackages("!ggplot2", why = "plotTuneMultiCritResult")
 
   names.y = colnames(res$y)
   map = aes_string(x = names.y[1L], y = names.y[2L], col = col, shape = shape)

@@ -4,6 +4,7 @@
 #' @import parallelMap
 #' @import ParamHelpers
 #' @import plyr
+#' @import reshape2
 #' @importFrom stats predict
 #' @importFrom survival Surv
 #' @importFrom survival is.Surv

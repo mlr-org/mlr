@@ -28,12 +28,13 @@ Depends:
     R (>= 3.0.0),
     ParamHelpers (>= 1.5),
     BBmisc (>= 1.9),
+    ggplot2,
     stats
 Imports:
     checkmate (>= 1.5.1),
-    ggplot2,
     parallelMap (>= 1.2),
     plyr,
+    reshape2,
     survival
 Suggests:
     ada,
@@ -89,7 +90,6 @@ Suggests:
     randomForestSRC,
     randomUniformForest,
     RCurl,
-    reshape2,
     rjson,
     robustbase,
     ROCR,
