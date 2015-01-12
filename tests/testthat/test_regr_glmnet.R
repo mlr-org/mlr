@@ -1,7 +1,7 @@
 context("regr_glmnet")
 
 test_that("regr_glmnet", {
-  library(glmnet)
+  requirePackages("glmnet")
   parset.list = list(
     list(),
     list(alpha = 0.7),

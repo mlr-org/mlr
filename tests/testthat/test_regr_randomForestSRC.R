@@ -1,7 +1,7 @@
 context("regr_randomForestSRC")
 
 test_that("regr_randomForestSRC", {
-  library(randomForestSRC)
+  requirePackages("randomForestSRC")
   
   parset.list = list(
     list(),

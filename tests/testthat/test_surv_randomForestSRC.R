@@ -1,8 +1,8 @@
 context("surv_randomForestSRC")
 
 test_that("surv_randomForestSRC", {
-  library(survival)
-  library(randomForestSRC)
+  requirePackages("survival")
+  requirePackages("randomForestSRC")
 
   parset.list = list(
     list(),

@@ -1,7 +1,7 @@
 context("regr_fnn")
 
 test_that("regr_fnn", {
-  library(FNN)
+  requirePackages("FNN")
   parset.list = list(
     list(),
     list(k=1),

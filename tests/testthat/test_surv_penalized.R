@@ -1,8 +1,8 @@
 context("surv_penalized")
 
 test_that("surv_penalized", {
-  library(survival)
-  library(penalized)
+  requirePackages("survival")
+  requirePackages("penalized")
   parset.list = list(
     list()
   )

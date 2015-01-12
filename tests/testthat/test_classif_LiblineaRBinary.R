@@ -1,7 +1,7 @@
 context("classif_LiblineaRBinary")
 
 test_that("classif_LiblineaRBinary", {
-  library(LiblineaR)
+  requirePackages("LiblineaR")
 
   # parset.list = list(
   #   list(type = 1),

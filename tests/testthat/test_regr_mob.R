@@ -1,7 +1,7 @@
 context("regr_mob")
 
 test_that("regr_mob", {
-  library(party)
+  requirePackages("party")
   parset.list = list(
     list(term.feats=c("lstat", "rm"), part.feats=c("zn", "indus")),
     list(alpha=0.10, minsplit=40, term.feats=c("lstat", "rm", "crim"),

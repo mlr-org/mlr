@@ -1,7 +1,7 @@
 context("regr_cubist")
 
 test_that("regr_cubist", {
-  library(Cubist)
+  requirePackages("Cubist")
   parset.list1 = list(
     list(),
     list(committees = 2L),

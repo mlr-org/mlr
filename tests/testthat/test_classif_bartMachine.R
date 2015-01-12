@@ -1,7 +1,7 @@
 context("classif_bartMachine")
 
 test_that("classif_bartMachine", {
-  library(bartMachine)
+  requirePackages("bartMachine")
   parset.list = list(
     list(num_burn_in = 20L, num_iterations_after_burn_in = 50L, run_in_sample = FALSE),
     list(num_burn_in = 20L, num_iterations_after_burn_in = 50L, alpha = 0.8, num_trees = 25L,
@@ -19,7 +19,7 @@ test_that("classif_bartMachine", {
     pars = list(X = x, y = y, verbose = FALSE)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(bartMachine, pars)
+    m = do.call(bartMachine::bartMachine, pars)
     newx = binaryclass.test
     newx[, binaryclass.class.col] = NULL
     set.seed(getOption("mlr.debug.seed"))

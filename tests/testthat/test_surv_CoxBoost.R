@@ -1,8 +1,8 @@
 context("surv_CoxBoost")
 
 test_that("surv_CoxBoost", {
-  library("survival")
-  library("CoxBoost")
+  requirePackages(""survival"")
+  requirePackages(""CoxBoost"")
   parset.list = list(
     list(),
     list(stepno = 10)

@@ -1,7 +1,7 @@
 context("classif_geoDA")
 
 test_that("classif_geoDA", {
-  library(DiscriMiner)
+  requirePackages("DiscriMiner")
 	set.seed(getOption("mlr.debug.seed"))
   m = geoDA(multiclass.train[,-multiclass.class.col], group=multiclass.train[,multiclass.class.col])
 	p =  classify(m, newdata=multiclass.test[,-multiclass.class.col])

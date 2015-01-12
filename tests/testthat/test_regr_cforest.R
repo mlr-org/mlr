@@ -1,7 +1,7 @@
 context("regr_cforest")
 
 test_that("regr_cforest", {
-  library(party)
+  requirePackages("party")
   parset.list = list(
     list(),
     list(control = cforest_unbiased(mtry = 2)),

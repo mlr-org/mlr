@@ -2,7 +2,7 @@ context("classif_randomUniformForest")
 
 test_that("classif_randomUniformForest", {
   skip_on_travis() # FIXME: I dont know why this breaks on travis
-  library(randomUniformForest)
+  requirePackages("randomUniformForest")
 
   parset.list = list(
     list(ntree = 5, mtry = 4)

@@ -1,7 +1,7 @@
 context("classif_kknn")
 
 test_that("classif_kknn", {
-  library(kknn)
+  requirePackages("kknn")
   parset.list = list(
     list(),
     list(k = 1),

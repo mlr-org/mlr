@@ -1,7 +1,7 @@
 context("classif_OneR")
 
 test_that("classif_OneR", {
-  library(RWeka)
+  requirePackages("RWeka")
   parset.list = list(
     list(),
     list(B=3)

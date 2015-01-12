@@ -1,7 +1,7 @@
 context("regr_brnn")
 
 test_that("regr_brnn", {
-  library(brnn)
+  requirePackages("brnn")
   parset.list = list(
     list(),
     list(neurons = 3L),

@@ -1,7 +1,7 @@
 context("surv_coxph")
 
 test_that("surv_coxph", {
-  library(survival)
+  requirePackages("survival")
   parset.list = list(
     list(),
     list(iter.max = 1),

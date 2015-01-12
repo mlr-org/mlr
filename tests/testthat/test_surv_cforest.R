@@ -1,8 +1,8 @@
 context("surv_cforest")
 
 test_that("surv_cforest", {
-  library(party)
-  library(survival)
+  requirePackages("party")
+  requirePackages("survival")
   parset.list = list(
     list(),
     list(control = cforest_unbiased(mtry = 2)),

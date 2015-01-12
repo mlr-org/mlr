@@ -1,7 +1,7 @@
 context("regr_elmNN")
 
 test_that("regr_elmNN", {
-  library(elmNN)
+  requirePackages("elmNN")
   parset.list = list(
     list(),
     list(nhid = 2L),

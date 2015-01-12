@@ -1,7 +1,7 @@
 context("cluster_EM")
 
 test_that("cluster_EM", {
-  library(RWeka)
+  requirePackages("RWeka")
 	parset.list = list(
 			list(),
 			list(N=10)

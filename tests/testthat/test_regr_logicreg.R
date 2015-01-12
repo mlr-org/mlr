@@ -1,7 +1,7 @@
 #context("regr_logicreg")
 #
 #test_that("regr_logicreg", {
-#  library(LogicReg)
+#  requirePackages("LogicReg")
 #  set.seed(1)
 #  mydata = as.data.frame(matrix(rbinom(100*5, 1, 0.5), 100, 5))
 #  mydata$y = rnorm(100)

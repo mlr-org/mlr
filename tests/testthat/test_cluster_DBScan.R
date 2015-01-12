@@ -2,7 +2,7 @@
 # context("cluster_DBScan")
 
 # test_that("cluster_DBScan", {
-#   library(RWeka)
+#   requirePackages("RWeka")
 #   parset.list = list(
 #     list()
 #   )

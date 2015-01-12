@@ -1,7 +1,7 @@
 context("classif_xgboost")
 
 test_that("classif_xgboost", {
-  library(xgboost)
+  requirePackages("xgboost")
 
   # binary class
   set.seed(getOption("mlr.debug.seed"))

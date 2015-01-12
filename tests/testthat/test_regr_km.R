@@ -1,7 +1,7 @@
 context("regr_km")
 
 test_that("regr_km", {
-  library(DiceKriging)
+  requirePackages("DiceKriging")
   parset.list = list(
     #list(covtype="gauss"),
     list(covtype="matern5_2")

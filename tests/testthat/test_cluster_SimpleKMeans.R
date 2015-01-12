@@ -1,7 +1,7 @@
 context("cluster_SimpleKMeans")
 
 test_that("cluster_SimpleKMeans", {
-  library(RWeka)
+  requirePackages("RWeka")
   parset.list = list(
     list(),
     list(N = 5L)

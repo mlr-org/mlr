@@ -1,7 +1,7 @@
 context("classif_lqa")
 
 test_that("classif_lqa", {
-  library(lqa)
+  requirePackages("lqa")
   parset.list = list(
     list(),
     list(penalty = 'lasso', lambda = 0.01),

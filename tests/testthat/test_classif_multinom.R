@@ -1,7 +1,7 @@
 context("classif_multinom")
 
 test_that("classif_multinom", {
-  library(nnet)
+  requirePackages("nnet")
 	set.seed(getOption("mlr.debug.seed"))
 	capture.output(
     m <- multinom(formula = multiclass.formula, data = multiclass.train)

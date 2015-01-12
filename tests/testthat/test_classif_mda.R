@@ -1,7 +1,7 @@
 context("classif_mda")
 
 test_that("classif_mda", {	
-  library(mda)
+  requirePackages("mda")
 	parset.list = list(
 			list(),
 			list(subclasses=2),

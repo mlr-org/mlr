@@ -1,7 +1,7 @@
 context("regr_nodeHarvest")
 
 test_that("regr_nodeHarvest", {
-  library(nodeHarvest)
+  requirePackages("nodeHarvest")
   
   parset.list = list(
     list(nodes = 100L),

@@ -1,7 +1,7 @@
 context("regr_penalized_ridge")
 
 test_that("regr_penalized_ridge", {
-  library(penalized)
+  requirePackages("penalized")
 	parset.list = list(
 			list(),
 			list(lambda2 = 0.3),

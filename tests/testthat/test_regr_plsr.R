@@ -1,7 +1,7 @@
 context("regr_plsr")
 
 test_that("regr_plsr", {
-  library(pls)
+  requirePackages("pls")
 	parset.list = list(
       list(),
 			list(ncomp = 1),

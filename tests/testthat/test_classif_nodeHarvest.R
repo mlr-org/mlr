@@ -1,7 +1,7 @@
 context("classif_nodeHarvest")
 
 test_that("classif_nodeHarvest", {
-  library(nodeHarvest)
+  requirePackages("nodeHarvest")
   
   parset.list = list(
     list(nodes = 100L),

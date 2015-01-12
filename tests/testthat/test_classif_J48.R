@@ -1,7 +1,7 @@
 context("classif_j48")
 
 test_that("classif_j48", {
-	library(RWeka)
+	requirePackages("RWeka")
 	parset.list = list(
 			list(),
 			list(M=10),

@@ -1,7 +1,7 @@
 context("classif_extraTrees")
 
 test_that("classif_extraTrees", {
-  library(extraTrees)
+  requirePackages("extraTrees")
   
   parset.list = list(
     list(),

@@ -1,7 +1,7 @@
 context("classif_xyf")
 
 test_that("classif_xyf", {
-  library(kohonen)
+  requirePackages("kohonen")
   parset.list1 = list(
     list(),
     list(grid = class::somgrid(xdim = 2L, ydim = 4L)),
@@ -14,15 +14,15 @@ test_that("classif_xyf", {
   )
 
   old.probs.list = old.predicts.list = list()
-  
+
   for (i in 1:length(parset.list1)) {
     pars = parset.list1[[i]]
     pars$data = as.matrix(binaryclass.train[, -binaryclass.class.col])
     pars$Y = binaryclass.train[, binaryclass.class.col]
     pars$keep.data = FALSE
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(xyf, pars)
-    p = predict.kohonen(m, as.matrix(binaryclass.test[, -binaryclass.class.col]))
+    m = do.call(kohonen::xyf, pars)
+    p = kohonen::predict.kohonen(m, as.matrix(binaryclass.test[, -binaryclass.class.col]))
     old.predicts.list[[i]] = p$prediction
     old.probs.list[[i]] = p$unit.predictions[p$unit.classif, 1L]
   }

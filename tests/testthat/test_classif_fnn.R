@@ -1,7 +1,7 @@
 context("classif_fnn")
 
 test_that("classif_fnn", {
-  library(FNN)
+  requirePackages("FNN")
   parset.list = list(
     list(),
     list(k=1),

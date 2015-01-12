@@ -1,8 +1,8 @@
 context("surv_cvglmnet")
 
 test_that("surv_cvglmnet", {
-  library(survival)
-  library(glmnet)
+  requirePackages("survival")
+  requirePackages("glmnet")
   parset.list = list(
     list(),
     list(alpha = 0.3),

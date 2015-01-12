@@ -3,7 +3,7 @@ context("classif_knn")
 test_that("classif_knn", {
   #FIXME: we see strange errors only on travis, not locally. I have no idea why...?
   skip_on_travis()
-  library(class)
+  requirePackages("class")
   parset.list = list(
     list(),
     list(k = 10)

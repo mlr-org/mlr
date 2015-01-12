@@ -1,7 +1,7 @@
 context("regr_randomForest")
 
 test_that("regr_randomForest", {
-  library(randomForest)
+  requirePackages("randomForest")
   parset.list = list(
     list(),
     list(ntree = 5, mtry = 2),

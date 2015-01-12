@@ -1,7 +1,7 @@
 context("classif_LiblineaRMultiClass")
 
 test_that("classif_LiblineaRMultiClass", {
-  library(LiblineaR)
+  requirePackages("LiblineaR")
   
   set.seed(getOption("mlr.debug.seed"))
   m = LiblineaR(data=multiclass.train[, -multiclass.class.col],

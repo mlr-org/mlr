@@ -1,7 +1,7 @@
 context("classif_lda")
 
 test_that("classif_lda", {
-  library(MASS)
+  requirePackages("MASS")
   set.seed(getOption("mlr.debug.seed"))
   m = lda(formula = multiclass.formula, data = multiclass.train)
   set.seed(getOption("mlr.debug.seed"))

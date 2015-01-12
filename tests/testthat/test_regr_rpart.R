@@ -1,7 +1,7 @@
 context("regr_rpart")
 
 test_that("regr_rpart", {
-  library(rpart)
+  requirePackages("rpart")
   parset.list = list(
     list(),
     list(minsplit=10, cp=0.005),

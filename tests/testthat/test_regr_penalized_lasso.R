@@ -1,7 +1,7 @@
 context("regr_penalized_lasso")
 
 test_that("regr_penalized_lasso", {
-	library(penalized)
+	requirePackages("penalized")
 	parset.list = list(
 			list(),
 			list(lambda1 = 0.3),

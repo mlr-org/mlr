@@ -1,7 +1,7 @@
 context("regr_extraTrees")
 
 test_that("regr_extraTrees", {
-  library(extraTrees)
+  requirePackages("extraTrees")
   
   parset.list = list(
     list(),

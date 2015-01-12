@@ -1,7 +1,7 @@
 context("classif_rpart")
 
 test_that("classif_rpart", {
-  library(rpart)
+  requirePackages("rpart")
   parset.list = list(
     list(),
     list(minsplit = 10, cp = 0.005),
@@ -18,11 +18,11 @@ test_that("classif_rpart", {
     pars = list(formula = multiclass.formula, data = multiclass.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(rpart, pars)
+    m = do.call(rpart::rpart, pars)
     p  = predict(m, newdata = multiclass.test, type = "class")
-	p2 = predict(m, newdata = multiclass.test, type = "prob")
-	old.predicts.list[[i]] = p
-	old.probs.list[[i]] = p2
+    p2 = predict(m, newdata = multiclass.test, type = "prob")
+    old.predicts.list[[i]] = p
+    old.probs.list[[i]] = p2
   }
 
   testSimpleParsets("classif.rpart", multiclass.df, multiclass.target, multiclass.train.inds, old.predicts.list, parset.list)
