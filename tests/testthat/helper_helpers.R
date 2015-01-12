@@ -194,3 +194,10 @@ testBootstrap = function(t.name, df, target, iters = 3, parset = list(), tune.tr
     expect_equal(sd  (ms[,"mse"]), tr$performances[1,3], check.names = FALSE)
   }
 }
+
+
+skip_on_travis <- function() {
+  if (!identical(Sys.getenv("TRAVIS"), "true")) return()
+
+  skip("On Travis")
+}
