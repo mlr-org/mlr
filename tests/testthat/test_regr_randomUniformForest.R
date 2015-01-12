@@ -1,11 +1,9 @@
 context("regr_randomUniformForest")
 
 test_that("regr_randomUniformForest", {
-  skip("breaks on travis")
   library(randomUniformForest)
 
   parset.list = list(
-    list(),
     list(ntree = 5, mtry = 4)
   )
 
