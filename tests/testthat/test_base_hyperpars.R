@@ -55,15 +55,31 @@ test_that("setting 'when' works for hyperpars", {
 
 
 test_that("options are respected", {
-  mlr.opts = getMlrOptions()
-  configureMlr()
+  # with local option
+
   lrn = makeLearner("classif.mock2")
   expect_error(setHyperPars(lrn, beta = 1), "available description object")
-  expect_warning(setHyperPars(lrn, beta = 1, on.par.without.desc = "warn"), , "available description object")
-  expect_is(setHyperPars(lrn, beta = 1, on.par.without.desc = "quiet"), "Learner")
+  lrn = makeLearner("classif.mock2", config = list(on.par.without.desc = "warn"))
+  expect_warning(setHyperPars(lrn, beta = 1), "available description object")
+  lrn = makeLearner("classif.mock2", config = list(on.par.without.desc = "quiet"))
+  expect_is(setHyperPars(lrn, beta = 1), "Learner")
 
+  lrn = makeLearner("classif.mock2")
   expect_error(setHyperPars(lrn, alpha = 2), "feasible")
-  expect_warning(setHyperPars(lrn, alpha = 2, on.par.out.of.bounds = "warn"), , "feasible")
-  expect_is(setHyperPars(lrn, alpha = 2, on.par.out.of.bounds = "quiet"), "Learner")
+  lrn = makeLearner("classif.mock2", config = list(on.par.out.of.bounds = "warn"))
+  expect_warning(setHyperPars(lrn, alpha = 2), "feasible")
+  lrn = makeLearner("classif.mock2", config = list(on.par.out.of.bounds = "quiet"))
+  expect_is(setHyperPars(lrn, alpha = 2), "Learner")
+
+
+  # with global option
+  mlr.opts = getMlrOptions()
+
+  lrn = makeLearner("classif.mock2")
+  configureMlr(on.par.without.desc = "quiet")
+  expect_is(setHyperPars(lrn, beta = 1), "Learner")
+  configureMlr(on.par.out.of.bounds = "quiet")
+  expect_is(setHyperPars(lrn, alpha = 2), "Learner")
+
   do.call(configureMlr, mlr.opts)
 })

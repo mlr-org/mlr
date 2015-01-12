@@ -7,10 +7,6 @@
 #' @param par.vals [\code{list}]\cr
 #'   Optional list of named (hyper)parameter settings. The arguments in
 #'   \code{...} take precedence over values in this list.
-#' @param on.par.without.desc [\code{character(1)}]\cr
-#'   Locally overrule this option. See \code{\link{configureMlr}} for details.
-#' @param on.par.out.of.bounds [\code{character(1)}]\cr
-#'   Locally overrule this option. See \code{\link{configureMlr}} for details.
 #' @template ret_learner
 #' @export
 #' @family learner
@@ -20,14 +16,12 @@
 #' print(cl1)
 #' # note the now set and altered hyperparameters:
 #' print(cl2)
-setHyperPars = function(learner, ..., par.vals = list(),
-  on.par.without.desc = getMlrOption("on.par.without.desc"),
-  on.par.out.of.bounds = getMlrOption("on.par.out.of.bounds")) {
+setHyperPars = function(learner, ..., par.vals = list()) {
   args = list(...)
   assertClass(learner, classes = "Learner")
   assertList(args, names = "named", .var.name = "parameter settings")
   assertList(par.vals, names = "named", .var.name = "parameter settings")
-  setHyperPars2(learner, insert(par.vals, args), on.par.without.desc, on.par.out.of.bounds)
+  setHyperPars2(learner, insert(par.vals, args))
 }
 
 #' Only exported for internal use.
@@ -35,23 +29,17 @@ setHyperPars = function(learner, ..., par.vals = list(),
 #'   The learner.
 #' @param par.vals [\code{list}]\cr
 #'   List of named (hyper)parameter settings.
-#' @param on.par.without.desc [\code{character(1)}]\cr
-#'   Locally overrule this option. See \code{\link{configureMlr}} for details.
-#' @param on.par.out.of.bounds [\code{character(1)}]\cr
-#'   Locally overrule this option. See \code{\link{configureMlr}} for details.
 #' @export
-setHyperPars2 = function(learner, par.vals,
-  on.par.without.desc = getMlrOption("on.par.without.desc"),
-  on.par.out.of.bounds = getMlrOption("on.par.out.of.bounds")) {
+setHyperPars2 = function(learner, par.vals) {
   UseMethod("setHyperPars2")
 }
 
 #' @export
-setHyperPars2.Learner = function(learner, par.vals,
-  on.par.without.desc = getMlrOption("on.par.without.desc"),
-  on.par.out.of.bounds = getMlrOption("on.par.out.of.bounds")) {
+setHyperPars2.Learner = function(learner, par.vals) {
   ns = names(par.vals)
   pars = learner$par.set$pars
+  on.par.without.desc = coalesce(learner$config$on.par.without.desc, getMlrOptions()$on.par.without.desc)
+  on.par.out.of.bounds = coalesce(learner$config$on.par.out.of.bounds, getMlrOptions()$on.par.out.of.bounds)
   for (i in seq_along(par.vals)) {
     n = ns[i]
     p = par.vals[[i]]
