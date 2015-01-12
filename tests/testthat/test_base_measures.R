@@ -35,4 +35,11 @@ test_that("measures", {
   perf = performance(pred, measures = multiclass.auc)
   expect_is(perf, "numeric")
 
+  # test survival measure
+  ms = list(cindex)
+  lrn = makeLearner("surv.coxph")
+  mod = train(lrn, task = surv.task, subset = surv.train.inds)
+  pred = predict(mod, task = surv.task, subset = surv.test.inds)
+  perf = performance(pred, measures = ms)
+  expect_is(perf, "numeric")
 })

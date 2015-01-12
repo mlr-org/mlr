@@ -624,7 +624,7 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
     resp = pred$data$response
     if (anyMissing(resp))
       return(NA_real_)
-    # FIXME: we need to ensure the censoring here
+    # FIXME: we need to convert to he correct survival type
     s = Surv(pred$data$truth.time, pred$data$truth.event)
     Hmisc::rcorr.cens(-1 * resp, s)[["C Index"]]
   }
