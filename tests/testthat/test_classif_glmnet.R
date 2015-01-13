@@ -22,14 +22,14 @@ test_that("classif_glmnet", {
     x[, binaryclass.class.col] = NULL
     pars = list(x = as.matrix(x), y = y, family = "binomial")
     pars = c(pars, parset)
-    ctrl.args = names(formals(glmnet.control))
+    ctrl.args = names(formals(glmnet::glmnet.control))
     set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
-      do.call(glmnet.control, pars[names(pars) %in% ctrl.args])
-      m = do.call(glmnet, pars[!names(pars) %in% ctrl.args])
-      glmnet.control(factory = TRUE)
+      do.call(glmnet::glmnet.control, pars[names(pars) %in% ctrl.args])
+      m = do.call(glmnet::glmnet, pars[!names(pars) %in% ctrl.args])
+      glmnet::glmnet.control(factory = TRUE)
     } else {
-      m = do.call(glmnet, pars)
+      m = do.call(glmnet::glmnet, pars)
     }
     newx = binaryclass.test
     newx[, binaryclass.class.col] = NULL

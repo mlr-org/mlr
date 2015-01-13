@@ -5,7 +5,7 @@ test_that("regr_cubist", {
   parset.list1 = list(
     list(),
     list(committees = 2L),
-    list(control = cubistControl(extrapolation = 50L, rules = 50L))
+    list(control = Cubist::cubistControl(extrapolation = 50L, rules = 50L))
   )
   parset.list2 = list(
     list(),
@@ -21,7 +21,7 @@ test_that("regr_cubist", {
     parset = parset.list1[[i]]
     parset = c(list(x = X, y = y), parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(cubist, parset)
+    m = do.call(Cubist::cubist, parset)
     p  = predict(m, newdata = regr.test)
     old.predicts.list[[i]] = p
   }

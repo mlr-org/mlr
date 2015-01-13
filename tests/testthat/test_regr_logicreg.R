@@ -9,7 +9,7 @@
 #
 #  parset.list1 = list(
 #    list(seed=debug.seed, type=2),
-#    list(seed=debug.seed, type=2, ntrees=1, tree.control=logreg.tree.control(treesize=3, minmass=5))
+#    list(seed=debug.seed, type=2, ntrees=1, tree.control=LogicReg::logreg.tree.control(treesize=3, minmass=5))
 #  )
 #  parset.list2 = list(
 #    list(seed=debug.seed),
@@ -23,7 +23,7 @@
 #    pars = list(resp=mydata$y[1:60], bin=mydata[1:60, 1:5], select=1L)
 #    pars = c(pars, parset)
 #    set.seed(getOption("mlr.debug.seed"))
-#    m = do.call(logreg, pars)
+#    m = do.call(LogicReg::logreg, pars)
 #    set.seed(getOption("mlr.debug.seed"))
 #    p = predict(m, newbin=mydata[61:100, 1:5])
 #    old.predicts.list[[i]] = p

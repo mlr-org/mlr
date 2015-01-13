@@ -21,14 +21,14 @@ test_that("regr_glmnet", {
     y = regr.train[, ind]
     pars = list(x = as.matrix(x), y = y, family = "gaussian")
     pars = c(pars, parset)
-    ctrl.args = names(formals(glmnet.control))
+    ctrl.args = names(formals(glmnet::glmnet.control))
     set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
       do.call(glmnet.control, pars[names(pars) %in% ctrl.args])
       m = do.call(glmnet, pars[!names(pars) %in% ctrl.args])
-      glmnet.control(factory = TRUE)
+      glmnet::glmnet.control(factory = TRUE)
     } else {
-      m = do.call(glmnet, pars)
+      m = do.call(glmnet::glmnet, pars)
     }
     newx = regr.test[,-ind]
     newx$chas = as.numeric(newx$chas)

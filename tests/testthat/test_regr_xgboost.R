@@ -13,7 +13,7 @@ test_that("regr_xgboost", {
 
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
-    d = xgb.DMatrix(
+    d = xgboost::xgb.DMatrix(
       data = as.matrix(regr.num.df[regr.num.train.inds, - regr.num.class.col]),
       label = regr.num.df[regr.num.train.inds, regr.num.target]
     )
@@ -21,7 +21,7 @@ test_that("regr_xgboost", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     capture.output(
-      m <- do.call(xgb.train, pars)
+      m <- do.call(xgboost::xgb.train, pars)
     )
     set.seed(getOption("mlr.debug.seed"))
     p = xgboost::predict(m, newdata = as.matrix(regr.num.df[regr.num.test.inds, - regr.num.class.col]))

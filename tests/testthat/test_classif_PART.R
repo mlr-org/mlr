@@ -1,6 +1,7 @@
 context("classif_PART")
 
 test_that("classif_PART", {
+  requirePackages("RWeka")
   parset.list = list(
     list(),
     list(M = 10),
@@ -15,8 +16,8 @@ test_that("classif_PART", {
     parset = parset.list[[i]]
     set.seed(getOption("mlr.debug.seed"))
     parset$Q = as.integer(runif(1, min = -.Machine$integer.max, max = .Machine$integer.max))
-    ctrl = do.call(Weka_control, parset)
-    m = PART(formula = multiclass.formula, data = multiclass.train, control = ctrl)
+    ctrl = do.call(RWeka::Weka_control, parset)
+    m = RWeka::PART(formula = multiclass.formula, data = multiclass.train, control = ctrl)
     set.seed(getOption("mlr.debug.seed"))
     p  = predict(m, newdata = multiclass.test, type = "class")
     set.seed(getOption("mlr.debug.seed"))
@@ -32,7 +33,7 @@ test_that("classif_PART", {
 
   tt = function (formula, data, subset, ...) {
     set.seed(getOption("mlr.debug.seed"))
-    PART(formula, data = data[subset,], control = Weka_control(..., Q =
+    RWeka::PART(formula, data = data[subset,], control = RWeka::Weka_control(..., Q =
         as.integer(runif(1, min = -.Machine$integer.max, max = .Machine$integer.max))))
   }
 

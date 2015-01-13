@@ -17,7 +17,7 @@ test_that("regr_kknn", {
 		pars = list(formula=regr.formula, train=regr.train, test=regr.test)
 		pars = c(pars, parset)
 		set.seed(getOption("mlr.debug.seed"))
-		m = do.call(kknn, pars)
+		m = do.call(kknn::kknn, pars)
 		p = predict(m, newdata=regr.test)
 		old.predicts.list[[i]] = p
 	}
@@ -28,7 +28,7 @@ test_that("regr_kknn", {
 		return(list(formula=formula, data=data, k=k))
 	}
 	tp = function(model, newdata) {
-		kknn(model$formula, train=model$data, test=newdata, k=model$k)$fitted
+		kknn::kknn(model$formula, train=model$data, test=newdata, k=model$k)$fitted
 	}
 	
 	testCVParsets("regr.kknn", regr.df, regr.target, tune.train=tt, tune.predict=tp, parset.list=parset.list)

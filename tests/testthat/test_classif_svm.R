@@ -11,9 +11,9 @@ context("classif_svm")
 test_that("classif_svm", {
   requirePackages("e1071")
   set.seed(getOption("mlr.debug.seed"))
-  m1 = svm(multiclass.formula, data=multiclass.train, kernel="radial", gamma=20)
+  m1 = e1071::svm(multiclass.formula, data=multiclass.train, kernel="radial", gamma=20)
   set.seed(getOption("mlr.debug.seed"))
-  m2 = svm(multiclass.formula, data=multiclass.train, kernel="radial", gamma=20, probability = TRUE)
+  m2 = e1071::svm(multiclass.formula, data=multiclass.train, kernel="radial", gamma=20, probability = TRUE)
   p1 = predict(m1, newdata=multiclass.test)
   p2 = predict(m2, newdata=multiclass.test, probability=TRUE)
   testSimple("classif.svm", multiclass.df, multiclass.target, multiclass.train.inds, p1,  parset=list(kernel="radial", gamma=20))
@@ -21,13 +21,13 @@ test_that("classif_svm", {
   #  parset=list(kernel="radial", gamma=20))
   
   set.seed(getOption("mlr.debug.seed"))
-  m = svm(multiclass.formula, data=multiclass.train, kernel="sigmoid", gamma=10, probability = TRUE)
+  m = e1071::svm(multiclass.formula, data=multiclass.train, kernel="sigmoid", gamma=10, probability = TRUE)
   p = predict(m, newdata=multiclass.test, probability = TRUE)
   #testProb  ("classif.svm",multiclass.df, multiclass.target, multiclass.train.inds, attr(p2, "probabilities"), 
   #  parset=list(kernel="sigmoid", gamma=10))
   
   set.seed(getOption("mlr.debug.seed"))
-  m = svm(multiclass.formula, data=multiclass.train, kernel="polynomial", degree=3, coef0=2, gamma=1.5)
+  m = e1071::svm(multiclass.formula, data=multiclass.train, kernel="polynomial", degree=3, coef0=2, gamma=1.5)
   p = predict(m, newdata=multiclass.test)
   p2 = predict(m, newdata=multiclass.test)
   testSimple("classif.svm", multiclass.df, multiclass.target, multiclass.train.inds, p,  
@@ -36,7 +36,7 @@ test_that("classif_svm", {
   #  parset=list(kernel="polynomial", degree=3, coef0=2, gamma=1.5))
   
   tt = function (formula, data, subset=1:150, ...) {
-    svm(formula, data=data[subset,], kernel="polynomial", degree=3, coef0=2, gamma=1.5)
+    e1071::svm(formula, data=data[subset,], kernel="polynomial", degree=3, coef0=2, gamma=1.5)
   }
   
   testCV("classif.svm", multiclass.df, multiclass.target, tune.train=tt, parset=list(kernel="polynomial", degree=3, coef0=2, gamma=1.5))

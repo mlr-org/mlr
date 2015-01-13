@@ -18,7 +18,7 @@ test_that("classif_randomForest", {
     pars = list(formula=multiclass.formula, data=multiclass.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(randomForest, pars)
+    m = do.call(randomForest::randomForest, pars)
     set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata=multiclass.test, type="response")
     set.seed(getOption("mlr.debug.seed"))
@@ -32,7 +32,7 @@ test_that("classif_randomForest", {
   testProbParsets("classif.randomForest", multiclass.df, multiclass.target,
     multiclass.train.inds, old.probs.list, parset.list)
 
-  tt = randomForest
+  tt = randomForest::randomForest
 
   testCVParsets("classif.randomForest", multiclass.df, multiclass.target, tune.train=tt, parset.list=parset.list)
 

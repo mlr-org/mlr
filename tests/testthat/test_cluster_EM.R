@@ -11,9 +11,9 @@ test_that("cluster_EM", {
 	
 	for (i in 1:length(parset.list)) {
 		parset = parset.list[[i]]
-		ctrl = do.call(Weka_control, parset)
+		ctrl = do.call(RWeka::Weka_control, parset)
 		set.seed(getOption("mlr.debug.seed"))
-		m = make_Weka_clusterer("weka/clusterers/EM")(noclass.train, control=ctrl)
+		m = RWeka::make_Weka_clusterer("weka/clusterers/EM")(noclass.train, control=ctrl)
 		p = predict(m, noclass.test) + 1
 		old.predicts.list[[i]] = p
 	}

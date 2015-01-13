@@ -18,7 +18,7 @@ test_that("regr_penalized_lasso", {
 		pars = c(pars, parset)
 		set.seed(getOption("mlr.debug.seed"))
 		capture.output(
-			m <- do.call(penalized, pars)
+			m <- do.call(penalized::penalized, pars)
 		)
 		p = penalized::predict(m, data=regr.test)
 		old.predicts.list[[i]] = p[,"mu"]

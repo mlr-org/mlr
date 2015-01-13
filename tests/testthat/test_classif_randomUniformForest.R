@@ -12,7 +12,7 @@ test_that("classif_randomUniformForest", {
     parset = c(list(formula = binaryclass.formula, data = binaryclass.train, OOB = FALSE,
     importance = FALSE, unsupervised = FALSE, threads = 1L), parset.list[[i]])
     set.seed(getOption("mlr.debug.seed"))
-    capture.output({m = do.call(randomUniformForest, parset)})
+    capture.output({m = do.call(randomUniformForest::randomUniformForest, parset)})
     old.predicts = predict(m, binaryclass.test)
 
     lrn = do.call("makeLearner", c("classif.randomUniformForest", parset.list[[i]]))

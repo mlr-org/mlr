@@ -16,7 +16,7 @@ test_that("surv_coxph", {
     pars = list(formula = surv.formula, data = surv.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(coxph, pars)
+    m = do.call(survival::coxph, pars)
     p  = predict(m, newdata = surv.test, type = "lp")
     old.predicts.list[[i]] = p
   }

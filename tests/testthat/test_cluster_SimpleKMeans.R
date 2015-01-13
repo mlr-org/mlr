@@ -11,9 +11,9 @@ test_that("cluster_SimpleKMeans", {
 
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
-    ctrl = do.call(Weka_control, parset)
+    ctrl = do.call(RWeka::Weka_control, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = SimpleKMeans(noclass.train, control = ctrl)
+    m = RWeka::SimpleKMeans(noclass.train, control = ctrl)
     p = predict(m, noclass.test) + 1L
     old.predicts.list[[i]] = p
   }

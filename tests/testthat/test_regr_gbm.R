@@ -17,7 +17,7 @@ test_that("regr_gbm", {
 		pars = c(pars, parset)
 		set.seed(getOption("mlr.debug.seed"))
 		capture.output(
-			m <- do.call(gbm, pars)
+			m <- do.call(gbm::gbm, pars)
 		)
 		set.seed(getOption("mlr.debug.seed"))
 		p = predict(m, newdata=regr.test, n.trees=length(m$trees))

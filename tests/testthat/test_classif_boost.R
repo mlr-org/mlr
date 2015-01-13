@@ -19,7 +19,7 @@ test_that("classif_boosting", {
     pars = list(formula = multiclass.formula, data = multiclass.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(boosting, pars)
+    m = do.call(adabag::boosting, pars)
     set.seed(getOption("mlr.debug.seed"))
     p = predict(m, newdata = multiclass.test)
     old.predicts.list[[i]] = as.factor(p$class)
@@ -38,7 +38,7 @@ test_that("classif_boosting", {
     else
       ctrl = rpart.control(xval = 0)
     set.seed(getOption("mlr.debug.seed"))
-    boosting(formula, data[subset,], mfinal = args$mfinal, control = ctrl)
+    adabag::boosting(formula, data[subset,], mfinal = args$mfinal, control = ctrl)
   }
 
   tp = function(model, newdata) {

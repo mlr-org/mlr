@@ -20,8 +20,8 @@ test_that("regr_xyf", {
     pars$data = as.matrix(regr.num.train[, -regr.num.class.col])
     pars$Y = regr.num.train[, regr.num.class.col]
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(xyf, pars)
-    p = predict(m, as.matrix(regr.num.test[, -regr.num.class.col]))
+    m = do.call(kohonen::xyf, pars)
+    p = kohonen::predict.kohonen(m, as.matrix(regr.num.test[, -regr.num.class.col]))
     old.predicts.list[[i]] = as.vector(p$prediction)
   }
 

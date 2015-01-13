@@ -14,7 +14,7 @@ test_that("regr_plsr", {
 		parset = parset.list[[i]]
 		pars = list(regr.formula, data = regr.train)
 		pars = c(pars, parset)
-		m = do.call(plsr, pars)
+		m = do.call(pls::plsr, pars)
 		old.predicts.list[[i]] = predict(m, newdata = regr.test, comps = 1:m$ncomp)[,1]
 	}
 	

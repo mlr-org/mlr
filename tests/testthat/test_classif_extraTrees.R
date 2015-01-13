@@ -23,7 +23,7 @@ test_that("classif_extraTrees", {
     parset = parset.list[[i]]
     parset = c(parset, list(x = x.train, y = y))
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(extraTrees, parset)
+    m = do.call(extraTrees::extraTrees, parset)
     old.predicts.list[[i]] = predict(m, x.test)
     old.probs.list[[i]] = predict(m, x.test, probability = TRUE)[, 1L]
   }

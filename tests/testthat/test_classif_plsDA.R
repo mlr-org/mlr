@@ -3,8 +3,8 @@ context("classif_plsDA")
 test_that("classif_plsDA", {
   requirePackages("DiscriMiner")
   set.seed(getOption("mlr.debug.seed"))
-  m = plsDA(multiclass.train[,-multiclass.class.col], group=multiclass.train[,multiclass.class.col])
-  p = classify(m, newdata=multiclass.test[,-multiclass.class.col])
+  m = DiscriMiner::plsDA(multiclass.train[,-multiclass.class.col], group=multiclass.train[,multiclass.class.col])
+  p = DiscriMiner::classify(m, newdata=multiclass.test[,-multiclass.class.col])
   testSimple("classif.plsDA", multiclass.df, multiclass.target, multiclass.train.inds, p$pred_class)
 
   tt = function (formula, data, subset, ...) {
@@ -14,7 +14,7 @@ test_that("classif_plsDA", {
   }
 
   tp = function(model, newdata) {
-    classify(model$model, newdata = newdata[,-model$target])$pred_class
+    DiscriMiner::classify(model$model, newdata = newdata[,-model$target])$pred_class
   }
 
   testCV("classif.plsDA", multiclass.df, multiclass.target, tune.train=tt, tune.predict=tp)

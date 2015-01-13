@@ -4,8 +4,8 @@ test_that("regr_cforest", {
   requirePackages("party")
   parset.list = list(
     list(),
-    list(control = cforest_unbiased(mtry = 2)),
-    list(control = cforest_unbiased(ntree = 1000))
+    list(control = party::cforest_unbiased(mtry = 2)),
+    list(control = party::cforest_unbiased(ntree = 1000))
   )
   parset.list2 = list(
     list(),
@@ -20,7 +20,7 @@ test_that("regr_cforest", {
     pars = list(regr.formula, data=regr.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(cforest, pars)
+    m = do.call(party::cforest, pars)
     set.seed(getOption("mlr.debug.seed"))
     old.predicts.list[[i]] = as.vector(predict(m, newdata = regr.test))
   }

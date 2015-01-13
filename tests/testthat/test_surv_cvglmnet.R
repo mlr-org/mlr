@@ -19,14 +19,14 @@ test_that("surv_cvglmnet", {
     pars = c(list(y = Surv(time=surv.train[, "time"], event=surv.train[, "event"]),
       x = as.matrix(surv.train[, -c(1,2,7)]), family = "cox"), parset)
     set.seed(getOption("mlr.debug.seed"))
-    ctrl.args = names(formals(glmnet.control))
+    ctrl.args = names(formals(glmnet::glmnet.control))
     set.seed(getOption("mlr.debug.seed"))
     if (any(names(pars) %in% ctrl.args)) {
-      do.call(glmnet.control, pars[names(pars) %in% ctrl.args])
-      m = do.call(cv.glmnet, pars[!names(pars) %in% ctrl.args])
-      glmnet.control(factory = TRUE)
+      do.call(glmnet::glmnet.control, pars[names(pars) %in% ctrl.args])
+      m = do.call(glmnet::cv.glmnet, pars[!names(pars) %in% ctrl.args])
+      glmnet::glmnet.control(factory = TRUE)
     } else {
-      m = do.call(cv.glmnet, pars)
+      m = do.call(glmnet::cv.glmnet, pars)
     }
     p  = predict(m, newx = as.matrix(surv.test[, -c(1,2,7)]), type = "link")
     old.predicts.list[[i]] = as.numeric(p)

@@ -19,7 +19,7 @@ test_that("classif_plsdaCaret", {
     pars = list(x = x, y = y)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(plsda, pars)
+    m = do.call(caret::plsda, pars)
     newx = binaryclass.test
     newx[, binaryclass.class.col] = NULL
     set.seed(getOption("mlr.debug.seed"))

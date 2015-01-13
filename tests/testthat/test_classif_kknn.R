@@ -17,7 +17,7 @@ test_that("classif_kknn", {
     pars = list(formula = multiclass.formula, train = multiclass.train, test = multiclass.test)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(kknn, pars)
+    m = do.call(kknn::kknn, pars)
     p = predict(m, newdata = multiclass.test)
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = m$prob
@@ -32,7 +32,7 @@ test_that("classif_kknn", {
     return(list(formula = formula, data = data, k = k))
   }
   tp = function(model, newdata) {
-    kknn(model$formula, train = model$data, test = newdata, k = model$k)$fitted
+    kknn::kknn(model$formula, train = model$data, test = newdata, k = model$k)$fitted
   }
 
   testCVParsets("classif.kknn", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp,

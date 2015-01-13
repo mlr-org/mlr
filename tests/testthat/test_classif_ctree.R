@@ -15,11 +15,11 @@ test_that("classif_ctree", {
 
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
-    ctrl = do.call(ctree_control, parset)
+    ctrl = do.call(party::ctree_control, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = ctree(formula = multiclass.formula, data = multiclass.train, control = ctrl)
+    m = party::ctree(formula = multiclass.formula, data = multiclass.train, control = ctrl)
     p  = predict(m, newdata = multiclass.test, type = "response")
-    p2 = Reduce(rbind, treeresponse(m, newdata = multiclass.test, type = "prob"))
+    p2 = Reduce(rbind, party::treeresponse(m, newdata = multiclass.test, type = "prob"))
     rownames(p2) = NULL
     colnames(p2) = levels(multiclass.df[,multiclass.target])
     old.predicts.list[[i]] = p

@@ -27,7 +27,7 @@ test_that("classif_plr", {
     pars = list(x = x, y = y)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(plr, pars)
+    m = do.call(stepPlr::plr, pars)
     set.seed(getOption("mlr.debug.seed"))
     newx = binaryclass.test
     newx[, binaryclass.class.col] = NULL

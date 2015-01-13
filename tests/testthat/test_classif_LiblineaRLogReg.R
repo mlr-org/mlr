@@ -30,7 +30,7 @@ test_that("classif_LiblineaRLogReg", {
   #     labels = binaryclass.train[, binaryclass.target])
   #   pars = c(pars, parset)
   #   set.seed(getOption("mlr.debug.seed"))
-  #   m = do.call(LiblineaR, pars)
+  #   m = do.call(LiblineaR::LiblineaR, pars)
   #   set.seed(getOption("mlr.debug.seed"))
   #   p = predict(m, newx = binaryclass.test[, -binaryclass.class.col], proba = TRUE)
   #   print(str(p))

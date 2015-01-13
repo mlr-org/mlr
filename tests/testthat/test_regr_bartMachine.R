@@ -16,7 +16,7 @@ test_that("regr_bartMachine", {
     pars = list(y = regr.train[, regr.target], X = regr.train[, xind], verbose = FALSE)
 		pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-		m = do.call(bartMachine, pars)
+		m = do.call(bartMachine::bartMachine, pars)
 		set.seed(getOption("mlr.debug.seed"))
 		old.predicts.list[[i]] = predict(m, new_data = regr.test[, xind])
   }

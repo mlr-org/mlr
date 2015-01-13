@@ -15,7 +15,7 @@ test_that("regr_randomUniformForest", {
     parset = c(list(formula = regr.formula, data = regr.train, OOB = FALSE,
     importance = FALSE, unsupervised = FALSE, threads = 1L), parset.list[[i]])
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(randomUniformForest, parset)
+    m = do.call(randomUniformForest::randomUniformForest, parset)
     old.predicts = predict(m, regr.test)
 
     lrn = do.call("makeLearner", c("regr.randomUniformForest", parset.list[[i]]))

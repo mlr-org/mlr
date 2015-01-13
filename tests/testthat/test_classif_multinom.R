@@ -4,7 +4,7 @@ test_that("classif_multinom", {
   requirePackages("nnet")
 	set.seed(getOption("mlr.debug.seed"))
 	capture.output(
-    m <- multinom(formula = multiclass.formula, data = multiclass.train)
+    m <- nnet::multinom(formula = multiclass.formula, data = multiclass.train)
 	)
 			
 	set.seed(getOption("mlr.debug.seed"))
@@ -16,7 +16,7 @@ test_that("classif_multinom", {
 	p = predict(m, newdata=multiclass.test, type="probs")
 	testProb  ("classif.multinom", multiclass.df, multiclass.target, multiclass.train.inds, p)
 	
-	tt = "multinom"
+	tt = nnet::multinom
 	tp = function(model, newdata) predict(model, newdata)
 	
 	testCV("classif.multinom", multiclass.df, multiclass.target, tune.train=tt, tune.predict=tp )

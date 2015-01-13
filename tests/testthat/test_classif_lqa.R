@@ -8,9 +8,9 @@ test_that("classif_lqa", {
     list(penalty = 'fused.lasso', lambda1 = 0.001, lambda2 = 0.01)
   )
   parset.list.lqa = list(
-    list(family = binomial(), penalty = lasso(0.1)),
-    list(family = binomial(), penalty = lasso(0.01)),
-    list(family = binomial(), penalty = fused.lasso(c(0.001, 0.01)))
+    list(family = binomial(), penalty = lqa::lasso(0.1)),
+    list(family = binomial(), penalty = lqa::lasso(0.01)),
+    list(family = binomial(), penalty = lqa::fused.lasso(c(0.001, 0.01)))
   )
 
   old.predicts.list = list()
@@ -23,7 +23,7 @@ test_that("classif_lqa", {
     x[, binaryclass.class.col] = NULL
     pars = list(x = x, y = y)
     pars = c(pars, parset)
-    m = do.call(lqa, pars)
+    m = do.call(lqa::lqa.default, pars)
     newx = binaryclass.test
     newx[, binaryclass.class.col] = NULL
     newx = cbind(1, newx)

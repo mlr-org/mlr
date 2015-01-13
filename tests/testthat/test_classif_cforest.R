@@ -4,8 +4,8 @@ test_that("classif_cforest", {
   requirePackages("party")
   parset.list = list(
     list(),
-    list(control = cforest_unbiased(mtry = 2)),
-    list(control = cforest_unbiased(ntree = 200))
+    list(control = party::cforest_unbiased(mtry = 2)),
+    list(control = party::cforest_unbiased(ntree = 200))
   )
   parset.list2 = list(
     list(),
@@ -21,7 +21,7 @@ test_that("classif_cforest", {
     pars = list(binaryclass.formula, data = binaryclass.train)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(cforest, pars)
+    m = do.call(party::cforest, pars)
     old.predicts.list[[i]] = predict(m, newdata = binaryclass.test)
     p = predict(m, newdata = binaryclass.test, type = 'prob')
     old.probs.list[[i]] = sapply(p, '[', 1)

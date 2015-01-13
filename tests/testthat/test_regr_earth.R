@@ -15,7 +15,7 @@ test_that("regr_earth", {
 		pars = list(regr.formula, data=regr.train)
 		pars = c(pars, parset)
 		set.seed(getOption("mlr.debug.seed"))
-		m = do.call(earth, pars)
+		m = do.call(earth::earth, pars)
 		set.seed(getOption("mlr.debug.seed"))
 		old.predicts.list[[i]] = predict(m, newdata=regr.test)[,1]
 	}

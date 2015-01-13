@@ -16,7 +16,7 @@ test_that("classif_mda", {
 		pars = list(formula=multiclass.formula, data=multiclass.train)
 		pars = c(pars, parset)
 		set.seed(getOption("mlr.debug.seed"))
-		m = do.call(mda, pars)
+		m = do.call(mda::mda, pars)
 		set.seed(getOption("mlr.debug.seed"))
 		p =  predict(m, newdata=multiclass.test)
 		set.seed(getOption("mlr.debug.seed"))
@@ -28,7 +28,7 @@ test_that("classif_mda", {
 	testSimpleParsets("classif.mda", multiclass.df, multiclass.target, multiclass.train.inds, old.predicts.list, parset.list)
 	testProbParsets  ("classif.mda", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
 	
-	tt = "mda"
+	tt = mda::mda
 	tp = function(model, newdata) predict(model, newdata)
 	
 	testCVParsets("classif.mda", multiclass.df, multiclass.target, tune.train=tt, tune.predict=tp, parset.list=parset.list)

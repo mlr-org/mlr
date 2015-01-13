@@ -4,13 +4,13 @@ test_that("regr_blackboost", {
   requirePackages("mboost")
   requirePackages("party")
   parset.list1 = list(
-			list(family=GaussReg(), tree_controls=ctree_control(maxdepth=2)),
-			list(family=GaussReg(), tree_controls=ctree_control(maxdepth=4), control=boost_control(nu=0.03))
+			list(family=mboost::GaussReg(), tree_controls=party::ctree_control(maxdepth=2)),
+			list(family=mboost::GaussReg(), tree_controls=party::ctree_control(maxdepth=4), control=mboost::boost_control(nu=0.03))
 	)
 	
 	parset.list2 = list(
-			list(family=Gaussian(), maxdepth=2),
-			list(family=Gaussian(), maxdepth=4, nu=0.03)
+			list(family=mboost::Gaussian(), maxdepth=2),
+			list(family=mboost::Gaussian(), maxdepth=4, nu=0.03)
 	)
 	
 	old.predicts.list = list()
@@ -20,7 +20,7 @@ test_that("regr_blackboost", {
 		pars = list(regr.formula, data=regr.train)
 		pars = c(pars, parset)
 		set.seed(getOption("mlr.debug.seed"))
-		m = do.call(blackboost, pars)
+		m = do.call(mboost::blackboost, pars)
 		set.seed(getOption("mlr.debug.seed"))
 		old.predicts.list[[i]] = predict(m, newdata=regr.test)[,1]
 	}

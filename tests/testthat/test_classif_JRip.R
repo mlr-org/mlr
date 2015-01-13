@@ -16,8 +16,8 @@ test_that("classif_JRip", {
     parset = parset.list[[i]]
     set.seed(getOption("mlr.debug.seed"))
     parset$S = as.integer(runif(1, min=-.Machine$integer.max, max=.Machine$integer.max))
-    ctrl = do.call(Weka_control, parset)
-    m = JRip(formula=multiclass.formula, data=multiclass.train, control=ctrl)
+    ctrl = do.call(RWeka::Weka_control, parset)
+    m = RWeka::JRip(formula=multiclass.formula, data=multiclass.train, control=ctrl)
     p  = predict(m, newdata=multiclass.test, type="class")
     p2 = predict(m, newdata=multiclass.test, type="prob")
     old.predicts.list[[i]] = p
@@ -28,7 +28,7 @@ test_that("classif_JRip", {
   testProbParsets  ("classif.JRip", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
 
   tt = function (formula, data, subset, ...) {
-    JRip(formula, data=data[subset,], control=Weka_control(..., S = as.integer(runif(1, min=-.Machine$integer.max, max=.Machine$integer.max))))
+    RWeka::JRip(formula, data=data[subset,], control=RWeka::Weka_control(..., S = as.integer(runif(1, min=-.Machine$integer.max, max=.Machine$integer.max))))
   }
 
   tp = function(model, newdata) predict(model, newdata, type="class")

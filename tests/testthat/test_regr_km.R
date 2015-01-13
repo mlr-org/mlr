@@ -16,10 +16,10 @@ test_that("regr_km", {
     pars = list(~1, design=des1, response=y)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    capture.output({
-      m = do.call(km, pars)
-    })
-    old.predicts.list[[i]] = predict(m, newdata=des2, type="SK")$mean
+    capture.output(
+      m <- do.call(DiceKriging::km, pars)
+    )
+    old.predicts.list[[i]] = DiceKriging::predict(m, newdata=des2, type="SK")$mean
   }
   testSimpleParsets("regr.km", dd, regr.target, 1:25, old.predicts.list, parset.list)
 })

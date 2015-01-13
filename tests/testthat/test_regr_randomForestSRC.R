@@ -15,7 +15,7 @@ test_that("regr_randomForestSRC", {
     parset = parset.list[[i]]
     parset = c(parset, list(data = regr.train, formula = regr.formula, importance = "none", proximity = FALSE, forest = TRUE))
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(rfsrc, parset)
+    m = do.call(randomForestSRC::rfsrc, parset)
     p  = predict(m, newdata = regr.test, importance = "none", na.action = "na.impute")$predicted
     old.predicts.list[[i]] = p
   }

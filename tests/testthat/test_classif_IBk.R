@@ -12,9 +12,9 @@ test_that("classif_IBk", {
 
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
-    ctrl = do.call(Weka_control, parset)
+    ctrl = do.call(RWeka::Weka_control, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = IBk(formula = multiclass.formula, data = multiclass.train, control = ctrl)
+    m = RWeka::IBk(formula = multiclass.formula, data = multiclass.train, control = ctrl)
     p  = predict(m, newdata = multiclass.test, type = "class")
     p2 = predict(m, newdata = multiclass.test, type = "prob")
     old.predicts.list[[i]] = p
@@ -25,7 +25,7 @@ test_that("classif_IBk", {
   testProbParsets  ("classif.IBk", multiclass.df, multiclass.target, multiclass.train.inds, old.probs.list, parset.list)
 
   tt = function (formula, data, subset, ...) {
-    IBk(formula, data = data[subset,], control = Weka_control(...))
+    RWeka::IBk(formula, data = data[subset,], control = RWeka::Weka_control(...))
   }
 
   tp = function(model, newdata) predict(model, newdata, type = "class")

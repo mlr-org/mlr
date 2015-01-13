@@ -14,8 +14,8 @@ test_that("cluster_kmeans", {
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     set.seed(getOption("mlr.debug.seed"))
-    m = kmeans(noclass.train, centers = centers)
-    p = as.integer(cl_predict(m, newdata = noclass.test, type = "class_ids"))
+    m = clue::kmeans(noclass.train, centers = centers)
+    p = as.integer(clue::cl_predict(m, newdata = noclass.test, type = "class_ids"))
     old.predicts.list[[i]] = p
   }
 

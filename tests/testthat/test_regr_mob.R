@@ -19,10 +19,10 @@ test_that("regr_mob", {
     formula = as.formula(paste(regr.target, "~", collapse(parset$term.feats, sep=" + "),
       "|", collapse(parset$part.feats, sep=" + ")))
     parset$term.feats = parset$part.feats = NULL
-    control = do.call(mob_control, parset)
+    control = do.call(party::mob_control, parset)
     pars = list(formula=formula, data=regr.train, control=control)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(mob, pars)
+    m = do.call(party::mob, pars)
     p  = predict(m, newdata=regr.test)
     old.predicts.list[[i]] = p
   }

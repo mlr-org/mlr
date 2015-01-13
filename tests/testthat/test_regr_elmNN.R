@@ -20,7 +20,7 @@ test_that("regr_elmNN", {
     if(!"nhid" %in% names(pars)) pars$nhid = 1L
     if(!"actfun" %in% names(pars)) pars$actfun = "sig"
     set.seed(getOption("mlr.debug.seed"))
-		m = do.call(elmtrain, pars)
+		m = do.call(elmNN::elmtrain.default, pars)
 		set.seed(getOption("mlr.debug.seed"))
 		old.predicts.list[[i]] = predict(m, newdata = regr.test[, xind])[,1]
 	}

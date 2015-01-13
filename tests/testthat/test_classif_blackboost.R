@@ -5,15 +5,15 @@ test_that("classif_blackboost", {
   requirePackages("party")
 
   parset.list1 = list(
-    list(family = mboost::Binomial(), tree_control = ctree_control(maxdepth = 2),
-      control = boost_control(mstop = 10L)),
-    list(family = mboost::Binomial(), tree_controls = ctree_control(maxdepth = 4),
-      control = boost_control(mstop = 10L, nu = 0.03))
+    list(family = mboost::Binomial(), tree_control = party::ctree_control(maxdepth = 2),
+      control = mboost::boost_control(mstop = 10L)),
+    list(family = mboost::Binomial(), tree_controls = party::ctree_control(maxdepth = 4),
+      control = mboost::boost_control(mstop = 10L, nu = 0.03))
   )
 
   parset.list2 = list(
-    list(family = Binomial(), mstop = 10L, maxdepth = 2),
-    list(family = Binomial(), mstop = 10L, maxdepth = 4, nu = 0.03)
+    list(family = mboost::Binomial(), mstop = 10L, maxdepth = 2),
+    list(family = mboost::Binomial(), mstop = 10L, maxdepth = 4, nu = 0.03)
   )
 
   old.predicts.list = list()

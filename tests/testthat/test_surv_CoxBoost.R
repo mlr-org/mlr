@@ -1,8 +1,8 @@
 context("surv_CoxBoost")
 
 test_that("surv_CoxBoost", {
-  requirePackages(""survival"")
-  requirePackages(""CoxBoost"")
+  requirePackages("survival")
+  requirePackages("CoxBoost")
   parset.list = list(
     list(),
     list(stepno = 10)
@@ -20,7 +20,7 @@ test_that("surv_CoxBoost", {
     pars = c(list(time = unname(y[, "time"]), status=unname(y[, "status"]), return.score = FALSE, penalty = penalty,
         x = as.matrix(fixDataForLearner(x, info))), parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = do.call(CoxBoost, pars)
+    m = do.call(CoxBoost::CoxBoost, pars)
     p  = as.numeric(predict(m, newdata = as.matrix(fixDataForLearner(dropNamed(surv.test, surv.target), info)), type = "lp"))
     old.predicts.list[[i]] = as.numeric(p)
   }
