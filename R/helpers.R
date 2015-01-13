@@ -2,6 +2,10 @@ requireLearnerPackages = function(learner) {
   requirePackages(learner$package, paste("learner", learner$id))
 }
 
+cleanupPackageNames = function(pkgs) {
+  gsub("^[!_]", "", pkgs)
+}
+
 measureAggrName = function(measure) {
   paste(measure$id, measure$aggr$id, sep = ".")
 }

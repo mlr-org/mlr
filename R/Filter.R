@@ -85,7 +85,7 @@ listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE) {
 print.Filter = function(x, ...) {
   catf("Filter: '%s'", x$name)
   if (!isScalarNA(x$pkg))
-    catf("Package: '%s'", x$pkg)
+    catf("Packages: '%s'", collapse(cleanupPackageNames(x$pkg)))
   catf("Supported tasks: %s", collapse(x$supported.tasks))
   catf("Supported features: %s", collapse(x$supported.features))
 }

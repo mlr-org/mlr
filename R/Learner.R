@@ -72,7 +72,7 @@ makeLearner = function(cl, id = cl, predict.type = "response", fix.factors = FAL
 print.Learner = function(x, ...) {
   # FIXME: the "old" printer was a little bit more informative...
   cat(
-    "Learner ", x$id, " from package ", collapse(x$package), "\n",
+    "Learner ", x$id, " from package ", collapse(cleanupPackageNames(x$package)), "\n",
     "Type: ", x$type, "\n",
     "Name: ", x$name, "; Short name: ", x$short.name, "\n",
     "Class: ", class(x)[1L], "\n",
