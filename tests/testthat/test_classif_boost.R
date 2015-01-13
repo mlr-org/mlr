@@ -1,10 +1,10 @@
 context("classif_boosting")
 
 test_that("classif_boosting", {
-  requirePackages("adabag")
+  requirePackages(c("adabag", "rpart"))
   parset.list1 = list(
-    list(mfinal = 1, control = rpart.control(xval = 0)),
-    list(mfinal = 2, control = rpart.control(cp = 0.2, xval = 0))
+    list(mfinal = 1, control = rpart::rpart.control(xval = 0)),
+    list(mfinal = 2, control = rpart::rpart.control(cp = 0.2, xval = 0))
   )
   parset.list2 = list(
     list(mfinal = 1),
@@ -34,9 +34,9 @@ test_that("classif_boosting", {
   tt = function (formula, data, subset = 1:nrow(data), ...) {
     args = list(...)
     if (!is.null(args$cp))
-      ctrl = rpart.control(cp = args$cp, xval = 0)
+      ctrl = rpart::rpart.control(cp = args$cp, xval = 0)
     else
-      ctrl = rpart.control(xval = 0)
+      ctrl = rpart::rpart.control(xval = 0)
     set.seed(getOption("mlr.debug.seed"))
     adabag::boosting(formula, data[subset,], mfinal = args$mfinal, control = ctrl)
   }
