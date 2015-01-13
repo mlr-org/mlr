@@ -31,10 +31,10 @@ test_that("classif_plr", {
     set.seed(getOption("mlr.debug.seed"))
     newx = binaryclass.test
     newx[, binaryclass.class.col] = NULL
-    p = predict(m, newx = newx, type = "class")
+    p = stepPlr::predict.plr(m, newx = newx, type = "class")
     p = ifelse(p == 1, binaryclass.class.levs[1L], binaryclass.class.levs[2L])
     set.seed(getOption("mlr.debug.seed"))
-    p2 = predict(m, newx = newx, type = "response")
+    p2 = stepPlr::predict.plr(m, newx = newx, type = "response")
     old.predicts.list[[i]] = p
     old.probs.list[[i]] = p2
   }

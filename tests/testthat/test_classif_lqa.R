@@ -15,7 +15,7 @@ test_that("classif_lqa", {
 
   old.predicts.list = list()
   old.probs.list = list()
-  
+
   for (i in seq_along(parset.list.lqa)) {
     parset = parset.list.lqa[[i]]
     x = binaryclass.train
@@ -27,7 +27,7 @@ test_that("classif_lqa", {
     newx = binaryclass.test
     newx[, binaryclass.class.col] = NULL
     newx = cbind(1, newx)
-    p = predict(m, newx)$mu.new
+    p = lqa::predict.lqa(m, newx)$mu.new
     p2 = ifelse(p > 0.5, binaryclass.class.levs[1L], binaryclass.class.levs[2L])
     old.predicts.list[[i]] = p2
     old.probs.list[[i]] = p
