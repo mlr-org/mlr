@@ -309,14 +309,13 @@ subsetTask = function(task, subset, features) {
 
 
 # we create a new env, so the reference is not changed
-# FIXME: really check what goes on here! where is this called / used?
 changeData = function(task, data, costs, weights) {
   if (missing(data))
     data = getTaskData(task)
   if (missing(costs))
     costs = getTaskCosts(task)
   if (missing(weights))
-    weights = task$env$weights
+    weights = task$weights
   task$env = new.env(parent = emptyenv())
   task$env$data = data
   # FIXME: I hate R, this is all bad
