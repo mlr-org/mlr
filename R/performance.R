@@ -86,10 +86,11 @@ doPerformaceIteration = function(measure, pred = NULL, task = NULL, model = NULL
       stopf("Measure %s does not support task type %s!", m$id, td$type)
     if (td$type == "classif" && length(td$class.levels) > 2L && "classif.multi" %nin% props)
       stopf("Multiclass problems cannot be used for measure %s!", m$id)
-    allowed.pred.types = props[grepl("predtype.", props)]
-    allowed.pred.types = sub("predtype.", "", allowed.pred.types)
-    if (!is.null(pred) && !(pred$predict.type %in% allowed.pred.types))
-      stopf("Measure %s is only allowed for predictions of type: %s!",
+
+    # if we have multiple req.pred.types, check if we have one of them (currently we only need prob)
+    req.pred.types = if ("req.prob" %in% props) "prob" else character(0L)
+    if (!is.null(pred) && length(req.pred.types) > 0L && pred$predict.type %nin% req.pred.types)
+      stopf("Measure %s requires predict type to be: '%s'!",
         m$id, collapse(m$allowed.pred.types))
   }
   measure$fun(task, model, pred, feats, m$extra.args)

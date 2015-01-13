@@ -30,9 +30,7 @@ Set of measure properties. Some standard property names include:
   \item{req.task}{Is task object required in calculation? Usually not the case}
   \item{req.model}{Is model object required in calculation? Usually not the case.}
   \item{req.feats}{Are feature values required in calculation? Usually not the case.}
-  \item{predtype.response}{Is measure applicable to pred.type \dQuote{response}?}
-  \item{predtype.prob}{Is measure applicable to pred.type \dQuote{prob}?}
-  \item{predtype.se}{Is measure applicable to pred.type \dQuote{se}?}
+  \item{req.model}{Are predicted probabilites required in calculation? Usually not the case, example would be AUC.}
 }
 Default is \code{character(0)}.}
 
