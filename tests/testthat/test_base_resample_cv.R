@@ -23,8 +23,8 @@ test_that("cv resampling works", {
   formula = multiclass.formula
   parset = list(minsplit = 12, cp = 0.09)
 
-  library(rpart)
-  tt = "rpart"
+  requirePackages("rpart")
+  tt = rpart::rpart
   tp = function(model, newdata) predict(model, newdata, type = "class")
 
   testCV("classif.rpart", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp, parset = parset)
@@ -49,4 +49,3 @@ test_that("cv instance works is stochastic", {
   rin2 = makeResampleInstance(makeResampleDesc("CV", iters = 2L), size = 500)
   expect_true(!all(sort(rin1$test.inds[[1]]) == sort(rin2$test.inds[[1]])))
 })
-

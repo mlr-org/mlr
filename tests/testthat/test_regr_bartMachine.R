@@ -14,21 +14,20 @@ test_that("regr_bartMachine", {
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     pars = list(y = regr.train[, regr.target], X = regr.train[, xind], verbose = FALSE)
-		pars = c(pars, parset)
+    pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-		m = do.call(bartMachine::bartMachine, pars)
-		set.seed(getOption("mlr.debug.seed"))
-		old.predicts.list[[i]] = predict(m, new_data = regr.test[, xind])
+    m = do.call(bartMachine::bartMachine, pars)
+    set.seed(getOption("mlr.debug.seed"))
+    old.predicts.list[[i]] = predict(m, new_data = regr.test[, xind])
   }
 
   # FIXME:
-  #Does not yet work because we can not yet set the seed for bartMachine, see
-  #https://github.com/kapelner/bartMachine/issues/2
-  #testSimpleParsets("regr.bartMachine", regr.df, regr.target, regr.train.inds,
+  # Does not yet work because we can not yet set the seed for bartMachine, see
+  # https://github.com/kapelner/bartMachine/issues/2
+  # testSimpleParsets("regr.bartMachine", regr.df, regr.target, regr.train.inds,
   #  old.predicts.list, parset.list)
 
   for(i in 1:length(parset.list)){
     expect_true(length(old.predicts.list[[i]]) == nrow(regr.test))
   }
-
 })

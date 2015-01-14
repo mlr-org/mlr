@@ -1,5 +1,3 @@
-library(parallelMap)
-
 context("parallel resampling")
 
 test_that("parallel resampling", {

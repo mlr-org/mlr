@@ -21,11 +21,13 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
     state = trafoValue(par.set, state)
     # remove NAs for dependencies
     state2 = if (remove.nas) removeMissingValues(state) else state
-    learner2 = try(setHyperPars(learner, par.vals = state2))
+    learner2 = try(setHyperPars(learner, par.vals = state2), silent = TRUE)
     # if somebody above (eg tuner) prodcued bad settings, we catch this here and dont eval
     if (is.error(learner2)) {
       set.pars.ok = FALSE
       errmsg = as.character(learner2)
+      if (show.info)
+        messagef("[Tune-x] Setting hyperpars failed: %s", errmsg)
     }
   } else if (inherits(control, "FeatSelControl")) {
     task = subsetTask(task, features = bits.to.features(state, task))

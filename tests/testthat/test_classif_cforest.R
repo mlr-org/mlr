@@ -12,10 +12,10 @@ test_that("classif_cforest", {
     list(mtry = 2),
     list(ntree = 200)
   )
-  
+
   old.predicts.list = list()
   old.probs.list = list()
-  
+
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     pars = list(binaryclass.formula, data = binaryclass.train)
@@ -26,9 +26,9 @@ test_that("classif_cforest", {
     p = predict(m, newdata = binaryclass.test, type = 'prob')
     old.probs.list[[i]] = sapply(p, '[', 1)
   }
-  
+
   testSimpleParsets("classif.cforest", binaryclass.df, binaryclass.target, binaryclass.train.inds,
-                    old.predicts.list, parset.list2)
+    old.predicts.list, parset.list2)
   testProbParsets ("classif.cforest", binaryclass.df, binaryclass.target, binaryclass.train.inds,
-                   old.probs.list, parset.list2)
+    old.probs.list, parset.list2)
 })

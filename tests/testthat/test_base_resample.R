@@ -1,4 +1,3 @@
-
 context("resample")
 
 test_that("resample", {
@@ -111,6 +110,3 @@ test_that("resample returns errors", {
 
   configureMlr(on.learner.error = "stop")
 })
-
-
-

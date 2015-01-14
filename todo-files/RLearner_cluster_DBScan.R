@@ -4,22 +4,22 @@ makeRLearner.cluster.DBScan = function() {
     cl = "cluster.DBScan",
     package = "RWeka",
     par.set = makeParamSet(
-      makeUntypedLearnerParam(id = "D", default = "weka.clusterers.forOPTICSAndDBScan.DataObjects.EuclideanDataObject"),
-      makeNumericLearnerParam(id = "E", default = 0.9, lower = 0),
+      makeNumericLearnerParam(id = "E", default = 0.9, lower = 1e-6),
+      makeIntegerLearnerParam(id = "M", default = 6, lower = 1),
       makeUntypedLearnerParam(id = "I", default = "weka.clusterers.forOPTICSAndDBScan.Databases.SequentialDatabase"),
-      makeIntegerLearnerParam(id = "M", default = 6L, lower = 1L)
+      makeUntypedLearnerParam(id = "D", default = "weka.clusterers.forOPTICSAndDBScan.DataObjects.EuclideanDataObject")
     ),
     properties = c("numerics"),
-    name = "DBScan density-based clustering",
-    short.name = "DBScan",
-    note = "Note that you might have to install the Weka package: \\code{WPM(\"install-package\", \"DBScan\")}"
+    name = "DBScan Clustering",
+    short.name = "dbscan",
+    note = "You might have to install the Weka package: WPM('install-package', 'optics_dbScan')"
   )
 }
 
 #' @export
 trainLearner.cluster.DBScan = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  ctrl = Weka_control(...)
-  DBScan(getTaskData(.task, .subset), control = ctrl)
+  ctrl = RWeka::Weka_control(...)
+  RWeka::DBScan(getTaskData(.task, .subset), control = ctrl)
 }
 
 #' @export

@@ -1,8 +1,7 @@
 context("surv_CoxBoost")
 
 test_that("surv_CoxBoost", {
-  requirePackages("survival")
-  requirePackages("CoxBoost")
+  requirePackages(c("!Matrix", "CoxBoost"))
   parset.list = list(
     list(),
     list(stepno = 10)

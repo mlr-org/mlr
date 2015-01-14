@@ -24,9 +24,9 @@ test_that("bs resampling works", {
   formula = multiclass.formula
   parset = list(minsplit = 12, cp = 0.09)
 
-  library(rpart)
+  requirePackages("rpart")
   tt = function(formula, data, subset) {
-    rpart(formula, data = data[subset,], minsplit = 12, cp = 0.09)
+    rpart::rpart(formula, data = data[subset,], minsplit = 12, cp = 0.09)
   }
   tp = function(model, newdata) {
     predict(model, newdata, type = "class")

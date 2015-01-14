@@ -1,7 +1,7 @@
 context("tune")
 
 test_that("tune", {
-  library(e1071)
+  requirePackages("e1071")
   cp = c(0.05, 0.9)
   minsplit = 1:2
   ps1 = makeParamSet(
@@ -11,8 +11,8 @@ test_that("tune", {
   ctrl = makeTuneControlGrid()
   folds = 3
 
-  tr = tune.rpart(formula = multiclass.formula, data = multiclass.df, cp = cp, minsplit = minsplit,
-    tunecontrol = tune.control(sampling = "cross", cross = folds))
+  tr = e1071::tune.rpart(formula = multiclass.formula, data = multiclass.df, cp = cp, minsplit = minsplit,
+    tunecontrol = e1071::tune.control(sampling = "cross", cross = folds))
   lrn = makeLearner("classif.rpart")
   cv.instance = e1071CVToMlrCV(tr)
   m1 = setAggregation(mmce, test.mean)

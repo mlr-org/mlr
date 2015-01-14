@@ -1,4 +1,3 @@
-
 context("resample convenience function")
 
 test_that("resample convenience functions", {
@@ -20,7 +19,7 @@ test_that("resample convenience functions", {
 
   r = repcv("classif.rpart", multiclass.task, folds = 2L, reps = 2L, stratify = TRUE)
   mycheck(r)
-  
+
   r = bootstrapOOB("classif.rpart", multiclass.task, iters = 1L)
   mycheck(r)
   r = bootstrapB632("classif.rpart", multiclass.task, iters = 1L)
@@ -28,4 +27,3 @@ test_that("resample convenience functions", {
   r = bootstrapB632plus("classif.rpart", multiclass.task, iters = 1L)
   mycheck(r)
 })
-
