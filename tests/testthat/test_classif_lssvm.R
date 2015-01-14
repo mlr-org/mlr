@@ -13,10 +13,10 @@ test_that("classif_lssvm", {
   testSimple("classif.lssvm",multiclass.df, multiclass.target, multiclass.train.inds, p,  parset=list(kernel="laplacedot", sigma=10))
 
   # Bug in kernel = "polydot"
-  #	set.seed(getOption("mlr.debug.seed"))
-  #	m = kernlab::lssvm(x=multiclass.formula, data=multiclass.train, kernel="polydot", kpar=list(degree=3, offset=2, scale=1.5))
-  #	p = kernlab::predict(m, newdata=multiclass.test)
-  #	testSimple("classif.lssvm", multiclass.df, multiclass.target, multiclass.train.inds, p,  parset=list(kernel="polydot", degree=3, offset=2, scale=1.5))
+  set.seed(getOption("mlr.debug.seed"))
+  # m = kernlab::lssvm(x=multiclass.formula, data=multiclass.train, kernel="polydot", kpar=list(degree=3, offset=2, scale=1.5))
+  # p = kernlab::predict(m, newdata=multiclass.test)
+  # testSimple("classif.lssvm", multiclass.df, multiclass.target, multiclass.train.inds, p,  parset=list(kernel="polydot", degree=3, offset=2, scale=1.5))
 
   tt = function (formula, data, subset=1:150, ...) {
     kernlab::lssvm(x=formula, data=data[subset,], kernel="rbfdot", kpar=list(sigma=20))

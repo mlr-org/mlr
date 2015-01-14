@@ -1,5 +1,5 @@
-# check some basic stuff here, the rest is done in test_featsel_
 context("selectFeatures basic")
+# check some basic stuff here, the rest is done in test_featsel_
 
 test_that("selectFeatures", {
   rdesc = makeResampleDesc("Holdout")
@@ -57,5 +57,3 @@ test_that("show info works in selectFeatures", {
     z = selectFeatures("classif.rpart", task = iris.task, resampling = rdesc, control = ctrl, show.info = TRUE)
    }, "mmce.test.mean=0.[0-9]+")
 })
-
-

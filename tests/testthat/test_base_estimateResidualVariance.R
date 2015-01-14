@@ -1,7 +1,7 @@
 context("estimateResidualVariance")
 
 test_that("estimateResidualVariance", {
-	set.seed(getOption("mlr.debug.seed"))
+  set.seed(getOption("mlr.debug.seed"))
   task = regr.task
   lrn = makeLearner("regr.lm")
   x1 = estimateResidualVariance(lrn, task)

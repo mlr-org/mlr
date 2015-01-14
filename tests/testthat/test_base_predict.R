@@ -10,8 +10,8 @@ test_that("predict", {
   cm2 = train(makeLearner("classif.lda"), multiclass.task, subset = inds)
   cp2 = predict(cm2, newdata = data[inds,])
   cp2b = predict(cm2, newdata = data[inds,-5])
-  library(MASS)
-  ext2 = lda(formula, data = data[inds,])
+  requirePackages("MASS")
+  ext2 = MASS::lda(formula, data = data[inds,])
   pred2 = predict(ext2,newdata = data[inds,])$class
 
   expect_equal(cp2$data$response, pred2)
@@ -19,7 +19,7 @@ test_that("predict", {
 
   cm3 = train(wl.lda, multiclass.task, subset = inds)
   cp3 = predict(cm3, newdata = data[multiclass.test.inds,])
-  ext3 = lda(formula, data = data[inds,])
+  ext3 = MASS::lda(formula, data = data[inds,])
   pred3 = predict(ext3,newdata = data[multiclass.test.inds,])$class
   prob3 = predict(ext3,newdata = data[multiclass.test.inds,])$post
   expect_equal(cp3$data$response, pred3)
@@ -51,7 +51,6 @@ test_that("predict", {
     levels = binaryclass.task$task.desc$class.levels)
   expect_equal(cp5d$data$response, f2)
   expect_true(setequal(levels(cp5e$data$response), c("M", "R")))
-
 })
 
 
@@ -71,7 +70,6 @@ test_that("predict works with strange class labels", {
   p = predict(mod, task = task)
   expect_equal(colnames(p$data), c("id", "truth", "prob.-1", "prob.1", "response"))
 })
-
 
 test_that("predict correctly propagates exception in predictLearner", {
   capture.output(expect_error(holdout("classif.mock1", multiclass.task), "foo"))
@@ -106,5 +104,3 @@ test_that("setThreshold does not produce NAs for extreme thresholds", {
   p2 = setThreshold(p1, 0)
   expect_true(!any(is.na(p2$data$response)))
 })
-
-

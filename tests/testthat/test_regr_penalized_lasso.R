@@ -36,7 +36,7 @@ test_that("regr_penalized_lasso", {
   wl = makeLearner("regr.penalized.lasso", lambda1=0.3)
   r = resample(wl, regr.task, res)
   p = as.data.frame(r$pred)
-  #	print(rf$preds[[1]])
+  # print(rf$preds[[1]])
   for (i in 1:folds) {
     test.i = res$test.inds[[i]]
     rf.p = subset(p, subset=(iter==i), select="response", drop=TRUE)
