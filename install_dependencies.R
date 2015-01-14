@@ -23,7 +23,7 @@ install_deps(".", TRUE)
 
 #Rweka packages
 library("RWeka")
-WPM("install-package", "Xmeans")
+WPM("install-package", "XMeans")
 
 if (FALSE){
   # Update from github
