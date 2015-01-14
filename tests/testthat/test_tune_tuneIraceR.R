@@ -1,7 +1,6 @@
 context("tuneIrace")
 
 test_that("tuneIrace", {
-  library(irace)
   rdesc = makeResampleDesc("Holdout", stratify = TRUE, split = 0.1)
   ps1 = makeParamSet(
     makeNumericParam("cp", lower = 0.001, upper = 1),
@@ -73,6 +72,3 @@ test_that("tuneIrace works with logical params", {
   expect_true(getOptPathLength(tr$opt.path) >= 15 && getOptPathLength(tr$opt.path) <= 20)
   expect_true(!is.na(tr$y))
 })
-
-
-
