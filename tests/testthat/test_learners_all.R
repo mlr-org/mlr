@@ -100,21 +100,21 @@ test_that("learners work", {
   d[1, 1] = NA
   task = makeClassifTask(data = d, target = binaryclass.target)
   lrns = mylist(task, create = TRUE)
-  lapply(lrns, function(lrn) {
+  for (lrn in lrns) {
     # increase speed and suppress output from bartMachine
     if (lrn$id == "classif.bartMachine")
       lrn = setHyperPars(lrn, verbose = FALSE, run_in_sample = FALSE, num_iterations_after_burn_in = 10L)
     m = train(lrn, task)
     p = predict(m, task)
     expect_true(!is.na(performance(p)))
-  })
+  }
 
   # normal regr, dont use feature 2, it is nearly always 0
   task = subsetTask(regr.task, subset = c(1:70),
     features = getTaskFeatureNames(regr.task)[c(1, 3)])
   lrns = mylist(task)
   lrns = lapply(lrns, makeLearner)
-  lapply(lrns, function(lrn) {
+  for(lrn in lrns) {
     expect_output(print(lrn), lrn$id)
     if (lrn$id == "regr.km")
       lrn = setHyperPars(lrn, nugget.estim = TRUE)
@@ -126,14 +126,14 @@ test_that("learners work", {
     m = train(lrn, task)
     p = predict(m, task)
     expect_true(!is.na(performance(p)))
-  })
+  }
 
   # regr with se
   task = subsetTask(regr.task, subset = c(1:70),
   features = getTaskFeatureNames(regr.task)[c(1, 3)])
   lrns = mylist(task, properties = "se")
   lrns = lapply(lrns, makeLearner, predict.type = "se")
-  lapply(lrns, function(lrn) {
+  for (lrn in lrns) {
     if (lrn$id == "regr.km")
       lrn = setHyperPars(lrn, nugget.estim = TRUE)
     if (lrn$id == "regr.cforest") # we only have 2 features, we dont want a warn
@@ -142,13 +142,13 @@ test_that("learners work", {
     p = predict(m, task)
     expect_equal(length(p$data$se), 70)
     expect_true(!is.na(performance(p)))
-  })
+  }
 
   # regr with weights
   task = subsetTask(regr.task, subset = 1:70, features = getTaskFeatureNames(regr.task)[c(1, 3)])
   lrns = mylist(task, properties = "weights")
   lrns = lapply(lrns, makeLearner)
-  lapply(lrns, function(lrn) {
+  for (lrn in lrns) {
     if (lrn$id == "regr.km")
       lrn = setHyperPars(lrn, nugget.estim = TRUE)
     if (lrn$id == "regr.cforest") # we only have 2 features, we dont want a warn
@@ -156,21 +156,21 @@ test_that("learners work", {
     m = train(lrn, task, weights = rep(1:2, 35))
     p = predict(m, task)
     expect_true(!is.na(performance(p)))
-  })
+  }
 
   # regr with missing
   d = regr.df[1:100, c(getTaskFeatureNames(regr.task)[c(1, 3)], regr.target)]
   d[1, 1] = NA
   task = makeRegrTask(data = d, target = regr.target)
   lrns = mylist(task, create = TRUE)
-  lapply(lrns, function(lrn) {
+  for (lrn in lrns) {
     # increase speed and suppress output from bartMachine
     if (lrn$id == "regr.bartMachine")
       lrn = setHyperPars(lrn, verbose = FALSE, run_in_sample = FALSE, num_iterations_after_burn_in = 10L)
     m = train(lrn, task)
     p = predict(m, task)
     expect_true(!is.na(performance(p)))
-  })
+  }
 
   # clustering, response
   task = noclass.task
