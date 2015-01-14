@@ -2,7 +2,8 @@
 makeRLearner.surv.cvglmnet = function() {
   makeRLearnerSurv(
     cl = "surv.cvglmnet",
-    package = "glmnet",
+    # Required for predict to work properly :(
+    package = "!glmnet",
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "nfolds", default = 10L, lower = 3L),

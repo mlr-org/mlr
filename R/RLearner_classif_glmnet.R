@@ -2,7 +2,8 @@
 makeRLearner.classif.glmnet = function() {
   makeRLearnerClassif(
     cl = "classif.glmnet",
-    package = "glmnet",
+    # Required for predict to work properly :(
+    package = "!glmnet",
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "s", default = 0.01, lower = 0, upper = 1, when = "predict"),
@@ -67,7 +68,7 @@ predictLearner.classif.glmnet = function(.learner, .model, .newdata, ...) {
   info = getTrainingInfo(.model)
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
   if(.learner$predict.type == "prob") {
-    p = predict(.model$learner.model, newx = .newdata, type = "response",  ...)
+    p = predict(.model$learner.model, newx = .newdata, type = "response", ...)
     if (length(.model$task.desc$class.levels) == 2) {
       p = setColNames(cbind(1 - p, p), .model$task.desc$class.levels)
     } else {
@@ -75,7 +76,7 @@ predictLearner.classif.glmnet = function(.learner, .model, .newdata, ...) {
     }
   } else {
     p = drop(predict(.model$learner.model, newx = .newdata, type = "class", ...))
-    p = factor(p, .model$task.desc$class.levels)
+    p = as.factor(p)
   }
   p
 }

@@ -2,7 +2,8 @@
 makeRLearner.regr.glmnet = function() {
   makeRLearnerRegr(
     cl = "regr.glmnet",
-    package = "glmnet",
+    # Required for predict to work properly :(
+    package = "!glmnet",
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "s", default = 0.01, lower = 0, upper = 1, when = "predict"),
