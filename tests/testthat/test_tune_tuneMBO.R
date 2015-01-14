@@ -5,7 +5,7 @@ context("tuneMBO")
 if (interactive()) {
 
 test_that("tuneMBO", {
-  library(mlrMBO)
+  requirePackages("!mlrMBO")
   res = makeResampleDesc("Holdout")
   ps = makeParamSet(
     makeNumericParam("cp", lower = 0, upper = 1),

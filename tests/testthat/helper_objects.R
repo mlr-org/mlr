@@ -1,5 +1,5 @@
-library(mlbench)
-data(Sonar, BreastCancer)
+data(Sonar, package = "mlbench")
+data(BreastCancer, package = "mlbench")
 
 binaryclass.df = Sonar
 binaryclass.formula = Class~.
@@ -29,7 +29,7 @@ noclass.train = noclass.df[noclass.train.inds, ]
 noclass.test  = noclass.df[noclass.test.inds, ]
 noclass.task = makeClusterTask("noclass", data = noclass.df)
 
-data(BostonHousing)
+data(BostonHousing, package = "mlbench")
 regr.df = BostonHousing
 regr.formula = medv ~ .
 regr.target = "medv"
