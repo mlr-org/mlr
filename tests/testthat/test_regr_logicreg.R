@@ -1,5 +1,7 @@
-#context("regr_logicreg")
-#
+context("regr_logicreg")
+
+skip("still in todo")
+
 #test_that("regr_logicreg", {
 #  requirePackages("LogicReg")
 #  set.seed(1)
@@ -15,9 +17,9 @@
 #    list(seed=debug.seed),
 #    list(seed=debug.seed, ntrees=1L, treesize=3L, minmass=5L)
 #  )
-#  
+#
 #  old.predicts.list = list()
-#  
+#
 #  for (i in 1:length(parset.list1)) {
 #    parset = parset.list1[[i]]
 #    pars = list(resp=mydata$y[1:60], bin=mydata[1:60, 1:5], select=1L)
@@ -28,6 +30,6 @@
 #    p = predict(m, newbin=mydata[61:100, 1:5])
 #    old.predicts.list[[i]] = p
 #  }
-#  
+#
 #  testSimpleParsets("regr.logicreg", mydata, "y", 1:60, old.predicts.list, parset.list2)
 #})
