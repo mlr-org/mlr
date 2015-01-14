@@ -1,5 +1,3 @@
-library(e1071)
-
 e1071CVToMlrCV = function(e1071.tune.result) {
   tr = e1071.tune.result
   inds = tr$train.ind
@@ -124,7 +122,7 @@ testProbParsets = function(t.name, df, target, train.inds, old.probs.list, parse
 
 
 testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tune.predict = predict) {
-  library(e1071)
+  requirePackages("e1071")
   data = df
   formula = formula(paste(target, "~."))
 
@@ -144,7 +142,7 @@ testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tu
     return(p)
   }
 
-  tr = e1071::tune(method = tt, predict.func = tp, train.x = formula, data = data, tunecontrol = tune.control(cross = folds, best.model = FALSE))
+  tr = e1071::tune(method = tt, predict.func = tp, train.x = formula, data = data, tunecontrol = e1071::tune.control(cross = folds, best.model = FALSE))
 
   cv.instance = e1071CVToMlrCV(tr)
   lrn = do.call("makeLearner", c(t.name, parset))
@@ -173,10 +171,11 @@ testCVParsets = function(t.name, df, target, folds = 2, tune.train, tune.predict
 
 
 testBootstrap = function(t.name, df, target, iters = 3, parset = list(), tune.train, tune.predict = predict) {
+  requirePackages("e1071")
   data = df
   formula = formula(paste(target, "~."))
   tr = e1071::tune(method = tune.train, predict.func = tune.predict, train.x = formula, data = data,
-    tunecontrol = tune.control(sampling = "bootstrap", nboot = iters, boot.size = 1))
+    tunecontrol = e1071::tune.control(sampling = "bootstrap", nboot = iters, boot.size = 1))
 
   bs.instance = e1071BootstrapToMlrBootstrap(tr)
   lrn = do.call("makeLearner", c(t.name, parset))
