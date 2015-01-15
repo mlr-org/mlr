@@ -1,7 +1,7 @@
 tuneMBO = function(learner, task, resampling, measures, par.set, control,
   opt.path, show.info) {
 
-  requirePackages("mlrMBO", "tuneMBO")
+  # requirePackages("mlrMBO", why = "tuneMBO")
   mbo.control = control$mbo.control
 
   if (any(!mbo.control$minimize))
@@ -23,7 +23,9 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
   state = mbo.control$save.file.path
   if (control$continue && file.exists(state)) {
     messagef("Resuming previous MBO run using state in '%s'...", state)
-    or = mlrMBO::mboContinue(state)
+    # FIXME: remove this when mbo on cran
+    mbofun = get("mboContinue", envir = getNamespace("mlrMBO"))
+    or = mbofun(state)
   } else {
     # FIXME: remove this when mbo on cran
     mbofun = get("mbo", envir = getNamespace("mlrMBO"))

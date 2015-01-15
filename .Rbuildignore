@@ -25,3 +25,5 @@ testinfo.RData
 
 ^man-roxygen
 ^.editorconfig$
+
+^travis_wait_*.log
