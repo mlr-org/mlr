@@ -56,6 +56,7 @@ knitIt = function(f) {
 message("Loading required packages ...")
 suppressPackageStartupMessages({
   # namespace conflicts
+  library(glmnet)   # auc
   library(ROCR)
 
   # required to build
