@@ -20,7 +20,7 @@
 #' @param negative [\code{character(1)}]\cr
 #'   The name of the negative class.
 #' @param positive [\code{character(1)}]\cr
-#'   The name of the positove class.
+#'   The name of the positive class.
 #' @param probabilites [\code{numeric}]\cr
 #'   The probabilites for the positive class.
 #' @name measures

@@ -215,7 +215,7 @@ The probabilites for the positive class.}
 The name of the negative class.}
 
 \item{positive}{[\code{character(1)}]\cr
-The name of the positove class.}
+The name of the positive class.}
 }
 \description{
 A performance measure is evaluated after a single train/predict step and returns a single number to assess the quality
