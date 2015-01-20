@@ -51,6 +51,9 @@
 #' @param err.col [\code{character(1)}]\cr
 #'   For classification: Color of misclassified data points.
 #'   Default is \dQuote{white}
+#' @param err.size [\code{integer(1)}]\cr
+#'   For classification: Size of of misclassified data points.
+#'   Default is \code{pointsize}.
 #' @param greyscale [\code{logical(1)}]\cr
 #'   Should the plot be greyscale completely?
 #'   Default is \code{FALSE}.
@@ -61,7 +64,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   prob.alpha = TRUE, se.band = TRUE,
   err.mark = "train",
   bg.cols = c("darkblue", "green", "darkred"),
-  err.col = "white",
+  err.col = "white", err.size = pointsize,
   greyscale = FALSE) {
 
   learner = checkLearner(learner)
@@ -100,6 +103,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   assertFlag(se.band)
   assertChoice(err.mark, choices = c("train", "cv", "none"))
   assertString(err.col)
+  assertNumber(err.size, lower = 0)
   assertLogical(greyscale)
 
   if (td$type == "classif" && err.mark == "cv" && cv == 0L)
@@ -174,16 +178,21 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
       } else {
         p = p + geom_tile(mapping = aes_string(fill = target))
       }
+      # print normal points
+      p = p + geom_point(data = subset(data, !data$.err),
+        mapping = aes_string(x = x1n, y = x2n, shape = target), size = pointsize)
+      # mark incorrect points
       if (err.mark != "none" && any(data$.err)) {
         p = p + geom_point(data = subset(data, data$.err),
-                           mapping = aes_string(x = x1n, y = x2n, shape = target),
-                           size = pointsize + 1.5, show_guide = FALSE)
+          mapping = aes_string(x = x1n, y = x2n, shape = target),
+          size = err.size + 1.5, show_guide = FALSE)
         p = p + geom_point(data = subset(data, data$.err),
-                           mapping = aes_string(x = x1n, y = x2n, shape = target),
-                           size = pointsize + 1, col = err.col, show_guide = FALSE)
+          mapping = aes_string(x = x1n, y = x2n, shape = target),
+          size = err.size + 1, col = err.col, show_guide = FALSE)
       }
-      p = p + geom_point(data = data, mapping = aes_string(x = x1n, y = x2n, shape = target),
-        size = pointsize)
+      # print error points
+      p = p + geom_point(data = subset(data, data$.err),
+        mapping = aes_string(x = x1n, y = x2n, shape = target), size = err.size, show_guide = FALSE)
       p  = p + guides(alpha = FALSE)
     }
   } else if (td$type == "cluster") {

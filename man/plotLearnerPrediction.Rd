@@ -7,7 +7,7 @@
 plotLearnerPrediction(learner, task, features = NULL, measures, cv = 10L,
   ..., gridsize, pointsize = 2, prob.alpha = TRUE, se.band = TRUE,
   err.mark = "train", bg.cols = c("darkblue", "green", "darkred"),
-  err.col = "white", greyscale = FALSE)
+  err.col = "white", err.size = pointsize, greyscale = FALSE)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -63,6 +63,10 @@ Default is \code{TRUE}.}
 \item{err.col}{[\code{character(1)}]\cr
 For classification: Color of misclassified data points.
 Default is \dQuote{white}}
+
+\item{err.size}{[\code{integer(1)}]\cr
+For classification: Size of of misclassified data points.
+Default is \code{pointsize}.}
 
 \item{greyscale}{[\code{logical(1)}]\cr
 Should the plot be greyscale completely?
