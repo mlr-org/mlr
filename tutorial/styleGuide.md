@@ -3,6 +3,7 @@
 * Please write **R** when referring to R.
 * Please write [%mlr] and [%package] referring to mlr or any other package. This will link to 
   rdocumentation.org.
+* Links to performance measures should point to measures.md (for example `[mmce](measures.md)`).
 
 ## Headers
 
