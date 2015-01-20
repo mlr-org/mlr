@@ -36,7 +36,8 @@ NULL
 #' @format none
 featperc = makeMeasure(id = "featperc", minimize = TRUE, best = 0, worst = 1,
   properties = c("classif", "classif.multi", "regr", "surv", "costsens", "cluster", "req.model", "req.pred"),
-  name = "Percentage of original features used for model, useful for feature selection.",
+  name = "Percentage of original features used for model",
+  note =  "Useful for feature selection.",
   fun = function(task, model, pred, feats, extra.args) {
     length(model$features) / sum(pred$task.desc$n.feat)
   }
@@ -68,7 +69,7 @@ timepredict = makeMeasure(id = "timepredict", minimize = TRUE, best = 0, worst =
 #' @rdname measures
 #' @format none
 timeboth = makeMeasure(id = "timeboth", minimize = TRUE, best = 0, worst = Inf,
-  properties = c("classif", "classif.multi", "regr", "surv", "costsens", "cluster", "req.model"),
+  properties = c("classif", "classif.multi", "regr", "surv", "costsens", "cluster", "req.model", "req.pred"),
   name = "timetrain + timepredict",
   fun = function(task, model, pred, feats, extra.args) {
     model$time + pred$time
@@ -264,7 +265,7 @@ ber = makeMeasure(id = "ber", minimize = TRUE, best = 0, worst = 1,
 #' @format none
 multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
-  name = "Multiclass Area under the curve",
+  name = "Multiclass area under the curve",
   note = "Calls `pROC::multiclass.roc`.",
   fun = function(task, model, pred, feats, extra.args) {
     # pROC does allow NAs
@@ -313,7 +314,7 @@ measureAUC = function(probabilites, truth, negative, positive) {
 bac = makeMeasure(id = "bac", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth"),
   name = "Balanced accuracy",
-  note = "Mean of true positive rate and true negative rate",
+  note = "Mean of true positive rate and true negative rate.",
   fun = function(task, model, pred, feats, extra.args) {
     mean(c(tp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive),
            tn$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$negative)))
@@ -654,7 +655,7 @@ meancosts = makeMeasure(id = "meancosts", minimize = TRUE, best = 0, worst = Inf
 mcp = makeMeasure(id = "mcp", minimize = TRUE, best = 0, worst = Inf,
   properties = c("costsens", "req.pred", "req.task"),
   name = "Misclassification penalty",
-  note = "i.e. average difference between costs of oracle and model prediction.",
+  note = "Average difference between costs of oracle and model prediction.",
   fun = function(task, model, pred, feats, extra.args) {
     mc = meancosts$fun(task, NULL, pred, NULL, extra.args)
     oc = mean(apply(task$env$costs, 1L, min))
@@ -671,7 +672,7 @@ mcp = makeMeasure(id = "mcp", minimize = TRUE, best = 0, worst = Inf,
 db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
   properties = c("cluster", "req.pred", "req.feats"),
   name = "Davies-Bouldin cluster separation measure",
-  note ="see `?clusterSim::index.DB`",
+  note ="See `?clusterSim::index.DB`.",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
     clusterSim::index.DB(feats, pred$data$response)$DB
@@ -684,7 +685,7 @@ db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
 dunn = makeMeasure(id = "dunn", minimize = FALSE, best = Inf, worst = 0,
   properties = c("cluster", "req.pred", "req.feats"),
   name = "Dunn index",
-  note = "see `?clValid::dunn`",
+  note = "See `?clValid::dunn`.",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clValid")
     clValid::dunn(Data = feats, clusters = pred$data$response)
@@ -697,7 +698,7 @@ dunn = makeMeasure(id = "dunn", minimize = FALSE, best = Inf, worst = 0,
 G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,
   properties = c("cluster", "req.pred", "req.feats"),
   name = "Calinski-Harabasz pseudo F statistic",
-  note = "see `?clusterSim::index.G1`",
+  note = "See `?clusterSim::index.G1`.",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
     clusterSim::index.G1(feats, pred$data$response)
@@ -710,7 +711,7 @@ G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,
 G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0,
   properties = c("cluster", "req.pred", "req.feats"),
   name = "Baker and Hubert adaptation of Goodman-Kruskal's gamma statistic",
-  note = "see `?clusterSim::index.G2`",
+  note = "See `?clusterSim::index.G2`.",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
     clusterSim::index.G2(clusterSim::dist.GDM(feats), pred$data$response)
@@ -723,7 +724,7 @@ G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0,
 silhouette = makeMeasure(id = "silhouette", minimize = FALSE, best = Inf, worst = 0,
   properties = c("cluster", "req.pred", "req.feats"),
   name = "Rousseeuw's silhouette internal cluster quality index",
-  note = "see `?clusterSim::index.S`",
+  note = "See `?clusterSim::index.S`.",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim")
     clusterSim::index.S(clusterSim::dist.GDM(feats), pred$data$response)
