@@ -249,16 +249,24 @@
 
 <h1 id="implemented-performance-measures">Implemented Performance Measures</h1>
 <p>The following tables show the performance measures available for the different types of
-learning problems as well as general performance measures in alphabetical order.</p>
+learning problems as well as general performance measures in alphabetical order.
+(See also the documentation about <a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">measures</a> and <a href="http://www.rdocumentation.org/packages/mlr/functions/makeMeasure.html">makeMeasure</a> for available measures and
+their properties.)</p>
 <p>Column <strong>Minimize</strong> indicates if the measure is minimized during, e.g., tuning or
 feature selection.
-<strong>Best</strong> and <strong>Worst</strong> show the best and worst values the performance measure can attain.</p>
-<p><strong>PredType</strong> shows the supported type of prediction.
-Columns <strong>Prediction</strong>, <strong>Model</strong>, and <strong>Task</strong> indicate if the measure requires the <a href="http://www.rdocumentation.org/packages/mlr/functions/Prediction.html">Prediction</a>,
-the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeWrappedModel.html">WrappedModel</a> and/or the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
-<p><strong>Aggregation</strong> shows the default aggregation method.</p>
-<p>For <em>classification</em>, column <strong>MultiClass</strong> indicates if a measure is suitable for
+<strong>Best</strong> and <strong>Worst</strong> show the best and worst values the performance measure can attain.
+For <em>classification</em>, column <strong>MultiClass</strong> indicates if a measure is suitable for
 multi-class problems. If not, the measure can only be used for binary classification problems.</p>
+<p>The next six columns refer to information required to calculate the performance measure.</p>
+<ul>
+<li><strong>Prediction</strong>: The <a href="http://www.rdocumentation.org/packages/mlr/functions/Prediction.html">Prediction</a> object.</li>
+<li><strong>Truth</strong>: The true values of the response variable(s) (for supervised learning).</li>
+<li><strong>Probs</strong>: The predicted probabilities (might be needed for classification).</li>
+<li><strong>Model</strong>: The <a href="http://www.rdocumentation.org/packages/mlr/functions/makeWrappedModel.html">WrappedModel</a> (e.g., for calculating the training time).</li>
+<li><strong>Task</strong>: The <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> (relevant for cost-sensitive classification).</li>
+<li><strong>Feats</strong>: The predicted data (relevant for clustering).</li>
+</ul>
+<p><strong>Aggregation</strong> shows the default <a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations.html">aggregation method</a> tied to the measure.</p>
 <h3 id="classification">Classification</h3>
 <table>
 <thead>
@@ -269,10 +277,12 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <th align="right">Best</th>
 <th align="right">Worst</th>
 <th align="center">MultiClass</th>
-<th align="left">PredType</th>
 <th align="center">Prediction</th>
+<th align="center">Truth</th>
+<th align="center">Probs</th>
 <th align="center">Model</th>
 <th align="center">Task</th>
+<th align="center">Feats</th>
 <th align="left">Aggregation</th>
 </tr>
 </thead>
@@ -284,11 +294,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="center">X</td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">auc</a> - Area under the curve</td>
@@ -297,24 +309,28 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="center"></td>
-<td align="left">prob</td>
+<td align="center">X</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">bac</a> - Balanced accuracy</td>
-<td align="left">Mean of true positive rate and true negative rate</td>
+<td align="left">Mean of true positive rate and true negative rate.</td>
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="center"></td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">ber</a> - Balanced error rate</td>
@@ -323,11 +339,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="center">X</td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">f1</a> - F1 measure</td>
@@ -336,11 +354,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="center"></td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">fdr</a> - False discovery rate</td>
@@ -349,11 +369,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="center"></td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">fn</a> - False negatives</td>
@@ -362,11 +384,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">0</td>
 <td align="right">Inf</td>
 <td align="center"></td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">fnr</a> - False negative rate</td>
@@ -375,11 +399,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="center"></td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">fp</a> - False positives</td>
@@ -388,11 +414,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">0</td>
 <td align="right">Inf</td>
 <td align="center"></td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">fpr</a> - False positive rate</td>
@@ -401,11 +429,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="center"></td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">gmean</a> - G-mean</td>
@@ -414,11 +444,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="center"></td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">gpr</a> - Geometric mean of precision and recall</td>
@@ -427,11 +459,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="center"></td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">mcc</a> - Matthews correlation coefficient</td>
@@ -440,11 +474,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">1</td>
 <td align="right">-1</td>
 <td align="center"></td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">mmce</a> - Mean misclassification error</td>
@@ -453,24 +489,28 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="center">X</td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">multiclass.auc</a> - Multiclass Area under the curve</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">multiclass.auc</a> - Multiclass area under the curve</td>
 <td align="left">Calls <code>pROC::multiclass.roc</code>.</td>
 <td align="center"></td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="center">X</td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">npv</a> - Negative predictive value</td>
@@ -479,11 +519,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="center"></td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">ppv</a> - Positive predictive value</td>
@@ -492,11 +534,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="center"></td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">tn</a> - True negatives</td>
@@ -505,11 +549,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">Inf</td>
 <td align="right">0</td>
 <td align="center"></td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">tnr</a> - True negative rate</td>
@@ -518,11 +564,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="center"></td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">tp</a> - True positives</td>
@@ -531,11 +579,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">Inf</td>
 <td align="right">0</td>
 <td align="center"></td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">tpr</a> - True positive rate</td>
@@ -544,11 +594,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="center"></td>
-<td align="left">response<br />prob</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 </tbody>
 </table>
@@ -560,11 +612,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <th align="left">Note</th>
 <th align="center">Minimize</th>
 <th align="right">Best</th>
-<th align="center">Worst</th>
-<th align="left">PredType</th>
+<th align="right">Worst</th>
 <th align="center">Prediction</th>
+<th align="center">Truth</th>
+<th align="center">Probs</th>
 <th align="center">Model</th>
 <th align="center">Task</th>
+<th align="center">Feats</th>
 <th align="left">Aggregation</th>
 </tr>
 </thead>
@@ -574,84 +628,98 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="center">Inf</td>
-<td align="left">response<br />se</td>
+<td align="right">Inf</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">medae</a> - Median of absolute errors</td>
 <td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="center">Inf</td>
-<td align="left">response<br />se</td>
+<td align="right">Inf</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">medse</a> - Median of squared errors</td>
 <td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="center">Inf</td>
-<td align="left">response<br />se</td>
+<td align="right">Inf</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">mse</a> - Mean of squared errors</td>
 <td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="center">Inf</td>
-<td align="left">response<br />se</td>
+<td align="right">Inf</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">rmse</a> - Root mean square error</td>
 <td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="center">Inf</td>
-<td align="left">response<br />se</td>
+<td align="right">Inf</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.sqrt.of.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.sqrt.of.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">sae</a> - Sum of absolute errors</td>
 <td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="center">Inf</td>
-<td align="left">response<br />se</td>
+<td align="right">Inf</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">sse</a> - Sum of squared errors</td>
 <td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="center">Inf</td>
-<td align="left">response<br />se</td>
+<td align="right">Inf</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 </tbody>
 </table>
@@ -663,11 +731,13 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <th align="left">Note</th>
 <th align="center">Minimize</th>
 <th align="right">Best</th>
-<th align="center">Worst</th>
-<th align="left">PredType</th>
+<th align="right">Worst</th>
 <th align="center">Prediction</th>
+<th align="center">Truth</th>
+<th align="center">Probs</th>
 <th align="center">Model</th>
 <th align="center">Task</th>
+<th align="center">Feats</th>
 <th align="left">Aggregation</th>
 </tr>
 </thead>
@@ -677,12 +747,14 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <td align="left"></td>
 <td align="center"></td>
 <td align="right">1</td>
-<td align="center">0</td>
-<td align="left">response<br />prob</td>
+<td align="right">0</td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 </tbody>
 </table>
@@ -694,74 +766,86 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <th align="left">Note</th>
 <th align="center">Minimize</th>
 <th align="right">Best</th>
-<th align="center">Worst</th>
-<th align="left">PredType</th>
+<th align="right">Worst</th>
 <th align="center">Prediction</th>
+<th align="center">Truth</th>
+<th align="center">Probs</th>
 <th align="center">Model</th>
 <th align="center">Task</th>
+<th align="center">Feats</th>
 <th align="left">Aggregation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">db</a> - Davies-Bouldin cluster separation measure</td>
-<td align="left">see <code>?clusterSim::index.DB</code></td>
+<td align="left">See <code>?clusterSim::index.DB</code>.</td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="center">Inf</td>
-<td align="left">response<br />prob</td>
+<td align="right">Inf</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">dunn</a> - Dunn index</td>
-<td align="left">see <code>?clValid::dunn</code></td>
+<td align="left">See <code>?clValid::dunn</code>.</td>
 <td align="center"></td>
 <td align="right">Inf</td>
-<td align="center">0</td>
-<td align="left">response<br />prob</td>
+<td align="right">0</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">G1</a> - Calinski-Harabasz pseudo F statistic</td>
-<td align="left">see <code>?clusterSim::index.G1</code></td>
+<td align="left">See <code>?clusterSim::index.G1</code>.</td>
 <td align="center"></td>
 <td align="right">Inf</td>
-<td align="center">0</td>
-<td align="left">response<br />prob</td>
+<td align="right">0</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">G2</a> - Baker and Hubert adaptation of Goodman-Kruskal's gamma statistic</td>
-<td align="left">see <code>?clusterSim::index.G2</code></td>
+<td align="left">See <code>?clusterSim::index.G2</code>.</td>
 <td align="center"></td>
 <td align="right">Inf</td>
-<td align="center">0</td>
-<td align="left">response<br />prob</td>
+<td align="right">0</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">silhouette</a> - Rousseeuw's silhouette internal cluster quality index</td>
-<td align="left">see <code>?clusterSim::index.S</code></td>
+<td align="left">See <code>?clusterSim::index.S</code>.</td>
 <td align="center"></td>
 <td align="right">Inf</td>
-<td align="center">0</td>
-<td align="left">response<br />prob</td>
+<td align="right">0</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 </tbody>
 </table>
@@ -773,38 +857,44 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <th align="left">Note</th>
 <th align="center">Minimize</th>
 <th align="right">Best</th>
-<th align="center">Worst</th>
-<th align="left">PredType</th>
+<th align="right">Worst</th>
 <th align="center">Prediction</th>
+<th align="center">Truth</th>
+<th align="center">Probs</th>
 <th align="center">Model</th>
 <th align="center">Task</th>
+<th align="center">Feats</th>
 <th align="left">Aggregation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">mcp</a> - Misclassification penalty</td>
-<td align="left">i.e. average difference between costs of oracle and model prediction.</td>
+<td align="left">Average difference between costs of oracle and model prediction.</td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="center">Inf</td>
-<td align="left">response</td>
+<td align="right">Inf</td>
 <td align="center">X</td>
 <td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
 <td align="center">X</td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">meancosts</a> - Mean costs of the predicted choices</td>
 <td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="center">Inf</td>
-<td align="left">response</td>
+<td align="right">Inf</td>
 <td align="center">X</td>
 <td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
 <td align="center">X</td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 </tbody>
 </table>
@@ -816,62 +906,72 @@ multi-class problems. If not, the measure can only be used for binary classifica
 <th align="left">Note</th>
 <th align="center">Minimize</th>
 <th align="right">Best</th>
-<th align="center">Worst</th>
-<th align="left">PredType</th>
+<th align="right">Worst</th>
 <th align="center">Prediction</th>
+<th align="center">Truth</th>
+<th align="center">Probs</th>
 <th align="center">Model</th>
 <th align="center">Task</th>
+<th align="center">Feats</th>
 <th align="left">Aggregation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">featperc</a> - Percentage of original features used for model, useful for feature selection.</td>
-<td align="left"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">featperc</a> - Percentage of original features used for model</td>
+<td align="left">Useful for feature selection.</td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="center">1</td>
-<td align="left">response<br />prob<br />se</td>
-<td align="center">X</td>
+<td align="right">1</td>
 <td align="center">X</td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">timeboth</a> - timetrain + timepredict</td>
 <td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="center">Inf</td>
-<td align="left">response<br />prob<br />se</td>
-<td align="center">X</td>
+<td align="right">Inf</td>
 <td align="center">X</td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">timepredict</a> - Time of predicting test set</td>
 <td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="center">Inf</td>
-<td align="left">response<br />prob<br />se</td>
+<td align="right">Inf</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 <tr>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/measures">timetrain</a> - Time of fitting the model</td>
 <td align="left"></td>
 <td align="center">X</td>
 <td align="right">0</td>
-<td align="center">Inf</td>
-<td align="left">response<br />prob<br />se</td>
+<td align="right">Inf</td>
+<td align="center"></td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center">X</td>
 <td align="center"></td>
-<td align="left">test.mean</td>
+<td align="center"></td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations">test.mean</a></td>
 </tr>
 </tbody>
 </table>

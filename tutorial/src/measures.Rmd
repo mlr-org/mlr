@@ -2,24 +2,30 @@
 
 The following tables show the performance measures available for the different types of
 learning problems as well as general performance measures in alphabetical order.
+(See also the documentation about [&measures] and [&makeMeasure] for available measures and
+their properties.)
 
 Column **Minimize** indicates if the measure is minimized during, e.g., tuning or
 feature selection.
 **Best** and **Worst** show the best and worst values the performance measure can attain.
-
-**PredType** shows the supported type of prediction.
-Columns **Prediction**, **Model**, and **Task** indicate if the measure requires the [&Prediction],
-the [WrappedModel](&makeWrappedModel) and/or the [&Task].
-
-**Aggregation** shows the default aggregation method.
-
 For *classification*, column **MultiClass** indicates if a measure is suitable for
 multi-class problems. If not, the measure can only be used for binary classification problems.
 
+The next six columns refer to information required to calculate the performance measure.
+
+* **Prediction**: The [&Prediction] object.
+* **Truth**: The true values of the response variable(s) (for supervised learning).
+* **Probs**: The predicted probabilities (might be needed for classification).
+* **Model**: The [WrappedModel](&makeWrappedModel) (e.g., for calculating the training time).
+* **Task**: The [&Task] (relevant for cost-sensitive classification).
+* **Feats**: The predicted data (relevant for clustering).
+
+**Aggregation** shows the default [aggregation method](&aggregations) tied to the measure.
+
 
 ```{r include=FALSE}
-linkFct = function(x) {
-  collapse(sprintf("[%1$s](http://www.rdocumentation.org/packages/mlr/functions/measures)", x), sep = "<br />")
+linkFct = function(x, y) {
+  collapse(sprintf("[%1$s](http://www.rdocumentation.org/packages/mlr/functions/%2$s)", x, y), sep = "<br />")
 }
 
 getTab = function(type) {
@@ -35,31 +41,34 @@ getTab = function(type) {
     meas = meas[keep]
   }
 
-  cols = c("Measure", "Note", "Minimize", "Best", "Worst", "MultiClass", "PredType", "Prediction", "Model", "Task", "Aggregation")
+  cols = c("Measure", "Note", "Minimize", "Best", "Worst", "MultiClass", "Prediction", "Truth", "Probs", "Model", "Task", "Feats", "Aggregation")
   df = makeDataFrame(nrow = length(meas), ncol = length(cols),
-    col.types = c("character", "character", "logical", "numeric", "numeric", "logical", "character", "logical", "logical", "logical", "character"))
+    col.types = c("character", "character", "logical", "numeric", "numeric", "logical", "logical", "logical", "logical", "logical", "logical", "logical", "character"))
   names(df) = cols
 
   for (i in seq_along(meas)) {
     mea = meas[[i]]
-    df[i, 1] = paste0(linkFct(mea$id), " - ", mea$name)
+    df[i, 1] = paste0(linkFct(mea$id, "measures"), " - ", mea$name)
     df[i, 2] = mea$note
     df[i, 3] = mea$minimize
     df[i, 4] = mea$best
     df[i, 5] = mea$worst
     df[i, 6] = "classif.multi" %in% mea$properties
-    df[i, 7] = sort(collapse(mea$allowed.pred.types, sep = "<br />"))
-    df[i, 8] = mea$req.pred
-    df[i, 9] = mea$req.model
-    df[i, 10] = mea$req.task
-    df[i, 11] = mea$aggr$id
+    df[i, 7] = "req.pred" %in% mea$properties
+    df[i, 8] = "req.truth" %in% mea$properties
+    df[i, 9] = "req.prob" %in% mea$properties
+    df[i, 10] = "req.model" %in% mea$properties
+    df[i, 11] = "req.task" %in% mea$properties
+    df[i, 12] = "req.feats" %in% mea$properties
+    df[i, 13] = linkFct(mea$aggr$id, "aggregations")
   }
 
-  just = c("left", "left", "center", "right", "right", "center", "left", "center", "center", "center", "left")
+  just = c("left", "left", "center", "right", "right", "center", "center", "center", "center", "center", "center", "center", "left")
 
   if (type != "classif") {
-    df$MultiClass = NULL
-    just = just[-5]
+    ind = cols != "MultiClass"
+    df = df[ind]
+    just = just[ind]
   }
 
   logicals = vlapply(df, is.logical)
