@@ -32,5 +32,5 @@ notifications:
         - erich.studerus@gmail.com
     on_success: change
     on_failure: always
-after_failure:
+on_failure:
   - ./travis-tool.sh dump_logs
