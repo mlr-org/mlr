@@ -1,7 +1,7 @@
 context("regr_blm")
 
 test_that("regr_blm", {
-  require("tgp") # Packages
+  require("tgp")
   parset.list = list(
     list(meanfn = "linear", bprior = "bflat"),
     list(meanfn = "linear", bprior = "bmle"),
