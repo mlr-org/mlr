@@ -1,14 +1,20 @@
 # travis config, based on https://github.com/craigcitro/r-travis
 
 language: c
-script: travis_wait ./travis-tool.sh run_tests
+
 env:
    global:
      - _R_CHECK_TIMINGS_=0
+
+branches:
+  only:
+   - master
+
 before_install:
   - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
   - chmod 755 ./travis-tool.sh
   - ./travis-tool.sh bootstrap
+
 install:
   - ./travis-tool.sh aptget_install r-cran-rjava
   - sudo R CMD javareconf
@@ -16,11 +22,19 @@ install:
   - ./travis-tool.sh github_package berndbischl/parallelMap
   - ./travis-tool.sh github_package berndbischl/ParamHelpers
   - ./travis-tool.sh install_deps
+  - ./travis-tool.sh github_package jimhester/covr
   - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package XMeans
   - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package optics_dbScan
-branches:
-  only:
-   - master
+
+
+script: travis_wait ./travis-tool.sh run_tests
+
+on_failure:
+  - ./travis-tool.sh dump_logs
+
+after_success:
+  - Rscript -e 'library(covr);coveralls()'
+
 notifications:
   email:
     recipients:
@@ -32,5 +46,3 @@ notifications:
         - erich.studerus@gmail.com
     on_success: change
     on_failure: always
-on_failure:
-  - ./travis-tool.sh dump_logs
