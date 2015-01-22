@@ -181,7 +181,7 @@ are represented by the background color.
 
 The plot title displays the ID of the [Learner](&makeLearner) (in the following example CART),
 its parameters, its training performance and its cross-validation performance.
-[&mmce] stands for *mean misclassification error*, i.e., the error rate.
+[mmce](measures.md) stands for *mean misclassification error*, i.e., the error rate.
 See the sections on [performance](performance.md) and
 [resampling](resample.md) for further explanations.
 

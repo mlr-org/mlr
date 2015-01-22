@@ -9,9 +9,9 @@ list of [&measures] or a measure that uses a non-standard misclassification cost
 
 The [&makeMeasure] function provides a simple way of constructing your own performance
 measure. Below, this is exemplified by an implementation of the mean
-misclassification error ([&mmce]) for the iris dataset. We write a simple
+misclassification error ([mmce](measures.md)) for the iris dataset. We write a simple
 function that computes the measure on the basis of the predictions and subsequently wrap it
-in a [&Measure] object. Then, we work with it as usual with the
+in a [Measure](&makeMeasure) object. Then, we work with it as usual with the
 [&performance] function.
 See the **R** documentation of the [&makeMeasure] function for details on the
 various parameters.
@@ -46,23 +46,23 @@ performance(pred, measures = mmce)
 To create a measure that involves non-standard misclassification costs you can use
 the [&makeCostMeasure] function. In order to do this, you first need to define the cost
 matrix you want to use and include all class labels. The cost matrix can then be
-wrapped in a [&Measure] object and a prediction can be evaluated as usual with the
+wrapped in a [Measure](&makeMeasure) object and a prediction can be evaluated as usual with the
 [&performance] function. See the **R** documentation of the [&makeCostMeasure] function for
 details on the various parameters.
 
 ```r
 ## Create misclassification cost matrix
-mcm = matrix(c(0, 2, 2, 3, 0, 2, 1, 1, 0), ncol=3)
+mcm = matrix(c(0, 2, 2, 3, 0, 2, 1, 1, 0), ncol = 3)
 rownames(mcm) = colnames(mcm) = c("setosa", "versicolor", "virginica")
 
 ## Create classification task and learner
 task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.lda")
 mod = train(lrn, task)
-pred = predict(mod, newdata= iris)
+pred = predict(mod, newdata = iris)
 
 ## Encapsulate the cost matrix in a Measure object
-my.costs = makeCostMeasure(id = "costs", minimize = TRUE, costs=mcm, task, aggregate = mean)
+my.costs = makeCostMeasure(id = "costs", minimize = TRUE, costs = mcm, task, aggregate = mean)
 
 ## Compare predicted and true label with our measure
 performance(pred, measures = my.costs)
@@ -95,7 +95,9 @@ In the usual case (e.g. cross validation), the `perf.train` vector is empty.
 Let's say you are interested in the range of the obtained measures:
 ```{r}
 my.range.aggr = mlr:::makeAggregation(id = "test.range",
-  fun = function (task, perf.test, perf.train, measure, group, pred) diff(range(perf.test)))
+  fun = function (task, perf.test, perf.train, measure, group, pred)
+    diff(range(perf.test))
+)
 ```
 
 Now we can run a feature selection based on the first measure in the provided

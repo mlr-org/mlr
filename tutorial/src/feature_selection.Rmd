@@ -84,8 +84,8 @@ features so that it can be part of the validation method of your choice.
 A [Learner](&makeLearner) can be fused with a filter method by function [&makeFilterWrapper].
 The resulting [Learner](&makeLearner) has the additional class attribute [&FilterWrapper].
 
-In the following example we calculate the 10-fold cross-validated error rate ([&mmce]) of the
-[k nearest neighbor classifier](&FNN::fnn) with preceding feature selection on the
+In the following example we calculate the 10-fold cross-validated error rate ([mmce](measures.md))
+of the [k nearest neighbor classifier](&FNN::fnn) with preceding feature selection on the
 [iris](&datasets::iris) data set.
 We use ``"information.gain"`` as importance measure and select the 2 features with
 highest importance.
@@ -163,8 +163,8 @@ Here is another example using [multi-criteria tuning](tune.md).
 We consider [linear discriminant analysis](&MASS::lda) with precedent feature selection based on
 the Chi-squared statistic of independence (``"chi.squared"``) on the [Sonar](&mlbench::sonar)
 data set and tune the threshold value.
-During tuning both, the false positive and the false negative rate ([&fpr] and [&fnr]), are
-minimized. As search strategy we choose a random search
+During tuning both, the false positive and the false negative rate ([fpr](measures.md) and
+[fnr](measures.md)), are minimized. As search strategy we choose a random search
 (see [makeTuneMultiCritControlRandom](&TuneMultiCritControl)).
 
 ```{r}
@@ -218,7 +218,8 @@ Feature selection can be conducted with function [&selectFeatures].
 In the following example we perform an exhaustive search on the
 [Wisconsin Prognostic Breast Cancer](&TH.data::wpbc) data set.
 As learning method we use the [Cox proportional hazards model](&survival::coxph).
-The performance is assessed by the holdout estimate of the concordance index ([&cindex]).
+The performance is assessed by the holdout estimate of the concordance index
+([cindex](measures.md)).
 
 ```{r}
 ## Specify the search strategy
@@ -250,7 +251,7 @@ sfeats$y
 
 In a second example we fit a simple linear regression model to the [BostonHousing](&mlbench::BostonHousing)
 data set and use a sequential search to find a feature set that minimizes the mean squared
-error ([&mse]).
+error ([mse](measures.md)).
 ``method = "sfs"`` indicates that we want to conduct a sequential forward search where features
 are added to the model until the performance cannot be improved anymore.
 See the documentation page [makeFeatSelControlSequential](&FeatSelControl) for other available

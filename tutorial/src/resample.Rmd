@@ -38,7 +38,7 @@ Generally, in *K-fold cross-validation* the data set *D* is partitioned into *K*
 In the *i*-th step of the *K* iterations, the *i*-th subset is
 used for testing, while the union of the remaining parts forms the training
 set.
-The default performance measure in survival analysis is the concordance index ([cindex](&measures)).
+The default performance measure in survival analysis is the concordance index ([cindex](measures.md)).
 
 ```{r}
 ## Specify the resampling strategy (3-fold cross-validation)
@@ -52,8 +52,8 @@ r
 ``r$measures.test`` gives the value of the performance measure on the 3 individual test
 data sets.
 ``r$aggr`` shows the aggregated performance value.
-Its name, ``"cindex.test.mean"``, indicates the performance measure, [&cindex], and the method used
-to aggregate the 3 individual performances.
+Its name, ``"cindex.test.mean"``, indicates the performance measure, [cindex](measures.md),
+and the method used to aggregate the 3 individual performances.
 [test.mean](&aggregations) is the default method and, as the name implies, takes the mean over the
 performances on the 3 test data sets.
 No predictions on the training data sets were made and thus ``r$measures.train`` contains missing values.
@@ -76,13 +76,13 @@ The columns ``iter`` and ``set``indicate the resampling iteration and
 if an individual prediction was made on the test or the training data set.
 
 
-In the above example the performance measure is the concordance index ([cindex](&measures)).
+In the above example the performance measure is the concordance index ([cindex](measures.md)).
 Of course, it is  possible to compute multiple performance measures at once by
 passing a list of measures
 (see also the previous section on [evaluating learner performance](performance.md)).
 
-In the following we estimate the Dunn index ([dunn](&measures)), the Davies-Bouldin cluster
-separation measure ([db](&measures)), and the time for training the learner ([timetrain](&measures))
+In the following we estimate the Dunn index ([dunn](measures.md)), the Davies-Bouldin cluster
+separation measure ([db](measures.md)), and the time for training the learner ([timetrain](measures.md))
 by *subsampling* with 5 iterations.
 In each iteration the data set *D* is randomly partitioned into a
 training and a test set according to a given percentage, e.g., 2/3
@@ -129,7 +129,7 @@ r = resample("regr.rpart", bh.task, rdesc)
 ## Accessing individual learner models
 
 In each resampling iteration a [Learner](&makeLearner) is fitted on the respective training set.
-By default, the resulting [&makeWrappedModel]s are not returned by [&resample].
+By default, the resulting [WrappedModel](&makeWrappedModel)s are not returned by [&resample].
 If you want to keep them, set ``models = TRUE`` when calling [&resample].
 
 ```{r}
@@ -271,7 +271,7 @@ r$aggr
 
 ### Example: Calculating the training error
 
-Here we calculate the mean misclassification error ([&mmce]) on the training and the test
+Here we calculate the mean misclassification error ([mmce](measures.md)) on the training and the test
 data sets. Note that we have to set ``predict = "both"``when calling [&makeResampleDesc]
 in order to get predictions on both data sets, training and test.
 
