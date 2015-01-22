@@ -248,9 +248,9 @@ list of <a href="http://www.rdocumentation.org/packages/mlr/functions/measures.h
 <h2 id="construct-a-performance-measure">Construct a performance measure</h2>
 <p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/makeMeasure.html">makeMeasure</a> function provides a simple way of constructing your own performance
 measure. Below, this is exemplified by an implementation of the mean
-misclassification error (<a href="http://www.rdocumentation.org/packages/mlr/functions/mmce.html">mmce</a>) for the iris dataset. We write a simple
+misclassification error (<a href="../measures/index.html">mmce</a>) for the iris dataset. We write a simple
 function that computes the measure on the basis of the predictions and subsequently wrap it
-in a <a href="http://www.rdocumentation.org/packages/mlr/functions/Measure.html">Measure</a> object. Then, we work with it as usual with the
+in a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeMeasure.html">Measure</a> object. Then, we work with it as usual with the
 <a href="http://www.rdocumentation.org/packages/mlr/functions/performance.html">performance</a> function.
 See the <strong>R</strong> documentation of the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeMeasure.html">makeMeasure</a> function for details on the
 various parameters.</p>
@@ -281,21 +281,21 @@ performance(pred, measures = mmce)
 <p>To create a measure that involves non-standard misclassification costs you can use
 the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeCostMeasure.html">makeCostMeasure</a> function. In order to do this, you first need to define the cost
 matrix you want to use and include all class labels. The cost matrix can then be
-wrapped in a <a href="http://www.rdocumentation.org/packages/mlr/functions/Measure.html">Measure</a> object and a prediction can be evaluated as usual with the
+wrapped in a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeMeasure.html">Measure</a> object and a prediction can be evaluated as usual with the
 <a href="http://www.rdocumentation.org/packages/mlr/functions/performance.html">performance</a> function. See the <strong>R</strong> documentation of the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeCostMeasure.html">makeCostMeasure</a> function for
 details on the various parameters.</p>
 <pre><code class="r">## Create misclassification cost matrix
-mcm = matrix(c(0, 2, 2, 3, 0, 2, 1, 1, 0), ncol=3)
+mcm = matrix(c(0, 2, 2, 3, 0, 2, 1, 1, 0), ncol = 3)
 rownames(mcm) = colnames(mcm) = c(&quot;setosa&quot;, &quot;versicolor&quot;, &quot;virginica&quot;)
 
 ## Create classification task and learner
 task = makeClassifTask(data = iris, target = &quot;Species&quot;)
 lrn = makeLearner(&quot;classif.lda&quot;)
 mod = train(lrn, task)
-pred = predict(mod, newdata= iris)
+pred = predict(mod, newdata = iris)
 
 ## Encapsulate the cost matrix in a Measure object
-my.costs = makeCostMeasure(id = &quot;costs&quot;, minimize = TRUE, costs=mcm, task, aggregate = mean)
+my.costs = makeCostMeasure(id = &quot;costs&quot;, minimize = TRUE, costs = mcm, task, aggregate = mean)
 
 ## Compare predicted and true label with our measure
 performance(pred, measures = my.costs)
@@ -323,7 +323,9 @@ In the usual case (e.g. cross validation), the <code>perf.train</code> vector is
 <h3 id="example-evaluate-the-range-of-measures">Example: Evaluate the range of measures</h3>
 <p>Let's say you are interested in the range of the obtained measures:</p>
 <pre><code class="r">my.range.aggr = mlr:::makeAggregation(id = &quot;test.range&quot;,
-  fun = function (task, perf.test, perf.train, measure, group, pred) diff(range(perf.test)))
+  fun = function (task, perf.test, perf.train, measure, group, pred)
+    diff(range(perf.test))
+)
 </code></pre>
 
 <p>Now we can run a feature selection based on the first measure in the provided

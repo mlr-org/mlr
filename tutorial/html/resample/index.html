@@ -275,7 +275,7 @@ Generally, in <em>K-fold cross-validation</em> the data set <em>D</em> is partit
 In the <em>i</em>-th step of the <em>K</em> iterations, the <em>i</em>-th subset is
 used for testing, while the union of the remaining parts forms the training
 set.
-The default performance measure in survival analysis is the concordance index (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">cindex</a>).</p>
+The default performance measure in survival analysis is the concordance index (<a href="../measures/index.html">cindex</a>).</p>
 <pre><code class="r">## Specify the resampling strategy (3-fold cross-validation)
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 
@@ -303,8 +303,8 @@ r = resample(&quot;surv.coxph&quot;, lung.task, rdesc)
 <p><code>r$measures.test</code> gives the value of the performance measure on the 3 individual test
 data sets.
 <code>r$aggr</code> shows the aggregated performance value.
-Its name, <code>"cindex.test.mean"</code>, indicates the performance measure, <a href="http://www.rdocumentation.org/packages/mlr/functions/cindex.html">cindex</a>, and the method used
-to aggregate the 3 individual performances.
+Its name, <code>"cindex.test.mean"</code>, indicates the performance measure, <a href="../measures/index.html">cindex</a>,
+and the method used to aggregate the 3 individual performances.
 <a href="http://www.rdocumentation.org/packages/mlr/functions/aggregations.html">test.mean</a> is the default method and, as the name implies, takes the mean over the
 performances on the 3 test data sets.
 No predictions on the training data sets were made and thus <code>r$measures.train</code> contains missing values.</p>
@@ -319,23 +319,23 @@ variable.</p>
 <pre><code class="r">head(r$pred$data)
 </code></pre>
 
-<pre><code>#&gt;    id truth.time truth.event   response iter  set
-#&gt; 2   1        455        TRUE -0.4951788    1 test
-#&gt; 4   2        210        TRUE  0.9573824    1 test
-#&gt; 7   4        310        TRUE  0.8069059    1 test
-#&gt; 17 10        613        TRUE  0.1918188    1 test
-#&gt; 19 12         61        TRUE  0.6638736    1 test
-#&gt; 22 14         81        TRUE -0.1873917    1 test
+<pre><code>#&gt;    id truth.time truth.event response iter  set
+#&gt; 2   1        455        TRUE  -0.4952    1 test
+#&gt; 4   2        210        TRUE   0.9574    1 test
+#&gt; 7   4        310        TRUE   0.8069    1 test
+#&gt; 17 10        613        TRUE   0.1918    1 test
+#&gt; 19 12         61        TRUE   0.6639    1 test
+#&gt; 22 14         81        TRUE  -0.1874    1 test
 </code></pre>
 
 <p>The columns <code>iter</code> and <code>set</code>indicate the resampling iteration and
 if an individual prediction was made on the test or the training data set.</p>
-<p>In the above example the performance measure is the concordance index (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">cindex</a>).
+<p>In the above example the performance measure is the concordance index (<a href="../measures/index.html">cindex</a>).
 Of course, it is  possible to compute multiple performance measures at once by
 passing a list of measures
 (see also the previous section on <a href="../performance/index.html">evaluating learner performance</a>).</p>
-<p>In the following we estimate the Dunn index (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">dunn</a>), the Davies-Bouldin cluster
-separation measure (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">db</a>), and the time for training the learner (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">timetrain</a>)
+<p>In the following we estimate the Dunn index (<a href="../measures/index.html">dunn</a>), the Davies-Bouldin cluster
+separation measure (<a href="../measures/index.html">db</a>), and the time for training the learner (<a href="../measures/index.html">timetrain</a>)
 by <em>subsampling</em> with 5 iterations.
 In each iteration the data set <em>D</em> is randomly partitioned into a
 training and a test set according to a given percentage, e.g., 2/3
@@ -351,72 +351,48 @@ r = resample(&quot;cluster.XMeans&quot;, mtcars.task, rdesc, measures = list(dun
 </code></pre>
 
 <pre><code>#&gt; [Resample] subsampling iter: 1
-#&gt; [Resample] subsampling iter: 2
+</code></pre>
+
+<pre><code>#&gt; Warning: RGL: unable to open X11 display
+#&gt; Warning: error in rgl_init
+</code></pre>
+
+<pre><code>#&gt; [Resample] subsampling iter: 2
 #&gt; [Resample] subsampling iter: 3
 </code></pre>
 
-<pre><code>#&gt; Warning in min(distance[c1, c2]): kein nicht-fehlendes Argument für min;
-#&gt; gebe Inf zurück
-</code></pre>
-
-<pre><code>#&gt; Warning in max(distance[c1, c1]): kein nicht-fehlendes Argument für max;
-#&gt; gebe -Inf zurück
-</code></pre>
-
-<pre><code>#&gt; Warning in min(distance[c1, c2]): kein nicht-fehlendes Argument für min;
-#&gt; gebe Inf zurück
-</code></pre>
-
-<pre><code>#&gt; Warning in max(R[i, ][is.finite(R[i, ])]): kein nicht-fehlendes Argument
-#&gt; für max; gebe -Inf zurück
+<pre><code>#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to max; returning -Inf
+#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to max; returning -Inf
 </code></pre>
 
 <pre><code>#&gt; [Resample] subsampling iter: 4
 </code></pre>
 
-<pre><code>#&gt; Warning in max(distance[c1, c1]): kein nicht-fehlendes Argument für max;
-#&gt; gebe -Inf zurück
-</code></pre>
-
-<pre><code>#&gt; Warning in min(distance[c1, c2]): kein nicht-fehlendes Argument für min;
-#&gt; gebe Inf zurück
-</code></pre>
-
-<pre><code>#&gt; Warning in min(distance[c1, c2]): kein nicht-fehlendes Argument für min;
-#&gt; gebe Inf zurück
-</code></pre>
-
-<pre><code>#&gt; Warning in max(R[i, ][is.finite(R[i, ])]): kein nicht-fehlendes Argument
-#&gt; für max; gebe -Inf zurück
+<pre><code>#&gt; Warning: no non-missing arguments to max; returning -Inf
+#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to max; returning -Inf
 </code></pre>
 
 <pre><code>#&gt; [Resample] subsampling iter: 5
 </code></pre>
 
-<pre><code>#&gt; Warning in min(distance[c1, c2]): kein nicht-fehlendes Argument für min;
-#&gt; gebe Inf zurück
+<pre><code>#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to max; returning -Inf
+#&gt; Warning: no non-missing arguments to min; returning Inf
+#&gt; Warning: no non-missing arguments to max; returning -Inf
 </code></pre>
 
-<pre><code>#&gt; Warning in max(distance[c1, c1]): kein nicht-fehlendes Argument für max;
-#&gt; gebe -Inf zurück
-</code></pre>
-
-<pre><code>#&gt; Warning in min(distance[c1, c2]): kein nicht-fehlendes Argument für min;
-#&gt; gebe Inf zurück
-</code></pre>
-
-<pre><code>#&gt; Warning in max(R[i, ][is.finite(R[i, ])]): kein nicht-fehlendes Argument
-#&gt; für max; gebe -Inf zurück
-</code></pre>
-
-<pre><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.12
+<pre><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.114
 </code></pre>
 
 <pre><code class="r">r$aggr
 </code></pre>
 
 <pre><code>#&gt;      dunn.test.mean        db.test.mean timetrain.test.mean 
-#&gt;           0.9576313           0.4253807           0.1196000
+#&gt;              0.9576              0.4254              0.1138
 </code></pre>
 
 <h2 id="stratified-resampling">Stratified resampling</h2>
@@ -453,7 +429,7 @@ r = resample(&quot;regr.rpart&quot;, bh.task, rdesc)
 
 <h2 id="accessing-individual-learner-models">Accessing individual learner models</h2>
 <p>In each resampling iteration a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> is fitted on the respective training set.
-By default, the resulting <a href="http://www.rdocumentation.org/packages/mlr/functions/makeWrappedModel.html">makeWrappedModel</a>s are not returned by <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a>.
+By default, the resulting <a href="http://www.rdocumentation.org/packages/mlr/functions/makeWrappedModel.html">WrappedModel</a>s are not returned by <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a>.
 If you want to keep them, set <code>models = TRUE</code> when calling <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a>.</p>
 <pre><code class="r">## 3-fold cross-validation
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
@@ -511,24 +487,22 @@ r = resample(&quot;regr.rpart&quot;, bh.task, rdesc,
 </code></pre>
 
 <pre><code>#&gt; [[1]]
-#&gt;      lstat         rm       crim        age        dis        nox 
-#&gt; 19580.2874  7900.6996  4635.4906  4621.4599  4085.7522  3073.0163 
-#&gt;        tax      indus         zn    ptratio        rad          b 
-#&gt;  2595.0683  1833.8227  1640.4665  1332.4891   535.0254   312.3056 
+#&gt;   lstat      rm    crim     age     dis     nox     tax   indus      zn 
+#&gt; 19580.3  7900.7  4635.5  4621.5  4085.8  3073.0  2595.1  1833.8  1640.5 
+#&gt; ptratio     rad       b 
+#&gt;  1332.5   535.0   312.3 
 #&gt; 
 #&gt; [[2]]
-#&gt;          rm       lstat     ptratio         dis         nox       indus 
-#&gt; 17127.90643 12275.66146  4439.22372  4017.49442  3795.11465  3732.49901 
-#&gt;         age        crim         tax          zn           b        chas 
-#&gt;  3559.07527  3228.78560  1063.52010   957.08762   632.54488    45.00784 
+#&gt;       rm    lstat  ptratio      dis      nox    indus      age     crim 
+#&gt; 17127.91 12275.66  4439.22  4017.49  3795.11  3732.50  3559.08  3228.79 
+#&gt;      tax       zn        b     chas 
+#&gt;  1063.52   957.09   632.54    45.01 
 #&gt; 
 #&gt; [[3]]
-#&gt;       lstat          rm       indus        crim         nox         age 
-#&gt; 15854.40598 12391.83203  8053.85456  7870.94676  7619.72014  6988.85600 
-#&gt;         dis     ptratio         tax           b          zn         rad 
-#&gt;  1590.40768  1084.79515   594.31174   394.98047   325.43855   317.35809 
-#&gt;        chas 
-#&gt;    45.52432
+#&gt;    lstat       rm    indus     crim      nox      age      dis  ptratio 
+#&gt; 15854.41 12391.83  8053.85  7870.95  7619.72  6988.86  1590.41  1084.80 
+#&gt;      tax        b       zn      rad     chas 
+#&gt;   594.31   394.98   325.44   317.36    45.52
 </code></pre>
 
 <h2 id="resample-descriptions-and-resample-instances">Resample descriptions and resample instances</h2>
@@ -704,7 +678,7 @@ r = resample(&quot;classif.rpart&quot;, iris.task, rdesc, measures = list(mmce, 
 </code></pre>
 
 <h3 id="example-calculating-the-training-error">Example: Calculating the training error</h3>
-<p>Here we calculate the mean misclassification error (<a href="http://www.rdocumentation.org/packages/mlr/functions/mmce.html">mmce</a>) on the training and the test
+<p>Here we calculate the mean misclassification error (<a href="../measures/index.html">mmce</a>) on the training and the test
 data sets. Note that we have to set <code>predict = "both"</code>when calling <a href="http://www.rdocumentation.org/packages/mlr/functions/makeResampleDesc.html">makeResampleDesc</a>
 in order to get predictions on both data sets, training and test.</p>
 <pre><code class="r">mmce.train.mean = setAggregation(mmce, train.mean)
@@ -731,7 +705,7 @@ r = resample(&quot;classif.rpart&quot;, iris.task, rdesc, measures = list(mmce, 
 </code></pre>
 
 <pre><code>#&gt;  mmce.test.mean mmce.train.mean 
-#&gt;      0.06000000      0.03333333
+#&gt;         0.06000         0.03333
 </code></pre>
 
 <h3 id="example-bootstrap">Example: Bootstrap</h3>
@@ -756,7 +730,7 @@ b632.mmce
 
 <pre><code>#&gt; Name: Mean misclassification error
 #&gt; Performance measure: mmce
-#&gt; Properties: classif,classif.multi
+#&gt; Properties: classif,classif.multi,req.pred,req.truth
 #&gt; Minimize: TRUE
 #&gt; Best: 0; Worst: 1
 #&gt; Aggregated by: b632
@@ -768,20 +742,20 @@ b632.mmce
 head(r$measures.train)
 </code></pre>
 
-<pre><code>#&gt;   iter       mmce       mmce       mmce
-#&gt; 1    1 0.02666667 0.02666667 0.02666667
-#&gt; 2    2 0.02666667 0.02666667 0.02666667
-#&gt; 3    3 0.04000000 0.04000000 0.04000000
-#&gt; 4    4 0.02000000 0.02000000 0.02000000
-#&gt; 5    5 0.05333333 0.05333333 0.05333333
-#&gt; 6    6 0.04666667 0.04666667 0.04666667
+<pre><code>#&gt;   iter    mmce    mmce    mmce
+#&gt; 1    1 0.02667 0.02667 0.02667
+#&gt; 2    2 0.02667 0.02667 0.02667
+#&gt; 3    3 0.04000 0.04000 0.04000
+#&gt; 4    4 0.02000 0.02000 0.02000
+#&gt; 5    5 0.05333 0.05333 0.05333
+#&gt; 6    6 0.04667 0.04667 0.04667
 </code></pre>
 
 <pre><code class="r">r$aggr
 </code></pre>
 
 <pre><code>#&gt; mmce.test.mean      mmce.b632  mmce.b632plus 
-#&gt;     0.05843174     0.04772353     0.04831784
+#&gt;        0.05843        0.04772        0.04832
 </code></pre>
 
 <h2 id="convenience-functions">Convenience functions</h2>

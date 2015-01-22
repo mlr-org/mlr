@@ -266,7 +266,7 @@ r$aggr
 </code></pre>
 
 <pre><code>#&gt; mmce.test.mean 
-#&gt;      0.2542857
+#&gt;         0.2543
 </code></pre>
 
 <p>And now with bagging:</p>
@@ -276,7 +276,7 @@ result$aggr
 </code></pre>
 
 <pre><code>#&gt; mmce.test.mean 
-#&gt;      0.1930952
+#&gt;         0.1931
 </code></pre>
 
 <p>Training more learners takes more time, but can outperform pure learners
@@ -305,7 +305,8 @@ bag.lrn = setPredictType(bag.lrn, predict.type = &quot;se&quot;)
 mod = train(learner = bag.lrn, task = bh.task, subset = train.inds)
 </code></pre>
 
-<p>With the function <a href="http://www.rdocumentation.org/packages/mlr/functions/getHomogeneousEnsembleModels.html">getHomogeneousEnsembleModels</a>, you can access the models fitted in the individual iterations.</p>
+<p>With the function <a href="http://www.rdocumentation.org/packages/mlr/functions/getHomogeneousEnsembleModels.html">getHomogeneousEnsembleModels</a>, you can access the models fitted in the
+individual iterations.</p>
 <pre><code class="r">head(getHomogeneousEnsembleModels(mod), 2)
 </code></pre>
 
@@ -327,13 +328,13 @@ mod = train(learner = bag.lrn, task = bh.task, subset = train.inds)
 head(pred$data)
 </code></pre>
 
-<pre><code>#&gt;   id truth response       se
-#&gt; 2  2  21.6 21.46507 1.040829
-#&gt; 3  3  34.7 34.44916 4.090512
-#&gt; 5  5  36.2 33.39258 1.172627
-#&gt; 6  6  28.7 23.76128 1.106508
-#&gt; 8  8  27.1 15.76715 3.305897
-#&gt; 9  9  16.5 15.02399 2.865487
+<pre><code>#&gt;   id truth response    se
+#&gt; 2  2  21.6    21.47 1.041
+#&gt; 3  3  34.7    34.45 4.091
+#&gt; 5  5  36.2    33.39 1.173
+#&gt; 6  6  28.7    23.76 1.107
+#&gt; 8  8  27.1    15.77 3.306
+#&gt; 9  9  16.5    15.02 2.865
 </code></pre>
 
 <p>In the column labelled <code>se</code> the standard deviation for each prediction is given.</p>

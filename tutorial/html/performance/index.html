@@ -252,16 +252,16 @@ In order to calculate the performance measures, call <a href="http://www.rdocume
 returned by <a href="http://www.rdocumentation.org/packages/mlr/functions/predict.WrappedModel.html">predict</a> and specify the desired performance measures.</p>
 <h2 id="available-performance-measures">Available performance measures</h2>
 <p><a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides a large number of performance measures for all types of learning problems.
-Typical performance measures for <em>classification</em> are the mean misclassification error (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">mmce</a>),
-accuracy (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">acc</a>) or measures based on <a href="../roc_analysis/index.html">ROC analysis</a>.
-For <em>regression</em> the mean of squared errors (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">mse</a>) or mean of absolute errors (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">mae</a>)
+Typical performance measures for <em>classification</em> are the mean misclassification error (<a href="../measures/index.html">mmce</a>),
+accuracy (<a href="../measures/index.html">acc</a>) or measures based on <a href="../roc_analysis/index.html">ROC analysis</a>.
+For <em>regression</em> the mean of squared errors (<a href="../measures/index.html">mse</a>) or mean of absolute errors (<a href="../measures/index.html">mae</a>)
 are usually considered.
-For <em>clustering</em> tasks, measures such as the Dunn index (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">dunn</a>) are provided,
-while for <em>survival</em> predictions, the Concordance Index (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">cindex</a>) is
+For <em>clustering</em> tasks, measures such as the Dunn index (<a href="../measures/index.html">dunn</a>) are provided,
+while for <em>survival</em> predictions, the Concordance Index (<a href="../measures/index.html">cindex</a>) is
 supported, and for <em>cost-sensitive</em> predictions the misclassification penalty
-(<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">mcp</a>) and others. It is also possible to access the time to train the
-learner (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">timetrain</a>), the time to compute the prediction (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">timepredict</a>) and their
-sum (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">timeboth</a>) as performance measures.</p>
+(<a href="../measures/index.html">mcp</a>) and others. It is also possible to access the time to train the
+learner (<a href="../measures/index.html">timetrain</a>), the time to compute the prediction (<a href="../measures/index.html">timepredict</a>) and their
+sum (<a href="../measures/index.html">timeboth</a>) as performance measures.</p>
 <p>To see which performance measures are implemented, have a look at the
 <a href="../measures/index.html">table of performance measures</a> and the <a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">measures</a> documentation page.</p>
 <p>If you want to implement an additional measure or include a measure with
@@ -290,7 +290,7 @@ listMeasures(iris.task)
 <h2 id="calculate-performance-measures">Calculate performance measures</h2>
 <p>In the following example we fit a <a href="http://www.rdocumentation.org/packages/gbm/functions/gbm.html">gradient boosting machine</a> on a subset of the
 <a href="http://www.rdocumentation.org/packages/mlbench/functions/BostonHousing.html">BostonHousing</a> data set and calculate the mean squared error
-(<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">mse</a>) on the remaining observations.</p>
+(<a href="../measures/index.html">mse</a>) on the remaining observations.</p>
 <pre><code class="r">n = getTaskDescription(bh.task)$size
 lrn = makeLearner(&quot;regr.gbm&quot;, n.trees = 1000)
 mod = train(lrn, task = bh.task, subset = seq(1, n, 2))
@@ -301,26 +301,26 @@ pred = predict(mod, task = bh.task, subset = seq(2, n, 2))
 performance(pred)
 </code></pre>
 
-<pre><code>#&gt;      mse 
-#&gt; 42.68414
+<pre><code>#&gt;   mse 
+#&gt; 42.68
 </code></pre>
 
-<p>The following code computes the median of squared errors (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">medse</a>) instead.</p>
+<p>The following code computes the median of squared errors (<a href="../measures/index.html">medse</a>) instead.</p>
 <pre><code class="r">performance(pred, measures = medse)
 </code></pre>
 
-<pre><code>#&gt;    medse 
-#&gt; 9.134965
+<pre><code>#&gt; medse 
+#&gt; 9.135
 </code></pre>
 
 <p>Of course, we can also calculate multiple performance measures at once by simply passing a
 list of measures which can also include <a href="../create_measure/index.html">your own measure</a>.</p>
-<p>Calculate the mean squared error, median squared error and mean absolute error (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">mae</a>).</p>
+<p>Calculate the mean squared error, median squared error and mean absolute error (<a href="../measures/index.html">mae</a>).</p>
 <pre><code class="r">performance(pred, measures = list(mse, medse, mae))
 </code></pre>
 
-<pre><code>#&gt;       mse     medse       mae 
-#&gt; 42.684141  9.134965  4.536750
+<pre><code>#&gt;    mse  medse    mae 
+#&gt; 42.684  9.135  4.537
 </code></pre>
 
 <p>For the other types of learning problems and measures, calculating the performance basically
@@ -328,13 +328,13 @@ works in the same way.</p>
 <h3 id="requirements-of-performance-measures">Requirements of performance measures</h3>
 <p>Note that in order to calculate some performance measures it is required that you pass the
 <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> or the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeWrappedModel.html">fitted model</a> in addition to the <a href="http://www.rdocumentation.org/packages/mlr/functions/Prediction.html">Prediction</a>.</p>
-<p>For example in order to assess the time needed for training (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">timetrain</a>), the fitted
+<p>For example in order to assess the time needed for training (<a href="../measures/index.html">timetrain</a>), the fitted
 model has to be passed.</p>
 <pre><code class="r">performance(pred, measures = timetrain, model = mod)
 </code></pre>
 
 <pre><code>#&gt; timetrain 
-#&gt;     0.219
+#&gt;     0.162
 </code></pre>
 
 <p>For many performance measures in cluster analysis the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> is required.</p>
@@ -346,12 +346,12 @@ pred = predict(mod, task = mtcars.task)
 performance(pred, measures = dunn, task = mtcars.task)
 </code></pre>
 
-<pre><code>#&gt;      dunn 
-#&gt; 0.1462919
+<pre><code>#&gt;   dunn 
+#&gt; 0.1463
 </code></pre>
 
 <p>Moreover, some measures require a certain type of prediction.
-For example in binary classification in order to calculate the AUC (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">auc</a>) -- the area
+For example in binary classification in order to calculate the AUC (<a href="../measures/index.html">auc</a>) -- the area
 under the ROC (receiver operating characteristic) curve -- we have to make sure that posterior
 probabilities are predicted.
 For more information on ROC analysis, see the section on <a href="../roc_analysis/index.html">ROC analysis</a>.</p>
@@ -362,12 +362,12 @@ pred = predict(mod, task = sonar.task)
 performance(pred, measures = auc)
 </code></pre>
 
-<pre><code>#&gt;       auc 
-#&gt; 0.9224018
+<pre><code>#&gt;    auc 
+#&gt; 0.9224
 </code></pre>
 
 <p>Also bear in mind that many of the performance measures that are available for classification,
-e.g., the false positive rate (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">fpr</a>), are only suitable for binary problems.</p>
+e.g., the false positive rate (<a href="../measures/index.html">fpr</a>), are only suitable for binary problems.</p>
 <h2 id="access-a-performance-measure">Access a performance measure</h2>
 <p>Performance measures in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> are objects of class <a href="http://www.rdocumentation.org/packages/mlr/functions/makeMeasure.html">Measure</a>.
 If you are interested in the properties or requirements of a single measure you can access it directly.
@@ -376,22 +376,17 @@ See the help page of <a href="http://www.rdocumentation.org/packages/mlr/functio
 str(mmce)
 </code></pre>
 
-<pre><code>#&gt; List of 15
-#&gt;  $ id                : chr &quot;mmce&quot;
-#&gt;  $ minimize          : logi TRUE
-#&gt;  $ properties        : chr [1:2] &quot;classif&quot; &quot;classif.multi&quot;
-#&gt;  $ allowed.pred.types: chr [1:2] &quot;response&quot; &quot;prob&quot;
-#&gt;  $ req.pred          : logi TRUE
-#&gt;  $ req.model         : logi FALSE
-#&gt;  $ req.task          : logi FALSE
-#&gt;  $ req.feats         : logi FALSE
-#&gt;  $ fun               :function (task, model, pred, feats, extra.args)  
-#&gt;  $ extra.args        : list()
-#&gt;  $ best              : num 0
-#&gt;  $ worst             : num 1
-#&gt;  $ name              : chr &quot;Mean misclassification error&quot;
-#&gt;  $ note              : chr &quot;&quot;
-#&gt;  $ aggr              :List of 2
+<pre><code>#&gt; List of 10
+#&gt;  $ id        : chr &quot;mmce&quot;
+#&gt;  $ minimize  : logi TRUE
+#&gt;  $ properties: chr [1:4] &quot;classif&quot; &quot;classif.multi&quot; &quot;req.pred&quot; &quot;req.truth&quot;
+#&gt;  $ fun       :function (task, model, pred, feats, extra.args)  
+#&gt;  $ extra.args: list()
+#&gt;  $ best      : num 0
+#&gt;  $ worst     : num 1
+#&gt;  $ name      : chr &quot;Mean misclassification error&quot;
+#&gt;  $ note      : chr &quot;&quot;
+#&gt;  $ aggr      :List of 2
 #&gt;   ..$ id : chr &quot;test.mean&quot;
 #&gt;   ..$ fun:function (task, perf.test, perf.train, measure, group, pred)  
 #&gt;   ..- attr(*, &quot;class&quot;)= chr &quot;Aggregation&quot;
@@ -405,8 +400,8 @@ Helpful in this regard is the function <a href="http://www.rdocumentation.org/pa
 learner performance versus the threshold.
 Later on we will show how to find an optimal threshold value by <a href="../tune/index.html">tuning</a>.</p>
 <p>In the following example we consider the <a href="http://www.rdocumentation.org/packages/mlbench/functions/Sonar.html">Sonar</a> data set and
-plot the false positive rate (<a href="http://www.rdocumentation.org/packages/mlr/functions/fpr.html">fpr</a>), the false negative rate (<a href="http://www.rdocumentation.org/packages/mlr/functions/fnr.html">fnr</a>) as well as the
-misclassification rate (<a href="http://www.rdocumentation.org/packages/mlr/functions/mmce.html">mmce</a>) for all possible threshold values.</p>
+plot the false positive rate (<a href="../measures/index.html">fpr</a>), the false negative rate (<a href="../measures/index.html">fnr</a>)
+as well as the misclassification rate (<a href="../measures/index.html">mmce</a>) for all possible threshold values.</p>
 <pre><code class="r">lrn = makeLearner(&quot;classif.lda&quot;, predict.type = &quot;prob&quot;)
 n = sonar.task$task.desc$size
 mod = train(lrn, task = sonar.task, subset = seq(1, n, by = 2))
@@ -416,8 +411,8 @@ pred = predict(mod, task = sonar.task, subset = seq(2, n, by = 2))
 performance(pred, measures = list(fpr, fnr, mmce))
 </code></pre>
 
-<pre><code>#&gt;       fpr       fnr      mmce 
-#&gt; 0.2500000 0.2500000 0.2788462
+<pre><code>#&gt;    fpr    fnr   mmce 
+#&gt; 0.2500 0.2500 0.2788
 </code></pre>
 
 <pre><code class="r">## Plot false negative and positive rates as well as the error rate versus the threshold

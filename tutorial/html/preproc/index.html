@@ -364,7 +364,7 @@ lrn
 #&gt; Hyperparameters: size=3,trace=FALSE,decay=0.01
 </code></pre>
 
-<p>Let's compare the cross-validated mean squared error (<a href="http://www.rdocumentation.org/packages/mlr/functions/measures.html">mse</a>) on the
+<p>Let's compare the cross-validated mean squared error (<a href="../measures/index.html">mse</a>) on the
 <a href="http://www.rdocumentation.org/packages/mlbench/functions/BostonHousing.html">Boston Housing data set</a> with and without scaling.</p>
 <pre><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
 
@@ -373,7 +373,7 @@ r$aggr
 </code></pre>
 
 <pre><code>#&gt; mse.test.mean 
-#&gt;      20.98447
+#&gt;         20.98
 </code></pre>
 
 <pre><code class="r">lrn = makeLearner(&quot;regr.nnet&quot;, trace = FALSE, decay = 1e-02)
@@ -382,7 +382,7 @@ r$aggr
 </code></pre>
 
 <pre><code>#&gt; mse.test.mean 
-#&gt;      54.37792
+#&gt;         54.38
 </code></pre>
 
 </div>
