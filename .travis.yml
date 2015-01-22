@@ -32,8 +32,6 @@ script: travis_wait ./travis-tool.sh run_tests
 on_failure:
   - ./travis-tool.sh dump_logs
 
-after_success:
-  - Rscript -e 'library(covr);coveralls()'
 
 notifications:
   email:
