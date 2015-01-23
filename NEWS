@@ -25,6 +25,7 @@ mlr_2.3:
 - classif.lda and classif.qda now have hyperpar "predict.method"
 - filterFeatures and makeFilterWrapper gain an argument for mandatory features
 - plotLearnerPrediction has new option "err.size"
+- classif.plsDA was for now removed because of problems with the underlying learning algorithm
 
 
 - new functions
