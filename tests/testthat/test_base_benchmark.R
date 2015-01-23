@@ -17,9 +17,7 @@ test_that("benchmark", {
   expect_true(setequal(df$learner.id, learner.names))
   expect_true(is.numeric(df$mmce))
   expect_equal(getBMRTaskIds(res), task.names)
-  expect_equal(getBMRLearnerIds(res, join = FALSE),
-    list(binary = learner.names, multiclass = learner.names))
-  expect_equal(getBMRLearnerIds(res, join = TRUE), learner.names)
+  expect_equal(getBMRLearnerIds(res), learner.names)
 
   preds = getBMRPredictions(res, as.df = FALSE)
   expect_true(is.list(preds))
@@ -65,9 +63,7 @@ test_that("benchmark", {
   expect_true(is.numeric(df$mmce))
   expect_true(is.numeric(df$acc))
   expect_equal(getBMRTaskIds(res), task.names)
-  expect_equal(getBMRLearnerIds(res, join = FALSE),
-    list(binary = learner.names, multiclass = learner.names))
-  expect_equal(getBMRLearnerIds(res, join = TRUE), learner.names)
+  expect_equal(getBMRLearnerIds(res), learner.names)
 
   preds = getBMRPredictions(res, as.df = FALSE)
   expect_true(is.list(preds))

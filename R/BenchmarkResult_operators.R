@@ -12,26 +12,19 @@ getBMRTaskIds = function(bmr) {
 #' @title Return learner ids used in benchmark.
 #'
 #' @template arg_bmr
-#' @param join [\code{logical(1)}]\cr
-#'   For \code{FALSE}: Get list of character vectors, named by task.ids.
-#'   For \code{TRUE}: Join these char vectors and make them unique.
-#'   Default is \code{FALSE}.
 #' @return [\code{list} | \code{character}]. See above.
 #' @export
 #' @family benchmark
-getBMRLearnerIds = function(bmr, join = FALSE) {
+getBMRLearnerIds = function(bmr) {
   assertClass(bmr, "BenchmarkResult")
-  lids = lapply(bmr, names)
-  if (join)
-    lids = unique(setNames(do.call(c, lids), NULL))
-  return(lids)
+  return(names(bmr[[1L]]))
 }
 
 # returns buried object in BMR, either as list of lists or data.frame with task.id, learner.id cols
 # you can restrict to subsets for tasks and learners and pass function to extract object
 getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = FALSE) {
   brtids = getBMRTaskIds(bmr)
-  brlids = getBMRLearnerIds(bmr, join = TRUE)
+  brlids = getBMRLearnerIds(bmr)
   if (is.null(task.ids))
     task.ids = brtids
   else
@@ -216,4 +209,3 @@ getBMRFilteredFeatures = function(bmr, task.ids = NULL, learner.ids = NULL, as.d
     as.data.frame(x$x)
   })
 }
-
