@@ -1,7 +1,7 @@
 context("classif_nnet")
 
 test_that("classif_nnet", {
-  requirePackages("nnet")
+  requirePackages("nnet", default.method = "load")
 
   set.seed(getOption("mlr.debug.seed"))
   capture.output({

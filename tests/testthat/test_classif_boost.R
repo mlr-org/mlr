@@ -1,7 +1,7 @@
 context("classif_boosting")
 
 test_that("classif_boosting", {
-  requirePackages(c("adabag", "rpart"))
+  requirePackages(c("adabag", "rpart"), default.method = "load")
   parset.list1 = list(
     list(mfinal = 1, control = rpart::rpart.control(xval = 0)),
     list(mfinal = 2, control = rpart::rpart.control(cp = 0.2, xval = 0))

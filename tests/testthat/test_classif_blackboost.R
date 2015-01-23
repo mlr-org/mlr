@@ -1,8 +1,8 @@
 context("classif_blackboost")
 
 test_that("classif_blackboost", {
-  requirePackages("mboost")
-  requirePackages("party")
+  requirePackages("mboost", default.method = "load")
+  requirePackages("party", default.method = "load")
 
   parset.list1 = list(
     list(family = mboost::Binomial(), tree_control = party::ctree_control(maxdepth = 2),

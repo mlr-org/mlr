@@ -1,7 +1,7 @@
 context("regr_gbm")
 
 test_that("regr_gbm", {
-  requirePackages("gbm")
+  requirePackages("gbm", default.method = "load")
   parset.list = list(
     list(),
     list(n.trees=600),

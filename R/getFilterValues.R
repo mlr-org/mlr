@@ -22,7 +22,7 @@ getFilterValues = function(task, method = "rf.importance", nselect = getTaskNFea
   filter = .FilterRegister[[method]]
 
   if (!isScalarNA(filter$pkg))
-    requirePackages(filter$pkg, why = "getFilterValues")
+    requirePackages(filter$pkg, why = "getFilterValues", default.method = "load")
   if (td$type %nin% filter$supported.tasks)
     stopf("Filter '%s' not compatible with task of type '%s'", filter$name, td$type)
   unsupported = setdiff(names(td$n.feat[td$n.feat > 0L]), filter$supported.features)

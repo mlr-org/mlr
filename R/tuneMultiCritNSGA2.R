@@ -1,6 +1,6 @@
 tuneMultiCritNSGA2 = function(learner, task, resampling, measures, par.set, control, opt.path, show.info) {
 
-  requirePackages("mco", why = "tuneMultiCritNSGA2")
+  requirePackages("mco", why = "tuneMultiCritNSGA2", default.method = "load")
   low = getLower(par.set)
   upp = getUpper(par.set)
   cx = function(x) convertXNumeric(x, par.set)

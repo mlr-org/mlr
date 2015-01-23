@@ -1,7 +1,7 @@
 context("classif_linDA")
 
 test_that("classif_linDA", {
-  requirePackages("DiscriMiner")
+  requirePackages("DiscriMiner", default.method = "load")
   set.seed(getOption("mlr.debug.seed"))
   m = DiscriMiner::linDA(multiclass.train[,-multiclass.class.col], group=multiclass.train[,multiclass.class.col])
   p =  DiscriMiner::classify(m, newdata=multiclass.test[,-multiclass.class.col])

@@ -1,7 +1,7 @@
 context("classif_gbm")
 
 test_that("classif_gbm", {
-  requirePackages("gbm")
+  requirePackages("gbm", default.method = "load")
 
   parset.list = list(
     list(),

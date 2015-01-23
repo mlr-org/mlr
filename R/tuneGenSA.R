@@ -1,5 +1,5 @@
 tuneGenSA = function(learner, task, resampling, measures, par.set, control, opt.path, show.info) {
-  requirePackages("GenSA", why = "tuneGenSA")
+  requirePackages("GenSA", why = "tuneGenSA", default.method = "load")
 
   low = getLower(par.set)
   upp = getUpper(par.set)

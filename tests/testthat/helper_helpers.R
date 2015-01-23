@@ -122,7 +122,7 @@ testProbParsets = function(t.name, df, target, train.inds, old.probs.list, parse
 
 
 testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tune.predict = predict) {
-  requirePackages("e1071")
+  requirePackages("e1071", default.method = "load")
   data = df
   formula = formula(paste(target, "~."))
 
@@ -171,7 +171,7 @@ testCVParsets = function(t.name, df, target, folds = 2, tune.train, tune.predict
 
 
 testBootstrap = function(t.name, df, target, iters = 3, parset = list(), tune.train, tune.predict = predict) {
-  requirePackages("e1071")
+  requirePackages("e1071", default.method = "load")
   data = df
   formula = formula(paste(target, "~."))
   tr = e1071::tune(method = tune.train, predict.func = tune.predict, train.x = formula, data = data,

@@ -1,7 +1,7 @@
 context("classif_lssvm")
 
 test_that("classif_lssvm", {
-  requirePackages("kernlab")
+  requirePackages("kernlab", default.method = "load")
   set.seed(getOption("mlr.debug.seed"))
   m = kernlab::lssvm(x=multiclass.formula, data=multiclass.train, kernel="rbfdot", kpar=list(sigma=20))
   p = kernlab::predict(m, newdata=multiclass.test)

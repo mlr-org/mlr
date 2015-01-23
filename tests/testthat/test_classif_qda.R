@@ -1,7 +1,7 @@
 context("classif_qda")
 
 test_that("classif_qda", {
-  requirePackages("MASS")
+  requirePackages("MASS", default.method = "load")
   m = try(MASS::qda(formula = multiclass.formula, data = multiclass.train))
   if (class(m) != "try-error") {
    p = predict(m, newdata = multiclass.test)

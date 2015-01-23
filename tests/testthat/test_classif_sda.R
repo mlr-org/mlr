@@ -1,7 +1,7 @@
 context("classif_sda")
 
 test_that("classif_sda", {
-  requirePackages("sda")
+  requirePackages("sda", default.method = "load")
   capture.output({
     set.seed(getOption("mlr.debug.seed"))
     m = sda::sda(as.matrix(dropNamed(multiclass.train, multiclass.target)), multiclass.train[, multiclass.target])

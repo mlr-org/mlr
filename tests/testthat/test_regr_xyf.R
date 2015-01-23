@@ -1,7 +1,7 @@
 context("regr_xyf")
 
 test_that("regr_xyf", {
-  requirePackages("kohonen")
+  requirePackages("kohonen", default.method = "load")
   parset.list1 = list(
     list(),
     list(grid = class::somgrid(xdim = 2L, ydim = 4L)),
@@ -14,7 +14,7 @@ test_that("regr_xyf", {
   )
 
   old.predicts.list = list()
-  
+
   for (i in 1:length(parset.list1)) {
     pars = parset.list1[[i]]
     pars$data = as.matrix(regr.num.train[, -regr.num.class.col])

@@ -1,7 +1,7 @@
 context("regr_xgboost")
 
 test_that("regr_xgboost", {
-  requirePackages("xgboost")
+  requirePackages("xgboost", default.method = "load")
   parset.list = list(
     list(nrounds = 1),
     list(nrounds = 5, max.depth = 4L)

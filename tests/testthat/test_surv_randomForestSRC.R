@@ -1,8 +1,8 @@
 context("surv_randomForestSRC")
 
 test_that("surv_randomForestSRC", {
-  requirePackages("survival")
-  requirePackages("randomForestSRC")
+  requirePackages("survival", default.method = "load")
+  requirePackages("randomForestSRC", default.method = "load")
 
   parset.list = list(
     list(),

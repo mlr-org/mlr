@@ -1,7 +1,7 @@
 context("regr_svm")
 
 test_that("regr_svm", {
-  requirePackages("e1071")
+  requirePackages("e1071", default.method = "load")
   parset.list = list(
     list(),
     list(kernel = "linear", epsilon = 0.2),

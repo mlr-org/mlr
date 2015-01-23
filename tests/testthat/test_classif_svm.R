@@ -1,7 +1,7 @@
 context("classif_svm")
 
 # we cannot do a prob test, as set.seed sems not to work on e1071 svm for the prob parameters!
-#requirePackages("e1071")
+#requirePackages("e1071", default.method = "load")
 #set.seed(1)
 #m1=svm(Species~., data=iris, probability=T)
 #set.seed(1)
@@ -9,7 +9,7 @@ context("classif_svm")
 #all.equal(m1, m2)
 
 test_that("classif_svm", {
-  requirePackages("e1071")
+  requirePackages("e1071", default.method = "load")
   set.seed(getOption("mlr.debug.seed"))
   m1 = e1071::svm(multiclass.formula, data=multiclass.train, kernel="radial", gamma=20)
   set.seed(getOption("mlr.debug.seed"))

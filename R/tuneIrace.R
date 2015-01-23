@@ -1,5 +1,5 @@
 tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.path, show.info) {
-  requirePackages("irace", why = "tuneIrace")
+  requirePackages("irace", why = "tuneIrace", default.method = "load")
 
   #FIXME: allow to do in parallel
   cx = function(x) convertXLogicalsNotAsStrings(x, par.set)

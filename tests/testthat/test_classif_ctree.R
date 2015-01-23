@@ -1,7 +1,7 @@
 context("classif_ctree")
 
 test_that("classif_ctree", {
-  requirePackages("party")
+  requirePackages("party", default.method = "load")
   parset.list = list(
     list(),
     list(minsplit = 10, mincriterion = 0.005),
@@ -26,9 +26,9 @@ test_that("classif_ctree", {
     old.probs.list[[i]] = p2
   }
 
-  testSimpleParsets("classif.ctree", multiclass.df, multiclass.target, multiclass.train.inds, 
+  testSimpleParsets("classif.ctree", multiclass.df, multiclass.target, multiclass.train.inds,
     old.predicts.list, parset.list)
-  testProbParsets  ("classif.ctree", multiclass.df, multiclass.target, multiclass.train.inds, 
+  testProbParsets  ("classif.ctree", multiclass.df, multiclass.target, multiclass.train.inds,
     old.probs.list, parset.list)
 
   df = iris

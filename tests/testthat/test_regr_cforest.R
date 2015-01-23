@@ -1,7 +1,7 @@
 context("regr_cforest")
 
 test_that("regr_cforest", {
-  requirePackages("party")
+  requirePackages("party", default.method = "load")
   parset.list = list(
     list(),
     list(control = party::cforest_unbiased(mtry = 2)),
@@ -12,9 +12,9 @@ test_that("regr_cforest", {
     list(mtry = 2),
     list(ntree = 1000)
   )
-  
+
   old.predicts.list = list()
-  
+
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     pars = list(regr.formula, data=regr.train)
@@ -24,6 +24,6 @@ test_that("regr_cforest", {
     set.seed(getOption("mlr.debug.seed"))
     old.predicts.list[[i]] = as.vector(predict(m, newdata = regr.test))
   }
-  
+
   testSimpleParsets("regr.cforest", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list2)
 })

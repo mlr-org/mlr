@@ -1,7 +1,7 @@
 context("classif_rrlda")
 
 test_that("classif_rrlda", {
-  requirePackages("!rrlda")
+  requirePackages("!rrlda", default.method = "load")
 
   m = rrlda::rrlda(x = multiclass.train[, -multiclass.class.col], grouping = multiclass.train[, multiclass.target])
   p = predict(m, x = multiclass.test[, -multiclass.class.col])$class

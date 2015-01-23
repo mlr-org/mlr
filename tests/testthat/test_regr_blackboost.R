@@ -1,7 +1,7 @@
 context("regr_blackboost")
 
 test_that("regr_blackboost", {
-  requirePackages(c("mboost","party"))
+  requirePackages(c("mboost","party"), default.method = "load")
   parset.list1 = list(
     list(family=mboost::GaussReg(), tree_controls=party::ctree_control(maxdepth=2)),
     list(family=mboost::GaussReg(), tree_controls=party::ctree_control(maxdepth=4), control=mboost::boost_control(nu=0.03))

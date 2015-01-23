@@ -1,7 +1,7 @@
 context("classif_plsdaCaret")
 
 test_that("classif_plsdaCaret", {
-  requirePackages("caret")
+  requirePackages("caret", default.method = "load")
   parset.list = list(
     list(),
     list(ncomp = 4),

@@ -1,7 +1,7 @@
 context("classif_plsDA")
 
 test_that("classif_plsDA", {
-  requirePackages("DiscriMiner")
+  requirePackages("DiscriMiner", default.method = "load")
   set.seed(getOption("mlr.debug.seed"))
   m = DiscriMiner::plsDA(multiclass.train[,-multiclass.class.col], group=multiclass.train[,multiclass.class.col])
   p = DiscriMiner::classify(m, newdata=multiclass.test[,-multiclass.class.col])

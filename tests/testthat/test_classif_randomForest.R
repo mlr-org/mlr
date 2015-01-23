@@ -1,7 +1,7 @@
 context("classif_randomForest")
 
 test_that("classif_randomForest", {
-  requirePackages("randomForest")
+  requirePackages("randomForest", default.method = "load")
   parset.list = list(
     list(),
     list(ntree=50,  mtry=2),
@@ -51,7 +51,7 @@ test_that("fix factors work", {
   data = iris
   train = sample(1:n, floor(n * 0.9))
   test = setdiff(1:n, train)
-  
+
   data$x = factor(sample(letters[1:3], n, replace=TRUE))
   task = makeClassifTask(data=data[train, ], target="Species")
   learner = makeLearner("classif.randomForest", fix.factors=TRUE)

@@ -1,7 +1,7 @@
 context("classif_ada")
 
 test_that("classif_ada", {
-  requirePackages("ada")
+  requirePackages("ada", default.method = "load")
   set.seed(getOption("mlr.debug.seed"))
   m = ada::ada(formula = binaryclass.formula, data = binaryclass.train, iter = 5L)
   set.seed(getOption("mlr.debug.seed"))

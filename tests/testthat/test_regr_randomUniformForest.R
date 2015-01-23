@@ -2,7 +2,7 @@ context("regr_randomUniformForest")
 
 test_that("regr_randomUniformForest", {
   skip_on_travis() # FIXME: I dont know why this breaks on travis
-  requirePackages("randomUniformForest")
+  requirePackages("randomUniformForest", default.method = "load")
 
   parset.list = list(
     list(ntree = 5, mtry = 4)

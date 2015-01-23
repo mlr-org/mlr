@@ -1,7 +1,7 @@
 context("regr_kknn")
 
 test_that("regr_kknn", {
-  requirePackages("!kknn")
+  requirePackages("!kknn", default.method = "load")
   parset.list = list(
     list(),
     list(k = 1),

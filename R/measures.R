@@ -271,7 +271,7 @@ multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, 
     # pROC does allow NAs
     # FIXME: pROC seems not to mark auc() as S3method, which means that calling multiclass.roc wont find it in pRoc
     # reported issue here:  https://github.com/xrobin/pROC/issues/4
-    requirePackages("!pROC", why = "multiclass.auc")
+    requirePackages("!pROC", why = "multiclass.auc", default.method = "load")
     resp = pred$data$response
     predP = getProbabilities(pred)
     # choose the probablity of the choosen response
@@ -621,7 +621,7 @@ cindex = makeMeasure(id = "cindex", minimize = FALSE, best = 1, worst = 0,
   properties = c("surv", "req.pred", "req.truth"),
   name = "Concordance index",
   fun = function(task, model, pred, feats, extra.args) {
-    requirePackages("Hmisc")
+    requirePackages("Hmisc", default.method = "load")
     resp = pred$data$response
     if (anyMissing(resp))
       return(NA_real_)
@@ -674,7 +674,7 @@ db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
   name = "Davies-Bouldin cluster separation measure",
   note ="See `?clusterSim::index.DB`.",
   fun = function(task, model, pred, feats, extra.args) {
-    requirePackages("clusterSim")
+    requirePackages("clusterSim", default.method = "load")
     clusterSim::index.DB(feats, pred$data$response)$DB
   }
 )
@@ -687,7 +687,7 @@ dunn = makeMeasure(id = "dunn", minimize = FALSE, best = Inf, worst = 0,
   name = "Dunn index",
   note = "See `?clValid::dunn`.",
   fun = function(task, model, pred, feats, extra.args) {
-    requirePackages("clValid")
+    requirePackages("clValid", default.method = "load")
     clValid::dunn(Data = feats, clusters = pred$data$response)
   }
 )
@@ -700,7 +700,7 @@ G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,
   name = "Calinski-Harabasz pseudo F statistic",
   note = "See `?clusterSim::index.G1`.",
   fun = function(task, model, pred, feats, extra.args) {
-    requirePackages("clusterSim")
+    requirePackages("clusterSim", default.method = "load")
     clusterSim::index.G1(feats, pred$data$response)
   }
 )
@@ -713,7 +713,7 @@ G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0,
   name = "Baker and Hubert adaptation of Goodman-Kruskal's gamma statistic",
   note = "See `?clusterSim::index.G2`.",
   fun = function(task, model, pred, feats, extra.args) {
-    requirePackages("clusterSim")
+    requirePackages("clusterSim", default.method = "load")
     clusterSim::index.G2(clusterSim::dist.GDM(feats), pred$data$response)
   }
 )
@@ -726,7 +726,7 @@ silhouette = makeMeasure(id = "silhouette", minimize = FALSE, best = Inf, worst 
   name = "Rousseeuw's silhouette internal cluster quality index",
   note = "See `?clusterSim::index.S`.",
   fun = function(task, model, pred, feats, extra.args) {
-    requirePackages("clusterSim")
+    requirePackages("clusterSim", default.method = "load")
     clusterSim::index.S(clusterSim::dist.GDM(feats), pred$data$response)
   }
 )

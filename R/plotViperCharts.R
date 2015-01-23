@@ -61,7 +61,7 @@ plotViperCharts.list = function(obj, chart = "rocc", browse = TRUE, auth.key = N
   assertList(obj, c("Prediction", "ResampleResult"), min.len = 1L)
   assertChoice(chart, c("prs", "rocs", "prc", "lift", "rocc", "roch", "ROC", "cost",
     "ratedriven", "kendall", "column"))
-  requirePackages(c("rjson", "RCurl"), why = "plotViperChart")
+  requirePackages(c("rjson", "RCurl"), why = "plotViperChart", default.method = "load")
 
   inp = mapply(function(p, s) {
     if (inherits(p, "ResampleResult")) {

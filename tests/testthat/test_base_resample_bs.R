@@ -24,7 +24,7 @@ test_that("bs resampling works", {
   formula = multiclass.formula
   parset = list(minsplit = 12, cp = 0.09)
 
-  requirePackages("rpart")
+  requirePackages("rpart", default.method = "load")
   tt = function(formula, data, subset) {
     rpart::rpart(formula, data = data[subset,], minsplit = 12, cp = 0.09)
   }

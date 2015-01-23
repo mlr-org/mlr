@@ -1,7 +1,7 @@
 context("classif_PART")
 
 test_that("classif_PART", {
-  requirePackages("RWeka")
+  requirePackages("RWeka", default.method = "load")
   parset.list = list(
     list(),
     list(M = 10),

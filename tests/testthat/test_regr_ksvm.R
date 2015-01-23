@@ -1,7 +1,7 @@
 context("regr_ksvm")
 
 test_that("regr_ksvm", {
-  requirePackages("kernlab")
+  requirePackages("kernlab", default.method = "load")
   parset.list = list(
     list(),
     list(C = 0.3, kpar=list(sigma=2)),
