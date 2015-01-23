@@ -1,3 +1,7 @@
+# I dont geht this to work, in the case for 2 numeric classes. For multiclass this seems to work
+# I dont have time to check the inner problems in the underlying code now
+# removed for later
+
 #' @export
 makeRLearner.classif.plsDA = function() {
   makeRLearnerClassif(
