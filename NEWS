@@ -53,6 +53,7 @@ mlr_2.3:
 -- regr.blm
 -- regr.brnn
 -- regr.btgp
+-- regr.btgpllm
 -- regr.btlm
 -- regr.cubist
 -- regr.elmNN
