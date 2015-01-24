@@ -35,9 +35,9 @@ trainLearner.regr.btlm = function(.learner, .task, .subset, .weights = NULL, ...
     d.factor = createDummyFeatures(d.factor, method = "reference")
     d$data = cbind(d.num, d.factor)
     print(names(d$data))
-    return(tgp::btlm(X = d$data, Z = d$target, basemax = n.num, ...))
+    return(tgp::btlm(X = d$data, Z = d$target, basemax = n.num, pred.n = FALSE, ...))
   } else {
-    return(tgp::btlm(X = d$data, Z = d$target, ...))
+    return(tgp::btlm(X = d$data, Z = d$target, pred.n = FALSE, ...))
   }
 }
 
@@ -52,9 +52,9 @@ predictLearner.regr.btlm = function(.learner, .model, .newdata, ...) {
     newdata.factor = createDummyFeatures(newdata.factor, method = "reference")
     newdata = cbind(newdata.num, newdata.factor)
     print(names(newdata))
-    p = predict(.model$learner.model, XX = newdata, ...)
+    p = predict(.model$learner.model, XX = newdata, pred.n = FALSE, ...)
   } else {
-    p = predict(.model$learner.model, XX = .newdata, ...)
+    p = predict(.model$learner.model, XX = .newdata, pred.n = FALSE, ...)
   }
   if (.learner$predict.type == "response") {
     return(p$ZZ.km)

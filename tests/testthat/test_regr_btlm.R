@@ -24,12 +24,12 @@ test_that("regr_btlm", {
   old.predicts.list = list()
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(X = train, Z = y, verb = 0, basemax = n.num)
+    pars = list(X = train, Z = y, verb = 0, basemax = n.num, pred.n = FALSE)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m <- do.call(tgp::btlm, pars)
     
-    old.predicts.list[[i]] = predict(m, XX = test)$ZZ.km
+    old.predicts.list[[i]] = predict(m, XX = test, pred.n = FALSE)$ZZ.km
   }
   testSimpleParsets("regr.btlm", regr.df[, c(2:5, 14)], regr.target, regr.train.inds, old.predicts.list, parset.list)
 })
