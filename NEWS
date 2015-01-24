@@ -46,6 +46,7 @@ mlr_2.3:
 -- classif.xgboost
 -- classif.xyf
 -- regr.bartMachine
+-- regr.bcart
 -- regr.bdk
 -- regr.blm
 -- regr.brnn
