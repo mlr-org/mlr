@@ -48,6 +48,7 @@ mlr_2.3:
 -- regr.bartMachine
 -- regr.bcart
 -- regr.bdk
+-- regr.bgp
 -- regr.blm
 -- regr.brnn
 -- regr.btlm
