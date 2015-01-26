@@ -12,7 +12,9 @@ There are two ways to pass the data:
 The first way is preferable if you want predictions for data already included in a [&Task].
 
 Just as [&train], the [predict](&predict.WrappedModel) function has a ``subset`` argument,
-so you can set aside different portions of the data in [&Task] for training and prediction (more advanced methods for splitting the data in train and test set are described in the [section on resampling](resample.md)).
+so you can set aside different portions of the data in [&Task] for training and prediction
+(more advanced methods for splitting the data in train and test set are described in the
+[section on resampling](resample.md)).
 
 In the following example we fit a [gradient boosting machine](&gbm::gbm) to every second
 observation of the [BostonHousing](&mlbench::BostonHousing) data set and make predictions
@@ -139,7 +141,7 @@ mod = train(lrn, task = sonar.task)
 ## Label of the positive class
 getTaskDescription(sonar.task)$positive
 
-## default threshold
+## Default threshold
 pred = predict(mod, sonar.task)
 pred$threshold
 
@@ -162,10 +164,14 @@ mod = train(lrn, iris.task)
 pred = predict(mod, newdata = iris)
 pred$threshold
 table(as.data.frame(pred)$response)
-pred = setThreshold(pred, c(setosa=0.01, versicolor=50, virginica=1))
+pred = setThreshold(pred, c(setosa = 0.01, versicolor = 50, virginica = 1))
 pred$threshold
 table(as.data.frame(pred)$response)
 ```
+
+If you are interested in tuning the threshold (vector) have a look at the section about
+[performance curves and threshold tuning](roc_analysis.md).
+
 
 ## Visualizing the prediction
 The function [&plotLearnerPrediction] allows to visualize predictions, e.g., for teaching purposes
@@ -188,6 +194,14 @@ See the sections on [performance](performance.md) and
 ```{r}
 lrn = makeLearner("classif.rpart", id = "CART")
 plotLearnerPrediction(lrn, task = iris.task)
+```
+
+For *clustering* we also get a scatter plot of two selected features.
+The color of the points indicates the predicted cluster.
+
+```{r}
+lrn = makeLearner("cluster.SimpleKMeans")
+plotLearnerPrediction(lrn, task = mtcars.task, features = c("disp", "drat"), cv = 0)
 ```
 
 For *regression*, there are two types of plots.
