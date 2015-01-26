@@ -27,7 +27,7 @@ makePreprocWrapperCaret = function (learner, ...) {
     makeLogicalLearnerParam("ppc.pca", default = FALSE),
     makeLogicalLearnerParam("ppc.ica", default = FALSE),
     makeLogicalLearnerParam("ppc.spatialSign", default = FALSE),
-    makeNumericLearnerParam("ppc.thresh", lower = 0, default = 0.94),
+    makeNumericLearnerParam("ppc.thresh", lower = 0, default = 0.95),
     # FIXME: pcaComp has data dep. default, number of features
     makeIntegerLearnerParam("ppc.pcaComp", lower = 1L),
     makeLogicalLearnerParam("ppc.na.remove", default = TRUE),
@@ -38,7 +38,8 @@ makePreprocWrapperCaret = function (learner, ...) {
     makeIntegerLearnerParam("ppc.numUnique", default = 3L, lower = 1L)
   )
   #FIXME: we need a PH functionm here.
-  par.vals = mapply(function(id) par.set$pars[[id]]$default, getParamIds(par.set))
+  par.vals = getParamDefaultVals(par.set)
+  par.vals = insert(par.vals, list(...))
 
   trainfun = function(data, target, args) {
     all.methods = c(

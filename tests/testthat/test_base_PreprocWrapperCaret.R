@@ -12,11 +12,13 @@ test_that("basic PreprocWrapperCaret works", {
   m = train(lrn3, multiclass.task, subset = multiclass.train.inds)
   ctrl = m$learner.model$control
   p = predict(m, subsetTask(multiclass.task, subset = multiclass.test.inds))
-  perf = performance(p, mmce)
-  expect_true(perf < 0.1)
+  perf2 = performance(p, mmce)
+  expect_true(perf2 > perf)
 
-
-#   mod = caret::preProcess(x = multiclass.df[multiclass.train.inds,1:4], method = c("BoxCox", "pca", "scale", "center"), pcaComp = 2)
-#   FIXME: fails and looks pretty different
-#   expect_equal(mod, ctrl)
+  mod = caret::preProcess(x = multiclass.df[multiclass.train.inds,1:4], method = c("BoxCox", "pca", "scale", "center"), pcaComp = 2)
+  mod$method = sort(mod$method)
+  ctrl$method = sort(ctrl$method)
+  mod$call = NULL
+  ctrl$call = NULL
+  expect_equal(mod, ctrl)
 })
