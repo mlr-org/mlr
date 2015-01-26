@@ -157,7 +157,7 @@ measureFPR(truth, response, negative, positive)
 
 fnr
 
-measureFNR(truth, response, positive, negative)
+measureFNR(truth, response, negative, positive)
 
 ppv
 

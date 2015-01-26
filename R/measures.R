@@ -477,7 +477,7 @@ fnr = makeMeasure(id = "fnr", minimize = TRUE, best = 0, worst = 1,
 #' @export measureFNR
 #' @rdname measures
 #' @format none
-measureFNR = function(truth, response, positive, negative) {
+measureFNR = function(truth, response, negative, positive) {
   measureFN(truth, response, negative) / sum(truth == positive)
 }
 
