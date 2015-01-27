@@ -184,19 +184,46 @@ are order-correct.
 
 In order to determine optimal threshold values you can use [%mlr]'s function [&tuneThreshold].
 Below we determine the threshold value for the positive class that leads to the
-lowest average misclassification costs on the data set.
+lowest average misclassification costs.
 
 ```{r}
 tune.res = tuneThreshold(pred = pred, measure = credit.costs)
 tune.res
 ```
 
-In this case the tuned threshold for the positive class is close to the theoretical threshold
+The tuned threshold for the positive class is close to the theoretical threshold
 and leads to a similar performance.
 
 ```{r}
 pred.th = setThreshold(pred, tune.res$th)
 performance(pred.th, measures = list(credit.costs, mmce))
+```
+
+Tuning the threshold on the complete training data set as shown above can lead to overfitting.
+To avoid this resampling strategies should be used.
+Below we perform 3-fold cross-validation and use [&tuneThreshold] to find threshold values
+with lowest average costs over the 3 test data sets.
+
+```{r}
+## 3-fold cross-validation
+rdesc = makeResampleDesc("CV", iters = 3)
+r = resample(lrn, credit.task, resampling = rdesc, measures = list(credit.costs, mmce), show.info = FALSE)
+r
+
+## Tune the threshold based on the predicted probabilities on the 3 test data sets
+tune.res = tuneThreshold(pred = r$pred, measure = credit.costs)
+tune.res
+```
+
+In the following we compare the cross-validated performance of the tuned and the theoretical
+threshold.
+
+```{r}
+## Tuned threshold
+performance(setThreshold(r$pred, tune.res$th), measures = list(credit.costs, mmce))
+
+## Theoretical threshold
+performance(setThreshold(r$pred, th), measures = list(credit.costs, mmce))
 ```
 
 
@@ -383,11 +410,20 @@ Since the scaling of the threshold vector does not change the predicted class la
 [&tuneThreshold] returns threshold values that lie in [0,1] and sum to unity.
 
 ```{r}
-tune.res = tuneThreshold(pred = pred, measure = wf.costs)
+## Threshold tuning based on 3-fold cross-validated predictions
+rdesc = makeResampleDesc("CV", iters = 3)
+r = resample(lrn, wf.task, resampling = rdesc, measures = list(wf.costs, mmce), show.info = FALSE)
+r
+tune.res = tuneThreshold(pred = r$pred, measure = wf.costs)
 tune.res
+```
 
-## Comparison of the tuned threshold vector and the (standardized) threshold vector chosen above
+For comparison we show the standardized version of the theoretically motivated threshold
+vector chosen above as well as its cross-validated performance.
+
+```{r}
 th/sum(th)
+performance(setThreshold(r$pred, th), measures = list(wf.costs, mmce))
 ```
 
 

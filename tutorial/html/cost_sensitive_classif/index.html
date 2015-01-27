@@ -509,7 +509,7 @@ In contrast to <em>theoretical thresholding</em> it suffices if the estimated po
 are order-correct.</p>
 <p>In order to determine optimal threshold values you can use <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>'s function <a href="http://www.rdocumentation.org/packages/mlr/functions/tuneThreshold.html">tuneThreshold</a>.
 Below we determine the threshold value for the positive class that leads to the
-lowest average misclassification costs on the data set.</p>
+lowest average misclassification costs.</p>
 <pre><code class="r">tune.res = tuneThreshold(pred = pred, measure = credit.costs)
 tune.res
 </code></pre>
@@ -522,7 +522,7 @@ tune.res
 #&gt;         0.46
 </code></pre>
 
-<p>In this case the tuned threshold for the positive class is close to the theoretical threshold
+<p>The tuned threshold for the positive class is close to the theoretical threshold
 and leads to a similar performance.</p>
 <pre><code class="r">pred.th = setThreshold(pred, tune.res$th)
 performance(pred.th, measures = list(credit.costs, mmce))
@@ -530,6 +530,58 @@ performance(pred.th, measures = list(credit.costs, mmce))
 
 <pre><code>#&gt; credit.costs         mmce 
 #&gt;        0.460        0.376
+</code></pre>
+
+<p>Tuning the threshold on the complete training data set as shown above can lead to overfitting.
+To avoid this resampling strategies should be used.
+Below we perform 3-fold cross-validation and use <a href="http://www.rdocumentation.org/packages/mlr/functions/tuneThreshold.html">tuneThreshold</a> to find threshold values
+with lowest average costs over the 3 test data sets.</p>
+<pre><code class="r">## 3-fold cross-validation
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+r = resample(lrn, credit.task, resampling = rdesc, measures = list(credit.costs, mmce), show.info = FALSE)
+r
+</code></pre>
+
+<pre><code>#&gt; Resample Result
+#&gt; Task: GermanCredit
+#&gt; Learner: classif.multinom
+#&gt; credit.costs.aggr: 0.85
+#&gt; credit.costs.mean: 0.85
+#&gt; credit.costs.sd: 0.17
+#&gt; mmce.aggr: 0.25
+#&gt; mmce.mean: 0.25
+#&gt; mmce.sd: 0.03
+</code></pre>
+
+<pre><code class="r">## Tune the threshold based on the predicted probabilities on the 3 test data sets
+tune.res = tuneThreshold(pred = r$pred, measure = credit.costs)
+tune.res
+</code></pre>
+
+<pre><code>#&gt; $th
+#&gt; [1] 0.1111
+#&gt; 
+#&gt; $perf
+#&gt; credit.costs 
+#&gt;        0.508
+</code></pre>
+
+<p>In the following we compare the cross-validated performance of the tuned and the theoretical
+threshold.</p>
+<pre><code class="r">## Tuned threshold
+performance(setThreshold(r$pred, tune.res$th), measures = list(credit.costs, mmce))
+</code></pre>
+
+<pre><code>#&gt; credit.costs         mmce 
+#&gt;        0.508        0.412
+</code></pre>
+
+<pre><code class="r">## Theoretical threshold
+performance(setThreshold(r$pred, th), measures = list(credit.costs, mmce))
+</code></pre>
+
+<pre><code>#&gt; credit.costs         mmce 
+#&gt;        0.558        0.362
 </code></pre>
 
 <h4 id="2-rebalancing">2. Rebalancing</h4>
@@ -586,7 +638,7 @@ performance(pred, measures = list(credit.costs, mmce))
 </code></pre>
 
 <pre><code>#&gt; credit.costs         mmce 
-#&gt;        0.230        0.206
+#&gt;        0.229        0.205
 </code></pre>
 
 <p>The theoretical weights may not always be suitable, therefore you can tune the weight for
@@ -603,31 +655,31 @@ tune.res
 </code></pre>
 
 <pre><code>#&gt; Tune result:
-#&gt; Op. pars: wcw.weight=7.25
-#&gt; credit.costs.test.mean=0.507,mmce.test.mean=0.383
+#&gt; Op. pars: wcw.weight=7.75
+#&gt; credit.costs.test.mean=0.512,mmce.test.mean=0.384
 </code></pre>
 
 <pre><code class="r">as.data.frame(tune.res$opt.path)[1:3]
 </code></pre>
 
 <pre><code>#&gt;    wcw.weight credit.costs.test.mean mmce.test.mean
-#&gt; 1           4                 0.5639          0.332
-#&gt; 2        4.25                 0.5539          0.334
-#&gt; 3         4.5                 0.5420          0.334
-#&gt; 4        4.75                 0.5350          0.339
-#&gt; 5           5                 0.5330          0.345
-#&gt; 6        5.25                 0.5360          0.356
-#&gt; 7         5.5                 0.5120          0.352
-#&gt; 8        5.75                 0.5100          0.354
-#&gt; 9           6                 0.5090          0.357
-#&gt; 10       6.25                 0.5120          0.364
-#&gt; 11        6.5                 0.5100          0.370
-#&gt; 12       6.75                 0.5120          0.372
-#&gt; 13          7                 0.5070          0.375
-#&gt; 14       7.25                 0.5070          0.383
-#&gt; 15        7.5                 0.5120          0.388
-#&gt; 16       7.75                 0.5140          0.394
-#&gt; 17          8                 0.5130          0.397
+#&gt; 1           4                  0.609          0.341
+#&gt; 2        4.25                  0.594          0.346
+#&gt; 3         4.5                  0.594          0.350
+#&gt; 4        4.75                  0.590          0.354
+#&gt; 5           5                  0.590          0.358
+#&gt; 6        5.25                  0.570          0.358
+#&gt; 7         5.5                  0.573          0.365
+#&gt; 8        5.75                  0.565          0.369
+#&gt; 9           6                  0.545          0.369
+#&gt; 10       6.25                  0.538          0.370
+#&gt; 11        6.5                  0.527          0.371
+#&gt; 12       6.75                  0.533          0.377
+#&gt; 13          7                  0.525          0.381
+#&gt; 14       7.25                  0.520          0.384
+#&gt; 15        7.5                  0.520          0.384
+#&gt; 16       7.75                  0.512          0.384
+#&gt; 17          8                  0.518          0.390
 </code></pre>
 
 <h5 id="ii-over-and-undersampling">ii. Over- and undersampling</h5>
@@ -645,7 +697,7 @@ performance(pred, measures = list(credit.costs, mmce))
 </code></pre>
 
 <pre><code>#&gt; credit.costs         mmce 
-#&gt;        0.429        0.325
+#&gt;        0.440        0.328
 </code></pre>
 
 <p>Of course, we can also tune the oversampling rate.
@@ -663,8 +715,8 @@ tune.res
 </code></pre>
 
 <pre><code>#&gt; Tune result:
-#&gt; Op. pars: osw.rate=6.25
-#&gt; credit.costs.test.mean=0.562,mmce.test.mean=0.374
+#&gt; Op. pars: osw.rate=6
+#&gt; credit.costs.test.mean=0.519,mmce.test.mean=0.363
 </code></pre>
 
 <h3 id="multi-class-problems">Multi-class problems</h3>
@@ -742,7 +794,7 @@ performance(pred, measures = list(wf.costs, mmce))
 </code></pre>
 
 <pre><code>#&gt; wf.costs     mmce 
-#&gt;    4.064    0.150
+#&gt;    4.446    0.156
 </code></pre>
 
 <pre><code class="r">th = c(1/55, 1/4.5, 1/9)
@@ -752,7 +804,7 @@ performance(pred.th, measures = list(wf.costs, mmce))
 </code></pre>
 
 <pre><code>#&gt; wf.costs     mmce 
-#&gt;    3.324    0.218
+#&gt;    3.982    0.436
 </code></pre>
 
 <p>The threshold vector <code>th</code> in the above example is chosen according to the average costs
@@ -765,24 +817,49 @@ the default.</p>
 <p>As in the binary case it is possible to tune the threshold vector using function <a href="http://www.rdocumentation.org/packages/mlr/functions/tuneThreshold.html">tuneThreshold</a>.
 Since the scaling of the threshold vector does not change the predicted class labels
 <a href="http://www.rdocumentation.org/packages/mlr/functions/tuneThreshold.html">tuneThreshold</a> returns threshold values that lie in [0,1] and sum to unity.</p>
-<pre><code class="r">tune.res = tuneThreshold(pred = pred, measure = wf.costs)
+<pre><code class="r">## Threshold tuning based on 3-fold cross-validated predictions
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+r = resample(lrn, wf.task, resampling = rdesc, measures = list(wf.costs, mmce), show.info = FALSE)
+r
+</code></pre>
+
+<pre><code>#&gt; Resample Result
+#&gt; Task: waveform
+#&gt; Learner: classif.rpart
+#&gt; wf.costs.aggr: 9.23
+#&gt; wf.costs.mean: 9.23
+#&gt; wf.costs.sd: 3.20
+#&gt; mmce.aggr: 0.27
+#&gt; mmce.mean: 0.27
+#&gt; mmce.sd: 0.03
+</code></pre>
+
+<pre><code class="r">tune.res = tuneThreshold(pred = r$pred, measure = wf.costs)
 tune.res
 </code></pre>
 
 <pre><code>#&gt; $th
-#&gt;       1       2       3 
-#&gt; 0.07472 0.40874 0.51655 
+#&gt;        1        2        3 
+#&gt; 0.006206 0.590280 0.403515 
 #&gt; 
 #&gt; $perf
-#&gt; [1] 3.314
+#&gt; [1] 4.45
 </code></pre>
 
-<pre><code class="r">## Comparison of the tuned threshold vector and the (standardized) threshold vector chosen above
-th/sum(th)
+<p>For comparison we show the standardized version of the theoretically motivated threshold
+vector chosen above as well as its cross-validated performance.</p>
+<pre><code class="r">th/sum(th)
 </code></pre>
 
 <pre><code>#&gt;       1       2       3 
 #&gt; 0.05172 0.63218 0.31609
+</code></pre>
+
+<pre><code class="r">performance(setThreshold(r$pred, th), measures = list(wf.costs, mmce))
+</code></pre>
+
+<pre><code>#&gt; wf.costs     mmce 
+#&gt;    6.312    0.416
 </code></pre>
 
 <h4 id="2-rebalancing_1">2. Rebalancing</h4>
@@ -803,8 +880,8 @@ tune.res
 </code></pre>
 
 <pre><code>#&gt; Tune result:
-#&gt; Op. pars: wcw.weight=71.6,9.37,4.8
-#&gt; wf.costs.test.mean=3.12,mmce.test.mean=0.234
+#&gt; Op. pars: wcw.weight=41.2,33.2,2.91
+#&gt; wf.costs.test.mean=2.28,mmce.test.mean=0.15
 </code></pre>
 
 <h2 id="example-dependent-misclassification-costs">Example-dependent misclassification costs</h2>
@@ -921,7 +998,7 @@ pred
 <pre><code>#&gt; Prediction: 150 observations
 #&gt; predict.type: response
 #&gt; threshold: 
-#&gt; time: 0.08
+#&gt; time: 0.07
 #&gt;   id response
 #&gt; 1  1   setosa
 #&gt; 2  2   setosa
@@ -935,7 +1012,7 @@ pred
 </code></pre>
 
 <pre><code>#&gt; meancosts       mcp 
-#&gt;     136.4     131.6
+#&gt;     161.2     156.0
 </code></pre>
 
 </div>
