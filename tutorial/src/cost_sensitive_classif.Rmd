@@ -16,9 +16,9 @@ component expresses the costs of assigning *x* to class *k*.
 A real-world example is fraud detection where the costs do not only depend on errors in
 predicting the status fraud/non-fraud, but also on the amount of money involved in each case.
 The cost of the intended class label *y* is assumed to be minimum.
-Given the cost vector, the true class labels *y* do not play a role in calculating the
-expected costs. Therefore, in order to define the classification problem, only the features
-*x* and the cost vector are required.
+If the cost vector is given, the true class labels *y* are not needed to calculate the
+expected costs.
+The classification problem is therefore completely defined by the features *x* and the cost vector.
 
 In the following we show ways to handle cost-sensitive classification problems in [%mlr].
 Some of the functionality is currently experimental, and there may be changes in the future.
@@ -31,23 +31,22 @@ directly.
 One example is [rpart](&rpart::rpart).
 
 Alternatively, we can use cost-insensitive methods and manipulate the predictions or the
-training data to take misclassification costs into account.
+training data in order to take misclassification costs into account.
 [%mlr] supports *thresholding* and *rebalancing*.
 
 1. **Thresholding**:
-  The thresholds that map the probabilities to class labels are chosen such that the costs
-  are minimized.
+  The thresholds used to turn posterior probabilities into class labels are chosen such that
+  the costs are minimized.
   This requires a [Learner](&makeLearner) that can predict posterior probabilities.
-  The costs are not taken into account during training.
+  During training the costs are not taken into account.
 
 2. **Rebalancing**:
-  The idea is to change the proportion of the classes in the training data set, either by
-  *weighting* or by *sampling*.
-  This way, the costs are taken into account during training.
+  The idea is to change the proportion of the classes in the training data set in order to
+  account for costs during training, either by *weighting* or by *sampling*.
   Rebalancing does not require that the [Learner](&makeLearner) can predict probabilities.
 
      i. *Weighting* requires a [Learner](&makeLearner) that supports class weights or observation
-	    weights.
+         weights.
 
      ii. If the [Learner](&makeLearner) cannot deal with weights the proportion of classes can
          be changed by *over-* and *undersampling*.
@@ -71,7 +70,7 @@ Often, the diagonal entries are zero or the cost matrix is rescaled to achieve z
 A well-known cost-sensitive classification problem is the
 [German Credit data set](&caret::GermanCredit)
 (see also the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Statlog+(German+Credit+Data))).
-The corresponding cost matrix ([Elkan (2001)](http://www.cs.iastate.edu/~honavar/elkan.pdf)
+The corresponding cost matrix (though [Elkan (2001)](http://www.cs.iastate.edu/~honavar/elkan.pdf)
 argues that this matrix is economically unreasonable) is given as:
 
 |               |      |      |
@@ -82,10 +81,10 @@ argues that this matrix is economically unreasonable) is given as:
 
 As in the table above, the rows indicate true and the columns predicted classes.
 
-In case of class-dependent costs it is sufficient to generate a normal [ClassifTask](&Task).
+In case of class-dependent costs it is sufficient to generate an ordinary [ClassifTask](&Task).
 A [CostSensTask](&Task) is needed in case of example-dependent costs.
-In the following we create the [ClassifTask](&Task), remove two constant features and
-generate the cost matrix.
+In the following we create the [ClassifTask](&Task), remove two constant features from the
+data set and generate the cost matrix.
 Per default, Bad is the positive class.
 
 ```{r}
@@ -95,14 +94,14 @@ credit.task = removeConstantFeatures(credit.task)
 credit.task
 
 costs = matrix(c(0, 1, 5, 0), 2)
-colnames(costs) = rownames(costs) = credit.task$task.desc$class.levels
+colnames(costs) = rownames(costs) = getTaskDescription(credit.task)$class.levels
 costs
 ```
 
 
 #### 1. Thresholding
 
-In the following example we fit a [logistic regression model](&nnet::multinom) to the
+Now we fit a [logistic regression model](&nnet::multinom) to the
 [German credit data set](&caret::GermanCredit) and predict posterior probabilities.
 
 ```{r}
@@ -114,8 +113,9 @@ pred
 ```
 
 The default thresholds for both classes are 0.5.
-According to the cost matrix we should predict class Good only if we are very sure and thus
-increase the threshold for class Good and decrease the threshold for class Bad.
+According to the cost matrix we should predict class Good only if we are very sure that Good
+is the correct label and therefore increase the threshold for class Good and decrease the
+threshold for class Bad.
 
 
 ##### i. Theoretical thresholding
@@ -140,8 +140,8 @@ pred.th
 
 In order to calculate the average costs over the entire data set we first need to create a new
 performance [Measure](&makeMeasure). This can be done with function [&makeCostMeasure]
-which requires the [ClassifTask](&Task) and the cost matrix.
-The cost matrix is passed via the argument ``costs`` and it is expected that the rows indicate
+which requires the [ClassifTask](&Task) object and the cost matrix.
+The cost matrix is passed via the argument ``costs``. It is expected that the rows indicate
 true class labels and the columns predicted class labels.
 
 ```{r}
@@ -163,10 +163,10 @@ performance(pred.th, measures = list(credit.costs, mmce))
 ```
 
 Theoretical thresholding is only reliable if the predicted posterior probabilities are correct.
-If there are systematic errors in the probabilities the thresholds have to be shifted accordingly.
+If there are systematic errors the thresholds have to be shifted accordingly.
 
-With function [&plotThreshVsPerf] you can plot the average costs versus possible threshold
-values for the positive class.
+Useful in this regard is function [&plotThreshVsPerf] that permits to plot the average costs
+as well as other performance measures versus possible threshold values for the positive class.
 The theoretical threshold ``th`` calculated above is indicated by the vertical line.
 As you can see the theoretical threshold is suitable.
 
@@ -177,11 +177,14 @@ plotThreshVsPerf(pred = pred, measures = list(credit.costs, mmce), mark.th = th)
 
 ##### ii. Empirical thresholding
 
-You can use function [&tuneThreshold] to find cost-optimal threshold values for the given
-learning method, see also [Sheng and Ling (2006)](http://sun0.cs.uca.edu/~ssheng/papers/AAAI06a.pdf).
-In the following we determine the threshold value for the positive class that leads to the
+In *empirical thresholding* (see [Sheng and Ling (2006)](http://sun0.cs.uca.edu/~ssheng/papers/AAAI06a.pdf))
+cost-optimal threshold values for a given learning method are selected based on the training data.
+In contrast to *theoretical thresholding* it suffices if the estimated posterior probabilities
+are order-correct.
+
+In order to determine optimal threshold values you can use [%mlr]'s function [&tuneThreshold].
+Below we determine the threshold value for the positive class that leads to the
 lowest average misclassification costs on the data set.
-For empirical thresholding it suffices if the estimated posterior probabilities are order-correct.
 
 ```{r}
 tune.res = tuneThreshold(pred = pred, measure = credit.costs)
@@ -199,7 +202,7 @@ performance(pred.th, measures = list(credit.costs, mmce))
 
 #### 2. Rebalancing
 
-In order to minimize the costs observations from the less costly class should be
+In order to minimize the average costs, observations from the less costly class should be
 given higher importance during training.
 This can be achieved by *weighting* the classes if the classification method under consideration
 accepts class or observations weights.
@@ -218,15 +221,17 @@ the inverse.
 A proof is given by [Elkan (2001)](http://www.cs.iastate.edu/~honavar/elkan.pdf).
 
 In most cases, the original threshold *t*<sub>0</sub> is 0.5 and thus the second factor vanishes.
-If additionally *t* equals the theoretical threshold *t*<sup>*</sup> the proportion of observations in
-the positive class has to be multiplied by
+If additionally our target threshold *t* is the theoretical threshold *t*<sup>*</sup> the
+proportion of observations in the positive class has to be multiplied by
 ![theoretic weight positive](../../images/theoretic_weight_positive.png "theoretic weight positive")
 
-Function [&makeWeightedClassesWrapper] allows to assign class weights to [Learner](&makeLearner)s
-that either support class weights or observation weights.
+Function [&makeWeightedClassesWrapper] allows to assign class weights to [Learner](&makeLearner)s.
+Naturally, this is only possible for methods with either a class weights or observation weights argument.
+(Have a look at the [table of integrated learners](integrated_learners.md) to see which methods
+support weights.)
 
 Function [multinom](&nnet::multinom) accepts observation weights.
-The weight given to observations from the positive class is passed via argument ``wcw.weight``.
+The weight given to all observations from the positive class is passed via argument ``wcw.weight``.
 Observations from the negative class automatically receive weight 1.
 
 ```{r}
@@ -238,8 +243,8 @@ performance(pred, measures = list(credit.costs, mmce))
 ```
 
 Some classification methods as the [support vector machine](&kernlab::ksvm) in package [%kernlab]
-accept class weights.
-In this case you have to pass the name of the relevant learner parameter (``"class.weights"``)
+support class weights.
+In this case you have to additionally pass the name of the relevant learner parameter (``"class.weights"``)
 via argument ``wcw.param`` when generating the wrapped [Learner](&makeLearner).
 
 ```{r}
@@ -274,7 +279,8 @@ of the classes in the training data can be changed by over- or undersampling.
 
 In the [GermanCredit data set](&caret::GermanCredit) the positive class Bad should receive
 a weight of about ``(1 - th)/th = 5``.
-This can be achieved by oversampling class Bad with a ``rate`` of 5.
+This can be achieved by oversampling class Bad with a ``rate`` of 5 (see also the documentation
+page of function [&oversample]).
 
 ```{r}
 credit.task.under = oversample(credit.task, rate = (1 - th)/th)
@@ -284,7 +290,10 @@ pred = predict(mod, task = credit.task)
 performance(pred, measures = list(credit.costs, mmce))
 ```
 
-Of course, we can also tune the oversampling rate as follows:
+Of course, we can also tune the oversampling rate.
+For this purpose we have to create a wrapped [Learner](&makeLearner) via function
+[makeOversampleWrapper](&makeUndersampleWrapper) and tune the parameter `osw.rate` using
+function [&tuneParams].
 
 ```{r}
 lrn = makeLearner("classif.multinom", trace = FALSE)
@@ -320,7 +329,7 @@ wf.task = makeClassifTask(id = "waveform", data = as.data.frame(df), target = "c
 
 ## Cost matrix
 costs = matrix(c(0, 5, 10, 30, 0, 8, 80, 4, 0), 3)
-colnames(costs) = rownames(costs) = wf.task$task.desc$class.levels
+colnames(costs) = rownames(costs) = getTaskDescription(wf.task)$class.levels
 
 ## Performance measure
 wf.costs = makeCostMeasure(id = "wf.costs", costs = costs, task = wf.task, best = 0,
@@ -333,6 +342,7 @@ that is, the cost of misclassifying an observation is independent of the predict
 (see [Domingos (1999)](http://homes.cs.washington.edu/~pedrod/papers/kdd99.pdf)).
 Given a cost matrix of this type, theoretical thresholds and weights can be derived
 in a similar manner as in the binary case.
+Obviously, the cost matrix given above does not have this special structure.
 
 
 #### 1. Thresholding
@@ -411,7 +421,7 @@ In case of example-dependent costs we have to create a special [&Task] via funct
 For this purpose the feature values *x* and an *n* times *K* ``cost`` matrix that contains
 the cost vectors for all *n* examples in the data set are required.
 
-We use the iris data and generate an artificial cost matrix.
+We use the [iris](&datasets::iris) data and generate an artificial cost matrix.
 
 ```{r}
 df = iris
@@ -424,8 +434,8 @@ costsens.task = makeCostSensTask(id = "iris", data = df, cost = cost)
 costsens.task
 ```
 
-[%mlr] provides several [wrappers](wrapper.md) to create [Learner](&makeLearner)s that can
-deal with example-dependent costs from regular classification and regression methods.
+[%mlr] provides several [wrappers](wrapper.md) to turn regular classification or regression methods
+into [Learner](&makeLearner)s that can deal with example-dependent costs.
 
 * [&makeCostSensClassifWrapper] (wraps a classification [Learner](&makeLearner)):
   This is a naive approach where the costs are coerced into class labels by choosing the
