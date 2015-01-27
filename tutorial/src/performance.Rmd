@@ -136,7 +136,7 @@ as well as the misclassification rate ([mmce](measures.md)) for all possible thr
 
 ```{r}
 lrn = makeLearner("classif.lda", predict.type = "prob")
-n = sonar.task$task.desc$size
+n = getTaskDescription(sonar.task)$size
 mod = train(lrn, task = sonar.task, subset = seq(1, n, by = 2))
 pred = predict(mod, task = sonar.task, subset = seq(2, n, by = 2))
 

@@ -363,7 +363,7 @@ pred = predict(mod, task = wf.task)
 performance(pred, measures = list(wf.costs, mmce))
 
 th = c(1/55, 1/4.5, 1/9)
-names(th) = wf.task$task.desc$class.levels
+names(th) = getTaskDescription(wf.task)$class.levels
 pred.th = setThreshold(pred, threshold = th)
 performance(pred.th, measures = list(wf.costs, mmce))
 ```
