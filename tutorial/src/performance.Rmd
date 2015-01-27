@@ -127,7 +127,8 @@ As you may recall (see the previous section on [making predictions](predict.md))
 in binary classification we can adjust the threshold used to map probabilities to class labels.
 Helpful in this regard is the function [&plotThreshVsPerf], which generates a plot of the
 learner performance versus the threshold.
-Later on we will show how to find an optimal threshold value by [tuning](tune.md).
+
+For more performance plots and automatic threshold tuning see [here](roc_analysis.md).
 
 In the following example we consider the [Sonar](&mlbench::Sonar) data set and
 plot the false positive rate ([fpr](measures.md)), the false negative rate ([fnr](measures.md))
@@ -144,3 +145,4 @@ performance(pred, measures = list(fpr, fnr, mmce))
 ## Plot false negative and positive rates as well as the error rate versus the threshold
 plotThreshVsPerf(pred, measures = list(fpr, fnr, mmce))
 ```
+
