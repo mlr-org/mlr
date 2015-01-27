@@ -62,6 +62,10 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
     if (any(notna))
       errmsg = errmsgs[notna][1L]
     exec.time = exec.time[3L]
+  } else {
+    # we still need to define a non-NULL threshold, if tuning it was requested
+    if (control$tune.threshold)
+      threshold = NA_real_
   }
   # if eval was not ok, everything should have been initailized to NAs
 
