@@ -47,8 +47,11 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
       th.args$pred = r$pred
       th.args$measure = measures[[1L]]
       tune.th.res = do.call(tuneThreshold, th.args)
-      y = tune.th.res$perf
       threshold = tune.th.res$th
+      # we need to eval 1 final time here, as tuneThreshold only works with 1 measure,
+      # but we need yvec for all measures
+      y = performance(setThreshold(r$pred, threshold = threshold), measures = measures)
+      # names from resample are slightly different, set them correctly here
       names(y) = names(r$aggr)
     } else {
       y = r$aggr

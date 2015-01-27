@@ -1,5 +1,6 @@
-#' Tune prediction threshold.
+#' @title Tune prediction threshold.
 #'
+#' @description
 #' Optimizes the threshold of prediction based on probabilities.
 #' Uses \code{\link[BBmisc]{optimizeSubInts}} for 2class problems and \code{\link[cmaes]{cma_es}}
 #' for multiclass problems.
