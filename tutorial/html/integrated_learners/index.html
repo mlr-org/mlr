@@ -138,6 +138,10 @@
                                 <a href="../roc_analysis/index.html">ROC Analysis</a>
                             </li>
                         
+                            <li >
+                                <a href="../learning_curve/index.html">Learning Curve</a>
+                            </li>
+                        
                         </ul>
                     </li>
                 
@@ -295,6 +299,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left">'use_missing_data' has been set to TRUE by default to allow missing data support</td>
 </tr>
 <tr>
+<td align="left"><strong>classif.bdk</strong> <br />bdk</td>
+<td align="left">Bi-Directional Kohonen map</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/kohonen/">kohonen</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">multiclass<br />prob<br />twoclass</td>
+<td align="left"></td>
+</tr>
+<tr>
 <td align="left"><strong>classif.binomial</strong> <br />binomial</td>
 <td align="left">Binomial Regression</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/stats/">stats</a></td>
@@ -347,6 +362,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center">X</td>
 <td align="right">multiclass<br />ordered<br />prob<br />twoclass</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.extraTrees</strong> <br />extraTrees</td>
+<td align="left">Extremely Randomized Trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/extraTrees/">extraTrees</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
+<td align="right">multiclass<br />prob<br />twoclass</td>
 <td align="left"></td>
 </tr>
 <tr>
@@ -647,17 +673,6 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left">AIC and BIC penalty types can be selected via the new parameter <code>cp.type</code></td>
 </tr>
 <tr>
-<td align="left"><strong>classif.plsDA</strong> <br />plsda</td>
-<td align="left">Partial Least Squares (PLS) Discriminant Analysis</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/DiscriMiner/">DiscriMiner</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right">multiclass<br />twoclass</td>
-<td align="left"></td>
-</tr>
-<tr>
 <td align="left"><strong>classif.plsdaCaret</strong> <br />plsdacaret</td>
 <td align="left">Partial Least Squares (PLS) Discriminant Analysis</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/caret/">caret</a></td>
@@ -724,6 +739,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left">'na.action' has been set to 'na.impute' by default to allow missing data support</td>
 </tr>
 <tr>
+<td align="left"><strong>classif.randomUniformForest</strong> <br />randomUniformForest</td>
+<td align="left">Random Uniform Forests</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/randomUniformForest/">randomUniformForest</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">multiclass<br />ordered<br />prob<br />twoclass</td>
+<td align="left"></td>
+</tr>
+<tr>
 <td align="left"><strong>classif.rda</strong> <br />rda</td>
 <td align="left">Regularized Discriminant Analysis</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/klaR/">klaR</a></td>
@@ -778,6 +804,28 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="right">multiclass<br />prob<br />twoclass</td>
 <td align="left"></td>
 </tr>
+<tr>
+<td align="left"><strong>classif.xgboost</strong> <br />xgb</td>
+<td align="left">eXtreme Gradient Boosting</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/xgboost/">xgboost</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">multiclass<br />prob<br />twoclass</td>
+<td align="left"><code>nround</code> should be set to value higher then 1 for more accuracy. Mulitclass will use <code>objective = 'multi:softmax'</code>. Binaryclass will use <code>objective = 'binary:logistic'</code>.</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.xyf</strong> <br />xyf</td>
+<td align="left">X-Y fused self-organising maps</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/kohonen/">kohonen</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">multiclass<br />prob<br />twoclass</td>
+<td align="left"></td>
+</tr>
 </tbody>
 </table>
 <h3 id="regression">Regression</h3>
@@ -808,6 +856,50 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left">'use_missing_data' has been set to TRUE by default to allow missing data support</td>
 </tr>
 <tr>
+<td align="left"><strong>regr.bcart</strong> <br />bcart</td>
+<td align="left">Bayesian CART</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/tgp/">tgp</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">se</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.bdk</strong> <br />bdk</td>
+<td align="left">Bi-Directional Kohonen map</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/kohonen/">kohonen</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.bgp</strong> <br />bgp</td>
+<td align="left">Bayesian Gaussian Process</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/tgp/">tgp</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">se</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.bgpllm</strong> <br />bgpllm</td>
+<td align="left">Bayesian Gaussian Process with jumps to the Limiting Linear Model</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/tgp/">tgp</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">se</td>
+<td align="left"></td>
+</tr>
+<tr>
 <td align="left"><strong>regr.blackboost</strong> <br />blackbst</td>
 <td align="left">Gradient Boosting with Regression Trees</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/mboost/">mboost</a><br /><a href="http://www.rdocumentation.org/packages/party/">party</a></td>
@@ -816,6 +908,61 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center"></td>
 <td align="center">X</td>
 <td align="right"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.blm</strong> <br />blm</td>
+<td align="left">Bayesian Linear Model</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/tgp/">tgp</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">se</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.brnn</strong> <br />brnn</td>
+<td align="left">Bayesian regularization for feed-forward neural networks</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/brnn/">brnn</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.btgp</strong> <br />btgp</td>
+<td align="left">Bayesian Treed Gaussian Process</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/tgp/">tgp</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">se</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.btgpllm</strong> <br />btgpllm</td>
+<td align="left">Bayesian Treed Gaussian Process with jumps to the Limiting Linear Model</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/tgp/">tgp</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">se</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.btlm</strong> <br />btlm</td>
+<td align="left">Bayesian Treed Linear Model</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/tgp/">tgp</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">se</td>
 <td align="left"></td>
 </tr>
 <tr>
@@ -852,6 +999,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left"></td>
 </tr>
 <tr>
+<td align="left"><strong>regr.cubist</strong> <br />cubist</td>
+<td align="left">Cubist</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/Cubist/">Cubist</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="left"></td>
+</tr>
+<tr>
 <td align="left"><strong>regr.earth</strong> <br />earth</td>
 <td align="left">Multivariate Adaptive Regression Splines</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/earth/">earth</a></td>
@@ -859,6 +1017,28 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
+<td align="right"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.elmNN</strong> <br />elmNN</td>
+<td align="left">Extreme Learning Machine for Single Hidden Layer Feedforward Neural Networks</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/elmNN/">elmNN</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="left">nhid has been set to 1 and actfun has been set to "sig" by default</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.extraTrees</strong> <br />extraTrees</td>
+<td align="left">Extremely Randomized Trees</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/extraTrees/">extraTrees</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">X</td>
 <td align="right"></td>
 <td align="left"></td>
 </tr>
@@ -963,7 +1143,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 </tr>
 <tr>
 <td align="left"><strong>regr.mob</strong> <br />mob</td>
-<td align="left">Model-based Recursive Partitioning Yielding a Tree with Fitted Models Associated with each Terminal Node</td>
+<td align="left">Model-based Recursive Partitioning  Yielding a Tree with Fitted Models Associated with each Terminal Node</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/party/">party</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -1050,6 +1230,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left">na.action' has been set to 'na.impute' by default to allow missing data support</td>
 </tr>
 <tr>
+<td align="left"><strong>regr.randomUniformForest</strong> <br />randomUniformForest</td>
+<td align="left">Random Uniform Forests</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/randomUniformForest/">randomUniformForest</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">ordered</td>
+<td align="left"></td>
+</tr>
+<tr>
 <td align="left"><strong>regr.rpart</strong> <br />rpart</td>
 <td align="left">Decision Tree</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/rpart/">rpart</a></td>
@@ -1080,7 +1271,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center"></td>
 <td align="center"></td>
 <td align="right"></td>
-<td align="left">Kernel parameters have to be passed directly and not by using the kpar list in rvm.  Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
+<td align="left">Kernel parameters have to be passed directly and not by using the kpar list in rvm.   Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
 </tr>
 <tr>
 <td align="left"><strong>regr.svm</strong> <br />svm</td>
@@ -1088,6 +1279,28 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left"><a href="http://www.rdocumentation.org/packages/e1071/">e1071</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.xgboost</strong> <br />xgb</td>
+<td align="left">eXtreme Gradient Boosting</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/xgboost/">xgboost</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="left"><code>nround</code> should be set to value higher then 1 for more accuracy. <code>objective = 'multireg:linear'</code> set automatically for regression.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.xyf</strong> <br />xyf</td>
+<td align="left">X-Y fused self-organising maps</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/kohonen/">kohonen</a></td>
+<td align="center">X</td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
 <td align="right"></td>

@@ -1,0 +1,40 @@
+# Learning Curve Analysis
+
+To analyze how the increase of observations in the trainings set improves the performance of a learner the *Learning Curve* is an appropriate visual tool.
+The experiment is conducted with an increasing subsample size and the performance is measured.
+In the plot the x-axis represents the relative subsample size whereas the y-axis represents the performance.
+
+Note that this function internally uses [%makeDownsampleWrapper], so for every run new observations are drawn.
+Thus the results are noisy.
+To reduce noise increase number of resampling iterations.
+
+## Plotting the Learning curve
+
+The [%mlr] function [generateLearningCurve](&generateLearningCurve) can generate the data for *learning curves* for multiple [learners](integrated_learners.md) and multiple [perfomrance measures](measures.md) at once. 
+With [&plotLearningCurve] the result of [&generateLearningCurve] can be plotted using [%ggplot2].
+
+```{r LearningCurveTPFP}
+r = generateLearningCurve(
+  learners = list("classif.rpart", "classif.knn"), 
+  task = sonar.task, 
+  percs = seq(0.1, 1, by = 0.2), 
+  measures = list(tp, fp, tn, fn), 
+  resampling = makeResampleDesc(method = "CV", iters = 5), 
+  show.info = FALSE)
+plotLearningCurve(r)
+```
+
+Here you can see, that a simplified usage of the `learners` argument was used, so that it's sufficient to give the *Name*.
+It is also possible to create a learner the usual way and even to mix it.
+Make sure to give different 'ids' in this case.
+
+```{r LearningCurveACCx}
+lrns = list(
+  makeLearner(cl = "classif.ksvm", id = "ksvm1" , sigma = 0.2, C = 2),
+  makeLearner(cl = "classif.ksvm", id = "ksvm2" , sigma = 0.1, C = 1),
+  "classif.randomForest"
+)
+rin = makeResampleDesc(method = "CV", iters = 5)
+lc = generateLearningCurve(learners = lrns, task = sonar.task, percs = seq(0.1, 1, by = 0.1), measures = acc, resampling = rin, show.info = FALSE)
+plotLearningCurve(lc)
+```

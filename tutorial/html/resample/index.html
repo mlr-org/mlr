@@ -138,6 +138,10 @@
                                 <a href="../roc_analysis/index.html">ROC Analysis</a>
                             </li>
                         
+                            <li >
+                                <a href="../learning_curve/index.html">Learning Curve</a>
+                            </li>
+                        
                         </ul>
                     </li>
                 
@@ -319,13 +323,13 @@ variable.</p>
 <pre><code class="r">head(r$pred$data)
 </code></pre>
 
-<pre><code>#&gt;    id truth.time truth.event response iter  set
-#&gt; 2   1        455        TRUE  -0.4952    1 test
-#&gt; 4   2        210        TRUE   0.9574    1 test
-#&gt; 7   4        310        TRUE   0.8069    1 test
-#&gt; 17 10        613        TRUE   0.1918    1 test
-#&gt; 19 12         61        TRUE   0.6639    1 test
-#&gt; 22 14         81        TRUE  -0.1874    1 test
+<pre><code>#&gt;    id truth.time truth.event   response iter  set
+#&gt; 2   1        455        TRUE -0.4951788    1 test
+#&gt; 4   2        210        TRUE  0.9573824    1 test
+#&gt; 7   4        310        TRUE  0.8069059    1 test
+#&gt; 17 10        613        TRUE  0.1918188    1 test
+#&gt; 19 12         61        TRUE  0.6638736    1 test
+#&gt; 22 14         81        TRUE -0.1873917    1 test
 </code></pre>
 
 <p>The columns <code>iter</code> and <code>set</code>indicate the resampling iteration and
@@ -353,46 +357,78 @@ r = resample(&quot;cluster.XMeans&quot;, mtcars.task, rdesc, measures = list(dun
 <pre><code>#&gt; [Resample] subsampling iter: 1
 </code></pre>
 
-<pre><code>#&gt; Warning: RGL: unable to open X11 display
-#&gt; Warning: error in rgl_init
+<pre><code>#&gt; Warning in rgl.init(initValue, onlyNULL): RGL: unable to open X11 display
+</code></pre>
+
+<pre><code>#&gt; Warning in fun(libname, pkgname): error in rgl_init
 </code></pre>
 
 <pre><code>#&gt; [Resample] subsampling iter: 2
 #&gt; [Resample] subsampling iter: 3
 </code></pre>
 
-<pre><code>#&gt; Warning: no non-missing arguments to min; returning Inf
-#&gt; Warning: no non-missing arguments to max; returning -Inf
-#&gt; Warning: no non-missing arguments to min; returning Inf
-#&gt; Warning: no non-missing arguments to max; returning -Inf
+<pre><code>#&gt; Warning in min(distance[c1, c2]): no non-missing arguments to min;
+#&gt; returning Inf
+</code></pre>
+
+<pre><code>#&gt; Warning in max(distance[c1, c1]): no non-missing arguments to max;
+#&gt; returning -Inf
+</code></pre>
+
+<pre><code>#&gt; Warning in min(distance[c1, c2]): no non-missing arguments to min;
+#&gt; returning Inf
+</code></pre>
+
+<pre><code>#&gt; Warning in max(R[i, ][is.finite(R[i, ])]): no non-missing arguments to
+#&gt; max; returning -Inf
 </code></pre>
 
 <pre><code>#&gt; [Resample] subsampling iter: 4
 </code></pre>
 
-<pre><code>#&gt; Warning: no non-missing arguments to max; returning -Inf
-#&gt; Warning: no non-missing arguments to min; returning Inf
-#&gt; Warning: no non-missing arguments to min; returning Inf
-#&gt; Warning: no non-missing arguments to max; returning -Inf
+<pre><code>#&gt; Warning in max(distance[c1, c1]): no non-missing arguments to max;
+#&gt; returning -Inf
+</code></pre>
+
+<pre><code>#&gt; Warning in min(distance[c1, c2]): no non-missing arguments to min;
+#&gt; returning Inf
+</code></pre>
+
+<pre><code>#&gt; Warning in min(distance[c1, c2]): no non-missing arguments to min;
+#&gt; returning Inf
+</code></pre>
+
+<pre><code>#&gt; Warning in max(R[i, ][is.finite(R[i, ])]): no non-missing arguments to
+#&gt; max; returning -Inf
 </code></pre>
 
 <pre><code>#&gt; [Resample] subsampling iter: 5
 </code></pre>
 
-<pre><code>#&gt; Warning: no non-missing arguments to min; returning Inf
-#&gt; Warning: no non-missing arguments to max; returning -Inf
-#&gt; Warning: no non-missing arguments to min; returning Inf
-#&gt; Warning: no non-missing arguments to max; returning -Inf
+<pre><code>#&gt; Warning in min(distance[c1, c2]): no non-missing arguments to min;
+#&gt; returning Inf
 </code></pre>
 
-<pre><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.114
+<pre><code>#&gt; Warning in max(distance[c1, c1]): no non-missing arguments to max;
+#&gt; returning -Inf
+</code></pre>
+
+<pre><code>#&gt; Warning in min(distance[c1, c2]): no non-missing arguments to min;
+#&gt; returning Inf
+</code></pre>
+
+<pre><code>#&gt; Warning in max(R[i, ][is.finite(R[i, ])]): no non-missing arguments to
+#&gt; max; returning -Inf
+</code></pre>
+
+<pre><code>#&gt; [Resample] Result: dunn.test.mean=0.958,db.test.mean=0.425,timetrain.test.mean=0.089
 </code></pre>
 
 <pre><code class="r">r$aggr
 </code></pre>
 
 <pre><code>#&gt;      dunn.test.mean        db.test.mean timetrain.test.mean 
-#&gt;              0.9576              0.4254              0.1138
+#&gt;           0.9576313           0.4253807           0.0890000
 </code></pre>
 
 <h2 id="stratified-resampling">Stratified resampling</h2>
@@ -487,22 +523,24 @@ r = resample(&quot;regr.rpart&quot;, bh.task, rdesc,
 </code></pre>
 
 <pre><code>#&gt; [[1]]
-#&gt;   lstat      rm    crim     age     dis     nox     tax   indus      zn 
-#&gt; 19580.3  7900.7  4635.5  4621.5  4085.8  3073.0  2595.1  1833.8  1640.5 
-#&gt; ptratio     rad       b 
-#&gt;  1332.5   535.0   312.3 
+#&gt;      lstat         rm       crim        age        dis        nox 
+#&gt; 19580.2874  7900.6996  4635.4906  4621.4599  4085.7522  3073.0163 
+#&gt;        tax      indus         zn    ptratio        rad          b 
+#&gt;  2595.0683  1833.8227  1640.4665  1332.4891   535.0254   312.3056 
 #&gt; 
 #&gt; [[2]]
-#&gt;       rm    lstat  ptratio      dis      nox    indus      age     crim 
-#&gt; 17127.91 12275.66  4439.22  4017.49  3795.11  3732.50  3559.08  3228.79 
-#&gt;      tax       zn        b     chas 
-#&gt;  1063.52   957.09   632.54    45.01 
+#&gt;          rm       lstat     ptratio         dis         nox       indus 
+#&gt; 17127.90643 12275.66146  4439.22372  4017.49442  3795.11465  3732.49901 
+#&gt;         age        crim         tax          zn           b        chas 
+#&gt;  3559.07527  3228.78560  1063.52010   957.08762   632.54488    45.00784 
 #&gt; 
 #&gt; [[3]]
-#&gt;    lstat       rm    indus     crim      nox      age      dis  ptratio 
-#&gt; 15854.41 12391.83  8053.85  7870.95  7619.72  6988.86  1590.41  1084.80 
-#&gt;      tax        b       zn      rad     chas 
-#&gt;   594.31   394.98   325.44   317.36    45.52
+#&gt;       lstat          rm       indus        crim         nox         age 
+#&gt; 15854.40598 12391.83203  8053.85456  7870.94676  7619.72014  6988.85600 
+#&gt;         dis     ptratio         tax           b          zn         rad 
+#&gt;  1590.40768  1084.79515   594.31174   394.98047   325.43855   317.35809 
+#&gt;        chas 
+#&gt;    45.52432
 </code></pre>
 
 <h2 id="resample-descriptions-and-resample-instances">Resample descriptions and resample instances</h2>
@@ -705,7 +743,7 @@ r = resample(&quot;classif.rpart&quot;, iris.task, rdesc, measures = list(mmce, 
 </code></pre>
 
 <pre><code>#&gt;  mmce.test.mean mmce.train.mean 
-#&gt;         0.06000         0.03333
+#&gt;      0.06000000      0.03333333
 </code></pre>
 
 <h3 id="example-bootstrap">Example: Bootstrap</h3>
@@ -742,20 +780,20 @@ b632.mmce
 head(r$measures.train)
 </code></pre>
 
-<pre><code>#&gt;   iter    mmce    mmce    mmce
-#&gt; 1    1 0.02667 0.02667 0.02667
-#&gt; 2    2 0.02667 0.02667 0.02667
-#&gt; 3    3 0.04000 0.04000 0.04000
-#&gt; 4    4 0.02000 0.02000 0.02000
-#&gt; 5    5 0.05333 0.05333 0.05333
-#&gt; 6    6 0.04667 0.04667 0.04667
+<pre><code>#&gt;   iter       mmce       mmce       mmce
+#&gt; 1    1 0.02666667 0.02666667 0.02666667
+#&gt; 2    2 0.02666667 0.02666667 0.02666667
+#&gt; 3    3 0.04000000 0.04000000 0.04000000
+#&gt; 4    4 0.02000000 0.02000000 0.02000000
+#&gt; 5    5 0.05333333 0.05333333 0.05333333
+#&gt; 6    6 0.04666667 0.04666667 0.04666667
 </code></pre>
 
 <pre><code class="r">r$aggr
 </code></pre>
 
 <pre><code>#&gt; mmce.test.mean      mmce.b632  mmce.b632plus 
-#&gt;        0.05843        0.04772        0.04832
+#&gt;     0.05843174     0.04772353     0.04831784
 </code></pre>
 
 <h2 id="convenience-functions">Convenience functions</h2>

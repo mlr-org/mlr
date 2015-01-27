@@ -24,6 +24,7 @@ pages:
 - ["cost_sensitive_classif.md", "Advanced", "Cost-Sensitive Classification"]
 - ["over_and_undersampling.md", "Advanced", "Imbalanced Classification Problems"]
 - ["roc_analysis.md", "Advanced", "ROC Analysis"]
+- ["learning_curve.md", "Advanced", "Learning Curve"]
 - ["create_learner.md", "Extend", "Create Custom Learners"]
 - ["create_measure.md", "Extend", "Create Custom Measures"]
 - ["create_imputation.md", "Extend", "Create an Imputation Method"]
