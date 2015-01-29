@@ -14,7 +14,7 @@ test_that("regr_blm", {
     pars = list(X = regr.train[, 1:3], Z = y, verb = 0, pred.n = FALSE)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m <- do.call(tgp::blm, pars)
+    m = do.call(tgp::blm, pars)
 
     old.predicts.list[[i]] = predict(m, XX = regr.test[, 1:3], pred.n = FALSE)$ZZ.km
   }

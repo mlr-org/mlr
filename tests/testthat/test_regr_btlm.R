@@ -27,7 +27,7 @@ test_that("regr_btlm", {
     pars = list(X = train, Z = y, verb = 0, basemax = n.num, pred.n = FALSE)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m <- do.call(tgp::btlm, pars)
+    m = do.call(tgp::btlm, pars)
     
     old.predicts.list[[i]] = predict(m, XX = test, pred.n = FALSE)$ZZ.km
   }
