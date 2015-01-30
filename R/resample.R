@@ -146,18 +146,17 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
 mergeResampleResult = function(learner, task, iter.results, measures, rin, models, extract, show.info) {
   iters = length(iter.results)
   mids = vcapply(measures, function(m) m$id)
-  group = if (length(rin$group)) rin$group else NA
 
   ms.train = as.data.frame(extractSubList(iter.results, "measures.train", simplify = "rows"))
   colnames(ms.train) = mids
   rownames(ms.train) = NULL
-  ms.train = cbind(iter = seq_len(iters), group = group, ms.train)
+  ms.train = cbind(iter = seq_len(iters), ms.train)
 
   ms.test = extractSubList(iter.results, "measures.test", simplify = FALSE)
   ms.test = as.data.frame(do.call(rbind, ms.test))
   colnames(ms.test) = mids
   rownames(ms.test) = NULL
-  ms.test = cbind(iter = seq_len(iters), group = group, ms.test)
+  ms.test = cbind(iter = seq_len(iters), ms.test)
 
   preds.test = extractSubList(iter.results, "pred.test", simplify = FALSE)
   preds.train = extractSubList(iter.results, "pred.train", simplify = FALSE)

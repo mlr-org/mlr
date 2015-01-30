@@ -19,9 +19,9 @@ test_that("measures", {
   rdesc = makeResampleDesc("Holdout", split = 0.2)
   r = resample(lrn, ct, rdesc, measures = ms)
   expect_equal(names(r$measures.train),
-    c("iter", "group", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr", "fnr", "ppv", "npv", "mcc", "f1", "foo"))
+    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr", "fnr", "ppv", "npv", "mcc", "f1", "foo"))
   expect_equal(names(r$measures.test),
-    c("iter", "group", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr", "fnr", "ppv", "npv", "mcc", "f1", "foo"))
+    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr", "fnr", "ppv", "npv", "mcc", "f1", "foo"))
 
   # test that measures work for se
   ms = list(mse, timetrain, timepredict, timeboth, featperc)
