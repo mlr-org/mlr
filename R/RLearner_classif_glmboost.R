@@ -45,11 +45,8 @@ predictLearner.classif.glmboost = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
   if (.learner$predict.type  == "prob") {
     p = p[, 1L]
-    y = matrix(0, ncol = 2L, nrow = nrow(.newdata))
-    colnames(y) = .model$task.desc$class.levels
-    y[, 1L] = p
-    y[, 2L] = 1-p
-    return(y)
+    levs = c(.model$task.desc$negative, .model$task.desc$positive)
+    y = propVectorToMatrix(p, levs)
   } else {
     return(p)
   }
