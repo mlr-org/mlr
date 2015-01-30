@@ -18,8 +18,10 @@ test_that("measures", {
 
   rdesc = makeResampleDesc("Holdout", split = 0.2)
   r = resample(lrn, ct, rdesc, measures = ms)
+  expect_equal(names(r$measures.train),
+    c("iter", "group", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr", "fnr", "ppv", "npv", "mcc", "f1", "foo"))
   expect_equal(names(r$measures.test),
-    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr", "fnr", "ppv", "npv", "mcc", "f1", "foo"))
+    c("iter", "group", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr", "fnr", "ppv", "npv", "mcc", "f1", "foo"))
 
   # test that measures work for se
   ms = list(mse, timetrain, timepredict, timeboth, featperc)
@@ -27,6 +29,7 @@ test_that("measures", {
   mod = train(lrn, task = regr.task, subset = regr.train.inds)
   pred = predict(mod, task = regr.task, subset = regr.test.inds)
   perf = performance(pred, measures = ms, model = mod)
+  expect_is(perf, "numeric")
 
   # Test multiclass auc
   lrn = makeLearner("classif.randomForest", predict.type = "prob")
