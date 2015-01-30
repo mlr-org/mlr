@@ -4,16 +4,11 @@
 \alias{getBMRLearnerIds}
 \title{Return learner ids used in benchmark.}
 \usage{
-getBMRLearnerIds(bmr, join = FALSE)
+getBMRLearnerIds(bmr)
 }
 \arguments{
 \item{bmr}{[\code{\link{BenchmarkResult}}]\cr
 Benchmark result.}
-
-\item{join}{[\code{logical(1)}]\cr
-For \code{FALSE}: Get list of character vectors, named by task.ids.
-For \code{TRUE}: Join these char vectors and make them unique.
-Default is \code{FALSE}.}
 }
 \value{
 [\code{list} | \code{character}]. See above.
