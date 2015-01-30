@@ -23,8 +23,8 @@ test_that("listLearners", {
   expect_true(length(x5) > 1)
   expect_true(setequal(x1, c(x2, x3, x4, x5)))
 
-  x5 = mylist("classif", properties = c("multiclass", "factors", "prob"))
-  expect_true(length(x5) > 10 && all(x5 %in% x2))
+  x6 = mylist("classif", properties = c("multiclass", "factors", "prob"))
+  expect_true(length(x6) > 10 && all(x6 %in% x2))
 })
 
 test_that("listLearners for task", {
