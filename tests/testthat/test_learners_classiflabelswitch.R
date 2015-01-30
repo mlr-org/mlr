@@ -17,6 +17,13 @@ mydata3$y = factor(rep(c("a", "b", "c"), each = c(n)))
 mydata4 = mydata3
 mydata4$y = factor(rep(c("a", "b", "c"), each = c(n)), levels = c("c", "b", "a"))
 
+mytask1a = makeClassifTask(id = "t1a" , data = mydata1, target = "y", positive = "a")
+mytask1b = makeClassifTask(id = "t1b", data = mydata1, target = "y", positive = "b")
+mytask2a = makeClassifTask(id = "t2a", data = mydata2, target = "y", positive = "a")
+mytask2b = makeClassifTask(id = "t2b", data = mydata2, target = "y", positive = "b")
+mytask3 =  makeClassifTask(id = "t3",  data = mydata3, target = "y")
+mytask4 =  makeClassifTask(id = "t4",  data = mydata4, target = "y")
+
 hpars = list(
   classif.lssvm = list(kernel = "vanilladot"),
   classif.LiblineaRLogReg = list(type = 7),
@@ -27,12 +34,6 @@ hpars = list(
 
 test_that("no labels are switched", {
   configureMlr(on.learner.error = "warn", show.learner.output = FALSE)
-  mytask1a = makeClassifTask(data = mydata1, target = "y", positive = "a")
-  mytask1b = makeClassifTask(data = mydata1, target = "y", positive = "b")
-  mytask2a = makeClassifTask(data = mydata2, target = "y", positive = "a")
-  mytask2b = makeClassifTask(data = mydata2, target = "y", positive = "b")
-  mytask3 = makeClassifTask(data = mydata3, target = "y")
-  mytask4 = makeClassifTask(data = mydata4, target = "y")
 
 
   checkErrsForTask = function(task, predtype) {
@@ -53,7 +54,8 @@ test_that("no labels are switched", {
       holdout(lrn, task, split = 0.5, stratify = TRUE)$aggr[[1L]]
     })
     expect_true(all(!is.na(errs) & errs <= 0.3))
-    print(sort(errs, na.last = TRUE))
+    # messagef("predtype = %s; task = %s", predtype, task$task.desc$id)
+    # print(sort(errs, na.last = TRUE))
   }
   for (predtype in c("response", "prob")) {
     checkErrsForTask(mytask1a, predtype)

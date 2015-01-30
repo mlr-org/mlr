@@ -39,6 +39,6 @@ predictLearner.classif.ada = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type=="response", "vector", "prob")
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
   if (type == "prob")
-    colnames(p) = .model$task.desc$class.levels
+    colnames(p) = levels(.model$learner.model$fit)
   return(p)
 }
