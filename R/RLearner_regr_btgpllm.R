@@ -21,7 +21,7 @@ makeRLearner.regr.btgpllm = function() {
       makeUntypedLearnerParam(id = "itemps", default = NULL),
       makeLogicalLearnerParam(id = "linburn", default = FALSE),
       makeNumericLearnerParam(id = "nu", default = 1.5, 
-                              requires = quote(corr == "matern"))
+        requires = quote(corr == "matern"))
     ),
     properties = c("numerics", "se", "factors"),
     name = "Bayesian Treed Gaussian Process with jumps to the Limiting Linear Model",
