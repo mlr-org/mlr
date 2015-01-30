@@ -25,7 +25,7 @@ mytask3 =  makeClassifTask(id = "t3",  data = mydata3, target = "y")
 mytask4 =  makeClassifTask(id = "t4",  data = mydata4, target = "y")
 
 hpars = list(
-  classif.lssvm = list(kernel = "vanilladot"),
+  classif.lssvm = list(kernel = "rbfdot", sigma = 0.4),
   classif.LiblineaRLogReg = list(type = 7),
   classif.LiblineaRBinary = list(type = 1),
   classif.LiblineaRMultiClass = list(type = 1)
