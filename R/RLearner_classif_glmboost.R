@@ -24,12 +24,17 @@ makeRLearner.classif.glmboost = function() {
 #' @export
 trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, m, risk, ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk)
+  d = getTaskData(.task, .subset)
+  if (.learner$predict.type == "prob") {
+    levs = c(.task$task.desc$negative, .task$task.desc$positive)
+    d[, .task$task.desc$target] = factor(d[, .task$task.desc$target], levs)
+  }
   if (is.null(.weights)) {
     f = as.formula(getTaskFormulaAsString(.task))
-    model = mboost::glmboost(f, data = getTaskData(.task, .subset), control = ctrl, ...)
+    model = mboost::glmboost(f, data = d, control = ctrl, ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
-    model = mboost::glmboost(f, data = getTaskData(.task, .subset), control = ctrl, weights = .weights, ...)
+    model = mboost::glmboost(f, data = d, control = ctrl, weights = .weights, ...)
   }
   if (m == "cv") {
     mboost::mstop(model) = mboost::mstop(mboost::cvrisk(model, papply = lapply))

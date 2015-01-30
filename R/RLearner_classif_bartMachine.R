@@ -41,7 +41,7 @@ makeRLearner.classif.bartMachine = function() {
 trainLearner.classif.bartMachine = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   y = d$target
-  if(.learner$predict.type == "prob") {
+  if (.learner$predict.type == "prob") {
     levs = c(.task$task.desc$negative, .task$task.desc$positive)
     y = factor(y, levels = levs)
   }
