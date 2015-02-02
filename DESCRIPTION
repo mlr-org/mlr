@@ -71,6 +71,7 @@ Suggests:
     kknn,
     klaR,
     kohonen,
+    laGP,
     LiblineaR,
     lqa,
     MASS,
