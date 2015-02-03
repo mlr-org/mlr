@@ -57,7 +57,7 @@ test_that("no labels are switched", {
     # messagef("predtype = %s; task = %s", predtype, task$task.desc$id)
     # print(sort(errs, na.last = TRUE))
   }
-  for (predtype in c("response", "prob")) {
+  for (predtype in c("prob")) {
     checkErrsForTask(mytask1a, predtype)
     checkErrsForTask(mytask1b, predtype)
     checkErrsForTask(mytask2a, predtype)
