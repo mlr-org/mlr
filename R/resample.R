@@ -162,7 +162,7 @@ mergeResampleResult = function(learner, task, iter.results, measures, rin, model
   preds.train = extractSubList(iter.results, "pred.train", simplify = FALSE)
   pred = makeResamplePrediction(instance = rin, preds.test = preds.test, preds.train = preds.train)
 
-  aggr = vnapply(measures, function(m) m$aggr$fun(task, ms.test[, m$id], ms.train[, m$id], m, group, pred))
+  aggr = vnapply(measures, function(m) m$aggr$fun(task, ms.test[, m$id], ms.train[, m$id], m, rin$group, pred))
   names(aggr) = vcapply(measures, measureAggrName)
 
   err.msgs = as.data.frame(extractSubList(iter.results, "err.msgs", simplify = "rows"))
