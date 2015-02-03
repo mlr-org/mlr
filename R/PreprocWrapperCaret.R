@@ -37,8 +37,7 @@ makePreprocWrapperCaret = function (learner, ...) {
     makeNumericLearnerParam("ppc.fudge", default = 0.2, lower = 0),
     makeIntegerLearnerParam("ppc.numUnique", default = 3L, lower = 1L)
   )
-  #FIXME: we need a PH functionm here.
-  par.vals = getParamDefaultVals(par.set)
+  par.vals = getDefaults(par.set)
   par.vals = insert(par.vals, list(...))
 
   trainfun = function(data, target, args) {
