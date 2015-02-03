@@ -59,55 +59,55 @@ test_that("learners work", {
     expect_true(!is.na(performance(p)))
   }
 
-  # binary classif with prob
-  task = subsetTask(binaryclass.task, subset = c(1:50, 150:208),
-    features = getTaskFeatureNames(binaryclass.task)[1:2])
-  lrns = mylist(task, properties = "prob")
-  lrns = lapply(lrns, makeLearner, predict.type = "prob")
-  lapply(lrns, function(lrn) {
-    # this boosting is slow
-    if (lrn$id == "classif.boosting")
-      lrn = setHyperPars(lrn, mfinal = 2L)
-    if (lrn$id == "classif.cforest") # we only have 4 features, we dont want a warn
-      lrn = setHyperPars(lrn, mtry = 1L)
-    # increase speed and suppress output from bartMachine
-    if (lrn$id == "classif.bartMachine")
-      lrn = setHyperPars(lrn, verbose = FALSE, run_in_sample = FALSE, num_iterations_after_burn_in = 10L)
-    m = train(lrn, task)
-    p = predict(m, task)
-    getProbabilities(p)
-    expect_true(!is.na(performance(p)))
-  })
+  # # binary classif with prob
+  # task = subsetTask(binaryclass.task, subset = c(1:50, 150:208),
+  #   features = getTaskFeatureNames(binaryclass.task)[1:2])
+  # lrns = mylist(task, properties = "prob")
+  # lrns = lapply(lrns, makeLearner, predict.type = "prob")
+  # lapply(lrns, function(lrn) {
+  #   # this boosting is slow
+  #   if (lrn$id == "classif.boosting")
+  #     lrn = setHyperPars(lrn, mfinal = 2L)
+  #   if (lrn$id == "classif.cforest") # we only have 4 features, we dont want a warn
+  #     lrn = setHyperPars(lrn, mtry = 1L)
+  #   # increase speed and suppress output from bartMachine
+  #   if (lrn$id == "classif.bartMachine")
+  #     lrn = setHyperPars(lrn, verbose = FALSE, run_in_sample = FALSE, num_iterations_after_burn_in = 10L)
+  #   m = train(lrn, task)
+  #   p = predict(m, task)
+  #   getProbabilities(p)
+  #   expect_true(!is.na(performance(p)))
+  # })
 
-  # binary classif with weights
-  task = makeClassifTask(data = binaryclass.df, target = binaryclass.target)
-  task = subsetTask(task, subset = c(1:50, 150:208), features = getTaskFeatureNames(task)[1:2])
-  lrns = mylist(task, properties = "weights")
-  lrns = lapply(lrns, makeLearner)
-  lapply(lrns, function(lrn) {
-    # this boosting is slow
-    if (lrn$id == "classif.boosting")
-      lrn = setHyperPars(lrn, mfinal = 2L)
-    if (lrn$id == "classif.cforest") # we only have 4 features, we dont want a warn
-      lrn = setHyperPars(lrn, mtry = 1L)
-    m = train(lrn, task, weights = 1:task$task.desc$size)
-    p = predict(m, task)
-    expect_true(!is.na(performance(p)))
-  })
+  # # binary classif with weights
+  # task = makeClassifTask(data = binaryclass.df, target = binaryclass.target)
+  # task = subsetTask(task, subset = c(1:50, 150:208), features = getTaskFeatureNames(task)[1:2])
+  # lrns = mylist(task, properties = "weights")
+  # lrns = lapply(lrns, makeLearner)
+  # lapply(lrns, function(lrn) {
+  #   # this boosting is slow
+  #   if (lrn$id == "classif.boosting")
+  #     lrn = setHyperPars(lrn, mfinal = 2L)
+  #   if (lrn$id == "classif.cforest") # we only have 4 features, we dont want a warn
+  #     lrn = setHyperPars(lrn, mtry = 1L)
+  #   m = train(lrn, task, weights = 1:task$task.desc$size)
+  #   p = predict(m, task)
+  #   expect_true(!is.na(performance(p)))
+  # })
 
-  # classif with missing
-  d = binaryclass.df[c(1:50, 120:170), c(1:2, binaryclass.class.col)]
-  d[1, 1] = NA
-  task = makeClassifTask(data = d, target = binaryclass.target)
-  lrns = mylist(task, create = TRUE)
-  for (lrn in lrns) {
-    # increase speed and suppress output from bartMachine
-    if (lrn$id == "classif.bartMachine")
-      lrn = setHyperPars(lrn, verbose = FALSE, run_in_sample = FALSE, num_iterations_after_burn_in = 10L)
-    m = train(lrn, task)
-    p = predict(m, task)
-    expect_true(!is.na(performance(p)))
-  }
+  # # classif with missing
+  # d = binaryclass.df[c(1:50, 120:170), c(1:2, binaryclass.class.col)]
+  # d[1, 1] = NA
+  # task = makeClassifTask(data = d, target = binaryclass.target)
+  # lrns = mylist(task, create = TRUE)
+  # for (lrn in lrns) {
+  #   # increase speed and suppress output from bartMachine
+  #   if (lrn$id == "classif.bartMachine")
+  #     lrn = setHyperPars(lrn, verbose = FALSE, run_in_sample = FALSE, num_iterations_after_burn_in = 10L)
+  #   m = train(lrn, task)
+  #   p = predict(m, task)
+  #   expect_true(!is.na(performance(p)))
+  # }
 
 #   # normal regr, dont use feature 2, it is nearly always 0
 #   task = subsetTask(regr.task, subset = c(1:70),
@@ -172,28 +172,28 @@ test_that("learners work", {
 #     expect_true(!is.na(performance(p)))
 #   }
 
-  # clustering, response
-  task = noclass.task
-  lrns = mylist(task, create = TRUE)
-  for (lrn in lrns) {
-    # FIXME: remove this if DBscan runs stable
-    if (!inherits(lrn, "cluster.DBScan")) {
-      expect_output(print(lrn), lrn$id)
-      m = train(lrn, task)
-      p = predict(m, task)
-      expect_true(!is.na(performance(p, task = task)))
-    }
-  }
+  # # clustering, response
+  # task = noclass.task
+  # lrns = mylist(task, create = TRUE)
+  # for (lrn in lrns) {
+  #   # FIXME: remove this if DBscan runs stable
+  #   if (!inherits(lrn, "cluster.DBScan")) {
+  #     expect_output(print(lrn), lrn$id)
+  #     m = train(lrn, task)
+  #     p = predict(m, task)
+  #     expect_true(!is.na(performance(p, task = task)))
+  #   }
+  # }
 
-  # clustering, prob
-  task = subsetTask(noclass.task, subset = 1:20,
-    features = getTaskFeatureNames(noclass.task)[1:2])
-  lrns = mylist(task, properties = "prob")
-  lrns = lapply(lrns, makeLearner, predict.type = "prob")
-  lapply(lrns, function(lrn) {
-    m = train(lrn, task)
-    p = predict(m, task)
-    getProbabilities(p)
-    expect_true(!is.na(performance(p, task = task)))
-  })
+  # # clustering, prob
+  # task = subsetTask(noclass.task, subset = 1:20,
+  #   features = getTaskFeatureNames(noclass.task)[1:2])
+  # lrns = mylist(task, properties = "prob")
+  # lrns = lapply(lrns, makeLearner, predict.type = "prob")
+  # lapply(lrns, function(lrn) {
+  #   m = train(lrn, task)
+  #   p = predict(m, task)
+  #   getProbabilities(p)
+  #   expect_true(!is.na(performance(p, task = task)))
+  # })
 })
