@@ -5,20 +5,20 @@ test_that("regr_btgp", {
   parset.list = list(
     list(meanfn = "linear", bprior = "bflat", corr = "expsep")
   )
-  
-  y = regr.train[, regr.target]
 
   df = regr.df[, 2:5]
   col.types = vcapply(df, function(x) class(x))
   factor.ind = (col.types == "factor")
   df.num = df[, !factor.ind, drop = FALSE]
-  n.num = ncol(df.num) 
+  n.num = ncol(df.num)
   df.factor = df[, factor.ind, drop = FALSE]
   df.factor = createDummyFeatures(df.factor, method = "reference")
   df = cbind(df.num, df.factor)
-  train = df[regr.train.inds, ]
-  test  = df[regr.test.inds, ]
-  
+  inds = 1:10
+  train = df[inds, ]
+  test  = df[-inds, ]
+  y = regr.df[inds, regr.target]
+
   old.predicts.list = list()
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
@@ -26,10 +26,9 @@ test_that("regr_btgp", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(tgp::btgp, pars)
-    
     old.predicts.list[[i]] = predict(m, XX = test, pred.n = FALSE)$ZZ.km
   }
-  testSimpleParsets("regr.btgp", regr.df[, c(2:5, 14)], regr.target, regr.train.inds, old.predicts.list, parset.list)
+  testSimpleParsets("regr.btgpllm", regr.df[, c(2:5, 14)], regr.target, inds, old.predicts.list, parset.list)
 })
 
 
