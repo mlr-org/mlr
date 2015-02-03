@@ -53,3 +53,13 @@ test_that("repcv instance is stochastic", {
   expect_true(!all(sort(rin1$test.inds[[1]]) == sort(rin2$test.inds[[1]])))
 })
 
+test_that("test.join works somehow", {
+  df = data.frame(t = factor(c(rep(c("a", "b"), each = 3), "c", "c")), x = 1:8)
+  task = makeClassifTask(data = df, target = "t")
+  lrn = makeLearner("classif.rpart")
+  measures = list(mmce, setAggregation(mmce, test.join))
+  rin = makeResampleInstance(makeResampleDesc("RepCV", reps = 5, folds = 3), task = task)
+  res = resample(learner = lrn, task = task, resampling = rin, measures = measures)
+  expect_equal(res$measures.test[, 2L], res$measures.test[, 3L])
+  expect_true(diff(res$aggr) > 0)
+})

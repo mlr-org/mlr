@@ -1,23 +1,29 @@
-#' Aggregation methods.
+#' @title Aggregation methods.
 #'
+#' @description
 #' \itemize{
-#' \item{\bold{test.mean}}{\cr Mean of performance values on test sets.}
-#' \item{\bold{test.sd}}{\cr Standard deviation of performance values on test sets.}
-#' \item{\bold{test.median}}{\cr Median of performance values on test sets.}
-#' \item{\bold{test.min}}{\cr Minimum of performance values on test sets.}
-#' \item{\bold{test.max}}{\cr Maximum of performance values on test sets.}
-#' \item{\bold{test.sum}}{\cr Sum of performance values on test sets.}
-#' \item{\bold{train.mean}}{\cr Mean of performance values on training sets.}
-#' \item{\bold{train.sd}}{\cr Standard deviation of performance values on training sets.}
-#' \item{\bold{train.median}}{\cr Median of performance values on training sets.}
-#' \item{\bold{train.min}}{\cr Minimum of performance values on training sets.}
-#' \item{\bold{train.max}}{\cr Maximum of performance values on training sets.}
-#' \item{\bold{train.sum}}{\cr Sum of performance values on training sets.}
-#' \item{\bold{b632}}{\cr Aggregation for B632 bootstrap.}
-#' \item{\bold{b632plus}}{\cr Aggregation for B632+ bootstrap.}
-#' \item{\bold{testgroup.mean}}{\cr Performance values on test sets are grouped according
-#'   to resampling method. The mean for very group is calculated, then the mean of those means.
-#'   Mainly used for repeated CV.}
+#'   \item{\bold{test.mean}}{\cr Mean of performance values on test sets.}
+#'   \item{\bold{test.sd}}{\cr Standard deviation of performance values on test sets.}
+#'   \item{\bold{test.median}}{\cr Median of performance values on test sets.}
+#'   \item{\bold{test.min}}{\cr Minimum of performance values on test sets.}
+#'   \item{\bold{test.max}}{\cr Maximum of performance values on test sets.}
+#'   \item{\bold{test.sum}}{\cr Sum of performance values on test sets.}
+#'   \item{\bold{train.mean}}{\cr Mean of performance values on training sets.}
+#'   \item{\bold{train.sd}}{\cr Standard deviation of performance values on training sets.}
+#'   \item{\bold{train.median}}{\cr Median of performance values on training sets.}
+#'   \item{\bold{train.min}}{\cr Minimum of performance values on training sets.}
+#'   \item{\bold{train.max}}{\cr Maximum of performance values on training sets.}
+#'   \item{\bold{train.sum}}{\cr Sum of performance values on training sets.}
+#'   \item{\bold{b632}}{\cr Aggregation for B632 bootstrap.}
+#'   \item{\bold{b632plus}}{\cr Aggregation for B632+ bootstrap.}
+#'   \item{\bold{testgroup.mean}}{\cr Performance values on test sets are grouped according
+#'     to resampling method. The mean for very group is calculated, then the mean of those means.
+#'     Mainly used for repeated CV.}
+#'   \item{\bold{test.join}}{\cr Performance measure on joined test sets.
+#'     This is especially useful for small sample sizes where unbalanced group sizes have a significant impact
+#'     on the aggregation.
+#'     For the repeated CV, the performance is calculated on each repetition and then aggregated
+#'     with the arithmetic mean.}
 #' }
 #' @format None
 #' @seealso \code{\link{Aggregation}}
@@ -180,5 +186,21 @@ testgroup.mean = makeAggregation(
     # calculate weighted mean. weights are num of observations in test
     w = vnapply(pred$instance$test.inds, length)
     sum(w * perf.test) / sum(w)
+  }
+)
+
+#' @export
+#' @rdname aggregations
+test.join = makeAggregation(
+  id = "test.join",
+  fun = function(task, perf.test, perf.train, measure, group, pred) {
+    df = as.data.frame(pred)
+    f = if (length(group)) group[df$iter] else factor(rep(1L, nrow(df)))
+    mean(vnapply(split(df, f), function(df) {
+      npred = makePrediction(task.desc = pred$task.desc, row.names = rownames(df),
+        id = NULL, truth = df$truth, predict.type = pred$predict.type, y = df$response,
+        time = NA_real_)
+      performance(npred, measure)
+    }))
   }
 )

@@ -5,6 +5,7 @@
 \alias{aggregations}
 \alias{b632}
 \alias{b632plus}
+\alias{test.join}
 \alias{test.max}
 \alias{test.mean}
 \alias{test.median}
@@ -62,26 +63,33 @@ b632
 b632plus
 
 testgroup.mean
+
+test.join
 }
 \description{
 \itemize{
-\item{\bold{test.mean}}{\cr Mean of performance values on test sets.}
-\item{\bold{test.sd}}{\cr Standard deviation of performance values on test sets.}
-\item{\bold{test.median}}{\cr Median of performance values on test sets.}
-\item{\bold{test.min}}{\cr Minimum of performance values on test sets.}
-\item{\bold{test.max}}{\cr Maximum of performance values on test sets.}
-\item{\bold{test.sum}}{\cr Sum of performance values on test sets.}
-\item{\bold{train.mean}}{\cr Mean of performance values on training sets.}
-\item{\bold{train.sd}}{\cr Standard deviation of performance values on training sets.}
-\item{\bold{train.median}}{\cr Median of performance values on training sets.}
-\item{\bold{train.min}}{\cr Minimum of performance values on training sets.}
-\item{\bold{train.max}}{\cr Maximum of performance values on training sets.}
-\item{\bold{train.sum}}{\cr Sum of performance values on training sets.}
-\item{\bold{b632}}{\cr Aggregation for B632 bootstrap.}
-\item{\bold{b632plus}}{\cr Aggregation for B632+ bootstrap.}
-\item{\bold{testgroup.mean}}{\cr Performance values on test sets are grouped according
-  to resampling method. The mean for very group is calculated, then the mean of those means.
-  Mainly used for repeated CV.}
+  \item{\bold{test.mean}}{\cr Mean of performance values on test sets.}
+  \item{\bold{test.sd}}{\cr Standard deviation of performance values on test sets.}
+  \item{\bold{test.median}}{\cr Median of performance values on test sets.}
+  \item{\bold{test.min}}{\cr Minimum of performance values on test sets.}
+  \item{\bold{test.max}}{\cr Maximum of performance values on test sets.}
+  \item{\bold{test.sum}}{\cr Sum of performance values on test sets.}
+  \item{\bold{train.mean}}{\cr Mean of performance values on training sets.}
+  \item{\bold{train.sd}}{\cr Standard deviation of performance values on training sets.}
+  \item{\bold{train.median}}{\cr Median of performance values on training sets.}
+  \item{\bold{train.min}}{\cr Minimum of performance values on training sets.}
+  \item{\bold{train.max}}{\cr Maximum of performance values on training sets.}
+  \item{\bold{train.sum}}{\cr Sum of performance values on training sets.}
+  \item{\bold{b632}}{\cr Aggregation for B632 bootstrap.}
+  \item{\bold{b632plus}}{\cr Aggregation for B632+ bootstrap.}
+  \item{\bold{testgroup.mean}}{\cr Performance values on test sets are grouped according
+    to resampling method. The mean for very group is calculated, then the mean of those means.
+    Mainly used for repeated CV.}
+  \item{\bold{test.join}}{\cr Performance measure on joined test sets.
+    This is especially useful for small sample sizes where unbalanced group sizes have a significant impact
+    on the aggregation.
+    For the repeated CV, the performance is calculated on each repetition and then aggregated
+    with the arithmetic mean.}
 }
 }
 \seealso{
