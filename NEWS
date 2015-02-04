@@ -7,6 +7,7 @@ mlr_2.3:
   then construct the plots via ROCR your self. See plotROCRCurves
 - all mlr measures now have slots "name" and "note"
 - exported a few very simple "getters" for tasks, see below
+- in makeLearner a probability threshold can be set for classifiers, also see setPredictThreshold
 - in the control objects for tuning and feature selection, the user can now enable threshold tuning
 - in the control objects for tuning and feature selection, the user can now define his own logging function
 - default console logging for tuneParams and selectFeatures is more informative, it displays time and memory info
@@ -25,7 +26,7 @@ mlr_2.3:
 - classif.lda and classif.qda now have hyperpar "predict.method"
 - filterFeatures and makeFilterWrapper gain an argument for mandatory features
 - plotLearnerPrediction has new option "err.size"
-- classif.plsDA was for now removed because of problems with the underlying learning algorithm
+- classif.plsDA and cluster.DBscan for now removed because of problems with the underlying learning algorithm
 
 
 - new functions
@@ -35,14 +36,13 @@ mlr_2.3:
 -- measureSSE, measureMSE, measureRMSE, measureMEDSE, ...
 -- PreprocWrapperCaret
 -- generateLearningCurve, plotLearningCurve
+-- setPredictThreshold
 
 - new learners:
 -- classif.bdk
 -- classif.binomial
 -- classif.extraTrees
--- classif.nodeHarvest
 -- classif.probit
--- classif.randomUniformForest
 -- classif.xgboost
 -- classif.xyf
 -- regr.bartMachine
@@ -59,8 +59,6 @@ mlr_2.3:
 -- regr.elmNN
 -- regr.extraTrees
 -- regr.laGP
--- regr.nodeHarvest
--- regr.randomUniformForest
 -- regr.xgboost
 -- regr.xyf
 -- surv.rpart

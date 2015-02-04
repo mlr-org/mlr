@@ -104,3 +104,25 @@ test_that("setThreshold does not produce NAs for extreme thresholds", {
   p2 = setThreshold(p1, 0)
   expect_true(!any(is.na(p2$data$response)))
 })
+
+test_that("predict.threshold", {
+  lrn = makeLearner("classif.lda", predict.type = "prob", predict.threshold = 0)
+  r = holdout(lrn, binaryclass.task)
+  expect_true(all(r$pred$data$response == binaryclass.task$task.desc$positive))
+  lrn = makeLearner("classif.lda", predict.type = "prob", predict.threshold = 1)
+  r = holdout(lrn, binaryclass.task)
+  expect_true(all(r$pred$data$response == binaryclass.task$task.desc$negative))
+  lrn = makeLearner("classif.lda", predict.type = "prob",
+    predict.threshold = c(setosa = 1000000000, virginica = 0, versicolor = 100000))
+  r = holdout(lrn, multiclass.task)
+  expect_true(all(r$pred$data$response == "virginica"))
+
+  # now with wrapper
+  lrn1 = makeLearner("classif.lda")
+  lrn2 = makeFilterWrapper(lrn1, fw.method = "chi.squared", fw.perc = 0.1)
+  lrn2 = setPredictType(lrn2, "prob")
+  lrn2 = setPredictThreshold(lrn2, 0)
+  r = holdout(lrn2, binaryclass.task)
+  expect_true(all(r$pred$data$response == binaryclass.task$task.desc$positive))
+})
+

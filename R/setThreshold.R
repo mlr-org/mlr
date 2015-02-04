@@ -10,8 +10,7 @@
 #' @template arg_pred
 #' @param threshold [\code{numeric}]\cr
 #'   Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.
-#'   Only if \code{pred} is a prediction object resulting from binary classification
-#'   it can be a single numerical threshold for the positive class.
+#'   Only for binary classification it can be a single numerical threshold for the positive class.
 #' @return [\code{\link{Prediction}}] with changed threshold and corresponding response.
 #' @export
 #' @seealso \code{\link{predict.WrappedModel}}

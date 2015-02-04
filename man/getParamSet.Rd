@@ -25,6 +25,7 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{makeLearner}}; \code{\link{getHyperPars}};
   \code{\link{removeHyperPars}};
   \code{\link{setHyperPars}}; \code{\link{setId}};
+  \code{\link{setPredictThreshold}};
   \code{\link{setPredictType}}; \code{\link{showHyperPars}}
 }
 

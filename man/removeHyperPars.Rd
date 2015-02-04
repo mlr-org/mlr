@@ -29,7 +29,7 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setProperties}}; \code{\link{Learner}},
   \code{\link{makeLearner}}; \code{\link{getHyperPars}};
   \code{\link{getParamSet}}; \code{\link{setHyperPars}};
-  \code{\link{setId}}; \code{\link{setPredictType}};
-  \code{\link{showHyperPars}}
+  \code{\link{setId}}; \code{\link{setPredictThreshold}};
+  \code{\link{setPredictType}}; \code{\link{showHyperPars}}
 }
 

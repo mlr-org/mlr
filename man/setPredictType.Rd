@@ -38,12 +38,14 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{makeLearner}}; \code{\link{getHyperPars}};
   \code{\link{getParamSet}}; \code{\link{removeHyperPars}};
   \code{\link{setHyperPars}}; \code{\link{setId}};
+  \code{\link{setPredictThreshold}};
   \code{\link{showHyperPars}}
 
 Other predict: \code{\link{asROCRPrediction}};
   \code{\link{getProbabilities}};
   \code{\link{plotROCRCurves}};
   \code{\link{plotViperCharts}};
-  \code{\link{predict.WrappedModel}}
+  \code{\link{predict.WrappedModel}};
+  \code{\link{setPredictThreshold}}
 }
 
