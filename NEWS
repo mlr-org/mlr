@@ -27,6 +27,9 @@ mlr_2.3:
 - plotLearnerPrediction has new option "err.size"
 - classif.plsDA and cluster.DBscan for now removed because of problems with the underlying learning algorithm
 - new aggregation test.join
+- the following models now can handle factors and ordereds by extra dummy or int encoding:
+  classif.glmnet, regr.glmnet, surv.glmnet, surv.cvglmnet, surv.penalized,
+  surv.optimCoxBoostPenalty, surv.glmboost, surv.CoxBoost
 
 - new functions
 -- getTaskType, getTaskId, getTaskTargetNames
