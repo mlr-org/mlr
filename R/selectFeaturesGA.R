@@ -41,9 +41,7 @@ selectFeaturesGA = function(learner, task, resampling, measures, bit.names, bits
     pop.inds = pool.inds[order(pool.y, decreasing = !minimize)[seq_len(mu)]]
     setOptPathElEOL(opt.path, setdiff(pool.inds, pop.inds), i)
   }
-  i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1L]]), ties = "random")
-  e = getOptPathEl(opt.path, i)
-  makeFeatSelResult(learner, control, names(e$x)[e$x == 1], e$y, opt.path)
+  makeFeatSelResultFromOptPath(learner, measures, control, opt.path)
 }
 
 

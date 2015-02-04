@@ -22,7 +22,8 @@
 #' @rdname TuneMultiCritResult
 NULL
 makeTuneMultiCritResult = function(learner, ind, x, y, control, opt.path) {
-  or = makeOptResult(learner, control, x, y, opt.path, "TuneMultiCritResult")
+  # set threshold to NULL, we can not currently tune for it in an MCO way
+  or = makeOptResult(learner, control, x, y, NULL, opt.path, "TuneMultiCritResult")
   or$ind = ind
   return(or)
 }
