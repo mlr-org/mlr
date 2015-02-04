@@ -83,7 +83,7 @@ train = function(learner, task, subset, weights = NULL) {
     }
     st = system.time(fun1(learner.model <- fun2(do.call(trainLearner, pars))), gcFirst = FALSE)
     # was there an error during training? maybe warn then
-    if(is.error(learner.model) && opts$on.learner.error == "warn")
+    if (is.error(learner.model) && opts$on.learner.error == "warn")
       warningf("Could not train learner %s: %s", learner$id, as.character(learner.model))
     time.train = as.numeric(st[3L])
   }

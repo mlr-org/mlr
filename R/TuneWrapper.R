@@ -69,3 +69,14 @@ predictLearner.TuneWrapper = function(.learner, .model, .newdata, ...) {
   predictLearner(lrn, .model$learner.model$next.model, .newdata, ...)
 }
 
+#' @export
+makeWrappedModel.TuneWrapper = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
+  # set threshold in learner so it is used in predict calls from here on
+  if (learner$control$tune.threshold)
+    learner = setPredictThreshold(learner, learner.model$opt.result$threshold)
+  x = NextMethod()
+  class(x) = c("TuneModel", class(x))
+  return(x)
+}
+
+
