@@ -15,7 +15,7 @@
 #' \item{y [\code{numeric}]}{Performance values for optimal \code{x}.}
 #' \item{threshold [\code{numeric}]}{Vector of finally found and used thresholds
 #'   if \code{tune.threshold} was enabled in \code{\link{TuneControl}}, otherwise not present and
-#'   hence \code{NULL}.
+#'   hence \code{NULL}.}
 #' \item{opt.path [\code{\link[ParamHelpers]{OptPath}}]}{Optimization path which lead to \code{x}.
 #'   Note that when you have trafos on some of your params, the opt.path always contains the
 #'   UNTRANSFORMED values on the original scale. You can simply call \code{trafoOptPath(opt.path)} to

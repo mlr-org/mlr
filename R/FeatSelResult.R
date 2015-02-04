@@ -13,7 +13,7 @@
 #' \item{y [\code{numeric}]}{Performance values for optimal \code{x}.}
 #' \item{threshold [\code{numeric}]}{Vector of finally found and used thresholds
 #'   if \code{tune.threshold} was enabled in \code{\link{FeatSelControl}}, otherwise not present and
-#'   hence \code{NULL}.
+#'   hence \code{NULL}.}
 #' \item{opt.path [\code{\link[ParamHelpers]{OptPath}}]}{Optimization path which lead to \code{x}.}
 #' }
 #' @name FeatSelResult
