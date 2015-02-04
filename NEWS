@@ -7,7 +7,7 @@ mlr_2.3:
   then construct the plots via ROCR your self. See plotROCRCurves
 - all mlr measures now have slots "name" and "note"
 - exported a few very simple "getters" for tasks, see below
-- in makeLearner a probability threshold can be set for classifiers, also see setPredictThreshold
+- in makeLearner a probability predict.threshold can be set for classifiers, also see setPredictThreshold
 - in the control objects for tuning and feature selection, the user can now enable threshold tuning
 - in the control objects for tuning and feature selection, the user can now define his own logging function
 - default console logging for tuneParams and selectFeatures is more informative, it displays time and memory info
@@ -26,7 +26,7 @@ mlr_2.3:
 - filterFeatures and makeFilterWrapper gain an argument for mandatory features
 - plotLearnerPrediction has new option "err.size"
 - classif.plsDA and cluster.DBscan for now removed because of problems with the underlying learning algorithm
-
+- new aggregation test.join
 
 - new functions
 -- getTaskType, getTaskId, getTaskTargetNames
