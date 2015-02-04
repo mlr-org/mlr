@@ -57,6 +57,7 @@ test_that("no labels are switched", {
     # messagef("predtype = %s; task = %s", predtype, task$task.desc$id)
     # print(sort(errs, na.last = TRUE))
   }
+  # FIXME: only check prob for now for timimg reasons
   for (predtype in c("prob")) {
     checkErrsForTask(mytask1a, predtype)
     checkErrsForTask(mytask1b, predtype)
