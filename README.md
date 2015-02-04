@@ -32,22 +32,29 @@ deviate from the implemented convenience methods and construct your own complex 
 Features
 ========
 
-* Clear S3 interface to R classification and regression methods
+* Clear S3 interface to R classification, regression, clustering and survival analysis methods
+* Possibility to fit, predict, evaluate and resample models
 * Easy extension mechanism through S3 inheritance
 * Abstract description of learners and tasks by properties
 * Parameter system for learners to encode data types and constraints
 * Many convenience methods and generic building blocks for your
   machine learning experiments
 * Resampling like bootstrapping, cross-validation and subsampling
-* Easy hyperparameter tuning using different optimization strategies
+* Different visualizations for e.g. ROC curves and predictions
+* Benchmarking of learners for muliple data sets
+* Easy hyperparameter tuning using different optimization strategies, including potent configurators
+  like iterated F-racing (irace) or sequential model-based optimization
 * Variable selection with filters and wrappers
-* Parallelization is built-in
+* Nested resampling of models with tuning and feature selection
+* Cost-sensitive learning, threshold tuning and imbalance correction
+* Wrapper mechanism to extend learner functionality and complex and custom ways
+* Combine different processing steps to a complex data mining chain that can be jointly optimized
+* OpenML connector for the Open Machine Learning server
 * Extension points to integrate your own stuff
+* Parallelization is built-in
 * Unit-testing
-* Possibility to fit, predict, evaluate and resample models
-* Tune hyper-parameters of a learner with different optimization algorithms
-* Feature selection with filters and wrappers
-* Combine different processing steps to a complex data mining chain; enables nested resampling of optimized models
+
+*If you like the package, please "star" it on Github.*
 
 
 News
@@ -56,6 +63,8 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
 [release](http://cran.r-project.org/web/packages/mlr/NEWS) and here for the
 [devel](https://github.com/berndbischl/mlr/blob/master/NEWS) version on Github.
 
+* 2015-02-04:
+  * mlr 2.3 released to CRAN.
 * 2014-10-28:
   * mlr 2.2 released to CRAN.
   * The popular Java tool WEKA uses mlr in its [RPlugin](http://weka.sourceforge.net/packageMetaData/RPlugin/index.html).
