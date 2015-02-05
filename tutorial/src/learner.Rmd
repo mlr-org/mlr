@@ -129,3 +129,21 @@ cluster.lrn = setHyperPars(cluster.lrn, N = 4)
 ## Go back to default hyperparameter values:
 regr.lrn = removeHyperPars(regr.lrn, c("n.trees", "interaction.depth"))
 ```
+
+## Listing learners
+The list of all learners and their respective properties are shown in the [Appendix](integrated_learners.md).
+
+If you would like a list of available learners, maybe only with certain properties or suitable for a
+certain learning [&Task] use the function [&listLearners].
+
+```{r}
+## List everything in mlr
+head(listLearners())
+## List classifiers that can output probabilities
+head(listLearners("classif", properties = "prob"))
+## List classifiers that can be applied to iris (i.e. multiclass) and output probabilities
+head(listLearners(iris.task, properties = "prob"))
+## The calls above return character vectors, but you can also create learner objects
+head(listLearners("cluster", create = TRUE), 2)
+```
+

@@ -134,7 +134,7 @@ costsens.task
 For more details see the section about [cost-sensitive classification](cost_sensitive_classif.md).
 
 
-# Further details
+## Further settings
 The [&Task] help page also lists several other arguments to describe further details of the
 problem.
 
