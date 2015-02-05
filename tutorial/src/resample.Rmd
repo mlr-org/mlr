@@ -322,11 +322,10 @@ code for generating a resample instance, setting the aggregation strategy and so
 on. For this reason [%mlr] provides some convenience functions for the
 frequently used resampling strategies, for example [holdout](&resample),
 [crossval](&resample) or [bootstrapB632](&resample). But note that you do not
-have as much control and flexibility than when using [&resample] with a resample
+have as much control and flexibility as when using [&resample] with a resample
 description or instance.
 
 ```{r, eval = FALSE}
 holdout("regr.lm", bh.task, measures = list(mse, mae))
 crossval("classif.lda", iris.task, iters = 3, measures = list(mmce, ber))
-bootstrapB632("surv.coxph", lung.task, iters = 20)
 ```
