@@ -39,7 +39,7 @@ test_that("fix factors work", {
   test = setdiff(1:n, train)
 
   task = makeRegrTask(data = data[train, ], target = "Sepal.Length")
-  learner = makeLearner("regr.randomForest", fix.factors = TRUE)
+  learner = makeLearner("regr.randomForest", fix.factors.prediction = TRUE)
   model = train(learner, task)
   newdata = data[head(test, 1L), ]
   newdata$Species = droplevels(newdata$Species)

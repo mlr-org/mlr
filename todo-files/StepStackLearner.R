@@ -67,7 +67,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
     lrn = setPredictType(lrn, predict.type = predict.type)
   }
   
-  lrn$fix.factors = TRUE
+  lrn$fix.factors.prediction = TRUE
   lrn$use.feat = use.feat
   
   lrn$method = method

@@ -54,7 +54,7 @@ test_that("fix factors work", {
 
   data$x = factor(sample(letters[1:3], n, replace=TRUE))
   task = makeClassifTask(data=data[train, ], target="Species")
-  learner = makeLearner("classif.randomForest", fix.factors=TRUE)
+  learner = makeLearner("classif.randomForest", fix.factors.prediction=TRUE)
   model = train(learner, task)
   newdata = data[head(test, 1L), ]
   newdata$Species = droplevels(newdata$Species)

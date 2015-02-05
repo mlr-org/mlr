@@ -16,7 +16,7 @@
 #'   Clustering: \dQuote{response} (= cluster IDS) or \dQuote{prob} (= fuzzy cluster membership probabilities).
 #'   Default is \dQuote{response}.
 #' @template arg_predictthreshold
-#' @param fix.factors [\code{logical(1)}]\cr
+#' @param fix.factors.prediction [\code{logical(1)}]\cr
 #'   In some cases, problems occur in underlying learners for factor features during prediction.
 #'   If the new features have LESS factor levels than during training (a strict subset),
 #'   the learner might produce an  error like
@@ -47,10 +47,10 @@
 #' lrn = makeLearner("classif.lda", method = "t", nu = 10)
 #' print(lrn$par.vals)
 makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold = NULL,
-  fix.factors = FALSE, ..., par.vals = list(), config = list()) {
+  fix.factors.prediction = FALSE, ..., par.vals = list(), config = list()) {
 
   assertString(cl)
-  assertFlag(fix.factors)
+  assertFlag(fix.factors.prediction)
   constructor = getS3method("makeRLearner", class = cl)
   wl = do.call(constructor, list())
 
@@ -70,7 +70,7 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
   wl = setHyperPars(learner = wl, ..., par.vals = par.vals)
   wl = setPredictType(learner = wl, predict.type = predict.type)
   wl$predict.threshold = predict.threshold
-  wl$fix.factors = fix.factors
+  wl$fix.factors.prediction = fix.factors.prediction
   wl$config = config
   return(wl)
 }
