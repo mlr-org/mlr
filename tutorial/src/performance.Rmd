@@ -25,7 +25,7 @@ If you want to implement an additional measure or include a measure with
 non-standard misclassification costs, see the section on
 [creating custom measures](create_measure.md).
 
-## Find a suitable performance measure
+## Listing measures
 The properties and requirements of the individual measures are shown in the [table of performance measures](measures.md).
 
 If you would like a list of available measures with certain properties or suitable for a
