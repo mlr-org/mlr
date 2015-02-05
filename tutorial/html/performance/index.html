@@ -305,16 +305,16 @@ pred = predict(mod, task = bh.task, subset = seq(2, n, 2))
 performance(pred)
 </code></pre>
 
-<pre><code>#&gt;   mse 
-#&gt; 42.68
+<pre><code>#&gt;      mse 
+#&gt; 42.68414
 </code></pre>
 
 <p>The following code computes the median of squared errors (<a href="../measures/index.html">medse</a>) instead.</p>
 <pre><code class="r">performance(pred, measures = medse)
 </code></pre>
 
-<pre><code>#&gt; medse 
-#&gt; 9.135
+<pre><code>#&gt;    medse 
+#&gt; 9.134965
 </code></pre>
 
 <p>Of course, we can also calculate multiple performance measures at once by simply passing a
@@ -323,8 +323,8 @@ list of measures which can also include <a href="../create_measure/index.html">y
 <pre><code class="r">performance(pred, measures = list(mse, medse, mae))
 </code></pre>
 
-<pre><code>#&gt;    mse  medse    mae 
-#&gt; 42.684  9.135  4.537
+<pre><code>#&gt;       mse     medse       mae 
+#&gt; 42.684141  9.134965  4.536750
 </code></pre>
 
 <p>For the other types of learning problems and measures, calculating the performance basically
@@ -338,7 +338,7 @@ model has to be passed.</p>
 </code></pre>
 
 <pre><code>#&gt; timetrain 
-#&gt;     0.305
+#&gt;     0.094
 </code></pre>
 
 <p>For many performance measures in cluster analysis the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> is required.</p>
@@ -350,8 +350,8 @@ pred = predict(mod, task = mtcars.task)
 performance(pred, measures = dunn, task = mtcars.task)
 </code></pre>
 
-<pre><code>#&gt;   dunn 
-#&gt; 0.1463
+<pre><code>#&gt;      dunn 
+#&gt; 0.1462919
 </code></pre>
 
 <p>Moreover, some measures require a certain type of prediction.
@@ -366,8 +366,8 @@ pred = predict(mod, task = sonar.task)
 performance(pred, measures = auc)
 </code></pre>
 
-<pre><code>#&gt;    auc 
-#&gt; 0.9224
+<pre><code>#&gt;       auc 
+#&gt; 0.9224018
 </code></pre>
 
 <p>Also bear in mind that many of the performance measures that are available for classification,
@@ -415,8 +415,8 @@ pred = predict(mod, task = sonar.task, subset = seq(2, n, by = 2))
 performance(pred, measures = list(fpr, fnr, mmce))
 </code></pre>
 
-<pre><code>#&gt;    fpr    fnr   mmce 
-#&gt; 0.2500 0.3036 0.2788
+<pre><code>#&gt;       fpr       fnr      mmce 
+#&gt; 0.2500000 0.3035714 0.2788462
 </code></pre>
 
 <pre><code class="r">## Plot false negative and positive rates as well as the error rate versus the threshold
