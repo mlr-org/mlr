@@ -67,6 +67,7 @@ suppressPackageStartupMessages({
   library(knitr)
   library(stringr)
   library(digest)
+  library(caret) # we get problems if this shadows "mlr::train"
   library(mlr)
 })
 
