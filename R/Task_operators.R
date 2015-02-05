@@ -205,6 +205,8 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
 recodeY = function(y, type, td) {
   if (type == "no")
     return(y)
+  if (type == "drop.levels")
+    return(factor(y))
   if (type == "01")
     return(as.numeric(y == td$positive))
   if (type == "-1+1")
