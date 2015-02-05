@@ -74,20 +74,16 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
   * I will talk about mlr in connection with the [OpenML](http://www.openml.org) project next week. If you don't know this, take a look, a very cool initiative by Joaquin Vanschoren. We are developing a connector to R in general which also covers mlr [here](https://github.com/openml/r).
 
 
-Get in Touch: Tracker and Mailinglists
-======================================
-We have used mailing lists in the past and there still is (mainly for devel)
+Get in Touch
+============
 
-https://groups.google.com/forum/?hl=de#!forum/mlr-devel
+Please use the issue tracker for problems, questions and feature requests. 
+Don't email in most cases, as we forget these mails. 
 
-mlr-devel@googlegroups.com
-
-But we strongly prefer to use the Github issue tracker now, because it is simply easier to handle and we do not forget your issues as easily as when they come in emails.
-We use this ourselves a lot and mainly communicate there, not that much on the mailing list.
 We also do not hate beginners and it is perfectly valid to mark a issue as "Question".
-But please don't forget that all of us work in academia and put a lot of work into this project, simply because we like it, not because we are specifically paid for it.
 
-If you are interested in seeing a new feature, also use the tracker.
+Please don't forget that all of us work in academia and put a lot of work into this project, simply because we like it, not because we are specifically paid for it.
+
 We also welcome pull requests or new developers.
 
 For everything else the maintainer Bernd Bischl can be reached here: bernd_bischl@gmx.net.
