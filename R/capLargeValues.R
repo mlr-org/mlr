@@ -1,11 +1,11 @@
 #' @title Convert large/infinite numeric values in a data.frame or task.
 #'
 #' @description
-#' Convert numeric entries which large/infinite (absolute) values in a data.frame
+#' Convert numeric entries which large/infinite (absolute) values in a data.frame.
 #' Only numeric/integer columns are affected.
 #'
 #' @template arg_taskdf
-#' @param cols [\code{character}]
+#' @param cols [\code{character}]\cr
 #'   Which columns to convert.
 #'   Default is all numeric columns.
 #' @param threshold [\code{numeric(1)}]\cr
@@ -16,12 +16,12 @@
 #'   Replacement value for large entries.
 #'   Large negative entries are converted to \code{-impute}.
 #'   Default is \code{threshold}.
-#' @param what [character(1)]
+#' @param what [\code{character(1)}]\cr
 #'   What kind of entries are affected?
 #'   \dQuote{abs} means \code{abs(x) > threshold},
 #'   \dQuote{pos} means \code{abs(x) > threshold && x > 0},
-#'   \dQuote{neg} means \code{abs(x) > threshold && x < 0},
-#'   Default is \dQuote{abs}
+#'   \dQuote{neg} means \code{abs(x) > threshold && x < 0}.
+#'   Default is \dQuote{abs}.
 #' @return [\code{data.frame}]
 #' @export
 #' @family eda_and_preprocess

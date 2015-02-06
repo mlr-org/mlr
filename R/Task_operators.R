@@ -283,7 +283,7 @@ getTaskCosts = function(task, subset) {
 #' @param subset [\code{integer} | \code{logical(n)}]\cr
 #'   Selected cases.
 #'   Default is all cases.
-#' @param features [character]\cr
+#' @param features [\code{character}]\cr
 #'   Selected inputs. Note that target feature is always included in the
 #'   resulting task, you should not pass it here.
 #'   Default is all features.
