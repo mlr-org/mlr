@@ -51,6 +51,7 @@ names(pred)
 head(pred$`iris-example`)
 ```
 
+
 Note that in the examples above the task and learner IDs are used to name the list elements.
 The IDs can be accessed as follows:
 
@@ -59,6 +60,13 @@ getBMRTaskIds(res)
 getBMRLearnerIds(res)
 ```
 
+Often it more convenient to work with data frames, so you can easily convert the result structure:
+
+```{r}
+getBMRPerformances(res, as.df = TRUE)
+getBMRAggrPerformances(res, as.df = TRUE)
+head(getBMRPredictions(res, as.df = TRUE))
+```
 
 ## Nested resampling
 
@@ -178,7 +186,7 @@ ctrl = makeFeatSelControlSequential(beta = 100, method = "sfs")
 in.rdesc = makeResampleDesc("CV", iter = 2)
 
 ## Feature selection with sequential forward search (sfs)
-lrn = makeFeatSelWrapper("classif.lda", resampling = in.rdesc, control = ctrl, 
+lrn = makeFeatSelWrapper("classif.lda", resampling = in.rdesc, control = ctrl,
   show.info = FALSE)
 
 ## Let's compare two learners
