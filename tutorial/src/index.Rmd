@@ -3,7 +3,7 @@ This web page provides an in-depth introduction on how to
 use the [%mlr] framework for machine learning experiments in **R**.
 
 We focus on the comprehension of the basic functions and applications.
-More detailed technical information can be found in the [manual pages](hhttp://www.rdocumentation.org/packages/mlr) which
+More detailed technical information can be found in the [manual pages](%mlr) which
 are regularly updated and reflect the documentation of the [current package version on CRAN](http://cran.r-project.org/web/packages/mlr/index.html).
 
 An offline version of this of this tutorial is available for download [here](http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip).
