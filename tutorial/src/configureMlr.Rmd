@@ -1,7 +1,7 @@
 # Configure mlr
 
 If you really know what you are doing you may think [%mlr] is limiting you in certain ways.
-Actually [%mlr] is just designed to make errors because of typos or invalid parameter values
+[%mlr] is designed to make usage errors due to typos or invalid parameter values
 as unlikely as possible.
 But sometimes you want to break those barriers and get full access.
 For all parameters, simply refer to the documentation of [&configureMlr].
@@ -37,8 +37,8 @@ getMlrOptions()
 
 ## Example: Turn off parameter checking
 
-In an additional scenario, you want to access a new parameter of a [Learner](&makeLearner) which
-is already available in [%mlr], but the parameter is not implemented in [%mlr] yet.
+Or maybe you want to access a new parameter of a [Learner](&makeLearner) where the learner
+is already available in [%mlr], but the parameter is not "registered" in the learner's parameter set yet.
 If this is the case you might want to [contact us](https://github.com/berndbischl/mlr#get-in-touch)
 or [open an issue](https://github.com/berndbischl/mlr/issues/new) as well!
 But until then you can turn off [%mlr]'s parameter checking like this:
@@ -51,6 +51,8 @@ configureMlr(on.par.without.desc = "quiet")
 lrn = makeLearner("classif.ksvm", newPar = 3)
 lrn = makeLearner("classif.ksvm", epsilon = -3)
 ```
+
+The parameter setting will then be passed to the underlying function without further ado.
 
 
 ## Example: Handle errors in an underlying learning method
