@@ -46,28 +46,37 @@ getTab = function(type) {
   }
   logicals = vlapply(df, is.logical)
   df[logicals] = lapply(df[logicals], function(x) ifelse(x, "X", ""))
+  df
+}
+
+makeTab = function(df) {
   pandoc.table(df, style = "rmarkdown", split.tables = Inf, split.cells = Inf,
     justify = c("left", "left", "left", "center", "center", "center", "center", "right", "left"))
 }
+
+types = c("classif", "regr", "surv", "cluster")
+tables = lapply(types, getTab)
+names(tables) = types
+numbers = sapply(tables, nrow)
 ```
 
 
-### Classification
+### Classification (`r numbers["classif"]`)
 ```{r echo=FALSE,results="asis"}
-getTab("classif")
+makeTab(tables[["classif"]])
 ```
 
-### Regression
+### Regression (`r numbers["regr"]`)
 ```{r echo=FALSE,results="asis"}
-getTab("regr")
+makeTab(tables[["regr"]])
 ```
 
-### Survival analysis
+### Survival analysis (`r numbers["surv"]`)
 ```{r echo=FALSE,results="asis"}
-getTab("surv")
+makeTab(tables[["surv"]])
 ```
 
-### Cluster analysis
+### Cluster analysis (`r numbers["cluster"]`)
 ```{r echo=FALSE,results="asis"}
-getTab("cluster")
+makeTab(tables[["cluster"]])
 ```
