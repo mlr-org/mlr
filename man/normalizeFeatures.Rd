@@ -38,11 +38,13 @@ since this methods does not fail for constant vectors. Possible actions are:\cr
 }
 \description{
 Normalize features by different methods.
-Internally \code{\link{normalize}} is used for every feature column.
+Internally \code{\link{BBmisc::normalize}} is used for every feature column.
 Non numerical features will be left untouched and passed to the result.
 For constant features most methods fail, special behaviour for this case is implemented.
 }
 \seealso{
+\code{\link{BBmisc::normalize}}
+
 Other eda_and_preprocess: \code{\link{capLargeValues}};
   \code{\link{createDummyFeatures}};
   \code{\link{dropFeatures}};

@@ -67,3 +67,19 @@ test_that("TuneWrapper uses tune.threshold", {
   expect_true(!all(r$pred$threshold == 0.5))
 })
 
+
+test_that("TuneWrapper works with getTuneResult and getNestedTuneResults", {
+  inner = makeResampleDesc("Holdout")
+  outer = makeResampleDesc("CV", iters = 2)
+  ps1 = makeParamSet(makeDiscreteParam(id = "C", values = c(1, 0.000001)))
+  lrn1a = makeLearner("classif.ksvm")
+  lrn2 = makeTuneWrapper(lrn1a, resampling = inner, par.set = ps1, control = makeTuneControlGrid())
+  r = resample(lrn2, binaryclass.task, outer, measures = mlr::mmce, extract = getTuneResult)
+  xs = getNestedTuneResultsX(r)
+  expect_equal(colnames(xs), "C")
+  expect_equal(nrow(xs), 2)
+  opdf = getNestedTuneResultsOptPathDf(r)
+  expect_true(all(c("iter", "C", "mmce.test.mean") %in% colnames(opdf)))
+  expect_equal(nrow(opdf), 4)
+})
+

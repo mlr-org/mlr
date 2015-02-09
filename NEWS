@@ -38,6 +38,7 @@ mlr_2.3:
 -- measureSSE, measureMSE, measureRMSE, measureMEDSE, ...
 -- PreprocWrapperCaret
 -- setPredictThreshold
+-- getNestedTuneResultsX, getNestedTuneResultsOptPathDf
 
 - new learners:
 -- classif.bdk

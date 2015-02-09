@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Normalize features by different methods. 
-#' Internally \code{\link{normalize}} is used for every feature column.
+#' Internally \code{\link{BBmisc::normalize}} is used for every feature column.
 #' Non numerical features will be left untouched and passed to the result.
 #' For constant features most methods fail, special behaviour for this case is implemented.
 #'
@@ -27,6 +27,7 @@
 #'   \dQuote{warn}: Same behaviour as \dQuote{quiet}, but print a warning message.\cr
 #'   \dQuote{stop}: Stop with an error.\cr
 #' @template ret_task
+#' @seealso \code{\link{BBmisc::normalize}}
 #' @export
 #' @family eda_and_preprocess
 normalizeFeatures = function(task, method = "standardize", exclude = character(0L), range = c(0, 1), on.constant = "quiet") {
