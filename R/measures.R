@@ -308,6 +308,25 @@ measureAUC = function(probabilites, truth, negative, positive) {
   ROCR::performance(rpreds, "auc")@y.values[[1L]]
 }
 
+#' @export brier
+#' @rdname measures
+#' @format none
+brier = makeMeasure(id = "brier", minimize = TRUE, best = 0, worst = 1,
+  properties = c("classif", "req.pred", "req.truth", "req.prob"),
+  name = "Brier score",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureBrier(getProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive)
+  }
+)
+
+#' @export measureBrier
+#' @rdname measures
+#' @format none
+measureBrier = function(probabilites, truth, negative, positive) {
+  y = as.numeric(truth == positive)
+  mean((y - probabilites)^2)
+}
+
 #' @export bac
 #' @rdname measures
 #' @format none
