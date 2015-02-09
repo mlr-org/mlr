@@ -142,7 +142,7 @@ mlr_2.1:
 - mlr now supports multi-criteria tuning
 - mlr now supports cluster analysis (experimental)
 - improve makeWeightedClassesWrapper: Hyperparams for class weighting are now supported, too.
-- removed fix.factors option from randomForest, but added it in general to makeLearner,
+- removed fix.factors.prediction option from randomForest, but added it in general to makeLearner,
   so it now works for all learners.
   Helps when feature factor levels where dropped in newdata prediction data.frames
 - more consistent results for tuning algorithms and parameters with "trafos" :
@@ -188,7 +188,7 @@ mlr_2.0:
 - fixed a bug in stratified CV where elements where not distributed as evenly as possible
   when the split number did not divide the number of observation
 - added class.weights param for classif.svm
-- add fix.factors option to randomForest
+- add fix.factors.prediction option to randomForest
 - generic standard error estimation in randomForest and BaggingWrapper
 - added fixup.data option to task constructors, so basic data cleanup can be performed
 - show.info is now an option in configureMlr

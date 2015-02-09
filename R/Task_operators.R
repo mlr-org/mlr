@@ -215,6 +215,8 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
 recodeY = function(y, type, td) {
   if (type == "no")
     return(y)
+  if (type == "drop.levels")
+    return(factor(y))
   if (type == "01")
     return(as.numeric(y == td$positive))
   if (type == "-1+1")
@@ -290,7 +292,7 @@ getTaskCosts = function(task, subset) {
 #' @param subset [\code{integer} | \code{logical(n)}]\cr
 #'   Selected cases.
 #'   Default is all cases.
-#' @param features [character]\cr
+#' @param features [\code{character}]\cr
 #'   Selected inputs. Note that target feature is always included in the
 #'   resulting task, you should not pass it here.
 #'   Default is all features.

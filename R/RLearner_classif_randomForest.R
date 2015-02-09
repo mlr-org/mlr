@@ -34,7 +34,7 @@ trainLearner.classif.randomForest = function(.learner, .task, .subset, .weights 
     names(classwt) = levs
   if (is.numeric(cutoff) && length(cutoff) == n && is.null(names(cutoff)))
     names(cutoff) = levs
-  randomForest::randomForest(f, data = getTaskData(.task, .subset), classwt = classwt, cutoff = cutoff, ...)
+  randomForest::randomForest(f, data = getTaskData(.task, .subset, recode.target = "drop.levels"), classwt = classwt, cutoff = cutoff, ...)
 }
 
 #' @export

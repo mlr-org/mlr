@@ -11,7 +11,7 @@ capLargeValues(obj, cols = NULL, threshold = Inf, impute = threshold,
 \item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
 Input data.}
 
-\item{cols}{[\code{character}]
+\item{cols}{[\code{character}]\cr
 Which columns to convert.
 Default is all numeric columns.}
 
@@ -25,18 +25,18 @@ Replacement value for large entries.
 Large negative entries are converted to \code{-impute}.
 Default is \code{threshold}.}
 
-\item{what}{[character(1)]
+\item{what}{[\code{character(1)}]\cr
 What kind of entries are affected?
 \dQuote{abs} means \code{abs(x) > threshold},
 \dQuote{pos} means \code{abs(x) > threshold && x > 0},
-\dQuote{neg} means \code{abs(x) > threshold && x < 0},
-Default is \dQuote{abs}}
+\dQuote{neg} means \code{abs(x) > threshold && x < 0}.
+Default is \dQuote{abs}.}
 }
 \value{
 [\code{data.frame}]
 }
 \description{
-Convert numeric entries which large/infinite (absolute) values in a data.frame
+Convert numeric entries which large/infinite (absolute) values in a data.frame.
 Only numeric/integer columns are affected.
 }
 \examples{

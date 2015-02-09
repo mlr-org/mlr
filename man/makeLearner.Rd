@@ -6,7 +6,7 @@
 \title{Create learner object.}
 \usage{
 makeLearner(cl, id = cl, predict.type = "response",
-  predict.threshold = NULL, fix.factors = FALSE, ..., par.vals = list(),
+  predict.threshold = NULL, fix.factors.prediction = FALSE, ..., par.vals = list(),
   config = list())
 }
 \arguments{
@@ -35,7 +35,7 @@ Only for binary classification it can be a single numerical threshold for the po
 See \code{\link{setThreshold}} for details on how it is applied.
 Default is \code{NULL} which means 0.5 / an equal threshold for each class.}
 
-\item{fix.factors}{[\code{logical(1)}]\cr
+\item{fix.factors.prediction}{[\code{logical(1)}]\cr
 In some cases, problems occur in underlying learners for factor features during prediction.
 If the new features have LESS factor levels than during training (a strict subset),
 the learner might produce an  error like
