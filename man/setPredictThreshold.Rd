@@ -33,7 +33,7 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{makeLearner}}; \code{\link{getHyperPars}};
   \code{\link{getParamSet}}; \code{\link{removeHyperPars}};
   \code{\link{setHyperPars}}; \code{\link{setId}};
-  \code{\link{setPredictType}}; \code{\link{showHyperPars}}
+  \code{\link{setPredictType}}
 
 Other predict: \code{\link{asROCRPrediction}};
   \code{\link{getProbabilities}};

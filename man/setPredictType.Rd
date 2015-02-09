@@ -38,8 +38,7 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{makeLearner}}; \code{\link{getHyperPars}};
   \code{\link{getParamSet}}; \code{\link{removeHyperPars}};
   \code{\link{setHyperPars}}; \code{\link{setId}};
-  \code{\link{setPredictThreshold}};
-  \code{\link{showHyperPars}}
+  \code{\link{setPredictThreshold}}
 
 Other predict: \code{\link{asROCRPrediction}};
   \code{\link{getProbabilities}};

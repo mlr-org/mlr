@@ -5,7 +5,7 @@
 #' @family learner
 #' @export
 getParamSet = function(learner) {
-  assertClass(learner, classes = "Learner")
+  learner = checkLearner(learner)
   UseMethod("getParamSet")
 }
 
