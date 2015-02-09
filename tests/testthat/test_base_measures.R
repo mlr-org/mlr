@@ -46,3 +46,13 @@ test_that("measures", {
   perf = performance(pred, measures = ms)
   expect_is(perf, "numeric")
 })
+
+
+test_that("measures with same id still work", {
+  m1 = mmce
+  m2 = acc
+  m1$id = m2$id = "foo"
+  r = holdout("classif.rpart", iris.task, measures = list(m1, m2))
+  expect_true(r$aggr[1L] < 0.2 && r$aggr[2L] > 0.8)
+})
+
