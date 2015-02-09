@@ -64,6 +64,16 @@ getTaskNFeats = function(task) {
   sum(task$task.desc$n.feat)
 }
 
+#' Get number of observations in task.
+#'
+#' @template arg_task
+#' @return [\code{integer(1)}].
+#' @export
+#' @family task
+getTaskSize = function(task) {
+  getTaskDescription(task)$size
+}
+
 #' @export
 #' @rdname getTaskFormula
 getTaskFormulaAsString = function(x, target = getTaskTargetNames(x)) {
@@ -276,8 +286,7 @@ getTaskCosts = function(task, subset) {
 
 #' Subset data in task.
 #'
-#' @param task [\code{\link{Task}}]\cr
-#'   The task.
+#' @template arg_task
 #' @param subset [\code{integer} | \code{logical(n)}]\cr
 #'   Selected cases.
 #'   Default is all cases.
