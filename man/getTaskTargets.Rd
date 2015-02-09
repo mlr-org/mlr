@@ -40,6 +40,7 @@ Other task: \code{\link{getTaskCosts}};
   \code{\link{getTaskFormula}},
   \code{\link{getTaskFormulaAsString}};
   \code{\link{getTaskId}}; \code{\link{getTaskNFeats}};
+  \code{\link{getTaskSize}};
   \code{\link{getTaskTargetNames}};
   \code{\link{getTaskType}}; \code{\link{subsetTask}}
 }

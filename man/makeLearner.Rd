@@ -6,8 +6,8 @@
 \title{Create learner object.}
 \usage{
 makeLearner(cl, id = cl, predict.type = "response",
-  predict.threshold = NULL, fix.factors.prediction = FALSE, ..., par.vals = list(),
-  config = list())
+  predict.threshold = NULL, fix.factors.prediction = FALSE, ...,
+  par.vals = list(), config = list())
 }
 \arguments{
 \item{cl}{[\code{character(1)}]\cr
