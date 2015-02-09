@@ -245,21 +245,14 @@
 <p>Training a learner means fitting a model to a given data set.
 In <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> this can be done by calling the function <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a>
 on a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> and a suitable <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
-<p>We start with a survival analysis example and train a
-<a href="http://www.rdocumentation.org/packages/survival/functions/coxph.html">Cox proportional hazards model</a>
-on the <a href="http://www.rdocumentation.org/packages/survival/functions/lung.html">lung</a> data set.</p>
-<pre><code class="r">data(lung, package = &quot;survival&quot;)
-lung$status = (lung$status == 2)
-task = makeSurvTask(data = lung, target = c(&quot;time&quot;, &quot;status&quot;))
-lrn = makeLearner(&quot;surv.coxph&quot;)
-
-mod = train(lrn, task)
+<p>Training a learner works the same way for every type of <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.
+Here is a classification example using the data set <a href="http://www.rdocumentation.org/packages/dataset/functions/iris.html">iris</a> and an LDA learner.</p>
+<pre><code class="r">lrn = makeLearner(&quot;classif.lda&quot;)
+mod = train(lrn, iris.task)
 mod
-</code></pre>
-
-<pre><code>#&gt; Model for id = surv.coxph class = surv.coxph
-#&gt; Trained on obs: 228
-#&gt; Used features: 8
+#&gt; Model for id = classif.lda class = classif.lda
+#&gt; Trained on obs: 150
+#&gt; Used features: 4
 #&gt; Hyperparameters:
 </code></pre>
 
@@ -268,30 +261,12 @@ As a general rule, you have to create a <a href="http://www.rdocumentation.org/p
 by, e.g., setting hyperparameter values or changing the type of prediction.
 Otherwise, <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a> and many other functions accept a character string naming the learning
 method.</p>
-<pre><code class="r">mod = train(&quot;surv.coxph&quot;, task)
+<pre><code class="r">mod = train(&quot;classif.lda&quot;, iris.task)
 mod
-</code></pre>
-
-<pre><code>#&gt; Model for id = surv.coxph class = surv.coxph
-#&gt; Trained on obs: 228
-#&gt; Used features: 8
+#&gt; Model for id = classif.lda class = classif.lda
+#&gt; Trained on obs: 150
+#&gt; Used features: 4
 #&gt; Hyperparameters:
-</code></pre>
-
-<p>Training a learner works the same way for every type of <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.
-Here is a cluster analysis example using the data set <a href="http://www.rdocumentation.org/packages/dataset/functions/mtcars.html">mtcars</a>.
-We create a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> because we want to set one of the hyperparameter values, the number of clusters.</p>
-<pre><code class="r">task = makeClusterTask(data = mtcars)
-lrn = makeLearner(&quot;cluster.kmeans&quot;, centers = 3)
-
-mod = train(lrn, task)
-mod
-</code></pre>
-
-<pre><code>#&gt; Model for id = cluster.kmeans class = cluster.kmeans
-#&gt; Trained on obs: 32
-#&gt; Used features: 11
-#&gt; Hyperparameters: centers=&lt;numeric&gt;
 </code></pre>
 
 <p>Optionally, only a subset of the data, specified by an index set, can be used to
@@ -300,25 +275,23 @@ train the learner. This set is passed using the <code>subset</code> argument of 
 The object <a href="http://www.rdocumentation.org/packages/mlr/functions/bh.task.html">bh.task</a> is the regression <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> on the <a href="http://www.rdocumentation.org/packages/mlbench/functions/BostonHousing.html">BostonHousing</a>
 data set provided by <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.</p>
 <pre><code class="r">## Number of observations
-n = getTaskDescription(bh.task)$size
+n = getTaskSize(bh.task)
 ## Use 1/3 of the observations for training
 train.set = sample(n, size = n/3)
 ## Train the learner
 mod = train(&quot;regr.lm&quot;, bh.task, subset = train.set)
 mod
-</code></pre>
-
-<pre><code>#&gt; Model for id = regr.lm class = regr.lm
+#&gt; Model for id = regr.lm class = regr.lm
 #&gt; Trained on obs: 168
 #&gt; Used features: 13
 #&gt; Hyperparameters:
 </code></pre>
 
-<p>Note that all standard <a href="../resample/index.html">resampling strategies</a> are supported.
+<p>Note, for later, that all standard <a href="../resample/index.html">resampling strategies</a> are supported.
 Therefore you usually do not have to subset the data yourself.</p>
 <p>Moreover, if the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> supports this, you can specify observation <code>weights</code>
 that reflect the relevance of examples in the training process.</p>
-<p>For example, in the <a href="http://www.rdocumentation.org/packages/mlbench/functions/BreastCancer.html">BreastCancer</a> data set class benign is almost
+<p>For example, in the <a href="http://www.rdocumentation.org/packages/mlbench/functions/BreastCancer.html">BreastCancer</a> data set class <code>benign</code> is almost
 twice as frequent as class malignant.
 If both classes should have equal importance in training the classifier we can weight the
 examples according to the class frequencies in the data set as shown in the following
@@ -329,9 +302,7 @@ tab = as.numeric(table(target))
 w = 1/tab[target]
 
 train(&quot;classif.rpart&quot;, task = bc.task, weights = w)
-</code></pre>
-
-<pre><code>#&gt; Model for id = classif.rpart class = classif.rpart
+#&gt; Model for id = classif.rpart class = classif.rpart
 #&gt; Trained on obs: 683
 #&gt; Used features: 9
 #&gt; Hyperparameters: xval=0
@@ -342,7 +313,26 @@ train(&quot;classif.rpart&quot;, task = bc.task, weights = w)
 Naturally, it makes sense to specify <code>weights</code> in <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">make<type>Task</a> if those weights
 should always be used for the learning task and in <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a> if this is not the case since, e.g.,
 some of the learners you want to use cannot deal with weights or you want to try different weights.
-The weights in <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a> overwrite the weights in <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.</p>
+The weights in <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a> overwrite the weights in <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.
+As a side remark for more advanced readers:
+By varying the weights in the calls to train, you could also implement your own variant of
+a general boosting type of algorithm on arbitrary mlr base learners.</p>
+<p>Let's finish with a survival analysis example and train a
+<a href="http://www.rdocumentation.org/packages/survival/functions/coxph.html">Cox proportional hazards model</a>
+on the <a href="http://www.rdocumentation.org/packages/survival/functions/lung.html">lung</a> data set.</p>
+<pre><code class="r">data(lung, package = &quot;survival&quot;)
+lung$status = (lung$status == 2)
+task = makeSurvTask(data = lung, target = c(&quot;time&quot;, &quot;status&quot;))
+lrn = makeLearner(&quot;surv.coxph&quot;)
+
+mod = train(lrn, task)
+mod
+#&gt; Model for id = surv.coxph class = surv.coxph
+#&gt; Trained on obs: 228
+#&gt; Used features: 8
+#&gt; Hyperparameters:
+</code></pre>
+
 <h2 id="wrapped-models">Wrapped models</h2>
 <p><a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a> returns an object of class <a href="http://www.rdocumentation.org/packages/mlr/functions/makeWrappedModel.html">WrappedModel</a>, which wraps the
 particular model of the underlying <strong>R</strong> learning method.
@@ -352,19 +342,17 @@ It can subsequently be used to perform a <a href="http://www.rdocumentation.org/
 In the following example we get an object of class <a href="http://www.rdocumentation.org/packages/stats/functions/lm.html">lm</a>.</p>
 <pre><code class="r">mod = train(&quot;regr.lm&quot;, bh.task, subset = train.set)
 getLearnerModel(mod)
-</code></pre>
-
-<pre><code>#&gt; 
+#&gt; 
 #&gt; Call:
 #&gt; stats::lm(formula = f, data = d)
 #&gt; 
 #&gt; Coefficients:
 #&gt; (Intercept)         crim           zn        indus        chas1  
-#&gt;   52.959465    -0.145787     0.045872    -0.001538     2.961884  
+#&gt;   35.593344     0.050105     0.058767    -0.010443     3.292679  
 #&gt;         nox           rm          age          dis          rad  
-#&gt;  -19.265562     1.889432     0.044340    -1.386546     0.310935  
+#&gt;  -26.048276     3.964828     0.028116    -1.560925     0.199352  
 #&gt;         tax      ptratio            b        lstat  
-#&gt;   -0.009272    -1.109389     0.004786    -0.803980
+#&gt;   -0.005052    -0.798202     0.008841    -0.674258
 </code></pre>
 
 </div>

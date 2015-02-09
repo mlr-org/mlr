@@ -243,28 +243,18 @@
 
 <h1 id="mlr-tutorial">mlr Tutorial</h1>
 <p>This web page provides an in-depth introduction on how to
-use the <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> framework for machine learning experiments and
-optimization in <strong>R</strong>.</p>
+use the <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> framework for machine learning experiments in <strong>R</strong>.</p>
 <p>We focus on the comprehension of the basic functions and applications.
-More detailed technical information can be found in the <a href="http://berndbischl.github.io/mlr/man/">manual pages</a> which
+More detailed technical information can be found in the <a href="http://www.rdocumentation.org/packages/mlr/">manual pages</a> which
 are regularly updated and reflect the documentation of the <a href="http://cran.r-project.org/web/packages/mlr/index.html">current package version on CRAN</a>.</p>
 <p>An offline version of this of this tutorial is available for download <a href="http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip">here</a>.</p>
-<p>The tutorial explains the basic analysis of a data set step by step:</p>
-<ul>
-<li>What is your data and the aim of your analysis? <a href="task/index.html">Tasks</a></li>
-<li>How do you select learning algorithms and set them up? <a href="learner/index.html">Learners</a>, <a href="train/index.html">Train</a></li>
-<li>How to predict given new data? <a href="predict/index.html">Predict</a></li>
-<li>How to evaluate models and their predictions? <a href="performance/index.html">Performance</a>, <a href="resample/index.html">Resampling</a></li>
-<li>How to tune models? <a href="tune/index.html">Tuning</a></li>
-<li>How to select important features? <a href="feature_selection/index.html">Feature Selection</a></li>
-<li>How to conduct a comparison study? <a href="benchmark_experiments/index.html">Benchmark Experiments</a></li>
-</ul>
-<p>We present various simple examples from classification, regression, cluster and survival
-analysis during this tutorial to illustrate the main features of the
-package.</p>
+<p>The tutorial explains the basic analysis of a data set step by step.
+Please refer to sections of the menu above: Basics, Advanced, Extend and Appendix.</p>
+<p>During the tutorial We present various simple examples from classification, regression, cluster and
+survival analysis during this tutorial to illustrate the main features of the package.</p>
 <p>Enjoy reading!</p>
 <h2 id="quick-start">Quick start</h2>
-<p>A simple stratified cross-validation of the <em>linear discriminant analysis</em> with <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.</p>
+<p>A simple stratified cross-validation of  <em>linear discriminant analysis</em> with <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.</p>
 <pre><code class="r">library(mlr)
 data(iris)
 
@@ -282,9 +272,7 @@ r = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE)
 
 ## Get the mean misclassification error:
 r$aggr
-</code></pre>
-
-<pre><code>#&gt; mmce.test.mean 
+#&gt; mmce.test.mean 
 #&gt;           0.02
 </code></pre>
 

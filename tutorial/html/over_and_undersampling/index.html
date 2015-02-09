@@ -259,23 +259,13 @@ mod = train(lrn, task)
 mod.over = train(lrn, task.over)
 mod.under = train(lrn, task.under)
 performance(predict(mod, newdata = data.even), measures = mmce)
-</code></pre>
-
-<pre><code>#&gt; mmce 
+#&gt; mmce 
 #&gt; 0.32
-</code></pre>
-
-<pre><code class="r">performance(predict(mod.over, newdata = data.even), measures = mmce)
-</code></pre>
-
-<pre><code>#&gt; mmce 
+performance(predict(mod.over, newdata = data.even), measures = mmce)
+#&gt; mmce 
 #&gt; 0.38
-</code></pre>
-
-<pre><code class="r">performance(predict(mod.under, newdata = data.even), measures = mmce)
-</code></pre>
-
-<pre><code>#&gt; mmce 
+performance(predict(mod.under, newdata = data.even), measures = mmce)
+#&gt; mmce 
 #&gt;  0.5
 </code></pre>
 
@@ -288,23 +278,13 @@ mod = train(lrn, task)
 mod.over = train(lrn.over, task)
 mod.under = train(lrn.under, task)
 performance(predict(mod, newdata = data.even), measures = mmce)
-</code></pre>
-
-<pre><code>#&gt; mmce 
+#&gt; mmce 
 #&gt; 0.32
-</code></pre>
-
-<pre><code class="r">performance(predict(mod.over, newdata = data.even), measures = mmce)
-</code></pre>
-
-<pre><code>#&gt; mmce 
+performance(predict(mod.over, newdata = data.even), measures = mmce)
+#&gt; mmce 
 #&gt; 0.43
-</code></pre>
-
-<pre><code class="r">performance(predict(mod.under, newdata = data.even), measures = mmce)
-</code></pre>
-
-<pre><code>#&gt; mmce 
+performance(predict(mod.under, newdata = data.even), measures = mmce)
+#&gt; mmce 
 #&gt; 0.41
 </code></pre>
 

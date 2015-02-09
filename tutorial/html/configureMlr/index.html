@@ -249,7 +249,7 @@
 
 <h1 id="configure-mlr">Configure mlr</h1>
 <p>If you really know what you are doing you may think <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> is limiting you in certain ways.
-Actually <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> is just designed to make errors because of typos or invalid parameter values
+<a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> is designed to make usage errors due to typos or invalid parameter values
 as unlikely as possible.
 But sometimes you want to break those barriers and get full access.
 For all parameters, simply refer to the documentation of <a href="http://www.rdocumentation.org/packages/mlr/functions/configureMlr.html">configureMlr</a>.</p>
@@ -258,36 +258,20 @@ For all parameters, simply refer to the documentation of <a href="http://www.rdo
 <pre><code class="r">## Perform a 3-fold cross-validation
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 r = resample(&quot;classif.ksvm&quot;, iris.task, rdesc)
-</code></pre>
-
-<pre><code>#&gt; [Resample] cross-validation iter: 1
-</code></pre>
-
-<pre><code>#&gt; Using automatic sigma estimation (sigest) for RBF or laplace kernel
-</code></pre>
-
-<pre><code>#&gt; [Resample] cross-validation iter: 2
-</code></pre>
-
-<pre><code>#&gt; Using automatic sigma estimation (sigest) for RBF or laplace kernel
-</code></pre>
-
-<pre><code>#&gt; [Resample] cross-validation iter: 3
-</code></pre>
-
-<pre><code>#&gt; Using automatic sigma estimation (sigest) for RBF or laplace kernel
-</code></pre>
-
-<pre><code>#&gt; [Resample] Result: mmce.test.mean=0.06
+#&gt; [Resample] cross-validation iter: 1
+#&gt; Using automatic sigma estimation (sigest) for RBF or laplace kernel
+#&gt; [Resample] cross-validation iter: 2
+#&gt; Using automatic sigma estimation (sigest) for RBF or laplace kernel
+#&gt; [Resample] cross-validation iter: 3
+#&gt; Using automatic sigma estimation (sigest) for RBF or laplace kernel
+#&gt; [Resample] Result: mmce.test.mean=0.06
 </code></pre>
 
 <p>Just try the following:</p>
 <pre><code class="r">configureMlr(show.learner.output = FALSE)
 rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 r = resample(&quot;classif.ksvm&quot;, iris.task, rdesc)
-</code></pre>
-
-<pre><code>#&gt; [Resample] cross-validation iter: 1
+#&gt; [Resample] cross-validation iter: 1
 #&gt; [Resample] cross-validation iter: 2
 #&gt; [Resample] cross-validation iter: 3
 #&gt; [Resample] Result: mmce.test.mean=0.0533
@@ -296,9 +280,7 @@ r = resample(&quot;classif.ksvm&quot;, iris.task, rdesc)
 <h2 id="access-the-current-configuration">Access the current configuration</h2>
 <p>Function <a href="http://www.rdocumentation.org/packages/mlr/functions/getMlrOptions.html">getMlrOptions</a> returns a <code>list</code> that shows the current configuration:</p>
 <pre><code class="r">getMlrOptions()
-</code></pre>
-
-<pre><code>#&gt; $on.learner.error
+#&gt; $on.learner.error
 #&gt; [1] &quot;stop&quot;
 #&gt; 
 #&gt; $on.learner.warning
@@ -318,30 +300,24 @@ r = resample(&quot;classif.ksvm&quot;, iris.task, rdesc)
 </code></pre>
 
 <h2 id="example-turn-off-parameter-checking">Example: Turn off parameter checking</h2>
-<p>In an additional scenario, you want to access a new parameter of a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> which
-is already available in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>, but the parameter is not implemented in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> yet.
+<p>Or maybe you want to access a new parameter of a <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> where the learner
+is already available in <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>, but the parameter is not "registered" in the learner's parameter set yet.
 If this is the case you might want to <a href="https://github.com/berndbischl/mlr#get-in-touch">contact us</a>
 or <a href="https://github.com/berndbischl/mlr/issues/new">open an issue</a> as well!
 But until then you can turn off <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>'s parameter checking like this:</p>
 <pre><code class="r">lrn = makeLearner(&quot;classif.ksvm&quot;, newPar = 3)
-</code></pre>
-
-<pre><code>#&gt; Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter newPar without available description object!
+#&gt; Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter newPar without available description object!
 #&gt; You can switch off this check by using configureMlr!
-</code></pre>
-
-<pre><code class="r">lrn = makeLearner(&quot;classif.ksvm&quot;, epsilon = -3)
-</code></pre>
-
-<pre><code>#&gt; Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter epsilon without available description object!
+lrn = makeLearner(&quot;classif.ksvm&quot;, epsilon = -3)
+#&gt; Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter epsilon without available description object!
 #&gt; You can switch off this check by using configureMlr!
-</code></pre>
 
-<pre><code class="r">configureMlr(on.par.without.desc = &quot;quiet&quot;)
+configureMlr(on.par.without.desc = &quot;quiet&quot;)
 lrn = makeLearner(&quot;classif.ksvm&quot;, newPar = 3)
 lrn = makeLearner(&quot;classif.ksvm&quot;, epsilon = -3)
 </code></pre>
 
+<p>The parameter setting will then be passed to the underlying function without further ado.</p>
 <h2 id="example-handle-errors-in-an-underlying-learning-method">Example: Handle errors in an underlying learning method</h2>
 <p>Another common situation is that a particular learning method throws an error.
 The default behavior of <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> is to generate an exception as well.
@@ -351,52 +327,32 @@ benchmark experiment due to one error.
 The following example shows how to prevent this:</p>
 <pre><code class="r">## This call gives an error caused by the low number of observations in class `virginica`
 train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
-</code></pre>
+#&gt; Error in qda.default(x, grouping, ...): some group is too small for 'qda'
+#&gt; Timing stopped at: 0.011 0 0.011
 
-<pre><code>#&gt; Error in qda.default(x, grouping, ...): some group is too small for 'qda'
-</code></pre>
-
-<pre><code>#&gt; Timing stopped at: 0.004 0 0.004
-</code></pre>
-
-<pre><code class="r">configureMlr(on.learner.error = &quot;warn&quot;)
+configureMlr(on.learner.error = &quot;warn&quot;)
 mod = train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
-</code></pre>
-
-<pre><code>#&gt; Warning in train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104): Could not train learner classif.qda: Error in qda.default(x, grouping, ...) : 
+#&gt; Warning in train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104): Could not train learner classif.qda: Error in qda.default(x, grouping, ...) : 
 #&gt;   some group is too small for 'qda'
-</code></pre>
-
-<pre><code class="r">mod
-</code></pre>
-
-<pre><code>#&gt; Model for id = classif.qda class = classif.qda
+mod
+#&gt; Model for id = classif.qda class = classif.qda
 #&gt; Trained on obs: 104
 #&gt; Used features: 4
 #&gt; Hyperparameters: 
 #&gt; Training failed: Error in qda.default(x, grouping, ...) : 
 #&gt;   some group is too small for 'qda'
-</code></pre>
 
-<pre><code class="r">## mod is an object of class FailureModel
+## mod is an object of class FailureModel
 isFailureModel(mod)
-</code></pre>
+#&gt; [1] TRUE
 
-<pre><code>#&gt; [1] TRUE
-</code></pre>
-
-<pre><code class="r">## Get the error message
+## Get the error message
 getFailureModelMsg(mod)
-</code></pre>
+#&gt; [1] &quot;Error in qda.default(x, grouping, ...) : \n  some group is too small for 'qda'\n&quot;
 
-<pre><code>#&gt; [1] &quot;Error in qda.default(x, grouping, ...) : \n  some group is too small for 'qda'\n&quot;
-</code></pre>
-
-<pre><code class="r">## NAs are predicted
+## NAs are predicted
 predict(mod, iris.task)
-</code></pre>
-
-<pre><code>#&gt; Prediction: 150 observations
+#&gt; Prediction: 150 observations
 #&gt; predict.type: response
 #&gt; threshold: 
 #&gt; time: NA

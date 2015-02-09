@@ -249,24 +249,14 @@ The first loop <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> enc
 It is good practice to call <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStop.html">parallelStop</a> at the end of your script.</p>
 <pre><code class="r">library(&quot;parallelMap&quot;)
 parallelStartSocket(2)
-</code></pre>
-
-<pre><code>#&gt; Starting parallelization in mode=socket with cpus=2.
-</code></pre>
-
-<pre><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
+#&gt; Starting parallelization in mode=socket with cpus=2.
+rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 r = resample(&quot;classif.lda&quot;, iris.task, rdesc)
-</code></pre>
-
-<pre><code>#&gt; Exporting objects to slaves for mode socket: .mlr.slave.options
+#&gt; Exporting objects to slaves for mode socket: .mlr.slave.options
 #&gt; Mapping in parallel: mode = socket; cpus = 2; elements = 3.
 #&gt; [Resample] Result: mmce.test.mean=0.02
-</code></pre>
-
-<pre><code class="r">parallelStop()
-</code></pre>
-
-<pre><code>#&gt; Stopped parallelization. All cleaned up.
+parallelStop()
+#&gt; Stopped parallelization. All cleaned up.
 </code></pre>
 
 <p>On Linux or Mac OS X, you may want to use
@@ -275,13 +265,25 @@ We offer different parallelization levels for fine grained control over the para
 E.g., if you do not want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/benchmark.html">benchmark</a> function because it has only very few iterations but want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resampling</a> of each learner instead,
 you can specifically pass the <code>level</code> <code>"mlr.resample"</code> to the <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart*</a> function.
 Currently the following levels are supported:</p>
-<pre><code class="r">parallelShowRegisteredLevels()
+<pre><code class="r">parallelGetRegisteredLevels()
+#&gt; mlr: mlr.benchmark, mlr.resample, mlr.selectFeatures, mlr.tuneParams
 </code></pre>
 
-<pre><code>#&gt; mlr                 : mlr.benchmark,mlr.resample,mlr.selectFeatures,mlr.tuneParams
-</code></pre>
-
-<p>For further ways of parallelizing your computations, consult the
+<p>Here is a brief explanation of what these levels do:</p>
+<ul>
+<li><strong>resample</strong>: Each resampling iteration (a train / test step) is a parallel job.</li>
+<li><strong>benchmark</strong>: Each experiment "run this learner on this data set" is a parallel job.</li>
+<li><strong>tuneParams</strong>: Each evaluation in hyperparameter space "resample with these parameter settings" is a parallel job.
+  How many of these can be run independently in parallel, depends on the tuning algorithm.
+  For grid search or random search this is
+  no problem, but for other tuners it depends on how many points are produced in each iteration
+  of the optimization. If a tuner works in a purely sequential fashion, we cannot work magic and the
+  hyperparameter evaluation will also run sequentially. But note that you can still parallelize the
+  underlying resampling.</li>
+<li><strong>selectFeatures</strong>: Each evaluation in feature space "resample with this feature subset" is a parallel job.
+  The same comments as for "tuneParams" apply here.</li>
+</ul>
+<p>For further details, consult the
 <a href="https://github.com/berndbischl/parallelMap#parallelmap">parallelMap tutorial</a> and help.</p>
 </div>
             

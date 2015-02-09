@@ -236,7 +236,7 @@
         
             <li><a href="#available-performance-measures">Available performance measures</a></li>
         
-            <li><a href="#find-a-suitable-performance-measure">Find a suitable performance measure</a></li>
+            <li><a href="#listing-measures">Listing measures</a></li>
         
             <li><a href="#calculate-performance-measures">Calculate performance measures</a></li>
         
@@ -271,23 +271,17 @@ sum (<a href="../measures/index.html">timeboth</a>) as performance measures.</p>
 <p>If you want to implement an additional measure or include a measure with
 non-standard misclassification costs, see the section on
 <a href="../create_measure/index.html">creating custom measures</a>.</p>
-<h2 id="find-a-suitable-performance-measure">Find a suitable performance measure</h2>
+<h2 id="listing-measures">Listing measures</h2>
 <p>The properties and requirements of the individual measures are shown in the <a href="../measures/index.html">table of performance measures</a>.</p>
 <p>If you would like a list of available measures with certain properties or suitable for a
 certain learning <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> use the function <a href="http://www.rdocumentation.org/packages/mlr/functions/listMeasures.html">listMeasures</a>.</p>
 <pre><code class="r">## Performance measures for classification with multiple classes
 listMeasures(&quot;classif&quot;, properties = &quot;classif.multi&quot;)
-</code></pre>
-
-<pre><code>#&gt; [1] &quot;featperc&quot;       &quot;mmce&quot;           &quot;timeboth&quot;       &quot;acc&quot;           
+#&gt; [1] &quot;featperc&quot;       &quot;mmce&quot;           &quot;timeboth&quot;       &quot;acc&quot;           
 #&gt; [5] &quot;multiclass.auc&quot; &quot;ber&quot;            &quot;timepredict&quot;    &quot;timetrain&quot;
-</code></pre>
-
-<pre><code class="r">## Performance measure suitable for the iris classification task
+## Performance measure suitable for the iris classification task
 listMeasures(iris.task)
-</code></pre>
-
-<pre><code>#&gt; [1] &quot;featperc&quot;       &quot;mmce&quot;           &quot;timeboth&quot;       &quot;acc&quot;           
+#&gt; [1] &quot;featperc&quot;       &quot;mmce&quot;           &quot;timeboth&quot;       &quot;acc&quot;           
 #&gt; [5] &quot;multiclass.auc&quot; &quot;ber&quot;            &quot;timepredict&quot;    &quot;timetrain&quot;
 </code></pre>
 
@@ -295,7 +289,7 @@ listMeasures(iris.task)
 <p>In the following example we fit a <a href="http://www.rdocumentation.org/packages/gbm/functions/gbm.html">gradient boosting machine</a> on a subset of the
 <a href="http://www.rdocumentation.org/packages/mlbench/functions/BostonHousing.html">BostonHousing</a> data set and calculate the mean squared error
 (<a href="../measures/index.html">mse</a>) on the remaining observations.</p>
-<pre><code class="r">n = getTaskDescription(bh.task)$size
+<pre><code class="r">n = getTaskSize(bh.task)
 lrn = makeLearner(&quot;regr.gbm&quot;, n.trees = 1000)
 mod = train(lrn, task = bh.task, subset = seq(1, n, 2))
 pred = predict(mod, task = bh.task, subset = seq(2, n, 2))
@@ -303,17 +297,13 @@ pred = predict(mod, task = bh.task, subset = seq(2, n, 2))
 # mse is the default measure for regression, we do not have to specify
 # it here
 performance(pred)
-</code></pre>
-
-<pre><code>#&gt;      mse 
+#&gt;      mse 
 #&gt; 42.68414
 </code></pre>
 
 <p>The following code computes the median of squared errors (<a href="../measures/index.html">medse</a>) instead.</p>
 <pre><code class="r">performance(pred, measures = medse)
-</code></pre>
-
-<pre><code>#&gt;    medse 
+#&gt;    medse 
 #&gt; 9.134965
 </code></pre>
 
@@ -321,9 +311,7 @@ performance(pred)
 list of measures which can also include <a href="../create_measure/index.html">your own measure</a>.</p>
 <p>Calculate the mean squared error, median squared error and mean absolute error (<a href="../measures/index.html">mae</a>).</p>
 <pre><code class="r">performance(pred, measures = list(mse, medse, mae))
-</code></pre>
-
-<pre><code>#&gt;       mse     medse       mae 
+#&gt;       mse     medse       mae 
 #&gt; 42.684141  9.134965  4.536750
 </code></pre>
 
@@ -335,10 +323,8 @@ works in the same way.</p>
 <p>For example in order to assess the time needed for training (<a href="../measures/index.html">timetrain</a>), the fitted
 model has to be passed.</p>
 <pre><code class="r">performance(pred, measures = timetrain, model = mod)
-</code></pre>
-
-<pre><code>#&gt; timetrain 
-#&gt;     0.094
+#&gt; timetrain 
+#&gt;     0.134
 </code></pre>
 
 <p>For many performance measures in cluster analysis the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> is required.</p>
@@ -348,9 +334,7 @@ pred = predict(mod, task = mtcars.task)
 
 ## Calculate the Dunn index
 performance(pred, measures = dunn, task = mtcars.task)
-</code></pre>
-
-<pre><code>#&gt;      dunn 
+#&gt;      dunn 
 #&gt; 0.1462919
 </code></pre>
 
@@ -364,9 +348,7 @@ mod = train(lrn, task = sonar.task)
 pred = predict(mod, task = sonar.task)
 
 performance(pred, measures = auc)
-</code></pre>
-
-<pre><code>#&gt;       auc 
+#&gt;       auc 
 #&gt; 0.9224018
 </code></pre>
 
@@ -378,9 +360,7 @@ If you are interested in the properties or requirements of a single measure you 
 See the help page of <a href="http://www.rdocumentation.org/packages/mlr/functions/makeMeasure.html">Measure</a> for information on the individual slots.</p>
 <pre><code class="r">## Mean misclassification error
 str(mmce)
-</code></pre>
-
-<pre><code>#&gt; List of 10
+#&gt; List of 10
 #&gt;  $ id        : chr &quot;mmce&quot;
 #&gt;  $ minimize  : logi TRUE
 #&gt;  $ properties: chr [1:4] &quot;classif&quot; &quot;classif.multi&quot; &quot;req.pred&quot; &quot;req.truth&quot;
@@ -407,19 +387,15 @@ learner performance versus the threshold.</p>
 plot the false positive rate (<a href="../measures/index.html">fpr</a>), the false negative rate (<a href="../measures/index.html">fnr</a>)
 as well as the misclassification rate (<a href="../measures/index.html">mmce</a>) for all possible threshold values.</p>
 <pre><code class="r">lrn = makeLearner(&quot;classif.lda&quot;, predict.type = &quot;prob&quot;)
-n = getTaskDescription(sonar.task)$size
+n = getTaskSize(sonar.task)
 mod = train(lrn, task = sonar.task, subset = seq(1, n, by = 2))
 pred = predict(mod, task = sonar.task, subset = seq(2, n, by = 2))
 
 ## Performance for the default threshold 0.5
 performance(pred, measures = list(fpr, fnr, mmce))
-</code></pre>
-
-<pre><code>#&gt;       fpr       fnr      mmce 
+#&gt;       fpr       fnr      mmce 
 #&gt; 0.2500000 0.3035714 0.2788462
-</code></pre>
-
-<pre><code class="r">## Plot false negative and positive rates as well as the error rate versus the threshold
+## Plot false negative and positive rates as well as the error rate versus the threshold
 plotThreshVsPerf(pred, measures = list(fpr, fnr, mmce))
 </code></pre>
 
