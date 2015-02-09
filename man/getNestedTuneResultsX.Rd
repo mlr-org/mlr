@@ -17,7 +17,7 @@ The result of a resampling of a tuneWrapped learner.}
 After you have conducted a resampling on a wrapped learner using \code{\link{makeTuneWrapper}} with \code{resample(..., extract = getTuneresult)} this helper gives you a \code{data.frame} with the hyperparameter settings which were found to be the best.
 }
 \examples{
-\\donotrun{
+\dontrun{
 ps = makeParamSet(
   makeDiscreteParam("C", values = 2^(-2:2)),
   makeDiscreteParam("sigma", values = 2^(-2:2))

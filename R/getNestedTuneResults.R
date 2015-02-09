@@ -6,7 +6,7 @@
 #'   The result of a resampling of a tuneWrapped learner.
 #' @return \code{data.frame}
 #' @examples
-#'\dontrun{
+#' \dontrun{
 #' ps = makeParamSet(
 #'   makeDiscreteParam("C", values = 2^(-2:2)),
 #'   makeDiscreteParam("sigma", values = 2^(-2:2))
@@ -17,7 +17,7 @@
 #' lrn = makeTuneWrapper("classif.ksvm", inner, par.set = ps, control = ctrl)
 #' r = resample(lrn, iris.task, resampling = outer, extract = getTuneResult)
 #' getNestedTuneResultsX(r)
-#'}
+#' }
 #' 
 #' @export 
 getNestedTuneResultsX = function(r) {
@@ -37,11 +37,11 @@ getNestedTuneResultsX = function(r) {
 #'   The result of a resampling of a tuneWrapped learner.
 #' @return \code{data.frame}
 #' @examples
-#'\dontrun{
+#' \dontrun{
 #' ps = makeParamSet(
 #'   makeDiscreteParam("C", values = 2^(-2:2)),
 #'   makeDiscreteParam("sigma", values = 2^(-2:2))
-#')
+#' )
 #' ctrl = makeTuneControlGrid()
 #' inner = makeResampleDesc("Holdout")
 #' outer = makeResampleDesc("CV", iters = 5)

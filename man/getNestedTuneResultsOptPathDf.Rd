@@ -18,7 +18,7 @@ After you have conducted a resampling on a wrapped learner using \code{\link{mak
 An additional column \code{iter} indicates to what resampling iteration the column belongs.
 }
 \examples{
-\\donotrun{
+\dontrun{
 ps = makeParamSet(
   makeDiscreteParam("C", values = 2^(-2:2)),
   makeDiscreteParam("sigma", values = 2^(-2:2))

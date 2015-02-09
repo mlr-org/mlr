@@ -20,6 +20,10 @@ If you use them you might want to define them in the \code{add.par.set} so that 
 }
 \description{
 Fuses a learner with preprocessing methods provided by \code{\link[caret]{preProcess}}.
+ Before training the preprocessing will be performed and the preprocessing model will be stored.
+ Before prediction the preprocessing model will transform the test data according to the trained model.
+
+ After being wrapped the learner will support missing values although this will only be the case if \code{ppc.knnImpute}, \code{ppc.bagImpute} or \code{ppc.mediaImpute} is set to \code{TRUE}.
 }
 \seealso{
 Other wrapper: \code{\link{CostSensClassifModel}},
