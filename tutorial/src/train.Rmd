@@ -33,7 +33,7 @@ data set provided by [%mlr].
 
 ```{r}
 ## Number of observations
-n = getTaskDescription(bh.task)$size
+n = getTaskSize(bh.task)
 ## Use 1/3 of the observations for training
 train.set = sample(n, size = n/3)
 ## Train the learner

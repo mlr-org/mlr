@@ -61,7 +61,7 @@ of the bagging learner is changed to ``"se"``.
 Below, we give a small example for regression.
 
 ```{r makeBaggingWrapper_regression}
-n = getTaskDescription(bh.task)$size
+n = getTaskSize(bh.task)
 train.inds = seq(1, n, 3)
 test.inds  = setdiff(1:n, train.inds)
 lrn = makeLearner("regr.rpart")

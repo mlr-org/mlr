@@ -21,7 +21,7 @@ observation of the [BostonHousing](&mlbench::BostonHousing) data set and make pr
 on the remaining data in [&bh.task].
 
 ```{r}
-n = getTaskDescription(bh.task)$size
+n = getTaskSize(bh.task)
 train.set = seq(1, n, by = 2)
 test.set = seq(2, n, by = 2)
 lrn = makeLearner("regr.gbm", n.trees = 100)
