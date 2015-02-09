@@ -32,7 +32,7 @@ mlr_2.3:
   surv.optimCoxBoostPenalty, surv.glmboost, surv.CoxBoost
 
 - new functions
--- getTaskType, getTaskId, getTaskTargetNames
+-- getTaskType, getTaskId, getTaskTargetNames, getTaskSize
 -- plotROCRCurves
 -- plotViperCharts
 -- measureSSE, measureMSE, measureRMSE, measureMEDSE, ...
