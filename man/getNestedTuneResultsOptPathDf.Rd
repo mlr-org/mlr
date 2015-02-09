@@ -15,20 +15,9 @@ The result of a resampling of a tuneWrapped learner.}
 }
 \description{
 After you have conducted a resampling on a wrapped learner using \code{\link{makeTuneWrapper}} with \code{resample(..., extract = getTuneresult)} this helper gives you a \code{data.frame} with all \code{opt.path}s combined by \code{rbind}.
-An additional column \code{iter} indicates to what resampling iteration the column belongs.
+  An additional column \code{iter} indicates to what resampling iteration the column belongs.
 }
 \examples{
-\dontrun{
-ps = makeParamSet(
-  makeDiscreteParam("C", values = 2^(-2:2)),
-  makeDiscreteParam("sigma", values = 2^(-2:2))
-)
-ctrl = makeTuneControlGrid()
-inner = makeResampleDesc("Holdout")
-outer = makeResampleDesc("CV", iters = 5)
-lrn = makeTuneWrapper("classif.ksvm", inner, par.set = ps, control = ctrl)
-r = resample(lrn, iris.task, resampling = outer, extract = getTuneResult)
-getNestedTuneResultsOptPathDf(r)
-}
+## see example of makeTuneWrapper
 }
 

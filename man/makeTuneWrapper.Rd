@@ -66,6 +66,8 @@ print(getTuneResult(mod))
 # we also extract tuned hyper pars in each iteration
 r = resample(lrn, task, outer, extract = getTuneResult)
 print(r$extract)
+getNestedTuneResultsOptPathDf(r)
+getNestedTuneResultsX(r)
 }
 \seealso{
 Other tune: \code{\link{ModelMultiplexer}},

@@ -2,7 +2,7 @@
 % Please edit documentation in R/getNestedTuneResults.R
 \name{getNestedTuneResultsX}
 \alias{getNestedTuneResultsX}
-\title{Get the tuned hyperparameter settings from a nested tuning}
+\title{Get the tuned hyperparameter settings from a nested tuning.}
 \usage{
 getNestedTuneResultsX(r)
 }
@@ -12,22 +12,12 @@ The result of a resampling of a tuneWrapped learner.}
 }
 \value{
 \code{data.frame}
+  \code{data.frame} with one column for each tuned hyperparameter and one row for each outer resampling iteration.
 }
 \description{
 After you have conducted a resampling on a wrapped learner using \code{\link{makeTuneWrapper}} with \code{resample(..., extract = getTuneresult)} this helper gives you a \code{data.frame} with the hyperparameter settings which were found to be the best.
 }
 \examples{
-\dontrun{
-ps = makeParamSet(
-  makeDiscreteParam("C", values = 2^(-2:2)),
-  makeDiscreteParam("sigma", values = 2^(-2:2))
-)
-ctrl = makeTuneControlGrid()
-inner = makeResampleDesc("Holdout")
-outer = makeResampleDesc("CV", iters = 5)
-lrn = makeTuneWrapper("classif.ksvm", inner, par.set = ps, control = ctrl)
-r = resample(lrn, iris.task, resampling = outer, extract = getTuneResult)
-getNestedTuneResultsX(r)
-}
+## see example of makeTuneWrapper
 }
 

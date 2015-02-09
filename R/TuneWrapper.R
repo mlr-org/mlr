@@ -37,6 +37,8 @@
 #' # we also extract tuned hyper pars in each iteration
 #' r = resample(lrn, task, outer, extract = getTuneResult)
 #' print(r$extract)
+#' getNestedTuneResultsOptPathDf(r)
+#' getNestedTuneResultsX(r)
 makeTuneWrapper = function(learner, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)
   assert(checkClass(resampling, "ResampleDesc"), checkClass(resampling, "ResampleInstance"))
