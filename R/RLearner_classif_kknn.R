@@ -2,7 +2,9 @@
 makeRLearner.classif.kknn = function() {
   makeRLearnerClassif(
     cl = "classif.kknn",
-    package = "kknn",
+    # FIXME: kknn set its own contr.dummy function, if we requireNamespace,
+    # this is not found, see issue  226
+    package = "!kknn",
     #FIXME: find out what ykernel and contrasts really do
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "k", default = 7L, lower = 1L),

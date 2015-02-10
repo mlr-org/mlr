@@ -25,7 +25,13 @@ mytask3 =  makeClassifTask(id = "t3",  data = mydata3, target = "y")
 mytask4 =  makeClassifTask(id = "t4",  data = mydata4, target = "y")
 
 hpars = list(
-  classif.lssvm = list(kernel = "rbfdot", sigma = 0.4),
+  classif.bartMachine = list(verbose = FALSE, run_in_sample = FALSE,
+    num_iterations_after_burn_in = 10L),
+  classif.bdk = list(ydim = 2L),
+  classif.boosting = list(mfinal = 10L),
+  classif.cforest = list(mtry = 2L),
+  classif.gbm = list(bag.fraction = 1, n.minobsinnode = 1),
+  classif.lssvm = list(kernel = "rbfdot", sigma = 0.4, reduced = FALSE),
   classif.LiblineaRLogReg = list(type = 7),
   classif.LiblineaRBinary = list(type = 1),
   classif.LiblineaRMultiClass = list(type = 1)
