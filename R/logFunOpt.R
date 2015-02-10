@@ -8,17 +8,18 @@ logFunDefault = function(learner, task, resampling, measures, par.set, control, 
 
   if (stage == 1L) {
     gc(); gc(); gc()
-    start.mem = sum(gc(reset = TRUE)[, 6L])
     start.time = Sys.time()
     messagef("[%s] %i: %s", prefixes[stage], dob, x.string)
-    return(list(start.mem = start.mem, start.time = start.time))
+    return(list(start.time = start.time))
   } else if (stage == 2L) {
-    end.mem = sum(gc(reset = TRUE)[, 6L])
+    # get cur mem and max mem and sum ncells and vcells.
+    # we had a diff here with gc(reset=TRUE). but this is bad the user cant avoid this, it might even be
+    # not allowed on CRAN
+    mem = colSums(gc()[, c(2L, 6L)])
     end.time = Sys.time()
-    diff.mem = end.mem - prev.stage$start.mem
     diff.time = end.time - prev.stage$start.time
-    messagef("[%s] %i: %s; time: %.1f min; memory: %.1f Mb (+%.1f)",
-      prefixes[stage], dob, perfsToString(y), diff.time, end.mem, diff.mem)
+    messagef("[%s] %i: %s; time: %.1f min; memory: %.0fMb use, %.0fMb max",
+      prefixes[stage], dob, perfsToString(y), diff.time, mem[1L], mem[2L])
     return(NULL)
   }
 }
