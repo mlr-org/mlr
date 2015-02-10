@@ -75,6 +75,20 @@ test_that("learners work", {
     expect_true(!is.na(performance(p)))
   }
 
+  # binary classif with factors
+  data = binaryclass.df[c(10:20, 180:190), 12:15]
+  data[, 4L] = factor(sample(c("a", "b"), size = nrow(data), replace = TRUE))
+  data$y = binaryclass.df[c(10:20, 180:190),binaryclass.target]
+  task = makeClassifTask(data = data, target = "y")
+  lrns = mylist(task, create = TRUE)
+  for (lrn in lrns) {
+    expect_output(print(lrn), lrn$id)
+    lrn = fixHyperPars(lrn)
+    m = train(lrn, task)
+    p = predict(m, task)
+    expect_true(!is.na(performance(p)))
+  }
+
   # binary classif with prob
   task = subsetTask(binaryclass.task, subset = c(1:10, 180:190),
     features = getTaskFeatureNames(binaryclass.task)[12:15])
@@ -127,6 +141,18 @@ test_that("learners work", {
   # normal regr, dont use feature 2, it is nearly always 0
   task = subsetTask(regr.task, subset = c(1:70),
     features = getTaskFeatureNames(regr.task)[c(1, 3)])
+  lrns = mylist(task)
+  lrns = lapply(lrns, makeLearner)
+  for(lrn in lrns) {
+    expect_output(print(lrn), lrn$id)
+    lrn = fixHyperPars(lrn)
+    m = train(lrn, task)
+    p = predict(m, task)
+    expect_true(!is.na(performance(p)))
+  }
+
+  # regr with factors
+  task = subsetTask(regr.task, subset = 180:240, features = getTaskFeatureNames(regr.task)[c(1, 2)])
   lrns = mylist(task)
   lrns = lapply(lrns, makeLearner)
   for(lrn in lrns) {
