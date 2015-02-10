@@ -1,7 +1,6 @@
 context("regr_laGP")
 
 test_that("regr_laGP", {
-  skip_on_travis() # FIXME: disabled for now
   requirePackages("laGP", default.method = "load")
   parset.list = list(
     list(start = 6, end = 50, close = 50)
