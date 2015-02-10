@@ -23,6 +23,19 @@ test_that("clustering performance",  {
   expect_true(is.numeric(performance(pred, task = noclass.task, measures = silhouette)))
 })
 
+test_that("clustering performance with missing clusters",  {
+  lrn = makeLearner("cluster.SimpleKMeans")
+  model = train(lrn, noclass.task)
+  pred = predict(model, task = noclass.task)
+  pred$data$response = sample(c(1, 3, 4), length(pred$data$response), replace = TRUE)
+
+  expect_that(performance(pred, task = noclass.task, measures = db), not(gives_warning()))
+  expect_that(performance(pred, task = noclass.task, measures = dunn), not(gives_warning()))
+  expect_that(performance(pred, task = noclass.task, measures = G1), not(gives_warning()))
+  expect_that(performance(pred, task = noclass.task, measures = G2), not(gives_warning()))
+  expect_that(performance(pred, task = noclass.task, measures = silhouette), not(gives_warning()))
+})
+
 test_that("clustering resample",  {
   rdesc = makeResampleDesc("Subsample", split = 0.3, iters = 2)
   lrn = makeLearner("cluster.SimpleKMeans")
