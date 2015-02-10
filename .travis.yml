@@ -22,7 +22,7 @@ install:
   - ./travis-tool.sh github_package berndbischl/parallelMap
   - ./travis-tool.sh github_package berndbischl/ParamHelpers
   - ./travis-tool.sh install_deps
-  - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package XMeans
+  - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
 
 
 script: travis_wait ./travis-tool.sh run_tests
