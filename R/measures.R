@@ -706,7 +706,8 @@ dunn = makeMeasure(id = "dunn", minimize = FALSE, best = Inf, worst = 0,
   name = "Dunn index",
   note = "See `?clValid::dunn`.",
   fun = function(task, model, pred, feats, extra.args) {
-    requirePackages("clValid", default.method = "load")
+    # produced a confusing note in some cases, see issue #232
+    suppressMessages(requirePackages("clValid", default.method = "load"))
     clValid::dunn(Data = feats, clusters = pred$data$response)
   }
 )
