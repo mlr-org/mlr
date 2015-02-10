@@ -8,6 +8,7 @@
 \alias{auc}
 \alias{bac}
 \alias{ber}
+\alias{brier}
 \alias{cindex}
 \alias{db}
 \alias{dunn}
@@ -27,6 +28,7 @@
 \alias{measureACC}
 \alias{measureAUC}
 \alias{measureBAC}
+\alias{measureBrier}
 \alias{measureFDR}
 \alias{measureFN}
 \alias{measureFNR}
@@ -122,6 +124,10 @@ multiclass.auc
 auc
 
 measureAUC(probabilites, truth, negative, positive)
+
+brier
+
+measureBrier(probabilites, truth, negative, positive)
 
 bac
 
