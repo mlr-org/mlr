@@ -98,14 +98,11 @@ getHyperPars(cluster.lrn)
 getParamSet(classif.lrn)
 ```
 
-With the function [&showHyperPars] we can get a quick overview about the available hyperparameters
-and defaults of a learning method.
-In contrast to [&getParamSet] it takes a character string naming a learning method
-and is therefore useful to get an overview about all hyperparameters before actually creating
-the [Learner](&makeLearner).
+We can also use [&getParamSet] to get a quick overview about the available hyperparameters
+and defaults of a learning method without explicitly constructing it.
 
 ```{r}
-showHyperPars("classif.randomForest")
+getParamSet("classif.randomForest")
 ```
 
 
