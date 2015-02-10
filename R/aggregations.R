@@ -183,9 +183,7 @@ b632plus = makeAggregation(
 testgroup.mean = makeAggregation(
   id = "testgroup.mean",
   fun = function(task, perf.test, perf.train, measure, group, pred) {
-    # calculate weighted mean. weights are num of observations in test
-    w = vnapply(pred$instance$test.inds, length)
-    sum(w * perf.test) / sum(w)
+    mean(vnapply(split(perf.test, group), mean))
   }
 )
 
