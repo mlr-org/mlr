@@ -1,6 +1,7 @@
 mlr_2.4:
 - we had to slightly change how the mem usage is reported in tuning and feature selection.
   See TuneControl and FeatSelControl where it is documented what is done now.
+- showHyperPars was removed. getParamSet does exactly the same thing
 
 - new measures
 -- brier
