@@ -235,6 +235,9 @@ If you want a measure for a misclassification cost matrix, look at \code{\link{m
 If you want to implement your own measure, look at \code{\link{makeMeasure}}.
 
 Most measures can directly be accessed via the function named after the scheme measureX (e.g. measureSSE).
+
+For clustering measures, we compact the predicted cluster IDs such that they form a continuous series
+starting with 1. If this is not the case, some of the measures will generate warnings.
 }
 \seealso{
 Other performance: \code{\link{Measure}},
