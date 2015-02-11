@@ -18,6 +18,11 @@ Normalizing method. Available are:\cr
 \dQuote{standardize}: Center and scale.\cr
 \dQuote{range}: Scale to a given range.\cr}
 
+\item{exclude}{[\code{character}]\cr
+Names of the columns to exclude.
+The target does not have to be included here.
+Default is none.}
+
 \item{range}{[\code{numeric(2)}]\cr
 Range for method \dQuote{range}.
 Default is \code{c(0,1)}.}
@@ -38,12 +43,12 @@ since this methods does not fail for constant vectors. Possible actions are:\cr
 }
 \description{
 Normalize features by different methods.
-Internally \code{\link{BBmisc::normalize}} is used for every feature column.
+Internally \code{\link[BBmisc]{normalize}} is used for every feature column.
 Non numerical features will be left untouched and passed to the result.
 For constant features most methods fail, special behaviour for this case is implemented.
 }
 \seealso{
-\code{\link{BBmisc::normalize}}
+\code{\link[BBmisc]{normalize}}
 
 Other eda_and_preprocess: \code{\link{capLargeValues}};
   \code{\link{createDummyFeatures}};
