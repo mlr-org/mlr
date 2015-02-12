@@ -27,7 +27,7 @@ test_that("classif_LiblineaRLogReg", {
   # for (i in 1:length(parset.list)) {
   #   parset = parset.list[[i]]
   #   pars = list(data = binaryclass.train[, -binaryclass.class.col],
-  #     labels = binaryclass.train[, binaryclass.target])
+  #     target = binaryclass.train[, binaryclass.target])
   #   pars = c(pars, parset)
   #   set.seed(getOption("mlr.debug.seed"))
   #   m = do.call(LiblineaR::LiblineaR, pars)
