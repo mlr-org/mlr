@@ -37,6 +37,8 @@
 #' # we also extract tuned hyper pars in each iteration
 #' r = resample(lrn, task, outer, extract = getTuneResult)
 #' print(r$extract)
+#' getNestedTuneResultsOptPathDf(r)
+#' getNestedTuneResultsX(r)
 makeTuneWrapper = function(learner, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)
   assert(checkClass(resampling, "ResampleDesc"), checkClass(resampling, "ResampleInstance"))
@@ -68,4 +70,15 @@ predictLearner.TuneWrapper = function(.learner, .model, .newdata, ...) {
   lrn = setHyperPars(.learner$next.learner, par.vals = .model$learner.model$opt.result$x)
   predictLearner(lrn, .model$learner.model$next.model, .newdata, ...)
 }
+
+#' @export
+makeWrappedModel.TuneWrapper = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
+  # set threshold in learner so it is used in predict calls from here on
+  if (learner$control$tune.threshold)
+    learner = setPredictThreshold(learner, learner.model$opt.result$threshold)
+  x = NextMethod()
+  class(x) = c("TuneModel", class(x))
+  return(x)
+}
+
 

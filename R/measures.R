@@ -13,6 +13,10 @@
 #' If you want to implement your own measure, look at \code{\link{makeMeasure}}.
 #'
 #' Most measures can directly be accessed via the function named after the scheme measureX (e.g. measureSSE).
+#'
+#' For clustering measures, we compact the predicted cluster IDs such that they form a continuous series
+#' starting with 1. If this is not the case, some of the measures will generate warnings.
+#'
 #' @param truth [\code{factor}]\cr
 #'   Vector of the true class.
 #' @param response [\code{factor}]\cr
@@ -306,6 +310,25 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
 measureAUC = function(probabilites, truth, negative, positive) {
   rpreds = asROCRPredictionIntern(probabilites, truth, negative, positive)
   ROCR::performance(rpreds, "auc")@y.values[[1L]]
+}
+
+#' @export brier
+#' @rdname measures
+#' @format none
+brier = makeMeasure(id = "brier", minimize = TRUE, best = 0, worst = 1,
+  properties = c("classif", "req.pred", "req.truth", "req.prob"),
+  name = "Brier score",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureBrier(getProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive)
+  }
+)
+
+#' @export measureBrier
+#' @rdname measures
+#' @format none
+measureBrier = function(probabilites, truth, negative, positive) {
+  y = as.numeric(truth == positive)
+  mean((y - probabilites)^2)
 }
 
 #' @export bac
@@ -675,7 +698,8 @@ db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
   note ="See `?clusterSim::index.DB`.",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim", default.method = "load")
-    clusterSim::index.DB(feats, pred$data$response)$DB
+    r = as.integer(as.factor(pred$data$response))
+    clusterSim::index.DB(feats, r)$DB
   }
 )
 
@@ -687,8 +711,10 @@ dunn = makeMeasure(id = "dunn", minimize = FALSE, best = Inf, worst = 0,
   name = "Dunn index",
   note = "See `?clValid::dunn`.",
   fun = function(task, model, pred, feats, extra.args) {
-    requirePackages("clValid", default.method = "load")
-    clValid::dunn(Data = feats, clusters = pred$data$response)
+    # produced a confusing note in some cases, see issue #232
+    suppressMessages(requirePackages("clValid", default.method = "load"))
+    r = as.integer(as.factor(pred$data$response))
+    clValid::dunn(Data = feats, clusters = r)
   }
 )
 
@@ -701,7 +727,8 @@ G1 = makeMeasure(id = "G1", minimize = FALSE, best = Inf, worst = 0,
   note = "See `?clusterSim::index.G1`.",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim", default.method = "load")
-    clusterSim::index.G1(feats, pred$data$response)
+    r = as.integer(as.factor(pred$data$response))
+    clusterSim::index.G1(feats, r)
   }
 )
 
@@ -714,7 +741,8 @@ G2 = makeMeasure(id = "G2", minimize = FALSE, best = Inf, worst = 0,
   note = "See `?clusterSim::index.G2`.",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim", default.method = "load")
-    clusterSim::index.G2(clusterSim::dist.GDM(feats), pred$data$response)
+    r = as.integer(as.factor(pred$data$response))
+    clusterSim::index.G2(clusterSim::dist.GDM(feats), r)
   }
 )
 
@@ -727,7 +755,8 @@ silhouette = makeMeasure(id = "silhouette", minimize = FALSE, best = Inf, worst 
   note = "See `?clusterSim::index.S`.",
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("clusterSim", default.method = "load")
-    clusterSim::index.S(clusterSim::dist.GDM(feats), pred$data$response)
+    r = as.integer(as.factor(pred$data$response))
+    clusterSim::index.S(clusterSim::dist.GDM(feats), r)
   }
 )
 

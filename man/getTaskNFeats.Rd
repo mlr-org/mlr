@@ -23,7 +23,7 @@ Other task: \code{\link{getTaskCosts}};
   \code{\link{getTaskFeatureNames}};
   \code{\link{getTaskFormula}},
   \code{\link{getTaskFormulaAsString}};
-  \code{\link{getTaskId}};
+  \code{\link{getTaskId}}; \code{\link{getTaskSize}};
   \code{\link{getTaskTargetNames}};
   \code{\link{getTaskTargets}}; \code{\link{getTaskType}};
   \code{\link{subsetTask}}

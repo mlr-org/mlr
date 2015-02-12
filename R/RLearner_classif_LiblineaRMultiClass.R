@@ -23,7 +23,7 @@ makeRLearner.classif.LiblineaRMultiClass = function() {
 #' @export
 trainLearner.classif.LiblineaRMultiClass = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
-  LiblineaR::LiblineaR(data = d$data, labels = d$target, ...)
+  LiblineaR::LiblineaR(data = d$data, target = d$target, ...)
 }
 
 #' @export

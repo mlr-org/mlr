@@ -81,6 +81,7 @@ Other predict: \code{\link{asROCRPrediction}};
   \code{\link{getProbabilities}};
   \code{\link{plotViperCharts}};
   \code{\link{predict.WrappedModel}};
+  \code{\link{setPredictThreshold}};
   \code{\link{setPredictType}}
 
 Other roc: \code{\link{asROCRPrediction}};

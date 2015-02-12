@@ -64,6 +64,16 @@ getTaskNFeats = function(task) {
   sum(task$task.desc$n.feat)
 }
 
+#' Get number of observations in task.
+#'
+#' @template arg_task
+#' @return [\code{integer(1)}].
+#' @export
+#' @family task
+getTaskSize = function(task) {
+  getTaskDescription(task)$size
+}
+
 #' @export
 #' @rdname getTaskFormula
 getTaskFormulaAsString = function(x, target = getTaskTargetNames(x)) {
@@ -148,9 +158,10 @@ getTaskTargets = function(task, subset, recode.target = "no") {
 #'   Default is FALSE.
 #' @param recode.target [\code{character(1)}]\cr
 #'   Should target classes be recoded? Only for binary classification.
-#'   Possible are \dQuote{no} (do nothing), \dQuote{01}, and \dQuote{-1+1}.
+#'   Possible are \dQuote{no} (do nothing), \dQuote{01}, \dQuote{-1+1} and \dQuote{drop.levels}.
 #'   In the two latter cases the target vector is converted into a numeric vector.
 #'   The positive class is coded as +1 and the negative class either as 0 or -1.
+#'   \dQuote{drop.levels} will remove empty factor levels in the target column.
 #'   Default is \dQuote{no}.
 #' @return Either a data.frame or a list with data.frame \code{data} and vector \code{target}.
 #' @family task
@@ -205,6 +216,8 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
 recodeY = function(y, type, td) {
   if (type == "no")
     return(y)
+  if (type == "drop.levels")
+    return(factor(y))
   if (type == "01")
     return(as.numeric(y == td$positive))
   if (type == "-1+1")
@@ -276,12 +289,11 @@ getTaskCosts = function(task, subset) {
 
 #' Subset data in task.
 #'
-#' @param task [\code{\link{Task}}]\cr
-#'   The task.
+#' @template arg_task
 #' @param subset [\code{integer} | \code{logical(n)}]\cr
 #'   Selected cases.
 #'   Default is all cases.
-#' @param features [character]\cr
+#' @param features [\code{character}]\cr
 #'   Selected inputs. Note that target feature is always included in the
 #'   resulting task, you should not pass it here.
 #'   Default is all features.

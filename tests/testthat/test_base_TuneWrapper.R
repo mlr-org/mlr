@@ -51,4 +51,35 @@ test_that("TuneWrapper passed predict hyper pars correctly to base learner", {
   resample(tw, binaryclass.task, rdesc)
 })
 
+test_that("TuneWrapper uses tune.threshold", {
+  lrn = makeLearner("classif.lda", predict.type = "prob")
+  rdesc = makeResampleDesc("Holdout")
+  costs = matrix(c(0, 5, 1, 0), 2)
+  colnames(costs) = rownames(costs) = getTaskDescription(binaryclass.task)$class.levels
+  mm = makeCostMeasure(id = "costs", costs = costs, task = binaryclass.task, best = 0, worst = 5)
+  ps = makeParamSet(makeDiscreteParam("method", "moment"))
+  ctrl = makeTuneControlGrid(tune.threshold = TRUE)
+  lrn = makeTuneWrapper(lrn, resampling = rdesc, measures = mm, par.set = ps, control = ctrl)
+  m = train(lrn, binaryclass.task)
+  p = predict(m, binaryclass.task)
+  expect_true(!all(p$threshold == 0.5))
+  r = resample(lrn, binaryclass.task, resampling = rdesc)
+  expect_true(!all(r$pred$threshold == 0.5))
+})
+
+
+test_that("TuneWrapper works with getTuneResult and getNestedTuneResults", {
+  inner = makeResampleDesc("Holdout")
+  outer = makeResampleDesc("CV", iters = 2)
+  ps1 = makeParamSet(makeDiscreteParam(id = "C", values = c(1, 0.000001)))
+  lrn1a = makeLearner("classif.ksvm")
+  lrn2 = makeTuneWrapper(lrn1a, resampling = inner, par.set = ps1, control = makeTuneControlGrid())
+  r = resample(lrn2, binaryclass.task, outer, measures = mlr::mmce, extract = getTuneResult)
+  xs = getNestedTuneResultsX(r)
+  expect_equal(colnames(xs), "C")
+  expect_equal(nrow(xs), 2)
+  opdf = getNestedTuneResultsOptPathDf(r)
+  expect_true(all(c("iter", "C", "mmce.test.mean") %in% colnames(opdf)))
+  expect_equal(nrow(opdf), 4)
+})
 

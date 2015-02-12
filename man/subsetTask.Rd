@@ -14,7 +14,7 @@ The task.}
 Selected cases.
 Default is all cases.}
 
-\item{features}{[character]\cr
+\item{features}{[\code{character}]\cr
 Selected inputs. Note that target feature is always included in the
 resulting task, you should not pass it here.
 Default is all features.}
@@ -37,6 +37,7 @@ Other task: \code{\link{getTaskCosts}};
   \code{\link{getTaskFormula}},
   \code{\link{getTaskFormulaAsString}};
   \code{\link{getTaskId}}; \code{\link{getTaskNFeats}};
+  \code{\link{getTaskSize}};
   \code{\link{getTaskTargetNames}};
   \code{\link{getTaskTargets}}; \code{\link{getTaskType}}
 }

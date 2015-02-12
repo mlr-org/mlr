@@ -39,6 +39,7 @@ Other predict: \code{\link{asROCRPrediction}};
   \code{\link{plotROCRCurves}};
   \code{\link{plotViperCharts}};
   \code{\link{predict.WrappedModel}};
+  \code{\link{setPredictThreshold}};
   \code{\link{setPredictType}}
 }
 

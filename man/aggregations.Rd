@@ -87,7 +87,7 @@ test.join
     Mainly used for repeated CV.}
   \item{\bold{test.join}}{\cr Performance measure on joined test sets.
     This is especially useful for small sample sizes where unbalanced group sizes have a significant impact
-    on the aggregation.
+    on the aggregation, especially for cross-validation test.join might make sense now.
     For the repeated CV, the performance is calculated on each repetition and then aggregated
     with the arithmetic mean.}
 }

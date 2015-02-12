@@ -75,7 +75,7 @@ makeModelMultiplexer = function(base.learners) {
   ps = makeParamSet(makeDiscreteLearnerParam("selected.learner", values = names(lrn$base.learners)))
   lrn$par.set = c(lrn$par.set, ps)
   lrn$par.set.ens = ps
-  lrn$fix.factors = TRUE
+  lrn$fix.factors.prediction = TRUE
   setHyperPars(lrn, selected.learner = names(lrn$base.learners)[1L])
 }
 

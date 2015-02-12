@@ -15,7 +15,8 @@
 #'   Survival: \dQuote{response} (= some sort of orderable risk) or \dQuote{prob} (= time dependent probabilities).
 #'   Clustering: \dQuote{response} (= cluster IDS) or \dQuote{prob} (= fuzzy cluster membership probabilities).
 #'   Default is \dQuote{response}.
-#' @param fix.factors [\code{logical(1)}]\cr
+#' @template arg_predictthreshold
+#' @param fix.factors.prediction [\code{logical(1)}]\cr
 #'   In some cases, problems occur in underlying learners for factor features during prediction.
 #'   If the new features have LESS factor levels than during training (a strict subset),
 #'   the learner might produce an  error like
@@ -45,9 +46,11 @@
 #' makeLearner("classif.lda", predict.type = "prob")
 #' lrn = makeLearner("classif.lda", method = "t", nu = 10)
 #' print(lrn$par.vals)
-makeLearner = function(cl, id = cl, predict.type = "response", fix.factors = FALSE, ..., par.vals = list(), config = list()) {
+makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold = NULL,
+  fix.factors.prediction = FALSE, ..., par.vals = list(), config = list()) {
+
   assertString(cl)
-  assertFlag(fix.factors)
+  assertFlag(fix.factors.prediction)
   constructor = getS3method("makeRLearner", class = cl)
   wl = do.call(constructor, list())
 
@@ -55,6 +58,9 @@ makeLearner = function(cl, id = cl, predict.type = "response", fix.factors = FAL
     assertString(id)
     wl$id = id
   }
+  # further checks on threshold can only be done later in setThreshold
+  if (!is.null(predict.threshold))
+    assertNumeric(predict.threshold, any.missing = FALSE)
   assertList(par.vals)
   assertList(config, names = "named")
   if (!nzchar(cl))
@@ -63,7 +69,8 @@ makeLearner = function(cl, id = cl, predict.type = "response", fix.factors = FAL
     stop("Learner must be a basic RLearner!")
   wl = setHyperPars(learner = wl, ..., par.vals = par.vals)
   wl = setPredictType(learner = wl, predict.type = predict.type)
-  wl$fix.factors = fix.factors
+  wl$predict.threshold = predict.threshold
+  wl$fix.factors.prediction = fix.factors.prediction
   wl$config = config
   return(wl)
 }

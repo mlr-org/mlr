@@ -11,6 +11,9 @@
 #' \item{control [\code{\link{FeatSelControl}}]}{ Control object from feature selection.}
 #' \item{x [\code{character}]}{Vector of feature names identified as optimal.}
 #' \item{y [\code{numeric}]}{Performance values for optimal \code{x}.}
+#' \item{threshold [\code{numeric}]}{Vector of finally found and used thresholds
+#'   if \code{tune.threshold} was enabled in \code{\link{FeatSelControl}}, otherwise not present and
+#'   hence \code{NULL}.}
 #' \item{opt.path [\code{\link[ParamHelpers]{OptPath}}]}{Optimization path which lead to \code{x}.}
 #' }
 #' @name FeatSelResult
@@ -18,8 +21,8 @@
 NULL
 
 
-makeFeatSelResult = function(learner, control, x, y, opt.path) {
-  makeOptResult(learner, control, x, y, opt.path, "FeatSelResult")
+makeFeatSelResult = function(learner, control, x, y, threshold, opt.path) {
+  makeOptResult(learner, control, x, y, threshold, opt.path, "FeatSelResult")
 }
 
 
@@ -35,5 +38,19 @@ print.FeatSelResult = function(x, ...) {
     x = head(x, printed.features)
 
   catf("Features (%i): %s", n.feats, collapse(x$x, ", "))
+  if (!is.null(x$threshold))
+    catf("Threshold: %s", collapse(sprintf("%2.2f", x$threshold)))
   catf("%s", perfsToString(x$y))
 }
+
+makeFeatSelResultFromOptPath = function(learner, measures, control, opt.path,
+  dob = opt.path$env$dob, ties = "random") {
+
+  i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), dob = dob, ties = ties)
+  e = getOptPathEl(opt.path, i)
+  # if we had threshold tuning, get th from op and set it in result object
+  threshold = if (control$tune.threshold) e$extra$threshold else NULL
+  makeFeatSelResult(learner, control, names(e$x)[e$x == 1], e$y, threshold, opt.path)
+}
+
+

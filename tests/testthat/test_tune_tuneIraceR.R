@@ -72,3 +72,12 @@ test_that("tuneIrace works with logical params", {
   expect_true(getOptPathLength(tr$opt.path) >= 15 && getOptPathLength(tr$opt.path) <= 20)
   expect_true(!is.na(tr$y))
 })
+
+test_that("tuneIrace works with tune.threshold", {
+  rdesc = makeResampleDesc("Holdout", stratify = TRUE, split = 0.1)
+  ps = makeParamSet(makeIntegerParam("minsplit", lower = 1, upper = 3))
+
+  n = 40
+  ctrl = makeTuneControlIrace(maxExperiments = n, nbIterations = 2, minNbSurvival = 1)
+  tr = tuneParams("classif.rpart", multiclass.task, rdesc, par.set = ps, control = ctrl)
+})

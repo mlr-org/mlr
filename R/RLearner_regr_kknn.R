@@ -2,7 +2,9 @@
 makeRLearner.regr.kknn = function() {
   makeRLearnerRegr(
     cl = "regr.kknn",
-    package = "kknn",
+    # FIXME: kknn set its own contr.dummy function, if we requireNamespace,
+    # this is not found, see issue  226
+    package = "!kknn",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "k", default = 7L, lower = 1L),
       makeNumericLearnerParam(id = "distance", default = 2, lower = 0),

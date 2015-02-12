@@ -13,6 +13,16 @@ setDefaultImputeVal = function(control, measures) {
   return(control)
 }
 
+# get one or multiple thresholds vector from optpath rows
+# if we have multiple rows we average the result
+getThresholdFromOptPath = function(opt.path, inds) {
+  ths = asMatrixCols(lapply(inds, function(i) {
+    ex = getOptPathEl(opt.path, i)$extra
+    ns = names(ex)
+    ex[grepl("^threshold", ns)]
+  }))
+  rowMeans(ths)
+}
 
 ##### tuning #####
 makeOptPathDFFromMeasures = function(par.set, measures, ...) {

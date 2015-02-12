@@ -58,6 +58,7 @@ Other predict: \code{\link{asROCRPrediction}};
   \code{\link{getProbabilities}};
   \code{\link{plotROCRCurves}};
   \code{\link{plotViperCharts}};
+  \code{\link{setPredictThreshold}};
   \code{\link{setPredictType}}
 }
 

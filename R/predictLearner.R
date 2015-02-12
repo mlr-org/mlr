@@ -33,7 +33,7 @@ predictLearner = function(.learner, .model, .newdata, ...) {
 
 predictLearner2 = function(.learner, .model, .newdata, ...) {
   # if we have that option enabled, set factor levels to complete levels from task
-  if (.learner$fix.factors) {
+  if (.learner$fix.factors.prediction) {
     fls = .model$factor.levels
     ns = names(fls)
     # only take objects in .newdata

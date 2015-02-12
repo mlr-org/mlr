@@ -148,22 +148,28 @@ mergeResampleResult = function(learner, task, iter.results, measures, rin, model
   mids = vcapply(measures, function(m) m$id)
 
   ms.train = as.data.frame(extractSubList(iter.results, "measures.train", simplify = "rows"))
-  colnames(ms.train) = mids
-  rownames(ms.train) = NULL
-  ms.train = cbind(iter = seq_len(iters), ms.train)
 
   ms.test = extractSubList(iter.results, "measures.test", simplify = FALSE)
   ms.test = as.data.frame(do.call(rbind, ms.test))
-  colnames(ms.test) = mids
-  rownames(ms.test) = NULL
-  ms.test = cbind(iter = seq_len(iters), ms.test)
 
   preds.test = extractSubList(iter.results, "pred.test", simplify = FALSE)
   preds.train = extractSubList(iter.results, "pred.train", simplify = FALSE)
   pred = makeResamplePrediction(instance = rin, preds.test = preds.test, preds.train = preds.train)
 
-  aggr = vnapply(measures, function(m) m$aggr$fun(task, ms.test[, m$id], ms.train[, m$id], m, rin$group, pred))
+  # aggr = vnapply(measures, function(m) m$aggr$fun(task, ms.test[, m$id], ms.train[, m$id], m, rin$group, pred))
+  aggr = vnapply(seq_along(measures), function(i) {
+    m = measures[[i]]
+    m$aggr$fun(task, ms.test[, i], ms.train[, i], m, rin$group, pred)
+  })
   names(aggr) = vcapply(measures, measureAggrName)
+
+  # name ms.* rows and cols
+  colnames(ms.test) = mids
+  rownames(ms.test) = NULL
+  ms.test = cbind(iter = seq_len(iters), ms.test)
+  colnames(ms.train) = mids
+  rownames(ms.train) = NULL
+  ms.train = cbind(iter = seq_len(iters), ms.train)
 
   err.msgs = as.data.frame(extractSubList(iter.results, "err.msgs", simplify = "rows"))
   rownames(err.msgs) = NULL

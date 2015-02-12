@@ -21,7 +21,7 @@
 #'     Mainly used for repeated CV.}
 #'   \item{\bold{test.join}}{\cr Performance measure on joined test sets.
 #'     This is especially useful for small sample sizes where unbalanced group sizes have a significant impact
-#'     on the aggregation.
+#'     on the aggregation, especially for cross-validation test.join might make sense now.
 #'     For the repeated CV, the performance is calculated on each repetition and then aggregated
 #'     with the arithmetic mean.}
 #' }
@@ -183,9 +183,7 @@ b632plus = makeAggregation(
 testgroup.mean = makeAggregation(
   id = "testgroup.mean",
   fun = function(task, perf.test, perf.train, measure, group, pred) {
-    # calculate weighted mean. weights are num of observations in test
-    w = vnapply(pred$instance$test.inds, length)
-    sum(w * perf.test) / sum(w)
+    mean(vnapply(split(perf.test, group), mean))
   }
 )
 

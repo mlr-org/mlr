@@ -1,3 +1,12 @@
+mlr_2.4:
+- we had to slightly change how the mem usage is reported in tuning and feature selection.
+  See TuneControl and FeatSelControl where it is documented what is done now.
+- showHyperPars was removed. getParamSet does exactly the same thing
+- option fix.factors in makeLearner was renamed to fix.factors.prediction for clarity
+- getTaskData now has recodeY = "drop.levels" which drops empty factor levels
+- new measures
+-- brier
+
 mlr_2.3:
 - resample now returns an object of class ResampleResult (downward compatible)
   to allow for a print method.
@@ -7,6 +16,7 @@ mlr_2.3:
   then construct the plots via ROCR your self. See plotROCRCurves
 - all mlr measures now have slots "name" and "note"
 - exported a few very simple "getters" for tasks, see below
+- in makeLearner a probability predict.threshold can be set for classifiers, also see setPredictThreshold
 - in the control objects for tuning and feature selection, the user can now enable threshold tuning
 - in the control objects for tuning and feature selection, the user can now define his own logging function
 - default console logging for tuneParams and selectFeatures is more informative, it displays time and memory info
@@ -18,31 +28,32 @@ mlr_2.3:
 - required basic learner packages are not loaded into the global namespace anymore, requireNamespace
   is used internally instead. this ensures less name clashes and name shadowing
 - resample passes dot arguments to the learner hyperpars
-- new option "on.par.out.of.bounds" to disable out-of-bound checks for model
-  parameters
+- new option "on.par.out.of.bounds" to disable out-of-bound checks for model parameters
 - measures were slightly internally changed. they expose more properties (check ?Measure) and some
   now unnecessary object slots were removed
 - classif.lda and classif.qda now have hyperpar "predict.method"
 - filterFeatures and makeFilterWrapper gain an argument for mandatory features
 - plotLearnerPrediction has new option "err.size"
-- classif.plsDA was for now removed because of problems with the underlying learning algorithm
-
+- classif.plsDA and cluster.DBscan for now removed because of problems with the underlying learning algorithm
+- new aggregation test.join
+- the following models now can handle factors and ordereds by extra dummy or int encoding:
+  classif.glmnet, regr.glmnet, surv.glmnet, surv.cvglmnet, surv.penalized,
+  surv.optimCoxBoostPenalty, surv.glmboost, surv.CoxBoost
 
 - new functions
--- getTaskType, getTaskId, getTaskTargetNames
+-- getTaskType, getTaskId, getTaskTargetNames, getTaskSize
 -- plotROCRCurves
 -- plotViperCharts
 -- measureSSE, measureMSE, measureRMSE, measureMEDSE, ...
 -- PreprocWrapperCaret
--- generateLearningCurve, plotLearningCurve
+-- setPredictThreshold
+-- getNestedTuneResultsX, getNestedTuneResultsOptPathDf
 
 - new learners:
 -- classif.bdk
 -- classif.binomial
 -- classif.extraTrees
--- classif.nodeHarvest
 -- classif.probit
--- classif.randomUniformForest
 -- classif.xgboost
 -- classif.xyf
 -- regr.bartMachine
@@ -59,8 +70,6 @@ mlr_2.3:
 -- regr.elmNN
 -- regr.extraTrees
 -- regr.laGP
--- regr.nodeHarvest
--- regr.randomUniformForest
 -- regr.xgboost
 -- regr.xyf
 -- surv.rpart
@@ -143,7 +152,7 @@ mlr_2.1:
 - mlr now supports multi-criteria tuning
 - mlr now supports cluster analysis (experimental)
 - improve makeWeightedClassesWrapper: Hyperparams for class weighting are now supported, too.
-- removed fix.factors option from randomForest, but added it in general to makeLearner,
+- removed fix.factors.prediction option from randomForest, but added it in general to makeLearner,
   so it now works for all learners.
   Helps when feature factor levels where dropped in newdata prediction data.frames
 - more consistent results for tuning algorithms and parameters with "trafos" :
@@ -189,7 +198,7 @@ mlr_2.0:
 - fixed a bug in stratified CV where elements where not distributed as evenly as possible
   when the split number did not divide the number of observation
 - added class.weights param for classif.svm
-- add fix.factors option to randomForest
+- add fix.factors.prediction option to randomForest
 - generic standard error estimation in randomForest and BaggingWrapper
 - added fixup.data option to task constructors, so basic data cleanup can be performed
 - show.info is now an option in configureMlr

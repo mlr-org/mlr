@@ -39,6 +39,7 @@ test_that("tune", {
   ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(nsub = 2L))
   tr2 = tuneParams(lrn2, binaryclass.task, rdesc, par.set = ps1, control = ctrl)
   expect_true(is.numeric(as.data.frame(tr2$opt.path)$threshold))
+  expect_true(isScalarNumeric(tr2$threshold))
 
   # check multiclass thresholding
   ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(control = list(maxit = 2)))
@@ -46,6 +47,7 @@ test_that("tune", {
   op.df = as.data.frame(tr3$opt.path)
   op.df = op.df[,grepl("threshold_", colnames(op.df))]
   expect_true(all(sapply(op.df, is.numeric)))
+  expect_true(is.numeric(tr3$threshold) && length(tr3$threshold) == 3L && !any(is.na(tr3$threshold)))
 
   expect_error(tuneParams(lrn, multiclass.task, cv.instance, par.set = makeParamSet(), control = ctrl))
 })

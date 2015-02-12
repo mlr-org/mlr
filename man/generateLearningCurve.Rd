@@ -20,7 +20,7 @@ Resampling strategy. If no strategy is given a default "Holdout" will be perform
 
 \item{percs}{[\code{numeric}]\cr
 Vector of percentages to be drawn from the training split.
-Internally \code{\link{makeDownsampleWrapper}} is used.
+Internally \code{\link{makeDownsampleWrapper}} is used in combination with \code{\link{benchmark}}.
 Thus the result will be noisy as the quality of the sample can differ.}
 
 \item{measures}{[(list of) \code{\link{Measure}}]\cr

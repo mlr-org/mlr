@@ -5,8 +5,9 @@
 \alias{makeLearner}
 \title{Create learner object.}
 \usage{
-makeLearner(cl, id = cl, predict.type = "response", fix.factors = FALSE,
-  ..., par.vals = list(), config = list())
+makeLearner(cl, id = cl, predict.type = "response",
+  predict.threshold = NULL, fix.factors.prediction = FALSE, ...,
+  par.vals = list(), config = list())
 }
 \arguments{
 \item{cl}{[\code{character(1)}]\cr
@@ -28,7 +29,13 @@ Survival: \dQuote{response} (= some sort of orderable risk) or \dQuote{prob} (= 
 Clustering: \dQuote{response} (= cluster IDS) or \dQuote{prob} (= fuzzy cluster membership probabilities).
 Default is \dQuote{response}.}
 
-\item{fix.factors}{[\code{logical(1)}]\cr
+\item{predict.threshold}{[\code{numeric}]\cr
+Threshold to produce class labels. Has to be a named vector, where names correspond to class labels.
+Only for binary classification it can be a single numerical threshold for the positive class.
+See \code{\link{setThreshold}} for details on how it is applied.
+Default is \code{NULL} which means 0.5 / an equal threshold for each class.}
+
+\item{fix.factors.prediction}{[\code{logical(1)}]\cr
 In some cases, problems occur in underlying learners for factor features during prediction.
 If the new features have LESS factor levels than during training (a strict subset),
 the learner might produce an  error like
@@ -76,6 +83,7 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setProperties}}; \code{\link{getHyperPars}};
   \code{\link{getParamSet}}; \code{\link{removeHyperPars}};
   \code{\link{setHyperPars}}; \code{\link{setId}};
-  \code{\link{setPredictType}}; \code{\link{showHyperPars}}
+  \code{\link{setPredictThreshold}};
+  \code{\link{setPredictType}}
 }
 

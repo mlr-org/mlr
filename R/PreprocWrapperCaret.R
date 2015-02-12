@@ -2,8 +2,10 @@
 #'
 #' @description
 #' Fuses a learner with preprocessing methods provided by \code{\link[caret]{preProcess}}.
-#  Before training the preprocessing will be performed and the preprocessing model will be stored.
-#  Before prediction the preprocessing model will transform the test data according to the trained model.
+#'  Before training the preprocessing will be performed and the preprocessing model will be stored.
+#'  Before prediction the preprocessing model will transform the test data according to the trained model.
+#'
+#'  After being wrapped the learner will support missing values although this will only be the case if \code{ppc.knnImpute}, \code{ppc.bagImpute} or \code{ppc.mediaImpute} is set to \code{TRUE}.
 #'
 #' @template arg_learner
 #' @param ... [any]\cr
@@ -74,6 +76,8 @@ makePreprocWrapperCaret = function (learner, ...) {
   predictfun = function(data, target, args, control) {
     data.frame(predict(control, data))
   }
+
+  learner = addProperties(learner, "missings")
 
   makePreprocWrapper(learner, trainfun, predictfun, par.set, par.vals)
 }

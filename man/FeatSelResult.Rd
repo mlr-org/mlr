@@ -16,6 +16,9 @@ Object members:
 \item{control [\code{\link{FeatSelControl}}]}{ Control object from feature selection.}
 \item{x [\code{character}]}{Vector of feature names identified as optimal.}
 \item{y [\code{numeric}]}{Performance values for optimal \code{x}.}
+\item{threshold [\code{numeric}]}{Vector of finally found and used thresholds
+  if \code{tune.threshold} was enabled in \code{\link{FeatSelControl}}, otherwise not present and
+  hence \code{NULL}.}
 \item{opt.path [\code{\link[ParamHelpers]{OptPath}}]}{Optimization path which lead to \code{x}.}
 }
 }

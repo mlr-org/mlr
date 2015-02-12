@@ -40,39 +40,62 @@ test_that("listLearners for task", {
 })
 
 test_that("learners work", {
+
+  # settings to make learnners faster and deal with small data size
+  hyperpars = list(
+    classif.boosting = list(mfinal = 2L),
+    classif.cforest = list(mtry = 1L),
+    classif.bartMachine = list(verbose = FALSE, run_in_sample = FALSE,
+      num_iterations_after_burn_in = 10L),
+    classif.bdk = list(ydim = 2L),
+    classif.gbm = list(bag.fraction = 1, n.minobsinnode = 1),
+    classif.lssvm = list(kernel = "rbfdot", reduced = FALSE),
+    classif.xyf = list(ydim = 2L),
+    regr.km = list(nugget = 0.01),
+    regr.cforest = list(mtry = 1L),
+    regr.bartMachine = list(verbose = FALSE, run_in_sample = FALSE,
+      num_iterations_after_burn_in = 10L)
+  )
+
+  fixHyperPars = function(lrn) {
+    if (lrn$id %in% names(hyperpars))
+      lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
+    return(lrn)
+  }
+
   # binary classif
-  task = subsetTask(binaryclass.task, subset = c(10:50, 180:208),
+  task = subsetTask(binaryclass.task, subset = c(10:20, 180:190),
     features = getTaskFeatureNames(binaryclass.task)[12:15])
   lrns = mylist(task, create = TRUE)
   for (lrn in lrns) {
-    # this boosting is slow
-    if (lrn$id == "classif.boosting")
-      lrn = setHyperPars(lrn, mfinal = 2L)
-    if (lrn$id == "classif.cforest") # we only have 4 features, we dont want a warn
-      lrn = setHyperPars(lrn, mtry = 1L)
-    # increase speed and suppress output from bartMachine
-    if (lrn$id == "classif.bartMachine")
-      lrn = setHyperPars(lrn, verbose = FALSE, run_in_sample = FALSE, num_iterations_after_burn_in = 10L)
     expect_output(print(lrn), lrn$id)
+    lrn = fixHyperPars(lrn)
+    m = train(lrn, task)
+    p = predict(m, task)
+    expect_true(!is.na(performance(p)))
+  }
+
+  # binary classif with factors
+  data = binaryclass.df[c(10:20, 180:190), 12:15]
+  data[, 4L] = factor(sample(c("a", "b"), size = nrow(data), replace = TRUE))
+  data$y = binaryclass.df[c(10:20, 180:190),binaryclass.target]
+  task = makeClassifTask(data = data, target = "y")
+  lrns = mylist(task, create = TRUE)
+  for (lrn in lrns) {
+    expect_output(print(lrn), lrn$id)
+    lrn = fixHyperPars(lrn)
     m = train(lrn, task)
     p = predict(m, task)
     expect_true(!is.na(performance(p)))
   }
 
   # binary classif with prob
-  task = subsetTask(binaryclass.task, subset = c(1:50, 150:208),
-    features = getTaskFeatureNames(binaryclass.task)[1:2])
+  task = subsetTask(binaryclass.task, subset = c(1:10, 180:190),
+    features = getTaskFeatureNames(binaryclass.task)[12:15])
   lrns = mylist(task, properties = "prob")
   lrns = lapply(lrns, makeLearner, predict.type = "prob")
   lapply(lrns, function(lrn) {
-    # this boosting is slow
-    if (lrn$id == "classif.boosting")
-      lrn = setHyperPars(lrn, mfinal = 2L)
-    if (lrn$id == "classif.cforest") # we only have 4 features, we dont want a warn
-      lrn = setHyperPars(lrn, mtry = 1L)
-    # increase speed and suppress output from bartMachine
-    if (lrn$id == "classif.bartMachine")
-      lrn = setHyperPars(lrn, verbose = FALSE, run_in_sample = FALSE, num_iterations_after_burn_in = 10L)
+    lrn = fixHyperPars(lrn)
     m = train(lrn, task)
     p = predict(m, task)
     getProbabilities(p)
@@ -81,29 +104,35 @@ test_that("learners work", {
 
   # binary classif with weights
   task = makeClassifTask(data = binaryclass.df, target = binaryclass.target)
-  task = subsetTask(task, subset = c(1:50, 150:208), features = getTaskFeatureNames(task)[1:2])
+  task = subsetTask(task, subset = c(1:10, 150:160), features = getTaskFeatureNames(task)[1:2])
   lrns = mylist(task, properties = "weights")
   lrns = lapply(lrns, makeLearner)
   lapply(lrns, function(lrn) {
-    # this boosting is slow
-    if (lrn$id == "classif.boosting")
-      lrn = setHyperPars(lrn, mfinal = 2L)
-    if (lrn$id == "classif.cforest") # we only have 4 features, we dont want a warn
-      lrn = setHyperPars(lrn, mtry = 1L)
+    lrn = fixHyperPars(lrn)
     m = train(lrn, task, weights = 1:task$task.desc$size)
     p = predict(m, task)
     expect_true(!is.na(performance(p)))
   })
 
   # classif with missing
-  d = binaryclass.df[c(1:50, 120:170), c(1:2, binaryclass.class.col)]
+  d = binaryclass.df[c(1:10, 180:190), c(1:2, binaryclass.class.col)]
   d[1, 1] = NA
   task = makeClassifTask(data = d, target = binaryclass.target)
   lrns = mylist(task, create = TRUE)
   for (lrn in lrns) {
-    # increase speed and suppress output from bartMachine
-    if (lrn$id == "classif.bartMachine")
-      lrn = setHyperPars(lrn, verbose = FALSE, run_in_sample = FALSE, num_iterations_after_burn_in = 10L)
+    lrn = fixHyperPars(lrn)
+    m = train(lrn, task)
+    p = predict(m, task)
+    expect_true(!is.na(performance(p)))
+  }
+
+  # classif with factors
+  d = binaryclass.df[c(1:10, 181:190), c(1:2, binaryclass.class.col)]
+  d[, 2] = factor(rep(c("a", "b", "b", "a"), each = 5L))
+  task = makeClassifTask(data = d, target = binaryclass.target)
+  lrns = mylist(task, create = TRUE)
+  for (lrn in lrns) {
+    lrn = fixHyperPars(lrn)
     m = train(lrn, task)
     p = predict(m, task)
     expect_true(!is.na(performance(p)))
@@ -116,13 +145,19 @@ test_that("learners work", {
   lrns = lapply(lrns, makeLearner)
   for(lrn in lrns) {
     expect_output(print(lrn), lrn$id)
-    if (lrn$id == "regr.km")
-      lrn = setHyperPars(lrn, nugget.estim = TRUE)
-    if (lrn$id == "regr.cforest") # we only have 2 features, we dont want a warn
-      lrn = setHyperPars(lrn, mtry = 1L)
-    # increase speed and suppress output from bartMachine
-    if (lrn$id == "regr.bartMachine")
-      lrn = setHyperPars(lrn, verbose = FALSE, run_in_sample = FALSE, num_iterations_after_burn_in = 10L)
+    lrn = fixHyperPars(lrn)
+    m = train(lrn, task)
+    p = predict(m, task)
+    expect_true(!is.na(performance(p)))
+  }
+
+  # regr with factors
+  task = subsetTask(regr.task, subset = 180:240, features = getTaskFeatureNames(regr.task)[c(1, 2)])
+  lrns = mylist(task)
+  lrns = lapply(lrns, makeLearner)
+  for(lrn in lrns) {
+    expect_output(print(lrn), lrn$id)
+    lrn = fixHyperPars(lrn)
     m = train(lrn, task)
     p = predict(m, task)
     expect_true(!is.na(performance(p)))
@@ -134,10 +169,7 @@ test_that("learners work", {
   lrns = mylist(task, properties = "se")
   lrns = lapply(lrns, makeLearner, predict.type = "se")
   for (lrn in lrns) {
-    if (lrn$id == "regr.km")
-      lrn = setHyperPars(lrn, nugget.estim = TRUE)
-    if (lrn$id == "regr.cforest") # we only have 2 features, we dont want a warn
-      lrn = setHyperPars(lrn, mtry = 1L)
+    lrn = fixHyperPars(lrn)
     m = train(lrn, task)
     p = predict(m, task)
     expect_equal(length(p$data$se), 70)
@@ -149,10 +181,7 @@ test_that("learners work", {
   lrns = mylist(task, properties = "weights")
   lrns = lapply(lrns, makeLearner)
   for (lrn in lrns) {
-    if (lrn$id == "regr.km")
-      lrn = setHyperPars(lrn, nugget.estim = TRUE)
-    if (lrn$id == "regr.cforest") # we only have 2 features, we dont want a warn
-      lrn = setHyperPars(lrn, mtry = 1L)
+    lrn = fixHyperPars(lrn)
     m = train(lrn, task, weights = rep(1:2, 35))
     p = predict(m, task)
     expect_true(!is.na(performance(p)))
@@ -164,9 +193,7 @@ test_that("learners work", {
   task = makeRegrTask(data = d, target = regr.target)
   lrns = mylist(task, create = TRUE)
   for (lrn in lrns) {
-    # increase speed and suppress output from bartMachine
-    if (lrn$id == "regr.bartMachine")
-      lrn = setHyperPars(lrn, verbose = FALSE, run_in_sample = FALSE, num_iterations_after_burn_in = 10L)
+    lrn = fixHyperPars(lrn)
     m = train(lrn, task)
     p = predict(m, task)
     expect_true(!is.na(performance(p)))

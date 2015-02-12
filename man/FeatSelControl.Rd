@@ -56,7 +56,11 @@ Default is none.}
 Function used for logging. If set to \code{NULL}, the internal default will be used.
 Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
 \code{par.set}, \code{control}, \code{opt.path}, \code{dob}, \code{x}, \code{y}, \code{remove.nas},
-and \code{stage} is expected. See the implementation for details.}
+and \code{stage} is expected.
+The default displays the performance measures, the time needed for evaluating,
+the currently used memory and the max memory ever used before
+(the latter two both taken from \code{\link{gc}}).
+See the implementation for details.}
 
 \item{impute.val}{[\code{numeric}]\cr
 If something goes wrong during optimization (e.g, the learner crashes),
