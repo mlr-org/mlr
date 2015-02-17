@@ -63,6 +63,8 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
 [release](http://cran.r-project.org/web/packages/mlr/NEWS) and here for the
 [devel](https://github.com/berndbischl/mlr/blob/master/NEWS) version on Github.
 
+* 2015-02-17:
+  * We have been informed that our tutorial "Applied Machine Learning and Efficient Model Selection with mlr" has been accepted for [useR 2015](http://user2015.math.aau.dk/) in Aarlborg. Hoping to meet all of you there in June! 
 * 2015-02-04:
   * mlr 2.3 released to CRAN.
 * 2014-10-28:
