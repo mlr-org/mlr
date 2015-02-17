@@ -64,7 +64,8 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
 [devel](https://github.com/berndbischl/mlr/blob/master/NEWS) version on Github.
 
 * 2015-02-17:
-  * We have been informed that our tutorial "Applied Machine Learning and Efficient Model Selection with mlr" has been accepted for [useR 2015](http://user2015.math.aau.dk/) in Aarlborg. Hoping to meet all of you there in June! 
+  * **We are currently in the process of working out a couple of project proposals for "Google Summer of Code 2015" with mlr. Have a look at our Wiki and at [gscoc-r](https://github.com/rstats-gsoc/gsoc2015) and the [Google group](https://groups.google.com/forum/#!forum/gsoc-r) if you are an interested student.**
+  * **We have been informed that our tutorial "Applied Machine Learning and Efficient Model Selection with mlr" has been accepted for [useR 2015](http://user2015.math.aau.dk/) in Aarlborg. Hoping to meet all of you there in June!**
 * 2015-02-04:
   * mlr 2.3 released to CRAN.
 * 2014-10-28:
