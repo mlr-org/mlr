@@ -40,8 +40,8 @@ makePreprocWrapper = function(learner, train, predict, par.set = makeParamSet(),
     stop("'par.vals' must be a properly named list!")
 
   id = paste(learner$id, "preproc", sep = ".")
-  x = makeBaseWrapper(id, next.learner = learner, par.set = par.set, par.vals = par.vals,
-    learner.subclass = "PreprocWrapper", model.subclass = "PreprocModel")
+  x = makeBaseWrapper(id, type = learner$type, next.learner = learner, par.set = par.set,
+    par.vals = par.vals, learner.subclass = "PreprocWrapper", model.subclass = "PreprocModel")
   x$train = train
   x$predict = predict
   return(x)

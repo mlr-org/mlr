@@ -23,7 +23,6 @@
 #' @family wrapper
 #' @export
 makeUndersampleWrapper = function(learner, usw.rate = 1) {
-  # FIXME: check binary classif
   learner = checkLearner(learner, "classif")
   pv = list()
   if (!missing(usw.rate)) {
@@ -34,7 +33,7 @@ makeUndersampleWrapper = function(learner, usw.rate = 1) {
   ps = makeParamSet(
     makeNumericLearnerParam(id = "usw.rate")
   )
-  makeBaseWrapper(id, learner, package = "mlr", par.set = ps, par.vals = pv,
+  makeBaseWrapper(id, "classif", learner, package = "mlr", par.set = ps, par.vals = pv,
     learner.subclass = "UndersampleWrapper", model.subclass = "UndersampleModel")
 }
 
@@ -51,7 +50,7 @@ makeOversampleWrapper = function(learner, osw.rate = 1) {
   ps = makeParamSet (
     makeNumericLearnerParam(id = "osw.rate")
   )
-  makeBaseWrapper(id, learner, package = "mlr", par.set = ps, par.vals = pv,
+  makeBaseWrapper(id, "classif", learner, package = "mlr", par.set = ps, par.vals = pv,
     learner.subclass = "OversampleWrapper", model.subclass = "OversampleModel")
 }
 

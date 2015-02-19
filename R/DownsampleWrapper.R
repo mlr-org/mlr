@@ -34,7 +34,7 @@ makeDownsampleWrapper = function(learner, dw.perc = 1, dw.stratify = FALSE) {
     makeNumericLearnerParam(id = "dw.perc", lower = 0, upper = 1, default = 1),
     makeLogicalLearnerParam(id = "dw.stratify", default = FALSE)
   )
-  makeBaseWrapper(id, learner, package = "mlr", par.set = ps, par.vals = pv,
+  makeBaseWrapper(id, learner$type, learner, package = "mlr", par.set = ps, par.vals = pv,
     learner.subclass = "DownsampleWrapper", model.subclass = "DownsampleModel")
 }
 
