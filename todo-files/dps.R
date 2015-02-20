@@ -20,6 +20,11 @@ doDPSSplit = function(x, inds) {
     # get first element where min dist occurs and its best neighbor, both indices
     nn1 = which.min(min.dists)
     nn2 = which.min(d.new[nn1, ])
+    # print(c(nn1, nn2))
+    if (length(s1) == 10) {
+      print(data.frame(x = s2, y = s1))
+      stop(7677)
+    }
     # mean dists of nn1 and nn2 to sets
     nn1.s1 = mean(d.old[nn1, s1])
     nn2.s1 = mean(d.old[nn2, s1])
@@ -84,11 +89,24 @@ instantiateResampleInstance.DPSDesc = function(desc, task) {
   makeResampleInstanceInternal(desc, size, test.inds = test.inds)
 }
 
-rdesc = makeResampleDesc("CV")
-rin = makeResampleInstance(rdesc, task = iris.task)
+# rdesc = makeResampleDesc("CV")
+# rin = makeResampleInstance(rdesc, task = iris.task)
 
-# x = iris[, -5L]
-# s = doDPSSplits(x, 2)
+x = read.table("todo-files/iris.csv", sep  = ",")
+x[,1] = x[,1] + 1:150
+# x[10,] = x[10,] + 1e-15
+# x[1,] = x[1,] + 1e-15
+# x[11,] = x[11,] + 1e-15
+
+u = doDPSSplit(x, 1:150)
+print(sort(u[[1]]))
+print(sort(u[[2]]))
+
+v = read.table("todo-files/folds.csv", sep  = ",")
+v1 = which(v[,1] == 1L)
+v2 = which(v[,2] == 2L)
+print(v1)
+
 # print(s)
 # print(sort(unlist(s)))
 
