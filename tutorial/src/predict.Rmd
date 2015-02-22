@@ -189,9 +189,9 @@ predictions with [ggplot](&ggplot2::ggplot).
 
 For *classification*, we get a scatter plot of 2 features (by default the first 2 in the data set).
 The type of symbol shows the true class labels of the data points.
-The color indicates if observations are misclassified.
+Symbols with white border indicate misclassified observations.
 The posterior probabilities (if the learner under consideration supports this)
-are represented by the background color.
+are represented by the background color where higher saturation means larger probabilities.
 
 The plot title displays the ID of the [Learner](&makeLearner) (in the following example CART),
 its parameters, its training performance and its cross-validation performance.
