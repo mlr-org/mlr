@@ -4,13 +4,15 @@ learning problem, for example the name of the target variable.
 
 
 ## Task types and creation
-The tasks are organised in a hierarchy, with the generic [&Task] at the top.
+The tasks are organized in a hierarchy, with the generic [&Task] at the top.
 The following tasks can be instantiated and all inherit from the virtual superclass [&Task]:
 
-* [ClassifTask](&Task) for binary and multi-class classification problems,
+* [ClassifTask](&Task) for binary and multi-class classification problems
+  (normal cost-sensitive classification can be handled as well),
 * [RegrTask](&Task) for regression problems,
 * [SurvTask](&Task) for survival analysis,
-* [CostSensTask](&Task) for cost-sensitive classification,
+* [CostSensTask](&Task) for general cost-sensitive classification
+  (with example specific costs),
 * [ClusterTask](&Task) for cluster analysis.
 
 To create a task, just call ``make<TaskType>``, e.g., [makeClassifTask](&Task).
@@ -19,21 +21,7 @@ If no ID is provided it is automatically generated using the variable name of th
 It will be later used to name results, for example of
 [benchmark experiments](benchmark_experiments.md), or in generated plots.
 Depending on the nature of the learning problem, additional arguments may be required and
-are exemplified in the following subsections.
-
-
-### Cluster analysis
-Because cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the ``data``.
-In the following example we create a learning task from the data set [mtcars](&datasets::mtcars).
-
-```{r}
-data(mtcars, package = "datasets")
-cluster.task = makeClusterTask(data = mtcars)
-cluster.task
-```
-As you can see, the [&Task] records the type of the learning problem and basic information about
-the data set, e.g., the types of the features (numeric vectors, factors or ordered factors),
-the number of observations, or whether missing values are present.
+are discussed in the following subsections.
 
 
 ### Regression
@@ -47,8 +35,12 @@ regr.task = makeRegrTask(id = "bh", data = BostonHousing, target = "medv")
 regr.task
 ```
 
+As you can see, the [&Task] records the type of the learning problem and basic information about
+the data set, e.g., the types of the features (numeric vectors, factors or ordered factors),
+the number of observations, or whether missing values are present.
+
 Creating tasks for classification problems and survival analysis follows the same scheme,
-except the type of the target variables.
+the data type of the target variables included in ``data`` is simply different.
 For each of these learning problems, some specifics are described below.
 
 
@@ -57,7 +49,7 @@ For classification the target variable has to be a [factor](&base::factor).
 
 In binary classification it is customary to refer to the two classes as *positive* and
 *negative* class.
-This is for example relevant with regard to certain [performance measures](performance.md)
+This is for example relevant for certain [performance measures](performance.md)
 like the *true positive rate*.
 By default the first factor level of the target variable is selected as the positive class.
 
@@ -73,14 +65,23 @@ classif.task = makeClassifTask(id = "BreastCancer", data = df, target = "Class")
 classif.task
 ```
 
-The positive class is benign.
-Class malignant can be manually selected as the positive class:
+The positive class is ``benign``.
+Class ``malignant`` can be manually selected as the positive class:
 
 ```{r}
 classif.task = makeClassifTask(id = "BreastCancer", data = df, target = "Class",
   positive = "malignant")
 ```
 
+### Cluster analysis
+Because cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the ``data``.
+In the following example we create a learning task from the data set [mtcars](&datasets::mtcars).
+
+```{r}
+data(mtcars, package = "datasets")
+cluster.task = makeClusterTask(data = mtcars)
+cluster.task
+```
 
 ### Survival analysis
 Survival tasks use two target columns.
@@ -133,7 +134,7 @@ costsens.task
 For more details see the section about [cost-sensitive classification](cost_sensitive_classif.md).
 
 
-### Further details
+## Further settings
 The [&Task] help page also lists several other arguments to describe further details of the
 problem.
 
@@ -199,7 +200,8 @@ removeConstantFeatures(cluster.task)
 dropFeatures(surv.task, c("meal.cal", "wt.loss"))
 
 ## Standardize numerical features:
-normalizeFeatures(classif.task, method = "standardize")
+task = normalizeFeatures(cluster.task, method = "range")
+summary(getTaskData(task))
 ```
 
 Some of these functions are covered and explained in more detail in the [data preprocessing](preproc.md) section.

@@ -251,21 +251,15 @@ The <em>learn</em> and <em>impute</em> functions both have at least the followin
 </ul>
 <p>Let's have a look at function <a href="http://www.rdocumentation.org/packages/mlr/functions/imputations.html">imputeMean</a>.</p>
 <pre><code class="r">imputeMean
-</code></pre>
-
-<pre><code>#&gt; function () 
+#&gt; function () 
 #&gt; {
 #&gt;     makeImputeMethod(learn = function(data, target, col) mean(data[[col]], 
 #&gt;         na.rm = TRUE), impute = simpleImpute)
 #&gt; }
-#&gt; &lt;bytecode: 0x7f04a93f1d38&gt;
+#&gt; &lt;bytecode: 0x7fd1f4df8040&gt;
 #&gt; &lt;environment: namespace:mlr&gt;
-</code></pre>
-
-<pre><code class="r">mlr:::simpleImpute
-</code></pre>
-
-<pre><code>#&gt; function (data, target, col, const) 
+mlr:::simpleImpute
+#&gt; function (data, target, col, const) 
 #&gt; {
 #&gt;     if (is.na(const)) 
 #&gt;         stopf(&quot;Error imputing column '%s'. Maybe all input data was missing?&quot;, 
@@ -276,7 +270,7 @@ The <em>learn</em> and <em>impute</em> functions both have at least the followin
 #&gt;     }
 #&gt;     replace(x, is.na(x), const)
 #&gt; }
-#&gt; &lt;bytecode: 0x7f04a971c658&gt;
+#&gt; &lt;bytecode: 0x7fd1f485c430&gt;
 #&gt; &lt;environment: namespace:mlr&gt;
 </code></pre>
 
@@ -316,9 +310,7 @@ are imputed by LOCF.</p>
 imp = impute(airquality, cols = list(Ozone = imputeLOCF(), Solar.R = imputeLOCF()),
   dummy.cols = c(&quot;Ozone&quot;, &quot;Solar.R&quot;))
 head(imp$data, 10)
-</code></pre>
-
-<pre><code>#&gt;    Ozone Solar.R Wind Temp Month Day Ozone.dummy Solar.R.dummy
+#&gt;    Ozone Solar.R Wind Temp Month Day Ozone.dummy Solar.R.dummy
 #&gt; 1     41     190  7.4   67     5   1       FALSE         FALSE
 #&gt; 2     36     118  8.0   72     5   2       FALSE         FALSE
 #&gt; 3     12     149 12.6   74     5   3       FALSE         FALSE

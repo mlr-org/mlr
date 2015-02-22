@@ -17,17 +17,24 @@ cross-validation and bootstrap, to mention just two popular approaches.
 
 ![Resampling Figure](../../images/resampling.png "Resampling Figure")
 
+If you want to read up further details, the paper
+[Resampling Strategies for Model Assessment and Selection](http://link.springer.com/chapter/10.1007%2F978-0-387-47509-7_8)
+by Simon is proabably not a bad choice.
+Bernd has also published a paper
+[Resampling methods for meta-model validation with recommendations for evolutionary computation](http://www.mitpressjournals.org/doi/pdf/10.1162/EVCO_a_00069)
+which contains detailed descriptions and lots of statistical background information on resampling methods.
+
 In [%mlr] the resampling strategy can be chosen via the function [&makeResampleDesc].
 The supported resampling strategies are:
 
 * Cross-validation (``"CV"``),
 * Leave-one-out cross-validation (``"LOO""``),
 * Repeated cross-validation (``"RepCV"``),
-* Out-of-bag bootstrap (``"Bootstrap"``),
-* Subsampling (``"Subsample"``),
+* Out-of-bag bootstrap and other variants (``"Bootstrap"``),
+* Subsampling, also called Monte-Carlo cross-validaton (``"Subsample"``),
 * Holdout (training/test) (``"Holdout"``).
 
-The [&resample] function then evaluates the performance of a [Learner](&makeLearner) using
+The [&resample] function evaluates the performance of a [Learner](&makeLearner) using
 the specified resampling strategy for a given machine learning [&Task].
 
 In the following example the performance of the
@@ -47,6 +54,11 @@ rdesc = makeResampleDesc("CV", iters = 3)
 ## Calculate the performance
 r = resample("surv.coxph", lung.task, rdesc)
 r
+## peak a little bit into r
+names(r)
+r$aggr
+r$measures.test
+r$measures.train
 ```
 
 ``r$measures.test`` gives the value of the performance measure on the 3 individual test
@@ -90,22 +102,24 @@ training and 1/3 test set. If there is just one iteration, the strategy
 is commonly called *holdout* or *test sample estimation*.
 
 ```{r}
+## cluster iris feature data
+task = makeClusterTask(data = iris[,-5])
 ## Subsampling with 5 iterations and default split 2/3
 rdesc = makeResampleDesc("Subsample", iters = 5)
 ## Subsampling with 5 iterations and 4/5 training data
 rdesc = makeResampleDesc("Subsample", iters = 5, split = 4/5)
 
 ## Calculate the three performance measures
-r = resample("cluster.XMeans", mtcars.task, rdesc, measures = list(dunn, db, timetrain))
+r = resample("cluster.kmeans", task, rdesc, measures = list(dunn, db, timetrain))
 r$aggr
 ```
 
 
 ## Stratified resampling
 For classification, it is usually desirable to have the same proportion of the classes in all of the partitions of the original data set. Stratified resampling ensures this.
-This is particularly useful in case of imbalanced classes. Otherwise it may happen for example
+This is particularly useful in case of imbalanced classes and small data sets. Otherwise it may happen, for example,
 that observations of less frequent classes are missing in some of the training sets which can
-decrease the performance of the learner.
+decrease the performance of the learner, or lead to model crashes
 In order to conduct stratified resampling, set ``stratify = TRUE`` when calling [&makeResampleDesc].
 
 ```{r}
@@ -258,14 +272,16 @@ rmse$aggr
 The aggregation method of a [Measure](&makeMeasure) can be changed via the function [&setAggregation].
 See the documentation of [&aggregations] for available methods.
 
-### Example: Calculating mean and standard deviation of the error rate
+### Example: Different measures and aggregations
 
-[test.sd](&aggregations) computes the standard deviation of performance values on the test sets.
+[test.median](&aggregations) computes the median of the performance values on the test sets.
 
 ```{r}
-mmce.test.sd = setAggregation(mmce, test.sd)
+## We use the mean error rate and the median of the true positive rates
+m1 = mmce
+m2 = setAggregation(tpr, test.median)
 rdesc = makeResampleDesc("CV", iters = 3)
-r = resample("classif.rpart", iris.task, rdesc, measures = list(mmce, mmce.test.sd))
+r = resample("classif.rpart", sonar.task, rdesc, measures = list(m1, m2))
 r$aggr
 ```
 
@@ -322,11 +338,10 @@ code for generating a resample instance, setting the aggregation strategy and so
 on. For this reason [%mlr] provides some convenience functions for the
 frequently used resampling strategies, for example [holdout](&resample),
 [crossval](&resample) or [bootstrapB632](&resample). But note that you do not
-have as much control and flexibility than when using [&resample] with a resample
+have as much control and flexibility as when using [&resample] with a resample
 description or instance.
 
 ```{r, eval = FALSE}
 holdout("regr.lm", bh.task, measures = list(mse, mae))
 crossval("classif.lda", iris.task, iters = 3, measures = list(mmce, ber))
-bootstrapB632("surv.coxph", lung.task, iters = 20)
 ```

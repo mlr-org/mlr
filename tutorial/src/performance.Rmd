@@ -25,7 +25,7 @@ If you want to implement an additional measure or include a measure with
 non-standard misclassification costs, see the section on
 [creating custom measures](create_measure.md).
 
-## Find a suitable performance measure
+## Listing measures
 The properties and requirements of the individual measures are shown in the [table of performance measures](measures.md).
 
 If you would like a list of available measures with certain properties or suitable for a
@@ -44,7 +44,7 @@ In the following example we fit a [gradient boosting machine](&gbm::gbm) on a su
 ([mse](measures.md)) on the remaining observations.
 
 ```{r}
-n = getTaskDescription(bh.task)$size
+n = getTaskSize(bh.task)
 lrn = makeLearner("regr.gbm", n.trees = 1000)
 mod = train(lrn, task = bh.task, subset = seq(1, n, 2))
 pred = predict(mod, task = bh.task, subset = seq(2, n, 2))
@@ -136,7 +136,7 @@ as well as the misclassification rate ([mmce](measures.md)) for all possible thr
 
 ```{r}
 lrn = makeLearner("classif.lda", predict.type = "prob")
-n = getTaskDescription(sonar.task)$size
+n = getTaskSize(sonar.task)
 mod = train(lrn, task = sonar.task, subset = seq(1, n, by = 2))
 pred = predict(mod, task = sonar.task, subset = seq(2, n, by = 2))
 

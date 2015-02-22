@@ -265,9 +265,7 @@ differently in a subsequent analysis.</p>
 <p>Let's have a look at the <a href="http://www.rdocumentation.org/packages/datasets/functions/airquality.html">airquality</a> data set.</p>
 <pre><code class="r">data(airquality)
 summary(airquality)
-</code></pre>
-
-<pre><code>#&gt;      Ozone           Solar.R           Wind             Temp      
+#&gt;      Ozone           Solar.R           Wind             Temp      
 #&gt;  Min.   :  1.00   Min.   :  7.0   Min.   : 1.700   Min.   :56.00  
 #&gt;  1st Qu.: 18.00   1st Qu.:115.8   1st Qu.: 7.400   1st Qu.:72.00  
 #&gt;  Median : 31.50   Median :205.0   Median : 9.700   Median :79.00  
@@ -293,9 +291,7 @@ ind = sample(nrow(airq), 10)
 airq$Wind[ind] = NA
 airq$Wind = cut(airq$Wind, c(0,8,16,24))
 summary(airq)
-</code></pre>
-
-<pre><code>#&gt;      Ozone           Solar.R           Wind         Temp      
+#&gt;      Ozone           Solar.R           Wind         Temp      
 #&gt;  Min.   :  1.00   Min.   :  7.0   (0,8]  :51   Min.   :56.00  
 #&gt;  1st Qu.: 18.00   1st Qu.:115.8   (8,16] :86   1st Qu.:72.00  
 #&gt;  Median : 31.50   Median :205.0   (16,24]: 6   Median :79.00  
@@ -324,9 +320,7 @@ you can do this as follows:</p>
 Per default, the dummy variables are factors with levels <code>"TRUE"</code> and <code>"FALSE"</code>.
 It is also possible to create numeric zero-one indicator variables.</p>
 <pre><code class="r">head(imp$data, 10)
-</code></pre>
-
-<pre><code>#&gt;       Ozone  Solar.R    Wind Temp Month Day Ozone.dummy Solar.R.dummy
+#&gt;       Ozone  Solar.R    Wind Temp Month Day Ozone.dummy Solar.R.dummy
 #&gt; 1  41.00000 190.0000   (0,8]   67     5   1       FALSE         FALSE
 #&gt; 2  36.00000 118.0000   (0,8]   72     5   2       FALSE         FALSE
 #&gt; 3  12.00000 149.0000  (8,16]   74     5   3       FALSE         FALSE
@@ -343,9 +337,7 @@ It is also possible to create numeric zero-one indicator variables.</p>
 imputation.
 For the current example this includes the means and the mode computed on the non-missing data.</p>
 <pre><code class="r">imp$desc
-</code></pre>
-
-<pre><code>#&gt; Imputation description
+#&gt; Imputation description
 #&gt; Target: 
 #&gt; Features: 6; Imputed: 6
 #&gt; impute.new.levels: TRUE
@@ -390,9 +382,7 @@ do not pose a problem.</p>
 <pre><code class="r">imp = impute(airq.train, target = &quot;Ozone&quot;, cols = list(Solar.R = imputeHist(),
   Wind = imputeLearner(makeLearner(&quot;classif.rpart&quot;))), dummy.cols = c(&quot;Solar.R&quot;, &quot;Wind&quot;))
 summary(imp$data)
-</code></pre>
-
-<pre><code>#&gt;      Ozone           Solar.R            Wind         Temp      
+#&gt;      Ozone           Solar.R            Wind         Temp      
 #&gt;  Min.   :  1.00   Min.   :  7.00   (0,8]  :34   Min.   :56.00  
 #&gt;  1st Qu.: 16.00   1st Qu.: 98.75   (8,16] :61   1st Qu.:69.00  
 #&gt;  Median : 34.00   Median :221.50   (16,24]: 5   Median :79.50  
@@ -408,12 +398,8 @@ summary(imp$data)
 #&gt;                          
 #&gt;                          
 #&gt; 
-</code></pre>
-
-<pre><code class="r">imp$desc
-</code></pre>
-
-<pre><code>#&gt; Imputation description
+imp$desc
+#&gt; Imputation description
 #&gt; Target: Ozone
 #&gt; Features: 3; Imputed: 2
 #&gt; impute.new.levels: TRUE
@@ -425,9 +411,7 @@ summary(imp$data)
 as the training data.</p>
 <pre><code class="r">airq.test.imp = reimpute(airq.test, imp$desc)
 head(airq.test.imp)
-</code></pre>
-
-<pre><code>#&gt;   Ozone Solar.R   Wind Temp Solar.R.dummy Wind.dummy
+#&gt;   Ozone Solar.R   Wind Temp Solar.R.dummy Wind.dummy
 #&gt; 1   110     207  (0,8]   90         FALSE      FALSE
 #&gt; 2    NA     222 (8,16]   92         FALSE      FALSE
 #&gt; 3    NA     137 (8,16]   86         FALSE      FALSE
@@ -447,9 +431,7 @@ Like in the example above we impute <code>Solar.R</code> by random numbers from 
 <pre><code class="r">lrn = makeImputeWrapper(&quot;regr.lm&quot;, cols = list(Solar.R = imputeHist(),
   Wind = imputeLearner(makeLearner(&quot;classif.rpart&quot;))), dummy.cols = c(&quot;Solar.R&quot;, &quot;Wind&quot;))
 lrn
-</code></pre>
-
-<pre><code>#&gt; Learner regr.lm.preproc from package stats
+#&gt; Learner regr.lm.preproc from package stats
 #&gt; Type: regr
 #&gt; Name: ; Short name: 
 #&gt; Class: PreprocWrapper
@@ -471,16 +453,12 @@ task = makeRegrTask(data = airq, target = &quot;Ozone&quot;)
 <pre><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 3)
 r = resample(lrn, task, resampling = rdesc, show.info = FALSE, models = TRUE)
 r$aggr
-</code></pre>
-
-<pre><code>#&gt; mse.test.mean 
+#&gt; mse.test.mean 
 #&gt;      524.3392
 </code></pre>
 
 <pre><code class="r">lapply(r$models, getLearnerModel)
-</code></pre>
-
-<pre><code>#&gt; [[1]]
+#&gt; [[1]]
 #&gt; 
 #&gt; Call:
 #&gt; stats::lm(formula = f, data = d)

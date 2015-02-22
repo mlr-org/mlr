@@ -236,6 +236,8 @@
         
             <li><a href="#task-types-and-creation">Task types and creation</a></li>
         
+            <li><a href="#further-settings">Further settings</a></li>
+        
             <li><a href="#accessing-a-learning-task">Accessing a learning task</a></li>
         
             <li><a href="#modifying-a-learning-task">Modifying a learning task</a></li>
@@ -251,13 +253,15 @@
 <p>Learning tasks encapsulate the data set and further relevant information about a machine
 learning problem, for example the name of the target variable.</p>
 <h2 id="task-types-and-creation">Task types and creation</h2>
-<p>The tasks are organised in a hierarchy, with the generic <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> at the top.
+<p>The tasks are organized in a hierarchy, with the generic <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> at the top.
 The following tasks can be instantiated and all inherit from the virtual superclass <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>:</p>
 <ul>
-<li><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">ClassifTask</a> for binary and multi-class classification problems,</li>
+<li><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">ClassifTask</a> for binary and multi-class classification problems
+  (normal cost-sensitive classification can be handled as well),</li>
 <li><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">RegrTask</a> for regression problems,</li>
 <li><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">SurvTask</a> for survival analysis,</li>
-<li><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">CostSensTask</a> for cost-sensitive classification,</li>
+<li><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">CostSensTask</a> for general cost-sensitive classification
+  (with example specific costs),</li>
 <li><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">ClusterTask</a> for cluster analysis.</li>
 </ul>
 <p>To create a task, just call <code>make&lt;TaskType&gt;</code>, e.g., <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeClassifTask</a>.
@@ -266,29 +270,7 @@ If no ID is provided it is automatically generated using the variable name of th
 It will be later used to name results, for example of
 <a href="../benchmark_experiments/index.html">benchmark experiments</a>, or in generated plots.
 Depending on the nature of the learning problem, additional arguments may be required and
-are exemplified in the following subsections.</p>
-<h3 id="cluster-analysis">Cluster analysis</h3>
-<p>Because cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the <code>data</code>.
-In the following example we create a learning task from the data set <a href="http://www.rdocumentation.org/packages/datasets/functions/mtcars.html">mtcars</a>.</p>
-<pre><code class="r">data(mtcars, package = &quot;datasets&quot;)
-cluster.task = makeClusterTask(data = mtcars)
-cluster.task
-</code></pre>
-
-<pre><code>#&gt; Unsupervised task: mtcars
-#&gt; Type: cluster
-#&gt; Observations: 32
-#&gt; Features:
-#&gt; numerics  factors  ordered 
-#&gt;       11        0        0 
-#&gt; Missings: FALSE
-#&gt; Has weights: FALSE
-#&gt; Has blocking: FALSE
-</code></pre>
-
-<p>As you can see, the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> records the type of the learning problem and basic information about
-the data set, e.g., the types of the features (numeric vectors, factors or ordered factors),
-the number of observations, or whether missing values are present.</p>
+are discussed in the following subsections.</p>
 <h3 id="regression">Regression</h3>
 <p>For supervised learning like regression (as well as classification and
 survival analysis) we, in addition to <code>data</code>, have to specify the name of the <code>target</code>
@@ -296,9 +278,7 @@ variable.</p>
 <pre><code class="r">data(BostonHousing, package = &quot;mlbench&quot;)
 regr.task = makeRegrTask(id = &quot;bh&quot;, data = BostonHousing, target = &quot;medv&quot;)
 regr.task
-</code></pre>
-
-<pre><code>#&gt; Supervised task: bh
+#&gt; Supervised task: bh
 #&gt; Type: regr
 #&gt; Target: medv
 #&gt; Observations: 506
@@ -310,14 +290,17 @@ regr.task
 #&gt; Has blocking: FALSE
 </code></pre>
 
+<p>As you can see, the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> records the type of the learning problem and basic information about
+the data set, e.g., the types of the features (numeric vectors, factors or ordered factors),
+the number of observations, or whether missing values are present.</p>
 <p>Creating tasks for classification problems and survival analysis follows the same scheme,
-except the type of the target variables.
+the data type of the target variables included in <code>data</code> is simply different.
 For each of these learning problems, some specifics are described below.</p>
 <h3 id="classification">Classification</h3>
 <p>For classification the target variable has to be a <a href="http://www.rdocumentation.org/packages/base/functions/factor.html">factor</a>.</p>
 <p>In binary classification it is customary to refer to the two classes as <em>positive</em> and
 <em>negative</em> class.
-This is for example relevant with regard to certain <a href="../performance/index.html">performance measures</a>
+This is for example relevant for certain <a href="../performance/index.html">performance measures</a>
 like the <em>true positive rate</em>.
 By default the first factor level of the target variable is selected as the positive class.</p>
 <p>In the following example, we define a classification task for the
@@ -328,9 +311,7 @@ df = BreastCancer
 df$Id = NULL
 classif.task = makeClassifTask(id = &quot;BreastCancer&quot;, data = df, target = &quot;Class&quot;)
 classif.task
-</code></pre>
-
-<pre><code>#&gt; Supervised task: BreastCancer
+#&gt; Supervised task: BreastCancer
 #&gt; Type: classif
 #&gt; Target: Class
 #&gt; Observations: 699
@@ -346,10 +327,27 @@ classif.task
 #&gt; Positive class: benign
 </code></pre>
 
-<p>The positive class is benign.
-Class malignant can be manually selected as the positive class:</p>
+<p>The positive class is <code>benign</code>.
+Class <code>malignant</code> can be manually selected as the positive class:</p>
 <pre><code class="r">classif.task = makeClassifTask(id = &quot;BreastCancer&quot;, data = df, target = &quot;Class&quot;,
   positive = &quot;malignant&quot;)
+</code></pre>
+
+<h3 id="cluster-analysis">Cluster analysis</h3>
+<p>Because cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the <code>data</code>.
+In the following example we create a learning task from the data set <a href="http://www.rdocumentation.org/packages/datasets/functions/mtcars.html">mtcars</a>.</p>
+<pre><code class="r">data(mtcars, package = &quot;datasets&quot;)
+cluster.task = makeClusterTask(data = mtcars)
+cluster.task
+#&gt; Unsupervised task: mtcars
+#&gt; Type: cluster
+#&gt; Observations: 32
+#&gt; Features:
+#&gt; numerics  factors  ordered 
+#&gt;       11        0        0 
+#&gt; Missings: FALSE
+#&gt; Has weights: FALSE
+#&gt; Has blocking: FALSE
 </code></pre>
 
 <h3 id="survival-analysis">Survival analysis</h3>
@@ -360,9 +358,7 @@ For interval censored data the two target columns must be specified in the <code
 lung$status = (lung$status == 2) # convert to logical
 surv.task = makeSurvTask(data = lung, target = c(&quot;time&quot;, &quot;status&quot;))
 surv.task
-</code></pre>
-
-<pre><code>#&gt; Supervised task: lung
+#&gt; Supervised task: lung
 #&gt; Type: surv
 #&gt; Target: time,status
 #&gt; Observations: 228
@@ -400,9 +396,7 @@ df$Species = NULL
 
 costsens.task = makeCostSensTask(data = df, cost = cost)
 costsens.task
-</code></pre>
-
-<pre><code>#&gt; Supervised task: df
+#&gt; Supervised task: df
 #&gt; Type: costsens
 #&gt; Observations: 150
 #&gt; Features:
@@ -415,7 +409,7 @@ costsens.task
 </code></pre>
 
 <p>For more details see the section about <a href="../cost_sensitive_classif/index.html">cost-sensitive classification</a>.</p>
-<h3 id="further-details">Further details</h3>
+<h2 id="further-settings">Further settings</h2>
 <p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> help page also lists several other arguments to describe further details of the
 problem.</p>
 <p>For example, we could include a <code>blocking</code> factor into the task.
@@ -426,9 +420,7 @@ not be separated when splitting into training and test sets during a resampling 
 <p>We provide many operators to access the elements stored in a <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.
 For example, to access a <a href="http://www.rdocumentation.org/packages/mlr/functions/TaskDesc.html">task description</a> you can use</p>
 <pre><code class="r">getTaskDescription(regr.task)
-</code></pre>
-
-<pre><code>#&gt; $id
+#&gt; $id
 #&gt; [1] &quot;bh&quot;
 #&gt; 
 #&gt; $type
@@ -461,9 +453,7 @@ For example, to access a <a href="http://www.rdocumentation.org/packages/mlr/fun
 Here are some more examples.</p>
 <pre><code class="r">## Accessing the data set in classif.task:
 str(getTaskData(classif.task))
-</code></pre>
-
-<pre><code>#&gt; 'data.frame':    699 obs. of  10 variables:
+#&gt; 'data.frame':    699 obs. of  10 variables:
 #&gt;  $ Cl.thickness   : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 5 5 3 6 4 8 1 2 2 4 ...
 #&gt;  $ Cell.size      : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 1 4 1 8 1 10 1 1 1 2 ...
 #&gt;  $ Cell.shape     : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 1 4 1 8 1 10 1 2 1 1 ...
@@ -474,42 +464,27 @@ str(getTaskData(classif.task))
 #&gt;  $ Normal.nucleoli: Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 2 1 7 1 7 1 1 1 1 ...
 #&gt;  $ Mitoses        : Factor w/ 9 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 1 1 1 1 1 1 1 5 1 ...
 #&gt;  $ Class          : Factor w/ 2 levels &quot;benign&quot;,&quot;malignant&quot;: 1 1 1 1 1 2 1 1 1 1 ...
-</code></pre>
 
-<pre><code class="r">## Get the number of input variables in cluster.task:
+## Get the number of input variables in cluster.task:
 getTaskNFeats(cluster.task)
-</code></pre>
+#&gt; [1] 11
 
-<pre><code>#&gt; [1] 11
-</code></pre>
-
-<pre><code class="r">## Get the names of the input variables in cluster.task:
+## Get the names of the input variables in cluster.task:
 getTaskFeatureNames(cluster.task)
-</code></pre>
-
-<pre><code>#&gt;  [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
+#&gt;  [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
 #&gt; [11] &quot;carb&quot;
-</code></pre>
 
-<pre><code class="r">## Get the names of the target columns:
+## Get the names of the target columns:
 getTaskTargetNames(surv.task)
-</code></pre>
+#&gt; [1] &quot;time&quot;   &quot;status&quot;
 
-<pre><code>#&gt; [1] &quot;time&quot;   &quot;status&quot;
-</code></pre>
-
-<pre><code class="r">## Get the values of the target variable in regr.task:
+## Get the values of the target variable in regr.task:
 head(getTaskTargets(regr.task))
-</code></pre>
+#&gt; [1] 24.0 21.6 34.7 33.4 36.2 28.7
 
-<pre><code>#&gt; [1] 24.0 21.6 34.7 33.4 36.2 28.7
-</code></pre>
-
-<pre><code class="r">## Get the cost matrix in costsens.task:
+## Get the cost matrix in costsens.task:
 head(getTaskCosts(costsens.task))
-</code></pre>
-
-<pre><code>#&gt;      y1        y2         y3
+#&gt;      y1        y2         y3
 #&gt; [1,]  0 1589.5664  674.44434
 #&gt; [2,]  0 1173.4364  828.40682
 #&gt; [3,]  0  942.7611 1095.33713
@@ -533,12 +508,8 @@ cluster.task = subsetTask(cluster.task, subset = 4:17)
 ## It may happen, especially after selecting observations, that features are constant.
 ## These should be removed.
 removeConstantFeatures(cluster.task)
-</code></pre>
-
-<pre><code>#&gt; Removing 1 columns: am
-</code></pre>
-
-<pre><code>#&gt; Unsupervised task: mtcars
+#&gt; Removing 1 columns: am
+#&gt; Unsupervised task: mtcars
 #&gt; Type: cluster
 #&gt; Observations: 14
 #&gt; Features:
@@ -547,13 +518,10 @@ removeConstantFeatures(cluster.task)
 #&gt; Missings: FALSE
 #&gt; Has weights: FALSE
 #&gt; Has blocking: FALSE
-</code></pre>
 
-<pre><code class="r">## Remove selected features:
+## Remove selected features:
 dropFeatures(surv.task, c(&quot;meal.cal&quot;, &quot;wt.loss&quot;))
-</code></pre>
-
-<pre><code>#&gt; Supervised task: lung
+#&gt; Supervised task: lung
 #&gt; Type: surv
 #&gt; Target: time,status
 #&gt; Observations: 228
@@ -563,26 +531,31 @@ dropFeatures(surv.task, c(&quot;meal.cal&quot;, &quot;wt.loss&quot;))
 #&gt; Missings: TRUE
 #&gt; Has weights: FALSE
 #&gt; Has blocking: FALSE
-</code></pre>
 
-<pre><code class="r">## Standardize numerical features:
-normalizeFeatures(classif.task, method = &quot;standardize&quot;)
-</code></pre>
-
-<pre><code>#&gt; Supervised task: BreastCancer
-#&gt; Type: classif
-#&gt; Target: Class
-#&gt; Observations: 699
-#&gt; Features:
-#&gt; numerics  factors  ordered 
-#&gt;        0        4        5 
-#&gt; Missings: TRUE
-#&gt; Has weights: FALSE
-#&gt; Has blocking: FALSE
-#&gt; Classes: 2
-#&gt;    benign malignant 
-#&gt;       458       241 
-#&gt; Positive class: malignant
+## Standardize numerical features:
+task = normalizeFeatures(cluster.task, method = &quot;range&quot;)
+summary(getTaskData(task))
+#&gt;       mpg              cyl              disp              hp        
+#&gt;  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+#&gt;  1st Qu.:0.3161   1st Qu.:0.5000   1st Qu.:0.1242   1st Qu.:0.2801  
+#&gt;  Median :0.5107   Median :1.0000   Median :0.4076   Median :0.6311  
+#&gt;  Mean   :0.4872   Mean   :0.7143   Mean   :0.4430   Mean   :0.5308  
+#&gt;  3rd Qu.:0.6196   3rd Qu.:1.0000   3rd Qu.:0.6618   3rd Qu.:0.7473  
+#&gt;  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
+#&gt;       drat              wt              qsec              vs        
+#&gt;  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+#&gt;  1st Qu.:0.2672   1st Qu.:0.1275   1st Qu.:0.2302   1st Qu.:0.0000  
+#&gt;  Median :0.3060   Median :0.1605   Median :0.3045   Median :0.0000  
+#&gt;  Mean   :0.4544   Mean   :0.3268   Mean   :0.3752   Mean   :0.4286  
+#&gt;  3rd Qu.:0.7026   3rd Qu.:0.3727   3rd Qu.:0.4908   3rd Qu.:1.0000  
+#&gt;  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
+#&gt;        am           gear             carb       
+#&gt;  Min.   :0.5   Min.   :0.0000   Min.   :0.0000  
+#&gt;  1st Qu.:0.5   1st Qu.:0.0000   1st Qu.:0.3333  
+#&gt;  Median :0.5   Median :0.0000   Median :0.6667  
+#&gt;  Mean   :0.5   Mean   :0.2857   Mean   :0.6429  
+#&gt;  3rd Qu.:0.5   3rd Qu.:0.7500   3rd Qu.:1.0000  
+#&gt;  Max.   :0.5   Max.   :1.0000   Max.   :1.0000
 </code></pre>
 
 <p>Some of these functions are covered and explained in more detail in the <a href="../preproc/index.html">data preprocessing</a> section.</p>

@@ -21,7 +21,7 @@ observation of the [BostonHousing](&mlbench::BostonHousing) data set and make pr
 on the remaining data in [&bh.task].
 
 ```{r}
-n = getTaskDescription(bh.task)$size
+n = getTaskSize(bh.task)
 train.set = seq(1, n, by = 2)
 test.set = seq(2, n, by = 2)
 lrn = makeLearner("regr.gbm", n.trees = 100)
@@ -48,7 +48,7 @@ newdata.pred = predict(mod, newdata = iris.test)
 newdata.pred
 ```
 
-Note that you do not have to remove the target columns from the data.
+Note that for supervised learning you do not have to remove the target columns from the data.
 These columns are automatically removed prior to calling the underlying ``predict`` method of the learner.
 
 
@@ -131,7 +131,7 @@ We can set the threshold value that is used to map the predicted posterior proba
 Note that for this purpose we need to create a [Learner](&makeLearner) that predicts probabilities.
 For binary classification, the threshold determines when the *positive* class is predicted.
 The default is 0.5.
-Now, we set the threshold for the positive class to 0.8 (that is, an example is assigned to the positive class if its posterior probability exceeds 0.8).
+Now, we set the threshold for the positive class to 0.9 (that is, an example is assigned to the positive class if its posterior probability exceeds 0.9).
 Which of the two classes is the positive one can be seen by accessing the [&Task].
 To illustrate binary classification, we use the [Sonar](&mlbench::Sonar) data set from the [%mlbench] package.
 ```{r}
@@ -142,17 +142,25 @@ mod = train(lrn, task = sonar.task)
 getTaskDescription(sonar.task)$positive
 
 ## Default threshold
-pred = predict(mod, sonar.task)
-pred$threshold
+pred1 = predict(mod, sonar.task)
+pred1$threshold
 
 ## Set the threshold value for the positive class
-pred = setThreshold(pred, 0.8)
-pred$threshold
-pred
+pred2 = setThreshold(pred1, 0.9)
+pred2$threshold
+pred2
+
+## We can also set the effect in the confusion matrix
+getConfMatrix(pred1)
+getConfMatrix(pred2)
 ```
-Note that in the binary case [&getProbabilities] extracts the posterior probabilities of the positive class only.
+
+Note that in the binary case [&getProbabilities] by default extracts the posterior
+probabilities of the positive class only.
 ```{r}
-head(getProbabilities(pred))
+head(getProbabilities(pred1))
+## But we can change that, too
+head(getProbabilities(pred1, cl = c("M", "R")))
 ```
 
 It works similarly for multiclass classification.
@@ -205,8 +213,8 @@ plotLearnerPrediction(lrn, task = mtcars.task, features = c("disp", "drat"), cv 
 ```
 
 For *regression*, there are two types of plots.
-The 1D plot shows the target values in dependence of 1 feature, the regression curve and
-if the chosen learner supports this the estimated standard error.
+The 1D plot shows the target values in relation to a single feature, the regression curve and,
+if the chosen learner supports this, the estimated standard error.
 
 ```{r}
 plotLearnerPrediction("regr.lm", features = "lstat", task = bh.task)

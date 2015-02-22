@@ -212,6 +212,12 @@ div.well, pre.well {
     background-color: #E7EBF2;
 }
 
+/* Hopefully only affects the learner list */
+h3[id|=classification] + table td:last-child, h3[id|=regression] + table td:last-child, h3[id|=survival-analysis] + table td:last-child, h3[id|=cluster-analysis] + table td:last-child  {
+    border-left: solid;
+    border-left-width: 1px;
+}
+
 @media (min-width: 768px) .navbar-nav>li>a {
     padding-top: 25px;
     padding-bottom: 5px;

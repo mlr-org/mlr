@@ -267,20 +267,16 @@ First let's try it without bagging:</p>
 <pre><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
 r = resample(learner = lrn, task = sonar.task, resampling = rdesc, show.info = FALSE)
 r$aggr
-</code></pre>
-
-<pre><code>#&gt; mmce.test.mean 
-#&gt;         0.2543
+#&gt; mmce.test.mean 
+#&gt;      0.2542857
 </code></pre>
 
 <p>And now with bagging:</p>
 <pre><code class="r">rdesc = makeResampleDesc(&quot;CV&quot;, iters = 10)
 result = resample(learner = bag.lrn, task = sonar.task, resampling = rdesc, show.info = FALSE)
 result$aggr
-</code></pre>
-
-<pre><code>#&gt; mmce.test.mean 
-#&gt;         0.1931
+#&gt; mmce.test.mean 
+#&gt;      0.1930952
 </code></pre>
 
 <p>Training more learners takes more time, but can outperform pure learners
@@ -300,7 +296,7 @@ for this reason the predict type of the <em>base learner</em> always has to be <
 Moreover, the standard deviation across predictions is estimated if the predict type
 of the bagging learner is changed to <code>"se"</code>.
 Below, we give a small example for regression.</p>
-<pre><code class="r">n = getTaskDescription(bh.task)$size
+<pre><code class="r">n = getTaskSize(bh.task)
 train.inds = seq(1, n, 3)
 test.inds  = setdiff(1:n, train.inds)
 lrn = makeLearner(&quot;regr.rpart&quot;)
@@ -312,9 +308,7 @@ mod = train(learner = bag.lrn, task = bh.task, subset = train.inds)
 <p>With the function <a href="http://www.rdocumentation.org/packages/mlr/functions/getHomogeneousEnsembleModels.html">getHomogeneousEnsembleModels</a>, you can access the models fitted in the
 individual iterations.</p>
 <pre><code class="r">head(getHomogeneousEnsembleModels(mod), 2)
-</code></pre>
-
-<pre><code>#&gt; [[1]]
+#&gt; [[1]]
 #&gt; Model for id = regr.rpart class = regr.rpart
 #&gt; Trained on obs: 169
 #&gt; Used features: 13
@@ -330,15 +324,13 @@ individual iterations.</p>
 <p>Predict the response and calculate the standard deviation:</p>
 <pre><code class="r">pred = predict(mod, task = bh.task, subset = test.inds)
 head(pred$data)
-</code></pre>
-
-<pre><code>#&gt;   id truth response    se
-#&gt; 2  2  21.6    21.47 1.041
-#&gt; 3  3  34.7    34.45 4.091
-#&gt; 5  5  36.2    33.39 1.173
-#&gt; 6  6  28.7    23.76 1.107
-#&gt; 8  8  27.1    15.77 3.306
-#&gt; 9  9  16.5    15.02 2.865
+#&gt;   id truth response       se
+#&gt; 2  2  21.6 21.46507 1.040829
+#&gt; 3  3  34.7 34.44916 4.090512
+#&gt; 5  5  36.2 33.39258 1.172627
+#&gt; 6  6  28.7 23.76128 1.106508
+#&gt; 8  8  27.1 15.76715 3.305897
+#&gt; 9  9  16.5 15.02399 2.865487
 </code></pre>
 
 <p>In the column labelled <code>se</code> the standard deviation for each prediction is given.</p>

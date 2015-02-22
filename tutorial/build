@@ -42,7 +42,7 @@ knitIt = function(f) {
     lines = str_replace_all(lines, macro$pattern, macro$replacement)
 
   cache.path = paste0(file.path("cache", f), .Platform$file.sep)
-  opts_chunk$set(cache = TRUE, cache.path = cache.path, dev = "svg", error = FALSE, comment = "#>")
+  opts_chunk$set(cache = TRUE, cache.path = cache.path, dev = "svg", error = FALSE, comment = "#>", collapse = TRUE)
   setSeed(f)
   knit(
     text = lines,
@@ -67,6 +67,7 @@ suppressPackageStartupMessages({
   library(knitr)
   library(stringr)
   library(digest)
+  library(caret) # we get problems if this shadows "mlr::train"
   library(mlr)
 })
 

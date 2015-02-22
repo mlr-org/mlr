@@ -69,7 +69,7 @@ The [Learner](&makeLearner) object is a [list](&base::list) and the following el
 information regarding the hyperparameters and the type of prediction.
 
 ```{r}
-## Get the selected hyperparameter values:
+## Get the configured hyperparameter settings that deviate from the defaults:
 cluster.lrn$par.vals
 
 ## Get the set of hyperparameters:
@@ -98,14 +98,11 @@ getHyperPars(cluster.lrn)
 getParamSet(classif.lrn)
 ```
 
-With the function [&showHyperPars] we can get a quick overview about the available hyperparameters
-and defaults of a learning method.
-In contrast to [&getParamSet] it takes a character string naming a learning method
-and is therefore useful to get an overview about all hyperparameters before actually creating
-the [Learner](&makeLearner).
+We can also use [&getParamSet] to get a quick overview about the available hyperparameters
+and defaults of a learning method without explicitly constructing it.
 
 ```{r}
-showHyperPars("classif.randomForest")
+getParamSet("classif.randomForest")
 ```
 
 
@@ -129,3 +126,21 @@ cluster.lrn = setHyperPars(cluster.lrn, N = 4)
 ## Go back to default hyperparameter values:
 regr.lrn = removeHyperPars(regr.lrn, c("n.trees", "interaction.depth"))
 ```
+
+## Listing learners
+The list of all learners and their respective properties are shown in the [Appendix](integrated_learners.md).
+
+If you would like a list of available learners, maybe only with certain properties or suitable for a
+certain learning [&Task] use the function [&listLearners].
+
+```{r}
+## List everything in mlr
+head(listLearners())
+## List classifiers that can output probabilities
+head(listLearners("classif", properties = "prob"))
+## List classifiers that can be applied to iris (i.e. multiclass) and output probabilities
+head(listLearners(iris.task, properties = "prob"))
+## The calls above return character vectors, but you can also create learner objects
+head(listLearners("cluster", create = TRUE), 2)
+```
+

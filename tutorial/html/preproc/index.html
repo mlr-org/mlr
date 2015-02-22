@@ -357,9 +357,7 @@ argument of the <em>train</em> function.</p>
 lrn = makePreprocWrapper(lrn, train = tr.fun, predict = pr.fun,
   par.vals = list(center = TRUE, scale = TRUE))
 lrn
-</code></pre>
-
-<pre><code>#&gt; Learner regr.nnet.preproc from package nnet
+#&gt; Learner regr.nnet.preproc from package nnet
 #&gt; Type: regr
 #&gt; Name: ; Short name: 
 #&gt; Class: PreprocWrapper
@@ -374,19 +372,14 @@ lrn
 
 r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
 r$aggr
-</code></pre>
+#&gt; mse.test.mean 
+#&gt;      20.98447
 
-<pre><code>#&gt; mse.test.mean 
-#&gt;      21.35203
-</code></pre>
-
-<pre><code class="r">lrn = makeLearner(&quot;regr.nnet&quot;, trace = FALSE, decay = 1e-02)
+lrn = makeLearner(&quot;regr.nnet&quot;, trace = FALSE, decay = 1e-02)
 r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
 r$aggr
-</code></pre>
-
-<pre><code>#&gt; mse.test.mean 
-#&gt;      52.37755
+#&gt; mse.test.mean 
+#&gt;      54.37792
 </code></pre>
 
 </div>

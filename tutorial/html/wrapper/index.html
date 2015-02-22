@@ -271,9 +271,7 @@ We choose to set equivalents of <code>ntree</code> (100 base learners) and <code
 <pre><code class="r">base.lrn = makeLearner(&quot;classif.rpart&quot;)
 wrapped.lrn = makeBaggingWrapper(base.lrn, bw.iters = 100, bw.feats = 0.5)
 print(wrapped.lrn)
-</code></pre>
-
-<pre><code>#&gt; Learner classif.rpart.bagged from package rpart
+#&gt; Learner classif.rpart.bagged from package rpart
 #&gt; Type: classif
 #&gt; Name: ; Short name: 
 #&gt; Class: BaggingWrapper
@@ -285,9 +283,7 @@ print(wrapped.lrn)
 <p>As we can see in the output, the wrapped learner inherited all properties from the base learner, especially the "weights" attribute is still present.
 We can use this newly constructed learner like all base learners, i.e. we can use it in <a href="http://www.rdocumentation.org/packages/mlr/functions/train.html">train</a>, <a href="http://www.rdocumentation.org/packages/mlr/functions/benchmark.html">benchmark</a>, <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resample</a>, etc.</p>
 <pre><code class="r">benchmark(tasks = task, learners = list(base.lrn, wrapped.lrn))
-</code></pre>
-
-<pre><code>#&gt; Task: iris, Learner: classif.rpart
+#&gt; Task: iris, Learner: classif.rpart
 #&gt; [Resample] cross-validation iter: 1
 #&gt; [Resample] cross-validation iter: 2
 #&gt; [Resample] cross-validation iter: 3
@@ -311,9 +307,7 @@ We can use this newly constructed learner like all base learners, i.e. we can us
 #&gt; [Resample] cross-validation iter: 9
 #&gt; [Resample] cross-validation iter: 10
 #&gt; [Resample] Result: mmce.test.mean=0.06
-</code></pre>
-
-<pre><code>#&gt;   task.id           learner.id mmce.test.mean
+#&gt;   task.id           learner.id mmce.test.mean
 #&gt; 1    iris        classif.rpart     0.06666667
 #&gt; 2    iris classif.rpart.bagged     0.06000000
 </code></pre>
@@ -322,9 +316,7 @@ We can use this newly constructed learner like all base learners, i.e. we can us
 But we hope for a better performance by tuning some hyperparameters of both the decision trees and bagging wrapper.
 Let's have a look at the available hyperparameters of the fused learner:</p>
 <pre><code class="r">getParamSet(wrapped.lrn)
-</code></pre>
-
-<pre><code>#&gt;                    Type len   Def   Constr Req Trafo
+#&gt;                    Type len   Def   Constr Req Trafo
 #&gt; bw.iters        integer   -    10 1 to Inf   -     -
 #&gt; bw.replace      logical   -  TRUE        -   -     -
 #&gt; bw.size         numeric   -     -   0 to 1   -     -
@@ -350,9 +342,7 @@ par.set = makeParamSet(
 )
 tuned.lrn = makeTuneWrapper(wrapped.lrn, rdesc, mmce, par.set, ctrl)
 print(tuned.lrn)
-</code></pre>
-
-<pre><code>#&gt; Learner classif.rpart.bagged.tuned from package rpart
+#&gt; Learner classif.rpart.bagged.tuned from package rpart
 #&gt; Type: classif
 #&gt; Name: ; Short name: 
 #&gt; Class: TuneWrapper
@@ -370,41 +360,35 @@ print(tuned.lrn)
 <li>This is repeated until the tuner terminates. Output is a tuned bagged learner.</li>
 </ol>
 <pre><code class="r">lrn = train(tuned.lrn, task = task)
-</code></pre>
-
-<pre><code>#&gt; [Tune] Started tuning learner classif.rpart.bagged for parameter set:
+#&gt; [Tune] Started tuning learner classif.rpart.bagged for parameter set:
 #&gt;             Type len Def    Constr Req Trafo
 #&gt; minsplit integer   -   -   1 to 10   -     -
 #&gt; bw.feats numeric   -   - 0.25 to 1   -     -
 #&gt; With control class: TuneControlRandom
 #&gt; Imputation value: 1
 #&gt; [Tune-x] 1: minsplit=5; bw.feats=0.935
-#&gt; [Tune-y] 1: mmce.test.mean=0.0467; time: 7.6 min; memory: 118.2 Mb (+0.0)
+#&gt; [Tune-y] 1: mmce.test.mean=0.0467; time: 7.9 min; memory: 135.2 Mb (+0.0)
 #&gt; [Tune-x] 2: minsplit=9; bw.feats=0.675
-#&gt; [Tune-y] 2: mmce.test.mean=0.0467; time: 7.8 min; memory: 118.2 Mb (+0.0)
+#&gt; [Tune-y] 2: mmce.test.mean=0.0467; time: 7.5 min; memory: 135.2 Mb (+0.0)
 #&gt; [Tune-x] 3: minsplit=2; bw.feats=0.847
-#&gt; [Tune-y] 3: mmce.test.mean=0.0467; time: 7.6 min; memory: 118.2 Mb (+0.0)
+#&gt; [Tune-y] 3: mmce.test.mean=0.0467; time: 7.6 min; memory: 135.2 Mb (+0.0)
 #&gt; [Tune-x] 4: minsplit=4; bw.feats=0.761
-#&gt; [Tune-y] 4: mmce.test.mean=0.0467; time: 7.7 min; memory: 118.2 Mb (+0.0)
+#&gt; [Tune-y] 4: mmce.test.mean=0.0467; time: 8.0 min; memory: 135.2 Mb (+0.0)
 #&gt; [Tune-x] 5: minsplit=6; bw.feats=0.338
-#&gt; [Tune-y] 5: mmce.test.mean=0.0867; time: 7.3 min; memory: 118.2 Mb (+0.0)
+#&gt; [Tune-y] 5: mmce.test.mean=0.0867; time: 8.0 min; memory: 135.2 Mb (+0.0)
 #&gt; [Tune-x] 6: minsplit=1; bw.feats=0.637
-#&gt; [Tune-y] 6: mmce.test.mean=0.0467; time: 7.7 min; memory: 118.2 Mb (+0.0)
+#&gt; [Tune-y] 6: mmce.test.mean=0.0467; time: 8.0 min; memory: 135.2 Mb (+0.0)
 #&gt; [Tune-x] 7: minsplit=1; bw.feats=0.998
-#&gt; [Tune-y] 7: mmce.test.mean=0.0467; time: 7.8 min; memory: 118.2 Mb (+0.0)
+#&gt; [Tune-y] 7: mmce.test.mean=0.0467; time: 8.0 min; memory: 135.2 Mb (+0.0)
 #&gt; [Tune-x] 8: minsplit=4; bw.feats=0.698
-#&gt; [Tune-y] 8: mmce.test.mean=0.0467; time: 7.5 min; memory: 118.2 Mb (+0.0)
+#&gt; [Tune-y] 8: mmce.test.mean=0.0467; time: 7.9 min; memory: 135.2 Mb (+0.0)
 #&gt; [Tune-x] 9: minsplit=3; bw.feats=0.836
-#&gt; [Tune-y] 9: mmce.test.mean=0.0467; time: 7.2 min; memory: 118.2 Mb (+0.0)
+#&gt; [Tune-y] 9: mmce.test.mean=0.0467; time: 8.3 min; memory: 135.2 Mb (+0.0)
 #&gt; [Tune-x] 10: minsplit=10; bw.feats=0.529
-#&gt; [Tune-y] 10: mmce.test.mean=0.0533; time: 7.1 min; memory: 118.2 Mb (+0.0)
+#&gt; [Tune-y] 10: mmce.test.mean=0.0533; time: 8.7 min; memory: 135.3 Mb (+0.1)
 #&gt; [Tune] Result: minsplit=1; bw.feats=0.998 : mmce.test.mean=0.0467
-</code></pre>
-
-<pre><code class="r">print(lrn)
-</code></pre>
-
-<pre><code>#&gt; Learner model for id=classif.rpart.bagged.tuned chain=TuneWrapper
+print(lrn)
+#&gt; Learner model for id=classif.rpart.bagged.tuned chain=TuneWrapper
 #&gt; [chain] Trained on obs: 150
 #&gt; [chain] Used features: 4
 #&gt; [model] Trained on obs: 0

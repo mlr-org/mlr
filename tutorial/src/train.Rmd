@@ -4,17 +4,12 @@ Training a learner means fitting a model to a given data set.
 In [%mlr] this can be done by calling the function [&train]
 on a [Learner](&makeLearner) and a suitable [&Task].
 
-We start with a survival analysis example and train a
-[Cox proportional hazards model](&survival::coxph)
-on the [lung](&survival::lung) data set.
+Training a learner works the same way for every type of [&Task].
+Here is a classification example using the data set [iris](&dataset::iris) and an LDA learner.
 
 ```{r}
-data(lung, package = "survival")
-lung$status = (lung$status == 2)
-task = makeSurvTask(data = lung, target = c("time", "status"))
-lrn = makeLearner("surv.coxph")
-
-mod = train(lrn, task)
+lrn = makeLearner("classif.lda")
+mod = train(lrn, iris.task)
 mod
 ```
 
@@ -25,19 +20,7 @@ Otherwise, [&train] and many other functions accept a character string naming th
 method.
 
 ```{r}
-mod = train("surv.coxph", task)
-mod
-```
-
-Training a learner works the same way for every type of [&Task].
-Here is a cluster analysis example using the data set [mtcars](&dataset::mtcars).
-We create a [Learner](&makeLearner) because we want to set one of the hyperparameter values, the number of clusters.
-
-```{r}
-task = makeClusterTask(data = mtcars)
-lrn = makeLearner("cluster.kmeans", centers = 3)
-
-mod = train(lrn, task)
+mod = train("classif.lda", iris.task)
 mod
 ```
 
@@ -50,7 +33,7 @@ data set provided by [%mlr].
 
 ```{r}
 ## Number of observations
-n = getTaskDescription(bh.task)$size
+n = getTaskSize(bh.task)
 ## Use 1/3 of the observations for training
 train.set = sample(n, size = n/3)
 ## Train the learner
@@ -58,13 +41,13 @@ mod = train("regr.lm", bh.task, subset = train.set)
 mod
 ```
 
-Note that all standard [resampling strategies](resample.md) are supported.
+Note, for later, that all standard [resampling strategies](resample.md) are supported.
 Therefore you usually do not have to subset the data yourself.
 
 Moreover, if the [Learner](&makeLearner) supports this, you can specify observation ``weights``
 that reflect the relevance of examples in the training process.
 
-For example, in the [BreastCancer](&mlbench::BreastCancer) data set class benign is almost
+For example, in the [BreastCancer](&mlbench::BreastCancer) data set class ``benign`` is almost
 twice as frequent as class malignant.
 If both classes should have equal importance in training the classifier we can weight the
 examples according to the class frequencies in the data set as shown in the following
@@ -85,7 +68,24 @@ Naturally, it makes sense to specify ``weights`` in [make<type>Task](&Task) if t
 should always be used for the learning task and in [&train] if this is not the case since, e.g.,
 some of the learners you want to use cannot deal with weights or you want to try different weights.
 The weights in [&train] overwrite the weights in [&Task].
+As a side remark for more advanced readers:
+By varying the weights in the calls to train, you could also implement your own variant of
+a general boosting type of algorithm on arbitrary mlr base learners.
 
+
+Let's finish with a survival analysis example and train a
+[Cox proportional hazards model](&survival::coxph)
+on the [lung](&survival::lung) data set.
+
+```{r}
+data(lung, package = "survival")
+lung$status = (lung$status == 2)
+task = makeSurvTask(data = lung, target = c("time", "status"))
+lrn = makeLearner("surv.coxph")
+
+mod = train(lrn, task)
+mod
+```
 
 ## Wrapped models
 [&train] returns an object of class [WrappedModel](&makeWrappedModel), which wraps the

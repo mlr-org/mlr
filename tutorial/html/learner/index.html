@@ -240,6 +240,8 @@
         
             <li><a href="#modifying-a-learner">Modifying a learner</a></li>
         
+            <li><a href="#listing-learners">Listing learners</a></li>
+        
     
     </ul>
 </div></div>
@@ -287,21 +289,16 @@ test data than in the training data.
 By setting <code>fix.factors = TRUE</code> these are avoided by adding a factor level for missing data in the test data set.</p>
 <p>Let's have a look at two of the learners created above.</p>
 <pre><code class="r">surv.lrn
-</code></pre>
-
-<pre><code>#&gt; Learner cph from package survival
+#&gt; Learner cph from package survival
 #&gt; Type: surv
 #&gt; Name: Cox Proportional Hazard Model; Short name: coxph
 #&gt; Class: surv.coxph
 #&gt; Properties: missings,numerics,factors,weights,prob,rcens
 #&gt; Predict-Type: response
 #&gt; Hyperparameters:
-</code></pre>
 
-<pre><code class="r">classif.lrn
-</code></pre>
-
-<pre><code>#&gt; Learner classif.randomForest from package randomForest
+classif.lrn
+#&gt; Learner classif.randomForest from package randomForest
 #&gt; Type: classif
 #&gt; Name: Random Forest; Short name: rf
 #&gt; Class: classif.randomForest
@@ -321,19 +318,14 @@ learners. This is explained in greater detail in the section about
 <h2 id="accessing-a-learner">Accessing a learner</h2>
 <p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a> object is a <a href="http://www.rdocumentation.org/packages/base/functions/list.html">list</a> and the following elements contain
 information regarding the hyperparameters and the type of prediction.</p>
-<pre><code class="r">## Get the selected hyperparameter values:
+<pre><code class="r">## Get the configured hyperparameter settings that deviate from the defaults:
 cluster.lrn$par.vals
-</code></pre>
-
-<pre><code>#&gt; $N
+#&gt; $N
 #&gt; [1] 5
-</code></pre>
 
-<pre><code class="r">## Get the set of hyperparameters:
+## Get the set of hyperparameters:
 classif.lrn$par.set
-</code></pre>
-
-<pre><code>#&gt;                     Type  len   Def   Constr Req Trafo
+#&gt;                     Type  len   Def   Constr Req Trafo
 #&gt; ntree            integer    -   500 1 to Inf   -     -
 #&gt; mtry             integer    -     - 1 to Inf   -     -
 #&gt; replace          logical    -  TRUE        -   -     -
@@ -346,13 +338,10 @@ classif.lrn$par.set
 #&gt; localImp         logical    - FALSE        -   -     -
 #&gt; norm.votes       logical    -  TRUE        -   -     -
 #&gt; keep.inbag       logical    - FALSE        -   -     -
-</code></pre>
 
-<pre><code class="r">## Get the type of prediction:
+## Get the type of prediction:
 regr.lrn$predict.type
-</code></pre>
-
-<pre><code>#&gt; [1] &quot;response&quot;
+#&gt; [1] &quot;response&quot;
 </code></pre>
 
 <p>Slot <code>$par.set</code> is an object of class <a href="http://www.rdocumentation.org/packages/ParamHelpers/functions/makeParamSet.html">ParamSet</a>.
@@ -366,17 +355,12 @@ as well the feature selection method, have hyperparameters.
 For details see the section on <a href="../wrapper/index.html">wrapped learners</a>.</p>
 <pre><code class="r">## Get current parameter settings
 getHyperPars(cluster.lrn)
-</code></pre>
-
-<pre><code>#&gt; $N
+#&gt; $N
 #&gt; [1] 5
-</code></pre>
 
-<pre><code class="r">## Get a description of all possible parameter settings
+## Get a description of all possible parameter settings
 getParamSet(classif.lrn)
-</code></pre>
-
-<pre><code>#&gt;                     Type  len   Def   Constr Req Trafo
+#&gt;                     Type  len   Def   Constr Req Trafo
 #&gt; ntree            integer    -   500 1 to Inf   -     -
 #&gt; mtry             integer    -     - 1 to Inf   -     -
 #&gt; replace          logical    -  TRUE        -   -     -
@@ -397,9 +381,7 @@ In contrast to <a href="http://www.rdocumentation.org/packages/mlr/functions/get
 and is therefore useful to get an overview about all hyperparameters before actually creating
 the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>.</p>
 <pre><code class="r">showHyperPars(&quot;classif.randomForest&quot;)
-</code></pre>
-
-<pre><code>#&gt;                     Type  len   Def   Constr Req
+#&gt;                     Type  len   Def   Constr Req
 #&gt; ntree            integer    -   500 1 to Inf   -
 #&gt; mtry             integer    -     - 1 to Inf   -
 #&gt; replace          logical    -  TRUE        -   -
@@ -421,18 +403,15 @@ Here are some examples.</p>
 <pre><code class="r">## Change the ID:
 surv.lrn = setId(surv.lrn, &quot;CoxModel&quot;)
 surv.lrn
-</code></pre>
-
-<pre><code>#&gt; Learner CoxModel from package survival
+#&gt; Learner CoxModel from package survival
 #&gt; Type: surv
 #&gt; Name: Cox Proportional Hazard Model; Short name: coxph
 #&gt; Class: surv.coxph
 #&gt; Properties: missings,numerics,factors,weights,prob,rcens
 #&gt; Predict-Type: response
 #&gt; Hyperparameters:
-</code></pre>
 
-<pre><code class="r">## Change the prediction type, predict a factor with class labels instead of probabilities:
+## Change the prediction type, predict a factor with class labels instead of probabilities:
 classif.lrn = setPredictType(classif.lrn, &quot;response&quot;)
 
 ## Change hyperparameter values:
@@ -440,6 +419,44 @@ cluster.lrn = setHyperPars(cluster.lrn, N = 4)
 
 ## Go back to default hyperparameter values:
 regr.lrn = removeHyperPars(regr.lrn, c(&quot;n.trees&quot;, &quot;interaction.depth&quot;))
+</code></pre>
+
+<h2 id="listing-learners">Listing learners</h2>
+<p>The list of all learners and their respective properties are shown in the <a href="../integrated_learners/index.html">Appendix</a>.</p>
+<p>If you would like a list of available learners, maybe only with certain properties or suitable for a
+certain learning <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> use the function <a href="http://www.rdocumentation.org/packages/mlr/functions/listLearners.html">listLearners</a>.</p>
+<pre><code class="r">## List everything in mlr
+head(listLearners())
+#&gt; [1] &quot;classif.ada&quot;         &quot;classif.bartMachine&quot; &quot;classif.bdk&quot;        
+#&gt; [4] &quot;classif.binomial&quot;    &quot;classif.blackboost&quot;  &quot;classif.boosting&quot;
+## List classifiers that can output probabilities
+head(listLearners(&quot;classif&quot;, properties = &quot;prob&quot;))
+#&gt; [1] &quot;classif.ada&quot;         &quot;classif.bartMachine&quot; &quot;classif.bdk&quot;        
+#&gt; [4] &quot;classif.binomial&quot;    &quot;classif.blackboost&quot;  &quot;classif.boosting&quot;
+## List classifiers that can be applied to iris (i.e. multiclass) and output probabilities
+head(listLearners(iris.task, properties = &quot;prob&quot;))
+#&gt; [1] &quot;classif.bdk&quot;        &quot;classif.boosting&quot;   &quot;classif.cforest&quot;   
+#&gt; [4] &quot;classif.ctree&quot;      &quot;classif.extraTrees&quot; &quot;classif.gbm&quot;
+## The calls above return character vectors, but you can also create learner objects
+head(listLearners(&quot;cluster&quot;, create = TRUE), 2)
+#&gt; [[1]]
+#&gt; Learner cluster.cmeans from package e1071,clue
+#&gt; Type: cluster
+#&gt; Name: Fuzzy C-Means Clustering; Short name: cmeans
+#&gt; Class: cluster.cmeans
+#&gt; Properties: numerics,prob
+#&gt; Predict-Type: response
+#&gt; Hyperparameters: centers=&lt;integer&gt;
+#&gt; 
+#&gt; 
+#&gt; [[2]]
+#&gt; Learner cluster.EM from package RWeka
+#&gt; Type: cluster
+#&gt; Name: Expectation-Maximization Clustering; Short name: em
+#&gt; Class: cluster.EM
+#&gt; Properties: numerics
+#&gt; Predict-Type: response
+#&gt; Hyperparameters:
 </code></pre>
 
 </div>

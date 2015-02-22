@@ -264,9 +264,7 @@ rdesc = makeResampleDesc(&quot;CV&quot;, iters = 5)
 ## Conduct the benchmark experiment
 res = benchmark(lrns, tasks, rdesc, show.info = FALSE)
 res
-</code></pre>
-
-<pre><code>#&gt;         task.id    learner.id mmce.test.mean
+#&gt;         task.id    learner.id mmce.test.mean
 #&gt; 1  iris-example   classif.lda     0.04000000
 #&gt; 2  iris-example classif.rpart     0.06666667
 #&gt; 3 Sonar-example   classif.lda     0.23577236
@@ -285,9 +283,7 @@ of the learning algorithms under consideration.
 Let's have a look at the benchmark result from the example above:</p>
 <pre><code class="r">## Individual performances of the 5 cross-validation runs
 getBMRPerformances(res)
-</code></pre>
-
-<pre><code>#&gt; $`iris-example`
+#&gt; $`iris-example`
 #&gt; $`iris-example`$classif.lda
 #&gt;   iter       mmce
 #&gt; 1    1 0.03333333
@@ -321,13 +317,10 @@ getBMRPerformances(res)
 #&gt; 3    3 0.2142857
 #&gt; 4    4 0.2926829
 #&gt; 5    5 0.3658537
-</code></pre>
 
-<pre><code class="r">## Aggregated performances
+## Aggregated performances
 getBMRAggrPerformances(res)
-</code></pre>
-
-<pre><code>#&gt; $`iris-example`
+#&gt; $`iris-example`
 #&gt; $`iris-example`$classif.lda
 #&gt; mmce.test.mean 
 #&gt;           0.04 
@@ -345,20 +338,13 @@ getBMRAggrPerformances(res)
 #&gt; $`Sonar-example`$classif.rpart
 #&gt; mmce.test.mean 
 #&gt;      0.2698026
-</code></pre>
 
-<pre><code class="r">## Predictions
+## Predictions
 pred = getBMRPredictions(res)
 names(pred)
-</code></pre>
-
-<pre><code>#&gt; [1] &quot;iris-example&quot;  &quot;Sonar-example&quot;
-</code></pre>
-
-<pre><code class="r">head(pred$`iris-example`)
-</code></pre>
-
-<pre><code>#&gt; $classif.lda
+#&gt; [1] &quot;iris-example&quot;  &quot;Sonar-example&quot;
+head(pred$`iris-example`)
+#&gt; $classif.lda
 #&gt; Resampled Prediction for:
 #&gt; Resample description: cross-validation with 5 iterations.
 #&gt; Predict: test
@@ -394,15 +380,48 @@ names(pred)
 <p>Note that in the examples above the task and learner IDs are used to name the list elements.
 The IDs can be accessed as follows:</p>
 <pre><code class="r">getBMRTaskIds(res)
+#&gt; [1] &quot;iris-example&quot;  &quot;Sonar-example&quot;
+getBMRLearnerIds(res)
+#&gt; [1] &quot;classif.lda&quot;   &quot;classif.rpart&quot;
 </code></pre>
 
-<pre><code>#&gt; [1] &quot;iris-example&quot;  &quot;Sonar-example&quot;
-</code></pre>
-
-<pre><code class="r">getBMRLearnerIds(res)
-</code></pre>
-
-<pre><code>#&gt; [1] &quot;classif.lda&quot;   &quot;classif.rpart&quot;
+<p>Often it more convenient to work with data frames, so you can easily convert the result structure:</p>
+<pre><code class="r">getBMRPerformances(res, as.df = TRUE)
+#&gt;          task.id    learner.id iter       mmce
+#&gt; 1   iris-example   classif.lda    1 0.03333333
+#&gt; 2   iris-example   classif.lda    2 0.00000000
+#&gt; 3   iris-example   classif.lda    3 0.00000000
+#&gt; 4   iris-example   classif.lda    4 0.00000000
+#&gt; 5   iris-example   classif.lda    5 0.16666667
+#&gt; 6   iris-example classif.rpart    1 0.06666667
+#&gt; 7   iris-example classif.rpart    2 0.06666667
+#&gt; 8   iris-example classif.rpart    3 0.00000000
+#&gt; 9   iris-example classif.rpart    4 0.03333333
+#&gt; 10  iris-example classif.rpart    5 0.16666667
+#&gt; 11 Sonar-example   classif.lda    1 0.26190476
+#&gt; 12 Sonar-example   classif.lda    2 0.19047619
+#&gt; 13 Sonar-example   classif.lda    3 0.21428571
+#&gt; 14 Sonar-example   classif.lda    4 0.21951220
+#&gt; 15 Sonar-example   classif.lda    5 0.29268293
+#&gt; 16 Sonar-example classif.rpart    1 0.28571429
+#&gt; 17 Sonar-example classif.rpart    2 0.19047619
+#&gt; 18 Sonar-example classif.rpart    3 0.21428571
+#&gt; 19 Sonar-example classif.rpart    4 0.29268293
+#&gt; 20 Sonar-example classif.rpart    5 0.36585366
+getBMRAggrPerformances(res, as.df = TRUE)
+#&gt;         task.id    learner.id mmce.test.mean
+#&gt; 1  iris-example   classif.lda     0.04000000
+#&gt; 2  iris-example classif.rpart     0.06666667
+#&gt; 3 Sonar-example   classif.lda     0.23577236
+#&gt; 4 Sonar-example classif.rpart     0.26980256
+head(getBMRPredictions(res, as.df = TRUE))
+#&gt;        task.id  learner.id id  truth response iter  set
+#&gt; 1 iris-example classif.lda  3 setosa   setosa    1 test
+#&gt; 2 iris-example classif.lda  7 setosa   setosa    1 test
+#&gt; 3 iris-example classif.lda 10 setosa   setosa    1 test
+#&gt; 4 iris-example classif.lda 13 setosa   setosa    1 test
+#&gt; 5 iris-example classif.lda 22 setosa   setosa    1 test
+#&gt; 6 iris-example classif.lda 36 setosa   setosa    1 test
 </code></pre>
 
 <h2 id="nested-resampling">Nested resampling</h2>
@@ -453,17 +472,12 @@ out.rdesc = makeResampleDesc(&quot;Bootstrap&quot;, iters = 5)
 ## Choose accuracy instead of default measure mean misclassification error
 res = benchmark(lrn, iris.task, out.rdesc, measure = acc, show.info = FALSE)
 res
-</code></pre>
-
-<pre><code>#&gt;        task.id         learner.id acc.test.mean
+#&gt;        task.id         learner.id acc.test.mean
 #&gt; 1 iris-example classif.kknn.tuned     0.9156964
-</code></pre>
 
-<pre><code class="r">## What parameter setting achieved this performances?
+## What parameter setting achieved this performances?
 getBMRTuneResults(res)
-</code></pre>
-
-<pre><code>#&gt; $`iris-example`
+#&gt; $`iris-example`
 #&gt; $`iris-example`$classif.kknn.tuned
 #&gt; $`iris-example`$classif.kknn.tuned[[1]]
 #&gt; Tune result:
@@ -489,13 +503,10 @@ getBMRTuneResults(res)
 #&gt; Tune result:
 #&gt; Op. pars: k=1
 #&gt; mmce.test.mean=0.02
-</code></pre>
 
-<pre><code class="r">## What performances did we get in the single runs?
+## What performances did we get in the single runs?
 getBMRPerformances(res)
-</code></pre>
-
-<pre><code>#&gt; $`iris-example`
+#&gt; $`iris-example`
 #&gt; $`iris-example`$classif.kknn.tuned
 #&gt;   iter       acc
 #&gt; 1    1 0.9074074
@@ -534,22 +545,17 @@ out.rdesc = makeResampleDesc(&quot;CV&quot;, iters = 5)
 ## Merge it to a benchmark experiment
 res = benchmark(lrns, tasks, out.rdesc, show.info = FALSE)
 res
-</code></pre>
-
-<pre><code>#&gt;         task.id         learner.id mmce.test.mean
+#&gt;         task.id         learner.id mmce.test.mean
 #&gt; 1  iris-example        classif.lda     0.02000000
 #&gt; 2  iris-example      classif.rpart     0.07333333
 #&gt; 3  iris-example classif.ksvm.tuned     0.04000000
 #&gt; 4 Sonar-example        classif.lda     0.25493612
 #&gt; 5 Sonar-example      classif.rpart     0.33112660
 #&gt; 6 Sonar-example classif.ksvm.tuned     0.50917538
-</code></pre>
 
-<pre><code class="r">## Performance values in individual runs
+## Performance values in individual runs
 getBMRPerformances(res)
-</code></pre>
-
-<pre><code>#&gt; $`iris-example`
+#&gt; $`iris-example`
 #&gt; $`iris-example`$classif.lda
 #&gt;   iter       mmce
 #&gt; 1    1 0.00000000
@@ -599,13 +605,10 @@ getBMRPerformances(res)
 #&gt; 3    3 0.6428571
 #&gt; 4    4 0.5853659
 #&gt; 5    5 0.5476190
-</code></pre>
 
-<pre><code class="r">## Tuned parameter for SVM
+## Tuned parameter for SVM
 getBMRTuneResults(res)
-</code></pre>
-
-<pre><code>#&gt; $`iris-example`
+#&gt; $`iris-example`
 #&gt; $`iris-example`$classif.lda
 #&gt; NULL
 #&gt; 
@@ -684,7 +687,7 @@ ctrl = makeFeatSelControlSequential(beta = 100, method = &quot;sfs&quot;)
 in.rdesc = makeResampleDesc(&quot;CV&quot;, iter = 2)
 
 ## Feature selection with sequential forward search (sfs)
-lrn = makeFeatSelWrapper(&quot;classif.lda&quot;, resampling = in.rdesc, control = ctrl, 
+lrn = makeFeatSelWrapper(&quot;classif.lda&quot;, resampling = in.rdesc, control = ctrl,
   show.info = FALSE)
 
 ## Let's compare two learners
@@ -696,18 +699,13 @@ out.rdesc = makeResampleDesc(&quot;Subsample&quot;, iter = 3)
 ## Benchmark experiment
 res = benchmark(tasks = iris.task, learners = lrns, resampling = out.rdesc, show.info = FALSE)
 res
-</code></pre>
-
-<pre><code>#&gt;        task.id          learner.id mmce.test.mean
+#&gt;        task.id          learner.id mmce.test.mean
 #&gt; 1 iris-example       classif.rpart     0.06666667
 #&gt; 2 iris-example classif.lda.featsel     0.04666667
-</code></pre>
 
-<pre><code class="r">## Which features have been selected (in the outer resampling steps)?
+## Which features have been selected (in the outer resampling steps)?
 getBMRFeatSelResults(res)
-</code></pre>
-
-<pre><code>#&gt; $`iris-example`
+#&gt; $`iris-example`
 #&gt; $`iris-example`$classif.rpart
 #&gt; NULL
 #&gt; 
@@ -726,13 +724,10 @@ getBMRFeatSelResults(res)
 #&gt; FeatSel result:
 #&gt; Features (2): Sepal.Length, Petal.Width
 #&gt; mmce.test.mean=0.04
-</code></pre>
 
-<pre><code class="r">## Performances on individual test data sets
+## Performances on individual test data sets
 getBMRPerformances(res)
-</code></pre>
-
-<pre><code>#&gt; $`iris-example`
+#&gt; $`iris-example`
 #&gt; $`iris-example`$classif.rpart
 #&gt;   iter mmce
 #&gt; 1    1 0.06
