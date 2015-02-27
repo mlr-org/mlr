@@ -268,7 +268,7 @@ First let's try it without bagging:</p>
 r = resample(learner = lrn, task = sonar.task, resampling = rdesc, show.info = FALSE)
 r$aggr
 #&gt; mmce.test.mean 
-#&gt;      0.2542857
+#&gt;         0.2543
 </code></pre>
 
 <p>And now with bagging:</p>
@@ -276,7 +276,7 @@ r$aggr
 result = resample(learner = bag.lrn, task = sonar.task, resampling = rdesc, show.info = FALSE)
 result$aggr
 #&gt; mmce.test.mean 
-#&gt;      0.1930952
+#&gt;         0.1931
 </code></pre>
 
 <p>Training more learners takes more time, but can outperform pure learners
@@ -324,13 +324,13 @@ individual iterations.</p>
 <p>Predict the response and calculate the standard deviation:</p>
 <pre><code class="r">pred = predict(mod, task = bh.task, subset = test.inds)
 head(pred$data)
-#&gt;   id truth response       se
-#&gt; 2  2  21.6 21.46507 1.040829
-#&gt; 3  3  34.7 34.44916 4.090512
-#&gt; 5  5  36.2 33.39258 1.172627
-#&gt; 6  6  28.7 23.76128 1.106508
-#&gt; 8  8  27.1 15.76715 3.305897
-#&gt; 9  9  16.5 15.02399 2.865487
+#&gt;   id truth response    se
+#&gt; 2  2  21.6    21.47 1.041
+#&gt; 3  3  34.7    34.45 4.091
+#&gt; 5  5  36.2    33.39 1.173
+#&gt; 6  6  28.7    23.76 1.107
+#&gt; 8  8  27.1    15.77 3.306
+#&gt; 9  9  16.5    15.02 2.865
 </code></pre>
 
 <p>In the column labelled <code>se</code> the standard deviation for each prediction is given.</p>

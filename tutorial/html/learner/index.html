@@ -375,25 +375,22 @@ getParamSet(classif.lrn)
 #&gt; keep.inbag       logical    - FALSE        -   -     -
 </code></pre>
 
-<p>With the function <a href="http://www.rdocumentation.org/packages/mlr/functions/showHyperPars.html">showHyperPars</a> we can get a quick overview about the available hyperparameters
-and defaults of a learning method.
-In contrast to <a href="http://www.rdocumentation.org/packages/mlr/functions/getParamSet.html">getParamSet</a> it takes a character string naming a learning method
-and is therefore useful to get an overview about all hyperparameters before actually creating
-the <a href="http://www.rdocumentation.org/packages/mlr/functions/makeLearner.html">Learner</a>.</p>
-<pre><code class="r">showHyperPars(&quot;classif.randomForest&quot;)
-#&gt;                     Type  len   Def   Constr Req
-#&gt; ntree            integer    -   500 1 to Inf   -
-#&gt; mtry             integer    -     - 1 to Inf   -
-#&gt; replace          logical    -  TRUE        -   -
-#&gt; classwt    numericvector &lt;NA&gt;     - 0 to Inf   -
-#&gt; cutoff     numericvector &lt;NA&gt;     -   0 to 1   -
-#&gt; sampsize         integer    -     - 1 to Inf   -
-#&gt; nodesize         integer    -     1 1 to Inf   -
-#&gt; maxnodes         integer    -     - 1 to Inf   -
-#&gt; importance       logical    - FALSE        -   -
-#&gt; localImp         logical    - FALSE        -   -
-#&gt; norm.votes       logical    -  TRUE        -   -
-#&gt; keep.inbag       logical    - FALSE        -   -
+<p>We can also use <a href="http://www.rdocumentation.org/packages/mlr/functions/getParamSet.html">getParamSet</a> to get a quick overview about the available hyperparameters
+and defaults of a learning method without explicitly constructing it.</p>
+<pre><code class="r">getParamSet(&quot;classif.randomForest&quot;)
+#&gt;                     Type  len   Def   Constr Req Trafo
+#&gt; ntree            integer    -   500 1 to Inf   -     -
+#&gt; mtry             integer    -     - 1 to Inf   -     -
+#&gt; replace          logical    -  TRUE        -   -     -
+#&gt; classwt    numericvector &lt;NA&gt;     - 0 to Inf   -     -
+#&gt; cutoff     numericvector &lt;NA&gt;     -   0 to 1   -     -
+#&gt; sampsize         integer    -     - 1 to Inf   -     -
+#&gt; nodesize         integer    -     1 1 to Inf   -     -
+#&gt; maxnodes         integer    -     - 1 to Inf   -     -
+#&gt; importance       logical    - FALSE        -   -     -
+#&gt; localImp         logical    - FALSE        -   -     -
+#&gt; norm.votes       logical    -  TRUE        -   -     -
+#&gt; keep.inbag       logical    - FALSE        -   -     -
 </code></pre>
 
 <h2 id="modifying-a-learner">Modifying a learner</h2>

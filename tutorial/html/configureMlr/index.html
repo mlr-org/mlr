@@ -306,10 +306,10 @@ If this is the case you might want to <a href="https://github.com/berndbischl/ml
 or <a href="https://github.com/berndbischl/mlr/issues/new">open an issue</a> as well!
 But until then you can turn off <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>'s parameter checking like this:</p>
 <pre><code class="r">lrn = makeLearner(&quot;classif.ksvm&quot;, newPar = 3)
-#&gt; Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter newPar without available description object!
+#&gt; Error: classif.ksvm: Setting parameter newPar without available description object!
 #&gt; You can switch off this check by using configureMlr!
 lrn = makeLearner(&quot;classif.ksvm&quot;, epsilon = -3)
-#&gt; Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter epsilon without available description object!
+#&gt; Error: classif.ksvm: Setting parameter epsilon without available description object!
 #&gt; You can switch off this check by using configureMlr!
 
 configureMlr(on.par.without.desc = &quot;quiet&quot;)
@@ -327,12 +327,12 @@ benchmark experiment due to one error.
 The following example shows how to prevent this:</p>
 <pre><code class="r">## This call gives an error caused by the low number of observations in class `virginica`
 train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
-#&gt; Error in qda.default(x, grouping, ...): some group is too small for 'qda'
+#&gt; Error: some group is too small for 'qda'
 #&gt; Timing stopped at: 0.011 0 0.011
 
 configureMlr(on.learner.error = &quot;warn&quot;)
 mod = train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
-#&gt; Warning in train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104): Could not train learner classif.qda: Error in qda.default(x, grouping, ...) : 
+#&gt; Warning: Could not train learner classif.qda: Error in qda.default(x, grouping, ...) : 
 #&gt;   some group is too small for 'qda'
 mod
 #&gt; Model for id = classif.qda class = classif.qda

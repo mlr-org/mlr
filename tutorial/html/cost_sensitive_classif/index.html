@@ -599,7 +599,7 @@ lrn
 #&gt; Type: classif
 #&gt; Name: ; Short name: 
 #&gt; Class: WeightedClassesWrapper
-#&gt; Properties: twoclass,multiclass,numerics,factors,prob
+#&gt; Properties: numerics,factors,prob,twoclass,multiclass
 #&gt; Predict-Type: response
 #&gt; Hyperparameters: trace=FALSE,wcw.weight=5
 </code></pre>
@@ -613,7 +613,7 @@ pred
 #&gt; Prediction: 1000 observations
 #&gt; predict.type: response
 #&gt; threshold: 
-#&gt; time: 0.02
+#&gt; time: 0.03
 #&gt;   id truth response
 #&gt; 1  1  Good     Good
 #&gt; 2  2   Bad      Bad
@@ -647,7 +647,7 @@ pred
 #&gt; Prediction: 1000 observations
 #&gt; predict.type: response
 #&gt; threshold: 
-#&gt; time: 0.54
+#&gt; time: 0.15
 #&gt;   id truth response
 #&gt; 1  1  Good     Good
 #&gt; 2  2   Bad      Bad
@@ -733,7 +733,7 @@ lrn
 #&gt; Type: classif
 #&gt; Name: ; Short name: 
 #&gt; Class: OversampleWrapper
-#&gt; Properties: twoclass,multiclass,numerics,factors,prob,weights
+#&gt; Properties: numerics,factors,weights,prob,twoclass,multiclass
 #&gt; Predict-Type: response
 #&gt; Hyperparameters: trace=FALSE,osw.rate=5
 
@@ -963,7 +963,7 @@ lrn
 #&gt; Type: costsens
 #&gt; Name: ; Short name: 
 #&gt; Class: CostSensWeightedPairsWrapper
-#&gt; Properties: twoclass,multiclass,numerics,factors
+#&gt; Properties: numerics,factors,twoclass,multiclass
 #&gt; Predict-Type: response
 #&gt; Hyperparameters: trace=FALSE
 

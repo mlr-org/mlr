@@ -309,12 +309,12 @@ names(r)
 #&gt; [9] &quot;extract&quot;
 r$aggr
 #&gt; cindex.test.mean 
-#&gt;        0.6271182
+#&gt;           0.6271
 r$measures.test
-#&gt;   iter    cindex
-#&gt; 1    1 0.5783027
-#&gt; 2    2 0.6324074
-#&gt; 3    3 0.6706444
+#&gt;   iter cindex
+#&gt; 1    1 0.5783
+#&gt; 2    2 0.6324
+#&gt; 3    3 0.6706
 r$measures.train
 #&gt;   iter cindex
 #&gt; 1    1     NA
@@ -339,13 +339,13 @@ Just as a <a href="http://www.rdocumentation.org/packages/mlr/functions/Predicti
 predictions and in case of a supervised learning problem the true values of the target
 variable.</p>
 <pre><code class="r">head(r$pred$data)
-#&gt;    id truth.time truth.event   response iter  set
-#&gt; 2   1        455        TRUE -0.4951788    1 test
-#&gt; 4   2        210        TRUE  0.9573824    1 test
-#&gt; 7   4        310        TRUE  0.8069059    1 test
-#&gt; 17 10        613        TRUE  0.1918188    1 test
-#&gt; 19 12         61        TRUE  0.6638736    1 test
-#&gt; 22 14         81        TRUE -0.1873917    1 test
+#&gt;    id truth.time truth.event response iter  set
+#&gt; 2   1        455        TRUE  -0.4952    1 test
+#&gt; 4   2        210        TRUE   0.9574    1 test
+#&gt; 7   4        310        TRUE   0.8069    1 test
+#&gt; 17 10        613        TRUE   0.1918    1 test
+#&gt; 19 12         61        TRUE   0.6639    1 test
+#&gt; 22 14         81        TRUE  -0.1874    1 test
 </code></pre>
 
 <p>The columns <code>iter</code> and <code>set</code>indicate the resampling iteration and
@@ -375,10 +375,10 @@ r = resample(&quot;cluster.kmeans&quot;, task, rdesc, measures = list(dunn, db, 
 #&gt; [Resample] subsampling iter: 3
 #&gt; [Resample] subsampling iter: 4
 #&gt; [Resample] subsampling iter: 5
-#&gt; [Resample] Result: dunn.test.mean=0.274,db.test.mean=0.51,timetrain.test.mean=0.0036
+#&gt; [Resample] Result: dunn.test.mean=0.274,db.test.mean=0.51,timetrain.test.mean=0.0024
 r$aggr
 #&gt;      dunn.test.mean        db.test.mean timetrain.test.mean 
-#&gt;           0.2738893           0.5103655           0.0036000
+#&gt;              0.2739              0.5104              0.0024
 </code></pre>
 
 <h2 id="stratified-resampling">Stratified resampling</h2>
@@ -457,22 +457,22 @@ r = resample(&quot;regr.rpart&quot;, bh.task, rdesc,
 #&gt; [Resample] Result: mse.test.mean=30.3
 r$extract
 #&gt; [[1]]
-#&gt;         rm      lstat       crim      indus        age    ptratio 
-#&gt; 15228.2872 10742.2277  3893.2744  3651.6232  2601.5262  2551.8492 
-#&gt;        dis        nox        rad        tax         zn 
-#&gt;  2498.2748  2419.5269  1014.2609   743.3742   308.8209 
+#&gt;      rm   lstat    crim   indus     age ptratio     dis     nox     rad 
+#&gt; 15228.3 10742.2  3893.3  3651.6  2601.5  2551.8  2498.3  2419.5  1014.3 
+#&gt;     tax      zn 
+#&gt;   743.4   308.8 
 #&gt; 
 #&gt; [[2]]
-#&gt;       lstat         nox         age       indus        crim          rm 
-#&gt; 15725.19021  9323.20270  8474.23077  8358.67000  8251.74446  7332.59637 
-#&gt;          zn         dis         tax         rad     ptratio           b 
-#&gt;  6151.29577  2741.12074  2055.67537  1216.01398   634.78381    71.00088 
+#&gt;   lstat     nox     age   indus    crim      rm      zn     dis     tax 
+#&gt; 15725.2  9323.2  8474.2  8358.7  8251.7  7332.6  6151.3  2741.1  2055.7 
+#&gt;     rad ptratio       b 
+#&gt;  1216.0   634.8    71.0 
 #&gt; 
 #&gt; [[3]]
-#&gt;         rm      lstat        age    ptratio        nox        dis 
-#&gt; 15890.9279 13262.3672  4296.4175  3678.6651  3668.4944  3512.2753 
-#&gt;       crim        tax      indus         zn          b        rad 
-#&gt;  3474.5883  2844.9918  1437.7900  1284.4714   578.6932   496.2382
+#&gt;      rm   lstat     age ptratio     nox     dis    crim     tax   indus 
+#&gt; 15890.9 13262.4  4296.4  3678.7  3668.5  3512.3  3474.6  2845.0  1437.8 
+#&gt;      zn       b     rad 
+#&gt;  1284.5   578.7   496.2
 </code></pre>
 
 <h2 id="resample-descriptions-and-resample-instances">Resample descriptions and resample instances</h2>
@@ -559,7 +559,7 @@ r.lda = resample(&quot;classif.lda&quot;, iris.task, rin, show.info = FALSE)
 r.rpart = resample(&quot;classif.rpart&quot;, iris.task, rin, show.info = FALSE)
 r.lda$aggr
 #&gt; mmce.test.mean 
-#&gt;     0.02666667
+#&gt;        0.02667
 r.rpart$aggr
 #&gt; mmce.test.mean 
 #&gt;           0.06
@@ -617,7 +617,7 @@ r = resample(&quot;classif.rpart&quot;, sonar.task, rdesc, measures = list(m1, m
 #&gt; [Resample] Result: mmce.test.mean=0.293,tpr.test.median=0.735
 r$aggr
 #&gt;  mmce.test.mean tpr.test.median 
-#&gt;       0.2930987       0.7352941
+#&gt;          0.2931          0.7353
 </code></pre>
 
 <h3 id="example-calculating-the-training-error">Example: Calculating the training error</h3>
@@ -638,7 +638,7 @@ r$measures.train
 #&gt; 3    3 0.04 0.04
 r$aggr
 #&gt;  mmce.test.mean mmce.train.mean 
-#&gt;      0.04666667      0.03666667
+#&gt;         0.04667         0.03667
 </code></pre>
 
 <h3 id="example-bootstrap">Example: Bootstrap</h3>
@@ -670,16 +670,16 @@ b632.mmce
 r = resample(&quot;classif.rpart&quot;, iris.task, rdesc,
     measures = list(mmce, b632.mmce, b632plus.mmce), show.info = FALSE)
 head(r$measures.train)
-#&gt;   iter        mmce        mmce        mmce
-#&gt; 1    1 0.026666667 0.026666667 0.026666667
-#&gt; 2    2 0.026666667 0.026666667 0.026666667
-#&gt; 3    3 0.006666667 0.006666667 0.006666667
-#&gt; 4    4 0.026666667 0.026666667 0.026666667
-#&gt; 5    5 0.033333333 0.033333333 0.033333333
-#&gt; 6    6 0.013333333 0.013333333 0.013333333
+#&gt;   iter     mmce     mmce     mmce
+#&gt; 1    1 0.026667 0.026667 0.026667
+#&gt; 2    2 0.026667 0.026667 0.026667
+#&gt; 3    3 0.006667 0.006667 0.006667
+#&gt; 4    4 0.026667 0.026667 0.026667
+#&gt; 5    5 0.033333 0.033333 0.033333
+#&gt; 6    6 0.013333 0.013333 0.013333
 r$aggr
 #&gt; mmce.test.mean      mmce.b632  mmce.b632plus 
-#&gt;     0.07051905     0.05389071     0.05496489
+#&gt;        0.07052        0.05389        0.05496
 </code></pre>
 
 <h2 id="convenience-functions">Convenience functions</h2>
