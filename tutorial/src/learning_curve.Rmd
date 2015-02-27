@@ -1,41 +1,53 @@
 # Learning Curve Analysis
 
-To analyze how the increase of observations in the trainings set improves the performance of a learner the *Learning Curve* is an appropriate visual tool.
+To analyse how the increase of observations in the training set improves the performance of
+a learner the *learning curve* is an appropriate visual tool.
 The experiment is conducted with an increasing subsample size and the performance is measured.
-In the plot the x-axis represents the relative subsample size whereas the y-axis represents the performance.
+In the plot the x-axis represents the relative subsample size whereas the y-axis represents
+the performance.
 
-Note that this function internally uses [%benchmark] in combination with [%makeDownsampleWrapper], so for every run new observations are drawn.
+Note that this function internally uses [&benchmark] in combination with [&makeDownsampleWrapper],
+so for every run new observations are drawn.
 Thus the results are noisy.
-To reduce noise increase number of resampling iterations.
-The resampling method you can define in the `resampling` argument of [%generateLearningCurve].
-It is also possible to pass a `ResampleInstance` (which is a result of [%makeResampleInstance]) to make resampling coherent for all passed learners and each step of increasing the observations.
+To reduce noise increase the number of resampling iterations.
+You can define the resampling method in the `resampling` argument of [&generateLearningCurve].
+It is also possible to pass a [ResampleInstance](&makeResampleInstance) (which is a result
+of [&makeResampleInstance]) to make resampling consistent for all passed learners and each
+step of increasing the number of observations.
 
-## Plotting the Learning curve
 
-The [%mlr] function [generateLearningCurve](&generateLearningCurve) can generate the data for *learning curves* for multiple [learners](integrated_learners.md) and multiple [performance measures](measures.md) at once. 
+## Plotting the learning curve
+
+The [%mlr] function [&generateLearningCurve] can generate the data for *learning curves*
+for multiple [learners](integrated_learners.md) and multiple [performance measures](measures.md)
+at once.
 With [&plotLearningCurve] the result of [&generateLearningCurve] can be plotted using [%ggplot2].
 
 ```{r LearningCurveTPFP}
 r = generateLearningCurve(
-  learners = list("classif.rpart", "classif.knn"), 
-  task = sonar.task, 
-  percs = seq(0.1, 1, by = 0.2), 
-  measures = list(tp, fp, tn, fn), 
-  resampling = makeResampleDesc(method = "CV", iters = 5), 
+  learners = list("classif.rpart", "classif.knn"),
+  task = sonar.task,
+  percs = seq(0.1, 1, by = 0.2),
+  measures = list(tp, fp, tn, fn),
+  resampling = makeResampleDesc(method = "CV", iters = 5),
   show.info = FALSE)
 plotLearningCurve(r)
 ```
 
 What happens is the following:
-Each learner will be internally wrapped in a `downsampleWrapper`.
-To measure the performance at the first step of `percs` - say `0.1` first the data will be split into a *training* and a *test set* according to the given *resampling*.
-Then a random sample containing 0.1% of the observations of the *training set* will be drawn and used to train the learner.
+Each learner will be internally wrapped in a [DownsampleWrapper](&makeDownsampleWrapper).
+To measure the performance at the first step of `percs`, say `0.1`, first the data will be
+split into a *training* and a *test set* according to the given *resampling strategy*.
+Then a random sample containing 10% of the observations of the *training set* will be drawn
+and used to train the learner.
 The performance will be measured on the *complete test set*.
-These steps will be repeated as defined by the given *resampling* and for each value of `percs`.
+These steps will be repeated as defined by the given *resampling method* and for each value
+of `percs`.
 
-In the first example a simplified usage of the `learners` argument was used, so that it's sufficient to give the *Name*.
+In the first example a simplified usage of the `learners` argument was used, so that it's
+sufficient to give the *name*.
 It is also possible to create a learner the usual way and even to mix it.
-Make sure to give different 'ids' in this case.
+Make sure to give different `id`s in this case.
 
 ```{r LearningCurveACCx}
 lrns = list(
@@ -44,6 +56,7 @@ lrns = list(
   "classif.randomForest"
 )
 rin = makeResampleDesc(method = "CV", iters = 5)
-lc = generateLearningCurve(learners = lrns, task = sonar.task, percs = seq(0.1, 1, by = 0.1), measures = acc, resampling = rin, show.info = FALSE)
+lc = generateLearningCurve(learners = lrns, task = sonar.task, percs = seq(0.1, 1, by = 0.1), measures = acc,
+  resampling = rin, show.info = FALSE)
 plotLearningCurve(lc)
 ```
