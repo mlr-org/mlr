@@ -33,6 +33,8 @@ makePrediction = function(task.desc, row.names, id, truth, predict.type, predict
 makePrediction.TaskDescRegr = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time) {
   data = namedList(c("id", "truth", "response", "se"))
   data$id = id
+  if (!is.null(names(truth)))
+      names(truth) = NULL
   data$truth = truth
   if (predict.type == "response") {
     data$response = y
