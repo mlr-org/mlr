@@ -25,7 +25,7 @@ makeRLearner.classif.cforest = function() {
       makeIntegerLearnerParam(id = "maxdepth", lower = 0L, default = 0L),
       makeLogicalLearnerParam(id = "savesplitstats", default = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "prob", "factors", "numerics", "ordered", "weights"),
+    properties = c("twoclass", "multiclass", "prob", "factors", "numerics", "ordered", "weights", "missings"),
     par.vals = list(),
     name = "Random forest based on conditional inference trees",
     short.name = "cforest",
