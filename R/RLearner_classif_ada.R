@@ -4,6 +4,7 @@ makeRLearner.classif.ada = function() {
     cl = "classif.ada",
     package = "ada",
     par.set = makeParamSet(
+      makeDiscreteLearnerParam(id = "loss", default = "exponential", values = c("exponential", "logistic")),
       makeDiscreteLearnerParam(id = "type", default = "discrete", values = c("discrete", "real", "gentle")),
       makeIntegerLearnerParam(id = "iter", default = 50L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0),

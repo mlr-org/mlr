@@ -4,6 +4,7 @@ mlr_2.4:
 - showHyperPars was removed. getParamSet does exactly the same thing
 - option fix.factors in makeLearner was renamed to fix.factors.prediction for clarity
 - getTaskData now has recodeY = "drop.levels" which drops empty factor levels
+- classif.ada: added "loss" hyperpar
 - new measures
 -- brier
 
