@@ -5,7 +5,9 @@ mlr_2.4:
 - option fix.factors in makeLearner was renamed to fix.factors.prediction for clarity
 - getTaskData now has recodeY = "drop.levels" which drops empty factor levels
 - new measures
--- brier
+- brier
+- add missings properties to all ctree and cforest methods:
+  regr/classif for ctree, regr/classif/surv for cforest, and regr/classif for blackboost
 
 mlr_2.3:
 - resample now returns an object of class ResampleResult (downward compatible)

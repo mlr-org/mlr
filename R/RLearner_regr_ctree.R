@@ -19,7 +19,7 @@ makeRLearner.regr.ctree = function() {
     properties = c("missings", "numerics", "factors", "ordered", "weights"),
     name = "Conditional Inference Trees",
     short.name = "ctree",
-    note = ""
+    note = "see ?ctree_control for possible breakage for nominal features with missingness"
   )
 }
 
