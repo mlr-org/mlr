@@ -30,8 +30,9 @@ makeRLearner.classif.ada = function() {
 }
 
 #' @export
-trainLearner.classif.ada = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.ada = function(.learner, .task, .subset, .weights = NULL, maxdepth,  ...) {
   f = getTaskFormula(.task)
+  ctrl = learnerArgsToControl(rpart::rpart.control, maxdepth)
   ada::ada(f, data = getTaskData(.task, .subset), ...)
 }
 

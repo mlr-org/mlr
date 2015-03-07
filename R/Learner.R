@@ -60,7 +60,12 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
   }
   # further checks on threshold can only be done later in setThreshold
   if (!is.null(predict.threshold))
+  {
+    #this changes default predict.type to prob if threshold is set
+    if(missing(predict.type))
+      predict.type = "prob"
     assertNumeric(predict.threshold, any.missing = FALSE)
+  }
   assertList(par.vals)
   assertList(config, names = "named")
   if (!nzchar(cl))
