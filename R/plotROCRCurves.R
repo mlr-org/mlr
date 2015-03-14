@@ -122,8 +122,9 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "thresho
     cargs$prediction.obj = asROCRPrediction(x)
     do.call(ROCR::performance, cargs)
   })
+  ylim <- range(sapply(rocr.perfs, function(x) unlist(x@y.values)))
   for (i in 1:k) {
-    pargs <- list(x = rocr.perfs[[i]], avg = avg, add = (i > 1L), col = cols[i], lty = ltys[i])
+    pargs <- list(x = rocr.perfs[[i]], avg = avg, add = (i > 1L), col = cols[i], lty = ltys[i], ylim = ylim)
     pargs <- insert(pargs, plot.args)
     do.call(ROCR::plot, pargs)
   }
