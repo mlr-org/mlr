@@ -145,10 +145,10 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "thresho
   if (is.null(add.diag)) {
     if (meas1 == "tpr" & meas2 == "fpr") {
       add.diag = TRUE
-    }
-  } else {
+    } else {
     add.diag = FALSE
-  }
+    }
+  } 
   if (add.diag)
     abline(b = 1, a = 0)
   invisible(NULL)
