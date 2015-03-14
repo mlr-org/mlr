@@ -28,7 +28,7 @@
 #'   Default is \code{TRUE} if more than one ROC curve is drawn.
 #' @param add.diag [\code{logical(1)}]\cr
 #'   Add main diagonal to plot via \code{\link{abline}}?
-#'   Default is \code{TRUE}.
+#'   Default is \code{FALSE} unless \code{meas1 = "tpr"} and \code{meas2 = "fpr"}.
 #' @param perf.args [named \code{list}]\cr
 #'   Further arguments passed to ROCR's \code{\link[ROCR]{performance}}.
 #'   Usually not needed and \code{meas1} and \code{meas2} are set internally.
@@ -54,7 +54,7 @@
 #' }
 plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
   cols = NULL, ltys = NULL,
-  add.legend = NULL, add.diag = TRUE, perf.args = list(), plot.args = list(), legend.args = list(), task.id = NULL) {
+  add.legend = NULL, add.diag = NULL, perf.args = list(), plot.args = list(), legend.args = list(), task.id = NULL) {
 
   # lets not check the value-names from ROCR here. they might be changed behind our back later...
   assertString(meas1)
@@ -67,7 +67,8 @@ plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
     assertCharacter(ltys, any.missing = FALSE)
   if (!is.null(add.legend))
     assertFlag(add.legend)
-  assertFlag(add.diag)
+  if (!is.null(add.diag))
+    assertFlag(add.diag)
   assertList(perf.args, names = "unique")
   assertList(plot.args, names = "unique")
   assertList(legend.args, names = "unique")
@@ -77,7 +78,7 @@ plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
 #' @export
 plotROCRCurves.Prediction = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
   cols = NULL, ltys = NULL,
-  add.legend = NULL, add.diag = TRUE, perf.args = list(), legend.args = list(), task.id = NULL) {
+  add.legend = NULL, add.diag = FALSE, perf.args = list(), legend.args = list(), task.id = NULL) {
 
   l = namedList(names = "prediction", init = obj)
   plotROCRCurves.list(l, meas1, meas2, avg, cols, ltys, add.legend, add.diag, perf.args, plot.args, legend.args)
@@ -86,7 +87,7 @@ plotROCRCurves.Prediction = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "t
 #' @export
 plotROCRCurves.ResampleResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
   cols = NULL, ltys = NULL,
-  add.legend = NULL, add.diag = TRUE,  perf.args = list(), legend.args = list(), task.id = NULL) {
+  add.legend = NULL, add.diag = NULL,  perf.args = list(), legend.args = list(), task.id = NULL) {
 
   l = namedList(names = obj$learner.id, init = obj)
   plotROCRCurves.list(l, meas1, meas2, avg, cols, ltys, add.legend, add.diag, perf.args, plot.args, legend.args)
@@ -95,7 +96,7 @@ plotROCRCurves.ResampleResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg 
 #' @export
 plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
   cols = NULL, ltys = NULL,
-  add.legend = NULL, add.diag = TRUE, perf.args = list(), plot.args = list(), legend.args = list(), task.id = NULL) {
+  add.legend = NULL, add.diag = NULL, perf.args = list(), plot.args = list(), legend.args = list(), task.id = NULL) {
 
   assertList(obj, c("Prediction", "ResampleResult"), min.len = 1L)
   k = length(obj)
@@ -136,6 +137,14 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "thresho
     cargs = list(x = "bottomright", legend = ns, col = cols, fill = cols, lty = ltys, bty = "n")
     cargs = insert(cargs, legend.args)
     do.call(legend, cargs)
+  }
+  
+  if (is.null(add.diag)) {
+    if (meas1 == "tpr" & meas2 == "fpr") {
+      add.diag = TRUE
+    }
+  } else {
+    add.diag = FALSE
   }
   if (add.diag)
     abline(b = 1, a = 0)
