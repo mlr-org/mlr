@@ -126,7 +126,6 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "thresho
     pargs <- list(x = rocr.perfs[[i]], avg = avg, add = (i > 1L), col = cols[i], lty = ltys[i])
     pargs <- insert(pargs, plot.args)
     do.call(ROCR::plot, pargs)
-    ## ROCR::plot(rocr.perfs[[i]], avg = avg, add = (i > 1L), col = cols[i], lty = ltys[i])
   }
 
   if (is.null(add.legend))
