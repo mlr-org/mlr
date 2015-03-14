@@ -33,6 +33,9 @@
 #'   Further arguments passed to ROCR's \code{\link[ROCR]{performance}}.
 #'   Usually not needed and \code{meas1} and \code{meas2} are set internally.
 #'   Default is an empty list.
+#' @param plot.args [named \code{list}]\cr
+#'   Further arguments passed to ROCR's code{\link{ROCR}{plot}}.
+#'   Default is an empty list.
 #' @param legend.args [named \code{list}]\cr
 #'   Further arguments passed to \code{\link{legend}}.
 #'   Default is to display the names or learner ids of \code{obj},
@@ -50,7 +53,7 @@
 #' lrn1 = makeLearner("classif.logreg", predict.type = "prob")
 #' lrn2 = makeLearner("classif.rpart", predict.type = "prob")
 #' b = benchmark(list(lrn1, lrn2), pid.task)
-#' z = plotROCRCurves(b, legend.args = list(fill = NULL))
+#' z = plotROCRCurves(b)
 #' }
 plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
   cols = NULL, ltys = NULL,
@@ -134,7 +137,7 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "thresho
     add.legend = (k > 1L)
   if (add.legend) {
     ns = names(obj)
-    cargs = list(x = "bottomright", legend = ns, col = cols, fill = cols, lty = ltys, bty = "n")
+    cargs = list(x = "bottomright", legend = ns, col = cols, fill = NULL, lty = ltys, bty = "n")
     cargs = insert(cargs, legend.args)
     do.call(legend, cargs)
   }

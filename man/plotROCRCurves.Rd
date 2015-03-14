@@ -5,8 +5,9 @@
 \title{Visualize binary classification predictions via ROCR ROC curves.}
 \usage{
 plotROCRCurves(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
-  cols = NULL, ltys = NULL, add.legend = NULL, add.diag = TRUE,
-  perf.args = list(), legend.args = list(), task.id = NULL)
+  cols = NULL, ltys = NULL, add.legend = NULL, add.diag = NULL,
+  perf.args = list(), plot.args = list(), legend.args = list(),
+  task.id = NULL)
 }
 \arguments{
 \item{obj}{[(list of) \code{\link{Prediction}} | (list of) \code{\link{ResampleResult}} | \code{\link{BenchmarkResult}}]\cr
@@ -41,11 +42,15 @@ Default is \code{TRUE} if more than one ROC curve is drawn.}
 
 \item{add.diag}{[\code{logical(1)}]\cr
 Add main diagonal to plot via \code{\link{abline}}?
-Default is \code{TRUE}.}
+Default is \code{FALSE} unless \code{meas1 = "tpr"} and \code{meas2 = "fpr"}.}
 
 \item{perf.args}{[named \code{list}]\cr
 Further arguments passed to ROCR's \code{\link[ROCR]{performance}}.
 Usually not needed and \code{meas1} and \code{meas2} are set internally.
+Default is an empty list.}
+
+\item{plot.args}{[named \code{list}]\cr
+Further arguments passed to ROCR's code{\link{ROCR}{plot}}.
 Default is an empty list.}
 
 \item{legend.args}{[named \code{list}]\cr
