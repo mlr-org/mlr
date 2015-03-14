@@ -133,7 +133,7 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "thresho
     add.legend = (k > 1L)
   if (add.legend) {
     ns = names(obj)
-    cargs = list(x = "bottomright", legend = ns, col = cols, fill = cols, lty = ltys)
+    cargs = list(x = "bottomright", legend = ns, col = cols, fill = cols, lty = ltys, bty = "n")
     cargs = insert(cargs, legend.args)
     do.call(legend, cargs)
   }
