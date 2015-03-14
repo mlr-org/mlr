@@ -50,11 +50,11 @@
 #' lrn1 = makeLearner("classif.logreg", predict.type = "prob")
 #' lrn2 = makeLearner("classif.rpart", predict.type = "prob")
 #' b = benchmark(list(lrn1, lrn2), pid.task)
-#' z = plotROCRCurves(b)
+#' z = plotROCRCurves(b, legend.args = list(fill = NULL))
 #' }
 plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
   cols = NULL, ltys = NULL,
-  add.legend = NULL, add.diag = TRUE, perf.args = list(), legend.args = list(), task.id = NULL) {
+  add.legend = NULL, add.diag = TRUE, perf.args = list(), plot.args = list(), legend.args = list(), task.id = NULL) {
 
   # lets not check the value-names from ROCR here. they might be changed behind our back later...
   assertString(meas1)
@@ -69,6 +69,7 @@ plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
     assertFlag(add.legend)
   assertFlag(add.diag)
   assertList(perf.args, names = "unique")
+  assertList(plot.args, names = "unique")
   assertList(legend.args, names = "unique")
   UseMethod("plotROCRCurves")
 }
@@ -79,7 +80,7 @@ plotROCRCurves.Prediction = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "t
   add.legend = NULL, add.diag = TRUE, perf.args = list(), legend.args = list(), task.id = NULL) {
 
   l = namedList(names = "prediction", init = obj)
-  plotROCRCurves.list(l, meas1, meas2, avg, cols, ltys, add.legend, add.diag, perf.args, legend.args)
+  plotROCRCurves.list(l, meas1, meas2, avg, cols, ltys, add.legend, add.diag, perf.args, plot.args, legend.args)
 }
 
 #' @export
@@ -88,13 +89,13 @@ plotROCRCurves.ResampleResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg 
   add.legend = NULL, add.diag = TRUE,  perf.args = list(), legend.args = list(), task.id = NULL) {
 
   l = namedList(names = obj$learner.id, init = obj)
-  plotROCRCurves.list(l, meas1, meas2, avg, cols, ltys, add.legend, add.diag, perf.args, legend.args)
+  plotROCRCurves.list(l, meas1, meas2, avg, cols, ltys, add.legend, add.diag, perf.args, plot.args, legend.args)
 }
 
 #' @export
 plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
   cols = NULL, ltys = NULL,
-  add.legend = NULL, add.diag = TRUE, perf.args = list(), legend.args = list(), task.id = NULL) {
+  add.legend = NULL, add.diag = TRUE, perf.args = list(), plot.args = list(), legend.args = list(), task.id = NULL) {
 
   assertList(obj, c("Prediction", "ResampleResult"), min.len = 1L)
   k = length(obj)
@@ -122,7 +123,10 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "thresho
     do.call(ROCR::performance, cargs)
   })
   for (i in 1:k) {
-    ROCR::plot(rocr.perfs[[i]], avg = avg, add = (i > 1L), col = cols[i], lty = ltys[i])
+    pargs <- list(x = rocr.perfs[[i]], avg = avg, add = (i > 1L), col = cols[i], lty = ltys[i])
+    pargs <- insert(pargs, plot.args)
+    do.call(ROCR::plot, pargs)
+    ## ROCR::plot(rocr.perfs[[i]], avg = avg, add = (i > 1L), col = cols[i], lty = ltys[i])
   }
 
   if (is.null(add.legend))
@@ -149,5 +153,4 @@ plotROCRCurves.BenchmarkResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg
     assertChoice(task.id, tids)
   ps = getBMRPredictions(obj, task.ids = task.id, as.df = FALSE)[[1L]]
   plotROCRCurves.list(ps, meas1, meas2, avg, cols, ltys, add.legend, add.diag, perf.args, legend.args)
-
 }
