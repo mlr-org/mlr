@@ -4,7 +4,7 @@
 \alias{plotROCRCurves}
 \title{Visualize binary classification predictions via ROCR ROC curves.}
 \usage{
-plotROCRCurves(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
+plotROCRCurves(obj, meas1 = "tpr", meas2 = "fpr", avg = "none",
   cols = NULL, ltys = NULL, add.legend = NULL, add.diag = NULL,
   perf.args = list(), plot.args = list(), legend.args = list(),
   task.id = NULL)
@@ -26,7 +26,9 @@ Default is \dQuote{fpr}.}
 
 \item{avg}{[\code{character(1)}]\cr
 How to average results from resampling.
-Default is \dQuote{threshold}.}
+Default is \dQuote{none} when \code{obj} is a (list of) prediction objects and
+\dQuote{threshold} when \code{obj} is a (list of) \code{ResamplePrediction} or \code{BenchmarkResult}.
+For more details see \code{\link[ROCR]{plot-methods}}.}
 
 \item{cols}{[\code{character}]\cr
 Colors of curves. Single strings are replicated to desired length.

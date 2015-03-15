@@ -18,6 +18,7 @@
 #'   How to average results from resampling.
 #'   Default is \dQuote{none} when \code{obj} is a (list of) prediction objects and
 #'   \dQuote{threshold} when \code{obj} is a (list of) \code{ResamplePrediction} or \code{BenchmarkResult}.
+#'   For more details see \code{\link[ROCR]{plot-methods}}.
 #' @param cols [\code{character}]\cr
 #'   Colors of curves. Single strings are replicated to desired length.
 #'   Default is to use \code{\link{rainbow}}.
