@@ -81,7 +81,7 @@ plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
 #' @export
 plotROCRCurves.Prediction = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
   cols = NULL, ltys = NULL,
-  add.legend = NULL, add.diag = FALSE, perf.args = list(), legend.args = list(), task.id = NULL) {
+  add.legend = NULL, add.diag = NULL, perf.args = list(), legend.args = list(), task.id = NULL) {
 
   l = namedList(names = "prediction", init = obj)
   plotROCRCurves.list(l, meas1, meas2, avg, cols, ltys, add.legend, add.diag, perf.args, plot.args, legend.args)
