@@ -16,7 +16,8 @@
 #'   Default is \dQuote{fpr}.
 #' @param avg [\code{character(1)}]\cr
 #'   How to average results from resampling.
-#'   Default is \dQuote{threshold}.
+#'   Default is \dQuote{none} when \code{obj} is a (list of) prediction objects and
+#'   \dQuote{threshold} when \code{obj} is a (list of) \code{ResamplePrediction} or \code{BenchmarkResult}.
 #' @param cols [\code{character}]\cr
 #'   Colors of curves. Single strings are replicated to desired length.
 #'   Default is to use \code{\link{rainbow}}.
@@ -55,7 +56,7 @@
 #' b = benchmark(list(lrn1, lrn2), pid.task)
 #' z = plotROCRCurves(b)
 #' }
-plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
+plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "none",
   cols = NULL, ltys = NULL,
   add.legend = NULL, add.diag = NULL, perf.args = list(), plot.args = list(), legend.args = list(), task.id = NULL) {
 
@@ -79,7 +80,7 @@ plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
 }
 
 #' @export
-plotROCRCurves.Prediction = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
+plotROCRCurves.Prediction = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "none",
   cols = NULL, ltys = NULL,
   add.legend = NULL, add.diag = NULL, perf.args = list(), legend.args = list(), task.id = NULL) {
 
@@ -97,7 +98,7 @@ plotROCRCurves.ResampleResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg 
 }
 
 #' @export
-plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
+plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "none",
   cols = NULL, ltys = NULL,
   add.legend = NULL, add.diag = NULL, perf.args = list(), plot.args = list(), legend.args = list(), task.id = NULL) {
 
