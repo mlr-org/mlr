@@ -82,7 +82,7 @@ plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "none",
 #' @export
 plotROCRCurves.Prediction = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "none",
   cols = NULL, ltys = NULL,
-  add.legend = NULL, add.diag = NULL, perf.args = list(), legend.args = list(), task.id = NULL) {
+  add.legend = NULL, add.diag = NULL, perf.args = list(), plot.args = list(), legend.args = list(), task.id = NULL) {
 
   l = namedList(names = "prediction", init = obj)
   plotROCRCurves.list(l, meas1, meas2, avg, cols, ltys, add.legend, add.diag, perf.args, plot.args, legend.args)
@@ -91,7 +91,7 @@ plotROCRCurves.Prediction = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "n
 #' @export
 plotROCRCurves.ResampleResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
   cols = NULL, ltys = NULL,
-  add.legend = NULL, add.diag = NULL,  perf.args = list(), legend.args = list(), task.id = NULL) {
+  add.legend = NULL, add.diag = NULL,  perf.args = list(), plot.args = list(), legend.args = list(), task.id = NULL) {
 
   l = namedList(names = obj$learner.id, init = obj)
   plotROCRCurves.list(l, meas1, meas2, avg, cols, ltys, add.legend, add.diag, perf.args, plot.args, legend.args)
@@ -157,7 +157,7 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "none",
 
 #' @export
 plotROCRCurves.BenchmarkResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold", cols = NULL, ltys = NULL,
-  add.legend = NULL, add.diag = TRUE, perf.args = list(), legend.args = list(), task.id = NULL) {
+  add.legend = NULL, add.diag = TRUE, perf.args = list(), plot.args = list(), legend.args = list(), task.id = NULL) {
 
   tids = getBMRTaskIds(obj)
   if (is.null(task.id))
@@ -165,5 +165,5 @@ plotROCRCurves.BenchmarkResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg
   else
     assertChoice(task.id, tids)
   ps = getBMRPredictions(obj, task.ids = task.id, as.df = FALSE)[[1L]]
-  plotROCRCurves.list(ps, meas1, meas2, avg, cols, ltys, add.legend, add.diag, perf.args, legend.args)
+  plotROCRCurves.list(ps, meas1, meas2, avg, cols, ltys, add.legend, add.diag, perf.args, plot.args, legend.args)
 }
