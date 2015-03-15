@@ -98,6 +98,19 @@ plotROCRCurves.ResampleResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg 
 }
 
 #' @export
+plotROCRCurves.BenchmarkResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold", cols = NULL, ltys = NULL,
+  add.legend = NULL, add.diag = TRUE, perf.args = list(), plot.args = list(), legend.args = list(), task.id = NULL) {
+
+  tids = getBMRTaskIds(obj)
+  if (is.null(task.id))
+    task.id = tids[1L]
+  else
+    assertChoice(task.id, tids)
+  ps = getBMRPredictions(obj, task.ids = task.id, as.df = FALSE)[[1L]]
+  plotROCRCurves.list(ps, meas1, meas2, avg, cols, ltys, add.legend, add.diag, perf.args, plot.args, legend.args)
+}
+
+#' @export
 plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "none",
   cols = NULL, ltys = NULL,
   add.legend = NULL, add.diag = NULL, perf.args = list(), plot.args = list(), legend.args = list(), task.id = NULL) {
@@ -153,17 +166,4 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "none",
   if (add.diag)
     abline(b = 1, a = 0)
   invisible(NULL)
-}
-
-#' @export
-plotROCRCurves.BenchmarkResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold", cols = NULL, ltys = NULL,
-  add.legend = NULL, add.diag = TRUE, perf.args = list(), plot.args = list(), legend.args = list(), task.id = NULL) {
-
-  tids = getBMRTaskIds(obj)
-  if (is.null(task.id))
-    task.id = tids[1L]
-  else
-    assertChoice(task.id, tids)
-  ps = getBMRPredictions(obj, task.ids = task.id, as.df = FALSE)[[1L]]
-  plotROCRCurves.list(ps, meas1, meas2, avg, cols, ltys, add.legend, add.diag, perf.args, plot.args, legend.args)
 }
