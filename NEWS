@@ -6,6 +6,12 @@ mlr_2.4:
 - getTaskData now has recodeY = "drop.levels" which drops empty factor levels
 - new measures
 -- brier
+- new defaults for plotROCRCurves
+-- avg and add.diag set depending on inputs
+-- fill set to NULL by default
+-- bty (box around legend) set to "n" by default
+- ylim bug for plotROCRCurves fixed
+- can now pass arguments to ROCR::plot via plot.args
 
 mlr_2.3:
 - resample now returns an object of class ResampleResult (downward compatible)
