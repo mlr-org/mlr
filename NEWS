@@ -6,7 +6,9 @@ mlr_2.4:
 - getTaskData now has recodeY = "drop.levels" which drops empty factor levels
 - classif.ada: added "loss" hyperpar
 - new measures
--- brier
+- brier
+- add missings properties to all ctree and cforest methods:
+  regr/classif for ctree, regr/classif/surv for cforest, and regr/classif for blackboost
 
 mlr_2.3:
 - resample now returns an object of class ResampleResult (downward compatible)
