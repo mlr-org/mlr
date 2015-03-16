@@ -83,6 +83,7 @@ Suggests:
     mRMRe,
     nnet,
     nodeHarvest,
+    neuralnet,
     party,
     penalized,
     pls,

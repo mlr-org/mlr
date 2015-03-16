@@ -9,7 +9,7 @@ makeRLearner.classif.neuralnet = function() {
             makeIntegerLearnerParam(id = "stepmax", default = 1e+05),
             makeIntegerLearnerParam(id = "rep", default = 1, lower = 1L),
             makeNumericVectorLearnerParam(id = "startweights", default = NULL),
-            makeNumericVectorLearnerParam(id = "learningrate.limit", default = NULL)
+            makeNumericVectorLearnerParam(id = "learningrate.limit", default = NULL),
             makeUntypedLearnerParam(id = "learningrate.factor", 
                                     default = list(minus = 0.5, plus = 1.2)),
             makeNumericLearnerParam(id = "learningrate", default = NULL),
@@ -17,17 +17,17 @@ makeRLearner.classif.neuralnet = function() {
                                      values = c("none","minimal","full")),
             makeIntegerLearnerParam(id = "lifesign.step", default = 1000),
             makeDiscreteLearnerParam(id = "algorithm", default = "rprop+",
-                                     values=c("backprop","rprop+","rprop-","sag","slr"))
+                                     values=c("backprop","rprop+","rprop-","sag","slr")),
             makeDiscreteLearnerParam(id = "err.fct", default = "sse",
-                                     values=c("sse","ce"))
+                                     values=c("sse","ce")),
             makeDiscreteLearnerParam(id = "act.fct", default = "logistic",
-                                     values=c("logistic","tanh"))
-            makeLogicalLearnerParam(id = "linear.output", default = TRUE)
-            makeNumericVectorLearnerParam(id = "exclude", default = NULL)
-            makeNumericVectorLearnerParam(id = "constant.weights", default = NULL)
+                                     values=c("logistic","tanh")),
+            makeLogicalLearnerParam(id = "linear.output", default = TRUE),
+            makeNumericVectorLearnerParam(id = "exclude", default = NULL),
+            makeNumericVectorLearnerParam(id = "constant.weights", default = NULL),
             makeLogicalLearnerParam(id = "likelihood", default = FALSE)
         ),
-        par.vals = list(err.fct = "ce")
+        par.vals = list(err.fct = "ce"),
         properties = c("twoclass", "multiclass", "numerics", "prob"),
         name = "Neural Network from neuralnet",
         short.name = "neuralnet",
