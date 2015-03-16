@@ -1,7 +1,7 @@
 #' @export
 makeRLearner.classif.neuralnet = function() {
     makeRLearnerClassif(
-        cl = "classif.neuralnet",
+        cl = "regr.neuralnet",
         package = "neuralnet",
         par.set = makeParamSet(
             makeIntegerVectorLearnerParam(id = "hidden", default = 1L, lower = 1L),
@@ -27,18 +27,18 @@ makeRLearner.classif.neuralnet = function() {
             makeNumericVectorLearnerParam(id = "constant.weights", default = NULL)
             makeLogicalLearnerParam(id = "likelihood", default = FALSE)
         ),
-        par.vals = list(err.fct = "ce")
-        properties = c("twoclass", "multiclass", "numerics", "prob"),
+        par.vals = list(err.fct = "sse")
+        properties = c("numerics"),
         name = "Neural Network from neuralnet",
         short.name = "neuralnet",
-        note = "`err.fct` has been set to `ce` to do classification."
+        note = "`err.fct` has been set to `sse` to do regression."
     )
 }
 
 #' @export
 trainLearner.classif.neuralnet = function(.learner, .task, .subset, .weights = NULL,  ...) {
-        f = as.formula(getTaskFormulaAsString(.task))
-        neuralnet::neuralnet(f, data = getTaskData(.task, .subset), ...)
+    f = as.formula(getTaskFormulaAsString(.task))
+    neuralnet::neuralnet(f, data = getTaskData(.task, .subset), ...)
 }
 
 #' @export
