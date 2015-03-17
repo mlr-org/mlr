@@ -20,10 +20,10 @@ makeRLearner.regr.blackboost = function() {
       makeLogicalLearnerParam(id = "savesplitstats", default = TRUE),
       makeIntegerLearnerParam(id = "maxdepth", default = 0L, lower = 0L)
     ),
-    properties = c("numerics", "factors", "weights"),
+    properties = c("numerics", "factors", "weights", "missings"),
     name = "Gradient Boosting with Regression Trees",
     short.name = "blackbst",
-    note = ""
+    note = "see ?ctree_control for possible breakage for nominal features with missingness"
   )
 }
 
