@@ -98,6 +98,7 @@ Suggests:
     rsm,
     RWeka,
     sda,
+    sparseLDA,
     stepPlr,
     testthat,
     tgp,
