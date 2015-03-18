@@ -1,7 +1,7 @@
 context("classif_sparseMDA")
 
 test_that("classif_sparseMDA", {
-  requirePackages("sparseMDA", default.method = "load")
+  requirePackages("sparseLDA", default.method = "load")
   requirePackages("MASS", default.method = "load")
   requirePackages("elasticnet", default.method = "load")
   
