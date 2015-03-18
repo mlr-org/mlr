@@ -28,7 +28,7 @@ trainLearner.classif.sparseMDA = function(.learner, .task, .subset, .weights = N
 }
 
 #' @export
-predictLearner.classif.sparseLDA = function(.learner, .model, .newdata, ...) {
+predictLearner.classif.sparseMDA = function(.learner, .model, .newdata, ...) {
   p = sparseLDA::predict.smda(.model$learner.model, newdata = subset(.newdata, select = .model$features), ...)
   if(.learner$predict.type == "response")
     return(p$class)
