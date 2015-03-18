@@ -10,6 +10,14 @@ mlr_2.4:
 - add missings properties to all ctree and cforest methods:
   regr/classif for ctree, regr/classif/surv for cforest, and regr/classif for blackboost
 
+- new learners:
+-- classif.sparseLDA
+-- classif.sparseMDA 
+
+- removed learners (due to outdated R-package):
+-- classif.xgboost
+-- regr.xgboost
+
 mlr_2.3:
 - resample now returns an object of class ResampleResult (downward compatible)
   to allow for a print method.
