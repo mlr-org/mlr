@@ -27,7 +27,7 @@ install:
 
 script: travis_wait ./travis-tool.sh run_tests
 
-on_failure:
+after_script:
   - ./travis-tool.sh dump_logs
 
 
