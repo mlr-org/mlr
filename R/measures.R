@@ -272,7 +272,6 @@ multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, 
   name = "Multiclass area under the curve",
   note = "Calls `pROC::multiclass.roc`.",
   fun = function(task, model, pred, feats, extra.args) {
-    # pROC does allow NAs
     # FIXME: pROC seems not to mark auc() as S3method, which means that calling multiclass.roc wont find it in pRoc
     # reported issue here:  https://github.com/xrobin/pROC/issues/4
     requirePackages("!pROC", why = "multiclass.auc", default.method = "load")
