@@ -10,7 +10,7 @@
 #' @export
 #' @rdname TuneControl
 makeTuneControlRandom = function(same.resampling.instance = TRUE, maxit = 100L, time.budget = NULL, exec.time.budget = NULL,
-  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL) {
+  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL) {
 
   if (is.null(maxit)) {
     maxit = Inf
@@ -31,6 +31,6 @@ makeTuneControlRandom = function(same.resampling.instance = TRUE, maxit = 100L, 
   }
 
   makeTuneControl(same.resampling.instance = same.resampling.instance,
-    maxit = maxit, time.budget = time.budget, exec.time.budget = exec.time.budget, start = NULL, tune.threshold = tune.threshold, tune.threshold.args = tune.threshold.args,
+    maxit = maxit, time.budget = time.budget, exec.time.budget = exec.time.budget, start = NULL, tune.threshold = tune.threshold, tune.threshold.args = tune.threshold.args, final.dw.perc = final.dw.perc, 
     log.fun = log.fun, cl = "TuneControlRandom")
 }

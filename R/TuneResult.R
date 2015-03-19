@@ -20,6 +20,7 @@
 #'   Note that when you have trafos on some of your params, the opt.path always contains the
 #'   UNTRANSFORMED values on the original scale. You can simply call \code{trafoOptPath(opt.path)} to
 #'   transform them, or, \code{as.data.frame{trafoOptPath(opt.path)}}}
+#' \item{dob [\code{numeric}]}{Which dobs of the opt.path to consider to find the best value}
 #' }
 #' @name TuneResult
 #' @rdname TuneResult
@@ -28,7 +29,7 @@ makeTuneResult = function(learner, control, x, y, threshold, opt.path) {
   makeOptResult(learner, control, x, y, threshold, opt.path, "TuneResult")
 }
 
-makeTuneResultFromOptPath = function(learner, par.set, measures, control, opt.path) {
+makeTuneResultFromOptPath = function(learner, par.set, measures, control, opt.path, dob) {
   i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), ties = "random")
   e = getOptPathEl(opt.path, i)
   x = trafoValue(par.set, e$x)
