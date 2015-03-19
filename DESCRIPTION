@@ -101,8 +101,7 @@ Suggests:
     stepPlr,
     testthat,
     tgp,
-    TH.data,
-    xgboost
+    TH.data
 LazyData: yes
 ByteCompile: yes
 Version: 2.4
