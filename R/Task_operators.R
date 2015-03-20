@@ -74,9 +74,12 @@ getTaskSize = function(task) {
   getTaskDescription(task)$size
 }
 
+#' @param features [\code{character}]\cr
+#'   Features that should be listed on the right hand side of the formula.
+#'   Default is \code{"."}.
 #' @export
 #' @rdname getTaskFormula
-getTaskFormulaAsString = function(x, target = getTaskTargetNames(x)) {
+getTaskFormulaAsString = function(x, target = getTaskTargetNames(x), features = ".") {
   td = getTaskDescription(x)
   type = td$type
   if (type == "surv") {
@@ -87,7 +90,7 @@ getTaskFormulaAsString = function(x, target = getTaskTargetNames(x)) {
   } else if (type == "cluster") {
     stop("There is no formula available for clustering.")
   }
-  paste(target, "~.")
+  paste(target, "~", paste(features, collapse = " + "))
 }
 
 
@@ -97,8 +100,11 @@ getTaskFormulaAsString = function(x, target = getTaskTargetNames(x)) {
 #'
 #' @template arg_task_or_desc
 #' @param target [\code{character(1)}]\cr
-#'   Left hand side of formula.
+#'   Left hand side of the formula.
 #'   Default is defined by task \code{x}.
+#' @param explicit.features [\code{logical(1)}]\cr
+#'   Should the features (right hand side of the formula) be explicitly listed?
+#'   Default is \code{FALSE}, i.e., they will be represented as \code{"."}.
 #' @param env [\code{environment}]\cr
 #'   Environment of the formula. Set this to \code{parent.frame()}
 #'   for the default behaviour.
@@ -106,8 +112,12 @@ getTaskFormulaAsString = function(x, target = getTaskTargetNames(x)) {
 #' @return [\code{formula} | \code{character(1)}].
 #' @family task
 #' @export
-getTaskFormula = function(x, target = getTaskTargetNames(x), env = NULL) {
-  as.formula(getTaskFormulaAsString(x, target = target), env = env)
+getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE, env = NULL) {
+  if (explicit.features)
+    as.formula(getTaskFormulaAsString(x, target = target, 
+      features = getTaskFeatureNames(x)), env = env)
+  else
+    as.formula(getTaskFormulaAsString(x, target = target, features = "."), env = env)
 }
 
 #' Get target column of task.
