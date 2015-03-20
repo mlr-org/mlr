@@ -113,7 +113,9 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     })
     full.res.complete = replicate(n, NA)
     full.res.complete[eval.steps] = full.res
-    or$opt.path$env[[ paste0("full.",names(full.res)[1]) ]] = full.res.complete #will not be in the data.frame but we will have it at least.
+    full.res.complete = list(full.res.complete)
+    names(full.res.complete) = paste0("full.",names(full.res)[1])
+    or$opt.path$env$full = full.res.complete #will not be in the data.frame but we will have it at least.
   }
   if (show.info)
     messagef("[Tune] Result: %s : %s", paramValueToString(par.set, or$x), perfsToString(or$y))
