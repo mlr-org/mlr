@@ -15,7 +15,7 @@ makeRLearner.classif.quaDA = function() {
 
 #' @export
 trainLearner.classif.quaDA = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  d = getTaskData(.task, .subset, target.extra = TRUE)
+  d = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "drop.levels")
   DiscriMiner::quaDA(variables = d$data, group = d$target, ...)
 }
 
