@@ -1,7 +1,7 @@
 context("random_forest_standard_error")
 
 test_that("standard error", {
-  data(BostonHousing)
+  data(BostonHousing, package = "mlbench")
 
   n = nrow(BostonHousing)
   train.set.idx = sample(1:n, floor(n * 0.4))
