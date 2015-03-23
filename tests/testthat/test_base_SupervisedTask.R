@@ -20,14 +20,11 @@ test_that("SupervisedTask", {
   expect_equal(sum(ct2$task.desc$n.feat), 2)
 
   # wrong data
-  expect_error(makeClassifTask(data = 44, target = "y"),
-    "be a data.frame")
+  expect_error(makeClassifTask(data = 44, target = "y"), "'data.frame'")
 
   # wrong target type
-  expect_error(makeClassifTask(data = regr.df, target = regr.target),
-    "be a factor")
-  expect_error(makeRegrTask(data = multiclass.df, target = multiclass.target),
-    "be numeric")
+  expect_error(makeClassifTask(data = regr.df, target = regr.target), "'factor'")
+  expect_error(makeRegrTask(data = multiclass.df, target = multiclass.target), "'numeric'")
 
   # wrong vars
   expect_error(subsetTask(multiclass.task, vars = c("Sepal.Length", "x", "y")))
