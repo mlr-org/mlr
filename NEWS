@@ -9,6 +9,7 @@ mlr_2.4:
 - brier
 - add missings properties to all ctree and cforest methods:
   regr/classif for ctree, regr/classif/surv for cforest, and regr/classif for blackboost
+- update on learners: added sparseLDA and removed xgboost
 
 mlr_2.3:
 - resample now returns an object of class ResampleResult (downward compatible)
