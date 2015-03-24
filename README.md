@@ -77,6 +77,11 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
   * I will talk about mlr in connection with the [OpenML](http://www.openml.org) project next week. If you don't know this, take a look, a very cool initiative by Joaquin Vanschoren. We are developing a connector to R in general which also covers mlr [here](https://github.com/openml/r).
 
 
+Talks and Videos
+================
+* [Video](www.youtube.com/watch?v=rzjkT1uLNi4) of Bernd's "mlr + OpenML" talk at OpenML workshop 2014
+
+
 Get in Touch
 ============
 
