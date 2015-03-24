@@ -79,7 +79,7 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
 
 Talks and Videos
 ================
-* [Video](www.youtube.com/watch?v=rzjkT1uLNi4) of Bernd's "mlr + OpenML" talk at OpenML workshop 2014
+* [Video](http://www.youtube.com/watch?v=rzjkT1uLNi4) of Bernd's "mlr + OpenML" talk at OpenML workshop 2014
 
 
 Get in Touch
