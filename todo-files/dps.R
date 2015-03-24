@@ -2,13 +2,14 @@ load_all()
 
 
 doDPSSplit = function(x, inds) {
+  require(fields)
   n = nrow(x)
   # the sets for our splits, both index vectors
   s1 = integer(0L)
   s2 = integer(0L)
   # calc dist matrix, this is inefficient, d.old stays, d.new gets reduced later
   # we dont want a object to be close to itself
-  d.old = as.matrix(dist(x))
+  d.old = rdist(x)
   diag(d.old) = Inf
   colnames(d.old) = rownames(d.old) = NULL
   d.new = d.old
@@ -59,8 +60,8 @@ doDPSSplits = function(x, k, inds = 1:nrow(x)) {
     s = doDPSSplit(x, inds)
     s1 = s[[1L]]
     s2 = s[[2L]]
-    x1 = x[s1,]
-    x2 = x[s2,]
+    x1 = x[as.character(s1),]
+    x2 = x[as.character(s2),]
     s = c(
       doDPSSplits(x1, k - 1L, s1),
       doDPSSplits(x2, k - 1L, s2)
@@ -93,7 +94,7 @@ x[,1] = x[,1] + 1:150
 # x[1,] = x[1,] + 1e-15
 # x[11,] = x[11,] + 1e-15
 
-u = doDPSSplit(x, 1:150)
+u = doDPSSplits(x, k=4, 1:150)
 print(sort(u[[1]]))
 print(sort(u[[2]]))
 
