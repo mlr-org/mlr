@@ -52,7 +52,7 @@
 #' b = benchmark(list(lrn1, lrn2), pid.task)
 #' z = plotROCRCurves(b)
 #' }
-plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", #avg = "threshold",
+plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
   cols = NULL, ltys = NULL,
   add.legend = NULL, add.diag = FALSE, perf.args = list(), legend.args = list(), task.id = NULL,...) {
     
@@ -92,7 +92,7 @@ plotROCRCurves.ResampleResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg 
 }
 
 #' @export
-plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", #avg = "threshold",
+plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
   cols = NULL, ltys = NULL,
   add.legend = NULL, add.diag = F, perf.args = list(), legend.args = list(), task.id = NULL,...) {
   
@@ -100,9 +100,6 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", #avg = "thresh
   avg = NA
   if (any(class(obj[[1L]]) == "Prediction")){
     avg = "none"
-  }else if (any(class(obj[[1L]]) == "ResamplePrediction"))
-  {
-    avg = "threshold"  
   }
 
   assertList(obj, c("Prediction", "ResampleResult"), min.len = 1L)
