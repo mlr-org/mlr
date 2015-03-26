@@ -59,7 +59,7 @@ plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
   # lets not check the value-names from ROCR here. they might be changed behind our back later...
   assertString(meas1)
   assertString(meas2)
-  #assertString(avg)
+  assertString(avg)
   if (!is.null(cols))
     assertCharacter(cols, any.missing = FALSE)
   if (!is.null(ltys))
@@ -97,7 +97,6 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "thresho
   add.legend = NULL, add.diag = F, perf.args = list(), legend.args = list(), task.id = NULL,...) {
   
   # default avg
-  avg = NA
   if (any(class(obj[[1L]]) == "Prediction")){
     avg = "none"
   }
