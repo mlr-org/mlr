@@ -5,8 +5,8 @@
 \title{Visualize binary classification predictions via ROCR ROC curves.}
 \usage{
 plotROCRCurves(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
-  cols = NULL, ltys = NULL, add.legend = NULL, add.diag = TRUE,
-  perf.args = list(), legend.args = list(), task.id = NULL)
+  cols = NULL, ltys = NULL, add.legend = NULL, add.diag = FALSE,
+  perf.args = list(), legend.args = list(), task.id = NULL, ...)
 }
 \arguments{
 \item{obj}{[(list of) \code{\link{Prediction}} | (list of) \code{\link{ResampleResult}} | \code{\link{BenchmarkResult}}]\cr
