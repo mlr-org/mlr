@@ -57,6 +57,11 @@ and to draw in \dQuote{bottomright}.}
 \item{task.id}{[\code{character(1)}]\cr
 Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
 Default is first task.}
+
+\item{...}{[\code{list}]\cr
+Additional standard graph arguments.
+}
+
 }
 \value{
 [\code{invisible(NULL)}].
