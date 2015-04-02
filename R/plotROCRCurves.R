@@ -28,7 +28,7 @@
 #'   Default is \code{TRUE} if more than one ROC curve is drawn.
 #' @param add.diag [\code{logical(1)}]\cr
 #'   Add main diagonal to plot via \code{\link{abline}}?
-#'   Default is \code{TRUE}.
+#'   Default is \code{FALSE}.
 #' @param perf.args [named \code{list}]\cr
 #'   Further arguments passed to ROCR's \code{\link[ROCR]{performance}}.
 #'   Usually not needed and \code{meas1} and \code{meas2} are set internally.
@@ -41,6 +41,8 @@
 #' @param task.id [\code{character(1)}]\cr
 #'   Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
 #'   Default is first task.
+#' @param ... [\code{list}]\cr
+#'   Additional parameters passed to the plot function
 #' @template ret_inv_null
 #' @family roc
 #' @family predict

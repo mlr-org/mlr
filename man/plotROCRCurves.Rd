@@ -41,7 +41,7 @@ Default is \code{TRUE} if more than one ROC curve is drawn.}
 
 \item{add.diag}{[\code{logical(1)}]\cr
 Add main diagonal to plot via \code{\link{abline}}?
-Default is \code{TRUE}.}
+Default is \code{FALSE}.}
 
 \item{perf.args}{[named \code{list}]\cr
 Further arguments passed to ROCR's \code{\link[ROCR]{performance}}.
@@ -59,9 +59,7 @@ Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwis
 Default is first task.}
 
 \item{...}{[\code{list}]\cr
-Additional standard graph arguments.
-}
-
+Additional parameters passed to the plot function}
 }
 \value{
 [\code{invisible(NULL)}].
