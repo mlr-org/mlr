@@ -5,8 +5,8 @@
 \title{Visualize binary classification predictions via ROCR ROC curves.}
 \usage{
 plotROCRCurves(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
-  cols = NULL, ltys = NULL, add.legend = NULL, add.diag = TRUE,
-  perf.args = list(), legend.args = list(), task.id = NULL)
+  cols = NULL, ltys = NULL, add.legend = NULL, add.diag = FALSE,
+  perf.args = list(), legend.args = list(), task.id = NULL, ...)
 }
 \arguments{
 \item{obj}{[(list of) \code{\link{Prediction}} | (list of) \code{\link{ResampleResult}} | \code{\link{BenchmarkResult}}]\cr
@@ -41,7 +41,7 @@ Default is \code{TRUE} if more than one ROC curve is drawn.}
 
 \item{add.diag}{[\code{logical(1)}]\cr
 Add main diagonal to plot via \code{\link{abline}}?
-Default is \code{TRUE}.}
+Default is \code{FALSE}.}
 
 \item{perf.args}{[named \code{list}]\cr
 Further arguments passed to ROCR's \code{\link[ROCR]{performance}}.
@@ -57,6 +57,9 @@ and to draw in \dQuote{bottomright}.}
 \item{task.id}{[\code{character(1)}]\cr
 Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
 Default is first task.}
+
+\item{...}{[\code{list}]\cr
+Additional parameters passed to the plot function}
 }
 \value{
 [\code{invisible(NULL)}].
