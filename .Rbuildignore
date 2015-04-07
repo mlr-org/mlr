@@ -1,14 +1,9 @@
-doc
-^makeR
-staticdocs
 todo-files
-tools
 
 .gitignore
 .travis.yml
 
 ^.*tar.gz$
-install_dependencies.R
 Makefile
 README.md
 test_all.R
