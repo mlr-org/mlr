@@ -1,0 +1,63 @@
+---
+title: "mlr: Machine Learning in R"
+author: "Jakob Richter"
+date: "`r Sys.Date()`"
+output: pdf_document
+vignette: >
+  %\VignetteIndexEntry{mlr}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+This Vignette is supposed to give you a short introductory glance at the key features of `mlr`.
+A more detailed in depth and continously updated tutorial can be found on the GitHub project page: 
+- [Project Page](https://github.com/berndbischl/mlr/)
+- [Online Tutorial](http://berndbischl.github.io/mlr/tutorial/html/)
+- [Download](http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip) online tutorial as zip for offline usage
+
+## Purpose
+
+The main goal of `mlr` is to provide a unified interface for *machine learning tasks* as *classification*, *regression*, *cluster analysis* and *survival analysis* in R. 
+In lack of a common interface makes it a hassle to carry out standard methods like cross validation and hyperparameter tuning for different learners.
+Hence `mlr` offers a simple and consistent way to
+- train a learner and predict outcomes
+- modify hyperparameters of a learner
+- perform resampling and measure the performance
+- tune the hyperparameters of a learner
+- and more.
+
+
+## Quick Start
+
+To highlight the main principle of `mlr` this short example is given.
+It demonstrates how to simpy perform a stratified cross validation using the key components of the `mlr` workflow - the `task` and `learner` objects.
+
+```{r}
+library(mlr)
+data(iris)
+
+## Define the task:
+task = makeClassifTask(id = "tutorial", data = iris, target = "Species")
+
+## Define the learner:
+lrn = makeLearner("classif.lda")
+
+## Define the resampling strategy:
+rdesc = makeResampleDesc(method = "CV", stratify = TRUE)
+
+## Do the resampling:
+r = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE)
+
+## Get the mean misclassification error:
+r$aggr
+````
+
+## Detailed Tutorial
+
+The example just demonstrated a tiny fraction of the capabilites of `mlr`.
+More features are covered in the up-to-date and in depth tutorial, online on the `mlr` project page.
+It covers among others: *benchmarking*, *preprocessing*, *imputation*, *feature selection*, *ROC analysis*, how to implement your own learner and the list of all supported learners.
+Reading is highly recommended!
+- [Project Page](https://github.com/berndbischl/mlr/)
+- [Online Tutorial](http://berndbischl.github.io/mlr/tutorial/html/)
+- [Download](http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip) online tutorial as zip for offline usage
