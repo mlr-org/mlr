@@ -31,7 +31,6 @@ trainLearner.regr.laGP = function(.learner, .task, .subset, .weights = NULL, ...
 #' @export
 predictLearner.regr.laGP = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
-  print(m)
   pars = c(list(X = m$data, Z = m$target, XX = .newdata), Xi.ret = FALSE, 
     m$parset, list(...))
   p = do.call(laGP::aGP, pars)
