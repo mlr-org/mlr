@@ -1,8 +1,8 @@
 ---
 title: "mlr: Machine Learning in R"
-author: "Jakob Richter"
+author: "Bernd Bischl, Michael Lang, Jakob Richter, Erich Studerus"
 date: "`r Sys.Date()`"
-output: pdf_document
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{mlr}
   %\VignetteEngine{knitr::rmarkdown}
