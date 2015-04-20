@@ -70,7 +70,7 @@ Reading is highly recommended!
 
 ## Thanks
 
-We would like to thank the authors of all packages `mlr` uses under the hood:
+We would like to thank the authors of all packages which `mlr` uses under the hood:
 
 ```{r,echo=FALSE,results="asis"}
 parse_pkgs = function(x) {
