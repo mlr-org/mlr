@@ -89,7 +89,7 @@ Suggests:
     pls,
     pROC,
     randomForest,
-    randomForestSRC,
+    randomForestSRC (>= 1.6.1),
     RCurl,
     rjson,
     robustbase,
