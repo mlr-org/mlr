@@ -21,7 +21,7 @@ test_that("regr_bdk", {
     pars$Y = regr.num.train[, regr.num.class.col]
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(kohonen::bdk, pars)
-    p = kohonen::predict.kohonen(m, as.matrix(regr.num.test[, -regr.num.class.col]))
+    p = predict(m, as.matrix(regr.num.test[, -regr.num.class.col]))
     old.predicts.list[[i]] = as.vector(p$prediction)
   }
 
