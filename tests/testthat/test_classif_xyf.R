@@ -22,7 +22,7 @@ test_that("classif_xyf", {
     pars$keep.data = FALSE
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(kohonen::xyf, pars)
-    p = kohonen::predict.kohonen(m, as.matrix(binaryclass.test[, -binaryclass.class.col]))
+    p = predict(m, as.matrix(binaryclass.test[, -binaryclass.class.col]))
     old.predicts.list[[i]] = p$prediction
     old.probs.list[[i]] = p$unit.predictions[p$unit.classif, 1L]
   }
@@ -30,5 +30,5 @@ test_that("classif_xyf", {
   testSimpleParsets("classif.xyf", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.predicts.list, parset.list2)
   testProbParsets ("classif.xyf", binaryclass.df, binaryclass.target, binaryclass.train.inds,
-                   old.probs.list, parset.list2)
+    old.probs.list, parset.list2)
 })

@@ -31,7 +31,7 @@ trainLearner.classif.bdk = function(.learner, .task, .subset, .weights = NULL, x
 
 #' @export
 predictLearner.classif.bdk = function(.learner, .model, .newdata, ...) {
-  p = kohonen::predict.kohonen(.model$learner.model, as.matrix(.newdata), ...)
+  p = predict(.model$learner.model, as.matrix(.newdata), ...)
   if (.learner$predict.type == "response"){
     return(p$prediction)
   } else {

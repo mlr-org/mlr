@@ -31,5 +31,5 @@ trainLearner.regr.bdk = function(.learner, .task, .subset, .weights = NULL, xdim
 
 #' @export
 predictLearner.regr.bdk = function(.learner, .model, .newdata, ...) {
-  kohonen::predict.kohonen(.model$learner.model, as.matrix(.newdata), ...)$prediction[, 1L]
+  predict(.model$learner.model, as.matrix(.newdata), ...)$prediction[, 1L]
 }
