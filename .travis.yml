@@ -37,7 +37,7 @@ notifications:
         - bernd_bischl@gmx.net
         - michellang@gmail.com
         - travis.mlr@jakob-r.de
-        - lars.kotthoff@insight-centre.org
+        - larsko@cs.ubc.ca
         - schiffner@math.uni-duesseldorf.de
         - erich.studerus@gmail.com
     on_success: change
