@@ -61,6 +61,7 @@ Suggests:
     elmNN,
     emoa,
     extraTrees,
+    fields,
     FNN,
     FSelector,
     gbm,

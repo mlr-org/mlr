@@ -1,19 +1,17 @@
 load_all()
 
-
-doDPSSplit = function(x, inds) {
-  require(fields)
+doDPSSplit = function(x) {
   n = nrow(x)
   # the sets for our splits, both index vectors
   s1 = integer(0L)
   s2 = integer(0L)
   # calc dist matrix, this is inefficient, d.old stays, d.new gets reduced later
   # we dont want a object to be close to itself
-  d.old = rdist(x)
+  d.old = fields::rdist(x)
   diag(d.old) = Inf
   colnames(d.old) = rownames(d.old) = NULL
   d.new = d.old
-
+  
   # run while he have not distributed all elements to s1 or s2
   while(length(s1) + length(s2) < n) {
     # dists for each obs to its nearest neigh
@@ -40,7 +38,7 @@ doDPSSplit = function(x, inds) {
     d.new[nn2, ] = Inf
     d.new[, nn1] = Inf
     d.new[, nn2] = Inf
-
+    
     # odd nr of elements, add last guy to set with larger mean dist
     if (length(s1) + length(s2) == n - 1L) {
       last = setdiff(1:n, c(s1, s2))
@@ -50,18 +48,25 @@ doDPSSplit = function(x, inds) {
         s2 = c(s2, last)
     }
   }
-  list(inds[s1], inds[s2])
+  list(s1, s2)
 }
 
 doDPSSplits = function(x, k, inds = 1:nrow(x)) {
+  if (log2(nrow(x)) < k) stop("Too many splits")
   if (k == 1L) {
-    s = doDPSSplit(x, inds)
+    s.index = doDPSSplit(x)
+    s = lapply(s.index, function(X) inds[X])
   } else {
-    s = doDPSSplit(x, inds)
+    s.index = doDPSSplit(x)
+    x1 = x[s.index[[1L]],]
+    x2 = x[s.index[[2L]],]
+    s = lapply(s.index, function(X) inds[X])
     s1 = s[[1L]]
     s2 = s[[2L]]
-    x1 = x[as.character(s1),]
-    x2 = x[as.character(s2),]
+    
+    if(any(is.na(x1)) | any(is.na(x2)))
+      stop("There are NAs")
+    
     s = c(
       doDPSSplits(x1, k - 1L, s1),
       doDPSSplits(x2, k - 1L, s2)
@@ -94,7 +99,7 @@ x[,1] = x[,1] + 1:150
 # x[1,] = x[1,] + 1e-15
 # x[11,] = x[11,] + 1e-15
 
-u = doDPSSplits(x, k=4, 1:150)
+u = doDPSSplits(x, k=8, 1:150)
 print(sort(u[[1]]))
 print(sort(u[[2]]))
 
