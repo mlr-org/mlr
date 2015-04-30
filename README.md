@@ -63,8 +63,10 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
 [release](http://cran.r-project.org/web/packages/mlr/NEWS) and here for the
 [devel](https://github.com/berndbischl/mlr/blob/master/NEWS) version on Github.
 
+* 2015-04-30:
+  * I (Bernd) was pretty busy as I had to change cities and workplaces. I now head the Computational Statistics Group at LMU Munich. More importantly, this resulted in me not taking care of requests and issues as much as I wanted during the last weeks. Apologies and hopefully I have more time from now on.  
+  * mlr got not one, but three project slots in Google Summer of Code 2015. Many thanks to the R foundation, Google and all students who applied with exciting proposals. Best of luck to Tong, Zach and Pascal, who will work on SVM ensembles, mlr's visualizatiom system and better hyperparameter / tuning options.
 * 2015-02-17:
-  * **We are currently in the process of working out a couple of project proposals for "Google Summer of Code 2015" with mlr. Have a look at our Wiki and at [gscoc-r](https://github.com/rstats-gsoc/gsoc2015) and the [Google group](https://groups.google.com/forum/#!forum/gsoc-r) if you are an interested student.**
   * **We have been informed that our tutorial "Applied Machine Learning and Efficient Model Selection with mlr" has been accepted for [useR 2015](http://user2015.math.aau.dk/) in Aarlborg. Hoping to meet all of you there in June!**
 * 2015-02-04:
   * mlr 2.3 released to CRAN.
