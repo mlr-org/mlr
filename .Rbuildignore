@@ -22,3 +22,4 @@ testinfo.RData
 ^.editorconfig$
 
 ^travis_wait_*.log
+^thirdparty$
