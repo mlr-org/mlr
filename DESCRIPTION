@@ -24,19 +24,19 @@ BugReports: https://github.com/berndbischl/mlr/issues
 License: BSD_3_clause + file LICENSE
 Encoding: UTF-8
 Roxygen: list(wrap = FALSE)
-Depends: 
+Depends:
     R (>= 3.0.0),
     ParamHelpers (>= 1.5),
     BBmisc (>= 1.9),
     ggplot2,
     stats
-Imports: 
+Imports:
     checkmate (>= 1.5.1),
     parallelMap (>= 1.2),
     plyr,
     reshape2,
     survival
-Suggests: 
+Suggests:
     ada,
     adabag,
     bartMachine,
@@ -99,6 +99,7 @@ Suggests:
     rsm,
     RWeka,
     sda,
+    snow,
     sparseLDA,
     stepPlr,
     testthat,
