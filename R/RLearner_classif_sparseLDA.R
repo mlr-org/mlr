@@ -2,7 +2,8 @@
 makeRLearner.classif.sparseLDA = function() {
   makeRLearnerClassif(
     cl = "classif.sparseLDA",
-    package = c("sparseLDA", "MASS", "elasticnet"),
+    # FIXME: maybe again broken NAMESPACE / import in package, if we dont use !, solvebeta is not found
+    package = c("!sparseLDA", "MASS", "!elasticnet"),
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "lambda", default = 1e-6, lower = 0, when = "train"),
       makeIntegerLearnerParam(id = "maxIte", default = 100L, lower = 0L, when = "train"),
@@ -27,7 +28,7 @@ trainLearner.classif.sparseLDA = function(.learner, .task, .subset, .weights = N
 
 #' @export
 predictLearner.classif.sparseLDA = function(.learner, .model, .newdata, ...) {
-  p = sparseLDA::predict.sda(.model$learner.model, 
+  p = sparseLDA::predict.sda(.model$learner.model,
     newdata = subset(.newdata, select = .model$features), ...)
   if(.learner$predict.type == "response")
     return(p$class)
