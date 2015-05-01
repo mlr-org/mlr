@@ -86,7 +86,6 @@ Suggests:
     nodeHarvest,
     party,
     penalized,
-    plotROC,
     pls,
     pROC,
     randomForest,
