@@ -79,6 +79,7 @@ Suggests:
     mboost,
     mco,
     mda,
+    mgcv,
     mlbench,
     modeltools,
     mRMRe,

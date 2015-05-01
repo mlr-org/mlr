@@ -58,6 +58,7 @@ mlr_2.3:
 -- classif.bdk
 -- classif.binomial
 -- classif.extraTrees
+-- classif.gam
 -- classif.probit
 -- classif.xgboost
 -- classif.xyf
