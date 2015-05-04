@@ -13,6 +13,36 @@ r_binary_packages:
     - RcppEigen
     - testthat
     - knitr
+    - ada
+    - adabag
+    - bartMachine
+    - brnn
+    - care
+    - caret
+    - class
+    - clue
+    - cluster
+    - clusterSim
+    - clValid
+    - cmaes
+    - CoxBoost
+    - crs
+    - Cubist
+    - DiceKriging
+    - DiceOptim
+    - DiscriMiner
+    - e1071
+    - earth
+    - elasticnet
+    - elmNN
+    - emoa
+    - extraTrees
+    - FNN
+    - FSelector
+    - gbm
+    - GenSA
+    - glmnet
+    - Hmisc
 r_github_packages:
     - berndbischl/BBmisc
     - berndbischl/parallelMap
