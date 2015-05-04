@@ -49,6 +49,7 @@ r_binary_packages:
     - pls
     - pROC
     - randomForest
+    - randomForestSRC
     - RCurl
     - rjson
     - robustbase
@@ -68,7 +69,7 @@ r_github_packages:
     - berndbischl/ParamHelpers
 before_script:
     - sudo R CMD javareconf
-    - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
+    - java -cp /usr/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
 notifications:
   email:
     recipients:
