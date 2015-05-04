@@ -9,7 +9,7 @@ branches:
         - master
 
 apt_packages:
-    - r-cran-java
+    - r-cran-rjava
 
 r_github_packages:
     - berndbischl/BBmisc
