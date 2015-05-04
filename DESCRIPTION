@@ -26,9 +26,9 @@ Encoding: UTF-8
 Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 3.0.0),
-    ParamHelpers (>= 1.5),
     BBmisc (>= 1.9),
     ggplot2,
+    ParamHelpers (>= 1.5),
     stats
 Imports:
     checkmate (>= 1.5.1),
@@ -71,6 +71,7 @@ Suggests:
     kernlab,
     kknn,
     klaR,
+    knitr,
     kohonen,
     laGP,
     LiblineaR,
@@ -104,8 +105,7 @@ Suggests:
     stepPlr,
     testthat,
     tgp,
-    TH.data,
-    knitr
+    TH.data
 LazyData: yes
 ByteCompile: yes
 Version: 2.4

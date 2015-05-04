@@ -8,14 +8,10 @@ branches:
 apt_packages:
     - r-cran-rjava
 r_binary_packages:
-    - checkmate
-    - Rcpp
-    - RcppEigen
-    - testthat
-    - knitr
     - ada
     - adabag
     - caret
+    - checkmate
     - class
     - clue
     - cluster
@@ -35,6 +31,43 @@ r_binary_packages:
     - GenSA
     - glmnet
     - Hmisc
+    - irace
+    - kernlab
+    - kknn
+    - klaR
+    - kohonen
+    - laGP
+    - LiblineaR
+    - lqa
+    - MASS
+    - mboost
+    - mco
+    - mda
+    - mlbench
+    - modeltools
+    - mRMRe
+    - nnet
+    - nodeHarvest
+    - party
+    - penalized
+    - pls
+    - pROC
+    - randomForest
+    - RCurl
+    - rjson
+    - robustbase
+    - ROCR
+    - rpart
+    - rrlda
+    - rsm
+    - RWeka
+    - sda
+    - snow
+    - sparseLDA
+    - stepPlr
+    - testthat
+    - tgp
+    - TH.data
 r_github_packages:
     - berndbischl/BBmisc
     - berndbischl/parallelMap
