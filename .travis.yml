@@ -1,34 +1,24 @@
-# travis config, based on https://github.com/craigcitro/r-travis
-
-language: c
+language: r
 
 env:
-   global:
-     - _R_CHECK_TIMINGS_=0
+    global:
+        - _R_CHECK_TIMINGS_=0
 
 branches:
-  only:
-   - master
+    only:
+        - master
 
-before_install:
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - ./travis-tool.sh bootstrap
+apt_packages:
+    - r-cran-java
 
-install:
-  - ./travis-tool.sh aptget_install r-cran-rjava
-  - sudo R CMD javareconf
-  - ./travis-tool.sh github_package berndbischl/BBmisc
-  - ./travis-tool.sh github_package berndbischl/parallelMap
-  - ./travis-tool.sh github_package berndbischl/ParamHelpers
-  - ./travis-tool.sh install_deps
-  - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
+r_github_packages:
+    - berndbischl/BBmisc
+    - berndbischl/parallelMap
+    - berndbischl/ParamHelpers
 
-
-script: travis_wait ./travis-tool.sh run_tests
-
-after_script:
-  - ./travis-tool.sh dump_logs
+before_script:
+    - sudo R CMD javareconf
+    - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
 
 
 notifications:
