@@ -93,6 +93,7 @@ Suggests:
     randomForestSRC (>= 1.6.1),
     RCurl,
     rjson,
+    rmarkdown,
     robustbase,
     ROCR,
     rpart,

@@ -52,6 +52,7 @@ r_binary_packages:
     - randomForestSRC
     - RCurl
     - rjson
+    - rmarkdown
     - robustbase
     - ROCR
     - rpart
