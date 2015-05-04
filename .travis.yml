@@ -8,7 +8,9 @@ branches:
 apt_packages:
     - r-cran-rjava
 r_binary_packages:
+    - checkmate
     - Rcpp
+    - RcppEigen
     - testthat
     - knitr
 r_github_packages:
