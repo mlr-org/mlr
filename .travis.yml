@@ -16,6 +16,79 @@ r_github_packages:
     - berndbischl/parallelMap
     - berndbischl/ParamHelpers
 
+r_binary_packages:
+    - ggplot2
+    - Rcpp
+    - plyr
+    - ada
+    - adabag
+    - bartMachine
+    - brnn
+    - care
+    - caret
+    - class
+    - clue
+    - cluster
+    - clusterSim
+    - clValid
+    - cmaes
+    - CoxBoost
+    - crs
+    - Cubist
+    - DiceKriging
+    - DiceOptim
+    - DiscriMiner
+    - e1071
+    - earth
+    - elasticnet
+    - elmNN
+    - emoa
+    - extraTrees
+    - FNN
+    - FSelector
+    - gbm
+    - GenSA
+    - glmnet
+    - Hmisc
+    - irace
+    - kernlab
+    - kknn
+    - klaR
+    - kohonen
+    - laGP
+    - LiblineaR
+    - lqa
+    - MASS
+    - mboost
+    - mco
+    - mda
+    - mlbench
+    - modeltools
+    - mRMRe
+    - nnet
+    - nodeHarvest
+    - party
+    - penalized
+    - pls
+    - pROC
+    - randomForest
+    - randomForestSRC
+    - RCurl
+    - rjson
+    - robustbase
+    - ROCR
+    - rpart
+    - rrlda
+    - rsm
+    - RWeka
+    - sda
+    - snow
+    - sparseLDA
+    - stepPlr
+    - testthat
+    - tgp
+    - TH.data
+    - knitr
 before_script:
     - sudo R CMD javareconf
     - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
