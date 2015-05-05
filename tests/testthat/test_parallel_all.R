@@ -11,15 +11,15 @@ test_that("parallel resampling", {
   }
   if (Sys.info()["sysname"] != "Windows") {
     doit("multicore", as.character(NA))
-    doit("multicore", "resample")
-    doit("multicore", "tuneParams")
+    doit("multicore", "mlr.resample")
+    doit("multicore", "mlr.tuneParams")
     doit("mpi", as.character(NA))
-    doit("mpi", "resample")
-    doit("mpi", "tuneParams")
+    doit("mpi", "mlr.resample")
+    doit("mpi", "mlr.tuneParams")
   }
   doit("socket", as.character(NA))
-  doit("socket", "resample")
-  doit("socket", "tuneParams")
+  doit("socket", "mlr.resample")
+  doit("socket", "mlr.tuneParams")
 })
 
 test_that("parallel tuning", {
@@ -35,15 +35,15 @@ test_that("parallel tuning", {
   }
   if (Sys.info()["sysname"] != "Windows") {
     doit("multicore", as.character(NA))
-    doit("multicore", "resample")
-    doit("multicore", "tuneParams")
+    doit("multicore", "mlr.resample")
+    doit("multicore", "mlr.tuneParams")
     doit("mpi", as.character(NA))
-    doit("mpi", "resample")
-    doit("mpi", "tuneParams")
+    doit("mpi", "mlr.resample")
+    doit("mpi", "mlr.tuneParams")
   }
   doit("socket", as.character(NA))
-  doit("socket", "resample")
-  doit("socket", "tuneParams")
+  doit("socket", "mlr.resample")
+  doit("socket", "mlr.tuneParams")
 })
 
 test_that("parallel featsel", {
@@ -58,15 +58,15 @@ test_that("parallel featsel", {
   }
   if (Sys.info()["sysname"] != "Windows") {
     doit("multicore", as.character(NA))
-    doit("multicore", "resample")
-    doit("multicore", "tuneParams")
+    doit("multicore", "mlr.resample")
+    doit("multicore", "mlr.tuneParams")
     doit("mpi", as.character(NA))
-    doit("mpi", "resample")
-    doit("mpi", "tuneParams")
+    doit("mpi", "mlr.resample")
+    doit("mpi", "mlr.tuneParams")
   }
   doit("socket", as.character(NA))
-  doit("socket", "resample")
-  doit("socket", "tuneParams")
+  doit("socket", "mlr.resample")
+  doit("socket", "mlr.tuneParams")
 })
 
 test_that("parallel exporting of options works", {
