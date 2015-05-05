@@ -10,12 +10,12 @@ test_that("filterFeatures", {
   feat.imp = getFilterValues(binaryclass.task, method = "chi.squared")
   expect_equal(ns, feat.imp$data$name)
   f = filterFeatures(binaryclass.task, method = "chi.squared", abs = 5L)
-  expect_equal(getTaskFeatureNames(f), head(sortByCol(feat.imp$data, "val", asc = FALSE), 5L)$name)
+  expect_true(setequal(getTaskFeatureNames(f), head(sortByCol(feat.imp$data, "val", asc = FALSE), 5L)$name))
   # now check that we get the same result by operating on getFilterValues
-  feat.imp = getFilterValues(binaryclass.task)
+  feat.imp = getFilterValues(binaryclass.task, method = "chi.squared")
   ff = filterFeatures(binaryclass.task, fval = feat.imp, abs = 5L)
   expect_equal(f, ff)
-  
+
   f1 = filterFeatures(binaryclass.task, abs = 1L, mandatory.feat = "V1", ntree = 1L)
   f2 = subsetTask(binaryclass.task, features = "V1")
   expect_equal(f1, f2)
