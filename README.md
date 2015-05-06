@@ -95,6 +95,8 @@ We also do not hate beginners and it is perfectly valid to mark a issue as "Ques
 Please don't forget that all of us work in academia and put a lot of work into this project, simply because we like it, not because we are specifically paid for it.
 
 We also welcome pull requests or new developers.
+To get started have a look at the [guidelines for contributors](https://github.com/berndbischl/mlr/wiki/Setup-and-Contribution-Guidelines).
+Please also consider the [**mlr** coding guidelines](https://github.com/berndbischl/mlr/wiki/mlr-Coding-Guidelines).
 
 For everything else the maintainer Bernd Bischl can be reached here: bernd_bischl@gmx.net.
 He (=me) is sometimes busy, so please use the other channels for appropriate stuff first, so you get quicker responses ;-)
