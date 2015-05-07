@@ -67,17 +67,8 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
     stop(paste("Unknown method:", method))
   )
   res = evalOptimizationState(learner, task, resampling, measures, NULL, bits.to.features, control, opt.path, show.info, 1L, x, FALSE)
-  # add stuff to opt.path
   state = list(x = x, y = res$y)
-  if (control$tune.threshold) {
-    extra = as.list(res$threshold)
-    # only explicitly name the threshold, if it has length 1
-    if (length(extra) == 1L)
-      names(extra) = "threshold"
-  } else {
-    extra = NULL
-  }
-  addOptPathEl(opt.path, x = as.list(x), y = res$y, dob = 1L, eol = 2L, exec.time = res$exec.time, error.message = res$errmsg, extra = extra)
+  addOptPathEl(opt.path, x = as.list(x), y = res$y, dob = 1L, eol = 2L, exec.time = res$exec.time, error.message = res$errmsg)
 
   forward = (method %in% c("sfs", "sffs"))
   fail = 0
