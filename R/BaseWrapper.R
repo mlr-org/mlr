@@ -68,7 +68,7 @@ makeWrappedModel.BaseWrapper = function(learner, learner.model, task.desc, subse
 
 #' @export
 isFailureModel.BaseWrapperModel = function(model) {
-  return(isFailureModel(model$learner.model$next.model))
+  return(!inherits(model$learner.model, "NoFeaturesModel") && isFailureModel(model$learner.model$next.model))
 }
 
 #' @export
