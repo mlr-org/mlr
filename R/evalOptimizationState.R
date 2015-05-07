@@ -99,9 +99,10 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
   for (i in seq_len(n)) {
     res = res.list[[i]]
     if (control$tune.threshold) {
-      # add class names to threshold, if longer than 1
       extra = as.list(res$threshold)
-      names(extra) = paste0("threshold", ifelse(length(extra) > 1L, ".", ""), names(extra))
+      # only explicitly name the threshold, if it has length 1
+      if (length(extra) == 1L)
+        names(extra) = "threshold"
     } else {
       extra = NULL
     }
