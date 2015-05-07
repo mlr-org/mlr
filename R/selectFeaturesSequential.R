@@ -77,7 +77,6 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
     extra = NULL
   }
   addOptPathEl(opt.path, x = as.list(x), y = res$y, dob = 1L, eol = 2L, exec.time = res$exec.time, error.message = res$errmsg, extra = extra)
-
   forward = (method %in% c("sfs", "sffs"))
   fail = 0
   while ((method %in% c("sfs", "sbs")  && fail == 0) || (method %in% c("sffs", "sfbs") && fail < 2)) {
