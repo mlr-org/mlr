@@ -70,9 +70,10 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
   # add stuff to opt.path
   state = list(x = x, y = res$y)
   if (control$tune.threshold) {
-    # add class names to threshold, if longer than 1
     extra = as.list(res$threshold)
-    names(extra) = paste0("threshold", ifelse(length(extra) > 1L, ".", ""), names(extra))
+    # only explicitly name the threshold, if it has length 1
+    if (length(extra) == 1L)
+      names(extra) = "threshold"
   } else {
     extra = NULL
   }
