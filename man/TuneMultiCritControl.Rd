@@ -24,13 +24,6 @@ makeTuneMultiCritControlRandom(same.resampling.instance = TRUE,
 Should the same resampling instance be used for all evaluations to reduce variance?
 Default is \code{TRUE}.}
 
-\item{resolution}{[\code{integer}]\cr
-Resolution of the grid for each numeric/integer parameter in \code{par.set}.
-For vector parameters, it is the resolution per dimension.
-Either pass one resolution for all parameters, or a named vector.
-See \code{\link[ParamHelpers]{generateGridDesign}}.
-Default is 10.}
-
 \item{log.fun}{[\code{function} | \code{NULL}]\cr
 Function used for logging. If set to \code{NULL}, the internal default will be used.
 Otherwise a function with arguments \code{learner}, \code{resampling}, \code{measures},
