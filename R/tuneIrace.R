@@ -15,10 +15,28 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
   control$extra.args$show.irace.output = NULL
   instances = lapply(seq_len(n.instances), function(i) makeResampleInstance(resampling, task = task))
 
-  parameters = convertParamSetToIrace(par.set)
+  # extract irace.digits from the tuner-control as the latter can't handle 'unknown' arguments
+  digits = control$extra.args$irace.digits
+  control$extra.args$irace.digits = NULL
+  if (is.null(digits))
+    digits = 1L
+  
+  # assert that the number of digits is big enough (wrt upper and lower limits)
+  # in case of non-numeric parameters, set the digits to 1L
+  par.set.digits = viapply(seq_len(length(par.set$pars)), function(i) {
+    if (par.set$pars[[i]]$type != "numeric")
+      return(0L)
+    -as.integer(floor(log10(diff(unlist(par.set$pars[[i]][c("lower", "upper")])))))
+  })
+  par.set.digits = max(par.set.digits) + 1L
+  if (digits < par.set.digits)
+    digits = par.set.digits
+  
+  # convertParamSetToIrace requires digits to be at least 1
+  parameters = convertParamSetToIrace(par.set, digits)
   log.file = tempfile()
-  tuner.config = c(list(hookRun = hookRun, instances = instances, logFile = log.file), control$extra.args)
-
+  tuner.config = c(list(hookRun = hookRun, instances = instances, logFile = log.file), 
+    control$extra.args, digits = digits)
   g = if (show.irace.output) identity else capture.output
   g(or <- irace::irace(tunerConfig = tuner.config, parameters = parameters))
   unlink(log.file)

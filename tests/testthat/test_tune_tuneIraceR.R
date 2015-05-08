@@ -81,3 +81,26 @@ test_that("tuneIrace works with tune.threshold", {
   ctrl = makeTuneControlIrace(maxExperiments = n, nbIterations = 2, minNbSurvival = 1)
   tr = tuneParams("classif.rpart", multiclass.task, rdesc, par.set = ps, control = ctrl)
 })
+
+test_that("tuneIrace handles adapts the number of digits", {
+  lrn = makeLearner("classif.gbm", predict.type = "prob")
+  
+  ps = makeParamSet(makeNumericParam("shrinkage", lower = 1e-5, upper = 1e-4))
+  ctrl = makeTuneControlIrace(maxExperiments = 60L)
+  ctrl2 = makeTuneControlIrace(maxExperiments = 60L, irace.digits = 3L)
+  ctrl3 = makeTuneControlIrace(maxExperiments = 60L, irace.digits = 10L)
+  rdesc = makeResampleDesc(method = "Holdout")
+  lrn.tune = makeTuneWrapper(lrn, resampling = rdesc, par.set = ps, 
+    control = ctrl, measure = list(mmce), show.info = FALSE)
+  lrn.tune2 = makeTuneWrapper(lrn, resampling = rdesc, par.set = ps, 
+    control = ctrl2, measure = list(mmce), show.info = FALSE)
+  lrn.tune3 = makeTuneWrapper(lrn, resampling = rdesc, par.set = ps, 
+    control = ctrl3, measure = list(mmce), show.info = FALSE)
+  
+  res = resample(lrn.tune, task = multiclass.task, rdesc, 
+    measures = list(mmce), show.info = FALSE)
+  res2 = resample(lrn.tune2, task = multiclass.task, rdesc,
+    measures = list(mmce), show.info = FALSE)
+  res3 = resample(lrn.tune3, task = multiclass.task, rdesc, 
+    measures = list(mmce), show.info = FALSE)
+})
