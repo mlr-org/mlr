@@ -29,7 +29,7 @@ save(bc.task, file = file.path(dn, "bc.task.RData"), compress = "xz")
 
 set.seed(DATASEED)
 data(PimaIndiansDiabetes, package = "mlbench")
-pid.task = makeClassifTask("PimaIndiansDiabetes-example", data = PimaIndiansDiabetes, target = "diabetes")
+pid.task = makeClassifTask("PimaIndiansDiabetes-example", data = PimaIndiansDiabetes, target = "diabetes", positive = "pos")
 save(pid.task, file = file.path(dn, "pid.task.RData"), compress = "xz")
 
 # regression

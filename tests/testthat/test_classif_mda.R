@@ -3,9 +3,9 @@ context("classif_mda")
 test_that("classif_mda", {
   requirePackages("!mda", default.method = "load")
   parset.list = list(
-    list(),
-    list(subclasses = 2),
-    list(subclasses = 3)
+    list(start.method = "lvq"),
+    list(start.method = "lvq", subclasses = 2),
+    list(start.method = "lvq", subclasses = 3)
   )
 
   old.predicts.list = list()
@@ -36,7 +36,7 @@ test_that("classif_mda", {
   testCVParsets("classif.mda", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp,
     parset.list = parset.list)
   testCV("classif.mda", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp,
-    parset = list(subclasses = 17))
+    parset = list(start.method = "lvq", subclasses = 17))
 
 })
 

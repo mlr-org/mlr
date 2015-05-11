@@ -77,6 +77,7 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
   sel.func = switch(cl,
     TuneControlRandom = tuneRandom,
     TuneControlGrid = tuneGrid,
+    TuneControlDesign = tuneDesign,
     TuneControlCMAES = tuneCMAES,
     TuneControlGenSA = tuneGenSA,
     TuneControlMBO = tuneMBO,

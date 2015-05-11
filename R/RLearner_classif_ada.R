@@ -4,6 +4,7 @@ makeRLearner.classif.ada = function() {
     cl = "classif.ada",
     package = "ada",
     par.set = makeParamSet(
+      makeDiscreteLearnerParam(id = "loss", default = "exponential", values = c("exponential", "logistic")),
       makeDiscreteLearnerParam(id = "type", default = "discrete", values = c("discrete", "real", "gentle")),
       makeIntegerLearnerParam(id = "iter", default = 50L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0),
@@ -20,7 +21,8 @@ makeRLearner.classif.ada = function() {
       makeDiscreteLearnerParam(id = "usesurrogate", default = 2L, values = 0:2),
       makeDiscreteLearnerParam(id = "surrogatestyle", default = 0L, values = 0:1),
       # we use 30 as upper limit, see docs of rpart.control
-      makeIntegerLearnerParam(id = "maxdepth", default = 30L, lower = 1L, upper = 30L)
+      makeIntegerLearnerParam(id = "maxdepth", default = 30L, lower = 1L, upper = 30L),
+      makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L)
     ),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "ada Boosting",
@@ -31,7 +33,16 @@ makeRLearner.classif.ada = function() {
 #' @export
 trainLearner.classif.ada = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  ada::ada(f, data = getTaskData(.task, .subset), ...)
+  #preserve list for certain parameters passed to rpart.control
+  dots = list(...)
+  to.list = c("maxdepth", "cp", "minsplit", "xval")
+  list = filterNull(dots[to.list])
+  dots = dropNamed(dots, to.list)
+  args = c(dots, list(list))
+  h.ada = function(...) {
+    ada::ada(f, getTaskData(.task, .subset), ...)
+  }
+  do.call(h.ada, args)
 }
 
 #' @export

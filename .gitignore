@@ -3,11 +3,10 @@ mlr_*.tar.gz
 .Rproj.user
 *.Rproj
 .Rhistory
-staticdocs
 src/*.so
 src/*.o
 .RData
 src/*.dll
 tests/testthat/Rplots.pdf
 testinfo.RData
-
+inst/doc/

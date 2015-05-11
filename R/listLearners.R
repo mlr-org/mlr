@@ -80,6 +80,7 @@ listLearners.character  = function(obj, properties = character(0L),
     }
   }
   res = filterNull(res)
+  names(res) = vcapply(res, function(lrn) lrn$id)
   err = filterNull(err)
   if (warn.missing.packages && length(err))
     warningf("The following learners could not be constructed, probably because their packages are not installed:\n%s\nCheck ?learners to see which packages you need or install mlr with all suggestions.", collapse(err))

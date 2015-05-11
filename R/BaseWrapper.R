@@ -1,4 +1,4 @@
-makeBaseWrapper = function(id, next.learner, package = character(0L), par.set = makeParamSet(),
+makeBaseWrapper = function(id, type, next.learner, package = character(0L), par.set = makeParamSet(),
   par.vals = list(), learner.subclass, model.subclass) {
 
   if (inherits(next.learner, "OptWrapper"))
@@ -7,14 +7,17 @@ makeBaseWrapper = function(id, next.learner, package = character(0L), par.set = 
   if (length(ns) > 0L)
     stopf("Hyperparameter names in wrapper clash with base learner names: %s", collapse(ns))
 
+  # set properties by default to what the resulting type is allowed and what the base learner can do
+  props = intersect(getSupportedLearnerProperties(type), next.learner$properties)
+
   makeS3Obj(c(learner.subclass, "BaseWrapper", "Learner"),
     id = id,
-    type = next.learner$type,
+    type = type,
     predict.type = next.learner$predict.type,
     package = union(package, next.learner$package),
     par.set = par.set,
     par.vals = par.vals,
-    properties = next.learner$properties,
+    properties = props,
     fix.factors.prediction = FALSE,
     next.learner = next.learner,
     model.subclass = model.subclass
@@ -65,7 +68,7 @@ makeWrappedModel.BaseWrapper = function(learner, learner.model, task.desc, subse
 
 #' @export
 isFailureModel.BaseWrapperModel = function(model) {
-  return(isFailureModel(model$learner.model$next.model))
+  return(!inherits(model$learner.model, "NoFeaturesModel") && isFailureModel(model$learner.model$next.model))
 }
 
 #' @export

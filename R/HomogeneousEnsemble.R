@@ -1,6 +1,6 @@
-makeHomogeneousEnsemble = function(id, next.learner, package, par.set = makeParamSet(),
+makeHomogeneousEnsemble = function(id, type, next.learner, package, par.set = makeParamSet(),
   learner.subclass, model.subclass, ...) {
-  x = makeBaseWrapper(id, next.learner, package, par.set,
+  makeBaseWrapper(id, type, next.learner, package, par.set,
     learner.subclass = c(learner.subclass, "HomogeneousEnsemble"),
     model.subclass = c(model.subclass, "HomogeneousEnsembleModel"),
     ...)

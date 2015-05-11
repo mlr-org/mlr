@@ -22,7 +22,7 @@ test_that("classif_bdk", {
     pars$keep.data = FALSE
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(kohonen::bdk, pars)
-    p = kohonen:::predict.kohonen(m, as.matrix(binaryclass.test[, -binaryclass.class.col]))
+    p = predict(m, as.matrix(binaryclass.test[, -binaryclass.class.col]))
     old.predicts.list[[i]] = p$prediction
     old.probs.list[[i]] = p$unit.predictions[p$unit.classif, 1L]
   }

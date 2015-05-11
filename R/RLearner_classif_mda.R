@@ -12,13 +12,14 @@ makeRLearner.classif.mda = function() {
         values = list(polyreg = mda::polyreg, mars = mda::mars, bruto = mda::bruto, gen.ridge = mda::gen.ridge)),
       makeLogicalLearnerParam(id = "trace", default = FALSE),
       makeLogicalLearnerParam(id = "keep.fitted", default = TRUE),
-      makeIntegerLearnerParam(id = "tries", default = 5L, lower = 1L)
+      makeIntegerLearnerParam(id = "tries", default = 5L, lower = 1L),
+      makeDiscreteLearnerParam(id = "start.method", default = "kmeans", values = c("kmeans", "lvq"))
     ),
-    par.vals = list(keep.fitted = FALSE),
+    par.vals = list(keep.fitted = FALSE, start.method = "lvq"),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "Mixture Discriminant Analysis",
     short.name = "mda",
-    note = "`keep.fitted` has been set to `FALSE` by default for speed."
+    note = "`keep.fitted` has been set to `FALSE` by default for speed and we use start.method='lvq' for more robust behavior / less technical crashes"
   )
 }
 

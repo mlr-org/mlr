@@ -194,11 +194,14 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     } else {
       probs = as.data.frame(probs)
       # if base learner predictions are responses
-      if (type == "classif" | type == "multiclassif") {
+      if (type == "classif" || type == "multiclassif") {
         # if base learner predictions are responses for classification
         if (sm.pt == "prob") {
-          # if super learner predictions should be probabilities
-          return(as.matrix(t(apply(probs, 1L, function(X) (table(factor(X, td$class.levels) )/length(X)) ))) )
+          # if super learner predictions should be probabilities, iter over rows to get proportions
+          # FIXME: this is very slow + CUMBERSOME. we also do it in more places
+          # we need a bbmisc fun for counting proportions in rows or cols
+          probs = apply(probs, 1L, function(x) (table(factor(x, td$class.levels) )/length(x)))
+          return(setColNames(t(probs), td$class.levels))
         } else {
           # if super learner predictions should be responses
           return(factor(apply(probs, 1L, computeMode), td$class.levels))
@@ -351,19 +354,19 @@ stackCV = function(learner, task) {
 
 # Returns response for correct usage in stackNoCV and stackCV and for predictions
 getResponse = function(pred, full.matrix = TRUE) {
-  # If classification with probabilities
+  # if classification with probabilities
   if (pred$predict.type == "prob") {
     if (full.matrix) {
-      # Return matrix of probabilities
+      # return matrix of probabilities
       predReturn = pred$data[, paste("prob", pred$task.desc$class.levels, sep = ".")]
       colnames(predReturn) = pred$task.desc$class.levels
       return(predReturn)
     } else {
-      # Return only vector of probabilities for binary classification
-      getProbabilities(pred)
+      # return only vector of probabilities for binary classification
+      return(getProbabilities(pred))
     }
   } else {
-    # If regression task
+    # if regression task
     pred$data$response
   }
 }

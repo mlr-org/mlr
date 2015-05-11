@@ -1,5 +1,5 @@
 requireLearnerPackages = function(learner) {
-  requirePackages(learner$package, paste("learner", learner$id), default.method = "load")
+  requirePackages(learner$package, why = paste("learner", learner$id), default.method = "load")
 }
 
 cleanupPackageNames = function(pkgs) {

@@ -23,7 +23,7 @@ makeRLearner.classif.randomForestSRC = function() {
 #' @export
 trainLearner.classif.randomForestSRC = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  randomForestSRC::rfsrc(f, data = getTaskData(.task, .subset), importance = "none", proximity = FALSE, forest = TRUE, ...)
+  randomForestSRC::rfsrc(f, data = getTaskData(.task, .subset, recode.target = "drop.levels"), importance = "none", proximity = FALSE, forest = TRUE, ...)
 }
 
 #' @export

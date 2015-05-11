@@ -59,6 +59,9 @@ filterFeatures = function(task, method = "rf.importance", fval = NULL, perc = NU
   if (select == "threshold")
     nselect = sum(fval$val >= threshold, na.rm = TRUE)
   features = as.character(head(sortByCol(fval, "val", asc = FALSE)$name, nselect))
+  allfeats = getTaskFeatureNames(task)
+  j = match(features, allfeats)
+  features = allfeats[sort(j)]
   subsetTask(task, features = features)
 }
 

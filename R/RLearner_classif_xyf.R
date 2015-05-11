@@ -31,9 +31,9 @@ trainLearner.classif.xyf = function(.learner, .task, .subset, .weights = NULL, x
 
 #' @export
 predictLearner.classif.xyf = function(.learner, .model, .newdata, ...) {
-  p = kohonen::predict.kohonen(.model$learner.model, as.matrix(.newdata), ...)
+  p = predict(.model$learner.model, as.matrix(.newdata), ...)
   if (.learner$predict.type == "response"){
-    return(p$prediction) 
+    return(p$prediction)
   } else {
     return(p$unit.predictions[p$unit.classif,])
   }

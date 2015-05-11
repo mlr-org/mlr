@@ -4,8 +4,15 @@ mlr_2.4:
 - showHyperPars was removed. getParamSet does exactly the same thing
 - option fix.factors in makeLearner was renamed to fix.factors.prediction for clarity
 - getTaskData now has recodeY = "drop.levels" which drops empty factor levels
+- classif.ada: added "loss" hyperpar
 - new measures
--- brier
+- brier
+- add missings properties to all ctree and cforest methods:
+  regr/classif for ctree, regr/classif/surv for cforest, and regr/classif for blackboost
+- update on learners: added sparseLDA and removed xgboost
+- reg.km: added param 'iso'
+- classif.mda: added param 'start.method' and changed its default to 'lvq'
+- tuneDesign: Tune a learner with a given Design, so that you can tune it with ParamHelpers::generateDesign
 
 mlr_2.3:
 - resample now returns an object of class ResampleResult (downward compatible)

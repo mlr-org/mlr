@@ -18,10 +18,9 @@ makeCostSensRegrWrapper = function(learner) {
   # we cannot make use of 'se' here
   learner = setPredictType(learner, "response")
   id = paste("costsens", learner$id, sep = ".")
-  x = makeHomogeneousEnsemble(id, learner, package = learner$package,
+  x = makeHomogeneousEnsemble(id, type = "costsens", learner, package = learner$package,
     learner.subclass = "CostSensRegrWrapper", model.subclass = "CostSensRegrModel")
-  x$type = "costsens"
-  removeProperties(x, c("weights", "se", "prob"))
+  removeProperties(x, c("weights", "prob"))
 }
 
 #' @export

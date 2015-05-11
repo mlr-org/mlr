@@ -14,6 +14,7 @@ makeRLearner.regr.km = function() {
       makeNumericVectorLearnerParam(id = "lower"),
       makeNumericVectorLearnerParam(id = "upper"),
       makeUntypedLearnerParam(id = "control"),
+      makeLogicalLearnerParam(id = "iso", default = FALSE),
       makeLogicalLearnerParam(id = "jitter", default = FALSE, when = "predict")
     ),
     par.vals = list(jitter = FALSE),

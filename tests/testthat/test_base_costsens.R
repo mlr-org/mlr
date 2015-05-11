@@ -27,6 +27,10 @@ test_that("costsens", {
   m2 = m$learner.model$next.model$learner.model
   expect_equal(m2$control$minsplit, 50)
 
+  lrn = makeCostSensRegrWrapper(makeLearner("regr.rpart"))
+  r = resample(lrn, costsens.task, rdesc)
+  expect_true(!is.na(r$aggr))
+
   lrn = makeCostSensWeightedPairsWrapper(makeLearner("classif.rpart"))
   r = resample(lrn, costsens.task, rdesc)
   expect_true(!is.na(r$aggr))

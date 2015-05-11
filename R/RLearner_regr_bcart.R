@@ -32,7 +32,6 @@ trainLearner.regr.bcart = function(.learner, .task, .subset, .weights = NULL, ..
     d.factor = d$data[, factor.ind, drop = FALSE]
     d.factor = createDummyFeatures(d.factor, method = "reference")
     d$data = cbind(d.num, d.factor)
-    print(names(d$data))
     return(tgp::bcart(X = d$data, Z = d$target, basemax = n.num, pred.n = FALSE, ...))
   } else {
     return(tgp::bcart(X = d$data, Z = d$target, pred.n = FALSE, ...))
@@ -49,7 +48,6 @@ predictLearner.regr.bcart = function(.learner, .model, .newdata, ...) {
     newdata.factor = .newdata[, factor.ind, drop = FALSE]
     newdata.factor = createDummyFeatures(newdata.factor, method = "reference")
     newdata = cbind(newdata.num, newdata.factor)
-    print(names(newdata))
     p = predict(.model$learner.model, XX = newdata, pred.n = FALSE, ...)
   } else {
     p = predict(.model$learner.model, XX = .newdata, pred.n = FALSE, ...)

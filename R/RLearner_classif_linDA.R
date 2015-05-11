@@ -15,7 +15,7 @@ makeRLearner.classif.linDA = function() {
 
 #' @export
 trainLearner.classif.linDA = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  d = getTaskData(.task, .subset, target.extra = TRUE)
+  d = getTaskData(.task, .subset, target.extra = TRUE, recode.target = "drop.levels")
   DiscriMiner::linDA(variables = d$data, group = d$target, ...)
 }
 

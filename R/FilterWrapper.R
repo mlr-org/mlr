@@ -54,6 +54,7 @@ makeFilterWrapper = function(learner, fw.method = "rf.importance", fw.perc = NUL
 
   lrn = makeBaseWrapper(
     id = paste(learner$id, "filtered", sep = "."),
+    type = learner$type,
     next.learner = learner,
     package = filter$pkg,
     par.set = makeParamSet(

@@ -3,8 +3,7 @@ context("UnsupervisedTask")
 test_that("UnsupervisedTask", {
   ct1 = noclass.task
 
-  expect_error(makeClassifTask(data = 44),
-    "Must be a data.frame")
+  expect_error(makeClassifTask(data = 44), "'data.frame'")
 
   # wrong vars
   expect_error(subsetTask(noclass.task, vars = c("Sepal.Length", "x", "y")))
