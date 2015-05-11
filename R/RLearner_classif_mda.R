@@ -6,14 +6,17 @@ makeRLearner.classif.mda = function() {
     # FIXME: stringdot pars and check order, scale and offset limits
     par.set = makeParamSet(
       makeUntypedLearnerParam(id = "subclasses", default = 2L),
-      makeIntegerLearnerParam(id = "iter", default = 5L, lower = 1L),
+      makeIntegerLearnerParam(id = "sub.df", lower = 1L),
+      makeIntegerLearnerParam(id = "tot.df", lower = 1L),
       makeIntegerLearnerParam(id = "dimension", lower = 1L),
+      makeIntegerLearnerParam(id = "iter", default = 5L, lower = 1L),
       makeDiscreteLearnerParam(id = "method", default = mda::polyreg,
         values = list(polyreg = mda::polyreg, mars = mda::mars, bruto = mda::bruto, gen.ridge = mda::gen.ridge)),
-      makeLogicalLearnerParam(id = "trace", default = FALSE),
       makeLogicalLearnerParam(id = "keep.fitted", default = TRUE),
+      makeLogicalLearnerParam(id = "trace", default = FALSE),
+      makeDiscreteLearnerParam(id = "start.method", default = "kmeans", values = c("kmeans", "lvq")),
       makeIntegerLearnerParam(id = "tries", default = 5L, lower = 1L),
-      makeDiscreteLearnerParam(id = "start.method", default = "kmeans", values = c("kmeans", "lvq"))
+      makeDiscreteLearnerParam(id = "criterion", default = "misclassification", values = c("misclassification", "deviance"))
     ),
     par.vals = list(keep.fitted = FALSE, start.method = "lvq"),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
