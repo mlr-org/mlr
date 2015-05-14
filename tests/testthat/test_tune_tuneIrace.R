@@ -104,32 +104,32 @@ test_that("tuneIrace handles the number of digits", {
     measures = list(mmce), show.info = FALSE)  
 })
 
-test_that("tuneIrace uses irace digits", {
+test_that("tuneIrace uses digits", {
   lrn = makeLearner("classif.gbm", predict.type = "prob")
   rdesc = makeResampleDesc(method = "Holdout")
   
-  ctrl = makeTuneControlIrace(maxExperiments = 60L, irace.digits = 5L)
+  ctrl = makeTuneControlIrace(maxExperiments = 60L, digits = 5L)
   ps = makeParamSet(makeNumericParam("shrinkage", lower = 1e-5, upper = 1e-4))
   lrn.tune = makeTuneWrapper(lrn, resampling = rdesc, par.set = ps, 
     control = ctrl, measure = list(mmce), show.info = FALSE)
   res = resample(lrn.tune, task = multiclass.task, rdesc, 
-    measures = list(mmce), show.info = FALSE)
+    measures = list(mmce), show.info = FALSE)    
   
-  ctrl = makeTuneControlIrace(maxExperiments = 60L, irace.digits = 4L)
+  ctrl = makeTuneControlIrace(maxExperiments = 60L, digits = 4L)
   ps = makeParamSet(makeNumericParam("shrinkage", lower = 1e-5, upper = 1e-4))
   lrn.tune = makeTuneWrapper(lrn, resampling = rdesc, par.set = ps, 
     control = ctrl, measure = list(mmce), show.info = FALSE)
   expect_error(suppressAll(resample(lrn.tune, task = multiclass.task, rdesc, 
     measures = list(mmce), show.info = FALSE)))
   
-  ctrl = makeTuneControlIrace(maxExperiments = 60L, irace.digits = "a")
+  ctrl = makeTuneControlIrace(maxExperiments = 60L, digits = "a")
   ps = makeParamSet(makeNumericParam("shrinkage", lower = 1e-5, upper = 1e-4))
   lrn.tune = makeTuneWrapper(lrn, resampling = rdesc, par.set = ps, 
     control = ctrl, measure = list(mmce), show.info = FALSE)
   expect_error(suppressAll(resample(lrn.tune, task = multiclass.task, rdesc, 
     measures = list(mmce), show.info = FALSE)))
   
-  ctrl = makeTuneControlIrace(maxExperiments = 60L, irace.digits = c(6L, 7L))
+  ctrl = makeTuneControlIrace(maxExperiments = 60L, digits = c(6L, 7L))
   ps = makeParamSet(makeNumericParam("shrinkage", lower = 1e-5, upper = 1e-4))
   lrn.tune = makeTuneWrapper(lrn, resampling = rdesc, par.set = ps, 
     control = ctrl, measure = list(mmce), show.info = FALSE)
