@@ -1,7 +1,7 @@
 context("classif_nodeHarvest")
 
 test_that("classif_nodeHarvest", {
-  requirePackages("nodeHarvest")
+  requirePackages("nodeHarvest", default.method = "load")
   
   parset.list = list(
     list(nodes = 100L),
@@ -25,6 +25,6 @@ test_that("classif_nodeHarvest", {
   
   testSimpleParsets("classif.nodeHarvest", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.predicts.list, parset.list)
-  testProbParsets ("classif.nodeHarvest", binaryclass.df, binaryclass.target,
+  testProbParsets("classif.nodeHarvest", binaryclass.df, binaryclass.target,
                    binaryclass.train.inds, old.probs.list, parset.list)
 })

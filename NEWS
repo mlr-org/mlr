@@ -14,6 +14,10 @@ mlr_2.4:
 - classif.mda: added param 'start.method' and changed its default to 'lvq', added params 'sub.df', 'tot.df' and 'criterion'.
 - tuneDesign: Tune a learner with a given Design, so that you can tune it with ParamHelpers::generateDesign
 
+- new learners:
+-- classif.nodeHarvest
+-- regr.nodeHarvest
+
 mlr_2.3:
 - resample now returns an object of class ResampleResult (downward compatible)
   to allow for a print method.
