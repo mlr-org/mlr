@@ -13,6 +13,8 @@ mlr_2.4:
 - reg.km: added param 'iso'
 - classif.mda: added param 'start.method' and changed its default to 'lvq', added params 'sub.df', 'tot.df' and 'criterion'.
 - tuneDesign: Tune a learner with a given Design, so that you can tune it with ParamHelpers::generateDesign
+- tuneIrace: allows to set the precision / digits within irace (using the argument 'irace.digits'
+  in makeTuneControlIrace); default is maximum precision
 
 - new learners:
 -- classif.nodeHarvest

@@ -87,6 +87,13 @@ Further control parameters passed to the \code{control} argument of \code{\link[
 The columns have to be named according to the \code{ParamSet} which will be used in \code{tune()}.
 Proper designs can be created with \code{\link[ParamHelpers]{generateDesign}} for instance.}
 
+\item{resolution}{[\code{integer}]\cr
+Resolution of the grid for each numeric/integer parameter in \code{par.set}.
+For vector parameters, it is the resolution per dimension.
+Either pass one resolution for all parameters, or a named vector.
+See \code{\link[ParamHelpers]{generateGridDesign}}.
+Default is 10.}
+
 \item{n.instances}{[\code{integer(1)}]\cr
 Number of random resampling instances for irace, see details.
 Default is 100.}
@@ -98,13 +105,6 @@ Default is \code{FALSE}.}
 \item{maxit}{[\code{integer(1)}]\cr
 Number of iterations for random search.
 Default is 100.}
-
-\item{design}{[\code{integer}]\cr
-Resolution of the grid for each numeric/integer parameter in \code{par.set}.
-For vector parameters, it is the resolution per dimension.
-Either pass one resolution for all parameters, or a named vector.
-See \code{\link[ParamHelpers]{generateGridDesign}}.
-Default is 10.}
 }
 \value{
 [\code{\link{TuneControl}}]. The specific subclass is one of
