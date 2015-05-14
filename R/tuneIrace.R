@@ -14,11 +14,18 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
   show.irace.output = control$extra.args$show.irace.output
   control$extra.args$show.irace.output = NULL
   instances = lapply(seq_len(n.instances), function(i) makeResampleInstance(resampling, task = task))
-
+  if (is.null(control$extra.args$irace.digits)) {
+    irace.digits = .Machine$integer.max
+  } else {
+    irace.digits = control$extra.args$irace.digits
+    assertInt(irace.digits)
+    control$extra.args$irace.digits = NULL
+  }
+  
   parameters = convertParamSetToIrace(par.set)
   log.file = tempfile()
-  tuner.config = c(list(hookRun = hookRun, instances = instances, logFile = log.file), control$extra.args)
-
+  tuner.config = c(list(hookRun = hookRun, instances = instances, logFile = log.file), 
+    control$extra.args, digits = irace.digits)
   g = if (show.irace.output) identity else capture.output
   g(or <- irace::irace(tunerConfig = tuner.config, parameters = parameters))
   unlink(log.file)
