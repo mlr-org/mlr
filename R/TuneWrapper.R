@@ -27,7 +27,7 @@
 #'   makeDiscreteParam("C", values = 1:2),
 #'   makeDiscreteParam("sigma", values = 1:2)
 #' )
-#' ctrl = makeTuneControlGrid()
+#' ctrl = makeTuneControlGrid(budget = 4L)
 #' inner = makeResampleDesc("Holdout")
 #' outer = makeResampleDesc("CV", iters = 2)
 #' lrn = makeTuneWrapper(lrn, resampling = inner, par.set = ps, control = ctrl)

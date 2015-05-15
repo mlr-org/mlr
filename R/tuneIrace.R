@@ -14,6 +14,7 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
   control$extra.args$n.instances = NULL
   show.irace.output = control$extra.args$show.irace.output
   control$extra.args$show.irace.output = NULL
+  control$extra.args$maxExperiments = control$budget
   instances = lapply(seq_len(n.instances), function(i) makeResampleInstance(resampling, task = task))
   if (is.null(control$extra.args$digits)) {
     control$extra.args$digits = .Machine$integer.max

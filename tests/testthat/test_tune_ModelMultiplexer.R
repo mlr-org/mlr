@@ -80,14 +80,14 @@ test_that("ModelMultiplexer tuning", {
   tune.ps = makeModelMultiplexerParamSet(lrn,
     makeIntegerParam("minsplit", lower = 1, upper = 50))
   # tune with random
-  ctrl = makeTuneControlRandom(maxit = 4L)
+  ctrl = makeTuneControlRandom(budget = 4L)
   res = tuneParams(lrn, binaryclass.task, rdesc, par.set = tune.ps, control = ctrl)
   expect_true(setequal(class(res), c("TuneResult", "OptResult")))
   y = getOptPathY(res$opt.path)
   expect_true(!is.na(y) && is.finite(y))
   # tune with irace
   task = subsetTask(binaryclass.task, subset = c(1:20, 150:170))
-  ctrl = makeTuneControlIrace(maxExperiments = 40L, nbIterations = 2L, minNbSurvival = 1L)
+  ctrl = makeTuneControlIrace(budget = 40L, nbIterations = 2L, minNbSurvival = 1L)
   res = tuneParams(lrn, task, rdesc, par.set = tune.ps, control = ctrl)
   expect_true(setequal(class(res), c("TuneResult", "OptResult")))
   y = getOptPathY(res$opt.path)

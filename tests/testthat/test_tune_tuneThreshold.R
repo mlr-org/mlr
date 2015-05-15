@@ -13,9 +13,7 @@ test_that("tuneThreshold", {
   # multiclass
   m = train(lrn, multiclass.task)
   p = predict(m, multiclass.task)
-  tr = tuneThreshold(p, mmce, control=list(maxit=5L))
+  expect_warning((tr = tuneThreshold(p, mmce, control = list(maxit = 5L), budget = 50L)))
   expect_true(length(tr$th) == 3 && all(tr$th >= 0) && all(tr$th <= 1))
   expect_true(tr$perf >= 0 && tr$perf < 0.1)
 })
-
-

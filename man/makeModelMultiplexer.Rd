@@ -45,8 +45,8 @@ ps = makeModelMultiplexerParamSet(lrn,
 print(ps)
 rdesc = makeResampleDesc("CV", iters = 2L)
 # to save some time we use random search. but you probably want something like this:
-# ctrl = makeTuneControlIrace(maxExperiments = 500L)
-ctrl = makeTuneControlRandom(maxit = 10L)
+# ctrl = makeTuneControlIrace(budget = 500L)
+ctrl = makeTuneControlRandom(budget = 10L)
 res = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)
 print(res)
 print(head(as.data.frame(res$opt.path)))
