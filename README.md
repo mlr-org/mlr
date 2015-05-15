@@ -1,5 +1,7 @@
 ![mlr](https://raw.githubusercontent.com/berndbischl/mlr/gh-pages/images/mlrLogo_blue_141x64.png): Machine Learning in R
 ==========================
+[![Build Status](https://travis-ci.org/berndbischl/mlr.png)](https://travis-ci.org/berndbischl/mlr)
+[![CRAN Status Badge](http://www.r-pkg.org/badges/version/mlr)](http://cran.r-project.org/web/packages/mlr)
 
 * [Offical CRAN release site](http://cran.r-project.org/web/packages/mlr/)
 * [Detailed Tutorial](http://berndbischl.github.io/mlr/tutorial/html/) ([online](http://berndbischl.github.io/mlr/tutorial/html/), [download for offline usage](http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip))
@@ -9,9 +11,7 @@
     ```splus
     devtools::install_github("berndbischl/mlr")
     ```
-
 * [Further installation instructions](https://github.com/tudo-r/PackagesInfo/wiki/Installation-Information)
-* Travis CI: [![Build Status](https://travis-ci.org/berndbischl/mlr.png)](https://travis-ci.org/berndbischl/mlr)
 
 
 Introduction
@@ -64,7 +64,7 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
 [devel](https://github.com/berndbischl/mlr/blob/master/NEWS) version on Github.
 
 * 2015-04-30:
-  * I (Bernd) was pretty busy as I had to change cities and workplaces. I now head the Computational Statistics Group at LMU Munich. More importantly, this resulted in me not taking care of requests and issues as much as I wanted during the last weeks. Apologies and hopefully I have more time from now on.  
+  * I (Bernd) was pretty busy as I had to change cities and workplaces. I now head the Computational Statistics Group at LMU Munich. More importantly, this resulted in me not taking care of requests and issues as much as I wanted during the last weeks. Apologies and hopefully I have more time from now on.
   * mlr got not one, but three project slots in Google Summer of Code 2015. Many thanks to the R Foundation, Google and all students who applied with exciting proposals. Best of luck to Tong, Zach and Pascal, who will work on SVM ensembles, mlr's visualization system and better hyperparameter / tuning options.
 * 2015-02-17:
   * **We have been informed that our tutorial "Applied Machine Learning and Efficient Model Selection with mlr" has been accepted for [useR 2015](http://user2015.math.aau.dk/) in Aarlborg. Hoping to meet all of you there in June!**
@@ -87,8 +87,8 @@ Talks and Videos
 Get in Touch
 ============
 
-Please use the issue tracker for problems, questions and feature requests. 
-Don't email in most cases, as we forget these mails. 
+Please use the issue tracker for problems, questions and feature requests.
+Don't email in most cases, as we forget these mails.
 
 We also do not hate beginners and it is perfectly valid to mark a issue as "Question".
 
