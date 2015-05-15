@@ -34,7 +34,7 @@
 #'   makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
 #'   makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x)
 #' )
-#' ctrl = makeTuneControlGrid(resolution = 2L)
+#' ctrl = makeTuneControlGrid(resolution = 2L, budget = 4L)
 #' rdesc = makeResampleDesc("CV", iters = 2L)
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)
@@ -53,7 +53,7 @@
 #'     requires = quote(kernel == "polydot"))
 #' )
 #' print(ps)
-#' ctrl = makeTuneControlIrace(maxExperiments = 200L)
+#' ctrl = makeTuneControlIrace(budget = 200L)
 #' rdesc = makeResampleDesc("Holdout")
 #' res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)

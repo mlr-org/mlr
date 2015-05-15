@@ -46,7 +46,7 @@ test_that("benchmark", {
   learners = list(makeLearner("classif.lda"), makeLearner("classif.rpart"))
   learners = c(learners, list(
     makeFeatSelWrapper(learners[[1L]], resampling = rin, control = makeFeatSelControlRandom(maxit = 3)),
-    makeTuneWrapper(learners[[2L]], resampling = rin, par.set = ps, control = makeTuneControlGrid()),
+    makeTuneWrapper(learners[[2L]], resampling = rin, par.set = ps, control = makeTuneControlGrid(budget = 2L)),
     makeFilterWrapper(learners[[1L]], fw.perc = 0.5)
   ))
   resamplings = list(rin, makeResampleDesc("Bootstrap", iters = 2L))

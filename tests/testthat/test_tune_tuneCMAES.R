@@ -6,7 +6,11 @@ test_that("tuneCMAES", {
     makeNumericParam("cp", lower = 0.001, upper = 1),
     makeIntegerParam("minsplit", lower = 1, upper = 10)
   )
-  ctrl1 = makeTuneControlCMAES(start = list(cp = 0.05, minsplit = 5L), maxit = 5)
+  ctrl1 = makeTuneControlCMAES(start = list(cp = 0.05, minsplit = 5L), budget = 20L)
+  expect_identical(ctrl1$budget, 20L)
+  expect_true(ctrl1$extra.args$lambda * ctrl1$extra.args$maxit <= 20L)
+  expect_true(ctrl1$extra.args$lambda * (ctrl1$extra.args$maxit + 1) > 20L)
+  expect_true((ctrl1$extra.args$lambda + 1) * ctrl1$extra.args$maxit > 20L)
   tr1 = tuneParams(makeLearner("classif.rpart"), multiclass.task, res,
     par.set = ps1, control = ctrl1)
 
@@ -17,7 +21,7 @@ test_that("tuneCMAES", {
   )
 
   ctrl2 = makeTuneControlCMAES(start = list(cutoff = c(1/3, 1/3, 1/3), ntree = 200L),
-    maxit = 5, sigma = 2)
+    budget = 30, sigma = 2)
   tr2 = tuneParams(makeLearner("classif.randomForest"), multiclass.task, res,
     par.set = ps2, control = ctrl2)
   expect_equal(ncol(as.data.frame(tr2$opt.path)), 4+1+2+2)
@@ -34,5 +38,7 @@ test_that("tuneCMAES", {
     par.set = ps3, control = ctrl1))
 })
 
-
-
+test_that("makeTuneControlCMAES produces an error, if budget setting is not appropriate", {
+  expect_error(makeTuneControlCMAES(start = list(cp = 0.05, minsplit = 5L), maxit = 5L))
+  expect_error(makeTuneControlCMAES(start = list(cp = 0.05, minsplit = 5L), budget = 10L, maxit = 15L))
+})

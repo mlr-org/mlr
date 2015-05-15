@@ -71,7 +71,7 @@ ps = makeParamSet(
   makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
   makeNumericParam("sigma", lower = -12, upper = 12, trafo = function(x) 2^x)
 )
-ctrl = makeTuneControlRandom(maxit = 3L)
+ctrl = makeTuneControlRandom(budget = 3L)
 rdesc = makeResampleDesc("CV", iters = 2L, stratify = TRUE)
 res = tuneParams(lrn, sonar.task, rdesc, par.set = ps, control = ctrl)
 print(res)

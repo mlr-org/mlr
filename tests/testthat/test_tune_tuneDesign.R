@@ -13,7 +13,7 @@ test_that("tuneDesign", {
   # discretized param set
   des = expand.grid(C = c.seq, sigma = sigma.seq)
   des.f = do.call(cbind.data.frame,lapply(des, factor))
-  ctrl = makeTuneControlDesign(design = des.f)
+  ctrl = makeTuneControlDesign(design = des.f, budget = 9L)
   tr1 = tuneParams(lrn, multiclass.task, rin, par.set = ps1, control = ctrl)
   op1 = as.data.frame(tr1$opt.path)
   op1$C = as.numeric(as.character(op1$C))
@@ -30,11 +30,19 @@ test_that("tuneDesign works with dependent params", {
   lrn = makeLearner("classif.ksvm")
   rdesc = makeResampleDesc("Holdout")
   des = generateGridDesign(par.set = ps, resolution = 3L)
-  ctrl = makeTuneControlDesign(design = des)
+  ctrl = makeTuneControlDesign(design = des, budget = nrow(des))
   tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
   expect_true(getOptPathLength(tr$opt.path) == 3 + 3 * 3)
   expect_true(!is.na(tr$y))
 })
 
-
-
+test_that("makeTuneControlDesign throws an error, if budget setting is not appropriate", {
+  ps = makeParamSet(
+    makeDiscreteParam("kernel", values = c("vanilladot", "rbfdot")),
+    makeNumericParam("C", lower = 1, upper = 2),
+    makeNumericParam("sigma", lower = 1, upper = 2, requires = quote(kernel == "rbfdot"))
+  )
+  des = generateGridDesign(par.set = ps, resolution = 3L)
+  expect_error(makeTuneControlDesign(design = des))
+  expect_error(makeTuneControlDesign(design = des, budget = 50L))
+})
