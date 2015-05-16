@@ -106,7 +106,8 @@ Suggests:
     stepPlr,
     testthat,
     tgp,
-    TH.data
+    TH.data,
+    wsrf
 LazyData: yes
 ByteCompile: yes
 Version: 2.4
