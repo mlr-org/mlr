@@ -17,6 +17,7 @@ mlr_2.4:
   in makeTuneControlIrace); default is maximum precision
 
 - new learners:
+-- classif.bst
 -- classif.nodeHarvest
 -- classif.pamr
 -- classif.rFerns
