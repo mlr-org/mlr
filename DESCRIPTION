@@ -85,6 +85,7 @@ Suggests:
     mRMRe,
     nnet,
     nodeHarvest,
+    pamr,
     party,
     penalized,
     pls,
