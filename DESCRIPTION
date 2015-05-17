@@ -64,6 +64,7 @@ Suggests:
     extraTrees,
     flare,
     FNN,
+    frbs,
     FSelector,
     gbm,
     GenSA,
