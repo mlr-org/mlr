@@ -9,7 +9,7 @@ mlr_2.4:
 - brier
 - add missings properties to all ctree and cforest methods:
   regr/classif for ctree, regr/classif/surv for cforest, and regr/classif for blackboost
-- update on learners: added sparseLDA and removed xgboost
+- learner xgboost was removed
 - reg.km: added param 'iso'
 - classif.mda: added param 'start.method' and changed its default to 'lvq', added params 'sub.df', 'tot.df' and 'criterion'.
 - tuneDesign: Tune a learner with a given Design, so that you can tune it with ParamHelpers::generateDesign
@@ -22,6 +22,7 @@ mlr_2.4:
 -- classif.nodeHarvest
 -- classif.pamr
 -- classif.rFerns
+-- classif.sparseLDA
 -- classif.wsrf
 -- regr.bst
 -- regr.nodeHarvest
