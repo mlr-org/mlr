@@ -23,6 +23,7 @@ mlr_2.4:
 -- classif.pamr
 -- classif.rFerns
 -- classif.wsrf
+-- regr.bst
 -- regr.nodeHarvest
 -- regr.slim
 
