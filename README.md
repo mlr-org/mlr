@@ -2,6 +2,7 @@
 ==========================
 [![Build Status](https://travis-ci.org/berndbischl/mlr.png)](https://travis-ci.org/berndbischl/mlr)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/mlr)](http://cran.r-project.org/web/packages/mlr)
+[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/mlr)](http://cran.rstudio.com/web/packages/mlr/index.html)
 
 * [Offical CRAN release site](http://cran.r-project.org/web/packages/mlr/)
 * [Detailed Tutorial](http://berndbischl.github.io/mlr/tutorial/html/) ([online](http://berndbischl.github.io/mlr/tutorial/html/), [download for offline usage](http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip))
