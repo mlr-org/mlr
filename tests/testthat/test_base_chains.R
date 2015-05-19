@@ -19,7 +19,7 @@ test_that("chains", {
   )
 
   lrn5 = makeTuneWrapper(lrn4, resampling = inner, par.set = ps,
-    control = makeTuneControlGrid())
+    control = makeTuneControlGrid(budget = 4L))
   m = train(lrn5, task = multiclass.task)
   p = predict(m, task = multiclass.task)
   or = m$learner.model$opt.result

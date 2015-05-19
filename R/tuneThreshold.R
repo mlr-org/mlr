@@ -20,11 +20,13 @@
 #' @param control [\code{list}]\cr
 #'   Control object for \code{\link[cmaes]{cma_es}} when used.
 #'   Default is empty list.
+#' @param budget [\code{integer(1)}]\cr
+#'   Maximum budget for tuning.
 #' @return [\code{list}]. A named list with with the following components:
 #'   \code{th} is the optimal threshold, \code{perf} the performance value.
 #' @family tune
 #' @export
-tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list()) {
+tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(), budget = 50L) {
   assertClass(pred, classes = "Prediction")
   assertClass(measure, classes = "Measure")
   if (!missing(task))
@@ -32,6 +34,7 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
   if (!missing(model))
     assertClass(model, classes = "WrappedModel")
   assertList(control)
+  budget = asCount(budget)
 
   td = pred$task.desc
   if (missing(measure))
@@ -58,6 +61,20 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
   } else {
     requirePackages("cmaes", why = "tuneThreshold", default.method = "load")
     start = rep(0.5, k)
+
+    # assure that the CMAES does not exceed the given budget
+    if (is.null(control$lambda))
+      control$lambda = as.integer(4 + floor(3 * log(k)))
+    if (!is.null(control$maxit) && (control$maxit != as.integer(floor(budget / control$lambda))))
+      warningf("Considering the given budget, the number of generations (maxit = %i) was changed to %i.",
+        control$maxit, as.integer(floor(budget / control$lambda)))
+    control$maxit = as.integer(floor(budget / control$lambda))
+
+    # assure that the budget is big enough for at least one generation
+    if (control$maxit == 0)
+      stopf("The current budget (%i) is too small. It should at least have the size of one population (lambda = %i)!",
+        budget, control$lambda)
+
     or = cmaes::cma_es(par = start, fn = fitn, lower = 0, upper = 1, control = control)
     th = or$par / sum(or$par)
     names(th) = cls

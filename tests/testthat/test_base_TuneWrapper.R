@@ -7,7 +7,7 @@ test_that("TuneWrapper", {
 
   ps1 = makeParamSet(makeDiscreteParam(id = "C", values = c(1, 0.000001)))
   lrn1a = makeLearner("classif.ksvm")
-  lrn2 = makeTuneWrapper(lrn1a, resampling = inner, par.set = ps1, control = makeTuneControlGrid())
+  lrn2 = makeTuneWrapper(lrn1a, resampling = inner, par.set = ps1, control = makeTuneControlGrid(budget = 2))
 
   m = train(lrn2, task = multiclass.task)
 
@@ -34,7 +34,8 @@ test_that("TuneWrapper", {
 
   # check that predict.type is taken from base learner
   lrn1 = makeLearner("classif.ksvm", predict.type = "prob")
-  lrn2 = makeTuneWrapper(lrn1, resampling = makeResampleDesc("Holdout"), par.set = ps1, control = makeTuneControlGrid())
+  lrn2 = makeTuneWrapper(lrn1, resampling = makeResampleDesc("Holdout"), 
+    par.set = ps1, control = makeTuneControlGrid(budget = 2))
   expect_equal(lrn2$predict.type, "prob")
   r = resample(lrn2, binaryclass.task, makeResampleDesc("Holdout"), measures = mlr::auc)
   expect_true(!is.na(r$aggr[["auc.test.mean"]]))
@@ -44,7 +45,7 @@ test_that("TuneWrapper", {
 test_that("TuneWrapper passed predict hyper pars correctly to base learner", {
   lrn = makeLearner("classif.glmnet", predict.type = "prob")
   rdesc = makeResampleDesc("Holdout", split = 0.2)
-  ctrl = makeTuneControlRandom(maxit = 1L)
+  ctrl = makeTuneControlRandom(budget = 1L)
   ps = makeParamSet(makeNumericParam("s", lower = 0.001, upper = 0.1))
   tw = makeTuneWrapper(lrn, rdesc, par.set = ps, control = ctrl)
   # this resulted in an error as "s" was not passed to predict
@@ -58,7 +59,7 @@ test_that("TuneWrapper uses tune.threshold", {
   colnames(costs) = rownames(costs) = getTaskDescription(binaryclass.task)$class.levels
   mm = makeCostMeasure(id = "costs", costs = costs, task = binaryclass.task, best = 0, worst = 5)
   ps = makeParamSet(makeDiscreteParam("method", "moment"))
-  ctrl = makeTuneControlGrid(tune.threshold = TRUE)
+  ctrl = makeTuneControlGrid(tune.threshold = TRUE, budget = 1)
   lrn = makeTuneWrapper(lrn, resampling = rdesc, measures = mm, par.set = ps, control = ctrl)
   m = train(lrn, binaryclass.task)
   p = predict(m, binaryclass.task)
@@ -73,7 +74,7 @@ test_that("TuneWrapper works with getTuneResult and getNestedTuneResults", {
   outer = makeResampleDesc("CV", iters = 2)
   ps1 = makeParamSet(makeDiscreteParam(id = "C", values = c(1, 0.000001)))
   lrn1a = makeLearner("classif.ksvm")
-  lrn2 = makeTuneWrapper(lrn1a, resampling = inner, par.set = ps1, control = makeTuneControlGrid())
+  lrn2 = makeTuneWrapper(lrn1a, resampling = inner, par.set = ps1, control = makeTuneControlGrid(budget = 2L))
   r = resample(lrn2, binaryclass.task, outer, measures = mlr::mmce, extract = getTuneResult)
   xs = getNestedTuneResultsX(r)
   expect_equal(colnames(xs), "C")
@@ -86,10 +87,10 @@ test_that("TuneWrapper works with getTuneResult and getNestedTuneResults", {
 
 test_that("TuneWrapper works with nested sampling and threshold tuning, cf. issue 242", {
   rdesc = makeResampleDesc("Holdout")
-  ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(nsub = 2L))
   ps = makeParamSet(
     makeDiscreteParam("C", 2^(-1))
   )
+  ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(nsub = 2L), budget = 1L)
   lrn1 = makeLearner("classif.ksvm", predict.type = "prob")
   lrn2 = makeTuneWrapper(lrn1, resampling = rdesc, measures = list(ber, mmce),
     par.set = ps, control = ctrl, show.info = FALSE)
