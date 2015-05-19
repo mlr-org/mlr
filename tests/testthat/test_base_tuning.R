@@ -8,7 +8,7 @@ test_that("tune", {
     makeDiscreteParam("cp", values = cp),
     makeDiscreteParam("minsplit", values = minsplit)
   )
-  ctrl = makeTuneControlGrid()
+  ctrl = makeTuneControlGrid(budget = 4L)
   folds = 3
 
   tr = e1071::tune.rpart(formula = multiclass.formula, data = multiclass.df, cp = cp, minsplit = minsplit,
@@ -36,13 +36,14 @@ test_that("tune", {
   rdesc = makeResampleDesc("Holdout")
   ms = c("acc", "mmce", "timefit")
   lrn2 = makeLearner("classif.rpart", predict.type = "prob")
-  ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(nsub = 2L))
+  ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(nsub = 2L), budget = 4L)
   tr2 = tuneParams(lrn2, binaryclass.task, rdesc, par.set = ps1, control = ctrl)
   expect_true(is.numeric(as.data.frame(tr2$opt.path)$threshold))
   expect_true(isScalarNumeric(tr2$threshold))
 
   # check multiclass thresholding
-  ctrl = makeTuneControlGrid(tune.threshold = TRUE, tune.threshold.args = list(control = list(maxit = 2)))
+  ctrl = makeTuneControlGrid(tune.threshold = TRUE,
+    tune.threshold.args = list(control = list(maxit = 2)), budget = 4L)
   tr3 = tuneParams(lrn2, multiclass.task, rdesc, par.set = ps1, control = ctrl)
   op.df = as.data.frame(tr3$opt.path)
   op.df = op.df[,grepl("threshold_", colnames(op.df))]
@@ -62,7 +63,7 @@ test_that("tuning works with infeasible pars", {
   )
   lrn = makeLearner("classif.rpart")
   rdesc = makeResampleDesc("Holdout", split = 0.2)
-  ctrl = makeTuneControlGrid()
+  ctrl = makeTuneControlGrid(budget = 2L)
   z = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
   d = as.data.frame(z$opt.path)
   expect_true(is.finite(d[1L, "mmce.test.mean"]))
@@ -78,7 +79,7 @@ test_that("tuning works with errors", {
   )
   lrn = makeLearner("classif.mock2")
   rdesc = makeResampleDesc("Holdout")
-  ctrl = makeTuneControlGrid()
+  ctrl = makeTuneControlGrid(budget = 2L)
   z = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
   d = as.data.frame(z$opt.path)
   expect_true(is.finite(d[1L, "mmce.test.mean"]))
@@ -92,7 +93,7 @@ test_that("tuning works with errors", {
 test_that("tuning works with tuneThreshold and multiple measures", {
   lrn = makeLearner("classif.rpart", predict.type = "prob")
   rdesc = makeResampleDesc("Holdout")
-  ctrl = makeTuneControlRandom(tune.threshold = TRUE, maxit = 2L)
+  ctrl = makeTuneControlRandom(tune.threshold = TRUE, budget = 2L)
   ps = makeParamSet(
     makeNumericParam("cp", lower = 0.1, upper = 0.2)
   )
@@ -104,9 +105,8 @@ test_that("tuning works with tuneThreshold and multiple measures", {
   ps = makeParamSet(
     makeDiscreteParam("cp", values = c(0.1, -1))
   )
-  ctrl = makeTuneControlGrid(tune.threshold = TRUE)
+  ctrl = makeTuneControlGrid(tune.threshold = TRUE, budget = 2L)
   res = tuneParams(lrn, sonar.task, resampling = rdesc, measures = list(mmce, auc),
     par.set = ps, control = ctrl)
   expect_true(is.numeric(res$y) && length(res$y) == 2L && !any(is.na(res$y)))
 })
-

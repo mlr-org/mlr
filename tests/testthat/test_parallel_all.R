@@ -27,7 +27,7 @@ test_that("parallel tuning", {
     lrn = makeLearner("classif.rpart")
     rdesc = makeResampleDesc("CV", iters = 2L)
     ps = makeParamSet(makeDiscreteParam("cp", values = c(0.01, 0.05)))
-    ctrl = makeTuneControlGrid()
+    ctrl = makeTuneControlGrid(budget = 2L)
     on.exit(parallelStop())
     parallelStart(mode = mode, cpus = 2L, level = level, show.info = FALSE)
     res = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)

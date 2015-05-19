@@ -68,7 +68,7 @@ test_that("clustering tune", {
     makeIntegerParam("N", lower = 2, upper = 10)
   )
 
-  ctrl = makeTuneControlRandom(maxit = 2)
+  ctrl = makeTuneControlRandom(budget = 2)
   tr = tuneParams(lrn, noclass.task, rdesc, par.set = ps, control = ctrl)
   expect_equal(getOptPathLength(tr$opt.path), 2)
   expect_true(!is.na(tr$y))

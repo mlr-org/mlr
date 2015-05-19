@@ -4,7 +4,8 @@
 \alias{tuneThreshold}
 \title{Tune prediction threshold.}
 \usage{
-tuneThreshold(pred, measure, task, model, nsub = 20L, control = list())
+tuneThreshold(pred, measure, task, model, nsub = 20L, control = list(),
+  budget = 50L)
 }
 \arguments{
 \item{pred}{[\code{\link{Prediction}}]\cr
@@ -28,6 +29,9 @@ Default is 20.}
 \item{control}{[\code{list}]\cr
 Control object for \code{\link[cmaes]{cma_es}} when used.
 Default is empty list.}
+
+\item{budget}{[\code{integer(1)}]\cr
+Maximum budget for tuning.}
 }
 \value{
 [\code{list}]. A named list with with the following components:
