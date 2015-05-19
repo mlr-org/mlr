@@ -11,7 +11,7 @@ test_that("tuneGrid", {
     makeDiscreteParam("C", values = c.seq),
     makeDiscreteParam("sigma", values = sigma.seq)
   )
-  ctrl = makeTuneControlGrid()
+  ctrl = makeTuneControlGrid(budget = 9L)
   tr1 = tuneParams(lrn, multiclass.task, rin, par.set = ps1, control = ctrl)
   op1 = as.data.frame(tr1$opt.path)
   op1$C = as.numeric(as.character(op1$C))
@@ -22,7 +22,7 @@ test_that("tuneGrid", {
     makeNumericParam("C", -2, 2, trafo = function(x) 2^x),
     makeNumericParam("sigma", -2, 2, trafo = function(x) 2^x)
   )
-  ctrl = makeTuneControlGrid(resolution = reso)
+  ctrl = makeTuneControlGrid(resolution = reso, budget = 9L)
   tr2 = tuneParams(lrn, multiclass.task, rin, par.set = ps2, control = ctrl)
   op2 = as.data.frame(trafoOptPath(tr2$opt.path))
   op1$exec.time = op2$exec.time = op1$error.message = NULL
@@ -38,11 +38,22 @@ test_that("tuneGrid works with dependent params", {
   )
   lrn = makeLearner("classif.ksvm")
   rdesc = makeResampleDesc("Holdout")
-  ctrl = makeTuneControlGrid(resolution = 3L)
+  ctrl = makeTuneControlGrid(resolution = 3L, budget = 3 + 3 * 3)
   tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
   expect_true(getOptPathLength(tr$opt.path) == 3 + 3 * 3)
   expect_true(!is.na(tr$y))
 })
 
-
-
+test_that("makeTuneControlGrid throws an error, if budget setting is not appropriate", {
+  ps = makeParamSet(
+    makeDiscreteParam("kernel", values = c("vanilladot", "rbfdot")),
+    makeNumericParam("C", lower = 1, upper = 2),
+    makeNumericParam("sigma", lower = 1, upper = 2, requires = quote(kernel == "rbfdot"))
+  )
+  lrn = makeLearner("classif.ksvm")
+  rdesc = makeResampleDesc("Holdout")
+  ctrl = makeTuneControlGrid(resolution = 3L)
+  expect_error(tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, show.info = FALSE))
+  ctrl = makeTuneControlGrid(resolution = 3L, budget = 50L)
+  expect_error(tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, show.info = FALSE))
+})

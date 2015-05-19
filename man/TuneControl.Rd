@@ -17,25 +17,25 @@
 \usage{
 makeTuneControlCMAES(same.resampling.instance = TRUE, impute.val = NULL,
   start = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = NULL, ...)
+  log.fun = NULL, budget = 100L, ...)
 
 makeTuneControlDesign(same.resampling.instance = TRUE, impute.val = NULL,
   design = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = NULL)
+  log.fun = NULL, budget = 100L)
 
 makeTuneControlGenSA(same.resampling.instance = TRUE, impute.val = NULL,
   start = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = NULL, ...)
+  log.fun = NULL, budget = 500L, ...)
 
 makeTuneControlGrid(same.resampling.instance = TRUE, impute.val = NULL,
   resolution = 10L, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = NULL)
+  log.fun = NULL, budget = 100L)
 
 makeTuneControlIrace(impute.val = NULL, n.instances = 100L,
   show.irace.output = FALSE, tune.threshold = FALSE,
-  tune.threshold.args = list(), log.fun = NULL, ...)
+  tune.threshold.args = list(), log.fun = NULL, budget = 1000L, ...)
 
-makeTuneControlRandom(same.resampling.instance = TRUE, maxit = 100L,
+makeTuneControlRandom(same.resampling.instance = TRUE, budget = 100L,
   tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL)
 }
 \arguments{
@@ -78,6 +78,9 @@ the currently used memory and the max memory ever used before
 (the latter two both taken from \code{\link{gc}}).
 See the implementation for details.}
 
+\item{budget}{[\code{integer(1)}]\cr
+Maximum budget for tuning.}
+
 \item{...}{[any]\cr
 Further control parameters passed to the \code{control} argument of \code{\link[cmaes]{cma_es}} and
 \code{tunerConfig} argument of \code{\link[irace]{irace}}.}
@@ -101,10 +104,6 @@ Default is 100.}
 \item{show.irace.output}{[\code{logical(1)}]\cr
 Show console output of irace while tuning?
 Default is \code{FALSE}.}
-
-\item{maxit}{[\code{integer(1)}]\cr
-Number of iterations for random search.
-Default is 100.}
 }
 \value{
 [\code{\link{TuneControl}}]. The specific subclass is one of

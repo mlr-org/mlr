@@ -5,10 +5,14 @@
 #' @export
 #' @rdname TuneControl
 makeTuneControlDesign = function(same.resampling.instance = TRUE, impute.val = NULL, design = NULL,
-  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL) {
+  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL, budget = 100L) {
+
   assertDataFrame(design, min.rows = 1)
+  if (nrow(design) != budget)
+    stopf("The given budget (%i) does not fit to the size of the design (%i)",
+      budget, nrow(design))
   makeTuneControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val,
     start = NULL, design = design,
     tune.threshold = tune.threshold, tune.threshold.args = tune.threshold.args,
-    log.fun = log.fun, cl = "TuneControlDesign")
+    log.fun = log.fun, cl = "TuneControlDesign", budget = budget)
 }
