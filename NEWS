@@ -15,6 +15,7 @@ mlr_2.4:
 - tuneDesign: Tune a learner with a given Design, so that you can tune it with ParamHelpers::generateDesign
 - tuneIrace: allows to set the precision / digits within irace (using the argument 'digits'
   in makeTuneControlIrace); default is maximum precision
+- generateLearningCurve and plotLearningCurve helps to plot the learning curve demonstrating how the performance increases with more observations.
 
 - new learners:
 -- classif.bst

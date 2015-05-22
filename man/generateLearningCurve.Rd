@@ -16,15 +16,17 @@ Learning algorithms which should be compared.}
 The task.}
 
 \item{resampling}{[\code{\link{ResampleDesc}} | \code{\link{ResampleInstance}}]\cr
-Resampling strategy. If no strategy is given a default "Holdout" will be performed.}
+Resampling strategy to evaluate the performance measure.
+If no strategy is given a default "Holdout" will be performed.}
 
 \item{percs}{[\code{numeric}]\cr
 Vector of percentages to be drawn from the training split.
+These values represent the x-axis.
 Internally \code{\link{makeDownsampleWrapper}} is used in combination with \code{\link{benchmark}}.
-Thus the result will be noisy as the quality of the sample can differ.}
+Thus for each percentage a different set of observations is drawn resulting in noisy performance measures as the quality of the sample can differ.}
 
 \item{measures}{[(list of) \code{\link{Measure}}]\cr
-Performance measures for the task.}
+Performance measures to generate learning curves for, representing the y-axis.}
 
 \item{stratify}{[\code{logical(1)}]\cr
 Only for classification:
