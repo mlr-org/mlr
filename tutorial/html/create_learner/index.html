@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../img/favicon.ico">
 
-        <title>Create Custom Learners - mlr tutorial</title>
+	<title>Create Custom Learners - mlr tutorial</title>
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -51,6 +51,12 @@
             
                 <!-- Main navigation -->
                 <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../index.html">Home</a>
+                    </li>
+                
                 
                 
                     <li class="dropdown">
@@ -491,9 +497,7 @@ trainLearner.cluster.FarthestFirst = function(.learner, .task, .subset, .weights
 predictLearner.cluster.FarthestFirst = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, .newdata, ...) + 1
 }
-</code></pre>
-
-</div>
+</code></pre></div>
             
         </div>
 
@@ -505,10 +509,14 @@ predictLearner.cluster.FarthestFirst = function(.learner, .model, .newdata, ...)
 
         
 
-        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/jquery-1.10.2.min.js"></script>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../js/prettify-1.0.min.js"></script>
         <script src="../js/highlight.pack.js"></script>
         <script src="../js/base.js"></script>
+
+        <!--
+        MkDocs version  : 0.12.2
+        Docs Build Date : 2015-05-22 13:31:20.563969
+        -->
     </body>
 </html>

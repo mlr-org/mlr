@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../img/favicon.ico">
 
-        <title>Configuration - mlr tutorial</title>
+	<title>Configuration - mlr tutorial</title>
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -51,6 +51,12 @@
             
                 <!-- Main navigation -->
                 <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../index.html">Home</a>
+                    </li>
+                
                 
                 
                     <li class="dropdown">
@@ -306,10 +312,10 @@ If this is the case you might want to <a href="https://github.com/berndbischl/ml
 or <a href="https://github.com/berndbischl/mlr/issues/new">open an issue</a> as well!
 But until then you can turn off <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>'s parameter checking like this:</p>
 <pre><code class="r">lrn = makeLearner(&quot;classif.ksvm&quot;, newPar = 3)
-#&gt; Error: classif.ksvm: Setting parameter newPar without available description object!
+#&gt; Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter newPar without available description object!
 #&gt; You can switch off this check by using configureMlr!
 lrn = makeLearner(&quot;classif.ksvm&quot;, epsilon = -3)
-#&gt; Error: classif.ksvm: Setting parameter epsilon without available description object!
+#&gt; Error in setHyperPars2.Learner(learner, insert(par.vals, args)): classif.ksvm: Setting parameter epsilon without available description object!
 #&gt; You can switch off this check by using configureMlr!
 
 configureMlr(on.par.without.desc = &quot;quiet&quot;)
@@ -327,12 +333,12 @@ benchmark experiment due to one error.
 The following example shows how to prevent this:</p>
 <pre><code class="r">## This call gives an error caused by the low number of observations in class `virginica`
 train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
-#&gt; Error: some group is too small for 'qda'
-#&gt; Timing stopped at: 0.011 0 0.011
+#&gt; Error in qda.default(x, grouping, ...): some group is too small for 'qda'
+#&gt; Timing stopped at: 0.004 0 0.003
 
 configureMlr(on.learner.error = &quot;warn&quot;)
 mod = train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
-#&gt; Warning: Could not train learner classif.qda: Error in qda.default(x, grouping, ...) : 
+#&gt; Warning in train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104): Could not train learner classif.qda: Error in qda.default(x, grouping, ...) : 
 #&gt;   some group is too small for 'qda'
 mod
 #&gt; Model for id = classif.qda class = classif.qda
@@ -367,8 +373,7 @@ predict(mod, iris.task)
 
 <p>Instead of an exception, a warning is issued and a <a href="http://www.rdocumentation.org/packages/mlr/functions/FailureModel.html">FailureModel</a> is created that predicts
 <code>NA</code>s for all new observations. Function <a href="http://www.rdocumentation.org/packages/mlr/functions/getFailureModelMsg.html">getFailureModelMsg</a> extracts the error
-message.</p>
-</div>
+message.</p></div>
             
         </div>
 
@@ -380,10 +385,14 @@ message.</p>
 
         
 
-        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/jquery-1.10.2.min.js"></script>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../js/prettify-1.0.min.js"></script>
         <script src="../js/highlight.pack.js"></script>
         <script src="../js/base.js"></script>
+
+        <!--
+        MkDocs version  : 0.12.2
+        Docs Build Date : 2015-05-22 13:31:19.865591
+        -->
     </body>
 </html>

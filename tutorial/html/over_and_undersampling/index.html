@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../img/favicon.ico">
 
-        <title>Imbalanced Classification Problems - mlr tutorial</title>
+	<title>Imbalanced Classification Problems - mlr tutorial</title>
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -51,6 +51,12 @@
             
                 <!-- Main navigation -->
                 <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../index.html">Home</a>
+                    </li>
+                
                 
                 
                     <li class="dropdown">
@@ -333,14 +339,14 @@ data.imbal.test = rbind(
   data.frame(x = rnorm(500, mean = 2), class = &quot;B&quot;)
 )
 performance(predict(mod, newdata = data.imbal.test), measures = list(mmce, auc))
-#&gt;    mmce     auc 
-#&gt; 0.01961 0.50000
+#&gt;       mmce        auc 
+#&gt; 0.01960784 0.50000000
 performance(predict(mod.over, newdata = data.imbal.test), measures = list(mmce, auc))
-#&gt;    mmce     auc 
-#&gt; 0.03529 0.59000
+#&gt;       mmce        auc 
+#&gt; 0.03529412 0.59000000
 performance(predict(mod.under, newdata = data.imbal.test), measures = list(mmce, auc))
-#&gt;    mmce     auc 
-#&gt; 0.05686 0.65370
+#&gt;       mmce        auc 
+#&gt; 0.05686275 0.65370000
 </code></pre>
 
 <p>In this case the <em>performance measure</em> has to be considered very carefully.
@@ -364,14 +370,14 @@ mod = train(lrn, task)
 mod.over = train(lrn.over, task)
 mod.under = train(lrn.under, task)
 performance(predict(mod, newdata = data.imbal.test), measures = list(mmce, auc))
-#&gt;    mmce     auc 
-#&gt; 0.01961 0.50000
+#&gt;       mmce        auc 
+#&gt; 0.01960784 0.50000000
 performance(predict(mod.over, newdata = data.imbal.test), measures = list(mmce, auc))
-#&gt;    mmce     auc 
-#&gt; 0.03529 0.67860
+#&gt;       mmce        auc 
+#&gt; 0.03529412 0.67860000
 performance(predict(mod.under, newdata = data.imbal.test), measures = list(mmce, auc))
-#&gt;    mmce     auc 
-#&gt; 0.03529 0.59000
+#&gt;       mmce        auc 
+#&gt; 0.03529412 0.59000000
 </code></pre>
 
 <h3 id="extensions-to-oversampling">Extensions to oversampling</h3>
@@ -441,7 +447,7 @@ obw.lrn = setPredictType(obw.lrn, &quot;prob&quot;)
 r2 = resample(learner = obw.lrn, task = task, resampling = rdesc, show.info = FALSE, measures = auc)
 r2$aggr
 #&gt; auc.test.mean 
-#&gt;        0.5871
+#&gt;     0.5870533
 </code></pre>
 
 <p>Now let's consider a <em>random forest</em> as initial learner:</p>
@@ -452,13 +458,13 @@ lrn = setPredictType(lrn, &quot;prob&quot;)
 res1 = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE, measures = auc)
 res1$aggr
 #&gt; auc.test.mean 
-#&gt;        0.5794
+#&gt;     0.5794236
 
 obw.lrn = setPredictType(obw.lrn, &quot;prob&quot;)
 res2 = resample(learner = obw.lrn, task = task, resampling = rdesc, show.info = FALSE,  measures = auc)
 res2$aggr
 #&gt; auc.test.mean 
-#&gt;        0.5291
+#&gt;     0.5290915
 </code></pre>
 
 <p>While <em>overbagging</em> slighty improves the performance of the <em>decision tree</em>,
@@ -495,9 +501,7 @@ to the specific class weighting parameter. The latter has to be defined as an
 additional parameter (<code>wcw.param</code>).</p>
 <pre><code class="r">lrn = makeLearner(&quot;classif.ksvm&quot;)
 wcw.lrn = makeWeightedClassesWrapper(lrn, wcw.param = &quot;class.weights&quot;, wcw.weight = 0.01)
-</code></pre>
-
-</div>
+</code></pre></div>
             
         </div>
 
@@ -509,10 +513,14 @@ wcw.lrn = makeWeightedClassesWrapper(lrn, wcw.param = &quot;class.weights&quot;,
 
         
 
-        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/jquery-1.10.2.min.js"></script>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../js/prettify-1.0.min.js"></script>
         <script src="../js/highlight.pack.js"></script>
         <script src="../js/base.js"></script>
+
+        <!--
+        MkDocs version  : 0.12.2
+        Docs Build Date : 2015-05-22 13:31:20.185537
+        -->
     </body>
 </html>

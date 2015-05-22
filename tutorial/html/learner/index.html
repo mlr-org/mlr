@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../img/favicon.ico">
 
-        <title>Learner - mlr tutorial</title>
+	<title>Learner - mlr tutorial</title>
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -51,6 +51,12 @@
             
                 <!-- Main navigation -->
                 <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../index.html">Home</a>
+                    </li>
+                
                 
                 
                     <li class="dropdown active">
@@ -424,19 +430,25 @@ regr.lrn = removeHyperPars(regr.lrn, c(&quot;n.trees&quot;, &quot;interaction.de
 certain learning <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> use the function <a href="http://www.rdocumentation.org/packages/mlr/functions/listLearners.html">listLearners</a>.</p>
 <pre><code class="r">## List everything in mlr
 head(listLearners())
-#&gt; [1] &quot;classif.ada&quot;         &quot;classif.bartMachine&quot; &quot;classif.bdk&quot;        
-#&gt; [4] &quot;classif.binomial&quot;    &quot;classif.blackboost&quot;  &quot;classif.boosting&quot;
+#&gt;           classif.ada   classif.bartMachine           classif.bdk 
+#&gt;         &quot;classif.ada&quot; &quot;classif.bartMachine&quot;         &quot;classif.bdk&quot; 
+#&gt;      classif.binomial    classif.blackboost      classif.boosting 
+#&gt;    &quot;classif.binomial&quot;  &quot;classif.blackboost&quot;    &quot;classif.boosting&quot;
 ## List classifiers that can output probabilities
 head(listLearners(&quot;classif&quot;, properties = &quot;prob&quot;))
-#&gt; [1] &quot;classif.ada&quot;         &quot;classif.bartMachine&quot; &quot;classif.bdk&quot;        
-#&gt; [4] &quot;classif.binomial&quot;    &quot;classif.blackboost&quot;  &quot;classif.boosting&quot;
+#&gt;           classif.ada   classif.bartMachine           classif.bdk 
+#&gt;         &quot;classif.ada&quot; &quot;classif.bartMachine&quot;         &quot;classif.bdk&quot; 
+#&gt;      classif.binomial    classif.blackboost      classif.boosting 
+#&gt;    &quot;classif.binomial&quot;  &quot;classif.blackboost&quot;    &quot;classif.boosting&quot;
 ## List classifiers that can be applied to iris (i.e. multiclass) and output probabilities
 head(listLearners(iris.task, properties = &quot;prob&quot;))
-#&gt; [1] &quot;classif.bdk&quot;        &quot;classif.boosting&quot;   &quot;classif.cforest&quot;   
-#&gt; [4] &quot;classif.ctree&quot;      &quot;classif.extraTrees&quot; &quot;classif.gbm&quot;
+#&gt;          classif.bdk     classif.boosting      classif.cforest 
+#&gt;        &quot;classif.bdk&quot;   &quot;classif.boosting&quot;    &quot;classif.cforest&quot; 
+#&gt;        classif.ctree   classif.extraTrees          classif.gbm 
+#&gt;      &quot;classif.ctree&quot; &quot;classif.extraTrees&quot;        &quot;classif.gbm&quot;
 ## The calls above return character vectors, but you can also create learner objects
 head(listLearners(&quot;cluster&quot;, create = TRUE), 2)
-#&gt; [[1]]
+#&gt; $cluster.cmeans
 #&gt; Learner cluster.cmeans from package e1071,clue
 #&gt; Type: cluster
 #&gt; Name: Fuzzy C-Means Clustering; Short name: cmeans
@@ -446,7 +458,7 @@ head(listLearners(&quot;cluster&quot;, create = TRUE), 2)
 #&gt; Hyperparameters: centers=&lt;integer&gt;
 #&gt; 
 #&gt; 
-#&gt; [[2]]
+#&gt; $cluster.EM
 #&gt; Learner cluster.EM from package RWeka
 #&gt; Type: cluster
 #&gt; Name: Expectation-Maximization Clustering; Short name: em
@@ -454,9 +466,7 @@ head(listLearners(&quot;cluster&quot;, create = TRUE), 2)
 #&gt; Properties: numerics
 #&gt; Predict-Type: response
 #&gt; Hyperparameters:
-</code></pre>
-
-</div>
+</code></pre></div>
             
         </div>
 
@@ -468,10 +478,14 @@ head(listLearners(&quot;cluster&quot;, create = TRUE), 2)
 
         
 
-        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/jquery-1.10.2.min.js"></script>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../js/prettify-1.0.min.js"></script>
         <script src="../js/highlight.pack.js"></script>
         <script src="../js/base.js"></script>
+
+        <!--
+        MkDocs version  : 0.12.2
+        Docs Build Date : 2015-05-22 13:31:17.322972
+        -->
     </body>
 </html>

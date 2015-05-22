@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../img/favicon.ico">
 
-        <title>Preprocessing - mlr tutorial</title>
+	<title>Preprocessing - mlr tutorial</title>
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -51,6 +51,12 @@
             
                 <!-- Main navigation -->
                 <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../index.html">Home</a>
+                    </li>
+                
                 
                 
                     <li class="dropdown">
@@ -373,16 +379,14 @@ lrn
 r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
 r$aggr
 #&gt; mse.test.mean 
-#&gt;         20.98
+#&gt;      21.35203
 
 lrn = makeLearner(&quot;regr.nnet&quot;, trace = FALSE, decay = 1e-02)
 r = resample(lrn, bh.task, resampling = rdesc, show.info = FALSE)
 r$aggr
 #&gt; mse.test.mean 
-#&gt;         54.38
-</code></pre>
-
-</div>
+#&gt;      52.37755
+</code></pre></div>
             
         </div>
 
@@ -394,10 +398,14 @@ r$aggr
 
         
 
-        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/jquery-1.10.2.min.js"></script>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../js/prettify-1.0.min.js"></script>
         <script src="../js/highlight.pack.js"></script>
         <script src="../js/base.js"></script>
+
+        <!--
+        MkDocs version  : 0.12.2
+        Docs Build Date : 2015-05-22 13:31:19.884824
+        -->
     </body>
 </html>

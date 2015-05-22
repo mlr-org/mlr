@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../img/favicon.ico">
 
-        <title>Imputations - mlr tutorial</title>
+	<title>Imputations - mlr tutorial</title>
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -51,6 +51,12 @@
             
                 <!-- Main navigation -->
                 <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../index.html">Home</a>
+                    </li>
+                
                 
                 
                     <li class="dropdown">
@@ -265,21 +271,21 @@ differently in a subsequent analysis.</p>
 <p>Let's have a look at the <a href="http://www.rdocumentation.org/packages/datasets/functions/airquality.html">airquality</a> data set.</p>
 <pre><code class="r">data(airquality)
 summary(airquality)
-#&gt;      Ozone          Solar.R         Wind            Temp     
-#&gt;  Min.   :  1.0   Min.   :  7   Min.   : 1.70   Min.   :56.0  
-#&gt;  1st Qu.: 18.0   1st Qu.:116   1st Qu.: 7.40   1st Qu.:72.0  
-#&gt;  Median : 31.5   Median :205   Median : 9.70   Median :79.0  
-#&gt;  Mean   : 42.1   Mean   :186   Mean   : 9.96   Mean   :77.9  
-#&gt;  3rd Qu.: 63.2   3rd Qu.:259   3rd Qu.:11.50   3rd Qu.:85.0  
-#&gt;  Max.   :168.0   Max.   :334   Max.   :20.70   Max.   :97.0  
-#&gt;  NA's   :37      NA's   :7                                   
-#&gt;      Month           Day      
-#&gt;  Min.   :5.00   Min.   : 1.0  
-#&gt;  1st Qu.:6.00   1st Qu.: 8.0  
-#&gt;  Median :7.00   Median :16.0  
-#&gt;  Mean   :6.99   Mean   :15.8  
-#&gt;  3rd Qu.:8.00   3rd Qu.:23.0  
-#&gt;  Max.   :9.00   Max.   :31.0  
+#&gt;      Ozone           Solar.R           Wind             Temp      
+#&gt;  Min.   :  1.00   Min.   :  7.0   Min.   : 1.700   Min.   :56.00  
+#&gt;  1st Qu.: 18.00   1st Qu.:115.8   1st Qu.: 7.400   1st Qu.:72.00  
+#&gt;  Median : 31.50   Median :205.0   Median : 9.700   Median :79.00  
+#&gt;  Mean   : 42.13   Mean   :185.9   Mean   : 9.958   Mean   :77.88  
+#&gt;  3rd Qu.: 63.25   3rd Qu.:258.8   3rd Qu.:11.500   3rd Qu.:85.00  
+#&gt;  Max.   :168.00   Max.   :334.0   Max.   :20.700   Max.   :97.00  
+#&gt;  NA's   :37       NA's   :7                                       
+#&gt;      Month            Day      
+#&gt;  Min.   :5.000   Min.   : 1.0  
+#&gt;  1st Qu.:6.000   1st Qu.: 8.0  
+#&gt;  Median :7.000   Median :16.0  
+#&gt;  Mean   :6.993   Mean   :15.8  
+#&gt;  3rd Qu.:8.000   3rd Qu.:23.0  
+#&gt;  Max.   :9.000   Max.   :31.0  
 #&gt; 
 </code></pre>
 
@@ -291,21 +297,21 @@ ind = sample(nrow(airq), 10)
 airq$Wind[ind] = NA
 airq$Wind = cut(airq$Wind, c(0,8,16,24))
 summary(airq)
-#&gt;      Ozone          Solar.R         Wind         Temp          Month     
-#&gt;  Min.   :  1.0   Min.   :  7   (0,8]  :51   Min.   :56.0   Min.   :5.00  
-#&gt;  1st Qu.: 18.0   1st Qu.:116   (8,16] :86   1st Qu.:72.0   1st Qu.:6.00  
-#&gt;  Median : 31.5   Median :205   (16,24]: 6   Median :79.0   Median :7.00  
-#&gt;  Mean   : 42.1   Mean   :186   NA's   :10   Mean   :77.9   Mean   :6.99  
-#&gt;  3rd Qu.: 63.2   3rd Qu.:259                3rd Qu.:85.0   3rd Qu.:8.00  
-#&gt;  Max.   :168.0   Max.   :334                Max.   :97.0   Max.   :9.00  
-#&gt;  NA's   :37      NA's   :7                                               
-#&gt;       Day      
-#&gt;  Min.   : 1.0  
-#&gt;  1st Qu.: 8.0  
-#&gt;  Median :16.0  
-#&gt;  Mean   :15.8  
-#&gt;  3rd Qu.:23.0  
-#&gt;  Max.   :31.0  
+#&gt;      Ozone           Solar.R           Wind         Temp      
+#&gt;  Min.   :  1.00   Min.   :  7.0   (0,8]  :51   Min.   :56.00  
+#&gt;  1st Qu.: 18.00   1st Qu.:115.8   (8,16] :86   1st Qu.:72.00  
+#&gt;  Median : 31.50   Median :205.0   (16,24]: 6   Median :79.00  
+#&gt;  Mean   : 42.13   Mean   :185.9   NA's   :10   Mean   :77.88  
+#&gt;  3rd Qu.: 63.25   3rd Qu.:258.8                3rd Qu.:85.00  
+#&gt;  Max.   :168.00   Max.   :334.0                Max.   :97.00  
+#&gt;  NA's   :37       NA's   :7                                   
+#&gt;      Month            Day      
+#&gt;  Min.   :5.000   Min.   : 1.0  
+#&gt;  1st Qu.:6.000   1st Qu.: 8.0  
+#&gt;  Median :7.000   Median :16.0  
+#&gt;  Mean   :6.993   Mean   :15.8  
+#&gt;  3rd Qu.:8.000   3rd Qu.:23.0  
+#&gt;  Max.   :9.000   Max.   :31.0  
 #&gt; 
 </code></pre>
 
@@ -320,17 +326,17 @@ you can do this as follows:</p>
 Per default, the dummy variables are factors with levels <code>"TRUE"</code> and <code>"FALSE"</code>.
 It is also possible to create numeric zero-one indicator variables.</p>
 <pre><code class="r">head(imp$data, 10)
-#&gt;    Ozone Solar.R    Wind Temp Month Day Ozone.dummy Solar.R.dummy
-#&gt; 1  41.00   190.0   (0,8]   67     5   1       FALSE         FALSE
-#&gt; 2  36.00   118.0   (0,8]   72     5   2       FALSE         FALSE
-#&gt; 3  12.00   149.0  (8,16]   74     5   3       FALSE         FALSE
-#&gt; 4  18.00   313.0  (8,16]   62     5   4       FALSE         FALSE
-#&gt; 5  42.13   185.9  (8,16]   56     5   5        TRUE          TRUE
-#&gt; 6  28.00   185.9  (8,16]   66     5   6       FALSE          TRUE
-#&gt; 7  23.00   299.0  (8,16]   65     5   7       FALSE         FALSE
-#&gt; 8  19.00    99.0  (8,16]   59     5   8       FALSE         FALSE
-#&gt; 9   8.00    19.0 (16,24]   61     5   9       FALSE         FALSE
-#&gt; 10 42.13   194.0  (8,16]   69     5  10        TRUE         FALSE
+#&gt;       Ozone  Solar.R    Wind Temp Month Day Ozone.dummy Solar.R.dummy
+#&gt; 1  41.00000 190.0000   (0,8]   67     5   1       FALSE         FALSE
+#&gt; 2  36.00000 118.0000   (0,8]   72     5   2       FALSE         FALSE
+#&gt; 3  12.00000 149.0000  (8,16]   74     5   3       FALSE         FALSE
+#&gt; 4  18.00000 313.0000  (8,16]   62     5   4       FALSE         FALSE
+#&gt; 5  42.12931 185.9315  (8,16]   56     5   5        TRUE          TRUE
+#&gt; 6  28.00000 185.9315  (8,16]   66     5   6       FALSE          TRUE
+#&gt; 7  23.00000 299.0000  (8,16]   65     5   7       FALSE         FALSE
+#&gt; 8  19.00000  99.0000  (8,16]   59     5   8       FALSE         FALSE
+#&gt; 9   8.00000  19.0000 (16,24]   61     5   9       FALSE         FALSE
+#&gt; 10 42.12931 194.0000  (8,16]   69     5  10        TRUE         FALSE
 </code></pre>
 
 <p>Slot <code>$desc</code> is an <a href="http://www.rdocumentation.org/packages/mlr/functions/impute.html">ImputationDesc</a> object that stores all relevant information about the
@@ -382,21 +388,21 @@ do not pose a problem.</p>
 <pre><code class="r">imp = impute(airq.train, target = &quot;Ozone&quot;, cols = list(Solar.R = imputeHist(),
   Wind = imputeLearner(makeLearner(&quot;classif.rpart&quot;))), dummy.cols = c(&quot;Solar.R&quot;, &quot;Wind&quot;))
 summary(imp$data)
-#&gt;      Ozone          Solar.R           Wind         Temp      Solar.R.dummy
-#&gt;  Min.   :  1.0   Min.   :  7.0   (0,8]  :34   Min.   :56.0   FALSE:93     
-#&gt;  1st Qu.: 16.0   1st Qu.: 98.8   (8,16] :61   1st Qu.:69.0   TRUE : 7     
-#&gt;  Median : 34.0   Median :221.5   (16,24]: 5   Median :79.5                
-#&gt;  Mean   : 41.6   Mean   :191.5                Mean   :76.9                
-#&gt;  3rd Qu.: 63.0   3rd Qu.:274.2                3rd Qu.:84.0                
-#&gt;  Max.   :135.0   Max.   :334.0                Max.   :93.0                
-#&gt;  NA's   :31                                                               
-#&gt;  Wind.dummy
-#&gt;  FALSE:92  
-#&gt;  TRUE : 8  
-#&gt;            
-#&gt;            
-#&gt;            
-#&gt;            
+#&gt;      Ozone           Solar.R            Wind         Temp      
+#&gt;  Min.   :  1.00   Min.   :  7.00   (0,8]  :34   Min.   :56.00  
+#&gt;  1st Qu.: 16.00   1st Qu.: 98.75   (8,16] :61   1st Qu.:69.00  
+#&gt;  Median : 34.00   Median :221.50   (16,24]: 5   Median :79.50  
+#&gt;  Mean   : 41.59   Mean   :191.54                Mean   :76.87  
+#&gt;  3rd Qu.: 63.00   3rd Qu.:274.25                3rd Qu.:84.00  
+#&gt;  Max.   :135.00   Max.   :334.00                Max.   :93.00  
+#&gt;  NA's   :31                                                    
+#&gt;  Solar.R.dummy Wind.dummy
+#&gt;  FALSE:93      FALSE:92  
+#&gt;  TRUE : 7      TRUE : 8  
+#&gt;                          
+#&gt;                          
+#&gt;                          
+#&gt;                          
 #&gt; 
 imp$desc
 #&gt; Imputation description
@@ -454,7 +460,7 @@ task = makeRegrTask(data = airq, target = &quot;Ozone&quot;)
 r = resample(lrn, task, resampling = rdesc, show.info = FALSE, models = TRUE)
 r$aggr
 #&gt; mse.test.mean 
-#&gt;         524.3
+#&gt;      524.3392
 </code></pre>
 
 <pre><code class="r">lapply(r$models, getLearnerModel)
@@ -479,11 +485,11 @@ r$aggr
 #&gt; 
 #&gt; Coefficients:
 #&gt;       (Intercept)            Solar.R         Wind(8,16]  
-#&gt;          -94.8454             0.0394           -16.2626  
+#&gt;         -94.84542            0.03936          -16.26255  
 #&gt;       Wind(16,24]               Temp  Solar.R.dummyTRUE  
-#&gt;           -7.0071             1.7951           -11.0858  
+#&gt;          -7.00707            1.79513          -11.08578  
 #&gt;    Wind.dummyTRUE  
-#&gt;           -0.6834  
+#&gt;          -0.68340  
 #&gt; 
 #&gt; 
 #&gt; [[3]]
@@ -493,14 +499,12 @@ r$aggr
 #&gt; 
 #&gt; Coefficients:
 #&gt;       (Intercept)            Solar.R         Wind(8,16]  
-#&gt;          -57.3044             0.0743           -30.7074  
+#&gt;         -57.30438            0.07426          -30.70737  
 #&gt;       Wind(16,24]               Temp  Solar.R.dummyTRUE  
-#&gt;          -18.2506             1.3590            -2.1665  
+#&gt;         -18.25055            1.35898           -2.16654  
 #&gt;    Wind.dummyTRUE  
-#&gt;           -5.5640
-</code></pre>
-
-</div>
+#&gt;          -5.56400
+</code></pre></div>
             
         </div>
 
@@ -512,10 +516,14 @@ r$aggr
 
         
 
-        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/jquery-1.10.2.min.js"></script>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../js/prettify-1.0.min.js"></script>
         <script src="../js/highlight.pack.js"></script>
         <script src="../js/base.js"></script>
+
+        <!--
+        MkDocs version  : 0.12.2
+        Docs Build Date : 2015-05-22 13:31:19.897824
+        -->
     </body>
 </html>

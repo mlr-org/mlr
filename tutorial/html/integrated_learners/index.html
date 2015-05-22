@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../img/favicon.ico">
 
-        <title>Integrated Learners - mlr tutorial</title>
+	<title>Integrated Learners - mlr tutorial</title>
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -51,6 +51,12 @@
             
                 <!-- Main navigation -->
                 <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../index.html">Home</a>
+                    </li>
+                
                 
                 
                     <li class="dropdown">
@@ -234,9 +240,9 @@
     
         <li class="main active"><a href="#integrated-learners">Integrated Learners</a></li>
         
-            <li><a href="#classification-49">Classification (49)</a></li>
+            <li><a href="#classification-55">Classification (55)</a></li>
         
-            <li><a href="#regression-42">Regression (42)</a></li>
+            <li><a href="#regression-45">Regression (45)</a></li>
         
             <li><a href="#survival-analysis-10">Survival analysis (10)</a></li>
         
@@ -260,7 +266,7 @@ For example <em>rcens</em> means that the learning method can deal with right ce
 Moreover, the type of prediction is displayed, where <em>prob</em> indicates that probabilities
 can be predicted.
 For <em>regression</em>, <em>se</em> means that standard errors and the mean response can be predicted.</p>
-<h3 id="classification-49">Classification (49)</h3>
+<h3 id="classification-55">Classification (55)</h3>
 <table>
 <thead>
 <tr>
@@ -329,7 +335,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center">X</td>
 <td align="right">prob<br />twoclass</td>
-<td align="left"></td>
+<td align="left">see ?ctree_control for possible breakage for nominal features with missingness</td>
 </tr>
 <tr>
 <td align="left"><strong>classif.boosting</strong> <br />adabag</td>
@@ -343,15 +349,26 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left"><code>xval</code> has been set to 0 by default for speed.</td>
 </tr>
 <tr>
+<td align="left"><strong>classif.bst</strong> <br />bst</td>
+<td align="left">Gradient Boosting</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/bst/">bst</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">twoclass</td>
+<td align="left">The argument <code>learner</code> has been renamed to <code>Learner</code> due to a name conflict with <code>setHyerPars</code>. <code>Learner</code> has been set to <code>lm</code> by default.</td>
+</tr>
+<tr>
 <td align="left"><strong>classif.cforest</strong> <br />cforest</td>
 <td align="left">Random forest based on conditional inference trees</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/party/">party</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
-<td align="center"></td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="right">multiclass<br />ordered<br />prob<br />twoclass</td>
-<td align="left"></td>
+<td align="left">see ?ctree_control for possible breakage for nominal features with missingness</td>
 </tr>
 <tr>
 <td align="left"><strong>classif.ctree</strong> <br />ctree</td>
@@ -362,7 +379,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center">X</td>
 <td align="right">multiclass<br />ordered<br />prob<br />twoclass</td>
-<td align="left"></td>
+<td align="left">see ?ctree_control for possible breakage for nominal features with missingness</td>
 </tr>
 <tr>
 <td align="left"><strong>classif.extraTrees</strong> <br />extraTrees</td>
@@ -429,6 +446,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="right">multiclass<br />prob<br />twoclass</td>
 <td align="left">Factors automatically get converted to dummy columns, ordered factors to integer</td>
+</tr>
+<tr>
+<td align="left"><strong>classif.hdrda</strong> <br />hdrda</td>
+<td align="left">High-Dimensional Regularized Discriminant Analysis</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/sparsediscrim/">sparsediscrim</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">prob<br />twoclass</td>
+<td align="left"></td>
 </tr>
 <tr>
 <td align="left"><strong>classif.IBk</strong> <br />ibk</td>
@@ -604,7 +632,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center"></td>
 <td align="center"></td>
 <td align="right">multiclass<br />prob<br />twoclass</td>
-<td align="left"><code>keep.fitted</code> has been set to <code>FALSE</code> by default for speed.</td>
+<td align="left"><code>keep.fitted</code> has been set to <code>FALSE</code> by default for speed and we use start.method='lvq' for more robust behavior / less technical crashes</td>
 </tr>
 <tr>
 <td align="left"><strong>classif.multinom</strong> <br />multinom</td>
@@ -640,6 +668,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left"><code>size</code> has been set to 3 by default.</td>
 </tr>
 <tr>
+<td align="left"><strong>classif.nodeHarvest</strong> <br />nodeHarvest</td>
+<td align="left">Node Harvest</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/nodeHarvest/">nodeHarvest</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">prob<br />twoclass</td>
+<td align="left"></td>
+</tr>
+<tr>
 <td align="left"><strong>classif.OneR</strong> <br />oner</td>
 <td align="left">1-R Classifier</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/RWeka/">RWeka</a></td>
@@ -649,6 +688,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center"></td>
 <td align="right">multiclass<br />prob<br />twoclass</td>
 <td align="left">NAs are directly passed to WEKA with <code>na.action = na.pass</code></td>
+</tr>
+<tr>
+<td align="left"><strong>classif.pamr</strong> <br />pamr</td>
+<td align="left">Nearest shrunken centroid</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/pamr/">pamr</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">prob<br />twoclass</td>
+<td align="left">threshold for prediction (<code>threshold.predict</code>) has been set to <code>1</code> by default</td>
 </tr>
 <tr>
 <td align="left"><strong>classif.PART</strong> <br />part</td>
@@ -750,6 +800,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left"><code>estimate.error</code> has been set to <code>FALSE</code> by default for speed.</td>
 </tr>
 <tr>
+<td align="left"><strong>classif.rFerns</strong> <br />rFerns</td>
+<td align="left">Random ferns</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/rFerns/">rFerns</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">multiclass<br />ordered<br />twoclass</td>
+<td align="left"></td>
+</tr>
+<tr>
 <td align="left"><strong>classif.rpart</strong> <br />rpart</td>
 <td align="left">Decision Tree</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/rpart/">rpart</a></td>
@@ -783,6 +844,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left"></td>
 </tr>
 <tr>
+<td align="left"><strong>classif.sparseLDA</strong> <br />sparseLDA</td>
+<td align="left">Sparse Discriminant Analysis</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/sparseLDA/">sparseLDA</a><br /><a href="http://www.rdocumentation.org/packages/MASS/">MASS</a><br /><a href="http://www.rdocumentation.org/packages/elasticnet/">elasticnet</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right">multiclass<br />prob<br />twoclass</td>
+<td align="left">Arguments Q and stop are not yet provided as they depend on the task.</td>
+</tr>
+<tr>
 <td align="left"><strong>classif.svm</strong> <br />svm</td>
 <td align="left">Support Vector Machines (libsvm)</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/e1071/">e1071</a></td>
@@ -794,15 +866,15 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left"></td>
 </tr>
 <tr>
-<td align="left"><strong>classif.xgboost</strong> <br />xgb</td>
-<td align="left">eXtreme Gradient Boosting</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/xgboost/">xgboost</a></td>
+<td align="left"><strong>classif.wsrf</strong> <br />wsrf</td>
+<td align="left">Weighted Subspace Random Forest</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/wsrf/">wsrf</a></td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
-<td align="center"></td>
-<td align="right">multiclass<br />prob<br />twoclass</td>
-<td align="left"><code>nround</code> should be set to value higher then 1 for more accuracy. Mulitclass will use <code>objective = 'multi:softmax'</code>. Binaryclass will use <code>objective = 'binary:logistic'</code>.</td>
+<td align="right">multiclass<br />ordered<br />prob<br />twoclass</td>
+<td align="left"><code>parallel</code> has been set to <code>FALSE</code> by default.</td>
 </tr>
 <tr>
 <td align="left"><strong>classif.xyf</strong> <br />xyf</td>
@@ -817,7 +889,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 </tr>
 </tbody>
 </table>
-<h3 id="regression-42">Regression (42)</h3>
+<h3 id="regression-45">Regression (45)</h3>
 <table>
 <thead>
 <tr>
@@ -894,10 +966,10 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left"><a href="http://www.rdocumentation.org/packages/mboost/">mboost</a><br /><a href="http://www.rdocumentation.org/packages/party/">party</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
-<td align="center"></td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="right"></td>
-<td align="left"></td>
+<td align="left">see ?ctree_control for possible breakage for nominal features with missingness</td>
 </tr>
 <tr>
 <td align="left"><strong>regr.blm</strong> <br />blm</td>
@@ -920,6 +992,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center"></td>
 <td align="right"></td>
 <td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.bst</strong> <br />bst</td>
+<td align="left">Gradient Boosting</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/bst/">bst</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="left">The argument <code>learner</code> has been renamed to <code>Learner</code> due to a name conflict with <code>setHyerPars</code></td>
 </tr>
 <tr>
 <td align="left"><strong>regr.btgp</strong> <br />btgp</td>
@@ -960,10 +1043,10 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left"><a href="http://www.rdocumentation.org/packages/party/">party</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
-<td align="center"></td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="right">ordered</td>
-<td align="left"></td>
+<td align="left">see ?ctree_control for possible breakage for nominal features with missingness</td>
 </tr>
 <tr>
 <td align="left"><strong>regr.crs</strong> <br />crs</td>
@@ -985,7 +1068,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="center">X</td>
 <td align="right">ordered</td>
-<td align="left"></td>
+<td align="left">see ?ctree_control for possible breakage for nominal features with missingness</td>
 </tr>
 <tr>
 <td align="left"><strong>regr.cubist</strong> <br />cubist</td>
@@ -1035,6 +1118,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left"><strong>regr.fnn</strong> <br />fnn</td>
 <td align="left">Fast k-Nearest Neighbor</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/FNN/">FNN</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><strong>regr.frbs</strong> <br />frbs</td>
+<td align="left">Fuzzy Rule-based Systems</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/frbs/">frbs</a></td>
 <td align="center">X</td>
 <td align="center"></td>
 <td align="center"></td>
@@ -1143,7 +1237,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 </tr>
 <tr>
 <td align="left"><strong>regr.mob</strong> <br />mob</td>
-<td align="left">Model-based Recursive Partitioning Yielding a Tree with Fitted Models Associated with each Terminal Node</td>
+<td align="left">Model-based Recursive Partitioning  Yielding a Tree with Fitted Models Associated with each Terminal Node</td>
 <td align="left"><a href="http://www.rdocumentation.org/packages/party/">party</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -1162,6 +1256,17 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center">X</td>
 <td align="right"></td>
 <td align="left"><code>size</code> has been set to 3 by default.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.nodeHarvest</strong> <br />nodeHarvest</td>
+<td align="left">Node Harvest</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/nodeHarvest/">nodeHarvest</a></td>
+<td align="center">X</td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="left"></td>
 </tr>
 <tr>
 <td align="left"><strong>regr.pcr</strong> <br />pcr</td>
@@ -1260,7 +1365,18 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center"></td>
 <td align="center"></td>
 <td align="right"></td>
-<td align="left">Kernel parameters have to be passed directly and not by using the kpar list in rvm.  Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
+<td align="left">Kernel parameters have to be passed directly and not by using the kpar list in rvm.   Note that <code>fit</code> has been set to <code>FALSE</code> by default for speed.</td>
+</tr>
+<tr>
+<td align="left"><strong>regr.slim</strong> <br />slim</td>
+<td align="left">Sparse Linear Regression using Nonsmooth Loss Functions and L1 Regularization</td>
+<td align="left"><a href="http://www.rdocumentation.org/packages/flare/">flare</a></td>
+<td align="center">X</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="right"></td>
+<td align="left">lambda.idx has been set to 3 by default</td>
 </tr>
 <tr>
 <td align="left"><strong>regr.svm</strong> <br />svm</td>
@@ -1272,17 +1388,6 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="center"></td>
 <td align="right"></td>
 <td align="left"></td>
-</tr>
-<tr>
-<td align="left"><strong>regr.xgboost</strong> <br />xgb</td>
-<td align="left">eXtreme Gradient Boosting</td>
-<td align="left"><a href="http://www.rdocumentation.org/packages/xgboost/">xgboost</a></td>
-<td align="center">X</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="right"></td>
-<td align="left"><code>nround</code> should be set to value higher then 1 for more accuracy. <code>objective = 'multireg:linear'</code> set automatically for regression.</td>
 </tr>
 <tr>
 <td align="left"><strong>regr.xyf</strong> <br />xyf</td>
@@ -1319,10 +1424,10 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left"><a href="http://www.rdocumentation.org/packages/party/">party</a><br /><a href="http://www.rdocumentation.org/packages/survival/">survival</a></td>
 <td align="center">X</td>
 <td align="center">X</td>
-<td align="center"></td>
+<td align="center">X</td>
 <td align="center">X</td>
 <td align="right">ordered<br />rcens</td>
-<td align="left"></td>
+<td align="left">see ?ctree_control for possible breakage for nominal features with missingness</td>
 </tr>
 <tr>
 <td align="left"><strong>surv.CoxBoost</strong> <br />coxboost</td>
@@ -1508,8 +1613,7 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 <td align="left">You may have to install the XMeans Weka package: WPM('install-package', 'XMeans').</td>
 </tr>
 </tbody>
-</table>
-</div>
+</table></div>
             
         </div>
 
@@ -1521,10 +1625,14 @@ For <em>regression</em>, <em>se</em> means that standard errors and the mean res
 
         
 
-        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/jquery-1.10.2.min.js"></script>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../js/prettify-1.0.min.js"></script>
         <script src="../js/highlight.pack.js"></script>
         <script src="../js/base.js"></script>
+
+        <!--
+        MkDocs version  : 0.12.2
+        Docs Build Date : 2015-05-22 13:31:20.672289
+        -->
     </body>
 </html>

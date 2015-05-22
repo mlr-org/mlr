@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../img/favicon.ico">
 
-        <title>Tasks - mlr tutorial</title>
+	<title>Tasks - mlr tutorial</title>
 
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -51,6 +51,12 @@
             
                 <!-- Main navigation -->
                 <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../index.html">Home</a>
+                    </li>
+                
                 
                 
                     <li class="dropdown active">
@@ -484,13 +490,13 @@ head(getTaskTargets(regr.task))
 
 ## Get the cost matrix in costsens.task:
 head(getTaskCosts(costsens.task))
-#&gt;      y1     y2      y3
-#&gt; [1,]  0 1589.6  674.44
-#&gt; [2,]  0 1173.4  828.41
-#&gt; [3,]  0  942.8 1095.34
-#&gt; [4,]  0 1049.6  477.82
-#&gt; [5,]  0 1121.9   90.85
-#&gt; [6,]  0 1820.0  841.07
+#&gt;      y1        y2         y3
+#&gt; [1,]  0 1589.5664  674.44434
+#&gt; [2,]  0 1173.4364  828.40682
+#&gt; [3,]  0  942.7611 1095.33713
+#&gt; [4,]  0 1049.5562  477.82496
+#&gt; [5,]  0 1121.8899   90.85237
+#&gt; [6,]  0 1819.9830  841.06686
 </code></pre>
 
 <p>Note the many options <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskData.html">getTaskData</a> provides to convert the data set into a convenient format.
@@ -535,35 +541,34 @@ dropFeatures(surv.task, c(&quot;meal.cal&quot;, &quot;wt.loss&quot;))
 ## Standardize numerical features:
 task = normalizeFeatures(cluster.task, method = &quot;range&quot;)
 summary(getTaskData(task))
-#&gt;       mpg             cyl             disp             hp       
-#&gt;  Min.   :0.000   Min.   :0.000   Min.   :0.000   Min.   :0.000  
-#&gt;  1st Qu.:0.316   1st Qu.:0.500   1st Qu.:0.124   1st Qu.:0.280  
-#&gt;  Median :0.511   Median :1.000   Median :0.408   Median :0.631  
-#&gt;  Mean   :0.487   Mean   :0.714   Mean   :0.443   Mean   :0.531  
-#&gt;  3rd Qu.:0.620   3rd Qu.:1.000   3rd Qu.:0.662   3rd Qu.:0.747  
-#&gt;  Max.   :1.000   Max.   :1.000   Max.   :1.000   Max.   :1.000  
-#&gt;       drat             wt             qsec             vs       
-#&gt;  Min.   :0.000   Min.   :0.000   Min.   :0.000   Min.   :0.000  
-#&gt;  1st Qu.:0.267   1st Qu.:0.128   1st Qu.:0.230   1st Qu.:0.000  
-#&gt;  Median :0.306   Median :0.161   Median :0.304   Median :0.000  
-#&gt;  Mean   :0.454   Mean   :0.327   Mean   :0.375   Mean   :0.429  
-#&gt;  3rd Qu.:0.703   3rd Qu.:0.373   3rd Qu.:0.491   3rd Qu.:1.000  
-#&gt;  Max.   :1.000   Max.   :1.000   Max.   :1.000   Max.   :1.000  
-#&gt;        am           gear            carb      
-#&gt;  Min.   :0.5   Min.   :0.000   Min.   :0.000  
-#&gt;  1st Qu.:0.5   1st Qu.:0.000   1st Qu.:0.333  
-#&gt;  Median :0.5   Median :0.000   Median :0.667  
-#&gt;  Mean   :0.5   Mean   :0.286   Mean   :0.643  
-#&gt;  3rd Qu.:0.5   3rd Qu.:0.750   3rd Qu.:1.000  
-#&gt;  Max.   :0.5   Max.   :1.000   Max.   :1.000
+#&gt;       mpg              cyl              disp              hp        
+#&gt;  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+#&gt;  1st Qu.:0.3161   1st Qu.:0.5000   1st Qu.:0.1242   1st Qu.:0.2801  
+#&gt;  Median :0.5107   Median :1.0000   Median :0.4076   Median :0.6311  
+#&gt;  Mean   :0.4872   Mean   :0.7143   Mean   :0.4430   Mean   :0.5308  
+#&gt;  3rd Qu.:0.6196   3rd Qu.:1.0000   3rd Qu.:0.6618   3rd Qu.:0.7473  
+#&gt;  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
+#&gt;       drat              wt              qsec              vs        
+#&gt;  Min.   :0.0000   Min.   :0.0000   Min.   :0.0000   Min.   :0.0000  
+#&gt;  1st Qu.:0.2672   1st Qu.:0.1275   1st Qu.:0.2302   1st Qu.:0.0000  
+#&gt;  Median :0.3060   Median :0.1605   Median :0.3045   Median :0.0000  
+#&gt;  Mean   :0.4544   Mean   :0.3268   Mean   :0.3752   Mean   :0.4286  
+#&gt;  3rd Qu.:0.7026   3rd Qu.:0.3727   3rd Qu.:0.4908   3rd Qu.:1.0000  
+#&gt;  Max.   :1.0000   Max.   :1.0000   Max.   :1.0000   Max.   :1.0000  
+#&gt;        am           gear             carb       
+#&gt;  Min.   :0.5   Min.   :0.0000   Min.   :0.0000  
+#&gt;  1st Qu.:0.5   1st Qu.:0.0000   1st Qu.:0.3333  
+#&gt;  Median :0.5   Median :0.0000   Median :0.6667  
+#&gt;  Mean   :0.5   Mean   :0.2857   Mean   :0.6429  
+#&gt;  3rd Qu.:0.5   3rd Qu.:0.7500   3rd Qu.:1.0000  
+#&gt;  Max.   :0.5   Max.   :1.0000   Max.   :1.0000
 </code></pre>
 
 <p>Some of these functions are covered and explained in more detail in the <a href="../preproc/index.html">data preprocessing</a> section.</p>
 <h2 id="example-tasks">Example tasks</h2>
 <p>For your convenience <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides pre-defined <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">tasks</a> for each type of learning problem.
 These are used throughout this tutorial in order to get shorter and more readable code.
-A list of all <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">tasks</a> can be found <a href="../example_tasks/index.html">here</a>.</p>
-</div>
+A list of all <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">tasks</a> can be found <a href="../example_tasks/index.html">here</a>.</p></div>
             
         </div>
 
@@ -575,10 +580,14 @@ A list of all <a href="http://www.rdocumentation.org/packages/mlr/functions/Task
 
         
 
-        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="../js/jquery-1.10.2.min.js"></script>
         <script src="../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../js/prettify-1.0.min.js"></script>
         <script src="../js/highlight.pack.js"></script>
         <script src="../js/base.js"></script>
+
+        <!--
+        MkDocs version  : 0.12.2
+        Docs Build Date : 2015-05-22 13:31:17.314362
+        -->
     </body>
 </html>

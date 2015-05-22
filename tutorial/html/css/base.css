@@ -214,8 +214,15 @@ div.well, pre.well {
 
 /* Hopefully only affects the learner list */
 h3[id|=classification] + table td:last-child, h3[id|=regression] + table td:last-child, h3[id|=survival-analysis] + table td:last-child, h3[id|=cluster-analysis] + table td:last-child  {
-    border-left: solid;
+    border-left: solid #CCC;
     border-left-width: 1px;
+    padding-left: 5px;
+}
+
+h3[id|=classification] + table td, h3[id|=regression] + table td, h3[id|=survival-analysis] + table td, h3[id|=cluster-analysis] + table td  {
+    font-size: small;
+    padding: 1px;
+    line-height: 1.3em;
 }
 
 @media (min-width: 768px) .navbar-nav>li>a {
