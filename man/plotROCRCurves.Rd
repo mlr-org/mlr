@@ -5,8 +5,8 @@
 \title{Visualize binary classification predictions via ROCR ROC curves.}
 \usage{
 plotROCRCurves(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
-  cols = NULL, ltys = NULL, add.legend = NULL, add.diag = TRUE,
-  perf.args = list(), legend.args = list(), task.id = NULL)
+  perf.args = list(), diagonal = FALSE, xlab = NULL, ylab = NULL,
+  title = "", task.id = NULL)
 }
 \arguments{
 \item{obj}{[(list of) \code{\link{Prediction}} | (list of) \code{\link{ResampleResult}} | \code{\link{BenchmarkResult}}]\cr
@@ -23,42 +23,42 @@ Default is \dQuote{tpr}.}
 Measure on y-axis. Note that this is a measure name from *ROCR* and not from mlr!
 Default is \dQuote{fpr}.}
 
-\item{avg}{[\code{character(1)}]\cr
-How to average results from resampling.
+\item{avg}{[\code{chracter(1)}]\cr
+If \code{obj} is of class \code{ResampleResult} or \code{BenchmarkResult}, how are
+the predictions to be combined (by learner)?
+If \code{obj} is not one of these classes, this argument is ignored.
+Possibilities are \dQuote{threshold}, \dQuote{horizontal}, \dQuote{vertical}, and \dQuote{none}.
 Default is \dQuote{threshold}.}
-
-\item{cols}{[\code{character}]\cr
-Colors of curves. Single strings are replicated to desired length.
-Default is to use \code{\link{rainbow}}.}
-
-\item{ltys}{[\code{integer}]\cr
-Line types of curves. Single ints are replicated to desired length.
-Default is to use 1.}
-
-\item{add.legend}{[\code{logical(1)}]\cr
-Add legend to plot?
-Default is \code{TRUE} if more than one ROC curve is drawn.}
-
-\item{add.diag}{[\code{logical(1)}]\cr
-Add main diagonal to plot via \code{\link{abline}}?
-Default is \code{TRUE}.}
 
 \item{perf.args}{[named \code{list}]\cr
 Further arguments passed to ROCR's \code{\link[ROCR]{performance}}.
 Usually not needed and \code{meas1} and \code{meas2} are set internally.
 Default is an empty list.}
 
-\item{legend.args}{[named \code{list}]\cr
-Further arguments passed to \code{\link{legend}}.
-Default is to display the names or learner ids of \code{obj},
-to set \code{col} and \code{fill} to \code{cols}, to set \code{lty} to \code{ltys},
-and to draw in \dQuote{bottomright}.}
+\item{diagonal}{[\code{logical(1)}]\cr
+Whether to plot a dashed diagonal line.
+Default is false.}
+
+\item{xlab}{[\code{character(1)}]\cr
+Label for x-axis.
+Default is \code{meas1}.}
+
+\item{ylab}{[\code{character(1)}]\cr
+Label for y-axis
+Default is \code{meas2}.}
+
+\item{title}{[\code{character(1)}]\cr
+Title for plot.
+Default is an empty string.}
 
 \item{task.id}{[\code{character(1)}]\cr
-Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
-Default is first task.}
+  Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
+  Default is first task.}
 }
 \value{
+A \code{\link[ggplot2]{ggplot}} object. To extract the raw data access the \code{data} element
+  of the returned object.
+
 [\code{invisible(NULL)}].
 }
 \description{
