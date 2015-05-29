@@ -28,5 +28,7 @@ test_that("plotROCRCurves", {
   rs = lapply(lrns, holdout, task = binaryclass.task)
   names(rs) = c("a", "b")
   plotROCRCurves(rs)	## list of ResampleResult's
+  plotROCRCurves(rs, avg = "none")
+  plotROCRCurves(rs, avg = "horizontal")
+  plotROCRCurves(rs, avg = "vertical")
 })
-
