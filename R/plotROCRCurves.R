@@ -116,7 +116,7 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "thresho
     plt_data = lapply(obj, function(obj_i) {
         perf.args$prediction.obj = asROCRPrediction(obj_i)
         perf = do.call(ROCR::performance, perf.args)
-        
+
         max_length = max(sapply(perf@x.values, length))
         x = vector("list", length(perf@x.values))
         y = vector("list", length(perf@y.values))
@@ -130,7 +130,7 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "thresho
             avg = "none"
 
         is_alpha = length(perf@alpha.values) > 0L
-        
+
         if (is_alpha) {
             perf@alpha.values = lapply(perf@alpha.values,
                                        function(alpha) {
@@ -153,7 +153,7 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "thresho
             perf@y.values[[i]] = perf@y.values[[i]][idx[[i]]]
             if (is_alpha)
                 perf@alpha.values[[i]] = perf@alpha.values[[i]][idx[[i]]]
-            
+
             if (avg == "threshold" & is_alpha & is_resample) {
                 x[[i]] = approxfun(perf@alpha.values[[i]],
                                    perf@x.values[[i]], rule = 2)(alpha)
@@ -186,8 +186,8 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "thresho
             out = data.frame(x = unlist(perf@x.values), y = unlist(perf@y.values))
         }
         colnames(out)[1:2] = c(perf@x.name, perf@y.name)
-          
-        if (is_alpha & avg != "threshold")
+
+        if (is_alpha & avg == "none")
             out[, perf@alpha.name] = unlist(perf@alpha.values)
 
         if (is_alpha & avg == "threshold")
@@ -195,10 +195,10 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "thresho
 
         if (is_resample & avg == "none")
             out$iter = rep(1:length(perf@x.values), times = sapply(perf@x.values, length))
-        
+
         out
     })
-    
+
     learners = names(plt_data)
     plt_data = plyr::ldply(plt_data)
     x_name = colnames(plt_data)[2]
@@ -220,7 +220,7 @@ plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "thresho
         plt = ggplot2::ggplot(plt_data, ggplot2::aes_string("x", "y", group = "learner", color = "learner"))
     }
     plt = plt + ggplot2::geom_line()
-    
+
     if (all(sapply(plt_data[, c("x", "y")], max) <= 1) & diagonal)
         plt = plt + ggplot2::geom_abline(ggplot2::aes_string(intercept = 0, slope = 1),
             linetype = "dashed", alpha = .5)
