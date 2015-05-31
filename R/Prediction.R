@@ -91,6 +91,44 @@ makePrediction.TaskDescClassif = function(task.desc, row.names, id, truth, predi
 }
 
 #' @export
+makePrediction.TaskDescMultilabel = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time) {
+  pred = list()
+  task.desc_classif = task.desc
+  class(task.desc_classif)[1] = "TaskDescClassif"
+  task.desc_classif$type = "classif"
+  for(i in task.desc$target){
+    truth.iter = truth[i]
+    names(truth.iter) = "truth" 
+    response = y[i]
+    names(response) = "response"
+    task.desc_classif$class.levels = task.desc$class.levels[[i]]
+    pred[[i]] = makePrediction(task.desc = task.desc_classif, row.names = row.names, id = id, truth = truth.iter,
+                               predict.type = predict.type, predict.threshold = predict.threshold, y = response, time = time)
+  }
+  data = list()
+  for(i in task.desc$target){
+    data[[i]] = pred[[i]]$data
+  }
+  
+  p = makeS3Obj(c("PredictionMultilabel","Prediction"),
+                predict.type = pred[[1]]$predict.type,
+                data = data,
+                threshold = pred[[1]]$threshold,
+                task.desc = task.desc,
+                time = time)
+  return(p)
+}
+
+#' @export
+print.PredictionMultilabel = function(x, ...) {
+  catf("Prediction: %i observations", nrow(x$data[[1]]))
+  catf("predict.type: %s", x$predict.type)
+  catf("threshold: %s", collapse(sprintf("%s=%.2f", names(x$threshold), x$threshold)))
+  catf("time: %.2f", x$time)
+  print(lapply(as.data.frame(x),head))
+}
+
+#' @export
 makePrediction.TaskDescSurv = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time) {
   data = namedList(c("id", "truth.time", "truth.event", "response"))
   data$id = id

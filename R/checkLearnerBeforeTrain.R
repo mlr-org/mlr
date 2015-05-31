@@ -6,6 +6,9 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
   }
 
   td = task$task.desc
+  
+  if(td$type == "multilabel"){
+    td$type = "classif"}
 
   if (td$type != learner$type) {
     stopf("Task '%s' is '%s', but learner '%s' is for '%s'!", td$id, td$type, learner$id, learner$type)

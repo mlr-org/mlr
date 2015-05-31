@@ -92,6 +92,10 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
       .model = model,
       .newdata = newdata
     )
+    
+    if("MultilabelWrapper" %in% class(model$learner.model))
+      pars$.learner = addClasses(pars$.learner, "MultilabelWrapper")
+        
     pars = c(pars, getHyperPars(learner, c("predict", "both")))
     debug.seed = getMlrOption("debug.seed", NULL)
     if (!is.null(debug.seed))

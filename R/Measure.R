@@ -111,6 +111,7 @@ default.measures = function(x) {
     x$type
   switch(type,
     classif = list(mmce),
+    multilabel = list(hamloss),
     regr = list(mse),
     costsens = list(mcp),
     surv = list(cindex),

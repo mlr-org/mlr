@@ -66,6 +66,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
     resampling = makeResampleInstance(resampling, task = task)
   assertClass(resampling, classes = "ResampleInstance")
   measures = checkMeasures(measures, task)
+  measures = getmeasures(measures, task)
   if (!is.null(weights)) {
     assertNumeric(weights, len = task$task.desc$size, any.missing = FALSE, lower = 0)
   }
@@ -121,15 +122,15 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   pp = rin$desc$predict
   if (pp == "train") {
     pred.train = predict(m, task, subset = train.i)
-    ms.train = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
+    ms.train = unlist(lapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm)))
   } else if (pp == "test") {
-    pred.test = predict(m, task, subset = test.i)
-    ms.test = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
+    pred.test = predict(m, task, subset = test.i)    
+    ms.test = unlist(lapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm)))
   } else { # "both"
     pred.train = predict(m, task, subset = train.i)
-    ms.train = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
+    ms.train = unlist(lapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm)))
     pred.test = predict(m, task, subset = test.i)
-    ms.test = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
+    ms.test = unlist(lapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm)))
   }
   ex = extract(m)
   list(
@@ -141,6 +142,24 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
     err.msgs = err.msgs,
     extract = ex
   )
+}
+
+getmeasures = function(measures, task){
+  if(task$task.desc$type != "multilabel"){
+    measures}else{
+      measuresmerge = list()
+      for(i in 1:length(measures)){
+        if (inherits(task,"MultilabelTask") & ("classif" %in% measures[[i]]$properties) & !(measures[[i]]$id %in% c("featperc", "timetrain", "timepredict", "timeboth"))){
+          measure = rep(list(measures[[i]]), length(task$task.desc$target))
+          for(i in 1:length(task$task.desc$target))
+            measure[[i]]$id = paste(measure[[i]]$id, task$task.desc$target[i], sep = ".")
+          measuresmerge = append(measuresmerge, measure)
+        }else{
+          measuresmerge = append(measuresmerge, measures[i])
+        }
+      }
+      measuresmerge
+    }
 }
 
 mergeResampleResult = function(learner, task, iter.results, measures, rin, models, extract, show.info) {
