@@ -45,11 +45,5 @@ plotROCRCurves(pr,diagonal=T)
 
 task = makeMultilabelTask(id = "tutorial", data = iris[-c(1:10),], target = c("neu","Species"))
 tr = train(lrn,task)
-pr = predict(tr,newdata=iris[1:10,])
+pr = predict(tr,newdata=iris[1:10,]) # geht noch nicht
 
-
-
-lrn1 = makeLearner("classif.lda", predict.type = "prob")
-mod1 = train(lrn1, sonar.task)
-pred1 = predict(mod1, task = sonar.task)
-plotROCRCurves(pred1)

@@ -122,15 +122,15 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   pp = rin$desc$predict
   if (pp == "train") {
     pred.train = predict(m, task, subset = train.i)
-    ms.train = unlist(lapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm)))
+    ms.train = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
   } else if (pp == "test") {
-    pred.test = predict(m, task, subset = test.i)    
-    ms.test = unlist(lapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm)))
+    pred.test = predict(m, task, subset = test.i)
+    ms.test = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
   } else { # "both"
     pred.train = predict(m, task, subset = train.i)
-    ms.train = unlist(lapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm)))
+    ms.train = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
     pred.test = predict(m, task, subset = test.i)
-    ms.test = unlist(lapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm)))
+    ms.test = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
   }
   ex = extract(m)
   list(
