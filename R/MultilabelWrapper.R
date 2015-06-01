@@ -20,9 +20,11 @@ predictLearner.MultilabelWrapper = function(.learner, .model, .newdata, ...) {
   for (i in 1:length(.model$learner.model)){
     model = .model$learner.model[i][[1]]
     pred[[i]] = predict(object = model, newdata = .newdata)$data
+    if (.learner$predict.type == "prob"){
+      pred[[i]] = pred[[i]][-ncol(pred[[i]])]
+      names(pred[[i]]) = substr(names(pred[[i]]),6,nchar(names(pred[[i]])))
+    }
   }
-  pred = data.frame(pred)
-  if(.learner$predict.type == "response")
-    colnames(pred) = names(.model$learner.model)
+    names(pred) = names(.model$learner.model)
   return(pred)
 }

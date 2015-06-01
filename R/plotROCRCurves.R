@@ -79,6 +79,25 @@ plotROCRCurves.Prediction = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "n
 }
 
 #' @export
+plotROCRCurves.PredictionMultilabel = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "none",
+                                     perf.args = list(), diagonal = FALSE, xlab = NULL, ylab = NULL, title = "", task.id = NULL) {
+  
+  for(i in names(obj$data)){
+    obj.i = obj
+    obj.i$data = obj$data[[i]]
+    obj.i$task.desc$type = "classif"
+    obj.i$task.desc$target = i
+    obj.i$task.desc$class.levels = obj$task.desc$class.levels[[i]]
+    class(obj.i$task.desc)[1] = "TaskDeskClassif"
+    class(obj.i) = c("PredictionClassif", "Prediction")
+    obj.i$task.desc$positive = obj.i$task.desc$class.levels[1]
+    obj.i$task.desc$negative = obj.i$task.desc$class.levels[2]
+    l = namedList(names = "prediction", init = obj.i)
+    print(plotROCRCurves.list(l, meas1, meas2, avg, perf.args, diagonal, xlab, ylab, title = i, task.id))
+  }
+}
+
+#' @export
 plotROCRCurves.ResampleResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
     perf.args = list(), diagonal = FALSE, xlab = NULL, ylab = NULL, title = "", task.id = NULL) {
 

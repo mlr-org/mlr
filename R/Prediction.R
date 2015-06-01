@@ -69,15 +69,15 @@ makePrediction.TaskDescClassif = function(task.desc, row.names, id, truth, predi
     if (length(i))
       names(data)[i] = paste0("prob.", colnames(y))
   }
-
+  
   p = makeS3Obj(c("PredictionClassif", "Prediction"),
-    predict.type = predict.type,
-    data = setRowNames(data, row.names),
-    threshold = NA_real_,
-    task.desc = task.desc,
-    time = time
+                predict.type = predict.type,
+                data = setRowNames(data, row.names),
+                threshold = NA_real_,
+                task.desc = task.desc,
+                time = time
   )
-
+  
   if (predict.type == "prob") {
     # set default threshold to 1/k
     if (is.null(predict.threshold)) {
@@ -86,7 +86,7 @@ makePrediction.TaskDescClassif = function(task.desc, row.names, id, truth, predi
     }
     p = setThreshold(p, predict.threshold)
   }
-
+  
   return(p)
 }
 
@@ -99,9 +99,11 @@ makePrediction.TaskDescMultilabel = function(task.desc, row.names, id, truth, pr
   for(i in task.desc$target){
     truth.iter = truth[i]
     names(truth.iter) = "truth" 
-    response = y[i]
-    names(response) = "response"
+    response = y[[i]]
+    if(predict.type == "response")
+      names(response) = "response"
     task.desc_classif$class.levels = task.desc$class.levels[[i]]
+    task.desc_classif$target = i
     pred[[i]] = makePrediction(task.desc = task.desc_classif, row.names = row.names, id = id, truth = truth.iter,
                                predict.type = predict.type, predict.threshold = predict.threshold, y = response, time = time)
   }
@@ -136,13 +138,13 @@ makePrediction.TaskDescSurv = function(task.desc, row.names, id, truth, predict.
   data$truth.time = truth[, 1L]
   data$truth.event = truth[, 2L]
   data$response = y
-
+  
   makeS3Obj(c("PredictionSurv", "Prediction"),
-    predict.type = predict.type,
-    data = setRowNames(as.data.frame(filterNull(data)), row.names),
-    threshold = NA_real_,
-    task.desc = task.desc,
-    time = time
+            predict.type = predict.type,
+            data = setRowNames(as.data.frame(filterNull(data)), row.names),
+            threshold = NA_real_,
+            task.desc = task.desc,
+            time = time
   )
 }
 
