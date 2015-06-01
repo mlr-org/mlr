@@ -30,7 +30,6 @@ r = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE, 
 r2 = resample(learner = lrn, task = task2, resampling = rdesc, show.info = FALSE, measures = list(hamloss,timetrain))
 r2 = resample(learner = lrn, task = task2, resampling = rdesc, show.info = FALSE, measures = list(mmce))
 r2 = resample(learner = lrn, task = task2, resampling = rdesc, show.info = FALSE, measures = list(hamloss,mmce,acc,timetrain))
-a <- traceback()
 
 r2$pred$data$V1
 ## Get the mean misclassification error:
@@ -40,10 +39,24 @@ r2$aggr
 lrn = makeLearner("classif.randomForest",predict.type="prob")
 task = makeClassifTask(id = "tutorial", data = iris[-c(1:10),], target = "neu")
 tr = train(lrn,task)
-pr = predict(tr,newdata=iris)
-plotROCRCurves(pr,diagonal=T)
+pr1 = predict(tr,newdata=iris[1:10,])
+plotROCRCurves(pr1,diagonal=T)
 
 task = makeMultilabelTask(id = "tutorial", data = iris[-c(1:10),], target = c("neu","Species"))
 tr = train(lrn,task)
-pr = predict(tr,newdata=iris[1:10,]) # geht noch nicht
+pr2 = predict(tr,newdata=iris[1:10,]) 
+
+# ROCR Curves
+data(iris)
+iris <- data.frame(iris,as.factor(sample(c("TRUE","FALSE"),150,replace=T)),
+                   as.factor(sample(c("TRUE","FALSE"),150,replace=T)))
+colnames(iris)[6:7] <- c("neu1","neu2")
+task = makeMultilabelTask(id = "tutorial", data = iris[-c(1:10),], target = c("neu1","neu2"))
+tr = train(lrn,task)
+pr2 = predict(tr,newdata=iris[1:10,]) 
+
+plotROCRCurves(pr2)
+
+
+
 
