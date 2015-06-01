@@ -18,8 +18,9 @@ tr = train(lrn,task)
 tr2 = train(lrn,task2)
 
 ## Predict
-pr = predict(tr,newdata=iris[1:10,])
+pr = predict(tr,newdata=iris[1:10])
 pr2 = predict(tr2,newdata=iris[1:10,])
+pr2 = predict(tr2,newdata=iris[1:10,-c(5,6)])
 
 ## Define the resampling strategy:
 rdesc = makeResampleDesc(method = "CV", stratify = FALSE)

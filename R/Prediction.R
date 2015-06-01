@@ -97,8 +97,12 @@ makePrediction.TaskDescMultilabel = function(task.desc, row.names, id, truth, pr
   class(task.desc_classif)[1] = "TaskDescClassif"
   task.desc_classif$type = "classif"
   for(i in task.desc$target){
-    truth.iter = truth[i]
-    names(truth.iter) = "truth" 
+    if(!is.null(truth)){
+      truth.iter = truth[i]
+      names(truth.iter) = "truth"
+    }else{
+      truth.iter = NULL
+    }
     response = y[[i]]
     if(predict.type == "response")
       names(response) = "response"
