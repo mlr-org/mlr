@@ -53,9 +53,23 @@
 #'   the currently used memory and the max memory ever used before
 #'   (the latter two both taken from \code{\link{gc}}).
 #'   See the implementation for details.
+#' @param budget [\code{integer(1)}]
+#'   Maximum budget for tuning. This value restricts the number of function
+#'   evaluations. In case of \code{makeTuneControlGrid} this number is
+#'   identical to the size of the grid. For \code{makeTuneControlRandom} the
+#'   \code{budget} equals the number of iterations (\code{maxit}) performed by
+#'   the random search algorithm. Within the \code{\link[cmaes]{cma_es}} the
+#'   \code{budget} corresponds to the product of the number of generations
+#'   (\code{maxit}) and the number of offsprings per generation
+#'   (\code{lambda}). \code{\link[GenSA]{GenSA}} defines the \code{budget} via
+#'   the argument \code{max.call}. However, one should note that this algorithm
+#'   does not stop its local search before its end. This behaviour might lead
+#'   to an extension of the defined budget. In \code{irace}, one can define the
+#'   \code{budget} using \code{maxExperiments}.
 #' @param ... [any]\cr
-#'   Further control parameters passed to the \code{control} argument of \code{\link[cmaes]{cma_es}} and
-#'   \code{tunerConfig} argument of \code{\link[irace]{irace}}.
+#'   Further control parameters passed to the \code{control} arguments of
+#'   \code{\link[cmaes]{cma_es}} or \code{\link[GenSA]{GenSA}}, as well as
+#'   towards the \code{tunerConfig} argument of \code{\link[irace]{irace}}.
 #' @return [\code{\link{TuneControl}}]. The specific subclass is one of
 #'   \code{\link{TuneControlGrid}}, \code{\link{TuneControlRandom}},
 #'   \code{\link{TuneControlCMAES}}, \code{\link{TuneControlGenSA}},
@@ -67,14 +81,17 @@
 NULL
 
 makeTuneControl = function(same.resampling.instance, impute.val = NULL, start = NULL,
-  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL, ..., cl) {
+  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL, budget = NULL, ..., cl) {
 
   if (!is.null(start))
     assertList(start, min.len = 1L, names = "unique")
   if (is.null(log.fun))
     log.fun = logFunTune
+  if (!is.null(budget))
+    budget = asCount(budget)
   x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, tune.threshold.args, log.fun, ...)
   x$start = start
+  x$budget = budget
   addClasses(x, c(cl, "TuneControl"))
 }
 
@@ -84,6 +101,7 @@ print.TuneControl = function(x, ...) {
   catf("Same resampling instance: %s", x$same.resampling.instance)
   catf("Imputation value: %s", ifelse(is.null(x$impute.val), "<worst>", sprintf("%g", x$impute.val)))
   catf("Start: %s", convertToShortString(x$start))
+  catf("Budget: %s", convertToShortString(x$budget))
   catf("Tune threshold: %s", x$tune.threshold)
   catf("Further arguments: %s", convertToShortString(x$extra.args))
 }
