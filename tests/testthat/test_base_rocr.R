@@ -10,25 +10,32 @@ test_that("ROCR", {
   expect_true(a1 == a2)
 })
 
-test_that("plotROCRCurves", {
+test_that("generateROCRCurvesData", {
   lrn1 = makeLearner("classif.rpart", predict.type = "prob")
   lrn2 = makeLearner("classif.lda", predict.type = "prob")
   lrns = list(lrn1, lrn2)
   m1 = train(lrn1, binaryclass.task)
   p1 = predict(m1, binaryclass.task)
-  plotROCRCurves(p1)		## Prediction
+  d1 = generateROCRCurvesData(p1)
+  plotROCRCurves(d1) # Prediction
 
   m2 = train(lrn2, binaryclass.task)
   p2 = predict(m2, binaryclass.task)
-  plotROCRCurves(list("lda" = p1, "rpart" = p2))	## list of Predictions
+  d2 = generateROCRCurvesData(list("lda" = p1, "rpart" = p2)) # list of Predictions
+  plotROCRCurves(d2)
 
   br = benchmark(lrn2, binaryclass.task, resampling = makeResampleDesc("Holdout"))
-  plotROCRCurves(br)	## BenchmarkResult
+  d3 = generateROCRCurvesData(br)
+  plotROCRCurves(d3) # BenchmarkResult
 
-  rs = lapply(lrns, holdout, task = binaryclass.task)
+  rs = lapply(lrns, holdout, task = binaryclass.task)	# list of ResampleResult's
   names(rs) = c("a", "b")
-  plotROCRCurves(rs)	## list of ResampleResult's
-  plotROCRCurves(rs, avg = "none")
-  plotROCRCurves(rs, avg = "horizontal")
-  plotROCRCurves(rs, avg = "vertical")
+  d4 = generateROCRCurvesData(rs)
+  dn = generateROCRCurvesData(rs, avg = "none")
+  dh = generateROCRCurvesData(rs, avg = "horizontal")
+  dv = generateROCRCurvesData(rs, avg = "vertical")
+  plotROCRCurves(d4)
+  plotROCRCurves(dn)
+  plotROCRCurves(dh)
+  plotROCRCurves(dv)
 })

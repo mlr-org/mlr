@@ -14,14 +14,16 @@ Prediction object.}
 Converts predictions to a format package ROCR can handle.
 }
 \seealso{
-Other predict: \code{\link{getProbabilities}};
+Other predict: \code{\link{generateROCRCurvesData}};
+  \code{\link{getProbabilities}};
   \code{\link{plotROCRCurves}};
   \code{\link{plotViperCharts}};
   \code{\link{predict.WrappedModel}};
   \code{\link{setPredictThreshold}};
   \code{\link{setPredictType}}
 
-Other roc: \code{\link{plotROCRCurves}};
+Other roc: \code{\link{generateROCRCurvesData}};
+  \code{\link{plotROCRCurves}};
   \code{\link{plotViperCharts}}
 }
 
