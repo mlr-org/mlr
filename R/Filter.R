@@ -167,6 +167,28 @@ makeFilter(
 )
 
 makeFilter(
+  name = "cforest.importance",
+  desc = "Permutation importance of random forest fitted in package 'party'",
+  pkg = "party",
+  supported.tasks = c("classif", "regr", "surv"),
+  supported.features = c("numerics", "factors"),
+  fun = function(task, nselect, ...) {
+    args = list(...)
+    cforest_args = as.list(base::args(party::cforest))
+    cforest_args = args[names(args) %in% names(cforest_args)]
+    control_args = as.list(base::args(party::cforest_control))
+    control_args = args[names(args) %in% names(control_args)]
+    varimp_args = as.list(base::args(party::varimp))
+    varimp_args = args[names(args) %in% names(varimp_args)]
+    ctrl = do.call(party::cforest_unbiased, control_args)
+    fit = do.call(party::cforest, c(list(formula = getTaskFormula(task), data = getTaskData(task), controls = ctrl),
+                                    cforest_args))
+    im = do.call(party::varimp, c(list(obj = fit), varimp_args))
+    im
+  }
+)
+
+makeFilter(
   name = "linear.correlation",
   desc = "Pearson correlation between feature and target",
   pkg  = "FSelector",
