@@ -434,16 +434,16 @@ res$y
 #&gt;   Length: 25
 #&gt;   Add x values transformed: FALSE
 #&gt;   Error messages: TRUE. Errors: 0 / 25.
-#&gt;   Exec times: TRUE. Range: 0.05 - 0.063. 0 NAs.
+#&gt;   Exec times: TRUE. Range: 0.05 - 0.06. 0 NAs.
 opt.grid = as.data.frame(res$opt.path)
 head(opt.grid)
 #&gt;      C sigma acc.test.mean acc.test.sd dob eol error.message exec.time
-#&gt; 1 0.25  0.25     0.9533333  0.03055050   1  NA          &lt;NA&gt;     0.060
-#&gt; 2  0.5  0.25     0.9466667  0.02309401   2  NA          &lt;NA&gt;     0.058
-#&gt; 3    1  0.25     0.9533333  0.01154701   3  NA          &lt;NA&gt;     0.051
+#&gt; 1 0.25  0.25     0.9533333  0.03055050   1  NA          &lt;NA&gt;     0.053
+#&gt; 2  0.5  0.25     0.9466667  0.02309401   2  NA          &lt;NA&gt;     0.051
+#&gt; 3    1  0.25     0.9533333  0.01154701   3  NA          &lt;NA&gt;     0.050
 #&gt; 4    2  0.25     0.9533333  0.01154701   4  NA          &lt;NA&gt;     0.050
 #&gt; 5    4  0.25     0.9533333  0.01154701   5  NA          &lt;NA&gt;     0.051
-#&gt; 6 0.25   0.5     0.9333333  0.01154701   6  NA          &lt;NA&gt;     0.055
+#&gt; 6 0.25   0.5     0.9333333  0.01154701   6  NA          &lt;NA&gt;     0.052
 </code></pre>
 
 <p>A quick visualization of the performance values on the search grid can be accomplished as follows:</p>
@@ -536,15 +536,15 @@ res
 <p>Note that <code>res$opt.path</code> contains the parameter values <em>on the original scale</em>.</p>
 <pre><code class="r">as.data.frame(res$opt.path)
 #&gt;     C sigma mmce.test.mean dob eol error.message exec.time
-#&gt; 1 -12   -12     0.52666667   1  NA          &lt;NA&gt;     0.037
-#&gt; 2   0   -12     0.52666667   2  NA          &lt;NA&gt;     0.037
+#&gt; 1 -12   -12     0.52666667   1  NA          &lt;NA&gt;     0.036
+#&gt; 2   0   -12     0.52666667   2  NA          &lt;NA&gt;     0.036
 #&gt; 3  12   -12     0.04000000   3  NA          &lt;NA&gt;     0.035
 #&gt; 4 -12     0     0.52666667   4  NA          &lt;NA&gt;     0.039
-#&gt; 5   0     0     0.04000000   5  NA          &lt;NA&gt;     0.045
-#&gt; 6  12     0     0.06666667   6  NA          &lt;NA&gt;     0.043
-#&gt; 7 -12    12     0.56666667   7  NA          &lt;NA&gt;     0.039
-#&gt; 8   0    12     0.68666667   8  NA          &lt;NA&gt;     0.040
-#&gt; 9  12    12     0.68666667   9  NA          &lt;NA&gt;     0.041
+#&gt; 5   0     0     0.04000000   5  NA          &lt;NA&gt;     0.041
+#&gt; 6  12     0     0.06666667   6  NA          &lt;NA&gt;     0.036
+#&gt; 7 -12    12     0.56666667   7  NA          &lt;NA&gt;     0.035
+#&gt; 8   0    12     0.68666667   8  NA          &lt;NA&gt;     0.035
+#&gt; 9  12    12     0.68666667   9  NA          &lt;NA&gt;     0.036
 </code></pre>
 
 <p>In order to get the <em>transformed</em> parameter values instead, use function
@@ -587,12 +587,12 @@ print(head(as.data.frame(res$opt.path)))
 #&gt; 5  7.772697 vanilladot         NA     NA           0.04   5  NA
 #&gt; 6 -6.093697 vanilladot         NA     NA           0.10   6  NA
 #&gt;   error.message exec.time
-#&gt; 1          &lt;NA&gt;     0.024
-#&gt; 2          &lt;NA&gt;     0.028
-#&gt; 3          &lt;NA&gt;     0.027
-#&gt; 4          &lt;NA&gt;     0.022
-#&gt; 5          &lt;NA&gt;     0.021
-#&gt; 6          &lt;NA&gt;     0.021
+#&gt; 1          &lt;NA&gt;     0.021
+#&gt; 2          &lt;NA&gt;     0.022
+#&gt; 3          &lt;NA&gt;     0.020
+#&gt; 4          &lt;NA&gt;     0.020
+#&gt; 5          &lt;NA&gt;     0.020
+#&gt; 6          &lt;NA&gt;     0.020
 </code></pre>
 
 <p>See how we made the kernel parameters like <code>sigma</code> and <code>degree</code> dependent on the <code>kernel</code>
@@ -637,12 +637,12 @@ print(head(as.data.frame(res$opt.path)))
 #&gt; 5         classif.ksvm         -11.450293                         NA
 #&gt; 6         classif.ksvm           9.867756                         NA
 #&gt;   mmce.test.mean dob eol error.message exec.time
-#&gt; 1     0.03333333   1  NA          &lt;NA&gt;     0.046
-#&gt; 2     0.06666667   2  NA          &lt;NA&gt;     0.052
-#&gt; 3     0.06666667   3  NA          &lt;NA&gt;     0.043
-#&gt; 4     0.08666667   4  NA          &lt;NA&gt;     0.044
-#&gt; 5     0.52666667   5  NA          &lt;NA&gt;     0.050
-#&gt; 6     0.67333333   6  NA          &lt;NA&gt;     0.042
+#&gt; 1     0.03333333   1  NA          &lt;NA&gt;     0.036
+#&gt; 2     0.06666667   2  NA          &lt;NA&gt;     0.034
+#&gt; 3     0.06666667   3  NA          &lt;NA&gt;     0.036
+#&gt; 4     0.08666667   4  NA          &lt;NA&gt;     0.035
+#&gt; 5     0.52666667   5  NA          &lt;NA&gt;     0.036
+#&gt; 6     0.67333333   6  NA          &lt;NA&gt;     0.036
 </code></pre>
 
 <h2 id="nested-resampling">Nested resampling</h2>
@@ -726,12 +726,12 @@ for <code>sigma</code> should be between 0 and 1.</p>
 <pre><code class="r">opt.paths = lapply(r$extract, function(x) as.data.frame(x$opt.path))
 head(opt.paths[[1]])
 #&gt;      C sigma mmce.test.mean dob eol error.message exec.time
-#&gt; 1 0.25  0.25          0.050   1  NA          &lt;NA&gt;     0.033
+#&gt; 1 0.25  0.25          0.050   1  NA          &lt;NA&gt;     0.020
 #&gt; 2  0.5  0.25          0.025   2  NA          &lt;NA&gt;     0.025
-#&gt; 3    1  0.25          0.025   3  NA          &lt;NA&gt;     0.026
-#&gt; 4    2  0.25          0.025   4  NA          &lt;NA&gt;     0.023
-#&gt; 5    4  0.25          0.025   5  NA          &lt;NA&gt;     0.022
-#&gt; 6 0.25   0.5          0.050   6  NA          &lt;NA&gt;     0.025
+#&gt; 3    1  0.25          0.025   3  NA          &lt;NA&gt;     0.021
+#&gt; 4    2  0.25          0.025   4  NA          &lt;NA&gt;     0.020
+#&gt; 5    4  0.25          0.025   5  NA          &lt;NA&gt;     0.020
+#&gt; 6 0.25   0.5          0.050   6  NA          &lt;NA&gt;     0.020
 </code></pre>
 
 <p>With the following code you can visualize the <code>opt.path</code> of the first resampling iteration.</p>
@@ -818,7 +818,7 @@ during tuning. Points on the Pareto front are slightly increased.</p>
 
         <!--
         MkDocs version  : 0.12.2
-        Docs Build Date : 2015-05-25 17:51:45.288225
+        Docs Build Date : 2015-06-03 01:07:28.908232
         -->
     </body>
 </html>
