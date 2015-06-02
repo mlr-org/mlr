@@ -1,9 +1,10 @@
 #' @export
 #' @rdname Task
-makeMultilabelTask <- function(id, data, target, weights=NULL, blocking=NULL,
-                positive= NA_character_, fixup.data = "warn", check.data=TRUE){
+makeMultilabelTask = function(id, data, target, weights=NULL, blocking=NULL,
+                positive = NA_character_, fixup.data = "warn", check.data=TRUE){
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)
+  assertCharacter(target)
   task = addClasses(makeSupervisedTask("multilabel", data, target,
                                        weights, blocking), "MultilabelTask")
     if(fixup.data != "no")
@@ -18,7 +19,6 @@ makeMultilabelTask <- function(id, data, target, weights=NULL, blocking=NULL,
 checkTaskCreation.MultilabelTask = function(task, target, ...) {
   NextMethod("checkTaskCreation")
   for(i in target){
-    assertString(i)
     assertFactor(task$env$data[[i]], any.missing = FALSE, empty.levels.ok = FALSE, .var.name = target[i])
 }
 }

@@ -47,7 +47,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
   model = object
   learner = model$learner
   td = model$task.desc
-
+  
   # FIXME: cleanup if cases
   if (missing(newdata)) {
     assertClass(task, classes = "Task")
@@ -66,11 +66,11 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
   } else {
     newdata = newdata[subset,, drop = FALSE]
   }
-
+  
   # if we saved a model and loaded it later just for prediction this is necessary
   requireLearnerPackages(learner)
   t.col = match(td$target, colnames(newdata))
-
+  
   # get truth and drop target col, if target in newdata
   if (!all(is.na(t.col))) {
     if (length(t.col) > 1L && anyMissing(t.col))
@@ -80,7 +80,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
   } else {
     truth = NULL
   }
-
+  
   # was there an error in building the model? --> return NAs
   if (isFailureModel(model)) {
     p = predictFailureModel(model, newdata)
@@ -93,9 +93,6 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
       .newdata = newdata
     )
     
-    if("MultilabelWrapper" %in% class(model$learner.model))
-      pars$.learner = addClasses(pars$.learner, "MultilabelWrapper")
-        
     pars = c(pars, getHyperPars(learner, c("predict", "both")))
     debug.seed = getMlrOption("debug.seed", NULL)
     if (!is.null(debug.seed))
@@ -123,5 +120,5 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
   else
     ids = subset
   makePrediction(task.desc = td, row.names = rownames(newdata), id = ids, truth = truth,
-    predict.type = learner$predict.type, predict.threshold = learner$predict.threshold, y = p, time = time.predict)
+                 predict.type = learner$predict.type, predict.threshold = learner$predict.threshold, y = p, time = time.predict)
 }

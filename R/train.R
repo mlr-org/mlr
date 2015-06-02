@@ -47,10 +47,6 @@ train = function(learner, task, subset, weights = NULL) {
   # make pars list for train call
   pars = list(.learner = learner, .task = task, .subset = subset)
 
-  # change learner class in multilabel case, to go to trainLearner.MultilabelWrapper
-  if(task$task.desc$type == "multilabel")
-    pars$.learner = addClasses(pars$.learner, "MultilabelWrapper")
-    
   # FIXME: code is bad here, set weights, the simply check it in checktasklearner
   if (!is.null(weights)) {
     assertNumeric(weights, len = length(subset), any.missing = FALSE, lower = 0)
