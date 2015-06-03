@@ -10,7 +10,7 @@ Note that this function internally uses [&benchmark] in combination with [&makeD
 so for every run new observations are drawn.
 Thus the results are noisy.
 To reduce noise increase the number of resampling iterations.
-You can define the resampling method in the `resampling` argument of [&generateLearningCurve].
+You can define the resampling method in the `resampling` argument of [&generateLearningCurveData].
 It is also possible to pass a [ResampleInstance](&makeResampleInstance) (which is a result
 of [&makeResampleInstance]) to make resampling consistent for all passed learners and each
 step of increasing the number of observations.
@@ -18,13 +18,13 @@ step of increasing the number of observations.
 
 ## Plotting the learning curve
 
-The [%mlr] function [&generateLearningCurve] can generate the data for *learning curves*
+The [%mlr] function [&generateLearningCurveData] can generate the data for *learning curves*
 for multiple [learners](integrated_learners.md) and multiple [performance measures](measures.md)
 at once.
-With [&plotLearningCurve] the result of [&generateLearningCurve] can be plotted using [%ggplot2].
+With [&plotLearningCurve] the result of [&generateLearningCurveData] can be plotted using [%ggplot2].
 
 ```{r LearningCurveTPFP}
-r = generateLearningCurve(
+r = generateLearningCurveData(
   learners = list("classif.rpart", "classif.knn"),
   task = sonar.task,
   percs = seq(0.1, 1, by = 0.2),
@@ -56,7 +56,7 @@ lrns = list(
   "classif.randomForest"
 )
 rin = makeResampleDesc(method = "CV", iters = 5)
-lc = generateLearningCurve(learners = lrns, task = sonar.task, percs = seq(0.1, 1, by = 0.1), measures = acc,
+lc = generateLearningCurveData(learners = lrns, task = sonar.task, percs = seq(0.1, 1, by = 0.1), measures = acc,
   resampling = rin, show.info = FALSE)
 plotLearningCurve(lc)
 ```
