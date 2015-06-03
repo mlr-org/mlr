@@ -161,7 +161,6 @@ appendmultilabelmeasures = function(measures, task){
   measuresmerge
 }
 
-
 mergeResampleResult = function(learner, task, iter.results, measures, rin, models, extract, show.info) {
   iters = length(iter.results)
   mids = vcapply(measures, function(m) m$id)

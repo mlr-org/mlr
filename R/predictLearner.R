@@ -51,8 +51,7 @@ predictLearner2 = function(.learner, .model, .newdata, ...) {
 checkPredictLearnerOutput = function(learner, model, p) {
   
   if(("MultilabelWrapper" %in% class(model$learner.model))){
-    return(p)}else{ 
-      
+    return(p)}else{       
       cl = class(p)[1L]
       if (learner$type == "classif") {
         levs = model$task.desc$class.levels
