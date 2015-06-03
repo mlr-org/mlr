@@ -4,19 +4,11 @@
 \alias{plotLearningCurve}
 \title{Plot learning curve data.}
 \usage{
-plotLearningCurve(obj, linesize = 1.5, pointsize = 1.5)
+plotLearningCurve(obj)
 }
 \arguments{
 \item{obj}{[\code{LearningCurveData}]\cr
-Result of \code{\link{generateLearningCurve}}.}
-
-\item{linesize}{[\code{numeric(1)}]\cr
-Linesize for ggplot2 \code{\link[ggplot2]{geom_line}} for graphs.
-Default is 1.5.}
-
-\item{pointsize}{[\code{numeric(1)}]\cr
-Linesize for ggplot2 \code{\link[ggplot2]{geom_point}} for graphs.
-Default is 1.5.}
+Result of \code{\link{generateLearningCurveData}}, with class \code{LearningCurveData}.}
 }
 \value{
 ggplot2 plot object.

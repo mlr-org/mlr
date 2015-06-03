@@ -17,6 +17,7 @@ mlr_2.4:
   in makeTuneControlIrace); default is maximum precision
 - generateLearningCurve and plotLearningCurve helps to plot the learning curve demonstrating how the performance increases with more observations.
 - plotROCRCurves has been rewritten to use ggplot2
+- The generation and plotting of ROC curves has been separated into two functions: generateROCRCurves and plotROCRCurves.
 
 - new learners:
 -- classif.bst

@@ -7,7 +7,7 @@
 #'   Learning algorithms which should be compared.
 #' @template arg_task
 #' @param resampling [\code{\link{ResampleDesc}} | \code{\link{ResampleInstance}}]\cr
-#'   Resampling strategy to evaluate the performance measure. 
+#'   Resampling strategy to evaluate the performance measure.
 #'   If no strategy is given a default "Holdout" will be performed.
 #' @param percs [\code{numeric}]\cr
 #'   Vector of percentages to be drawn from the training split.
@@ -20,15 +20,15 @@
 #'   Only for classification:
 #'   Should the downsampled data be stratified according to the target classes?
 #' @template arg_showinfo
-#' @return [\code{data.frame}]
+#' @return A [\code{data.frame}] of class \code{LearningCurveData}.
 #' @examples
-#' r = generateLearningCurve(list("classif.rpart", "classif.knn"),
+#' r = generateLearningCurveData(list("classif.rpart", "classif.knn"),
 #' task = sonar.task, percs = seq(0.2, 1, by = 0.2),
 #' measures = list(tp, fp, tn, fn), resampling = makeResampleDesc(method = "Subsample", iters = 5),
 #' show.info = FALSE)
 #' print(plotLearningCurve(r))
 #' @export
-generateLearningCurve = function(learners, task, resampling = NULL,
+generateLearningCurveData = function(learners, task, resampling = NULL,
   percs = seq(0.1, 1, by = 0.1), measures, stratify = FALSE, show.info = getMlrOption("show.info"))  {
 
   learners = lapply(learners, checkLearner)
@@ -70,30 +70,25 @@ generateLearningCurve = function(learners, task, resampling = NULL,
   # set short measures names and resort cols
   mids = extractSubList(measures, "id")
   colnames(perfs) = mids
-  cbind(learner = learner, perc = perc, perfs)
+  out = cbind(learner = learner, perc = perc, perfs)
+  class(out) = append(class(out), "LearningCurveData")
+  out
 }
-
 #' @title Plot learning curve data.
 #'
 #' @description
 #' Visualizes data size (percentage used for model) vs. performance measure(s).
 #'
 #' @param obj [\code{LearningCurveData}]\cr
-#'   Result of \code{\link{generateLearningCurve}}.
-#' @param linesize [\code{numeric(1)}]\cr
-#'   Linesize for ggplot2 \code{\link[ggplot2]{geom_line}} for graphs.
-#'   Default is 1.5.
-#' @param pointsize [\code{numeric(1)}]\cr
-#'   Linesize for ggplot2 \code{\link[ggplot2]{geom_point}} for graphs.
-#'   Default is 1.5.
+#'   Result of \code{\link{generateLearningCurveData}}, with class \code{LearningCurveData}.
 #' @template ret_gg2
 #' @export
-plotLearningCurve = function(obj, linesize = 1.5, pointsize = 1.5) {
-  ggdata = melt(obj, id.vars = c("learner", "perc"), variable.name = "measure", value.name = "perf")
-  pl = ggplot(ggdata, aes_string(x = "perc", y = "perf", colour = "learner"))
-  pl = pl + layer(geom = "point", size = pointsize)
-  pl = pl + layer(geom = "line", size = linesize)
-  pl = pl + facet_wrap(~measure, scales = "free_y")
+plotLearningCurve = function(obj) {
+  assertClass(obj, "LearningCurveData")
+  ggdata = reshape2::melt(obj, id.vars = c("learner", "perc"), variable.name = "measure", value.name = "perf")
+  pl = ggplot2::ggplot(ggdata, ggplot2::aes_string(x = "perc", y = "perf", colour = "learner"))
+  pl = pl + ggplot2::layer(geom = "point")
+  pl = pl + ggplot2::layer(geom = "line")
+  pl = pl + ggplot2::facet_wrap(~measure, scales = "free_y")
   return(pl)
 }
-
