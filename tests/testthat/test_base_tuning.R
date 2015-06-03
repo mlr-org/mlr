@@ -110,3 +110,34 @@ test_that("tuning works with tuneThreshold and multiple measures", {
   expect_true(is.numeric(res$y) && length(res$y) == 2L && !any(is.na(res$y)))
 })
 
+test_that("tuning allows usage of budget", {
+  lrn = makeLearner("classif.rpart", predict.type = "prob")
+  rdesc = makeResampleDesc("Holdout")
+  ctrl = makeTuneControlCMAES(budget = 18, lambda = 6, maxit = 3)
+  ps = makeParamSet(
+    makeNumericParam("cp", lower = 0.1, upper = 0.2),
+    makeIntegerParam("minsplit", lower = 1, upper = 10)
+  )
+  res = tuneParams(lrn, binaryclass.task, resampling = rdesc, par.set = ps, control = ctrl)
+  expect_true(is.numeric(res$y) && (length(res$y) == 1L) && !any(is.na(res$y)))
+
+  # also check with infeasible stuff
+  ps = makeParamSet(
+    makeDiscreteParam("cp", values = c(0.1, -1))
+  )
+  ctrl = makeTuneControlGrid(tune.threshold = TRUE, budget = 2L)
+  res = tuneParams(lrn, sonar.task, resampling = rdesc, measures = list(mmce, auc),
+    par.set = ps, control = ctrl)
+  expect_true(is.numeric(res$y) && length(res$y) == 2L && !any(is.na(res$y)))
+
+  lrn = makeLearner("classif.rpart", predict.type = "prob")
+  rdesc = makeResampleDesc("Holdout")
+  ctrl = makeTuneControlRandom(tune.threshold = TRUE, maxit = NULL, budget = 3L)
+  ps = makeParamSet(
+    makeNumericParam("cp", lower = 0.1, upper = 0.2)
+  )
+  res = tuneParams(lrn, binaryclass.task, resampling = rdesc, measures = list(mmce, auc),
+    par.set = ps, control = ctrl)
+  expect_true(is.numeric(res$y) && length(res$y) == 2L && !any(is.na(res$y)))
+  expect_identical(getOptPathLength(res$opt.path), 3L)
+})

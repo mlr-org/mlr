@@ -16,6 +16,8 @@ mlr_2.4:
 - tuneIrace: allows to set the precision / digits within irace (using the argument 'digits'
   in makeTuneControlIrace); default is maximum precision
 - generateLearningCurve and plotLearningCurve helps to plot the learning curve demonstrating how the performance increases with more observations.
+- tuning: added 'budget' parameter in makeTuneControl*, allowing to define a maximum budget for tuning
+- makeTuneControlGenSA: optimized function will be considered non-smooth per default (change via ...)
 - plotROCRCurves has been rewritten to use ggplot2
 
 - new learners:

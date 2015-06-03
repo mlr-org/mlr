@@ -36,5 +36,18 @@ test_that("tuneDesign works with dependent params", {
   expect_true(!is.na(tr$y))
 })
 
-
-
+test_that("makeTuneControlDesign uses the budget parameter", {
+  ps = makeParamSet(
+    makeDiscreteParam("kernel", values = c("vanilladot", "rbfdot")),
+    makeNumericParam("C", lower = 1, upper = 2),
+    makeNumericParam("sigma", lower = 1, upper = 2, requires = quote(kernel == "rbfdot"))
+  )
+  lrn = makeLearner("classif.ksvm")
+  rdesc = makeResampleDesc("Holdout")
+  des = generateGridDesign(par.set = ps, resolution = 3L)
+  expect_error(makeTuneControlDesign(design = des, budget = 50L))
+  ctrl = makeTuneControlDesign(design = des, budget = 12L)
+  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
+  expect_true(!is.na(tr$y))
+  expect_identical(getOptPathLength(tr$opt.path), ctrl$budget)
+})

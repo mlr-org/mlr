@@ -136,3 +136,17 @@ test_that("tuneIrace uses digits", {
   expect_error(suppressAll(resample(lrn.tune, task = multiclass.task, rdesc, 
     measures = list(mmce), show.info = FALSE)))
 })
+
+test_that("makeTuneControlIrace handles budget parameter", {
+  rdesc = makeResampleDesc("Holdout", stratify = TRUE, split = 0.1)
+  ps = makeParamSet(makeIntegerParam("minsplit", lower = 1, upper = 3))
+
+  n = 40
+  expect_error(makeTuneControlIrace(budget = n, nbIterations = 2, minNbSurvival = 1, maxExperiments = n + 2L))
+  expect_error(makeTuneControlIrace(budget = n + 2L, nbIterations = 2, minNbSurvival = 1, maxExperiments = n))
+
+  # check, whether it is ok to provide both arguments as long as they are the same
+  ctrl = makeTuneControlIrace(budget = n, nbIterations = 2, minNbSurvival = 1, maxExperiments = n)
+  tr1 = tuneParams(makeLearner("classif.rpart"), multiclass.task, rdesc, par.set = ps, control = ctrl)
+  expect_true(getOptPathLength(tr1$opt.path) <= n)
+})
