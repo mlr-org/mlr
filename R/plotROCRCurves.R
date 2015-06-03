@@ -14,33 +14,34 @@
 #' @param meas2 [\code{character(1)}]\cr
 #'   Measure on y-axis. Note that this is a measure name from *ROCR* and not from mlr!
 #'   Default is \dQuote{fpr}.
-#' @param avg [\code{character(1)}]\cr
-#'   How to average results from resampling.
+#' @param avg [\code{chracter(1)}]\cr
+#'   If \code{obj} is of class \code{ResampleResult} or \code{BenchmarkResult}, how are
+#'   the predictions to be combined (by learner)?
+#'   If \code{obj} is not one of these classes, this argument is ignored.
+#'   Possibilities are \dQuote{threshold}, \dQuote{horizontal}, \dQuote{vertical}, and \dQuote{none}.
 #'   Default is \dQuote{threshold}.
-#' @param cols [\code{character}]\cr
-#'   Colors of curves. Single strings are replicated to desired length.
-#'   Default is to use \code{\link{rainbow}}.
-#' @param ltys [\code{integer}]\cr
-#'   Line types of curves. Single ints are replicated to desired length.
-#'   Default is to use 1.
-#' @param add.legend [\code{logical(1)}]\cr
-#'   Add legend to plot?
-#'   Default is \code{TRUE} if more than one ROC curve is drawn.
-#' @param add.diag [\code{logical(1)}]\cr
-#'   Add main diagonal to plot via \code{\link{abline}}?
-#'   Default is \code{TRUE}.
 #' @param perf.args [named \code{list}]\cr
 #'   Further arguments passed to ROCR's \code{\link[ROCR]{performance}}.
 #'   Usually not needed and \code{meas1} and \code{meas2} are set internally.
 #'   Default is an empty list.
-#' @param legend.args [named \code{list}]\cr
-#'   Further arguments passed to \code{\link{legend}}.
-#'   Default is to display the names or learner ids of \code{obj},
-#'   to set \code{col} and \code{fill} to \code{cols}, to set \code{lty} to \code{ltys},
-#'   and to draw in \dQuote{bottomright}.
+#' @param diagonal [\code{logical(1)}]\cr
+#'   Whether to plot a dashed diagonal line.
+#'   Default is false.
+#' @param xlab [\code{character(1)}]\cr
+#'   Label for x-axis.
+#'   Default is \code{meas1}.
+#' @param ylab [\code{character(1)}]\cr
+#'   Label for y-axis
+#'   Default is \code{meas2}.
+#' @param title [\code{character(1)}]\cr
+#'   Title for plot.
+#'   Default is an empty string.
 #' @param task.id [\code{character(1)}]\cr
 #'   Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
 #'   Default is first task.
+#'
+#' @return A \code{\link[ggplot2]{ggplot}} object. To extract the raw data access the \code{data} element
+#'   of the returned object.
 #' @template ret_inv_null
 #' @family roc
 #' @family predict
@@ -53,101 +54,182 @@
 #' z = plotROCRCurves(b)
 #' }
 plotROCRCurves = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
-  cols = NULL, ltys = NULL,
-  add.legend = NULL, add.diag = TRUE, perf.args = list(), legend.args = list(), task.id = NULL) {
+    perf.args = list(), diagonal = FALSE, xlab = NULL, ylab = NULL, title = "",
+    task.id = NULL) {
 
-  # lets not check the value-names from ROCR here. they might be changed behind our back later...
-  assertString(meas1)
-  assertString(meas2)
-  assertString(avg)
-  if (!is.null(cols))
-    assertCharacter(cols, any.missing = FALSE)
-  if (!is.null(ltys))
-    # ltys = asInteger(ltys, any.missing = FALSE)
-    assertCharacter(ltys, any.missing = FALSE)
-  if (!is.null(add.legend))
-    assertFlag(add.legend)
-  assertFlag(add.diag)
-  assertList(perf.args, names = "unique")
-  assertList(legend.args, names = "unique")
-  UseMethod("plotROCRCurves")
+    # lets not check the value-names from ROCR here. they might be changed behind our back later...
+    assertString(meas1)
+    assertString(meas2)
+    assertString(avg)
+    stopifnot(avg %in% c("none", "threshold", "horizontal", "vertical"))
+    assertLogical(diagonal)
+    stopifnot(is.null(xlab) | (is.character(xlab) & length(xlab) == 1))
+    stopifnot(is.null(ylab) | (is.character(ylab) & length(ylab) == 1))
+    assertString(title)
+    assertList(perf.args, names = "unique")
+    UseMethod("plotROCRCurves")
 }
 
 #' @export
-plotROCRCurves.Prediction = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
-  cols = NULL, ltys = NULL,
-  add.legend = NULL, add.diag = TRUE, perf.args = list(), legend.args = list(), task.id = NULL) {
+plotROCRCurves.Prediction = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "none",
+    perf.args = list(), diagonal = FALSE, xlab = NULL, ylab = NULL, title = "", task.id = NULL) {
 
-  l = namedList(names = "prediction", init = obj)
-  plotROCRCurves.list(l, meas1, meas2, avg, cols, ltys, add.legend, add.diag, perf.args, legend.args)
+    l = namedList(names = "prediction", init = obj)
+    plotROCRCurves.list(l, meas1, meas2, avg, perf.args, diagonal, xlab, ylab, title, task.id)
 }
 
 #' @export
 plotROCRCurves.ResampleResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
-  cols = NULL, ltys = NULL,
-  add.legend = NULL, add.diag = TRUE,  perf.args = list(), legend.args = list(), task.id = NULL) {
+    perf.args = list(), diagonal = FALSE, xlab = NULL, ylab = NULL, title = "", task.id = NULL) {
 
-  l = namedList(names = obj$learner.id, init = obj)
-  plotROCRCurves.list(l, meas1, meas2, avg, cols, ltys, add.legend, add.diag, perf.args, legend.args)
+    l = namedList(names = obj$learner.id, init = obj)
+    plotROCRCurves.list(l, meas1, meas2, avg, perf.args, diagonal, xlab, ylab, title, task.id)
+}
+
+#' @export
+plotROCRCurves.BenchmarkResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
+    perf.args = list(), diagonal = FALSE, xlab = NULL, ylab = NULL, title = "", task.id = NULL) {
+
+    tids = getBMRTaskIds(obj)
+    if (is.null(task.id))
+        task.id = tids[1L]
+    else
+        assertChoice(task.id, tids)
+    ps = getBMRPredictions(obj, task.ids = task.id, as.df = FALSE)[[1L]]
+    plotROCRCurves.list(ps, meas1, meas2, avg, perf.args, diagonal, xlab, ylab, title, task.id)
 }
 
 #' @export
 plotROCRCurves.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
-  cols = NULL, ltys = NULL,
-  add.legend = NULL, add.diag = TRUE, perf.args = list(), legend.args = list(), task.id = NULL) {
+    perf.args = list(), diagonal = FALSE, xlab = NULL, ylab = NULL, title = "", task.id = NULL) {
 
-  assertList(obj, c("Prediction", "ResampleResult"), min.len = 1L)
-  k = length(obj)
-  # unwrap ResampleResult to Prediction and set default names
-  if (inherits(obj[[1L]], "ResampleResult")) {
-    if (is.null(names(obj)))
-      names(obj) = extractSubList(obj, c("pred", "learner.id"))
-    obj = extractSubList(obj, "pred", simplify = FALSE)
-  }
-  assertList(obj, names = "unique")
-  if (is.null(cols)) {
-    cols = rainbow(k)
-  } else {
-    cols = ensureVector(cols, n = k, cl = "character")
-  }
-  if (is.null(ltys)) {
-    ltys = rep("solid", k)
-  } else {
-    ltys = ensureVector(ltys, n = k, cl = "character")
-  }
-  cargs = list(measure = meas1, x.measure = meas2)
-  cargs = insert(cargs, perf.args)
-  rocr.perfs = lapply(obj, function(x) {
-    cargs$prediction.obj = asROCRPrediction(x)
-    do.call(ROCR::performance, cargs)
-  })
-  for (i in 1:k) {
-    ROCR::plot(rocr.perfs[[i]], avg = avg, add = (i > 1L), col = cols[i], lty = ltys[i])
-  }
+    assertList(obj, c("Prediction", "ResampleResult"), min.len = 1L)
+    # unwrap ResampleResult to Prediction and set default names
+    if (inherits(obj[[1L]], "ResampleResult")) {
+        if (is.null(names(obj)))
+            names(obj) = extractSubList(obj, c("pred", "learner.id"))
+        obj = extractSubList(obj, "pred", simplify = FALSE)
+    }
+    assertList(obj, names = "unique")
 
-  if (is.null(add.legend))
-    add.legend = (k > 1L)
-  if (add.legend) {
-    ns = names(obj)
-    cargs = list(x = "bottomright", legend = ns, col = cols, fill = cols, lty = ltys)
-    cargs = insert(cargs, legend.args)
-    do.call(legend, cargs)
-  }
-  if (add.diag)
-    abline(b = 1, a = 0)
-  invisible(NULL)
-}
+    perf.args = insert(perf.args, list(measure = meas1, x.measure = meas2))
+    plt_data = lapply(obj, function(obj_i) {
+        perf.args$prediction.obj = asROCRPrediction(obj_i)
+        perf = do.call(ROCR::performance, perf.args)
 
-#' @export
-plotROCRCurves.BenchmarkResult = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold", cols = NULL, ltys = NULL,
-  add.legend = NULL, add.diag = TRUE, perf.args = list(), legend.args = list(), task.id = NULL) {
+        max_length = max(sapply(perf@x.values, length))
+        x = vector("list", length(perf@x.values))
+        y = vector("list", length(perf@y.values))
 
-  tids = getBMRTaskIds(obj)
-  if (is.null(task.id))
-    task.id = tids[1L]
-  else
-    assertChoice(task.id, tids)
-  ps = getBMRPredictions(obj, task.ids = task.id, as.df = FALSE)[[1L]]
-  plotROCRCurves.list(ps, meas1, meas2, avg, cols, ltys, add.legend, add.diag, perf.args, legend.args)
+        idx_x = lapply(perf@x.values, function(z) which(is.finite(z)))
+        idx_y = lapply(perf@y.values, function(z) which(is.finite(z)))
+        idx = lapply(1:length(perf@x.values), function(i) intersect(idx_x[[i]], idx_y[[i]]))
 
+        is_resample = length(perf@x.values) > 1L
+        if (!is_resample)
+            avg = "none"
+
+        is_alpha = length(perf@alpha.values) > 0L
+
+        if (is_alpha) {
+            perf@alpha.values = lapply(perf@alpha.values,
+                                       function(alpha) {
+                inf_idx = which(is.infinite(alpha))
+                if (length(inf_idx) > 0L) {
+                    alpha[inf_idx] = max(alpha[-inf_idx]) +
+                        mean(abs(alpha[-inf_idx][-1] - alpha[-inf_idx][-length(alpha[-inf_idx])]))
+                }
+                alpha
+            })
+
+            if (avg == "threshold" & is_resample) {
+                alpha = unlist(perf@alpha.values)
+                alpha = rev(seq(min(alpha), max(alpha), length.out = max_length))
+            }
+        }
+
+        for (i in 1:length(perf@x.values)) {
+            perf@x.values[[i]] = perf@x.values[[i]][idx[[i]]]
+            perf@y.values[[i]] = perf@y.values[[i]][idx[[i]]]
+            if (is_alpha)
+                perf@alpha.values[[i]] = perf@alpha.values[[i]][idx[[i]]]
+
+            if (avg == "threshold" & is_alpha & is_resample) {
+                x[[i]] = approxfun(perf@alpha.values[[i]],
+                                   perf@x.values[[i]], rule = 2)(alpha)
+                y[[i]] = approxfun(perf@alpha.values[[i]],
+                                   perf@y.values[[i]], rule = 2)(alpha)
+            } else if (avg == "vertical" & is_resample) {
+                x = unlist(perf@x.values)
+                x = seq(min(x), max(x), length.out = max_length)
+                y[[i]] = approxfun(perf@x.values[[i]],
+                                   perf@y.values[[i]], rule = 2)(x)
+            } else if (avg == "horizontal" & is_resample) {
+                y = unlist(perf@y.values)
+                y = seq(min(y), max(y), length.out = max_length)
+                x[[i]] = approxfun(perf@y.values[[i]],
+                                   perf@x.values[[i]], rule = 2)(y)
+            } else { ## no averaging needed
+                break
+            }
+        }
+
+        check_avg_objects = exists("x") & exists("y")
+
+        if (avg == "threshold" & check_avg_objects) {
+            out = data.frame(x = rowMeans(do.call(cbind, x)), y = rowMeans(do.call(cbind, y)))
+        } else if (avg == "horizontal" & check_avg_objects) {
+            out = data.frame(x = rowMeans(do.call(cbind, x)), y)
+        } else if (avg == "vertical" & check_avg_objects) {
+            out = data.frame(x, y = rowMeans(do.call(cbind, y)))
+        } else {
+            out = data.frame(x = unlist(perf@x.values), y = unlist(perf@y.values))
+        }
+        colnames(out)[1:2] = c(perf@x.name, perf@y.name)
+
+        if (is_alpha & avg == "none")
+            out[, perf@alpha.name] = unlist(perf@alpha.values)
+
+        if (is_alpha & avg == "threshold")
+            out[, perf@alpha.name] = alpha
+
+        if (is_resample & avg == "none")
+            out$iter = rep(1:length(perf@x.values), times = sapply(perf@x.values, length))
+
+        out
+    })
+
+    learners = names(plt_data)
+    plt_data = plyr::ldply(plt_data)
+    x_name = colnames(plt_data)[2]
+    y_name = colnames(plt_data)[3]
+    colnames(plt_data)[1:3] = c("learner", "x", "y")
+    plt_data = plt_data[order(plt_data$x), ]
+
+    if (ncol(plt_data) > 3L) {
+        alpha_name = colnames(plt_data)[4L]
+        colnames(plt_data)[4L] = "alpha"
+    }
+
+    if (length(unique(plt_data$learner)) == 1L) {
+        plt = ggplot2::ggplot(plt_data, ggplot2::aes_string("x", "y"))
+    } else if (avg == "none" & "iter" %in% colnames(plt_data)) {
+        plt_data$int = interaction(plt_data$iter, plt_data$learner)
+        plt = ggplot2::ggplot(plt_data, ggplot2::aes_string("x", "y", group = "int", color = "learner"))
+    } else {
+        plt = ggplot2::ggplot(plt_data, ggplot2::aes_string("x", "y", group = "learner", color = "learner"))
+    }
+    plt = plt + ggplot2::geom_line()
+
+    if (all(sapply(plt_data[, c("x", "y")], max) <= 1) & diagonal)
+        plt = plt + ggplot2::geom_abline(ggplot2::aes_string(intercept = 0, slope = 1),
+            linetype = "dashed", alpha = .5)
+
+    if (is.null(xlab))
+        xlab = x_name
+    if (is.null(ylab))
+        ylab = y_name
+
+    plt = plt + ggplot2::labs(x = xlab, y = ylab, title = title)
+    plt
 }

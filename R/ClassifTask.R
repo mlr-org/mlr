@@ -10,9 +10,6 @@ makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
     fixupData(task, target, fixup.data)
   if (check.data)
     checkTaskCreation(task, target)
-  # we expect the target to be a factor from here on
-  levs = levels(task$env$data[[target]])
-  m = length(levs)
   id = checkOrGuessId(id, data)
   task$task.desc = makeTaskDesc.ClassifTask(task, id, target, positive)
   return(task)
