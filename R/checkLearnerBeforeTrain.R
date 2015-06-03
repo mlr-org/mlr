@@ -7,7 +7,7 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
 
   td = task$task.desc
   
-  if(td$type == "multilabel"){
+  if (td$type == "multilabel"){
     td$type = "classif"}
 
   if (td$type != learner$type) {

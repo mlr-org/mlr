@@ -641,14 +641,14 @@ hamloss = makeMeasure(id = "hamloss", minimize = TRUE, best = 0, worst = 1,
                       properties = c("multilabel"),
                       name = "Hamming loss", 
                       fun = function(task, model, pred, feats, extra.args) {
-                        measureHAMLOSS(data=pred$data)
+                        measureHAMLOSS(preds=pred$data)
                       })
 
 #' @export measureHAMLOSS
 #' @rdname measures
 #' @format none
-measureHAMLOSS = function(data) {
-  mean(sapply(data, function(x) mean(x$response != x$truth)))
+measureHAMLOSS = function(preds) {
+  mean(vnapply(preds, function(x) mean(x$response != x$truth)))
 }
 
 ###############################################################################

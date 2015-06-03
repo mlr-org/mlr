@@ -66,7 +66,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
     resampling = makeResampleInstance(resampling, task = task)
   assertClass(resampling, classes = "ResampleInstance")
   measures = checkMeasures(measures, task)
-  if(task$task.desc$type == "multilabel"){
+  if (task$task.desc$type == "multilabel"){
     measures = appendmultilabelmeasures(measures, task)
   }
   if (!is.null(weights)) {
@@ -148,10 +148,10 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
 
 appendmultilabelmeasures = function(measures, task){
   measuresmerge = list()
-  for(i in 1:length(measures)){
+  for (i in 1:length(measures)){
     if (inherits(task,"MultilabelTask") & ("classif" %in% measures[[i]]$properties) & !(measures[[i]]$id %in% c("featperc", "timetrain", "timepredict", "timeboth"))){
       measure = rep(list(measures[[i]]), length(task$task.desc$target))
-      for(i in 1:length(task$task.desc$target))
+      for (i in 1:length(task$task.desc$target))
         measure[[i]]$id = paste(measure[[i]]$id, task$task.desc$target[i], sep = ".")
       measuresmerge = append(measuresmerge, measure)
     }else{

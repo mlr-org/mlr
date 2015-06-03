@@ -17,7 +17,7 @@ trainLearner.MultilabelWrapper <- function(.learner, .task, .subset, .weights =N
 {
   train = list()
   data = getTaskData(.task)
-  for(i in 1:length(.task$task.desc$target)){
+  for (i in 1:length(.task$task.desc$target)){
     task = makeClassifTask(id = .learner$id, data = data[!colnames(data) == .task$task.desc$target[-i]], 
                            target = .task$task.desc$target[i])
     task = subsetTask(task, subset = .subset)
@@ -43,7 +43,7 @@ print.MultilabelModel = function(x, ...) {
 predictLearner.MultilabelWrapper = function(.learner, .model, .newdata, ...) {
   pred = list()
   for (i in 1:length(.model$learner.model)){
-    model = .model$learner.model[i][[1]]
+    model = .model$learner.model[[i]]
     pred[[i]] = predict(object = model, newdata = .newdata)$data
     if (.learner$predict.type == "prob"){
       pred[[i]] = pred[[i]][-ncol(pred[[i]])]

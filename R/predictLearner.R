@@ -52,40 +52,40 @@ checkPredictLearnerOutput = function(learner, model, p) {
   
   if(("MultilabelWrapper" %in% class(model$learner.model))){
     return(p)}else{ 
-  
-  cl = class(p)[1L]
-  if (learner$type == "classif") {
-    levs = model$task.desc$class.levels
-    if (learner$predict.type == "response") {
-      # the levels of the predicted classes might not be complete....
-      # be sure to add the levels at the end, otherwise data gets changed!!!
-      if (!is.factor(p))
-        stopf("predictLearner for %s has returned a class %s instead of a factor!", learner$id, cl)
-      levs2 = levels(p)
-      if (length(levs2) != length(levs) || any(levs != levs2))
-        p = factor(p, levels = levs)
-    } else if (learner$predict.type == "prob") {
-      if (!is.matrix(p))
-        stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)
-      cns = colnames(p)
-      if (is.null(cns) || length(cns) == 0L)
-        stopf("predictLearner for %s has returned not the class levels as column names, but no column names at all!",
-          learner$id)
-      if (!setequal(cns, levs))
-        stopf("predictLearner for %s has returned not the class levels as column names: %s",
-          learner$id, collapse(colnames(p)))
+      
+      cl = class(p)[1L]
+      if (learner$type == "classif") {
+        levs = model$task.desc$class.levels
+        if (learner$predict.type == "response") {
+          # the levels of the predicted classes might not be complete....
+          # be sure to add the levels at the end, otherwise data gets changed!!!
+          if (!is.factor(p))
+            stopf("predictLearner for %s has returned a class %s instead of a factor!", learner$id, cl)
+          levs2 = levels(p)
+          if (length(levs2) != length(levs) || any(levs != levs2))
+            p = factor(p, levels = levs)
+        } else if (learner$predict.type == "prob") {
+          if (!is.matrix(p))
+            stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)
+          cns = colnames(p)
+          if (is.null(cns) || length(cns) == 0L)
+            stopf("predictLearner for %s has returned not the class levels as column names, but no column names at all!",
+                  learner$id)
+          if (!setequal(cns, levs))
+            stopf("predictLearner for %s has returned not the class levels as column names: %s",
+                  learner$id, collapse(colnames(p)))
+        }
+      } else if (learner$type == "regr")  {
+        if (learner$predict.type == "response") {
+          if (cl != "numeric")
+            stopf("predictLearner for %s has returned a class %s instead of a numeric!", learner$id, cl)
+        } else if (learner$predict.type == "se") {
+          if (!is.matrix(p))
+            stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)
+          if (ncol(p) != 2L)
+            stopf("predictLearner for %s has not returned a numeric matrix with 2 columns!", learner$id)
+        }
+      }
+      return(p)
     }
-  } else if (learner$type == "regr")  {
-    if (learner$predict.type == "response") {
-      if (cl != "numeric")
-        stopf("predictLearner for %s has returned a class %s instead of a numeric!", learner$id, cl)
-     } else if (learner$predict.type == "se") {
-      if (!is.matrix(p))
-        stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)
-      if (ncol(p) != 2L)
-        stopf("predictLearner for %s has not returned a numeric matrix with 2 columns!", learner$id)
-    }
-  }
-  return(p)
-}
 }

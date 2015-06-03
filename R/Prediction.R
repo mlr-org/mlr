@@ -42,11 +42,11 @@ makePrediction.TaskDescRegr = function(task.desc, row.names, id, truth, predict.
   }
 
   makeS3Obj(c("PredictionRegr", "Prediction"),
-    predict.type = predict.type,
-    data = setRowNames(as.data.frame(filterNull(data)), row.names),
-    threshold = NA_real_,
-    task.desc = task.desc,
-    time = time
+            predict.type = predict.type,
+            data = setRowNames(as.data.frame(filterNull(data)), row.names),
+            threshold = NA_real_,
+            task.desc = task.desc,
+            time = time
   )
 }
 
@@ -69,7 +69,7 @@ makePrediction.TaskDescClassif = function(task.desc, row.names, id, truth, predi
     if (length(i))
       names(data)[i] = paste0("prob.", colnames(y))
   }
-  
+
   p = makeS3Obj(c("PredictionClassif", "Prediction"),
                 predict.type = predict.type,
                 data = setRowNames(data, row.names),
@@ -77,7 +77,7 @@ makePrediction.TaskDescClassif = function(task.desc, row.names, id, truth, predi
                 task.desc = task.desc,
                 time = time
   )
-  
+
   if (predict.type == "prob") {
     # set default threshold to 1/k
     if (is.null(predict.threshold)) {
@@ -86,7 +86,6 @@ makePrediction.TaskDescClassif = function(task.desc, row.names, id, truth, predi
     }
     p = setThreshold(p, predict.threshold)
   }
-  
   return(p)
 }
 
@@ -96,7 +95,7 @@ makePrediction.TaskDescMultilabel = function(task.desc, row.names, id, truth, pr
   task.desc_classif = task.desc
   class(task.desc_classif)[1] = "TaskDescClassif"
   task.desc_classif$type = "classif"
-  for(i in task.desc$target){
+  for (i in task.desc$target){
     if(!is.null(truth)){
       truth.iter = truth[i]
       names(truth.iter) = "truth"
@@ -104,7 +103,7 @@ makePrediction.TaskDescMultilabel = function(task.desc, row.names, id, truth, pr
       truth.iter = NULL
     }
     response = y[[i]]
-    if(predict.type == "response")
+    if (predict.type == "response")
       names(response) = "response"
     task.desc_classif$class.levels = task.desc$class.levels[[i]]
     task.desc_classif$target = i
@@ -115,14 +114,14 @@ makePrediction.TaskDescMultilabel = function(task.desc, row.names, id, truth, pr
   for(i in task.desc$target){
     data[[i]] = pred[[i]]$data
   }
-  
-  p = makeS3Obj(c("PredictionMultilabel","Prediction"),
-                predict.type = pred[[1]]$predict.type,
-                data = data,
-                threshold = pred[[1]]$threshold,
-                task.desc = task.desc,
-                time = time)
-  return(p)
+
+  makeS3Obj(c("PredictionMultilabel","Prediction"),
+            predict.type = pred[[1]]$predict.type,
+            data = data,
+            threshold = pred[[1]]$threshold,
+            task.desc = task.desc,
+            time = time
+            )
 }
 
 #' @export

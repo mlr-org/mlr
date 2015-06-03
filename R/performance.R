@@ -37,8 +37,8 @@ performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) 
     i = substr(id,regexpr("\\.[^\\.]*$", id)+1, nchar(id))
     pred$data = pred$data[[i]]
   }
-    res = vnapply(measures, doPerformaceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats)  
-    setNames(res, id)  
+  res = vnapply(measures, doPerformaceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats)  
+  setNames(res, id)  
 }
 
 doPerformaceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL) {
