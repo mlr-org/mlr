@@ -61,6 +61,7 @@ ECML PKDD 2013, pp. 650-653, LNCS 8190, Springer, 2013.
 Other predict: \code{\link{asROCRPrediction}};
   \code{\link{generateROCRCurvesData}};
   \code{\link{getProbabilities}};
+  \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}};
   \code{\link{predict.WrappedModel}};
   \code{\link{setPredictThreshold}};
@@ -68,6 +69,7 @@ Other predict: \code{\link{asROCRPrediction}};
 
 Other roc: \code{\link{asROCRPrediction}};
   \code{\link{generateROCRCurvesData}};
+  \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}}
 }
 

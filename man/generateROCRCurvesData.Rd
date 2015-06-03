@@ -59,6 +59,7 @@ z = generateROCRCurvesData(b)
 \seealso{
 Other predict: \code{\link{asROCRPrediction}};
   \code{\link{getProbabilities}};
+  \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}};
   \code{\link{plotViperCharts}};
   \code{\link{predict.WrappedModel}};
@@ -66,6 +67,7 @@ Other predict: \code{\link{asROCRPrediction}};
   \code{\link{setPredictType}}
 
 Other roc: \code{\link{asROCRPrediction}};
+  \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}};
   \code{\link{plotViperCharts}}
 }

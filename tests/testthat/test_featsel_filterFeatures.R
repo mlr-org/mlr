@@ -43,6 +43,8 @@ test_that("filterFeatures", {
   }
 
   # extra test of univariate filter
-  getFilterValues(task = multiclass.task, method = "univariate", perc = 0.5,
-    perf.learner = makeLearner("classif.rpart"), measures = mmce)
+  fv = getFilterValues(task = multiclass.task, method = "univariate", perc = 0.5,
+                       perf.learner = makeLearner("classif.rpart"), measures = mmce)
+  plotFilterValues(fv)
+  plotFilterValuesGGVIS(fv)
 })

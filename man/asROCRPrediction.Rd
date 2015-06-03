@@ -16,6 +16,7 @@ Converts predictions to a format package ROCR can handle.
 \seealso{
 Other predict: \code{\link{generateROCRCurvesData}};
   \code{\link{getProbabilities}};
+  \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}};
   \code{\link{plotViperCharts}};
   \code{\link{predict.WrappedModel}};
@@ -23,6 +24,7 @@ Other predict: \code{\link{generateROCRCurvesData}};
   \code{\link{setPredictType}}
 
 Other roc: \code{\link{generateROCRCurvesData}};
+  \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}};
   \code{\link{plotViperCharts}}
 }

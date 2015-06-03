@@ -1,4 +1,4 @@
-#' @title Plots multi-criteria results after tuning.
+#' @title Plots multi-criteria results after tuning using ggplot2.
 #'
 #' @description
 #' Visualizes the pareto front and possibly the dominated points.
@@ -50,4 +50,39 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
     p = p + geom_point(data = front, size = pointsize * 1.5)
   return(p)
 }
+#' @title Plots multi-criteria results after tuning using ggvis.
+#'
+#' @description
+#' Visualizes the pareto front and possibly the dominated points.
+#'
+#' @param res [\code{\link{TuneMultiCritResult}}]\cr
+#'   Result of \code{\link{tuneParamsMultiCrit}}.
+#' @param path [\code{logical(1)}]\cr
+#'   Visualize all evaluated points (or only the non-dominated pareto front)?
+#'   Points are colored according to their location.
+#'   Default is \code{TRUE}.
+#'
+#' @template ret_ggv
+#' @family tune_multicrit
+#' @export
+#' @examples
+#' # see tuneParamsMultiCrit
+plotTuneMultiCritResultGGVIS = function(res, path = TRUE) {
+  assertClass(res, "TuneMultiCritResult")
+  assertFlag(path)
+  plt_data = as.data.frame(res$opt.path)
+  plt_data$location = factor(row.names(plt_data) %in% res$ind, levels = c(TRUE, FALSE),
+                             labels = c("frontier", "interior"))
 
+  if (path) {
+    plt = ggvis::ggvis(plt_data, ggvis::prop("x", as.name(colnames(res$y)[1L])),
+                       ggvis::prop("y", as.name(colnames(res$y)[2L])))
+    plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name("location")))
+  } else {
+    plt_data = plt_data[plt_data$location == "frontier", , drop = FALSE]
+    plt = ggvis::ggvis(plt_data, ggvis::prop("x", as.name(colnames(res$y)[1L])),
+                       ggvis::prop("y", as.name(colnames(res$y)[2L])))
+    plt = ggvis::layer_points(plt)
+  }
+  return(plt)
+}

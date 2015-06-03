@@ -74,7 +74,7 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
   class(out) = append(class(out), "LearningCurveData")
   out
 }
-#' @title Plot learning curve data.
+#' @title Plot learning curve data using ggplot2.
 #'
 #' @description
 #' Visualizes data size (percentage used for model) vs. performance measure(s).
@@ -91,4 +91,90 @@ plotLearningCurve = function(obj) {
   pl = pl + ggplot2::layer(geom = "line")
   pl = pl + ggplot2::facet_wrap(~measure, scales = "free_y")
   return(pl)
+}
+#' @title Plot learning curve data using ggvis.
+#'
+#' @description
+#' Visualizes data size (percentage used for model) vs. performance measure(s).
+#'
+#' @param obj [\code{LearningCurveData}]\cr
+#'   Result of \code{\link{generateLearningCurveData}}.
+#' @param color_variable [\code{character(1)}]\cr
+#'   The variable to be mapped to color in the plot.
+#'   Can be "learner" or "measure". If left unspecified
+#'   The option with fewer unique values is mapped to color.
+#' @param interactive [\code{logical(1)}]\cr
+#'   Whether to make the plot interactive with Shiny.
+#'   If true then a sidebar menu is created that lets the user
+#'   select which measure or learner (whichever is not \code{color_variable}) to display.
+#'   Note that if there are multiple learners and multiple measures interactivity is
+#'   necessary as ggvis does not currently support facetting or subplots.
+#'   If \code{interactive} is true but there are not multiple measures or learners then
+#'   the plot will be static.
+#'   Default is false.
+#' @template ret_ggv
+#' @export
+plotLearningCurveGGVIS = function(obj, color_variable = NULL, interactive = FALSE) {
+  plt_data = reshape2::melt(obj, id.vars = c("learner", "perc"), variable.name = "measure", value.name = "perf")
+
+  assertClass(obj, "LearningCurveData")
+  if (!is.null(color_variable))
+    assertChoice(color_variable, c("learner", "measure"))
+  nmeas = length(unique(plt_data$measure))
+  nlearn = length(unique(plt_data$learner))
+
+  if (is.null(color_variable) & nmeas == 1) {
+    color_variable = "learner"
+    interactive = FALSE
+  } else if (is.null(color_variable) & nlearn == 1) {
+    color_variable = "measure"
+    interactive = FALSE
+  } else if (is.null(color_variable) & interactive) {
+    if (nlearn > nmeas) {
+      color_variable = "measure"
+      pick_variable = "learner"
+    } else {
+      color_variable = "learner"
+      pick_variable = "measure"
+    }
+  } else if (interactive) {
+    if (color_variable == "measure")
+      pick_variable = "learner"
+    else
+      pick_variable = "measure"
+  } else {
+    stop("cannot plot multiple learners and multiple measures statically")
+  }
+
+  if (interactive) {
+    ui = shiny::shinyUI(
+        shiny::pageWithSidebar(
+            shiny::headerPanel("learning curve"),
+            shiny::sidebarPanel(
+                shiny::selectInput("level_variable",
+                                   paste("choose a ", pick_variable),
+                                   unique(levels(plt_data[[pick_variable]])))
+            ),
+            shiny::mainPanel(
+                shiny::uiOutput("ggvis_ui"),
+                ggvis::ggvisOutput("ggvis")
+            )
+        ))
+    server = shiny::shinyServer(function(input, output) {
+      plt_data_sub = shiny::reactive(plt_data[which(plt_data[[pick_variable]] == input$level_variable), ])
+      plt = ggvis::ggvis(plt_data_sub, ggvis::prop("x", as.name("perc")),
+                         ggvis::prop("y", as.name("perf")),
+                         ggvis::prop("stroke", as.name(color_variable)))
+      plt = ggvis::layer_lines(plt)
+      plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name(color_variable)))
+      ggvis::bind_shiny(plt, "ggvis", "ggvis_ui")
+    })
+    shiny::shinyApp(ui, server)
+  } else {
+    plt = ggvis::ggvis(plt_data, ggvis::prop("x", as.name("perc")),
+                       ggvis::prop("y", as.name("perf")),
+                       ggvis::prop("stroke", as.name(color_variable)))
+    plt = ggvis::layer_lines(plt)
+    ggvis::layer_points(plt, ggvis::prop("fill", as.name(color_variable)))
+  }
 }

@@ -25,6 +25,8 @@ test_that("tuneParamsMultiCrit", {
   # and check plotting
   print(plotTuneMultiCritResult(res, path = TRUE))
   print(plotTuneMultiCritResult(res, path = FALSE))
+  plotTuneMultiCritResultGGVIS(res, path = TRUE)
+  plotTuneMultiCritResultGGVIS(res, path = FALSE)
 
   # grid search
   ctrl = makeTuneMultiCritControlGrid(resolution = 2L)

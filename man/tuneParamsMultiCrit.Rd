@@ -65,6 +65,7 @@ Other tune_multicrit: \code{\link{TuneMultiCritControl}},
   \code{\link{makeTuneMultiCritControlGrid}},
   \code{\link{makeTuneMultiCritControlNSGA2}},
   \code{\link{makeTuneMultiCritControlRandom}};
+  \code{\link{plotTuneMultiCritResultGGVIS}};
   \code{\link{plotTuneMultiCritResult}}
 }
 

@@ -195,7 +195,7 @@ generateROCRCurvesData.list = function(obj, meas1 = "tpr", meas2 = "fpr", avg = 
 print.ROCRCurvesData = function(x, ...) {
   print(x$data[1:5, ], ...)
 }
-#' @title Plots results from generateROCRCurvesData.
+#' @title Plots results from generateROCRCurvesData using ggplot2.
 #'
 #' @description
 #' Visualize how binary classification performs across different measures.
@@ -250,4 +250,77 @@ plotROCRCurves = function(obj, diagonal = FALSE, xlab, ylab, title = "") {
 
   plt = plt + ggplot2::labs(x = xlab, y = ylab, title = title)
   return(plt)
+}
+#' @title Plots results from generateROCRCurvesData using ggvis.
+#'
+#' @description
+#' Visualize how binary classification performs across different measures.
+#'
+#' @family roc
+#' @family predict
+#'
+#' @param obj [\code{ROCRCurvesData}]\cr
+#'   Result of \code{\link{generateROCRCurvesData}}.
+#' @param diagonal [\code{logical(1)}]\cr
+#'   Whether to plot a dashed diagonal line.
+#'   Default is \code{FALSE}.
+#' @param cutoffs [\code{logical(1)}]\cr
+#'   Whether to plot tooltips displaying threshold values using Shiny.
+#'   The plot will be opened in the default browser.
+#' @template ret_ggv
+#' @export
+plotROCRCurvesGGVIS = function(obj, diagonal = FALSE, cutoffs = FALSE) {
+
+  assertClass(obj, c("ROCRCurvesData", "list"))
+  obj$data = obj$data
+  x_name = colnames(obj$data)[2]
+  y_name = colnames(obj$data)[3]
+  colnames(obj$data)[2:3] = c(obj$meas1, obj$meas2)
+
+  obj$data$id = 1:nrow(obj$data)
+  if (length(unique(obj$data$learner)) == 1L) {
+    plt = ggvis::ggvis(obj$data, ggvis::prop("x", as.name(obj$meas1)),
+                       ggvis::prop("y", as.name(obj$meas2)))
+    plt = ggvis::layer_lines(plt)
+  } else if (obj$avg == "none" & "iter" %in% colnames(obj$data)) {
+    plt = ggvis::ggvis(obj$data, ggvis::prop("x", as.name(obj$meas1)),
+                       ggvis::prop("y", as.name(obj$meas2)),
+                       ggvis::prop("stroke", as.name("learner")))
+    plt = ggvis::group_by_.ggvis(plt, as.name("iter"), as.name("learner"))
+    plt = ggvis::layer_paths(plt)
+  } else {
+    plt = ggvis::ggvis(obj$data, ggvis::prop("x", as.name(obj$meas1)),
+                       ggvis::prop("y", as.name(obj$meas2)),
+                       ggvis::prop("stroke", as.name("learner")),
+                       ggvis::prop("key", as.name("id"), scale = FALSE))
+    plt = ggvis::layer_lines(plt)
+  }
+
+  if (all(sapply(obj$data[, c(obj$meas1, obj$meas2)], max) <= 1) & diagonal) {
+    abline_data = data.frame(dx = seq(0, 1, length.out = nrow(obj$data)),
+                             dy = seq(0, 1, length.out = nrow(obj$data)),
+                             learner = obj$data$learner)
+    plt = ggvis::layer_paths(plt, ggvis::prop("x", as.name("dx")),
+                             ggvis::prop("y", as.name("dy")),
+                             ggvis::prop("stroke", "gray", scale = FALSE),
+                             data = abline_data)
+  }
+
+  if ("alpha" %in% colnames(obj$data) & obj$avg %in% c("none", "threshold") & cutoffs) {
+    gen_tooltip <- function(x) {
+      if (is.null(x)) {
+        NULL
+      } else {
+        row = obj$data[obj$data$id == x$id, ]
+        paste0(prettyNum(row$alpha, scientific = FALSE))
+      }
+    }
+    plt = ggvis::layer_points(plt, ggvis::prop("opacity", .5, scale = FALSE),
+                              ggvis::prop("fill", as.name("learner")))
+    plt = ggvis::add_tooltip(plt, gen_tooltip, on = "hover")
+  }
+
+  plt = ggvis::add_axis(plt, "x", title = x_name)
+  plt = ggvis::add_axis(plt, "y", title = y_name)
+  plt
 }

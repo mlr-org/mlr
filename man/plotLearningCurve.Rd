@@ -2,7 +2,7 @@
 % Please edit documentation in R/generateLearningCurve.R
 \name{plotLearningCurve}
 \alias{plotLearningCurve}
-\title{Plot learning curve data.}
+\title{Plot learning curve data using ggplot2.}
 \usage{
 plotLearningCurve(obj)
 }

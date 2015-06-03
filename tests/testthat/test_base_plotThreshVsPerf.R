@@ -5,4 +5,5 @@ test_that("plotThreshVsPerf", {
   lrn = makeLearner("classif.rpart", predict.type = "prob")
   r = holdout(lrn, binaryclass.task)
   plotThreshVsPerf(r$pred, gridsize = gs)
+  plotThreshVsPerfGGVIS(r$pred, gridsize = gs)
 })
