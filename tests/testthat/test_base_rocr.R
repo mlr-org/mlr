@@ -18,17 +18,20 @@ test_that("generateROCRCurvesData", {
   p1 = predict(m1, binaryclass.task)
   d1 = generateROCRCurvesData(p1)
   plotROCRCurves(d1) # Prediction
+  plotROCRCurvesGGVIS(d1)
 
   m2 = train(lrn2, binaryclass.task)
   p2 = predict(m2, binaryclass.task)
   d2 = generateROCRCurvesData(list("lda" = p1, "rpart" = p2)) # list of Predictions
   plotROCRCurves(d2)
+  plotROCRCurvesGGVIS(d2)
 
   br = benchmark(lrn2, binaryclass.task, resampling = makeResampleDesc("Holdout"))
   d3 = generateROCRCurvesData(br)
   plotROCRCurves(d3) # BenchmarkResult
+  plotROCRCurvesGGVIS(d3)
 
-  rs = lapply(lrns, holdout, task = binaryclass.task)	# list of ResampleResult's
+  rs = lapply(lrns, crossval, task = binaryclass.task)	# list of ResampleResult's
   names(rs) = c("a", "b")
   d4 = generateROCRCurvesData(rs)
   dn = generateROCRCurvesData(rs, avg = "none")
@@ -38,4 +41,8 @@ test_that("generateROCRCurvesData", {
   plotROCRCurves(dn)
   plotROCRCurves(dh)
   plotROCRCurves(dv)
+  plotROCRCurvesGGVIS(d4)
+  plotROCRCurvesGGVIS(dn)
+  plotROCRCurvesGGVIS(dh)
+  plotROCRCurvesGGVIS(dv)
 })

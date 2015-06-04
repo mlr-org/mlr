@@ -2,7 +2,7 @@
 % Please edit documentation in R/plotTuneMultiCritResult.R
 \name{plotTuneMultiCritResult}
 \alias{plotTuneMultiCritResult}
-\title{Plots multi-criteria results after tuning.}
+\title{Plots multi-criteria results after tuning using ggplot2.}
 \usage{
 plotTuneMultiCritResult(res, path = TRUE, col = NULL, shape = NULL,
   pointsize = 2)
@@ -45,6 +45,7 @@ Other tune_multicrit: \code{\link{TuneMultiCritControl}},
   \code{\link{makeTuneMultiCritControlGrid}},
   \code{\link{makeTuneMultiCritControlNSGA2}},
   \code{\link{makeTuneMultiCritControlRandom}};
+  \code{\link{plotTuneMultiCritResultGGVIS}};
   \code{\link{tuneParamsMultiCrit}}
 }
 

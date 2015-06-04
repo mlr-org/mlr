@@ -11,13 +11,18 @@ mlr_2.4:
   regr/classif for ctree, regr/classif/surv for cforest, and regr/classif for blackboost
 - learner xgboost was removed
 - reg.km: added param 'iso'
-- classif.mda: added param 'start.method' and changed its default to 'lvq', added params 'sub.df', 'tot.df' and 'criterion'.
+- classif.mda: added param 'start.method' and changed its default to 'lvq', added params 'sub.df', 'tot.df'
+  and 'criterion'.
 - tuneDesign: Tune a learner with a given Design, so that you can tune it with ParamHelpers::generateDesign
 - tuneIrace: allows to set the precision / digits within irace (using the argument 'digits'
   in makeTuneControlIrace); default is maximum precision
-- generateLearningCurveData and plotLearningCurve helps to plot the learning curve demonstrating how the performance increases with more observations.
+- generateLearningCurveData and plotLearningCurve helps to plot the learning curve demonstrating how the
+  performance increases with more observations.
 - plotROCRCurves has been rewritten to use ggplot2
-- The generation and plotting of ROC curves has been separated into two functions: generateROCRCurvesData and plotROCRCurves.
+- The generation and plotting of ROC curves has been separated into two functions: generateROCRCurvesData
+  and plotROCRCurves.
+- experimental ggvis functions have been added: plotROCRCurvesGGVIS, plotLearningCurveGGVIS,
+  plotTuneMultiCritResultGGVIS, plotThreshVsPerfGGVIS, and plotFilterValuesGGVIS
 
 - new learners:
 -- classif.bst
