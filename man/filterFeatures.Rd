@@ -4,7 +4,7 @@
 \alias{filterFeatures}
 \title{Filter features by thresholding filter values.}
 \usage{
-filterFeatures(task, method = "rf.importance", fval = NULL, perc = NULL,
+filterFeatures(task, method = NULL, fval = NULL, perc = NULL,
   abs = NULL, threshold = NULL, mandatory.feat = NULL, ...)
 }
 \arguments{
@@ -13,7 +13,8 @@ The task.}
 
 \item{method}{[\code{character(1)}]\cr
 See \code{\link{listFilterMethods}}.
-Default is \dQuote{rf.importance}.}
+Default is \code{NULL}, however, if \code{method} and \code{fval} are \code{NULL},
+the default filter \dQuote{rf.importance} is used.}
 
 \item{fval}{[\code{\link{FilterValues}}]\cr
 Result of \code{\link{getFilterValues}}.

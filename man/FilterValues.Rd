@@ -6,9 +6,11 @@
 \description{
 \itemize{
   \item{task.desc [\code{\link{TaskDesc}}]}{Task description.}
-  \item{method [\code{character}]}{Filter method.}
-  \item{data [\code{data.frame}]}{Has columns: \code{name} = Names of features;
+  \item{data [named \code{list}], Filter method is the name}
+  \itemize{
+    \item{data [\code{data.frame}]}{Has columns: \code{name} = Names of features;
     \code{val} = Feature importance values; \code{type} = Feature column type.}
+}
 }
 }
 \seealso{
