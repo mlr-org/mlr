@@ -1,6 +1,7 @@
 ![mlr](https://raw.githubusercontent.com/berndbischl/mlr/gh-pages/images/mlrLogo_blue_141x64.png): Machine Learning in R
 ==========================
 [![Build Status](https://travis-ci.org/berndbischl/mlr.png)](https://travis-ci.org/berndbischl/mlr)
+[![Coverage Status](https://coveralls.io/repos/zachmayer/mlr/badge.svg)](https://coveralls.io/r/zachmayer/mlr)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/mlr)](http://cran.r-project.org/web/packages/mlr)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/mlr)](http://cran.rstudio.com/web/packages/mlr/index.html)
 

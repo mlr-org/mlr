@@ -11,6 +11,8 @@ r_github_packages:
     - berndbischl/BBmisc
     - berndbischl/parallelMap
     - berndbischl/ParamHelpers
+    - jimhester/covr
+    - jimhester/lintr
 before_script:
     - sudo R CMD javareconf
     - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
@@ -25,3 +27,6 @@ notifications:
         - erich.studerus@gmail.com
     on_success: change
     on_failure: always
+after_script:
+  - Rscript -e 'library(covr);coveralls()'
+  - Rscript -e 'library(lintr);load(system.file("testdata/my_linters.rda",package="mlr",mustWork=TRUE));lint_package(linters=my_linters)'
