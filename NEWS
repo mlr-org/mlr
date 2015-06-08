@@ -23,6 +23,9 @@ mlr_2.4:
   and plotROCRCurves.
 - experimental ggvis functions have been added: plotROCRCurvesGGVIS, plotLearningCurveGGVIS,
   plotTuneMultiCritResultGGVIS, plotThreshVsPerfGGVIS, and plotFilterValuesGGVIS
+- getFeatureValues is deprecated in favor of generateFeatureValuesData
+- plotFeatureValues and plotFeatureValuesGGVIS can now plot multiple filter methods using facetting
+  and interactivity (via Shiny) respectively.
 
 - new learners:
 -- classif.bst
