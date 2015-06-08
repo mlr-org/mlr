@@ -5,7 +5,7 @@
 \title{Plot filter values using ggvis.}
 \usage{
 plotFilterValuesGGVIS(fvalues, sort = "dec", n.show = 20L,
-  feat.type.cols = c("darkgreen", "darkblue"))
+  feat.type.cols = FALSE)
 }
 \arguments{
 \item{fvalues}{[\code{\link{FilterValues}}]\cr
@@ -20,10 +20,10 @@ Default is decreasing.}
 Number of features (maximal) to show.
 Default is 20.}
 
-\item{feat.type.cols}{[\code{character(2)}*]\cr
-Colors for factor and numeric features.
-\code{NULL} means no colors.
-Default is darkgreen and darkblue.}
+\item{feat.type.cols}{[\code{logical(1)}]\cr
+Color factor and numeric features.
+\code{FALSE} means no colors.
+Default is \code{FALSE}.}
 }
 \value{
 a ggvis plot object.

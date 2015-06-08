@@ -8,19 +8,15 @@
 #' @param gridsize [\code{integer(1)}]\cr
 #'   Grid resolution for x-axis (threshold).
 #'   Default is 100.
-#' @param linesize [\code{numeric(1)}]\cr
-#'   Linesize for ggplot2 \code{\link[ggplot2]{geom_line}} for performance graphs.
-#'   Default is 1.5.
 #' @template ret_gg2
 #' @export
-plotThreshVsPerf = function(pred, measures, mark.th = NA_real_, gridsize = 100L, linesize = 1.5) {
+plotThreshVsPerf = function(pred, measures, mark.th = NA_real_, gridsize = 100L) {
   assertClass(pred, classes = "Prediction")
   td = pred$task.desc
   if (td$type != "classif" || length(td$class.levels) != 2L)
     stopf("Task must be binary classification!")
   measures = checkMeasures(measures, td)
   assertNumber(mark.th, na.ok = TRUE, lower = 0, upper = 1)
-  assertNumber(linesize, lower = 0)
 
   mids = extractSubList(measures, "id")
   # grid for predictions
@@ -34,7 +30,7 @@ plotThreshVsPerf = function(pred, measures, mark.th = NA_real_, gridsize = 100L,
   grid = cbind(grid, perf)
   grid = melt(grid, measure.vars = mids, variable.name = "measure", value.name = "perf")
   p = ggplot(data = grid, mapping = aes_string(x = "threshold", y = "perf", col = "measure"))
-  p = p + geom_line(size = linesize)
+  p = p + geom_line()
   if (!is.na(mark.th))
     p = p + geom_vline(xintercept = mark.th)
   return(p)
