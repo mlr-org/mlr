@@ -18,7 +18,7 @@ trainLearner.MultilabelWrapper <- function(.learner, .task, .subset, .weights =N
   train = list()
   data = getTaskData(.task)
   for (i in 1:length(.task$task.desc$target)){
-    task = makeClassifTask(id = .learner$id, data = data[!colnames(data) == .task$task.desc$target[-i]], 
+    task = makeClassifTask(id = .learner$id, data = data[!(colnames(data) %in% .task$task.desc$target[-i])], 
                            target = .task$task.desc$target[i])
     task = subsetTask(task, subset = .subset)
     train[[i]] = train(.learner$next.learner, task, weights = .weights)
