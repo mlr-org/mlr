@@ -11,8 +11,8 @@ getFilterValues(task, method = "rf.importance",
 \item{task}{[\code{\link{Task}}]\cr
 The task.}
 
-\item{method}{[\code{character(1)}]\cr
-Filter method, see above.
+\item{method}{[\code{character}]\cr
+Filter methods, see above.
 Default is \dQuote{rf.importance}.}
 
 \item{nselect}{[\code{integer(1)}]\cr

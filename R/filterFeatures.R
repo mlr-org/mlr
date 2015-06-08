@@ -7,7 +7,8 @@
 #' @template arg_task
 #' @param method [\code{character(1)}]\cr
 #'   See \code{\link{listFilterMethods}}.
-#'   Default is \dQuote{rf.importance}.
+#'   Default is \code{NULL}, however, if \code{method} and \code{fval} are \code{NULL},
+#'   the default filter \dQuote{rf.importance} is used.
 #' @param fval [\code{\link{FilterValues}}]\cr
 #'   Result of \code{\link{getFilterValues}}.
 #'   If you pass this, the filter values in the object are used for feature filtering.
@@ -29,10 +30,13 @@
 #' @template ret_task
 #' @export
 #' @family filter
-filterFeatures = function(task, method = "rf.importance", fval = NULL, perc = NULL, abs = NULL,
+filterFeatures = function(task, method = NULL, fval = NULL, perc = NULL, abs = NULL,
                           threshold = NULL, mandatory.feat = NULL, ...) {
   assertClass(task, "SupervisedTask")
-  assertChoice(method, choices = ls(.FilterRegister))
+
+  if (!is.null(method))
+    assertChoice(method, choices = ls(.FilterRegister))
+
   select = checkFilterArguments(perc, abs, threshold)
   p = getTaskNFeats(task)
   nselect = switch(select,
@@ -42,10 +46,20 @@ filterFeatures = function(task, method = "rf.importance", fval = NULL, perc = NU
   )
 
   if (is.null(fval)) {
-    fval = getFilterValues(task = task, method = method, nselect = nselect, ...)$data
+    if (is.null(method))
+      fval = getFilterValues(task = task, nselect = nselect, ...)$data[[1L]]
+    else
+      fval = getFilterValues(task = task, method = method, nselect = nselect, ...)$data[[1L]]
   } else {
     assertClass(fval, "FilterValues")
-    fval = fval$data
+    if (length(fval$data) > 1L & is.null(method)) {
+      stop("method must be specified if input to fval contains multiple filters.")
+    } else if (length(fval$data) > 1L & !is.null(method)) {
+      assert(method %in% names(fval$data))
+      fval = fval$data[[method]]
+    } else {
+      fval = fval$data[[1L]]
+    }
   }
   if (!is.null(mandatory.feat)) {
     assertCharacter(mandatory.feat)

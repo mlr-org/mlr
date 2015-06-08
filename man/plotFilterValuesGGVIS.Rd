@@ -5,7 +5,7 @@
 \title{Plot filter values using ggvis.}
 \usage{
 plotFilterValuesGGVIS(fvalues, sort = "dec", n.show = 20L,
-  feat.type.cols = c("darkgreen", "darkblue"))
+  feat.type.cols = c("darkgreen", "darkblue"), interactive = FALSE)
 }
 \arguments{
 \item{fvalues}{[\code{\link{FilterValues}}]\cr
@@ -24,6 +24,13 @@ Default is 20.}
 Colors for factor and numeric features.
 \code{NULL} means no colors.
 Default is darkgreen and darkblue.}
+
+\item{interactive}{[\code{logical(1)}]\cr
+Whether to use Shiny to visualize multiple filter methods.
+If \code{TRUE} and \code{getFilterValues} was called with multiple methods,
+then returns a Shiny application with a drop-down menu allowing the visualization
+of said methods. If \code{FALSE} then a static \code{ggvis} plot is returned.
+Default is \code{FALSE}.}
 }
 \value{
 a ggvis plot object.
@@ -32,7 +39,12 @@ a ggvis plot object.
 Plot filter values using ggvis.
 }
 \examples{
+\dontrun{
 fv = getFilterValues(iris.task, method = "chi.squared")
 plotFilterValuesGGVIS(fv)
+
+fvm = getFilterValues(iris.task, method = c("chi.squared", "rf.importance"))
+plotFilterValuesGGVIS(fvm, interactive = TRUE)
+}
 }
 

@@ -3,14 +3,14 @@ context("filterFeatures")
 test_that("filterFeatures", {
   ns = getTaskFeatureNames(binaryclass.task)
   feat.imp = getFilterValues(binaryclass.task)
-  expect_equal(ns, feat.imp$data$name)
+  expect_equal(ns, feat.imp$data[[1L]]$name)
   f = filterFeatures(binaryclass.task, select = "threshold", threshold = -Inf)
   expect_equal(f, binaryclass.task)
 
   feat.imp = getFilterValues(binaryclass.task, method = "chi.squared")
-  expect_equal(ns, feat.imp$data$name)
+  expect_equal(ns, feat.imp$data[[1L]]$name)
   f = filterFeatures(binaryclass.task, method = "chi.squared", abs = 5L)
-  expect_true(setequal(getTaskFeatureNames(f), head(sortByCol(feat.imp$data, "val", asc = FALSE), 5L)$name))
+  expect_true(setequal(getTaskFeatureNames(f), head(sortByCol(feat.imp$data[[1L]], "val", asc = FALSE), 5L)$name))
   # now check that we get the same result by operating on getFilterValues
   feat.imp = getFilterValues(binaryclass.task, method = "chi.squared")
   ff = filterFeatures(binaryclass.task, fval = feat.imp, abs = 5L)
@@ -47,4 +47,6 @@ test_that("filterFeatures", {
                        perf.learner = makeLearner("classif.rpart"), measures = mmce)
   plotFilterValues(fv)
   plotFilterValuesGGVIS(fv)
+
+  fvm = getFilterValues(task = binaryclass.task, method = c("rf.min.depth", "rf.importance"))
 })
