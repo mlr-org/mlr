@@ -4,8 +4,7 @@
 \alias{plotThreshVsPerf}
 \title{Plot threshold vs. performance(s) for 2-class classification using ggplot2.}
 \usage{
-plotThreshVsPerf(pred, measures, mark.th = NA_real_, gridsize = 100L,
-  linesize = 1.5)
+plotThreshVsPerf(pred, measures, mark.th = NA_real_, gridsize = 100L)
 }
 \arguments{
 \item{pred}{[\code{\link{Prediction}}]\cr
@@ -21,10 +20,6 @@ Default is \code{NA} which means not to do it.}
 \item{gridsize}{[\code{integer(1)}]\cr
 Grid resolution for x-axis (threshold).
 Default is 100.}
-
-\item{linesize}{[\code{numeric(1)}]\cr
-Linesize for ggplot2 \code{\link[ggplot2]{geom_line}} for performance graphs.
-Default is 1.5.}
 }
 \value{
 ggplot2 plot object.

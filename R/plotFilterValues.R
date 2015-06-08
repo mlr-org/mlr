@@ -9,18 +9,19 @@
 #' @param n.show [\code{integer(1)}]\cr
 #'   Number of features (maximal) to show.
 #'   Default is 20.
-#' @param feat.type.cols [\code{character(2)}*]\cr
-#'   Colors for factor and numeric features.
-#'   \code{NULL} means no colors.
-#'   Default is darkgreen and darkblue.
+#' @param feat.type.cols [\code{logical(1)}]\cr
+#'   Color factor and numeric features.
+#'   \code{FALSE} means no colors.
+#'   Default is \code{FALSE}.
 #' @template ret_gg2
 #' @export
 #' @examples
 #' fv = getFilterValues(iris.task, method = "chi.squared")
 #' plotFilterValues(fv)
-plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols = c("darkgreen", "darkblue")) {
+plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols = FALSE) {
   assertClass(fvalues, classes = "FilterValues")
   assertChoice(sort, choices = c("dec", "inc", "none"))
+  assertFlag(feat.type.cols)
   n.show = asCount(n.show)
 
   data = fvalues$data
@@ -29,20 +30,17 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
     data = head(sortByCol(data, "val", asc = (sort == "inc")), n.show)
 
   data$name = factor(data$name, levels = as.character(data$name))
-  if (!is.null(feat.type.cols)) {
-    assertCharacter(feat.type.cols, len = 2L, any.missing = FALSE)
-    mp = aes_string(x = "name", y = "val", fill = "type")
-  } else {
-    mp = aes_string(x = "name", y = "val")
-  }
-  p = ggplot(data = data, mapping = mp)
-  p = p + geom_bar(position = "identity", stat = "identity")
-  if (!is.null(feat.type.cols))
-    p = p + scale_fill_manual(values = feat.type.cols)
-  p = p + ggtitle(sprintf("%s (%i features), filter = %s",
-    fvalues$task.desc$id, sum(fvalues$task.desc$n.feat), fvalues$method))
-  p = p + xlab("") + ylab("")
-  p = p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  if (feat.type.cols)
+    mp = ggplot2::aes_string(x = "name", y = "val", fill = "type")
+  else
+    mp = ggplot2::aes_string(x = "name", y = "val")
+  p = ggplot2::ggplot(data = data, mapping = mp)
+  p = p + ggplot2::geom_bar(position = "identity", stat = "identity")
+  p = p + ggplot2::labs(title = sprintf("%s (%i features), filter = %s",
+                                        fvalues$task.desc$id,
+                                        sum(fvalues$task.desc$n.feat), fvalues$method),
+                        x = "", y = "")
+  p = p + ggplot2::theme(axis.text.x = element_text(angle = 45, hjust = 1))
   return(p)
 }
 #' Plot filter values using ggvis.
@@ -56,18 +54,19 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
 #' @param n.show [\code{integer(1)}]\cr
 #'   Number of features (maximal) to show.
 #'   Default is 20.
-#' @param feat.type.cols [\code{character(2)}*]\cr
-#'   Colors for factor and numeric features.
-#'   \code{NULL} means no colors.
-#'   Default is darkgreen and darkblue.
+#' @param feat.type.cols [\code{logical(1)}]\cr
+#'   Color factor and numeric features.
+#'   \code{FALSE} means no colors.
+#'   Default is \code{FALSE}.
 #' @template ret_ggv
 #' @export
 #' @examples
 #' fv = getFilterValues(iris.task, method = "chi.squared")
 #' plotFilterValuesGGVIS(fv)
-plotFilterValuesGGVIS = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols = c("darkgreen", "darkblue")) {
+plotFilterValuesGGVIS = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols = FALSE) {
   assertClass(fvalues, classes = "FilterValues")
   assertChoice(sort, choices = c("dec", "inc", "none"))
+  assertFlag(feat.type.cols)
   n.show = asCount(n.show)
 
   data = fvalues$data
@@ -76,18 +75,15 @@ plotFilterValuesGGVIS = function(fvalues, sort = "dec", n.show = 20L, feat.type.
     data = head(sortByCol(data, "val", asc = (sort == "inc")), n.show)
 
   data$name = factor(data$name, levels = as.character(data$name))
-  if (!is.null(feat.type.cols)) {
-    assertCharacter(feat.type.cols, len = 2L, any.missing = FALSE)
+  if (feat.type.cols)
     p = ggvis::ggvis(data, ggvis::prop("x", as.name("name")),
                      ggvis::prop("y", as.name("val")),
                      ggvis::prop("fill", as.name("type")))
-  } else {
+  else
     p = ggvis::ggvis(data, ggvis::prop("x", as.name("name")),
                      ggvis::prop("y", as.name("val")))
-  }
+
   p = ggvis::layer_bars(p)
-  if (!is.null(feat.type.cols))
-      p = ggvis::scale_nominal(p, "fill", range = feat.type.cols)
 
   add_title <- function(vis, ..., x_lab = "", title = "") {
       vis = ggvis::add_axis(vis, "x", title = x_lab)
