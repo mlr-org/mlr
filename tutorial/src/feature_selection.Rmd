@@ -17,14 +17,16 @@ Based on these values the features can be ranked and a feature subset can be sel
 ### Calculating the feature importance
 
 Different methods for calculating the feature importance are built into [%mlr]'s function
-[&getFilterValues]. Currently, classification, regression and survival analysis tasks
+[&generateFilterValuesData].
+([&getFilterValues] has been deprecated in favor of [&generateFilterValuesData].)
+Currently, classification, regression and survival analysis tasks
 are supported. A table showing all available methods can be found [here](filter_methods.md).
 
-Function [&getFilterValues] requires the [&Task] and a character string specifying the filter
+Function [&generateFilterValuesData] requires the [&Task] and a character string specifying the filter
 method.
 
 ```{r}
-fv = getFilterValues(iris.task, method = "information.gain")
+fv = generateFilterValuesData(iris.task, method = "information.gain")
 fv
 ```
 
