@@ -4,24 +4,19 @@
 \alias{plotLearningCurveGGVIS}
 \title{Plot learning curve data using ggvis.}
 \usage{
-plotLearningCurveGGVIS(obj, color_variable = NULL, interactive = FALSE)
+plotLearningCurveGGVIS(obj, interactive = FALSE)
 }
 \arguments{
 \item{obj}{[\code{LearningCurveData}]\cr
 Result of \code{\link{generateLearningCurveData}}.}
 
-\item{color_variable}{[\code{character(1)}]\cr
-The variable to be mapped to color in the plot.
-Can be "learner" or "measure". If left unspecified
-The option with fewer unique values is mapped to color.}
-
 \item{interactive}{[\code{logical(1)}]\cr
 Whether to make the plot interactive with Shiny.
-If true then a sidebar menu is created that lets the user
-select which measure or learner (whichever is not \code{color_variable}) to display.
+If \code{TRUE} then a sidebar menu is created that lets the user
+select which learner to display.
 Note that if there are multiple learners and multiple measures interactivity is
 necessary as ggvis does not currently support facetting or subplots.
-If \code{interactive} is true but there are not multiple measures or learners then
+If \code{interactive} is \code{TRUE} but there are not multiple measures or learners then
 the plot will be static.
 Default is false.}
 }
@@ -30,5 +25,17 @@ a ggvis plot object.
 }
 \description{
 Visualizes data size (percentage used for model) vs. performance measure(s).
+}
+\seealso{
+Other learning_curve: \code{\link{generateLearningCurveData}};
+  \code{\link{plotLearningCurve}}
+
+Other plot: \code{\link{plotFilterValuesGGVIS}};
+  \code{\link{plotFilterValues}};
+  \code{\link{plotLearningCurve}};
+  \code{\link{plotROCRCurvesGGVIS}};
+  \code{\link{plotROCRCurves}};
+  \code{\link{plotThreshVsPerfGGVIS}};
+  \code{\link{plotThreshVsPerf}}
 }
 

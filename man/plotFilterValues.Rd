@@ -35,4 +35,21 @@ Plot filter values using ggplot2.
 fv = generateFilterValuesData(iris.task, method = "chi.squared")
 plotFilterValues(fv)
 }
+\seealso{
+Other filter: \code{\link{FilterValues}};
+  \code{\link{filterFeatures}};
+  \code{\link{generateFilterValuesData}};
+  \code{\link{getFilterValues}};
+  \code{\link{getFilteredFeatures}};
+  \code{\link{makeFilterWrapper}};
+  \code{\link{plotFilterValuesGGVIS}}
+
+Other plot: \code{\link{plotFilterValuesGGVIS}};
+  \code{\link{plotLearningCurveGGVIS}};
+  \code{\link{plotLearningCurve}};
+  \code{\link{plotROCRCurvesGGVIS}};
+  \code{\link{plotROCRCurves}};
+  \code{\link{plotThreshVsPerfGGVIS}};
+  \code{\link{plotThreshVsPerf}}
+}
 

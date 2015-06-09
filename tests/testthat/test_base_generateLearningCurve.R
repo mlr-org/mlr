@@ -1,21 +1,23 @@
 context("generateLearningCurve")
 
 test_that("generateLearningCurve", {
-  r1 = generateLearningCurveData(list("classif.rpart", "classif.knn"),
-                                task = sonar.task, percs = c(0.1, 0.3),
+  r = generateLearningCurveData(list("classif.rpart", "classif.knn"),
+                                task = binaryclass.task, percs = c(0.1, 0.3),
                                 measures = list(acc, timeboth))
-  expect_true(all(c("learner", "perc", "acc", "timeboth") %in% colnames(r1)))
-  plotLearningCurve(r1)
+  expect_true(all(c("learner", "perc", "acc", "timeboth") %in% colnames(r$data)))
+  plotLearningCurve(r)
+  ## plotLearningCurveGGVIS(r, interactive = TRUE)
 
-  r2 = generateLearningCurveData(learners = list("regr.lm", "regr.svm"),
+  r = generateLearningCurveData(learners = list("regr.lm", "regr.svm"),
                                 task = regr.num.task, percs = c(0.1, 0.2),
                                 resampling = makeResampleDesc(method = "CV", iters = 2),
                                 measures = list(sse, timeboth))
-  expect_true(all(c("learner", "perc", "sse", "timeboth") %in% colnames(r2)))
-  plotLearningCurve(r2)
+  expect_true(all(c("learner", "perc", "sse", "timeboth") %in% colnames(r$data)))
+  plotLearningCurve(r)
+  ## plotLearningCurveGGVIS(r, interactive = TRUE)
 
-  r3 = generateLearningCurveData(list("classif.rpart", "classif.knn"),
-                                 task = sonar.task, percs = c(0.1, 0.3),
-                                 measures = acc)
-  plotLearningCurveGGVIS(r3)
+  r = generateLearningCurveData(list("classif.rpart", "classif.knn"),
+                                task = binaryclass.task, percs = c(0.1, 0.3),
+                                measures = acc)
+  ## plotLearningCurveGGVIS(r, interactive = TRUE)
 })

@@ -4,6 +4,9 @@
 #' Calculates numerical filter values for features.
 #' For a list of features, use \code{\link{listFilterMethods}}.
 #'
+#' @family generate_plot_data
+#' @family filter
+#'
 #' @template arg_task
 #' @param method [\code{character}]\cr
 #'   Filter method(s), see above.
@@ -54,12 +57,12 @@ generateFilterValuesData = function(task, method = "rf.importance", nselect = ge
                    type = types,
                    fval, row.names = NULL, stringsAsFactors = FALSE)
   makeS3Obj("FilterValues",
-    task.desc = td,
-    data = out
-  )
+            task.desc = td,
+            data = out)
 }
-
 #' Result of \code{\link{generateFilterValuesData}}.
+#'
+#' @family filter
 #'
 #' \itemize{
 #'   \item{task.desc [\code{\link{TaskDesc}}]}{Task description.}
@@ -78,6 +81,9 @@ print.FilterValues = function(x, ...) {
   print(head(x$data))
 }
 #' @title Calculates feature filter values.
+#'
+#' @family filter
+#' @family generate_plot_data
 #'
 #' @description
 #' Calculates numerical filter values for features.
@@ -107,6 +113,9 @@ getFilterValues = function(task, method = "rf.importance", nselect = getTaskNFea
             data = out$data)
 }
 #' Plot filter values using ggplot2.
+#'
+#' @family plot
+#' @family filter
 #'
 #' @param fvalues [\code{\link{FilterValues}}]\cr
 #'   Filter values.
@@ -148,21 +157,28 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
     mp = aes_string(x = "name", y = "value", fill = "type")
   else
     mp = aes_string(x = "name", y = "value")
-  p = ggplot2::ggplot(data = data, mapping = mp)
-  p = p + ggplot2::geom_bar(position = "identity", stat = "identity")
+  plt = ggplot2::ggplot(data = data, mapping = mp)
+  plt = plt + ggplot2::geom_bar(position = "identity", stat = "identity")
   if (length(unique(data$method)) > 1L) {
-    p = p + ggplot2::facet_wrap(~ method, scales = "free_y")
-    p = p + labs(title = sprintf("%s (%i features)", fvalues$task.desc$id, sum(fvalues$task.desc$n.feat)),
-                 x = "", y = "")
+    plt = plt + ggplot2::facet_wrap(~ method, scales = "free_y")
+    plt = plt + ggplot2::labs(title = sprintf("%s (%i features)",
+                                              fvalues$task.desc$id,
+                                              sum(fvalues$task.desc$n.feat)),
+                              x = "", y = "")
   } else {
-    p = p + labs(title = sprintf("%s (%i features), filter = %s",
-                                 fvalues$task.desc$id, sum(fvalues$task.desc$n.feat), methods),
-                 x = "", y = "")
+    plt = plt + ggplot2::labs(title = sprintf("%s (%i features), filter = %s",
+                                              fvalues$task.desc$id,
+                                              sum(fvalues$task.desc$n.feat),
+                                              methods),
+                              x = "", y = "")
   }
-  p = p + theme(axis.text.x = element_text(angle = 45, hjust = 1))
-  return(p)
+  plt = plt + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
+  return(plt)
 }
 #' Plot filter values using ggvis.
+#'
+#' @family plot
+#' @family filter
 #'
 #' @param fvalues [\code{\link{FilterValues}}]\cr
 #'   Filter values.
@@ -185,9 +201,10 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
 #'   Default is \code{FALSE}.
 #' @template ret_ggv
 #' @export
-#' @examples
+#' @examples \dontrun{
 #' fv = generateFilterValuesData(iris.task, method = "chi.squared")
 #' plotFilterValuesGGVIS(fv)
+#' }
 plotFilterValuesGGVIS = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols = FALSE, interactive = FALSE) {
   assertClass(fvalues, classes = "FilterValues")
   assertChoice(sort, choices = c("dec", "inc", "none"))
@@ -206,22 +223,22 @@ plotFilterValuesGGVIS = function(fvalues, sort = "dec", n.show = 20L, feat.type.
       head(sortByCol(data[data$method == x, ], "value", (sort == "inc")), n.show)))
 
   data$name = factor(data$name, levels = as.character(unique(data$name)))
-  create_plot <- function(data, feat.type.cols) {
+  create_plot = function(data, feat.type.cols) {
     if (feat.type.cols)
-      p = ggvis::ggvis(data, ggvis::prop("x", as.name("name")),
-                       ggvis::prop("y", as.name("value")),
-                       ggvis::prop("fill", as.name("type")))
+      plt = ggvis::ggvis(data, ggvis::prop("x", as.name("name")),
+                         ggvis::prop("y", as.name("value")),
+                         ggvis::prop("fill", as.name("type")))
     else
-      p = ggvis::ggvis(data, ggvis::prop("x", as.name("name")),
-                       ggvis::prop("y", as.name("value")))
+      plt = ggvis::ggvis(data, ggvis::prop("x", as.name("name")),
+                         ggvis::prop("y", as.name("value")))
 
-    p = ggvis::layer_bars(p)
-    p = ggvis::add_axis(p, "y", title = "")
-    p = ggvis::add_axis(p, "x", title = "")
-    return(p)
+    plt = ggvis::layer_bars(plt)
+    plt = ggvis::add_axis(plt, "y", title = "")
+    plt = ggvis::add_axis(plt, "x", title = "")
+    return(plt)
   }
 
-  add_title <- function(vis, ..., x_lab = "", title = "") {
+  add_title = function(vis, ..., x_lab = "", title = "") {
     vis = ggvis::add_axis(vis, "x", title = x_lab)
     vis = ggvis::add_axis(vis, "x", orient = "top", ticks = 0, title = title,
                           properties = ggvis::axis_props(
@@ -231,13 +248,13 @@ plotFilterValuesGGVIS = function(fvalues, sort = "dec", n.show = 20L, feat.type.
   }
 
   if (length(unique(data$method)) == 1L) {
-    p = create_plot(data, feat.type.cols)
-    p = add_title(p, x_lab = "",
-                  title = sprintf("%s (%i features), filter = %s",
-                                  fvalues$task.desc$id,
-                                  sum(fvalues$task.desc$n.feat),
-                                  unique(data$method)))
-    return(p)
+    plt = create_plot(data, feat.type.cols)
+    plt = add_title(plt, x_lab = "",
+                    title = sprintf("%s (%i features), filter = %s",
+                                    fvalues$task.desc$id,
+                                    sum(fvalues$task.desc$n.feat),
+                                    unique(data$method)))
+    return(plt)
   } else if (length(unique(data$method)) > 1L & interactive) {
     ui = shiny::shinyUI(
         shiny::pageWithSidebar(
@@ -254,8 +271,8 @@ plotFilterValuesGGVIS = function(fvalues, sort = "dec", n.show = 20L, feat.type.
         ))
     server = shiny::shinyServer(function(input, output) {
       data_sub = shiny::reactive(data[which(data[["method"]] == input$level_variable), ])
-      p = create_plot(data_sub, feat.type.cols)
-      ggvis::bind_shiny(p, "ggvis", "ggvis_ui")
+      plt = create_plot(data_sub, feat.type.cols)
+      ggvis::bind_shiny(plt, "ggvis", "ggvis_ui")
     })
     shiny::shinyApp(ui, server)
   } else {

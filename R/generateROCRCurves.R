@@ -8,6 +8,7 @@
 #'
 #' @family roc
 #' @family predict
+#' @family generate_plot_data
 #'
 #' @template arg_plotroc_obj
 #' @param meas1 [\code{character(1)}]\cr
@@ -33,13 +34,6 @@
 #' @return A \code{ROCRCurvesData} object, a \code{list} with elements giving the data output from
 #'   \code{\link[ROCR]{performance}} and the input arguments.
 #' @export
-#' @examples
-#' \dontrun{
-#' lrn1 = makeLearner("classif.logreg", predict.type = "prob")
-#' lrn2 = makeLearner("classif.rpart", predict.type = "prob")
-#' b = benchmark(list(lrn1, lrn2), pid.task)
-#' z = generateROCRCurvesData(b)
-#' }
 generateROCRCurvesData = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
                               perf.args = list(), task.id = NULL) {
 
@@ -202,6 +196,7 @@ print.ROCRCurvesData = function(x, ...) {
 #'
 #' @family roc
 #' @family predict
+#' @family plot
 #'
 #' @param obj [\code{ROCRCurvesData}]\cr
 #'   Result of \code{\link{generateROCRCurvesData}}.
@@ -258,6 +253,7 @@ plotROCRCurves = function(obj, diagonal = FALSE, xlab, ylab, title = "") {
 #'
 #' @family roc
 #' @family predict
+#' @family plot
 #'
 #' @param obj [\code{ROCRCurvesData}]\cr
 #'   Result of \code{\link{generateROCRCurvesData}}.
