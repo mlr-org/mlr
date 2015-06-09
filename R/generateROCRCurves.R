@@ -8,6 +8,7 @@
 #'
 #' @family roc
 #' @family predict
+#' @family generate_plot_data
 #'
 #' @template arg_plotroc_obj
 #' @param meas1 [\code{character(1)}]\cr
@@ -202,6 +203,7 @@ print.ROCRCurvesData = function(x, ...) {
 #'
 #' @family roc
 #' @family predict
+#' @family plot
 #'
 #' @param obj [\code{ROCRCurvesData}]\cr
 #'   Result of \code{\link{generateROCRCurvesData}}.
@@ -258,6 +260,7 @@ plotROCRCurves = function(obj, diagonal = FALSE, xlab, ylab, title = "") {
 #'
 #' @family roc
 #' @family predict
+#' @family plot
 #'
 #' @param obj [\code{ROCRCurvesData}]\cr
 #'   Result of \code{\link{generateROCRCurvesData}}.

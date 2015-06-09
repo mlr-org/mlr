@@ -3,6 +3,9 @@
 #' @description
 #' Observe how the performance changes with an increasing number of observations.
 #'
+#' @family generate_plot_data
+#' @family learning_curve
+#'
 #' @param learners [(list of) \code{\link{Learner}}]\cr
 #'   Learning algorithms which should be compared.
 #' @template arg_task
@@ -71,10 +74,36 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
   mids = extractSubList(measures, "id")
   colnames(perfs) = mids
   out = cbind(learner = learner, perc = perc, perfs)
-  class(out) = append(class(out), "LearningCurveData")
-  out
+  makeS3Obj("LearningCurveData",
+            task = task,
+            measures = measures,
+            data = out)
+}
+#' Result of \code{\link{generateLearningCurveData}}.
+#'
+#' @family learning_curve
+#'
+#' \itemize{
+#'   \item{task [\code{\link{TaskDesc}}]}{Task description.}
+#'   \item{measures} [\code{\link{Measure}}]{Measures.}
+#'   \item{data [\code{data.frame}]}{Has columns: \code{learner} = Name of learner;
+#'     \code{perc} = Percentages drawn from the training split.; and a column for each \code{\link{Measure}}
+#'                   passed to \code{\link{generateLearningCurveData}}.}
+#' }
+#' @name LearningCurveData
+#' @rdname LearningCurveData
+NULL
+#' @export
+print.LearningCurveData = function(x, ...) {
+  catf("LearningCurveData:")
+  catf("Task: %s", x$task$task.desc$id)
+  catf("Measures: %s", paste(sapply(x$measures, function(z) z$name), collapse = ", "))
+  print(head(x$data))
 }
 #' @title Plot learning curve data using ggplot2.
+#'
+#' @family learning_curve
+#' @family plot
 #'
 #' @description
 #' Visualizes data size (percentage used for model) vs. performance measure(s).
@@ -85,75 +114,64 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
 #' @export
 plotLearningCurve = function(obj) {
   assertClass(obj, "LearningCurveData")
-  ggdata = reshape2::melt(obj, id.vars = c("learner", "perc"), variable.name = "measure", value.name = "perf")
-  pl = ggplot2::ggplot(ggdata, ggplot2::aes_string(x = "perc", y = "perf", colour = "learner"))
-  pl = pl + ggplot2::layer(geom = "point")
-  pl = pl + ggplot2::layer(geom = "line")
-  pl = pl + ggplot2::facet_wrap(~measure, scales = "free_y")
-  return(pl)
+  data = reshape2::melt(obj$data,
+                        id.vars = c("learner", "perc"),
+                        variable.name = "measure", value.name = "perf")
+  plt = ggplot2::ggplot(data, ggplot2::aes_string(x = "perc", y = "perf", colour = "measure"))
+  plt = plt + ggplot2::geom_point()
+  plt = plt + ggplot2::geom_line()
+  plt = plt + ggplot2::facet_wrap(~ learner, scales = "free_y")
+  return(plt)
 }
 #' @title Plot learning curve data using ggvis.
+#'
+#' @family plot
+#' @family learning_curve
 #'
 #' @description
 #' Visualizes data size (percentage used for model) vs. performance measure(s).
 #'
 #' @param obj [\code{LearningCurveData}]\cr
 #'   Result of \code{\link{generateLearningCurveData}}.
-#' @param color_variable [\code{character(1)}]\cr
-#'   The variable to be mapped to color in the plot.
-#'   Can be "learner" or "measure". If left unspecified
-#'   The option with fewer unique values is mapped to color.
 #' @param interactive [\code{logical(1)}]\cr
 #'   Whether to make the plot interactive with Shiny.
-#'   If true then a sidebar menu is created that lets the user
-#'   select which measure or learner (whichever is not \code{color_variable}) to display.
+#'   If \code{TRUE} then a sidebar menu is created that lets the user
+#'   select which learner to display.
 #'   Note that if there are multiple learners and multiple measures interactivity is
 #'   necessary as ggvis does not currently support facetting or subplots.
-#'   If \code{interactive} is true but there are not multiple measures or learners then
+#'   If \code{interactive} is \code{TRUE} but there are not multiple measures or learners then
 #'   the plot will be static.
 #'   Default is false.
 #' @template ret_ggv
 #' @export
-plotLearningCurveGGVIS = function(obj, color_variable = NULL, interactive = FALSE) {
-  plt_data = reshape2::melt(obj, id.vars = c("learner", "perc"), variable.name = "measure", value.name = "perf")
-
+plotLearningCurveGGVIS = function(obj, interactive = FALSE) {
   assertClass(obj, "LearningCurveData")
-  if (!is.null(color_variable))
-    assertChoice(color_variable, c("learner", "measure"))
-  nmeas = length(unique(plt_data$measure))
-  nlearn = length(unique(plt_data$learner))
+  data = reshape2::melt(obj$data, id.vars = c("learner", "perc"), variable.name = "measure", value.name = "perf")
+  nmeas = length(unique(data$measure))
+  nlearn = length(unique(data$learner))
 
-  if (is.null(color_variable) & nmeas == 1) {
-    color_variable = "learner"
-    interactive = FALSE
-  } else if (is.null(color_variable) & nlearn == 1) {
-    color_variable = "measure"
-    interactive = FALSE
-  } else if (is.null(color_variable) & interactive) {
-    if (nlearn > nmeas) {
-      color_variable = "measure"
-      pick_variable = "learner"
+  create_plot = function(data, color = TRUE) {
+    if (color) {
+      plt = ggvis::ggvis(data, ggvis::prop("x", as.name("perc")),
+                         ggvis::prop("y", as.name("perf")),
+                         ggvis::prop("stroke", as.name("measure")))
+      plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name("measure")))
     } else {
-      color_variable = "learner"
-      pick_variable = "measure"
+      plt = ggvis::ggvis(data, ggvis::prop("x", as.name("perc")),
+                         ggvis::prop("y", as.name("perf")))
+      plt = ggvis::layer_points(plt)
     }
-  } else if (interactive) {
-    if (color_variable == "measure")
-      pick_variable = "learner"
-    else
-      pick_variable = "measure"
-  } else {
-    stop("cannot plot multiple learners and multiple measures statically")
+    ggvis::layer_lines(plt)
   }
 
-  if (interactive) {
+  if (interactive & nlearn > 1L) {
     ui = shiny::shinyUI(
         shiny::pageWithSidebar(
             shiny::headerPanel("learning curve"),
             shiny::sidebarPanel(
-                shiny::selectInput("level_variable",
-                                   paste("choose a ", pick_variable),
-                                   unique(levels(plt_data[[pick_variable]])))
+                shiny::selectInput("learner_select",
+                                   "choose a learner",
+                                   levels(data[["learner"]]))
             ),
             shiny::mainPanel(
                 shiny::uiOutput("ggvis_ui"),
@@ -161,20 +179,14 @@ plotLearningCurveGGVIS = function(obj, color_variable = NULL, interactive = FALS
             )
         ))
     server = shiny::shinyServer(function(input, output) {
-      plt_data_sub = shiny::reactive(plt_data[which(plt_data[[pick_variable]] == input$level_variable), ])
-      plt = ggvis::ggvis(plt_data_sub, ggvis::prop("x", as.name("perc")),
-                         ggvis::prop("y", as.name("perf")),
-                         ggvis::prop("stroke", as.name(color_variable)))
-      plt = ggvis::layer_lines(plt)
-      plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name(color_variable)))
+      data_sub = shiny::reactive(data[which(data[["learner"]] == input$learner_select), ])
+      plt = create_plot(data_sub, nmeas > 1L)
       ggvis::bind_shiny(plt, "ggvis", "ggvis_ui")
     })
     shiny::shinyApp(ui, server)
+  } else if (nlearn == 1L) {
+    create_plot(data, nmeas > 1)
   } else {
-    plt = ggvis::ggvis(plt_data, ggvis::prop("x", as.name("perc")),
-                       ggvis::prop("y", as.name("perf")),
-                       ggvis::prop("stroke", as.name(color_variable)))
-    plt = ggvis::layer_lines(plt)
-    ggvis::layer_points(plt, ggvis::prop("fill", as.name(color_variable)))
+    stop("interactive must be TRUE if the number of learners and the number of measures are greater than 1.")
   }
 }
