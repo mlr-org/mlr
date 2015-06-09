@@ -1,16 +1,16 @@
 #' @title Get the tuned hyperparameter settings from a nested tuning.
 #'
-#' @description 
-#'   After you have conducted a resampling on a wrapped learner using \code{\link{makeTuneWrapper}} with \code{resample(..., extract = getTuneresult)} this helper gives you a \code{data.frame} with the hyperparameter settings which were found to be the best.
-#' 
+#' @description
+#' After you resampled a tuning wrapper (see \code{\link{makeTuneWrapper}})
+#' with \code{resample(..., extract = getTuneresult)} this helper returns a \code{data.frame} with
+#' the the best found hyperparameter settings for each resampling iteration.
+#'
 #' @param r [\code{\link{ResampleResult}}] \cr
-#'   The result of a resampling of a tuneWrapped learner.
-#' @return \code{data.frame}
-#'   \code{data.frame} with one column for each tuned hyperparameter and one row for each outer resampling iteration.
+#'   The result of resampling of a tuning wrapper.
+#' @return [\code{data.frame}]. One column for each tuned hyperparameter and one row for each outer resampling iteration.
 #' @examples
-#'   ## see example of makeTuneWrapper
-#' 
-#' @export 
+#' # see example of makeTuneWrapper
+#' @export
 getNestedTuneResultsX = function(r) {
   assertClass(r, "ResampleResult")
   assertList(r$extract)
@@ -22,14 +22,16 @@ getNestedTuneResultsX = function(r) {
 #' @title Get the \code{opt.path}s from each tuning step from the outer resampling.
 #'
 #' @description
-#'   After you have conducted a resampling on a wrapped learner using \code{\link{makeTuneWrapper}} with \code{resample(..., extract = getTuneresult)} this helper gives you a \code{data.frame} with all \code{opt.path}s combined by \code{rbind}.
-#'   An additional column \code{iter} indicates to what resampling iteration the column belongs.
-#' 
+#' After you resampled a tuning wrapper (see \code{\link{makeTuneWrapper}})
+#' with \code{resample(..., extract = getTuneresult)} this helper returns a \code{data.frame} with
+#' with all \code{opt.path}s combined by \code{rbind}.
+#' An additional column \code{iter} indicates to what resampling iteration the row belongs.
+#'
 #' @param r [\code{\link{ResampleResult}}] \cr
-#'   The result of a resampling of a tuneWrapped learner.
-#' @return \code{data.frame}
+#'   The result of resampling of a tuning wrapper.
+#' @return [\code{data.frame}]. See above.
 #' @examples
-#'   ## see example of makeTuneWrapper
+#' # see example of makeTuneWrapper
 #' @export
 getNestedTuneResultsOptPathDf = function(r) {
   assertClass(r, "ResampleResult")
