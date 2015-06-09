@@ -74,14 +74,15 @@ Reading is highly recommended!
 We would like to thank the authors of all packages which `mlr` uses under the hood:
 
 ```{r,echo=FALSE,results="asis"}
-parse_pkgs = function(x) {
+parsePkgs = function(x) {
   x = strsplit(x, "\n|,")[[1L]]
-  x = sub("^ ?([[:alnum:]]+).*", "\\1", x)
+  # remove version requirement in (...)
+  x = sub("\\(.*\\)", "", x)
   x[nzchar(x)]
 }
 
 desc = packageDescription("mlr")
-pkgs = c(parse_pkgs(desc$Depends), parse_pkgs(desc$Imports), parse_pkgs(desc$Suggests))
-pkgs = sort(setdiff(pkgs, "R"))
+pkgs = c(parsePkgs(desc$Depends), parsePkgs(desc$Imports), parsePkgs(desc$Suggests))
+pkgs = sort(setdiff(pkgs, c("R", "stats")))
 cat(sprintf("* [%1$s](http://cran.r-project.org/package=%1$s)", pkgs), sep = "\n")
 ```
