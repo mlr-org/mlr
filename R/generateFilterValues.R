@@ -201,9 +201,10 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
 #'   Default is \code{FALSE}.
 #' @template ret_ggv
 #' @export
-#' @examples
+#' @examples \dontrun{
 #' fv = generateFilterValuesData(iris.task, method = "chi.squared")
 #' plotFilterValuesGGVIS(fv)
+#' }
 plotFilterValuesGGVIS = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols = FALSE, interactive = FALSE) {
   assertClass(fvalues, classes = "FilterValues")
   assertChoice(sort, choices = c("dec", "inc", "none"))

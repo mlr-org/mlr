@@ -39,8 +39,10 @@ a ggvis plot object.
 Plot filter values using ggvis.
 }
 \examples{
+\dontrun{
 fv = generateFilterValuesData(iris.task, method = "chi.squared")
 plotFilterValuesGGVIS(fv)
+}
 }
 \seealso{
 Other filter: \code{\link{FilterValues}};

@@ -18,7 +18,7 @@ test_that("generateThreshVsPerfData", {
 
   ## benchmark result
   lrns = list(lrn, makeLearner("classif.lda", predict.type = "prob"))
-  rdesc = makeResampleDesc("CV", iters = 5)
+  rdesc = makeResampleDesc("CV", iters = 3)
   res = benchmark(lrns, binaryclass.task, rdesc, show.info = FALSE)
   pvs = generateThreshVsPerfData(res, list(tpr, fpr))
   plotThreshVsPerf(pvs)

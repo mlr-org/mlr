@@ -78,13 +78,12 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, task.id
 #'   Default is \code{NA} which means not to do it.
 #' @template ret_gg2
 #' @export
-#' @examples \dontrun{
+#' @examples
 #' lrn = makeLearner("classif.rpart", predict.type = "prob")
 #' mod = train(lrn, sonar.task)
 #' pred = predict(mod, sonar.task)
 #' pvs = generateThreshVsPerfData(pred, list(tpr, fpr))
 #' plotThreshVsPerf(pvs)
-#' }
 plotThreshVsPerf = function(obj, mark.th = NA_real_) {
   assertClass(obj, classes = "ThreshVsPerfData")
   data = reshape2::melt(obj$data, measure.vars = obj$measures,

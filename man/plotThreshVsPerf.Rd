@@ -21,13 +21,11 @@ ggplot2 plot object.
 Plot threshold vs. performance(s) for 2-class classification using ggplot2.
 }
 \examples{
-\dontrun{
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 mod = train(lrn, sonar.task)
 pred = predict(mod, sonar.task)
 pvs = generateThreshVsPerfData(pred, list(tpr, fpr))
 plotThreshVsPerf(pvs)
-}
 }
 \seealso{
 Other plot: \code{\link{plotFilterValuesGGVIS}};

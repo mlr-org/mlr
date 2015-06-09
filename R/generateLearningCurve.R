@@ -29,7 +29,7 @@
 #' task = sonar.task, percs = seq(0.2, 1, by = 0.2),
 #' measures = list(tp, fp, tn, fn), resampling = makeResampleDesc(method = "Subsample", iters = 5),
 #' show.info = FALSE)
-#' print(plotLearningCurve(r))
+#' plotLearningCurve(r)
 #' @export
 generateLearningCurveData = function(learners, task, resampling = NULL,
   percs = seq(0.1, 1, by = 0.1), measures, stratify = FALSE, show.info = getMlrOption("show.info"))  {

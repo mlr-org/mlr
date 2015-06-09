@@ -48,14 +48,6 @@ and then ROCR's \code{\link[ROCR]{performance}}.
 
 See these methods in ROCR for further info.
 }
-\examples{
-\dontrun{
-lrn1 = makeLearner("classif.logreg", predict.type = "prob")
-lrn2 = makeLearner("classif.rpart", predict.type = "prob")
-b = benchmark(list(lrn1, lrn2), pid.task)
-z = generateROCRCurvesData(b)
-}
-}
 \seealso{
 Other generate_plot_data: \code{\link{generateFilterValuesData}};
   \code{\link{generateLearningCurveData}};
