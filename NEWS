@@ -36,6 +36,7 @@ mlr_2.4:
 -- classif.pamr
 -- classif.rFerns
 -- classif.sparseLDA
+-- classif.wsrf
 -- regr.bst
 -- regr.frbs
 -- regr.nodeHarvest
