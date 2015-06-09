@@ -19,6 +19,7 @@ Returns the filtered features.
 \seealso{
 Other filter: \code{\link{FilterValues}};
   \code{\link{filterFeatures}};
+  \code{\link{generateFilterValuesData}};
   \code{\link{getFilterValues}};
   \code{\link{makeFilterWrapper}}
 }
