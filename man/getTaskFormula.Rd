@@ -5,7 +5,8 @@
 \alias{getTaskFormulaAsString}
 \title{Get formula of a task.}
 \usage{
-getTaskFormulaAsString(x, target = getTaskTargetNames(x), features = ".")
+getTaskFormulaAsString(x, target = getTaskTargetNames(x),
+  explicit.features = FALSE)
 
 getTaskFormula(x, target = getTaskTargetNames(x), explicit.features = FALSE,
   env = NULL)
@@ -17,10 +18,6 @@ Task or its description object.}
 \item{target}{[\code{character(1)}]\cr
 Left hand side of the formula.
 Default is defined by task \code{x}.}
-
-\item{features}{[\code{character}]\cr
-Features that should be listed on the right hand side of the formula.
-Default is \code{"."}.}
 
 \item{explicit.features}{[\code{logical(1)}]\cr
 Should the features (right hand side of the formula) be explicitly listed?
