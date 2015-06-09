@@ -25,7 +25,7 @@ mlr_2.4:
 - new functions
 -- getTaskSize
 -- getNestedTuneResultsX, getNestedTuneResultsOptPathDf
--- generateLearningCurveData, plotLearningCurve 
+-- generateROCRCurvesData, generateFilterValuesData, generateLearningCurveData, plotLearningCurve 
 -- experimental ggvis functions: plotROCRCurvesGGVIS, plotLearningCurveGGVIS, 
    plotTuneMultiCritResultGGVIS, plotThreshVsPerfGGVIS, and plotFilterValuesGGVIS
 
