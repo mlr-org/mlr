@@ -49,4 +49,13 @@ measures = list(tp, fp, tn, fn), resampling = makeResampleDesc(method = "Subsamp
 show.info = FALSE)
 print(plotLearningCurve(r))
 }
+\seealso{
+Other generate_plot_data: \code{\link{generateFilterValuesData}};
+  \code{\link{generateROCRCurvesData}};
+  \code{\link{generateThreshVsPerfData}};
+  \code{\link{getFilterValues}}
+
+Other learning_curve: \code{\link{plotLearningCurveGGVIS}};
+  \code{\link{plotLearningCurve}}
+}
 

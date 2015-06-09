@@ -33,6 +33,21 @@ Other filter: \code{\link{FilterValues}};
   \code{\link{filterFeatures}};
   \code{\link{getFilterValues}};
   \code{\link{getFilteredFeatures}};
-  \code{\link{makeFilterWrapper}}
+  \code{\link{makeFilterWrapper}};
+  \code{\link{plotFilterValuesGGVIS}};
+  \code{\link{plotFilterValues}}
+
+Other filter: \code{\link{FilterValues}};
+  \code{\link{filterFeatures}};
+  \code{\link{getFilterValues}};
+  \code{\link{getFilteredFeatures}};
+  \code{\link{makeFilterWrapper}};
+  \code{\link{plotFilterValuesGGVIS}};
+  \code{\link{plotFilterValues}}
+
+Other generate_plot_data: \code{\link{generateLearningCurveData}};
+  \code{\link{generateROCRCurvesData}};
+  \code{\link{generateThreshVsPerfData}};
+  \code{\link{getFilterValues}}
 }
 

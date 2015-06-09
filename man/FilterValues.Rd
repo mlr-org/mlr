@@ -4,18 +4,15 @@
 \alias{FilterValues}
 \title{Result of \code{\link{generateFilterValuesData}}.}
 \description{
-\itemize{
-  \item{task.desc [\code{\link{TaskDesc}}]}{Task description.}
-  \item{data [\code{data.frame}]}{Has columns: \code{name} = Names of features;
-    \code{type} = Feature column type; and a column for each \code{method} with
-                  the feature values.}
-}
+Result of \code{\link{generateFilterValuesData}}.
 }
 \seealso{
 Other filter: \code{\link{filterFeatures}};
   \code{\link{generateFilterValuesData}};
   \code{\link{getFilterValues}};
   \code{\link{getFilteredFeatures}};
-  \code{\link{makeFilterWrapper}}
+  \code{\link{makeFilterWrapper}};
+  \code{\link{plotFilterValuesGGVIS}};
+  \code{\link{plotFilterValues}}
 }
 

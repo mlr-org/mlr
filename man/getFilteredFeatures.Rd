@@ -21,6 +21,8 @@ Other filter: \code{\link{FilterValues}};
   \code{\link{filterFeatures}};
   \code{\link{generateFilterValuesData}};
   \code{\link{getFilterValues}};
-  \code{\link{makeFilterWrapper}}
+  \code{\link{makeFilterWrapper}};
+  \code{\link{plotFilterValuesGGVIS}};
+  \code{\link{plotFilterValues}}
 }
 

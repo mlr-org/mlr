@@ -26,4 +26,16 @@ a ggvis plot object.
 \description{
 Visualizes data size (percentage used for model) vs. performance measure(s).
 }
+\seealso{
+Other learning_curve: \code{\link{generateLearningCurveData}};
+  \code{\link{plotLearningCurve}}
+
+Other plot: \code{\link{plotFilterValuesGGVIS}};
+  \code{\link{plotFilterValues}};
+  \code{\link{plotLearningCurve}};
+  \code{\link{plotROCRCurvesGGVIS}};
+  \code{\link{plotROCRCurves}};
+  \code{\link{plotThreshVsPerfGGVIS}};
+  \code{\link{plotThreshVsPerf}}
+}
 

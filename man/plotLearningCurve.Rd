@@ -16,4 +16,16 @@ ggplot2 plot object.
 \description{
 Visualizes data size (percentage used for model) vs. performance measure(s).
 }
+\seealso{
+Other learning_curve: \code{\link{generateLearningCurveData}};
+  \code{\link{plotLearningCurveGGVIS}}
+
+Other plot: \code{\link{plotFilterValuesGGVIS}};
+  \code{\link{plotFilterValues}};
+  \code{\link{plotLearningCurveGGVIS}};
+  \code{\link{plotROCRCurvesGGVIS}};
+  \code{\link{plotROCRCurves}};
+  \code{\link{plotThreshVsPerfGGVIS}};
+  \code{\link{plotThreshVsPerf}}
+}
 

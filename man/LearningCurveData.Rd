@@ -4,12 +4,6 @@
 \alias{LearningCurveData}
 \title{Result of \code{\link{generateLearningCurveData}}.}
 \description{
-\itemize{
-  \item{task [\code{\link{TaskDesc}}]}{Task description.}
-  \item{measures} [\code{\link{Measure}}]{Measures.}
-  \item{data [\code{data.frame}]}{Has columns: \code{learner} = Name of learner;
-    \code{perc} = Percentages drawn from the training split.; and a column for each \code{\link{Measure}}
-                  passed to \code{\link{generateLearningCurveData}}.}
-}
+Result of \code{\link{generateLearningCurveData}}.
 }
 

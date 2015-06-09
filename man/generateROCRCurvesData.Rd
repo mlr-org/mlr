@@ -57,6 +57,11 @@ z = generateROCRCurvesData(b)
 }
 }
 \seealso{
+Other generate_plot_data: \code{\link{generateFilterValuesData}};
+  \code{\link{generateLearningCurveData}};
+  \code{\link{generateThreshVsPerfData}};
+  \code{\link{getFilterValues}}
+
 Other predict: \code{\link{asROCRPrediction}};
   \code{\link{getProbabilities}};
   \code{\link{plotROCRCurvesGGVIS}};

@@ -33,6 +33,14 @@ ggplot2 plot object.
 Visualize how binary classification performs across different measures.
 }
 \seealso{
+Other plot: \code{\link{plotFilterValuesGGVIS}};
+  \code{\link{plotFilterValues}};
+  \code{\link{plotLearningCurveGGVIS}};
+  \code{\link{plotLearningCurve}};
+  \code{\link{plotROCRCurvesGGVIS}};
+  \code{\link{plotThreshVsPerfGGVIS}};
+  \code{\link{plotThreshVsPerf}}
+
 Other predict: \code{\link{asROCRPrediction}};
   \code{\link{generateROCRCurvesData}};
   \code{\link{getProbabilities}};
