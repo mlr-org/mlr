@@ -5,10 +5,9 @@ mlr_2.4:
 - option fix.factors in makeLearner was renamed to fix.factors.prediction for clarity
 - getTaskData now has recodeY = "drop.levels" which drops empty factor levels
 - classif.ada: added "loss" hyperpar
-- new measures
-- brier
 - add missings properties to all ctree and cforest methods:
   regr/classif for ctree, regr/classif/surv for cforest, and regr/classif for blackboost
+- getTaskFormula / getTaskFormulaAsString have new argument 'explicit.features'
 - learner xgboost was removed
 - reg.km: added param 'iso'
 - classif.mda: added param 'start.method' and changed its default to 'lvq', added params 'sub.df', 'tot.df'
@@ -24,6 +23,10 @@ mlr_2.4:
 - experimental ggvis functions have been added: plotROCRCurvesGGVIS, plotLearningCurveGGVIS,
   plotTuneMultiCritResultGGVIS, plotThreshVsPerfGGVIS, and plotFilterValuesGGVIS
 
+- new functions
+-- getTaskSize
+-- getNestedTuneResultsX, getNestedTuneResultsOptPathDf
+
 - new learners:
 -- classif.bst
 -- classif.hdrda
@@ -35,6 +38,9 @@ mlr_2.4:
 -- regr.frbs
 -- regr.nodeHarvest
 -- regr.slim
+
+- new measures:
+-- brier
 
 mlr_2.3:
 - resample now returns an object of class ResampleResult (downward compatible)
@@ -70,13 +76,12 @@ mlr_2.3:
   surv.optimCoxBoostPenalty, surv.glmboost, surv.CoxBoost
 
 - new functions
--- getTaskType, getTaskId, getTaskTargetNames, getTaskSize
+-- getTaskType, getTaskId, getTaskTargetNames
 -- plotROCRCurves
 -- plotViperCharts
 -- measureSSE, measureMSE, measureRMSE, measureMEDSE, ...
 -- PreprocWrapperCaret
 -- setPredictThreshold
--- getNestedTuneResultsX, getNestedTuneResultsOptPathDf
 
 - new learners:
 -- classif.bdk
@@ -181,7 +186,7 @@ mlr_2.1:
 - mlr now supports multi-criteria tuning
 - mlr now supports cluster analysis (experimental)
 - improve makeWeightedClassesWrapper: Hyperparams for class weighting are now supported, too.
-- removed fix.factors.prediction option from randomForest, but added it in general to makeLearner,
+- removed fix.factors option from randomForest, but added it in general to makeLearner,
   so it now works for all learners.
   Helps when feature factor levels where dropped in newdata prediction data.frames
 - more consistent results for tuning algorithms and parameters with "trafos" :
