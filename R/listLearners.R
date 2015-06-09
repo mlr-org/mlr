@@ -24,8 +24,8 @@
 #' @param create [\code{logical(1)}]\cr
 #'   Instantiate objects (or return strings)?
 #'   Default is \code{FALSE}.
-#' @return [\code{character} | \code{list} of \code{\link{Learner}}]. Class names of matching
-#'   learners or instantiated objects.
+#' @return [\code{character} | \code{list} of \code{\link{Learner}}].
+#'   Named by ids of listed learners.
 #' @examples
 #' \dontrun{
 #' listLearners("classif", properties = c("multiclass", "prob"))
