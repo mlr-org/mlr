@@ -90,8 +90,13 @@ plotROCRCurves.PredictionMultilabel = function(obj, meas1 = "tpr", meas2 = "fpr"
     obj.i$task.desc$class.levels = obj$task.desc$class.levels[[i]]
     class(obj.i$task.desc)[1] = "TaskDeskClassif"
     class(obj.i) = c("PredictionClassif", "Prediction")
-    obj.i$task.desc$positive = obj.i$task.desc$class.levels[1]
-    obj.i$task.desc$negative = obj.i$task.desc$class.levels[2]
+    if(any(obj.i$task.desc$class.levels==TRUE) & any(obj.i$task.desc$class.levels==FALSE)){
+      obj.i$task.desc$positive = TRUE
+      obj.i$task.desc$negative = FALSE
+    }else{
+      obj.i$task.desc$positive = obj.i$task.desc$class.levels[1]
+      obj.i$task.desc$negative = obj.i$task.desc$class.levels[2]
+    }
     l = namedList(names = "prediction", init = obj.i)
     print(plotROCRCurves.list(l, meas1, meas2, avg, perf.args, diagonal, xlab, ylab, title = i, task.id))
   }
