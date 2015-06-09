@@ -115,14 +115,12 @@ plotLearningCurve = function(obj) {
 #' @template ret_ggv
 #' @export
 plotLearningCurveGGVIS = function(obj, color_variable = NULL, interactive = FALSE) {
-  plt_data = reshape2::melt(obj, id.vars = c("learner", "perc"), variable.name = "measure", value.name = "perf")
-
   assertClass(obj, "LearningCurveData")
   if (!is.null(color_variable))
     assertChoice(color_variable, c("learner", "measure"))
+  plt_data = reshape2::melt(obj, id.vars = c("learner", "perc"), variable.name = "measure", value.name = "perf")
   nmeas = length(unique(plt_data$measure))
   nlearn = length(unique(plt_data$learner))
-
   if (is.null(color_variable) & nmeas == 1) {
     color_variable = "learner"
     interactive = FALSE

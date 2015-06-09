@@ -206,7 +206,7 @@ plotFilterValuesGGVIS = function(fvalues, sort = "dec", n.show = 20L, feat.type.
       head(sortByCol(data[data$method == x, ], "value", (sort == "inc")), n.show)))
 
   data$name = factor(data$name, levels = as.character(unique(data$name)))
-  create_plot <- function(data, feat.type.cols) {
+  create_plot = function(data, feat.type.cols) {
     if (feat.type.cols)
       p = ggvis::ggvis(data, ggvis::prop("x", as.name("name")),
                        ggvis::prop("y", as.name("value")),
@@ -221,7 +221,7 @@ plotFilterValuesGGVIS = function(fvalues, sort = "dec", n.show = 20L, feat.type.
     return(p)
   }
 
-  add_title <- function(vis, ..., x_lab = "", title = "") {
+  add_title = function(vis, ..., x_lab = "", title = "") {
     vis = ggvis::add_axis(vis, "x", title = x_lab)
     vis = ggvis::add_axis(vis, "x", orient = "top", ticks = 0, title = title,
                           properties = ggvis::axis_props(
