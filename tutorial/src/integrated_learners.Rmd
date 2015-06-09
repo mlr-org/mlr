@@ -51,7 +51,7 @@ getTab = function(type) {
 
 makeTab = function(df) {
   pandoc.table(df, style = "rmarkdown", split.tables = Inf, split.cells = Inf,
-    justify = c("left", "left", "left", "center", "center", "center", "center", "right", "left"))
+    justify = c("left", "left", "left", "center", "center", "center", "center", "left", "left"))
 }
 
 types = c("classif", "regr", "surv", "cluster")
