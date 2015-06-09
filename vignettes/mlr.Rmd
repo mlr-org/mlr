@@ -83,5 +83,5 @@ parse_pkgs = function(x) {
 desc = packageDescription("mlr")
 pkgs = c(parse_pkgs(desc$Depends), parse_pkgs(desc$Imports), parse_pkgs(desc$Suggests))
 pkgs = sort(setdiff(pkgs, "R"))
-cat(sprintf("* [%1$s](http://cran.r-project.org/web/packages/%1$s/)", pkgs), sep = "\n")
+cat(sprintf("* [%1$s](http://cran.r-project.org/package=%1$s)", pkgs), sep = "\n")
 ```
