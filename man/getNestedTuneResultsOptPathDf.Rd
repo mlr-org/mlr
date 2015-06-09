@@ -8,16 +8,18 @@ getNestedTuneResultsOptPathDf(r)
 }
 \arguments{
 \item{r}{[\code{\link{ResampleResult}}] \cr
-The result of a resampling of a tuneWrapped learner.}
+The result of resampling of a tuning wrapper.}
 }
 \value{
-\code{data.frame}
+[\code{data.frame}]. See above.
 }
 \description{
-After you have conducted a resampling on a wrapped learner using \code{\link{makeTuneWrapper}} with \code{resample(..., extract = getTuneresult)} this helper gives you a \code{data.frame} with all \code{opt.path}s combined by \code{rbind}.
-  An additional column \code{iter} indicates to what resampling iteration the column belongs.
+After you resampled a tuning wrapper (see \code{\link{makeTuneWrapper}})
+with \code{resample(..., extract = getTuneresult)} this helper returns a \code{data.frame} with
+with all \code{opt.path}s combined by \code{rbind}.
+An additional column \code{iter} indicates to what resampling iteration the row belongs.
 }
 \examples{
-## see example of makeTuneWrapper
+# see example of makeTuneWrapper
 }
 
