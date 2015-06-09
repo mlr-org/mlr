@@ -5,7 +5,6 @@ mlr_2.4:
 - showHyperPars was removed. getParamSet does exactly the same thing
 - we had to slightly change how the mem usage is reported in tuning and feature selection.
   See TuneControl and FeatSelControl where it is documented what is done now.
-- tuneDesign: Tune a learner with a given Design, so that you can tune it with ParamHelpers::generateDesign
 - tuneIrace: allows to set the precision / digits within irace (using the argument 'digits'
   in makeTuneControlIrace); default is maximum precision
 - for plotting in general we try to introduce a "data layer", so the data can be generated independently
@@ -25,6 +24,7 @@ mlr_2.4:
 - new functions
 -- getTaskSize
 -- getNestedTuneResultsX, getNestedTuneResultsOptPathDf
+-- tuneDesign
 -- generateROCRCurvesData, generateFilterValuesData, generateLearningCurveData, plotLearningCurve 
 -- experimental ggvis functions: plotROCRCurvesGGVIS, plotLearningCurveGGVIS, 
    plotTuneMultiCritResultGGVIS, plotThreshVsPerfGGVIS, and plotFilterValuesGGVIS
