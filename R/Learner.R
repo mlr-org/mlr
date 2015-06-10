@@ -58,9 +58,7 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
     assertString(id)
     wl$id = id
   }
-  # further checks on threshold can only be done later in setThreshold
-  if (!is.null(predict.threshold))
-    assertNumeric(predict.threshold, any.missing = FALSE)
+  # predict.threshold is checked in setter below
   assertList(par.vals)
   assertList(config, names = "named")
   if (!nzchar(cl))
@@ -69,7 +67,8 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
     stop("Learner must be a basic RLearner!")
   wl = setHyperPars(learner = wl, ..., par.vals = par.vals)
   wl = setPredictType(learner = wl, predict.type = predict.type)
-  wl$predict.threshold = predict.threshold
+  if (!is.null(predict.threshold))
+    wl = setPredictThreshold(wl, predict.threshold)
   wl$fix.factors.prediction = fix.factors.prediction
   wl$config = config
   return(wl)
