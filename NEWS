@@ -3,6 +3,8 @@ mlr_2.4:
 - getTaskData now has recodeY = "drop.levels" which drops empty factor levels
 - option fix.factors in makeLearner was renamed to fix.factors.prediction for clarity
 - showHyperPars was removed. getParamSet does exactly the same thing
+- 'resample' and 'benchmark' got the argument keep.pred,
+  setting it to FALSE allows to discard the prediction objects to save memory
 - we had to slightly change how the mem usage is reported in tuning and feature selection.
   See TuneControl and FeatSelControl where it is documented what is done now.
 - tuneIrace: allows to set the precision / digits within irace (using the argument 'digits'
@@ -21,7 +23,6 @@ mlr_2.4:
 - classif.mda: added param 'start.method' and changed its default to 'lvq', added params 'sub.df', 'tot.df'
   and 'criterion'.
 - plotThreshVsPerf and plotLearningCurve now have param 'facet'
-- resample and benchmark got the argument keep.preds, allowing you now to discard the prediction objects
 
 - new functions
 -- getTaskSize
