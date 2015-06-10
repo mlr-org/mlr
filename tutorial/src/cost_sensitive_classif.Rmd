@@ -211,7 +211,8 @@ The theoretical threshold ``th`` calculated above is indicated by the vertical l
 As you can see the theoretical threshold seems a bit large.
 
 ```{r}
-plotThreshVsPerf(pred = r$pred, measures = list(credit.costs, mmce), mark.th = th)
+d = generateThreshVsPerfData(r$pred, measures = list(credit.costs, mmce))
+plotThreshVsPerf(d, facet = "learner", mark.th = th)
 ```
 
 

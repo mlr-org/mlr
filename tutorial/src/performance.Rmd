@@ -143,6 +143,7 @@ pred = predict(mod, task = sonar.task, subset = seq(2, n, by = 2))
 ## Performance for the default threshold 0.5
 performance(pred, measures = list(fpr, fnr, mmce))
 ## Plot false negative and positive rates as well as the error rate versus the threshold
-plotThreshVsPerf(pred, measures = list(fpr, fnr, mmce))
+d = generateThreshVsPerfData(pred, measures = list(fpr, fnr, mmce))
+plotThreshVsPerf(d)
 ```
 
