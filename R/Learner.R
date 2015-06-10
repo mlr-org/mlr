@@ -76,7 +76,6 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
 
 #' @export
 print.Learner = function(x, ...) {
-  # FIXME: the "old" printer was a little bit more informative...
   cat(
     "Learner ", x$id, " from package ", collapse(cleanupPackageNames(x$package)), "\n",
     "Type: ", x$type, "\n",
