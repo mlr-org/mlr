@@ -1,13 +1,15 @@
-#' Get predictions from resample results.
+#' @title Get predictions from resample results.
+#'
+#' Very simple getter.
 #'
 #' @param res [\code{ResampleResult}]\cr
 #'   The result of \code{\link{resample}} run with \code{keep.pred = TRUE}.
-#' @return [\code{ResamplePrediction}]
-##' @export
+#' @return [\code{ResamplePrediction}].
+#' @export
 #' @family resample
 getRRPredictions = function(res) {
   if (is.null(res$pred))
-    stopf("The prediction slot is empty because the ResampleResult was generated with keep.pred = FALSE.")
+    stopf("The 'pred' slot is empty because the ResampleResult was generated with keep.pred = FALSE.")
   else
     res$pred
 }

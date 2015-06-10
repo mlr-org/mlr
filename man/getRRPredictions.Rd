@@ -2,7 +2,9 @@
 % Please edit documentation in R/ResampleResult_operators.R
 \name{getRRPredictions}
 \alias{getRRPredictions}
-\title{Get predictions from resample results.}
+\title{Get predictions from resample results.
+
+Very simple getter.}
 \usage{
 getRRPredictions(res)
 }
@@ -11,10 +13,12 @@ getRRPredictions(res)
 The result of \code{\link{resample}} run with \code{keep.pred = TRUE}.}
 }
 \value{
-[\code{ResamplePrediction}]
+[\code{ResamplePrediction}].
 }
 \description{
 Get predictions from resample results.
+
+Very simple getter.
 }
 \seealso{
 Other resample: \code{\link{ResampleDesc}},
