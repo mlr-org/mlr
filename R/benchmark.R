@@ -18,11 +18,12 @@
 #' @param measures [(list of) \code{\link{Measure}}]\cr
 #'   Performance measures for all tasks.
 #'   If missing, the default measure of the first task is used.
+#' @template arg_keep_pred
 #' @template arg_showinfo
 #' @return [\code{\link{BenchmarkResult}}].
 #' @family benchmark
 #' @export
-benchmark = function(learners, tasks, resamplings, measures, show.info = getMlrOption("show.info")) {
+benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, show.info = getMlrOption("show.info")) {
   learners = ensureVector(learners, 1L, "Learner")
   assertList(learners, min.len = 1L)
   checkListElementClass(learners, "Learner")
@@ -99,7 +100,7 @@ benchmark = function(learners, tasks, resamplings, measures, show.info = getMlrO
 #' @family benchmark
 NULL
 
-benchmarkParallel = function(index, learners, tasks, resamplings, measures, show.info) {
+benchmarkParallel = function(index, learners, tasks, resamplings, measures, keep.pred = TRUE, show.info) {
   setSlaveOptions()
   ind.task = index[[1L]]
   ind.learner = index[[2L]]
@@ -117,7 +118,7 @@ benchmarkParallel = function(index, learners, tasks, resamplings, measures, show
   }
   lrn = learners[[ind.learner]]
   r = resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]],
-    measures = measures, models = TRUE, extract = extract.this, show.info = show.info)
+    measures = measures, models = TRUE, extract = extract.this, keep.pred = keep.pred, show.info = show.info)
   # store used learner in result
   r$learner = lrn
   return(r)

@@ -282,7 +282,7 @@ makeFilter(
     res = double(length(fns))
     for (i in seq_along(fns)) {
       subtask = subsetTask(task, features = fns[i])
-      res[i] = resample(learner = perf.learner, task = subtask, resampling = perf.resampling, measures = perf.measure, show.info = FALSE)$aggr
+      res[i] = resample(learner = perf.learner, task = subtask, resampling = perf.resampling, measures = perf.measure, keep.pred = FALSE, show.info = FALSE)$aggr
     }
     if (perf.measure[[1L]]$minimize)
       res = -1.0 * res
