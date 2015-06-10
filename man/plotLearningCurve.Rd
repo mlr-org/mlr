@@ -4,23 +4,17 @@
 \alias{plotLearningCurve}
 \title{Plot learning curve data using ggplot2.}
 \usage{
-plotLearningCurve(obj, color = "learner", facet = "measure")
+plotLearningCurve(obj, facet = "measure")
 }
 \arguments{
 \item{obj}{[\code{LearningCurveData}]\cr
 Result of \code{\link{generateLearningCurveData}}, with class \code{LearningCurveData}.}
 
-\item{color}{[\code{character(1)}]\cr
-Selects \dQuote{measure} or \dQuote{learner} to be used for coloring the lines and points in the plot.
-A vector cannot be mapped to the color aesthetic and used for facetting.
-The vector mapped to \code{color} must have more than one unique value, otherwise it will
-be ignored. The default is \dQuote{learner}.}
-
 \item{facet}{[\code{character(1)}]\cr
 Selects \dQuote{measure} or \dQuote{learner} to be the facetting variable.
-A vector cannot be mapped to \code{color} and used for facetting.
-The vector mapped to \code{facet} must have more than one unique value, otherwise it will
-be ignored. The default is \dQuote{measure}.}
+The variable mapped to \code{facet} must have more than one unique value, otherwise it will
+be ignored. The variable not chosen is mapped to color if it has more than one unique value.
+The default is \dQuote{measure}.}
 }
 \value{
 ggplot2 plot object.
