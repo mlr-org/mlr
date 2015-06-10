@@ -4,26 +4,31 @@
 \alias{plotThreshVsPerfGGVIS}
 \title{Plot threshold vs. performance(s) for 2-class classification using ggvis.}
 \usage{
-plotThreshVsPerfGGVIS(obj, mark.th = NA_real_, interactive = FALSE)
+plotThreshVsPerfGGVIS(obj, color = "learner", interaction = "measure",
+  mark.th = NA_real_)
 }
 \arguments{
 \item{obj}{[\code{ThreshVsPerfData}]\cr
 Result of \code{\link{generateThreshVsPerfData}}.}
 
+\item{color}{[\code{character(1)}]\cr
+Selects \dQuote{measure} or \dQuote{learner} to be used for coloring the lines and points in the plot.
+A vector cannot be mapped to the color aesthetic and used for interaction.
+The vector mapped to \code{color} must have more than one unique value, otherwise it will
+be ignored. The default is \dQuote{learner}.}
+
+\item{interaction}{[\code{character(1)}]\cr
+Selects \dQuote{measure} or \dQuote{learner} to be used in a Shiny application
+making the \code{interaction} variable selectable via a drop-down menu.
+A vector cannot be mapped to \code{color} and used for interaction.
+Note that if there are multiple learners and multiple measures interactivity is
+necessary as ggvis does not currently support facetting or subplots.
+The vector mapped to \code{interaction} must have more than one unique value, otherwise it will
+be ignored. The default is \dQuote{measure}.}
+
 \item{mark.th}{[\code{numeric(1)}]\cr
 Mark given threshold with vertical line?
 Default is \code{NA} which means not to do it.}
-
-\item{interactive}{[\code{logical(1)}]\cr
-Whether to make the plot interactive with Shiny.
-If \code{TRUE} then a sidebar menu is created that lets the user
-select which learner to display.
-Note that if there are multiple learners and multiple measures interactivity is
-necessary as ggvis does not currently support facetting or subplots.
-If \code{interactive} is \code{TRUE} but there are not multiple measures or learners then
-the plot will be static.
-Note that \code{mark.th} is not supported when \code{interactive = TRUE}.
-Default is \code{FALSE}.}
 }
 \value{
 a ggvis plot object.

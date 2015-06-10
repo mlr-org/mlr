@@ -73,6 +73,16 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, task.id
 #'
 #' @param obj [\code{ThreshVsPerfData}]\cr
 #'   Result of \code{\link{generateThreshVsPerfData}}.
+#' @param color [\code{character(1)}]\cr
+#'   Selects \dQuote{measure} or \dQuote{learner} to be used for coloring the lines and points in the plot.
+#'   A vector cannot be mapped to the color aesthetic and used for facetting.
+#'   The vector mapped to \code{color} must have more than one unique value, otherwise it will
+#'   be ignored. The default is \dQuote{learner}.
+#' @param facet [\code{character(1)}]\cr
+#'   Selects \dQuote{measure} or \dQuote{learner} to be the facetting variable.
+#'   A vector cannot be mapped to \code{color} and used for facetting.
+#'   The vector mapped to \code{facet} must have more than one unique value, otherwise it will
+#'   be ignored. The default is \dQuote{measure}.
 #' @param mark.th [\code{numeric(1)}]\cr
 #'   Mark given threshold with vertical line?
 #'   Default is \code{NA} which means not to do it.
@@ -84,17 +94,30 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, task.id
 #' pred = predict(mod, sonar.task)
 #' pvs = generateThreshVsPerfData(pred, list(tpr, fpr))
 #' plotThreshVsPerf(pvs)
-plotThreshVsPerf = function(obj, mark.th = NA_real_) {
+plotThreshVsPerf = function(obj, color = "learner", facet = "measure", mark.th = NA_real_) {
   assertClass(obj, classes = "ThreshVsPerfData")
+  assertChoice(color, c("measure", "learner"))
+  assertChoice(facet, c("measure", "learner"))
   data = reshape2::melt(obj$data, measure.vars = obj$measures,
               variable.name = "measure", value.name = "perf",
               id.vars = c("learner", "threshold"))
-  plt = ggplot2::ggplot(data, aes_string(x = "threshold", y = "perf", col = "measure"))
+  nlearn = length(unique(data$learner))
+  nmeas = length(unique(data$measure))
+
+  if ((color == "learner" & nlearn == 1L) | (color == "measure" & nmeas == 1L))
+    color = NULL
+  if ((facet == "learner" & nlearn == 1L) | (facet == "measure" & nmeas == 1L))
+    facet = NULL
+
+  if (!is.null(color))
+    plt = ggplot2::ggplot(data, aes_string(x = "threshold", y = "perf", color = color))
+  else
+    plt = ggplot2::ggplot(data, aes_string(x = "threshold", y = "perf"))
   plt = plt + ggplot2::geom_line()
   if (!is.na(mark.th))
     plt = plt + ggplot2::geom_vline(xintercept = mark.th)
-  if (length(unique(data$learner)) > 1L)
-    plt = plt + ggplot2::facet_wrap(~ learner, scales = "free_y")
+  if (!is.null(facet))
+    plt = plt + ggplot2::facet_wrap(as.formula(paste("~", facet)), scales = "free_y")
   return(plt)
 }
 #' @title Plot threshold vs. performance(s) for 2-class classification using ggvis.
@@ -107,16 +130,19 @@ plotThreshVsPerf = function(obj, mark.th = NA_real_) {
 #' @param mark.th [\code{numeric(1)}]\cr
 #'   Mark given threshold with vertical line?
 #'   Default is \code{NA} which means not to do it.
-#' @param interactive [\code{logical(1)}]\cr
-#'   Whether to make the plot interactive with Shiny.
-#'   If \code{TRUE} then a sidebar menu is created that lets the user
-#'   select which learner to display.
+#' @param color [\code{character(1)}]\cr
+#'   Selects \dQuote{measure} or \dQuote{learner} to be used for coloring the lines and points in the plot.
+#'   A vector cannot be mapped to the color aesthetic and used for interaction.
+#'   The vector mapped to \code{color} must have more than one unique value, otherwise it will
+#'   be ignored. The default is \dQuote{learner}.
+#' @param interaction [\code{character(1)}]\cr
+#'   Selects \dQuote{measure} or \dQuote{learner} to be used in a Shiny application
+#'   making the \code{interaction} variable selectable via a drop-down menu.
+#'   A vector cannot be mapped to \code{color} and used for interaction.
 #'   Note that if there are multiple learners and multiple measures interactivity is
 #'   necessary as ggvis does not currently support facetting or subplots.
-#'   If \code{interactive} is \code{TRUE} but there are not multiple measures or learners then
-#'   the plot will be static.
-#'   Note that \code{mark.th} is not supported when \code{interactive = TRUE}.
-#'   Default is \code{FALSE}.
+#'   The vector mapped to \code{interaction} must have more than one unique value, otherwise it will
+#'   be ignored. The default is \dQuote{measure}.
 #' @template ret_ggv
 #' @export
 #' @examples \dontrun{
@@ -126,23 +152,34 @@ plotThreshVsPerf = function(obj, mark.th = NA_real_) {
 #' pvs = generateThreshVsPerfData(pred, list(tpr, fpr))
 #' plotThreshVsPerfGGVIS(pvs)
 #' }
-plotThreshVsPerfGGVIS = function(obj, mark.th = NA_real_, interactive = FALSE) {
+plotThreshVsPerfGGVIS = function(obj, color = "learner", interaction = "measure",
+                                 mark.th = NA_real_) {
   assertClass(obj, classes = "ThreshVsPerfData")
+  assertChoice(color, c("measure", "learner"))
+  assertChoice(interaction, c("measure", "learner"))
+
   data = reshape2::melt(obj$data, measure.vars = obj$measures,
                         variable.name = "measure", value.name = "perf",
                         id.vars = c("learner", "threshold"))
+  nmeas = length(unique(data$measure))
+  nlearn = length(unique(data$learner))
 
-  create_plot = function(data, measures) {
-    if (length(obj$measures) > 1L) {
+  if ((color == "learner" & nlearn == 1L) | (color == "measure" & nmeas == 1L))
+    color = NULL
+  if ((interaction == "learner" & nlearn == 1L) | (interaction == "measure" & nmeas == 1L))
+    interaction = NULL
+
+  create_plot = function(data, color, measures) {
+    if (!is.null(color)) {
       plt = ggvis::ggvis(data, ggvis::prop("x", as.name("threshold")),
                          ggvis::prop("y", as.name("perf")),
-                         ggvis::prop("stroke", as.name("measure")))
+                         ggvis::prop("stroke", as.name(color)))
     } else {
       plt = ggvis::ggvis(data, ggvis::prop("x", as.name("threshold")),
                          ggvis::prop("y", as.name("perf")))
     }
     plt = ggvis::layer_lines(plt)
-    if (!is.na(mark.th) & !interactive) { ## cannot do vline with reactive data
+    if (!is.na(mark.th) & is.null(interaction)) { ## cannot do vline with reactive data
       vline_data = data.frame(x2 = rep(mark.th, 2), y2 = c(min(data$perf), max(data$perf)),
                               measure = obj$measures[1])
       plt = ggvis::layer_paths(plt, ggvis::prop("x", as.name("x2")),
@@ -156,15 +193,15 @@ plotThreshVsPerfGGVIS = function(obj, mark.th = NA_real_, interactive = FALSE) {
       plt = ggvis::add_axis(plt, "y", title = measures[1])
     plt
   }
-  
-  if (interactive & length(unique(data$learner)) > 1L) {
+
+  if (!is.null(interaction)) {
     ui = shiny::shinyUI(
         shiny::pageWithSidebar(
-            shiny::headerPanel(""),
+            shiny::headerPanel("Threshold vs. Performance"),
             shiny::sidebarPanel(
-                shiny::selectInput("learner_select",
-                                   "choose a learner",
-                                   levels(data[["learner"]]))
+                shiny::selectInput("interaction_select",
+                                   paste("choose a", interaction),
+                                   levels(data[[interaction]]))
             ),
             shiny::mainPanel(
                 shiny::uiOutput("ggvis_ui"),
@@ -172,12 +209,12 @@ plotThreshVsPerfGGVIS = function(obj, mark.th = NA_real_, interactive = FALSE) {
             )
         ))
     server = shiny::shinyServer(function(input, output) {
-      data_sub = shiny::reactive(data[which(data[["learner"]] == input$learner_select), ])
-      plt = create_plot(data_sub, obj$measures)
+      data_sub = shiny::reactive(data[which(data[[interaction]] == input$interaction_select), ])
+      plt = create_plot(data_sub, color, obj$measures)
       ggvis::bind_shiny(plt, "ggvis", "ggvis_ui")
     })
     shiny::shinyApp(ui, server)
   } else {
-    create_plot(data, obj$measures)
+    create_plot(data, color, obj$measures)
   }
 }
