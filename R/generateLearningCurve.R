@@ -110,22 +110,19 @@ print.LearningCurveData = function(x, ...) {
 #'
 #' @param obj [\code{LearningCurveData}]\cr
 #'   Result of \code{\link{generateLearningCurveData}}, with class \code{LearningCurveData}.
-#' @param color [\code{character(1)}]\cr
-#'   Selects \dQuote{measure} or \dQuote{learner} to be used for coloring the lines and points in the plot.
-#'   A vector cannot be mapped to the color aesthetic and used for facetting.
-#'   The vector mapped to \code{color} must have more than one unique value, otherwise it will
-#'   be ignored. The default is \dQuote{learner}.
 #' @param facet [\code{character(1)}]\cr
 #'   Selects \dQuote{measure} or \dQuote{learner} to be the facetting variable.
-#'   A vector cannot be mapped to \code{color} and used for facetting.
-#'   The vector mapped to \code{facet} must have more than one unique value, otherwise it will
-#'   be ignored. The default is \dQuote{measure}.
+#'   The variable mapped to \code{facet} must have more than one unique value, otherwise it will
+#'   be ignored. The variable not chosen is mapped to color if it has more than one unique value.
+#'   The default is \dQuote{measure}.
 #' @template ret_gg2
 #' @export
-plotLearningCurve = function(obj, color = "learner", facet = "measure") {
+plotLearningCurve = function(obj, facet = "measure") {
   assertClass(obj, "LearningCurveData")
-  assertChoice(color, c("measure", "learner"))
-  assertChoice(facet, c("measure", "learner"))
+  mappings = c("measure", "learner")
+  assertChoice(facet, mappings)
+  color = mappings[mappings != facet]
+
   data = reshape2::melt(obj$data,
                         id.vars = c("learner", "perc"),
                         variable.name = "measure", value.name = "perf")
@@ -157,25 +154,21 @@ plotLearningCurve = function(obj, color = "learner", facet = "measure") {
 #'
 #' @param obj [\code{LearningCurveData}]\cr
 #'   Result of \code{\link{generateLearningCurveData}}.
-#' @param color [\code{character(1)}]\cr
-#'   Selects \dQuote{measure} or \dQuote{learner} to be used for coloring the lines and points in the plot.
-#'   A vector cannot be mapped to the color aesthetic and used for interaction.
-#'   The vector mapped to \code{color} must have more than one unique value, otherwise it will
-#'   be ignored. The default is \dQuote{learner}.
 #' @param interaction [\code{character(1)}]\cr
 #'   Selects \dQuote{measure} or \dQuote{learner} to be used in a Shiny application
 #'   making the \code{interaction} variable selectable via a drop-down menu.
-#'   A vector cannot be mapped to \code{color} and used for interaction.
+#'   This variable must have more than one unique value, otherwise it will be ignored.
+#'   The variable not chosen is mapped to color if it has more than one unique value.
 #'   Note that if there are multiple learners and multiple measures interactivity is
 #'   necessary as ggvis does not currently support facetting or subplots.
-#'   The vector mapped to \code{interaction} must have more than one unique value, otherwise it will
-#'   be ignored. The default is \dQuote{measure}.
+#'   The default is \dQuote{measure}.
 #' @template ret_ggv
 #' @export
-plotLearningCurveGGVIS = function(obj, color = "learner", interaction = "measure") {
+plotLearningCurveGGVIS = function(obj, interaction = "measure") {
   assertClass(obj, "LearningCurveData")
-  assertChoice(color, c("measure", "learner"))
-  assertChoice(interaction, c("measure", "learner"))
+  mappings = c("measure", "learner")
+  assertChoice(interaction, mappings)
+  color = mappings[mappings != interaction]
 
   data = reshape2::melt(obj$data, id.vars = c("learner", "perc"), variable.name = "measure", value.name = "perf")
   nmeas = length(unique(data$measure))

@@ -73,16 +73,11 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, task.id
 #'
 #' @param obj [\code{ThreshVsPerfData}]\cr
 #'   Result of \code{\link{generateThreshVsPerfData}}.
-#' @param color [\code{character(1)}]\cr
-#'   Selects \dQuote{measure} or \dQuote{learner} to be used for coloring the lines and points in the plot.
-#'   A vector cannot be mapped to the color aesthetic and used for facetting.
-#'   The vector mapped to \code{color} must have more than one unique value, otherwise it will
-#'   be ignored. The default is \dQuote{learner}.
 #' @param facet [\code{character(1)}]\cr
 #'   Selects \dQuote{measure} or \dQuote{learner} to be the facetting variable.
-#'   A vector cannot be mapped to \code{color} and used for facetting.
-#'   The vector mapped to \code{facet} must have more than one unique value, otherwise it will
-#'   be ignored. The default is \dQuote{measure}.
+#'   The variable mapped to \code{facet} must have more than one unique value, otherwise it will
+#'   be ignored. The variable not chosen is mapped to color if it has more than one unique value.
+#'   The default is \dQuote{measure}.
 #' @param mark.th [\code{numeric(1)}]\cr
 #'   Mark given threshold with vertical line?
 #'   Default is \code{NA} which means not to do it.
@@ -94,10 +89,12 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, task.id
 #' pred = predict(mod, sonar.task)
 #' pvs = generateThreshVsPerfData(pred, list(tpr, fpr))
 #' plotThreshVsPerf(pvs)
-plotThreshVsPerf = function(obj, color = "learner", facet = "measure", mark.th = NA_real_) {
+plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_) {
   assertClass(obj, classes = "ThreshVsPerfData")
-  assertChoice(color, c("measure", "learner"))
-  assertChoice(facet, c("measure", "learner"))
+  mappings = c("measure", "learner")
+  assertChoice(facet, mappings)
+  color = mappings[mappings != facet]
+
   data = reshape2::melt(obj$data, measure.vars = obj$measures,
               variable.name = "measure", value.name = "perf",
               id.vars = c("learner", "threshold"))
@@ -130,19 +127,14 @@ plotThreshVsPerf = function(obj, color = "learner", facet = "measure", mark.th =
 #' @param mark.th [\code{numeric(1)}]\cr
 #'   Mark given threshold with vertical line?
 #'   Default is \code{NA} which means not to do it.
-#' @param color [\code{character(1)}]\cr
-#'   Selects \dQuote{measure} or \dQuote{learner} to be used for coloring the lines and points in the plot.
-#'   A vector cannot be mapped to the color aesthetic and used for interaction.
-#'   The vector mapped to \code{color} must have more than one unique value, otherwise it will
-#'   be ignored. The default is \dQuote{learner}.
 #' @param interaction [\code{character(1)}]\cr
 #'   Selects \dQuote{measure} or \dQuote{learner} to be used in a Shiny application
 #'   making the \code{interaction} variable selectable via a drop-down menu.
-#'   A vector cannot be mapped to \code{color} and used for interaction.
+#'   This variable must have more than one unique value, otherwise it will be ignored.
+#'   The variable not chosen is mapped to color if it has more than one unique value.
 #'   Note that if there are multiple learners and multiple measures interactivity is
 #'   necessary as ggvis does not currently support facetting or subplots.
-#'   The vector mapped to \code{interaction} must have more than one unique value, otherwise it will
-#'   be ignored. The default is \dQuote{measure}.
+#'   The default is \dQuote{measure}.
 #' @template ret_ggv
 #' @export
 #' @examples \dontrun{
@@ -152,11 +144,12 @@ plotThreshVsPerf = function(obj, color = "learner", facet = "measure", mark.th =
 #' pvs = generateThreshVsPerfData(pred, list(tpr, fpr))
 #' plotThreshVsPerfGGVIS(pvs)
 #' }
-plotThreshVsPerfGGVIS = function(obj, color = "learner", interaction = "measure",
+plotThreshVsPerfGGVIS = function(obj, interaction = "measure",
                                  mark.th = NA_real_) {
   assertClass(obj, classes = "ThreshVsPerfData")
-  assertChoice(color, c("measure", "learner"))
-  assertChoice(interaction, c("measure", "learner"))
+  mappings = c("measure", "learner")
+  assertChoice(interaction, mappings)
+  color = mappings[mappings != interaction]
 
   data = reshape2::melt(obj$data, measure.vars = obj$measures,
                         variable.name = "measure", value.name = "perf",
