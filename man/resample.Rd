@@ -16,25 +16,32 @@ resample(learner, task, resampling, measures, weights = NULL,
   show.info = getMlrOption("show.info"))
 
 crossval(learner, task, iters = 10L, stratify = FALSE, measures,
-  models = FALSE, ..., show.info = getMlrOption("show.info"))
+  models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
 
 repcv(learner, task, folds = 10L, reps = 10L, stratify = FALSE, measures,
-  models = FALSE, ..., show.info = getMlrOption("show.info"))
+  models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
 
 holdout(learner, task, split = 2/3, stratify = FALSE, measures,
-  models = FALSE, ..., show.info = getMlrOption("show.info"))
+  models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
 
 subsample(learner, task, iters = 30, split = 2/3, stratify = FALSE,
-  measures, models = FALSE, ..., show.info = getMlrOption("show.info"))
+  measures, models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
 
 bootstrapOOB(learner, task, iters = 30, stratify = FALSE, measures,
-  models = FALSE, ..., show.info = getMlrOption("show.info"))
+  models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
 
 bootstrapB632(learner, task, iters = 30, stratify = FALSE, measures,
-  models = FALSE, ..., show.info = getMlrOption("show.info"))
+  models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
 
 bootstrapB632plus(learner, task, iters = 30, stratify = FALSE, measures,
-  models = FALSE, ..., show.info = getMlrOption("show.info"))
+  models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -125,6 +132,7 @@ Other resample: \code{\link{ResampleDesc}},
   \code{\link{ResampleInstance}},
   \code{\link{makeResampleInstance}};
   \code{\link{ResamplePrediction}};
-  \code{\link{ResampleResult}}
+  \code{\link{ResampleResult}};
+  \code{\link{getRRPredictions}}
 }
 
