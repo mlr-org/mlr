@@ -74,12 +74,9 @@ getTaskSize = function(task) {
   getTaskDescription(task)$size
 }
 
-#' @param features [\code{character}]\cr
-#'   Features that should be listed on the right hand side of the formula.
-#'   Default is \code{"."}.
 #' @export
 #' @rdname getTaskFormula
-getTaskFormulaAsString = function(x, target = getTaskTargetNames(x), features = ".") {
+getTaskFormulaAsString = function(x, target = getTaskTargetNames(x), explicit.features = FALSE) {
   td = getTaskDescription(x)
   type = td$type
   if (type == "surv") {
@@ -89,6 +86,13 @@ getTaskFormulaAsString = function(x, target = getTaskTargetNames(x), features = 
     stop("There is no formula available for cost-sensitive learning.")
   } else if (type == "cluster") {
     stop("There is no formula available for clustering.")
+  }
+  if (explicit.features) {
+    if (!inherits(x, "Task"))
+      stopf("'explicit.features' can only be used when 'x' is of type 'Task'!")
+    features = getTaskFeatureNames(x)
+  } else {
+    features = "."
   }
   paste(target, "~", paste(features, collapse = " + "))
 }
@@ -113,11 +117,7 @@ getTaskFormulaAsString = function(x, target = getTaskTargetNames(x), features = 
 #' @family task
 #' @export
 getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE, env = NULL) {
-  if (explicit.features)
-    as.formula(getTaskFormulaAsString(x, target = target, 
-      features = getTaskFeatureNames(x)), env = env)
-  else
-    as.formula(getTaskFormulaAsString(x, target = target, features = "."), env = env)
+  as.formula(getTaskFormulaAsString(x, target = target, explicit.features = explicit.features))
 }
 
 #' Get target column of task.

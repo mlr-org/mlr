@@ -43,8 +43,8 @@ Instantiate objects (or return strings)?
 Default is \code{FALSE}.}
 }
 \value{
-[\code{character} | \code{list} of \code{\link{Learner}}]. Class names of matching
-  learners or instantiated objects.
+[\code{character} | \code{list} of \code{\link{Learner}}].
+  Named by ids of listed learners.
 }
 \description{
 Returns the class names of learning algorithms which have specific characteristics, e.g.

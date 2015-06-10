@@ -65,8 +65,11 @@ print(r$extract)
 \seealso{
 Other filter: \code{\link{FilterValues}};
   \code{\link{filterFeatures}};
+  \code{\link{generateFilterValuesData}};
   \code{\link{getFilterValues}};
-  \code{\link{getFilteredFeatures}}
+  \code{\link{getFilteredFeatures}};
+  \code{\link{plotFilterValuesGGVIS}};
+  \code{\link{plotFilterValues}}
 
 Other wrapper: \code{\link{CostSensClassifModel}},
   \code{\link{CostSensClassifWrapper}},

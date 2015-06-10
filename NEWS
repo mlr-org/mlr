@@ -1,22 +1,38 @@
 mlr_2.4:
+- getTaskFormula / getTaskFormulaAsString have new argument 'explicit.features'
+- getTaskData now has recodeY = "drop.levels" which drops empty factor levels
+- option fix.factors in makeLearner was renamed to fix.factors.prediction for clarity
+- showHyperPars was removed. getParamSet does exactly the same thing
 - we had to slightly change how the mem usage is reported in tuning and feature selection.
   See TuneControl and FeatSelControl where it is documented what is done now.
-- showHyperPars was removed. getParamSet does exactly the same thing
-- option fix.factors in makeLearner was renamed to fix.factors.prediction for clarity
-- getTaskData now has recodeY = "drop.levels" which drops empty factor levels
-- classif.ada: added "loss" hyperpar
-- new measures
-- brier
-- add missings properties to all ctree and cforest methods:
-  regr/classif for ctree, regr/classif/surv for cforest, and regr/classif for blackboost
-- learner xgboost was removed
-- reg.km: added param 'iso'
-- classif.mda: added param 'start.method' and changed its default to 'lvq', added params 'sub.df', 'tot.df' and 'criterion'.
-- tuneDesign: Tune a learner with a given Design, so that you can tune it with ParamHelpers::generateDesign
 - tuneIrace: allows to set the precision / digits within irace (using the argument 'digits'
   in makeTuneControlIrace); default is maximum precision
-- generateLearningCurve and plotLearningCurve helps to plot the learning curve demonstrating how the performance increases with more observations.
+- for plotting in general we try to introduce a "data layer", so the data can be generated independently
+  of the plotting first, into well-defined objects; these can then be plotted with mlr or custom code;
+  the naming scheme is always generate<Foo>Data and plot<Foo>
+- getFilterValues is deprecated in favor of generateFilterValuesData
+- plotFilterValues can now plot multiple filter methods using facetting
+- plotROCRCurves has been rewritten to use ggplot2
+- classif.ada: added "loss" hyperpar
+- add missings properties to all ctree and cforest methods:
+  regr/classif for ctree, regr/classif/surv for cforest, and regr/classif for blackboost
+- learner xgboost was removed, because the package is not on CRAN anymore, unfortunately
+- reg.km: added param 'iso'
+- classif.mda: added param 'start.method' and changed its default to 'lvq', added params 'sub.df', 'tot.df'
+  and 'criterion'.
+- plotThreshVsPerf and plotLearningCurve now have param 'facet'
 - resample and benchmark got the argument keep.preds, allowing you now to discard the prediction objects
+
+- new functions
+-- getTaskSize
+-- getNestedTuneResultsX, getNestedTuneResultsOptPathDf
+-- tuneDesign
+-- generateROCRCurvesData, generateFilterValuesData, generateLearningCurveData, plotLearningCurve,
+   generateThreshVsPerfData, plotThreshVsPerf
+-- generateThreshVsPerfData accepts Prediction, ResampleResult, lists of ResampleResult,
+   and BenchmarkResult objects.
+-- experimental ggvis functions: plotROCRCurvesGGVIS, plotLearningCurveGGVIS,
+   plotTuneMultiCritResultGGVIS, plotThreshVsPerfGGVIS, and plotFilterValuesGGVIS
 
 - new learners:
 -- classif.bst
@@ -25,11 +41,13 @@ mlr_2.4:
 -- classif.pamr
 -- classif.rFerns
 -- classif.sparseLDA
--- classif.wsrf
 -- regr.bst
 -- regr.frbs
 -- regr.nodeHarvest
 -- regr.slim
+
+- new measures:
+-- brier
 
 mlr_2.3:
 - resample now returns an object of class ResampleResult (downward compatible)
@@ -65,13 +83,12 @@ mlr_2.3:
   surv.optimCoxBoostPenalty, surv.glmboost, surv.CoxBoost
 
 - new functions
--- getTaskType, getTaskId, getTaskTargetNames, getTaskSize
+-- getTaskType, getTaskId, getTaskTargetNames
 -- plotROCRCurves
 -- plotViperCharts
 -- measureSSE, measureMSE, measureRMSE, measureMEDSE, ...
 -- PreprocWrapperCaret
 -- setPredictThreshold
--- getNestedTuneResultsX, getNestedTuneResultsOptPathDf
 
 - new learners:
 -- classif.bdk
@@ -176,7 +193,7 @@ mlr_2.1:
 - mlr now supports multi-criteria tuning
 - mlr now supports cluster analysis (experimental)
 - improve makeWeightedClassesWrapper: Hyperparams for class weighting are now supported, too.
-- removed fix.factors.prediction option from randomForest, but added it in general to makeLearner,
+- removed fix.factors option from randomForest, but added it in general to makeLearner,
   so it now works for all learners.
   Helps when feature factor levels where dropped in newdata prediction data.frames
 - more consistent results for tuning algorithms and parameters with "trafos" :

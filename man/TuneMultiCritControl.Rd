@@ -80,7 +80,8 @@ The following tuners are available:
 }
 }
 \seealso{
-Other tune_multicrit: \code{\link{plotTuneMultiCritResult}};
+Other tune_multicrit: \code{\link{plotTuneMultiCritResultGGVIS}};
+  \code{\link{plotTuneMultiCritResult}};
   \code{\link{tuneParamsMultiCrit}}
 }
 

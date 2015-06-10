@@ -17,7 +17,7 @@ logFunDefault = function(learner, task, resampling, measures, par.set, control, 
     # not allowed on CRAN
     mem = colSums(gc()[, c(2L, 6L)])
     end.time = Sys.time()
-    diff.time = difftime(time1 = end.time, time2 = prev.stage$start.time, units="mins")
+    diff.time = difftime(time1 = end.time, time2 = prev.stage$start.time, units = "mins")
     messagef("[%s] %i: %s; time: %.1f min; memory: %.0fMb use, %.0fMb max",
       prefixes[stage], dob, perfsToString(y), diff.time[[1]], mem[1L], mem[2L])
     return(NULL)

@@ -36,7 +36,9 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setPredictType}}
 
 Other predict: \code{\link{asROCRPrediction}};
+  \code{\link{generateROCRCurvesData}};
   \code{\link{getProbabilities}};
+  \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}};
   \code{\link{plotViperCharts}};
   \code{\link{predict.WrappedModel}};

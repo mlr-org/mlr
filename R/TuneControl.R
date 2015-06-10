@@ -8,6 +8,8 @@
 #'     or discretize them yourself by always using \code{\link[ParamHelpers]{makeDiscreteParam}}
 #'     in the \code{par.set} passed to \code{\link{tuneParams}}.}
 #'   \item{makeTuneControlRandom}{Random search. All kinds of parameter types can be handled.}
+#'   \item{makeTuneControlDesign}{Completely pre-specifiy a data.frame of design points to be evaluated
+#'     during tuning. All kinds of parameter types can be handled.}
 #'   \item{makeTuneControlCMAES}{CMA Evolution Strategy with method \code{\link[cmaes]{cma_es}}.
 #'     Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
 #'     For integers the internally proposed numeric values are automatically rounded.
