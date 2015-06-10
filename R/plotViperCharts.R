@@ -66,7 +66,7 @@ plotViperCharts.list = function(obj, chart = "rocc", browse = TRUE, auth.key = N
   inp = mapply(function(p, s) {
     if (inherits(p, "ResampleResult")) {
       s = p$learner.id
-      p = p$pred
+      p = getRRPredictions(p)
     }
     checkPrediction(p, task.type = "classif", binary = TRUE, predict.type = "prob", check.truth = TRUE)
     a = p$data$truth

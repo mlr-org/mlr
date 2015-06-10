@@ -19,7 +19,7 @@ generateThreshVsPerfData.Prediction = function(obj, measures, gridsize = 100L, t
   generateThreshVsPerfData.list(namedList("prediction", obj), measures, gridsize, task.id)
 #' @export
 generateThreshVsPerfData.ResampleResult = function(obj, measures, gridsize = 100L, task.id = NULL) {
-  obj = obj$pred
+  obj = getRRPredictions(obj)
   assertClass(obj, "Prediction")
   assert(obj$predict.type == "prob")
   generateThreshVsPerfData.Prediction(obj, measures, gridsize)

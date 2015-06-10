@@ -76,9 +76,9 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
 # FIXME: at least have an option to only take rsponse?
 getBMRPredictions = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE) {
   f = if (as.df)
-    function(x) as.data.frame(x$pred)
+    function(x) as.data.frame(getRRPredictions(x))
   else
-    function(x) x$pred
+    function(x) getRRPredictions(x)
   getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = as.df)
 }
 
