@@ -110,17 +110,41 @@ print.LearningCurveData = function(x, ...) {
 #'
 #' @param obj [\code{LearningCurveData}]\cr
 #'   Result of \code{\link{generateLearningCurveData}}, with class \code{LearningCurveData}.
+#' @param color [\code{character(1)}]\cr
+#'   Selects \dQuote{measure} or \dQuote{learner} to be used for coloring the lines and points in the plot.
+#'   A vector cannot be mapped to the color aesthetic and used for facetting.
+#'   The vector mapped to \code{color} must have more than one unique value, otherwise it will
+#'   be ignored. The default is \dQuote{learner}.
+#' @param facet [\code{character(1)}]\cr
+#'   Selects \dQuote{measure} or \dQuote{learner} to be the facetting variable.
+#'   A vector cannot be mapped to \code{color} and used for facetting.
+#'   The vector mapped to \code{facet} must have more than one unique value, otherwise it will
+#'   be ignored. The default is \dQuote{measure}.
 #' @template ret_gg2
 #' @export
-plotLearningCurve = function(obj) {
+plotLearningCurve = function(obj, color = "learner", facet = "measure") {
   assertClass(obj, "LearningCurveData")
+  assertChoice(color, c("measure", "learner"))
+  assertChoice(facet, c("measure", "learner"))
   data = reshape2::melt(obj$data,
                         id.vars = c("learner", "perc"),
                         variable.name = "measure", value.name = "perf")
-  plt = ggplot2::ggplot(data, ggplot2::aes_string(x = "perc", y = "perf", colour = "measure"))
+  nlearn = length(unique(data$learner))
+  nmeas = length(unique(data$measure))
+
+  if ((color == "learner" & nlearn == 1L) | (color == "measure" & nmeas == 1L))
+    color = NULL
+  if ((facet == "learner" & nlearn == 1L) | (facet == "measure" & nmeas == 1L))
+    facet = NULL
+
+  if (!is.null(color))
+    plt = ggplot2::ggplot(data, ggplot2::aes_string(x = "perc", y = "perf", colour = color))
+  else
+    plt = ggplot2::ggplot(data, ggplot2::aes_string(x = "perc", y = "perf"))
   plt = plt + ggplot2::geom_point()
   plt = plt + ggplot2::geom_line()
-  plt = plt + ggplot2::facet_wrap(~ learner, scales = "free_y")
+  if (!is.null(facet))
+    plt = plt + ggplot2::facet_wrap(as.formula(paste("~", facet)), scales = "free_y")
   return(plt)
 }
 #' @title Plot learning curve data using ggvis.
@@ -133,29 +157,41 @@ plotLearningCurve = function(obj) {
 #'
 #' @param obj [\code{LearningCurveData}]\cr
 #'   Result of \code{\link{generateLearningCurveData}}.
-#' @param interactive [\code{logical(1)}]\cr
-#'   Whether to make the plot interactive with Shiny.
-#'   If \code{TRUE} then a sidebar menu is created that lets the user
-#'   select which learner to display.
+#' @param color [\code{character(1)}]\cr
+#'   Selects \dQuote{measure} or \dQuote{learner} to be used for coloring the lines and points in the plot.
+#'   A vector cannot be mapped to the color aesthetic and used for interaction.
+#'   The vector mapped to \code{color} must have more than one unique value, otherwise it will
+#'   be ignored. The default is \dQuote{learner}.
+#' @param interaction [\code{character(1)}]\cr
+#'   Selects \dQuote{measure} or \dQuote{learner} to be used in a Shiny application
+#'   making the \code{interaction} variable selectable via a drop-down menu.
+#'   A vector cannot be mapped to \code{color} and used for interaction.
 #'   Note that if there are multiple learners and multiple measures interactivity is
 #'   necessary as ggvis does not currently support facetting or subplots.
-#'   If \code{interactive} is \code{TRUE} but there are not multiple measures or learners then
-#'   the plot will be static.
-#'   Default is false.
+#'   The vector mapped to \code{interaction} must have more than one unique value, otherwise it will
+#'   be ignored. The default is \dQuote{measure}.
 #' @template ret_ggv
 #' @export
-plotLearningCurveGGVIS = function(obj, interactive = FALSE) {
+plotLearningCurveGGVIS = function(obj, color = "learner", interaction = "measure") {
   assertClass(obj, "LearningCurveData")
+  assertChoice(color, c("measure", "learner"))
+  assertChoice(interaction, c("measure", "learner"))
+
   data = reshape2::melt(obj$data, id.vars = c("learner", "perc"), variable.name = "measure", value.name = "perf")
   nmeas = length(unique(data$measure))
   nlearn = length(unique(data$learner))
 
-  create_plot = function(data, color = TRUE) {
-    if (color) {
+  if ((color == "learner" & nlearn == 1L) | (color == "measure" & nmeas == 1L))
+    color = NULL
+  if ((interaction == "learner" & nlearn == 1L) | (interaction == "measure" & nmeas == 1L))
+    interaction = NULL
+
+  create_plot = function(data, color) {
+    if (!is.null(color)) {
       plt = ggvis::ggvis(data, ggvis::prop("x", as.name("perc")),
                          ggvis::prop("y", as.name("perf")),
-                         ggvis::prop("stroke", as.name("measure")))
-      plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name("measure")))
+                         ggvis::prop("stroke", as.name(color)))
+      plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name(color)))
     } else {
       plt = ggvis::ggvis(data, ggvis::prop("x", as.name("perc")),
                          ggvis::prop("y", as.name("perf")))
@@ -164,14 +200,14 @@ plotLearningCurveGGVIS = function(obj, interactive = FALSE) {
     ggvis::layer_lines(plt)
   }
 
-  if (interactive & nlearn > 1L) {
+  if (!is.null(interaction)) {
     ui = shiny::shinyUI(
         shiny::pageWithSidebar(
             shiny::headerPanel("learning curve"),
             shiny::sidebarPanel(
-                shiny::selectInput("learner_select",
-                                   "choose a learner",
-                                   levels(data[["learner"]]))
+                shiny::selectInput("interaction_select",
+                                   paste("choose a", interaction),
+                                   levels(data[[interaction]]))
             ),
             shiny::mainPanel(
                 shiny::uiOutput("ggvis_ui"),
@@ -179,14 +215,12 @@ plotLearningCurveGGVIS = function(obj, interactive = FALSE) {
             )
         ))
     server = shiny::shinyServer(function(input, output) {
-      data_sub = shiny::reactive(data[which(data[["learner"]] == input$learner_select), ])
-      plt = create_plot(data_sub, nmeas > 1L)
+      data_sub = shiny::reactive(data[which(data[[interaction]] == input$interaction_select), ])
+      plt = create_plot(data_sub, color)
       ggvis::bind_shiny(plt, "ggvis", "ggvis_ui")
     })
     shiny::shinyApp(ui, server)
-  } else if (nlearn == 1L) {
-    create_plot(data, nmeas > 1)
   } else {
-    stop("interactive must be TRUE if the number of learners and the number of measures are greater than 1.")
+    create_plot(data, color)
   }
 }

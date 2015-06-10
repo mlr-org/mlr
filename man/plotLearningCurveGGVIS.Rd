@@ -4,21 +4,26 @@
 \alias{plotLearningCurveGGVIS}
 \title{Plot learning curve data using ggvis.}
 \usage{
-plotLearningCurveGGVIS(obj, interactive = FALSE)
+plotLearningCurveGGVIS(obj, color = "learner", interaction = "measure")
 }
 \arguments{
 \item{obj}{[\code{LearningCurveData}]\cr
 Result of \code{\link{generateLearningCurveData}}.}
 
-\item{interactive}{[\code{logical(1)}]\cr
-Whether to make the plot interactive with Shiny.
-If \code{TRUE} then a sidebar menu is created that lets the user
-select which learner to display.
+\item{color}{[\code{character(1)}]\cr
+Selects \dQuote{measure} or \dQuote{learner} to be used for coloring the lines and points in the plot.
+A vector cannot be mapped to the color aesthetic and used for interaction.
+The vector mapped to \code{color} must have more than one unique value, otherwise it will
+be ignored. The default is \dQuote{learner}.}
+
+\item{interaction}{[\code{character(1)}]\cr
+Selects \dQuote{measure} or \dQuote{learner} to be used in a Shiny application
+making the \code{interaction} variable selectable via a drop-down menu.
+A vector cannot be mapped to \code{color} and used for interaction.
 Note that if there are multiple learners and multiple measures interactivity is
 necessary as ggvis does not currently support facetting or subplots.
-If \code{interactive} is \code{TRUE} but there are not multiple measures or learners then
-the plot will be static.
-Default is false.}
+The vector mapped to \code{interaction} must have more than one unique value, otherwise it will
+be ignored. The default is \dQuote{measure}.}
 }
 \value{
 a ggvis plot object.
