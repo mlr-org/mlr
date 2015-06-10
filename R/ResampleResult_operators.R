@@ -1,5 +1,6 @@
 #' @title Get predictions from resample results.
 #'
+#' @description
 #' Very simple getter.
 #'
 #' @param res [\code{ResampleResult}]\cr
