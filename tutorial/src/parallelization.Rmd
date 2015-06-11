@@ -19,6 +19,9 @@ parallelStop()
 
 On Linux or Mac OS X, you may want to use
 [parallelStartMulticore](&parallelMap::parallelStart) instead.
+
+## Parallelization levels
+
 We offer different parallelization levels for fine grained control over the parallelization.
 E.g., if you do not want to parallelize the [&benchmark] function because it has only very few iterations but want to parallelize the [resampling](&resample) of each learner instead,
 you can specifically pass the ``level`` `"mlr.resample"` to the [parallelStart*](&parallelMap::parallelStart) function.
@@ -40,6 +43,22 @@ Here is a brief explanation of what these levels do:
   underlying resampling.
 * **mlr.selectFeatures**: Each evaluation in feature space "resample with this feature subset" is a parallel job.
   The same comments as for "mlr.tuneParams" apply here.
+
+
+## Custom learners and parallelization
+
+If you have implemented a custom learner yourself, locally, you currently need to export this to the slave.
+So if you see an error after calling, e.g., a parallelized version of [resample] like this:
+```
+no applicable method for 'trainLearner' applied to an object of class <my_new_learner>
+```
+simply add the following line somewhere after calling [parallelStart](&parallelMap::parallelStart).
+```
+parallelExport("trainLearner.<my_new_learner>", "predictLearner.<my_new_learner>")
+```
+
+
+## The end
 
 For further details, consult the
 [parallelMap tutorial](https://github.com/berndbischl/parallelMap#parallelmap) and help.
