@@ -41,6 +41,9 @@
 #' \item{extract [\code{list}]:}{
 #'   List of extracted parts from fitted models or \code{NULL}.
 #' }
+#' \item{runtime [\code{numeric(1)}]:}{
+#'   Time in seconds it took to execute the resampling.
+#' }
 #' }
 #' The print method of this object gives a short overview, including
 #' task and learner ids, aggregated measures as well as mean and standard
@@ -59,5 +62,6 @@ print.ResampleResult = function(x, ...) {
     catf("%s.mean: %.2f", name, mean(x, na.rm = TRUE))
     catf("%s.sd: %.2f", name, sd(x, na.rm = TRUE))
   }, name = colnames(m), x = m, aggr = x$aggr)
+  catf("Runtime: %g", x$runtime)
   invisible(NULL)
 }
