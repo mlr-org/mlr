@@ -31,6 +31,8 @@ Other tune: \code{\link{ModelMultiplexer}},
   \code{\link{makeTuneControlGrid}},
   \code{\link{makeTuneControlIrace}},
   \code{\link{makeTuneControlRandom}};
+  \code{\link{getNestedTuneResultsOptPathDf}};
+  \code{\link{getNestedTuneResultsX}};
   \code{\link{makeModelMultiplexerParamSet}};
   \code{\link{makeTuneWrapper}}; \code{\link{tuneParams}};
   \code{\link{tuneThreshold}}

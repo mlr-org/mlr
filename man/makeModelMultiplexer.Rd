@@ -87,6 +87,8 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{makeTuneControlGrid}},
   \code{\link{makeTuneControlIrace}},
   \code{\link{makeTuneControlRandom}};
+  \code{\link{getNestedTuneResultsOptPathDf}};
+  \code{\link{getNestedTuneResultsX}};
   \code{\link{getTuneResult}};
   \code{\link{makeModelMultiplexerParamSet}};
   \code{\link{makeTuneWrapper}}; \code{\link{tuneParams}};
