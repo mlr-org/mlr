@@ -1,4 +1,5 @@
 mlr_2.4:
+- WrappedModel printer was slightly improved
 - getTaskFormula / getTaskFormulaAsString have new argument 'explicit.features'
 - getTaskData now has recodeY = "drop.levels" which drops empty factor levels
 - option fix.factors in makeLearner was renamed to fix.factors.prediction for clarity
