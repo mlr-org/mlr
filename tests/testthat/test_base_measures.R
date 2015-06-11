@@ -56,3 +56,12 @@ test_that("measures with same id still work", {
   expect_true(r$aggr[1L] < 0.2 && r$aggr[2L] > 0.8)
 })
 
+test_that("ber with faulty model produces NA", {
+  data = iris; data[,1] = 1
+  lrn = makeLearner("classif.lda", config = list(on.learner.error = "quiet"))
+  task = makeClassifTask(data = data, target = "Species")
+  r = holdout(lrn, task, measures = ber)
+  expect_true(is.na(r$aggr))
+})
+
+
