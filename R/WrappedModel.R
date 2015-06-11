@@ -60,6 +60,8 @@ print.WrappedModel = function(x, ...) {
     "Hyperparameters: ", getHyperParsString(x$learner), "\n",
     sep = ""
   )
+  if (isFailureModel(x))
+    catf("Training failed: %s", getFailureModelMsg(x))
 }
 
 #' Get underlying R model of learner integrated into mlr.
