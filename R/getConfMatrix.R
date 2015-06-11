@@ -25,7 +25,7 @@
 #' r = crossval("classif.lda", iris.task, iters = 2L)
 #' print(getConfMatrix(r$pred))
 getConfMatrix = function(pred, relative = FALSE) {
-  checkPrediction(pred, task.type = "classif", check.truth = TRUE)
+  checkPrediction(pred, task.type = "classif", check.truth = TRUE, no.na = TRUE)
   assertFlag(relative)
   cls = pred$task.desc$class.levels
   k = length(cls)
