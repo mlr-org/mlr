@@ -61,7 +61,7 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
   requirePackages(package, why = paste("learner", id), default.method = "load")
 
   assertString(id)
-  assertChoice(type, choices = c("classif", "regr", "surv", "cluster"))
+  assertChoice(type, choices = c("classif", "regr", "multilabel", "surv", "cluster"))
   assertSubset(properties, getSupportedLearnerProperties(type))
   assertClass(par.set, classes = "ParamSet")
   checkListElementClass(par.set$pars, "LearnerParam")
@@ -91,6 +91,13 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
 makeRLearnerClassif = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "") {
   addClasses(
     makeRLearnerInternal(cl, "classif", package, par.set, par.vals, properties, name, short.name, note),
+    c(cl, "RLearnerClassif")
+  )
+}
+
+makeRLearnerMultilabel = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "") {
+  addClasses(
+    makeRLearnerInternal(cl, "multilabel", package, par.set, par.vals, properties, name, short.name, note),
     c(cl, "RLearnerClassif")
   )
 }

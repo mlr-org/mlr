@@ -8,6 +8,7 @@ makeMultilabelWrapper = function(learner) {
   packs = learner$package
   x = makeHomogeneousEnsemble(id, learner$type, learner, packs, 
                               learner.subclass = "MultilabelWrapper", model.subclass = "MultilabelModel")
+  x$type = "multilabel"
   return(x)
 }
 

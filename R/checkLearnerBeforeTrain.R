@@ -8,12 +8,10 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
   td = task$task.desc
   
   if (td$type == "multilabel"){
-    td$type = "classif"
     class.length = max(vnapply(td$class.levels,length))
   }else{
     class.length = length(td$class.levels) 
   }
-
 
   if (td$type != learner$type) {
     stopf("Task '%s' is '%s', but learner '%s' is for '%s'!", td$id, td$type, learner$id, learner$type)
@@ -47,7 +45,7 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
     warningf("Task '%s' contains weights but these are not used by learner '%s'!", td$id, learner$id)
   }
 
-  if (td$type == "classif") {
+  if (td$type %in% c("classif", "multilabel")) {
     if (class.length == 1L) {
       if(!hasProperties(learner, "oneclass"))
         stopf("Task '%s' is a one-class-problem, but learner '%s' does not support that!", td$id, learner$id)

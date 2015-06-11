@@ -30,6 +30,7 @@ setPredictType.Learner = function(learner, predict.type) {
   # checks should be done down here i guess, because of recursive calls in wrappers
   assertChoice(predict.type, choices = switch(learner$type,
     classif = c("response", "prob"),
+    multilabel = c("response", "prob"),
     regr = c("response", "se"),
     surv = c("response", "prob"),
     costsens = "response",
