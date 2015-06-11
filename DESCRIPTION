@@ -32,7 +32,7 @@ Depends:
     ParamHelpers (>= 1.5),
     stats
 Imports:
-    checkmate (>= 1.5.1),
+    checkmate (>= 1.5.3),
     ggvis,
     parallelMap (>= 1.3),
     plyr,

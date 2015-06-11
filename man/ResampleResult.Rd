@@ -43,6 +43,9 @@ contains the following object members:
 \item{extract [\code{list}]:}{
   List of extracted parts from fitted models or \code{NULL}.
 }
+\item{runtime [\code{numeric(1)}]:}{
+  Time in seconds it took to execute the resampling.
+}
 }
 The print method of this object gives a short overview, including
 task and learner ids, aggregated measures as well as mean and standard
