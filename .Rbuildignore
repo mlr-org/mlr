@@ -1,4 +1,5 @@
 todo-files
+test*.R
 
 .gitignore
 .travis.yml
