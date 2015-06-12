@@ -8,6 +8,7 @@
 #' @param r [\code{\link{ResampleResult}}] \cr
 #'   The result of resampling of a tuning wrapper.
 #' @return [\code{data.frame}]. One column for each tuned hyperparameter and one row for each outer resampling iteration.
+#' @family tune
 #' @examples
 #' # see example of makeTuneWrapper
 #' @export
@@ -30,6 +31,7 @@ getNestedTuneResultsX = function(r) {
 #' @param r [\code{\link{ResampleResult}}] \cr
 #'   The result of resampling of a tuning wrapper.
 #' @return [\code{data.frame}]. See above.
+#' @family tune
 #' @examples
 #' # see example of makeTuneWrapper
 #' @export

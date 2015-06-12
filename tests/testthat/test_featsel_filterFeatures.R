@@ -24,7 +24,7 @@ test_that("filterFeatures", {
   expect_equal(ns, feat.imp.new$data$name)
   f = filterFeatures(binaryclass.task, method = "chi.squared", abs = 5L)
   expect_true(setequal(getTaskFeatureNames(f),
-                       head(sortByCol(feat.imp.new$data, "chi.squared", asc = FALSE), 5L)$name))
+      head(sortByCol(feat.imp.new$data, "chi.squared", asc = FALSE), 5L)$name))
   # now check that we get the same result by operating on generateFilterValuesData
   feat.imp.new = generateFilterValuesData(binaryclass.task, method = "chi.squared")
   ff = filterFeatures(binaryclass.task, fval = feat.imp.new, abs = 5L)
@@ -58,9 +58,9 @@ test_that("filterFeatures", {
 
   # extra test of univariate filter
   fv = suppressWarnings(getFilterValues(task = multiclass.task, method = "univariate", perc = 0.5,
-                                        perf.learner = makeLearner("classif.rpart"), measures = mmce))
+      perf.learner = makeLearner("classif.rpart"), measures = mmce))
   fv = generateFilterValuesData(task = multiclass.task, method = "univariate", perc = 0.5,
-                                perf.learner = makeLearner("classif.rpart"), measures = mmce)
+    perf.learner = makeLearner("classif.rpart"), measures = mmce)
 })
 
 test_that("plotFilterValues", {

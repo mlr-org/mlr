@@ -19,4 +19,13 @@ test_that("getConfMatrix works with dropped class levels in newdata", {
   expect_true(is.matrix(cm) && nrow(cm) == 4 && ncol(cm) == 4)
 })
 
+test_that("getConfMatrix produces error for FailureModel predicttions", {
+  data = iris; data[,1] = 1
+  lrn = makeLearner("classif.lda", config = list(on.learner.error = "quiet"))
+  task = makeClassifTask(data = data, target = "Species")
+  r = holdout(lrn, task, measures = ber)
+  expect_error(getConfMatrix(r$pred), "FailureModel")
+})
+
+
 

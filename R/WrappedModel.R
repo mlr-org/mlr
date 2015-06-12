@@ -54,12 +54,14 @@ makeWrappedModel.Learner = function(learner, learner.model, task.desc, subset, f
 #' @export
 print.WrappedModel = function(x, ...) {
   cat(
-    "Model for id = ", x$learner$id, " class = ", getClass1(x$learner), "\n",
-    "Trained on obs: ", length(x$subset), "\n",
-    "Used features: ", length(x$features), "\n",
+    "Model for learner.id=", x$learner$id, "; learner.class=", getClass1(x$learner), "\n",
+    sprintf("Trained on: task.id = %s; obs = %i; features = %i",
+      x$task.desc$id, length(x$subset), length(x$features)), "\n",
     "Hyperparameters: ", getHyperParsString(x$learner), "\n",
     sep = ""
   )
+  if (isFailureModel(x))
+    catf("Training failed: %s", getFailureModelMsg(x))
 }
 
 #' Get underlying R model of learner integrated into mlr.

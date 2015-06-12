@@ -11,10 +11,10 @@ getRRPredictions(res)
 The result of \code{\link{resample}} run with \code{keep.pred = TRUE}.}
 }
 \value{
-[\code{ResamplePrediction}]
+[\code{ResamplePrediction}].
 }
 \description{
-Get predictions from resample results.
+Very simple getter.
 }
 \seealso{
 Other resample: \code{\link{ResampleDesc}},

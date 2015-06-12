@@ -22,4 +22,25 @@ An additional column \code{iter} indicates to what resampling iteration the row 
 \examples{
 # see example of makeTuneWrapper
 }
+\seealso{
+Other tune: \code{\link{ModelMultiplexer}},
+  \code{\link{makeModelMultiplexer}};
+  \code{\link{TuneControl}},
+  \code{\link{TuneControlCMAES}},
+  \code{\link{TuneControlGenSA}},
+  \code{\link{TuneControlGrid}},
+  \code{\link{TuneControlIrace}},
+  \code{\link{TuneControlRandom}},
+  \code{\link{makeTuneControlCMAES}},
+  \code{\link{makeTuneControlDesign}},
+  \code{\link{makeTuneControlGenSA}},
+  \code{\link{makeTuneControlGrid}},
+  \code{\link{makeTuneControlIrace}},
+  \code{\link{makeTuneControlRandom}};
+  \code{\link{getNestedTuneResultsX}};
+  \code{\link{getTuneResult}};
+  \code{\link{makeModelMultiplexerParamSet}};
+  \code{\link{makeTuneWrapper}}; \code{\link{tuneParams}};
+  \code{\link{tuneThreshold}}
+}
 
