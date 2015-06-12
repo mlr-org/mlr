@@ -1,7 +1,6 @@
 tuneRandom = function(learner, task, resampling, measures, par.set, control, opt.path, show.info) {
 
-  if (!is.null(control$extra.args$exec.time.budget) && is.finite(control$extra.args$exec.time.budget)) {
-  	
+  if (!is.null(control$extra.args$exec.time.budget) && is.finite(control$extra.args$exec.time.budget)) { 	
   	start.time = Sys.time()
     iters = control$extra.args$maxit
     time.budget = control$extra.args$time.budget

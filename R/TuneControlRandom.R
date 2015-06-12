@@ -15,7 +15,7 @@ makeTuneControlRandom = function(same.resampling.instance = TRUE, maxit = 100L, 
   if (is.null(maxit)) {
     maxit = Inf
   } else {
-    assertCount(maxit, na.ok = FALSE, positive = TRUE)
+    asCount(maxit)
   }
 
   if (is.null(time.budget)) {

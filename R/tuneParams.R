@@ -97,27 +97,6 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     messagef("Imputation value: %g", control$impute.val)
   }
   or = sel.func(learner, task, resampling, measures, par.set, control, opt.path, show.info)
-  #Evaluate some more when the learner is a downampleWrapper
-  if (is.numeric(control$extra.args$dw.steps) && is.numeric(getHyperPars(learner)$dw.perc) && getHyperPars(learner)$dw.perc < 1) {
-    if (show.info)
-      messagef("Downsample Wrapper Detected. Learn on full training set...")
-    n = getOptPathLength(opt.path)
-    eval.steps = seq(from = 1, to = n, length.out = control$extra.args$dw.steps + 2)
-    eval.steps = tail(head(eval.steps, -1), -1) #we don't want to eval at the fist and last step
-    full.res = sapply(eval.steps, function(i) {
-      best = makeTuneResultFromOptPath(learner = learner, par.set = par.set, measures = measures, control = control, opt.path = opt.path, dob = getOptPathDOB(opt.path)[seq_len(i)])
-      if (show.info)
-        messagef("Best so far %s", paramValueToString(par.set, best$x))
-      learner.full = setHyperPars(learner, par.vals = c(best$x, list(dw.perc = 1)))
-      r = resample(learner = learner.full, task = task, resampling = resampling, measures = measures, show.info = show.info)
-      r$aggr[1]
-    })
-    full.res.complete = replicate(n, NA)
-    full.res.complete[eval.steps] = full.res
-    full.res.complete = list(full.res.complete)
-    names(full.res.complete) = paste0("full.",names(full.res)[1])
-    or$opt.path$env$full = full.res.complete #will not be in the data.frame but we will have it at least.
-  }
   if (show.info)
     messagef("[Tune] Result: %s : %s", paramValueToString(par.set, or$x), perfsToString(or$y))
   return(or)
