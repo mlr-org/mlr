@@ -90,7 +90,7 @@ parsePkgs = function(x) {
   # remove version requirement in (...)
   x = sub("\\(.*\\)", "", x)
   # trim whitespace (cannot be inside name)
-  gsub(" ", "", " a ")
+  x = gsub(" ", "", x)
   # empty string become char(0)
   x[nzchar(x)]
 }
