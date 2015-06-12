@@ -12,28 +12,36 @@
 \title{Fit models according to a resampling strategy.}
 \usage{
 resample(learner, task, resampling, measures, weights = NULL,
-  models = FALSE, extract, ..., show.info = getMlrOption("show.info"))
+  models = FALSE, extract, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
 
 crossval(learner, task, iters = 10L, stratify = FALSE, measures,
-  models = FALSE, ..., show.info = getMlrOption("show.info"))
+  models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
 
 repcv(learner, task, folds = 10L, reps = 10L, stratify = FALSE, measures,
-  models = FALSE, ..., show.info = getMlrOption("show.info"))
+  models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
 
 holdout(learner, task, split = 2/3, stratify = FALSE, measures,
-  models = FALSE, ..., show.info = getMlrOption("show.info"))
+  models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
 
 subsample(learner, task, iters = 30, split = 2/3, stratify = FALSE,
-  measures, models = FALSE, ..., show.info = getMlrOption("show.info"))
+  measures, models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
 
 bootstrapOOB(learner, task, iters = 30, stratify = FALSE, measures,
-  models = FALSE, ..., show.info = getMlrOption("show.info"))
+  models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
 
 bootstrapB632(learner, task, iters = 30, stratify = FALSE, measures,
-  models = FALSE, ..., show.info = getMlrOption("show.info"))
+  models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
 
 bootstrapB632plus(learner, task, iters = 30, stratify = FALSE, measures,
-  models = FALSE, ..., show.info = getMlrOption("show.info"))
+  models = FALSE, keep.pred = TRUE, ...,
+  show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -65,6 +73,11 @@ Function used to extract information from a fitted model during resampling.
 Is applied to every \code{\link{WrappedModel}} resulting from calls to \code{\link{train}}
 during resampling.
 Default is to extract nothing.}
+
+\item{keep.pred}{[\code{logical(1)}]\cr
+Keep the data in the \code{pred} slot of the results.
+If you do many experiments these informations might only increase the size of your result file without being essential for your analyisis so you want to set this value on \code{FALSE}.
+Default is \code{TRUE}.}
 
 \item{...}{[any]\cr
 Further hyperparameters passed to \code{learner}.}
@@ -119,6 +132,7 @@ Other resample: \code{\link{ResampleDesc}},
   \code{\link{ResampleInstance}},
   \code{\link{makeResampleInstance}};
   \code{\link{ResamplePrediction}};
-  \code{\link{ResampleResult}}
+  \code{\link{ResampleResult}};
+  \code{\link{getRRPredictions}}
 }
 

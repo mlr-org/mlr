@@ -14,7 +14,7 @@ makeRLearner.regr.nodeHarvest = function() {
       makeLogicalLearnerParam(id = "silent", default = FALSE),
       makeLogicalLearnerParam(id = "biascorr", default = FALSE)
     ),
-    properties = c("numerics", "factors", "missings"),
+    properties = c("numerics", "factors"),
     name = "Node Harvest",
     short.name = "nodeHarvest",
     note = ""

@@ -2,26 +2,36 @@
 % Please edit documentation in R/generateLearningCurve.R
 \name{plotLearningCurve}
 \alias{plotLearningCurve}
-\title{Plot learning curve data.}
+\title{Plot learning curve data using ggplot2.}
 \usage{
-plotLearningCurve(obj, linesize = 1.5, pointsize = 1.5)
+plotLearningCurve(obj, facet = "measure")
 }
 \arguments{
 \item{obj}{[\code{LearningCurveData}]\cr
-Result of \code{\link{generateLearningCurve}}.}
+Result of \code{\link{generateLearningCurveData}}, with class \code{LearningCurveData}.}
 
-\item{linesize}{[\code{numeric(1)}]\cr
-Linesize for ggplot2 \code{\link[ggplot2]{geom_line}} for graphs.
-Default is 1.5.}
-
-\item{pointsize}{[\code{numeric(1)}]\cr
-Linesize for ggplot2 \code{\link[ggplot2]{geom_point}} for graphs.
-Default is 1.5.}
+\item{facet}{[\code{character(1)}]\cr
+Selects \dQuote{measure} or \dQuote{learner} to be the facetting variable.
+The variable mapped to \code{facet} must have more than one unique value, otherwise it will
+be ignored. The variable not chosen is mapped to color if it has more than one unique value.
+The default is \dQuote{measure}.}
 }
 \value{
 ggplot2 plot object.
 }
 \description{
 Visualizes data size (percentage used for model) vs. performance measure(s).
+}
+\seealso{
+Other learning_curve: \code{\link{generateLearningCurveData}};
+  \code{\link{plotLearningCurveGGVIS}}
+
+Other plot: \code{\link{plotFilterValuesGGVIS}};
+  \code{\link{plotFilterValues}};
+  \code{\link{plotLearningCurveGGVIS}};
+  \code{\link{plotROCRCurvesGGVIS}};
+  \code{\link{plotROCRCurves}};
+  \code{\link{plotThreshVsPerfGGVIS}};
+  \code{\link{plotThreshVsPerf}}
 }
 

@@ -50,11 +50,13 @@ test_that("learners work", {
     classif.bdk = list(ydim = 2L),
     classif.gbm = list(bag.fraction = 1, n.minobsinnode = 1),
     classif.lssvm = list(kernel = "rbfdot", reduced = FALSE),
+    classif.nodeHarvest = list(nodes = 100L, nodesize = 5L),
     classif.xyf = list(ydim = 2L),
     regr.km = list(nugget = 0.01),
     regr.cforest = list(mtry = 1L),
     regr.bartMachine = list(verbose = FALSE, run_in_sample = FALSE,
-      num_iterations_after_burn_in = 10L)
+      num_iterations_after_burn_in = 10L),
+    regr.nodeHarvest = list(nodes = 100L, nodesize = 5L)
   )
 
   fixHyperPars = function(lrn) {
@@ -143,7 +145,7 @@ test_that("learners work", {
     features = getTaskFeatureNames(regr.task)[c(1, 3)])
   lrns = mylist(task)
   lrns = lapply(lrns, makeLearner)
-  for(lrn in lrns) {
+  for (lrn in lrns) {
     expect_output(print(lrn), lrn$id)
     lrn = fixHyperPars(lrn)
     m = train(lrn, task)
@@ -155,7 +157,7 @@ test_that("learners work", {
   task = subsetTask(regr.task, subset = 180:240, features = getTaskFeatureNames(regr.task)[c(1, 2)])
   lrns = mylist(task)
   lrns = lapply(lrns, makeLearner)
-  for(lrn in lrns) {
+  for (lrn in lrns) {
     expect_output(print(lrn), lrn$id)
     lrn = fixHyperPars(lrn)
     m = train(lrn, task)

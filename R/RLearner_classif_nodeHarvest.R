@@ -14,7 +14,7 @@ makeRLearner.classif.nodeHarvest = function() {
       makeLogicalLearnerParam(id = "silent", default = FALSE),
       makeLogicalLearnerParam(id = "biascorr", default = FALSE)
     ),
-    properties = c("numerics", "factors", "missings", "twoclass", "prob"),
+    properties = c("numerics", "factors", "twoclass", "prob"),
     name = "Node Harvest",
     short.name = "nodeHarvest",
     note = ""

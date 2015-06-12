@@ -1,7 +1,7 @@
 context("regr_nodeHarvest")
 
 test_that("regr_nodeHarvest", {
-  requirePackages("nodeHarvest")
+  requirePackages("nodeHarvest", default.method = "load")
   
   parset.list = list(
     list(nodes = 100L),
@@ -19,6 +19,6 @@ test_that("regr_nodeHarvest", {
     old.predicts.list[[i]] = predict(m, regr.df[-regr.train.inds,])
   }
   
-  system.time(testSimpleParsets("regr.nodeHarvest", regr.df, regr.target, regr.train.inds,
-    old.predicts.list, parset.list))
+  testSimpleParsets("regr.nodeHarvest", regr.df, regr.target, regr.train.inds,
+    old.predicts.list, parset.list)
 })

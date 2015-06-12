@@ -58,6 +58,7 @@ Other resample: \code{\link{ResampleDesc}},
   \code{\link{bootstrapB632plus}},
   \code{\link{bootstrapOOB}}, \code{\link{crossval}},
   \code{\link{holdout}}, \code{\link{repcv}},
-  \code{\link{resample}}, \code{\link{subsample}}
+  \code{\link{resample}}, \code{\link{subsample}};
+  \code{\link{getRRPredictions}}
 }
 

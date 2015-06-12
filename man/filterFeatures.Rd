@@ -16,7 +16,7 @@ See \code{\link{listFilterMethods}}.
 Default is \dQuote{rf.importance}.}
 
 \item{fval}{[\code{\link{FilterValues}}]\cr
-Result of \code{\link{getFilterValues}}.
+Result of \code{\link{generateFilterValuesData}}.
 If you pass this, the filter values in the object are used for feature filtering.
 \code{method} and \code{...} are ignored then.
 Default is \code{NULL} and not used.}
@@ -43,13 +43,16 @@ Passed down to selected filter method.}
 [\code{\link{Task}}].
 }
 \description{
-First, calls \code{\link{getFilterValues}}.
+First, calls \code{\link{generateFilterValuesData}}.
 Features are then selected via \code{select} and \code{val}.
 }
 \seealso{
 Other filter: \code{\link{FilterValues}};
+  \code{\link{generateFilterValuesData}};
   \code{\link{getFilterValues}};
   \code{\link{getFilteredFeatures}};
-  \code{\link{makeFilterWrapper}}
+  \code{\link{makeFilterWrapper}};
+  \code{\link{plotFilterValuesGGVIS}};
+  \code{\link{plotFilterValues}}
 }
 

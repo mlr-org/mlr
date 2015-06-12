@@ -43,6 +43,7 @@
 #'   Is applied to every \code{\link{WrappedModel}} resulting from calls to \code{\link{train}}
 #'   during resampling.
 #'   Default is to extract nothing.
+#' @template arg_keep_pred
 #' @param ... [any]\cr
 #'   Further hyperparameters passed to \code{learner}.
 #' @template arg_showinfo
@@ -57,7 +58,7 @@
 #' print(r$measures.test)
 #' print(r$pred)
 resample = function(learner, task, resampling, measures, weights = NULL, models = FALSE,
-  extract, ..., show.info = getMlrOption("show.info")) {
+  extract, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
 
   learner = checkLearner(learner, ...)
   assertClass(task, classes = "Task")
@@ -96,7 +97,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   iter.results = parallelMap(doResampleIteration, seq_len(rin$desc$iters), level = "mlr.resample", more.args = more.args)
 
   addClasses(
-    mergeResampleResult(learner, task, iter.results, measures, rin, models, extract, show.info),
+    mergeResampleResult(learner, task, iter.results, measures, rin, models, extract, keep.pred, show.info),
     "ResampleResult"
   )
 }
@@ -143,7 +144,7 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   )
 }
 
-mergeResampleResult = function(learner, task, iter.results, measures, rin, models, extract, show.info) {
+mergeResampleResult = function(learner, task, iter.results, measures, rin, models, extract, keep.pred, show.info) {
   iters = length(iter.results)
   mids = vcapply(measures, function(m) m$id)
 
@@ -178,6 +179,9 @@ mergeResampleResult = function(learner, task, iter.results, measures, rin, model
 
   if (show.info)
     messagef("[Resample] Result: %s", perfsToString(aggr))
+
+  if (!keep.pred)
+    pred = NULL
 
   list(
     learner.id = learner$id,

@@ -4,7 +4,7 @@
 \alias{benchmark}
 \title{Benchmark experiment for multiple learners and tasks.}
 \usage{
-benchmark(learners, tasks, resamplings, measures,
+benchmark(learners, tasks, resamplings, measures, keep.pred = TRUE,
   show.info = getMlrOption("show.info"))
 }
 \arguments{
@@ -22,6 +22,11 @@ If missing, a 10-fold cross validation is used.}
 \item{measures}{[(list of) \code{\link{Measure}}]\cr
 Performance measures for all tasks.
 If missing, the default measure of the first task is used.}
+
+\item{keep.pred}{[\code{logical(1)}]\cr
+Keep the data in the \code{pred} slot of the results.
+If you do many experiments these informations might only increase the size of your result file without being essential for your analyisis so you want to set this value on \code{FALSE}.
+Default is \code{TRUE}.}
 
 \item{show.info}{[\code{logical(1)}]\cr
 Print verbose output on console?

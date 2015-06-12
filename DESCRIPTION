@@ -18,7 +18,8 @@ Authors@R: c(person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role =
     person("Tobias", "Kuehn", email = "tobi.kuehn@gmx.de", role = "aut"),
     person("Erich", "Studerus", email = "erich.studerus@upkbs.ch", role =
     "aut"), person("Lars", "Kotthoff", email =
-    "larsko@cs.ubc.ca", role = "aut"))
+    "larsko@cs.ubc.ca", role = "aut"), person("Zachary", "Jones", email =
+    "zmj@zmjones.com", role = "ctb"))
 URL: https://github.com/berndbischl/mlr
 BugReports: https://github.com/berndbischl/mlr/issues
 License: BSD_3_clause + file LICENSE
@@ -32,15 +33,18 @@ Depends:
     stats
 Imports:
     checkmate (>= 1.5.1),
+    ggvis,
     parallelMap (>= 1.3),
     plyr,
     reshape2,
+    shiny,
     survival
 Suggests:
     ada,
     adabag,
     bartMachine,
     brnn,
+    bst,
     care,
     caret,
     class,
@@ -61,7 +65,9 @@ Suggests:
     elmNN,
     emoa,
     extraTrees,
+    flare,
     FNN,
+    frbs,
     FSelector,
     gbm,
     GenSA,
@@ -85,6 +91,7 @@ Suggests:
     mRMRe,
     nnet,
     nodeHarvest,
+    pamr,
     party,
     penalized,
     pls,
@@ -92,6 +99,7 @@ Suggests:
     randomForest,
     randomForestSRC (>= 1.6.1),
     RCurl,
+    rFerns,
     rjson,
     rmarkdown,
     robustbase,
@@ -101,7 +109,7 @@ Suggests:
     rsm,
     RWeka,
     sda,
-    snow,
+    sparsediscrim,
     sparseLDA,
     stepPlr,
     testthat,
