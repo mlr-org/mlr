@@ -293,6 +293,12 @@
     
         <li class="main active"><a href="#parallelization">Parallelization</a></li>
         
+            <li><a href="#parallelization-levels">Parallelization levels</a></li>
+        
+            <li><a href="#custom-learners-and-parallelization">Custom learners and parallelization</a></li>
+        
+            <li><a href="#the-end">The end</a></li>
+        
     
     </ul>
 </div></div>
@@ -319,8 +325,9 @@ parallelStop()
 </code></pre>
 
 <p>On Linux or Mac OS X, you may want to use
-<a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStartMulticore</a> instead.
-We offer different parallelization levels for fine grained control over the parallelization.
+<a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStartMulticore</a> instead.</p>
+<h2 id="parallelization-levels">Parallelization levels</h2>
+<p>We offer different parallelization levels for fine grained control over the parallelization.
 E.g., if you do not want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/benchmark.html">benchmark</a> function because it has only very few iterations but want to parallelize the <a href="http://www.rdocumentation.org/packages/mlr/functions/resample.html">resampling</a> of each learner instead,
 you can specifically pass the <code>level</code> <code>"mlr.resample"</code> to the <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart*</a> function.
 Currently the following levels are supported:</p>
@@ -330,18 +337,29 @@ Currently the following levels are supported:</p>
 
 <p>Here is a brief explanation of what these levels do:</p>
 <ul>
-<li><strong>resample</strong>: Each resampling iteration (a train / test step) is a parallel job.</li>
-<li><strong>benchmark</strong>: Each experiment "run this learner on this data set" is a parallel job.</li>
-<li><strong>tuneParams</strong>: Each evaluation in hyperparameter space "resample with these parameter settings" is a parallel job.
+<li><strong>mlr.resample</strong>: Each resampling iteration (a train / test step) is a parallel job.</li>
+<li><strong>mlr.benchmark</strong>: Each experiment "run this learner on this data set" is a parallel job.</li>
+<li><strong>mlr.tuneParams</strong>: Each evaluation in hyperparameter space "resample with these parameter settings" is a parallel job.
   How many of these can be run independently in parallel, depends on the tuning algorithm.
   For grid search or random search this is
   no problem, but for other tuners it depends on how many points are produced in each iteration
   of the optimization. If a tuner works in a purely sequential fashion, we cannot work magic and the
   hyperparameter evaluation will also run sequentially. But note that you can still parallelize the
   underlying resampling.</li>
-<li><strong>selectFeatures</strong>: Each evaluation in feature space "resample with this feature subset" is a parallel job.
-  The same comments as for "tuneParams" apply here.</li>
+<li><strong>mlr.selectFeatures</strong>: Each evaluation in feature space "resample with this feature subset" is a parallel job.
+  The same comments as for "mlr.tuneParams" apply here.</li>
 </ul>
+<h2 id="custom-learners-and-parallelization">Custom learners and parallelization</h2>
+<p>If you have implemented a custom learner yourself, locally, you currently need to export this to the slave.
+So if you see an error after calling, e.g., a parallelized version of [resample] like this:</p>
+<pre><code>no applicable method for 'trainLearner' applied to an object of class &lt;my_new_learner&gt;
+</code></pre>
+
+<p>simply add the following line somewhere after calling <a href="http://www.rdocumentation.org/packages/parallelMap/functions/parallelStart.html">parallelStart</a>.</p>
+<pre><code>parallelExport(&quot;trainLearner.&lt;my_new_learner&gt;&quot;, &quot;predictLearner.&lt;my_new_learner&gt;&quot;)
+</code></pre>
+
+<h2 id="the-end">The end</h2>
 <p>For further details, consult the
 <a href="https://github.com/berndbischl/parallelMap#parallelmap">parallelMap tutorial</a> and help.</p></div>
             
