@@ -19,4 +19,6 @@ test_that("Learner", {
 
   wl = makeLearner("regr.lm", config = list(on.learner.error = "quiet"))
   expect_equal(wl$config$on.learner.error, "quiet")
+
+  expect_error(makeLearner("classif.lda", predict.threshold = 1, "'prob' must hold"))
 })

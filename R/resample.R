@@ -94,10 +94,12 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   }
   parallelLibrary("mlr", master = FALSE, level = "mlr.resample", show.info = FALSE)
   exportMlrOptions(level = "mlr.resample")
+  time1 = Sys.time()
   iter.results = parallelMap(doResampleIteration, seq_len(rin$desc$iters), level = "mlr.resample", more.args = more.args)
-
+  time2 = Sys.time()
+  runtime = as.numeric(difftime(time2, time1, "sec"))
   addClasses(
-    mergeResampleResult(learner, task, iter.results, measures, rin, models, extract, keep.pred, show.info),
+    mergeResampleResult(learner, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime),
     "ResampleResult"
   )
 }
@@ -144,7 +146,7 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   )
 }
 
-mergeResampleResult = function(learner, task, iter.results, measures, rin, models, extract, keep.pred, show.info) {
+mergeResampleResult = function(learner, task, iter.results, measures, rin, models, extract, keep.pred, show.info, runtime) {
   iters = length(iter.results)
   mids = vcapply(measures, function(m) m$id)
 
@@ -192,6 +194,7 @@ mergeResampleResult = function(learner, task, iter.results, measures, rin, model
     pred = pred,
     models = if (models) lapply(iter.results, function(x) x$model) else NULL,
     err.msgs = err.msgs,
-    extract = if(is.function(extract)) extractSubList(iter.results, "extract", simplify = FALSE) else NULL
+    extract = if(is.function(extract)) extractSubList(iter.results, "extract", simplify = FALSE) else NULL,
+    runtime = runtime
   )
 }

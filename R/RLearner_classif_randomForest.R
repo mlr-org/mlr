@@ -9,7 +9,7 @@ makeRLearner.classif.randomForest = function() {
       makeLogicalLearnerParam(id = "replace", default = TRUE),
       makeNumericVectorLearnerParam(id = "classwt", lower = 0),
       makeNumericVectorLearnerParam(id = "cutoff", lower = 0, upper = 1),
-      makeIntegerLearnerParam(id = "sampsize", lower = 1L),
+      makeIntegerVectorLearnerParam(id = "sampsize", lower = 0L),
       makeIntegerLearnerParam(id = "nodesize", default = 1L, lower = 1L),
       makeIntegerLearnerParam(id = "maxnodes", lower = 1L),
       makeLogicalLearnerParam(id = "importance", default = FALSE),

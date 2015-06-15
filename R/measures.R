@@ -259,6 +259,9 @@ ber = makeMeasure(id = "ber", minimize = TRUE, best = 0, worst = 1,
   name = "Balanced error rate",
   note = "Mean of misclassification error rates on all individual classes.",
   fun = function(task, model, pred, feats, extra.args) {
+    # special case for predictions from FailureModel
+    if (any(is.na(pred$data$response)))
+      return(NA_real_)
     n = length(pred$task.desc$class.levels) + 1L
     mean(getConfMatrix(pred, relative = TRUE)[-n, n])
   }
