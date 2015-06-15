@@ -22,6 +22,9 @@ The [%mlr] function [&generateLearningCurveData] can generate the data for *lear
 for multiple [learners](integrated_learners.md) and multiple [performance measures](measures.md)
 at once.
 With [&plotLearningCurve] the result of [&generateLearningCurveData] can be plotted using [%ggplot2].
+[&plotLearningCurve] has an argument `facet` which can be either "measure" or "learner". By default
+`facet = "measure"` and facetted subplots are created for each measure input to [&generateLearningCurveData].
+If `facet = "measure"` learners are mapped to color, and vice versa.
 
 ```{r LearningCurveTPFP}
 r = generateLearningCurveData(
@@ -34,7 +37,7 @@ r = generateLearningCurveData(
 plotLearningCurve(r)
 ```
 
-What happens is the following:
+What happens in [%generateLearningCurveData] is the following:
 Each learner will be internally wrapped in a [DownsampleWrapper](&makeDownsampleWrapper).
 To measure the performance at the first step of `percs`, say `0.1`, first the data will be
 split into a *training* and a *test set* according to the given *resampling strategy*.
@@ -49,14 +52,24 @@ sufficient to give the *name*.
 It is also possible to create a learner the usual way and even to mix it.
 Make sure to give different `id`s in this case.
 
-```{r LearningCurveACCx}
+```{r LearningCurveACCx, fig.width = 8, fig.height = 6}
 lrns = list(
   makeLearner(cl = "classif.ksvm", id = "ksvm1" , sigma = 0.2, C = 2),
   makeLearner(cl = "classif.ksvm", id = "ksvm2" , sigma = 0.1, C = 1),
   "classif.randomForest"
 )
 rin = makeResampleDesc(method = "CV", iters = 5)
-lc = generateLearningCurveData(learners = lrns, task = sonar.task, percs = seq(0.1, 1, by = 0.1), measures = acc,
-  resampling = rin, show.info = FALSE)
+lc = generateLearningCurveData(learners = lrns, task = sonar.task,
+                               percs = seq(0.1, 1, by = 0.1), measures = acc,
+                               resampling = rin, show.info = FALSE)
 plotLearningCurve(lc)
+```
+
+There is also an experimental [%ggvis] plotting function, [%plotLearningCurveGGVIS]. Instead of the `facet`
+argument to [&plotLearningCurve] there is an argument `interactive` which plays a similar role. As subplots
+are not available in [&ggvis], measures or learners are mapped to an interactive sidebar which allows selection
+of the displayed measures or learners. The other feature is mapped to color.
+
+```{r, eval = FALSE}
+plotLearningCurveGGVIS(r, interactive = "measure")
 ```
