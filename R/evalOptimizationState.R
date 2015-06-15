@@ -14,14 +14,16 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   threshold = NULL
   log.fun = control$log.fun
 
-  if (inherits(control, "TuneControlMBO") && control$mbo.control$multifid) {
-    state$dw.perc = control$mbo.control$multifid.lvls[state$.multifid.lvl]
-    state = dropNamed(state, ".multifid.lvl")
-    par.set = c(par.set, makeParamSet(
-      makeIntegerParam("dw.perc", lower = 1L, upper = length(control$mbo.control$multifid.lvls))))
-    state = trafoValue(par.set, state)
-    learner2 = setHyperPars(learner, par.vals = state)
-  } else if (inherits(control, "TuneControl") || inherits(control, "TuneMultiCritControl")) {
+  if (inherits(control, "TuneControl") || inherits(control, "TuneMultiCritControl")) {
+    if (inherits(control, "TuneControlMBO") && control$mbo.control$multifid) {
+      #transform multifid lvl to param setting
+      multifid.param = control$mbo.control$multifid.param #string
+      multifid.values = control$mbo.control$multifid.lvls #factor over discrete values
+      state[[multifid.param]] = multifid.values[state$.multifid.lvl]
+      state = dropNamed(state, ".multifid.lvl")
+      par.set = c(par.set, makeParamSet(
+        makeDiscreteParam(multifid.param, values = multifid.values)))
+    }
     # set names before trafo
     state = setValueCNames(par.set, state)
     # transform parameters
