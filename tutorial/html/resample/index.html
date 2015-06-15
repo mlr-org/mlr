@@ -361,11 +361,12 @@ r
 #&gt; cindex.aggr: 0.63
 #&gt; cindex.mean: 0.63
 #&gt; cindex.sd: 0.05
+#&gt; Runtime: 0.109092
 ## peak a little bit into r
 names(r)
-#&gt; [1] &quot;learner.id&quot;     &quot;task.id&quot;        &quot;measures.train&quot; &quot;measures.test&quot; 
-#&gt; [5] &quot;aggr&quot;           &quot;pred&quot;           &quot;models&quot;         &quot;err.msgs&quot;      
-#&gt; [9] &quot;extract&quot;
+#&gt;  [1] &quot;learner.id&quot;     &quot;task.id&quot;        &quot;measures.train&quot; &quot;measures.test&quot; 
+#&gt;  [5] &quot;aggr&quot;           &quot;pred&quot;           &quot;models&quot;         &quot;err.msgs&quot;      
+#&gt;  [9] &quot;extract&quot;        &quot;runtime&quot;
 r$aggr
 #&gt; cindex.test.mean 
 #&gt;        0.6271182
@@ -434,10 +435,10 @@ r = resample(&quot;cluster.kmeans&quot;, task, rdesc, measures = list(dunn, db, 
 #&gt; [Resample] subsampling iter: 3
 #&gt; [Resample] subsampling iter: 4
 #&gt; [Resample] subsampling iter: 5
-#&gt; [Resample] Result: dunn.test.mean=0.274,db.test.mean=0.51,timetrain.test.mean=0.0004
+#&gt; [Resample] Result: dunn.test.mean=0.274,db.test.mean=0.51,timetrain.test.mean=0.0006
 r$aggr
 #&gt;      dunn.test.mean        db.test.mean timetrain.test.mean 
-#&gt;           0.2738893           0.5103655           0.0004000
+#&gt;           0.2738893           0.5103655           0.0006000
 </code></pre>
 
 <h2 id="stratified-resampling">Stratified resampling</h2>
@@ -482,21 +483,18 @@ r = resample(&quot;classif.lda&quot;, iris.task, rdesc, models = TRUE)
 #&gt; [Resample] Result: mmce.test.mean=0.02
 r$models
 #&gt; [[1]]
-#&gt; Model for id = classif.lda class = classif.lda
-#&gt; Trained on obs: 100
-#&gt; Used features: 4
+#&gt; Model for learner.id=classif.lda; learner.class=classif.lda
+#&gt; Trained on: task.id = iris-example; obs = 100; features = 4
 #&gt; Hyperparameters: 
 #&gt; 
 #&gt; [[2]]
-#&gt; Model for id = classif.lda class = classif.lda
-#&gt; Trained on obs: 100
-#&gt; Used features: 4
+#&gt; Model for learner.id=classif.lda; learner.class=classif.lda
+#&gt; Trained on: task.id = iris-example; obs = 100; features = 4
 #&gt; Hyperparameters: 
 #&gt; 
 #&gt; [[3]]
-#&gt; Model for id = classif.lda class = classif.lda
-#&gt; Trained on obs: 100
-#&gt; Used features: 4
+#&gt; Model for learner.id=classif.lda; learner.class=classif.lda
+#&gt; Trained on: task.id = iris-example; obs = 100; features = 4
 #&gt; Hyperparameters:
 </code></pre>
 

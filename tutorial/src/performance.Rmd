@@ -146,10 +146,10 @@ d = generateThreshVsPerfData(pred, measures = list(fpr, fnr, mmce))
 plotThreshVsPerf(d)
 ```
 
-There is an experimental [%ggvis] plotting function [%plotThreshVsPerfGGVIS] which performs similarly
-to [%plotThresVsPerf] but instead of creating facetted subplots to visualize multiple learners and/or
+There is an experimental [%ggvis] plotting function [&plotThreshVsPerfGGVIS] which performs similarly
+to [&plotThreshVsPerf] but instead of creating facetted subplots to visualize multiple learners and/or
 multiple measures, one of them is mapped to an interactive sidebar which selects what to display.
 
 ```{r, eval = FALSE}
-plotThresVsPerfGGVIS(d)
+plotThreshVsPerfGGVIS(d)
 ```

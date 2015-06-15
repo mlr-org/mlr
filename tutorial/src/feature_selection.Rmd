@@ -47,9 +47,9 @@ plotFilterValues(fv2)
 By default [&plotFilterValues] will create facetted subplots if multiple filter methods are passed as input to
 [&generateFilterValuesData].
 
-There is also an experimental [&ggvis] plotting function, [&plotFilterValuesGGVIS]. This takes the same
+There is also an experimental [%ggvis] plotting function, [&plotFilterValuesGGVIS]. This takes the same
 arguments as [&plotFilterValues] with the addition of a `logical(1)` argument `interactive`, which, if used with
-an output from [&generateFilterValuesData] that includes multiple filter values, produces a [&Shiny] application
+an output from [&generateFilterValuesData] that includes multiple filter values, produces a [%shiny] application
 that allows the interactive selection of the displayed filter method.
 
 ```{r, eval=FALSE}

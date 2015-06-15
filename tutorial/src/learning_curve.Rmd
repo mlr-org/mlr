@@ -37,7 +37,7 @@ r = generateLearningCurveData(
 plotLearningCurve(r)
 ```
 
-What happens in [%generateLearningCurveData] is the following:
+What happens in [&generateLearningCurveData] is the following:
 Each learner will be internally wrapped in a [DownsampleWrapper](&makeDownsampleWrapper).
 To measure the performance at the first step of `percs`, say `0.1`, first the data will be
 split into a *training* and a *test set* according to the given *resampling strategy*.
@@ -65,9 +65,9 @@ lc = generateLearningCurveData(learners = lrns, task = sonar.task,
 plotLearningCurve(lc)
 ```
 
-There is also an experimental [%ggvis] plotting function, [%plotLearningCurveGGVIS]. Instead of the `facet`
+There is also an experimental [%ggvis] plotting function, [&plotLearningCurveGGVIS]. Instead of the `facet`
 argument to [&plotLearningCurve] there is an argument `interactive` which plays a similar role. As subplots
-are not available in [&ggvis], measures or learners are mapped to an interactive sidebar which allows selection
+are not available in [%ggvis], measures or learners are mapped to an interactive sidebar which allows selection
 of the displayed measures or learners. The other feature is mapped to color.
 
 ```{r, eval = FALSE}

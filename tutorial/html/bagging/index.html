@@ -368,15 +368,13 @@ mod = train(learner = bag.lrn, task = bh.task, subset = train.inds)
 individual iterations.</p>
 <pre><code class="r">head(getHomogeneousEnsembleModels(mod), 2)
 #&gt; [[1]]
-#&gt; Model for id = regr.rpart class = regr.rpart
-#&gt; Trained on obs: 169
-#&gt; Used features: 13
+#&gt; Model for learner.id=regr.rpart; learner.class=regr.rpart
+#&gt; Trained on: task.id = BostonHousing-example; obs = 169; features = 13
 #&gt; Hyperparameters: xval=0
 #&gt; 
 #&gt; [[2]]
-#&gt; Model for id = regr.rpart class = regr.rpart
-#&gt; Trained on obs: 169
-#&gt; Used features: 13
+#&gt; Model for learner.id=regr.rpart; learner.class=regr.rpart
+#&gt; Trained on: task.id = BostonHousing-example; obs = 169; features = 13
 #&gt; Hyperparameters: xval=0
 </code></pre>
 

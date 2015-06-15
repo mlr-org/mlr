@@ -387,17 +387,19 @@ The following example shows how to prevent this:</p>
 <pre><code class="r">## This call gives an error caused by the low number of observations in class `virginica`
 train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
 #&gt; Error in qda.default(x, grouping, ...): some group is too small for 'qda'
-#&gt; Timing stopped at: 0.003 0 0.003
+#&gt; Timing stopped at: 0.004 0 0.003
 
 configureMlr(on.learner.error = &quot;warn&quot;)
 mod = train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
 #&gt; Warning in train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104): Could not train learner classif.qda: Error in qda.default(x, grouping, ...) : 
 #&gt;   some group is too small for 'qda'
 mod
-#&gt; Model for id = classif.qda class = classif.qda
-#&gt; Trained on obs: 104
-#&gt; Used features: 4
+#&gt; Model for learner.id=classif.qda; learner.class=classif.qda
+#&gt; Trained on: task.id = iris-example; obs = 104; features = 4
 #&gt; Hyperparameters: 
+#&gt; Training failed: Error in qda.default(x, grouping, ...) : 
+#&gt;   some group is too small for 'qda'
+#&gt; 
 #&gt; Training failed: Error in qda.default(x, grouping, ...) : 
 #&gt;   some group is too small for 'qda'
 

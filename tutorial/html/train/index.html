@@ -309,9 +309,8 @@ Here is a classification example using the data set <a href="http://www.rdocumen
 <pre><code class="r">lrn = makeLearner(&quot;classif.lda&quot;)
 mod = train(lrn, iris.task)
 mod
-#&gt; Model for id = classif.lda class = classif.lda
-#&gt; Trained on obs: 150
-#&gt; Used features: 4
+#&gt; Model for learner.id=classif.lda; learner.class=classif.lda
+#&gt; Trained on: task.id = iris-example; obs = 150; features = 4
 #&gt; Hyperparameters:
 </code></pre>
 
@@ -322,9 +321,8 @@ Otherwise, <a href="http://www.rdocumentation.org/packages/mlr/functions/train.h
 method.</p>
 <pre><code class="r">mod = train(&quot;classif.lda&quot;, iris.task)
 mod
-#&gt; Model for id = classif.lda class = classif.lda
-#&gt; Trained on obs: 150
-#&gt; Used features: 4
+#&gt; Model for learner.id=classif.lda; learner.class=classif.lda
+#&gt; Trained on: task.id = iris-example; obs = 150; features = 4
 #&gt; Hyperparameters:
 </code></pre>
 
@@ -340,9 +338,8 @@ train.set = sample(n, size = n/3)
 ## Train the learner
 mod = train(&quot;regr.lm&quot;, bh.task, subset = train.set)
 mod
-#&gt; Model for id = regr.lm class = regr.lm
-#&gt; Trained on obs: 168
-#&gt; Used features: 13
+#&gt; Model for learner.id=regr.lm; learner.class=regr.lm
+#&gt; Trained on: task.id = BostonHousing-example; obs = 168; features = 13
 #&gt; Hyperparameters:
 </code></pre>
 
@@ -361,9 +358,8 @@ tab = as.numeric(table(target))
 w = 1/tab[target]
 
 train(&quot;classif.rpart&quot;, task = bc.task, weights = w)
-#&gt; Model for id = classif.rpart class = classif.rpart
-#&gt; Trained on obs: 683
-#&gt; Used features: 9
+#&gt; Model for learner.id=classif.rpart; learner.class=classif.rpart
+#&gt; Trained on: task.id = BreastCancer-example; obs = 683; features = 9
 #&gt; Hyperparameters: xval=0
 </code></pre>
 
@@ -386,9 +382,8 @@ lrn = makeLearner(&quot;surv.coxph&quot;)
 
 mod = train(lrn, task)
 mod
-#&gt; Model for id = surv.coxph class = surv.coxph
-#&gt; Trained on obs: 228
-#&gt; Used features: 8
+#&gt; Model for learner.id=surv.coxph; learner.class=surv.coxph
+#&gt; Trained on: task.id = lung; obs = 228; features = 8
 #&gt; Hyperparameters:
 </code></pre>
 
