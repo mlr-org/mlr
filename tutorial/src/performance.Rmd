@@ -125,8 +125,7 @@ str(mmce)
 
 As you may recall (see the previous section on [making predictions](predict.md))
 in binary classification we can adjust the threshold used to map probabilities to class labels.
-Helpful in this regard is the function [&plotThreshVsPerf], which generates a plot of the
-learner performance versus the threshold.
+Helpful in this regard is are the functions [&generateThreshVsPerfData] and [&plotThreshVsPerf], which generate and plot, respectively, the learner performance versus the threshold.
 
 For more performance plots and automatic threshold tuning see [here](roc_analysis.md).
 
@@ -134,7 +133,7 @@ In the following example we consider the [Sonar](&mlbench::Sonar) data set and
 plot the false positive rate ([fpr](measures.md)), the false negative rate ([fnr](measures.md))
 as well as the misclassification rate ([mmce](measures.md)) for all possible threshold values.
 
-```{r}
+```{r, fig.width=8, fig.height=4}
 lrn = makeLearner("classif.lda", predict.type = "prob")
 n = getTaskSize(sonar.task)
 mod = train(lrn, task = sonar.task, subset = seq(1, n, by = 2))
@@ -147,3 +146,10 @@ d = generateThreshVsPerfData(pred, measures = list(fpr, fnr, mmce))
 plotThreshVsPerf(d)
 ```
 
+There is an experimental [%ggvis] plotting function [&plotThreshVsPerfGGVIS] which performs similarly
+to [&plotThreshVsPerf] but instead of creating facetted subplots to visualize multiple learners and/or
+multiple measures, one of them is mapped to an interactive sidebar which selects what to display.
+
+```{r, eval = FALSE}
+plotThreshVsPerfGGVIS(d)
+```
