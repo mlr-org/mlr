@@ -22,7 +22,7 @@ Authors@R: c(person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role =
     "zmj@zmjones.com", role = "ctb"))
 URL: https://github.com/berndbischl/mlr
 BugReports: https://github.com/berndbischl/mlr/issues
-License: BSD_3_clause + file LICENSE
+License: BSD_2_clause + file LICENSE
 Encoding: UTF-8
 Roxygen: list(wrap = FALSE)
 Depends:
@@ -117,5 +117,5 @@ Suggests:
     TH.data
 LazyData: yes
 ByteCompile: yes
-Version: 2.4
+Version: 2.5
 VignetteBuilder: knitr

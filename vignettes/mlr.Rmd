@@ -19,19 +19,30 @@ A more detailed in depth and continuously updated tutorial can be found on the G
 ## Purpose
 
 The main goal of `mlr` is to provide a unified interface for *machine learning tasks* as *classification*, *regression*, *cluster analysis* and *survival analysis* in R.
-In lack of a common interface it becomes a hassle to carry out standard methods like cross validation and hyperparameter tuning for different learners.
-Hence, `mlr` offers a simple and consistent way to
+In lack of a common interface it becomes a hassle to carry out standard methods like cross-validation and hyperparameter tuning for different learners.
+Hence, `mlr` offers the following features:
 
-* train a learner and predict outcomes,
-* modify hyperparameters of a learner,
-* perform resampling and measure the performance, or
-* tune the hyperparameters of a learner.
-
+* Possibility to fit, predict, evaluate and resample models
+* Easy extension mechanism through S3 inheritance
+* Abstract description of learners and tasks by properties
+* Parameter system for learners to encode data types and constraints
+* Many convenience methods and generic building blocks for your machine learning experiments
+* Resampling like bootstrapping, cross-validation and subsampling
+* Different visualizations for e.g. ROC curves and predictions
+* Benchmarking of learners for muliple data sets
+* Easy hyperparameter tuning using different optimization strategies
+* Variable selection with filters and wrappers
+* Nested resampling of models with tuning and feature selection
+* Cost-sensitive learning, threshold tuning and imbalance correction
+* Wrapper mechanism to extend learner functionality and complex and custom ways
+* Combine different processing steps to a complex data mining chain that can be jointly optimized
+* Extension points to integrate your own stuff
+* Parallelization is built-in
 
 ## Quick Start
 
-To highlight the main principle of `mlr` we give a quick introduction to the package.
-We demonstrate how to simply perform a classification analysis using a stratified cross validation which illustrates some of the major building blocks of the `mlr` workflow, namely tasks and learners.
+To highlight the main principles of `mlr` we give a quick introduction to the package.
+We demonstrate how to simply perform a classification analysis using a stratified cross validation, which illustrates some of the major building blocks of the `mlr` workflow, namely tasks and learners.
 
 ```{r}
 library(mlr)
@@ -79,7 +90,7 @@ parsePkgs = function(x) {
   # remove version requirement in (...)
   x = sub("\\(.*\\)", "", x)
   # trim whitespace (cannot be inside name)
-  gsub(" ", "", " a ")
+  x = gsub(" ", "", x)
   # empty string become char(0)
   x[nzchar(x)]
 }
