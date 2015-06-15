@@ -71,7 +71,7 @@
                         
                             
 <li >
-    <a href="../learner/index.html">Learner</a>
+    <a href="../learner/index.html">Learners</a>
 </li>
 
                         
@@ -324,7 +324,7 @@ The following tasks can be instantiated and all inherit from the virtual supercl
 <li><a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">ClusterTask</a> for cluster analysis.</li>
 </ul>
 <p>To create a task, just call <code>make&lt;TaskType&gt;</code>, e.g., <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">makeClassifTask</a>.
-All tasks require an identifier (argument <code>id</code>) and a <a href="http://www.rdocumentation.org/packages/base/functions/data.frame.html">data frame</a> (argument <code>data</code>).
+All tasks require an identifier (argument <code>id</code>) and a <a href="http://www.rdocumentation.org/packages/base/functions/data.frame.html">data.frame</a> (argument <code>data</code>).
 If no ID is provided it is automatically generated using the variable name of the data.
 It will be later used to name results, for example of
 <a href="../benchmark_experiments/index.html">benchmark experiments</a>, or in generated plots.
@@ -388,13 +388,12 @@ classif.task
 
 <p>The positive class is <code>benign</code>.
 Class <code>malignant</code> can be manually selected as the positive class:</p>
-<pre><code class="r">classif.task = makeClassifTask(id = &quot;BreastCancer&quot;, data = df, target = &quot;Class&quot;,
-  positive = &quot;malignant&quot;)
+<pre><code class="r">classif.task = makeClassifTask(id = &quot;BreastCancer&quot;, data = df, target = &quot;Class&quot;, positive = &quot;malignant&quot;)
 </code></pre>
 
 <h3 id="cluster-analysis">Cluster analysis</h3>
-<p>Because cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the <code>data</code>.
-In the following example we create a learning task from the data set <a href="http://www.rdocumentation.org/packages/datasets/functions/mtcars.html">mtcars</a>.</p>
+<p>As cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the <code>data</code>.
+Below we create a learning task from the data set <a href="http://www.rdocumentation.org/packages/datasets/functions/mtcars.html">mtcars</a>.</p>
 <pre><code class="r">data(mtcars, package = &quot;datasets&quot;)
 cluster.task = makeClusterTask(data = mtcars)
 cluster.task
@@ -429,15 +428,13 @@ surv.task
 #&gt; Has blocking: FALSE
 </code></pre>
 
-<p>The type of censoring can be specified via the argument <code>censoring</code> which defaults to
+<p>The type of censoring can be specified via the argument <code>censoring</code>, which defaults to
 <code>"rcens"</code> for right censored data.</p>
 <h3 id="cost-sensitive-classification">Cost-sensitive classification</h3>
 <p>The standard objective in classification is to obtain a high prediction accuracy, i.e., to
 minimize the number of errors. Thereby, all types of misclassification errors are deemed
-equally severe. However, in many applications different kinds of errors cause different costs
-that should be taken into consideration.</p>
-<p>There exist different types of misclassification costs.
-In case of <em>class-dependent costs</em> that depend on the actual and predicted class labels it
+equally severe. However, in many applications different kinds of errors cause different costs.</p>
+<p>In case of <em>class-dependent costs</em>, that depend on the actual and predicted class labels, it
 is sufficient to create an ordinary <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">ClassifTask</a>.</p>
 <p>In order to handle <em>example-specific costs</em> it is necessary to generate a <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">CostSensTask</a>.
 In this scenario, each example (<em>x</em>, <em>y</em>) is associated with an individual cost vector of length
@@ -445,10 +442,10 @@ In this scenario, each example (<em>x</em>, <em>y</em>) is associated with an in
 <em>x</em> to class <em>k</em>. Naturally, it is assumed that the cost of the intended class label <em>y</em> is
 minimal.</p>
 <p>As the cost vector contains all relevant information about the intended class label <em>y</em>, only
-the feature values <em>x</em> and a <code>cost</code> matrix that contains the cost vectors for all examples in the data
-set are required to create the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">CostSensTask</a>.</p>
+the feature values <em>x</em> and a <code>cost</code> matrix, which contains the cost vectors for all examples in the data
+set, are required to create the <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">CostSensTask</a>.</p>
 <p>In the following example we use the <a href="http://www.rdocumentation.org/packages/datasets/functions/iris.html">iris data</a> and generate an artificial cost matrix
-(following <a href="http://dx.doi.org/10.1145/1102351.1102358">Beygelzimer et al. (2005)</a>):</p>
+(following <a href="http://dx.doi.org/10.1145/1102351.1102358">Beygelzimer et al., 2005</a>):</p>
 <pre><code class="r">df = iris
 cost = matrix(runif(150 * 3, 0, 2000), 150) * (1 - diag(3))[df$Species,]
 df$Species = NULL
@@ -470,9 +467,9 @@ costsens.task
 <p>For more details see the section about <a href="../cost_sensitive_classif/index.html">cost-sensitive classification</a>.</p>
 <h2 id="further-settings">Further settings</h2>
 <p>The <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> help page also lists several other arguments to describe further details of the
-problem.</p>
+learning problem.</p>
 <p>For example, we could include a <code>blocking</code> factor into the task.
-This would tell the task that some observations "belong together", and should
+This would tell the task that some observations "belong together" and should
 not be separated when splitting into training and test sets during a resampling iteration.</p>
 <p>Another possibility is to assign <code>weights</code> to observations according to their importance.</p>
 <h2 id="accessing-a-learning-task">Accessing a learning task</h2>
@@ -510,7 +507,7 @@ For example, to access a <a href="http://www.rdocumentation.org/packages/mlr/fun
 
 <p>The most important operations are listed in the documentation of <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a>.
 Here are some more examples.</p>
-<pre><code class="r">## Accessing the data set in classif.task:
+<pre><code class="r">## Accessing the data set in classif.task
 str(getTaskData(classif.task))
 #&gt; 'data.frame':    699 obs. of  10 variables:
 #&gt;  $ Cl.thickness   : Ord.factor w/ 10 levels &quot;1&quot;&lt;&quot;2&quot;&lt;&quot;3&quot;&lt;&quot;4&quot;&lt;..: 5 5 3 6 4 8 1 2 2 4 ...
@@ -524,24 +521,28 @@ str(getTaskData(classif.task))
 #&gt;  $ Mitoses        : Factor w/ 9 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 1 1 1 1 1 1 1 1 5 1 ...
 #&gt;  $ Class          : Factor w/ 2 levels &quot;benign&quot;,&quot;malignant&quot;: 1 1 1 1 1 2 1 1 1 1 ...
 
-## Get the number of input variables in cluster.task:
+## Get the number of observations in classif.task
+getTaskSize(classif.task)
+#&gt; [1] 699
+
+## Get the number of input variables in cluster.task
 getTaskNFeats(cluster.task)
 #&gt; [1] 11
 
-## Get the names of the input variables in cluster.task:
+## Get the names of the input variables in cluster.task
 getTaskFeatureNames(cluster.task)
 #&gt;  [1] &quot;mpg&quot;  &quot;cyl&quot;  &quot;disp&quot; &quot;hp&quot;   &quot;drat&quot; &quot;wt&quot;   &quot;qsec&quot; &quot;vs&quot;   &quot;am&quot;   &quot;gear&quot;
 #&gt; [11] &quot;carb&quot;
 
-## Get the names of the target columns:
+## Get the names of the target columns
 getTaskTargetNames(surv.task)
 #&gt; [1] &quot;time&quot;   &quot;status&quot;
 
-## Get the values of the target variable in regr.task:
+## Get the values of the target variable in regr.task
 head(getTaskTargets(regr.task))
 #&gt; [1] 24.0 21.6 34.7 33.4 36.2 28.7
 
-## Get the cost matrix in costsens.task:
+## Get the cost matrix in costsens.task
 head(getTaskCosts(costsens.task))
 #&gt;      y1        y2         y3
 #&gt; [1,]  0 1589.5664  674.44434
@@ -552,7 +553,7 @@ head(getTaskCosts(costsens.task))
 #&gt; [6,]  0 1819.9830  841.06686
 </code></pre>
 
-<p>Note the many options <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskData.html">getTaskData</a> provides to convert the data set into a convenient format.
+<p>Note the many options that <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskData.html">getTaskData</a> provides to convert the data set into a convenient format.
 This especially comes in handy when you <a href="../create_learner/index.html">integrate a learner</a> from another <strong>R</strong>
 package into <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.
 In this regard the functions <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskFormula.html">getTaskFormula</a> and <a href="http://www.rdocumentation.org/packages/mlr/functions/getTaskFormula.html">getTaskFormulaAsString</a>
@@ -561,7 +562,7 @@ are also useful.</p>
 <p><a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides several functions to alter an existing <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> which is often more
 convenient than creating a new <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">Task</a> from scratch.
 Here are some examples.</p>
-<pre><code class="r">## Select observations and features:
+<pre><code class="r">## Select observations and features
 cluster.task = subsetTask(cluster.task, subset = 4:17)
 
 ## It may happen, especially after selecting observations, that features are constant.
@@ -578,7 +579,7 @@ removeConstantFeatures(cluster.task)
 #&gt; Has weights: FALSE
 #&gt; Has blocking: FALSE
 
-## Remove selected features:
+## Remove selected features
 dropFeatures(surv.task, c(&quot;meal.cal&quot;, &quot;wt.loss&quot;))
 #&gt; Supervised task: lung
 #&gt; Type: surv
@@ -591,7 +592,7 @@ dropFeatures(surv.task, c(&quot;meal.cal&quot;, &quot;wt.loss&quot;))
 #&gt; Has weights: FALSE
 #&gt; Has blocking: FALSE
 
-## Standardize numerical features:
+## Standardize numerical features
 task = normalizeFeatures(cluster.task, method = &quot;range&quot;)
 summary(getTaskData(task))
 #&gt;       mpg              cyl              disp              hp        
@@ -617,7 +618,7 @@ summary(getTaskData(task))
 #&gt;  Max.   :0.5   Max.   :1.0000   Max.   :1.0000
 </code></pre>
 
-<p>Some of these functions are covered and explained in more detail in the <a href="../preproc/index.html">data preprocessing</a> section.</p>
+<p>Some of these functions are explained in more detail in the <a href="../preproc/index.html">data preprocessing</a> section.</p>
 <h2 id="example-tasks">Example tasks</h2>
 <p>For your convenience <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a> provides pre-defined <a href="http://www.rdocumentation.org/packages/mlr/functions/Task.html">tasks</a> for each type of learning problem.
 These are used throughout this tutorial in order to get shorter and more readable code.

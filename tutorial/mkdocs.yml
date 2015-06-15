@@ -8,7 +8,7 @@ pages:
 - Home: 'index.md'
 - Basics:
     - 'Tasks': 'task.md'
-    - 'Learner': 'learner.md'
+    - 'Learners': 'learner.md'
     - 'Train': 'train.md'
     - 'Predict': 'predict.md'
     - 'Performance': 'performance.md'

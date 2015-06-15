@@ -11,29 +11,29 @@ An offline version of this of this tutorial is available for download [here](htt
 The tutorial explains the basic analysis of a data set step by step.
 Please refer to sections of the menu above: Basics, Advanced, Extend and Appendix.
 
-During the tutorial We present various simple examples from classification, regression, cluster and
-survival analysis during this tutorial to illustrate the main features of the package.
+During the tutorial we present various simple examples from classification, regression, cluster and
+survival analysis to illustrate the main features of the package.
 
 Enjoy reading!
 
 ## Quick start
-A simple stratified cross-validation of  *linear discriminant analysis* with [%mlr].
+A simple stratified cross-validation of [linear discriminant analysis](&MASS::lda) with [%mlr].
 ```{r}
 library(mlr)
 data(iris)
 
-## Define the task:
+## Define the task
 task = makeClassifTask(id = "tutorial", data = iris, target = "Species")
 
-## Define the learner:
+## Define the learner
 lrn = makeLearner("classif.lda")
 
-## Define the resampling strategy:
+## Define the resampling strategy
 rdesc = makeResampleDesc(method = "CV", stratify = TRUE)
 
-## Do the resampling:
+## Do the resampling
 r = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE)
 
-## Get the mean misclassification error:
+## Get the mean misclassification error
 r$aggr
 ```

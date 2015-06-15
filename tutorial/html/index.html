@@ -71,7 +71,7 @@
                         
                             
 <li >
-    <a href="learner/index.html">Learner</a>
+    <a href="learner/index.html">Learners</a>
 </li>
 
                         
@@ -309,27 +309,27 @@ are regularly updated and reflect the documentation of the <a href="http://cran.
 <p>An offline version of this of this tutorial is available for download <a href="http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip">here</a>.</p>
 <p>The tutorial explains the basic analysis of a data set step by step.
 Please refer to sections of the menu above: Basics, Advanced, Extend and Appendix.</p>
-<p>During the tutorial We present various simple examples from classification, regression, cluster and
-survival analysis during this tutorial to illustrate the main features of the package.</p>
+<p>During the tutorial we present various simple examples from classification, regression, cluster and
+survival analysis to illustrate the main features of the package.</p>
 <p>Enjoy reading!</p>
 <h2 id="quick-start">Quick start</h2>
-<p>A simple stratified cross-validation of  <em>linear discriminant analysis</em> with <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.</p>
+<p>A simple stratified cross-validation of <a href="http://www.rdocumentation.org/packages/MASS/functions/lda.html">linear discriminant analysis</a> with <a href="http://www.rdocumentation.org/packages/mlr/">mlr</a>.</p>
 <pre><code class="r">library(mlr)
 data(iris)
 
-## Define the task:
+## Define the task
 task = makeClassifTask(id = &quot;tutorial&quot;, data = iris, target = &quot;Species&quot;)
 
-## Define the learner:
+## Define the learner
 lrn = makeLearner(&quot;classif.lda&quot;)
 
-## Define the resampling strategy:
+## Define the resampling strategy
 rdesc = makeResampleDesc(method = &quot;CV&quot;, stratify = TRUE)
 
-## Do the resampling:
+## Do the resampling
 r = resample(learner = lrn, task = task, resampling = rdesc, show.info = FALSE)
 
-## Get the mean misclassification error:
+## Get the mean misclassification error
 r$aggr
 #&gt; mmce.test.mean 
 #&gt;           0.02
@@ -380,5 +380,5 @@ r$aggr
 
 <!--
 MkDocs version : 0.14.0
-Build Date UTC : 2015-06-14 21:37:21.879987
+Build Date UTC : 2015-06-15 19:50:36.934011
 -->

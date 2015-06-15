@@ -16,7 +16,7 @@ The following tasks can be instantiated and all inherit from the virtual supercl
 * [ClusterTask](&Task) for cluster analysis.
 
 To create a task, just call ``make<TaskType>``, e.g., [makeClassifTask](&Task).
-All tasks require an identifier (argument ``id``) and a [data frame](&base::data.frame) (argument ``data``).
+All tasks require an identifier (argument ``id``) and a [data.frame](&base::data.frame) (argument ``data``).
 If no ID is provided it is automatically generated using the variable name of the data.
 It will be later used to name results, for example of
 [benchmark experiments](benchmark_experiments.md), or in generated plots.
@@ -69,13 +69,12 @@ The positive class is ``benign``.
 Class ``malignant`` can be manually selected as the positive class:
 
 ```{r}
-classif.task = makeClassifTask(id = "BreastCancer", data = df, target = "Class",
-  positive = "malignant")
+classif.task = makeClassifTask(id = "BreastCancer", data = df, target = "Class", positive = "malignant")
 ```
 
 ### Cluster analysis
-Because cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the ``data``.
-In the following example we create a learning task from the data set [mtcars](&datasets::mtcars).
+As cluster analysis is unsupervised, the only mandatory argument to construct a cluster analysis task is the ``data``.
+Below we create a learning task from the data set [mtcars](&datasets::mtcars).
 
 ```{r}
 data(mtcars, package = "datasets")
@@ -95,18 +94,16 @@ surv.task = makeSurvTask(data = lung, target = c("time", "status"))
 surv.task
 ```
 
-The type of censoring can be specified via the argument ``censoring`` which defaults to
+The type of censoring can be specified via the argument ``censoring``, which defaults to
 ``"rcens"`` for right censored data.
 
 
 ### Cost-sensitive classification
 The standard objective in classification is to obtain a high prediction accuracy, i.e., to
 minimize the number of errors. Thereby, all types of misclassification errors are deemed
-equally severe. However, in many applications different kinds of errors cause different costs
-that should be taken into consideration.
+equally severe. However, in many applications different kinds of errors cause different costs.
 
-There exist different types of misclassification costs.
-In case of *class-dependent costs* that depend on the actual and predicted class labels it
+In case of *class-dependent costs*, that depend on the actual and predicted class labels, it
 is sufficient to create an ordinary [ClassifTask](&Task).
 
 In order to handle *example-specific costs* it is necessary to generate a [CostSensTask](&Task).
@@ -116,11 +113,11 @@ In this scenario, each example (*x*, *y*) is associated with an individual cost 
 minimal.
 
 As the cost vector contains all relevant information about the intended class label *y*, only
-the feature values *x* and a ``cost`` matrix that contains the cost vectors for all examples in the data
-set are required to create the [CostSensTask](&Task).
+the feature values *x* and a ``cost`` matrix, which contains the cost vectors for all examples in the data
+set, are required to create the [CostSensTask](&Task).
 
 In the following example we use the [iris data](&datasets::iris) and generate an artificial cost matrix
-(following [Beygelzimer et al. (2005)](http://dx.doi.org/10.1145/1102351.1102358)):
+(following [Beygelzimer et al., 2005](http://dx.doi.org/10.1145/1102351.1102358)):
 
 ```{r}
 df = iris
@@ -136,10 +133,10 @@ For more details see the section about [cost-sensitive classification](cost_sens
 
 ## Further settings
 The [&Task] help page also lists several other arguments to describe further details of the
-problem.
+learning problem.
 
 For example, we could include a ``blocking`` factor into the task.
-This would tell the task that some observations "belong together", and should
+This would tell the task that some observations "belong together" and should
 not be separated when splitting into training and test sets during a resampling iteration.
 
 Another possibility is to assign ``weights`` to observations according to their importance.
@@ -157,26 +154,29 @@ The most important operations are listed in the documentation of [&Task].
 Here are some more examples.
 
 ```{r}
-## Accessing the data set in classif.task:
+## Accessing the data set in classif.task
 str(getTaskData(classif.task))
 
-## Get the number of input variables in cluster.task:
+## Get the number of observations in classif.task
+getTaskSize(classif.task)
+
+## Get the number of input variables in cluster.task
 getTaskNFeats(cluster.task)
 
-## Get the names of the input variables in cluster.task:
+## Get the names of the input variables in cluster.task
 getTaskFeatureNames(cluster.task)
 
-## Get the names of the target columns:
+## Get the names of the target columns
 getTaskTargetNames(surv.task)
 
-## Get the values of the target variable in regr.task:
+## Get the values of the target variable in regr.task
 head(getTaskTargets(regr.task))
 
-## Get the cost matrix in costsens.task:
+## Get the cost matrix in costsens.task
 head(getTaskCosts(costsens.task))
 ```
 
-Note the many options [&getTaskData] provides to convert the data set into a convenient format.
+Note the many options that [&getTaskData] provides to convert the data set into a convenient format.
 This especially comes in handy when you [integrate a learner](create_learner.md) from another **R**
 package into [%mlr].
 In this regard the functions [&getTaskFormula] and [getTaskFormulaAsString](&getTaskFormula)
@@ -189,22 +189,22 @@ convenient than creating a new [&Task] from scratch.
 Here are some examples.
 
 ```{r}
-## Select observations and features:
+## Select observations and features
 cluster.task = subsetTask(cluster.task, subset = 4:17)
 
 ## It may happen, especially after selecting observations, that features are constant.
 ## These should be removed.
 removeConstantFeatures(cluster.task)
 
-## Remove selected features:
+## Remove selected features
 dropFeatures(surv.task, c("meal.cal", "wt.loss"))
 
-## Standardize numerical features:
+## Standardize numerical features
 task = normalizeFeatures(cluster.task, method = "range")
 summary(getTaskData(task))
 ```
 
-Some of these functions are covered and explained in more detail in the [data preprocessing](preproc.md) section.
+Some of these functions are explained in more detail in the [data preprocessing](preproc.md) section.
 
 
 ## Example tasks
