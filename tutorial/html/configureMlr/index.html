@@ -387,7 +387,7 @@ The following example shows how to prevent this:</p>
 <pre><code class="r">## This call gives an error caused by the low number of observations in class `virginica`
 train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
 #&gt; Error in qda.default(x, grouping, ...): some group is too small for 'qda'
-#&gt; Timing stopped at: 0.004 0 0.003
+#&gt; Timing stopped at: 0.006 0 0.006
 
 configureMlr(on.learner.error = &quot;warn&quot;)
 mod = train(&quot;classif.qda&quot;, task = iris.task, subset = 1:104)
