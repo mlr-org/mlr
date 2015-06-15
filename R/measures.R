@@ -697,9 +697,13 @@ db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
   name = "Davies-Bouldin cluster separation measure",
   note ="See `?clusterSim::index.DB`.",
   fun = function(task, model, pred, feats, extra.args) {
-    requirePackages("clusterSim", default.method = "load")
-    r = as.integer(as.factor(pred$data$response))
-    clusterSim::index.DB(feats, r)$DB
+    if(length(unique(pred$data$response)) > 1L) {
+      requirePackages("clusterSim", default.method = "load")
+      r = as.integer(as.factor(pred$data$response))
+      clusterSim::index.DB(feats, r)$DB
+    } else {
+      NA
+    }
   }
 )
 
