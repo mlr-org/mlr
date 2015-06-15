@@ -34,7 +34,8 @@ hpars = list(
   classif.lssvm = list(kernel = "rbfdot", sigma = 0.4, reduced = FALSE),
   classif.LiblineaRLogReg = list(type = 7),
   classif.LiblineaRBinary = list(type = 1),
-  classif.LiblineaRMultiClass = list(type = 1)
+  classif.LiblineaRMultiClass = list(type = 1),
+  classif.nodeHarvest = list(nodes = 100L, maxinter = 1L)
 )
 
 
@@ -49,8 +50,6 @@ test_that("no labels are switched", {
     names(lrns) = lids
     toremove = grepl("classif.mock", lids)
     toremove = toremove | grepl("classif.LiblineaRMultiClass", lids)
-    #FIXME: nodeHarvest does not yet pass this test
-    toremove = toremove | grepl("classif.nodeHarvest", lids)
     lrns = lrns[!toremove]
 
     errs = vnapply(lrns, function(lrn) {

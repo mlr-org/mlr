@@ -90,7 +90,7 @@ Suggests:
     modeltools,
     mRMRe,
     nnet,
-    nodeHarvest,
+    nodeHarvest (>= 0.7-3),
     pamr,
     party,
     penalized,
