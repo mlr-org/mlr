@@ -55,6 +55,9 @@
 #'   the currently used memory and the max memory ever used before
 #'   (the latter two both taken from \code{\link{gc}}).
 #'   See the implementation for details.
+#' @param final.dw.perc [\code{boolean}]\cr
+#'   If a Learner wrapped by a \code{\link{makeDownsampleWrapper}} is used, you can define the value of \code{dw.perc} which is used to train the Learner with the final parameter setting found by the tuning.
+#'   Default is \code{NULL} which will not change anything.
 #' @param ... [any]\cr
 #'   Further control parameters passed to the \code{control} argument of \code{\link[cmaes]{cma_es}} and
 #'   \code{tunerConfig} argument of \code{\link[irace]{irace}}.
@@ -69,13 +72,15 @@
 NULL
 
 makeTuneControl = function(same.resampling.instance, impute.val = NULL, start = NULL,
-  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL, ..., cl) {
+  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL, ..., cl) {
 
   if (!is.null(start))
     assertList(start, min.len = 1L, names = "unique")
   if (is.null(log.fun))
     log.fun = logFunTune
-  x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, tune.threshold.args, log.fun, ...)
+  if (!is.null(final.dw.perc))
+    assertNumeric(final.dw.perc, lower = 0, upper = 1)
+  x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, tune.threshold.args, log.fun, final.dw.perc, ...)
   x$start = start
   addClasses(x, c(cl, "TuneControl"))
 }

@@ -7,10 +7,10 @@
 #' @export
 #' @rdname TuneControl
 makeTuneControlIrace = function(impute.val = NULL, n.instances = 100L, show.irace.output = FALSE,
-  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL, ...) {
+  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL, ...) {
 
   makeTuneControl(same.resampling.instance = FALSE, impute.val = impute.val,
     n.instances = n.instances, show.irace.output = show.irace.output,
     start = NULL, tune.threshold = tune.threshold, tune.threshold.args = tune.threshold.args,
-    log.fun = log.fun, ..., cl = "TuneControlIrace")
+    log.fun = log.fun, final.dw.perc = final.dw.perc, ..., cl = "TuneControlIrace")
 }

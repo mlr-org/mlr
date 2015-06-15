@@ -1,5 +1,5 @@
 makeOptControl = function(same.resampling.instance, impute.val = NULL, tune.threshold = FALSE,
-  tune.threshold.args = list(), log.fun = NULL, ...) {
+  tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL, ...) {
 
   assertFlag(same.resampling.instance)
   if (!is.null(impute.val))
@@ -13,6 +13,7 @@ makeOptControl = function(same.resampling.instance, impute.val = NULL, tune.thre
     tune.threshold = tune.threshold,
     tune.threshold.args = tune.threshold.args,
     log.fun = log.fun,
+    final.dw.perc = final.dw.perc,
     extra.args = list(...)
   )
 }

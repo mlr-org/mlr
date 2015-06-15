@@ -27,5 +27,5 @@ tuneOptim = function(learner, task, resampling, measures, par.set, control,
   }
   i = getOptPathBestIndex(opt.path, measureAggrName(measures[[1]]), ties="random")
   e = getOptPathEl(opt.path, i)
-  makeTuneResult(learner, control, e$x, e$y, opt.path)
+  makeTuneResult(learner, control, e$x, e$y, NULL, opt.path)
 }

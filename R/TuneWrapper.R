@@ -57,13 +57,18 @@ makeTuneWrapper = function(learner, resampling, measures, par.set, control, show
 trainLearner.TuneWrapper = function(.learner, .task, .subset,  ...) {
   .task = subsetTask(.task, .subset)
   or = tuneParams(.learner$next.learner, .task, .learner$resampling, .learner$measures,
-    .learner$opt.pars, .learner$control, .learner$show.info)
+                  .learner$opt.pars, .learner$control, .learner$show.info)
   lrn = setHyperPars(.learner$next.learner, par.vals = or$x)
+  if("DownsampleWrapper" %in% class(.learner$next.learner) && !is.null(.learner$control$final.dw.perc) && !is.null(getHyperPars(lrn)$dw.perc) && getHyperPars(lrn)$dw.perc < 1) {
+    messagef("Train model on %f on data.", .learner$control$final.dw.perc)
+    lrn = setHyperPars(lrn, par.vals = list(dw.perc = .learner$control$final.dw.perc))
+  }
   m = train(lrn, .task)
   x = makeChainModel(next.model = m, cl = "TuneModel")
   x$opt.result = or
   return(x)
 }
+
 
 #' @export
 predictLearner.TuneWrapper = function(.learner, .model, .newdata, ...) {
