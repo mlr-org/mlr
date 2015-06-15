@@ -64,4 +64,6 @@ test_that("ber with faulty model produces NA", {
   expect_true(is.na(r$aggr))
 })
 
-
+test_that("db with single cluster doesn't give warnings", {
+  expect_that(crossval("cluster.kmeans", agri.task), not(gives_warning()))
+})
