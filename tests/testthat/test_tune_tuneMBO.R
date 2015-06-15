@@ -4,7 +4,9 @@ context("tuneMBO")
 if (interactive()) {
 test_that("tuneMBO", {
   skip_if_not_installed("mlrMBO")
-  requirePackages("!mlrMBO")
+  attachNamespace("mlrMBO")
+  # FIXME change when mlrMBO is on cran
+  #requirePackages("!mlrMBO")
   res = makeResampleDesc("Holdout")
   ps = makeParamSet(
     makeNumericParam("cp", lower = 0, upper = 1),
@@ -40,7 +42,8 @@ test_that("tuneMBO", {
 
 test_that("tuneMBO works with mfMBO", {
   skip_if_not_installed("mlrMBO")
-  requirePackages("!mlrMBO")
+  # FIXME change when mlrMBO is on cran
+  # requirePackages("!mlrMBO")
   res = makeResampleDesc("Holdout")
   ps = makeParamSet(
     makeNumericParam("cost", lower = -15, upper = 15, trafo = function(x) 2^x),

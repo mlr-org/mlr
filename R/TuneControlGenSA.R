@@ -1,7 +1,7 @@
 #' @export
 #' @rdname TuneControl
 makeTuneControlGenSA = function(same.resampling.instance = TRUE, impute.val = NULL, start = NULL,
-  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL...) {
+  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL, ...) {
 
   args = list(...)
   default = list(smooth = FALSE)

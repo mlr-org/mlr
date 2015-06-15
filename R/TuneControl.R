@@ -56,7 +56,7 @@
 #'   (the latter two both taken from \code{\link{gc}}).
 #'   See the implementation for details.
 #' @param final.dw.perc [\code{boolean}]\cr
-#'   If a Learner wrapped by a \code{\link{DownsampleWrapper}} is used, you can define the value of \code{dw.perc} which is used to train the Learner with the final parameter setting found by the tuning.
+#'   If a Learner wrapped by a \code{\link{makeDownsampleWrapper}} is used, you can define the value of \code{dw.perc} which is used to train the Learner with the final parameter setting found by the tuning.
 #'   Default is \code{NULL} which will not change anything.
 #' @param ... [any]\cr
 #'   Further control parameters passed to the \code{control} argument of \code{\link[cmaes]{cma_es}} and

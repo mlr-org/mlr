@@ -23,7 +23,6 @@ Object members:
   Note that when you have trafos on some of your params, the opt.path always contains the
   UNTRANSFORMED values on the original scale. You can simply call \code{trafoOptPath(opt.path)} to
   transform them, or, \code{as.data.frame{trafoOptPath(opt.path)}}}
-\item{dob [\code{numeric}]}{Which dobs of the opt.path to consider to find the best value}
 }
 }
 
