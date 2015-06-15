@@ -204,15 +204,15 @@ If there are systematic errors the thresholds have to be shifted accordingly.
 
 Useful in this regard is function [&plotThreshVsPerf] that permits to plot the average costs
 as well as any other performance measure versus possible threshold values for the positive
-class in [0,1].
+class in [0,1]. The underlying data is generated from [&generateThreshVsPerfData].
 
 The following plot show the cross-validated costs and error rate ([mmce](measures.md)).
 The theoretical threshold ``th`` calculated above is indicated by the vertical line.
 As you can see the theoretical threshold seems a bit large.
 
-```{r}
-d = generateThreshVsPerfData(r$pred, measures = list(credit.costs, mmce))
-plotThreshVsPerf(d, facet = "learner", mark.th = th)
+```{r, fig.width=8, fig.height=4}
+d = generateThreshVsPerfData(r, measures = list(credit.costs, mmce))
+plotThreshVsPerf(d, mark.th = th)
 ```
 
 

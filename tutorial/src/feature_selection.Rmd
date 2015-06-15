@@ -17,9 +17,7 @@ Based on these values the features can be ranked and a feature subset can be sel
 ### Calculating the feature importance
 
 Different methods for calculating the feature importance are built into [%mlr]'s function
-[&generateFilterValuesData].
-([&getFilterValues] has been deprecated in favor of [&generateFilterValuesData].)
-Currently, classification, regression and survival analysis tasks
+[&generateFilterValuesData] ([&getFilterValues] has been deprecated in favor of [&generateFilterValuesData].). Currently, classification, regression and survival analysis tasks
 are supported. A table showing all available methods can be found [here](filter_methods.md).
 
 Function [&generateFilterValuesData] requires the [&Task] and a character string specifying the filter
@@ -31,23 +29,35 @@ fv
 ```
 
 ``fv`` is a [&FilterValues] object and ``fv$data`` contains a [data.frame](&base::data.frame)
-that gives the importance values for all features.
-
+that gives the importance values for all features. Optionally, a vector of filter methods can be
+passed.
 
 ```{r}
-fv$data
+fv2 = generateFilterValuesData(iris.task, method = c("information.gain", "chi.squared"))
+fv2$data
 ```
 
 A bar plot of importance values for the individual features can be obtained using
 function [&plotFilterValues].
 
 ```{r}
-plotFilterValues(fv)
+plotFilterValues(fv2)
+```
+
+By default [&plotFilterValues] will create facetted subplots if multiple filter methods are passed as input to
+[&generateFilterValuesData].
+
+There is also an experimental [%ggvis] plotting function, [&plotFilterValuesGGVIS]. This takes the same
+arguments as [&plotFilterValues] with the addition of a `logical(1)` argument `interactive`, which, if used with
+an output from [&generateFilterValuesData] that includes multiple filter values, produces a [%shiny] application
+that allows the interactive selection of the displayed filter method.
+
+```{r, eval=FALSE}
+plotFilterValuesGGVIS(fv2, interactive = TRUE)
 ```
 
 According to the ``"information.gain"`` measure, `Petal.Width` and `Petal.Length`
 contain the most information about the target variable `Species`.
-
 
 ### Selecting a feature subset
 

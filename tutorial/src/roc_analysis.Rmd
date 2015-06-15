@@ -82,7 +82,15 @@ Per default, [&plotROCRCurves] draws a ROC curve and optionally adds a diagonal 
 the performance of a random classifier.
 
 ```{r}
-plotROCRCurves(generateROCRCurvesData(pred1), diagonal = TRUE)
+droc = generateROCRCurvesData(pred1)
+plotROCRCurves(droc, diagonal = TRUE)
+```
+There is also an experimental plotting function [&plotROCRCurvesGGVIS] which uses [%ggvis] to create similar
+figures with the addition of (optional) interactive tooltips (displayed on hover) that display the threshold
+at that point in the curve.
+
+```{r, eval = FALSE}
+plotROCRCurvesGGVIS(droc, cutoffs = TRUE)
 ```
 
 The corresponding area under curve ([auc](measures.md)) can be calculated as usual by calling
@@ -106,7 +114,6 @@ corresponding ROC curves in one plot.
 For this purpose just pass a named [list](&base::list) of [&Prediction]s to [&plotROCRCurves].
 
 ```{r}
-
 plotROCRCurves(generateROCRCurvesData(list(lda = pred1, ksvm = pred2)))
 ```
 
