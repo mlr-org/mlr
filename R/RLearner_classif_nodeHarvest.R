@@ -11,7 +11,7 @@ makeRLearner.classif.nodeHarvest = function() {
       makeNumericLearnerParam(id = "lambda"),
       makeUntypedLearnerParam(id = "addto", default = NULL),
       makeLogicalLearnerParam(id = "onlyinter"),
-      makeLogicalLearnerParam(id = "silent", default = FALSE),
+      makeLogicalLearnerParam(id = "silent", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "biascorr", default = FALSE)
     ),
     properties = c("numerics", "factors", "twoclass", "prob"),

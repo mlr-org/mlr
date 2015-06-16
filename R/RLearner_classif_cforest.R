@@ -7,8 +7,8 @@ makeRLearner.classif.cforest = function() {
       makeIntegerLearnerParam(id = "ntree", lower = 1L, default = 500L),
       makeIntegerLearnerParam(id = "mtry", lower = 1L, default = 5L),
       makeLogicalLearnerParam(id = "replace", default = FALSE),
-      makeLogicalLearnerParam(id = "trace", default = FALSE),
       makeNumericLearnerParam(id = "fraction", lower = 0, upper = 1, default = 0.632),
+      makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "teststat", values = c("quad", "max"), default = "quad"),
       makeLogicalLearnerParam(id = "pvalue", default = TRUE),
       makeDiscreteLearnerParam(id = "testtype",
@@ -23,7 +23,7 @@ makeRLearner.classif.cforest = function() {
       makeIntegerLearnerParam(id = "nresample", lower = 1L, default = 9999L),
       makeIntegerLearnerParam(id = "maxsurrogate", lower = 0L, default = 0L),
       makeIntegerLearnerParam(id = "maxdepth", lower = 0L, default = 0L),
-      makeLogicalLearnerParam(id = "savesplitstats", default = FALSE)
+      makeLogicalLearnerParam(id = "savesplitstats", default = FALSE, tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "prob", "factors", "numerics", "ordered", "weights", "missings"),
     par.vals = list(),
@@ -34,18 +34,16 @@ makeRLearner.classif.cforest = function() {
 }
 
 #' @export
-trainLearner.classif.cforest = function(.learner, .task, .subset, .weights = NULL,
-                                     ntree, mtry, replace, fraction, trace, pvalue,
-                                     teststat, testtype, mincriterion, minprob,
-                                     minsplit, minbucket, stump, randomsplits,
-                                     nresample, maxsurrogate, maxdepth,
-                                     savesplitstats, ...) {
+trainLearner.classif.cforest = function(.learner, .task, .subset,
+  .weights = NULL, ntree, mtry, replace, fraction, trace, pvalue, teststat,
+  testtype, mincriterion, minprob, minsplit, minbucket, stump, randomsplits,
+  nresample, maxsurrogate, maxdepth, savesplitstats, ...) {
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
-  ctrl = learnerArgsToControl(party::cforest_unbiased, ntree, mtry, replace, fraction,
-                              trace, pvalue, teststat, testtype, mincriterion,
-                              minprob, minsplit, minbucket, stump, randomsplits,
-                              nresample, maxsurrogate, maxdepth, savesplitstats)
+  ctrl = learnerArgsToControl(party::cforest_unbiased, ntree, mtry, replace,
+    fraction, trace, pvalue, teststat, testtype, mincriterion, minprob,
+    minsplit, minbucket, stump, randomsplits, nresample, maxsurrogate,
+    maxdepth, savesplitstats)
   party::cforest(f, data = d, controls = ctrl, weights = .weights, ...)
 }
 

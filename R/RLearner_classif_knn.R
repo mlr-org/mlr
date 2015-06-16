@@ -6,6 +6,7 @@ makeRLearner.classif.knn = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "k", default = 1L, lower = 1L),
       makeNumericLearnerParam(id = "l", default = 0L, lower = 0L),
+      makeLogicalLearnerParam(id = "prob", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "use.all", default = TRUE)
     ),
     # knn cannot really return probs, only for the winning class (yeah well done BR)

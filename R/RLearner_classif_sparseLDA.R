@@ -7,7 +7,7 @@ makeRLearner.classif.sparseLDA = function() {
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "lambda", default = 1e-6, lower = 0, when = "train"),
       makeIntegerLearnerParam(id = "maxIte", default = 100L, lower = 0L, when = "train"),
-      makeLogicalLearnerParam(id = "trace", default = FALSE, when = "train"),
+      makeLogicalLearnerParam(id = "trace", default = FALSE, when = "train", tunable = FALSE),
       makeNumericLearnerParam(id = "tol", default = 1e-6, lower = 0, when = "train")
     ),
     properties = c("twoclass", "multiclass", "numerics", "prob"),

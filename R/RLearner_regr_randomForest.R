@@ -17,7 +17,8 @@ makeRLearner.regr.randomForest = function() {
       makeIntegerLearnerParam(id = "maxnodes", lower = 1L),
       makeLogicalLearnerParam(id = "importance", default = FALSE),
       makeLogicalLearnerParam(id = "localImp", default = FALSE),
-      makeLogicalLearnerParam(id = "keep.inbag", default = FALSE)
+      makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(
       se.method = "bootstrap",

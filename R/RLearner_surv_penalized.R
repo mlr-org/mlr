@@ -8,7 +8,8 @@ makeRLearner.surv.penalized = function() {
       makeNumericLearnerParam(id = "lambda2", default = 0, lower = 0),
       makeLogicalLearnerParam(id = "fusedl", default = FALSE),
       makeLogicalLearnerParam(id = "standardize", default = FALSE),
-      makeIntegerLearnerParam(id = "maxiter", default = 25L)
+      makeIntegerLearnerParam(id = "maxiter", default = 25L),
+      makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
     properties = c("numerics", "factors", "ordered", "rcens"),
     name = "Penalized Regression",

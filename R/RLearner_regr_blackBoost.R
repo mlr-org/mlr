@@ -17,7 +17,7 @@ makeRLearner.regr.blackboost = function() {
       makeIntegerLearnerParam(id = "nresample", default = 9999L, lower = 1L, requires = expression(testtype=="MonteCarlo")),
       makeIntegerLearnerParam(id = "maxsurrogate", default = 0L, lower = 0L),
       makeIntegerLearnerParam(id = "mtry", default = 0L, lower = 0L),
-      makeLogicalLearnerParam(id = "savesplitstats", default = TRUE),
+      makeLogicalLearnerParam(id = "savesplitstats", default = TRUE, tunable = FALSE),
       makeIntegerLearnerParam(id = "maxdepth", default = 0L, lower = 0L)
     ),
     properties = c("numerics", "factors", "weights", "missings"),

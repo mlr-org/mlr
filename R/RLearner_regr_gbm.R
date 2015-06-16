@@ -6,11 +6,14 @@ makeRLearner.regr.gbm = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "distribution", default = "gaussian", values = c("gaussian", "laplace", "poisson")),
       makeIntegerLearnerParam(id = "n.trees", default = 100L, lower = 1L),
+      makeIntegerLearnerParam(id = "cv.folds", default = 0L),
       makeIntegerLearnerParam(id = "interaction.depth", default = 1L, lower = 1L),
       makeIntegerLearnerParam(id = "n.minobsinnode", default = 10L, lower = 1L),
       makeNumericLearnerParam(id = "shrinkage", default = 0.001, lower = 0),
       makeNumericLearnerParam(id = "bag.fraction", default = 0.5, lower = 0, upper = 1),
-      makeNumericLearnerParam(id = "train.fraction", default = 1, lower = 0, upper = 1)
+      makeNumericLearnerParam(id = "train.fraction", default = 1, lower = 0, upper = 1),
+      makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(distribution = "gaussian"),
     properties = c("missings", "numerics", "factors", "weights"),

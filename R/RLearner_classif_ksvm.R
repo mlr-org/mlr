@@ -13,6 +13,8 @@ makeRLearner.classif.ksvm = function() {
         lower = 0, default = 1, requires = expression(type %in% c("C-svc", "C-bsvc", "spoc-svc", "kbb-svc"))),
       makeNumericLearnerParam(id = "nu",
         lower = 0, default = 0.2, requires = expression(type == "nu-svc")),
+      makeNumericLearnerParam(id = "epsilon", default = 0.1,
+        requires = expression(type %in% c("eps-svr", "nu-svr", "eps-bsvm"))),
       makeNumericLearnerParam(id = "sigma",
         lower = 0, requires = expression(kernel %in% c("rbfdot", "anovadot", "besseldot", "laplacedot"))),
       makeIntegerLearnerParam(id = "degree", default = 3L, lower = 1L,

@@ -4,7 +4,8 @@ makeRLearner.classif.OneR = function() {
     cl = "classif.OneR",
     package = "RWeka",
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id = "B", default = 6L, lower = 1L)
+      makeIntegerLearnerParam(id = "B", default = 6L, lower = 1L),
+      makeLogicalLearnerParam(id = "output-debug-info", default = FALSE, tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
     name = "1-R Classifier",

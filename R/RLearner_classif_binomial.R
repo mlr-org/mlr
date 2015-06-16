@@ -5,7 +5,8 @@ makeRLearner.classif.binomial = function() {
     package = "stats",
     par.set = makeParamSet(
       makeDiscreteLearnerParam("link", values = c("logit", "probit", "cloglog", "cauchit", "log"),
-        default = "logit")
+        default = "logit"),
+      makeLogicalLearnerParam("model", default = TRUE, tunable = FALSE)
     ),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Binomial Regression",

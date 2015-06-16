@@ -19,7 +19,8 @@ makeRLearner.cluster.SimpleKMeans = function() {
       makeIntegerLearnerParam(id = "S", default = 10L, lower = 0L),
       makeNumericLearnerParam(id = "t2", default = -1),
       makeNumericLearnerParam(id = "t1", default = -1.5),
-      makeLogicalLearnerParam(id = "V")
+      makeLogicalLearnerParam(id = "V", tunable = FALSE),
+      makeLogicalLearnerParam(id = "output-debug-info", default = FALSE, tunable = FALSE)
     ),
     properties = c("numerics"),
     name = "K-Means Clustering",

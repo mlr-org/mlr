@@ -15,7 +15,9 @@ makeRLearner.classif.J48 = function() {
       makeLogicalLearnerParam(id = "S"),
       makeLogicalLearnerParam(id = "L"),
       makeLogicalLearnerParam(id = "A"),
-      makeLogicalLearnerParam(id = "J")
+      makeLogicalLearnerParam(id = "J"),
+      makeIntegerLearnerParam(id = "Q", tunable = FALSE),
+      makeLogicalLearnerParam(id = "output-debug-info", default = FALSE, tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
     name = "J48 Decision Trees",

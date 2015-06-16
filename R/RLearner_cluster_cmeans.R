@@ -10,7 +10,9 @@ makeRLearner.cluster.cmeans = function() {
       makeIntegerLearnerParam(id = "m", default = 2L, lower = 1L),
       makeDiscreteLearnerParam(id = "dist", values = c("euclidean", "manhattan"), default = "euclidean"),
       makeUntypedLearnerParam(id = "control"),
-      makeLogicalLearnerParam(id = "verbose")
+      makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE),
+      makeDiscreteLearnerParam(id = "method", default = "cmeans", values = c("cmeans", "ufcl")),
+      makeNumericLearnerParam(id = "rate.par", lower = 0, upper = 1)
     ),
     par.vals = list(centers = 2L),
     properties = c("numerics", "prob"),

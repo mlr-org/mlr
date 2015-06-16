@@ -20,7 +20,7 @@ The built-ins are:
   \item \code{imputeMode()} for imputation using the mode,
   \item \code{imputeMin(multiplier)} for imputing constant values shifted below the minimum
     using \code{min(x) - multiplier * diff(range(x))},
-  \item \code{imputeMin(multiplier)} for imputing constant values shifted above the maximum
+  \item \code{imputeMax(multiplier)} for imputing constant values shifted above the maximum
     using \code{max(x) + multiplier * diff(range(x))},
   \item \code{imputeNormal(mean, sd)} for imputation using normally
     distributed random values. Mean and standard deviation will be calculated
@@ -98,7 +98,7 @@ The built-ins are:
   \item \code{imputeMode()} for imputation using the mode,
   \item \code{imputeMin(multiplier)} for imputing constant values shifted below the minimum
     using \code{min(x) - multiplier * diff(range(x))},
-  \item \code{imputeMin(multiplier)} for imputing constant values shifted above the maximum
+  \item \code{imputeMax(multiplier)} for imputing constant values shifted above the maximum
     using \code{max(x) + multiplier * diff(range(x))},
   \item \code{imputeNormal(mean, sd)} for imputation using normally
     distributed random values. Mean and standard deviation will be calculated

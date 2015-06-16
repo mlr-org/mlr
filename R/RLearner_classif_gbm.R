@@ -6,11 +6,14 @@ makeRLearner.classif.gbm = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "distribution", values = c("bernoulli", "adaboost", "gaussian", "laplace", "huberized", "multinomial", "poisson", "pairwise")),
       makeIntegerLearnerParam(id = "n.trees", default = 100L, lower = 1L),
+      makeIntegerLearnerParam(id = "cv.folds", default = 0L),
       makeIntegerLearnerParam(id = "interaction.depth", default = 1L, lower = 1L),
       makeIntegerLearnerParam(id = "n.minobsinnode", default = 10L, lower = 1L),
       makeNumericLearnerParam(id = "shrinkage", default = 0.001, lower = 0),
       makeNumericLearnerParam(id = "bag.fraction", default = 0.5, lower = 0, upper = 1),
-      makeNumericLearnerParam(id = "train.fraction", default = 1, lower = 0, upper = 1)
+      makeNumericLearnerParam(id = "train.fraction", default = 1, lower = 0, upper = 1),
+      makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights"),
     name = "Gradient Boosting Machine",
@@ -27,10 +30,10 @@ trainLearner.classif.gbm = function(.learner, .task, .subset, .weights = NULL,  
     d = getTaskData(.task, .subset)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
-    gbm::gbm(f, data = d, keep.data = FALSE, verbose = FALSE, ...)
+    gbm::gbm(f, data = d, keep.data = FALSE, ...)
   } else  {
     f = as.formula(getTaskFormulaAsString(.task))
-    gbm::gbm(f, data = d, keep.data = FALSE, verbose = FALSE, weights = .weights, ...)
+    gbm::gbm(f, data = d, keep.data = FALSE, weights = .weights, ...)
   }
 }
 

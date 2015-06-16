@@ -3,7 +3,7 @@ context("getParamSet")
 test_that("getParamSet", {
   lrn = makeLearner("classif.lda")
   ps = getParamSet(lrn)
-  expect_true(setequal(names(ps$pars), c("method", "nu", "tol", "predict.method")))
+  expect_true(setequal(names(ps$pars), c("method", "nu", "tol", "predict.method", "CV")))
 
   lrn = makeFilterWrapper(lrn)
   ps = getParamSet(lrn)

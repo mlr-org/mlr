@@ -4,7 +4,8 @@ makeRLearner.regr.penalized.ridge = function() {
     cl = "regr.penalized.ridge",
     package = "penalized",
     par.set = makeParamSet(
-      makeNumericLearnerParam(id = "lambda2", default = 0, lower = 0)
+      makeNumericLearnerParam(id = "lambda2", default = 0, lower = 0),
+      makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
     properties = c("numerics", "factors"),
     name = "Penalized Ridge Regression",
