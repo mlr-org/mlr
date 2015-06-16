@@ -60,8 +60,8 @@
 #'   Default is \code{NULL} which will not change anything.
 #' @param budget [\code{integer(1)}]
 #'   Maximum budget for tuning. This value restricts the number of function
-#'   evaluations. In case of \code{makeTuneControlGrid} this number is
-#'   identical to the size of the grid. For \code{makeTuneControlRandom} the
+#'   evaluations. In case of \code{makeTuneControlGrid} this number must be identical
+#'   to the size of the grid. For \code{makeTuneControlRandom} the
 #'   \code{budget} equals the number of iterations (\code{maxit}) performed by
 #'   the random search algorithm. Within the \code{\link[cmaes]{cma_es}} the
 #'   \code{budget} corresponds to the product of the number of generations
@@ -69,8 +69,8 @@
 #'   (\code{lambda}). \code{\link[GenSA]{GenSA}} defines the \code{budget} via
 #'   the argument \code{max.call}. However, one should note that this algorithm
 #'   does not stop its local search before its end. This behaviour might lead
-#'   to an extension of the defined budget. In \code{irace}, one can define the
-#'   \code{budget} using \code{maxExperiments}.
+#'   to an extension of the defined budget. In \code{irace},
+#'   \code{budget} is passed to \code{maxExperiments}.
 #' @param ... [any]\cr
 #'   Further control parameters passed to the \code{control} arguments of
 #'   \code{\link[cmaes]{cma_es}} or \code{\link[GenSA]{GenSA}}, as well as
@@ -109,7 +109,7 @@ print.TuneControl = function(x, ...) {
   catf("Same resampling instance: %s", x$same.resampling.instance)
   catf("Imputation value: %s", ifelse(is.null(x$impute.val), "<worst>", sprintf("%g", x$impute.val)))
   catf("Start: %s", convertToShortString(x$start))
-  catf("Budget: %s", convertToShortString(x$budget))
+  catf("Budget: %i", x$budget)
   catf("Tune threshold: %s", x$tune.threshold)
   catf("Further arguments: %s", convertToShortString(x$extra.args))
 }

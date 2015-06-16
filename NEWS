@@ -1,6 +1,8 @@
 mlr_2.5:
-- tuning: added 'budget' parameter in makeTuneControl*, allowing to define a maximum budget for tuning
-- makeTuneControlGenSA: optimized function will be considered non-smooth per default (change via ...)
+- tuning: added 'budget' parameter in makeTuneControl*, allowing to
+  define a maximum "number of evaluations" budget for tuning algorithms
+- makeTuneControlGenSA: optimized function will be considered non-smooth
+  per default (change via ... args)
 
 mlr_2.4:
 - WrappedModel printer was slightly improved
