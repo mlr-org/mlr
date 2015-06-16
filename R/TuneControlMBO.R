@@ -11,15 +11,32 @@
 #   Control object for model-based optimization tuning.
 # @export
 # @rdname TuneControl
-makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL, learner, mbo.control,
-  tune.threshold = FALSE, tune.threshold.args = list(), continue = FALSE, log.fun = NULL, final.dw.perc = NULL) {
+makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL,
+  learner, mbo.control, tune.threshold = FALSE, tune.threshold.args = list(),
+  continue = FALSE, log.fun = NULL, final.dw.perc = NULL, budget = NULL) {
 
   assertClass(learner, classes = "Learner")
   assertClass(mbo.control, "MBOControl")
   assertFlag(continue)
+
+  if (is.null(budget))
+    budget = mbo.control$init.design.points + mbo.control$iters
+  else if (mbo.control$init.design.points > budget)
+    stopf("The size of the initial design (init.design.points = %i) exceeds the given budget (%i).",
+      mbo.control$init.design.points, budget)
+  else if (mbo.control$init.design.points + mbo.control$iters > budget)
+    stopf("The given budget (%i) is smaller than the sum of init.design.points (%i) and iters (%i).",
+      budget, mbo.control$init.design.points, mbo.control$iters)
+  else if (mbo.control$init.design.points + mbo.control$iters < budget) {
+    catf("The budget was reduced from %i to %i, respecting 'init.design.points = %i' and 'iters = %i'.",
+      budget, mbo.control$init.design.points + mbo.control$iters,
+      mbo.control$init.design.points, mbo.control$iters)
+    budget = mbo.control$init.design.points + mbo.control$iters
+  }
+
   x = makeTuneControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val,
     start = NULL, tune.threshold = tune.threshold, tune.threshold.args = tune.threshold.args,
-    cl = "TuneControlMBO", log.fun = log.fun, final.dw.perc = final.dw.perc)
+    cl = "TuneControlMBO", log.fun = log.fun, final.dw.perc = final.dw.perc, budget = budget)
   x$learner = learner
   x$mbo.control = mbo.control
   x$continue = continue

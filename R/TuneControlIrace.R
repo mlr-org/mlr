@@ -6,11 +6,30 @@
 #'   Default is \code{FALSE}.
 #' @export
 #' @rdname TuneControl
-makeTuneControlIrace = function(impute.val = NULL, n.instances = 100L, show.irace.output = FALSE,
-  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL, ...) {
+makeTuneControlIrace = function(impute.val = NULL, n.instances = 100L,
+  show.irace.output = FALSE, tune.threshold = FALSE, tune.threshold.args = list(),
+  log.fun = NULL, final.dw.perc = NULL, budget = NULL, ...) {
+
+  # check, if 'budget' fits to 'maxExperiments'
+  args = list(...)
+  if (is.null(budget)) {
+    if (is.null(args$maxExperiments))
+      budget = args$maxExperiments = 1000L
+    else
+      budget = args$maxExperiments
+  } else {
+    if (is.null(args$maxExperiments))
+      args$maxExperiments = budget
+    else if (budget != args$maxExperiments)
+      stopf("The number of experiments (maxExperiments = %i) differs from the given budget (budget = %i).",
+        args$maxExperiments, budget)
+  }
+
+  args$maxExperiments = asCount(args$maxExperiments)
+  n.instances = asCount(n.instances)
 
   makeTuneControl(same.resampling.instance = FALSE, impute.val = impute.val,
     n.instances = n.instances, show.irace.output = show.irace.output,
     start = NULL, tune.threshold = tune.threshold, tune.threshold.args = tune.threshold.args,
-    log.fun = log.fun, final.dw.perc = final.dw.perc, ..., cl = "TuneControlIrace")
+    log.fun = log.fun, final.dw.perc = final.dw.perc, budget = budget, ..., cl = "TuneControlIrace")
 }

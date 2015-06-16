@@ -44,5 +44,14 @@ test_that("tuneGrid works with dependent params", {
   expect_true(!is.na(tr$y))
 })
 
-
-
+test_that("makeTuneControlGrid throws an error, if budget setting is not appropriate", {
+  ps = makeParamSet(
+    makeDiscreteParam("kernel", values = c("vanilladot", "rbfdot")),
+    makeNumericParam("C", lower = 1, upper = 2),
+    makeNumericParam("sigma", lower = 1, upper = 2, requires = quote(kernel == "rbfdot"))
+  )
+  lrn = makeLearner("classif.ksvm")
+  rdesc = makeResampleDesc("Holdout")
+  ctrl = makeTuneControlGrid(resolution = 3L, budget = 50L)
+  expect_error(tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl, show.info = FALSE))
+})
