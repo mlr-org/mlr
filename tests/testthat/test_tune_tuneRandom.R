@@ -39,3 +39,18 @@ test_that("tuneRandom works with trafo", {
   expect_true(!is.na(tr$y) && is.finite(tr$y))
 })
 
+test_that("tuneRandom uses budget", {
+  lrn = makeLearner("classif.ksvm")
+  ps = makeParamSet(makeNumericParam("sigma", lower = -10, upper = -1, trafo = function(x) 2^x))
+  rdesc = makeResampleDesc("Holdout")
+  ctrl = makeTuneControlRandom(maxit = 3)
+  ctrl2 = makeTuneControlRandom(budget = 3, maxit = NULL)
+  ctrl3 = makeTuneControlRandom(budget = 3, maxit = 3)
+  expect_identical(ctrl, ctrl2)
+  expect_identical(ctrl, ctrl3)
+  expect_error(makeTuneControlRandom(budget = 3))
+
+  tr = tuneParams(lrn, iris.task, rdesc, par.set = ps, control = ctrl)
+  expect_equal(getOptPathLength(tr$opt.path), 3)
+  expect_true(!is.na(tr$y) && is.finite(tr$y))
+})

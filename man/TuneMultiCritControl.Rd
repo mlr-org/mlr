@@ -54,8 +54,9 @@ For multi-criteria optimization pass a vector of imputation values, one for each
 in the same order as your measures.}
 
 \item{...}{[any]\cr
-Further control parameters passed to the \code{control} argument of \code{\link[cmaes]{cma_es}} and
-\code{tunerConfig} argument of \code{\link[irace]{irace}}.}
+Further control parameters passed to the \code{control} arguments of
+\code{\link[cmaes]{cma_es}} or \code{\link[GenSA]{GenSA}}, as well as
+towards the \code{tunerConfig} argument of \code{\link[irace]{irace}}.}
 
 \item{maxit}{[\code{integer(1)}]\cr
 Number of iterations for random search.

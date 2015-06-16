@@ -16,6 +16,18 @@ tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.
   ctrl.cmaes = insert(ctrl.cmaes, control$extra.args)
   cx = function(x) convertXMatrixCols(x, par.set)
 
+  # check whether the budget parameter is used correctly;
+  # this check is only performed, if the budget is defined, but neither start, lambda nor maxit were defined
+  N = length(start)
+  budget = control$budget
+  if (!is.null(budget) && is.null(control$start) && is.null(ctrl.cmaes$lambda) && is.null(ctrl.cmaes$maxit)) {
+    ctrl.cmaes$lambda = as.integer(4 + floor(3 * log(N)))
+    ctrl.cmaes$maxit = as.integer(100 * N^2)
+    if (control$budget != ctrl.cmaes$lambda * ctrl.cmaes$maxit)
+      stopf("budget (%i) != lambda (%i) * maxit (%i)",
+        control$budget, ctrl.cmaes$lambda, ctrl.cmaes$maxit)
+  }
+
   cmaes::cma_es(par = start, fn = tunerFitnFunVectorized, lower = low, upper = upp, control = ctrl.cmaes,
     learner = learner, task = task, resampling = resampling, measures = measures,
     par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
