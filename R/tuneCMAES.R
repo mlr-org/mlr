@@ -20,13 +20,24 @@ tuneCMAES = function(learner, task, resampling, measures, par.set, control, opt.
   # this check is only performed, if the budget is defined, but neither start, lambda nor maxit were defined
   N = length(start)
   budget = control$budget
-  if (!is.null(budget) && is.null(control$start) && is.null(ctrl.cmaes$lambda) && is.null(ctrl.cmaes$maxit)) {
-    ctrl.cmaes$lambda = as.integer(4 + floor(3 * log(N)))
-    ctrl.cmaes$maxit = as.integer(100 * N^2)
-    if (control$budget != ctrl.cmaes$lambda * ctrl.cmaes$maxit)
-      stopf("budget (%i) != lambda (%i) * maxit (%i)",
-        control$budget, ctrl.cmaes$lambda, ctrl.cmaes$maxit)
-  }
+
+  # either use user choice or lambda default, now lambda is set
+  if (is.null(ctrl.cmaes$lambda))
+    ctrl.cmaes$lambda = 4 + floor(3 * log(N))
+
+  # if we have budget, calc maxit, otherwise use CMAES default, now maxit is set
+  maxit = if (is.null(budget))
+    ifelse(is.null(ctrl.cmaes$maxit), 100*N^2, ctrl.cmaes$maxit)
+  else
+    floor(budget / ctrl.cmaes$lambda)
+
+  if (!is.null(budget) && budget < ctrl.cmaes$lambda)
+    stopf("Budget = %$i cannot be less than lambda = %i!", budget, ctrl.cmaes$lambda)
+
+  if (!is.null(ctrl.cmaes$maxit) && ctrl.cmaes$maxit != maxit)
+    stopf("Provided setting of maxit = %i does not work with provided budget = %s, lambda = %i",
+      ctrl.cmaes$maxit, ifelse(is.null(budget), "NULL", budget), ctrl.cmaes$lambda)
+  ctrl.cmaes$maxit = maxit
 
   cmaes::cma_es(par = start, fn = tunerFitnFunVectorized, lower = low, upper = upp, control = ctrl.cmaes,
     learner = learner, task = task, resampling = resampling, measures = measures,

@@ -28,7 +28,7 @@ makeTuneControlIrace = function(impute.val = NULL, n.instances = 100L,
       x$extra.args$maxExperiments, budget)
   # now if budget was given, use it
   if (!is.null(budget))
-    x$extra.args$maxExperiments = budget
+    x$extra.args$maxExperiments = x$budget
 
   return(x)
 }
