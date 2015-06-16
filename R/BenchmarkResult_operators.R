@@ -6,18 +6,51 @@
 #' @family benchmark
 getBMRTaskIds = function(bmr) {
   assertClass(bmr, "BenchmarkResult")
-  return(names(bmr))
+  return(names(bmr$results))
+}
+
+#' @title Return learners used in benchmark.
+#'
+#' @template arg_bmr
+#' @return [\code{list}].
+#' @export
+#' @family benchmark
+getBMRLearners = function(bmr) {
+  assertClass(bmr, "BenchmarkResult")
+  return(bmr$learners)
 }
 
 #' @title Return learner ids used in benchmark.
 #'
 #' @template arg_bmr
-#' @return [\code{list} | \code{character}]. See above.
+#' @return [\code{character}].
 #' @export
 #' @family benchmark
 getBMRLearnerIds = function(bmr) {
   assertClass(bmr, "BenchmarkResult")
-  return(names(bmr[[1L]]))
+  extractSubList(bmr$learners, "id", use.names = FALSE)
+}
+
+#' @title Return measures used in benchmark.
+#'
+#' @template arg_bmr
+#' @return [\code{list}]. See above.
+#' @export
+#' @family benchmark
+getBMRMeasures = function(bmr) {
+  assertClass(bmr, "BenchmarkResult")
+  return(bmr$measures)
+}
+
+#' @title Return measures used in benchmark.
+#'
+#' @template arg_bmr
+#' @return [\code{list}]. See above.
+#' @export
+#' @family benchmark
+getBMRMeasureIds = function(bmr) {
+  assertClass(bmr, "BenchmarkResult")
+  extractSubList(bmr$measures, "id", use.names = FALSE)
 }
 
 # returns buried object in BMR, either as list of lists or data.frame with task.id, learner.id cols
@@ -35,7 +68,7 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
     assertSubset(learner.ids, brlids)
   res = lapply(task.ids, function(tid) {
     xs = lapply(learner.ids, function(lid) {
-      p = fun(bmr[[tid]][[lid]])
+      p = fun(bmr$results[[tid]][[lid]])
       if (as.df) {
         if (!is.null(p))
           p = as.data.frame(cbind(task.id = tid, learner.id = lid, p))

@@ -82,10 +82,15 @@ benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, s
     level = plevel
   )
   results.by.task = split(results, unlist(inds$task))
-  for(taskname in names(results.by.task)) {
+  for (taskname in names(results.by.task)) {
     names(results.by.task[[taskname]]) = inds$learner[inds$task == taskname]
   }
   addClasses(results.by.task, "BenchmarkResult")
+  makeS3Obj("BenchmarkResult",
+    results = results.by.task,
+    measures = measures,
+    learners = learners
+  )
 }
 
 #' Result of a benchmark run.

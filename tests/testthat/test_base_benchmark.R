@@ -18,6 +18,8 @@ test_that("benchmark", {
   expect_true(is.numeric(df$mmce))
   expect_equal(getBMRTaskIds(res), task.names)
   expect_equal(getBMRLearnerIds(res), learner.names)
+  expect_equal(getBMRMeasures(res), list(mmce))
+  expect_equal(getBMRMeasureIds(res), "mmce")
 
   preds = getBMRPredictions(res, as.df = FALSE)
   expect_true(is.list(preds))
