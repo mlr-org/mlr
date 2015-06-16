@@ -9,7 +9,7 @@ makeRLearner.regr.mob = function() {
       makeIntegerLearnerParam(id = "minsplit", default = 20L, lower = 1L),
       makeNumericLearnerParam(id = "trim", default = 0.1, lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "breakties", default = FALSE),
-      makeLogicalLearnerParam(id = "verbose", default = FALSE),
+      makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "model", default = modeltools::glinearModel,
         values = list(glinearModel = modeltools::glinearModel, linearModel = modeltools::linearModel)),
       makeUntypedLearnerParam(id = "part.feats"),

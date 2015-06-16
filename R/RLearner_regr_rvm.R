@@ -24,7 +24,9 @@ makeRLearner.regr.rvm = function() {
       makeNumericLearnerParam(id = "iterations", default = 100L, lower = 0L),
       makeNumericLearnerParam(id = "tol", default = .Machine$double.eps, lower = 0),
       makeNumericLearnerParam(id = "minmaxdiff", default = 0.001, lower = 0),
-      makeLogicalLearnerParam(id = "fit", default = TRUE)
+      makeLogicalLearnerParam(id = "verbosity", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "fit", default = TRUE),
+      makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L)
     ),
     par.vals = list(fit = FALSE),
     properties = c("numerics", "factors"),

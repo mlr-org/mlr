@@ -11,9 +11,10 @@ makeRLearner.classif.bdk = function() {
       makeNumericVectorLearnerParam(id = "alpha", default = c(0.05, 0.01), len = 2L),
       makeNumericVectorLearnerParam(id = "radius"),
       makeNumericLearnerParam(id = "xweight", default = 0.75, lower = 0),
-      makeLogicalLearnerParam(id = "contin"),
+      makeLogicalLearnerParam(id = "contin", tunable = FALSE),
       makeLogicalLearnerParam(id = "toroidal", default = FALSE),
-      makeDiscreteLearnerParam(id = "n.hood", values = c("circular", "square"))
+      makeDiscreteLearnerParam(id = "n.hood", values = c("circular", "square")),
+      makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE)
     ),
     properties = c("numerics", "twoclass", "multiclass", "prob"),
     name = "Bi-Directional Kohonen map",

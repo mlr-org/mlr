@@ -8,7 +8,7 @@ makeRLearner.classif.sda = function() {
       makeNumericLearnerParam("lambda.var", lower = 0, upper = 1),
       makeNumericLearnerParam("lambda.freqs", lower = 0, upper = 1),
       makeLogicalLearnerParam("diagonal", default = FALSE),
-      makeLogicalLearnerParam("verbose", default = TRUE)
+      makeLogicalLearnerParam("verbose", default = TRUE, tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "numerics", "prob"),
     name = "Shrinkage Discriminant Analysis",

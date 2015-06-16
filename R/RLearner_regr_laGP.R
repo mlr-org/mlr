@@ -14,7 +14,8 @@ makeRLearner.regr.laGP = function() {
       # X, so the are not given here
       makeIntegerLearnerParam(id = "close", lower = 0), 
       makeIntegerLearnerParam(id = "numrays", lower = 0, 
-        requires = quote(method == "alcray"))
+        requires = quote(method == "alcray")),
+      makeNumericLearnerParam(id = "verb", default = 0, tunable = FALSE)
     ),
     properties = c("numerics", "se"),
     name = "Local Approximate Gaussian Process",

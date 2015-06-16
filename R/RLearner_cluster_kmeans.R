@@ -9,7 +9,7 @@ makeRLearner.cluster.kmeans = function() {
       makeIntegerLearnerParam(id = "nstart", default = 1L, lower = 1L),
       makeDiscreteLearnerParam(id = "algorithm",
         values = c("Hartigan-Wong", "Lloyd", "Forgy", "MacQueen"), default = 'Hartigan-Wong'),
-      makeLogicalLearnerParam(id = "trace")
+      makeLogicalLearnerParam(id = "trace", tunable = FALSE)
     ),
     par.vals = list(centers = 2L),
     properties = c("numerics"),

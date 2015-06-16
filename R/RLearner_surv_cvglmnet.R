@@ -30,7 +30,8 @@ makeRLearner.surv.cvglmnet = function() {
       makeNumericLearnerParam(id = "pmin", default = 1.0e-9, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "exmx", default = 250.0),
       makeNumericLearnerParam(id = "prec", default = 1e-10),
-      makeIntegerLearnerParam(id = "mxit", default = 100, lower = 1)
+      makeIntegerLearnerParam(id = "mxit", default = 100, lower = 1),
+      makeLogicalLearnerParam(id = "factory", default = FALSE)
     ),
     properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     name = "GLM with Regularization (Cross Validated Lambda)",

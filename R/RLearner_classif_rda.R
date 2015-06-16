@@ -9,6 +9,7 @@ makeRLearner.classif.rda = function() {
       makeLogicalLearnerParam(id = "crossval", default = TRUE),
       makeIntegerLearnerParam(id = "fold", default = 10L, lower = 1L),
       makeNumericLearnerParam(id = "train.fraction", default = 0.5, lower = 0, upper = 1),
+      makeLogicalLearnerParam(id = "output", default = FALSE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "schedule", default = 1L, values = 1:2, requires = expression(simAnn==FALSE)),
       makeNumericLearnerParam(id = "T.start", default = 0.1, lower = 0, requires = expression(simAnn==TRUE)),
       makeNumericLearnerParam(id = "halflife", default = 0.1, lower = 0, requires = expression(simAnn==TRUE || schedule==1)),

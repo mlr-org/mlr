@@ -6,7 +6,10 @@ makeRLearner.regr.plsr = function() {
       makeIntegerLearnerParam(id = "ncomp", lower = 1),
       makeDiscreteLearnerParam(id = "method", default = "kernelpls",
         values = c("kernelpls", "widekernelpls", "simpls", "oscorespls")),
-      makeLogicalLearnerParam(id = "scale", default = TRUE)
+      makeLogicalLearnerParam(id = "scale", default = TRUE),
+      makeLogicalLearnerParam(id = "model", default = TRUE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "x", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "y", default = FALSE, tunable = FALSE)
     ),
     properties = c("numerics", "factors"),
     name = "Partial Least Squares Regression",

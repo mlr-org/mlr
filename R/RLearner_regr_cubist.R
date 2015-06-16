@@ -9,7 +9,7 @@ makeRLearner.regr.cubist = function() {
       makeIntegerLearnerParam(id = "rules", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "extrapolation", default = 100, lower = 0, upper = 100),
       makeIntegerLearnerParam(id = "sample", default = 0L, lower = 0L),
-      makeIntegerLearnerParam(id = "seed", default = sample.int(4096, size = 1) - 1L),
+      makeIntegerLearnerParam(id = "seed", default = sample.int(4096, size = 1) - 1L, tunable = FALSE),
       makeUntypedLearnerParam(id = "label", default = "outcome"),
       makeIntegerLearnerParam(id = "neighbors", default = 0L, lower = 0L, upper = 9L, when = "predict")
     ),

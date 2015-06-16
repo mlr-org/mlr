@@ -5,6 +5,7 @@ makeRLearner.classif.quaDA = function() {
     package = "DiscriMiner",
     par.set = makeParamSet(
       #makeNumericVectorLearnerParam(id = "prior", lower = 0, upper = 1, default = NULL),
+      makeDiscreteLearnerParam(id = "validation", values = c("crossval", "learntest"))
       ),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Quadratic Discriminant Analysis",

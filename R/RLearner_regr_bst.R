@@ -11,7 +11,7 @@ makeRLearner.regr.bst = function() {
       makeUntypedLearnerParam(id = "f.init", default = NULL),
       makeUntypedLearnerParam(id = "xselect.init", default = NULL),
       makeLogicalLearnerParam(id = "center", default = FALSE),
-      makeLogicalLearnerParam(id = "trace", default = FALSE),
+      makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam(id = "numsample", default = 50L, lower = 1L),
       makeIntegerLearnerParam(id = "df", default = 4L, lower = 1L),
       makeIntegerLearnerParam(id = "minsplit", default = 20L, lower = 1L),
@@ -39,11 +39,11 @@ trainLearner.regr.bst = function(.learner, .task, .subset, .weights = NULL, msto
   usesurrogate, surrogatestyle, maxdepth, xval, Learner, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   ctrl = learnerArgsToControl(bst::bst_control, mstop, nu, twinboost, f.init,
-                              xselect.init, center, trace, numsample, df)
+    xselect.init, center, trace, numsample, df)
   control.tree = learnerArgsToControl(list,  minsplit, minbucket, cp, maxsurrogate,
-                                      usesurrogate, surrogatestyle, maxdepth, xval)
+    usesurrogate, surrogatestyle, maxdepth, xval)
   bst::bst(x = d$data, y = d$target, family = "gaussian", ctrl = ctrl,
-           control.tree = control.tree, learner = Learner, ...)
+    control.tree = control.tree, learner = Learner, ...)
 }
 
 #' @export
