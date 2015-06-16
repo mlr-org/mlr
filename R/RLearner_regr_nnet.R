@@ -14,7 +14,7 @@ makeRLearner.regr.nnet = function() {
       makeNumericLearnerParam(id = "rang", default = 0.7),
       makeNumericLearnerParam(id = "decay", default = 0, lower = 0),
       makeLogicalLearnerParam(id = "Hess", default = FALSE),
-      makeLogicalLearnerParam(id = "trace", default = TRUE, tunable = TRUE),
+      makeLogicalLearnerParam(id = "trace", default = TRUE, tunable = FALSE),
       makeIntegerLearnerParam(id = "MaxNWts", default = 1000L, lower = 1L),
       # FIXME_PK: Why are abstoll and reltoll written with 2 "l"?
       makeNumericLearnerParam(id = "abstoll", default = 1.0e-4),

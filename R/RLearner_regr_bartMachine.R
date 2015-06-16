@@ -25,9 +25,9 @@ makeRLearner.regr.bartMachine = function() {
       makeLogicalLearnerParam(id = "impute_missingness_with_rf_impute", default = FALSE),
       makeLogicalLearnerParam(id = "impute_missingness_with_x_j_bar_for_lm", default = TRUE),
       makeLogicalLearnerParam(id = "mem_cache_for_speed", default = TRUE),
-      makeLogicalLearnerParam(id = "serialize", default = FALSE, tunable = TRUE),
+      makeLogicalLearnerParam(id = "serialize", default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam(id = "seed", tunable = FALSE),
-      makeLogicalLearnerParam(id = "verbose", default = TRUE, tunable = TRUE)
+      makeLogicalLearnerParam(id = "verbose", default = TRUE, tunable = FALSE)
     ),
     par.vals = list("use_missing_data" = TRUE),
     properties = c("numerics", "factors", "missings"),
