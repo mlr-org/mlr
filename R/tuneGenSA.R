@@ -10,13 +10,13 @@ tuneGenSA = function(learner, task, resampling, measures, par.set, control, opt.
   ctrl.gensa = control$extra.args
   cx = function(x) convertXNumeric(x, par.set)
 
-  # FIXME_PK: GenSA sometimes exceeds the given budget!
+  # FIXME: GenSA exceeds the given budget (if it is very low)!
   res = GenSA::GenSA(par = start, fn = tunerFitnFun, lower = low, upper = upp, control = ctrl.gensa,
     learner = learner, task = task, resampling = resampling, measures = measures,
     par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
     convertx = cx, remove.nas = FALSE)
 
-  # FIXME_PK: the following condition can be removed, once we are able to fix the
+  # FIXME: the following condition can be removed, once we are able to fix the
   # budget in GenSA
   if (!is.null(control$budget) && res$counts > control$budget)
     warningf("GenSA used %i function calls, exceededing the given budget of %i evaluations.",

@@ -58,7 +58,7 @@
 #' @param final.dw.perc [\code{boolean}]\cr
 #'   If a Learner wrapped by a \code{\link{makeDownsampleWrapper}} is used, you can define the value of \code{dw.perc} which is used to train the Learner with the final parameter setting found by the tuning.
 #'   Default is \code{NULL} which will not change anything.
-#' @param budget [\code{integer(1)}]
+#' @param budget [\code{integer(1)}]\cr
 #'   Maximum budget for tuning. This value restricts the number of function
 #'   evaluations. In case of \code{makeTuneControlGrid} this number must be identical
 #'   to the size of the grid. For \code{makeTuneControlRandom} the
@@ -69,8 +69,8 @@
 #'   (\code{lambda}). \code{\link[GenSA]{GenSA}} defines the \code{budget} via
 #'   the argument \code{max.call}. However, one should note that this algorithm
 #'   does not stop its local search before its end. This behaviour might lead
-#'   to an extension of the defined budget. In \code{irace},
-#'   \code{budget} is passed to \code{maxExperiments}.
+#'   to an extension of the defined budget and will result in a warning. In
+#'   \code{irace}, \code{budget} is passed to \code{maxExperiments}.
 #' @param ... [any]\cr
 #'   Further control parameters passed to the \code{control} arguments of
 #'   \code{\link[cmaes]{cma_es}} or \code{\link[GenSA]{GenSA}}, as well as
