@@ -5,7 +5,7 @@
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/mlr)](http://cran.rstudio.com/web/packages/mlr/index.html)
 
 * [Offical CRAN release site](http://cran.r-project.org/web/packages/mlr/)
-* [Detailed Tutorial](http://berndbischl.github.io/mlr/tutorial/html/) ([online](http://berndbischl.github.io/mlr/tutorial/html/), [download for offline usage](http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip))
+* [Detailed Tutorial](https://mlr-org.github.io/mlr-tutorial/tutorial/current/html/) ([online](https://mlr-org.github.io/mlr-tutorial/tutorial/current/html/), [download for offline usage](https://mlr-org.github.io/mlr-tutorial/tutorial/current/mlr_tutorial.zip))
 * [R Documentation in HTML](http://www.rdocumentation.org/packages/mlr)
 * Install the development version
 
