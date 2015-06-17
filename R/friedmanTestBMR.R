@@ -33,7 +33,7 @@
 friedmanTestBMR = function(bmr,measure=NULL,aggregation = 'default'){
   assertClass(bmr, "BenchmarkResult")
   if (is.null(measure)){
-    measure = getBMRMeasures(bmr)[[1L]]
+    measure = getBMRMeasures(bmr)[[1]]
   }
   assertClass(measure, "Measure")
   assertChoice(aggregation,c('default','mean'))

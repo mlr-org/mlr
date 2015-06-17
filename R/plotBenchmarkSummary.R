@@ -34,11 +34,10 @@
 getBenchmarkSummaryData = function(bmr,measure = NULL, fill = "best"){
   assertClass(bmr, "BenchmarkResult")
   assertChoice(fill,c("worst","best"))
-  if (!is.null(measure)){
-    assertClass(measure, "Measure")
-  } else {
+  if (is.null(measure)){
     measure = getBMRMeasures(bmr)[[1]]
   }
+  assertClass(measure, "Measure")
   df = as.data.frame(bmr)
   aggrMeas = mlr:::measureAggrName(measure)
   df = mlr::getBMRAggrPerformances(bmr,as.df = TRUE)
@@ -65,7 +64,7 @@ getBenchmarkSummaryData = function(bmr,measure = NULL, fill = "best"){
     }
   }
   #Create alpha
-  df2$alpha = 0.5
+  df2$alpha = 0.4
   df$alpha  = 1
   #Fit together dfs with different alphas
   df = rbind(df,df2)
@@ -89,6 +88,8 @@ getBenchmarkSummaryData = function(bmr,measure = NULL, fill = "best"){
 #'  classifiers. Bars are filled proportional to the best performance. \cr
 #' 'worst' compares all performances to the worst performance accross all \cr
 #'  classifiers. Bars are filled proportional to the worst performance. \cr
+#'  This plot is analogous to the one described in Eugster, J.A.(2012) \cr
+#'  but does not include any clustering. 
 #'   
 #' @param bmr \link[mlr]{BenchmarkResult}\cr
 #'  Output of a \link[mlr]{benchmark} function.
@@ -128,12 +129,15 @@ plotBenchmarkSummary = function(bmr,measure=NULL,fill = "best",
   #Plot
   p = ggplot(df)+
     geom_bar(aes(x=task.id,y=x, fill =learner.id,alpha =alpha),
-             stat = "identity",linetype = 1)+
+             stat = "identity",linetype = 1, color = "grey",
+             size = .001)+
     scale_alpha_identity()+
     coord_flip()+
     ylab(paste(measure$name," proportional to",fill,"performance"))+
-    theme(axis.text.x = ggplot2::element_blank(), 
-          axis.ticks.x = ggplot2::element_blank())
+    theme(axis.text.x = element_blank(), 
+          axis.ticks.x = element_blank(),
+          axis.title.y = element_blank())
+  
   return(p)
 }
 

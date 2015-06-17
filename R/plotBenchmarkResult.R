@@ -5,6 +5,9 @@
 #' Plots Boxplots for a selected measure accross all iterations of an algorithm
 #' faceted by the task.id
 #' 
+#' @details Credit: This plot is analogous to the one described in 
+#' Eugster, J.A. (2012) 
+#' 
 #' @param bmr \link[mlr]{BenchmarkResult}\cr
 #'  Output of a \link[mlr]{benchmark} function.
 #' @param measure \link[mlr]{Measure} \cr
@@ -40,11 +43,10 @@ plotBenchmarkResult = function(bmr,measure= NULL,style= "box",orderLrns = NULL,
                                orderTsks = NULL){
   
   assertClass(bmr, "BenchmarkResult")
-  if (!is.null(measure)){
-    assertClass(measure, "Measure")
-  } else {
-    measure = getBMRMeasures(bmr)[[1]]
+  if (is.null(measure)){
+    measure = getBMRMeasures(bmr)[[1L]]
   }
+  assertClass(measure,"Measure")
   assertClass(style,"character")
   assertChoice(style,c("box","violin"))
   df = as.data.frame(bmr)

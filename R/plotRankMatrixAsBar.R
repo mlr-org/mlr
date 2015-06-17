@@ -27,13 +27,13 @@ getRankMatrixAsBarData = function(bmr,measure){
   # Assert Classes
   assertClass(bmr, "BenchmarkResult")
   if (!is.null(measure)){
-    assertClass(measure, "Measure")
-  } else {
-    measure = getBMRMeasures(bmr)[[1]]
+    measure = getBMRMeasures(bmr)[[1L]]
   }
+  assertClass(measure, "Measure")
+
   # Melt back into plotable form:
   df = convertBMRToRankMatrix(bmr,measure)
-  n2 = dim(df)[2]
+  n2 = dim(df)[2L]
   df = melt(df,id.vars =c("learner.id"),
                        value.name = c("Rank"),
                        variable.name =c("task.id"))
