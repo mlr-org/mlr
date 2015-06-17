@@ -12,6 +12,7 @@ mlr_2.5:
 -- convertMLBenchObjToTask
 -- getBMRLearners, getBMRMeasures, getBMRMeasureIds
 -- makeMultilabelTask, makeMultilabelWrapper
+-- generatePartialPredictionData, plotPartialPrediction, and plotPartialPredictionGGVIS
 
 - new measures
 -- hamloss
@@ -53,11 +54,11 @@ mlr_2.4:
 -- getNestedTuneResultsX, getNestedTuneResultsOptPathDf
 -- tuneDesign
 -- generateROCRCurvesData, generateFilterValuesData, generateLearningCurveData, plotLearningCurve,
-   generateThreshVsPerfData, plotThreshVsPerf, generatePartialPredictionData, plotPartialPrediction
+   generateThreshVsPerfData, plotThreshVsPerf,
 -- generateThreshVsPerfData accepts Prediction, ResampleResult, lists of ResampleResult,
    and BenchmarkResult objects.
 -- experimental ggvis functions: plotROCRCurvesGGVIS, plotLearningCurveGGVIS,
-   plotTuneMultiCritResultGGVIS, plotThreshVsPerfGGVIS, plotFilterValuesGGVIS, and plotPartialPredictionGGVIS
+   plotTuneMultiCritResultGGVIS, plotThreshVsPerfGGVIS, and plotFilterValuesGGVIS
 
 
 - new learners:
