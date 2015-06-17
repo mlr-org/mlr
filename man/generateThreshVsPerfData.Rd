@@ -30,6 +30,7 @@ Generate threshold vs. performance(s) for 2-class classification.
 \seealso{
 Other generate_plot_data: \code{\link{generateFilterValuesData}};
   \code{\link{generateLearningCurveData}};
+  \code{\link{generatePartialPredictionData}};
   \code{\link{generateROCRCurvesData}};
   \code{\link{getFilterValues}}
 

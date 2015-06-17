@@ -46,6 +46,7 @@ Other filter: \code{\link{FilterValues}};
   \code{\link{plotFilterValues}}
 
 Other generate_plot_data: \code{\link{generateLearningCurveData}};
+  \code{\link{generatePartialPredictionData}};
   \code{\link{generateROCRCurvesData}};
   \code{\link{generateThreshVsPerfData}};
   \code{\link{getFilterValues}}

@@ -32,6 +32,8 @@ Other learning_curve: \code{\link{generateLearningCurveData}};
 Other plot: \code{\link{plotFilterValuesGGVIS}};
   \code{\link{plotFilterValues}};
   \code{\link{plotLearningCurve}};
+  \code{\link{plotPartialPredictionGGVIS}};
+  \code{\link{plotPartialPrediction}};
   \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}};
   \code{\link{plotThreshVsPerfGGVIS}};

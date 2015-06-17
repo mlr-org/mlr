@@ -1,0 +1,21 @@
+context("generatePartialPrediction")
+
+test_that("generatePartialPredictionData", {
+  fr = train("regr.rpart", regr.task)
+  dr = generatePartialPredictionData(fr, getTaskData(bh.task), c("lstat", "chas"))
+  plotPartialPrediction(dr, facet = "chas")
+  ## plotPartialPredictionGGVIS(dr, interaction = "chas")
+  fc = train("classif.rpart", multiclass.task)
+  dc = generatePartialPredictionData(fc, getTaskData(multiclass.task), c("Petal.Width", "Petal.Length"),
+                                     function(x) table(x) / length(x))
+  plotPartialPrediction(dc, facet = "Petal.Length")
+  ## plotPartialPredictionGGVIS(dc, interaction = "Petal.Length")
+  fcp = train(makeLearner("classif.rpart", predict.type = "prob"), multiclass.task)
+  dcp = generatePartialPredictionData(fcp, getTaskData(iris.task), c("Petal.Width", "Petal.Length"))
+  plotPartialPrediction(dcp, facet = "Petal.Length")
+  ## plotPartialPredictionGGVIS(dcp, interaction = "Petal.Length")
+  fs = train("surv.coxph", surv.task)
+  ds = generatePartialPredictionData(fs, getTaskData(surv.task), c("Petal.Width", "Petal.Length"))
+  plotPartialPrediction(ds, facet = "Petal.Length")
+  ## plotPartialPredictionGGVIS(ds, interaction = "Petal.Length")
+})
