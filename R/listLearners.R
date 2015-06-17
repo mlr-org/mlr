@@ -59,7 +59,7 @@ listLearners.default  = function(obj, properties = character(0L),
 listLearners.character  = function(obj, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, create = FALSE) {
 
-  assertChoice(obj, choices = c("classif", "regr", "surv", "costsens", "cluster", NA_character_))
+  assertChoice(obj, choices = c("classif", "regr", "surv", "costsens", "cluster", "multilabel", NA_character_))
   assertSubset(properties, getSupportedLearnerProperties(obj))
 
   type = obj
