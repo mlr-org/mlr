@@ -21,6 +21,7 @@
 \alias{fpr}
 \alias{gmean}
 \alias{gpr}
+\alias{hamloss}
 \alias{mae}
 \alias{mcc}
 \alias{mcp}
@@ -36,6 +37,7 @@
 \alias{measureFPR}
 \alias{measureGMEAN}
 \alias{measureGPR}
+\alias{measureHAMLOSS}
 \alias{measureMAE}
 \alias{measureMCC}
 \alias{measureMEDAE}
@@ -190,6 +192,10 @@ measureGMEAN(truth, response, negative, positive)
 gpr
 
 measureGPR(truth, response, positive)
+
+hamloss
+
+measureHAMLOSS(truth, response)
 
 cindex
 

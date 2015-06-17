@@ -1,4 +1,5 @@
-#' @title Create a classification, regression, survival, cluster, or cost-sensitive classification task.
+#' @title Create a classification, regression, survival, cluster, cost-sensitive classification or
+#' multilabel task.
 #'
 #' @description
 #' The task encapsulates the data and specifies - through its subclasses -
@@ -18,6 +19,11 @@
 #' \item{task.desc [\code{\link{TaskDesc}}]}{Encapsulates further information about the task.}
 #' }
 #'
+#' Notes:
+#' For multilabel classification we assume that the presence of labels is encoded via logical
+#' columns in \code{data}. The name of the column specifies the name of the label. \code{target}
+#' is then a char vector that points to these columns.
+#'
 #' @param id [\code{character(1)}]\cr
 #'   Id string for object.
 #'   Default is the name of R variable passed to \code{data}.
@@ -26,7 +32,8 @@
 #' @param target [\code{character(1)} | \code{character(2)}]\cr
 #'   Name of the target variable.
 #'   For survival analysis these are the names of the survival time and event columns,
-#'   so it has length 2.
+#'   so it has length 2, for multilabel classification it must the names of the logical
+#'   columns that encode whether a label is present or not.
 #' @param costs [\code{data.frame}]\cr
 #'   A numeric matrix or data frame containing the costs of misclassification.
 #'   We assume the general case of observation specific costs.

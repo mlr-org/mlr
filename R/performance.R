@@ -48,6 +48,9 @@ doPerformaceIteration = function(measure, pred = NULL, task = NULL, model = NULL
     if (type == "surv") {
       if (is.null(pred$data$truth.time) || is.null(pred$data$truth.event))
         stopf("You need to have 'truth.time' and 'truth.event' columns in your pred object for measure %s!", m$id)
+    } else if (type == "multilabel") {
+      if (!(any(grepl("^truth\\.", colnames(pred$data)))))
+        stopf("You need to have 'truth.*' columns in your pred object for measure %s!", m$id)
     } else {
       if (is.null(pred$data$truth))
         stopf("You need to have a 'truth' column in your pred object for measure %s!", m$id)

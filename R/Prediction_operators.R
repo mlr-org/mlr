@@ -64,3 +64,46 @@ getProbabilities = function(pred, cl) {
 #	prob = Reduce(rbind, lapply(preds, function(x) x@prob))
 #	return(new("Prediction", task.desc = preds[[1]]@desc, id = id, response = response, target = target, weights = weights, prob = prob));
 #}
+
+
+#' @title Get response / truth from prediction object.
+#'
+#' @description
+#' The following types are returned, depending on task type:
+#'  \tabular{ll}{
+#'    classif     \tab factor\cr
+#'    regr        \tab numeric\cr
+#'    cluster     \tab factor\cr
+#'    surv        \tab ???\cr
+#'    multilabel  \tab logical matrix, columns named with labels\cr
+#' }
+#'
+#' @template arg_pred
+#' @return See above.
+#' @export
+#' @family predict
+getPredictionResponse = function(pred) {
+  UseMethod("getPredictionResponse")
+}
+
+#' @export
+getPredictionResponse.PredictionMultilabel = function(pred) {
+  i = grepl("^truth\\.", colnames(pred$data))
+  m = as.matrix(pred$data[, i])
+  setColNames(m, pred$task.desc$class.levels)
+}
+
+
+#' @rdname getPredictionResponse
+#' @export
+getPredictionTruth = function(pred) {
+  UseMethod("getPredictionTruth")
+}
+
+#' @export
+getPredictionTruth.PredictionMultilabel = function(pred) {
+  i = grepl("^response\\.", colnames(pred$data))
+  m = as.matrix(pred$data[, i])
+  setColNames(m, pred$task.desc$class.levels)
+}
+

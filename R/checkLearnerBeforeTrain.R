@@ -56,3 +56,5 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
   }
   invisible(NULL)
 }
+
+

@@ -35,6 +35,8 @@ Other plot: \code{\link{plotFilterValuesGGVIS}};
 
 Other predict: \code{\link{asROCRPrediction}};
   \code{\link{generateROCRCurvesData}};
+  \code{\link{getPredictionResponse}},
+  \code{\link{getPredictionTruth}};
   \code{\link{getProbabilities}};
   \code{\link{plotROCRCurves}};
   \code{\link{plotViperCharts}};

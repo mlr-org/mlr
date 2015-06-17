@@ -1,12 +1,23 @@
 mlr_2.5:
+- we have (somewhat experimental) support for multilabel classification.
+  so we now have a task, a new baselearner (rFerns),
+  and a generic reduction-to-binary algorithm (MultilabelWrapper)
 - tuning: added 'budget' parameter in makeTuneControl*, allowing to
   define a maximum "number of evaluations" budget for tuning algorithms
 - makeTuneControlGenSA: optimized function will be considered non-smooth
   per default (change via ... args)
 
 - new functions
+-- getPredictionTruth, getPredictionResponse
 -- convertMLBenchObjToTask
 -- getBMRLearners, getBMRMeasures, getBMRMeasureIds
+-- makeMultilabelTask, makeMultilabelWrapper
+
+- new measures
+-- hamloss
+
+- new learners
+-- multilabel.rFerns
 
 mlr_2.4:
 - WrappedModel printer was slightly improved

@@ -22,6 +22,16 @@ multiclass.test  = multiclass.df[multiclass.test.inds, ]
 multiclass.class.col = 5
 multiclass.task = makeClassifTask("multiclass", data = multiclass.df, target = multiclass.target)
 
+multilabel.df = iris
+multilabel.df[, "y1"] = rep(c(TRUE, FALSE), 75L)
+multilabel.df[, "y2"] = rep(c(FALSE, TRUE), 75L)
+multilabel.target = c("y1", "y2")
+multilabel.train.inds = c(1:30, 51:80, 101:130)
+multilabel.test.inds  = setdiff(1:150, multilabel.train.inds)
+multilabel.train = multilabel.df[multilabel.train.inds, ]
+multilabel.test  = multilabel.df[multilabel.test.inds, ]
+multilabel.task = makeMultilabelTask("multilabel", data = multilabel.df, target = multilabel.target)
+
 noclass.df = iris[,-5]
 noclass.train.inds = c(1:30, 51:80, 101:130)
 noclass.test.inds  = setdiff(1:150, noclass.train.inds)

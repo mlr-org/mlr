@@ -42,11 +42,11 @@ makePrediction.TaskDescRegr = function(task.desc, row.names, id, truth, predict.
   }
 
   makeS3Obj(c("PredictionRegr", "Prediction"),
-    predict.type = predict.type,
-    data = setRowNames(as.data.frame(filterNull(data)), row.names),
-    threshold = NA_real_,
-    task.desc = task.desc,
-    time = time
+            predict.type = predict.type,
+            data = setRowNames(as.data.frame(filterNull(data)), row.names),
+            threshold = NA_real_,
+            task.desc = task.desc,
+            time = time
   )
 }
 
@@ -86,8 +86,19 @@ makePrediction.TaskDescClassif = function(task.desc, row.names, id, truth, predi
     }
     p = setThreshold(p, predict.threshold)
   }
-
   return(p)
+}
+
+#' @export
+makePrediction.TaskDescMultilabel = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time) {
+  data = cbind(id = id, truth = truth, response = y)
+  p = makeS3Obj(c("PredictionMultilabel", "Prediction"),
+    predict.type = predict.type,
+    data = setRowNames(data, row.names),
+    threshold = NA_real_,
+    task.desc = task.desc,
+    time = time
+  )
 }
 
 #' @export
