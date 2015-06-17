@@ -37,7 +37,7 @@ Print verbose output on console?
 Default is set via \code{\link{configureMlr}}.}
 }
 \value{
-A [\code{data.frame}] of class \code{LearningCurveData}.
+An object of class \code{\link{LearningCurveData}}.
 }
 \description{
 Observe how the performance changes with an increasing number of observations.
