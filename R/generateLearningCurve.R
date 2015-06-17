@@ -23,7 +23,7 @@
 #'   Only for classification:
 #'   Should the downsampled data be stratified according to the target classes?
 #' @template arg_showinfo
-#' @return A [\code{data.frame}] of class \code{LearningCurveData}.
+#' @return An object of class \code{\link{LearningCurveData}}.
 #' @examples
 #' r = generateLearningCurveData(list("classif.rpart", "classif.knn"),
 #' task = sonar.task, percs = seq(0.2, 1, by = 0.2),
