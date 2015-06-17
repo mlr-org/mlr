@@ -34,11 +34,10 @@
 getBenchmarkSummaryData = function(bmr,measure = NULL, fill = "best"){
   assertClass(bmr, "BenchmarkResult")
   assertChoice(fill,c("worst","best"))
-  if (!is.null(measure)){
-    assertClass(measure, "Measure")
-  } else {
+  if (is.null(measure)){
     measure = getBMRMeasures(bmr)[[1]]
   }
+  assertClass(measure, "Measure")
   df = as.data.frame(bmr)
   aggrMeas = mlr:::measureAggrName(measure)
   df = mlr::getBMRAggrPerformances(bmr,as.df = TRUE)

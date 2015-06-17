@@ -26,14 +26,13 @@
 #' 
 #' @export
  
-getCritDifferencesData = function(bmr,measure){
+getCritDifferencesData = function(bmr,measure = NULL){
   #Assert correct inputs
   assertClass(bmr, "BenchmarkResult")
-  if (!is.null(measure)){
-    assertClass(measure, "Measure")
-  } else {
+  if (is.null(measure)){
     measure = getBMRMeasures(bmr)[[1]]
   }
+  assertClass(measure, "Measure")
   #Get Rankmatrix
   Rmat = convertBMRToRankMatrix(bmr,measure)
   # transpose RankMatrix
@@ -46,7 +45,7 @@ getCritDifferencesData = function(bmr,measure){
   df = data.frame(cbind(meanRank),
                   learner.id = names(meanRank),
                   rank = rank(meanRank,ties.method = "random"))
-  bst = df$rank < nLearners/2
+  bst = df$rank < mean(df)
   df$yend[bst]  = subset(df$rank,bst)-0.5
   df$yend[!bst] = subset(rank(desc(df$rank)),!bst)-0.5
   df$xend  = 0L
@@ -93,22 +92,29 @@ getCritDifferencesData = function(bmr,measure){
 #' @export
 
 plotCritDifferences = function(bmr,measure=NULL,p.value= 0.05,base = NULL){
-  # Correct input assertion is done in getData
+  #Assert correct input
+  if (is.null(measure)){
+     measure = getBMRMeasures(bmr)[[1]]
+  }
+  assertClass(measure, "Measure")
   # Data
   df = getCritDifferencesData(bmr,measure)
   #For baseline: if null choose best performing (random if two are equal)
   if (is.null(base)){
-    base = df$learner.id[df$rank == min(df$rank)]
+     base = df$learner.id[df$rank == min(df$rank)]
   }
+  assertChoice(base,getBMRLearnerIds)
   # NemenyiTest
   assertNumeric(p.value,lower = 0, upper = 1,len=1)
   nemTest = posthocNemenyiTestBMR(bmr,measure,p.value)
   if (nemTest$fRejNull == FALSE){
-    message(c("Could not reject null hypothesis of friedman-test."))
+     message(c("Could not reject null hypothesis of friedman-test."))
   }
+  # Info for Plotting the CD Interval
   CD = nemTest$cDifference
   CDx = df$meanRank[df$learner.id == base]
   CDy = 0.1
+  
   p = ggplot(df, aes(color = learner.id))+ 
     geom_point(aes(x = meanRank, y= 0))+
     geom_segment(aes(x = meanRank,xend = meanRank, y=0,yend=yend),
@@ -130,14 +136,13 @@ plotCritDifferences = function(bmr,measure=NULL,p.value= 0.05,base = NULL){
           panel.grid.major = element_blank(), 
           plot.background  = element_blank())
   #Plot Critical Difference Bar
-  p = p + annotate("segment", x=CDx +CD, xend = CDx-CD, y = CDy,
-                   yend = CDy,
-                   alpha = 0.5, color = "darkgrey",size = 2) +
+  p = p + annotate("segment", x=CDx + CD, xend = CDx-CD, y = CDy,
+                   yend = CDy, alpha = 0.5, color = "darkgrey", size = 2) +
     annotate("segment", x=CDx +CD, xend = CDx+CD, y =CDy-0.05,
-             yend = CDy+0.05, color = "darkgrey",size = 1) +
+             yend = CDy+0.05, color = "darkgrey",size = 1)    +
     annotate("segment", x=CDx -CD, xend = CDx-CD, y =CDy-0.05,
-             yend = CDy+0.05, color = "darkgrey",size = 1)+
-    annotate("point", x=CDx,y=CDy,alpha = 0.5)+
+             yend = CDy+0.05, color = "darkgrey",size = 1)    +
+    annotate("point", x=CDx,y=CDy,alpha = 0.5) +
     annotate("text",label = 
                paste("Critical Difference =",round(CD,2)),
              x = CDx, y = CDy, vjust = -1)

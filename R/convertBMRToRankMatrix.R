@@ -32,11 +32,11 @@
 convertBMRToRankMatrix = function(bmr,measure = NULL,aggregation = "default"){
   #Assert class and convert to data.frame
   assertClass(bmr, "BenchmarkResult")
-  if (!is.null(measure)){
-  assertClass(measure, "Measure")
-  } else {
+  if (is.null(measure)){
   measure = getBMRMeasures(bmr)[[1]]
   }
+  assertClass(measure, "Measure")
+  assertChoice(aggregation, c("mean","default"))
 # Aggregate mean over iterations
   if (aggregation == "mean"){ 
   df = as.data.frame(bmr)
@@ -50,11 +50,12 @@ convertBMRToRankMatrix = function(bmr,measure = NULL,aggregation = "default"){
   df = df[,c("task.id","learner.id",aggrMeas)]
   names(df)[names(df)== aggrMeas] = c("x")
   }
-  # Calculate Ranks, ties broken randomly, rank according to minimize option    # of selected measure
-  if(measure$minimize == FALSE){
+  # Calculate Ranks, ties broken randomly, rank according to minimize option   
+  # of selected measure
+  if (measure$minimize == FALSE){
     df = ddply(df,.(task.id),mutate,AlgRank = rank(desc(x),
                                                    ties.method = "random"))
-  }else if(measure$minimize == TRUE){
+  } else if(measure$minimize == TRUE){
     df = ddply(df,.(task.id),mutate,AlgRank = rank(x,ties.method = "random"))
   }
   # melt/cast into matrix 

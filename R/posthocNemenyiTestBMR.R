@@ -41,19 +41,23 @@
 #' @export
 
 
-posthocNemenyiTestBMR = function(bmr,measure = NULL, p.value=0.05,                                               aggregation = 'default'){
+posthocNemenyiTestBMR = function(bmr,measure = NULL, p.value=0.05,                                                              aggregation = 'default'){
   requirePackages("PMCMR")
   #Assert correct inputs
   assertClass(bmr, "BenchmarkResult")
   if (is.null(measure)){
-    measure = getBMRMeasures(bmr)[[1]]
+    measure = getBMRMeasures(bmr)[[1L]]
   }
   assertClass(measure, "Measure")
   assertNumeric(p.value,lower = 0, upper = 1,len=1)
   assertChoice(aggregation,c('default','mean'))
   # Number of Learners/Tasks
-  nLearners = length(bmr[[1]])
-  nTasks = length(bmr)
+  nLearners = length(bmr$learners)
+  if (nLearners < 2){
+     message("Only one Learner to compare")
+  }
+  assertNumeric(nLearners, lower = 2)
+  nTasks = length(bmr$results)
   # Take mean across iterations
   if (aggregation == "mean"){ 
     df = as.data.frame(bmr)

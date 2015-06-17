@@ -40,11 +40,10 @@ plotBenchmarkResult = function(bmr,measure= NULL,style= "box",orderLrns = NULL,
                                orderTsks = NULL){
   
   assertClass(bmr, "BenchmarkResult")
-  if (!is.null(measure)){
-    assertClass(measure, "Measure")
-  } else {
-    measure = getBMRMeasures(bmr)[[1]]
+  if (is.null(measure)){
+    measure = getBMRMeasures(bmr)[[1L]]
   }
+  assertClass(measure,"Measure")
   assertClass(style,"character")
   assertChoice(style,c("box","violin"))
   df = as.data.frame(bmr)
