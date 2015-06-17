@@ -46,7 +46,7 @@ getCritDifferencesData = function(bmr,measure = NULL){
   df = data.frame(cbind(meanRank),
                   learner.id = names(meanRank),
                   rank = rank(meanRank,ties.method = "random"))
-  bst = df$rank < mean(df)
+  bst = df$rank < mean(df$rank)
   df$yend[bst]  = subset(df$rank,bst)-0.5
   df$yend[!bst] = subset(rank(desc(df$rank)),!bst)-0.5
   df$xend  = 0L
