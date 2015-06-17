@@ -51,6 +51,7 @@ See these methods in ROCR for further info.
 \seealso{
 Other generate_plot_data: \code{\link{generateFilterValuesData}};
   \code{\link{generateLearningCurveData}};
+  \code{\link{generatePartialPredictionData}};
   \code{\link{generateThreshVsPerfData}};
   \code{\link{getFilterValues}}
 

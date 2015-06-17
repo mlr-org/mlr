@@ -34,11 +34,12 @@ mlr_2.4:
 -- getNestedTuneResultsX, getNestedTuneResultsOptPathDf
 -- tuneDesign
 -- generateROCRCurvesData, generateFilterValuesData, generateLearningCurveData, plotLearningCurve,
-   generateThreshVsPerfData, plotThreshVsPerf
+   generateThreshVsPerfData, plotThreshVsPerf, generatePartialPredictionData, plotPartialPrediction
 -- generateThreshVsPerfData accepts Prediction, ResampleResult, lists of ResampleResult,
    and BenchmarkResult objects.
 -- experimental ggvis functions: plotROCRCurvesGGVIS, plotLearningCurveGGVIS,
-   plotTuneMultiCritResultGGVIS, plotThreshVsPerfGGVIS, and plotFilterValuesGGVIS
+   plotTuneMultiCritResultGGVIS, plotThreshVsPerfGGVIS, plotFilterValuesGGVIS, and plotPartialPredictionGGVIS
+
 
 - new learners:
 -- classif.bst

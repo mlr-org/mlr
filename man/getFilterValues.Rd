@@ -50,6 +50,7 @@ Other filter: \code{\link{FilterValues}};
 
 Other generate_plot_data: \code{\link{generateFilterValuesData}};
   \code{\link{generateLearningCurveData}};
+  \code{\link{generatePartialPredictionData}};
   \code{\link{generateROCRCurvesData}};
   \code{\link{generateThreshVsPerfData}}
 }

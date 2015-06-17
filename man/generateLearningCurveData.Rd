@@ -51,6 +51,7 @@ plotLearningCurve(r)
 }
 \seealso{
 Other generate_plot_data: \code{\link{generateFilterValuesData}};
+  \code{\link{generatePartialPredictionData}};
   \code{\link{generateROCRCurvesData}};
   \code{\link{generateThreshVsPerfData}};
   \code{\link{getFilterValues}}

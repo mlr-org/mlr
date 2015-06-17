@@ -29,6 +29,8 @@ Other plot: \code{\link{plotFilterValuesGGVIS}};
   \code{\link{plotFilterValues}};
   \code{\link{plotLearningCurveGGVIS}};
   \code{\link{plotLearningCurve}};
+  \code{\link{plotPartialPredictionGGVIS}};
+  \code{\link{plotPartialPrediction}};
   \code{\link{plotROCRCurves}};
   \code{\link{plotThreshVsPerfGGVIS}};
   \code{\link{plotThreshVsPerf}}

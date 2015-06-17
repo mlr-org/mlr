@@ -56,6 +56,8 @@ Other filter: \code{\link{FilterValues}};
 Other plot: \code{\link{plotFilterValues}};
   \code{\link{plotLearningCurveGGVIS}};
   \code{\link{plotLearningCurve}};
+  \code{\link{plotPartialPredictionGGVIS}};
+  \code{\link{plotPartialPrediction}};
   \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}};
   \code{\link{plotThreshVsPerfGGVIS}};
