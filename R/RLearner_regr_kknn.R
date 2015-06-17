@@ -9,7 +9,8 @@ makeRLearner.regr.kknn = function() {
       makeIntegerLearnerParam(id = "k", default = 7L, lower = 1L),
       makeNumericLearnerParam(id = "distance", default = 2, lower = 0),
       makeDiscreteLearnerParam(id = "kernel", default = "triangular",
-        values = list("rectangular", "triangular", "epanechnikov", "biweight", "triweight", "cos", "inv", "gaussian"))
+        values = list("rectangular", "triangular", "epanechnikov", "biweight", "triweight", "cos", "inv", "gaussian")),
+      makeLogicalLearnerParam(id = "scale", default = TRUE)
     ),
     properties = c("numerics", "factors"),
     name = "K-Nearest-Neighbor regression",

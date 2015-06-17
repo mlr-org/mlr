@@ -20,6 +20,12 @@ test_that("tuneMBO", {
   expect_equal(getOptPathLength(tr$opt.path), n1+n2)
   expect_equal(dim(as.data.frame(tr$opt.path)), c(n1 + n2, 2 + 1 + 4))
 
+  ctrl2 = makeTuneControlMBO(learner = makeLearner("regr.lm"), mbo.control = mbo.ctrl, budget = n1 + n2 + 3L)
+  expect_identical(ctrl, ctrl2)
+
+  expect_error(makeTuneControlMBO(learner = makeLearner("regr.lm"), mbo.control = mbo.ctrl, budget = n1 + n2 - 1L))
+  expect_error(makeTuneControlMBO(learner = makeLearner("regr.lm"), mbo.control = mbo.ctrl, budget = n1 - 1L))
+
   ps = makeParamSet(
     makeNumericParam("sigma", lower = -10, upper = -1, trafo = function(x) 2^x)
   )

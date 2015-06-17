@@ -58,9 +58,23 @@
 #' @param final.dw.perc [\code{boolean}]\cr
 #'   If a Learner wrapped by a \code{\link{makeDownsampleWrapper}} is used, you can define the value of \code{dw.perc} which is used to train the Learner with the final parameter setting found by the tuning.
 #'   Default is \code{NULL} which will not change anything.
+#' @param budget [\code{integer(1)}]\cr
+#'   Maximum budget for tuning. This value restricts the number of function
+#'   evaluations. In case of \code{makeTuneControlGrid} this number must be identical
+#'   to the size of the grid. For \code{makeTuneControlRandom} the
+#'   \code{budget} equals the number of iterations (\code{maxit}) performed by
+#'   the random search algorithm. Within the \code{\link[cmaes]{cma_es}} the
+#'   \code{budget} corresponds to the product of the number of generations
+#'   (\code{maxit}) and the number of offsprings per generation
+#'   (\code{lambda}). \code{\link[GenSA]{GenSA}} defines the \code{budget} via
+#'   the argument \code{max.call}. However, one should note that this algorithm
+#'   does not stop its local search before its end. This behaviour might lead
+#'   to an extension of the defined budget and will result in a warning. In
+#'   \code{irace}, \code{budget} is passed to \code{maxExperiments}.
 #' @param ... [any]\cr
-#'   Further control parameters passed to the \code{control} argument of \code{\link[cmaes]{cma_es}} and
-#'   \code{tunerConfig} argument of \code{\link[irace]{irace}}.
+#'   Further control parameters passed to the \code{control} arguments of
+#'   \code{\link[cmaes]{cma_es}} or \code{\link[GenSA]{GenSA}}, as well as
+#'   towards the \code{tunerConfig} argument of \code{\link[irace]{irace}}.
 #' @return [\code{\link{TuneControl}}]. The specific subclass is one of
 #'   \code{\link{TuneControlGrid}}, \code{\link{TuneControlRandom}},
 #'   \code{\link{TuneControlCMAES}}, \code{\link{TuneControlGenSA}},
@@ -71,17 +85,21 @@
 #' @aliases TuneControlGrid TuneControlRandom TuneControlCMAES TuneControlGenSA TuneControlIrace
 NULL
 
-makeTuneControl = function(same.resampling.instance, impute.val = NULL, start = NULL,
-  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL, ..., cl) {
+makeTuneControl = function(same.resampling.instance, impute.val = NULL,
+  start = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
+  log.fun = NULL, final.dw.perc = NULL, budget = NULL, ..., cl) {
 
   if (!is.null(start))
     assertList(start, min.len = 1L, names = "unique")
   if (is.null(log.fun))
     log.fun = logFunTune
+  if (!is.null(budget))
+    budget = asCount(budget)
   if (!is.null(final.dw.perc))
     assertNumeric(final.dw.perc, lower = 0, upper = 1)
   x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, tune.threshold.args, log.fun, final.dw.perc, ...)
   x$start = start
+  x$budget = budget
   addClasses(x, c(cl, "TuneControl"))
 }
 
@@ -91,6 +109,7 @@ print.TuneControl = function(x, ...) {
   catf("Same resampling instance: %s", x$same.resampling.instance)
   catf("Imputation value: %s", ifelse(is.null(x$impute.val), "<worst>", sprintf("%g", x$impute.val)))
   catf("Start: %s", convertToShortString(x$start))
+  catf("Budget: %i", x$budget)
   catf("Tune threshold: %s", x$tune.threshold)
   catf("Further arguments: %s", convertToShortString(x$extra.args))
 }

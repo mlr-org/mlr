@@ -7,8 +7,11 @@ makeRLearner.classif.JRip = function() {
       makeIntegerLearnerParam(id = "F", default = 3L, lower = 2L),
       makeNumericLearnerParam(id = "N", default = 2, lower = 0),
       makeIntegerLearnerParam(id = "O", default = 2L, lower = 1L),
+      makeLogicalLearnerParam(id = "D", default = FALSE, tunable = FALSE),
+      makeIntegerLearnerParam(id = "S", tunable = FALSE),
       makeLogicalLearnerParam(id = "E", default = FALSE),
-      makeLogicalLearnerParam(id = "P", default = FALSE)
+      makeLogicalLearnerParam(id = "P", default = FALSE),
+      makeLogicalLearnerParam(id = "output-debug-info", default = FALSE, tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
     name = "Propositional Rule Learner",

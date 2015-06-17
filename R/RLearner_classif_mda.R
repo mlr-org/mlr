@@ -9,11 +9,12 @@ makeRLearner.classif.mda = function() {
       makeIntegerLearnerParam(id = "sub.df", lower = 1L),
       makeIntegerLearnerParam(id = "tot.df", lower = 1L),
       makeIntegerLearnerParam(id = "dimension", lower = 1L),
+      makeNumericLearnerParam(id = "eps", default = .Machine$double.eps, lower = 0),
       makeIntegerLearnerParam(id = "iter", default = 5L, lower = 1L),
       makeDiscreteLearnerParam(id = "method", default = mda::polyreg,
         values = list(polyreg = mda::polyreg, mars = mda::mars, bruto = mda::bruto, gen.ridge = mda::gen.ridge)),
       makeLogicalLearnerParam(id = "keep.fitted", default = TRUE),
-      makeLogicalLearnerParam(id = "trace", default = FALSE),
+      makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "start.method", default = "kmeans", values = c("kmeans", "lvq")),
       makeIntegerLearnerParam(id = "tries", default = 5L, lower = 1L),
       makeDiscreteLearnerParam(id = "criterion", default = "misclassification", values = c("misclassification", "deviance"))

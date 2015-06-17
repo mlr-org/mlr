@@ -14,7 +14,7 @@ makeRLearner.regr.brnn = function() {
       makeNumericLearnerParam(id = "min_grad", default = 1e-10),
       makeNumericLearnerParam(id = "change", default = 0.001, lower = .Machine$double.eps),
       makeIntegerLearnerParam(id = "cores", default = 1L, lower = 1L),
-      makeLogicalLearnerParam(id = "verbose", default = FALSE),
+      makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "Monte_Carlo", default = FALSE),
       makeNumericLearnerParam(id = "tol", default = 1e-06, lower = .Machine$double.eps),
       makeIntegerLearnerParam(id = "samples", default = 40L, lower = 1L),

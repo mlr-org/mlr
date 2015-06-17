@@ -4,7 +4,8 @@ makeRLearner.regr.penalized.lasso = function() {
     cl = "regr.penalized.lasso",
     package = "penalized",
     par.set = makeParamSet(
-      makeNumericLearnerParam(id = "lambda1", default = 0, lower = 0)
+      makeNumericLearnerParam(id = "lambda1", default = 0, lower = 0),
+      makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
     properties = c("numerics", "factors"),
     name = "Lasso Regression",

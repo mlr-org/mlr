@@ -10,7 +10,9 @@ makeRLearner.classif.PART = function() {
       makeIntegerLearnerParam(id = "N", default = 3L, lower = 2L),
       makeLogicalLearnerParam(id = "B"),
       makeLogicalLearnerParam(id = "U"),
-      makeLogicalLearnerParam(id = "J")
+      makeLogicalLearnerParam(id = "J"),
+      makeIntegerLearnerParam(id = "Q", tunable = FALSE),
+      makeLogicalLearnerParam(id = "output-debug-info", default = FALSE, tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
     name = "PART Decision Lists",

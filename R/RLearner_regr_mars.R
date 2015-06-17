@@ -9,6 +9,7 @@ makeRLearner.regr.mars = function() {
       makeNumericLearnerParam(id = "penalty", default = 2, lower = 0),
       makeNumericLearnerParam(id = "thresh", default = 0.001, lower = 0),
       makeLogicalLearnerParam(id = "prune", default = TRUE),
+      makeLogicalLearnerParam(id = "trace.mars", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "forward.step", default = TRUE)
     ),
     properties = c("numerics"),

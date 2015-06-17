@@ -31,8 +31,13 @@ makeRLearner.regr.crs = function() {
       makeLogicalLearnerParam(id = "prune", default = FALSE),
       makeIntegerLearnerParam(id = "restarts", default = 0, lower = 0),
       makeIntegerLearnerParam(id = "nmulti", default = 5, lower = 0),
-      makeLogicalLearnerParam(id = "singular.ok", default = FALSE)
-
+      makeLogicalLearnerParam(id = "singular.ok", default = FALSE),
+      makeIntegerLearnerParam(id = "deriv", default = 0L, lower = 0L),
+      makeLogicalLearnerParam(id = "data.return", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "model.return", default = FALSE,
+        requires = expression(kernel = TRUE), tunable = FALSE),
+      makeIntegerLearnerParam(id = "random.seed", tunable = FALSE),
+      makeNumericLearnerParam(id = "tau", lower = 0, upper = 1)
     ),
     par.vals = list(),
     properties = c("numerics", "factors", "se", "weights"),

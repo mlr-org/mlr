@@ -14,7 +14,13 @@ makeRLearner.regr.btlm = function() {
         default = c(2000, 7000, 2), lower = 0), 
       makeIntegerLearnerParam(id = "R", default = 1, lower = 1), 
       makeLogicalLearnerParam(id = "m0r1", default = TRUE),
-      makeUntypedLearnerParam(id = "itemps", default = NULL)
+      makeUntypedLearnerParam(id = "itemps", default = NULL),
+      makeLogicalLearnerParam(id = "krige", default = TRUE),
+      makeLogicalLearnerParam(id = "zcov", default = FALSE),
+      makeLogicalLearnerParam(id = "Ds2x", default = FALSE),
+      makeLogicalLearnerParam(id = "improv", default = FALSE),
+      makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
+      makeIntegerLearnerParam(id = "verb", default = 1L, lower = 0L, upper = 4L, tunable = FALSE)
     ),
     properties = c("numerics", "se", "factors"),
     name = "Bayesian Treed Linear Model",

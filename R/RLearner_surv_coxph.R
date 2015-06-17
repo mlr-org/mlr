@@ -10,7 +10,10 @@ makeRLearner.surv.coxph = function() {
       makeNumericLearnerParam(id = "toler.chol", default = .Machine$double.eps^0.75, lower = 0),
       makeIntegerLearnerParam(id = "iter.max", default = 20L, lower = 1L),
       makeNumericLearnerParam(id = "toler.inf", default = sqrt(.Machine$double.eps^0.75), lower = 0),
-      makeIntegerLearnerParam(id = "outer.max", default = 10L, lower = 1L)
+      makeIntegerLearnerParam(id = "outer.max", default = 10L, lower = 1L),
+      makeLogicalLearnerParam(id = "model", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "x", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "y", default = TRUE, tunable = FALSE)
     ),
     properties = c("missings", "numerics", "factors", "weights", "prob", "rcens"),
     name = "Cox Proportional Hazard Model",

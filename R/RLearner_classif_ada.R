@@ -13,6 +13,7 @@ makeRLearner.classif.ada = function() {
       makeLogicalLearnerParam(id = "bag.shift", default = FALSE),
       makeIntegerLearnerParam(id = "max.iter", default = 20L, lower = 1L),
       makeNumericLearnerParam(id = "delta", default = 1e-10, lower = 0),
+      makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam(id = "minsplit", default = 20L, lower = 1L),
       makeIntegerLearnerParam(id = "minbucket", lower = 1L),
       makeNumericLearnerParam(id = "cp", default = 0.01, lower = 0, upper = 1),

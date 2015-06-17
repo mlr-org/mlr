@@ -7,7 +7,7 @@ makeRLearner.regr.cforest = function() {
       makeIntegerLearnerParam(id = "ntree", lower = 1L, default = 500L),
       makeIntegerLearnerParam(id = "mtry", lower = 1L, default = 5L),
       makeLogicalLearnerParam(id = "replace", default = FALSE),
-      makeLogicalLearnerParam(id = "trace", default = FALSE),
+      makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeNumericLearnerParam(id = "fraction", lower = 0, upper = 1, default = 0.632),
       makeDiscreteLearnerParam(id = "teststat", values = c("quad", "max"), default = 'quad'),
       makeLogicalLearnerParam(id = "pvalue", default = TRUE),
@@ -23,7 +23,7 @@ makeRLearner.regr.cforest = function() {
       makeIntegerLearnerParam(id = "nresample", lower = 1L, default = 9999L),
       makeIntegerLearnerParam(id = "maxsurrogate", lower = 0L, default = 0L),
       makeIntegerLearnerParam(id = "maxdepth", lower = 0L, default = 0L),
-      makeLogicalLearnerParam(id = "savesplitstats", default = FALSE)
+      makeLogicalLearnerParam(id = "savesplitstats", default = FALSE, tunable = FALSE)
     ),
     properties = c("numerics", "factors", "ordered", "weights", "missings"),
     par.vals = list(),

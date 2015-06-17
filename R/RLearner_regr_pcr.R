@@ -8,15 +8,14 @@ makeRLearner.regr.pcr = function() {
       makeDiscreteLearnerParam(id = "method", default = "cppls",
         values = c("kernelpls", "widekernelpls", "simpls", "oscorespls", "cppls", "svdpc")),
       makeLogicalLearnerParam(id = "scale", default = FALSE),
-      makeLogicalLearnerParam(id = "model", default = TRUE),
-      makeLogicalLearnerParam(id = "x", default = FALSE),
-      makeLogicalLearnerParam(id = "y", default = FALSE)
+      makeLogicalLearnerParam(id = "model", default = TRUE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "x", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "y", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(model = FALSE),
     properties = c("numerics", "factors"),
     name = "Principal Component Regression",
-    short.name = "pcr",
-    note = "`model` has been set to `FALSE` by default for speed."
+    short.name = "pcr"
   )
 }
 

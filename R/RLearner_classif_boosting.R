@@ -7,7 +7,7 @@ makeRLearner.classif.boosting = function() {
     par.set = makeParamSet(
       makeLogicalLearnerParam(id = "boos", default = TRUE),
       makeIntegerLearnerParam(id = "mfinal", default = 100L, lower = 1L),
-      makeDiscreteLearnerParam(id = "coeflearn", default = "Breiman", values = c("Breiman", "Freund")),
+      makeDiscreteLearnerParam(id = "coeflearn", default = "Breiman", values = c("Breiman", "Freund", "Zhu")),
       # rpart.control arguments
       makeIntegerLearnerParam(id = "minsplit", default = 20L, lower = 1L),
       makeIntegerLearnerParam(id = "minbucket", lower = 1L),

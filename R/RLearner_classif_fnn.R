@@ -6,8 +6,8 @@ makeRLearner.classif.fnn = function() {
     package = "FNN",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "k", default = 1L, lower = 1L),
-      makeLogicalLearnerParam(id = "use.all", default = TRUE, requires = expression(algorithm == "VR")),
-      makeDiscreteLearnerParam(id = "algorithm", default = "cover_tree", values = list("cover_tree", "kd_tree", "VR"))
+      makeLogicalLearnerParam(id = "prob", default = FALSE, tunable = FALSE),
+      makeDiscreteLearnerParam(id = "algorithm", default = "cover_tree", values = list("cover_tree", "kd_tree", "brute"))
     ),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Fast k-Nearest Neighbour",

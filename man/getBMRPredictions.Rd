@@ -37,6 +37,9 @@ Other benchmark: \code{\link{BenchmarkResult}};
   \code{\link{getBMRFeatSelResults}};
   \code{\link{getBMRFilteredFeatures}};
   \code{\link{getBMRLearnerIds}};
+  \code{\link{getBMRLearners}};
+  \code{\link{getBMRMeasureIds}};
+  \code{\link{getBMRMeasures}};
   \code{\link{getBMRPerformances}};
   \code{\link{getBMRTaskIds}};
   \code{\link{getBMRTuneResults}}

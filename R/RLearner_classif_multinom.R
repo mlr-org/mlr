@@ -4,14 +4,15 @@ makeRLearner.classif.multinom = function() {
     cl = "classif.multinom",
     package = "nnet",
     par.set = makeParamSet(
-      makeLogicalLearnerParam(id = "Hess", default = FALSE),
+      makeLogicalLearnerParam(id = "Hess", default = FALSE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "summ", default = 0L, values = 0:3),
       makeLogicalLearnerParam(id = "censored", default = FALSE),
-      makeLogicalLearnerParam(id = "model", default = FALSE),
+      makeLogicalLearnerParam(id = "model", default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam(id = "maxit", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "rang", default = 0.7),
       makeNumericLearnerParam(id = "decay", default = 0),
-      makeLogicalLearnerParam(id = "trace", default = TRUE),
+      makeLogicalLearnerParam(id = "trace", default = TRUE, tunable = FALSE),
+      ## FIXME_PK: Why are abstol and reltol written with 2 "l"?
       makeNumericLearnerParam(id = "abstoll", default = 1.0e-4),
       makeNumericLearnerParam(id = "reltoll", default = 1.0e-8)
     ),

@@ -9,14 +9,17 @@
 #'   the condition is checked after each iteration.
 #' @export
 #' @rdname TuneControl
-makeTuneControlRandom = function(same.resampling.instance = TRUE, maxit = 100L, time.budget = NULL, exec.time.budget = NULL,
-  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL) {
+makeTuneControlRandom = function(same.resampling.instance = TRUE, maxit = 100L,
+  time.budget = NULL, exec.time.budget = NULL, tune.threshold = FALSE,
+  tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL, budget = NULL) {
 
-  if (is.null(maxit)) {
-    maxit = Inf
-  } else {
-    asCount(maxit)
-  }
+  if (is.null(budget))
+    budget = maxit
+  else if (is.null(maxit))
+    maxit = budget
+  else if (budget != maxit)
+    stopf("The parameters budget (%i) and maxit (%i) differ.", budget, maxit)
+  maxit = asCount(maxit)
 
   if (is.null(time.budget)) {
     time.budget = Inf
@@ -32,5 +35,5 @@ makeTuneControlRandom = function(same.resampling.instance = TRUE, maxit = 100L, 
 
   makeTuneControl(same.resampling.instance = same.resampling.instance,
     maxit = maxit, time.budget = time.budget, exec.time.budget = exec.time.budget, start = NULL, tune.threshold = tune.threshold, tune.threshold.args = tune.threshold.args, final.dw.perc = final.dw.perc, 
-    log.fun = log.fun, cl = "TuneControlRandom")
+    log.fun = log.fun, budget = budget, cl = "TuneControlRandom")
 }

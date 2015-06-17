@@ -14,7 +14,7 @@ makeRLearner.regr.slim = function() {
       makeLogicalLearnerParam(id = "res.sd", default = FALSE),
       makeNumericLearnerParam(id = "prec", default = 1e-5, lower = .Machine$double.eps),
       makeIntegerLearnerParam(id = "max.ite", default = 1e5L),
-      makeLogicalLearnerParam(id = "verbose", default = FALSE),
+      makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam(id = "lambda.idx", default = 3L, when = "predict")
     ),
     par.vals = list(lambda.idx = 3L),

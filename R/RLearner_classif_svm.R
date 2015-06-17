@@ -12,10 +12,12 @@ makeRLearner.classif.svm = function() {
       makeIntegerLearnerParam(id = "degree", default = 3L, lower = 1L, requires = expression(kernel=="polynomial")),
       makeNumericLearnerParam(id = "coef0", default = 0, requires = expression(kernel=="polynomial" || kernel=="sigmoid")),
       makeNumericLearnerParam(id = "gamma", lower = 0, requires = expression(kernel!="linear")),
+      makeNumericLearnerParam(id = "cachesize", default = 40L),
       makeNumericLearnerParam(id = "tolerance", default = 0.001, lower = 0),
+      makeNumericLearnerParam(id = "epsilon", default = 0.1, lower = 0),
       makeLogicalLearnerParam(id = "shrinking", default = TRUE),
-      makeNumericLearnerParam(id = "cachesize", default = 40L)
-
+      makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L),
+      makeLogicalLearnerParam(id = "fitted", default = TRUE, tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "Support Vector Machines (libsvm)",

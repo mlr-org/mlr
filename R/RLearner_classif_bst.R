@@ -12,7 +12,7 @@ makeRLearner.classif.bst = function() {
       makeUntypedLearnerParam(id = "f.init", default = NULL),
       makeUntypedLearnerParam(id = "xselect.init", default = NULL),
       makeLogicalLearnerParam(id = "center", default = FALSE),
-      makeLogicalLearnerParam(id = "trace", default = FALSE),
+      makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam(id = "numsample", default = 50L, lower = 1L),
       makeIntegerLearnerParam(id = "df", default = 4L, lower = 1L),
       makeIntegerLearnerParam(id = "minsplit", default = 20L, lower = 1L),

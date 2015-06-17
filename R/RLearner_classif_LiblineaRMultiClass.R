@@ -10,7 +10,7 @@ makeRLearner.classif.LiblineaRMultiClass = function() {
       makeLogicalLearnerParam(id = "bias", default = TRUE),
       makeNumericVectorLearnerParam(id = "wi", len = NA_integer_),
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L),
-      makeLogicalLearnerParam(id = "verbose", default = FALSE)
+      makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(type = 4),
     properties = c("twoclass", "multiclass", "numerics"),

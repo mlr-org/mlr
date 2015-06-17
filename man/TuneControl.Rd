@@ -17,27 +17,29 @@
 \usage{
 makeTuneControlCMAES(same.resampling.instance = TRUE, impute.val = NULL,
   start = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = NULL, final.dw.perc = NULL, ...)
+  log.fun = NULL, final.dw.perc = NULL, budget = NULL, ...)
 
 makeTuneControlDesign(same.resampling.instance = TRUE, impute.val = NULL,
   design = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = NULL)
+  log.fun = NULL, budget = NULL)
 
 makeTuneControlGenSA(same.resampling.instance = TRUE, impute.val = NULL,
   start = NULL, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = NULL, final.dw.perc = NULL, ...)
+  log.fun = NULL, final.dw.perc = NULL, budget = NULL, ...)
 
 makeTuneControlGrid(same.resampling.instance = TRUE, impute.val = NULL,
   resolution = 10L, tune.threshold = FALSE, tune.threshold.args = list(),
-  log.fun = NULL, final.dw.perc = NULL)
+  log.fun = NULL, final.dw.perc = NULL, budget = NULL)
 
 makeTuneControlIrace(impute.val = NULL, n.instances = 100L,
   show.irace.output = FALSE, tune.threshold = FALSE,
-  tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL, ...)
+  tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL,
+  budget = NULL, ...)
 
 makeTuneControlRandom(same.resampling.instance = TRUE, maxit = 100L,
   time.budget = NULL, exec.time.budget = NULL, tune.threshold = FALSE,
-  tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL)
+  tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL,
+  budget = NULL)
 }
 \arguments{
 \item{same.resampling.instance}{[\code{logical(1)}]\cr
@@ -83,9 +85,24 @@ See the implementation for details.}
 If a Learner wrapped by a \code{\link{makeDownsampleWrapper}} is used, you can define the value of \code{dw.perc} which is used to train the Learner with the final parameter setting found by the tuning.
 Default is \code{NULL} which will not change anything.}
 
+\item{budget}{[\code{integer(1)}]\cr
+Maximum budget for tuning. This value restricts the number of function
+evaluations. In case of \code{makeTuneControlGrid} this number must be identical
+to the size of the grid. For \code{makeTuneControlRandom} the
+\code{budget} equals the number of iterations (\code{maxit}) performed by
+the random search algorithm. Within the \code{\link[cmaes]{cma_es}} the
+\code{budget} corresponds to the product of the number of generations
+(\code{maxit}) and the number of offsprings per generation
+(\code{lambda}). \code{\link[GenSA]{GenSA}} defines the \code{budget} via
+the argument \code{max.call}. However, one should note that this algorithm
+does not stop its local search before its end. This behaviour might lead
+to an extension of the defined budget and will result in a warning. In
+\code{irace}, \code{budget} is passed to \code{maxExperiments}.}
+
 \item{...}{[any]\cr
-Further control parameters passed to the \code{control} argument of \code{\link[cmaes]{cma_es}} and
-\code{tunerConfig} argument of \code{\link[irace]{irace}}.}
+Further control parameters passed to the \code{control} arguments of
+\code{\link[cmaes]{cma_es}} or \code{\link[GenSA]{GenSA}}, as well as
+towards the \code{tunerConfig} argument of \code{\link[irace]{irace}}.}
 
 \item{design}{[\code{data.frame}]\cr
 \code{data.frame} containing the different parameter settings to be evaluated.

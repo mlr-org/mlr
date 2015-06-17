@@ -13,7 +13,9 @@ makeRLearner.cluster.EM = function() {
       makeIntegerLearnerParam(id = "num-slots", default = 1L, lower = 1L),
       makeIntegerLearnerParam(id = "S", default = 100L, lower = 0L),
       makeIntegerLearnerParam(id = "X", default = 10L, lower = 1L),
-      makeLogicalLearnerParam(id = "V")
+      makeIntegerLearnerParam(id = "K", default = 10L, lower = 1L),
+      makeLogicalLearnerParam(id = "V", tunable = FALSE),
+      makeLogicalLearnerParam(id = "output-debug-info", default = FALSE, tunable = FALSE)
     ),
     properties = c("numerics"),
     name = "Expectation-Maximization Clustering",

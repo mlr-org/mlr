@@ -9,11 +9,13 @@ makeRLearner.classif.extraTrees = function() {
       makeIntegerLearnerParam(id = "nodesize", default = 1L),
       makeIntegerLearnerParam(id = "numRandomCuts", default = 1L),
       makeLogicalLearnerParam(id = "evenCuts", default = FALSE),
+      makeIntegerLearnerParam(id = "numThreads", default = 1L, lower = 1L),
       makeIntegerVectorLearnerParam(id = "subsetSizes"),
       makeUntypedLearnerParam(id = "subsetGroups"),
       makeIntegerVectorLearnerParam(id = "tasks", lower = 1L),
       makeNumericLearnerParam(id = "probOfTaskCuts", lower = 0, upper = 1),
-      makeIntegerLearnerParam(id = "numRandomTaskCuts", default = 1L, lower = 1L)
+      makeIntegerLearnerParam(id = "numRandomTaskCuts", default = 1L, lower = 1L),
+      makeDiscreteLearnerParam(id = "na.action", default = "stop", values = c("stop", "zero", "fuse"))
     ),
     properties = c("numerics", "weights", "twoclass", "multiclass", "prob"),
     name = "Extremely Randomized Trees",
