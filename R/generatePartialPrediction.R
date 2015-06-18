@@ -57,10 +57,25 @@ generatePartialPredictionData = function(obj, data, features, fun = mean,
                                          gridsize = 10L, ...) {
   checkmate::assertClass(obj, "WrappedModel")
   td = obj$task.desc
-  rng = lapply(features, function(x) generateFeatureGrid(x, data, resample, fmin, fmax, gridsize))
+  rng = vector("list", length(features))
+  for (i in 1:length(rng))
+    rng[[i]] = generateFeatureGrid(features[i], data, resample, fmin[i], fmax[i], gridsize)
+
+  ## rng = lapply(features, function(x) generateFeatureGrid(x, data, resample, fmin, fmax, gridsize))
   rng = as.data.frame(rng)
   if (length(features) > 1L)
     rng = expand.grid(rng)
+
+
+  ## check that function returns input of valid length and type
+  test = fun(1:3)
+  if (td$type == "classif" & obj$learner$predict.type == "response")
+    checkmate::assert(length(test) == 3L)
+  else if (td$type == "classif" & obj$learner$predict.type == "prob")
+    checkmate::assert(length(test) == 1L)
+  else
+    checkmate::assert(length(test) %in% c(1L, 3L))
+  checkmate::assert(is.numeric(test))
 
   args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = features, ...)
   ppred = parallelMap::parallelMap(doPartialPredictionIteration, seq_len(nrow(rng)), more.args = args)
@@ -133,7 +148,6 @@ print.PartialPredictionData = function(x, ...) {
 plotPartialPrediction = function(obj, facet = NULL) {
   checkmate::assertClass(obj, "PartialPredictionData")
   checkmate::assert(length(obj$features) <= 2L)
-  bounds = all(c("lower", "upper") %in% colnames(obj$data))
   if (!is.null(facet)) {
     checkmate::assert(facet %in% obj$features & length(obj$features) > 1L)
     feature = obj$features[which(obj$features != facet)]
@@ -150,6 +164,10 @@ plotPartialPrediction = function(obj, facet = NULL) {
     target = "risk"
   else
     target = obj$target
+
+  bounds = all(c("lower", "upper") %in% colnames(obj$data))
+  if (bounds)
+    checkmate::assert(obj$task.desc$type == "regr")
 
   if (all(target %in% obj$task.desc$class.levels)) {
     out = reshape2::melt(obj$data, id.vars = obj$features, variable = "Class", value.name = "Probability")
@@ -189,7 +207,11 @@ plotPartialPrediction = function(obj, facet = NULL) {
 plotPartialPredictionGGVIS = function(obj, interaction = NULL) {
   checkmate::assertClass(obj, "PartialPredictionData")
   checkmate::assert(length(obj$features) <= 2L)
+
   bounds = all(c("lower", "upper") %in% colnames(obj$data))
+  if (bounds)
+    checkmate::assert(obj$task.desc$type == "regr")
+
   if (!is.null(interaction)) {
     checkmate::assert(interaction %in% obj$features & length(obj$features) > 1L)
     feature = obj$features[which(obj$features != interaction)]
@@ -268,6 +290,14 @@ doPartialPredictionIteration = function(obj, data, rng, features, fun, td, i, ..
 
 generateFeatureGrid = function(feature, data, resample = NULL,
                                fmin = NULL, fmax = NULL, cutoff = 10L) {
+  checkmate::assert(length(feature) == 1L & is.character(feature))
+  checkmate::assert(is.data.frame(data) & feature %in% colnames(data))
+  if (!is.null(fmin) | !is.null(fmax)) {
+    if (!is.na(fmin) | !is.na(fmax)) {
+      checkmate::assert(class(data[[feature]]) %in% c("numeric", "integer"))
+    }
+  }
+
   if (is.factor(data[[feature]])) {
     factor(rep(levels(data[[feature]]), length.out = cutoff),
            levels = levels(data[[feature]]), ordered = is.ordered(data[[feature]]))
@@ -279,7 +309,14 @@ generateFeatureGrid = function(feature, data, resample = NULL,
     if (!is.null(resample)) {
       checkmate::assertChoice(resample, c("bootstrap", "subsample"))
       sample(data[[feature]], cutoff, resample == "bootstrap")
-    } else
-      seq(fmin, fmax, length.out = cutoff)
+    } else {
+      if (is.integer(data[[feature]])) {
+        checkmate::assert(all.equal(fmin, round(fmin, 0)))
+        checkmate::assert(all.equal(fmax, round(fmax, 0)))
+        sort(rep(fmin:fmax, length.out = cutoff))
+      }
+      else
+        seq(fmin, fmax, length.out = cutoff)
+    }
   }
 }
