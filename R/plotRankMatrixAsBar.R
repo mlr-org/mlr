@@ -1,4 +1,3 @@
-##########################################################################
 #' @title Get Data for RankMatrix as Barplot
 #' 
 #' @description Get the \code{data.frame} to plot a RanMatrix as a Barplot.
@@ -13,37 +12,33 @@
 #' @return [\code{data.frame}]
 #' 
 #' @examples 
-#' lrns = list(makeLearner("classif.randomForest"),makeLearner("classif.rpart"),
+#' lrns = list(makeLearner("classif.randomForest"), makeLearner("classif.rpart"),
 #'             makeLearner("classif.nnet"), makeLearner("classif.svm"))
-#' tasks = list(iris.task,sonar.task,pid.task)
+#' tasks = list(iris.task, sonar.task, pid.task)
 #' rdesc = makeResampleDesc("CV", iters = 5)
-#' meas = list(acc,mmce,ber,featperc)
-#' res = benchmark(lrns, tasks, rdesc,meas)
-#' getRankMatrixAsBarData(res,acc)
-#' getRankMatrixAsBarData(res,acc)
-#' 
+#' meas = list(acc, mmce, ber, featperc)
+#' res = benchmark(lrns, tasks, rdesc, meas)
+#' generateRankMatrixAsBarData(res, acc)
+#' @family generateData
 #' @export
-getRankMatrixAsBarData = function(bmr,measure){
+generateRankMatrixAsBarData = function(bmr, measure){
   # Assert Classes
   assertClass(bmr, "BenchmarkResult")
-  if (!is.null(measure)){
+  if (!is.null(measure)) 
     measure = getBMRMeasures(bmr)[[1L]]
-  }
   assertClass(measure, "Measure")
 
   # Melt back into plotable form:
-  df = convertBMRToRankMatrix(bmr,measure)
+  df = convertBMRToRankMatrix(bmr, measure)
   n2 = dim(df)[2L]
-  df = melt(df,id.vars =c("learner.id"),
+  df = melt(df, id.vars =c("learner.id"),
                        value.name = c("Rank"),
-                       variable.name =c("task.id"))
+                       variable.name = c("task.id"))
   return(df)
 }
 
 
 
-
-##########################################################################
 #' @title Plot Rankmatrix as Barplot
 #' 
 #' @description Plots a barchart from the ranks of algorithms. Alternatively
@@ -79,34 +74,42 @@ getRankMatrixAsBarData = function(bmr,measure){
 #' @return [\link{ggplot2}] plot
 #' 
 #' @examples 
-#' lrns = list(makeLearner("classif.randomForest"),makeLearner("classif.rpart"),
+#' lrns = list(makeLearner("classif.randomForest"), makeLearner("classif.rpart"),
 #'             makeLearner("classif.nnet"), makeLearner("classif.svm"))
-#' tasks = list(iris.task,sonar.task,pid.task)
+#' tasks = list(iris.task, sonar.task, pid.task)
 #' rdesc = makeResampleDesc("CV", iters = 5)
-#' meas = list(acc,mmce,ber,featperc)
-#' res = benchmark(lrns, tasks, rdesc,meas)
-#' plotRankMatrixAsBar(res,acc,"dodge")
-#' plotRankMatrixAsBar(res,acc,orderLrns = c(1,2,4,3),orderTsks=c(3,2,1))
+#' meas = list(acc, mmce, ber, featperc)
+#' res = benchmark(lrns, tasks, rdesc, meas)
+#' plotRankMatrixAsBar(res, acc, "dodge")
+#' plotRankMatrixAsBar(res, acc, orderLrns = c(1,2,4,3), orderTsks=c(3,2,1))
 #' 
 #' @export
 
-plotRankMatrixAsBar = function(bmr, measure = NULL,pos = "tile",
-                               orderLrns = NULL, orderTsks = NULL){
+plotRankMatrixAsBar = function(bmr, measure = NULL, pos = "tile",
+                               order.Lrns = NULL, order.Tsks = NULL) {
   
-  assertChoice(pos,c("tile","stack","dodge"))
+  # Assert correct input
+  assertClass(bmr, "BenchmarkResult")
+  assertChoice(pos,c("tile", "stack", "dodge"))
+  if (!is.null(measure)) 
+    measure = getBMRMeasures(bmr)[[1L]]
+  
   df = getRankMatrixAsBarData(bmr,measure)
-  if (!is.null(orderLrns)){df = orderBMRLrns( bmr, df, orderLrns)}
-  if (!is.null(orderTsks)){df = orderBMRTasks(bmr, df, orderTsks)}
-  # Plot the data
-  if (pos == "tile"){
+  if (!is.null(order.Lrns))
+    df = orderBMRLrns( bmr, df, order.Lrns)
+  if (!is.null(order.Tsks))
+    df = orderBMRTasks(bmr, df, order.Tsks)
+  
+  # Plot
+  if (pos == "tile") {
     p = ggplot(df) + 
-      geom_tile(aes(x=as.factor(Rank),fill = learner.id,y= task.id),
-                colour = "dimgrey", size  = 0.3)+
+      geom_tile(aes(x = as.factor(Rank),fill = learner.id, y = task.id),
+                colour = "dimgrey", size  = 0.3) +
       xlab("Rank")
-  } else if (pos != "tile"){
+  } else if (pos != "tile") {
     p = ggplot(df) + 
-      geom_bar(aes(x=as.factor(Rank),fill = learner.id), position = pos)+
-      xlab("Rank")+
+      geom_bar(aes(x = as.factor(Rank), fill = learner.id), position = pos) +
+      xlab("Rank") +
       ylab(NULL)
   }
   return(p)

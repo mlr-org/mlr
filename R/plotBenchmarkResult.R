@@ -1,11 +1,10 @@
-##########################################################################
-#' @title Create a Trellis-plot for a measure
+#' @title Create a Trellis-plot for a selected \link{Measure}
 #' 
 #' @description 
-#' Plots Boxplots for a selected measure accross all iterations of an algorithm
-#' faceted by the task.id
+#' Plots Boxplots for a selected \link{Measure} accross all iterations
+#' of the resampling strategy, faceted by the task.id
 #' 
-#' @details Credit: This plot is analogous to the one described in 
+#' @details Credit: This plot is similar to the one described in 
 #' Eugster, J.A. (2012) 
 #' 
 #' @param bmr \link[mlr]{BenchmarkResult}\cr
@@ -22,7 +21,7 @@
 #' vector refering to the positions in the new order.
 #' @param orderLrns [\code{character(nTasks)}] \cr 
 #'                  [\code{integer(nTasks)}] \cr
-#' Character vector with task.ids in new order , or integer
+#' Character vector with task.ids in new order, or an integer
 #' vector refering to the positions in the new order.
 #' 
 #' @return [\link{ggplot2}] plot
@@ -35,32 +34,44 @@
 #' meas = list(acc,mmce,ber,featperc)
 #' res = benchmark(lrns, tasks, rdesc,meas)
 #' plotBenchmarkResult(res,acc)
-#' 
+#' @family plot
 #' @export
 
 
-plotBenchmarkResult = function(bmr,measure= NULL,style= "box",orderLrns = NULL,
-                               orderTsks = NULL){
+plotBenchmarkResult = function(bmr, measure = NULL,style = "box", 
+                               order.Lrns = NULL, order.Tsks = NULL) {
   
+  # Assertions
   assertClass(bmr, "BenchmarkResult")
-  if (is.null(measure)){
+  if (is.null(measure))
     measure = getBMRMeasures(bmr)[[1L]]
-  }
-  assertClass(measure,"Measure")
-  assertClass(style,"character")
-  assertChoice(style,c("box","violin"))
+  
+  assertClass(measure, "Measure")
+  assertChoice(measure$id, getBMRMeasureIds(bmr))
+  assertClass(style, "character")
+  assertChoice(style, c("box", "violin"))
+  
+  # Get and modify data.frame
   df = as.data.frame(bmr)
-  if (!is.null(orderLrns)){df = orderBMRLrns( bmr, df, orderLrns)}
-  if (!is.null(orderTsks)){df = orderBMRTasks(bmr, df, orderTsks)}
-  p = ggplot(df,aes_string(x = "learner.id",y=measure$id,color="learner.id"))+
+  if (!is.null(order.Lrns))
+    df = orderBMRLrns( bmr, df, order.Lrns)
+  if (!is.null(order.Tsks))
+    df = orderBMRTasks(bmr, df, order.Tsks)
+  
+  # Create the plot
+  p = ggplot(df, aes_string(x = "learner.id", y = measure$id,
+                           color = "learner.id")) +
     theme(axis.title.x = element_blank()) +
     facet_wrap(~task.id)
-  if(style == "box"){
+  
+  if (style == "box") {
     p = p + geom_boxplot() 
-  }else if(style == "violin"){
-    p = p + geom_violin() + stat_summary(fun.ymin = median, fun.ymax = median,
-                                         fun.y = median, geom="crossbar",
-                                         color="darkgrey", size = 0.4)
+  }else if (style == "violin") {
+    p = p + 
+      geom_violin() + 
+      stat_summary(fun.ymin = median, fun.ymax = median,
+                   fun.y = median, geom = "crossbar",
+                   color = "darkgrey", size = 0.4)
   }
   return(p)
 }

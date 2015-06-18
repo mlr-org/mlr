@@ -25,30 +25,34 @@
 #' rdesc = makeResampleDesc("CV", iters = 5)
 #' meas = list(acc,mmce,ber,featperc)
 #' res = benchmark(lrns, tasks, rdesc,meas)
-#' friedmanTestBMR(res,measure)
+#' friedmanTestBMR(res, measure)
 #' 
+#' @family htest
 #' @export
 
 
-friedmanTestBMR = function(bmr,measure=NULL,aggregation = 'default'){
+friedmanTestBMR = function(bmr, measure = NULL, aggregation = "default") {
+  
+  #Assert correct inputs
   assertClass(bmr, "BenchmarkResult")
-  if (is.null(measure)){
-    measure = getBMRMeasures(bmr)[[1]]
-  }
+  if (is.null(measure))
+    measure = getBMRMeasures(bmr)[[1L]]
   assertClass(measure, "Measure")
-  assertChoice(aggregation,c('default','mean'))
+  assertChoice(measure$id, getBMRMeasureIds(bmr))
+  assertChoice(aggregation, c("default", "mean"))
+  
   # Aggregate means over iterations
-  if (aggregation == "mean"){ 
+  if (aggregation == "mean") { 
     df = as.data.frame(bmr)
     df = aggregate(df[[measure$id]],
                    by = list(task.id = df$task.id,
                              learner.id = df$learner.id),
-                   FUN= mean)
-  } else if (aggregation == "default"){
-    aggrMeas = mlr:::measureAggrName(measure)
-    df = mlr::getBMRAggrPerformances(bmr,as.df = TRUE)
-    df = df[,c("task.id","learner.id",aggrMeas)]
-    names(df)[names(df)== aggrMeas] = c("x")
+                   FUN = mean)
+  } else if (aggregation == "default") {
+    aggrMeas = measureAggrName(measure)
+    df = getBMRAggrPerformances(bmr, as.df = TRUE)
+    df = df[,c("task.id", "learner.id",aggrMeas)]
+    names(df)[names(df) == aggrMeas] = c("x")
   }
   #Test
   tst = friedman.test(x ~ learner.id | task.id, data = df)
