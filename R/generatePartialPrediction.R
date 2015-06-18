@@ -61,9 +61,11 @@ generatePartialPredictionData = function(obj, data, features, fun = mean,
   rng = as.data.frame(rng)
   if (length(features) > 1L)
     rng = expand.grid(rng)
+
   args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = features, ...)
   ppred = parallelMap::parallelMap(doPartialPredictionIteration, seq_len(nrow(rng)), more.args = args)
   ppred = as.data.frame(do.call("rbind", ppred))
+
   if (td$type %in% c("regr", "surv")) {
     target = td$target
   } else {
@@ -152,7 +154,7 @@ plotPartialPrediction = function(obj, facet = NULL) {
   if (all(target %in% obj$task.desc$class.levels)) {
     out = reshape2::melt(obj$data, id.vars = obj$features, variable = "Class", value.name = "Probability")
     out$Class = gsub("^prob\\.", "", out$Class)
-    plt = ggplot2::ggplot(out, ggplot2::aes_string(feature, "Probability", color = "Class"))
+    plt = ggplot2::ggplot(out, ggplot2::aes_string(feature, "Probability", group = "Class", color = "Class"))
   } else {
     plt = ggplot2::ggplot(obj$data, ggplot2::aes_string(feature, target))
   }
@@ -228,7 +230,6 @@ plotPartialPredictionGGVIS = function(obj, interaction = NULL) {
   }
 
   if (!is.null(interaction) & length(obj$features) > 1L) {
-    numeric_interaction = 
     ui = shiny::shinyUI(
       shiny::pageWithSidebar(
         shiny::headerPanel("Partial Prediction"),
@@ -268,7 +269,8 @@ doPartialPredictionIteration = function(obj, data, rng, features, fun, td, i, ..
 generateFeatureGrid = function(feature, data, resample = NULL,
                                fmin = NULL, fmax = NULL, cutoff = 10L) {
   if (is.factor(data[[feature]])) {
-    rep(levels(data[[feature]]), length.out = cutoff)
+    factor(rep(levels(data[[feature]]), length.out = cutoff),
+           levels = levels(data[[feature]]), ordered = is.ordered(data[[feature]]))
   } else {
     if (is.null(fmin))
       fmin = min(data[[feature]], na.rm = TRUE)
