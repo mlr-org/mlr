@@ -154,7 +154,7 @@ plotPartialPrediction = function(obj, facet = NULL) {
   if (all(target %in% obj$task.desc$class.levels)) {
     out = reshape2::melt(obj$data, id.vars = obj$features, variable = "Class", value.name = "Probability")
     out$Class = gsub("^prob\\.", "", out$Class)
-    plt = ggplot2::ggplot(out, ggplot2::aes_string(feature, "Probability", color = "Class"))
+    plt = ggplot2::ggplot(out, ggplot2::aes_string(feature, "Probability", group = "Class", color = "Class"))
   } else {
     plt = ggplot2::ggplot(obj$data, ggplot2::aes_string(feature, target))
   }
