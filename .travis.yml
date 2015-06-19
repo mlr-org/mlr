@@ -16,10 +16,10 @@ r_github_packages:
 r_binary_packages:
     - ada
     - adabag
-    - bartMachine
-    - brnn
+    # - bartMachine
+    # - brnn
     - bst
-    - care
+    # - care
     - caret
     - class
     - clue
@@ -31,18 +31,18 @@ r_binary_packages:
     - crs
     - Cubist
     - DiceKriging
-    - DiceOptim
-    - DiscriMiner
+    # - DiceOptim
+    # - DiscriMiner
     - e1071
     - earth
     - elasticnet
-    - elmNN
+    # - elmNN
     - emoa
-    - extraTrees
+    # - extraTrees
     - flare
     - FNN
     - frbs
-    - FSelector
+    # - FSelector
     - gbm
     - GenSA
     - ggplot2
@@ -55,18 +55,18 @@ r_binary_packages:
     - klaR
     - knitr
     - kohonen
-    - laGP
+    # - laGP
     - LiblineaR
-    - lqa
+    # - lqa
     - MASS
     - mboost
     - mco
     - mda
     - mlbench
     - modeltools
-    - mRMRe
+    # - mRMRe
     - nnet
-    - nodeHarvest
+    # - nodeHarvest
     - pamr
     - party
     - penalized
@@ -83,13 +83,13 @@ r_binary_packages:
     - robustbase
     - ROCR
     - rpart
-    - rrlda
+    # - rrlda
     - rsm
     - RWeka
     - sda
     - shiny
-    - sparsediscrim
-    - sparseLDA
+    # - sparsediscrim
+    # - sparseLDA
     - stepPlr
     - testthat
     - tgp
