@@ -95,9 +95,8 @@ r_binary_packages:
     - tgp
     - TH.data
 before_script:
-    # - git clone https://github.com/mllg/travis-r-tools.git travis-r-tools
-    # - Rscript travis-r-tools/update-packages.r
-    - Rscript -e 'options(repos = "http://cran.rstudio.com"); tryCatch({ old <- old.packages(); if (!is.null(old)) install.packages(old[, "Package"]) }, error = function(e) { message(e); q(status = 1, save = "no") })'
+    - curl -L -O https://raw.githubusercontent.com/mllg/travis-r-tools/master/update-packages.r
+    - Rscript update-packages.r
     - sudo R CMD javareconf
     - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
 notifications:
