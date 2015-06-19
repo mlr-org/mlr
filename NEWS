@@ -6,6 +6,7 @@ mlr_2.5:
   define a maximum "number of evaluations" budget for tuning algorithms
 - makeTuneControlGenSA: optimized function will be considered non-smooth
   per default (change via ... args)
+- classif.svm: added 'scale' param
 
 - new functions
 -- getPredictionTruth, getPredictionResponse
