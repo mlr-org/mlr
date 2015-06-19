@@ -45,6 +45,8 @@ r_binary_packages:
     - FSelector
     - gbm
     - GenSA
+    - ggplot2
+    - ggvis
     - glmnet
     - Hmisc
     - irace
@@ -69,9 +71,11 @@ r_binary_packages:
     - party
     - penalized
     - pls
+    - plyr
     - pROC
     - randomForest
     - randomForestSRC
+    - reshape2
     - RCurl
     - rFerns
     - rjson
@@ -83,6 +87,7 @@ r_binary_packages:
     - rsm
     - RWeka
     - sda
+    - shiny
     - sparsediscrim
     - sparseLDA
     - stepPlr
