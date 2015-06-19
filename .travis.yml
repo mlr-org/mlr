@@ -95,9 +95,9 @@ r_binary_packages:
     - tgp
     - TH.data
 before_script:
+    - Rscript -e 'options(repos = "http://cran.rstudio.com"); update.packages(ask = FALSE)'
     - sudo R CMD javareconf
     - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
-    - Rscript -e 'options(repos = "http://cran.rstudio.com"); update.packages(ask = FALSE)'
 notifications:
   email:
     recipients:
