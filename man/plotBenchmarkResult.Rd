@@ -2,10 +2,10 @@
 % Please edit documentation in R/plotBenchmarkResult.R
 \name{plotBenchmarkResult}
 \alias{plotBenchmarkResult}
-\title{Create a Trellis-plot for a measure}
+\title{Create a Trellis-plot for a selected \link{Measure}}
 \usage{
-plotBenchmarkResult(bmr, measure = NULL, style = "box", orderLrns = NULL,
-  orderTsks = NULL)
+plotBenchmarkResult(bmr, measure = NULL, style = "box", order.Lrns = NULL,
+  order.Tsks = NULL)
 }
 \arguments{
 \item{bmr}{\link[mlr]{BenchmarkResult}\cr
@@ -19,22 +19,26 @@ Defaults to first.}
 Type of Plot, can be \code{"box"} for a boxplot or \code{"violin"} for
 a violin-plot.}
 
-\item{orderLrns}{[\code{character(nLearners)}] \cr
+\item{orderLrns}{[\code{character(nLearners)}] or \cr
                  [\code{integer(nLearners)}] \cr
-Character vector with learner.ids in new order , or integer
+Character vector with \code{learner.ids} in new order , or integer
 vector refering to the positions in the new order.}
 
-\item{orderLrns}{[\code{character(nTasks)}] \cr
+\item{orderLrns}{[\code{character(nTasks)}] or \cr
                  [\code{integer(nTasks)}] \cr
-Character vector with task.ids in new order , or integer
+Character vector with \code{task.ids} in new order, or an integer
 vector refering to the positions in the new order.}
 }
 \value{
 [\link{ggplot2}] plot
 }
 \description{
-Plots Boxplots for a selected measure accross all iterations of an algorithm
-faceted by the task.id
+Plots Boxplots for a selected \link{Measure} accross all iterations
+of the resampling strategy, faceted by the \code{task.id}
+}
+\details{
+Credit: This plot is similar to the one described in
+Eugster, J.A. (2012)
 }
 \examples{
 lrns = list(makeLearner("classif.randomForest"),makeLearner("classif.rpart"),
@@ -44,5 +48,16 @@ rdesc = makeResampleDesc("CV", iters = 5)
 meas = list(acc,mmce,ber,featperc)
 res = benchmark(lrns, tasks, rdesc,meas)
 plotBenchmarkResult(res,acc)
+}
+\seealso{
+Other plot: \code{\link{plotBenchmarkSummary}};
+  \code{\link{plotFilterValuesGGVIS}};
+  \code{\link{plotFilterValues}};
+  \code{\link{plotLearningCurveGGVIS}};
+  \code{\link{plotLearningCurve}};
+  \code{\link{plotROCRCurvesGGVIS}};
+  \code{\link{plotROCRCurves}};
+  \code{\link{plotThreshVsPerfGGVIS}};
+  \code{\link{plotThreshVsPerf}}
 }
 

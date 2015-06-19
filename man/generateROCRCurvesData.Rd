@@ -49,8 +49,10 @@ and then ROCR's \code{\link[ROCR]{performance}}.
 See these methods in ROCR for further info.
 }
 \seealso{
-Other generate_plot_data: \code{\link{generateFilterValuesData}};
+Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}};
+  \code{\link{generateFilterValuesData}};
   \code{\link{generateLearningCurveData}};
+  \code{\link{generateRankMatrixAsBarData}};
   \code{\link{generateThreshVsPerfData}};
   \code{\link{getFilterValues}}
 

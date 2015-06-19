@@ -3,14 +3,14 @@
 #' @description
 #' Performs a \link[PMCMR]{posthoc.friedman.nemenyi.test} for a 
 #' \link{BenchmarkResult} and a selected measure.
-#' The null hypothesis is that apart from an effect of the task, the location
-#' parameter (mean of aggregated Perforamance Measure) is the same for 
-#' each learner.
+#' The null hypothesis is that apart from an effect of the different
+#' [\code{tasks}], the location parameter (mean of aggregated 
+#' Perforamance Measure) is the same for each learner.
 #' 
 #' @details
 #' If the Null Hypthesis of the included ad-hoc friedman.test can be rejected a
 #' \code{pairwise.htest} is returned. If not, the function returns the 
-#' corresponding \code{friedman.test}
+#' corresponding \link{friedman.test}
 #' 
 #' @param bmr \link[mlr]{BenchmarkResult}\cr
 #'  Output of a \link[mlr]{benchmark} function.
@@ -18,14 +18,14 @@
 #'  Measure for which ranks should be calculated (e.g: acc). 
 #'  Defaults to first.
 #'  @param p.value [\code{numeric}(1)] \cr
-#'  P-value for the tests.\cr  Default: 0.05
+#'  p-value for the tests.\cr  Default: 0.05
 #' 
-#' @return A list of class "pairwise.htest". See 
+#' @return A list of class \code{pairwise.htest}.\cr See 
 #' \link[PMCMR]{posthoc.friedman.nemenyi.test} for details. \cr
 #' Additionally two components are added to the list: \cr
-#' \code{$fRejNull:} whether the according friedman.test rejects the Null
-#' hypothesis.\cr
-#' \code{$cDifference}: Minimal difference the mean ranks of two learners
+#' $\code{fRejNull:} whether the according friedman.test rejects the Null
+#' hypothesis at the selected p.value.\cr
+#' $\code{cDifference}: Minimal difference the mean ranks of two learners
 #' need to have in order to be significantly different.
 #' 
 #' 

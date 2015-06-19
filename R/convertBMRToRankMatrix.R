@@ -1,8 +1,8 @@
 #' @title Convert BenchmarkResult to a Rankmatrix
 #' 
 #' @description Computes a matrix of all the ranks of different algorithms
-#' over different datasets(tasks). Ranks are computed from aggregated 
-#' measures. 
+#' over different datasets (tasks). Ranks are computed from aggregated 
+#' measures. Ties are broken at random.
 #' 
 #' @param bmr \link[mlr]{BenchmarkResult}\cr
 #'  Output of a \link[mlr]{benchmark} function.

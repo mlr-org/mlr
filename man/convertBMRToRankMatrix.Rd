@@ -26,16 +26,16 @@ The columns of the matrix correspond to tasks, rows correspond to learners.
 }
 \description{
 Computes a matrix of all the ranks of different algorithms
-over different datasets(tasks). Ranks are computed from aggregated
-measures.
+over different datasets (tasks). Ranks are computed from aggregated
+measures. Ties are broken at random.
 }
 \examples{
-lrns = list(makeLearner("classif.randomForest"),makeLearner("classif.rpart"),
+lrns = list(makeLearner("classif.randomForest"), makeLearner("classif.rpart"),
             makeLearner("classif.nnet"), makeLearner("classif.svm"))
-tasks = list(iris.task,sonar.task,pid.task)
+tasks = list(iris.task, sonar.task, pid.task)
 rdesc = makeResampleDesc("CV", iters = 5)
-meas = list(acc,mmce,ber,featperc)
-res = benchmark(lrns, tasks, rdesc,meas)
-convertBMRToRankMatrix(res,acc)
+meas = list(acc, mmce, ber, featperc)
+res = benchmark(lrns, tasks, rdesc, meas)
+convertBMRToRankMatrix(res, acc)
 }
 

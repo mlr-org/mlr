@@ -44,7 +44,9 @@ Other filter: \code{\link{FilterValues}};
   \code{\link{makeFilterWrapper}};
   \code{\link{plotFilterValuesGGVIS}}
 
-Other plot: \code{\link{plotFilterValuesGGVIS}};
+Other plot: \code{\link{plotBenchmarkResult}};
+  \code{\link{plotBenchmarkSummary}};
+  \code{\link{plotFilterValuesGGVIS}};
   \code{\link{plotLearningCurveGGVIS}};
   \code{\link{plotLearningCurve}};
   \code{\link{plotROCRCurvesGGVIS}};

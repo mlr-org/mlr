@@ -4,52 +4,46 @@
 \alias{plotBenchmarkSummary}
 \title{plotBenchmarkSummary}
 \usage{
-plotBenchmarkSummary(bmr, measure = NULL, fill = "best", orderLrns = NULL,
-  orderTsks = NULL)
+plotBenchmarkSummary(obj)
 }
 \arguments{
-\item{bmr}{\link[mlr]{BenchmarkResult}\cr
-Output of a \link[mlr]{benchmark} function.}
-
-\item{measure}{\link[mlr]{Measure} \cr
-Measure for which ranks should be calculated (e.g: acc). \cr
-Defaults to first.}
-
-\item{fill}{[\code{character(0)}] \cr
-Fill bars proportional to [\code{fill}] \cr
-Can be \code{best} or \code{worst}. See \code{Details}.}
-
-\item{orderLrns}{[\code{character(nLearners)}] \cr
-                 [\code{integer(nLearners)}] \cr
-Character vector with learner.ids in new order , or integer
-vector refering to the positions in the new order.}
-
-\item{orderLrns}{[\code{character(nTasks)}] \cr
-                 [\code{integer(nTasks)}] \cr
-Character vector with task.ids in new order , or integer
-vector refering to the positions in the new order.}
+\item{obj}{[\code{BenchmarkSummaryData}]\cr
+ Output of a \link{generateBenchmarkSummaryData} function.}
 }
 \value{
 \link{ggplot2}] plot
 }
 \description{
-Plots a BenchmarkSummaryPlot for a selected measure. Full tiles correspond
-to the worst performance accross all tasks and learners. The actuall fill
-corresponds to the proportional performance of the learner in the task.
+Plots a BenchmarkSummaryPlot for a selected \link{Measure}.
+Full tiles correspond
+to the worst performance accross all \code{tasks.ids}
+and \code{learner.ids}. The actuall fill
+corresponds to the proportional performance of the \code{best}
+or \code{worst} algorithm accross all tasks.
 }
 \details{
-'best' compares all performances to the best performance accross all \cr
- classifiers. Bars are filled proportional to the best performance. \cr
-'worst' compares all performances to the worst performance accross all \cr
- classifiers. Bars are filled proportional to the worst performance. \cr
+Credit: This plot is analogous to the one described in Eugster,J.A.(2012)
+ but does not include any clustering.
 }
 \examples{
-lrns = list(makeLearner("classif.randomForest"),makeLearner("classif.rpart"),
+lrns = list(makeLearner("classif.randomForest"), makeLearner("classif.rpart"),
             makeLearner("classif.nnet"), makeLearner("classif.svm"))
-tasks = list(iris.task,sonar.task,pid.task)
+tasks = list(iris.task, sonar.task, pid.task)
 rdesc = makeResampleDesc("CV", iters = 5)
-meas = list(acc,mmce,ber,featperc)
+meas = list(acc, mmce, ber, featperc)
 res = benchmark(lrns, tasks, rdesc,meas)
-plotBenchmarkSummary(res,acc,fill = "best")
+g = generateBenchmarkSummaryData(res,ber,fill = "best")
+plotBenchmarkSummary(g)
+}
+\seealso{
+Other plot: \code{\link{plotBenchmarkResult}};
+  \code{\link{plotFilterValuesGGVIS}};
+  \code{\link{plotFilterValues}};
+  \code{\link{plotLearningCurveGGVIS}};
+  \code{\link{plotLearningCurve}};
+  \code{\link{plotROCRCurvesGGVIS}};
+  \code{\link{plotROCRCurves}};
+  \code{\link{plotThreshVsPerfGGVIS}};
+  \code{\link{plotThreshVsPerf}}
 }
 

@@ -45,8 +45,10 @@ Other filter: \code{\link{FilterValues}};
   \code{\link{plotFilterValuesGGVIS}};
   \code{\link{plotFilterValues}}
 
-Other generate_plot_data: \code{\link{generateLearningCurveData}};
+Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}};
+  \code{\link{generateLearningCurveData}};
   \code{\link{generateROCRCurvesData}};
+  \code{\link{generateRankMatrixAsBarData}};
   \code{\link{generateThreshVsPerfData}};
   \code{\link{getFilterValues}}
 }

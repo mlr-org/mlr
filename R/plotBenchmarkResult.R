@@ -2,7 +2,7 @@
 #' 
 #' @description 
 #' Plots Boxplots for a selected \link{Measure} accross all iterations
-#' of the resampling strategy, faceted by the task.id
+#' of the resampling strategy, faceted by the \code{task.id}
 #' 
 #' @details Credit: This plot is similar to the one described in 
 #' Eugster, J.A. (2012) 
@@ -15,13 +15,13 @@
 #' @param style [\code{character(1)]}]\cr
 #'  Type of Plot, can be \code{"box"} for a boxplot or \code{"violin"} for
 #'  a violin-plot.
-#' @param orderLrns [\code{character(nLearners)}] \cr 
+#' @param orderLrns [\code{character(nLearners)}] or \cr 
 #'                  [\code{integer(nLearners)}] \cr
-#' Character vector with learner.ids in new order , or integer
+#' Character vector with \code{learner.ids} in new order , or integer
 #' vector refering to the positions in the new order.
-#' @param orderLrns [\code{character(nTasks)}] \cr 
+#' @param orderLrns [\code{character(nTasks)}] or \cr 
 #'                  [\code{integer(nTasks)}] \cr
-#' Character vector with task.ids in new order, or an integer
+#' Character vector with \code{task.ids} in new order, or an integer
 #' vector refering to the positions in the new order.
 #' 
 #' @return [\link{ggplot2}] plot

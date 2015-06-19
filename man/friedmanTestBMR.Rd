@@ -2,7 +2,7 @@
 % Please edit documentation in R/friedmanTestBMR.R
 \name{friedmanTestBMR}
 \alias{friedmanTestBMR}
-\title{Perform Friedman-Test on BenchmarkResult}
+\title{Perform Friedman Test on BenchmarkResult}
 \usage{
 friedmanTestBMR(bmr, measure = NULL, aggregation = "default")
 }
@@ -24,10 +24,10 @@ A list of class \code{htest}. \cr
 See \link[stats]{friedman.test} for details.\cr
 }
 \description{
-Performs a Friedman Test for a selected measure. \cr
-The null hypothesis is that apart from an effect of the task, the
-location parameter (aggregated Performance measure) is the same
-for each learner.
+Performs a \link{friedman.test} for a selected measure. \cr
+The null hypothesis is that apart from an effect of the different
+[\code{tasks}], the location parameter (aggregated performance-measure)
+is the same for each [\code{learner}].
 }
 \examples{
 lrns = list(makeLearner("classif.randomForest"),makeLearner("classif.rpart"),
@@ -36,6 +36,6 @@ tasks = list(iris.task,sonar.task,pid.task)
 rdesc = makeResampleDesc("CV", iters = 5)
 meas = list(acc,mmce,ber,featperc)
 res = benchmark(lrns, tasks, rdesc,meas)
-friedmanTestBMR(res,measure)
+friedmanTestBMR(res, measure)
 }
 

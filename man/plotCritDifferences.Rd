@@ -4,39 +4,39 @@
 \alias{plotCritDifferences}
 \title{plotCritDifferences}
 \usage{
-plotCritDifferences(bmr, measure = NULL, p.value = 0.05, base = NULL)
+plotCritDifferences(obj, baseline = NULL)
 }
 \arguments{
-\item{bmr}{\link[mlr]{BenchmarkResult}\cr
-Output of a \link[mlr]{benchmark} function.}
+\item{obj}{[\code{critDifferencesData}]
+Result of \link{generateCritDifferencesData} function.}
 
-\item{measure}{\link[mlr]{Measure} \cr
-Measure for which ranks should be calculated (e.g: acc).
-Defaults to first.}
-
-\item{p.value}{[\code{numeric}(1)]\cr
-P-value for the critical difference. Default: 0.05}
-
-\item{base[\code{character(1)}]:}{learner.id \cr
- Select a learner.id as baseline for the critical difference diagram,
- the critical difference will be positioned arround this learner.
- Defaults to best performing algorithm.}
+\item{baseline}{[\code{character(1)}]: [\code{learner.id}] \cr
+Overwrites baseline from \link{generateCritDifferencesData}!\cr
+Select a [\code{learner.id} as baseline for the critical difference
+diagram, the critical difference will be positioned arround this learner.
+Defaults to best performing algorithm.}
 }
 \value{
 [\link{ggplot2}] plot
 }
 \description{
-Plots a Critical-Difference Diagram for all classifiers and a selected
-measure. If a base is selected, the Critical Difference Interval will be
-positioned arround the base. If not, the best performing algorithm will be
-chosen as base.
+Plots a Critical-Differences Diagram for all classifiers and
+a selected measure. If a baseline is selected, the Critical Difference
+Interval will be positioned arround the baseline. If not, the best
+performing algorithm will be chosen as baseline.
+}
+\details{
+Credit: The output is a a critical differences plot, similar to
+ the one proposed in Demsar(2006).
 }
 \examples{
-lrns = list(makeLearner("classif.lda"),makeLearner("classif.rpart"))
-tasks = list(iris.task,sonar.task)
-rdesc = makeResampleDesc("CV", iters = 3)
-meas = list(acc,mmce,ber,featperc)
-res = benchmark(lrns, tasks, rdesc,meas)
-plotCritDifferences(res,acc,0.05,"classif.lda")
+lrns = list(makeLearner("classif.randomForest"),makeLearner("classif.nnet"),
+            makeLearner("classif.rpart"), makeLearner("classif.svm"))
+tasks = list(iris.task, sonar.task, pid.task)
+rdesc = makeResampleDesc("CV", iters = 5L)
+meas = list(acc, mmce, ber, featperc)
+res = benchmark(lrns, tasks, rdesc, meas)
+g = generateCritDifferencesData(res,acc,p.value = 0.1)
+plotCritDifferencesData(p)
 }
 

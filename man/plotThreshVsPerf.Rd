@@ -34,7 +34,9 @@ pvs = generateThreshVsPerfData(pred, list(tpr, fpr))
 plotThreshVsPerf(pvs)
 }
 \seealso{
-Other plot: \code{\link{plotFilterValuesGGVIS}};
+Other plot: \code{\link{plotBenchmarkResult}};
+  \code{\link{plotBenchmarkSummary}};
+  \code{\link{plotFilterValuesGGVIS}};
   \code{\link{plotFilterValues}};
   \code{\link{plotLearningCurveGGVIS}};
   \code{\link{plotLearningCurve}};

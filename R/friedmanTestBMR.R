@@ -1,9 +1,9 @@
-#' @title Perform Friedman-Test on BenchmarkResult
+#' @title Perform Friedman Test on BenchmarkResult
 #' 
-#' @description Performs a Friedman Test for a selected measure. \cr
-#' The null hypothesis is that apart from an effect of the task, the
-#' location parameter (aggregated Performance measure) is the same 
-#' for each learner.
+#' @description Performs a \link{friedman.test} for a selected measure. \cr
+#' The null hypothesis is that apart from an effect of the different 
+#' [\code{tasks}], the location parameter (aggregated performance-measure)
+#' is the same for each [\code{learner}].
 #'  
 #' @param bmr \link[mlr]{BenchmarkResult}\cr
 #'  Output of a \link[mlr]{benchmark} function.

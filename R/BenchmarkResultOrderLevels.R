@@ -13,7 +13,7 @@ orderBMRTasks = function(bmr, df = NULL, order.Tsks) {
     assertClass(df, "data.frame")
   }
   if (is.numeric(order.Tsks)) {
-    orderTsks= getBMRTaskIds(bmr)[order.Tsks]
+    order.Tsks= getBMRTaskIds(bmr)[order.Tsks]
   } else {
     assertCharacter(order.Tsks)
   }
@@ -40,7 +40,7 @@ orderBMRLrns = function(bmr,df=NULL,order.Lrns){
   } else {
     assertClass(df, "data.frame")
   }
-  if (is.numeric(orderLrns)) {
+  if (is.numeric(order.Lrns)) {
     order.Lrns = getBMRLearnerIds(bmr)[order.Lrns]
   } else {
     assertCharacter(order.Lrns)
