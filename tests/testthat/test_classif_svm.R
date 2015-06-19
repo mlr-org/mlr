@@ -40,4 +40,13 @@ test_that("classif_svm", {
   }
 
   testCV("classif.svm", multiclass.df, multiclass.target, tune.train=tt, parset=list(kernel="polynomial", degree=3, coef0=2, gamma=1.5))
+
+  lrn = makeLearner("classif.svm", scale = FALSE)
+  model = train(lrn, multiclass.task)
+  preds = predict(model, multiclass.task)
+  expect_equal(length(preds), 5)
+  lrn = makeLearner("classif.svm", scale = c(TRUE))
+  model = train(lrn, multiclass.task)
+  preds = predict(model, multiclass.task)
+  expect_equal(length(preds), 5)
 })

@@ -17,7 +17,8 @@ makeRLearner.classif.svm = function() {
       makeNumericLearnerParam(id = "epsilon", default = 0.1, lower = 0),
       makeLogicalLearnerParam(id = "shrinking", default = TRUE),
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L),
-      makeLogicalLearnerParam(id = "fitted", default = TRUE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "fitted", default = TRUE, tunable = FALSE),
+      makeLogicalVectorLearnerParam(id = "scale", default = c(TRUE), tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "Support Vector Machines (libsvm)",
