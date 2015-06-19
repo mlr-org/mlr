@@ -13,9 +13,86 @@ r_github_packages:
     - berndbischl/parallelMap
     - berndbischl/ParamHelpers
     - mllg/checkmate
+r_binary_packages:
+    - ada
+    - adabag
+    - bartMachine
+    - brnn
+    - bst
+    - care
+    - caret
+    - class
+    - clue
+    - cluster
+    - clusterSim
+    - clValid
+    - cmaes
+    - CoxBoost
+    - crs
+    - Cubist
+    - DiceKriging
+    - DiceOptim
+    - DiscriMiner
+    - e1071
+    - earth
+    - elasticnet
+    - elmNN
+    - emoa
+    - extraTrees
+    - flare
+    - FNN
+    - frbs
+    - FSelector
+    - gbm
+    - GenSA
+    - glmnet
+    - Hmisc
+    - irace
+    - kernlab
+    - kknn
+    - klaR
+    - knitr
+    - kohonen
+    - laGP
+    - LiblineaR
+    - lqa
+    - MASS
+    - mboost
+    - mco
+    - mda
+    - mlbench
+    - modeltools
+    - mRMRe
+    - nnet
+    - nodeHarvest
+    - pamr
+    - party
+    - penalized
+    - pls
+    - pROC
+    - randomForest
+    - randomForestSRC
+    - RCurl
+    - rFerns
+    - rjson
+    - rmarkdown
+    - robustbase
+    - ROCR
+    - rpart
+    - rrlda
+    - rsm
+    - RWeka
+    - sda
+    - sparsediscrim
+    - sparseLDA
+    - stepPlr
+    - testthat
+    - tgp
+    - TH.data
 before_script:
     - sudo R CMD javareconf
     - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
+    - Rscript -e "update.packages(ask = FALSE)"
 notifications:
   email:
     recipients:
