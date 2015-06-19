@@ -15,11 +15,6 @@ test_that("multilabel", {
   # resample
   r = holdout(lrn, multilabel.task)
   expect_true(!is.na(r$aggr))
-  # probs
-  lrn = setPredictType(lrn, "prob")
-  mod = train(lrn, multilabel.task)
-  pred = predict(mod, multilabel.task)
-  print(str(pred$data))
 })
 
 
