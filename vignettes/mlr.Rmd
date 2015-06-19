@@ -1,6 +1,6 @@
 ---
 title: "mlr: Machine Learning in R"
-author: "Bernd Bischl, Michael Lang, Jakob Richter, Jakob Bossek, Leonard Judt,
+author: "Bernd Bischl, Michel Lang, Jakob Richter, Jakob Bossek, Leonard Judt,
 Tobias Kuehn, Erich Studerus, Lars Kotthoff"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -9,9 +9,11 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
+# mlr: Machine Learning in R
 
 This Vignette is supposed to give you a short introductory glance at the key features of `mlr`.
 A more detailed in depth and continuously updated tutorial can be found on the GitHub project page:
+
 - [Project Page](https://github.com/berndbischl/mlr/)
 - [Online Tutorial](http://berndbischl.github.io/mlr/tutorial/html/)
 - [Download](http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip) online tutorial as zip for offline usage
@@ -22,22 +24,22 @@ The main goal of `mlr` is to provide a unified interface for *machine learning t
 In lack of a common interface it becomes a hassle to carry out standard methods like cross-validation and hyperparameter tuning for different learners.
 Hence, `mlr` offers the following features:
 
-* Possibility to fit, predict, evaluate and resample models
-* Easy extension mechanism through S3 inheritance
-* Abstract description of learners and tasks by properties
-* Parameter system for learners to encode data types and constraints
-* Many convenience methods and generic building blocks for your machine learning experiments
-* Resampling like bootstrapping, cross-validation and subsampling
-* Different visualizations for e.g. ROC curves and predictions
-* Benchmarking of learners for muliple data sets
-* Easy hyperparameter tuning using different optimization strategies
-* Variable selection with filters and wrappers
-* Nested resampling of models with tuning and feature selection
-* Cost-sensitive learning, threshold tuning and imbalance correction
-* Wrapper mechanism to extend learner functionality and complex and custom ways
-* Combine different processing steps to a complex data mining chain that can be jointly optimized
-* Extension points to integrate your own stuff
-* Parallelization is built-in
+- Possibility to fit, predict, evaluate and resample models
+- Easy extension mechanism through S3 inheritance
+- Abstract description of learners and tasks by properties
+- Parameter system for learners to encode data types and constraints
+- Many convenience methods and generic building blocks for your machine learning experiments
+- Resampling like bootstrapping, cross-validation and subsampling
+- Different visualizations for e.g. ROC curves and predictions
+- Benchmarking of learners for multiple data sets
+- Easy hyperparameter tuning using different optimization strategies
+- Variable selection with filters and wrappers
+- Nested resampling of models with tuning and feature selection
+- Cost-sensitive learning, threshold tuning and imbalance correction
+- Wrapper mechanism to extend learner functionality and complex and custom ways
+- Combine different processing steps to a complex data mining chain that can be jointly optimized
+- Extension points to integrate your own stuff
+- Parallelization is built-in
 
 ## Quick Start
 
@@ -76,7 +78,7 @@ Reading is highly recommended!
 
 * [Project Page](https://github.com/berndbischl/mlr/)
 * [Online Tutorial](http://berndbischl.github.io/mlr/tutorial/html/)
-* [Download](http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip) online tutorial as zip for offline usage
+* [Offline Tutorial](http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip): online tutorial as zip for offline usage
 * [Wiki](https://github.com/berndbischl/mlr/wiki) with additional information for developers
 
 
