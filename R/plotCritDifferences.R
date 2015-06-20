@@ -130,7 +130,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
 #' rdesc = makeResampleDesc("CV", iters = 5L)
 #' meas = list(acc, mmce, ber, featperc)
 #' res = benchmark(lrns, tasks, rdesc, meas)
-#' g = generateCritDifferencesData(res,acc,p.value = 0.1)
+#' g = generateCritDifferencesData(res,acc, p.value = 0.1)
 #' plotCritDifferencesData(p)
 #' 
 #' @family plot, critDifference
