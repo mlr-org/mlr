@@ -138,6 +138,8 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
 
 plotCritDifferences = function(obj, baseline = NULL) {
 
+  
+  
   #Assert correct input
   assertClass(obj, "critDifferencesData")
   # Data
@@ -156,7 +158,7 @@ plotCritDifferences = function(obj, baseline = NULL) {
     geom_segment(aes(x = meanRank, xend = xend, y = yend, yend = yend),
                  size = 1) +
     geom_text(aes(x = xtext, y = yend, label = learner.id,
-                  color = learner.id), vjust = -1 )+
+                  color = learner.id), vjust = -1) +
     ylab("Average Rank") +
     scale_x_continuous(breaks = c(0:max(obj$data$xend))) +
     theme(axis.text.y  = element_blank(), 
@@ -173,8 +175,8 @@ plotCritDifferences = function(obj, baseline = NULL) {
   CDx = obj$cdInfo$x
   CDy = obj$cdInfo$y
   CD = obj$cdInfo$cd
-  # Plot Critical Difference Bar
   
+  # Plot Critical Difference Bar
   p = p + 
     annotate("segment", x = CDx + CD, xend = CDx - CD, y = CDy,
              yend = CDy, alpha = 0.5, color = "darkgrey", size = 2) +
