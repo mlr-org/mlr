@@ -16,7 +16,10 @@ Measure for which ranks should be calculated (e.g: acc).
 Defaults to first.}
 
 \item{p.value}{[\code{numeric}(1)] \cr
- p-value for the tests.\cr  Default: 0.05}
+p-value for the tests.\cr  Default: 0.05}
+
+\item{test}{[\code{character(1)}] \cr
+ Test for which the}
 }
 \value{
 A list of class \code{pairwise.htest}.\cr See

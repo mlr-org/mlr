@@ -3,6 +3,11 @@
 #' @description Generate data that can be used to plot a 
 #' critical differences plot.
 #' 
+#' @details Computes the critical differences according to either the 
+#' \code{"Bonferroni-Dunn"} method or the \code{"Nemenyi"} method.\cr  
+#' \code{"Bonferroni-Dunn"} usually yields higher power as it does not 
+#' compare all algorithms to each other, but all algorithms to a 
+#' \code{baseline} instead.
 #' @param bmr \link[mlr]{BenchmarkResult}\cr
 #'  Output of a \link[mlr]{benchmark} function.
 #' @param measure \link[mlr]{Measure} \cr
@@ -14,6 +19,17 @@
 #' Select a [\code{learner.id} as baseline for the critical difference
 #' diagram, the critical difference will be positioned arround this learner.
 #' Defaults to best performing algorithm.
+#' @param test [\code{character(1)}] \cr
+#'  Test for which the critical differences are computed. \cr
+#'  [\code{"bd"}] for the Bonferroni-Dunn Test, which is comparing all
+#'  classifiers to a \codeall others(baseline), thus performing a comparison
+#'  of one classifier to all others. \cr
+#'  Algorithms not in the interval are statistically better (or worse)
+#'  then the baseline. \cr
+#'  [\code{"nemenyi"}] for the \link[PMCMR]{posthoc.friedman.nemenyi.test}
+#'  which is comparing all classifiers to each other. The null hypothesis that 
+#'  there is a difference between the classifiers can not be rejected for all
+#'  classifiers that have a single grey bar connecting them.
 #'  
 #' @return [\code{critDifferencesData}], containing: \cr
 #' $\code{$data}: [\code{data.frame}] containing the info for the descriptive
@@ -43,7 +59,7 @@
 
  
 generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
-                                       baseline = NULL) {
+                                       baseline = NULL, test = "bd") {
   
   #Assert correct inputs
   assertClass(bmr, "BenchmarkResult")
@@ -51,6 +67,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
     measure = getBMRMeasures(bmr)[[1L]]
   assertClass(measure, "Measure")
   assertChoice(measure$id, getBMRMeasureIds(bmr)) 
+  assertChoice(test, c("nemenyi","bd"))
   
   #Get Rankmatrix, Transpose and get mean ranks
   Rmat = convertBMRToRankMatrix(bmr, measure)
@@ -84,7 +101,8 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
     message(c("Could not reject null hypothesis of friedman-test."))
 
   # Info for Plotting the CD Interval
-  cdInfo = list("cd" = nemTest$cDifference,
+  cdInfo = list("test" = test,
+                "cd" = nemTest$cDifference,
                 "x" = df$meanRank[df$learner.id == baseline],
                 "y" = 0.1)
   
@@ -138,25 +156,21 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
 
 plotCritDifferences = function(obj, baseline = NULL) {
 
-  
-  
   #Assert correct input
   assertClass(obj, "critDifferencesData")
   # Data
-  #For baseline: if null choose best performing (random if two are equal)
   if (!is.null(baseline)) {
-    assertChoice(baseline, getBMRLearnerIds(bmr))
+    assertChoice(baseline,obj$data$learner.id)
     obj$baseline = baseline
   }
+
   
-  
-  
-  p = ggplot(obj$data, aes(color = learner.id)) + 
-    geom_point(aes(x = meanRank, y = 0),size = 3) +
-    geom_segment(aes(x = meanRank, xend = meanRank, y = 0, yend = yend),
-                 size = 1) +
-    geom_segment(aes(x = meanRank, xend = xend, y = yend, yend = yend),
-                 size = 1) +
+  p = ggplot(obj$data) + 
+    geom_point(aes(x = meanRank, y = 0, color = learner.id), size = 3) +
+    geom_segment(aes(x = meanRank, xend = meanRank, y = 0, yend = yend,
+                     color = learner.id),size = 1) +
+    geom_segment(aes(x = meanRank, xend = xend, y = yend, yend = yend,
+                     color = learner.id),size = 1) +
     geom_text(aes(x = xtext, y = yend, label = learner.id,
                   color = learner.id), vjust = -1) +
     ylab("Average Rank") +
@@ -174,8 +188,8 @@ plotCritDifferences = function(obj, baseline = NULL) {
   
   CDx = obj$cdInfo$x
   CDy = obj$cdInfo$y
-  CD = obj$cdInfo$cd
-  
+  CD = obj$cdInfo$cd[[obj$cdInfo$test]]
+  if (obj$cdInfo$test == "bd") {
   # Plot Critical Difference Bar
   p = p + 
     annotate("segment", x = CDx + CD, xend = CDx - CD, y = CDy,
@@ -184,8 +198,25 @@ plotCritDifferences = function(obj, baseline = NULL) {
              yend = CDy + 0.05, color = "darkgrey", size = 1) +
     annotate("segment", x = CDx - CD, xend = CDx - CD, y = CDy - 0.05,
              yend = CDy + 0.05, color = "darkgrey", size = 1) +
-    annotate("point", x = CDx, y = CDy, alpha = 0.5) +
-    annotate("text", label = paste("Critical Difference =", round(CD,2)),
-             x = CDx, y = CDy, vjust = -1)
+    annotate("point", x = dfInfo$CDx, y = dfInfo$CDy, alpha = 0.5) +
+    annotate("text", label = paste("Critical Difference =", round(dfInfo$CD,2)),
+             x = dfInfo$CDx, y = dfInfo$CDy, vjust = -1)
+  } else if (obj$cdInfo$test == "nemenyi") {
+    sub = obj$data$meanRank
+    names(sub) = obj$data$learner.id
+    sub = sort(sub)
+    mat = apply(t(outer(sub, sub, `-`)), c(1,2),
+                FUN = function(x) ifelse(x > 0 && x < CD, x, 0))
+    mat = melt(mat, id.vars = colnames(mat))
+    mat = mat[mat$value != 0,]
+    df = aggregate(mat$value, by= list("Var1" = mat$Var1), FUN = max)
+    df$y = seq(0.01, to = 0.4, length.out = dim(df)[1])
+    df = merge(df,obj$data, by.x = "Var1", by.y = "learner.id")
+  p = p +
+    geom_segment(aes(x = meanRank, xend = meanRank + x, y = y, yend = y), data = df,
+                 size = 1, color = "dimgrey")
+    
+  }
   return(p)
 } 
+

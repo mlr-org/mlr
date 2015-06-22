@@ -17,8 +17,10 @@
 #' @param measure \link[mlr]{Measure} \cr
 #'  Measure for which ranks should be calculated (e.g: acc). 
 #'  Defaults to first.
-#'  @param p.value [\code{numeric}(1)] \cr
+#' @param p.value [\code{numeric}(1)] \cr
 #'  p-value for the tests.\cr  Default: 0.05
+#' @param test [\code{character(1)}] \cr
+#'  Test for which the 
 #' 
 #' @return A list of class \code{pairwise.htest}.\cr See 
 #' \link[PMCMR]{posthoc.friedman.nemenyi.test} for details. \cr
@@ -74,17 +76,23 @@ posthocNemenyiTestBMR = function(bmr, measure = NULL, p.value = 0.05,           
   fTest = friedmanTestBMR(bmr, measure)
   fRejNull = fTest$p.value < p.value
   
-  #Calculate Critical Difference
-  q  = qtukey(1 - p.value, nLearners, 1e+06) / sqrt(2)
-  CD = q * sqrt(nLearners * (nLearners + 1) / (6 * nTasks))
+  #Calculate Critical Difference(s)
+  q.Nemenyi  = qtukey(1 - p.value, nLearners, 1e+06) / sqrt(2)
+  CD.Nemenyi = q.Nemenyi * sqrt(nLearners * (nLearners + 1) / (6 * nTasks))
+  # Also return Bonferroni Dunn CD for convenience
+  q.BD = qtukey(1 - (p.value / (nLearners - 1)), 2, 1e+06) / sqrt(2) 
+  CD.BD = q.BD * sqrt(nLearners * (nLearners + 1) / (6 * nTasks))
+  
   if (fRejNull == TRUE) {
     nemTest = posthoc.friedman.nemenyi.test(x ~ learner.id | task.id, data = df)
-    nemTest$cDifference = CD
-    nemTest$fRejNull = TRUE
+    nemTest$cDifference = list("nemenyi" = CD.Nemenyi,
+                               "bd" = CD.BD)
+    nemTest$fRejNull = fRejNull
     return(nemTest)
   } else if (fRejNull == FALSE) {
-    fTest$fRejNull = FALSE
-    fTest$cDifference = CD
+    fTest$fRejNull = fRejNull
+    fTest$cDifference = list("nemenyi" = CD.Nemenyi,
+                               "bd" = CD.BD)
     return(fTest)
   }
 }

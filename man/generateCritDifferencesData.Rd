@@ -5,7 +5,7 @@
 \title{Generate Data for critical-differences Plot}
 \usage{
 generateCritDifferencesData(bmr, measure = NULL, p.value = 0.05,
-  baseline = NULL)
+  baseline = NULL, test = "bd")
 }
 \arguments{
 \item{bmr}{\link[mlr]{BenchmarkResult}\cr
@@ -22,6 +22,18 @@ P-value for the critical difference. Default: 0.05}
 Select a [\code{learner.id} as baseline for the critical difference
 diagram, the critical difference will be positioned arround this learner.
 Defaults to best performing algorithm.}
+
+\item{test}{[\code{character(1)}] \cr
+ Test for which the critical differences are computed. \cr
+ [\code{"bd"}] for the Bonferroni-Dunn Test, which is comparing all
+ classifiers to a \codeall others(baseline), thus performing a comparison
+ of one classifier to all others. \cr
+ Algorithms not in the interval are statistically better (or worse)
+ then the baseline. \cr
+ [\code{"nemenyi"}] for the \link[PMCMR]{posthoc.friedman.nemenyi.test}
+ which is comparing all classifiers to each other. The null hypothesis that
+ there is a difference between the classifiers can not be rejected for all
+ classifiers that have a single grey bar connecting them.}
 }
 \value{
 [\code{critDifferencesData}], containing: \cr
@@ -40,6 +52,13 @@ $\code{p.value}: p.value used for the \link[PMCMR]{friedman.nemenyi.test}
 \description{
 Generate data that can be used to plot a
 critical differences plot.
+}
+\details{
+Computes the critical differences according to either the
+\code{"Bonferroni-Dunn"} method or the \code{"Nemenyi"} method.\cr
+\code{"Bonferroni-Dunn"} usually yields higher power as it does not
+compare all algorithms to each other, but all algorithms to a
+\code{baseline} instead.
 }
 \examples{
 lrns = list(makeLearner("classif.randomForest"),makeLearner("classif.nnet"),

@@ -36,7 +36,7 @@ tasks = list(iris.task, sonar.task, pid.task)
 rdesc = makeResampleDesc("CV", iters = 5L)
 meas = list(acc, mmce, ber, featperc)
 res = benchmark(lrns, tasks, rdesc, meas)
-g = generateCritDifferencesData(res,acc,p.value = 0.1)
+g = generateCritDifferencesData(res,acc, p.value = 0.1)
 plotCritDifferencesData(p)
 }
 

@@ -11,12 +11,12 @@ test_that("critDifferences", {
   res = benchmark(lrns, tasks, rdesc, meas)
 
   # For generateCritDifferencesData
+  r = generateCritDifferencesData(res,mmce, p.value = 0.3, test = "bd")
+  expect_is(r, "critDifferencesData")
   r_1 = generateCritDifferencesData(res)
-  expect_is(r, "critDifferencesData")
-  r_2 = generateCritDifferencesData(res,ber,baseline = "classif.nnet")
-  expect_is(r, "critDifferencesData")
-  r = generateCritDifferencesData(res,mmce, p.value = 0.3)
-  expect_is(r, "critDifferencesData")
+  expect_is(r_1, "critDifferencesData")
+  r_2 = generateCritDifferencesData(res,ber,baseline = "classif.nnet", test = "nemenyi")
+  expect_is(r_2, "critDifferencesData")
   expect_message(generateCritDifferencesData(res,mmce, p.value = 10^(-10)))
   
   
