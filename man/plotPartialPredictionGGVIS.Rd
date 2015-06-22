@@ -2,7 +2,7 @@
 % Please edit documentation in R/generatePartialPrediction.R
 \name{plotPartialPredictionGGVIS}
 \alias{plotPartialPredictionGGVIS}
-\title{Plot a partial prediction}
+\title{Plot a partial prediction using ggvis}
 \usage{
 plotPartialPredictionGGVIS(obj, interaction = NULL)
 }
@@ -15,6 +15,9 @@ The name of a feature to be mapped to an interactive sidebar using Shiny.
 This feature must have been an element of the \code{features} argument to
 \code{\link{generatePartialPredictionData}} and is only applicable when said argument had length
 greater than 1.
+If \code{\link{generatePartialPredictionData}} is called with the \code{interaction} argument \code{FALSE}
+(the default) with argument \code{features} of length greater than one, then \code{interaction} is ignored and
+the feature displayed is controlled by an interactive side panel.
 Default is \code{NULL}.}
 }
 \value{

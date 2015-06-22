@@ -2,7 +2,7 @@
 % Please edit documentation in R/generatePartialPrediction.R
 \name{plotPartialPrediction}
 \alias{plotPartialPrediction}
-\title{Plot a partial prediction}
+\title{Plot a partial prediction with ggplot2}
 \usage{
 plotPartialPrediction(obj, facet = NULL)
 }
@@ -15,6 +15,11 @@ The name of a feature to be used for facetting.
 This feature must have been an element of the \code{features} argument to
 \code{\link{generatePartialPredictionData}} and is only applicable when said argument had length
 greater than 1.
+If \code{\link{generatePartialPredictionData}} is called with the \code{interaction} argument \code{FALSE}
+(the default) with argument \code{features} of length greater than one, then \code{facet} is ignored and
+each feature is plotted in its own facet.
+Note that if any of the elements of the \code{features} argument of \code{\link{generatePartialPredictionData}}
+are factors, they will be coerced to numerics.
 Default is \code{NULL}.}
 }
 \value{

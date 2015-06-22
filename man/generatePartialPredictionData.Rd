@@ -4,8 +4,9 @@
 \alias{generatePartialPredictionData}
 \title{Generate partial predictions}
 \usage{
-generatePartialPredictionData(obj, data, features, fun = mean,
-  resample = NULL, fmin = NULL, fmax = NULL, gridsize = 10L, ...)
+generatePartialPredictionData(obj, data, features, interaction = FALSE,
+  fun = mean, resample = NULL, fmin = NULL, fmax = NULL,
+  gridsize = 10L, ...)
 }
 \arguments{
 \item{obj}{a \code{\link{WrappedModel}} returned from \code{\link{train}}.}
@@ -14,6 +15,15 @@ generatePartialPredictionData(obj, data, features, fun = mean,
 
 \item{features}{\code{character}\cr
 A vector of feature names matching the training data.}
+
+\item{interaction}{\code{logical(1)}\cr
+Whether the \code{features} should be interacted or not. If \code{TRUE} then the Cartesian product of the
+prediction grid for each feature is taken, and the partial prediction at each unique combination of
+values of the features is estimated. Note that if the length of \code{features} is greater than two,
+\code{\link{plotPartialPrediction}} and \code{\link{plotPartialPredictionGGVIS}} cannot be used.
+If \code{FALSE} each feature is considered separately. In this case \code{features} can be much longer
+than two.
+Default is \code{FALSE}.}
 
 \item{fun}{for regression, a function that accepts a numeric vector and returns either a single number
 such as a measure of location such as the mean, or three numbers, which give a lower bound,
@@ -64,7 +74,7 @@ Estimate how the learned prediction function is affected by one or more features
 \examples{
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 fit = train(lrn, iris.task)
-pd = generatePartialPredictionData(fit, getTaskData(iris.task), "Petal.Width")
+pd = generatePartialPredictionData(fit, getTaskData(iris.task), c("Petal.Width", "Petal.Length"))
 plotPartialPrediction(pd)
 }
 \seealso{
