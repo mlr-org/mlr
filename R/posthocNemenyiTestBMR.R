@@ -75,7 +75,7 @@ posthocNemenyiTestBMR = function(bmr, measure = NULL, p.value = 0.05,           
   fRejNull = fTest$p.value < p.value
   
   #Calculate Critical Difference
-  q  = qtukey(1 - (p.value / (nLearners - 1)), 2, 1e+06) / sqrt(2)
+  q  = qtukey(1 - p.value, nLearners, 1e+06) / sqrt(2)
   CD = q * sqrt(nLearners * (nLearners + 1) / (6 * nTasks))
   if (fRejNull == TRUE) {
     nemTest = posthoc.friedman.nemenyi.test(x ~ learner.id | task.id, data = df)
