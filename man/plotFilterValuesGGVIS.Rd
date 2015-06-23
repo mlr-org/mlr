@@ -4,32 +4,15 @@
 \alias{plotFilterValuesGGVIS}
 \title{Plot filter values using ggvis.}
 \usage{
-plotFilterValuesGGVIS(fvalues, sort = "dec", n.show = 20L,
-  feat.type.cols = FALSE, interactive = FALSE)
+plotFilterValuesGGVIS(fvalues, feat.type.cols = FALSE)
 }
 \arguments{
 \item{fvalues}{[\code{\link{FilterValues}}]\cr
 Filter values.}
 
-\item{sort}{[\code{character(1)}]\cr
-Sort features like this.
-\dQuote{dec} = decreasing, \dQuote{inc} = increasing, \dQuote{none} = no sorting.
-Default is decreasing.}
-
-\item{n.show}{[\code{integer(1)}]\cr
-Number of features (maximal) to show.
-Default is 20.}
-
 \item{feat.type.cols}{[\code{logical(1)}]\cr
 Colors for factor and numeric features.
 \code{FALSE} means no colors.
-Default is \code{FALSE}.}
-
-\item{interactive}{[\code{logical(1)}]\cr
-Whether to use Shiny to visualize multiple filter methods.
-If \code{TRUE} and \code{getFilterValues} was called with multiple methods,
-then returns a Shiny application with a drop-down menu allowing the visualization
-of said methods. If \code{FALSE} then a static \code{ggvis} plot is returned.
 Default is \code{FALSE}.}
 }
 \value{
