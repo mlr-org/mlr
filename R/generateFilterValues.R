@@ -217,12 +217,12 @@ plotFilterValuesGGVIS = function(fvalues, feat.type.cols = FALSE) {
   }
 
   gen_plot_data = function(data, sort_type, value_column, factor_column, n_show) {
-    if (sort_type != "none")
+    if (sort_type != "none") {
+      data = head(sortByCol(data, "value", FALSE), n = n_show)
       data[[factor_column]] = factor(data[[factor_column]],
                                      levels = data[[factor_column]][order(data[[value_column]],
                                                                           decreasing = sort_type == "decreasing")])
-    data = head(data, n = n_show)
-    data[[factor_column]] = factor(data[[factor_column]]) ## drop unused factor levels
+    }
     data
   }
 
