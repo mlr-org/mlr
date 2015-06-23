@@ -6,7 +6,7 @@ test_that("critDifferences", {
   lrns = list(makeLearner("classif.randomForest"), makeLearner("classif.nnet"),
               makeLearner("classif.rpart"), makeLearner("classif.svm"))
   tasks = list(iris.task, sonar.task, pid.task)
-  rdesc = makeResampleDesc("CV", iters = 2L)
+  rdesc = makeResampleDesc("CV", iters = 5L)
   meas = list(acc, mmce, ber, featperc)
   res = benchmark(lrns, tasks, rdesc, meas)
 

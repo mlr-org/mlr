@@ -19,16 +19,19 @@ Defaults to first.}
 P-value for the critical difference. Default: 0.05}
 
 \item{baseline}{[\code{character(1)}]: [\code{learner.id}] \cr
-Select a [\code{learner.id} as baseline for the critical difference
-diagram, the critical difference will be positioned arround this learner.
-Defaults to best performing algorithm.}
+Select a [\code{learner.id} as baseline for the \code{test = "bd"}
+(bonferroni-dunn") critical differences
+diagram, the critical difference Interval will then be positioned arround this learner.
+Defaults to best performing algorithm. \cr
+For \code{test = "nemenyi"}, no baseline is needed as it performs \code{all pairwise
+comparisons.}}
 
 \item{test}{[\code{character(1)}] \cr
  Test for which the critical differences are computed. \cr
  [\code{"bd"}] for the Bonferroni-Dunn Test, which is comparing all
- classifiers to a \codeall others(baseline), thus performing a comparison
+ classifiers to a \code {baseline}, thus performing a comparison
  of one classifier to all others. \cr
- Algorithms not in the interval are statistically better (or worse)
+ Algorithms not connected by a single line are statistically different(better or worse)
  then the baseline. \cr
  [\code{"nemenyi"}] for the \link[PMCMR]{posthoc.friedman.nemenyi.test}
  which is comparing all classifiers to each other. The null hypothesis that

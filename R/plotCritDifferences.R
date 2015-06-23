@@ -16,15 +16,18 @@
 #' @param p.value [\code{numeric}(1)]\cr
 #'  P-value for the critical difference. Default: 0.05
 #' @param baseline [\code{character(1)}]: [\code{learner.id}] \cr
-#' Select a [\code{learner.id} as baseline for the critical difference
-#' diagram, the critical difference will be positioned arround this learner.
-#' Defaults to best performing algorithm.
+#' Select a [\code{learner.id} as baseline for the \code{test = "bd"}
+#' (bonferroni-dunn") critical differences
+#' diagram, the critical difference Interval will then be positioned arround this learner.
+#' Defaults to best performing algorithm. \cr
+#' For \code{test = "nemenyi"}, no baseline is needed as it performs \code{all pairwise
+#' comparisons.} 
 #' @param test [\code{character(1)}] \cr
 #'  Test for which the critical differences are computed. \cr
 #'  [\code{"bd"}] for the Bonferroni-Dunn Test, which is comparing all
-#'  classifiers to a \codeall others(baseline), thus performing a comparison
+#'  classifiers to a \code {baseline}, thus performing a comparison
 #'  of one classifier to all others. \cr
-#'  Algorithms not in the interval are statistically better (or worse)
+#'  Algorithms not connected by a single line are statistically different(better or worse)
 #'  then the baseline. \cr
 #'  [\code{"nemenyi"}] for the \link[PMCMR]{posthoc.friedman.nemenyi.test}
 #'  which is comparing all classifiers to each other. The null hypothesis that 
@@ -89,7 +92,6 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
   df$xtext[!bst] = max(df$rank) + 1
   
   #Baseline
-  
   if(is.null(baseline))
     baseline = df$learner.id[df$rank == min(df$rank)]
   assertChoice(baseline, getBMRLearnerIds(bmr))
@@ -99,13 +101,27 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
   nemTest = posthocNemenyiTestBMR(bmr, measure, p.value)
   if (nemTest$fRejNull == FALSE)
     message(c("Could not reject null hypothesis of friedman-test."))
-
+  
   # Info for Plotting the CD Interval
   cdInfo = list("test" = test,
-                "cd" = nemTest$cDifference,
+                "cd" = nemTest$cDifference[[test]],
                 "x" = df$meanRank[df$learner.id == baseline],
                 "y" = 0.1)
   
+  # Data for NemenyiTest
+  if (test == "nemenyi") {
+  sub = sort(df$meanRank)
+  mat = apply(t(outer(sub, sub, `-`)), c(1,2),
+              FUN = function(x) ifelse(x > 0 && x < cdInfo$cd, x, 0))
+  xstart = round(apply(mat + sub, 1, min), 3)
+  xend   = round(apply(mat + sub, 1, max), 3)
+  nemdf = data.frame(xstart, xend, "diff" = xend - xstart)
+  nemdf = ddply(nemdf, .(xend), function(x) x[which.max(x$diff), ])
+  nemdf = nemdf[nemdf$xend - nemdf$xstart > 0, ]
+  nemdf$y = seq(from = 0.1, to = 0.35, length.out = dim(nemdf)[1])
+  cdInfo$nemenyiData = nemdf
+  }
+            
   # Output
   out = list("data" = df,
              "cdInfo" = cdInfo,
@@ -160,8 +176,9 @@ plotCritDifferences = function(obj, baseline = NULL) {
   assertClass(obj, "critDifferencesData")
   # Data
   if (!is.null(baseline)) {
-    assertChoice(baseline,obj$data$learner.id)
-    obj$baseline = baseline
+    assertChoice(baseline, obj$data$learner.id)
+  } else {
+    baseline =obj$baseline
   }
 
   
@@ -188,7 +205,7 @@ plotCritDifferences = function(obj, baseline = NULL) {
   
   CDx = obj$cdInfo$x
   CDy = obj$cdInfo$y
-  CD = obj$cdInfo$cd[[obj$cdInfo$test]]
+  CD = obj$cdInfo$cd
   if (obj$cdInfo$test == "bd") {
   # Plot Critical Difference Bar
   p = p + 
@@ -198,23 +215,15 @@ plotCritDifferences = function(obj, baseline = NULL) {
              yend = CDy + 0.05, color = "darkgrey", size = 1) +
     annotate("segment", x = CDx - CD, xend = CDx - CD, y = CDy - 0.05,
              yend = CDy + 0.05, color = "darkgrey", size = 1) +
-    annotate("point", x = dfInfo$CDx, y = dfInfo$CDy, alpha = 0.5) +
-    annotate("text", label = paste("Critical Difference =", round(dfInfo$CD,2)),
-             x = dfInfo$CDx, y = dfInfo$CDy, vjust = -1)
+    annotate("point", x = CDx, y = CDy, alpha = 0.5) +
+    annotate("text", label = paste("Critical Difference =", round(CD,2)),
+             x = CDx, y = CDy, vjust = -1)
+  
   } else if (obj$cdInfo$test == "nemenyi") {
-    sub = obj$data$meanRank
-    names(sub) = obj$data$learner.id
-    sub = sort(sub)
-    mat = apply(t(outer(sub, sub, `-`)), c(1,2),
-                FUN = function(x) ifelse(x > 0 && x < CD, x, 0))
-    mat = melt(mat, id.vars = colnames(mat))
-    mat = mat[mat$value != 0,]
-    df = aggregate(mat$value, by= list("Var1" = mat$Var1), FUN = max)
-    df$y = seq(0.01, to = 0.4, length.out = dim(df)[1])
-    df = merge(df,obj$data, by.x = "Var1", by.y = "learner.id")
-  p = p +
-    geom_segment(aes(x = meanRank, xend = meanRank + x, y = y, yend = y), data = df,
-                 size = 1, color = "dimgrey")
+    nemenyiData = obj$cdInfo$nemenyiData
+    p = p +
+    geom_segment(aes(x = xstart - .03, xend = xend + .03, y = y, yend = y), data = nemenyiData,
+                 size = 2, color = "dimgrey", alpha = 0.9)
     
   }
   return(p)
