@@ -7,6 +7,7 @@ mlr_2.5:
 - makeTuneControlGenSA: optimized function will be considered non-smooth
   per default (change via ... args)
 - classif.svm: added 'scale' param
+- plotFilterValuesGGVIS: made sort argument interactive
 
 - new functions
 -- getPredictionTruth, getPredictionResponse

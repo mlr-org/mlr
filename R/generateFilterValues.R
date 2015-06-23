@@ -197,7 +197,8 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
 #'   Whether to use Shiny to visualize multiple filter methods.
 #'   If \code{TRUE} and \code{getFilterValues} was called with multiple methods,
 #'   then returns a Shiny application with a drop-down menu allowing the visualization
-#'   of said methods. If \code{FALSE} then a static \code{ggvis} plot is returned.
+#'   of said methods. How to sort the displayed feature values is also interactive.
+#'   If \code{FALSE} then a static \code{ggvis} plot is returned.
 #'   Default is \code{FALSE}.
 #' @template ret_ggv
 #' @export
@@ -218,10 +219,6 @@ plotFilterValuesGGVIS = function(fvalues, sort = "dec", n.show = 20L, feat.type.
   n.show = min(n.show, max(sapply(methods, function(x) sum(!is.na(data[[x]])))))
   data = reshape2::melt(data, id.vars = c("name", "type"), variable = "method")
 
-  if (sort != "none")
-    data = do.call(rbind, lapply(methods, function(x)
-      head(sortByCol(data[data$method == x, ], "value", (sort == "inc")), n.show)))
-
   data$name = factor(data$name, levels = as.character(unique(data$name)))
   create_plot = function(data, feat.type.cols) {
     if (feat.type.cols)
@@ -236,6 +233,14 @@ plotFilterValuesGGVIS = function(fvalues, sort = "dec", n.show = 20L, feat.type.
     plt = ggvis::add_axis(plt, "y", title = "")
     plt = ggvis::add_axis(plt, "x", title = "")
     return(plt)
+  }
+
+  sort_plot_data = function(data, sort_type, value_column, factor_column, n.show) {
+    if (sort_type != "none" | n.show != nrow(data))
+        data[[factor_column]] = factor(data[[factor_column]],
+                                       levels = data[[factor_column]][order(data[[value_column]],
+                                                                            decreasing = sort_type == "decreasing")])
+    data
   }
 
   add_title = function(vis, ..., x_lab = "", title = "") {
@@ -262,7 +267,10 @@ plotFilterValuesGGVIS = function(fvalues, sort = "dec", n.show = 20L, feat.type.
             shiny::sidebarPanel(
                 shiny::selectInput("level_variable",
                                    "choose a filter method",
-                                   unique(levels(data[["method"]])))
+                                   unique(levels(data[["method"]]))),
+                shiny::radioButtons("sort_type",
+                                    "sort features",
+                                    c("increasing", "decreasing", "none"))
             ),
             shiny::mainPanel(
                 shiny::uiOutput("ggvis_ui"),
@@ -270,8 +278,20 @@ plotFilterValuesGGVIS = function(fvalues, sort = "dec", n.show = 20L, feat.type.
             )
         ))
     server = shiny::shinyServer(function(input, output) {
-      data_sub = shiny::reactive(data[which(data[["method"]] == input$level_variable), ])
-      plt = create_plot(data_sub, feat.type.cols)
+      plt = shiny::reactive(
+        create_plot(
+          data = head(
+            sort_plot_data(
+              data[which(data[["method"]] == input$level_variable), ],
+              input$sort_type,
+              "value",
+              "name",
+              n.show
+            ),
+            n = n.show),
+          feat.type.cols
+        )
+      )
       ggvis::bind_shiny(plt, "ggvis", "ggvis_ui")
     })
     shiny::shinyApp(ui, server)
