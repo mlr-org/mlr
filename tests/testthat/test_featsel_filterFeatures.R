@@ -66,7 +66,7 @@ test_that("filterFeatures", {
 test_that("plotFilterValues", {
   fv = generateFilterValuesData(binaryclass.task, method = "chi.squared")
   plotFilterValues(fv)
-  plotFilterValuesGGVIS(fv)
+  ## plotFilterValuesGGVIS(fv)
 
   fv2 = generateFilterValuesData(binaryclass.task, method = c("chi.squared", "rf.importance"))
   plotFilterValues(fv)
