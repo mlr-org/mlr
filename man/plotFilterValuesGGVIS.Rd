@@ -29,7 +29,8 @@ Default is \code{FALSE}.}
 Whether to use Shiny to visualize multiple filter methods.
 If \code{TRUE} and \code{getFilterValues} was called with multiple methods,
 then returns a Shiny application with a drop-down menu allowing the visualization
-of said methods. If \code{FALSE} then a static \code{ggvis} plot is returned.
+of said methods. How to sort the displayed feature values is also interactive.
+If \code{FALSE} then a static \code{ggvis} plot is returned.
 Default is \code{FALSE}.}
 }
 \value{
