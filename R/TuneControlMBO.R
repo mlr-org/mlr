@@ -9,15 +9,18 @@
 #   Requires \dQuote{save.file.path) to be set.
 # @param mbo.control [\code{\link[mlrMBO]{MBOControl}}] \cr
 #   Control object for model-based optimization tuning.
+# @param mbo.keep.result [\code{logical(1)}] \cr
+#    Should the \code{MBOResult} be stored in the result.
 # @export
 # @rdname TuneControl
 makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL,
   learner, mbo.control, tune.threshold = FALSE, tune.threshold.args = list(),
-  continue = FALSE, log.fun = NULL, final.dw.perc = NULL, budget = NULL) {
+  continue = FALSE, log.fun = NULL, final.dw.perc = NULL, budget = NULL, mbo.keep.result = FALSE) {
 
   assertClass(learner, classes = "Learner")
   assertClass(mbo.control, "MBOControl")
   assertFlag(continue)
+  assertFlag(mbo.keep.result)
 
   if (is.null(budget))
     budget = mbo.control$init.design.points + mbo.control$iters
@@ -40,5 +43,6 @@ makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL
   x$learner = learner
   x$mbo.control = mbo.control
   x$continue = continue
+  x$mbo.keep.result = mbo.keep.result
   return(x)
 }

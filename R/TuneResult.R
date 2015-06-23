@@ -24,8 +24,8 @@
 #' @name TuneResult
 #' @rdname TuneResult
 NULL
-makeTuneResult = function(learner, control, x, y, threshold, opt.path) {
-  makeOptResult(learner, control, x, y, threshold, opt.path, "TuneResult")
+makeTuneResult = function(learner, control, x, y, threshold, opt.path, ...) {
+  makeOptResult(learner, control, x, y, threshold, opt.path, "TuneResult", ...)
 }
 
 makeTuneResultFromOptPath = function(learner, par.set, measures, control, opt.path) {
