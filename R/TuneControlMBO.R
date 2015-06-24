@@ -11,11 +11,16 @@
 #   Control object for model-based optimization tuning.
 # @param mbo.keep.result [\code{logical(1)}] \cr
 #    Should the \code{MBOResult} be stored in the result.
+# @param mbo.design [\code{data.frame} | NULL]\cr
+#   Initial design as data frame.
+#   If the parameters have corresponding trafo functions,
+#   the design must not be transformed before it is passed!
+#   If \code{NULL}, one is constructed from the settings in \code{mbo.control}.
 # @export
 # @rdname TuneControl
 makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL,
   learner, mbo.control, tune.threshold = FALSE, tune.threshold.args = list(),
-  continue = FALSE, log.fun = NULL, final.dw.perc = NULL, budget = NULL, mbo.keep.result = FALSE) {
+  continue = FALSE, log.fun = NULL, final.dw.perc = NULL, budget = NULL, mbo.keep.result = FALSE, mbo.design = NULL) {
 
   assertClass(learner, classes = "Learner")
   assertClass(mbo.control, "MBOControl")
@@ -44,5 +49,6 @@ makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL
   x$mbo.control = mbo.control
   x$continue = continue
   x$mbo.keep.result = mbo.keep.result
+  x$mbo.design = mbo.design
   return(x)
 }
