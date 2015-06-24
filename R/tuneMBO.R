@@ -31,7 +31,7 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
   } else {
     # FIXME: remove this when mbo on cran
     mbofun = get("mbo", envir = getNamespace("mlrMBO"))
-    or = mbofun(tff, ps2, design = control$mbo.design, learner = control$learner, control = mbo.control, show.info = show.info)
+    or = mbofun(tff, ps2, design = control$mbo.design, learner = control$learner, control = mbo.control, show.info = FALSE)
   }
 
   x = trafoValue(par.set, or$x)
