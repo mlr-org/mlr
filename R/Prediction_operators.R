@@ -55,9 +55,9 @@ getPredictionProbabilities = function(pred, cl) {
   return(y)
 }
 
-getProbabilities = function(pred, cl) {
-  warnf("getProbabilities() is deprecated. Use getPredictionProbabilities() instead.")
-  getPredictionProbabilities(pred, cl)
+#' @export
+getProbabilities = function() {
+  .Deprecated("getPredictionProbabilities")
 }
 
 #c.Prediction = function(...) {
