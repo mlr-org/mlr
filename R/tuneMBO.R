@@ -35,10 +35,11 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
   }
 
   x = trafoValue(par.set, or$x)
+  y = setNames(or$y, opt.path$y.names[1L])
   # we take the point that mbo proposes and its estimated y
   # FIXME: threshold
   if (!control$mbo.keep.result)
     or = NULL
-  res = makeTuneResult(learner, control, x, setNames(or$y, opt.path$y.names[1L]), NULL, opt.path, mbo.result = or)
+  res = makeTuneResult(learner, control, x, y, NULL, opt.path, mbo.result = or)
   res
 }
