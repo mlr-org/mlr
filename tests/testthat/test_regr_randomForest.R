@@ -45,3 +45,13 @@ test_that("fix factors work", {
   newdata$Species = droplevels(newdata$Species)
   expect_is(predict(model, newdata = newdata), "Prediction")
 })
+
+test_that("different se.methods work", {
+  se.methods = c("bootstrap", "jackknife", "noisy.bootstrap")
+  for (se.method in se.methods) {
+    learner = makeLearner("regr.randomForest", predict.type = "se", se.method = se.method, ntree = 10)
+    model = train(learner, task = regr.task, subset = regr.train.inds)
+    pred = predict(model, task = regr.task, subset = regr.test.inds)
+    expect_true(is.numeric(pred$data$se))
+  }
+})
