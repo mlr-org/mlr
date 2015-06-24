@@ -205,6 +205,8 @@ plotPartialPrediction = function(obj, facet = NULL) {
   if (all(target %in% obj$task.desc$class.levels)) {
     out = reshape2::melt(obj$data, id.vars = obj$features, variable = "Class", value.name = "Probability")
     out$Class = gsub("^prob\\.", "", out$Class)
+    if (length(unique(out$Class)) == 2L)
+      out = out[out$Class == obj$task.desc$positive, ]
     if (length(feature) > 1L) {
       ## suppress warnings for reshaping vectors of different types
       ## factors are coerced to numeric/integers
@@ -212,6 +214,8 @@ plotPartialPrediction = function(obj, facet = NULL) {
       out = reshape2::melt(out, id.vars = c("Class", "Probability"),
                                             variable = "Feature", value.name = "Value")
       out = out[!is.na(out$Value), ]
+      if (length(unique(out$Class)) == 2L)
+        out = out[out$Class == obj$task.desc$positive, ]
       plt = ggplot2::ggplot(out, ggplot2::aes_string("Value", "Probability", group = "Class", color = "Class"))
       plt = plt + ggplot2::facet_wrap(as.formula("~ Feature"), scales = "free_x")
     } else {
@@ -282,6 +286,10 @@ plotPartialPredictionGGVIS = function(obj, interaction = NULL) {
   if (all(target %in% obj$task.desc$class.levels)) {
     data = reshape2::melt(obj$data, id.vars = obj$features, variable = "Class", value.name = "Probability")
     data$Class = gsub("^prob\\.", "", data$Class)
+    if (length(unique(data$Class)) == 2L) {
+      data = data[data$Class == obj$task.desc$positive, ]
+      target = obj$task.desc$positive
+    }
   } else {
     data = obj$data
   }

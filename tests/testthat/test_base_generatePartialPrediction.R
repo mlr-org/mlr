@@ -37,6 +37,11 @@ test_that("generatePartialPredictionData", {
                                       fun = function(x) quantile(x, c(.25, .5, .75)), gridsize = 5L)
   plotPartialPrediction(db2)
   ## plotPartialPredictionGGVIS(db2)
+
+  fcpb = train(makeLearner("classif.rpart", predict.type = "prob"), binaryclass.task)
+  bc = generatePartialPredictionData(fcpb, getTaskData(binaryclass.task), c("V11", "V12"))
+  plotPartialPrediction(bc)
+  ## plotPartialPredictionGGVIS(bc)
 })
 
 test_that("generateFeatureGrid", {
