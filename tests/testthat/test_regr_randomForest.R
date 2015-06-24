@@ -49,7 +49,8 @@ test_that("fix factors work", {
 test_that("different se.methods work", {
   se.methods = c("bootstrap", "jackknife", "noisy.bootstrap")
   for (se.method in se.methods) {
-    learner = makeLearner("regr.randomForest", predict.type = "se", se.method = se.method, ntree = 10)
+    keep.inbag = se.method == "jackknife"
+    learner = makeLearner("regr.randomForest", predict.type = "se", se.method = se.method, ntree = 10, keep.inbag = keep.inbag)
     model = train(learner, task = regr.task, subset = regr.train.inds)
     pred = predict(model, task = regr.task, subset = regr.test.inds)
     expect_true(is.numeric(pred$data$se))
