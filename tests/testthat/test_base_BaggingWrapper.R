@@ -30,7 +30,7 @@ test_that("BaggingWrapper", {
   lrn2 = setPredictType(lrn2, "prob")
   m = train(lrn2, binaryclass.task)
   p = predict(m, binaryclass.task)
-  getProbabilities(p)
+  getPredictionProbabilities(p)
   r = resample(lrn2, binaryclass.task, rdesc, measures = auc)
 
   # regression

@@ -54,7 +54,7 @@ test_that("ModelMultiplexer basic stuff works", {
   lrn2 = setPredictType(lrn, "prob")
   mod = train(lrn2, task = binaryclass.task)
   p = predict(mod, task = binaryclass.task)
-  getProbabilities(p)
+  getPredictionProbabilities(p)
 })
 
 test_that("FailureModel works", {

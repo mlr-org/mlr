@@ -51,14 +51,14 @@ lrn = makeLearner("classif.lda", predict.type = "prob")
 model = train(lrn, iris.task, subset = train.set)
 p = predict(model, task = iris.task, subset = test.set)
 print(p)
-getProbabilities(p)
+getPredictionProbabilities(p)
 }
 \seealso{
 Other predict: \code{\link{asROCRPrediction}};
   \code{\link{generateROCRCurvesData}};
+  \code{\link{getPredictionProbabilities}};
   \code{\link{getPredictionResponse}},
   \code{\link{getPredictionTruth}};
-  \code{\link{getProbabilities}};
   \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}};
   \code{\link{plotViperCharts}};

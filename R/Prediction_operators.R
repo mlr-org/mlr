@@ -21,11 +21,11 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
 #' pred = predict(mod, newdata = iris)
 #'
 #' # Get probabilities for all classes
-#' head(getProbabilities(pred))
+#' head(getPredictionProbabilities(pred))
 #'
 #' # Get probabilities for a subset of classes
-#' head(getProbabilities(pred, c("setosa", "virginica")))
-getProbabilities = function(pred, cl) {
+#' head(getPredictionProbabilities(pred, c("setosa", "virginica")))
+getPredictionProbabilities = function(pred, cl) {
   assertClass(pred, classes = "Prediction")
   ttype = pred$task.desc$type
   if (ttype %nin% c("classif", "cluster"))
@@ -53,6 +53,11 @@ getProbabilities = function(pred, cl) {
     colnames(y) = seq_col(y)
   }
   return(y)
+}
+
+getProbabilities = function(pred, cl) {
+  warnf("getProbabilities() is deprecated. Use getPredictionProbabilities() instead.")
+  getPredictionProbabilities(pred, cl)
 }
 
 #c.Prediction = function(...) {

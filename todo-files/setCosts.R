@@ -55,7 +55,7 @@ setCosts = function(pred, costs) {
     if (!setequal(rns, levs) || !setequal(cns, levs)) 
       stop("Row and column names of cost matrix have to equal class levels!")
   }
-  p = getProbabilities(pred, cl = levs)
+  p = getPredictionProbabilities(pred, cl = levs)
   # resort rows and columns of cost matrix so we have same order as in p
   costs = costs[levs, levs]
   # simplify costs

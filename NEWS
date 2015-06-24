@@ -8,6 +8,7 @@ mlr_2.5:
   per default (change via ... args)
 - classif.svm: added 'scale' param
 - plotFilterValuesGGVIS: sort and n_show are interactive, interactive flag removed
+- renamed getProbabilities to getPredictionProbabilities
 
 - new functions
 -- getPredictionTruth, getPredictionResponse

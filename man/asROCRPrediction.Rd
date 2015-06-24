@@ -15,9 +15,9 @@ Converts predictions to a format package ROCR can handle.
 }
 \seealso{
 Other predict: \code{\link{generateROCRCurvesData}};
+  \code{\link{getPredictionProbabilities}};
   \code{\link{getPredictionResponse}},
   \code{\link{getPredictionTruth}};
-  \code{\link{getProbabilities}};
   \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}};
   \code{\link{plotViperCharts}};

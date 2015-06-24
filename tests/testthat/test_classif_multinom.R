@@ -24,7 +24,7 @@ test_that("classif_multinom", {
   m = train(wl, binaryclass.task)
   p = predict(m, newdata=binaryclass.df)
   rr = p$data$response
-  pp = getProbabilities(p)
+  pp = getPredictionProbabilities(p)
   i = as.integer(pp < 0.5) + 1
   labs = as.factor(binaryclass.task$task.desc$class.levels[i])
   expect_equal(rr, labs)

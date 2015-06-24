@@ -170,7 +170,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
       p = ggplot(grid, aes_string(x = x1n, y = x2n))
       if (hasProperties(learner, "prob") && prob.alpha) {
         # max of rows is prob for selected class
-        prob = apply(getProbabilities(pred.grid, cl = td$class.levels), 1, max)
+        prob = apply(getPredictionProbabilities(pred.grid, cl = td$class.levels), 1, max)
         grid$.prob.pred.class = prob
         p = p + geom_tile(data = grid, mapping = aes_string(fill = target, alpha = ".prob.pred.class"),
           show_guide = TRUE)

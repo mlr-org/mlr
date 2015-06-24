@@ -71,7 +71,7 @@ plotViperCharts.list = function(obj, chart = "rocc", browse = TRUE, auth.key = N
     checkPrediction(p, task.type = "classif", binary = TRUE, predict.type = "prob", check.truth = TRUE)
     a = p$data$truth
     a = as.numeric(a == p$task.desc$positive)
-    list(name = s, actual = a, predicted = getProbabilities(p))
+    list(name = s, actual = a, predicted = getPredictionProbabilities(p))
   }, obj, names(obj), SIMPLIFY = FALSE, USE.NAMES = FALSE)
   inp = list(
     chart = chart, data = inp, embedded = "false"

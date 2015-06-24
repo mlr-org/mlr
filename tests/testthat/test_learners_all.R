@@ -102,7 +102,7 @@ test_that("learners work", {
     lrn = fixHyperPars(lrn)
     m = train(lrn, task)
     p = predict(m, task)
-    getProbabilities(p)
+    getPredictionProbabilities(p)
     expect_true(!is.na(performance(p)))
   })
 
@@ -224,7 +224,7 @@ test_that("learners work", {
   lapply(lrns, function(lrn) {
     m = train(lrn, task)
     p = predict(m, task)
-    getProbabilities(p)
+    getPredictionProbabilities(p)
     expect_true(!is.na(performance(p, task = task)))
   })
 })

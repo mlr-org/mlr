@@ -23,10 +23,10 @@ test_that("predict", {
   pred3 = predict(ext3,newdata = data[multiclass.test.inds,])$class
   prob3 = predict(ext3,newdata = data[multiclass.test.inds,])$post
   expect_equal(cp3$data$response, pred3)
-  expect_equal(prob3, as.matrix(getProbabilities(cp3, colnames(prob3))))
-  expect_true(is.numeric(getProbabilities(cp3, "setosa")))
-  expect_equal(colnames(getProbabilities(cp3, c("setosa", "versicolor"))), c("setosa", "versicolor"))
-  expect_equal(colnames(getProbabilities(cp3, c("versicolor", "setosa"))), c("versicolor", "setosa"))
+  expect_equal(prob3, as.matrix(getPredictionProbabilities(cp3, colnames(prob3))))
+  expect_true(is.numeric(getPredictionProbabilities(cp3, "setosa")))
+  expect_equal(colnames(getPredictionProbabilities(cp3, c("setosa", "versicolor"))), c("setosa", "versicolor"))
+  expect_equal(colnames(getPredictionProbabilities(cp3, c("versicolor", "setosa"))), c("versicolor", "setosa"))
 
   cp4 = predict(cm3, task = multiclass.task, subset = multiclass.test.inds)
   expect_equal(cp4$data$response, pred3)

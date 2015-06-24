@@ -3,7 +3,7 @@
 #' @description
 #' Result from \code{\link{predict.WrappedModel}}.
 #' Use \code{as.data.frame} to access all information in a convenient format.
-#' The function \code{\link{getProbabilities}} is useful to access predicted probabilities.
+#' The function \code{\link{getPredictionProbabilities}} is useful to access predicted probabilities.
 #'
 #' The \code{data} member of the object contains always the following columns:
 #' \code{id}, index numbers of predicted cases from the task, \code{response}

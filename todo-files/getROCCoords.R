@@ -35,7 +35,7 @@ getROCCoords = function(obj, thresholds = 50L) {
 getROCCoords.Prediction = function(obj, thresholds = 50L) {
   checkPrediction(obj, task.type = "classif", predict.type = "prob", binary = TRUE)
   pos = obj$task.desc$positive
-  data = data.frame(truth = obj$data$truth, prob = getProbabilities(obj))
+  data = data.frame(truth = obj$data$truth, prob = getPredictionProbabilities(obj))
   data = sortByCol(data, "prob", asc = FALSE)
   n.pos = sum(data$truth == pos)
   n.neg = nrow(data) - n.pos

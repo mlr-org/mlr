@@ -19,7 +19,7 @@ Not used for \code{method = 'average'}. Default is \code{NULL}.}
 \item{predict.type}{[\code{character(1)}]\cr
   Sets the type of the final prediction for \code{method = 'average'}.
   For other methods, the predict type should be set within \code{super.learner}.
-  If the type of the base learner prediction, which is set up within \code{base.learners}), is
+  If the type of the base learner prediction, which is set up within \code{base.learners}, is
   \describe{
    \item{\code{"prob"}}{then \code{predict.type = 'prob'} will use the average of all
    bease learner predictions and \code{predict.type = 'response'} will use

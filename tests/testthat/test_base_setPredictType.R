@@ -12,7 +12,7 @@ test_that("predict.type gets propagated", {
 
   m = train(lrn2, iris.task)
   p = predict(m, iris.task)
-  prob = getProbabilities(p)
+  prob = getPredictionProbabilities(p)
   expect_true(is.data.frame(prob) && nrow(prob) == nrow(iris))
 })
 
@@ -28,7 +28,7 @@ test_that("predict.type works with BaggingWrapper, special case", {
   expect_equal(lrn2$next.learner$predict.type, "response")
   m = train(lrn2, iris.task)
   p = predict(m, iris.task)
-  prob = getProbabilities(p)
+  prob = getPredictionProbabilities(p)
   expect_true(is.data.frame(prob) && nrow(prob) == nrow(iris))
 })
 

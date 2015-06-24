@@ -39,7 +39,7 @@
 #' model = train(lrn, iris.task, subset = train.set)
 #' p = predict(model, task = iris.task, subset = test.set)
 #' print(p)
-#' getProbabilities(p)
+#' getPredictionProbabilities(p)
 predict.WrappedModel = function(object, task, newdata, subset, ...) {
   if (!xor(missing(task), missing(newdata)))
     stop("Pass either a task object or a newdata data.frame to predict, but not both!")

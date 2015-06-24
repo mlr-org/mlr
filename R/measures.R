@@ -277,7 +277,7 @@ multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, 
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("pROC", why = "multiclass.auc", default.method = "load")
     resp = pred$data$response
-    predP = getProbabilities(pred)
+    predP = getPredictionProbabilities(pred)
     # choose the probablity of the choosen response
     predV = vnapply(seq_row(predP), function(i) {
       predP[i, resp[i]]
@@ -300,7 +300,7 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
     # ROCR does not work with NAs
     if (anyMissing(pred$data$response) || length(unique(pred$data$truth)) == 1L)
       return(NA_real_)
-    measureAUC(getProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive)
+    measureAUC(getPredictionProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive)
   }
 )
 
@@ -319,7 +319,7 @@ brier = makeMeasure(id = "brier", minimize = TRUE, best = 0, worst = 1,
   properties = c("classif", "req.pred", "req.truth", "req.prob"),
   name = "Brier score",
   fun = function(task, model, pred, feats, extra.args) {
-    measureBrier(getProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive)
+    measureBrier(getPredictionProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive)
   }
 )
 

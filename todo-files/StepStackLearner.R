@@ -436,7 +436,7 @@ getResponse = function(pred, full.matrix = TRUE) {
       return(predReturn)
     } else {
       # Return only vector of probabilities for binary classification
-      getProbabilities(pred)
+      getPredictionProbabilities(pred)
     }
   } else {
     # If regression task

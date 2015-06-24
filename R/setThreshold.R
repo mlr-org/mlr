@@ -45,7 +45,7 @@ setThreshold = function(pred, threshold) {
   }
   if (length(threshold > 1L) && !setequal(levs, names(threshold)))
     stop("Threshold names must correspond to classes!")
-  p = getProbabilities(pred, cl = levs)
+  p = getPredictionProbabilities(pred, cl = levs)
   # resort so we have same order in threshold and p
   threshold = threshold[levs]
   # divide all rows by threshold then get max el
