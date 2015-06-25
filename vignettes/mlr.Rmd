@@ -79,8 +79,11 @@ It covers among others: *benchmarking*, *preprocessing*, *imputation*, *feature 
 Reading is highly recommended!
 
 * [Project Page](https://github.com/berndbischl/mlr/)
-* [Online Tutorial](http://berndbischl.github.io/mlr/tutorial/html/)
-* [Offline Tutorial](http://berndbischl.github.io/mlr/tutorial/mlr_tutorial.zip): online tutorial as zip for offline usage
+* Online Tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/tutorial/release/html/)
+  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/tutorial/devel/html/)
+* Offline Tutorial: online tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/tutorial/release/mlr_tutorial.zip)
+  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/tutorial/devel/mlr_tutorial.zip)
+  as zip for offline usage
 * [Wiki](https://github.com/berndbischl/mlr/wiki) with additional information for developers
 
 
