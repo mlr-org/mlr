@@ -223,7 +223,16 @@ plotCritDifferences = function(obj, baseline = NULL) {
     nemenyiData = obj$cdInfo$nemenyiData
     p = p +
     geom_segment(aes(x = xstart - .03, xend = xend + .03, y = y, yend = y), data = nemenyiData,
-                 size = 2, color = "dimgrey", alpha = 0.9)
+                 size = 2, color = "dimgrey", alpha = 0.9) + 
+      annotate("text", label = paste("Critical Difference =", round(CD,2)),
+               y = max(obj$data$yend), x = mean(obj$data$meanRank), vjust = -1)+ 
+      annotate("segment",
+               x =  mean(obj$data$meanRank) - 0.5*CD, 
+               xend = mean(obj$data$meanRank) + 0.5 * CD,
+               y = max(obj$data$yend) + .2,
+               yend = max(obj$data$yend)+ .2,
+               size = 2, alpha = .8)
+               
     
   }
   return(p)

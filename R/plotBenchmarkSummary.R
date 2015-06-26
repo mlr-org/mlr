@@ -145,7 +145,7 @@ plotBenchmarkSummary = function(obj) {
              stat = "identity", linetype = 1, color = "grey", size = .001) +
     scale_alpha_identity() +
     coord_flip() +
-    ylab(paste(measure$name, " proportional to", fill, "performance")) +
+    ylab(paste(obj$measure$name, " proportional to", obj$fill, "performance")) +
     theme(axis.text.x = element_blank(), 
           axis.ticks.x = element_blank(),
           axis.title.y = element_blank())

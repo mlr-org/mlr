@@ -51,7 +51,8 @@ posthocNemenyiTestBMR = function(bmr, measure = NULL, p.value = 0.05,           
   assertClass(bmr, "BenchmarkResult")
   if (is.null(measure))
     measure = getBMRMeasures(bmr)[[1L]]
-  assertClass(measure, "Measure")
+  assertClass(measure$id, "Measure")
+  assertChoice(measure,getBMRMeasureIds(bmr))
   assertNumeric(p.value,lower = 0, upper = 1,len=1)
   assertChoice(aggregation,c('default','mean'))
   # Number of Learners/Tasks
