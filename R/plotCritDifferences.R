@@ -39,7 +39,7 @@
 #' @param test [\code{character(1)}] \cr
 #'  Test for which the critical differences are computed. \cr
 #'  [\code{"bd"}] for the Bonferroni-Dunn Test, which is comparing all
-#'  classifiers to a \code {baseline}, thus performing a comparison
+#'  classifiers to a \code{baseline}, thus performing a comparison
 #'  of one classifier to all others. \cr
 #'  Algorithms not connected by a single line are statistically different(better or worse)
 #'  then the baseline. \cr
@@ -88,13 +88,9 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
   # get a baseline
   if(is.null(baseline))
     baseline = df$learner.id[df$rank == min(df$rank)]
-  # assertChoice(baseline, getBMRLearnerIds(bmr))
   
   # perform nemenyi test
   nem.test = friedmanPostHocTestBMR(bmr, measure, p.value)
-  if (!nem.test$f.rejnull)
-    message(c("Could not reject null hypothesis of friedman-test."))
-  
   
   # info for plotting the cricital differences
   cd.info = list("test" = test,

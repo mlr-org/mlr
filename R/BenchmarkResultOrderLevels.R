@@ -38,7 +38,7 @@ orderBMRLrns = function(bmr, df = NULL, order.lrns){
   } else {
     assertClass(df, "data.frame")
   }
-  if (is.numeric(order.Lrns)) {
+  if (is.numeric(order.lrns)) {
     order.lrns = getBMRLearnerIds(bmr)[order.lrns]
   } else {
     assertCharacter(order.lrns)

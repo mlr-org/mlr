@@ -20,8 +20,10 @@ test_that("hypothesisTest", {
   expect_is(r, "htest") 
   expect_false(r$f.rejnull)
   r = friedmanPostHocTestBMR(res, acc, p.value = .99)
-  expect_is(r, "pairwise.htest") 
-  expect_true(r$f.rejnull)
-  expect_is(r$crit.difference, "numeric")
-  expect_more_than(r$crit.difference[1], 0L)
+  if (r$p.value < .99) {
+    expect_is(r, "pairwise.htest") 
+    expect_true(r$f.rejnull)
+  }
+  expect_is(r$crit.difference[[1]], "numeric")
+  expect_more_than(r$crit.difference[[1]], 0L)
   })

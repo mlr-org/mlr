@@ -18,9 +18,9 @@ test_that("BenchmarkSummary", {
   
   
   # For plot
-  p = plotBenchmarkSummary(r11)
+  p = plotBenchmarkSummary(r1)
   expect_is(p, "ggplot")
-  p = plotBenchmarkSummary(r12)
+  p = plotBenchmarkSummary(r2)
   expect_is(p, "ggplot")
   
   

@@ -49,9 +49,9 @@ plotBenchmarkResult = function(bmr, measure = NULL, style = "box",
   
   # get and modify data.frame
   df = as.data.frame(bmr)
-  if (!is.null(order.Lrns))
+  if (!is.null(order.lrns))
     df = orderBMRLrns(bmr, df, order.lrns)
-  if (!is.null(order.Tsks))
+  if (!is.null(order.tsks))
     df = orderBMRTasks(bmr, df, order.tsks)
   
   # Create the plot

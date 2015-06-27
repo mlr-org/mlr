@@ -16,31 +16,31 @@ test_that("RankMatrix", {
   r = convertBMRToRankMatrix(res)
   expect_is(r, "matrix")
   expect_equal(dim(r), c(n.lrns, n.tsks))
-  expect_equivalent(rownames(r), getBMRTaskIds(res))
-  expect_equivalent(colnames(r), getBMRLearnerIds(res))
+  expect_equivalent(colnames(r), getBMRTaskIds(res))
+  expect_equivalent(rownames(r), getBMRLearnerIds(res))
   expect_equal(sum(r), sum(1:n.lrns * n.tsks))
   
   # measure = ber
   r = convertBMRToRankMatrix(res, ber)
   expect_is(r, "matrix")
   expect_equal(dim(r), c(n.lrns, n.tsks))
-  expect_equivalent(colnames(r), getBMRLearnerIds(res))
+  expect_equivalent(rownames(r), getBMRLearnerIds(res))
   expect_equal(sum(r), sum(1:n.lrns * n.tsks))
   
   # aggregation = "mean"
   r = convertBMRToRankMatrix(res, aggregation = "mean")
   expect_is(r, "matrix")
   expect_equal(dim(r), c(n.lrns, n.tsks))
-  expect_equivalent(colnames(r), getBMRLearnerIds(res))
+  expect_equivalent(rownames(r), getBMRLearnerIds(res))
   expect_equal(sum(r), sum(1:n.lrns * n.tsks))
 
   # For generateRankMatrixAsBarData
   r = generateRankMatrixAsBarData(res)
   expect_is(r, "RankMatrixAsBarData")
   r2 = generateRankMatrixAsBarData(res, acc)
-  expect_is(r, "RankMatrixAsBarData")
+  expect_is(r2, "RankMatrixAsBarData")
   r3 = generateRankMatrixAsBarData(res, featperc)
-  expect_is(r, "RankMatrixAsBarData") 
+  expect_is(r3, "RankMatrixAsBarData") 
   
   # For plotRankMatrixAsBar
   p = plotRankMatrixAsBar(r)
