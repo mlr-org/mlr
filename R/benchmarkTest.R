@@ -46,7 +46,7 @@ friedmanTestBMR = function(bmr, measure = NULL, aggregation = "default") {
   } else if (aggregation == "default") {
     aggr.meas = measureAggrName(measure)
     df = getBMRAggrPerformances(bmr, as.df = TRUE)
-    df = df[,c("task.id", "learner.id",aggr.meas)]
+    df = df[, c("task.id", "learner.id", aggr.meas)]
     names(df)[names(df) == aggr.meas] = c("x")
   }
   #Test
@@ -72,7 +72,7 @@ friedmanTestBMR = function(bmr, measure = NULL, aggregation = "default") {
 #'  need to have in order to be significantly different.
 #' 
 #' @details
-#'  If the null hypothesis of the included ad-hoc \code{\link{friedman.test}}
+#'  If the null hypothesis of the included ad hoc \code{\link{friedman.test}}
 #'  can be rejected a \code{pairwise.htest} is returned. If not, the function returns the 
 #'  corresponding \link{friedman.test}
 #' 
@@ -99,9 +99,9 @@ friedmanPostHocTestBMR = function(bmr, measure = NULL, p.value = 0.05,          
   if (is.null(measure))
     measure = getBMRMeasures(bmr)[[1L]]
   assertClass(measure, "Measure")
-  assertChoice(measure$id,getBMRMeasureIds(bmr))
-  assertNumeric(p.value,lower = 0, upper = 1,len=1)
-  assertChoice(aggregation,c('default','mean'))
+  assertChoice(measure$id, getBMRMeasureIds(bmr))
+  assertNumeric(p.value, lower = 0, upper = 1, len = 1)
+  assertChoice(aggregation, c('default', 'mean'))
   
   
   n.learners = length(bmr$learners)
@@ -116,11 +116,11 @@ friedmanPostHocTestBMR = function(bmr, measure = NULL, p.value = 0.05,          
     df = aggregate(df[[measure$id]],
                    by = list(task.id = df$task.id,
                              learner.id = df$learner.id),
-                   FUN= mean)
+                   FUN = mean)
   } else if (aggregation == "default") {
     aggr.meas = measureAggrName(measure)
     df = getBMRAggrPerformances(bmr, as.df = TRUE)
-    df = df[,c("task.id", "learner.id", aggr.meas)]
+    df = df[, c("task.id", "learner.id", aggr.meas)]
     names(df)[names(df) == aggr.meas] = c("x")
   }
   

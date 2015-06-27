@@ -27,7 +27,7 @@ orderBMRTasks = function(bmr, df = NULL, order.tsks) {
 
 # order levels of learner.ids of a BenchmarkResult
 # usefull for plotting in ggplot2
-orderBMRLrns = function(bmr,df=NULL,order.lrns){
+orderBMRLrns = function(bmr, df = NULL, order.lrns){
   
   assertClass(bmr, "BenchmarkResult")
   assertVector(order.lrns, len = length(getBMRLearnerIds(bmr)))

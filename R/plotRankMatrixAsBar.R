@@ -47,19 +47,19 @@ generateRankMatrixAsBarData = function(bmr, measure = NULL, pos = "tile",
     measure = getBMRMeasures(bmr)[[1L]]
   assertClass(measure, "Measure")
   assertChoice(measure$id, getBMRMeasureIds(bmr))
-  assertChoice(pos,c("tile", "stack", "dodge"))
+  assertChoice(pos, c("tile", "stack", "dodge"))
   
   
   # melt back into plotable form:
   df = convertBMRToRankMatrix(bmr, measure, ties.method = "random")
-  df = melt(df, id.vars =c("learner.id"),
+  df = melt(df, id.vars = c("learner.id"),
                        value.name = c("Rank"),
                        variable.name = c("task.id"))
   colnames(df) = c("learner.id","task.id","Rank")
   
   # Order if needed
   if (!is.null(order.lrns))
-    df = orderBMRLrns( bmr, df, order.lrns)
+    df = orderBMRLrns(bmr, df, order.lrns)
   if (!is.null(order.tsks))
     df = orderBMRTasks(bmr, df, order.tsks)
   
@@ -108,7 +108,7 @@ plotRankMatrixAsBar = function(obj, pos = NULL) {
   assertClass(obj, "RankMatrixAsBarData")
   if (is.null(pos))
     pos = obj$pos
-  assertChoice(pos,c("tile","stack","dodge"))
+  assertChoice(pos, c("tile", "stack", "dodge"))
 
   if (pos == "tile") {
     p = ggplot(obj$data) + 

@@ -3,54 +3,53 @@ context("RankMatrix")
 test_that("RankMatrix", {
 
   # Get Data
-  lrns = list(makeLearner("classif.randomForest"), makeLearner("classif.nnet"),
-              makeLearner("classif.rpart"), makeLearner("classif.svm"))
-  tasks = list(iris.task, sonar.task, pid.task)
+  lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))
+  tasks = list(iris.task, sonar.task)
   rdesc = makeResampleDesc("CV", iters = 2L)
   meas = list(acc, mmce, ber, featperc)
   res = benchmark(lrns, tasks, rdesc, meas)
-  nTasks = length(getBMRTaskIds(res))
-  nLrns = length(getBMRLearnerIds(res))
+  n.tsks = length(getBMRTaskIds(res))
+  n.lrns = length(getBMRLearnerIds(res))
   
-  # Test for convertBMRToRankMatrix
-  # 1) measure = NULL
+  # test for convertBMRToRankMatrix
+  # measure = NULL
   r = convertBMRToRankMatrix(res)
-  expect_is(r, "data.frame")
-  expect_equal(dim(r), c(nLrns, nTasks + 1))
-  expect_equivalent(colnames(r),c("learner.id", getBMRTaskIds(res)))
-  expect_equivalent(as.character(r$learner.id), getBMRLearnerIds(res))
-  expect_equal(sum(r[, -c(1)]), sum(1:nLrns * nTasks))
-  # 2) measure = ber
+  expect_is(r, "matrix")
+  expect_equal(dim(r), c(n.lrns, n.tsks))
+  expect_equivalent(rownames(r), getBMRTaskIds(res))
+  expect_equivalent(colnames(r), getBMRLearnerIds(res))
+  expect_equal(sum(r), sum(1:n.lrns * n.tsks))
+  
+  # measure = ber
   r = convertBMRToRankMatrix(res, ber)
-  expect_is(r, "data.frame")
-  expect_equal(dim(r), c(nLrns, nTasks + 1))
-  expect_equivalent(colnames(r), c("learner.id", getBMRTaskIds(res)))
-  expect_equivalent(as.character(r$learner.id), getBMRLearnerIds(res))
-  expect_equal(sum(r[, -c(1)]), sum(1:nLrns * nTasks))
-  # 3) aggregation = "mean"
+  expect_is(r, "matrix")
+  expect_equal(dim(r), c(n.lrns, n.tsks))
+  expect_equivalent(colnames(r), getBMRLearnerIds(res))
+  expect_equal(sum(r), sum(1:n.lrns * n.tsks))
+  
+  # aggregation = "mean"
   r = convertBMRToRankMatrix(res, aggregation = "mean")
-  expect_is(r, "data.frame")
-  expect_equal(dim(r), c(nLrns, nTasks + 1))
-  expect_equivalent(colnames(r), c("learner.id", getBMRTaskIds(res)))
-  expect_equivalent(as.character(r$learner.id), getBMRLearnerIds(res))
-  expect_equal(sum(r[, -c(1)]), sum(1:nLrns * nTasks))
+  expect_is(r, "matrix")
+  expect_equal(dim(r), c(n.lrns, n.tsks))
+  expect_equivalent(colnames(r), getBMRLearnerIds(res))
+  expect_equal(sum(r), sum(1:n.lrns * n.tsks))
 
   # For generateRankMatrixAsBarData
   r = generateRankMatrixAsBarData(res)
   expect_is(r, "RankMatrixAsBarData")
-  r = generateRankMatrixAsBarData(res, acc)
+  r2 = generateRankMatrixAsBarData(res, acc)
   expect_is(r, "RankMatrixAsBarData")
-  r = generateRankMatrixAsBarData(res, featperc)
+  r3 = generateRankMatrixAsBarData(res, featperc)
   expect_is(r, "RankMatrixAsBarData") 
   
   # For plotRankMatrixAsBar
   p = plotRankMatrixAsBar(r)
   expect_is(p, "ggplot")
-  p = plotRankMatrixAsBar(r)
+  p = plotRankMatrixAsBar(r2)
   expect_is(p, "ggplot")
-  p = plotRankMatrixAsBar(r)
+  p = plotRankMatrixAsBar(r3)
   expect_is(p, "ggplot")
-  p = plotRankMatrixAsBar(r, pos = "tile")
+  p = plotRankMatrixAsBar(r2, pos = "stack")
   expect_is(p, "ggplot")
   p = plotRankMatrixAsBar(r, pos = "dodge")
   expect_is(p, "ggplot")

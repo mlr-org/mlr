@@ -47,10 +47,10 @@ plotBenchmarkResult = function(bmr, measure = NULL, style = "box",
   assertClass(style, "character")
   assertChoice(style, c("box", "violin"))
   
-  # Get and modify data.frame
+  # get and modify data.frame
   df = as.data.frame(bmr)
   if (!is.null(order.Lrns))
-    df = orderBMRLrns( bmr, df, order.lrns)
+    df = orderBMRLrns(bmr, df, order.lrns)
   if (!is.null(order.Tsks))
     df = orderBMRTasks(bmr, df, order.tsks)
   

@@ -1,4 +1,4 @@
-#' @title Convert BenchmarkResult to a Rankmatrix.
+#' @title Convert BenchmarkResult to a rank-matrix.
 #' 
 #' @description Computes a matrix of all the ranks of different algorithms
 #'  over different datasets (tasks). Ranks are computed from aggregated 

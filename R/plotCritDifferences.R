@@ -65,7 +65,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
   assertClass(measure, "Measure")
   assertChoice(measure$id, getBMRMeasureIds(bmr)) 
   assertChoice(test, c("nemenyi","bd"))
-  assertNumeric(p.value, lower = 0, upper = 1,len = 1)
+  assertNumeric(p.value, lower = 0, upper = 1, len = 1)
   
   #Get Rankmatrix, transpose and get mean ranks
   rankmat = convertBMRToRankMatrix(bmr, measure)
@@ -132,9 +132,9 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
 
 #' @title Plot critical differences for a selected measure.
 #' 
-#' @description Plots a Critical-Differences Diagram for all classifiers and 
-#' a selected measure. If a baseline is selected, the Critical Difference
-#' Interval will be positioned arround the baseline. If not, the best
+#' @description Plots a critical-differences diagram for all classifiers and 
+#' a selected measure. If a baseline is selected, the critical difference
+#' interval will be positioned arround the baseline. If not, the best
 #' performing algorithm will be chosen as baseline.
 #' 
 #' @return [\link{ggplot2}] plot
@@ -173,9 +173,9 @@ plotCritDifferences = function(obj, baseline = NULL) {
   p = ggplot(obj$data) + 
     geom_point(aes(x = mean.rank, y = 0, color = learner.id), size = 3) +
     geom_segment(aes(x = mean.rank, xend = mean.rank, y = 0, yend = yend,
-                     color = learner.id),size = 1) +
+                     color = learner.id), size = 1) +
     geom_segment(aes(x = mean.rank, xend = xend, y = yend, yend = yend,
-                     color = learner.id),size = 1) +
+                     color = learner.id), size = 1) +
     geom_text(aes(x = xtext, y = yend, label = learner.id,
                   color = learner.id), vjust = -1) +
     ylab("Average Rank") +
@@ -217,10 +217,10 @@ plotCritDifferences = function(obj, baseline = NULL) {
       annotate("text", label = paste("Critical Difference =", round(cd,2)),
                y = max(obj$data$yend), x = mean(obj$data$mean.rank), vjust = -1) + 
       annotate("segment",
-               x =  mean(obj$data$mean.rank) - 0.5*cd, 
+               x =  mean(obj$data$mean.rank) - 0.5 * cd, 
                xend = mean(obj$data$mean.rank) + 0.5 * cd,
                y = max(obj$data$yend) + .2,
-               yend = max(obj$data$yend)+ .2,
+               yend = max(obj$data$yend) + .2,
                size = 2)
   }
   return(p)

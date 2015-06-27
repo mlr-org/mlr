@@ -1,7 +1,7 @@
 #' @title Generate data for a Benchmark-summary plot.
 #' 
 #' @description
-#'  A BenchmarkSummaryplot shows allows comparison of performance of different
+#'  A BenchmarkSummary plot shows allows comparison of performance of different
 #'  learners within a task.
 #' 
 #' @return \code{BenchmarkSummaryData}, contains: \cr
@@ -40,7 +40,7 @@ generateBenchmarkSummaryData = function(bmr, measure = NULL, fill = "best",
                                         order.lrns = NULL, order.tsks = NULL) {
   
   assertClass(bmr, "BenchmarkResult")
-  assertChoice(fill,c("worst","best"))
+  assertChoice(fill, c("worst", "best"))
   if (is.null(measure))
     measure = getBMRMeasures(bmr)[[1L]]
   assertClass(measure, "Measure")
@@ -49,7 +49,7 @@ generateBenchmarkSummaryData = function(bmr, measure = NULL, fill = "best",
   # aggregate data over iterations
   aggrMeas = measureAggrName(measure)
   df = getBMRAggrPerformances(bmr, as.df = TRUE)
-  df = df[,c("task.id", "learner.id", aggrMeas)]
+  df = df[, c("task.id", "learner.id", aggrMeas)]
   names(df)[names(df) == aggrMeas] = c("x")
   
   if (!is.null(order.lrns))
