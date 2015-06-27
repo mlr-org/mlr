@@ -1,38 +1,37 @@
-#' @title Convert BenchmarkResult to a Rankmatrix
+#' @title Convert BenchmarkResult to a Rankmatrix.
 #' 
 #' @description Computes a matrix of all the ranks of different algorithms
-#' over different datasets (tasks). Ranks are computed from aggregated 
-#' measures. Ties are broken at random.
+#'  over different datasets (tasks). Ranks are computed from aggregated 
+#'  measures.
 #' 
-#' @param bmr \link[mlr]{BenchmarkResult}\cr
-#'  Output of a \link[mlr]{benchmark} function.
-#' @param measure \link[mlr]{Measure} \cr
+#' @return [\code{matrix}] \cr
+#'  Matrix, with measure ranks as entries. \cr  
+#'  The matrix has one row for each \code{learner},
+#'  and one column for each \code{task}.
+#' 
+#' @param bmr [\code{\link{BenchmarkResult}}] \cr
+#'  Output of a \code{\link{benchmark}} function.
+#' @param measure [\code{\link{Measure}}] \cr
 #'  Measure for which ranks should be calculated (e.g: acc). 
 #'  Defaults to first.
-#' @param aggregation [\code{character](1)}] \cr
+#' @param aggregation [\code{character(1)}] \cr
 #'  Aggregation method for resampling strategy. \cr
 #'  Can be \code{default} or \code{mean}.
-#'  See \link{getAggrPerformances} for details.
+#'  See \code{\link{getAggrPerformances}}. for details on \code{default}.
+#' @param ties.method [\code{character(1)}]\cr
+#'  see \code{\link{rank}} for details.
 #' 
-#' @return [\code{data.frame}] \cr
-#' Matrix, with measure ranks as entries. \cr  
-#' The columns of the matrix correspond to tasks, rows correspond to learners.
 #' 
 #' @examples 
-#' lrns = list(makeLearner("classif.randomForest"), makeLearner("classif.rpart"),
-#'             makeLearner("classif.nnet"), makeLearner("classif.svm"))
-#' tasks = list(iris.task, sonar.task, pid.task)
-#' rdesc = makeResampleDesc("CV", iters = 5)
-#' meas = list(acc, mmce, ber, featperc)
-#' res = benchmark(lrns, tasks, rdesc, meas)
+#' # see benchmark
 #' convertBMRToRankMatrix(res, acc)
 #' 
-#' @family convertBMR
+#' @family convertBMR, benchmark
 #' @export
 
-convertBMRToRankMatrix = function(bmr, measure = NULL,aggregation = "default") {
+convertBMRToRankMatrix = function(bmr, measure = NULL, ties.method = "average",
+                                  aggregation = "default") {
   
-  #Assert class and convert to data.frame
   assertClass(bmr, "BenchmarkResult")
   if (is.null(measure))
     measure = getBMRMeasures(bmr)[[1]]
@@ -40,30 +39,35 @@ convertBMRToRankMatrix = function(bmr, measure = NULL,aggregation = "default") {
   assertChoice(measure$id, getBMRMeasureIds(bmr))
   assertChoice(aggregation, c("mean", "default"))
   
-# Aggregate mean over iterations
+  # aggregate mean over iterations
   if (aggregation == "mean") { 
-  df = as.data.frame(bmr)
-  df = aggregate(df[[measure$id]],
-                 by = list(task.id = df$task.id,
-                           learner.id = df$learner.id),
-                 FUN= mean)
+    df = as.data.frame(bmr)
+    df = aggregate(df[[measure$id]],
+                   by = list(task.id = df$task.id,
+                             learner.id = df$learner.id),
+                   FUN = mean)
   } else if (aggregation == "default") {
-  aggrMeas = measureAggrName(measure)
-  df = getBMRAggrPerformances(bmr, as.df = TRUE)
-  df = df[, c("task.id", "learner.id", aggrMeas)]
-  names(df)[names(df) == aggrMeas] = c("x")
+    aggr.meas = measureAggrName(measure)
+    df = getBMRAggrPerformances(bmr, as.df = TRUE)
+    df = df[, c("task.id", "learner.id", aggr.meas)]
+    names(df)[names(df) == aggr.meas] = c("x")
   }
-  # Calculate Ranks, ties broken randomly, rank according to minimize option   
-  # of selected measure
-  if (measure$minimize == FALSE) {
-    df = ddply(df, .(task.id), mutate, AlgRank = rank(desc(x),
-                                                 ties.method = "random"))
-  } else if(measure$minimize == TRUE) {
-    df = ddply(df, .(task.id), mutate, AlgRank = rank(x, ties.method = "random"))
-  }
-  # melt/cast into matrix 
-  df = melt(df, c("task.id", "learner.id"), "AlgRank")
+  
+  # calculate ranks, rank according to minimize option of the measure 
+  # due to a bug in plyr, eval(parse()) has to be called in order to 
+  # dynamically adjust the ties.method
+  if (!measure$minimize)
+    df$x = desc(df$x)
+  eval(parse(text = paste0(
+    "df = ddply(df, .(task.id), transform, alg.rank = rank(x, ties.method = '",
+    ties.method, "'))"
+  )))
+  
+  # convert into matrix, rows = leaner, cols = tasks
+  df = melt(df, c("task.id", "learner.id"), "alg.rank")
   df = dcast(df, learner.id ~ task.id )
-  #Return data.frame
-  return(df)
+  rownames(df) = df$learner.id
+  mat = as.matrix(df[,colnames(df) != "learner.id"])
+  
+  return(mat)
 }

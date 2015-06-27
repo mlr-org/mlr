@@ -1,53 +1,51 @@
-# Order Levels of task.ids of a BenchmarkResult
-# Usefull for plotting in ggplot2
-orderBMRTasks = function(bmr, df = NULL, order.Tsks) {
+# order levels of task.ids of a BenchmarkResult
+# usefull for plotting in ggplot2
+
+orderBMRTasks = function(bmr, df = NULL, order.tsks) {
   
-  # Assert correct input 
   assertClass(bmr, "BenchmarkResult")
-  assertVector(order.Tsks, len = length(getBMRTaskIds(bmr)))
-  
+  assertVector(order.tsks, len = length(getBMRTaskIds(bmr)))
   
   if (is.null(df)) {
     df = as.data.frame(bmr)
   } else {
     assertClass(df, "data.frame")
   }
-  if (is.numeric(order.Tsks)) {
-    order.Tsks= getBMRTaskIds(bmr)[order.Tsks]
+  if (is.numeric(order.tsks)) {
+    order.tsks = getBMRTaskIds(bmr)[order.tsks]
   } else {
-    assertCharacter(order.Tsks)
+    assertCharacter(order.tsks)
   }
-  assertSetEqual(order.Tsks, getBMRTaskIds(bmr), ordered = FALSE) 
+  assertSetEqual(order.tsks, getBMRTaskIds(bmr), ordered = FALSE) 
   
-  #Change levels
-  df$task.id = factor(df$task.id, order.Tsks)
+  # change levels
+  df$task.id = factor(df$task.id, order.tsks)
   return(df)
 }
 
 
 
-# Order Levels of learner.ids of a BenchmarkResult
-# Usefull for plotting in ggplot2
-orderBMRLrns = function(bmr,df=NULL,order.Lrns){
+# order levels of learner.ids of a BenchmarkResult
+# usefull for plotting in ggplot2
+orderBMRLrns = function(bmr,df=NULL,order.lrns){
   
-  # Assert correct input
   assertClass(bmr, "BenchmarkResult")
-  assertVector(order.Lrns, len = length(getBMRLearnerIds(bmr)))
+  assertVector(order.lrns, len = length(getBMRLearnerIds(bmr)))
   
-  # Create df and or getLearnerIds
+  # create df and/or getLearnerIds
   if (is.null(df)) {
     df = as.data.frame(bmr)
   } else {
     assertClass(df, "data.frame")
   }
   if (is.numeric(order.Lrns)) {
-    order.Lrns = getBMRLearnerIds(bmr)[order.Lrns]
+    order.lrns = getBMRLearnerIds(bmr)[order.lrns]
   } else {
-    assertCharacter(order.Lrns)
+    assertCharacter(order.lrns)
   }
   
-  # Change Levels
-  assertSetEqual(order.Lrns, getBMRLearnerIds(bmr), ordered = FALSE) 
-  df$learner.id = factor(df$learner.id, order.Lrns)
+  # change levels
+  assertSetEqual(order.lrns, getBMRLearnerIds(bmr), ordered = FALSE) 
+  df$learner.id = factor(df$learner.id, order.lrns)
   return(df)
 }

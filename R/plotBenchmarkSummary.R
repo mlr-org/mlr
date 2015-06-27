@@ -1,94 +1,86 @@
-#' @title Generate data for a BenchmarkSummary plot.
+#' @title Generate data for a Benchmark-summary plot.
 #' 
 #' @description
-#' Generate data used to plot a BenchmarkSummary plot.
+#'  A BenchmarkSummaryplot shows allows comparison of performance of different
+#'  learners within a task.
+#' 
+#' @return \code{BenchmarkSummaryData}, contains: \cr
+#'  $\code{data}: [\code{data.frame}]. \cr
+#'  $\code{fill}: selected \code{fill} option.
+#'  $\code{measure}: selected \code{measure}.
 #'   
-#' @param bmr \link[mlr]{BenchmarkResult}\cr
-#'  Output of a \link[mlr]{benchmark} function.
-#' @param measure \link[mlr]{Measure} \cr
-#'  Measure for which ranks should be calculated (e.g: acc). \cr
+#' @param bmr [\code{\link{BenchmarkResult}}] \cr
+#'  Output of a \code{\link{benchmark}} function.
+#' @param measure [\code{\link{Measure}}] \cr
+#'  Measure for which ranks should be calculated (e.g: acc). 
 #'  Defaults to first.
 #' @param fill [\code{character(0)}] \cr 
 #'  Fill bars proportional to [\code{fill}] \cr
 #'  Can be \code{best} or \code{worst}.
 #'  \code{"best"} compares all performances to the best performance accross all
 #'  classifiers. Bars are filled proportional to the best performance. \cr
-#' \code{"worst"} compares all performances to the worst performance accross
+#'  \code{"worst"} compares all performances to the worst performance accross
 #'  all classifiers. Bars are filled proportional to the worst performance. \cr
-#' @param order.Lrns [\code{character(nLearners)}] or \cr 
-#'                  [\code{integer(nLearners)}] \cr
-#' Character vector with \code{learner.ids} in new order , or integer
-#' vector refering to the positions in the new order.
-#' @param order.Tsks [\code{character(nTasks)}] or \cr 
-#'                  [\code{integer(nTasks)}] \cr
-#' Character vector with \code{task.ids} in new order, or an integer
-#' vector refering to the positions in the new order.
+#' @param order.lrns [\code{character(n.learners)}] or \cr 
+#'                   [\code{integer(n.learners)}] \cr
+#'  Character vector with \code{learner.ids} in new order , or integer
+#'  vector refering to the positions in the new order.
+#' @param order.tsks [\code{character(n.tasks)}] or \cr 
+#'                  [\code{integer(n.tasks)}] \cr
+#'  Character vector with \code{task.ids} in new order, or an integer
+#'  vector refering to the positions in the new order.
 #' 
-#' @return \code{BenchmarkSummaryData}, contains: \cr
-#' $\code{data}: [\code{data.frame}]. \cr
-#' $\code{fill}: selected \code{fill} option.
-#' $\code{measure}: selected \code{measure}.
 #' @examples 
-#' lrns = list(makeLearner("classif.randomForest"), makeLearner("classif.rpart"),
-#'             makeLearner("classif.nnet"), makeLearner("classif.svm"))
-#' tasks = list(iris.task, sonar.task, pid.task)
-#' rdesc = makeResampleDesc("CV", iters = 5)
-#' meas = list(acc, mmce, ber, featperc)
-#' res = benchmark(lrns, tasks, rdesc, meas)
-#' generateBenchmarkSummaryData(res, acc)
+#' # see plotBenchmarkSummary
 #' 
-#' @family generate_plot_data
+#' @family generate_plot_data, benchmark
 #' @export
 
 generateBenchmarkSummaryData = function(bmr, measure = NULL, fill = "best",
-                                        order.Lrns = NULL, order.Tsks = NULL) {
+                                        order.lrns = NULL, order.tsks = NULL) {
   
-  #Asser Correct Input
   assertClass(bmr, "BenchmarkResult")
   assertChoice(fill,c("worst","best"))
-  if (is.null(measure)){
+  if (is.null(measure))
     measure = getBMRMeasures(bmr)[[1L]]
-  }
   assertClass(measure, "Measure")
   assertChoice(measure$id, getBMRMeasureIds(bmr))
   
-  # Get Data and Aggregate
-  df = as.data.frame(bmr)
+  # aggregate data over iterations
   aggrMeas = measureAggrName(measure)
   df = getBMRAggrPerformances(bmr, as.df = TRUE)
   df = df[,c("task.id", "learner.id", aggrMeas)]
   names(df)[names(df) == aggrMeas] = c("x")
-  if (!is.null(order.Lrns))
-    df = orderBMRLrns( bmr, df, order.Lrns)
-  if (!is.null(order.Tsks))
-    df = orderBMRTasks(bmr, df, order.Tsks)
   
-  
-  
-  # Calculate Positions: Create 2 dfs, one for actual value, other to fill up
-  # to next task.
+  if (!is.null(order.lrns))
+    df = orderBMRLrns( bmr, df, orderlrns)
+  if (!is.null(order.tsks))
+    df = orderBMRTasks(bmr, df, ordertsks)
+
+# get min / max performance in task
+  row.names(df) = NULL
   df2 = df
   if (fill == "worst") {
-    if (measure$minimize == FALSE) {
-      df$x = (1 - df$x) / (1 - min(df$x))
+    if (!measure$minimize) {
+      df = ddply(df, .(task.id), mutate, x = (1 - x) / (1 - min(x)))
       df2$x = 1 - df$x
-    } else if(measure$minimize == TRUE) {
-      df$x = df$x / max(df$x)
+    } else if(measure$minimize) {
+      df = ddply(df, .(task.id), mutate, x = x / max(x))
       df2$x = 1 - df$x
     }
   } else if (fill == "best") {
-    if (measure$minimize == FALSE) {
-      df$x = df$x / (max(df$x))
+    if (!measure$minimize) {
+      df = ddply(df, .(task.id), mutate, x = x / max(x))
       df2$x = 1 - df$x
-    } else if (measure$minimize == TRUE) {
-      df$x = (1 - df$x) / (1 - min(df$x))
+    } else if (measure$minimize) {
+      df = ddply(df, .(task.id), mutate, x = (1 - x) / (1 - min(x)))
       df2$x = 1 - df$x
     }
   }
-  #Create alpha
+   
+  # rbind data.frames with different alphas
   df2$alpha = 0.4
   df$alpha  = 1
-  #Fit together dfs with different alphas
   df = rbind(df, df2)
   df = sortByCol(df, c("task.id", "learner.id"))
   
@@ -98,41 +90,36 @@ generateBenchmarkSummaryData = function(bmr, measure = NULL, fill = "best",
 
   class(out) = append(class(out), "BenchmarkSummaryData")
   return(out)
-  
 }
 
 
 
-#' @title plotBenchmarkSummary
+#' @title plot a Summary for a Benchmarkresult
 #' 
 #' @description
-#' Plots a BenchmarkSummaryPlot for a selected \link{Measure}.
-#' Full tiles correspond
-#' to the worst performance accross all \code{tasks.ids}
-#' and \code{learner.ids}. The actuall fill
-#' corresponds to the proportional performance of the \code{best}
-#' or \code{worst} algorithm accross all tasks.
+#'  Plots a BenchmarkSummaryPlot for a selected \link{Measure}.
+#'  Full tiles correspond
+#'  to the worst performance accross all \code{tasks.ids}
+#'  and \code{learner.ids}. The actuall fill
+#'  corresponds to the proportional performance of the \code{best}
+#'  or \code{worst} within the task.
+#'  
+#' @return \link{ggplot2}] plot 
 #' 
 #' @details 
 #'  Credit: This plot is analogous to the one described in Eugster,J.A.(2012)
-#'  but does not include any clustering. 
+#'  but does not include any clustering or sorting.
 #'   
 #' @param obj [\code{BenchmarkSummaryData}]\cr
 #'  Output of a \link{generateBenchmarkSummaryData} function.
 #' 
-#' @return \link{ggplot2}] plot
 #' 
 #' @examples 
-#' lrns = list(makeLearner("classif.randomForest"), makeLearner("classif.rpart"),
-#'             makeLearner("classif.nnet"), makeLearner("classif.svm"))
-#' tasks = list(iris.task, sonar.task, pid.task)
-#' rdesc = makeResampleDesc("CV", iters = 5)
-#' meas = list(acc, mmce, ber, featperc)
-#' res = benchmark(lrns, tasks, rdesc,meas)
+#' # see benchmark
 #' g = generateBenchmarkSummaryData(res,ber,fill = "best")
 #' plotBenchmarkSummary(g)
 #' 
-#' @family plot
+#' @family plot, benchmark
 #' @export
 
 plotBenchmarkSummary = function(obj) {
