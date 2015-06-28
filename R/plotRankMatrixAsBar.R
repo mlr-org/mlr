@@ -1,42 +1,38 @@
 #' @title Generate data to plot a rank-matrix as a barplot.
 #' 
 #' @description Generate Data for \code{\link{plotRankMatrixAsBar}}.
-#'  Ties in ranks are broken randomly, in order to assert non-overlapping
-#'  and non-empty bars.
-#' 
-#' @return [\code{RankMatrixAsBarData}] \cr
+#' Ties in ranks are broken randomly, in order to assert non-overlapping
+#' and non-empty bars.
+#'  
+#' @param bmr [\code{\link{BenchmarkResult}}] \cr
+#'   Output of a \code{\link{benchmark}} function.
+#' @param measure [\code{\link{Measure}}] \cr
+#'   Measure for which ranks should be calculated (e.g: acc).
+#'   Defaults to first.
+#' @param pos [\code{character(1)}]
+#'   Optionally set how the bars are positioned in \code{\link{ggplot2}}. \cr
+#'   Ranks are plotted on the x-axis. \cr
+#'   \dQuote{tile} plots a heatmap with \code{tasks} as the y-axis.\cr
+#'   Allows identification of the performance in a special task.\cr
+#'   \dQuote{stack} plots a stacked barplot. \cr
+#'   Allows for comparison of learners within and and accross ranks.\cr
+#'   \dQuote{dodge} plots a barplot with bars next to each other instead
+#'   of stacked bars.\cr
+#' @param order.lrns [\code{character(n.learners)}] \cr 
+#'   Character vector with \code{learner.ids} in new order.
+#' @param order.tsks [\code{character(n.tasks)}] or \cr 
+#'   Character vector with \code{task.ids} in new order.
+#'   
+#' @return [\code{RankMatrixAsBarData}]
 #' List which contains the following info: \cr
 #' $\code{data}: \code{data.frame} containing the data for plotting\cr
 #' $\code{measure}: \link{Measure} the ranks are calculated on\cr
-#' $\code{pos}: Positioning info for the plot\cr
-#'  
-#' @param bmr [\code{\link{BenchmarkResult}}] \cr
-#'  Output of a \code{\link{benchmark}} function.
-#' @param measure [\code{\link{Measure}}] \cr
-#'  Measure for which ranks should be calculated (e.g: acc).
-#'  Defaults to first.
-#' @param pos [\code{character(1)}]
-#'  Optionally set how the bars are positioned in [\link{ggplot2}]. \cr
-#'  \code{"tile"} plots a heatmap with \link{task} as the y-axis.\cr
-#'  Allows identification of the performance in a special task.\cr
-#'  \code{"stack"} plots a stacked barplot. \cr
-#'  Allows for comparison of learners within and and accross ranks.\cr
-#'  \code{"dodge"} plots a barplot of with dodged instead of stacked bars.\cr 
-#' @param order.lrns [\code{character(n.learners)}] or \cr 
-#'                  [\code{integer(n.learners)}] \cr
-#' Character vector with \code{learner.ids} in new order, or integer
-#' vector refering to the positions in the new order, that has the number of
-#' of learners as length.
-#' @param order.tsks [\code{character(n.tasks)}] or \cr 
-#'                  [\code{integer(n.tasks)}] \cr
-#' Character vector with \code{task.ids} in new order, or an integer
-#' vector refering to the positions in the new order, that has the number of learners 
-#' as length.               
-#' 
+#' $\code{pos}: Positioning info for the plot\cr             
 #' 
 #' @examples 
 #' # see plotRankMatrixAsBar
-#' @family generate_plot_data, benchmark
+#' @family generate_plot_data
+#' @family benchmark
 #' @export
 
 generateRankMatrixAsBarData = function(bmr, measure = NULL, pos = "tile",
@@ -77,30 +73,30 @@ generateRankMatrixAsBarData = function(bmr, measure = NULL, pos = "tile",
 #' @title Plot a rank-matrix as a barplot.
 #' 
 #' @description Plots a barchart from the ranks of algorithms. Alternatively
-#'  tiles can be plotted for every rank-task combination, see \code{pos}
-#'  for details. The x-axis accross all plots is the ranks of a learner.id.
-#'  Areas are always coloured corresponding to the learner.  
-#'  
-#' @return [\link{ggplot2}] plot
+#' tiles can be plotted for every rank-task combination, see \code{pos}
+#' for details. The x-axis accross all plots is the ranks of a learner.id.
+#' Areas are always coloured corresponding to the learner.  
 #' 
-#' @param obj [\code{\link{RankMatrixAsBarData}}]\cr
-#'  Output of a \code{\link{generateRankMatrixAsBarData}} function.
+#' @param obj [\code{RankMatrixAsBarData}]\cr
+#'   Output of a \code{\link{generateRankMatrixAsBarData}} function.
 #' @param pos [\code{character(1)}]
-#'  Optionally set how the bars are positioned in [\link{ggplot2}]. \cr
-#'  Overwrites the one created in \link{generateRankMatrixAsBar}. \cr
-#'  \code{"tile"} plots a heatmap with \link{task} as the y-axis.\cr
-#'  Allows identification of the performance in a special task.\cr
-#'  \code{"stack"} plots a stacked barplot. \cr
-#'  Allows for comparison of learners within and and accross ranks.\cr
-#'  \code{"dodge"} plots a barplot with bars next to each other instead
-#'  of stacked bars.\cr
+#'   Optionally set how the bars are positioned in \code{\link{ggplot2}}. \cr
+#'   Overwrites the one created in \code{\link{generateRankMatrixAsBarData}}. \cr
+#'   \dQuote{tile} plots a heatmap with \code{task} as the y-axis.\cr
+#'   Allows identification of the performance in a special task.\cr
+#'   \dQuote{stack} plots a stacked barplot. \cr
+#'   Allows for comparison of learners within and and accross ranks.\cr
+#'   \dQuote{dodge} plots a barplot with bars next to each other instead
+#'   of stacked bars.\cr
 #' 
 #' @examples 
-#'  # see benchmark
-#'  g = generateRankMatrixAsBarData(res, acc, order.Tsks = c(3L, 2L, 1L))
-#'  plotRankMatrixAsBar(g, "tile")
-#'  plotRankMatrixAsBar(g, "dodge")
+#' # see benchmark
+#' # g  = generateRankMatrixAsBarData(res, acc)
+#' # plotRankMatrixAsBar(g, "tile")
+#' # plotRankMatrixAsBar(g, "dodge")
 #' 
+#' @family plot
+#' @family benchmark
 #' @export
 
 plotRankMatrixAsBar = function(obj, pos = NULL) {
@@ -112,12 +108,12 @@ plotRankMatrixAsBar = function(obj, pos = NULL) {
 
   if (pos == "tile") {
     p = ggplot(obj$data) + 
-      geom_tile(aes(x = as.factor(Rank),fill = learner.id, y = task.id),
+      geom_tile(aes_string(x = as.factor("Rank"),fill = "learner.id", y = "task.id"),
                 colour = "dimgrey", size  = 0.3) +
       xlab("Rank")
   } else if (pos != "tile") {
     p = ggplot(obj$data) + 
-      geom_bar(aes(x = as.factor(Rank), fill = learner.id), position = pos) +
+      geom_bar(aes(x = as.factor("Rank"), fill = "learner.id"), position = pos) +
       xlab("Rank") +
       ylab(NULL)
   }

@@ -1,32 +1,32 @@
 #' @title Convert BenchmarkResult to a rank-matrix.
 #' 
 #' @description Computes a matrix of all the ranks of different algorithms
-#'  over different datasets (tasks). Ranks are computed from aggregated 
-#'  measures.
-#' 
-#' @return [\code{matrix}] \cr
-#'  Matrix, with measure ranks as entries. \cr  
-#'  The matrix has one row for each \code{learner},
-#'  and one column for each \code{task}.
+#' over different datasets (tasks). Ranks are computed from aggregated 
+#' measures.
 #' 
 #' @param bmr [\code{\link{BenchmarkResult}}] \cr
-#'  Output of a \code{\link{benchmark}} function.
+#'   Output of a \code{\link{benchmark}} function.
 #' @param measure [\code{\link{Measure}}] \cr
-#'  Measure for which ranks should be calculated (e.g: acc). 
-#'  Defaults to first.
+#'   Measure for which ranks should be calculated (e.g: acc). 
+#'   Defaults to first.
 #' @param aggregation [\code{character(1)}] \cr
-#'  Aggregation method for resampling strategy. \cr
-#'  Can be \code{default} or \code{mean}.
-#'  See \code{\link{getAggrPerformances}}. for details on \code{default}.
+#'   Aggregation method for resampling strategy. \cr
+#'   Can be \dQuote{default} or \dQuote{mean}.
+#'   See \code{\link{getBMRAggrPerformances}}. for details on \dQuote{default}.
 #' @param ties.method [\code{character(1)}]\cr
-#'  see \code{\link{rank}} for details.
+#'   see \code{\link{rank}} for details.
+#'  
+#' @return [\code{matrix}]
+#' Matrix, with measure ranks as entries. \cr  
+#' The matrix has one row for each \code{learner},
+#' and one column for each \code{task}.
 #' 
 #' 
 #' @examples 
 #' # see benchmark
-#' convertBMRToRankMatrix(res, acc)
+#' # convertBMRToRankMatrix(res, acc)
 #' 
-#' @family convertBMR, benchmark
+#' @family benchmark
 #' @export
 
 convertBMRToRankMatrix = function(bmr, measure = NULL, ties.method = "average",

@@ -21,20 +21,15 @@ test_that("RankMatrix", {
   expect_is(r1,"data.frame")
   r2 = orderBMRLrns(res, order.lrns = lrn.id2)
   expect_is(r2, "data.frame")
-  r3 = orderBMRLrns(res, order.lrns = c( 2L, 1L))
-  expect_is(r3, "data.frame")
   # Test constant dimensions
   expect_equal(dim(r1), dim(as.data.frame(res)))
   expect_equal(dim(r2), dim(as.data.frame(res)))
-  expect_equal(dim(r3), dim(as.data.frame(res)))
+
 
     
   # Test ordering Tsks
-  r1 = orderBMRTasks(res, order.tsks = c(2L,1L))
-  expect_is(r2, "data.frame")
-  r2 = orderBMRTasks(res, order.tsks = tsk.id1)
-  expect_is(r2, "data.frame")
-  expect_equal(dim(r1), dim(as.data.frame(res)))
+  r3 = orderBMRTasks(res, order.tsks = tsk.id1)
+  expect_is(r3, "data.frame")
   expect_equal(dim(r2), dim(as.data.frame(res)))
   
 })

@@ -12,9 +12,9 @@ test_that("BenchmarkResult", {
   # For plotRankMatrixAsBar
   p = plotBenchmarkResult(res)
   expect_is(p, "ggplot")
-  p = plotBenchmarkResult(res, ber, order.tsks = c(2L, 1L))
+  p = plotBenchmarkResult(res, ber)
   expect_is(p, "ggplot")
-  p = plotBenchmarkResult(res, mmce, order.lrns = c(1L, 2L))
+  p = plotBenchmarkResult(res, mmce)
   expect_is(p, "ggplot")
   
 })
