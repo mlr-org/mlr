@@ -311,7 +311,10 @@ plotPartialPredictionGGVIS = function(obj, interaction = NULL) {
                                  ggvis::prop("y2", as.name("upper")),
                                  ggvis::prop("opacity", .5))
     plt = ggvis::add_axis(plt, "x", title = feature)
-    plt = ggvis::add_axis(plt, "y", title = target)
+    if (length(obj$task.desc$type) == "response")
+      plt = ggvis::add_axis(plt, "y", title = target)
+    else
+      plt = ggvis::add_axis(plt, "y", title = "Probability")
     plt
   }
 
