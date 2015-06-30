@@ -40,10 +40,10 @@
 #' @param note [\code{character(1)}]
 #'   Additional notes regarding the learner and its integration in mlr.
 #'   Default is \dQuote{}.
-#' @return [\code{\link{RLearnerClassif}}, \code{\link{RLearnerRegr}} or \code{\link{RLearnerSurv}}].
+#' @return [\code{\link{RLearnerClassif}}, \code{\link{RLearnerCluster}}, \code{\link{RLearnerRegr}} or \code{\link{RLearnerSurv}}].
 #' @name RLearner
 #' @rdname RLearner
-#' @aliases RLearnerClassif RLearnerRegr RLearnerSurv
+#' @aliases RLearnerClassif RLearnerCluster RLearnerRegr RLearnerSurv
 NULL
 
 #' @export
