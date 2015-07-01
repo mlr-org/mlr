@@ -357,3 +357,46 @@ makeFilter(
     })
   }
 )
+
+makeFilter(
+  name = "permutation.importance",
+  desc = "the aggregate difference between feature permuted and unpermuted predictions",
+  pkg = character(0L),
+  supported.tasks = c("classif", "regr", "surv"),
+  supported.features = c("numerics", "factors"),
+  fun = function(task, learner, measure, contrast = function(x, y) x - y,
+                 aggregation = mean, nperm = 1, nselect, replace = FALSE, ...) {
+    learner = checkLearner(learner)
+    measure = checkMeasures(measure, learner)
+    if (getTaskType(task) != learner$type)
+      stopf("Expected task of type '%s', not '%s'", getTaskType(task), learner$type)
+    if (length(measure) != 1L)
+      stop("Exactly one measure must be provided")
+    assertCount(nperm)
+    test.contrast = contrast(1, 1)
+    assert(is.numeric(test.contrast) & length(test.contrast) == 1L)
+    test.aggregation = aggregation(1:2)
+    assert(is.numeric(test.aggregation) & length(test.aggregation) == 1L)
+
+    doPermutationImportance = function(task, learner, measure, contrast, i) {
+      fit = train(learner, task)
+      pred = predict(fit, task = task)
+      data = getTaskData(task)
+
+      sapply(getTaskFeatureNames(task), function(x) {
+        data[[x]] = sample(data[[x]], length(data[[x]]), replace)
+        pred.permuted = predict(fit, newdata = data)
+        perf = performance(pred, measure)
+        perf.permuted = performance(pred.permuted, measure)
+        contrast(perf.permuted, perf)
+      }, USE.NAMES = FALSE)
+    }
+
+    args = list(task = task, learner = learner, measure = measure, contrast = contrast)
+    out = parallelMap::parallelMap(doPermutationImportance, seq_len(nperm), more.args = args)
+    out = do.call("rbind", out)
+    out = apply(out, 2, aggregation)
+    names(out) = getTaskFeatureNames(task)
+    return(out)
+  }
+)

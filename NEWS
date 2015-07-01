@@ -23,6 +23,9 @@ mlr_2.5:
 - new learners
 -- multilabel.rFerns
 
+- new filters
+-- permutation.importance
+
 mlr_2.4:
 - WrappedModel printer was slightly improved
 - ReampleResult now stores the runtime it took to resample in a slot
