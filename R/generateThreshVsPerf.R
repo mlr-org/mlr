@@ -95,6 +95,12 @@ plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_) {
   assertChoice(facet, mappings)
   color = mappings[mappings != facet]
 
+  for (i in 1:length(obj$measures)) {
+    measure.name = get(obj$measures[i])$name
+    colnames(obj$data)[colnames(obj$data) == obj$measures[i]] = measure.name
+    obj$measures[i] = measure.name
+  }
+
   data = reshape2::melt(obj$data, measure.vars = obj$measures,
               variable.name = "measure", value.name = "perf",
               id.vars = c("learner", "threshold"))
@@ -150,6 +156,12 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure",
   mappings = c("measure", "learner")
   assertChoice(interaction, mappings)
   color = mappings[mappings != interaction]
+
+  for (i in 1:length(obj$measures)) {
+    measure.name = get(obj$measures[i])$name
+    colnames(obj$data)[colnames(obj$data) == obj$measures[i]] = measure.name
+    obj$measures[i] = measure.name
+  }
 
   data = reshape2::melt(obj$data, measure.vars = obj$measures,
                         variable.name = "measure", value.name = "perf",
