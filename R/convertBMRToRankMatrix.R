@@ -4,18 +4,11 @@
 #' over different datasets (tasks). Ranks are computed from aggregated 
 #' measures.
 #' 
-#' @param bmr [\code{\link{BenchmarkResult}}] \cr
-#'   Output of a \code{\link{benchmark}} function.
-#' @param measure [\code{\link{Measure}}] \cr
-#'   Measure for which ranks should be calculated (e.g: acc). 
-#'   Defaults to first.
-#' @param aggregation [\code{character(1)}] \cr
-#'   Aggregation method for resampling strategy. \cr
-#'   Can be \dQuote{default} or \dQuote{mean}.
-#'   See \code{\link{getBMRAggrPerformances}}. for details on \dQuote{default}.
+#' @template arg_bmr
+#' @template arg_measure
+#' @template arg_aggregation_method
 #' @param ties.method [\code{character(1)}]\cr
 #'   see \code{\link{rank}} for details.
-#'  
 #' @return [\code{matrix}]
 #' Matrix, with measure ranks as entries. \cr  
 #' The matrix has one row for each \code{learner},

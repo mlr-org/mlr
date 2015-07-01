@@ -3,21 +3,13 @@
 #' @description Performs a \code{\link{friedman.test}} for a selected measure. \cr
 #' The null hypothesis is that apart from an effect of the different 
 #' [\code{tasks}], the location parameter (aggregated performance-measure)
-#' is the same for each [\code{learner}].
+#' is the same for each \code{learner}.
 #' 
-#' @param bmr [\code{\link{BenchmarkResult}}] \cr
-#'   Output of a \code{\link{benchmark}} function.
-#' @param measure [\code{\link{Measure}}] \cr
-#'   Measure for which ranks should be calculated (e.g: acc).
-#'   Defaults to first.
-#' @param aggregation [\code{character](1)}] \cr
-#'   Aggregation method for resampling strategy. \cr
-#'   Can be \code{default} or \code{mean}.\cr
-#'   See \code{\link{getBMRAggrPerformances}} for details.
-#'   
+#' @template arg_bmr
+#' @template arg_measure
+#' @template arg_aggregation_method
 #' @return A list of class \code{htest}. \cr
 #' See \code{\link{friedman.test}} for details.\cr
-#' 
 #' 
 #' @examples 
 #'  # see benchmark for a BenchmarkResult
@@ -61,31 +53,23 @@ friedmanTestBMR = function(bmr, measure = NULL, aggregation = "default") {
 #' Performs a \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}} for a 
 #' \code{\link{BenchmarkResult}} and a selected measure.\cr
 #' This means \code{all pairwise comparisons} of \code{learners} are performed.
-#' The null hypothesis is that each pair of learners is equal.
-#' 
-#' @param bmr [\code{\link{BenchmarkResult}}] \cr
-#'   Output of a \code{\link{benchmark}} function.
-#' @param measure [\code{\link{Measure}}] \cr
-#'   Measure for which ranks should be calculated (e.g: acc).
-#'   Defaults to first. 
-#' @param p.value [\code{numeric(1)}] \cr
-#'   p-value for the tests.\cr  Default: 0.05
-#' @param aggregation [\code{character(1)}] \cr
-#'   \dQuote{mean} or \dQuote{default}. See \code{\link{getBMRAggrPerformances}}
-#'   for details.
-#'  
-#' @return A list of class \code{pairwise.htest}.\cr See 
-#' \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}} for details. \cr
-#' Additionally two components are added to the list: \cr
-#' $\code{f.rejnull:} whether the according friedman.test rejects the Null
-#' hypothesis at the selected p.value.\cr
-#' $\code{crit.difference}: Minimal difference the mean ranks of two learners
-#' need to have in order to be significantly different.
-#'  
-#' @details
+#' The null hypothesis of the post hoc test is that each pair of learners is equal.
 #' If the null hypothesis of the included ad hoc \code{\link{friedman.test}}
 #' can be rejected a \code{pairwise.htest} is returned. If not, the function returns the 
 #' corresponding \link{friedman.test}
+#' 
+#' @template arg_bmr
+#' @template arg_measure
+#' @param p.value [\code{numeric(1)}] \cr
+#'   p-value for the tests.\cr  Default: 0.05
+#' @template arg_aggregation_method
+#' @return A list of class \code{pairwise.htest}.\cr See 
+#' \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}} for details. \cr
+#' Additionally two components are added to the list: \cr
+#' \item{f.rejnull}{[\code{logical(1)}]whether the according friedman.test rejects the Null
+#' hypothesis at the selected p.value}
+#' \item{crit.difference}{[\code{list(2)}]Minimal difference the mean ranks of two learners
+#' need to have in order to be significantly different}
 #' 
 #' @examples 
 #' # see benchmark

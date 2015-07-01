@@ -4,24 +4,19 @@
 #' Plots boxplots for a selected \code{measure} accross all iterations
 #' of the resampling strategy, faceted by the \code{task.id}
 #' 
-#' @param bmr [\code{\link{BenchmarkResult}}] \cr
-#'   Output of a \code{\link{benchmark}} function.
-#' @param measure [\code{\link{Measure}}] \cr
-#'   Measure for which ranks should be calculated (e.g: acc).
-#'   Defaults to first. 
+#' @template arg_bmr
+#' @template arg_measure
 #' @param style [\code{character(1)]}]\cr
 #'   Type of Plot, can be \dQuote{box} for a boxplot or \dQuote{violin} for
 #'   a violin-plot.
-#' @param order.lrns [\code{character(n.learners)}] \cr 
-#'   Character vector with \code{learner.ids} in new order.
-#' @param order.tsks [\code{character(n.tasks)}] \cr 
-#'   Character vector with \code{task.ids} in new order.
+#' @template arg_order_lrns
+#' @template arg_order_tsks
+#' @template ret_gg2
 #' 
-#' @return [\link{ggplot2}] plot
-#' 
-#' @details Credit: This plot is similar to the one described in 
-#' Eugster, J.A. (2012) 
-#' 
+#' @references Manuel J. A. Eugster, Torsten Hothorn and Friedrich Leisch;
+#' Domain-Based Benchmark Experiments:Exploratory and Inferential Analysis,
+#' AUSTRIAN JOURNAL OF STATISTICS Volume 41 (2012), Number 1, 5–26,
+#' but does not include any clustering or sorting.
 #' @examples 
 #' # see benchmark function
 #' # plotBenchmarkResult(res,acc)

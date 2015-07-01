@@ -1,17 +1,19 @@
 #' @title Generate data for critical-differences plot.
 #' 
-#' @description Generate data that can be used to plot a 
-#'  critical differences plot.
+#' @description Generates data that can be used to plot a 
+#' critical differences plot. Computes the critical differences according
+#' to either the 
+#' \code{"Bonferroni-Dunn"} test or the \code{"Nemenyi"} test.\cr  
+#' \code{"Bonferroni-Dunn"} usually yields higher power as it does not 
+#' compare all algorithms to each other, but all algorithms to a 
+#' \code{baseline} instead.
 #' 
-#' @param bmr [\code{\link{BenchmarkResult}}] \cr
-#'   Output of a \code{\link{benchmark}} function.
-#' @param measure [\code{\link{Measure}}] \cr
-#'   Measure for which ranks should be calculated (e.g: acc). 
-#'   Defaults to first.
+#' @template arg_bmr
+#' @template arg_measure
 #' @param p.value [\code{numeric}(1)]\cr
 #'   P-value for the critical difference. Default: 0.05
 #' @param baseline [\code{character(1)}]: [\code{learner.id}] \cr
-#'   Select a [\code{learner.id} as baseline for the \code{test = "bd"}
+#'   Select a \code{learner.id} as baseline for the \code{test = "bd"}
 #'   ("Bonferroni-Dunn") critical differences
 #'   diagram.The critical difference Interval will then be positioned arround this learner.
 #'   Defaults to best performing algorithm. \cr
@@ -28,25 +30,17 @@
 #'   which is comparing all classifiers to each other. The null hypothesis that 
 #'   there is a difference between the classifiers can not be rejected for all
 #'   classifiers that have a single grey bar connecting them. 
-#'   
-#' @return [\code{critDifferencesData}], containing: \cr
-#' $\code{$data}: [\code{data.frame}] containing the info for the descriptive
-#'                part of the plot.\cr 
-#' $\code{friedman.nemenyi.test}: [\code{list}] of class \code{pairwise.htest} \cr
+#' @return [\code{critDifferencesData}]. List containing: 
+#' \item{data}{[\code{data.frame}] containing the info for the descriptive
+#'                part of the plot}
+#' \item{friedman.nemenyi.test}{[\code{list}] of class \code{pairwise.htest} \cr
 #'                                contains the calculated
-#'                                \link[PMCMR]{posthoc.friedman.nemenyi.test}. \cr
-#' $\code{cd.info}: [\code{list}] containing info on the critical difference
-#'                  and its positioning.\cr
-#' $\code{baseline}: \code{baseline} chosen for plotting.\cr
-#' $\code{p.value}: p.value used for the \link[PMCMR]{posthoc.friedman.nemenyi.test}
-#'                  and for computation of the \code{Critical Difference}.
-#' 
-#' 
-#' @details Computes the critical differences according to either the 
-#' \code{"Bonferroni-Dunn"} method or the \code{"Nemenyi"} method.\cr  
-#' \code{"Bonferroni-Dunn"} usually yields higher power as it does not 
-#' compare all algorithms to each other, but all algorithms to a 
-#' \code{baseline} instead.
+#'                                \link[PMCMR]{posthoc.friedman.nemenyi.test}}
+#' \item{cd.info}{[\code{list}] containing info on the critical difference
+#'                  and its positioning}
+#' \item{baseline}{\code{baseline} chosen for plotting}
+#' \item{p.value}{p.value used for the \link[PMCMR]{posthoc.friedman.nemenyi.test}
+#'                  and for computation of the critical difference}
 #' 
 #' @examples 
 #' # see plotCritDifferences
@@ -140,11 +134,11 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
 #'   Select a [\code{learner.id} as baseline for the critical difference
 #'   diagram, the critical difference will be positioned arround this learner.
 #'   Defaults to best performing algorithm.
+#' @template ret_gg2
 #' 
-#' @return [\link{ggplot2}] plot
-#' 
-#' @details Credit: The output is a a critical differences plot, similar to 
-#' the one proposed in Demsar(2006). 
+#' @references Janez Demsar, Statistical Comparisons of Classifiers over Multiple Data Sets, 
+#' JMLR, 2006
+
 #' 
 #' @examples 
 #' # see 

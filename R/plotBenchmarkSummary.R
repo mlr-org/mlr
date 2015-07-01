@@ -4,27 +4,21 @@
 #' A benchmark-summary plot allows comparison of performance of different
 #' learners within a task.
 #'   
-#' @param bmr [\code{\link{BenchmarkResult}}] \cr
-#'   Output of a \code{\link{benchmark}} function.
-#' @param measure [\code{\link{Measure}}] \cr
-#'   Measure for which ranks should be calculated (e.g: acc). 
-#'   Defaults to first.
+#' @template arg_bmr
+#' @template arg_measure
 #' @param fill [\code{character(0)}] \cr 
-#'   Fill bars proportional to [\code{fill}] \cr
-#'   Can be \code{best} or \code{worst}.
+#'   Bars are filled proportional to \dQuote{best} or \dQuote{worst} performing
+#'   algorithm. \cr
 #'   \dQuote{best} compares all performances to the best performance accross all
 #'   classifiers. Bars are filled proportional to the best performance. \cr
 #'   \dQuote{worst} compares all performances to the worst performance accross
 #'   all classifiers. Bars are filled proportional to the worst performance. \cr
-#' @param order.lrns [\code{character(n.learners)}]\cr 
-#'   Character vector with \code{learner.ids} in new order.
-#' @param order.tsks [\code{character(n.tasks)}] \cr 
-#'   Character vector with \code{task.ids} in new order.
-#' 
-#' @return \code{BenchmarkSummaryData}, contains: \cr
-#' $\code{data}: [\code{data.frame}]. \cr
-#' $\code{fill}: selected \code{fill} option.
-#' $\code{measure}: selected \code{measure}.
+#' @template arg_order_lrns
+#' @template arg_order_tsks
+#' @return \code{BenchmarkSummaryData}. List containing:
+#' \item{data}{[\code{data.frame}]}
+#' \item{fill}{selected \code{fill} option}
+#' \item{measure}{selected \code{measure}}
 #'  
 #' @examples 
 #' # see plotBenchmarkSummary
@@ -99,18 +93,19 @@ generateBenchmarkSummaryData = function(bmr, measure = NULL, fill = "best",
 #' @description
 #' Plots a BenchmarkSummaryPlot for a selected \link{Measure}.
 #' Full tiles correspond
-#' to the worst performance accross all \code{tasks.ids}
-#' and \code{learner.ids}. The actuall fill
+#' to the worst performance accross all \code{tasks}
+#' and \code{learner}. The actuall fill
 #' corresponds to the proportional performance of the \dQuote{best}
 #' or \dQuote{worst} within the task.
 #' 
 #' @param obj [\code{BenchmarkSummaryData}]\cr
 #'   Output of a \link{generateBenchmarkSummaryData} function. 
-#'    
-#' @return \link{ggplot2}] plot 
+#' @template ret_gg2
 #' 
-#' @details 
-#' Credit: This plot is analogous to the one described in Eugster,J.A.(2012)
+#' @references This plot is analogous to the one described in: \cr
+#' Manuel J. A. Eugster, Torsten Hothorn and Friedrich Leisch;
+#' Domain-Based Benchmark Experiments:Exploratory and Inferential Analysis,
+#' AUSTRIAN JOURNAL OF STATISTICS Volume 41 (2012), Number 1
 #' but does not include any clustering or sorting.
 #'   
 #' @examples 

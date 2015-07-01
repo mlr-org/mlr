@@ -4,11 +4,8 @@
 #' Ties in ranks are broken randomly, in order to assert non-overlapping
 #' and non-empty bars.
 #'  
-#' @param bmr [\code{\link{BenchmarkResult}}] \cr
-#'   Output of a \code{\link{benchmark}} function.
-#' @param measure [\code{\link{Measure}}] \cr
-#'   Measure for which ranks should be calculated (e.g: acc).
-#'   Defaults to first.
+#' @template arg_bmr
+#' @template arg_measure
 #' @param pos [\code{character(1)}]
 #'   Optionally set how the bars are positioned in \code{\link{ggplot2}}. \cr
 #'   Ranks are plotted on the x-axis. \cr
@@ -18,16 +15,12 @@
 #'   Allows for comparison of learners within and and accross ranks.\cr
 #'   \dQuote{dodge} plots a barplot with bars next to each other instead
 #'   of stacked bars.\cr
-#' @param order.lrns [\code{character(n.learners)}] \cr 
-#'   Character vector with \code{learner.ids} in new order.
-#' @param order.tsks [\code{character(n.tasks)}] or \cr 
-#'   Character vector with \code{task.ids} in new order.
-#'   
-#' @return [\code{RankMatrixAsBarData}]
-#' List which contains the following info: \cr
-#' $\code{data}: \code{data.frame} containing the data for plotting\cr
-#' $\code{measure}: \link{Measure} the ranks are calculated on\cr
-#' $\code{pos}: Positioning info for the plot\cr             
+#' @template arg_order_lrns
+#' @template arg_order_tsks
+#' @return [\code{RankMatrixAsBarData}]. List with items:
+#' \item{data}{\code{data.frame} containing the data for plotting}
+#' \item{measure}{measure the ranks are calculated on}
+#' \item{pos}{Positioning info for the plot}        
 #' 
 #' @examples 
 #' # see plotRankMatrixAsBar
@@ -88,6 +81,7 @@ generateRankMatrixAsBarData = function(bmr, measure = NULL, pos = "tile",
 #'   Allows for comparison of learners within and and accross ranks.\cr
 #'   \dQuote{dodge} plots a barplot with bars next to each other instead
 #'   of stacked bars.\cr
+#' @template ret_gg2
 #' 
 #' @examples 
 #' # see benchmark
