@@ -6,6 +6,7 @@ branches:
     only:
         - master
         - multiFidPlugIn
+        - task_ops
 apt_packages:
     - r-cran-rjava
 r_github_packages:
