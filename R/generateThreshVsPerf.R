@@ -63,7 +63,7 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, task.id
   out = plyr::ldply(obj, .id = "learner")
   out = cbind(grid, out)
   makeS3Obj("ThreshVsPerfData",
-            measures = mids,
+            measures = measures,
             data = out)
 }
 #' @title Plot threshold vs. performance(s) for 2-class classification using ggplot2.
@@ -95,13 +95,10 @@ plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_) {
   assertChoice(facet, mappings)
   color = mappings[mappings != facet]
 
-  for (i in 1:length(obj$measures)) {
-    measure.name = get(obj$measures[i])$name
-    colnames(obj$data)[colnames(obj$data) == obj$measures[i]] = measure.name
-    obj$measures[i] = measure.name
-  }
+  colnames(obj$data) = BBmisc::mapValues(colnames(obj$data), extractSubList(obj$measures, "id"),
+                                         extractSubList(obj$measures, "name"))
 
-  data = reshape2::melt(obj$data, measure.vars = obj$measures,
+  data = reshape2::melt(obj$data, measure.vars = extractSubList(obj$measures, "name"),
               variable.name = "measure", value.name = "perf",
               id.vars = c("learner", "threshold"))
   nlearn = length(unique(data$learner))
@@ -157,13 +154,10 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure",
   assertChoice(interaction, mappings)
   color = mappings[mappings != interaction]
 
-  for (i in 1:length(obj$measures)) {
-    measure.name = get(obj$measures[i])$name
-    colnames(obj$data)[colnames(obj$data) == obj$measures[i]] = measure.name
-    obj$measures[i] = measure.name
-  }
+  colnames(obj$data) = BBmisc::mapValues(colnames(obj$data), extractSubList(obj$measures, "id"),
+                                         extractSubList(obj$measures, "name"))
 
-  data = reshape2::melt(obj$data, measure.vars = obj$measures,
+  data = reshape2::melt(obj$data, measure.vars = extractSubList(obj$measures, "name"),
                         variable.name = "measure", value.name = "perf",
                         id.vars = c("learner", "threshold"))
   nmeas = length(unique(data$measure))

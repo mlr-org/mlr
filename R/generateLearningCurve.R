@@ -123,11 +123,8 @@ plotLearningCurve = function(obj, facet = "measure") {
   assertChoice(facet, mappings)
   color = mappings[mappings != facet]
 
-  for (i in 1:length(obj$measures)) {
-    measure.name = obj$measures[[i]]$name
-    colnames(obj$data)[colnames(obj$data) == obj$measures[[i]]$id] = measure.name
-    obj$measures[[i]] = measure.name
-  }
+  colnames(obj$data) = BBmisc::mapValues(colnames(obj$data), extractSubList(obj$measures, "id"),
+                                         extractSubList(obj$measures, "name"))
 
   data = reshape2::melt(obj$data,
                         id.vars = c("learner", "perc"),
@@ -176,11 +173,8 @@ plotLearningCurveGGVIS = function(obj, interaction = "measure") {
   assertChoice(interaction, mappings)
   color = mappings[mappings != interaction]
 
-  for (i in 1:length(obj$measures)) {
-    measure.name = obj$measures[[i]]$name
-    colnames(obj$data)[colnames(obj$data) == obj$measures[[i]]$id] = measure.name
-    obj$measures[[i]] = measure.name
-  }
+  colnames(obj$data) = BBmisc::mapValues(colnames(obj$data), extractSubList(obj$measures, "id"),
+                                         extractSubList(obj$measures, "name"))
 
   data = reshape2::melt(obj$data, id.vars = c("learner", "perc"), variable.name = "measure", value.name = "perf")
   nmeas = length(unique(data$measure))
