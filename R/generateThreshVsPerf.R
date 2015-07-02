@@ -99,7 +99,7 @@ plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_) {
                                          extractSubList(obj$measures, "name"))
 
   data = reshape2::melt(obj$data, measure.vars = extractSubList(obj$measures, "name"),
-              variable.name = "measure", value.name = "perf",
+              variable.name = "measure", value.name = "performance",
               id.vars = c("learner", "threshold"))
   nlearn = length(unique(data$learner))
   nmeas = length(unique(data$measure))
@@ -110,14 +110,18 @@ plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_) {
     facet = NULL
 
   if (!is.null(color))
-    plt = ggplot2::ggplot(data, aes_string(x = "threshold", y = "perf", color = color))
+    plt = ggplot2::ggplot(data, aes_string(x = "threshold", y = "performance", color = color))
   else
-    plt = ggplot2::ggplot(data, aes_string(x = "threshold", y = "perf"))
+    plt = ggplot2::ggplot(data, aes_string(x = "threshold", y = "performance"))
   plt = plt + ggplot2::geom_line()
   if (!is.na(mark.th))
     plt = plt + ggplot2::geom_vline(xintercept = mark.th)
   if (!is.null(facet))
     plt = plt + ggplot2::facet_wrap(as.formula(paste("~", facet)), scales = "free_y")
+  else if (length(obj$measures) == 1L)
+    plt = plt + ylab(obj$measures[[1]]$name)
+  else
+    plt = plt + ylab("performance")
   return(plt)
 }
 #' @title Plot threshold vs. performance(s) for 2-class classification using ggvis.
@@ -187,9 +191,9 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure",
     }
     plt = ggvis::add_axis(plt, "x", title = "threshold")
     if (length(measures) > 1L)
-      plt = ggvis::add_axis(plt, "y", title = "measure")
+      plt = ggvis::add_axis(plt, "y", title = "performance")
     else
-      plt = ggvis::add_axis(plt, "y", title = measures[1])
+      plt = ggvis::add_axis(plt, "y", title = measures[[1]]$name)
     plt
   }
 
