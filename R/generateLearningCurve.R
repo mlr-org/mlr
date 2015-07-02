@@ -123,12 +123,13 @@ plotLearningCurve = function(obj, facet = "measure") {
   assertChoice(facet, mappings)
   color = mappings[mappings != facet]
 
-  colnames(obj$data) = BBmisc::mapValues(colnames(obj$data), extractSubList(obj$measures, "id"),
-                                         extractSubList(obj$measures, "name"))
+  colnames(obj$data) = BBmisc::mapValues(colnames(obj$data),
+                                         c(extractSubList(obj$measures, "id"), "perc"),
+                                         c(extractSubList(obj$measures, "name"), "percentage"))
 
   data = reshape2::melt(obj$data,
-                        id.vars = c("learner", "perc"),
-                        variable.name = "measure", value.name = "perf")
+                        id.vars = c("learner", "percentage"),
+                        variable.name = "measure", value.name = "performance")
   nlearn = length(unique(data$learner))
   nmeas = length(unique(data$measure))
 
@@ -138,9 +139,9 @@ plotLearningCurve = function(obj, facet = "measure") {
     facet = NULL
 
   if (!is.null(color))
-    plt = ggplot2::ggplot(data, ggplot2::aes_string(x = "perc", y = "perf", colour = color))
+    plt = ggplot2::ggplot(data, ggplot2::aes_string(x = "percentage", y = "performance", colour = color))
   else
-    plt = ggplot2::ggplot(data, ggplot2::aes_string(x = "perc", y = "perf"))
+    plt = ggplot2::ggplot(data, ggplot2::aes_string(x = "percentage", y = "performance"))
   plt = plt + ggplot2::geom_point()
   plt = plt + ggplot2::geom_line()
   if (!is.null(facet))
@@ -173,10 +174,13 @@ plotLearningCurveGGVIS = function(obj, interaction = "measure") {
   assertChoice(interaction, mappings)
   color = mappings[mappings != interaction]
 
-  colnames(obj$data) = BBmisc::mapValues(colnames(obj$data), extractSubList(obj$measures, "id"),
-                                         extractSubList(obj$measures, "name"))
+  colnames(obj$data) = BBmisc::mapValues(colnames(obj$data),
+                                         c(extractSubList(obj$measures, "id"), "perc"),
+                                         c(extractSubList(obj$measures, "name"), "percentage"))
 
-  data = reshape2::melt(obj$data, id.vars = c("learner", "perc"), variable.name = "measure", value.name = "perf")
+  data = reshape2::melt(obj$data, id.vars = c("learner", "percentage"), variable.name = "measure",
+                        value.name = "performance")
+
   nmeas = length(unique(data$measure))
   nlearn = length(unique(data$learner))
 
@@ -187,13 +191,13 @@ plotLearningCurveGGVIS = function(obj, interaction = "measure") {
 
   create_plot = function(data, color) {
     if (!is.null(color)) {
-      plt = ggvis::ggvis(data, ggvis::prop("x", as.name("perc")),
-                         ggvis::prop("y", as.name("perf")),
+      plt = ggvis::ggvis(data, ggvis::prop("x", as.name("percentage")),
+                         ggvis::prop("y", as.name("performance")),
                          ggvis::prop("stroke", as.name(color)))
       plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name(color)))
     } else {
-      plt = ggvis::ggvis(data, ggvis::prop("x", as.name("perc")),
-                         ggvis::prop("y", as.name("perf")))
+      plt = ggvis::ggvis(data, ggvis::prop("x", as.name("percentage")),
+                         ggvis::prop("y", as.name("performance")))
       plt = ggvis::layer_points(plt)
     }
     ggvis::layer_lines(plt)
