@@ -66,6 +66,7 @@ Suggests:
     emoa,
     extraTrees,
     flare,
+    fields,
     FNN,
     frbs,
     FSelector,
