@@ -10,6 +10,7 @@ mlr_2.5:
 - plotFilterValuesGGVIS: sort and n_show are interactive, interactive flag removed
 - renamed getProbabilities to getPredictionProbabilities and deprecated getProbabilities
 - plots now use long names for measures where possible
+- there was a nasty bug in measure "mcc". fixed and unit tested. and apologies.
 
 - new functions
 -- getPredictionTruth, getPredictionResponse
