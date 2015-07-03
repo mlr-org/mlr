@@ -15,10 +15,10 @@ This Vignette is supposed to give you a short introductory glance at the key fea
 A more detailed in depth and continuously updated tutorial can be found on the GitHub project page:
 
 - [Project Page](https://github.com/berndbischl/mlr/)
-- Online Tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/tutorial/release/html/)
-  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/tutorial/devel/html/)
-- Download the online tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/tutorial/release/mlr_tutorial.zip)
-  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/tutorial/devel/mlr_tutorial.zip) as zip for offline usage
+- Online Tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/release/html/)
+  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/html/)
+- Download the online tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/release/mlr_tutorial.zip)
+  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/mlr_tutorial.zip) as zip for offline usage
 
 ## Purpose
 
@@ -79,10 +79,10 @@ It covers among others: *benchmarking*, *preprocessing*, *imputation*, *feature 
 Reading is highly recommended!
 
 * [Project Page](https://github.com/berndbischl/mlr/)
-* Online Tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/tutorial/release/html/)
-  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/tutorial/devel/html/)
-* Offline Tutorial: online tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/tutorial/release/mlr_tutorial.zip)
-  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/tutorial/devel/mlr_tutorial.zip)
+* Online Tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/release/html/)
+  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/html/)
+* Offline Tutorial: online tutorial for [mlr release](https://mlr-org.github.io/mlr-tutorial/release/mlr_tutorial.zip)
+  and [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/mlr_tutorial.zip)
   as zip for offline usage
 * [Wiki](https://github.com/berndbischl/mlr/wiki) with additional information for developers
 
