@@ -67,3 +67,19 @@ test_that("ber with faulty model produces NA", {
 test_that("db with single cluster doesn't give warnings", {
   expect_that(crossval("cluster.kmeans", agri.task), not(gives_warning()))
 })
+
+test_that("mcc is implemented correctly", { # see issue 363
+  r = holdout("classif.rpart", sonar.task, measure = mcc)
+  p = as.data.frame(r$pred)
+  cm = getConfMatrix(r$pred)[1:2, 1:2]
+
+  # taken from psych::phi. the phi measure is another name for mcc
+  r.sum = rowSums(cm)
+  c.sum = colSums(cm)
+  total = sum(r.sum)
+  r.sum = r.sum / total
+  c.sum = c.sum / total
+  v = prod(r.sum, c.sum)
+  phi = (cm[1, 1] / total - c.sum[1] * r.sum[1])/sqrt(v)
+  expect_equal(r$aggr[[1]], phi[[1L]])
+})

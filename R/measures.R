@@ -578,7 +578,8 @@ measureMCC = function(truth, response, negative, positive) {
   tp = measureTP(truth, response, positive)
   fn = measureFN(truth, response, negative)
   fp = measureFP(truth, response, positive)
-  (tp * tn - fp * fn) / sqrt(prod(table(truth, response)))
+  (tp * tn - fp * fn) /
+    sqrt((tp + fp) * (tp + fn) * (tn + fp) * (tn + fn))
 }
 
 #' @export f1
