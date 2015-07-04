@@ -5,7 +5,7 @@ checkLearnerBeforeTrain = function(task, learner, weights) {
     clipString(collapse(colnames(.data)[has.it], ", "), 50L)
   }
 
-  td = task$task.desc
+  td = getTaskDescription(task)
 
   if (td$type != learner$type) {
     stopf("Task '%s' is '%s', but learner '%s' is for '%s'!", td$id, td$type, learner$id, learner$type)

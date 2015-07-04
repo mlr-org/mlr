@@ -364,3 +364,7 @@ getTaskFactorLevels = function(task) {
   cols = vlapply(task$env$data, is.factor)
   lapply(task$env$data[cols], levels)
 }
+
+getTaskWeights = function(task) {
+  task$weights
+}

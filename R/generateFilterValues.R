@@ -21,7 +21,7 @@
 generateFilterValuesData = function(task, method = "rf.importance", nselect = getTaskNFeats(task), ...) {
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
   assert(all(sapply(method, function(x) assertChoice(x, choices = ls(.FilterRegister)))))
-  td = task$task.desc
+  td = getTaskDescription(task)
   filter = lapply(method, function(x) .FilterRegister[[x]])
   if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg)))))
     dummy = lapply(filter, function(x)

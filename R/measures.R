@@ -687,7 +687,7 @@ meancosts = makeMeasure(id = "meancosts", minimize = TRUE, best = 0, worst = Inf
   fun = function(task, model, pred, feats, extra.args) {
     classes = as.character(pred$data$response)
     ids = pred$data$id
-    costs = task$env$costs
+    costs = getTaskCosts(task)
     y = mapply(function(id, cl) {
       costs[id, cl]
     }, ids, classes, SIMPLIFY = TRUE, USE.NAMES = FALSE)
@@ -703,7 +703,7 @@ mcp = makeMeasure(id = "mcp", minimize = TRUE, best = 0, worst = Inf,
   note = "Average difference between costs of oracle and model prediction.",
   fun = function(task, model, pred, feats, extra.args) {
     mc = meancosts$fun(task, NULL, pred, NULL, extra.args)
-    oc = mean(apply(task$env$costs, 1L, min))
+    oc = mean(apply(getTaskCosts(task), 1L, min))
     mc - oc
   }
 )

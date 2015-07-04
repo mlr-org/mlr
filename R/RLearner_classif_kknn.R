@@ -22,7 +22,7 @@ makeRLearner.classif.kknn = function() {
 
 #' @export
 trainLearner.classif.kknn = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  list(td = .task$task.desc, data = getTaskData(.task, .subset), parset = list(...))
+  list(td = getTaskDescription(.task), data = getTaskData(.task, .subset), parset = list(...))
 }
 
 #' @export

@@ -62,13 +62,14 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 
   learner = checkLearner(learner, ...)
   assertClass(task, classes = "Task")
+  n = getTaskSize(task)
   # instantiate resampling
   if (inherits(resampling, "ResampleDesc"))
     resampling = makeResampleInstance(resampling, task = task)
   assertClass(resampling, classes = "ResampleInstance")
   measures = checkMeasures(measures, task)
   if (!is.null(weights)) {
-    assertNumeric(weights, len = task$task.desc$size, any.missing = FALSE, lower = 0)
+    assertNumeric(weights, len = n, any.missing = FALSE, lower = 0)
   }
   assertFlag(models)
   if (missing(extract))
@@ -77,7 +78,6 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
     assertFunction(extract)
   assertFlag(show.info)
 
-  n = task$task.desc$size
   r = resampling$size
   if (n != r)
     stop(paste("Size of data set:", n, "and resampling instance:", r, "differ!"))
@@ -89,7 +89,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
     measures = measures, model = models, extract = extract, show.info = show.info)
   if (!is.null(weights)) {
     more.args$weights = weights
-  } else if (!is.null(task$weights)) {
+  } else if (!is.null(getTaskWeights(task))) {
     more.args$weights = task$weights
   }
   parallelLibrary("mlr", master = FALSE, level = "mlr.resample", show.info = FALSE)

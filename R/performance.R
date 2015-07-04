@@ -65,7 +65,6 @@ doPerformaceIteration = function(measure, pred = NULL, task = NULL, model = NULL
     if (is.null(task))
       stopf("You need to pass task for measure %s!", m$id)
     assertClass(task, classes = "Task")
-    td = task$desc
   }
   if ("req.feats" %in% props) {
     if (is.null(task) && is.null(feats))
@@ -81,7 +80,7 @@ doPerformaceIteration = function(measure, pred = NULL, task = NULL, model = NULL
   else if (!is.null(model))
     model$task.desc
   else if (!is.null(task))
-    task$desc
+    getTaskDescription(task)
 
   # null only happens in custom resampled measure when we do no individual measurements
   if (!is.null(td)) {

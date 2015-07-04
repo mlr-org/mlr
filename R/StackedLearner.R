@@ -149,7 +149,7 @@ trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
   # reduce to subset we want to train ensemble on
   .task = subsetTask(.task, subset = .subset)
   # init prob result matrix, where base learners store predictions
-  probs = makeDataFrame(.task$task.desc$size, ncol = length(bls), col.types = "numeric",
+  probs = makeDataFrame(getTaskSize(.task), ncol = length(bls), col.types = "numeric",
     col.names = ids)
   switch(.learner$method,
     average = averageBaseLearners(.learner, .task),
@@ -172,8 +172,8 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
   bms.pt = unique(extractSubList(.model$learner$base.learners, "predict.type"))
 
   # get task information (classif)
-  levs = .model$task.desc$class.levels
   td = .model$task.desc
+  levs = td$class.levels
   type = ifelse(td$type == "regr", "regr",
     ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
 
@@ -216,7 +216,7 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
   } else {
     probs = as.data.frame(probs)
     # feed probs into super model and we are done
-    feat = .newdata[, !colnames(.newdata)%in%.model$task.desc$target, drop = FALSE]
+    feat = .newdata[, colnames(.newdata) %nin% td$target, drop = FALSE]
 
     if (use.feat) {
       predData = cbind(probs, feat)
@@ -226,7 +226,7 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
 
     pred = predict(sm, newdata = predData)
     if (sm.pt == "prob") {
-      return(as.matrix(getPredictionProbabilities(pred, cl = .model$task.desc$class.levels)))
+      return(as.matrix(getPredictionProbabilities(pred, cl = td$class.levels)))
     } else {
       return(pred$data$response)
     }
@@ -263,8 +263,9 @@ averageBaseLearners = function(learner, task) {
 
 # stacking where we predict the training set in-sample, then super-learn on that
 stackNoCV = function(learner, task) {
-  type = ifelse(task$task.desc$type == "regr", "regr",
-    ifelse(length(task$task.desc$class.levels) == 2L, "classif", "multiclassif"))
+  td = getTaskDescription(task)
+  type = ifelse(td$type == "regr", "regr",
+    ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   bls = learner$base.learners
   use.feat = learner$use.feat
   base.models = probs = vector("list", length(bls))
@@ -286,16 +287,16 @@ stackNoCV = function(learner, task) {
   }
 
   # now fit the super learner for predicted_probs --> target
-  probs[[task$task.desc$target]] = getTaskTargets(task)
+  probs[[td$target]] = getTaskTargets(task)
   if (use.feat) {
     # add data with normal features
     feat = getTaskData(task)
-    feat = feat[, !colnames(feat)%in%task$task.desc$target, drop = FALSE]
+    feat = feat[, colnames(feat) %nin% td$target, drop = FALSE]
     probs = cbind(probs, feat)
     super.task = makeSuperLearnerTask(learner, data = probs,
-      target = task$task.desc$target)
+      target = td$target)
   } else {
-    super.task = makeSuperLearnerTask(learner, data = probs, target = task$task.desc$target)
+    super.task = makeSuperLearnerTask(learner, data = probs, target = td$target)
   }
   super.model = train(learner$super.learner, super.task)
   list(method = "stack.no.cv", base.models = base.models,
@@ -304,8 +305,9 @@ stackNoCV = function(learner, task) {
 
 # stacking where we crossval the training set with the base learners, then super-learn on that
 stackCV = function(learner, task) {
-  type = ifelse(task$task.desc$type == "regr", "regr",
-    ifelse(length(task$task.desc$class.levels) == 2L, "classif", "multiclassif"))
+  td = getTaskDescription(task)
+  type = ifelse(td$type == "regr", "regr",
+    ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   bls = learner$base.learners
   use.feat = learner$use.feat
   # cross-validate all base learners and get a prob vector for the whole dataset for each learner
@@ -327,7 +329,7 @@ stackCV = function(learner, task) {
   }
 
   # add true target column IN CORRECT ORDER
-  tn = task$task.desc$target
+  tn = getTaskTargetNames(task)
   test.inds = unlist(rin$test.inds)
 
   pred.train = as.list(probs[order(test.inds), , drop = FALSE])
@@ -358,8 +360,9 @@ getResponse = function(pred, full.matrix = TRUE) {
   if (pred$predict.type == "prob") {
     if (full.matrix) {
       # return matrix of probabilities
-      predReturn = pred$data[, paste("prob", pred$task.desc$class.levels, sep = ".")]
-      colnames(predReturn) = pred$task.desc$class.levels
+      td = pred$task.desc
+      predReturn = pred$data[, paste("prob", td$class.levels, sep = ".")]
+      colnames(predReturn) = td$class.levels
       return(predReturn)
     } else {
       # return only vector of probabilities for binary classification

@@ -100,8 +100,8 @@ makeTask = function(type, data, weights = NULL, blocking = NULL) {
 #FIXME: it would probably be better to have: pre-check, fixup, post-check!
 checkTaskCreation.Task = function(task, target, ...) {
   checkColumnNames(task$env$data, 'data')
-  if (!is.null(task$env$weights))
-    assertNumeric(weights, len = nrow(task$env$data), any.missing = FALSE, lower = 0)
+  if (!is.null(task$weights))
+    assertNumeric(task$weights, len = nrow(task$env$data), any.missing = FALSE, lower = 0)
   if (!is.null(task$blocking)) {
     assertFactor(task$blocking, len = nrow(task$env$data), any.missing = FALSE)
     if(length(task$blocking) && length(task$blocking) != nrow(task$env$data))

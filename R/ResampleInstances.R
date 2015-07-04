@@ -3,7 +3,8 @@ instantiateResampleInstance = function(desc, size, task) {
 }
 
 instantiateResampleInstance.DPSDesc = function(desc, size, task) {
-  if (missing(size)) size = task$task.desc$size
+  if (missing(size))
+    size = getTaskSize(task)
   if (desc$iters > size)
     stopf("Cannot use more folds (%i) than size (%i)!", desc$iters, size)
   x = getTaskData(task, target.extra=TRUE)$data
@@ -62,7 +63,7 @@ doDPSSplit = function(x) {
   diag(d.old) = Inf
   colnames(d.old) = rownames(d.old) = NULL
   d.new = d.old
-  
+
   # run while he have not distributed all elements to s1 or s2
   while(length(s1) + length(s2) < n) {
     # dists for each obs to its nearest neigh
@@ -89,7 +90,7 @@ doDPSSplit = function(x) {
     d.new[nn2, ] = Inf
     d.new[, nn1] = Inf
     d.new[, nn2] = Inf
-    
+
     # odd nr of elements, add last guy to set with larger mean dist
     if (length(s1) + length(s2) == n - 1L) {
       last = setdiff(1:n, c(s1, s2))
@@ -112,15 +113,15 @@ doDPSSplits = function(x, k, inds = 1:nrow(x)) {
     s.index = doDPSSplit(x)
     x1 = x[s.index[[1L]],]
     x2 = x[s.index[[2L]],]
-    
+
     # get corresponding indices from full data set
     s = lapply(s.index, function(X) inds[X])
     s1 = s[[1L]]
     s2 = s[[2L]]
-    
+
     if(any(is.na(x1)) | any(is.na(x2)))
       stop("There are NAs")
-    
+
     s = c(
       doDPSSplits(x1, k - 1L, s1),
       doDPSSplits(x2, k - 1L, s2)

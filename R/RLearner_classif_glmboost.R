@@ -29,8 +29,9 @@ trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NU
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk)
   d = getTaskData(.task, .subset)
   if (.learner$predict.type == "prob") {
-    levs = c(.task$task.desc$negative, .task$task.desc$positive)
-    d[, .task$task.desc$target] = factor(d[, .task$task.desc$target], levs)
+    td = getTaskDescription(.task)
+    levs = c(td$negative, td$positive)
+    d[, getTaskTargetNames(.task)] = factor(d[, getTaskTargetNames(.task)], levs)
   }
   f = as.formula(getTaskFormulaAsString(.task))
   if (is.null(.weights)) {
@@ -51,8 +52,9 @@ predictLearner.classif.glmboost = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type == "response", "class", "response")
   p = predict(.model$learner.model, newdata = .newdata, type = type, ...)
   if (.learner$predict.type  == "prob") {
+    td = .model$task.desc
     p = p[, 1L]
-    levs = c(.model$task.desc$negative, .model$task.desc$positive)
+    levs = c(td$negative, td$positive)
     y = propVectorToMatrix(p, levs)
   } else {
     return(p)

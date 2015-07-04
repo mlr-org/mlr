@@ -29,8 +29,8 @@ makeCostSensClassifWrapper = function(learner) {
 trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset, ...) {
   # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
-  feats = .task$env$data
-  costs = .task$env$costs
+  feats = getTaskData(.task)
+  costs = getTaskCosts(.task)
   cns = colnames(costs)
   # compute average costs of all classes, then sort labels by it
   cns.costs = colSums(costs)
@@ -42,7 +42,7 @@ trainLearner.CostSensClassifWrapper = function(.learner, .task, .subset, ...) {
   # if all equal, predict one class, stupid fringe case
   if (length(unique(newy)) == 1) {
     m = makeS3Obj("CostSensClassifModelConstant", y = newy[1L])
-    model = makeWrappedModel.Learner(.learner, m, .task$task.desc, .subset, getTaskFeatureNames(.task),
+    model = makeWrappedModel.Learner(.learner, m, getTaskDescription(.task), .subset, getTaskFeatureNames(.task),
       getTaskFactorLevels(.task), 0)
   } else {
     data = cbind(feats, ..y.. = newy)

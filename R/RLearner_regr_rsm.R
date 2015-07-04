@@ -25,7 +25,7 @@ trainLearner.regr.rsm = function(.learner, .task, .subset, .weights = NULL,  ...
     SO = g("SO"),
     stop("Unknown modelfun: ", mf)
   )
-  f = as.formula(paste(.task$task.desc$target, "~", mf))
+  f = as.formula(paste(getTaskTargetNames(.task), "~", mf))
   myargs = list(f, getTaskData(.task, .subset))
   # strange behaviour in rsm forces us to use do.call...
   do.call(rsm::rsm, myargs)

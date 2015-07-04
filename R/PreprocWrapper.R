@@ -51,7 +51,7 @@ makePreprocWrapper = function(learner, train, predict, par.set = makeParamSet(),
 trainLearner.PreprocWrapper = function(.learner, .task, .subset, ...) {
   pvs = .learner$par.vals
   pp = .learner$train(data = getTaskData(.task, .subset),
-    target = .task$task.desc$target, args = pvs)
+    target = getTaskTargetNames(.task), args = pvs)
   # FIXME: why is the order important?
   if (!(is.list(pp) && length(pp) == 2L && all(names(pp) == c("data", "control")) &&
     is.data.frame(pp$data) && is.list(pp$control)))

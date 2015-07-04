@@ -93,7 +93,7 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL
   if (missing(bw.size))
     bw.size = if (bw.replace) 1 else 0.632
   .task = subsetTask(.task, subset = .subset)
-  n = .task$task.desc$size
+  n = getTaskSize(.task)
   m = round(n * bw.size)
   allinds = seq_len(n)
   if (bw.feats < 1) {

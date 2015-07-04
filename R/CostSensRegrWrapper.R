@@ -27,14 +27,14 @@ makeCostSensRegrWrapper = function(learner) {
 trainLearner.CostSensRegrWrapper = function(.learner, .task, .subset, ...) {
   # note that no hyperpars can be in ..., they would refer to the wrapper
   .task = subsetTask(.task, subset = .subset)
-  costs = .task$env$costs
-  classes = .task$task.desc$class.levels
-  feats = .task$env$data
+  costs = getTaskCosts(.task)
+  td = getTaskDescription(.task)
+  classes = td$class.levels
   models = vector("list", length = length(classes))
   for (i in seq_along(classes)) {
     cl = classes[i]
     y = costs[, cl]
-    data = cbind(feats, ..y.. = y)
+    data = cbind(getTaskData(.task), ..y.. = y)
     task = makeRegrTask(id = cl, data = data, target = "..y..",
       check.data = FALSE, fixup.data = "quiet")
     models[[i]] = train(.learner$next.learner, task)
@@ -50,5 +50,3 @@ predictLearner.CostSensRegrWrapper = function(.learner, .model, .newdata, ...) {
   classes = .model$task.desc$class.levels
   factor(classes[p], levels = classes)
 }
-
-

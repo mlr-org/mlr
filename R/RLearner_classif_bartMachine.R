@@ -44,7 +44,8 @@ trainLearner.classif.bartMachine = function(.learner, .task, .subset, .weights =
   d = getTaskData(.task, .subset, target.extra = TRUE)
   y = d$target
   if (.learner$predict.type == "prob") {
-    levs = c(.task$task.desc$negative, .task$task.desc$positive)
+    td = getTaskDescription(.task)
+    levs = c(td$negative, td$positive)
     y = factor(y, levels = levs)
   }
   bartMachine::bartMachine(X = d$data, y = y, ...)
@@ -52,7 +53,8 @@ trainLearner.classif.bartMachine = function(.learner, .task, .subset, .weights =
 
 #' @export
 predictLearner.classif.bartMachine = function(.learner, .model, .newdata, ...) {
-  levs = c(.model$task.desc$negative, .model$task.desc$positive)
+  td = .model$task.desc
+  levs = c(td$negative, td$positive)
   if(.learner$predict.type == "prob"){
     p = predict(.model$learner.model, new_data = .newdata, type = "prob", ...)
     y = propVectorToMatrix(p, levs)
