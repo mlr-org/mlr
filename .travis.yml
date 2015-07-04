@@ -6,6 +6,7 @@ branches:
     only:
         - master
         - multiFidPlugIn
+        - task_ops
 apt_packages:
     - r-cran-rjava
 r_github_packages:
@@ -91,6 +92,7 @@ r_binary_packages:
     # - sparsediscrim
     # - sparseLDA
     - stepPlr
+    - stringi
     - testthat
     - tgp
     - TH.data
