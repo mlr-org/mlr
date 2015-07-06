@@ -8,8 +8,8 @@
 #' @param cl [\code{character(1)}] \cr
 #'   Class name for learner to create.
 #'   By convention, all classification learners start with \dQuote{classif.},
-#'   all regression learners with \dQuote{regr.} and all survival learners
-#'   start with \dQuote{surv.}.
+#'   all regression learners with \dQuote{regr.}, all cluster learners with \dQuote{cluster.}
+#'   and all survival learners start with \dQuote{surv.}.
 #' @param package [\code{character}]\cr
 #'   Package(s) to load for the implementation of the learner.
 #' @param properties [\code{character(1)}]\cr
