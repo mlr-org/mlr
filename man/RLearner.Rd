@@ -3,6 +3,7 @@
 \name{RLearner}
 \alias{RLearner}
 \alias{RLearnerClassif}
+\alias{RLearnerCluster}
 \alias{RLearnerRegr}
 \alias{RLearnerSurv}
 \alias{makeRLearner}
@@ -71,7 +72,7 @@ Additional notes regarding the learner and its integration in mlr.
 Default is \dQuote{}.}
 }
 \value{
-[\code{\link{RLearnerClassif}}, \code{\link{RLearnerRegr}} or \code{\link{RLearnerSurv}}].
+[\code{\link{RLearnerClassif}}, \code{\link{RLearnerCluster}}, \code{\link{RLearnerRegr}} or \code{\link{RLearnerSurv}}].
 }
 \description{
 Wraps an already implemented learning method from R to make it accessible to mlr.

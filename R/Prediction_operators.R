@@ -28,7 +28,7 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
 getPredictionProbabilities = function(pred, cl) {
   assertClass(pred, classes = "Prediction")
   ttype = pred$task.desc$type
-  if (ttype %nin% c("classif", "cluster"))
+  if (ttype %nin% c("classif", "cluster", "multilabel"))
     stop("Prediction was not generated from a ClassifTask or ClusterTask!")
   if (missing(cl)) {
     if (length(pred$task.desc$class.levels) == 2L)
@@ -93,7 +93,7 @@ getPredictionResponse = function(pred) {
 
 #' @export
 getPredictionResponse.PredictionMultilabel = function(pred) {
-  i = grepl("^truth\\.", colnames(pred$data))
+  i = grepl("^response\\.", colnames(pred$data))
   m = as.matrix(pred$data[, i])
   setColNames(m, pred$task.desc$class.levels)
 }
@@ -107,7 +107,7 @@ getPredictionTruth = function(pred) {
 
 #' @export
 getPredictionTruth.PredictionMultilabel = function(pred) {
-  i = grepl("^response\\.", colnames(pred$data))
+  i = grepl("^truth\\.", colnames(pred$data))
   m = as.matrix(pred$data[, i])
   setColNames(m, pred$task.desc$class.levels)
 }
