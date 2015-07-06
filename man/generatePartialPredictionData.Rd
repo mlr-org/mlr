@@ -5,8 +5,10 @@
 \title{Generate partial predictions}
 \usage{
 generatePartialPredictionData(obj, data, features, interaction = FALSE,
-  fun = mean, resample = NULL, fmin = NULL, fmax = NULL,
-  gridsize = 10L, ...)
+  fun = mean, resample = "none", fmin = sapply(features, function(x)
+  ifelse(!is.factor(data[[x]]), min(data[[x]], na.rm = TRUE), NA)),
+  fmax = sapply(features, function(x) ifelse(!is.factor(data[[x]]),
+  max(data[[x]], na.rm = TRUE), NA)), gridsize = 10L, ...)
 }
 \arguments{
 \item{obj}{a \code{\link{WrappedModel}} returned from \code{\link{train}}.}
@@ -39,22 +41,22 @@ in which case the default is the proportion of observations predicted to be in e
 \item{resample}{\code{character(1)}\cr
 Defines how the prediction grid for each feature is created. If \dQuote{bootstrap} then
 values are sampled with replacement from the training data. If \dQuote{subsample} then
-values are sampled without replacement from the training data. If \code{NULL} an evenly spaced
+values are sampled without replacement from the training data. If \dQuote{none} an evenly spaced
 grid between either the empirical minimum and maximum, or the minimum and maximum defined by
 \code{fmin} and \code{fmax}, is created.
-Default is \code{NULL}.}
+Default is \dQuote{none}.}
 
 \item{fmin}{\code{numeric}\cr
 The minimum value that each element of \code{features} can take.
 This argument is only applicable if \code{resample = NULL} and when the empirical minimum is higher
 than the theoretical minimum for a given feature.
-Default is \code{NULL}.}
+Default is the empirical minimum of each numeric feature and NA for factor features.}
 
 \item{fmax}{\code{numeric}\cr
 The maximum value that each element of \code{features} can take.
-This argument is only applicable if \code{resample = NULL} and when the empirical maximum is lower
+This argument is only applicable if \code{resample = "none"} and when the empirical maximum is lower
 than the theoretical maximum for a given feature.
-Default is \code{NULL}.}
+Default is the empirical maximum of each numeric feature and NA for factor features.}
 
 \item{gridsize}{\code{integer(1)}\cr
 The length of the prediction grid created for each feature.
