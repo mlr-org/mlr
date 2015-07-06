@@ -15,13 +15,14 @@
 generateThreshVsPerfData = function(obj, measures, gridsize = 100L, task.id = NULL)
   UseMethod("generateThreshVsPerfData")
 #' @export
-generateThreshVsPerfData.Prediction = function(obj, measures, gridsize = 100L, task.id = NULL)
+generateThreshVsPerfData.Prediction = function(obj, measures, gridsize = 100L, task.id = NULL) {
+  checkPrediction(obj, task.type = "classif", binary = TRUE, predict.type = "prob")
   generateThreshVsPerfData.list(namedList("prediction", obj), measures, gridsize, task.id)
+}
 #' @export
 generateThreshVsPerfData.ResampleResult = function(obj, measures, gridsize = 100L, task.id = NULL) {
   obj = getRRPredictions(obj)
-  assertClass(obj, "Prediction")
-  assert(obj$predict.type == "prob")
+  checkPrediction(obj, task.type = "classif", binary = TRUE, predict.type = "prob")
   generateThreshVsPerfData.Prediction(obj, measures, gridsize)
 }
 #' @export
@@ -32,7 +33,9 @@ generateThreshVsPerfData.BenchmarkResult = function(obj, measures, gridsize = 10
   else
     assertChoice(task.id, tids)
   obj = getBMRPredictions(obj, task.ids = task.id, as.df = FALSE)[[1L]]
-  assert(all(extractSubList(obj, "predict.type") == "prob"))
+
+  for (x in obj)
+    checkPrediction(x, task.type = "classif", binary = TRUE, predict.type = "prob")
   generateThreshVsPerfData.list(obj, measures, gridsize, task.id)
 }
 #' @export
@@ -44,17 +47,13 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, task.id
       names(obj) = extractSubList(obj, c("pred", "learner.id"))
     obj = extractSubList(obj, "pred", simplify = FALSE)
   }
-  td = BBmisc::extractSubList(obj, "task.desc", simplify = FALSE)[[1L]]
+  assertList(obj, names = "unique")
+  td = extractSubList(obj, "task.desc", simplify = FALSE)[[1L]]
   measures = checkMeasures(measures, td)
   mids = extractSubList(measures, "id")
-  if (td$type != "classif" || length(td$class.levels) != 2L)
-    stopf("Task must be binary classification!")
-  assertList(obj, names = "unique")
   thseq = seq(0, 1, length.out = gridsize)
   grid = data.frame(threshold = thseq)
   obj = lapply(obj, function(x) {
-    assertClass(x, "Prediction")
-    assert(x$predict.type == "prob")
     asMatrixRows(lapply(thseq, function(threshold) {
       pp = setThreshold(x, threshold = threshold)
       performance(pp, measures = measures)
@@ -95,8 +94,9 @@ plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_) {
   assertChoice(facet, mappings)
   color = mappings[mappings != facet]
 
-  colnames(obj$data) = BBmisc::mapValues(colnames(obj$data), extractSubList(obj$measures, "id"),
-                                         extractSubList(obj$measures, "name"))
+  colnames(obj$data) = mapValues(colnames(obj$data),
+                                 extractSubList(obj$measures, "id"),
+                                 extractSubList(obj$measures, "name"))
 
   data = reshape2::melt(obj$data, measure.vars = extractSubList(obj$measures, "name"),
               variable.name = "measure", value.name = "performance",
@@ -158,8 +158,9 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure",
   assertChoice(interaction, mappings)
   color = mappings[mappings != interaction]
 
-  colnames(obj$data) = BBmisc::mapValues(colnames(obj$data), extractSubList(obj$measures, "id"),
-                                         extractSubList(obj$measures, "name"))
+  colnames(obj$data) = mapValues(colnames(obj$data),
+                                 extractSubList(obj$measures, "id"),
+                                 extractSubList(obj$measures, "name"))
 
   data = reshape2::melt(obj$data, measure.vars = extractSubList(obj$measures, "name"),
                         variable.name = "measure", value.name = "perf",
