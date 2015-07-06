@@ -1,0 +1,40 @@
+#' @export
+makeRLearner.regr.h2ogbm = function() {
+  makeRLearnerRegr(
+    cl = "regr.h2ogbm",
+    package = "h2o",
+    par.set = makeParamSet(
+      makeIntegerLearnerParam("ntrees", lower = 1L, default = 50),
+      makeIntegerLearnerParam("max_depth", lower = 1L, default = 5),
+      makeIntegerLearnerParam("min_rows", lower = 1L,  default = 10L),
+      makeNumericLearnerParam("learn_rate", lower = 0, upper = 1, default = 0.1),
+      makeIntegerLearnerParam("nbins", lower = 1L, default = 20L),
+      makeIntegerLearnerParam("nbins_cats", lower = 1L, default = 1024),
+      makeIntegerLearnerParam("seed", tunable = FALSE)
+    ),
+    properties = c("numerics", "factors"),
+    name = "h2o.gbm",
+    short.name = "h2o.gbm",
+    note = "'distribution' is set automatically by mlr."
+  )
+}
+
+#' @export
+trainLearner.regr.h2ogbm = function(.learner, .task, .subset, .weights = NULL,  ...) {
+  y = getTaskTargetNames(.task)
+  x = getTaskFeatureNames(.task)
+  d = getTaskData(.task, subset = .subset)
+  h2of = as.h2o(d)
+  h2o.gbm(y = y, x = x, training_frame = h2of, distribution = "gaussian", ...)
+}
+
+#' @export
+predictLearner.regr.h2ogbm = function(.learner, .model, .newdata, ...) {
+  m = .model$learner.model
+  h2of = as.h2o(.newdata)
+  p = h2o::h2o.predict(m, newdata = h2of, ...)
+  p.df = as.data.frame(p)
+  return(p.df$predict)
+}
+
+
