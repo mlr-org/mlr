@@ -51,12 +51,15 @@ generateBenchmarkSummaryData = function(bmr, measure = NULL, fill = "best",
   if (!is.null(order.tsks))
     df = orderBMRTasks(bmr, df, order.tsks)
 
-# get min / max performance in task
+  # get min / max performance in task
+  # normalize: (max = 1, min =< 1)
+  df$x = df$x / max(df$x)
+  
   row.names(df) = NULL
   df2 = df
   if (fill == "worst") {
     if (!measure$minimize) {
-      df = ddply(df, c("task.id"), mutate, x = (1 - x) / (1 - min(x)))
+      df = ddply(df, c("task.id"), mutate, x = min(x) / x )
       df2$x = 1 - df$x
     } else if(measure$minimize) {
       df = ddply(df, c("task.id"), mutate, x = x / max(x))
@@ -67,7 +70,7 @@ generateBenchmarkSummaryData = function(bmr, measure = NULL, fill = "best",
       df = ddply(df, c("task.id"), mutate, x = x / max(x))
       df2$x = 1 - df$x
     } else if (measure$minimize) {
-      df = ddply(df, c("task.id"), mutate, x = (1 - x) / (1 - min(x)))
+      df = ddply(df, c("task.id"), mutate, x = min(x) / x )
       df2$x = 1 - df$x
     }
   }
