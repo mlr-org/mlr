@@ -51,30 +51,25 @@ generateBenchmarkSummaryData = function(bmr, measure = NULL, fill = "best",
   if (!is.null(order.tsks))
     df = orderBMRTasks(bmr, df, order.tsks)
 
-  # get min / max performance in task
-  # normalize: (max = 1, min =< 1)
-  df$x = df$x / max(df$x)
-  
   row.names(df) = NULL
-  df2 = df
   if (fill == "worst") {
     if (!measure$minimize) {
       df = ddply(df, c("task.id"), mutate, x = min(x) / x )
-      df2$x = 1 - df$x
     } else if(measure$minimize) {
       df = ddply(df, c("task.id"), mutate, x = x / max(x))
-      df2$x = 1 - df$x
     }
   } else if (fill == "best") {
     if (!measure$minimize) {
       df = ddply(df, c("task.id"), mutate, x = x / max(x))
-      df2$x = 1 - df$x
     } else if (measure$minimize) {
       df = ddply(df, c("task.id"), mutate, x = min(x) / x )
-      df2$x = 1 - df$x
     }
   }
-   
+  # compute ranks
+  df = ddply(df, c("task.id"), mutate, rk = rank(x, ties.method = "first"))
+  df2 = df
+  df2$x = 1 - df$x
+  
   # rbind data.frames with different alphas
   df2$alpha = 0.4
   df$alpha  = 1
@@ -99,7 +94,8 @@ generateBenchmarkSummaryData = function(bmr, measure = NULL, fill = "best",
 #' to the worst performance accross all \code{tasks}
 #' and \code{learner}. The actuall fill
 #' corresponds to the proportional performance of the \dQuote{best}
-#' or \dQuote{worst} within the task.
+#' or \dQuote{worst} within the task. Sorting along the x-axis is done
+#' accoriding to the algorithms rank.
 #' 
 #' @param obj [\code{BenchmarkSummaryData}]\cr
 #'   Output of a \link{generateBenchmarkSummaryData} function. 
@@ -123,10 +119,10 @@ generateBenchmarkSummaryData = function(bmr, measure = NULL, fill = "best",
 plotBenchmarkSummary = function(obj) {
   
   assertClass(obj, "BenchmarkSummaryData")
-  df = obj$data
-  #Plot
-  p = ggplot(df) +
-    geom_bar(aes_string(x = "task.id", y = "x", fill = "learner.id", alpha = "alpha"),
+
+  p = ggplot(obj$data) +
+    geom_bar(aes_string(x = "task.id", y = "x", fill = "learner.id", alpha = "alpha",
+                        order = "desc(rk)"),
              stat = "identity", linetype = 1, color = "grey", size = .001) +
     scale_alpha_identity() +
     coord_flip() +
