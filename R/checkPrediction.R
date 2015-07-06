@@ -11,6 +11,6 @@ checkPrediction = function(pred, task.type = NULL, binary = FALSE, predict.type 
     stopf("predict.type must be one of '%s', but is: '%s'", collapse(predict.type), pred$predict.type)
   if (check.truth && is.null(pred$data$truth))
     stopf("Prediction object does not contain ground truth column 'truth'!")
-  if (any(is.na(pred$data$response)))
+  if (no.na && any(is.na(pred$data$response)))
     stopf("Prediction object contains NAs in response, this likely due to a prediction from a FailureModel!")
 }

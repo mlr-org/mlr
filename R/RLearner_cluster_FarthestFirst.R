@@ -23,6 +23,6 @@ trainLearner.cluster.FarthestFirst = function(.learner, .task, .subset, .weights
 #' @export
 predictLearner.cluster.FarthestFirst = function(.learner, .model, .newdata, ...) {
   # RWeka returns cluster indices (i.e. starting from 0, which some tools don't like
-  predict(.model$learner.model, .newdata, ...) + 1
+  as.integer(predict(.model$learner.model, .newdata, ...)) + 1L
 }
 
