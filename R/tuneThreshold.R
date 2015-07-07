@@ -1,9 +1,10 @@
 #' @title Tune prediction threshold.
 #'
 #' @description
-#' Optimizes the threshold of prediction based on probabilities.
-#' Uses \code{\link[BBmisc]{optimizeSubInts}} for 2class problems and \code{\link[cmaes]{cma_es}}
-#' for multiclass problems.
+#' Optimizes the threshold of predictions based on probabilities.
+#' Works for classification and multilabel tasks.
+#' Uses \code{\link[BBmisc]{optimizeSubInts}} for normal binary class problems and \code{\link[cmaes]{cma_es}}
+#' for multiclass and multilabel problems.
 #'
 #' @template arg_pred
 #' @param measure [\code{\link{Measure}}]\cr
@@ -26,8 +27,9 @@
 #' @family tune
 #' @export
 tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list()) {
-  assertClass(pred, classes = "Prediction")
+  checkPrediction(pred, task.type = c("classif", "multilabel"), predict.type = "prob")
   td = pred$task.desc
+  ttype = td$type
   measure = checkMeasures(measure, td)[[1L]]
   if (!missing(task))
     assertClass(task, classes = "SupervisedTask")
@@ -45,22 +47,22 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
   cls = pred$task.desc$class.levels
   k = length(cls)
   fitn = function(x) {
-    if (k > 2)
+    if (ttype == "multilabel" || k > 2)
       names(x) = cls
     performance(setThreshold(pred, x), measure, task, model)
   }
 
-  if (k == 2) {
-    or = optimizeSubInts(f = fitn, lower = 0, upper = 1, maximum = !measure$minimize, nsub = nsub)
-    th = or[[1]]
-    perf = or$objective
-  } else {
+  if (ttype == "multilabel" || k > 2L) {
     requirePackages("cmaes", why = "tuneThreshold", default.method = "load")
     start = rep(0.5, k)
     or = cmaes::cma_es(par = start, fn = fitn, lower = 0, upper = 1, control = control)
     th = or$par / sum(or$par)
     names(th) = cls
     perf = or$val
+  } else { # classif with k = 2
+    or = optimizeSubInts(f = fitn, lower = 0, upper = 1, maximum = !measure$minimize, nsub = nsub)
+    th = or[[1]]
+    perf = or$objective
   }
   return(list(th = th, perf = perf))
 }

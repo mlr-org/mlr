@@ -56,6 +56,10 @@ test_that("MultilabelBinaryRelevanceWrapper", {
   expect_equal(colnames(p), cls)
   p = getPredictionProbabilities(r$pred, cls[1L])
   expect_true(is.numeric(p))
+  # now test that we can tune the thresholds
+  tr = tuneThreshold(r$pred, nsub = 2L, control= list(maxit = 2L))
+  expect_true(!is.na(tr$perf))
+  expect_equal(length(tr$th), length(getTaskClassLevels(multilabel.task)))
 })
 
 
