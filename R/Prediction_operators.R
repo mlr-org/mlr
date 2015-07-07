@@ -41,16 +41,16 @@ getPredictionProbabilities = function(pred, cl) {
   if (pred$predict.type != "prob")
     stop("Probabilities not present in Prediction object!")
   cns = colnames(pred$data)
-  if (ttype == "classif") {
+  if (ttype %in% c("classif", "multilabel")) {
     cl2 = paste("prob", cl, sep = ".")
     if (!all(cl2 %in% cns))
       stopf("Trying to get probabilities for nonexistant classes: %s", collapse(cl))
     y = pred$data[, cl2]
     if (length(cl) > 1L)
       colnames(y) = cl
-  } else {
+  } else if (ttype == "cluster") {
     y = pred$data[, grepl("prob\\.", cns)]
-    colnames(y) = seq_col(y)
+    colnames(y) = seq_len(cns)
   }
   return(y)
 }
