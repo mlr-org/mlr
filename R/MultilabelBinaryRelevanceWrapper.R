@@ -1,18 +1,18 @@
 
 #' @export
-makeMultilabelWrapper = function(learner) {
+makeMultilabelBinaryRelevanceWrapper = function(learner) {
   learner = checkLearner(learner, type = "classif")
   id = paste("multilabel", learner$id, sep = ".")
   packs = learner$package
   x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
-    learner.subclass = "MultilabelWrapper", model.subclass = "MultilabelModel")
+    learner.subclass = "MultilabelBinaryRelevanceWrapper", model.subclass = "MultilabelBinaryRelevanceModel")
   x$type = "multilabel"
   return(x)
 }
 
 
 #' @export
-trainLearner.MultilabelWrapper = function(.learner, .task, .subset, .weights = NULL,...) {
+trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subset, .weights = NULL,...) {
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
   data = getTaskData(.task)
@@ -26,7 +26,7 @@ trainLearner.MultilabelWrapper = function(.learner, .task, .subset, .weights = N
 }
 
 #' @export
-predictLearner.MultilabelWrapper = function(.learner, .model, .newdata, ...) {
+predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .newdata, ...) {
   models = getHomogeneousEnsembleModels(.model, learner.models = FALSE)
   f = if (.learner$predict.type == "response")
     function(m) as.logical(predict(m, newdata = .newdata, ...)$data$response)

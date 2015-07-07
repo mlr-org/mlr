@@ -18,9 +18,9 @@ test_that("multilabel", {
 })
 
 
-test_that("MultiLabelWrapper", {
+test_that("MultilabelBinaryRelevanceWrapper", {
   lrn1 = makeLearner("classif.rpart")
-  lrn2 = makeMultilabelWrapper(lrn1)
+  lrn2 = makeMultilabelBinaryRelevanceWrapper(lrn1)
 
   # train predict eval
   mod = train(lrn2, multilabel.task)
@@ -36,7 +36,7 @@ test_that("MultiLabelWrapper", {
   expect_true(!is.na(r$aggr))
 
   lrn1 = makeLearner("classif.rpart", predict.type = "prob")
-  lrn2 = makeMultilabelWrapper(lrn1)
+  lrn2 = makeMultilabelBinaryRelevanceWrapper(lrn1)
   r = holdout(lrn2, multilabel.task)
   expect_true(!is.na(r$aggr))
   p = getPredictionProbabilities(r$pred)
@@ -45,7 +45,7 @@ test_that("MultiLabelWrapper", {
   expect_true(is.data.frame(p))
 
   lrn1 = makeLearner("classif.rpart")
-  lrn2 = makeMultilabelWrapper(lrn1)
+  lrn2 = makeMultilabelBinaryRelevanceWrapper(lrn1)
   lrn2 = setPredictType(lrn2, "prob")
   r = holdout(lrn2, multilabel.task)
   expect_true(!is.na(r$aggr))
