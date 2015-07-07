@@ -24,7 +24,7 @@ Environment of the formula.
 Default is \code{parent.frame()}.}
 }
 \value{
-[\code{formula} | \code{character(1)}].
+[\code{formula}].
 }
 \description{
 This is simply \dQuote{<target> ~ .}.

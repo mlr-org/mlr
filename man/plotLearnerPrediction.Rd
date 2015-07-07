@@ -22,7 +22,8 @@ Selected features for model.
 By default the first 2 features are used.}
 
 \item{measures}{[\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
-Performance measure(s) to evaluate.}
+Performance measure(s) to evaluate.
+Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
 
 \item{cv}{[\code{integer(1)}]\cr
 Do cross-validation and display in plot title?

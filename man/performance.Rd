@@ -11,7 +11,8 @@ performance(pred, measures, task = NULL, model = NULL, feats = NULL)
 Prediction object.}
 
 \item{measures}{[\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
-Performance measure(s) to evaluate.}
+Performance measure(s) to evaluate.
+Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
 
 \item{task}{[\code{\link{Task}}]\cr
 Learning task, might be requested by performance measure, usually not needed except for clustering.}

@@ -11,7 +11,8 @@ tuneThreshold(pred, measure, task, model, nsub = 20L, control = list())
 Prediction object.}
 
 \item{measure}{[\code{\link{Measure}}]\cr
-Performance measure to optimize.}
+Performance measure to optimize.
+Default is the default measure for the task.}
 
 \item{task}{[\code{\link{Task}}]\cr
 Learning task. Rarely neeeded,

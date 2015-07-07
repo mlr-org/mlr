@@ -19,7 +19,8 @@ If you want to change that behaviour, look at \code{\link{FeatSelControl}}.}
 
 \item{measures}{[list of \code{\link{Measure}} | \code{\link{Measure}}]\cr
 Performance measures to evaluate. The first measure, aggregated by the first aggregation function
-is optimized, others are simply evaluated.}
+is optimized, others are simply evaluated.
+Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
 
 \item{bit.names}{[character]\cr
 Names of bits encoding the solutions. Also defines the total number of bits in the encoding.
