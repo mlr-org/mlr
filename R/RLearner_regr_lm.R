@@ -25,7 +25,7 @@ trainLearner.regr.lm = function(.learner, .task, .subset, .weights = NULL,  ...)
     f = getTaskFormula(.task)
     stats::lm(f, data = d, ...)
   } else  {
-    f = as.formula(getTaskFormulaAsString(.task))
+    f = getTaskFormula(.task)
     stats::lm(f, data = d, weights = .weights, ...)
   }
 }

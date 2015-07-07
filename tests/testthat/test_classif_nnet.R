@@ -1,15 +1,15 @@
-context("classif_nnet")
+context("regr_nnet")
 
-test_that("classif_nnet", {
+test_that("regr_nnet", {
   requirePackages("nnet", default.method = "load")
 
   set.seed(getOption("mlr.debug.seed"))
   capture.output({
-    m = nnet::nnet(multiclass.formula, size=7, data=multiclass.train)
+    m = nnet::nnet(regr.formula, size=7, data=regr.train)
     set.seed(getOption("mlr.debug.seed"))
-    p = as.factor(predict(m, newdata=multiclass.test, type="class"))
+    p = as.factor(predict(m, newdata=regr.test))
     set.seed(getOption("mlr.debug.seed"))
-    p2 = predict(m, newdata=multiclass.test, type="raw")
+    p2 = predict(m, newdata=regr.test, type="raw")
     set.seed(getOption("mlr.debug.seed"))
     m = nnet::nnet(binaryclass.formula, size=7, data=binaryclass.train)
     set.seed(getOption("mlr.debug.seed"))

@@ -85,9 +85,21 @@ getTaskSize = function(task) {
   getTaskDescription(task)$size
 }
 
+#' Get formula of a task.
+#'
+#' This is simply \dQuote{<target> ~ .}.
+#'
+#' @template arg_task_or_desc
+#' @param target [\code{character(1)}]\cr
+#'   Left hand side of the formula.
+#'   Default is defined by task \code{x}.
+#' @param explicit.features [\code{logical(1)}]\cr
+#'   Should the features (right hand side of the formula) be explicitly listed?
+#'   Default is \code{FALSE}, i.e., they will be represented as \code{"."}.
+#' @return [\code{formula} | \code{character(1)}].
+#' @family task
 #' @export
-#' @rdname getTaskFormula
-getTaskFormulaAsString = function(x, target = getTaskTargetNames(x), explicit.features = FALSE) {
+getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE) {
   td = getTaskDescription(x)
   type = td$type
   if (type == "surv") {
@@ -105,30 +117,10 @@ getTaskFormulaAsString = function(x, target = getTaskTargetNames(x), explicit.fe
   } else {
     features = "."
   }
-  paste(target, "~", paste(features, collapse = " + "))
-}
-
-
-#' Get formula of a task.
-#'
-#' This is simply \dQuote{<target> ~ .}.
-#'
-#' @template arg_task_or_desc
-#' @param target [\code{character(1)}]\cr
-#'   Left hand side of the formula.
-#'   Default is defined by task \code{x}.
-#' @param explicit.features [\code{logical(1)}]\cr
-#'   Should the features (right hand side of the formula) be explicitly listed?
-#'   Default is \code{FALSE}, i.e., they will be represented as \code{"."}.
-#' @param env [\code{environment}]\cr
-#'   Environment of the formula. Set this to \code{parent.frame()}
-#'   for the default behaviour.
-#'   Default is \code{NULL} which deletes the environment.
-#' @return [\code{formula} | \code{character(1)}].
-#' @family task
-#' @export
-getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE, env = NULL) {
-  as.formula(getTaskFormulaAsString(x, target = target, explicit.features = explicit.features))
+  # FIXME in the future we might want to create formulas w/o an environment
+  # currently this is impossible for survival because the namespace is not imported
+  # properly in many packages -> survival::Surv not found
+  as.formula(paste(target, "~", paste(features, collapse = " + ")))
 }
 
 #' Get target column of task.

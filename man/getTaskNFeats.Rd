@@ -17,13 +17,12 @@ The task.}
 Get number of features in task.
 }
 \seealso{
-Other task: \code{\link{getTaskCosts}};
-  \code{\link{getTaskData}};
+Other task: \code{\link{getTaskClassLevels}};
+  \code{\link{getTaskCosts}}; \code{\link{getTaskData}};
   \code{\link{getTaskDescription}};
   \code{\link{getTaskFeatureNames}};
-  \code{\link{getTaskFormula}},
-  \code{\link{getTaskFormulaAsString}};
-  \code{\link{getTaskId}}; \code{\link{getTaskSize}};
+  \code{\link{getTaskFormula}}; \code{\link{getTaskId}};
+  \code{\link{getTaskSize}};
   \code{\link{getTaskTargetNames}};
   \code{\link{getTaskTargets}}; \code{\link{getTaskType}};
   \code{\link{subsetTask}}

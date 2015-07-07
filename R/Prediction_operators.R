@@ -79,7 +79,7 @@ getProbabilities = function() {
 #'    classif     \tab factor\cr
 #'    regr        \tab numeric\cr
 #'    cluster     \tab factor\cr
-#'    surv        \tab ???\cr
+#'    surv        \tab numeric\cr
 #'    multilabel  \tab logical matrix, columns named with labels\cr
 #' }
 #'

@@ -35,7 +35,7 @@ trainLearner.classif.nnet = function(.learner, .task, .subset, .weights = NULL, 
     f = getTaskFormula(.task)
     nnet::nnet(f, data = getTaskData(.task, .subset), ...)
   } else  {
-    f = as.formula(getTaskFormulaAsString(.task))
+    f = getTaskFormula(.task)
     nnet::nnet(f, data = getTaskData(.task, .subset), weights = .weights, ...)
   }
 }

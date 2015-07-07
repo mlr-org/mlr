@@ -6,8 +6,10 @@
 #' the type of the task.
 #' It also contains a description object detailing further aspects of the data.
 #'
-#' Useful operators are: \code{\link{getTaskFormula}}, \code{\link{getTaskFormulaAsString}},
-#' \code{\link{getTaskFeatureNames}}, \code{\link{getTaskData}}, \code{\link{getTaskTargets}},
+#' Useful operators are: \code{\link{getTaskFormula}},
+#' \code{\link{getTaskFeatureNames}},
+#' \code{\link{getTaskData}},
+#' \code{\link{getTaskTargets}}, and
 #' \code{\link{subsetTask}}.
 #'
 #' Object members:

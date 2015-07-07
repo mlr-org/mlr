@@ -31,7 +31,7 @@ trainLearner.classif.rpart = function(.learner, .task, .subset, .weights = NULL,
     f = getTaskFormula(.task)
     rpart::rpart(f, data = d, ...)
   } else  {
-    f = as.formula(getTaskFormulaAsString(.task))
+    f = getTaskFormula(.task)
     rpart::rpart(f, data = d, weights = .weights, ...)
   }
 }
