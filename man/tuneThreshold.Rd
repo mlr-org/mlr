@@ -35,9 +35,10 @@ Default is empty list.}
   \code{th} is the optimal threshold, \code{perf} the performance value.
 }
 \description{
-Optimizes the threshold of prediction based on probabilities.
-Uses \code{\link[BBmisc]{optimizeSubInts}} for 2class problems and \code{\link[cmaes]{cma_es}}
-for multiclass problems.
+Optimizes the threshold of predictions based on probabilities.
+Works for classification and multilabel tasks.
+Uses \code{\link[BBmisc]{optimizeSubInts}} for normal binary class problems and \code{\link[cmaes]{cma_es}}
+for multiclass and multilabel problems.
 }
 \seealso{
 Other tune: \code{\link{ModelMultiplexer}},
