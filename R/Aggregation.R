@@ -27,9 +27,9 @@ NULL
 #'
 #'
 #' @param id [\code{character(1)}]\cr
-#'   Name of the aggregation method. (Preferably the same name as the generated function)
+#'   Name of the aggregation method (preferably the same name as the generated function).
 #' @param name [\code{character(1)}]\cr
-#'   Long name of the aggregation method.
+#'   Long name of the aggregation method. Default is \code{id}.
 #' @param fun [\code{function}]\cr
 #'   A function with following signature: \code{function(task, perf.test, perf.train, measure, group, pred)}
 #'   \itemize{
@@ -47,7 +47,7 @@ NULL
 #' test.iqr = makeAggregation(id = "test.iqr", name = "Test set interquartile range",
 #'   fun = function (task, perf.test, perf.train, measure, group, pred) IQR(perf.test))
 #' @export
-makeAggregation = function(id, name, fun) {
+makeAggregation = function(id, name = id, fun) {
   assertString(id)
   assertString(name)
   setClasses(list(id = id, name = name, fun = fun), "Aggregation")

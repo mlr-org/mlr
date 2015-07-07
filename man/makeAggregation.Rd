@@ -4,14 +4,14 @@
 \alias{makeAggregation}
 \title{Specifiy your own aggregation of measures}
 \usage{
-makeAggregation(id, name, fun)
+makeAggregation(id, name = id, fun)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
-Name of the aggregation method. (Preferably the same name as the generated function)}
+Name of the aggregation method (preferably the same name as the generated function).}
 
 \item{name}{[\code{character(1)}]\cr
-Long name of the aggregation method.}
+Long name of the aggregation method. Default is \code{id}.}
 
 \item{fun}{[\code{function}]\cr
 A function with following signature: \code{function(task, perf.test, perf.train, measure, group, pred)}
