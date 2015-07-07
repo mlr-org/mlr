@@ -85,7 +85,7 @@ getProbabilities = function() {
 #'  \tabular{ll}{
 #'    classif     \tab factor\cr
 #'    regr        \tab numeric\cr
-#'    cluster     \tab factor\cr
+#'    cluster     \tab integer\cr
 #'    surv        \tab numeric\cr
 #'    multilabel  \tab logical matrix, columns named with labels\cr
 #' }
@@ -96,6 +96,12 @@ getProbabilities = function() {
 #' @family predict
 getPredictionResponse = function(pred) {
   UseMethod("getPredictionResponse")
+}
+
+#' @export
+getPredictionResponse.default = function(pred) {
+  # this should work for classif, regr and cluster and surv
+  pred$data[, "response", drop = TRUE]
 }
 
 #' @export
@@ -110,6 +116,22 @@ getPredictionResponse.PredictionMultilabel = function(pred) {
 #' @export
 getPredictionTruth = function(pred) {
   UseMethod("getPredictionTruth")
+}
+
+#' @export
+getPredictionTruth.default = function(pred) {
+  pred$data[, "truth", drop = TRUE]
+}
+
+#' @export
+getPredictionTruth.PredictionCluster = function(pred) {
+  stop("There is no truth for cluster tasks")
+}
+
+#' @export
+getPredictionTruth.PredictionSurv = function(pred) {
+  lookup = setNames(c("left", "right", "interval2"), c("lcens", "rcens", "icens"))
+  Surv(pred$data$truth.time, pred$data$truth.event, type = lookup[pred$task.desc$censoring])
 }
 
 #' @export
