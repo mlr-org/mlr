@@ -55,7 +55,7 @@ test_that("MultiLabelWrapper", {
   expect_true(is.data.frame(p))
   expect_equal(colnames(p), cls)
   p = getPredictionProbabilities(r$pred, cls[1L])
-  expect_true(is.data.frame(p))
+  expect_true(is.numeric(p))
 })
 
 
