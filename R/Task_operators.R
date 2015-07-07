@@ -99,7 +99,7 @@ getTaskSize = function(task) {
 #' @param env [\code{environment}]\cr
 #'   Environment of the formula.
 #'   Default is \code{parent.frame()}.
-#' @return [\code{formula} | \code{character(1)}].
+#' @return [\code{formula}].
 #' @family task
 #' @export
 getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE, env = parent.frame()) {

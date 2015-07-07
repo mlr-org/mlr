@@ -55,7 +55,6 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
   if(inherits(m, "FailureModel")){
     expect_is(old.predicts, "try-error")
   } else {
-    m <<- m
     cp = predict(m, newdata = test)
     # to avoid issues with dropped levels in the class factor we only check the elements as chars
     if (is.numeric(cp$data$response) && is.numeric(old.predicts))

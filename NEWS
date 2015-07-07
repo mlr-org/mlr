@@ -11,6 +11,8 @@ mlr_2.5:
 - renamed getProbabilities to getPredictionProbabilities and deprecated getProbabilities
 - plots now use long names for measures where possible
 - there was a nasty bug in measure "mcc". fixed and unit tested. and apologies.
+- removed getTaskFormulaAsString and improved getTaskFormula so the former is
+  not needed anymore
 
 - new functions
 -- getTaskClassLevels
