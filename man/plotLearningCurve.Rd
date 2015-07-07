@@ -4,7 +4,7 @@
 \alias{plotLearningCurve}
 \title{Plot learning curve data using ggplot2.}
 \usage{
-plotLearningCurve(obj, facet = "measure")
+plotLearningCurve(obj, facet = "measure", pretty.names = TRUE)
 }
 \arguments{
 \item{obj}{[\code{LearningCurveData}]\cr
@@ -15,6 +15,10 @@ Selects \dQuote{measure} or \dQuote{learner} to be the facetting variable.
 The variable mapped to \code{facet} must have more than one unique value, otherwise it will
 be ignored. The variable not chosen is mapped to color if it has more than one unique value.
 The default is \dQuote{measure}.}
+
+\item{pretty.names}{[\code{logical(1)}]\cr
+Whether to use the \code{\link{Measure}} name instead of the id in the plot.
+Default is \code{TRUE}.}
 }
 \value{
 ggplot2 plot object.

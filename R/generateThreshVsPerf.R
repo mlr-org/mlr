@@ -44,13 +44,14 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, task.id
   ## unwrap ResampleResult to Prediction and set default names
   if (inherits(obj[[1L]], "ResampleResult")) {
     if (is.null(names(obj)))
-      names(obj) = extractSubList(obj, c("pred", "learner.id"))
+      names(obj) = extractSubList(obj, "learner.id")
     obj = extractSubList(obj, "pred", simplify = FALSE)
   }
   assertList(obj, names = "unique")
   td = extractSubList(obj, "task.desc", simplify = FALSE)[[1L]]
   measures = checkMeasures(measures, td)
-  mids = extractSubList(measures, "id")
+  mids = replaceDupeMeasureNames(measures, "id")
+  names(measures) = mids
   thseq = seq(0, 1, length.out = gridsize)
   grid = data.frame(threshold = thseq)
   obj = lapply(obj, function(x) {
@@ -80,27 +81,35 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, task.id
 #' @param mark.th [\code{numeric(1)}]\cr
 #'   Mark given threshold with vertical line?
 #'   Default is \code{NA} which means not to do it.
+#' @param pretty.names [\code{logical(1)}]\cr
+#'   Whether to use the \code{\link{Measure}} name instead of the id in the plot.
+#'   Default is \code{TRUE}.
 #' @template ret_gg2
 #' @export
 #' @examples
 #' lrn = makeLearner("classif.rpart", predict.type = "prob")
 #' mod = train(lrn, sonar.task)
 #' pred = predict(mod, sonar.task)
-#' pvs = generateThreshVsPerfData(pred, list(tpr, fpr))
+#' pvs = generateThreshVsPerfData(pred, list(acc, setAggregation(acc, train.mean)))
 #' plotThreshVsPerf(pvs)
-plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_) {
+plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_, pretty.names = TRUE) {
   assertClass(obj, classes = "ThreshVsPerfData")
   mappings = c("measure", "learner")
   assertChoice(facet, mappings)
   color = mappings[mappings != facet]
 
-  colnames(obj$data) = mapValues(colnames(obj$data),
-                                 extractSubList(obj$measures, "id"),
-                                 extractSubList(obj$measures, "name"))
+  if (pretty.names) {
+    mnames = replaceDupeMeasureNames(obj$measures, "name")
+    colnames(obj$data) = mapValues(colnames(obj$data),
+                                   names(obj$measures),
+                                   mnames)
+  } else
+    mnames = names(obj$measures)
 
-  data = reshape2::melt(obj$data, measure.vars = extractSubList(obj$measures, "name"),
-              variable.name = "measure", value.name = "performance",
-              id.vars = c("learner", "threshold"))
+  data = reshape2::melt(obj$data,
+                        measure.vars = mnames,
+                        variable.name = "measure", value.name = "performance",
+                        id.vars = c("learner", "threshold"))
   nlearn = length(unique(data$learner))
   nmeas = length(unique(data$measure))
 
@@ -142,6 +151,9 @@ plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_) {
 #'   Note that if there are multiple learners and multiple measures interactivity is
 #'   necessary as ggvis does not currently support facetting or subplots.
 #'   The default is \dQuote{measure}.
+#' @param pretty.names [\code{logical(1)}]\cr
+#'   Whether to use the \code{\link{Measure}} name instead of the id in the plot.
+#'   Default is \code{TRUE}.
 #' @template ret_ggv
 #' @export
 #' @examples \dontrun{
@@ -151,19 +163,24 @@ plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_) {
 #' pvs = generateThreshVsPerfData(pred, list(tpr, fpr))
 #' plotThreshVsPerfGGVIS(pvs)
 #' }
-plotThreshVsPerfGGVIS = function(obj, interaction = "measure",
-                                 mark.th = NA_real_) {
+plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real_, pretty.names = TRUE) {
   assertClass(obj, classes = "ThreshVsPerfData")
   mappings = c("measure", "learner")
   assertChoice(interaction, mappings)
+  assertFlag(pretty.names)
   color = mappings[mappings != interaction]
 
-  colnames(obj$data) = mapValues(colnames(obj$data),
-                                 extractSubList(obj$measures, "id"),
-                                 extractSubList(obj$measures, "name"))
+  if (pretty.names) {
+    mnames = replaceDupeMeasureNames(obj$measures, "name")
+    colnames(obj$data) = mapValues(colnames(obj$data),
+                                   names(obj$measures),
+                                   mnames)
+  } else
+    mnames = names(obj$measures)
 
-  data = reshape2::melt(obj$data, measure.vars = extractSubList(obj$measures, "name"),
-                        variable.name = "measure", value.name = "perf",
+  data = reshape2::melt(obj$data,
+                        measure.vars = mnames,
+                        variable.name = "measure", value.name = "performance",
                         id.vars = c("learner", "threshold"))
   nmeas = length(unique(data$measure))
   nlearn = length(unique(data$learner))

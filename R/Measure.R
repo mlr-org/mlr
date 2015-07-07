@@ -62,7 +62,7 @@
 #' @param name [\code{character}] \cr
 #'   Name of the measure. Default is \code{id}.
 #' @param note [\code{character}] \cr
-#'   Description and additional notes for the learner. Default is \dQuote{}.
+#'   Description and additional notes for the measure. Default is \dQuote{}.
 #' @template ret_measure
 #' @export
 #' @family performance

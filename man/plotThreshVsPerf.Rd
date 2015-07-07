@@ -4,7 +4,8 @@
 \alias{plotThreshVsPerf}
 \title{Plot threshold vs. performance(s) for 2-class classification using ggplot2.}
 \usage{
-plotThreshVsPerf(obj, facet = "measure", mark.th = NA_real_)
+plotThreshVsPerf(obj, facet = "measure", mark.th = NA_real_,
+  pretty.names = TRUE)
 }
 \arguments{
 \item{obj}{[\code{ThreshVsPerfData}]\cr
@@ -19,6 +20,10 @@ The default is \dQuote{measure}.}
 \item{mark.th}{[\code{numeric(1)}]\cr
 Mark given threshold with vertical line?
 Default is \code{NA} which means not to do it.}
+
+\item{pretty.names}{[\code{logical(1)}]\cr
+Whether to use the \code{\link{Measure}} name instead of the id in the plot.
+Default is \code{TRUE}.}
 }
 \value{
 ggplot2 plot object.
@@ -30,7 +35,7 @@ Plot threshold vs. performance(s) for 2-class classification using ggplot2.
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 mod = train(lrn, sonar.task)
 pred = predict(mod, sonar.task)
-pvs = generateThreshVsPerfData(pred, list(tpr, fpr))
+pvs = generateThreshVsPerfData(pred, list(acc, setAggregation(acc, train.mean)))
 plotThreshVsPerf(pvs)
 }
 \seealso{
