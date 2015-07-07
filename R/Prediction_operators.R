@@ -50,7 +50,7 @@ getPredictionProbabilities = function(pred, cl) {
       colnames(y) = cl
   } else if (ttype == "cluster") {
     y = pred$data[, grepl("prob\\.", cns)]
-    colnames(y) = seq_len(cns)
+    colnames(y) = seq_col(y)
   }
   return(y)
 }
