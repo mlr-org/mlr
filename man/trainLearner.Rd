@@ -33,6 +33,6 @@ You have to implement this method if you want to add another learner to this pac
 \details{
 Your implementation must adhere to the following:
 The model must be fitted on the subset of \code{.task} given by \code{.subset}. All parameters
-must in \code{...} must be passed to the underlying training function.
+in \code{...} must be passed to the underlying training function.
 }
 
