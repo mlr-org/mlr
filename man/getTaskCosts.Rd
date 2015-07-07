@@ -21,7 +21,8 @@ Default is all cases.}
 Retuns \dQuote{NULL} if the task is not of type \dQuote{costsens}.
 }
 \seealso{
-Other task: \code{\link{getTaskData}};
+Other task: \code{\link{getTaskClassLevels}};
+  \code{\link{getTaskData}};
   \code{\link{getTaskDescription}};
   \code{\link{getTaskFeatureNames}};
   \code{\link{getTaskFormula}},

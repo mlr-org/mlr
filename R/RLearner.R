@@ -21,8 +21,12 @@
 #'     \item{oneclas,twoclass,multiclass}{Can one-class, two-class or multi-class classification problems be handled?}
 #'     \item{prob}{Can probabilites be predicted?}
 #'     \item{se}{Can standard errors be predicted?}
+#'     \item{class.weights}{Can class weights be handled?}
 #'   }
 #'   Default is \code{character(0)}.
+#' @param class.weights.param [\code{\link{character}(1)}] \cr
+#'   Name of the parameter, which can be used for providing class weights.
+#'   Note that this parameter can only be used in case of classification.
 #' @param par.set [\code{\link[ParamHelpers]{ParamSet}}] \cr
 #'   Parameter set of (hyper)parameters and their constraints.
 #' @param par.vals [\code{list}] \cr
@@ -88,12 +92,20 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
 
 #' @export
 #' @rdname RLearner
-makeRLearnerClassif = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "") {
-  addClasses(
+makeRLearnerClassif = function(cl, package, par.set, par.vals = list(), properties = character(0L),
+  name = cl, short.name = cl, note = "", class.weights.param = NULL) {
+
+  lrn = addClasses(
     makeRLearnerInternal(cl, "classif", package, par.set, par.vals, properties, name, short.name, note),
     c(cl, "RLearnerClassif")
   )
+  if ("class.weights" %in% lrn$properties) {
+    assertString(class.weights.param)
+    lrn$class.weights.param = class.weights.param
+  }
+  return(lrn)
 }
+
 
 makeRLearnerMultilabel = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "") {
   addClasses(

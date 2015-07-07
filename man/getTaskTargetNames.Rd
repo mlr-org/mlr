@@ -17,8 +17,8 @@ The task.}
 Get the name(s) of the target column(s).
 }
 \seealso{
-Other task: \code{\link{getTaskCosts}};
-  \code{\link{getTaskData}};
+Other task: \code{\link{getTaskClassLevels}};
+  \code{\link{getTaskCosts}}; \code{\link{getTaskData}};
   \code{\link{getTaskDescription}};
   \code{\link{getTaskFeatureNames}};
   \code{\link{getTaskFormula}},

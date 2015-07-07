@@ -8,12 +8,13 @@ makeRLearner.classif.LiblineaRMultiClass = function() {
       makeNumericLearnerParam(id = "cost", default = 1, lower = 0),
       makeNumericLearnerParam(id = "epsilon", default = 0.1, lower = 0),
       makeLogicalLearnerParam(id = "bias", default = TRUE),
-      makeNumericVectorLearnerParam(id = "wi", len = NA_integer_),
-      makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L),
+      makeNumericVectorLearnerParam(id = "wi", len = NA_integer_, tunable = FALSE),
+      makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(type = 4),
-    properties = c("twoclass", "multiclass", "numerics"),
+    properties = c("twoclass", "multiclass", "numerics", "class.weights"),
+    class.weights.param = "wi",
     name = "Multi-class Support Vector Classification by Crammer and Singer",
     short.name = "mcsvc",
     note = "This model is type 4."

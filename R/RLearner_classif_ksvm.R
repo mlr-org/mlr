@@ -27,11 +27,12 @@ makeRLearner.classif.ksvm = function() {
         requires = expression(kernel == "besseldot")),
       makeNumericLearnerParam(id = "tol", default = 0.001, lower = 0),
       makeLogicalLearnerParam(id = "shrinking", default = TRUE),
-      makeNumericVectorLearnerParam(id = "class.weights", len = NA_integer_, lower = 0),
+      makeNumericVectorLearnerParam(id = "class.weights", len = NA_integer_, lower = 0, tunable = FALSE),
       makeLogicalLearnerParam(id = "fit", default = TRUE)
     ),
     par.vals = list(fit = FALSE),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "class.weights"),
+    class.weights.param = "class.weights",
     name = "Support Vector Machines",
     short.name = "ksvm",
     note = "Kernel parameters have to be passed directly and not by using the kpar list in ksvm. Note that `fit` has been set to `FALSE` by default for speed."

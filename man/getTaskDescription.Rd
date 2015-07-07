@@ -17,8 +17,8 @@ Task or its description object.}
 Get a summarizing task description.
 }
 \seealso{
-Other task: \code{\link{getTaskCosts}};
-  \code{\link{getTaskData}};
+Other task: \code{\link{getTaskClassLevels}};
+  \code{\link{getTaskCosts}}; \code{\link{getTaskData}};
   \code{\link{getTaskFeatureNames}};
   \code{\link{getTaskFormula}},
   \code{\link{getTaskFormulaAsString}};

@@ -17,8 +17,8 @@ The task.}
 Get the id of the task.
 }
 \seealso{
-Other task: \code{\link{getTaskCosts}};
-  \code{\link{getTaskData}};
+Other task: \code{\link{getTaskClassLevels}};
+  \code{\link{getTaskCosts}}; \code{\link{getTaskData}};
   \code{\link{getTaskDescription}};
   \code{\link{getTaskFeatureNames}};
   \code{\link{getTaskFormula}},

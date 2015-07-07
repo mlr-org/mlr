@@ -16,7 +16,8 @@
 makeRLearner()
 
 makeRLearnerClassif(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "")
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  class.weights.param = NULL)
 
 makeRLearnerRegr(cl, package, par.set, par.vals = list(),
   properties = character(0L), name = cl, short.name = cl, note = "")
@@ -31,8 +32,8 @@ makeRLearnerCluster(cl, package, par.set, par.vals = list(),
 \item{cl}{[\code{character(1)}] \cr
 Class name for learner to create.
 By convention, all classification learners start with \dQuote{classif.},
-all regression learners with \dQuote{regr.} and all survival learners
-start with \dQuote{surv.}.}
+all regression learners with \dQuote{regr.}, all cluster learners with \dQuote{cluster.}
+and all survival learners start with \dQuote{surv.}.}
 
 \item{package}{[\code{character}]\cr
 Package(s) to load for the implementation of the learner.}
@@ -55,6 +56,7 @@ Set of learner properties. Some standard property names include:
   \item{oneclas,twoclass,multiclass}{Can one-class, two-class or multi-class classification problems be handled?}
   \item{prob}{Can probabilites be predicted?}
   \item{se}{Can standard errors be predicted?}
+  \item{class.weights}{Can class weights be handled?}
 }
 Default is \code{character(0)}.}
 
@@ -70,6 +72,10 @@ Default is \code{id}.}
 \item{note}{[\code{character(1)}]
 Additional notes regarding the learner and its integration in mlr.
 Default is \dQuote{}.}
+
+\item{class.weights.param}{[\code{\link{character}(1)}] \cr
+Name of the parameter, which can be used for providing class weights.
+Note that this parameter can only be used in case of classification.}
 }
 \value{
 [\code{\link{RLearnerClassif}}, \code{\link{RLearnerCluster}}, \code{\link{RLearnerRegr}} or \code{\link{RLearnerSurv}}].
