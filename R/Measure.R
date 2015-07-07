@@ -102,7 +102,25 @@ makeMeasure = function(id, minimize, properties = character(0L),
   setAggregation(m, aggr)
 }
 
-default.measures = function(x) {
+#' @title Get default measure.
+#'
+#' @description
+#' Get the default measure for a task type, task, task description or a learner.
+#' Currently these are:
+#'  \tabular{ll}{
+#'    classif     \tab mmce\cr
+#'    regr        \tab mse\cr
+#'    cluster     \tab db\cr
+#'    surv        \tab cindex\cr
+#'    costsens    \tab mcp\cr
+#'    multilabel  \tab hamloss\cr
+#' }
+#'
+#' @param x [\code{character(1)} | \code{\link{Task}} | \code{\link{TaskDesc}} | \code{\link{Learner}}]\cr
+#'  Task type, task, task description or a learner.
+#' @return [\code{\link{Measure}}].
+#' @export
+getDefaultMeasure = function(x) {
   type = if (inherits(x, "TaskDesc"))
     x$type
   else if (inherits(x, "Task"))
@@ -110,12 +128,12 @@ default.measures = function(x) {
   else if (inherits(x, "Learner"))
     x$type
   switch(type,
-    classif = list(mmce),
-    multilabel = list(hamloss),
-    regr = list(mse),
-    costsens = list(mcp),
-    surv = list(cindex),
-    cluster = list(db)
+    classif = mmce,
+    cluster = db,
+    regr = mse,
+    surv = cindex,
+    costsens = mcp,
+    multilabel = hamloss
   )
 }
 

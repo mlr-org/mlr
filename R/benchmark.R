@@ -62,7 +62,7 @@ benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, s
 
   # check measures
   if (missing(measures)) {
-    measures = default.measures(tasks[[1L]])
+    measures = list(getDefaultMeasure(tasks[[1L]]))
   } else {
     measures = ensureVector(measures, 1L, "Measure")
     assertList(measures)
