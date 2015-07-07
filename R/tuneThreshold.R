@@ -8,6 +8,7 @@
 #' @template arg_pred
 #' @param measure [\code{\link{Measure}}]\cr
 #'   Performance measure to optimize.
+#'   Default is the default measure for the task.
 #' @param task [\code{\link{Task}}]\cr
 #'   Learning task. Rarely neeeded,
 #'   only when required for the performance measure.
@@ -26,16 +27,17 @@
 #' @export
 tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list()) {
   assertClass(pred, classes = "Prediction")
-  assertClass(measure, classes = "Measure")
+  td = pred$task.desc
+  if (missing(measure))
+    measure = default.measures(td)[[1L]]
+  else
+    assertClass(measure, classes = "Measure")
   if (!missing(task))
     assertClass(task, classes = "SupervisedTask")
   if (!missing(model))
     assertClass(model, classes = "WrappedModel")
   assertList(control)
 
-  td = pred$task.desc
-  if (missing(measure))
-    measure = default.measures(td)[[1]]
   probs = getPredictionProbabilities(pred)
 
   # brutally return NA if we find any NA in the predicted probs...
