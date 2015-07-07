@@ -4,11 +4,14 @@
 \alias{makeAggregation}
 \title{Specifiy your own aggregation of measures}
 \usage{
-makeAggregation(id, fun)
+makeAggregation(id, name, fun)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
 Name of the aggregation method. (Preferably the same name as the generated function)}
+
+\item{name}{[\code{character(1)}]\cr
+Long name of the aggregation method.}
 
 \item{fun}{[\code{function}]\cr
 A function with following signature: \code{function(task, perf.test, perf.train, measure, group, pred)}
@@ -30,7 +33,7 @@ inner workings so the result might not be compatible with everything! \cr
 }
 \examples{
 # computes the interquartile range on all performance values
-test.iqr = makeAggregation(id = "test.iqr",
+test.iqr = makeAggregation(id = "test.iqr", name = "Test set interquartile range",
   fun = function (task, perf.test, perf.train, measure, group, pred) IQR(perf.test))
 }
 \seealso{

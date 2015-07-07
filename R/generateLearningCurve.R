@@ -71,9 +71,10 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
   perfs = dropNamed(perfs, c("task.id", "learner.id"))
 
   # set short measures names and resort cols
-  mids = extractSubList(measures, "id")
+  mids = replaceDupeMeasureNames(measures, "id")
+  names(measures) = mids
   colnames(perfs) = mids
-  out = cbind(learner = learner, perc = perc, perfs)
+  out = cbind(learner = learner, percentage = perc, perfs)
   makeS3Obj("LearningCurveData",
             task = task,
             measures = measures,
@@ -115,17 +116,24 @@ print.LearningCurveData = function(x, ...) {
 #'   The variable mapped to \code{facet} must have more than one unique value, otherwise it will
 #'   be ignored. The variable not chosen is mapped to color if it has more than one unique value.
 #'   The default is \dQuote{measure}.
+#' @param pretty.names [\code{logical(1)}]\cr
+#'   Whether to use the \code{\link{Measure}} name instead of the id in the plot.
+#'   Default is \code{TRUE}.
 #' @template ret_gg2
 #' @export
-plotLearningCurve = function(obj, facet = "measure") {
+plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE) {
   assertClass(obj, "LearningCurveData")
   mappings = c("measure", "learner")
   assertChoice(facet, mappings)
+  assertFlag(pretty.names)
   color = mappings[mappings != facet]
 
-  colnames(obj$data) = mapValues(colnames(obj$data),
-                                 c(extractSubList(obj$measures, "id"), "perc"),
-                                 c(extractSubList(obj$measures, "name"), "percentage"))
+  if (pretty.names) {
+    mnames = replaceDupeMeasureNames(obj$measures, "name")
+    colnames(obj$data) = mapValues(colnames(obj$data),
+                                   names(obj$measures),
+                                   mnames)
+  }
 
   data = reshape2::melt(obj$data,
                         id.vars = c("learner", "percentage"),
@@ -166,21 +174,28 @@ plotLearningCurve = function(obj, facet = "measure") {
 #'   Note that if there are multiple learners and multiple measures interactivity is
 #'   necessary as ggvis does not currently support facetting or subplots.
 #'   The default is \dQuote{measure}.
+#' @param pretty.names [\code{logical(1)}]\cr
+#'   Whether to use the \code{\link{Measure}} name instead of the id in the plot.
+#'   Default is \code{TRUE}.
 #' @template ret_ggv
 #' @export
-plotLearningCurveGGVIS = function(obj, interaction = "measure") {
+plotLearningCurveGGVIS = function(obj, interaction = "measure", pretty.names = TRUE) {
   assertClass(obj, "LearningCurveData")
   mappings = c("measure", "learner")
   assertChoice(interaction, mappings)
+  assertFlag(pretty.names)
   color = mappings[mappings != interaction]
 
-  colnames(obj$data) = mapValues(colnames(obj$data),
-                                 c(extractSubList(obj$measures, "id"), "perc"),
-                                 c(extractSubList(obj$measures, "name"), "percentage"))
+  if (pretty.names) {
+    mnames = replaceDupeMeasureNames(obj$measures, "name")
+    colnames(obj$data) = mapValues(colnames(obj$data),
+                                   names(obj$measures),
+                                   mnames)
+  }
 
-  data = reshape2::melt(obj$data, id.vars = c("learner", "percentage"), variable.name = "measure",
-                        value.name = "performance")
-
+  data = reshape2::melt(obj$data,
+                        id.vars = c("learner", "percentage"),
+                        variable.name = "measure", value.name = "performance")
   nmeas = length(unique(data$measure))
   nlearn = length(unique(data$learner))
 

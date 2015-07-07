@@ -13,6 +13,15 @@ mlr_2.5:
 - there was a nasty bug in measure "mcc". fixed and unit tested. and apologies.
 - removed getTaskFormulaAsString and improved getTaskFormula so the former is
   not needed anymore
+- aggregations now have a 'name' property, which is a long name
+- generateLearningCurveData and generateThreshVsPerfData now append the aggregation id
+  to the output column name if the measure ids are the same
+- plotLearningCurve, plotLearningCurveGGVIS, plotThreshVsPerf, plotThreshVsPerfGGVIS now have an argument
+  'pretty.names' which plots the 'name' element of the measures instead of the 'id'.
+- makeCustomResampledMeasure now has arguments 'measure.id' and 'aggregation.id'
+  instead of only 'id' which corresponded to the measure. Also, 'name' and note (corresponding to the measure)
+  as well as 'aggregation.name' have been added.
+- makeCostMeasure now has arguments 'name' and 'id'.
 
 - new functions
 -- getDefaultMeasure

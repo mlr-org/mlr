@@ -35,6 +35,7 @@ NULL
 #' @rdname aggregations
 test.mean = makeAggregation(
   id = "test.mean",
+  name = "Test mean",
   fun = function(task, perf.test, perf.train, measure, group, pred) mean(perf.test)
 )
 
@@ -42,6 +43,7 @@ test.mean = makeAggregation(
 #' @rdname aggregations
 test.sd = makeAggregation(
   id = "test.sd",
+  name = "Test sd",
   fun = function(task, perf.test, perf.train, measure, group, pred) sd(perf.test)
 )
 
@@ -49,6 +51,7 @@ test.sd = makeAggregation(
 #' @rdname aggregations
 test.median = makeAggregation(
   id = "test.median",
+  name = "Test median",
   fun = function(task, perf.test, perf.train, measure, group, pred) median(perf.test)
 )
 
@@ -56,6 +59,7 @@ test.median = makeAggregation(
 #' @rdname aggregations
 test.min = makeAggregation(
   id = "test.min",
+  name = "Test minimum",
   fun = function(task, perf.test, perf.train, measure, group, pred) min(perf.test)
 )
 
@@ -63,6 +67,7 @@ test.min = makeAggregation(
 #' @rdname aggregations
 test.max = makeAggregation(
   id = "test.max",
+  name = "Test maximum",
   fun = function(task, perf.test, perf.train, measure, group, pred) max(perf.test)
 )
 
@@ -70,6 +75,7 @@ test.max = makeAggregation(
 #' @rdname aggregations
 test.sum = makeAggregation(
   id = "test.sum",
+  name = "Test sum",
   fun = function(task, perf.test, perf.train, measure, group, pred) sum(perf.test)
 )
 
@@ -77,6 +83,7 @@ test.sum = makeAggregation(
 #' @rdname aggregations
 test.range = makeAggregation(
   id = "test.range",
+  name = "Test range",
   fun = function(task, perf.test, perf.train, measure, group, pred) diff(range(perf.test))
 )
 
@@ -84,6 +91,7 @@ test.range = makeAggregation(
 #' @rdname aggregations
 test.sqrt.of.mean = makeAggregation(
   id = "test.sqrt.of.mean",
+  name = "Test RMSE",
   fun = function(task, perf.test, perf.train, measure, group, pred) sqrt(mean(perf.test))
 )
 
@@ -91,6 +99,7 @@ test.sqrt.of.mean = makeAggregation(
 #' @rdname aggregations
 train.mean = makeAggregation(
   id = "train.mean",
+  name = "Training mean",
   fun = function(task, perf.test, perf.train, measure, group, pred) mean(perf.train)
 )
 
@@ -98,6 +107,7 @@ train.mean = makeAggregation(
 #' @rdname aggregations
 train.sd = makeAggregation(
   id = "train.sd",
+  name = "Training sd",
   fun = function(task, perf.test, perf.train, measure, group, pred) sd(perf.train)
 )
 
@@ -105,6 +115,7 @@ train.sd = makeAggregation(
 #' @rdname aggregations
 train.median = makeAggregation(
   id = "train.median",
+  name = "Training median",
   fun = function(task, perf.test, perf.train, measure, group, pred) median(perf.train)
 )
 
@@ -112,6 +123,7 @@ train.median = makeAggregation(
 #' @rdname aggregations
 train.min = makeAggregation(
   id = "train.min",
+  name = "Training min",
   fun = function(task, perf.test, perf.train, measure, group, pred) min(perf.train)
 )
 
@@ -119,6 +131,7 @@ train.min = makeAggregation(
 #' @rdname aggregations
 train.max = makeAggregation(
   id = "train.max",
+  name = "Training max",
   fun = function(task, perf.test, perf.train, measure, group, pred) max(perf.train)
 )
 
@@ -126,6 +139,7 @@ train.max = makeAggregation(
 #' @rdname aggregations
 train.sum = makeAggregation(
   id = "train.sum",
+  name = "Training sum",
   fun = function(task, perf.test, perf.train, measure, group, pred) sum(perf.train)
 )
 
@@ -133,6 +147,7 @@ train.sum = makeAggregation(
 #' @rdname aggregations
 train.range = makeAggregation(
   id = "train.range",
+  name = "Training range",
   fun = function(task, perf.test, perf.train, measure, group, pred) diff(range(perf.train))
 )
 
@@ -140,6 +155,7 @@ train.range = makeAggregation(
 #' @rdname aggregations
 train.sqrt.of.mean = makeAggregation(
   id = "train.sqrt.of.mean",
+  name = "Training RMSE",
   fun = function(task, perf.test, perf.train, measure, group, pred) sqrt(mean(perf.train))
 )
 
@@ -147,6 +163,7 @@ train.sqrt.of.mean = makeAggregation(
 #' @rdname aggregations
 b632 = makeAggregation(
   id = "b632",
+  name = ".632 Bootstrap",
   fun = function(task, perf.test, perf.train, measure, group, pred) {
     mean(0.632*perf.test + 0.368*perf.train)
   }
@@ -158,6 +175,7 @@ b632 = makeAggregation(
 #' @rdname aggregations
 b632plus = makeAggregation(
   id = "b632plus",
+  name = ".632 Bootstrap plus",
   fun = function(task, perf.test, perf.train, measure, group, pred) {
     df = as.data.frame(pred)
     a = numeric(length(perf.test))
@@ -182,6 +200,7 @@ b632plus = makeAggregation(
 #' @rdname aggregations
 testgroup.mean = makeAggregation(
   id = "testgroup.mean",
+  name = "Test group mean",
   fun = function(task, perf.test, perf.train, measure, group, pred) {
     mean(vnapply(split(perf.test, group), mean))
   }
@@ -191,6 +210,7 @@ testgroup.mean = makeAggregation(
 #' @rdname aggregations
 test.join = makeAggregation(
   id = "test.join",
+  name = "Test join",
   fun = function(task, perf.test, perf.train, measure, group, pred) {
     df = as.data.frame(pred)
     f = if (length(group)) group[df$iter] else factor(rep(1L, nrow(df)))

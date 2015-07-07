@@ -5,7 +5,7 @@ test_that("performance", {
   lrn = makeLearner("classif.rpart")
   rf = resample(lrn, task = binaryclass.task, resampling = res, measures = list(acc, timeboth))
 
-  res = makeResampleDesc("Bootstrap", iters = 3)
+  res = makeResampleDesc("Bootstrap", iters = 3L)
   rf = resample(lrn, task = binaryclass.task, resampling = res, measures = list(acc, timeboth))
   m = setAggregation(acc, test.median)
   rf = resample(lrn, task = binaryclass.task, resampling = res, measures = m)
@@ -35,14 +35,14 @@ test_that("performance", {
   expect_equal(names(res), c("ber", "acc", "tp"))
 
   # custom measure
-
-  mymeasure = makeCustomResampledMeasure(id = "mym", properties = c("classif", "predtype.response"),
+  mymeasure = makeCustomResampledMeasure(measure.id = "mym", aggregation.id = "train.mean",
+                                         properties = c("classif", "predtype.response"),
     fun = function(task, group, pred, feats, extra.args) {
       mean(pred$data$truth != pred$data$response)
     })
   rdesc = makeResampleDesc("Holdout")
   r = resample(lrn, binaryclass.task, rdesc, measures = list(mmce, mymeasure))
-  expect_equal(as.numeric(r$aggr["mmce.test.mean"]), as.numeric(r$aggr["custom.mym"]))
+  expect_equal(as.numeric(r$aggr["mmce.test.mean"]), as.numeric(r$aggr["mym.train.mean"]))
 })
 
 
@@ -54,4 +54,3 @@ test_that("performance checks for missing truth col", {
 
   expect_error(performance(pred, measure = mmce), "need to have a 'truth' col")
 })
-

@@ -6,8 +6,14 @@ cleanupPackageNames = function(pkgs) {
   gsub("^[!_]", "", pkgs)
 }
 
+# paste together measure and aggregation ids
 measureAggrName = function(measure) {
   paste(measure$id, measure$aggr$id, sep = ".")
+}
+
+# paste together measure and aggregation names
+measureAggrPrettyName = function(measure) {
+  paste(measure$name, measure$aggr$name, sep = ": ")
 }
 
 perfsToString = function(y) {
@@ -60,4 +66,20 @@ getSupportedLearnerProperties = function(type = NA_character_) {
     unique(unlist(p))
   else
     p[[type]]
+}
+
+# find duplicate measure names or ids and paste together those
+# with the associated aggregation ids or names
+replaceDupeMeasureNames = function(measures, x = "id") {
+  assertList(measures, "Measure")
+  assertChoice(x, c("id", "name"))
+  meas.names = extractSubList(measures, x)
+  dupes = table(meas.names)
+  dupes = which(meas.names %in% names(dupes[dupes > 1]))
+  if (x == "id")
+    new.names = sapply(measures[dupes], function(x) measureAggrName(x))
+  else
+    new.names = sapply(measures[dupes], function(x) measureAggrPrettyName(x))
+  meas.names[dupes] = new.names
+  unlist(meas.names)
 }

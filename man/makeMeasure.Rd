@@ -58,7 +58,7 @@ Default is \code{Inf} or -\code{Inf}, depending on \code{minimize}.}
 Name of the measure. Default is \code{id}.}
 
 \item{note}{[\code{character}] \cr
-Description and additional notes for the learner. Default is \dQuote{}.}
+Description and additional notes for the measure. Default is \dQuote{}.}
 }
 \value{
 [\code{\link{Measure}}].

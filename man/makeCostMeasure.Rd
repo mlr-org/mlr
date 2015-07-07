@@ -5,7 +5,7 @@
 \title{Creates a measure for non-standard misclassification costs.}
 \usage{
 makeCostMeasure(id = "costs", minimize = TRUE, costs, task,
-  combine = mean, best = NULL, worst = NULL)
+  combine = mean, best = NULL, worst = NULL, name = id, note = "")
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -37,6 +37,12 @@ Default is -\code{Inf} or \code{Inf}, depending on \code{minimize}.}
 \item{worst}{[\code{numeric(1)}]\cr
 Worst obtainable value for measure.
 Default is \code{Inf} or -\code{Inf}, depending on \code{minimize}.}
+
+\item{name}{[\code{character}] \cr
+Name of the measure. Default is \code{id}.}
+
+\item{note}{[\code{character}] \cr
+Description and additional notes for the measure. Default is \dQuote{}.}
 }
 \value{
 [\code{\link{Measure}}].
