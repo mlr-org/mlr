@@ -4,7 +4,8 @@
 \alias{getTaskFormula}
 \title{Get formula of a task.}
 \usage{
-getTaskFormula(x, target = getTaskTargetNames(x), explicit.features = FALSE)
+getTaskFormula(x, target = getTaskTargetNames(x), explicit.features = FALSE,
+  env = parent.frame())
 }
 \arguments{
 \item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
@@ -17,6 +18,10 @@ Default is defined by task \code{x}.}
 \item{explicit.features}{[\code{logical(1)}]\cr
 Should the features (right hand side of the formula) be explicitly listed?
 Default is \code{FALSE}, i.e., they will be represented as \code{"."}.}
+
+\item{env}{[\code{environment}]\cr
+Environment of the formula.
+Default is \code{parent.frame()}.}
 }
 \value{
 [\code{formula} | \code{character(1)}].
