@@ -96,10 +96,13 @@ getTaskSize = function(task) {
 #' @param explicit.features [\code{logical(1)}]\cr
 #'   Should the features (right hand side of the formula) be explicitly listed?
 #'   Default is \code{FALSE}, i.e., they will be represented as \code{"."}.
+#' @param env [\code{environment}]\cr
+#'   Environment of the formula.
+#'   Default is \code{parent.frame()}.
 #' @return [\code{formula} | \code{character(1)}].
 #' @family task
 #' @export
-getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE) {
+getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE, env = parent.frame()) {
   td = getTaskDescription(x)
   type = td$type
   if (type == "surv") {
@@ -120,7 +123,7 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
   # FIXME in the future we might want to create formulas w/o an environment
   # currently this is impossible for survival because the namespace is not imported
   # properly in many packages -> survival::Surv not found
-  as.formula(paste(target, "~", paste(features, collapse = " + ")))
+  as.formula(paste(target, "~", paste(features, collapse = " + ")), env = env)
 }
 
 #' Get target column of task.
