@@ -41,6 +41,17 @@ getTaskTargetNames = function(task) {
   getTaskDescription(task)$target
 }
 
+#' Get the class levels for classification and multilabel tasks.
+#'
+#' @template arg_task
+#' @return [\code{character}].
+#' @export
+#' @family task
+getTaskClassLevels = function(task) {
+  checkTask(task, task.type = c("classif", "multilabel"))
+  getTaskDescription(task)$class.levels
+}
+
 #' Get feature names of task.
 #'
 #' Target column name is not included.

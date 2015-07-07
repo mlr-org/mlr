@@ -8,7 +8,7 @@ as.data.frame.Prediction = function(x, row.names = NULL, optional = FALSE,...) {
 #' @template arg_pred
 #' @param cl [\code{character}]\cr
 #'   Names of classes.
-#'   Default is either all classes for multi-class problems or the positive class for binary classification.
+#'   Default is either all classes for multi-class / multilabel problems or the positive class for binary classification.
 #' @return [\code{data.frame}] with numerical columns or a numerical vector if length of \code{cl} is 1.
 #'   Order of columns is defined by \code{cl}.
 #' @export

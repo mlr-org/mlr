@@ -13,6 +13,7 @@ mlr_2.5:
 - there was a nasty bug in measure "mcc". fixed and unit tested. and apologies.
 
 - new functions
+-- getTaskClassLevels
 -- getPredictionTruth, getPredictionResponse
 -- convertMLBenchObjToTask
 -- getBMRLearners, getBMRMeasures, getBMRMeasureIds
