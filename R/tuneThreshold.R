@@ -28,7 +28,7 @@
 tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list()) {
   assertClass(pred, classes = "Prediction")
   td = pred$task.desc
-  measure = checkMeasures(measure)[[1L]]
+  measure = checkMeasures(measure, td)[[1L]]
   if (!missing(task))
     assertClass(task, classes = "SupervisedTask")
   if (!missing(model))
