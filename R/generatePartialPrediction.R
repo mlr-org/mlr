@@ -102,9 +102,12 @@ generatePartialPredictionData = function(obj, data, features, interaction = FALS
 
   if (td$type == "regr")
     target = td$target
-  else if (td$type == "classif")
-    target = td$class.levels
-  else
+  else if (td$type == "classif") {
+    if (length(td$class.levels) > 2L)
+      target = td$class.levels
+    else
+      target = td$positive
+  }  else
     target = "risk"
 
   if (length(features) > 1L & !interaction) {
@@ -214,8 +217,6 @@ plotPartialPrediction = function(obj, facet = NULL) {
   if (all(target %in% obj$task.desc$class.levels)) {
     out = reshape2::melt(obj$data, id.vars = obj$features, variable = "Class", value.name = "Probability")
     out$Class = gsub("^prob\\.", "", out$Class)
-    if (length(unique(out$Class)) == 2L)
-      out = out[out$Class == obj$task.desc$positive, ]
     if (length(feature) > 1L) {
       ## suppress warnings for reshaping vectors of different types
       ## factors are coerced to numeric/integers
@@ -296,10 +297,6 @@ plotPartialPredictionGGVIS = function(obj, interaction = NULL) {
   if (all(target %in% obj$task.desc$class.levels)) {
     data = reshape2::melt(obj$data, id.vars = obj$features, variable = "Class", value.name = "Probability")
     data$Class = gsub("^prob\\.", "", data$Class)
-    if (length(unique(data$Class)) == 2L) {
-      data = data[data$Class == obj$task.desc$positive, ]
-      target = obj$task.desc$positive
-    }
   } else {
     data = obj$data
   }
@@ -363,14 +360,13 @@ plotPartialPredictionGGVIS = function(obj, interaction = NULL) {
 
 doPartialPredictionIteration = function(obj, data, rng, features, fun, td, i, ...) {
   data[features] = rng[i, ]
-  pred = do.call("predict", c(list("object" = obj, "newdata" = data), list(...)))$data
-  if (obj$learner$predict.type == "response") {
-    fun(pred$response)
-  } else {
-    cols = lapply(td$class.levels, function(x) grepl(x, colnames(pred)))
-    cols = apply(do.call("rbind", cols), 2, any)
-    apply(pred[, cols], 2, fun)
-  }
+  pred = do.call("predict", c(list("object" = obj, "newdata" = data), list(...)))
+  if (obj$learner$predict.type == "response")
+    fun(getPredictionResponse(pred))
+  else if (length(obj$task.desc$class.levels) == 2L)
+    fun(getPredictionProbabilities(pred))
+  else
+    apply(getPredictionProbabilities(pred), 2, fun)
 }
 
 generateFeatureGrid = function(feature, data, resample, fmin, fmax, cutoff) {
