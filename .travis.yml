@@ -10,7 +10,6 @@ branches:
 apt_packages:
     - r-cran-rjava
 r_github_packages:
-    - mllg/checkmate
     - berndbischl/BBmisc
     - berndbischl/parallelMap
     - berndbischl/ParamHelpers
@@ -22,6 +21,7 @@ r_binary_packages:
     - bst
     # - care
     - caret
+    - checkmate
     - class
     - clue
     - cluster
