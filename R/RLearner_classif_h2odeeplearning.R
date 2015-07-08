@@ -1,15 +1,8 @@
-
-
-
-
-
 # autoencoder
 # Enable auto-encoder for model building.
 
 # use_all_factor_levels
 # Logical. Use all factor levels of categorical variance. Otherwise the first factor level is omittted (without loss of accuracy). Useful for variable imporotances and auto-enabled for autoencoder.
-
-
 
 # train_samples_per_iteration
 # Number of training samples (globally) per MapReduce iteration. Special values are: 0 one epoch; -1 all available data (e.g., replicated training data); or -2 auto-tuning (default)
@@ -156,62 +149,7 @@
 # extra parameters to pass onto functions (not implemented)
 
 
-
-# h2o.deeplearning(x, y, training_frame, model_id = "",
-#   overwrite_with_best_model, n_folds = 0, validation_frame, checkpoint,
-#   autoencoder = FALSE, use_all_factor_levels = TRUE,
-#   activation = c("Rectifier", "Tanh", "TanhWithDropout",
-#   "RectifierWithDropout", "Maxout", "MaxoutWithDropout"), hidden = c(200,
-#   200), epochs = 10, train_samples_per_iteration = -2, seed,
-#   adaptive_rate = TRUE,
-#   rho = 0.99,
-#   epsilon = 1e-08,
-#   rate = 0.005,
-#   rate_annealing = 1e-06,
-#   rate_decay = 1,
-#   momentum_start = 0,
-#   momentum_ramp = 1e+06,
-#   momentum_stable = 0,
-#   nesterov_accelerated_gradient = TRUE,
-#   input_dropout_ratio = 0,
-#   hidden_dropout_ratios,
-#   l1 = 0,
-#   l2 = 0,
-#   max_w2 = Inf,
-#   initial_weight_distribution = c("UniformAdaptive", "Uniform", "Normal"),
-#   initial_weight_scale = 1,
-#   loss = c("Automatic", "CrossEntropy", "MeanSquare", "Absolute", "Huber"),
-#   score_interval = 5,
-#   score_training_samples,
-#   score_validation_samples,
-#   score_duty_cycle,
-#   classification_stop,
-#   regression_stop,
-#   quiet_mode,
-#   max_confusion_matrix_size,
-#   max_hit_ratio_k,
-#   balance_classes = FALSE,
-#   class_sampling_factors,
-#   max_after_balance_size,
-#   score_validation_sampling,
-#   diagnostics,
-#   variable_importances,
-#   fast_mode,
-#   ignore_const_cols,
-#   force_load_balance,
-#   replicate_training_data,
-#   single_node_mode,
-#   shuffle_training_data,
-#   sparse,
-#   col_major,
-#   average_activation,
-#   sparsity_beta,
-#   max_categorical_features,
-#   reproducible = FALSE,
-#   export_weights_and_biases = FALSE, ...)
-
-
-
+# Details: https://leanpub.com/deeplearning/read
 makeRLearner.classif.h2odeeplearning = function() {
   makeRLearnerClassif(
     cl = "classif.h2odeeplearning",
@@ -220,42 +158,56 @@ makeRLearner.classif.h2odeeplearning = function() {
     makeLogicalLearnerParam("autoencoder", default = FALSE),
     makeLogicalLearnerParam("use_all_factor_level", default = TRUE),
     makeDiscreteParam(activation = c("Rectifier", "Tanh", "TanhWithDropout", "RectifierWithDropout", "Maxout", "MaxoutWithDropout")),
-    makeIntegerVectorLearnerParam("hidden", default = c(200L, 200)),
+    # FIXME: hidden can also be a list of integer vectors for grid search
+    makeIntegerVectorLearnerParam("hidden", default = c(200L, 200)), 
     makeNumericLearnerParam("epochs", default = 10L), # doc says can be fractional
-    train_samples_per_iteration = -2, seed,
-#   adaptive_rate = TRUE, rho = 0.99, epsilon = 1e-08, rate = 0.005,
-#   rate_annealing = 1e-06,
-    #   rate_decay = 1,
-    #   momentum_start = 0,
-#   momentum_ramp = 1e+06,
-    #   momentum_stable = 0,
-#   nesterov_accelerated_gradient = TRUE,
-    #   input_dropout_ratio = 0,
-#   hidden_dropout_ratios,
+    makeNumericLearnerParam("train_samples_per_iteration", default = -2, lower = -2), 
+    makeIntegerLearnerParam("seed", tunable = FALSE),
+    makeLogicalLearnerParam("adaptive_rate", default = TRUE),
+    makeNumericLearnerParam("rho", default = 0.99),
+    makeNumericLearnerParam("epsilon", default = 1e-08),
+    makeNumericLearnerParam("rate", default = 0.005),
+    makeNumericLearnerParam("rate_annealing", default = 1e-06),
+    makeNumericLearnerParam("rate_decay", default = 1),
+    makeNumericLearnerParam("momentum_start", default = 0),
+    makeNumericLearnerParam("momentum_ramp", default = 1e+06),
+    makeNumericLearnerParam("momentum_stable", default = 0),
+    makeLogicalLearnerParam("nesterov_accelerated_gradient", default = TRUE),
+    makeNumericLearnerParam("input_dropout_ratio", default = 0),
+    makeNumericLearnerParam("hidden_dropout_ratios", default = 0.5),
     makeNumericLearnerParam("l1", default = 0),
     makeNumericLearnerParam("l2", default = 0),
     makeNumericLearnerParam("max_w2", default = Inf),
     makeDiscreteLearnerParam("initial_weight_distribution", values = c("UniformAdaptive", "Uniform", "Normal"), default = "UniformAdaptive"),
-    #   initial_weight_scale = 1,
+    makeNumericLearnerParam("initial_weight_scale", default = 1),
     makeDiscreteParam("loss", default = c("Automatic", "CrossEntropy", "MeanSquare", "Absolute", "Huber")),
-      score_interval = 5,
-#   score_training_samples, score_validation_samples, score_duty_cycle,
-#   classification_stop,
-    #   regression_stop,
-    # makeLogicalLearnerParam("quiet_mode", default = ??),
-
-    #   max_confusion_matrix_size,
-#   max_hit_ratio_k,
+    makeNumericLearnerParam("score_interval", default = 5),
+    makeIntegerLearnerParam("score_training_samples", default = 10000),
+    makeIntegerLearnerParam("score_validation_samples", default = 0),
+    makeNumericLearnerParam("score_duty_cycle", default = 0.1),
+    makeNumericLearnerParam("classification_stop", default = 0),
+    makeNumericLearnerParam("regression_stop", default = 1e-6),
+    makeLogicalLearnerParam("quiet_mode", tunable = FALSE),
+    makeIntegerLearnerParam("max_confusion_matrix_size", default = 20, tunable = FALSE),
+    makeIntegerLearnerParam("max_hit_ratio_k", default = 10), # is this tunable?
     makeLogicalLearnerParam("balance_classes", default = FALSE),
-
-    #   class_sampling_factors,
-#   max_after_balance_size,
-    #   score_validation_sampling,
-    #   diagnostics,
-#   variable_importances,
-    #   fast_mode,
-    #   ignore_const_cols,
-    #   force_load_balance,
+    makeNumericLearnerParam("class_sampling_factors", requires = expression(balance_classes == TRUE)),
+    makeNumericLearnerParam("max_after_balance_size", default = 5),
+    makeDiscreteLearnerParam("score_validation_sampling", values = c("Uniform", "Stratified"), default = "Uniform"),
+    makeLogicalLearnerParam("diagnostics", default = TRUE, tunable = FALSE),
+    makeLogicalLearnerParam("variable_importances", default = TRUE, tunable = FALSE),
+    makeLogicalLearnerParam("fast_mode", default = TRUE, tunable = FALSE),
+    makeLogicalLearnerParam("ignore_const_cols", default = TRUE, tunable = FALSE),
+    makeLogicalLearnerParam("force_load_balance", default = TRUE, tunable = FALSE),
+    makeLogicalLearnerParam("replicate_training_data", default = TRUE, tunable = FALSE),
+    makeLogicalLearnerParam("single_node_mode", default = FALSE, tunable = FALSE),
+    makeLogicalLearnerParam("shuffle_training_data", tunable = FALSE),
+    makeLogicalLearnerParam("sparse", default = FALSE, tunable = FALSE),
+    makeLogicalLearnerParam("col_major", default = FALSE, tunable = FALSE),
+    makeLogicalLearnerParam("average_activation", tunable = FALSE),
+    #makeLogicalLearnerParam("sparsity_beta", tunable = FALSE),
+    makeLogicalLearnerParam("reproducible", default = FALSE, tunable = FALSE),
+    makeLogicalLearnerParam("export_weights_and_biases", default = FALSE, tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "h2o.deeplearning",
