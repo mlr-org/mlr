@@ -1,11 +1,11 @@
-#' @title Implementation of the Binary Relevance Method
+#' @title Binary Relevance Method
 #'
 #' @description
 #' 
-#' Every learner which is implemented in mlr and which supports twoclass or multiclass 
+#' Every learner which is implemented in mlr and which supports binary
 #' classification can be converted to a wrapped binary relevance multilabel learner. 
 #' The multilabel classification problem is converted into simple binary classifications 
-#' for each label/target on which the twoclass learners are applied. 
+#' for each label/target on which the binary learners are applied. 
 #'  
 #' @template arg_learner
 #' @template ret_learner

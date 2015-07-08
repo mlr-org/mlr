@@ -2,7 +2,7 @@
 % Please edit documentation in R/MultilabelBinaryRelevanceWrapper.R
 \name{makeMultilabelBinaryRelevanceWrapper}
 \alias{makeMultilabelBinaryRelevanceWrapper}
-\title{Implementation of the Binary Relevance Method}
+\title{Binary Relevance Method}
 \usage{
 makeMultilabelBinaryRelevanceWrapper(learner)
 }
@@ -15,10 +15,10 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 [\code{\link{Learner}}].
 }
 \description{
-Every learner which is implemented in mlr and which supports twoclass or multiclass
+Every learner which is implemented in mlr and which supports binary
 classification can be converted to a wrapped binary relevance multilabel learner.
 The multilabel classification problem is converted into simple binary classifications
-for each label/target on which the twoclass learners are applied.
+for each label/target on which the binary learners are applied.
 }
 \examples{
 data = cbind(iris,new1 = sample(c(TRUE, FALSE), 150, replace = TRUE),
