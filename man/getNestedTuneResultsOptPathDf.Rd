@@ -15,7 +15,7 @@ The result of resampling of a tuning wrapper.}
 }
 \description{
 After you resampled a tuning wrapper (see \code{\link{makeTuneWrapper}})
-with \code{resample(..., extract = getTuneresult)} this helper returns a \code{data.frame} with
+with \code{resample(..., extract = getTuneResult)} this helper returns a \code{data.frame} with
 with all \code{opt.path}s combined by \code{rbind}.
 An additional column \code{iter} indicates to what resampling iteration the row belongs.
 }

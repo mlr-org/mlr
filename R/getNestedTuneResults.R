@@ -2,7 +2,7 @@
 #'
 #' @description
 #' After you resampled a tuning wrapper (see \code{\link{makeTuneWrapper}})
-#' with \code{resample(..., extract = getTuneresult)} this helper returns a \code{data.frame} with
+#' with \code{resample(..., extract = getTuneResult)} this helper returns a \code{data.frame} with
 #' the the best found hyperparameter settings for each resampling iteration.
 #'
 #' @param r [\code{\link{ResampleResult}}] \cr
@@ -24,7 +24,7 @@ getNestedTuneResultsX = function(r) {
 #'
 #' @description
 #' After you resampled a tuning wrapper (see \code{\link{makeTuneWrapper}})
-#' with \code{resample(..., extract = getTuneresult)} this helper returns a \code{data.frame} with
+#' with \code{resample(..., extract = getTuneResult)} this helper returns a \code{data.frame} with
 #' with all \code{opt.path}s combined by \code{rbind}.
 #' An additional column \code{iter} indicates to what resampling iteration the row belongs.
 #'

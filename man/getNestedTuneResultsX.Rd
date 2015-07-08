@@ -15,7 +15,7 @@ The result of resampling of a tuning wrapper.}
 }
 \description{
 After you resampled a tuning wrapper (see \code{\link{makeTuneWrapper}})
-with \code{resample(..., extract = getTuneresult)} this helper returns a \code{data.frame} with
+with \code{resample(..., extract = getTuneResult)} this helper returns a \code{data.frame} with
 the the best found hyperparameter settings for each resampling iteration.
 }
 \examples{
