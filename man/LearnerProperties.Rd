@@ -35,8 +35,10 @@ character vector.
 }
 \seealso{
 Other learner: \code{\link{Learner}},
-  \code{\link{makeLearner}}; \code{\link{getHyperPars}};
-  \code{\link{getParamSet}}; \code{\link{removeHyperPars}};
+  \code{\link{makeLearner}};
+  \code{\link{getClassWeightParam}};
+  \code{\link{getHyperPars}}; \code{\link{getParamSet}};
+  \code{\link{removeHyperPars}};
   \code{\link{setHyperPars}}; \code{\link{setId}};
   \code{\link{setPredictThreshold}};
   \code{\link{setPredictType}}

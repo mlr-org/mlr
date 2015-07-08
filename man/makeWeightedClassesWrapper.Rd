@@ -4,19 +4,12 @@
 \alias{makeWeightedClassesWrapper}
 \title{Wraps a classifier for weighted fitting where each class receives a weight.}
 \usage{
-makeWeightedClassesWrapper(learner, wcw.param = NULL, wcw.weight = 1)
+makeWeightedClassesWrapper(learner, wcw.weight = 1)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
 The classification learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
-
-\item{wcw.param}{[\code{character(1)}]\cr
-Name of already existing learner param which allows class weighting.
-Or \code{NULL} if such a param does not exist.
-Must during training accept a named vector of class weights,
-where length equals the number of classes.
-Default is \code{NULL}.}
 
 \item{wcw.weight}{[\code{numeric}]\cr
 Weight for each class.
@@ -55,7 +48,7 @@ something like a new \dQuote{class.weights} parameter for the learner via observ
 }
 \examples{
 # using the direct parameter of the SVM
-lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.param = "class.weights", wcw.weight = 0.01)
+lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.weight = 0.01)
 res = holdout(lrn, sonar.task)
 print(getConfMatrix(res$pred))
 
@@ -65,7 +58,7 @@ res = holdout(lrn, sonar.task)
 print(getConfMatrix(res$pred))
 
 # tuning the imbalancy param and the SVM param in one go
-lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.param = "class.weights")
+lrn = makeWeightedClassesWrapper("classif.ksvm")
 ps = makeParamSet(
   makeNumericParam("wcw.weight", lower = 1, upper = 10),
   makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
