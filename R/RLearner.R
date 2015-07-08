@@ -40,10 +40,10 @@
 #' @param note [\code{character(1)}]
 #'   Additional notes regarding the learner and its integration in mlr.
 #'   Default is \dQuote{}.
-#' @return [\code{\link{RLearnerClassif}}, \code{\link{RLearnerCluster}}, \code{\link{RLearnerRegr}} or \code{\link{RLearnerSurv}}].
+#' @return [\code{\link{RLearnerClassif}}, \code{\link{RLearnerCluster}}, \code{\link{RLearnerMultilabel}} \code{\link{RLearnerRegr}} or \code{\link{RLearnerSurv}}].
 #' @name RLearner
 #' @rdname RLearner
-#' @aliases RLearnerClassif RLearnerCluster RLearnerRegr RLearnerSurv
+#' @aliases RLearnerClassif RLearnerCluster RLearnerMultilabel RLearnerRegr RLearnerSurv
 NULL
 
 #' @export
@@ -95,6 +95,8 @@ makeRLearnerClassif = function(cl, package, par.set, par.vals = list(), properti
   )
 }
 
+#' @export
+#' @rdname RLearner
 makeRLearnerMultilabel = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "") {
   addClasses(
     makeRLearnerInternal(cl, "multilabel", package, par.set, par.vals, properties, name, short.name, note),

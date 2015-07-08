@@ -29,7 +29,7 @@ getPredictionProbabilities = function(pred, cl) {
   assertClass(pred, classes = "Prediction")
   ttype = pred$task.desc$type
   if (ttype %nin% c("classif", "cluster", "multilabel"))
-    stop("Prediction was not generated from a ClassifTask or ClusterTask!")
+    stop("Prediction was not generated from a ClassifTask, MultilabelTask or ClusterTask!")
   if (missing(cl)) {
     if (ttype == "classif") {
       if (length(pred$task.desc$class.levels) == 2L)

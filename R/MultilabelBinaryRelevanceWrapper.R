@@ -1,4 +1,29 @@
-
+#' @title Implementation of the Binary Relevance Method
+#'
+#' @description
+#' 
+#' Every learner which is implemented in mlr and which supports twoclass or multiclass 
+#' classification can be converted to a wrapped binary relevance multilabel learner. 
+#' The multilabel classification problem is converted into simple binary classifications 
+#' for each label/target on which the twoclass learners are applied. 
+#'  
+#' @template arg_learner
+#' @template ret_learner
+#' @family wrapper
+#' @export
+#' @examples
+#' data = cbind(iris,new1 = sample(c(TRUE, FALSE), 150, replace = TRUE),
+#'              new2 = sample(c(TRUE, FALSE), 150, replace = TRUE))
+#' multilabel.task = makeMultilabelTask(id = "multi", data = data[-c(1:10),], target = c("new1", "new2"))
+#' lrn = makeLearner("classif.rpart")
+#' multilabel.lrn = makeMultilabelBinaryRelevanceWrapper(lrn)
+#' multilabel.lrn2 = makeMultilabelBinaryRelevanceWrapper("classif.rpart")
+#' # train, predict and evaluate
+#' mod = train(multilabel.lrn2, multilabel.task)
+#' pred = predict(mod, multilabel.task)
+#' p = performance(pred)
+#' # with newdata
+#' pred = predict(mod, newdata=data[1:10,])
 #' @export
 makeMultilabelBinaryRelevanceWrapper = function(learner) {
   learner = checkLearner(learner, type = "classif")
