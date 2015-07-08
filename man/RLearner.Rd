@@ -4,11 +4,13 @@
 \alias{RLearner}
 \alias{RLearnerClassif}
 \alias{RLearnerCluster}
+\alias{RLearnerMultilabel}
 \alias{RLearnerRegr}
 \alias{RLearnerSurv}
 \alias{makeRLearner}
 \alias{makeRLearnerClassif}
 \alias{makeRLearnerCluster}
+\alias{makeRLearnerMultilabel}
 \alias{makeRLearnerRegr}
 \alias{makeRLearnerSurv}
 \title{Internal construction / wrapping of learner object.}
@@ -16,6 +18,9 @@
 makeRLearner()
 
 makeRLearnerClassif(cl, package, par.set, par.vals = list(),
+  properties = character(0L), name = cl, short.name = cl, note = "")
+
+makeRLearnerMultilabel(cl, package, par.set, par.vals = list(),
   properties = character(0L), name = cl, short.name = cl, note = "")
 
 makeRLearnerRegr(cl, package, par.set, par.vals = list(),
@@ -72,7 +77,7 @@ Additional notes regarding the learner and its integration in mlr.
 Default is \dQuote{}.}
 }
 \value{
-[\code{\link{RLearnerClassif}}, \code{\link{RLearnerCluster}}, \code{\link{RLearnerRegr}} or \code{\link{RLearnerSurv}}].
+[\code{\link{RLearnerClassif}}, \code{\link{RLearnerCluster}}, \code{\link{RLearnerMultilabel}} \code{\link{RLearnerRegr}} or \code{\link{RLearnerSurv}}].
 }
 \description{
 Wraps an already implemented learning method from R to make it accessible to mlr.

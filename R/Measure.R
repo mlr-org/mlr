@@ -33,6 +33,7 @@
 #'   \describe{
 #'     \item{classif}{Is the measure applicable for classification?}
 #'     \item{classif.multi}{Is the measure applicable for multi-class classification?}
+#'     \item{multilabel}{Is the measure applicable for multilabel classification}
 #'     \item{regr}{Is the measure applicable for regression?}
 #'     \item{surv}{Is the measure applicable for survival?}
 #'     \item{costsens}{Is the measure applicable for cost-sensitive learning?}
