@@ -23,12 +23,6 @@
 #' something like a new \dQuote{class.weights} parameter for the learner via observation weights.
 #'
 #' @template arg_learner_classif
-#' @param wcw.param [\code{character(1)}]\cr
-#'   Name of already existing learner param which allows class weighting.
-#'   Or \code{NULL} if such a param does not exist.
-#'   Must during training accept a named vector of class weights,
-#'   where length equals the number of classes.
-#'   Default is \code{NULL}.
 #' @param wcw.weight [\code{numeric}]\cr
 #'   Weight for each class.
 #'   Must be a vector of the same number of elements as classes are in task,
@@ -43,7 +37,7 @@
 #' @export
 #' @examples
 #' # using the direct parameter of the SVM
-#' lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.param = "class.weights", wcw.weight = 0.01)
+#' lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.weight = 0.01)
 #' res = holdout(lrn, sonar.task)
 #' print(getConfMatrix(res$pred))
 #'
@@ -53,7 +47,7 @@
 #' print(getConfMatrix(res$pred))
 #'
 #' # tuning the imbalancy param and the SVM param in one go
-#' lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.param = "class.weights")
+#' lrn = makeWeightedClassesWrapper("classif.ksvm")
 #' ps = makeParamSet(
 #'   makeNumericParam("wcw.weight", lower = 1, upper = 10),
 #'   makeNumericParam("C", lower = -12, upper = 12, trafo = function(x) 2^x),
@@ -64,9 +58,10 @@
 #' res = tuneParams(lrn, sonar.task, rdesc, par.set = ps, control = ctrl)
 #' print(res)
 #' print(res$opt.path)
-makeWeightedClassesWrapper = function(learner, wcw.param = NULL, wcw.weight = 1) {
+makeWeightedClassesWrapper = function(learner, wcw.weight = 1) {
   learner = checkLearnerClassif(learner)
   pv = list()
+  wcw.param = learner$class.weights.param
   if (is.null(wcw.param)) {
     if (!hasProperties(learner, "weights"))
       stopf("Learner '%s' does not support observation weights. You have to set 'wcw.param' to the learner param which allows to set class weights! (which hopefully exists...)", learner$id)

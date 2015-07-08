@@ -13,7 +13,8 @@ makeRLearner.classif.LiblineaRLogReg = function() {
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
       ),
-    properties = c("twoclass", "numerics", "prob", "multiclass"),
+    properties = c("twoclass", "numerics", "prob", "multiclass", "class.weights"),
+    class.weights.param = "wi",
     name = "Regularized Logistic Regression",
     short.name = "reglreg",
     note = "This model subsumes type 0,6,7."

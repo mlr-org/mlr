@@ -62,7 +62,7 @@ test_that("show info works in selectFeatures", {
 test_that("selectFeatures/sfs works with wrapper" , {
   ctrl = makeFeatSelControlSequential(method = "sfs")
   lrn1 = makeLearner("classif.LiblineaRLogReg")
-  lrn2 = makeWeightedClassesWrapper(lrn1, wcw.param = "wi")
+  lrn2 = makeWeightedClassesWrapper(lrn1)
   task = subsetTask(binaryclass.task, features = getTaskFeatureNames(binaryclass.task)[1:2])
   rdesc = makeResampleDesc("Holdout", split = 0.8, stratify = TRUE)
   sel = selectFeatures(lrn2, task, rdesc, control = ctrl)
