@@ -20,17 +20,21 @@
 Introduction
 ============
 
-R does not define a standardized interface for all its machine learning algorithms. Therefore, for any
-non-trivial experiments, you need to write lengthy, tedious and error-prone wrappers to call the different
-algorithms and unify their respective output. Additionally you need to implement infrastructure to resample
-your models, optimize hyperparameters, select features, cope with pre- and post-processing of data and
-compare models in a statistically meaningful way.
-As this becomes computationally expensive, you might want to parallelize your experiments as well. This
-often forces users to make crummy trade-offs in their experiments due to time constraints or lacking expert
-programming skills. **mlr** provides this infrastructure so that you can focus on your experiments!
-The framework currently focuses on supervised methods like classification, regression and survival analysis and
-their corresponding evaluation and optimization. It is written in a way that you can extend it yourself or
-deviate from the implemented convenience methods and construct your own complex experiments or algorithms.
+R does not define a standardized interface for all its machine learning
+algorithms. Therefore, for any non-trivial experiments, you need to write
+lengthy, tedious and error-prone wrappers to call the different algorithms and
+unify their respective output. Additionally you need to implement infrastructure
+to resample your models, optimize hyperparameters, select features, cope with
+pre- and post-processing of data and compare models in a statistically
+meaningful way. As this becomes computationally expensive, you might want to
+parallelize your experiments as well. This often forces users to make crummy
+trade-offs in their experiments due to time constraints or lacking expert
+programming skills. **mlr** provides this infrastructure so that you can focus
+on your experiments! The framework currently focuses on supervised methods like
+classification, regression and survival analysis and their corresponding
+evaluation and optimization. It is written in a way that you can extend it
+yourself or deviate from the implemented convenience methods and construct your
+own complex experiments or algorithms.
 
 Features
 ========
