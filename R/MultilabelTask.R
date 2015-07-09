@@ -30,5 +30,5 @@ makeTaskDesc.MultilabelTask = function(task, id, target) {
   levs = target
   td = makeTaskDescInternal(task, "multilabel", id, target)
   td$class.levels = levs
-  return(addClasses(td, "TaskDescMultilabel"))
+  return(addClasses(td, c("TaskDescMultilabel", "TaskDescSupervised")))
 }

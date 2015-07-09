@@ -14,7 +14,7 @@ makeClusterTask = function(id = deparse(substitute(data)), data, weights = NULL,
 makeTaskDesc.ClusterTask = function(task, id) {
   target = character(0L)
   td = makeTaskDescInternal(task, "cluster", id, target)
-  return(addClasses(td, "TaskDescCluster"))
+  return(addClasses(td, c("TaskDescCluster", "TaskDescUnsupervised")))
 }
 
 #' @export

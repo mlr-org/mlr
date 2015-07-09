@@ -54,7 +54,7 @@ test_that("stratification does not put all remaining elements in the first split
   rdesc = makeResampleDesc("CV", iters=3, stratify=TRUE)
   rin = makeResampleInstance(rdesc, task=task)
 
-  tabs = lapply(rin$test.inds, function(j) table(getTaskTargets(task, j)))
+  tabs = lapply(rin$test.inds, function(j) table(getTaskTargets(task)[j]))
   split.sizes = sapply(tabs, sum)
   expect_true(all(split.sizes < 130))
 })

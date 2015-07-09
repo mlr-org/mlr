@@ -38,7 +38,7 @@ makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blockin
 makeTaskDesc.CostSensTask = function(task, id, target) {
   td = makeTaskDescInternal(task, "costsens", id, target)
   td$class.levels = colnames(task$env$costs)
-  return(addClasses(td, "TaskDescCostSens"))
+  return(addClasses(td, c("TaskDescCostSens", "TaskDescSupervised")))
 }
 
 #' @export

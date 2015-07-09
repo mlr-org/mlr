@@ -70,5 +70,5 @@ makeSurvTask = function(id = deparse(substitute(data)), data, target, censoring 
 makeTaskDesc.SurvTask = function(task, id, target, censoring) {
   td = makeTaskDescInternal(task, "surv", id, target)
   td$censoring = censoring
-  addClasses(td, "TaskDescSurv")
+  addClasses(td, c("TaskDescSurv", "TaskDescSupervised"))
 }

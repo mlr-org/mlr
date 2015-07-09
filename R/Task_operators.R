@@ -5,15 +5,22 @@
 #' @export
 #' @family task
 getTaskDescription = function(x) {
-  if (inherits(x, "TaskDesc"))
-    x
-  else
-    x$task.desc
+  UseMethod("getTaskDescription")
+}
+
+#' @export
+getTaskDescription.default = function(x) {
+  x$task.desc
+}
+
+#' @export
+getTaskDescription.TaskDesc = function(x) {
+  x
 }
 
 #' Get the type of the task.
 #'
-#' @template arg_task
+#' @template arg_task_or_desc
 #' @return [\code{character(1)}].
 #' @export
 #' @family task
@@ -23,7 +30,7 @@ getTaskType = function(task) {
 
 #' Get the id of the task.
 #'
-#' @template arg_task
+#' @template arg_task_or_desc
 #' @return [\code{character(1)}].
 #' @export
 #' @family task
@@ -33,22 +40,51 @@ getTaskId = function(task) {
 
 #' Get the name(s) of the target column(s).
 #'
-#' @template arg_task
+#' @template arg_task_or_desc
 #' @return [\code{character}].
 #' @export
 #' @family task
 getTaskTargetNames = function(task) {
-  getTaskDescription(task)$target
+  UseMethod("getTaskTargetNames")
+}
+
+#' @export
+getTaskTargetNames.Task = function(task) {
+  getTaskTargetNames(getTaskDescription(task))
+}
+
+#' @export
+getTaskTargetNames.TaskDescSupervised = function(task) {
+  task$target
+}
+
+#' @export
+getTaskTargetNames.TaskDescUnsupervised = function(task) {
+  character(0L)
 }
 
 #' Get the class levels for classification and multilabel tasks.
 #'
-#' @template arg_task
+#' @template arg_task_or_desc
 #' @return [\code{character}].
 #' @export
 #' @family task
 getTaskClassLevels = function(task) {
-  checkTask(task, task.type = c("classif", "multilabel"))
+  UseMethod("getTaskClassLevels")
+}
+
+#' @export
+getTaskClassLevels.Task = function(task) {
+  getTaskClassLevels(getTaskDescription(task))
+}
+
+#' @export
+getTaskClassLevels.TaskDescClassif = function(task) {
+  getTaskDescription(task)$class.levels
+}
+
+#' @export
+getTaskClassLevels.TaskDescMultilabel = function(task) {
   getTaskDescription(task)$class.levels
 }
 
@@ -61,23 +97,22 @@ getTaskClassLevels = function(task) {
 #' @family task
 #' @export
 getTaskFeatureNames = function(task) {
-  #FIXME: argument checks currently not done for speed
-  setdiff(colnames(task$env$data), task$task.desc$target)
+  setdiff(names(task$env$data), getTaskTargetNames(task))
 }
 
 #' Get number of features in task.
 #'
-#' @template arg_task
+#' @template arg_task_or_desc
 #' @return [\code{integer(1)}].
 #' @export
 #' @family task
 getTaskNFeats = function(task) {
-  sum(task$task.desc$n.feat)
+  sum(getTaskDescription(task)$n.feat)
 }
 
 #' Get number of observations in task.
 #'
-#' @template arg_task
+#' @template arg_task_or_desc
 #' @return [\code{integer(1)}].
 #' @export
 #' @family task
@@ -129,9 +164,6 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
 #' Get target column of task.
 #'
 #' @template arg_task
-#' @param subset [\code{integer}]\cr
-#'   Selected cases.
-#'   Default is all cases.
 #' @param recode.target [\code{character(1)}] \cr
 #'   Should target classes be recoded? Only for binary classification.
 #'   Possible are \dQuote{no} (do nothing), \dQuote{01}, and \dQuote{-1+1}.
@@ -144,15 +176,20 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
 #' getTaskTargets(task)
-#' getTaskTargets(task, subset = 1:50)
-getTaskTargets = function(task, subset, recode.target = "no") {
-  #FIXME: argument checks currently not done for speed
-  if (task$task.desc$type == "costsens")
-    stop("There is no target available for cost-sensitive learning.")
-  if (task$task.desc$type == "cluster")
-    stop("There is no target available for cluster.")
-  y = task$env$data[subset, task$task.desc$target, drop = TRUE]
+getTaskTargets = function(task, recode.target = "no") {
+  UseMethod(("getTaskTargets"))
+}
+
+getTaskTargets.SupervisedTask = function(task, recode.target = "no") {
+  y = task$env$data[, task$task.desc$target, drop = TRUE]
   recodeY(y, recode.target, task$task.desc)
+}
+
+getTaskTargets.UnsupervisedTask = function(task, recode.target = "no") {
+    stop("There is no target available for unsupervised tasks.")
+}
+
+getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 }
 
 

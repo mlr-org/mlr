@@ -1,6 +1,6 @@
 makeUnsupervisedTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
   task = makeTask(type, data, weights, blocking, fixup.data = fixup.data, check.data = check.data)
-  checkTaskData(getTaskData(data), cols = setdiff(colnames(data), target))
+  checkTaskData(getTaskData(data))
   addClasses(task, "UnsupervisedTask")
 }
 

@@ -23,5 +23,5 @@ makeRegrTask = function(id = deparse(substitute(data)), data, target, weights = 
 }
 
 makeTaskDesc.RegrTask = function(task, id, target) {
-  addClasses(makeTaskDescInternal(task, "regr", id, target), "TaskDescRegr")
+  addClasses(makeTaskDescInternal(task, "regr", id, target), c("TaskDescRegr", "TaskDescSupervised"))
 }
