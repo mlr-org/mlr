@@ -8,20 +8,24 @@
 #'
 #' @template arg_learner
 #' @template ret_learner
-#' @family wrapper
+#' @references
+#' Tsoumakas, G., & Katakis, I. (2006)
+#' \emph{Multi-label classification: An overview.} 
+#' Dept. of Informatics, Aristotle University of Thessaloniki, Greece.
+#' @family wrapper 
+#' @family multilabel
 #' @export
 #' @examples
-#' data = cbind(iris,
-#'   y1 = sample(c(TRUE, FALSE), 150, replace = TRUE),
-#'   y2 = sample(c(TRUE, FALSE), 150, replace = TRUE))
-#' multilabel.task = makeMultilabelTask(id = "multi", data = data[-c(1:10),], target = c("y1", "y2"))
+#' yeast = getTaskData(yeast.task)
+#' Labels = colnames(yeast)[1:14]
+#' yeast.task = makeMultilabelTask(id = "multi", data = yeast, target = Labels)
 #' lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")
 #' # train, predict and evaluate
-#' mod = train(lrn, multilabel.task)
-#' pred = predict(mod, multilabel.task)
+#' mod = train(lrn, yeast.task)
+#' pred = predict(mod, yeast.task)
 #' p = performance(pred)
 #' # with newdata
-#' pred = predict(mod, newdata = data[1:10,])
+#' pred = predict(mod, newdata = yeast[1:10,])
 #' @export
 makeMultilabelBinaryRelevanceWrapper = function(learner) {
   learner = checkLearner(learner, type = "classif")
