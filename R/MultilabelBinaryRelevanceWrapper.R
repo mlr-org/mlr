@@ -16,9 +16,8 @@
 #' @family multilabel
 #' @export
 #' @examples
-#' yeast = getTaskData(yeast.task)
-#' Labels = colnames(yeast)[1:14]
-#' yeast.task = makeMultilabelTask(id = "multi", data = yeast, target = Labels)
+#' labels = colnames(yeast)[1:14]
+#' yeast.task = makeMultilabelTask(id = "multi", data = yeast, target = labels)
 #' lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")
 #' # train, predict and evaluate
 #' mod = train(lrn, yeast.task)
