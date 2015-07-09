@@ -4,7 +4,7 @@ makeMultilabelTask = function(id, data, target, weights = NULL, blocking = NULL,
   positive = NA_character_, fixup.data = "warn", check.data = TRUE){
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)
-  assertCharacter(target)
+  assertCharacter(target, min.len = 2)
   task = addClasses(makeSupervisedTask("multilabel", data, target, weights, blocking), "MultilabelTask")
   if (fixup.data != "no")
     fixupData(task,target,fixup.data)
