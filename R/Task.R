@@ -142,7 +142,6 @@ checkTaskData = function(data, cols = names(data)) {
     }
   }
 
-  if (!is.null(data))
   Map(fun, cn = cols, x = data[cols])
   invisible(TRUE)
 }
@@ -159,17 +158,4 @@ print.Task = function(x, print.weights = TRUE, ...) {
   if (print.weights)
     catf("Has weights: %s", td$has.weights)
   catf("Has blocking: %s", td$has.blocking)
-}
-
-# either guess task id from variable name of data or check it
-checkOrGuessId = function(id, data) {
-  if (missing(id)) {
-    # go up to user frame for heuristic to get name of data
-    id = deparse(substitute(data, env = parent.frame(1L)))
-    if (!is.character(id) || length(id) != 1L)
-      stop("Cannot infer id for task automatically. Please set it manually!")
-  } else {
-    assertString(id)
-  }
-  return(id)
 }

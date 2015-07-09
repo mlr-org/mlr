@@ -97,7 +97,7 @@ getTaskClassLevels.TaskDescMultilabel = function(task) {
 #' @family task
 #' @export
 getTaskFeatureNames = function(task) {
-  setdiff(names(task$env$data), getTaskTargetNames(task))
+  setdiff(names(task$env$data), getTaskDescription(task)$target)
 }
 
 #' Get number of features in task.
