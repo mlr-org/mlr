@@ -1,31 +1,31 @@
 #' @export
 #' @rdname Task
-makeClassifTask = function(id, data, target, weights = NULL, blocking = NULL,
-  positive = NA_character_, fixup.data = "warn", check.data = TRUE) {
+makeClassifTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, positive = NA_character_, fixup.data = "warn", check.data = TRUE) {
+  assertString(id)
+  assertDataFrame(data)
+  assertString(target)
+  assertString(positive, na.ok = TRUE)
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)
 
-  task = addClasses(makeSupervisedTask("classif", data, target, weights, blocking), "ClassifTask")
-  if (fixup.data != "no")
-    fixupData(task, target, fixup.data)
-  if (check.data)
-    checkTaskCreation(task, target)
-  id = checkOrGuessId(id, data)
+  if (fixup.data != "no") {
+    x = data[[target]]
+    if (is.character(x) || is.logical(x) || is.integer(x)) {
+      data[[target]] = as.factor(x)
+    } else if (is.factor(x) && fixup.data == "warn" && any(table(x) == 0L)) {
+      warningf("Target column '%s' contains empty factor levels", target)
+      data[[target]] = droplevels(x)
+    }
+  }
+
+  task = makeSupervisedTask("classif", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
+
+  if (check.data) {
+    assertFactor(data[[target]], any.missing = FALSE, empty.levels.ok = FALSE, .var.name = target)
+  }
+
   task$task.desc = makeTaskDesc.ClassifTask(task, id, target, positive)
-  return(task)
-}
-
-checkTaskCreation.ClassifTask = function(task, target, ...) {
-  NextMethod("checkTaskCreation")
-  assertString(target)
-  assertFactor(task$env$data[[target]], any.missing = FALSE, empty.levels.ok = FALSE, .var.name = target)
-}
-
-fixupData.ClassifTask = function(task, target, choice, ...) {
-  NextMethod("fixupData")
-  x = task$env$data[[target]]
-  if (is.character(x) || is.logical(x) || is.integer(x))
-    task$env$data[[target]] = as.factor(x)
+  addClasses(task, "ClassifTask")
 }
 
 makeTaskDesc.ClassifTask = function(task, id, target, positive) {

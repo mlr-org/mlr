@@ -1,33 +1,25 @@
 #' @export
 #' @rdname Task
-makeRegrTask = function(id, data, target, weights = NULL, blocking = NULL,
-  fixup.data = "warn", check.data = TRUE) {
+makeRegrTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
+  assertString(id)
+  assertDataFrame(data)
+  assertString(target)
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)
 
-  task = addClasses(makeSupervisedTask("regr", data, target, weights, blocking), "RegrTask")
-  if (fixup.data != "no")
-    fixupData(task, target, fixup.data)
-  if (check.data)
-    checkTaskCreation(task, target)
+  if (fixup.data != "no") {
+    if (is.integer(data[[target]]))
+      data[[target]] = as.double(data[[target]])
+  }
 
-  id = checkOrGuessId(id, data)
+  task = makeSupervisedTask("regr", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
+
+  if (check.data) {
+    assertNumeric(data[[target]], any.missing = FALSE, finite = TRUE, .var.name = target)
+  }
+
   task$task.desc = makeTaskDesc.RegrTask(task, id, target)
-  return(task)
-}
-
-checkTaskCreation.RegrTask = function(task, target, ...) {
-  NextMethod("checkTaskCreation")
-  assertString(target)
-  assertNumeric(task$env$data[[target]], any.missing = FALSE, finite = TRUE,
-    .var.name = target)
-}
-
-fixupData.RegrTask = function(task, target, choice, ...) {
-  NextMethod("fixupData")
-  x = task$env$data[[target]]
-  if (is.integer(x))
-    task$env$data[[target]] = as.numeric(x)
+  addClasses(task, "RegrTask")
 }
 
 makeTaskDesc.RegrTask = function(task, id, target) {

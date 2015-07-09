@@ -17,12 +17,12 @@ test_that("checkData", {
   expect_error(makeRegrTask(data = df, target = regr.target), "be finite")
   df = regr.df
   df[1, getTaskFeatureNames(regr.task)[1]] = Inf
-  expect_error(makeRegrTask(data = df, target = regr.target), "Data contains infinite")
+  expect_error(makeRegrTask(data = df, target = regr.target), "infinite")
 
   # data contains nans
   df = regr.df
   df[1, getTaskFeatureNames(regr.task)[1]] = NaN
-  expect_error(makeRegrTask(data = df, target = regr.target), "Data contains NaN")
+  expect_error(makeRegrTask(data = df, target = regr.target), "contains NaN")
 
   # check conversion of target
   df = binaryclass.df
@@ -44,5 +44,5 @@ test_that("checkData", {
   df = multiclass.df
   df[, 1] = as.logical(df[,1])
   colnames(df)[1] = "aaa"
-  expect_error(makeClassifTask(data = df, target = multiclass.target), "Unsupported feature type in: aaa, logical")
+  expect_error(makeClassifTask(data = df, target = multiclass.target), "Unsupported feature type")
 })
