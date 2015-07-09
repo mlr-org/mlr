@@ -13,11 +13,12 @@ test_that("UnsupervisedTask", {
   df[1,1:3] = NA
   df[2,1:3] = NA
   ct = makeClusterTask(data = df)
-  expect_true(ct$task.desc$has.missings)
+  td = getTaskDescription(ct)
+  expect_true(td$has.missings)
 
   # check that blocking is still there after subsetting
   ct1 = makeClusterTask(data = noclass.df, blocking = as.factor(1:nrow(noclass.df)))
-  expect_true(ct1$task.desc$has.blocking)
+  expect_true(getTaskDescription(ct1)$has.blocking)
   ct2 = subsetTask(ct1)
-  expect_true(ct2$task.desc$has.blocking)
+  expect_true(getTaskDescription(ct2)$has.blocking)
 })

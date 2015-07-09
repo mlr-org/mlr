@@ -10,7 +10,7 @@ test_that("convertMLbenchObjToTask", {
     expect_is(task, "Task")
     # for some, n is not properly respected in mlbench
     if (f %nin% c("mlbench.corners", "mlbench.hypercube", "mlbench.simplex"))
-      expect_equal(task$task.desc$size, n)
+      expect_equal(getTaskSize(task), n)
   }
 
   # get all mlbench datasets, HouseVotes84 and Ozone have NAs in target col

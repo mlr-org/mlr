@@ -1,7 +1,7 @@
 context("WeightedClassesWrapper")
 
 test_that("WeightedClassesWrapper, binary",  {
-  pos = binaryclass.task$task.desc$positive
+  pos = getTaskDescription(binaryclass.task)$positive
   f = function(lrn, w) {
     lrn1 = makeLearner(lrn)
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
@@ -25,7 +25,7 @@ test_that("WeightedClassesWrapper, binary",  {
 })
 
 test_that("WeightedClassesWrapper, multiclass",  {
-  levs = multiclass.task$task.desc$class.levels
+  levs = getTaskClassLevels(multiclass.task)
   f = function(lrn, w) {
     lrn1 = makeLearner(lrn)
     param = lrn1$class.weights.param

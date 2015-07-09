@@ -49,7 +49,7 @@ test_that("setting 'when' works for hyperpars", {
   m = train(lrn, regr.task)
   expect_equal(m$learner.model, list(foo = 1 + 3))
   p = predict(m, regr.task)
-  expect_equal(p$data$response, rep(1+2+2*3, regr.task$task.desc$size))
+  expect_equal(p$data$response, rep(1+2+2*3, getTaskSize(regr.task)))
 })
 
 

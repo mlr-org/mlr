@@ -1,6 +1,6 @@
 context("prediction operators")
 
-mypredict = function(task) predict(train(sprintf("%s.rpart", task$task.desc$type), task), task)
+mypredict = function(task) predict(train(sprintf("%s.rpart", getTaskType(task)), task), task)
 classif.pred = mypredict(binaryclass.task)
 regr.pred = mypredict(regr.task)
 surv.pred = mypredict(surv.task)

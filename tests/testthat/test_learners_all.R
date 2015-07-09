@@ -113,7 +113,7 @@ test_that("learners work", {
   lrns = lapply(lrns, makeLearner)
   lapply(lrns, function(lrn) {
     lrn = fixHyperPars(lrn)
-    m = train(lrn, task, weights = 1:task$task.desc$size)
+    m = train(lrn, task, weights = 1:getTaskSize(task))
     p = predict(m, task)
     expect_true(!is.na(performance(p)))
   })
@@ -230,7 +230,7 @@ test_that("learners work", {
 })
 
 test_that("weightedClassWrapper on all binary learners",  {
-  pos = binaryclass.task$task.desc$positive
+  pos = getTaskDescription(binaryclass.task)$positive
   f = function(lrn, w) {
     lrn1 = makeLearner(lrn)
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
@@ -250,7 +250,7 @@ test_that("weightedClassWrapper on all binary learners",  {
 })
 
 test_that("WeightedClassWrapper on all multiclass learners",  {
-  levs = multiclass.task$task.desc$class.levels
+  levs = getTaskClassLevels(multiclass.task)
   f = function(lrn, w) {
     lrn1 = makeLearner(lrn)
     param = lrn1$class.weights.param
