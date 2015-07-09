@@ -1,6 +1,6 @@
 ![mlr](http://mlr-org.github.io/mlr-tutorial/images/mlrLogo_blue_141x64.png): Machine Learning in R
 ==========================
-[![Build Status](https://travis-ci.org/berndbischl/mlr.svg?branch=master)](https://travis-ci.org/berndbischl/mlr)
+[![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/mlr)](http://cran.r-project.org/web/packages/mlr)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/mlr)](http://cran.rstudio.com/web/packages/mlr/index.html)
 
@@ -12,7 +12,7 @@
 * Install the development version
 
     ```splus
-    devtools::install_github("berndbischl/mlr")
+    devtools::install_github("mlr-org/mlr")
     ```
 * [Further installation instructions](https://github.com/tudo-r/PackagesInfo/wiki/Installation-Information)
 
@@ -68,7 +68,7 @@ News
 ====
 Most NEWS regarding extensions and changes of the packages can be accessed here for the
 [release](http://cran.r-project.org/web/packages/mlr/NEWS) and here for the
-[devel](https://github.com/berndbischl/mlr/blob/master/NEWS) version on Github.
+[devel](https://github.com/mlr-org/mlr/blob/master/NEWS) version on Github.
 
 * 2015-06-27:
   * Zach M Jones is doing great work in his current GSOC project to improve **mlr's visualization system** to explore models and data. Some of this is already in 2.4, much more is to come in upcoming 2.5. Here are some general remarks.
@@ -111,8 +111,8 @@ We also do not hate beginners and it is perfectly valid to mark a issue as "Ques
 Please don't forget that all of us work in academia and put a lot of work into this project, simply because we like it, not because we are specifically paid for it.
 
 We also welcome pull requests or new developers.
-To get started have a look at the [guidelines for contributors](https://github.com/berndbischl/mlr/wiki/Setup-and-Contribution-Guidelines).
-Please also consider the [**mlr** coding guidelines](https://github.com/berndbischl/mlr/wiki/mlr-Coding-Guidelines).
+To get started have a look at the [guidelines for contributors](https://github.com/mlr-org/mlr/wiki/Setup-and-Contribution-Guidelines).
+Please also consider the [**mlr** coding guidelines](https://github.com/mlr-org/mlr/wiki/mlr-Coding-Guidelines).
 
 For everything else the maintainer Bernd Bischl can be reached here: bernd_bischl@gmx.net.
 He (=me) is sometimes busy, so please use the other channels for appropriate stuff first, so you get quicker responses ;-)
