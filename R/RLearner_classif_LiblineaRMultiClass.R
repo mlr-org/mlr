@@ -13,7 +13,8 @@ makeRLearner.classif.LiblineaRMultiClass = function() {
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(type = 4),
-    properties = c("twoclass", "multiclass", "numerics"),
+    properties = c("twoclass", "multiclass", "numerics", "class.weights"),
+    class.weights.param = "wi",
     name = "Multi-class Support Vector Classification by Crammer and Singer",
     short.name = "mcsvc",
     note = "This model is type 4."

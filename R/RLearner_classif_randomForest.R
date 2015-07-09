@@ -18,7 +18,8 @@ makeRLearner.classif.randomForest = function() {
       makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob", "class.weights"),
+    class.weights.param = "classwt",
     name = "Random Forest",
     short.name = "rf"
     )

@@ -13,7 +13,8 @@ makeRLearner.classif.LiblineaRBinary = function() {
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
-    properties = c("twoclass", "numerics"),
+    properties = c("twoclass", "numerics", "class.weights"),
+    class.weights.param = "wi",
     name = "Regularized Binary Linear Predictive Models Estimation",
     short.name = "liblinearbinary",
     note = "This model subsumes the types 1,2,3,5."
