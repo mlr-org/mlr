@@ -22,6 +22,9 @@ mlr_2.5:
   instead of only 'id' which corresponded to the measure. Also, 'name' and note (corresponding to the measure)
   as well as 'aggregation.name' have been added.
 - makeCostMeasure now has arguments 'name' and 'id'.
+- classification learner now can have a property 'class.weights', supported by 'class.weights.param'. The latter
+  indicates which of the parameters provides that class weights information to the learner.
+- class weights integrated in the learner will be used as default for 'wcw.param' in 'makeWeightedClassesWrapper'
 
 - new functions
 -- getDefaultMeasure
