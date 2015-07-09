@@ -4,7 +4,7 @@
 \alias{getTaskId}
 \title{Get the id of the task.}
 \usage{
-getTaskId(task)
+getTaskId(x)
 }
 \arguments{
 \item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr

@@ -4,7 +4,7 @@
 \alias{getTaskClassLevels}
 \title{Get the class levels for classification and multilabel tasks.}
 \usage{
-getTaskClassLevels(task)
+getTaskClassLevels(x)
 }
 \arguments{
 \item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr

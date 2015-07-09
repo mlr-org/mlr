@@ -4,7 +4,7 @@
 \alias{getTaskType}
 \title{Get the type of the task.}
 \usage{
-getTaskType(task)
+getTaskType(x)
 }
 \arguments{
 \item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr

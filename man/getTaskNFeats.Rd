@@ -4,7 +4,7 @@
 \alias{getTaskNFeats}
 \title{Get number of features in task.}
 \usage{
-getTaskNFeats(task)
+getTaskNFeats(x)
 }
 \arguments{
 \item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr

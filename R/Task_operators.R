@@ -24,8 +24,8 @@ getTaskDescription.TaskDesc = function(x) {
 #' @return [\code{character(1)}].
 #' @export
 #' @family task
-getTaskType = function(task) {
-  getTaskDescription(task)$type
+getTaskType = function(x) {
+  getTaskDescription(x)$type
 }
 
 #' Get the id of the task.
@@ -34,8 +34,8 @@ getTaskType = function(task) {
 #' @return [\code{character(1)}].
 #' @export
 #' @family task
-getTaskId = function(task) {
-  getTaskDescription(task)$id
+getTaskId = function(x) {
+  getTaskDescription(x)$id
 }
 
 #' Get the name(s) of the target column(s).
@@ -44,22 +44,22 @@ getTaskId = function(task) {
 #' @return [\code{character}].
 #' @export
 #' @family task
-getTaskTargetNames = function(task) {
+getTaskTargetNames = function(x) {
   UseMethod("getTaskTargetNames")
 }
 
 #' @export
-getTaskTargetNames.Task = function(task) {
-  getTaskTargetNames(getTaskDescription(task))
+getTaskTargetNames.Task = function(x) {
+  getTaskTargetNames(getTaskDescription(x))
 }
 
 #' @export
-getTaskTargetNames.TaskDescSupervised = function(task) {
-  task$target
+getTaskTargetNames.TaskDescSupervised = function(x) {
+  x$target
 }
 
 #' @export
-getTaskTargetNames.TaskDescUnsupervised = function(task) {
+getTaskTargetNames.TaskDescUnsupervised = function(x) {
   character(0L)
 }
 
@@ -69,23 +69,23 @@ getTaskTargetNames.TaskDescUnsupervised = function(task) {
 #' @return [\code{character}].
 #' @export
 #' @family task
-getTaskClassLevels = function(task) {
+getTaskClassLevels = function(x) {
   UseMethod("getTaskClassLevels")
 }
 
 #' @export
-getTaskClassLevels.Task = function(task) {
-  getTaskClassLevels(getTaskDescription(task))
+getTaskClassLevels.Task = function(x) {
+  getTaskClassLevels(getTaskDescription(x))
 }
 
 #' @export
-getTaskClassLevels.TaskDescClassif = function(task) {
-  getTaskDescription(task)$class.levels
+getTaskClassLevels.TaskDescClassif = function(x) {
+  getTaskDescription(x)$class.levels
 }
 
 #' @export
-getTaskClassLevels.TaskDescMultilabel = function(task) {
-  getTaskDescription(task)$class.levels
+getTaskClassLevels.TaskDescMultilabel = function(x) {
+  getTaskDescription(x)$class.levels
 }
 
 #' Get feature names of task.
@@ -106,8 +106,8 @@ getTaskFeatureNames = function(task) {
 #' @return [\code{integer(1)}].
 #' @export
 #' @family task
-getTaskNFeats = function(task) {
-  sum(getTaskDescription(task)$n.feat)
+getTaskNFeats = function(x) {
+  sum(getTaskDescription(x)$n.feat)
 }
 
 #' Get number of observations in task.
@@ -116,8 +116,8 @@ getTaskNFeats = function(task) {
 #' @return [\code{integer(1)}].
 #' @export
 #' @family task
-getTaskSize = function(task) {
-  getTaskDescription(task)$size
+getTaskSize = function(x) {
+  getTaskDescription(x)$size
 }
 
 #' Get formula of a task.

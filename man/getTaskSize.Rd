@@ -4,7 +4,7 @@
 \alias{getTaskSize}
 \title{Get number of observations in task.}
 \usage{
-getTaskSize(task)
+getTaskSize(x)
 }
 \arguments{
 \item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
