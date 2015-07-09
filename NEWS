@@ -34,6 +34,7 @@ mlr_2.5:
 -- getBMRLearners, getBMRMeasures, getBMRMeasureIds
 -- makeMultilabelTask, makeMultilabelWrapper
 -- generatePartialPredictionData, plotPartialPrediction, and plotPartialPredictionGGVIS
+-- getClassWeightParam
 
 - new measures
 -- hamloss
