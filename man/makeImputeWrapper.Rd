@@ -72,6 +72,7 @@ Other wrapper: \code{\link{CostSensClassifModel}},
   \code{\link{makeFeatSelWrapper}};
   \code{\link{makeFilterWrapper}};
   \code{\link{makeMulticlassWrapper}};
+  \code{\link{makeMultilabelBinaryRelevanceWrapper}};
   \code{\link{makeOverBaggingWrapper}};
   \code{\link{makeOversampleWrapper}},
   \code{\link{makeUndersampleWrapper}};

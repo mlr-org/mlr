@@ -4,15 +4,11 @@
 \alias{getTaskTargets}
 \title{Get target column of task.}
 \usage{
-getTaskTargets(task, subset, recode.target = "no")
+getTaskTargets(task, recode.target = "no")
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
 The task.}
-
-\item{subset}{[\code{integer}]\cr
-Selected cases.
-Default is all cases.}
 
 \item{recode.target}{[\code{character(1)}] \cr
 Should target classes be recoded? Only for binary classification.
@@ -30,7 +26,6 @@ Get target column of task.
 \examples{
 task = makeClassifTask(data = iris, target = "Species")
 getTaskTargets(task)
-getTaskTargets(task, subset = 1:50)
 }
 \seealso{
 Other task: \code{\link{getTaskClassLevels}};

@@ -38,6 +38,7 @@ Other wrapper: \code{\link{CostSensClassifModel}},
   \code{\link{makeFilterWrapper}};
   \code{\link{makeImputeWrapper}};
   \code{\link{makeMulticlassWrapper}};
+  \code{\link{makeMultilabelBinaryRelevanceWrapper}};
   \code{\link{makeOverBaggingWrapper}};
   \code{\link{makeOversampleWrapper}},
   \code{\link{makeUndersampleWrapper}};

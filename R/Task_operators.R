@@ -180,16 +180,20 @@ getTaskTargets = function(task, recode.target = "no") {
   UseMethod(("getTaskTargets"))
 }
 
+#' @export
 getTaskTargets.SupervisedTask = function(task, recode.target = "no") {
   y = task$env$data[, task$task.desc$target, drop = TRUE]
   recodeY(y, recode.target, task$task.desc)
 }
 
+#' @export
 getTaskTargets.UnsupervisedTask = function(task, recode.target = "no") {
-    stop("There is no target available for unsupervised tasks.")
+  stop("There is no target available for unsupervised tasks.")
 }
 
+#' @export
 getTaskTargets.CostSensTask = function(task, recode.target = "no") {
+  stop("There is no target available for costsens tasks.")
 }
 
 

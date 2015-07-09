@@ -16,23 +16,26 @@
 \title{Create a classification, regression, survival, cluster, cost-sensitive classification or
 multilabel task.}
 \usage{
-makeClassifTask(id, data, target, weights = NULL, blocking = NULL,
-  positive = NA_character_, fixup.data = "warn", check.data = TRUE)
-
-makeClusterTask(id, data, weights = NULL, blocking = NULL,
+makeClassifTask(id = deparse(substitute(data)), data, target,
+  weights = NULL, blocking = NULL, positive = NA_character_,
   fixup.data = "warn", check.data = TRUE)
 
-makeCostSensTask(id, data, costs, blocking = NULL, fixup.data = "warn",
-  check.data = TRUE)
-
-makeMultilabelTask(id, data, target, weights = NULL, blocking = NULL,
-  positive = NA_character_, fixup.data = "warn", check.data = TRUE)
-
-makeRegrTask(id, data, target, weights = NULL, blocking = NULL,
-  fixup.data = "warn", check.data = TRUE)
-
-makeSurvTask(id, data, target, censoring = "rcens", weights = NULL,
+makeClusterTask(id = deparse(substitute(data)), data, weights = NULL,
   blocking = NULL, fixup.data = "warn", check.data = TRUE)
+
+makeCostSensTask(id = deparse(substitute(data)), data, costs,
+  blocking = NULL, fixup.data = "warn", check.data = TRUE)
+
+makeMultilabelTask(id = deparse(substitute(data)), data, target,
+  weights = NULL, blocking = NULL, positive = NA_character_,
+  fixup.data = "warn", check.data = TRUE)
+
+makeRegrTask(id = deparse(substitute(data)), data, target, weights = NULL,
+  blocking = NULL, fixup.data = "warn", check.data = TRUE)
+
+makeSurvTask(id = deparse(substitute(data)), data, target,
+  censoring = "rcens", weights = NULL, blocking = NULL,
+  fixup.data = "warn", check.data = TRUE)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
