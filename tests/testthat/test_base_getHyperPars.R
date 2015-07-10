@@ -14,8 +14,8 @@ test_that("getHyperPars", {
   expect_true(setequal(names(getHyperPars(lrn)), c("classif.rpart.xval", "selected.learner")))
 
   lrn = makeLearner("multilabel.rFerns")
-  expect_true(setequal(getHyperPars(lrn), list(xval = 0)))
+  expect_true(setequal(getHyperPars(lrn), list()))
 
   lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")  
-  expect_true(setequal(getHyperPars(lrn), list(xval = 0)))
+  expect_true(setequal(getHyperPars(lrn), list()))
 })
