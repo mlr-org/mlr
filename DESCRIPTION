@@ -96,6 +96,7 @@ Suggests:
     party,
     penalized,
     pls,
+    PMCMR,
     pROC (>= 1.8),
     randomForest,
     randomForestSRC (>= 1.6.1),

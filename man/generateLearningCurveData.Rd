@@ -50,9 +50,12 @@ show.info = FALSE)
 plotLearningCurve(r)
 }
 \seealso{
-Other generate_plot_data: \code{\link{generateFilterValuesData}};
+Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}};
+  \code{\link{generateCritDifferencesData}};
+  \code{\link{generateFilterValuesData}};
   \code{\link{generatePartialPredictionData}};
   \code{\link{generateROCRCurvesData}};
+  \code{\link{generateRankMatrixAsBarData}};
   \code{\link{generateThreshVsPerfData}};
   \code{\link{getFilterValues}}
 

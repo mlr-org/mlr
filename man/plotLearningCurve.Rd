@@ -30,13 +30,17 @@ Visualizes data size (percentage used for model) vs. performance measure(s).
 Other learning_curve: \code{\link{generateLearningCurveData}};
   \code{\link{plotLearningCurveGGVIS}}
 
-Other plot: \code{\link{plotFilterValuesGGVIS}};
+Other plot: \code{\link{plotBenchmarkResult}};
+  \code{\link{plotBenchmarkSummary}};
+  \code{\link{plotCritDifferences}};
+  \code{\link{plotFilterValuesGGVIS}};
   \code{\link{plotFilterValues}};
   \code{\link{plotLearningCurveGGVIS}};
   \code{\link{plotPartialPredictionGGVIS}};
   \code{\link{plotPartialPrediction}};
   \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}};
+  \code{\link{plotRankMatrixAsBar}};
   \code{\link{plotThreshVsPerfGGVIS}};
   \code{\link{plotThreshVsPerf}}
 }

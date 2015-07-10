@@ -48,10 +48,13 @@ Other filter: \code{\link{FilterValues}};
   \code{\link{plotFilterValuesGGVIS}};
   \code{\link{plotFilterValues}}
 
-Other generate_plot_data: \code{\link{generateFilterValuesData}};
+Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}};
+  \code{\link{generateCritDifferencesData}};
+  \code{\link{generateFilterValuesData}};
   \code{\link{generateLearningCurveData}};
   \code{\link{generatePartialPredictionData}};
   \code{\link{generateROCRCurvesData}};
+  \code{\link{generateRankMatrixAsBarData}};
   \code{\link{generateThreshVsPerfData}}
 }
 

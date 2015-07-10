@@ -11,6 +11,12 @@ You can also convert the object using \code{\link[base]{as.data.frame}}.
 }
 \seealso{
 Other benchmark: \code{\link{benchmark}};
+  \code{\link{convertBMRToRankMatrix}};
+  \code{\link{friedmanPostHocTestBMR}};
+  \code{\link{friedmanTestBMR}};
+  \code{\link{generateBenchmarkSummaryData}};
+  \code{\link{generateCritDifferencesData}};
+  \code{\link{generateRankMatrixAsBarData}};
   \code{\link{getBMRAggrPerformances}};
   \code{\link{getBMRFeatSelResults}};
   \code{\link{getBMRFilteredFeatures}};
@@ -21,6 +27,10 @@ Other benchmark: \code{\link{benchmark}};
   \code{\link{getBMRPerformances}};
   \code{\link{getBMRPredictions}};
   \code{\link{getBMRTaskIds}};
-  \code{\link{getBMRTuneResults}}
+  \code{\link{getBMRTuneResults}};
+  \code{\link{plotBenchmarkResult}};
+  \code{\link{plotBenchmarkSummary}};
+  \code{\link{plotCritDifferences}};
+  \code{\link{plotRankMatrixAsBar}}
 }
 
