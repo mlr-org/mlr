@@ -37,9 +37,8 @@ makeTuneControlIrace(impute.val = NULL, n.instances = 100L,
   budget = NULL, ...)
 
 makeTuneControlRandom(same.resampling.instance = TRUE, maxit = 100L,
-  time.budget = NULL, exec.time.budget = NULL, tune.threshold = FALSE,
-  tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL,
-  budget = NULL)
+  tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL,
+  final.dw.perc = NULL, budget = NULL)
 }
 \arguments{
 \item{same.resampling.instance}{[\code{logical(1)}]\cr
@@ -127,14 +126,6 @@ Default is \code{FALSE}.}
 \item{maxit}{[\code{integer(1)} | NULL]\cr
 Number of iterations for random search.
 Default is 100.}
-
-\item{time.budget}{[\code{integer(1)} | NULL]\cr
-Running time budget in seconds. Note that the actual mbo run can take more time since
-the condition is checked after each iteration.}
-
-\item{exec.time.budget}{[\code{integer(1)} | NULL]\cr
-Execution time (time spent executing the function passed to \code{mbo}) budget in seconds. Note that the actual mbo run can take more time since
-the condition is checked after each iteration.}
 }
 \value{
 [\code{\link{TuneControl}}]. The specific subclass is one of
