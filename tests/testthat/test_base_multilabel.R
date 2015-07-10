@@ -15,6 +15,17 @@ test_that("multilabel", {
   # resample
   r = holdout(lrn, multilabel.task)
   expect_true(!is.na(r$aggr))
+  # Learner with Impute-Preprocessing
+  lrn = makeImputeWrapper(lrn, classes = list(integer = imputeMedian(), numeric = imputeMedian(), factor = imputeConstant("Const")))
+  multilabel.df2 = multilabel.df
+  multilabel.df2[c(2,10,14), c(1,5)] = NA
+  multilabel.task2 = makeMultilabelTask("multilabel", data = multilabel.df2, target = multilabel.target)
+  mod = train(lrn, multilabel.task2)
+  pred = predict(mod, multilabel.task2) 
+  # Learner with Hyperparameters
+  lrn = makeLearner("multilabel.rFerns", par.vals = list(depth=6, ferns=100))
+  mod = train(lrn, multilabel.task)
+  pred = predict(mod, multilabel.task) 
 })
 
 
@@ -60,6 +71,20 @@ test_that("MultilabelBinaryRelevanceWrapper", {
   tr = tuneThreshold(r$pred, nsub = 2L, control= list(maxit = 2L))
   expect_true(!is.na(tr$perf))
   expect_equal(length(tr$th), length(getTaskClassLevels(multilabel.task)))
+  # Learner with Impute-Preprocessing
+  lrn1 = makeLearner("classif.rpart")
+  lrn2 = makeMultilabelBinaryRelevanceWrapper(lrn1)
+  lrn2 = makeImputeWrapper(lrn2, classes = list(integer = imputeMedian(), numeric = imputeMedian(), factor = imputeConstant("Const")))
+  multilabel.df2 = multilabel.df
+  multilabel.df2[c(2,10,14), c(1,5)] = NA
+  multilabel.task2 = makeMultilabelTask("multilabel", data = multilabel.df2, target = multilabel.target)
+  mod = train(lrn2, multilabel.task2)
+  pred = predict(mod, multilabel.task2) 
+  # Learner with Hyperparameters
+  lrn1 = makeLearner("classif.rpart", par.vals = list(minsplit = 10, cp = 0.005))
+  lrn2 = makeMultilabelBinaryRelevanceWrapper(lrn1)
+  mod = train(lrn2, multilabel.task)
+  pred = predict(mod, multilabel.task) 
 })
 
 

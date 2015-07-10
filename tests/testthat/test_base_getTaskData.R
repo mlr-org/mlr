@@ -56,3 +56,23 @@ test_that("getTaskData survival", {
   expect_true(is.Surv(x$target))
   expect_equal(dim(x$target), c(150L, 2L))
 })
+
+test_that("getTaskData multilabel", {
+  df = getTaskData(multilabel.task)
+  expect_equal(df, multilabel.df)
+  cn = colnames(multilabel.df)[3:4]
+  df = getTaskData(multilabel.task, subset=1:10, features=cn)
+  expect_equal(df, multilabel.df[1:10, union(cn, multilabel.target)])
+  
+  x = getTaskData(multilabel.task, target.extra=TRUE)
+  expect_true(setequal(names(x), c("data", "target")))
+  expect_true(is.data.frame(x$data))
+  expect_true(is.data.frame(x$target))
+  expect_equal(dim(x$data), c(150L, 5L))
+  expect_equal(dim(x$target), c(150L, 2L))
+  expect_equal(names(x$target), multilabel.target)
+  expect_true(setequal(names(x$data), setdiff(names(multilabel.df), multilabel.target)))
+  
+  x = getTaskData(multilabel.task, target.extra=TRUE)
+  expect_equal(dim(x$target), c(150L, 2L))
+})

@@ -12,4 +12,10 @@ test_that("getHyperPars", {
 
   lrn = makeModelMultiplexer(list("classif.rpart", "classif.lda"))
   expect_true(setequal(names(getHyperPars(lrn)), c("classif.rpart.xval", "selected.learner")))
+
+  lrn = makeLearner("multilabel.rFerns")
+  expect_true(setequal(getHyperPars(lrn), list(xval = 0)))
+
+  lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")  
+  expect_true(setequal(getHyperPars(lrn), list(xval = 0)))
 })
