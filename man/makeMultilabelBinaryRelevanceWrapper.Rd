@@ -21,17 +21,18 @@ The multilabel classification problem is converted into simple binary classifica
 for each label/target on which the binary learner is applied.
 }
 \examples{
-data = cbind(iris,
-  y1 = sample(c(TRUE, FALSE), 150, replace = TRUE),
-  y2 = sample(c(TRUE, FALSE), 150, replace = TRUE))
-multilabel.task = makeMultilabelTask(id = "multi", data = data[-c(1:10),], target = c("y1", "y2"))
 lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")
 # train, predict and evaluate
-mod = train(lrn, multilabel.task)
-pred = predict(mod, multilabel.task)
+mod = train(lrn, yeast.task)
+pred = predict(mod, yeast.task)
 p = performance(pred)
 # with newdata
-pred = predict(mod, newdata = data[1:10,])
+pred = predict(mod, newdata = yeast[1:10,])
+}
+\references{
+Tsoumakas, G., & Katakis, I. (2006)
+\emph{Multi-label classification: An overview.}
+Dept. of Informatics, Aristotle University of Thessaloniki, Greece.
 }
 \seealso{
 Other wrapper: \code{\link{CostSensClassifModel}},
