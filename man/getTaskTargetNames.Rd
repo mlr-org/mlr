@@ -4,11 +4,11 @@
 \alias{getTaskTargetNames}
 \title{Get the name(s) of the target column(s).}
 \usage{
-getTaskTargetNames(task)
+getTaskTargetNames(x)
 }
 \arguments{
-\item{task}{[\code{\link{Task}}]\cr
-The task.}
+\item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
+Task or its description object.}
 }
 \value{
 [\code{character}].
@@ -17,14 +17,13 @@ The task.}
 Get the name(s) of the target column(s).
 }
 \seealso{
-Other task: \code{\link{getTaskCosts}};
-  \code{\link{getTaskData}};
+Other task: \code{\link{getTaskClassLevels}};
+  \code{\link{getTaskCosts}}; \code{\link{getTaskData}};
   \code{\link{getTaskDescription}};
   \code{\link{getTaskFeatureNames}};
-  \code{\link{getTaskFormula}},
-  \code{\link{getTaskFormulaAsString}};
-  \code{\link{getTaskId}}; \code{\link{getTaskNFeats}};
-  \code{\link{getTaskSize}}; \code{\link{getTaskTargets}};
-  \code{\link{getTaskType}}; \code{\link{subsetTask}}
+  \code{\link{getTaskFormula}}; \code{\link{getTaskId}};
+  \code{\link{getTaskNFeats}}; \code{\link{getTaskSize}};
+  \code{\link{getTaskTargets}}; \code{\link{getTaskType}};
+  \code{\link{subsetTask}}
 }
 

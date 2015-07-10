@@ -1,27 +1,16 @@
+makeSupervisedTask = function(type, data, target, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
+  task = makeTask(type = type, data = data, weights = weights, blocking = blocking, fixup.data = fixup.data, check.data = check.data)
 
-makeSupervisedTask = function(type, data, target, weights = NULL, blocking = NULL) {
-  env = new.env(parent = emptyenv())
-  assertDataFrame(data)
-  env$data = data
-  makeS3Obj(c("SupervisedTask", "Task"),
-    env = env,
-    weights = weights,
-    blocking = blocking,
-    task.desc = NA
-  )
-}
+  if (check.data) {
+    # costsens does not have a target col...
+    # assertCharacter(target, any.missing = FALSE, min.len = 1L)
+    w = which.first(target %nin% colnames(data))
+    if (length(w) > 0L)
+      stopf("Column names of data doesn't contain target var: %s", target[w])
+    checkTaskData(task$env$data, cols = setdiff(colnames(data), target))
+  }
 
-#FIXME: it would probably be better to have: pre-check, fixup, post-check!
-
-checkTaskCreation.SupervisedTask = function(task, target, ...) {
-  w = which.first(target %nin% colnames(task$env$data))
-  if (length(w) > 0L)
-    stopf("Column names of data doesn't contain target var: %s", target[w])
-  NextMethod("checkTaskCreation")
-}
-
-fixupData.SupervisedTask = function(task, target, choice, ...) {
-  NextMethod("fixupData")
+  addClasses(task, "SupervisedTask")
 }
 
 #' @export

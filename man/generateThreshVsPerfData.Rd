@@ -14,7 +14,8 @@ name the list with the names you want to see in the plots, probably
 learner shortnames or ids.}
 
 \item{measures}{[\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
-Performance measure(s) to evaluate.}
+Performance measure(s) to evaluate.
+Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
 
 \item{gridsize}{[\code{integer(1)}]\cr
 Grid resolution for x-axis (threshold).

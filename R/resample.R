@@ -90,7 +90,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
   if (!is.null(weights)) {
     more.args$weights = weights
   } else if (!is.null(getTaskWeights(task))) {
-    more.args$weights = task$weights
+    more.args$weights = getTaskWeights(task)
   }
   parallelLibrary("mlr", master = FALSE, level = "mlr.resample", show.info = FALSE)
   exportMlrOptions(level = "mlr.resample")

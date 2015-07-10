@@ -14,7 +14,7 @@ test_that("surv_glmboost", {
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     ctrl = mboost::boost_control(mstop = parset$mstop, nu = parset$nu)
-    f = getTaskFormula(surv.task, env=loadNamespace("survival"))
+    f = getTaskFormula(surv.task)
     pars = list(f, data = surv.train, control = ctrl, family = mboost::CoxPH())
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(mboost::glmboost, pars)

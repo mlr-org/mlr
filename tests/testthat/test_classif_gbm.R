@@ -13,7 +13,7 @@ test_that("classif_gbm", {
   old.probs.list = list()
 
   mydata = binaryclass.train
-  mydata[, binaryclass.target] = as.numeric(mydata[, binaryclass.target] ==  binaryclass.task$task.desc$positive)
+  mydata[, binaryclass.target] = as.numeric(mydata[, binaryclass.target] ==  getTaskDescription(binaryclass.task)$positive)
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     pars = list(binaryclass.formula, data = mydata, distribution = "bernoulli")

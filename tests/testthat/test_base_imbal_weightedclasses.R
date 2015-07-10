@@ -1,46 +1,56 @@
 context("WeightedClassesWrapper")
 
 test_that("WeightedClassesWrapper, binary",  {
-  pos = binaryclass.task$task.desc$positive
-  f = function(lrn, param = NULL, w) {
+  pos = getTaskDescription(binaryclass.task)$positive
+  f = function(lrn, w) {
     lrn1 = makeLearner(lrn)
-    lrn2 = makeWeightedClassesWrapper(lrn1, wcw.param = param, wcw.weight = w)
+    lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
     m = train(lrn2, binaryclass.task)
     p = predict(m, binaryclass.task)
     cm = getConfMatrix(p)
   }
-  cm1 = f("classif.rpart", NULL, 0.001)
-  cm2 = f("classif.rpart", NULL, 1)
-  cm3 = f("classif.rpart", NULL, 1000)
-  expect_true(all(cm1[, pos] < cm2[, pos]))
-  expect_true(all(cm2[, pos] < cm3[, pos]))
 
-  cm1 = f("classif.ksvm", "class.weights", 0.001)
-  cm2 = f("classif.ksvm", "class.weights", 1)
-  cm3 = f("classif.ksvm", "class.weights", 1000)
-  expect_true(all(cm1[, pos] < cm2[, pos]))
-  expect_true(all(cm2[, pos] < cm3[, pos]))
+  learners = paste("classif", c("ksvm", "LiblineaRBinary", "LiblineaRLogReg",
+    "LiblineaRMultiClass", "randomForest", "svm"), sep = ".")
+  x = lapply(learners, function(lrn) {
+    cm1 = f(lrn, 0.001)
+    cm2 = f(lrn, 1)
+    cm3 = f(lrn, 1000)
+    expect_true(all(cm1[, pos] <= cm2[, pos]))
+    expect_true(all(cm2[, pos] <= cm3[, pos]))
+  })
+
+  # check what happens, if no weights are provided
+  expect_error(f("classif.lda", 0.01))
 })
 
 test_that("WeightedClassesWrapper, multiclass",  {
-  levs = multiclass.task$task.desc$class.levels
-  f = function(w) {
-    lrn1 = makeLearner("classif.multinom")
+  levs = getTaskClassLevels(multiclass.task)
+  f = function(lrn, w) {
+    lrn1 = makeLearner(lrn)
+    param = lrn1$class.weights.param
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
     m = train(lrn2, multiclass.task)
     p = predict(m, multiclass.task)
     cm = getConfMatrix(p)
   }
-  cm0 = f(c(1, 1, 1))
-  cm1 = f(c(100000, 1, 1))
-  cm2 = f(c(1, 100000, 1))
-  cm3 = f(c(1, 1, 100000))
-  expect_true(all(cm0[, levs[1]] <= cm1[, levs[1]]))
-  expect_true(all(cm0[, levs[2]] <= cm2[, levs[2]]))
-  expect_true(all(cm0[, levs[3]] <= cm3[, levs[3]]))
-  expect_equal(sum(cm1[1:3, levs[1L]]), 150L)
-  expect_equal(sum(cm2[1:3, levs[2L]]), 150L)
-  expect_equal(sum(cm3[1:3, levs[3L]]), 150L)
+
+  learners = paste("classif", c("ksvm", "LiblineaRMultiClass", "randomForest",
+    "svm"), sep = ".")
+  x = lapply(learners, function(lrn) {
+    classes = getTaskFactorLevels(multiclass.task)[[multiclass.target]]
+    n = length(classes)
+    cm1 = f(lrn, setNames(object = c(10000, 1, 1), classes))
+    cm2 = f(lrn, setNames(object = c(1, 10000, 1), classes))
+    cm3 = f(lrn, setNames(object = c(1, 1, 10000), classes))
+    expect_true(all(cm1[, levs[1]] >= cm2[, levs[1]]))
+    expect_true(all(cm1[, levs[1]] >= cm3[, levs[1]]))
+    expect_true(all(cm2[, levs[2]] >= cm1[, levs[2]]))
+    expect_true(all(cm2[, levs[2]] >= cm3[, levs[2]]))
+    expect_true(all(cm3[, levs[3]] >= cm1[, levs[3]]))
+    expect_true(all(cm3[, levs[3]] >= cm2[, levs[3]]))
+  })
+
+  # check what happens, if no weights are provided
+  expect_error(f("classif.lda", setNames(object = c(1, 10000, 1), classes)))
 })
-
-

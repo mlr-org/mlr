@@ -37,9 +37,11 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{addProperties}}, \code{\link{hasProperties}},
   \code{\link{removeProperties}},
   \code{\link{setProperties}}; \code{\link{Learner}},
-  \code{\link{makeLearner}}; \code{\link{getHyperPars}};
-  \code{\link{getParamSet}}; \code{\link{removeHyperPars}};
-  \code{\link{setId}}; \code{\link{setPredictThreshold}};
+  \code{\link{makeLearner}};
+  \code{\link{getClassWeightParam}};
+  \code{\link{getHyperPars}}; \code{\link{getParamSet}};
+  \code{\link{removeHyperPars}}; \code{\link{setId}};
+  \code{\link{setPredictThreshold}};
   \code{\link{setPredictType}}
 }
 

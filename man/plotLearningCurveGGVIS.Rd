@@ -4,7 +4,7 @@
 \alias{plotLearningCurveGGVIS}
 \title{Plot learning curve data using ggvis.}
 \usage{
-plotLearningCurveGGVIS(obj, interaction = "measure")
+plotLearningCurveGGVIS(obj, interaction = "measure", pretty.names = TRUE)
 }
 \arguments{
 \item{obj}{[\code{LearningCurveData}]\cr
@@ -18,6 +18,10 @@ The variable not chosen is mapped to color if it has more than one unique value.
 Note that if there are multiple learners and multiple measures interactivity is
 necessary as ggvis does not currently support facetting or subplots.
 The default is \dQuote{measure}.}
+
+\item{pretty.names}{[\code{logical(1)}]\cr
+Whether to use the \code{\link{Measure}} name instead of the id in the plot.
+Default is \code{TRUE}.}
 }
 \value{
 a ggvis plot object.

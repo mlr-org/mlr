@@ -7,7 +7,7 @@
 #' The measure itself knows whether it wants to be minimized or maximized and for what tasks it is applicable.
 #'
 #' All supported measures can be found by \code{\link{listMeasures}} or as a table
-#' in the tutorial appendix: \url{http://berndbischl.github.io/mlr/tutorial/html/measures/}.
+#' in the tutorial appendix: \url{http://mlr-org.github.io/mlr-tutorial/release/html/measures/}.
 #'
 #' If you want a measure for a misclassification cost matrix, look at \code{\link{makeCostMeasure}}.
 #' If you want to implement your own measure, look at \code{\link{makeMeasure}}.

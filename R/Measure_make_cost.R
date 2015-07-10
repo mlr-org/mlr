@@ -21,12 +21,15 @@
 #' @template ret_measure
 #' @export
 #' @family performance
-makeCostMeasure = function(id = "costs", minimize = TRUE, costs, task, combine = mean, best = NULL, worst = NULL) {
+makeCostMeasure = function(id = "costs", minimize = TRUE, costs, task, combine = mean, best = NULL, worst = NULL,
+                           name = id, note = "") {
   assertString(id)
   assertFlag(minimize)
   assertMatrix(costs)
   assertClass(task, classes = "ClassifTask")
   assertFunction(combine)
+  assertString(name)
+  assertString(note)
 
   #check costs
   td = getTaskDescription(task)
@@ -54,6 +57,8 @@ makeCostMeasure = function(id = "costs", minimize = TRUE, costs, task, combine =
       }
       y = mapply(cc, as.character(pred$data$truth), as.character(r))
       combine(y)
-    }
+    },
+    name = name,
+    note = note
   )
 }

@@ -7,20 +7,21 @@ test_that("getTaskData", {
   expect_equal(df, multiclass.df[1:10, c(1:2, 5)])
 
   # recode.target
+  td = getTaskDescription(binaryclass.task)
   df = getTaskData(binaryclass.task, recode.target="01")
   expect_equal(df[, 1:20], binaryclass.df[, 1:20])
   expect_true(is.numeric(df[, binaryclass.target]))
   expect_equal(sum(df[, binaryclass.target] == 1),
-    sum(binaryclass.df[, binaryclass.target] == binaryclass.task$task.desc$positive))
+    sum(binaryclass.df[, binaryclass.target] == td$positive))
   expect_equal(sum(df[, binaryclass.target] == 0),
-    sum(binaryclass.df[, binaryclass.target] == binaryclass.task$task.desc$negative))
+    sum(binaryclass.df[, binaryclass.target] == td$negative))
   df = getTaskData(binaryclass.task, recode.target="-1+1")
   expect_equal(df[,1:20], binaryclass.df[, 1:20])
   expect_true(is.numeric(df[, binaryclass.target]))
   expect_equal(sum(df[, binaryclass.target] == 1),
-    sum(binaryclass.df[, binaryclass.target] == binaryclass.task$task.desc$positive))
+    sum(binaryclass.df[, binaryclass.target] == td$positive))
   expect_equal(sum(df[, binaryclass.target] == -1),
-    sum(binaryclass.df[, binaryclass.target] == binaryclass.task$task.desc$negative))
+    sum(binaryclass.df[, binaryclass.target] == td$negative))
 
   df = getTaskData(binaryclass.task, subset=1:150, features=colnames(binaryclass.df)[1:2])
   expect_equal(nrow(df), 150)

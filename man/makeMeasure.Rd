@@ -22,6 +22,7 @@ Set of measure properties. Some standard property names include:
 \describe{
   \item{classif}{Is the measure applicable for classification?}
   \item{classif.multi}{Is the measure applicable for multi-class classification?}
+  \item{multilabel}{Is the measure applicable for multilabel classification?}
   \item{regr}{Is the measure applicable for regression?}
   \item{surv}{Is the measure applicable for survival?}
   \item{costsens}{Is the measure applicable for cost-sensitive learning?}
@@ -58,7 +59,7 @@ Default is \code{Inf} or -\code{Inf}, depending on \code{minimize}.}
 Name of the measure. Default is \code{id}.}
 
 \item{note}{[\code{character}] \cr
-Description and additional notes for the learner. Default is \dQuote{}.}
+Description and additional notes for the measure. Default is \dQuote{}.}
 }
 \value{
 [\code{\link{Measure}}].

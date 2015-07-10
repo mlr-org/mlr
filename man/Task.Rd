@@ -16,23 +16,26 @@
 \title{Create a classification, regression, survival, cluster, cost-sensitive classification or
 multilabel task.}
 \usage{
-makeClassifTask(id, data, target, weights = NULL, blocking = NULL,
-  positive = NA_character_, fixup.data = "warn", check.data = TRUE)
-
-makeClusterTask(id, data, weights = NULL, blocking = NULL,
+makeClassifTask(id = deparse(substitute(data)), data, target,
+  weights = NULL, blocking = NULL, positive = NA_character_,
   fixup.data = "warn", check.data = TRUE)
 
-makeCostSensTask(id, data, costs, blocking = NULL, fixup.data = "warn",
-  check.data = TRUE)
-
-makeMultilabelTask(id, data, target, weights = NULL, blocking = NULL,
-  positive = NA_character_, fixup.data = "warn", check.data = TRUE)
-
-makeRegrTask(id, data, target, weights = NULL, blocking = NULL,
-  fixup.data = "warn", check.data = TRUE)
-
-makeSurvTask(id, data, target, censoring = "rcens", weights = NULL,
+makeClusterTask(id = deparse(substitute(data)), data, weights = NULL,
   blocking = NULL, fixup.data = "warn", check.data = TRUE)
+
+makeCostSensTask(id = deparse(substitute(data)), data, costs,
+  blocking = NULL, fixup.data = "warn", check.data = TRUE)
+
+makeMultilabelTask(id = deparse(substitute(data)), data, target,
+  weights = NULL, blocking = NULL, positive = NA_character_,
+  fixup.data = "warn", check.data = TRUE)
+
+makeRegrTask(id = deparse(substitute(data)), data, target, weights = NULL,
+  blocking = NULL, fixup.data = "warn", check.data = TRUE)
+
+makeSurvTask(id = deparse(substitute(data)), data, target,
+  censoring = "rcens", weights = NULL, blocking = NULL,
+  fixup.data = "warn", check.data = TRUE)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -101,8 +104,10 @@ The task encapsulates the data and specifies - through its subclasses -
 the type of the task.
 It also contains a description object detailing further aspects of the data.
 
-Useful operators are: \code{\link{getTaskFormula}}, \code{\link{getTaskFormulaAsString}},
-\code{\link{getTaskFeatureNames}}, \code{\link{getTaskData}}, \code{\link{getTaskTargets}},
+Useful operators are: \code{\link{getTaskFormula}},
+\code{\link{getTaskFeatureNames}},
+\code{\link{getTaskData}},
+\code{\link{getTaskTargets}}, and
 \code{\link{subsetTask}}.
 
 Object members:

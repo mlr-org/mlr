@@ -32,7 +32,7 @@ trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL,
   family = do.call(get(family, mode = "function", envir = loadNamespace("mboost")), list())
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
   if (use.formula) {
-    f = getTaskFormula(.task, env = loadNamespace("survival"))
+    f = getTaskFormula(.task)
     model = if (is.null(.weights)) {
       mboost::glmboost(f, data = getTaskData(.task, subset = .subset, recode.target = "rcens"), control = ctrl, family = family, ...)
     } else  {

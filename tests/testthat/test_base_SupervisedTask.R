@@ -3,21 +3,22 @@ context("SupervisedTask")
 test_that("SupervisedTask", {
   ct1 = multiclass.task
 
-  expect_equal(ct1$task.desc$target, "Species")
-  expect_equal(getTaskTargets(ct1), multiclass.df[,multiclass.target])
+  expect_equal(getTaskTargetNames(ct1), "Species")
+  expect_equal(getTaskTargets(ct1), multiclass.df[, multiclass.target])
 
   ct = binaryclass.task
-  pn = c(ct$task.desc$positive, ct$task.desc$negative)
-  expect_equal(sort(ct$task.desc$class.levels), sort(pn))
+  td = getTaskDescription(ct)
+  pn = c(td$positive, td$negative)
+  expect_true(setequal(getTaskClassLevels(ct), sort(pn)))
 
   ct2 = subsetTask(ct, subset = 1:150)
-  expect_equal(ct$task.desc$positive, ct2$task.desc$positive)
+  expect_equal(getTaskDescription(ct)$positive, getTaskDescription(ct2)$positive)
   ct2 = subsetTask(ct, subset = 1:150, features = colnames(binaryclass.df)[1:2])
-  expect_equal(ct2$task.desc$size, 150)
-  expect_equal(sum(ct2$task.desc$n.feat), 2)
+  expect_equal(getTaskSize(ct2), 150)
+  expect_equal(sum(getTaskNFeats(ct2)), 2)
   ct2 = subsetTask(ct, subset = 1:150, features = colnames(binaryclass.df)[1:2])
-  expect_equal(ct2$task.desc$size, 150)
-  expect_equal(sum(ct2$task.desc$n.feat), 2)
+  expect_equal(getTaskSize(ct2), 150)
+  expect_equal(sum(getTaskNFeats(ct2)), 2)
 
   # wrong data
   expect_error(makeClassifTask(data = 44, target = "y"), "'data.frame'")
@@ -34,13 +35,13 @@ test_that("SupervisedTask", {
   df[1,1:3] = NA
   df[2,1:3] = NA
   ct = makeClassifTask(data = df, target = multiclass.target)
-  expect_true(ct$task.desc$has.missings)
+  expect_true(getTaskDescription(ct)$has.missings)
 
   # check that blocking is still there after subsetting
   ct1 = makeClassifTask(data = multiclass.df, target = multiclass.target, blocking = as.factor(1:nrow(multiclass.df)))
-  expect_true(ct1$task.desc$has.blocking)
+  expect_true(getTaskDescription(ct1)$has.blocking)
   ct2 = subsetTask(ct1)
-  expect_true(ct2$task.desc$has.blocking)
+  expect_true(getTaskDescription(ct2)$has.blocking)
 })
 
 test_that("SupervisedTask dropping of levels works", {
@@ -59,6 +60,7 @@ test_that("SupervisedTask dropping of levels works", {
 
 test_that("SupervisedTask does not drop positive class", {
   data = iris[1:100, ]
-  expect_warning({task = makeClassifTask(data = data, target = "Species")}, "Empty factor levels")
-  expect_true(setequal(c(task$task.desc$positive, task$task.desc$negative), unique(data$Species)))
+  expect_warning({task = makeClassifTask(data = data, target = "Species")}, "empty factor levels")
+  td = getTaskDescription(task)
+  expect_true(setequal(c(td$positive, td$negative), unique(data$Species)))
 })

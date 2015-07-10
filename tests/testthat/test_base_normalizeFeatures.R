@@ -13,5 +13,5 @@ test_that("normalizeFeatures", {
 
   norm.task = normalizeFeatures(multiclass.task, method="range")
   expect_equal(norm.task$task.desc, multiclass.task$task.desc)
-  expect_equal(range(norm.task$env$data$Sepal.Width), c(0,1))
+  expect_equal(range(getTaskData(norm.task)$Sepal.Width), c(0,1))
 })

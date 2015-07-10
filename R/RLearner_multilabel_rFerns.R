@@ -22,6 +22,6 @@ trainLearner.multilabel.rFerns = function(.learner, .task, .subset, .weights = N
 
 #' @export
 predictLearner.multilabel.rFerns = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, .newdata, ...)
+  as.matrix(predict(.model$learner.model, .newdata, ...))
 }
 

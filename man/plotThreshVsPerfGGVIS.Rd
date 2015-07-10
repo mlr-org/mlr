@@ -4,7 +4,8 @@
 \alias{plotThreshVsPerfGGVIS}
 \title{Plot threshold vs. performance(s) for 2-class classification using ggvis.}
 \usage{
-plotThreshVsPerfGGVIS(obj, interaction = "measure", mark.th = NA_real_)
+plotThreshVsPerfGGVIS(obj, interaction = "measure", mark.th = NA_real_,
+  pretty.names = TRUE)
 }
 \arguments{
 \item{obj}{[\code{ThreshVsPerfData}]\cr
@@ -22,6 +23,10 @@ The default is \dQuote{measure}.}
 \item{mark.th}{[\code{numeric(1)}]\cr
 Mark given threshold with vertical line?
 Default is \code{NA} which means not to do it.}
+
+\item{pretty.names}{[\code{logical(1)}]\cr
+Whether to use the \code{\link{Measure}} name instead of the id in the plot.
+Default is \code{TRUE}.}
 }
 \value{
 a ggvis plot object.

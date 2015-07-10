@@ -12,17 +12,17 @@ The classification learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
 \item{wcw.param}{[\code{character(1)}]\cr
-Name of already existing learner param which allows class weighting.
-Or \code{NULL} if such a param does not exist.
-Must during training accept a named vector of class weights,
-where length equals the number of classes.
-Default is \code{NULL}.}
+Name of already existing learner parameter, which allows class weighting.
+The default (\code{wcw.param = NULL}) will use the parameter defined in
+the learner (\code{class.weights.param}). During training, the parameter
+must accept a named vector of class weights, where length equals the
+number of classes.}
 
 \item{wcw.weight}{[\code{numeric}]\cr
 Weight for each class.
 Must be a vector of the same number of elements as classes are in task,
 and must also be in the same order as the class levels are in
-\code{task$task.desc$class.levels}.
+\code{getTaskDescription(task)$class.levels}.
 For convenience, one must pass a single number in case of binary classification, which
 is then taken as the weight of the positive class, while the negative class receives a weight
 of 1.
@@ -54,8 +54,8 @@ We set this weight depending on the class internally in the wrapper. Basically w
 something like a new \dQuote{class.weights} parameter for the learner via observation weights.
 }
 \examples{
-# using the direct parameter of the SVM
-lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.param = "class.weights", wcw.weight = 0.01)
+# using the direct parameter of the SVM (which is already defined in the learner)
+lrn = makeWeightedClassesWrapper("classif.ksvm", wcw.weight = 0.01)
 res = holdout(lrn, sonar.task)
 print(getConfMatrix(res$pred))
 
@@ -90,6 +90,7 @@ Other wrapper: \code{\link{CostSensClassifModel}},
   \code{\link{makeFilterWrapper}};
   \code{\link{makeImputeWrapper}};
   \code{\link{makeMulticlassWrapper}};
+  \code{\link{makeMultilabelBinaryRelevanceWrapper}};
   \code{\link{makeOverBaggingWrapper}};
   \code{\link{makeOversampleWrapper}},
   \code{\link{makeUndersampleWrapper}};

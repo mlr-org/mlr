@@ -56,7 +56,8 @@ Resampling strategy.
 If a description is passed, it is instantiated automatically.}
 
 \item{measures}{[\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
-Performance measure(s) to evaluate.}
+Performance measure(s) to evaluate.
+Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
 
 \item{weights}{[\code{numeric}]\cr
 Optional, non-negative case weight vector to be used during fitting.

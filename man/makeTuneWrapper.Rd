@@ -20,7 +20,8 @@ If you want to change that behavior, look at \code{\link{TuneControl}}.}
 
 \item{measures}{[list of \code{\link{Measure}} | \code{\link{Measure}}]\cr
 Performance measures to evaluate. The first measure, aggregated by the first aggregation function
-is optimized, others are simply evaluated.}
+is optimized, others are simply evaluated.
+Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
 
 \item{par.set}{[\code{\link[ParamHelpers]{ParamSet}}]\cr
 Collection of parameters and their constraints for optimization.}
@@ -102,6 +103,7 @@ Other wrapper: \code{\link{CostSensClassifModel}},
   \code{\link{makeFilterWrapper}};
   \code{\link{makeImputeWrapper}};
   \code{\link{makeMulticlassWrapper}};
+  \code{\link{makeMultilabelBinaryRelevanceWrapper}};
   \code{\link{makeOverBaggingWrapper}};
   \code{\link{makeOversampleWrapper}},
   \code{\link{makeUndersampleWrapper}};

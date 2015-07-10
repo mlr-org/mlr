@@ -5,40 +5,87 @@
 #' @export
 #' @family task
 getTaskDescription = function(x) {
-  if (inherits(x, "TaskDesc"))
-    x
-  else
-    x$task.desc
+  UseMethod("getTaskDescription")
+}
+
+#' @export
+getTaskDescription.default = function(x) {
+  x$task.desc
+}
+
+#' @export
+getTaskDescription.TaskDesc = function(x) {
+  x
 }
 
 #' Get the type of the task.
 #'
-#' @template arg_task
+#' @template arg_task_or_desc
 #' @return [\code{character(1)}].
 #' @export
 #' @family task
-getTaskType = function(task) {
-  getTaskDescription(task)$type
+getTaskType = function(x) {
+  getTaskDescription(x)$type
 }
 
 #' Get the id of the task.
 #'
-#' @template arg_task
+#' @template arg_task_or_desc
 #' @return [\code{character(1)}].
 #' @export
 #' @family task
-getTaskId = function(task) {
-  getTaskDescription(task)$id
+getTaskId = function(x) {
+  getTaskDescription(x)$id
 }
 
 #' Get the name(s) of the target column(s).
 #'
-#' @template arg_task
+#' @template arg_task_or_desc
 #' @return [\code{character}].
 #' @export
 #' @family task
-getTaskTargetNames = function(task) {
-  getTaskDescription(task)$target
+getTaskTargetNames = function(x) {
+  UseMethod("getTaskTargetNames")
+}
+
+#' @export
+getTaskTargetNames.Task = function(x) {
+  getTaskTargetNames(getTaskDescription(x))
+}
+
+#' @export
+getTaskTargetNames.TaskDescSupervised = function(x) {
+  x$target
+}
+
+#' @export
+getTaskTargetNames.TaskDescUnsupervised = function(x) {
+  character(0L)
+}
+
+#' Get the class levels for classification and multilabel tasks.
+#'
+#' @template arg_task_or_desc
+#' @return [\code{character}].
+#' @export
+#' @family task
+getTaskClassLevels = function(x) {
+  UseMethod("getTaskClassLevels")
+}
+
+#' @export
+getTaskClassLevels.Task = function(x) {
+  getTaskClassLevels(getTaskDescription(x))
+}
+
+#' @export
+getTaskClassLevels.TaskDescClassif = function(x) {
+  getTaskDescription(x)$class.levels
+}
+
+#' @export
+getTaskClassLevels.TaskDescMultilabel = function(x) {
+  getTaskDescription(x)$class.levels
 }
 
 #' Get feature names of task.
@@ -50,33 +97,47 @@ getTaskTargetNames = function(task) {
 #' @family task
 #' @export
 getTaskFeatureNames = function(task) {
-  #FIXME: argument checks currently not done for speed
-  setdiff(colnames(task$env$data), task$task.desc$target)
+  setdiff(names(task$env$data), getTaskDescription(task)$target)
 }
 
 #' Get number of features in task.
 #'
-#' @template arg_task
+#' @template arg_task_or_desc
 #' @return [\code{integer(1)}].
 #' @export
 #' @family task
-getTaskNFeats = function(task) {
-  sum(task$task.desc$n.feat)
+getTaskNFeats = function(x) {
+  sum(getTaskDescription(x)$n.feat)
 }
 
 #' Get number of observations in task.
 #'
-#' @template arg_task
+#' @template arg_task_or_desc
 #' @return [\code{integer(1)}].
 #' @export
 #' @family task
-getTaskSize = function(task) {
-  getTaskDescription(task)$size
+getTaskSize = function(x) {
+  getTaskDescription(x)$size
 }
 
+#' Get formula of a task.
+#'
+#' This is simply \dQuote{<target> ~ .}.
+#'
+#' @template arg_task_or_desc
+#' @param target [\code{character(1)}]\cr
+#'   Left hand side of the formula.
+#'   Default is defined by task \code{x}.
+#' @param explicit.features [\code{logical(1)}]\cr
+#'   Should the features (right hand side of the formula) be explicitly listed?
+#'   Default is \code{FALSE}, i.e., they will be represented as \code{"."}.
+#' @param env [\code{environment}]\cr
+#'   Environment of the formula.
+#'   Default is \code{parent.frame()}.
+#' @return [\code{formula}].
+#' @family task
 #' @export
-#' @rdname getTaskFormula
-getTaskFormulaAsString = function(x, target = getTaskTargetNames(x), explicit.features = FALSE) {
+getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE, env = parent.frame()) {
   td = getTaskDescription(x)
   type = td$type
   if (type == "surv") {
@@ -94,38 +155,15 @@ getTaskFormulaAsString = function(x, target = getTaskTargetNames(x), explicit.fe
   } else {
     features = "."
   }
-  paste(target, "~", paste(features, collapse = " + "))
-}
-
-
-#' Get formula of a task.
-#'
-#' This is simply \dQuote{<target> ~ .}.
-#'
-#' @template arg_task_or_desc
-#' @param target [\code{character(1)}]\cr
-#'   Left hand side of the formula.
-#'   Default is defined by task \code{x}.
-#' @param explicit.features [\code{logical(1)}]\cr
-#'   Should the features (right hand side of the formula) be explicitly listed?
-#'   Default is \code{FALSE}, i.e., they will be represented as \code{"."}.
-#' @param env [\code{environment}]\cr
-#'   Environment of the formula. Set this to \code{parent.frame()}
-#'   for the default behaviour.
-#'   Default is \code{NULL} which deletes the environment.
-#' @return [\code{formula} | \code{character(1)}].
-#' @family task
-#' @export
-getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features = FALSE, env = NULL) {
-  as.formula(getTaskFormulaAsString(x, target = target, explicit.features = explicit.features))
+  # FIXME in the future we might want to create formulas w/o an environment
+  # currently this is impossible for survival because the namespace is not imported
+  # properly in many packages -> survival::Surv not found
+  as.formula(paste(target, "~", paste(features, collapse = " + ")), env = env)
 }
 
 #' Get target column of task.
 #'
 #' @template arg_task
-#' @param subset [\code{integer}]\cr
-#'   Selected cases.
-#'   Default is all cases.
 #' @param recode.target [\code{character(1)}] \cr
 #'   Should target classes be recoded? Only for binary classification.
 #'   Possible are \dQuote{no} (do nothing), \dQuote{01}, and \dQuote{-1+1}.
@@ -138,15 +176,24 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
 #' getTaskTargets(task)
-#' getTaskTargets(task, subset = 1:50)
-getTaskTargets = function(task, subset, recode.target = "no") {
-  #FIXME: argument checks currently not done for speed
-  if (task$task.desc$type == "costsens")
-    stop("There is no target available for cost-sensitive learning.")
-  if (task$task.desc$type == "cluster")
-    stop("There is no target available for cluster.")
-  y = task$env$data[subset, task$task.desc$target, drop = TRUE]
+getTaskTargets = function(task, recode.target = "no") {
+  UseMethod(("getTaskTargets"))
+}
+
+#' @export
+getTaskTargets.SupervisedTask = function(task, recode.target = "no") {
+  y = task$env$data[, task$task.desc$target, drop = TRUE]
   recodeY(y, recode.target, task$task.desc)
+}
+
+#' @export
+getTaskTargets.UnsupervisedTask = function(task, recode.target = "no") {
+  stop("There is no target available for unsupervised tasks.")
+}
+
+#' @export
+getTaskTargets.CostSensTask = function(task, recode.target = "no") {
+  stop("There is no target available for costsens tasks.")
 }
 
 

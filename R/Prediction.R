@@ -107,6 +107,15 @@ makePrediction.TaskDescMultilabel = function(task.desc, row.names, id, truth, pr
     task.desc = task.desc,
     time = time
   )
+  if (predict.type == "prob") {
+    # set default threshold to 0.5
+    if (is.null(predict.threshold)) {
+      predict.threshold = rep(0.5, length(task.desc$class.levels))
+      names(predict.threshold) = task.desc$class.levels
+    }
+    p = setThreshold(p, predict.threshold)
+  }
+  return(p)
 }
 
 #' @export

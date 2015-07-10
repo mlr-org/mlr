@@ -4,11 +4,11 @@
 \alias{getTaskType}
 \title{Get the type of the task.}
 \usage{
-getTaskType(task)
+getTaskType(x)
 }
 \arguments{
-\item{task}{[\code{\link{Task}}]\cr
-The task.}
+\item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
+Task or its description object.}
 }
 \value{
 [\code{character(1)}].
@@ -17,14 +17,12 @@ The task.}
 Get the type of the task.
 }
 \seealso{
-Other task: \code{\link{getTaskCosts}};
-  \code{\link{getTaskData}};
+Other task: \code{\link{getTaskClassLevels}};
+  \code{\link{getTaskCosts}}; \code{\link{getTaskData}};
   \code{\link{getTaskDescription}};
   \code{\link{getTaskFeatureNames}};
-  \code{\link{getTaskFormula}},
-  \code{\link{getTaskFormulaAsString}};
-  \code{\link{getTaskId}}; \code{\link{getTaskNFeats}};
-  \code{\link{getTaskSize}};
+  \code{\link{getTaskFormula}}; \code{\link{getTaskId}};
+  \code{\link{getTaskNFeats}}; \code{\link{getTaskSize}};
   \code{\link{getTaskTargetNames}};
   \code{\link{getTaskTargets}}; \code{\link{subsetTask}}
 }

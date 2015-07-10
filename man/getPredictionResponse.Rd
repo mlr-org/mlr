@@ -21,8 +21,8 @@ The following types are returned, depending on task type:
  \tabular{ll}{
    classif     \tab factor\cr
    regr        \tab numeric\cr
-   cluster     \tab factor\cr
-   surv        \tab ???\cr
+   cluster     \tab integer\cr
+   surv        \tab numeric\cr
    multilabel  \tab logical matrix, columns named with labels\cr
 }
 }

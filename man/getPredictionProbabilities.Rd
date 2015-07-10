@@ -12,7 +12,7 @@ Prediction object.}
 
 \item{cl}{[\code{character}]\cr
 Names of classes.
-Default is either all classes for multi-class problems or the positive class for binary classification.}
+Default is either all classes for multi-class / multilabel problems or the positive class for binary classification.}
 }
 \value{
 [\code{data.frame}] with numerical columns or a numerical vector if length of \code{cl} is 1.

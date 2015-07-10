@@ -4,12 +4,17 @@
 \alias{makeCustomResampledMeasure}
 \title{Construct your own resampled performance measure.}
 \usage{
-makeCustomResampledMeasure(id, minimize = TRUE, properties = character(0L),
-  fun, extra.args = list(), best = NULL, worst = NULL)
+makeCustomResampledMeasure(measure.id, aggregation.id, minimize = TRUE,
+  properties = character(0L), fun, extra.args = list(), best = NULL,
+  worst = NULL, measure.name = measure.id,
+  aggregation.name = aggregation.id, note = "")
 }
 \arguments{
-\item{id}{[\code{character(1)}]\cr
-Name of aggregated measure.}
+\item{measure.id}{[\code{character(1)}]\cr
+Short name of measure.}
+
+\item{aggregation.id}{[\code{character(1)}]\cr
+Short name of aggregation.}
 
 \item{minimize}{[\code{logical(1)}]\cr
 Should the measure be minimized?
@@ -47,6 +52,17 @@ Default is -\code{Inf} or \code{Inf}, depending on \code{minimize}.}
 \item{worst}{[\code{numeric(1)}]\cr
 Worst obtainable value for measure.
 Default is \code{Inf} or -\code{Inf}, depending on \code{minimize}.}
+
+\item{measure.name}{[\code{character(1)}]\cr
+Long name of measure.
+Default is \code{measure.id}.}
+
+\item{aggregation.name}{[\code{character(1)}]\cr
+Long name of the aggregation.
+Default is \code{aggregation.id}.}
+
+\item{note}{[\code{character}] \cr
+Description and additional notes for the measure. Default is \dQuote{}.}
 }
 \value{
 [\code{\link{Measure}}].

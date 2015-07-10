@@ -33,6 +33,7 @@
 #'   \describe{
 #'     \item{classif}{Is the measure applicable for classification?}
 #'     \item{classif.multi}{Is the measure applicable for multi-class classification?}
+#'     \item{multilabel}{Is the measure applicable for multilabel classification?}
 #'     \item{regr}{Is the measure applicable for regression?}
 #'     \item{surv}{Is the measure applicable for survival?}
 #'     \item{costsens}{Is the measure applicable for cost-sensitive learning?}
@@ -62,7 +63,7 @@
 #' @param name [\code{character}] \cr
 #'   Name of the measure. Default is \code{id}.
 #' @param note [\code{character}] \cr
-#'   Description and additional notes for the learner. Default is \dQuote{}.
+#'   Description and additional notes for the measure. Default is \dQuote{}.
 #' @template ret_measure
 #' @export
 #' @family performance
@@ -102,7 +103,25 @@ makeMeasure = function(id, minimize, properties = character(0L),
   setAggregation(m, aggr)
 }
 
-default.measures = function(x) {
+#' @title Get default measure.
+#'
+#' @description
+#' Get the default measure for a task type, task, task description or a learner.
+#' Currently these are:
+#'  \tabular{ll}{
+#'    classif     \tab mmce\cr
+#'    regr        \tab mse\cr
+#'    cluster     \tab db\cr
+#'    surv        \tab cindex\cr
+#'    costsens    \tab mcp\cr
+#'    multilabel  \tab hamloss\cr
+#' }
+#'
+#' @param x [\code{character(1)} | \code{\link{Task}} | \code{\link{TaskDesc}} | \code{\link{Learner}}]\cr
+#'  Task type, task, task description or a learner.
+#' @return [\code{\link{Measure}}].
+#' @export
+getDefaultMeasure = function(x) {
   type = if (inherits(x, "TaskDesc"))
     x$type
   else if (inherits(x, "Task"))
@@ -110,12 +129,12 @@ default.measures = function(x) {
   else if (inherits(x, "Learner"))
     x$type
   switch(type,
-    classif = list(mmce),
-    multilabel = list(hamloss),
-    regr = list(mse),
-    costsens = list(mcp),
-    surv = list(cindex),
-    cluster = list(db)
+    classif = mmce,
+    cluster = db,
+    regr = mse,
+    surv = cindex,
+    costsens = mcp,
+    multilabel = hamloss
   )
 }
 

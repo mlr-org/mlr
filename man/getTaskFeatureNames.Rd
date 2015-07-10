@@ -17,13 +17,11 @@ The task.}
 Target column name is not included.
 }
 \seealso{
-Other task: \code{\link{getTaskCosts}};
-  \code{\link{getTaskData}};
+Other task: \code{\link{getTaskClassLevels}};
+  \code{\link{getTaskCosts}}; \code{\link{getTaskData}};
   \code{\link{getTaskDescription}};
-  \code{\link{getTaskFormula}},
-  \code{\link{getTaskFormulaAsString}};
-  \code{\link{getTaskId}}; \code{\link{getTaskNFeats}};
-  \code{\link{getTaskSize}};
+  \code{\link{getTaskFormula}}; \code{\link{getTaskId}};
+  \code{\link{getTaskNFeats}}; \code{\link{getTaskSize}};
   \code{\link{getTaskTargetNames}};
   \code{\link{getTaskTargets}}; \code{\link{getTaskType}};
   \code{\link{subsetTask}}

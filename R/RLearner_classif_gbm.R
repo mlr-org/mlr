@@ -33,7 +33,7 @@ trainLearner.classif.gbm = function(.learner, .task, .subset, .weights = NULL,  
     f = getTaskFormula(.task)
     gbm::gbm(f, data = d, keep.data = FALSE, ...)
   } else  {
-    f = as.formula(getTaskFormulaAsString(.task))
+    f = getTaskFormula(.task)
     gbm::gbm(f, data = d, keep.data = FALSE, weights = .weights, ...)
   }
 }

@@ -11,13 +11,30 @@ mlr_2.5:
 - renamed getProbabilities to getPredictionProbabilities and deprecated getProbabilities
 - plots now use long names for measures where possible
 - there was a nasty bug in measure "mcc". fixed and unit tested. and apologies.
+- removed getTaskFormulaAsString and improved getTaskFormula so the former is
+  not needed anymore
+- aggregations now have a 'name' property, which is a long name
+- generateLearningCurveData and generateThreshVsPerfData now append the aggregation id
+  to the output column name if the measure ids are the same
+- plotLearningCurve, plotLearningCurveGGVIS, plotThreshVsPerf, plotThreshVsPerfGGVIS now have an argument
+  'pretty.names' which plots the 'name' element of the measures instead of the 'id'.
+- makeCustomResampledMeasure now has arguments 'measure.id' and 'aggregation.id'
+  instead of only 'id' which corresponded to the measure. Also, 'name' and note (corresponding to the measure)
+  as well as 'aggregation.name' have been added.
+- makeCostMeasure now has arguments 'name' and 'id'.
+- classification learner now can have a property 'class.weights', supported by 'class.weights.param'. The latter
+  indicates which of the parameters provides that class weights information to the learner.
+- class weights integrated in the learner will be used as default for 'wcw.param' in 'makeWeightedClassesWrapper'
 
 - new functions
+-- getDefaultMeasure
+-- getTaskClassLevels
 -- getPredictionTruth, getPredictionResponse
 -- convertMLBenchObjToTask
 -- getBMRLearners, getBMRMeasures, getBMRMeasureIds
 -- makeMultilabelTask, makeMultilabelWrapper
 -- generatePartialPredictionData, plotPartialPrediction, and plotPartialPredictionGGVIS
+-- getClassWeightParam
 
 - new measures
 -- hamloss

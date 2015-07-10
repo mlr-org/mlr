@@ -41,7 +41,7 @@ generateROCRCurvesData = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "thre
   assertString(meas1)
   assertString(meas2)
   assertString(avg)
-  stopifnot(avg %in% c("none", "threshold", "horizontal", "vertical"))
+  assertChoice(avg, c("none", "threshold", "horizontal", "vertical"))
   assertList(perf.args, names = "unique")
   UseMethod("generateROCRCurvesData")
 }

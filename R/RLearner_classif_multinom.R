@@ -29,7 +29,7 @@ trainLearner.classif.multinom = function(.learner, .task, .subset, .weights = NU
     f = getTaskFormula(.task)
     nnet::multinom(f, data = getTaskData(.task, .subset), ...)
   } else  {
-    f = as.formula(getTaskFormulaAsString(.task))
+    f = getTaskFormula(.task)
     nnet::multinom(f, data = getTaskData(.task, .subset), weights = .weights, ...)
   }
 }

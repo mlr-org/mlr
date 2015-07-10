@@ -34,7 +34,7 @@ trainLearner.regr.nnet = function(.learner, .task, .subset, .weights = NULL,  ..
     f = getTaskFormula(.task)
     nnet::nnet(f, data = getTaskData(.task, .subset), linout = TRUE, ...)
   } else  {
-    f = as.formula(getTaskFormulaAsString(.task))
+    f = getTaskFormula(.task)
     nnet::nnet(f, data = getTaskData(.task, .subset), linout = TRUE, weights = .weights, ...)
   }
 }

@@ -8,7 +8,8 @@ setAggregation(measure, aggr)
 }
 \arguments{
 \item{measure}{[\code{\link{Measure}}]\cr
-Performance measure.}
+Performance measure.
+Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
 
 \item{aggr}{[\code{\link{Aggregation}}]\cr
 Aggregation function.}

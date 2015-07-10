@@ -1,6 +1,6 @@
 checkMeasures = function(measures, obj, aggr = NULL) {
   if (missing(measures)) {
-    measures = default.measures(obj)
+    measures = list(getDefaultMeasure(obj))
   } else {
     measures = ensureVector(measures, n = 1L, cl = "Measure")
     assertList(measures, types = "Measure", min.len = 1L)

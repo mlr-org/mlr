@@ -31,20 +31,20 @@
 #' @param resample \code{character(1)}\cr
 #'   Defines how the prediction grid for each feature is created. If \dQuote{bootstrap} then
 #'   values are sampled with replacement from the training data. If \dQuote{subsample} then
-#'   values are sampled without replacement from the training data. If \code{NULL} an evenly spaced
+#'   values are sampled without replacement from the training data. If \dQuote{none} an evenly spaced
 #'   grid between either the empirical minimum and maximum, or the minimum and maximum defined by
 #'   \code{fmin} and \code{fmax}, is created.
-#'   Default is \code{NULL}.
+#'   Default is \dQuote{none}.
 #' @param fmin \code{numeric}\cr
 #'   The minimum value that each element of \code{features} can take.
 #'   This argument is only applicable if \code{resample = NULL} and when the empirical minimum is higher
 #'   than the theoretical minimum for a given feature.
-#'   Default is \code{NULL}.
+#'   Default is the empirical minimum of each numeric feature and NA for factor features.
 #' @param fmax \code{numeric}\cr
 #'   The maximum value that each element of \code{features} can take.
-#'   This argument is only applicable if \code{resample = NULL} and when the empirical maximum is lower
+#'   This argument is only applicable if \code{resample = "none"} and when the empirical maximum is lower
 #'   than the theoretical maximum for a given feature.
-#'   Default is \code{NULL}.
+#'   Default is the empirical maximum of each numeric feature and NA for factor features.
 #' @param gridsize \code{integer(1)}\cr
 #'   The length of the prediction grid created for each feature.
 #'   If \code{resample = "bootstrap"} or \code{resample = "subsample"} then this defines
@@ -61,35 +61,53 @@
 #' plotPartialPrediction(pd)
 #' @export
 generatePartialPredictionData = function(obj, data, features, interaction = FALSE, fun = mean,
-                                         resample = NULL, fmin = NULL, fmax = NULL,
+                                         resample = "none",
+                                         fmin = sapply(features, function(x)
+                                           ifelse(!is.factor(data[[x]]), min(data[[x]], na.rm = TRUE), NA)),
+                                         fmax = sapply(features, function(x)
+                                           ifelse(!is.factor(data[[x]]), max(data[[x]], na.rm = TRUE), NA)),
                                          gridsize = 10L, ...) {
-  checkmate::assertClass(obj, "WrappedModel")
   td = obj$task.desc
+  assertClass(obj, "WrappedModel")
+  assertDataFrame(data, col.names = "unique", min.rows = 1L, min.cols = length(obj$features) + length(td$target))
+  checkColumnNames(data, "data")
+  assertSetEqual(colnames(data), c(obj$features, td$target), ordered = FALSE)
+  assertSubset(td$target, colnames(data))
+  assertSubset(features, obj$features)
+  assertFlag(interaction)
+  assertFunction(fun)
+  assertChoice(resample, c("none", "bootstrap", "subsample"))
+  assertNumeric(fmin, finite = TRUE)
+  assertNumeric(fmax, finite = TRUE)
+  assertCount(gridsize, positive = TRUE)
 
   rng = vector("list", length(features))
   names(rng) = features
   for (i in 1:length(features))
     rng[[i]] = generateFeatureGrid(features[i], data, resample, fmax[i], fmin[i], gridsize)
   rng = as.data.frame(rng)
-
   if (length(features) > 1L & interaction)
     rng = expand.grid(rng)
 
   ## check that function returns input of valid length and type
   test = fun(1:3)
-  if (td$type == "classif" & obj$learner$predict.type == "response")
-    checkmate::assert(length(test) == 3L)
-  else if (td$type == "classif" & obj$learner$predict.type == "prob")
-    checkmate::assert(length(test) == 1L)
-  else
-    checkmate::assert(length(test) %in% c(1L, 3L))
-  checkmate::assert(is.numeric(test))
+  if (!is.numeric(test))
+    stop("fun argument must return a numeric vector")
+  if (td$type == "classif" & obj$learner$predict.type == "response" & length(test) != 3L)
+    stop("function argument must return a numeric vector with length equal to the number of target class levels.")
+  if (td$type == "classif" & obj$learner$predict.type == "prob" & length(test) != 1L)
+    stop("function argument must return a numeric vector of length 1.")
+  if (td$type == "regr" & !(length(test) %in% c(1L, 3L)))
+    stop("function argument must return a numeric vector of length 1 or 3.")
 
   if (td$type == "regr")
     target = td$target
-  else if (td$type == "classif")
-    target = td$class.levels
-  else
+  else if (td$type == "classif") {
+    if (length(td$class.levels) > 2L)
+      target = td$class.levels
+    else
+      target = td$positive
+  }  else
     target = "risk"
 
   if (length(features) > 1L & !interaction) {
@@ -118,12 +136,8 @@ generatePartialPredictionData = function(obj, data, features, interaction = FALS
   }
 
   if (length(test) == 3L & td$type == "regr")
-    checkmate::assert(all(out$lower <= out[[target]] & out[[target]] <= out$upper))
-
-  checkmate::assert(all(apply(sapply(target, function(x)
-    grepl(paste0(x, "$"), colnames(out))), 2, any)))
-  checkmate::assert(all(features %in% colnames(out)))
-
+    if (!all(out$lower <= out[[target]] & out[[target]] <= out$upper))
+      stop("function argument must return a sorted numeric vector ordered lowest to highest.")
 
   makeS3Obj("PartialPredictionData",
             data = out,
@@ -181,9 +195,9 @@ print.PartialPredictionData = function(x, ...) {
 #' @return A ggplot2 object.
 #' @export
 plotPartialPrediction = function(obj, facet = NULL) {
-  checkmate::assertClass(obj, "PartialPredictionData")
-  if (obj$interaction)
-    checkmate::assert(length(obj$features) <= 2L)
+  assertClass(obj, "PartialPredictionData")
+  if (obj$interaction & length(obj$features) > 2L)
+    stop("It is only possible to plot 2 features with this function.")
 
   if (!is.null(facet) & obj$interaction & length(obj$features) == 2L) {
     feature = obj$features[which(obj$features != facet)]
@@ -198,15 +212,11 @@ plotPartialPrediction = function(obj, facet = NULL) {
 
   target = obj$target
 
-  bounds = all(c("lower", "upper") %in% colnames(obj$data))
-  if (bounds)
-    checkmate::assert(obj$task.desc$type == "regr")
+  bounds = all(c("lower", "upper") %in% colnames(obj$data) & obj$task.desc$type %in% c("surv", "regr"))
 
   if (all(target %in% obj$task.desc$class.levels)) {
     out = reshape2::melt(obj$data, id.vars = obj$features, variable = "Class", value.name = "Probability")
     out$Class = gsub("^prob\\.", "", out$Class)
-    if (length(unique(out$Class)) == 2L)
-      out = out[out$Class == obj$task.desc$positive, ]
     if (length(feature) > 1L) {
       ## suppress warnings for reshaping vectors of different types
       ## factors are coerced to numeric/integers
@@ -267,15 +277,16 @@ plotPartialPrediction = function(obj, facet = NULL) {
 #' @return A ggvis object.
 #' @export
 plotPartialPredictionGGVIS = function(obj, interaction = NULL) {
-  checkmate::assertClass(obj, "PartialPredictionData")
-  checkmate::assert(length(obj$features) <= 2L)
+  assertClass(obj, "PartialPredictionData")
 
-  bounds = all(c("lower", "upper") %in% colnames(obj$data))
-  if (bounds)
-    checkmate::assert(obj$task.desc$type == "regr")
+  if (obj$interaction & length(obj$features) > 2L)
+    stop("It is only possible to plot 2 features with this function.")
+
+  bounds = all(c("lower", "upper") %in% colnames(obj$data) & obj$task.desc$type %in% c("surv", "regr"))
 
   if (!is.null(interaction) & !is.null(obj$interaction) & length(obj$features) == 2L) {
-    checkmate::assert(interaction %in% obj$features)
+    if (!(interaction %in% obj$features))
+      stop("interaction argument not found in features.")
     feature = obj$features[which(obj$features != interaction)]
   } else {
     feature = obj$features
@@ -286,10 +297,6 @@ plotPartialPredictionGGVIS = function(obj, interaction = NULL) {
   if (all(target %in% obj$task.desc$class.levels)) {
     data = reshape2::melt(obj$data, id.vars = obj$features, variable = "Class", value.name = "Probability")
     data$Class = gsub("^prob\\.", "", data$Class)
-    if (length(unique(data$Class)) == 2L) {
-      data = data[data$Class == obj$task.desc$positive, ]
-      target = obj$task.desc$positive
-    }
   } else {
     data = obj$data
   }
@@ -353,50 +360,25 @@ plotPartialPredictionGGVIS = function(obj, interaction = NULL) {
 
 doPartialPredictionIteration = function(obj, data, rng, features, fun, td, i, ...) {
   data[features] = rng[i, ]
-  pred = do.call("predict", c(list("object" = obj, "newdata" = data), list(...)))$data
-  if (obj$learner$predict.type == "response") {
-    fun(pred$response)
-  } else {
-    cols = lapply(td$class.levels, function(x) grepl(x, colnames(pred)))
-    cols = apply(do.call("rbind", cols), 2, any)
-    apply(pred[, cols], 2, fun)
-  }
+  pred = do.call("predict", c(list("object" = obj, "newdata" = data), list(...)))
+  if (obj$learner$predict.type == "response")
+    fun(getPredictionResponse(pred))
+  else if (length(obj$task.desc$class.levels) == 2L)
+    fun(getPredictionProbabilities(pred))
+  else
+    apply(getPredictionProbabilities(pred), 2, fun)
 }
 
-generateFeatureGrid = function(feature, data, resample = NULL,
-                               fmin = NULL, fmax = NULL, cutoff = 10L) {
-  checkmate::assert(length(feature) == 1L & is.character(feature))
-  checkmate::assert(is.data.frame(data) & feature %in% colnames(data))
-
-  if (!is.null(fmin)) {
-    if (!is.na(fmin)) {
-      checkmate::assert(class(data[[feature]]) %in% c("numeric", "integer"))
-    }
-  }
-
-  if (!is.null(fmax)) {
-    if (!is.na(fmax)) {
-      checkmate::assert(class(data[[feature]]) %in% c("numeric", "integer"))
-    }
-  }
-
+generateFeatureGrid = function(feature, data, resample, fmin, fmax, cutoff) {
   if (is.factor(data[[feature]])) {
     factor(rep(levels(data[[feature]]), length.out = cutoff),
            levels = levels(data[[feature]]), ordered = is.ordered(data[[feature]]))
   } else {
-    if (is.null(fmin))
-      fmin = min(data[[feature]], na.rm = TRUE)
-    if (is.null(fmax))
-      fmax = max(data[[feature]], na.rm = TRUE)
-    if (!is.null(resample)) {
-      checkmate::assertChoice(resample, c("bootstrap", "subsample"))
+    if (resample != "none") {
       sample(data[[feature]], cutoff, resample == "bootstrap")
     } else {
-      if (is.integer(data[[feature]])) {
-        checkmate::assert(all.equal(fmin, round(fmin, 0)))
-        checkmate::assert(all.equal(fmax, round(fmax, 0)))
+      if (is.integer(data[[feature]]))
         sort(rep(fmin:fmax, length.out = cutoff))
-      }
       else
         seq(fmin, fmax, length.out = cutoff)
     }

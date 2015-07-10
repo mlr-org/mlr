@@ -24,7 +24,7 @@ makeRLearner.surv.coxph = function() {
 
 #' @export
 trainLearner.surv.coxph = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  f = as.formula(getTaskFormulaAsString(.task))
+  f = getTaskFormula(.task)
   data = getTaskData(.task, subset = .subset)
   if (is.null(.weights)) {
     mod = survival::coxph(formula = f, data = data, ...)

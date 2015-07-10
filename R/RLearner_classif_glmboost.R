@@ -33,7 +33,7 @@ trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NU
     levs = c(td$negative, td$positive)
     d[, getTaskTargetNames(.task)] = factor(d[, getTaskTargetNames(.task)], levs)
   }
-  f = as.formula(getTaskFormulaAsString(.task))
+  f = getTaskFormula(.task)
   if (is.null(.weights)) {
     model = mboost::glmboost(f, data = d, control = ctrl, ...)
   } else  {

@@ -61,7 +61,7 @@ regr.num.class.col = 13
 regr.num.task = makeRegrTask("regrnumtask", data = regr.num.df, target = regr.num.target)
 
 surv.df = cbind(time = rexp(150, 1/20)+1, event = sample(c(TRUE, FALSE), 150, replace = TRUE), iris)
-surv.formula = Surv(time,event) ~ .
+surv.formula = survival::Surv(time, event) ~ .
 surv.target = c("time", "event")
 surv.train.inds = c(1:30, 51:80, 101:130)
 surv.test.inds  = setdiff(1:150, surv.train.inds)
