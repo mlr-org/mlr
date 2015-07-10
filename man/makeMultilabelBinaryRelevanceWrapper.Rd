@@ -27,7 +27,7 @@ mod = train(lrn, yeast.task)
 pred = predict(mod, yeast.task)
 p = performance(pred)
 # with newdata
-pred = predict(mod, newdata = yeast[1:10,])
+pred = predict(mod, newdata = getTaskData(yeast.task)[1:10,])
 }
 \references{
 Tsoumakas, G., & Katakis, I. (2006)

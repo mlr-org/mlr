@@ -22,7 +22,7 @@
 #' pred = predict(mod, yeast.task)
 #' p = performance(pred)
 #' # with newdata
-#' pred = predict(mod, newdata = yeast[1:10,])
+#' pred = predict(mod, newdata = getTaskData(yeast.task)[1:10,])
 #' @export
 makeMultilabelBinaryRelevanceWrapper = function(learner) {
   learner = checkLearner(learner, type = "classif")
