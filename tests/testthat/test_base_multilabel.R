@@ -22,10 +22,14 @@ test_that("multilabel", {
   multilabel.task2 = makeMultilabelTask("multilabel", data = multilabel.df2, target = multilabel.target)
   mod = train(lrn, multilabel.task2)
   pred = predict(mod, multilabel.task2) 
+  p = performance(pred)
+  expect_true(!is.na(p))
   # Learner with Hyperparameters
   lrn = makeLearner("multilabel.rFerns", par.vals = list(depth=6, ferns=100))
   mod = train(lrn, multilabel.task)
   pred = predict(mod, multilabel.task) 
+  p = performance(pred)
+  expect_true(!is.na(p))
 })
 
 
@@ -80,11 +84,15 @@ test_that("MultilabelBinaryRelevanceWrapper", {
   multilabel.task2 = makeMultilabelTask("multilabel", data = multilabel.df2, target = multilabel.target)
   mod = train(lrn2, multilabel.task2)
   pred = predict(mod, multilabel.task2) 
+  p = performance(pred)
+  expect_true(!is.na(p))
   # Learner with Hyperparameters
   lrn1 = makeLearner("classif.rpart", par.vals = list(minsplit = 10, cp = 0.005))
   lrn2 = makeMultilabelBinaryRelevanceWrapper(lrn1)
   mod = train(lrn2, multilabel.task)
   pred = predict(mod, multilabel.task) 
+  p = performance(pred)
+  expect_true(!is.na(p))
 })
 
 
