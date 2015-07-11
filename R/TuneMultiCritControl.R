@@ -14,6 +14,16 @@
 #' }
 #'
 #' @inheritParams TuneControl
+#' @param budget [\code{integer(1)}]\cr
+#'   Maximum budget for tuning. This value restricts the number of function
+#'   evaluations. In case of \code{makeTuneMultiCritControlGrid} this number
+#'   must be identical to the size of the grid. For
+#'   \code{makeTuneMultiCritControlRandom} the \code{budget} equals the number
+#'   of iterations (\code{maxit}) performed by the random search algorithm.
+#'   And in case of \code{makeTuneMultiCritControlNSGA2} the \code{budget}
+#'   corresponds to the product of the maximum number of generations
+#'   (\code{max(generations)}) + 1 (for the initial population) and the size of
+#'   the population (\code{popsize}).
 #' @return [\code{\link{TuneMultiCritControl}}]. The specific subclass is one of
 #'   \code{\link{TuneMultiCritControlGrid}}, \code{\link{TuneMultiCritControlRandom}},
 #'   \code{\link{TuneMultiCritControlNSGA2}}.
@@ -23,13 +33,19 @@
 #' @aliases TuneMultiCritControlGrid TuneMultiCritControlRandom TuneMultiCritControlNSGA2
 NULL
 
-makeTuneMultiCritControl = function(measures, same.resampling.instance, impute.val = NULL, log.fun = NULL, final.dw.perc = NULL, ..., cl) {
+makeTuneMultiCritControl = function(measures, same.resampling.instance,
+  impute.val = NULL, log.fun = NULL, final.dw.perc = NULL, budget = NULL, ..., cl) {
+
   assertFlag(same.resampling.instance)
   if (!is.null(impute.val))
     assertNumeric(impute.val, any.missing = FALSE)
   if (is.null(log.fun))
     log.fun = logFunTune
-  x = makeOptControl(same.resampling.instance, impute.val, log.fun = log.fun, final.dw.perc = final.dw.perc, ...)
+  if (!is.null(budget))
+    budget = asCount(budget)
+  x = makeOptControl(same.resampling.instance, impute.val, log.fun = log.fun,
+    final.dw.perc = final.dw.perc, ...)
+  x$budget = budget
   addClasses(x, c(cl, "TuneMultiCritControl"))
 }
 
@@ -38,6 +54,7 @@ print.TuneMultiCritControl = function(x, ...) {
   catf("Tune multicrit control: %s", class(x)[1])
   catf("Same resampling instance: %s", x$same.resampling.instance)
   catf("Imputation value: %s", ifelse(is.null(x$impute.val), "<worst>", collapse(sprintf("%g", x$impute.val))))
+  catf("Budget: %i", x$budget)
   catf("Further arguments: %s", convertToShortString(x$extra.args))
 }
 
