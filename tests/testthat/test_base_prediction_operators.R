@@ -36,6 +36,6 @@ test_that("getPredictionProbabilities", {
   classif.pred = predict(train(lrn, binaryclass.task), binaryclass.task)
   expect_true(is.numeric(getPredictionProbabilities(classif.pred, "R")))
   lrn2 = makeMultilabelBinaryRelevanceWrapper(lrn)
-  multilabel.pred2 = predict(train(lrn2, task), task)
+  multilabel.pred2 = predict(train(lrn2, multilabel.task), multilabel.task)
   expect_true(is.numeric(getPredictionProbabilities(multilabel.pred2, "y2")))
 })
