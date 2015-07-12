@@ -2,8 +2,12 @@ mlr_2.5:
 - we have (somewhat experimental) support for multilabel classification.
   so we now have a task, a new baselearner (rFerns),
   and a generic reduction-to-binary algorithm (MultilabelWrapper)
-- tuning: added 'budget' parameter in makeTuneControl*, allowing to
+- tuning: added 'budget' parameter in makeTuneControl* (single-objective)
+  and makeTuneMultiCritControl* (multi-objective scenarios), allowing to define
+  a maximum "number of evaluations" budget for tuning algorithms
+- tuning: added 'budget' parameter in makeTuneMultiCritControl*, allowing to
   define a maximum "number of evaluations" budget for tuning algorithms
+  in the single-objective case
 - makeTuneControlGenSA: optimized function will be considered non-smooth
   per default (change via ... args)
 - classif.svm: added 'scale' param
