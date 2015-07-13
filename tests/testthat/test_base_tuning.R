@@ -76,7 +76,7 @@ test_that("tuning works with errors", {
   ps = makeParamSet(
     makeDiscreteParam("alpha", values = c(1, 0))
   )
-  lrn = makeLearner("classif.mock2")
+  lrn = makeLearner("classif.__mlrmocklearners__2")
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlGrid()
   z = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)

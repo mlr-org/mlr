@@ -21,7 +21,7 @@ test_that("oversampling in each bag works", {
    lrn1 = makeLearner("classif.rpart")
    lrn2 = makeOverBaggingWrapper(lrn1, obw.rate = 5, obw.iters = 3)
    mod = train(lrn2, task)
-   models = getHomogeneousEnsembleModels(mod)
+   models = getLearnerModel(mod)
    # check min class size gets increased by rate/factor 5
    tab = lapply(1:length(models), function(i) {
      data = getTaskData(task, models[[i]]$subset)

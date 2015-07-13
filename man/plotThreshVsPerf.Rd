@@ -39,7 +39,10 @@ pvs = generateThreshVsPerfData(pred, list(acc, setAggregation(acc, train.mean)))
 plotThreshVsPerf(pvs)
 }
 \seealso{
-Other plot: \code{\link{plotFilterValuesGGVIS}};
+Other plot: \code{\link{plotBenchmarkResult}};
+  \code{\link{plotBenchmarkSummary}};
+  \code{\link{plotCritDifferences}};
+  \code{\link{plotFilterValuesGGVIS}};
   \code{\link{plotFilterValues}};
   \code{\link{plotLearningCurveGGVIS}};
   \code{\link{plotLearningCurve}};
@@ -47,6 +50,7 @@ Other plot: \code{\link{plotFilterValuesGGVIS}};
   \code{\link{plotPartialPrediction}};
   \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}};
+  \code{\link{plotRankMatrixAsBar}};
   \code{\link{plotThreshVsPerfGGVIS}}
 
 Other thresh_vs_perf: \code{\link{generateThreshVsPerfData}};

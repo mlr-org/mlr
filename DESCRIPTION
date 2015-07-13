@@ -92,10 +92,12 @@ Suggests:
     mRMRe,
     nnet,
     nodeHarvest (>= 0.7-3),
+    neuralnet,
     pamr,
     party,
     penalized,
     pls,
+    PMCMR,
     pROC (>= 1.8),
     randomForest,
     randomForestSRC (>= 1.6.1),
@@ -113,9 +115,11 @@ Suggests:
     sparsediscrim,
     sparseLDA,
     stepPlr,
+    SwarmSVM,
     testthat,
     tgp,
-    TH.data
+    TH.data,
+    XML
 LazyData: yes
 ByteCompile: yes
 Version: 2.5

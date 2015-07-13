@@ -11,13 +11,14 @@
 \title{Create control structures for multi-criteria tuning.}
 \usage{
 makeTuneMultiCritControlGrid(same.resampling.instance = TRUE,
-  resolution = 10L, log.fun = NULL)
+  resolution = 10L, log.fun = NULL, final.dw.perc = NULL, budget = NULL)
 
 makeTuneMultiCritControlNSGA2(same.resampling.instance = TRUE,
-  impute.val = NULL, log.fun = NULL, ...)
+  impute.val = NULL, log.fun = NULL, final.dw.perc = NULL,
+  budget = NULL, ...)
 
 makeTuneMultiCritControlRandom(same.resampling.instance = TRUE,
-  maxit = 100L, log.fun = NULL)
+  maxit = 100L, log.fun = NULL, final.dw.perc = NULL, budget = NULL)
 }
 \arguments{
 \item{same.resampling.instance}{[\code{logical(1)}]\cr
@@ -40,6 +41,21 @@ The default displays the performance measures, the time needed for evaluating,
 the currently used memory and the max memory ever used before
 (the latter two both taken from \code{\link{gc}}).
 See the implementation for details.}
+
+\item{final.dw.perc}{[\code{boolean}]\cr
+If a Learner wrapped by a \code{\link{makeDownsampleWrapper}} is used, you can define the value of \code{dw.perc} which is used to train the Learner with the final parameter setting found by the tuning.
+Default is \code{NULL} which will not change anything.}
+
+\item{budget}{[\code{integer(1)}]\cr
+Maximum budget for tuning. This value restricts the number of function
+evaluations. In case of \code{makeTuneMultiCritControlGrid} this number
+must be identical to the size of the grid. For
+\code{makeTuneMultiCritControlRandom} the \code{budget} equals the number
+of iterations (\code{maxit}) performed by the random search algorithm.
+And in case of \code{makeTuneMultiCritControlNSGA2} the \code{budget}
+corresponds to the product of the maximum number of generations
+(\code{max(generations)}) + 1 (for the initial population) and the size of
+the population (\code{popsize}).}
 
 \item{impute.val}{[\code{numeric}]\cr
 If something goes wrong during optimization (e.g, the learner crashes),

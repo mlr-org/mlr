@@ -36,13 +36,17 @@ Other filter: \code{\link{FilterValues}};
   \code{\link{makeFilterWrapper}};
   \code{\link{plotFilterValues}}
 
-Other plot: \code{\link{plotFilterValues}};
+Other plot: \code{\link{plotBenchmarkResult}};
+  \code{\link{plotBenchmarkSummary}};
+  \code{\link{plotCritDifferences}};
+  \code{\link{plotFilterValues}};
   \code{\link{plotLearningCurveGGVIS}};
   \code{\link{plotLearningCurve}};
   \code{\link{plotPartialPredictionGGVIS}};
   \code{\link{plotPartialPrediction}};
   \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}};
+  \code{\link{plotRankMatrixAsBar}};
   \code{\link{plotThreshVsPerfGGVIS}};
   \code{\link{plotThreshVsPerf}}
 }

@@ -61,7 +61,7 @@ test_that("tuneParamsMultiCrit works with low number of evals and dependencies",
 # FIXME: I am not sure how we can check wich value is imputed for theoptimizer?
 test_that("y imputing works", {
   configureMlr(on.learner.error = "quiet")
-  lrn = makeLearner("classif.mock2")
+  lrn = makeLearner("classif.__mlrmocklearners__2")
   rdesc = makeResampleDesc("Holdout")
   ps = makeParamSet(
     makeNumericParam("alpha", lower = 0, upper = 1)

@@ -29,6 +29,11 @@ mlr_2.5:
 - classification learner now can have a property 'class.weights', supported by 'class.weights.param'. The latter
   indicates which of the parameters provides that class weights information to the learner.
 - class weights integrated in the learner will be used as default for 'wcw.param' in 'makeWeightedClassesWrapper'
+- listLearners with create = FALSE does not load packages anymore and is
+  therefore faster and more reliable; it also supports the additional parameter
+  check.packages now that will check whether required packages are installed
+  without loading them
+- many new function for statistical benchmark comparisons are added, see below
 
 - new functions
 -- getDefaultMeasure
@@ -36,15 +41,24 @@ mlr_2.5:
 -- getPredictionTruth, getPredictionResponse
 -- convertMLBenchObjToTask
 -- getBMRLearners, getBMRMeasures, getBMRMeasureIds
--- makeMultilabelTask, makeMultilabelWrapper
+-- makeMultilabelTask, makeMultilabelWrapper, getMultilabelBinaryPerformances
 -- generatePartialPredictionData, plotPartialPrediction, and plotPartialPredictionGGVIS
 -- getClassWeightParam
+-- plotBenchmarkResult, convertBMRToRankMatrix, generateRankMatrixAsBarData, plotRankMatrixAsBar,
+   generateBenchmarkSummaryData, plotBenchmarkSummary,
+   friedmanTestBMR, friedmanPostHocTestBMR, generateCritDifferencesData, plotCritDifferences
 
 - new measures
 -- hamloss
 
 - new learners
 -- multilabel.rFerns
+-- classif.avNNet
+-- classif.clusterSVM
+-- classif.dcSVM
+-- classif.gaterSVM
+-- classif.neuralnet
+-- regr.avNNet
 
 - new filters
 -- permutation.importance

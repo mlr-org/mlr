@@ -80,9 +80,12 @@ pd = generatePartialPredictionData(fit, getTaskData(iris.task), c("Petal.Width",
 plotPartialPrediction(pd)
 }
 \seealso{
-Other generate_plot_data: \code{\link{generateFilterValuesData}};
+Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}};
+  \code{\link{generateCritDifferencesData}};
+  \code{\link{generateFilterValuesData}};
   \code{\link{generateLearningCurveData}};
   \code{\link{generateROCRCurvesData}};
+  \code{\link{generateRankMatrixAsBarData}};
   \code{\link{generateThreshVsPerfData}};
   \code{\link{getFilterValues}}
 

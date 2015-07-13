@@ -18,7 +18,7 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 }
 \description{
 Creates a wrapper, which can be used like any other learner object.
-Models can easily be accessed via \code{\link{getHomogeneousEnsembleModels}}.
+Models can easily be accessed via \code{\link{getLearnerModel}}.
 
 For each pair of labels, we fit a binary classifier.
 For each observation we define the label to be the element of the pair with minimal costs.

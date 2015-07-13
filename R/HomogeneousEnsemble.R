@@ -11,32 +11,28 @@ makeHomogeneousEnsemble = function(id, type, next.learner, package, par.set = ma
 #' @export
 # if ANY model in the list is broken --> failure
 isFailureModel.HomogeneousEnsembleModel = function(model) {
-  mods = getHomogeneousEnsembleModels(model, learner.models = FALSE)
+  mods = getLearnerModel(model, more.unwrap = FALSE)
   any(vlapply(mods, isFailureModel))
 }
 
 #' @export
 getFailureModelMsg.HomogeneousEnsembleModel = function(model) {
-  mods = getHomogeneousEnsembleModels(model, learner.models = FALSE)
+  mods = getLearnerModel(model, more.unwrap = FALSE)
   msgs = vcapply(mods, getFailureModelMsg)
   j = which.first(!is.na(msgs))
   ifelse(j == 0L, NA_character_ , msgs[j])
 }
 
-#' Returns the list of fitted models.
-#'
-#' @param model [\code{\link[mlr]{WrappedModel}}]\cr
-#'   Model produced by training a learner of homogeneous models.
-#' @param learner.models [\code{logical(1)}]\cr
-#'   Return underlying R models or wrapped
-#'   mlr models (\code{\link[mlr]{WrappedModel}}).
-#'   Default is \code{FALSE}.
-#' @return [\code{list}].
 #' @export
 getHomogeneousEnsembleModels = function(model, learner.models = FALSE) {
-  assertClass(model, classes = "HomogeneousEnsembleModel")
+  .Deprecated("getLearnerModel")
+  getLearnerModel(model, more.unwrap = learner.models)
+}
+
+#' @export
+getLearnerModel.HomogeneousEnsembleModel = function(model, more.unwrap = FALSE) {
   ms = model$learner.model$next.model
-  if (learner.models)
+  if (more.unwrap)
     extractSubList(ms, "learner.model", simplify = FALSE)
   else
     ms
@@ -49,7 +45,7 @@ getHomogeneousEnsembleModels = function(model, learner.models = FALSE) {
 # does only work for responses, not probs, se, etc
 predictHomogeneousEnsemble = function(.learner, .model, .newdata, ...) {
   classes = .model$task.desc$class.levels
-  models = getHomogeneousEnsembleModels(.model, learner.models = FALSE)
+  models = getLearnerModel(.model, more.unwrap = FALSE)
   # for classif we convert factor to char, nicer to handle later on
   preds = lapply(models, function(mod) {
     p = predict(mod, newdata = .newdata, ...)$data$response

@@ -8,16 +8,19 @@
 \title{Find matching learning algorithms.}
 \usage{
 listLearners(obj = NA_character_, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
+  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE,
+  create = FALSE)
 
 \method{listLearners}{default}(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
+  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE,
+  create = FALSE)
 
 \method{listLearners}{character}(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE)
+  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE,
+  create = FALSE)
 
 \method{listLearners}{Task}(obj, properties = character(0L), quiet = TRUE,
-  warn.missing.packages = TRUE, create = FALSE)
+  warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE)
 }
 \arguments{
 \item{obj}{[\code{character(1)} | \code{\link{Task}}]\cr
@@ -38,19 +41,28 @@ If some learner cannot be constructed because its package is missing,
 should a warning be shown?
 Default is \code{TRUE}.}
 
+\item{check.packages}{[\code{logical(1)}]\cr
+Check if required packages are installed. Calls
+\code{installed.packages()}. If \code{create} is \code{TRUE},
+this is done implicitly and the value of this parameter is ignored.
+Default is \code{TRUE}. If set to \code{FALSE}, learners that cannot
+actually be constructed because of missing packages may be returned.}
+
 \item{create}{[\code{logical(1)}]\cr
 Instantiate objects (or return strings)?
 Default is \code{FALSE}.}
 }
 \value{
 [\code{character} | \code{list} of \code{\link{Learner}}].
-  Named by ids of listed learners.
+  The latter is named by ids of listed learners.
 }
 \description{
 Returns the class names of learning algorithms which have specific characteristics, e.g.
 whether they supports missing values, case weights, etc.
 
-Note that the packages of all learners are loaded during the search.
+Note that the packages of all learners are loaded during the search if you create them.
+This can be a lot. If you do not create them we only inspect properties of the S3 classes.
+This will be a lot faster.
 
 Note that for general cost-sensitive learning, mlr currently supports mainly
 \dQuote{wrapper} approaches like \code{\link{CostSensWeightedPairsWrapper}},

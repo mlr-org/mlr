@@ -177,7 +177,7 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
 #' task = makeClassifTask(data = iris, target = "Species")
 #' getTaskTargets(task)
 getTaskTargets = function(task, recode.target = "no") {
-  UseMethod(("getTaskTargets"))
+  UseMethod("getTaskTargets")
 }
 
 #' @export

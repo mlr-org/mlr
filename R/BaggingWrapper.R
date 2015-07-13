@@ -5,7 +5,7 @@
 #' (i.e., similar to what a \code{randomForest} does).
 #' Creates a learner object, which can be
 #' used like any other learner object.
-#' Models can easily be accessed via \code{\link{getHomogeneousEnsembleModels}}.
+#' Models can easily be accessed via \code{\link{getLearnerModel}}.
 #'
 #' Bagging is implemented as follows:
 #' For each iteration a random data subset is sampled (with or without replacement)
@@ -116,7 +116,7 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL
 
 #' @export
 predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
-  models = getHomogeneousEnsembleModels(.model, learner.models = FALSE)
+  models = getLearnerModel(.model, more.unwrap = FALSE)
   g = if (.learner$type == "classif") as.character else identity
   p = asMatrixCols(lapply(models, function(m) {
     nd = .newdata[, m$features, drop = FALSE]

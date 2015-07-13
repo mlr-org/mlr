@@ -43,7 +43,7 @@ test_that("ModelMultiplexer basic stuff works", {
   expect_true(setequal(names(xs), c("selected.learner", "classif.rpart.minsplit", "classif.rpart.xval")))
   expect_equal(xs$classif.rpart.minsplit, 10000L)
   mod = train(lrn2, task = binaryclass.task)
-  expect_equal(getLearnerModel(mod)$control$minsplit, 10000L)
+  expect_equal(getLearnerModel(mod, more.unwrap = TRUE)$control$minsplit, 10000L)
 
   # check removal
   lrn3 = removeHyperPars(lrn2, "classif.rpart.minsplit")
@@ -59,16 +59,16 @@ test_that("ModelMultiplexer basic stuff works", {
 
 test_that("FailureModel works", {
   lrn = list(
-    makeLearner("classif.mock2", config = list(on.learner.error = "warn")),
+    makeLearner("classif.__mlrmocklearners__2", config = list(on.learner.error = "warn")),
     makeLearner("classif.rpart", config = list(on.learner.error = "warn"))
   )
   lrn = makeModelMultiplexer(lrn)
 
-  lrn = setHyperPars(lrn, classif.mock2.alpha = 1)
+  lrn = setHyperPars(lrn, classif.__mlrmocklearners__2.alpha = 1)
   mod = train(lrn, task = iris.task)
   expect_false(isFailureModel(mod))
 
-  lrn = setHyperPars(lrn, classif.mock2.alpha = 0)
+  lrn = setHyperPars(lrn, classif.__mlrmocklearners__2.alpha = 0)
   expect_warning(mod <- train(lrn, task = iris.task), "foo")
   expect_true(isFailureModel(mod))
 })

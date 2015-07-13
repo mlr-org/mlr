@@ -6,6 +6,13 @@ test_that("generateLearningCurve", {
                                 measures = list(acc, timeboth))
   expect_true(all(c("learner", "percentage", "acc", "timeboth") %in% colnames(r$data)))
   plotLearningCurve(r)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  expect_that(length(XML::getNodeSet(doc, grey.xpath, "svg")), equals(length(r$measures)))
+  expect_that(length(XML::getNodeSet(doc, red.line.xpath, "svg")) - 1, equals(length(unique(r$data$learner))))
+  expect_that(length(XML::getNodeSet(doc, blue.line.xpath, "svg")) - 1, equals(length(unique(r$data$learner))))
   ## plotLearningCurveGGVIS(r)
 
   r = generateLearningCurveData(learners = list("regr.lm", "regr.svm"),
@@ -14,6 +21,11 @@ test_that("generateLearningCurve", {
                                 measures = list(sse, timeboth))
   expect_true(all(c("learner", "percentage", "sse", "timeboth") %in% colnames(r$data)))
   plotLearningCurve(r)
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  expect_that(length(XML::getNodeSet(doc, grey.xpath, "svg")), equals(length(r$measures)))
+  expect_that(length(XML::getNodeSet(doc, red.line.xpath, "svg")) - 1, equals(length(unique(r$data$learner))))
+  expect_that(length(XML::getNodeSet(doc, blue.line.xpath, "svg")) - 1, equals(length(unique(r$data$learner))))
   ## plotLearningCurveGGVIS(r)
 
   r = generateLearningCurveData(list("classif.rpart", "classif.knn"),
@@ -21,5 +33,10 @@ test_that("generateLearningCurve", {
                                 resampling = makeResampleDesc("Holdout", predict = "both"),
                                 measures = list(acc, setAggregation(acc, train.mean)))
   plotLearningCurve(r)
-  plotLearningCurveGGVIS(r) ## not interactive by default
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  expect_that(length(XML::getNodeSet(doc, grey.xpath, "svg")), equals(length(r$measures)))
+  expect_that(length(XML::getNodeSet(doc, red.line.xpath, "svg")) - 1, equals(length(unique(r$data$learner))))
+  expect_that(length(XML::getNodeSet(doc, blue.line.xpath, "svg")) - 1, equals(length(unique(r$data$learner))))
+  ## plotLearningCurveGGVIS(r)
 })
