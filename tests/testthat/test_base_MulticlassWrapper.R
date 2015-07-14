@@ -4,10 +4,10 @@ test_that("MulticlassWrapper", {
   #cmatrix function
   ownCmatrix = function (task) {
     cm.onevsrest = function(task) {
-      n = length(task$task.desc$class.levels)
+      n = length(getTaskClassLevels(task))
       cm = matrix(-1, n, n)
       diag(cm) = 1
-      rownames(cm) = task$task.desc$class.levels
+      rownames(cm) = getTaskClassLevels(task)
       return(cm)
     }
     cm = cm.onevsrest(task)

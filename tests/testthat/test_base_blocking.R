@@ -4,7 +4,7 @@ test_that("blocking", {
   df = multiclass.df
   b = as.factor(rep(1:30, 5))
   ct = makeClassifTask(target=multiclass.target, data=multiclass.df, blocking=b)
-  expect_true(ct$task.desc$has.blocking)
+  expect_true(getTaskDescription(ct)$has.blocking)
   res = makeResampleInstance(makeResampleDesc("CV", iters=3), task=ct)
   for (j in 1:res$desc$iters) {
     train.j = res$train.inds[[j]]

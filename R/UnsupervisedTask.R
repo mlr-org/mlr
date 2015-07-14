@@ -1,21 +1,7 @@
-makeUnsupervisedTask = function(type, data, weights = NULL, blocking = NULL) {
-  env = new.env(parent = emptyenv())
-  assertDataFrame(data)
-  env$data = data
-  makeS3Obj(c("UnsupervisedTask", "Task"),
-    env = env,
-    weights = weights,
-    blocking = blocking,
-    task.desc = NA
-  )
-}
-
-checkTaskCreation.UnsupervisedTask = function(task, ...) {
-  NextMethod("checkTaskCreation")
-}
-
-fixupData.UnsupervisedTask = function(task, target, choice) {
-  NextMethod("fixupData")
+makeUnsupervisedTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "warn", check.data = TRUE) {
+  task = makeTask(type, data, weights, blocking, fixup.data = fixup.data, check.data = check.data)
+  checkTaskData(getTaskData(data))
+  addClasses(task, "UnsupervisedTask")
 }
 
 #' @export

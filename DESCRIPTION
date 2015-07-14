@@ -26,13 +26,13 @@ License: BSD_2_clause + file LICENSE
 Encoding: UTF-8
 Roxygen: list(wrap = FALSE)
 Depends:
-    R (>= 3.0.0),
+    R (>= 3.0.2),
     BBmisc (>= 1.9),
     ggplot2,
     ParamHelpers (>= 1.5),
     stats
 Imports:
-    checkmate (>= 1.5.3),
+    checkmate (>= 1.6.0),
     ggvis,
     parallelMap (>= 1.3),
     plyr,

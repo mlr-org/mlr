@@ -4,11 +4,11 @@
 \alias{getTaskClassLevels}
 \title{Get the class levels for classification and multilabel tasks.}
 \usage{
-getTaskClassLevels(task)
+getTaskClassLevels(x)
 }
 \arguments{
-\item{task}{[\code{\link{Task}}]\cr
-The task.}
+\item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
+Task or its description object.}
 }
 \value{
 [\code{character}].

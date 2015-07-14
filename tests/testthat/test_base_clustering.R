@@ -58,7 +58,7 @@ test_that("clustering benchmark", {
 
 test_that("clustering downsample", {
   down.tsk = downsample(noclass.task, perc = 1/3)
-  expect_equal(down.tsk$task.desc$size, 50L)
+  expect_equal(getTaskSize(down.tsk), 50L)
 })
 
 test_that("clustering tune", {
@@ -73,4 +73,3 @@ test_that("clustering tune", {
   expect_equal(getOptPathLength(tr$opt.path), 2)
   expect_true(!is.na(tr$y))
 })
-

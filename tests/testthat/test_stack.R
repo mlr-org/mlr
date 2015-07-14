@@ -14,8 +14,7 @@ checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
   pr = predict(tr, task)
 
   if (sm.pt == "prob") {
-    expect_equal(ncol(pr$data[,grepl("prob", colnames(pr$data))]),
-      length(task$task.desc$class.levels))
+    expect_equal(ncol(pr$data[,grepl("prob", colnames(pr$data))]), length(getTaskClassLevels(task)))
   }
 
   if (method != "stack.cv") {
@@ -29,6 +28,7 @@ checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
 test_that("Stacking works", {
   tasks = list(binaryclass.task, multiclass.task, regr.task)
   for (task in tasks) {
+    td = getTaskDescription(task)
     if (inherits(task, "ClassifTask")) {
       pts = c("response", "prob")
       base = c("classif.rpart", "classif.lda", "classif.svm")
@@ -43,7 +43,7 @@ test_that("Stacking works", {
       for (use.feat in ufs) {
         for (sm.pt in pts) {
           for (bms.pt in pts) {
-            #cat(task$task.desc$type, task$task.desc$id, method, use.feat, sm.pt, bms.pt, fill = TRUE)
+            # cat(td$type, td$id, method, use.feat, sm.pt, bms.pt, fill = TRUE)
             checkStack(task, method, base, super, bms.pt, sm.pt, use.feat)
           }
         }

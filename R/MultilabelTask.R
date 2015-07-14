@@ -1,25 +1,20 @@
 #' @export
 #' @rdname Task
-makeMultilabelTask = function(id, data, target, weights = NULL, blocking = NULL,
-  positive = NA_character_, fixup.data = "warn", check.data = TRUE){
+makeMultilabelTask = function(id = deparse(substitute(data)), data, target, weights = NULL, blocking = NULL, positive = NA_character_, fixup.data = "warn", check.data = TRUE) {
+  assertString(id)
+  assertCharacter(target, any.missing = FALSE, min.len = 2L)
+  assertDataFrame(data)
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)
-  assertCharacter(target)
-  task = addClasses(makeSupervisedTask("multilabel", data, target, weights, blocking), "MultilabelTask")
-  if (fixup.data != "no")
-    fixupData(task,target,fixup.data)
-  if (check.data)
-    checkTaskCreation(task,target)
-  id = checkOrGuessId(id, data)
-  task$task.desc = makeTaskDesc.MultilabelTask(task, id, target)
-  return(task)
-}
 
-checkTaskCreation.MultilabelTask = function(task, target, ...) {
-  NextMethod("checkTaskCreation")
-  for (i in target){
-    assertLogical(task$env$data[[i]], any.missing = FALSE, .var.name = target[i])
+  task = makeSupervisedTask("multilabel", data, target, weights, blocking)
+  # currently we dont do any fixup here
+  if (check.data) {
+    for (cn in target)
+      assertLogical(task$env$data[[cn]], any.missing = FALSE, .var.name = cn)
   }
+  task$task.desc = makeTaskDesc.MultilabelTask(task, id, target)
+  addClasses(task, "MultilabelTask")
 }
 
 #' @export
@@ -35,5 +30,5 @@ makeTaskDesc.MultilabelTask = function(task, id, target) {
   levs = target
   td = makeTaskDescInternal(task, "multilabel", id, target)
   td$class.levels = levs
-  return(addClasses(td, "TaskDescMultilabel"))
+  return(addClasses(td, c("TaskDescMultilabel", "TaskDescSupervised")))
 }

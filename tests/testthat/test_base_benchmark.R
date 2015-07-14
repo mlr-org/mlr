@@ -32,7 +32,7 @@ test_that("benchmark", {
 
   preds = getBMRPredictions(res, as.df = TRUE)
   expect_is(preds, "data.frame")
-  expect_equal(nrow(preds), 2 * (multiclass.task$task.desc$size + binaryclass.task$task.desc$size))
+  expect_equal(nrow(preds), 2 * (getTaskSize(multiclass.task) + getTaskSize(binaryclass.task)))
 
   p = getBMRPerformances(res, as.df = TRUE)
   expect_is(p, "data.frame")

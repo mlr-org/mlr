@@ -35,9 +35,10 @@ test_that("resample", {
   rf4 = setThreshold(rf4, 1)
 
   expect_equal(rf1$data$response, rf2$data$response)
-  f1 = factor(rep(binaryclass.task$task.desc$positive, cv.i$size), levels = binaryclass.task$task.desc$class.levels)
+  td = getTaskDescription(binaryclass.task)
+  f1 = factor(rep(td$positive, cv.i$size), levels = td$class.levels)
   expect_equal(rf3$data$response, f1)
-  f2 = factor(rep(binaryclass.task$task.desc$negative, cv.i$size), levels = binaryclass.task$task.desc$class.levels)
+  f2 = factor(rep(td$negative, cv.i$size), levels = td$class.levels)
   expect_equal(rf4$data$response, f2)
 
   ct = makeClassifTask(data = iris[,c("Species", "Petal.Width")], target = "Species")

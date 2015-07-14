@@ -76,3 +76,12 @@ cost = matrix(runif(150*3,0,2000), 150) * (1 - diag(3))[iris$Species,]
 iris$Species = NULL
 costiris.task = makeCostSensTask("cost-sensitive iris-example", data = iris, cost = cost)
 save(costiris.task, file = file.path(dn, "costiris.task.RData"), compress = "xz")
+
+# multilabel
+set.seed(DATASEED)
+d = load2("../thirdparty/yeast.RData")
+yeast.task = makeMultilabelTask("yeast-example", data = d, target = paste0("label", 1:14))
+save(yeast.task, file = file.path(dn, "yeast.task.RData"), compress = "xz")
+
+
+

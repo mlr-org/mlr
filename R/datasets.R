@@ -111,3 +111,16 @@ NULL
 #' @keywords data
 #' @docType data
 NULL
+
+#' Yeast multilabel classification task
+#'
+#' Contains the task (\code{yeast.task}).
+#'
+#' @name yeast.task
+#' @source \url{http://sourceforge.net/projects/mulan/files/datasets/yeast.rar}
+#' @references Elisseeff, A., & Weston, J. (2001):
+#' A kernel method for multi-labelled classification.
+#' In Advances in neural information processing systems (pp. 681-687).
+#' @keywords data
+#' @docType data
+NULL

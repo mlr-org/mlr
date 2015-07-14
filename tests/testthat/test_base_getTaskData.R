@@ -7,20 +7,21 @@ test_that("getTaskData", {
   expect_equal(df, multiclass.df[1:10, c(1:2, 5)])
 
   # recode.target
+  td = getTaskDescription(binaryclass.task)
   df = getTaskData(binaryclass.task, recode.target="01")
   expect_equal(df[, 1:20], binaryclass.df[, 1:20])
   expect_true(is.numeric(df[, binaryclass.target]))
   expect_equal(sum(df[, binaryclass.target] == 1),
-    sum(binaryclass.df[, binaryclass.target] == binaryclass.task$task.desc$positive))
+    sum(binaryclass.df[, binaryclass.target] == td$positive))
   expect_equal(sum(df[, binaryclass.target] == 0),
-    sum(binaryclass.df[, binaryclass.target] == binaryclass.task$task.desc$negative))
+    sum(binaryclass.df[, binaryclass.target] == td$negative))
   df = getTaskData(binaryclass.task, recode.target="-1+1")
   expect_equal(df[,1:20], binaryclass.df[, 1:20])
   expect_true(is.numeric(df[, binaryclass.target]))
   expect_equal(sum(df[, binaryclass.target] == 1),
-    sum(binaryclass.df[, binaryclass.target] == binaryclass.task$task.desc$positive))
+    sum(binaryclass.df[, binaryclass.target] == td$positive))
   expect_equal(sum(df[, binaryclass.target] == -1),
-    sum(binaryclass.df[, binaryclass.target] == binaryclass.task$task.desc$negative))
+    sum(binaryclass.df[, binaryclass.target] == td$negative))
 
   df = getTaskData(binaryclass.task, subset=1:150, features=colnames(binaryclass.df)[1:2])
   expect_equal(nrow(df), 150)
@@ -53,5 +54,25 @@ test_that("getTaskData survival", {
 
   x = getTaskData(surv.task, target.extra=TRUE, recode.target="rcens")
   expect_true(is.Surv(x$target))
+  expect_equal(dim(x$target), c(150L, 2L))
+})
+
+test_that("getTaskData multilabel", {
+  df = getTaskData(multilabel.task)
+  expect_equal(df, multilabel.df)
+  cn = colnames(multilabel.df)[3:4]
+  df = getTaskData(multilabel.task, subset=1:10, features=cn)
+  expect_equal(df, multilabel.df[1:10, union(cn, multilabel.target)])
+  
+  x = getTaskData(multilabel.task, target.extra=TRUE)
+  expect_true(setequal(names(x), c("data", "target")))
+  expect_true(is.data.frame(x$data))
+  expect_true(is.data.frame(x$target))
+  expect_equal(dim(x$data), c(150L, 5L))
+  expect_equal(dim(x$target), c(150L, 2L))
+  expect_equal(names(x$target), multilabel.target)
+  expect_true(setequal(names(x$data), setdiff(names(multilabel.df), multilabel.target)))
+  
+  x = getTaskData(multilabel.task, target.extra=TRUE)
   expect_equal(dim(x$target), c(150L, 2L))
 })

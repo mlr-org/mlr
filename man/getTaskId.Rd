@@ -4,11 +4,11 @@
 \alias{getTaskId}
 \title{Get the id of the task.}
 \usage{
-getTaskId(task)
+getTaskId(x)
 }
 \arguments{
-\item{task}{[\code{\link{Task}}]\cr
-The task.}
+\item{x}{[\code{\link{Task}} | \code{\link{TaskDesc}}]\cr
+Task or its description object.}
 }
 \value{
 [\code{character(1)}].
