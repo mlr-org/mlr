@@ -88,8 +88,12 @@ test_that("ImputeWrapper", {
   m = train(lrn, task)
   p = predict(m, task)
   expect_true(!any(is.na(p$data$response)))
-  mm = getLearnerModel(m)
+  mm = getLearnerModel(m, more.unwrap = TRUE)
+  expect_output(print(mm), "root")
   expect_is(mm, "rpart")
+  mm = getLearnerModel(m, more.unwrap = FALSE)
+  expect_output(print(mm), "Model")
+  expect_is(mm, "WrappedModel")
 })
 
 

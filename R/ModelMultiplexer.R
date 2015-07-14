@@ -103,8 +103,11 @@ makeWrappedModel.ModelMultiplexer = function(learner, learner.model, task.desc, 
 }
 
 #' @export
-getLearnerModel.ModelMultiplexerModel = function(model) {
-  model$learner.model$next.model$learner.model
+getLearnerModel.ModelMultiplexerModel = function(model, more.unwrap = FALSE) {
+  if (more.unwrap)
+    model$learner.model$next.model$learner.model
+  else
+    model$learner.model$next.model
 }
 
 #' @export

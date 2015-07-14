@@ -43,7 +43,7 @@ test_that("ModelMultiplexer basic stuff works", {
   expect_true(setequal(names(xs), c("selected.learner", "classif.rpart.minsplit", "classif.rpart.xval")))
   expect_equal(xs$classif.rpart.minsplit, 10000L)
   mod = train(lrn2, task = binaryclass.task)
-  expect_equal(getLearnerModel(mod)$control$minsplit, 10000L)
+  expect_equal(getLearnerModel(mod, more.unwrap = TRUE)$control$minsplit, 10000L)
 
   # check removal
   lrn3 = removeHyperPars(lrn2, "classif.rpart.minsplit")
