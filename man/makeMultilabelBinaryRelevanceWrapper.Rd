@@ -19,6 +19,15 @@ Every learner which is implemented in mlr and which supports binary
 classification can be converted to a wrapped binary relevance multilabel learner.
 The multilabel classification problem is converted into simple binary classifications
 for each label/target on which the binary learner is applied.
+
+Models can easily be accessed via \code{\link{getLearnerModel}}.
+
+Note that it does not make sense to set a threshold in the used base \code{learner}
+when you predict probabilities.
+On the other hand, it can make a lot of sense, to call \code{\link{setThreshold}}
+on the \code{MultilabelBinaryRelevanceWrapper} for each label indvidually;
+Or to tune these thresholds with \code{\link{tuneThreshold}}; especially when you face very
+unabalanced class distributions for each binary label.
 }
 \examples{
 lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")

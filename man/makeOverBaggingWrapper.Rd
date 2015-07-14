@@ -36,7 +36,7 @@ Fuses a classification learner for binary classification with an over-bagging me
 for imbalancy correction when we have strongly unequal class sizes.
 Creates a learner object, which can be
 used like any other learner object.
-Models can easily be accessed via \code{\link{getHomogeneousEnsembleModels}}.
+Models can easily be accessed via \code{\link{getLearnerModel}}.
 
 OverBagging is implemented as follows:
 For each iteration a random data subset is sampled. Minority class examples
