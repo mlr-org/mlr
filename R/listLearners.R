@@ -4,7 +4,9 @@
 #' Returns the class names of learning algorithms which have specific characteristics, e.g.
 #' whether they supports missing values, case weights, etc.
 #'
-#' Note that the packages of all learners are loaded during the search.
+#' Note that the packages of all learners are loaded during the search if you create them.
+#' This can be a lot. If you do not create them we only inspect properties of the S3 classes.
+#' This will be a lot faster.
 #'
 #' Note that for general cost-sensitive learning, mlr currently supports mainly
 #' \dQuote{wrapper} approaches like \code{\link{CostSensWeightedPairsWrapper}},
@@ -25,7 +27,7 @@
 #'   Instantiate objects (or return strings)?
 #'   Default is \code{FALSE}.
 #' @return [\code{character} | \code{list} of \code{\link{Learner}}].
-#'   Named by ids of listed learners.
+#'   The latter is named by ids of listed learners.
 #' @examples
 #' \dontrun{
 #' listLearners("classif", properties = c("multiclass", "prob"))
@@ -64,30 +66,44 @@ listLearners.character  = function(obj, properties = character(0L),
 
   type = obj
   meths = as.character(methods("makeRLearner"))
+  # make really sure we filter out our own mock learners here, they have a very unique name
+  meths = meths[!grepl("__mlrmocklearners__", meths)]
   res = err = vector("list", length(meths))
   learner.classes = vcapply(strsplit(meths, "makeRLearner\\."), function(x) x[2L])
   for (i in seq_along(meths)) {
     cl = learner.classes[[i]]
-    if (quiet)
-      suppressAll(lrn <- try(makeLearner(cl), silent = TRUE))
-    else
-      lrn = try(makeLearner(cl))
-
-    if (is.error(lrn)) {
-      err[[i]] = cl
-    } else if ((is.na(type) || type == lrn$type) && all(properties %in% lrn$properties)) {
-        res[[i]] = lrn
+    lrn.type = strsplit(cl, "\\.")[[1L]][1L]
+    # create the learner object, now it is simple to check the props
+    if (create) {
+      if (quiet)
+        suppressAll(lrn <- try(makeLearner(cl), silent = TRUE))
+      else
+        lrn = try(makeLearner(cl))
+      if (is.error(lrn))
+        err[[i]] = cl
+      else
+        lrn.properties = lrn$properties
+    } else { # dont create it, we need to parse the code tree
+      m = meths[[i]]
+      mb = functionBody(m)
+      lrn.properties = mb[[2L]]$properties
+      lrn.properties = eval(lrn.properties)
+      lrn = cl
     }
+    # check if we have correct type and props
+    if (is.null(err[[i]]) && (is.na(type) || type == lrn.type) && all(properties %in% lrn.properties))
+      res[[i]] = lrn
+
   }
   res = filterNull(res)
-  names(res) = vcapply(res, function(lrn) lrn$id)
+  if (create)
+    names(res) = extractSubList(res, "id")
+  else
+    res = unlist(res)
   err = filterNull(err)
   if (warn.missing.packages && length(err))
     warningf("The following learners could not be constructed, probably because their packages are not installed:\n%s\nCheck ?learners to see which packages you need or install mlr with all suggestions.", collapse(err))
-  if (create)
-    return(res)
-  else
-    return(vcapply(res, getClass1))
+  return(res)
 }
 
 #' @export

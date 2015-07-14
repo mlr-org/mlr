@@ -25,6 +25,8 @@ mlr_2.5:
 - classification learner now can have a property 'class.weights', supported by 'class.weights.param'. The latter
   indicates which of the parameters provides that class weights information to the learner.
 - class weights integrated in the learner will be used as default for 'wcw.param' in 'makeWeightedClassesWrapper'
+- listLearners with create = FALSE does not load packages anymore and is
+  therefore faster and more reliable
 
 - new functions
 -- getDefaultMeasure
