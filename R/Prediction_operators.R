@@ -63,8 +63,9 @@ getPredictionProbabilities = function(pred, cl) {
 }
 
 #' @export
-getProbabilities = function() {
+getProbabilities = function(pred, cl) {
   .Deprecated("getPredictionProbabilities")
+  getPredictionProbabilities(pred, cl)
 }
 
 #c.Prediction = function(...) {
