@@ -72,7 +72,7 @@ test_that("predict works with strange class labels", {
 })
 
 test_that("predict correctly propagates exception in predictLearner", {
-  capture.output(expect_error(holdout("classif.mock1", multiclass.task), "foo"))
+  capture.output(expect_error(holdout("classif.__mlrmocklearners__1", multiclass.task), "foo"))
 })
 
 test_that("predict works with newdata / subset", {

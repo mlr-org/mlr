@@ -59,16 +59,16 @@ test_that("ModelMultiplexer basic stuff works", {
 
 test_that("FailureModel works", {
   lrn = list(
-    makeLearner("classif.mock2", config = list(on.learner.error = "warn")),
+    makeLearner("classif.__mlrmocklearners__2", config = list(on.learner.error = "warn")),
     makeLearner("classif.rpart", config = list(on.learner.error = "warn"))
   )
   lrn = makeModelMultiplexer(lrn)
 
-  lrn = setHyperPars(lrn, classif.mock2.alpha = 1)
+  lrn = setHyperPars(lrn, classif.__mlrmocklearners__2.alpha = 1)
   mod = train(lrn, task = iris.task)
   expect_false(isFailureModel(mod))
 
-  lrn = setHyperPars(lrn, classif.mock2.alpha = 0)
+  lrn = setHyperPars(lrn, classif.__mlrmocklearners__2.alpha = 0)
   expect_warning(mod <- train(lrn, task = iris.task), "foo")
   expect_true(isFailureModel(mod))
 })

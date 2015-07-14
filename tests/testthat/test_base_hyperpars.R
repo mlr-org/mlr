@@ -42,7 +42,7 @@ test_that("removing par settings works", {
 })
 
 test_that("setting 'when' works for hyperpars", {
-  lrn = makeLearner("regr.mock4", p1 = 1, p2 = 2, p3 = 3)
+  lrn = makeLearner("regr.__mlrmocklearners__4", p1 = 1, p2 = 2, p3 = 3)
   hps = getHyperPars(lrn)
   expect_equal(hps, list(p1 = 1, p2 = 2, p3 = 3))
   # model stores p1 + p3 in fit, adds p2,p3 in predict to this (so it predicts constant val)
@@ -57,25 +57,25 @@ test_that("setting 'when' works for hyperpars", {
 test_that("options are respected", {
   # with local option
 
-  lrn = makeLearner("classif.mock2")
+  lrn = makeLearner("classif.__mlrmocklearners__2")
   expect_error(setHyperPars(lrn, beta = 1), "available description object")
-  lrn = makeLearner("classif.mock2", config = list(on.par.without.desc = "warn"))
+  lrn = makeLearner("classif.__mlrmocklearners__2", config = list(on.par.without.desc = "warn"))
   expect_warning(setHyperPars(lrn, beta = 1), "available description object")
-  lrn = makeLearner("classif.mock2", config = list(on.par.without.desc = "quiet"))
+  lrn = makeLearner("classif.__mlrmocklearners__2", config = list(on.par.without.desc = "quiet"))
   expect_is(setHyperPars(lrn, beta = 1), "Learner")
 
-  lrn = makeLearner("classif.mock2")
+  lrn = makeLearner("classif.__mlrmocklearners__2")
   expect_error(setHyperPars(lrn, alpha = 2), "feasible")
-  lrn = makeLearner("classif.mock2", config = list(on.par.out.of.bounds = "warn"))
+  lrn = makeLearner("classif.__mlrmocklearners__2", config = list(on.par.out.of.bounds = "warn"))
   expect_warning(setHyperPars(lrn, alpha = 2), "feasible")
-  lrn = makeLearner("classif.mock2", config = list(on.par.out.of.bounds = "quiet"))
+  lrn = makeLearner("classif.__mlrmocklearners__2", config = list(on.par.out.of.bounds = "quiet"))
   expect_is(setHyperPars(lrn, alpha = 2), "Learner")
 
 
   # with global option
   mlr.opts = getMlrOptions()
 
-  lrn = makeLearner("classif.mock2")
+  lrn = makeLearner("classif.__mlrmocklearners__2")
   configureMlr(on.par.without.desc = "quiet")
   expect_is(setHyperPars(lrn, beta = 1), "Learner")
   configureMlr(on.par.out.of.bounds = "quiet")

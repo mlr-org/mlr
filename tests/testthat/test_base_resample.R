@@ -90,7 +90,7 @@ test_that("resample checks constraints", {
 test_that("resample returns errors", {
   configureMlr(on.learner.error = "quiet")
 
-  lrn = makeLearner("classif.mock2", alpha = 1)
+  lrn = makeLearner("classif.__mlrmocklearners__2", alpha = 1)
   z = holdout(lrn, multiclass.task)
   expect_true(!is.na(z$aggr))
   expect_true(is.data.frame(z$err.msgs))
@@ -98,7 +98,7 @@ test_that("resample returns errors", {
   expect_true(all(is.na(z$err.msgs$train)))
   expect_true(all(is.na(z$err.msgs$predict)))
 
-  lrn = makeLearner("classif.mock2", alpha = 0)
+  lrn = makeLearner("classif.__mlrmocklearners__2", alpha = 0)
   m = train(lrn, multiclass.task)
   expect_true(isFailureModel(m))
   z = crossval(lrn, multiclass.task, iters = 2L)

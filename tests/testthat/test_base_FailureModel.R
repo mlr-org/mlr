@@ -42,7 +42,7 @@ test_that("FailureModel", {
   expect_true(all(is.na(p$data$se)))
 
   # costens: response
-  lrn = makeCostSensClassifWrapper("classif.mock3")
+  lrn = makeCostSensClassifWrapper("classif.__mlrmocklearners__3")
   m = train(lrn, costsens.task)
   expect_true(isFailureModel(m))
   expect_true(!is.null(m$learner.model))
