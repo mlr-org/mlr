@@ -30,7 +30,9 @@ mlr_2.5:
   indicates which of the parameters provides that class weights information to the learner.
 - class weights integrated in the learner will be used as default for 'wcw.param' in 'makeWeightedClassesWrapper'
 - listLearners with create = FALSE does not load packages anymore and is
-  therefore faster and more reliable
+  therefore faster and more reliable; it also supports the additional parameter
+  check.packages now that will check whether required packages are installed
+  without loading them
 
 - new functions
 -- getDefaultMeasure

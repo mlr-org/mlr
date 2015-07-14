@@ -23,6 +23,12 @@
 #'   If some learner cannot be constructed because its package is missing,
 #'   should a warning be shown?
 #'   Default is \code{TRUE}.
+#' @param check.packages [\code{logical(1)}]\cr
+#'   Check if required packages are installed. Calls
+#'   \code{installed.packages()}. If \code{create} is \code{TRUE},
+#'   this is done implicitly and the value of this parameter is ignored.
+#'   Default is \code{TRUE}. If set to \code{FALSE}, learners that cannot
+#'   actually be constructed because of missing packages may be returned.
 #' @param create [\code{logical(1)}]\cr
 #'   Instantiate objects (or return strings)?
 #'   Default is \code{FALSE}.
@@ -37,7 +43,7 @@
 #' }
 #' @export
 listLearners  = function(obj = NA_character_, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE) {
+  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
 
   if (!missing(obj))
     assert(checkCharacter(obj), checkClass(obj, "Task"))
@@ -51,15 +57,15 @@ listLearners  = function(obj = NA_character_, properties = character(0L),
 #' @export
 #' @rdname listLearners
 listLearners.default  = function(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE) {
+  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
 
-  listLearners.character(obj = NA_character_, properties, quiet, warn.missing.packages, create)
+  listLearners.character(obj = NA_character_, properties, quiet, warn.missing.packages, check.packages, create)
 }
 
 #' @export
 #' @rdname listLearners
 listLearners.character  = function(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE) {
+  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
 
   assertChoice(obj, choices = c("classif", "regr", "surv", "costsens", "cluster", "multilabel", NA_character_))
   assertSubset(properties, getSupportedLearnerProperties(obj))
@@ -70,31 +76,47 @@ listLearners.character  = function(obj, properties = character(0L),
   meths = meths[!grepl("__mlrmocklearners__", meths)]
   res = err = vector("list", length(meths))
   learner.classes = vcapply(strsplit(meths, "makeRLearner\\."), function(x) x[2L])
+  if (!create && check.packages) {
+    installed.packs = rownames(installed.packages())
+  }
   for (i in seq_along(meths)) {
     cl = learner.classes[[i]]
     lrn.type = strsplit(cl, "\\.")[[1L]][1L]
-    # create the learner object, now it is simple to check the props
-    if (create) {
-      if (quiet)
-        suppressAll(lrn <- try(makeLearner(cl), silent = TRUE))
-      else
-        lrn = try(makeLearner(cl))
-      if (is.error(lrn))
-        err[[i]] = cl
-      else
-        lrn.properties = lrn$properties
-    } else { # dont create it, we need to parse the code tree
-      m = meths[[i]]
-      mb = functionBody(m)
+    m = meths[[i]]
+    mb = functionBody(m)
+    if (!create && check.packages) {
+      depsInstalled = all(sapply(eval(mb[[2L]]$package), function(x) {
+        char = substr(x, 1L, 1L)
+        pack = substr(x, 1L + (char == "!" | char == "_"), nchar(x))
+        pack %in% installed.packs
+      }))
+    }
+    if (create || !check.packages || depsInstalled) {
       lrn.properties = mb[[2L]]$properties
       lrn.properties = eval(lrn.properties)
       lrn = cl
+    } else {
+      err[[i]] = learner.classes[[i]]
     }
-    # check if we have correct type and props
-    if (is.null(err[[i]]) && (is.na(type) || type == lrn.type) && all(properties %in% lrn.properties))
-      res[[i]] = lrn
 
+    # check if we have correct type and props
+    if (is.null(err[[i]]) && (is.na(type) || type == lrn.type) && all(properties %in% lrn.properties)) {
+      if (create) {
+        if (quiet) {
+          suppressAll(lrn <- try(makeLearner(lrn), silent = TRUE))
+        } else {
+          lrn = try(makeLearner(lrn))
+        }
+        if (is.error(lrn)) {
+          err[[i]] = cl
+        }
+      }
+      if (is.null(err[[i]])) {
+        res[[i]] = lrn
+      }
+    }
   }
+
   res = filterNull(res)
   if (create)
     names(res) = extractSubList(res, "id")
@@ -109,7 +131,7 @@ listLearners.character  = function(obj, properties = character(0L),
 #' @export
 #' @rdname listLearners
 listLearners.Task = function(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, create = FALSE) {
+  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
 
   task = obj
   td = getTaskDescription(task)
@@ -125,5 +147,5 @@ listLearners.Task = function(obj, properties = character(0L),
     if (length(td$class.levels) >= 3L) props = c(props, "multiclass")
   }
 
-  listLearners.character(td$type, union(props, properties), quiet, warn.missing.packages, create)
+  listLearners.character(td$type, union(props, properties), quiet, warn.missing.packages, check.packages, create)
 }
