@@ -193,11 +193,11 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
   create_plot = function(data, color, measures) {
     if (!is.null(color)) {
       plt = ggvis::ggvis(data, ggvis::prop("x", as.name("threshold")),
-                         ggvis::prop("y", as.name("perf")),
+                         ggvis::prop("y", as.name("performance")),
                          ggvis::prop("stroke", as.name(color)))
     } else {
       plt = ggvis::ggvis(data, ggvis::prop("x", as.name("threshold")),
-                         ggvis::prop("y", as.name("perf")))
+                         ggvis::prop("y", as.name("performance")))
     }
     plt = ggvis::layer_lines(plt)
     if (!is.na(mark.th) & is.null(interaction)) { ## cannot do vline with reactive data
