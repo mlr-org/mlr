@@ -7,6 +7,12 @@ test_that("generateThreshVsPerfData", {
   pred = predict(mod, binaryclass.task)
   pvs = generateThreshVsPerfData(pred, list(tpr, fpr))
   plotThreshVsPerf(pvs)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  expect_that(length(XML::getNodeSet(doc, grey.xpath, "svg")), equals(length(pvs$measures)))
+  expect_that(length(XML::getNodeSet(doc, black.line.xpath, "svg")), equals(length(pvs$measures)))
   ## plotThreshVsPerfGGVIS(pvs)
 
   ## resample prediction
@@ -14,6 +20,10 @@ test_that("generateThreshVsPerfData", {
   r = resample(lrn, binaryclass.task, rdesc)
   pvs = generateThreshVsPerfData(r, list(tpr, fpr))
   plotThreshVsPerf(pvs)
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  expect_that(length(XML::getNodeSet(doc, grey.xpath, "svg")), equals(length(pvs$measures)))
+  expect_that(length(XML::getNodeSet(doc, black.line.xpath, "svg")), equals(length(pvs$measures)))
   ## plotThreshVsPerfGGVIS(pvs)
 
   ## benchmark result
@@ -22,6 +32,11 @@ test_that("generateThreshVsPerfData", {
   res = benchmark(lrns, binaryclass.task, rdesc, show.info = FALSE)
   pvs = generateThreshVsPerfData(res, list(tpr, fpr))
   plotThreshVsPerf(pvs)
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  expect_that(length(XML::getNodeSet(doc, grey.xpath, "svg")), equals(length(pvs$measures)))
+  expect_that(length(XML::getNodeSet(doc, red.line.xpath, "svg")) - 1, equals(length(unique(pvs$data$learner))))
+  expect_that(length(XML::getNodeSet(doc, blue.line.xpath, "svg")) - 1, equals(length(unique(pvs$data$learner))))
   ## plotThreshVsPerfGGVIS(pvs)
 
   ## list of resample predictions
@@ -29,6 +44,11 @@ test_that("generateThreshVsPerfData", {
   names(rs) = c("a", "b")
   pvs = generateThreshVsPerfData(rs, list(tpr, fpr))
   plotThreshVsPerf(pvs)
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  expect_that(length(XML::getNodeSet(doc, grey.xpath, "svg")), equals(length(pvs$measures)))
+  expect_that(length(XML::getNodeSet(doc, red.line.xpath, "svg")) - 1, equals(length(unique(pvs$data$learner))))
+  expect_that(length(XML::getNodeSet(doc, blue.line.xpath, "svg")) - 1, equals(length(unique(pvs$data$learner))))
   ## plotThreshVsPerfGGVIS(pvs)
 
   ## test prediction obj with custom measure
@@ -39,5 +59,10 @@ test_that("generateThreshVsPerfData", {
                           minimize = TRUE, costs = mcm, binaryclass.task, combine = mean)
   pvs.custom = generateThreshVsPerfData(pred, costs)
   plotThreshVsPerf(pvs.custom)
+  ggsave(path)
+  doc = XML::xmlParse(path)
+
+  expect_that(length(XML::getNodeSet(doc, grey.xpath, "svg")), equals(length(pvs.custom$measures)))
+  expect_that(length(XML::getNodeSet(doc, black.line.xpath, "svg")), equals(length(unique(pvs.custom$data$learner))))
   ## plotThreshVsPerfGGVIS(pvs.custom)
 })

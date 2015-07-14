@@ -115,7 +115,8 @@ Suggests:
     stepPlr,
     testthat,
     tgp,
-    TH.data
+    TH.data,
+    XML
 LazyData: yes
 ByteCompile: yes
 Version: 2.5
