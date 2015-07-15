@@ -31,12 +31,17 @@ unabalanced class distributions for each binary label.
 }
 \examples{
 lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")
+lrn = setPredictType(lrn, "prob")
 # train, predict and evaluate
 mod = train(lrn, yeast.task)
 pred = predict(mod, yeast.task)
 p = performance(pred)
 # with newdata
 pred = predict(mod, newdata = getTaskData(yeast.task)[1:10,])
+getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
+# with prediction result of resample
+r = holdout(lrn, yeast.task, measures = hamloss)
+getMultilabelBinaryPerformances(r$pred, measures = list(mmce, auc))
 }
 \references{
 Tsoumakas, G., & Katakis, I. (2006)
@@ -44,6 +49,8 @@ Tsoumakas, G., & Katakis, I. (2006)
 Dept. of Informatics, Aristotle University of Thessaloniki, Greece.
 }
 \seealso{
+Other multilabel: \code{\link{getMultilabelBinaryPerformances}}
+
 Other wrapper: \code{\link{CostSensClassifModel}},
   \code{\link{CostSensClassifWrapper}},
   \code{\link{makeCostSensClassifWrapper}};
