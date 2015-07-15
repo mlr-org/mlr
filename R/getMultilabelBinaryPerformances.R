@@ -1,42 +1,40 @@
-#' @title Binary Classification Measures for Multilabel Classification Predictions.
+#' @title Retrieve binary classification measures for multilabel classification predictions.
 #'
 #' @description
-#' Measures the quality of each label prediction w.r.t. some binary classification 
+#' Measures the quality of each binary label prediction w.r.t. some binary classification
 #' performance measure.
-#' 
+#'
 #' @param pred [\code{\link{Prediction}}]\cr
-#'   Multilabel Prediction object. 
+#'   Multilabel Prediction object.
 #' @param measures [\code{\link{Measure}} | list of \code{\link{Measure}}]
-#'   Performance measure(s) to evaluate. Has to be a measure that measures 
-#'   binary classification performance. Default is mean missclassification error.
+#'   Performance measure(s) to evaluate, must be applicable to binary classification performance.
+#'   Default is \code{mmce}.
 #' @return [named \code{matrix}]. Performance value(s), column names are measure(s), row names are labels.
 #' @export
 #' @family multilabel
 #' @examples
-#' task = yeast.task
-#' lrn = makeMultilabelBinaryRelevanceWrapper("classif.rpart")
-#' mod = train(lrn, yeast.task)
-#' pred = predict(mod, yeast.task)
-#' measures = list(mmce, acc)
-#' getMultilabelBinaryPerformances(pred, measures)
-#' # with prediction result of resample
-#' rdesc = makeResampleDesc("CV", iters = 2)
-#' r = resample(lrn, task, rdesc, measures = list(hamloss))
-#' getMultilabelBinaryPerformances(r$pred, measures)
+#' # see makeMultilabelBinaryRelevanceWrapper
 getMultilabelBinaryPerformances = function(pred, measures) {
   checkPrediction(pred, task.type = "multilabel")
-  pred$task.desc$type = "classif"
-  measures = checkMeasures(measures, pred$task.desc)
+  measures = checkMeasures(measures, "classif")
   p = matrix(, length(pred$task.desc$class.levels), length(measures))
   colnames(p) = vcapply(measures, measureAggrName)
   rownames(p) = pred$task.desc$class.levels
-  truth = getPredictionTruth(pred)
-  response = getPredictionResponse(pred)
+  truths = getPredictionTruth(pred)
+  responses = getPredictionResponse(pred)
+  if (pred$predict.type == "prob")
+    probs = getPredictionProbabilities(pred)
   for (measure in measures) {
     predi = pred
+    predi$task.desc$type = "classif"
+    predi$task.desc$class.levels = c("TRUE", "FALSE")
+    predi$task.desc$positive = "TRUE"
+    predi$task.desc$negative = "FALSE"
     measurename = measureAggrName(measure)
     for (label in pred$task.desc$class.levels) {
-      predi$data = data.frame(truth = truth[, label], response = response[, label])
+      predi$data = data.frame(truth = truths[, label], response = responses[, label])
+      if (pred$predict.type == "prob")
+        predi$data$prob.TRUE = probs[, label]
       p[label, measurename] = performance(predi, measure)
     }
   }

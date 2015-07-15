@@ -40,7 +40,7 @@ mlr_2.5:
 -- getPredictionTruth, getPredictionResponse
 -- convertMLBenchObjToTask
 -- getBMRLearners, getBMRMeasures, getBMRMeasureIds
--- makeMultilabelTask, makeMultilabelWrapper
+-- makeMultilabelTask, makeMultilabelWrapper, getMultilabelBinaryPerformances
 -- generatePartialPredictionData, plotPartialPrediction, and plotPartialPredictionGGVIS
 -- getClassWeightParam
 

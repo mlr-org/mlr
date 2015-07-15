@@ -32,6 +32,11 @@
 #' p = performance(pred)
 #' # with newdata
 #' pred = predict(mod, newdata = getTaskData(yeast.task)[1:10,])
+#  performance(pred, measure = hamloss)
+#' getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
+#' # with prediction result of resample
+#' r = holdout(lrn, yeast.task, measures = hamloss)
+#' getMultilabelBinaryPerformances(r$pred, measures = list(mmce, auc))
 makeMultilabelBinaryRelevanceWrapper = function(learner) {
   learner = checkLearner(learner, type = "classif")
   id = paste("multilabel", learner$id, sep = ".")
