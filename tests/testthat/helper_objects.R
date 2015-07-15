@@ -72,3 +72,13 @@ surv.task = makeSurvTask("survtask", data = surv.df, target = surv.target)
 costsens.feat = iris
 costsens.costs = matrix(runif(150L * 3L, min = 0, max = 1), 150L, 3L)
 costsens.task = makeCostSensTask("costsens", data = costsens.feat, costs = costsens.costs)
+
+black.xpath = "//svg:path[contains(@style, 'fill:rgb(0%,0%,0%);')]"
+grey.xpath = "//svg:path[contains(@style, 'fill:rgb(89.803922%,89.803922%,89.803922%);')]"
+red.xpath = "//svg:path[contains(@style, 'fill:rgb(97.254902%,46.27451%,42.745098%);')]"
+blue.xpath = "//svg:path[contains(@style, 'fill:rgb(38.039216%,61.176471%,100%);')]"
+green.xpath = "//svg:path[contains(@style, 'fill:rgb(0%,72.941176%,21.960784%);')]"
+black.line.xpath = "//svg:path[contains(@style, 'stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,0%);')]"
+red.line.xpath = "//svg:path[contains(@style, 'stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,74.901961%,76.862745%);')]"
+blue.line.xpath = "//svg:path[contains(@style, 'stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(97.254902%,46.27451%,42.745098%);')]"
+black.bar.xpath = "//svg:path[contains(@style, 'stroke:none;fill-rule:nonzero;fill:rgb(20%,20%,20%);fill-opacity:1')]"
