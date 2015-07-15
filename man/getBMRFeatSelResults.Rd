@@ -34,6 +34,12 @@ Returns a list of lists of ???? data.frames, as returned by
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}};
   \code{\link{benchmark}};
+  \code{\link{convertBMRToRankMatrix}};
+  \code{\link{friedmanPostHocTestBMR}};
+  \code{\link{friedmanTestBMR}};
+  \code{\link{generateBenchmarkSummaryData}};
+  \code{\link{generateCritDifferencesData}};
+  \code{\link{generateRankMatrixAsBarData}};
   \code{\link{getBMRAggrPerformances}};
   \code{\link{getBMRFilteredFeatures}};
   \code{\link{getBMRLearnerIds}};
@@ -43,6 +49,10 @@ Other benchmark: \code{\link{BenchmarkResult}};
   \code{\link{getBMRPerformances}};
   \code{\link{getBMRPredictions}};
   \code{\link{getBMRTaskIds}};
-  \code{\link{getBMRTuneResults}}
+  \code{\link{getBMRTuneResults}};
+  \code{\link{plotBenchmarkResult}};
+  \code{\link{plotBenchmarkSummary}};
+  \code{\link{plotCritDifferences}};
+  \code{\link{plotRankMatrixAsBar}}
 }
 

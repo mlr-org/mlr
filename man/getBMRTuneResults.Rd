@@ -33,6 +33,12 @@ Returns a list of lists of ??? as returned by
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}};
   \code{\link{benchmark}};
+  \code{\link{convertBMRToRankMatrix}};
+  \code{\link{friedmanPostHocTestBMR}};
+  \code{\link{friedmanTestBMR}};
+  \code{\link{generateBenchmarkSummaryData}};
+  \code{\link{generateCritDifferencesData}};
+  \code{\link{generateRankMatrixAsBarData}};
   \code{\link{getBMRAggrPerformances}};
   \code{\link{getBMRFeatSelResults}};
   \code{\link{getBMRFilteredFeatures}};
@@ -42,6 +48,10 @@ Other benchmark: \code{\link{BenchmarkResult}};
   \code{\link{getBMRMeasures}};
   \code{\link{getBMRPerformances}};
   \code{\link{getBMRPredictions}};
-  \code{\link{getBMRTaskIds}}
+  \code{\link{getBMRTaskIds}};
+  \code{\link{plotBenchmarkResult}};
+  \code{\link{plotBenchmarkSummary}};
+  \code{\link{plotCritDifferences}};
+  \code{\link{plotRankMatrixAsBar}}
 }
 

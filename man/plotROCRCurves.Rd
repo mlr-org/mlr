@@ -33,13 +33,17 @@ ggplot2 plot object.
 Visualize how binary classification performs across different measures.
 }
 \seealso{
-Other plot: \code{\link{plotFilterValuesGGVIS}};
+Other plot: \code{\link{plotBenchmarkResult}};
+  \code{\link{plotBenchmarkSummary}};
+  \code{\link{plotCritDifferences}};
+  \code{\link{plotFilterValuesGGVIS}};
   \code{\link{plotFilterValues}};
   \code{\link{plotLearningCurveGGVIS}};
   \code{\link{plotLearningCurve}};
   \code{\link{plotPartialPredictionGGVIS}};
   \code{\link{plotPartialPrediction}};
   \code{\link{plotROCRCurvesGGVIS}};
+  \code{\link{plotRankMatrixAsBar}};
   \code{\link{plotThreshVsPerfGGVIS}};
   \code{\link{plotThreshVsPerf}}
 

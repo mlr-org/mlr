@@ -29,10 +29,13 @@ Default is first task.}
 Generate threshold vs. performance(s) for 2-class classification.
 }
 \seealso{
-Other generate_plot_data: \code{\link{generateFilterValuesData}};
+Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}};
+  \code{\link{generateCritDifferencesData}};
+  \code{\link{generateFilterValuesData}};
   \code{\link{generateLearningCurveData}};
   \code{\link{generatePartialPredictionData}};
   \code{\link{generateROCRCurvesData}};
+  \code{\link{generateRankMatrixAsBarData}};
   \code{\link{getFilterValues}}
 
 Other thresh_vs_perf: \code{\link{plotThreshVsPerfGGVIS}};
