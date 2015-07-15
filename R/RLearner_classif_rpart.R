@@ -17,7 +17,7 @@ makeRLearner.classif.rpart = function() {
       makeUntypedLearnerParam(id = "parms")
     ),
     par.vals = list(xval = 0L),
-    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "ordered", "prob", "weights"),
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "ordered", "prob", "weights", "featimp"),
     name = "Decision Tree",
     short.name = "rpart",
     note = "`xval` has been set to 0 by default for speed."
@@ -40,4 +40,12 @@ trainLearner.classif.rpart = function(.learner, .task, .subset, .weights = NULL,
 predictLearner.classif.rpart = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, prob = "prob", "class")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
+}
+
+#' @export
+getFeatureImportance.classif.rpart = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model)
+  fiv = as.numeric(mod$variable.importance[names(mod$ordered)])
+  names(fiv) = .model$features
+  return(fiv)
 }
