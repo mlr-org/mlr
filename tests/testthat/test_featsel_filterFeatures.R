@@ -74,9 +74,18 @@ test_that("filterFeatures", {
 test_that("plotFilterValues", {
   fv = generateFilterValuesData(binaryclass.task, method = "chi.squared")
   plotFilterValues(fv)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  expect_that(length(XML::getNodeSet(doc, black.bar.xpath, "svg")), equals(20))
   ## plotFilterValuesGGVIS(fv)
 
   fv2 = generateFilterValuesData(binaryclass.task, method = c("chi.squared", "rf.importance"))
-  plotFilterValues(fv)
-  ## plotFilterValuesGGVIS(fv) ## cannot test due to interactivity
+  plotFilterValues(fv2)
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  expect_that(length(XML::getNodeSet(doc, black.bar.xpath, "svg")), equals(40))
+  expect_that(length(XML::getNodeSet(doc, grey.xpath, "svg")), equals(ncol(fv2$data) - 2))
+  ## plotFilterValuesGGVIS(fv2)
 })
