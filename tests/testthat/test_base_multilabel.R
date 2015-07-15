@@ -8,13 +8,20 @@ test_that("multilabel", {
   pred = predict(mod, multilabel.task)
   p = performance(pred)
   expect_true(!is.na(p))
+  pmulti = getMultilabelBinaryPerformances(pred, list(mmce, acc))
+  expect_true(!any(is.na(pmulti)))
+  expect_true(is.matrix(pmulti))
   # with newdata df
   pred = predict(mod, newdata = multilabel.df)
   p = performance(pred)
   expect_true(!is.na(p))
+  pmulti = getMultilabelBinaryPerformances(pred, list(mmce, acc))
+  expect_true(!any(is.na(pmulti)))
   # resample
   r = holdout(lrn, multilabel.task)
   expect_true(!is.na(r$aggr))
+  pmulti = getMultilabelBinaryPerformances(r$pred, list(mmce, acc))
+  expect_true(!any(is.na(pmulti)))
   # Learner with Impute-Preprocessing
   lrn = makeImputeWrapper(lrn, classes = list(integer = imputeMedian(), numeric = imputeMedian(), factor = imputeConstant("Const")))
   multilabel.df2 = multilabel.df
@@ -42,14 +49,20 @@ test_that("MultilabelBinaryRelevanceWrapper", {
   pred = predict(mod, multilabel.task)
   p = performance(pred)
   expect_true(!is.na(p))
+  pmulti = getMultilabelBinaryPerformances(pred, list(mmce, acc))
+  expect_true(!any(is.na(pmulti)))
+  expect_true(is.matrix(pmulti))
   # with newdata df
   pred = predict(mod, newdata = multilabel.df)
   p = performance(pred)
   expect_true(!is.na(p))
+  pmulti = getMultilabelBinaryPerformances(pred, list(mmce, acc))
+  expect_true(!any(is.na(pmulti)))
   # resample
   r = holdout(lrn2, multilabel.task)
   expect_true(!is.na(r$aggr))
-
+  pmulti = getMultilabelBinaryPerformances(pred, list(mmce, acc))
+  expect_true(!any(is.na(pmulti)))
   lrn1 = makeLearner("classif.rpart", predict.type = "prob")
   lrn2 = makeMultilabelBinaryRelevanceWrapper(lrn1)
   r = holdout(lrn2, multilabel.task)
@@ -71,6 +84,9 @@ test_that("MultilabelBinaryRelevanceWrapper", {
   expect_equal(colnames(p), cls)
   p = getPredictionProbabilities(r$pred, cls[1L])
   expect_true(is.numeric(p))
+  # setThreshold
+  thresh = setThreshold(r$pred, threshold = c("y1"=0.9, "y2"=0.9))
+  expect_true(is.data.frame(thresh$data))
   # now test that we can tune the thresholds
   tr = tuneThreshold(r$pred, nsub = 2L, control= list(maxit = 2L))
   expect_true(!is.na(tr$perf))
@@ -94,7 +110,5 @@ test_that("MultilabelBinaryRelevanceWrapper", {
   p = performance(pred)
   expect_true(!is.na(p))
 })
-
-
 
 
