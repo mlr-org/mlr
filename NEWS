@@ -33,6 +33,7 @@ mlr_2.5:
   therefore faster and more reliable; it also supports the additional parameter
   check.packages now that will check whether required packages are installed
   without loading them
+- many new function for statistical benchmark comparisons are added, see below
 
 - new functions
 -- getDefaultMeasure
@@ -43,6 +44,9 @@ mlr_2.5:
 -- makeMultilabelTask, makeMultilabelWrapper, getMultilabelBinaryPerformances
 -- generatePartialPredictionData, plotPartialPrediction, and plotPartialPredictionGGVIS
 -- getClassWeightParam
+-- plotBenchmarkResult, convertBMRToRankMatrix, generateRankMatrixAsBarData, plotRankMatrixAsBar,
+   generateBenchmarkSummaryData, plotBenchmarkSummary,
+   friedmanTestBMR, friedmanPostHocTestBMR, generateCritDifferencesData, plotCritDifferences
 
 - new measures
 -- hamloss
