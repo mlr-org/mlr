@@ -36,12 +36,8 @@ lrn = setPredictType(lrn, "prob")
 mod = train(lrn, yeast.task)
 pred = predict(mod, yeast.task)
 p = performance(pred)
-# with newdata
-pred = predict(mod, newdata = getTaskData(yeast.task)[1:10,])
 getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
-# with prediction result of resample
-r = holdout(lrn, yeast.task, measures = hamloss)
-getMultilabelBinaryPerformances(r$pred, measures = list(mmce, auc))
+# above works also with predictions from resample!
 }
 \references{
 Tsoumakas, G., & Katakis, I. (2006)
