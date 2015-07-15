@@ -54,3 +54,8 @@ test_that("performance checks for missing truth col", {
 
   expect_error(performance(pred, measure = mmce), "need to have a 'truth' col")
 })
+
+test_that("performance checks for req prob type", {
+  lrn = makeLearner("classif.rpart")
+  expect_error(holdout(lrn, binaryclass.task, measures = auc), "predict type to be: 'prob'")
+})

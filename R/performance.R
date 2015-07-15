@@ -93,7 +93,7 @@ doPerformaceIteration = function(measure, pred = NULL, task = NULL, model = NULL
     req.pred.types = if ("req.prob" %in% props) "prob" else character(0L)
     if (!is.null(pred) && length(req.pred.types) > 0L && pred$predict.type %nin% req.pred.types)
       stopf("Measure %s requires predict type to be: '%s'!",
-        m$id, collapse(m$allowed.pred.types))
+        m$id, collapse(req.pred.types))
   }
   measure$fun(task, model, pred, feats, m$extra.args)
 }
