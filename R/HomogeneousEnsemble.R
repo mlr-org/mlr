@@ -23,6 +23,7 @@ getFailureModelMsg.HomogeneousEnsembleModel = function(model) {
   ifelse(j == 0L, NA_character_ , msgs[j])
 }
 
+#' Deprecated, use \code{getLearnerModel} instead.
 #' @export
 getHomogeneousEnsembleModels = function(model, learner.models = FALSE) {
   .Deprecated("getLearnerModel")

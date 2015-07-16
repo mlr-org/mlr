@@ -62,6 +62,7 @@ getPredictionProbabilities = function(pred, cl) {
   return(y)
 }
 
+#' Deprecated, use \code{getPredictionProbabilities} instead.
 #' @export
 getProbabilities = function(pred, cl) {
   .Deprecated("getPredictionProbabilities")
