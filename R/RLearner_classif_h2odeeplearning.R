@@ -157,9 +157,10 @@ makeRLearner.classif.h2odeeplearning = function() {
     par.set = makeParamSet(
     makeLogicalLearnerParam("autoencoder", default = FALSE),
     makeLogicalLearnerParam("use_all_factor_level", default = TRUE),
-    makeDiscreteParam(activation = c("Rectifier", "Tanh", "TanhWithDropout", "RectifierWithDropout", "Maxout", "MaxoutWithDropout")),
+    makeDiscreteLearnerParam("activation", values = 
+      c("Rectifier", "Tanh", "TanhWithDropout", "RectifierWithDropout", "Maxout", "MaxoutWithDropout"), default = "Rectifier"),
     # FIXME: hidden can also be a list of integer vectors for grid search
-    makeIntegerVectorLearnerParam("hidden", default = c(200L, 200)), 
+    makeIntegerVectorLearnerParam("hidden", default = 200L, len = NA_integer_, lower = 1L), 
     makeNumericLearnerParam("epochs", default = 10L), # doc says can be fractional
     makeNumericLearnerParam("train_samples_per_iteration", default = -2, lower = -2), 
     makeIntegerLearnerParam("seed", tunable = FALSE),
@@ -177,10 +178,11 @@ makeRLearner.classif.h2odeeplearning = function() {
     makeNumericLearnerParam("hidden_dropout_ratios", default = 0.5),
     makeNumericLearnerParam("l1", default = 0),
     makeNumericLearnerParam("l2", default = 0),
-    makeNumericLearnerParam("max_w2", default = Inf),
+    #FIXME: makeNumericLearnerParam("max_w2", default = Inf),
+    makeNumericLearnerParam("max_w2", default = 1e+06),
     makeDiscreteLearnerParam("initial_weight_distribution", values = c("UniformAdaptive", "Uniform", "Normal"), default = "UniformAdaptive"),
     makeNumericLearnerParam("initial_weight_scale", default = 1),
-    makeDiscreteParam("loss", default = c("Automatic", "CrossEntropy", "MeanSquare", "Absolute", "Huber")),
+    makeDiscreteLearnerParam("loss", values = c("Automatic", "CrossEntropy", "MeanSquare", "Absolute", "Huber")),
     makeNumericLearnerParam("score_interval", default = 5),
     makeIntegerLearnerParam("score_training_samples", default = 10000),
     makeIntegerLearnerParam("score_validation_samples", default = 0),
@@ -235,7 +237,7 @@ predictLearner.classif.h2odeeplearning = function(.learner, .model, .newdata, ..
     return(p.df$predict)
   } else {
     p.df$predict = NULL
-    return(p.df)
+    return(as.matrix(p.df))
   }
 }
 
