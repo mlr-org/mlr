@@ -42,11 +42,20 @@ predictLearner.classif.h2oglm = function(.learner, .model, .newdata, ...) {
   h2of = as.h2o(.newdata)
   p = h2o::h2o.predict(m, newdata = h2of, ...)
   p.df = as.data.frame(p)
+  
+  #FIXME: h2o.glm returns wrong predictions? p0 := positive class???
+  colname = c("predict" = "predict", 
+    "p0" = .model$task.desc$positive,
+    "p1" = .model$task.desc$negative)
+  colnames(p.df) = colname[colnames(p.df)]
+  p.df$predict = as.factor(as.vector(colname[-1][apply(p.df[,-1], 1, which.max)]))
+  
   if (.learner$predict.type == "response") {
     return(p.df$predict)
   } else {
     p.df$predict = NULL
-    return(p.df)
+    ret = as.matrix(p.df)
+    return(ret)
   }
 }
 
