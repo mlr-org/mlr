@@ -160,7 +160,7 @@ makeRLearner.classif.h2odeeplearning = function() {
     makeDiscreteLearnerParam("activation", values = 
       c("Rectifier", "Tanh", "TanhWithDropout", "RectifierWithDropout", "Maxout", "MaxoutWithDropout"), default = "Rectifier"),
     # FIXME: hidden can also be a list of integer vectors for grid search
-    makeIntegerVectorLearnerParam("hidden", default = 200L, len = NA_integer_, lower = 1L), 
+    makeIntegerVectorLearnerParam("hidden", default = c(200L, 200L), len = NA_integer_, lower = 1L), 
     makeNumericLearnerParam("epochs", default = 10L), # doc says can be fractional
     makeNumericLearnerParam("train_samples_per_iteration", default = -2, lower = -2), 
     makeIntegerLearnerParam("seed", tunable = FALSE),
