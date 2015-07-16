@@ -6,6 +6,11 @@
 \usage{
 getProbabilities(pred, cl)
 }
+\arguments{
+\item{pred}{}
+
+\item{cl}{Order of columns is defined by \code{cl}.}
+}
 \description{
 Deprecated, use \code{getPredictionProbabilities} instead.
 }

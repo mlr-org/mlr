@@ -24,6 +24,8 @@ getFailureModelMsg.HomogeneousEnsembleModel = function(model) {
 }
 
 #' Deprecated, use \code{getLearnerModel} instead.
+#' @param model
+#' @param learner.models
 #' @export
 getHomogeneousEnsembleModels = function(model, learner.models = FALSE) {
   .Deprecated("getLearnerModel")

@@ -6,6 +6,11 @@
 \usage{
 getHomogeneousEnsembleModels(model, learner.models = FALSE)
 }
+\arguments{
+\item{model}{}
+
+\item{learner.models}{}
+}
 \description{
 Deprecated, use \code{getLearnerModel} instead.
 }
