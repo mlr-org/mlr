@@ -63,9 +63,8 @@ getPredictionProbabilities = function(pred, cl) {
 }
 
 #' Deprecated, use \code{getPredictionProbabilities} instead.
-#' @param pred
-#' @param cl
-#'   Order of columns is defined by \code{cl}.
+#' @param pred Deprecated.
+#' @param cl Deprecated.
 #' @export
 getProbabilities = function(pred, cl) {
   .Deprecated("getPredictionProbabilities")

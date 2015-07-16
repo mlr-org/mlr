@@ -7,9 +7,9 @@
 getProbabilities(pred, cl)
 }
 \arguments{
-\item{pred}{}
+\item{pred}{Deprecated.}
 
-\item{cl}{Order of columns is defined by \code{cl}.}
+\item{cl}{Deprecated.}
 }
 \description{
 Deprecated, use \code{getPredictionProbabilities} instead.

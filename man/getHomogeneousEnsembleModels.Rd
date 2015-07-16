@@ -7,9 +7,9 @@
 getHomogeneousEnsembleModels(model, learner.models = FALSE)
 }
 \arguments{
-\item{model}{}
+\item{model}{Deprecated.}
 
-\item{learner.models}{}
+\item{learner.models}{Deprecated.}
 }
 \description{
 Deprecated, use \code{getLearnerModel} instead.
