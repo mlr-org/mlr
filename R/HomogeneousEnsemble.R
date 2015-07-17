@@ -23,6 +23,9 @@ getFailureModelMsg.HomogeneousEnsembleModel = function(model) {
   ifelse(j == 0L, NA_character_ , msgs[j])
 }
 
+#' Deprecated, use \code{getLearnerModel} instead.
+#' @param model Deprecated.
+#' @param learner.models Deprecated.
 #' @export
 getHomogeneousEnsembleModels = function(model, learner.models = FALSE) {
   .Deprecated("getLearnerModel")
@@ -62,3 +65,4 @@ predictHomogeneousEnsemble = function(.learner, .model, .newdata, ...) {
 makeHomChainModel = function(learner, models) {
   makeChainModel(next.model = models, cl = c(learner$model.subclass, "HomogeneousEnsembleModel"))
 }
+
