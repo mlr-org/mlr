@@ -56,6 +56,9 @@ mlr_2.5:
 -- classif.avNNet
 -- classif.neuralnet
 -- regr.avNNet
+-- classif.clusterSVM
+-- classif.dcSVM
+-- classif.gaterSVM
 
 - new filters
 -- permutation.importance
