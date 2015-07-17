@@ -65,3 +65,4 @@ predictHomogeneousEnsemble = function(.learner, .model, .newdata, ...) {
 makeHomChainModel = function(learner, models) {
   makeChainModel(next.model = models, cl = c(learner$model.subclass, "HomogeneousEnsembleModel"))
 }
+

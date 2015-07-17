@@ -53,6 +53,9 @@ mlr_2.5:
 
 - new learners
 -- multilabel.rFerns
+-- classif.avNNet
+-- classif.neuralnet
+-- regr.avNNet
 
 - new filters
 -- permutation.importance
