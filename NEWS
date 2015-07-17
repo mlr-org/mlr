@@ -54,9 +54,6 @@ mlr_2.5:
 - new learners
 -- multilabel.rFerns
 -- classif.avNNet
--- classif.clusterSVM
--- classif.dcSVM
--- classif.gaterSVM
 -- classif.neuralnet
 -- regr.avNNet
 
