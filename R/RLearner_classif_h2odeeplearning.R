@@ -161,15 +161,15 @@ makeRLearner.classif.h2odeeplearning = function() {
       c("Rectifier", "Tanh", "TanhWithDropout", "RectifierWithDropout", "Maxout", "MaxoutWithDropout"), default = "Rectifier"),
     # FIXME: hidden can also be a list of integer vectors for grid search
     makeIntegerVectorLearnerParam("hidden", default = c(200L, 200L), len = NA_integer_, lower = 1L), 
-    makeNumericLearnerParam("epochs", default = 10L), # doc says can be fractional
+    makeNumericLearnerParam("epochs", default = 10L, lower = 1), # doc says can be fractional
     makeNumericLearnerParam("train_samples_per_iteration", default = -2, lower = -2), 
     makeIntegerLearnerParam("seed", tunable = FALSE),
     makeLogicalLearnerParam("adaptive_rate", default = TRUE),
-    makeNumericLearnerParam("rho", default = 0.99),
+    makeNumericLearnerParam("rho", default = 0.99, lower = 0), # is there a upper limit for this?
     makeNumericLearnerParam("epsilon", default = 1e-08),
-    makeNumericLearnerParam("rate", default = 0.005),
-    makeNumericLearnerParam("rate_annealing", default = 1e-06),
-    makeNumericLearnerParam("rate_decay", default = 1),
+    makeNumericLearnerParam("rate", default = 0.005, lower = 0, upper = 1),
+    makeNumericLearnerParam("rate_annealing", default = 1e-06, lower = 0),
+    makeNumericLearnerParam("rate_decay", default = 1, lower = 0),
     makeNumericLearnerParam("momentum_start", default = 0),
     makeNumericLearnerParam("momentum_ramp", default = 1e+06),
     makeNumericLearnerParam("momentum_stable", default = 0),
@@ -187,11 +187,11 @@ makeRLearner.classif.h2odeeplearning = function() {
     makeIntegerLearnerParam("score_training_samples", default = 10000),
     makeIntegerLearnerParam("score_validation_samples", default = 0),
     makeNumericLearnerParam("score_duty_cycle", default = 0.1),
-    makeNumericLearnerParam("classification_stop", default = 0),
-    makeNumericLearnerParam("regression_stop", default = 1e-6),
+    makeNumericLearnerParam("classification_stop", default = 0, lower = -1),
+    makeNumericLearnerParam("regression_stop", default = 1e-6, lower = -1),
     makeLogicalLearnerParam("quiet_mode", tunable = FALSE),
-    makeIntegerLearnerParam("max_confusion_matrix_size", default = 20, tunable = FALSE),
-    makeIntegerLearnerParam("max_hit_ratio_k", default = 10), # is this tunable?
+    makeIntegerLearnerParam("max_confusion_matrix_size", default = 20, tunable = FALSE, lower = 0),
+    makeIntegerLearnerParam("max_hit_ratio_k", default = 10, lower = 0), # is this tunable?
     makeLogicalLearnerParam("balance_classes", default = FALSE),
     makeNumericLearnerParam("class_sampling_factors", requires = expression(balance_classes == TRUE)),
     makeNumericLearnerParam("max_after_balance_size", default = 5),
