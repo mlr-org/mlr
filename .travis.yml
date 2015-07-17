@@ -7,6 +7,7 @@ branches:
         - master
         - multiFidPlugIn
         - task_ops
+warnings_are_errors: true
 apt_packages:
     - r-cran-rjava
 r_github_packages:

@@ -83,3 +83,18 @@ test_that("mcc is implemented correctly", { # see issue 363
   phi = (cm[1, 1] / total - c.sum[1] * r.sum[1])/sqrt(v)
   expect_equal(r$aggr[[1]], phi[[1L]])
 })
+
+test_that("listMeasures", {
+  mycheck = function(type) {
+    xs = listMeasures(type, create = TRUE)
+    expect_true(is.list(xs) && length(xs) > 0L, info = type)
+    expect_true(all(vlapply(xs, inherits, what = "Measure")), info = type)
+  }
+  mycheck("classif")
+  mycheck("regr")
+  mycheck("cluster")
+  mycheck("surv")
+  mycheck("costsens")
+  mycheck("multilabel")
+})
+

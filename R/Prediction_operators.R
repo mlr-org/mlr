@@ -62,6 +62,9 @@ getPredictionProbabilities = function(pred, cl) {
   return(y)
 }
 
+#' Deprecated, use \code{getPredictionProbabilities} instead.
+#' @param pred Deprecated.
+#' @param cl Deprecated.
 #' @export
 getProbabilities = function(pred, cl) {
   .Deprecated("getPredictionProbabilities")
@@ -141,4 +144,5 @@ getPredictionTruth.PredictionMultilabel = function(pred) {
   m = as.matrix(pred$data[, i])
   setColNames(m, pred$task.desc$class.levels)
 }
+
 
