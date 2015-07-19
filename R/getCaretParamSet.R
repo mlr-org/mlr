@@ -1,5 +1,8 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ecec28c5da2561fb85d34a04919a749598d77073
 #' @title Get tuning parameters from a learner of the caret R-package.
 #'
 #' @description
@@ -33,6 +36,7 @@
 #'   \item{\code{par.set}} is a \code{\link[ParamHelpers]{ParamSet}}, containing all the configurable
 #'   tuning parameters
 #' }
+<<<<<<< HEAD
 =======
 #' @title Get default parameters from a learner of the caret R-package.
 =======
@@ -81,6 +85,8 @@
 #'   tuning parameters
 #' }
 >>>>>>> f09089e... fixing getCaretParamSet according to hangout with Bernd
+=======
+>>>>>>> ecec28c5da2561fb85d34a04919a749598d77073
 #' @export
 #' @examples
 #' library(caret)
@@ -101,6 +107,7 @@ getCaretParamSet = function(learner, length = 3, x, y, discretize = TRUE){
   # transfer caret parameters into mlr parameters
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   params = lapply(colnames(caret.grid), function(i) {
 =======
   params = setNames(lapply(colnames(caret.grid), function(i) {
@@ -108,6 +115,9 @@ getCaretParamSet = function(learner, length = 3, x, y, discretize = TRUE){
 =======
   params = lapply(colnames(caret.grid), function(i) {
 >>>>>>> f09089e... fixing getCaretParamSet according to hangout with Bernd
+=======
+  params = lapply(colnames(caret.grid), function(i) {
+>>>>>>> ecec28c5da2561fb85d34a04919a749598d77073
     x = sort(unique(caret.grid[,i]))
     cl = class(x)
     if (cl == "factor") {
@@ -129,6 +139,9 @@ getCaretParamSet = function(learner, length = 3, x, y, discretize = TRUE){
     )
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ecec28c5da2561fb85d34a04919a749598d77073
   })
   names(params) = colnames(caret.grid)
 
@@ -144,6 +157,7 @@ getCaretParamSet = function(learner, length = 3, x, y, discretize = TRUE){
   } else {
     par.vals = lapply(caret.grid[!is.tunable], function(x) {
       if (is.factor(x))
+<<<<<<< HEAD
 =======
   }), colnames(caret.grid))
 =======
@@ -169,6 +183,8 @@ getCaretParamSet = function(learner, length = 3, x, y, discretize = TRUE){
     par.vals = lapply(caret.grid[!is.tunable], function(x) {
       if (is.factor(x))
 >>>>>>> f09089e... fixing getCaretParamSet according to hangout with Bernd
+=======
+>>>>>>> ecec28c5da2561fb85d34a04919a749598d77073
         x = as.character(x)
       return(x[1L])
     })
@@ -180,6 +196,7 @@ getCaretParamSet = function(learner, length = 3, x, y, discretize = TRUE){
   return(list(par.vals = par.vals,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     par.set = do.call(makeParamSet, params[is.tunable])))
 =======
     par.set = do.call(makeParamSet, params[tunable.index])))
@@ -187,4 +204,7 @@ getCaretParamSet = function(learner, length = 3, x, y, discretize = TRUE){
 =======
     par.set = do.call(makeParamSet, params[is.tunable])))
 >>>>>>> f09089e... fixing getCaretParamSet according to hangout with Bernd
+=======
+    par.set = do.call(makeParamSet, params[is.tunable])))
+>>>>>>> ecec28c5da2561fb85d34a04919a749598d77073
 }
