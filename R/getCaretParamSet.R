@@ -1,26 +1,36 @@
-#' @title Get default parameters from a learner of the caret R-package.
+#' @title Get tuning parameters from a learner of the caret R-package.
 #'
 #' @description
-#' Constructs default parameters from a learner of the \code{caret} R-package
-#' and converts them into \code{mlr}.
+#' Constructs a grid of tuning parameters from a learner of the \code{caret}
+#' R-package. These values are then converted into a list of non-tunable
+#' parameters (\code{par.vals}) and a tunable
+#' \code{\link[ParamHelpers]{ParamSet}} (\code{par.set}), which can be used by
+#' \code{\link{tuneParams}} for tuning the learner. Numerical parameters will
+#' either be specified by their lower and upper bounds or they will be
+#' discretized into specific values.
 #'
 #' @param learner [\code{character(1)}]\cr
-#'   The name of the learner from caret (cf. \url{http://topepo.github.io/caret/modelList.html}).
+#'   The name of the learner from \code{caret}
+#'   (cf. \url{http://topepo.github.io/caret/modelList.html}). Note that the
+#'   names in \code{caret} often differ from the ones in \code{mlr}.
 #' @param length [\code{integer(1)}]\cr
-#'   A length (= precision) parameter which is used by \code{caret} when
-#'   generating the grid of tuning parameters.
+#'   A length / precision parameter which is used by \code{caret} for
+#'   generating the grid of tuning parameters. \code{caret} generates either as
+#'   many values per tuning parameter / dimension as defined by \code{length}
+#'   or only a single value (in case of non-tunable \code{par.vals}).
 #' @param x [\code{data.frame}]\cr
-#'   A data frame with the input parameters.
+#'   A data frame with the input data.
 #' @param y [\code{factor} | \code{numeric}]\cr
 #'   A response vector.
 #' @param discretize [\code{logical(1)}]\cr
-#'   Should the numerical constraints be discretized (\code{discretize = TRUE})
-#'   or should they be defined by their lower and upper bounds
-#'   (\code{discretize = FALSE}). The default is \code{discretize = TRUE}.
-#' @return [\code{list(2)}]. A list of parameters:\cr
-#'   (1) \code{par.vals} contains a list of all constant tuning parameters,\cr
-#'   (2) \code{par.set} is a \code{\link[ParamHelpers]{ParamSet}}, containing all the configurable
-#'   tuning parameters.
+#'   Should the numerical parameters be discretized? Alternatively, they will
+#'   be defined by their lower and upper bounds. The default is \code{TRUE}.
+#' @return [\code{list(2)}]. A list of parameters:
+#' \itemize{
+#'   \item{\code{par.vals}} contains a list of all constant tuning parameters
+#'   \item{\code{par.set}} is a \code{\link[ParamHelpers]{ParamSet}}, containing all the configurable
+#'   tuning parameters
+#' }
 #' @export
 #' @examples
 #' library(caret)
@@ -39,7 +49,7 @@ getCaretParamSet = function(learner, length = 3, x, y, discretize = TRUE){
   caret.grid = caret::getModelInfo(learner)[[learner]]$grid(x = x, y = y, len = length)
 
   # transfer caret parameters into mlr parameters
-  params = setNames(lapply(colnames(caret.grid), function(i) {
+  params = lapply(colnames(caret.grid), function(i) {
     x = sort(unique(caret.grid[,i]))
     cl = class(x)
     if (cl == "factor") {
@@ -59,20 +69,21 @@ getCaretParamSet = function(learner, length = 3, x, y, discretize = TRUE){
       numeric = makeNumericParam(id = i, lower = min(x), upper = max(x)),
       integer = makeIntegerParam(id = i, lower = min(x), upper = max(x))
     )
-  }), colnames(caret.grid))
+  })
+  names(params) = colnames(caret.grid)
 
-  # are the parameters configurable or are the bounds / values unique?
-  tunable.index = vlapply(params, function(x) {
+  # are the parameters configurable or are the values unique?
+  is.tunable = vlapply(params, function(x) {
     (!is.null(x$values) && length(x$values) > 1) |
-      (!is.null(x$lower) && !is.null(x$upper) && all(x$upper > x$lower))
+      (!is.null(x$lower) && !is.null(x$upper) && (x$upper > x$lower))
   })
 
   # define par.vals (if existing)
-  if (sum(!tunable.index) == 0) {
+  if (all(is.tunable)) {
     par.vals = NULL
   } else {
-    par.vals = lapply(caret.grid[!tunable.index], function(x) {
-      if (class(x) == "factor")
+    par.vals = lapply(caret.grid[!is.tunable], function(x) {
+      if (is.factor(x))
         x = as.character(x)
       return(x[1L])
     })
@@ -82,5 +93,5 @@ getCaretParamSet = function(learner, length = 3, x, y, discretize = TRUE){
   }
 
   return(list(par.vals = par.vals,
-    par.set = do.call(makeParamSet, params[tunable.index])))
+    par.set = do.call(makeParamSet, params[is.tunable])))
 }
