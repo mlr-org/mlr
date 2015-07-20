@@ -76,7 +76,7 @@ test_that("y imputing works", {
   configureMlr(on.learner.error = "stop")
 })
 
-test_that("tuneParamsMultiCritNSGA2 with budget", {
+test_that("tuneParamsMultiCrit with budget", {
   lrn =  makeLearner("classif.rpart")
   rdesc = makeResampleDesc("Holdout")
   ps = makeParamSet(
@@ -84,67 +84,40 @@ test_that("tuneParamsMultiCritNSGA2 with budget", {
     makeIntegerParam("minsplit", lower = 1, upper = 50)
   )
 
-  ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 1L)
-  expect_equal(ctrl$budget, ctrl$extra.args$popsize * (ctrl$extra.args$generations + 1))
-  res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
-    measures = list(tpr, fpr), control = ctrl)
-  expect_equal(getOptPathLength(res$opt.path), ctrl$budget)
+  mycheck = function(ctrl, expected.budget) {
+    if ("TuneMultiCritControlGrid" %in% class(ctrl)) {
+      if (!is.null(ctrl$budget))
+        expect_equal(ctrl$budget, expected.budget)
+    } else {
+      expect_equal(ctrl$budget, expected.budget)
+    }
+    res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
+      measures = list(tpr, fpr), control = ctrl)
+    expect_equal(getOptPathLength(res$opt.path), expected.budget)
+  }
 
-  expect_error(makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 2L, budget = 8L))
-  expect_error(makeTuneMultiCritControlNSGA2(generations = 4L, budget = 12L))
+  # random search
+  ctrl = makeTuneMultiCritControlRandom(maxit = 3L)
+  mycheck(ctrl, ctrl$extra.args$maxit)
+  ctrl = makeTuneMultiCritControlRandom(maxit = 3L, budget = 3L)
+  mycheck(ctrl, ctrl$extra.args$maxit)
+  expect_error(makeTuneMultiCritControlRandom(maxit = 3L, budget = 5L))
 
-  ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, budget = 12L)
-  expect_equal(ctrl$extra.args$generations, 2L)
-  res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
-    measures = list(tpr, fpr), control = ctrl)
-  expect_equal(getOptPathLength(res$opt.path), ctrl$budget)
-})
-
-test_that("tuneParamsMultiCritGrid with budget", {
-  lrn =  makeLearner("classif.rpart")
-  rdesc = makeResampleDesc("Holdout")
-  ps = makeParamSet(
-    makeNumericParam("cp", lower = 0.001, upper = 1),
-    makeIntegerParam("minsplit", lower = 1, upper = 50)
-  )
-  
+  # grid search
   ctrl = makeTuneMultiCritControlGrid(resolution = 3)
-  res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
-    measures = list(tpr, fpr), control = ctrl)
-  expect_equal(getOptPathLength(res$opt.path), ctrl$extra.args$resolution^2)
-  
+  mycheck(ctrl, ctrl$extra.args$resolution^2)
   ctrl = makeTuneMultiCritControlGrid(resolution = 3, budget = 9L)
-  res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
-    measures = list(tpr, fpr), control = ctrl)
-  expect_equal(getOptPathLength(res$opt.path), ctrl$extra.args$resolution^2)
-  expect_equal(getOptPathLength(res$opt.path), ctrl$budget)
-  
+  mycheck(ctrl, ctrl$extra.args$resolution^2)
   ctrl = makeTuneMultiCritControlGrid(resolution = 3, budget = 10L)
   expect_error(tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
     measures = list(tpr, fpr), control = ctrl))
-})
 
-test_that("tuneParamsMultiCritRandom with budget", {
-  lrn =  makeLearner("classif.rpart")
-  rdesc = makeResampleDesc("Holdout")
-  ps = makeParamSet(
-    makeNumericParam("cp", lower = 0.001, upper = 1),
-    makeIntegerParam("minsplit", lower = 1, upper = 50)
-  )
-  
-  ctrl = makeTuneMultiCritControlRandom(maxit = 3L)
-  expect_equal(ctrl$budget, ctrl$extra.args$maxit)
-  res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
-    measures = list(tpr, fpr), control = ctrl)
-  expect_equal(getOptPathLength(res$opt.path), ctrl$budget)
-  expect_equal(getOptPathLength(res$opt.path), ctrl$extra.args$maxit)
-
-  ctrl = makeTuneMultiCritControlRandom(maxit = 3L, budget = 3L)
-  expect_equal(ctrl$budget, ctrl$extra.args$maxit)
-  res = tuneParamsMultiCrit(lrn, binaryclass.task, rdesc, par.set = ps,
-    measures = list(tpr, fpr), control = ctrl)
-  expect_equal(getOptPathLength(res$opt.path), ctrl$budget)
-  expect_equal(getOptPathLength(res$opt.path), ctrl$extra.args$maxit)
-
-  expect_error(makeTuneMultiCritControlRandom(maxit = 3L, budget = 5L))
+  # nsga2
+  ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 1L)
+  mycheck(ctrl, ctrl$extra.args$popsize * (ctrl$extra.args$generations + 1))
+  expect_error(makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 2L, budget = 8L))
+  expect_error(makeTuneMultiCritControlNSGA2(generations = 4L, budget = 12L))
+  ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, budget = 12L)
+  expect_equal(ctrl$extra.args$generations, 2L)
+  mycheck(ctrl, 12L)
 })

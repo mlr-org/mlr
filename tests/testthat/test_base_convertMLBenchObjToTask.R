@@ -19,6 +19,7 @@ test_that("convertMLbenchObjToTask", {
   for (d in setdiff(ds, c("HouseVotes84", "Ozone"))) {
     task = convertMLBenchObjToTask(d, n = n)
     expect_is(task, "Task")
+    expect_equal(getTaskId(task), d)
   }
 })
 

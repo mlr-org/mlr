@@ -19,6 +19,7 @@
 convertMLBenchObjToTask = function(x, n = 100L, ...) {
   assertString(x)
   requirePackages("mlbench")
+  id = x
 
   datasets = data(package = "mlbench")
   datasets = datasets$results[, "Item"]
@@ -62,8 +63,8 @@ convertMLBenchObjToTask = function(x, n = 100L, ...) {
     target = if (!is.null(z$classes)) "classes" else "y"
   }
   task = if (is.factor(d[, target]))
-    makeClassifTask(data = d, target = target)
+    makeClassifTask(id = id, data = d, target = target)
   else
-    makeRegrTask(data = d, target = target)
+    makeRegrTask(id = id, data = d, target = target)
   return(task)
 }
