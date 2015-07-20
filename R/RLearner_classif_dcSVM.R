@@ -5,9 +5,9 @@ makeRLearner.classif.dcSVM = function() {
     package = "SwarmSVM",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "k", default = 4, lower = 1),
-      makeIntegerLearnerParam(id = "m", default = 800, lower = 1),
+      makeIntegerLearnerParam(id = "m", lower = 1),
       makeDiscreteLearnerParam(id = "kernel", default = 3, values = c(1,2,3)),
-      makeIntegerLearnerParam(id = "max.levels", default = 1, lower = 1),
+      makeIntegerLearnerParam(id = "max.levels", lower = 1),
       makeIntegerLearnerParam(id = "early", default = 0, lower = 0),
       makeLogicalLearnerParam(id = "final.training", default = FALSE),
       makeLogicalLearnerParam(id = "pre.scale", default = FALSE),
@@ -23,7 +23,7 @@ makeRLearner.classif.dcSVM = function() {
     properties = c("twoclass", "numerics"),
     name = "Divided-Conquer Support Vector Machines",
     short.name = "dcSVM",
-    note = "m set to 800 and max.levels set to 1 by default"
+    note = ""
   )
 }
 
@@ -31,21 +31,24 @@ makeRLearner.classif.dcSVM = function() {
 trainLearner.classif.dcSVM = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   pars = list(...)
-  m = NULL
-  max.levels = NULL
-  k = NULL
+  m.flag = FALSE
+  max.levels.flag = FALSE
+  k.flag = FALSE
   if (!any(grepl('m', names(pars)))) {
     m = 800
+    m.flag = TRUE
   } else {
     m = pars$m
   }
   if (!any(grepl('max.levels', names(pars)))) {
     max.levels = 1
+    max.levels.flag = TRUE
   } else {
     max.levels = pars$max.levels
   }
-  if (!any(grepl('max.levels', names(pars)))) {
+  if (!any(grepl('k', names(pars)))) {
     k = 4
+    k.flag = TRUE
   } else { 
     k = pars$k
   }
@@ -58,11 +61,11 @@ trainLearner.classif.dcSVM = function(.learner, .task, .subset, .weights = NULL,
   }
 
   
-  if (!is.null(m) && !is.null(max.levels)) {
+  if (m.flag && max.levels.flag) {
     SwarmSVM::dcSVM(x = d$data, y = d$target, m = m, max.levels = max.levels, ...)
-  } else if (is.null(m) && !is.null(max.levels)) {
+  } else if (!m.flag && max.levels.flag) {
     SwarmSVM::dcSVM(x = d$data, y = d$target, max.levels = max.levels, ...)
-  } else if (!is.null(m) && is.null(max.levels)) {
+  } else if (m.flag && !max.levels.flag) {
     SwarmSVM::dcSVM(x = d$data, y = d$target, m = m, ...)
   } else {
     SwarmSVM::dcSVM(x = d$data, y = d$target, ...)

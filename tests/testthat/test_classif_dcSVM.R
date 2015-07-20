@@ -1,6 +1,6 @@
 context("classif_dcSVM")
 
-test_that("classif_gaterSVM", {
+test_that("classif_dcSVM", {
   requirePackages("SwarmSVM", default.method = "load")
   set.seed(getOption("mlr.debug.seed"))
   
