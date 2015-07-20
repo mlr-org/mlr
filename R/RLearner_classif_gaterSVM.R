@@ -4,9 +4,9 @@ makeRLearner.classif.gaterSVM = function() {
     cl = "classif.gaterSVM",
     package = c("SwarmSVM", "e1071"),
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id = "m", lower = 1),
-      makeNumericLearnerParam(id = "c", lower = 0),
-      makeIntegerLearnerParam(id = "max.iter", lower = 1),
+      makeIntegerLearnerParam(id = "m", default = 3, lower = 1),
+      makeNumericLearnerParam(id = "c", default = 1, lower = 0),
+      makeIntegerLearnerParam(id = "max.iter", default = 1, lower = 1),
       makeIntegerLearnerParam(id = "hidden", default = 5, lower = 0),
       makeNumericLearnerParam(id = "learningrate", default = 0.01, lower = 0),
       makeNumericLearnerParam(id = "threshold", default = 0.01, lower = 0),
@@ -20,14 +20,31 @@ makeRLearner.classif.gaterSVM = function() {
     properties = c("twoclass", "numerics"),
     name = "Mixture of SVMs with Neural Network Gater Function",
     short.name = "gaterSVM",
-    note = ""
+    note = "m set to 3 and max.iter set to 1 by default"
   )
 }
 
 #' @export
 trainLearner.classif.gaterSVM = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
-  SwarmSVM::gaterSVM(x = d$data, y = d$target, ...)
+  pars = list(...)
+  m = NULL
+  max.iter = NULL
+  if (!any(grepl('m', names(pars)))) {
+    m = 3
+  }
+  if (!any(grepl('max.iter', names(pars)))) {
+    max.iter = 1
+  }
+  if (!is.null(m) && !is.null(max.iter)) {
+    SwarmSVM::gaterSVM(x = d$data, y = d$target, m = m, max.iter = max.iter, ...)
+  } else if (is.null(m) && !is.null(max.iter)) {
+    SwarmSVM::gaterSVM(x = d$data, y = d$target, max.iter = max.iter, ...)
+  } else if (!is.null(m) && is.null(max.iter)) {
+    SwarmSVM::gaterSVM(x = d$data, y = d$target, m = m, ...)
+  } else {
+    SwarmSVM::gaterSVM(x = d$data, y = d$target, ...)
+  }
 }
 
 #' @export
