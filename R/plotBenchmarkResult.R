@@ -52,7 +52,8 @@ plotBenchmarkResult = function(bmr, measure = NULL, style = "box", order.lrns = 
 
   if (pretty.names) {
     colnames(df) = mapValues(colnames(df), measure$id, measure$name)
-    mname = measure$name
+    # add backticks to allow spaces and other weird characters
+    mname = c("`", measure$name, "`", sep = "")
   } else
     mname = measure$id
 

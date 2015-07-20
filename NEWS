@@ -47,6 +47,7 @@ mlr_2.5:
 -- plotBenchmarkResult, convertBMRToRankMatrix, generateRankMatrixAsBarData, plotRankMatrixAsBar,
    generateBenchmarkSummaryData, plotBenchmarkSummary,
    friedmanTestBMR, friedmanPostHocTestBMR, generateCritDifferencesData, plotCritDifferences
+-- getCaretParamSet
 
 - new measures
 -- hamloss

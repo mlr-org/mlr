@@ -26,4 +26,3 @@ makeTuneControlGenSA = function(same.resampling.instance = TRUE, impute.val = NU
     log.fun = log.fun, final.dw.perc = final.dw.perc, budget = budget, cl = "TuneControlGenSA")
   do.call(makeTuneControl, c(args, args2))
 }
-

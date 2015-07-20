@@ -9,6 +9,5 @@ makeTuneControlCMAES = function(same.resampling.instance = TRUE, impute.val = NU
     tune.threshold.args = tune.threshold.args, log.fun = log.fun,
     final.dw.perc = final.dw.perc, budget = budget, ..., cl = "TuneControlCMAES")
 
-
   return(ctrl)
 }
