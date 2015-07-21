@@ -50,16 +50,12 @@ plotBenchmarkResult = function(bmr, measure = NULL, style = "box", order.lrns = 
   if (!is.null(order.tsks))
     df = orderBMRTasks(bmr, df, order.tsks)
 
-  if (pretty.names) {
-    colnames(df) = mapValues(colnames(df), measure$id, measure$name)
-    # add backticks to allow spaces and other weird characters
-    mname = c("`", measure$name, "`", sep = "")
-  } else
-    mname = measure$id
-
-  p = ggplot(df, aes_string("learner.id", mname))
+  p = ggplot(df, aes_string("learner.id", measure$id))
   p = p + theme(axis.title.x = element_blank(),
                 axis.text.x = element_text(angle = -45, hjust = 0))
+  if (pretty.names) {
+    p = p + ylab(measure$name)
+  }
 
   if (style == "box")
     p = p + geom_boxplot()
