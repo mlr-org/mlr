@@ -92,8 +92,7 @@ listLearners.character  = function(obj, properties = character(0L),
       }))
     }
     if (create || !check.packages || depsInstalled) {
-      lrn.properties = getLearnerProperties(mb[[2L]])
-      lrn.properties = eval(lrn.properties)
+      lrn.properties = getLearnerProperties(eval(mb[[2L]]))
       lrn = cl
     } else {
       err[[i]] = learner.classes[[i]]
