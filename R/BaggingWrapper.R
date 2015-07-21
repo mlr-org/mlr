@@ -146,7 +146,7 @@ setPredictType.BaggingWrapper = function(learner, predict.type) {
 
 getLearnerProperties.BaggingWrapper = function(learner) {
     switch(learner$type,
-    "classif" = union(getLearnerProperties(learner$next.learner), "pron"),
+    "classif" = union(getLearnerProperties(learner$next.learner), "prob"),
     "regr" = union(getLearnerProperties(learner$next.learner), "se")
   )
 }
