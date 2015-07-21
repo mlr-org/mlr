@@ -22,10 +22,9 @@ Set the id of a learner object.
 }
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
-  \code{\link{addProperties}}, \code{\link{hasProperties}},
-  \code{\link{removeProperties}},
-  \code{\link{setProperties}}; \code{\link{Learner}},
-  \code{\link{makeLearner}};
+  \code{\link{getLearnerProperties}},
+  \code{\link{hasLearnerProperties}};
+  \code{\link{Learner}}, \code{\link{makeLearner}};
   \code{\link{getClassWeightParam}};
   \code{\link{getHyperPars}}; \code{\link{getParamSet}};
   \code{\link{removeHyperPars}};

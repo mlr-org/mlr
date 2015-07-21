@@ -2,19 +2,13 @@
 % Please edit documentation in R/Learner_properties.R
 \name{LearnerProperties}
 \alias{LearnerProperties}
-\alias{addProperties}
-\alias{hasProperties}
-\alias{removeProperties}
-\alias{setProperties}
+\alias{getLearnerProperties}
+\alias{hasLearnerProperties}
 \title{Set, add, remove or query properties of learners}
 \usage{
-setProperties(learner, props)
+getLearnerProperties(learner)
 
-addProperties(learner, props)
-
-removeProperties(learner, props)
-
-hasProperties(learner, props)
+hasLearnerProperties(learner, props)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -25,12 +19,12 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 Vector of properties to set, add, remove or query.}
 }
 \value{
-\code{setProperties}, \code{addProperties} and \code{removeProperties}
+\code{setLearnerProperties}, \code{addLearnerProperties} and \code{removeLearnerProperties}
  return an updated \code{\link{Learner}}.
- \code{hasProperties} returns a logical vector of the same length of \code{props}.
+ \code{hasLearnerProperties} returns a logical vector of the same length of \code{props}.
 }
 \description{
-Properties can be accessed with \code{learner$properties}, which returns a
+Properties can be accessed with \code{getLearnerProperties(learner)}, which returns a
 character vector.
 }
 \seealso{
