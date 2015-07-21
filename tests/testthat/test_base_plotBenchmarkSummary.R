@@ -16,6 +16,9 @@ test_that("BenchmarkSummary", {
   r3 = generateBenchmarkSummaryData(res, timeboth, fill = "worst")
 
   plotBenchmarkSummary(r1)
+  ggsave(tempfile(fileext = ".png"))
   plotBenchmarkSummary(r2)
+  ggsave(tempfile(fileext = ".png"))
   plotBenchmarkSummary(r3)
+  ggsave(tempfile(fileext = ".png"))
 })

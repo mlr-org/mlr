@@ -16,6 +16,9 @@ test_that("critDifferences", {
   expect_message(generateCritDifferencesData(res, mmce, p.value = 10^(-10)))
 
   plotCritDifferences(r)
+  ggsave(tempfile(fileext = ".png"))
   plotCritDifferences(r1)
+  ggsave(tempfile(fileext = ".png"))
   plotCritDifferences(r2)
+  ggsave(tempfile(fileext = ".png"))
 })
