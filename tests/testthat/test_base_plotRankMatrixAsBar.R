@@ -42,8 +42,13 @@ test_that("RankMatrix", {
 
   # For plotRankMatrixAsBar
   plotRankMatrixAsBar(r)
+  ggsave(tempfile(fileext = ".png"))
   plotRankMatrixAsBar(r2)
+  ggsave(tempfile(fileext = ".png"))
   plotRankMatrixAsBar(r3)
+  ggsave(tempfile(fileext = ".png"))
   plotRankMatrixAsBar(r2, pos = "stack")
+  ggsave(tempfile(fileext = ".png"))
   plotRankMatrixAsBar(r, pos = "dodge")
+  ggsave(tempfile(fileext = ".png"))
 })

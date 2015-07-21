@@ -7,16 +7,16 @@ test_that("BenchmarkResult", {
   meas = list(acc, mmce, ber, featperc)
   res = benchmark(lrns, tasks, rdesc, meas)
   plotBenchmarkResult(res)
+  ggsave(tempfile(fileext = ".png"))
 })
 
 test_that("BenchmarkResult allows spaces", {
-  cv10f = makeResampleDesc("CV", iters = 2L)
+  cv = makeResampleDesc("CV", iters = 2L)
   measures = list(mlr::auc)
   learners = list(
     makeLearner("classif.rpart", predict.type = "prob")
   )
-
-  res = benchmark(learners, sonar.task, cv10f, measures)
-
+  res = benchmark(learners, sonar.task, cv, measures)
   plotBenchmarkResult(res, measure=auc)
+  ggsave(tempfile(fileext = ".png"))
 })
