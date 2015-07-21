@@ -113,8 +113,7 @@ makeFeatSelControl = function(same.resampling.instance, impute.val = NULL, maxit
   x = makeOptControl(same.resampling.instance, impute.val, tune.threshold, tune.threshold.args, log.fun, ...)
   x$maxit = maxit
   x$max.features = max.features
-  class(x) = c(cl, "FeatSelControl", class(x))
-  return(x)
+  addClasses(x, c(cl, "FeatSelControl"))
 }
 
 #' @export

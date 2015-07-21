@@ -43,8 +43,6 @@ makeMulticlassWrapper = function(learner, mcw.method = "onevsrest") {
   x = makeHomogeneousEnsemble(id = id, type = "classif", next.learner = learner,
     package = learner$package,  par.set = ps, par.vals = pv,
     learner.subclass = "MulticlassWrapper", model.subclass = "MulticlassModel")
-  x = addProperties(x, props = "multiclass")
-  x = removeProperties(x, props = "prob")
   x = setPredictType(x, predict.type = "response")
   return(x)
 }
@@ -91,6 +89,12 @@ predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, ...) {
     rns[getMinIndex(d)]
   })
   as.factor(y)
+}
+
+getLearnerProperties.MulticlassWrapper = function(learner){
+  props = getLearnerProperties(learner$next.learner)
+  props = union(props, "multiclass")
+  setdiff(props, "prob")
 }
 
 ##############################               helpers                      ##############################

@@ -20,9 +20,8 @@ makeCostSensClassifWrapper = function(learner) {
   learner = checkLearnerClassif(learner)
   learner = setPredictType(learner, "response")
   id = paste("costsens", learner$id, sep = ".")
-  x = makeBaseWrapper(id, "costsens", learner, package = learner$package,
+  makeBaseWrapper(id, "costsens", learner, package = learner$package,
     learner.subclass = "CostSensClassifWrapper", model.subclass = "CostSensClassifModel")
-  removeProperties(x, c("weights", "prob"))
 }
 
 #' @export
@@ -63,5 +62,8 @@ predictLearner.CostSensClassifWrapper = function(.learner, .model, .newdata, ...
   NextMethod()
 }
 
+getLearnerProperties.CostSensClassifWrapper = function(learner) {
+  setdiff(getLearnerProperties(learner$next.learner), c("weights", "prob"))
+}
 
 

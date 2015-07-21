@@ -23,9 +23,8 @@ makeCostSensWeightedPairsWrapper = function(learner) {
   learner = checkLearnerClassif(learner, weights = TRUE)
   learner = setPredictType(learner, "response")
   id = paste("costsens", learner$id, sep = ".")
-  x = makeHomogeneousEnsemble(id, "costsens", learner, package = learner$package,
+  makeHomogeneousEnsemble(id, "costsens", learner, package = learner$package,
     learner.subclass = "CostSensWeightedPairsWrapper", model.subclass = "CostSensWeightedPairsModel")
-  removeProperties(x, c("weights", "prob"))
 }
 
 #' @export
@@ -67,5 +66,9 @@ predictLearner.CostSensWeightedPairsWrapper = function(.learner, .model, .newdat
   classes = .model$task.desc$class.levels
   preds = predictHomogeneousEnsemble(.learner, .model, .newdata, ...)
   factor(apply(preds, 1L, computeMode), levels = classes)
+}
+
+getLearnerProperties.CostSensWeightedPairsWrapper = function(learner) {
+  setdiff(getLearnerProperties(learner$next.learner), c("weights", "prob"))
 }
 

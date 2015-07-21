@@ -70,12 +70,8 @@ makeBaggingWrapper = function(learner, bw.iters = 10L, bw.replace = TRUE, bw.siz
     makeNumericLearnerParam(id = "bw.size", lower = 0, upper = 1),
     makeNumericLearnerParam(id = "bw.feats", lower = 0, upper = 1, default = 2/3)
   )
-  x = makeHomogeneousEnsemble(id, learner$type, learner, packs, par.set = ps, par.vals = pv,
+  makeHomogeneousEnsemble(id, learner$type, learner, packs, par.set = ps, par.vals = pv,
     learner.subclass = "BaggingWrapper", model.subclass = "BaggingModel")
-  switch(x$type,
-    "classif" = addProperties(x, "prob"),
-    "regr" = addProperties(x, "se")
-  )
 }
 
 #' @export
@@ -146,4 +142,11 @@ predictLearner.BaggingWrapper = function(.learner, .model, .newdata, ...) {
 #' @export
 setPredictType.BaggingWrapper = function(learner, predict.type) {
   setPredictType.Learner(learner, predict.type)
+}
+
+getLearnerProperties.BaggingWrapper = function(learner) {
+    switch(learner$type,
+    "classif" = union(getLearnerProperties(learner$next.learner), "pron"),
+    "regr" = union(getLearnerProperties(learner$next.learner), "se")
+  )
 }
