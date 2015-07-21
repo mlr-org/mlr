@@ -34,6 +34,10 @@ mlr_2.5:
   check.packages now that will check whether required packages are installed
   without loading them
 - many new function for statistical benchmark comparisons are added, see below
+- rename hasProperties, getProperties to hasLearnerProperties and getLearnerProperties
+- Learner Propoerties are now implemented object oriented as a state of a Learner.
+  Only RLearners have the properties stored in a slot. 
+  For each class the getter can be overwritten.
 
 - new functions
 -- getDefaultMeasure
@@ -64,6 +68,9 @@ mlr_2.5:
 
 - new filters
 -- permutation.importance
+
+- removed functions
+-- setProperties, addProperties, removeProperties
 
 mlr_2.4:
 - WrappedModel printer was slightly improved
