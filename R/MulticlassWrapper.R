@@ -91,6 +91,7 @@ predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, ...) {
   as.factor(y)
 }
 
+#' @export
 getLearnerProperties.MulticlassWrapper = function(learner){
   props = getLearnerProperties(learner$next.learner)
   props = union(props, "multiclass")

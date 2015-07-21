@@ -32,6 +32,7 @@ makeImputeWrapper = function(learner, classes = list(), cols = list(),
   addClasses(lrn, "ImputeWrapper")
 }
 
+#' @export
 getLearnerProperties.ImputeWrapper = function(learner) {
   union(getLearnerProperties(learner$next.learner), "missings")
 }

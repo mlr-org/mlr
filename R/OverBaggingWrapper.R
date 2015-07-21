@@ -80,6 +80,7 @@ trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, .weights = 
   m = makeHomChainModel(.learner, models)
 }
 
+#' @export
 predictLearnerProperties.OverBaggingWrapper = function(learner) {
   union(getLearnerProperties(learner$next.learner), "prob")
 }

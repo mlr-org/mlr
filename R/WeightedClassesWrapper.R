@@ -120,6 +120,7 @@ trainLearner.WeightedClassesWrapper = function(.learner, .task, .subset, .weight
   makeChainModel(next.model = m, cl = "WeightedClassesModel")
 }
 
+#' @export
 getLearnerProperties.WeightedClassesWrapper = function(learner) {
   setdiff(getLearnerProperties(learner$next.learner), "weights")
 }

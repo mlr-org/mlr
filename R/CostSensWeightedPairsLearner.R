@@ -68,6 +68,7 @@ predictLearner.CostSensWeightedPairsWrapper = function(.learner, .model, .newdat
   factor(apply(preds, 1L, computeMode), levels = classes)
 }
 
+#' @export
 getLearnerProperties.CostSensWeightedPairsWrapper = function(learner) {
   setdiff(getLearnerProperties(learner$next.learner), c("weights", "prob"))
 }

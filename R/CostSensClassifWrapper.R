@@ -62,6 +62,7 @@ predictLearner.CostSensClassifWrapper = function(.learner, .model, .newdata, ...
   NextMethod()
 }
 
+#' @export
 getLearnerProperties.CostSensClassifWrapper = function(learner) {
   setdiff(getLearnerProperties(learner$next.learner), c("weights", "prob"))
 }

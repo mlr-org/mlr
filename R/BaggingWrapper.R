@@ -144,6 +144,7 @@ setPredictType.BaggingWrapper = function(learner, predict.type) {
   setPredictType.Learner(learner, predict.type)
 }
 
+#' @export
 getLearnerProperties.BaggingWrapper = function(learner) {
     switch(learner$type,
     "classif" = union(getLearnerProperties(learner$next.learner), "prob"),

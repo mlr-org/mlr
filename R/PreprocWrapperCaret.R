@@ -81,6 +81,7 @@ makePreprocWrapperCaret = function (learner, ...) {
   addClasses(x, "PreprocWrapperCaret")
 }
 
+#' @export
 getLearnerProperties.PreprocWrapperCaret = function(learner) {
   props = getLearnerProperties(learner$next.learner)
   par.vals = getHyperPars(learner)
