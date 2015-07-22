@@ -1,6 +1,6 @@
-context("classif_saeDNN")
+context("classif_dbnDNN")
 
-test_that("classif_saeDNN", {
+test_that("classif_dbnDNN", {
   requirePackages("deepnet", default.method = "load")
   
   set.seed(getOption("mlr.debug.seed"))
@@ -16,13 +16,13 @@ test_that("classif_saeDNN", {
       onehot[ind,i] = 1
     }
     
-    m = deepnet::sae.dnn.train(x = x, y = onehot, hidden = 7, output = "softmax")
+    m = deepnet::dbn.dnn.train(x = x, y = onehot, hidden = 7, output = "softmax")
     p = deepnet::nn.predict(m, data.matrix(binaryclass.test[,-ncol(binaryclass.test)]))
     colnames(p) = binaryclass.class.levs
     p = as.factor(colnames(p)[max.col(p)])
   })
   
   set.seed(getOption("mlr.debug.seed"))
-  testSimple("classif.saeDNN", binaryclass.df, binaryclass.target, binaryclass.train.inds, p, 
+  testSimple("classif.dbnDNN", binaryclass.df, binaryclass.target, binaryclass.train.inds, p, 
              parset = list(hidden = 7))
 })

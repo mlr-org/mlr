@@ -1,7 +1,7 @@
 #' @export
-makeRLearner.classif.saeDNN = function() {
+makeRLearner.classif.dbnDNN = function() {
   makeRLearnerClassif(
-    cl = "classif.saeDNN",
+    cl = "classif.dbnDNN",
     package = "deepnet",
     par.set = makeParamSet(
       makeIntegerVectorLearnerParam(id = "hidden", default = c(10), lower = 1),
@@ -12,20 +12,20 @@ makeRLearner.classif.saeDNN = function() {
       makeIntegerLearnerParam(id = "numepochs", default = 3, lower = 1),
       makeIntegerLearnerParam(id = "batchsize", default = 100, lower = 1),
       makeDiscreteLearnerParam(id = "output", default = "sigm", values = c("sigm", "linear", "softmax")),
-      makeDiscreteLearnerParam(id = "sae_output", default = "linear", values = c("sigm", "linear", "softmax")),
       makeNumericLearnerParam(id = "hidden_dropout", default = 0, lower = 0, upper = 1),
-      makeNumericLearnerParam(id = "visible_dropout", default = 0, lower = 0, upper = 1)
+      makeNumericLearnerParam(id = "visible_dropout", default = 0, lower = 0, upper = 1),
+      makeIntegerLearnerParam(id = "cd")
     ),
     par.vals = list(output = "softmax"),
     properties = c("twoclass", "multiclass","numerics", "prob"),
-    name = "Deep neural network with weights initialized by Stacked AutoEncoder",
-    short.name = "sae.dnn",
+    name = "Deep neural network with weights initialized by DBN",
+    short.name = "dbn.dnn",
     note = "`output` set to `softmax` by default"
   )
 }
 
 #' @export
-trainLearner.classif.saeDNN = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.classif.dbnDNN = function(.learner, .task, .subset, .weights = NULL,  ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   y = as.numeric(d$target)
   dict = sort(unique(y))
@@ -34,11 +34,11 @@ trainLearner.classif.saeDNN = function(.learner, .task, .subset, .weights = NULL
     ind = which(y == dict[i])
     onehot[ind,i] = 1
   }
-  deepnet::sae.dnn.train(x = data.matrix(d$data), y = onehot, ...)
+  deepnet::dbn.dnn.train(x = data.matrix(d$data), y = onehot, ...)
 }
 
 #' @export
-predictLearner.classif.saeDNN = function(.learner, .model, .newdata, ...) {
+predictLearner.classif.dbnDNN = function(.learner, .model, .newdata, ...) {
   type = switch(.learner$predict.type, response = "class", prob = "raw")
   pred = deepnet::nn.predict(.model$learner.model, data.matrix(.newdata))
   colnames(pred) = .model$factor.levels[[1]]
