@@ -26,5 +26,5 @@ test_that("basic PreprocWrapperCaret works", {
 test_that("PreprocWrapperCaret supports missing values", {
   lrn1 = makeLearner("classif.svm")
   lrn2 = makePreprocWrapperCaret(lrn1, ppc.knnImpute = TRUE)
-  expect_true(hasProperties(lrn2, props = "missings"))
+  expect_true(hasLearnerProperties(lrn2, props = "missings"))
 })
