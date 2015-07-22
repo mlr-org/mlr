@@ -24,10 +24,9 @@ Which means that the default behavior for that param will now be used.
 }
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
-  \code{\link{addProperties}}, \code{\link{hasProperties}},
-  \code{\link{removeProperties}},
-  \code{\link{setProperties}}; \code{\link{Learner}},
-  \code{\link{makeLearner}};
+  \code{\link{getLearnerProperties}},
+  \code{\link{hasLearnerProperties}};
+  \code{\link{Learner}}, \code{\link{makeLearner}};
   \code{\link{getClassWeightParam}};
   \code{\link{getHyperPars}}; \code{\link{getParamSet}};
   \code{\link{setHyperPars}}; \code{\link{setId}};

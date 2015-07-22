@@ -123,9 +123,9 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
 
   # predictions
   # if learner supports prob or se, enable it
-  if (td$type == "regr" && taskdim == 1L && hasProperties(learner, "se"))
+  if (td$type == "regr" && taskdim == 1L && hasLearnerProperties(learner, "se"))
     learner = setPredictType(learner, "se")
-  if (td$type == "classif" && hasProperties(learner, "prob"))
+  if (td$type == "classif" && hasLearnerProperties(learner, "prob"))
     learner = setPredictType(learner, "prob")
   mod = train(learner, task)
   pred.train = predict(mod, task)
@@ -168,7 +168,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
       NULL
     if (taskdim == 2L) {
       p = ggplot(grid, aes_string(x = x1n, y = x2n))
-      if (hasProperties(learner, "prob") && prob.alpha) {
+      if (hasLearnerProperties(learner, "prob") && prob.alpha) {
         # max of rows is prob for selected class
         prob = apply(getPredictionProbabilities(pred.grid, cl = td$class.levels), 1, max)
         grid$.prob.pred.class = prob
@@ -208,7 +208,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
       p = p + geom_point(data = data, mapping = aes_string(y = target), size = pointsize)
       p = p + geom_line(data = grid, mapping = aes_string(y = target))
       # show se band
-      if (se.band && hasProperties(learner, "se")) {
+      if (se.band && hasLearnerProperties(learner, "se")) {
         grid$.se = pred.grid$data$se
         grid$.ymin = grid[, target] - grid$.se
         grid$.ymax = grid[, target] + grid$.se

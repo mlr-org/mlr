@@ -29,5 +29,10 @@ makeImputeWrapper = function(learner, classes = list(), cols = list(),
   }
 
   lrn = makePreprocWrapper(learner, trainfun, predictfun, par.vals = args)
-  addProperties(lrn, "missings")
+  addClasses(lrn, "ImputeWrapper")
+}
+
+#' @export
+getLearnerProperties.ImputeWrapper = function(learner) {
+  union(getLearnerProperties(learner$next.learner), "missings")
 }

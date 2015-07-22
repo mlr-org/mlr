@@ -7,9 +7,6 @@ makeBaseWrapper = function(id, type, next.learner, package = character(0L), par.
   if (length(ns) > 0L)
     stopf("Hyperparameter names in wrapper clash with base learner names: %s", collapse(ns))
 
-  # set properties by default to what the resulting type is allowed and what the base learner can do
-  props = intersect(getSupportedLearnerProperties(type), next.learner$properties)
-
   makeS3Obj(c(learner.subclass, "BaseWrapper", "Learner"),
     id = id,
     type = type,
@@ -17,7 +14,6 @@ makeBaseWrapper = function(id, type, next.learner, package = character(0L), par.
     package = union(package, next.learner$package),
     par.set = par.set,
     par.vals = par.vals,
-    properties = props,
     fix.factors.prediction = FALSE,
     next.learner = next.learner,
     model.subclass = model.subclass
@@ -76,4 +72,9 @@ getFailureModelMsg.BaseWrapperModel = function(model) {
   return(getFailureModelMsg(model$learner.model$next.model))
 }
 
+#' @export
+getLearnerProperties.BaseWrapper = function(learner) {
+  # set properties by default to what the resulting type is allowed and what the base learner can do
+  intersect(getSupportedLearnerProperties(learner$type), getLearnerProperties(learner$next.learner))
+}
 

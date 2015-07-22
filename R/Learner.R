@@ -81,7 +81,7 @@ print.Learner = function(x, ...) {
     "Type: ", x$type, "\n",
     "Name: ", x$name, "; Short name: ", x$short.name, "\n",
     "Class: ", class(x)[1L], "\n",
-    "Properties: ", collapse(x$properties), "\n",
+    "Properties: ", collapse(getLearnerProperties(x)), "\n",
     "Predict-Type: ", x$predict.type, "\n",
     "Hyperparameters: ", getHyperParsString(x), "\n\n",
     sep =""

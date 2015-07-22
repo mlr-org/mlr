@@ -5,7 +5,7 @@
 #'  Before training the preprocessing will be performed and the preprocessing model will be stored.
 #'  Before prediction the preprocessing model will transform the test data according to the trained model.
 #'
-#'  After being wrapped the learner will support missing values although this will only be the case if \code{ppc.knnImpute}, \code{ppc.bagImpute} or \code{ppc.mediaImpute} is set to \code{TRUE}.
+#'  After being wrapped the learner will support missing values although this will only be the case if \code{ppc.knnImpute}, \code{ppc.bagImpute} or \code{ppc.medianImpute} is set to \code{TRUE}.
 #'
 #' @template arg_learner
 #' @param ... [any]\cr
@@ -77,8 +77,17 @@ makePreprocWrapperCaret = function (learner, ...) {
     data.frame(predict(control, data))
   }
 
-  learner = addProperties(learner, "missings")
+  x = makePreprocWrapper(learner, trainfun, predictfun, par.set, par.vals)
+  addClasses(x, "PreprocWrapperCaret")
+}
 
-  makePreprocWrapper(learner, trainfun, predictfun, par.set, par.vals)
+#' @export
+getLearnerProperties.PreprocWrapperCaret = function(learner) {
+  props = getLearnerProperties(learner$next.learner)
+  par.vals = getHyperPars(learner)
+  if (par.vals$ppc.bagImpute | par.vals$ppc.knnImpute | par.vals$ppc.medianImpute) {
+    props = union(props, "missings")
+  }
+  props
 }
 
