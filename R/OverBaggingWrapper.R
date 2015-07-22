@@ -81,6 +81,6 @@ trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, .weights = 
 }
 
 #' @export
-predictLearnerProperties.OverBaggingWrapper = function(learner) {
+getLearnerProperties.OverBaggingWrapper = function(learner) {
   union(getLearnerProperties(learner$next.learner), "prob")
 }
