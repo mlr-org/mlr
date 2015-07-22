@@ -110,6 +110,7 @@ Suggests:
     rpart,
     rrlda,
     rsm,
+    RSNNS,
     RWeka,
     sda,
     sparsediscrim,
