@@ -17,6 +17,7 @@ makeRLearner.classif.gaterSVM = function() {
       makeUntypedLearnerParam(id = "valid.metric", default = NULL),
       makeLogicalLearnerParam(id = "verbose", default = FALSE)
     ),
+    par.vals = list(m = 3, max.iter = 1),
     properties = c("twoclass", "numerics"),
     name = "Mixture of SVMs with Neural Network Gater Function",
     short.name = "gaterSVM",
@@ -27,24 +28,7 @@ makeRLearner.classif.gaterSVM = function() {
 #' @export
 trainLearner.classif.gaterSVM = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
-  pars = list(...)
-  m = NULL
-  max.iter = NULL
-  if (!any(grepl('m', names(pars)))) {
-    m = 3
-  }
-  if (!any(grepl('max.iter', names(pars)))) {
-    max.iter = 1
-  }
-  if (!is.null(m) && !is.null(max.iter)) {
-    SwarmSVM::gaterSVM(x = d$data, y = d$target, m = m, max.iter = max.iter, ...)
-  } else if (is.null(m) && !is.null(max.iter)) {
-    SwarmSVM::gaterSVM(x = d$data, y = d$target, max.iter = max.iter, ...)
-  } else if (!is.null(m) && is.null(max.iter)) {
-    SwarmSVM::gaterSVM(x = d$data, y = d$target, m = m, ...)
-  } else {
-    SwarmSVM::gaterSVM(x = d$data, y = d$target, ...)
-  }
+  SwarmSVM::gaterSVM(x = d$data, y = d$target, ...)
 }
 
 #' @export
