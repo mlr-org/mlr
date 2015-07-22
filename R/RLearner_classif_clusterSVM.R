@@ -23,10 +23,11 @@ makeRLearner.classif.clusterSVM = function() {
       makeFunctionLearnerParam(id = "cluster.fun"),
       makeFunctionLearnerParam(id = "cluster.predict")
     ),
+    par.vals = list(centers = 2),
     properties = c("twoclass", "numerics"),
     name = "Clustered Support Vector Machines",
     short.name = "clusterSVM",
-    note = "centers set to 2 by default"
+    note = "`centers` set to 2 by default"
   )
 }
 
@@ -34,11 +35,7 @@ makeRLearner.classif.clusterSVM = function() {
 trainLearner.classif.clusterSVM = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   pars = list(...)
-  if (!any(grepl('centers', names(pars)))) {
-    SwarmSVM::clusterSVM(x = d$data, y = d$target, centers = 2, ...)
-  } else {
     SwarmSVM::clusterSVM(x = d$data, y = d$target, ...)
-  }
 }
 
 #' @export
