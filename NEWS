@@ -67,6 +67,7 @@ mlr_2.5:
 -- classif.mlp
 -- classif.saeDNN
 -- classif.dbnDNN
+-- classif.nnTrain
 
 - new filters
 -- permutation.importance
