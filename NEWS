@@ -65,6 +65,7 @@ mlr_2.5:
 -- classif.dcSVM
 -- classif.gaterSVM
 -- classif.mlp
+-- classif.saeDNN
 
 - new filters
 -- permutation.importance
