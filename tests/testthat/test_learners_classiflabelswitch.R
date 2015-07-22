@@ -60,7 +60,7 @@ test_that("no labels are switched", {
         lrn = setHyperPars(lrn, par.vals = hps)
       holdout(lrn, task, split = 0.5, stratify = TRUE)$aggr[[1L]]
     })
-    expect_true(all(!is.na(errs) & errs <= 0.3))
+    expect_true(all(!is.na(errs) & errs <= 0.4))
     # messagef("predtype = %s; task = %s", predtype, task$task.desc$id)
     # print(sort(errs, na.last = TRUE))
   }
