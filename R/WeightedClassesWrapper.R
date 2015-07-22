@@ -17,7 +17,7 @@
 #' and tuning! See example below.
 #'
 #' b) The learner does not have a direct parameter to support class weighting, but
-#' supports observation weights, so \code{hasProperties(learner, 'weights')} is \code{TRUE}.
+#' supports observation weights, so \code{hasLearnerProperties(learner, 'weights')} is \code{TRUE}.
 #' This means that an individual, arbitrary weight can be set per observation during training.
 #' We set this weight depending on the class internally in the wrapper. Basically we introduce
 #' something like a new \dQuote{class.weights} parameter for the learner via observation weights.
@@ -75,7 +75,7 @@ makeWeightedClassesWrapper = function(learner, wcw.param = NULL, wcw.weight = 1)
       wcw.param, learner$class.weights.param)
 
   if (is.null(wcw.param)) {
-    if (!hasProperties(learner, "weights"))
+    if (!hasLearnerProperties(learner, "weights"))
       stopf("Learner '%s' does not support observation weights. You have to set 'wcw.param' to the learner param which allows to set class weights! (which hopefully exists...)", learner$id)
   } else {
     assertSubset(wcw.param, getParamIds(learner$par.set))
@@ -92,7 +92,7 @@ makeWeightedClassesWrapper = function(learner, wcw.param = NULL, wcw.weight = 1)
   x = makeBaseWrapper(id, learner$type, learner, package = learner$package, par.set = ps, par.vals = pv,
     learner.subclass = "WeightedClassesWrapper", model.subclass = "WeightedClassesModel")
   x$wcw.param = wcw.param
-  removeProperties(x, "weights")
+  x
 }
 
 #' @export
@@ -118,4 +118,9 @@ trainLearner.WeightedClassesWrapper = function(.learner, .task, .subset, .weight
     m = train(.learner$next.learner, task = .task)
   }
   makeChainModel(next.model = m, cl = "WeightedClassesModel")
+}
+
+#' @export
+getLearnerProperties.WeightedClassesWrapper = function(learner) {
+  setdiff(getLearnerProperties(learner$next.learner), "weights")
 }

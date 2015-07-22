@@ -48,7 +48,7 @@ The wrapper in this case simply offers a convenient, consistent fashion for clas
 and tuning! See example below.
 
 b) The learner does not have a direct parameter to support class weighting, but
-supports observation weights, so \code{hasProperties(learner, 'weights')} is \code{TRUE}.
+supports observation weights, so \code{hasLearnerProperties(learner, 'weights')} is \code{TRUE}.
 This means that an individual, arbitrary weight can be set per observation during training.
 We set this weight depending on the class internally in the wrapper. Basically we introduce
 something like a new \dQuote{class.weights} parameter for the learner via observation weights.

@@ -100,7 +100,7 @@ makeRLearnerClassif = function(cl, package, par.set, par.vals = list(), properti
   )
 
   # include the class.weights.param
-  if ("class.weights" %in% lrn$properties) {
+  if ("class.weights" %in% getLearnerProperties(lrn)) {
     assertString(class.weights.param)
     if (!is.null(par.set$pars[[class.weights.param]]))
       lrn$class.weights.param = class.weights.param
