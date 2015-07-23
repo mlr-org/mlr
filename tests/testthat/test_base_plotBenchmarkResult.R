@@ -7,7 +7,11 @@ test_that("BenchmarkResult", {
   meas = list(acc, mmce, ber, featperc)
   res = benchmark(lrns, tasks, rdesc, meas)
   plotBenchmarkResult(res)
-  ggsave(tempfile(fileext = ".png"))
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  expect_equal(length(XML::getNodeSet(doc, grey.xpath, "svg")), length(getBMRTaskIds(res)))
 })
 
 test_that("BenchmarkResult allows spaces", {

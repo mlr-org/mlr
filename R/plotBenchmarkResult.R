@@ -1,7 +1,7 @@
 #' @title Create a Trellis-plot for a selected measure.
 #'
 #' @description
-#' Plots boxplots for a selected \code{measure} accross all iterations
+#' Plots boxplots for a selected \code{measure} across all iterations
 #' of the resampling strategy, faceted by the \code{task.id}
 #'
 #' @template arg_bmr
@@ -53,6 +53,8 @@ plotBenchmarkResult = function(bmr, measure = NULL, style = "box", order.lrns = 
   p = ggplot(df, aes_string("learner.id", measure$id))
   p = p + theme(axis.title.x = element_blank(),
                 axis.text.x = element_text(angle = -45, hjust = 0))
+  p = p + facet_grid(. ~ task.id)
+  
   if (pretty.names) {
     p = p + ylab(measure$name)
   }
