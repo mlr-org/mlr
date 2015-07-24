@@ -19,9 +19,8 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 Vector of properties to set, add, remove or query.}
 }
 \value{
-\code{setLearnerProperties}, \code{addLearnerProperties} and \code{removeLearnerProperties}
- return an updated \code{\link{Learner}}.
- \code{hasLearnerProperties} returns a logical vector of the same length of \code{props}.
+\code{getLearnerProperties} returns a character vector with learner properties.
+ \code{hasLearnerProperties} returns a logical vector of the same length as \code{props}.
 }
 \description{
 Properties can be accessed with \code{getLearnerProperties(learner)}, which returns a
