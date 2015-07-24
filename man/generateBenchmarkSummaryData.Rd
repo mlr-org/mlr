@@ -63,7 +63,8 @@ Other benchmark: \code{\link{BenchmarkResult}};
   \code{\link{plotCritDifferences}};
   \code{\link{plotRankMatrixAsBar}}
 
-Other generate_plot_data: \code{\link{generateCritDifferencesData}};
+Other generate_plot_data: \code{\link{generateCalibrationData}};
+  \code{\link{generateCritDifferencesData}};
   \code{\link{generateFilterValuesData}};
   \code{\link{generateLearningCurveData}};
   \code{\link{generatePartialPredictionData}};
