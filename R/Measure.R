@@ -4,8 +4,8 @@
 #' A measure object encapsulates a function to evaluate the performance of a prediction.
 #' Information about already implemented measures can be obtained here: \code{\link{measures}}.
 #'
-#' A learner is trained on a a training set d1, results in a model m, predicts another set d2
-#' (which may be a different one or the training set), resulting in the prediction.
+#' A learner is trained on a training set d1, results in a model m and predicts another set d2
+#' (which may be a different one or the training set) resulting in the prediction.
 #' The performance measure can now be defined using all of the information of the original task,
 #' the fitted model and the prediction.
 #'
@@ -27,7 +27,7 @@
 #'   Name of measure.
 #' @param minimize [\code{logical(1)}]\cr
 #'   Should the measure be minimized?
-#'   Default is in \code{TRUE}.
+#'   Default is \code{TRUE}.
 #' @param properties [\code{character}]\cr
 #'   Set of measure properties. Some standard property names include:
 #'   \describe{
@@ -45,7 +45,7 @@
 #'     \item{req.prob}{Are predicted probabilites required in calculation? Usually not the case, example would be AUC.}
 #'   }
 #'   Default is \code{character(0)}.
-#' @param fun [\code{function(task, model, pred, extra.args)}]\cr
+#' @param fun [\code{function(task, model, pred, feats, extra.args)}]\cr
 #'   Calculates performance value.
 #' @param extra.args [\code{list}]\cr
 #'   List of extra arguments which will always be passed to \code{fun}.
