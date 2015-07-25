@@ -112,7 +112,6 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #' @template ret_gg2
 #' @export
 #' @examples
-#'
 #' lrns = list(makeLearner("classif.rpart", predict.type = "prob"),
 #'             makeLearner("classif.nnet", predict.type = "prob"))
 #' fit = lapply(lrns, train, task = iris.task)
@@ -132,6 +131,8 @@ plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE) {
   assertFlag(reference)
   assertFlag(rag)
 
+  obj$proportion$xend = length(levels(obj$proportion$bin))
+
   p = ggplot(obj$proportion, aes_string("bin", "Proportion", color = "Class", group = "Class"))
   p = p + scale_x_discrete(drop = FALSE)
 
@@ -143,16 +144,16 @@ plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE) {
   if (length(unique(obj$proportion$Learner)) > 1L)
     p = p + facet_wrap(~ Learner)
 
-  if (reference) {
-    xend = length(levels(obj$data$bin))
-    p = p + geom_segment(aes(x = 1, xend = xend, y = 0, yend = 1), colour = "black", linetype = "dashed")
-  }
+  if (reference)
+    p = p + geom_segment(aes_string(1, 0, xend = "xend", yend = 1), colour = "black", linetype = "dashed")
 
   if (rag) {
-    p = p + geom_rug(data = obj$data[obj$data$truth == obj$data$Class, ],
-                     mapping = aes(x = jitter(as.numeric(bin)), y = 1), sides = "t", alpha = .25)
-    p = p + geom_rug(data = obj$data[obj$data$truth != obj$data$Class, ],
-                     mapping = aes(x = jitter(as.numeric(bin)), y = 1), sides = "b", alpha = .25)
+    top_data = obj$data[obj$data$truth == obj$data$Class, ]
+    top_data$x = jitter(as.numeric(top_data$bin))
+    p = p + geom_rug(data = top_data, aes_string("x", y = 1), sides = "t", alpha = .25)
+    bottom_data = obj$data[obj$data$truth != obj$data$Class, ]
+    bottom_data$x = jitter(as.numeric(bottom_data$bin))
+    p = p + geom_rug(data = bottom_data, aes_string("x", y = 1), sides = "b", alpha = .25)
   }
   p = p + labs(x = "Probability Bin", y = "Class Proportion")
   p + theme(axis.text.x = element_text(angle = 90, hjust = 1))
