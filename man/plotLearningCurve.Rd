@@ -32,6 +32,7 @@ Other learning_curve: \code{\link{generateLearningCurveData}};
 
 Other plot: \code{\link{plotBenchmarkResult}};
   \code{\link{plotBenchmarkSummary}};
+  \code{\link{plotCalibration}};
   \code{\link{plotCritDifferences}};
   \code{\link{plotFilterValuesGGVIS}};
   \code{\link{plotFilterValues}};
