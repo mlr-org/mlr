@@ -64,6 +64,7 @@ Other benchmark: \code{\link{BenchmarkResult}};
 
 Other plot: \code{\link{plotBenchmarkResult}};
   \code{\link{plotBenchmarkSummary}};
+  \code{\link{plotCalibration}};
   \code{\link{plotFilterValuesGGVIS}};
   \code{\link{plotFilterValues}};
   \code{\link{plotLearningCurveGGVIS}};

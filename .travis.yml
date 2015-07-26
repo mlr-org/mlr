@@ -18,9 +18,9 @@ r_binary_packages:
     - ada
     - adabag
     # - bartMachine
-    # - brnn
+    - brnn
     - bst
-    # - care
+    - care
     - caret
     - checkmate
     - class
@@ -33,18 +33,20 @@ r_binary_packages:
     - crs
     - Cubist
     - DiceKriging
-    # - DiceOptim
-    # - DiscriMiner
+    - DiceOptim
+    - DiscriMiner
+    # - deepnet
     - e1071
     - earth
     - elasticnet
-    # - elmNN
+    - elmNN
     - emoa
     # - extraTrees
+    - fields
     - flare
     - FNN
     - frbs
-    # - FSelector
+    - FSelector
     - gbm
     - GenSA
     - ggplot2
@@ -57,46 +59,51 @@ r_binary_packages:
     - klaR
     - knitr
     - kohonen
-    # - laGP
+    - laGP
     - LiblineaR
-    # - lqa
+    - lqa
     - MASS
     - mboost
     - mco
     - mda
     - mlbench
     - modeltools
-    # - mRMRe
+    - mRMRe
+    # - neuralnet
     - nnet
-    # - nodeHarvest
+    - nodeHarvest
     - pamr
     - party
     - penalized
     - pls
     - plyr
+    # - PMCMR
     - pROC
     - randomForest
     - randomForestSRC
     - reshape2
     - RCurl
+    # - RSNNS
     - rFerns
     - rjson
     - rmarkdown
     - robustbase
     - ROCR
     - rpart
-    # - rrlda
+    - rrlda
     - rsm
     - RWeka
     - sda
     - shiny
-    # - sparsediscrim
-    # - sparseLDA
+    - sparsediscrim
+    - sparseLDA
     - stepPlr
     - stringi
+    # - SwarmSVM
     - testthat
     - tgp
     - TH.data
+    # - XML
 before_script:
     - curl -L https://raw.githubusercontent.com/mllg/travis-r-tools/master/update-packages.r -o /tmp/update-packages.r
     - Rscript /tmp/update-packages.r

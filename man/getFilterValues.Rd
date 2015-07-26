@@ -49,6 +49,7 @@ Other filter: \code{\link{FilterValues}};
   \code{\link{plotFilterValues}}
 
 Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}};
+  \code{\link{generateCalibrationData}};
   \code{\link{generateCritDifferencesData}};
   \code{\link{generateFilterValuesData}};
   \code{\link{generateLearningCurveData}};
