@@ -29,10 +29,10 @@ Depends:
     R (>= 3.0.2),
     BBmisc (>= 1.9),
     ggplot2,
-    ParamHelpers (>= 1.5),
+    ParamHelpers (>= 1.6),
     stats
 Imports:
-    checkmate (>= 1.6.0),
+    checkmate (>= 1.6.2),
     ggvis,
     parallelMap (>= 1.3),
     plyr,
