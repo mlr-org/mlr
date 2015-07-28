@@ -9,6 +9,7 @@
 #'   \item{\code{stack.nocv}}{Fits the super learner, where in-sample predictions of the base learners are used.}
 #'   \item{\code{stack.cv}}{Fits the super learner, where the base learner predictions are computed
 #'   by crossvalidated predictions (the resampling strategy can be set via the \code{resampling} argument).}
+#'   \item{\code{hill.climb}}{Select a subset of base learner predictions by hill climbing algorithm.}
 #'  }
 #'
 #' @param base.learners [(list of) \code{\link{Learner}}]\cr
@@ -63,7 +64,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
     resampling = makeResampleDesc("CV", iters= 5L,
       stratify = ifelse(baseType == "classif", TRUE, FALSE))
   }
-  assertChoice(method, c("average", "stack.nocv", "stack.cv"))
+  assertChoice(method, c("average", "stack.nocv", "stack.cv", "hill.climb"))
   assertClass(resampling, "ResampleDesc")
 
   pts = unique(extractSubList(base.learners, "predict.type"))
@@ -154,7 +155,8 @@ trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
   switch(.learner$method,
     average = averageBaseLearners(.learner, .task),
     stack.nocv = stackNoCV(.learner, .task),
-    stack.cv = stackCV(.learner, .task)
+    stack.cv = stackCV(.learner, .task),
+    hill.climb = hillclimbBaseLearners(.learner, .task, ...)
   )
 }
 
@@ -350,6 +352,115 @@ stackCV = function(learner, task) {
   super.model = train(learner$super.learner, super.task)
   list(method = "stack.cv", base.models = base.models,
        super.model = super.model, pred.train = pred.train)
+}
+
+hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagprob = 1, bagtimes = 1, 
+  metric = NULL) {
+  
+  assertFlag(replace)
+  assertInt(init, lower = 0)
+  assertNumber(bagprob, lower = 0, upper = 1)
+  assertInt(bagtime, lower = 1)
+  
+  td = getTaskDescription(task)
+  type = ifelse(td$type == "regr", "regr",
+                ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
+  if (testNull(metric)) {
+    if (type == "regr") {
+      metric = function(pred, true) mean((pred-true)^2)
+    } else {
+      metric = function(pred, true) {
+        if (testMatrix(pred))
+          pred = max.col(pred)
+        tb = table(pred, true)
+        return( 1- sum(diag(tb))/sum(tb) )
+    }
+  }
+  assertFunction(metric)
+  
+  bls = learner$base.learners
+  use.feat = learner$use.feat
+  # cross-validate all base learners and get a prob vector for the whole dataset for each learner
+  base.models = probs = vector("list", length(bls))
+  rin = makeResampleInstance(learner$resampling, task = task)
+  for (i in seq_along(bls)) {
+    bl = bls[[i]]
+    r = resample(bl, task, rin, show.info = FALSE)
+    probs[[i]] = getResponse(r$pred, full.matrix = FALSE)
+    # also fit all base models again on the complete original data set
+    base.models[[i]] = train(bl, task)
+  }
+  names(probs) = names(bls)
+  # TODO: I only need it as real number or a probability matrix
+  if (type == "regr" | type == "classif") {
+    probs = as.data.frame(probs)
+  } else {
+    probs = as.data.frame(lapply(probs, function(X) X)) #X[,-ncol(X)]))
+  }
+  
+  # add true target column IN CORRECT ORDER
+  tn = getTaskTargetNames(task)
+  test.inds = unlist(rin$test.inds)
+  pred.train = as.list(probs[order(test.inds), , drop = FALSE])
+  probs[[tn]] = getTaskTargets(task)[test.inds]
+  
+  # now start the hill climbing
+  probs = probs[order(test.inds), , drop = FALSE]
+  m = length(bls)
+  weights = rep(0, m)
+  flag = TRUE
+  for (bagind in 1:bagtime) {
+    # bagging of models
+    bagsize = ceiling(m*bagprob)
+    bagmodel = sample(1:m, bagsize)
+    weight = rep(0, bagsize)
+    
+    # Initial selection of strongest learners
+    if (init>0) {
+      score = rep(Inf, bagsize)
+      for (i in bagmodel) {
+        score[i] = metric(probs[,i], probs[[tn]])
+      }
+      inds = order(score)[1:init]
+      weight[inds] = 1
+    }
+    
+    selection.size = init
+    selection.ind = inds
+    current.prob = rep(0, nrow(probs))
+    if (selection.size>0)
+      current.prob = rowSums(probs[selection.size])
+    flag = TRUE
+    if (selection.size>0)
+      old.score = metric(current.prob, probs[[tn]])
+    
+    while (flag) {
+      score = rep(Inf, bagsize)
+      for (i in bagmodel) {
+        score[i] = metric(probs[,i], probs[[tn]])
+      }
+      inds = order(score)
+      if (!replace) {
+        ind = setdiff(inds, selection.ind)[1]
+      } else {
+        ind = inds[1]
+      }
+      
+      new.score = metric(current.prob, probs[[tn]])
+      if (new.score>old.score) {
+        flag = FALSE
+      } else {
+        weights[ind] = weights[ind]+1
+        selection.ind = c(selection.ind, ind)
+        selection.size = selection.size+1
+        old.score = new.score
+      }
+    }
+    weights[bagmodel] = weights[bagmodel] + weight
+  }
+  
+  list(method = "average", base.models = base.models, super.model = NULL,
+       pred.train = probs, weights = weights)
 }
 
 ### other helpers ###
