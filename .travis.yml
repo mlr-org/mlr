@@ -35,13 +35,13 @@ r_binary_packages:
     - DiceKriging
     - DiceOptim
     - DiscriMiner
-    # - deepnet
+    - deepnet
     - e1071
     - earth
     - elasticnet
     - elmNN
     - emoa
-    # - extraTrees
+    - extraTrees
     - fields
     - flare
     - FNN
@@ -69,7 +69,7 @@ r_binary_packages:
     - mlbench
     - modeltools
     - mRMRe
-    # - neuralnet
+    - neuralnet
     - nnet
     - nodeHarvest
     - pamr
@@ -83,7 +83,7 @@ r_binary_packages:
     - randomForestSRC
     - reshape2
     - RCurl
-    # - RSNNS
+    - RSNNS
     - rFerns
     - rjson
     - rmarkdown
@@ -99,11 +99,11 @@ r_binary_packages:
     - sparseLDA
     - stepPlr
     - stringi
-    # - SwarmSVM
+    - SwarmSVM
     - testthat
     - tgp
     - TH.data
-    # - XML
+    - XML
 before_script:
     - curl -L https://raw.githubusercontent.com/mllg/travis-r-tools/master/update-packages.r -o /tmp/update-packages.r
     - Rscript /tmp/update-packages.r
