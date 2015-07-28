@@ -46,6 +46,7 @@ Other filter: \code{\link{FilterValues}};
 
 Other plot: \code{\link{plotBenchmarkResult}};
   \code{\link{plotBenchmarkSummary}};
+  \code{\link{plotCalibration}};
   \code{\link{plotCritDifferences}};
   \code{\link{plotFilterValuesGGVIS}};
   \code{\link{plotLearningCurveGGVIS}};

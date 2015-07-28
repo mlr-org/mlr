@@ -7,9 +7,8 @@
 #' @template arg_learner
 #' @param props [\code{character}]\cr
 #'   Vector of properties to set, add, remove or query.
-#' @return \code{setLearnerProperties}, \code{addLearnerProperties} and \code{removeLearnerProperties}
-#'  return an updated \code{\link{Learner}}.
-#'  \code{hasLearnerProperties} returns a logical vector of the same length of \code{props}.
+#' @return \code{getLearnerProperties} returns a character vector with learner properties.
+#'  \code{hasLearnerProperties} returns a logical vector of the same length as \code{props}.
 #' @name LearnerProperties
 #' @rdname LearnerProperties
 #' @family learner

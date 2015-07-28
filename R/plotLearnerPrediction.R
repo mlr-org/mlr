@@ -52,7 +52,7 @@
 #'   For classification: Color of misclassified data points.
 #'   Default is \dQuote{white}
 #' @param err.size [\code{integer(1)}]\cr
-#'   For classification: Size of of misclassified data points.
+#'   For classification: Size of misclassified data points.
 #'   Default is \code{pointsize}.
 #' @param greyscale [\code{logical(1)}]\cr
 #'   Should the plot be greyscale completely?

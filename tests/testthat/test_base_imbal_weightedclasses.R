@@ -28,7 +28,6 @@ test_that("WeightedClassesWrapper, multiclass",  {
   levs = getTaskClassLevels(multiclass.task)
   f = function(lrn, w) {
     lrn1 = makeLearner(lrn)
-    param = lrn1$class.weights.param
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
     m = train(lrn2, multiclass.task)
     p = predict(m, multiclass.task)
@@ -53,4 +52,19 @@ test_that("WeightedClassesWrapper, multiclass",  {
 
   # check what happens, if no weights are provided
   expect_error(f("classif.lda", setNames(object = c(1, 10000, 1), classes)))
+})
+
+
+context("getClassWeightParam")
+
+test_that("getClassWeightParam",  {
+  f = function(lrn) {
+    lrn1 = makeLearner(lrn)
+    expect_is(getClassWeightParam(lrn), "LearnerParam")
+    expect_is(getClassWeightParam(lrn1), "LearnerParam")
+  }
+
+  learners = paste("classif", c("ksvm", "LiblineaRMultiClass", "randomForest",
+    "svm"), sep = ".")
+  x = lapply(learners, f)
 })
