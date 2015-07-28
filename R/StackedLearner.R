@@ -215,6 +215,8 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
         return(prob)
       }
     }
+  } else if (.learner$method == "hillclimb") {
+    weights = model$weights
   } else {
     probs = as.data.frame(probs)
     # feed probs into super model and we are done
@@ -374,6 +376,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
           pred = max.col(pred)
         tb = table(pred, true)
         return( 1- sum(diag(tb))/sum(tb) )
+      }
     }
   }
   assertFunction(metric)
@@ -386,17 +389,21 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
   for (i in seq_along(bls)) {
     bl = bls[[i]]
     r = resample(bl, task, rin, show.info = FALSE)
-    probs[[i]] = getResponse(r$pred, full.matrix = FALSE)
+    if (type == "pred") {
+      probs[[i]] = matrix(getResponse(r$pred), ncol = 1)
+    } else {
+      probs[[i]] = getResponse(r$pred, full.matrix = TRUE)
+    }
     # also fit all base models again on the complete original data set
     base.models[[i]] = train(bl, task)
   }
   names(probs) = names(bls)
   # TODO: I only need it as real number or a probability matrix
-  if (type == "regr" | type == "classif") {
-    probs = as.data.frame(probs)
-  } else {
-    probs = as.data.frame(lapply(probs, function(X) X)) #X[,-ncol(X)]))
-  }
+#   if (type == "regr" | type == "classif") {
+#     probs = as.data.frame(probs)
+#   } else {
+#     probs = as.data.frame(lapply(probs, function(X) X)) #X[,-ncol(X)]))
+#   }
   
   # add true target column IN CORRECT ORDER
   tn = getTaskTargetNames(task)
@@ -405,7 +412,8 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
   probs[[tn]] = getTaskTargets(task)[test.inds]
   
   # now start the hill climbing
-  probs = probs[order(test.inds), , drop = FALSE]
+  probs = lapply(probs, function(x) x[order(test.inds), , drop = FALSE])
+  # probs = probs[order(test.inds), , drop = FALSE]
   m = length(bls)
   weights = rep(0, m)
   flag = TRUE
@@ -419,7 +427,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
     if (init>0) {
       score = rep(Inf, bagsize)
       for (i in bagmodel) {
-        score[i] = metric(probs[,i], probs[[tn]])
+        score[i] = metric(probs[[i]], probs[[tn]])
       }
       inds = order(score)[1:init]
       weight[inds] = 1
@@ -427,17 +435,18 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
     
     selection.size = init
     selection.ind = inds
-    current.prob = rep(0, nrow(probs))
-    if (selection.size>0)
-      current.prob = rowSums(probs[selection.size])
-    flag = TRUE
-    if (selection.size>0)
+    # current.prob = rep(0, nrow(probs))
+    current.prob = matrix(0, nrow(probs[[1]]), ncol(probs[[1]]))
+    if (selection.size>0) {
+      current.prob = Reduce('+', probs[selection.ind])
       old.score = metric(current.prob, probs[[tn]])
+    }
+    flag = TRUE
     
     while (flag) {
       score = rep(Inf, bagsize)
       for (i in bagmodel) {
-        score[i] = metric(probs[,i], probs[[tn]])
+        score[i] = metric(probs[[i]], probs[[tn]])
       }
       inds = order(score)
       if (!replace) {
@@ -458,8 +467,9 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
     }
     weights[bagmodel] = weights[bagmodel] + weight
   }
-  
-  list(method = "average", base.models = base.models, super.model = NULL,
+  weights = weights/sum(weights)
+
+  list(method = "hillclimb", base.models = base.models, super.model = NULL,
        pred.train = probs, weights = weights)
 }
 

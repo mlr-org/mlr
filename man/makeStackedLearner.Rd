@@ -57,6 +57,7 @@ The following stacking methods are available:
   \item{\code{stack.nocv}}{Fits the super learner, where in-sample predictions of the base learners are used.}
   \item{\code{stack.cv}}{Fits the super learner, where the base learner predictions are computed
   by crossvalidated predictions (the resampling strategy can be set via the \code{resampling} argument).}
+  \item{\code{hill.climb}}{Select a subset of base learner predictions by hill climbing algorithm.}
  }
 }
 
