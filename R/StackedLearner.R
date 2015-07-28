@@ -356,8 +356,8 @@ stackCV = function(learner, task) {
        super.model = super.model, pred.train = pred.train)
 }
 
-hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagprob = 1, bagtimes = 1, 
-  metric = NULL) {
+hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagprob = 1, bagtime = 1, 
+  metric = NULL, ...) {
   
   assertFlag(replace)
   assertInt(init, lower = 0)
@@ -372,8 +372,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
       metric = function(pred, true) mean((pred-true)^2)
     } else {
       metric = function(pred, true) {
-        if (testMatrix(pred))
-          pred = max.col(pred)
+        pred = colnames(pred)[max.col(pred)]
         tb = table(pred, true)
         return( 1- sum(diag(tb))/sum(tb) )
       }
@@ -393,6 +392,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
       probs[[i]] = matrix(getResponse(r$pred), ncol = 1)
     } else {
       probs[[i]] = getResponse(r$pred, full.matrix = TRUE)
+      colnames(probs[[i]]) = task$task.desc$class.levels
     }
     # also fit all base models again on the complete original data set
     base.models[[i]] = train(bl, task)
@@ -408,11 +408,11 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
   # add true target column IN CORRECT ORDER
   tn = getTaskTargetNames(task)
   test.inds = unlist(rin$test.inds)
-  pred.train = as.list(probs[order(test.inds), , drop = FALSE])
-  probs[[tn]] = getTaskTargets(task)[test.inds]
   
   # now start the hill climbing
   probs = lapply(probs, function(x) x[order(test.inds), , drop = FALSE])
+  probs[[tn]] = getTaskTargets(task)[test.inds]
+  probs[[tn]] = probs[[tn]][order(test.inds)]
   # probs = probs[order(test.inds), , drop = FALSE]
   m = length(bls)
   weights = rep(0, m)
@@ -424,6 +424,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
     weight = rep(0, bagsize)
     
     # Initial selection of strongest learners
+    inds = NULL
     if (init>0) {
       score = rep(Inf, bagsize)
       for (i in bagmodel) {
@@ -437,16 +438,17 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
     selection.ind = inds
     # current.prob = rep(0, nrow(probs))
     current.prob = matrix(0, nrow(probs[[1]]), ncol(probs[[1]]))
+    old.score = Inf
     if (selection.size>0) {
       current.prob = Reduce('+', probs[selection.ind])
-      old.score = metric(current.prob, probs[[tn]])
+      old.score = metric(current.prob/selection.size, probs[[tn]])
     }
     flag = TRUE
     
     while (flag) {
       score = rep(Inf, bagsize)
       for (i in bagmodel) {
-        score[i] = metric(probs[[i]], probs[[tn]])
+        score[i] = metric( (probs[[i]]+current.prob)/(selection.size+1), probs[[tn]] )
       }
       inds = order(score)
       if (!replace) {
@@ -455,10 +457,11 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
         ind = inds[1]
       }
       
-      new.score = metric(current.prob, probs[[tn]])
-      if (new.score>old.score) {
+      new.score = score[ind]
+      if (old.score-new.score<1e-8) {
         flag = FALSE
       } else {
+        current.prob = current.prob+probs[[ind]]
         weights[ind] = weights[ind]+1
         selection.ind = c(selection.ind, ind)
         selection.size = selection.size+1
