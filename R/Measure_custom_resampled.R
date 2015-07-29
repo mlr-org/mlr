@@ -16,15 +16,15 @@
 #' @param aggregation.name [\code{character(1)}]\cr
 #'   Long name of the aggregation.
 #'   Default is \code{aggregation.id}.
-#' @param fun [\code{function(task, pred, group, pred, extra.args)}]\cr
+#' @param fun [\code{function(task, group, pred, extra.args)}]\cr
 #'   Calculates performance value from \code{\link{ResamplePrediction}} object.
-#'   For rare case you can also use the task, the grouping or the extra arguments \code{extra.args}.
+#'   For rare cases you can also use the task, the grouping or the extra arguments \code{extra.args}.
 #' @param extra.args [\code{list}]\cr
 #'   List of extra arguments which will always be passed to \code{fun}.
 #'   Default is empty list.
 #' @param minimize [\code{logical(1)}]\cr
 #'   Should the measure be minimized?
-#'   Default is in \code{TRUE}.
+#'   Default is \code{TRUE}.
 #' @param properties [\code{character}]\cr
 #'   Set of measure properties. Some standard property names include:
 #'   \describe{

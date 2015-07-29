@@ -34,7 +34,7 @@ Default is \code{TRUE}.}
 ggplot2 plot object.
 }
 \description{
-Plots boxplots for a selected \code{measure} accross all iterations
+Plots boxplots for a selected \code{measure} across all iterations
 of the resampling strategy, faceted by the \code{task.id}
 }
 \examples{
@@ -76,6 +76,7 @@ Other benchmark: \code{\link{BenchmarkResult}};
   \code{\link{plotRankMatrixAsBar}}
 
 Other plot: \code{\link{plotBenchmarkSummary}};
+  \code{\link{plotCalibration}};
   \code{\link{plotCritDifferences}};
   \code{\link{plotFilterValuesGGVIS}};
   \code{\link{plotFilterValues}};

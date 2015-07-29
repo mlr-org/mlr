@@ -66,7 +66,7 @@ For classification: Color of misclassified data points.
 Default is \dQuote{white}}
 
 \item{err.size}{[\code{integer(1)}]\cr
-For classification: Size of of misclassified data points.
+For classification: Size of misclassified data points.
 Default is \code{pointsize}.}
 
 \item{greyscale}{[\code{logical(1)}]\cr

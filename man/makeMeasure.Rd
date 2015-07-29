@@ -15,7 +15,7 @@ Name of measure.}
 
 \item{minimize}{[\code{logical(1)}]\cr
 Should the measure be minimized?
-Default is in \code{TRUE}.}
+Default is \code{TRUE}.}
 
 \item{properties}{[\code{character}]\cr
 Set of measure properties. Some standard property names include:
@@ -35,7 +35,7 @@ Set of measure properties. Some standard property names include:
 }
 Default is \code{character(0)}.}
 
-\item{fun}{[\code{function(task, model, pred, extra.args)}]\cr
+\item{fun}{[\code{function(task, model, pred, feats, extra.args)}]\cr
 Calculates performance value.}
 
 \item{extra.args}{[\code{list}]\cr
@@ -68,8 +68,8 @@ Description and additional notes for the measure. Default is \dQuote{}.}
 A measure object encapsulates a function to evaluate the performance of a prediction.
 Information about already implemented measures can be obtained here: \code{\link{measures}}.
 
-A learner is trained on a a training set d1, results in a model m, predicts another set d2
-(which may be a different one or the training set), resulting in the prediction.
+A learner is trained on a training set d1, results in a model m and predicts another set d2
+(which may be a different one or the training set) resulting in the prediction.
 The performance measure can now be defined using all of the information of the original task,
 the fitted model and the prediction.
 

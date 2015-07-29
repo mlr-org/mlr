@@ -36,7 +36,7 @@ mlr_2.5:
 - many new function for statistical benchmark comparisons are added, see below
 - rename hasProperties, getProperties to hasLearnerProperties and getLearnerProperties
 - Learner Propoerties are now implemented object oriented as a state of a Learner.
-  Only RLearners have the properties stored in a slot. 
+  Only RLearners have the properties stored in a slot.
   For each class the getter can be overwritten.
 
 - new functions
@@ -52,6 +52,7 @@ mlr_2.5:
    generateBenchmarkSummaryData, plotBenchmarkSummary,
    friedmanTestBMR, friedmanPostHocTestBMR, generateCritDifferencesData, plotCritDifferences
 -- getCaretParamSet
+-- generateCalibrationData and plotCalibration
 
 - new measures
 -- hamloss
