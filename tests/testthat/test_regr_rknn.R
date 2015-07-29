@@ -6,10 +6,10 @@ test_that("regr_rknn", {
   k = c(2L, 4L)
   r = c(200L, 600L)
   mtry = c(2L, 3L)
-  parset.grid <- expand.grid(k= k, r = r, mtry = mtry)
-  parset.list <- apply(parset.grid, MARGIN = 1L, as.list)
+  parset.grid = expand.grid(k= k, r = r, mtry = mtry)
+  parset.list = apply(parset.grid, MARGIN = 1L, as.list)
   #rknn needs integer seed for reproducibility
-  parset.list <- lapply(parset.list, function(x) c(x, seed = 2015L))
+  parset.list = lapply(parset.list, function(x) c(x, seed = 2015L))
   
   old.predicts.list = list()
   
