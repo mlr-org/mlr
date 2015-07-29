@@ -42,7 +42,12 @@
 #'   Function used to extract information from a fitted model during resampling.
 #'   Is applied to every \code{\link{WrappedModel}} resulting from calls to \code{\link{train}}
 #'   during resampling.
-#'   Default is to extract nothing.
+#'   If no function is given, \code{mlr} will automatically apply the following functions for each wrapped learner used: 
+#'   \itemize{
+#'     \item \code{\link{TuneWrapper}}: \code{\link{getTuneResult}}
+#'     \item \code{\link{FeatSelWrapper}}: \code{\link{getFeatSelResult}}
+#'     \item \code{\link{FilterWrapper}}: \code{\link{getFilteredFeatures}}
+#'   }
 #' @template arg_keep_pred
 #' @param ... [any]\cr
 #'   Further hyperparameters passed to \code{learner}.

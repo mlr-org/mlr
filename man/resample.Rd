@@ -73,7 +73,12 @@ Default is \code{FALSE}.}
 Function used to extract information from a fitted model during resampling.
 Is applied to every \code{\link{WrappedModel}} resulting from calls to \code{\link{train}}
 during resampling.
-Default is to extract nothing.}
+If no function is given, \code{mlr} will automatically apply the following functions for each wrapped learner used:
+\itemize{
+  \item \code{\link{TuneWrapper}}: \code{\link{getTuneResult}}
+  \item \code{\link{FeatSelWrapper}}: \code{\link{getFeatSelResult}}
+  \item \code{\link{FilterWrapper}}: \code{\link{getFilteredFeatures}}
+}}
 
 \item{keep.pred}{[\code{logical(1)}]\cr
 Keep the prediction data in the \code{pred} slot of the result object.
