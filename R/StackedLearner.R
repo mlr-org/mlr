@@ -73,13 +73,13 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
     stop("Predicting standard errors currently not supported.")
   if (length(pts) > 1L)
     stop("Base learner must all have the same predict type!")
-  if (method == "average" & (!is.null(super.learner) | is.null(predict.type)) )
+  if ((method == "average" | method == "hill.climb") & (!is.null(super.learner) | is.null(predict.type)) )
     stop("No super learner needed for this method or the 'predict.type' is not specified.")
-  if (method != "average" & is.null(super.learner))
+  if (method != "average" & method != "hill.climb" & is.null(super.learner))
     stop("You have to specify a super learner for this method.")
   #if (method != "average" & !is.null(predict.type))
   #  stop("Predict type has to be specified within the super learner.")
-  if (method == "average" & use.feat)
+  if ((method == "average" | method == "hill.climb") & use.feat)
     stop("The original features can not be used for this method")
   if (!inherits(resampling, "CVDesc"))
     stop("Currently only CV is allowed for resampling!")
@@ -184,15 +184,15 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
 
   if (.learner$method %in% c("average", "hill.climb")) {
     if (.learner$method == "hill.climb") {
-      weights = .model$learner.model$weights
+      model.weight = .model$learner.model$weights
+    } else {
+      model.weight = rep(1/length(probs), length(probs))
     }
     if (bms.pt == "prob") {
       # if base learner predictions are probabilities for classification
-      if (.learner$method == "hill.climb") {
-        for (i in 1:nrow(prob))
-          prob[[i]] = prob[[i]]*weights[i]
-      }
-      prob = Reduce("+", probs) / length(probs) #rowMeans(probs)
+      for (i in 1:length(probs))
+        probs[[i]] = probs[[i]]*model.weight[i]
+      prob = Reduce("+", probs)
       if (sm.pt == "prob") {
         # if super learner predictions should be probabilities
         return(as.matrix(prob))
@@ -211,8 +211,8 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
           # we need a bbmisc fun for counting proportions in rows or cols
           #probs = apply(probs, 1L, function(x) (table(factor(x, td$class.levels) )/length(x)))
           #return(setColNames(t(probs), td$class.levels))
-          probs = rowiseRatio(probs, td$class.levels, weights)
-          return(probs, td$class.levels)
+          probs = rowiseRatio(probs, td$class.levels, model.weight)
+          return(probs)
         } else {
           # if super learner predictions should be responses
           return(factor(apply(probs, 1L, computeMode), td$class.levels))
@@ -388,6 +388,10 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
   assertFunction(metric)
   
   bls = learner$base.learners
+  for (i in 1:length(bls)) {
+    if (bls[[i]]$predict.type == "response")
+      stop("Hill climbing algorithm only takes probability predict type for classification.")
+  }
   use.feat = learner$use.feat
   # cross-validate all base learners and get a prob vector for the whole dataset for each learner
   base.models = probs = vector("list", length(bls))
@@ -515,17 +519,17 @@ makeSuperLearnerTask = function(learner, data, target) {
 }
 
 # Count the ratio
-rowiseRatio = function(probs, levels, weights = NULL) {
+rowiseRatio = function(probs, levels, model.weight = NULL) {
   m = length(levels)
   p = ncol(probs)
-  if (testNull(weights)) {
-    weights = rep(1/p, p)
+  if (testNull(model.weight)) {
+    model.weight = rep(1/p, p)
   }
   mat = matrix(0,nrow(probs),m)
   for (i in 1:m) {
     ids = matrix(probs==levels[i], nrow(probs), p)
     for (j in 1:p)
-      ids[,j] = ids[,j]*weights[j]
+      ids[,j] = ids[,j]*model.weight[j]
     mat[,i] = rowSums(ids)
   }
   colnames(mat) = levels
