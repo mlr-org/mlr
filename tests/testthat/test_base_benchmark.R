@@ -89,6 +89,11 @@ test_that("benchmark", {
 
   tr = getBMRTuneResults(res, as.df = FALSE)
 
+  trd = getBMRTuneResults(res, as.df = TRUE)
+  expect_is(trd, "data.frame")
+  expect_equal(ncol(trd), 5)
+  expect_equal(nrow(trd), 4)
+
   f = function(tmp, cl) {
     context(sprintf("benchmark: extracting %s", cl))
     expect_true(is.list(tmp))
