@@ -12,7 +12,7 @@
 \title{Fit models according to a resampling strategy.}
 \usage{
 resample(learner, task, resampling, measures, weights = NULL,
-  models = FALSE, extract, keep.pred = TRUE, ...,
+  models = FALSE, extract = NULL, keep.pred = TRUE, ...,
   show.info = getMlrOption("show.info"))
 
 crossval(learner, task, iters = 10L, stratify = FALSE, measures,
