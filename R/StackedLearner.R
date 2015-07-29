@@ -182,16 +182,23 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
   # predict prob vectors with each base model
   probs = getStackedBaseLearnerPredictions(model = .model, newdata = .newdata)
 
-  if (.learner$method == "average") {
+  if (.learner$method %in% c("average", "hill.climb")) {
+    if (.learner$method == "hill.climb") {
+      weights = .model$learner.model$weights
+    }
     if (bms.pt == "prob") {
       # if base learner predictions are probabilities for classification
+      if (.learner$method == "hill.climb") {
+        for (i in 1:nrow(prob))
+          prob[[i]] = prob[[i]]*weights[i]
+      }
       prob = Reduce("+", probs) / length(probs) #rowMeans(probs)
       if (sm.pt == "prob") {
         # if super learner predictions should be probabilities
         return(as.matrix(prob))
       } else {
         # if super learner predictions should be responses
-        return(factor(colnames(prob)[apply(as.matrix(prob), 1L, which.max)], td$class.levels))
+        return(factor(colnames(prob)[max.col(prob)], td$class.levels))
       }
     } else {
       probs = as.data.frame(probs)
@@ -202,8 +209,10 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
           # if super learner predictions should be probabilities, iter over rows to get proportions
           # FIXME: this is very slow + CUMBERSOME. we also do it in more places
           # we need a bbmisc fun for counting proportions in rows or cols
-          probs = apply(probs, 1L, function(x) (table(factor(x, td$class.levels) )/length(x)))
-          return(setColNames(t(probs), td$class.levels))
+          #probs = apply(probs, 1L, function(x) (table(factor(x, td$class.levels) )/length(x)))
+          #return(setColNames(t(probs), td$class.levels))
+          probs = rowiseRatio(probs, td$class.levels, weights)
+          return(probs, td$class.levels)
         } else {
           # if super learner predictions should be responses
           return(factor(apply(probs, 1L, computeMode), td$class.levels))
@@ -215,8 +224,6 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
         return(prob)
       }
     }
-  } else if (.learner$method == "hillclimb") {
-    weights = model$weights
   } else {
     probs = as.data.frame(probs)
     # feed probs into super model and we are done
@@ -505,6 +512,24 @@ makeSuperLearnerTask = function(learner, data, target) {
   } else {
     makeRegrTask(data = data, target = target)
   }
+}
+
+# Count the ratio
+rowiseRatio = function(probs, levels, weights = NULL) {
+  m = length(levels)
+  p = ncol(probs)
+  if (testNull(weights)) {
+    weights = rep(1/p, p)
+  }
+  mat = matrix(0,nrow(probs),m)
+  for (i in 1:m) {
+    ids = matrix(probs==levels[i], nrow(probs), p)
+    for (j in 1:p)
+      ids[,j] = ids[,j]*weights[j]
+    mat[,i] = rowSums(ids)
+  }
+  colnames(mat) = levels
+  return(mat)
 }
 
 # TODOs:
