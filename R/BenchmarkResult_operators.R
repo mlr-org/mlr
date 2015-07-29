@@ -199,7 +199,7 @@ getBMROptResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FA
 #' @family benchmark
 getBMRTuneResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE) {
   getBMROptResults(bmr, task.ids, learner.ids, as.df, "TuneWrapper", function(x) {
-    as.data.frame(x$x)
+    data.frame(x$x, as.list(x$y))
   })
 }
 
