@@ -14,6 +14,7 @@ test_that("FilterWrapper", {
   res = makeResampleDesc("CV", iters = 2)
   r = resample(lrn2, binaryclass.task, res)
   expect_true(!any(is.na(r$aggr)))
+  expect_subset(r$extract[[1]][[1]], getTaskFeatureNames(binaryclass.task))
 })
 
 
