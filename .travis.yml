@@ -83,6 +83,7 @@ r_binary_packages:
     - randomForestSRC
     - reshape2
     - RCurl
+    - rknn
     - RSNNS
     - rFerns
     - rjson
