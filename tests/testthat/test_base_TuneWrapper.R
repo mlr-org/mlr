@@ -36,7 +36,7 @@ test_that("TuneWrapper", {
   lrn1 = makeLearner("classif.ksvm", predict.type = "prob")
   lrn2 = makeTuneWrapper(lrn1, resampling = makeResampleDesc("Holdout"), par.set = ps1, control = makeTuneControlGrid())
   expect_equal(lrn2$predict.type, "prob")
-  r = resample(lrn2, binaryclass.task, makeResampleDesc("CV"), measures = mlr::auc)
+  r = resample(lrn2, binaryclass.task, makeResampleDesc("Holdout"), measures = mlr::auc)
   expect_true(!is.na(r$aggr[["auc.test.mean"]]))
   expect_class(r$extract[[1]][[1]], "TuneResult")
 })

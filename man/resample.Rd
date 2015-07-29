@@ -75,9 +75,9 @@ Is applied to every \code{\link{WrappedModel}} resulting from calls to \code{\li
 during resampling.
 If no function is given, \code{mlr} will automatically apply the following functions for each wrapped learner used:
 \itemize{
-  \item \code{\link{TuneWrapper}}: \code{\link{getTuneResult}}
-  \item \code{\link{FeatSelWrapper}}: \code{\link{getFeatSelResult}}
-  \item \code{\link{FilterWrapper}}: \code{\link{getFilteredFeatures}}
+  \item \code{TuneWrapper}: \code{\link{getTuneResult}}
+  \item \code{FeatSelWrapper}: \code{\link{getFeatSelResult}}
+  \item \code{FilterWrapper}: \code{\link{getFilteredFeatures}}
 }}
 
 \item{keep.pred}{[\code{logical(1)}]\cr
