@@ -7,7 +7,7 @@ getResampleExtract2.NULL = function(learner) {
 }
 
 getResampleExtract2.Learner = function(learner) {
-  function(model) {}
+  NULL
 }
 
 getResampleExtract2.BaseWrapper = function(learner) {
