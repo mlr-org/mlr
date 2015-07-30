@@ -60,4 +60,26 @@ The following stacking methods are available:
   \item{\code{hill.climb}}{Select a subset of base learner predictions by hill climbing algorithm.}
  }
 }
+\examples{
+require(mlr)
+
+  # Classification
+  data(iris)
+  tsk = makeClassifTask(data = iris, target = "Species")
+  lrns = listLearners(tsk, properties = "prob", create = TRUE)
+  lrns = lapply(lrns, setPredictType, "prob")
+  m = makeStackedLearner(base.learners = lrns[1:5],
+    predict.type = "prob", method = "hill.climb")
+  tmp = train(m, tsk)
+  res = predict(tmp, tsk)
+
+  # Regression
+  data(BostonHousing, package = "mlbench")
+  tsk = makeRegrTask(data = BostonHousing, target = "medv")
+  lrns = listLearners(tsk, create = TRUE)
+  m = makeStackedLearner(base.learners = lrns[c(1, 14, 15, 19, 21, 27, 29, 31)],
+    predict.type = "response", method = "hill.climb")
+  tmp = train(m, tsk)
+  res = predict(tmp, tsk)
+}
 

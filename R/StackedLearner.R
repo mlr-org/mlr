@@ -46,6 +46,28 @@
 #'   Resampling strategy for \code{method = 'stack.cv'}.
 #'   Currently only CV is allowed for resampling.
 #'   The default \code{NULL} uses 5-fold CV.
+#' @examples
+#'   require(mlr)
+#'   
+#'   # Classification
+#'   data(iris)
+#'   tsk = makeClassifTask(data = iris, target = "Species")
+#'   lrns = listLearners(tsk, properties = "prob", create = TRUE)
+#'   lrns = lapply(lrns, setPredictType, "prob")
+#'   m = makeStackedLearner(base.learners = lrns[1:5], 
+#'     predict.type = "prob", method = "hill.climb")
+#'   tmp = train(m, tsk)
+#'   res = predict(tmp, tsk)
+#'   
+#'   # Regression
+#'   data(BostonHousing, package = "mlbench")
+#'   tsk = makeRegrTask(data = BostonHousing, target = "medv")
+#'   lrns = listLearners(tsk, create = TRUE)
+#'   m = makeStackedLearner(base.learners = lrns[c(1, 14, 15, 19, 21, 27, 29, 31)], 
+#'     predict.type = "response", method = "hill.climb")
+#'   tmp = train(m, tsk)
+#'   res = predict(tmp, tsk)
+#'   
 #' @export
 makeStackedLearner = function(base.learners, super.learner = NULL, predict.type = NULL,
   method = "stack.nocv", use.feat = FALSE, resampling = NULL) {
@@ -135,7 +157,7 @@ getStackedBaseLearnerPredictions = function(model, newdata = NULL) {
     probs = vector("list", length(bms))
     for (i in seq_along(bms)) {
       pred = predict(bms[[i]], newdata = newdata)
-      probs[[i]] = getResponse(pred, full.matrix = ifelse(method == "average", TRUE, FALSE))
+      probs[[i]] = getResponse(pred, full.matrix = ifelse(method %in% c("average","hill.climb"), TRUE, FALSE))
     }
 
     names(probs) = sapply(bms, function(X) X$learner$id) #names(.learner$base.learners)
@@ -388,9 +410,11 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
   assertFunction(metric)
   
   bls = learner$base.learners
-  for (i in 1:length(bls)) {
-    if (bls[[i]]$predict.type == "response")
-      stop("Hill climbing algorithm only takes probability predict type for classification.")
+  if (type != "regr") {
+    for (i in 1:length(bls)) {
+      if (bls[[i]]$predict.type == "response")
+        stop("Hill climbing algorithm only takes probability predict type for classification.")
+    }
   }
   use.feat = learner$use.feat
   # cross-validate all base learners and get a prob vector for the whole dataset for each learner
@@ -399,7 +423,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
   for (i in seq_along(bls)) {
     bl = bls[[i]]
     r = resample(bl, task, rin, show.info = FALSE)
-    if (type == "pred") {
+    if (type == "regr") {
       probs[[i]] = matrix(getResponse(r$pred), ncol = 1)
     } else {
       probs[[i]] = getResponse(r$pred, full.matrix = TRUE)
@@ -483,7 +507,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
   }
   weights = weights/sum(weights)
 
-  list(method = "hillclimb", base.models = base.models, super.model = NULL,
+  list(method = "hill.climb", base.models = base.models, super.model = NULL,
        pred.train = probs, weights = weights)
 }
 
