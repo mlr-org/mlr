@@ -52,3 +52,30 @@ test_that("Stacking works", {
     }
   }
 })
+
+test_that("Parameters for hill climb works", {
+  tsk = binaryclass.task
+  lrns = listLearners(tsk, properties = "prob", create = TRUE)
+  lrns = lapply(lrns, setPredictType, "prob")
+  m = makeStackedLearner(base.learners = lrns[1:5], predict.type = "prob", method = "hill.climb", 
+    parset = list(bagprob = 0.8, bagtime = 5, replace = FALSE))
+  tmp = train(m, tsk)
+  res = predict(tmp, tsk)
+
+  expect_equal(sum(tmp$learner.model$weights), 1)
+  
+  metric = function(pred, true) {
+    pred = colnames(pred)[max.col(pred)]
+    tb = table(pred, true)
+    return( 1- sum(diag(tb))/sum(tb) )
+  }
+
+  m = makeStackedLearner(base.learners = lrns[1:10], predict.type = "prob", method = "hill.climb",
+    parset = list(replace = TRUE, bagprob = 0.7, bagtime = 3, init = 2, metric = metric))
+  tmp = train(m, tsk)
+  res = predict(tmp, tsk)
+  
+  expect_equal(sum(tmp$learner.model$weights), 1)
+
+})
+

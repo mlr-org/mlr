@@ -5,7 +5,8 @@
 \title{Create a stacked learner object.}
 \usage{
 makeStackedLearner(base.learners, super.learner = NULL, predict.type = NULL,
-  method = "stack.nocv", use.feat = FALSE, resampling = NULL)
+  method = "stack.nocv", use.feat = FALSE, resampling = NULL,
+  parset = list())
 }
 \arguments{
 \item{base.learners}{[(list of) \code{\link{Learner}}]\cr
@@ -46,6 +47,16 @@ Default is \code{FALSE}.}
 Resampling strategy for \code{method = 'stack.cv'}.
 Currently only CV is allowed for resampling.
 The default \code{NULL} uses 5-fold CV.}
+
+\item{parset}{the parameters for \code{hill.climb} method, including
+\describe{
+  \item{\code{replace}}{Whether a base learner can be selected more than once.}
+  \item{\code{init}}{Number of best models being included before the selection algorithm.}
+  \item{\code{bagprob}}{The proportion of models being considered in one round of selection.}
+  \item{\code{bagtime}}{The number of rounds of the bagging selection.}
+  \item{\code{metric}}{The result evaluation metric function taking two parameters \code{pred} and \code{true},
+  the smaller the score the better.}
+}}
 }
 \description{
 A stacked learner uses predictions of several base learners and fits

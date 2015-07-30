@@ -46,6 +46,15 @@
 #'   Resampling strategy for \code{method = 'stack.cv'}.
 #'   Currently only CV is allowed for resampling.
 #'   The default \code{NULL} uses 5-fold CV.
+#' @param parset the parameters for \code{hill.climb} method, including
+#' \describe{
+#'   \item{\code{replace}}{Whether a base learner can be selected more than once.}
+#'   \item{\code{init}}{Number of best models being included before the selection algorithm.}
+#'   \item{\code{bagprob}}{The proportion of models being considered in one round of selection.}
+#'   \item{\code{bagtime}}{The number of rounds of the bagging selection.}
+#'   \item{\code{metric}}{The result evaluation metric function taking two parameters \code{pred} and \code{true}, 
+#'   the smaller the score the better.}
+#' }
 #' @examples
 #'   require(mlr)
 #'   
@@ -70,7 +79,7 @@
 #'   
 #' @export
 makeStackedLearner = function(base.learners, super.learner = NULL, predict.type = NULL,
-  method = "stack.nocv", use.feat = FALSE, resampling = NULL) {
+  method = "stack.nocv", use.feat = FALSE, resampling = NULL, parset = list()) {
 
   if (is.character(base.learners)) base.learners = lapply(base.learners, checkLearner)
   if (!is.null(super.learner)) {
@@ -126,6 +135,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
   lrn$method = method
   lrn$super.learner = super.learner
   lrn$resampling = resampling
+  lrn$parset = parset
   return(lrn)
 }
 
@@ -178,7 +188,8 @@ trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
     average = averageBaseLearners(.learner, .task),
     stack.nocv = stackNoCV(.learner, .task),
     stack.cv = stackCV(.learner, .task),
-    hill.climb = hillclimbBaseLearners(.learner, .task, ...)
+    # hill.climb = hillclimbBaseLearners(.learner, .task, ...)
+    hill.climb = do.call(hillclimbBaseLearners, c(list(.learner, .task), .learner$parset))
   )
 }
 
@@ -387,7 +398,7 @@ stackCV = function(learner, task) {
 
 hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagprob = 1, bagtime = 1, 
   metric = NULL, ...) {
-  
+
   assertFlag(replace)
   assertInt(init, lower = 0)
   assertNumber(bagprob, lower = 0, upper = 1)
