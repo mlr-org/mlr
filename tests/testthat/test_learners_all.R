@@ -48,6 +48,8 @@ test_that("learners work", {
     classif.boosting = list(mfinal = 2L),
     classif.cforest = list(mtry = 1L),
     classif.bartMachine = list(verbose = FALSE, run_in_sample = FALSE,
+      # without this (and despite use_missing_data being TRUE), the test with missing data fails with a null point exception, which manifests itself as a completely different rJava error in the test
+      replace_missing_data_with_x_j_bar = TRUE,
       num_iterations_after_burn_in = 10L),
     classif.bdk = list(ydim = 2L),
     classif.gbm = list(bag.fraction = 1, n.minobsinnode = 1),
@@ -57,6 +59,8 @@ test_that("learners work", {
     regr.km = list(nugget = 0.01),
     regr.cforest = list(mtry = 1L),
     regr.bartMachine = list(verbose = FALSE, run_in_sample = FALSE,
+      # see above
+      replace_missing_data_with_x_j_bar = TRUE,
       num_iterations_after_burn_in = 10L),
     regr.nodeHarvest = list(nodes = 100L, nodesize = 5L)
   )
