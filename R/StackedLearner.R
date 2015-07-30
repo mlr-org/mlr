@@ -9,6 +9,7 @@
 #'   \item{\code{stack.nocv}}{Fits the super learner, where in-sample predictions of the base learners are used.}
 #'   \item{\code{stack.cv}}{Fits the super learner, where the base learner predictions are computed
 #'   by crossvalidated predictions (the resampling strategy can be set via the \code{resampling} argument).}
+#'   \item{\code{hill.climb}}{Select a subset of base learner predictions by hill climbing algorithm.}
 #'  }
 #'
 #' @param base.learners [(list of) \code{\link{Learner}}]\cr
@@ -45,9 +46,40 @@
 #'   Resampling strategy for \code{method = 'stack.cv'}.
 #'   Currently only CV is allowed for resampling.
 #'   The default \code{NULL} uses 5-fold CV.
+#' @param parset the parameters for \code{hill.climb} method, including
+#' \describe{
+#'   \item{\code{replace}}{Whether a base learner can be selected more than once.}
+#'   \item{\code{init}}{Number of best models being included before the selection algorithm.}
+#'   \item{\code{bagprob}}{The proportion of models being considered in one round of selection.}
+#'   \item{\code{bagtime}}{The number of rounds of the bagging selection.}
+#'   \item{\code{metric}}{The result evaluation metric function taking two parameters \code{pred} and \code{true}, 
+#'   the smaller the score the better.}
+#' }
+#' @examples
+#'   require(mlr)
+#'   
+#'   # Classification
+#'   data(iris)
+#'   tsk = makeClassifTask(data = iris, target = "Species")
+#'   lrns = listLearners(tsk, properties = "prob", create = TRUE)
+#'   lrns = lapply(lrns, setPredictType, "prob")
+#'   m = makeStackedLearner(base.learners = lrns[1:5], 
+#'     predict.type = "prob", method = "hill.climb")
+#'   tmp = train(m, tsk)
+#'   res = predict(tmp, tsk)
+#'   
+#'   # Regression
+#'   data(BostonHousing, package = "mlbench")
+#'   tsk = makeRegrTask(data = BostonHousing, target = "medv")
+#'   lrns = listLearners(tsk, create = TRUE)
+#'   m = makeStackedLearner(base.learners = lrns[c(1, 14, 15, 19, 21, 27, 29, 31)], 
+#'     predict.type = "response", method = "hill.climb")
+#'   tmp = train(m, tsk)
+#'   res = predict(tmp, tsk)
+#'   
 #' @export
 makeStackedLearner = function(base.learners, super.learner = NULL, predict.type = NULL,
-  method = "stack.nocv", use.feat = FALSE, resampling = NULL) {
+  method = "stack.nocv", use.feat = FALSE, resampling = NULL, parset = list()) {
 
   if (is.character(base.learners)) base.learners = lapply(base.learners, checkLearner)
   if (!is.null(super.learner)) {
@@ -63,7 +95,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
     resampling = makeResampleDesc("CV", iters= 5L,
       stratify = ifelse(baseType == "classif", TRUE, FALSE))
   }
-  assertChoice(method, c("average", "stack.nocv", "stack.cv"))
+  assertChoice(method, c("average", "stack.nocv", "stack.cv", "hill.climb"))
   assertClass(resampling, "ResampleDesc")
 
   pts = unique(extractSubList(base.learners, "predict.type"))
@@ -72,13 +104,13 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
     stop("Predicting standard errors currently not supported.")
   if (length(pts) > 1L)
     stop("Base learner must all have the same predict type!")
-  if (method == "average" & (!is.null(super.learner) | is.null(predict.type)) )
+  if ((method == "average" | method == "hill.climb") & (!is.null(super.learner) | is.null(predict.type)) )
     stop("No super learner needed for this method or the 'predict.type' is not specified.")
-  if (method != "average" & is.null(super.learner))
+  if (method != "average" & method != "hill.climb" & is.null(super.learner))
     stop("You have to specify a super learner for this method.")
   #if (method != "average" & !is.null(predict.type))
   #  stop("Predict type has to be specified within the super learner.")
-  if (method == "average" & use.feat)
+  if ((method == "average" | method == "hill.climb") & use.feat)
     stop("The original features can not be used for this method")
   if (!inherits(resampling, "CVDesc"))
     stop("Currently only CV is allowed for resampling!")
@@ -103,6 +135,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
   lrn$method = method
   lrn$super.learner = super.learner
   lrn$resampling = resampling
+  lrn$parset = parset
   return(lrn)
 }
 
@@ -134,7 +167,7 @@ getStackedBaseLearnerPredictions = function(model, newdata = NULL) {
     probs = vector("list", length(bms))
     for (i in seq_along(bms)) {
       pred = predict(bms[[i]], newdata = newdata)
-      probs[[i]] = getResponse(pred, full.matrix = ifelse(method == "average", TRUE, FALSE))
+      probs[[i]] = getResponse(pred, full.matrix = ifelse(method %in% c("average","hill.climb"), TRUE, FALSE))
     }
 
     names(probs) = sapply(bms, function(X) X$learner$id) #names(.learner$base.learners)
@@ -154,7 +187,9 @@ trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
   switch(.learner$method,
     average = averageBaseLearners(.learner, .task),
     stack.nocv = stackNoCV(.learner, .task),
-    stack.cv = stackCV(.learner, .task)
+    stack.cv = stackCV(.learner, .task),
+    # hill.climb = hillclimbBaseLearners(.learner, .task, ...)
+    hill.climb = do.call(hillclimbBaseLearners, c(list(.learner, .task), .learner$parset))
   )
 }
 
@@ -180,16 +215,23 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
   # predict prob vectors with each base model
   probs = getStackedBaseLearnerPredictions(model = .model, newdata = .newdata)
 
-  if (.learner$method == "average") {
+  if (.learner$method %in% c("average", "hill.climb")) {
+    if (.learner$method == "hill.climb") {
+      model.weight = .model$learner.model$weights
+    } else {
+      model.weight = rep(1/length(probs), length(probs))
+    }
     if (bms.pt == "prob") {
       # if base learner predictions are probabilities for classification
-      prob = Reduce("+", probs) / length(probs) #rowMeans(probs)
+      for (i in 1:length(probs))
+        probs[[i]] = probs[[i]]*model.weight[i]
+      prob = Reduce("+", probs)
       if (sm.pt == "prob") {
         # if super learner predictions should be probabilities
         return(as.matrix(prob))
       } else {
         # if super learner predictions should be responses
-        return(factor(colnames(prob)[apply(as.matrix(prob), 1L, which.max)], td$class.levels))
+        return(factor(colnames(prob)[max.col(prob)], td$class.levels))
       }
     } else {
       probs = as.data.frame(probs)
@@ -200,8 +242,10 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
           # if super learner predictions should be probabilities, iter over rows to get proportions
           # FIXME: this is very slow + CUMBERSOME. we also do it in more places
           # we need a bbmisc fun for counting proportions in rows or cols
-          probs = apply(probs, 1L, function(x) (table(factor(x, td$class.levels) )/length(x)))
-          return(setColNames(t(probs), td$class.levels))
+          #probs = apply(probs, 1L, function(x) (table(factor(x, td$class.levels) )/length(x)))
+          #return(setColNames(t(probs), td$class.levels))
+          probs = rowiseRatio(probs, td$class.levels, model.weight)
+          return(probs)
         } else {
           # if super learner predictions should be responses
           return(factor(apply(probs, 1L, computeMode), td$class.levels))
@@ -352,6 +396,132 @@ stackCV = function(learner, task) {
        super.model = super.model, pred.train = pred.train)
 }
 
+hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagprob = 1, bagtime = 1, 
+  metric = NULL, ...) {
+
+  assertFlag(replace)
+  assertInt(init, lower = 0)
+  assertNumber(bagprob, lower = 0, upper = 1)
+  assertInt(bagtime, lower = 1)
+  
+  td = getTaskDescription(task)
+  type = ifelse(td$type == "regr", "regr",
+                ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
+  if (testNull(metric)) {
+    if (type == "regr") {
+      metric = function(pred, true) mean((pred-true)^2)
+    } else {
+      metric = function(pred, true) {
+        pred = colnames(pred)[max.col(pred)]
+        tb = table(pred, true)
+        return( 1- sum(diag(tb))/sum(tb) )
+      }
+    }
+  }
+  assertFunction(metric)
+  
+  bls = learner$base.learners
+  if (type != "regr") {
+    for (i in 1:length(bls)) {
+      if (bls[[i]]$predict.type == "response")
+        stop("Hill climbing algorithm only takes probability predict type for classification.")
+    }
+  }
+  use.feat = learner$use.feat
+  # cross-validate all base learners and get a prob vector for the whole dataset for each learner
+  base.models = probs = vector("list", length(bls))
+  rin = makeResampleInstance(learner$resampling, task = task)
+  for (i in seq_along(bls)) {
+    bl = bls[[i]]
+    r = resample(bl, task, rin, show.info = FALSE)
+    if (type == "regr") {
+      probs[[i]] = matrix(getResponse(r$pred), ncol = 1)
+    } else {
+      probs[[i]] = getResponse(r$pred, full.matrix = TRUE)
+      colnames(probs[[i]]) = task$task.desc$class.levels
+    }
+    # also fit all base models again on the complete original data set
+    base.models[[i]] = train(bl, task)
+  }
+  names(probs) = names(bls)
+  # TODO: I only need it as real number or a probability matrix
+#   if (type == "regr" | type == "classif") {
+#     probs = as.data.frame(probs)
+#   } else {
+#     probs = as.data.frame(lapply(probs, function(X) X)) #X[,-ncol(X)]))
+#   }
+  
+  # add true target column IN CORRECT ORDER
+  tn = getTaskTargetNames(task)
+  test.inds = unlist(rin$test.inds)
+  
+  # now start the hill climbing
+  probs = lapply(probs, function(x) x[order(test.inds), , drop = FALSE])
+  probs[[tn]] = getTaskTargets(task)[test.inds]
+  probs[[tn]] = probs[[tn]][order(test.inds)]
+  # probs = probs[order(test.inds), , drop = FALSE]
+  m = length(bls)
+  weights = rep(0, m)
+  flag = TRUE
+  for (bagind in 1:bagtime) {
+    # bagging of models
+    bagsize = ceiling(m*bagprob)
+    bagmodel = sample(1:m, bagsize)
+    weight = rep(0, bagsize)
+    
+    # Initial selection of strongest learners
+    inds = NULL
+    if (init>0) {
+      score = rep(Inf, bagsize)
+      for (i in bagmodel) {
+        score[i] = metric(probs[[i]], probs[[tn]])
+      }
+      inds = order(score)[1:init]
+      weight[inds] = 1
+    }
+    
+    selection.size = init
+    selection.ind = inds
+    # current.prob = rep(0, nrow(probs))
+    current.prob = matrix(0, nrow(probs[[1]]), ncol(probs[[1]]))
+    old.score = Inf
+    if (selection.size>0) {
+      current.prob = Reduce('+', probs[selection.ind])
+      old.score = metric(current.prob/selection.size, probs[[tn]])
+    }
+    flag = TRUE
+    
+    while (flag) {
+      score = rep(Inf, bagsize)
+      for (i in bagmodel) {
+        score[i] = metric( (probs[[i]]+current.prob)/(selection.size+1), probs[[tn]] )
+      }
+      inds = order(score)
+      if (!replace) {
+        ind = setdiff(inds, selection.ind)[1]
+      } else {
+        ind = inds[1]
+      }
+      
+      new.score = score[ind]
+      if (old.score-new.score<1e-8) {
+        flag = FALSE
+      } else {
+        current.prob = current.prob+probs[[ind]]
+        weights[ind] = weights[ind]+1
+        selection.ind = c(selection.ind, ind)
+        selection.size = selection.size+1
+        old.score = new.score
+      }
+    }
+    weights[bagmodel] = weights[bagmodel] + weight
+  }
+  weights = weights/sum(weights)
+
+  list(method = "hill.climb", base.models = base.models, super.model = NULL,
+       pred.train = probs, weights = weights)
+}
+
 ### other helpers ###
 
 # Returns response for correct usage in stackNoCV and stackCV and for predictions
@@ -381,6 +551,24 @@ makeSuperLearnerTask = function(learner, data, target) {
   } else {
     makeRegrTask(data = data, target = target)
   }
+}
+
+# Count the ratio
+rowiseRatio = function(probs, levels, model.weight = NULL) {
+  m = length(levels)
+  p = ncol(probs)
+  if (testNull(model.weight)) {
+    model.weight = rep(1/p, p)
+  }
+  mat = matrix(0,nrow(probs),m)
+  for (i in 1:m) {
+    ids = matrix(probs==levels[i], nrow(probs), p)
+    for (j in 1:p)
+      ids[,j] = ids[,j]*model.weight[j]
+    mat[,i] = rowSums(ids)
+  }
+  colnames(mat) = levels
+  return(mat)
 }
 
 # TODOs:
