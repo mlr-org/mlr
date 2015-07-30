@@ -5,7 +5,7 @@ env:
 branches:
     only:
         - master
-        - multiFidPlugIn
+        - ci_nojava
         - task_ops
 warnings_are_errors: true
 apt_packages:
