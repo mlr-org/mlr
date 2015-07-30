@@ -7,6 +7,9 @@
 # @param continue [\code{logical(1)}]\cr
 #   Resume calculation from previous run using \code[mboContinue}?
 #   Requires \dQuote{save.file.path) to be set.
+#   Note that the \code{OptPath} in the \code{OptResult} will only include 
+#   the evaluations after the continuation.
+#   The complete \code{OptPath} will be found in \code{$mbo.result$opt.path}.
 # @param mbo.control [\code{\link[mlrMBO]{MBOControl}}] \cr
 #   Control object for model-based optimization tuning.
 # @param mbo.keep.result [\code{logical(1)}] \cr
