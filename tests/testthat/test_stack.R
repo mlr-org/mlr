@@ -2,12 +2,13 @@ context("Stacking")
 
 checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
   base = lapply(base, makeLearner, predict.type = bms.pt)
-  if (method == "average") {
+  if (method %in% c("average", "hill.climb")) {
     super = NULL
   } else {
     super = makeLearner(super, predict.type = sm.pt)
     # sm.pt = NULL
   }
+  if (method == "hill.climb" && bms.pt == "response" && inherits(task, "ClassifTask")) return()
 
   slrn = makeStackedLearner(base, super, method = method, use.feat = use.feat, predict.type = sm.pt)
   tr = train(slrn, task)
@@ -17,7 +18,7 @@ checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
     expect_equal(ncol(pr$data[,grepl("prob", colnames(pr$data))]), length(getTaskClassLevels(task)))
   }
 
-  if (method != "stack.cv") {
+  if (method %nin% c("stack.cv", "hill.climb")) {
     expect_equal(
       getStackedBaseLearnerPredictions(tr),
       getStackedBaseLearnerPredictions(tr, newdata = getTaskData(task))
@@ -38,8 +39,8 @@ test_that("Stacking works", {
       base = c("regr.rpart", "regr.lm", "regr.svm")
       super = "regr.randomForest"
     }
-    for (method in c("average", "stack.cv", "stack.nocv")) {
-      ufs = if (method == "average") FALSE else c(FALSE, TRUE)
+    for (method in c("average", "stack.cv", "stack.nocv", "hill.climb")) {
+      ufs = if (method %in% c("average", "hill.climb")) FALSE else c(FALSE, TRUE)
       for (use.feat in ufs) {
         for (sm.pt in pts) {
           for (bms.pt in pts) {
@@ -51,3 +52,30 @@ test_that("Stacking works", {
     }
   }
 })
+
+test_that("Parameters for hill climb works", {
+  tsk = binaryclass.task
+  lrns = listLearners(tsk, properties = "prob", create = TRUE)
+  lrns = lapply(lrns, setPredictType, "prob")
+  m = makeStackedLearner(base.learners = lrns[1:5], predict.type = "prob", method = "hill.climb", 
+    parset = list(bagprob = 0.8, bagtime = 5, replace = FALSE))
+  tmp = train(m, tsk)
+  res = predict(tmp, tsk)
+
+  expect_equal(sum(tmp$learner.model$weights), 1)
+  
+  metric = function(pred, true) {
+    pred = colnames(pred)[max.col(pred)]
+    tb = table(pred, true)
+    return( 1- sum(diag(tb))/sum(tb) )
+  }
+
+  m = makeStackedLearner(base.learners = lrns[1:10], predict.type = "prob", method = "hill.climb",
+    parset = list(replace = TRUE, bagprob = 0.7, bagtime = 3, init = 2, metric = metric))
+  tmp = train(m, tsk)
+  res = predict(tmp, tsk)
+  
+  expect_equal(sum(tmp$learner.model$weights), 1)
+
+})
+

@@ -5,7 +5,8 @@
 \title{Create a stacked learner object.}
 \usage{
 makeStackedLearner(base.learners, super.learner = NULL, predict.type = NULL,
-  method = "stack.nocv", use.feat = FALSE, resampling = NULL)
+  method = "stack.nocv", use.feat = FALSE, resampling = NULL,
+  parset = list())
 }
 \arguments{
 \item{base.learners}{[(list of) \code{\link{Learner}}]\cr
@@ -46,6 +47,16 @@ Default is \code{FALSE}.}
 Resampling strategy for \code{method = 'stack.cv'}.
 Currently only CV is allowed for resampling.
 The default \code{NULL} uses 5-fold CV.}
+
+\item{parset}{the parameters for \code{hill.climb} method, including
+\describe{
+  \item{\code{replace}}{Whether a base learner can be selected more than once.}
+  \item{\code{init}}{Number of best models being included before the selection algorithm.}
+  \item{\code{bagprob}}{The proportion of models being considered in one round of selection.}
+  \item{\code{bagtime}}{The number of rounds of the bagging selection.}
+  \item{\code{metric}}{The result evaluation metric function taking two parameters \code{pred} and \code{true},
+  the smaller the score the better.}
+}}
 }
 \description{
 A stacked learner uses predictions of several base learners and fits
@@ -57,6 +68,29 @@ The following stacking methods are available:
   \item{\code{stack.nocv}}{Fits the super learner, where in-sample predictions of the base learners are used.}
   \item{\code{stack.cv}}{Fits the super learner, where the base learner predictions are computed
   by crossvalidated predictions (the resampling strategy can be set via the \code{resampling} argument).}
+  \item{\code{hill.climb}}{Select a subset of base learner predictions by hill climbing algorithm.}
  }
+}
+\examples{
+require(mlr)
+
+  # Classification
+  data(iris)
+  tsk = makeClassifTask(data = iris, target = "Species")
+  lrns = listLearners(tsk, properties = "prob", create = TRUE)
+  lrns = lapply(lrns, setPredictType, "prob")
+  m = makeStackedLearner(base.learners = lrns[1:5],
+    predict.type = "prob", method = "hill.climb")
+  tmp = train(m, tsk)
+  res = predict(tmp, tsk)
+
+  # Regression
+  data(BostonHousing, package = "mlbench")
+  tsk = makeRegrTask(data = BostonHousing, target = "medv")
+  lrns = listLearners(tsk, create = TRUE)
+  m = makeStackedLearner(base.learners = lrns[c(1, 14, 15, 19, 21, 27, 29, 31)],
+    predict.type = "response", method = "hill.climb")
+  tmp = train(m, tsk)
+  res = predict(tmp, tsk)
 }
 
