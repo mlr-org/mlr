@@ -10,6 +10,7 @@ branches:
 warnings_are_errors: true
 apt_packages:
     - r-cran-rjava
+    - libgmp-dev
 r_github_packages:
     - berndbischl/BBmisc
     - berndbischl/parallelMap
@@ -104,8 +105,6 @@ r_binary_packages:
     - tgp
     - TH.data
     - XML
-before_install:
-    - sudo apt-get install libgmp-dev
 before_script:
     - curl -L https://raw.githubusercontent.com/mllg/travis-r-tools/master/update-packages.r -o /tmp/update-packages.r
     - Rscript /tmp/update-packages.r
