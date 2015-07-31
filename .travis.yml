@@ -109,6 +109,7 @@ before_script:
     - Rscript /tmp/update-packages.r
     - sudo R CMD javareconf
     - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
+    - sudo apt-get install libgmp-dev
 notifications:
   email:
     recipients:
