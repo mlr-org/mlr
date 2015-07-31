@@ -105,6 +105,7 @@ Suggests:
     RCurl,
     rFerns,
     rjson,
+    rknn,
     rmarkdown,
     robustbase,
     ROCR,
