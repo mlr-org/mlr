@@ -104,12 +104,13 @@ r_binary_packages:
     - tgp
     - TH.data
     - XML
+before_install:
+    - sudo apt-get install libgmp-dev
 before_script:
     - curl -L https://raw.githubusercontent.com/mllg/travis-r-tools/master/update-packages.r -o /tmp/update-packages.r
     - Rscript /tmp/update-packages.r
     - sudo R CMD javareconf
     - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
-    - sudo apt-get install libgmp-dev
 notifications:
   email:
     recipients:
