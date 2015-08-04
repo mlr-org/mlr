@@ -39,7 +39,7 @@ makeRLearner.regr.xgboost = function() {
 #' @export
 trainLearner.regr.xgboost = function(.learner, .task, .subset, .weights = NULL,  ...) {
   td = getTaskDescription(.task)
-  data = getTaskData(.task, target.extra = TRUE)
+  data = getTaskData(.task, .subset, target.extra = TRUE)
   target = data$target
   data = data.matrix(data$data)
   

@@ -4,8 +4,8 @@ test_that("regr_xgboost", {
   requirePackages("xgboost", default.method = "load")
   
   set.seed(getOption("mlr.debug.seed"))
-  model = xgboost::xgboost(data = data.matrix(regr.df[,1:13]), 
-                           label = as.numeric(regr.df[,14]),
+  model = xgboost::xgboost(data = data.matrix(regr.train[,1:13]), 
+                           label = as.numeric(regr.train[,14]),
                            nrounds = 20, objective = "reg:linear")
   pred = xgboost::predict(model, data.matrix(regr.test[,1:13]))
   
