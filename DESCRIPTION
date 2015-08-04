@@ -122,6 +122,7 @@ Suggests:
     testthat,
     tgp,
     TH.data,
+    xgboost,
     XML
 LazyData: yes
 ByteCompile: yes

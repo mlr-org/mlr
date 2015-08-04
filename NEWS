@@ -72,6 +72,8 @@ mlr_2.5:
 -- classif.nnTrain
 -- classif.rknn
 -- regr.rknn
+-- classif.xgboost
+-- regr.xgboost
 
 - new filters
 -- permutation.importance
