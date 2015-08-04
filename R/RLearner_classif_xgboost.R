@@ -39,7 +39,7 @@ makeRLearner.classif.xgboost = function() {
 #' @export
 trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NULL,  ...) {
   td = getTaskDescription(.task)
-  data = getTaskData(.task, .subset, target.extra = TRUE, )
+  data = getTaskData(.task, .subset, target.extra = TRUE)
   target = data$target
   target = match(as.character(target), td$class.levels) - 1
   data = data.matrix(data$data)
