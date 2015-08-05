@@ -29,10 +29,11 @@ makeRLearner.classif.xgboost = function() {
       makeIntegerLearnerParam(id = "early.stop.round", default = 1, lower = 1),
       makeLogicalLearnerParam(id = "maximize", default = TRUE)
     ),
+    par.val = list(nrounds = 1),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
-    note = ""
+    note = "`nrounds` set to 1 by default"
   )
 }
 
@@ -61,7 +62,7 @@ trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NUL
     parlist = list(...)
     obj = parlist$objective
     if (testNull(obj)) {
-      obj = "multi:softmax"
+      obj = "multi:softprob"
     }
     num_class = length(td$class.levels)
     
@@ -97,6 +98,7 @@ predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
   } else {
     nc = length(td$class.levels)
     p = matrix(p,nc,length(p)/nc)
+    p = t(p)
     colnames(p) = td$class.levels
     if (.learner$predict.type == "prob") {
       return(p)
