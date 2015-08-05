@@ -29,7 +29,7 @@ makeRLearner.regr.xgboost = function() {
       makeIntegerLearnerParam(id = "early.stop.round", default = 1, lower = 1),
       makeLogicalLearnerParam(id = "maximize", default = FALSE)
     ),
-    par.val = list(nrounds = 1),
+    par.vals = list(nrounds = 1),
     properties = c("numerics", "factors", "weights"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
