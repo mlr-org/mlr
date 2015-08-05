@@ -72,7 +72,8 @@ The following stacking methods are available:
  }
 }
 \examples{
-require(mlr)
+\dontrun{
+  require(mlr)
 
   # Classification
   data(iris)
@@ -95,5 +96,6 @@ require(mlr)
     predict.type = "response", method = "hill.climb")
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
+}
 }
 

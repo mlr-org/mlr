@@ -56,6 +56,7 @@
 #'   the smaller the score the better.}
 #' }
 #' @examples
+#' \dontrun{
 #'   require(mlr)
 #'   
 #'   # Classification
@@ -79,7 +80,7 @@
 #'     predict.type = "response", method = "hill.climb")
 #'   tmp = train(m, tsk)
 #'   res = predict(tmp, tsk)
-#'   
+#' }
 #' @export
 makeStackedLearner = function(base.learners, super.learner = NULL, predict.type = NULL,
   method = "stack.nocv", use.feat = FALSE, resampling = NULL, parset = list()) {
