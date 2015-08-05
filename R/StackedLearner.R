@@ -61,9 +61,10 @@
 #'   # Classification
 #'   data(iris)
 #'   tsk = makeClassifTask(data = iris, target = "Species")
-#'   lrns = listLearners(tsk, properties = "prob", create = TRUE)
+#'   base = c("classif.rpart", "classif.lda", "classif.svm")
+#'   lrns = lapply(base, makeLearner)
 #'   lrns = lapply(lrns, setPredictType, "prob")
-#'   m = makeStackedLearner(base.learners = lrns[1:5], 
+#'   m = makeStackedLearner(base.learners = lrns, 
 #'     predict.type = "prob", method = "hill.climb")
 #'   tmp = train(m, tsk)
 #'   res = predict(tmp, tsk)
@@ -71,8 +72,11 @@
 #'   # Regression
 #'   data(BostonHousing, package = "mlbench")
 #'   tsk = makeRegrTask(data = BostonHousing, target = "medv")
+#'   base = c("regr.rpart", "regr.svm")
+#'   lrns = lapply(base, makeLearner)
+#'   lrns = lapply(lrns, setPredictType, "prob")
 #'   lrns = listLearners(tsk, create = TRUE)
-#'   m = makeStackedLearner(base.learners = lrns[c(1, 14, 15, 19, 21, 27, 29, 31)], 
+#'   m = makeStackedLearner(base.learners = lrns, 
 #'     predict.type = "response", method = "hill.climb")
 #'   tmp = train(m, tsk)
 #'   res = predict(tmp, tsk)
