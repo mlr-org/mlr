@@ -90,7 +90,6 @@ require(mlr)
   tsk = makeRegrTask(data = BostonHousing, target = "medv")
   base = c("regr.rpart", "regr.svm")
   lrns = lapply(base, makeLearner)
-  lrns = lapply(lrns, setPredictType, "prob")
   lrns = listLearners(tsk, create = TRUE)
   m = makeStackedLearner(base.learners = lrns,
     predict.type = "response", method = "hill.climb")
