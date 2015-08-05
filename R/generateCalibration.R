@@ -112,6 +112,7 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #' @template ret_gg2
 #' @export
 #' @examples
+#' \dontrun{
 #' lrns = list(makeLearner("classif.rpart", predict.type = "prob"),
 #'             makeLearner("classif.nnet", predict.type = "prob"))
 #' fit = lapply(lrns, train, task = iris.task)
@@ -125,6 +126,7 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #' names(pred) = c("rpart", "lda")
 #' out = generateCalibrationData(pred)
 #' plotCalibration(out)
+#' }
 plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE) {
   assertClass(obj, "CalibrationData")
   assertFlag(smooth)

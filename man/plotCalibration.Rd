@@ -30,6 +30,7 @@ ggplot2 plot object.
 Plot calibration data using ggplot2.
 }
 \examples{
+\dontrun{
 lrns = list(makeLearner("classif.rpart", predict.type = "prob"),
             makeLearner("classif.nnet", predict.type = "prob"))
 fit = lapply(lrns, train, task = iris.task)
@@ -43,6 +44,7 @@ pred = lapply(fit, predict, task = sonar.task)
 names(pred) = c("rpart", "lda")
 out = generateCalibrationData(pred)
 plotCalibration(out)
+}
 }
 \seealso{
 Other calibration: \code{\link{generateCalibrationData}}
