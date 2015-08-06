@@ -10,6 +10,7 @@
 #'   \item{\code{stack.cv}}{Fits the super learner, where the base learner predictions are computed
 #'   by crossvalidated predictions (the resampling strategy can be set via the \code{resampling} argument).}
 #'   \item{\code{hill.climb}}{Select a subset of base learner predictions by hill climbing algorithm.}
+#'   \item{\code{compress}}{Train a neural network to compress the model from a collection of base learners.}
 #'  }
 #'
 #' @param base.learners [(list of) \code{\link{Learner}}]\cr
@@ -35,9 +36,13 @@
 #'
 #' @param method [\code{character(1)}]\cr
 #'   \dQuote{average} for averaging the predictions of the base learners,
-#'   \dQuote{stack.nocv} for building a super learner using the predictions of the base learners and
+#'   \dQuote{stack.nocv} for building a super learner using the predictions of the base learners,
 #'   \dQuote{stack.cv} for building a super learner using crossvalidated predictions of the base learners.
-#'   Default is \dQuote{stack.nocv}.
+#'   Default is \dQuote{stack.nocv},
+#'   \dQuote{hill.climb} for averaging the predictions of the base learners, with the weights learned from 
+#'   hill climbing algorithm and
+#'   \dQuote{compress} for compressing the model to mimic the predictive of a collection of base learners, 
+#'   while speed up the prediction and reduce the size of the model.
 #' @param use.feat [\code{logical(1)}]\cr
 #'   Whether the original features should also be passed to the super learner.
 #'   Not used for \code{method = 'average'}.
@@ -55,8 +60,13 @@
 #'   \item{\code{metric}}{The result evaluation metric function taking two parameters \code{pred} and \code{true}, 
 #'   the smaller the score the better.}
 #' }
+#' the parameters for \code{compress} method, including
+#' \describe{
+#'    \item{k}{the size multiplier of the generated data}
+#'    \item{prob}{the probability to exchange values}
+#'    \item{s}{the standard deviation of each numerical feature}
+#' }
 #' @examples
-#' \dontrun{
 #'   require(mlr)
 #'   
 #'   # Classification
@@ -75,17 +85,18 @@
 #'   tsk = makeRegrTask(data = BostonHousing, target = "medv")
 #'   base = c("regr.rpart", "regr.svm")
 #'   lrns = lapply(base, makeLearner)
-#'   lrns = listLearners(tsk, create = TRUE)
 #'   m = makeStackedLearner(base.learners = lrns, 
-#'     predict.type = "response", method = "hill.climb")
+#'     predict.type = "response", method = "compress")
 #'   tmp = train(m, tsk)
 #'   res = predict(tmp, tsk)
-#' }
 #' @export
 makeStackedLearner = function(base.learners, super.learner = NULL, predict.type = NULL,
   method = "stack.nocv", use.feat = FALSE, resampling = NULL, parset = list()) {
 
   if (is.character(base.learners)) base.learners = lapply(base.learners, checkLearner)
+  if (is.null(super.learner) && method == "compress") {
+    super.learner = makeLearner(paste0(base.learners[[1]]$type,'.','nnet'))
+  }
   if (!is.null(super.learner)) {
     super.learner = checkLearner(super.learner)
     if (!is.null(predict.type)) super.learner = setPredictType(super.learner, predict.type)
@@ -99,7 +110,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
     resampling = makeResampleDesc("CV", iters= 5L,
       stratify = ifelse(baseType == "classif", TRUE, FALSE))
   }
-  assertChoice(method, c("average", "stack.nocv", "stack.cv", "hill.climb"))
+  assertChoice(method, c("average", "stack.nocv", "stack.cv", "hill.climb", "compress"))
   assertClass(resampling, "ResampleDesc")
 
   pts = unique(extractSubList(base.learners, "predict.type"))
@@ -193,7 +204,8 @@ trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
     stack.nocv = stackNoCV(.learner, .task),
     stack.cv = stackCV(.learner, .task),
     # hill.climb = hillclimbBaseLearners(.learner, .task, ...)
-    hill.climb = do.call(hillclimbBaseLearners, c(list(.learner, .task), .learner$parset))
+    hill.climb = do.call(hillclimbBaseLearners, c(list(.learner, .task), .learner$parset)),
+    compress = compressBaseLearners(.learner, .task, .learner$parset)
   )
 }
 
@@ -217,7 +229,11 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
     ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
 
   # predict prob vectors with each base model
-  probs = getStackedBaseLearnerPredictions(model = .model, newdata = .newdata)
+  if (.learner$method != "compress") {
+    probs = getStackedBaseLearnerPredictions(model = .model, newdata = .newdata)
+  } else {
+    probs = .newdata
+  }
 
   if (.learner$method %in% c("average", "hill.climb")) {
     if (.learner$method == "hill.climb") {
@@ -260,6 +276,14 @@ predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) {
         prob = Reduce("+", probs) / length(probs) #rowMeans(probs)
         return(prob)
       }
+    }
+  } else if (.learner$method == "compress") {
+    probs = as.data.frame(probs)
+    pred = predict(sm, newdata = probs)
+    if (sm.pt == "prob") {
+      return(as.matrix(getPredictionProbabilities(pred, cl = td$class.levels)))
+    } else {
+      return(pred$data$response)
     }
   } else {
     probs = as.data.frame(probs)
@@ -448,12 +472,6 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
     base.models[[i]] = train(bl, task)
   }
   names(probs) = names(bls)
-  # TODO: I only need it as real number or a probability matrix
-#   if (type == "regr" | type == "classif") {
-#     probs = as.data.frame(probs)
-#   } else {
-#     probs = as.data.frame(lapply(probs, function(X) X)) #X[,-ncol(X)]))
-#   }
   
   # add true target column IN CORRECT ORDER
   tn = getTaskTargetNames(task)
@@ -526,6 +544,46 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
        pred.train = probs, weights = weights)
 }
 
+compressBaseLearners = function(learner, task, parset = list()) {
+  lrn = learner
+  lrn$method = "hill.climb"
+  ensemble.model = train(lrn, task)
+  
+  data = getTaskData(task, target.extra = TRUE)
+  target = data[[2]]
+  data = data[[1]]
+   
+  psuedo.data = do.call(getPsuedoData, c(list(data), parset))
+  psuedo.target = predict(ensemble.model, newdata = psuedo.data)
+  psuedo.data = data.frame(psuedo.data, target = psuedo.target$data$response)
+
+  td = ensemble.model$task.desc
+  levs = td$class.levels
+  type = ifelse(td$type == "regr", "regr",
+    ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
+  
+  if (type == "regr") {
+    new.task = makeRegrTask(data = psuedo.data, target = "target")
+    if (testNull(learner$super.learner)) {
+      m = makeLearner("regr.nnet", predict.type = )
+    } else {
+      m = learner$super.learner
+    }
+  } else {
+    new.task = makeClassifTask(data = psuedo.data, target = "target")
+    if (testNull(learner$super.learner)) {
+      m = makeLearner("classif.nnet", predict.type = "")
+    } else {
+      m = learner$super.learner
+    }
+  }
+
+  super.model = train(m, new.task)
+  
+  list(method = "compress", base.learners = lrn$base.learners, super.model = super.model,
+       pred.train = psuedo.data)
+}
+
 ### other helpers ###
 
 # Returns response for correct usage in stackNoCV and stackCV and for predictions
@@ -575,6 +633,110 @@ rowiseRatio = function(probs, levels, model.weight = NULL) {
   return(mat)
 }
 
+# Psuedo Data
+getPsuedoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
+  res = NULL
+  n = nrow(.data)
+  ori.names = names(.data)
+  feat.class = sapply(.data, class)
+  ind2 = which(feat.class == "factor")
+  ind1 = setdiff(1:ncol(.data), ind2)
+  if (length(ind2)>0)
+    ori.labels = lapply(.data[[ind2]], levels)
+  .data = lapply(.data, as.numeric)
+  .data = as.data.frame(.data) 
+  # Normalization
+  mn = rep(0, ncol(.data))
+  mx = rep(0, ncol(.data))
+  for (i in ind1) {
+    mn[i] = min(.data[,i])
+    mx[i] = max(.data[,i])
+    .data[, i] = (.data[, i]-mn[i])/(mx[i]-mn[i])
+  }
+  if (testNull(s)) {
+    s = rep(0, ncol(.data))
+    for (i in ind1) {
+      s[i] = sd(.data[,i])
+    }
+  }
+  testNumeric(s, len = ncol(.data), lower = 0)
+  
+  # Func to calc dist
+  hamming = function(mat) {
+    n = nrow(mat)
+    m = ncol(mat)
+    res = matrix(0,n,n)
+    for (j in 1:m) {
+      unq = unique(mat[,j])
+      p = length(unq)
+      for (i in 1:p) {
+        ind = which(mat[,j] == unq[i])
+        res[ind, -ind] = res[ind, -ind]+1
+      }
+    }
+    return(res)
+  }
+  
+  one.nn = function(mat, ind1, ind2) {
+    n = nrow(mat)
+    dist.mat.1 = matrix(0,n,n)
+    dist.mat.2 = matrix(0,n,n)
+    if (length(ind1)>0) {
+      dist.mat.1 = as.matrix(stats::dist(mat[,ind1, drop = FALSE]))
+    }
+    if (length(ind2)>0) {
+      dist.mat.2 = hamming(mat[,ind2, drop = FALSE])
+    }
+    dist.mat = dist.mat.1+dist.mat.2
+    neighbour = max.col( -dist.mat - diag(Inf, n))
+    return(neighbour)
+  }
+  
+  # Get the neighbour 
+  neighbour = one.nn(.data, ind1, ind2)
+  
+  # Start the loop
+  p = ncol(.data)
+  for (loop in 1:k) {
+    data = .data
+    prob.mat = matrix(sample(c(0,1), n*p, replace = TRUE, prob = c(prob, 1-prob)), n, p)
+    prob.mat = prob.mat == 0
+    for (i in 1:n) {
+      e = as.numeric(data[i, ])
+      ee = as.numeric(data[neighbour[i], ])
+      
+      # continuous
+      for (j in ind1) {
+        if (prob.mat[i,j]) {
+          current.sd = abs(e[j]-ee[j])/s[j]
+          tmp1 = rnorm(1,ee[j], current.sd)
+          tmp2 = rnorm(1,e[j], current.sd)
+          e[j] = tmp1
+          ee[j] = tmp2
+        }
+      }
+      for (j in ind2) {
+        if (prob.mat[i,j]) {
+          tmp = e[j]
+          e[j] = ee[j]
+          ee[j] = tmp
+        }
+      }
+      
+      data[i,] = ee
+      data[neighbour[i],] = e
+    }
+    res = rbind(res, data)
+  }
+  for (i in ind1)
+    res[,i] = res[,i]*(mx[i]-mn[i])+mn[i]
+  res = data.frame(res)
+  names(res) = ori.names
+  for (i in ind2)
+    res[[i]] = factor(res[[i]], labels = ori.labels[[i]])
+  return(res)
+}
+
 # TODOs:
 # - document + test + export
 # - benchmark stuff on openml
@@ -587,3 +749,4 @@ rowiseRatio = function(probs, levels, model.weight = NULL) {
 # - DONE: add option to use normal features in super learner
 # - DONE: super learner can also return predicted probabilites
 # - DONE: allow regression as well
+

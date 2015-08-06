@@ -39,6 +39,7 @@ mlr_2.5:
   Only RLearners have the properties stored in a slot.
   For each class the getter can be overwritten.
 - The hill climbing algorithm for stacking (Caruana 04) is implemented as method 'hill.climb' in 'makeStackedLearner' to select models from base learners, which is equivalent to weighted average.
+- The model compression algorithm for stacking (Caruana 06) is implemented as method 'compress' in 'makeStackedLearner' to first select models from base learners and then mimic the behaviour with a super learner. The default super learner is neural network.
 
 - new functions
 -- getDefaultMeasure
