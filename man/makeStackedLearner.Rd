@@ -34,9 +34,13 @@ Not used for \code{method = 'average'}. Default is \code{NULL}.}
 
 \item{method}{[\code{character(1)}]\cr
 \dQuote{average} for averaging the predictions of the base learners,
-\dQuote{stack.nocv} for building a super learner using the predictions of the base learners and
+\dQuote{stack.nocv} for building a super learner using the predictions of the base learners,
 \dQuote{stack.cv} for building a super learner using crossvalidated predictions of the base learners.
-Default is \dQuote{stack.nocv}.}
+Default is \dQuote{stack.nocv},
+\dQuote{hill.climb} for averaging the predictions of the base learners, with the weights learned from
+hill climbing algorithm and
+\dQuote{compress} for compressing the model to mimic the predictive of a collection of base learners,
+while speed up the prediction and reduce the size of the model.}
 
 \item{use.feat}{[\code{logical(1)}]\cr
 Whether the original features should also be passed to the super learner.
@@ -56,6 +60,12 @@ The default \code{NULL} uses 5-fold CV.}
   \item{\code{bagtime}}{The number of rounds of the bagging selection.}
   \item{\code{metric}}{The result evaluation metric function taking two parameters \code{pred} and \code{true},
   the smaller the score the better.}
+}
+the parameters for \code{compress} method, including
+\describe{
+   \item{k}{the size multiplier of the generated data}
+   \item{prob}{the probability to exchange values}
+   \item{s}{the standard deviation of each numerical feature}
 }}
 }
 \description{
@@ -69,11 +79,11 @@ The following stacking methods are available:
   \item{\code{stack.cv}}{Fits the super learner, where the base learner predictions are computed
   by crossvalidated predictions (the resampling strategy can be set via the \code{resampling} argument).}
   \item{\code{hill.climb}}{Select a subset of base learner predictions by hill climbing algorithm.}
+  \item{\code{compress}}{Train a neural network to compress the model from a collection of base learners.}
  }
 }
 \examples{
-\dontrun{
-  require(mlr)
+require(mlr)
 
   # Classification
   data(iris)
@@ -91,11 +101,9 @@ The following stacking methods are available:
   tsk = makeRegrTask(data = BostonHousing, target = "medv")
   base = c("regr.rpart", "regr.svm")
   lrns = lapply(base, makeLearner)
-  lrns = listLearners(tsk, create = TRUE)
   m = makeStackedLearner(base.learners = lrns,
-    predict.type = "response", method = "hill.climb")
+    predict.type = "response", method = "compress")
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
-}
 }
 
