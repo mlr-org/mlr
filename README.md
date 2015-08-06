@@ -15,6 +15,7 @@
     devtools::install_github("mlr-org/mlr")
     ```
 * [Further installation instructions](https://github.com/tudo-r/PackagesInfo/wiki/Installation-Information)
+* [Ask a question about mlr on Stackoverflow](https://stackoverflow.com/questions/tagged/mlr)
 
 
 Introduction
