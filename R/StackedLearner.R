@@ -41,8 +41,8 @@
 #'   Default is \dQuote{stack.nocv},
 #'   \dQuote{hill.climb} for averaging the predictions of the base learners, with the weights learned from 
 #'   hill climbing algorithm and
-#'   \dQuote{compress} for compressing the model to mimic the predictive of a collection of base learners, 
-#'   while speed up the prediction and reduce the size of the model.
+#'   \dQuote{compress} for compressing the model to mimic the predictions of a collection of base learners
+#'   while speeding up the predictions and reducing the size of the model.
 #' @param use.feat [\code{logical(1)}]\cr
 #'   Whether the original features should also be passed to the super learner.
 #'   Not used for \code{method = 'average'}.
@@ -67,8 +67,6 @@
 #'    \item{s}{the standard deviation of each numerical feature}
 #' }
 #' @examples
-#'   require(mlr)
-#'   
 #'   # Classification
 #'   data(iris)
 #'   tsk = makeClassifTask(data = iris, target = "Species")
@@ -553,9 +551,9 @@ compressBaseLearners = function(learner, task, parset = list()) {
   target = data[[2]]
   data = data[[1]]
    
-  psuedo.data = do.call(getPsuedoData, c(list(data), parset))
-  psuedo.target = predict(ensemble.model, newdata = psuedo.data)
-  psuedo.data = data.frame(psuedo.data, target = psuedo.target$data$response)
+  pseudo.data = do.call(getPseudoData, c(list(data), parset))
+  pseudo.target = predict(ensemble.model, newdata = pseudo.data)
+  pseudo.data = data.frame(pseudo.data, target = pseudo.target$data$response)
 
   td = ensemble.model$task.desc
   levs = td$class.levels
@@ -563,14 +561,14 @@ compressBaseLearners = function(learner, task, parset = list()) {
     ifelse(length(td$class.levels) == 2L, "classif", "multiclassif"))
   
   if (type == "regr") {
-    new.task = makeRegrTask(data = psuedo.data, target = "target")
+    new.task = makeRegrTask(data = pseudo.data, target = "target")
     if (testNull(learner$super.learner)) {
       m = makeLearner("regr.nnet", predict.type = )
     } else {
       m = learner$super.learner
     }
   } else {
-    new.task = makeClassifTask(data = psuedo.data, target = "target")
+    new.task = makeClassifTask(data = pseudo.data, target = "target")
     if (testNull(learner$super.learner)) {
       m = makeLearner("classif.nnet", predict.type = "")
     } else {
@@ -581,7 +579,7 @@ compressBaseLearners = function(learner, task, parset = list()) {
   super.model = train(m, new.task)
   
   list(method = "compress", base.learners = lrn$base.learners, super.model = super.model,
-       pred.train = psuedo.data)
+       pred.train = pseudo.data)
 }
 
 ### other helpers ###
@@ -633,8 +631,7 @@ rowiseRatio = function(probs, levels, model.weight = NULL) {
   return(mat)
 }
 
-# Psuedo Data
-getPsuedoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
+getPseudoData = function(.data, k = 3, prob = 0.1, s = NULL, ...) {
   res = NULL
   n = nrow(.data)
   ori.names = names(.data)
