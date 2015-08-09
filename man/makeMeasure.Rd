@@ -127,6 +127,7 @@ Other performance: \code{\link{G1}}, \code{\link{G2}},
   \code{\link{tn}}, \code{\link{tnr}}, \code{\link{tp}},
   \code{\link{tpr}}; \code{\link{makeCostMeasure}};
   \code{\link{makeCustomResampledMeasure}};
-  \code{\link{performance}}
+  \code{\link{performance}};
+  \code{\link{relativeOverfitting}}
 }
 
