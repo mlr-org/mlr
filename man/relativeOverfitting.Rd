@@ -4,8 +4,7 @@
 \alias{relativeOverfitting}
 \title{Estimate relative overfitting.}
 \usage{
-relativeOverfitting(pred, measures, task = NULL, model = NULL,
-  feats = NULL)
+relativeOverfitting(pred, measures, task, model, feats = NULL)
 }
 \arguments{
 \item{pred}{[\code{\link{Prediction}}]\cr
@@ -32,6 +31,9 @@ are extracted from it.}
 \description{
 Estimates the relative overfitting of a model as the ratio of the difference in test and train performane to the difference of test performance in the no-information case and train performance.
 In the no-information case the features carry no information with respect to the prediction. This is simulated by permuting features and predictions.
+}
+\details{
+Currently only support for classification and regression tasks is implemented.
 }
 \examples{
 training.set = seq(1, nrow(iris), by = 2)

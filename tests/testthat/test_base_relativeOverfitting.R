@@ -26,4 +26,3 @@ test_that("relativeOverfitting works for regression", {
   expect_true(is.numeric(ro))
   expect_equal(length(ro), 1)
 })
-

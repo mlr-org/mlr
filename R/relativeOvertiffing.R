@@ -3,6 +3,8 @@
 #' Estimates the relative overfitting of a model as the ratio of the difference in test and train performane to the difference of test performance in the no-information case and train performance.
 #' In the no-information case the features carry no information with respect to the prediction. This is simulated by permuting features and predictions.
 #'
+#' Currently only support for classification and regression tasks is implemented.
+#'
 #' @template arg_pred
 #' @template arg_measures
 #' @param task [\code{\link{Task}}]\cr
@@ -31,7 +33,16 @@
 #' mod2 = train(lrn2, task, subset = training.set)
 #' pred2 = predict(mod2, newdata = iris[test.set, ])
 #' relativeOverfitting(pred2, measures = mmce, task = task, model = mod2)
-relativeOverfitting = function(pred, measures, task = NULL, model = NULL, feats = NULL) {
+relativeOverfitting = function(pred, measures, task, model, feats = NULL) {
+  assertClass(pred, classes = "Prediction")
+  if (is.null(pred$data$truth))
+    stopf("You need to have a 'truth' column in your pred object to estimate the relative overfitting!")
+  assertClass(model, classes = "WrappedModel")
+  assertClass(task, classes = "Task")
+
+  type = getTaskDescription(pred)$type
+  assertChoice(type, choices = c("classif", "regr"))
+
   perf.test = performance(pred, measures = measures, task = task, model = model, feats = feats)
 
   rows = nrow(pred$data)
