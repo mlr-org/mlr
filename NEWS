@@ -58,6 +58,7 @@ mlr_2.5:
 -- getCaretParamSet
 -- generateCalibrationData and plotCalibration
 -- relativeOverfitting
+-- plotROCCurves
 
 - new measures
 -- hamloss
