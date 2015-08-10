@@ -38,11 +38,11 @@
 #'   \dQuote{average} for averaging the predictions of the base learners,
 #'   \dQuote{stack.nocv} for building a super learner using the predictions of the base learners,
 #'   \dQuote{stack.cv} for building a super learner using crossvalidated predictions of the base learners.
-#'   Default is \dQuote{stack.nocv},
 #'   \dQuote{hill.climb} for averaging the predictions of the base learners, with the weights learned from 
 #'   hill climbing algorithm and
 #'   \dQuote{compress} for compressing the model to mimic the predictions of a collection of base learners
 #'   while speeding up the predictions and reducing the size of the model.
+#'   Default is \dQuote{stack.nocv},
 #' @param use.feat [\code{logical(1)}]\cr
 #'   Whether the original features should also be passed to the super learner.
 #'   Not used for \code{method = 'average'}.
@@ -93,7 +93,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
 
   if (is.character(base.learners)) base.learners = lapply(base.learners, checkLearner)
   if (is.null(super.learner) && method == "compress") {
-    super.learner = makeLearner(paste0(base.learners[[1]]$type,'.','nnet'))
+    super.learner = makeLearner(paste0(base.learners[[1]]$type,'.nnet'))
   }
   if (!is.null(super.learner)) {
     super.learner = checkLearner(super.learner)
