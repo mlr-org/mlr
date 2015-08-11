@@ -45,14 +45,11 @@ relativeOverfitting = function(pred, measures, task, model, feats = NULL) {
 
   perf.test = performance(pred, measures = measures, task = task, model = model, feats = feats)
 
-  rows = nrow(pred$data)
-  permutations = expand.grid(pred$data)
-  perf.permuted = Reduce('+', lapply(1:rows^2, function(i) {
-    pred.permuted = pred
-    pred.permuted$data$truth = permutations[i,'truth']
-    pred.permuted$data$response = permutations[i,'response']
-    performance(pred.permuted, measures = measures, task = task, model = model, feats = feats)
-  })) / rows^2
+  nrows = nrow(pred$data)
+  pred.permuted = pred
+  pred.permuted$data = data.frame(truth = rep(pred$data$truth, each = nrows),
+    response = rep(pred$data$response, times = nrows))
+  perf.permuted = performance(pred.permuted, measures = measures, task = task, model = model, feats = feats)
 
   pred.train = predict(model, task)
   perf.train = performance(pred.train, measures = measures, task = task, model = model, feats = feats)
