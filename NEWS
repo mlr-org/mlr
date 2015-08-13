@@ -33,14 +33,16 @@ mlr_2.5:
   therefore faster and more reliable; it also supports the additional parameter
   check.packages now that will check whether required packages are installed
   without loading them
-- many new function for statistical benchmark comparisons are added, see below
+- many new functions for statistical benchmark comparisons are added, see below
 - rename hasProperties, getProperties to hasLearnerProperties and getLearnerProperties
-- Learner Propoerties are now implemented object oriented as a state of a Learner.
+- Learner properties are now implemented object oriented as a state of a Learner.
   Only RLearners have the properties stored in a slot.
   For each class the getter can be overwritten.
 - The hill climbing algorithm for stacking (Caruana 04) is implemented as method 'hill.climb' in 'makeStackedLearner' to select models from base learners, which is equivalent to weighted average.
 - The model compression algorithm for stacking (Caruana 06) is implemented as method 'compress' in 'makeStackedLearner' to first select models from base learners and then mimic the behaviour with a super learner. The default super learner is neural network.
 - The "Feature-subspace Aggregating Ensemble Algorithm" is implemented as a new learner in 'FeatingEnsemble.R'.
+- relativeOverfitting provides a way to estimate how much a model overfits to
+  the training data according to a measure.
 
 - new functions
 -- getDefaultMeasure
@@ -56,6 +58,8 @@ mlr_2.5:
    friedmanTestBMR, friedmanPostHocTestBMR, generateCritDifferencesData, plotCritDifferences
 -- getCaretParamSet
 -- generateCalibrationData and plotCalibration
+-- relativeOverfitting
+-- plotROCCurves
 
 - new measures
 -- hamloss
