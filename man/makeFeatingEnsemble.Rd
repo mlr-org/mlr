@@ -26,7 +26,8 @@ The majority or proportion will be used as prediction otherwise.}
 \description{
 An ensemble algorithm which builds local models instead of global models.
 The algorithm builds several trees to split the data space then train a model on each leaf.
-The final result is the aggregation of results from all the trees.
+The final result is the aggregation of results from all the trees. The algorithm is introduced
+in the paper "Feature-subspace aggregating: ensembles for stable and unstable learners" by Ting et al.
 }
 \examples{
 data(iris)
@@ -36,5 +37,8 @@ flrn = makeFeatingEnsemble(learner = lrn, attrs = 1:4, random = 5, maximum.level
   minimum.instance = 4, predict.type = "prob")
 m = train(flrn, tsk)
 pred = predict(m, newdata = iris)
+}
+\references{
+Ting, Kai Ming, et al. "Feature-subspace aggregating: ensembles for stable and unstable learners." Machine Learning 82.3 (2011): 375-397.
 }
 
