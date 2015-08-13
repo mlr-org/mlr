@@ -22,6 +22,16 @@ multiclass.test  = multiclass.df[multiclass.test.inds, ]
 multiclass.class.col = 5
 multiclass.task = makeClassifTask("multiclass", data = multiclass.df, target = multiclass.target)
 
+multiclass.small.df = iris[c(1:3, 51:53, 101:103),]
+multiclass.small.formula = Species~.
+multiclass.small.target = "Species"
+multiclass.small.train.inds = c(1:2, 4:5, 7:8)
+multiclass.small.test.inds  = setdiff(1:9, multiclass.small.train.inds)
+multiclass.small.train = multiclass.small.df[multiclass.small.train.inds, ]
+multiclass.small.test  = multiclass.small.df[multiclass.small.test.inds, ]
+multiclass.small.class.col = 5
+multiclass.small.task = makeClassifTask("multiclass", data = multiclass.small.df, target = multiclass.small.target)
+
 multilabel.df = iris
 multilabel.df[, "y1"] = rep(c(TRUE, FALSE), 75L)
 multilabel.df[, "y2"] = rep(c(FALSE, TRUE), 75L)
@@ -49,6 +59,16 @@ regr.train = regr.df[regr.train.inds, ]
 regr.test  = regr.df[regr.test.inds, ]
 regr.class.col = 14
 regr.task = makeRegrTask("regrtask", data = regr.df, target = regr.target)
+
+regr.small.df = BostonHousing[150:160,]
+regr.small.formula = medv ~ .
+regr.small.target = "medv"
+regr.small.train.inds = 1:7
+regr.small.test.inds  = setdiff(1:nrow(regr.small.df), regr.small.train.inds)
+regr.small.train = regr.small.df[regr.small.train.inds, ]
+regr.small.test  = regr.small.df[regr.small.test.inds, ]
+regr.small.class.col = 14
+regr.small.task = makeRegrTask("regrtask", data = regr.small.df, target = regr.small.target)
 
 regr.num.df = regr.df[,sapply(regr.df, is.numeric)]
 regr.num.formula = regr.formula

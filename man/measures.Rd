@@ -249,7 +249,8 @@ starting with 1. If this is not the case, some of the measures will generate war
 Other performance: \code{\link{Measure}},
   \code{\link{makeMeasure}}; \code{\link{makeCostMeasure}};
   \code{\link{makeCustomResampledMeasure}};
-  \code{\link{performance}}
+  \code{\link{performance}};
+  \code{\link{relativeOverfitting}}
 }
 \keyword{datasets}
 

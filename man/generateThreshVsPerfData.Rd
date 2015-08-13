@@ -4,7 +4,8 @@
 \alias{generateThreshVsPerfData}
 \title{Generate threshold vs. performance(s) for 2-class classification.}
 \usage{
-generateThreshVsPerfData(obj, measures, gridsize = 100L, task.id = NULL)
+generateThreshVsPerfData(obj, measures, gridsize = 100L, aggregate = TRUE,
+  task.id = NULL)
 }
 \arguments{
 \item{obj}{[(list of) \code{\link{Prediction}} | (list of) \code{\link{ResampleResult}} | \code{\link{BenchmarkResult}}]\cr
@@ -20,6 +21,11 @@ Default is the default measure for the task, see here \code{\link{getDefaultMeas
 \item{gridsize}{[\code{integer(1)}]\cr
 Grid resolution for x-axis (threshold).
 Default is 100.}
+
+\item{aggregate}{[\code{logical(1)}]\cr
+Whether to aggregate \code{\link{ResamplePrediction}}s or to plot the performance
+of each iteration separately.
+Default is \code{TRUE}.}
 
 \item{task.id}{[\code{character(1)}]\cr
 Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
@@ -39,7 +45,8 @@ Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}};
   \code{\link{generateRankMatrixAsBarData}};
   \code{\link{getFilterValues}}
 
-Other thresh_vs_perf: \code{\link{plotThreshVsPerfGGVIS}};
+Other thresh_vs_perf: \code{\link{plotROCCurves}};
+  \code{\link{plotThreshVsPerfGGVIS}};
   \code{\link{plotThreshVsPerf}}
 }
 
