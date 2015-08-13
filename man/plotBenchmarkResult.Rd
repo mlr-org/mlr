@@ -84,6 +84,7 @@ Other plot: \code{\link{plotBenchmarkSummary}};
   \code{\link{plotLearningCurve}};
   \code{\link{plotPartialPredictionGGVIS}};
   \code{\link{plotPartialPrediction}};
+  \code{\link{plotROCCurves}};
   \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}};
   \code{\link{plotRankMatrixAsBar}};

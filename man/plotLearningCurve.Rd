@@ -39,6 +39,7 @@ Other plot: \code{\link{plotBenchmarkResult}};
   \code{\link{plotLearningCurveGGVIS}};
   \code{\link{plotPartialPredictionGGVIS}};
   \code{\link{plotPartialPrediction}};
+  \code{\link{plotROCCurves}};
   \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}};
   \code{\link{plotRankMatrixAsBar}};
