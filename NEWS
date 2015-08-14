@@ -42,6 +42,8 @@ mlr_2.5:
 - The model compression algorithm for stacking (Caruana 06) is implemented as method 'compress' in 'makeStackedLearner' to first select models from base learners and then mimic the behaviour with a super learner. The default super learner is neural network.
 - relativeOverfitting provides a way to estimate how much a model overfits to
   the training data according to a measure.
+- generatePartialPredictionData can now generate (optionally centered) individual conditional expectation (ICE) curves
+- plotPartialPredictionGGVIS has renamed argument "interaction" to "interact"
 
 - new functions
 -- getDefaultMeasure

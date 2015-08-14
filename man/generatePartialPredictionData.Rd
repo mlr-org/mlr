@@ -5,10 +5,11 @@
 \title{Generate partial predictions}
 \usage{
 generatePartialPredictionData(obj, data, features, interaction = FALSE,
-  fun = mean, resample = "none", fmin = sapply(features, function(x)
-  ifelse(!is.factor(data[[x]]), min(data[[x]], na.rm = TRUE), NA)),
-  fmax = sapply(features, function(x) ifelse(!is.factor(data[[x]]),
-  max(data[[x]], na.rm = TRUE), NA)), gridsize = 10L, ...)
+  individual = FALSE, center = NULL, fun = mean, resample = "none",
+  fmin = sapply(features, function(x) ifelse(!is.factor(data[[x]]),
+  min(data[[x]], na.rm = TRUE), NA)), fmax = sapply(features, function(x)
+  ifelse(!is.factor(data[[x]]), max(data[[x]], na.rm = TRUE), NA)),
+  gridsize = 10L, ...)
 }
 \arguments{
 \item{obj}{a \code{\link{WrappedModel}} returned from \code{\link{train}}.}
@@ -16,7 +17,7 @@ generatePartialPredictionData(obj, data, features, interaction = FALSE,
 \item{data}{a \code{data.frame} with the same columns as are present in the training data.}
 
 \item{features}{\code{character}\cr
-A vector of feature names matching the training data.}
+A vector of feature names contained in the training data.}
 
 \item{interaction}{\code{logical(1)}\cr
 Whether the \code{features} should be interacted or not. If \code{TRUE} then the Cartesian product of the
@@ -26,6 +27,20 @@ values of the features is estimated. Note that if the length of \code{features} 
 If \code{FALSE} each feature is considered separately. In this case \code{features} can be much longer
 than two.
 Default is \code{FALSE}.}
+
+\item{individual}{\code{logical(1)}\cr
+Whether to plot the individual conditional expectation curves rather than the aggregated curve, i.e.,
+rather than aggregating (using \code{fun}) the partial predictions of \code{features}, plot the
+partial predictions of all observations in \code{data} across all values of the \code{features}.
+The algorithm is developed in Goldstein, Kapelner, Bleich, and Pitkin (2015).
+Default is \code{FALSE}.}
+
+\item{center}{\code{numeric}\cr
+The fixed values of the \code{features} used to calculate an individual partial prediction which is then
+subtracted from each individual partial prediction made across the prediction grid created for the
+\code{features}: centering the individual partial prediction lines to make them more interpretable.
+This argument is ignored if \code{individual != TRUE}.
+Default is \code{NULL}.}
 
 \item{fun}{for regression, a function that accepts a numeric vector and returns either a single number
 such as a measure of location such as the mean, or three numbers, which give a lower bound,
@@ -49,13 +64,15 @@ Default is \dQuote{none}.}
 \item{fmin}{\code{numeric}\cr
 The minimum value that each element of \code{features} can take.
 This argument is only applicable if \code{resample = NULL} and when the empirical minimum is higher
-than the theoretical minimum for a given feature.
+than the theoretical minimum for a given feature. This only applies to numeric features and a
+\code{NA} should be inserted into the vector if the corresponding feature is a factor.
 Default is the empirical minimum of each numeric feature and NA for factor features.}
 
 \item{fmax}{\code{numeric}\cr
 The maximum value that each element of \code{features} can take.
 This argument is only applicable if \code{resample = "none"} and when the empirical maximum is lower
-than the theoretical maximum for a given feature.
+than the theoretical maximum for a given feature. This only applies to numeric features and a
+\code{NA} should be inserted into the vector if the corresponding feature is a factor.
 Default is the empirical maximum of each numeric feature and NA for factor features.}
 
 \item{gridsize}{\code{integer(1)}\cr
@@ -73,7 +90,15 @@ an object of class \code{PartialPredictionData}, a named list, which contains th
 \description{
 Estimate how the learned prediction function is affected by one or more features
 }
+\note{
+Goldstein, Alex, Adam Kapelner, Justin Bleich, and Emil Pitkin. "Peeking inside the black box: Visualizing statistical learning with plots of individual conditional expectation." Journal of Computational and Graphical Statistics 24, no. 1 (2015): 44-65.
+}
 \examples{
+lrn = makeLearner("regr.rpart")
+fit = train(lrn, bh.task)
+pd = generatePartialPredictionData(fit, getTaskData(bh.task), c("lstat", "crim"))
+plotPartialPrediction(pd)
+
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 fit = train(lrn, iris.task)
 pd = generatePartialPredictionData(fit, getTaskData(iris.task), c("Petal.Width", "Petal.Length"))
