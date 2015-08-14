@@ -43,6 +43,8 @@ mlr_2.5:
 - The "Feature-subspace Aggregating Ensemble Algorithm" is implemented as a new learner in 'FeatingEnsemble.R'.
 - relativeOverfitting provides a way to estimate how much a model overfits to
   the training data according to a measure.
+- generatePartialPredictionData can now generate (optionally centered) individual conditional expectation (ICE) curves
+- plotPartialPredictionGGVIS has renamed argument "interaction" to "interact"
 
 - new functions
 -- getDefaultMeasure
