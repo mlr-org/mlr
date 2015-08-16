@@ -38,7 +38,7 @@ train = function(learner, task, subset, weights = NULL) {
     subset = seq_len(getTaskSize(task))
   } else {
     if (is.logical(subset))
-      subset = which(subswet)
+      subset = which(subset)
     else
       subset = asInteger(subset)
   }

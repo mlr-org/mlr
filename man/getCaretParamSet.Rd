@@ -4,7 +4,7 @@
 \alias{getCaretParamSet}
 \title{Get tuning parameters from a learner of the caret R-package.}
 \usage{
-getCaretParamSet(learner, length = 3, x, y, discretize = TRUE)
+getCaretParamSet(learner, length = 3L, task, discretize = TRUE)
 }
 \arguments{
 \item{learner}{[\code{character(1)}]\cr
@@ -18,11 +18,8 @@ generating the grid of tuning parameters. \code{caret} generates either as
 many values per tuning parameter / dimension as defined by \code{length}
 or only a single value (in case of non-tunable \code{par.vals}).}
 
-\item{x}{[\code{data.frame}]\cr
-A data frame with the input data.}
-
-\item{y}{[\code{factor} | \code{numeric}]\cr
-A response vector.}
+\item{task}{[\code{\link{Task}}]\cr
+Learning task, which might be requested for creating the tuning grid.}
 
 \item{discretize}{[\code{logical(1)}]\cr
 Should the numerical parameters be discretized? Alternatively, they will
@@ -47,14 +44,15 @@ discretized into specific values.
 }
 \examples{
 library(caret)
+classifTask = makeClassifTask(data = iris, target = "Species")
 
 # (1) classification (random forest) with discretized parameters
-getCaretParamSet("rf", length = 9L, x = iris[, -5], y = iris[, 5], discretize = TRUE)
+getCaretParamSet("rf", length = 9L, task = classifTask, discretize = TRUE)
 
 # (2) regression (gradient boosting machine) without discretized parameters
 library(mlbench)
 data(BostonHousing)
-getCaretParamSet("gbm", length = 9L, x = BostonHousing[, -14],
-  y = BostonHousing[, 14], discretize = FALSE)
+regrTask = makeRegrTask(data = BostonHousing, target = "medv")
+getCaretParamSet("gbm", length = 9L, task = regrTask, discretize = FALSE)
 }
 
