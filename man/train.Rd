@@ -14,9 +14,10 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 \item{task}{[\code{\link{Task}}]\cr
 The task.}
 
-\item{subset}{[\code{integer}]\cr
+\item{subset}{[\code{integer} | \code{integer}]\cr
 An index vector specifying the training cases to be used for fitting.
-By default the complete data set is used.}
+By default the complete data set is used.
+Logical vectors will be transformed to integer with \code{\link[base]{which}}.}
 
 \item{weights}{[\code{numeric}]\cr
 Optional, non-negative case weight vector to be used during fitting.

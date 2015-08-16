@@ -77,8 +77,11 @@ test_that("predict correctly propagates exception in predictLearner", {
 
 test_that("predict works with newdata / subset", {
   mod = train(makeLearner("classif.lda"), multiclass.task)
-  p = predict(mod, newdata = multiclass.df, subset = 1:10)
-  expect_equal(nrow(p$data), 10)
+  p1 = predict(mod, newdata = multiclass.df, subset = 1:10)
+  expect_equal(nrow(p1$data), 10)
+
+  p2 = predict(mod, newdata = multiclass.df, subset = c(rep(TRUE, 10)))
+  expect_equal(p1, p2)
 })
 
 test_that("predict preserves rownames", {

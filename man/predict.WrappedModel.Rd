@@ -17,9 +17,10 @@ The task. If this is passed, data from this task is predicted.}
 New observations which should be predicted.
 Pass this alternatively instead of \code{task}.}
 
-\item{subset}{[\code{integer}]\cr
-Index vector to subset \code{task} or \code{newdata}.
-Default is all data.}
+\item{subset}{[\code{integer} | \code{integer}]\cr
+An index vector specifying the training cases to be used for fitting.
+By default the complete data set is used.
+Logical vectors will be transformed to integer with \code{\link[base]{which}}.}
 
 \item{...}{[any]\cr
 Currently ignored.}

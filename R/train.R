@@ -5,9 +5,10 @@
 #'
 #' @template arg_learner
 #' @template arg_task
-#' @param subset [\code{integer}]\cr
+#' @param subset [\code{integer} | \code{integer}]\cr
 #'   An index vector specifying the training cases to be used for fitting.
 #'   By default the complete data set is used.
+#'   Logical vectors will be transformed to integer with \code{\link[base]{which}}.
 #' @param weights [\code{numeric}]\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
 #'   If given, must be of same length as \code{subset} and in corresponding order.
