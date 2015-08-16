@@ -36,7 +36,10 @@ train = function(learner, task, subset, weights = NULL) {
   if (missing(subset)) {
     subset = seq_len(getTaskSize(task))
   } else {
-    subset = asInteger(subset)
+    if (is.logical(subset))
+      subset = which(subswet)
+    else
+      subset = asInteger(subset)
   }
 
   # make sure that pack for learner is loaded, probably needed when learner is exported
