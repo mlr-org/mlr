@@ -5,7 +5,8 @@ test_that("generatePartialPredictionData", {
 
   fr = train("regr.rpart", regr.task)
   dr = generatePartialPredictionData(fr, getTaskData(regr.task), c("lstat", "chas"), TRUE,
-                                     fmin = c(1, NA), fmax = c(40, NA), gridsize = gridsize)
+                                     fmin = list("lstat" = 1, "chas" = NA),
+                                     fmax = list("lstat" = 40, "chas" = NA), gridsize = gridsize)
   nfeat = length(dr$features)
   nfacet = length(unique(getTaskData(regr.task)[["chas"]]))
   n = getTaskSize(regr.task)
@@ -23,7 +24,8 @@ test_that("generatePartialPredictionData", {
   ## plotPartialPredictionGGVIS(dr, interact = "chas")
 
   dr = generatePartialPredictionData(fr, getTaskData(regr.task), c("lstat", "chas"), TRUE, TRUE,
-                                     fmin = c(1, NA), fmax = c(40, NA), gridsize = gridsize)
+                                     fmin = list("lstat" = 1, "chas" = NA),
+                                     fmax = list("lstat" = 40, "chas" = NA), gridsize = gridsize)
   expect_that(max(dr$data$lstat), equals(40.))
   expect_that(min(dr$data$lstat), equals(1.))
   expect_that(nrow(dr$data), equals(gridsize * nfeat * n))
