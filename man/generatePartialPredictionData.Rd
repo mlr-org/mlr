@@ -6,10 +6,11 @@
 \usage{
 generatePartialPredictionData(obj, data, features, interaction = FALSE,
   individual = FALSE, center = NULL, fun = mean, resample = "none",
-  fmin = sapply(features, function(x) ifelse(!is.factor(data[[x]]),
-  min(data[[x]], na.rm = TRUE), NA)), fmax = sapply(features, function(x)
-  ifelse(!is.factor(data[[x]]), max(data[[x]], na.rm = TRUE), NA)),
-  gridsize = 10L, ...)
+  fmin = lapply(features, function(x) ifelse(is.ordered(data[[x]]) |
+  is.numeric(data[[x]]), min(data[[x]], na.rm = TRUE), NA)),
+  fmax = lapply(features, function(x) ifelse(is.ordered(data[[x]]) |
+  is.numeric(data[[x]]), max(data[[x]], na.rm = TRUE), NA)), gridsize = 10L,
+  ...)
 }
 \arguments{
 \item{obj}{a \code{\link{WrappedModel}} returned from \code{\link{train}}.}
@@ -35,8 +36,9 @@ partial predictions of all observations in \code{data} across all values of the 
 The algorithm is developed in Goldstein, Kapelner, Bleich, and Pitkin (2015).
 Default is \code{FALSE}.}
 
-\item{center}{\code{numeric}\cr
-The fixed values of the \code{features} used to calculate an individual partial prediction which is then
+\item{center}{\code{list}\cr
+A named list containing the fixed values of the \code{features}
+used to calculate an individual partial prediction which is then
 subtracted from each individual partial prediction made across the prediction grid created for the
 \code{features}: centering the individual partial prediction lines to make them more interpretable.
 This argument is ignored if \code{individual != TRUE}.

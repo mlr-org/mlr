@@ -24,8 +24,9 @@
 #'   partial predictions of all observations in \code{data} across all values of the \code{features}.
 #'   The algorithm is developed in Goldstein, Kapelner, Bleich, and Pitkin (2015).
 #'   Default is \code{FALSE}.
-#' @param center \code{numeric}\cr
-#'   The fixed values of the \code{features} used to calculate an individual partial prediction which is then
+#' @param center \code{list}\cr
+#'   A named list containing the fixed values of the \code{features}
+#'   used to calculate an individual partial prediction which is then
 #'   subtracted from each individual partial prediction made across the prediction grid created for the
 #'   \code{features}: centering the individual partial prediction lines to make them more interpretable.
 #'   This argument is ignored if \code{individual != TRUE}.
@@ -85,10 +86,14 @@
 generatePartialPredictionData = function(obj, data, features, interaction = FALSE,
                                          individual = FALSE, center = NULL,
                                          fun = mean, resample = "none",
-                                         fmin = sapply(features, function(x)
-                                           ifelse(!is.factor(data[[x]]), min(data[[x]], na.rm = TRUE), NA)),
-                                         fmax = sapply(features, function(x)
-                                           ifelse(!is.factor(data[[x]]), max(data[[x]], na.rm = TRUE), NA)),
+                                         fmin = lapply(features,
+                                                       function(x)
+                                                         ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
+                                                                min(data[[x]], na.rm = TRUE), NA)),
+                                         fmax = lapply(features,
+                                                       function(x)
+                                                         ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
+                                                                max(data[[x]], na.rm = TRUE), NA)),
                                          gridsize = 10L, ...) {
   td = obj$task.desc
   assertClass(obj, "WrappedModel")
@@ -102,21 +107,25 @@ generatePartialPredictionData = function(obj, data, features, interaction = FALS
   if (individual)
     fun = function(x) x
   if (!is.null(center)) {
-    assertNumeric(center, finite = TRUE, len = length(features))
-    center = t(center)
-    colnames(center) = features
-    center = data.frame(center)
+    assertList(center, len = length(features), names = "unique")
+    if (!all(names(center) %in% features))
+      stop("The names of the elements in center must be the same as the features.")
+    center = as.data.frame(do.call("cbind", center))
   }
   assertFunction(fun)
   assertChoice(resample, c("none", "bootstrap", "subsample"))
-  assertNumeric(fmin, finite = TRUE, len = length(features))
-  assertNumeric(fmax, finite = TRUE, len = length(features))
+  assertList(fmin, len = length(features))
+  if (!all(names(fmin) %in% features))
+    stop("fmin must be a named list with an NA or value corresponding to each feature.")
+  assertList(fmax, len = length(features))
+  if (!all(names(fmax) %in% features))
+    stop("fmax must be a named list with an NA or value corresponding to each feature.")
   assertCount(gridsize, positive = TRUE)
 
   rng = vector("list", length(features))
   names(rng) = features
   for (i in 1:length(features))
-    rng[[i]] = generateFeatureGrid(features[i], data, resample, fmax[i], fmin[i], gridsize)
+    rng[[i]] = generateFeatureGrid(features[i], data, resample, fmax[[i]], fmin[[i]], gridsize)
   rng = as.data.frame(rng)
   if (length(features) > 1L & interaction)
     rng = expand.grid(rng)
@@ -187,7 +196,7 @@ generatePartialPredictionData = function(obj, data, features, interaction = FALS
             features = features,
             interaction = interaction,
             individual = individual,
-            center = center)
+            center = !is.null(center))
 }
 
 doPartialPredictionIteration = function(obj, data, rng, features, fun, td, i, ...) {
@@ -273,8 +282,8 @@ doIndividualPartialPrediction = function(out, td, n = nrow(data), rng, target, f
 #'   \item{features}{Features argument input}.
 #'   \item{interaction}{Whether or not the features were interacted (i.e. conditioning)}
 #'   \item{individual}{Whether the parial predictions were aggregated or the individual curves are retained.}
-#'   \item{center}{If \code{individual == TRUE} the values of the features used to generate predictions which
-#'                 are then subtracted from the individual partial predictions. Only displayed if
+#'   \item{center}{If \code{individual == TRUE} whether the partial prediction at the values of the
+#'                 features specified was subtracted from the individual partial predictions. Only displayed if
 #'                 \code{individual == TRUE}.}
 #' }
 #' @name PartialPredictionData
@@ -289,7 +298,7 @@ print.PartialPredictionData = function(x, ...) {
   catf("Interaction: %s", x$interaction)
   catf("Individual: %s", x$individual)
   if (x$individual)
-    catf("Feature values used to center: %s", x$center)
+    catf("Predictions centered: %s", x$center)
   print(head(x$data))
 }
 #' @title Plot a partial prediction with ggplot2
@@ -390,7 +399,7 @@ plotPartialPrediction = function(obj, facet = NULL) {
   if (!is.null(facet))
     plt = plt + facet_wrap(as.formula(paste0("~ ", facet)), scales = scales)
 
-  if (!is.null(obj$center))
+  if (obj$center)
     plt = plt + ylab(paste(target, "(centered)"))
 
   plt
@@ -485,8 +494,8 @@ plotPartialPredictionGGVIS = function(obj, interact = NULL) {
   }
 
   panel = shiny::selectInput("interaction_select", interact, choices)
-  header = ifelse(!is.null(obj$center), paste("partial predictions for", obj$task.desc$target,
-                                              "(centered)"), obj$task.desc$target)
+  header = ifelse(obj$center, paste("partial predictions for", obj$task.desc$target,
+                                    "(centered)"), paste(obj$task.desc$target, collapse = ", "))
 
   ui = shiny::shinyUI(
     shiny::pageWithSidebar(
