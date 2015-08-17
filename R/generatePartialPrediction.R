@@ -172,10 +172,9 @@ generatePartialPredictionData = function(obj, data, features, interaction = FALS
   } else {
     args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = features, ...)
     out = parallelMap::parallelMap(doPartialPredictionIteration, seq_len(nrow(rng)), more.args = args)
-    if (!is.null(center) & individual) {
-      centerpred = doPartialPredictionIteration(obj, data, center, features, fun, td, 1)
-      centerpred = as.data.frame(do.call("rbind", centerpred))
-    } else
+    if (!is.null(center) & individual)
+      centerpred = as.data.frame(doPartialPredictionIteration(obj, data, center, features, fun, td, 1))
+    else
       centerpred = NULL
     if (!individual)
       out = doAggregatePartialPrediction(out, td, target, features, test, rng)

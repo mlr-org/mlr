@@ -23,6 +23,10 @@ test_that("generatePartialPredictionData", {
   expect_that(length(XML::getNodeSet(doc, black.xpath, "svg")), equals(nfacet * gridsize))
   ## plotPartialPredictionGGVIS(dr, interact = "chas")
 
+  ## parallelMap drops lists of length 1 to the type of the element
+  dr.1 = generatePartialPredictionData(fr, getTaskData(regr.task), "lstat", fmin = list("lstat" = 1),
+                                       fmax = list("lstat" = 40), gridsize = gridsize)
+
   dr = generatePartialPredictionData(fr, getTaskData(regr.task), c("lstat", "chas"), TRUE, TRUE,
                                      fmin = list("lstat" = 1, "chas" = NA),
                                      fmax = list("lstat" = 40, "chas" = NA), gridsize = gridsize)
