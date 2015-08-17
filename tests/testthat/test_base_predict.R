@@ -81,7 +81,7 @@ test_that("predict works with newdata / subset", {
   expect_equal(nrow(p1$data), 10)
 
   p2 = predict(mod, newdata = multiclass.df, subset = c(rep(TRUE, 10)))
-  expect_equal(p1, p2)
+  expect_equal(getPredictionResponse(p1), getPredictionResponse(p2))
 })
 
 test_that("predict preserves rownames", {
