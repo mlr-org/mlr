@@ -487,7 +487,7 @@ plotPartialPredictionGGVIS = function(obj, interact = NULL) {
         plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name("Class")))
       else
         plt = ggvis::layer_points(plt)
-      plt = ggvis::layer_lines(plt)
+      plt = ggvis::layer_paths(plt)
     }
 
     plt
