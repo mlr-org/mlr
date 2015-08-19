@@ -1,7 +1,10 @@
 #' @title Generate partial predictions
 #'
 #' @description
-#' Estimate how the learned prediction function is affected by one or more features
+#' Estimate how the learned prediction function is affected by one or more features.
+#' For a learned function f(x) where x is partitioned into x_s and x_c, the partial dependence of
+#' f on x_s can be summarized by averaging over x_c and setting x_s to a range of values of interest,
+#' estimating E_(x_s)(f(x_s, x_c)). The conditional expectation of f at observation i is estimated similarly.
 #'
 #' @family partial_prediction
 #' @family generate_plot_data
@@ -70,17 +73,18 @@
 #' @return an object of class \code{PartialPredictionData}, a named list, which contains the data,
 #'   the target, the features, and the task description.
 #'
-#' @note
-#' Goldstein, Alex, Adam Kapelner, Justin Bleich, and Emil Pitkin. "Peeking inside the black box: Visualizing statistical learning with plots of individual conditional expectation." Journal of Computational and Graphical Statistics 24, no. 1 (2015): 44-65.
+#' @references
+#' Goldstein, Alex, Adam Kapelner, Justin Bleich, and Emil Pitkin. \dQuote{Peeking inside the black box: Visualizing statistical learning with plots of individual conditional expectation.} Journal of Computational and Graphical Statistics. Vol. 24, No. 1 (2015): 44-65.
+#' Friedman, Jerome. \dQuote{Greedy Function Approximation: A Gradient Boosting Machine.} The Annals of Statistics. Vol. 29. No. 5 (2001): 1189-1232.
 #' @examples
 #' lrn = makeLearner("regr.rpart")
 #' fit = train(lrn, bh.task)
-#' pd = generatePartialPredictionData(fit, getTaskData(bh.task), c("lstat", "crim"))
+#' pd = generatePartialPredictionData(fit, getTaskData(bh.task), "lstat")
 #' plotPartialPrediction(pd)
 #'
 #' lrn = makeLearner("classif.rpart", predict.type = "prob")
 #' fit = train(lrn, iris.task)
-#' pd = generatePartialPredictionData(fit, getTaskData(iris.task), c("Petal.Width", "Petal.Length"))
+#' pd = generatePartialPredictionData(fit, getTaskData(iris.task), "Petal.Width")
 #' plotPartialPrediction(pd)
 #' @export
 generatePartialPredictionData = function(obj, data, features, interaction = FALSE,
