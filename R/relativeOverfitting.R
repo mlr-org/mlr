@@ -1,6 +1,6 @@
 #' Estimate relative overfitting.
 #'
-#' Estimates the relative overfitting of a model as the ratio of the difference in test and train performane to the difference of test performance in the no-information case and train performance.
+#' Estimates the relative overfitting of a model as the ratio of the difference in test and train performance to the difference of test performance in the no-information case and train performance.
 #' In the no-information case the features carry no information with respect to the prediction. This is simulated by permuting features and predictions.
 #'
 #' Currently only support for classification and regression tasks is implemented.
