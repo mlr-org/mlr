@@ -16,7 +16,8 @@ makeRLearner.regr.gbm = function() {
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(distribution = "gaussian"),
-    properties = c("missings", "numerics", "factors", "weights"),
+    properties = c("missings", "numerics", "factors", "weights", "submodel"),
+    submodel.param = "n.trees",
     name = "Gradient Boosting Machine",
     short.name = "gbm",
     note = "`distribution` has been set to *gaussian* by default."
@@ -38,5 +39,12 @@ trainLearner.regr.gbm = function(.learner, .task, .subset, .weights = NULL,  ...
 #' @export
 predictLearner.regr.gbm = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
-  gbm::predict.gbm(m, newdata = .newdata, n.trees = length(m$trees), ...)
+  dots = list(...)
+  if ("submodel.value" %in% names(dots)) {
+    if (dots$submodel.value > m$n.trees)
+      stopf("n.trees (%i) exceeds the number of trees in the model (%i).",
+        dots$submodel.value, m$n.trees)
+    m$n.trees = dots$submodel.value
+  }
+  gbm::predict.gbm(m, newdata = .newdata, n.trees = m$n.trees, single.tree = FALSE, ...)
 }

@@ -42,6 +42,13 @@ trainLearner.classif.gbm = function(.learner, .task, .subset, .weights = NULL,  
 predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
   td = .model$task.desc
   m = .model$learner.model
+  dots = list(...)
+  if ("submodel.value" %in% names(dots)) {
+    if (dots$submodel.value > m$n.trees)
+      stopf("n.trees (%i) exceeds the number of trees in the model (%i).",
+        dots$submodel.value, m$n.trees)
+    m$n.trees = dots$submodel.value
+  }
   p = gbm::predict.gbm(m, newdata = .newdata, type = "response", n.trees = m$n.trees, single.tree = FALSE, ...)
   if (length(td$class.levels) == 2L) {
     levs = c(td$negative, td$positive)

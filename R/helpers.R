@@ -55,9 +55,9 @@ propVectorToMatrix = function(p, levs) {
 
 getSupportedLearnerProperties = function(type = NA_character_) {
   p = list(
-    classif    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "class.weights"),
+    classif    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "class.weights", "submodel"),
     multilabel = c("numerics", "factors", "ordered", "missings", "weights", "prob", "multilabel", "oneclass", "twoclass", "multiclass"),
-    regr       = c("numerics", "factors", "ordered", "missings", "weights", "se"),
+    regr       = c("numerics", "factors", "ordered", "missings", "weights", "se", "submodel"),
     cluster    = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
     surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "rcens"),
     costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass")

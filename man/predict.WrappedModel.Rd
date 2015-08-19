@@ -23,7 +23,7 @@ By default the complete data set is used.
 Logical vectors will be transformed to integer with \code{\link[base]{which}}.}
 
 \item{...}{[any]\cr
-Currently ignored.}
+Currently only used for forwarding the \code{submodel.value}.}
 }
 \value{
 [\code{\link{Prediction}}].
@@ -47,12 +47,26 @@ p = predict(model, newdata = iris, subset = test.set)
 print(p)
 predict(model, task = iris.task, subset = test.set)
 
-# predict now probabiliies instead of class labels
+# now, predict probabilities instead of class labels
 lrn = makeLearner("classif.lda", predict.type = "prob")
 model = train(lrn, iris.task, subset = train.set)
 p = predict(model, task = iris.task, subset = test.set)
 print(p)
 getPredictionProbabilities(p)
+
+# make a prediction for a regression task and compute the mse
+library(mlbench)
+data(BostonHousing)
+train.set = seq(1, 506, 2)
+test.set = seq(2, 506, 2)
+regr.task = makeRegrTask(target = "medv", data = BostonHousing)
+model = train("regr.randomForest", regr.task, subset = train.set)
+p = predict(object = model, task = regr.task, subset = test.set)
+performance(pred = p, measures = mse)
+
+# now, use a submodel (here: the first 2 trees) of the previous model
+p = predict(object = model, task = regr.task, subset = test.set, submodel.value = 2)
+performance(pred = p, measures = mse)
 }
 \seealso{
 Other predict: \code{\link{asROCRPrediction}};

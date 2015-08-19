@@ -19,13 +19,14 @@ makeRLearner()
 
 makeRLearnerClassif(cl, package, par.set, par.vals = list(),
   properties = character(0L), name = cl, short.name = cl, note = "",
-  class.weights.param = NULL)
+  class.weights.param = NULL, submodel.param = NULL)
 
 makeRLearnerMultilabel(cl, package, par.set, par.vals = list(),
   properties = character(0L), name = cl, short.name = cl, note = "")
 
 makeRLearnerRegr(cl, package, par.set, par.vals = list(),
-  properties = character(0L), name = cl, short.name = cl, note = "")
+  properties = character(0L), name = cl, short.name = cl, note = "",
+  submodel.param = NULL)
 
 makeRLearnerSurv(cl, package, par.set, par.vals = list(),
   properties = character(0L), name = cl, short.name = cl, note = "")
@@ -62,6 +63,7 @@ Set of learner properties. Some standard property names include:
   \item{prob}{Can probabilites be predicted?}
   \item{se}{Can standard errors be predicted?}
   \item{class.weights}{Can class weights be handled?}
+  \item{submodel}{Can submodels be created?}
 }
 Default is \code{character(0)}.}
 
@@ -80,6 +82,16 @@ Default is \dQuote{}.}
 
 \item{class.weights.param}{[\code{character(1)}] \cr
 Name of the parameter, which can be used for providing class weights.}
+
+\item{submodel.param}{[\code{character(1)}] \cr
+Name of the parameter, which allows the submodel-trick, i.e., which allows
+to derive submodels of the original model by training the model with the
+maximal value of that submodel parameter and afterwards accessing all
+models (which belong to smaller values of that parameter) "for free".
+For instance, one can train a \code{\link[randomForest]{randomForest}}
+consisting of \code{ntree = 500} trees and afterwards access all forests,
+which consist of less than 500 trees. Note that the default value of that
+param (as defined in \code{par.set}) will be used as maximal value.}
 }
 \value{
 [\code{\link{RLearnerClassif}}, \code{\link{RLearnerCluster}}, \code{\link{RLearnerMultilabel}} \code{\link{RLearnerRegr}} or \code{\link{RLearnerSurv}}].
