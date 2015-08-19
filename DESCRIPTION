@@ -102,6 +102,7 @@ Suggests:
     pROC (>= 1.8),
     randomForest,
     randomForestSRC (>= 1.6.1),
+    ranger (>= 0.2.6),
     RCurl,
     rFerns,
     rjson,
