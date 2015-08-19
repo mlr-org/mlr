@@ -29,6 +29,14 @@ test_that("listLearners", {
   expect_true(length(x6) > 10 && all(x6 %in% x2))
 })
 
+test_that("listLearners doesn't load packages", {
+  npacks.before = nrow(loaded_packages())
+  mylist("classif")
+  npacks.after = nrow(loaded_packages())
+
+  expect_equal(npacks.before, npacks.after)
+})
+
 test_that("listLearners for task", {
   x1 = mylist(binaryclass.task)
   x2 = mylist(multiclass.task)
