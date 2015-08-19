@@ -34,7 +34,7 @@ makeRLearner.surv.ranger = function() {
 trainLearner.surv.ranger = function(.learner, .task, .subset, .weigts, ...) {
   args = list(...)
   ranger::ranger(formula = getTaskFormula(.task), data = getTaskData(.task, .subset), 
-         write.forest = TRUE, ...)
+    write.forest = TRUE, ...)
 }
 
 #' @export
