@@ -57,7 +57,6 @@ Suggests:
     crs,
     Cubist,
     deepnet,
-    devtools,
     DiceKriging,
     DiceOptim,
     DiscriMiner,

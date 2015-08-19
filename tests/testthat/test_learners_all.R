@@ -30,9 +30,9 @@ test_that("listLearners", {
 })
 
 test_that("listLearners doesn't load packages", {
-  npacks.before = nrow(loaded_packages())
+  npacks.before = length(search())
   mylist("classif")
-  npacks.after = nrow(loaded_packages())
+  npacks.after = length(search())
 
   expect_equal(npacks.before, npacks.after)
 })
