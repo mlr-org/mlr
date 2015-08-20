@@ -5,54 +5,51 @@
 #'
 #' Currently only support for classification and regression tasks is implemented.
 #'
-#' @template arg_pred
+#' @param rdesc [\code{\link{ResampleDesc}}\cr
+#'   Resampling strategy.
 #' @template arg_measures
-#' @param task [\code{\link{Task}}]\cr
-#'   Learning task.
-#' @param model [\code{\link{WrappedModel}}]\cr
-#'   Model built on training data.
-#' @param feats [\code{data.frame}]\cr
-#'   Features of predicted data, usually not needed except for clustering.
-#'   If the prediction was generated from a \code{task}, you can also pass this instead and the features
-#'   are extracted from it.
-#' @return [named \code{numeric}]. Relative overfitting estimate(s), named by measure(s).
+#' @template arg_task
+#' @template arg_learner
+#' @return [\code{data.frame}]. Relative overfitting estimate(s), named by measure(s), for each resampling iteration.
 #' @export
 #' @family performance
 #' @references Bradley Efron and Robert Tibshirani; Improvements on Cross-Validation: The .632+ Bootstrap Method, Journal of the American Statistical Association, Vol. 92, No. 438. (Jun., 1997), pp. 548-560.
 #' @examples
-#' training.set = seq(1, nrow(iris), by = 2)
-#' test.set = seq(2, nrow(iris), by = 2)
-#'
 #' task = makeClassifTask(data = iris, target = "Species")
-#' lrn = makeLearner("classif.lda")
-#' mod = train(lrn, task, subset = training.set)
-#' pred = predict(mod, newdata = iris[test.set, ])
-#' relativeOverfitting(pred, measures = mmce, task = task, model = mod)
-#'
-#' lrn2 = makeLearner("classif.knn")
-#' mod2 = train(lrn2, task, subset = training.set)
-#' pred2 = predict(mod2, newdata = iris[test.set, ])
-#' relativeOverfitting(pred2, measures = mmce, task = task, model = mod2)
-relativeOverfitting = function(pred, measures, task, model, feats = NULL) {
-  assertClass(pred, classes = "Prediction")
-  if (is.null(pred$data$truth))
-    stopf("You need to have a 'truth' column in your pred object to estimate the relative overfitting!")
-  assertClass(model, classes = "WrappedModel")
+#' rdesc = makeResampleDesc("CV", iters = 2)
+#' estimateRelativeOverfitting(rdesc, acc, task, makeLearner("classif.knn"))
+#' estimateRelativeOverfitting(rdesc, acc, task, makeLearner("classif.lda"))
+estimateRelativeOverfitting = function(rdesc, measures, task, learner) {
+  assertClass(rdesc, classes = "ResampleDesc")
   assertClass(task, classes = "Task")
+  assertClass(learner, classes = "Learner")
 
-  type = getTaskDescription(pred)$type
-  assertChoice(type, choices = c("classif", "regr"))
+  UseMethod("estimateRelativeOverfitting")
+}
 
-  perf.test = performance(pred, measures = measures, task = task, model = model, feats = feats)
+#' @export
+#' @rdname estimateRelativeOverfitting
+estimateRelativeOverfitting.ResampleDesc = function(rdesc, measures, task, learner) {
+  measures = checkMeasures(measures, task)
 
-  nrows = nrow(pred$data)
-  pred.permuted = pred
-  pred.permuted$data = data.frame(truth = rep(pred$data$truth, each = nrows),
-    response = rep(pred$data$response, times = nrows))
-  perf.permuted = performance(pred.permuted, measures = measures, task = task, model = model, feats = feats)
+  rdesc$predict = "both"
+  r = resample(learner, task, rdesc, measures, show.info = FALSE)
+  mids = vcapply(measures, function(m) m$id)
 
-  pred.train = predict(model, task)
-  perf.train = performance(pred.train, measures = measures, task = task, model = model, feats = feats)
+  iterations = nrow(r$measures.test)
+  do.call(rbind, lapply(1:iterations, function(i) {
+    perf.test = r$measures.test[i,mids,drop = FALSE]
+    perf.train = r$measures.train[i,mids,drop = FALSE]
 
-  (perf.test - perf.train) / (perf.permuted - perf.train)
+    data = r$pred$data[r$pred$data$iter == i & r$pred$data$set == "test",]
+    nrows = nrow(data)
+    pred.permuted = r$pred
+    pred.permuted$data = data.frame(truth = rep(data$truth, each = nrows),
+      response = rep(data$response, times = nrows))
+    perf.permuted = performance(pred.permuted, measures = measures, task = task)
+
+    df = (perf.test - perf.train) / (perf.permuted - perf.train)
+    names(df) = paste("relative.overfit", mids, sep = ".")
+    cbind(data.frame(iter = i), df)
+  }))
 }

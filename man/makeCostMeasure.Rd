@@ -85,8 +85,9 @@ Other performance: \code{\link{G1}}, \code{\link{G2}},
   \code{\link{tn}}, \code{\link{tnr}}, \code{\link{tp}},
   \code{\link{tpr}}; \code{\link{Measure}},
   \code{\link{makeMeasure}};
+  \code{\link{estimateRelativeOverfitting}},
+  \code{\link{estimateRelativeOverfitting.ResampleDesc}};
   \code{\link{makeCustomResampledMeasure}};
-  \code{\link{performance}};
-  \code{\link{relativeOverfitting}}
+  \code{\link{performance}}
 }
 
