@@ -13,8 +13,9 @@
 #' For \code{test = "bd"} an interval is drawn arround the algorithm selected
 #' as baseline. All learners within this interval are not signifcantly different
 #' from the baseline. \cr
-#' Calculation: \deqn{CD = q_{\alpha} \sqrt{\frac{k(k+1)}{6N}}} \cr
-#' Where \deqn{q_\alpha} is based on the studentized range statistic.
+#' Calculation:
+#' \deqn{ CD = q_{\alpha} \sqrt{(\frac{k(k+1)}{6N})}}{CD = q_alpha sqrt(k(k+1)/(6N))} \cr
+#' Where \eqn{q_\alpha} is based on the  studentized range statistic.
 #' See references for details.
 #'
 #' @template arg_bmr
