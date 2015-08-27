@@ -132,7 +132,6 @@ generatePartialPredictionData = function(obj, data, features, interaction = FALS
   names(rng) = features
   for (i in 1:length(features))
     rng[[i]] = generateFeatureGrid(features[i], data, resample, fmax[[i]], fmin[[i]], gridsize)
-  rng = as.data.frame(rng)
   if (length(features) > 1L & interaction)
     rng = expand.grid(rng)
 
@@ -162,7 +161,8 @@ generatePartialPredictionData = function(obj, data, features, interaction = FALS
 
   if (length(features) > 1L & !interaction) {
     out = lapply(features, function(x) {
-      rng = rng[x][!is.na(rng[x]),, drop = FALSE]
+      rng = as.data.frame(rng[[x]])
+      colnames(rng) = x
       args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = x, ...)
       out = parallelMap::parallelMap(doPartialPredictionIteration, seq_len(nrow(rng)), more.args = args)
       if (!is.null(center) & individual)
@@ -176,6 +176,8 @@ generatePartialPredictionData = function(obj, data, features, interaction = FALS
     })
     out = plyr::ldply(out)
   } else {
+    rng = as.data.frame(rng)
+    colnames(rng) = features
     args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = features, ...)
     out = parallelMap::parallelMap(doPartialPredictionIteration, seq_len(nrow(rng)), more.args = args)
     if (!is.null(center) & individual)
@@ -195,7 +197,7 @@ generatePartialPredictionData = function(obj, data, features, interaction = FALS
                   colnames(out)[!colnames(out) %in% c("Class", "Probability", features)])]
 
   makeS3Obj("PartialPredictionData",
-            data = unique(out), ## fixme, duplicates being inserted somewhere
+            data = out,
             task.desc = td,
             target = target,
             features = features,
@@ -203,7 +205,6 @@ generatePartialPredictionData = function(obj, data, features, interaction = FALS
             individual = individual,
             center = !is.null(center))
 }
-
 doPartialPredictionIteration = function(obj, data, rng, features, fun, td, i, ...) {
   data[features] = rng[i, ]
   pred = do.call("predict", c(list("object" = obj, "newdata" = data), list(...)))
@@ -215,13 +216,16 @@ doPartialPredictionIteration = function(obj, data, rng, features, fun, td, i, ..
     apply(getPredictionProbabilities(pred), 2, fun)
 }
 
-generateFeatureGrid = function(feature, data, resample, fmin, fmax, cutoff) {
+generateFeatureGrid = function(feature, data, resample, fmin, fmax, gridsize) {
+  nunique = ifelse(length(feature) > 1L, nrow(unique(data[feature, ])), length(unique(data[[feature]])))
+  cutoff = ifelse(gridsize >= nunique, nunique, gridsize)
+
   if (is.factor(data[[feature]])) {
     factor(rep(levels(data[[feature]]), length.out = cutoff),
            levels = levels(data[[feature]]), ordered = is.ordered(data[[feature]]))
   } else {
     if (resample != "none") {
-      sample(data[[feature]], cutoff, resample == "bootstrap")
+      sort(sample(data[[feature]], cutoff, resample == "bootstrap"))
     } else {
       if (is.integer(data[[feature]]))
         sort(rep(fmin:fmax, length.out = cutoff))
