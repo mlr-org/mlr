@@ -11,10 +11,24 @@
 #'
 #' @param obj [\code{\link{WrappedModel}}]\cr
 #'   Result of \code{\link{train}}.
+#' @param task [\code{\link{Task}}]\cr
+#'   The task. If this is passed, data from this task is predicted.
 #' @param data [\code{data.frame}]\cr
-#'  With columns as are present in the training data.
+#'  Data to be used to compute partial predictions.
+#'  Pass this alternatively instead of \code{task}.
 #' @param features [\code{character}]\cr
 #'   A vector of feature names contained in the training data.
+#'   If not specified the features will be extracted from the \code{task}.
+#'   If \code{n} is unspecified, half of the available features will be used, with the
+#'   most important features (according to \code{\link{generateFilterValuesData}}) being selected first.
+#' @param n [\code{integer(1)}]\cr
+#'   The number of features to select if \code{features} is not specified. The features are selected in
+#'   order of their importance as calculated by \code{\link{generateFilterValuesData}} using the filter
+#'   specified by \code{method}.
+#' @param method [\code{character(1)}]\cr
+#'   The filter method to use. Ignored if \code{features} specified.
+#'   See \code{\link{listFilterMethods}}.
+#'   Default is \dQuote{rf.importance}
 #' @param interaction [\code{logical(1)}]\cr
 #'   Whether the \code{features} should be interacted or not. If \code{TRUE} then the Cartesian product of the
 #'   prediction grid for each feature is taken, and the partial prediction at each unique combination of
@@ -81,32 +95,47 @@
 #' @examples
 #' lrn = makeLearner("regr.rpart")
 #' fit = train(lrn, bh.task)
-#' pd = generatePartialPredictionData(fit, getTaskData(bh.task), "lstat")
+#' pd = generatePartialPredictionData(fit, task = bh.task, features = "lstat")
 #' plotPartialPrediction(pd)
 #'
 #' lrn = makeLearner("classif.rpart", predict.type = "prob")
 #' fit = train(lrn, iris.task)
-#' pd = generatePartialPredictionData(fit, getTaskData(iris.task), "Petal.Width")
+#' pd = generatePartialPredictionData(fit, task = iris.task, features = "Petal.Width")
 #' plotPartialPrediction(pd)
 #' @export
-generatePartialPredictionData = function(obj, data, features, interaction = FALSE,
+generatePartialPredictionData = function(obj, task, data, features,
+                                         n, method = "rf.importance",
+                                         interaction = FALSE,
                                          individual = FALSE, center = NULL,
                                          fun = mean, resample = "none",
-                                         fmin = lapply(features,
-                                                       function(x)
-                                                         ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
-                                                                min(data[[x]], na.rm = TRUE), NA)),
-                                         fmax = lapply(features,
-                                                       function(x)
-                                                         ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
-                                                                max(data[[x]], na.rm = TRUE), NA)),
-                                         gridsize = 10L, ...) {
-  td = obj$task.desc
+                                         fmin, fmax, gridsize = 10L, ...) {
   assertClass(obj, "WrappedModel")
-  assertDataFrame(data, col.names = "unique", min.rows = 1L, min.cols = length(obj$features) + length(td$target))
-  checkColumnNames(data, "data")
-  assertSetEqual(colnames(data), c(obj$features, td$target), ordered = FALSE)
-  assertSubset(td$target, colnames(data))
+  if (!xor(missing(task), missing(data)))
+    stop("Pass either a task object or a data data.frame to predict, but not both!")
+  if (missing(data)) {
+    assertClass(task, classes = "Task")
+    data = getTaskData(task)
+    td = task$task.desc
+  } else {
+    td = obj$task.desc
+    assertDataFrame(data, col.names = "unique", min.rows = 1L, min.cols = length(obj$features) + length(td$target))
+    checkColumnNames(data, "data")
+    assertSetEqual(colnames(data), c(obj$features, td$target), ordered = FALSE)
+    assertSubset(td$target, colnames(data))
+  }
+
+  if (missing(features)) {
+    if (missing(task))
+      stop("You must pass a task if features is not specified!")
+    p = getTaskNFeats(task)
+    if (missing(n))
+      n = floor(p * .5)
+    assertCount(n)
+    n = ifelse(p < n, p, n)
+    assertChoice(method, choices = ls(.FilterRegister))
+    fv = generateFilterValuesData(task, method)
+    features = fv$data$name[order(fv$data[[method]], decreasing = TRUE)][1:n]
+  }
   assertSubset(features, obj$features)
   assertFlag(interaction)
   assertFlag(individual)
@@ -120,6 +149,13 @@ generatePartialPredictionData = function(obj, data, features, interaction = FALS
   }
   assertFunction(fun)
   assertChoice(resample, c("none", "bootstrap", "subsample"))
+
+  if (missing(fmin))
+    fmin = lapply(features, function(x) ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
+                                               min(data[[x]], na.rm = TRUE), NA))
+  if (missing(fmax))
+    fmax = lapply(features, function(x) ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
+                                               max(data[[x]], na.rm = TRUE), NA))
   assertList(fmin, len = length(features))
   if (!all(names(fmin) %in% features))
     stop("fmin must be a named list with an NA or value corresponding to each feature.")
@@ -496,7 +532,7 @@ plotPartialPredictionGGVIS = function(obj, interact = NULL) {
         plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name("Class")))
       else
         plt = ggvis::layer_points(plt)
-      plt = ggvis::layer_paths(plt)
+      plt = ggvis::layer_lines(plt)
     }
 
     plt
