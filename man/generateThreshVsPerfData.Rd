@@ -31,6 +31,11 @@ Default is \code{TRUE}.}
 Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
 Default is first task.}
 }
+\value{
+[\code{ThreshVsPerfData}]. A named list containing the measured performance
+  across the threshold grid, the measures, and whether the performance estimates were
+  aggregated (only applicable for (list of) \code{\link{ResampleResult}}s).
+}
 \description{
 Generate threshold vs. performance(s) for 2-class classification.
 }

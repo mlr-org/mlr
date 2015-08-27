@@ -4,16 +4,18 @@
 #' Estimate how the learned prediction function is affected by one or more features.
 #' For a learned function f(x) where x is partitioned into x_s and x_c, the partial dependence of
 #' f on x_s can be summarized by averaging over x_c and setting x_s to a range of values of interest,
-#' estimating E_(x_s)(f(x_s, x_c)). The conditional expectation of f at observation i is estimated similarly.
+#' estimating E_(x_c)(f(x_s, x_c)). The conditional expectation of f at observation i is estimated similarly.
 #'
 #' @family partial_prediction
 #' @family generate_plot_data
 #'
-#' @param obj a \code{\link{WrappedModel}} returned from \code{\link{train}}.
-#' @param data a \code{data.frame} with the same columns as are present in the training data.
-#' @param features \code{character}\cr
+#' @param obj [\code{\link{WrappedModel}}]\cr
+#'   Result of \code{\link{train}}.
+#' @param data [\code{data.frame}]\cr
+#'  With columns as are present in the training data.
+#' @param features [\code{character}]\cr
 #'   A vector of feature names contained in the training data.
-#' @param interaction \code{logical(1)}\cr
+#' @param interaction [\code{logical(1)}]\cr
 #'   Whether the \code{features} should be interacted or not. If \code{TRUE} then the Cartesian product of the
 #'   prediction grid for each feature is taken, and the partial prediction at each unique combination of
 #'   values of the features is estimated. Note that if the length of \code{features} is greater than two,
@@ -21,20 +23,21 @@
 #'   If \code{FALSE} each feature is considered separately. In this case \code{features} can be much longer
 #'   than two.
 #'   Default is \code{FALSE}.
-#' @param individual \code{logical(1)}\cr
+#' @param individual [\code{logical(1)}]\cr
 #'   Whether to plot the individual conditional expectation curves rather than the aggregated curve, i.e.,
 #'   rather than aggregating (using \code{fun}) the partial predictions of \code{features}, plot the
 #'   partial predictions of all observations in \code{data} across all values of the \code{features}.
 #'   The algorithm is developed in Goldstein, Kapelner, Bleich, and Pitkin (2015).
 #'   Default is \code{FALSE}.
-#' @param center \code{list}\cr
+#' @param center [\code{list}]\cr
 #'   A named list containing the fixed values of the \code{features}
 #'   used to calculate an individual partial prediction which is then
 #'   subtracted from each individual partial prediction made across the prediction grid created for the
 #'   \code{features}: centering the individual partial prediction lines to make them more interpretable.
 #'   This argument is ignored if \code{individual != TRUE}.
 #'   Default is \code{NULL}.
-#' @param fun for regression, a function that accepts a numeric vector and returns either a single number
+#' @param fun [\code{function}]\cr
+#'   For regression, a function that accepts a numeric vector and returns either a single number
 #'   such as a measure of location such as the mean, or three numbers, which give a lower bound,
 #'   a measure of location, and an upper bound. Note if three numbers are returned they must be
 #'   in this order. For classification with \code{predict.type = "prob"} the function must accept
@@ -44,35 +47,34 @@
 #'   target feature.
 #'   The default is the mean, unless \code{obj} is classification with \code{predict.type = "response"}
 #'   in which case the default is the proportion of observations predicted to be in each class.
-#' @param resample \code{character(1)}\cr
+#' @param resample [\code{character(1)}]\cr
 #'   Defines how the prediction grid for each feature is created. If \dQuote{bootstrap} then
 #'   values are sampled with replacement from the training data. If \dQuote{subsample} then
 #'   values are sampled without replacement from the training data. If \dQuote{none} an evenly spaced
 #'   grid between either the empirical minimum and maximum, or the minimum and maximum defined by
 #'   \code{fmin} and \code{fmax}, is created.
 #'   Default is \dQuote{none}.
-#' @param fmin \code{numeric}\cr
+#' @param fmin [\code{numeric}]\cr
 #'   The minimum value that each element of \code{features} can take.
 #'   This argument is only applicable if \code{resample = NULL} and when the empirical minimum is higher
 #'   than the theoretical minimum for a given feature. This only applies to numeric features and a
 #'   \code{NA} should be inserted into the vector if the corresponding feature is a factor.
 #'   Default is the empirical minimum of each numeric feature and NA for factor features.
-#' @param fmax \code{numeric}\cr
+#' @param fmax [\code{numeric}]\cr
 #'   The maximum value that each element of \code{features} can take.
 #'   This argument is only applicable if \code{resample = "none"} and when the empirical maximum is lower
 #'   than the theoretical maximum for a given feature. This only applies to numeric features and a
 #'   \code{NA} should be inserted into the vector if the corresponding feature is a factor.
 #'   Default is the empirical maximum of each numeric feature and NA for factor features.
-#' @param gridsize \code{integer(1)}\cr
+#' @param gridsize [\code{integer(1)}]\cr
 #'   The length of the prediction grid created for each feature.
 #'   If \code{resample = "bootstrap"} or \code{resample = "subsample"} then this defines
 #'   the number of (possibly non-unique) values resampled. If \code{resample = NULL} it defines the
 #'   length of the evenly spaced grid created.
 #' @param ... additional arguments to be passed to \code{\link{predict}}.
-#'
-#' @return an object of class \code{PartialPredictionData}, a named list, which contains the data,
-#'   the target, the features, and the task description.
-#'
+#' @return [\code{PartialPredictionData}], A named list, which contains the partial predictions,
+#'   input data, target, features, task description, and other arguments controlling the type of
+#'   partial predictions made.
 #' @references
 #' Goldstein, Alex, Adam Kapelner, Justin Bleich, and Emil Pitkin. \dQuote{Peeking inside the black box: Visualizing statistical learning with plots of individual conditional expectation.} Journal of Computational and Graphical Statistics. Vol. 24, No. 1 (2015): 44-65.
 #' Friedman, Jerome. \dQuote{Greedy Function Approximation: A Gradient Boosting Machine.} The Annals of Statistics. Vol. 29. No. 5 (2001): 1189-1232.
@@ -130,7 +132,6 @@ generatePartialPredictionData = function(obj, data, features, interaction = FALS
   names(rng) = features
   for (i in 1:length(features))
     rng[[i]] = generateFeatureGrid(features[i], data, resample, fmax[[i]], fmin[[i]], gridsize)
-  rng = as.data.frame(rng)
   if (length(features) > 1L & interaction)
     rng = expand.grid(rng)
 
@@ -160,7 +161,8 @@ generatePartialPredictionData = function(obj, data, features, interaction = FALS
 
   if (length(features) > 1L & !interaction) {
     out = lapply(features, function(x) {
-      rng = rng[x][!is.na(rng[x]),, drop = FALSE]
+      rng = as.data.frame(rng[[x]])
+      colnames(rng) = x
       args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = x, ...)
       out = parallelMap::parallelMap(doPartialPredictionIteration, seq_len(nrow(rng)), more.args = args)
       if (!is.null(center) & individual)
@@ -174,6 +176,8 @@ generatePartialPredictionData = function(obj, data, features, interaction = FALS
     })
     out = plyr::ldply(out)
   } else {
+    rng = as.data.frame(rng)
+    colnames(rng) = features
     args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = features, ...)
     out = parallelMap::parallelMap(doPartialPredictionIteration, seq_len(nrow(rng)), more.args = args)
     if (!is.null(center) & individual)
@@ -193,7 +197,7 @@ generatePartialPredictionData = function(obj, data, features, interaction = FALS
                   colnames(out)[!colnames(out) %in% c("Class", "Probability", features)])]
 
   makeS3Obj("PartialPredictionData",
-            data = unique(out), ## fixme, duplicates being inserted somewhere
+            data = out,
             task.desc = td,
             target = target,
             features = features,
@@ -201,7 +205,6 @@ generatePartialPredictionData = function(obj, data, features, interaction = FALS
             individual = individual,
             center = !is.null(center))
 }
-
 doPartialPredictionIteration = function(obj, data, rng, features, fun, td, i, ...) {
   data[features] = rng[i, ]
   pred = do.call("predict", c(list("object" = obj, "newdata" = data), list(...)))
@@ -213,13 +216,16 @@ doPartialPredictionIteration = function(obj, data, rng, features, fun, td, i, ..
     apply(getPredictionProbabilities(pred), 2, fun)
 }
 
-generateFeatureGrid = function(feature, data, resample, fmin, fmax, cutoff) {
+generateFeatureGrid = function(feature, data, resample, fmin, fmax, gridsize) {
+  nunique = ifelse(length(feature) > 1L, nrow(unique(data[feature, ])), length(unique(data[[feature]])))
+  cutoff = ifelse(gridsize >= nunique, nunique, gridsize)
+
   if (is.factor(data[[feature]])) {
     factor(rep(levels(data[[feature]]), length.out = cutoff),
            levels = levels(data[[feature]]), ordered = is.ordered(data[[feature]]))
   } else {
     if (resample != "none") {
-      sample(data[[feature]], cutoff, resample == "bootstrap")
+      sort(sample(data[[feature]], cutoff, resample == "bootstrap"))
     } else {
       if (is.integer(data[[feature]]))
         sort(rep(fmin:fmax, length.out = cutoff))
@@ -311,9 +317,9 @@ print.PartialPredictionData = function(x, ...) {
 #' @family partial_prediction
 #' @family plot
 #'
-#' @param obj \code{PartialPredictionData}\cr
+#' @param obj [\code{PartialPredictionData}]\cr
 #'   Generated by \code{\link{generatePartialPredictionData}}.
-#' @param facet \code{character(1)}\cr
+#' @param facet [\code{character(1)}]\cr
 #'   The name of a feature to be used for facetting.
 #'   This feature must have been an element of the \code{features} argument to
 #'   \code{\link{generatePartialPredictionData}} and is only applicable when said argument had length
@@ -324,7 +330,7 @@ print.PartialPredictionData = function(x, ...) {
 #'   Note that if any of the elements of the \code{features} argument of \code{\link{generatePartialPredictionData}}
 #'   are factors, they will be coerced to numerics.
 #'   Default is \code{NULL}.
-#' @return A ggplot2 object.
+#' @template ret_gg2
 #' @export
 plotPartialPrediction = function(obj, facet = NULL) {
   assertClass(obj, "PartialPredictionData")
@@ -414,9 +420,9 @@ plotPartialPrediction = function(obj, facet = NULL) {
 #' @family partial_prediction
 #' @family plot
 #'
-#' @param obj \code{PartialPredictionData}\cr
+#' @param obj [\code{PartialPredictionData}]\cr
 #'   Generated by \code{\link{generatePartialPredictionData}}.
-#' @param interact \code{character(1)}\cr
+#' @param interact [\code{character(1)}]\cr
 #'   The name of a feature to be mapped to an interactive sidebar using Shiny.
 #'   This feature must have been an element of the \code{features} argument to
 #'   \code{\link{generatePartialPredictionData}} and is only applicable when said argument had length
@@ -425,7 +431,7 @@ plotPartialPrediction = function(obj, facet = NULL) {
 #'   (the default) with argument \code{features} of length greater than one, then \code{interact} is ignored and
 #'   the feature displayed is controlled by an interactive side panel.
 #'   Default is \code{NULL}.
-#' @return A ggvis object.
+#' @template ret_ggv
 #' @export
 plotPartialPredictionGGVIS = function(obj, interact = NULL) {
   assertClass(obj, "PartialPredictionData")
