@@ -4,8 +4,8 @@ test_that("generatePartialPredictionData", {
   gridsize = 3L
 
   fr = train("regr.rpart", regr.task)
-  dr = generatePartialPredictionData(fr, getTaskData(regr.task), c("lstat", "chas"), TRUE,
-                                     fmin = list("lstat" = 1, "chas" = NA),
+  dr = generatePartialPredictionData(fr, task = regr.task, features = c("lstat", "chas"),
+                                     interaction = TRUE, fmin = list("lstat" = 1, "chas" = NA),
                                      fmax = list("lstat" = 40, "chas" = NA), gridsize = gridsize)
   nfeat = length(dr$features)
   nfacet = length(unique(getTaskData(regr.task)[["chas"]]))
@@ -23,11 +23,16 @@ test_that("generatePartialPredictionData", {
   expect_that(length(XML::getNodeSet(doc, black.xpath, "svg")), equals(nfacet * gridsize))
   ## plotPartialPredictionGGVIS(dr, interact = "chas")
 
-  ## parallelMap drops lists of length 1 to the type of the element
-  dr.1 = generatePartialPredictionData(fr, getTaskData(regr.task), "lstat", fmin = list("lstat" = 1),
+  ## test that automatic feature selection works
+  dr.fs = generatePartialPredictionData(fr, task = regr.task, n = 2L, gridsize = gridsize)
+  expect_that(nrow(dr.fs$data), equals(gridsize * 2L))
+
+  dr.1 = generatePartialPredictionData(fr, task = regr.task, features = "lstat",
+                                       fmin = list("lstat" = 1),
                                        fmax = list("lstat" = 40), gridsize = gridsize)
 
-  dr = generatePartialPredictionData(fr, getTaskData(regr.task), c("lstat", "chas"), TRUE, TRUE,
+  dr = generatePartialPredictionData(fr, task = regr.task, features = c("lstat", "chas"),
+                                     interaction = TRUE, individual = TRUE,
                                      fmin = list("lstat" = 1, "chas" = NA),
                                      fmax = list("lstat" = 40, "chas" = NA), gridsize = gridsize)
   expect_that(max(dr$data$lstat), equals(40.))
@@ -42,7 +47,7 @@ test_that("generatePartialPredictionData", {
   ## plotPartialPredictionGGVIS(dr, interact = "chas")
 
   fc = train("classif.rpart", multiclass.task)
-  dc = generatePartialPredictionData(fc, getTaskData(multiclass.task), c("Petal.Width", "Petal.Length"),
+  dc = generatePartialPredictionData(fc, task = multiclass.task, features = c("Petal.Width", "Petal.Length"),
                                      fun = function(x) table(x) / length(x), gridsize = gridsize)
   nfeat = length(dc$features)
   n = getTaskSize(multiclass.task)
@@ -54,12 +59,12 @@ test_that("generatePartialPredictionData", {
   expect_that(length(XML::getNodeSet(doc, red.xpath, "svg")) - 1, equals(nfeat * gridsize))
   expect_that(length(XML::getNodeSet(doc, blue.xpath, "svg")) - 1, equals(nfeat * gridsize))
   expect_that(length(XML::getNodeSet(doc, green.xpath, "svg")) - 1, equals(nfeat * gridsize))
-  ## plotPartialPredictionGGVIS(dc)
+  ## plotPartialPredictionGGVIS(dc) ##FIXME
 
   fcp = train(makeLearner("classif.rpart", predict.type = "prob"), multiclass.task)
-  expect_error(generatePartialPrediction(fcp, getTaskData(multiclass.task), "Petal.Width",
-                                         function(x) quantile(x, c(.025, .5, .975))), gridsize = gridsize)
-  dcp = generatePartialPredictionData(fcp, getTaskData(iris.task), c("Petal.Width", "Petal.Length"),
+  expect_error(generatePartialPrediction(fcp, task = multiclass.task, features = "Petal.Width",
+                                         fun = function(x) quantile(x, c(.025, .5, .975))), gridsize = gridsize)
+  dcp = generatePartialPredictionData(fcp, task = multiclass.task, features = c("Petal.Width", "Petal.Length"),
                                       interaction = TRUE, gridsize = gridsize)
   nfacet = length(unique(dcp$data$Petal.Length))
   ntarget = length(dcp$target)
@@ -72,13 +77,13 @@ test_that("generatePartialPredictionData", {
   expect_that(length(XML::getNodeSet(doc, green.xpath, "svg")) - 1, equals(ntarget * nfacet))
   ## plotPartialPredictionGGVIS(dcp, interact = "Petal.Length")
 
-  dcp = generatePartialPredictionData(fcp, getTaskData(iris.task), c("Petal.Width", "Petal.Length"), TRUE, TRUE,
-                                      gridsize = gridsize)
+  dcp = generatePartialPredictionData(fcp, task = multiclass.task, features = c("Petal.Width", "Petal.Length"),
+                                      interaction = TRUE, individual = TRUE, gridsize = gridsize)
   plotPartialPrediction(dcp, facet = "Petal.Length")
   ## plotPartialPredictionGGVIS(dcp, interact = "Petal.Length")
 
   fs = train("surv.coxph", surv.task)
-  ds = generatePartialPredictionData(fs, getTaskData(surv.task), c("Petal.Width", "Petal.Length"),
+  ds = generatePartialPredictionData(fs, task = surv.task, features = c("Petal.Width", "Petal.Length"),
                                      gridsize = gridsize)
   nfeat = length(ds$features)
   n = getTaskSize(surv.task)
@@ -89,7 +94,8 @@ test_that("generatePartialPredictionData", {
   expect_that(length(XML::getNodeSet(doc, black.xpath, "svg")), equals(gridsize * nfeat))
   ## plotPartialPredictionGGVIS(ds)
 
-  db = generatePartialPredictionData(fr, getTaskData(regr.task), c("lstat", "chas"), TRUE,
+  db = generatePartialPredictionData(fr, task = regr.task, features = c("lstat", "chas"),
+                                     interaction = TRUE,
                                      fun = function(x) quantile(x, c(.25, .5, .75)), gridsize = gridsize)
   nfacet = length(unique(getTaskData(regr.task)[["chas"]]))
   n = getTaskSize(regr.task)
@@ -101,8 +107,8 @@ test_that("generatePartialPredictionData", {
   expect_that(length(XML::getNodeSet(doc, black.xpath, "svg")), equals(nfacet * gridsize))
   ## plotPartialPredictionGGVIS(db, interact = "chas")
 
-  db2 = generatePartialPredictionData(fr, getTaskData(regr.task), c("lstat", "crim"), FALSE,
-                                      fun = function(x) quantile(x, c(.25, .5, .75)), gridsize = 3L)
+  db2 = generatePartialPredictionData(fr, task = regr.task, features = c("lstat", "crim"),
+                                      fun = function(x) quantile(x, c(.25, .5, .75)), gridsize = gridsize)
   nfeat = length(db2$features)
   n = getTaskSize(regr.task)
   plotPartialPrediction(db2)
@@ -113,8 +119,8 @@ test_that("generatePartialPredictionData", {
   ## plotPartialPredictionGGVIS(db2)
 
   fcpb = train(makeLearner("classif.rpart", predict.type = "prob"), binaryclass.task)
-  bc = generatePartialPredictionData(fcpb, getTaskData(binaryclass.task), c("V11", "V12"), individual = TRUE,
-                                     gridsize = gridsize)
+  bc = generatePartialPredictionData(fcpb, task = binaryclass.task, features = c("V11", "V12"),
+                                     individual = TRUE, gridsize = gridsize)
   nfeat = length(bc$features)
   n = getTaskSize(binaryclass.task)
   plotPartialPrediction(bc)
