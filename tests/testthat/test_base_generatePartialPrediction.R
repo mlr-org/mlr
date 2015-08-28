@@ -23,6 +23,8 @@ test_that("generatePartialPredictionData", {
   expect_that(length(XML::getNodeSet(doc, black.xpath, "svg")), equals(nfacet * gridsize))
   ## plotPartialPredictionGGVIS(dr, interact = "chas")
 
+  dr.df = generatePartialPredictionData(fr, input = getTaskData(regr.task), features = "lstat")
+
   dr.1 = generatePartialPredictionData(fr, input = regr.task, features = "lstat",
                                        fmin = list("lstat" = 1),
                                        fmax = list("lstat" = 40), gridsize = gridsize)

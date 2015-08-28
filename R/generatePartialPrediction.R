@@ -103,6 +103,7 @@ generatePartialPredictionData = function(obj, input, features,
     td = input$task.desc
   } else {
     data = input
+    td = obj$task.desc
     assertDataFrame(data, col.names = "unique", min.rows = 1L, min.cols = length(obj$features) + length(td$target))
     assertSetEqual(colnames(data), c(obj$features, td$target), ordered = FALSE)
   }
