@@ -11,24 +11,11 @@
 #'
 #' @param obj [\code{\link{WrappedModel}}]\cr
 #'   Result of \code{\link{train}}.
-#' @param task [\code{\link{Task}}]\cr
-#'   The task. If this is passed, data from this task is predicted.
-#' @param data [\code{data.frame}]\cr
-#'  Data to be used to compute partial predictions.
-#'  Pass this alternatively instead of \code{task}.
+#' @param input [\code{data.frame} | \code{\link{Task}}]\cr
+#'   Input data.
 #' @param features [\code{character}]\cr
 #'   A vector of feature names contained in the training data.
-#'   If not specified the features will be extracted from the \code{task}.
-#'   If \code{n} is unspecified, half of the available features will be used, with the
-#'   most important features (according to \code{\link{generateFilterValuesData}}) being selected first.
-#' @param n [\code{integer(1)}]\cr
-#'   The number of features to select if \code{features} is not specified. The features are selected in
-#'   order of their importance as calculated by \code{\link{generateFilterValuesData}} using the filter
-#'   specified by \code{method}.
-#' @param method [\code{character(1)}]\cr
-#'   The filter method to use. Ignored if \code{features} specified.
-#'   See \code{\link{listFilterMethods}}.
-#'   Default is \dQuote{rf.importance}
+#'   If not specified all features in the \code{input} will be used.
 #' @param interaction [\code{logical(1)}]\cr
 #'   Whether the \code{features} should be interacted or not. If \code{TRUE} then the Cartesian product of the
 #'   prediction grid for each feature is taken, and the partial prediction at each unique combination of
@@ -95,48 +82,36 @@
 #' @examples
 #' lrn = makeLearner("regr.rpart")
 #' fit = train(lrn, bh.task)
-#' pd = generatePartialPredictionData(fit, task = bh.task, features = "lstat")
+#' pd = generatePartialPredictionData(fit, bh.task, "lstat")
 #' plotPartialPrediction(pd)
 #'
 #' lrn = makeLearner("classif.rpart", predict.type = "prob")
 #' fit = train(lrn, iris.task)
-#' pd = generatePartialPredictionData(fit, task = iris.task, features = "Petal.Width")
+#' pd = generatePartialPredictionData(fit, iris.task, "Petal.Width")
 #' plotPartialPrediction(pd)
 #' @export
-generatePartialPredictionData = function(obj, task, data, features,
-                                         n, method = "rf.importance",
+generatePartialPredictionData = function(obj, input, features,
                                          interaction = FALSE,
                                          individual = FALSE, center = NULL,
                                          fun = mean, resample = "none",
                                          fmin, fmax, gridsize = 10L, ...) {
   assertClass(obj, "WrappedModel")
-  if (!xor(missing(task), missing(data)))
-    stop("Pass either a task object or a data data.frame to predict, but not both!")
-  if (missing(data)) {
-    assertClass(task, classes = "Task")
-    data = getTaskData(task)
-    td = task$task.desc
+  if (!inherits(input, c("Task", "data.frame")))
+    stop("input must be a Task or a data.frame!")
+  if (inherits(input, "Task")) {
+    data = getTaskData(input)
+    td = input$task.desc
   } else {
-    td = obj$task.desc
+    data = input
     assertDataFrame(data, col.names = "unique", min.rows = 1L, min.cols = length(obj$features) + length(td$target))
-    checkColumnNames(data, "data")
     assertSetEqual(colnames(data), c(obj$features, td$target), ordered = FALSE)
-    assertSubset(td$target, colnames(data))
   }
 
-  if (missing(features)) {
-    if (missing(task))
-      stop("You must pass a task if features is not specified!")
-    p = getTaskNFeats(task)
-    if (missing(n))
-      n = floor(p * .5)
-    assertCount(n)
-    n = ifelse(p < n, p, n)
-    assertChoice(method, choices = ls(.FilterRegister))
-    fv = generateFilterValuesData(task, method)
-    features = fv$data$name[order(fv$data[[method]], decreasing = TRUE)][1:n]
-  }
-  assertSubset(features, obj$features)
+  if (missing(features))
+    features = colnames(data)[!colnames(data) %in% td$target]
+  else
+    assertSubset(features, obj$features)
+
   assertFlag(interaction)
   assertFlag(individual)
   if (individual)

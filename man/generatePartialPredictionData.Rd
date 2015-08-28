@@ -4,37 +4,20 @@
 \alias{generatePartialPredictionData}
 \title{Generate partial predictions}
 \usage{
-generatePartialPredictionData(obj, task, data, features, n,
-  method = "rf.importance", interaction = FALSE, individual = FALSE,
-  center = NULL, fun = mean, resample = "none", fmin, fmax,
-  gridsize = 10L, ...)
+generatePartialPredictionData(obj, input, features, interaction = FALSE,
+  individual = FALSE, center = NULL, fun = mean, resample = "none",
+  fmin, fmax, gridsize = 10L, ...)
 }
 \arguments{
 \item{obj}{[\code{\link{WrappedModel}}]\cr
 Result of \code{\link{train}}.}
 
-\item{task}{[\code{\link{Task}}]\cr
-The task. If this is passed, data from this task is predicted.}
-
-\item{data}{[\code{data.frame}]\cr
-Data to be used to compute partial predictions.
-Pass this alternatively instead of \code{task}.}
+\item{input}{[\code{data.frame} | \code{\link{Task}}]\cr
+Input data.}
 
 \item{features}{[\code{character}]\cr
 A vector of feature names contained in the training data.
-If not specified the features will be extracted from the \code{task}.
-If \code{n} is unspecified, half of the available features will be used, with the
-most important features (according to \code{\link{generateFilterValuesData}}) being selected first.}
-
-\item{n}{[\code{integer(1)}]\cr
-The number of features to select if \code{features} is not specified. The features are selected in
-order of their importance as calculated by \code{\link{generateFilterValuesData}} using the filter
-specified by \code{method}.}
-
-\item{method}{[\code{character(1)}]\cr
-The filter method to use. Ignored if \code{features} specified.
-See \code{\link{listFilterMethods}}.
-Default is \dQuote{rf.importance}}
+If not specified all features in the \code{input} will be used.}
 
 \item{interaction}{[\code{logical(1)}]\cr
 Whether the \code{features} should be interacted or not. If \code{TRUE} then the Cartesian product of the
@@ -116,12 +99,12 @@ estimating E_(x_c)(f(x_s, x_c)). The conditional expectation of f at observation
 \examples{
 lrn = makeLearner("regr.rpart")
 fit = train(lrn, bh.task)
-pd = generatePartialPredictionData(fit, task = bh.task, features = "lstat")
+pd = generatePartialPredictionData(fit, bh.task, "lstat")
 plotPartialPrediction(pd)
 
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 fit = train(lrn, iris.task)
-pd = generatePartialPredictionData(fit, task = iris.task, features = "Petal.Width")
+pd = generatePartialPredictionData(fit, iris.task, "Petal.Width")
 plotPartialPrediction(pd)
 }
 \references{
