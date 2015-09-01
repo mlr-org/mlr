@@ -7,7 +7,7 @@ makeRLearner.regr.ranger = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "num.trees", lower = 1L, default = 500L),
       makeIntegerLearnerParam(id = "mtry", lower = 1L), 
-      makeIntegerLearnerParam(id = "min.node.size", lower = 1L), 
+      makeIntegerLearnerParam(id = "min.node.size", lower = 1L, default = 5L), 
       makeLogicalLearnerParam(id = "replace", default = TRUE),
       makeNumericVectorLearnerParam(id = "split.select.weights", lower = 0, upper = 1),
       makeUntypedLearnerParam(id = "always.split.variables"),
