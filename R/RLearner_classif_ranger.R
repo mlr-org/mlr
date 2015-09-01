@@ -16,10 +16,10 @@ makeRLearner.classif.ranger = function() {
         default = "none"),
       makeLogicalLearnerParam(id = "scale.permutation.importance", default = FALSE,
         requires = expression(importance == "permutation")),
-      makeIntegerLearnerParam(id = "num.threads", lower = 1L, when = "both"),
-      makeLogicalLearnerParam(id = "save.memory", default = FALSE),
-      makeLogicalLearnerParam(id = "verbose", default = TRUE, when = "both"),
-      makeIntegerLearnerParam(id = "seed", when = "both")
+      makeIntegerLearnerParam(id = "num.threads", lower = 1L, when = "both", tunable = FALSE),
+      makeLogicalLearnerParam(id = "save.memory", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "verbose", default = TRUE, when = "both", tunable = FALSE),
+      makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "prob", "numerics", "factors"),
     name = "Random Forests",
