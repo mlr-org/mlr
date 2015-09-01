@@ -7,6 +7,7 @@ makeRLearner.classif.ranger = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "num.trees", lower = 1L, default = 500L),
       makeIntegerLearnerParam(id = "mtry", lower = 1L), 
+      # FIXME: Add default value when data dependent defaults are implemented: min.node.size = 1 for classification, 10 for probability prediction 
       makeIntegerLearnerParam(id = "min.node.size", lower = 1L), 
       makeLogicalLearnerParam(id = "replace", default = TRUE),
       makeNumericVectorLearnerParam(id = "split.select.weights", lower = 0, upper = 1),
