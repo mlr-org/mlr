@@ -6,6 +6,7 @@ makeRLearner.surv.ranger = function() {
     package = "ranger",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "num.trees", lower = 1L, default = 500L),
+      # FIXME: Add default value when data dependent defaults are implemented: mtry=floor(sqrt(#independent vars)) 
       makeIntegerLearnerParam(id = "mtry", lower = 1L), 
       makeIntegerLearnerParam(id = "min.node.size", lower = 1L, default = 3L), 
       makeLogicalLearnerParam(id = "replace", default = TRUE),
