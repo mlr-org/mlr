@@ -22,7 +22,7 @@
 #'   By default the complete data set is used.
 #'   Logical vectors will be transformed to integer with \code{\link[base]{which}}.
 #' @param ... [any]\cr
-#'   Currently ignored.
+#'   Currently only used for forwarding the \code{submodel.value}.
 #' @return [\code{\link{Prediction}}].
 #' @family predict
 #' @export
@@ -35,12 +35,26 @@
 #' print(p)
 #' predict(model, task = iris.task, subset = test.set)
 #'
-#' # predict now probabiliies instead of class labels
+#' # now, predict probabilities instead of class labels
 #' lrn = makeLearner("classif.lda", predict.type = "prob")
 #' model = train(lrn, iris.task, subset = train.set)
 #' p = predict(model, task = iris.task, subset = test.set)
 #' print(p)
 #' getPredictionProbabilities(p)
+#'
+#' # make a prediction for a regression task and compute the mse
+#' library(mlbench)
+#' data(BostonHousing)
+#' train.set = seq(1, 506, 2)
+#' test.set = seq(2, 506, 2)
+#' regr.task = makeRegrTask(target = "medv", data = BostonHousing)
+#' model = train("regr.randomForest", regr.task, subset = train.set)
+#' p = predict(object = model, task = regr.task, subset = test.set)
+#' performance(pred = p, measures = mse)
+#'
+#' # now, use a submodel (here: the first 2 trees) of the previous model
+#' p = predict(object = model, task = regr.task, subset = test.set, submodel.value = 2)
+#' performance(pred = p, measures = mse)
 predict.WrappedModel = function(object, task, newdata, subset, ...) {
   if (!xor(missing(task), missing(newdata)))
     stop("Pass either a task object or a newdata data.frame to predict, but not both!")
@@ -96,7 +110,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
       .model = model,
       .newdata = newdata
     )
-    pars = c(pars, getHyperPars(learner, c("predict", "both")))
+    pars = c(pars, getHyperPars(learner, c("predict", "both")), ...)
     debug.seed = getMlrOption("debug.seed", NULL)
     if (!is.null(debug.seed))
       set.seed(debug.seed)

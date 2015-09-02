@@ -43,6 +43,9 @@ mlr_2.5:
 - The "Feature-subspace Aggregating Ensemble Algorithm" is implemented as a new learner in 'FeatingEnsemble.R'.
 - relativeOverfitting provides a way to estimate how much a model overfits to
   the training data according to a measure.
+- allow usage of submodels when predicting (so far only implemented for gbm and randomForest)
+- learners can now have the property 'submodel' as well as an additional argument 'submodel.param', which states the
+  parameter that can be used for the submodel trick
 
 - new functions
 -- getDefaultMeasure

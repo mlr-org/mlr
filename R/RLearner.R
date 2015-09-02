@@ -22,10 +22,20 @@
 #'     \item{prob}{Can probabilites be predicted?}
 #'     \item{se}{Can standard errors be predicted?}
 #'     \item{class.weights}{Can class weights be handled?}
+#'     \item{submodel}{Can submodels be created?}
 #'   }
 #'   Default is \code{character(0)}.
 #' @param class.weights.param [\code{character(1)}] \cr
 #'   Name of the parameter, which can be used for providing class weights.
+#' @param submodel.param [\code{character(1)}] \cr
+#'   Name of the parameter, which allows the submodel-trick, i.e., which allows
+#'   to derive submodels of the original model by training the model with the
+#'   maximal value of that submodel parameter and afterwards accessing all
+#'   models (which belong to smaller values of that parameter) "for free".
+#'   For instance, one can train a \code{\link[randomForest]{randomForest}}
+#'   consisting of \code{ntree = 500} trees and afterwards access all forests,
+#'   which consist of less than 500 trees. Note that the default value of that
+#'   param (as defined in \code{par.set}) will be used as maximal value.
 #' @param par.set [\code{\link[ParamHelpers]{ParamSet}}] \cr
 #'   Parameter set of (hyper)parameters and their constraints.
 #' @param par.vals [\code{list}] \cr
@@ -92,7 +102,7 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
 #' @export
 #' @rdname RLearner
 makeRLearnerClassif = function(cl, package, par.set, par.vals = list(), properties = character(0L),
-  name = cl, short.name = cl, note = "", class.weights.param = NULL) {
+  name = cl, short.name = cl, note = "", class.weights.param = NULL, submodel.param = NULL) {
 
   lrn = addClasses(
     makeRLearnerInternal(cl, "classif", package, par.set, par.vals, properties, name, short.name, note),
@@ -106,6 +116,16 @@ makeRLearnerClassif = function(cl, package, par.set, par.vals = list(), properti
       lrn$class.weights.param = class.weights.param
     else
       stopf("'%s' needs to be defined in the parameter set as well.", class.weights.param)
+  }
+
+  # include the submodel.param
+  if ("submodel" %in% getLearnerProperties(lrn)) {
+    assertString(submodel.param)
+    if (!is.null(par.set$pars[[submodel.param]])) {
+      lrn$submodel.param = submodel.param
+    } else {
+      stopf("'%s' needs to be defined in the parameter set as well.", submodel.param)
+    }
   }
   return(lrn)
 }
@@ -121,11 +141,24 @@ makeRLearnerMultilabel = function(cl, package, par.set, par.vals = list(), prope
 
 #' @export
 #' @rdname RLearner
-makeRLearnerRegr = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "") {
-  addClasses(
+makeRLearnerRegr = function(cl, package, par.set, par.vals = list(), properties = character(0L),
+  name = cl, short.name = cl, note = "", submodel.param = NULL) {
+
+  lrn = addClasses(
     makeRLearnerInternal(cl, "regr", package, par.set, par.vals, properties, name, short.name, note),
     c(cl, "RLearnerRegr")
   )
+
+  # include the submodel.param
+  if ("submodel" %in% getLearnerProperties(lrn)) {
+    assertString(submodel.param)
+    if (!is.null(par.set$pars[[submodel.param]])) {
+      lrn$submodel.param = submodel.param
+    } else {
+      stopf("'%s' needs to be defined in the parameter set as well.", submodel.param)
+    }
+  }
+  return(lrn)
 }
 
 #' @export

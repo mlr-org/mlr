@@ -24,7 +24,8 @@ makeRLearner.regr.randomForest = function() {
       se.method = "bootstrap",
       nr.of.bootstrap.samples = 5L
     ),
-    properties = c("numerics", "factors", "ordered", "se"),
+    properties = c("numerics", "factors", "ordered", "se", "submodel"),
+    submodel.param = "ntree",
     name = "Random Forest",
     short.name = "rf"
   )
@@ -66,6 +67,10 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
 
 #' @export
 predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
+  dots = list(...)
+  if ("submodel.value" %in% names(dots))
+    .model$learner.model = extractSubforest(
+      model = .model$learner.model, submodel.value = dots$submodel.value)
   if (.learner$predict.type == "se") {
     se.fun = switch(.learner$par.vals$se.method,
       bootstrap = bootstrapStandardError,
