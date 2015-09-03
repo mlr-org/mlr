@@ -12,35 +12,35 @@
 \title{Fit models according to a resampling strategy.}
 \usage{
 resample(learner, task, resampling, measures, weights = NULL,
-  models = FALSE, extract, keep.pred = TRUE, ...,
+  models = FALSE, extract = NULL, keep.pred = TRUE, ...,
   show.info = getMlrOption("show.info"))
 
 crossval(learner, task, iters = 10L, stratify = FALSE, measures,
-  models = FALSE, keep.pred = TRUE, ...,
+  models = FALSE, keep.pred = TRUE, extract = NULL, ...,
   show.info = getMlrOption("show.info"))
 
 repcv(learner, task, folds = 10L, reps = 10L, stratify = FALSE, measures,
-  models = FALSE, keep.pred = TRUE, ...,
+  models = FALSE, keep.pred = TRUE, extract = NULL, ...,
   show.info = getMlrOption("show.info"))
 
 holdout(learner, task, split = 2/3, stratify = FALSE, measures,
-  models = FALSE, keep.pred = TRUE, ...,
+  models = FALSE, keep.pred = TRUE, extract = NULL, ...,
   show.info = getMlrOption("show.info"))
 
 subsample(learner, task, iters = 30, split = 2/3, stratify = FALSE,
-  measures, models = FALSE, keep.pred = TRUE, ...,
+  measures, models = FALSE, keep.pred = TRUE, extract = NULL, ...,
   show.info = getMlrOption("show.info"))
 
 bootstrapOOB(learner, task, iters = 30, stratify = FALSE, measures,
-  models = FALSE, keep.pred = TRUE, ...,
+  models = FALSE, keep.pred = TRUE, extract = NULL, ...,
   show.info = getMlrOption("show.info"))
 
 bootstrapB632(learner, task, iters = 30, stratify = FALSE, measures,
-  models = FALSE, keep.pred = TRUE, ...,
+  models = FALSE, keep.pred = TRUE, extract = NULL, ...,
   show.info = getMlrOption("show.info"))
 
 bootstrapB632plus(learner, task, iters = 30, stratify = FALSE, measures,
-  models = FALSE, keep.pred = TRUE, ...,
+  models = FALSE, keep.pred = TRUE, extract = NULL, ...,
   show.info = getMlrOption("show.info"))
 }
 \arguments{
@@ -73,7 +73,12 @@ Default is \code{FALSE}.}
 Function used to extract information from a fitted model during resampling.
 Is applied to every \code{\link{WrappedModel}} resulting from calls to \code{\link{train}}
 during resampling.
-Default is to extract nothing.}
+If no function is given, \code{mlr} will automatically apply the following functions for each wrapped learner used:
+\itemize{
+  \item \code{TuneWrapper}: \code{\link{getTuneResult}}
+  \item \code{FeatSelWrapper}: \code{\link{getFeatSelResult}}
+  \item \code{FilterWrapper}: \code{\link{getFilteredFeatures}}
+}}
 
 \item{keep.pred}{[\code{logical(1)}]\cr
 Keep the prediction data in the \code{pred} slot of the result object.

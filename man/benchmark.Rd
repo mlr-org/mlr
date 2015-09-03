@@ -5,7 +5,7 @@
 \title{Benchmark experiment for multiple learners and tasks.}
 \usage{
 benchmark(learners, tasks, resamplings, measures, keep.pred = TRUE,
-  show.info = getMlrOption("show.info"))
+  extract = NULL, show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learners}{[(list of) \code{\link{Learner}}]\cr
@@ -29,6 +29,17 @@ If you do many experiments (on larger data sets) these objects might unnecessari
 object size / mem usage, if you do not really need them.
 In this case you can this argument to \code{FALSE}.
 Default is \code{TRUE}.}
+
+\item{extract}{[\code{function}]\cr
+Function used to extract information from a fitted model during resampling.
+Is applied to every \code{\link{WrappedModel}} resulting from calls to \code{\link{train}}
+during resampling.
+If no function is given, \code{mlr} will automatically apply the following functions for each wrapped learner used:
+\itemize{
+  \item \code{TuneWrapper}: \code{\link{getTuneResult}}
+  \item \code{FeatSelWrapper}: \code{\link{getFeatSelResult}}
+  \item \code{FilterWrapper}: \code{\link{getFilteredFeatures}}
+}}
 
 \item{show.info}{[\code{logical(1)}]\cr
 Print verbose output on console?
