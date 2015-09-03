@@ -10,10 +10,10 @@ test_that("FeatSelWrapper", {
 
   r = resample(lrn2, multiclass.task, outer)
   expect_true(!is.na(r$aggr[[1]]))
-  feats = extractSubList(r$extract, list(1, "x"), simplify = FALSE)
+  feats = extractSubList(r$extract, "x", simplify = FALSE)
   expect_true(is.list(feats) && length(feats) == 2L && all(sapply(feats, is.character)))
-  perfs = extractSubList(r$extract, list(1, "y"))
+  perfs = extractSubList(r$extract, "y")
   expect_true(is.numeric(perfs) && length(perfs) == 2L && !any(is.na(perfs)))
-  expect_class(r$extract[[1]][[1]], "FeatSelResult")
+  expect_class(r$extract[[1L]], "FeatSelResult")
 })
 

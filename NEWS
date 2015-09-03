@@ -43,6 +43,8 @@ mlr_2.5:
 - The "Feature-subspace Aggregating Ensemble Algorithm" is implemented as a new learner in 'FeatingEnsemble.R'.
 - relativeOverfitting provides a way to estimate how much a model overfits to
   the training data according to a measure.
+- resample, benchmark, and resample convenience functions (crossval, repcv etc.) now support
+  the extract argument. FeatSelWrapper, FilterWrapper, TuneWrapper have a default extract method.
 
 - new functions
 -- getDefaultMeasure
