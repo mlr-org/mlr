@@ -5,7 +5,7 @@
 \title{Benchmark experiment for multiple learners and tasks.}
 \usage{
 benchmark(learners, tasks, resamplings, measures, keep.pred = TRUE,
-  show.info = getMlrOption("show.info"))
+  extract = NULL, show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learners}{[(list of) \code{\link{Learner}}]\cr
