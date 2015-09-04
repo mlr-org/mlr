@@ -38,6 +38,8 @@ mlr_2.5:
 - Learner Propoerties are now implemented object oriented as a state of a Learner.
   Only RLearners have the properties stored in a slot. 
   For each class the getter can be overwritten.
+- resample, benchmark, and resample convenience functions (crossval, repcv etc.) now support 
+  the extract argument. FeatSelWrapper, FilterWrapper, TuneWrapper have a default extract method.
 
 - new functions
 -- getDefaultMeasure
