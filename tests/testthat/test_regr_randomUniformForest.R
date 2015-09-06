@@ -5,9 +5,7 @@ test_that("regr_randomUniformForest", {
 
   parset.list = list(
     list(),
-    list(ntree=50, mtry=2),
-    list(ntree=50, nodesize = 2L),
-    list(mtry=2, nodesize = 2L)
+    list(ntree=50, mtry=2)
     )
   #randomUniformForest ist not reproducible with set.seed, so we just check for createability
   for(i in 1:length(parset.list)){
