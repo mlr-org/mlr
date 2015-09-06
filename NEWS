@@ -82,6 +82,8 @@ mlr_2.5:
 -- regr.rknn
 -- classif.xgboost
 -- regr.xgboost
+-- classif.randomUniformForest
+-- regr.randomUniformForest
 
 - new filters
 -- permutation.importance
