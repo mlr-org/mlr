@@ -5,7 +5,7 @@ test_that("classif_randomUniformForest", {
 
   parset.list = list(
     list(),
-    list(ntree=50, mtry=2)
+    list(ntree = 5L, mtry = 2L)
     )
 
   #randomUniformForest ist not reproducible with set.seed, so we just check for createability
