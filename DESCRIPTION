@@ -109,6 +109,7 @@ Suggests:
     rmarkdown,
     robustbase,
     ROCR,
+    rotationForest,
     rpart,
     rrlda,
     rsm,
