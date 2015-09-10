@@ -27,9 +27,9 @@ predictLearner.classif.rotationForest = function(.learner, .model, .newdata, ...
   features = .newdata[, names(.newdata) == .model$features]
   p = predict(.model$learner.model, newdata = features, all = FALSE, ...)
   if(.learner$predict.type == "prob"){
-    p = propVectorToMatrix(1-p, .model$task.desc$class.levels)
+    levs = c(.model$task.desc$positive, .model$task.desc$negative)  
+    propVectorToMatrix(1-p, levs)
   }else{
-    p = as.factor(ifelse(p > 0.5, .model$task.desc$positive, .model$task.desc$negative))
+    as.factor(ifelse(p > 0.5, .model$task.desc$positive, .model$task.desc$negative))
   }
-  return(p)
 }
