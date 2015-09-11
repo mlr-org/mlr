@@ -36,6 +36,8 @@ mergeBenchmarkResultTask = function(...) {
   mergeTask = function(x, y) {
     if (!sameMeasures(x, y)) 
       stop("merging 'BenchmarkResult's must be based on the same set of measures")
+    if (any(names(x$results)%in%names(y$results))) 
+      stop("duplicated task found")
     if (identical(sort(names(x$learners)), sort(names(y$learners)))) {
       results = Map(append, x, y)$results
     } else stop("merging different tasks of 'BenchmarkResult's must be based on the same set of learners")

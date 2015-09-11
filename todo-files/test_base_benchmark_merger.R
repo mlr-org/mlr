@@ -47,4 +47,25 @@ test_that("benchmark merger", {
   # merge all learners
   result = mergeBenchmarkResultTask(mergeBenchmarkResultLearner(bench1, bench2), bench3)
   checkBenchmarkResult(list(bench1, bench2, bench3), result)
+  
+  # benchmark Results should contain experiments for all possible task-learner combinations
+  l1t1 = benchmark(learners[[1]], tasks[[1]], rdesc)
+  l1t2 = benchmark(learners[[1]], tasks[[2]], rdesc)
+  l2t1 = benchmark(learners[[2]], tasks[[1]], rdesc)
+  l2t2 = benchmark(learners[[2]], tasks[[2]], rdesc)
+  
+  expect_error(mergeBenchmarkResultLearner(l2t1, l2t2), "duplicated learner")
+  expect_error(mergeBenchmarkResultLearner(l1t1, l1t2), "duplicated learner")
+  expect_error(mergeBenchmarkResultTask(l1t1, l2t1), "duplicated task")
+  expect_error(mergeBenchmarkResultTask(l1t2, l2t2), "duplicated task")
+  
+  expect_error(mergeBenchmarkResultLearner(l1t1, l2t2), "based on the same set of tasks")
+  expect_error(mergeBenchmarkResultLearner(l1t2, l2t1), "based on the same set of tasks")
+  expect_error(mergeBenchmarkResultTask(l1t1, l2t2), "based on the same set of learners")
+  expect_error(mergeBenchmarkResultTask(l1t2, l2t1), "based on the same set of learners")
+  
+  expect_true(inherits(mergeBenchmarkResultLearner(l1t1, l2t1), "BenchmarkResult"))
+  expect_true(inherits(mergeBenchmarkResultLearner(l1t2, l2t2), "BenchmarkResult"))
+  expect_true(inherits(mergeBenchmarkResultTask(l1t1, l1t2), "BenchmarkResult"))
+  expect_true(inherits(mergeBenchmarkResultTask(l2t1, l2t2), "BenchmarkResult"))
 })
