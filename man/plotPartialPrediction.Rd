@@ -4,7 +4,7 @@
 \alias{plotPartialPrediction}
 \title{Plot a partial prediction with ggplot2}
 \usage{
-plotPartialPrediction(obj, facet = NULL)
+plotPartialPrediction(obj, facet = NULL, p = 1)
 }
 \arguments{
 \item{obj}{[\code{PartialPredictionData}]\cr
@@ -21,6 +21,11 @@ each feature is plotted in its own facet.
 Note that if any of the elements of the \code{features} argument of \code{\link{generatePartialPredictionData}}
 are factors, they will be coerced to numerics.
 Default is \code{NULL}.}
+
+\item{p}{[\code{numeric(1)}]\cr
+If \code{individual = TRUE} then \code{sample} allows the user to sample without replacement
+from the output to make the display more readable. Each row is sampled with probability \code{p}.
+Default is \code{1}.}
 }
 \value{
 ggplot2 plot object.

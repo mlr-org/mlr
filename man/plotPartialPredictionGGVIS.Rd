@@ -4,7 +4,7 @@
 \alias{plotPartialPredictionGGVIS}
 \title{Plot a partial prediction using ggvis}
 \usage{
-plotPartialPredictionGGVIS(obj, interact = NULL)
+plotPartialPredictionGGVIS(obj, interact = NULL, p = 1)
 }
 \arguments{
 \item{obj}{[\code{PartialPredictionData}]\cr
@@ -19,6 +19,11 @@ If \code{\link{generatePartialPredictionData}} is called with the \code{interact
 (the default) with argument \code{features} of length greater than one, then \code{interact} is ignored and
 the feature displayed is controlled by an interactive side panel.
 Default is \code{NULL}.}
+
+\item{p}{[\code{numeric(1)}]\cr
+If \code{individual = TRUE} then \code{sample} allows the user to sample without replacement
+from the output to make the display more readable. Each row is sampled with probability \code{p}.
+Default is \code{1}.}
 }
 \value{
 a ggvis plot object.

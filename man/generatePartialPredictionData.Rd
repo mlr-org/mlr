@@ -5,8 +5,8 @@
 \title{Generate partial predictions}
 \usage{
 generatePartialPredictionData(obj, input, features, interaction = FALSE,
-  individual = FALSE, center = NULL, fun = mean, resample = "none",
-  fmin, fmax, gridsize = 10L, ...)
+  derivative = FALSE, individual = FALSE, center = NULL, fun = mean,
+  resample = "none", fmin, fmax, gridsize = 10L, ...)
 }
 \arguments{
 \item{obj}{[\code{\link{WrappedModel}}]\cr
@@ -26,6 +26,17 @@ values of the features is estimated. Note that if the length of \code{features} 
 \code{\link{plotPartialPrediction}} and \code{\link{plotPartialPredictionGGVIS}} cannot be used.
 If \code{FALSE} each feature is considered separately. In this case \code{features} can be much longer
 than two.
+Default is \code{FALSE}.}
+
+\item{derivative}{[\code{logical(1)}]\cr
+Whether or not the partial derivative of the learned function with respect to the features should be
+estimated. If \code{TRUE} \code{interaction} must be \code{FALSE}. The partial derivative of individual
+observations may be estimated. Note that computation time increases as the learned prediction function
+is evaluated at \code{gridsize} points * the number of points required to estimate the partial derivative.
+Additional arguments may be passed to \code{\link[numDeriv]{grad}} (for regression or survival tasks) or
+\code{\link[numDeriv]{jacobian}} (for classification tasks). Note that functions which are not smooth may
+result in estimated derivatives of 0 (for points where the function does not change within +/- epsilon)
+or estimates trending towards +/- infinity (at discontinuities).
 Default is \code{FALSE}.}
 
 \item{individual}{[\code{logical(1)}]\cr
@@ -95,6 +106,7 @@ Estimate how the learned prediction function is affected by one or more features
 For a learned function f(x) where x is partitioned into x_s and x_c, the partial dependence of
 f on x_s can be summarized by averaging over x_c and setting x_s to a range of values of interest,
 estimating E_(x_c)(f(x_s, x_c)). The conditional expectation of f at observation i is estimated similarly.
+Additionally, partial derivatives of the marginalized function w.r.t. the features can be computed.
 }
 \examples{
 lrn = makeLearner("regr.rpart")
