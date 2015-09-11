@@ -80,6 +80,8 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
     if (length(t.col) > 1L && anyMissing(t.col))
       stop("Some but not all target columns found in data")
     truth = newdata[, t.col, drop = TRUE]
+    if (is.list(truth))
+      truth = data.frame(truth)
     newdata = newdata[, -t.col, drop = FALSE]
   } else {
     truth = NULL
