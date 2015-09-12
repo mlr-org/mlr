@@ -75,7 +75,7 @@ Suggests:
     GenSA,
     glmnet,
     Hmisc,
-    irace,
+    irace (>= 1.0.7),
     kernlab,
     kknn,
     klaR,
