@@ -47,6 +47,9 @@ mlr_2.5:
   the extract argument. FeatSelWrapper, FilterWrapper, TuneWrapper have a default extract method.
 - generatePartialPredictionData now can estimate the partial derivative of the partial prediction function wrt the
   features for regression, classification, and survival tasks.
+- restructured the LiblineaR learners to a more convenient format. These old ones were removed:
+  classif.LiblineaRBinary, classif.LiblineaRLogReg,  classif.LiblineaRMultiClass.
+  For the new ones, see below.
 
 - new functions
 -- getDefaultMeasure
@@ -85,13 +88,13 @@ mlr_2.5:
 -- classif.xgboost
 -- regr.xgboost
 -- classif.rotationForest
-—- classif.LiblineaRL1L2SVC
-—- classif.LiblineaRL1LogReg
-—- classif.LiblineaRL2L1SVC
-—- classif.LiblineaRL2LogReg
-—- classif.LiblineaRL1LMultiClassSVC
-—- regr.LiblineaRL2L1SVR
-—- regr.LiblineaRL2L2SVR
+-- classif.LiblineaRL1L2SVC
+-- classif.LiblineaRL1LogReg
+-- classif.LiblineaRL2L1SVC
+-- classif.LiblineaRL2LogReg
+-- classif.LiblineaRL1LMultiClassSVC
+-- regr.LiblineaRL2L1SVR
+-- regr.LiblineaRL2L2SVR
 
 - new filters
 -- permutation.importance
