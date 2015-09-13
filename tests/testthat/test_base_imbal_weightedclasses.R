@@ -10,8 +10,9 @@ test_that("WeightedClassesWrapper, binary",  {
     cm = getConfMatrix(p)
   }
 
-  learners = paste("classif", c("ksvm", "LiblineaRBinary", "LiblineaRLogReg",
-    "LiblineaRMultiClass", "randomForest", "svm"), sep = ".")
+  learners = paste("classif", c("ksvm", "LiblineaRL1L2SVC", "LiblineaRL2L1SVC",
+   "LiblineaRL2SVC", "LiblineaRL1LogReg", "LiblineaRL2LogReg", "LiblineaRMultiClassSVC",
+   "randomForest", "svm"), sep = ".")
   x = lapply(learners, function(lrn) {
     cm1 = f(lrn, 0.001)
     cm2 = f(lrn, 1)
@@ -34,8 +35,9 @@ test_that("WeightedClassesWrapper, multiclass",  {
     cm = getConfMatrix(p)
   }
 
-  learners = paste("classif", c("ksvm", "LiblineaRMultiClass", "randomForest",
-    "svm"), sep = ".")
+  learners = paste("classif", c("ksvm", "LiblineaRL1L2SVC", "LiblineaRL2L1SVC",
+   "LiblineaRL2SVC", "LiblineaRL1LogReg", "LiblineaRL2LogReg", "LiblineaRMultiClassSVC",
+   "randomForest", "svm"), sep = ".")
   x = lapply(learners, function(lrn) {
     classes = getTaskFactorLevels(multiclass.task)[[multiclass.target]]
     n = length(classes)
@@ -64,7 +66,8 @@ test_that("getClassWeightParam",  {
     expect_is(getClassWeightParam(lrn1), "LearnerParam")
   }
 
-  learners = paste("classif", c("ksvm", "LiblineaRMultiClass", "randomForest",
-    "svm"), sep = ".")
+  learners = paste("classif", c("ksvm", "LiblineaRL1L2SVC", "LiblineaRL2L1SVC",
+   "LiblineaRL2SVC", "LiblineaRL1LogReg", "LiblineaRL2LogReg", "LiblineaRMultiClassSVC",
+   "randomForest", "svm"), sep = ".")
   x = lapply(learners, f)
 })
