@@ -41,7 +41,8 @@ test_that("generatePartialPredictionData", {
   ggsave(path)
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, grey.xpath, "svg")), equals(nfacet))
-  expect_that(length(XML::getNodeSet(doc, black.xpath, "svg")), equals(nfacet * gridsize * n))
+  ## black.xpath counts points which are omitted when individual = TRUE
+  ## expect_that(length(XML::getNodeSet(doc, black.xpath, "svg")), equals(nfacet * gridsize * n))
   ## plotPartialPredictionGGVIS(dr, interact = "chas")
 
   fc = train("classif.rpart", multiclass.task)
@@ -57,7 +58,7 @@ test_that("generatePartialPredictionData", {
   expect_that(length(XML::getNodeSet(doc, red.xpath, "svg")) - 1, equals(nfeat * gridsize))
   expect_that(length(XML::getNodeSet(doc, blue.xpath, "svg")) - 1, equals(nfeat * gridsize))
   expect_that(length(XML::getNodeSet(doc, green.xpath, "svg")) - 1, equals(nfeat * gridsize))
-  ## plotPartialPredictionGGVIS(dc) ##FIXME
+  ## plotPartialPredictionGGVIS(dc)
 
   fcp = train(makeLearner("classif.rpart", predict.type = "prob"), multiclass.task)
   expect_error(generatePartialPrediction(fcp, input = multiclass.task, features = "Petal.Width",
@@ -80,7 +81,7 @@ test_that("generatePartialPredictionData", {
   plotPartialPrediction(dcp, facet = "Petal.Length")
   ## plotPartialPredictionGGVIS(dcp, interact = "Petal.Length")
 
-  fs = train("surv.coxph", surv.task)
+  fs = train("surv.rpart", surv.task)
   ds = generatePartialPredictionData(fs, input = surv.task, features = c("Petal.Width", "Petal.Length"),
                                      gridsize = gridsize)
   nfeat = length(ds$features)
@@ -96,6 +97,10 @@ test_that("generatePartialPredictionData", {
                                      interaction = TRUE,
                                      fun = function(x) quantile(x, c(.25, .5, .75)), gridsize = gridsize)
   nfacet = length(unique(getTaskData(regr.task)[["chas"]]))
+  expect_error(generatePartialPredictionData(fr, input = regr.task, features = c("lstat", "chas"),
+                                             derivative = TRUE))
+  expect_error(generatePartialPredictionData(fr, input = regr.task, features = c("lstat", "chas"),
+                                             interaction = TRUE, derivative = TRUE))
   n = getTaskSize(regr.task)
   expect_that(colnames(db$data), equals(c("medv", "lstat", "chas", "lower", "upper")))
   plotPartialPrediction(db, facet = "chas")
@@ -125,8 +130,19 @@ test_that("generatePartialPredictionData", {
   ggsave(path)
   doc = XML::xmlParse(path)
   expect_that(length(XML::getNodeSet(doc, grey.xpath, "svg")), equals(nfeat))
-  expect_that(length(XML::getNodeSet(doc, red.xpath, "svg")) - 1, equals(nfeat * gridsize * n))
+  ## again, omission of points for individual = TRUE
+  ## expect_that(length(XML::getNodeSet(doc, red.xpath, "svg")) - 1, equals(nfeat * gridsize * n))
   ## plotPartialPredictionGGVIS(bc)
+
+  fr = train(makeLearner("regr.ksvm"), regr.task)
+  pfr = generatePartialPredictionData(fr, input = regr.task, features = c("lstat", "crim"),
+                                      derivative = TRUE, individual = TRUE, gridsize = gridsize)
+  fc = train(makeLearner("classif.ksvm", predict.type = "prob"), multiclass.task)
+  pfc = generatePartialPredictionData(fc, input = multiclass.task, features = c("Petal.Width", "Petal.Length"),
+                                      derivative = TRUE, gridsize = gridsize)
+  fs = train(makeLearner("surv.coxph"), surv.task)
+  pfs = generatePartialPredictionData(fs, input = surv.task, features = c("Petal.Width", "Petal.Length"),
+                                      derivative = TRUE, gridsize = gridsize)
 })
 
 test_that("generateFeatureGrid", {

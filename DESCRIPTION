@@ -94,6 +94,7 @@ Suggests:
     nnet,
     nodeHarvest (>= 0.7-3),
     neuralnet,
+    numDeriv,
     pamr,
     party,
     penalized,

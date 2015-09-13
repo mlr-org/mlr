@@ -5,6 +5,7 @@
 #' For a learned function f(x) where x is partitioned into x_s and x_c, the partial dependence of
 #' f on x_s can be summarized by averaging over x_c and setting x_s to a range of values of interest,
 #' estimating E_(x_c)(f(x_s, x_c)). The conditional expectation of f at observation i is estimated similarly.
+#' Additionally, partial derivatives of the marginalized function w.r.t. the features can be computed.
 #'
 #' @family partial_prediction
 #' @family generate_plot_data
@@ -23,6 +24,16 @@
 #'   \code{\link{plotPartialPrediction}} and \code{\link{plotPartialPredictionGGVIS}} cannot be used.
 #'   If \code{FALSE} each feature is considered separately. In this case \code{features} can be much longer
 #'   than two.
+#'   Default is \code{FALSE}.
+#' @param derivative [\code{logical(1)}]\cr
+#'   Whether or not the partial derivative of the learned function with respect to the features should be
+#'   estimated. If \code{TRUE} \code{interaction} must be \code{FALSE}. The partial derivative of individual
+#'   observations may be estimated. Note that computation time increases as the learned prediction function
+#'   is evaluated at \code{gridsize} points * the number of points required to estimate the partial derivative.
+#'   Additional arguments may be passed to \code{\link[numDeriv]{grad}} (for regression or survival tasks) or
+#'   \code{\link[numDeriv]{jacobian}} (for classification tasks). Note that functions which are not smooth may
+#'   result in estimated derivatives of 0 (for points where the function does not change within +/- epsilon)
+#'   or estimates trending towards +/- infinity (at discontinuities).
 #'   Default is \code{FALSE}.
 #' @param individual [\code{logical(1)}]\cr
 #'   Whether to plot the individual conditional expectation curves rather than the aggregated curve, i.e.,
@@ -92,6 +103,7 @@
 #' @export
 generatePartialPredictionData = function(obj, input, features,
                                          interaction = FALSE,
+                                         derivative = FALSE,
                                          individual = FALSE, center = NULL,
                                          fun = mean, resample = "none",
                                          fmin, fmax, gridsize = 10L, ...) {
@@ -114,10 +126,19 @@ generatePartialPredictionData = function(obj, input, features,
     assertSubset(features, obj$features)
 
   assertFlag(interaction)
+  assertFlag(derivative)
+  if (derivative & interaction)
+    stop("interaction cannot be TRUE if derivative is TRUE.")
+  if (derivative) {
+    if (any(sapply(data[, features, drop = FALSE], class) %in% c("factor", "ordered", "character")))
+      stop("All features must be numeric to estimate set derivative = TRUE!")
+  }
   assertFlag(individual)
   if (individual)
     fun = function(x) x
   if (!is.null(center)) {
+    if (derivative)
+      stop("center cannot be used with derivative = TRUE.")
     assertList(center, len = length(features), names = "unique")
     if (!all(names(center) %in% features))
       stop("The names of the elements in center must be the same as the features.")
@@ -173,14 +194,22 @@ generatePartialPredictionData = function(obj, input, features,
 
   if (length(features) > 1L & !interaction) {
     out = lapply(features, function(x) {
-      rng = as.data.frame(rng[[x]])
-      colnames(rng) = x
-      args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = x, ...)
-      out = parallelMap::parallelMap(doPartialPredictionIteration, seq_len(nrow(rng)), more.args = args)
-      if (!is.null(center) & individual)
-        centerpred = doPartialPredictionIteration(obj, data, center[, x, drop = FALSE], x, fun, td, 1)
-      else
+      if (derivative) {
+        args = list(obj = obj, data = data, features = x, fun = fun, td = td, individual = individual, ...)
+        out = parallelMap::parallelMap(doPartialDerivativeIteration, x = rng[[x]], more.args = args)
+        rng = as.data.frame(rng[[x]])
+        colnames(rng) = x
         centerpred = NULL
+      } else {
+        rng = as.data.frame(rng[[x]])
+        colnames(rng) = x
+        args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = x, ...)
+        out = parallelMap::parallelMap(doPartialPredictionIteration, seq_len(nrow(rng)), more.args = args)
+        if (!is.null(center) & individual)
+          centerpred = doPartialPredictionIteration(obj, data, center[, x, drop = FALSE], x, fun, td, 1)
+        else
+          centerpred = NULL
+      }
       if (!individual)
         doAggregatePartialPrediction(out, td, target, x, test, rng)
       else
@@ -188,14 +217,22 @@ generatePartialPredictionData = function(obj, input, features,
     })
     out = plyr::ldply(out)
   } else {
-    rng = as.data.frame(rng)
-    colnames(rng) = features
-    args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = features, ...)
-    out = parallelMap::parallelMap(doPartialPredictionIteration, seq_len(nrow(rng)), more.args = args)
-    if (!is.null(center) & individual)
-      centerpred = as.data.frame(doPartialPredictionIteration(obj, data, center, features, fun, td, 1))
-    else
+    if (derivative) {
+      args = list(obj = obj, data = data, features = features, fun = fun, td = td, individual = individual, ...)
+      out = parallelMap::parallelMap(doPartialDerivativeIteration, x = rng[[features]], more.args = args)
       centerpred = NULL
+      rng = as.data.frame(rng)
+      colnames(rng) = features
+    } else {
+      rng = as.data.frame(rng)
+      colnames(rng) = features
+      args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = features, ...)
+      out = parallelMap::parallelMap(doPartialPredictionIteration, seq_len(nrow(rng)), more.args = args)
+      if (!is.null(center) & individual)
+        centerpred = as.data.frame(doPartialPredictionIteration(obj, data, center, features, fun, td, 1))
+      else
+        centerpred = NULL
+    }
     if (!individual)
       out = doAggregatePartialPrediction(out, td, target, features, test, rng)
     else
@@ -214,9 +251,48 @@ generatePartialPredictionData = function(obj, input, features,
             target = target,
             features = features,
             interaction = interaction,
+            derivative = derivative,
             individual = individual,
             center = !is.null(center))
 }
+
+doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individual, ...) {
+  if (!individual) {
+    ## construct function appropriate for numDeriv w/ aggregate predictions
+    f = function(x, obj, data, features, fun, td, ...) {
+      data[features] = x
+      pred = do.call("predict", c(list("object" = obj, "newdata" = data), list(...)))
+      if (obj$learner$predict.type == "response")
+        fun(getPredictionResponse(pred))
+      else if (length(obj$task.desc$class.levels) == 2L)
+        fun(getPredictionProbabilities(pred))
+      else
+        apply(getPredictionProbabilities(pred), 2, fun)
+    }
+    if (obj$learner$predict.type == "response")
+      numDeriv::grad(func = f, x = x, obj = obj, data = data, features = features, fun = fun, td = td)
+    else
+      t(numDeriv::jacobian(func = f, x = x, obj = obj, data = data, features = features, fun = fun, td = td, ...))
+  } else {
+    f = function(x, obj, data, features, fun, td, ...) {
+      data[features] = x
+      pred = do.call("predict", c(list("object" = obj, "newdata" = data), list(...)))
+      if (obj$learner$predict.type == "response")
+        getPredictionResponse(pred)
+      else
+        as.numeric(getPredictionProbabilities(pred))
+    }
+    if (obj$learner$predict.type == "response")
+      sapply(1:nrow(data), function(idx)
+        numDeriv::grad(func = f, x = x, obj = obj, data = data[idx,, drop = FALSE], features = features,
+                       fun = fun, td = td))
+    else
+      t(sapply(1:nrow(data), function(idx) numDeriv::jacobian(func = f, x = x, obj = obj,
+                                                              data = data[idx,, drop = FALSE],
+                                                              features = features, fun = fun, td = td, ...)))
+  }
+}
+
 doPartialPredictionIteration = function(obj, data, rng, features, fun, td, i, ...) {
   data[features] = rng[i, ]
   pred = do.call("predict", c(list("object" = obj, "newdata" = data), list(...)))
@@ -270,6 +346,7 @@ doIndividualPartialPrediction = function(out, td, n = nrow(data), rng, target, f
     if (!is.null(centerpred))
       out = lapply(out, function(x) x - centerpred)
     out = as.data.frame(do.call("rbind", out))
+    colnames(out) = target
     idx = rep(seq_len(n), nrow(rng))
     rng = rng[rep(seq_len(nrow(rng)), each = n), , drop = FALSE]
     out = cbind(out, rng, idx, row.names = NULL)
@@ -298,9 +375,10 @@ doIndividualPartialPrediction = function(out, td, n = nrow(data), rng, target, f
 #'   as a a column for each element of \code{features}. If \code{individual = TRUE} then there is an
 #'   additional column \code{idx} which gives the index of the \code{data} that each prediction corresponds to.}
 #'   \item{task.desc \code{\link{TaskDesc}}}{Task description}.
+#'   \item{features}{Features argument input}.
 #'   \item{target}{Target feature for regression, target feature levels for classification,
 #'         survival and event indicator for survival.}
-#'   \item{features}{Features argument input}.
+#'   \item{derivative}{Whether or not the partial derivative was estimated.}
 #'   \item{interaction}{Whether or not the features were interacted (i.e. conditioning)}
 #'   \item{individual}{Whether the parial predictions were aggregated or the individual curves are retained.}
 #'   \item{center}{If \code{individual == TRUE} whether the partial prediction at the values of the
@@ -316,6 +394,7 @@ print.PartialPredictionData = function(x, ...) {
   catf("Task: %s", x$task.desc$id)
   catf("Features: %s", paste(x$features, collapse = ", "))
   catf("Target: %s", paste(x$target, collapse = ", "))
+  catf("Derivative: %s", x$derivative)
   catf("Interaction: %s", x$interaction)
   catf("Individual: %s", x$individual)
   if (x$individual)
@@ -342,12 +421,25 @@ print.PartialPredictionData = function(x, ...) {
 #'   Note that if any of the elements of the \code{features} argument of \code{\link{generatePartialPredictionData}}
 #'   are factors, they will be coerced to numerics.
 #'   Default is \code{NULL}.
+#' @param p [\code{numeric(1)}]\cr
+#'   If \code{individual = TRUE} then \code{sample} allows the user to sample without replacement
+#'   from the output to make the display more readable. Each row is sampled with probability \code{p}.
+#'   Default is \code{1}.
 #' @template ret_gg2
 #' @export
-plotPartialPrediction = function(obj, facet = NULL) {
+plotPartialPrediction = function(obj, facet = NULL, p = 1) {
   assertClass(obj, "PartialPredictionData")
   if (!is.null(facet))
     assertChoice(facet, obj$features)
+  if (p != 1) {
+    assertNumber(p, lower = 0, upper = 1, finite = TRUE)
+    if (!obj$individual)
+      stop("generatePartialPredictionData must be called with individual = TRUE to use this argument!")
+    rows = unique(obj$data$idx)
+    id = sample(rows, size = floor(p * length(rows)))
+    obj$data = obj$data[which(obj$data$idx %in% id), ]
+  }
+
   if (obj$interaction & length(obj$features) > 2L)
     stop("It is only possible to plot 2 features with this function.")
 
@@ -370,7 +462,10 @@ plotPartialPrediction = function(obj, facet = NULL) {
     scales = "fixed"
   }
 
-  target = obj$target
+  if (obj$task.desc$type %in% c("regr", "classif"))
+    target = obj$task.desc$target
+  else
+    target = "Risk"
 
   bounds = all(c("lower", "upper") %in% colnames(obj$data) & obj$task.desc$type %in% c("surv", "regr"))
 
@@ -412,7 +507,7 @@ plotPartialPrediction = function(obj, facet = NULL) {
   if (!obj$individual)
     plt = plt + geom_line() + geom_point()
   else
-    plt = plt + geom_line(alpha = .25) + geom_point(alpha = .25)
+    plt = plt + geom_line(alpha = .25)
 
   if (bounds)
     plt = plt + geom_ribbon(aes_string(ymin = "lower", ymax = "upper"), alpha = .5)
@@ -422,6 +517,9 @@ plotPartialPrediction = function(obj, facet = NULL) {
 
   if (obj$center)
     plt = plt + ylab(paste(target, "(centered)"))
+
+  if (obj$derivative)
+    plt = plt + ylab(paste(target, "(derivative)"))
 
   plt
 }
@@ -443,14 +541,27 @@ plotPartialPrediction = function(obj, facet = NULL) {
 #'   (the default) with argument \code{features} of length greater than one, then \code{interact} is ignored and
 #'   the feature displayed is controlled by an interactive side panel.
 #'   Default is \code{NULL}.
+#' @param p [\code{numeric(1)}]\cr
+#'   If \code{individual = TRUE} then \code{sample} allows the user to sample without replacement
+#'   from the output to make the display more readable. Each row is sampled with probability \code{p}.
+#'   Default is \code{1}.
 #' @template ret_ggv
 #' @export
-plotPartialPredictionGGVIS = function(obj, interact = NULL) {
+plotPartialPredictionGGVIS = function(obj, interact = NULL, p = 1) {
   assertClass(obj, "PartialPredictionData")
   if (!is.null(interact))
     assertChoice(interact, obj$features)
   if (obj$interaction & length(obj$features) > 2L)
     stop("It is only possible to plot 2 features with this function.")
+
+  if (p != 1) {
+    assertNumber(p, lower = 0, upper = 1, finite = TRUE)
+    if (!obj$individual)
+      stop("generatePartialPredictionData must be called with individual = TRUE to use this argument!")
+    rows = unique(obj$data$idx)
+    id = sample(rows, size = floor(p * length(rows)))
+    obj$data = obj$data[which(obj$data$idx %in% id), ]
+  }
 
   if (obj$interaction & length(obj$features) == 2L) {
     if (is.null(interact))
@@ -470,6 +581,11 @@ plotPartialPredictionGGVIS = function(obj, interact = NULL) {
     interact = NULL
 
   bounds = all(c("lower", "upper") %in% colnames(obj$data) & obj$task.desc$type %in% c("surv", "regr"))
+
+  if (obj$task.desc$type %in% c("regr", "classif"))
+    target = obj$task.desc$target
+  else
+    target = "Risk"
 
   create_plot = function(td, target, interaction, individual, data, x, bounds) {
     classif = td$type == "classif" & all(target %in% td$class.levels)
@@ -497,11 +613,6 @@ plotPartialPredictionGGVIS = function(obj, interact = NULL) {
                                  ggvis::prop("opacity", .5))
     if (individual) {
       plt = ggvis::group_by_.ggvis(plt, as.name("idx"))
-      if (classif)
-        plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name("Class")),
-                                  ggvis::prop("opacity", .25))
-      else
-        plt = ggvis::layer_points(plt, ggvis::prop("opacity", .25))
       plt = ggvis::layer_paths(plt, ggvis::prop("opacity", .25))
     } else {
       if (classif)
@@ -514,27 +625,31 @@ plotPartialPredictionGGVIS = function(obj, interact = NULL) {
     plt
   }
 
-  panel = shiny::selectInput("interaction_select", interact, choices)
-  header = ifelse(obj$center, paste("partial predictions for", obj$task.desc$target,
-                                    "(centered)"), paste(obj$task.desc$target, collapse = ", "))
-
-  ui = shiny::shinyUI(
-    shiny::pageWithSidebar(
-      shiny::headerPanel(header),
-      shiny::sidebarPanel(panel),
-      shiny::mainPanel(
-        shiny::uiOutput("ggvis_ui"),
-        ggvis::ggvisOutput("ggvis")
-      )
-    ))
-  server = shiny::shinyServer(function(input, output) {
-    plt = shiny::reactive(create_plot(obj$task.desc, obj$target, obj$interaction, obj$individual,
-                                      obj$data[obj$data[[interact]] == input$interaction_select, ],
-                                      x, bounds))
-    ggvis::bind_shiny(plt, "ggvis", "ggvis_ui")
-  })
-  if (!is.null(interaction))
-    shiny::shinyApp(ui, server)
+  if (obj$center)
+    header = paste(target, "(centered)")
+  else if (obj$derivative)
+    header = paste(target, "(derivative)")
   else
+    header = target
+
+  if (!is.null(interact)) {
+    panel = shiny::selectInput("interaction_select", interact, choices)
+    ui = shiny::shinyUI(
+      shiny::pageWithSidebar(
+        shiny::headerPanel(header),
+        shiny::sidebarPanel(panel),
+        shiny::mainPanel(
+          shiny::uiOutput("ggvis_ui"),
+          ggvis::ggvisOutput("ggvis")
+        )
+      ))
+    server = shiny::shinyServer(function(input, output) {
+      plt = shiny::reactive(create_plot(obj$task.desc, obj$target, obj$interaction, obj$individual,
+                                        obj$data[obj$data[[interact]] == input$interaction_select, ],
+                                        x, bounds))
+      ggvis::bind_shiny(plt, "ggvis", "ggvis_ui")
+    })
+    shiny::shinyApp(ui, server)
+  } else
     create_plot(obj$task.desc, obj$target, obj$interaction, obj$individual, obj$data, obj$features, bounds)
 }

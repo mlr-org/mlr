@@ -45,6 +45,8 @@ mlr_2.5:
   the training data according to a measure.
 - resample, benchmark, and resample convenience functions (crossval, repcv etc.) now support
   the extract argument. FeatSelWrapper, FilterWrapper, TuneWrapper have a default extract method.
+- generatePartialPredictionData now can estimate the partial derivative of the partial prediction function wrt the
+  features for regression, classification, and survival tasks.
 
 - new functions
 -- getDefaultMeasure
