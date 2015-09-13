@@ -7,7 +7,7 @@ test_that("benchmark merger", {
     makeLearner("classif.randomForest"))
   tasks = list(iris.task, bc.task, sonar.task)
   
-  # checks if list of single BenchmarkResults is equal to the merged BenchmarkResults
+  # checks if list of unmerged BenchmarkResults is equal to the merged BenchmarkResults
   checkBenchmarkResult = function(list, merged) {
     rbinded = do.call("rbind", lapply(list, as.data.frame))
     res = merge(rbinded, merged, by = c("task.id", "learner.id", "iter"), all = TRUE)
@@ -22,7 +22,7 @@ test_that("benchmark merger", {
   bench = mergeBenchmarkResultTask(bench1, bench2)
   checkBenchmarkResult(list(bench1, bench2), bench)
   
-  # Forgot to run a learner on both tasks
+  # Forgot to run another learner on both tasks
   bench3 = benchmark(learners[3], tasks[1:2], rdesc)
   merged = mergeBenchmarkResultLearner(bench, bench3)
   checkBenchmarkResult(list(bench, bench3), merged)
@@ -33,14 +33,14 @@ test_that("benchmark merger", {
   checkBenchmarkResult(list(bench, bench3), merged)
   
   # Change order of tasks and see if merging works
-  bench1lrn = benchmark(learners[[1]], tasks[1:2], rdesc)
-  bench2lrn = benchmark(learners[[2]], tasks[2:1], rdesc)
-  benchLearner = mergeBenchmarkResultLearner(bench1lrn, bench2lrn)
-  checkBenchmarkResult(list(bench1lrn, bench2lrn), benchLearner)
-  
-  # Merge both
   bench1 = benchmark(learners[[1]], tasks[1:2], rdesc)
-  # apply two additional lerners on same task
+  bench2 = benchmark(learners[[2]], tasks[2:1], rdesc)
+  merged = mergeBenchmarkResultLearner(bench1, bench2)
+  checkBenchmarkResult(list(bench1, bench2), merged)
+  
+  # Merge both learner and task
+  bench1 = benchmark(learners[[1]], tasks[1:2], rdesc)
+  # apply two additional lerners on same tasks
   bench2 = benchmark(learners[2:3], tasks[1:2], rdesc)
   # add another task and apply all on it learners
   bench3 = benchmark(learners, tasks[3], rdesc)
@@ -48,10 +48,10 @@ test_that("benchmark merger", {
   result = mergeBenchmarkResultTask(mergeBenchmarkResultLearner(bench1, bench2), bench3)
   checkBenchmarkResult(list(bench1, bench2, bench3), result)
   
-  # benchmark Results should contain experiments for all possible task-learner combinations
+  # error message check
   l1t1 = benchmark(learners[[1]], tasks[[1]], rdesc)
-  l1t2 = benchmark(learners[[1]], tasks[[2]], rdesc)
   l2t1 = benchmark(learners[[2]], tasks[[1]], rdesc)
+  l1t2 = benchmark(learners[[1]], tasks[[2]], rdesc)
   l2t2 = benchmark(learners[[2]], tasks[[2]], rdesc)
   
   expect_error(mergeBenchmarkResultLearner(l2t1, l2t2), "duplicated learner")
@@ -68,4 +68,13 @@ test_that("benchmark merger", {
   expect_true(inherits(mergeBenchmarkResultLearner(l1t2, l2t2), "BenchmarkResult"))
   expect_true(inherits(mergeBenchmarkResultTask(l1t1, l1t2), "BenchmarkResult"))
   expect_true(inherits(mergeBenchmarkResultTask(l2t1, l2t2), "BenchmarkResult"))
+  
+  # try to merge more than two benchmarkResults
+  l3t1 = benchmark(learners[[3]], tasks[[1]], rdesc)
+  l1t3 = benchmark(learners[[1]], tasks[[3]], rdesc)
+  ml = mergeBenchmarkResultLearner(l1t1, l2t1, l3t1)
+  mt = mergeBenchmarkResultTask(l1t1, l1t2, l1t3)
+  
+  checkBenchmarkResult(list(l1t1, l2t1, l3t1), ml)
+  checkBenchmarkResult(list(l1t1, l1t2, l1t3), mt)
 })
