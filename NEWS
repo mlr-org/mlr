@@ -85,6 +85,13 @@ mlr_2.5:
 -- classif.xgboost
 -- regr.xgboost
 -- classif.rotationForest
+—- classif.LiblineaRL1L2SVC
+—- classif.LiblineaRL1LogReg
+—- classif.LiblineaRL2L1SVC
+—- classif.LiblineaRL2LogReg
+—- classif.LiblineaRL1LMultiClassSVC
+—- regr.LiblineaRL2L1SVR
+—- regr.LiblineaRL2L2SVR
 
 - new filters
 -- permutation.importance

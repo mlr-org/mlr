@@ -6,7 +6,6 @@ test_that("checkTaskLearner", {
   task = makeClassifTask(data=df, target=multiclass.target)
   expect_error(train(makeLearner("classif.lda"), task), "missing values")
   expect_error(train(makeLearner("regr.km"), regr.task), "factor inputs")
-  expect_error(train(makeLearner("classif.LiblineaRBinary"), multiclass.task), "multiclass-problem")
   expect_error(train(makeLearner("classif.gbm"), regr.task), "is for 'classif'")
   expect_error(train(makeLearner("regr.gbm"), multiclass.task), "is for 'regr'")
 })
