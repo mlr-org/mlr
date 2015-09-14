@@ -97,6 +97,7 @@ Suggests:
     numDeriv,
     pamr,
     party,
+    ParallelForest,
     penalized,
     pls,
     PMCMR,
