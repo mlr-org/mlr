@@ -110,8 +110,10 @@ before_install:
     - sudo apt-get -qq update
     - sudo apt-get -qq install gcc-4.8
     - sudo apt-get -qq install g++-4.8
+    - sudo apt-get install -qq gfortran-4.8
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 90
     - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
+    - sudo update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-4.8 90
 before_script:
     - curl -L https://raw.githubusercontent.com/mllg/travis-r-tools/master/update-packages.r -o /tmp/update-packages.r
     - Rscript /tmp/update-packages.r
