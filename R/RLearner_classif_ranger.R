@@ -31,7 +31,7 @@ makeRLearner.classif.ranger = function() {
 }
 
 #' @export
-trainLearner.classif.ranger <- function(.learner, .task, .subset, .weigts, ...) {
+trainLearner.classif.ranger <- function(.learner, .task, .subset, .weights, ...) {
   args = list(...)
   ranger::ranger(formula = getTaskFormula(.task), data = getTaskData(.task, .subset), 
     write.forest = TRUE, probability = (.learner$predict.type == "prob"), ...)

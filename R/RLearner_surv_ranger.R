@@ -32,7 +32,7 @@ makeRLearner.surv.ranger = function() {
 }
 
 #' @export
-trainLearner.surv.ranger = function(.learner, .task, .subset, .weigts, ...) {
+trainLearner.surv.ranger = function(.learner, .task, .subset, .weights, ...) {
   args = list(...)
   ranger::ranger(formula = getTaskFormula(.task), data = getTaskData(.task, .subset), 
     write.forest = TRUE, ...)
