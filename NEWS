@@ -45,8 +45,6 @@ mlr_2.5:
   the training data according to a measure.
 - resample, benchmark, and resample convenience functions (crossval, repcv etc.) now support
   the extract argument. FeatSelWrapper, FilterWrapper, TuneWrapper have a default extract method.
-- generatePartialPredictionData now can estimate the partial derivative of the partial prediction function wrt the
-  features for regression, classification, and survival tasks.
 - restructured the LiblineaR learners to a more convenient format. These old ones were removed:
   classif.LiblineaRBinary, classif.LiblineaRLogReg,  classif.LiblineaRMultiClass.
   For the new ones, see below.
@@ -54,7 +52,7 @@ mlr_2.5:
 - new functions
 -- getDefaultMeasure
 -- getTaskClassLevels
--- getPredictionTruth, getPredictionResponse
+-- getPredictionTruth, getPredictionResponse, getPredictionSE
 -- convertMLBenchObjToTask
 -- getBMRLearners, getBMRMeasures, getBMRMeasureIds
 -- makeMultilabelTask, makeMultilabelWrapper, getMultilabelBinaryPerformances

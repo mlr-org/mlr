@@ -38,6 +38,7 @@ head(getPredictionProbabilities(pred, c("setosa", "virginica")))
 Other predict: \code{\link{asROCRPrediction}};
   \code{\link{generateROCRCurvesData}};
   \code{\link{getPredictionResponse}},
+  \code{\link{getPredictionSE}},
   \code{\link{getPredictionTruth}};
   \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}};
