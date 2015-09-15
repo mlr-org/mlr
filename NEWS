@@ -80,6 +80,9 @@ mlr_2.5:
 -- regr.rknn
 -- classif.xgboost
 -- regr.xgboost
+-- classif.ranger
+-- regr.ranger
+-- surv.ranger
 
 - new filters
 -- permutation.importance
