@@ -1,5 +1,13 @@
 #' @title Generate classifier calibration data.
 #'
+#' @description
+#' A calibrated classifier is one where the predicted probability of a class closely matches the
+#' rate at which that class occurs, e.g. for data points which are assigned a predicted probability
+#' of class A of .8, approximately 80 percent of such points should belong to class A if the classifier
+#' is well calibrated. This is estimated empirically by grouping data points with similar predicted
+#' probabilities for each class, and plotting the rate of each class within each bin against the
+#' predicted probability bins.
+#'
 #' @family generate_plot_data
 #' @family calibration
 #'
@@ -16,6 +24,8 @@
 #' @param task.id [\code{character(1)}]\cr
 #'   Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
 #'   Default is first task.
+#'
+#' @references Vuk, Miha, and Curk, Tomaz. \dQuote{ROC Curve, Lift Chart, and Calibration Plot.} Metodoloski zvezki. Vol. 3. No. 1 (2006): 89-108.
 #' @export
 generateCalibrationData = function(obj, breaks = "Sturges", groups = NULL, task.id = NULL)
   UseMethod("generateCalibrationData")

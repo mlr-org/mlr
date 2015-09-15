@@ -38,6 +38,7 @@ test_that("TuneWrapper", {
   expect_equal(lrn2$predict.type, "prob")
   r = resample(lrn2, binaryclass.task, makeResampleDesc("Holdout"), measures = mlr::auc)
   expect_true(!is.na(r$aggr[["auc.test.mean"]]))
+  expect_class(r$extract[[1L]], "TuneResult")
 })
 
 # see bug in issue 205

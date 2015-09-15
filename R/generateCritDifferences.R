@@ -6,7 +6,17 @@
 #' \code{"Bonferroni-Dunn"} test or the \code{"Nemenyi"} test.\cr
 #' \code{"Bonferroni-Dunn"} usually yields higher power as it does not
 #' compare all algorithms to each other, but all algorithms to a
-#' \code{baseline} instead.
+#' \code{baseline} instead. \cr
+#' Learners are drawn on the y-axis according to their average rank. \cr
+#' For \code{test = "nemenyi"} a bar is drawn, connecting all groups of not
+#' significantly different learners.\cr
+#' For \code{test = "bd"} an interval is drawn arround the algorithm selected
+#' as baseline. All learners within this interval are not signifcantly different
+#' from the baseline. \cr
+#' Calculation:
+#' \deqn{ CD = q_{\alpha} \sqrt{(\frac{k(k+1)}{6N})}}{CD = q_alpha sqrt(k(k+1)/(6N))} \cr
+#' Where \eqn{q_\alpha} is based on the  studentized range statistic.
+#' See references for details.
 #'
 #' @template arg_bmr
 #' @template arg_measure

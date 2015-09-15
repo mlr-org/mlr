@@ -15,6 +15,9 @@
 #' @param task.id [\code{character(1)}]\cr
 #'   Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
 #'   Default is first task.
+#' @return [\code{ThreshVsPerfData}]. A named list containing the measured performance
+#'   across the threshold grid, the measures, and whether the performance estimates were
+#'   aggregated (only applicable for (list of) \code{\link{ResampleResult}}s).
 #' @export
 generateThreshVsPerfData = function(obj, measures, gridsize = 100L, aggregate = TRUE, task.id = NULL)
   UseMethod("generateThreshVsPerfData")

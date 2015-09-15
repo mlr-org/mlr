@@ -43,6 +43,13 @@ mlr_2.5:
 - The "Feature-subspace Aggregating Ensemble Algorithm" is implemented as a new learner in 'FeatingEnsemble.R'.
 - relativeOverfitting provides a way to estimate how much a model overfits to
   the training data according to a measure.
+- resample, benchmark, and resample convenience functions (crossval, repcv etc.) now support
+  the extract argument. FeatSelWrapper, FilterWrapper, TuneWrapper have a default extract method.
+- generatePartialPredictionData now can estimate the partial derivative of the partial prediction function wrt the
+  features for regression, classification, and survival tasks.
+- restructured the LiblineaR learners to a more convenient format. These old ones were removed:
+  classif.LiblineaRBinary, classif.LiblineaRLogReg,  classif.LiblineaRMultiClass.
+  For the new ones, see below.
 
 - new functions
 -- getDefaultMeasure
@@ -80,6 +87,14 @@ mlr_2.5:
 -- regr.rknn
 -- classif.xgboost
 -- regr.xgboost
+-- classif.rotationForest
+-- classif.LiblineaRL1L2SVC
+-- classif.LiblineaRL1LogReg
+-- classif.LiblineaRL2L1SVC
+-- classif.LiblineaRL2LogReg
+-- classif.LiblineaRL1LMultiClassSVC
+-- regr.LiblineaRL2L1SVR
+-- regr.LiblineaRL2L2SVR
 -- classif.ranger
 -- regr.ranger
 -- surv.ranger

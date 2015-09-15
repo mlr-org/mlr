@@ -107,8 +107,9 @@ Other performance: \code{\link{G1}}, \code{\link{G2}},
   \code{\link{timepredict}}, \code{\link{timetrain}},
   \code{\link{tn}}, \code{\link{tnr}}, \code{\link{tp}},
   \code{\link{tpr}}; \code{\link{Measure}},
-  \code{\link{makeMeasure}}; \code{\link{makeCostMeasure}};
-  \code{\link{performance}};
-  \code{\link{relativeOverfitting}}
+  \code{\link{makeMeasure}};
+  \code{\link{estimateRelativeOverfitting}},
+  \code{\link{estimateRelativeOverfitting.ResampleDesc}};
+  \code{\link{makeCostMeasure}}; \code{\link{performance}}
 }
 

@@ -125,9 +125,11 @@ Other performance: \code{\link{G1}}, \code{\link{G2}},
   \code{\link{sse}}, \code{\link{timeboth}},
   \code{\link{timepredict}}, \code{\link{timetrain}},
   \code{\link{tn}}, \code{\link{tnr}}, \code{\link{tp}},
-  \code{\link{tpr}}; \code{\link{makeCostMeasure}};
+  \code{\link{tpr}};
+  \code{\link{estimateRelativeOverfitting}},
+  \code{\link{estimateRelativeOverfitting.ResampleDesc}};
+  \code{\link{makeCostMeasure}};
   \code{\link{makeCustomResampledMeasure}};
-  \code{\link{performance}};
-  \code{\link{relativeOverfitting}}
+  \code{\link{performance}}
 }
 

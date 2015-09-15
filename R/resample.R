@@ -38,11 +38,7 @@
 #' @param models [\code{logical(1)}]\cr
 #'   Should all fitted models be returned?
 #'   Default is \code{FALSE}.
-#' @param extract [\code{function}]\cr
-#'   Function used to extract information from a fitted model during resampling.
-#'   Is applied to every \code{\link{WrappedModel}} resulting from calls to \code{\link{train}}
-#'   during resampling.
-#'   Default is to extract nothing.
+#' @template arg_extract
 #' @template arg_keep_pred
 #' @param ... [any]\cr
 #'   Further hyperparameters passed to \code{learner}.
@@ -58,7 +54,7 @@
 #' print(r$measures.test)
 #' print(r$pred)
 resample = function(learner, task, resampling, measures, weights = NULL, models = FALSE,
-  extract, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
+  extract = NULL, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
 
   learner = checkLearner(learner, ...)
   assertClass(task, classes = "Task")
@@ -72,8 +68,8 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
     assertNumeric(weights, len = n, any.missing = FALSE, lower = 0)
   }
   assertFlag(models)
-  if (missing(extract))
-    extract = function(model) {}
+  if (is.null(extract))
+    extract = getResampleExtract(learner)
   else
     assertFunction(extract)
   assertFlag(show.info)
