@@ -2,10 +2,13 @@
 % Please edit documentation in R/Prediction_operators.R
 \name{getPredictionResponse}
 \alias{getPredictionResponse}
+\alias{getPredictionSE}
 \alias{getPredictionTruth}
 \title{Get response / truth from prediction object.}
 \usage{
 getPredictionResponse(pred)
+
+getPredictionSE(pred)
 
 getPredictionTruth(pred)
 }
@@ -21,6 +24,7 @@ The following types are returned, depending on task type:
  \tabular{ll}{
    classif     \tab factor\cr
    regr        \tab numeric\cr
+   se          \tab numeric\cr
    cluster     \tab integer\cr
    surv        \tab numeric\cr
    multilabel  \tab logical matrix, columns named with labels\cr

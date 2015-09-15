@@ -59,6 +59,10 @@
 #'   target feature.
 #'   The default is the mean, unless \code{obj} is classification with \code{predict.type = "response"}
 #'   in which case the default is the proportion of observations predicted to be in each class.
+#' @param bounds [\code{numeric(2)}]\cr
+#'   The value (lower, upper) the estimated standard error is multiplied by to estimate the bound on a
+#'   confidence region for a partial prediction. Ignored if \code{predict.type != "se"} for the learner.
+#'   Default is the 2.5 and 97.5 quantiles (-1.96, 1.96) of the Gaussian distribution.
 #' @param resample [\code{character(1)}]\cr
 #'   Defines how the prediction grid for each feature is created. If \dQuote{bootstrap} then
 #'   values are sampled with replacement from the training data. If \dQuote{subsample} then
@@ -102,12 +106,16 @@
 #' plotPartialPrediction(pd)
 #' @export
 generatePartialPredictionData = function(obj, input, features,
-                                         interaction = FALSE,
-                                         derivative = FALSE,
+                                         interaction = FALSE, derivative = FALSE,
                                          individual = FALSE, center = NULL,
-                                         fun = mean, resample = "none",
+                                         fun = mean, bounds = c(qnorm(.025), qnorm(.975)),
+                                         resample = "none",
                                          fmin, fmax, gridsize = 10L, ...) {
   assertClass(obj, "WrappedModel")
+  if (obj$learner$predict.type == "se" & individual)
+    stop("individual = TRUE not compatabile with predict.type = 'se'!")
+  if (obj$learner$predict.type == "se" & derivative)
+    stop("derivative = TRUE is not compatible with predict.type = 'se'!")
   if (!inherits(input, c("Task", "data.frame")))
     stop("input must be a Task or a data.frame!")
   if (inherits(input, "Task")) {
@@ -145,6 +153,9 @@ generatePartialPredictionData = function(obj, input, features,
     center = as.data.frame(do.call("cbind", center))
   }
   assertFunction(fun)
+  assertNumeric(bounds, len = 2L)
+  assertNumber(bounds[1], upper = 0)
+  assertNumber(bounds[2], lower = 0)
   assertChoice(resample, c("none", "bootstrap", "subsample"))
 
   if (missing(fmin))
@@ -195,7 +206,8 @@ generatePartialPredictionData = function(obj, input, features,
   if (length(features) > 1L & !interaction) {
     out = lapply(features, function(x) {
       if (derivative) {
-        args = list(obj = obj, data = data, features = x, fun = fun, td = td, individual = individual, ...)
+        args = list(obj = obj, data = data, features = x, fun = fun, td = td, individual = individual,
+                    bounds = bounds, ...)
         out = parallelMap::parallelMap(doPartialDerivativeIteration, x = rng[[x]], more.args = args)
         rng = as.data.frame(rng[[x]])
         colnames(rng) = x
@@ -203,10 +215,11 @@ generatePartialPredictionData = function(obj, input, features,
       } else {
         rng = as.data.frame(rng[[x]])
         colnames(rng) = x
-        args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = x, ...)
+        args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = x, bounds = bounds, ...)
         out = parallelMap::parallelMap(doPartialPredictionIteration, seq_len(nrow(rng)), more.args = args)
         if (!is.null(center) & individual)
-          centerpred = doPartialPredictionIteration(obj, data, center[, x, drop = FALSE], x, fun, td, 1)
+          centerpred = doPartialPredictionIteration(obj, data, center[, x, drop = FALSE],
+                                                    x, fun, td, 1, bounds = bounds)
         else
           centerpred = NULL
       }
@@ -226,10 +239,10 @@ generatePartialPredictionData = function(obj, input, features,
     } else {
       rng = as.data.frame(rng)
       colnames(rng) = features
-      args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = features, ...)
+      args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = features, bounds = bounds, ...)
       out = parallelMap::parallelMap(doPartialPredictionIteration, seq_len(nrow(rng)), more.args = args)
       if (!is.null(center) & individual)
-        centerpred = as.data.frame(doPartialPredictionIteration(obj, data, center, features, fun, td, 1))
+        centerpred = as.data.frame(doPartialPredictionIteration(obj, data, center, features, fun, td, 1, bounds))
       else
         centerpred = NULL
     }
@@ -293,14 +306,18 @@ doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individ
   }
 }
 
-doPartialPredictionIteration = function(obj, data, rng, features, fun, td, i, ...) {
+doPartialPredictionIteration = function(obj, data, rng, features, fun, td, i, bounds, ...) {
   data[features] = rng[i, ]
   pred = do.call("predict", c(list("object" = obj, "newdata" = data), list(...)))
   if (obj$learner$predict.type == "response")
     fun(getPredictionResponse(pred))
   else if (length(obj$task.desc$class.levels) == 2L)
     fun(getPredictionProbabilities(pred))
-  else
+  else if (obj$learner$predict.type == "se") {
+    point = getPredictionResponse(pred)
+    out = cbind(point + outer(getPredictionSE(pred), bounds), point)[, c(1, 3, 2)]
+    unname(apply(out, 2, fun))
+  } else
     apply(getPredictionProbabilities(pred), 2, fun)
 }
 
@@ -325,12 +342,12 @@ generateFeatureGrid = function(feature, data, resample, fmin, fmax, gridsize) {
 
 doAggregatePartialPrediction = function(out, td, target, features, test, rng) {
   out = as.data.frame(do.call("rbind", out))
-  if (td$type == "regr" & length(test) == 3L)
+  if (td$type == "regr" & ncol(out) == 3L)
     colnames(out) = c("lower", target, "upper")
   else
     colnames(out) = target
   out = cbind(out, rng)
-  if (length(test) == 3L & td$type == "regr")
+  if (td$type == "regr" & all(c("upper", "lower", target) %in% colnames(out)))
     if (!all(out$lower <= out[[target]] & out[[target]] <= out$upper))
       stop("function argument must return a sorted numeric vector ordered lowest to highest.")
 
