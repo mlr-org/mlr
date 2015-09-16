@@ -98,6 +98,7 @@ getFilteredFeatures = function(model) {
   UseMethod("getFilteredFeatures")
 }
 
+#' @export
 getFilteredFeatures.default = function(model) {
   if (is.null(model$learner.model$next.model)) {
     NULL
@@ -106,6 +107,7 @@ getFilteredFeatures.default = function(model) {
   }
 }
 
+#' @export
 getFilteredFeatures.FilterModel = function(model) {
   model$learner.model$next.model$features
 }
