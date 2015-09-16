@@ -62,6 +62,7 @@ Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}};
 Other predict: \code{\link{asROCRPrediction}};
   \code{\link{getPredictionProbabilities}};
   \code{\link{getPredictionResponse}},
+  \code{\link{getPredictionSE}},
   \code{\link{getPredictionTruth}};
   \code{\link{plotROCRCurvesGGVIS}};
   \code{\link{plotROCRCurves}};

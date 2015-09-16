@@ -6,7 +6,8 @@
 \usage{
 generatePartialPredictionData(obj, input, features, interaction = FALSE,
   derivative = FALSE, individual = FALSE, center = NULL, fun = mean,
-  resample = "none", fmin, fmax, gridsize = 10L, ...)
+  bounds = c(qnorm(0.025), qnorm(0.975)), resample = "none", fmin, fmax,
+  gridsize = 10L, ...)
 }
 \arguments{
 \item{obj}{[\code{\link{WrappedModel}}]\cr
@@ -65,6 +66,11 @@ a character vector and output a numeric vector with length equal to the number o
 target feature.
 The default is the mean, unless \code{obj} is classification with \code{predict.type = "response"}
 in which case the default is the proportion of observations predicted to be in each class.}
+
+\item{bounds}{[\code{numeric(2)}]\cr
+The value (lower, upper) the estimated standard error is multiplied by to estimate the bound on a
+confidence region for a partial prediction. Ignored if \code{predict.type != "se"} for the learner.
+Default is the 2.5 and 97.5 quantiles (-1.96, 1.96) of the Gaussian distribution.}
 
 \item{resample}{[\code{character(1)}]\cr
 Defines how the prediction grid for each feature is created. If \dQuote{bootstrap} then

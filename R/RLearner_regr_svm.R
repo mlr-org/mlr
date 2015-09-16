@@ -16,7 +16,8 @@ makeRLearner.regr.svm = function() {
       makeNumericLearnerParam(id = "epsilon", lower = 0, requires = expression(type == "eps-regression")),
       makeLogicalLearnerParam(id = "shrinking", default = TRUE),
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L),
-      makeLogicalLearnerParam(id = "fitted", default = TRUE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "fitted", default = TRUE, tunable = FALSE),
+      makeLogicalVectorLearnerParam(id = "scale", default = c(TRUE), tunable = TRUE)
     ),
     properties = c("numerics", "factors"),
     name = "Support Vector Machines (libsvm)",

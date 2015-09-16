@@ -89,6 +89,7 @@ getProbabilities = function(pred, cl) {
 #'  \tabular{ll}{
 #'    classif     \tab factor\cr
 #'    regr        \tab numeric\cr
+#'    se          \tab numeric\cr
 #'    cluster     \tab integer\cr
 #'    surv        \tab numeric\cr
 #'    multilabel  \tab logical matrix, columns named with labels\cr
@@ -115,6 +116,16 @@ getPredictionResponse.PredictionMultilabel = function(pred) {
   setColNames(m, pred$task.desc$class.levels)
 }
 
+#' @rdname getPredictionResponse
+#' @export
+getPredictionSE = function(pred) {
+  UseMethod("getPredictionSE")
+}
+
+#' @export
+getPredictionSE.default = function(pred) {
+  pred$data[, "se", drop = TRUE]
+}
 
 #' @rdname getPredictionResponse
 #' @export
@@ -144,5 +155,3 @@ getPredictionTruth.PredictionMultilabel = function(pred) {
   m = as.matrix(pred$data[, i])
   setColNames(m, pred$task.desc$class.levels)
 }
-
-
