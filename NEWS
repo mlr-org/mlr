@@ -10,7 +10,7 @@ mlr_2.5:
   in the single-objective case
 - makeTuneControlGenSA: optimized function will be considered non-smooth
   per default (change via ... args)
-- classif.svm: added 'scale' param
+- svm: added 'scale' param
 - plotFilterValuesGGVIS: sort and n_show are interactive, interactive flag removed
 - renamed getProbabilities to getPredictionProbabilities and deprecated getProbabilities
 - plots now use long names for measures where possible
