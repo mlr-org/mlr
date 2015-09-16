@@ -54,7 +54,7 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
 
       # fit models on the bootstrap samples
       models = apply(samplesIdx, 2, function(bootstrapIdx) {
-        randomForest::randomForest(f, data = train[bootstrapIdx,, drop = FALSE],...)
+        randomForest::randomForest(f, data = train[bootstrapIdx,, drop = FALSE], ntree = ntree, ...)
       })
 
       # save models in attrribute
