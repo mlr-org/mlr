@@ -26,7 +26,8 @@ makeRLearner.regr.randomForest = function() {
     ),
     properties = c("numerics", "factors", "ordered", "se"),
     name = "Random Forest",
-    short.name = "rf"
+    short.name = "rf",
+    note = "se estimation is conducted following [Standard errors for bagged and random forest estimators, Sexton and Laake, 2009.]"
   )
 }
 
@@ -43,18 +44,21 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
       train = getTaskData(.task, .subset)
 
       # set some params for bootstraping
-      numberOfBootstraps = par.vals[["nr.of.bootstrap.samples"]]
+      M = par.vals$"nr.of.bootstrap.samples"
       bootstrapSize = nrow(train)
 
       # generate bootstrap samples
-      samplesIdx = replicate(numberOfBootstraps, sample(seq_len(bootstrapSize), replace = TRUE))
-
-      # determine whether we work with reduced ensemble size (noisy bootstrap) or not
-      ntree = if (par.vals$se.method == "bootstrap") par.vals$ntree else par.vals$ntree.for.se
+      samplesIdx = replicate(M, sample(seq_len(bootstrapSize), replace = TRUE))
 
       # fit models on the bootstrap samples
+      dots = list(...)
+      # determine whether we work with reduced ensemble size (noisy bootstrap) or not
+      if (par.vals$se.method == "noisy.bootstrap") {
+        R = coalesce(par.vals$ntree.for.se, 100)
+        dots[["ntree"]] = R
+      }
       models = apply(samplesIdx, 2, function(bootstrapIdx) {
-        randomForest::randomForest(f, data = train[bootstrapIdx,, drop = FALSE], ntree = ntree, ...)
+        do.call(randomForest::randomForest, c(list(f, data = train[bootstrapIdx,, drop = FALSE]), dots))
       })
 
       # save models in attrribute
