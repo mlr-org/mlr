@@ -11,8 +11,8 @@
 \alias{test.median}
 \alias{test.min}
 \alias{test.range}
+\alias{test.rmse}
 \alias{test.sd}
-\alias{test.sqrt.of.mean}
 \alias{test.sum}
 \alias{testgroup.mean}
 \alias{train.max}
@@ -20,8 +20,8 @@
 \alias{train.median}
 \alias{train.min}
 \alias{train.range}
+\alias{train.rmse}
 \alias{train.sd}
-\alias{train.sqrt.of.mean}
 \alias{train.sum}
 \title{Aggregation methods.}
 \format{None}
@@ -40,7 +40,7 @@ test.sum
 
 test.range
 
-test.sqrt.of.mean
+test.rmse
 
 train.mean
 
@@ -56,7 +56,7 @@ train.sum
 
 train.range
 
-train.sqrt.of.mean
+train.rmse
 
 b632
 

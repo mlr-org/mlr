@@ -127,10 +127,11 @@ measureMSE = function(truth, response) {
 rmse = makeMeasure(id = "rmse", minimize = TRUE, best = 0, worst = Inf,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Root mean square error",
+  note = "The RMSE will be aggregated as the root of the mean of the squared single RMSE values.",
   fun = function(task, model, pred, feats, extra.args) {
     measureRMSE(pred$data$truth, pred$data$response)
   },
-  aggr = test.sqrt.of.mean
+  aggr = test.rmse
 )
 
 #' @export measureRMSE
