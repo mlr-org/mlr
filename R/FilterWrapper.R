@@ -95,5 +95,17 @@ predictLearner.FilterWrapper = function(.learner, .model, .newdata, ...) {
 #' @export
 #' @family filter
 getFilteredFeatures = function(model) {
+  UseMethod("getFilteredFeatures")
+}
+
+getFilteredFeatures.default = function(model) {
+  if (is.null(model$learner.model$next.model)) {
+    NULL
+  } else {
+    getFilteredFeatures(model$learner.model$next.model)
+  }
+}
+
+getFilteredFeatures.FilterModel = function(model) {
   model$learner.model$next.model$features
 }
