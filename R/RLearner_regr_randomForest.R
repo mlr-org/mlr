@@ -90,8 +90,8 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
 
     models = attr(.model$learner.model, "mlr.se.bootstrap.models")
     B = length(models)
-    R = par.vals$ntree
-    M = if(is.null(par.vals$ntree.for.se)) par.vals$ntree else par.vals$ntree.for.se
+    M = par.vals$ntree
+    R = if(is.null(par.vals$ntree.for.se)) M else par.vals$ntree.for.se
 
     # make predictions for newdata based on each "bootstrap model"
     preds = lapply(models, function(model) {
