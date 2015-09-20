@@ -40,6 +40,6 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
   # FIXME: threshold
   if (!control$mbo.keep.result)
     or = NULL
-  res = makeTuneResult(learner, control, x, y, NULL, opt.path, mbo.result = or)
+  res = makeTuneResult(learner, control, removeMissingValues(x), y, NULL, opt.path, mbo.result = or)
   res
 }
