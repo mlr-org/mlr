@@ -107,7 +107,6 @@ r_binary_packages:
     - XML
 before_install:
     - sudo R CMD javareconf
-before_install:
     - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test -y
     - sudo apt-get -qq update
     - sudo apt-get -qq install gcc-4.8
