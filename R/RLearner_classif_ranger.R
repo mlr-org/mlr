@@ -15,7 +15,7 @@ makeRLearner.classif.ranger = function() {
       makeUntypedLearnerParam(id = "always.split.variables"),
       makeLogicalLearnerParam(id = "respect.unordered.factors", default = FALSE),
       makeDiscreteLearnerParam(id = "importance", values = c("none", "impurity", "permutation"), default = "none", tunable = FALSE),
-      makeLogicalLearnerParam(id = "scale.permutation.importance", default = FALSE, requires = expression(importance == "permutation"), tunable = FALSE),
+      makeLogicalLearnerParam(id = "scale.permutation.importance", default = FALSE, requires = quote(importance == "permutation"), tunable = FALSE),
       makeIntegerLearnerParam(id = "num.threads", lower = 1L, when = "both", tunable = FALSE),
       makeLogicalLearnerParam(id = "save.memory", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = TRUE, when = "both", tunable = FALSE),
