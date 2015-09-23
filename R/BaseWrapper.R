@@ -7,17 +7,19 @@ makeBaseWrapper = function(id, type, next.learner, package = character(0L), par.
   if (length(ns) > 0L)
     stopf("Hyperparameter names in wrapper clash with base learner names: %s", collapse(ns))
 
-  makeS3Obj(c(learner.subclass, "BaseWrapper", "Learner"),
+  learner = makeLearnerBaseConstructor(classes = c(learner.subclass, "BaseWrapper"),
     id = id,
     type = type,
     predict.type = next.learner$predict.type,
     package = union(package, next.learner$package),
+    properties = NULL, # these are handled by the getter anyway
     par.set = par.set,
-    par.vals = par.vals,
-    fix.factors.prediction = FALSE,
-    next.learner = next.learner,
-    model.subclass = model.subclass
+    par.vals = par.vals
   )
+  learner$fix.factors.prediction = FALSE
+  learner$next.learner = next.learner
+  learner$model.subclass = model.subclass
+  return(learner)
 }
 
 #' @export

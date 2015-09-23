@@ -74,19 +74,20 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
   assertString(name)
   assertString(short.name)
   assertString(note)
-
-  learner = setClasses(list(
+  learner = makeLearnerBaseConstructor("RLearner",
     id = id,
     type = type,
     package = package,
     properties = unique(properties),
     par.set = par.set,
     par.vals = par.vals,
-    predict.type = "response",
-    name = name,
-    short.name = short.name,
-    note = note
-  ), c("RLearner", "Learner"))
+    predict.type = "response"
+  )
+  learner$name = name
+  learner$short.name = short.name
+  learner$note = note
+  return(learner)
+
 }
 
 #' @export
