@@ -65,7 +65,6 @@
 makeModelMultiplexer = function(base.learners) {
   lrn = makeBaseEnsemble(
     id = "ModelMultiplexer",
-    short.name = "mm",
     base.learners = base.learners,
     bls.type = NULL,
     ens.type = NULL,
