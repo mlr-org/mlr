@@ -71,3 +71,19 @@ predictLearner.regr.__mlrmocklearners__4 = function(.learner, .model, .newdata, 
 registerS3method("makeRLearner", "regr.__mlrmocklearners__4", makeRLearner.regr.__mlrmocklearners__4)
 registerS3method("trainLearner", "regr.__mlrmocklearners__4", trainLearner.regr.__mlrmocklearners__4)
 registerS3method("predictLearner", "regr.__mlrmocklearners__4", predictLearner.regr.__mlrmocklearners__4)
+
+
+# Learner cannot use expression in param requires
+makeRLearner.classif.__mlrmocklearners__5 = function() {
+  makeRLearnerClassif(
+    cl = "classif.__mlrmocklearners__5",
+    package = "mlr",
+    par.set = makeParamSet(
+      makeDiscreteLearnerParam(id = "a", values = c("x", "y")),
+      makeNumericLearnerParam(id = "b", requires = expression(a == "x"))
+    ),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
+  )
+}
+registerS3method("makeRLearner", "classif.__mlrmocklearners__5", makeRLearner.classif.__mlrmocklearners__5)
+

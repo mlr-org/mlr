@@ -5,7 +5,7 @@ makeRLearner.classif.lda = function() {
     package = "MASS",
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "method", default = "moment", values = c("moment", "mle", "mve", "t")),
-      makeNumericLearnerParam(id = "nu", lower = 2, requires = expression(method == "t")),
+      makeNumericLearnerParam(id = "nu", lower = 2, requires = quote(method == "t")),
       makeNumericLearnerParam(id = "tol", default = 1e-4, lower = 0),
       makeDiscreteLearnerParam(id = "predict.method", values = c("plug-in", "predictive", "debiased"),
         default = "plug-in", when = "predict"),

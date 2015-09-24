@@ -21,6 +21,8 @@
 #' @template arg_measures_opt
 #' @param par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
 #'   Collection of parameters and their constraints for optimization.
+#'   Dependent parameters with a \code{requires} field must use \code{quote} and not
+#'   \code{expression} to define it.
 #' @param control [\code{\link{TuneControl}}]\cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.
 #' @template arg_showinfo
@@ -64,6 +66,8 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
   assertClass(task, classes = "Task")
   measures = checkMeasures(measures, learner)
   assertClass(par.set, classes = "ParamSet")
+  # FIXME: must be removed later, see PH issue #52
+  checkParamSet(par.set)
   assertClass(control, classes = "TuneControl")
   if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")
