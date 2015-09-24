@@ -200,3 +200,13 @@ skip_on_travis <- function() {
 
   skip("On Travis")
 }
+
+mylist = function(..., create = FALSE) {
+  lrns = listLearners(..., create = create)
+  if (create) {
+    ids = extractSubList(lrns, "id")
+  } else {
+    ids = lrns
+  }
+  lrns[!grepl("mock", ids)]
+}
