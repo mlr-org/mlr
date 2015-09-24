@@ -10,7 +10,7 @@ makeRLearner.regr.ctree = function() {
       makeIntegerLearnerParam(id = "minsplit", default = 20L, lower = 1L),
       makeIntegerLearnerParam(id = "minbucket", default = 7L, lower = 1L),
       makeLogicalLearnerParam(id = "stump", default = FALSE),
-      makeIntegerLearnerParam(id = "nresample", default = 9999L, lower = 1L, requires = expression(testtype=="MonteCarlo")),
+      makeIntegerLearnerParam(id = "nresample", default = 9999L, lower = 1L, requires = quote(testtype=="MonteCarlo")),
       makeIntegerLearnerParam(id = "maxsurrogate", default = 0L, lower = 0L),
       makeIntegerLearnerParam(id = "mtry", default = 0L, lower = 0L),
       makeLogicalLearnerParam(id = "savesplitstats", default = TRUE, tunable = FALSE),

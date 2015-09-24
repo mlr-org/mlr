@@ -141,3 +141,14 @@ test_that("tuning allows usage of budget", {
   expect_true(is.numeric(res$y) && length(res$y) == 2L && !any(is.na(res$y)))
   expect_identical(getOptPathLength(res$opt.path), 3L)
 })
+
+test_that("Learner cannot use expression in param requires, see #369", {
+  rdesc = makeResampleDesc("Holdout")
+  ctrl = makeTuneControlRandom()
+  ps = makeParamSet(
+    makeDiscreteLearnerParam(id = "a", values = c("x", "y")),
+    makeNumericLearnerParam(id = "b", requires = expression(a == "x"))
+  )
+  expect_error(tuneParams("classif.rpart", binaryclass.task, resampling = rdesc, par.set = ps, control = ctrl),
+    "used 'expression'")
+})
