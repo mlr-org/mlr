@@ -150,3 +150,14 @@ test_that("makeTuneControlIrace handles budget parameter", {
   tr1 = tuneParams(makeLearner("classif.rpart"), multiclass.task, rdesc, par.set = ps, control = ctrl)
   expect_true(getOptPathLength(tr1$opt.path) <= n)
 })
+
+test_that("issue 279", {
+  lrn = makeLearner("classif.gbm", predict.type = "prob")
+  ps = makeParamSet(makeNumericParam("shrinkage", lower = 4e-5, upper = 1e-4))
+  ctrl = makeTuneControlIrace(maxExperiments = 60L)
+  rdesc = makeResampleDesc(method = "Holdout")
+  lrn.tune = makeTuneWrapper(lrn, resampling = rdesc, par.set = ps, control = ctrl, measure = list(mmce))
+
+  set.seed(123)
+  res = resample(lrn.tune, task = sonar.task, rdesc, measures = list(mmce))
+})
