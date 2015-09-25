@@ -1,8 +1,6 @@
 context("cluster_DBScan")
 
 test_that("cluster_DBScan", {
-  skip("issue #130")
-
   requirePackages("RWeka")
   parset.list = list(
     list()

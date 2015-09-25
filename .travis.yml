@@ -120,6 +120,7 @@ before_script:
     - curl -L https://raw.githubusercontent.com/mllg/travis-r-tools/master/update-packages.r -o /tmp/update-packages.r
     - Rscript /tmp/update-packages.r
     - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
+    - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/optics_dbScan1.0.5.zip
 
 after_success:
     - git checkout master
