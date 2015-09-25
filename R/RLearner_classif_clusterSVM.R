@@ -5,7 +5,7 @@ makeRLearner.classif.clusterSVM = function() {
     package = c("SwarmSVM", "LiblineaR"),
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "centers", default = 2, lower = 1),
-      makeUntypedLearnerParam(id = "cluster.object", default = NULL, requires = expression(is.null(centers))),
+      makeUntypedLearnerParam(id = "cluster.object", default = NULL, requires = quote(is.null(centers))),
       makeNumericLearnerParam(id = "lambda", default = 1, lower = 0),
       makeLogicalLearnerParam(id = "sparse", default = TRUE),
       makeUntypedLearnerParam(id = "valid.x", default = NULL),

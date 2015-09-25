@@ -4,7 +4,8 @@ makeRLearner.classif.xgboost = function() {
     cl = "classif.xgboost",
     package = "xgboost",
     par.set = makeParamSet(
-      makeUntypedLearnerParam(id = "params", default = list()),
+      # we pass all of what goes in 'params' directly to ... of xgboost
+      # makeUntypedLearnerParam(id = "params", default = list()),
       makeDiscreteLearnerParam(id = "booster", default = "gbtree", values = c("gbtree", "gblinear")),
       makeIntegerLearnerParam(id = "silent", default = 0),
       makeNumericLearnerParam(id = "eta", default = 0.3, lower = 0),
@@ -20,7 +21,7 @@ makeRLearner.classif.xgboost = function() {
       makeUntypedLearnerParam(id = "objective", default = "binary:logistic"),
       makeUntypedLearnerParam(id = "eval_metric", default = "error"),
       makeNumericLearnerParam(id = "base_score", default = 0.5),
-      
+
       makeNumericLearnerParam(id = "missing", default = 0),
       makeIntegerLearnerParam(id = "nthread", default = 16,lower = 1),
       makeIntegerLearnerParam(id = "nrounds", default = 1, lower = 1),
@@ -33,7 +34,7 @@ makeRLearner.classif.xgboost = function() {
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
-    note = "`nrounds` set to 1 by default"
+    note = "All setting are passed directly, rather than through xgboost's 'param'. 'rounds' set to 1 by default"
   )
 }
 
@@ -44,14 +45,14 @@ trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NUL
   target = data$target
   target = match(as.character(target), td$class.levels) - 1
   data = data.matrix(data$data)
-  
+
   if (length(td$class.levels) == 2L) {
     parlist = list(...)
     obj = parlist$objective
     if (testNull(obj)) {
       obj = "binary:logistic"
     }
-    
+
     if (testNull(.weights)) {
       xgboost::xgboost(data = data, label = target, objective = obj, ...)
     } else {
@@ -65,7 +66,7 @@ trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NUL
       obj = "multi:softprob"
     }
     num_class = length(td$class.levels)
-    
+
     if (testNull(.weights)) {
       xgboost::xgboost(data = data, label = target, objective = obj, num_class = num_class, ...)
     } else {
@@ -80,7 +81,7 @@ predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
   td = .model$task.desc
   m = .model$learner.model
   p = xgboost::predict(m, newdata = data.matrix(.newdata), ...)
-  nc = length(td$class.levels)  
+  nc = length(td$class.levels)
 
   if (nc == 2L) {
     y = matrix(0, ncol = 2, nrow = nrow(.newdata))

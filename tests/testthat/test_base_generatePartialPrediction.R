@@ -143,6 +143,10 @@ test_that("generatePartialPredictionData", {
   fs = train(makeLearner("surv.coxph"), surv.task)
   pfs = generatePartialPredictionData(fs, input = surv.task, features = c("Petal.Width", "Petal.Length"),
                                       derivative = TRUE, gridsize = gridsize)
+
+  fse = train(makeLearner("regr.lm", predict.type = "se"), regr.task)
+  pfse = generatePartialPredictionData(fse, input = regr.task, features = c("lstat", "crim"),
+                                       bounds = c(-2, 2), gridsize = gridsize)
 })
 
 test_that("generateFeatureGrid", {

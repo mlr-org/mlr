@@ -89,10 +89,10 @@ test.range = makeAggregation(
 
 #' @export
 #' @rdname aggregations
-test.sqrt.of.mean = makeAggregation(
-  id = "test.sqrt.of.mean",
+test.rmse = makeAggregation(
+  id = "test.rmse",
   name = "Test RMSE",
-  fun = function(task, perf.test, perf.train, measure, group, pred) sqrt(mean(perf.test))
+  fun = function(task, perf.test, perf.train, measure, group, pred) sqrt(mean(perf.test^2))
 )
 
 #' @export
@@ -153,10 +153,10 @@ train.range = makeAggregation(
 
 #' @export
 #' @rdname aggregations
-train.sqrt.of.mean = makeAggregation(
-  id = "train.sqrt.of.mean",
+train.rmse = makeAggregation(
+  id = "train.rmse",
   name = "Training RMSE",
-  fun = function(task, perf.test, perf.train, measure, group, pred) sqrt(mean(perf.train))
+  fun = function(task, perf.test, perf.train, measure, group, pred) sqrt(mean(perf.train^2))
 )
 
 #' @export

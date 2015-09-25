@@ -9,7 +9,7 @@
 # - all params of base.learners get new name <learnerid>.<paramid> to avoid name clashes
 # - predict.type = response by default
 # - train and predict we cannot really define, must be done in derived class
-makeBaseEnsemble = function(id, name = id, short.name = id, base.learners, bls.type = NULL,
+makeBaseEnsemble = function(id, base.learners, bls.type = NULL,
   ens.type = NULL, package = character(0L),
   par.set = makeParamSet(), par.vals = list(), cl) {
 
@@ -44,11 +44,8 @@ makeBaseEnsemble = function(id, name = id, short.name = id, base.learners, bls.t
   }
   par.set.all = c(par.set.bls, par.set)
 
-  lrn = makeS3Obj(
-    c(cl, "BaseEnsemble", "Learner"),
+  lrn = makeLearnerBaseConstructor(c(cl, "BaseEnsemble"),
     id = id,
-    name = name,
-    short.name = short.name,
     type = ens.type,
     package = unique(unlist(extractSubList(base.learners, "package"))),
     par.set = par.set.all,

@@ -105,10 +105,19 @@ r_binary_packages:
     - tgp
     - TH.data
     - XML
+before_install:
+    - sudo R CMD javareconf
+    - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test -y
+    - sudo apt-get -qq update
+    - sudo apt-get -qq install gcc-4.8
+    - sudo apt-get -qq install g++-4.8
+    - sudo apt-get install -qq gfortran-4.8
+    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 90
+    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
+    - sudo update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-4.8 90
 before_script:
     - curl -L https://raw.githubusercontent.com/mllg/travis-r-tools/master/update-packages.r -o /tmp/update-packages.r
     - Rscript /tmp/update-packages.r
-    - sudo R CMD javareconf
     - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
 notifications:
   email:

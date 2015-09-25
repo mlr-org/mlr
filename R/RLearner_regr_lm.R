@@ -7,7 +7,7 @@ makeRLearner.regr.lm = function() {
       makeDiscreteLearnerParam(id = "method", default = "moment",
         values = c("moment", "mle", "mve", "t")),
       makeNumericLearnerParam(id = "nu", lower = 2,
-        requires = expression(method == "t")),
+        requires = quote(method == "t")),
       makeNumericLearnerParam(id = "tol", default = 1.0e-4, lower = 0),
       makeLogicalLearnerParam(id = "singular.ok", default = TRUE, tunable = FALSE)
     ),

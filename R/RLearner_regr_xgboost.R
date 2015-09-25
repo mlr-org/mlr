@@ -4,7 +4,8 @@ makeRLearner.regr.xgboost = function() {
     cl = "regr.xgboost",
     package = "xgboost",
     par.set = makeParamSet(
-      makeUntypedLearnerParam(id = "params", default = list()),
+      # we pass all of what goes in 'params' directly to ... of xgboost
+      #makeUntypedLearnerParam(id = "params", default = list()),
       makeDiscreteLearnerParam(id = "booster", default = "gbtree", values = c("gbtree", "gblinear")),
       makeIntegerLearnerParam(id = "silent", default = 0),
       makeNumericLearnerParam(id = "eta", default = 0.3, lower = 0),
@@ -20,7 +21,7 @@ makeRLearner.regr.xgboost = function() {
       makeUntypedLearnerParam(id = "objective", default = "reg:linear"),
       makeUntypedLearnerParam(id = "eval_metric", default = "rmse"),
       makeNumericLearnerParam(id = "base_score", default = 0.5),
-      
+
       makeNumericLearnerParam(id = "missing", default = 0),
       makeIntegerLearnerParam(id = "nthread", default = 16, lower = 1),
       makeIntegerLearnerParam(id = "nrounds", default = 1, lower = 1),
@@ -33,7 +34,7 @@ makeRLearner.regr.xgboost = function() {
     properties = c("numerics", "factors", "weights"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
-    note = "`nrounds` set to 1 by default"
+    note = "All setting are passed directly, rather than through xgboost's 'param'. 'rounds' set to 1 by default"
   )
 }
 
@@ -43,13 +44,13 @@ trainLearner.regr.xgboost = function(.learner, .task, .subset, .weights = NULL, 
   data = getTaskData(.task, .subset, target.extra = TRUE)
   target = data$target
   data = data.matrix(data$data)
-  
+
   parlist = list(...)
   obj = parlist$objective
   if (testNull(obj)) {
     obj = "reg:linear"
   }
-  
+
   if (testNull(.weights)) {
     xgboost::xgboost(data = data, label = target, objective = obj, ...)
   } else {

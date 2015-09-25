@@ -1,57 +1,7 @@
-context("learners")
 
-mylist = function(..., create = FALSE) {
-  lrns = listLearners(..., create = create)
-  if (create) {
-    ids = extractSubList(lrns, "id")
-  } else {
-    ids = lrns
-  }
-  lrns[!grepl("mock", ids)]
-}
+test_that("learners work: classif ", {
 
-test_that("listLearners", {
-  x1 = mylist()
-  x2 = mylist("classif")
-  x3 = mylist("regr")
-  x4 = mylist("surv")
-  x5 = mylist("cluster")
-  x6 = mylist("multilabel")
-  expect_true(length(x1) > 40L)
-  expect_true(length(x2) > 20L)
-  expect_true(length(x3) > 10L)
-  expect_true(length(x4) > 1L)
-  expect_true(length(x5) > 1L)
-  expect_true(length(x6) > 0L)
-  expect_true(setequal(x1, c(x2, x3, x4, x5, x6)))
-
-  x6 = mylist("classif", properties = c("multiclass", "factors", "prob"))
-  expect_true(length(x6) > 10 && all(x6 %in% x2))
-})
-
-test_that("listLearners doesn't load packages", {
-  npacks.before = length(search())
-  mylist("classif")
-  npacks.after = length(search())
-
-  expect_equal(npacks.before, npacks.after)
-})
-
-test_that("listLearners for task", {
-  x1 = mylist(binaryclass.task)
-  x2 = mylist(multiclass.task)
-  x3 = mylist(regr.task)
-  expect_true(length(x1) > 10)
-  expect_true(length(x2) > 10)
-  expect_true(length(x3) > 10)
-  expect_true(length(intersect(x1, x3)) == 0)
-  expect_true(length(intersect(x2, x3)) == 0)
-  expect_true(all(x2 %in% x1))
-})
-
-test_that("learners work", {
-
-  # settings to make learnners faster and deal with small data size
+  # settings to make learners faster and deal with small data size
   hyperpars = list(
     classif.boosting = list(mfinal = 2L),
     classif.cforest = list(mtry = 1L),
@@ -63,14 +13,7 @@ test_that("learners work", {
     classif.gbm = list(bag.fraction = 1, n.minobsinnode = 1),
     classif.lssvm = list(kernel = "rbfdot", reduced = FALSE),
     classif.nodeHarvest = list(nodes = 100L, nodesize = 5L),
-    classif.xyf = list(ydim = 2L),
-    regr.km = list(nugget = 0.01),
-    regr.cforest = list(mtry = 1L),
-    regr.bartMachine = list(verbose = FALSE, run_in_sample = FALSE,
-      # see above
-      replace_missing_data_with_x_j_bar = TRUE,
-      num_iterations_after_burn_in = 10L),
-    regr.nodeHarvest = list(nodes = 100L, nodesize = 5L)
+    classif.xyf = list(ydim = 2L)
   )
 
   fixHyperPars = function(lrn) {
@@ -154,91 +97,7 @@ test_that("learners work", {
     expect_true(!is.na(performance(p)))
   }
 
-  # normal regr, dont use feature 2, it is nearly always 0
-  task = subsetTask(regr.task, subset = c(1:70),
-    features = getTaskFeatureNames(regr.task)[c(1, 3)])
-  lrns = mylist(task)
-  lrns = lapply(lrns, makeLearner)
-  for (lrn in lrns) {
-    expect_output(print(lrn), lrn$id)
-    lrn = fixHyperPars(lrn)
-    m = train(lrn, task)
-    p = predict(m, task)
-    expect_true(!is.na(performance(p)))
-  }
 
-  # regr with factors
-  task = subsetTask(regr.task, subset = 180:240, features = getTaskFeatureNames(regr.task)[c(1, 2)])
-  lrns = mylist(task)
-  lrns = lapply(lrns, makeLearner)
-  for (lrn in lrns) {
-    expect_output(print(lrn), lrn$id)
-    lrn = fixHyperPars(lrn)
-    m = train(lrn, task)
-    p = predict(m, task)
-    expect_true(!is.na(performance(p)))
-  }
-
-  # regr with se
-  task = subsetTask(regr.task, subset = c(1:70),
-  features = getTaskFeatureNames(regr.task)[c(1, 3)])
-  lrns = mylist(task, properties = "se")
-  lrns = lapply(lrns, makeLearner, predict.type = "se")
-  for (lrn in lrns) {
-    lrn = fixHyperPars(lrn)
-    m = train(lrn, task)
-    p = predict(m, task)
-    expect_equal(length(p$data$se), 70)
-    expect_true(!is.na(performance(p)))
-  }
-
-  # regr with weights
-  task = subsetTask(regr.task, subset = 1:70, features = getTaskFeatureNames(regr.task)[c(1, 3)])
-  lrns = mylist(task, properties = "weights")
-  lrns = lapply(lrns, makeLearner)
-  for (lrn in lrns) {
-    lrn = fixHyperPars(lrn)
-    m = train(lrn, task, weights = rep(1:2, 35))
-    p = predict(m, task)
-    expect_true(!is.na(performance(p)))
-  }
-
-  # regr with missing
-  d = regr.df[1:100, c(getTaskFeatureNames(regr.task)[c(1, 3)], regr.target)]
-  d[1, 1] = NA
-  task = makeRegrTask(data = d, target = regr.target)
-  lrns = mylist(task, create = TRUE)
-  for (lrn in lrns) {
-    lrn = fixHyperPars(lrn)
-    m = train(lrn, task)
-    p = predict(m, task)
-    expect_true(!is.na(performance(p)))
-  }
-
-  # clustering, response
-  task = noclass.task
-  lrns = mylist(task, create = TRUE)
-  for (lrn in lrns) {
-    # FIXME: remove this if DBscan runs stable
-    if (!inherits(lrn, "cluster.DBScan")) {
-      expect_output(print(lrn), lrn$id)
-      m = train(lrn, task)
-      p = predict(m, task)
-      expect_true(!is.na(performance(p, task = task)))
-    }
-  }
-
-  # clustering, prob
-  task = subsetTask(noclass.task, subset = 1:20,
-    features = getTaskFeatureNames(noclass.task)[1:2])
-  lrns = mylist(task, properties = "prob")
-  lrns = lapply(lrns, makeLearner, predict.type = "prob")
-  lapply(lrns, function(lrn) {
-    m = train(lrn, task)
-    p = predict(m, task)
-    getPredictionProbabilities(p)
-    expect_true(!is.na(performance(p, task = task)))
-  })
 })
 
 test_that("weightedClassWrapper on all binary learners",  {
@@ -287,3 +146,4 @@ test_that("WeightedClassWrapper on all multiclass learners",  {
     expect_true(all(cm3[, levs[3]] >= cm2[, levs[3]]))
   })
 })
+

@@ -10,7 +10,8 @@ mlr_2.5:
   in the single-objective case
 - makeTuneControlGenSA: optimized function will be considered non-smooth
   per default (change via ... args)
-- classif.svm: added 'scale' param
+- classif.svm, regr.svm: added 'scale' param
+- ksvm: added 'cache' param
 - plotFilterValuesGGVIS: sort and n_show are interactive, interactive flag removed
 - renamed getProbabilities to getPredictionProbabilities and deprecated getProbabilities
 - plots now use long names for measures where possible
@@ -40,13 +41,10 @@ mlr_2.5:
   For each class the getter can be overwritten.
 - The hill climbing algorithm for stacking (Caruana 04) is implemented as method 'hill.climb' in 'makeStackedLearner' to select models from base learners, which is equivalent to weighted average.
 - The model compression algorithm for stacking (Caruana 06) is implemented as method 'compress' in 'makeStackedLearner' to first select models from base learners and then mimic the behaviour with a super learner. The default super learner is neural network.
-- The "Feature-subspace Aggregating Ensemble Algorithm" is implemented as a new learner in 'FeatingEnsemble.R'.
 - relativeOverfitting provides a way to estimate how much a model overfits to
   the training data according to a measure.
 - resample, benchmark, and resample convenience functions (crossval, repcv etc.) now support
   the extract argument. FeatSelWrapper, FilterWrapper, TuneWrapper have a default extract method.
-- generatePartialPredictionData now can estimate the partial derivative of the partial prediction function wrt the
-  features for regression, classification, and survival tasks.
 - restructured the LiblineaR learners to a more convenient format. These old ones were removed:
   classif.LiblineaRBinary, classif.LiblineaRLogReg,  classif.LiblineaRMultiClass.
   For the new ones, see below.
@@ -54,7 +52,7 @@ mlr_2.5:
 - new functions
 -- getDefaultMeasure
 -- getTaskClassLevels
--- getPredictionTruth, getPredictionResponse
+-- getPredictionTruth, getPredictionResponse, getPredictionSE
 -- convertMLBenchObjToTask
 -- getBMRLearners, getBMRMeasures, getBMRMeasureIds
 -- makeMultilabelTask, makeMultilabelWrapper, getMultilabelBinaryPerformances
@@ -97,6 +95,9 @@ mlr_2.5:
 -- regr.LiblineaRL2L2SVR
 -- classif.randomForestSRCSyn
 -- regr.randomForestSRCSyn
+-- classif.ranger
+-- regr.ranger
+-- surv.ranger
 
 - new filters
 -- permutation.importance
