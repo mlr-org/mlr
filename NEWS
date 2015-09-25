@@ -43,8 +43,6 @@ mlr_2.5:
 - The model compression algorithm for stacking (Caruana 06) is implemented as method 'compress' in 'makeStackedLearner' to first select models from base learners and then mimic the behaviour with a super learner. The default super learner is neural network.
 - relativeOverfitting provides a way to estimate how much a model overfits to
   the training data according to a measure.
-- resample, benchmark, and resample convenience functions (crossval, repcv etc.) now support
-  the extract argument. FeatSelWrapper, FilterWrapper, TuneWrapper have a default extract method.
 - restructured the LiblineaR learners to a more convenient format. These old ones were removed:
   classif.LiblineaRBinary, classif.LiblineaRLogReg,  classif.LiblineaRMultiClass.
   For the new ones, see below.
