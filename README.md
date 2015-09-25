@@ -75,7 +75,7 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
   * Zach M Jones is doing great work in his current GSOC project to improve **mlr's visualization system** to explore models and data. Some of this is already in 2.4, much more is to come in upcoming 2.5. Here are some general remarks.
     * We try to use ggplot2 as a standard for static graphics you can use in papers and knitr docs. These plotting functions return ggplot2 objects you can later change with the usual "+"-operator.
     * We often provide ggvis versions of these plots, which are more interactive.
-    * For each plot, there is a well-defined data layer / container object that contains the data necessary for the plot. This object is generated first and passed to the function that does the actual plotting. Pro: This enforces good design on our side. And if you dislike something in our plots, you can implement your own by using the container object, instead of doing everything from scratch. Con: You need to call 2 functions for a plot. We think the "Pros" are worth it.  
+    * For each plot, there is a well-defined data layer / container object that contains the data necessary for the plot. This object is generated first and passed to the function that does the actual plotting. Pro: This enforces good design on our side. And if you dislike something in our plots, you can implement your own by using the container object, instead of doing everything from scratch. Con: You need to call 2 functions for a plot. We think the "Pros" are worth it.
   * mlr is becoming a **Github org**, because we are growing larger and need more structure. The tutorial is already on that org (and hopefully you don't even notice that), and we will migrate the whole project soon (hopefully also without many people noticing much).
   * The **tutorial is now continuously being built and checked with Travis CI**. It is also **versioned**, so we have subdirs 2.4, 2.5, and symlinks "devel" and "release". Before, we only had one version, and people got confused if we already explained stuff for the devel version, which was not on CRAN yet. (Julia and Lars put lots of work into all of this.)
 * 2015-06-13:
@@ -107,15 +107,12 @@ Get in Touch
 Please use the issue tracker for problems, questions and feature requests.
 Don't email in most cases, as we forget these mails.
 
-We also do not hate beginners and it is perfectly valid to mark a issue as "Question".
+We also do not hate beginners and it is perfectly valid to mark an issue as "Question".
 
 Please don't forget that all of us work in academia and put a lot of work into this project, simply because we like it, not because we are specifically paid for it.
 
 We also welcome pull requests or new developers.
-To get started have a look at the [guidelines for contributors](https://github.com/mlr-org/mlr/wiki/Setup-and-Contribution-Guidelines).
-Please also consider the [**mlr** coding guidelines](https://github.com/mlr-org/mlr/wiki/mlr-Coding-Guidelines).
+Just make sure that you have a glance at our [**mlr** coding guidelines](https://github.com/mlr-org/mlr/wiki/mlr-Coding-Guidelines) before.
 
 For everything else the maintainer Bernd Bischl can be reached here: bernd_bischl@gmx.net.
 He (=me) is sometimes busy, so please use the other channels for appropriate stuff first, so you get quicker responses ;-)
-
-
