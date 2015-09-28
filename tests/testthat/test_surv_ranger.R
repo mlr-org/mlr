@@ -4,12 +4,30 @@ context("surv_ranger")
 test_that("surv_ranger", {
   requirePackages("survival", default.method = "load")
   requirePackages("ranger", default.method = "load")
-  
-  lrn = makeLearner("surv.ranger", predict.type = "prob")
+
+  lrn = makeLearner("surv.ranger")
   task = makeSurvTask(data = surv.train, target = surv.target)
-  
+
   set.seed(getOption("mlr.debug.seed"))
   m = mlr::train(lrn, task)
-
   expect_equal(m$learner.model$treetype, "Survival")
+  p = predict(m, newdata = surv.test)
+  expect_is(p, "PredictionSurv")
+
+  parset.list = list(
+    list(num.trees = 10)
+  )
+
+  old.predicts.list = list()
+  for (i in 1:length(parset.list)) {
+    parset = parset.list[[i]]
+    pars = list(formula = surv.formula, data = surv.train, write.forest = TRUE)
+    pars = c(pars, parset)
+    set.seed(getOption("mlr.debug.seed"))
+    m = do.call(ranger::ranger, pars)
+    p = predict(m, data = surv.test)
+    old.predicts.list[[i]] = rowMeans(p$chf)
+  }
+
+  testSimpleParsets("surv.ranger", surv.df, surv.target, surv.train.inds, old.predicts.list, parset.list)
 })

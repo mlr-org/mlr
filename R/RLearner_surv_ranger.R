@@ -19,8 +19,7 @@ makeRLearner.surv.ranger = function() {
       makeLogicalLearnerParam(id = "save.memory", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = TRUE, when = "both", tunable = FALSE),
       makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE),
-      makeDiscreteLearnerParam(id = "splitrule", values = c("logrank", "C"),
-                               default = "logrank")
+      makeDiscreteLearnerParam(id = "splitrule", values = c("logrank", "C"), default = "logrank")
     ),
     par.vals = list(num.threads = 1L),
     properties = c("numerics", "factors", "rcens", "prob"),
@@ -32,16 +31,16 @@ makeRLearner.surv.ranger = function() {
 
 #' @export
 trainLearner.surv.ranger = function(.learner, .task, .subset, .weights, ...) {
+  if(.learner$predict.type != "response")
+    stop("Unsupported predict type")
   ranger::ranger(formula = getTaskFormula(.task), data = getTaskData(.task, .subset),
     write.forest = TRUE, ...)
 }
 
 #' @export
 predictLearner.surv.ranger = function(.learner, .model, .newdata, ...) {
-  if (.learner$predict.type == "prob") {
-    p = predict(object = .model$learner.model, data = .newdata, ...)
-    return(p$survival)
-  } else {
-    stop("Unknown predict type")
-  }
+  if(.learner$predict.type != "response")
+    stop("Unsupported predict type")
+  p = predict(object = .model$learner.model, data = .newdata)
+  rowMeans(p$chf)
 }
