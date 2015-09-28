@@ -12,7 +12,7 @@ makeRLearner.surv.glmboost = function() {
       makeLogicalLearnerParam(id = "use.formula", default = TRUE, when = "both")
     ),
     par.vals = list(
-      family = "CoxPH",
+      family = mboost::CoxPH(),
       m = "mstop",
       use.formula = TRUE
     ),
