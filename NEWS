@@ -1,3 +1,7 @@
+mlr_2.6:
+- new learners:
+-- cluster.DBScan
+
 mlr_2.5:
 - we have (somewhat experimental) support for multilabel classification.
   so we now have a task, a new baselearner (rFerns),

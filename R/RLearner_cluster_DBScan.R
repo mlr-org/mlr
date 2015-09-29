@@ -12,7 +12,7 @@ makeRLearner.cluster.DBScan = function() {
     properties = c("numerics"),
     name = "DBScan Clustering",
     short.name = "dbscan",
-    note = "You might have to install the Weka package: WPM('install-package', 'optics_dbScan')"
+    note = "You might have to install the Weka package: WPM('install-package', 'optics_dbScan') -- please note that only version 1.0.1 works properly."
   )
 }
 
@@ -25,6 +25,6 @@ trainLearner.cluster.DBScan = function(.learner, .task, .subset, .weights = NULL
 #' @export
 predictLearner.cluster.DBScan = function(.learner, .model, .newdata, ...) {
   # DBScan returns cluster indices (i.e. starting from 0, which some tools don't like
-  predict(.model$learner.model, .newdata, ...) + 1
+  as.integer(predict(.model$learner.model, .newdata, ...)) + 1L
 }
 
