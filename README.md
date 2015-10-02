@@ -99,6 +99,7 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
 Talks and Videos
 ================
 * [Video](http://www.youtube.com/watch?v=rzjkT1uLNi4) of Bernd's "mlr + OpenML" talk at OpenML workshop 2014
+* [Video](https://www.youtube.com/watch?v=d1PnFiN6nOQ) of Zach's International Methods Colloquim talk 2015 "Data Mining as Exploratory Data Analysis"
 
 
 Get in Touch
