@@ -47,7 +47,7 @@ test_that("filterFeatures", {
   # Loop through all filters
   filter.list = listFilterMethods(desc = FALSE, tasks = TRUE, features = FALSE)
   filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
-  filter.list.classif = setdiff(filter.list.classif, c("univariate", "permutation.importance")) #make extra test
+  filter.list.classif = setdiff(filter.list.classif, c("univariate.model.score", "permutation.importance")) #make extra test
   for (filter in filter.list.classif) {
     filterFeatures(task = multiclass.task, method = filter, perc = 0.5)
   }
@@ -57,9 +57,9 @@ test_that("filterFeatures", {
   }
 
   # extra test of univariate filter
-  fv = suppressWarnings(getFilterValues(task = multiclass.task, method = "univariate", perc = 0.5,
+  fv = suppressWarnings(getFilterValues(task = multiclass.task, method = "univariate.model.score", perc = 0.5,
       perf.learner = makeLearner("classif.rpart"), measures = mmce))
-  fv = generateFilterValuesData(task = multiclass.task, method = "univariate", perc = 0.5,
+  fv = generateFilterValuesData(task = multiclass.task, method = "univariate.model.score", perc = 0.5,
     perf.learner = makeLearner("classif.rpart"), measures = mmce)
 
   # extra test of the permutation.importance filter

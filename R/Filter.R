@@ -284,13 +284,23 @@ makeFilter(
   }
 )
 
-makeFilter(
-  name = "univariate",
-  desc = "Construct a simple performance filter using a mlr learner",
+univariate = makeFilter(
+  name = "univariate.model.score",
+  desc = "Resamples an mlr learner for each input feature individually. The resampling performance is used as filter score, with rpart as default learner.",
   pkg  = character(0L),
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors"),
-  fun = function(task, nselect, perf.learner, perf.measure, perf.resampling = NULL, ...) {
+  fun = function(task, nselect, perf.learner = NULL, perf.measure = NULL, perf.resampling = NULL, ...) {
+    typ = getTaskType(task)
+    if (is.null(perf.learner))
+      if (typ == "classif")
+        perf.learner = "classif.rpart"
+      else if (typ == "regr")
+        perf.learner = "regr.rpart"
+      else if (typ == "surv")
+        perf.learner = "surv.rpart"
+    if (is.null(perf.measure))
+      perf.measure = getDefaultMeasure(task)
     perf.learner = checkLearner(perf.learner)
     perf.measure = checkMeasures(perf.measure, perf.learner)
     if (length(perf.measure) != 1L)
@@ -311,6 +321,11 @@ makeFilter(
     setNames(res, fns)
   }
 )
+.FilterRegister[["univariate"]] = univariate
+.FilterRegister[["univariate"]]$fun = function(...) {
+  .Deprecated("Filter 'univariate' is deprecated, use 'univariate.model.score' instead.")
+  .FilterRegister[["univariate.model.score"]]$fun(...)
+}
 
 makeFilter(
   name = "anova.test",
