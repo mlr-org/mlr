@@ -19,12 +19,11 @@
 #'   Performance measures for all tasks.
 #'   If missing, the default measure of the first task is used.
 #' @template arg_keep_pred
-#' @template arg_extract
 #' @template arg_showinfo
 #' @return [\code{\link{BenchmarkResult}}].
 #' @family benchmark
 #' @export
-benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, extract = NULL, show.info = getMlrOption("show.info")) {
+benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, show.info = getMlrOption("show.info")) {
   learners = ensureVector(learners, 1L, "Learner")
   assertList(learners, min.len = 1L)
   checkListElementClass(learners, "Learner")
@@ -79,7 +78,7 @@ benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, e
     benchmarkParallel,
     split(as.matrix(inds), f = seq_row(inds)),
     more.args = list(learners = learners, tasks = tasks, resamplings = resamplings,
-      measures = measures, extract = extract, show.info = show.info),
+      measures = measures, show.info = show.info),
     level = plevel
   )
   results.by.task = split(results, unlist(inds$task))
@@ -106,16 +105,25 @@ benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, e
 #' @family benchmark
 NULL
 
-benchmarkParallel = function(index, learners, tasks, resamplings, measures, keep.pred = TRUE, extract = NULL, show.info) {
+benchmarkParallel = function(index, learners, tasks, resamplings, measures, keep.pred = TRUE, show.info) {
   setSlaveOptions()
   ind.task = index[[1L]]
   ind.learner = index[[2L]]
   if (show.info)
     messagef("Task: %s, Learner: %s", ind.task, ind.learner)
   cl = class(learners[[ind.learner]])
+  if("FeatSelWrapper" %in% cl) {
+    extract.this = getFeatSelResult
+  } else if("TuneWrapper" %in% cl) {
+    extract.this = getTuneResult
+  } else if("FilterWrapper" %in% cl) {
+    extract.this = getFilteredFeatures
+  } else {
+    extract.this = function(model) { NULL }
+  }
   lrn = learners[[ind.learner]]
   r = resample(learners[[ind.learner]], tasks[[ind.task]], resamplings[[ind.task]],
-    measures = measures, models = TRUE, extract = extract, keep.pred = keep.pred, show.info = show.info)
+    measures = measures, models = TRUE, extract = extract.this, keep.pred = keep.pred, show.info = show.info)
   # store used learner in result
   r$learner = lrn
   return(r)
