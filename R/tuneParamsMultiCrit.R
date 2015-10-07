@@ -16,6 +16,8 @@
 #'   If you want to change that behavior, look at \code{\link{TuneMultiCritControl}}.
 #' @param par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
 #'   Collection of parameters and their constraints for optimization.
+#'   Dependent parameters with a \code{requires} field must use \code{quote} and not
+#'   \code{expression} to define it.
 #' @param measures [list of \code{\link{Measure}}]\cr
 #'   Performance measures to optimize simultaneously.
 #' @param control [\code{\link{TuneMultiCritControl}}]\cr

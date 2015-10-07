@@ -28,6 +28,8 @@
 #'   Name of the parameter, which can be used for providing class weights.
 #' @param par.set [\code{\link[ParamHelpers]{ParamSet}}] \cr
 #'   Parameter set of (hyper)parameters and their constraints.
+#'   Dependent parameters with a \code{requires} field must use \code{quote} and not
+#'   \code{expression} to define it.
 #' @param par.vals [\code{list}] \cr
 #'   Always set hyperparameters to these values when the object is constructed.
 #'   Useful when default values are missing in the underlying function.
