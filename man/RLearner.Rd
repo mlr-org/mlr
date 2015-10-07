@@ -44,7 +44,9 @@ and all survival learners start with \dQuote{surv.}.}
 Package(s) to load for the implementation of the learner.}
 
 \item{par.set}{[\code{\link[ParamHelpers]{ParamSet}}] \cr
-Parameter set of (hyper)parameters and their constraints.}
+Parameter set of (hyper)parameters and their constraints.
+Dependent parameters with a \code{requires} field must use \code{quote} and not
+\code{expression} to define it.}
 
 \item{par.vals}{[\code{list}] \cr
 Always set hyperparameters to these values when the object is constructed.

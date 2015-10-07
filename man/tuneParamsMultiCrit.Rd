@@ -25,7 +25,9 @@ If you want to change that behavior, look at \code{\link{TuneMultiCritControl}}.
 Performance measures to optimize simultaneously.}
 
 \item{par.set}{[\code{\link[ParamHelpers]{ParamSet}}]\cr
-Collection of parameters and their constraints for optimization.}
+Collection of parameters and their constraints for optimization.
+Dependent parameters with a \code{requires} field must use \code{quote} and not
+\code{expression} to define it.}
 
 \item{control}{[\code{\link{TuneMultiCritControl}}]\cr
 Control object for search method. Also selects the optimization algorithm for tuning.}

@@ -2,11 +2,28 @@
 % Please edit documentation in R/benchmark.R
 \name{BenchmarkResult}
 \alias{BenchmarkResult}
-\title{Result of a benchmark run.}
+\title{BenchmarkResult object.}
 \description{
-Container for results of benchmarked experiments using \code{\link{benchmark}}.
-The structure of the object itself is rather complicated, it is recommended to
-retrive required information via the \code{getBMR*} getter functions.
+Result of a benchmark experiment conducted by \code{\link{benchmark}}
+with the following members:
+\describe{
+\item{results [list of \code{\link{ResampleResult}}]:}{
+  A nested \code{list} of resample results,
+  first ordered by task id, then by learner id.
+}
+\item{measures [list of \code{\link{Measure}}]:}{
+  The performance measures used in the benchmark experiment.
+}
+\item{learners [list of \code{\link{Learner}}]:}{
+  The learning algorithms compared in the benchmark experiment.
+}
+}
+
+The print method of this object shows aggregated performance values
+for all tasks and learners.
+
+It is recommended to
+retrieve required information via the \code{getBMR*} getter functions.
 You can also convert the object using \code{\link[base]{as.data.frame}}.
 }
 \seealso{
