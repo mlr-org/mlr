@@ -32,6 +32,5 @@ test_that("classif_RRF", {
     multiclass.train.inds, old.probs.list, parset.list)
 
   tt = RRF::RRF
-
   testCVParsets("classif.RRF", multiclass.df, multiclass.target, tune.train=tt, parset.list=parset.list)
 })
