@@ -94,6 +94,8 @@ mlr_2.5:
 -- classif.ranger
 -- regr.ranger
 -- surv.ranger
+-- classif.RRF
+-- regr.RRF
 
 - new filters
 -- permutation.importance

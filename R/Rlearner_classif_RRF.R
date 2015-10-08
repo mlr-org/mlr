@@ -5,16 +5,13 @@ makeRLearner.classif.RRF = function() {
     package = "RRF",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "ntree", lower = 1L, default = 500L),
-      # FIXME: Add default value when data dependent defaults are implemented: mtry=floor(sqrt(#independent vars)) 
-      makeIntegerLearnerParam(id = "mtry", lower = 1L), 
-      # FIXME: Add default value when data dependent defaults are implemented: min.node.size = 1 for classification,
-      #                                                                               10 for probability prediction 
-      # FIXME: add args strata and sampsize and feaIni
+      # FIXME: Add default value when data dependent defaults are implemented: mtry = floor(ncol(x)/3)
+      makeIntegerLearnerParam(id = "mtry", lower = 1L, default = 5L), 
       makeIntegerLearnerParam(id = "nodesize", lower = 1L), 
       makeLogicalLearnerParam(id = "replace", default = TRUE),
       makeIntegerLearnerParam(id = "flagReg", default = 1L, lower = 0), 
-      makeNumericLearnerParam(id = "coefReg", default = 0.8,
-                              requires = expression(flagReg == 1L)),
+      makeNumericLearnerParam(id = "coefReg", default = 0.8, requires = quote(flagReg == 1L)),
+      makeIntegerVectorLearnerParam(id = "feaIni", lower = 0, upper = Inf, requires = quote(flagReg == 1L)),
       makeNumericVectorLearnerParam(id = "classwt", lower = 0, upper = 1L),
       makeNumericVectorLearnerParam(id = "cutoff", lower = 0, upper = 1L),
       makeIntegerLearnerParam(id = "maxnodes", lower = 1L),
@@ -25,7 +22,9 @@ makeRLearner.classif.RRF = function() {
       makeLogicalLearnerParam(id = "oob.prox", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "norm.votes", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE),
-      makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE),
+      makeUntypedLearnerParam(id = "strata"),
+      makeIntegerVectorLearnerParam(id = "sampsize", lower = 0)
     ),
     properties = c("twoclass", "multiclass", "prob", "numerics", "factors"),
     name = "Regularized Random Forests",
