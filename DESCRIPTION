@@ -114,6 +114,7 @@ Suggests:
     rotationForest,
     rpart,
     rrlda,
+    RRF,
     rsm,
     RSNNS,
     RWeka,
