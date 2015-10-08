@@ -87,3 +87,19 @@ test_that("parallel exporting of options works", {
   # make sure
   configureMlr(on.learner.error = "stop")
 })
+
+test_that("parallel partial predictions", {
+  doit = function(level) {
+    lrn = makeLearner("regr.rpart")
+    fit = train(lrn, regr.task)
+    on.exit(parallelStop())
+    parallelStart(mode = mode, cpus = 2L, show.info = FALSE)
+    pd = generatePartialPredictionData(fit, regr.task, "lstat", gridsize = 2L)
+    expect_true(nrow(pd$data) == 2L)
+  }
+  if (Sys.info()["sysname"] != "Windows") {
+    doit("multicore")
+    doit("mpi")
+  }
+  doit("socket")
+})

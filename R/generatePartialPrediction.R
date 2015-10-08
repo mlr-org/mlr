@@ -208,7 +208,7 @@ generatePartialPredictionData = function(obj, input, features,
       if (derivative) {
         args = list(obj = obj, data = data, features = x, fun = fun, td = td, individual = individual,
                     bounds = bounds, ...)
-        out = parallelMap::parallelMap(doPartialDerivativeIteration, x = rng[[x]], more.args = args)
+        out = parallelMap(doPartialDerivativeIteration, x = rng[[x]], more.args = args)
         rng = as.data.frame(rng[[x]])
         colnames(rng) = x
         centerpred = NULL
@@ -216,7 +216,7 @@ generatePartialPredictionData = function(obj, input, features,
         rng = as.data.frame(rng[[x]])
         colnames(rng) = x
         args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = x, bounds = bounds, ...)
-        out = parallelMap::parallelMap(doPartialPredictionIteration, seq_len(nrow(rng)), more.args = args)
+        out = parallelMap(doPartialPredictionIteration, i = seq_len(nrow(rng)), more.args = args)
         if (!is.null(center) & individual)
           centerpred = doPartialPredictionIteration(obj, data, center[, x, drop = FALSE],
                                                     x, fun, td, 1, bounds = bounds)
@@ -240,7 +240,7 @@ generatePartialPredictionData = function(obj, input, features,
       rng = as.data.frame(rng)
       colnames(rng) = features
       args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = features, bounds = bounds, ...)
-      out = parallelMap::parallelMap(doPartialPredictionIteration, seq_len(nrow(rng)), more.args = args)
+      out = parallelMap::parallelMap(doPartialPredictionIteration, i = seq_len(nrow(rng)), more.args = args)
       if (!is.null(center) & individual)
         centerpred = as.data.frame(doPartialPredictionIteration(obj, data, center, features, fun, td, 1, bounds))
       else
