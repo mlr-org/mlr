@@ -134,14 +134,17 @@ test_that("generatePartialPredictionData", {
   ## expect_that(length(XML::getNodeSet(doc, red.xpath, "svg")) - 1, equals(nfeat * gridsize * n))
   ## plotPartialPredictionGGVIS(bc)
 
+  subset = 1:5
   fr = train(makeLearner("regr.ksvm"), regr.task)
-  pfr = generatePartialPredictionData(fr, input = regr.task, features = c("lstat", "crim"),
+  pfr = generatePartialPredictionData(fr, input = regr.df[subset, ], features = c("lstat", "crim"),
                                       derivative = TRUE, individual = TRUE, gridsize = gridsize)
   fc = train(makeLearner("classif.ksvm", predict.type = "prob"), multiclass.task)
-  pfc = generatePartialPredictionData(fc, input = multiclass.task, features = c("Petal.Width", "Petal.Length"),
+  pfc = generatePartialPredictionData(fc, input = multiclass.df[subset, ],
+                                      features = c("Petal.Width", "Petal.Length"),
                                       derivative = TRUE, gridsize = gridsize)
   fs = train(makeLearner("surv.coxph"), surv.task)
-  pfs = generatePartialPredictionData(fs, input = surv.task, features = c("Petal.Width", "Petal.Length"),
+  pfs = generatePartialPredictionData(fs, input = surv.df[subset, ],
+                                      features = c("Petal.Width", "Petal.Length"),
                                       derivative = TRUE, gridsize = gridsize)
 
   fse = train(makeLearner("regr.lm", predict.type = "se"), regr.task)
