@@ -12,7 +12,7 @@ makeRLearner.cluster.kmeans = function() {
       makeLogicalLearnerParam(id = "trace", tunable = FALSE)
     ),
     par.vals = list(centers = 2L),
-    properties = c("numerics"),
+    properties = c("numerics", "prob"),
     name = "K-Means",
     note = "The 'predict' method uses 'cl_predict' from the 'clue' package to compute the cluster memberships for new data. The default 'centers=2' is added so the method runs without setting params, but this must in reality of course be changed by the user.",
     short.name = "kmeans"
@@ -26,6 +26,9 @@ trainLearner.cluster.kmeans = function(.learner, .task, .subset, .weights = NULL
 
 #' @export
 predictLearner.cluster.kmeans = function(.learner, .model, .newdata, ...) {
-  as.integer(clue::cl_predict(.model$learner.model, newdata = .newdata, type = "class_ids"))
+  switch(.learner$predict.type,
+    response = as.integer(clue::cl_predict(.model$learner.model, newdata = .newdata, type = "class_ids", ...)),
+    prob = as.matrix(clue::cl_predict(.model$learner.model, newdata = .newdata, type = "memberships", ...))
+  )
 }
 
