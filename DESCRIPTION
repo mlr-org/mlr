@@ -46,7 +46,7 @@ Suggests:
     brnn,
     bst,
     care,
-    caret,
+    caret (>= 6.0-57),
     class,
     clue,
     cluster,
