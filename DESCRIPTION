@@ -74,6 +74,7 @@ Suggests:
     gbm,
     GenSA,
     glmnet,
+    h2o,
     Hmisc,
     irace (>= 1.0.7),
     kernlab,
