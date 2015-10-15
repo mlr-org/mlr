@@ -1,0 +1,52 @@
+#' @export
+makeRLearner.regr.h2oglm = function() {
+  makeRLearnerRegr(
+    cl = "regr.h2oglm",
+    package = "h2o",
+    par.set = makeParamSet(
+      makeIntegerLearnerParam("max_iterations", lower = 0L, default = 50L),
+      makeNumericLearnerParam("beta_epsilon", default = 0),
+      makeLogicalLearnerParam("standardize", default = TRUE),
+      makeDiscreteLearnerParam("solver", values = c("IRLSM", "L_BFGS"), default = "IRLSM"),
+      makeDiscreteLearnerParam("link", values = c("identity", "log", "inverse"), default = "identity"),
+      makeNumericLearnerParam("alpha", lower = 0, upper = 1, default = 0.5),
+      makeNumericLearnerParam("lambda", lower = 0, default = 1e-5),
+      makeLogicalLearnerParam("lambda_search", default = FALSE),
+      makeIntegerLearnerParam("nlambdas", lower = 1L,
+        requires = quote(lambda_search == TRUE)),
+      makeNumericLearnerParam("lambda_min_ratio", lower = 0, upper = 1, # data dep default
+        requires = quote(lambda_search == TRUE)),
+      makeUntypedLearnerParam("beta_constraints"),
+      makeLogicalLearnerParam("intercept", default = TRUE)
+    ),
+    properties = c("numerics", "factors", "weights"),
+    name = "h2o.glm",
+    short.name = "h2o.glm",
+    note = "'family' is always set to 'gaussian'."
+  )
+}
+
+#' @export
+trainLearner.regr.h2oglm = function(.learner, .task, .subset, .weights = NULL,  ...) {
+  y = getTaskTargetNames(.task)
+  x = getTaskFeatureNames(.task)
+  d = getTaskData(.task, subset = .subset)
+  wcol = NULL
+  if (!is.null(.weights)) {
+    d$.mlr.weights = .weights[.subset]
+    wcol = ".mlr.weights"
+  }
+  h2of = h2o::as.h2o(d)
+  h2o::h2o.glm(y = y, x = x, training_frame = h2of, family = "gaussian", weights_column = wcol, ...)
+}
+
+#' @export
+predictLearner.regr.h2oglm = function(.learner, .model, .newdata, ...) {
+  m = .model$learner.model
+  h2of = h2o::as.h2o(.newdata)
+  p = h2o::h2o.predict(m, newdata = h2of, ...)
+  p.df = as.data.frame(p)
+  return(p.df$predict)
+}
+
+
