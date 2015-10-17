@@ -24,7 +24,7 @@ See \code{\link{rank}} for details.}
 for details on \dQuote{default}.}
 
 \item{pos}{[\code{character(1)}]
-Optionally set how the bars are positioned in \code{\link{ggplot2}}.
+Optionally set how the bars are positioned in ggplot2.
 Ranks are plotted on the x-axis.
 \dQuote{tile} plots a heatmap with \code{task} as the y-axis.
 Allows identification of the performance in a special task.

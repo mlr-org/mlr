@@ -49,15 +49,17 @@ Default is \code{TRUE}. If set to \code{FALSE}, learners that cannot
 actually be constructed because of missing packages may be returned.}
 
 \item{create}{[\code{logical(1)}]\cr
-Instantiate objects (or return strings)?
+Instantiate objects (or return info table)?
+Packages are loaded if and only if this option is \code{TRUE}.
 Default is \code{FALSE}.}
 }
 \value{
-[\code{character} | \code{list} of \code{\link{Learner}}].
+[\code{data.frame} | \code{list} of \code{\link{Learner}}].
+  Either descriptive data.frame that allows access to all properties of learners or a list of created learner objects.
   The latter is named by ids of listed learners.
 }
 \description{
-Returns the class names of learning algorithms which have specific characteristics, e.g.
+Returns learning algorithms which have specific characteristics, e.g.
 whether they supports missing values, case weights, etc.
 
 Note that the packages of all learners are loaded during the search if you create them.

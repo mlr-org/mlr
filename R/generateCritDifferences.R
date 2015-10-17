@@ -188,15 +188,14 @@ plotCritDifferences = function(obj, baseline = NULL) {
     }
     
     p = p + annotate("segment", x = cd.x + cd, xend = cd.x - cd, y = cd.y, yend = cd.y,
-                     alpha = 0.5, color = "darkgrey", size = 2, vjust = obj$cd.info$textvjust)
+                     alpha = 0.5, color = "darkgrey", size = 2)
     p = p + annotate("segment", x = cd.x + cd, xend = cd.x + cd, y = cd.y - 0.05,
                      yend = cd.y + 0.05, color = "darkgrey", size = 1)
     p = p + annotate("segment", x = cd.x - cd, xend = cd.x - cd, y = cd.y - 0.05,
                      yend = cd.y + 0.05, color = "darkgrey", size = 1, )
-    p = p + annotate("point", x = cd.x, y = cd.y, alpha = 0.5, vjust = obj$cd.info$barvjust)
+    p = p + annotate("point", x = cd.x, y = cd.y, alpha = 0.5)
     p = p + annotate("text", label = paste("Critical Difference =", round(cd, 2)),
-                     x = cd.x, y = cd.y + 0.05, vjust = obj$cd.info$textvjust,
-                     hjust = 0.5)
+                     x = cd.x, y = cd.y + 0.05, hjust = 0.5)
   } else {
     nemenyiData = obj$cd.info$nemenyi.data
     if (!(nrow(nemenyiData) == 0L)) {
