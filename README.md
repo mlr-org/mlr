@@ -31,11 +31,12 @@ meaningful way. As this becomes computationally expensive, you might want to
 parallelize your experiments as well. This often forces users to make crummy
 trade-offs in their experiments due to time constraints or lacking expert
 programming skills. **mlr** provides this infrastructure so that you can focus
-on your experiments! The framework currently focuses on supervised methods like
+on your experiments! The framework provides supervised methods like
 classification, regression and survival analysis and their corresponding
-evaluation and optimization. It is written in a way that you can extend it
-yourself or deviate from the implemented convenience methods and construct your
-own complex experiments or algorithms.
+evaluation and optimization as well as unsupervised methods like clustering. It
+is written in a way that you can extend it yourself or deviate from the
+implemented convenience methods and construct your own complex experiments or
+algorithms.
 
 Features
 ========
@@ -48,10 +49,12 @@ Features
 * Many convenience methods and generic building blocks for your
   machine learning experiments
 * Resampling like bootstrapping, cross-validation and subsampling
-* Different visualizations for e.g. ROC curves and predictions
+* Extensive visualizations for e.g. ROC curves, predictions and partial
+  predictions
 * Benchmarking of learners for muliple data sets
-* Easy hyperparameter tuning using different optimization strategies, including potent configurators
-  like iterated F-racing (irace) or sequential model-based optimization
+* Easy hyperparameter tuning using different optimization strategies, including
+  potent configurators like iterated F-racing (irace) or sequential model-based
+  optimization
 * Variable selection with filters and wrappers
 * Nested resampling of models with tuning and feature selection
 * Cost-sensitive learning, threshold tuning and imbalance correction
@@ -61,6 +64,7 @@ Features
 * Extension points to integrate your own stuff
 * Parallelization is built-in
 * Unit-testing
+* Detailed tutorial
 
 *If you like the package, please "star" it on Github.*
 
