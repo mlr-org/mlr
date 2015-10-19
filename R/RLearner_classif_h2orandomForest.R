@@ -1,0 +1,54 @@
+#' @export
+makeRLearner.classif.h2orandomForest = function() {
+  makeRLearnerClassif(
+    cl = "classif.h2orandomForest",
+    package = "h2o",
+    par.set = makeParamSet(
+      makeIntegerLearnerParam("mtries", lower = -1L, default = -1L),
+      makeNumericLearnerParam("sample_rate", lower = 0, upper = 1, default = 0.632),
+      makeLogicalLearnerParam("build_tree_one_node", default = FALSE, tunable = FALSE),
+      makeIntegerLearnerParam("ntrees", lower = 1L, default = 50L),
+      makeIntegerLearnerParam("max_depth", lower = 1L, default = 20L),
+      makeIntegerLearnerParam("min_rows", lower = 1L,  default = 1L),
+      makeIntegerLearnerParam("nbins", lower = 1L, default = 20L),
+      makeIntegerLearnerParam("nbins_cats", lower = 1L, default = 1024L),
+      makeLogicalLearnerParam("binomial_double_trees", default = TRUE),
+      makeLogicalLearnerParam("balance_classes", default = FALSE),
+      makeIntegerLearnerParam("max_after_balance_size", lower = 0, default = 5L),
+      makeIntegerLearnerParam("seed", tunable = FALSE)
+    ),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
+    name = "h2o.randomForest",
+    short.name = "h2o.rf",
+    note = ""
+  )
+}
+
+#' @export
+trainLearner.classif.h2orandomForest = function(.learner, .task, .subset, .weights = NULL,  ...) {
+  y = getTaskTargetNames(.task)
+  x = getTaskFeatureNames(.task)
+  d = getTaskData(.task, subset = .subset)
+  h2of = h2o::as.h2o(d)
+  h2o::h2o.randomForest(y = y, x = x, training_frame = h2of, ...)
+}
+
+#' @export
+predictLearner.classif.h2orandomForest = function(.learner, .model, .newdata, ...) {
+  m = .model$learner.model
+  h2of = h2o::as.h2o(.newdata)
+  p = h2o::h2o.predict(m, newdata = h2of, ...)
+  p.df = as.data.frame(p)
+  
+  pCol = grepl("p[[:digit:]]", colnames(p.df))
+  if(any(pCol)) colnames(p.df)[pCol] = gsub("p", "", colnames(p.df)[pCol])
+  
+  if (.learner$predict.type == "response") {
+    return(p.df$predict)
+  } else {
+    p.df$predict = NULL
+    return(as.matrix(p.df))
+  }
+}
+
+
