@@ -48,6 +48,7 @@ mlr_2.5:
   For the new ones, see below.
 - Added some commonly used ResampleDesc description objects, to save typing in resample experiments:
   hout, cv2, cv3, cv5, cv10.
+- regr.randomForest: changed default nodesize to 5 (according to randomForest defaults)
 
 - new functions
 -- getDefaultMeasure
