@@ -1,4 +1,6 @@
 mlr_2.5:
+- fixed a bug that caused performance() to return incorrect values with
+  ResamplePredictions
 - we have (somewhat experimental) support for multilabel classification.
   so we now have a task, a new baselearner (rFerns),
   and a generic reduction-to-binary algorithm (MultilabelWrapper)
