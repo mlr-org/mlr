@@ -189,7 +189,7 @@ getBMROptResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FA
 #' @title Extract the tuning results from a benchmark result.
 #'
 #' @description
-#' Returns a list of lists of lists of \code{\link{TuneResult}}s. The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. If \code{as.df} is \code{TRUE}, a data frame with \dQuote{task.id}, \dQuote{learner.id}, the resample iteration, the parameter values and the performances is returned.
+#' Returns a nested list of \code{\link{TuneResult}}s. The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. If \code{as.df} is \code{TRUE}, a data frame with the \dQuote{task.id}, \dQuote{learner.id}, the resample iteration, the parameter values and the performances is returned.
 #'
 #' @template arg_bmr
 #' @template arg_bmr_taskids
@@ -208,9 +208,9 @@ getBMRTuneResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = F
 #' @title Extract the feature selection results from a benchmark result.
 #'
 #' @description
-#' Returns a list of lists of lists of \code{\link{FeatSelResult}}s. The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. If \code{as.df} is \code{TRUE}, a data frame with \dQuote{task.id}, \dQuote{learner.id}, the resample iteration and the selected features is returned.
+#' Returns a nested list of \code{\link{FeatSelResult}}s. The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. If \code{as.df} is \code{TRUE}, a data frame with \dQuote{task.id}, \dQuote{learner.id}, the resample iteration and the selected features is returned.
 #'
-#' Note that if more than one feature is selected and a data frame requested, there will be multiple rows for the same dataset-learner-iteration; one for each selected feature.
+#' Note that if more than one feature is selected and a data frame is requested, there will be multiple rows for the same dataset-learner-iteration; one for each selected feature.
 #'
 #' @template arg_bmr
 #' @template arg_bmr_taskids
@@ -229,9 +229,9 @@ getBMRFeatSelResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df 
 #' @title Extract the feature selection results from a benchmark result.
 #'
 #' @description
-#' Returns a list of lists of lists of lists of characters The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. The list at the lowest level is the list of selected features. If \code{as.df} is \code{TRUE}, a data frame with \dQuote{task.id}, \dQuote{learner.id}, the resample iteration and the selected features is returned.
+#' Returns a nested list of characters The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. The list at the lowest level is the list of selected features. If \code{as.df} is \code{TRUE}, a data frame with \dQuote{task.id}, \dQuote{learner.id}, the resample iteration and the selected features is returned.
 #'
-#' Note that if more than one feature is selected and a data frame requested, there will be multiple rows for the same dataset-learner-iteration; one for each selected feature.
+#' Note that if more than one feature is selected and a data frame is requested, there will be multiple rows for the same dataset-learner-iteration; one for each selected feature.
 #'
 #' @template arg_bmr
 #' @template arg_bmr_taskids
