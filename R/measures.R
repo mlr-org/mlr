@@ -786,4 +786,3 @@ silhouette = makeMeasure(id = "silhouette", minimize = FALSE, best = Inf, worst 
     clusterSim::index.S(clusterSim::dist.GDM(feats), r)
   }
 )
-

@@ -16,6 +16,7 @@ r_github_packages:
     - berndbischl/BBmisc
     - berndbischl/parallelMap
     - berndbischl/ParamHelpers
+    - swager/randomForestCI
 r_binary_packages:
     - ada
     - adabag
