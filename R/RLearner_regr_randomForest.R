@@ -133,6 +133,9 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
     # extract relevant data from
     model = .model$learner.model
 
+    if (is.na(model$inbag))
+      stop("regr.randomForest must be defined with keep.inbag = TRUE to estimate the jackknife standard error!")
+
     # inbag needed to determine which observation was included in the training
     # of each ensemble member
     inbag = model$inbag
