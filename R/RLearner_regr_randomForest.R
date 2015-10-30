@@ -8,7 +8,7 @@ makeRLearner.regr.randomForest = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "ntree", default = 500L, lower = 1L),
       makeIntegerLearnerParam(id = "ntree.for.se", default = 100L, lower = 1L),
-      makeDiscreteLearnerParam(id = "se.method", default = "bootstrap", values = c("bootstrap", "jackknife", "noisy.bootstrap"), requires = quote(se.method != "jackknife" && keep.inbag == TRUE)),
+      makeDiscreteLearnerParam(id = "se.method", default = "infjackknife", values = c("bootstrap", "jackknife", "noisy.bootstrap", "infjackknife"), requires = quote(se.method != "jackknife" && keep.inbag == TRUE)),
       makeIntegerLearnerParam(id = "nr.of.bootstrap.samples", default = 5L, lower = 1L),
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
@@ -70,7 +70,8 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
     se.fun = switch(.learner$par.vals$se.method,
       bootstrap = bootstrapStandardError,
       noisy.bootstrap = bootstrapStandardError,
-      jackknife = jackknifeStandardError
+      jackknife = jackknifeStandardError,
+      infjackknife = infinitesimalJackknifeStandardError
     )
     se.fun(.learner, .model, .newdata, ...)
   } else {
@@ -87,7 +88,7 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
     models = attr(.model$learner.model, "mlr.se.bootstrap.models")
     B = length(models)
     R = par.vals$ntree
-    M = if(is.null(par.vals$ntree.for.se)) par.vals$ntree else par.vals$ntree.for.se
+    M = if (is.null(par.vals$ntree.for.se)) par.vals$ntree else par.vals$ntree.for.se
 
     # make predictions for newdata based on each "bootstrap model"
     preds = lapply(models, function(model) {
@@ -102,7 +103,7 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
     ind.responses = extractSubList(preds, "individual", simplify = FALSE, use.names = FALSE)
 
     # R substracts columnswise matrix - vector, 2nd is actually apply(aggr.responses, 1, var)
-    res = cbind(mean.responses, rowSums((aggr.responses - mean.responses)^2) / (B-1))
+    res = cbind(mean.responses, rowSums((aggr.responses - mean.responses)^2) / (B - 1))
 
     if (par.vals$se.method == "noisy.bootstrap") {
       # Bias contributed significantly to the error of the biased bootstrap estimator
@@ -113,7 +114,7 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
         bias = 0
         for (b in seq_len(B)) {
           for (r in seq_len(R)) {
-            bias = bias + (ind.responses[[b]][i, r] - aggr.responses[i,b])^2
+            bias = bias + (ind.responses[[b]][i, r] - aggr.responses[i, b])^2
           }
         }
 
@@ -164,3 +165,7 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
     })
     return(cbind(mean.responses, se.preds))
 }
+
+# computes the bias corrected infintesimal jackknife using randomForestCI
+infinitesimalJackknifeStandardError = function(.learner, .model, .newdata, ...)
+  as.matrix(randomForestCI::randomForestInfJack(.model$learner.model, .newdata, ...))
