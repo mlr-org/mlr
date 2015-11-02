@@ -75,16 +75,16 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05, base
                   learner.id = names(mean.rank),
                   rank = rank(mean.rank, ties.method = "average"))
   bst = df$rank < mean(df$rank)
-  df$yend[bst]  = subset(df$rank, bst) - 0.5
-  df$yend[!bst] = subset(rank(desc(df$rank)), !bst) - 0.5
+  df$yend[bst]  = subset(rank(df$rank, ties.method = "first"), bst) - 0.5
+  df$yend[!bst] = subset(rank(desc(df$rank), ties.method = "first"), !bst) - 0.5
   df$xend  = 0
-  df$xend[!bst]  = max(df$rank) + 1
+  df$xend[!bst]  = max(df$rank) + 1L
   df$xtext = 0
-  df$xtext[!bst] = max(df$rank) + 1
+  df$xtext[!bst] = max(df$rank) + 1L
 
   # get a baseline
   if (is.null(baseline))
-    baseline = df$learner.id[df$rank == min(df$rank)]
+    baseline = df$learner.id[df$rank == min(df$rank)][1L]
 
   # perform nemenyi test
   nem.test = friedmanPostHocTestBMR(bmr, measure, p.value)
@@ -93,7 +93,11 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05, base
   cd.info = list("test" = test,
                  "cd" = nem.test$crit.difference[[test]],
                  "x" = df$mean.rank[df$learner.id == baseline],
-                 "y" = 0.1)
+                 "y" = 0.1,
+                 "barhjust" = 0,
+                 "barvjust" = 0,
+                 "texthjust" = 0,
+                 "textvjust" = -1)
   
   # create data for the connecting bars
   if (test == "nemenyi") {
@@ -122,6 +126,8 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05, base
 #' a selected measure. If a baseline is selected for the Bonferroni-Dunn
 #' test, the critical difference interval will be positioned arround the baseline.
 #' If not, the best performing algorithm will be chosen as baseline.
+#' The positioning of some descriptive elements can be moved by modifying the 
+#' generated data.
 #'
 #' @param obj [\code{critDifferencesData}]
 #'   Result of \link{generateCritDifferencesData} function.
@@ -149,9 +155,10 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05, base
 #' @export
 plotCritDifferences = function(obj, baseline = NULL) {
   assertClass(obj, "critDifferencesData")
-  if (!is.null(baseline))
+  if (!is.null(baseline)) {
     assertChoice(baseline, obj$data$learner.id)
-  else
+    assertCharacter(baseline, max.len = 1L)
+  } else
     baseline = obj$baseline
 
   p = ggplot(obj$data)
@@ -194,14 +201,20 @@ plotCritDifferences = function(obj, baseline = NULL) {
     if (!(nrow(nemenyiData) == 0L)) {
       p = p + geom_segment(aes_string("xstart", "y", xend = "xend", yend = "y"), data = nemenyiData,
                            size = 2, color = "dimgrey", alpha = 0.9)
-      p = p + annotate("text", label = paste("Critical Difference =", round(cd, 2)),
-                       y = max(obj$data$yend), x = mean(obj$data$mean.rank), vjust = -1)
+      p = p + annotate("text",
+                       label = paste("Critical Difference =", round(cd, 2)),
+                       y = max(obj$data$yend),
+                       x = mean(obj$data$mean.rank),
+                       vjust = obj$cd.info$textvjust,
+                       hjust = obj$cd.info$texthjust)
       p = p + annotate("segment",
                        x =  mean(obj$data$mean.rank) - 0.5 * cd,
                        xend = mean(obj$data$mean.rank) + 0.5 * cd,
                        y = max(obj$data$yend) + .2,
                        yend = max(obj$data$yend) + .2,
-                       size = 2)
+                       size = 2L,
+                       vjust = obj$cd.info$barvjust,
+                       hjust = obj$cd.info$barhjust)
     }
   }
   return(p)
