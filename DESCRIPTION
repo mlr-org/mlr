@@ -53,6 +53,7 @@ Suggests:
     clusterSim,
     clValid,
     cmaes,
+    copulaedas,
     CoxBoost,
     crs,
     Cubist,
@@ -71,6 +72,7 @@ Suggests:
     FNN,
     frbs,
     FSelector,
+    GA,
     gbm,
     GenSA,
     glmnet,
@@ -101,6 +103,7 @@ Suggests:
     pls,
     PMCMR,
     pROC (>= 1.8),
+    pso,
     randomForest,
     randomForestSRC (>= 1.6.1),
     ranger (>= 0.2.6),
@@ -131,3 +134,4 @@ LazyData: yes
 ByteCompile: yes
 Version: 2.5
 VignetteBuilder: knitr
+RoxygenNote: 5.0.0

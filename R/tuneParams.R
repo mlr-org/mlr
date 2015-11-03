@@ -61,6 +61,7 @@
 #' print(res)
 #' print(head(as.data.frame(res$opt.path)))
 #' }
+
 tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
@@ -86,6 +87,9 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     TuneControlGenSA = tuneGenSA,
     TuneControlMBO = tuneMBO,
     TuneControlIrace = tuneIrace,
+    TuneControlGA = tuneGA,
+    TuneControlPSO = tunePSO, 
+    TuneControlEDA = tuneEDA,
     stopf("Tuning algorithm for '%s' does not exist!", cl)
   )
   if (cl == "TuneControlMBO" && control$mbo.control$multifid) {

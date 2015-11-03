@@ -22,6 +22,16 @@
 #'     All kinds of parameter types can be handled. We return the best of the final elite
 #'     candidates found by irace in the last race. Its estimated performance is the mean of all
 #'     evaluations ever done for that candidate.}
+#'   \item{makeTuneControlGA}{Genetic algorithm (\code{\link[GA]{GA}}) tuning method. Can handle numeric(vector) and 
+#'     integer(vector) hyperparameters, but no dependencies. For integers the internally proposed numeric
+#'     values are automatically rounded. }
+#'   \item{makeTuneControlPSO}{Particle Swarm Optimization (\code{\link[PSO]{PSO}}) implementation consistent with the
+#'     standard PSO 2007/2011 by Maurice Clerc et al.
+#'     Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
+#'     For integers the internally proposed numeric values are automatically rounded.}
+#'   \item{makeTuneControlEDA}{Tuning with Estimation Distribution Algorithms (\code{\link[EDA]{EDAs}}) based on copula and vines functions.
+#'     Can handle numeric(vector) and integer(vector) hyperparameters, but no dependencies.
+#'     For integers the internally proposed numeric values are automatically rounded.}
 #' }
 #'
 #' Some notes on irace: For resampling you have to pass a \code{\link{ResampleDesc}},
@@ -66,23 +76,29 @@
 #'   the random search algorithm. Within the \code{\link[cmaes]{cma_es}} the
 #'   \code{budget} corresponds to the product of the number of generations
 #'   (\code{maxit}) and the number of offsprings per generation
-#'   (\code{lambda}). \code{\link[GenSA]{GenSA}} defines the \code{budget} via
+#'   (\code{lambda}). \code{\link[GA]{GA}} defines the \code{budget} as the product of
+#'   the number of generations (\code{maxit}) and the population's size (\code{popSize}).
+#'   \code{\link[EDA]{EDAs}} does the same. The \code{\link[PSO]{PSO}} defines it as the
+#'   product of the number of generations (\code{maxit}) and the number of swarm particles (\code{nParticles}).
+#'   \code{\link[GenSA]{GenSA}} defines the \code{budget} via
 #'   the argument \code{max.call}. However, one should note that this algorithm
 #'   does not stop its local search before its end. This behaviour might lead
 #'   to an extension of the defined budget and will result in a warning. In
 #'   \code{irace}, \code{budget} is passed to \code{maxExperiments}.
 #' @param ... [any]\cr
 #'   Further control parameters passed to the \code{control} arguments of
-#'   \code{\link[cmaes]{cma_es}} or \code{\link[GenSA]{GenSA}}, as well as
+#'   \code{\link[cmaes]{cma_es}}, \code{\link[GA]{GA}}, \code{\link[PSO]{PSO}}, 
+#'   \code{\link[EDA]{EDA}}, \code{\link[GenSA]{GenSA}}, as well as
 #'   towards the \code{tunerConfig} argument of \code{\link[irace]{irace}}.
 #' @return [\code{\link{TuneControl}}]. The specific subclass is one of
 #'   \code{\link{TuneControlGrid}}, \code{\link{TuneControlRandom}},
 #'   \code{\link{TuneControlCMAES}}, \code{\link{TuneControlGenSA}},
-#'   \code{\link{TuneControlIrace}}.
+#'   \code{\link{TuneControlIrace}}, \code{\link{TuneControlGA}}, 
+#'   \code{\link{TuneControlPSO}}, \code{\link{TuneControlEDA}}.
 #' @family tune
 #' @name TuneControl
 #' @rdname TuneControl
-#' @aliases TuneControlGrid TuneControlRandom TuneControlCMAES TuneControlGenSA TuneControlIrace
+#' @aliases TuneControlGrid TuneControlRandom TuneControlCMAES TuneControlGenSA TuneControlIrace TuneControlGA TuneControlPSO TuneControlEDA
 NULL
 
 makeTuneControl = function(same.resampling.instance, impute.val = NULL,
