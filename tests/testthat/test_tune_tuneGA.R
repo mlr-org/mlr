@@ -83,7 +83,7 @@ test_that("tuneGA with budget", {
   tr1 = tuneParams(makeLearner("classif.rpart"), multiclass.task, res,
     par.set = ps1, control = ctrl1)
 
-  # FIX ME: error - they are not equal 
+  # FIX ME: opth.path's size returned is not equal the budget size (Package's behavior) 
   # expect_identical(getOptPathLength(tr1$opt.path), ctrl1$budget)
  
 })

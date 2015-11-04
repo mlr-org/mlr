@@ -23,6 +23,9 @@ tuneGA = function(learner, task, resampling, measures, par.set, control, opt.pat
     max = upp, maxiter = ctrl.ga$maxit, run = ctrl.ga$run, popSize = ctrl.ga$popSize,
     suggestions = start, parallel = ctrl.ga$parallel, monitor = NULL)
 
+  # FIX ME: opth.path's size returned is not equal the budget size (due some GA package's behavior) 
+  # Probably it omits the individuals selected from the previous iteration
+
   # Returning values
   tune.result = makeTuneResultFromOptPath(learner, par.set, measures, control, opt.path)
   return(tune.result)
