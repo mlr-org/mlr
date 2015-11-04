@@ -29,6 +29,13 @@ test_that("classif_cforest", {
 
   testSimpleParsets("classif.cforest", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.predicts.list, parset.list2)
-  testProbParsets ("classif.cforest", binaryclass.df, binaryclass.target, binaryclass.train.inds,
+  testProbParsets("classif.cforest", binaryclass.df, binaryclass.target, binaryclass.train.inds,
     old.probs.list, parset.list2)
+
+  # issue 556
+  parset.list3 = list(
+    list(replace = FALSE)
+  )
+  testSimpleParsets("classif.cforest", binaryclass.df, binaryclass.target, binaryclass.train.inds,
+    old.predicts.list, parset.list3)
 })

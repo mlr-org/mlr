@@ -26,4 +26,10 @@ test_that("regr_cforest", {
   }
 
   testSimpleParsets("regr.cforest", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list2)
+
+  # issue 556
+  parset.list3 = list(
+    list(replace = FALSE)
+  )
+  testSimpleParsets("regr.cforest", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list3)
 })
