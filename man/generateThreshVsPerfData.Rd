@@ -36,6 +36,9 @@ Default is first task.}
   across the threshold grid, the measures, and whether the performance estimates were
   aggregated (only applicable for (list of) \code{\link{ResampleResult}}s).
 }
+\description{
+Generates data on threshold vs. performance(s) for 2-class classification that can be used for plotting.
+}
 \seealso{
 Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}},
   \code{\link{generateCalibrationData}},

@@ -1,5 +1,8 @@
 #' @title Return task ids used in benchmark.
 #'
+#' @description
+#' Gets the task IDs used in a benchmark experiment.
+#'
 #' @template arg_bmr
 #' @return [\code{character}].
 #' @export
@@ -10,6 +13,9 @@ getBMRTaskIds = function(bmr) {
 }
 
 #' @title Return learners used in benchmark.
+#'
+#' @description
+#' Gets the learners used in a benchmark experiment.
 #'
 #' @template arg_bmr
 #' @return [\code{list}].
@@ -22,6 +28,9 @@ getBMRLearners = function(bmr) {
 
 #' @title Return learner ids used in benchmark.
 #'
+#' @description
+#' Gets the IDs of the learners used in a benchmark experiment.
+#'
 #' @template arg_bmr
 #' @return [\code{character}].
 #' @export
@@ -33,6 +42,9 @@ getBMRLearnerIds = function(bmr) {
 
 #' @title Return measures used in benchmark.
 #'
+#' @description
+#' Gets the measures used in a benchmark experiment.
+#'
 #' @template arg_bmr
 #' @return [\code{list}]. See above.
 #' @export
@@ -42,7 +54,10 @@ getBMRMeasures = function(bmr) {
   return(bmr$measures)
 }
 
-#' @title Return measures used in benchmark.
+#' @title Return measures IDs used in benchmark.
+#'
+#' @description
+#' Gets the IDs of the measures used in a benchmark experiment.
 #'
 #' @template arg_bmr
 #' @return [\code{list}]. See above.

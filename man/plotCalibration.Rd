@@ -26,6 +26,9 @@ Default is \code{TRUE}.}
 \value{
 ggplot2 plot object.
 }
+\description{
+Plots calibration data from \code{\link{generateCalibrationData}}.
+}
 \examples{
 \dontrun{
 lrns = list(makeLearner("classif.rpart", predict.type = "prob"),

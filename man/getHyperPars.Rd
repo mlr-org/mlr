@@ -20,6 +20,9 @@ Default is \code{c("train", "predict", "both")}.}
 \value{
 [\code{list}]. A named list of values.
 }
+\description{
+Retrieves the current hyperparameter settings of a learner.
+}
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},

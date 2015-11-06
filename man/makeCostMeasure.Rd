@@ -47,6 +47,9 @@ Description and additional notes for the measure. Default is \dQuote{}.}
 \value{
 [\code{\link{Measure}}].
 }
+\description{
+Creates a cost measure for non-standard classification error costs.
+}
 \seealso{
 Other performance: \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCustomResampledMeasure}},

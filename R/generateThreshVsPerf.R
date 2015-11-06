@@ -1,5 +1,8 @@
 #' @title Generate threshold vs. performance(s) for 2-class classification.
 #'
+#' @description
+#' Generates data on threshold vs. performance(s) for 2-class classification that can be used for plotting.
+#'
 #' @family generate_plot_data
 #' @family thresh_vs_perf
 #'
@@ -88,6 +91,9 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
 }
 #' @title Plot threshold vs. performance(s) for 2-class classification using ggplot2.
 #'
+#' @description
+#' Plots threshold vs. performance(s) data that has been generated with \code{\link{generateThreshVsPerfData}}.
+#'
 #' @family plot
 #' @family thresh_vs_perf
 #'
@@ -154,6 +160,9 @@ plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_, pretty.n
   return(plt)
 }
 #' @title Plot threshold vs. performance(s) for 2-class classification using ggvis.
+#'
+#' @description
+#' Plots threshold vs. performance(s) data that has been generated with \code{\link{generateThreshVsPerfData}}.
 #'
 #' @family plot
 #' @family thresh_vs_perf
@@ -260,6 +269,9 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
   }
 }
 #' @title Plots a ROC curve using ggplot2
+#'
+#' @description
+#' Plots a ROC curve from predictions.
 #'
 #' @family plot
 #' @family thresh_vs_perf

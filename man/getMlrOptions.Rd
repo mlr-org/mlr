@@ -9,6 +9,9 @@ getMlrOptions()
 \value{
 [\code{list}].
 }
+\description{
+Gets the options for mlr.
+}
 \seealso{
 Other configure: \code{\link{configureMlr}}
 }

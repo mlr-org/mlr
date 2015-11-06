@@ -31,6 +31,9 @@ Default is \code{TRUE}.}
 \value{
 a ggvis plot object.
 }
+\description{
+Plots threshold vs. performance(s) data that has been generated with \code{\link{generateThreshVsPerfData}}.
+}
 \examples{
 \dontrun{
 lrn = makeLearner("classif.rpart", predict.type = "prob")

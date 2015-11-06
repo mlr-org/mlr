@@ -166,7 +166,6 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
 #' @details None.
 #'
 #' @export
-#'
 getStackedBaseLearnerPredictions = function(model, newdata = NULL) {
   # get base learner and predict type
   bms = model$learner.model$base.models

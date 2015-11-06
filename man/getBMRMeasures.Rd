@@ -13,6 +13,9 @@ Benchmark result.}
 \value{
 [\code{list}]. See above.
 }
+\description{
+Gets the measures used in a benchmark experiment.
+}
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{benchmark}},

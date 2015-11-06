@@ -13,6 +13,9 @@ Benchmark result.}
 \value{
 [\code{character}].
 }
+\description{
+Gets the task IDs used in a benchmark experiment.
+}
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{benchmark}},

@@ -2,7 +2,7 @@
 % Please edit documentation in R/BenchmarkResult_operators.R
 \name{getBMRMeasureIds}
 \alias{getBMRMeasureIds}
-\title{Return measures used in benchmark.}
+\title{Return measures IDs used in benchmark.}
 \usage{
 getBMRMeasureIds(bmr)
 }
@@ -12,6 +12,9 @@ Benchmark result.}
 }
 \value{
 [\code{list}]. See above.
+}
+\description{
+Gets the IDs of the measures used in a benchmark experiment.
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},

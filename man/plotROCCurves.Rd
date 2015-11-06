@@ -29,6 +29,9 @@ Default is \code{TRUE}.}
 \value{
 a ggvis plot object.
 }
+\description{
+Plots a ROC curve from predictions.
+}
 \examples{
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 fit = train(lrn, sonar.task)

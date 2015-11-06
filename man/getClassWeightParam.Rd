@@ -16,6 +16,9 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
   A numeric parameter object, containing the class weight parameter of the
   given learner.
 }
+\description{
+Gets the class weight parameter of a learner.
+}
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getHyperPars}}, \code{\link{getParamSet}},

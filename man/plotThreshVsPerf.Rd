@@ -28,6 +28,9 @@ Default is \code{TRUE}.}
 \value{
 ggplot2 plot object.
 }
+\description{
+Plots threshold vs. performance(s) data that has been generated with \code{\link{generateThreshVsPerfData}}.
+}
 \examples{
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 mod = train(lrn, sonar.task)

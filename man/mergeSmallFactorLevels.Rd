@@ -28,6 +28,9 @@ Default is \dQuote{.merged}}
 \value{
 \code{Task}, where merged levels are combined into a new level of name \code{new.level}.
 }
+\description{
+Merges factor levels that occur only infrequently into combined levels with a higher frequency.
+}
 \seealso{
 Other eda_and_preprocess: \code{\link{capLargeValues}},
   \code{\link{createDummyFeatures}},
