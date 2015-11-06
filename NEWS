@@ -211,6 +211,7 @@ mlr_2.5:
 - Added some commonly used ResampleDesc description objects, to save typing in resample experiments:
   hout, cv2, cv3, cv5, cv10.
 - regr.randomForest: changed default nodesize to 5 (according to randomForest defaults)
+- Added three tuning methods using optimization algorithms: GA (tuneGA), PSO (tunePSO) and EDAs (tuneEDA).
 
 - new functions
 -- getDefaultMeasure
@@ -228,6 +229,7 @@ mlr_2.5:
 -- generateCalibrationData and plotCalibration
 -- relativeOverfitting
 -- plotROCCurves
+-- makeTuneControlGA, makeTuneControlPSO, makeTuneControlEDA, tuneGA, tunePSO, tuneEDA
 
 - new measures
 -- hamloss

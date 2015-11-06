@@ -44,6 +44,18 @@ checkTunerParset = function(learner, par.set, measures, control) {
   if (inherits(control, "TuneControlNSGA2")) {
     checkParsOk("NSGA2", c("numeric", "integer", "numericvector", "integervector"))
   }
+  if (inherits(control, "TuneControlGA")) {
+    checkParsOk("GA", c("numeric", "integer", "numericvector", "integervector"))
+    checkStart()
+  }
+  if (inherits(control, "TuneControlEDA")) {
+    checkParsOk("EDA", c("numeric", "integer", "numericvector", "integervector"))
+    checkStart()
+  }
+  if (inherits(control, "TuneControlPSO")) {
+    checkParsOk("PSO", c("numeric", "integer", "numericvector", "integervector"))
+    checkStart()
+  }
 
   # check requires / dependent params
   if (hasRequires(par.set) && cl %nin% c("TuneControlRandom", "TuneControlGrid",
