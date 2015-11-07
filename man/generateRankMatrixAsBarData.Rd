@@ -16,7 +16,7 @@ Performance measure.
 Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
 
 \item{pos}{[\code{character(1)}]
-Optionally set how the bars are positioned in \code{\link{ggplot2}}. \cr
+Optionally set how the bars are positioned in \code{\link[ggplot2]{ggplot}}. \cr
 Ranks are plotted on the x-axis. \cr
 \dQuote{tile} plots a heatmap with \code{tasks} as the y-axis.\cr
 Allows identification of the performance in a special task.\cr

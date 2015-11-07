@@ -7,7 +7,7 @@
 #' @template arg_bmr
 #' @template arg_measure
 #' @param pos [\code{character(1)}]
-#'   Optionally set how the bars are positioned in \code{\link{ggplot2}}. \cr
+#'   Optionally set how the bars are positioned in \code{\link[ggplot2]{ggplot}}. \cr
 #'   Ranks are plotted on the x-axis. \cr
 #'   \dQuote{tile} plots a heatmap with \code{tasks} as the y-axis.\cr
 #'   Allows identification of the performance in a special task.\cr
@@ -63,7 +63,7 @@ generateRankMatrixAsBarData = function(bmr, measure = NULL, pos = "tile",
 #' @param obj [\code{RankMatrixAsBarData}]\cr
 #'   Output of a \code{\link{generateRankMatrixAsBarData}} function.
 #' @param pos [\code{character(1)}]
-#'   Optionally set how the bars are positioned in \code{\link{ggplot2}}. \cr
+#'   Optionally set how the bars are positioned in \link[ggplot2]{ggplot}. \cr
 #'   Overwrites the one created in \code{\link{generateRankMatrixAsBarData}}. \cr
 #'   \dQuote{tile} plots a heatmap with \code{task} as the y-axis.\cr
 #'   Allows identification of the performance in a special task.\cr
