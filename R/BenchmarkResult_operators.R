@@ -71,6 +71,7 @@ getBMRMeasureIds = function(bmr) {
 # returns buried object in BMR, either as list of lists or data.frame with task.id, learner.id cols
 # you can restrict to subsets for tasks and learners and pass function to extract object
 getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = FALSE) {
+  assertClass(bmr, "BenchmarkResult")
   brtids = getBMRTaskIds(bmr)
   brlids = getBMRLearnerIds(bmr)
   if (is.null(task.ids))
@@ -110,6 +111,9 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
 #' Either a list of lists of \code{\link{ResamplePrediction}} objects, as returned by
 #' \code{\link{resample}}, or these objects are rbind-ed with extra columns
 #' \dQuote{task.id} and \dQuote{learner.id}.
+#'
+#' If \code{predict.type} is \dQuote{prob}, the probabilities for each class are returned in addition to the response.
+#'
 #' @template arg_bmr
 #' @template arg_bmr_taskids
 #' @template arg_bmr_learnerids
@@ -118,11 +122,8 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
 #' @export
 #' @family benchmark
 
-#FIXME: rbind.fill is stupid. this will not work for probs,
-#FIXME: simply take response, offer to get as list for rest
-# in as.data.frame allow to select cols / only response
-# FIXME: at least have an option to only take rsponse?
 getBMRPredictions = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE) {
+  assertClass(bmr, "BenchmarkResult")
   f = if (as.df)
     function(x) as.data.frame(getRRPredictions(x))
   else
@@ -146,6 +147,7 @@ getBMRPredictions = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = F
 #' @export
 #' @family benchmark
 getBMRPerformances = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE) {
+  assertClass(bmr, "BenchmarkResult")
   f = function(x) x$measures.test
   getBMRObjects(bmr, task.ids, learner.ids, fun = f, as.df = as.df)
 }
@@ -165,6 +167,7 @@ getBMRPerformances = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = 
 #' @export
 #' @family benchmark
 getBMRAggrPerformances = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE) {
+  assertClass(bmr, "BenchmarkResult")
   f = if (as.df)
     function(x) as.data.frame(as.list(x$aggr))
   else
@@ -180,9 +183,9 @@ getBMROptResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FA
     function(x) {
       niters = nrow(x$measures.test)
       if (inherits(x$learner, wrapper.class)) {
-        # FIXME: this wont work for vector params?
         xs = lapply(x$extract, fun)
-        cbind(iter = 1:niters, do.call(rbind.fill, xs))
+        xs = lapply(1:length(xs), function(i) cbind(iter = i, xs[[i]]))
+        do.call(rbind.fill, xs)
       } else {
         NULL
       }
@@ -201,9 +204,7 @@ getBMROptResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FA
 #' @title Extract the tuning results from a benchmark result.
 #'
 #' @description
-#' Returns a list of lists of ??? as returned by
-#' \code{\link{resample}}, or these objects are rbind-ed with extra columns
-#' \dQuote{task.id} and \dQuote{learner.id}.
+#' Returns a nested list of \code{\link{TuneResult}}s. The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. If \code{as.df} is \code{TRUE}, a data frame with the \dQuote{task.id}, \dQuote{learner.id}, the resample iteration, the parameter values and the performances is returned.
 #'
 #' @template arg_bmr
 #' @template arg_bmr_taskids
@@ -213,6 +214,7 @@ getBMROptResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FA
 #' @export
 #' @family benchmark
 getBMRTuneResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE) {
+  assertClass(bmr, "BenchmarkResult")
   getBMROptResults(bmr, task.ids, learner.ids, as.df, "TuneWrapper", function(x) {
     data.frame(x$x, as.list(x$y))
   })
@@ -221,9 +223,9 @@ getBMRTuneResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = F
 #' @title Extract the feature selection results from a benchmark result.
 #'
 #' @description
-#' Returns a list of lists of ???? data.frames, as returned by
-#' \code{\link{resample}}, or these objects are rbind-ed with extra columns
-#' \dQuote{task.id} and \dQuote{learner.id}.
+#' Returns a nested list of \code{\link{FeatSelResult}}s. The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. If \code{as.df} is \code{TRUE}, a data frame with \dQuote{task.id}, \dQuote{learner.id}, the resample iteration and the selected features is returned.
+#'
+#' Note that if more than one feature is selected and a data frame is requested, there will be multiple rows for the same dataset-learner-iteration; one for each selected feature.
 #'
 #' @template arg_bmr
 #' @template arg_bmr_taskids
@@ -233,6 +235,7 @@ getBMRTuneResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = F
 #' @export
 #' @family benchmark
 getBMRFeatSelResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE) {
+  assertClass(bmr, "BenchmarkResult")
   getBMROptResults(bmr, task.ids, learner.ids, as.df, "FeatSelWrapper", function(x) {
     as.data.frame(x$x)
   })
@@ -241,9 +244,9 @@ getBMRFeatSelResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df 
 #' @title Extract the feature selection results from a benchmark result.
 #'
 #' @description
-#' Returns a list of lists of ??? data.frames, as returned by
-#' \code{\link{resample}}, or these objects are rbind-ed with extra columns
-#' \dQuote{task.id} and \dQuote{learner.id}.
+#' Returns a nested list of characters The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. The list at the lowest level is the list of selected features. If \code{as.df} is \code{TRUE}, a data frame with \dQuote{task.id}, \dQuote{learner.id}, the resample iteration and the selected features is returned.
+#'
+#' Note that if more than one feature is selected and a data frame is requested, there will be multiple rows for the same dataset-learner-iteration; one for each selected feature.
 #'
 #' @template arg_bmr
 #' @template arg_bmr_taskids
@@ -253,7 +256,8 @@ getBMRFeatSelResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df 
 #' @export
 #' @family benchmark
 getBMRFilteredFeatures = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FALSE) {
+  assertClass(bmr, "BenchmarkResult")
   getBMROptResults(bmr, task.ids, learner.ids, as.df, "FilterWrapper", function(x) {
-    as.data.frame(x$x)
+    as.data.frame(x)
   })
 }
