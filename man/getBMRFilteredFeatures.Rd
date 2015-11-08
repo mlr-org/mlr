@@ -27,9 +27,9 @@ Default is \code{FALSE}}
 [\code{list} | \code{data.frame}]. See above.
 }
 \description{
-Returns a list of lists of ??? data.frames, as returned by
-\code{\link{resample}}, or these objects are rbind-ed with extra columns
-\dQuote{task.id} and \dQuote{learner.id}.
+Returns a nested list of characters The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. The list at the lowest level is the list of selected features. If \code{as.df} is \code{TRUE}, a data frame with \dQuote{task.id}, \dQuote{learner.id}, the resample iteration and the selected features is returned.
+
+Note that if more than one feature is selected and a data frame is requested, there will be multiple rows for the same dataset-learner-iteration; one for each selected feature.
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},

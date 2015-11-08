@@ -26,9 +26,7 @@ Default is \code{FALSE}}
 [\code{list} | \code{data.frame}]. See above.
 }
 \description{
-Returns a list of lists of ??? as returned by
-\code{\link{resample}}, or these objects are rbind-ed with extra columns
-\dQuote{task.id} and \dQuote{learner.id}.
+Returns a nested list of \code{\link{TuneResult}}s. The first level of nesting is by data set, the second by learner, the third for the benchmark resampling iterations. If \code{as.df} is \code{TRUE}, a data frame with the \dQuote{task.id}, \dQuote{learner.id}, the resample iteration, the parameter values and the performances is returned.
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},

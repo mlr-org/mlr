@@ -29,6 +29,8 @@ Default is \code{FALSE}}
 Either a list of lists of \code{\link{ResamplePrediction}} objects, as returned by
 \code{\link{resample}}, or these objects are rbind-ed with extra columns
 \dQuote{task.id} and \dQuote{learner.id}.
+
+If \code{predict.type} is \dQuote{prob}, the probabilities for each class are returned in addition to the response.
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
