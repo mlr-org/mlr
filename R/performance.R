@@ -32,11 +32,17 @@ performance = function(pred, measures, task = NULL, model = NULL, feats = NULL) 
   if (!is.null(pred))
     assertClass(pred, classes = "Prediction")
   measures = checkMeasures(measures, pred$task.desc)
-  res = vnapply(measures, doPerformaceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats)
+  res = vnapply(measures, doPerformanceIteration, pred = pred, task = task, model = model, td = NULL, feats = feats)
+  # FIXME: This is really what the names should be, but it breaks all kinds of other stuff
+  #if (inherits(pred, "ResamplePrediction")) {
+  #  setNames(res, vcapply(measures, measureAggrName))
+  #} else {
+  #  setNames(res, extractSubList(measures, "id"))
+  #}
   setNames(res, extractSubList(measures, "id"))
 }
 
-doPerformaceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL) {
+doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NULL, td = NULL, feats = NULL) {
   m = measure
   props = m$properties
   if ("req.pred" %in% props) {
@@ -95,5 +101,25 @@ doPerformaceIteration = function(measure, pred = NULL, task = NULL, model = NULL
       stopf("Measure %s requires predict type to be: '%s'!",
         m$id, collapse(req.pred.types))
   }
-  measure$fun(task, model, pred, feats, m$extra.args)
+  # if it's a ResamplePrediction, aggregate
+  if (inherits(pred, "ResamplePrediction")) {
+    if (is.null(pred$data$iter)) pred$data$iter = 1L
+    if (is.null(pred$data$set)) pred$data$set = "test"
+    perfs = ddply(pred$data, "iter", function(ss) {
+      ss.train = subset(ss, ss$set == "train")
+      ss.test = subset(ss, ss$set == "test")
+      if (nrow(ss.train) > 0L) {
+        pred$data = ss.train
+        perf.train = measure$fun(task, model, pred, feats, m$extra.args)
+      } else {
+        perf.train = NA
+      }
+      pred$data = ss.test
+      perf.test = measure$fun(task, model, pred, feats, m$extra.args)
+      data.frame(perf.train = perf.train, perf.test = perf.test, iter = ss$iter[1L])
+    })
+    measure$aggr$fun(task, perfs$perf.test, perfs$perf.train, measure, perfs$iter, pred)
+  } else {
+    measure$fun(task, model, pred, feats, m$extra.args)
+  }
 }
