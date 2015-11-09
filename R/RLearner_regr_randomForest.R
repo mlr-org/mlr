@@ -168,4 +168,4 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
 
 # computes the bias corrected infintesimal jackknife using randomForestCI
 infinitesimalJackknifeStandardError = function(.learner, .model, .newdata, ...)
-  as.matrix(randomForestCI::randomForestInfJack(.model$learner.model, .newdata, ...))
+  as.matrix(randomForestCI::randomForestInfJack(.model$learner.model, .newdata, FALSE))
