@@ -8,7 +8,7 @@ makeRLearner.regr.randomForest = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "ntree", default = 500L, lower = 1L),
       makeIntegerLearnerParam(id = "ntree.for.se", default = 100L, lower = 1L),
-      makeDiscreteLearnerParam(id = "se.method", default = "infjackknife", values = c("bootstrap", "jackknife", "noisy.bootstrap", "infjackknife"), requires = quote(se.method != "jackknife" && keep.inbag == TRUE)),
+      makeDiscreteLearnerParam(id = "se.method", default = "infjackknife", values = c("bootstrap", "jackknife", "noisy.bootstrap", "infjackknife", "sd"), requires = quote(se.method != "jackknife" && keep.inbag == TRUE)),
       makeIntegerLearnerParam(id = "nr.of.bootstrap.samples", default = 5L, lower = 1L),
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
@@ -57,7 +57,7 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
         randomForest::randomForest(f, data = train[bootstrapIdx,, drop = FALSE],...)
       })
 
-      # save models in attrribute
+     # save models in attrribute
       attr(m, "mlr.se.bootstrap.models") = models
     }
   }
@@ -71,7 +71,8 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
       bootstrap = bootstrapStandardError,
       noisy.bootstrap = bootstrapStandardError,
       jackknife = jackknifeStandardError,
-      infjackknife = infinitesimalJackknifeStandardError
+      infjackknife = infinitesimalJackknifeStandardError,
+      sd = sdStandardError
     )
     se.fun(.learner, .model, .newdata, ...)
   } else {
@@ -169,3 +170,10 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
 # computes the bias corrected infintesimal jackknife using randomForestCI
 infinitesimalJackknifeStandardError = function(.learner, .model, .newdata, ...)
   as.matrix(randomForestCI::randomForestInfJack(.model$learner.model, .newdata, FALSE))
+
+# computes the standard deviation across trees
+sdStandardError = function(.learner, .model, .newdata, ...) {
+  pred = predict(.model$learner.model, newdata = .newdata, predict.all = TRUE)
+  se = apply(pred$individual, 1, sd)
+  return(cbind(pred$aggregate, se))
+}
