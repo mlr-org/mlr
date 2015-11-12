@@ -1,5 +1,8 @@
 #' @title Returns a list of mlr's options
 #'
+#' @description
+#' Gets the options for mlr.
+#'
 #' @return [\code{list}].
 #' @export
 #' @family configure

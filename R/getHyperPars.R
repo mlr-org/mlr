@@ -1,5 +1,8 @@
 #' @title Get current parameter settings for a learner.
 #'
+#' @description
+#' Retrieves the current hyperparameter settings of a learner.
+#'
 #' @template arg_learner
 #' @param for.fun [\code{character(1)}]\cr
 #'   Restrict the returned settings to hyperparameters corresponding to \code{when}

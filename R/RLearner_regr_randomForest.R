@@ -13,7 +13,7 @@ makeRLearner.regr.randomForest = function() {
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
       makeIntegerLearnerParam(id = "sampsize", lower = 1L),
-      makeIntegerLearnerParam(id = "nodesize", default = 1L, lower = 1L),
+      makeIntegerLearnerParam(id = "nodesize", default = 5L, lower = 1L),
       makeIntegerLearnerParam(id = "maxnodes", lower = 1L),
       makeLogicalLearnerParam(id = "importance", default = FALSE),
       makeLogicalLearnerParam(id = "localImp", default = FALSE),
@@ -132,6 +132,9 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
 jackknifeStandardError = function(.learner, .model, .newdata, ...) {
     # extract relevant data from
     model = .model$learner.model
+
+    if (is.na(model$inbag))
+      stop("regr.randomForest must be defined with keep.inbag = TRUE to estimate the jackknife standard error!")
 
     # inbag needed to determine which observation was included in the training
     # of each ensemble member

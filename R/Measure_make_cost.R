@@ -1,5 +1,8 @@
 #' @title Creates a measure for non-standard misclassification costs.
 #'
+#' @description
+#' Creates a cost measure for non-standard classification error costs.
+#'
 #' @param id [\code{character(1)}]\cr
 #'   Name of measure.
 #'   Default is \dQuote{costs}.

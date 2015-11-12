@@ -96,8 +96,7 @@ test_that("tuning works with tuneThreshold and multiple measures", {
   ps = makeParamSet(
     makeNumericParam("cp", lower = 0.1, upper = 0.2)
   )
-  res = tuneParams(lrn, binaryclass.task, resampling = rdesc, measures = list(mmce, auc),
-    par.set = ps, control = ctrl)
+  res = tuneParams(lrn, binaryclass.task, resampling = rdesc, measures = list(mmce, auc), par.set = ps, control = ctrl)
   expect_true(is.numeric(res$y) && length(res$y) == 2L && !any(is.na(res$y)))
 
 # also check with infeasible stuff

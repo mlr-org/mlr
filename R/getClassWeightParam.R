@@ -1,5 +1,8 @@
 #' @title Get the class weight parameter of a learner.
 #'
+#' @description
+#' Gets the class weight parameter of a learner.
+#'
 #' @template arg_learner
 #' @return [\code{numeric \link{LearnerParam}}].\cr
 #'   A numeric parameter object, containing the class weight parameter of the

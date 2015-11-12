@@ -104,6 +104,9 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 }
 #' @title Plot calibration data using ggplot2.
 #'
+#' @description
+#' Plots calibration data from \code{\link{generateCalibrationData}}.
+#'
 #' @family plot
 #' @family calibration
 #'

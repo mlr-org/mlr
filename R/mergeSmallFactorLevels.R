@@ -1,5 +1,8 @@
 #' @title Merges small levels of factors into new level.
 #'
+#' @description
+#' Merges factor levels that occur only infrequently into combined levels with a higher frequency.
+#'
 #' @template arg_task
 #' @param cols [\code{character}]
 #'   Which columns to convert.

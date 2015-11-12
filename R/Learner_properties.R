@@ -20,6 +20,7 @@ getLearnerProperties = function(learner) {
   UseMethod("getLearnerProperties")
 }
 
+#' @export
 getLearnerProperties.Learner = function(learner) {
   learner$properties
 }
