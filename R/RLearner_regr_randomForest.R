@@ -8,8 +8,12 @@ makeRLearner.regr.randomForest = function() {
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "ntree", default = 500L, lower = 1L),
       makeIntegerLearnerParam(id = "ntree.for.se", default = 100L, lower = 1L),
-      makeDiscreteLearnerParam(id = "se.method", default = "infjackknife", values = c("bootstrap", "jackknife", "noisy.bootstrap", "infjackknife", "sd"), requires = quote(se.method != "jackknife" && keep.inbag == TRUE)),
+      makeDiscreteLearnerParam(id = "se.method", default = "infjackknife",
+                               values = c("bootstrap", "jackknife", "noisy.bootstrap", "infjackknife", "sd"),
+                               requires = quote(se.method %in% c("jackknife", "infjackknife") &&
+                                                  keep.inbag == TRUE)),
       makeIntegerLearnerParam(id = "nr.of.bootstrap.samples", default = 5L, lower = 1L),
+      makeLogicalLearnerParam(id = "calibrate", default = TRUE, tunable = FALSE),
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
       makeIntegerLearnerParam(id = "sampsize", lower = 1L),
@@ -129,47 +133,33 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
     return(res)
 }
 
-# Computes the (potentially bias-corrected respcetively noisy)
-# jackknife estimator of the standard error
+# Computes the bias-corrected jackknife after bootstrap
 jackknifeStandardError = function(.learner, .model, .newdata, ...) {
-    # extract relevant data from
-    model = .model$learner.model
-
-    if (is.na(model$inbag))
-      stop("regr.randomForest must be defined with keep.inbag = TRUE to estimate the jackknife standard error!")
-
-    # inbag needed to determine which observation was included in the training
-    # of each ensemble member
-    inbag = model$inbag
-    n = nrow(inbag)
-
-    # keep predictions of all ensemble members
-    rf.preds = predict(model, .newdata, predict.all = TRUE)
-
-    # determine number of participating ensembles
-    # FIXME: formula looks strange. proof read ALL code in this file!
-    M = lapply(seq_len(n), function(i) sum(abs(inbag[i, ] - 1)))
-    # determine ensemlbe members, where observation i is not included
-    idx = lapply(seq_len(n), function(i) which(inbag[i, ] == 0L))
-
-    # estimate
-    res = matrix(NA_real_, ncol = n, nrow = nrow(.newdata))
-    for (j in seq_row(.newdata)) {
-      for (i in seq_len(n)) {
-        res[j, i] = sum(rf.preds$individual[j, idx[[i]]]) / M[[i]]
-      }
-    }
-
-    mean.responses = rf.preds$aggregate
-    se.preds = apply(res, 1L, function(row) {
-      sum((row - mean(row))^2)  / n
-    })
-    return(cbind(mean.responses, se.preds))
+  model = .model$learner.model
+  n = nrow(model$inbag)
+  ntree = model$ntree
+  pred = predict(model, .newdata, predict.all = TRUE)
+  oob = t(sapply(seq_len(n), function(i) model$inbag[i, ] == 0))
+  jack_n = apply(oob, 1, function(x) rowMeans(pred$individual[, x]))
+  jack = (n - 1) / n * rowSums((jack_n - pred$aggregate)^2)
+  bias = (exp(1) - 1) * n / ntree^2 * rowSums((pred$individual - pred$aggregate)^2)
+  jab = jack - bias
+  jab[jab < 0] = 0
+  return(cbind(pred$aggregate, sqrt(jab)))
 }
 
+
 # computes the bias corrected infintesimal jackknife using randomForestCI
-infinitesimalJackknifeStandardError = function(.learner, .model, .newdata, ...)
-  as.matrix(randomForestCI::randomForestInfJack(.model$learner.model, .newdata, FALSE))
+infinitesimalJackknifeStandardError = function(.learner, .model, .newdata, ...) {
+  if (is.null(.learner$par.vals$calibrate) & nrow(.newdata) > 20L)
+    calibrate = TRUE
+  else
+    calibrate = FALSE
+  ret = randomForestCI::randomForestInfJack(.model$learner.model, .newdata, calibrate)
+  ret$var.hat[ret$var.hat < 0] = 0
+  ij.se = sqrt(ret$var.hat)
+  return(cbind(ret$y.hat, ij.se))
+}
 
 # computes the standard deviation across trees
 sdStandardError = function(.learner, .model, .newdata, ...) {
