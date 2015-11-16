@@ -55,7 +55,6 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type == "se") {
     se.fun = switch(.learner$par.vals$se.method,
       bootstrap = bootstrapStandardError,
-      noisy.bootstrap = bootstrapStandardError,
       jackknife = jackknifeStandardError,
       infjackknife = infinitesimalJackknifeStandardError,
       sd = sdStandardError
@@ -69,8 +68,8 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
 # Computes brute force or noisy bootstrap
 # Set ntree = ntree.for.se for the brute force bootstrap
 # Set ntree.for.se << ntree for the noisy bootstrap (mc bias corrected)
-boostrapStandardError = function(.learner, .model, .newdata, ...) {
-  pred.all.boot = lapply(getLearnerModel(fit$learner.model), function(x)
+bootstrapStandardError = function(.learner, .model, .newdata, ...) {
+  pred.all.boot = lapply(getLearnerModel(.model$learner.model), function(x)
     predict(x$learner.model, newdata = .newdata, predict.all = TRUE)$individual)
   B = .learner$par.vals$se.boot
   R = .learner$par.vals$ntree.for.se
@@ -78,10 +77,12 @@ boostrapStandardError = function(.learner, .model, .newdata, ...) {
   bias = ((1 / R) - (1 / M)) / (B * R * (R - 1)) *
     rowSums(sapply(pred.all.boot, function(p) rowSums((p - mean(p))^2)))
   pred = getPredictionResponse(predict(.model$learner.model, newdata = .newdata))
-  pred.boot = lapply(getLearnerModel(fit$learner.model), predict, newdata = .newdata)
+  pred.boot = lapply(getLearnerModel(.model$learner.model), predict, newdata = .newdata, ...)
   pred.boot = extractSubList(pred.boot, c("data", "response"))
   se = apply(pred.boot, 1, sd)
-  cbind(pred, se - bias)
+  nb.se = se - bias
+  nb.se[nb.se < 0] = 0
+  cbind(pred, nb.se)
 }
 
 # Computes the mc bias-corrected jackknife after bootstrap
