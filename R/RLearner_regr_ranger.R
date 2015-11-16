@@ -30,7 +30,8 @@ makeRLearner.regr.ranger = function() {
 
 #' @export
 trainLearner.regr.ranger = function(.learner, .task, .subset, .weights, ...) {
-  ranger::ranger(formula = getTaskFormula(.task), data = getTaskData(.task, .subset),
+  tn = getTaskTargetNames(.task)
+  ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset),
     write.forest = TRUE, ...)
 }
 
