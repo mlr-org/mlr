@@ -47,9 +47,9 @@ test_that("fix factors work", {
 })
 
 test_that("different se.methods work", {
-  se.methods = c("bootstrap", "jackknife", "noisy.bootstrap")
+  se.methods = c("bootstrap", "jackknife", "infjackknife")
   for (se.method in se.methods) {
-    keep.inbag = se.method == "jackknife"
+    keep.inbag = se.method %in% c("jackknife", "infjackknife")
     learner = makeLearner("regr.randomForest", predict.type = "se", se.method = se.method, ntree = 10, keep.inbag = keep.inbag)
     model = train(learner, task = regr.task, subset = regr.train.inds)
     pred = predict(model, task = regr.task, subset = regr.test.inds)
