@@ -79,8 +79,7 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
   pred = getPredictionResponse(predict(.model$learner.model, newdata = .newdata))
   pred.boot = lapply(getLearnerModel(.model$learner.model), predict, newdata = .newdata, ...)
   pred.boot = extractSubList(pred.boot, c("data", "response"))
-  se = apply(pred.boot, 1, sd)
-  nb.se = se - bias
+  nb.se = sqrt(apply(pred.boot, 1, var) - bias)
   nb.se[nb.se < 0] = 0
   cbind(pred, nb.se)
 }
