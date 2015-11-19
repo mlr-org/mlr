@@ -78,7 +78,7 @@ Object slots:
 }
 }
 \section{Standard ResampleDesc objects}{
- 
+
 For common resampling strategies you can save some typing
 by using the following description objects:
 \describe{

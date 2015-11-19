@@ -1,11 +1,14 @@
 #' @import BBmisc
 #' @import checkmate
 #' @import ggplot2
+#' @import graphics
+#' @import methods
 #' @import parallelMap
 #' @import ParamHelpers
 #' @import plyr
 #' @import reshape2
-#' @importFrom stats predict
+#' @import stats
+#' @import utils
 #' @importFrom survival Surv
 #' @importFrom survival is.Surv
 
@@ -16,12 +19,12 @@
 
 
 #' @rdname makeResampleDesc
-#' @aliases NULL 
+#' @aliases NULL
 #' @docType NULL
 #' @usage NULL
 #' @format NULL
 #' @keywords NULL
-#' @section Standard ResampleDesc objects: 
+#' @section Standard ResampleDesc objects:
 #' For common resampling strategies you can save some typing
 #' by using the following description objects:
 #' \describe{

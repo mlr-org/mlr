@@ -21,11 +21,11 @@
 #' @family wrapper
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
-#' lrn = makeLearner("classif.ksvm")
+#' lrn = makeLearner("classif.rpart")
 #' # stupid mini grid
 #' ps = makeParamSet(
-#'   makeDiscreteParam("C", values = 1:2),
-#'   makeDiscreteParam("sigma", values = 1:2)
+#'   makeDiscreteParam("cp", values = c(0.05, 0.1)),
+#'   makeDiscreteParam("minsplit", values = c(10, 20))
 #' )
 #' ctrl = makeTuneControlGrid()
 #' inner = makeResampleDesc("Holdout")
