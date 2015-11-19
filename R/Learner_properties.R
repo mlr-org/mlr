@@ -32,3 +32,13 @@ hasLearnerProperties = function(learner, props) {
   assertSubset(props, getSupportedLearnerProperties())
   props %in% getLearnerProperties(learner)
 }
+
+#' Deprecated, use \code{hasLearnerProperties} instead.
+#' @param pred Deprecated.
+#' @param cl Deprecated.
+#' @export
+hasProperties = function(learner, props) {
+  .Deprecated("hasLearnerProperties")
+  hasLearnerProperties(learner, props)
+}
+

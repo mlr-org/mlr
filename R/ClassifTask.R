@@ -4,6 +4,9 @@ makeClassifTask = function(id = deparse(substitute(data)), data, target, weights
   assertString(id)
   assertDataFrame(data)
   assertString(target)
+  # some code on cran passed stuff like positive=1, we can live with the convert here
+  if (isScalarNumeric(positive))
+    positive = as.character(positive)
   assertString(positive, na.ok = TRUE)
   assertChoice(fixup.data, choices = c("no", "quiet", "warn"))
   assertFlag(check.data)

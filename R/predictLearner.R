@@ -90,7 +90,7 @@ checkPredictLearnerOutput = function(learner, model, p) {
     if (learner$predict.type == "response") {
       if (cl != "integer")
         stopf("predictLearner for %s has returned a class %s instead of an integer!", learner$id, cl)
-     } else if (learner$predict.type == "prob") {
+    } else if (learner$predict.type == "prob") {
       if (!is.matrix(p))
         stopf("predictLearner for %s has returned a class %s instead of a matrix!", learner$id, cl)
     }
