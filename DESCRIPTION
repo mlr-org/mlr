@@ -130,6 +130,6 @@ Suggests:
     XML
 LazyData: yes
 ByteCompile: yes
-Version: 2.5
+Version: 2.6
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
