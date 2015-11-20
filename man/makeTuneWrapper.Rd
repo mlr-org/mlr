@@ -52,6 +52,7 @@ After training, the optimal hyperparameters (and other related information) can 
 \code{\link{getTuneResult}}.
 }
 \examples{
+\donttest{
 task = makeClassifTask(data = iris, target = "Species")
 lrn = makeLearner("classif.rpart")
 # stupid mini grid
@@ -71,6 +72,7 @@ r = resample(lrn, task, outer, extract = getTuneResult)
 print(r$extract)
 getNestedTuneResultsOptPathDf(r)
 getNestedTuneResultsX(r)
+}
 }
 \seealso{
 Other tune: \code{\link{TuneControl}},

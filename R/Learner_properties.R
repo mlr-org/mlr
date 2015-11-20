@@ -34,8 +34,8 @@ hasLearnerProperties = function(learner, props) {
 }
 
 #' Deprecated, use \code{hasLearnerProperties} instead.
-#' @param pred Deprecated.
-#' @param cl Deprecated.
+#' @param learner Deprecated.
+#' @param props Deprecated.
 #' @export
 hasProperties = function(learner, props) {
   .Deprecated("hasLearnerProperties")

@@ -25,6 +25,7 @@
 #' @family multilabel
 #' @export
 #' @examples
+#' \donttest{
 #' d = getTaskData(yeast.task)
 #' # drop some labels so example runs faster
 #' d = d[, c(1:3, 15:117)]
@@ -38,6 +39,7 @@
 #' performance(pred, measure = hamloss)
 #' getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 #' # above works also with predictions from resample!
+#' }
 makeMultilabelBinaryRelevanceWrapper = function(learner) {
   learner = checkLearner(learner, type = "classif")
   id = paste("multilabel", learner$id, sep = ".")

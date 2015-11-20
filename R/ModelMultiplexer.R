@@ -21,6 +21,7 @@
 #' @note Note that logging output during tuning is somewhat shortened to make it more readable.
 #'   I.e., the artificial prefix before parameter names is suppressed.
 #' @examples
+#' \donttest{
 #' bls = list(
 #'   makeLearner("classif.ksvm"),
 #'   makeLearner("classif.randomForest")
@@ -62,6 +63,7 @@
 #' )
 #'
 #' # all three ps-objects are exactly the same internally.
+#' }
 makeModelMultiplexer = function(base.learners) {
   lrn = makeBaseEnsemble(
     id = "ModelMultiplexer",

@@ -20,6 +20,7 @@
 #' @family tune
 #' @family wrapper
 #' @examples
+#' \donttest{
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn = makeLearner("classif.rpart")
 #' # stupid mini grid
@@ -39,6 +40,7 @@
 #' print(r$extract)
 #' getNestedTuneResultsOptPathDf(r)
 #' getNestedTuneResultsX(r)
+#' }
 makeTuneWrapper = function(learner, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)
   assert(checkClass(resampling, "ResampleDesc"), checkClass(resampling, "ResampleInstance"))

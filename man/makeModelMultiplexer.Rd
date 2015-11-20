@@ -30,6 +30,7 @@ Note that logging output during tuning is somewhat shortened to make it more rea
   I.e., the artificial prefix before parameter names is suppressed.
 }
 \examples{
+\donttest{
 bls = list(
   makeLearner("classif.ksvm"),
   makeLearner("classif.randomForest")
@@ -71,6 +72,7 @@ ps = makeParamSet(
 )
 
 # all three ps-objects are exactly the same internally.
+}
 }
 \seealso{
 Other multiplexer: \code{\link{makeModelMultiplexerParamSet}}

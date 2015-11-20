@@ -27,6 +27,7 @@
 #' @family tune_multicrit
 #' @export
 #' @examples
+#' \donttest{
 #' # multi-criteria optimization of (tpr, fpr) with NGSA-II
 #' lrn =  makeLearner("classif.ksvm")
 #' rdesc = makeResampleDesc("Holdout")
@@ -38,6 +39,7 @@
 #' res = tuneParamsMultiCrit(lrn, sonar.task, rdesc, par.set = ps,
 #'   measures = list(tpr, fpr), control = ctrl)
 #' plotTuneMultiCritResult(res, path = TRUE)
+#' }
 tuneParamsMultiCrit = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")

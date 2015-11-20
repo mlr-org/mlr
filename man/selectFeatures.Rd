@@ -56,10 +56,12 @@ to a single feature, but you are able to change this by using the arguments \cod
 and \code{bits.to.features}. Thus allowing you to switch on whole groups of features with a single bit.
 }
 \examples{
+\donttest{
 rdesc = makeResampleDesc("Holdout")
 ctrl = makeFeatSelControlSequential(method = "sfs", maxit = NA)
 res = selectFeatures("classif.rpart", iris.task, rdesc, control = ctrl)
 analyzeFeatSelResult(res)
+}
 }
 \seealso{
 Other featsel: \code{\link{FeatSelControl}},

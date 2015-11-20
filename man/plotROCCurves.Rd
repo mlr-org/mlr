@@ -33,6 +33,7 @@ a ggvis plot object.
 Plots a ROC curve from predictions.
 }
 \examples{
+\donttest{
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 fit = train(lrn, sonar.task)
 pred = predict(fit, task = sonar.task)
@@ -46,6 +47,7 @@ plotROCCurves(roc_r)
 r2 = crossval(lrn, sonar.task, iters = 3)
 roc_l = generateThreshVsPerfData(list(boot = r, cv = r2), list(fpr, tpr), aggregate = FALSE)
 plotROCCurves(roc_l)
+}
 }
 \seealso{
 Other plot: \code{\link{plotBenchmarkResult}},

@@ -47,6 +47,7 @@ by passing a corresponding control object. For a complete list of implemented al
 \code{\link{TuneMultiCritControl}}.
 }
 \examples{
+\donttest{
 # multi-criteria optimization of (tpr, fpr) with NGSA-II
 lrn =  makeLearner("classif.ksvm")
 rdesc = makeResampleDesc("Holdout")
@@ -58,6 +59,7 @@ ctrl = makeTuneMultiCritControlNSGA2(popsize = 4L, generations = 1L)
 res = tuneParamsMultiCrit(lrn, sonar.task, rdesc, par.set = ps,
   measures = list(tpr, fpr), control = ctrl)
 plotTuneMultiCritResult(res, path = TRUE)
+}
 }
 \seealso{
 Other tune_multicrit: \code{\link{TuneMultiCritControl}},

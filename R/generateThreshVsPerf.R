@@ -89,6 +89,7 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
             data = cbind(grid, out),
             aggregate = aggregate)
 }
+
 #' @title Plot threshold vs. performance(s) for 2-class classification using ggplot2.
 #'
 #' @description
@@ -268,6 +269,7 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
     create_plot(data, color, obj$measures)
   }
 }
+
 #' @title Plots a ROC curve using ggplot2
 #'
 #' @description
@@ -285,8 +287,9 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
 #'   Whether to use the \code{\link{Measure}} name instead of the id in the plot.
 #'   Default is \code{TRUE}.
 #' @template ret_ggv
-#'
+#' @export
 #' @examples
+#' \donttest{
 #' lrn = makeLearner("classif.rpart", predict.type = "prob")
 #' fit = train(lrn, sonar.task)
 #' pred = predict(fit, task = sonar.task)
@@ -300,7 +303,7 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
 #' r2 = crossval(lrn, sonar.task, iters = 3)
 #' roc_l = generateThreshVsPerfData(list(boot = r, cv = r2), list(fpr, tpr), aggregate = FALSE)
 #' plotROCCurves(roc_l)
-#' @export
+#' }
 plotROCCurves = function(obj, measures = obj$measures[1:2], diagonal = TRUE, pretty.names = TRUE) {
   assertClass(obj, "ThreshVsPerfData")
   assertList(measures, "Measure", len = 2)

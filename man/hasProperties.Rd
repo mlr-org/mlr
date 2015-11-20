@@ -7,9 +7,9 @@
 hasProperties(learner, props)
 }
 \arguments{
-\item{pred}{Deprecated.}
+\item{learner}{Deprecated.}
 
-\item{cl}{Deprecated.}
+\item{props}{Deprecated.}
 }
 \description{
 Deprecated, use \code{hasLearnerProperties} instead.
