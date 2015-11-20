@@ -89,9 +89,12 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
   model = .model$learner.model
   n = nrow(model$inbag)
   ntree = model$ntree
-  pred = predict(model, .newdata, predict.all = TRUE)
+  pred = predict(model, newdata = .newdata, predict.all = TRUE)
   oob = t(sapply(seq_len(n), function(i) model$inbag[i, ] == 0))
-  jack_n = apply(oob, 1, function(x) rowMeans(pred$individual[, x]))
+  jack_n = apply(oob, 1, function(x) rowMeans(pred$individual[, x, drop = FALSE]))
+  if (is.vector(jack_n)) {
+    jack_n = t(as.matrix(jack_n))
+  }
   jack = (n - 1) / n * rowSums((jack_n - pred$aggregate)^2)
   bias = (exp(1) - 1) * n / ntree^2 * rowSums((pred$individual - pred$aggregate)^2)
   jab = jack - bias
