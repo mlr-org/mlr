@@ -123,7 +123,7 @@ makeResampleDescHoldout = function(iters, split = 2/3) {
 }
 
 makeResampleDescCV = function(iters = 10L) {
-  iters = asCount(iters, positive = TRUE)
+  iters = asInt(iters, lower = 2L)
   makeResampleDescInternal("cross-validation", iters = iters)
 }
 
