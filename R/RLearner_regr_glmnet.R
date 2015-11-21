@@ -2,9 +2,10 @@
 makeRLearner.regr.glmnet = function() {
   makeRLearnerRegr(
     cl = "regr.glmnet",
-    # Required for predict to work properly :(
+    # FIXME: Required for predict to work properly :(
     package = "!glmnet",
     par.set = makeParamSet(
+      makeDiscreteLearnerParam(id = "family", values = c("gaussian", "poisson"), default = "gaussian"),
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "s", default = 0.01, lower = 0, upper = 1, when = "predict"),
       makeLogicalLearnerParam(id = "exact", default = FALSE, when = "predict"),
@@ -46,7 +47,7 @@ makeRLearner.regr.glmnet = function() {
 trainLearner.regr.glmnet = function(.learner, .task, .subset, .weights = NULL, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   info = getFixDataInfo(d$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
-  args = c(list(x = as.matrix(fixDataForLearner(d$data, info)), y = d$target, family = "gaussian"), list(...))
+  args = c(list(x = as.matrix(fixDataForLearner(d$data, info)), y = d$target), list(...))
   rm(d)
   if (!is.null(.weights))
     args$weights = .weights

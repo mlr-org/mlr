@@ -38,3 +38,15 @@ test_that("regr_glmnet", {
   test.dat$chas = as.numeric(test.dat$chas)
   testSimpleParsets("regr.glmnet", test.dat, regr.target, regr.train.inds, old.predicts.list, parset.list)
 })
+
+
+test_that("regr_glmnet works with poisson", {
+  # set some dummy counts
+  d = regr.df
+  d[, regr.target] = sample(1:100, getTaskSize(regr.task), replace = TRUE)
+  task = makeRegrTask(data = d, target = regr.target)
+  lrn = makeLearner("regr.glmnet", family = "poisson")
+  r = holdout(lrn, task)
+  expect_true(!is.na(r$aggr))
+})
+
