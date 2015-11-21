@@ -75,7 +75,7 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
 [release](http://cran.r-project.org/web/packages/mlr/NEWS) and here for the
 [devel](https://github.com/mlr-org/mlr/blob/master/NEWS) version on Github.
 
-* 2015-06-13:
+* 2015-11-21:
   * mlr 2.5 released to CRAN. In addition to other things and many cleanups and fixes, it features: a) Quite a few new learners b) plots and statistical tests to analyze benchmark results (e.g. Demsar) c) partial depedency plots for all models (which I like quite a lot) d) first support for multilabel classification.
 * 2015-06-27:
   * Zach M Jones is doing great work in his current GSOC project to improve **mlr's visualization system** to explore models and data. Some of this is already in 2.4, much more is to come in upcoming 2.5. Here are some general remarks.
