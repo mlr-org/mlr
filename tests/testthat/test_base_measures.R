@@ -2,7 +2,7 @@ context("measures")
 
 test_that("measures", {
   ct = binaryclass.task
-
+  options(warn = 2)
   mymeasure = makeMeasure(id = "foo", minimize = TRUE, properties = c("classif", "classif.multi", "regr", "predtype.response", "predtype.prob"),
     fun = function(task, model, pred, feats, extra.args) {
       tt = pred
@@ -99,8 +99,83 @@ test_that("listMeasures", {
 })
 
 test_that("check measure calculations", {
-
-  #data used here can be found in helper_objects.R
+  #tiny datasets for testing
+  #features
+  var1 = c(1, 2, 3, 4)
+  var2 = c(3, 4, 1, 2)
+  #for regression
+  tar.regr = c(5, 10, 0, 5)
+  pred.art.regr = c(4, 11, 0, 4)
+  data.regr = data.frame(var1, var2, tar.regr)
+  task.regr = makeRegrTask(data = data.regr, target = "tar.regr")
+  lrn.regr = makeLearner("regr.rpart")
+  mod.regr = train(lrn.regr, task.regr)
+  pred.regr = predict(mod.regr, task.regr)
+  pred.regr$data$response = pred.art.regr
+  #for multiclass
+  tar.classif = factor(c(1L, 2L, 0L, 1L))
+  pred.art.classif = factor(c(1L, 1L, 0L, 2L))
+  data.classif = data.frame(var1, var2, tar.classif)
+  task.classif = makeClassifTask(data = data.classif, target = "tar.classif")
+  lrn.classif = makeLearner("classif.rpart", predict.type = "prob")
+  mod.classif = train(lrn.classif, task.classif)
+  pred.classif = predict(mod.classif, task.classif)
+  pred.classif$data$response = pred.art.classif
+  #for binaryclass
+  tar.bin = factor(c(1L, 0L, 0L, 1L))
+  pred.art.bin = factor(c(1L, 1L, 0L, 0L))
+  data.bin = data.frame(var1, var2, tar.bin)
+  task.bin = makeClassifTask(data = data.bin, target = "tar.bin")
+  lrn.bin = lrn.classif
+  mod.bin = train(lrn.bin, task.bin)
+  pred.bin = predict(mod.bin, task.bin)
+  pred.bin$data$response = pred.art.bin
+  #for multilabel
+  tar1.multilabel = c(TRUE, FALSE, FALSE, TRUE)
+  tar2.multilabel = c(TRUE, TRUE, FALSE, TRUE)
+  pred.art.multilabel = cbind(c(TRUE, FALSE, FALSE, FALSE), c(FALSE, TRUE, FALSE, TRUE))
+  data.multilabel = data.frame(var1, var2, tar1.multilabel, tar2.multilabel)
+  label.names = c("tar1.multilabel", "tar2.multilabel")
+  task.multilabel = makeMultilabelTask(data = data.multilabel, target = label.names)
+  lrn.multilabel = makeLearner("multilabel.rFerns")
+  mod.multilabel = train(lrn.multilabel, task.multilabel)
+  pred.multilabel = predict(mod.multilabel, task.multilabel)
+  pred.multilabel$data[,4:5] = pred.art.multilabel
+  #for survival
+  time.surv = c(5, 10, 5, 10)
+  status.surv = c(TRUE, FALSE, TRUE, FALSE)
+  pred.art.surv = c(1, -1, 1, 1)
+  data.surv = data.frame(var1, var2, time.surv, status.surv)
+  tar.names = c("time.surv", "status.surv")
+  task.surv = makeSurvTask(data = data.surv, target = tar.names)
+  lrn.surv = makeLearner("surv.coxph")
+  # lm does not converge due to small data and warns
+  suppressWarnings({
+  mod.surv = train(lrn.surv, task.surv)
+  })
+  pred.surv = predict(mod.surv, task.surv)
+  pred.surv$data[,"response"] = pred.art.surv
+  #for costsensitive
+  tar.costsens = factor(c("a", "b", "c", "a"))
+  pred.art.costsens = factor(c("a", "b", "c", "c"))
+  data.costsens = data.frame(var1, var2)
+  costs = matrix(c(0, 1, 2, 1, 0, 2, 1, 2, 0, 0, 2,1), nrow = 4L, byrow = TRUE)
+  colnames(costs) = levels(tar.costsens)
+  rownames(costs) = rownames(data.costsens)
+  task.costsens = makeCostSensTask(data = data.costsens, cost = costs)
+  lrn.costsens = makeLearner("classif.multinom", trace = FALSE)
+  lrn.costsens = makeCostSensWeightedPairsWrapper(lrn.costsens)
+  mod.costsens = train(lrn.costsens, task.costsens)
+  pred.costsens = predict(mod.costsens, task = task.costsens)
+  pred.costsens$data$response = pred.art.costsens
+  #for clustering
+  pred.art.cluster = c(1L, 1L, 2L, 1L)
+  data.cluster = data.frame(var1, var2)
+  task.cluster = makeClusterTask(data = data.cluster)
+  lrn.cluster = makeLearner("cluster.EM")
+  mod.cluster = train(lrn.cluster, task.cluster)
+  pred.cluster = predict(mod.cluster, task.cluster)
+  pred.cluster$data$response = pred.art.cluster
 
   #test regression measures
 
@@ -296,7 +371,7 @@ test_that("check measure calculations", {
   #cindex
   pos = pred.surv$data[pred.surv$data$truth.event == TRUE, "response"]
   neg = pred.surv$data[pred.surv$data$truth.event == FALSE, "response"]
-  cons = c(ifelse(pos[1L] > neg, 1L, 0L), ifelse(pos[2L] > neg, 1L, 0L)) 
+  cons = c(ifelse(pos[1L] > neg, 1L, 0L), ifelse(pos[2L] > neg, 1L, 0L))
   ties = c(ifelse(pos[1L] == neg, 0.5, 0), ifelse(pos[2L] == neg, 0.5, 0))
   n.pairs = length(pos) * length(neg)
   cindex.test = sum(c(cons, ties)) / n.pairs
@@ -311,7 +386,7 @@ test_that("check measure calculations", {
   meancosts.perf = performance(pred.costsens, measures = meancosts,
    model = mod.costsens, task = task.costsens)
   names(meancosts.perf) = NULL
-  expect_equal(meancosts.test, meancosts.perf, 
+  expect_equal(meancosts.test, meancosts.perf,
    meancosts$fun(pred = pred.costsens, task = task.costsens))
   #mcp
   mcp.test = meancosts.test - 0
@@ -327,7 +402,7 @@ test_that("check measure calculations", {
   #db
   c2 = c(3, 1)
   c1 = c((1 + 2 + 4) / 3, (3 + 4 + 2) / 3)
-  s1 = sqrt((sum((data.cluster[1, ] - c1)^2) + sum((data.cluster[2, ] - c1)^2) + 
+  s1 = sqrt((sum((data.cluster[1, ] - c1)^2) + sum((data.cluster[2, ] - c1)^2) +
     sum((data.cluster[4, ] - c1)^2)) / 3L)
   M = sqrt(sum((c2 - c1)^2))
   db.test = s1 / M
@@ -352,7 +427,7 @@ test_that("check measure calculations", {
     sqrt(sum((c(4, 3) - c(3, 2))^2))
   insum = sqrt(sum((c(1, 3) - c(2, 4))^2)) + sqrt(sum((c(1, 3) - c(4, 2))^2)) +
     sqrt(sum((c(2, 4) - c(4, 2))^2))
-  g1.test = exsum / insum 
+  g1.test = exsum / insum
   g1.perf = performance(pred.cluster, measures = G1,
     model = mod.cluster, feats = data.cluster)
   names(g1.perf) = NULL
@@ -373,7 +448,7 @@ test_that("check measure calculations", {
   g2.test = (con.pairs - dis.pairs) / (con.pairs + dis.pairs)
   g2.perf = performance(pred.cluster, measures = G2,
     model = mod.cluster, feats = data.cluster)
-  names(g2.perf) = NULL 
+  names(g2.perf) = NULL
   expect_equal(g2.test, g2.perf,
    G2$fun(pred = pred.cluster, feats = data.cluster))
   #silhouette
