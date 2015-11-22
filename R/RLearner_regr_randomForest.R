@@ -26,7 +26,8 @@ makeRLearner.regr.randomForest = function() {
     ),
     par.vals = list(
       se.method = "bootstrap",
-      se.boot = 50L
+      se.boot = 50L,
+      ntree.for.se = 100L
     ),
     properties = c("numerics", "factors", "ordered", "se"),
     name = "Random Forest",
@@ -75,10 +76,14 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
   R = .learner$par.vals$ntree.for.se
   M = .learner$par.vals$ntree
   bias = ((1 / R) - (1 / M)) / (B * R * (R - 1)) *
-    rowSums(sapply(pred.all.boot, function(p) rowSums((p - mean(p))^2)))
+    rowSums(matrix(sapply(pred.all.boot, function(p) rowSums((p - mean(p))^2)),
+                   nrow = nrow(.newdata), ncol = R, byrow = TRUE))
   pred = getPredictionResponse(predict(.model$learner.model, newdata = .newdata))
   pred.boot = lapply(getLearnerModel(.model$learner.model), predict, newdata = .newdata, ...)
   pred.boot = extractSubList(pred.boot, c("data", "response"))
+  if (is.vector(pred.boot)) {
+    pred.boot = matrix(pred.boot, nrow = nrow(.newdata), ncol = R, byrow = TRUE)
+  }
   nb.se = sqrt(apply(pred.boot, 1, var) - bias)
   nb.se[nb.se < 0] = 0
   cbind(pred, nb.se)
@@ -111,8 +116,7 @@ infinitesimalJackknifeStandardError = function(.learner, .model, .newdata, ...) 
     calibrate = FALSE
   ret = randomForestCI::randomForestInfJack(.model$learner.model, .newdata, calibrate)
   ret$var.hat[ret$var.hat < 0] = 0
-  ij.se = sqrt(ret$var.hat)
-  return(cbind(ret$y.hat, ij.se))
+  return(cbind(ret$y.hat, sqrt(ret$var.hat)))
 }
 
 # computes the standard deviation across trees
