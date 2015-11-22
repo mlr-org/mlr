@@ -2,15 +2,9 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
   requirePackages("irace", why = "tuneIrace", default.method = "load")
 
   cx = function(x) convertXLogicalsNotAsStrings(x, par.set)
-
-  hookRunParallel = function(experiment, hook.run, config = list()) {
-    # get our param settings that irace should try
-    cands = extractSubList(experiment, "candidate", simplify = FALSE)
-    cands = lapply(cands, as.list)
-    # the instance is always the same for all different param setting
-    rin = experiment[[1]]$instance
-
-    tunerFitnFunVectorized(cands, learner = learner, task = task, resampling = rin, measures = measures,
+  hookRun = function(experiment, config = list()) {
+    rin = experiment$instance
+    tunerFitnFun(as.list(experiment$candidate), learner = learner, task = task, resampling = rin, measures = measures,
       par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
       convertx = cx, remove.nas = TRUE)
   }
@@ -28,7 +22,7 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
 
   parameters = convertParamSetToIrace(par.set)
   log.file = tempfile()
-  tuner.config = c(list(hookRunParallel = hookRunParallel, instances = instances, logFile = log.file),
+  tuner.config = c(list(hookRun = hookRun, instances = instances, logFile = log.file),
     control$extra.args)
   g = if (show.irace.output) identity else capture.output
   g(or <- irace::irace(tunerConfig = tuner.config, parameters = parameters))
