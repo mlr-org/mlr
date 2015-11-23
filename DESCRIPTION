@@ -120,7 +120,7 @@ Suggests:
     RWeka,
     sda,
     sparsediscrim,
-    sparseLDA,
+    sparseLDA (>= 0.1-6),
     stepPlr,
     SwarmSVM,
     testthat,
