@@ -25,7 +25,7 @@ trainLearner.regr.rknn = function(.learner, .task, .subset, .weights = NULL,  ..
 }
 
 #' @export
-predictLearner.regr.rknn = function(.learner, .model, .newdata, ...){
+predictLearner.regr.rknn = function(.learner, .model, .newdata, ...) {
   args = .model$learner.model
   args$newdata = .newdata
   do.call(rknn::rknnReg, args)$pred

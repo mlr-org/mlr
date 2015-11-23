@@ -33,5 +33,5 @@ predictLearner.classif.LiblineaRL2LogReg = function(.learner, .model, .newdata, 
   if(.learner$predict.type == "response")
     as.factor(predict(.model$learner.model, newx = .newdata, ...)$predictions)
   else
-    predict(.model$learner.model, newx = .newdata, proba = TRUE, ...)$probabilities  
+    predict(.model$learner.model, newx = .newdata, proba = TRUE, ...)$probabilities
 }
