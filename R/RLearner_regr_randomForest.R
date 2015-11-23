@@ -84,9 +84,9 @@ bootstrapStandardError = function(.learner, .model, .newdata, ...) {
   if (is.vector(pred.boot)) {
     pred.boot = matrix(pred.boot, nrow = nrow(.newdata), ncol = R, byrow = TRUE)
   }
-  nb.se = sqrt(apply(pred.boot, 1, var) - bias)
-  nb.se[nb.se < 0] = 0
-  cbind(pred, nb.se)
+  var.boot = apply(pred.boot, 1, var) - bias
+  var.boot[var.boot <= 0] = 0
+  cbind(pred, sqrt(var.boot))
 }
 
 # Computes the mc bias-corrected jackknife after bootstrap
