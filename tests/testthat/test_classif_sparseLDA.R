@@ -1,8 +1,7 @@
 context("classif_sparseLDA")
 
 test_that("classif_sparseLDA", {
-  # FIXME: maybe again broken NAMESPACE / import in package, if we dont use !, solvebeta is not found
-  requirePackages(c("!sparseLDA", "MASS", "!elasticnet"))
+  requirePackages(c("sparseLDA", "MASS", "elasticnet"))
 
   parset.list = list(
     list(),

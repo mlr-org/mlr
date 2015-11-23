@@ -2,8 +2,7 @@
 makeRLearner.classif.sparseLDA = function() {
   makeRLearnerClassif(
     cl = "classif.sparseLDA",
-    # FIXME: maybe again broken NAMESPACE / import in package, if we dont use !, solvebeta is not found
-    package = c("!sparseLDA", "MASS", "!elasticnet"),
+    package = c("sparseLDA", "MASS", "elasticnet"),
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "lambda", default = 1e-6, lower = 0, when = "train"),
       makeIntegerLearnerParam(id = "maxIte", default = 100L, lower = 0L, when = "train"),
