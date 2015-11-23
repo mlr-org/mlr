@@ -46,6 +46,18 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
   } else {
     data = getTaskData(.task, .subset, target.extra = TRUE)
     m = randomForest::randomForest(x = data[["data"]], y = data[["target"]], ...)
+    ## ugly hack
+    ## if the formula interface is used the training data is saved, but not with the default interface
+    ## the training data is used when predict.type = "se" and calibration is not FALSE
+    if (.learner$predict.type == "se") {
+      if (is.null(.learner$par.vals$calibrate)) {
+        m$data = data
+      } else {
+        if (.learner$par.vals$calibrate) {
+          m$data = data
+        }
+      }
+    }
   }
   return(m)
 }
@@ -110,18 +122,28 @@ jackknifeStandardError = function(.learner, .model, .newdata, ...) {
 
 # computes the mc bias corrected infintesimal jackknife using randomForestCI
 infinitesimalJackknifeStandardError = function(.learner, .model, .newdata, ...) {
-  if (is.null(.learner$par.vals$calibrate) & nrow(.newdata) > 20L)
+  ## ugly, must be a better way to do this
+  idx <- seq_len(nrow(.newdata))
+  if (!is.null(.learner$par.vals$calibrate)) {
+    if (.learner$par.vals$calibrate) {
+      calibrate = TRUE
+    } else {
+      calibrate = FALSE
+    }
+  } else {
     calibrate = TRUE
-  else
-    calibrate = FALSE
-  ret = randomForestCI::randomForestInfJack(.model$learner.model, .newdata, calibrate)
+  }
+  if (nrow(.newdata) <= 20L & calibrate) {
+    .newdata = rbind(.newdata, .model$learner.model$data)
+  }
+  ret = randomForestCI::randomForestInfJack(.model$learner.model, .newdata, calibrate, ...)
   ret$var.hat[ret$var.hat < 0] = 0
-  return(cbind(ret$y.hat, sqrt(ret$var.hat)))
+  return(cbind(ret$y.hat[idx], sqrt(ret$var.hat)[idx]))
 }
 
 # computes the standard deviation across trees
 sdStandardError = function(.learner, .model, .newdata, ...) {
-  pred = predict(.model$learner.model, newdata = .newdata, predict.all = TRUE)
+  pred = predict(.model$learner.model, newdata = .newdata, predict.all = TRUE, ...)
   se = apply(pred$individual, 1, sd)
   return(cbind(pred$aggregate, se))
 }
