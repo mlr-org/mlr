@@ -21,6 +21,9 @@ Default is \dQuote{no}.}
 A \code{factor} for classification or a \code{numeric} for regression, a data.frame
   of logical columns for multilabel.
 }
+\description{
+Get target data of task.
+}
 \examples{
 task = makeClassifTask(data = iris, target = "Species")
 getTaskTargets(task)

@@ -176,6 +176,9 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
 
 #' @title Get target data of task.
 #'
+#' @description
+#' Get target data of task.
+#'
 #' @template arg_task
 #' @param recode.target [\code{character(1)}] \cr
 #'   Should target classes be recoded? Only for binary classification.
