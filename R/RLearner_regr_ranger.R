@@ -24,7 +24,7 @@ makeRLearner.regr.ranger = function() {
     properties = c("numerics", "factors"),
     name = "Random Forests",
     short.name = "ranger",
-    note = ""
+    note = "By default, internal parallelization is switched off (num.threads = 1) and verbose output is disabled. Both settings are changeable."
   )
 }
 
