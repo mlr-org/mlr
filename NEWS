@@ -2,6 +2,7 @@ mlr_2.6:
 - cluster.kmeans: added support for fuzzy clustering (property "prob")
 - regr.lm: removed some erroneous param settings
 - regr.glmnet: added 'family' param and allowed 'gaussian', but also 'poisson'
+- disabled plotViperCharts unit tests as VC seems to be offline currently
 
 new learners
 -- regr.glmboost
