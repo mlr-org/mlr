@@ -27,7 +27,8 @@ Default is \code{parent.frame()}.}
 [\code{formula}].
 }
 \description{
-This is simply \dQuote{<target> ~ .}.
+This is usually simply \dQuote{<target> ~ .}.
+For multilabel it is \dQuote{<target_1> + ... + <target_k> ~ .}.
 }
 \seealso{
 Other task: \code{\link{getTaskClassLevels}},

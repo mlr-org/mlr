@@ -6,7 +6,9 @@ test_that("multilabel task", {
   expect_equal(getTaskClassLevels(mt), c("y1", "y2"))
   expect_equal(getTaskFormula(mt), y1 + y2 ~ .)
   y = getTaskTargets(mt)
-  expect_true(is.matrix(y) && is.logical(mt) && ncol(y) == 2L && colnames(mt) == c("y1", "y2"))
+  expect_true(is.data.frame(y) && ncol(y) == 2L)
+  expect_true(is.logical(y[,1]) && is.logical(y[,2L]))
+  expect_equal(colnames(y), c("y1", "y2"))
 })
 
 test_that("multilabel learning", {

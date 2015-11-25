@@ -2,7 +2,7 @@
 % Please edit documentation in R/Task_operators.R
 \name{getTaskTargets}
 \alias{getTaskTargets}
-\title{Get target column of task.}
+\title{Get target data of task.}
 \usage{
 getTaskTargets(task, recode.target = "no")
 }
@@ -18,10 +18,8 @@ The positive class is coded as +1 and the negative class either as 0 or -1.
 Default is \dQuote{no}.}
 }
 \value{
-A \code{factor} for classification or a \code{numeric} for regression.
-}
-\description{
-Get target column of task.
+A \code{factor} for classification or a \code{numeric} for regression, a data.frame
+  of logical columns for multilabel.
 }
 \examples{
 task = makeClassifTask(data = iris, target = "Species")

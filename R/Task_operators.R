@@ -39,8 +39,9 @@ getTaskId = function(x) {
 }
 
 #' @title Get the name(s) of the target column(s).
-#' @description:
-#' NB: For multilabel, \code{\link{getTaskTargetNames}} and \code\link{getTaskClassLevels}}
+#'
+#' @description
+#' NB: For multilabel, \code{\link{getTaskTargetNames}} and \code{\link{getTaskClassLevels}}
 #' actually return the same thing.
 #'
 #' @template arg_task_or_desc
@@ -68,8 +69,9 @@ getTaskTargetNames.TaskDescUnsupervised = function(x) {
 
 
 #' @title Get the class levels for classification and multilabel tasks.
-#' @description:
-#' NB: For multilabel, \code{\link{getTaskTargetNames}} and \code\link{getTaskClassLevels}}
+#'
+#' @description
+#' NB: For multilabel, \code{\link{getTaskTargetNames}} and \code{\link{getTaskClassLevels}}
 #' actually return the same thing.
 #'
 #' @template arg_task_or_desc
@@ -172,7 +174,7 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
   as.formula(paste(target, "~", paste(features, collapse = " + ")), env = env)
 }
 
-#' Get target column of task.
+#' @title Get target data of task.
 #'
 #' @template arg_task
 #' @param recode.target [\code{character(1)}] \cr
@@ -181,7 +183,8 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
 #'   In the two latter cases the target vector is converted into a numeric vector.
 #'   The positive class is coded as +1 and the negative class either as 0 or -1.
 #'   Default is \dQuote{no}.
-#' @return A \code{factor} for classification or a \code{numeric} for regression.
+#' @return A \code{factor} for classification or a \code{numeric} for regression, a data.frame
+#'   of logical columns for multilabel.
 #' @family task
 #' @export
 #' @examples
