@@ -3,8 +3,8 @@
 #' @description
 #' Optimizes the threshold of predictions based on probabilities.
 #' Works for classification and multilabel tasks.
-#' Uses \code{\link[BBmisc]{optimizeSubInts}} for normal binary class problems and \code{\link[cmaes]{cma_es}}
-#' for multiclass and multilabel problems.
+#' Uses \code{\link[BBmisc]{optimizeSubInts}} for normal binary class problems and
+#' \code{\link[cmaes]{cma_es}} for multiclass and multilabel problems.
 #'
 #' @template arg_pred
 #' @param measure [\code{\link{Measure}}]\cr
@@ -54,8 +54,20 @@ tuneThreshold = function(pred, measure, task, model, nsub = 20L, control = list(
 
   if (ttype == "multilabel" || k > 2L) {
     requirePackages("cmaes", why = "tuneThreshold", default.method = "load")
-    start = rep(0.5, k)
-    or = cmaes::cma_es(par = start, fn = fitn, lower = 0, upper = 1, control = control)
+    start = rep(1/k, k)
+
+    # ui = rbind(diag(k), -diag(k), rep(1, k), rep(-1, k))
+    # ci = c(rep(c(0, -1), each = k), 0.999, -1.001)
+    ui = rbind(diag(k), -diag(k))
+    ci = c(rep(c(0, -1), each = k))
+    print(ui)
+    print(ci)
+    for (i in 1:restarts)
+      s = starts[[i]]
+      or = constrOptim(s, fitn, method = "Nelder-Mead", ui = ui, ci = ci)
+      if ...
+    }
+    xx <<- or
     th = or$par / sum(or$par)
     names(th) = cls
     perf = or$val
