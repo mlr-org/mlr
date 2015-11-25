@@ -1,6 +1,15 @@
 context("multilabel")
 
-test_that("multilabel", {
+test_that("multilabel task", {
+  mt = multilabel.task
+  expect_equal(getTaskTargetNames(mt), c("y1", "y2"))
+  expect_equal(getTaskClassLevels(mt), c("y1", "y2"))
+  expect_equal(getTaskFormula(mt), y1 + y2 ~ .)
+  y = getTaskTargets(mt)
+  expect_true(is.matrix(y) && is.logical(mt) && ncol(y) == 2L && colnames(mt) == c("y1", "y2"))
+})
+
+test_that("multilabel learning", {
   lrn = makeLearner("multilabel.rFerns")
 
   # train predict eval
