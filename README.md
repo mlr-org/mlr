@@ -1,8 +1,8 @@
 ![mlr](http://mlr-org.github.io/mlr-tutorial/images/mlrLogo_blue_141x64.png): Machine Learning in R
 ==========================
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
-[![CRAN Status Badge](http://www.r-pkg.org/badges/version/mlr)](http://cran.r-project.org/web/packages/mlr)
-[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/mlr)](http://cran.rstudio.com/web/packages/mlr/index.html)
+[![CRAN Status Badge](https://www.r-pkg.org/badges/version/mlr)](https://cran.r-project.org/web/packages/mlr)
+[![CRAN Downloads](https://cranlogs.r-pkg.org/badges/mlr)](https://cran.rstudio.com/web/packages/mlr/index.html)
 
 * [Offical CRAN release site](http://cran.r-project.org/web/packages/mlr/)
 * Detailed Tutorial:
@@ -15,7 +15,7 @@
     ```splus
     devtools::install_github("mlr-org/mlr")
     ```
-* [Further installation instructions](https://github.com/tudo-r/PackagesInfo/wiki/Installation-Information)
+* [Further installation instructions](https://github.com/rdatsci/PackagesInfo/wiki/Installation-Information)
 * [Ask a question about mlr on Stackoverflow](https://stackoverflow.com/questions/tagged/mlr)
 
 
@@ -105,7 +105,7 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
 
 Talks and Videos
 ================
-* [Video](http://www.youtube.com/watch?v=rzjkT1uLNi4) of Bernd's "mlr + OpenML" talk at OpenML workshop 2014
+* [Video](https://www.youtube.com/watch?v=rzjkT1uLNi4) of Bernd's "mlr + OpenML" talk at OpenML workshop 2014
 * [Video](https://www.youtube.com/watch?v=d1PnFiN6nOQ) of Zach's International Methods Colloquim talk 2015 "Data Mining as Exploratory Data Analysis"
 
 
