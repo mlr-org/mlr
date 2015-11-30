@@ -195,12 +195,6 @@ testBootstrap = function(t.name, df, target, iters = 3, parset = list(), tune.tr
 }
 
 
-skip_on_travis <- function() {
-  if (!identical(Sys.getenv("TRAVIS"), "true")) return()
-
-  skip("On Travis")
-}
-
 mylist = function(..., create = FALSE) {
   lrns = listLearners(..., create = create)
   if (create) {

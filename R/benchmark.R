@@ -20,7 +20,7 @@
 #'   If missing, the default measure of the first task is used.
 #' @template arg_keep_pred
 #' @param models [\code{logical(1)}]\cr
-#'   Should all fitted models be returned?
+#'   Should all fitted models be stored in the \code{\link{ResampleResult}}?
 #'   Default is \code{TRUE}.
 #' @template arg_showinfo
 #' @return [\code{\link{BenchmarkResult}}].
