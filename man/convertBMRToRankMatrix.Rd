@@ -16,7 +16,7 @@ Performance measure.
 Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
 
 \item{ties.method}{[\code{character(1)}]\cr
-see \code{\link{rank}} for details.}
+See \code{\link{rank}} for details.}
 
 \item{aggregation}{[\code{character(1)}] \cr
 \dQuote{mean} or \dQuote{default}. See \code{\link{getBMRAggrPerformances}}
@@ -24,28 +24,24 @@ for details on \dQuote{default}.}
 }
 \value{
 [\code{matrix}]
-Matrix, with measure ranks as entries. \cr  
-The matrix has one row for each \code{learner},
+Matrix, with rank of learners per task as entries. The matrix has one row for each \code{learner},
 and one column for each \code{task}.
 }
 \description{
-Computes a matrix of all the ranks of different algorithms
-over different datasets (tasks). Ranks are computed from aggregated 
-measures.
+Computes a matrix of all the ranks of different algorithms over different datasets (tasks).
+Ranks are computed from aggregated measures.
+Smaller ranks imply better methods, so for measures that are minimized, small ranks imply small scores.
+for measures that are maximized, small ranks imply large scores.
 }
 \examples{
 # see benchmark
-# convertBMRToRankMatrix(res, acc)
-
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{benchmark}},
   \code{\link{friedmanPostHocTestBMR}},
   \code{\link{friedmanTestBMR}},
-  \code{\link{generateBenchmarkSummaryData}},
   \code{\link{generateCritDifferencesData}},
-  \code{\link{generateRankMatrixAsBarData}},
   \code{\link{getBMRAggrPerformances}},
   \code{\link{getBMRFeatSelResults}},
   \code{\link{getBMRFilteredFeatures}},
@@ -57,9 +53,9 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRPredictions}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
-  \code{\link{plotBenchmarkResult}},
-  \code{\link{plotBenchmarkSummary}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{plotRankMatrixAsBar}}
+  \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
+  \code{\link{plotCritDifferences}}
 }
 

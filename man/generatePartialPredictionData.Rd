@@ -130,13 +130,11 @@ Goldstein, Alex, Adam Kapelner, Justin Bleich, and Emil Pitkin. \dQuote{Peeking 
 Friedman, Jerome. \dQuote{Greedy Function Approximation: A Gradient Boosting Machine.} The Annals of Statistics. Vol. 29. No. 5 (2001): 1189-1232.
 }
 \seealso{
-Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}},
-  \code{\link{generateCalibrationData}},
+Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
   \code{\link{generateFilterValuesData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generateROCRCurvesData}},
-  \code{\link{generateRankMatrixAsBarData}},
   \code{\link{generateThreshVsPerfData}},
   \code{\link{getFilterValues}}
 

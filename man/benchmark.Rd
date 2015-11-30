@@ -48,14 +48,24 @@ training / test sets are used for the different learners.
 Furthermore, you can of course pass \dQuote{enhanced} learners via wrappers, e.g., a
 learner can be automatically tuned using \code{\link{makeTuneWrapper}}.
 }
+\examples{
+lrns = list(makeLearner("classif.lda"), makeLearner("classif.rpart"))
+tasks = list(iris.task, sonar.task)
+rdesc = makeResampleDesc("CV", iters = 2L)
+meas = list(acc, ber)
+bmr = benchmark(lrns, tasks, rdesc, measures = meas)
+rmat = convertBMRToRankMatrix(bmr)
+print(rmat)
+plotBMRSummary(bmr)
+plotBMRBoxplots(bmr, ber, style = "violin")
+plotBMRRanksAsBarChart(bmr, pos = "stack")
+}
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{convertBMRToRankMatrix}},
   \code{\link{friedmanPostHocTestBMR}},
   \code{\link{friedmanTestBMR}},
-  \code{\link{generateBenchmarkSummaryData}},
   \code{\link{generateCritDifferencesData}},
-  \code{\link{generateRankMatrixAsBarData}},
   \code{\link{getBMRAggrPerformances}},
   \code{\link{getBMRFeatSelResults}},
   \code{\link{getBMRFilteredFeatures}},
@@ -67,9 +77,9 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRPredictions}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
-  \code{\link{plotBenchmarkResult}},
-  \code{\link{plotBenchmarkSummary}},
-  \code{\link{plotCritDifferences}},
-  \code{\link{plotRankMatrixAsBar}}
+  \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
+  \code{\link{plotCritDifferences}}
 }
 

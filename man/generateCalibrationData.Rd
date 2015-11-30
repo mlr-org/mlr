@@ -43,13 +43,11 @@ Vuk, Miha, and Curk, Tomaz. \dQuote{ROC Curve, Lift Chart, and Calibration Plot.
 \seealso{
 Other calibration: \code{\link{plotCalibration}}
 
-Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}},
-  \code{\link{generateCritDifferencesData}},
+Other generate_plot_data: \code{\link{generateCritDifferencesData}},
   \code{\link{generateFilterValuesData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialPredictionData}},
   \code{\link{generateROCRCurvesData}},
-  \code{\link{generateRankMatrixAsBarData}},
   \code{\link{generateThreshVsPerfData}},
   \code{\link{getFilterValues}}
 }

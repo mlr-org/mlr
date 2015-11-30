@@ -45,13 +45,11 @@ Other filter: \code{\link{FilterValues}},
   \code{\link{plotFilterValuesGGVIS}},
   \code{\link{plotFilterValues}}
 
-Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}},
-  \code{\link{generateCalibrationData}},
+Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialPredictionData}},
   \code{\link{generateROCRCurvesData}},
-  \code{\link{generateRankMatrixAsBarData}},
   \code{\link{generateThreshVsPerfData}},
   \code{\link{getFilterValues}}
 }
