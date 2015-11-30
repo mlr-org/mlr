@@ -179,3 +179,23 @@ test_that("benchmark", {
   f(getBMRTuneResults(res), "TuneResult")
   f(getBMRFilteredFeatures(res), "character")
 })
+
+test_that("keep.preds and models are passed down to resample()", {
+  task.names = c("binary")
+  tasks = list(binaryclass.task)
+  learner.names = c("classif.lda")
+  learners = lapply(learner.names, makeLearner)
+  rin = makeResampleDesc("CV", iters = 2L)
+
+  res = benchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resampling = rin, keep.pred = TRUE, models = TRUE)
+  x = res$results$binary$classif.lda
+  expect_is(x, "ResampleResult")
+  expect_list(x$models, types = "WrappedModel")
+  expect_is(x$pred, "ResamplePrediction")
+
+  res = benchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resampling = rin, keep.pred = FALSE, models = FALSE)
+  x = res$results$binary$classif.lda
+  expect_is(x, "ResampleResult")
+  expect_null(x$models)
+  expect_null(x$pred)
+})

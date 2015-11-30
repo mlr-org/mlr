@@ -34,10 +34,6 @@ getTrainingInfo = function(x) {
   attr(x, "mlr.train.info") %??% attr(x$learner.model, "mlr.train.info")
 }
 
-"%??%" = function(lhs, rhs) {
-  if (missing(lhs) || is.null(lhs)) rhs else lhs
-}
-
 getLearnerOptions = function(lrn, opts) {
   lrn.opts = getLeafLearner(lrn)$config
   setNames(lapply(opts, function(x) lrn.opts[[x]] %??% getMlrOption(x)), opts)
