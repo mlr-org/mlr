@@ -5,7 +5,7 @@
 \title{Benchmark experiment for multiple learners and tasks.}
 \usage{
 benchmark(learners, tasks, resamplings, measures, keep.pred = TRUE,
-  show.info = getMlrOption("show.info"))
+  models = TRUE, show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learners}{[(list of) \code{\link{Learner}}]\cr
@@ -28,6 +28,10 @@ Keep the prediction data in the \code{pred} slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
 In this case you can this argument to \code{FALSE}.
+Default is \code{TRUE}.}
+
+\item{models}{[\code{logical(1)}]\cr
+Should all fitted models be returned?
 Default is \code{TRUE}.}
 
 \item{show.info}{[\code{logical(1)}]\cr
