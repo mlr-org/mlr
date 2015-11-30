@@ -14,7 +14,7 @@ The classification learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 }
 \value{
-[\code{\link[mlr]{Learner}}].
+[\code{\link{Learner}}].
 }
 \description{
 Creates a wrapper, which can be used like any other learner object.

@@ -19,14 +19,13 @@ Default is the default measure for the task, see here \code{\link{getDefaultMeas
 for details on \dQuote{default}.}
 }
 \value{
-A list of class \code{htest}. \cr
-See \code{\link{friedman.test}} for details.\cr
+[list of \code{htest}]: See \code{\link[stats]{friedman.test}} for details.
 }
 \description{
-Performs a \code{\link{friedman.test}} for a selected measure. \cr
+Performs a \code{\link[stats]{friedman.test}} for a selected measure.
 The null hypothesis is that apart from an effect of the different
-[\code{tasks}], the location parameter (aggregated performance-measure)
-is the same for each \code{learner}.
+[\code{\link{Task}}], the location parameter (aggregated performance-measure)
+is the same for each \code{\link{Learner}}.
 }
 \examples{
 lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))
@@ -34,7 +33,6 @@ tasks = list(iris.task, sonar.task)
 rdesc = makeResampleDesc("CV", iters = 2L)
 res = benchmark(lrns, tasks, rdesc, acc)
 friedmanTestBMR(res)
-
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},

@@ -16,20 +16,22 @@ Performance measure.
 Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
 
 \item{ties.method}{[\code{character(1)}]\cr
-See \code{\link{rank}} for details.}
+see \code{\link[base]{rank}} for details.}
 
 \item{aggregation}{[\code{character(1)}] \cr
 \dQuote{mean} or \dQuote{default}. See \code{\link{getBMRAggrPerformances}}
 for details on \dQuote{default}.}
 }
 \value{
-[\code{matrix}]
-Matrix, with rank of learners per task as entries. The matrix has one row for each \code{learner},
-and one column for each \code{task}.
+[\code{matrix}] with measure ranks as entries.
+  The matrix has one row for each \code{learner}, and one column for each \code{task}.
 }
 \description{
 Computes a matrix of all the ranks of different algorithms over different datasets (tasks).
-Ranks are computed from aggregated measures.
+
+Computes a matrix of all the ranks of different algorithms
+over different datasets (tasks). Ranks are computed from aggregated
+measures.
 Smaller ranks imply better methods, so for measures that are minimized, small ranks imply small scores.
 for measures that are maximized, small ranks imply large scores.
 }

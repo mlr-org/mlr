@@ -15,7 +15,7 @@
 #' multiple binary ones and aggregates by voting.
 #'
 #' @template arg_learner_classif
-#' @return [\code{\link[mlr]{Learner}}].
+#' @return [\code{\link{Learner}}].
 #' @export
 #' @family costsens
 #' @aliases CostSensWeightedPairsWrapper CostSensWeightedPairsModel
@@ -72,4 +72,3 @@ predictLearner.CostSensWeightedPairsWrapper = function(.learner, .model, .newdat
 getLearnerProperties.CostSensWeightedPairsWrapper = function(learner) {
   setdiff(getLearnerProperties(learner$next.learner), c("weights", "prob"))
 }
-
