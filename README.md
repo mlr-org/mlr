@@ -9,7 +9,7 @@
     * [mlr release](https://mlr-org.github.io/mlr-tutorial/release/html/) ([online](https://mlr-org.github.io/mlr-tutorial/release/html/), [download for offline usage](https://mlr-org.github.io/mlr-tutorial/release/mlr_tutorial.zip))
     * [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/html/) ([online](https://mlr-org.github.io/mlr-tutorial/devel/html/), [download for offline usage](https://mlr-org.github.io/mlr-tutorial/devel/mlr_tutorial.zip))
 * [R Documentation in HTML](http://www.rdocumentation.org/packages/mlr)
-* Internal [Jenkins test infrastructure](https://hagakure.cs.ubc.ca:2893) - only for developers.
+* Internal [Jenkins test infrastructure](https://hagakure.cs.ubc.ca:2893/view/mlr/) - only for developers.
 * Install the development version
 
     ```splus
