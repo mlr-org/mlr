@@ -55,7 +55,8 @@
 #' @family generate_plot_data
 #' @family benchmark
 #' @export
-generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05, baseline = NULL, test = "bd") {
+generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
+                                       baseline = NULL, test = "bd") {
   assertClass(bmr, "BenchmarkResult")
   if (is.null(measure))
     measure = getBMRMeasures(bmr)[[1L]]
@@ -63,37 +64,39 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05, base
   assertChoice(measure$id, getBMRMeasureIds(bmr))
   assertChoice(test, c("nemenyi", "bd"))
   assertNumeric(p.value, lower = 0, upper = 1, len = 1)
-
+  
   # Get Rankmatrix, transpose and get mean ranks
-  rankmat = convertBMRToRankMatrix(bmr, measure)
-  transp.rankmat <- as.data.frame(t(rankmat))
+  transp.rankmat = as.data.frame(t(convertBMRToRankMatrix(bmr, measure)))
   mean.rank = apply(transp.rankmat, 2, mean)
-
+  
   # Gather Info for plotting the descriptive part.
-  n.learners = length(getBMRLearnerIds(bmr))
   df = data.frame(cbind(mean.rank),
                   learner.id = names(mean.rank),
                   rank = rank(mean.rank, ties.method = "average"))
-  bst = df$rank < mean(df$rank)
-  df$yend[bst]  = subset(df$rank, bst) - 0.5
-  df$yend[!bst] = subset(rank(desc(df$rank)), !bst) - 0.5
+  bst = df$rank < median(df$rank)
+  df$yend[bst]  = subset(rank(df$rank, ties.method = "first"), bst) - 0.5
+  df$yend[!bst] = subset(rank(desc(df$rank), ties.method = "first"), !bst) - 0.5
   df$xend  = 0
-  df$xend[!bst]  = max(df$rank) + 1
+  df$xend[!bst]  = max(df$rank) + 1L
   df$xtext = 0
-  df$xtext[!bst] = max(df$rank) + 1
-
+  df$xtext[!bst] = max(df$rank) + 1L
+  
   # get a baseline
-  if (is.null(baseline))
-    baseline = df$learner.id[df$rank == min(df$rank)]
-
+  if (is.null(baseline)) {
+    baseline = df$learner.id[df$rank == min(df$rank)][1L]
+  } else {
+    assertChoice(baseline, getBMRLearnerIds(bmr))
+  }
   # perform nemenyi test
   nem.test = friedmanPostHocTestBMR(bmr, measure, p.value)
-
+  
   # info for plotting the cricital differences
   cd.info = list("test" = test,
                  "cd" = nem.test$crit.difference[[test]],
                  "x" = df$mean.rank[df$learner.id == baseline],
-                 "y" = 0.1)
+                 "y" = 0.1,
+                 "barvjust" = 0,
+                 "textvjust" = 0)
   
   # create data for the connecting bars
   if (test == "nemenyi") {
@@ -108,7 +111,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05, base
     nemdf$y = seq(from = 0.1, to = 0.35, length.out = dim(nemdf)[1])
     cd.info$nemenyi.data = nemdf
   }
-
+  
   makeS3Obj("critDifferencesData",
             "data" = df,
             "cd.info" = cd.info,
@@ -122,6 +125,8 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05, base
 #' a selected measure. If a baseline is selected for the Bonferroni-Dunn
 #' test, the critical difference interval will be positioned arround the baseline.
 #' If not, the best performing algorithm will be chosen as baseline.
+#' The positioning of some descriptive elements can be moved by modifying the 
+#' generated data.
 #'
 #' @param obj [\code{critDifferencesData}]
 #'   Result of \link{generateCritDifferencesData} function.
@@ -149,19 +154,16 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05, base
 #' @export
 plotCritDifferences = function(obj, baseline = NULL) {
   assertClass(obj, "critDifferencesData")
-  if (!is.null(baseline))
-    assertChoice(baseline, obj$data$learner.id)
-  else
-    baseline = obj$baseline
-
+  
   p = ggplot(obj$data)
   p = p + geom_point(aes_string("mean.rank", 0, colour = "learner.id"), size = 3)
   p = p + geom_segment(aes_string("mean.rank", 0, xend = "mean.rank", yend = "yend",
                                   color = "learner.id"), size = 1)
   p = p + geom_segment(aes_string("mean.rank", "yend", xend = "xend",
                                   yend = "yend", color = "learner.id"), size = 1)
-  p = p + geom_text(aes_string("xtext", "yend", label = "learner.id", color = "learner.id"), vjust = -1)
-  p = p + ylab("Average Rank")
+  p = p + geom_text(aes_string("xtext", "yend", label = "learner.id", color = "learner.id"),
+                    vjust = -1)
+  p = p + xlab("Average Rank")
   p = p + scale_x_continuous(breaks = c(0:max(obj$data$xend)))
   p = p + theme(axis.text.y = element_blank(),
                 axis.ticks.y = element_blank(),
@@ -173,35 +175,46 @@ plotCritDifferences = function(obj, baseline = NULL) {
                 axis.line.y = element_blank(),
                 panel.grid.major = element_blank(),
                 plot.background = element_blank())
-
+  
   cd.x = obj$cd.info$x
   cd.y = obj$cd.info$y
   cd = obj$cd.info$cd
-
+  
   # plot the critical difference bars
   if (obj$cd.info$test == "bd") {
+    if (!is.null(baseline)) {
+      assertChoice(baseline, obj$data$learner.id)
+      obj$cd.info$x = obj$data$mean.rank[obj$data$learner.id == baseline][1]
+    }
+    
     p = p + annotate("segment", x = cd.x + cd, xend = cd.x - cd, y = cd.y, yend = cd.y,
-                     alpha = 0.5, color = "darkgrey", size = 2)
+                     alpha = 0.5, color = "darkgrey", size = 2, vjust = obj$cd.info$textvjust)
     p = p + annotate("segment", x = cd.x + cd, xend = cd.x + cd, y = cd.y - 0.05,
                      yend = cd.y + 0.05, color = "darkgrey", size = 1)
     p = p + annotate("segment", x = cd.x - cd, xend = cd.x - cd, y = cd.y - 0.05,
-                     yend = cd.y + 0.05, color = "darkgrey", size = 1)
-    p = p +  annotate("point", x = cd.x, y = cd.y, alpha = 0.5)
+                     yend = cd.y + 0.05, color = "darkgrey", size = 1, )
+    p = p + annotate("point", x = cd.x, y = cd.y, alpha = 0.5, vjust = obj$cd.info$barvjust)
     p = p + annotate("text", label = paste("Critical Difference =", round(cd, 2)),
-                     x = cd.x, y = cd.y, vjust = -1)
+                     x = cd.x, y = cd.y + 0.05, vjust = obj$cd.info$textvjust,
+                     hjust = 0.5)
   } else {
     nemenyiData = obj$cd.info$nemenyi.data
     if (!(nrow(nemenyiData) == 0L)) {
       p = p + geom_segment(aes_string("xstart", "y", xend = "xend", yend = "y"), data = nemenyiData,
                            size = 2, color = "dimgrey", alpha = 0.9)
-      p = p + annotate("text", label = paste("Critical Difference =", round(cd, 2)),
-                       y = max(obj$data$yend), x = mean(obj$data$mean.rank), vjust = -1)
+      p = p + annotate("text",
+                       label = paste("Critical Difference =", round(cd, 2)),
+                       y = max(obj$data$yend) + .1,
+                       x = mean(obj$data$mean.rank),
+                       vjust = obj$cd.info$textvjust,
+                       hjust = 0.5)
       p = p + annotate("segment",
                        x =  mean(obj$data$mean.rank) - 0.5 * cd,
                        xend = mean(obj$data$mean.rank) + 0.5 * cd,
                        y = max(obj$data$yend) + .2,
                        yend = max(obj$data$yend) + .2,
-                       size = 2)
+                       size = 2L,
+                       vjust = obj$cd.info$barvjust)
     }
   }
   return(p)
