@@ -51,10 +51,10 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
     ## the training data is used when predict.type = "se" and calibration is not FALSE
     if (.learner$predict.type == "se") {
       if (is.null(.learner$par.vals$calibrate)) {
-        m$data = data
+        m$data = data[["data"]]
       } else {
         if (.learner$par.vals$calibrate) {
-          m$data = data
+          m$data = data[["data"]]
         }
       }
     }
