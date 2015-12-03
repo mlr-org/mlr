@@ -49,11 +49,13 @@ test_that("different se.methods work", {
   se.methods = c("bootstrap", "jackknife", "infjackknife")
   for (se.method in se.methods) {
     keep.inbag = se.method %in% c("jackknife", "infjackknife")
-    learner = makeLearner("regr.randomForest", predict.type = "se", se.method = se.method, ntree = 10, keep.inbag = keep.inbag)
+    learner = makeLearner("regr.randomForest", predict.type = "se", se.method = se.method, ntree = 10L, keep.inbag = keep.inbag)
     model = train(learner, task = regr.task, subset = regr.train.inds)
-    pred.all = predict(model, task = regr.task, subset = regr.test.inds)
+
+    pred.all = predict(model, task = regr.task, subset = 1)
     expect_true(is.numeric(pred.all$data$se))
     expect_true(all(pred.all$data$se >= 0))
+
     pred.one = predict(model, task = regr.task, subset = 1)
     expect_true(is.numeric(pred.one$data$se))
     expect_true(all(pred.one$data$se >= 0))
