@@ -9,6 +9,7 @@ branches:
         - ci_nojava
         - task_ops
 warnings_are_errors: true
+r_check_args: "--as-cran --run-donttest"
 apt_packages:
     - r-cran-rjava
     - libgmp-dev
