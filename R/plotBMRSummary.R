@@ -35,20 +35,25 @@ plotBMRSummary = function(bmr, measure = NULL, trafo = "none", order.tsks = NULL
 
   df = getBMRAggrPerformances(bmr, as.df = TRUE)
 
+
+  xlab.string = meas.name
+
   # trafo to ranks manually here
   if (trafo == "rank") {
     df = ddply(df, "task.id", function(d) {
       d[, meas.name] = rank(d[, meas.name], ties.method = "average")
       return(d)
     })
+    xlab.string = paste("rank of", xlab.string)
   }
 
   df = orderBMRTasks(bmr, df, order.tsks)
 
   p = ggplot(df, aes_string(x = meas.name, y = "task.id", col = "learner.id"))
-  p = p + geom_point(size = pointsize, position = position_jitter(height = jitter))
+  p = p + geom_point(size = pointsize, position = position_jitter(width = 0, height = jitter))
   # we dont need y label, the task names speak for themselves
   p = p + ylab("")
+  p = p + xlab(xlab.string)
   return(p)
 }
 
