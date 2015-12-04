@@ -126,6 +126,8 @@ mlr_2.5:
 -- classif.LiblineaRL1LMultiClassSVC
 -- regr.LiblineaRL2L1SVR
 -- regr.LiblineaRL2L2SVR
+-- classif.randomForestSRCSyn
+-- regr.randomForestSRCSyn
 -- classif.ranger
 -- regr.ranger
 -- surv.ranger
