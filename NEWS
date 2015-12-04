@@ -1,6 +1,11 @@
 mlr_2.7:
 - New argument "models" for function benchmark
 - fixed a bug where 'keep.pred' was ignored in the benchmark function
+- some of the very new functions for benchmark plots had to be refactored and/or renamed.
+  these names are gone from the API:
+  plotBenchmarkResult, generateRankMatrixAsBarData, plotRankMatrixAsBar, generateBenchmarkSummaryData, plotBenchmarkSummary,
+  this is the new API:
+  plotBMRSummary, plotBMRBoxplots, plotBMRRanksAsBarChart
 
 mlr_2.6:
 - cluster.kmeans: added support for fuzzy clustering (property "prob")
