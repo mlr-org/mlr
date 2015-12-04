@@ -6,6 +6,7 @@ mlr_new:
 new learners
 -- classif.randomForestSRCSyn
 -- regr.randomForestSRCSyn
+-- cluster.dbscan
 
 mlr_2.7:
 - New argument "models" for function benchmark
@@ -27,7 +28,6 @@ mlr_2.6:
 new learners
 -- regr.glmboost
 -- cluster.Cobweb
--- cluster.dbscan
 
 mlr_2.5:
 - fixed a bug that caused performance() to return incorrect values with
