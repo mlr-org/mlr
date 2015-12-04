@@ -1,6 +1,7 @@
 mlr_new:
 - Feature filter "univariate" had a bad name, was deprecated and is now called
  "univariate.model.score". The new one also has better defaults.
+- (generate/plot)PartialPrediction: added new arg "geom" for tile plots
 
 mlr_2.7:
 - New argument "models" for function benchmark
