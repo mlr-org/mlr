@@ -3,6 +3,10 @@ mlr_new:
  "univariate.model.score". The new one also has better defaults.
 - (generate/plot)PartialPrediction: added new arg "geom" for tile plots
 
+new learners
+-- classif.randomForestSRCSyn
+-- regr.randomForestSRCSyn
+
 mlr_2.7:
 - New argument "models" for function benchmark
 - fixed a bug where 'keep.pred' was ignored in the benchmark function
