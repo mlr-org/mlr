@@ -40,14 +40,12 @@ Default is first task.}
 Generates data on threshold vs. performance(s) for 2-class classification that can be used for plotting.
 }
 \seealso{
-Other generate_plot_data: \code{\link{generateBenchmarkSummaryData}},
-  \code{\link{generateCalibrationData}},
+Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
   \code{\link{generateFilterValuesData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialPredictionData}},
   \code{\link{generateROCRCurvesData}},
-  \code{\link{generateRankMatrixAsBarData}},
   \code{\link{getFilterValues}}
 
 Other thresh_vs_perf: \code{\link{plotROCCurves}},

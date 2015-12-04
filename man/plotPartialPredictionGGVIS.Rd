@@ -35,8 +35,9 @@ Plot a partial prediction from \code{\link{generatePartialPredictionData}} using
 Other partial_prediction: \code{\link{generatePartialPredictionData}},
   \code{\link{plotPartialPrediction}}
 
-Other plot: \code{\link{plotBenchmarkResult}},
-  \code{\link{plotBenchmarkSummary}},
+Other plot: \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
   \code{\link{plotCalibration}},
   \code{\link{plotCritDifferences}},
   \code{\link{plotFilterValuesGGVIS}},
@@ -47,7 +48,6 @@ Other plot: \code{\link{plotBenchmarkResult}},
   \code{\link{plotROCCurves}},
   \code{\link{plotROCRCurvesGGVIS}},
   \code{\link{plotROCRCurves}},
-  \code{\link{plotRankMatrixAsBar}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }

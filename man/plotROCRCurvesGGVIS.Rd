@@ -25,8 +25,9 @@ a ggvis plot object.
 Visualize how binary classification performs across different measures.
 }
 \seealso{
-Other plot: \code{\link{plotBenchmarkResult}},
-  \code{\link{plotBenchmarkSummary}},
+Other plot: \code{\link{plotBMRBoxplots}},
+  \code{\link{plotBMRRanksAsBarChart}},
+  \code{\link{plotBMRSummary}},
   \code{\link{plotCalibration}},
   \code{\link{plotCritDifferences}},
   \code{\link{plotFilterValuesGGVIS}},
@@ -37,7 +38,6 @@ Other plot: \code{\link{plotBenchmarkResult}},
   \code{\link{plotPartialPrediction}},
   \code{\link{plotROCCurves}},
   \code{\link{plotROCRCurves}},
-  \code{\link{plotRankMatrixAsBar}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 
