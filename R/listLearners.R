@@ -1,7 +1,7 @@
 #' @title Find matching learning algorithms.
 #'
 #' @description
-#' Returns the class names of learning algorithms which have specific characteristics, e.g.
+#' Returns learning algorithms which have specific characteristics, e.g.
 #' whether they supports missing values, case weights, etc.
 #'
 #' Note that the packages of all learners are loaded during the search if you create them.
@@ -30,9 +30,14 @@
 #'   Default is \code{TRUE}. If set to \code{FALSE}, learners that cannot
 #'   actually be constructed because of missing packages may be returned.
 #' @param create [\code{logical(1)}]\cr
-#'   Instantiate objects (or return strings)?
+#'   Instantiate objects (or return strings / info table)?
+#'   Packages are loaded if and only if this option is \code{TRUE}.
 #'   Default is \code{FALSE}.
-#' @return [\code{character} | \code{list} of \code{\link{Learner}}].
+#' @param table [\code{logical(1)}]\cr
+#'   Return a descriptive data.frame that allows access to all properties of learners (or return just class name strings)?
+#'   Can only be used if \code{create = FALSE}.
+#'   Default is \code{FALSE}.
+#' @return [\code{character} | \code{data.frame} | \code{list} of \code{\link{Learner}}].
 #'   The latter is named by ids of listed learners.
 #' @examples
 #' \dontrun{
@@ -43,13 +48,16 @@
 #' }
 #' @export
 listLearners  = function(obj = NA_character_, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
+  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE, table = FALSE) {
 
   if (!missing(obj))
     assert(checkCharacter(obj), checkClass(obj, "Task"))
   assertSubset(properties, getSupportedLearnerProperties())
   assertFlag(warn.missing.packages)
   assertFlag(create)
+  assertFlag(table)
+  if (table && create)
+    stopf("'table=TRUE' can only be used when 'create=FALSE'!")
   UseMethod("listLearners")
 }
 
@@ -57,15 +65,15 @@ listLearners  = function(obj = NA_character_, properties = character(0L),
 #' @export
 #' @rdname listLearners
 listLearners.default  = function(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
+  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE, table = FALSE) {
 
-  listLearners.character(obj = NA_character_, properties, quiet, warn.missing.packages, check.packages, create)
+  listLearners.character(obj = NA_character_, properties, quiet, warn.missing.packages, check.packages, create, table)
 }
 
 #' @export
 #' @rdname listLearners
 listLearners.character  = function(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
+  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE, table = FALSE) {
 
   assertChoice(obj, choices = c("classif", "regr", "surv", "costsens", "cluster", "multilabel", NA_character_))
   assertSubset(properties, getSupportedLearnerProperties(obj))
@@ -75,6 +83,8 @@ listLearners.character  = function(obj, properties = character(0L),
   # make really sure we filter out our own mock learners here, they have a very unique name
   meths = meths[!grepl("__mlrmocklearners__", meths)]
   res = err = vector("list", length(meths))
+  res.table = data.frame()
+  res.table.props = c(numerics = FALSE, factors = FALSE, ordered = FALSE, missings = FALSE, weights = FALSE, twoclass = FALSE, multiclass = FALSE, class.weights = FALSE, prob = FALSE, se = FALSE, lcens = FALSE, rcens = FALSE, icens = FALSE)
   learner.classes = vcapply(strsplit(meths, "makeRLearner\\."), function(x) x[2L])
   if (!create && check.packages) {
     installed.packs = rownames(installed.packages())
@@ -93,6 +103,10 @@ listLearners.character  = function(obj, properties = character(0L),
     }
     if (create || !check.packages || depsInstalled) {
       lrn.properties = eval(mb[[2L]]$properties)
+      lrn.package = eval(mb[[2L]]$package)
+      lrn.name = eval(mb[[2L]]$name)
+      lrn.short.name = eval(mb[[2L]]$short.name)
+      lrn.note = eval(mb[[2L]]$note)
       lrn = cl
     } else {
       err[[i]] = learner.classes[[i]]
@@ -111,7 +125,16 @@ listLearners.character  = function(obj, properties = character(0L),
         }
       }
       if (is.null(err[[i]])) {
-        res[[i]] = lrn
+        if (table) {
+          rtp = res.table.props
+          rtp[lrn.properties] = TRUE
+          rtp = as.data.frame(as.list(rtp))
+          lp = collapse(lrn.package, ",")
+          res.table = rbind(res.table, cbind(class = lrn, package = lp,
+            short.name = lrn.short.name, name = lrn.name, rtp))
+        } else {
+          res[[i]] = lrn
+        }
       }
     }
   }
@@ -124,13 +147,16 @@ listLearners.character  = function(obj, properties = character(0L),
   err = filterNull(err)
   if (warn.missing.packages && length(err))
     warningf("The following learners could not be constructed, probably because their packages are not installed:\n%s\nCheck ?learners to see which packages you need or install mlr with all suggestions.", collapse(err))
-  return(res)
+  if (table)
+    return(convertDfCols(res.table, factors.as.char = TRUE))
+  else
+    return(res)
 }
 
 #' @export
 #' @rdname listLearners
 listLearners.Task = function(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
+  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE, table = FALSE) {
 
   task = obj
   td = getTaskDescription(task)
@@ -146,5 +172,5 @@ listLearners.Task = function(obj, properties = character(0L),
     if (length(td$class.levels) >= 3L) props = c(props, "multiclass")
   }
 
-  listLearners.character(td$type, union(props, properties), quiet, warn.missing.packages, check.packages, create)
+  listLearners.character(td$type, union(props, properties), quiet, warn.missing.packages, check.packages, create, table)
 }
