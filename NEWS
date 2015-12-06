@@ -120,6 +120,8 @@ mlr_2.8:
 
 - new functions
 -- getBMRModels
+- added wrapper that adds support for classification problems that have only a
+  single label or very sparse labels learners (ConstantClassWrapper)
 
 - removed functions
 -- generateROCRCurvesData, plotROCRCurves, plotROCRCurvesGGVIS
