@@ -24,7 +24,7 @@
 #'   Named by variable name, non-factors do not occur in the list.
 #' @param time [\code{numeric(1)}]\cr
 #'   Computation time for model fit in seconds.
-#'  @template ret_wmodel
+#' @template ret_wmodel
 #' @export
 #' @aliases WrappedModel
 makeWrappedModel = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
