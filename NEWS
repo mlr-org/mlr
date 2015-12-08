@@ -3,6 +3,8 @@ mlr_new:
  "univariate.model.score". The new one also has better defaults.
 - (generate/plot)PartialPrediction: added new arg "geom" for tile plots
 - small fix for plotBMRSummary
+- removed learners: classif.randomForestSRCSyn, regr.randomForestSRCSyn
+
 
 new learners
 -- classif.randomForestSRCSyn
