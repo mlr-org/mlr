@@ -11,9 +11,13 @@ test_that("listLearners", {
   expect_true(is.data.frame(x2))
   expect_equal(length(x1), nrow(x2))
   expect_true(ncol(x2) > 3L)
+  expect_true(all(x2$type %in% c("classif", "regr", "cluster", "surv", "multilabel")))
   x2a = listLearners("classif", create = FALSE, table = TRUE, properties = c("missings"))
   expect_equal(length(x1a), nrow(x2a))
-  # FIMXE type coli?
 
-
+  x3 = listLearners(multiclass.task, create = FALSE, table = TRUE)
+  expect_true(is.data.frame(x3))
+  expect_true(nrow(x3) > 20L)
+  expect_true(ncol(x3) > 3L)
+  expect_true(all(x3$type == "classif"))
 })

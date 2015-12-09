@@ -103,6 +103,7 @@ listLearners.character  = function(obj, properties = character(0L),
     }
     if (create || !check.packages || depsInstalled) {
       lrn.properties = eval(mb[[2L]]$properties)
+      lrn.type = strsplit(cl, "\\.")[[1L]][1L]
       lrn.package = eval(mb[[2L]]$package)
       lrn.name = eval(mb[[2L]]$name)
       lrn.short.name = eval(mb[[2L]]$short.name)
@@ -130,7 +131,7 @@ listLearners.character  = function(obj, properties = character(0L),
           rtp[lrn.properties] = TRUE
           rtp = as.data.frame(as.list(rtp))
           lp = collapse(lrn.package, ",")
-          res.table = rbind(res.table, cbind(class = lrn, package = lp,
+          res.table = rbind(res.table, cbind(class = lrn, type = lrn.type, package = lp,
             short.name = lrn.short.name, name = lrn.name, rtp))
         } else {
           res[[i]] = lrn
