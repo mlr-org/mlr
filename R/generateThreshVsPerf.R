@@ -282,7 +282,7 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
 #' @template arg_measures
 #' @param diagonal [\code{logical(1)}]\cr
 #'   Whether to plot a dashed diagonal line.
-#'   Default is \code{FALSE}.
+#'   Default is \code{TRUE}.
 #' @param pretty.names [\code{logical(1)}]\cr
 #'   Whether to use the \code{\link{Measure}} name instead of the id in the plot.
 #'   Default is \code{TRUE}.
