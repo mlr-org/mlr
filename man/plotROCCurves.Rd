@@ -20,7 +20,7 @@ Default is the default measure for the task, see here \code{\link{getDefaultMeas
 
 \item{diagonal}{[\code{logical(1)}]\cr
 Whether to plot a dashed diagonal line.
-Default is \code{FALSE}.}
+Default is \code{TRUE}.}
 
 \item{pretty.names}{[\code{logical(1)}]\cr
 Whether to use the \code{\link{Measure}} name instead of the id in the plot.
