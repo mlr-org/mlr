@@ -11,6 +11,9 @@
 #' In order to avoid name clashes all parameter names are prefixed
 #' with the base learner id, i.e. \dQuote{[learner.id].[parameter.name]}.
 #'
+#' The predict.type of the Multiplexer is inherited from the predict.type of the
+#' base learners.
+#'
 #' @param base.learners [\code{list} of \code{\link{Learner}}]\cr
 #'  List of Learners with unique IDs.
 #' @return [\code{ModelMultiplexer}]. A \code{\link{Learner}} specialized as \code{ModelMultiplexer}.
@@ -72,6 +75,9 @@ makeModelMultiplexer = function(base.learners) {
     ens.type = NULL,
     cl = "ModelMultiplexer"
   )
+  # the super contructor checks that all predict.types are same
+  # now inherit this type from the base.learners for the MM
+  lrn = setPredictType(lrn, lrn$base.learners[[1L]]$predict.type)
   # add extra param to parset, after we did all checks and so on in the base function
   ps = makeParamSet(makeDiscreteLearnerParam("selected.learner", values = names(lrn$base.learners)))
   lrn$par.set = c(lrn$par.set, ps)

@@ -24,6 +24,9 @@ their hyperparameters in one go. Combine this with \code{\link{tuneParams}} and
 The parameter set is the union of all (unique) base learners.
 In order to avoid name clashes all parameter names are prefixed
 with the base learner id, i.e. \dQuote{[learner.id].[parameter.name]}.
+
+The predict.type of the Multiplexer is inherited from the predict.type of the
+base learners.
 }
 \note{
 Note that logging output during tuning is somewhat shortened to make it more readable.
