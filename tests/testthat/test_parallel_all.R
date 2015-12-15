@@ -98,8 +98,9 @@ test_that("parallel partial dependence", {
     expect_true(nrow(pd$data) == 2L)
   }
   if (Sys.info()["sysname"] != "Windows") {
-    doit("multicore")
-    doit("mpi")
+    doit("multicore", "mlr.partialPredictions")
+    doit("mpi", "mlr.partialPredictions")
   }
-  doit("socket")
+  doit("socket", "mlr.partialPredictions")
+})
 })
