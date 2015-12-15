@@ -18,7 +18,7 @@ makeRLearner.classif.randomForest = function() {
       makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob", "class.weights"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob", "class.weights", "featimp"),
     class.weights.param = "classwt",
     name = "Random Forest",
     short.name = "rf"
@@ -44,4 +44,13 @@ trainLearner.classif.randomForest = function(.learner, .task, .subset, .weights 
 predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type=="response", "response", "prob")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
+}
+
+#' @export
+getFeatureImportance.classif.randomForest = function(.learner, .model, data, ...) {
+  mod = getLearnerModel(.model)
+  if (missing(data)) data = 2L
+  fiv = as.numeric(randomForest::importance(mod, data, ...))
+  names(fiv) = .model$features
+  return(fiv)
 }

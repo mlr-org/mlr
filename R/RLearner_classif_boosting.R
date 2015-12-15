@@ -21,7 +21,7 @@ makeRLearner.classif.boosting = function() {
       makeIntegerLearnerParam(id = "xval", default = 0L, lower = 0L)
     ),
     par.vals = list(xval = 0L),
-    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "featimp"),
     name = "Adabag Boosting",
     short.name = "adabag",
     note = "`xval` has been set to 0 by default for speed."
@@ -46,4 +46,12 @@ predictLearner.classif.boosting = function(.learner, .model, .newdata, ...) {
   } else {
     return(as.factor(p$class))
   }
+}
+
+#' @export
+getFeatureImportance.classif.boosting = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model)
+  fiv = as.numeric(mod$importance[.model$features])
+  names(fiv) = .model$features
+  return(fiv)
 }
