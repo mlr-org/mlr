@@ -31,6 +31,8 @@ Either a list of lists of \code{\link{ResamplePrediction}} objects, as returned 
 \dQuote{task.id} and \dQuote{learner.id}.
 
 If \code{predict.type} is \dQuote{prob}, the probabilities for each class are returned in addition to the response.
+
+If \code{keep.pred} is \code{FALSE} in the call to \code{\link{benchmark}}, the function will return \code{NULL}.
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
@@ -45,7 +47,7 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRLearnerIds}},
   \code{\link{getBMRLearners}},
   \code{\link{getBMRMeasureIds}},
-  \code{\link{getBMRMeasures}},
+  \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPerformances}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},

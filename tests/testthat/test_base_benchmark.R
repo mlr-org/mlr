@@ -193,9 +193,23 @@ test_that("keep.preds and models are passed down to resample()", {
   expect_list(x$models, types = "WrappedModel")
   expect_is(x$pred, "ResamplePrediction")
 
+  ##test getter function for models
+  models = getBMRModels(res)
+  expect_true(is.list(models))
+  expect_true(setequal(names(models), "binary"))
+  models1 = models[[1L]]
+  expect_true(is.list(models1))
+  expect_true(setequal(names(models1), "classif.lda"))
+  models11 = models1[[1L]]
+  expect_true(is.list(models11))
+  expect_equal(length(models11), 2L)
+  models111 = models11[[1L]]
+  expect_is(models111, "WrappedModel")
+
   res = benchmark(learners = makeLearner("classif.lda", predict.type = "prob"), task = binaryclass.task, resampling = rin, keep.pred = FALSE, models = FALSE)
   x = res$results$binary$classif.lda
+  models11 = getBMRModels(res)[[1L]][[1L]]
   expect_is(x, "ResampleResult")
-  expect_null(x$models)
   expect_null(x$pred)
+  expect_null(models11)
 })
