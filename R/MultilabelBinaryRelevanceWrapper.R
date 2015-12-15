@@ -40,21 +40,30 @@ trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subse
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
   data = getTaskData(.task)
-  models = namedList(targets)
-  for (tn in targets) {
-    data2 = dropNamed(data, setdiff(targets, tn))
-    ctask = makeClassifTask(id = tn, data = data2, target = tn)
-    models[[tn]] = train(.learner$next.learner, ctask, weights = .weights)
-  }
+  parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
+  exportMlrOptions(level = "mlr.ensemble")
+  models = parallelMap(doMultilabelBinaryRelevanceTrainIteration, tn = targets,
+                       more.args = list(weights = .weights, learner = .learner$next.learner, task = .task,
+                                        data = data), level = "mlr.ensemble")
   makeHomChainModel(.learner, models)
 }
 
 #' @export
 predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .newdata, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
-  f = if (.learner$predict.type == "response")
+  f = if (.learner$predict.type == "response") {
     function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, ...)))
-  else
-    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, ...), cl = "TRUE")
-  asMatrixCols(lapply(models, f))
+  } else {
+    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, ...))
+  }
+
+  parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
+  exportMlrOptions(level = "mlr.ensemble")
+  asMatrixCols(parallelMap(f, m = models, level = "mlr.ensemble"), col.names = .model$task.desc$class.levels)
+}
+
+doMultilabelBinaryRelevanceTrainIteration = function(tn, learner, task, data, weights) {
+  setSlaveOptions()
+  task = makeClassifTask(id = tn, data = dropNamed(data, setdiff(getTaskTargetNames(task), tn)), target = tn)
+  train(learner, task, weights = weights)
 }

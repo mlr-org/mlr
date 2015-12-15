@@ -55,20 +55,26 @@ trainLearner.MulticlassWrapper = function(.learner, .task, .subset, .weights = N
   y = getTaskTargets(.task)
   cm = buildCMatrix(mcw.method, .task)
   x = multi.to.binary(y, cm)
-  # now fit models
-  models = lapply(seq_along(x$row.inds), function(i) {
-    data2 = d[x$row.inds[[i]], , drop = FALSE]
-    data2[, tn] = x$targets[[i]]
-    ct = changeData(.task, data2)
-    ct$task.desc$positive = "1"
-    ct$task.desc$negative = "-1"
-    train(.learner$next.learner, ct, weights = .weights)
-  })
+  args = list("x" = x, "d" = getTaskData(.task), "y" = getTaskTargets(.task), "learner" = .learner,
+              "task" = .task, "tn" = getTaskTargetNames(.task), "weights" = .weights)
+  parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
+  exportMlrOptions(level = "mlr.ensemble")
+  models = parallelMap(i = seq_along(x$row.inds), doMulticlassTrainIteration,
+                       more.args = args, level = "mlr.ensemble")
   m = makeHomChainModel(.learner, models)
   m$cm = cm
   return(m)
 }
 
+doMulticlassTrainIteration = function(x, i, d, y, learner, task, tn, weights) {
+  setSlaveOptions()
+  data2 = d[x$row.inds[[i]],, drop = FALSE]
+  data2[, tn] = x$targets[[i]]
+  ct = changeData(task, data2)
+  ct$task.desc$positive = "1"
+  ct$task.desc$negative = "-1"
+  train(learner$next.learner, ct, weights = weights)
+}
 
 #' @export
 predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, ...) {
@@ -82,6 +88,11 @@ predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, ...) {
       pred = as.numeric(pred == "1") * 2 - 1
     pred
   })
+  parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
+  exportMlrOptions(level = "mlr.ensemble")
+  p = parallelMap(doMulticlassPredictIteration, m = models,
+                  more.args = c(list("newdata" = .newdata), list(...)), simplify = TRUE,
+                  level = "mlr.ensemble")
   rns = rownames(cm)
   # we use hamming decoding here, see http://jmlr.org/papers/volume11/escalera10a/escalera10a.pdf
   y = apply(p, 1L, function(v) {
@@ -89,6 +100,13 @@ predictLearner.MulticlassWrapper = function(.learner, .model, .newdata, ...) {
     rns[getMinIndex(d)]
   })
   as.factor(y)
+}
+
+doMulticlassPredictIteration = function(m, newdata, ...) {
+  pred = predict(m, newdata = newdata, ...)$data$response
+  if (is.factor(pred))
+    pred = as.numeric(pred == "1") * 2 - 1
+  pred  
 }
 
 #' @export

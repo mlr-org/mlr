@@ -44,7 +44,7 @@ test_that("Stacking works", {
       for (use.feat in ufs) {
         for (sm.pt in pts) {
           for (bms.pt in pts) {
-            # cat(td$type, td$id, method, use.feat, sm.pt, bms.pt, fill = TRUE)
+            ## cat(td$type, td$id, method, use.feat, sm.pt, bms.pt, fill = TRUE)
             checkStack(task, method, base, super, bms.pt, sm.pt, use.feat)
           }
         }
@@ -85,7 +85,6 @@ test_that("Parameters for hill climb works", {
   res = predict(tmp, tsk)
 
   expect_equal(sum(tmp$learner.model$weights), 1)
-
 })
 
 test_that("Parameters for compress model", {
@@ -97,7 +96,6 @@ test_that("Parameters for compress model", {
                          parset = list(k = 5, prob = 0.3))
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
-
 
   tsk = regr.task
   base = c("regr.rpart", "regr.svm")
