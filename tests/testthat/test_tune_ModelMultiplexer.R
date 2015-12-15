@@ -93,3 +93,25 @@ test_that("ModelMultiplexer tuning", {
   y = getOptPathY(res$opt.path)
   expect_true(!is.na(y) && is.finite(y))
 })
+
+# we had bug here, see issue #609
+test_that("ModelMultiplexer inherits predict.type from base learners", {
+  base.learners = list(
+    makeLearner("classif.ksvm", predict.type = "prob"),
+    makeLearner("classif.randomForest", predict.type = "prob")
+  )
+  learner = makeModelMultiplexer(base.learners)
+  expect_equal(learner$predict.type, "prob")
+  # now lets see that the next code runs and does not complain about matrix output for
+  # base learner predict output
+  r = holdout(learner, binaryclass.task)
+
+  # now check that we can tune the threshold
+  ps = makeModelMultiplexerParamSet(learner,
+    makeDiscreteParam("C", 1),
+    makeDiscreteParam("mtry", c(2, 3))
+  )
+  rdesc = makeResampleDesc("Holdout")
+  ctrl = makeTuneControlGrid(tune.threshold = TRUE)
+  res = tuneParams(learner, binaryclass.task, resampling = rdesc, par.set = ps, control = ctrl)
+})
