@@ -30,6 +30,8 @@ Default is \code{FALSE}}
 Either a list of lists of \dQuote{measure.test} data.frames, as returned by
 \code{\link{resample}}, or these objects are rbind-ed with extra columns
 \dQuote{task.id} and \dQuote{learner.id}.
+
+Note: Measure values will be \code{NA} for \code{\link{ResampleDesc}}s with \code{predict} is \dQuote{train}
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
@@ -44,7 +46,7 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRLearnerIds}},
   \code{\link{getBMRLearners}},
   \code{\link{getBMRMeasureIds}},
-  \code{\link{getBMRMeasures}},
+  \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
   \code{\link{getBMRPredictions}},
   \code{\link{getBMRTaskIds}},
   \code{\link{getBMRTuneResults}},
