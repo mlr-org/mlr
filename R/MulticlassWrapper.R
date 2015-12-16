@@ -108,7 +108,7 @@ buildCMatrix = function (mcw.method, .task) {
       onevsrest = cm.onevsrest,
       onevsone = cm.onevsone)
   }
-  levs = getTaskFactorLevels(.task)[[1]]
+  levs = getTaskClassLevels(.task)
   cm = meth(.task)
   if (!setequal(rownames(cm), levs))
     stop("Rownames of codematrix must be class levels!")
@@ -136,21 +136,21 @@ multi.to.binary = function(target, codematrix) {
 }
 
 cm.onevsrest = function(task) {
-  td = getTaskDescription(task)
-  n = length(td$class.levels)
+  tcl = getTaskClassLevels(task)
+  n = length(tcl)
   cm = matrix(-1, n, n)
   diag(cm) = 1
-  setRowNames(cm, td$class.levels)
+  setRowNames(cm, tcl)
 }
 
 cm.onevsone = function(task) {
-  td = getTaskDescription(task)
-  n = length(td$class.levels)
+  tcl = getTaskClassLevels(task)
+  n = length(tcl)
   cm = matrix(0, n, choose(n, 2))
   combs = combn(n, 2)
   for (i in seq_col(combs)) {
     j = combs[, i]
     cm[j, i] = c(1, -1)
   }
-  setRowNames(cm, td$class.levels)
+  setRowNames(cm, tcl)
 }
