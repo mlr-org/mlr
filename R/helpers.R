@@ -52,16 +52,20 @@ propVectorToMatrix = function(p, levs) {
 getSupportedLearnerProperties = function(type = NA_character_) {
   p = list(
     classif    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "class.weights"),
-    multilabel = c("numerics", "factors", "ordered", "missings", "weights", "prob", "multilabel", "oneclass", "twoclass", "multiclass"),
+    multilabel = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass"),
     regr       = c("numerics", "factors", "ordered", "missings", "weights", "se"),
     cluster    = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
-    surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "rcens"),
+    surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens"),
     costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass")
   )
   if (is.na(type))
     unique(unlist(p))
   else
     p[[type]]
+}
+
+getSupportedTaskTypes = function() {
+  c("classif", "regr", "surv", "costsens", "cluster", "multilabel")
 }
 
 # find duplicate measure names or ids and paste together those

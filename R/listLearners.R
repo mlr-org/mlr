@@ -1,7 +1,7 @@
 #' @title Find matching learning algorithms.
 #'
 #' @description
-#' Returns the class names of learning algorithms which have specific characteristics, e.g.
+#' Returns learning algorithms which have specific characteristics, e.g.
 #' whether they supports missing values, case weights, etc.
 #'
 #' Note that the packages of all learners are loaded during the search if you create them.
@@ -30,9 +30,11 @@
 #'   Default is \code{TRUE}. If set to \code{FALSE}, learners that cannot
 #'   actually be constructed because of missing packages may be returned.
 #' @param create [\code{logical(1)}]\cr
-#'   Instantiate objects (or return strings)?
+#'   Instantiate objects (or return info table)?
+#'   Packages are loaded if and only if this option is \code{TRUE}.
 #'   Default is \code{FALSE}.
-#' @return [\code{character} | \code{list} of \code{\link{Learner}}].
+#' @return [\code{data.frame} | \code{list} of \code{\link{Learner}}].
+#'   Either descriptive data.frame that allows access to all properties of learners or a list of created learner objects.
 #'   The latter is named by ids of listed learners.
 #' @examples
 #' \dontrun{
@@ -45,10 +47,10 @@
 listLearners  = function(obj = NA_character_, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
 
-  if (!missing(obj))
-    assert(checkCharacter(obj), checkClass(obj, "Task"))
   assertSubset(properties, getSupportedLearnerProperties())
+  assertFlag(quiet)
   assertFlag(warn.missing.packages)
+  assertFlag(check.packages)
   assertFlag(create)
   UseMethod("listLearners")
 }
@@ -67,18 +69,19 @@ listLearners.default  = function(obj, properties = character(0L),
 listLearners.character  = function(obj, properties = character(0L),
   quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
 
-  assertChoice(obj, choices = c("classif", "regr", "surv", "costsens", "cluster", "multilabel", NA_character_))
-  assertSubset(properties, getSupportedLearnerProperties(obj))
+  assertChoice(obj, c(NA_character_, getSupportedTaskTypes()))
+
+  supp.learn.props = getSupportedLearnerProperties(obj)
+  assertSubset(properties, supp.learn.props)
 
   type = obj
   meths = as.character(methods("makeRLearner"))
   # make really sure we filter out our own mock learners here, they have a very unique name
   meths = meths[!grepl("__mlrmocklearners__", meths)]
   res = err = vector("list", length(meths))
+  res.table = data.frame()
+  res.table.props = setNames(rep(FALSE, length(supp.learn.props)), supp.learn.props)
   learner.classes = vcapply(strsplit(meths, "makeRLearner\\."), function(x) x[2L])
-  if (!create && check.packages) {
-    installed.packs = rownames(installed.packages())
-  }
   for (i in seq_along(meths)) {
     cl = learner.classes[[i]]
     lrn.type = strsplit(cl, "\\.")[[1L]][1L]
@@ -88,11 +91,17 @@ listLearners.character  = function(obj, properties = character(0L),
       depsInstalled = all(sapply(eval(mb[[2L]]$package), function(x) {
         char = substr(x, 1L, 1L)
         pack = substr(x, 1L + (char == "!" | char == "_"), nchar(x))
-        pack %in% installed.packs
+        # we should get one path for exactly each dep package
+        (length(pack) ==  0L) || length(find.package(pack, quiet = TRUE, verbose = FALSE)) == length(pack)
       }))
     }
     if (create || !check.packages || depsInstalled) {
       lrn.properties = eval(mb[[2L]]$properties)
+      lrn.type = strsplit(cl, "\\.")[[1L]][1L]
+      lrn.package = eval(mb[[2L]]$package)
+      lrn.name = eval(mb[[2L]]$name)
+      lrn.short.name = eval(mb[[2L]]$short.name)
+      lrn.note = eval(mb[[2L]]$note)
       lrn = cl
     } else {
       err[[i]] = learner.classes[[i]]
@@ -111,7 +120,16 @@ listLearners.character  = function(obj, properties = character(0L),
         }
       }
       if (is.null(err[[i]])) {
-        res[[i]] = lrn
+        if (!create) {
+          rtp = res.table.props
+          rtp[lrn.properties] = TRUE
+          rtp = as.data.frame(as.list(rtp))
+          lp = collapse(lrn.package, ",")
+          res.table = rbind(res.table, cbind(class = lrn, type = lrn.type, package = lp,
+            short.name = lrn.short.name, name = lrn.name, rtp))
+        } else {
+          res[[i]] = lrn
+        }
       }
     }
   }
@@ -124,7 +142,10 @@ listLearners.character  = function(obj, properties = character(0L),
   err = filterNull(err)
   if (warn.missing.packages && length(err))
     warningf("The following learners could not be constructed, probably because their packages are not installed:\n%s\nCheck ?learners to see which packages you need or install mlr with all suggestions.", collapse(err))
-  return(res)
+  if (create)
+    return(res)
+  else
+    return(convertDfCols(res.table, factors.as.char = TRUE))
 }
 
 #' @export
