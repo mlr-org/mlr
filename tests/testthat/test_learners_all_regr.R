@@ -21,7 +21,7 @@ test_that("learners work: regr ", {
   task = subsetTask(regr.task, subset = c(1:70),
     features = getTaskFeatureNames(regr.task)[c(1, 3)])
   lrns = mylist(task)
-  lrns = lapply(lrns, makeLearner)
+  lrns = lapply(lrns$class, makeLearner)
   for (lrn in lrns) {
     expect_output(print(lrn), lrn$id)
     lrn = fixHyperPars(lrn)
@@ -33,7 +33,7 @@ test_that("learners work: regr ", {
   # regr with factors
   task = subsetTask(regr.task, subset = 180:240, features = getTaskFeatureNames(regr.task)[c(1, 2)])
   lrns = mylist(task)
-  lrns = lapply(lrns, makeLearner)
+  lrns = lapply(lrns$class, makeLearner)
   for (lrn in lrns) {
     expect_output(print(lrn), lrn$id)
     lrn = fixHyperPars(lrn)
@@ -46,7 +46,7 @@ test_that("learners work: regr ", {
   task = subsetTask(regr.task, subset = c(1:70),
   features = getTaskFeatureNames(regr.task)[c(1, 3)])
   lrns = mylist(task, properties = "se")
-  lrns = lapply(lrns, makeLearner, predict.type = "se")
+  lrns = lapply(lrns$class, makeLearner, predict.type = "se")
   for (lrn in lrns) {
     lrn = fixHyperPars(lrn)
     m = train(lrn, task)
@@ -58,7 +58,7 @@ test_that("learners work: regr ", {
   # regr with weights
   task = subsetTask(regr.task, subset = 1:70, features = getTaskFeatureNames(regr.task)[c(1, 3)])
   lrns = mylist(task, properties = "weights")
-  lrns = lapply(lrns, makeLearner)
+  lrns = lapply(lrns$class, makeLearner)
   for (lrn in lrns) {
     lrn = fixHyperPars(lrn)
     m = train(lrn, task, weights = rep(1:2, 35))
@@ -71,7 +71,7 @@ test_that("learners work: regr ", {
   d[1, 1] = NA
   task = makeRegrTask(data = d, target = regr.target)
   lrns = mylist(task, create = TRUE)
-  for (lrn in lrns) {
+  for (lrn in lrns$class) {
     lrn = fixHyperPars(lrn)
     m = train(lrn, task)
     p = predict(m, task)
