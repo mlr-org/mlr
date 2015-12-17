@@ -199,8 +199,9 @@ mylist = function(..., create = FALSE) {
   lrns = listLearners(..., create = create)
   if (create) {
     ids = extractSubList(lrns, "id")
+    return(lrns[!grepl("mock", ids)])
   } else {
-    ids = lrns
+    ids = lrns$class
+    return(lrns[!grepl("mock", ids),])
   }
-  lrns[!grepl("mock", ids)]
 }
