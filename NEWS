@@ -6,7 +6,11 @@ mlr_new:
 - removed learners: classif.randomForestSRCSyn, regr.randomForestSRCSyn
 - the ModelMultiplexer inherits its predict.type from the base learners now
 - check that learners in an ensemble have the same predict.type
-- New function getBMRModels to extract stored models from a benchmark result
+- new function getBMRModels to extract stored models from a benchmark result
+
+- API changes
+-- listLearners now returns a data frame with properties of the learners if
+   create is false
 
 - new functions
 -- getBMRModels
