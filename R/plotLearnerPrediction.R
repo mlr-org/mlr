@@ -173,7 +173,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
         prob = apply(getPredictionProbabilities(pred.grid, cl = td$class.levels), 1, max)
         grid$.prob.pred.class = prob
         p = p + geom_tile(data = grid, mapping = aes_string(fill = target, alpha = ".prob.pred.class"),
-          show_guide = TRUE)
+          show.legend = TRUE)
         p = p + scale_alpha(limits = range(grid$.prob.pred.class))
       } else {
         p = p + geom_tile(mapping = aes_string(fill = target))
@@ -185,14 +185,14 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
       if (err.mark != "none" && any(data$.err)) {
         p = p + geom_point(data = subset(data, data$.err),
           mapping = aes_string(x = x1n, y = x2n, shape = target),
-          size = err.size + 1.5, show_guide = FALSE)
+          size = err.size + 1.5, show.legend = FALSE)
         p = p + geom_point(data = subset(data, data$.err),
           mapping = aes_string(x = x1n, y = x2n, shape = target),
-          size = err.size + 1, col = err.col, show_guide = FALSE)
+          size = err.size + 1, col = err.col, show.legend = FALSE)
       }
       # print error points
       p = p + geom_point(data = subset(data, data$.err),
-        mapping = aes_string(x = x1n, y = x2n, shape = target), size = err.size, show_guide = FALSE)
+        mapping = aes_string(x = x1n, y = x2n, shape = target), size = err.size, show.legend = FALSE)
       p  = p + guides(alpha = FALSE)
     }
   } else if (td$type == "cluster") {
