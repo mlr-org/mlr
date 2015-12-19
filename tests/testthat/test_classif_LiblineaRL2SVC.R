@@ -24,6 +24,12 @@ test_that("classif_LiblineaRL2SVC", {
      p = predict(m, newx = binaryclass.test[, -binaryclass.class.col])
      old.predicts.list[[i]] = as.factor(p$predictions)
    }
+   parset.list = list(
+    list(type = 1),
+    list(),
+    list(type = 1, cost = 5L),
+    list(cost = 5L)
+    )
 
    testSimpleParsets("classif.LiblineaRL2SVC", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.predicts.list, parset.list)

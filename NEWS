@@ -7,6 +7,9 @@ mlr_new:
 - the ModelMultiplexer inherits its predict.type from the base learners now
 - check that learners in an ensemble have the same predict.type
 - new function getBMRModels to extract stored models from a benchmark result
+- Fixed a bug where several learners from the LiblineaR package
+  ("classif.LiblineaRL2LogReg", "classif.LiblineaRL2SVC", "regr.LiblineaRL2L2SVR")
+  were calling the wrong value for "type" (0) and thus training the wrong model.
 
 - API changes
 -- listLearners now returns a data frame with properties of the learners if

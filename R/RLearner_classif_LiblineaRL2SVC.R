@@ -4,7 +4,7 @@ makeRLearner.classif.LiblineaRL2SVC = function() {
     cl = "classif.LiblineaRL2SVC",
     package = "LiblineaR",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "type", values = c(1L, 2L)),
+      makeDiscreteLearnerParam(id = "type", default = 2L, values = c(1L, 2L)),
       makeNumericLearnerParam(id = "cost", default = 1, lower = 0),
       ## FIXME: Add default value when parameter dependent defaults are implemented:
       ## if type = 1: eps default = 0.1, if type = 2: eps default = 0.01
@@ -14,11 +14,12 @@ makeRLearner.classif.LiblineaRL2SVC = function() {
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
+    par.vals = list(type = 2L),
     properties = c("twoclass", "multiclass", "numerics", "class.weights"),
     class.weights.param = "wi",
     name = "L2-Regularized L2-Loss Support Vector Classification",
     short.name = "liblinl2svc",
-    note = "type 2 is primal and type 1 is dual problem"
+    note = "type 2 (the default) is primal and type 1 is dual problem"
   )
 }
 
