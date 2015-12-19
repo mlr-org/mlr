@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Returns learning algorithms which have specific characteristics, e.g.
-#' whether they supports missing values, case weights, etc.
+#' whether they support missing values, case weights, etc.
 #'
 #' Note that the packages of all learners are loaded during the search if you create them.
 #' This can be a lot. If you do not create them we only inspect properties of the S3 classes.
@@ -11,6 +11,7 @@
 #' Note that for general cost-sensitive learning, mlr currently supports mainly
 #' \dQuote{wrapper} approaches like \code{\link{CostSensWeightedPairsWrapper}},
 #' which are not listed, as they are not basic R learning algorithms.
+#' The same applies for multilabel classification, see \code{\link{makeMultilabelBinaryRelevanceWrapper}}.
 #'
 #' @template arg_task_or_type
 #' @param properties [\code{character}]\cr
@@ -25,7 +26,7 @@
 #'   Default is \code{TRUE}.
 #' @param check.packages [\code{logical(1)}]\cr
 #'   Check if required packages are installed. Calls
-#'   \code{installed.packages()}. If \code{create} is \code{TRUE},
+#'   \code{find.package()}. If \code{create} is \code{TRUE},
 #'   this is done implicitly and the value of this parameter is ignored.
 #'   Default is \code{TRUE}. If set to \code{FALSE}, learners that cannot
 #'   actually be constructed because of missing packages may be returned.
@@ -125,8 +126,9 @@ listLearners.character  = function(obj, properties = character(0L),
           rtp[lrn.properties] = TRUE
           rtp = as.data.frame(as.list(rtp))
           lp = collapse(lrn.package, ",")
+          if (is.null(lrn.note)) lrn.note = ""
           res.table = rbind(res.table, cbind(class = lrn, type = lrn.type, package = lp,
-            short.name = lrn.short.name, name = lrn.name, rtp))
+            short.name = lrn.short.name, name = lrn.name, rtp, note = lrn.note))
         } else {
           res[[i]] = lrn
         }
