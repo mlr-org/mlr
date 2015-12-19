@@ -19,6 +19,13 @@ new learners
 -- classif.randomForestSRCSyn
 -- regr.randomForestSRCSyn
 -- cluster.dbscan
+-- classif.h2odeeplearning
+-- classif.h2ogbm
+-- classif.h2oglm
+-- classif.h2orandomForest
+-- regr.h2ogbm
+-- regr.h2oglm
+-- regr.h20randomForest
 
 mlr_2.7:
 - New argument "models" for function benchmark
