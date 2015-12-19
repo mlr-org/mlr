@@ -1,25 +1,22 @@
 #' @title Perform overall Friedman test for a BenchmarkResult.
 #'
-#' @description Performs a \code{\link{friedman.test}} for a selected measure. \cr
+#' @description Performs a \code{\link[stats]{friedman.test}} for a selected measure.
 #' The null hypothesis is that apart from an effect of the different
-#' [\code{tasks}], the location parameter (aggregated performance-measure)
-#' is the same for each \code{learner}.
+#' [\code{\link{Task}}], the location parameter (aggregated performance-measure)
+#' is the same for each \code{\link{Learner}}.
 #'
 #' @template arg_bmr
 #' @template arg_measure
 #' @template arg_aggregation_method
-#' @return A list of class \code{htest}. \cr
-#' See \code{\link{friedman.test}} for details.\cr
-#'
+#' @return [list of \code{htest}]: See \code{\link[stats]{friedman.test}} for details.
+#' @family benchmark
+#' @export
 #' @examples
 #' lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))
 #' tasks = list(iris.task, sonar.task)
 #' rdesc = makeResampleDesc("CV", iters = 2L)
 #' res = benchmark(lrns, tasks, rdesc, acc)
 #' friedmanTestBMR(res)
-#'
-#' @family benchmark
-#' @export
 friedmanTestBMR = function(bmr, measure = NULL, aggregation = "default") {
 
   assertClass(bmr, "BenchmarkResult")
@@ -43,39 +40,38 @@ friedmanTestBMR = function(bmr, measure = NULL, aggregation = "default") {
   tst = friedman.test(x ~ learner.id | task.id, data = df)
   return(tst)
 }
+
 #' @title Perform a posthoc Friedman-Nemenyi test.
 #'
 #' @description
 #' Performs a \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}} for a
-#' \code{\link{BenchmarkResult}} and a selected measure.\cr
+#' \code{\link{BenchmarkResult}} and a selected measure.
 #' This means \code{all pairwise comparisons} of \code{learners} are performed.
 #' The null hypothesis of the post hoc test is that each pair of learners is equal.
-#' If the null hypothesis of the included ad hoc \code{\link{friedman.test}}
+#' If the null hypothesis of the included ad hoc \code{\link[stats]{friedman.test}}
 #' can be rejected a \code{pairwise.htest} is returned. If not, the function returns the
-#' corresponding \link{friedman.test}
+#' corresponding \link[stats]{friedman.test}
 #'
 #' @template arg_bmr
 #' @template arg_measure
-#' @param p.value [\code{numeric(1)}] \cr
-#'   p-value for the tests.\cr  Default: 0.05
+#' @param p.value [\code{numeric(1)}]\cr
+#'   p-value for the tests. Default: 0.05
 #' @template arg_aggregation_method
-#' @return A list of class \code{pairwise.htest}.\cr See
-#' \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}} for details. \cr
-#' Additionally two components are added to the list: \cr
-#' \item{f.rejnull}{[\code{logical(1)}]whether the according friedman.test rejects the Null
-#' hypothesis at the selected p.value}
-#' \item{crit.difference}{[\code{list(2)}]Minimal difference the mean ranks of two learners
-#' need to have in order to be significantly different}
+#' @return [list of \code{pairwise.htest}]: See \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}} for details.
+#' Additionally two components are added to the list:
+#' \describe{
+#'   \item{f.rejnull [\code{logical(1)}]}{Whether the according friedman.test rejects the Null hypothesis at the selected p.value}
+#'   \item{crit.difference [\code{list(2)}]}{Minimal difference the mean ranks of two learners need to have in order to be significantly different}
+#' }
 #'
+#' @family benchmark
+#' @export
 #' @examples
 #' lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))
 #' tasks = list(iris.task, sonar.task)
 #' rdesc = makeResampleDesc("CV", iters = 2L)
 #' res = benchmark(lrns, tasks, rdesc, acc)
 #' friedmanPostHocTestBMR(res, acc, p.value = 0.1)
-#'
-#' @family benchmark
-#' @export
 friedmanPostHocTestBMR = function(bmr, measure = NULL, p.value = 0.05, aggregation = "default") {
   requirePackages("PMCMR")
   assertClass(bmr, "BenchmarkResult")

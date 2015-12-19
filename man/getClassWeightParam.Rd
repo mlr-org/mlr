@@ -12,9 +12,8 @@ The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 }
 \value{
-[\code{numeric \link{LearnerParam}}].\cr
-  A numeric parameter object, containing the class weight parameter of the
-  given learner.
+[\code{numeric \link{LearnerParam}}]:
+  A numeric parameter object, containing the class weight parameter of the given learner.
 }
 \description{
 Gets the class weight parameter of a learner.

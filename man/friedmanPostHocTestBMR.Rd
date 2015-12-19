@@ -15,30 +15,29 @@ Benchmark result.}
 Performance measure.
 Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
 
-\item{p.value}{[\code{numeric(1)}] \cr
-p-value for the tests.\cr  Default: 0.05}
+\item{p.value}{[\code{numeric(1)}]\cr
+p-value for the tests. Default: 0.05}
 
 \item{aggregation}{[\code{character(1)}] \cr
 \dQuote{mean} or \dQuote{default}. See \code{\link{getBMRAggrPerformances}}
 for details on \dQuote{default}.}
 }
 \value{
-A list of class \code{pairwise.htest}.\cr See
-\code{\link[PMCMR]{posthoc.friedman.nemenyi.test}} for details. \cr
-Additionally two components are added to the list: \cr
-\item{f.rejnull}{[\code{logical(1)}]whether the according friedman.test rejects the Null
-hypothesis at the selected p.value}
-\item{crit.difference}{[\code{list(2)}]Minimal difference the mean ranks of two learners
-need to have in order to be significantly different}
+[list of \code{pairwise.htest}]: See \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}} for details.
+Additionally two components are added to the list:
+\describe{
+  \item{f.rejnull [\code{logical(1)}]}{Whether the according friedman.test rejects the Null hypothesis at the selected p.value}
+  \item{crit.difference [\code{list(2)}]}{Minimal difference the mean ranks of two learners need to have in order to be significantly different}
+}
 }
 \description{
 Performs a \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}} for a
-\code{\link{BenchmarkResult}} and a selected measure.\cr
+\code{\link{BenchmarkResult}} and a selected measure.
 This means \code{all pairwise comparisons} of \code{learners} are performed.
 The null hypothesis of the post hoc test is that each pair of learners is equal.
-If the null hypothesis of the included ad hoc \code{\link{friedman.test}}
+If the null hypothesis of the included ad hoc \code{\link[stats]{friedman.test}}
 can be rejected a \code{pairwise.htest} is returned. If not, the function returns the
-corresponding \link{friedman.test}
+corresponding \link[stats]{friedman.test}
 }
 \examples{
 lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))
@@ -46,7 +45,6 @@ tasks = list(iris.task, sonar.task)
 rdesc = makeResampleDesc("CV", iters = 2L)
 res = benchmark(lrns, tasks, rdesc, acc)
 friedmanPostHocTestBMR(res, acc, p.value = 0.1)
-
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
