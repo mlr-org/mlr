@@ -25,7 +25,7 @@ listLearners(obj = NA_character_, properties = character(0L),
 \arguments{
 \item{obj}{[\code{character(1)} | \code{\link{Task}}]\cr
 Either a task or the type of the task, in the latter case one of:
-\dQuote{classif}, \dQuote{regr},  \dQuote{surv}, \dQuote{costsens}, \dQuote{cluster}.
+\dQuote{classif}, \dQuote{regr},  \dQuote{surv}, \dQuote{costsens}, \dQuote{cluster}, \dQuote{multilabel}.
 Default is \code{NA}, matching all types.}
 
 \item{properties}{[\code{character}]\cr
@@ -43,7 +43,7 @@ Default is \code{TRUE}.}
 
 \item{check.packages}{[\code{logical(1)}]\cr
 Check if required packages are installed. Calls
-\code{installed.packages()}. If \code{create} is \code{TRUE},
+\code{find.package()}. If \code{create} is \code{TRUE},
 this is done implicitly and the value of this parameter is ignored.
 Default is \code{TRUE}. If set to \code{FALSE}, learners that cannot
 actually be constructed because of missing packages may be returned.}
@@ -60,7 +60,7 @@ Default is \code{FALSE}.}
 }
 \description{
 Returns learning algorithms which have specific characteristics, e.g.
-whether they supports missing values, case weights, etc.
+whether they support missing values, case weights, etc.
 
 Note that the packages of all learners are loaded during the search if you create them.
 This can be a lot. If you do not create them we only inspect properties of the S3 classes.
@@ -69,6 +69,7 @@ This will be a lot faster.
 Note that for general cost-sensitive learning, mlr currently supports mainly
 \dQuote{wrapper} approaches like \code{\link{CostSensWeightedPairsWrapper}},
 which are not listed, as they are not basic R learning algorithms.
+The same applies for multilabel classification, see \code{\link{makeMultilabelBinaryRelevanceWrapper}}.
 }
 \examples{
 \dontrun{
