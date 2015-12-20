@@ -1,6 +1,6 @@
-context("critDifferences")
+context("CritDifferences")
 
-test_that("critDifferences", {
+test_that("CritDifferences", {
   
   lrns = list(makeLearner("classif.rpart"),
               makeLearner("classif.nnet"))
@@ -10,18 +10,18 @@ test_that("critDifferences", {
   res = benchmark(lrns, tasks, rdesc, meas)
 
   r1 = generateCritDifferencesData(res)
-  expect_is(r1, "critDifferencesData")
+  expect_is(r1, "CritDifferencesData")
   r2 = generateCritDifferencesData(res, ber, baseline = "classif.rpart", test = "nemenyi")
-  expect_is(r2, "critDifferencesData")
+  expect_is(r2, "CritDifferencesData")
   r3 = generateCritDifferencesData(res, ber, p.value = 0.1, test = "bd")
-  expect_is(r3, "critDifferencesData")
-  r3$cd.info$textvjust = 1L
+  expect_is(r3, "CritDifferencesData")
   expect_message(generateCritDifferencesData(res, mmce, p.value = 10^(-10)))
+  
   # Test Issue #554
   set.seed(123L)
   res = benchmark(lrns, tasks, rdesc, meas)
   r = generateCritDifferencesData(res, mmce, p.value = 0.3, test = "bd")
-  expect_is(r, "critDifferencesData")
+  expect_is(r, "CritDifferencesData")
   
   plotCritDifferences(r1)
   ggsave(tempfile(fileext = ".png"))
