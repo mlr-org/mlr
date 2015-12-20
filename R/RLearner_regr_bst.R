@@ -20,16 +20,16 @@ makeRLearner.regr.bst = function() {
       makeIntegerLearnerParam(id = "maxcompete", default = 4L, lower = 0L),
       makeIntegerLearnerParam(id = "maxsurrogate", default = 5L, lower = 0L),
       makeDiscreteLearnerParam(id = "usesurrogate", default = 2L, values = 0:2),
-      makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L),
+      makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L, tunable = FALSE),
       makeDiscreteLearnerParam(id = "surrogatestyle", default = 0L, values = 0:1),
       makeIntegerLearnerParam(id = "maxdepth", default = 1L, lower = 1L, upper = 30L),
       makeDiscreteLearnerParam(id = "Learner", default = "ls", values = c("ls", "sm", "tree"))
     ),
-    par.vals = list(maxdepth = 1L, Learner = "ls"),
+    par.vals = list(Learner = "ls", maxdepth = 1L, xval = 0L),
     properties = c("numerics"),
     name = "Gradient Boosting",
     short.name = "bst",
-    note = "The argument `learner` has been renamed to `Learner` due to a name conflict with `setHyerPars`"
+    note = "Renamed param 'learner` to `Learner` due to nameclash `setHyperPars`'. Default changes: 'Learner = ls', 'xval = 0' and 'maxdepth = 1'."
   )
 }
 

@@ -13,7 +13,7 @@ makeRLearner.classif.rpart = function() {
       makeDiscreteLearnerParam(id = "surrogatestyle", default = 0L, values = 0:1),
       # we use 30 as upper limit, see docs of rpart.control
       makeIntegerLearnerParam(id = "maxdepth", default = 30L, lower = 1L, upper = 30L),
-      makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L),
+      makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L, tunable = FALSE),
       makeUntypedLearnerParam(id = "parms")
     ),
     par.vals = list(xval = 0L),
