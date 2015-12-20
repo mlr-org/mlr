@@ -13,6 +13,7 @@ mlr_new:
 - Fixed a bug where the resampling objects hout, cv2, cv3, cv5, cv10 were not documented
   in the ResampleDesc help page
 - regr.xgboost, classif.xgboost: add feval param
+- fixed a bug in irace tuning interface with unamed discrete values
 
 - API changes
 -- listLearners now returns a data frame with properties of the learners if
