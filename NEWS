@@ -12,6 +12,7 @@ mlr_new:
   were calling the wrong value for "type" (0) and thus training the wrong model.
 - Fixed a bug where the resampling objects hout, cv2, cv3, cv5, cv10 were not documented
   in the ResampleDesc help page
+- regr.xgboost, classif.xgboost: add feval param
 
 - API changes
 -- listLearners now returns a data frame with properties of the learners if
