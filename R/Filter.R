@@ -322,8 +322,9 @@ univariate = makeFilter(
   }
 )
 .FilterRegister[["univariate"]] = univariate
+.FilterRegister[["univariate"]]$desc = "Resamples an mlr learner for each input feature individually. The resampling performance is used as filter score, with rpart as default learner (DEPRECATED)."
 .FilterRegister[["univariate"]]$fun = function(...) {
-  .Deprecated("Filter 'univariate' is deprecated, use 'univariate.model.score' instead.")
+  .Deprecated(old = "Filter 'univariate'", new = "Filter 'univariate.model.score'")
   .FilterRegister[["univariate.model.score"]]$fun(...)
 }
 
