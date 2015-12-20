@@ -14,6 +14,8 @@ mlr_new:
   in the ResampleDesc help page
 - regr.xgboost, classif.xgboost: add feval param
 - fixed a bug in irace tuning interface with unamed discrete values
+- Fixed bugs in "jackknife" and "bootstrap" se estimators for regr.randomForest.
+- Added "sd" estimator for regr.randomForest.
 
 - API changes
 -- listLearners now returns a data frame with properties of the learners if
