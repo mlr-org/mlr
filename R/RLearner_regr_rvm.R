@@ -26,7 +26,7 @@ makeRLearner.regr.rvm = function() {
       makeNumericLearnerParam(id = "minmaxdiff", default = 0.001, lower = 0),
       makeLogicalLearnerParam(id = "verbosity", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "fit", default = TRUE),
-      makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L)
+      makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L, tunable = FALSE)
     ),
     par.vals = list(fit = FALSE),
     properties = c("numerics", "factors"),
