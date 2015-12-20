@@ -29,7 +29,7 @@ Depends:
     R (>= 3.0.2),
     BBmisc (>= 1.9),
     ggplot2,
-    ParamHelpers (>= 1.6),
+    ParamHelpers (>= 1.7),
     stats
 Imports:
     checkmate (>= 1.6.2),
