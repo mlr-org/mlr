@@ -27,7 +27,7 @@ makeRLearner.classif.clusterSVM = function() {
     properties = c("twoclass", "numerics"),
     name = "Clustered Support Vector Machines",
     short.name = "clusterSVM",
-    note = "`centers` set to 2 by default"
+    note = "`centers` set to `2` by default."
   )
 }
 

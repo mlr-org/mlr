@@ -21,7 +21,7 @@ makeRLearner.classif.nnTrain = function() {
     properties = c("twoclass", "multiclass","numerics", "prob"),
     name = "Training Neural Network by Backpropagation",
     short.name = "nn.train",
-    note = "`output` set to `softmax` by default"
+    note = "`output` set to `softmax` by default."
   )
 }
 

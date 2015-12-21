@@ -40,7 +40,7 @@ makeRLearner.regr.randomForest = function() {
     properties = c("numerics", "factors", "ordered", "se"),
     name = "Random Forest",
     short.name = "rf",
-    note = "see ?regr.randomForest for information about se estimation."
+    note = "See `?regr.randomForest` for information about se estimation."
 
   )
 }

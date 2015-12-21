@@ -39,7 +39,7 @@ makeRLearner.regr.glmnet = function() {
     par.vals = list(s = 0.01),
     name = "GLM with Lasso or Elasticnet Regularization",
     short.name = "glmnet",
-    note = "Factors automatically get converted to dummy columns, ordered factors to integer"
+    note = "Factors automatically get converted to dummy columns, ordered factors to integer."
   )
 }
 

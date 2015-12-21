@@ -28,7 +28,7 @@ makeRLearner.surv.optimCoxBoostPenalty = function() {
     properties = c("numerics", "factors", "weights", "rcens"),
     name = "Cox Proportional Hazards Model with Componentwise Likelihood based Boosting, automatic tuning enabled",
     short.name = "optimCoxBoostPenalty",
-    note = "Factors automatically get converted to dummy columns, ordered factors to integer"
+    note = "Factors automatically get converted to dummy columns, ordered factors to integer."
   )
 }
 

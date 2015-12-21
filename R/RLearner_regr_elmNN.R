@@ -12,7 +12,7 @@ makeRLearner.regr.elmNN = function() {
     properties = c("numerics"),
     name = "Extreme Learning Machine for Single Hidden Layer Feedforward Neural Networks",
     short.name = "elmNN",
-    note = "nhid has been set to 1 and actfun has been set to \"sig\" by default"
+    note = '`nhid` has been set to `1` and `actfun` has been set to `"sig"` by default.'
   )
 }
 

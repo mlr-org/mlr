@@ -7,7 +7,7 @@ makeRLearner.classif.probit = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Probit Regression",
     short.name = "probit",
-    note = "Delegates to glm with family binomial/probit."
+    note = 'Delegates to `glm` with `family = binomial(link = "probit")`.'
   )
 }
 

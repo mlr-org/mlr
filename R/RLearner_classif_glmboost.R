@@ -19,7 +19,7 @@ makeRLearner.classif.glmboost = function() {
     short.name = "glmbst",
     note = paste(
       "`family` has been set to `Binomial()` by default.",
-      "Maximum number of boosting iterations is set via 'mstop', the actual number used for prediction is controlled by 'm'."
+      "Maximum number of boosting iterations is set via `mstop`, the actual number used for prediction is controlled by `m`."
     )
   )
 }

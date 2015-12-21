@@ -21,7 +21,7 @@ makeRLearner.classif.gaterSVM = function() {
     properties = c("twoclass", "numerics"),
     name = "Mixture of SVMs with Neural Network Gater Function",
     short.name = "gaterSVM",
-    note = "m set to 3 and max.iter set to 1 by default"
+    note = "`m` set to `3` and `max.iter` set to `1` by default."
   )
 }
 

@@ -25,7 +25,7 @@ makeRLearner.regr.avNNet = function() {
     properties = c("numerics", "factors", "weights"),
     name = "Neural Network",
     short.name = "avNNet",
-    note = "`size` has been set to 3 by default."
+    note = "`size` has been set to `3` by default."
   )
 }
 
