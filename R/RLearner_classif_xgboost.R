@@ -35,7 +35,7 @@ makeRLearner.classif.xgboost = function() {
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
-    note = "All setting are passed directly, rather than through xgboost's 'param'. 'rounds' set to 1 by default"
+    note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` by default."
   )
 }
 

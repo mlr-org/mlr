@@ -28,7 +28,7 @@ makeRLearner.surv.cforest = function() {
     par.vals = list(),
     name = "Random Forest based on Conditional Inference Trees",
     short.name = "crf",
-    note = "see ?ctree_control for possible breakage for nominal features with missingness"
+    note = "See `?ctree_control` for possible breakage for nominal features with missingness."
   )
 }
 

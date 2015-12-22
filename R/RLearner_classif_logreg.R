@@ -7,7 +7,7 @@ makeRLearner.classif.logreg = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Logistic Regression",
     short.name = "logreg",
-    note = "Delegates to glm with family binomial/logit."
+    note = 'Delegates to `glm` with `family = binomial(link = "logit")`.'
   )
 }
 

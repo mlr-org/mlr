@@ -29,7 +29,7 @@ makeRLearner.regr.bst = function() {
     properties = c("numerics"),
     name = "Gradient Boosting",
     short.name = "bst",
-    note = "Renamed param 'learner` to `Learner` due to nameclash `setHyperPars`'. Default changes: 'Learner = ls', 'xval = 0' and 'maxdepth = 1'."
+    note = 'Renamed parameter `learner` to `Learner` due to nameclash with `setHyperPars`. Default changes: `Learner = "ls"`, `xval = 0`, and `maxdepth = 1`.'
   )
 }
 

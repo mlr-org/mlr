@@ -13,7 +13,7 @@ makeRLearner.classif.sparseLDA = function() {
     properties = c("twoclass", "multiclass", "numerics", "prob"),
     name = "Sparse Discriminant Analysis",
     short.name = "sparseLDA",
-    note = "Arguments Q and stop are not yet provided as they depend on the task."
+    note = "Arguments `Q` and `stop` are not yet provided as they depend on the task."
   )
 }
 

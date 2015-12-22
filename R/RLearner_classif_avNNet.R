@@ -21,7 +21,7 @@ makeRLearner.classif.avNNet = function() {
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
     name = "Neural Network",
     short.name = "avNNet",
-    note = "`size` has been set to 3 by default. Doing bagging training of `nnet` if set `bag=TRUE`."
+    note = "`size` has been set to `3` by default. Doing bagging training of `nnet` if set `bag = TRUE`."
   )
 }
 

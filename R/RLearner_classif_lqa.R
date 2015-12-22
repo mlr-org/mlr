@@ -33,7 +33,7 @@ makeRLearner.classif.lqa = function() {
     par.vals = list(penalty = 'lasso', lambda = 0.1),
     name = "Fitting penalized Generalized Linear Models with the LQA algorithm",
     short.name = "lqa",
-    note = "`penalty` has been set to *lasso* and `lambda` to 0.1 by default."
+    note = '`penalty` has been set to `"lasso"` and `lambda` to `0.1` by default.'
   )
 }
 

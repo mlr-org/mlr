@@ -21,7 +21,7 @@ makeRLearner.classif.pamr = function() {
     properties = c("numerics", "twoclass", "prob"),
     name = "Nearest shrunken centroid",
     short.name = "pamr",
-    note = "threshold for prediction (`threshold.predict`) has been set to `1` by default"
+    note = "Threshold for prediction (`threshold.predict`) has been set to `1` by default."
   )
 }
 

@@ -20,7 +20,7 @@ makeRLearner.classif.saeDNN = function() {
     properties = c("twoclass", "multiclass","numerics", "prob"),
     name = "Deep neural network with weights initialized by Stacked AutoEncoder",
     short.name = "sae.dnn",
-    note = "`output` set to `softmax` by default"
+    note = '`output` set to `"softmax"` by default.'
   )
 }
 

@@ -14,7 +14,7 @@ makeRLearner.surv.penalized = function() {
     properties = c("numerics", "factors", "ordered", "rcens"),
     name = "Penalized Regression",
     short.name = "penalized",
-    note = "Factors automatically get converted to dummy columns, ordered factors to integer"
+    note = "Factors automatically get converted to dummy columns, ordered factors to integer."
   )
 }
 
