@@ -58,31 +58,28 @@
 generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
                                        baseline = NULL, test = "bd") {
   assertClass(bmr, "BenchmarkResult")
-  if (is.null(measure))
-    measure = getBMRMeasures(bmr)[[1L]]
-  assertClass(measure, "Measure")
-  assertChoice(measure$id, getBMRMeasureIds(bmr))
   assertChoice(test, c("nemenyi", "bd"))
   assertNumeric(p.value, lower = 0, upper = 1, len = 1)
+  measure = checkBMRMeasure(measure, bmr)
 
   # Get Rankmatrix, transpose and get mean ranks
   transp.rankmat = as.data.frame(t(convertBMRToRankMatrix(bmr, measure)))
-  mean.rank = apply(transp.rankmat, 2, mean)
-
+  mean.rank = colMeans(transp.rankmat)
   # Gather Info for plotting the descriptive part.
   df = data.frame(cbind(mean.rank),
-                  learner.id = names(mean.rank),
-                  rank = rank(mean.rank, ties.method = "average"))
+    learner.id = names(mean.rank),
+    rank = rank(mean.rank, ties.method = "average"))
   # Orientation of descriptive lines yend(=y-value of horizontal line)
   right = df$rank > median(df$rank)
   # Better learners are ranked ascending
   df$yend = rank(df$rank[!right], ties.method = "first") - 0.5
   # Worse learners ranked descending
   df$yend[right] = rank(desc(df$rank[right]), ties.method = "first") - 0.5
-  # Better half of learner have lines to left.
+  # Better half of learner have lines to left / others right.
   df$xend = ifelse(!right, 0, max(df$rank) + 1L)
   # Save orientation, can be used for vjust of text later on
   df$right = as.numeric(right)
+  df$short.name = getBMRLearnerShortNames(bmr)
 
   # Get a baseline
   if (is.null(baseline)) {
@@ -95,18 +92,16 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
   nem.test = friedmanPostHocTestBMR(bmr, measure, p.value)
   # Store Info for plotting the cricital differences
   cd.info = list("test" = test,
-                 "cd" = nem.test$crit.difference[[test]],
-                 "x" = df$mean.rank[df$learner.id == baseline],
-                 "y" = 0.1,
-                 "bar.vjust" = 0,
-                 "text.vjust" = 0)
+    "cd" = nem.test$crit.difference[[test]],
+    "x" = df$mean.rank[df$learner.id == baseline],
+    "y" = 0.1)
 
   # Create data for connecting bars (only nemenyi test)
   if (test == "nemenyi") {
     sub = sort(df$mean.rank)
     # Compute a matrix of all possible bars
     mat = apply(t(outer(sub, sub, `-`)), c(1,2),
-                FUN = function(x) ifelse(x > 0 && x < cd.info$cd, x, 0))
+      FUN = function(x) ifelse(x > 0 && x < cd.info$cd, x, 0))
     # Get start and end point of all possible bars
     xstart = round(apply(mat + sub, 1, min), 3)
     xend   = round(apply(mat + sub, 1, max), 3)
@@ -122,11 +117,11 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
   }
 
   makeS3Obj("CritDifferencesData",
-            "data" = df,
-            "cd.info" = cd.info,
-            "friedman.nemenyi.test" = nem.test,
-            "baseline" = baseline,
-            "p.value" = p.value)
+    "data" = df,
+    "cd.info" = cd.info,
+    "friedman.nemenyi.test" = nem.test,
+    "baseline" = baseline,
+    "p.value" = p.value)
 }
 #' @title Plot critical differences for a selected measure.
 #'
@@ -144,24 +139,18 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
 #'   Select a [\code{learner.id} as baseline for the critical difference
 #'   diagram, the critical difference will be positioned arround this learner.
 #'   Defaults to best performing algorithm.
+#' @param pretty.names [\code{logical(1)}]: \cr
+#'    Should learner short names be used instead of learner.id?
 #' @template ret_gg2
 #'
 #' @references Janez Demsar, Statistical Comparisons of Classifiers over Multiple Data Sets,
 #' JMLR, 2006
-#'
-#' @examples
-#' lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))
-#' tasks = list(iris.task, sonar.task)
-#' rdesc = makeResampleDesc("CV", iters = 2L)
-#' meas = list(acc, mmce)
-#' res = benchmark(lrns, tasks, rdesc, meas)
-#' r = generateCritDifferencesData(res, mmce, p.value = 0.3, test = "bd")
-#' plotCritDifferences(r)
-#'
 #' @family plot
 #' @family benchmark
 #' @export
-plotCritDifferences = function(obj, baseline = NULL) {
+#' @examples
+#' # see benchmark
+plotCritDifferences = function(obj, baseline = NULL, pretty.names = TRUE) {
   assertClass(obj, "CritDifferencesData")
 
   # Plot descritptive lines and learner names
@@ -174,9 +163,14 @@ plotCritDifferences = function(obj, baseline = NULL) {
   # Vertical descriptive bar
   p = p + geom_segment(aes_string("mean.rank", "yend", xend = "xend",
                                   yend = "yend", color = "learner.id"), size = 1)
-  # Learner name
-  p = p + geom_text(aes_string("xend", "yend", label = "learner.id", color = "learner.id",
-                               hjust = "right"), vjust = -1)
+  # Plot Learner name
+  if (pretty.names) {
+    p = p + geom_text(aes_string("xend", "yend", label = "short.name", color = "learner.id",
+                                 hjust = "right"), vjust = -1)
+  } else {
+    p = p + geom_text(aes_string("xend", "yend", label = "learner.id", color = "learner.id",
+                                 hjust = "right"), vjust = -1)
+  }
   p = p + xlab("Average Rank")
   # Change appearance
   p = p + scale_x_continuous(breaks = c(0:max(obj$data$xend)))
@@ -213,13 +207,13 @@ plotCritDifferences = function(obj, baseline = NULL) {
     p = p + annotate("point", x = cd.x, y = cd.y, alpha = 0.5)
     # Add critical difference text
     p = p + annotate("text", label = paste("Critical Difference =", round(cd, 2)),
-                     x = cd.x, y = cd.y + 0.05, hjust = 0.5)
+                     x = cd.x, y = cd.y + 0.05)
   } else {
     nemenyi.data = obj$cd.info$nemenyi.data
     if (!(nrow(nemenyi.data) == 0L)) {
       # Add connecting bars
-      p = p + geom_segment(aes_string("xstart", "y", xend = "xend", yend = "y"), data = nemenyi.data,
-                           size = 2, color = "dimgrey", alpha = 0.9)
+      p = p + geom_segment(aes_string("xstart", "y", xend = "xend", yend = "y"),
+                           data = nemenyi.data, size = 2, color = "dimgrey", alpha = 0.9)
       # Add text (descriptive)
       p = p + annotate("text",
                        label = paste("Critical Difference =", round(cd, 2)),
@@ -232,7 +226,7 @@ plotCritDifferences = function(obj, baseline = NULL) {
                        yend = max(obj$data$yend) + .2,
                        size = 2L)
     } else {
-      message("No bars to plot!")
+      message("No connecting bars to plot!")
     }
   }
   return(p)
