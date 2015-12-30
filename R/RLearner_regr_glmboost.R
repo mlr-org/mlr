@@ -17,7 +17,7 @@ makeRLearner.regr.glmboost = function() {
     properties = c("numerics", "factors", "weights"),
     name = "Boosting for GLMs",
     short.name = "glmboost",
-    note = "Maximum number of boosting iterations is set via 'mstop', the actual number used is controlled by 'm'."
+    note = "Maximum number of boosting iterations is set via `mstop`, the actual number used is controlled by `m`."
   )
 }
 #' @export

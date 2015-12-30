@@ -25,6 +25,7 @@ makeRLearner.regr.xgboost = function() {
       makeNumericLearnerParam(id = "missing", default = 0),
       makeIntegerLearnerParam(id = "nthread", default = 16, lower = 1),
       makeIntegerLearnerParam(id = "nrounds", default = 1, lower = 1),
+      makeUntypedLearnerParam(id = "feval", default = NULL),
       makeIntegerLearnerParam(id = "verbose", default = 1, lower = 0, upper = 2),
       makeIntegerLearnerParam(id = "print.every.n", default = 1, lower = 1),
       makeIntegerLearnerParam(id = "early.stop.round", default = 1, lower = 1),
@@ -34,7 +35,7 @@ makeRLearner.regr.xgboost = function() {
     properties = c("numerics", "factors", "weights"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
-    note = "All setting are passed directly, rather than through xgboost's 'param'. 'rounds' set to 1 by default"
+    note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` by default."
   )
 }
 

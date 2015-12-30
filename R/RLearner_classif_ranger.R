@@ -25,7 +25,7 @@ makeRLearner.classif.ranger = function() {
     properties = c("twoclass", "multiclass", "prob", "numerics", "factors"),
     name = "Random Forests",
     short.name = "ranger",
-    note = "By default, internal parallelization is switched off (num.threads = 1) and verbose output is disabled. Both settings are changeable."
+    note = "By default, internal parallelization is switched off (`num.threads = 1`) and `verbose` output is disabled. Both settings are changeable."
   )
 }
 

@@ -2,6 +2,11 @@
 % Please edit documentation in R/ResampleDesc.R, R/zzz.R
 \name{makeResampleDesc}
 \alias{ResampleDesc}
+\alias{cv10}
+\alias{cv2}
+\alias{cv3}
+\alias{cv5}
+\alias{hout}
 \alias{makeResampleDesc}
 \title{Create a description object for a resampling strategy.}
 \usage{

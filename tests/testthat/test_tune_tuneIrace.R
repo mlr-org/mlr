@@ -91,7 +91,7 @@ test_that("tuneIrace uses digits", {
   lrn.tune = makeTuneWrapper("classif.gbm", resampling = rdesc, par.set = ps,
     control = ctrl, show.info = FALSE)
   res = resample(lrn.tune, task = multiclass.task, rdesc)
-  
+
   lrn = makeLearner("classif.rpart")
   ctrl = makeTuneControlIrace(maxExperiments = 30L, nbIterations = 1L,
     digits = 5L)
@@ -99,19 +99,19 @@ test_that("tuneIrace uses digits", {
   lrn.tune = makeTuneWrapper(lrn, resampling = rdesc, par.set = ps,
     control = ctrl, show.info = FALSE)
   res = resample(lrn.tune, task = multiclass.task, rdesc)
-  
+
   ctrl = makeTuneControlIrace(maxExperiments = 60L, digits = 4L)
   ps = makeParamSet(makeNumericParam("cp", lower = 1e-5, upper = 1e-4))
   lrn.tune = makeTuneWrapper(lrn, resampling = rdesc, par.set = ps,
     control = ctrl, show.info = FALSE)
   expect_error(suppressAll(resample(lrn.tune, task = multiclass.task, rdesc)))
-  
+
   ctrl = makeTuneControlIrace(maxExperiments = 60L, digits = "a")
   ps = makeParamSet(makeNumericParam("cp", lower = 1e-5, upper = 1e-4))
   lrn.tune = makeTuneWrapper(lrn, resampling = rdesc, par.set = ps,
     control = ctrl, show.info = FALSE)
   expect_error(suppressAll(resample(lrn.tune, task = multiclass.task, rdesc)))
-  
+
   ctrl = makeTuneControlIrace(maxExperiments = 60L, digits = c(6L, 7L))
   ps = makeParamSet(makeNumericParam("cp", lower = 1e-5, upper = 1e-4))
   lrn.tune = makeTuneWrapper(lrn, resampling = rdesc, par.set = ps,
@@ -142,3 +142,14 @@ test_that("Error in hyperparameter tuning with scientific notation for lower/upp
   set.seed(123)
   res = resample(lrn.tune, task = sonar.task, rdesc)
 })
+
+# we had a bug here, see issue #627
+test_that("irace works with unnamed discrete values", {
+  lrn = makeLearner("classif.rpart")
+  ctrl = makeTuneControlIrace(maxExperiments = 30L, nbIterations = 1L)
+  ps = makeParamSet(
+    makeDiscreteParam("minsplit", c(2L, 7L))
+  )
+  res = tuneParams(lrn, multiclass.task, hout, par.set = ps, control = ctrl)
+})
+

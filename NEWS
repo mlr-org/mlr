@@ -10,6 +10,12 @@ mlr_new:
 - Fixed a bug where several learners from the LiblineaR package
   ("classif.LiblineaRL2LogReg", "classif.LiblineaRL2SVC", "regr.LiblineaRL2L2SVR")
   were calling the wrong value for "type" (0) and thus training the wrong model.
+- Fixed a bug where the resampling objects hout, cv2, cv3, cv5, cv10 were not documented
+  in the ResampleDesc help page
+- regr.xgboost, classif.xgboost: add feval param
+- fixed a bug in irace tuning interface with unamed discrete values
+- Fixed bugs in "jackknife" and "bootstrap" se estimators for regr.randomForest.
+- Added "sd" estimator for regr.randomForest.
 
 - API changes
 -- listLearners now returns a data frame with properties of the learners if

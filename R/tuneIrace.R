@@ -1,12 +1,21 @@
 tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.path, show.info) {
   requirePackages("irace", why = "tuneIrace", default.method = "load")
-
-  cx = function(x) convertXLogicalsNotAsStrings(x, par.set)
   hookRun = function(experiment, config = list()) {
     rin = experiment$instance
-    tunerFitnFun(as.list(experiment$candidate), learner = learner, task = task, resampling = rin, measures = measures,
+    plen = getParamNr(par.set, devectorize = TRUE)
+    x = experiment$candidate
+    # FIXME: this is a bug in irace, where for 1 param only a scalar is returned
+    # BB reported this already, maybe we can remove this later
+    if (plen == 1L)
+      x = makeDataFrame(1L, 1L, init = x, col.names = getParamIds(par.set))
+
+    # now convert to list, we also need to convert col types, irace sometimes uses not what we need
+    # - logicals are stored as as strings
+    x = dfRowToList(x, par.set, 1L, enforce.col.types = TRUE)
+
+    tunerFitnFun(x, learner = learner, task = task, resampling = rin, measures = measures,
       par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
-      convertx = cx, remove.nas = TRUE)
+      convertx = identity, remove.nas = TRUE)
   }
 
   n.instances = control$extra.args$n.instances

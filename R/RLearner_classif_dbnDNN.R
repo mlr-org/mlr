@@ -20,7 +20,7 @@ makeRLearner.classif.dbnDNN = function() {
     properties = c("twoclass", "multiclass","numerics", "prob"),
     name = "Deep neural network with weights initialized by DBN",
     short.name = "dbn.dnn",
-    note = "`output` set to `softmax` by default"
+    note = '`output` set to `"softmax"` by default.'
   )
 }
 

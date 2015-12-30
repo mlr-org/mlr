@@ -29,7 +29,7 @@ makeRLearner.classif.cforest = function() {
     par.vals = list(),
     name = "Random forest based on conditional inference trees",
     short.name = "cforest",
-    note = "see ?ctree_control for possible breakage for nominal features with missingness"
+    note = "See `?ctree_control` for possible breakage for nominal features with missingness."
   )
 }
 

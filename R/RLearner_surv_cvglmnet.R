@@ -36,7 +36,7 @@ makeRLearner.surv.cvglmnet = function() {
     properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     name = "GLM with Regularization (Cross Validated Lambda)",
     short.name = "cvglmnet",
-    note = "Factors automatically get converted to dummy columns, ordered factors to integer"
+    note = "Factors automatically get converted to dummy columns, ordered factors to integer."
   )
 }
 

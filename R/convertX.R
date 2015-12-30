@@ -21,15 +21,6 @@ convertXMatrixCols = function(xs, par.set) {
   })
 }
 
-# convert logical param values from chars to true logicals, eg irace produces strings in tuning
-convertXLogicalsNotAsStrings = function(x, par.set) {
-  types = getParamTypes(par.set, use.names = TRUE)
-  j = types %in% c("logical", "logicalvector")
-  if (any(j))
-    x[j] = lapply(x[j], as.logical)
-  return(x)
-}
-
 roundIntegers = function(x, par.set) {
   Map(function(par, v) {
     if (par$type %in% c("integer", "integervector"))
