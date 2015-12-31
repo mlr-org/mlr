@@ -16,10 +16,7 @@
 friedmanTestBMR = function(bmr, measure = NULL, aggregation = "default") {
   
   assertClass(bmr, "BenchmarkResult")
-  if (is.null(measure))
-    measure = getBMRMeasures(bmr)[[1L]]
-  assertClass(measure, "Measure")
-  assertChoice(measure$id, getBMRMeasureIds(bmr))
+  measure = checkBMRMeasure(measure, bmr)
   assertChoice(aggregation, c("default", "mean"))
   
   # aggregate mean or default over iterations
