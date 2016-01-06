@@ -1,5 +1,25 @@
 context("ModelMultiplexer")
 
+test_that("ModelMultiplexer works for regression tasks", {
+  base.learners = list(
+    makeLearner("regr.glmnet"),
+    makeLearner("regr.randomForest")
+  )
+  learner = makeModelMultiplexer(base.learners)
+  expect_equal(learner$predict.type, "response")
+  # now lets see that the next code runs and does not complain about matrix output for
+  # base learner predict output
+  r = holdout(learner, regr.task)
+  
+  # now check that we can tune the threshold
+  ps = makeModelMultiplexerParamSet(learner,
+                                     makeDiscreteParam("alpha", c(0.5,0.9)),
+                                    makeDiscreteParam("mtry", c(2, 3))
+  )
+  rdesc = makeResampleDesc("Holdout")
+  ctrl = makeTuneControlGrid()
+  res = tuneParams(learner, regr.task, resampling = rdesc, par.set = ps, control = ctrl)
+})
 
 test_that("makeModelMultiplexerParamSet works", {
   bls = list(

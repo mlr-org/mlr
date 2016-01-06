@@ -67,5 +67,5 @@ trainLearner.regr.glmnet = function(.learner, .task, .subset, .weights = NULL, .
 predictLearner.regr.glmnet = function(.learner, .model, .newdata, ...) {
   info = getTrainingInfo(.model)
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
-  drop(predict(.model$learner.model, newx = .newdata, ...))
+  drop(predict(.model$learner.model, newx = .newdata, s=getHyperPars(.learner)$s, ...))
 }
