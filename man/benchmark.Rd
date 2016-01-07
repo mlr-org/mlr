@@ -59,6 +59,8 @@ print(rmat)
 plotBMRSummary(bmr)
 plotBMRBoxplots(bmr, ber, style = "violin")
 plotBMRRanksAsBarChart(bmr, pos = "stack")
+friedmanTestBMR(bmr)
+friedmanPostHocTestBMR(bmr, p.value = 0.05)
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
@@ -70,6 +72,7 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRFeatSelResults}},
   \code{\link{getBMRFilteredFeatures}},
   \code{\link{getBMRLearnerIds}},
+  \code{\link{getBMRLearnerShortNames}},
   \code{\link{getBMRLearners}},
   \code{\link{getBMRMeasureIds}},
   \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},

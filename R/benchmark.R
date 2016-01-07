@@ -37,6 +37,8 @@
 #' plotBMRSummary(bmr)
 #' plotBMRBoxplots(bmr, ber, style = "violin")
 #' plotBMRRanksAsBarChart(bmr, pos = "stack")
+#' friedmanTestBMR(bmr)
+#' friedmanPostHocTestBMR(bmr, p.value = 0.05)
 benchmark = function(learners, tasks, resamplings, measures, keep.pred = TRUE, models = TRUE, show.info = getMlrOption("show.info")) {
   learners = ensureVector(learners, 1L, "Learner")
   assertList(learners, min.len = 1L)

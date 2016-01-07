@@ -40,6 +40,20 @@ getBMRLearnerIds = function(bmr) {
   extractSubList(bmr$learners, "id", use.names = FALSE)
 }
 
+#' @title Return learner short.names used in benchmark.
+#'
+#' @description
+#' Gets the learner short.names of the learners used in a benchmark experiment.
+#'
+#' @template arg_bmr
+#' @return [\code{character}].
+#' @export
+#' @family benchmark
+getBMRLearnerShortNames = function(bmr) {
+  assertClass(bmr, "BenchmarkResult")
+  extractSubList(bmr$learners, "short.name", use.names = FALSE)
+}
+
 #' @title Return measures used in benchmark.
 #'
 #' @description
