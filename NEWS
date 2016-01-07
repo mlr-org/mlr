@@ -16,7 +16,7 @@ mlr_new:
 - fixed a bug in irace tuning interface with unamed discrete values
 - Fixed bugs in "jackknife" and "bootstrap" se estimators for regr.randomForest.
 - Added "sd" estimator for regr.randomForest.
-- Fixed a mini bug in ModelMultiplexer where hyperpars that are only need in
+- Fixed a mini bug in ModelMultiplexer where hyperpars that are only needed in
   predict were not passed down correctly
 
 - API changes
