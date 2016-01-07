@@ -115,3 +115,15 @@ test_that("ModelMultiplexer inherits predict.type from base learners", {
   ctrl = makeTuneControlGrid(tune.threshold = TRUE)
   res = tuneParams(learner, binaryclass.task, resampling = rdesc, par.set = ps, control = ctrl)
 })
+
+# we had bug here, see issue #647
+test_that("ModelMultiplexer passes on hyper pars in predict", {
+  base.learners = list(
+    makeLearner("regr.glmnet"),
+    makeLearner("regr.rpart")
+  )
+  learner = makeModelMultiplexer(base.learners)
+  expect_equal(learner$predict.type, "response")
+  r = holdout(learner, regr.task)
+})
+

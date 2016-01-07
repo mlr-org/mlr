@@ -99,7 +99,10 @@ predictLearner.ModelMultiplexer = function(.learner, .model, .newdata, ...) {
   # simply predict with the model
   sl = .learner$par.vals$selected.learner
   bl = .learner$base.learners[[sl]]
-  predictLearner(bl, .model$learner.model$next.model, .newdata)
+  # we need to pass the changed setting of the base learner for the predict function further down
+  args = list(.learner = bl, .model = .model$learner.model$next.model, .newdata = .newdata)
+  args = c(args, getHyperPars(bl, for.fun = "predict"))
+  do.call(predictLearner, args)
 }
 
 #' @export
