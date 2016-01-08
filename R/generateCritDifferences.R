@@ -205,15 +205,13 @@ plotCritDifferences = function(obj, baseline = NULL) {
                        label = paste("Critical Difference =", round(cd, 2)),
                        y = max(obj$data$yend) + .1,
                        x = mean(obj$data$mean.rank),
-                       vjust = obj$cd.info$textvjust,
                        hjust = 0.5)
       p = p + annotate("segment",
                        x =  mean(obj$data$mean.rank) - 0.5 * cd,
                        xend = mean(obj$data$mean.rank) + 0.5 * cd,
                        y = max(obj$data$yend) + .2,
                        yend = max(obj$data$yend) + .2,
-                       size = 2L,
-                       vjust = obj$cd.info$barvjust)
+                       size = 2L)
     }
   }
   return(p)
