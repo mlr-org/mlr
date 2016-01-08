@@ -39,7 +39,13 @@ trainLearner.surv.cforest = function(.learner, .task, .subset,
   nresample, maxsurrogate, maxdepth, savesplitstats, ...) {
   f = getTaskFormula(.task)
   d = getTaskData(.task, .subset)
-  ctrl = learnerArgsToControl(party::cforest_unbiased, ntree, mtry, replace,
+  defaults = getDefaults(getParamSet(.learner))
+  if (missing(teststat)) teststat = defaults$teststat
+  if (missing(testtype)) testtype = defaults$testtype
+  if (missing(mincriterion)) mincriterion = defaults$mincriterion
+  if (missing(replace)) replace = defaults$replace
+  if (missing(fraction)) fraction = defaults$fraction
+  ctrl = learnerArgsToControl(party::cforest_control, ntree, mtry, replace,
     fraction, trace, pvalue, teststat, testtype, mincriterion, minprob,
     minsplit, minbucket, stump, randomsplits, nresample, maxsurrogate,
     maxdepth, savesplitstats)

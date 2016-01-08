@@ -26,4 +26,11 @@ test_that("surv_cforest", {
 
   testSimpleParsets("surv.cforest", surv.df, surv.target, surv.train.inds,
     old.predicts.list, parset.list2)
+
+  # issue 556
+  parset.list3 = list(
+    list(replace = FALSE)
+  )
+  testSimpleParsets("surv.cforest", surv.df, surv.target, surv.train.inds,
+    old.predicts.list, parset.list3)
 })
