@@ -1,4 +1,4 @@
-#' Estimate the residual variance
+#' Estimate the residual variance.
 #'
 #' Estimate the residual variance of a regression model on a given task.
 #' If a regression learner is provided instead of a model, the model is

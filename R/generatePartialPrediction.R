@@ -1,4 +1,4 @@
-#' @title Generate partial predictions
+#' @title Generate partial predictions.
 #'
 #' @description
 #' Estimate how the learned prediction function is affected by one or more features.
@@ -9,6 +9,7 @@
 #'
 #' @family partial_prediction
 #' @family generate_plot_data
+#' @aliases PartialPredictionData
 #'
 #' @param obj [\code{\link{WrappedModel}}]\cr
 #'   Result of \code{\link{train}}.
@@ -88,11 +89,35 @@
 #'   the number of (possibly non-unique) values resampled. If \code{resample = NULL} it defines the
 #'   length of the evenly spaced grid created.
 #' @param ... additional arguments to be passed to \code{\link{predict}}.
-#' @return [\code{PartialPredictionData}], A named list, which contains the partial predictions,
+#' @return [\code{PartialPredictionData}]. A named list, which contains the partial predictions,
 #'   input data, target, features, task description, and other arguments controlling the type of
 #'   partial predictions made.
+#'
+#' Object members:
+#'   \item{data}{[\code{data.frame}]\cr
+#'     Has columns for the prediction: one column for regression and
+#'     survival analysis, and a column for class and the predicted probability for classification as well
+#'     as a a column for each element of \code{features}. If \code{individual = TRUE} then there is an
+#'     additional column \code{idx} which gives the index of the \code{data} that each prediction corresponds to.}
+#'   \item{task.desc}{[\code{\link{TaskDesc}}]\cr
+#'     Task description.}
+#'   \item{target}{Target feature for regression, target feature levels for classification,
+#'         survival and event indicator for survival.}
+#'   \item{features}{[\code{character}]\cr
+#'     Features argument input.}
+#'   \item{interaction}{[\code{logical(1)}]\cr
+#'     Whether or not the features were interacted (i.e. conditioning).}
+#'   \item{derivative}{[\code{logical(1)}]\cr
+#'     Whether or not the partial derivative was estimated.}
+#'   \item{individual}{[\code{logical(1)}]\cr
+#'     Whether the partial predictions were aggregated or the individual curves are retained.}
+#'   \item{center}{[\code{logical(1)}]\cr
+#'     If \code{individual == TRUE} whether the partial prediction at the values of the
+#'                 features specified was subtracted from the individual partial predictions. Only displayed if
+#'                 \code{individual == TRUE}.}
 #' @references
 #' Goldstein, Alex, Adam Kapelner, Justin Bleich, and Emil Pitkin. \dQuote{Peeking inside the black box: Visualizing statistical learning with plots of individual conditional expectation.} Journal of Computational and Graphical Statistics. Vol. 24, No. 1 (2015): 44-65.
+#'
 #' Friedman, Jerome. \dQuote{Greedy Function Approximation: A Gradient Boosting Machine.} The Annals of Statistics. Vol. 29. No. 5 (2001): 1189-1232.
 #' @examples
 #' lrn = makeLearner("regr.rpart")
@@ -382,29 +407,6 @@ doIndividualPartialPrediction = function(out, td, n = nrow(data), rng, target, f
   }
   out
 }
-#' Result of \code{\link{generatePartialPredictionData}}.
-#'
-#' @family partial_prediction
-#'
-#' \itemize{
-#'   \item{data \code{data.frame}}{Has columns for the prediction: one column for regression and
-#'   survival analysis, and a column for class and the predicted probability for classification as well
-#'   as a a column for each element of \code{features}. If \code{individual = TRUE} then there is an
-#'   additional column \code{idx} which gives the index of the \code{data} that each prediction corresponds to.}
-#'   \item{task.desc \code{\link{TaskDesc}}}{Task description}.
-#'   \item{features}{Features argument input}.
-#'   \item{target}{Target feature for regression, target feature levels for classification,
-#'         survival and event indicator for survival.}
-#'   \item{derivative}{Whether or not the partial derivative was estimated.}
-#'   \item{interaction}{Whether or not the features were interacted (i.e. conditioning)}
-#'   \item{individual}{Whether the parial predictions were aggregated or the individual curves are retained.}
-#'   \item{center}{If \code{individual == TRUE} whether the partial prediction at the values of the
-#'                 features specified was subtracted from the individual partial predictions. Only displayed if
-#'                 \code{individual == TRUE}.}
-#' }
-#' @name PartialPredictionData
-#' @rdname PartialPredictionData
-NULL
 #' @export
 print.PartialPredictionData = function(x, ...) {
   catf("PartialPredictionData")
@@ -418,7 +420,7 @@ print.PartialPredictionData = function(x, ...) {
     catf("Predictions centered: %s", x$center)
   print(head(x$data))
 }
-#' @title Plot a partial prediction with ggplot2
+#' @title Plot a partial prediction with ggplot2.
 #' @description
 #' Plot a partial prediction from \code{\link{generatePartialPredictionData}} using ggplot2.
 #'
@@ -428,7 +430,7 @@ print.PartialPredictionData = function(x, ...) {
 #' @param obj [\code{PartialPredictionData}]\cr
 #'   Generated by \code{\link{generatePartialPredictionData}}.
 #' @param geom [\code{charater(1)}]\cr
-#'   The type of geom to use to disply the data. Can be \dQuote{line} or \dQuote{tile}.
+#'   The type of geom to use to display the data. Can be \dQuote{line} or \dQuote{tile}.
 #'   For tiling at least two features must be used with \code{interaction = TRUE} in the call to
 #'   \code{\link{generatePartialPredictionData}}. This may be used in conjuction with the
 #'   \code{facet} argument if three features are specified in the call to
@@ -561,7 +563,7 @@ plotPartialPrediction = function(obj, geom = "line", facet = NULL, p = 1) {
 
   plt
 }
-#' @title Plot a partial prediction using ggvis
+#' @title Plot a partial prediction using ggvis.
 #' @description
 #' Plot a partial prediction from \code{\link{generatePartialPredictionData}} using ggvis.
 #'

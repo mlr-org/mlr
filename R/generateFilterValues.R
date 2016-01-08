@@ -6,6 +6,7 @@
 #'
 #' @family generate_plot_data
 #' @family filter
+#' @aliases FilterValues
 #'
 #' @template arg_task
 #' @param method [\code{character}]\cr
@@ -15,8 +16,16 @@
 #'   Number of scores to request. Scores are getting calculated for all features per default.
 #' @param ... [any]\cr
 #'   Passed down to selected method.
-#' @return [\code{\link{FilterValues}}].
-#' @family filter
+#' @return [\code{FilterValues}]. A \code{list} containing:
+#'   \item{task.desc}{[\code{\link{TaskDesc}}]\cr
+#'	   Task description.}
+#'   \item{data}{[\code{data.frame}] with columns:
+#'     \itemize{
+#'       \item \code{name} Name of feature.
+#'       \item \code{type} Feature column type.
+#'       \item A column for each \code{method} with
+#'                   the feature importance values.
+#'     }}
 #' @export
 generateFilterValuesData = function(task, method = "rf.importance", nselect = getTaskNFeats(task), ...) {
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
@@ -60,20 +69,6 @@ generateFilterValuesData = function(task, method = "rf.importance", nselect = ge
             task.desc = td,
             data = out)
 }
-#' Result of \code{\link{generateFilterValuesData}}.
-#'
-#' @family filter
-#'
-#' \itemize{
-#'   \item{task.desc [\code{\link{TaskDesc}}]}{Task description.}
-#'   \item{data [\code{data.frame}]}{Has columns: \code{name} = Names of features;
-#'     \code{type} = Feature column type; and a column for each \code{method} with
-#'                   the feature values.}
-#' }
-#' @name FilterValues
-#' @rdname FilterValues
-#' @family filter
-NULL
 #' @export
 print.FilterValues = function(x, ...) {
   catf("FilterValues:")

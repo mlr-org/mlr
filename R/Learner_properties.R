@@ -1,4 +1,4 @@
-#' @title Set, add, remove or query properties of learners
+#' @title Query properties of learners.
 #'
 #' @description
 #' Properties can be accessed with \code{getLearnerProperties(learner)}, which returns a
@@ -6,11 +6,12 @@
 #'
 #' @template arg_learner
 #' @param props [\code{character}]\cr
-#'   Vector of properties to set, add, remove or query.
+#'   Vector of properties to query.
 #' @return \code{getLearnerProperties} returns a character vector with learner properties.
 #'  \code{hasLearnerProperties} returns a logical vector of the same length as \code{props}.
 #' @name LearnerProperties
 #' @rdname LearnerProperties
+#' @aliases getLearnerProperties hasLearnerProperties
 #' @family learner
 NULL
 

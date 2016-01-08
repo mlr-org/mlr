@@ -9,6 +9,7 @@
 #' @family roc
 #' @family predict
 #' @family generate_plot_data
+#' @aliases ROCRCurvesData
 #'
 #' @template arg_plotroc_obj
 #' @param meas1 [\code{character(1)}]\cr
@@ -31,8 +32,8 @@
 #'   Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
 #'   Default is first task.
 #'
-#' @return A \code{ROCRCurvesData} object, a \code{list} with elements giving the data output from
-#'   \code{\link[ROCR]{performance}} and the input arguments.
+#' @return [\code{ROCRCurvesData}]. A \code{list} with elements giving the data output from
+#'   ROCR's \code{\link[ROCR]{performance}} and the input arguments.
 #' @export
 generateROCRCurvesData = function(obj, meas1 = "tpr", meas2 = "fpr", avg = "threshold",
                               perf.args = list(), task.id = NULL) {
@@ -202,7 +203,7 @@ print.ROCRCurvesData = function(x, ...) {
 #'   Result of \code{\link{generateROCRCurvesData}}.
 #' @param diagonal [\code{logical(1)}]\cr
 #'   Whether to plot a dashed diagonal line.
-#'   Default is false.
+#'   Default is \code{FALSE}.
 #' @param xlab [\code{character(1)}]\cr
 #'   Label for x-axis.
 #'   Default is \code{meas1}.

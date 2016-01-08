@@ -1,7 +1,5 @@
 #' @title Convert BenchmarkResult to a rank-matrix.
 #'
-#' @description
-#' Computes a matrix of all the ranks of different algorithms over different datasets (tasks).
 #' @description Computes a matrix of all the ranks of different algorithms
 #' over different datasets (tasks). Ranks are computed from aggregated
 #' measures.
@@ -11,7 +9,7 @@
 #' @template arg_bmr
 #' @template arg_measure
 #' @param ties.method [\code{character(1)}]\cr
-#'   see \code{\link[base]{rank}} for details.
+#'   See \code{\link[base]{rank}} for details.
 #' @template arg_aggregation_method
 #' @return [\code{matrix}] with measure ranks as entries.
 #'   The matrix has one row for each \code{learner}, and one column for each \code{task}.

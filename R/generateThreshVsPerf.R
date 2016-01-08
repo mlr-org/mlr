@@ -5,6 +5,7 @@
 #'
 #' @family generate_plot_data
 #' @family thresh_vs_perf
+#' @aliases ThreshVsPerfData
 #'
 #' @template arg_plotroc_obj
 #' @template arg_measures
@@ -270,7 +271,7 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
   }
 }
 
-#' @title Plots a ROC curve using ggplot2
+#' @title Plots a ROC curve using ggplot2.
 #'
 #' @description
 #' Plots a ROC curve from predictions.

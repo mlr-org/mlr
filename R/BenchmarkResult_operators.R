@@ -141,7 +141,6 @@ getBMRPredictions = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = F
 #' \code{\link{resample}}, or these objects are rbind-ed with extra columns
 #' \dQuote{task.id} and \dQuote{learner.id}.
 #'
-#' Note: Measure values will be \code{NA} for \code{\link{ResampleDesc}}s with \code{predict} is \dQuote{train}
 #'
 #' @template arg_bmr
 #' @template arg_bmr_taskids
@@ -163,7 +162,6 @@ getBMRPerformances = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = 
 #' \code{\link{resample}}, or these objects are rbind-ed with extra columns
 #' \dQuote{task.id} and \dQuote{learner.id}.
 #'
-#' Note: Measure values will be \code{NA} for \code{\link{ResampleDesc}}s with \code{predict} is \dQuote{train}
 #'
 #' @template arg_bmr
 #' @template arg_bmr_taskids
