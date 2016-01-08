@@ -16,8 +16,9 @@ test_that("regr_randomForestSRCSyn", {
     parset = c(parset, list(data = regr.train, formula = regr.formula, newdata = regr.test,
      importance = "none", proximity = FALSE, forest = TRUE, verbose = FALSE))
     set.seed(getOption("mlr.debug.seed"))
-    p = do.call(randomForestSRC::rfsrcSyn, parset)$predicted
-    old.predicts.list[[i]] = p
+    p = do.call(randomForestSRC::rfsrcSyn, parset)$rfSynPred$predicted
+    # versison 2.0 of randomForestSRC returns an array here :(
+    old.predicts.list[[i]] = as.numeric(p)
   }
 
   testSimpleParsets("regr.randomForestSRCSyn", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list)
