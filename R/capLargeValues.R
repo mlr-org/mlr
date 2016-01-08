@@ -1,10 +1,15 @@
 #' @title Convert large/infinite numeric values in a data.frame or task.
 #'
 #' @description
-#' Convert numeric entries which large/infinite (absolute) values in a data.frame.
+#' Convert numeric entries which large/infinite (absolute) values
+#' in a data.frame or task.
 #' Only numeric/integer columns are affected.
 #'
 #' @template arg_taskdf
+#' @param target [\code{character}]\cr
+#'   Name of the column(s) specifying the response.
+#'   Target columns will not be capped.
+#'   Default is \code{character(0)}.
 #' @param cols [\code{character}]\cr
 #'   Which columns to convert.
 #'   Default is all numeric columns.
@@ -27,7 +32,9 @@
 #' @family eda_and_preprocess
 #' @examples
 #' capLargeValues(iris, threshold = 5, impute = 5)
-capLargeValues = function(obj, cols = NULL, threshold = Inf, impute = threshold, what = "abs") {
+capLargeValues = function(obj, target = character(0L), cols = NULL,
+  threshold = Inf, impute = threshold, what = "abs") {
+  assertCharacter(target, any.missing = FALSE)
   assertNumber(threshold, lower = 0)
   assertNumber(impute, lower = 0)
   assertChoice(what, c("abs", "pos", "neg"))
@@ -35,14 +42,24 @@ capLargeValues = function(obj, cols = NULL, threshold = Inf, impute = threshold,
 }
 
 #' @export
-capLargeValues.Task = function(obj, cols = NULL, threshold = Inf, impute = threshold, what = "abs") {
-  d = capLargeValues.data.frame(obj$env$obj, cols = cols, threshold = threshold, impute = impute)
+capLargeValues.Task = function(obj, target = character(0L), cols = NULL,
+  threshold = Inf, impute = threshold, what = "abs") {
+  if (length(target) != 0L) {
+    stop("Don't provide target names if you pass a task!")
+  }
+  d = getTaskData(obj)
+  d = capLargeValues.data.frame(d, target = character(0L), cols = cols,
+    threshold = threshold, impute = impute)
   changeData(obj, data = d)
 }
 
 #' @export
-capLargeValues.data.frame = function(obj, cols = NULL, threshold = Inf, impute = threshold, what = "abs") {
+capLargeValues.data.frame = function(obj, target = character(0L), cols = NULL,
+  threshold = Inf, impute = threshold, what = "abs") {
+  checkTargetPreproc(obj, target, cols)
   cns = colnames(obj)[vlapply(obj, is.numeric)]
+  cns = setdiff(cns, target)
+
   if (!is.null(cols)) {
     assertSubset(cols, cns)
     cns = intersect(cns, cols)
