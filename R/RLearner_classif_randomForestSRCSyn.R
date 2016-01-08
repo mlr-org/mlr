@@ -1,7 +1,7 @@
 #' @export
-makeRLearner.regr.randomForestSRCSyn = function() {
-  makeRLearnerRegr(
-    cl = "regr.randomForestSRCSyn",
+makeRLearner.classif.randomForestSRCSyn = function() {
+  makeRLearnerClassif(
+    cl = "classif.randomForestSRCSyn",
     package = "randomForestSRC",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "ntree", default = 1000L, lower = 1L),
@@ -23,7 +23,7 @@ makeRLearner.regr.randomForestSRCSyn = function() {
       makeLogicalLearnerParam(id = "statistics", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "fast.restore", default = FALSE, tunable = FALSE)
     ),
-    properties = c("numerics", "factors", "ordered"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob"),
     name = "Synthetic Random Forest",
     short.name = "rfsrcSyn",
     note = "na.action' has been set to 'na.impute' by default to allow missing data support"
@@ -31,18 +31,21 @@ makeRLearner.regr.randomForestSRCSyn = function() {
 }
 
 #' @export
-trainLearner.regr.randomForestSRCSyn = function(.learner, .task, .subset, .weights = NULL, ...) {
+trainLearner.classif.randomForestSRCSyn = function(.learner, .task, .subset, .weights = NULL, ...) {
   ##using parameters object and newdata throws an error, so we need to train like this
   df = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
-  c(list(formula = f, data = df), list(importance = "none", proximity = FALSE, forest = TRUE, verbose = FALSE, ...))
+  c(list(formula = f, data = df), list(proximity = FALSE, forest = TRUE, verbose = FALSE, ...))
 }
 
 #' @export
-predictLearner.regr.randomForestSRCSyn = function(.learner, .model, .newdata, ...) {
+predictLearner.classif.randomForestSRCSyn = function(.learner, .model, .newdata, ...) {
   args = .model$learner.model
   args$newdata = .newdata
-  args$verbose = FALSE
-  p = do.call(randomForestSRC::rfsrcSyn, args)$predicted
+  p = do.call(randomForestSRC::rfsrcSyn, args)$rfSynPred$predicted
+  if (.learner$predict.type == "response") {
+    max.id = apply(p, MARGIN = 1L, which.max)
+    p = factor(colnames(p)[max.id])
+  }
   return(p)
 }

@@ -18,10 +18,10 @@ test_that("classif_randomForestSRCSyn", {
      importance = "none", proximity = FALSE, forest = TRUE, verbose = FALSE))
     set.seed(getOption("mlr.debug.seed"))
     mod = do.call(randomForestSRC::rfsrcSyn, parset)
-    max.id = apply(mod$predicted, MARGIN = 1L, which.max)
-    p = factor(colnames(mod$predicted)[max.id])
+    max.id = apply(mod$rfSynPred$predicted, MARGIN = 1L, which.max)
+    p = factor(colnames(mod$rfSynPred$predicted)[max.id])
     old.predicts.list[[i]] = p
-    probs = mod$predicted[, binaryclass.task$task.desc$positive]
+    probs = mod$rfSynPred$predicted[, binaryclass.task$task.desc$positive]
     old.probs.list[[i]] = probs
   }
 
