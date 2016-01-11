@@ -9,7 +9,7 @@
 #'
 #' Models can easily be accessed via \code{\link{getLearnerModel}}.
 #'
-#' @param order The chain order. E.g. for \code{m} labels, this must be a permutation of \code{1:m}. Default is \code{sample(1:m)} (random order).
+#' @param order The chain order. E.g. for \code{m} labels, this must be a permutation of \code{1:m}. Default is \code{"random"}, i.e. \code{sample(1:m)}.
 #' @template arg_learner
 #' @template ret_learner
 #' @references
@@ -35,6 +35,9 @@
 #' # above works also with predictions from resample!
 makeMultilabelClassifierChainsWrapper = function(learner, order = "random") {
   learner = checkLearner(learner, type = "classif")
+  if ("twoclass" %nin% learner$properties) {
+    stopf("Learner does not support binary classification")
+  }
   id = paste("multilabel", learner$id, sep = ".")
   packs = learner$package
   x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
