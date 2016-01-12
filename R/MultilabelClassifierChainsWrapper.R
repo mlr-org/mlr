@@ -5,7 +5,8 @@
 #' classification can be converted to a wrapped classifier chains multilabel learner.
 #' CC trains a binary classifier for each label following a given order. In training phase,
 #' the feature space of each classifier is extended with true label information of all previous
-#' labels in the chain.
+#' labels in the chain. During the prediction phase, when true labels are not available, they are
+#' replaced by predicted labels.
 #'
 #' Models can easily be accessed via \code{\link{getLearnerModel}}.
 #'
@@ -55,7 +56,7 @@ trainLearner.MultilabelClassifierChainsWrapper = function(.learner, .task, .subs
   } else {
     order = .learner$order
   }
-  if (length(order) != length(.task$task.desc$target)) {
+  if (length(order) != length(getTaskTargetNames(.task))) {
     stopf("order length does not match number of targets!")  
   }
   targets = getTaskTargetNames(.task)
@@ -65,8 +66,9 @@ trainLearner.MultilabelClassifierChainsWrapper = function(.learner, .task, .subs
   chained_targets = targets
   for (tn in targets[order]) {
     data2 = dropNamed(data, setdiff(chained_targets, tn))
-    if (length(data2[, which(names(data2)%in%setdiff(targets, tn))]) != 0) {
-      data2[, which(names(data2) %in% setdiff(targets, tn))] = ifelse(data2[, which(names(data2) %in% setdiff(targets, tn))] == TRUE, 1, 0)
+    index = which(names(data2) %in% setdiff(targets, tn))
+    if (length(data2[, index]) != 0) {
+      data2[, index] = as.numeric(data2[, index])
     }
     ctask = makeClassifTask(id = tn, data = data2, target = tn)
     models[[tn]] = train(.learner$next.learner, ctask, weights = .weights)
@@ -81,12 +83,12 @@ predictLearner.MultilabelClassifierChainsWrapper = function(.learner, .model, .n
   predmatrix = matrix(ncol = length(models), nrow = nrow(newdata), dimnames = list(NULL, names(models)))
   if (.learner$predict.type == "response") {
     for (tn in names(models)) {
-      predmatrix[, tn] = as.logical(predict(models[[tn]], newdata = newdata)$data$response)
+      predmatrix[, tn] = as.logical(getPredictionResponse(predict(models[[tn]], newdata = newdata)))
       newdata[paste(tn)] = as.numeric(predmatrix[, tn])
     }
   } else {
     for (tn in names(models)) {
-      predmatrix[, tn] = predict(models[[tn]], newdata = newdata)$data$prob.TRUE
+      predmatrix[, tn] = getPredictionProbabilities(predict(models[[tn]], newdata = newdata))
       newdata[paste(tn)] = predmatrix[, tn]
     }
   }
