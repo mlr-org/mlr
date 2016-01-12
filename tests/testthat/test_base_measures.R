@@ -183,53 +183,68 @@ test_that("check measure calculations", {
   sq.errs = c(5 - 4, 10 - 11, 0 - 0, 5 - 4)^2L
   sse.test = sum(sq.errs)
   sse.perf = performance(pred.regr, measures = sse, model = mod.regr)
-  names(sse.perf) = NULL
-  expect_equal(sse.test, sse.perf, sse$fun(pred = pred.regr))
+  expect_equal(sse.test, sse$fun(pred = pred.regr))
+  expect_equal(sse.test, as.numeric(sse.perf))
   #mse
   mse.test = mean(sq.errs)
   mse.perf = performance(pred.regr, measures = mse, model = mod.regr)
-  names(mse.perf) = NULL
-  expect_equal(mse.test, mse.perf, mse$fun(pred = pred.regr))
+  expect_equal(mse.test, mse$fun(pred = pred.regr))
+  expect_equal(mse.test, as.numeric(mse.perf))
   #rmse
   rmse.test = sqrt(mse.test)
   rmse.perf = performance(pred.regr, measures = rmse, model = mod.regr)
-  names(rmse.perf) = NULL
-  expect_equal(rmse.test, rmse.perf, rmse$fun(pred = pred.regr))
+  expect_equal(rmse.test, rmse$fun(pred = pred.regr))
+  expect_equal(rmse.test, as.numeric(rmse.perf))
   #medse
   medse.test = median(sq.errs)
   medse.perf = performance(pred.regr, measures = medse, model = mod.regr)
-  names(medse.perf) = NULL
-  expect_equal(medse.test, medse.perf, medse$fun(pred = pred.regr))
+  expect_equal(medse.test, medse$fun(pred = pred.regr))
+  expect_equal(medse.test, as.numeric(medse.perf))
   #sae
   abs.errs = abs(c(5 - 4, 10 - 11, 0 - 0, 5 - 4))
   sae.test = sum(abs.errs)
   sae.perf = performance(pred.regr, measures = sae, model = mod.regr)
-  names(sae.perf) = NULL
-  expect_equal(sae.test, sae.test, sae$fun(pred = pred.regr))
+  expect_equal(sae.test, sae$fun(pred = pred.regr))
+  expect_equal(sae.test, as.numeric(sae.perf))
   #mae
   mae.test = mean(abs.errs)
   mae.perf = performance(pred.regr, measures = mae, model = mod.regr)
-  names(mae.perf) = NULL
-  expect_equal(mae.test, mae.perf, mae$fun(pred = pred.regr))
+  expect_equal(mae.test, mae$fun(pred = pred.regr))
+  expect_equal(mae.test, as.numeric(mae.perf))
   #medae
   medae.test = median(abs.errs)
   medae.perf = performance(pred.regr, measures = medae, model = mod.regr)
-  names(medae.perf) = NULL
-  expect_equal(medae.test, medae.perf, medae$fun(pred = pred.regr))
-
+  expect_equal(medae.test, medae$fun(pred = pred.regr))
+  expect_equal(medae.test, as.numeric(medae.perf))
+  # rsq
+  rsq.test = 1 - (sse.test / sum((tar.regr - mean(tar.regr))^2L))
+  rsq.perf = performance(pred.regr, measures = rsq, model = mod.regr)
+  expect_equal(rsq.test, rsq$fun(pred = pred.regr))
+  expect_equal(rsq.test, as.numeric(rsq.perf))
+  # arsq
+  arsq.test = 1 - (1 - rsq.test) * (2L / (4L - 2L - 1L))
+  arsq.perf = performance(pred.regr, measures = arsq,
+    model = mod.regr)
+  expect_equal(arsq.test, arsq$fun(pred = pred.regr, model = mod.regr))
+  expect_equal(arsq.test, as.numeric(arsq.perf))
+  # expvar
+  expvar.test = sum((pred.art.regr - mean(tar.regr))^2L) / sum((tar.regr - mean(tar.regr))^2L)
+  expvar.perf = performance(pred.regr, measures = expvar, model = mod.regr)
+  expect_equal(expvar.test, expvar$fun(pred = pred.regr))
+  expect_equal(expvar.test, as.numeric(expvar.perf))
 
   #test multiclass measures
 
   #mmce
   mmce.test = mean(c(1L != 1L, 2L != 0L, 0L != 0L, 1L != 2L))
   mmce.perf = performance(pred.classif, measures = mmce, model = mod.classif)
-  names(mmce.perf) = NULL
-  expect_equal(mmce.test, mmce.perf, mmce$fun(pred = pred.classif))
+  expect_equal(mmce.test, mmce$fun(pred = pred.classif))
+  expect_equal(mmce.test, as.numeric(mmce.perf))
   #acc
   acc.test = mean(c(1L != 1L, 2L != 0L, 0L != 0L, 1L != 2L))
   acc.perf = performance(pred.classif, measures = acc, model = mod.classif)
-  names(acc.perf) = NULL
-  expect_equal(acc.test, acc.perf, acc$fun(pred = pred.classif))
+  expect_equal(acc.test, acc$fun(pred = pred.classif))
+  expect_equal(acc.test, as.numeric(acc.perf))
   #multiclass.auc
   n.cl = length(levels(tar.classif))
   pred.probs = getPredictionProbabilities(pred.classif)
@@ -250,9 +265,8 @@ test_that("check measure calculations", {
   multiclass.auc.test = 1 / (n.cl * (n.cl - 1)) * sum(aucs)
   multiclass.auc.perf = performance(pred.classif,
    measures = multiclass.auc, model = mod.classif)
-  names(multiclass.auc.perf) = NULL
-  expect_equal(multiclass.auc.test, multiclass.auc.perf,
-   multiclass.auc$fun(pred = pred.classif))
+  expect_equal(multiclass.auc.test, multiclass.auc$fun(pred = pred.classif))
+  expect_equal(multiclass.auc.test, as.numeric(multiclass.auc.perf))
 
   #test binaryclass measures
 
@@ -260,101 +274,101 @@ test_that("check measure calculations", {
   pred.probs = getPredictionProbabilities(pred.bin)
   brier.test = mean((as.numeric(tar.bin == "0") - pred.probs)^2)
   brier.perf = performance(pred.bin, measures = brier, model = mod.bin)
-  names(brier.perf) = NULL
-  expect_equal(brier.test, brier.perf, brier$fun(pred = pred.bin))
+  expect_equal(brier.test, brier$fun(pred = pred.bin))
+  expect_equal(brier.test, as.numeric(brier.perf))
   #tp
   tp.test = sum(tar.bin == pred.art.bin & pred.art.bin == 0L)
   tp.perf = performance(pred.bin, measures = tp, model = mod.bin)
-  names(tp.perf) = NULL
-  expect_equal(tp.test, tp.perf, tp$fun(pred = pred.bin))
+  expect_equal(tp.test, tp$fun(pred = pred.bin))
+  expect_equal(tp.test, as.numeric(tp.perf))
   #tn
   tn.test = sum(tar.bin == pred.art.bin & pred.art.bin == 1L)
   tn.perf = performance(pred.bin, measures = tn, model = mod.bin)
-  names(tn.perf) = NULL
-  expect_equal(tn.test, tn.perf, tn$fun(pred = pred.bin))
+  expect_equal(tn.test, tn$fun(pred = pred.bin))
+  expect_equal(tn.test, as.numeric(tn.perf))
   #fp
   fp.test = sum(tar.bin != pred.art.bin & pred.art.bin == 0L)
   fp.perf = performance(pred.bin, measures = fp, model = mod.bin)
-  names(fp.perf) = NULL
-  expect_equal(fp.test, fp.perf, fp$fun(pred = pred.bin))
+  expect_equal(fp.test, fp$fun(pred = pred.bin))
+  expect_equal(fp.test, as.numeric(fp.perf))
   #fn
   fn.test = sum(tar.bin != pred.art.bin & pred.art.bin == 1L)
   fn.perf = performance(pred.bin, measures = fn, model = mod.bin)
-  names(fn.perf) = NULL
-  expect_equal(fn.test, fn.perf, fn$fun(pred = pred.bin))
+  expect_equal(fn.test, fn$fun(pred = pred.bin))
+  expect_equal(fn.test, as.numeric(fn.perf))
   #tpr
   tpr.test = tp.test / sum(tar.bin == 0L)
   tpr.perf = performance(pred.bin, measures = tpr, model = mod.bin)
-  names(tpr.perf) = NULL
-  expect_equal(tpr.test, tpr.perf, tpr$fun(pred = pred.bin))
+  expect_equal(tpr.test, tpr$fun(pred = pred.bin))
+  expect_equal(tpr.test, as.numeric(tpr.perf))
   #tnr
   tnr.test = tn.test / sum(tar.bin == 1L)
   tnr.perf = performance(pred.bin, measures = tnr, model = mod.bin)
-  names(tnr.perf) = NULL
-  expect_equal(tnr.test, tnr.perf, tnr$fun(pred = pred.bin))
+  expect_equal(tnr.test, tnr$fun(pred = pred.bin))
+  expect_equal(tnr.test, as.numeric(tnr.perf))
   #fpr
   fpr.test = fp.test / sum(tar.bin != 0L)
   fpr.perf = performance(pred.bin, measures = fpr, model = mod.bin)
-  names(fpr.perf) = NULL
-  expect_equal(fpr.test, fpr.perf, fpr$fun(pred = pred.bin))
+  expect_equal(fpr.test, fpr$fun(pred = pred.bin))
+  expect_equal(fpr.test, as.numeric(fpr.perf))
   #fnr
   fnr.test = fn.test / sum(tar.bin != 1L)
   fnr.perf = performance(pred.bin, measures = fnr, model = mod.bin)
-  names(fnr.perf) = NULL
-  expect_equal(fnr.test, fnr.perf, fnr$fun(pred = pred.bin))
+  expect_equal(fnr.test, fnr$fun(pred = pred.bin))
+  expect_equal(fnr.test, as.numeric(fnr.perf))
   #ppv
   ppv.test = tp.test / sum(pred.art.bin == 0L)
   ppv.perf = performance(pred.bin, measures = ppv, model = mod.bin)
-  names(ppv.perf) = NULL
-  expect_equal(ppv.test, ppv.perf, ppv$fun(pred = pred.bin))
+  expect_equal(ppv.test, ppv$fun(pred = pred.bin))
+  expect_equal(ppv.test, as.numeric(ppv.perf))
   #npv
   npv.test = tn.test / sum(pred.art.bin == 1L)
   npv.perf = performance(pred.bin, measures = npv, model = mod.bin)
-  names(npv.perf) = NULL
-  expect_equal(npv.test, npv.perf, npv$fun(pred = pred.bin))
+  expect_equal(npv.test, npv$fun(pred = pred.bin))
+  expect_equal(npv.test, as.numeric(npv.perf))
   #fdr
   fdr.test = fp.test / sum(pred.art.bin == 0L)
   fdr.perf = performance(pred.bin, measures = fdr, model = mod.bin)
-  names(fdr.perf) = NULL
-  expect_equal(fdr.test, fdr.perf, fdr$fun(pred = pred.bin))
+  expect_equal(fdr.test, fdr$fun(pred = pred.bin))
+  expect_equal(fdr.test, as.numeric(fdr.perf))
   #bac
   bac.test = 0.5 * (tpr.test / (tpr.test + fnr.test) + tnr.test /
     (tnr.test + fpr.test))
   bac.perf = performance(pred.bin, measures = bac, model = mod.bin)
-  names(bac.perf) = NULL
-  expect_equal(bac.test, bac.perf, bac$fun(pred = pred.bin))
+  expect_equal(bac.test, bac$fun(pred = pred.bin))
+  expect_equal(bac.test, as.numeric(bac.perf))
   #ber
   ber.test = 1L - bac.test
   ber.perf = performance(pred.bin, measures = ber, model = mod.bin)
-  names(ber.perf) = NULL
-  expect_equal(ber.test, ber.perf, ber$fun(pred = pred.bin))
+  expect_equal(ber.test, ber$fun(pred = pred.bin))
+  expect_equal(ber.test, as.numeric(ber.perf))
   #auc
   auc.test = (tpr.test + tnr.test) / 2L
   auc.perf = performance(pred.bin, measures = auc, model = mod.bin)
-  names(auc.perf) = NULL
-  expect_equal(auc.test, auc.perf, auc$fun(pred = pred.bin))
+  expect_equal(auc.test, auc$fun(pred = pred.bin))
+  expect_equal(auc.test, as.numeric(auc.perf))
   #mcc
   mcc.test =  (tp.test * tn.test - fp.test * fn.test) /
     sqrt((tp.test + fp.test) * (tp.test + fn.test) *
       (tn.test + fp.test) * (tn.test + fn.test))
    mcc.perf = performance(pred.bin, measures = mcc, model = mod.bin)
-  names(mcc.perf) = NULL
-  expect_equal(mcc.test, mcc.perf, mcc$fun(pred = pred.bin))
+  expect_equal(mcc.test, mcc$fun(pred = pred.bin))
+  expect_equal(mcc.test, as.numeric(mcc.perf))
   #f1
   f1.test = 2 * tp.test / (sum(tar.bin == 0L) + sum(pred.art.bin == 0L))
   f1.perf = performance(pred.bin, measures = f1, model = mod.bin)
-  names(f1.perf) = NULL
-  expect_equal(f1.test, f1.perf, f1$fun(pred = pred.bin))
+  expect_equal(f1.test, f1$fun(pred = pred.bin))
+  expect_equal(f1.test, as.numeric(f1.perf))
   #gmean
   gmean.test = sqrt(tp.test * tn.test)
   gmean.perf = performance(pred.bin, measures = gmean, model = mod.bin)
-  names(gmean.perf) = NULL
-  expect_equal(gmean.test, gmean.perf, gmean$fun(pred = pred.bin))
+  expect_equal(gmean.test, gmean$fun(pred = pred.bin))
+  expect_equal(gmean.test, as.numeric(gmean.perf))
   #gpr
   gpr.test = sqrt(ppv.test * tpr.test)
   gpr.perf = performance(pred.bin, measures = gpr, model = mod.bin)
-  names(gpr.perf) = NULL
-  expect_equal(gpr.test, gpr.perf, gpr$fun(pred = pred.bin))
+  expect_equal(gpr.test, gpr$fun(pred = pred.bin))
+  expect_equal(gpr.test, as.numeric(gpr.perf))
 
   #test multilabel measures
 
@@ -363,8 +377,8 @@ test_that("check measure calculations", {
       tar2.multilabel != pred.multilabel$data[, 5L]))
   hamloss.perf = performance(pred.multilabel,
    measures = hamloss, model = mod.multilabel)
-  names(hamloss.perf) = NULL
-  expect_equal(hamloss.test, hamloss.perf, hamloss$fun(pred = pred.multilabel))
+  expect_equal(hamloss.test, hamloss$fun(pred = pred.multilabel))
+  expect_equal(hamloss.test, as.numeric(hamloss.perf))
 
   #test survival measures
 
@@ -376,8 +390,8 @@ test_that("check measure calculations", {
   n.pairs = length(pos) * length(neg)
   cindex.test = sum(c(cons, ties)) / n.pairs
   cindex.perf = performance(pred.surv, measures = cindex, model = mod.surv)
-  names(cindex.perf) = NULL
-  expect_equal(cindex.test, cindex.perf, cindex$fun(pred = pred.surv))
+  expect_equal(cindex.test, cindex$fun(pred = pred.surv))
+  expect_equal(cindex.test, as.numeric(cindex.perf))
 
   #test cost-sensitive measures
 
@@ -385,17 +399,15 @@ test_that("check measure calculations", {
   meancosts.test = (0 + 0 + 0 + 1) / 4L
   meancosts.perf = performance(pred.costsens, measures = meancosts,
    model = mod.costsens, task = task.costsens)
-  names(meancosts.perf) = NULL
-  expect_equal(meancosts.test, meancosts.perf,
-   meancosts$fun(pred = pred.costsens, task = task.costsens))
+  expect_equal(meancosts.test,
+    meancosts$fun(pred = pred.costsens, task = task.costsens))
+  expect_equal(meancosts.test, as.numeric(meancosts.perf))
   #mcp
   mcp.test = meancosts.test - 0
   mcp.perf = performance(pred.costsens, measures = mcp,
     task = task.costsens, model = mod.costsens)
-  names(mcp.perf) = NULL
-  expect_equal(mcp.test, mcp.perf,
-   mcp$fun(pred = pred.costsens, task = task.costsens))
-
+  expect_equal(mcp.test, mcp$fun(pred = pred.costsens, task = task.costsens))
+  expect_equal(mcp.test, as.numeric(mcp.perf))
 
   #test clustering
 
@@ -408,9 +420,9 @@ test_that("check measure calculations", {
   db.test = s1 / M
   db.perf = performance(pred.cluster, measures = db,
     model = mod.cluster, feats = data.cluster)
-  names(db.perf) = NULL
-  expect_equal(db.test, db.perf, db$fun(task = task.cluster,
+  expect_equal(db.test,db$fun(task = task.cluster,
    pred = pred.cluster, feats = data.cluster))
+  expect_equal(db.test, as.numeric(db.perf))
   #dunn
   exdist = min(sqrt(sum((c(1, 3) - c(3, 1))^2)), sqrt(sum((c(2, 4) - c(3, 1))^2)),
     sqrt(sum((c(4, 3) - c(3, 2))^2)))
@@ -419,9 +431,9 @@ test_that("check measure calculations", {
   dunn.test = exdist / indist
   dunn.perf = performance(pred.cluster, measures = dunn,
     model = mod.cluster, feats = data.cluster)
-  names(dunn.perf) = NULL
-  expect_equal(dunn.test, dunn.perf,
-   dunn$fun(pred = pred.cluster, feats = data.cluster))
+  expect_equal(dunn.test,
+    dunn$fun(pred = pred.cluster, feats = data.cluster))
+  expect_equal(dunn.test, as.numeric(dunn.perf))
   #g1 index
   exsum = sqrt(sum((c(1, 3) - c(3, 1))^2)) + sqrt(sum((c(2, 4) - c(3, 1))^2)) +
     sqrt(sum((c(4, 3) - c(3, 2))^2))
@@ -430,9 +442,8 @@ test_that("check measure calculations", {
   g1.test = exsum / insum
   g1.perf = performance(pred.cluster, measures = G1,
     model = mod.cluster, feats = data.cluster)
-  names(g1.perf) = NULL
-  expect_equal(g1.test, g1.perf,
-   G1$fun(pred = pred.cluster, feats = data.cluster))
+  expect_equal(g1.test, G1$fun(pred = pred.cluster, feats = data.cluster))
+  expect_equal(g1.test, as.numeric(g1.perf))
   #g2 index
   dists = as.matrix(dist(data.cluster, method = "euclidian"))
   c2.dists = as.vector(dists[, 3L])
@@ -448,9 +459,8 @@ test_that("check measure calculations", {
   g2.test = (con.pairs - dis.pairs) / (con.pairs + dis.pairs)
   g2.perf = performance(pred.cluster, measures = G2,
     model = mod.cluster, feats = data.cluster)
-  names(g2.perf) = NULL
-  expect_equal(g2.test, g2.perf,
-   G2$fun(pred = pred.cluster, feats = data.cluster))
+  expect_equal(g2.test, G2$fun(pred = pred.cluster, feats = data.cluster))
+  expect_equal(g2.test, as.numeric(g2.perf))
   #silhouette
   dists = as.matrix(clusterSim::dist.GDM(data.cluster))
   ais = replace(dists, dists == 0, NA)[-3L, -3L]
@@ -461,7 +471,6 @@ test_that("check measure calculations", {
   silhouette.test = sum(sils)/nrow(data.cluster)
   silhouette.perf = performance(pred.cluster, measures = silhouette,
     model = mod.cluster, feats = data.cluster)
-  names(silhouette.perf) = NULL
-  expect_equal(silhouette.test, silhouette.perf,
-   silhouette$fun(pred = pred.cluster, feats = data.cluster), tolerance = 0.00001)
+  expect_equal(silhouette.test, silhouette$fun(pred = pred.cluster, feats = data.cluster))
+  expect_equal(object = silhouette.test, as.numeric(silhouette.perf))
 })
