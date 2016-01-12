@@ -88,12 +88,7 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
     TuneControlIrace = tuneIrace,
     stopf("Tuning algorithm for '%s' does not exist!", cl)
   )
-  if (cl == "TuneControlMBO" && control$mbo.control$multifid) {
-    par.set2 = c(par.set, makeParamSet(makeIntegerParam(".multifid.lvl", lower = 0, upper = length(control$mbo.control$multifid.lvls))))
-  } else {
-    par.set2 = par.set
-  }
-  opt.path = makeOptPathDFFromMeasures(par.set2, measures, include.extra = (control$tune.threshold))
+  opt.path = makeOptPathDFFromMeasures(par.set, measures, include.extra = (control$tune.threshold))
   if (show.info) {
     messagef("[Tune] Started tuning learner %s for parameter set:", learner$id)
     messagef(printToChar(par.set))
