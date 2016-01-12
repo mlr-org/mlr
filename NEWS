@@ -1,4 +1,5 @@
 mlr_new:
+- Add nested stacking for multilabel classification
 - Feature filter "univariate" had a bad name, was deprecated and is now called
  "univariate.model.score". The new one also has better defaults.
 - (generate/plot)PartialPrediction: added new arg "geom" for tile plots
