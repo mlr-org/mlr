@@ -15,15 +15,6 @@ evalOptimizationState = function(learner, task, resampling, measures, par.set, b
   log.fun = control$log.fun
 
   if (inherits(control, "TuneControl") || inherits(control, "TuneMultiCritControl")) {
-    if (inherits(control, "TuneControlMBO") && control$mbo.control$multifid) {
-      #transform multifid lvl to param setting
-      multifid.param = control$mbo.control$multifid.param #string
-      multifid.values = control$mbo.control$multifid.lvls #factor over discrete values
-      state[[multifid.param]] = multifid.values[state$.multifid.lvl]
-      state = dropNamed(state, ".multifid.lvl")
-      par.set = c(par.set, makeParamSet(
-        makeDiscreteParam(multifid.param, values = multifid.values)))
-    }
     # set names before trafo
     state = setValueCNames(par.set, state)
     # transform parameters
