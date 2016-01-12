@@ -693,10 +693,7 @@ f1mult = makeMeasure(id = "f1mult", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measureF1MULT = function(truth, response) {
-  precisionTimesRecall = sum(truth * response)
-  precision = sum(truth)
-  recall = sum(response)
-  2 * precisionTimesRecall / (precision + recall)
+  2 * sum(truth * response) / (sum(truth) + sum(response))
 }
 
 #' @export jaccard
@@ -715,10 +712,7 @@ jaccard = makeMeasure(id = "jaccard", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measureJACCARD = function(truth, response) {
-  precisionTimesRecall = sum(truth * response)
-  precision = sum(truth)
-  recall = sum(response)
-  precisionTimesRecall / (precision + recall - precisionTimesRecall)  
+  sum(truth * response) / (sum(truth) + sum(response) - sum(truth * response))  
 }
 
 ###############################################################################

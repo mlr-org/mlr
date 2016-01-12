@@ -365,7 +365,29 @@ test_that("check measure calculations", {
    measures = hamloss, model = mod.multilabel)
   names(hamloss.perf) = NULL
   expect_equal(hamloss.test, hamloss.perf, hamloss$fun(pred = pred.multilabel))
-
+  #subset01
+  subset01.test = mean((tar1.multilabel != pred.multilabel$data[, 4L]) ==
+    (tar2.multilabel != pred.multilabel$data[, 5L]))
+  subset01.perf = performance(pred.multilabel,
+    measures = subset01, model = mod.multilabel)
+  names(subset01.perf) = NULL
+  expect_equal(subset01.test, subset01.perf, subset01$fun(pred = pred.multilabel))
+  #f1mult
+  f1mult.test = 2 * sum(tar1.multilabel * pred.multilabel$data[, 4L], tar2.multilabel * pred.multilabel$data[, 5L]) / 
+    sum(c(tar1.multilabel, tar2.multilabel, pred.multilabel$data[, 4L], pred.multilabel$data[, 5L]))
+  f1mult1.perf = performance(pred.multilabel,
+    measures = f1mult, model = mod.multilabel)
+  names(f1mult1.perf) = NULL
+  expect_equal(f1mult.test, f1mult1.perf, f1mult$fun(pred = pred.multilabel))
+  #jaccard
+  jaccard.test = sum(tar1.multilabel * pred.multilabel$data[, 4L], tar2.multilabel * pred.multilabel$data[, 5L]) / 
+    (sum(c(tar1.multilabel, tar2.multilabel, pred.multilabel$data[, 4L], pred.multilabel$data[, 5L])) -
+    sum(tar1.multilabel * pred.multilabel$data[, 4L], tar2.multilabel * pred.multilabel$data[, 5L]))
+  jaccard.perf = performance(pred.multilabel,
+    measures = jaccard, model = mod.multilabel)
+  names(jaccard.perf) = NULL
+  expect_equal(jaccard.test, jaccard.perf, jaccard$fun(pred = pred.multilabel))
+  
   #test survival measures
 
   #cindex
