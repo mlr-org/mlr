@@ -227,18 +227,19 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #'   Default is all.
 #' @param target.extra [\code{logical(1)}]\cr
 #'   Should target vector be returned separately?
-#'   If not, a single data.frame including the target is returned, otherwise a list
-#'   with the input data.frame and an extra vector for the targets.
-#'   Default is FALSE.
-# FIXME surve recode.target must be documented
-# maye we should also check that we either have binary or surv when the user passes an option
+#'   If not, a single data.frame including the target columns is returned, otherwise a list
+#'   with the input data.frame and an extra vector or data.frame for the targets.
+#'   Default is \code{FALSE}.
 #' @param recode.target [\code{character(1)}]\cr
-#'   Should target classes be recoded? Only for binary classification.
-#'   Possible are \dQuote{no} (do nothing), \dQuote{01}, \dQuote{-1+1} and \dQuote{drop.levels}.
+#'   Should target classes be recoded? Supported are binary classification and survival.
+#'   Possible values for binary classification are \dQuote{01}, \dQuote{-1+1} and \dQuote{drop.levels}.
 #'   In the two latter cases the target vector is converted into a numeric vector.
-#'   The positive class is coded as +1 and the negative class either as 0 or -1.
+#'   The positive class is coded as \dQuote{+1} and the negative class either as \dQuote{0} or \dQuote{-1}.
 #'   \dQuote{drop.levels} will remove empty factor levels in the target column.
-#'   Default is \dQuote{no}.
+#'   For survival, you may choose to recode the survival times to \dQuote{left}, \dQuote{right} or \dQuote{interval2} censored times
+#'   using \dQuote{lcens}, \dQuote{rcens} or \dQuote{icens}, respectively.
+#'   See \code{\link[survival]{Surv}} for the format specification.
+#'   Default for both binary classification and survival is \dQuote{no} (do nothing).
 #' @return Either a data.frame or a list with data.frame \code{data} and vector \code{target}.
 #' @family task
 #' @export
