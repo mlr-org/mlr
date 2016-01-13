@@ -48,12 +48,6 @@ Parameter set of (hyper)parameters and their constraints.
 Dependent parameters with a \code{requires} field must use \code{quote} and not
 \code{expression} to define it.}
 
-\item{par.vals}{[\code{list}] \cr
-Always set hyperparameters to these values when the object is constructed.
-Useful when default values are missing in the underlying function.
-The values can later be overwritten when the user sets hyperparameters.
-Default is empty list.}
-
 \item{properties}{[\code{character(1)}]\cr
 Set of learner properties. Some standard property names include:
 \describe{
@@ -82,6 +76,12 @@ Default is \dQuote{}.}
 
 \item{class.weights.param}{[\code{character(1)}] \cr
 Name of the parameter, which can be used for providing class weights.}
+
+\item{par.vals}{[\code{list}] \cr
+Always set hyperparameters to these values when the object is constructed.
+Useful when default values are missing in the underlying function.
+The values can later be overwritten when the user sets hyperparameters.
+Default is empty list.}
 }
 \value{
 [\code{\link{RLearnerClassif}}, \code{\link{RLearnerCluster}}, \code{\link{RLearnerMultilabel}} \code{\link{RLearnerRegr}} or \code{\link{RLearnerSurv}}].

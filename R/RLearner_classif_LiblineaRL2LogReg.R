@@ -14,7 +14,7 @@ makeRLearner.classif.LiblineaRL2LogReg = function() {
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
-    mlr.default.mlr.default.par.vals = list(type = 0L),
+    mlr.default.par.vals = list(type = 0L),
     properties = c("twoclass", "multiclass", "numerics", "class.weights", "prob"),
     class.weights.param = "wi",
     name = "L2-Regularized Logistic Regression",
