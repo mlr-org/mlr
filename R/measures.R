@@ -693,7 +693,15 @@ f1mult = makeMeasure(id = "f1mult", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measureF1MULT = function(truth, response) {
-  2 * sum(truth * response) / (sum(truth) + sum(response))
+  Fi = as.numeric()
+  for (i in 1L:nrow(truth)) {
+    if (sum(truth[i, ]) + sum(response[i, ]) == 0) {
+      Fi[i] = 1
+    } else {
+    Fi[i] = 2*sum(truth[i, ] * response[i, ]) / (sum(truth[i, ]) + sum(response[i, ]))
+    }
+  }
+  mean(Fi) 
 }
 
 #' @export jaccard
@@ -712,7 +720,15 @@ jaccard = makeMeasure(id = "jaccard", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measureJACCARD = function(truth, response) {
-  sum(truth * response) / (sum(truth) + sum(response) - sum(truth * response))  
+  Ji = as.numeric()
+  for (i in 1L:nrow(truth)) {
+    if (sum(truth[i, ]) + sum(response[i, ]) == 0) {
+      Ji[i] = 1
+    } else {
+    Ji[i] = sum(truth[i, ] * response[i, ]) / (sum(truth[i, ]) + sum(response[i, ]) - sum(truth[i, ] * response[i, ]))
+    }
+  }
+  mean(Ji)
 }
 
 ###############################################################################
