@@ -19,7 +19,7 @@ makeRLearner.classif.mda = function() {
       makeIntegerLearnerParam(id = "tries", default = 5L, lower = 1L),
       makeDiscreteLearnerParam(id = "criterion", default = "misclassification", values = c("misclassification", "deviance"))
     ),
-    par.vals = list(keep.fitted = FALSE, start.method = "lvq"),
+    mlr.default.par.vals = list(keep.fitted = FALSE, start.method = "lvq"),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "Mixture Discriminant Analysis",
     short.name = "mda",

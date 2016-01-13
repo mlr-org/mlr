@@ -28,7 +28,7 @@ makeRLearner.regr.rvm = function() {
       makeLogicalLearnerParam(id = "fit", default = TRUE),
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L, tunable = FALSE)
     ),
-    par.vals = list(fit = FALSE),
+    mlr.default.par.vals = list(fit = FALSE),
     properties = c("numerics", "factors"),
     name = "Relevance Vector Machine",
     short.name = "rvm",

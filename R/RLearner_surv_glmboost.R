@@ -11,7 +11,7 @@ makeRLearner.surv.glmboost = function() {
       makeDiscreteLearnerParam(id = "m", default = "mstop", values = c("mstop", "cv")),
       makeLogicalLearnerParam(id = "use.formula", default = TRUE, when = "both")
     ),
-    par.vals = list(
+    mlr.default.par.vals = list(
       family = mboost::CoxPH(),
       m = "mstop",
       use.formula = TRUE

@@ -31,7 +31,7 @@ makeRLearner.classif.xgboost = function() {
       makeIntegerLearnerParam(id = "early.stop.round", default = 1, lower = 1),
       makeLogicalLearnerParam(id = "maximize", default = TRUE)
     ),
-    par.vals = list(nrounds = 1),
+    mlr.default.par.vals = list(nrounds = 1),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",

@@ -16,7 +16,7 @@ makeRLearner.surv.rpart = function() {
       makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L, tunable = FALSE),
       makeUntypedLearnerParam(id = "parms")
     ),
-    par.vals = list(xval = 0L),
+    mlr.default.par.vals = list(xval = 0L),
     properties = c("rcens", "missings", "numerics", "factors", "ordered", "weights"),
     name = "Survival Tree",
     short.name = "rpart",

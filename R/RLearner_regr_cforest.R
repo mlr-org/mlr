@@ -26,7 +26,7 @@ makeRLearner.regr.cforest = function() {
       makeLogicalLearnerParam(id = "savesplitstats", default = FALSE, tunable = FALSE)
     ),
     properties = c("numerics", "factors", "ordered", "weights", "missings"),
-    par.vals = list(),
+    mlr.default.par.vals = list(),
     name = "Random Forest Based on Conditional Inference Trees",
     short.name = "cforest",
     note = "See `?ctree_control` for possible breakage for nominal features with missingness."

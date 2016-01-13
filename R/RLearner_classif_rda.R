@@ -22,7 +22,7 @@ makeRLearner.classif.rda = function() {
       makeLogicalLearnerParam(id = "SimAnn", default = FALSE),
       makeLogicalLearnerParam(id = "estimate.error", default = TRUE)
     ),
-    par.vals = list(estimate.error = FALSE),
+    mlr.default.par.vals = list(estimate.error = FALSE),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "Regularized Discriminant Analysis",
     short.name = "rda",

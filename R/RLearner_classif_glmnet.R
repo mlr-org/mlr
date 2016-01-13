@@ -35,7 +35,7 @@ makeRLearner.classif.glmnet = function() {
       makeLogicalLearnerParam(id = "factory", default = FALSE)
     ),
     properties = c("numerics", "factors", "prob", "twoclass", "multiclass", "weights"),
-    par.vals = list(s = 0.01),
+    mlr.default.par.vals = list(s = 0.01),
     name = "GLM with Lasso or Elasticnet Regularization",
     short.name = "glmnet",
     note = "Factors automatically get converted to dummy columns, ordered factors to integer."

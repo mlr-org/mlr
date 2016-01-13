@@ -21,7 +21,7 @@ makeRLearner.regr.randomForestSRC = function() {
       makeLogicalLearnerParam(id = "statistics", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "fast.restore", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(na.action = "na.impute"),
+    mlr.default.par.vals = list(na.action = "na.impute"),
     properties = c("missings", "numerics", "factors"),
     name = "Random Forest",
     short.name = "rfsrc",

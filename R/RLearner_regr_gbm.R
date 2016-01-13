@@ -15,7 +15,7 @@ makeRLearner.regr.gbm = function() {
       makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(distribution = "gaussian"),
+    mlr.default.par.vals = list(distribution = "gaussian"),
     properties = c("missings", "numerics", "factors", "weights"),
     name = "Gradient Boosting Machine",
     short.name = "gbm",

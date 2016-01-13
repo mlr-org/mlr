@@ -12,7 +12,7 @@ makeRLearner.regr.pcr = function() {
       makeLogicalLearnerParam(id = "x", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "y", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(model = FALSE),
+    mlr.default.par.vals = list(model = FALSE),
     properties = c("numerics", "factors"),
     name = "Principal Component Regression",
     short.name = "pcr"

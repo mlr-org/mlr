@@ -17,7 +17,7 @@ makeRLearner.classif.nnTrain = function() {
       makeNumericLearnerParam(id = "hidden_dropout", default = 0, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "visible_dropout", default = 0, lower = 0, upper = 1)
     ),
-    par.vals = list(output = "softmax"),
+    mlr.default.par.vals = list(output = "softmax"),
     properties = c("twoclass", "multiclass","numerics", "prob"),
     name = "Training Neural Network by Backpropagation",
     short.name = "nn.train",

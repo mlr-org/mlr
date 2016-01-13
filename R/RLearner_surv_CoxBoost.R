@@ -19,7 +19,7 @@ makeRLearner.surv.CoxBoost = function() {
       makeLogicalLearnerParam(id = "return.score", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(return.score = FALSE),
+    mlr.default.par.vals = list(return.score = FALSE),
     properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     name = "Cox Proportional Hazards Model with Componentwise Likelihood based Boosting",
     short.name = "coxboost",

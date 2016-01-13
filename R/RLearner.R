@@ -57,8 +57,8 @@ makeRLearner = function() {
   UseMethod("makeRLearner")
 }
 
-makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties,
-  name = id, short.name = id, note = "") {
+makeRLearnerInternal = function(id, type, package, par.set, mlr.default.par.vals, properties,
+  name = id, short.name = id, note = "", par.vals = list()) {
 
   # must do that before accessing par.set
   # one case where lazy eval is actually helpful...
@@ -70,9 +70,9 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
   assertSubset(properties, getSupportedLearnerProperties(type))
   assertClass(par.set, classes = "ParamSet")
   checkListElementClass(par.set$pars, "LearnerParam")
-  assertList(par.vals)
-  if(!isProperlyNamed(par.vals))
-    stop("Argument par.vals must be a properly named list!")
+  assertList(mlr.default.par.vals)
+  if(!isProperlyNamed(mlr.default.par.vals))
+    stop("Argument mlr.default.par.vals must be a properly named list!")
   assertString(name)
   assertString(short.name)
   assertString(note)
@@ -85,6 +85,7 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
     par.vals = par.vals,
     predict.type = "response"
   )
+  learner$mlr.default.par.vals = mlr.default.par.vals
   learner$name = name
   learner$short.name = short.name
   learner$note = note
@@ -94,11 +95,11 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
 
 #' @export
 #' @rdname RLearner
-makeRLearnerClassif = function(cl, package, par.set, par.vals = list(), properties = character(0L),
+makeRLearnerClassif = function(cl, package, par.set, mlr.default.par.vals = list(), properties = character(0L),
   name = cl, short.name = cl, note = "", class.weights.param = NULL) {
 
   lrn = addClasses(
-    makeRLearnerInternal(cl, "classif", package, par.set, par.vals, properties, name, short.name, note),
+    makeRLearnerInternal(cl, "classif", package, par.set, mlr.default.par.vals, properties, name, short.name, note),
     c(cl, "RLearnerClassif")
   )
 
@@ -115,36 +116,36 @@ makeRLearnerClassif = function(cl, package, par.set, par.vals = list(), properti
 
 #' @export
 #' @rdname RLearner
-makeRLearnerMultilabel = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "") {
+makeRLearnerMultilabel = function(cl, package, par.set, mlr.default.par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "") {
   addClasses(
-    makeRLearnerInternal(cl, "multilabel", package, par.set, par.vals, properties, name, short.name, note),
+    makeRLearnerInternal(cl, "multilabel", package, par.set, mlr.default.par.vals, properties, name, short.name, note),
     c(cl, "RLearnerClassif")
   )
 }
 
 #' @export
 #' @rdname RLearner
-makeRLearnerRegr = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "") {
+makeRLearnerRegr = function(cl, package, par.set, mlr.default.par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "") {
   addClasses(
-    makeRLearnerInternal(cl, "regr", package, par.set, par.vals, properties, name, short.name, note),
+    makeRLearnerInternal(cl, "regr", package, par.set, mlr.default.par.vals, properties, name, short.name, note),
     c(cl, "RLearnerRegr")
   )
 }
 
 #' @export
 #' @rdname RLearner
-makeRLearnerSurv = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "") {
+makeRLearnerSurv = function(cl, package, par.set, mlr.default.par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "") {
   addClasses(
-    makeRLearnerInternal(cl, "surv", package, par.set, par.vals, properties, name, short.name, note),
+    makeRLearnerInternal(cl, "surv", package, par.set, mlr.default.par.vals, properties, name, short.name, note),
     c(cl, "RLearnerSurv")
   )
 }
 
 #' @export
 #' @rdname RLearner
-makeRLearnerCluster = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "") {
+makeRLearnerCluster = function(cl, package, par.set, mlr.default.par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "") {
   addClasses(
-    makeRLearnerInternal(cl, "cluster", package, par.set, par.vals, properties, name, short.name, note),
+    makeRLearnerInternal(cl, "cluster", package, par.set, mlr.default.par.vals, properties, name, short.name, note),
     c(cl, "RLearnerCluster")
   )
 }

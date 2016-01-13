@@ -17,7 +17,7 @@ makeRLearner.regr.xgboost = function() {
       makeNumericLearnerParam(id = "alpha", default = 0, requires = expression(booster == "gblinear")),
       makeNumericLearnerParam(id = "lambda.bias", default = 0, requires = expression(booster == "gblinear"))
     ),
-    par.vals = list(nrounds = 1L),
+    mlr.default.par.vals = list(nrounds = 1L),
     properties = c("numerics"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgb",

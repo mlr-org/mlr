@@ -24,7 +24,7 @@ makeRLearner.surv.optimCoxBoostPenalty = function() {
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
       # FIXME: still missing some arguments
     ),
-    par.vals = list(return.score = FALSE),
+    mlr.default.par.vals = list(return.score = FALSE),
     properties = c("numerics", "factors", "weights", "rcens"),
     name = "Cox Proportional Hazards Model with Componentwise Likelihood based Boosting, automatic tuning enabled",
     short.name = "optimCoxBoostPenalty",

@@ -25,7 +25,7 @@ makeRLearner.surv.cforest = function() {
       makeLogicalLearnerParam(id = "savesplitstats", default = FALSE, tunable = FALSE)
     ),
     properties = c("factors", "numerics", "ordered", "weights", "rcens", "missings"),
-    par.vals = list(),
+    mlr.default.par.vals = list(),
     name = "Random Forest based on Conditional Inference Trees",
     short.name = "crf",
     note = "See `?ctree_control` for possible breakage for nominal features with missingness."

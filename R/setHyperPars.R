@@ -36,6 +36,8 @@ setHyperPars2 = function(learner, par.vals) {
 
 #' @export
 setHyperPars2.Learner = function(learner, par.vals) {
+  #load mlr-default pars of learner
+  par.vals = insert(learner$mlr.default.par.vals, par.vals)
   ns = names(par.vals)
   pars = learner$par.set$pars
   on.par.without.desc = coalesce(learner$config$on.par.without.desc, getMlrOptions()$on.par.without.desc)

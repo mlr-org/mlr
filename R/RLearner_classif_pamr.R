@@ -17,7 +17,7 @@ makeRLearner.classif.pamr = function() {
       #we cannot the use the orginal argument name 'threshold', because it's already used
       makeNumericLearnerParam(id = "threshold.predict", default = 1, when = "predict")
     ),
-    par.vals = list(threshold.predict = 1),
+    mlr.default.par.vals = list(threshold.predict = 1),
     properties = c("numerics", "twoclass", "prob"),
     name = "Nearest shrunken centroid",
     short.name = "pamr",

@@ -15,7 +15,7 @@ makeRLearner.regr.mob = function() {
       makeUntypedLearnerParam(id = "part.feats"),
       makeUntypedLearnerParam(id = "term.feats")
     ),
-    par.vals = list(),
+    mlr.default.par.vals = list(),
     properties = c("numerics", "factors", "weights"),
     name = "Model-based Recursive Partitioning  Yielding a Tree with Fitted Models Associated with each Terminal Node",
     short.name = "mob",

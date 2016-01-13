@@ -6,7 +6,7 @@ makeRLearner.regr.rsm = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "modelfun", default = "FO", values = c("FO", "TWI", "SO"))
     ),
-    par.vals = list(modelfun = "FO"),
+    mlr.default.par.vals = list(modelfun = "FO"),
     properties = c("numerics"),
     name = "Response Surface Regression",
     short.name = "rsm",

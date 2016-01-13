@@ -31,7 +31,7 @@ makeRLearner.classif.ksvm = function() {
       makeLogicalLearnerParam(id = "fit", default = TRUE),
       makeIntegerLearnerParam(id = "cache", default = 40L, lower = 1L, tunable = FALSE)
     ),
-    par.vals = list(fit = FALSE),
+    mlr.default.par.vals = list(fit = FALSE),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "class.weights"),
     class.weights.param = "class.weights",
     name = "Support Vector Machines",

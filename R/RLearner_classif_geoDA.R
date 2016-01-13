@@ -6,7 +6,7 @@ makeRLearner.classif.geoDA = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "validation", values = list(crossval = "crossval", learntest = "learntest", NULL = NULL), default = NULL, tunable = FALSE)
     ),
-    par.vals = list(validation = NULL),
+    mlr.default.par.vals = list(validation = NULL),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Geometric Predictive Discriminant Analysis",
     short.name = "geoda",

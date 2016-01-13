@@ -27,7 +27,7 @@ makeRLearner.classif.neuralnet = function() {
       makeNumericVectorLearnerParam(id = "constant.weights"),
       makeLogicalLearnerParam(id = "likelihood", default = FALSE)
     ),
-    par.vals = list(err.fct = "ce"),
+    mlr.default.par.vals = list(err.fct = "ce"),
     properties = c("twoclass", "numerics", "prob"),
     name = "Neural Network from neuralnet",
     short.name = "neuralnet",

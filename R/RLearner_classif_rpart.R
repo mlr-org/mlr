@@ -16,7 +16,7 @@ makeRLearner.classif.rpart = function() {
       makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L, tunable = FALSE),
       makeUntypedLearnerParam(id = "parms")
     ),
-    par.vals = list(xval = 0L),
+    mlr.default.par.vals = list(xval = 0L),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "ordered", "prob", "weights"),
     name = "Decision Tree",
     short.name = "rpart",

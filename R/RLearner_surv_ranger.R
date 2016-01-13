@@ -21,7 +21,7 @@ makeRLearner.surv.ranger = function() {
       makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE),
       makeDiscreteLearnerParam(id = "splitrule", values = c("logrank", "C"), default = "logrank")
     ),
-    par.vals = list(num.threads = 1L, verbose = FALSE),
+    mlr.default.par.vals = list(num.threads = 1L, verbose = FALSE),
     properties = c("numerics", "factors", "rcens", "prob"),
     name = "Random Forests",
     short.name = "ranger",

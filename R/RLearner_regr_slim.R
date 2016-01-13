@@ -17,7 +17,7 @@ makeRLearner.regr.slim = function() {
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam(id = "lambda.idx", default = 3L, when = "predict")
     ),
-    par.vals = list(lambda.idx = 3L),
+    mlr.default.par.vals = list(lambda.idx = 3L),
     properties = c("numerics"),
     name = "Sparse Linear Regression using Nonsmooth Loss Functions and L1 Regularization",
     short.name = "slim",
