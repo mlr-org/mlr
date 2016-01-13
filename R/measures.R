@@ -648,13 +648,87 @@ hamloss = makeMeasure(id = "hamloss", minimize = TRUE, best = 0, worst = 1,
   fun = function(task, model, pred, feats, extra.args) {
     measureHAMLOSS(getPredictionTruth.PredictionMultilabel(pred),
       getPredictionResponse.PredictionMultilabel(pred))
-})
+  }
+)
 
 #' @export measureHAMLOSS
 #' @rdname measures
 #' @format none
 measureHAMLOSS = function(truth, response) {
   mean(truth != response)
+}
+
+#' @export subset01
+#' @rdname measures
+#' @format none
+subset01 = makeMeasure(id = "subset01", minimize = TRUE, best = 0, worst = 1,
+  properties = c("multilabel", "req.pred", "req.truth"),
+  name = "Subset-0-1 loss",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureSUBSET01(getPredictionTruth.PredictionMultilabel(pred),
+      getPredictionResponse.PredictionMultilabel(pred))
+  }
+)
+
+#' @export measureSUBSET01
+#' @rdname measures
+#' @format none
+measureSUBSET01 = function(truth, response) {
+  mean(!apply(truth == response, 1, all))
+}
+
+#' @export f1mult
+#' @rdname measures
+#' @format none
+f1mult = makeMeasure(id = "f1mult", minimize = FALSE, best = 1, worst = 0,
+  properties = c("multilabel", "req.pred", "req.truth"),
+  name = "F1 measure",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureF1MULT(getPredictionTruth.PredictionMultilabel(pred),
+      getPredictionResponse.PredictionMultilabel(pred))
+  }
+)
+
+#' @export measureF1MULT
+#' @rdname measures
+#' @format none
+measureF1MULT = function(truth, response) {
+  Fi = as.numeric()
+  for (i in 1L:nrow(truth)) {
+    if (sum(truth[i, ]) + sum(response[i, ]) == 0) {
+      Fi[i] = 1
+    } else {
+    Fi[i] = 2*sum(truth[i, ] * response[i, ]) / (sum(truth[i, ]) + sum(response[i, ]))
+    }
+  }
+  mean(Fi) 
+}
+
+#' @export jaccard
+#' @rdname measures
+#' @format none
+jaccard = makeMeasure(id = "jaccard", minimize = FALSE, best = 1, worst = 0,
+  properties = c("multilabel", "req.pred", "req.truth"),
+  name = "Jaccard index",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureJACCARD(getPredictionTruth.PredictionMultilabel(pred),
+      getPredictionResponse.PredictionMultilabel(pred))
+  }
+)
+
+#' @export measureJACCARD
+#' @rdname measures
+#' @format none
+measureJACCARD = function(truth, response) {
+  Ji = as.numeric()
+  for (i in 1L:nrow(truth)) {
+    if (sum(truth[i, ]) + sum(response[i, ]) == 0) {
+      Ji[i] = 1
+    } else {
+    Ji[i] = sum(truth[i, ] * response[i, ]) / (sum(truth[i, ]) + sum(response[i, ]) - sum(truth[i, ] * response[i, ]))
+    }
+  }
+  mean(Ji)
 }
 
 ###############################################################################
