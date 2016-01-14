@@ -219,6 +219,7 @@ measureMEDAE = function(truth, response) {
 rsq = makeMeasure(id = "rsq", minimize = FALSE, best = 1, worst = -Inf,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Coefficient of determination",
+  note = "Also called R-squared, which is 1 - residual_sum_of_squares / total_sum_of_squares.",
   fun = function(task, model, pred, feats, extra.args) {
     measureRSQ(pred$data$truth, pred$data$response)
   }
@@ -239,6 +240,7 @@ measureRSQ = function(truth, response) {
 expvar = makeMeasure(id = "expvar", minimize = FALSE, best = 1, worst = 0,
   properties = c("regr", "req.pred", "req.truth"),
   name = "Explained variance",
+  note = "Similar to measaure rsq (R-squared). Defined as explained_sum_of_squares / total_sum_of_squares.",
   fun = function(task, model, pred, feats, extra.args) {
     measureEXPVAR(pred$data$truth, pred$data$response)
   }
