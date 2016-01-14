@@ -47,7 +47,7 @@
 #' @param ... [any]\cr
 #'   Further hyperparameters passed to \code{learner}.
 #' @template arg_showinfo
-#' @return [\code{\link{ResampleResult}}]. List of:
+#' @return [\code{\link{ResampleResult}}].
 #' @family resample
 #' @export
 #' @examples

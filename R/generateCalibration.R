@@ -10,9 +10,10 @@
 #'
 #' @family generate_plot_data
 #' @family calibration
+#' @aliases CalibrationData
 #'
 #' @template arg_plotroc_obj
-#' @param breaks [\code{character(1)}] or [\code{numeric}]\cr
+#' @param breaks [\code{character(1)} | \code{numeric}]\cr
 #'   If \code{character(1)}, the algorithm to use in generating probability bins.
 #'   See \code{\link{hist}} for details.
 #'   If \code{numeric}, the cut points for the bins.
@@ -24,6 +25,27 @@
 #' @param task.id [\code{character(1)}]\cr
 #'   Selected task in \code{\link{BenchmarkResult}} to do plots for, ignored otherwise.
 #'   Default is first task.
+#'
+#' @return [CalibrationData]. A \code{list} containing:
+#'   \item{proportion}{[\code{data.frame}] with columns:
+#'     \itemize{
+#'       \item \code{Learner} Name of learner.
+#'       \item \code{bin} Bins calculated according to the \code{breaks} or \code{groups} argument.
+#'       \item \code{Class} Class labels (for binary classification only the positive class).
+#'       \item \code{Proportion} Proportion of observations from class \code{Class} among all
+#'         observations with posterior probabilities of class \code{Class} within the
+#'         interval given in \code{bin}.
+#'     }}
+#'   \item{data}{[\code{data.frame}] with columns:
+#'     \itemize{
+#'       \item \code{Learner} Name of learner.
+#'       \item \code{truth} True class label.
+#'       \item \code{Class} Class labels (for binary classification only the positive class).
+#'       \item \code{Probability} Predicted posterior probability of \code{Class}.
+#'       \item \code{bin} Bin corresponding to \code{Probability}.
+#'     }}
+#'   \item{task}{[\code{\link{TaskDesc}}]\cr
+#'     Task description.}
 #'
 #' @references Vuk, Miha, and Curk, Tomaz. \dQuote{ROC Curve, Lift Chart, and Calibration Plot.} Metodoloski zvezki. Vol. 3. No. 1 (2006): 89-108.
 #' @export
@@ -111,7 +133,7 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #' @family calibration
 #'
 #' @param obj [\code{CalibrationData}]\cr
-#'   Result of \code{\link{generateCalibrationData}}
+#'   Result of \code{\link{generateCalibrationData}}.
 #' @param smooth [\code{logical(1)}]\cr
 #'   Whether to use a loess smoother.
 #'   Default is \code{FALSE}.

@@ -1,4 +1,4 @@
-#' @title Fuse learner with preprocessing
+#' @title Fuse learner with preprocessing.
 #'
 #' @description
 #' Fuses a learner with preprocessing methods provided by \code{\link[caret]{preProcess}}.
