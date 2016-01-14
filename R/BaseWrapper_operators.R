@@ -11,14 +11,14 @@ getHyperPars.BaseWrapper = function(learner, for.fun = c("train", "predict", "bo
 
 
 #' @export
-setHyperPars2.BaseWrapper = function(learner, par.vals) {
+setHyperPars2.BaseWrapper = function(learner, par.vals, reset = "no") {
   ns = names(par.vals)
   pds.n = names(learner$par.set$pars)
   for (i in seq_along(par.vals)) {
     if (ns[i] %in% pds.n) {
-      learner = setHyperPars2.Learner(learner, par.vals = par.vals[i])
+      learner = setHyperPars2.Learner(learner, par.vals = par.vals[i], reset = reset)
     } else {
-      learner$next.learner = setHyperPars2(learner$next.learner, par.vals = par.vals[i])
+      learner$next.learner = setHyperPars2(learner$next.learner, par.vals = par.vals[i], reset = reset)
     }
   }
   return(learner)

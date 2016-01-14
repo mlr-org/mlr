@@ -7,6 +7,10 @@
 #' @param par.vals [\code{list}]\cr
 #'   Optional list of named (hyper)parameter settings. The arguments in
 #'   \code{...} take precedence over values in this list.
+#' @param reset [\code{character(1)}]\cr
+#'   The options are \code{"no"} to add and in case overwrite param settings, which is the default.
+#'   \code{"soft"} will reset the manualy set param.values and restore the mlr defaults.
+#'   \code{"hard"} will reset all param.values.
 #' @template ret_learner
 #' @export
 #' @family learner
@@ -16,11 +20,12 @@
 #' print(cl1)
 #' # note the now set and altered hyperparameters:
 #' print(cl2)
-setHyperPars = function(learner, ..., par.vals = list()) {
+setHyperPars = function(learner, ..., par.vals = list(), reset = "no") {
   args = list(...)
   assertClass(learner, classes = "Learner")
   assertList(args, names = "named", .var.name = "parameter settings")
   assertList(par.vals, names = "named", .var.name = "parameter settings")
+  assertChoice(reset, c("no", "soft", "hard"))
   setHyperPars2(learner, insert(par.vals, args))
 }
 
@@ -30,21 +35,27 @@ setHyperPars = function(learner, ..., par.vals = list()) {
 #' @param par.vals [\code{list}]\cr
 #'   List of named (hyper)parameter settings.
 #' @export
-setHyperPars2 = function(learner, par.vals) {
+setHyperPars2 = function(learner, par.vals, reset = "no") {
   UseMethod("setHyperPars2")
 }
 
 #' @export
-setHyperPars2.Learner = function(learner, par.vals) {
+setHyperPars2.Learner = function(learner, par.vals, reset = "no") {
   #load mlr-default pars of learner
-  par.vals = insert(learner$mlr.default.par.vals, par.vals)
+  if (reset == "soft") {
+    par.vals = insert(learner$mlr.default.par.vals, par.vals)  
+  } else if (reset == "no") {
+    par.vals = insert(insert(learner$mlr.default.par.vals, learner$par.vals), par.vals)
+  } else if (reset == "hard") {
+    par.vals = par.vals
+  }
+  
   ns = names(par.vals)
   pars = learner$par.set$pars
   on.par.without.desc = coalesce(learner$config$on.par.without.desc, getMlrOptions()$on.par.without.desc)
   on.par.out.of.bounds = coalesce(learner$config$on.par.out.of.bounds, getMlrOptions()$on.par.out.of.bounds)
   for (i in seq_along(par.vals)) {
     n = ns[i]
-    p = par.vals[[i]]
     pd = pars[[n]]
     if (is.null(pd)) {
       # no description: stop warn or quiet
@@ -55,10 +66,9 @@ setHyperPars2.Learner = function(learner, par.vals) {
         warning(msg)
       }
       learner$par.set$pars[[n]] = makeUntypedLearnerParam(id = n)
-      learner$par.vals[[n]] = p
     } else {
-      if (on.par.out.of.bounds != "quiet" && !isFeasible(pd, p)) {
-        msg = sprintf("%s is not feasible for parameter '%s'!", convertToShortString(p), pd$id)
+      if (on.par.out.of.bounds != "quiet" && !isFeasible(pd, par.vals[[i]])) {
+        msg = sprintf("%s is not feasible for parameter '%s'!", convertToShortString(par.vals[[i]]), pd$id)
         if (on.par.out.of.bounds == "stop") {
           stop(msg)
         } else {
@@ -68,8 +78,16 @@ setHyperPars2.Learner = function(learner, par.vals) {
       ## if valname of discrete par was used, transform it to real value
       #if (pd$type == "discrete" && is.character(p) && length(p) == 1 && p %in% names(pd$values))
       #  p = pd$values[[p]]
-      learner$par.vals[[n]] = p
     }
   }
+  if (length(par.vals) > 0 && !isFeasible(learner$par.set, par.vals, use.defaults = TRUE, filter = TRUE)) {
+    msg = sprintf("The given param setting is not feasible. Possibly due to not met requirements.")
+    if (on.par.out.of.bounds == "stop") {
+      stop(msg)
+    } else {
+      warning(msg)
+    }
+  }
+  learner$par.vals = par.vals
   return(learner)
 }

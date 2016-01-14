@@ -38,7 +38,8 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
   train = df[inds,]
   test = df[-inds,]
 
-  lrn = do.call("makeLearner", c(list(t.name), parset))
+  lrn = makeLearner(t.name)
+  lrn = setHyperPars(lrn, par.vals = parset, reset = "hard")
   # FIXME this heuristic will backfire eventually
   if (length(target) == 0)
     task = makeClusterTask(data = df)
@@ -65,10 +66,6 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
 }
 
 testSimpleParsets = function(t.name, df, target, train.inds, old.predicts.list, parset.list) {
-  inds = train.inds
-  train = df[inds,]
-  test = df[-inds,]
-
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     old.predicts = old.predicts.list[[i]]
