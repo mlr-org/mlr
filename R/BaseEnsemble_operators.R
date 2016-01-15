@@ -35,7 +35,7 @@ setHyperPars2.BaseEnsemble = function(learner, par.vals, reset = "no") {
         par.vals = setNames(par.vals[i], z$par.id), reset = reset)
     } else {
       # extra param of ensemble learner, just set it normally
-      learner = setHyperPars2.Learner(learner, par.vals = par.vals[i], reset = reset)
+      learner = setHyperPars2.Learner(learner, par.vals = par.vals[i], reset = "no")
     }
   }
   return(learner)

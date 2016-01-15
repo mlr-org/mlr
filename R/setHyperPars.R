@@ -48,6 +48,8 @@ setHyperPars2.Learner = function(learner, par.vals, reset = "no") {
     par.vals = insert(insert(learner$mlr.default.par.vals, learner$par.vals), par.vals)
   } else if (reset == "hard") {
     par.vals = par.vals
+  } else if (reset == "before") {
+    par.vals = insert(learner$par.vals, par.vals)
   }
   
   ns = names(par.vals)
@@ -80,12 +82,9 @@ setHyperPars2.Learner = function(learner, par.vals, reset = "no") {
       #  p = pd$values[[p]]
     }
   }
-  if (length(par.vals) > 0 && !isFeasible(learner$par.set, par.vals, use.defaults = TRUE, filter = TRUE)) {
-    msg = sprintf("The given param setting is not feasible. Possibly due to not met requirements.")
+  if (length(par.vals) > 0 && !isFeasible(learner$par.set, par.vals, use.defaults = TRUE, filter = TRUE, warn = TRUE)) {
     if (on.par.out.of.bounds == "stop") {
-      stop(msg)
-    } else {
-      warning(msg)
+      stop()
     }
   }
   learner$par.vals = par.vals

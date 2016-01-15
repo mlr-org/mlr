@@ -27,9 +27,10 @@ test_that("removing par settings works", {
   lrn = makeLearner("classif.qda")
   expect_error(removeHyperPars(lrn, "minsplit"), "Trying to remove")
   expect_error(removeHyperPars(lrn, "xxx"), "Trying to remove")
-  lrn2 = setHyperPars(lrn, method = "mve", nu = 7)
-  lrn3 = removeHyperPars(lrn2, "method")
-  expect_equal(getHyperPars(lrn3), list(nu = 7))
+  lrn2 = setHyperPars(lrn, method = "t", nu = 7)
+  expect_error(removeHyperPars(lrn2, "method"))
+  lrn3 = removeHyperPars(lrn2, "nu")
+  expect_equal(getHyperPars(lrn3), list(method = "t"))
 
   # now with wrapper
   lrn = makeBaggingWrapper(makeLearner("classif.qda"))

@@ -23,6 +23,12 @@ removeHyperPars = function(learner, ids = character(0L)) {
 #' @export
 removeHyperPars.Learner = function(learner, ids = character(0L)) {
   learner$par.vals[ids] = NULL
+  on.par.out.of.bounds = coalesce(learner$config$on.par.out.of.bounds, getMlrOptions()$on.par.out.of.bounds)
+  if (length(learner$par.vals[ids]) > 0 && !isFeasible(learner$par.set, learner$par.vals, use.defaults = TRUE, filter = TRUE, warn = on.par.out.of.bounds %in% c("warn", "stop"))) {
+    if (on.par.out.of.bounds == "stop") {
+      stop()
+    }
+  }
   return(learner)
 }
 
