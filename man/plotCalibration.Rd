@@ -8,7 +8,7 @@ plotCalibration(obj, smooth = FALSE, reference = TRUE, rag = TRUE)
 }
 \arguments{
 \item{obj}{[\code{CalibrationData}]\cr
-Result of \code{\link{generateCalibrationData}}}
+Result of \code{\link{generateCalibrationData}}.}
 
 \item{smooth}{[\code{logical(1)}]\cr
 Whether to use a loess smoother.

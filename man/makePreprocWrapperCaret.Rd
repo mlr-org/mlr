@@ -2,7 +2,7 @@
 % Please edit documentation in R/PreprocWrapperCaret.R
 \name{makePreprocWrapperCaret}
 \alias{makePreprocWrapperCaret}
-\title{Fuse learner with preprocessing}
+\title{Fuse learner with preprocessing.}
 \usage{
 makePreprocWrapperCaret(learner, ...)
 }

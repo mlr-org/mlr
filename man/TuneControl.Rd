@@ -46,7 +46,7 @@ Should the same resampling instance be used for all evaluations to reduce varian
 Default is \code{TRUE}.}
 
 \item{impute.val}{[\code{numeric}]\cr
-If something goes wrong during optimization (e.g, the learner crashes),
+If something goes wrong during optimization (e.g. the learner crashes),
 this value is fed back to the tuner, so the tuning algorithm does not abort.
 It is not stored in the optimization path, an NA and a corresponding error message are
 logged instead.

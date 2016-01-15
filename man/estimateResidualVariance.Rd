@@ -2,7 +2,7 @@
 % Please edit documentation in R/estimateResidualVariance.R
 \name{estimateResidualVariance}
 \alias{estimateResidualVariance}
-\title{Estimate the residual variance}
+\title{Estimate the residual variance.}
 \usage{
 estimateResidualVariance(x, task, data, target)
 }

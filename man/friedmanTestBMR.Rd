@@ -12,7 +12,7 @@ Benchmark result.}
 
 \item{measure}{[\code{\link{Measure}}]\cr
 Performance measure.
-Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
+Default is the first measure used in the benchmark experiment.}
 
 \item{aggregation}{[\code{character(1)}] \cr
 \dQuote{mean} or \dQuote{default}. See \code{\link{getBMRAggrPerformances}}

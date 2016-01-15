@@ -2,7 +2,7 @@
 % Please edit documentation in R/Filter.R
 \name{listFilterMethods}
 \alias{listFilterMethods}
-\title{List filter methods}
+\title{List filter methods.}
 \usage{
 listFilterMethods(desc = TRUE, tasks = FALSE, features = FALSE)
 }

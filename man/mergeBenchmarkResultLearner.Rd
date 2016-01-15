@@ -2,13 +2,13 @@
 % Please edit documentation in R/benchmarkResult_mergers.R
 \name{mergeBenchmarkResultLearner}
 \alias{mergeBenchmarkResultLearner}
-\title{Merge different learners of BenchmarkResult objects}
+\title{Merge different learners of BenchmarkResult objects.}
 \usage{
 mergeBenchmarkResultLearner(...)
 }
 \arguments{
-\item{...}{[\code{\link{BenchmarkResult}}] \cr 
-\code{BenchmarkResult} objects that should be merged}
+\item{...}{[\code{\link{BenchmarkResult}}]\cr 
+\code{BenchmarkResult} objects that should be merged.}
 }
 \description{
 Combines the \code{\link{BenchmarkResult}} objects that were performed 

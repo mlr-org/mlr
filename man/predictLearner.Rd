@@ -20,19 +20,33 @@ New data to predict. Does not include target column.}
 Additional parameters, which need to be passed to the underlying predict function.}
 }
 \value{
-For classification: Either a factor for type \dQuote{response} or a matrix for
-  type \dQuote{prob}. In the latter case the columns must be named with the class labels.
-  For regressions: Either a numeric for type \dQuote{response} or a matrix with two columns
-  for type \dQuote{se}. In the latter case first column is the estimated response (mean value)
-  and the second column the estimated standard errors.
+\itemize{
+  \item For classification: Either a factor with class labels for type
+    \dQuote{response} or, if the learner supports this, a matrix of class probabilities
+    for type \dQuote{prob}. In the latter case the columns must be named with the class
+    labels.
+  \item For regression: Either a numeric vector for type \dQuote{response} or,
+    if the learner supports this, a matrix with two columns for type \dQuote{se}.
+    In the latter case the first column contains the estimated response (mean value)
+    and the second column the estimated standard errors.
+  \item For survival: Either a numeric vector with some sort of orderable risk
+    for type \dQuote{response} or, if supported, a numeric vector with time dependent
+    probabilities for type \dQuote{prob}.
+  \item For clustering: Either an integer with cluster IDs for type \dQuote{response}
+    or, if supported, a matrix of membership probabilities for type \dQuote{prob}.
+  \item For multilabel: A logical matrix that indicates predicted class labels for type
+    \dQuote{response} or, if supported, a matrix of class probabilities for type
+    \dQuote{prob}. The columns must be named with the class labels.
+ }
 }
 \description{
 Mainly for internal use. Predict new data with a fitted model.
 You have to implement this method if you want to add another learner to this package.
 }
 \details{
-You implementation must adhere to the following:
-The model must be fitted on the subset of \code{.task} given by \code{.subset}. All parameters
-in \code{...} must be passed to the underlying training function.
+Your implementation must adhere to the following:
+Predictions for the observations in \code{.newdata} must be made based on the fitted
+model (\code{.model$learner.model}).
+All parameters in \code{...} must be passed to the underlying predict function.
 }
 

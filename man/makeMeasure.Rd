@@ -36,7 +36,20 @@ Set of measure properties. Some standard property names include:
 Default is \code{character(0)}.}
 
 \item{fun}{[\code{function(task, model, pred, feats, extra.args)}]\cr
-Calculates performance value.}
+Calculates the performance value. Usually you will only need the prediction
+object \code{pred}.
+\describe{
+  \item{\code{task} [\code{\link{Task}}]}{
+    The task.}
+  \item{\code{model} [\code{\link{WrappedModel}}]}{
+    The fitted model.}
+  \item{\code{pred} [\code{\link{Prediction}}]}{
+    Prediction object.}
+  \item{\code{feats} [\code{data.frame}]}{
+    The features.}
+  \item{\code{extra.args} [\code{list}]}{
+    See below.}
+}}
 
 \item{extra.args}{[\code{list}]\cr
 List of extra arguments which will always be passed to \code{fun}.

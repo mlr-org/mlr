@@ -47,8 +47,7 @@ First, calls \code{\link{generateFilterValuesData}}.
 Features are then selected via \code{select} and \code{val}.
 }
 \seealso{
-Other filter: \code{\link{FilterValues}},
-  \code{\link{generateFilterValuesData}},
+Other filter: \code{\link{generateFilterValuesData}},
   \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
   \code{\link{makeFilterWrapper}},
