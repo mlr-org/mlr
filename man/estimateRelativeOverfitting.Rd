@@ -11,7 +11,7 @@ estimateRelativeOverfitting(rdesc, measures, task, learner)
   learner)
 }
 \arguments{
-\item{rdesc}{[\code{\link{ResampleDesc}}\cr
+\item{rdesc}{[\code{\link{ResampleDesc}}]\cr
 Resampling strategy.}
 
 \item{measures}{[\code{\link{Measure}} | list of \code{\link{Measure}}]\cr

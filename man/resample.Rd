@@ -79,7 +79,7 @@ Default is to extract nothing.}
 Keep the prediction data in the \code{pred} slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
-In this case you can this argument to \code{FALSE}.
+In this case you can set this argument to \code{FALSE}.
 Default is \code{TRUE}.}
 
 \item{...}{[any]\cr
@@ -105,7 +105,7 @@ See \code{\link{ResampleDesc}}.}
 See \code{\link{ResampleDesc}}.}
 }
 \value{
-[\code{\link{ResampleResult}}]. List of:
+[\code{\link{ResampleResult}}].
 }
 \description{
 The function \code{resample} fits a model specified by \link{Learner} on a \link{Task}

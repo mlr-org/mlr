@@ -4,7 +4,7 @@
 \alias{LearnerProperties}
 \alias{getLearnerProperties}
 \alias{hasLearnerProperties}
-\title{Set, add, remove or query properties of learners}
+\title{Query properties of learners.}
 \usage{
 getLearnerProperties(learner)
 
@@ -16,7 +16,7 @@ The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
 \item{props}{[\code{character}]\cr
-Vector of properties to set, add, remove or query.}
+Vector of properties to query.}
 }
 \value{
 \code{getLearnerProperties} returns a character vector with learner properties.

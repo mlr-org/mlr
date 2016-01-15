@@ -40,7 +40,7 @@
 #'   Default is \code{id}.
 #' @param note [\code{character(1)}]\cr
 #'   Additional notes regarding the learner and its integration in mlr.
-#'   Default is \code{\dQuote{}}.
+#'   Default is \dQuote{}.
 #' @return [\code{\link{RLearner}}]. The specific subclass is one of \code{\link{RLearnerClassif}},
 #'   \code{\link{RLearnerCluster}}, \code{\link{RLearnerMultilabel}},
 #'   \code{\link{RLearnerRegr}}, \code{\link{RLearnerSurv}}.

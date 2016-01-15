@@ -12,7 +12,7 @@ Result of \code{\link{generateROCRCurvesData}}.}
 
 \item{diagonal}{[\code{logical(1)}]\cr
 Whether to plot a dashed diagonal line.
-Default is false.}
+Default is \code{FALSE}.}
 
 \item{xlab}{[\code{character(1)}]\cr
 Label for x-axis.

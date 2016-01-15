@@ -3,7 +3,7 @@
 \docType{data}
 \name{wpbc.task}
 \alias{wpbc.task}
-\title{Wisonsin Prognostic Breast Cancer (WPBC) survival task}
+\title{Wisonsin Prognostic Breast Cancer (WPBC) survival task.}
 \description{
 Contains the task (\code{wpbc.task}).
 }

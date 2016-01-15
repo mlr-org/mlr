@@ -2,7 +2,7 @@
 % Please edit documentation in R/Aggregation.R
 \name{makeAggregation}
 \alias{makeAggregation}
-\title{Specifiy your own aggregation of measures}
+\title{Specify your own aggregation of measures.}
 \usage{
 makeAggregation(id, name = id, fun)
 }
@@ -13,23 +13,30 @@ Name of the aggregation method (preferably the same name as the generated functi
 \item{name}{[\code{character(1)}]\cr
 Long name of the aggregation method. Default is \code{id}.}
 
-\item{fun}{[\code{function}]\cr
-A function with following signature: \code{function(task, perf.test, perf.train, measure, group, pred)}
-\itemize{
- \item{\bold{task}}: task (\code{\link{Task}}) object
- \item{\bold{perf.test}}: numerical vector of \link{performance} results on the test data set
- \item{\bold{perf.train}}. numerical vector of \link{performance} results on the train data set
- \item{\bold{measure}}: \code{\link{Measure}} object.
- \item{\bold{group}}: grouping vector
- \item{\bold{pred}}: \code{\link{Prediction}} object
+\item{fun}{[\code{function(task, perf.test, perf.train, measure, group, pred)}]\cr
+Calculates the aggregated performance. In most cases you will only need the performances
+\code{perf.test} and optionally \code{perf.train} on the test and training data sets.
+\describe{
+  \item{\code{task} [\code{\link{Task}}]}{The task.}
+  \item{\code{perf.test} [\code{numeric}]}{
+    \code{\link{performance}} results on the test data sets.}
+  \item{\code{perf.train} [\code{numeric}]}{
+    \code{\link{performance}} results on the training data sets.}
+  \item{\code{measure} [\code{\link{Measure}}]}{
+    Performance measure.}
+  \item{\code{group} [\code{factor}]}{
+    Grouping of resampling iterations. This encodes whether specific iterations
+    'belong together' (e.g. repeated CV).}
+  \item{\code{pred} [\code{\link{Prediction}}]}{
+    Prediction object.}
 }}
 }
 \value{
-\link{Aggregation} object
+[\code{\link{Aggregation}}].
 }
 \description{
-This is an adavanced feature of mlr. It gives access to some
-inner workings so the result might not be compatible with everything! \cr
+This is an advanced feature of mlr. It gives access to some
+inner workings so the result might not be compatible with everything!
 }
 \examples{
 # computes the interquartile range on all performance values
@@ -37,6 +44,6 @@ test.iqr = makeAggregation(id = "test.iqr", name = "Test set interquartile range
   fun = function (task, perf.test, perf.train, measure, group, pred) IQR(perf.test))
 }
 \seealso{
-\link{aggregations}, \code{\link{setAggregation}}
+\code{\link{aggregations}}, \code{\link{setAggregation}}
 }
 

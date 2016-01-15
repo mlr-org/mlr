@@ -2,7 +2,7 @@
 % Please edit documentation in R/options.R
 \name{getMlrOptions}
 \alias{getMlrOptions}
-\title{Returns a list of mlr's options}
+\title{Returns a list of mlr's options.}
 \usage{
 getMlrOptions()
 }
