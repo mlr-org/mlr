@@ -17,17 +17,23 @@ getMinMaxClass = function(y) {
 }
 
 # resample one of the two classes cl
-# clreplace - replacement of class in argument cl, othreplace - replacement of other class in each case
-sampleBinaryClass = function(y, rate, cl, clreplace = TRUE, othreplace = TRUE, bagging = FALSE) {
-  z = getMinMaxClass(y)
-  inds1 = switch(cl, min = z$min.inds, max = z$max.inds)
-  inds2 = switch(cl, min = z$max.inds, max = z$min.inds)
+# @param y binaryclass vec
+# @param rate resample rate
+# @param cl classname to resample
+# @param clreplace sample replacement of cl
+# @param othreplace sample replacement of other cl
+# @return new y vec
+sampleBinaryClass = function(y, rate, cl, clreplace = TRUE, othreplace = TRUE) {
+  inds1 = which(y == cl)
+  inds2 = seq_along(y)[-inds1]
   newsize = round(length(inds1) * rate)
-  # undersampling (cl = "max"): sampling of all inds of maxClass (but newsize <= max.size)
-  # oversampling (cl = "min" and bagging = FALSE): take existing inds and sample add. inds with repl.
-  # overbagging (cl = "min" and bagging = TRUE): sampling of all inds of minClass  
-  newinds1 = if( (cl == "max") || bagging ) { sample(inds1, newsize, replace = clreplace) 
-  } else { c(inds1, sample(inds1, newsize-length(inds1), replace = clreplace)) }
+  # undersampling (rate < 1): sampling out of all inds of cl (but newsize <= max.size)
+  # oversampling (rate > 1): take existing inds and sample add. inds with repl.  
+  if (rate < 1) { 
+    newinds1 = sample(inds1, newsize, replace = clreplace) 
+  } else {
+    newinds1 = c(inds1, sample(inds1, newsize - length(inds1), replace = clreplace))
+  }
   newinds2 = sample(inds2, length(inds2), replace = othreplace)
   c(newinds1, newinds2)
 }
