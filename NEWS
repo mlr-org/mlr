@@ -33,6 +33,9 @@ new learners
 -- regr.randomForestSRCSyn
 -- cluster.dbscan
 
+-new measures
+-- rsq, arsq, expvar
+
 mlr_2.7:
 - New argument "models" for function benchmark
 - fixed a bug where 'keep.pred' was ignored in the benchmark function

@@ -1,4 +1,4 @@
-#' @title Normalize features
+#' @title Normalize features.
 #'
 #' @description
 #' Normalize features by different methods. 

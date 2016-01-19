@@ -2,7 +2,7 @@
 % Please edit documentation in R/generatePartialPrediction.R
 \name{plotPartialPredictionGGVIS}
 \alias{plotPartialPredictionGGVIS}
-\title{Plot a partial prediction using ggvis}
+\title{Plot a partial prediction using ggvis.}
 \usage{
 plotPartialPredictionGGVIS(obj, interact = NULL, p = 1)
 }

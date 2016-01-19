@@ -13,12 +13,12 @@ Benchmark result.}
 
 \item{measure}{[\code{\link{Measure}}]\cr
 Performance measure.
-Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
+Default is the first measure used in the benchmark experiment.}
 
 \item{trafo}{[\code{character(1)}]\cr
 Currently either \dQuote{none} or \dQuote{rank}, the latter performing a rank transformation
 (with average handling of ties) of the scores per task.
-NB: You can add always addd \code{\link{scale_x_log10}} to the result to put scores on a log scale.
+NB: You can add always add \code{\link[ggplot2]{scale_x_log10}} to the result to put scores on a log scale.
 Default is \dQuote{none}.}
 
 \item{order.tsks}{[\code{character(n.tasks)}] \cr 
@@ -36,9 +36,10 @@ Default is 0.05.}
 ggplot2 plot object.
 }
 \description{
-Creates a scatter plots, where each line refers to a task.
+Creates a scatter plot, where each line refers to a task.
 On that line the aggregated scores for all learners are plotted, for that task.
-You can use a rank transformation or just use ggplot2's \code{}
+Optionally, you can apply a rank transformation or just use one of ggplot2's transformations
+like \code{\link[ggplot2]{scale_x_log10}}.
 }
 \examples{
 # see benchmark

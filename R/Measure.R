@@ -46,7 +46,20 @@
 #'   }
 #'   Default is \code{character(0)}.
 #' @param fun [\code{function(task, model, pred, feats, extra.args)}]\cr
-#'   Calculates performance value.
+#'   Calculates the performance value. Usually you will only need the prediction
+#'   object \code{pred}.
+#'   \describe{
+#'     \item{\code{task} [\code{\link{Task}}]}{
+#'       The task.}
+#'     \item{\code{model} [\code{\link{WrappedModel}}]}{
+#'       The fitted model.}
+#'     \item{\code{pred} [\code{\link{Prediction}}]}{
+#'       Prediction object.}
+#'     \item{\code{feats} [\code{data.frame}]}{
+#'       The features.}
+#'     \item{\code{extra.args} [\code{list}]}{
+#'       See below.}
+#'   }
 #' @param extra.args [\code{list}]\cr
 #'   List of extra arguments which will always be passed to \code{fun}.
 #'   Default is empty list.
@@ -144,7 +157,8 @@ getDefaultMeasure = function(x) {
 #' Set how this measure will be aggregated after resampling.
 #' To see possible aggregation functions: \code{\link{aggregations}}.
 #'
-#' @template arg_measure
+#' @param measure [\code{\link{Measure}}]\cr
+#'   Performance measure.
 #' @template arg_aggr
 #' @return [\code{\link{Measure}}] with changed aggregation behaviour.
 #' @export

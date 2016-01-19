@@ -1,51 +1,48 @@
-#' Internal construction / wrapping of learner object.
+#' @title Internal construction / wrapping of learner object.
 #'
+#' @description
 #' Wraps an already implemented learning method from R to make it accessible to mlr.
 #' Call this method in your constructor. You have to pass an id (name), the required
-#' package(s), a description object for all changeable parameters (you dont have to do this for the
-#' learner to work, but it is strongly recommended), and use property tags to define features of the learner.
+#' package(s), a description object for all changeable parameters (you do not have to do this for the
+#' learner to work, but it is strongly recommended), and use property tags to define
+#' features of the learner.
 #'
-#' @param cl [\code{character(1)}] \cr
-#'   Class name for learner to create.
-#'   By convention, all classification learners start with \dQuote{classif.},
-#'   all regression learners with \dQuote{regr.}, all cluster learners with \dQuote{cluster.}
-#'   and all survival learners start with \dQuote{surv.}.
+#' For a general overview on how to integrate a learning algorithm into mlr's system, please read the
+#' section in the online tutorial:
+#' \url{http://mlr-org.github.io/mlr-tutorial/release/html/create_learner/index.html}
+#'
+#' To see all possible properties of a learner, go to: \code{\link{LearnerProperties}}.
+#'
+#' @template arg_lrncl
 #' @param package [\code{character}]\cr
 #'   Package(s) to load for the implementation of the learner.
-#' @param properties [\code{character(1)}]\cr
-#'   Set of learner properties. Some standard property names include:
-#'   \describe{
-#'     \item{numerics}{Can numeric features be handled?}
-#'     \item{factors}{Can factor features be handled?}
-#'     \item{missings}{Can missing features be handled?}
-#'     \item{oneclas,twoclass,multiclass}{Can one-class, two-class or multi-class classification problems be handled?}
-#'     \item{prob}{Can probabilites be predicted?}
-#'     \item{se}{Can standard errors be predicted?}
-#'     \item{class.weights}{Can class weights be handled?}
-#'   }
+#' @param properties [\code{character}]\cr
+#'   Set of learner properties. See above.
 #'   Default is \code{character(0)}.
-#' @param class.weights.param [\code{character(1)}] \cr
+#' @param class.weights.param [\code{character(1)}]\cr
 #'   Name of the parameter, which can be used for providing class weights.
-#' @param par.set [\code{\link[ParamHelpers]{ParamSet}}] \cr
+#' @param par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
 #'   Parameter set of (hyper)parameters and their constraints.
 #'   Dependent parameters with a \code{requires} field must use \code{quote} and not
 #'   \code{expression} to define it.
-#' @param par.vals [\code{list}] \cr
+#' @param par.vals [\code{list}]\cr
 #'   Always set hyperparameters to these values when the object is constructed.
 #'   Useful when default values are missing in the underlying function.
 #'   The values can later be overwritten when the user sets hyperparameters.
 #'   Default is empty list.
-#' @param name [\code{character(1)}]
+#' @param name [\code{character(1)}]\cr
 #'   Meaningful name for learner.
 #'   Default is \code{id}.
-#' @param short.name [\code{character(1)}]
+#' @param short.name [\code{character(1)}]\cr
 #'   Short name for learner.
 #'   Should only be a few characters so it can be used in plots and tables.
 #'   Default is \code{id}.
-#' @param note [\code{character(1)}]
+#' @param note [\code{character(1)}]\cr
 #'   Additional notes regarding the learner and its integration in mlr.
 #'   Default is \dQuote{}.
-#' @return [\code{\link{RLearnerClassif}}, \code{\link{RLearnerCluster}}, \code{\link{RLearnerMultilabel}} \code{\link{RLearnerRegr}} or \code{\link{RLearnerSurv}}].
+#' @return [\code{\link{RLearner}}]. The specific subclass is one of \code{\link{RLearnerClassif}},
+#'   \code{\link{RLearnerCluster}}, \code{\link{RLearnerMultilabel}},
+#'   \code{\link{RLearnerRegr}}, \code{\link{RLearnerSurv}}.
 #' @name RLearner
 #' @rdname RLearner
 #' @aliases RLearnerClassif RLearnerCluster RLearnerMultilabel RLearnerRegr RLearnerSurv

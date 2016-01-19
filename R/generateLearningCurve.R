@@ -1,10 +1,11 @@
-#' @title Generates a learning curve
+#' @title Generates a learning curve.
 #'
 #' @description
 #' Observe how the performance changes with an increasing number of observations.
 #'
 #' @family generate_plot_data
 #' @family learning_curve
+#' @aliases LearningCurveData
 #'
 #' @param learners [(list of) \code{\link{Learner}}]\cr
 #'   Learning algorithms which should be compared.
@@ -23,7 +24,18 @@
 #'   Only for classification:
 #'   Should the downsampled data be stratified according to the target classes?
 #' @template arg_showinfo
-#' @return An object of class \code{\link{LearningCurveData}}.
+#' @return [\code{LearningCurveData}]. A \code{list} containing:
+#'   \item{task}{[\code{\link{Task}}]\cr
+#'     The task.}
+#'   \item{measures}{[(list of) \code{\link{Measure}}]\cr
+#'     Performance measures.}
+#'   \item{data}{[\code{data.frame}] with columns:
+#'     \itemize{	
+#'       \item \code{learner} Names of learners.
+#'       \item \code{percentage} Percentages drawn from the training split.
+#'       \item One column for each
+#'     \code{\link{Measure}} passed to \code{\link{generateLearningCurveData}}.
+#'    }}
 #' @examples
 #' r = generateLearningCurveData(list("classif.rpart", "classif.knn"),
 #' task = sonar.task, percs = seq(0.2, 1, by = 0.2),
@@ -80,20 +92,6 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
             measures = measures,
             data = out)
 }
-#' Result of \code{\link{generateLearningCurveData}}.
-#'
-#' @family learning_curve
-#'
-#' \itemize{
-#'   \item{task [\code{\link{TaskDesc}}]}{Task description.}
-#'   \item{measures} [\code{\link{Measure}}]{Measures.}
-#'   \item{data [\code{data.frame}]}{Has columns: \code{learner} = Name of learner;
-#'     \code{perc} = Percentages drawn from the training split.; and a column for each \code{\link{Measure}}
-#'                   passed to \code{\link{generateLearningCurveData}}.}
-#' }
-#' @name LearningCurveData
-#' @rdname LearningCurveData
-NULL
 #' @export
 print.LearningCurveData = function(x, ...) {
   catf("LearningCurveData:")

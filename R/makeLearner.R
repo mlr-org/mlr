@@ -6,6 +6,8 @@
 #' value selects the label. The threshold used to assign the label can later be changed using the
 #' \code{\link{setThreshold}} function.
 #'
+#' To see all possible properties of a learner, go to: \code{\link{LearnerProperties}}.
+#'
 #' @template arg_lrncl
 #' @param id [\code{character(1)}]\cr
 #'   Id string for object. Used to display object.
@@ -14,7 +16,8 @@
 #'   Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
 #'   Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
 #'   Survival: \dQuote{response} (= some sort of orderable risk) or \dQuote{prob} (= time dependent probabilities).
-#'   Clustering: \dQuote{response} (= cluster IDS) or \dQuote{prob} (= fuzzy cluster membership probabilities).
+#'   Clustering: \dQuote{response} (= cluster IDS) or \dQuote{prob} (= fuzzy cluster membership probabilities),
+#'   Multilabel: \dQuote{response} (= logical matrix indicating the predicted class labels) or \dQuote{prob} (= probabilities and corresponding logical matrix indicating class labels).
 #'   Default is \dQuote{response}.
 #' @template arg_predictthreshold
 #' @param fix.factors.prediction [\code{logical(1)}]\cr

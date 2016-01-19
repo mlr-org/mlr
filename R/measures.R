@@ -213,6 +213,62 @@ measureMEDAE = function(truth, response) {
   median(abs(response - truth))
 }
 
+#' @export rsq
+#' @rdname measures
+#' @format none
+rsq = makeMeasure(id = "rsq", minimize = FALSE, best = 1, worst = -Inf,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Coefficient of determination",
+  note = "Also called R-squared, which is 1 - residual_sum_of_squares / total_sum_of_squares.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureRSQ(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureRSQ
+#' @rdname measures
+#' @format none
+measureRSQ = function(truth, response) {
+  rss = measureSSE(truth, response)
+  ess = sum((truth - mean(truth))^2L)
+  1 - rss / ess
+}
+
+#' @export expvar
+#' @rdname measures
+#' @format none
+expvar = makeMeasure(id = "expvar", minimize = FALSE, best = 1, worst = 0,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Explained variance",
+  note = "Similar to measaure rsq (R-squared). Defined as explained_sum_of_squares / total_sum_of_squares.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureEXPVAR(pred$data$truth, pred$data$response)
+  }
+)
+
+#' @export measureEXPVAR
+#' @rdname measures
+#' @format none
+measureEXPVAR = function(truth, response) {
+  regss = sum((response - mean(truth))^2L)
+  ess = sum((truth - mean(truth))^2L)
+  regss / ess
+}
+
+#' @export arsq
+#' @rdname measures
+#' @format none
+arsq = makeMeasure(id = "adjrsq", minimize = FALSE, best = 1, worst = 0,
+  properties = c("regr", "req.pred", "req.truth"),
+  name = "Adjusted coefficient of determination",
+  note = "Adjusted R-squared is only defined for normal linear regression",
+  fun = function(task, model, pred, feats, extra.args) {
+    n = length(pred$data$truth)
+    p = length(model$features)
+    1 - (1 - measureRSQ(pred$data$truth, pred$data$response)) * (p / (n - p - 1L))
+  }
+)
+
 ###############################################################################
 ### classif multi ###
 ###############################################################################
