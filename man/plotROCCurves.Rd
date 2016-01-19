@@ -2,7 +2,7 @@
 % Please edit documentation in R/generateThreshVsPerf.R
 \name{plotROCCurves}
 \alias{plotROCCurves}
-\title{Plots a ROC curve using ggplot2}
+\title{Plots a ROC curve using ggplot2.}
 \usage{
 plotROCCurves(obj, measures = obj$measures[1:2], diagonal = TRUE,
   pretty.names = TRUE)

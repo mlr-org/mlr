@@ -21,7 +21,7 @@ Default is all.}
 
 \item{as.df}{[\code{character(1)}]\cr
 Return one data.frame as result - or a list of lists of objects?.
-Default is \code{FALSE}}
+Default is \code{FALSE}.}
 }
 \value{
 [\code{list} | \code{data.frame}]. See above.

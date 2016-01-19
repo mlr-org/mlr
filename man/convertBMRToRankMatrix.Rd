@@ -13,10 +13,10 @@ Benchmark result.}
 
 \item{measure}{[\code{\link{Measure}}]\cr
 Performance measure.
-Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
+Default is the first measure used in the benchmark experiment.}
 
 \item{ties.method}{[\code{character(1)}]\cr
-see \code{\link[base]{rank}} for details.}
+See \code{\link[base]{rank}} for details.}
 
 \item{aggregation}{[\code{character(1)}] \cr
 \dQuote{mean} or \dQuote{default}. See \code{\link{getBMRAggrPerformances}}
@@ -27,8 +27,6 @@ for details on \dQuote{default}.}
   The matrix has one row for each \code{learner}, and one column for each \code{task}.
 }
 \description{
-Computes a matrix of all the ranks of different algorithms over different datasets (tasks).
-
 Computes a matrix of all the ranks of different algorithms
 over different datasets (tasks). Ranks are computed from aggregated
 measures.

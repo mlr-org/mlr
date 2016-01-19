@@ -1,4 +1,4 @@
-#' @title Returns a list of mlr's options
+#' @title Returns a list of mlr's options.
 #'
 #' @description
 #' Gets the options for mlr.

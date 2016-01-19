@@ -17,8 +17,7 @@ Trained Model created with \code{\link{makeFilterWrapper}}.}
 Returns the filtered features.
 }
 \seealso{
-Other filter: \code{\link{FilterValues}},
-  \code{\link{filterFeatures}},
+Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilterValues}},
   \code{\link{makeFilterWrapper}},

@@ -1,16 +1,17 @@
 #' @title Plot a benchmark summary.
 #'
 #' @description
-#' Creates a scatter plots, where each line refers to a task.
+#' Creates a scatter plot, where each line refers to a task.
 #' On that line the aggregated scores for all learners are plotted, for that task.
-#' You can use a rank transformation or just use ggplot2's \code{}
+#' Optionally, you can apply a rank transformation or just use one of ggplot2's transformations
+#' like \code{\link[ggplot2]{scale_x_log10}}.
 #'
 #' @template arg_bmr
 #' @template arg_measure
 #' @param trafo [\code{character(1)}]\cr
 #'   Currently either \dQuote{none} or \dQuote{rank}, the latter performing a rank transformation
 #'   (with average handling of ties) of the scores per task.
-#'   NB: You can add always addd \code{\link{scale_x_log10}} to the result to put scores on a log scale.
+#'   NB: You can add always add \code{\link[ggplot2]{scale_x_log10}} to the result to put scores on a log scale.
 #'   Default is \dQuote{none}.
 #' @template arg_order_tsks
 #' @param pointsize [\code{numeric(1)}]\cr

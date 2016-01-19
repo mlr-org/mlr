@@ -5,6 +5,7 @@
 \alias{G1}
 \alias{G2}
 \alias{acc}
+\alias{arsq}
 \alias{auc}
 \alias{bac}
 \alias{ber}
@@ -12,6 +13,7 @@
 \alias{cindex}
 \alias{db}
 \alias{dunn}
+\alias{expvar}
 \alias{f1}
 \alias{fdr}
 \alias{featperc}
@@ -30,6 +32,7 @@
 \alias{measureAUC}
 \alias{measureBAC}
 \alias{measureBrier}
+\alias{measureEXPVAR}
 \alias{measureFDR}
 \alias{measureFN}
 \alias{measureFNR}
@@ -47,6 +50,7 @@
 \alias{measureNPV}
 \alias{measurePPV}
 \alias{measureRMSE}
+\alias{measureRSQ}
 \alias{measureSAE}
 \alias{measureSSE}
 \alias{measureTN}
@@ -62,6 +66,7 @@
 \alias{npv}
 \alias{ppv}
 \alias{rmse}
+\alias{rsq}
 \alias{sae}
 \alias{silhouette}
 \alias{sse}
@@ -110,6 +115,16 @@ measureMAE(truth, response)
 medae
 
 measureMEDAE(truth, response)
+
+rsq
+
+measureRSQ(truth, response)
+
+expvar
+
+measureEXPVAR(truth, response)
+
+arsq
 
 mmce
 
