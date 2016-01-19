@@ -6,6 +6,8 @@
 #' value selects the label. The threshold used to assign the label can later be changed using the
 #' \code{\link{setThreshold}} function.
 #'
+#' To see all possible properties of a learner, go to: \code{\link{LearnerProperties}}.
+#'
 #' @template arg_lrncl
 #' @param id [\code{character(1)}]\cr
 #'   Id string for object. Used to display object.

@@ -11,17 +11,7 @@
 #' section in the online tutorial:
 #' \url{http://mlr-org.github.io/mlr-tutorial/release/html/create_learner/index.html}
 #'
-#' The learner properties are defined as follows:
-#' \describe{
-#'   \item{numerics, factors, ordered}{Can numeric, factor or ordered factor features be handled?}
-#'   \item{missings}{Can missing values in features be handled?}
-#'   \item{weights}{Can observations be weighted during fitting?}
-#'   \item{oneclas, twoclass, multiclass}{Only for classif: Can one-class, two-class or multi-class classification problems be handled?}
-#'   \item{class.weights}{Only for classif: Can class weights be handled?}
-#'   \item{rcens, lcens, icens}{Only for surv: Can right, left, or interval censored data be handled?}
-#'   \item{prob}{Only for classif and cluster: Can probabilites be predicted?}
-#'   \item{se}{Only for regr: Can standard errors be predicted?}
-#' }
+#' To see all possible properties of a learner, go to: \code{\link{LearnerProperties}}.
 #'
 #' @template arg_lrncl
 #' @param package [\code{character}]\cr

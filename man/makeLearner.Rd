@@ -69,6 +69,8 @@ For a classification learner the \code{predict.type} can be set
 to \dQuote{prob} to predict probabilities and the maximum
 value selects the label. The threshold used to assign the label can later be changed using the
 \code{\link{setThreshold}} function.
+
+To see all possible properties of a learner, go to: \code{\link{LearnerProperties}}.
 }
 \examples{
 makeLearner("classif.rpart")
