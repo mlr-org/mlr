@@ -58,16 +58,7 @@ The values can later be overwritten when the user sets hyperparameters.
 Default is empty list.}
 
 \item{properties}{[\code{character}]\cr
-Set of learner properties. Some standard property names include:
-\describe{
-  \item{numerics, factors, ordered}{Can numeric, factor or ordered factor features be handled?}
-  \item{missings}{Can missing values in features be handled?}
-  \item{oneclas, twoclass, multiclass}{Can one-class, two-class or multi-class classification problems be handled?}
-  \item{class.weights}{Can class weights be handled?}
-  \item{rcens, lcens, icens}{Can right, left, or interval censored data be handled?}
-  \item{prob}{Can probabilites be predicted?}
-  \item{se}{Can standard errors be predicted?}
-}
+Set of learner properties. See above.
 Default is \code{character(0)}.}
 
 \item{name}{[\code{character(1)}]\cr
@@ -95,6 +86,23 @@ Name of the parameter, which can be used for providing class weights.}
 Wraps an already implemented learning method from R to make it accessible to mlr.
 Call this method in your constructor. You have to pass an id (name), the required
 package(s), a description object for all changeable parameters (you do not have to do this for the
-learner to work, but it is strongly recommended), and use property tags to define features of the learner.
+learner to work, but it is strongly recommended), and use property tags to define
+features of the learner.
+
+For a general overview on how to integrate a learning algorithm into mlr's system, please read the
+section in the online tutorial:
+\url{http://mlr-org.github.io/mlr-tutorial/release/html/create_learner/index.html}
+
+The learner properties are defined as follows:
+\describe{
+  \item{numerics, factors, ordered}{Can numeric, factor or ordered factor features be handled?}
+  \item{missings}{Can missing values in features be handled?}
+  \item{weights}{Can observations be weighted during fitting?}
+  \item{oneclas, twoclass, multiclass}{Only for classif: Can one-class, two-class or multi-class classification problems be handled?}
+  \item{class.weights}{Only for classif: Can class weights be handled?}
+  \item{rcens, lcens, icens}{Only for surv: Can right, left, or interval censored data be handled?}
+  \item{prob}{Only for classif and cluster: Can probabilites be predicted?}
+  \item{se}{Only for regr: Can standard errors be predicted?}
+}
 }
 
