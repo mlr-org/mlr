@@ -4,7 +4,7 @@
 \alias{setHyperPars}
 \title{Set the hyperparameters of a learner object.}
 \usage{
-setHyperPars(learner, ..., par.vals = list())
+setHyperPars(learner, ..., par.vals = list(), reset = "no")
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -18,6 +18,11 @@ using the \code{par.vals} argument.}
 \item{par.vals}{[\code{list}]\cr
 Optional list of named (hyper)parameter settings. The arguments in
 \code{...} take precedence over values in this list.}
+
+\item{reset}{[\code{character(1)}]\cr
+The options are \code{"no"} to add and in case overwrite param settings, which is the default.
+\code{"soft"} will reset the manualy set param.values and restore the mlr defaults.
+\code{"hard"} will reset all param.values.}
 }
 \value{
 [\code{\link{Learner}}].

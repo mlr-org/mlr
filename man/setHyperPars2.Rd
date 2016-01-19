@@ -4,7 +4,7 @@
 \alias{setHyperPars2}
 \title{Only exported for internal use.}
 \usage{
-setHyperPars2(learner, par.vals)
+setHyperPars2(learner, par.vals, reset = "no")
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}}]\cr
