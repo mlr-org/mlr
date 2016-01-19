@@ -34,7 +34,7 @@ The learner properties are defined as follows:
   \item{oneclas, twoclass, multiclass}{Only for classif: Can one-class, two-class or multi-class classification problems be handled?}
   \item{class.weights}{Only for classif: Can class weights be handled?}
   \item{rcens, lcens, icens}{Only for surv: Can right, left, or interval censored data be handled?}
-  \item{prob}{Only for classif and cluster: Can probabilites be predicted?}
+  \item{prob}{For classif, cluster, multilabel, surv: Can probabilites be predicted?}
   \item{se}{Only for regr: Can standard errors be predicted?}
 }
 }
