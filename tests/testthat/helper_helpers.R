@@ -81,7 +81,9 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) 
 
   task = makeClassifTask(data = df, target = target)
 
-  lrn = do.call("makeLearner", c(t.name, parset, predict.type = "prob"))
+  lrn = makeLearner(t.name, predict.type = "prob")
+  lrn = setHyperPars(lrn, par.vals = parset, reset = "hard")
+  
   m = try(train(lrn, task, subset = inds))
 
   if (inherits(m, "FailureModel")) {

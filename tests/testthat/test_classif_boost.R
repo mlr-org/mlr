@@ -7,8 +7,8 @@ test_that("classif_boosting", {
     list(mfinal = 2, control = rpart::rpart.control(cp = 0.2, xval = 0))
   )
   parset.list2 = list(
-    list(mfinal = 1),
-    list(mfinal = 2, cp = 0.2)
+    list(mfinal = 1, xval = 0),
+    list(mfinal = 2, cp = 0.2, xval = 0)
   )
 
   old.predicts.list = list()

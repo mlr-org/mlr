@@ -26,8 +26,8 @@ setHyperPars = function(learner, ..., par.vals = list(), reset = "no") {
   assertClass(learner, classes = "Learner")
   assertList(args, names = "named", .var.name = "parameter settings")
   assertList(par.vals, names = "named", .var.name = "parameter settings")
-  assertChoice(reset, c("no", "soft", "hard"))
-  setHyperPars2(learner, insert(par.vals, args))
+  assertChoice(reset, c("no", "soft", "hard", "before"))
+  setHyperPars2(learner, insert(par.vals, args), reset = reset)
 }
 
 #' Only exported for internal use.
@@ -44,7 +44,7 @@ setHyperPars2 = function(learner, par.vals, reset = "no") {
 setHyperPars2.Learner = function(learner, par.vals, reset = "no") {
   #load mlr-default pars of learner
   if (reset == "soft") {
-    par.vals = insert(learner$mlr.default.par.vals, par.vals)  
+    par.vals = insertCompliant(learner$mlr.default.par.vals, par.vals)  
   } else if (reset == "no") {
     par.vals = insert(insert(learner$mlr.default.par.vals, learner$par.vals), par.vals)
   } else if (reset == "hard") {

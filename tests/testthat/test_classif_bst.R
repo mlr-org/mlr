@@ -4,17 +4,17 @@ test_that("classif_bst", {
   requirePackages("bst", default.method = "load")
   
   parset.list1 = list(
-    list(),
-    list(cost = 0.6, family = "gaussian"),
-    list(ctrl = bst::bst_control(mstop = 40L)),
-    list(learner = "tree", control.tree = list(maxdepth = 2L))
+    list(control.tree = list(xval = 0L)),
+    list(cost = 0.6, family = "gaussian", control.tree = list(xval = 0L)),
+    list(ctrl = bst::bst_control(mstop = 40L), control.tree = list(xval = 0L)),
+    list(learner = "tree", control.tree = list(maxdepth = 2L, xval = 0L))
   )
   
   parset.list2 = list(
-    list(),
-    list(cost = 0.6, family = "gaussian"),
-    list(mstop = 40L),
-    list(Learner = "tree", maxdepth = 2L)
+    list(xval = 0L),
+    list(cost = 0.6, family = "gaussian", xval = 0L),
+    list(mstop = 40L, xval = 0L),
+    list(Learner = "tree", maxdepth = 2L, xval = 0L)
   )
 
   old.predicts.list = list()

@@ -22,7 +22,8 @@ Optional list of named (hyper)parameter settings. The arguments in
 \item{reset}{[\code{character(1)}]\cr
 The options are \code{"no"} to add and in case overwrite param settings, which is the default.
 \code{"soft"} will reset the manualy set param.values and restore the mlr defaults.
-\code{"hard"} will reset all param.values.}
+\code{"hard"} will reset all param.values.
+\code{"before"} will only take the param.values already present in the learner without taking any defaults.}
 }
 \value{
 [\code{\link{Learner}}].
