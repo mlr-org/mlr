@@ -2,7 +2,7 @@ context("surv_cvglmnet")
 
 test_that("surv_cvglmnet", {
   requirePackages("survival", default.method = "load")
-  requirePackages("!glmnet", default.method = "load")
+  requirePackages("glmnet", default.method = "load")
   parset.list = list(
     list(),
     list(alpha = 0.3),

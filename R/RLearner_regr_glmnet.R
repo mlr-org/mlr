@@ -2,8 +2,7 @@
 makeRLearner.regr.glmnet = function() {
   makeRLearnerRegr(
     cl = "regr.glmnet",
-    # FIXME: Required for predict to work properly :(
-    package = "!glmnet",
+    package = "glmnet",
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "family", values = c("gaussian", "poisson"), default = "gaussian"),
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),

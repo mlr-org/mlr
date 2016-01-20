@@ -1,7 +1,7 @@
 context("classif_glmnet")
 
 test_that("classif_glmnet", {
-  requirePackages("!glmnet", default.method = "load")
+  requirePackages("glmnet", default.method = "load")
   parset.list = list(
     list(),
     list(alpha = 0.5),
