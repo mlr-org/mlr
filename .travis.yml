@@ -7,7 +7,7 @@ branches:
     only:
         - master
         - ci_nojava
-        - task_ops
+        - test_checkmate
 warnings_are_errors: true
 r_check_args: "--as-cran --run-donttest"
 apt_packages:
