@@ -12,9 +12,9 @@ is estimated, using the methods described in Sexton and Laake (2009).
 
 If \code{se.method = "bootstrap"} the standard error of a prediction is estimated by bootstrapping the random forest, where the number of bootstrap replicates and the number of trees in the ensemble are controlled by \code{se.boot} and \code{ntree.for.se} respectively, and then taking the standard deviation of the predictions.
 
-If \code{se.method = "jackknife"}, the default, the standard error of a prediction is by computing the jackknife-after-bootstrap, the mean-squared difference between the prediction made by only using trees which did not contain said observation and the ensemble prediction.
+If \code{se.method = "jackknife"}, the default, the standard error of a prediction is estimated by computing the jackknife-after-bootstrap, the mean-squared difference between the prediction made by only using trees which did not contain said observation and the ensemble prediction.
 
-For both \dQuote{jackknife} and \dQuote{bootstrap} a Monte-Carlo bias correction is applied and, in the case that this results in a negative variance estimate, the values are truncated at 0.
+For both \dQuote{jackknife} and \dQuote{bootstrap}, a Monte-Carlo bias correction is applied and, in the case that this results in a negative variance estimate, the values are truncated at 0.
 }
 \references{
 [Joseph Sexton] and [Petter Laake],; [Standard errors for bagged and random forest estimators], Computational Statistics and Data Analysis Volume 53, 2009, [801-811].
