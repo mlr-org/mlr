@@ -20,6 +20,7 @@ mlr_new:
   predict were not passed down correctly
 - Fixed a bug where the function capLargeValues wasn't working if you passed a task.
 - capLargeValues now has a new argument "target", to prevent from capping response values.
+- classif.gbm, regr.gbm: Updated possible 'distribution' settings a bit.
 
 - API changes
 -- listLearners now returns a data frame with properties of the learners if

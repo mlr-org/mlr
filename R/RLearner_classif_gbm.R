@@ -4,7 +4,7 @@ makeRLearner.classif.gbm = function() {
     cl = "classif.gbm",
     package = "gbm",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "distribution", values = c("bernoulli", "adaboost", "gaussian", "laplace", "huberized", "multinomial", "poisson", "pairwise")),
+      makeDiscreteLearnerParam(id = "distribution", values = c("bernoulli", "adaboost", "huberized", "multinomial")),
       makeIntegerLearnerParam(id = "n.trees", default = 100L, lower = 1L),
       makeIntegerLearnerParam(id = "cv.folds", default = 0L),
       makeIntegerLearnerParam(id = "interaction.depth", default = 1L, lower = 1L),
@@ -18,7 +18,8 @@ makeRLearner.classif.gbm = function() {
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights"),
     name = "Gradient Boosting Machine",
     short.name = "gbm",
-    note = ""
+    note = "Note on param 'distribution': gbm will select 'bernoulli' by default for 2 classes, and 'multinomial' for
+      multiclass problems. The latter is the only setting that works for > 2 classes."
   )
 }
 
