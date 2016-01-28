@@ -22,6 +22,7 @@ makeRLearner.regr.km = function() {
       makeLogicalLearnerParam(id = "jitter", default = FALSE, when = "predict")
     ),
     par.vals = list(jitter = FALSE),
+    # FIXME jitter not found as parameter for km() or km.predict(). par.vals and LearnerParam are the same here.
     properties = c("numerics", "se"),
     name = "Kriging",
     short.name = "km",
