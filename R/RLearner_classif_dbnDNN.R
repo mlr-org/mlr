@@ -16,7 +16,7 @@ makeRLearner.classif.dbnDNN = function() {
       makeNumericLearnerParam(id = "visible_dropout", default = 0, lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "cd")
     ),
-    mlr.default.par.vals = list(output = "softmax"),
+    mlr.defaults = list(output = "softmax"),
     properties = c("twoclass", "multiclass","numerics", "prob"),
     name = "Deep neural network with weights initialized by DBN",
     short.name = "dbn.dnn",

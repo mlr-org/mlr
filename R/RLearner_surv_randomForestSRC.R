@@ -22,7 +22,7 @@ makeRLearner.surv.randomForestSRC = function() {
       makeLogicalLearnerParam(id = "statistics", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "fast.restore", default = FALSE, tunable = FALSE)
     ),
-    mlr.default.par.vals = list(na.action = "na.impute"),
+    mlr.defaults = list(na.action = "na.impute"),
     properties = c("missings", "numerics", "factors", "ordered", "rcens"),
     name = "Random Forests for Survival",
     short.name = "rfsrc",

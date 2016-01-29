@@ -39,7 +39,7 @@ makeRLearner.regr.crs = function() {
       makeIntegerLearnerParam(id = "random.seed", tunable = FALSE),
       makeNumericLearnerParam(id = "tau", lower = 0, upper = 1)
     ),
-    mlr.default.par.vals = list(),
+    mlr.defaults = list(),
     properties = c("numerics", "factors", "se", "weights"),
     name = "Regression Splines",
     short.name = "crs",

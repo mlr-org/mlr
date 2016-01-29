@@ -13,7 +13,7 @@ makeRLearner.regr.glmboost = function() {
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "m", default = "mstop", values = c("mstop", "cv", "aic"))
       ),
-    mlr.default.par.vals = list(m = "mstop"),
+    mlr.defaults = list(m = "mstop"),
     properties = c("numerics", "factors", "weights"),
     name = "Boosting for GLMs",
     short.name = "glmboost",

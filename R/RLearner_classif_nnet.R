@@ -21,7 +21,7 @@ makeRLearner.classif.nnet = function() {
       makeNumericLearnerParam(id = "abstoll", default = 1.0e-4),
       makeNumericLearnerParam(id = "reltoll", default = 1.0e-8)
     ),
-    mlr.default.par.vals = list(size = 3L),
+    mlr.defaults = list(size = 3L),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
     name = "Neural Network",
     short.name = "nnet",

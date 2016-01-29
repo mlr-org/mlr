@@ -29,7 +29,7 @@ makeRLearner.regr.ksvm = function() {
       makeLogicalLearnerParam(id = "fit", default = TRUE),
       makeIntegerLearnerParam(id = "cache", default = 40L, lower = 1L, tunable = FALSE)
     ),
-    mlr.default.par.vals = list(fit = FALSE),
+    mlr.defaults = list(fit = FALSE),
     properties = c("numerics", "factors"),
     name = "Support Vector Machines",
     short.name = "ksvm",

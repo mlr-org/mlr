@@ -20,7 +20,7 @@ makeRLearner.classif.blackboost = function() {
       makeLogicalLearnerParam(id = "savesplitstats", default = TRUE, tunable = FALSE),
       makeIntegerLearnerParam(id = "maxdepth", default = 0L, lower = 0L)
     ),
-    mlr.default.par.vals = list(family = mboost::Binomial()),
+    mlr.defaults = list(family = mboost::Binomial()),
     properties = c("twoclass", "missings", "numerics", "factors", "prob", "weights"),
     name = "Gradient Boosting With Regression Trees",
     short.name = "blackbst",

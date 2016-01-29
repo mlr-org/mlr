@@ -30,7 +30,7 @@ makeRLearner.classif.lqa = function() {
       makeIntegerLearnerParam(id = "digits", default = 5L, lower = 1L)
     ),
     properties = c("numerics", "prob", "twoclass", "weights"),
-    mlr.default.par.vals = list(penalty = 'lasso', lambda = 0.1),
+    mlr.defaults = list(penalty = 'lasso', lambda = 0.1),
     name = "Fitting penalized Generalized Linear Models with the LQA algorithm",
     short.name = "lqa",
     note = '`penalty` has been set to `"lasso"` and `lambda` to `0.1` by default.'

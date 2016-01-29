@@ -32,7 +32,7 @@ makeRLearner.surv.glmnet = function() {
       makeIntegerLearnerParam(id = "mxit", default = 100, lower = 1)
     ),
     properties = c("numerics", "factors", "ordered", "weights", "rcens"),
-    mlr.default.par.vals = list(s = 0.01),
+    mlr.defaults = list(s = 0.01),
     name = "GLM with Regularization",
     short.name = "glmnet",
     note = "Factors automatically get converted to dummy columns, ordered factors to integer."

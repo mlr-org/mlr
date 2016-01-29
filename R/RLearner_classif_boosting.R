@@ -20,7 +20,7 @@ makeRLearner.classif.boosting = function() {
       makeIntegerLearnerParam(id = "maxdepth", default = 30L, lower = 1L, upper = 30L),
       makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L, tunable = FALSE)
     ),
-    mlr.default.par.vals = list(xval = 0L),
+    mlr.defaults = list(xval = 0L),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob"),
     name = "Adabag Boosting",
     short.name = "adabag",

@@ -25,7 +25,7 @@ makeRLearner.classif.ada = function() {
       makeIntegerLearnerParam(id = "maxdepth", default = 30L, lower = 1L, upper = 30L),
       makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L, tunable = FALSE)
     ),
-    mlr.default.par.vals = list(xval = 0L),
+    mlr.defaults = list(xval = 0L),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "ada Boosting",
     short.name = "ada",

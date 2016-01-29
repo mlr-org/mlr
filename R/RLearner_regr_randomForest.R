@@ -32,7 +32,7 @@ makeRLearner.regr.randomForest = function() {
       makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
-    mlr.default.par.vals = list(
+    mlr.defaults = list(
       se.method = "bootstrap",
       se.boot = 50L,
       ntree.for.se = 100L

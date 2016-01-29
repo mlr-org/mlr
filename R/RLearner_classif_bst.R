@@ -26,7 +26,7 @@ makeRLearner.classif.bst = function() {
       makeIntegerLearnerParam(id = "maxdepth", default = 1L, lower = 1L, upper = 30L),
       makeDiscreteLearnerParam(id = "Learner", default = "ls", values = c("ls", "sm", "tree"))
     ),
-    mlr.default.par.vals = list(xval = 0L),
+    mlr.defaults = list(xval = 0L),
     properties = c("numerics", "twoclass"),
     name = "Gradient Boosting",
     short.name = "bst",

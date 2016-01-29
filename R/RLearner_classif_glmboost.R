@@ -13,7 +13,7 @@ makeRLearner.classif.glmboost = function() {
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "m", default = "mstop", values = c("mstop", "cv", "aic"))
     ),
-    mlr.default.par.vals = list(family = mboost::Binomial(), m = "mstop"),
+    mlr.defaults = list(family = mboost::Binomial(), m = "mstop"),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Boosting for GLMs",
     short.name = "glmbst",

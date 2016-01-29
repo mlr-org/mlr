@@ -14,7 +14,7 @@ makeRLearner.classif.LiblineaRL2SVC = function() {
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
-    mlr.default.par.vals = list(type = 2L),
+    mlr.defaults = list(type = 2L),
     properties = c("twoclass", "multiclass", "numerics", "class.weights"),
     class.weights.param = "wi",
     name = "L2-Regularized L2-Loss Support Vector Classification",

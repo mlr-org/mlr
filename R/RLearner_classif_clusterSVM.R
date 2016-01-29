@@ -23,7 +23,7 @@ makeRLearner.classif.clusterSVM = function() {
       makeFunctionLearnerParam(id = "cluster.fun"),
       makeFunctionLearnerParam(id = "cluster.predict")
     ),
-    mlr.default.par.vals = list(centers = 2),
+    mlr.defaults = list(centers = 2),
     properties = c("twoclass", "numerics"),
     name = "Clustered Support Vector Machines",
     short.name = "clusterSVM",

@@ -8,7 +8,7 @@ makeRLearner.regr.elmNN = function() {
       makeDiscreteLearnerParam(id = "actfun", default = "sig", values = c("sig", "sin", "radbas",
         "hardlim", "hardlims", "satlins", "tansig", "tribas", "poslin", "purelin"))
     ),
-    mlr.default.par.vals = list(nhid = 1L, actfun = "sig"),
+    mlr.defaults = list(nhid = 1L, actfun = "sig"),
     properties = c("numerics"),
     name = "Extreme Learning Machine for Single Hidden Layer Feedforward Neural Networks",
     short.name = "elmNN",

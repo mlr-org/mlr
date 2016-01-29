@@ -21,7 +21,7 @@ makeRLearner.regr.km = function() {
       makeLogicalLearnerParam(id = "scaling", default = FALSE),
       makeLogicalLearnerParam(id = "jitter", default = FALSE, when = "predict")
     ),
-    mlr.default.par.vals = list(jitter = FALSE),
+    mlr.defaults = list(jitter = FALSE),
     properties = c("numerics", "se"),
     name = "Kriging",
     short.name = "km",

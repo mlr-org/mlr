@@ -23,7 +23,7 @@ makeRLearner.classif.lssvm = function() {
       makeNumericLearnerParam(id = "tol", default = 0.0001, lower = 0),
       makeLogicalLearnerParam(id = "fitted", default = TRUE)
     ),
-    mlr.default.par.vals = list(fitted = FALSE),
+    mlr.defaults = list(fitted = FALSE),
     properties = c("twoclass", "multiclass", "numerics", "factors"),
     name = "Least Squares Support Vector Machine",
     short.name = "lssvm",

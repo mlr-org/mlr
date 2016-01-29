@@ -17,7 +17,7 @@ makeRLearner.classif.gaterSVM = function() {
       makeUntypedLearnerParam(id = "valid.metric", default = NULL),
       makeLogicalLearnerParam(id = "verbose", default = FALSE)
     ),
-    mlr.default.par.vals = list(m = 3, max.iter = 1),
+    mlr.defaults = list(m = 3, max.iter = 1),
     properties = c("twoclass", "numerics"),
     name = "Mixture of SVMs with Neural Network Gater Function",
     short.name = "gaterSVM",

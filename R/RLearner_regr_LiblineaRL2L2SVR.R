@@ -15,7 +15,7 @@ makeRLearner.regr.LiblineaRL2L2SVR = function() {
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
     #provide default to get rid of warning message during training
-    mlr.default.par.vals = list(svr_eps = 0.1, type = 11L),
+    mlr.defaults = list(svr_eps = 0.1, type = 11L),
     properties = c("numerics"),
     name = "L2-Regularized L2-Loss Support Vector Regression",
     short.name = "liblinl2l2svr",

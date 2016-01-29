@@ -21,7 +21,7 @@ makeRLearner.classif.ranger = function() {
       makeLogicalLearnerParam(id = "verbose", default = TRUE, when = "both", tunable = FALSE),
       makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE)
     ),
-    mlr.default.par.vals = list(num.threads = 1L, verbose = FALSE),
+    mlr.defaults = list(num.threads = 1L, verbose = FALSE),
     properties = c("twoclass", "multiclass", "prob", "numerics", "factors"),
     name = "Random Forests",
     short.name = "ranger",

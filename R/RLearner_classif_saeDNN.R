@@ -16,7 +16,7 @@ makeRLearner.classif.saeDNN = function() {
       makeNumericLearnerParam(id = "hidden_dropout", default = 0, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "visible_dropout", default = 0, lower = 0, upper = 1)
     ),
-    mlr.default.par.vals = list(output = "softmax"),
+    mlr.defaults = list(output = "softmax"),
     properties = c("twoclass", "multiclass","numerics", "prob"),
     name = "Deep neural network with weights initialized by Stacked AutoEncoder",
     short.name = "sae.dnn",

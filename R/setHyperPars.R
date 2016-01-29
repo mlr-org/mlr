@@ -44,13 +44,11 @@ setHyperPars2 = function(learner, par.vals, reset = "no") {
 setHyperPars2.Learner = function(learner, par.vals, reset = "no") {
   #load mlr-default pars of learner
   if (reset == "soft") {
-    par.vals = insertCompliant(learner$mlr.default.par.vals, par.vals)  
+    par.vals = insertCompliantValues(learner$par.set, learner$mlr.defaults, par.vals)  
   } else if (reset == "no") {
-    par.vals = insert(insert(learner$mlr.default.par.vals, learner$par.vals), par.vals)
+    par.vals = insert(learner$par.vals, par.vals)
   } else if (reset == "hard") {
     par.vals = par.vals
-  } else if (reset == "before") {
-    par.vals = insert(learner$par.vals, par.vals)
   }
   
   ns = names(par.vals)

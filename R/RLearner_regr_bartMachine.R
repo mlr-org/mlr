@@ -29,7 +29,7 @@ makeRLearner.regr.bartMachine = function() {
       makeIntegerLearnerParam(id = "seed", tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = TRUE, tunable = FALSE)
     ),
-    mlr.default.par.vals = list("use_missing_data" = TRUE),
+    mlr.defaults = list("use_missing_data" = TRUE),
     properties = c("numerics", "factors", "missings"),
     name = "Bayesian Additive Regression Trees",
     short.name = "bartmachine",
