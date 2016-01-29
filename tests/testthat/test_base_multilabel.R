@@ -13,30 +13,50 @@ test_that("multilabel task", {
 
 test_that("multilabel learning", {
   lrn = makeLearner("multilabel.rFerns")
+  lrn2 = makeLearner("multilabel.randomForestSRC")
 
   # train predict eval
   mod = train(lrn, multilabel.task)
   pred = predict(mod, multilabel.task)
   p = performance(pred)
   expect_true(!is.na(p))
+  mod2 = train(lrn2, multilabel.task)
+  pred2 = predict(mod2, multilabel.task)
+  p2 = performance(pred2)
+  expect_true(!is.na(p2))
   pmulti = getMultilabelBinaryPerformances(pred, list(mmce, acc))
   expect_true(is.matrix(pmulti))
   expect_true(!any(is.na(pmulti)))
   expect_equal(rownames(pmulti), getTaskTargetNames(multilabel.task))
   expect_equal(colnames(pmulti), vcapply(list(mmce, acc), mlr:::measureAggrName))
+  pmulti2 = getMultilabelBinaryPerformances(pred2, list(mmce, acc))
+  expect_true(is.matrix(pmulti2))
+  expect_true(!any(is.na(pmulti2)))
+  expect_equal(rownames(pmulti2), getTaskTargetNames(multilabel.task))
+  expect_equal(colnames(pmulti2), vcapply(list(mmce, acc), mlr:::measureAggrName))
   # with newdata df
   pred = predict(mod, newdata = multilabel.df)
   p = performance(pred)
   expect_true(!is.na(p))
   pmulti = getMultilabelBinaryPerformances(pred, list(mmce, acc))
   expect_true(!any(is.na(pmulti)))
+  pred2 = predict(mod2, newdata = multilabel.df)
+  p2 = performance(pred2)
+  expect_true(!is.na(p2))
+  pmulti2 = getMultilabelBinaryPerformances(pred2, list(mmce, acc))
+  expect_true(!any(is.na(pmulti2)))
   # resample
   r = holdout(lrn, multilabel.task)
   expect_true(!is.na(r$aggr))
   pmulti = getMultilabelBinaryPerformances(r$pred, list(mmce, acc))
   expect_true(!any(is.na(pmulti)))
+  r2 = holdout(lrn2, multilabel.task)
+  expect_true(!is.na(r2$aggr))
+  pmulti2 = getMultilabelBinaryPerformances(r2$pred, list(mmce, acc))
+  expect_true(!any(is.na(pmulti2)))
   # Learner with Impute-Preprocessing
   lrn = makeImputeWrapper(lrn, classes = list(integer = imputeMedian(), numeric = imputeMedian(), factor = imputeConstant("Const")))
+  lrn2 = makeImputeWrapper(lrn2, classes = list(integer = imputeMedian(), numeric = imputeMedian(), factor = imputeConstant("Const")))
   multilabel.df2 = multilabel.df
   multilabel.df2[c(2,10,14), c(1,5)] = NA
   multilabel.task2 = makeMultilabelTask("multilabel", data = multilabel.df2, target = multilabel.target)
@@ -44,12 +64,21 @@ test_that("multilabel learning", {
   pred = predict(mod, multilabel.task2)
   p = performance(pred)
   expect_true(!is.na(p))
+  mod2 = train(lrn2, multilabel.task2)
+  pred2 = predict(mod2, multilabel.task2)
+  p2 = performance(pred2)
+  expect_true(!is.na(p))
   # Learner with Hyperparameters
   lrn = makeLearner("multilabel.rFerns", par.vals = list(depth=6, ferns=100))
   mod = train(lrn, multilabel.task)
   pred = predict(mod, multilabel.task)
   p = performance(pred)
   expect_true(!is.na(p))
+  lrn2 = makeLearner("multilabel.randomForestSRC", par.vals = list(mtry=3, nodesize=3))
+  mod2 = train(lrn2, multilabel.task)
+  pred2 = predict(mod2, multilabel.task)
+  p2 = performance(pred2)
+  expect_true(!is.na(p2))
 })
 
 
