@@ -29,6 +29,9 @@ mlr_new:
 - new functions
 -- getBMRModels
 
+- removed functions
+-- generateROCRCurvesData, plotROCRCurves, plotROCRCurvesGGVIS
+
 new learners
 -- classif.randomForestSRCSyn
 -- classif.cvglmnet
