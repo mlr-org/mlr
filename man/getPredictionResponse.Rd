@@ -32,10 +32,7 @@ The following types are returned, depending on task type:
 }
 \seealso{
 Other predict: \code{\link{asROCRPrediction}},
-  \code{\link{generateROCRCurvesData}},
   \code{\link{getPredictionProbabilities}},
-  \code{\link{plotROCRCurvesGGVIS}},
-  \code{\link{plotROCRCurves}},
   \code{\link{plotViperCharts}},
   \code{\link{predict.WrappedModel}},
   \code{\link{setPredictThreshold}},

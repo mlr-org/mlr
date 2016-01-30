@@ -39,11 +39,8 @@ Other learner: \code{\link{LearnerProperties}},
   \code{\link{setPredictThreshold}}
 
 Other predict: \code{\link{asROCRPrediction}},
-  \code{\link{generateROCRCurvesData}},
   \code{\link{getPredictionProbabilities}},
   \code{\link{getPredictionResponse}},
-  \code{\link{plotROCRCurvesGGVIS}},
-  \code{\link{plotROCRCurves}},
   \code{\link{plotViperCharts}},
   \code{\link{predict.WrappedModel}},
   \code{\link{setPredictThreshold}}

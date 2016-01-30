@@ -56,8 +56,6 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotPartialPredictionGGVIS}},
   \code{\link{plotPartialPrediction}},
   \code{\link{plotROCCurves}},
-  \code{\link{plotROCRCurvesGGVIS}},
-  \code{\link{plotROCRCurves}},
   \code{\link{plotThreshVsPerf}}
 
 Other thresh_vs_perf: \code{\link{generateThreshVsPerfData}},
