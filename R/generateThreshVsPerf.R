@@ -61,33 +61,33 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
       names(obj) = extractSubList(obj, "learner.id")
     obj = extractSubList(obj, "pred", simplify = FALSE)
   }
+  
   assertList(obj, names = "unique")
   td = extractSubList(obj, "task.desc", simplify = FALSE)[[1L]]
   measures = checkMeasures(measures, td)
   mids = replaceDupeMeasureNames(measures, "id")
   names(measures) = mids
-  thseq = seq(0, 1, length.out = gridsize)
-  grid = data.frame(threshold = thseq)
-  obj = lapply(obj, function(x) {
-    if (all(sapply(obj, function(x) inherits(x, "ResamplePrediction"))) & !aggregate) {
-      do.call("rbind", lapply(thseq, function(threshold) {
-        pp = setThreshold(x, threshold = threshold)
-        t(sapply(unique(x$data$iter), function(i) {
+  grid = data.frame(threshold = seq(0, 1, length.out = gridsize))
+  resamp = all(sapply(obj, function(x) inherits(x, "ResamplePrediction")))
+  out = lapply(obj, function(x) {
+    do.call("rbind", lapply(grid$threshold, function(th) {
+      pp = setThreshold(x, threshold = th)
+      if (!aggregate & resamp) {
+        iter = seq_len(pp$instance$desc$iters)
+        asMatrixRows(lapply(iter, function(i) {
           pp$data = pp$data[pp$data$iter == i, ]
-          c(performance(pp, measures = measures), "iter" = i)
+          c(setNames(performance(pp, measures = measures), mids), "iter" = i, "threshold" = th)
         }))
-      }))
-    } else {
-      asMatrixRows(lapply(thseq, function(threshold) {
-        pp = setThreshold(x, threshold = threshold)
-        performance(pp, measures = measures)
-      }), col.names = mids)
-    }
+      } else {
+        c(setNames(performance(pp, measures = measures), mids), "threshold" = th)
+      }
+    }))
   })
-  out = plyr::ldply(obj, .id = "learner")
+  out = ldply(out, .id = "learner")
+  colnames(out[!(colnames(out) %in% c("threshold", "id"))]) = mids
   makeS3Obj("ThreshVsPerfData",
             measures = measures,
-            data = cbind(grid, out),
+            data = out,
             aggregate = aggregate)
 }
 
@@ -128,37 +128,48 @@ plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_, pretty.n
 
   if (pretty.names) {
     mnames = replaceDupeMeasureNames(obj$measures, "name")
-    colnames(obj$data) = mapValues(colnames(obj$data),
-                                   names(obj$measures),
-                                   mnames)
-  } else
+    colnames(obj$data) = mapValues(colnames(obj$data), names(obj$measures), mnames)
+  } else {
     mnames = names(obj$measures)
+  }
 
-  data = reshape2::melt(obj$data,
-                        measure.vars = mnames,
-                        variable.name = "measure", value.name = "performance",
-                        id.vars = c("learner", "threshold"))
+  id.vars = c("learner", "threshold")
+  resamp = "iter" %in% colnames(obj$data)
+  if (resamp) id.vars = c(id.vars, "iter")
+
+  data = melt(obj$data,
+              measure.vars = mnames,
+              variable.name = "measure", value.name = "performance",
+              id.vars = id.vars)
   nlearn = length(unique(data$learner))
   nmeas = length(unique(data$measure))
 
   if ((color == "learner" & nlearn == 1L) | (color == "measure" & nmeas == 1L))
     color = NULL
+  
   if ((facet == "learner" & nlearn == 1L) | (facet == "measure" & nmeas == 1L))
     facet = NULL
 
   if (!is.null(color))
-    plt = ggplot2::ggplot(data, aes_string(x = "threshold", y = "performance", color = color))
+    plt = ggplot(data, aes_string(x = "threshold", y = "performance", color = color))
   else
-    plt = ggplot2::ggplot(data, aes_string(x = "threshold", y = "performance"))
-  plt = plt + ggplot2::geom_line()
+    plt = ggplot(data, aes_string(x = "threshold", y = "performance"))
+
+  if (resamp & !obj$aggregate)
+    plt = plt + geom_path(aes_string(group = "int"))
+  else
+    plt = plt + geom_path()
+  
   if (!is.na(mark.th))
-    plt = plt + ggplot2::geom_vline(xintercept = mark.th)
+    plt = plt + geom_vline(xintercept = mark.th)
+  
   if (!is.null(facet))
-    plt = plt + ggplot2::facet_wrap(as.formula(paste("~", facet)), scales = "free_y")
+    plt = plt + facet_wrap(facet, scales = "free_y")
   else if (length(obj$measures) == 1L)
     plt = plt + ylab(obj$measures[[1]]$name)
   else
     plt = plt + ylab("performance")
+  
   return(plt)
 }
 #' @title Plot threshold vs. performance(s) for 2-class classification using ggvis.
@@ -209,10 +220,14 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
   } else
     mnames = names(obj$measures)
 
-  data = reshape2::melt(obj$data,
-                        measure.vars = mnames,
-                        variable.name = "measure", value.name = "performance",
-                        id.vars = c("learner", "threshold"))
+  id.vars = c("learner", "threshold")
+  resamp = "iter" %in% colnames(obj$data)
+  if (resamp) id.vars = c(id.vars, "iter")
+
+  data = melt(obj$data,
+              measure.vars = mnames,
+              variable.name = "measure", value.name = "performance",
+              id.vars = id.vars)
   nmeas = length(unique(data$measure))
   nlearn = length(unique(data$learner))
 
@@ -222,50 +237,58 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
     interaction = NULL
 
   create_plot = function(data, color, measures) {
-    if (!is.null(color)) {
-      plt = ggvis::ggvis(data, ggvis::prop("x", as.name("threshold")),
-                         ggvis::prop("y", as.name("performance")),
-                         ggvis::prop("stroke", as.name(color)))
-    } else {
-      plt = ggvis::ggvis(data, ggvis::prop("x", as.name("threshold")),
-                         ggvis::prop("y", as.name("performance")))
+    if (!is.null(color))
+      plt = ggvis(data, prop("x", as.name("threshold")),
+                  prop("y", as.name("performance")),
+                  prop("stroke", as.name(color)))
+    else
+      plt = ggvis(data, prop("x", as.name("threshold")),
+                  prop("y", as.name("performance")))
+
+    if (!obj$aggregate & resamp) {
+      iter <- NULL ## ugly hack!
+      plt = group_by(plt, iter)
     }
-    plt = ggvis::layer_lines(plt)
+    
+    plt = layer_paths(plt)
+    
     if (!is.na(mark.th) & is.null(interaction)) { ## cannot do vline with reactive data
       vline_data = data.frame(x2 = rep(mark.th, 2), y2 = c(min(data$perf), max(data$perf)),
                               measure = obj$measures[1])
-      plt = ggvis::layer_paths(plt, ggvis::prop("x", as.name("x2")),
-                               ggvis::prop("y", as.name("y2")),
-                               ggvis::prop("stroke", "grey", scale = FALSE), data = vline_data)
+      plt = layer_paths(plt, prop("x", as.name("x2")),
+                        prop("y", as.name("y2")),
+                        prop("stroke", "grey", scale = FALSE), data = vline_data)
     }
-    plt = ggvis::add_axis(plt, "x", title = "threshold")
+    plt = add_axis(plt, "x", title = "threshold")
+    
     if (length(measures) > 1L)
-      plt = ggvis::add_axis(plt, "y", title = "performance")
+      plt = add_axis(plt, "y", title = "performance")
     else
-      plt = ggvis::add_axis(plt, "y", title = measures[[1]]$name)
+      plt = add_axis(plt, "y", title = measures[[1]]$name)
+    
     plt
   }
 
   if (!is.null(interaction)) {
-    ui = shiny::shinyUI(
-        shiny::pageWithSidebar(
-            shiny::headerPanel("Threshold vs. Performance"),
-            shiny::sidebarPanel(
-                shiny::selectInput("interaction_select",
-                                   paste("choose a", interaction),
-                                   levels(data[[interaction]]))
-            ),
-            shiny::mainPanel(
-                shiny::uiOutput("ggvis_ui"),
-                ggvis::ggvisOutput("ggvis")
-            )
-        ))
-    server = shiny::shinyServer(function(input, output) {
-      data_sub = shiny::reactive(data[which(data[[interaction]] == input$interaction_select), ])
+    ui = shinyUI(
+      pageWithSidebar(
+        headerPanel("Threshold vs. Performance"),
+        sidebarPanel(
+          selectInput("interaction_select",
+                      paste("choose a", interaction),
+                      levels(data[[interaction]]))
+        ),
+        mainPanel(
+          uiOutput("ggvis_ui"),
+          ggvisOutput("ggvis")
+        )
+      ))
+    server = shinyServer(function(input, output) {
+      data_sub = reactive(data[which(data[[interaction]] == input$interaction_select), ])
       plt = create_plot(data_sub, color, obj$measures)
-      ggvis::bind_shiny(plt, "ggvis", "ggvis_ui")
+      bind_shiny(plt, "ggvis", "ggvis_ui")
     })
-    shiny::shinyApp(ui, server)
+    shinyApp(ui, server)
   } else {
     create_plot(data, color, obj$measures)
   }
