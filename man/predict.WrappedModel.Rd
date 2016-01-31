@@ -56,11 +56,8 @@ getPredictionProbabilities(p)
 }
 \seealso{
 Other predict: \code{\link{asROCRPrediction}},
-  \code{\link{generateROCRCurvesData}},
   \code{\link{getPredictionProbabilities}},
   \code{\link{getPredictionResponse}},
-  \code{\link{plotROCRCurvesGGVIS}},
-  \code{\link{plotROCRCurves}},
   \code{\link{plotViperCharts}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
