@@ -1,6 +1,8 @@
 #' @import BBmisc
 #' @import checkmate
 #' @import ggplot2
+#' @import shiny
+#' @importFrom ggvis ggvis bind_shiny layer_paths layer_lines layer_points add_axis prop ggvisOutput group_by
 #' @import graphics
 #' @import methods
 #' @import parallelMap

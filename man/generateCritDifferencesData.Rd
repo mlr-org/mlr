@@ -13,7 +13,7 @@ Benchmark result.}
 
 \item{measure}{[\code{\link{Measure}}]\cr
 Performance measure.
-Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
+Default is the first measure used in the benchmark experiment.}
 
 \item{p.value}{[\code{numeric}(1)]\cr
 P-value for the critical difference. Default: 0.05}
@@ -96,7 +96,6 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateFilterValuesData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialPredictionData}},
-  \code{\link{generateROCRCurvesData}},
   \code{\link{generateThreshVsPerfData}},
   \code{\link{getFilterValues}}
 }

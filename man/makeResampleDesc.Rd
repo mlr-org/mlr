@@ -27,12 +27,12 @@ Default is \dQuote{test}.}
 Further parameters for strategies.\cr
 \describe{
 \item{iters [\code{integer(1)}]}{Number of iterations, for \dQuote{CV}, \dQuote{Subsample}
-  and \dQuote{Boostrap}}
+  and \dQuote{Boostrap}.}
 \item{split [\code{numeric(1)}]}{Proportion of training cases for \dQuote{Holdout} and
   \dQuote{Subsample} between 0 and 1. Default is 2/3.}
-\item{reps [integer(1)]}{Repeats for \dQuote{RepCV}. Here \code{iters = folds * reps}.
+\item{reps [\code{integer(1)}]}{Repeats for \dQuote{RepCV}. Here \code{iters = folds * reps}.
   Default is 10.}
-\item{folds [integer(1)]}{Folds in the repeated CV for \code{RepCV}.
+\item{folds [\code{integer(1)]}}{Folds in the repeated CV for \code{RepCV}.
   Here \code{iters = folds * reps}. Default is 10.}
 }}
 
@@ -41,7 +41,7 @@ Should stratification be done for the target variable?
 For classification tasks, this means that the resampling strategy is applied to all classes
 individually and the resulting index sets are joined to make sure that the proportion of
 observations in each training set is as in the original data set. Useful for imbalanced class sizes.
-For survival tasks stratification is done on the events, resulting training sets with comparable
+For survival tasks stratification is done on the events, resulting in training sets with comparable
 censoring rates.}
 
 \item{stratify.cols}{[\code{character}]\cr

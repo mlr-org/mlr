@@ -13,9 +13,10 @@ makeLearner(cl, id = cl, predict.type = "response",
 \item{cl}{[\code{character(1)}]\cr
 Class of learner. By convention, all classification learners
 start with \dQuote{classif.}, all regression learners with
-\dQuote{regr.}, all survival learners start with \dQuote{surv.}
-and all clustering learners with \dQuote{cluster.}.
-A list of all learners is available on the
+\dQuote{regr.}, all survival learners start with \dQuote{surv.},
+all clustering learners with \dQuote{cluster.}, and all multilabel
+classification learners start with \dQuote{multilabel.}.
+A list of all integrated learners is available on the
 \code{\link{learners}} help page.}
 
 \item{id}{[\code{character(1)}]\cr
@@ -26,7 +27,8 @@ Default is \code{cl}.}
 Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
 Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
 Survival: \dQuote{response} (= some sort of orderable risk) or \dQuote{prob} (= time dependent probabilities).
-Clustering: \dQuote{response} (= cluster IDS) or \dQuote{prob} (= fuzzy cluster membership probabilities).
+Clustering: \dQuote{response} (= cluster IDS) or \dQuote{prob} (= fuzzy cluster membership probabilities),
+Multilabel: \dQuote{response} (= logical matrix indicating the predicted class labels) or \dQuote{prob} (= probabilities and corresponding logical matrix indicating class labels).
 Default is \dQuote{response}.}
 
 \item{predict.threshold}{[\code{numeric}]\cr
@@ -67,6 +69,8 @@ For a classification learner the \code{predict.type} can be set
 to \dQuote{prob} to predict probabilities and the maximum
 value selects the label. The threshold used to assign the label can later be changed using the
 \code{\link{setThreshold}} function.
+
+To see all possible properties of a learner, go to: \code{\link{LearnerProperties}}.
 }
 \examples{
 makeLearner("classif.rpart")

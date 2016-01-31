@@ -2,7 +2,7 @@
 % Please edit documentation in R/generateThreshVsPerf.R
 \name{plotROCCurves}
 \alias{plotROCCurves}
-\title{Plots a ROC curve using ggplot2}
+\title{Plots a ROC curve using ggplot2.}
 \usage{
 plotROCCurves(obj, measures = obj$measures[1:2], diagonal = TRUE,
   pretty.names = TRUE)
@@ -61,8 +61,6 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotLearningCurve}},
   \code{\link{plotPartialPredictionGGVIS}},
   \code{\link{plotPartialPrediction}},
-  \code{\link{plotROCRCurvesGGVIS}},
-  \code{\link{plotROCRCurves}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 

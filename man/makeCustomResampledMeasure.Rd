@@ -39,7 +39,18 @@ Default is \code{character(0)}.}
 
 \item{fun}{[\code{function(task, group, pred, extra.args)}]\cr
 Calculates performance value from \code{\link{ResamplePrediction}} object.
-For rare cases you can also use the task, the grouping or the extra arguments \code{extra.args}.}
+For rare cases you can also use the task, the grouping or the extra arguments \code{extra.args}.
+\describe{
+  \item{\code{task} [\code{\link{Task}}]}{
+    The task.}
+  \item{\code{group} [\code{factor}]}{
+    Grouping of resampling iterations. This encodes whether specific iterations
+    'belong together' (e.g. repeated CV).}
+  \item{\code{pred} [\code{\link{Prediction}}]}{
+    Prediction object.}
+  \item{\code{extra.args} [\code{list}]}{
+    See below.}
+}}
 
 \item{extra.args}{[\code{list}]\cr
 List of extra arguments which will always be passed to \code{fun}.

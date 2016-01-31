@@ -3,7 +3,7 @@
 \docType{data}
 \name{lung.task}
 \alias{lung.task}
-\title{NCCTG Lung Cancer survival task}
+\title{NCCTG Lung Cancer survival task.}
 \description{
 Contains the task (\code{lung.task}).
 }

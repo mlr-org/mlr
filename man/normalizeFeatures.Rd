@@ -2,7 +2,7 @@
 % Please edit documentation in R/normalizeFeatures.R
 \name{normalizeFeatures}
 \alias{normalizeFeatures}
-\title{Normalize features}
+\title{Normalize features.}
 \usage{
 normalizeFeatures(task, method = "standardize", exclude = character(0L),
   range = c(0, 1), on.constant = "quiet")
