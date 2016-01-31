@@ -168,7 +168,6 @@ test_that("MultilabelClassifierChainsWrapper", {
   expect_true(is.data.frame(p))
   p = getPredictionProbabilities(r$pred, getTaskClassLevels(multilabel.task))
   expect_true(is.data.frame(p))
-  
   lrn1 = makeLearner("classif.rpart")
   lrn2 = makeMultilabelClassifierChainsWrapper(lrn1)
   lrn2 = setPredictType(lrn2, "prob")
@@ -206,4 +205,14 @@ test_that("MultilabelClassifierChainsWrapper", {
   pred = predict(mod, multilabel.task)
   p = performance(pred)
   expect_true(!is.na(p))
+  # 3 targets
+  threeTargetDf = getTaskData(multilabel.task)
+  threeTargetDf$y3 = threeTargetDf$y2
+  multilabel3t.task = makeMultilabelTask(data = threeTargetDf, target = c("y1", "y2", "y3"))
+  mod = train(lrn2, multilabel3t.task)
+  pred = predict(mod, multilabel3t.task)
+  p = performance(pred)
+  expect_true(!is.na(p))
+  pmulti = getMultilabelBinaryPerformances(pred, list(mmce))
+  expect_true(!any(is.na(pmulti)))
 })

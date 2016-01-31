@@ -68,7 +68,7 @@ trainLearner.MultilabelClassifierChainsWrapper = function(.learner, .task, .subs
     data2 = dropNamed(data, setdiff(chained_targets, tn))
     index = which(names(data2) %in% setdiff(targets, tn))
     if (length(data2[, index]) != 0) {
-      data2[, index] = as.numeric(data2[, index])
+      data2[, index] = sapply(data2[, index], as.numeric)
     }
     ctask = makeClassifTask(id = tn, data = data2, target = tn)
     models[[tn]] = train(.learner$next.learner, ctask, weights = .weights)
