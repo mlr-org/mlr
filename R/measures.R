@@ -713,6 +713,133 @@ measureHAMLOSS = function(truth, response) {
   mean(truth != response)
 }
 
+#' @export subset01
+#' @rdname measures
+#' @format none
+subset01 = makeMeasure(id = "subset01", minimize = TRUE, best = 0, worst = 1,
+  properties = c("multilabel", "req.pred", "req.truth"),
+  name = "Subset-0-1 loss",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureSUBSET01(getPredictionTruth.PredictionMultilabel(pred),
+    getPredictionResponse.PredictionMultilabel(pred))
+  }
+)
+
+#' @export measureSUBSET01
+#' @rdname measures
+#' @format none
+measureSUBSET01 = function(truth, response) {
+  mean(!apply(truth == response, 1, all))
+}
+
+#' @export f1mult
+#' @rdname measures
+#' @format none
+f1mult = makeMeasure(id = "f1mult", minimize = FALSE, best = 1, worst = 0,
+  properties = c("multilabel", "req.pred", "req.truth"),
+  name = "F1 measure",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureF1MULT(getPredictionTruth.PredictionMultilabel(pred),
+    getPredictionResponse.PredictionMultilabel(pred))
+  }
+)
+
+#' @export measureF1MULT
+#' @rdname measures
+#' @format none
+measureF1MULT = function(truth, response) {
+  Fi = as.numeric()
+  for (i in 1L:nrow(truth)) {
+    if (sum(truth[i, ]) + sum(response[i, ]) == 0) {
+      Fi[i] = 1
+    } else {
+      Fi[i] = 2*sum(truth[i, ] * response[i, ]) / (sum(truth[i, ]) + sum(response[i, ]))
+    }
+  }
+  mean(Fi) 
+}
+
+#' @export accmult
+#' @rdname measures
+#' @format none
+accmult = makeMeasure(id = "accmult", minimize = FALSE, best = 1, worst = 0,
+  properties = c("multilabel", "req.pred", "req.truth"),
+  name = "Accuracy (multilabel)",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureACCMULT(getPredictionTruth.PredictionMultilabel(pred),
+    getPredictionResponse.PredictionMultilabel(pred))
+  }
+)
+
+#' @export measureACCMULT
+#' @rdname measures
+#' @format none
+measureACCMULT = function(truth, response) {
+  Acc = as.numeric()
+  for (i in 1L:nrow(truth)) {
+    if (sum(truth[i, ]) + sum(response[i, ]) == 0) {
+      Acc[i] = 1
+    } else {
+      Acc[i] = sum(truth[i, ] * response[i, ]) / (sum(truth[i, ]) + sum(response[i, ]) - sum(truth[i, ] * response[i, ]))
+    }
+  }
+  mean(Acc)
+}
+
+#' @export precmult
+#' @rdname measures
+#' @format none
+precmult = makeMeasure(id = "precmult", minimize = FALSE, best = 1, worst = 0,
+  properties = c("multilabel", "req.pred", "req.truth"),
+  name = "Precision (multilabel)",
+  fun = function(task, model, pred, feats, extra.args) {
+    measurePRECMULT(getPredictionTruth.PredictionMultilabel(pred),
+    getPredictionResponse.PredictionMultilabel(pred))
+  }
+)
+
+#' @export measurePRECMULT
+#' @rdname measures
+#' @format none
+measurePRECMULT = function(truth, response) {
+  Prec = as.numeric()
+  for (i in 1L:nrow(truth)) {
+    if (sum(response[i, ]) == 0) {
+      Prec[i] = 1
+    } else {
+      Prec[i] = sum(truth[i, ] * response[i, ]) / sum(response[i, ])
+    }
+  }
+  mean(Prec)
+}
+
+#' @export recallmult
+#' @rdname measures
+#' @format none
+recallmult = makeMeasure(id = "precmult", minimize = FALSE, best = 1, worst = 0,
+  properties = c("multilabel", "req.pred", "req.truth"),
+  name = "Precision (multilabel)",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureRECALLMULT(getPredictionTruth.PredictionMultilabel(pred),
+    getPredictionResponse.PredictionMultilabel(pred))
+  }
+)
+
+#' @export measureRECALLMULT
+#' @rdname measures
+#' @format none
+measureRECALLMULT = function(truth, response) {
+  Rec = as.numeric()
+  for (i in 1L:nrow(truth)) {
+    if (sum(truth[i, ]) == 0) {
+      Rec[i] = 1
+    } else {
+      Rec[i] = sum(truth[i, ] * response[i, ]) / sum(truth[i, ])
+    }
+  }
+  mean(Rec)
+}
+
 ###############################################################################
 ### survival ###
 ###############################################################################
