@@ -83,11 +83,18 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
       }
     }))
   })
-  out = ldply(out, .id = "learner")
-  colnames(out[!(colnames(out) %in% c("threshold", "id"))]) = mids
+
+  if (length(obj) == 1L & inherits(obj[[1L]], "Prediction")) {
+    out = out[[1L]]
+    colnames(out)[!colnames(out) %in% c("iter", "threshold", "learner")] = mids
+  } else {
+    out = ldply(out, .id = "learner")
+    colnames(out)[!colnames(out) %in% c("iter", "threshold", "learner")] = mids
+  }
+
   makeS3Obj("ThreshVsPerfData",
             measures = measures,
-            data = out,
+            data = as.data.frame(out),
             aggregate = aggregate)
 }
 
@@ -133,15 +140,19 @@ plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_, pretty.n
     mnames = names(obj$measures)
   }
 
-  id.vars = c("learner", "threshold")
+  id.vars = "threshold"
   resamp = "iter" %in% colnames(obj$data)
   if (resamp) id.vars = c(id.vars, "iter")
+  if ("learner" %in% colnames(obj$data)) id.vars = c(id.vars, "learner")
 
   data = melt(obj$data,
               measure.vars = mnames,
               variable.name = "measure", value.name = "performance",
               id.vars = id.vars)
-  nlearn = length(unique(data$learner))
+  if (!is.null(data$learner))
+    nlearn = length(unique(data$learner))
+  else
+    nlearn = 1L
   nmeas = length(unique(data$measure))
 
   if ((color == "learner" & nlearn == 1L) | (color == "measure" & nmeas == 1L))
@@ -342,7 +353,10 @@ plotROCCurves = function(obj, measures = obj$measures[1:2], diagonal = TRUE, pre
   else
     mnames = names(obj$measures)
 
-  mlearn = length(unique(obj$data$learner)) > 1L
+  if (!is.null(obj$data$learner))
+    mlearn = length(unique(obj$data$learner)) > 1L
+  else
+    mlearn = FALSE
   resamp = "iter" %in% colnames(obj$data)
 
   if (!obj$aggregate & mlearn & resamp) {
