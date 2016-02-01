@@ -816,7 +816,7 @@ measurePRECMULT = function(truth, response) {
 #' @export recallmult
 #' @rdname measures
 #' @format none
-recallmult = makeMeasure(id = "precmult", minimize = FALSE, best = 1, worst = 0,
+recallmult = makeMeasure(id = "recallmult", minimize = FALSE, best = 1, worst = 0,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Precision (multilabel)",
   fun = function(task, model, pred, feats, extra.args) {
