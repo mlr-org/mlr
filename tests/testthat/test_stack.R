@@ -53,6 +53,14 @@ test_that("Stacking works", {
   }
 })
 
+test_that("Stacking works with wrapped learners (#687)", {
+  base = c("classif.rpart")
+  lrns = lapply(base, makeLearner)
+  lrns = lapply(lrns, setPredictType, "prob")
+  lrns[[1]] = makeFilterWrapper(lrns[[1]], fw.abs = 2)
+  m = makeStackedLearner(base.learners = lrns, predict.type = "prob", method = "hill.climb")
+})
+
 test_that("Parameters for hill climb works", {
   tsk = binaryclass.task
   base = c("classif.rpart", "classif.lda", "classif.svm")
