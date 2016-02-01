@@ -156,7 +156,7 @@ plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_, pretty.n
     plt = ggplot(data, aes_string(x = "threshold", y = "performance"))
 
   if (resamp & !obj$aggregate)
-    plt = plt + geom_path(aes_string(group = "int"))
+    plt = plt + geom_path(aes_string(group = "iter"))
   else
     plt = plt + geom_path()
   
