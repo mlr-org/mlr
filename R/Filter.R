@@ -136,7 +136,7 @@ makeFilter(
 
 makeFilter(
   name = "rf.importance",
-  desc = "Importance of random forests",
+  desc = "Importance of random forests fitted in package 'randomForestSRC'",
   pkg  = "randomForestSRC",
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors"),
@@ -172,8 +172,13 @@ makeFilter(
   pkg = "party",
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors"),
-  fun = function(task, nselect, ...) {
+  fun = function(task, nselect, mtry = 5L, ...) {
     args = list(...)
+    # we need to set mtry, which is 5 by default in cforest, to p if p < mtry
+    # otherwise we get a warning
+    p = getTaskNFeats(task)
+    if (p < mtry)
+      args$mtry = p
     cforest_args = as.list(base::args(party::cforest))
     cforest_args = args[names(args) %in% names(cforest_args)]
     control_args = as.list(base::args(party::cforest_control))
