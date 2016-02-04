@@ -1,4 +1,4 @@
-context("BenchmarkSummary")
+context("plotBMRSummary")
 
 test_that("BenchmarkSummary", {
   lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))

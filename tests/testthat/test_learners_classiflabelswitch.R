@@ -1,3 +1,4 @@
+context("learners_classiflabelswitch")
 
 n = 50L
 p = 2L

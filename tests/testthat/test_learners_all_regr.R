@@ -1,3 +1,5 @@
+context("learners_all_regr")
+
 test_that("learners work: regr ", {
 
   # settings to make learners faster and deal with small data size

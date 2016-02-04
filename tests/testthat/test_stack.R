@@ -1,4 +1,4 @@
-context("Stacking")
+context("stack")
 
 checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
   base = lapply(base, makeLearner, predict.type = bms.pt)

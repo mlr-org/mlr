@@ -1,4 +1,4 @@
-context("resample: cv")
+context("resample_cv")
 
 
 test_that("cv instance works", {

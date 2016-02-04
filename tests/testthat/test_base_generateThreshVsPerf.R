@@ -1,4 +1,4 @@
-context("generateThreshVsPerfData")
+context("generateThreshVsPerf")
 
 test_that("generateThreshVsPerfData", {
   ## single prediction

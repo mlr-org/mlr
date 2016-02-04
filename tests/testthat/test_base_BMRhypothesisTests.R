@@ -1,4 +1,4 @@
-context("hypothesisTest")
+context("BMRhypothesisTests")
 
 test_that("hypothesisTest", {
   lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))

@@ -1,4 +1,4 @@
-context("clustering base")
+context("clustering")
 
 test_that("clustering predict",  {
   lrn = makeLearner("cluster.cmeans", predict.type = "prob")

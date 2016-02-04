@@ -1,3 +1,4 @@
+context("learners_all_classif")
 
 test_that("learners work: classif ", {
 
