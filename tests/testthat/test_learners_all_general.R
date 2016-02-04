@@ -1,4 +1,4 @@
-context("learners: general")
+context("learners_all_general")
 
 test_that("listLearners", {
   x1 = mylist()

@@ -1,4 +1,4 @@
-context("resample: bs")
+context("resample_bs")
 
 test_that("bs instance works", {
   rin = makeResampleInstance(makeResampleDesc("Bootstrap", iters = 3), size = 25)

@@ -1,4 +1,4 @@
-context("tune")
+context("tuning")
 
 test_that("tune", {
   requirePackages("e1071", default.method = "load")

@@ -1,4 +1,4 @@
-context("resample: subsampling")
+context("resample_subsample")
 
 test_that("subsampling instance works", {
   rin = makeResampleInstance(makeResampleDesc("Subsample", iters = 2, split = 0.25), size = 20)

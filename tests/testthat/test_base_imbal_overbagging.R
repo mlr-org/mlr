@@ -1,4 +1,4 @@
-context("OverBagging")
+context("overbagging")
 
 test_that("OverBagging wrapper",  {
   rdesc = makeResampleDesc("CV", iters = 2)

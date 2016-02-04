@@ -1,4 +1,4 @@
-context("generateCalibrationData")
+context("generateCalibration")
 
 test_that("generateCalibrationData", {
   ## single prediction

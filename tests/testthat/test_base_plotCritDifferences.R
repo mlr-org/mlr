@@ -1,4 +1,4 @@
-context("critDifferences")
+context("plotcritDifferences")
 
 test_that("critDifferences", {
   

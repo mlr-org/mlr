@@ -1,3 +1,5 @@
+context("learners_all_clusters")
+
 test_that("learners work: cluster", {
 
   # clustering, response

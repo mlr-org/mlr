@@ -1,4 +1,4 @@
-context("resample convenience function")
+context("resample_convenience")
 
 test_that("resample convenience functions", {
 
