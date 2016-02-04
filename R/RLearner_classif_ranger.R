@@ -22,7 +22,7 @@ makeRLearner.classif.ranger = function() {
       makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE)
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE),
-    properties = c("twoclass", "multiclass", "prob", "numerics", "factors"),
+    properties = c("twoclass", "multiclass", "prob", "numerics", "factors", "oob"),
     name = "Random Forests",
     short.name = "ranger",
     note = "By default, internal parallelization is switched off (`num.threads = 1`) and `verbose` output is disabled. Both settings are changeable."
@@ -40,4 +40,11 @@ trainLearner.classif.ranger = function(.learner, .task, .subset, .weights, ...) 
 predictLearner.classif.ranger = function(.learner, .model, .newdata, ...) {
   p = predict(object = .model$learner.model, data = .newdata, ...)
   return(p$predictions)
+}
+
+getOutOfBag.classif.ranger = function(.learner, .model) {
+  mod = .model$learner.model
+  preds = mod$predictions
+  err = mod$prediction.error
+  list(response = preds, err = err)
 }

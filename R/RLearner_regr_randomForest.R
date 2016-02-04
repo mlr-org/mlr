@@ -43,7 +43,7 @@ makeRLearner.regr.randomForest = function() {
       se.boot = 50L,
       ntree.for.se = 100L
     ),
-    properties = c("numerics", "factors", "ordered", "se"),
+    properties = c("numerics", "factors", "ordered", "se", "oob"),
     name = "Random Forest",
     short.name = "rf",
     note = "See `?regr.randomForest` for information about se estimation."
@@ -127,4 +127,11 @@ sdStandardError = function(.learner, .model, .newdata, ...) {
   pred = predict(.model$learner.model, newdata = .newdata, predict.all = TRUE, ...)
   se = apply(pred$individual, 1, sd)
   return(cbind(pred$aggregate, se))
+}
+
+getOutOfBag.regr.randomForest = function(.learner, .model) {
+  mod = .model$learner.model
+  preds = mod$predicted
+  err = mod$err.rate[, 1L]
+  list(response = preds, err = err)
 }

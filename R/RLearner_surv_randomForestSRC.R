@@ -23,7 +23,7 @@ makeRLearner.surv.randomForestSRC = function() {
       makeLogicalLearnerParam(id = "fast.restore", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(na.action = "na.impute"),
-    properties = c("missings", "numerics", "factors", "ordered", "rcens"),
+    properties = c("missings", "numerics", "factors", "ordered", "rcens", "oob"),
     name = "Random Forests for Survival",
     short.name = "rfsrc",
     note = "'na.action' has been set to 'na.impute' by default to allow missing data support"
@@ -51,4 +51,11 @@ predictLearner.surv.randomForestSRC = function(.learner, .model, .newdata, ...) 
   } else {
     stop("Unknown predict type")
   }
+}
+
+getOutOfBag.surv.randomForestSRC = function(.learner, .model) {
+  mod = .model$learner.model
+  preds = mod$predicted.oob
+  err = mod$err.rate
+  list(response = preds, err = err)
 }
