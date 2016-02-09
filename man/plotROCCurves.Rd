@@ -4,19 +4,14 @@
 \alias{plotROCCurves}
 \title{Plots a ROC curve using ggplot2.}
 \usage{
-plotROCCurves(obj, measures = obj$measures[1:2], diagonal = TRUE,
-  pretty.names = TRUE)
+plotROCCurves(obj, measures, diagonal = TRUE, pretty.names = TRUE)
 }
 \arguments{
-\item{obj}{[(list of) \code{\link{Prediction}} | (list of) \code{\link{ResampleResult}} | \code{\link{BenchmarkResult}}]\cr
-Single prediction object, list of them, single resample result, list of them, or a benchmark result.
-In case of a list probably produced by different learners you want to compare, then
-name the list with the names you want to see in the plots, probably
-learner shortnames or ids.}
+\item{obj}{[\code{ThreshVsPerfData}]\cr
+Result of \code{\link{generateThreshVsPerfData}}.}
 
-\item{measures}{[\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
-Performance measure(s) to evaluate.
-Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
+\item{measures}{[\code{list(2)} of \code{\link{Measure}}]\cr
+Default is the first 2 measures passed to \code{\link{generateThreshVsPerfData}}.}
 
 \item{diagonal}{[\code{logical(1)}]\cr
 Whether to plot a dashed diagonal line.
