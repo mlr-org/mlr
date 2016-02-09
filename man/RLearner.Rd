@@ -17,20 +17,20 @@
 \usage{
 makeRLearner()
 
-makeRLearnerClassif(cl, package, par.set, mlr.default.par.vals = list(),
+makeRLearnerClassif(cl, package, par.set, mlr.defaults = list(),
   properties = character(0L), name = cl, short.name = cl, note = "",
   class.weights.param = NULL)
 
-makeRLearnerMultilabel(cl, package, par.set, mlr.default.par.vals = list(),
+makeRLearnerMultilabel(cl, package, par.set, mlr.defaults = list(),
   properties = character(0L), name = cl, short.name = cl, note = "")
 
-makeRLearnerRegr(cl, package, par.set, mlr.default.par.vals = list(),
+makeRLearnerRegr(cl, package, par.set, mlr.defaults = list(),
   properties = character(0L), name = cl, short.name = cl, note = "")
 
-makeRLearnerSurv(cl, package, par.set, mlr.default.par.vals = list(),
+makeRLearnerSurv(cl, package, par.set, mlr.defaults = list(),
   properties = character(0L), name = cl, short.name = cl, note = "")
 
-makeRLearnerCluster(cl, package, par.set, mlr.default.par.vals = list(),
+makeRLearnerCluster(cl, package, par.set, mlr.defaults = list(),
   properties = character(0L), name = cl, short.name = cl, note = "")
 }
 \arguments{

@@ -24,10 +24,13 @@ removeHyperPars = function(learner, ids = character(0L)) {
 removeHyperPars.Learner = function(learner, ids = character(0L)) {
   learner$par.vals[ids] = NULL
   on.par.out.of.bounds = coalesce(learner$config$on.par.out.of.bounds, getMlrOptions()$on.par.out.of.bounds)
-  if (length(learner$par.vals[ids]) > 0 && !isFeasible(learner$par.set, learner$par.vals, use.defaults = TRUE, filter = TRUE, warn = on.par.out.of.bounds %in% c("warn", "stop"))) {
-    if (on.par.out.of.bounds == "stop") {
-      stop()
-    }
+  if (on.par.out.of.bounds != "quiet") {}
+  
+  feasibility = TRUE
+  if (length(learner$par.vals[ids]) > 0 && !(feasibility = isFeasible(learner$par.set, learner$par.vals, use.defaults = TRUE, filter = TRUE))) {
+    stopfun = switch(on.par.out.of.bounds, stop = stop, warn = warning, function(...) {})
+    msg = coalesce(attr(feasibility, "warning"), "")
+    stopfun(msg)
   }
   return(learner)
 }

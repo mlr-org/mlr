@@ -8,7 +8,7 @@ checkLearner = function(learner, type = NULL, weights = FALSE, ...) {
   if (weights && !hasLearnerProperties(learner, "weights"))
     stopf("Learner '%s' must support weights, but does not!", learner$id)
   #FIXME: I am not sure if the following is necessary
-  setHyperPars(learner, reset = "before", ...)
+  setHyperPars(learner, ...)
 }
 
 checkLearnerClassif = function(learner, weights = FALSE) {

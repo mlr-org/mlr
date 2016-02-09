@@ -55,6 +55,7 @@ setHyperPars2.Learner = function(learner, par.vals, reset = "no") {
   pars = learner$par.set$pars
   on.par.without.desc = coalesce(learner$config$on.par.without.desc, getMlrOptions()$on.par.without.desc)
   on.par.out.of.bounds = coalesce(learner$config$on.par.out.of.bounds, getMlrOptions()$on.par.out.of.bounds)
+  stopfun = switch(on.par.out.of.bounds, stop = stop, warn = warning, function(...) {})
   for (i in seq_along(par.vals)) {
     n = ns[i]
     pd = pars[[n]]
@@ -68,23 +69,20 @@ setHyperPars2.Learner = function(learner, par.vals, reset = "no") {
       }
       learner$par.set$pars[[n]] = makeUntypedLearnerParam(id = n)
     } else {
-      if (on.par.out.of.bounds != "quiet" && !isFeasible(pd, par.vals[[i]])) {
-        msg = sprintf("%s is not feasible for parameter '%s'!", convertToShortString(par.vals[[i]]), pd$id)
-        if (on.par.out.of.bounds == "stop") {
-          stop(msg)
-        } else {
-          warning(msg)
-        }
+      feasibility = TRUE
+      if (on.par.out.of.bounds != "quiet" && !(feasibility = isFeasible(pd, par.vals[[i]]))) {
+        msg = coalesce(attr(feasibility, "warning"), sprintf("%s is not feasible for parameter '%s'!", convertToShortString(par.vals[[i]]), pd$id))
+        stopfun(msg)
       }
       ## if valname of discrete par was used, transform it to real value
       #if (pd$type == "discrete" && is.character(p) && length(p) == 1 && p %in% names(pd$values))
       #  p = pd$values[[p]]
     }
   }
-  if (length(par.vals) > 0 && !isFeasible(learner$par.set, par.vals, use.defaults = TRUE, filter = TRUE, warn = TRUE)) {
-    if (on.par.out.of.bounds == "stop") {
-      stop()
-    }
+  feasibility = TRUE
+  if (length(par.vals) > 0 && !(feasibility = isFeasible(learner$par.set, par.vals, use.defaults = TRUE, filter = TRUE))) {
+    msg = coalesce(attr(feasibility, "warning"), "")
+    stopfun(msg)
   }
   learner$par.vals = par.vals
   return(learner)
