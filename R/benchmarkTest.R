@@ -57,7 +57,7 @@ friedmanTestBMR = function(bmr, measure = NULL, aggregation = "default") {
 #' @param p.value [\code{numeric(1)}]\cr
 #'   p-value for the tests. Default: 0.05
 #' @template arg_aggregation_method
-#' @return [list of \code{htest} or \code{PMCMR}]: See \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}} for details.
+#' @return [list of \code{pairwise.htest}]: See \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}} for details.
 #' Additionally two components are added to the list:
 #' \describe{
 #'   \item{f.rejnull [\code{logical(1)}]}{Whether the according friedman.test rejects the Null hypothesis at the selected p.value}
