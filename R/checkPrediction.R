@@ -14,7 +14,7 @@ checkPrediction = function(pred, task.type = NULL, binary = FALSE, predict.type 
 
   if (no.na) {
     r = getPredictionResponse(pred)
-    if (any(is.na(r)))
+    if (anyMissing(r))
       stopf("Prediction object contains NAs in response, this likely due to a prediction from a FailureModel!")
   }
 }
