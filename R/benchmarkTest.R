@@ -49,7 +49,7 @@ friedmanTestBMR = function(bmr, measure = NULL, aggregation = "default") {
 #' This means \code{all pairwise comparisons} of \code{learners} are performed.
 #' The null hypothesis of the post hoc test is that each pair of learners is equal.
 #' If the null hypothesis of the included ad hoc \code{\link[stats]{friedman.test}}
-#' can be rejected a \code{pairwise.htest} is returned. If not, the function returns the
+#' can be rejected a \code{PMCMR} is returned. If not, the function returns the
 #' corresponding \link[stats]{friedman.test}
 #'
 #' @template arg_bmr
@@ -57,7 +57,7 @@ friedmanTestBMR = function(bmr, measure = NULL, aggregation = "default") {
 #' @param p.value [\code{numeric(1)}]\cr
 #'   p-value for the tests. Default: 0.05
 #' @template arg_aggregation_method
-#' @return [list of \code{pairwise.htest}]: See \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}} for details.
+#' @return [list of \code{PMCMR}]: See \code{\link[PMCMR]{posthoc.friedman.nemenyi.test}} for details.
 #' Additionally two components are added to the list:
 #' \describe{
 #'   \item{f.rejnull [\code{logical(1)}]}{Whether the according friedman.test rejects the Null hypothesis at the selected p.value}
