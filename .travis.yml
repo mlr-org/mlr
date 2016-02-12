@@ -122,8 +122,7 @@ before_install:
 before_script:
     - curl -L https://raw.githubusercontent.com/mllg/travis-r-tools/master/update-packages.r -o /tmp/update-packages.r
     - Rscript /tmp/update-packages.r
-    - curl -L https://sourceforge.net/projects/weka/files/weka-3-6/3.6.13/weka-3-6-13.zip -o /tmp/weka.zip
-    - unzip /tmp/weka.zip weka-3-6-13/weka.jar
+    - find / -iname 'weka.jar'
     - java -cp weka-3-6-13/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
 
 after_success:
