@@ -115,7 +115,7 @@ makeRLearnerClassif = function(cl, package, par.set, par.vals = list(), properti
 makeRLearnerMultilabel = function(cl, package, par.set, par.vals = list(), properties = character(0L), name = cl, short.name = cl, note = "") {
   addClasses(
     makeRLearnerInternal(cl, "multilabel", package, par.set, par.vals, properties, name, short.name, note),
-    c(cl, "RLearnerClassif")
+    c(cl, "RLearnerMultilabel")
   )
 }
 
