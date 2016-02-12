@@ -24,6 +24,7 @@ test_that("downsample wrapper",  {
 })
 
 test_that("downsample wrapper works with xgboost, we had issue #492",  {
+  skip_if_not_installed("xgboost") # xgboost broken on CRAN, they cannot run our tests
   rdesc = makeResampleDesc("CV", iters = 2)
   lrn = makeDownsampleWrapper("classif.xgboost", dw.perc = 0.5)
   expect_output(print(lrn), "down")
