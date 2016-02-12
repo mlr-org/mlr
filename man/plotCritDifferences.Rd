@@ -27,7 +27,7 @@ Plots a critical-differences diagram for all classifiers and
 a selected measure. If a baseline is selected for the Bonferroni-Dunn
 test, the critical difference interval will be positioned arround the baseline.
 If not, the best performing algorithm will be chosen as baseline.
-The positioning of some descriptive elements can be moved by modifying the 
+The positioning of some descriptive elements can be moved by modifying the
 generated data.
 }
 \examples{

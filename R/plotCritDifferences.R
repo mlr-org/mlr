@@ -63,7 +63,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
   measure = checkBMRMeasure(measure, bmr)
 
   # Get Rankmatrix, transpose and get mean ranks
-  mean.rank = rowMeans(convertBMRToRankMatrix(bmr, measure)
+  mean.rank = rowMeans(convertBMRToRankMatrix(bmr, measure))
   # Gather Info for plotting the descriptive part.
   df = data.frame(mean.rank,
     learner.id = names(mean.rank),
