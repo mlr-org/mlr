@@ -43,7 +43,7 @@
 #' @return [\code{critDifferencesData}]. List containing:
 #' \item{data}{[\code{data.frame}] containing the info for the descriptive
 #'                part of the plot}
-#' \item{friedman.nemenyi.test}{[\code{list}] of class \code{PMCMR} \cr
+#' \item{friedman.nemenyi.test}{[\code{list}] of class \code{pairwise.htest} \cr
 #'                                contains the calculated
 #'                                \link[PMCMR]{posthoc.friedman.nemenyi.test}}
 #' \item{cd.info}{[\code{list}] containing info on the critical difference
