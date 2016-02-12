@@ -109,7 +109,7 @@ r_binary_packages:
     - TH.data
     - XML
 before_install:
-    - sudo R CMD javareconf
+    - sudo $HOME/R-bin/bin/R CMD javareconf
     - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test -y
     - sudo apt-get -qq update
     - sudo apt-get -qq install gcc-4.8
