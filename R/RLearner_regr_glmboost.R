@@ -21,8 +21,8 @@ makeRLearner.regr.glmboost = function() {
   )
 }
 #' @export
-trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, m, risk, ...) {
-  ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk)
+trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, m, risk, trace, stopintern, ...) {
+  ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, trace, stopintern)
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
   if (is.null(.weights)) {
