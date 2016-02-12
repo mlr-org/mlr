@@ -1,9 +1,8 @@
-mlr_new:
+mlr_2.8:
 - Feature filter "univariate" had a bad name, was deprecated and is now called
  "univariate.model.score". The new one also has better defaults.
 - (generate/plot)PartialPrediction: added new arg "geom" for tile plots
 - small fix for plotBMRSummary
-- removed learners: classif.randomForestSRCSyn, regr.randomForestSRCSyn
 - the ModelMultiplexer inherits its predict.type from the base learners now
 - check that learners in an ensemble have the same predict.type
 - new function getBMRModels to extract stored models from a benchmark result
