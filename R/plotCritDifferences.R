@@ -63,10 +63,9 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
   measure = checkBMRMeasure(measure, bmr)
 
   # Get Rankmatrix, transpose and get mean ranks
-  transp.rankmat = as.data.frame(t(convertBMRToRankMatrix(bmr, measure)))
-  mean.rank = colMeans(transp.rankmat)
+  mean.rank = rowMeans(convertBMRToRankMatrix(bmr, measure)
   # Gather Info for plotting the descriptive part.
-  df = data.frame(cbind(mean.rank),
+  df = data.frame(mean.rank,
     learner.id = names(mean.rank),
     rank = rank(mean.rank, ties.method = "average"))
   # Orientation of descriptive lines yend(=y-value of horizontal line)
@@ -83,7 +82,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
 
   # Get a baseline
   if (is.null(baseline)) {
-    baseline = df$learner.id[df$rank == min(df$rank)][1L]
+    baseline = df$learner.id[which.min(df$rank)]
   } else {
     assertChoice(baseline, getBMRLearnerIds(bmr))
   }
@@ -184,6 +183,7 @@ plotCritDifferences = function(obj, baseline = NULL, pretty.names = TRUE) {
                 axis.line.y = element_blank(),
                 panel.grid.major = element_blank(),
                 plot.background = element_blank())
+
   # Write some values into shorter names as they are used numerous times.
   cd.x = obj$cd.info$x
   cd.y = obj$cd.info$y
@@ -193,7 +193,7 @@ plotCritDifferences = function(obj, baseline = NULL, pretty.names = TRUE) {
   if (obj$cd.info$test == "bd") {
     if (!is.null(baseline)) {
       assertChoice(baseline, obj$data$learner.id)
-      obj$cd.info$x = obj$data$mean.rank[obj$data$learner.id == baseline][1]
+      cd.x = obj$data$mean.rank[obj$data$learner.id == baseline]
     }
     # Add horizontal bar arround baseline
     p = p + annotate("segment", x = cd.x + cd, xend = cd.x - cd, y = cd.y, yend = cd.y,
