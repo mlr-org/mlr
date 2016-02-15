@@ -71,7 +71,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
   # Orientation of descriptive lines yend(=y-value of horizontal line)
   right = df$rank > median(df$rank)
   # Better learners are ranked ascending
-  df$yend = rank(df$rank[!right], ties.method = "first") - 0.5
+  df$yend[!right] = rank(df$rank[!right], ties.method = "first") - 0.5
   # Worse learners ranked descending
   df$yend[right] = rank(desc(df$rank[right]), ties.method = "first") - 0.5
   # Better half of learner have lines to left / others right.
