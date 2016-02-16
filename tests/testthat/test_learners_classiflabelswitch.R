@@ -75,4 +75,3 @@ test_that("no labels are switched", {
     checkErrsForTask(mytask4, predtype)
   }
 })
-

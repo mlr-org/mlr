@@ -1,8 +1,8 @@
 context("surv_glmboost")
 
 test_that("surv_glmboost", {
-  requireNamespace("survival")
-  requireNamespace("mboost")
+  requirePackagesOrSkip(c("survival", "mboost"), default.method = "load")
+
   parset.list = list(
     list(mstop = 100L, nu = 0.1),
     list(mstop = 50L, nu = 1),

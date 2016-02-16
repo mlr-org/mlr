@@ -25,4 +25,3 @@ test_that("Learner", {
   #  Learner cannot use expression in param requires, see #369
   expect_error(makeLearner("classif.__mlrmocklearners__5"), "used 'expression'")
 })
-

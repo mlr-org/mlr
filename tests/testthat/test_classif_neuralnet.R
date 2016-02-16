@@ -1,8 +1,8 @@
 context("classif_neuralnet")
 
 test_that("classif_neuralnet", {
-  requirePackages("neuralnet", default.method = "load")
-  
+  requirePackagesOrSkip("neuralnet", default.method = "load")
+
   set.seed(getOption("mlr.debug.seed"))
   capture.output({
     # neuralnet is not dealing with formula with `.` well
@@ -14,16 +14,16 @@ test_that("classif_neuralnet", {
     formula_expand = as.formula(formula_expand)
     traindat = binaryclass.train
     traindat[[binaryclass.target]] = as.numeric(traindat[[binaryclass.target]])-1
-    
-    m = neuralnet::neuralnet(formula_expand, hidden=7, data=traindat, err.fct="ce", 
+
+    m = neuralnet::neuralnet(formula_expand, hidden=7, data=traindat, err.fct="ce",
       linear.output = FALSE)
     p = neuralnet::compute(m, covariate = binaryclass.test[,-ncol(binaryclass.test)])
     p = as.numeric(as.vector(p[[2]])>0.5)
     p = factor(p, labels = binaryclass.class.levs)
   })
-  
+
   set.seed(getOption("mlr.debug.seed"))
-  testSimple("classif.neuralnet", binaryclass.df, binaryclass.target, binaryclass.train.inds, p, 
+  testSimple("classif.neuralnet", binaryclass.df, binaryclass.target, binaryclass.train.inds, p,
              parset = list(hidden = 7, err.fct = "ce"))
   # Neuralnet doesn't have the `predict` method
 #   set.seed(getOption("mlr.debug.seed"))

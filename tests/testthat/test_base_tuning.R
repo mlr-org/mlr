@@ -1,7 +1,7 @@
 context("tuning")
 
 test_that("tune", {
-  requirePackages("e1071", default.method = "load")
+  requirePackagesOrSkip("e1071", default.method = "load")
   cp = c(0.05, 0.9)
   minsplit = 1:2
   ps1 = makeParamSet(

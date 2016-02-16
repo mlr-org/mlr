@@ -1,7 +1,8 @@
 context("regr_elmNN")
 
 test_that("regr_elmNN", {
-  requirePackages("elmNN", default.method = "load")
+  requirePackagesOrSkip("elmNN", default.method = "load")
+
   parset.list = list(
     list(),
     list(nhid = 2L),

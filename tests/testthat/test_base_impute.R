@@ -95,6 +95,3 @@ test_that("ImputeWrapper", {
   expect_output(print(mm), "Model")
   expect_is(mm, "WrappedModel")
 })
-
-
-

@@ -1,7 +1,7 @@
 context("classif_randomForestSRCSyn")
 
 test_that("classif_randomForestSRCSyn", {
-  requirePackages("randomForestSRC", default.method = "load")
+  requirePackagesOrSkip("randomForestSRC", default.method = "load")
 
   parset.list = list(
     list(),

@@ -1,8 +1,8 @@
 context("classif_rknn")
 
 test_that("classif_rknn", {
-  requirePackages("rknn", default.method = "load")
-  
+  requirePackagesOrSkip("rknn", default.method = "load")
+
   k = c(2L, 4L)
   r = c(200L, 600L)
   mtry = c(2L, 3L)
@@ -10,9 +10,9 @@ test_that("classif_rknn", {
   parset.list = apply(parset.grid, MARGIN = 1L, as.list)
   #rknn needs integer seed for reproducibility
   parset.list = lapply(parset.list, function(x) c(x, seed = 2015L))
-  
+
   old.predicts.list = list()
-  
+
   for (i in 1L:length(parset.list)) {
     parset = parset.list[[i]]
     train = multiclass.train
@@ -25,15 +25,15 @@ test_that("classif_rknn", {
     p = do.call(rknn::rknn, pars)$pred
     old.predicts.list[[i]] = p
   }
-  
+
   testSimpleParsets("classif.rknn", multiclass.df, multiclass.target, multiclass.train.inds,
                     old.predicts.list, parset.list)
-  
+
   tt = function (formula, data, k = 1L, r = 500L, mtry = 2L, seed = 2015L, cluster = NULL) {
     return(list(formula = formula, data = data, k = k, r = r, mtry = mtry,
                 seed = seed, cluster = cluster))
   }
-  
+
   tp = function(model, newdata) {
     target = as.character(model$formula)[2L]
     train = model$data
