@@ -72,7 +72,7 @@ test_that("Parameters for hill climb works", {
   res = predict(tmp, tsk)
 
   expect_equal(sum(tmp$learner.model$weights), 1)
-  
+
   metric = function(pred, true) {
     pred = colnames(pred)[max.col(pred)]
     tb = table(pred, true)
@@ -83,7 +83,7 @@ test_that("Parameters for hill climb works", {
     parset = list(replace = TRUE, bagprob = 0.7, bagtime = 3, init = 2, metric = metric))
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
-  
+
   expect_equal(sum(tmp$learner.model$weights), 1)
 
 })
@@ -97,8 +97,8 @@ test_that("Parameters for compress model", {
                          parset = list(k = 5, prob = 0.3))
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
-  
-  
+
+
   tsk = regr.task
   base = c("regr.rpart", "regr.svm")
   lrns = lapply(base, makeLearner)
@@ -108,4 +108,3 @@ test_that("Parameters for compress model", {
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
 })
-

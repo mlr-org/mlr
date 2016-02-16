@@ -1,8 +1,8 @@
 context("regr_ranger")
 
 test_that("regr_ranger", {
-  requirePackages("ranger", default.method = "load")
-  
+  requirePackagesOrSkip("ranger", default.method = "load")
+
   parset.list = list(
     list(),
     list(num.trees = 100),
@@ -10,7 +10,7 @@ test_that("regr_ranger", {
     list(num.trees = 500, min.node.size = 2)
   )
   old.predicts.list = list()
-  
+
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     parset = c(parset, list(data = regr.train, formula = regr.formula, write.forest = TRUE))
@@ -19,6 +19,6 @@ test_that("regr_ranger", {
     p  = predict(m, data = regr.test)
     old.predicts.list[[i]] = p$predictions
   }
-  
+
   testSimpleParsets("regr.ranger", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list)
 })

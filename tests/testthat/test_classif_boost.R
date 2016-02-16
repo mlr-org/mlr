@@ -1,7 +1,8 @@
 context("classif_boosting")
 
 test_that("classif_boosting", {
-  requirePackages(c("adabag", "rpart"), default.method = "load")
+  requirePackagesOrSkip(c("adabag", "rpart"), default.method = "load")
+
   parset.list1 = list(
     list(mfinal = 1, control = rpart::rpart.control(xval = 0)),
     list(mfinal = 2, control = rpart::rpart.control(cp = 0.2, xval = 0))
@@ -49,4 +50,3 @@ test_that("classif_boosting", {
   testCVParsets("classif.boosting", multiclass.df, multiclass.target,
     tune.train = tt, tune.predict = tp, parset.list = parset.list2)
 })
-

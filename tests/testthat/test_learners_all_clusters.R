@@ -27,4 +27,3 @@ test_that("learners work: cluster", {
     expect_true(!is.na(performance(p, task = task)))
   })
 })
-

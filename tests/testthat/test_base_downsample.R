@@ -31,4 +31,3 @@ test_that("downsample wrapper works with xgboost, we had issue #492",  {
   r = resample(lrn, binaryclass.task, rdesc)
   expect_true(!is.na(r$aggr))
 })
-

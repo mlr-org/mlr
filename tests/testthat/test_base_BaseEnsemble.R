@@ -22,4 +22,3 @@ test_that("BaseEnsemble", {
   expect_error(makeBaseEnsemble(id = "foo", base.learners = list(bl1, bl2),
     par.set = ps, par.vals = pv, cl = "mywrapper"), "predict.type")
 })
-

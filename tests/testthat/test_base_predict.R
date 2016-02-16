@@ -10,7 +10,7 @@ test_that("predict", {
   cm2 = train(makeLearner("classif.lda"), multiclass.task, subset = inds)
   cp2 = predict(cm2, newdata = data[inds,])
   cp2b = predict(cm2, newdata = data[inds,-5])
-  requirePackages("MASS", default.method = "load")
+  requirePackagesOrSkip("MASS", default.method = "load")
   ext2 = MASS::lda(formula, data = data[inds,])
   pred2 = predict(ext2,newdata = data[inds,])$class
 
@@ -129,4 +129,3 @@ test_that("predict.threshold", {
   r = holdout(lrn2, binaryclass.task)
   expect_true(all(r$pred$data$response == td$positive))
 })
-

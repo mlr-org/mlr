@@ -1,7 +1,8 @@
 context("regr_bgp")
 
 test_that("regr_bgp", {
-  requirePackages("tgp", default.method = "load")
+  requirePackagesOrSkip("tgp", default.method = "load")
+
   parset.list = list(
     list(meanfn = "linear", bprior = "bflat", corr = "expsep")
   )

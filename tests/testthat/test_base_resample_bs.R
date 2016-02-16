@@ -24,7 +24,7 @@ test_that("bs resampling works", {
   formula = multiclass.formula
   parset = list(minsplit = 12, cp = 0.09)
 
-  requirePackages("rpart", default.method = "load")
+  requirePackagesOrSkip("rpart", default.method = "load")
   tt = function(formula, data, subset) {
     rpart::rpart(formula, data = data[subset,], minsplit = 12, cp = 0.09)
   }
@@ -55,4 +55,3 @@ test_that("bs instance is stochastic", {
   rin2 = makeResampleInstance(makeResampleDesc("Bootstrap", iters = 3), size = 500)
   expect_true(!all(sort(rin1$train.inds[[1]]) == sort(rin2$train.inds[[1]])))
 })
-

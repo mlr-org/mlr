@@ -81,6 +81,3 @@ test_that("learners work: regr ", {
   }
 
 })
-
-
-

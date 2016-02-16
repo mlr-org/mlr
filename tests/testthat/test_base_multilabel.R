@@ -129,5 +129,3 @@ test_that("MultilabelBinaryRelevanceWrapper", {
   p = performance(pred)
   expect_true(!is.na(p))
 })
-
-
