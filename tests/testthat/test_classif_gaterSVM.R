@@ -13,4 +13,12 @@ test_that("classif_gaterSVM", {
 
   testSimple("classif.gaterSVM", binaryclass.df, binaryclass.target, binaryclass.train.inds, p,
              parset = list(m = 2, max.iter = 1, seed = 0))
+
+  # Prediction result containing only one class
+  data = data.frame(a = c(1, 2, 1, 2), b = c(1, 1, 2, 2), c = c("a", "b", "a", "b"))
+  traintask = makeClassifTask("train", data, "c")
+  testtask = makeClusterTask("test", data.frame(a = c(1, 1), b = c(1, 1)))
+  x = train(makeLearner("classif.gaterSVM", m = 2, seed = 0), traintask)
+  result = predict(x, testtask)$data$response
+  expect_equal(as.character(result), c("a", "a"))
 })
