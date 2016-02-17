@@ -14,7 +14,7 @@ test_that("regr_glmnet", {
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     s = parset[["s"]]
-    if(is.null(s)) s = 0.01
+    if (is.null(s)) s = 0.01
     parset[["s"]] = NULL
     ind = match(regr.target, names(regr.train))
     x = regr.train[, -ind]

@@ -50,7 +50,7 @@ friedmanPostHocTestBMR = function(bmr, measure = NULL, p.value = 0.05, aggregati
   }
   # Perform Friedman Test
   f.test = friedmanTestBMR(bmr, measure)
-  if(!is.na(f.test$p.value)) {
+  if (!is.na(f.test$p.value)) {
     f.rejnull = f.test$p.value < p.value
     if (!f.rejnull)
       warning("Cannot reject null hypothesis of overall Friedman test,

@@ -26,7 +26,7 @@ test_that("dps instance works", {
 
 test_that("dps internal functions work", {
   x = getTaskData(sonar.task, target.extra = TRUE)$data
-  for(i in 1:floor(log2(nrow(x)))){
+  for (i in 1:floor(log2(nrow(x)))){
     # split the data
     s = doDPSSplits(x, k=i)
     s = do.call("cbind", lapply(s, function(X) X[1:min(sapply(s, length))]))
@@ -35,7 +35,7 @@ test_that("dps internal functions work", {
     dist1 = fields:::rdist(x)
 
     # check if the distance of two consecutive sets is increasing
-    for(k in seq(1, ncol(s), by=2)) {
+    for (k in seq(1, ncol(s), by=2)) {
       expect_true(!is.unsorted(apply(s, 1, function(X) dist1[X[k], X[k+1]])))
     }
   }

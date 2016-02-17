@@ -34,7 +34,7 @@ trainLearner.surv.penalized = function(.learner, .task, .subset, .weights = NULL
 predictLearner.surv.penalized = function(.learner, .model, .newdata, ...) {
   info = getTrainingInfo(.model)
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
-  if(.learner$predict.type == "response") {
+  if (.learner$predict.type == "response") {
     # Note: this is a rather ugly hack but should work according to Jelle
     penalized::survival(penalized::predict(.model$learner.model, penalized = .newdata), Inf)
   } else {

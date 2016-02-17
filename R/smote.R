@@ -84,7 +84,7 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
     ranges = apply(x.min.matrix, 2, max) - apply(x.min.matrix, 2, min)
 
     # loop for each member of x.min
-    for(i in 1:n.xmin) {
+    for (i in 1:n.xmin) {
       # calculate nn next neighbors of element x.min.matrix[i,]
       x.scaled = scale(x.min.matrix, x.min.matrix[i,], ranges)
       if (any(!is.num)) {
@@ -100,7 +100,7 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
       n.new.obs = n.new / n.xmin
 
       # loop for each new member
-      for(n in 1:n.new.obs) {
+      for (n in 1:n.new.obs) {
         # randomly select one of the kNNs
         neigh = sample(1:nn, 1)
 
