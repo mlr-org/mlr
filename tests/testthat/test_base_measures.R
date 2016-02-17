@@ -360,7 +360,7 @@ test_that("check measure calculations", {
   expect_equal(f1.test, f1$fun(pred = pred.bin))
   expect_equal(f1.test, as.numeric(f1.perf))
   #gmean
-  gmean.test = sqrt(tp.test * tn.test)
+  gmean.test = sqrt((tp.test/(tp.test + fn.test)) * tn.test/(tn.test + fp.test))
   gmean.perf = performance(pred.bin, measures = gmean, model = mod.bin)
   expect_equal(gmean.test, gmean$fun(pred = pred.bin))
   expect_equal(gmean.test, as.numeric(gmean.perf))
