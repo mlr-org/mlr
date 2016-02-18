@@ -6,7 +6,7 @@ test_that("listLearners", {
   expect_true(ncol(x1) > 3L)
   expect_true(all(x1$type %in% c("classif", "regr", "cluster", "surv", "multilabel")))
   x1a = listLearners("classif", create = FALSE, properties = c("missings"))
-  expect_true(length(x1a) > 10 && length(x1a) < length(x1))
+  expect_true(nrow(x1a) > 10 && nrow(x1a) < nrow(x1))
 
   x2 = listLearners(multiclass.task, create = FALSE)
   expect_true(is.data.frame(x2))
