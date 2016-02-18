@@ -1,3 +1,46 @@
+getLearnerTable = function() {
+  ids = as.character(methods("makeRLearner"))
+  ids = ids[!stri_detect_fixed(ids, "__mlrmocklearners__")]
+  tab = rbindlist(lapply(ids, function(id) {
+    row = lapply(as.list(functionBody(id)[[2L]])[c("cl", "name", "short.name", "package", "properties", "note")], eval)
+    data.table(
+      id = row$cl,
+      name = row$name,
+      short.name = row$short.name,
+      package = list(stri_replace_first_regex(row$package, "^[!_]", "")),
+      properties = list(row$properties),
+      note = row$note %??% NA_character_
+    )
+  }))
+
+  # set learner type (classif, regr, surv, ...)
+  tab$type = vcapply(stri_split_fixed(tab$id, ".", n = 2L), head, 1L)
+
+  # check if all requirements are installed
+  pkgs = unique(unlist(tab$package))
+  pkgs = pkgs[vlapply(pkgs, function(x) length(find.package(x, quiet = TRUE)) > 0L)]
+  tab$installed = vlapply(tab$package, function(x) all(x %in% pkgs))
+
+  return(tab)
+}
+
+filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), properties = character(0L), check.packages = TRUE) {
+  contains = function(lhs, rhs) all(lhs %in% rhs)
+
+  if (check.packages)
+    tab = tab[tab$installed]
+
+  if (length(types) > 0L && !isScalarNA(types))
+    tab = tab[tab$type %in% types]
+
+  if (length(properties) > 0L) {
+    i = vlapply(tab$properties, contains, lhs = properties)
+    tab = tab[i]
+  }
+
+  return(tab)
+}
+
 #' @title Find matching learning algorithms.
 #'
 #' @description
@@ -26,8 +69,8 @@
 #'   Default is \code{TRUE}.
 #' @param check.packages [\code{logical(1)}]\cr
 #'   Check if required packages are installed. Calls
-#'   \code{find.package()}. If \code{create} is \code{TRUE},
-#'   this is done implicitly and the value of this parameter is ignored.
+#'   \code{find.package()}. If \code{create} is \code{TRUE}, this is done implicitly and the value of this parameter is ignored.
+#'   If \code{create} is \code{FALSE} and \code{check.packages} is \code{TRUE} the returned table only contains learners whose dependencies are installed.
 #'   Default is \code{TRUE}. If set to \code{FALSE}, learners that cannot
 #'   actually be constructed because of missing packages may be returned.
 #' @param create [\code{logical(1)}]\cr
@@ -67,87 +110,20 @@ listLearners.default  = function(obj, properties = character(0L),
 
 #' @export
 #' @rdname listLearners
-listLearners.character  = function(obj, properties = character(0L),
-  quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
+listLearners.character  = function(obj, properties = character(0L), quiet = TRUE, warn.missing.packages = TRUE, check.packages = TRUE, create = FALSE) {
+  if (!isScalarNA(obj))
+    assertSubset(obj, getSupportedTaskTypes())
+  tab = getLearnerTable()
 
-  assertChoice(obj, c(NA_character_, getSupportedTaskTypes()))
+  if (warn.missing.packages && !all(tab$installed))
+    warningf("The following learners could not be constructed, probably because their packages are not installed:\n%s\nCheck ?learners to see which packages you need or install mlr with all suggestions.", collapse(tab[!tab$installed]$id))
 
-  supp.learn.props = getSupportedLearnerProperties(obj)
-  assertSubset(properties, supp.learn.props)
+  tab = filterLearnerTable(tab, types = obj, properties = properties, check.packages = check.packages && !create)
 
-  type = obj
-  meths = as.character(methods("makeRLearner"))
-  # make really sure we filter out our own mock learners here, they have a very unique name
-  meths = meths[!grepl("__mlrmocklearners__", meths)]
-  res = err = vector("list", length(meths))
-  res.table = data.frame()
-  res.table.props = setNames(rep(FALSE, length(supp.learn.props)), supp.learn.props)
-  learner.classes = vcapply(strsplit(meths, "makeRLearner\\."), function(x) x[2L])
-  for (i in seq_along(meths)) {
-    cl = learner.classes[[i]]
-    lrn.type = strsplit(cl, "\\.")[[1L]][1L]
-    m = meths[[i]]
-    mb = functionBody(m)
-    if (!create && check.packages) {
-      depsInstalled = all(sapply(eval(mb[[2L]]$package), function(x) {
-        char = substr(x, 1L, 1L)
-        pack = substr(x, 1L + (char == "!" | char == "_"), nchar(x))
-        # we should get one path for exactly each dep package
-        (length(pack) ==  0L) || length(find.package(pack, quiet = TRUE, verbose = FALSE)) == length(pack)
-      }))
-    }
-    if (create || !check.packages || depsInstalled) {
-      lrn.properties = eval(mb[[2L]]$properties)
-      lrn.type = strsplit(cl, "\\.")[[1L]][1L]
-      lrn.package = eval(mb[[2L]]$package)
-      lrn.name = eval(mb[[2L]]$name)
-      lrn.short.name = eval(mb[[2L]]$short.name)
-      lrn.note = eval(mb[[2L]]$note)
-      lrn = cl
-    } else {
-      err[[i]] = learner.classes[[i]]
-    }
-
-    # check if we have correct type and props
-    if (is.null(err[[i]]) && (is.na(type) || type == lrn.type) && all(properties %in% lrn.properties)) {
-      if (create) {
-        if (quiet) {
-          suppressAll(lrn <- try(makeLearner(lrn), silent = TRUE))
-        } else {
-          lrn = try(makeLearner(lrn))
-        }
-        if (is.error(lrn)) {
-          err[[i]] = cl
-        }
-      }
-      if (is.null(err[[i]])) {
-        if (!create) {
-          rtp = res.table.props
-          rtp[lrn.properties] = TRUE
-          rtp = as.data.frame(as.list(rtp))
-          lp = collapse(lrn.package, ",")
-          if (is.null(lrn.note)) lrn.note = ""
-          res.table = rbind(res.table, cbind(class = lrn, type = lrn.type, package = lp,
-            short.name = lrn.short.name, name = lrn.name, rtp, note = lrn.note))
-        } else {
-          res[[i]] = lrn
-        }
-      }
-    }
-  }
-
-  res = filterNull(res)
   if (create)
-    names(res) = extractSubList(res, "id")
-  else
-    res = unlist(res)
-  err = filterNull(err)
-  if (warn.missing.packages && length(err))
-    warningf("The following learners could not be constructed, probably because their packages are not installed:\n%s\nCheck ?learners to see which packages you need or install mlr with all suggestions.", collapse(err))
-  if (create)
-    return(res)
-  else
-    return(convertDfCols(res.table, factors.as.char = TRUE))
+    return(lapply(tab$id[tab$installed], makeLearner))
+  setDF(tab)
+  return(tab)
 }
 
 #' @export
