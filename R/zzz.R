@@ -8,9 +8,10 @@
 #' @import parallelMap
 #' @import ParamHelpers
 #' @import plyr
-#' @import reshape2
 #' @import stats
 #' @import utils
+#' @import stringi
+#' @import data.table
 #' @importFrom survival Surv
 #' @importFrom survival is.Surv
 
