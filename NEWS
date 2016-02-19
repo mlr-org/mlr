@@ -1,5 +1,7 @@
 mlr_2.9:
 - SMOTEWrapper: fix a bug where "sw.nn" was not correctly passed down
+- removed classif.bartMachine and regr.bartMachine, lead to coredumps even in
+  other learners when loaded.
 
 mlr_2.8:
 - Feature filter "univariate" had a bad name, was deprecated and is now called
