@@ -73,7 +73,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
   # Better learners are ranked ascending
   df$yend[!right] = rank(df$rank[!right], ties.method = "first") - 0.5
   # Worse learners ranked descending
-  df$yend[right] = rank(desc(df$rank[right]), ties.method = "first") - 0.5
+  df$yend[right] = rank(plyr::desc(df$rank[right]), ties.method = "first") - 0.5
   # Better half of learner have lines to left / others right.
   df$xend = ifelse(!right, 0, max(df$rank) + 1L)
   # Save orientation, can be used for vjust of text later on
@@ -106,7 +106,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
     xend   = round(apply(mat + sub, 1, max), 3)
     nem.df = data.frame(xstart, xend, "diff" = xend - xstart)
     # For each unique endpoint of a bar take the longest bar
-    nem.df = ddply(nem.df, .(xend), function(x) x[which.max(x$diff), ])
+    nem.df = plyr::ddply(nem.df, "xend", function(x) x[which.max(x$diff), ])
     # Take only bars with length > 0
     nem.df = nem.df[nem.df$xend - nem.df$xstart > 0, ]
     # Y-value for bars is between 0.1 and 0..35 hardcoded
