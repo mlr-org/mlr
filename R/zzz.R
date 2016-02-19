@@ -5,6 +5,9 @@
 #' @import parallelMap
 #' @import ParamHelpers
 #' @import ggplot2
+#' @import stats
+#' @import stringi
+#' @import data.table
 
 .onAttach = function(libname, pkgname) {
   configureMlr()

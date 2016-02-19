@@ -34,12 +34,14 @@ Depends:
     stats
 Imports:
     checkmate (>= 1.7.1),
+    data.table,
     ggvis,
     methods,
     parallelMap (>= 1.3),
     plyr,
     reshape2,
     shiny,
+    stringi,
     survival
 Suggests:
     ada,
