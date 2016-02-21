@@ -134,7 +134,7 @@ makeResampleInstanceInternal = function(desc, size, train.inds, test.inds, group
     train.inds = sample(size)
     train.inds = lapply(test.inds, function(x) setdiff(train.inds, x))
   }
-  inst = makeS3Obj("ResampleInstance",
+  makeS3Obj("ResampleInstance",
     desc = desc,
     size = size,
     train.inds = train.inds,

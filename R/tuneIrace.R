@@ -38,10 +38,8 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
   unlink(log.file)
   if (nrow(or) == 0L)
     stop("irace produced no result, possibly the budget was set too low?")
-  id = or[1L, 1L]
   # get best candidate
   x1 = as.list(irace::removeCandidatesMetaData(or[1L,]))
-  x2 = trafoValue(par.set, x1)
   # we need chars, not factors / logicals, so we can match 'x'
   d = convertDfCols(as.data.frame(opt.path), logicals.as.factor = TRUE)
   d = convertDfCols(d, factors.as.char = TRUE)

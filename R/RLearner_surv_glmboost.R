@@ -28,7 +28,6 @@ makeRLearner.surv.glmboost = function() {
 
 #' @export
 trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL, family, mstop, nu, m, use.formula, ...) {
-  envir = loadNamespace("mboost")
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
   if (use.formula) {
     f = getTaskFormula(.task)
