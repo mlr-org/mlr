@@ -107,7 +107,7 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
   }
 
   if (check.data) {
-    checkColumnNames(data, 'data')
+    assertDataFrame(data, col.names = "strict")
     if (!is.null(weights))
       assertNumeric(weights, len = nrow(data), any.missing = FALSE, lower = 0)
     if (!is.null(blocking)) {
@@ -133,7 +133,7 @@ checkTaskData = function(data, cols = names(data)) {
     if (is.numeric(x)) {
       if (anyInfinite(x))
         stopf("Column '%s' contains infinite values.", cn)
-      if (any(is.nan(x)))
+      if (anyNaN(x))
         stopf("Column '%s' contains NaN values.", cn)
     } else if (is.factor(x)) {
       if (any(table(x) == 0L))

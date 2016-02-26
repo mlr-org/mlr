@@ -36,7 +36,7 @@ plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", 
   df = convertBMRToRankMatrix(bmr, measure, ties.method = ties.method, aggregation = aggregation)
 
   # melt back into plotable form:
-  df = melt(df)
+  df = reshape2::melt(df)
   colnames(df) = c("learner.id", "task.id", "rank")
   df = orderBMRLrns(bmr, df, order.lrns)
   df = orderBMRTasks(bmr, df, order.tsks)

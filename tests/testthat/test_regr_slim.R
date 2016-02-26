@@ -1,7 +1,8 @@
 context("regr_slim")
 
 test_that("regr_slim", {
-  requirePackages("flare", default.method = "load")
+  requirePackagesOrSkip("flare", default.method = "load")
+
   parset.list = list(
     list(),
     list(method = "dantzig"),

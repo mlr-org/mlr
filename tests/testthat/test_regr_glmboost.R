@@ -1,6 +1,7 @@
 context("regr_glmboost")
 test_that("regr_glmboost", {
-  requireNamespace("mboost")
+  requirePackagesOrSkip("mboost", default.method = "load")
+
   parset.list1 = list(
     list(family=mboost::Gaussian(), control=mboost::boost_control(nu=0.03)),
     list(family=mboost::Gaussian(), control=mboost::boost_control(mstop=600), center=TRUE)

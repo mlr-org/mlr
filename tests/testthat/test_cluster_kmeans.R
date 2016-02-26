@@ -1,7 +1,7 @@
 context("cluster_kmeans")
 
 test_that("cluster_kmeans", {
-  requirePackages("stats", default.method = "load")
+  requirePackagesOrSkip("stats", default.method = "load")
 
   centers = matrix(c(1, 2, 3, 4, 2, 3, 4, 5), ncol = 4)
   parset.list = list(

@@ -1,4 +1,4 @@
-context("RankMatrix")
+context("convertBMRToRankMatrix")
 
 test_that("convertBMRToRankMatrix", {
 

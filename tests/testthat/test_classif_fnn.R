@@ -1,7 +1,8 @@
 context("classif_fnn")
 
 test_that("classif_fnn", {
-  requirePackages("FNN", default.method = "load")
+  requirePackagesOrSkip("FNN", default.method = "load")
+
   parset.list = list(
     list(),
     list(k=1),

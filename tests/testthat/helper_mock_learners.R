@@ -86,4 +86,3 @@ makeRLearner.classif.__mlrmocklearners__5 = function() {
   )
 }
 registerS3method("makeRLearner", "classif.__mlrmocklearners__5", makeRLearner.classif.__mlrmocklearners__5)
-

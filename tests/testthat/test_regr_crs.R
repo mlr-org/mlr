@@ -1,7 +1,8 @@
 context("regr_crs")
 
 test_that("regr_crs", {
-  requirePackages("crs", default.method = "load")
+  requirePackagesOrSkip("crs", default.method = "load")
+
   parset.list = list(
     list(nmulti = 1, cv = "none"),
     list(degree = rep(3, 12), nmulti = 1, cv = "none"),

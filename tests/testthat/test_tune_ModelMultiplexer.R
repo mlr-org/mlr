@@ -126,4 +126,3 @@ test_that("ModelMultiplexer passes on hyper pars in predict", {
   expect_equal(learner$predict.type, "response")
   r = holdout(learner, regr.task)
 })
-

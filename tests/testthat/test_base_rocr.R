@@ -1,4 +1,4 @@
-context("ROCR")
+context("rocr")
 
 test_that("ROCR", {
   lrn = makeLearner("classif.lda", predict.type="prob")

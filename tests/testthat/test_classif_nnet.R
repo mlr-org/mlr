@@ -1,7 +1,7 @@
 context("classif_nnet")
 
 test_that("classif_nnet", {
-  requirePackages("nnet", default.method = "load")
+  requirePackagesOrSkip("nnet", default.method = "load")
 
   set.seed(getOption("mlr.debug.seed"))
   capture.output({
@@ -43,5 +43,3 @@ test_that("classif_nnet", {
   pred2 = predict(mod, task = task)
   expect_equal(pred1$data$response, pred2$data$response)
 })
-
-

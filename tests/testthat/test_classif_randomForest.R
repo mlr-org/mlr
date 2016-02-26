@@ -1,7 +1,7 @@
 context("classif_randomForest")
 
 test_that("classif_randomForest", {
-  requirePackages("randomForest", default.method = "load")
+  requirePackagesOrSkip("randomForest", default.method = "load")
   parset.list = list(
     list(),
     list(ntree=50,  mtry=2),
@@ -60,4 +60,3 @@ test_that("fix factors work", {
   newdata$Species = droplevels(newdata$Species)
   expect_is(predict(model, newdata=newdata), "Prediction")
 })
-

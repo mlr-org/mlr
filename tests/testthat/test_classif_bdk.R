@@ -1,7 +1,8 @@
 context("classif_bdk")
 
 test_that("classif_bdk", {
-  requirePackages("kohonen", default.method = "load")
+  requirePackagesOrSkip("kohonen", default.method = "load")
+
   parset.list1 = list(
     list(),
     list(grid = class::somgrid(xdim = 2L, ydim = 4L)),

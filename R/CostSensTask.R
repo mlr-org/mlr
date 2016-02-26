@@ -22,8 +22,8 @@ makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blockin
   task$env$costs = costs
 
   if (check.data) {
-    assertNumeric(costs, any.missing = FALSE, lower = 0)
-    checkColumnNames(costs)
+    assertMatrix(costs, any.missing = FALSE, col.names = "strict")
+    assertNumeric(costs, lower = 0)
     if (nrow(costs) != nrow(data))
       stopf("Number of rows in cost matrix (%s) should equal the number of observations (%s).", nrow(costs), nrow(data))
     # we use ..y.. later in the models as a name for temp labels
