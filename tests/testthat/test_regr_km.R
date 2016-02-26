@@ -1,7 +1,8 @@
 context("regr_km")
 
 test_that("regr_km", {
-  requirePackages("DiceKriging", default.method = "load")
+  requirePackagesOrSkip("DiceKriging", default.method = "load")
+
   parset.list = list(
     #list(covtype="gauss"),
     list(covtype="matern5_2")

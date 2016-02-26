@@ -1,4 +1,4 @@
-context("parallel resampling")
+context("parallel_all")
 
 test_that("parallel resampling", {
   doit = function(mode, level) {

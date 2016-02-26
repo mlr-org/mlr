@@ -1,3 +1,4 @@
+context("learners_classiflabelswitch")
 
 n = 50L
 p = 2L
@@ -74,4 +75,3 @@ test_that("no labels are switched", {
     checkErrsForTask(mytask4, predtype)
   }
 })
-

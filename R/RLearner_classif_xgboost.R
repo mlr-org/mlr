@@ -50,11 +50,11 @@ trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NUL
   if (length(td$class.levels) == 2L) {
     parlist = list(...)
     obj = parlist$objective
-    if (testNull(obj)) {
+    if (is.null(obj)) {
       obj = "binary:logistic"
     }
 
-    if (testNull(.weights)) {
+    if (is.null(.weights)) {
       xgboost::xgboost(data = data, label = target, objective = obj, ...)
     } else {
       xgb.dmat = xgboost::xgb.DMatrix(data = data, label = target, weight = .weights)
@@ -63,12 +63,12 @@ trainLearner.classif.xgboost = function(.learner, .task, .subset, .weights = NUL
   } else {
     parlist = list(...)
     obj = parlist$objective
-    if (testNull(obj)) {
+    if (is.null(obj)) {
       obj = "multi:softprob"
     }
     num_class = length(td$class.levels)
 
-    if (testNull(.weights)) {
+    if (is.null(.weights)) {
       xgboost::xgboost(data = data, label = target, objective = obj, num_class = num_class, ...)
     } else {
       xgb.dmat = xgboost::xgb.DMatrix(data = data, label = target, weight = .weights)

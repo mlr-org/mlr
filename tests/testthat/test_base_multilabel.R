@@ -205,4 +205,14 @@ test_that("MultilabelNestedStackingWrapper", {
   pred = predict(mod, multilabel.task)
   p = performance(pred)
   expect_true(!is.na(p))
+  # 3 targets
+  threeTargetDf = getTaskData(multilabel.task)
+  threeTargetDf$y3 = threeTargetDf$y2
+  multilabel3t.task = makeMultilabelTask(data = threeTargetDf, target = c("y1", "y2", "y3"))
+  mod = train(lrn2, multilabel3t.task)
+  pred = predict(mod, multilabel3t.task)
+  p = performance(pred)
+  expect_true(!is.na(p))
+  pmulti = getMultilabelBinaryPerformances(pred, list(mmce))
+  expect_true(!any(is.na(pmulti)))
 })

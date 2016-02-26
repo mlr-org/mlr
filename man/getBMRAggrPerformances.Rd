@@ -21,7 +21,7 @@ Default is all.}
 
 \item{as.df}{[\code{character(1)}]\cr
 Return one data.frame as result - or a list of lists of objects?.
-Default is \code{FALSE}}
+Default is \code{FALSE}.}
 }
 \value{
 [\code{list} | \code{data.frame}]. See above.
@@ -30,8 +30,6 @@ Default is \code{FALSE}}
 Either a list of lists of \dQuote{aggr} numeric vectors, as returned by
 \code{\link{resample}}, or these objects are rbind-ed with extra columns
 \dQuote{task.id} and \dQuote{learner.id}.
-
-Note: Measure values will be \code{NA} for \code{\link{ResampleDesc}}s with \code{predict} is \dQuote{train}
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
@@ -43,6 +41,7 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRFeatSelResults}},
   \code{\link{getBMRFilteredFeatures}},
   \code{\link{getBMRLearnerIds}},
+  \code{\link{getBMRLearnerShortNames}},
   \code{\link{getBMRLearners}},
   \code{\link{getBMRMeasureIds}},
   \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},

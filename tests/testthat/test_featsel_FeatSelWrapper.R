@@ -17,4 +17,3 @@ test_that("FeatSelWrapper", {
   perfs = extractSubList(r$extract, "y")
   expect_true(is.numeric(perfs) && length(perfs) == 2L && !any(is.na(perfs)))
 })
-

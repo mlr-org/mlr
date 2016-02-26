@@ -1,3 +1,4 @@
+context("learners_all_classif")
 
 test_that("learners work: classif ", {
 
@@ -146,4 +147,3 @@ test_that("WeightedClassWrapper on all multiclass learners",  {
     expect_true(all(cm3[, levs[3]] >= cm2[, levs[3]]))
   })
 })
-

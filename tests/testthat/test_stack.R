@@ -1,4 +1,4 @@
-context("Stacking")
+context("stack")
 
 checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {
   base = lapply(base, makeLearner, predict.type = bms.pt)
@@ -53,6 +53,14 @@ test_that("Stacking works", {
   }
 })
 
+test_that("Stacking works with wrapped learners (#687)", {
+  base = c("classif.rpart")
+  lrns = lapply(base, makeLearner)
+  lrns = lapply(lrns, setPredictType, "prob")
+  lrns[[1]] = makeFilterWrapper(lrns[[1]], fw.abs = 2)
+  m = makeStackedLearner(base.learners = lrns, predict.type = "prob", method = "hill.climb")
+})
+
 test_that("Parameters for hill climb works", {
   tsk = binaryclass.task
   base = c("classif.rpart", "classif.lda", "classif.svm")
@@ -64,7 +72,7 @@ test_that("Parameters for hill climb works", {
   res = predict(tmp, tsk)
 
   expect_equal(sum(tmp$learner.model$weights), 1)
-  
+
   metric = function(pred, true) {
     pred = colnames(pred)[max.col(pred)]
     tb = table(pred, true)
@@ -75,7 +83,7 @@ test_that("Parameters for hill climb works", {
     parset = list(replace = TRUE, bagprob = 0.7, bagtime = 3, init = 2, metric = metric))
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
-  
+
   expect_equal(sum(tmp$learner.model$weights), 1)
 
 })
@@ -89,8 +97,8 @@ test_that("Parameters for compress model", {
                          parset = list(k = 5, prob = 0.3))
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
-  
-  
+
+
   tsk = regr.task
   base = c("regr.rpart", "regr.svm")
   lrns = lapply(base, makeLearner)
@@ -100,4 +108,3 @@ test_that("Parameters for compress model", {
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
 })
-

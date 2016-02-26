@@ -1,15 +1,15 @@
 context("regr_bst")
 
 test_that("classif_bst", {
-  requirePackages("bst", default.method = "load")
-  
+  requirePackagesOrSkip("bst", default.method = "load")
+
   parset.list1 = list(
     list(),
     list(cost = 0.6),
     list(ctrl = bst::bst_control(mstop = 40L)),
     list(learner = "tree", control.tree = list(maxdepth = 2L))
   )
-  
+
   parset.list2 = list(
     list(),
     list(cost = 0.6),
@@ -19,7 +19,7 @@ test_that("classif_bst", {
 
   old.predicts.list = list()
   xind = names(regr.num.train) != regr.num.target
-  
+
   for (i in 1:length(parset.list1)) {
     parset = parset.list1[[i]]
     parset$y = regr.num.train[, regr.num.target]

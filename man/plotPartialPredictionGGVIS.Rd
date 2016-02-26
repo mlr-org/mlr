@@ -2,7 +2,7 @@
 % Please edit documentation in R/generatePartialPrediction.R
 \name{plotPartialPredictionGGVIS}
 \alias{plotPartialPredictionGGVIS}
-\title{Plot a partial prediction using ggvis}
+\title{Plot a partial prediction using ggvis.}
 \usage{
 plotPartialPredictionGGVIS(obj, interact = NULL, p = 1)
 }
@@ -46,8 +46,6 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotLearningCurve}},
   \code{\link{plotPartialPrediction}},
   \code{\link{plotROCCurves}},
-  \code{\link{plotROCRCurvesGGVIS}},
-  \code{\link{plotROCRCurves}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }

@@ -1,10 +1,18 @@
 mlr_new:
 - Add nested stacking for multilabel classification
+
+mlr_2.9:
+- SMOTEWrapper: fix a bug where "sw.nn" was not correctly passed down
+- removed classif.bartMachine and regr.bartMachine, lead to coredumps even in
+  other learners when loaded.
+- classif.blackboost, regr.blackboost: made sure that arg "stump" is passed on
+  correctly
+
+mlr_2.8:
 - Feature filter "univariate" had a bad name, was deprecated and is now called
  "univariate.model.score". The new one also has better defaults.
 - (generate/plot)PartialPrediction: added new arg "geom" for tile plots
 - small fix for plotBMRSummary
-- removed learners: classif.randomForestSRCSyn, regr.randomForestSRCSyn
 - the ModelMultiplexer inherits its predict.type from the base learners now
 - check that learners in an ensemble have the same predict.type
 - new function getBMRModels to extract stored models from a benchmark result
@@ -21,6 +29,9 @@ mlr_new:
   predict were not passed down correctly
 - Fixed a bug where the function capLargeValues wasn't working if you passed a task.
 - capLargeValues now has a new argument "target", to prevent from capping response values.
+- classif.gbm, regr.gbm: Updated possible 'distribution' settings a bit.
+- oversample, undersample, makeOversampleWrapper, makeUndersampleWrapper, makeOverBaggingWrapper:
+  Added arguments to specifically select the sampled class.
 
 - API changes
 -- listLearners now returns a data frame with properties of the learners if
@@ -29,10 +40,17 @@ mlr_new:
 - new functions
 -- getBMRModels
 
+- removed functions
+-- generateROCRCurvesData, plotROCRCurves, plotROCRCurvesGGVIS
+
 new learners
 -- classif.randomForestSRCSyn
+-- classif.cvglmnet
 -- regr.randomForestSRCSyn
 -- cluster.dbscan
+
+-new measures
+-- rsq, arsq, expvar
 
 mlr_2.7:
 - New argument "models" for function benchmark

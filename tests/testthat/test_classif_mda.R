@@ -1,7 +1,8 @@
 context("classif_mda")
 
 test_that("classif_mda", {
-  requirePackages("!mda", default.method = "load")
+  requirePackagesOrSkip("!mda", default.method = "load")
+
   parset.list = list(
     list(start.method = "lvq"),
     list(start.method = "lvq", subclasses = 2),
@@ -39,4 +40,3 @@ test_that("classif_mda", {
     parset = list(start.method = "lvq", subclasses = 17))
 
 })
-

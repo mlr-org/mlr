@@ -1,7 +1,8 @@
 context("regr_penalized_lasso")
 
 test_that("regr_penalized_lasso", {
-  requirePackages("!penalized", default.method = "load")
+  requirePackagesOrSkip("!penalized", default.method = "load")
+
   parset.list = list(
     list(),
     list(lambda1 = 0.3),

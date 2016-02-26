@@ -1,7 +1,8 @@
 context("regr_glmnet")
 
 test_that("regr_glmnet", {
-  requirePackages("glmnet", default.method = "load")
+  requirePackagesOrSkip("glmnet", default.method = "load")
+
   parset.list = list(
     list(),
     list(alpha = 0.7),
@@ -49,4 +50,3 @@ test_that("regr_glmnet works with poisson", {
   r = holdout(lrn, task)
   expect_true(!is.na(r$aggr))
 })
-

@@ -32,16 +32,14 @@ For a list of features, use \code{\link{listFilterMethods}}.
 \code{getFilterValues} is deprecated in favor of \code{\link{generateFilterValuesData}}.
 }
 \seealso{
-Other filter: \code{\link{FilterValues}},
-  \code{\link{filterFeatures}},
+Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilteredFeatures}},
   \code{\link{makeFilterWrapper}},
   \code{\link{plotFilterValuesGGVIS}},
   \code{\link{plotFilterValues}}
 
-Other filter: \code{\link{FilterValues}},
-  \code{\link{filterFeatures}},
+Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilteredFeatures}},
   \code{\link{makeFilterWrapper}},
@@ -53,7 +51,6 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateFilterValuesData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialPredictionData}},
-  \code{\link{generateROCRCurvesData}},
   \code{\link{generateThreshVsPerfData}}
 }
 

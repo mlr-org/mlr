@@ -5,14 +5,14 @@
 #'
 #' @template arg_learner
 #' @template arg_task
-#' @param subset [\code{integer} | \code{integer}]\cr
+#' @param subset [\code{integer} | \code{logical}]\cr
 #'   An index vector specifying the training cases to be used for fitting.
 #'   By default the complete data set is used.
 #'   Logical vectors will be transformed to integer with \code{\link[base]{which}}.
 #' @param weights [\code{numeric}]\cr
 #'   Optional, non-negative case weight vector to be used during fitting.
 #'   If given, must be of same length as \code{subset} and in corresponding order.
-#'   By default \code{NULL} which means no weights are used unless specified in the task ([\code{\link{Task}}]).
+#'   By default \code{NULL} which means no weights are used unless specified in the task (\code{\link{Task}}).
 #'   Weights from the task will be overwritten.
 #' @return [\code{\link{WrappedModel}}].
 #' @export

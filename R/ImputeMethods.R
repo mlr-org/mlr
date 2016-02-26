@@ -41,7 +41,8 @@ simpleImpute = function(data, target, col, const) {
 }
 
 
-#' Built in imputation methods
+#' Built-in imputation methods.
+#'
 #' The built-ins are:
 #' \itemize{
 #'   \item \code{imputeConstant(const)} for imputation using a constant value,

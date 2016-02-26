@@ -5,6 +5,7 @@
 #'
 #' @family generate_plot_data
 #' @family thresh_vs_perf
+#' @aliases ThreshVsPerfData
 #'
 #' @template arg_plotroc_obj
 #' @template arg_measures
@@ -60,33 +61,40 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
       names(obj) = extractSubList(obj, "learner.id")
     obj = extractSubList(obj, "pred", simplify = FALSE)
   }
+
   assertList(obj, names = "unique")
   td = extractSubList(obj, "task.desc", simplify = FALSE)[[1L]]
   measures = checkMeasures(measures, td)
   mids = replaceDupeMeasureNames(measures, "id")
   names(measures) = mids
-  thseq = seq(0, 1, length.out = gridsize)
-  grid = data.frame(threshold = thseq)
-  obj = lapply(obj, function(x) {
-    if (all(sapply(obj, function(x) inherits(x, "ResamplePrediction"))) & !aggregate) {
-      do.call("rbind", lapply(thseq, function(threshold) {
-        pp = setThreshold(x, threshold = threshold)
-        t(sapply(unique(x$data$iter), function(i) {
+  grid = data.frame(threshold = seq(0, 1, length.out = gridsize))
+  resamp = all(sapply(obj, function(x) inherits(x, "ResamplePrediction")))
+  out = lapply(obj, function(x) {
+    do.call("rbind", lapply(grid$threshold, function(th) {
+      pp = setThreshold(x, threshold = th)
+      if (!aggregate & resamp) {
+        iter = seq_len(pp$instance$desc$iters)
+        asMatrixRows(lapply(iter, function(i) {
           pp$data = pp$data[pp$data$iter == i, ]
-          c(performance(pp, measures = measures), "iter" = i)
+          c(setNames(performance(pp, measures = measures), mids), "iter" = i, "threshold" = th)
         }))
-      }))
-    } else {
-      asMatrixRows(lapply(thseq, function(threshold) {
-        pp = setThreshold(x, threshold = threshold)
-        performance(pp, measures = measures)
-      }), col.names = mids)
-    }
+      } else {
+        c(setNames(performance(pp, measures = measures), mids), "threshold" = th)
+      }
+    }))
   })
-  out = plyr::ldply(obj, .id = "learner")
+
+  if (length(obj) == 1L & inherits(obj[[1L]], "Prediction")) {
+    out = out[[1L]]
+    colnames(out)[!colnames(out) %in% c("iter", "threshold", "learner")] = mids
+  } else {
+    out = plyr::ldply(out, .id = "learner")
+    colnames(out)[!colnames(out) %in% c("iter", "threshold", "learner")] = mids
+  }
+
   makeS3Obj("ThreshVsPerfData",
             measures = measures,
-            data = cbind(grid, out),
+            data = as.data.frame(out),
             aggregate = aggregate)
 }
 
@@ -127,37 +135,54 @@ plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_, pretty.n
 
   if (pretty.names) {
     mnames = replaceDupeMeasureNames(obj$measures, "name")
-    colnames(obj$data) = mapValues(colnames(obj$data),
-                                   names(obj$measures),
-                                   mnames)
-  } else
+    colnames(obj$data) = mapValues(colnames(obj$data), names(obj$measures), mnames)
+  } else {
     mnames = names(obj$measures)
+  }
+
+  id.vars = "threshold"
+  resamp = "iter" %in% colnames(obj$data)
+  if (resamp) id.vars = c(id.vars, "iter")
+  if ("learner" %in% colnames(obj$data)) id.vars = c(id.vars, "learner")
 
   data = reshape2::melt(obj$data,
-                        measure.vars = mnames,
-                        variable.name = "measure", value.name = "performance",
-                        id.vars = c("learner", "threshold"))
-  nlearn = length(unique(data$learner))
+              measure.vars = mnames,
+              variable.name = "measure", value.name = "performance",
+              id.vars = id.vars)
+  if (!is.null(data$learner))
+    nlearn = length(unique(data$learner))
+  else
+    nlearn = 1L
   nmeas = length(unique(data$measure))
 
   if ((color == "learner" & nlearn == 1L) | (color == "measure" & nmeas == 1L))
     color = NULL
+
   if ((facet == "learner" & nlearn == 1L) | (facet == "measure" & nmeas == 1L))
     facet = NULL
 
-  if (!is.null(color))
-    plt = ggplot2::ggplot(data, aes_string(x = "threshold", y = "performance", color = color))
-  else
-    plt = ggplot2::ggplot(data, aes_string(x = "threshold", y = "performance"))
-  plt = plt + ggplot2::geom_line()
+  if (resamp & !obj$aggregate & is.null(color)) {
+    group = "iter"
+  } else if (resamp & !obj$aggregate & !is.null(color)) {
+    data$int = interaction(data[["iter"]], data[[color]])
+    group = "int"
+  } else {
+    group = NULL
+  }
+
+  plt = ggplot(data, aes_string(x = "threshold", y = "performance"))
+  plt = plt + geom_line(aes_string(group = group, color = color))
+
   if (!is.na(mark.th))
-    plt = plt + ggplot2::geom_vline(xintercept = mark.th)
+    plt = plt + geom_vline(xintercept = mark.th)
+
   if (!is.null(facet))
-    plt = plt + ggplot2::facet_wrap(as.formula(paste("~", facet)), scales = "free_y")
+    plt = plt + facet_wrap(facet, scales = "free_y")
   else if (length(obj$measures) == 1L)
     plt = plt + ylab(obj$measures[[1]]$name)
   else
     plt = plt + ylab("performance")
+
   return(plt)
 }
 #' @title Plot threshold vs. performance(s) for 2-class classification using ggvis.
@@ -208,69 +233,90 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
   } else
     mnames = names(obj$measures)
 
+  id.vars = "threshold"
+  resamp = "iter" %in% colnames(obj$data)
+  if (resamp) id.vars = c(id.vars, "iter")
+  if ("learner" %in% colnames(obj$data)) id.vars = c(id.vars, "learner")
+
   data = reshape2::melt(obj$data,
-                        measure.vars = mnames,
-                        variable.name = "measure", value.name = "performance",
-                        id.vars = c("learner", "threshold"))
+              measure.vars = mnames,
+              variable.name = "measure", value.name = "performance",
+              id.vars = id.vars)
   nmeas = length(unique(data$measure))
-  nlearn = length(unique(data$learner))
+
+  if (!is.null(data$learner))
+    nlearn = length(unique(data$learner))
+  else
+    nlearn = 1L
 
   if ((color == "learner" & nlearn == 1L) | (color == "measure" & nmeas == 1L))
     color = NULL
   if ((interaction == "learner" & nlearn == 1L) | (interaction == "measure" & nmeas == 1L))
     interaction = NULL
 
-  create_plot = function(data, color, measures) {
-    if (!is.null(color)) {
-      plt = ggvis::ggvis(data, ggvis::prop("x", as.name("threshold")),
-                         ggvis::prop("y", as.name("performance")),
-                         ggvis::prop("stroke", as.name(color)))
-    } else {
-      plt = ggvis::ggvis(data, ggvis::prop("x", as.name("threshold")),
-                         ggvis::prop("y", as.name("performance")))
-    }
-    plt = ggvis::layer_lines(plt)
+  if (resamp & !obj$aggregate & is.null(color)) {
+    group = "iter"
+  } else if (resamp & !obj$aggregate & !is.null(color)) {
+    group = c("iter", color)
+  } else {
+    group = NULL
+  }
+
+  create_plot = function(data, color = NULL, group = NULL, measures) {
+    if (!is.null(color))
+      plt = ggvis::ggvis(data, ggvis::prop("x", as.name("threshold")), ggvis::prop("y", as.name("performance")),
+                  ggvis::prop("stroke", as.name(color)))
+    else
+      plt = ggvis::ggvis(data, ggvis::prop("x", as.name("threshold")), ggvis::prop("y", as.name("performance")))
+
+    if (!is.null(group))
+      plt = ggvis::group_by(plt, .dots = group)
+
+    plt = ggvis::layer_paths(plt)
+
     if (!is.na(mark.th) & is.null(interaction)) { ## cannot do vline with reactive data
       vline_data = data.frame(x2 = rep(mark.th, 2), y2 = c(min(data$perf), max(data$perf)),
                               measure = obj$measures[1])
-      plt = ggvis::layer_paths(plt, ggvis::prop("x", as.name("x2")),
-                               ggvis::prop("y", as.name("y2")),
-                               ggvis::prop("stroke", "grey", scale = FALSE), data = vline_data)
+      plt = ggvis::layer_lines(plt, ggvis::prop("x", as.name("x2")),
+                        ggvis::prop("y", as.name("y2")),
+                        ggvis::prop("stroke", "grey", scale = FALSE), data = vline_data)
     }
     plt = ggvis::add_axis(plt, "x", title = "threshold")
+
     if (length(measures) > 1L)
       plt = ggvis::add_axis(plt, "y", title = "performance")
     else
       plt = ggvis::add_axis(plt, "y", title = measures[[1]]$name)
+
     plt
   }
 
   if (!is.null(interaction)) {
     ui = shiny::shinyUI(
-        shiny::pageWithSidebar(
-            shiny::headerPanel("Threshold vs. Performance"),
-            shiny::sidebarPanel(
-                shiny::selectInput("interaction_select",
-                                   paste("choose a", interaction),
-                                   levels(data[[interaction]]))
-            ),
-            shiny::mainPanel(
-                shiny::uiOutput("ggvis_ui"),
-                ggvis::ggvisOutput("ggvis")
-            )
-        ))
+      shiny::pageWithSidebar(
+        shiny::headerPanel("Threshold vs. Performance"),
+        shiny::sidebarPanel(
+          shiny::selectInput("interaction_select",
+                      paste("choose a", interaction),
+                      levels(data[[interaction]]))
+        ),
+        shiny::mainPanel(
+          shiny::uiOutput("ggvis_ui"),
+          ggvis::ggvisOutput("ggvis")
+        )
+      ))
     server = shiny::shinyServer(function(input, output) {
       data_sub = shiny::reactive(data[which(data[[interaction]] == input$interaction_select), ])
-      plt = create_plot(data_sub, color, obj$measures)
+      plt = create_plot(data_sub, color, group, obj$measures)
       ggvis::bind_shiny(plt, "ggvis", "ggvis_ui")
     })
     shiny::shinyApp(ui, server)
   } else {
-    create_plot(data, color, obj$measures)
+    create_plot(data, color, group, obj$measures)
   }
 }
 
-#' @title Plots a ROC curve using ggplot2
+#' @title Plots a ROC curve using ggplot2.
 #'
 #' @description
 #' Plots a ROC curve from predictions.
@@ -278,8 +324,10 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
 #' @family plot
 #' @family thresh_vs_perf
 #'
-#' @template arg_plotroc_obj
-#' @template arg_measures
+#' @param obj [\code{ThreshVsPerfData}]\cr
+#'   Result of \code{\link{generateThreshVsPerfData}}.
+#' @param measures [\code{list(2)} of \code{\link{Measure}}]\cr
+#'   Default is the first 2 measures passed to \code{\link{generateThreshVsPerfData}}.
 #' @param diagonal [\code{logical(1)}]\cr
 #'   Whether to plot a dashed diagonal line.
 #'   Default is \code{TRUE}.
@@ -304,8 +352,12 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
 #' roc_l = generateThreshVsPerfData(list(boot = r, cv = r2), list(fpr, tpr), aggregate = FALSE)
 #' plotROCCurves(roc_l)
 #' }
-plotROCCurves = function(obj, measures = obj$measures[1:2], diagonal = TRUE, pretty.names = TRUE) {
+plotROCCurves = function(obj, measures, diagonal = TRUE, pretty.names = TRUE) {
   assertClass(obj, "ThreshVsPerfData")
+
+  if (missing(measures))
+    measures = obj$measures[1:2]
+
   assertList(measures, "Measure", len = 2)
   assertFlag(diagonal)
   assertFlag(pretty.names)
@@ -314,11 +366,14 @@ plotROCCurves = function(obj, measures = obj$measures[1:2], diagonal = TRUE, pre
     names(measures) = extractSubList(measures, "id")
 
   if (pretty.names)
-    mnames = replaceDupeMeasureNames(obj$measures, "name")
+    mnames = replaceDupeMeasureNames(measures, "name")
   else
-    mnames = names(obj$measures)
+    mnames = names(measures)
 
-  mlearn = length(unique(obj$data$learner)) > 1L
+  if (!is.null(obj$data$learner))
+    mlearn = length(unique(obj$data$learner)) > 1L
+  else
+    mlearn = FALSE
   resamp = "iter" %in% colnames(obj$data)
 
   if (!obj$aggregate & mlearn & resamp) {
@@ -342,7 +397,7 @@ plotROCCurves = function(obj, measures = obj$measures[1:2], diagonal = TRUE, pre
   if (length(unique(obj$data$learner)) > 1L)
     p = p + facet_wrap(~ learner)
 
-  if (diagonal & all(sapply(obj$data[, names(measures)], max) <= 1))
+  if (diagonal & all(sapply(obj$data[, names(measures)], function(x) max(x, na.rm = TRUE)) <= 1))
     p = p + geom_abline(aes(intercept = 0, slope = 1), linetype = "dashed", alpha = .5)
   p
 }

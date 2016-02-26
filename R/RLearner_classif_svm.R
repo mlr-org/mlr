@@ -14,7 +14,6 @@ makeRLearner.classif.svm = function() {
       makeNumericLearnerParam(id = "gamma", lower = 0, requires = quote(kernel!="linear")),
       makeNumericLearnerParam(id = "cachesize", default = 40L),
       makeNumericLearnerParam(id = "tolerance", default = 0.001, lower = 0),
-      makeNumericLearnerParam(id = "epsilon", default = 0.1, lower = 0),
       makeLogicalLearnerParam(id = "shrinking", default = TRUE),
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L, tunable = FALSE),
       makeLogicalLearnerParam(id = "fitted", default = TRUE, tunable = FALSE),

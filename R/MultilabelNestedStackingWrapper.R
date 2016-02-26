@@ -98,7 +98,7 @@ predictLearner.MultilabelNestedStackingWrapper = function(.learner, .model, .new
     }
   } else {
     for (tn in names(models)) {
-      predmatrix[, tn] = getPredictionProbabilities(predict(models[[tn]], newdata = newdata))
+      predmatrix[, tn] = getPredictionProbabilities(predict(models[[tn]], newdata = newdata), cl = "TRUE")
       newdata[paste(tn)] = predmatrix[, tn]
     }
   }

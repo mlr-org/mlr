@@ -2,7 +2,7 @@
 % Please edit documentation in R/Filter.R
 \name{makeFilter}
 \alias{makeFilter}
-\title{Create a feature filter}
+\title{Create a feature filter.}
 \usage{
 makeFilter(name, desc, pkg, supported.tasks, supported.features, fun)
 }

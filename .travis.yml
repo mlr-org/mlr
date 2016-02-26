@@ -1,13 +1,15 @@
 language: r
+sudo: required
 env:
     global:
         - _R_CHECK_TIMINGS_=0
+        - _R_CHECK_FORCE_SUGGESTS_=0
         - secure: "WFbdUIQRi7VYUHceKrg9xnw7m+8SK658rmgWPW++zWq5J4n0ZLuTRdKHu7ijyK9zOzNGjLF+NzvnwPS+yMPJwTX/s82hrC5GAMrYs3shEvR95PwFx42nfjqU5fsKsZ9gYpqIuZoJs32yPOJ/9XBLHU8rUv5+x4Z1zM2hBJHAn74="
 branches:
     only:
         - master
         - ci_nojava
-        - task_ops
+        - test_checkmate
 warnings_are_errors: true
 r_check_args: "--as-cran --run-donttest"
 apt_packages:
@@ -108,7 +110,7 @@ r_binary_packages:
     - TH.data
     - XML
 before_install:
-    - sudo R CMD javareconf
+    - sudo $HOME/R-bin/bin/R CMD javareconf
     - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test -y
     - sudo apt-get -qq update
     - sudo apt-get -qq install gcc-4.8
@@ -117,10 +119,11 @@ before_install:
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 90
     - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
     - sudo update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-4.8 90
+    - Rscript -e 'install.packages("devtools", repos = "http://cran.rstudio.com")'
 before_script:
     - curl -L https://raw.githubusercontent.com/mllg/travis-r-tools/master/update-packages.r -o /tmp/update-packages.r
     - Rscript /tmp/update-packages.r
-    - java -cp /usr/local/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
+    - java -cp /usr/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
 
 after_success:
     - git checkout master

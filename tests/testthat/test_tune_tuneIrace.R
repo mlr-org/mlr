@@ -152,4 +152,3 @@ test_that("irace works with unnamed discrete values", {
   )
   res = tuneParams(lrn, multiclass.task, hout, par.set = ps, control = ctrl)
 })
-

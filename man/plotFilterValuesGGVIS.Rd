@@ -28,8 +28,7 @@ plotFilterValuesGGVIS(fv)
 }
 }
 \seealso{
-Other filter: \code{\link{FilterValues}},
-  \code{\link{filterFeatures}},
+Other filter: \code{\link{filterFeatures}},
   \code{\link{generateFilterValuesData}},
   \code{\link{getFilterValues}},
   \code{\link{getFilteredFeatures}},
@@ -47,8 +46,6 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotPartialPredictionGGVIS}},
   \code{\link{plotPartialPrediction}},
   \code{\link{plotROCCurves}},
-  \code{\link{plotROCRCurvesGGVIS}},
-  \code{\link{plotROCRCurves}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }

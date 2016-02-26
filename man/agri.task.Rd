@@ -3,7 +3,7 @@
 \docType{data}
 \name{agri.task}
 \alias{agri.task}
-\title{European Union Agricultural Workforces clustering task}
+\title{European Union Agricultural Workforces clustering task.}
 \description{
 Contains the task (\code{agri.task}).
 }

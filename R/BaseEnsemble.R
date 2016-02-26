@@ -55,7 +55,7 @@ makeBaseEnsemble = function(id, base.learners, bls.type = NULL,
     package = unique(unlist(extractSubList(base.learners, "package"))),
     par.set = par.set.all,
     par.vals = par.vals,
-    properties = Reduce(intersect, extractSubList(base.learners, "properties", simplify = FALSE)),
+    properties = Reduce(intersect, lapply(base.learners, getLearnerProperties)),
     predict.type = "response")
 
   lrn$base.learners = setNames(base.learners, ids)

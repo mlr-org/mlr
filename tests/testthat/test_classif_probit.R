@@ -18,7 +18,3 @@ test_that("classif_probit", {
 
   testCV("classif.probit", binaryclass.df, binaryclass.target, tune.train = tt, tune.predict = tp )
 })
-
-
-
-

@@ -1,16 +1,13 @@
+#' @import methods
+#' @importFrom survival Surv is.Surv
 #' @import BBmisc
 #' @import checkmate
-#' @import ggplot2
-#' @import graphics
-#' @import methods
 #' @import parallelMap
 #' @import ParamHelpers
-#' @import plyr
-#' @import reshape2
+#' @import ggplot2
 #' @import stats
-#' @import utils
-#' @importFrom survival Surv
-#' @importFrom survival is.Surv
+#' @import stringi
+#' @import data.table
 
 .onAttach = function(libname, pkgname) {
   configureMlr()

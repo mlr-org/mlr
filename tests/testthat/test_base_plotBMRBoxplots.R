@@ -1,4 +1,4 @@
-context("BenchmarkResult")
+context("plotBMRBoxplots")
 
 test_that("BenchmarkResult", {
   lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))
@@ -11,7 +11,7 @@ test_that("BenchmarkResult", {
   path = paste0(dir, "/test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
-  #expect_equal(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), length(getBMRTaskIds(res)))
+  expect_equal(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), length(getBMRTaskIds(res)))
 })
 
 test_that("BenchmarkResult allows spaces", {

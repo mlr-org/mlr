@@ -36,7 +36,7 @@ If the type of the base learner prediction, which is set up within \code{base.le
 \dQuote{average} for averaging the predictions of the base learners,
 \dQuote{stack.nocv} for building a super learner using the predictions of the base learners,
 \dQuote{stack.cv} for building a super learner using crossvalidated predictions of the base learners.
-\dQuote{hill.climb} for averaging the predictions of the base learners, with the weights learned from 
+\dQuote{hill.climb} for averaging the predictions of the base learners, with the weights learned from
 hill climbing algorithm and
 \dQuote{compress} for compressing the model to mimic the predictions of a collection of base learners
 while speeding up the predictions and reducing the size of the model.
@@ -58,7 +58,7 @@ The default \code{NULL} uses 5-fold CV.}
   \item{\code{init}}{Number of best models being included before the selection algorithm.}
   \item{\code{bagprob}}{The proportion of models being considered in one round of selection.}
   \item{\code{bagtime}}{The number of rounds of the bagging selection.}
-  \item{\code{metric}}{The result evaluation metric function taking two parameters \code{pred} and \code{true}, 
+  \item{\code{metric}}{The result evaluation metric function taking two parameters \code{pred} and \code{true},
   the smaller the score the better.}
 }
 the parameters for \code{compress} method, including
@@ -89,17 +89,17 @@ The following stacking methods are available:
   base = c("classif.rpart", "classif.lda", "classif.svm")
   lrns = lapply(base, makeLearner)
   lrns = lapply(lrns, setPredictType, "prob")
-  m = makeStackedLearner(base.learners = lrns, 
+  m = makeStackedLearner(base.learners = lrns,
     predict.type = "prob", method = "hill.climb")
   tmp = train(m, tsk)
   res = predict(tmp, tsk)
-  
+
   # Regression
   data(BostonHousing, package = "mlbench")
   tsk = makeRegrTask(data = BostonHousing, target = "medv")
   base = c("regr.rpart", "regr.svm")
   lrns = lapply(base, makeLearner)
-  m = makeStackedLearner(base.learners = lrns, 
+  m = makeStackedLearner(base.learners = lrns,
     predict.type = "response", method = "compress")
   tmp = train(m, tsk)
   res = predict(tmp, tsk)

@@ -83,7 +83,7 @@ test.join
   \item{\bold{b632}}{\cr Aggregation for B632 bootstrap.}
   \item{\bold{b632plus}}{\cr Aggregation for B632+ bootstrap.}
   \item{\bold{testgroup.mean}}{\cr Performance values on test sets are grouped according
-    to resampling method. The mean for very group is calculated, then the mean of those means.
+    to resampling method. The mean for every group is calculated, then the mean of those means.
     Mainly used for repeated CV.}
   \item{\bold{test.join}}{\cr Performance measure on joined test sets.
     This is especially useful for small sample sizes where unbalanced group sizes have a significant impact

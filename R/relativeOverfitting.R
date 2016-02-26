@@ -5,7 +5,7 @@
 #'
 #' Currently only support for classification and regression tasks is implemented.
 #'
-#' @param rdesc [\code{\link{ResampleDesc}}\cr
+#' @param rdesc [\code{\link{ResampleDesc}}]\cr
 #'   Resampling strategy.
 #' @template arg_measures
 #' @template arg_task

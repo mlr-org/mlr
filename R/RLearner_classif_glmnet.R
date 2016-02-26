@@ -2,8 +2,7 @@
 makeRLearner.classif.glmnet = function() {
   makeRLearnerClassif(
     cl = "classif.glmnet",
-    # Required for predict to work properly :(
-    package = "!glmnet",
+    package = "glmnet",
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "s", default = 0.01, lower = 0, upper = 1, when = "predict"),
@@ -38,7 +37,7 @@ makeRLearner.classif.glmnet = function() {
     par.vals = list(s = 0.01),
     name = "GLM with Lasso or Elasticnet Regularization",
     short.name = "glmnet",
-    note = "Factors automatically get converted to dummy columns, ordered factors to integer."
+    note = "The family parameter is set to `binomial` for two-class problems and to `multinomial` otherwise. Factors automatically get converted to dummy columns, ordered factors to integer."
   )
 }
 

@@ -8,7 +8,7 @@ plotCalibration(obj, smooth = FALSE, reference = TRUE, rag = TRUE)
 }
 \arguments{
 \item{obj}{[\code{CalibrationData}]\cr
-Result of \code{\link{generateCalibrationData}}}
+Result of \code{\link{generateCalibrationData}}.}
 
 \item{smooth}{[\code{logical(1)}]\cr
 Whether to use a loess smoother.
@@ -60,8 +60,6 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotPartialPredictionGGVIS}},
   \code{\link{plotPartialPrediction}},
   \code{\link{plotROCCurves}},
-  \code{\link{plotROCRCurvesGGVIS}},
-  \code{\link{plotROCRCurves}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }
