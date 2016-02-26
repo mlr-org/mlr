@@ -1,3 +1,6 @@
+mlr_new:
+- Add nested stacking for multilabel classification
+
 mlr_2.9:
 - SMOTEWrapper: fix a bug where "sw.nn" was not correctly passed down
 - removed classif.bartMachine and regr.bartMachine, lead to coredumps even in
