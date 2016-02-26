@@ -34,5 +34,6 @@ trainLearner.classif.gaterSVM = function(.learner, .task, .subset, .weights = NU
 #' @export
 predictLearner.classif.gaterSVM = function(.learner, .model, .newdata, ...) {
   factor(predict(.model$learner.model, newdata = .newdata, ...),
-    labels = .model$factor.levels$Class)
+    levels = c(-1, 1),
+    labels = .model$factor.levels[[1]])
 }

@@ -1,4 +1,4 @@
-context("ordered factors")
+context("orderedfactors")
 
 test_that("ordered factors", {
   data(BreastCancer, package = "mlbench")

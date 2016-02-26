@@ -1,4 +1,4 @@
-context("learners: general")
+context("learners_all_general")
 
 test_that("listLearners", {
   x1 = mylist()
@@ -38,4 +38,3 @@ test_that("listLearners for task", {
   expect_true(length(intersect(x2$class, x3$class)) == 0)
   expect_true(all(x2$class %in% x1$class))
 })
-

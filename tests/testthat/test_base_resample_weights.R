@@ -1,4 +1,4 @@
-context("resample: weights")
+context("resample_weights")
 
 test_that("resample works with weights", {
   task = makeClassifTask(data = iris, target = "Species", weights = as.integer(iris$Species))

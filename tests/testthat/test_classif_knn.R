@@ -1,7 +1,8 @@
 context("classif_knn")
 
 test_that("classif_knn", {
-  requirePackages("class", default.method = "load")
+  requirePackagesOrSkip("class", default.method = "load")
+
   parset.list = list(
     list(),
     list(k = 10)
@@ -43,4 +44,3 @@ test_that("classif_knn", {
   testCVParsets("classif.knn", multiclass.df, multiclass.target, tune.train = tt, tune.predict = tp,
     parset.list = parset.list)
 })
-

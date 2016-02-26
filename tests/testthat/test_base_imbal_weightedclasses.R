@@ -1,4 +1,4 @@
-context("WeightedClassesWrapper")
+context("weightedclasses")
 
 test_that("WeightedClassesWrapper, binary",  {
   pos = getTaskDescription(binaryclass.task)$positive

@@ -1,8 +1,8 @@
 context("classif_mlp")
 
 test_that("classif_mlp", {
-  requirePackages("RSNNS", default.method = "load")
-  
+  requirePackagesOrSkip("RSNNS", default.method = "load")
+
   set.seed(getOption("mlr.debug.seed"))
   capture.output({
     # neuralnet is not dealing with formula with `.` well
@@ -13,8 +13,8 @@ test_that("classif_mlp", {
     p = max.col(p)
     p = factor(p, labels = binaryclass.class.levs)
   })
-  
+
   set.seed(getOption("mlr.debug.seed"))
-  testSimple("classif.mlp", binaryclass.df, binaryclass.target, binaryclass.train.inds, p, 
+  testSimple("classif.mlp", binaryclass.df, binaryclass.target, binaryclass.train.inds, p,
              parset = list(size = 7, maxit = 100))
 })

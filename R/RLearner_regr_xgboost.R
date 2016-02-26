@@ -48,11 +48,11 @@ trainLearner.regr.xgboost = function(.learner, .task, .subset, .weights = NULL, 
 
   parlist = list(...)
   obj = parlist$objective
-  if (testNull(obj)) {
+  if (is.null(obj)) {
     obj = "reg:linear"
   }
 
-  if (testNull(.weights)) {
+  if (is.null(.weights)) {
     xgboost::xgboost(data = data, label = target, objective = obj, ...)
   } else {
     xgb.dmat = xgboost::xgb.DMatrix(data = data, label = target, weight = .weights)

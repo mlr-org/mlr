@@ -1,4 +1,4 @@
-context("Impute")
+context("impute")
 
 test_that("Impute data frame", {
   data = data.frame(f = letters[c(1,1,1,1,2)], x = rep(1., 5), y = c(1, 2, 3, 3, 4), z = NA)
@@ -95,6 +95,3 @@ test_that("ImputeWrapper", {
   expect_output(print(mm), "Model")
   expect_is(mm, "WrappedModel")
 })
-
-
-

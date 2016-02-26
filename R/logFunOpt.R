@@ -40,7 +40,7 @@ logFunTune = function(learner, task, resampling, measures, par.set, control, opt
 logFunFeatSel = function(learner, task, resampling, measures, par.set, control, opt.path, dob,
   x, y, remove.nas, stage, prev.stage) {
 
-  x.string = sprintf("%s (%i bits)", clipString(collapse(x, ""), 30L), sum(x))
+  x.string = sprintf("%s (%i bits)", clipString(collapse(x, ""), 80L), sum(x))
 
   logFunDefault(learner, task, resampling, measures, par.set, control, opt.path, dob,
     x.string, y, remove.nas, stage, prev.stage, prefixes = c("FeatSel-x", "FeatSel-y")

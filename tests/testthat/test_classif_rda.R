@@ -1,7 +1,7 @@
 context("classif_rda")
 
 test_that("classif_rda", {
-  requirePackages("klaR", default.method = "load")
+  requirePackagesOrSkip("klaR", default.method = "load")
 
   set.seed(getOption("mlr.debug.seed"))
   m = klaR::rda(formula=multiclass.formula, data=multiclass.train)

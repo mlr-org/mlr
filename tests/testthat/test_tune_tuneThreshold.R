@@ -17,5 +17,3 @@ test_that("tuneThreshold", {
   expect_true(length(tr$th) == 3 && all(tr$th >= 0) && all(tr$th <= 1))
   expect_true(tr$perf >= 0 && tr$perf < 0.1)
 })
-
-

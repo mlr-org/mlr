@@ -19,7 +19,8 @@ Authors@R: c(person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role =
     person("Erich", "Studerus", email = "erich.studerus@upkbs.ch", role =
     "aut"), person("Lars", "Kotthoff", email =
     "larsko@cs.ubc.ca", role = "aut"), person("Zachary", "Jones", email =
-    "zmj@zmjones.com", role = "ctb"))
+    "zmj@zmjones.com", role = "ctb"), person("Schiffner", "Julia", email =
+    "schiffner@math.uni-duesseldorf.de", role = "aut"))
 URL: https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 License: BSD_2_clause + file LICENSE
@@ -32,18 +33,19 @@ Depends:
     ParamHelpers (>= 1.7),
     stats
 Imports:
-    checkmate (>= 1.6.2),
+    checkmate (>= 1.7.1),
+    data.table,
     ggvis,
     methods,
     parallelMap (>= 1.3),
     plyr,
     reshape2,
     shiny,
+    stringi,
     survival
 Suggests:
     ada,
     adabag,
-    bartMachine,
     brnn,
     bst,
     care,
@@ -131,6 +133,6 @@ Suggests:
     XML
 LazyData: yes
 ByteCompile: yes
-Version: 2.8
+Version: 2.9
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1

@@ -130,7 +130,6 @@ test_that("MultilabelBinaryRelevanceWrapper", {
   expect_true(!is.na(p))
 })
 
-
 test_that("MultilabelClassifierChainsWrapper", {
   lrn1 = makeLearner("classif.rpart")
   lrn2 = makeMultilabelClassifierChainsWrapper(lrn1)

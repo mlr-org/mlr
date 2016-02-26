@@ -16,18 +16,30 @@ getMinMaxClass = function(y) {
   )
 }
 
-# resample one of the two classes cl
-# clreplace - replacement of class in argument cl, othreplace - replacement of other class in each case
-sampleBinaryClass = function(y, rate, cl, clreplace = TRUE, othreplace = TRUE, bagging = FALSE) {
-  z = getMinMaxClass(y)
-  inds1 = switch(cl, min = z$min.inds, max = z$max.inds)
-  inds2 = switch(cl, min = z$max.inds, max = z$min.inds)
+# @param y binaryclass vec
+# @param rate resample rate
+# @param cl main class to either down or upsample
+# @param resample.other.class sample with replacement from other class?
+# @return new y vec
+#
+# generates a new resampled y:
+# a) class cl is either oversampled or downsampled, depending on rate
+# b) the other binary class is either copied or boostrapped (for variance)
+sampleBinaryClass = function(y, rate, cl, resample.other.class) {
+  inds1 = which(y == cl) # indices for class cl
+  inds2 = setdiff(seq_along(y), inds1) # indices for other class
   newsize = round(length(inds1) * rate)
-  # undersampling (cl = "max"): sampling of all inds of maxClass (but newsize <= max.size)
-  # oversampling (cl = "min" and bagging = FALSE): take existing inds and sample add. inds with repl.
-  # overbagging (cl = "min" and bagging = TRUE): sampling of all inds of minClass  
-  newinds1 = if( (cl == "max") || bagging ) { sample(inds1, newsize, replace = clreplace) 
-  } else { c(inds1, sample(inds1, newsize-length(inds1), replace = clreplace)) }
-  newinds2 = sample(inds2, length(inds2), replace = othreplace)
+  # undersampling (rate < 1): reduce class1 by selecting newsize elements from it
+  if (rate < 1) {
+    newinds1 = sample(inds1, newsize, replace = FALSE)
+  # oversampling (rate > 1): take existing inds and sample add. inds with repl.
+  } else {
+    newinds1 = c(inds1, sample(inds1, newsize - length(inds1), replace = TRUE))
+  }
+  # now either copy or bootstrap other class
+  if (resample.other.class)
+    newinds2 = sample(inds2, length(inds2), replace = TRUE)
+  else
+    newinds2 = inds2
   c(newinds1, newinds2)
 }

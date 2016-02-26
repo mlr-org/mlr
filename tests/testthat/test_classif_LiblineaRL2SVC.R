@@ -1,7 +1,7 @@
 context("classif_LiblineaRL2SVC")
 
 test_that("classif_LiblineaRL2SVC", {
-  requirePackages("LiblineaR", default.method = "load")
+  requirePackagesOrSkip("LiblineaR", default.method = "load")
 
   parset.list = list(
     list(type = 1),

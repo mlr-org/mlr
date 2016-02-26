@@ -27,8 +27,3 @@ test_that("classif_binomial", {
   testProbParsets  ("classif.binomial", binaryclass.df[,-nof], binaryclass.target, binaryclass.train.inds,
     old.probs.list, parset.list)
 })
-
-
-
-
-
