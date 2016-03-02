@@ -35,9 +35,9 @@ print(cl2)
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}}, \code{\link{getParamSet}},
-  \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
-  \code{\link{setId}}, \code{\link{setPredictThreshold}},
+  \code{\link{getHyperPars}}, \code{\link{makeLearner}},
+  \code{\link{removeHyperPars}}, \code{\link{setId}},
+  \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
 }
 

@@ -83,7 +83,7 @@ print(lrn$par.vals)
 
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}}, \code{\link{getParamSet}},
+  \code{\link{getHyperPars}},
   \code{\link{removeHyperPars}},
   \code{\link{setHyperPars}}, \code{\link{setId}},
   \code{\link{setPredictThreshold}},

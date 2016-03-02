@@ -28,8 +28,8 @@ For complex wrappers only the top-level \code{predict.type} is currently set.
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}}, \code{\link{getParamSet}},
-  \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
+  \code{\link{getHyperPars}}, \code{\link{makeLearner}},
+  \code{\link{removeHyperPars}},
   \code{\link{setHyperPars}}, \code{\link{setId}},
   \code{\link{setPredictType}}
 
