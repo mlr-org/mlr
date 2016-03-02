@@ -1,11 +1,10 @@
 #'@export
-getParamSet.Learner = function(learner) {
-  assertClass(learner, classes = "Learner")
-  learner$par.set
+getParamSet.Learner = function(x) {
+  x$par.set
 }
 
 #'@export
-getParamSet.character = function(learner) {
-  learner = checkLearner(learner)
-  getParamSet(learner)
+getParamSet.character = function(x) {
+  x = checkLearner(x)
+  getParamSet(x)
 }
