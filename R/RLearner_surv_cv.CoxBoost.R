@@ -47,6 +47,7 @@ trainLearner.surv.cv.CoxBoost = function(.learner, .task, .subset, .weights = NU
     warning("Could not determine the optimal step number in cv.CoxBoost")
 
   pars = insert(pars, list(stepno = res$optimal.step))
+  pars$maxstepno = NULL
   attachTrainingInfo(do.call(CoxBoost::CoxBoost, pars), info)
 }
 
