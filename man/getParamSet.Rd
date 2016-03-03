@@ -4,7 +4,7 @@
 \alias{getParamSet}
 \title{Get a description of all possible parameter settings for a learner.}
 \usage{
-getParamSet(learner)
+getParamSet(learner, ...)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr

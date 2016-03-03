@@ -4,7 +4,7 @@
 #' @template ret_ps
 #' @family learner
 #' @export
-getParamSet = function(learner) {
+getParamSet = function(learner, ...) {
   checkLearner(learner)
   UseMethod("getParamSet")
 }
