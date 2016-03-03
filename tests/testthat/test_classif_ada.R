@@ -17,3 +17,8 @@ test_that("classif_ada", {
     binaryclass.train.inds, p, parset = list(iter = 5L))
 
 })
+
+test_that("classif_ada passes parameters correctly to rpart.control (#732)", {
+    lrn = makeLearner("classif.ada", minsplit=20, minbucket=20, cp=0.01, maxcompete=4, maxsurrogate=5, usesurrogate=2, surrogatestyle=0, maxdepth=30, xval=10)
+    train(lrn, binaryclass.task)
+})
