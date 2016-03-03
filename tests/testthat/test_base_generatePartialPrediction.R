@@ -89,7 +89,7 @@ test_that("generatePartialPredictionData", {
 
   ## check that survival tasks work with multiple features
   fs = train("surv.rpart", surv.task)
-  ds = generatePartialPredictionData(fs, input = surv.task, features = c("Petal.Width", "Petal.Length"),
+  ds = generatePartialPredictionData(fs, input = surv.task, features = c("x1", "x2"),
                                      gridsize = gridsize)
   nfeat = length(ds$features)
   n = getTaskSize(surv.task)
@@ -158,7 +158,7 @@ test_that("generatePartialPredictionData", {
                                       derivative = TRUE, gridsize = gridsize)
   fs = train(makeLearner("surv.coxph"), surv.task)
   pfs = generatePartialPredictionData(fs, input = surv.df[subset, ],
-                                      features = c("Petal.Width", "Petal.Length"),
+                                      features = c("x1", "x2"),
                                       derivative = TRUE, gridsize = gridsize)
 
   ## check that se estimation works
@@ -173,7 +173,7 @@ test_that("generatePartialPredictionData", {
   tfr = generatePartialPredictionData(fr, regr.df, features = c("lstat", "crim", "chas"),
                                       interaction = TRUE, gridsize = gridsize)
   plotPartialPrediction(tfr, geom = "tile", facet = "chas")
-  tfs = generatePartialPredictionData(fs, surv.df, c("Petal.Width", "Petal.Length"), interaction = TRUE)
+  tfs = generatePartialPredictionData(fs, surv.df, c("x1", "x2"), interaction = TRUE)
   plotPartialPrediction(tfs, geom = "tile")
 })
 
