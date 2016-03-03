@@ -123,7 +123,6 @@ multi.to.binary = function(target, codematrix) {
   if (anyMissing(codematrix))
     stop("Code matrix contains missing values!")
   levs = levels(target)
-  no.class = length(levs)
   rns = rownames(codematrix)
   if (is.null(rns) || !setequal(rns, levs))
     stop("Rownames of code matrix have to be the class levels!")

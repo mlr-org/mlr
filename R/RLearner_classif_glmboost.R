@@ -55,7 +55,7 @@ predictLearner.classif.glmboost = function(.learner, .model, .newdata, ...) {
     td = .model$task.desc
     p = p[, 1L]
     levs = c(td$negative, td$positive)
-    y = propVectorToMatrix(p, levs)
+    return(propVectorToMatrix(p, levs))
   } else {
     return(p)
   }

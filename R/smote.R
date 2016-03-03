@@ -79,7 +79,6 @@ smote = function(task, rate, nn = 5L, standardize = TRUE, alt.logic = FALSE) {
 
   if (alt.logic == TRUE) {
     n.xmin = dim(x.min.matrix)[1]
-    p = dim(x.min.matrix)[2]
 
     # range per variable
     ranges = apply(x.min.matrix, 2, max) - apply(x.min.matrix, 2, min)

@@ -199,7 +199,6 @@ getBMROptResults = function(bmr, task.ids = NULL, learner.ids = NULL, as.df = FA
 
   f = if (as.df) {
     function(x) {
-      niters = nrow(x$measures.test)
       if (inherits(x$learner, wrapper.class)) {
         xs = lapply(x$extract, fun)
         xs = lapply(1:length(xs), function(i) cbind(iter = i, xs[[i]]))

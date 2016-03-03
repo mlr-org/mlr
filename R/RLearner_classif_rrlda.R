@@ -26,5 +26,5 @@ trainLearner.classif.rrlda = function(.learner, .task, .subset, .weights = NULL,
 
 #' @export
 predictLearner.classif.rrlda = function(.learner, .model, .newdata, ...) {
-  p = as.factor(predict(.model$learner.model, x = .newdata, ...)$class)
+  as.factor(predict(.model$learner.model, x = .newdata, ...)$class)
 }

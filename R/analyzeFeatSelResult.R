@@ -26,7 +26,6 @@ analyzeFeatSelResult = function(res, reduce = TRUE) {
   features = names(op$par.set$pars)
   ctrl = res$control
   width.feat = 20L
-  width.num = 8L
 
   ##### print header
   catf("Features         : %i", length(x))
