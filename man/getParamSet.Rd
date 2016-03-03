@@ -10,6 +10,8 @@ getParamSet(learner, ...)
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
 The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+
+\item{...\cr}{Currently unused.}
 }
 \value{
 [\code{\link[ParamHelpers]{ParamSet}}].
