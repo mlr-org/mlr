@@ -7,7 +7,7 @@ makeRLearner.regr.ksvm = function() {
       makeLogicalLearnerParam(id = "scaled", default = TRUE),
       makeDiscreteLearnerParam(id = "type", default = "eps-svr", values = c("eps-svr", "nu-svr", "eps-bsvr")),
       makeDiscreteLearnerParam(id = "kernel", default = "rbfdot",
-        values = c("vanilladot", "polydot", "rbfdot", "tanhdot", "laplacedot", "besseldot", "anovadot", "splinedot", "stringdot")),
+        values = c("vanilladot", "polydot", "rbfdot", "tanhdot", "laplacedot", "besseldot", "anovadot", "splinedot")),
       makeNumericLearnerParam(id = "C",
         lower = 0, default = 1, requires = quote(type %in% c("eps-svr", "eps-bsvr"))),
       makeNumericLearnerParam(id = "nu",
