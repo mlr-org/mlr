@@ -19,6 +19,7 @@ r_github_packages:
     - berndbischl/BBmisc
     - berndbischl/parallelMap
     - berndbischl/ParamHelpers
+    - hadley/svglite
 r_binary_packages:
     - ada
     - adabag
@@ -105,7 +106,6 @@ r_binary_packages:
     - sparseLDA
     - stepPlr
     - stringi
-    - svglite
     - SwarmSVM
     - testthat
     - tgp
