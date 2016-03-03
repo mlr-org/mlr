@@ -54,7 +54,14 @@ trainLearner.classif.dcSVM = function(.learner, .task, .subset, .weights = NULL,
   min.cluster = ceiling(5*m/(k^max.levels))
   if (min.cluster>m) {
     f = getTaskFormula(.task)
-    result = e1071::svm(f, data = getTaskData(.task, .subset), probability = FALSE, ...)
+    # map kernel to corresponding e1071 kernel
+    if (!is.null(pars$kernel)) {
+      kernel = c("linear", "polynomial", "radial")[pars$kernel]
+    } else {
+      kernel = c("radial")
+    }
+    pars$kernel = kernel
+    result = do.call(e1071::svm, c(f, list(data = getTaskData(.task, .subset), probability = FALSE), pars))
     return(result)
   }
 
