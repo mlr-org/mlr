@@ -1,6 +1,6 @@
 #' @export
-getParamSet.BaseWrapper = function(x) {
-  c(x$par.set, getParamSet(x$next.learner))
+getParamSet.BaseWrapper = function(x, ...) {
+  c(x$par.set, getParamSet(x$next.learner, ...))
 }
 
 

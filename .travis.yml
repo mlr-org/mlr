@@ -100,10 +100,12 @@ r_binary_packages:
     - RWeka
     - sda
     - shiny
+    - smoof
     - sparsediscrim
     - sparseLDA
     - stepPlr
     - stringi
+    - svglite
     - SwarmSVM
     - testthat
     - tgp

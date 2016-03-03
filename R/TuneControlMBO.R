@@ -35,8 +35,8 @@ makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL
       nrow(mbo.design), budget)
   else if (!is.null(budget)) {
     if (!is.null(mbo.control$stop.conds))
-      warnf("The mbo.control object already has a stopping condition. However we add another one respecting the budget.", mbo.control$init.design.points, budget)
-    mbo.control = setMBOControlTermination(mbo.control, max.evals = budget)
+      warning("The mbo.control object already has a stopping condition. However we add another one respecting the budget.", mbo.control$init.design.points, budget)
+    mbo.control = mlrMBO::setMBOControlTermination(mbo.control, max.evals = budget)
   }
 
   x = makeTuneControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val,
