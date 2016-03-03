@@ -30,10 +30,14 @@ tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt
   force(show.info)
   force(convertx)
   force(remove.nas)
+  # remove trafos for mbo, we do this in tunerFitnFun
+  ps2 = par.set
+  for (i in seq_along(ps2$pars))
+    ps2$pars[[i]]$trafo = NULL
   f = smoof::makeSingleObjectiveFunction(
     fn = function(x) {
       tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas)
-  }, par.set = par.set, has.simple.signature = FALSE, noisy = TRUE)
+  }, par.set = ps2, has.simple.signature = FALSE, noisy = TRUE)
 }
 
 # multiple xs in parallel
