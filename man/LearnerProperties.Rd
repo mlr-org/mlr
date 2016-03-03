@@ -40,8 +40,8 @@ The learner properties are defined as follows:
 }
 \seealso{
 Other learner: \code{\link{getClassWeightParam}},
-  \code{\link{getHyperPars}}, \code{\link{makeLearner}},
-  \code{\link{removeHyperPars}},
+  \code{\link{getHyperPars}}, \code{\link{getParamSet}},
+  \code{\link{makeLearner}}, \code{\link{removeHyperPars}},
   \code{\link{setHyperPars}}, \code{\link{setId}},
   \code{\link{setPredictThreshold}},
   \code{\link{setPredictType}}
