@@ -22,7 +22,8 @@ makeRLearner.classif.randomForestSRC = function() {
       makeLogicalLearnerParam(id = "fast.restore", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(na.action = "na.impute"),
-    properties = c("missings", "numerics", "factors", "prob", "twoclass", "multiclass"),
+    properties = c("missings", "numerics", "factors", "prob", "twoclass",
+      "multiclass", "oob"),
     name = "Random Forest",
     short.name = "rfsrc",
     note = "`na.action` has been set to `na.impute` by default to allow missing data support."
@@ -43,4 +44,16 @@ predictLearner.classif.randomForestSRC = function(.learner, .model, .newdata, ..
   } else {
     return(p$class)
   }
+}
+
+getOutOfBag.classif.randomForestSRC = function(.learner, .model) {
+  mod = .model$learner.model
+  preds = as.data.frame(mod$predicted.oob)
+  if (.learner$predict.type != "prob") {
+    levs = names(preds)
+    preds.class = as.integer(apply(preds, 1L, which.max))
+    preds = as.factor(levs[preds.class])
+  }
+  err = mean(mod$err.rate[, 1L])
+  list(response = preds, err = err)
 }

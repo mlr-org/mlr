@@ -22,7 +22,7 @@ makeRLearner.surv.ranger = function() {
       makeDiscreteLearnerParam(id = "splitrule", values = c("logrank", "C"), default = "logrank")
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE),
-    properties = c("numerics", "factors", "rcens", "prob"),
+    properties = c("numerics", "factors", "rcens", "prob", "oob"),
     name = "Random Forests",
     short.name = "ranger",
     note = "By default, internal parallelization is switched off (`num.threads = 1`) and `verbose` output is disabled. Both settings are changeable."
@@ -44,4 +44,12 @@ predictLearner.surv.ranger = function(.learner, .model, .newdata, ...) {
     stop("Unsupported predict type")
   p = predict(object = .model$learner.model, data = .newdata)
   rowMeans(p$chf)
+}
+
+getOutOfBag.surv.ranger = function(.learner, .model) {
+  mod = .model$learner.model
+  err = mod$prediction.error
+  # surv.ranger only provides err rate unfortunately
+  preds = as.numeric(rep(NA, .model$task.desc$size))
+  list(response = preds, err = err)
 }

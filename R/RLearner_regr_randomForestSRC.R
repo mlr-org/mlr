@@ -22,7 +22,7 @@ makeRLearner.regr.randomForestSRC = function() {
       makeLogicalLearnerParam(id = "fast.restore", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(na.action = "na.impute"),
-    properties = c("missings", "numerics", "factors"),
+    properties = c("missings", "numerics", "factors", "oob"),
     name = "Random Forest",
     short.name = "rfsrc",
     note = "`na.action` has been set to `na.impute` by default to allow missing data support."
@@ -40,4 +40,11 @@ predictLearner.regr.randomForestSRC = function(.learner, .model, .newdata, ...) 
   p = predict(.model$learner.model, newdata = .newdata, importance = "none", ...)
   # versison 2.0 of randomForestSRC returns an array here :(
   as.numeric(p$predicted)
+}
+
+getOutOfBag.regr.randomForestSRC = function(.learner, .model) {
+  mod = .model$learner.model
+  preds = as.numeric(mod$predicted.oob)
+  err = mean(mod$err.rate)
+  list(response = preds, err = err)
 }
