@@ -1,15 +1,23 @@
 mlr_2.9:
 - SMOTEWrapper: fix a bug where "sw.nn" was not correctly passed down
 - removed classif.bartMachine and regr.bartMachine, lead to coredumps even in
-  other learners when loaded.
+  other learners when loaded
 - classif.blackboost, regr.blackboost: made sure that arg "stump" is passed on
   correctly
+- fixed parameter values for WEKA learners IBk, J48, PART, EM, SimpleKMeans,
+  XMeans
+- fixed a bug that caused hyperparameters to be not passed on correctly in the
+  ModelMultiplexer in some cases
+- various cleanups that removed unused code
 
-new learners
+- new learners
 -- surv.cv.CoxBoost
 
-removed learners
+- removed learners
 -- surv.optimCoxBoostPenalty
+
+- removed functions
+-- getParamSet generic (now in ParamHelpers package)
 
 mlr_2.8:
 - Feature filter "univariate" had a bad name, was deprecated and is now called
