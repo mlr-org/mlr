@@ -14,7 +14,7 @@ makeRLearner.classif.bdk = function() {
       makeLogicalLearnerParam(id = "contin", tunable = FALSE),
       makeLogicalLearnerParam(id = "toroidal", default = FALSE),
       makeDiscreteLearnerParam(id = "n.hood", values = c("circular", "square")),
-      makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "keep.data", default = FALSE, tunable = FALSE)
     ),
     properties = c("numerics", "twoclass", "multiclass", "prob"),
     name = "Bi-Directional Kohonen map",
@@ -27,7 +27,7 @@ makeRLearner.classif.bdk = function() {
 trainLearner.classif.bdk = function(.learner, .task, .subset, .weights = NULL, xdim, ydim, topo, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   grid = learnerArgsToControl(class::somgrid, xdim, ydim, topo)
-  kohonen::bdk(as.matrix(d$data), Y = d$target, grid = grid, keep.data = FALSE, ...)
+  kohonen::bdk(as.matrix(d$data), Y = d$target, grid = grid, ...)
 }
 
 #' @export

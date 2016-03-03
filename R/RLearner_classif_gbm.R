@@ -12,7 +12,7 @@ makeRLearner.classif.gbm = function() {
       makeNumericLearnerParam(id = "shrinkage", default = 0.001, lower = 0),
       makeNumericLearnerParam(id = "bag.fraction", default = 0.5, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "train.fraction", default = 1, lower = 0, upper = 1),
-      makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "keep.data", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights"),
@@ -32,10 +32,10 @@ trainLearner.classif.gbm = function(.learner, .task, .subset, .weights = NULL,  
     d = getTaskData(.task, .subset)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
-    gbm::gbm(f, data = d, keep.data = FALSE, ...)
+    gbm::gbm(f, data = d, ...)
   } else  {
     f = getTaskFormula(.task)
-    gbm::gbm(f, data = d, keep.data = FALSE, weights = .weights, ...)
+    gbm::gbm(f, data = d, weights = .weights, ...)
   }
 }
 
