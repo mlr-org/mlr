@@ -5,9 +5,9 @@
 # @param learner [\code{\link{Learner}}]\cr
 #   Regression learner to model performance landscape.
 # @param continue [\code{logical(1)}]\cr
-#   Resume calculation from previous run using \code[mboContinue}?
+#   Resume calculation from previous run using \code{mboContinue}?
 #   Requires \dQuote{save.file.path) to be set.
-#   Note that the \code{OptPath} in the \code{OptResult} will only include 
+#   Note that the \code{OptPath} in the \code{OptResult} will only include
 #   the evaluations after the continuation.
 #   The complete \code{OptPath} will be found in \code{$mbo.result$opt.path}.
 # @param mbo.control [\code{\link[mlrMBO]{MBOControl}}] \cr
@@ -36,7 +36,8 @@ makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL
   else if (!is.null(budget)) {
     if (!is.null(mbo.control$stop.conds))
       warning("The mbo.control object already has a stopping condition. However we add another one respecting the budget.", mbo.control$init.design.points, budget)
-    mbo.control = mlrMBO::setMBOControlTermination(mbo.control, max.evals = budget)
+    setMBOControlTermination = get("setMBOControlTermination", envir = getNamespace("mlrMBO")) # FIXME: Remove if mlrMBO hits CRAN
+    mbo.control = setMBOControlTermination(mbo.control, max.evals = budget)
   }
 
   x = makeTuneControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val,
