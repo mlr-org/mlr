@@ -126,6 +126,7 @@ Suggests:
     sparseLDA,
     stepPlr,
     SwarmSVM,
+    svglite,
     testthat,
     tgp,
     TH.data,
