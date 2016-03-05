@@ -12,6 +12,11 @@ test_that("tuneRandom", {
   tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
   expect_equal(getOptPathLength(tr$opt.path), 5)
   expect_true(!is.na(tr$y))
+
+  ctrl = makeTuneControlRandom(budget = 4)
+  tr = tuneParams(lrn, multiclass.task, rdesc, par.set = ps, control = ctrl)
+  expect_equal(getOptPathLength(tr$opt.path), 4)
+  expect_true(!is.na(tr$y))
 })
 
 test_that("tuneRandom works with dependent params", {
