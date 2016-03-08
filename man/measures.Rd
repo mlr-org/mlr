@@ -260,6 +260,11 @@ Most measures can directly be accessed via the function named after the scheme m
 For clustering measures, we compact the predicted cluster IDs such that they form a continuous series
 starting with 1. If this is not the case, some of the measures will generate warnings.
 }
+\references{
+He, H. & Garcia, E. A. (2009)
+\emph{Learning from Imbalanced Data.}
+IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9. pp. 1263-1284.
+}
 \seealso{
 Other performance: \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},

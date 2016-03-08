@@ -383,7 +383,7 @@ doAggregatePartialPrediction = function(out, td, target, features, test, rng) {
   out
 }
 
-doIndividualPartialPrediction = function(out, td, n = nrow(data), rng, target, features, centerpred = NULL) {
+doIndividualPartialPrediction = function(out, td, n, rng, target, features, centerpred = NULL) {
   if (td$type == "classif" & length(td$class.levels) > 2L) {
     if (!is.null(centerpred))
       out = lapply(out, function(x) x - centerpred)

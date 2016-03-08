@@ -33,7 +33,7 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
   log.file = tempfile()
   tuner.config = c(list(hookRun = hookRun, instances = instances, logFile = log.file),
     control$extra.args)
-  g = if (show.irace.output) identity else capture.output
+  g = if (show.irace.output) identity else utils::capture.output
   g(or <- irace::irace(tunerConfig = tuner.config, parameters = parameters))
   unlink(log.file)
   if (nrow(or) == 0L)

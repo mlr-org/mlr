@@ -1,5 +1,7 @@
 #' @import methods
 #' @importFrom survival Surv is.Surv
+#' @importFrom graphics hist
+#' @importFrom utils browseURL capture.output combn data getFromNamespace getS3method head methods tail
 #' @import BBmisc
 #' @import checkmate
 #' @import parallelMap
