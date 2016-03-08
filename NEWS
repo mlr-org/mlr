@@ -14,6 +14,7 @@ mlr_2.9:
 - convert data.frame-ish in Task if necessary
 - fix bug with NoFeaturesModel and ModelMultiplexer
 - clean up randomForestSRC learners
+- fix bug with partialPredictions and GGVIS
 
 - new learners
 -- surv.cv.CoxBoost
