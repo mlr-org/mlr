@@ -28,7 +28,7 @@ test_that("regr_bartMachine", {
   # testSimpleParsets("regr.bartMachine", regr.df, regr.target, regr.train.inds,
   #  old.predicts.list, parset.list)
 
-  for(i in 1:length(parset.list)){
+  for (i in 1:length(parset.list)){
     expect_true(length(old.predicts.list[[i]]) == nrow(regr.test))
   }
 })

@@ -39,7 +39,7 @@ test_that("classif_bartMachine", {
   #testProbParsets ("classif.bartMachine", binaryclass.df, binaryclass.target, binaryclass.train.inds,
   #  old.probs.list, parset.list)
 
-  for(i in 1:length(parset.list)){
+  for (i in 1:length(parset.list)){
     expect_true(length(old.predicts.list[[i]]) == nrow(binaryclass.test))
     expect_true(length(old.probs.list[[i]]) == nrow(binaryclass.test))
   }

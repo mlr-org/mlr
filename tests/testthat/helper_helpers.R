@@ -59,7 +59,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     stop("Should not happen!")
   m = try(train(lrn, task, subset = inds))
 
-  if(inherits(m, "FailureModel")){
+  if (inherits(m, "FailureModel")){
     expect_is(old.predicts, "try-error")
   } else {
     cp = predict(m, newdata = test)

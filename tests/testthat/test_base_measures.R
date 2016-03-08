@@ -255,7 +255,7 @@ test_that("check measure calculations", {
   level.grid = t(combn(as.numeric(levels(tar.classif)), m = 2L))
   level.grid = rbind(level.grid, level.grid[, ncol(level.grid):1])
   aucs = numeric(nrow(level.grid))
-  for(i in 1:nrow(level.grid)){
+  for (i in 1:nrow(level.grid)){
     ranks = sort(rank(predictor[names(predictor) %in% level.grid[i, ]]))
     ranks = ranks[names(ranks) == level.grid[i]]
     n = length(ranks)

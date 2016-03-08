@@ -55,7 +55,7 @@ trainLearner.classif.bartMachine = function(.learner, .task, .subset, .weights =
 predictLearner.classif.bartMachine = function(.learner, .model, .newdata, ...) {
   td = .model$task.desc
   levs = c(td$negative, td$positive)
-  if(.learner$predict.type == "prob"){
+  if (.learner$predict.type == "prob"){
     p = predict(.model$learner.model, new_data = .newdata, type = "prob", ...)
     y = propVectorToMatrix(p, levs)
   } else {

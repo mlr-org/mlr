@@ -46,7 +46,7 @@ trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights 
 
 #' @export
 predictLearner.surv.randomForestSRC = function(.learner, .model, .newdata, ...) {
-  if(.learner$predict.type == "response") {
+  if (.learner$predict.type == "response") {
     predict(.model$learner.model, newdata = .newdata, importance = "none", ...)$predicted
   } else {
     stop("Unknown predict type")
