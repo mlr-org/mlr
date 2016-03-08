@@ -141,3 +141,39 @@ test_that("ModelMultiplexer handles tasks with no features", {
   expect_is(p$data, "data.frame")
   expect_true(all(p$data$response == mean(p$data$response)))
 })
+
+# issue #760
+test_that("ModelMultiplexer passes on hyper pars in predict with both", {
+  testPS = makeRLearnerClassif("testPS", character(0),
+      makeParamSet(makeIntegerLearnerParam("tpTRAIN", when="train"),
+                   makeIntegerLearnerParam("tpPREDICT", when="predict"),
+                   makeIntegerLearnerParam("tpBOTH", when="both")),
+      properties=c("numerics", "twoclass"))
+  testPS$fix.factors.prediction = TRUE
+  
+  opts = NULL
+  trainLearner.testPS = function(.learner, .task, .subset, .weights=NULL, ...) {
+    opts <<- list(...)
+    # the following to make the type checking happy
+    list(dummy=getTaskData(.task, .subset)[[getTaskTargetNames(.task)[1]]][1])
+  }
+  registerS3method("trainLearner", "testPS", trainLearner.testPS)
+  
+  predictLearner.testPS = function(.learner, .model, .newdata, ...) {
+    opts <<- list(...)
+    rep(.model$learner.model$dummy, nrow(.newdata))  # just do something
+  }
+  registerS3method("predictLearner", "testPS", predictLearner.testPS)
+
+  testPSMM = makeModelMultiplexer(list(testPS))
+  testPSMMArgs = setHyperPars(testPSMM, testPS.tpTRAIN=1, testPS.tpPREDICT=2, testPS.tpBOTH=3)
+  trained = train(testPSMMArgs, pid.task)
+  expect_false(is.null(opts$tpBOTH))
+  expect_false(is.null(opts$tpTRAIN))
+  expect_true(is.null(opts$tpPREDICT))
+
+  predicted = predict(trained, pid.task)
+  expect_false(is.null(opts$tpBOTH))
+  expect_true(is.null(opts$tpTRAIN))
+  expect_false(is.null(opts$tpPREDICT))
+})
