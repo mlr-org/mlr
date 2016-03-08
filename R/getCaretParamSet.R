@@ -30,8 +30,8 @@
 #'   tuning parameters
 #' }
 #' @export
-#' @examples
 # FIXME this produced an error in travis
+# @examples
 # library(caret)
 # classifTask = makeClassifTask(data = iris, target = "Species")
 #
