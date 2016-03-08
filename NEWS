@@ -13,6 +13,7 @@ mlr_2.9:
 - classif.glmboost, regr.glmboost: add parameters stopintern and trace
 - convert data.frame-ish in Task if necessary
 - fix bug with NoFeaturesModel and ModelMultiplexer
+- clean up randomForestSRC learners
 
 - new learners
 -- surv.cv.CoxBoost
