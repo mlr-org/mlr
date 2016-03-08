@@ -10,6 +10,7 @@ mlr_2.9:
   ModelMultiplexer in some cases
 - various cleanups that removed unused code
 - updated gmean measure and unit test, added reference to formula of gmean
+- classif.glmboost, regr.glmboost: add parameters stopintern and trace
 
 - new learners
 -- surv.cv.CoxBoost
