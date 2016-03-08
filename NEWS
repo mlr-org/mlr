@@ -12,6 +12,7 @@ mlr_2.9:
 - updated gmean measure and unit test, added reference to formula of gmean
 - classif.glmboost, regr.glmboost: add parameters stopintern and trace
 - convert data.frame-ish in Task if necessary
+- fix bug with NoFeaturesModel and ModelMultiplexer
 
 - new learners
 -- surv.cv.CoxBoost
