@@ -11,7 +11,8 @@ getParamSet(learner, ...)
 The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
-\item{...\cr}{Currently unused.}
+\item{...}{[any] \cr
+Currently unused.}
 }
 \value{
 [\code{\link[ParamHelpers]{ParamSet}}].

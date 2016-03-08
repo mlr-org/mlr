@@ -1,7 +1,7 @@
 #' Get a description of all possible parameter settings for a learner.
 #'
 #' @template arg_learner
-#' @param ...\cr
+#' @param ... [any] \cr
 #'   Currently unused.
 #' @template ret_ps
 #' @family learner
