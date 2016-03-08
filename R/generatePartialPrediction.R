@@ -130,6 +130,9 @@
 #' pd = generatePartialPredictionData(fit, iris.task, "Petal.Width")
 #' plotPartialPrediction(pd)
 #' @export
+#' @importFrom plyr ldply
+#' @importFrom ggvis ggvis prop layer_ribbons layer_paths layer_points layer_lines bind_shiny ggvisOutput
+#' @importFrom shiny selectInput shinyUI pageWithSidebar headerPanel sidebarPanel mainPanel uiOutput shinyServer reactive shinyApp
 generatePartialPredictionData = function(obj, input, features,
                                          interaction = FALSE, derivative = FALSE,
                                          individual = FALSE, center = NULL,
