@@ -24,8 +24,10 @@ makeRLearner.regr.bst = function() {
       makeDiscreteLearnerParam(id = "surrogatestyle", default = 0L, values = 0:1),
       makeIntegerLearnerParam(id = "maxdepth", default = 1L, lower = 1L, upper = 30L),
       makeDiscreteLearnerParam(id = "Learner", default = "ls", values = c("ls", "sm", "tree"))
+      # FIXME bst() seems to have no default for Learner. But if "ls" is correct, it is not needed in par.vals
     ),
     par.vals = list(Learner = "ls", maxdepth = 1L, xval = 0L),
+    # FIXME par.vals default for maxdepth is the same as the default of LearnerParam and the function
     properties = c("numerics"),
     name = "Gradient Boosting",
     short.name = "bst",

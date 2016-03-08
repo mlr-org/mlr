@@ -7,6 +7,7 @@ makeRLearner.classif.avNNet = function() {
       makeIntegerLearnerParam(id = "repeats", default = 5L, lower = 1L),
       makeLogicalLearnerParam(id = "bag", default = FALSE),
       makeIntegerLearnerParam(id = "size", default = 3L, lower = 0L),
+      # FIXME nnet() seems to have no default for size, but if it is 3, par.vals is redundand
       makeIntegerLearnerParam(id = "maxit", default = 100L, lower = 1L),
       makeLogicalLearnerParam(id = "skip", default = FALSE),
       makeNumericLearnerParam(id = "rang", default = 0.7),

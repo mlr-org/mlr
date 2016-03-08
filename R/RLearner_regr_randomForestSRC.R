@@ -12,6 +12,7 @@ makeRLearner.regr.randomForestSRC = function() {
       makeIntegerLearnerParam(id = "nsplit", default = 0L),
       makeDiscreteLearnerParam(id = "na.action", default = "na.impute",
         values = c("na.omit", "na.impute"), when = "both"),
+      # FIXME default in rfsrc() for na.action is na.omit
       makeIntegerLearnerParam(id = "nimpute", default = 1L, lower = 1L),
       makeNumericVectorLearnerParam(id = "xwar.wt", lower = 0),
       makeLogicalLearnerParam(id = "forest", default = TRUE, tunable = FALSE),

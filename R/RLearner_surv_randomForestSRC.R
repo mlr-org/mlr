@@ -14,6 +14,7 @@ makeRLearner.surv.randomForestSRC = function() {
         values = c("logrank", "logrankscore")),
       makeDiscreteLearnerParam(id = "na.action", default = "na.impute",
         values = c("na.omit", "na.impute"), when = "both"),
+      # FIXME default for na.action in rfsrc() is na.omit
       makeNumericVectorLearnerParam(id = "xwar.wt", lower = 0),
       makeLogicalLearnerParam(id = "forest", default = TRUE, tunable = FALSE),
       makeIntegerLearnerParam(id = "seed", tunable = FALSE),
