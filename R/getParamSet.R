@@ -1,12 +1,10 @@
 #' Get a description of all possible parameter settings for a learner.
 #'
 #' @template arg_learner
-#' @param ... [any] \cr
-#'   Currently unused.
 #' @template ret_ps
 #' @family learner
 #' @export
-getParamSet = function(learner, ...) {
+getParamSet = function(learner) {
   checkLearner(learner)
   UseMethod("getParamSet")
 }

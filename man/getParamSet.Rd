@@ -4,15 +4,12 @@
 \alias{getParamSet}
 \title{Get a description of all possible parameter settings for a learner.}
 \usage{
-getParamSet(learner, ...)
+getParamSet(learner)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
 The learner.
 If you pass a string the learner will be created via \code{\link{makeLearner}}.}
-
-\item{...}{[any] \cr
-Currently unused.}
 }
 \value{
 [\code{\link[ParamHelpers]{ParamSet}}].
