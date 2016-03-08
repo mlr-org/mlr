@@ -10,14 +10,14 @@ getParamSet = function(learner) {
 }
 
 #'@export
-getParamSet.Learner = function(x, ...) {
-  x$par.set
+getParamSet.Learner = function(learner) {
+  learner$par.set
 }
 
 #'@export
-getParamSet.character = function(x, ...) {
-  x = checkLearner(x)
-  getParamSet(x, ...)
+getParamSet.character = function(learner) {
+  learner = checkLearner(learner)
+  getParamSet(learner)
 }
 
 
