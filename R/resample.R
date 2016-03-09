@@ -124,14 +124,18 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   pp = rin$desc$predict
   if (pp == "train") {
     pred.train = predict(m, task, subset = train.i)
+    if (!is.null(pred.train$error)) err.msgs[2L] = pred.train$error
     ms.train = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
   } else if (pp == "test") {
     pred.test = predict(m, task, subset = test.i)
+    if (!is.null(pred.test$error)) err.msgs[2L] = pred.test$error
     ms.test = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
   } else { # "both"
     pred.train = predict(m, task, subset = train.i)
+    if (!is.null(pred.train$error)) err.msgs[2L] = pred.train$error
     ms.train = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
     pred.test = predict(m, task, subset = test.i)
+    if (!is.null(pred.test$error)) err.msgs[2L] = paste(err.msgs[2L], pred.test$error)
     ms.test = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
   }
   ex = extract(m)

@@ -111,3 +111,20 @@ test_that("resample returns errors", {
 
   configureMlr(on.learner.error = "stop")
 })
+
+# issue #668
+test_that("resample has error messages when prediction fails", {
+  configureMlr(on.learner.error = "quiet")
+  configureMlr(on.learner.warning = "quiet")
+
+  lrn = makeLearner("classif.knn")
+  lrn$properties = c(lrn$properties, c("missings"))
+
+  task = makeClassifTask("test", data = Sonar, target = "Class")
+  task$env$data$V1[1:2] = NA
+  r = crossval(lrn, task)
+  expect_false(all(is.na(r$err.msgs$predict)))
+
+  configureMlr(on.learner.error = "stop")
+  configureMlr(on.learner.warning = "warn")
+})
