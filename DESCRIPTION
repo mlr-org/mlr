@@ -46,6 +46,7 @@ Imports:
 Suggests:
     ada,
     adabag,
+    bartMachine,
     brnn,
     bst,
     care,
