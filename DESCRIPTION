@@ -79,6 +79,7 @@ Suggests:
     gbm,
     GenSA,
     glmnet,
+    glinternet,
     Hmisc,
     irace (>= 1.0.7),
     kernlab,

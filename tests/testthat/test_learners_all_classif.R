@@ -11,6 +11,7 @@ test_that("learners work: classif ", {
       replace_missing_data_with_x_j_bar = TRUE,
       num_iterations_after_burn_in = 10L),
     classif.bdk = list(ydim = 2L),
+    classif.cvglinternet = list(nFolds = 2, nLambda = 10),
     classif.gbm = list(bag.fraction = 1, n.minobsinnode = 1),
     classif.lssvm = list(kernel = "rbfdot", reduced = FALSE),
     classif.nodeHarvest = list(nodes = 100L, nodesize = 5L),
