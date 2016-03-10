@@ -255,7 +255,7 @@ test_that("check measure calculations", {
   level.grid = t(combn(as.numeric(levels(tar.classif)), m = 2L))
   level.grid = rbind(level.grid, level.grid[, ncol(level.grid):1])
   aucs = numeric(nrow(level.grid))
-  for(i in 1:nrow(level.grid)){
+  for (i in 1:nrow(level.grid)){
     ranks = sort(rank(predictor[names(predictor) %in% level.grid[i, ]]))
     ranks = ranks[names(ranks) == level.grid[i]]
     n = length(ranks)
@@ -360,7 +360,7 @@ test_that("check measure calculations", {
   expect_equal(f1.test, f1$fun(pred = pred.bin))
   expect_equal(f1.test, as.numeric(f1.perf))
   #gmean
-  gmean.test = sqrt(tp.test * tn.test)
+  gmean.test = sqrt((tp.test/(tp.test + fn.test)) * tn.test/(tn.test + fp.test))
   gmean.perf = performance(pred.bin, measures = gmean, model = mod.bin)
   expect_equal(gmean.test, gmean$fun(pred = pred.bin))
   expect_equal(gmean.test, as.numeric(gmean.perf))

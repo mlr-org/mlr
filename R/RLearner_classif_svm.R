@@ -35,7 +35,7 @@ trainLearner.classif.svm = function(.learner, .task, .subset, .weights = NULL,  
 
 #' @export
 predictLearner.classif.svm = function(.learner, .model, .newdata, ...) {
-  if(.learner$predict.type == "response") {
+  if (.learner$predict.type == "response") {
     predict(.model$learner.model, newdata = .newdata, ...)
   } else {
     attr(predict(.model$learner.model, newdata = .newdata, probability = TRUE, ...), "probabilities")

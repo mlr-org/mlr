@@ -31,7 +31,7 @@ makeRLearner.surv.ranger = function() {
 
 #' @export
 trainLearner.surv.ranger = function(.learner, .task, .subset, .weights, ...) {
-  if(.learner$predict.type != "response")
+  if (.learner$predict.type != "response")
     stop("Unsupported predict type")
   tn = getTaskTargetNames(.task)
   ranger::ranger(formula = NULL, dependent.variable.name = tn[1L], status.variable.name = tn[2L], data = getTaskData(.task, .subset),
@@ -40,7 +40,7 @@ trainLearner.surv.ranger = function(.learner, .task, .subset, .weights, ...) {
 
 #' @export
 predictLearner.surv.ranger = function(.learner, .model, .newdata, ...) {
-  if(.learner$predict.type != "response")
+  if (.learner$predict.type != "response")
     stop("Unsupported predict type")
   p = predict(object = .model$learner.model, data = .newdata)
   rowMeans(p$chf)

@@ -145,11 +145,11 @@ benchmarkParallel = function(task, learner, learners, tasks, resamplings, measur
   if (show.info)
     messagef("Task: %s, Learner: %s", task, learner)
   cl = class(learners[[learner]])
-  if("FeatSelWrapper" %in% cl) {
+  if ("FeatSelWrapper" %in% cl) {
     extract.this = getFeatSelResult
-  } else if("TuneWrapper" %in% cl) {
+  } else if ("TuneWrapper" %in% cl) {
     extract.this = getTuneResult
-  } else if("FilterWrapper" %in% cl) {
+  } else if ("FilterWrapper" %in% cl) {
     extract.this = getFilteredFeatures
   } else {
     extract.this = function(model) { NULL }

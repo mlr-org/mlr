@@ -14,7 +14,6 @@ test_that("tuneIrace", {
   expect_true(!is.na(tr1$y))
 
   # with trafo
-  res = makeResampleDesc("Holdout")
   ps2 = makeParamSet(
     makeNumericParam("C", lower = -5, upper = 5, trafo = function(x) 2^x),
     makeNumericParam("sigma", lower = -5, upper = 5, trafo = function(x) 2^x)

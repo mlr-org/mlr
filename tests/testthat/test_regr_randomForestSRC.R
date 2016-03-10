@@ -7,17 +7,17 @@ test_that("regr_randomForestSRC", {
     list(),
     list(ntree = 100),
     list(ntree = 50, mtry = 4),
-    list(ntree = 50, nodesize = 2, na.action = "na.impute")
+    list(ntree = 50, nodesize = 2, na.action = "na.impute", importance = "none", proximity = FALSE)
   )
   old.predicts.list = list()
 
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
-    parset = c(parset, list(data = regr.train, formula = regr.formula, importance = "none", proximity = FALSE, forest = TRUE))
+    parset = c(parset, list(data = regr.train, formula = regr.formula, forest = TRUE))
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(randomForestSRC::rfsrc, parset)
     # versison 2.0 of randomForestSRC returns an array here :(
-    p  = as.numeric(predict(m, newdata = regr.test, importance = "none", na.action = "na.impute")$predicted)
+    p = as.numeric(predict(m, newdata = regr.test, membership = FALSE, na.action = "na.impute")$predicted)
     old.predicts.list[[i]] = p
   }
 

@@ -4,7 +4,7 @@ test_that("downsample",  {
   down.tsk = downsample(multiclass.task, perc = 1/3)
   expect_equal(getTaskSize(down.tsk), 50L)
   rsm.methods = c("Bootstrap", "Subsample", "Holdout")
-  for(rsm.method in rsm.methods) {
+  for (rsm.method in rsm.methods) {
     rin = makeResampleInstance(rsm.method, task = binaryclass.task)
     rin2 = downsample(rin, perc = 0.5)
     sapply(seq_along(rin$train.inds), function(i)

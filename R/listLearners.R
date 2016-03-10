@@ -14,7 +14,7 @@ getLearnerTable = function() {
   }))
 
   # set learner type (classif, regr, surv, ...)
-  tab$type = vcapply(stri_split_fixed(tab$id, ".", n = 2L), head, 1L)
+  tab$type = vcapply(stri_split_fixed(tab$id, ".", n = 2L), utils::head, 1L)
 
   # check if all requirements are installed
   pkgs = unique(unlist(tab$package))

@@ -80,14 +80,26 @@ regr.num.test  = regr.num.df[regr.num.test.inds, ]
 regr.num.class.col = 13
 regr.num.task = makeRegrTask("regrnumtask", data = regr.num.df, target = regr.num.target)
 
-surv.df = cbind(time = rexp(150, 1/20)+1, event = sample(c(TRUE, FALSE), 150, replace = TRUE), iris)
-surv.formula = survival::Surv(time, event) ~ .
-surv.target = c("time", "event")
-surv.train.inds = c(1:30, 51:80, 101:130)
-surv.test.inds  = setdiff(1:150, surv.train.inds)
+getSurvData = function(n = 100, p = 10) {
+  set.seed(1)
+  beta <- c(rep(1,10),rep(0,p-10))
+  x <- matrix(rnorm(n*p),n,p)
+  colnames(x) = sprintf("x%01i", 1:p)
+  real.time <- -(log(runif(n)))/(10 * exp(drop(x %*% beta)))
+  cens.time <- rexp(n,rate=1/10)
+  status <- ifelse(real.time <= cens.time, TRUE, FALSE)
+  obs.time <- ifelse(real.time <= cens.time,real.time,cens.time) + 1
+  return(cbind(data.frame(time = obs.time, status = status), x))
+}
+surv.df = getSurvData()
+surv.formula = survival::Surv(time, status) ~ .
+surv.target = c("time", "status")
+surv.train.inds = seq(1, floor(2/3 * nrow(surv.df)))
+surv.test.inds  = setdiff(1:nrow(surv.df), surv.train.inds)
 surv.train = surv.df[surv.train.inds, ]
 surv.test  = surv.df[surv.test.inds, ]
 surv.task = makeSurvTask("survtask", data = surv.df, target = surv.target)
+rm(getSurvData)
 
 costsens.feat = iris
 costsens.costs = matrix(runif(150L * 3L, min = 0, max = 1), 150L, 3L)

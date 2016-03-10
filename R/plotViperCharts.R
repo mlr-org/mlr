@@ -78,7 +78,7 @@ plotViperCharts.list = function(obj, chart = "rocc", browse = TRUE, auth.key = N
   )
   url = "http://viper.ijs.si/api/"
   headers = list('Accept' = 'application/json', 'Content-Type' = 'application/json')
-  if(!is.null(auth.key))
+  if (!is.null(auth.key))
     headers['AUTH-KEY'] = auth.key
   resp = RCurl::postForm(url, .opts = list(postfields = rjson::toJSON(inp), httpheader = headers))
   resp = rjson::fromJSON(resp)

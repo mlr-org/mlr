@@ -38,7 +38,7 @@ trainLearner.surv.coxph = function(.learner, .task, .subset, .weights = NULL,  .
 
 #' @export
 predictLearner.surv.coxph = function(.learner, .model, .newdata, ...) {
-  if(.learner$predict.type == "response") {
+  if (.learner$predict.type == "response") {
     predict(.model$learner.model, newdata = .newdata, type = "lp", ...)
   } else if (.learner$predict.type == "prob") {
     surv.range = getTrainingInfo(.model$learner.model)$surv.range

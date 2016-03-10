@@ -103,7 +103,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
     if (!is.null(debug.seed))
       set.seed(debug.seed)
     opts = getLearnerOptions(learner, c("show.learner.output", "on.learner.error", "on.learner.warning"))
-    fun1 = if (opts$show.learner.output) identity else capture.output
+    fun1 = if (opts$show.learner.output) identity else utils::capture.output
     fun2 = if (opts$on.learner.error == "stop") identity else function(x) try(x, silent = TRUE)
     if (opts$on.learner.warning == "quiet") {
       old.warn.opt = getOption("warn")
