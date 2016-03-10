@@ -194,7 +194,7 @@ mergeResampleResult = function(learner, task, iter.results, measures, rin, model
     pred = pred,
     models = if (models) lapply(iter.results, function(x) x$model) else NULL,
     err.msgs = err.msgs,
-    extract = if(is.function(extract)) extractSubList(iter.results, "extract", simplify = FALSE) else NULL,
+    extract = if (is.function(extract)) extractSubList(iter.results, "extract", simplify = FALSE) else NULL,
     runtime = runtime
   )
 }

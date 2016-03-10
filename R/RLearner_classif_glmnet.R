@@ -68,7 +68,7 @@ trainLearner.classif.glmnet = function(.learner, .task, .subset, .weights = NULL
 predictLearner.classif.glmnet = function(.learner, .model, .newdata, ...) {
   info = getTrainingInfo(.model)
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
-  if(.learner$predict.type == "prob") {
+  if (.learner$predict.type == "prob") {
     p = predict(.model$learner.model, newx = .newdata, type = "response", ...)
     td = .model$task.desc
     if (length(td$class.levels) == 2L) {

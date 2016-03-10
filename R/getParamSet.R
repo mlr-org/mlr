@@ -11,7 +11,6 @@ getParamSet = function(learner) {
 
 #'@export
 getParamSet.Learner = function(learner) {
-  assertClass(learner, classes = "Learner")
   learner$par.set
 }
 

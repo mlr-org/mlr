@@ -670,8 +670,12 @@ gmean = makeMeasure(id = "gmean", minimize = FALSE, best = 1, worst = 0,
 #' @export measureGMEAN
 #' @rdname measures
 #' @format none
+#' @references
+#' He, H. & Garcia, E. A. (2009)
+#' \emph{Learning from Imbalanced Data.}
+#' IEEE Transactions on Knowledge and Data Engineering, vol. 21, no. 9. pp. 1263-1284.
 measureGMEAN = function(truth, response, negative, positive) {
-  sqrt(measureTP(truth, response, positive) * measureTN(truth, response, negative))
+  sqrt(measureTPR(truth, response, positive) * measureTNR(truth, response, negative))
 }
 
 #' @export gpr
@@ -776,7 +780,7 @@ db = makeMeasure(id = "db", minimize = TRUE, best = 0, worst = Inf,
   name = "Davies-Bouldin cluster separation measure",
   note ="See `?clusterSim::index.DB`.",
   fun = function(task, model, pred, feats, extra.args) {
-    if(length(unique(pred$data$response)) > 1L) {
+    if (length(unique(pred$data$response)) > 1L) {
       requirePackages("clusterSim", default.method = "load")
       r = as.integer(as.factor(pred$data$response))
       clusterSim::index.DB(feats, r)$DB

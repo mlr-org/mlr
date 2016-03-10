@@ -18,8 +18,8 @@ NULL
 makeResamplePrediction = function(instance, preds.test, preds.train) {
   tenull = sapply(preds.test, is.null)
   trnull = sapply(preds.train, is.null)
-  if(any(tenull)) pr.te = preds.test[!tenull] else pr.te = preds.test
-  if(any(trnull)) pr.tr = preds.train[!trnull] else pr.tr = preds.train
+  if (any(tenull)) pr.te = preds.test[!tenull] else pr.te = preds.test
+  if (any(trnull)) pr.tr = preds.train[!trnull] else pr.tr = preds.train
 
   #   dtest = do.call("rbind", lapply(seq_along(pr.te), function(X)
   #     cbind(pr.te[[X]]$data, iter = X, set = "test") ))

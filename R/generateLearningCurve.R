@@ -30,7 +30,7 @@
 #'   \item{measures}{[(list of) \code{\link{Measure}}]\cr
 #'     Performance measures.}
 #'   \item{data}{[\code{data.frame}] with columns:
-#'     \itemize{	
+#'     \itemize{
 #'       \item \code{learner} Names of learners.
 #'       \item \code{percentage} Percentages drawn from the training split.
 #'       \item One column for each
@@ -61,7 +61,7 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
 
   # create downsampled versions for all learners
   lrnds1 = lapply(learners, function(lrn) {
-    lrn.downsampleds = lapply(perc.ids, function(p.id) {
+    lapply(perc.ids, function(p.id) {
       perc = percs[p.id]
       dsw = makeDownsampleWrapper(learner = lrn, dw.perc = perc, dw.stratify = stratify)
       list(
