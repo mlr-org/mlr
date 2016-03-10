@@ -68,7 +68,7 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
   assertClass(par.set, classes = "ParamSet")
   checkListElementClass(par.set$pars, "LearnerParam")
   assertList(par.vals)
-  if(!isProperlyNamed(par.vals))
+  if (!isProperlyNamed(par.vals))
     stop("Argument par.vals must be a properly named list!")
   assertString(name)
   assertString(short.name)

@@ -1,7 +1,5 @@
 # set default value fro y-imputation in optimization
 setDefaultImputeVal = function(control, measures) {
-  # if single crit we want a scalar impute val
-  ms = if (inherits(control, "TuneMultiCritControl")) measures else measures[1L]
   getDefVal = function(mm) {
     if (identical(mm$aggr, test.mean) && is.finite(mm$worst))
       ifelse(mm$minimize, 1, -1) * mm$worst

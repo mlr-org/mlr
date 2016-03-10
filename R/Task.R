@@ -108,6 +108,10 @@ makeTask = function(type, data, weights = NULL, blocking = NULL, fixup.data = "w
 
   if (check.data) {
     assertDataFrame(data, col.names = "strict")
+    if (class(data)[1] != "data.frame") {
+      warningf("Provided data is not a pure data.frame but from class %s, hence it will be converted.", class(data)[1])
+      data = as.data.frame(data)
+    }
     if (!is.null(weights))
       assertNumeric(weights, len = nrow(data), any.missing = FALSE, lower = 0)
     if (!is.null(blocking)) {

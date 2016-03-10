@@ -63,7 +63,7 @@ trainLearner.surv.cvglmnet = function(.learner, .task, .subset, .weights = NULL,
 predictLearner.surv.cvglmnet = function(.learner, .model, .newdata, ...) {
   info = getTrainingInfo(.model)
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
-  if(.learner$predict.type == "response")
+  if (.learner$predict.type == "response")
     return(as.numeric(predict(.model$learner.model, newx = .newdata, type = "link", ...)))
   stop("Unknown predict type")
 }

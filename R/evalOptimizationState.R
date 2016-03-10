@@ -105,8 +105,10 @@ evalOptimizationStates = function(learner, task, resampling, measures, par.set, 
     } else {
       extra = NULL
     }
+    # check.feasible = FALSE if we put in transformed values
+    check.feasible = !is.null(par.set) && !hasTrafo(par.set)
     addOptPathEl(opt.path, x = as.list(states[[i]]), y = res$y, exec.time = res$exec.time,
-      error.message = res$errmsg, dob = dobs[i], eol = eols[i], check.feasible = FALSE,
+      error.message = res$errmsg, dob = dobs[i], eol = eols[i], check.feasible = check.feasible,
       extra = extra)
   }
   return(res.list)

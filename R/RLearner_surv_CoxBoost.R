@@ -4,18 +4,12 @@ makeRLearner.surv.CoxBoost = function() {
     cl = "surv.CoxBoost",
     package = "!CoxBoost",
     par.set = makeParamSet(
-      makeIntegerLearnerParam(id = "maxstepno", default = 100, lower = 0),
-      makeIntegerLearnerParam(id = "K", default = 10, lower = 1),
-      makeDiscreteLearnerParam(id = "type", default = "verweij",
-        values = c("verweij", "naive")),
-      makeIntegerLearnerParam(id = "stepno", default = 100L, lower = 1),
-      makeNumericLearnerParam(id = "penalty", lower = 0),
+      makeIntegerVectorLearnerParam(id = "unpen.index"),
       makeLogicalLearnerParam(id = "standardize", default = TRUE),
-      makeDiscreteLearnerParam(id = "criterion", default = "pscore",
-        values = c("pscore", "score", "hpscore", "hscore")),
+      makeNumericLearnerParam(id = "penalty", lower = 0),
+      makeDiscreteLearnerParam(id = "criterion", default = "pscore", values = c("pscore", "score", "hpscore", "hscore")),
       makeNumericLearnerParam(id = "stepsize.factor", default = 1, lower = 0),
-      makeDiscreteLearnerParam(id = "sf.scheme", default = "sigmoid",
-        values = c("sigmoid", "linear")),
+      makeIntegerLearnerParam(id = "stepno", default = 100L, lower = 1),
       makeLogicalLearnerParam(id = "return.score", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
@@ -28,7 +22,7 @@ makeRLearner.surv.CoxBoost = function() {
 }
 
 #' @export
-trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL, penalty = NULL, ...) {
+trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL, penalty = NULL, unpen.index = NULL, ...) {
   data = getTaskData(.task, subset = .subset, target.extra = TRUE, recode.target = "rcens")
   info = getFixDataInfo(data$data, factors.to.dummies = TRUE, ordered.to.int = TRUE)
   data$data = as.matrix(fixDataForLearner(data$data, info))
@@ -50,7 +44,7 @@ trainLearner.surv.CoxBoost = function(.learner, .task, .subset, .weights = NULL,
 predictLearner.surv.CoxBoost = function(.learner, .model, .newdata, ...) {
   info = getTrainingInfo(.model)
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
-  if(.learner$predict.type == "response")
+  if (.learner$predict.type == "response")
     as.numeric(predict(.model$learner.model, newdata = .newdata, type = "lp"))
   else
     stop("Unknown predict type")

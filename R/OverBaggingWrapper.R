@@ -87,7 +87,7 @@ trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, .weights = 
     bag = sampleBinaryClass(y, rate = obw.rate, cl = obw.cl, resample.other.class = (obw.maxcl == "boot"))
     train(.learner$next.learner, .task, subset = bag, weights = .weights)
   })
-  m = makeHomChainModel(.learner, models)
+  makeHomChainModel(.learner, models)
 }
 
 #' @export

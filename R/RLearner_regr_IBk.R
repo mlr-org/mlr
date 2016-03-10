@@ -4,12 +4,12 @@ makeRLearner.regr.IBk = function() {
     cl = "regr.IBk",
     package = "RWeka",
     par.set = makeParamSet(
-      makeLogicalLearnerParam(id = "I"),
-      makeLogicalLearnerParam(id = "F"),
+      makeLogicalLearnerParam(id = "I", default = FALSE),
+      makeLogicalLearnerParam(id = "F", default = FALSE),
       makeIntegerLearnerParam(id = "K", lower = 1L, default = 1L),
-      makeLogicalLearnerParam(id = "E"),
+      makeLogicalLearnerParam(id = "E", default = FALSE),
       makeIntegerLearnerParam(id = "W", lower = 0L),
-      makeLogicalLearnerParam(id = "X"),
+      makeLogicalLearnerParam(id = "X", default = FALSE),
       makeUntypedLearnerParam(id = "A", default = "weka.core.neighboursearch.LinearNNSearch"),
       makeLogicalLearnerParam(id = "output-debug-info", default = FALSE, tunable = FALSE)
     ),
