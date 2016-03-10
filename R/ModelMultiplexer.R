@@ -101,7 +101,7 @@ predictLearner.ModelMultiplexer = function(.learner, .model, .newdata, ...) {
   bl = .learner$base.learners[[sl]]
   # we need to pass the changed setting of the base learner for the predict function further down
   args = list(.learner = bl, .model = .model$learner.model$next.model, .newdata = .newdata)
-  args = c(args, getHyperPars(bl, for.fun = "predict"))
+  args = c(args, getHyperPars(bl, for.fun = c("predict", "both")))
   do.call(predictLearner, args)
 }
 
@@ -112,6 +112,9 @@ makeWrappedModel.ModelMultiplexer = function(learner, learner.model, task.desc, 
 
 #' @export
 getLearnerModel.ModelMultiplexerModel = function(model, more.unwrap = FALSE) {
+  if (inherits(model$learner.model, "NoFeaturesModel")) {
+    return(model$learner.model)
+  }
   if (more.unwrap)
     model$learner.model$next.model$learner.model
   else
@@ -120,6 +123,6 @@ getLearnerModel.ModelMultiplexerModel = function(model, more.unwrap = FALSE) {
 
 #' @export
 isFailureModel.ModelMultiplexerModel = function(model) {
-  isFailureModel(model$learner.model$next.model)
+  !inherits(model$learner.model, "NoFeaturesModel") && isFailureModel(model$learner.model$next.model)
 }
 

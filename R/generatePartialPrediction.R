@@ -130,6 +130,9 @@
 #' pd = generatePartialPredictionData(fit, iris.task, "Petal.Width")
 #' plotPartialPrediction(pd)
 #' @export
+#' @importFrom plyr ldply
+#' @importFrom ggvis ggvis prop layer_ribbons layer_paths layer_points layer_lines bind_shiny ggvisOutput
+#' @importFrom shiny selectInput shinyUI pageWithSidebar headerPanel sidebarPanel mainPanel uiOutput shinyServer reactive shinyApp
 generatePartialPredictionData = function(obj, input, features,
                                          interaction = FALSE, derivative = FALSE,
                                          individual = FALSE, center = NULL,
@@ -253,11 +256,11 @@ generatePartialPredictionData = function(obj, input, features,
       else
         doIndividualPartialPrediction(out, td, nrow(data), rng, target, x, centerpred)
     })
-    out = plyr::ldply(out)
+    out = ldply(out)
   } else {
     if (derivative) {
       args = list(obj = obj, data = data, features = features, fun = fun, td = td, individual = individual, ...)
-      out = parallelMap::parallelMap(doPartialDerivativeIteration, x = rng[[features]], more.args = args)
+      out = parallelMap(doPartialDerivativeIteration, x = rng[[features]], more.args = args)
       centerpred = NULL
       rng = as.data.frame(rng)
       colnames(rng) = features
@@ -265,7 +268,7 @@ generatePartialPredictionData = function(obj, input, features,
       rng = as.data.frame(rng)
       colnames(rng) = features
       args = list(obj = obj, data = data, fun = fun, td = td, rng = rng, features = features, bounds = bounds, ...)
-      out = parallelMap::parallelMap(doPartialPredictionIteration, i = seq_len(nrow(rng)), more.args = args)
+      out = parallelMap(doPartialPredictionIteration, i = seq_len(nrow(rng)), more.args = args)
       if (!is.null(center) & individual)
         centerpred = as.data.frame(doPartialPredictionIteration(obj, data, center, features, fun, td, 1, bounds))
       else
@@ -377,13 +380,13 @@ doAggregatePartialPrediction = function(out, td, target, features, test, rng) {
       stop("function argument must return a sorted numeric vector ordered lowest to highest.")
 
   if (all(target %in% td$class.levels)) {
-    out = reshape2::melt(out, id.vars = features, variable = "Class", value.name = "Probability")
+    out = melt(out, id.vars = features, variable = "Class", value.name = "Probability")
     out$Class = gsub("^prob\\.", "", out$Class)
   }
   out
 }
 
-doIndividualPartialPrediction = function(out, td, n = nrow(data), rng, target, features, centerpred = NULL) {
+doIndividualPartialPrediction = function(out, td, n, rng, target, features, centerpred = NULL) {
   if (td$type == "classif" & length(td$class.levels) > 2L) {
     if (!is.null(centerpred))
       out = lapply(out, function(x) x - centerpred)
@@ -392,8 +395,8 @@ doIndividualPartialPrediction = function(out, td, n = nrow(data), rng, target, f
     idx = rep(seq_len(n), nrow(rng))
     rng = rng[rep(seq_len(nrow(rng)), each = n), , drop = FALSE]
     out = cbind(out, rng, idx, row.names = NULL)
-    out = reshape2::melt(out, id.vars = c(features, "idx"),
-                         variable.name = "Class", value.name = "Probability")
+    out = melt(out, id.vars = c(features, "idx"),
+               variable.name = "Class", value.name = "Probability")
     out$idx = interaction(out$idx, out$Class)
   } else {
     out = as.data.frame(do.call("rbind", out))
@@ -401,9 +404,9 @@ doIndividualPartialPrediction = function(out, td, n = nrow(data), rng, target, f
       out = t(apply(out, 1, function(x) x - centerpred))
     colnames(out) = 1:n
     out = cbind(out, rng)
-    out = reshape2::melt(out, id.vars = features, variable.name = "idx", value.name = target)
+    out = melt(out, id.vars = features, variable.name = "idx", value.name = target)
     if (td$type == "classif")
-      out = reshape2::melt(out, id.vars = c(features, "idx"), value.name = "Probability", variable.name = "Class")
+      out = melt(out, id.vars = c(features, "idx"), value.name = "Probability", variable.name = "Class")
   }
   out
 }
@@ -594,6 +597,9 @@ plotPartialPredictionGGVIS = function(obj, interact = NULL, p = 1) {
   if (obj$interaction & length(obj$features) > 2L)
     stop("It is only possible to plot 2 features with this function.")
 
+  if (!obj$interaction & !is.null(interact))
+    stop("generatePartialPredictionData was called with interaction = FALSE!")
+
   if (p != 1) {
     assertNumber(p, lower = 0, upper = 1, finite = TRUE)
     if (!obj$individual)
@@ -613,8 +619,8 @@ plotPartialPredictionGGVIS = function(obj, interact = NULL, p = 1) {
       choices = sort(unique(obj$data[[interact]]))
   } else if (!obj$interaction & length(obj$features) > 1L) {
     id = colnames(obj$data)[!colnames(obj$data) %in% obj$features]
-    obj$data = reshape2::melt(obj$data, id.vars = id, variable.name = "Feature",
-                              value.name = "Value", na.rm = TRUE)
+    obj$data = melt(obj$data, id.vars = id, variable.name = "Feature",
+                    value.name = "Value", na.rm = TRUE)
     interact = "Feature"
     choices = obj$features
   } else
@@ -631,35 +637,42 @@ plotPartialPredictionGGVIS = function(obj, interact = NULL, p = 1) {
     classif = td$type == "classif" & all(target %in% td$class.levels)
     if (classif) {
       if (interaction)
-        plt = ggvis::ggvis(data, ggvis::prop("x", as.name(x)),
-                           ggvis::prop("y", as.name("Probability")),
-                           ggvis::prop("stroke", as.name("Class")))
-      else ## no interaction but multiple features
-        plt = ggvis::ggvis(data, ggvis::prop("x", as.name("Value")),
-                           ggvis::prop("y", as.name("Probability")),
-                           ggvis::prop("stroke", as.name("Class")))
+        plt = ggvis(data, prop("x", as.name(x)),
+                    prop("y", as.name("Probability")),
+                    prop("stroke", as.name("Class")))
+      else if (!interaction & !is.null(interact)) ## no interaction but multiple features
+        plt = ggvis(data, prop("x", as.name("Value")),
+                    prop("y", as.name("Probability")),
+                    prop("stroke", as.name("Class")))
+      else
+        plt = ggvis(data, prop("x", as.name(x)),
+                    prop("y", as.name("Probability")),
+                    prop("stroke", as.name("Class")))
+      
     } else { ## regression/survival
       if (interaction)
-        plt = ggvis::ggvis(data, ggvis::prop("x", as.name(x)),
-                           ggvis::prop("y", as.name(target)))
+        plt = ggvis(data, prop("x", as.name(x)),
+                    prop("y", as.name(target)))
+      else if (!interaction & !is.null(interact))
+        plt = ggvis(data, prop("x", as.name("Value")),
+                    prop("y", as.name(target)))
       else
-        plt = ggvis::ggvis(data, ggvis::prop("x", as.name("Value")),
-                           ggvis::prop("y", as.name(target)))
+        plt = ggvis(data, prop("x", as.name(x)), prop("y", as.name(target)))
     }
 
     if (bounds)
-      plt = ggvis::layer_ribbons(plt, ggvis::prop("y", as.name("lower")),
-                                 ggvis::prop("y2", as.name("upper")),
-                                 ggvis::prop("opacity", .5))
+      plt = layer_ribbons(plt, prop("y", as.name("lower")),
+                          prop("y2", as.name("upper")),
+                          prop("opacity", .5))
     if (individual) {
       plt = ggvis::group_by_.ggvis(plt, as.name("idx"))
-      plt = ggvis::layer_paths(plt, ggvis::prop("opacity", .25))
+      plt = layer_paths(plt, prop("opacity", .25))
     } else {
       if (classif)
-        plt = ggvis::layer_points(plt, ggvis::prop("fill", as.name("Class")))
+        plt = layer_points(plt, prop("fill", as.name("Class")))
       else
-        plt = ggvis::layer_points(plt)
-      plt = ggvis::layer_lines(plt)
+        plt = layer_points(plt)
+      plt = layer_lines(plt)
     }
 
     plt
@@ -673,23 +686,23 @@ plotPartialPredictionGGVIS = function(obj, interact = NULL, p = 1) {
     header = target
 
   if (!is.null(interact)) {
-    panel = shiny::selectInput("interaction_select", interact, choices)
-    ui = shiny::shinyUI(
-      shiny::pageWithSidebar(
-        shiny::headerPanel(header),
-        shiny::sidebarPanel(panel),
-        shiny::mainPanel(
-          shiny::uiOutput("ggvis_ui"),
-          ggvis::ggvisOutput("ggvis")
+    panel = selectInput("interaction_select", interact, choices)
+    ui = shinyUI(
+      pageWithSidebar(
+        headerPanel(header),
+        sidebarPanel(panel),
+        mainPanel(
+          uiOutput("ggvis_ui"),
+          ggvisOutput("ggvis")
         )
       ))
-    server = shiny::shinyServer(function(input, output) {
-      plt = shiny::reactive(create_plot(obj$task.desc, obj$target, obj$interaction, obj$individual,
-                                        obj$data[obj$data[[interact]] == input$interaction_select, ],
-                                        x, bounds))
-      ggvis::bind_shiny(plt, "ggvis", "ggvis_ui")
+    server = shinyServer(function(input, output) {
+      plt = reactive(create_plot(obj$task.desc, obj$target, obj$interaction, obj$individual,
+                                 obj$data[obj$data[[interact]] == input$interaction_select, ],
+                                 x, bounds))
+      bind_shiny(plt, "ggvis", "ggvis_ui")
     })
-    shiny::shinyApp(ui, server)
+    shinyApp(ui, server)
   } else
     create_plot(obj$task.desc, obj$target, obj$interaction, obj$individual, obj$data, obj$features, bounds)
 }

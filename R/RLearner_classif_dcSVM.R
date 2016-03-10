@@ -33,7 +33,6 @@ trainLearner.classif.dcSVM = function(.learner, .task, .subset, .weights = NULL,
   pars = list(...)
   m.flag = FALSE
   max.levels.flag = FALSE
-  k.flag = FALSE
   if (!any(grepl('m', names(pars)))) {
     m = 800
     m.flag = TRUE
@@ -48,8 +47,7 @@ trainLearner.classif.dcSVM = function(.learner, .task, .subset, .weights = NULL,
   }
   if (!any(grepl('k', names(pars)))) {
     k = 4
-    k.flag = TRUE
-  } else { 
+  } else {
     k = pars$k
   }
   m = min(nrow(d$data), m)
@@ -60,7 +58,7 @@ trainLearner.classif.dcSVM = function(.learner, .task, .subset, .weights = NULL,
     return(result)
   }
 
-  
+
   if (m.flag && max.levels.flag) {
     SwarmSVM::dcSVM(x = d$data, y = d$target, m = m, max.levels = max.levels, ...)
   } else if (!m.flag && max.levels.flag) {
