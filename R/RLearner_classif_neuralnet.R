@@ -26,7 +26,7 @@ makeRLearner.classif.neuralnet = function() {
       makeNumericVectorLearnerParam(id = "constant.weights"),
       makeLogicalLearnerParam(id = "likelihood", default = FALSE)
     ),
-    par.vals = list(err.fct = "ce", linear.output = FALSE),
+    par.vals = list(err.fct = "ce"),
     properties = c("twoclass", "numerics", "prob"),
     name = "Neural Network from neuralnet",
     short.name = "neuralnet",
@@ -62,7 +62,7 @@ trainLearner.classif.neuralnet = function(.learner, .task, .subset, .weights = N
     f = formula_expand
   }
   
-  neuralnet::neuralnet(f, data = taskdat, ...)
+  neuralnet::neuralnet(f, data = taskdat, linear.output = FALSE, ...)
 }
 
 #' @export
