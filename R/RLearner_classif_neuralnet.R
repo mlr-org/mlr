@@ -22,16 +22,15 @@ makeRLearner.classif.neuralnet = function() {
                                values=c("sse","ce")),
       makeDiscreteLearnerParam(id = "act.fct", default = "logistic",
                                values=c("logistic","tanh")),
-      makeLogicalLearnerParam(id = "linear.output", default = TRUE),
       makeNumericVectorLearnerParam(id = "exclude"),
       makeNumericVectorLearnerParam(id = "constant.weights"),
       makeLogicalLearnerParam(id = "likelihood", default = FALSE)
     ),
-    par.vals = list(err.fct = "ce"),
+    par.vals = list(err.fct = "ce", linear.output = FALSE),
     properties = c("twoclass", "numerics", "prob"),
     name = "Neural Network from neuralnet",
     short.name = "neuralnet",
-    note = "`err.fct` has been set to `ce` to do classification."
+    note = "`err.fct` has been set to `ce` and `linear.output` to FALSE to do classification."
   )
 }
 
@@ -63,7 +62,7 @@ trainLearner.classif.neuralnet = function(.learner, .task, .subset, .weights = N
     f = formula_expand
   }
   
-  neuralnet::neuralnet(f, data = taskdat, linear.output = FALSE, ...)
+  neuralnet::neuralnet(f, data = taskdat, ...)
 }
 
 #' @export
