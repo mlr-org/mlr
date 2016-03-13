@@ -15,6 +15,7 @@ mlr_2.9:
 - clean up randomForestSRC learners
 - fix bug with partialPredictions and GGVIS
 - remove unnecessary linear.output parameter for classif.neuralnet
+- remove unsupported KSVM parameter value stringdot
 
 - new learners
 -- surv.cv.CoxBoost
