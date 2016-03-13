@@ -14,6 +14,7 @@ mlr_2.9:
 - fix bug with NoFeaturesModel and ModelMultiplexer
 - clean up randomForestSRC learners
 - fix bug with partialPredictions and GGVIS
+- remove unnecessary linear.output parameter for classif.neuralnet
 
 - new learners
 -- surv.cv.CoxBoost
