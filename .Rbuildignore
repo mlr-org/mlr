@@ -25,5 +25,5 @@ testinfo.RData
 ^travis_wait_*.log
 ^thirdparty$
 
-.git
-makeR
+^.git$
+^makeR$
