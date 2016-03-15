@@ -78,7 +78,7 @@ train = function(learner, task, subset, weights = NULL) {
       set.seed(debug.seed)
     # for optwrappers we want to see the tuning / varsel logging
     # FIXME: is case really ok for optwrapper? can we supppress then too?
-    fun1 = if (opts$show.learner.output || inherits(learner, "OptWrapper")) identity else utils::capture.output
+    fun1 = if (opts$show.learner.output || inherits(learner, "OptWrapper")) identity else capture.output
     fun2 = if (opts$on.learner.error == "stop") identity else function(x) try(x, silent = TRUE)
     if (opts$on.learner.warning == "quiet") {
       old.warn.opt = getOption("warn")
