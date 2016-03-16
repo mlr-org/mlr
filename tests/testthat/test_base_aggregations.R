@@ -6,6 +6,7 @@ test_that("aggregations", {
   lrn = makeLearner("classif.rpart", predict.type = "prob")
   r = resample(lrn, task = binaryclass.task, resampling = rdesc, measures = ms)
   a = r$aggr
+  expect_true(FALSE)
   expect_equal(length(a), length(ms))
   expect_true(!any(is.na(as.logical(a))))
 })
