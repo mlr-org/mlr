@@ -42,17 +42,4 @@ parameters (\code{par.vals}) and a tunable
 either be specified by their lower and upper bounds or they will be
 discretized into specific values.
 }
-\examples{
-library(caret)
-classifTask = makeClassifTask(data = iris, target = "Species")
-
-# (1) classification (random forest) with discretized parameters
-getCaretParamSet("rf", length = 9L, task = classifTask, discretize = TRUE)
-
-# (2) regression (gradient boosting machine) without discretized parameters
-library(mlbench)
-data(BostonHousing)
-regrTask = makeRegrTask(data = BostonHousing, target = "medv")
-getCaretParamSet("gbm", length = 9L, task = regrTask, discretize = FALSE)
-}
 
