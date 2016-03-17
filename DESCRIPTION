@@ -106,7 +106,7 @@ Suggests:
     PMCMR,
     pROC (>= 1.8),
     randomForest,
-    randomForestSRC (>= 2.0.5),
+    randomForestSRC (>= 2.1.0),
     ranger (>= 0.3.0),
     RCurl,
     rFerns,
