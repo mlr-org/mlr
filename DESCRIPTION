@@ -20,7 +20,8 @@ Authors@R: c(person("Bernd", "Bischl", email = "bernd_bischl@gmx.net", role =
     "aut"), person("Lars", "Kotthoff", email =
     "larsko@cs.ubc.ca", role = "aut"), person("Zachary", "Jones", email =
     "zmj@zmjones.com", role = "ctb"), person("Schiffner", "Julia", email =
-    "schiffner@math.uni-duesseldorf.de", role = "aut"))
+    "schiffner@math.uni-duesseldorf.de", role = "aut"), person("Giuseppe", "Casalicchio", email =
+    "giuseppe.casalicchio@stat.uni-muenchen.de", role = "aut"))
 URL: https://github.com/mlr-org/mlr
 BugReports: https://github.com/mlr-org/mlr/issues
 License: BSD_2_clause + file LICENSE
