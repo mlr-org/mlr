@@ -127,6 +127,7 @@ listLearners.character  = function(obj, properties = character(0L), quiet = TRUE
   properties = getSupportedLearnerProperties()
   tab = cbind(tab, rbindlist(lapply(tab$properties, function(x) setNames(as.list(properties %in% x), properties))))
   tab$properties = NULL
+  setnames(tab, "id", "class")
   setDF(tab)
   return(tab)
 }

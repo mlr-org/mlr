@@ -55,8 +55,8 @@ Default is \code{FALSE}.}
 }
 \value{
 [\code{data.frame} | \code{list} of \code{\link{Learner}}].
-  Either descriptive data.frame that allows access to all properties of learners or a list of created learner objects.
-  The latter is named by ids of listed learners.
+  Either a descriptive data.frame that allows access to all properties of the learners
+  or a list of created learner objects (named by ids of listed learners).
 }
 \description{
 Returns learning algorithms which have specific characteristics, e.g.
