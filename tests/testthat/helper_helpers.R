@@ -210,7 +210,7 @@ mylist = function(..., create = FALSE) {
     ids = extractSubList(lrns, "id")
     return(lrns[!grepl("mock", ids)])
   } else {
-    ids = lrns$id
+    ids = lrns$class
     return(lrns[!grepl("mock", ids),])
   }
 }
