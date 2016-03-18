@@ -136,12 +136,12 @@ makeFilter(
 
 makeFilter(
   name = "rf.importance",
-  desc = "Importance of random forests fitted in package 'randomForestSRC'",
+  desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'.",
   pkg  = "randomForestSRC",
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
-    im = randomForestSRC::rfsrc(getTaskFormula(task), data = getTaskData(task), proximity = FALSE, forest = FALSE, importance = TRUE, ...)$importance
+    im = randomForestSRC::rfsrc(getTaskFormula(task), data = getTaskData(task), proximity = FALSE, forest = FALSE, importance = "permute", ...)$importance
     if (inherits(task, "ClassifTask")) {
       ns = rownames(im)
       y = im[, "all"]
