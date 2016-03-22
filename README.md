@@ -52,7 +52,7 @@ Features
 * Resampling methods like bootstrapping, cross-validation and subsampling
 * Extensive visualizations for e.g. ROC curves, predictions and partial
   predictions
-* Benchmarking of learners for muliple data sets
+* Benchmarking of learners for multiple data sets
 * Easy hyperparameter tuning using different optimization strategies, including
   potent configurators like iterated F-racing (irace) or sequential model-based
   optimization
