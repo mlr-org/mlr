@@ -1,4 +1,4 @@
-context("resample: loo")
+context("resample_loo")
 
 test_that("loo instance works", {
   rin = makeResampleInstance(makeResampleDesc("LOO"), size=10)

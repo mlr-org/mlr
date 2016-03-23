@@ -6,7 +6,7 @@ test_that("tuneMBO", {
   skip_if_not_installed("mlrMBO")
   attachNamespace("mlrMBO")
   # FIXME change when mlrMBO is on cran
-  #requirePackages("!mlrMBO")
+  #requirePackagesOrSkip("!mlrMBO")
   res = makeResampleDesc("Holdout")
   ps = makeParamSet(
     makeNumericParam("cp", lower = 0, upper = 1),

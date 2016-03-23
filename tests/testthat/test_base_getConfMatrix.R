@@ -26,6 +26,3 @@ test_that("getConfMatrix produces error for FailureModel predicttions", {
   r = holdout(lrn, task, measures = ber)
   expect_error(getConfMatrix(r$pred), "FailureModel")
 })
-
-
-

@@ -1,7 +1,7 @@
 context("regr_nnet")
 
 test_that("regr_nnet", {
-  requirePackages("nnet", default.method = "load")
+  requirePackagesOrSkip("nnet", default.method = "load")
 
   set.seed(getOption("mlr.debug.seed"))
   capture.output({
@@ -21,4 +21,3 @@ test_that("regr_nnet", {
   # testCV("regr.nnet", regr.df, regr.target, tune.train = tt, tune.predict = tp,
     # parset = list(size = 3L, maxit = 50L))
 })
-

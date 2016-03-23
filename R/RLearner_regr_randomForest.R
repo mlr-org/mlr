@@ -46,8 +46,7 @@ makeRLearner.regr.randomForest = function() {
     properties = c("numerics", "factors", "ordered", "se"),
     name = "Random Forest",
     short.name = "rf",
-    note = "See `?regr.randomForest` for information about se estimation."
-
+    note = "See `?regr.randomForest` for information about se estimation. Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures."
   )
 }
 

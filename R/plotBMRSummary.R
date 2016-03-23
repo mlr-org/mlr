@@ -41,7 +41,7 @@ plotBMRSummary = function(bmr, measure = NULL, trafo = "none", order.tsks = NULL
 
   # trafo to ranks manually here
   if (trafo == "rank") {
-    df = ddply(df, "task.id", function(d) {
+    df = plyr::ddply(df, "task.id", function(d) {
       d[, meas.name] = rank(d[, meas.name], ties.method = "average")
       return(d)
     })

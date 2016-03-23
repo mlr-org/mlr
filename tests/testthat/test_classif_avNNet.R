@@ -1,8 +1,8 @@
 context("classif_avNNet")
 
 test_that("classif_avNNet", {
-  requirePackages("nnet", default.method = "load")
-  
+  requirePackagesOrSkip("nnet", default.method = "load")
+
   set.seed(getOption("mlr.debug.seed"))
   repeats = 5
   pred = 0
@@ -12,8 +12,8 @@ test_that("classif_avNNet", {
   }
   pred = pred/repeats
   pred = factor(as.numeric(pred>0.5), labels = binaryclass.class.levs)
-  
+
   set.seed(getOption("mlr.debug.seed"))
-  testSimple("classif.avNNet", binaryclass.df, binaryclass.target, binaryclass.train.inds, pred, 
+  testSimple("classif.avNNet", binaryclass.df, binaryclass.target, binaryclass.train.inds, pred,
     parset = list(size = 3))
 })

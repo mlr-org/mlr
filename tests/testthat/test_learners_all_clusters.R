@@ -1,3 +1,5 @@
+context("learners_all_clusters")
+
 test_that("learners work: cluster", {
 
   # clustering, response
@@ -25,4 +27,3 @@ test_that("learners work: cluster", {
     expect_true(!is.na(performance(p, task = task)))
   })
 })
-

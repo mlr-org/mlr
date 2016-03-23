@@ -119,7 +119,7 @@ doDPSSplits = function(x, k, inds = 1:nrow(x)) {
     s1 = s[[1L]]
     s2 = s[[2L]]
 
-    if(any(is.na(x1)) | any(is.na(x2)))
+    if (anyMissing(x1) || anyMissing(x2))
       stop("There are NAs")
 
     s = c(

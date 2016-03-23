@@ -517,7 +517,7 @@ plotPartialPrediction = function(obj, geom = "line", facet = NULL, p = 1) {
                  length(features) < 3L & geom == "line")
 
   if (geom == "line") {
-    obj$data = melt(obj$data, id.vars = colnames(obj$data)[!colnames(obj$data) %in% features],
+    obj$data = reshape2::melt(obj$data, id.vars = colnames(obj$data)[!colnames(obj$data) %in% features],
                     variable = "Feature", value.name = "Value", na.rm = TRUE)
     if (!obj$individual) {
       if (obj$task.desc$type %in% c("regr", "surv"))

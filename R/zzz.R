@@ -1,18 +1,13 @@
+#' @import methods
+#' @importFrom survival Surv is.Surv
 #' @import BBmisc
 #' @import checkmate
-#' @import ggplot2
-#' @import shiny
-#' @importFrom ggvis ggvis bind_shiny layer_paths layer_lines layer_points add_axis prop ggvisOutput group_by
-#' @import graphics
-#' @import methods
 #' @import parallelMap
 #' @import ParamHelpers
-#' @import plyr
-#' @import reshape2
+#' @import ggplot2
 #' @import stats
-#' @import utils
-#' @importFrom survival Surv
-#' @importFrom survival is.Surv
+#' @import stringi
+#' @import data.table
 
 .onAttach = function(libname, pkgname) {
   configureMlr()

@@ -1,7 +1,7 @@
 context("regr_LiblineaRL2L2SVR")
 
 test_that("regr_LiblineaRL2L2SVR", {
-  requirePackages("LiblineaR", default.method = "load")
+  requirePackagesOrSkip("LiblineaR", default.method = "load")
 
   parset.list = list(
     list(type = 11, svr_eps = 0.01),
@@ -33,5 +33,4 @@ test_that("regr_LiblineaRL2L2SVR", {
 
   testSimpleParsets("regr.LiblineaRL2L2SVR", regr.num.df, regr.num.target,
     regr.num.train.inds, old.predicts.list, parset.list)
-
 })

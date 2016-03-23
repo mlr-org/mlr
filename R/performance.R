@@ -105,7 +105,7 @@ doPerformanceIteration = function(measure, pred = NULL, task = NULL, model = NUL
   if (inherits(pred, "ResamplePrediction")) {
     if (is.null(pred$data$iter)) pred$data$iter = 1L
     if (is.null(pred$data$set)) pred$data$set = "test"
-    perfs = ddply(pred$data, "iter", function(ss) {
+    perfs = plyr::ddply(pred$data, "iter", function(ss) {
       ss.train = subset(ss, ss$set == "train")
       ss.test = subset(ss, ss$set == "test")
       if (nrow(ss.train) > 0L) {

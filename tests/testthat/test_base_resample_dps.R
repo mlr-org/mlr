@@ -1,4 +1,4 @@
-context("resample: dps")
+context("resample_dps")
 
 test_that("dps instance works", {
   desc = makeResampleDesc("DPS", iters = 2)
@@ -40,7 +40,3 @@ test_that("dps internal functions work", {
     }
   }
 })
-
-
-
-

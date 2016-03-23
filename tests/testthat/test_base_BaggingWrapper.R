@@ -63,5 +63,3 @@ test_that("BaggingWrapper works with 1 obs in newdata", {
   p = predict(mod, newdata = nd)
   expect_true(!is.na(performance(p)))
 })
-
-
