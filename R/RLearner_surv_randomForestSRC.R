@@ -16,11 +16,14 @@ makeRLearner.surv.randomForestSRC = function() {
       makeIntegerLearnerParam(id = "nsplit", lower = 0L, default = 0L,
         requires = quote(splitrule != "random")), # nsplit is ignored and internally set to 1 for splitrule = "random"
       makeLogicalLearnerParam(id = "split.null", default = FALSE),
-      makeDiscreteLearnerParam(id = "importance", default = "permute", tunable = FALSE,
-        values = c("permute", "random", "anti", "permute.ensemble", "random.ensemble", "anti.ensemble", "none")),
+      makeDiscreteLearnerParam(id = "importance", default = FALSE, tunable = FALSE,
+        values = list(`FALSE` = FALSE, `TRUE` = TRUE, "none", "permute", "random", "anti",
+          "permute.ensemble", "random.ensemble", "anti.ensemble")),
       makeDiscreteLearnerParam(id = "na.action", default = "na.impute",
         values = c("na.impute", "na.random"), when = "both"),
       makeIntegerLearnerParam(id = "nimpute", default = 1L, lower = 1L),
+      ## FIXME
+      # makeIntegerLearnerParam(id = "ntime", lower = 1L), # can be a single integer or a vector of numeric (?) values
       makeDiscreteLearnerParam(id = "proximity", default = FALSE, tunable = FALSE,
         values = list("inbag", "oob", "all", `TRUE` = TRUE, `FALSE` = FALSE)),
       makeNumericVectorLearnerParam(id = "xvar.wt", lower = 0),
@@ -34,12 +37,11 @@ makeRLearner.surv.randomForestSRC = function() {
       makeLogicalLearnerParam(id = "statistics", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "fast.restore", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(na.action = "na.impute", importance = "none"),
+    par.vals = list(na.action = "na.impute"),
     properties = c("missings", "numerics", "factors", "ordered", "rcens"),
     name = "Random Forest",
     short.name = "rfsrc",
-    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.
-      `importance` has been set to `"none"` by default for speed.'
+    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.'
   )
 }
 

@@ -7,7 +7,7 @@ test_that("classif_randomForestSRC", {
     list(),
     list(ntree = 100),
     list(ntree = 250, mtry = 4),
-    list(ntree = 250, nodesize = 2, na.action = "na.impute", importance = "none", proximity = FALSE)
+    list(ntree = 250, nodesize = 2, na.action = "na.impute", importance = "permute", proximity = FALSE)
   )
   old.predicts.list = list()
   old.probs.list = list()
