@@ -1,6 +1,5 @@
 mlr_2.9:
 - SMOTEWrapper: fix a bug where "sw.nn" was not correctly passed down
-- removed classif.bartMachine and regr.bartMachine because of bugs
 - classif.blackboost, regr.blackboost: made sure that arg "stump" is passed on
   correctly
 - fixed parameter values for WEKA learners IBk, J48, PART, EM, SimpleKMeans,
@@ -16,6 +15,7 @@ mlr_2.9:
 - fix bug with partialPredictions and GGVIS
 - remove unnecessary linear.output parameter for classif.neuralnet
 - remove unsupported KSVM parameter value stringdot
+- fix some bartMachine compatibility issues
 
 - new learners
 -- surv.cv.CoxBoost
