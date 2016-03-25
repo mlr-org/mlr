@@ -60,10 +60,9 @@ test_that("no labels are switched", {
       if (!is.null(hps))
         lrn = setHyperPars(lrn, par.vals = hps)
       err = holdout(lrn, task, split = 0.5, stratify = TRUE)$aggr[[1L]]
-      expect_true(!is.na(err) & err <= 1/3, info = paste(task$task.desc$id, id, err, sep = ", "))
+      expect_true(!is.na(err) & err <= 1/3, info = paste(getTaskDescription(task)$id, id, err, sep = ", "))
       err
     })
-    # messagef("predtype = %s; task = %s", predtype, task$task.desc$id)
   }
   # FIXME: only check prob for now for timimg reasons
   for (predtype in c("prob")) {
