@@ -101,15 +101,17 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
   }
 
   baseType = unique(extractSubList(base.learners, "type"))
-  if (!is.null(resampling) & method != "stack.cv") {
-    stop("No resampling needed for this method")
-  }
-  if (is.null(resampling)) {
-    resampling = makeResampleDesc("CV", iters= 5L,
-      stratify = ifelse(baseType == "classif", TRUE, FALSE))
-  }
   assertChoice(method, c("average", "stack.nocv", "stack.cv", "hill.climb", "compress"))
-  assertClass(resampling, "ResampleDesc")
+
+  if (method %in% c("stack.cv", "hill.climb")) {
+    if (is.null(resampling)) {
+      resampling = makeResampleDesc("CV", iters = 5L, stratify = ifelse(baseType == "classif", TRUE, FALSE))
+    } else {
+      assertClass(resampling, "CVDesc")
+    }
+  } else {
+    assertClass(resampling, "NULL")
+  }
 
   pts = unique(extractSubList(base.learners, "predict.type"))
   if ("se"%in%pts | (!is.null(predict.type) && predict.type == "se") |
