@@ -48,7 +48,7 @@
 #'   Not used for \code{method = 'average'}.
 #'   Default is \code{FALSE}.
 #' @param resampling [\code{\link{ResampleDesc}}]\cr
-#'   Resampling strategy for \code{method = 'stack.cv'}.
+#'   Resampling strategy for \code{method = 'stack.cv'} and \code{method = 'hill.climb'}.
 #'   Currently only CV is allowed for resampling.
 #'   The default \code{NULL} uses 5-fold CV.
 #' @param parset the parameters for \code{hill.climb} method, including
@@ -101,15 +101,17 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
   }
 
   baseType = unique(extractSubList(base.learners, "type"))
-  if (!is.null(resampling) & method != "stack.cv") {
-    stop("No resampling needed for this method")
-  }
-  if (is.null(resampling)) {
-    resampling = makeResampleDesc("CV", iters= 5L,
-      stratify = ifelse(baseType == "classif", TRUE, FALSE))
-  }
   assertChoice(method, c("average", "stack.nocv", "stack.cv", "hill.climb", "compress"))
-  assertClass(resampling, "ResampleDesc")
+
+  if (method %in% c("stack.cv", "hill.climb")) {
+    if (is.null(resampling)) {
+      resampling = makeResampleDesc("CV", iters = 5L, stratify = ifelse(baseType == "classif", TRUE, FALSE))
+    } else {
+      assertClass(resampling, "CVDesc")
+    }
+  } else {
+    assertClass(resampling, "NULL")
+  }
 
   pts = unique(extractSubList(base.learners, "predict.type"))
   if ("se"%in%pts | (!is.null(predict.type) && predict.type == "se") |
@@ -415,11 +417,11 @@ stackCV = function(learner, task) {
        super.model = super.model, pred.train = pred.train)
 }
 
-hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagprob = 1, bagtime = 1,
+hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 5, bagprob = 0.5, bagtime = 20,
   metric = NULL, ...) {
 
   assertFlag(replace)
-  assertInt(init, lower = 0)
+  assertInt(init, lower = 0, upper = length(learner$base.learners))
   assertNumber(bagprob, lower = 0, upper = 1)
   assertInt(bagtime, lower = 1)
 
@@ -479,17 +481,17 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
     # bagging of models
     bagsize = ceiling(m*bagprob)
     bagmodel = sample(1:m, bagsize)
-    weight = rep(0, bagsize)
+    bagweight = rep(0, m)
 
     # Initial selection of strongest learners
     inds = NULL
     if (init>0) {
-      score = rep(Inf, bagsize)
+      score = rep(Inf, m)
       for (i in bagmodel) {
         score[i] = metric(probs[[i]], probs[[tn]])
       }
       inds = order(score)[1:init]
-      weight[inds] = 1
+      bagweight[inds] = 1
     }
 
     selection.size = init
@@ -526,7 +528,7 @@ hillclimbBaseLearners = function(learner, task, replace = TRUE, init = 0, bagpro
         old.score = new.score
       }
     }
-    weights[bagmodel] = weights[bagmodel] + weight
+    weights = weights + bagweight
   }
   weights = weights/sum(weights)
 
