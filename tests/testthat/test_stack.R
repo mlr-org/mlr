@@ -63,9 +63,13 @@ test_that("Stacking works with wrapped learners (#687)", {
 
 test_that("Parameters for hill climb works", {
   tsk = binaryclass.task
-  base = c("classif.rpart", "classif.lda", "classif.svm")
-  lrns = lapply(base, makeLearner)
-  lrns = lapply(lrns, setPredictType, "prob")
+  lrns = list(
+    makeLearner("classif.ksvm", predict.type = "prob"),
+    makeLearner("classif.randomForest", predict.type = "prob"),
+    makeLearner("classif.kknn", id = "classif.knn2", predict.type = "prob", k = 2),
+    makeLearner("classif.kknn", id = "classif.knn3", predict.type = "prob", k = 3),
+    makeLearner("classif.kknn", id = "classif.knn4", predict.type = "prob", k = 4),
+    makeLearner("classif.kknn", id = "classif.knn5", predict.type = "prob", k = 5))
   m = makeStackedLearner(base.learners = lrns, predict.type = "prob", method = "hill.climb",
     parset = list(bagprob = 0.8, bagtime = 5, replace = FALSE))
   tmp = train(m, tsk)
