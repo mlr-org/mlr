@@ -17,7 +17,8 @@ makeRLearner.surv.rpart = function() {
       makeUntypedLearnerParam(id = "parms")
     ),
     par.vals = list(xval = 0L),
-    properties = c("rcens", "missings", "numerics", "factors", "ordered", "weights"),
+    properties = c("rcens", "missings", "numerics", "factors", "ordered",
+      "weights", "featimp"),
     name = "Survival Tree",
     short.name = "rpart",
     note = "`xval` has been set to `0` by default for speed."
@@ -42,4 +43,11 @@ predictLearner.surv.rpart = function(.learner, .model, .newdata, ...) {
   } else {
     stop("Unsuporrted predict type")
   }
+}
+
+getFeatureImportance.surv.rpart = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model)
+  fiv = as.numeric(mod$variable.importance[names(mod$ordered)])
+  names(fiv) = .model$features
+  return(fiv)
 }

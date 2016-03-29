@@ -48,7 +48,7 @@ makeRLearner.regr.randomForest = function() {
       se.boot = 50L,
       ntree.for.se = 100L
     ),
-    properties = c("numerics", "factors", "ordered", "se"),
+    properties = c("numerics", "factors", "ordered", "se", "featimp"),
     name = "Random Forest",
     short.name = "rf",
     note = "See `?regr.randomForest` for information about se estimation. Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures."
@@ -131,4 +131,29 @@ sdStandardError = function(.learner, .model, .newdata, ...) {
   pred = predict(.model$learner.model, newdata = .newdata, predict.all = TRUE, ...)
   se = apply(pred$individual, 1, sd)
   return(cbind(pred$aggregate, se))
+}
+
+getFeatureImportance.regr.randomForest = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model)
+  ctrl = list(...)
+  if (is.null(ctrl$type)) {
+    ctrl$type = 2L
+  } else {
+    if (ctrl$type == 1L) {
+      has.fiv = .learner$par.vals$importance
+      if (is.null(has.fiv) || has.fiv != TRUE)
+        stop("You need to train the learner with parameter 'importance' is TRUE")
+    }
+  }
+  
+  fiv.obj = randomForest::importance(mod, ctrl)
+
+  if (ctrl$type == 1L) {
+    fiv = fiv.obj[, 1L]
+    names(fiv) = rownames(fiv.obj)
+  } else {
+    fiv = as.numeric(fiv.obj)
+    names(fiv) = .model$features
+  }
+  return(fiv)
 }

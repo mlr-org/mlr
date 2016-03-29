@@ -25,7 +25,7 @@ makeRLearner.regr.cforest = function() {
       makeIntegerLearnerParam(id = "maxdepth", lower = 0L, default = 0L),
       makeLogicalLearnerParam(id = "savesplitstats", default = FALSE, tunable = FALSE)
     ),
-    properties = c("numerics", "factors", "ordered", "weights", "missings"),
+    properties = c("numerics", "factors", "ordered", "weights", "missings", "featimp"),
     par.vals = list(),
     name = "Random Forest Based on Conditional Inference Trees",
     short.name = "cforest",
@@ -58,4 +58,15 @@ trainLearner.regr.cforest = function(.learner, .task, .subset, .weights = NULL,
 #' @export
 predictLearner.regr.cforest = function(.learner, .model, .newdata, ...) {
   as.vector(predict(.model$learner.model, newdata = .newdata, ...))
+}
+
+getFeatureImportance.regr.cforest = function(.learner, .model, AUC = FALSE, ...) {
+  mod = getLearnerModel(.model)
+  if (AUC) {
+    fiv = as.numeric(party::varimpAUC(mod, ...))
+  } else {
+    fiv = as.numeric(party::varimp(mod, ...))
+  }
+  names(fiv) = .model$features
+  return(fiv)
 }
