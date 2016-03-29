@@ -8,6 +8,7 @@ makeRLearner.regr.randomForestSRC = function() {
       makeDiscreteLearnerParam(id = "bootstrap", default = "by.root",
         values = c("by.root", "by.node", "none")),
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
+      makeNumericLearnerParam(id = "mtry.ratio", lower = 0L, upper = 1L),
       makeIntegerLearnerParam(id = "nodesize", lower = 1L, default = 5L),
       makeIntegerLearnerParam(id = "nodedepth", default = -1L),
       makeDiscreteLearnerParam(id = "splitrule", default = "mse",
@@ -19,7 +20,7 @@ makeRLearner.regr.randomForestSRC = function() {
         values = list(`FALSE` = FALSE, `TRUE` = TRUE, "none", "permute", "random", "anti",
           "permute.ensemble", "random.ensemble", "anti.ensemble")),
       makeDiscreteLearnerParam(id = "na.action", default = "na.impute",
-        values = c("na.impute", "na.random"), when = "both"),
+        values = c("na.omit", "na.impute", "na.random"), when = "both"),
       makeIntegerLearnerParam(id = "nimpute", default = 1L, lower = 1L),
       makeDiscreteLearnerParam(id = "proximity", default = FALSE, tunable = FALSE,
         values = list("inbag", "oob", "all", `TRUE` = TRUE, `FALSE` = FALSE)),
@@ -38,14 +39,20 @@ makeRLearner.regr.randomForestSRC = function() {
     properties = c("missings", "numerics", "factors", "ordered"),
     name = "Random Forest",
     short.name = "rfsrc",
-    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.'
+    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.
+      `mtry.ratio` indicates the proportion of variables randomly selected as candidates for a split.'
   )
 }
 
 #' @export
-trainLearner.regr.randomForestSRC = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.regr.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, mtry = NULL, mtry.ratio = NULL, ...) {
+  if (!is.null(mtry.ratio)) {
+    if (!is.null(mtry))
+      stop("You cannot set both 'mtry' and 'mtry.ratio'")
+    mtry = mtry.ratio * getTaskNFeats(.task)
+  }
   f = getTaskFormula(.task)
-  randomForestSRC::rfsrc(f, data = getTaskData(.task, .subset), forest = TRUE, ...)
+  randomForestSRC::rfsrc(f, data = getTaskData(.task, .subset), forest = TRUE, mtry = mtry, ...)
 }
 
 #' @export

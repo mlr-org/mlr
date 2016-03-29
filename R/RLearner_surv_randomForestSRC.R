@@ -20,10 +20,9 @@ makeRLearner.surv.randomForestSRC = function() {
         values = list(`FALSE` = FALSE, `TRUE` = TRUE, "none", "permute", "random", "anti",
           "permute.ensemble", "random.ensemble", "anti.ensemble")),
       makeDiscreteLearnerParam(id = "na.action", default = "na.impute",
-        values = c("na.impute", "na.random"), when = "both"),
+        values = c("na.omit", "na.impute", "na.random"), when = "both"),
       makeIntegerLearnerParam(id = "nimpute", default = 1L, lower = 1L),
-      ## FIXME
-      # makeIntegerLearnerParam(id = "ntime", lower = 1L), # can be a single integer or a vector of numeric (?) values
+      makeUntypedLearnerParam(id = "ntime"), # can be a single integer with number of time points or a numeric vector of time values
       makeDiscreteLearnerParam(id = "proximity", default = FALSE, tunable = FALSE,
         values = list("inbag", "oob", "all", `TRUE` = TRUE, `FALSE` = FALSE)),
       makeNumericVectorLearnerParam(id = "xvar.wt", lower = 0),
@@ -41,21 +40,20 @@ makeRLearner.surv.randomForestSRC = function() {
     properties = c("missings", "numerics", "factors", "ordered", "rcens"),
     name = "Random Forest",
     short.name = "rfsrc",
-    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.'
+    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.
+      `mtry.ratio` indicates the proportion of variables randomly selected as candidates for a split.'
   )
 }
 
 #' @export
 trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, mtry = NULL, mtry.ratio = NULL, ...) {
-  data = getTaskData(.task, subset = .subset)
   if (!is.null(mtry.ratio)) {
     if (!is.null(mtry))
       stop("You cannot set both 'mtry' and 'mtry.ratio'")
-    mtry = mtry.ratio * nrow(data)
+    mtry = mtry.ratio * getTaskNFeats(.task)
   }
-
   f = getTaskFormula(.task)
-  randomForestSRC::rfsrc(f, data = data, forest = TRUE, mtry = mtry, ...)
+  randomForestSRC::rfsrc(f, data = getTaskData(.task, subset = .subset), forest = TRUE, mtry = mtry, ...)
 }
 
 #' @export

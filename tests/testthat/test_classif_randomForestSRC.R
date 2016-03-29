@@ -6,7 +6,7 @@ test_that("classif_randomForestSRC", {
   parset.list = list(
     list(),
     list(ntree = 100),
-    list(ntree = 250, mtry = 4),
+    list(ntree = 250, mtry.ratio = 0.9),
     list(ntree = 250, nodesize = 2, na.action = "na.impute", importance = "permute", proximity = FALSE)
   )
   old.predicts.list = list()
@@ -14,6 +14,10 @@ test_that("classif_randomForestSRC", {
 
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
+    if (!is.null(parset$mtry.ratio)) {
+      parset$mtry = parset$mtry.ratio * (ncol(binaryclass.df) - 1)
+      parset$mtry.ratio = NULL
+    } 
     parset = c(parset, list(data = binaryclass.train, formula = binaryclass.formula, forest = TRUE))
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(randomForestSRC::rfsrc, parset)
