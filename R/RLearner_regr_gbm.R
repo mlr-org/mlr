@@ -16,7 +16,7 @@ makeRLearner.regr.gbm = function() {
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(distribution = "gaussian"),
-    properties = c("missings", "numerics", "factors", "weights"),
+    properties = c("missings", "numerics", "factors", "weights", "featimp"),
     name = "Gradient Boosting Machine",
     short.name = "gbm",
     note = '`distribution` has been set to `"gaussian"` by default.'
@@ -39,4 +39,13 @@ trainLearner.regr.gbm = function(.learner, .task, .subset, .weights = NULL,  ...
 predictLearner.regr.gbm = function(.learner, .model, .newdata, ...) {
   m = .model$learner.model
   gbm::predict.gbm(m, newdata = .newdata, n.trees = length(m$trees), ...)
+}
+
+getFeatureImportance.regr.gbm = function(.learner, .model, n.trees, ...) {
+  mod = getLearnerModel(.model)
+  if (missing(n.trees))
+    n.trees = mod$n.trees
+  fiv = as.numeric(gbm::relative.influence(mod, n.trees, ...))
+  names(fiv) = .model$features
+  return(fiv)
 }

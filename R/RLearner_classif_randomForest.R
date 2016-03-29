@@ -18,7 +18,7 @@ makeRLearner.classif.randomForest = function() {
       makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob", "class.weights"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob", "class.weights", "featimp"),
     class.weights.param = "classwt",
     name = "Random Forest",
     short.name = "rf",
@@ -45,4 +45,29 @@ trainLearner.classif.randomForest = function(.learner, .task, .subset, .weights 
 predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type=="response", "response", "prob")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
+}
+
+getFeatureImportance.classif.randomForest = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model)
+  ctrl = list(...)
+  if (is.null(ctrl$type)) {
+    ctrl$type = 2L
+  } else {
+    if (ctrl$type == 1L) {
+      has.fiv = .learner$par.vals$importance
+      if (is.null(has.fiv) || has.fiv != TRUE)
+        stop("You need to train the learner with parameter 'importance' is TRUE")
+    }
+  }
+  
+  fiv.obj = randomForest::importance(mod, ctrl)
+
+  if (ctrl$type == 1L) {
+    fiv = fiv.obj[, 1L]
+    names(fiv) = rownames(fiv.obj)
+  } else {
+    fiv = as.numeric(fiv.obj)
+    names(fiv) = .model$features
+  }
+  return(fiv)
 }

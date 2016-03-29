@@ -35,7 +35,7 @@ makeRLearner.regr.randomForestSRC = function() {
       makeLogicalLearnerParam(id = "fast.restore", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(na.action = "na.impute"),
-    properties = c("missings", "numerics", "factors", "ordered"),
+    properties = c("missings", "numerics", "factors", "ordered", "featimp"),
     name = "Random Forest",
     short.name = "rfsrc",
     note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.'
@@ -53,4 +53,9 @@ predictLearner.regr.randomForestSRC = function(.learner, .model, .newdata, ...) 
   p = predict(.model$learner.model, newdata = .newdata, membership = FALSE, ...)
   # versison 2.0 of randomForestSRC returns an array here :(
   as.numeric(p$predicted)
+}
+
+getFeatureImportance.regr.randomForestSRC = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model)
+  randomForestSRC::vimp(mod)$importance
 }

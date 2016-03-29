@@ -24,7 +24,8 @@ makeRLearner.surv.cforest = function() {
       makeIntegerLearnerParam(id = "maxdepth", lower = 0L, default = 0L),
       makeLogicalLearnerParam(id = "savesplitstats", default = FALSE, tunable = FALSE)
     ),
-    properties = c("factors", "numerics", "ordered", "weights", "rcens", "missings"),
+    properties = c("factors", "numerics", "ordered", "weights", "rcens",
+      "missings", "featimp"),
     par.vals = list(),
     name = "Random Forest based on Conditional Inference Trees",
     short.name = "crf",
@@ -55,4 +56,11 @@ trainLearner.surv.cforest = function(.learner, .task, .subset,
 #' @export
 predictLearner.surv.cforest = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, newdata = .newdata, ...)
+}
+
+getFeatureImportance.surv.cforest = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model)
+  fiv = as.numeric(party::varimp(mod, ...))
+  names(fiv) = .model$features
+  return(fiv)
 }
