@@ -48,7 +48,7 @@
 #'   Not used for \code{method = 'average'}.
 #'   Default is \code{FALSE}.
 #' @param resampling [\code{\link{ResampleDesc}}]\cr
-+#'   Resampling strategy for \code{method = 'stack.cv'} and \code{method = 'hill.climb'}.
+#'   Resampling strategy for \code{method = 'stack.cv'} and \code{method = 'hill.climb'}.
 #'   Currently only CV is allowed for resampling.
 #'   The default \code{NULL} uses 5-fold CV.
 #' @param parset the parameters for \code{hill.climb} method, including
