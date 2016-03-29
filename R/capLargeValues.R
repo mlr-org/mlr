@@ -60,10 +60,10 @@ capLargeValues.data.frame = function(obj, target = character(0L), cols = NULL,
   cns = colnames(obj)[vlapply(obj, is.numeric)]
   cns = setdiff(cns, target)
 
-  if (!is.null(cols)) {
+  # check that user requested cols are only numeric cols with the target
+  if (!is.null(cols))
     assertSubset(cols, cns)
-    cns = intersect(cns, cols)
-  }
+
   fun = switch(what,
     abs = function(x) abs(x) > threshold,
     pos = function(x) abs(x) > threshold & x > 0,

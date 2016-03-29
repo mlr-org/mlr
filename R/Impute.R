@@ -81,7 +81,8 @@
 impute = function(obj, target = character(0L), classes = list(), cols = list(),
   dummy.classes = character(0L), dummy.cols = character(0L), dummy.type = "factor",
   force.dummies = FALSE, impute.new.levels = TRUE, recode.factor.levels = TRUE) {
-
+  assertList(cols)
+  checkTargetPreproc(obj, target, names(cols))
   UseMethod("impute")
 }
 
@@ -93,9 +94,9 @@ impute.data.frame = function(obj, target = character(0L), classes = list(), cols
   data = obj
   allowed.classes = c("logical", "integer", "numeric", "complex", "character", "factor")
   assertCharacter(target, any.missing = FALSE)
-  
+
+  # check that we dont request dummy col to be created for the target
   if (length(target) != 0L) {
-    checkTargetPreproc(data, target, cols)
     not.ok = which.first(target %in% names(dummy.cols))
     if (length(not.ok) != 0L)
       stopf("Dummy creation of target column '%s' not possible", target[not.ok])
@@ -104,7 +105,6 @@ impute.data.frame = function(obj, target = character(0L), classes = list(), cols
   not.ok = which.first(names(classes) %nin% allowed.classes)
   if (length(not.ok))
     stopf("Column class '%s' for imputation not recognized", names(classes)[not.ok])
-  assertList(cols)
   not.ok = which.first(names(cols) %nin% names(data))
   if (length(not.ok))
     stopf("Column for imputation not present in data: %s", names(cols)[not.ok])
@@ -176,24 +176,10 @@ impute.data.frame = function(obj, target = character(0L), classes = list(), cols
 }
 
 #' @export
-impute.list = function(obj, target = character(0L), classes = list(), cols = list(),
-  dummy.classes = character(0L), dummy.cols = character(0L), dummy.type = "factor",
-  force.dummies = FALSE, impute.new.levels = TRUE, recode.factor.levels = TRUE) {
-
-  impute.data.frame(as.data.frame(obj), target = target, classes = classes, cols = cols,
-    dummy.classes = dummy.classes, dummy.cols = dummy.cols, dummy.type = dummy.type,
-    force.dummies = force.dummies, impute.new.levels = impute.new.levels,
-    recode.factor.levels = recode.factor.levels)
-}
-
-#' @export
 impute.Task = function(obj, target = character(0L), classes = list(), cols = list(),
   dummy.classes = character(0L), dummy.cols = character(0L), dummy.type = "factor",
   force.dummies = FALSE, impute.new.levels = TRUE, recode.factor.levels = TRUE) {
 
-  if (length(target) != 0L) {
-    stop("Don't provide target names if you pass a task!")
-  }
   target = getTaskTargetNames(obj)
   d = getTaskData(obj)
   imputed = impute.data.frame(d, target = target, classes = classes, cols = cols,
@@ -290,10 +276,6 @@ reimpute.data.frame = function(obj, desc) {
   data.frame(x, stringsAsFactors = FALSE)
 }
 
-#' @export
-reimpute.list = function(obj, desc) {
-  reimpute.data.frame(as.data.frame(obj), desc)
-}
 
 #' @export
 reimpute.Task = function(obj, desc) {
