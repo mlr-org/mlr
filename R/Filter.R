@@ -385,12 +385,12 @@ makeFilter(
   pkg = character(0L),
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors"),
-  fun = function(task, learner, measure, contrast = function(x, y) x - y,
+  fun = function(task, fw.learner, measure, contrast = function(x, y) x - y,
                  aggregation = mean, nperm = 1, nselect, replace = FALSE, ...) {
-    learner = checkLearner(learner)
-    measure = checkMeasures(measure, learner)
-    if (getTaskType(task) != learner$type)
-      stopf("Expected task of type '%s', not '%s'", getTaskType(task), learner$type)
+    fw.learner = checkLearner(fw.learner)
+    measure = checkMeasures(measure, fw.learner)
+    if (getTaskType(task) != fw.learner$type)
+      stopf("Expected task of type '%s', not '%s'", getTaskType(task), fw.learner$type)
     if (length(measure) != 1L)
       stop("Exactly one measure must be provided")
     assertCount(nperm)
@@ -399,8 +399,8 @@ makeFilter(
     test.aggregation = aggregation(1:2)
     assert(is.numeric(test.aggregation) & length(test.aggregation) == 1L)
 
-    doPermutationImportance = function(task, learner, measure, contrast, i) {
-      fit = train(learner, task)
+    doPermutationImportance = function(task, fw.learner, measure, contrast, i) {
+      fit = train(fw.learner, task)
       pred = predict(fit, task = task)
       data = getTaskData(task)
 
@@ -413,7 +413,7 @@ makeFilter(
       }, USE.NAMES = FALSE)
     }
 
-    args = list(task = task, learner = learner, measure = measure, contrast = contrast)
+    args = list(task = task, fw.learner = fw.learner, measure = measure, contrast = contrast)
     out = parallelMap::parallelMap(doPermutationImportance, seq_len(nperm), more.args = args)
     out = do.call("rbind", out)
     out = apply(out, 2, aggregation)
