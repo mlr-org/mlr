@@ -66,7 +66,7 @@ test_that("filterFeatures", {
 
   # extra test of the permutation.importance filter
   fv = generateFilterValuesData(task = multiclass.task, method = "permutation.importance",
-                                fw.learner = makeLearner("classif.rpart"),
+                                learner = makeLearner("classif.rpart"),
                                 measure = acc,
                                 contrast = function(x, y) abs(x - y),
                                 aggregation = median,
