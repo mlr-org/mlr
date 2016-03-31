@@ -16,6 +16,7 @@ mlr_2.9:
 - remove unnecessary linear.output parameter for classif.neuralnet
 - remove unsupported KSVM parameter value stringdot
 - fix some bartMachine compatibility issues
+- rename permutation importance learner arg to fw.learner
 
 - new learners
 -- surv.cv.CoxBoost
