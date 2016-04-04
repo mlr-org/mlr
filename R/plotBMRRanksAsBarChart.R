@@ -22,13 +22,16 @@
 #'   of stacked bars.
 #' @template arg_order_lrns
 #' @template arg_order_tsks
+#' @param pretty.names [\code{logical(1)}] Whether to use short names for learners
+#'   instead of the id, in the plot legend. Defaults to \code{TRUE}.
 #' @template ret_gg2
 #' @family plot
 #' @family benchmark
 #' @export
 #' @examples
 #' # see benchmark
-plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", aggregation = "default", pos = "stack", order.lrns = NULL, order.tsks = NULL) {
+plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", aggregation = "default",
+  pos = "stack", order.lrns = NULL, order.tsks = NULL, pretty.names = TRUE) {
   assertClass(bmr, "BenchmarkResult")
   measure = checkBMRMeasure(measure, bmr)
   assertChoice(pos, c("tile", "stack", "dodge"))
@@ -41,7 +44,7 @@ plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", 
   df = orderBMRLrns(bmr, df, order.lrns)
   df = orderBMRTasks(bmr, df, order.tsks)
 
-  df$rank = as.factor(df$rank)
+  df = as.data.frame(sapply(df, as.factor))
   if (pos == "tile") {
     p = ggplot(df, aes_string("rank", "task.id", fill = "learner.id"))
     p = p + geom_tile()
@@ -51,5 +54,11 @@ plotBMRRanksAsBarChart = function(bmr, measure = NULL, ties.method = "average", 
     p = p + geom_bar(position = pos)
     p = p + ylab(NULL)
   }
+
+  if (pretty.names) {
+    lrns.short = getBMRLearnerShortNames(bmr)
+    p = p + scale_fill_discrete(labels = lrns.short)
+  }
+  
   return(p)
 }

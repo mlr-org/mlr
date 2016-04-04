@@ -20,13 +20,16 @@
 #' @param jitter [\code{numeric(1)}]\cr
 #'   Small vertical jitter to deal with overplotting in case of equal scores.
 #'   Default is 0.05.
+#' @param pretty.names [\code{logical(1)}] Whether to use short names for learners
+#'   instead of the id, in the plot legend. Defaults to \code{TRUE}.
 #' @template ret_gg2
 #' @family benchmark
 #' @family plot
 #' @export
 #' @examples
 #' # see benchmark
-plotBMRSummary = function(bmr, measure = NULL, trafo = "none", order.tsks = NULL, pointsize = 4L, jitter = 0.05) {
+plotBMRSummary = function(bmr, measure = NULL, trafo = "none", order.tsks = NULL,
+  pointsize = 4L, jitter = 0.05, pretty.names = TRUE) {
   assertClass(bmr, "BenchmarkResult")
   measure = checkBMRMeasure(measure, bmr)
   assertChoice(trafo, c("none", "rank"))
@@ -55,6 +58,10 @@ plotBMRSummary = function(bmr, measure = NULL, trafo = "none", order.tsks = NULL
   # we dont need y label, the task names speak for themselves
   p = p + ylab("")
   p = p + xlab(xlab.string)
+  if (pretty.names) {
+    lrns.short = getBMRLearnerShortNames(bmr)
+    p = p + scale_colour_discrete(labels = lrns.short)
+  }
   return(p)
 }
 

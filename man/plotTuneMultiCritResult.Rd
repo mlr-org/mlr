@@ -5,7 +5,7 @@
 \title{Plots multi-criteria results after tuning using ggplot2.}
 \usage{
 plotTuneMultiCritResult(res, path = TRUE, col = NULL, shape = NULL,
-  pointsize = 2)
+  pointsize = 2, pretty.names = TRUE)
 }
 \arguments{
 \item{res}{[\code{\link{TuneMultiCritResult}}]\cr
@@ -27,6 +27,9 @@ Default is \code{NULL}, which means none.}
 \item{pointsize}{[\code{numeric(1)}]\cr
 Point size for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
 Default is 2.}
+
+\item{pretty.names}{If TRUE (the default), replaces dots in axis titles
+by spaces.}
 }
 \value{
 ggplot2 plot object.

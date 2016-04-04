@@ -7,7 +7,8 @@
 plotLearnerPrediction(learner, task, features = NULL, measures, cv = 10L,
   ..., gridsize, pointsize = 2, prob.alpha = TRUE, se.band = TRUE,
   err.mark = "train", bg.cols = c("darkblue", "green", "darkred"),
-  err.col = "white", err.size = pointsize, greyscale = FALSE)
+  err.col = "white", err.size = pointsize, greyscale = FALSE,
+  pretty.names = TRUE)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -72,6 +73,9 @@ Default is \code{pointsize}.}
 \item{greyscale}{[\code{logical(1)}]\cr
 Should the plot be greyscale completely?
 Default is \code{FALSE}.}
+
+\item{pretty.names}{[\code{logical(1)}] Whether to use short names for learners
+instead of the id, in the plot title. Defaults to \code{TRUE}.}
 }
 \value{
 The ggplot2 object.
