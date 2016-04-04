@@ -1,9 +1,11 @@
 #' @title Create control structures for feature selection.
 #'
 #' @description
-#' Feature selection method used by \code{\link{selectFeatures}}.
-#' The following methods are available:
-#'
+#' Feature selection method used by \code{\link{selectFeatures}}.\cr
+#' The methods used here follow a wrapper approach, described in
+#' Kohavi and John (1997) (see references).
+#' 
+#' The following optimization algorithms are available: 
 #'  \describe{
 #'    \item{FeatSelControlExhaustive}{Exhaustive search. All feature sets (up to a certain number
 #'      of features \code{max.features}) are searched.}
@@ -97,6 +99,9 @@
 #' @return [\code{\link{FeatSelControl}}]. The specific subclass is one of
 #'   \code{\link{FeatSelControlExhaustive}}, \code{\link{FeatSelControlRandom}},
 #'   \code{\link{FeatSelControlSequential}}, \code{\link{FeatSelControlGA}}.
+#' @references [Ron Kohavi] and [George H. John],
+#' [Wrappers for feature subset selection], Artificial Intelligence Volume 97, 1997, [273-324].
+#' \url{http://ai.stanford.edu/~ronnyk/wrappersPrint.pdf}.\cr
 #' @family featsel
 #' @name FeatSelControl
 #' @rdname FeatSelControl
