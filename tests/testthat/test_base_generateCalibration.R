@@ -49,4 +49,11 @@ test_that("generateCalibrationData", {
   doc = XML::xmlParse(path)
   #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(length(unique(cd$data$Learner))))
   #expect_that(length(XML::getNodeSet(doc, red.xpath, ns.svg)), equals(nrow(cd$proportion) + 1))
+
+  # pretty names works
+  cd = generateCalibrationData(res)
+  plotCalibration(cd, pretty.names = FALSE)
+  ggsave(path)
+  doc = XML::xmlParse(path)
+
 })

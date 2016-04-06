@@ -5,7 +5,7 @@
 \title{Plot a benchmark summary.}
 \usage{
 plotBMRSummary(bmr, measure = NULL, trafo = "none", order.tsks = NULL,
-  pointsize = 4L, jitter = 0.05)
+  pointsize = 4L, jitter = 0.05, pretty.names = TRUE)
 }
 \arguments{
 \item{bmr}{[\code{\link{BenchmarkResult}}]\cr
@@ -31,6 +31,9 @@ Default is 4.}
 \item{jitter}{[\code{numeric(1)}]\cr
 Small vertical jitter to deal with overplotting in case of equal scores.
 Default is 0.05.}
+
+\item{pretty.names}{[\code{logical(1)}] Whether to use short names for learners
+instead of the id, in the plot legend. Defaults to \code{TRUE}.}
 }
 \value{
 ggplot2 plot object.

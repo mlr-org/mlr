@@ -17,7 +17,8 @@ diagram, the critical difference will be positioned arround this learner.
 Defaults to best performing algorithm.}
 
 \item{pretty.names}{[\code{logical(1)}]: \cr
-Should learner short names be used instead of learner.id?}
+Should learner short names be used instead of learner.id?
+Defaults to \code{TRUE}.}
 }
 \value{
 ggplot2 plot object.
