@@ -36,5 +36,14 @@ Object of class \dQuote{Filter}.
 \description{
 Creates and registers custom feature filters. Implemented filters
 can be listed with \code{\link{listFilterMethods}}.
+
+Filter \dQuote{permutation.importance} computes a loss function between predictions made by a
+learner before and after a feature is permuted. Special arguments to the filter function are
+\code{imp.learner}, a [\code{\link{Learner}} or \code{character(1)}] which specifies the learner
+to use when computing the permutation importance, \code{contrast}, a \code{function} which takes two
+numeric vectors and returns one (default is the difference), \code{aggregation}, a \code{function} which
+takes a \code{numeric} and returns a \code{numeric(1)} (default is the mean), \code{nperm},
+an \code{integer(1)}, and \code{replace}, a \code{logical(1)} which determines whether the feature being
+permuted is sampled with or without replacement.
 }
 

@@ -24,3 +24,13 @@ test_that("FilterWrapper univariate (issue #516)", {
   expect_true(!inherits(m, "FailureModel"))
   expect_equal(m$features, getTaskFeatureNames(binaryclass.task))
 })
+
+test_that("Filterwrapper permutation.importance (issue #814)", {
+  lrn1 = makeLearner("classif.rpart")
+  lrn2 = makeFilterWrapper(lrn1, fw.method = "permutation.importance", imp.learner = "classif.rpart", fw.perc = 1L)
+  m = train(lrn2, binaryclass.task)
+  res = makeResampleDesc("CV", iters = 2)
+  r = resample(lrn2, binaryclass.task, res)
+  expect_true(!any(is.na(r$aggr)))
+  expect_subset(r$extract[[1]][[1]], getTaskFeatureNames(binaryclass.task))
+})
