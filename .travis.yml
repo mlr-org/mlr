@@ -1,152 +1,38 @@
 language: r
-sudo: required
-env:
-    global:
-        - _R_CHECK_TIMINGS_=0
-        - _R_CHECK_FORCE_SUGGESTS_=0
-        - secure: "WFbdUIQRi7VYUHceKrg9xnw7m+8SK658rmgWPW++zWq5J4n0ZLuTRdKHu7ijyK9zOzNGjLF+NzvnwPS+yMPJwTX/s82hrC5GAMrYs3shEvR95PwFx42nfjqU5fsKsZ9gYpqIuZoJs32yPOJ/9XBLHU8rUv5+x4Z1zM2hBJHAn74="
-branches:
-    only:
-        - master
-        - ci_nojava
-        - test_checkmate
-warnings_are_errors: true
-r_check_args: "--as-cran --run-donttest"
-apt_packages:
-    - r-cran-rjava
-    - libgmp-dev
-r_github_packages:
-    - berndbischl/BBmisc
-    - berndbischl/parallelMap
-    - berndbischl/ParamHelpers
-    - hadley/svglite
-r_binary_packages:
-    - ada
-    - adabag
-    # - bartMachine
-    - brnn
-    - bst
-    - care
-    - caret
-    - checkmate
-    - class
-    - clue
-    - cluster
-    - clusterSim
-    - clValid
-    - cmaes
-    - CoxBoost
-    - crs
-    - Cubist
-    - DiceKriging
-    - DiceOptim
-    - DiscriMiner
-    - deepnet
-    - e1071
-    - earth
-    - elasticnet
-    - elmNN
-    - emoa
-    # - extraTrees
-    - fields
-    - flare
-    - FNN
-    - frbs
-    - FSelector
-    - gbm
-    - GenSA
-    - ggplot2
-    - ggvis
-    - glmnet
-    - Hmisc
-    - irace
-    - kernlab
-    - kknn
-    - klaR
-    - knitr
-    - kohonen
-    - laGP
-    - LiblineaR
-    - lqa
-    - MASS
-    - mboost
-    - mco
-    - mda
-    - mlbench
-    - modeltools
-    - mRMRe
-    - neuralnet
-    - nnet
-    - nodeHarvest
-    - pamr
-    - party
-    - penalized
-    - pls
-    - plyr
-    # - PMCMR
-    - pROC
-    - randomForest
-    - randomForestSRC
-    - reshape2
-    - RCurl
-    - RSNNS
-    - rFerns
-    - rjson
-    - rmarkdown
-    - robustbase
-    - ROCR
-    - rpart
-    - rrlda
-    - rsm
-    - RWeka
-    - sda
-    - shiny
-    - smoof
-    - sparsediscrim
-    - sparseLDA
-    - stepPlr
-    - stringi
-    - SwarmSVM
-    - testthat
-    - tgp
-    - TH.data
-    - XML
-before_install:
-    - sudo $HOME/R-bin/bin/R CMD javareconf
-    - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test -y
-    - sudo apt-get -qq update
-    - sudo apt-get -qq install gcc-4.8
-    - sudo apt-get -qq install g++-4.8
-    - sudo apt-get install -qq gfortran-4.8
-    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 90
-    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
-    - sudo update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-4.8 90
-    - Rscript -e 'install.packages("devtools", repos = "http://cran.rstudio.com")'
-    - Rscript -e 'install.packages("nlme", lib="/home/travis/R-bin/lib/R/library/")'
-before_script:
-    - curl -L https://raw.githubusercontent.com/mllg/travis-r-tools/master/update-packages.r -o /tmp/update-packages.r
-    - Rscript /tmp/update-packages.r
-    - java -cp /usr/lib/R/site-library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
+sudo: false
+cache: packages
+r:
+   - release
+   - devel
 
-after_success:
-    - git checkout master
-    - R --no-save <<< 'library("devtools"); document()'
-    - git config user.name $GIT_NAME
-    - git config user.email $GIT_EMAIL
-    - git config credential.helper "store --file=.git/credentials"
-    - echo "https://$GH_TOKEN:@github.com" >> .git/credentials
-    - git config push.default matching
-    - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
-    - git push
+addons:
+ apt:
+   sources:
+   - ubuntu-toolchain-r-test
+   packages:
+   - gcc-4.9
+   - g++-4.9
+  - libgmp-dev
+
+env:
+  global:
+    - secure: "WFbdUIQRi7VYUHceKrg9xnw7m+8SK658rmgWPW++zWq5J4n0ZLuTRdKHu7ijyK9zOzNGjLF+NzvnwPS+yMPJwTX/s82hrC5GAMrYs3shEvR95PwFx42nfjqU5fsKsZ9gYpqIuZoJs32yPOJ/9XBLHU8rUv5+x4Z1zM2hBJHAn74="
+
+r_github_packages:
+  - berndbischl/BBmisc
+  - berndbischl/parallelMap
+  - berndbischl/ParamHelpers
+
+before_install:
+  - mkdir $HOME/bin
+  - ln -s $(which gcc-4.9) $HOME/bin/gcc
+  - ln -s $(which g++-4.9) $HOME/bin/g++
+  - export PATH=$HOME/bin:$PATH
+
+before_script:
+  - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
 
 notifications:
   email:
     recipients:
-        - bernd_bischl@gmx.net
         - michellang@gmail.com
-        - travis.mlr@jakob-r.de
-        - larsko@cs.ubc.ca
-        - schiffner@math.uni-duesseldorf.de
-        - erich.studerus@gmail.com
-    on_success: change
-    on_failure: always
