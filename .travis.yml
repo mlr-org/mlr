@@ -2,17 +2,17 @@ language: r
 sudo: false
 cache: packages
 r:
-   - release
-   - devel
+  - release
+  - devel
 
 addons:
- apt:
-   sources:
-   - ubuntu-toolchain-r-test
-   packages:
-   - gcc-4.9
-   - g++-4.9
-  - libgmp-dev
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.9
+      - g++-4.9
+      - libgmp-dev
 
 env:
   global:
@@ -35,4 +35,4 @@ before_script:
 notifications:
   email:
     recipients:
-        - michellang@gmail.com
+      - michellang@gmail.com
