@@ -18,7 +18,8 @@
 #' @param pointsize [\code{numeric(1)}]\cr
 #'   Point size for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
 #'   Default is 2.
-#' @template arg_prettynames
+#' @param pretty.names [\code{logical{1}}]\cr
+#'   Whether to use the ID of the measures instead of their name in labels. Defaults to \code{TRUE}.
 #' @template ret_gg2
 #' @family tune_multicrit
 #' @export
@@ -51,7 +52,7 @@ plotTuneMultiCritResult = function(res, path = TRUE, col = NULL, shape = NULL, p
   if (path)
     p = p + geom_point(data = front, size = pointsize * 1.5)
   if (pretty.names) {
-    names.y = gsub(".", " ", names.y, fixed = TRUE)
+    names.y = sapply(res$measures, function(x) x$id)
     p = p + labs(x = names.y[1L], y = names.y[2L])
   }
   return(p)
