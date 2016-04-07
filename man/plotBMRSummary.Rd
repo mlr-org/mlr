@@ -32,7 +32,7 @@ Default is 4.}
 Small vertical jitter to deal with overplotting in case of equal scores.
 Default is 0.05.}
 
-\item{pretty.names}{[\code{\logical{1}}]\cr
+\item{pretty.names}{[\code{logical{1}}]\cr
 Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
 }
 \value{
