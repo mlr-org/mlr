@@ -18,8 +18,8 @@ mlr_2.9:
 - fix some bartMachine compatibility issues
 - add pretty.names arguments to plots that show learner short names instead of
   IDs
-- improve documentation for permutation importance filter
-
+- improve documentation for permutation.importance filter and perform slight
+  argument renaming to fix potential name clashes
 - new learners
 -- surv.cv.CoxBoost
 
