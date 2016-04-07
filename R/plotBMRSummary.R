@@ -20,8 +20,7 @@
 #' @param jitter [\code{numeric(1)}]\cr
 #'   Small vertical jitter to deal with overplotting in case of equal scores.
 #'   Default is 0.05.
-#' @param pretty.names [\code{logical(1)}] Whether to use short names for learners
-#'   instead of the id, in the plot legend. Defaults to \code{TRUE}.
+#' @template arg_prettynames
 #' @template ret_gg2
 #' @family benchmark
 #' @family plot

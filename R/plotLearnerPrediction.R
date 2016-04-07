@@ -57,8 +57,7 @@
 #' @param greyscale [\code{logical(1)}]\cr
 #'   Should the plot be greyscale completely?
 #'   Default is \code{FALSE}.
-#' @param pretty.names [\code{logical(1)}] Whether to use short names for learners
-#'   instead of the id, in the plot title. Defaults to \code{TRUE}.
+#' @template arg_prettynames
 #' @return The ggplot2 object.
 #' @export
 plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 10L,  ...,

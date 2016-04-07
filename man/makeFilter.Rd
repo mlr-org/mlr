@@ -35,7 +35,9 @@ Object of class \dQuote{Filter}.
 }
 \description{
 Creates and registers custom feature filters. Implemented filters
-can be listed with \code{\link{listFilterMethods}}.
+can be listed with \code{\link{listFilterMethods}}. Additional
+documentation for the \code{fun} parameter specific to each filter can
+be found in the description.
 
 Filter \dQuote{permutation.importance} computes a loss function between predictions made by a
 learner before and after a feature is permuted. Special arguments to the filter function are

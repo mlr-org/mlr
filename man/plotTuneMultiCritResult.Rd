@@ -28,8 +28,8 @@ Default is \code{NULL}, which means none.}
 Point size for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
 Default is 2.}
 
-\item{pretty.names}{If TRUE (the default), replaces dots in axis titles
-by spaces.}
+\item{pretty.names}{[\code{\logical{1}}]\cr
+Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
 }
 \value{
 ggplot2 plot object.

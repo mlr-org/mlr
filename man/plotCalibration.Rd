@@ -4,8 +4,7 @@
 \alias{plotCalibration}
 \title{Plot calibration data using ggplot2.}
 \usage{
-plotCalibration(obj, smooth = FALSE, reference = TRUE, rag = TRUE,
-  pretty.names = TRUE)
+plotCalibration(obj, smooth = FALSE, reference = TRUE, rag = TRUE)
 }
 \arguments{
 \item{obj}{[\code{CalibrationData}]\cr
@@ -23,9 +22,6 @@ Default is \code{TRUE}.}
 Whether to include a rag plot which shows a rug plot on the top which pertains to
 positive cases and on the bottom which pertains to negative cases.
 Default is \code{TRUE}.}
-
-\item{pretty.names}{Whether to use the learner's short names in the plot's
-(facet) title. Defaults to \code{TRUE}.}
 }
 \value{
 ggplot2 plot object.

@@ -74,8 +74,8 @@ Default is \code{pointsize}.}
 Should the plot be greyscale completely?
 Default is \code{FALSE}.}
 
-\item{pretty.names}{[\code{logical(1)}] Whether to use short names for learners
-instead of the id, in the plot title. Defaults to \code{TRUE}.}
+\item{pretty.names}{[\code{\logical{1}}]\cr
+Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
 }
 \value{
 The ggplot2 object.

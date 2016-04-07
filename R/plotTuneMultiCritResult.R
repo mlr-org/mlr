@@ -18,8 +18,7 @@
 #' @param pointsize [\code{numeric(1)}]\cr
 #'   Point size for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
 #'   Default is 2.
-#' @param pretty.names If TRUE (the default), replaces dots in axis titles
-#'   by spaces.
+#' @template arg_prettynames
 #' @template ret_gg2
 #' @family tune_multicrit
 #' @export

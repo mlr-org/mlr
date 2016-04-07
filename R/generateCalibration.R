@@ -144,8 +144,6 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #'   Whether to include a rag plot which shows a rug plot on the top which pertains to
 #'   positive cases and on the bottom which pertains to negative cases.
 #'   Default is \code{TRUE}.
-#' @param pretty.names Whether to use the learner's short names in the plot's
-#'   (facet) title. Defaults to \code{TRUE}.
 #' @template ret_gg2
 #' @export
 #' @examples
@@ -164,20 +162,13 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #' out = generateCalibrationData(pred)
 #' plotCalibration(out)
 #' }
-plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE, pretty.names = TRUE) {
+plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE) {
   assertClass(obj, "CalibrationData")
   assertFlag(smooth)
   assertFlag(reference)
   assertFlag(rag)
 
   obj$proportion$xend = length(levels(obj$proportion$bin))
-
-  if (pretty.names) {
-    levels(obj$proportion$Learner) = sub(paste(obj$task$type, ".", sep = ""), "",
-      levels(obj$proportion$Learner))
-    levels(obj$data$Learner) = sub(paste(obj$task$type, ".", sep = ""), "",
-      levels(obj$data$Learner))
-  }
 
   p = ggplot(obj$proportion, aes_string("bin", "Proportion", color = "Class", group = "Class"))
   p = p + scale_x_discrete(drop = FALSE)
@@ -189,9 +180,6 @@ plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE, pr
 
   if (length(unique(obj$proportion$Learner)) > 1L) {
     p = p + facet_wrap(~ Learner)
-  } else {
-    if (pretty.names)
-      p = p + ggtitle(obj$proportion$Learner[[1L]])
   }
 
   if (reference)

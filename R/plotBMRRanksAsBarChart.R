@@ -22,8 +22,7 @@
 #'   of stacked bars.
 #' @template arg_order_lrns
 #' @template arg_order_tsks
-#' @param pretty.names [\code{logical(1)}] Whether to use short names for learners
-#'   instead of the id, in the plot legend. Defaults to \code{TRUE}.
+#' @template arg_prettynames
 #' @template ret_gg2
 #' @family plot
 #' @family benchmark

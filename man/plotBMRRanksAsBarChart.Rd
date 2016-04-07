@@ -39,8 +39,8 @@ Character vector with \code{learner.ids} in new order.}
 \item{order.tsks}{[\code{character(n.tasks)}] \cr 
 Character vector with \code{task.ids} in new order.}
 
-\item{pretty.names}{[\code{logical(1)}] Whether to use short names for learners
-instead of the id, in the plot legend. Defaults to \code{TRUE}.}
+\item{pretty.names}{[\code{\logical{1}}]\cr
+Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
 }
 \value{
 ggplot2 plot object.
