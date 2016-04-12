@@ -12,14 +12,14 @@ makeRLearner.regr.gbm = function() {
       makeNumericLearnerParam(id = "shrinkage", default = 0.001, lower = 0),
       makeNumericLearnerParam(id = "bag.fraction", default = 0.5, lower = 0, upper = 1),
       makeNumericLearnerParam(id = "train.fraction", default = 1, lower = 0, upper = 1),
-      makeLogicalLearnerParam(id = "keep.data", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(distribution = "gaussian"),
+    par.vals = list(distribution = "gaussian", keep.data = FALSE),
     properties = c("missings", "numerics", "factors", "weights"),
     name = "Gradient Boosting Machine",
     short.name = "gbm",
-    note = '`distribution` has been set to `"gaussian"` by default.'
+    note = '`keep.data` is set to FALSE to reduce memory requirements, `distribution` has been set to `"gaussian"` by default.'
   )
 }
 

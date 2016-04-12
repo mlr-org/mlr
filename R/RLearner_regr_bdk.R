@@ -14,12 +14,13 @@ makeRLearner.regr.bdk = function() {
       makeLogicalLearnerParam(id = "contin", tunable = FALSE),
       makeLogicalLearnerParam(id = "toroidal", default = FALSE),
       makeDiscreteLearnerParam(id = "n.hood", values = c("circular", "square")),
-      makeLogicalLearnerParam(id = "keep.data", default = FALSE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE)
     ),
     properties = c("numerics"),
+    par.vals = list(keep.data = FALSE),
     name = "Bi-Directional Kohonen map",
     short.name = "bdk",
-    note = ""
+    note = "`keep.data` is set to FALSE to reduce memory requirements."
   )
 }
 
