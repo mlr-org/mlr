@@ -35,7 +35,5 @@ test_that("classif_dcSVM", {
 test_that("classif_dcSVM works correctly when e1071 is used (#733)", {
   requirePackagesOrSkip("SwarmSVM", default.method = "load")
 
-  set.seed(getOption("mlr.debug.seed"))
-
   x = train(makeLearner("classif.dcSVM", kernel = 1), binaryclass.task)
 })
