@@ -11,7 +11,7 @@ mlr_2.9:
 - classif.glmboost, regr.glmboost: add parameters stopintern and trace
 - convert data.frame-ish in Task if necessary
 - fix bug with NoFeaturesModel and ModelMultiplexer
-- clean up randomForestSRC learners
+- clean up randomForestSRC and randomForestSRCSyn learners
 - fix bug with partialPredictions and GGVIS
 - remove unnecessary linear.output parameter for classif.neuralnet
 - remove unsupported KSVM parameter value stringdot
