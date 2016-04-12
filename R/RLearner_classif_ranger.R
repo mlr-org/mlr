@@ -22,7 +22,7 @@ makeRLearner.classif.ranger = function() {
       makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE)
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE),
-    properties = c("twoclass", "multiclass", "prob", "numerics", "factors"),
+    properties = c("twoclass", "multiclass", "prob", "numerics", "factors", "featimp"),
     name = "Random Forests",
     short.name = "ranger",
     note = "By default, internal parallelization is switched off (`num.threads = 1`) and `verbose` output is disabled. Both settings are changeable."
@@ -40,4 +40,16 @@ trainLearner.classif.ranger = function(.learner, .task, .subset, .weights, ...) 
 predictLearner.classif.ranger = function(.learner, .model, .newdata, ...) {
   p = predict(object = .model$learner.model, data = .newdata, ...)
   return(p$predictions)
+}
+
+getFeatureImportance.classif.ranger = function(.learner, .model, ...) {
+  has.fiv = .learner$par.vals$importance
+  if (is.null(has.fiv) || has.fiv == "none") {
+    stop("You must set the learners parameter value for importance to
+      'impurity' or 'permutation' to compute feature importance")
+  }
+  mod = getLearnerModel(.model)
+  fiv = as.numeric(ranger::importance(mod))
+  names(fiv) = .model$features
+  return(fiv)
 }

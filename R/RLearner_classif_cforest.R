@@ -25,7 +25,7 @@ makeRLearner.classif.cforest = function() {
       makeIntegerLearnerParam(id = "maxdepth", lower = 0L, default = 0L),
       makeLogicalLearnerParam(id = "savesplitstats", default = FALSE, tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "prob", "factors", "numerics", "ordered", "weights", "missings"),
+    properties = c("twoclass", "multiclass", "prob", "factors", "numerics", "ordered", "weights", "missings", "featimp"),
     par.vals = list(),
     name = "Random forest based on conditional inference trees",
     short.name = "cforest",
@@ -64,4 +64,15 @@ predictLearner.classif.cforest = function(.learner, .model, .newdata, ...) {
     p = predict(.model$learner.model, newdata = .newdata, ...)
   }
   p
+}
+
+getFeatureImportance.classif.cforest = function(.learner, .model, AUC = FALSE, ...) {
+  mod = getLearnerModel(.model)
+  if (AUC) {
+    fiv = as.numeric(party::varimpAUC(mod, ...))
+  } else {
+    fiv = as.numeric(party::varimp(mod, ...))
+  }
+  names(fiv) = .model$features
+  return(fiv)
 }

@@ -16,7 +16,7 @@ makeRLearner.regr.rpart = function() {
       makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L, tunable = FALSE)
     ),
     par.vals = list(xval = 0L),
-    properties = c("missings", "numerics", "factors", "ordered", "weights"),
+    properties = c("missings", "numerics", "factors", "ordered", "weights", "featimp"),
     name = "Decision Tree",
     short.name = "rpart",
     note = "`xval` has been set to `0` by default for speed."
@@ -39,3 +39,11 @@ trainLearner.regr.rpart = function(.learner, .task, .subset, .weights = NULL,  .
 predictLearner.regr.rpart = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, newdata = .newdata, ...)
 }
+
+getFeatureImportance.regr.rpart = function(.learner, .model, ...) {
+  mod = getLearnerModel(.model)
+  fiv = as.numeric(mod$variable.importance[names(mod$ordered)])
+  names(fiv) = .model$features
+  return(fiv)
+}
+

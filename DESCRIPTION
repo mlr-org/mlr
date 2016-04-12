@@ -81,6 +81,7 @@ Suggests:
     GenSA,
     glmnet,
     Hmisc,
+    ipred,
     irace (>= 1.0.7),
     kernlab,
     kknn,

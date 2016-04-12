@@ -15,7 +15,7 @@ makeRLearner.classif.gbm = function() {
       makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights"),
+    properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights", "featimp"),
     name = "Gradient Boosting Machine",
     short.name = "gbm",
     note = "Note on param 'distribution': gbm will select 'bernoulli' by default for 2 classes, and 'multinomial' for
@@ -67,4 +67,13 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
       return(factor(cns[ind], levels = cns))
     }
   }
+}
+
+getFeatureImportance.classif.gbm = function(.learner, .model, n.trees, ...) {
+  mod = getLearnerModel(.model)
+  if (missing(n.trees))
+    n.trees = mod$n.trees
+  fiv = as.numeric(gbm::relative.influence(mod, n.trees, ...))
+  names(fiv) = .model$features
+  return(fiv)
 }
