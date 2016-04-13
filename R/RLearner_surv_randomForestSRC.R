@@ -20,11 +20,15 @@ makeRLearner.surv.randomForestSRC = function() {
         values = list(`FALSE` = FALSE, `TRUE` = TRUE, "none", "permute", "random", "anti",
           "permute.ensemble", "random.ensemble", "anti.ensemble")),
       makeDiscreteLearnerParam(id = "na.action", default = "na.impute",
-        values = c("na.omit", "na.impute", "na.random"), when = "both"),
+        values = c("na.omit", "na.impute"), when = "both"),
       makeIntegerLearnerParam(id = "nimpute", default = 1L, lower = 1L),
       makeUntypedLearnerParam(id = "ntime"), # can be a single integer with number of time points or a numeric vector of time values
       makeDiscreteLearnerParam(id = "proximity", default = FALSE, tunable = FALSE,
         values = list("inbag", "oob", "all", `TRUE` = TRUE, `FALSE` = FALSE)),
+      makeIntegerLearnerParam(id = "sampsize", lower = 1L,
+        requires = quote(bootstrap == "by.root")),
+      makeDiscreteLearnerParam(id = "samptype", default = "swr", values = c("swr", "swor"),
+        requires = quote(bootstrap == "by.root")),
       makeNumericVectorLearnerParam(id = "xvar.wt", lower = 0),
       makeDiscreteLearnerParam(id = "var.used", default = FALSE, tunable = FALSE,
         values = list(`FALSE` = FALSE, "all.trees", "by.tree")),
@@ -34,10 +38,10 @@ makeRLearner.surv.randomForestSRC = function() {
       makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE, when = "both"), # is currently ignored
       makeLogicalLearnerParam(id = "membership", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "statistics", default = FALSE, tunable = FALSE),
-      makeLogicalLearnerParam(id = "fast.restore", default = FALSE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "tree.err", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(na.action = "na.impute"),
-    properties = c("missings", "numerics", "factors", "ordered", "rcens"),
+    properties = c("missings", "numerics", "factors", "ordered", "rcens", "weights"),
     name = "Random Forest",
     short.name = "rfsrc",
     note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.
@@ -53,7 +57,7 @@ trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights 
     mtry = mtry.ratio * getTaskNFeats(.task)
   }
   f = getTaskFormula(.task)
-  randomForestSRC::rfsrc(f, data = getTaskData(.task, subset = .subset), forest = TRUE, mtry = mtry, ...)
+  randomForestSRC::rfsrc(f, data = getTaskData(.task, subset = .subset), forest = TRUE, mtry = mtry, case.wt = .weights, ...)
 }
 
 #' @export
