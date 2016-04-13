@@ -1,3 +1,6 @@
+mlr_new:
+- Add multilabel wrappers: classifier chains, nested stacking, dependent 
+  binary relevance, stacking
 mlr_2.9:
 - SMOTEWrapper: fix a bug where "sw.nn" was not correctly passed down
 - classif.blackboost, regr.blackboost: made sure that arg "stump" is passed on
