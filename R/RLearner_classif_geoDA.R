@@ -9,8 +9,7 @@ makeRLearner.classif.geoDA = function() {
     par.vals = list(validation = NULL),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Geometric Predictive Discriminant Analysis",
-    short.name = "geoda",
-    note = ""
+    short.name = "geoda"
   )
 }
 

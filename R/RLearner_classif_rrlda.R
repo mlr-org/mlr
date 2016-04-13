@@ -13,8 +13,7 @@ makeRLearner.classif.rrlda = function() {
     ),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Robust Regularized Linear Discriminant Analysis",
-    short.name = "rrlda",
-    note = ""
+    short.name = "rrlda"
   )
 }
 
