@@ -106,7 +106,7 @@ getPredictionResponse = function(pred) {
 #' @export
 getPredictionResponse.default = function(pred) {
   # this should work for classif, regr and cluster and surv
-  pred$data[, "response", drop = TRUE]
+  pred$data[["response"]]
 }
 
 #' @export
@@ -124,7 +124,7 @@ getPredictionSE = function(pred) {
 
 #' @export
 getPredictionSE.default = function(pred) {
-  pred$data[, "se", drop = TRUE]
+  pred$data[["se"]]
 }
 
 #' @rdname getPredictionResponse
@@ -135,7 +135,7 @@ getPredictionTruth = function(pred) {
 
 #' @export
 getPredictionTruth.default = function(pred) {
-  pred$data[, "truth", drop = TRUE]
+  pred$data[["truth"]]
 }
 
 #' @export

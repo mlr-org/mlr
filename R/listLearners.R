@@ -78,8 +78,8 @@ filterLearnerTable = function(tab = getLearnerTable(), types = character(0L), pr
 #'   Packages are loaded if and only if this option is \code{TRUE}.
 #'   Default is \code{FALSE}.
 #' @return [\code{data.frame} | \code{list} of \code{\link{Learner}}].
-#'   Either descriptive data.frame that allows access to all properties of learners or a list of created learner objects.
-#'   The latter is named by ids of listed learners.
+#'   Either a descriptive data.frame that allows access to all properties of the learners
+#'   or a list of created learner objects (named by ids of listed learners).
 #' @examples
 #' \dontrun{
 #' listLearners("classif", properties = c("multiclass", "prob"))
@@ -122,6 +122,12 @@ listLearners.character  = function(obj, properties = character(0L), quiet = TRUE
 
   if (create)
     return(lapply(tab$id[tab$installed], makeLearner))
+
+  tab$package = vcapply(tab$package, collapse)
+  properties = getSupportedLearnerProperties()
+  tab = cbind(tab, rbindlist(lapply(tab$properties, function(x) setNames(as.list(properties %in% x), properties))))
+  tab$properties = NULL
+  setnames(tab, "id", "class")
   setDF(tab)
   return(tab)
 }

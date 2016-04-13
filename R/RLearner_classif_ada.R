@@ -38,7 +38,7 @@ trainLearner.classif.ada = function(.learner, .task, .subset, .weights = NULL,  
   f = getTaskFormula(.task)
   #preserve list for certain parameters passed to rpart.control
   dots = list(...)
-  to.list = c("maxdepth", "cp", "minsplit", "xval")
+  to.list = c("maxdepth", "cp", "minsplit", "xval", "minbucket", "maxcompete", "maxsurrogate", "usesurrogate", "surrogatestyle")
   list = filterNull(dots[to.list])
   dots = dropNamed(dots, to.list)
   args = c(dots, list(list))

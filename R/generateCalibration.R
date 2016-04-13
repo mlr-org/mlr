@@ -178,8 +178,9 @@ plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE) {
   else
     p = p + geom_point() + geom_line()
 
-  if (length(unique(obj$proportion$Learner)) > 1L)
+  if (length(unique(obj$proportion$Learner)) > 1L) {
     p = p + facet_wrap(~ Learner)
+  }
 
   if (reference)
     p = p + geom_segment(aes_string(1, 0, xend = "xend", yend = 1), colour = "black", linetype = "dashed")

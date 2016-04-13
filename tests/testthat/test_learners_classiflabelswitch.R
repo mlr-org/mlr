@@ -53,17 +53,16 @@ test_that("no labels are switched", {
     toremove = toremove | grepl("classif.LiblineaRMultiClass", lids)
     lrns = lrns[!toremove]
 
-    errs = vnapply(lrns, function(lrn) {
+    vnapply(lrns, function(lrn) {
       lrn = setPredictType(lrn, predtype)
       id = lrn$id
       hps = hpars[[id]]
       if (!is.null(hps))
         lrn = setHyperPars(lrn, par.vals = hps)
-      holdout(lrn, task, split = 0.5, stratify = TRUE)$aggr[[1L]]
+      err = holdout(lrn, task, split = 0.5, stratify = TRUE)$aggr[[1L]]
+      expect_true(!is.na(err) & err <= 1/3, info = paste(getTaskDescription(task)$id, id, err, sep = ", "))
+      err
     })
-    expect_true(all(!is.na(errs) & errs <= 0.4))
-    # messagef("predtype = %s; task = %s", predtype, task$task.desc$id)
-    # print(sort(errs, na.last = TRUE))
   }
   # FIXME: only check prob for now for timimg reasons
   for (predtype in c("prob")) {

@@ -28,7 +28,6 @@ makeRLearner.surv.glmboost = function() {
 
 #' @export
 trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL, family, mstop, nu, m, use.formula, ...) {
-  envir = loadNamespace("mboost")
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
   if (use.formula) {
     f = getTaskFormula(.task)
@@ -61,7 +60,7 @@ predictLearner.surv.glmboost = function(.learner, .model, .newdata, use.formula,
     info = getTrainingInfo(.model)
     .newdata = as.matrix(fixDataForLearner(.newdata, info))
   }
-  if(.learner$predict.type == "response")
+  if (.learner$predict.type == "response")
     predict(.model$learner.model, newdata = .newdata, type = "link")
   else
     stop("Unknown predict type")

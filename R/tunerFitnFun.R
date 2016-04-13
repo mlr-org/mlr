@@ -13,9 +13,31 @@ tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
   dob = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
   res = evalOptimizationState(learner, task, resampling, measures, par.set, NULL, ctrl,
     opt.path, show.info, dob, x, remove.nas)
-  addOptPathEl(opt.path, x = x, y = res$y, dob = dob, eol = NA, check.feasible = TRUE,
+  # check.feasible = FALSE if we put in transformed values
+  addOptPathEl(opt.path, x = x, y = res$y, dob = dob, eol = NA, check.feasible = !hasTrafo(par.set),
     exec.time = res$exec.time, error.message = res$errmsg)
   convertYForTuner(res$y, measures, ctrl)
+}
+
+tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas) {
+  force(learner)
+  force(task)
+  force(resampling)
+  force(measures)
+  force(par.set)
+  force(ctrl)
+  force(opt.path)
+  force(show.info)
+  force(convertx)
+  force(remove.nas)
+  # remove trafos for mbo, we do this in tunerFitnFun
+  ps2 = par.set
+  for (i in seq_along(ps2$pars))
+    ps2$pars[[i]]$trafo = NULL
+  f = smoof::makeSingleObjectiveFunction(
+    fn = function(x) {
+      tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas)
+  }, par.set = ps2, has.simple.signature = FALSE, noisy = TRUE)
 }
 
 # multiple xs in parallel

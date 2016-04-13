@@ -4,47 +4,64 @@ makeRLearner.regr.randomForestSRCSyn = function() {
     cl = "regr.randomForestSRCSyn",
     package = "randomForestSRC",
     par.set = makeParamSet(
+      ## arguments of rfsrcSyn
+      ## only ntree, mtrySeq, nodesizeSeq, nsplit are relevant to the RF machines
+      ## all other params apply to the synthetic forest
       makeIntegerLearnerParam(id = "ntree", default = 1000L, lower = 1L),
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
-      makeIntegerVectorLearnerParam(id = "mtrySeq"),
+      makeIntegerVectorLearnerParam(id = "mtrySeq", lower = 1L),
       makeIntegerLearnerParam(id = "nodesize", default = 5L, lower = 1L),
       makeIntegerVectorLearnerParam(id = "nodesizeSeq", default = c(1L:10L, 20L, 30L, 50L, 100L)),
-      makeNumericLearnerParam(id = "nsplit", default = 0, lower = 0),
-      makeIntegerLearnerParam(id = "min.node", default = 3L, ),
+      makeIntegerLearnerParam(id = "nsplit", lower = 0L, default = 0L,
+        requires = quote(splitrule != "random")), 
+        # for the synthetic forest nsplit is ignored and internally set to 1L if splitrule = "random"
+        # splitrule cannot be set for the RF machines, so if nsplit != 0 mse splitting with nsplit randomly selected split points is done
+      makeNumericLearnerParam(id = "min.node", default = 3L, lower = 0L),
       makeLogicalLearnerParam(id = "use.org.features", default = TRUE),
-      makeDiscreteLearnerParam(id = "na.action", default = "na.impute",
+      makeDiscreteLearnerParam(id = "na.action", default = "na.omit",
         values = c("na.omit", "na.impute"), when = "both"),
+      makeLogicalLearnerParam(id = "verbose", default = TRUE, tunable = FALSE),
+      ## further arguments to rfsrc (synthetic forest) via ...
+      makeDiscreteLearnerParam(id = "bootstrap", default = "by.root",
+        values = c("by.root", "by.node", "none")),
+      makeIntegerLearnerParam(id = "nodedepth", default = -1L),
+      makeDiscreteLearnerParam(id = "splitrule", default = "mse",
+        values = c("mse", "mse.unwt", "mse.hvwt", "random")),
+      makeLogicalLearnerParam(id = "split.null", default = FALSE),
+      makeDiscreteLearnerParam(id = "importance", default = FALSE, tunable = FALSE,
+        values = list(`FALSE` = FALSE, `TRUE` = TRUE, "none", "permute", "random", "anti",
+          "permute.ensemble", "random.ensemble", "anti.ensemble")),
       makeIntegerLearnerParam(id = "nimpute", default = 1L, lower = 1L),
-      makeNumericVectorLearnerParam(id = "xwar.wt", lower = 0),
-      makeLogicalLearnerParam(id = "forest", default = TRUE, tunable = FALSE),
-      makeIntegerLearnerParam(id = "seed", tunable = FALSE),
-      makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE),
+      makeDiscreteLearnerParam(id = "proximity", default = FALSE, tunable = FALSE,
+        values = list("inbag", "oob", "all", `TRUE` = TRUE, `FALSE` = FALSE)),
+      makeNumericVectorLearnerParam(id = "xvar.wt", lower = 0),
+      makeDiscreteLearnerParam(id = "var.used", default = FALSE, tunable = FALSE,
+        values = list(`FALSE` = FALSE, "all.trees", "by.tree")),
+      makeDiscreteLearnerParam(id = "split.depth", default = FALSE, tunable = FALSE,
+        values = list(`FALSE` = FALSE, "all.trees", "by.tree")),
+      makeIntegerLearnerParam(id = "seed", upper = 0L, tunable = FALSE),
+      makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE, when = "both"), # is currently ignored
       makeLogicalLearnerParam(id = "membership", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "statistics", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "fast.restore", default = FALSE, tunable = FALSE)
     ),
-    properties = c("numerics", "factors", "ordered"),
+    par.vals = list(na.action = "na.impute", verbose = FALSE),
+    properties = c("numerics", "factors", "ordered", "missings"),
     name = "Synthetic Random Forest",
     short.name = "rfsrcSyn",
-    note = "na.action' has been set to 'na.impute' by default to allow missing data support"
+    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support and `verbose` has been set to `FALSE`.'
     )
 }
 
 #' @export
 trainLearner.regr.randomForestSRCSyn = function(.learner, .task, .subset, .weights = NULL, ...) {
-  ##using parameters object and newdata throws an error, so we need to train like this
-  df = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
-  c(list(formula = f, data = df), list(importance = "none", proximity = FALSE, forest = TRUE, verbose = FALSE, ...))
+  randomForestSRC::rfsrcSyn(formula = f, data = getTaskData(.task, .subset), forest = TRUE, ...)
 }
 
 #' @export
 predictLearner.regr.randomForestSRCSyn = function(.learner, .model, .newdata, ...) {
-  args = .model$learner.model
-  args$newdata = .newdata
-  args$verbose = FALSE
-  p = do.call(randomForestSRC::rfsrcSyn, args)$rfSynPred$predicted
-  # versison 2.0 of randomForestSRC returns an array here :(
-  p = as.numeric(p)
-  return(p)
+  p = randomForestSRC::rfsrcSyn(object = .model$learner.model, newdata = .newdata, membership = FALSE, ...)$rfSynPred$predicted
+  # version > 2.0 of randomForestSRC returns an array here :(
+  as.numeric(p)
 }

@@ -59,6 +59,11 @@ filterFeatures = function(task, method = "rf.importance", fval = NULL, perc = NU
       }
     }
   }
+
+  if (all(is.na(fval[[method]]))) {
+    stopf("Filter method returned all NA values!")
+  }
+
   if (!is.null(mandatory.feat)) {
     assertCharacter(mandatory.feat)
     if (!all(mandatory.feat %in% fval$name))

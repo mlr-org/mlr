@@ -138,8 +138,7 @@ generateCritDifferencesData = function(bmr, measure = NULL, p.value = 0.05,
 #'   Select a [\code{learner.id} as baseline for the critical difference
 #'   diagram, the critical difference will be positioned arround this learner.
 #'   Defaults to best performing algorithm.
-#' @param pretty.names [\code{logical(1)}]: \cr
-#'    Should learner short names be used instead of learner.id?
+#' @template arg_prettynames
 #' @template ret_gg2
 #'
 #' @references Janez Demsar, Statistical Comparisons of Classifiers over Multiple Data Sets,

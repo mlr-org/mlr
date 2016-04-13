@@ -15,11 +15,11 @@ makeRLearner.regr.gbm = function() {
       makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(distribution = "gaussian"),
+    par.vals = list(distribution = "gaussian", keep.data = FALSE),
     properties = c("missings", "numerics", "factors", "weights"),
     name = "Gradient Boosting Machine",
     short.name = "gbm",
-    note = '`distribution` has been set to `"gaussian"` by default.'
+    note = '`keep.data` is set to FALSE to reduce memory requirements, `distribution` has been set to `"gaussian"` by default.'
   )
 }
 
@@ -28,10 +28,10 @@ trainLearner.regr.gbm = function(.learner, .task, .subset, .weights = NULL,  ...
   f = getTaskFormula(.task)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
-    gbm::gbm(f, data = getTaskData(.task, .subset), keep.data = FALSE, ...)
+    gbm::gbm(f, data = getTaskData(.task, .subset), ...)
   } else  {
     f = getTaskFormula(.task)
-    gbm::gbm(f, data = getTaskData(.task, .subset), keep.data = FALSE, weights = .weights, ...)
+    gbm::gbm(f, data = getTaskData(.task, .subset), weights = .weights, ...)
   }
 }
 

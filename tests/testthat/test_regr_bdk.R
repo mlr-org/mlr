@@ -29,3 +29,8 @@ test_that("regr_bdk", {
   testSimpleParsets("regr.bdk", regr.num.df, regr.num.target, regr.num.train.inds,
     old.predicts.list, parset.list2)
 })
+
+test_that("regr_bdk keep.data is passed correctly", {
+  train(makeLearner("regr.bdk", keep.data = FALSE), regr.num.task)
+  train(makeLearner("regr.bdk", keep.data = TRUE), regr.num.task)
+})

@@ -57,6 +57,7 @@
 #' @param greyscale [\code{logical(1)}]\cr
 #'   Should the plot be greyscale completely?
 #'   Default is \code{FALSE}.
+#' @template arg_prettynames
 #' @return The ggplot2 object.
 #' @export
 plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 10L,  ...,
@@ -65,7 +66,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   err.mark = "train",
   bg.cols = c("darkblue", "green", "darkred"),
   err.col = "white", err.size = pointsize,
-  greyscale = FALSE) {
+  greyscale = FALSE, pretty.names = TRUE) {
 
   learner = checkLearner(learner)
   assert(
@@ -232,7 +233,12 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   }
 
   # set title
-  title = sprintf("%s: %s", learner$id, paramValueToString(learner$par.set, learner$par.vals))
+  if (pretty.names) {
+    lrn.str = learner$short.name
+  } else {
+    lrn.str = learner$id
+  }
+  title = sprintf("%s: %s", lrn.str, paramValueToString(learner$par.set, learner$par.vals))
   title = sprintf("%s\nTrain: %s; CV: %s", title, perfsToString(perf.train), perfsToString(perf.cv))
   p = p + ggtitle(title)
 

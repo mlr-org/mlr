@@ -33,8 +33,8 @@ parallelize your experiments as well. This often forces users to make crummy
 trade-offs in their experiments due to time constraints or lacking expert
 programming skills. **mlr** provides this infrastructure so that you can focus
 on your experiments! The framework provides supervised methods like
-classification, regression and survival analysis and their corresponding
-evaluation and optimization as well as unsupervised methods like clustering. It
+classification, regression and survival analysis along with their corresponding
+evaluation and optimization methods, as well as unsupervised methods like clustering. It
 is written in a way that you can extend it yourself or deviate from the
 implemented convenience methods and construct your own complex experiments or
 algorithms.
@@ -49,17 +49,17 @@ Features
 * Parameter system for learners to encode data types and constraints
 * Many convenience methods and generic building blocks for your
   machine learning experiments
-* Resampling like bootstrapping, cross-validation and subsampling
+* Resampling methods like bootstrapping, cross-validation and subsampling
 * Extensive visualizations for e.g. ROC curves, predictions and partial
   predictions
-* Benchmarking of learners for muliple data sets
+* Benchmarking of learners for multiple data sets
 * Easy hyperparameter tuning using different optimization strategies, including
   potent configurators like iterated F-racing (irace) or sequential model-based
   optimization
 * Variable selection with filters and wrappers
 * Nested resampling of models with tuning and feature selection
 * Cost-sensitive learning, threshold tuning and imbalance correction
-* Wrapper mechanism to extend learner functionality and complex and custom ways
+* Wrapper mechanism to extend learner functionality in complex and custom ways
 * Combine different processing steps to a complex data mining chain that can be jointly optimized
 * OpenML connector for the Open Machine Learning server
 * Extension points to integrate your own stuff

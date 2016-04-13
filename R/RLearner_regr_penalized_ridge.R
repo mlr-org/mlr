@@ -9,8 +9,7 @@ makeRLearner.regr.penalized.ridge = function() {
     ),
     properties = c("numerics", "factors"),
     name = "Penalized Ridge Regression",
-    short.name = "ridge",
-    note = ""
+    short.name = "ridge"
   )
 }
 

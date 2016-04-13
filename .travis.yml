@@ -19,6 +19,7 @@ r_github_packages:
     - berndbischl/BBmisc
     - berndbischl/parallelMap
     - berndbischl/ParamHelpers
+    - hadley/svglite
 r_binary_packages:
     - ada
     - adabag
@@ -100,6 +101,7 @@ r_binary_packages:
     - RWeka
     - sda
     - shiny
+    - smoof
     - sparsediscrim
     - sparseLDA
     - stepPlr
@@ -120,6 +122,7 @@ before_install:
     - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
     - sudo update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-4.8 90
     - Rscript -e 'install.packages("devtools", repos = "http://cran.rstudio.com")'
+    - Rscript -e 'install.packages("nlme", lib="/home/travis/R-bin/lib/R/library/")'
 before_script:
     - curl -L https://raw.githubusercontent.com/mllg/travis-r-tools/master/update-packages.r -o /tmp/update-packages.r
     - Rscript /tmp/update-packages.r

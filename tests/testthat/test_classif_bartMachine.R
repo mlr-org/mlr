@@ -4,9 +4,8 @@ test_that("classif_bartMachine", {
   requirePackagesOrSkip("bartMachine", default.method = "load")
 
   parset.list = list(
-    list(num_burn_in = 20L, num_iterations_after_burn_in = 50L, run_in_sample = FALSE),
-    list(num_burn_in = 20L, num_iterations_after_burn_in = 50L, alpha = 0.8, num_trees = 25L,
-         run_in_sample = FALSE)
+    list(num_burn_in = 20L, num_iterations_after_burn_in = 50L, run_in_sample = FALSE, seed = getOption("mlr.debug.seed")),
+    list(num_burn_in = 20L, num_iterations_after_burn_in = 50L, alpha = 0.8, num_trees = 25L, run_in_sample = FALSE, seed = getOption("mlr.debug.seed"))
   )
 
   old.predicts.list = list()
@@ -15,7 +14,7 @@ test_that("classif_bartMachine", {
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     x = binaryclass.train
-    y = x[, binaryclass.class.col]
+    y = factor(x[, binaryclass.class.col], levels = binaryclass.class.levs)
     x[, binaryclass.class.col] = NULL
     pars = list(X = x, y = y, verbose = FALSE)
     pars = c(pars, parset)
@@ -31,17 +30,22 @@ test_that("classif_bartMachine", {
     old.probs.list[[i]] = p2
   }
 
-  # FIXME:
-  #Does not yet work because we can not yet set the seed for bartMachine, see
-  #https://github.com/kapelner/bartMachine/issues/2
-  #testSimpleParsets("classif.bartMachine", binaryclass.df, binaryclass.target, binaryclass.train.inds,
-  #  old.predicts.list, parset.list)
-  #testProbParsets ("classif.bartMachine", binaryclass.df, binaryclass.target, binaryclass.train.inds,
-  #  old.probs.list, parset.list)
+  testSimpleParsets("classif.bartMachine", binaryclass.df, binaryclass.target, binaryclass.train.inds,
+    old.predicts.list, parset.list)
+  testProbParsets("classif.bartMachine", binaryclass.df, binaryclass.target, binaryclass.train.inds,
+    old.probs.list, parset.list)
 
-  for(i in 1:length(parset.list)){
+  for (i in 1:length(parset.list)){
     expect_true(length(old.predicts.list[[i]]) == nrow(binaryclass.test))
     expect_true(length(old.probs.list[[i]]) == nrow(binaryclass.test))
   }
 
+})
+
+# issue 422
+test_that("classif_bartMachine works with missing values", {
+  requirePackagesOrSkip("bartMachine", default.method = "load")
+  foo = binaryclass.df
+  foo[1,1] = NA
+  bartMachine::bartMachine(X = foo, y = foo[[binaryclass.target]], use_missing_data = TRUE)
 })

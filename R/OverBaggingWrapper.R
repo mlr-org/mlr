@@ -67,7 +67,7 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 1, obw.ma
     makeIntegerLearnerParam(id = "obw.iters", lower = 1L, default = 10L),
     makeNumericLearnerParam(id = "obw.rate", lower = 1),
     makeDiscreteLearnerParam(id = "obw.maxcl", c("boot", "all")),
-    makeUntypedLearnerParam(id = "obw.cl", default = NULL)
+    makeUntypedLearnerParam(id = "obw.cl", default = NULL, tunable = FALSE)
   )
   makeHomogeneousEnsemble(id, "classif", learner, packs, par.set = ps, par.vals = pv,
      learner.subclass = c("OverBaggingWrapper", "BaggingWrapper"), model.subclass = "BaggingModel")
@@ -87,7 +87,7 @@ trainLearner.OverBaggingWrapper = function(.learner, .task, .subset, .weights = 
     bag = sampleBinaryClass(y, rate = obw.rate, cl = obw.cl, resample.other.class = (obw.maxcl == "boot"))
     train(.learner$next.learner, .task, subset = bag, weights = .weights)
   })
-  m = makeHomChainModel(.learner, models)
+  makeHomChainModel(.learner, models)
 }
 
 #' @export

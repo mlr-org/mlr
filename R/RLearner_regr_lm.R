@@ -9,8 +9,7 @@ makeRLearner.regr.lm = function() {
     ),
     properties = c("numerics", "factors", "se", "weights"),
     name = "Simple Linear Regression",
-    short.name = "lm",
-    note = ""
+    short.name = "lm"
   )
 }
 
@@ -28,7 +27,7 @@ trainLearner.regr.lm = function(.learner, .task, .subset, .weights = NULL,  ...)
 
 #' @export
 predictLearner.regr.lm = function(.learner, .model, .newdata, ...) {
-  if(.learner$predict.type == "response") {
+  if (.learner$predict.type == "response") {
     predict(.model$learner.model, newdata = .newdata, se.fit = FALSE, ...)
   } else {
     p = predict(.model$learner.model, newdata = .newdata, se.fit = TRUE, ...)
