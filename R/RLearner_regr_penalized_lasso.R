@@ -9,8 +9,7 @@ makeRLearner.regr.penalized.lasso = function() {
     ),
     properties = c("numerics", "factors"),
     name = "Lasso Regression",
-    short.name = "lasso",
-    note = ""
+    short.name = "lasso"
   )
 }
 

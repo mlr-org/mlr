@@ -21,8 +21,7 @@ makeRLearner.regr.earth = function() {
     ),
     properties = c("numerics", "factors"),
     name = "Multivariate Adaptive Regression Splines",
-    short.name = "earth",
-    note = ""
+    short.name = "earth"
   )
 }
 
