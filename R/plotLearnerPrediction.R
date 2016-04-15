@@ -169,7 +169,6 @@ plotLearnerPrediction = function(learner, task, features = NULL, threeD = FALSE,
   title = sprintf("%s: %s", lrn.str, paramValueToString(learner$par.set, learner$par.vals))
   title = sprintf("%s\nTrain: %s; CV: %s", title, perfsToString(perf.train), perfsToString(perf.cv))
   
-  
   if (!threeD) {
     if (td$type == "classif") {
       data$.err = if (err.mark == "train")
