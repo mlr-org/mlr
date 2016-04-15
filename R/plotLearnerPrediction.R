@@ -60,7 +60,7 @@
 #' @template arg_prettynames
 #' @return The ggplot2 object.
 #' @export
-plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 10L,  ...,
+plotLearnerPrediction = function(learner, task, features = NULL, threeD = FALSE, measures, cv = 10L,  ...,
   gridsize, pointsize = 2,
   prob.alpha = TRUE, se.band = TRUE,
   err.mark = "train",
@@ -88,8 +88,8 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   taskdim = length(features)
   if (td$type %in% c("classif", "cluster") && taskdim != 2L)
     stopf("Classification and clustering: currently only 2D plots supported, not: %i", taskdim)
-  if (td$type == "regr" && taskdim %nin% 1:2)
-    stopf("Regression: currently only 1D and 2D plots supported, not: %i", taskdim)
+  if (td$type == "regr" && taskdim %nin% 1:3)
+    stopf("Regression: currently only 1D, 2D and 3D plots supported, not: %i", taskdim)
 
   measures = checkMeasures(measures, task)
   cv = asCount(cv)
@@ -159,79 +159,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   colnames(grid) = features
   pred.grid = predict(mod, newdata = grid)
   grid[, target] = pred.grid$data$response
-
-  if (td$type == "classif") {
-    data$.err = if (err.mark == "train")
-      (y != yhat)
-    else if (err.mark == "cv")
-      y != pred.cv$data[order(pred.cv$data$id), "response"]
-    else
-      NULL
-    if (taskdim == 2L) {
-      p = ggplot(grid, aes_string(x = x1n, y = x2n))
-      if (hasLearnerProperties(learner, "prob") && prob.alpha) {
-        # max of rows is prob for selected class
-        prob = apply(getPredictionProbabilities(pred.grid, cl = td$class.levels), 1, max)
-        grid$.prob.pred.class = prob
-        p = p + geom_tile(data = grid, mapping = aes_string(fill = target, alpha = ".prob.pred.class"),
-          show.legend = TRUE)
-        p = p + scale_alpha(limits = range(grid$.prob.pred.class))
-      } else {
-        p = p + geom_tile(mapping = aes_string(fill = target))
-      }
-      # print normal points
-      p = p + geom_point(data = subset(data, !data$.err),
-        mapping = aes_string(x = x1n, y = x2n, shape = target), size = pointsize)
-      # mark incorrect points
-      if (err.mark != "none" && any(data$.err)) {
-        p = p + geom_point(data = subset(data, data$.err),
-          mapping = aes_string(x = x1n, y = x2n, shape = target),
-          size = err.size + 1.5, show.legend = FALSE)
-        p = p + geom_point(data = subset(data, data$.err),
-          mapping = aes_string(x = x1n, y = x2n, shape = target),
-          size = err.size + 1, col = err.col, show.legend = FALSE)
-      }
-      # print error points
-      p = p + geom_point(data = subset(data, data$.err),
-        mapping = aes_string(x = x1n, y = x2n, shape = target), size = err.size, show.legend = FALSE)
-      p  = p + guides(alpha = FALSE)
-    }
-  } else if (td$type == "cluster") {
-    if (taskdim == 2L) {
-      data$response = factor(yhat)
-      p = ggplot(data, aes_string(x = x1n, y = x2n, col = "response"))
-      p = p + geom_point(size = pointsize)
-    }
-  } else if (td$type == "regr") {
-    if (taskdim == 1L) {
-      # plot points and model
-      p = ggplot(mapping = aes_string(x = x1n))
-      p = p + geom_point(data = data, mapping = aes_string(y = target), size = pointsize)
-      p = p + geom_line(data = grid, mapping = aes_string(y = target))
-      # show se band
-      if (se.band && hasLearnerProperties(learner, "se")) {
-        grid$.se = pred.grid$data$se
-        grid$.ymin = grid[, target] - grid$.se
-        grid$.ymax = grid[, target] + grid$.se
-        p = p + geom_ribbon(data = grid, mapping = aes_string(ymin = ".ymin", ymax = ".ymax"), alpha = 0.2)
-      }
-    } else if (taskdim == 2L) {
-      #FIXME: color are not scaled correctly? can be improved?
-      # plot background from model / grid
-      p = ggplot(mapping = aes_string(x = x1n, y = x2n))
-      p = p + geom_tile(data = grid, mapping = aes_string(fill = target))
-      p = p + scale_fill_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L], space = "Lab")
-      # plot point, with circle and interior color for y
-      p = p + geom_point(data = data, mapping = aes_string(x = x1n, y = x2n, colour = target),
-        size = pointsize)
-      p = p + geom_point(data = data, mapping = aes_string(x = x1n, y = x2n),
-        size = pointsize, colour = "black", shape = 1)
-      # plot point, with circle and interior color for y
-      p = p + scale_colour_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L], space = "Lab")
-      p  = p + guides(colour = FALSE)
-    }
-  }
-
+  
   # set title
   if (pretty.names) {
     lrn.str = learner$short.name
@@ -241,10 +169,101 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
   title = sprintf("%s: %s", lrn.str, paramValueToString(learner$par.set, learner$par.vals))
   title = sprintf("%s\nTrain: %s; CV: %s", title, perfsToString(perf.train), perfsToString(perf.cv))
   p = p + ggtitle(title)
-
-  # deal with greyscale
-  if (greyscale) {
-    p = p + scale_fill_grey()
+  
+  if (!threeD) {
+    if (td$type == "classif") {
+      data$.err = if (err.mark == "train")
+        (y != yhat)
+      else if (err.mark == "cv")
+        y != pred.cv$data[order(pred.cv$data$id), "response"]
+      else
+        NULL
+      if (taskdim == 2L) {
+        p = ggplot(grid, aes_string(x = x1n, y = x2n))
+        if (hasLearnerProperties(learner, "prob") && prob.alpha) {
+          # max of rows is prob for selected class
+          prob = apply(getPredictionProbabilities(pred.grid, cl = td$class.levels), 1, max)
+          grid$.prob.pred.class = prob
+          p = p + geom_tile(data = grid, mapping = aes_string(fill = target, alpha = ".prob.pred.class"),
+                            show.legend = TRUE)
+          p = p + scale_alpha(limits = range(grid$.prob.pred.class))
+        } else {
+          p = p + geom_tile(mapping = aes_string(fill = target))
+        }
+        # print normal points
+        p = p + geom_point(data = subset(data, !data$.err),
+                           mapping = aes_string(x = x1n, y = x2n, shape = target), size = pointsize)
+        # mark incorrect points
+        if (err.mark != "none" && any(data$.err)) {
+          p = p + geom_point(data = subset(data, data$.err),
+                             mapping = aes_string(x = x1n, y = x2n, shape = target),
+                             size = err.size + 1.5, show.legend = FALSE)
+          p = p + geom_point(data = subset(data, data$.err),
+                             mapping = aes_string(x = x1n, y = x2n, shape = target),
+                             size = err.size + 1, col = err.col, show.legend = FALSE)
+        }
+        # print error points
+        p = p + geom_point(data = subset(data, data$.err),
+                           mapping = aes_string(x = x1n, y = x2n, shape = target), size = err.size, show.legend = FALSE)
+        p  = p + guides(alpha = FALSE)
+      }
+    } else if (td$type == "cluster") {
+      if (taskdim == 2L) {
+        data$response = factor(yhat)
+        p = ggplot(data, aes_string(x = x1n, y = x2n, col = "response"))
+        p = p + geom_point(size = pointsize)
+      }
+    } else if (td$type == "regr") {
+      if (taskdim == 1L) {
+        # plot points and model
+        p = ggplot(mapping = aes_string(x = x1n))
+        p = p + geom_point(data = data, mapping = aes_string(y = target), size = pointsize)
+        p = p + geom_line(data = grid, mapping = aes_string(y = target))
+        # show se band
+        if (se.band && hasLearnerProperties(learner, "se")) {
+          grid$.se = pred.grid$data$se
+          grid$.ymin = grid[, target] - grid$.se
+          grid$.ymax = grid[, target] + grid$.se
+          p = p + geom_ribbon(data = grid, mapping = aes_string(ymin = ".ymin", ymax = ".ymax"), alpha = 0.2)
+        }
+      } else if (taskdim == 2L) {
+        #FIXME: color are not scaled correctly? can be improved?
+        # plot background from model / grid
+        p = ggplot(mapping = aes_string(x = x1n, y = x2n))
+        p = p + geom_tile(data = grid, mapping = aes_string(fill = target))
+        p = p + scale_fill_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L], space = "Lab")
+        # plot point, with circle and interior color for y
+        p = p + geom_point(data = data, mapping = aes_string(x = x1n, y = x2n, colour = target),
+                           size = pointsize)
+        p = p + geom_point(data = data, mapping = aes_string(x = x1n, y = x2n),
+                           size = pointsize, colour = "black", shape = 1)
+        # plot point, with circle and interior color for y
+        p = p + scale_colour_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L], space = "Lab")
+        p  = p + guides(colour = FALSE)
+      }
+    }
+    
+    # deal with greyscale
+    if (greyscale) {
+      p = p + scale_fill_grey()
+    }
+  }
+  else if (taskdim == 2L && threeD) {
+    require(plotly)
+    # reform grid data
+    grid.dcast = reshape2::dcast(grid, as.formula(paste(x1n, x2n, sep = "~")))
+    # generate 3D plots data list
+    grid.3d = list(x = grid.dcast$crim,
+                   y = as.numeric(colnames(grid.dcast)[-1]),
+                   z = as.matrix(grid.dcast[,-1]))
+    # plot 3D surface
+    p = plot_ly(x = grid.3d$x, y = grid.3d$y, z = grid.3d$z, 
+                type = "surface", colorbar = list(title = target))
+    # set plot parameters
+    p = p %>% layout(title = title,
+                     scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
+                                  yaxis = list(title = paste("y: ", x2n, sep = "")), 
+                                  zaxis = list(title = paste("z: ", target, sep = ""))))
   }
   return(p)
 }
