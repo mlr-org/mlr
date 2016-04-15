@@ -20,6 +20,8 @@
 #'   Selected features for model.
 #'   By default the first 2 features are used.
 #' @template arg_measures
+#' @param threeD [\code{logical(1)}]\cr
+#'   3D visual of a plot. Default is FALSE.
 #' @param cv [\code{integer(1)}]\cr
 #'   Do cross-validation and display in plot title?
 #'   Number of folds. 0 means no CV.
@@ -88,7 +90,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, threeD = FALSE,
   taskdim = length(features)
   if (td$type %in% c("classif", "cluster") && taskdim != 2L)
     stopf("Classification and clustering: currently only 2D plots supported, not: %i", taskdim)
-  if (td$type == "regr" && taskdim %nin% 1:3)
+  if (td$type == "regr" && taskdim %nin% 1:2)
     stopf("Regression: currently only 1D, 2D and 3D plots supported, not: %i", taskdim)
 
   measures = checkMeasures(measures, task)
