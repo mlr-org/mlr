@@ -20,7 +20,7 @@
 #'   Selected features for model.
 #'   By default the first 2 features are used.
 #' @template arg_measures
-#' @param threeD [\code{logical(1)}]\cr
+#' @param three.d [\code{logical(1)}]\cr
 #'   3D visual of a plot. Default is FALSE.
 #' @param cv [\code{integer(1)}]\cr
 #'   Do cross-validation and display in plot title?
@@ -62,7 +62,7 @@
 #' @template arg_prettynames
 #' @return The ggplot2 object.
 #' @export
-plotLearnerPrediction = function(learner, task, features = NULL, threeD = FALSE, measures, cv = 10L,  ...,
+plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE, measures, cv = 10L,  ...,
   gridsize, pointsize = 2,
   prob.alpha = TRUE, se.band = TRUE,
   err.mark = "train",
@@ -171,7 +171,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, threeD = FALSE,
   title = sprintf("%s: %s", lrn.str, paramValueToString(learner$par.set, learner$par.vals))
   title = sprintf("%s\nTrain: %s; CV: %s", title, perfsToString(perf.train), perfsToString(perf.cv))
   
-  if (!threeD) {
+  if (!three.d) {
     if (td$type == "classif") {
       data$.err = if (err.mark == "train")
         (y != yhat)
@@ -249,7 +249,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, threeD = FALSE,
       p = p + scale_fill_grey()
     }
   }
-  else if (taskdim == 2L && threeD) {
+  else if (taskdim == 2L && three.d) {
     require(plotly)
     # reform grid data
     grid.dcast = reshape2::dcast(grid, as.formula(paste(x1n, x2n, sep = "~")))
