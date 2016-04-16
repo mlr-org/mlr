@@ -252,9 +252,9 @@ plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE
   else if (taskdim == 2L && three.d) {
     require(plotly)
     # reform grid data
-    grid.dcast = reshape2::dcast(grid, as.formula(paste(x1n, x2n, sep = "~")))
+    grid.dcast = reshape2::dcast(grid, as.formula(paste(x1n, x2n, sep = "~")), value.var = target)
     # generate 3D plots data list
-    grid.3d = list(x = grid.dcast$crim,
+    grid.3d = list(x = grid.dcast[,1],
                    y = as.numeric(colnames(grid.dcast)[-1]),
                    z = as.matrix(grid.dcast[,-1]))
     # plot 3D surface
