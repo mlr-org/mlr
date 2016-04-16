@@ -10,7 +10,7 @@ regr.kknn = makeLearner("regr.kknn")
 
 plotLearnerPrediction(learner = regr.kknn, task = bh.task, three.d = T)
 plotLearnerPrediction(learner = regr.kknn, task = bh.task, three.d = T, features = c("indus", "age"))
-
+plotLearnerPrediction(learner = regr.kknn, task = bh.task, three.d = T, pointsize = 5)
 
 # Learner: lm
 regr.lm = makeLearner("regr.lm")

@@ -259,12 +259,16 @@ plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE
                    z = as.matrix(grid.dcast[,-1]))
     # plot 3D surface
     p = plot_ly(x = grid.3d$x, y = grid.3d$y, z = grid.3d$z, 
-                type = "surface", colorbar = list(title = target))
+                type = "surface", colorbar = list(title = target), name = "Learned Value")
     # set plot parameters
     p = p %>% layout(title = title,
                      scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
                                   yaxis = list(title = paste("y: ", x2n, sep = "")), 
                                   zaxis = list(title = paste("z: ", target, sep = ""))))
+    # add real value trace
+    p = add_trace(p, x = data[, x1n], y = data[, x2n], z = data[, target], 
+                  type = "scatter3d", color = data[, target], mode = "markers",
+                  marker = list(size = pointsize, colorbar = F), name = "Input Value", showscale = F)
   }
   return(p)
 }
