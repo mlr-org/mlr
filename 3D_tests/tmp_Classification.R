@@ -1,75 +1,30 @@
-#' @title Visualizes a learning algorithm on a 1D or 2D data set.
-#'
-#' @description
-#' Trains the model for 1 or 2 selected features, then displays it via \code{\link[ggplot2]{ggplot}}.
-#' Good for teaching or exploring models.
-#'
-#' For classification and clustering, only 2D plots are supported. The data points, the classification and
-#' potentially through color alpha blending the posterior probabilities are shown.
-#'
-#' For regression, 1D and 2D plots are supported. 1D shows the data, the estimated mean and potentially
-#' the estimated standard error. 2D does not show estimated standard error,
-#' but only the estimated mean via background color.
-#'
-#' The plot title displays the model id, its parameters, the training performance
-#' and the cross-validation performance.
-#'
-#' @template arg_learner
-#' @template arg_task
-#' @param features [\code{character}]\cr
-#'   Selected features for model.
-#'   By default the first 2 features are used.
-#' @template arg_measures
-#' @param three.d [\code{logical(1)}]\cr
-#'   3D visual of a plot. Default is FALSE.
-#' @param cv [\code{integer(1)}]\cr
-#'   Do cross-validation and display in plot title?
-#'   Number of folds. 0 means no CV.
-#'   Default is 10.
-#' @param ... [any]\cr
-#'   Parameters for \code{learner}.
-#' @param gridsize [\code{integer(1)}]\cr
-#'   Grid resolution per axis for background predictions.
-#'   Default is 500 for 1D and 100 for 2D.
-#' @param pointsize [\code{numeric(1)}]\cr
-#'   Pointsize for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
-#'   Default is 2.
-#' @param prob.alpha [\code{logical(1)}]\cr
-#'   For classification: Set alpha value of background to probability for
-#'   predicted class? Allows visualization of \dQuote{confidence} for prediction.
-#'   If not, only a constant color is displayed in the background for the predicted label.
-#'   Default is \code{TRUE}.
-#' @param se.band [\code{logical(1)}]\cr
-#'   For regression in 1D: Show band for standard error estimation?
-#'   Default is \code{TRUE}.
-#' @param err.mark [\code{character(1)}]:
-#'   For classification: Either mark error of the model on the training data (\dQuote{train}) or
-#'   during cross-validation (\dQuote{cv}) or not at all with \dQuote{none}.
-#'   Default is \dQuote{train}.
-#' @param bg.cols [\code{character(3)}]\cr
-#'   Background colors for classification and regression.
-#'   Sorted from low, medium to high.
-#'   Default is \code{TRUE}.
-#' @param err.col [\code{character(1)}]\cr
-#'   For classification: Color of misclassified data points.
-#'   Default is \dQuote{white}
-#' @param err.size [\code{integer(1)}]\cr
-#'   For classification: Size of misclassified data points.
-#'   Default is \code{pointsize}.
-#' @param greyscale [\code{logical(1)}]\cr
-#'   Should the plot be greyscale completely?
-#'   Default is \code{FALSE}.
-#' @template arg_prettynames
-#' @return The ggplot2 object.
-#' @export
-plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE, measures, cv = 10L,  ...,
-  gridsize, pointsize = 2,
-  prob.alpha = TRUE, se.band = TRUE,
-  err.mark = "train",
-  bg.cols = c("darkblue", "green", "darkred"),
-  err.col = "white", err.size = pointsize,
-  greyscale = FALSE, pretty.names = TRUE) {
+classif.lrn = makeLearner("classif.ksvm")
+measures = list(getDefaultMeasure(obj))
 
+learner = classif.lrn
+task = iris.task
+features = c("Sepal.Length", "Sepal.Width", "Petal.Length")
+measures
+cv = 10L
+gridsize
+pointsize = 2
+prob.alpha = TRUE
+se.band = TRUE
+err.mark = "train"
+bg.cols = c("darkblue", "green", "darkred")
+err.col = "white"
+err.size = pointsize
+greyscale = FALSE
+pretty.names = TRUE
+
+plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE, measures, cv = 10L,  ...,
+                                 gridsize, pointsize = 2,
+                                 prob.alpha = TRUE, se.band = TRUE,
+                                 err.mark = "train",
+                                 bg.cols = c("darkblue", "green", "darkred"),
+                                 err.col = "white", err.size = pointsize,
+                                 greyscale = FALSE, pretty.names = TRUE) {
+  
   learner = checkLearner(learner)
   assert(
     checkClass(task, "ClassifTask"),
@@ -77,7 +32,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE
     checkClass(task, "ClusterTask")
   )
   td = getTaskDescription(task)
-
+  
   # features and dimensionality
   fns = getTaskFeatureNames(task)
   if (is.null(features) && !three.d) {
@@ -96,10 +51,10 @@ plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE
     stopf("Classification and clustering: currently only 2D and 3D plots supported, not: %i", taskdim)
   if (td$type == "regr" && taskdim %nin% 1:2)
     stopf("Regression: currently only 1D, 2D and 3D plots supported, not: %i", taskdim)
-
+  
   measures = checkMeasures(measures, task)
   cv = asCount(cv)
-
+  
   if (missing(gridsize)) {
     gridsize = ifelse(taskdim == 1L, 500, 100)
   } else {
@@ -112,14 +67,14 @@ plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE
   assertString(err.col)
   assertNumber(err.size, lower = 0)
   assertLogical(greyscale)
-
+  
   if (td$type == "classif" && err.mark == "cv" && cv == 0L)
     stopf("Classification: CV must be switched on, with 'cv' > 0, for err.type = 'cv'!")
-
+  
   # subset to features, set hyperpars
   task = subsetTask(task, features = features)
   learner = setHyperPars(learner, ...)
-
+  
   # some shortcut names
   target = td$target
   data = getTaskData(task)
@@ -127,7 +82,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE
     y = getTaskTargets(task)
   x1n = features[1L]
   x1 = data[, x1n]
-
+  
   # predictions
   # if learner supports prob or se, enable it
   if (td$type == "regr" && taskdim == 1L && hasLearnerProperties(learner, "se"))
@@ -145,7 +100,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE
   } else {
     perf.cv = NA_real_
   }
-
+  
   # 2d, 3d stuff
   if (taskdim > 1L) {
     x2n = features[2L]
@@ -155,7 +110,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE
       x3 = data[, x3n]
     }
   }
-
+  
   # grid for predictions
   if (taskdim == 1L) {
     grid = data.frame(x = seq(min(x1), max(x1), length.out = gridsize))
