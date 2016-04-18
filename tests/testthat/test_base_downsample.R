@@ -31,3 +31,11 @@ test_that("downsample wrapper works with xgboost, we had issue #492",  {
   r = resample(lrn, binaryclass.task, rdesc)
   expect_true(!is.na(r$aggr))
 })
+
+test_that("downsample wrapper works with weights, we had issue #838",  {
+  task = makeClassifTask(data = multiclass.df, target = multiclass.target, weights = multiclass.df[,1L])
+  lrn = makeDownsampleWrapper("classif.rpart", dw.perc = 0.5, dw.stratify = TRUE)
+  m = train(lrn, task)
+})
+
+
