@@ -86,3 +86,27 @@ makeRLearner.classif.__mlrmocklearners__5 = function() {
   )
 }
 registerS3method("makeRLearner", "classif.__mlrmocklearners__5", makeRLearner.classif.__mlrmocklearners__5)
+
+# stores weights internally so we can see wether they are correctly passed down
+makeRLearner.regr.__mlrmocklearners__6 = function() {
+  makeRLearnerRegr(
+    cl = "regr.__mlrmocklearners__6", package = character(0L),
+    par.set = makeParamSet(),
+    properties = c("missings", "numerics", "factors", "weights")
+  )
+}
+
+trainLearner.regr.__mlrmocklearners__6 = function(.learner, .task, .subset, .weights = NULL, ...) {
+  list(weights = .weights)
+}
+
+predictLearner.regr.__mlrmocklearners__6 = function(.learner, .model, .newdata ) {
+  rep(1, nrow(.newdata))
+}
+registerS3method("makeRLearner", "regr.__mlrmocklearners__6", makeRLearner.regr.__mlrmocklearners__6)
+registerS3method("trainLearner", "regr.__mlrmocklearners__6", trainLearner.regr.__mlrmocklearners__6)
+registerS3method("predictLearner", "regr.__mlrmocklearners__6", predictLearner.regr.__mlrmocklearners__6)
+
+
+
+
