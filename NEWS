@@ -1,3 +1,6 @@
+mlr_new:
+- Add Dependent Binary Relevance for multilabel classification
+
 mlr_2.9:
 - SMOTEWrapper: fix a bug where "sw.nn" was not correctly passed down
 - classif.blackboost, regr.blackboost: made sure that arg "stump" is passed on
