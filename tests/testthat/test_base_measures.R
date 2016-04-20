@@ -379,7 +379,51 @@ test_that("check measure calculations", {
    measures = hamloss, model = mod.multilabel)
   expect_equal(hamloss.test, hamloss$fun(pred = pred.multilabel))
   expect_equal(hamloss.test, as.numeric(hamloss.perf))
-
+  #subset01
+  subset01.test = mean((tar1.multilabel != pred.multilabel$data[, 4L]) ==
+      (tar2.multilabel != pred.multilabel$data[, 5L]))
+  subset01.perf = performance(pred.multilabel,
+    measures = subset01, model = mod.multilabel)
+  names(subset01.perf) = NULL
+  expect_equal(subset01.test, subset01.perf, subset01$fun(pred = pred.multilabel))
+  #f1mult
+  f1mult.test =   2L * rowSums(cbind(tar1.multilabel, tar2.multilabel) * cbind(pred.multilabel$data[, 4L], pred.multilabel$data[, 5L])) / 
+    (rowSums(cbind(tar1.multilabel, tar2.multilabel)) + rowSums(cbind(pred.multilabel$data[, 4L], pred.multilabel$data[, 5L])))
+  f1mult.test = ifelse(is.nan(f1mult.test), 1L, f1mult.test)
+  f1mult.test = mean(f1mult.test)
+  f1mult1.perf = performance(pred.multilabel,
+    measures = f1mult, model = mod.multilabel)
+  names(f1mult1.perf) = NULL
+  expect_equal(f1mult.test, f1mult1.perf, f1mult$fun(pred = pred.multilabel))
+  #accmult
+  accmult.test = rowSums(cbind(tar1.multilabel, tar2.multilabel) * cbind(pred.multilabel$data[, 4L], pred.multilabel$data[, 5L])) / 
+    (rowSums(cbind(tar1.multilabel, tar2.multilabel)) + rowSums(cbind(pred.multilabel$data[, 4L], pred.multilabel$data[, 5L])) - 
+       rowSums(cbind(tar1.multilabel, tar2.multilabel) * cbind(pred.multilabel$data[, 4L], pred.multilabel$data[, 5L])))
+  accmult.test = ifelse(is.nan(accmult.test), 1L, accmult.test)
+  accmult.test = mean(accmult.test)
+  accmult.perf = performance(pred.multilabel,
+    measures = accmult, model = mod.multilabel)
+  names(accmult.perf) = NULL
+  expect_equal(accmult.test, accmult.perf, accmult$fun(pred = pred.multilabel))
+  #precmult
+  precmult.test = rowSums(cbind(tar1.multilabel, tar2.multilabel) * cbind(pred.multilabel$data[, 4L], pred.multilabel$data[, 5L])) / 
+    rowSums(cbind(pred.multilabel$data[, 4L], pred.multilabel$data[, 5L]))
+  precmult.test = ifelse(is.nan(precmult.test), 1L, precmult.test)
+  precmult.test = mean(precmult.test)
+  precmult.perf = performance(pred.multilabel,
+    measures = precmult, model = mod.multilabel)
+  names(precmult.perf) = NULL
+  expect_equal(precmult.test, precmult.perf, precmult$fun(pred = pred.multilabel))
+  #recallmult
+  recallmult.test = rowSums(cbind(tar1.multilabel, tar2.multilabel) * cbind(pred.multilabel$data[, 4L], pred.multilabel$data[, 5L])) / 
+    rowSums(cbind(tar1.multilabel, tar2.multilabel))
+  recallmult.test = ifelse(is.nan(recallmult.test), 1L, recallmult.test)
+  recallmult.test = mean(recallmult.test)
+  recallmult.perf = performance(pred.multilabel,
+    measures = recallmult, model = mod.multilabel)
+  names(recallmult.perf) = NULL
+  expect_equal(recallmult.test, recallmult.perf, recallmult$fun(pred = pred.multilabel))
+  
   #test survival measures
 
   #cindex
