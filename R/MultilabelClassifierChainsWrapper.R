@@ -54,7 +54,7 @@ trainLearner.MultilabelClassifierChainsWrapper = function(.learner, .task, .subs
   } else {
     order = .learner$order
   }
-  if (length(order) != length(getTaskTargetNames(.task))) {
+  if (!identical(sort(order), 1:length(getTaskTargetNames(.task)))) {
     stopf("order does not match number of targets!")  
   }
   targets = getTaskTargetNames(.task)

@@ -71,7 +71,7 @@ predictLearner.MultilabelDBRWrapper = function(.learner, .model, .newdata, ...) 
   # Level 1 prediction (binary relevance)
   modelsLvl1 = models[1:length(.model$task.desc$target)]
   f = if (.learner$predict.type == "response") {
-    function(m) getPredictionResponse(predict(m, newdata = .newdata, ...))
+    function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, ...)))
   } else {
     function(m) getPredictionProbabilities(predict(m, newdata = .newdata, ...), cl = "TRUE")
   }

@@ -56,7 +56,7 @@ trainLearner.MultilabelNestedStackingWrapper = function(.learner, .task, .subset
   } else {
     order = .learner$order
   }
-  if (sort(order) != 1:length(getTaskTargetNames(.task))) {
+  if (!identical(sort(order), 1:length(getTaskTargetNames(.task)))) {
     stopf("order does not match number of targets!")
   }  
   targets = getTaskTargetNames(.task)
