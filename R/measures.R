@@ -752,7 +752,7 @@ f1mult = makeMeasure(id = "f1mult", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measureF1MULT = function(truth, response) {
-  Fi = as.numeric()
+  Fi = numeric(nrow(truth))
   for (i in 1L:nrow(truth)) {
     if (sum(truth[i, ]) + sum(response[i, ]) == 0) {
       Fi[i] = 1
@@ -779,7 +779,7 @@ accmult = makeMeasure(id = "accmult", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measureACCMULT = function(truth, response) {
-  Acc = as.numeric()
+  Acc = numeric(nrow(truth))
   for (i in 1L:nrow(truth)) {
     if (sum(truth[i, ]) + sum(response[i, ]) == 0) {
       Acc[i] = 1
@@ -806,7 +806,7 @@ precmult = makeMeasure(id = "precmult", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measurePRECMULT = function(truth, response) {
-  Prec = as.numeric()
+  Prec = numeric(nrow(truth))
   for (i in 1L:nrow(truth)) {
     if (sum(response[i, ]) == 0) {
       Prec[i] = 1
@@ -833,7 +833,7 @@ recallmult = makeMeasure(id = "recallmult", minimize = FALSE, best = 1, worst = 
 #' @rdname measures
 #' @format none
 measureRECALLMULT = function(truth, response) {
-  Rec = as.numeric()
+  Rec = numeric(nrow(truth))
   for (i in 1L:nrow(truth)) {
     if (sum(truth[i, ]) == 0) {
       Rec[i] = 1
