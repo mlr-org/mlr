@@ -23,6 +23,8 @@ mlr_2.9:
   IDs
 - improve documentation for permutation.importance filter and perform slight
   argument renaming to fix potential name clashes
+- fix small bug in DownsampleWrapper when trained with weights
+
 - new learners
 -- surv.cv.CoxBoost
 
