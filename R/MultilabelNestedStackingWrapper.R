@@ -52,12 +52,12 @@ makeMultilabelNestedStackingWrapper = function(learner, order = "random", cv.fol
 #' @export
 trainLearner.MultilabelNestedStackingWrapper = function(.learner, .task, .subset, .weights = NULL, ...) {
   if (.learner$order[1] == "random") {
-    order = sample(1:length(.task$task.desc$target))  #random order
+    order = sample(1:length(getTaskTargetNames(.task))) #random order
   } else {
     order = .learner$order
   }
-  if (length(order) != length(getTaskTargetNames(.task))) {
-    stopf("Length order does not match number of targets!")
+  if (sort(order) != 1:length(getTaskTargetNames(.task))) {
+    stopf("order does not match number of targets!")
   }  
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)

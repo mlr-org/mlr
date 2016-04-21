@@ -50,12 +50,12 @@ makeMultilabelClassifierChainsWrapper = function(learner, order = "random") {
 #' @export
 trainLearner.MultilabelClassifierChainsWrapper = function(.learner, .task, .subset, .weights = NULL, ...){
   if (.learner$order[1] == "random") {
-    order = sample(1:length(.task$task.desc$target)) #random order
+    order = sample(1:length(getTaskTargetNames(.task))) #random order
   } else {
     order = .learner$order
   }
   if (length(order) != length(getTaskTargetNames(.task))) {
-    stopf("order length does not match number of targets!")  
+    stopf("order does not match number of targets!")  
   }
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
