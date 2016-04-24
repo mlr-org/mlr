@@ -83,9 +83,9 @@ plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE
   if (is.null(features) && !three.d) {
     # take first or first 2 features as default
     features = if (length(fns) == 1L) fns else fns[1:2]
-  } else if (three.d && td$type != "classif") {
+  } else if (is.null(features) && three.d && td$type != "classif") {
     features = if (length(fns) == 1L) fns else fns[1:2]
-  } else if (three.d && td$type == "classif") {
+  } else if (is.null(features) && three.d && td$type == "classif") {
     features = if (length(fns) == 1L) fns else fns[1:3]
   } else {
     assertCharacter(features, max.len = 3L)
