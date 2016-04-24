@@ -271,8 +271,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE
       p = p + scale_colour_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L], space = "Lab")
       p  = p + guides(colour = FALSE)
     }
-  }
-  else if (td$type == "regr" && taskdim == 2L && three.d) {
+  } else if (td$type == "regr" && taskdim == 2L && three.d) {
     require(plotly)
     # reform grid data
     grid.dcast = reshape2::dcast(grid, as.formula(paste(x1n, x2n, sep = "~")), value.var = target)
