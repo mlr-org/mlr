@@ -222,20 +222,21 @@ plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE
                            mapping = aes_string(x = x1n, y = x2n, shape = target), size = err.size, show.legend = FALSE)
         p  = p + guides(alpha = FALSE)
       }
-    } else if (taskdim == 3L) {
+    } else if (three.d && taskdim == 3L) {
       require(plotly)
       subdata = subset(data, !data$.err)
       errdata = subset(data, data$.err)
       p = plot_ly(x = subdata[, x1n], y = subdata[, x2n], z = subdata[, x3n], 
                   type = "scatter3d", mode = "markers", symbol = subdata[, target], 
-                  marker = list(size = pointsize), name = "Input Value")
+                  marker = list(size = pointsize), text = "Input Data", legendgroup = "Input Data")
       p = p %>% layout(title = title,
                        scene = list(xaxis = list(title = paste("x: ", x1n)),
                                     yaxis = list(title = paste("y: ", x2n)),
                                     zaxis = list(title = paste("z: ", x3n))))
       p = add_trace(p, x = errdata[, x1n], y = errdata[, x2n], z = errdata[, x3n],
                     type = "scatter3d", mode = "markers", symbol = errdata[, target],
-                    marker = list(size = pointsize), name = "Missclassified")
+                    marker = list(size = pointsize, color = "black"), text = "Missclassified Data",
+                    legendgroup = "Missclassified Data")
     }
   } else if (td$type == "cluster") {
     if (taskdim == 2L) {
