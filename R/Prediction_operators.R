@@ -155,3 +155,17 @@ getPredictionTruth.PredictionMultilabel = function(pred) {
   m = as.matrix(pred$data[, i])
   setColNames(m, pred$task.desc$class.levels)
 }
+
+#' @title Return the error dump of a failed Prediction.
+#'
+#' @description
+#' Returns the error dump that can be used with \code{debugger()} to evaluate errors.
+#' If \code{\link{configureMlr}} configuration \code{on.error.dump} is \code{FALSE} or if the
+#' prediction did not fail, this returns \code{NULL}.
+#'
+#' @template arg_pred
+#' @return [\code{last.dump}].
+#' @export
+getPredictionDump = function(pred) {
+  pred$dump
+}

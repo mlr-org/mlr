@@ -73,3 +73,7 @@ getFailureModelMsg.FailureModel = function(model) {
   return(as.character(model$learner.model))
 }
 
+#' @export
+getFailureModelDump.FailureModel = function(model) {
+  return(model$dump)
+}

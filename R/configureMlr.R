@@ -41,11 +41,18 @@
 #'   Should the output of the learning algorithm during training and prediction be shown or captured and
 #'   suppressed?
 #'   Default is \code{TRUE}.
+#' @param on.learner.dump [\code{logical(1)}]\cr
+#'   Specify whether \code{\link{FailureModel}} models and failed predictions should contain an error dump
+#'   that can be used with \code{debugger} to inspect an error. This option is only effective if \code{on.learner.error}
+#'   is \dQuote{warn} or \dQuote{quiet}. If it is \code{TRUE}, the dump can be accessed using 
+#'   \code{\link{getFailureModelDump}} on the \code{\link{FailureModel}}, or \code{\link{getPredictionDump}}
+#'   on the failed prediction.
+#'   Default is \code{FALSE}.
 #' @template ret_inv_null
 #' @family configure
 #' @export
 configureMlr = function(show.info, on.learner.error, on.learner.warning,
-  on.par.without.desc, on.par.out.of.bounds, show.learner.output) {
+  on.par.without.desc, on.par.out.of.bounds, show.learner.output, on.error.dump) {
 
   defaults = list(
     show.info = TRUE,
@@ -53,7 +60,8 @@ configureMlr = function(show.info, on.learner.error, on.learner.warning,
     on.learner.warning = "warn",
     on.par.without.desc = "stop",
     on.par.out.of.bounds = "stop",
-    show.learner.output = TRUE
+    show.learner.output = TRUE,
+    on.error.dump = FALSE
   )
 
   any.change = FALSE
@@ -85,6 +93,11 @@ configureMlr = function(show.info, on.learner.error, on.learner.warning,
   if (!missing(show.learner.output)) {
     assertFlag(show.learner.output)
     setMlrOption("show.learner.output", show.learner.output)
+    any.change = TRUE
+  }
+  if (!missing(on.error.dump)) {
+    assertFlag(on.error.dump)
+    setMlrOption("on.error.dump", on.error.dump)
     any.change = TRUE
   }
 

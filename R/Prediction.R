@@ -32,12 +32,12 @@ NULL
 #' @description
 #' Internal, do not use!
 #' @export
-makePrediction = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_) {
+makePrediction = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump) {
   UseMethod("makePrediction")
 }
 
 #' @export
-makePrediction.TaskDescRegr = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_) {
+makePrediction.TaskDescRegr = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump) {
   data = namedList(c("id", "truth", "response", "se"))
   data$id = id
   data$truth = truth
@@ -55,11 +55,12 @@ makePrediction.TaskDescRegr = function(task.desc, row.names, id, truth, predict.
     task.desc = task.desc,
     time = time,
     error = error
+    dump = dump
   )
 }
 
 #' @export
-makePrediction.TaskDescClassif = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_) {
+makePrediction.TaskDescClassif = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump) {
   data = namedList(c("id", "truth", "response", "prob"))
   data$id = id
   # truth can come from a simple "newdata" df. then there might not be all factor levels present
@@ -85,6 +86,7 @@ makePrediction.TaskDescClassif = function(task.desc, row.names, id, truth, predi
     task.desc = task.desc,
     time = time,
     error = error
+    dump = dump
   )
 
   if (predict.type == "prob") {
@@ -99,7 +101,7 @@ makePrediction.TaskDescClassif = function(task.desc, row.names, id, truth, predi
 }
 
 #' @export
-makePrediction.TaskDescMultilabel = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_) {
+makePrediction.TaskDescMultilabel = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump) {
   data = namedList(c("id", "truth", "response", "prob"))
   data$id = id
   data$truth = truth
@@ -116,6 +118,7 @@ makePrediction.TaskDescMultilabel = function(task.desc, row.names, id, truth, pr
     task.desc = task.desc,
     time = time,
     error = error
+    dump = dump
   )
   if (predict.type == "prob") {
     # set default threshold to 0.5
@@ -129,7 +132,7 @@ makePrediction.TaskDescMultilabel = function(task.desc, row.names, id, truth, pr
 }
 
 #' @export
-makePrediction.TaskDescSurv = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_) {
+makePrediction.TaskDescSurv = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump) {
   data = namedList(c("id", "truth.time", "truth.event", "response"))
   data$id = id
   # FIXME: recode times
@@ -144,11 +147,12 @@ makePrediction.TaskDescSurv = function(task.desc, row.names, id, truth, predict.
     task.desc = task.desc,
     time = time,
     error = error
+    dump = dump
   )
 }
 
 #' @export
-makePrediction.TaskDescCluster = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_) {
+makePrediction.TaskDescCluster = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump) {
   data = namedList(c("id", "response", "prob"))
   data$id = id
   if (predict.type == "response") {
@@ -168,12 +172,13 @@ makePrediction.TaskDescCluster = function(task.desc, row.names, id, truth, predi
     task.desc = task.desc,
     time = time,
     error = error
+    dump = dump
   )
   return(p)
 }
 
 #' @export
-makePrediction.TaskDescCostSens = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_) {
+makePrediction.TaskDescCostSens = function(task.desc, row.names, id, truth, predict.type, predict.threshold = NULL, y, time, error = NA_character_, dump) {
   data = namedList(c("id", "response"))
   data$id = id
   data$response = y
@@ -185,6 +190,7 @@ makePrediction.TaskDescCostSens = function(task.desc, row.names, id, truth, pred
     task.desc = task.desc,
     time = time,
     error = error
+    dump = dump
   )
 }
 

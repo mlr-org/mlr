@@ -23,6 +23,14 @@ getFailureModelMsg.HomogeneousEnsembleModel = function(model) {
   ifelse(j == 0L, NA_character_ , msgs[j])
 }
 
+#' @export
+getFailureModelDump.HomogeneousEnsembleModel = function(model) {
+  mods = getLearnerModel(model, more.unwrap = FALSE)
+  msgs = lapply(mods, getFailureModelDump)
+  j = which.first(!is.null(msgs))
+  ifelse(j == 0L, NULL, msgs[[j]])
+} 
+
 #' Deprecated, use \code{getLearnerModel} instead.
 #' @param model Deprecated.
 #' @param learner.models Deprecated.
