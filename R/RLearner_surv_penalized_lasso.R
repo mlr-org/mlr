@@ -1,14 +1,12 @@
 #' @export
-makeRLearner.regr.penalized.lasso = function() {
-  makeRLearnerRegr(
-    cl = "regr.penalized.lasso",
+makeRLearner.surv.penalized.lasso = function() {
+  makeRLearnerSurv(
+    cl = "surv.penalized.lasso",
     package = "!penalized",
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "lambda1", default = 0, lower = 0),
       makeUntypedLearnerParam(id = "unpenalized"),
       makeLogicalVectorLearnerParam(id = "positive", default = FALSE),
-      makeDiscreteLearnerParam(id = "model", default = "linear",
-        values = c("linear", "poisson")),
       makeNumericVectorLearnerParam(id = "startbeta"),
       makeNumericVectorLearnerParam(id = "startgamma"),
       # untyped here because one can also pass "Park" to steps
@@ -18,23 +16,29 @@ makeRLearner.regr.penalized.lasso = function() {
       makeLogicalLearnerParam(id = "standardize", default = FALSE),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(trace = FALSE, model = "linear"),
-    properties = c("numerics", "factors"),
-    name = "Lasso Regression",
+    par.vals = list(trace = FALSE),
+    properties = c("numerics", "factors", "ordered", "rcens"),
+    name = "LassoRegression",
     short.name = "lasso",
     note = "trace=FALSE was set by default to disable logging output."
   )
 }
 
 #' @export
-trainLearner.regr.penalized.lasso = function(.learner, .task, .subset, .weights = NULL,  ...) {
+trainLearner.surv.penalized.lasso = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  penalized::penalized(f, data = getTaskData(.task, .subset), fusedl = FALSE, ...)
+  penalized::penalized(f, data = getTaskData(.task, subset = .subset),
+    model = "cox", fusedl = FALSE, ...)
 }
 
 #' @export
-predictLearner.regr.penalized.lasso = function(.learner, .model, .newdata, ...) {
-  m = .model$learner.model
-  .newdata[,.model$task.desc$target] = 0
-  penalized::predict(m, data = .newdata,  ...)[, "mu"]
+predictLearner.surv.penalized.lasso = function(.learner, .model, .newdata, ...) {
+  #info = getTrainingInfo(.model)
+  #.newdata = as.matrix(fixDataForLearner(.newdata, info))
+  if(.learner$predict.type == "response") {
+    # Note: this is a rather ugly hack but should work according to Jelle
+    penalized::survival(penalized::predict(.model$learner.model, penalized = .newdata), Inf)
+  } else {
+    stop("Unknown predict type")
+  }
 }
