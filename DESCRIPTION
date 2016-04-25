@@ -103,7 +103,7 @@ Suggests:
     numDeriv,
     pamr,
     party,
-    penalized,
+    penalized (>= 0.9-46),
     pls,
     PMCMR (>= 4.1),
     pROC (>= 1.8),
