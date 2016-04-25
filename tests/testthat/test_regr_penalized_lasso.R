@@ -21,6 +21,8 @@ test_that("regr_penalized_lasso", {
     capture.output(
       m <- do.call(penalized::penalized, pars)
     )
+    # FIXME: should be removed, reported in issue 840
+    m@formula$unpenalized[[2L]] = as.symbol(regr.target)
     p = penalized::predict(m, data = regr.test)
     old.predicts.list[[i]] = p[,"mu"]
   }
@@ -32,9 +34,11 @@ test_that("regr_penalized_lasso", {
   }
 
   tp = function(model, newdata, ...) {
+    # FIXME: should be removed, reported in issue 840
+    model@formula$unpenalized[[2L]] = as.symbol(regr.target)
     penalized::predict(model, data = newdata,...)[, "mu"]
   }
-  
+
   testCVParsets("regr.penalized.lasso", regr.df, regr.target,
     tune.train = tt, tune.predict = tp, parset.list = parset.list)
 })

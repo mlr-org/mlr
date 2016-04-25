@@ -22,6 +22,8 @@ test_that("regr_penalized_ridge", {
       m <- do.call(penalized::penalized, pars)
       )
     set.seed(getOption("mlr.debug.seed"))
+    # FIXME: should be removed, reported in issue 840
+    m@formula$unpenalized[[2L]] = as.symbol(regr.target)
     p = penalized::predict(m, data = regr.test)
     old.predicts.list[[i]] = p[,"mu"]
   }
