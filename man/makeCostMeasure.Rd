@@ -4,8 +4,8 @@
 \alias{makeCostMeasure}
 \title{Creates a measure for non-standard misclassification costs.}
 \usage{
-makeCostMeasure(id = "costs", minimize = TRUE, costs, task,
-  combine = mean, best = NULL, worst = NULL, name = id, note = "")
+makeCostMeasure(id = "costs", minimize = TRUE, costs, combine = mean,
+  best = NULL, worst = NULL, name = id, note = "")
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr
@@ -20,9 +20,6 @@ Default is \code{TRUE}.}
 \item{costs}{[\code{matrix}]\cr
 Matrix of misclassification costs. Rows and columns have to be named with class labels, order does not matter.
 Rows indicate true classes, columns predicted classes.}
-
-\item{task}{[\code{\link{ClassifTask}}]\cr
-Classification task. Has to be passed, so validity of matrix names can be checked.}
 
 \item{combine}{[\code{function}]\cr
 How to combine costs over all cases for a SINGLE test set?

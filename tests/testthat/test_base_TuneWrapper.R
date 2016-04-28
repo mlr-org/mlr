@@ -56,7 +56,7 @@ test_that("TuneWrapper uses tune.threshold", {
   rdesc = makeResampleDesc("Holdout")
   costs = matrix(c(0, 5, 1, 0), 2)
   colnames(costs) = rownames(costs) = getTaskDescription(binaryclass.task)$class.levels
-  mm = makeCostMeasure(id = "costs", costs = costs, task = binaryclass.task, best = 0, worst = 5)
+  mm = makeCostMeasure(id = "costs", costs = costs, best = 0, worst = 5)
   ps = makeParamSet(makeDiscreteParam("method", "moment"))
   ctrl = makeTuneControlGrid(tune.threshold = TRUE)
   lrn = makeTuneWrapper(lrn, resampling = rdesc, measures = mm, par.set = ps, control = ctrl)
