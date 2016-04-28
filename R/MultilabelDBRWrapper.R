@@ -56,8 +56,7 @@ trainLearner.MultilabelDBRWrapper = function(.learner, .task, .subset, .weights 
   modelsMeta = namedList(targets)
   for (tn in targets) {
     data2Meta = dropNamed(data, setdiff(targets, tn))
-    trueLabelData = sapply(data.frame(data[, setdiff(targets, tn)]), as.numeric)
-    colnames(trueLabelData) = setdiff(targets, tn)
+    trueLabelData = sapply(data[, setdiff(targets, tn)], as.numeric)
     data2Meta = data.frame(data2Meta, trueLabelData)
     ctask = makeClassifTask(id = tn, data = data2Meta, target = tn)
     modelsMeta[[tn]] = train(.learner$next.learner, ctask, weights = .weights)
