@@ -24,12 +24,21 @@ mlr_2.9:
 - improve documentation for permutation.importance filter and perform slight
   argument renaming to fix potential name clashes
 - fix small bug in DownsampleWrapper when trained with weights
+- the "penalized" learner were restructured and improved (params were added), also see below.
 
 - new learners
 -- surv.cv.CoxBoost
+-- regr.penalized.fusedlasso
+-- classif.penalized.ridge
+-- classif.penalized.lasso
+-- classif.penalized.fusedlasso
+-- surv.penalized.ridge
+-- surv.penalized.lasso
+-- surv.penalized.fusedlasso
 
 - removed learners
 -- surv.optimCoxBoostPenalty
+-- surv.penalized (split up, see new learners above)
 
 - removed functions
 -- getParamSet generic (now in ParamHelpers package)
