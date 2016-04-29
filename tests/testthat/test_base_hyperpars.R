@@ -43,7 +43,11 @@ test_that("removing par settings works", {
   expect_equal(getHyperPars(lrn3), list(bw.iters = 9))
   lrn3 = removeHyperPars(lrn2, "bw.iters")
   expect_equal(getHyperPars(lrn3), list(method = "mve"))
-
+  
+  # now remove all hyperpars using a wrapped wrapper
+  lrn = makeOversampleWrapper(makeFilterWrapper(makeLearner("classif.qda", nu = 2), fw.perc = 0.5), osw.rate = 1)
+  lrn1 = removeHyperPars(lrn, ids = names(getHyperPars(lrn)))
+  expect_true(length(getHyperPars(lrn1)) == 0)
 })
 
 test_that("setting 'when' works for hyperpars", {
