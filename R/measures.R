@@ -436,6 +436,28 @@ measureBrier = function(probabilities, truth, negative, positive) {
   mean((y - probabilities)^2)
 }
 
+#' @export brier.sc
+#' @rdname measures
+#' @format none
+brier.sc = makeMeasure(id = "brier.sc", minimize = FALSE, best = 1, worst = 0,
+  properties = c("classif", "req.pred", "req.truth", "req.prob"),
+  name = "Brier scaled",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureBrier.sc(getPredictionProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive)
+  }
+)
+
+#' @export measureBrier.sc
+#' @rdname measures
+#' @format none
+measureBrier.sc = function(probabilites, truth, negative, positive) {
+  y = as.numeric(truth == positive)
+  brier = mean((y - probabilites)^2)
+  inc = mean(probabilites)
+  brier.max = inc * (1 - inc)^2 + (1 - inc) * inc^2
+  1 - brier / brier.max
+}
+
 #' @export bac
 #' @rdname measures
 #' @format none
