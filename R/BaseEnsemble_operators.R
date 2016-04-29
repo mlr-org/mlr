@@ -48,6 +48,7 @@ removeHyperPars.BaseEnsemble = function(learner, ids) {
     if (id %in% parnames.bls) {
       # param of ensapsulated learner, remove prefix, set it in the bl list
       z = matchBaseEnsembleLearner(learner, id)
+      # FIXME: won't work properly when base.learners are BaseWrappers, should we support this?
       learner$base.learners[[z$ind]] = removeHyperPars.Learner(learner$base.learners[[z$ind]],
         z$par.id)
     } else {
