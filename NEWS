@@ -26,6 +26,7 @@ mlr_2.9:
 - new learners
 -- surv.cv.CoxBoost
 -- regr.penalized.fusedlasso
+-- regr.glm
 -- classif.penalized.ridge
 -- classif.penalized.lasso
 -- classif.penalized.fusedlasso
