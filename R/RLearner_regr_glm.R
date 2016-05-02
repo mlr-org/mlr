@@ -34,7 +34,7 @@ makeRLearner.regr.glm = function() {
     ),
     properties = c("numerics", "factors", "se", "weights"),
     name = "Generalized Linear Regression",
-    note = "Mlr derivates from original glm API: the learner parameter family 
+    note = "mlr derivates from original glm API: the learner parameter family 
     must be a character and every family has its own link, i.e. 
     family = 'gaussian', link.gaussian = 'identity'",
     short.name = "glm"
