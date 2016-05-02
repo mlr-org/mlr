@@ -27,6 +27,7 @@ mlr_2.9:
 -- surv.cv.CoxBoost
 -- regr.penalized.fusedlasso
 -- regr.glm
+-- classif.C50
 -- classif.penalized.ridge
 -- classif.penalized.lasso
 -- classif.penalized.fusedlasso
