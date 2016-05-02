@@ -66,7 +66,8 @@ test_that("learners work: classif ", {
   lrns = mylist("classif", properties = "weights", create = TRUE)
   lapply(lrns, testThatLearnerRespectsWeights, hyperpars = hyperpars,
     task = binaryclass.task, train.inds = binaryclass.train.inds, binaryclass.test.inds,
-    weights = rep(c(10000L, 1L), c(10L, length(binaryclass.train.inds) - 10L)))
+    weights = rep(c(10000L, 1L), c(10L, length(binaryclass.train.inds) - 10L)),
+    pred.type = "prob", get.pred.fun = getPredictionProbabilities)
 
   # classif with missing
   d = binaryclass.df[c(1:10, 180:190), c(1:2, binaryclass.class.col)]
