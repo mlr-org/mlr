@@ -23,12 +23,9 @@ test_that("regr_glm", {
     old.predicts.list[[i]] = p
   }
   
-  parset.list = list(
-    list(),
-    list(family = "inverse.gaussian", inverse.gaussian.link = "log", mustart = rep(0.4,14)),
-    list(trace = TRUE, epsilon = 1e-10, maxit = 30),
-    list(x = TRUE, y = FALSE)
-  )
+  # names for family and link in mlr differ from glm() argument family
+  parset.list[[2]]$family = "inverse.gaussian"
+  parset.list[[2]]$inverse.gaussian.link = "log"
   
   testSimpleParsets("regr.glm", regr.df, regr.target,
     regr.train.inds, old.predicts.list, parset.list)
