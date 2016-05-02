@@ -27,7 +27,6 @@ makeRLearner.classif.C50 = function() {
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", 
                    "missings", "weights"),
     name = "C50",
-    note = "",
     short.name = "C50"
   )
 }
@@ -42,7 +41,7 @@ trainLearner.classif.C50 = function(.learner, .task, .subset, .weights = NULL,
     label)
   
   d = getTaskData(.task, .subset, target.extra = TRUE)
-   C50::C5.0(x = d$data, y = d$target, control = ctrl, ...)
+   C50::C5.0(x = d$data, y = d$target, control = ctrl, weights = .weights, ...)
 }
 
 
