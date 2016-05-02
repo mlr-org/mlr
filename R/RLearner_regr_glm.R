@@ -7,13 +7,13 @@ makeRLearner.regr.glm = function() {
       makeDiscreteLearnerParam(id = "family", default = "gaussian",
         values = c("gaussian", "Gamma", "inverse.gaussian", "poisson")),
       makeDiscreteLearnerParam(id = "gaussian.link", default = "identity",
-        values = c("identity", "log", "inverse"), requires = quote(family$family == "gaussian")),
+        values = c("identity", "log", "inverse"), requires = quote(family == "gaussian")),
       makeDiscreteLearnerParam(id = "Gamma.link", default = "inverse",
-        values = c("inverse", "identity", "log"), requires = quote(family$family == "Gamma")),
+        values = c("inverse", "identity", "log"), requires = quote(family == "Gamma")),
       makeDiscreteLearnerParam(id = "poisson.link", default = "log",
-        values = c("log", "identity", "sqrt"), requires = quote(family$family == "poisson")),
+        values = c("log", "identity", "sqrt"), requires = quote(family == "poisson")),
       makeDiscreteLearnerParam(id = "inverse.gaussian.link", default = "1/mu^2",
-        values = c("1/mu^2", "inverse", "identity", "log"), requires = quote (family$family == "inverse.gaussian")),
+        values = c("1/mu^2", "inverse", "identity", "log"), requires = quote (family == "inverse.gaussian")),
       # FIXME: default for start, mustart and etastart is family and link dependet (see family$initialize)
       # FIXME: length is data dependent (length = number of predictors + 1)
       makeNumericVectorLearnerParam(id = "start"), 
@@ -34,6 +34,9 @@ makeRLearner.regr.glm = function() {
     ),
     properties = c("numerics", "factors", "se", "weights"),
     name = "Generalized Linear Regression",
+    note = "mlr derivates from original glm API: the learner parameter family 
+    must be a character and every family has its own link, i.e. 
+    family = 'gaussian', link.gaussian = 'identity'",
     short.name = "glm"
   )
 }
