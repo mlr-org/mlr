@@ -31,35 +31,34 @@ makeCostMeasure = function(id = "costs", minimize = TRUE, costs, combine = mean,
   assertString(name)
   assertString(note)
   
-  
-  
+
   makeMeasure(id = id, minimize = minimize, extra.args = list(costs, combine),
-              properties = c("classif", "classif.multi", "req.pred", "req.truth", "predtype.response", "predtype.prob"),
-              best = best, worst = worst,
-              fun = function(task, model, pred, feats, extra.args) {
-                #check costs    
-                td = pred$task.desc
-                levs = td$class.levels
-                if (any(dim(costs))) {
-                  if (any(dim(costs) != length(levs)))
-                    stop("Dimensions of costs have to be the same as number of class levels!")
-                  rns = rownames(costs)
-                  cns = colnames(costs)
-                  if (!setequal(rns, levs) || !setequal(cns, levs))
-                    stop("Row and column names of cost matrix have to equal class levels!")
-                }
-                costs = extra.args[[1L]]
-                # cannot index with NA
-                r = pred$data$response
-                if (anyMissing(r))
-                  return(NA_real_)
-                cc = function(truth, pred) {
-                  costs[truth, pred]
-                }
-                y = mapply(cc, as.character(pred$data$truth), as.character(r))
-                combine(y)
-              },
-              name = name,
-              note = note
+    properties = c("classif", "classif.multi", "req.pred", "req.truth", "predtype.response", "predtype.prob"),
+    best = best, worst = worst,
+    fun = function(task, model, pred, feats, extra.args) {
+      #check costs    
+      td = pred$task.desc
+      levs = td$class.levels
+      if (any(dim(costs))) {
+        if (any(dim(costs) != length(levs)))
+          stop("Dimensions of costs have to be the same as number of class levels!")
+        rns = rownames(costs)
+        cns = colnames(costs)
+        if (!setequal(rns, levs) || !setequal(cns, levs))
+          stop("Row and column names of cost matrix have to equal class levels!")
+      }
+      costs = extra.args[[1L]]
+      # cannot index with NA
+      r = pred$data$response
+      if (anyMissing(r))
+        return(NA_real_)
+      cc = function(truth, pred) {
+        costs[truth, pred]
+      }
+      y = mapply(cc, as.character(pred$data$truth), as.character(r))
+      combine(y)
+    },
+    name = name,
+    note = note
   )
 }
