@@ -31,7 +31,7 @@ trainLearner.regr.ctree = function(.learner, .task, .subset, .weights = NULL, te
   ctrl = learnerArgsToControl(party::ctree_control, teststat, testtype, mincriterion, minsplit,
     minbucket, stump, nresample, maxsurrogate, mtry, savesplitstats, maxdepth)
   f = getTaskFormula(.task)
-  party::ctree(f, data = getTaskData(.task, .subset), controls = ctrl, ...)
+  party::ctree(f, data = getTaskData(.task, .subset), controls = ctrl, weights = .weights, ...)
 }
 
 #' @export
