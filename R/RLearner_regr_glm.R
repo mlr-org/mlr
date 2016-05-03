@@ -16,9 +16,9 @@ makeRLearner.regr.glm = function() {
         values = c("1/mu^2", "inverse", "identity", "log"), requires = quote (family == "inverse.gaussian")),
       # FIXME: default for start, mustart and etastart is family and link dependet (see family$initialize)
       # FIXME: length is data dependent (length = number of predictors + 1)
-      makeNumericVectorLearnerParam(id = "start"), 
+      makeNumericVectorLearnerParam(id = "start"),
       # FIXME: len for etastart and mustart is data dependet (length = number of cases)
-      makeNumericVectorLearnerParam(id = "etastart"),  
+      makeNumericVectorLearnerParam(id = "etastart"),
       makeNumericVectorLearnerParam(id = "mustart"),
       makeNumericVectorLearnerParam(id = "offset"),
       makeNumericLearnerParam(id = "epsilon", default = 1e-8),
@@ -34,66 +34,37 @@ makeRLearner.regr.glm = function() {
     ),
     properties = c("numerics", "factors", "se", "weights"),
     name = "Generalized Linear Regression",
-    note = "mlr derivates from original glm API: the learner parameter family 
-    must be a character and every family has its own link, i.e. 
-    family = 'gaussian', link.gaussian = 'identity'",
-    short.name = "glm"
+    short.name = "glm",
+    note = "'family' must be a character and every family has its own link, i.e. family = 'gaussian', link.gaussian = 'identity', which is also the default."
   )
 }
 
 #' @export
-trainLearner.regr.glm = function(.learner, .task, .subset, .weights = NULL, epsilon, maxit, trace, family, ...) {
+trainLearner.regr.glm = function(.learner, .task, .subset, .weights = NULL, epsilon, maxit, trace, family,
+  gaussian.link = "identity", poisson.link = "log", Gamma.link = "inverse", inverse.gaussian.link = "1/mu2", ...) {
+
   ctrl = learnerArgsToControl(stats::glm.control, epsilon, maxit, trace)
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
-  family = .learner$par.vals$family
-  
-  if (family == "gaussian") {
-    if (length(.learner$par.vals$gaussian.link) == 0L) { 
-      family = stats::gaussian()
-    } else {
-      family = stats::gaussian(link = .learner$par.vals$gaussian.link)
-    }
-  } else {
-    if (family == "poisson") {
-      if (length(.learner$par.vals$poisson.link) == 0L) {
-        family = stats::poisson()
-      } else {
-        family = stats::poisson(link = .learner$par.vals$poisson.link)
-      }
-    } else {
-      if (family == "Gamma") {
-        if (length(.learner$par.vals$Gamma.link) == 0L) {
-          family = stats::Gamma()
-        } else {
-          family = stats::Gamma(link = .learner$par.vals$Gamma.link)
-        }
-      } else {
-        if (family == "inverse.gaussian") {
-          if (length(.learner$par.vals$Gamma.link) == 0L) {
-            family = stats::inverse.gaussian()
-          } else {
-            family = stats::inverse.gaussian(link = .learner$par.vals$inverse.gaussian.link)
-          }
-        }
-      }
-    }
-  }
-  
-  
-  if (is.null(.weights)) {
-    stats::glm(f, data = d, control = ctrl, family = family, ... )
-  } else  {
-    stats::glm(f, data = d, control = ctrl, weights = .weights, family = family, ... )
-  }
+
+  family = switch(family,
+    gaussian = stats::gaussian(link = make.link(gaussian.link)),
+    poisson = stats::poisson(link = make.link(poisson.link)),
+    Gamma = stats::Gamma(link = make.link(Gamma.link)),
+    inverse.gaussian = inverse.gaussian(link = make.link(inverse.gaussian.link))
+  )
+  if (is.null(.weights))
+    m = stats::glm(f, data = d, control = ctrl, family = family, ... )
+  else
+    m = stats::glm(f, data = d, control = ctrl, weights = .weights, family = family, ... )
+  return(m)
 }
 
 #' @export
 predictLearner.regr.glm = function(.learner, .model, .newdata, ...) {
-  if (.learner$predict.type == "response") {
-    predict(.model$learner.model, newdata = .newdata, se.fit = FALSE, ...)
-  } else {
-    p = predict(.model$learner.model, newdata = .newdata, se.fit = TRUE, ...)
-    cbind(p$fit, p$se.fit)
-  }
+  se.fit = .learner$predict.type == "se"
+  p = predict(.model$learner.model, newdata = .newdata, type = "response", se.fit = se.fit, ...)
+  if (se.fit)
+    p = cbind(p$fit, p$se.fit)
+  return(p)
 }
