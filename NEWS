@@ -24,6 +24,8 @@ mlr_2.9:
 - the "penalized" learner were restructured and improved (params were added), also see below.
 - makeCostMeasure: removed arg "task", names of cost matrix are checked on measure calculation
 -- fixed weight handling and weight tag for some learners
+- rename generatePartialPrediction, plotPartialPrediction, and plotPartialPredictionGGVIS to
+  generatePartialDependence, plotPartialDependence, and plotPartialDependenceGGVIS
 
 - new learners
 -- surv.cv.CoxBoost
