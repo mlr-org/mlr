@@ -52,7 +52,7 @@
 #'   Default is \code{TRUE}.
 #' @param err.col [\code{character(1)}]\cr
 #'   For classification: Color of misclassified data points.
-#'   Default is \dQuote{white}
+#'   Default value for 2D plot is \dQuote{white} and default value for 3D plot is \dQuote{black}
 #' @param err.size [\code{integer(1)}]\cr
 #'   For classification: Size of misclassified data points.
 #'   Default is \code{pointsize}.
@@ -226,17 +226,28 @@ plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE
       require(plotly)
       subdata = subset(data, !data$.err)
       errdata = subset(data, data$.err)
-      p = plot_ly(x = subdata[, x1n], y = subdata[, x2n], z = subdata[, x3n], 
-                  type = "scatter3d", mode = "markers", symbol = subdata[, target], 
-                  marker = list(size = pointsize), text = "Input Data", legendgroup = "Input Data")
+      if (greyscale)
+        p = plot_ly(x = subdata[, x1n], y = subdata[, x2n], z = subdata[, x3n], 
+                    type = "scatter3d", mode = "markers", symbol = subdata[, target], 
+                    marker = list(size = pointsize, color = "grey"), text = "Input Data", legendgroup = "Input Data")
+      else 
+        p = plot_ly(x = subdata[, x1n], y = subdata[, x2n], z = subdata[, x3n], 
+                    type = "scatter3d", mode = "markers", symbol = subdata[, target], 
+                    marker = list(size = pointsize), text = "Input Data", legendgroup = "Input Data")
       p = p %>% layout(title = title,
                        scene = list(xaxis = list(title = paste("x: ", x1n)),
                                     yaxis = list(title = paste("y: ", x2n)),
                                     zaxis = list(title = paste("z: ", x3n))))
-      p = add_trace(p, x = errdata[, x1n], y = errdata[, x2n], z = errdata[, x3n],
-                    type = "scatter3d", mode = "markers", symbol = errdata[, target],
-                    marker = list(size = pointsize, color = "black"), text = "Missclassified Data",
-                    legendgroup = "Missclassified Data")
+      if (err.col == "white")
+        p = add_trace(p, x = errdata[, x1n], y = errdata[, x2n], z = errdata[, x3n],
+                      type = "scatter3d", mode = "markers", symbol = errdata[, target],
+                      marker = list(size = err.size, color = "black"), text = "Missclassified Data",
+                      legendgroup = "Missclassified Data")
+      else
+        p = add_trace(p, x = errdata[, x1n], y = errdata[, x2n], z = errdata[, x3n],
+                      type = "scatter3d", mode = "markers", symbol = errdata[, target],
+                      marker = list(size = err.size, color = err.col), text = "Missclassified Data",
+                      legendgroup = "Missclassified Data")
     }
   } else if (td$type == "cluster") {
     if (taskdim == 2L) {
@@ -280,18 +291,33 @@ plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE
     grid.3d = list(x = grid.dcast[,1],
                    y = as.numeric(colnames(grid.dcast)[-1]),
                    z = as.matrix(grid.dcast[,-1]))
-    # plot 3D surface
-    p = plot_ly(x = grid.3d$x, y = grid.3d$y, z = grid.3d$z, 
-                type = "surface", colorbar = list(title = target), name = "Learned Value")
-    # set plot parameters
-    p = p %>% layout(title = title,
-                     scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
-                                  yaxis = list(title = paste("y: ", x2n, sep = "")), 
-                                  zaxis = list(title = paste("z: ", target, sep = ""))))
-    # add real value trace
-    p = add_trace(p, x = data[, x1n], y = data[, x2n], z = data[, target], 
-                  type = "scatter3d", color = data[, target], mode = "markers",
-                  marker = list(size = pointsize, colorbar = F), name = "Input Value", showscale = F)
+    if (greyscale) {
+      # plot 3D surface
+      p = plot_ly(x = grid.3d$x, y = grid.3d$y, z = grid.3d$z, 
+                  type = "surface", colorbar = list(title = target), name = "Learned Value", colorscale = "Greys")
+      # set plot parameters
+      p = p %>% layout(title = title,
+                       scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
+                                    yaxis = list(title = paste("y: ", x2n, sep = "")), 
+                                    zaxis = list(title = paste("z: ", target, sep = ""))))
+      # add real value trace
+      p = add_trace(p, x = data[, x1n], y = data[, x2n], z = data[, target], 
+                    type = "scatter3d", color = data[, target], mode = "markers",
+                    marker = list(size = pointsize, colorbar = F, colorscale = "Greys"), name = "Input Value", showscale = F)
+    } else {
+      # plot 3D surface
+      p = plot_ly(x = grid.3d$x, y = grid.3d$y, z = grid.3d$z, 
+                  type = "surface", colorbar = list(title = target), name = "Learned Value")
+      # set plot parameters
+      p = p %>% layout(title = title,
+                       scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
+                                    yaxis = list(title = paste("y: ", x2n, sep = "")), 
+                                    zaxis = list(title = paste("z: ", target, sep = ""))))
+      # add real value trace
+      p = add_trace(p, x = data[, x1n], y = data[, x2n], z = data[, target], 
+                    type = "scatter3d", color = data[, target], mode = "markers",
+                    marker = list(size = pointsize, colorbar = F), name = "Input Value", showscale = F)
+    }
   }
   if (!three.d){
     p = p + ggtitle(title)
