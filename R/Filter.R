@@ -211,8 +211,8 @@ makeFilter(
   name = "rank.correlation",
   desc = "Spearman's correlation between feature and target",
   pkg  = "FSelector",
-  supported.tasks = c("regr"),
-  supported.features = c("numerics", "factors"),
+  supported.tasks = "regr",
+  supported.features = "numerics",
   fun = function(task, nselect, ...) {
     y = FSelector::rank.correlation(getTaskFormula(task), data = getTaskData(task))
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
