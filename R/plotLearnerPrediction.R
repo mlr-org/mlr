@@ -290,7 +290,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE
     # generate 3D plots data list
     grid.3d = list(x = grid.dcast[,1],
                    y = as.numeric(colnames(grid.dcast)[-1]),
-                   z = as.matrix(grid.dcast[,-1]))
+                   z = t(as.matrix(grid.dcast[,-1])))
     if (greyscale) {
       # plot 3D surface
       p = plot_ly(x = grid.3d$x, y = grid.3d$y, z = grid.3d$z, 
