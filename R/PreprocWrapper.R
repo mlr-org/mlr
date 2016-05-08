@@ -20,6 +20,7 @@
 #'   \code{target} is a string and denotes the target variable in \code{data}.
 #'   \code{args} are the args that were passed to \code{train}.
 #'   \code{control} is the object you returned in \code{train}.
+#'   Must return the processed data.
 #' @param par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
 #'   Parameter set of \code{\link[ParamHelpers]{LearnerParam}} objects to describe the
 #'   parameters in \code{args}.
