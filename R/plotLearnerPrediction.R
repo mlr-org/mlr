@@ -59,6 +59,12 @@
 #' @param greyscale [\code{logical(1)}]\cr
 #'   Should the plot be greyscale completely?
 #'   Default is \code{FALSE}.
+#' @param alpha [\code{numeric(1)}]\cr
+#'   Set the prediction point transparancy for classification 3D plots with value from 0 to 1.
+#'   Default is 1.
+#' @param err.alpha [\code{numeric(1)}]\cr
+#'   Set the error point transparancy for classification 3D plots with value from 0 to 1.
+#'   Default is \code{alpha}
 #' @template arg_prettynames
 #' @return The ggplot2 object.
 #' @export
@@ -68,7 +74,8 @@ plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE
   err.mark = "train",
   bg.cols = c("darkblue", "green", "darkred"),
   err.col = "white", err.size = pointsize,
-  greyscale = FALSE, pretty.names = TRUE) {
+  greyscale = FALSE, pretty.names = TRUE,
+  alpha = 1, err.alpha = alpha) {
 
   learner = checkLearner(learner)
   assert(
@@ -226,28 +233,32 @@ plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE
       require(plotly)
       subdata = subset(data, !data$.err)
       errdata = subset(data, data$.err)
+      # print normal points
       if (greyscale)
         p = plot_ly(x = subdata[, x1n], y = subdata[, x2n], z = subdata[, x3n], 
                     type = "scatter3d", mode = "markers", symbol = subdata[, target], 
-                    marker = list(size = pointsize, color = "grey"), text = "Input Data", legendgroup = "Input Data")
+                    marker = list(size = pointsize, opacity = alpha, color = "grey"), 
+                    text = "Input Data", legendgroup = "Input Data")
       else 
         p = plot_ly(x = subdata[, x1n], y = subdata[, x2n], z = subdata[, x3n], 
                     type = "scatter3d", mode = "markers", symbol = subdata[, target], 
-                    marker = list(size = pointsize), text = "Input Data", legendgroup = "Input Data")
+                    marker = list(size = pointsize, opacity = alpha), 
+                    text = "Input Data", legendgroup = "Input Data")
       p = p %>% layout(title = title,
                        scene = list(xaxis = list(title = paste("x: ", x1n)),
                                     yaxis = list(title = paste("y: ", x2n)),
                                     zaxis = list(title = paste("z: ", x3n))))
+      # print incorrect points
       if (err.col == "white")
         p = add_trace(p, x = errdata[, x1n], y = errdata[, x2n], z = errdata[, x3n],
                       type = "scatter3d", mode = "markers", symbol = errdata[, target],
-                      marker = list(size = err.size, color = "black"), text = "Missclassified Data",
-                      legendgroup = "Missclassified Data")
+                      marker = list(size = err.size, opacity = err.alpha, color = "black"), 
+                      text = "Missclassified Data", legendgroup = "Missclassified Data")
       else
         p = add_trace(p, x = errdata[, x1n], y = errdata[, x2n], z = errdata[, x3n],
                       type = "scatter3d", mode = "markers", symbol = errdata[, target],
-                      marker = list(size = err.size, color = err.col), text = "Missclassified Data",
-                      legendgroup = "Missclassified Data")
+                      marker = list(size = err.size, opacity = err.alpha, color = err.col), 
+                      text = "Missclassified Data", legendgroup = "Missclassified Data")
     }
   } else if (td$type == "cluster") {
     if (taskdim == 2L) {

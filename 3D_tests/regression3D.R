@@ -1,5 +1,3 @@
-getTaskFeatureNames(bh.task)
-
 # Learner: kknn
 regr.kknn = makeLearner("regr.kknn")
 
