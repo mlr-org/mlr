@@ -35,7 +35,7 @@ test_that("removeConstantFeatures", {
   data$target = 1
   data$noise = rnorm(nrow(data))
   lrn = makeLearner("regr.lm")
-  lrn = removeConstantFeaturesWrapper(lrn, perc = 0.1)
+  lrn = makeRemoveConstantFeaturesWrapper(lrn, perc = 0.1)
   task = makeRegrTask(data = data, target = "target")
   model = train(lrn, task)
   mod = getLearnerModel(model)$learner.model
