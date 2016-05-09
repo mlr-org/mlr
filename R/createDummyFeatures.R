@@ -10,28 +10,34 @@
 #'   Available are:\cr
 #'   \dQuote{1-of-n}: For n factor levels there will be n dummy variables.\cr
 #'   \dQuote{reference}: There will be n-1 dummy variables leaving out the first factor level of each variable.\cr
-#' @template arg_exclude
+#' @param cols [\code{character}]\cr
+#'   Columns to create dummy features for. Default is to use all columns.
 #' @template ret_taskdf
 #' @export
 #' @family eda_and_preprocess
-createDummyFeatures = function(obj, target = character(0L), method = "1-of-n", exclude = character(0L)) {
+createDummyFeatures = function(obj, target = character(0L), method = "1-of-n", cols = NULL) {
   assertChoice(method, choices = c("1-of-n", "reference"))
-  checkTargetPreproc(obj, target, cols = NULL)
-  assertCharacter(exclude)
+  checkTargetPreproc(obj, target, cols)
   UseMethod("createDummyFeatures")
 }
 
 #' @export
-createDummyFeatures.data.frame = function(obj, target = character(0L), method = "1-of-n", exclude = character(0L)) {
-  assertSubset(exclude, choices = colnames(obj))
-  # extract obj to work on
+createDummyFeatures.data.frame = function(obj, target = character(0L), method = "1-of-n", cols = NULL) {
+    # get all factor feature names present in data
   work.cols = colnames(obj)[vlapply(obj, is.factor)]
-  work.cols = setdiff(work.cols, exclude)
   work.cols = setdiff(work.cols, target)
+
+  # check that user requested cols are only factor cols
+  if (!is.null(cols)) {
+    assertSubset(cols, work.cols)
+    work.cols = cols
+  }
+
   # prevent function model.matrix from dropping rows with missing values
   old.na.action = options()$na.action
   on.exit(options(na.action = old.na.action))
   options(na.action = "na.pass")
+
   dummies = lapply(work.cols, function(colname) {
     if (method == "1-of-n") {
       form = paste0("~",colname,"-1")
@@ -57,8 +63,8 @@ createDummyFeatures.data.frame = function(obj, target = character(0L), method = 
 }
 
 #' @export
-createDummyFeatures.SupervisedTask = function(obj, target = character(0L), method = "1-of-n", exclude = character(0)) {
-  assertSubset(exclude, choices = getTaskFeatureNames(obj))
-  d = createDummyFeatures(obj = getTaskData(obj), target = obj$task.desc$target, method = method, exclude = exclude)
+createDummyFeatures.Task = function(obj, target = character(0L), method = "1-of-n", cols = NULL) {
+  target = getTaskTargetNames(obj)
+  d = createDummyFeatures(obj = getTaskData(obj), target = target, method = method, cols = cols)
   changeData(obj, d)
 }
