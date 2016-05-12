@@ -4,13 +4,13 @@
 \alias{removeConstantFeatures}
 \title{Remove constant features from a data set.}
 \usage{
-removeConstantFeatures(task, perc = 0, dont.rm = character(0L),
+removeConstantFeatures(obj, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^0.5,
   show.info = getMlrOption("show.info"))
 }
 \arguments{
-\item{task}{[\code{\link{Task}}]\cr
-The task.}
+\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
+Input data.}
 
 \item{perc}{[\code{numeric(1)}]\cr
 The percentage of a feature values in [0, 1) that must differ from the mode value.
@@ -35,7 +35,7 @@ Print verbose output on console?
 Default is set via \code{\link{configureMlr}}.}
 }
 \value{
-[\code{\link{Task}}].
+[\code{data.frame} | \code{\link{Task}}]. Same type as \code{obj}.
 }
 \description{
 Constant features can lead to errors in some models and obviously provide

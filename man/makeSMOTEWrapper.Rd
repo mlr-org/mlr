@@ -60,6 +60,7 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeOverBaggingWrapper}},
   \code{\link{makePreprocWrapperCaret}},
   \code{\link{makePreprocWrapper}},
+  \code{\link{makeRemoveConstantFeaturesWrapper}},
   \code{\link{makeTuneWrapper}},
   \code{\link{makeUndersampleWrapper}},
   \code{\link{makeWeightedClassesWrapper}}

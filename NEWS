@@ -1,4 +1,7 @@
 mlr_2.9:
+- removeConstantFeatures now also operates on data.frames and
+  makeRemoveConstantFeaturesWrapper can be used to augment a learner with this
+  preprocessing step.
 - SMOTEWrapper: fix a bug where "sw.nn" was not correctly passed down
 - classif.blackboost, regr.blackboost: made sure that arg "stump" is passed on
   correctly
