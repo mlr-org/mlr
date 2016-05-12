@@ -17,6 +17,7 @@
 #' @param na.ignore [\code{logical(1)}]\cr
 #'   Should NAs be ignored in the percentage calculation?
 #'   (Or should they be treated as a single, extra level in the percentage calculation?)
+#'   Note that if the feature has only missing values, it is always removed.
 #'   Default is \code{FALSE}.
 #' @param tol [\code{numeric(1)}]\cr
 #'   Numerical tolerance to treat two numbers as equal.
@@ -56,10 +57,10 @@ removeConstantFeatures.data.frame = function(obj, perc = 0, dont.rm = character(
   digits = ceiling(log10(1 / tol))
   cns = setdiff(colnames(obj), dont.rm)
   ratio = vnapply(obj[cns], function(x) {
-    if (is.double(x))
-      x = round(x, digits = digits)
     if (allMissing(x))
       return(0)
+    if (is.double(x))
+      x = round(x, digits = digits)
     m = computeMode(x, na.rm = na.ignore)
     if (na.ignore) {
       mean(m != x, na.rm = TRUE)

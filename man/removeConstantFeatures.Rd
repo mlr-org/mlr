@@ -23,6 +23,7 @@ Default is no columns.}
 \item{na.ignore}{[\code{logical(1)}]\cr
 Should NAs be ignored in the percentage calculation?
 (Or should they be treated as a single, extra level in the percentage calculation?)
+Note that if the feature has only missing values, it is always removed.
 Default is \code{FALSE}.}
 
 \item{tol}{[\code{numeric(1)}]\cr

@@ -10,6 +10,7 @@ test_that("removeConstantFeatures", {
     f = c(1, NA),
     g = c(1, 1),
     n = c(0, 1 - 0.7 - 0.3),
+    m = as.double(c(NA, NA)), # only missings are supported?
     target = as.factor(1:2)
   )
   data = data[c(rep(1, 9), 2),]
@@ -27,11 +28,14 @@ test_that("removeConstantFeatures", {
   res = getTaskData(removeConstantFeatures(task, tol = 0, na.ignore = TRUE))
   expect_true(setequal(colnames(res), c("a", "b", "c", "d", "target", "safe", "n")))
 
+  res = getTaskData(removeConstantFeatures(task, na.ignore = FALSE))
+  expect_true(setequal(names(res), c("a", "b", "c", "d", "e", "f", "target", "safe")))
+
   res = getTaskData(removeConstantFeatures(task, na.ignore = FALSE, perc = 0.2))
   expect_equal(colnames(res), c("target", "safe"))
 
 
-  data = dropNamed(data, c("e", "f"))
+  data = dropNamed(data, c("e", "f", "m"))
   data$target = 1
   data$noise = rnorm(nrow(data))
   lrn = makeLearner("regr.lm")
