@@ -26,6 +26,7 @@ mlr_2.9:
 -- fixed weight handling and weight tag for some learners
 - rename generatePartialPrediction, plotPartialPrediction, and plotPartialPredictionGGVIS to
   generatePartialDependence, plotPartialDependence, and plotPartialDependenceGGVIS
+- add stability.nugget parameter for "regr.km"
 
 - new learners
 -- surv.cv.CoxBoost
