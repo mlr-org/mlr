@@ -58,6 +58,8 @@ removeConstantFeatures.data.frame = function(obj, perc = 0, dont.rm = character(
   ratio = vnapply(obj[cns], function(x) {
     if (is.double(x))
       x = round(x, digits = digits)
+    if (allMissing(x))
+      return(0)
     m = computeMode(x, na.rm = na.ignore)
     if (na.ignore) {
       mean(m != x, na.rm = TRUE)
