@@ -249,7 +249,7 @@ test_that("check measure calculations", {
   multiclass.brier.test = mean(rowSums((getPredictionProbabilities(pred.classif) - matrix(c(0,0,1,0,1,0,0,1,0,1,0,0), 4, 3))^2))
   multiclass.brier.perf = performance(pred.classif, measures = multiclass.brier, model = mod.classif)
   expect_equal(multiclass.brier.test, multiclass.brier$fun(pred = pred.classif))
-  expect_equal(multiclass.brier.test, as.numeric(multiclass.brier.test))
+  expect_equal(multiclass.brier.test, as.numeric(multiclass.brier.perf))
   #multiclass.auc
   n.cl = length(levels(tar.classif))
   pred.probs = getPredictionProbabilities(pred.classif)
