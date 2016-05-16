@@ -11,7 +11,7 @@
 getClassWeightParam = function(learner) {
   learner = checkLearner(learner, "classif")
   assertChoice("class.weights", getLearnerProperties(learner))
-  UseMethod("getClassWeightParam")
+  UseMethod("getClassWeightParam", learner)
 }
 
 
