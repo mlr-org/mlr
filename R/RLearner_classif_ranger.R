@@ -22,7 +22,7 @@ makeRLearner.classif.ranger = function() {
       makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE)
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE),
-    properties = c("twoclass", "multiclass", "prob", "numerics", "factors"),
+    properties = c("twoclass", "multiclass", "prob", "numerics", "factors", "ordered"),
     name = "Random Forests",
     short.name = "ranger",
     note = "By default, internal parallelization is switched off (`num.threads = 1`) and `verbose` output is disabled. Both settings are changeable."
