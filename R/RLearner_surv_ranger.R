@@ -22,7 +22,7 @@ makeRLearner.surv.ranger = function() {
       makeDiscreteLearnerParam(id = "splitrule", values = c("logrank", "C"), default = "logrank")
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE),
-    properties = c("numerics", "factors", "rcens", "prob"),
+    properties = c("numerics", "factors", "ordered", "rcens", "prob"),
     name = "Random Forests",
     short.name = "ranger",
     note = "By default, internal parallelization is switched off (`num.threads = 1`) and `verbose` output is disabled. Both settings are changeable."
