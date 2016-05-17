@@ -350,11 +350,12 @@ multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, 
 multiclass.brier = makeMeasure(id = "multiclass.brier", minimize = TRUE, best = 0, worst = 2,
   properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
   name = "Multiclass Brier score",
+  note = "Following the definition by Brier: http://docs.lib.noaa.gov/rescue/mwr/078/mwr-078-01-0001.pdf",                             
   fun = function(task, model, pred, feats, extra.args) {
-    if (!is.na(pred$task.desc$negative)) {
-      measureBrier(getPredictionProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive)
+  if (nlevels(truth) == 2L) {
+    measureMulticlassBrier(getPredictionProbabilities(pred), pred$data$truth) * 2
     } else {
-      measureMulticlassBrier(getPredictionProbabilities(pred), pred$data$truth)
+      measureBrier(getPredictionProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive)
     }
   }
 )
