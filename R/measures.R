@@ -353,10 +353,10 @@ multiclass.brier = makeMeasure(id = "multiclass.brier", minimize = TRUE, best = 
   note = "Following the definition by Brier: http://docs.lib.noaa.gov/rescue/mwr/078/mwr-078-01-0001.pdf",                             
   fun = function(task, model, pred, feats, extra.args) {
   if (nlevels(truth) == 2L) {
-    measureMulticlassBrier(getPredictionProbabilities(pred), pred$data$truth) * 2
+    measureBrier(getPredictionProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive) * 2
     } else {
-      measureBrier(getPredictionProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive)
-    }
+      measureMulticlassBrier(getPredictionProbabilities(pred), pred$data$truth)
+      }
   }
 )
 
