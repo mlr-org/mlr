@@ -61,3 +61,7 @@ predictLearner.regr.randomForestSRC = function(.learner, .model, .newdata, ...) 
   # versison 2.0 of randomForestSRC returns an array here :(
   as.numeric(p$predicted)
 }
+
+getOutOfBag.regr.randomForestSRC = function(.learner, .model) {
+  .model$learner.model$predicted.oob
+}

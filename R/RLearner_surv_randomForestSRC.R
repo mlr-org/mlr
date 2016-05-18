@@ -64,3 +64,7 @@ predictLearner.surv.randomForestSRC = function(.learner, .model, .newdata, ...) 
     stop("Unknown predict type")
   }
 }
+
+getOutOfBag.surv.randomForestSRC = function(.learner, .model) {
+  .model$learner.model$predicted.oob
+}
