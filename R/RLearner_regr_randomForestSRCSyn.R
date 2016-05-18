@@ -34,6 +34,10 @@ makeRLearner.regr.randomForestSRCSyn = function() {
       makeIntegerLearnerParam(id = "nimpute", default = 1L, lower = 1L),
       makeDiscreteLearnerParam(id = "proximity", default = FALSE, tunable = FALSE,
         values = list("inbag", "oob", "all", `TRUE` = TRUE, `FALSE` = FALSE)),
+      makeIntegerLearnerParam(id = "sampsize", lower = 1L,
+        requires = quote(bootstrap == "by.root")),
+      makeDiscreteLearnerParam(id = "samptype", default = "swr", values = c("swr", "swor"),
+        requires = quote(bootstrap == "by.root")),
       makeNumericVectorLearnerParam(id = "xvar.wt", lower = 0),
       makeDiscreteLearnerParam(id = "var.used", default = FALSE, tunable = FALSE,
         values = list(`FALSE` = FALSE, "all.trees", "by.tree")),
@@ -43,10 +47,10 @@ makeRLearner.regr.randomForestSRCSyn = function() {
       makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE, when = "both"), # is currently ignored
       makeLogicalLearnerParam(id = "membership", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "statistics", default = FALSE, tunable = FALSE),
-      makeLogicalLearnerParam(id = "fast.restore", default = FALSE, tunable = FALSE)
+      makeLogicalLearnerParam(id = "tree.err", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(na.action = "na.impute", verbose = FALSE),
-    properties = c("numerics", "factors", "ordered", "missings"),
+    properties = c("numerics", "factors", "ordered", "missings", "weights"),
     name = "Synthetic Random Forest",
     short.name = "rfsrcSyn",
     note = '`na.action` has been set to `"na.impute"` by default to allow missing data support and `verbose` has been set to `FALSE`.'
@@ -56,7 +60,7 @@ makeRLearner.regr.randomForestSRCSyn = function() {
 #' @export
 trainLearner.regr.randomForestSRCSyn = function(.learner, .task, .subset, .weights = NULL, ...) {
   f = getTaskFormula(.task)
-  randomForestSRC::rfsrcSyn(formula = f, data = getTaskData(.task, .subset), forest = TRUE, ...)
+  randomForestSRC::rfsrcSyn(formula = f, data = getTaskData(.task, .subset), forest = TRUE, case.wt = .weights, ...)
 }
 
 #' @export
