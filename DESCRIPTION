@@ -32,7 +32,8 @@ Depends:
     BBmisc (>= 1.9),
     ggplot2,
     ParamHelpers (>= 1.7),
-    stats
+    stats, 
+    stringi
 Imports:
     checkmate (>= 1.7.1),
     data.table,
@@ -42,7 +43,6 @@ Imports:
     plyr,
     reshape2,
     shiny,
-    stringi,
     survival
 Suggests:
     ada,

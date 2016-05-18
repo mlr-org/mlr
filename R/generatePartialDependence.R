@@ -380,7 +380,7 @@ doAggregatePartialDependence = function(out, td, target, features, rng) {
 
   if (all(target %in% td$class.levels)) {
     out = melt(out, id.vars = features, variable = "Class", value.name = "Probability")
-    out$Class = gsub("^prob\\.", "", out$Class)
+    out$Class = stri_replace_all(out$Class, "", regex = "^prob\\.")
   }
   out
 }
@@ -413,8 +413,8 @@ doIndividualPartialDependence = function(out, td, n, rng, target, features, cent
 print.PartialDependenceData = function(x, ...) {
   catf("PartialDependenceData")
   catf("Task: %s", x$task.desc$id)
-  catf("Features: %s", paste(x$features, collapse = ", "))
-  catf("Target: %s", paste(x$target, collapse = ", "))
+  catf("Features: %s", stri_paste(x$features, collapse = ", ", sep = " "))
+  catf("Target: %s", stri_paste(x$target, collapse = ", ", sep = " "))
   catf("Derivative: %s", x$derivative)
   catf("Interaction: %s", x$interaction)
   catf("Individual: %s", x$individual)
@@ -489,9 +489,9 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, p = 1) {
       stop("generatePartialDependence must be called with interaction = TRUE to use this argument!")
     features = obj$features[which(obj$features != facet)]
     if (!is.factor(obj$data[[facet]]))
-      obj$data[[facet]] = paste(facet, "=", as.factor(signif(obj$data[[facet]], 2)), sep = " ")
+      obj$data[[facet]] = stri_paste(facet, "=", as.factor(signif(obj$data[[facet]], 2)), sep = " ")
     else
-      obj$data[[facet]] = paste(facet, "=", obj$data[[facet]])
+      obj$data[[facet]] = stri_paste(facet, "=", obj$data[[facet]], sep = " ")
     scales = "fixed"
   } else {
     features = obj$features
@@ -549,10 +549,10 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, p = 1) {
       plt = plt + geom_ribbon(aes_string(ymin = "lower", ymax = "upper"), alpha = .5)
 
     if (obj$center)
-      plt = plt + ylab(paste(target, "(centered)"))
+      plt = plt + ylab(stri_paste(target, "(centered)", sep = " "))
 
     if (obj$derivative)
-      plt = plt + ylab(paste(target, "(derivative)"))
+      plt = plt + ylab(stri_paste(target, "(derivative)", sep = " "))
   } else { ## tiling
     plt = ggplot(obj$data, aes_string(x = features[1], y = features[2], z = target))
     plt = plt + geom_tile(aes_string(fill = target))
@@ -561,7 +561,7 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, p = 1) {
   }
 
   if (!is.null(facet))
-    plt = plt + facet_wrap(as.formula(paste0("~ ", facet)), scales = scales)
+    plt = plt + facet_wrap(as.formula(stri_paste("~ ", facet)), scales = scales)
 
   plt
 }
@@ -678,9 +678,9 @@ plotPartialDependenceGGVIS = function(obj, interact = NULL, p = 1) {
   }
 
   if (obj$center)
-    header = paste(target, "(centered)")
+    header = stri_paste(target, "(centered)", sep = " ")
   else if (obj$derivative)
-    header = paste(target, "(derivative)")
+    header = stri_paste(target, "(derivative)", sep = " ")
   else
     header = target
 

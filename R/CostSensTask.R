@@ -16,7 +16,7 @@ makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blockin
     if (is.data.frame(costs))
       costs = as.matrix(costs)
     if (is.null(colnames(costs)))
-      colnames(costs) = paste0("y", seq_col(costs))
+      colnames(costs) = stri_paste("y", seq_col(costs))
   }
   task = makeSupervisedTask("costsens", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
   task$env$costs = costs

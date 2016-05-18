@@ -56,7 +56,7 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
     sbs = rep(1, dim),
     sffs = rep(0, dim),
     sfbs = rep(1, dim),
-    stop(paste("Unknown method:", method))
+    stop(stri_paste("Unknown method:", method, sep = " "))
   )
 
   gen.new.states = switch(method,
@@ -64,7 +64,7 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
     sbs = gen.new.states.sbs,
     sffs = gen.new.states.sfs,
     sfbs = gen.new.states.sbs,
-    stop(paste("Unknown method:", method))
+    stop(stri_paste("Unknown method:", method, sep = " "))
   )
   res = evalOptimizationState(learner, task, resampling, measures, NULL, bits.to.features, control, opt.path, show.info, 1L, x, FALSE)
   # add stuff to opt.path
@@ -72,7 +72,7 @@ selectFeaturesSequential = function(learner, task, resampling, measures, bit.nam
   if (control$tune.threshold) {
     # add class names to threshold, if longer than 1
     extra = as.list(res$threshold)
-    names(extra) = paste0("threshold", ifelse(length(extra) > 1L, ".", ""), names(extra))
+    names(extra) = stri_paste("threshold", ifelse(length(extra) > 1L, ".", ""), names(extra))
   } else {
     extra = NULL
   }

@@ -34,16 +34,16 @@ createDummyFeatures.data.frame = function(obj, target = character(0L), method = 
   options(na.action = "na.pass")
   dummies = lapply(work.cols, function(colname) {
     if (method == "1-of-n") {
-      form = paste0("~",colname,"-1")
+      form = stri_paste("~", colname, "-1")
       res = model.matrix(as.formula(form), data = obj)
       colnames(res) = levels(obj[[colname]])
     } else {
-      form = paste0("~",colname,"-1")
+      form = stri_paste("~", colname, "-1")
       res = model.matrix(as.formula(form), data = obj)[, -1, drop = FALSE]
       colnames(res) = tail(levels(obj[[colname]]), -1)
     }
     if (ncol(res) == 1) {
-      colnames(res) = paste(colname, colnames(res), sep = ".")
+      colnames(res) = stri_paste(colname, colnames(res), sep = ".")
     }
     res
   })

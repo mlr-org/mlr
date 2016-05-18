@@ -29,7 +29,7 @@ makeDownsampleWrapper = function(learner, dw.perc = 1, dw.stratify = FALSE) {
     assertFlag(dw.stratify)
     pv$dw.stratify = dw.stratify
   }
-  id = paste(learner$id, "downsampled", sep = ".")
+  id = stri_paste(learner$id, "downsampled", sep = ".")
   ps = makeParamSet(
     makeNumericLearnerParam(id = "dw.perc", lower = 0, upper = 1, default = 1),
     makeLogicalLearnerParam(id = "dw.stratify", default = FALSE)

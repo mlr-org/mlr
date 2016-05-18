@@ -60,7 +60,7 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
   # must do that before accessing par.set
   # one case where lazy eval is actually helpful...
   assertCharacter(package, any.missing = FALSE)
-  requirePackages(package, why = paste("learner", id), default.method = "load")
+  requirePackages(package, why = stri_paste("learner", id, sep = " "), default.method = "load")
 
   assertString(id)
   assertChoice(type, choices = c("classif", "regr", "multilabel", "surv", "cluster", "costsens"))
