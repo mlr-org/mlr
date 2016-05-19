@@ -23,11 +23,11 @@ test_that("getOutOfBag", {
     # you may want to change the params for certain learner if training takes
     # a long time
     if (alg == "randomForestSRC")
-      par.vals$ntree = 5L
+      par.vals$ntree = 50L
     
     lrn = makeLearner(lrn.id, par.vals = par.vals)
     mod = train(lrn, tsk)
-    oob = getOutOfBag(mod)
+    oob = getOutOfBag(mod, tsk)
     
     if (type == "classif") {
       expect_is(oob$data, "data.frame")

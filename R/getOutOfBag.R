@@ -33,6 +33,8 @@
 #' performance(oob, measures = list(auc, mmce))
 
 getOutOfBag = function(object, task) {
+  assertClass(object, classes = "WrappedModel")
+  assertClass(task, classes = "Task")
   td = object$task.desc
   # extract truth column
   subset = object$subset
