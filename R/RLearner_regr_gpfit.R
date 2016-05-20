@@ -18,10 +18,11 @@ makeRLearner.regr.gpfit <- function(){
 }
 #' @export
 trainLearner.regr.gpfit = function(.learner, .task, .subset, ...) {
-  GPfit::GP_fit(getTaskData(.task, .subset, target.extra = TRUE)$data, getTaskTargets(.task, .subset), ...)
-}
+  d = getTaskData(.task, .subset, target.extra = TRUE)
+  GPfit::GP_fit(d$data, d$target, ...)
+  }
 #' @export
 predictLearner.regr.gpfit = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, newdata = .newdata)$Y_hat
+  predict(.model$learner.model, xnew = .newdata)$Y_hat
 }
 
