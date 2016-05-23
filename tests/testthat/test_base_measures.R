@@ -35,7 +35,7 @@ test_that("measures", {
   lrn = makeLearner("classif.randomForest", predict.type = "prob")
   mod = train(lrn, task = multiclass.task, subset = multiclass.train.inds)
   pred = predict(mod, task = multiclass.task, subset = multiclass.test.inds)
-  perf = performance(pred, measures = multiclass.auc)
+  perf = performance(pred, measures = list(multiclass.aunu, multiclass.aunp, multiclass.au1u, multiclass.au1p))
   expect_is(perf, "numeric")
 
   # test survival measure
@@ -246,27 +246,8 @@ test_that("check measure calculations", {
   expect_equal(acc.test, acc$fun(pred = pred.classif))
   expect_equal(acc.test, as.numeric(acc.perf))
   #multiclass.auc
-  n.cl = length(levels(tar.classif))
-  pred.probs = getPredictionProbabilities(pred.classif)
-  predictor = vnapply(1:length(pred.art.classif), function(i) {
-    pred.probs[i, pred.art.classif[i]]
-  })
-  names(predictor) = pred.art.classif
-  level.grid = t(combn(as.numeric(levels(tar.classif)), m = 2L))
-  level.grid = rbind(level.grid, level.grid[, ncol(level.grid):1])
-  aucs = numeric(nrow(level.grid))
-  for (i in 1:nrow(level.grid)){
-    ranks = sort(rank(predictor[names(predictor) %in% level.grid[i, ]]))
-    ranks = ranks[names(ranks) == level.grid[i]]
-    n = length(ranks)
-    ranks.sum = sum(ranks)
-    aucs[i] = ranks.sum - n * (n + 1) / 2
-  }
-  multiclass.auc.test = 1 / (n.cl * (n.cl - 1)) * sum(aucs)
-  multiclass.auc.perf = performance(pred.classif,
-   measures = multiclass.auc, model = mod.classif)
-  expect_equal(multiclass.auc.test, multiclass.auc$fun(pred = pred.classif))
-  expect_equal(multiclass.auc.test, as.numeric(multiclass.auc.perf))
+  expect_equal(as.numeric(performance(pred.bin, measures = list(multiclass.aunu, multiclass.aunp, multiclass.au1u, multiclass.au1p))), 
+               as.numeric(rep(performance(pred.bin, measures = auc), 4)))
 
   #test binaryclass measures
 

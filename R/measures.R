@@ -324,25 +324,87 @@ ber = makeMeasure(id = "ber", minimize = TRUE, best = 0, worst = 1,
   }
 )
 
-#' @export multiclass.auc
+#' @export multiclass.aunu
 #' @rdname measures
 #' @format none
-multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, worst = 0,
-  properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
-  name = "Multiclass area under the curve",
-  note = "Calls `pROC::multiclass.roc`.",
-  fun = function(task, model, pred, feats, extra.args) {
-    requirePackages("pROC", why = "multiclass.auc", default.method = "load")
-    resp = pred$data$response
-    predP = getPredictionProbabilities(pred)
-    # choose the probablity of the choosen response
-    predV = vnapply(seq_row(predP), function(i) {
-      predP[i, resp[i]]
-    })
-    auc = pROC::multiclass.roc(response = resp, predictor = predV)$auc
-    as.numeric(auc)
-  }
+multiclass.aunu = makeMeasure(id = "multiclass.aunu", minimize = FALSE, best = 1, worst = 0.5,
+                              properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
+                              name = "Average multiclass AUC",
+                              note = "Following the definition in the Ferri et. al Paper: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf",                             
+                              fun = function(task, model, pred, feats, extra.args) {
+                                measureAUNU(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
+                              }
 )
+
+#' @export measureAUNU
+#' @rdname measures
+#' @format none
+measureAUNU = function(probabilities, truth) {
+  mean(vnapply(1:nlevels(truth), function(i) colAUC(probabilities[, i], truth == levels(truth)[i])))
+}
+
+#' @export multiclass.aunp
+#' @rdname measures
+#' @format none
+multiclass.aunp = makeMeasure(id = "multiclass.aunp", minimize = FALSE, best = 1, worst = 0.5,
+                              properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
+                              name = "Weighted average multiclass AUC",
+                              note = "Following the definition in the Ferri et. al paper: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf",                             
+                              fun = function(task, model, pred, feats, extra.args) {
+                                measureAUNP(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
+                              }
+)
+
+#' @export measureAUNP
+#' @rdname measures
+#' @format none
+measureAUNP = function(probabilities, truth) {
+  sum(vnapply(1:nlevels(truth), function(i) mean(truth == levels(truth)[i]) * colAUC(probabilities[,i], truth == levels(truth)[i])))  
+}
+
+#' @export multiclass.au1u
+#' @rdname measures
+#' @format none
+multiclass.au1u = makeMeasure(id = "multiclass.au1u", minimize = FALSE, best = 1, worst = 0.5,
+                              properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
+                              name = "Average multiclass AUC with each class against each other",
+                              note = "Following the definition in the Ferri et. al paper: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf",                             
+                              fun = function(task, model, pred, feats, extra.args) {
+                                measureAU1U(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
+                              }
+)
+
+#' @export measureAU1U
+#' @rdname measures
+#' @format none
+measureAU1U = function(probabilities, truth) {
+  m = colAUC(probabilities, truth)
+  c = c(combn(1:nlevels(truth), 2))
+  mean(m[cbind(rep(1:nrow(m), each = 2), c)])
+}
+
+#' @export multiclass.au1p
+#' @rdname measures
+#' @format none
+multiclass.au1p = makeMeasure(id = "multiclass.au1p", minimize = FALSE, best = 1, worst = 0.5,
+                              properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
+                              name = "Weighted average multiclass AUC with each class against each other",
+                              note = "Following the definition in the Ferri et. al paper: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf",                             
+                              fun = function(task, model, pred, feats, extra.args) {
+                                measureAU1P(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
+                              }
+)
+
+#' @export measureAU1P
+#' @rdname measures
+#' @format none
+measureAU1P = function(probabilities, truth) {
+  m = colAUC(probabilities, truth)
+  weights = table(truth) / length(truth)
+  m = m * matrix(rep(weights, each = nrow(m)), ncol = length(weights))
+  c = c(combn(1:nlevels(truth), 2))
+  sum(m[cbind(rep(1:nrow(m), each = 2), c)]) / (nlevels(truth) - 1)
+}
 
 ###############################################################################
 ### classif binary ###
