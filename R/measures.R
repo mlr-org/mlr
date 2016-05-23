@@ -25,8 +25,8 @@
 #'   The name of the negative class.
 #' @param positive [\code{character(1)}]\cr
 #'   The name of the positive class.
-#' @param probabilites [\code{numeric}]\cr
-#'   The probabilites for the positive class.
+#' @param probabilities [\code{numeric}]\cr
+#'   The probabilities for the positive class.
 #' @name measures
 #' @rdname measures
 #' @family performance
@@ -352,18 +352,14 @@ multiclass.brier = makeMeasure(id = "multiclass.brier", minimize = TRUE, best = 
   name = "Multiclass Brier score",
   note = "Following the definition by Brier: http://docs.lib.noaa.gov/rescue/mwr/078/mwr-078-01-0001.pdf",                             
   fun = function(task, model, pred, feats, extra.args) {
-  if (nlevels(pred$data$truth) == 2L) {
-    measureBrier(getPredictionProbabilities(pred), pred$data$truth, pred$task.desc$negative, pred$task.desc$positive) * 2
-    } else {
-      measureMULTICLASSBRIER(getPredictionProbabilities(pred), pred$data$truth)
-      }
+  measureMulticlassBrier(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
   }
 )
 
-#' @export measureMULTICLASSBRIER
+#' @export measureMulticlassBrier
 #' @rdname measures
 #' @format none
-measureMULTICLASSBRIER = function(probabilities, truth) {
+measureMulticlassBrier = function(probabilities, truth) {
   mean(rowSums((probabilities - model.matrix( ~ . -1, data = as.data.frame(truth)))^2))
 }
 
@@ -387,8 +383,8 @@ auc = makeMeasure(id = "auc", minimize = FALSE, best = 1, worst = 0,
 #' @export measureAUC
 #' @rdname measures
 #' @format none
-measureAUC = function(probabilites, truth, negative, positive) {
-  rpreds = asROCRPredictionIntern(probabilites, truth, negative, positive)
+measureAUC = function(probabilities, truth, negative, positive) {
+  rpreds = asROCRPredictionIntern(probabilities, truth, negative, positive)
   ROCR::performance(rpreds, "auc")@y.values[[1L]]
 }
 
@@ -406,9 +402,9 @@ brier = makeMeasure(id = "brier", minimize = TRUE, best = 0, worst = 1,
 #' @export measureBrier
 #' @rdname measures
 #' @format none
-measureBrier = function(probabilites, truth, negative, positive) {
+measureBrier = function(probabilities, truth, negative, positive) {
   y = as.numeric(truth == positive)
-  mean((y - probabilites)^2)
+  mean((y - probabilities)^2)
 }
 
 #' @export bac
