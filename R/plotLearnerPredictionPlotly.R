@@ -26,9 +26,9 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
   }
   taskdim = length(features)
   if (td$type == "classif" && taskdim != 3)
-    stopf("Classification: currently only 3D plots supported, not: %i", taskdim)
+    stopf("Classification: currently only 3D plots supported in Plotly, not: %i", taskdim)
   if (td$type == "regr" && taskdim != 2)
-    stopf("Regression: currently only 3D plots supported, not: %i", taskdim)
+    stopf("Regression: currently only 3D plots supported in Plotly, not: %i", taskdim)
   
   measures = checkMeasures(measures, task)
   cv = asCount(cv)
@@ -126,17 +126,15 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
       NULL
     if (taskdim == 3L) {
       require(plotly)
-      subdata = subset(data, !data$.err)
-      errdata = subset(data, data$.err)
       # print normal points
       if (greyscale)
-        p = plot_ly(x = subdata[, x1n], y = subdata[, x2n], z = subdata[, x3n], 
-                    type = "scatter3d", mode = "markers", symbol = subdata[, target], 
+        p = plot_ly(data = data, x = get(x1n), y = get(x2n), z = get(x3n), 
+                    type = "scatter3d", mode = "markers", symbol = data[, target], 
                     marker = list(size = pointsize, opacity = alpha, color = "grey"), 
                     text = "Input Data", legendgroup = "Input Data")
       else 
-        p = plot_ly(x = subdata[, x1n], y = subdata[, x2n], z = subdata[, x3n], 
-                    type = "scatter3d", mode = "markers", symbol = subdata[, target], 
+        p = plot_ly(data = data, x = get(x1n), y = get(x2n), z = get(x3n), 
+                    type = "scatter3d", mode = "markers", symbol = data[, target], 
                     marker = list(size = pointsize, opacity = alpha), 
                     text = "Input Data", legendgroup = "Input Data")
       p = p %>% layout(title = title,
@@ -145,13 +143,17 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
                                     zaxis = list(title = paste("z: ", x3n))))
       # print incorrect points
       if (err.col == "white")
-        p = add_trace(p, x = errdata[, x1n], y = errdata[, x2n], z = errdata[, x3n],
-                      type = "scatter3d", mode = "markers", symbol = errdata[, target],
+        p = add_trace(p, data = subset(data, data$.err), 
+                      x = get(x1n), y = get(x2n), z = get(x3n),
+                      type = "scatter3d", mode = "markers", 
+                      symbol = data[, target],
                       marker = list(size = err.size, opacity = err.alpha, color = "black"), 
                       text = "Missclassified Data", legendgroup = "Missclassified Data")
       else
-        p = add_trace(p, x = errdata[, x1n], y = errdata[, x2n], z = errdata[, x3n],
-                      type = "scatter3d", mode = "markers", symbol = errdata[, target],
+        p = add_trace(p, data = subset(data, data$.err),
+                      x = get(x1n), y = get(x2n), z = get(x3n),
+                      type = "scatter3d", mode = "markers", 
+                      symbol = data[, target],
                       marker = list(size = err.size, opacity = err.alpha, color = err.col), 
                       text = "Missclassified Data", legendgroup = "Missclassified Data")
     }
