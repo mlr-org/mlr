@@ -1,5 +1,5 @@
 plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures, cv = 10L,  ...,
-                                 gridsize, pointsize = 2,
+                                 gridsize, show.point = TRUE, pointsize = 2,
                                  prob.alpha = TRUE, se.band = TRUE,
                                  err.mark = "train",
                                  err.col = "white", err.size = pointsize,
@@ -174,9 +174,12 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
                                     yaxis = list(title = paste("y: ", x2n, sep = "")), 
                                     zaxis = list(title = paste("z: ", target, sep = ""))))
       # add real value trace
-      p = add_trace(p, x = data[, x1n], y = data[, x2n], z = data[, target], 
-                    type = "scatter3d", color = data[, target], mode = "markers",
-                    marker = list(size = pointsize, colorbar = F, colorscale = "Greys"), name = "Input Value", showscale = F)
+      if (show.point) {
+        p = add_trace(p, x = data[, x1n], y = data[, x2n], z = data[, target], 
+                      type = "scatter3d", color = data[, target], mode = "markers",
+                      marker = list(size = pointsize, colorbar = F, colorscale = "Greys"), 
+                      name = "Input Value", showscale = F)
+      }
     } else {
       # plot 3D surface
       p = plot_ly(x = grid.3d$x, y = grid.3d$y, z = grid.3d$z, 
@@ -187,9 +190,12 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
                                     yaxis = list(title = paste("y: ", x2n, sep = "")), 
                                     zaxis = list(title = paste("z: ", target, sep = ""))))
       # add real value trace
-      p = add_trace(p, x = data[, x1n], y = data[, x2n], z = data[, target], 
-                    type = "scatter3d", color = data[, target], mode = "markers",
-                    marker = list(size = pointsize, colorbar = F), name = "Input Value", showscale = F)
+      if (show.point) {
+        p = add_trace(p, x = data[, x1n], y = data[, x2n], z = data[, target], 
+                      type = "scatter3d", color = data[, target], mode = "markers",
+                      marker = list(size = pointsize, colorbar = F), 
+                      name = "Input Value", showscale = F)
+      }
     }
   }
   return(p)
