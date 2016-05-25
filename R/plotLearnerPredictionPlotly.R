@@ -2,9 +2,11 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
                                  gridsize, show.point = TRUE, pointsize = 2,
                                  prob.alpha = TRUE, se.band = TRUE,
                                  err.mark = "train",
-                                 err.col = "white", err.size = pointsize,
+                                 err.col = "black", err.size = pointsize,
                                  greyscale = FALSE, pretty.names = TRUE,
-                                 alpha = 1, err.alpha = alpha) {
+                                 alpha = 1, err.alpha = alpha,
+                                 bounding.point = F, bounding.point.size = pointsize,
+                                 bounding.point.alpha = 0.4, bounding.point.col = "grey") {
   
   require(plotly)
   learner = checkLearner(learner)
@@ -99,9 +101,9 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
     )
   } else if (taskdim == 3L) {
     grid = expand.grid(
-      seq(min(x1), max(x1), length.out = gridsize / 4),
-      seq(min(x2), max(x2), length.out = gridsize / 4),
-      seq(min(x3), max(x3), length.out = gridsize / 4)
+      seq(min(x1), max(x1), length.out = gridsize / 2),
+      seq(min(x2), max(x2), length.out = gridsize / 2),
+      seq(min(x3), max(x3), length.out = gridsize / 2)
     )
   }
   colnames(grid) = features
@@ -125,7 +127,6 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
     else
       NULL
     if (taskdim == 3L) {
-      require(plotly)
       # print normal points
       if (greyscale)
         p = plot_ly(data = data, x = get(x1n), y = get(x2n), z = get(x3n), 
@@ -142,20 +143,36 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
                                     yaxis = list(title = paste("y: ", x2n)),
                                     zaxis = list(title = paste("z: ", x3n))))
       # print incorrect points
-      if (err.col == "white")
+      if (missing(err.col))
         p = add_trace(p, data = subset(data, data$.err), 
                       x = get(x1n), y = get(x2n), z = get(x3n),
                       type = "scatter3d", mode = "markers", 
-                      symbol = data[, target],
+                      symbol = subset(data, data$.err)[, target],
                       marker = list(size = err.size, opacity = err.alpha, color = "black"), 
                       text = "Missclassified Data", legendgroup = "Missclassified Data")
       else
         p = add_trace(p, data = subset(data, data$.err),
                       x = get(x1n), y = get(x2n), z = get(x3n),
                       type = "scatter3d", mode = "markers", 
-                      symbol = data[, target],
+                      symbol = subset(data, data$.err)[, target],
                       marker = list(size = err.size, opacity = err.alpha, color = err.col), 
                       text = "Missclassified Data", legendgroup = "Missclassified Data")
+      
+      # add bounding point
+      if (bounding.point == T) {
+        index = NULL
+        for (i in 1:c(nrow(pred.grid$data) - 1)) {
+          if (pred.grid$data[i, "response"] != pred.grid$data[i + 1, "response"] && (i %% (gridsize / 2)) != 0) {
+            index = append(index, i)
+          }
+        }
+        index = index[!duplicated(index)]
+        
+        p = add_trace(p, data = grid[index,], x = get(x1n), y = get(x2n), z = get(x3n),
+                      type = "scatter3d", mode = "markers", opacity = bounding.point.alpha,
+                      marker = list(size = bounding.point.size, color = bounding.point.col),
+                      showlegend = FALSE, name = "Bounding")
+      }
     }
   } else if (td$type == "regr" && taskdim == 2L) {
     # reform grid data
