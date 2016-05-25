@@ -72,8 +72,6 @@ Other plot: \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotLearningCurve}},
   \code{\link{plotPartialDependenceGGVIS}},
   \code{\link{plotPartialDependence}},
-  \code{\link{plotPartialPredictionGGVIS}},
-  \code{\link{plotPartialPrediction}},
   \code{\link{plotROCCurves}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
