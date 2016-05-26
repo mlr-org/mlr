@@ -19,7 +19,10 @@ plotLearnerPredictionPlotly(classif.ksvm, iris.task, err.size = 5)
 plotLearnerPredictionPlotly(classif.ksvm, iris.task, err.col = "red")
 plotLearnerPredictionPlotly(classif.ksvm, iris.task, err.size = 5, err.col = "grey")
 plotLearnerPredictionPlotly(classif.ksvm, iris.task, greyscale = T, err.col = "red", err.size = 5)
+plotLearnerPredictionPlotly(classif.ksvm, iris.task, show.point.legend = F)
+plotLearnerPredictionPlotly(classif.ksvm, iris.task, show.err.legend = F)
 plotLearnerPredictionPlotly(classif.ksvm, iris.task, bounding.point = T)
+
 
 # pid.task
 plotLearnerPredictionPlotly(classif.ksvm, pid.task)

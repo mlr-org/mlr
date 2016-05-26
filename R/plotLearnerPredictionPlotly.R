@@ -1,12 +1,12 @@
 plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures, cv = 10L,  ...,
-                                 gridsize, show.point = TRUE, pointsize = 2,
+                                 gridsize, show.point = TRUE, pointsize = 2, show.point.legend = TRUE,
                                  prob.alpha = TRUE, se.band = TRUE,
                                  err.mark = "train",
-                                 err.col = "black", err.size = pointsize,
+                                 err.col = "black", err.size = pointsize, show.err.legend = TRUE,
                                  greyscale = FALSE, pretty.names = TRUE,
                                  alpha = 1, err.alpha = alpha,
                                  bounding.point = F, bounding.point.size = pointsize,
-                                 bounding.point.alpha = 0.4, bounding.point.col = "grey") {
+                                 bounding.point.alpha = 0.4, bounding.point.col = NULL) {
   
   require(plotly)
   learner = checkLearner(learner)
@@ -132,12 +132,12 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
         p = plot_ly(data = data, x = get(x1n), y = get(x2n), z = get(x3n), 
                     type = "scatter3d", mode = "markers", symbol = data[, target], 
                     marker = list(size = pointsize, opacity = alpha, color = "grey"), 
-                    text = "Input Data", legendgroup = "Input Data")
+                    text = "Input Data", legendgroup = "Input Data", showlegend = show.point.legend)
       else 
         p = plot_ly(data = data, x = get(x1n), y = get(x2n), z = get(x3n), 
                     type = "scatter3d", mode = "markers", symbol = data[, target], 
                     marker = list(size = pointsize, opacity = alpha), 
-                    text = "Input Data", legendgroup = "Input Data")
+                    text = "Input Data", legendgroup = "Input Data", showlegend = show.point.legend)
       p = p %>% layout(title = title,
                        scene = list(xaxis = list(title = paste("x: ", x1n)),
                                     yaxis = list(title = paste("y: ", x2n)),
@@ -147,14 +147,14 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
         p = add_trace(p, data = subset(data, data$.err), 
                       x = get(x1n), y = get(x2n), z = get(x3n),
                       type = "scatter3d", mode = "markers", 
-                      symbol = subset(data, data$.err)[, target],
+                      symbol = subset(data, data$.err)[, target], showlegend = show.err.legend, 
                       marker = list(size = err.size, opacity = err.alpha, color = "black"), 
                       text = "Missclassified Data", legendgroup = "Missclassified Data")
       else
         p = add_trace(p, data = subset(data, data$.err),
                       x = get(x1n), y = get(x2n), z = get(x3n),
                       type = "scatter3d", mode = "markers", 
-                      symbol = subset(data, data$.err)[, target],
+                      symbol = subset(data, data$.err)[, target], showlegend = show.err.legend,
                       marker = list(size = err.size, opacity = err.alpha, color = err.col), 
                       text = "Missclassified Data", legendgroup = "Missclassified Data")
       
@@ -168,10 +168,16 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
         }
         index = index[!duplicated(index)]
         
-        p = add_trace(p, data = grid[index,], x = get(x1n), y = get(x2n), z = get(x3n),
-                      type = "scatter3d", mode = "markers", opacity = bounding.point.alpha,
-                      marker = list(size = bounding.point.size, color = bounding.point.col),
-                      showlegend = FALSE, name = "Bounding")
+        if (is.null(bounding.point.col))
+          p = add_trace(p, data = grid[index,], x = get(x1n), y = get(x2n), z = get(x3n),
+                        type = "scatter3d", mode = "markers", opacity = bounding.point.alpha,
+                        marker = list(size = bounding.point.size), color = grid[index, target],
+                        showlegend = FALSE, name = "Bounding")
+        else
+          p = add_trace(p, data = grid[index,], x = get(x1n), y = get(x2n), z = get(x3n),
+                        type = "scatter3d", mode = "markers", opacity = bounding.point.alpha,
+                        marker = list(size = bounding.point.size, color = bounding.point.col),
+                        showlegend = FALSE, name = "Bounding")
       }
     }
   } else if (td$type == "regr" && taskdim == 2L) {
