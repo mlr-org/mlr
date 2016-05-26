@@ -185,14 +185,15 @@ test_that("generateFeatureGrid", {
     z = 1:3
   )
   features = colnames(data)
-  fmin = sapply(features, function(x) ifelse(!is.factor(data[[x]]), min(data[[x]], na.rm = TRUE), NA))
-  fmax = sapply(features, function(x) ifelse(!is.factor(data[[x]]), max(data[[x]], na.rm = TRUE), NA))
-  resample = "none"
-  cutoff = 3L
+  fmin = sapply(features, function(x)
+    ifelse(!is.factor(data[[x]]), min(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
+  fmax = sapply(features, function(x)
+    ifelse(!is.factor(data[[x]]), max(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
+  out = generateFeatureGrid(features, data, "none", gridsize = 3, fmin, fmax)
 
-  expect_that(generateFeatureGrid("w", data, resample, fmin["w"], fmax["w"], cutoff), is_a("numeric"))
-  expect_that(generateFeatureGrid("x", data, resample, fmin["x"], fmax["x"], cutoff), is_a("factor"))
-  expect_that(levels(generateFeatureGrid("x", data, resample, NA, NA, cutoff)), equals(letters[1:3]))
-  expect_that(generateFeatureGrid("y", data, resample, fmin["y"], fmax["y"], cutoff), is_a("ordered"))
-  expect_that(generateFeatureGrid("z", data, resample, fmin["z"], fmax["z"], cutoff), is_a("integer"))
+  expect_that(out$w, is_a("numeric"))
+  expect_that(out$x, is_a("factor"))
+  expect_that(levels(out$x), equals(letters[1:3]))
+  expect_that(out$y, is_a("ordered"))
+  expect_that(out$z, is_a("integer"))
 })

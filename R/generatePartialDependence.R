@@ -187,11 +187,11 @@ generatePartialDependenceData = function(obj, input, features,
   assertChoice(resample, c("none", "bootstrap", "subsample"))
 
   if (missing(fmin))
-    fmin = lapply(features, function(x) ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
-                                               min(data[[x]], na.rm = TRUE), NA))
+    fmin = sapply(features, function(x) ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
+                                               min(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
   if (missing(fmax))
-    fmax = lapply(features, function(x) ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
-                                               max(data[[x]], na.rm = TRUE), NA))
+    fmax = sapply(features, function(x) ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
+                                               max(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
   assertList(fmin, len = length(features))
   if (!all(names(fmin) %in% features))
     stop("fmin must be a named list with an NA or value corresponding to each feature.")
@@ -200,10 +200,7 @@ generatePartialDependenceData = function(obj, input, features,
     stop("fmax must be a named list with an NA or value corresponding to each feature.")
   assertCount(gridsize, positive = TRUE)
 
-  rng = vector("list", length(features))
-  names(rng) = features
-  for (i in 1:length(features))
-    rng[[i]] = generateFeatureGrid(features[i], data, resample, fmax[[i]], fmin[[i]], gridsize)
+  rng = generateFeatureGrid(features, data, resample, gridsize, fmin, fmax)
   if (length(features) > 1L & interaction)
     rng = expand.grid(rng)
 
@@ -252,7 +249,7 @@ generatePartialDependenceData = function(obj, input, features,
           centerpred = NULL
       }
       if (!individual)
-        doAggregatePartialDependence(out, td, target, x, test, rng)
+        doAggregatePartialDependence(out, td, target, x, rng)
       else
         doIndividualPartialDependence(out, td, nrow(data), rng, target, x, centerpred)
     })
@@ -275,7 +272,7 @@ generatePartialDependenceData = function(obj, input, features,
         centerpred = NULL
     }
     if (!individual)
-      out = doAggregatePartialDependence(out, td, target, features, test, rng)
+      out = doAggregatePartialDependence(out, td, target, features, rng)
     else
       out = doIndividualPartialDependence(out, td, nrow(data), rng, target, features, centerpred)
   }
@@ -349,26 +346,28 @@ doPartialDependenceIteration = function(obj, data, rng, features, fun, td, i, bo
     apply(getPredictionProbabilities(pred), 2, fun)
 }
 
-generateFeatureGrid = function(feature, data, resample, fmin, fmax, gridsize) {
-  nunique = ifelse(length(feature) > 1L, nrow(unique(data[feature, ])), length(unique(data[[feature]])))
-  cutoff = ifelse(gridsize >= nunique, nunique, gridsize)
+generateFeatureGrid = function(features, data, resample, gridsize, fmin, fmax) {
+  sapply(features, function(feature) {
+      nunique = length(unique(data[[feature]]))
+      cutoff = ifelse(gridsize >= nunique, nunique, gridsize)
 
-  if (is.factor(data[[feature]])) {
-    factor(rep(levels(data[[feature]]), length.out = cutoff),
-           levels = levels(data[[feature]]), ordered = is.ordered(data[[feature]]))
-  } else {
-    if (resample != "none") {
-      sort(sample(data[[feature]], cutoff, resample == "bootstrap"))
-    } else {
-      if (is.integer(data[[feature]]))
-        sort(rep(fmin:fmax, length.out = cutoff))
-      else
-        seq(fmin, fmax, length.out = cutoff)
-    }
-  }
+      if (is.factor(data[[feature]])) {
+        factor(rep(levels(data[[feature]]), length.out = cutoff),
+               levels = levels(data[[feature]]), ordered = is.ordered(data[[feature]]))
+      } else {
+        if (resample != "none") {
+          sort(sample(data[[feature]], cutoff, resample == "bootstrap"))
+        } else {
+          if (is.integer(data[[feature]]))
+            sort(rep(fmin[[feature]]:fmax[[feature]], length.out = cutoff))
+          else
+            seq(fmin[[feature]], fmax[[feature]], length.out = cutoff)
+        }
+      }
+    }, simplify = FALSE)
 }
 
-doAggregatePartialDependence = function(out, td, target, features, test, rng) {
+doAggregatePartialDependence = function(out, td, target, features, rng) {
   out = as.data.frame(do.call("rbind", out))
   if (td$type == "regr" & ncol(out) == 3L)
     colnames(out) = c("lower", target, "upper")
