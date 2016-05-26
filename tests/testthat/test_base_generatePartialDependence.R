@@ -1,5 +1,51 @@
 context("generatePartialDependence")
 
+test_that("generateFunctionalANOVAData", {
+  gridsize = 3L
+
+  fr = train("regr.rpart", regr.task)
+  dr1 = generateFunctionalANOVAData(fr, regr.task, c("lstat", "age"), 1L, mean, gridsize = gridsize)
+  
+  plotPartialDependence(dr1)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+
+  dr2 = generateFunctionalANOVAData(fr, regr.task, c("lstat", "age"), 2L, mean, gridsize = gridsize)
+  expect_that(dim(dr2$data), equals(c(gridsize^2, 4L)))
+  expect_that(dr2$interaction, is_true())
+  plotPartialDependence(dr2, "tile")
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+
+  expect_error(generateFunctionalANOVAData(fr, regr.task, c("lstat", "age"), 3L, mean, gridsize = gridsize))
+
+  dr1b = generateFunctionalANOVAData(fr, regr.task, c("lstat", "age"), 1L,
+                                     function(x) quantile(x, c(.025, .5, .975)), gridsize = gridsize)
+  expect_that(dim(dr1b$data), equals(c(gridsize * length(dr1b$features), 6L)))
+  plotPartialDependence(dr1b)
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+
+  dr2b = generateFunctionalANOVAData(fr, regr.task, c("lstat", "age"), 2L,
+                                     function(x) quantile(x, c(.025, .5, .975)), gridsize = gridsize)
+  expect_that(dim(dr2b$data), equals(c(gridsize^length(dr2b$features), 6L)))
+  expect_that(dr2b$interaction, is_true())
+  plotPartialDependence(dr2b, "tile")
+  dir = tempdir()
+  path = paste0(dir, "/test.svg")
+  ggsave(path)
+  doc = XML::xmlParse(path)
+
+  dr3 = generateFunctionalANOVAData(fr, regr.task, c("lstat", "age", "rm"), 2L)
+  expect_error(plotPartialDependence(dr3, "tile"))
+})
+
 test_that("generatePartialDependenceData", {
   gridsize = 3L
 
