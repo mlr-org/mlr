@@ -15,7 +15,19 @@ test_that("BaseEnsemble", {
   be = setHyperPars(be, foo = 12)
   expect_true(setequal(getHyperPars(be), list(a.xval = 0L, a.minsplit = 11L,
     b.fit = FALSE, b.C = 2, foo = 12)))
+  
+  # check removing hyperpars
+  be1 = removeHyperPars(be, names(getHyperPars(be)))
+  expect_true(length(getHyperPars(be1)) == 0)
 
+  bl1 = be
+  bl2 = makeOversampleWrapper(makeFilterWrapper(bl2, fw.perc = 0.5), osw.rate = 1)
+  ps = makeParamSet(makeNumericLearnerParam("foo"))
+  pv = list(foo = 3)
+  be = makeBaseEnsemble(id = "foo", base.learners = list(bl1, bl2), par.set = ps, par.vals = pv,
+    cl = "mywrapper")
+  be1 = removeHyperPars(be, names(getHyperPars(be)))
+  
   # check that we get error if predict types are unequal
   bl1 = makeLearner("classif.rpart", predict.type = "prob")
   bl2 = makeLearner("classif.ksvm", predict.type = "response")
