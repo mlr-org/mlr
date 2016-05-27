@@ -102,9 +102,9 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
     )
   } else if (taskdim == 3L) {
     grid = expand.grid(
-      seq(min(x1), max(x1), length.out = gridsize / 2),
-      seq(min(x2), max(x2), length.out = gridsize / 2),
-      seq(min(x3), max(x3), length.out = gridsize / 2)
+      seq(min(x1), max(x1), length.out = gridsize / 5),
+      seq(min(x2), max(x2), length.out = gridsize / 5),
+      seq(min(x3), max(x3), length.out = gridsize / 5)
     )
   }
   colnames(grid) = features
@@ -165,7 +165,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
       if (bounding.point == TRUE) {
         index = NULL
         for (i in 1:c(nrow(pred.grid$data) - 1)) {
-          if (pred.grid$data[i, "response"] != pred.grid$data[i + 1, "response"] && (i %% (gridsize / 2)) != 0) {
+          if (pred.grid$data[i, "response"] != pred.grid$data[i + 1, "response"] && (i %% (gridsize / 5)) != 0) {
             index = append(index, i)
           }
         }
@@ -173,12 +173,13 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
         
         if (is.null(bounding.point.col))
           p = add_trace(p, data = grid[index,], x = get(x1n), y = get(x2n), z = get(x3n),
-                        type = "scatter3d", mode = "markers", opacity = bounding.point.alpha,
+                        type = "mesh3d", mode = "markers", opacity = bounding.point.alpha,
                         marker = list(size = bounding.point.size), color = grid[index, target],
-                        showlegend = show.bounding.legend, text = "Bounding Point", legendgroup = "Bounding Point")
+                        showlegend = show.bounding.legend,
+                        text = "Bounding Point", legendgroup = "Bounding Point")
         else
           p = add_trace(p, data = grid[index,], x = get(x1n), y = get(x2n), z = get(x3n),
-                        type = "scatter3d", mode = "markers", opacity = bounding.point.alpha,
+                        type = "mesh3d", mode = "markers", opacity = bounding.point.alpha,
                         marker = list(size = bounding.point.size, color = bounding.point.col),
                         showlegend = show.bounding.legend, name = "Bounding")
       }
