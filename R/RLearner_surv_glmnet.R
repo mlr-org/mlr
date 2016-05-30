@@ -5,7 +5,7 @@ makeRLearner.surv.glmnet = function() {
     package = "glmnet",
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
-      makeNumericLearnerParam(id = "s", default = 0.01, lower = 0, upper = 1, when = "predict"),
+      makeNumericLearnerParam(id = "s", default = 0.01, lower = 0, when = "predict"),
       makeLogicalLearnerParam(id = "exact", default = FALSE, when = "predict"),
       makeIntegerLearnerParam(id = "nlambda", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "lambda.min.ratio", lower = 0, upper = 1),
