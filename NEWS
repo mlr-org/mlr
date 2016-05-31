@@ -35,6 +35,7 @@ mlr_2.9:
 - subsetTask, getTaskData: arg "features" now also accepts logical and integer
 - normalizeFeatures, createDummyFeatures: arg 'exclude' was replaced by 'cols'
 - normalizeFeatures is now S3 and can be called also on data.frames
+- classif.ranger, regr.ranger and surv.ranger: now respect unordered factors by default
 
 - new learners
 -- classif.C50
