@@ -31,7 +31,7 @@ trainLearner.regr.gpfit = function(.learner, .task, .subset, scale = TRUE, ...) 
       d$data = apply(d$data, 2, function(x) x = (x - min(x)) / (max(x) - min(x)))
     }
     res = GPfit::GP_fit(d$data, d$target, ...)
-    res = attachTrainingInfo(res, list(scaled = TRUE, const = const)) #, high = high, low = low))
+    res = attachTrainingInfo(res, list(scaled = TRUE, const = const, high = high, low = low))
     return(res)
   } else {
     res = GPfit::GP_fit(d$data, d$target, ...)
@@ -43,27 +43,26 @@ trainLearner.regr.gpfit = function(.learner, .task, .subset, scale = TRUE, ...) 
 predictLearner.regr.gpfit = function(.learner, .model, .newdata, ...) {
   tr.info = getTrainingInfo(.model)
   if (tr.info$scaled) {
-    low = apply(.newdata, 2, min)
-    high = apply(.newdata, 2, max)
-    const = union(which(high == low), tr.info$const)
-    new.const = setdiff(const, tr.info$const)
-    if (length(const) > 0) {
-      .newdata[,const] = 1:nrow(.newdata)
+    # low = apply(.newdata, 2, min)
+    # high = apply(.newdata, 2, max)
+    # const = union(which(high == low), tr.info$const)
+    # new.const = setdiff(const, tr.info$const)
+    # if (length(const) > 0) {
+    #   .newdata[,const] = 1:nrow(.newdata)
+    # }
+    if (length(tr.info$const) > 0) {
+      inds = (1:ncol(.newdata))[-tr.info$const]
+    } else {
+      inds = 1:ncol(.newdata)
     }
-    # if (length(tr.info$const) > 0) {
-    #   inds = (1:ncol(.newdata))[-tr.info$const]
-    # } else {
-    #   inds = 1:ncol(.newdata)
-    # }
-    #   for (i in inds) {
-    #     .newdata[,i] =  (.newdata[,i] - tr.info$low[i] / (tr.info$high[i] - tr.info$low[i]))
-    #   }
-    # }
-    .newdata = apply(.newdata, 2, function(x) x = (x - min(x)) / (max(x) - min(x)))
+      for (i in inds) {
+        .newdata[,i] =  (.newdata[,i] - tr.info$low[i]) / (tr.info$high[i] - tr.info$low[i])
+    }
+    # .newdata = apply(.newdata, 2, function(x) x = (x - min(x)) / (max(x) - min(x)))
     # Set the new constants on 0.5 and remove the old constants:
-    if (length(new.const) > 0) {
-      .newdata[,new.const] = rep(0.5, nrow(newdata))
-    }
+    # if (length(new.const) > 0) {
+    #   .newdata[,new.const] = rep(0.5, nrow(newdata))
+    # }
     if (length(tr.info$const) > 0) {
       .newdata = .newdata[,-tr.info$const]
     }
