@@ -21,15 +21,25 @@ trainLearner.regr.gpfit = function(.learner, .task, .subset, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   low = min(d$data)
   high = max(d$data)
-  d$data = (d$data - min(d$data)) / (max(d$data) - min(d$data))
-  res = GPfit::GP_fit(d$data, d$target, ...)
-  res = attachTrainingInfo(res, list(high = high, low = low))
-  res
+  if (low < 0 | high > 1) {
+    d$data = (d$data - min(d$data)) / (max(d$data) - min(d$data))
+    res = GPfit::GP_fit(d$data, d$target, ...)
+    res = attachTrainingInfo(res, list(scaled = TRUE, high = high, low = low))
+    return(res)
+  } else {
+    res = GPfit::GP_fit(d$data, d$target, ...)
+    res = attachTrainingInfo(res, list(scaled = FALSE, high = high, low = low))
+    return(res)
   }
+}
 #' @export
 predictLearner.regr.gpfit = function(.learner, .model, .newdata, ...) {
   sc.param = getTrainingInfo(.model)
-  newdata.scal = (.newdata - sc.param$low) / (sc.param$high - sc.param$low)
-  predict(.model$learner.model, xnew = newdata.scal)$Y_hat
+  if (sc.param$scaled == TRUE) {
+    newdata = (.newdata - sc.param$low) / (sc.param$high - sc.param$low)
+  } else {
+    newdata = .newdata
+  }
+  predict(.model$learner.model, xnew = newdata)$Y_hat
 }
 
