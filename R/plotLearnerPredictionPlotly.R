@@ -1,12 +1,13 @@
 plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures, cv = 10L,  ...,
-                                 gridsize, show.point = TRUE, pointsize = 2, show.point.legend = TRUE,
+                                 gridsize, show.point = TRUE, show.surface = TRUE,
+                                 pointsize = 2, show.point.legend = TRUE,
                                  prob.alpha = TRUE, se.band = TRUE,
                                  err.mark = "train",
                                  err.col = "black", err.size = pointsize, show.err.legend = TRUE,
                                  greyscale = FALSE, pretty.names = TRUE,
                                  alpha = 1, err.alpha = alpha,
                                  bounding.point = FALSE, bounding.point.size = pointsize,
-                                 bounding.point.alpha = 0.4, bounding.point.col = NULL,
+                                 bounding.point.alpha = 0.6, bounding.point.col = NULL,
                                  show.bounding.legend = TRUE) {
   
   require(plotly)
@@ -172,14 +173,14 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
         index = index[!duplicated(index)]
         
         if (is.null(bounding.point.col))
-          p = add_trace(p, data = grid[index,], x = get(x1n), y = get(x2n), z = get(x3n),
+          p = add_trace(p, data = grid, x = get(x1n), y = get(x2n), z = get(x3n),
                         type = "mesh3d", mode = "markers", opacity = bounding.point.alpha,
-                        marker = list(size = bounding.point.size), color = grid[index, target],
-                        showlegend = show.bounding.legend,
+                        marker = list(size = bounding.point.size), color = grid[, target],
+                        showlegend = show.bounding.legend, alphahull = 0,
                         text = "Bounding Point", legendgroup = "Bounding Point")
         else
-          p = add_trace(p, data = grid[index,], x = get(x1n), y = get(x2n), z = get(x3n),
-                        type = "mesh3d", mode = "markers", opacity = bounding.point.alpha,
+          p = add_trace(p, data = grid, x = get(x1n), y = get(x2n), z = get(x3n),
+                        type = "scatter3d", mode = "markers", opacity = bounding.point.alpha, alphahull = 0,
                         marker = list(size = bounding.point.size, color = bounding.point.col),
                         showlegend = show.bounding.legend, name = "Bounding")
       }
@@ -191,6 +192,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
     grid.3d = list(x = grid.dcast[,1],
                    y = as.numeric(colnames(grid.dcast)[-1]),
                    z = t(as.matrix(grid.dcast[,-1])))
+    
     if (greyscale) {
       # plot 3D surface
       p = plot_ly(x = grid.3d$x, y = grid.3d$y, z = grid.3d$z, 
