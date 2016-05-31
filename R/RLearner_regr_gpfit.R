@@ -4,11 +4,11 @@ makeRLearner.regr.gpfit <- function(){
     cl = "regr.gpfit",
     package = "GPfit",
     par.set = makeParamSet(
-      makeNumericVectorLearnerParam(id = "contro", len = 3),
-      makeNumericLearnerParam(id = "nug_thres", default = 20),
-      makeLogicalLearnerParam(id = "trace", default = FALSE),
-      makeIntegerLearnerParam(id = "maxit", default = 100),
-      makeNumericLearnerParam(id = "optim_start")
+      makeNumericVectorLearnerParam(id = "control", len = 3, default = c(200*d, 80*d, 2*d), lower = c(1, 1, 1)),
+      makeNumericLearnerParam(id = "nug_thres", default = 20, lower = 10, upper = 25),
+      makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
+      makeIntegerLearnerParam(id = "maxit", default = 100, lower = 0),
+      makeNumericVectorLearnerParam(id = "optim_start", tunable = FALSE)
     ),
     properties = c("numerics"),
     name = "Gaussian Process Model fitting",
