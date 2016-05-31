@@ -4,7 +4,7 @@ makeRLearner.regr.gpfit <- function(){
     cl = "regr.gpfit",
     package = "GPfit",
     par.set = makeParamSet(
-      makeNumericVectorLearnerParam(id = "control", len = 3, default = c(200*d, 80*d, 2*d), lower = c(1, 1, 1)),
+      makeNumericVectorLearnerParam(id = "control", len = 3, lower = c(1, 1, 1)),
       makeNumericLearnerParam(id = "nug_thres", default = 20, lower = 10, upper = 25),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam(id = "maxit", default = 100, lower = 0),
@@ -19,10 +19,17 @@ makeRLearner.regr.gpfit <- function(){
 #' @export
 trainLearner.regr.gpfit = function(.learner, .task, .subset, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
-  GPfit::GP_fit(d$data, d$target, ...)
+  low = min(d$data)
+  high = max(d$data)
+  d$data = (d$data - min(d$data)) / (max(d$data) - min(d$data))
+  res = GPfit::GP_fit(d$data, d$target, ...)
+  res = attachTrainingInfo(res, list(high = high, low = low))
+  res
   }
 #' @export
 predictLearner.regr.gpfit = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, xnew = .newdata)$Y_hat
+  sc.param = getTrainingInfo(.model)
+  newdata.scal = (.newdata - sc.param$low) / (sc.param$high - sc.param$low)
+  predict(.model$learner.model, xnew = newdata.scal)$Y_hat
 }
 
