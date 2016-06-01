@@ -61,7 +61,7 @@ listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE) {
   tag2df = function(tags, prefix = "") {
     unique.tags = sort(unique(unlist(tags)))
     res = asMatrixRows(lapply(tags, "%in%", x = unique.tags))
-    colnames(res) = paste0(prefix, unique.tags)
+    colnames(res) = stri_paste(prefix, unique.tags)
     rownames(res) = NULL
     as.data.frame(res)
   }
@@ -344,7 +344,7 @@ makeFilter(
   fun = function(task, nselect, ...) {
     data = getTaskData(task)
     sapply(getTaskFeatureNames(task), function(feat.name) {
-      f = as.formula(paste0(feat.name,"~",getTaskTargetNames(task)))
+      f = as.formula(stri_paste(feat.name,"~",getTaskTargetNames(task)))
       aov.t = aov(f, data = data)
       summary(aov.t)[[1]][1,'F value']
     })
@@ -360,7 +360,7 @@ makeFilter(
   fun = function(task, nselect, ...) {
     data = getTaskData(task)
     sapply(getTaskFeatureNames(task), function(feat.name) {
-      f = as.formula(paste0(feat.name,"~", getTaskTargetNames(task)))
+      f = as.formula(stri_paste(feat.name,"~", getTaskTargetNames(task)))
       t = kruskal.test(f, data = data)
       unname(t$statistic)
     })

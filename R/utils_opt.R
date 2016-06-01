@@ -18,8 +18,8 @@ getThresholdFromOptPath = function(opt.path, inds) {
   ths = asMatrixCols(lapply(inds, function(i) {
     ex = getOptPathEl(opt.path, i)$extra
     ns = names(ex)
-    ex = ex[grepl("^threshold", ns)]
-    setNames(ex, sub("^threshold\\.", "", names(ex)))
+    ex = ex[stri_detect_regex(ns, "^threshold")]
+    setNames(ex, stri_replace_first(names(ex), "", regex = "^threshold\\."))
   }))
   rowMeans(ths)
 }

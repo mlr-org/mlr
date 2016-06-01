@@ -83,11 +83,11 @@ makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, str
     stop("Stratification cannot be done for LOO!")
   if (stratify && ! is.null(stratify.cols))
     stop("Arguments 'stratify' and 'stratify.cols' are mutually exclusive!")
-  d = do.call(paste0("makeResampleDesc", method), list(...))
+  d = do.call(stri_paste("makeResampleDesc", method), list(...))
   d$predict = predict
   d$stratify = stratify
   d$stratify.cols = stratify.cols
-  addClasses(d, paste0(method, "Desc"))
+  addClasses(d, stri_paste(method, "Desc"))
 }
 
 

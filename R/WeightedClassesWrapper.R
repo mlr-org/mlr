@@ -85,7 +85,7 @@ makeWeightedClassesWrapper = function(learner, wcw.param = NULL, wcw.weight = 1)
     assertNumeric(wcw.weight, lower = 0, any.missing = FALSE)
     pv$wcw.weight = wcw.weight
   }
-  id = paste("weightedclasses", learner$id, sep = ".")
+  id = stri_paste("weightedclasses", learner$id, sep = ".")
   ps = makeParamSet(
     makeNumericVectorLearnerParam(id = "wcw.weight", len = NA_integer_, lower = 0)
   )
