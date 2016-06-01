@@ -1,5 +1,5 @@
 #' @export
-makeRLearner.regr.gpfit <- function(){
+makeRLearner.regr.gpfit = function(){
   makeRLearnerRegr(
     cl = "regr.gpfit",
     package = "GPfit",
@@ -8,7 +8,8 @@ makeRLearner.regr.gpfit <- function(){
       makeNumericLearnerParam(id = "nug_thres", default = 20, lower = 10, upper = 25),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam(id = "maxit", default = 100, lower = 0),
-      makeUntypedLearnerParam(id = "optim_start", tunable = FALSE)
+      makeUntypedLearnerParam(id = "optim_start", tunable = FALSE),
+      makeLogicalLearnerParam(id = "scale", default = TRUE)
     ),
     properties = c("numerics"),
     name = "Gaussian Process Model fitting",
@@ -43,13 +44,6 @@ trainLearner.regr.gpfit = function(.learner, .task, .subset, scale = TRUE, ...) 
 predictLearner.regr.gpfit = function(.learner, .model, .newdata, ...) {
   tr.info = getTrainingInfo(.model)
   if (tr.info$scaled) {
-    # low = apply(.newdata, 2, min)
-    # high = apply(.newdata, 2, max)
-    # const = union(which(high == low), tr.info$const)
-    # new.const = setdiff(const, tr.info$const)
-    # if (length(const) > 0) {
-    #   .newdata[,const] = 1:nrow(.newdata)
-    # }
     if (length(tr.info$const) > 0) {
       inds = (1:ncol(.newdata))[-tr.info$const]
     } else {
@@ -58,11 +52,6 @@ predictLearner.regr.gpfit = function(.learner, .model, .newdata, ...) {
       for (i in inds) {
         .newdata[,i] =  (.newdata[,i] - tr.info$low[i]) / (tr.info$high[i] - tr.info$low[i])
     }
-    # .newdata = apply(.newdata, 2, function(x) x = (x - min(x)) / (max(x) - min(x)))
-    # Set the new constants on 0.5 and remove the old constants:
-    # if (length(new.const) > 0) {
-    #   .newdata[,new.const] = rep(0.5, nrow(newdata))
-    # }
     if (length(tr.info$const) > 0) {
       .newdata = .newdata[,-tr.info$const]
     }
