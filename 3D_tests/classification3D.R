@@ -11,17 +11,18 @@ plotLearnerPrediction(classif.ksvm, sonar.task, features = getTaskFeatureNames(s
 # iris.task
 plotLearnerPredictionPlotly(classif.ksvm, iris.task)
 plotLearnerPredictionPlotly(classif.ksvm, iris.task, features = c("Petal.Width", "Petal.Length", "Sepal.Width"))
-plotLearnerPredictionPlotly(classif.ksvm, iris.task, greyscale = T)
 plotLearnerPredictionPlotly(classif.ksvm, iris.task, pointsize = 10)
 plotLearnerPredictionPlotly(classif.ksvm, iris.task, pointsize = 10, alpha = 0.6)
-plotLearnerPredictionPlotly(classif.ksvm, iris.task, pointsize = 10, alpha = 0.6, err.alpha = 1)
-plotLearnerPredictionPlotly(classif.ksvm, iris.task, err.size = 5)
 plotLearnerPredictionPlotly(classif.ksvm, iris.task, err.col = "red")
-plotLearnerPredictionPlotly(classif.ksvm, iris.task, err.size = 5, err.col = "grey")
-plotLearnerPredictionPlotly(classif.ksvm, iris.task, greyscale = T, err.col = "red", err.size = 5)
 plotLearnerPredictionPlotly(classif.ksvm, iris.task, show.point.legend = F)
-plotLearnerPredictionPlotly(classif.ksvm, iris.task, show.err.legend = F)
-plotLearnerPredictionPlotly(classif.ksvm, iris.task, bounding.point = T)
+plotLearnerPredictionPlotly(classif.ksvm, iris.task, show = "bounding.point")
+plotLearnerPredictionPlotly(classif.ksvm, iris.task, show = "bounding.point", bounding.alpha = 1)
+plotLearnerPredictionPlotly(classif.ksvm, iris.task, show = "bounding.point", bounding.alpha = 1, show.point = F)
+plotLearnerPredictionPlotly(classif.ksvm, iris.task, show = "bounding.point", bounding.alpha = 1, show.point = F, bounding.point.legend = T)
+plotLearnerPredictionPlotly(classif.ksvm, iris.task, show = "bounding.region")
+plotLearnerPredictionPlotly(classif.ksvm, iris.task, show = "bounding.region", bounding.region.alphahull = 3)
+plotLearnerPredictionPlotly(classif.ksvm, iris.task, show = "region")
+plotLearnerPredictionPlotly(classif.ksvm, iris.task, show = "region", show.point = F)
 
 
 # pid.task
@@ -38,7 +39,7 @@ plotLearnerPredictionPlotly(classif.ksvm, pid.task, greyscale = T, err.size = 4,
 classif.cvglmnet = makeLearner("classif.cvglmnet")
 
 plotLearnerPredictionPlotly(classif.cvglmnet, iris.task)
-plotLearnerPredictionPlotly(classif.cvglmnet, iris.task, bounding.point = T)
+plotLearnerPredictionPlotly(classif.cvglmnet, iris.task, show.bounding = T)
 
 plotLearnerPredictionPlotly(classif.cvglmnet, pid.task)
 
@@ -50,4 +51,4 @@ classif.randomForest = makeLearner("classif.randomForest")
 plotLearnerPredictionPlotly(classif.randomForest, iris.task)
 plotLearnerPredictionPlotly(classif.randomForest, pid.task)
 plotLearnerPredictionPlotly(classif.randomForest, bc.task)
-plotLearnerPredictionPlotly(classif.randomForest, iris.task, bounding.point = T)
+plotLearnerPredictionPlotly(classif.randomForest, iris.task, show = "region")
