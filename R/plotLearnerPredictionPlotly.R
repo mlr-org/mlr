@@ -1,10 +1,11 @@
 plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures, cv = 10L,  ...,
-                                 gridsize, show.point = TRUE, show.point.legend = TRUE,
+                                 gridsize, show.point = TRUE, show.point.legend = TRUE, show.colorbar = TRUE,
                                  pointsize = 2, prob.alpha = TRUE, se.band = TRUE,
                                  err.mark = "train", err.col = "black",
                                  regr.greyscale = FALSE, pretty.names = TRUE,
-                                 alpha = 1, show = NULL, bounding.alpha = 0.5, bounding.region.alphahull = -1,
-                                 bounding.point.size = pointsize, bounding.point.legend = FALSE) {
+                                 point.alpha = 1, show = NULL, bounding.alpha = 0.5, bounding.region.alphahull = -1,
+                                 bounding.point.size = pointsize, bounding.point.legend = FALSE,
+                                 region.alpha = 0.5) {
   
   require(plotly)
   learner = checkLearner(learner)
@@ -16,23 +17,23 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
   
   # features and dimensionality
   fns = getTaskFeatureNames(task)
-  if (is.null(features) && td$type != "classif") {
-    features = if (length(fns) == 1L) fns else fns[1:2]
-  } else if (is.null(features) && td$type == "classif") {
-    features = if (length(fns) == 1L) fns else fns[1:3]
-  } else {
+  if (length(fns) == 1L)
+    stopf("plotLearnerPrediction() works with at least 2 features.")
+  if (is.null(features))
+    features = fns[1:2]
+  else {
     assertCharacter(features, max.len = 3L)
     assertSubset(features, choices = fns)
   }
   taskdim = length(features)
-  if (td$type == "classif" && taskdim != 3)
-    stopf("Classification: currently only 3D plots supported in Plotly, not: %i", taskdim)
-  if (td$type == "regr" && taskdim != 2)
-    stopf("Regression: currently only 3D plots supported in Plotly, not: %i", taskdim)
-  if (!show.point && missing(show))
-    stopf("Either show.point is given TRUE, or show is given a type in ('bounding.point', 'bounding.region', 'region')")
-  if (!missing(show) && show %nin% c("bounding.point", "bounding.region", "region"))
-    stopf("show must be one of ('bounding.point', 'bounding.region', 'region')")
+  if (td$type == "classif" && taskdim %nin% c(2L, 3L))
+    stopf("Classification: currently only 2 or 3 features plots supported in plotLearnerPredictionPlotly(), not: %i", taskdim)
+  if (td$type == "regr" && taskdim != 2L)
+    stopf("Regression: currently only 2 features plots supported in plotLearnerPredictionPlotly(), not: %i", taskdim)
+  if (taskdim != 2L && !show.point && missing(show))
+    stopf("Either 'show.point' is given TRUE, or 'show' is given a type in ('bounding.point', 'bounding.region', 'region')")
+  if (taskdim != 2L && !missing(show) && show %nin% c("bounding.point", "bounding.region", "region"))
+    stopf("'show' must be one of ('bounding.point', 'bounding.region', 'region')")
   
   measures = checkMeasures(measures, task)
   cv = asCount(cv)
@@ -128,21 +129,51 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
       y != pred.cv$data[order(pred.cv$data$id), "response"]
     else
       NULL
+    if (taskdim == 2L) {
+      cdata = cbind(pred.grid, grid)
+      cdata$nresponse = apply(subset(pred.grid$data, select = -response), 1, max)
+      
+      grid.dcast = reshape2::dcast(cdata, as.formula(paste(x1n, x2n, sep = "~")), value.var = "nresponse")
+      grid.3d = list(x = grid.dcast[,1],
+                     y = as.numeric(colnames(grid.dcast)[-1]),
+                     z = t(as.matrix(grid.dcast[,-1])))
+      
+      p = plot_ly(data = grid.3d, x = x, y = y, z = z,
+                  type = "surface", showscale = show.colorbar, colorbar = list(title = target),
+                  name = "Density")
+      if (show.point) {
+        data$.z = 0
+        p = add_trace(p, data = data, x = get(x1n), y = get(x2n), z = .z,
+                      type = "scatter3d", mode = "markers", symbol = get(target),
+                      marker = list(size = pointsize), showlegend = show.point.legend)
+      }
+      p = p %>% layout(title = title,
+                       scene = list(xaxis = list(title = paste("x: ", x1n)),
+                                    yaxis = list(title = paste("y: ", x2n)),
+                                    zaxis = list(title = "z: f(x,y)", range = c(0, 1))),
+                       legend = list(xanchor = "right"))
+    }
     if (taskdim == 3L) {
       if (show.point) {
-        cols = RColorBrewer::brewer.pal(nlevels(data$Species), "Set1")
+        if (nlevels(data[, target]) < 3)
+          cols = toRGB(c("blue", "red"))
+        else
+          cols = RColorBrewer::brewer.pal(nlevels(data[, target]), "Set1")
         data$.cols = as.character(factor(as.numeric(data[, target]), labels = cols))
-        data[data$.err == TRUE, ".cols"] = err.col
+        data[data$.err == TRUE, ".cols"] = toRGB(err.col)
         
-        p = plot_ly(data = data, x = get(x1n), y = get(x2n), z = get(x3n), 
-                    type = "scatter3d", mode = "markers", symbol = data[, target], 
-                    marker = list(size = pointsize, opacity = alpha, color = .cols),
+        tmp = data
+        tmp = tmp[order(tmp$.cols, decreasing = T), ]
+        
+        p = plot_ly(data = tmp, x = get(x1n), y = get(x2n), z = get(x3n), 
+                    type = "scatter3d", mode = "markers", symbol = tmp[, target], 
+                    marker = list(size = pointsize, opacity = point.alpha, color = .cols),
                     showlegend = show.point.legend)
         
         if (!missing(show)) {
           if (show == "region")
             p = add_trace(p, data = grid, x = get(x1n), y = get(x2n), z = get(x3n),
-                          type = "mesh3d", mode = "markers", opacity = bounding.alpha,
+                          type = "mesh3d", mode = "markers", opacity = region.alpha,
                           color = grid[, target], alphahull = 0)
           else {
             index = NULL
@@ -155,7 +186,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
             
             if (show == "bounding.region")
               p = add_trace(p, data = grid[index, ], x = get(x1n), y = get(x2n), z = get(x3n),
-                            type = "mesh3d", color = get(target), colors = "Set1", 
+                            type = "mesh3d", color = get(target), 
                             alphahull = bounding.region.alphahull, opacity = bounding.alpha)
             else if (show == "bounding.point")
               p = add_trace(p, data = grid[index, ], x = get(x1n), y = get(x2n), z = get(x3n),
@@ -167,7 +198,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
       } else {
         if (show == "region")
           p = plot_ly(data = grid, x = get(x1n), y = get(x2n), z = get(x3n),
-                      type = "mesh3d", mode = "markers", opacity = bounding.alpha,
+                      type = "mesh3d", mode = "markers", opacity = region.alpha,
                       color = grid[, target], alphahull = 0)
         else {
           index = NULL
