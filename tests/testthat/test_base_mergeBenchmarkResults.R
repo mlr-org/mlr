@@ -17,42 +17,42 @@ test_that("mergeBenchmarkResults", {
     expect_true(identical(res$mmce.x, res$mmce.y))
   }
   
-  # Change order of leraners and see if merging works
-  bench1 = benchmark(learners[1:2], tasks[[1]], cv2)
-  bench2 = benchmark(learners[2:1], tasks[[2]], cv2)
+  # Change order of leaners and see if merging works
+  bench1 = benchmark(learners[1:2], tasks[[1L]], cv2)
+  bench2 = benchmark(learners[2:1], tasks[[2L]], cv2)
   bench = mergeBenchmarkResults(bench1, bench2)
   checkBenchmarkResults(list(bench1, bench2), bench)
   
   # Forgot to run another learner on both tasks
-  bench3 = benchmark(learners[3], tasks[1:2], cv2)
+  bench3 = benchmark(learners[3L], tasks[1:2], cv2)
   merged = mergeBenchmarkResults(bench, bench3)
   checkBenchmarkResults(list(bench, bench3), merged)
   
   # Forgot to run all learners on another task
-  bench3 = benchmark(learners[1:2], tasks[[3]], cv2)
+  bench3 = benchmark(learners[1:2], tasks[[3L]], cv2)
   merged = mergeBenchmarkResults(bench, bench3)
   checkBenchmarkResults(list(bench, bench3), merged)
   
   # Change order of tasks and see if merging works
-  bench1 = benchmark(learners[[1]], tasks[1:2], cv2)
-  bench2 = benchmark(learners[[2]], tasks[2:1], cv2)
+  bench1 = benchmark(learners[[1L]], tasks[1:2], cv2)
+  bench2 = benchmark(learners[[2L]], tasks[2:1], cv2)
   merged = mergeBenchmarkResults(bench1, bench2)
   checkBenchmarkResults(list(bench1, bench2), merged)
   
   # Merge both learner and task
-  bench1 = benchmark(learners[[1]], tasks[1:2], cv2)
+  bench1 = benchmark(learners[[1L]], tasks[1:2], cv2)
   # apply two additional lerners on same tasks
   bench2 = benchmark(learners[2:3], tasks[1:2], cv2)
   # add another task and apply all on it learners
-  bench3 = benchmark(learners, tasks[3], cv2)
+  bench3 = benchmark(learners, tasks[3L], cv2)
   # merge all learners
   result = mergeBenchmarkResults(bench1, bench2, bench3)
   checkBenchmarkResults(list(bench1, bench2, bench3), result)
   
   # error message check
-  l1t1 = benchmark(learners[[1]], tasks[[1]], cv2)
-  l2t1 = benchmark(learners[[2]], tasks[[1]], cv2)
-  l2t2 = benchmark(learners[[2]], tasks[[2]], cv2)
+  l1t1 = benchmark(learners[[1L]], tasks[[1L]], cv2)
+  l2t1 = benchmark(learners[[2L]], tasks[[1L]], cv2)
+  l2t2 = benchmark(learners[[2L]], tasks[[2L]], cv2)
   expect_error(mergeBenchmarkResults(l1t1, l2t1, l2t1), "occur in multiple")
   expect_error(mergeBenchmarkResults(l1t1, l2t2), "are missing")
   l1t1.acc = benchmark(learners[[1L]], tasks[[1L]], cv2, measures = list(acc))
