@@ -25,14 +25,10 @@ trainLearner.regr.gpfit = function(.learner, .task, .subset, scale = TRUE, ...) 
   if (scale) {
     low = apply(d$data, 2, min)
     high = apply(d$data, 2, max)
-    const = which(high == low)
-    if (length(const > 0)) {
-      d$data = apply(d$data[,-const], 2, function(x) x = (x - min(x)) / (max(x) - min(x)))
-    } else {
-      d$data = apply(d$data, 2, function(x) x = (x - min(x)) / (max(x) - min(x)))
-    }
+    not.const = which(high != low)
+    d$data = apply(d$data[,not.const], 2, function(x) x = (x - min(x)) / (max(x) - min(x)))
     res = GPfit::GP_fit(d$data, d$target, ...)
-    res = attachTrainingInfo(res, list(scaled = TRUE, const = const, high = high, low = low))
+    res = attachTrainingInfo(res, list(scaled = TRUE, not.const = not.const, high = high, low = low))
     return(res)
   } else {
     res = GPfit::GP_fit(d$data, d$target, ...)
@@ -44,18 +40,10 @@ trainLearner.regr.gpfit = function(.learner, .task, .subset, scale = TRUE, ...) 
 predictLearner.regr.gpfit = function(.learner, .model, .newdata, ...) {
   tr.info = getTrainingInfo(.model)
   if (tr.info$scaled) {
-    if (length(tr.info$const) > 0) {
-      inds = (1:ncol(.newdata))[-tr.info$const]
-    } else {
-      inds = 1:ncol(.newdata)
-    }
-      for (i in inds) {
+      for (i in tr.info$not.const) {
         .newdata[,i] =  (.newdata[,i] - tr.info$low[i]) / (tr.info$high[i] - tr.info$low[i])
     }
-    if (length(tr.info$const) > 0) {
-      .newdata = .newdata[,-tr.info$const]
-    }
   } 
-  predict(.model$learner.model, xnew = .newdata)$Y_hat
+  predict(.model$learner.model, xnew = .newdata[, not.const])$Y_hat
 }
 
