@@ -25,7 +25,7 @@ trainLearner.regr.gpfit = function(.learner, .task, .subset, scale = TRUE, ...) 
   if (scale) {
     low = apply(d$data, 2, min)
     high = apply(d$data, 2, max)
-    not.const = which(high != low)
+    not.const = colnames(d$data)[high != low]
     d$data = apply(d$data[,not.const], 2, function(x) x = (x - min(x)) / (max(x) - min(x)))
     res = GPfit::GP_fit(d$data, d$target, ...)
     res = attachTrainingInfo(res, list(scaled = TRUE, not.const = not.const, high = high, low = low))
