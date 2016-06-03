@@ -44,6 +44,6 @@ predictLearner.regr.gpfit = function(.learner, .model, .newdata, ...) {
         .newdata[,i] =  (.newdata[,i] - tr.info$low[i]) / (tr.info$high[i] - tr.info$low[i])
     }
   } 
-  predict(.model$learner.model, xnew = .newdata[, not.const])$Y_hat
+  predict(.model$learner.model, xnew = .newdata[, tr.info$not.const])$Y_hat
 }
 
