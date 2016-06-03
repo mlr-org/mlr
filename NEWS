@@ -30,7 +30,7 @@ mlr_2.9:
 - rename generatePartialPrediction, plotPartialPrediction, and plotPartialPredictionGGVIS to
   generatePartialDependence, plotPartialDependence, and plotPartialDependenceGGVIS
 - add stability.nugget parameter for "regr.km"
-- plotPartialDependence now can create plots classification tasks with more than one interacted features
+- plotPartialDependence can plot classification tasks with more than one interacted features now
 
 - new learners
 -- surv.cv.CoxBoost
