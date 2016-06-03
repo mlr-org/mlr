@@ -5,24 +5,24 @@ test_that("learners work: surv ", {
   # settings to make learners faster and deal with small sample size
   # These values come from multi-criteria tunining (timetrain, timepredict)
   hyperpars = list(
-    surv.cforest = list(mtry = 1L)
-    #surv.cforest = list(ntree = 198L, mtry = 1L, replace = TRUE, teststat = "max",
-     # testtpe = "Teststatistic", mincriterion = 0.92),
-    #surv.CoxBoost = list(penalty = 600, criterion = "pscore", stepno = 72L)
-    # surv.coxph = list(outer.max = 19L),
-    # surv.cv.CoxBoost = list(maxstepno = 4L, penalty = 393, stepsize.factor = 2.85),
-    # surv.cvglmnet = list(alpha = 0.1038067, nfolds = 5L, standardize = FALSE,
-    #   maxit = 29000L),
-    # surv.glmboost = list(mstop = 10L, nu = 0.6349),
-    #surv.penalized.fusedlasso = list(lambda1 = 0.4045103, lambda2 = 1,
-    #   standardize = TRUE)
-    # surv.penalized.ridge = list(maxiter = 65L),
-    # surv.randomForestSRC = list(ntree = 720, bootstrap = "none",
-    #   mtry = 2L, nodesize = 17L, splitrule = "random", na.action = "na.omit",
-    #   split.depth = "by.tree"),
-    # surv.ranger = list(num.trees = 400L, mtry = 1L, min.node.size = 20L),
-    # surv.rpart = list(minsplit = 7L, minbucket = 8L, cp = 0.6900071,
-    #   maxcompete = 1L, maxdepth = 27L)
+    surv.cforest = list(mtry = 1L),
+    surv.cforest = list(ntree = 198L, mtry = 1L, replace = TRUE, teststat = "max",
+    testtpe = "Teststatistic", mincriterion = 0.92),
+    surv.CoxBoost = list(penalty = 600, criterion = "pscore", stepno = 72L),
+    surv.coxph = list(outer.max = 19L),
+    surv.cv.CoxBoost = list(penalty = 393, stepsize.factor = 2.85), # maxstepno = 4L, 
+    surv.cvglmnet = list(alpha = 0.1038067, nfolds = 5L, standardize = FALSE,
+      maxit = 29000L),
+    surv.glmboost = list(mstop = 10L, nu = 0.6349),
+    surv.penalized.fusedlasso = list(lambda1 = 0.4045103, lambda2 = 1,
+      standardize = TRUE),
+    surv.penalized.ridge = list(maxiter = 65L),
+   # surv.randomForestSRC = list(ntree = 720, bootstrap = "none",
+    #  mtry = 2L, nodesize = 17L, splitrule = "random", na.action = "na.omit",
+     # split.depth = "by.tree"),
+    surv.ranger = list(num.trees = 400L, mtry = 1L, min.node.size = 20L),
+    surv.rpart = list(minsplit = 7L, minbucket = 8L, cp = 0.6900071,
+      maxcompete = 1L, maxdepth = 27L)
   )
   
   fixHyperPars = function(lrn) {
@@ -44,24 +44,25 @@ test_that("learners work: surv ", {
     expect_true(!is.na(performance(p)))
   }
   
-  
   # survival analysis with factors
   data = surv.df[, c("time", "status", "x3", "x4")]
   data[, 4L] = factor(sample(c("a", "b"), size = nrow(data), replace = TRUE))
   task = makeSurvTask(data = data, target = c("time", "status"))
   lrns = mylist(task, create = TRUE)
   # delete the next for loop when penalized learners are fixd
-  for (i in 1:(length(lrns)-1)) {
+  logic = rep(TRUE, length(lrns))
+  for (i in 1:length(logic)) {
     if (lrns[[i]]$id == "surv.penalized.fusedlasso") {
-    lrns[[i]] = NULL
+      logic[[i]] = FALSE
     }
     if(lrns[[i]]$id == "surv.penalized.lasso") {
-      lrns[[i]] = NULL
+      logic[[i]] = FALSE
     }
     if (lrns[[i]]$id == "surv.penalized.ridge") {
-      lrns[[i]] = NULL
+      logic[[i]] = FALSE
     }
   }
+  lrns = lrns[logic]
   for (lrn in lrns) {
     expect_output(print(lrn), lrn$id)
     lrn = fixHyperPars(lrn)
@@ -70,9 +71,8 @@ test_that("learners work: surv ", {
     expect_true(!is.na(performance(p)))
   }
   
-  
+  # mlr doesn't support prediction of probabilities yet
   # binary classif with prob (only coxph and ranger)
-  # mlr doesn't supprt prediction of probabilities yet
   # task = subsetTask(surv.task, subset = c(1:70),
   #   features = getTaskFeatureNames(surv.task)[c(3,4)])
   # lrns = mylist(task, properties = "prob")
@@ -85,12 +85,28 @@ test_that("learners work: surv ", {
   #   expect_true(!is.na(performance(p)))
   # })
   
-  # FIXME: geht noch nicht
+  # surv with weights
+  # bigger dataset necessary otherwise cvglmnet does not converge
+  task = surv.task
   lrns = mylist("surv", properties = "weights", create = TRUE)
   lapply(lrns, testThatLearnerRespectsWeights, hyperpars = hyperpars,
-    task = surv.task, train.inds = surv.train.inds, surv.test.inds,
-    weights = rep(c(10000L, 1L), c(10L, length(surv.train.inds) - 10L)),
+    task = task, train.inds = surv.train.inds,
+    test.inds = surv.test.inds,
+    weights = rep(c(1L, 5L), length.out = length(surv.train.inds)),
     pred.type = "response", get.pred.fun = getPredictionResponse)
   
-  
+
+  # classif with missing
+  d = surv.df
+  d[1, 3] = NA
+  task = makeSurvTask(data = d, target = surv.target)
+  lrns = mylist(task, properties = "missings", create = TRUE)
+  # coxph does handle missing values with NA (and thus in a different way than the original)
+  lrns = lrns[-2]
+  for (lrn in lrns) {
+    lrn = fixHyperPars(lrn)
+    m = train(lrn, task)
+    p = predict(m, task)
+    expect_true(!is.na(performance(p)))
+  }
 })
