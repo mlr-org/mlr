@@ -460,26 +460,8 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, p = 1) {
   if (length(obj$features) > 2L & geom != "tile" & obj$interaction)
     stop("To plot more than 2 features geom must be 'tile'!")
   assertChoice(geom, c("tile", "line"))
-  if (geom == "tile") {
-    if (!(obj$task.desc$type %in% c("regr", "surv"))) {
-      if (length(obj$task.desc$class.levels) > 2L)
-        stop("Only visualization of binary classification works with tiling!")
-    }
-
-    feat_classes = sapply(obj$data, class)
-    if (any(feat_classes == "factor")) {
-      fact_feats = names(feat_classes[feat_classes == "factor"])
-      if (!is.null(facet))
-        fact_feats = fact_feats[which(fact_feats != facet)]
-      do_not_contour = length(fact_feats) > 0L
-    } else
-      do_not_contour = FALSE
-
-    if (do_not_contour)
-      warning("Factor features cannot be used to create contour plots! only tiles will be displayed.")
-    if (!obj$interaction)
+  if (geom == "tile" & !obj$interaction)
       stop("generatePartialDependenceData was called with interaction = FALSE!")
-  }
 
   if (!is.null(facet)) {
     assertChoice(facet, obj$features)
@@ -499,6 +481,8 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, p = 1) {
       facet = "Feature"
       scales = "free_x"
     }
+    if (obj$task.desc$type == "classif" & geom == "tile" & length(features) == 2L)
+      scales = "free_x"
   }
 
   if (p != 1) {
@@ -554,14 +538,18 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, p = 1) {
     if (obj$derivative)
       plt = plt + ylab(stri_paste(target, "(derivative)", sep = " "))
   } else { ## tiling
-    plt = ggplot(obj$data, aes_string(x = features[1], y = features[2], z = target))
-    plt = plt + geom_tile(aes_string(fill = target))
-    if (!do_not_contour)
-      plt = plt + stat_contour()
+    if (obj$task.desc$type == "classif") {
+      plt = ggplot(obj$data, aes_string(x = features[1], y = features[2], fill = "Probability"))
+      plt = plt + geom_raster()
+      facet = "Class"
+    } else {
+      plt = ggplot(obj$data, aes_string(x = features[1], y = features[2], z = target))
+      plt = plt + geom_raster(aes_string(fill = target))
+    }
   }
 
   if (!is.null(facet))
-    plt = plt + facet_wrap(as.formula(stri_paste("~ ", facet)), scales = scales)
+    plt = plt + facet_wrap(as.formula(stri_paste("~", facet)), scales = scales)
 
   plt
 }

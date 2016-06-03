@@ -72,7 +72,7 @@ test_that("generatePartialDependenceData", {
                                       interaction = TRUE, gridsize = gridsize)
   nfacet = length(unique(dcp$data$Petal.Length))
   ntarget = length(dcp$target)
-  plotPartialDependence(dcp, facet = "Petal.Length")
+  plotPartialDependence(dcp, geom = "tile")
   ggsave(path)
   doc = XML::xmlParse(path)
   #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfacet))
@@ -84,11 +84,11 @@ test_that("generatePartialDependenceData", {
   ## check that probability outputting classifiers work with ICE
   dcp = generatePartialDependenceData(fcp, input = multiclass.task, features = c("Petal.Width", "Petal.Length"),
                                       interaction = TRUE, individual = TRUE, gridsize = gridsize)
-  plotPartialDependence(dcp, facet = "Petal.Length")
+  plotPartialDependence(dcp, geom = "tile")
   ## plotPartialDependenceGGVIS(dcp, interact = "Petal.Length")
 
   ## check that survival tasks work with multiple features
-  fs = train("surv.rpart", surv.task)
+  fs = train("surv.coxph", surv.task)
   ds = generatePartialDependenceData(fs, input = surv.task, features = c("x1", "x2"),
                                      gridsize = gridsize)
   nfeat = length(ds$features)
@@ -167,8 +167,6 @@ test_that("generatePartialDependenceData", {
                                        bounds = c(-2, 2), gridsize = gridsize)
 
   ## check that tile + contour plots work for two and three features with regression and survival
-  expect_warning(plotPartialDependence(db, "tile")) ## factor feature
-  expect_error(plotPartialDependence(dcp, geom = "tile")) ## no multiclass support
   expect_error(plotPartialDependence(ds, geom = "tile")) ## interaction == FALSE
   tfr = generatePartialDependenceData(fr, regr.df, features = c("lstat", "crim", "chas"),
                                       interaction = TRUE, gridsize = gridsize)
