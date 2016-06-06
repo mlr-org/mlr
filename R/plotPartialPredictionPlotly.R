@@ -43,11 +43,18 @@ plotPartialPredictionPlotly = function(obj, p = 1) {
                                       zaxis = list(title = paste("z: ", target, sep = ""))))
   }
   
-  # if (obj$task.desc$type == "classif") {
-  #   
-  # }
-  
-  
+  if (obj$task.desc$type == "classif") {
+    grid.dcast = reshape2::dcast(obj$data, as.formula(paste(x1n, x2n, sep = "~")), value.var = "Probability")
+    grid.3d = list(x = grid.dcast[,1],
+                   y = as.numeric(colnames(grid.dcast)[-1]),
+                   z = t(as.matrix(grid.dcast[,-1])))
+    
+    plt = plot_ly(data = grid.3d, x = x, y = y, z = z,
+                  type = "surface")
+    plt = plt %>% layout(scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
+                                      yaxis = list(title = paste("y: ", x2n, sep = "")), 
+                                      zaxis = list(title = "Probability")))
+  }
   
   plt
 }
