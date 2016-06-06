@@ -5,24 +5,24 @@ test_that("learners work: surv ", {
   # settings to make learners faster and deal with small sample size
   # These values come from multi-criteria tunining (timetrain, timepredict)
   hyperpars = list(
-    surv.cforest = list(mtry = 1L),
-    surv.cforest = list(ntree = 198L, mtry = 1L, replace = TRUE, teststat = "max",
-    testtpe = "Teststatistic", mincriterion = 0.92),
-    surv.CoxBoost = list(penalty = 600, criterion = "pscore", stepno = 72L),
-    surv.coxph = list(outer.max = 19L),
-    surv.cv.CoxBoost = list(penalty = 393, stepsize.factor = 2.85), # maxstepno = 4L, 
-    surv.cvglmnet = list(alpha = 0.1038067, nfolds = 5L, standardize = FALSE,
-      maxit = 29000L),
-    surv.glmboost = list(mstop = 10L, nu = 0.6349),
-    surv.penalized.fusedlasso = list(lambda1 = 0.4045103, lambda2 = 1,
-      standardize = TRUE),
-    surv.penalized.ridge = list(maxiter = 65L),
-   # surv.randomForestSRC = list(ntree = 720, bootstrap = "none",
+    surv.cforest = list(mtry = 1L)
+    #surv.cforest = list(ntree = 198L, mtry = 1L, replace = TRUE, teststat = "max",
+    #testtpe = "Teststatistic", mincriterion = 0.92),
+    #surv.CoxBoost = list(penalty = 600, criterion = "pscore", stepno = 72L),
+    #surv.coxph = list(outer.max = 19L),
+    #surv.cv.CoxBoost = list(penalty = 393, stepsize.factor = 2.85), # maxstepno = 4L, 
+    #surv.cvglmnet = list(alpha = 0.1038067, nfolds = 5L, standardize = FALSE,
+    #  maxit = 29000L),
+    #surv.glmboost = list(mstop = 10L, nu = 0.6349),
+    #surv.penalized.fusedlasso = list(lambda1 = 0.4045103, lambda2 = 1,
+    #  standardize = TRUE),
+    #surv.penalized.ridge = list(maxiter = 65L),
+    #surv.randomForestSRC = list(ntree = 720, bootstrap = "none",
     #  mtry = 2L, nodesize = 17L, splitrule = "random", na.action = "na.omit",
      # split.depth = "by.tree"),
-    surv.ranger = list(num.trees = 400L, mtry = 1L, min.node.size = 20L),
-    surv.rpart = list(minsplit = 7L, minbucket = 8L, cp = 0.6900071,
-      maxcompete = 1L, maxdepth = 27L)
+    #surv.ranger = list(num.trees = 400L, mtry = 1L, min.node.size = 20L),
+    #surv.rpart = list(minsplit = 7L, minbucket = 8L, cp = 0.6900071,
+    #  maxcompete = 1L, maxdepth = 27L)
   )
   
   fixHyperPars = function(lrn) {
