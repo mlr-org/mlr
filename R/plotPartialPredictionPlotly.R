@@ -37,6 +37,10 @@ plotPartialPredictionPlotly = function(obj, p = 1) {
     
     plt = plot_ly(data = grid.3d, x = x, y = y, z = z,
                   type = "surface")
+    
+    plt = plt %>% layout(scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
+                                      yaxis = list(title = paste("y: ", x2n, sep = "")), 
+                                      zaxis = list(title = paste("z: ", target, sep = ""))))
   }
   
   # if (obj$task.desc$type == "classif") {
