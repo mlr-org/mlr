@@ -25,8 +25,7 @@ before predictions.}
 Function to preprocess the data before prediction.
 \code{target} is a string and denotes the target variable in \code{data}.
 \code{args} are the args that were passed to \code{train}.
-\code{control} is the object you returned in \code{train}.
-Must return the processed data.}
+\code{control} is the object you returned in \code{train}.}
 
 \item{par.set}{[\code{\link[ParamHelpers]{ParamSet}}]\cr
 Parameter set of \code{\link[ParamHelpers]{LearnerParam}} objects to describe the
@@ -57,7 +56,6 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeMultilabelBinaryRelevanceWrapper}},
   \code{\link{makeOverBaggingWrapper}},
   \code{\link{makePreprocWrapperCaret}},
-  \code{\link{makeRemoveConstantFeaturesWrapper}},
   \code{\link{makeSMOTEWrapper}},
   \code{\link{makeTuneWrapper}},
   \code{\link{makeUndersampleWrapper}},

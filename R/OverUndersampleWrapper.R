@@ -39,7 +39,7 @@ makeUndersampleWrapper = function(learner, usw.rate = 1, usw.cl = NULL) {
     assertString(usw.cl)
     pv$usw.cl = usw.cl
   }
-  id = stri_paste(learner$id, "undersampled", sep = ".")
+  id = paste(learner$id, "undersampled", sep = ".")
   ps = makeParamSet(
     makeNumericLearnerParam(id = "usw.rate", lower = 0, upper = 1),
     makeUntypedLearnerParam(id = "usw.cl", default = NULL, tunable = FALSE)
@@ -61,7 +61,7 @@ makeOversampleWrapper = function(learner, osw.rate = 1, osw.cl = NULL) {
     assertString(osw.cl)
     pv$osw.cl = osw.cl
   }
-  id = stri_paste(learner$id, "oversampled", sep = ".")
+  id = paste(learner$id, "oversampled", sep = ".")
   ps = makeParamSet (
     makeNumericLearnerParam(id = "osw.rate", lower = 1),
     makeUntypedLearnerParam(id = "osw.cl", default = NULL, tunable = FALSE)

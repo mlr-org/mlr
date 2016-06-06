@@ -32,19 +32,19 @@ trainLearner.classif.dcSVM = function(.learner, .task, .subset, .weights = NULL,
   pars = list(...)
   m.flag = FALSE
   max.levels.flag = FALSE
-  if (!any(stri_detect_regex(names(pars), 'm'))) {
+  if (!any(grepl('m', names(pars)))) {
     m = 800
     m.flag = TRUE
   } else {
     m = pars$m
   }
-  if (!any(stri_detect_regex(names(pars), 'max.levels'))) {
+  if (!any(grepl('max.levels', names(pars)))) {
     max.levels = 1
     max.levels.flag = TRUE
   } else {
     max.levels = pars$max.levels
   }
-  if (!any(stri_detect_regex(names(pars), 'k'))) {
+  if (!any(grepl('k', names(pars)))) {
     k = 4
   } else {
     k = pars$k

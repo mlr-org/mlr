@@ -20,6 +20,8 @@
 #'   Selected features for model.
 #'   By default the first 2 features are used.
 #' @template arg_measures
+#' @param three.d [\code{logical(1)}]\cr
+#'   3D visual of a plot. Default is FALSE.
 #' @param cv [\code{integer(1)}]\cr
 #'   Do cross-validation and display in plot title?
 #'   Number of folds. 0 means no CV.
@@ -50,23 +52,30 @@
 #'   Default is \code{TRUE}.
 #' @param err.col [\code{character(1)}]\cr
 #'   For classification: Color of misclassified data points.
-#'   Default is \dQuote{white}
+#'   Default value for 2D plot is \dQuote{white} and default value for 3D plot is \dQuote{black}
 #' @param err.size [\code{integer(1)}]\cr
 #'   For classification: Size of misclassified data points.
 #'   Default is \code{pointsize}.
 #' @param greyscale [\code{logical(1)}]\cr
 #'   Should the plot be greyscale completely?
 #'   Default is \code{FALSE}.
+#' @param alpha [\code{numeric(1)}]\cr
+#'   Set the prediction point transparancy for classification 3D plots with value from 0 to 1.
+#'   Default is 1.
+#' @param err.alpha [\code{numeric(1)}]\cr
+#'   Set the error point transparancy for classification 3D plots with value from 0 to 1.
+#'   Default is \code{alpha}
 #' @template arg_prettynames
 #' @return The ggplot2 object.
 #' @export
-plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 10L,  ...,
+plotLearnerPrediction = function(learner, task, features = NULL, three.d = FALSE, measures, cv = 10L,  ...,
   gridsize, pointsize = 2,
   prob.alpha = TRUE, se.band = TRUE,
   err.mark = "train",
   bg.cols = c("darkblue", "green", "darkred"),
   err.col = "white", err.size = pointsize,
-  greyscale = FALSE, pretty.names = TRUE) {
+  greyscale = FALSE, pretty.names = TRUE,
+  alpha = 1, err.alpha = alpha) {
 
   learner = checkLearner(learner)
   assert(
@@ -78,18 +87,22 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
 
   # features and dimensionality
   fns = getTaskFeatureNames(task)
-  if (is.null(features)) {
+  if (is.null(features) && !three.d) {
     # take first or first 2 features as default
     features = if (length(fns) == 1L) fns else fns[1:2]
+  } else if (is.null(features) && three.d && td$type != "classif") {
+    features = if (length(fns) == 1L) fns else fns[1:2]
+  } else if (is.null(features) && three.d && td$type == "classif") {
+    features = if (length(fns) == 1L) fns else fns[1:3]
   } else {
-    assertCharacter(features, max.len = 2L)
+    assertCharacter(features, max.len = 3L)
     assertSubset(features, choices = fns)
   }
   taskdim = length(features)
-  if (td$type %in% c("classif", "cluster") && taskdim != 2L)
-    stopf("Classification and clustering: currently only 2D plots supported, not: %i", taskdim)
+  if (td$type %in% c("classif", "cluster") && taskdim %nin% 2:3)
+    stopf("Classification and clustering: currently only 2D and 3D plots supported, not: %i", taskdim)
   if (td$type == "regr" && taskdim %nin% 1:2)
-    stopf("Regression: currently only 1D and 2D plots supported, not: %i", taskdim)
+    stopf("Regression: currently only 1D, 2D and 3D plots supported, not: %i", taskdim)
 
   measures = checkMeasures(measures, task)
   cv = asCount(cv)
@@ -140,10 +153,14 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
     perf.cv = NA_real_
   }
 
-  # 2d stuff
-  if (taskdim == 2L) {
+  # 2d, 3d stuff
+  if (taskdim > 1L) {
     x2n = features[2L]
     x2 = data[, x2n]
+    if (taskdim == 3L) {
+      x3n = features[3L]
+      x3 = data[, x3n]
+    }
   }
 
   # grid for predictions
@@ -155,11 +172,26 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
       seq(min(x1), max(x1), length.out = gridsize),
       seq(min(x2), max(x2), length.out = gridsize)
     )
+  } else if (taskdim == 3L) {
+    grid = expand.grid(
+      seq(min(x1), max(x1), length.out = gridsize / 4),
+      seq(min(x2), max(x2), length.out = gridsize / 4),
+      seq(min(x3), max(x3), length.out = gridsize / 4)
+    )
   }
   colnames(grid) = features
   pred.grid = predict(mod, newdata = grid)
   grid[, target] = pred.grid$data$response
-
+  
+  # set title
+  if (pretty.names) {
+    lrn.str = learner$short.name
+  } else {
+    lrn.str = learner$id
+  }
+  title = sprintf("%s: %s", lrn.str, paramValueToString(learner$par.set, learner$par.vals))
+  title = sprintf("%s\nTrain: %s; CV: %s", title, perfsToString(perf.train), perfsToString(perf.cv))
+  
   if (td$type == "classif") {
     data$.err = if (err.mark == "train")
       (y != yhat)
@@ -167,34 +199,66 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
       y != pred.cv$data[order(pred.cv$data$id), "response"]
     else
       NULL
-    if (taskdim == 2L) {
-      p = ggplot(grid, aes_string(x = x1n, y = x2n))
-      if (hasLearnerProperties(learner, "prob") && prob.alpha) {
-        # max of rows is prob for selected class
-        prob = apply(getPredictionProbabilities(pred.grid, cl = td$class.levels), 1, max)
-        grid$.prob.pred.class = prob
-        p = p + geom_tile(data = grid, mapping = aes_string(fill = target, alpha = ".prob.pred.class"),
-          show.legend = TRUE)
-        p = p + scale_alpha(limits = range(grid$.prob.pred.class))
-      } else {
-        p = p + geom_tile(mapping = aes_string(fill = target))
+    if (!three.d){
+      if (taskdim == 2L) {
+        p = ggplot(grid, aes_string(x = x1n, y = x2n))
+        if (hasLearnerProperties(learner, "prob") && prob.alpha) {
+          # max of rows is prob for selected class
+          prob = apply(getPredictionProbabilities(pred.grid, cl = td$class.levels), 1, max)
+          grid$.prob.pred.class = prob
+          p = p + geom_tile(data = grid, mapping = aes_string(fill = target, alpha = ".prob.pred.class"),
+                            show.legend = TRUE)
+          p = p + scale_alpha(limits = range(grid$.prob.pred.class))
+        } else {
+          p = p + geom_tile(mapping = aes_string(fill = target))
+        }
+        # print normal points
+        p = p + geom_point(data = subset(data, !data$.err),
+                           mapping = aes_string(x = x1n, y = x2n, shape = target), size = pointsize)
+        # mark incorrect points
+        if (err.mark != "none" && any(data$.err)) {
+          p = p + geom_point(data = subset(data, data$.err),
+                             mapping = aes_string(x = x1n, y = x2n, shape = target),
+                             size = err.size + 1.5, show.legend = FALSE)
+          p = p + geom_point(data = subset(data, data$.err),
+                             mapping = aes_string(x = x1n, y = x2n, shape = target),
+                             size = err.size + 1, col = err.col, show.legend = FALSE)
+        }
+        # print error points
+        p = p + geom_point(data = subset(data, data$.err),
+                           mapping = aes_string(x = x1n, y = x2n, shape = target), size = err.size, show.legend = FALSE)
+        p  = p + guides(alpha = FALSE)
       }
+    } else if (three.d && taskdim == 3L) {
+      require(plotly)
+      subdata = subset(data, !data$.err)
+      errdata = subset(data, data$.err)
       # print normal points
-      p = p + geom_point(data = subset(data, !data$.err),
-        mapping = aes_string(x = x1n, y = x2n, shape = target), size = pointsize)
-      # mark incorrect points
-      if (err.mark != "none" && any(data$.err)) {
-        p = p + geom_point(data = subset(data, data$.err),
-          mapping = aes_string(x = x1n, y = x2n, shape = target),
-          size = err.size + 1.5, show.legend = FALSE)
-        p = p + geom_point(data = subset(data, data$.err),
-          mapping = aes_string(x = x1n, y = x2n, shape = target),
-          size = err.size + 1, col = err.col, show.legend = FALSE)
-      }
-      # print error points
-      p = p + geom_point(data = subset(data, data$.err),
-        mapping = aes_string(x = x1n, y = x2n, shape = target), size = err.size, show.legend = FALSE)
-      p  = p + guides(alpha = FALSE)
+      if (greyscale)
+        p = plot_ly(x = subdata[, x1n], y = subdata[, x2n], z = subdata[, x3n], 
+                    type = "scatter3d", mode = "markers", symbol = subdata[, target], 
+                    marker = list(size = pointsize, opacity = alpha, color = "grey"), 
+                    text = "Input Data", legendgroup = "Input Data")
+      else 
+        p = plot_ly(x = subdata[, x1n], y = subdata[, x2n], z = subdata[, x3n], 
+                    type = "scatter3d", mode = "markers", symbol = subdata[, target], 
+                    marker = list(size = pointsize, opacity = alpha), 
+                    text = "Input Data", legendgroup = "Input Data")
+      p = p %>% layout(title = title,
+                       scene = list(xaxis = list(title = paste("x: ", x1n)),
+                                    yaxis = list(title = paste("y: ", x2n)),
+                                    zaxis = list(title = paste("z: ", x3n))))
+      # print incorrect points
+      if (err.col == "white")
+        p = add_trace(p, x = errdata[, x1n], y = errdata[, x2n], z = errdata[, x3n],
+                      type = "scatter3d", mode = "markers", symbol = errdata[, target],
+                      marker = list(size = err.size, opacity = err.alpha, color = "black"), 
+                      text = "Missclassified Data", legendgroup = "Missclassified Data")
+      else
+        p = add_trace(p, x = errdata[, x1n], y = errdata[, x2n], z = errdata[, x3n],
+                      type = "scatter3d", mode = "markers", symbol = errdata[, target],
+                      marker = list(size = err.size, opacity = err.alpha, color = err.col), 
+                      text = "Missclassified Data", legendgroup = "Missclassified Data")
     }
   } else if (td$type == "cluster") {
     if (taskdim == 2L) {
@@ -202,7 +266,7 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
       p = ggplot(data, aes_string(x = x1n, y = x2n, col = "response"))
       p = p + geom_point(size = pointsize)
     }
-  } else if (td$type == "regr") {
+  } else if (td$type == "regr"  && !three.d) {
     if (taskdim == 1L) {
       # plot points and model
       p = ggplot(mapping = aes_string(x = x1n))
@@ -223,28 +287,55 @@ plotLearnerPrediction = function(learner, task, features = NULL, measures, cv = 
       p = p + scale_fill_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L], space = "Lab")
       # plot point, with circle and interior color for y
       p = p + geom_point(data = data, mapping = aes_string(x = x1n, y = x2n, colour = target),
-        size = pointsize)
+                         size = pointsize)
       p = p + geom_point(data = data, mapping = aes_string(x = x1n, y = x2n),
-        size = pointsize, colour = "black", shape = 1)
+                         size = pointsize, colour = "black", shape = 1)
       # plot point, with circle and interior color for y
       p = p + scale_colour_gradient2(low = bg.cols[1L], mid = bg.cols[2L], high = bg.cols[3L], space = "Lab")
       p  = p + guides(colour = FALSE)
     }
+  } else if (td$type == "regr" && taskdim == 2L && three.d) {
+    require(plotly)
+    # reform grid data
+    grid.dcast = reshape2::dcast(grid, as.formula(paste(x1n, x2n, sep = "~")), value.var = target)
+    # generate 3D plots data list
+    grid.3d = list(x = grid.dcast[,1],
+                   y = as.numeric(colnames(grid.dcast)[-1]),
+                   z = t(as.matrix(grid.dcast[,-1])))
+    if (greyscale) {
+      # plot 3D surface
+      p = plot_ly(x = grid.3d$x, y = grid.3d$y, z = grid.3d$z, 
+                  type = "surface", colorbar = list(title = target), name = "Learned Value", colorscale = "Greys")
+      # set plot parameters
+      p = p %>% layout(title = title,
+                       scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
+                                    yaxis = list(title = paste("y: ", x2n, sep = "")), 
+                                    zaxis = list(title = paste("z: ", target, sep = ""))))
+      # add real value trace
+      p = add_trace(p, x = data[, x1n], y = data[, x2n], z = data[, target], 
+                    type = "scatter3d", color = data[, target], mode = "markers",
+                    marker = list(size = pointsize, colorbar = F, colorscale = "Greys"), name = "Input Value", showscale = F)
+    } else {
+      # plot 3D surface
+      p = plot_ly(x = grid.3d$x, y = grid.3d$y, z = grid.3d$z, 
+                  type = "surface", colorbar = list(title = target), name = "Learned Value")
+      # set plot parameters
+      p = p %>% layout(title = title,
+                       scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
+                                    yaxis = list(title = paste("y: ", x2n, sep = "")), 
+                                    zaxis = list(title = paste("z: ", target, sep = ""))))
+      # add real value trace
+      p = add_trace(p, x = data[, x1n], y = data[, x2n], z = data[, target], 
+                    type = "scatter3d", color = data[, target], mode = "markers",
+                    marker = list(size = pointsize, colorbar = F), name = "Input Value", showscale = F)
+    }
   }
-
-  # set title
-  if (pretty.names) {
-    lrn.str = learner$short.name
-  } else {
-    lrn.str = learner$id
-  }
-  title = sprintf("%s: %s", lrn.str, paramValueToString(learner$par.set, learner$par.vals))
-  title = sprintf("%s\nTrain: %s; CV: %s", title, perfsToString(perf.train), perfsToString(perf.cv))
-  p = p + ggtitle(title)
-
-  # deal with greyscale
-  if (greyscale) {
-    p = p + scale_fill_grey()
+  if (!three.d){
+    p = p + ggtitle(title)
+    # deal with greyscale
+    if (greyscale) {
+      p = p + scale_fill_grey()
+    }
   }
   return(p)
 }

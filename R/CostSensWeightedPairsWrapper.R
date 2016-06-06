@@ -22,7 +22,7 @@
 makeCostSensWeightedPairsWrapper = function(learner) {
   learner = checkLearnerClassif(learner, weights = TRUE)
   learner = setPredictType(learner, "response")
-  id = stri_paste("costsens", learner$id, sep = ".")
+  id = paste("costsens", learner$id, sep = ".")
   makeHomogeneousEnsemble(id, "costsens", learner, package = learner$package,
     learner.subclass = "CostSensWeightedPairsWrapper", model.subclass = "CostSensWeightedPairsModel")
 }

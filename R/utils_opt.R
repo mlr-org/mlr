@@ -18,8 +18,8 @@ getThresholdFromOptPath = function(opt.path, inds) {
   ths = asMatrixCols(lapply(inds, function(i) {
     ex = getOptPathEl(opt.path, i)$extra
     ns = names(ex)
-    ex = ex[stri_detect_regex(ns, "^threshold")]
-    setNames(ex, stri_replace_first(names(ex), "", regex = "^threshold\\."))
+    ex = ex[grepl("^threshold", ns)]
+    setNames(ex, sub("^threshold\\.", "", names(ex)))
   }))
   rowMeans(ths)
 }
@@ -33,7 +33,6 @@ makeOptPathDFFromMeasures = function(par.set, measures, ...) {
     length(intersect(ns, getParamIds(par.set, repeated = TRUE, with.nr = TRUE))) > 0L)
     stop("Cannot create OptPath, measures ids and dimension names of input space overlap!")
   minimize = vlapply(measures, function(m) m$minimize)
-  names(minimize) = ns
   makeOptPathDF(par.set, ns, minimize, add.transformed.x = FALSE,
     include.error.message = TRUE, include.exec.time = TRUE, ...)
 }

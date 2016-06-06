@@ -10,7 +10,6 @@ makeRLearner.surv.ranger = function() {
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
       makeIntegerLearnerParam(id = "min.node.size", lower = 1L, default = 3L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
-      makeNumericLearnerParam(id = "sample.fraction", lower = 0L, upper = 1L),
       makeNumericVectorLearnerParam(id = "split.select.weights", lower = 0, upper = 1),
       makeUntypedLearnerParam(id = "always.split.variables"),
       makeLogicalLearnerParam(id = "respect.unordered.factors", default = FALSE),
@@ -23,7 +22,7 @@ makeRLearner.surv.ranger = function() {
       makeDiscreteLearnerParam(id = "splitrule", values = c("logrank", "C"), default = "logrank")
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE),
-    properties = c("numerics", "factors", "ordered", "rcens", "prob"),
+    properties = c("numerics", "factors", "rcens", "prob"),
     name = "Random Forests",
     short.name = "ranger",
     note = "By default, internal parallelization is switched off (`num.threads = 1`) and `verbose` output is disabled. Both settings are changeable."

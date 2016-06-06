@@ -4,13 +4,13 @@
 \alias{removeConstantFeatures}
 \title{Remove constant features from a data set.}
 \usage{
-removeConstantFeatures(obj, perc = 0, dont.rm = character(0L),
+removeConstantFeatures(task, perc = 0, dont.rm = character(0L),
   na.ignore = FALSE, tol = .Machine$double.eps^0.5,
   show.info = getMlrOption("show.info"))
 }
 \arguments{
-\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
-Input data.}
+\item{task}{[\code{\link{Task}}]\cr
+The task.}
 
 \item{perc}{[\code{numeric(1)}]\cr
 The percentage of a feature values in [0, 1) that must differ from the mode value.
@@ -23,7 +23,6 @@ Default is no columns.}
 \item{na.ignore}{[\code{logical(1)}]\cr
 Should NAs be ignored in the percentage calculation?
 (Or should they be treated as a single, extra level in the percentage calculation?)
-Note that if the feature has only missing values, it is always removed.
 Default is \code{FALSE}.}
 
 \item{tol}{[\code{numeric(1)}]\cr
@@ -36,7 +35,7 @@ Print verbose output on console?
 Default is set via \code{\link{configureMlr}}.}
 }
 \value{
-[\code{data.frame} | \code{\link{Task}}]. Same type as \code{obj}.
+[\code{\link{Task}}].
 }
 \description{
 Constant features can lead to errors in some models and obviously provide

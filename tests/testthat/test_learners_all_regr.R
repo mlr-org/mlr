@@ -59,10 +59,14 @@ test_that("learners work: regr ", {
 
   # regr with weights
   task = subsetTask(regr.task, subset = 1:70, features = getTaskFeatureNames(regr.task)[c(1, 3)])
-  lrns = mylist("regr", properties = "weights", create = TRUE)
-  lapply(lrns, testThatLearnerRespectsWeights, hyperpars = hyperpars,
-    task = task, train.inds = 1:70, test.inds = 1:70, weights = rep(c(1, 5), length.out = 70),
-    pred.type = "response", get.pred.fun = getPredictionResponse)
+  lrns = mylist(task, properties = "weights")
+  lrns = lapply(lrns$class, makeLearner)
+  for (lrn in lrns) {
+    lrn = fixHyperPars(lrn)
+    m = train(lrn, task, weights = rep(1:2, 35))
+    p = predict(m, task)
+    expect_true(!is.na(performance(p)))
+  }
 
   # regr with missing
   d = regr.df[1:100, c(getTaskFeatureNames(regr.task)[c(1, 3)], regr.target)]

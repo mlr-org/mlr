@@ -19,10 +19,9 @@ makeRLearner.surv.glmboost = function() {
     properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     name = "Gradient Boosting with Componentwise Linear Models",
     short.name = "glmboost",
-    note = stri_paste(
+    note = paste(
       "`family` has been set to `CoxPH()` by default.",
-      "Maximum number of boosting iterations is set via `mstop`, the actual number used for prediction is controlled by `m`.",
-      sep = " "
+      "Maximum number of boosting iterations is set via `mstop`, the actual number used for prediction is controlled by `m`."
     )
   )
 }

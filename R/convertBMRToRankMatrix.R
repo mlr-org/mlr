@@ -47,9 +47,8 @@ convertBMRToRankMatrix = function(bmr, measure = NULL, ties.method = "average", 
   # convert into matrix, rows = leaner, cols = tasks
   df = reshape2::melt(df, c("task.id", "learner.id"), "alg.rank")
   df = reshape2::dcast(df, learner.id ~ task.id )
-  task.id.names = setdiff(colnames(df), "learner.id")
-  mat = as.matrix(df[, task.id.names])
-  rownames(mat) = df$learner.id
-  colnames(mat) = task.id.names
+  rownames(df) = df$learner.id
+  mat = as.matrix(df[,colnames(df) != "learner.id"])
+
   return(mat)
 }

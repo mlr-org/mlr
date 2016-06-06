@@ -17,16 +17,9 @@ test_that("downsample",  {
 })
 
 test_that("downsample wrapper",  {
-  # test it with classif
   rdesc = makeResampleDesc("CV", iters = 2)
   lrn = makeDownsampleWrapper("classif.rpart", dw.perc = 0.5)
   r = resample(lrn, binaryclass.task, rdesc)
-  expect_true(!is.na(r$aggr))
-
-  # test it with regr
-  rdesc = makeResampleDesc("CV", iters = 2)
-  lrn = makeDownsampleWrapper("regr.rpart", dw.perc = 0.5)
-  r = resample(lrn, regr.task, rdesc)
   expect_true(!is.na(r$aggr))
 })
 
@@ -38,28 +31,3 @@ test_that("downsample wrapper works with xgboost, we had issue #492",  {
   r = resample(lrn, binaryclass.task, rdesc)
   expect_true(!is.na(r$aggr))
 })
-
-test_that("downsample wrapper works with weights, we had issue #838",  {
-  n = nrow(regr.df)
-  w = 1:n
-  task = makeRegrTask(data = regr.df, target = regr.target, weights = w)
-
-  # weights from task, use all
-  lrn = makeDownsampleWrapper("regr.__mlrmocklearners__6", dw.perc = 1)
-  m = train(lrn, task)
-  expect_set_equal(getLearnerModel(m, more.unwrap = TRUE)$weights, w)
-
-  # weights from task, really downsample
-  lrn = makeDownsampleWrapper("regr.__mlrmocklearners__6", dw.perc = 0.5)
-  m = train(lrn, task)
-  u = getLearnerModel(m, more.unwrap = TRUE)$weights
-  expect_true(length(u) == n/2 && all(u %in% w))
-
-  # weights from train
-  lrn = makeDownsampleWrapper("regr.__mlrmocklearners__6", dw.perc = 0.5)
-  m = train(lrn, task, subset = 1:10, weights = 1:10)
-  u = getLearnerModel(m, more.unwrap = TRUE)$weights
-  expect_true(length(u) == 5 && all(u %in% 1:10))
-})
-
-

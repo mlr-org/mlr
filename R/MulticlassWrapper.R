@@ -38,7 +38,7 @@ makeMulticlassWrapper = function(learner, mcw.method = "onevsrest") {
     checkFunction(mcw.method, args = "task")
   )
   pv = list(mcw.method = mcw.method)
-  id = stri_paste(learner$id, "multiclass", sep = ".")
+  id = paste(learner$id, "multiclass", sep = ".")
 
   x = makeHomogeneousEnsemble(id = id, type = "classif", next.learner = learner,
     package = learner$package,  par.set = ps, par.vals = pv,

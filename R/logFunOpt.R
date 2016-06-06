@@ -30,7 +30,7 @@ logFunTune = function(learner, task, resampling, measures, par.set, control, opt
   x.string = paramValueToString(par.set, x, show.missing.values = !remove.nas)
   # shorten tuning logging a bit. we remove the sel.learner prefix from params
   if (inherits(learner, "ModelMultiplexer"))
-    x.string = stri_replace_all(x.string, "", regex = stri_paste(x$selected.learner, "\\."))
+    x.string = gsub(paste0(x$selected.learner, "\\."), "", x.string)
 
   logFunDefault(learner, task, resampling, measures, par.set, control, opt.path, dob,
     x.string, y, remove.nas, stage, prev.stage, prefixes = c("Tune-x", "Tune-y")

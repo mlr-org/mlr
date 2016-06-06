@@ -11,7 +11,6 @@ makeRLearner.classif.ranger = function() {
       # FIXME: Add default value when data dependent defaults are implemented: min.node.size = 1 for classification, 10 for probability prediction
       makeIntegerLearnerParam(id = "min.node.size", lower = 1L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
-      makeNumericLearnerParam(id = "sample.fraction", lower = 0L, upper = 1L),
       makeNumericVectorLearnerParam(id = "split.select.weights", lower = 0, upper = 1),
       makeUntypedLearnerParam(id = "always.split.variables"),
       makeLogicalLearnerParam(id = "respect.unordered.factors", default = FALSE),
@@ -23,7 +22,7 @@ makeRLearner.classif.ranger = function() {
       makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE)
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE),
-    properties = c("twoclass", "multiclass", "prob", "numerics", "factors", "ordered"),
+    properties = c("twoclass", "multiclass", "prob", "numerics", "factors"),
     name = "Random Forests",
     short.name = "ranger",
     note = "By default, internal parallelization is switched off (`num.threads = 1`) and `verbose` output is disabled. Both settings are changeable."

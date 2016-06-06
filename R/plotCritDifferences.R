@@ -205,7 +205,7 @@ plotCritDifferences = function(obj, baseline = NULL, pretty.names = TRUE) {
     # Add point at learner
     p = p + annotate("point", x = cd.x, y = cd.y, alpha = 0.5)
     # Add critical difference text
-    p = p + annotate("text", label = stri_paste("Critical Difference =", round(cd, 2), sep = " "),
+    p = p + annotate("text", label = paste("Critical Difference =", round(cd, 2)),
                      x = cd.x, y = cd.y + 0.05)
   } else {
     nemenyi.data = obj$cd.info$nemenyi.data
@@ -215,7 +215,7 @@ plotCritDifferences = function(obj, baseline = NULL, pretty.names = TRUE) {
                            data = nemenyi.data, size = 2, color = "dimgrey", alpha = 0.9)
       # Add text (descriptive)
       p = p + annotate("text",
-                       label = stri_paste("Critical Difference =", round(cd, 2), sep = " "),
+                       label = paste("Critical Difference =", round(cd, 2)),
                        y = max(obj$data$yend) + .1, x = mean(obj$data$mean.rank))
       # Add bar (descriptive)
       p = p + annotate("segment",

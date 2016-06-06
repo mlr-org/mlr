@@ -37,14 +37,14 @@ generateFilterValuesData = function(task, method = "rf.importance", nselect = ge
   check_task = sapply(filter, function(x) td$type %nin% x$supported.tasks)
   if (any(check_task))
     stopf("Filter(s) '%s' not campatible with task of type '%s'",
-          stri_paste(method[check_task], collapse = ", ", sep = " "), td$type)
+          paste(method[check_task], collapse = ", "), td$type)
 
   check_feat = lapply(filter, function(x) setdiff(names(td$nfeat[td$n.feat > 0L]), x$supported.features))
   check_length = sapply(check_feat, length) > 0L
   if (any(check_length)) {
     stopf("Filter(s) '%s' not compatible with features of type '%s' respectively.",
           method[check_length],
-          stri_paste(sapply(check_feat[check_length], function(x) stri_paste(x, collapse = ", ", sep = " ")), collapse = ", and", sep = " "))
+          paste(sapply(check_feat[check_length], function(x) paste(x, collapse = ", ")), collapse = ", and"))
   }
   assertCount(nselect)
 

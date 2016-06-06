@@ -80,7 +80,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 
   r = resampling$size
   if (n != r)
-    stop(stri_paste("Size of data set:", n, "and resampling instance:", r, "differ!", sep = " "))
+    stop(paste("Size of data set:", n, "and resampling instance:", r, "differ!"))
 
   checkLearnerBeforeTrain(task, learner, weights)
 

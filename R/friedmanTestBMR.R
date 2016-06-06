@@ -30,5 +30,5 @@ friedmanTestBMR = function(bmr, measure = NULL, aggregation = "default") {
     aggr.meas = measureAggrName(measure)
     df = getBMRAggrPerformances(bmr, as.df = TRUE)
   }
-  friedman.test(as.formula(stri_paste(aggr.meas, " ~ learner.id | task.id", sep = "")), data = df)
+  friedman.test(as.formula(paste(aggr.meas, " ~ learner.id | task.id", sep = "")), data = df)
 }

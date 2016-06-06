@@ -171,7 +171,7 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
   # FIXME in the future we might want to create formulas w/o an environment
   # currently this is impossible for survival because the namespace is not imported
   # properly in many packages -> survival::Surv not found
-  as.formula(stri_paste(target, "~", stri_paste(features, collapse = " + ", sep = " "), sep = " "), env = env)
+  as.formula(paste(target, "~", paste(features, collapse = " + ")), env = env)
 }
 
 #' @title Get target data of task.

@@ -47,7 +47,7 @@ plotBMRSummary = function(bmr, measure = NULL, trafo = "none", order.tsks = NULL
       d[, meas.name] = rank(d[, meas.name], ties.method = "average")
       return(d)
     })
-    xlab.string = stri_paste("rank of", xlab.string, sep = " ")
+    xlab.string = paste("rank of", xlab.string)
   }
 
   df = orderBMRTasks(bmr, df, order.tsks)

@@ -49,14 +49,14 @@ getPredictionProbabilities = function(pred, cl) {
     stop("Probabilities not present in Prediction object!")
   cns = colnames(pred$data)
   if (ttype %in% c("classif", "multilabel")) {
-    cl2 = stri_paste("prob", cl, sep = ".")
+    cl2 = paste("prob", cl, sep = ".")
     if (!all(cl2 %in% cns))
       stopf("Trying to get probabilities for nonexistant classes: %s", collapse(cl))
     y = pred$data[, cl2]
     if (length(cl) > 1L)
       colnames(y) = cl
   } else if (ttype == "cluster") {
-    y = pred$data[, stri_detect_regex(cns, "prob\\.")]
+    y = pred$data[, grepl("prob\\.", cns)]
     colnames(y) = seq_col(y)
   }
   return(y)
@@ -111,7 +111,7 @@ getPredictionResponse.default = function(pred) {
 
 #' @export
 getPredictionResponse.PredictionMultilabel = function(pred) {
-  i = stri_detect_regex(colnames(pred$data), "^response\\.")
+  i = grepl("^response\\.", colnames(pred$data))
   m = as.matrix(pred$data[, i])
   setColNames(m, pred$task.desc$class.levels)
 }
@@ -151,7 +151,7 @@ getPredictionTruth.PredictionSurv = function(pred) {
 
 #' @export
 getPredictionTruth.PredictionMultilabel = function(pred) {
-  i = stri_detect_regex(colnames(pred$data), "^truth\\.")
+  i = grepl("^truth\\.", colnames(pred$data))
   m = as.matrix(pred$data[, i])
   setColNames(m, pred$task.desc$class.levels)
 }

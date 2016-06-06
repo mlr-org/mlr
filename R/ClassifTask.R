@@ -47,7 +47,7 @@ makeTaskDesc.ClassifTask = function(task, id, target, positive) {
   td$positive = positive
   td$negative = NA_character_
   if (length(td$class.levels) == 1L)
-    td$negative = stri_paste("not_", positive)
+    td$negative = paste0("not_", positive)
   else if (length(td$class.levels) == 2L)
     td$negative = setdiff(td$class.levels, positive)
   return(addClasses(td, c("TaskDescClassif", "TaskDescSupervised")))

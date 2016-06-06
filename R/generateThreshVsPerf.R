@@ -297,7 +297,7 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
         shiny::headerPanel("Threshold vs. Performance"),
         shiny::sidebarPanel(
           shiny::selectInput("interaction_select",
-                      stri_paste("choose a", interaction, sep = " "),
+                      paste("choose a", interaction),
                       levels(data[[interaction]]))
         ),
         shiny::mainPanel(

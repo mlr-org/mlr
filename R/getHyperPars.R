@@ -32,6 +32,6 @@ getHyperParsString = function(learner) {
   ns = names(hps)
   pars = getParamSet(learner)$pars[ns]
   s = Map(paramValueToString, pars, hps)
-  stri_paste(ns, s, sep = "=", collapse = ",")
+  paste(ns, s, sep = "=", collapse = ",")
 }
 

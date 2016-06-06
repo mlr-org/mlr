@@ -114,7 +114,7 @@ predict.WrappedModel = function(object, task, newdata, subset, ...) {
     time.predict = as.numeric(st[3L])
     # was there an error during prediction?
     if (is.error(p)) {
-      if (opts$on.learner.error == "warn")
+      if (opts$on.learner.warning == "warn")
         warningf("Could not predict with learner %s: %s", learner$id, as.character(p))
       p = predictFailureModel(model, newdata)
       time.predict = NA_real_

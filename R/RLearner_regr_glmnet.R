@@ -6,7 +6,7 @@ makeRLearner.regr.glmnet = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "family", values = c("gaussian", "poisson"), default = "gaussian"),
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
-      makeNumericLearnerParam(id = "s", default = 0.01, lower = 0, when = "predict"),
+      makeNumericLearnerParam(id = "s", default = 0.01, lower = 0, upper = 1, when = "predict"),
       makeLogicalLearnerParam(id = "exact", default = FALSE, when = "predict"),
       makeIntegerLearnerParam(id = "nlambda", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "lambda.min.ratio", lower = 0, upper = 1),

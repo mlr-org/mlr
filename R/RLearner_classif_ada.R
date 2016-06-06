@@ -26,7 +26,7 @@ makeRLearner.classif.ada = function() {
       makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L, tunable = FALSE)
     ),
     par.vals = list(xval = 0L),
-    properties = c("twoclass", "numerics", "factors", "prob"),
+    properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "ada Boosting",
     short.name = "ada",
     note = "`xval` has been set to `0` by default for speed."

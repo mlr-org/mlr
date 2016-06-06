@@ -66,7 +66,7 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
       dsw = makeDownsampleWrapper(learner = lrn, dw.perc = perc, dw.stratify = stratify)
       list(
         lrn.id = lrn$id,
-        lrn = setId(dsw, stri_paste(lrn$id, ".", p.id)),
+        lrn = setId(dsw, paste0(lrn$id, ".", p.id)),
         perc = perc
       )
     })
@@ -96,7 +96,7 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
 print.LearningCurveData = function(x, ...) {
   catf("LearningCurveData:")
   catf("Task: %s", x$task$task.desc$id)
-  catf("Measures: %s", collapse(extractSubList(x$measures, "name")))
+  catf("Measures: %s", paste(sapply(x$measures, function(z) z$name), collapse = ", "))
   print(head(x$data))
 }
 #' @title Plot learning curve data using ggplot2.
@@ -151,8 +151,7 @@ plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE) {
   plt = plt + ggplot2::geom_point()
   plt = plt + ggplot2::geom_line()
   if (!is.null(facet))
-    plt = plt + ggplot2::facet_wrap(as.formula(stri_paste("~", facet, sep = " ")),
-                                    scales = "free_y")
+    plt = plt + ggplot2::facet_wrap(as.formula(paste("~", facet)), scales = "free_y")
   return(plt)
 }
 #' @title Plot learning curve data using ggvis.
@@ -223,7 +222,7 @@ plotLearningCurveGGVIS = function(obj, interaction = "measure", pretty.names = T
             shiny::headerPanel("learning curve"),
             shiny::sidebarPanel(
                 shiny::selectInput("interaction_select",
-                                   stri_paste("choose a", interaction, sep = " "),
+                                   paste("choose a", interaction),
                                    levels(data[[interaction]]))
             ),
             shiny::mainPanel(

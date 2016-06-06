@@ -20,12 +20,6 @@ Default is \code{FALSE}.}
 \description{
 Calculates confusion matrix for (possibly resampled) prediction.
 Rows indicate true classes, columns predicted classes.
-
-The marginal elements count the number of classification
-errors for the respective row or column, i.e., the number of errors
-when you condition on the corresponding true (rows) or predicted
-(columns) class. The last element in the margin diagonal
-displays the total amount of errors.
 }
 \examples{
 # get confusion matrix after simple manual prediction

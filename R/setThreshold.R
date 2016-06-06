@@ -59,7 +59,7 @@ setThreshold = function(pred, threshold) {
   } else if (ttype == "multilabel") {
     # substract threshold from every entry, then check if > 0, then set response level
     p = sweep(as.matrix(p), MARGIN = 2, FUN = "-", threshold)
-    i = stri_paste("response.", levs)
+    i = paste0("response.", levs)
     pred$data[, i] = p > 0
   }
   pred$threshold = threshold

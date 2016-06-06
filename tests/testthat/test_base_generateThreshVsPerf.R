@@ -105,7 +105,7 @@ test_that("generateThreshVsPerfData", {
   mcm = matrix(sample(0:3, size = (length(classes))^2, TRUE), ncol = length(classes))
   rownames(mcm) = colnames(mcm) = classes
   costs = makeCostMeasure(id = "asym.costs", name = "Asymmetric costs",
-                          minimize = TRUE, costs = mcm, combine = mean)
+                          minimize = TRUE, costs = mcm, binaryclass.task, combine = mean)
   pvs.custom = generateThreshVsPerfData(pred, costs)
   plotThreshVsPerf(pvs.custom)
   ggsave(path)

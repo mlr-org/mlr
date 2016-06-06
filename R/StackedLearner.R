@@ -93,7 +93,7 @@ makeStackedLearner = function(base.learners, super.learner = NULL, predict.type 
 
   if (is.character(base.learners)) base.learners = lapply(base.learners, checkLearner)
   if (is.null(super.learner) && method == "compress") {
-    super.learner = makeLearner(stri_paste(base.learners[[1]]$type, '.nnet'))
+    super.learner = makeLearner(paste0(base.learners[[1]]$type,'.nnet'))
   }
   if (!is.null(super.learner)) {
     super.learner = checkLearner(super.learner)
@@ -581,7 +581,7 @@ getResponse = function(pred, full.matrix = TRUE) {
     if (full.matrix) {
       # return matrix of probabilities
       td = pred$task.desc
-      predReturn = pred$data[, stri_paste("prob", td$class.levels, sep = ".")]
+      predReturn = pred$data[, paste("prob", td$class.levels, sep = ".")]
       colnames(predReturn) = td$class.levels
       return(predReturn)
     } else {

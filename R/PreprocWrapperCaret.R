@@ -37,8 +37,7 @@ makePreprocWrapperCaret = function (learner, ...) {
     # knnSummary function #FIXME is function parameter
     # outcome #FIXME do we need that?
     makeNumericLearnerParam("ppc.fudge", default = 0.2, lower = 0),
-    makeIntegerLearnerParam("ppc.numUnique", default = 3L, lower = 1L),
-    makeIntegerLearnerParam("ppc.n.comp", lower = 1L)
+    makeIntegerLearnerParam("ppc.numUnique", default = 3L, lower = 1L)
   )
   par.vals = getDefaults(par.set)
   par.vals = insert(par.vals, list(...))
@@ -62,8 +61,7 @@ makePreprocWrapperCaret = function (learner, ...) {
       na.remove = args$ppc.na.remove,
       k = args$ppc.k,
       fudge = args$ppc.fudge,
-      numUnique = args$ppc.numUnique,
-      n.comp = args$ppc.n.comp
+      numUnique = args$ppc.numUnique
     )
 
     cns = colnames(data)

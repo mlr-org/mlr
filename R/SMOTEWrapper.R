@@ -51,7 +51,7 @@ makeSMOTEWrapper = function(learner, sw.rate = 1, sw.nn = 5L,
   if (!missing(sw.alt.logic)) {
     pv$sw.alt.logic = sw.alt.logic
   }
-  id = stri_paste(learner$id, "smoted", sep = ".")
+  id = paste(learner$id, "smoted", sep = ".")
   ps = makeParamSet(
     makeNumericLearnerParam(id = "sw.rate", lower = 1),
     makeIntegerLearnerParam(id = "sw.nn", lower = 1L),

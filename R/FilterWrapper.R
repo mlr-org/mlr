@@ -53,7 +53,7 @@ makeFilterWrapper = function(learner, fw.method = "rf.importance", fw.perc = NUL
   assertList(ddd, names = "named")
 
   lrn = makeBaseWrapper(
-    id = stri_paste(learner$id, "filtered", sep = "."),
+    id = paste(learner$id, "filtered", sep = "."),
     type = learner$type,
     next.learner = learner,
     package = filter$pkg,

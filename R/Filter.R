@@ -61,7 +61,7 @@ listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE) {
   tag2df = function(tags, prefix = "") {
     unique.tags = sort(unique(unlist(tags)))
     res = asMatrixRows(lapply(tags, "%in%", x = unique.tags))
-    colnames(res) = stri_paste(prefix, unique.tags)
+    colnames(res) = paste0(prefix, unique.tags)
     rownames(res) = NULL
     as.data.frame(res)
   }
@@ -211,8 +211,8 @@ makeFilter(
   name = "rank.correlation",
   desc = "Spearman's correlation between feature and target",
   pkg  = "FSelector",
-  supported.tasks = "regr",
-  supported.features = "numerics",
+  supported.tasks = c("regr"),
+  supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
     y = FSelector::rank.correlation(getTaskFormula(task), data = getTaskData(task))
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
@@ -344,7 +344,7 @@ makeFilter(
   fun = function(task, nselect, ...) {
     data = getTaskData(task)
     sapply(getTaskFeatureNames(task), function(feat.name) {
-      f = as.formula(stri_paste(feat.name,"~",getTaskTargetNames(task)))
+      f = as.formula(paste0(feat.name,"~",getTaskTargetNames(task)))
       aov.t = aov(f, data = data)
       summary(aov.t)[[1]][1,'F value']
     })
@@ -360,7 +360,7 @@ makeFilter(
   fun = function(task, nselect, ...) {
     data = getTaskData(task)
     sapply(getTaskFeatureNames(task), function(feat.name) {
-      f = as.formula(stri_paste(feat.name,"~", getTaskTargetNames(task)))
+      f = as.formula(paste0(feat.name,"~", getTaskTargetNames(task)))
       t = kruskal.test(f, data = data)
       unname(t$statistic)
     })

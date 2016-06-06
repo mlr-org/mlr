@@ -65,9 +65,9 @@ makePrediction.TaskDescClassif = function(task.desc, row.names, id, truth, predi
     data$prob = y
     data = as.data.frame(filterNull(data))
     # fix columnnames for prob if strange chars are in factor levels
-    indices = stri_detect_fixed(names(data), "prob.")
-    if (sum(indices) > 0)
-      names(data)[indices] = stri_paste("prob.", colnames(y))
+    i = grep("prob.", names(data), fixed = TRUE)
+    if (length(i))
+      names(data)[i] = paste0("prob.", colnames(y))
   }
 
   p = makeS3Obj(c("PredictionClassif", "Prediction"),

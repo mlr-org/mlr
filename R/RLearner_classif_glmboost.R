@@ -17,10 +17,9 @@ makeRLearner.classif.glmboost = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Boosting for GLMs",
     short.name = "glmbst",
-    note = stri_paste(
+    note = paste(
       "`family` has been set to `Binomial()` by default.",
-      "Maximum number of boosting iterations is set via `mstop`, the actual number used for prediction is controlled by `m`.",
-      sep = " "
+      "Maximum number of boosting iterations is set via `mstop`, the actual number used for prediction is controlled by `m`."
     )
   )
 }

@@ -1,8 +1,8 @@
 # find the learner for a given param name, so <learnerid>.<paramid>
 matchBaseEnsembleLearner = function(ensemble, pn) {
-  patterns = stri_paste("^", names(ensemble$base.learners), "\\.")
-  j = which(vlapply(patterns, stri_detect_regex, str = pn))
-  par.id = stri_replace_first(pn, "", regex = patterns[j])
+  patterns = paste0("^", names(ensemble$base.learners), "\\.")
+  j = which(vlapply(patterns, function(p) grepl(p, pn)))
+  par.id = sub(patterns[j], "", pn)
   list(index = j, par.id = par.id)
 }
 
@@ -11,7 +11,7 @@ getHyperPars.BaseEnsemble = function(learner, for.fun = c("train", "predict", "b
   pvs = lapply(learner$base.learners, function(lrn) {
     xs = getHyperPars.Learner(lrn, for.fun = for.fun)
     if (length(xs) > 0L)
-      names(xs) = stri_paste(lrn$id, ".", names(xs))
+      names(xs) = paste0(lrn$id, ".", names(xs))
     return(xs)
   })
   # if we dont do this, R prefixes the list names again.

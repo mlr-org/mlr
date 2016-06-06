@@ -45,7 +45,6 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
   \code{\link{generateFilterValuesData}},
   \code{\link{generateLearningCurveData}},
-  \code{\link{generatePartialDependenceData}},
   \code{\link{generatePartialPredictionData}},
   \code{\link{getFilterValues}}
 

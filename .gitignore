@@ -10,9 +10,3 @@ src/*.dll
 tests/testthat/Rplots.pdf
 testinfo.RData
 inst/doc/
-.directory
-.gdb_history
-.DS_Store
-ehthumbs.db
-Icon?
-Thumbs.db

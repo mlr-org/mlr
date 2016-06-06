@@ -65,7 +65,7 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
   # predict.threshold is checked in setter below
   assertList(par.vals)
   assertList(config, names = "named")
-  if (stri_isempty(cl))
+  if (!nzchar(cl))
     stop("Cannot create learner from empty string!")
   if (!inherits(wl, "RLearner"))
     stop("Learner must be a basic RLearner!")
