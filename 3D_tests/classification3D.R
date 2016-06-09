@@ -26,8 +26,6 @@ plotLearnerPredictionPlotly(classif.ksvm, iris.task, features = c("Petal.Width",
 plotLearnerPredictionPlotly(classif.ksvm, iris.task, features = getTaskFeatureNames(iris.task)[1:3], 
                             pointsize = 10)
 plotLearnerPredictionPlotly(classif.ksvm, iris.task, features = getTaskFeatureNames(iris.task)[1:3], 
-                            pointsize = 10, alpha = 0.6)
-plotLearnerPredictionPlotly(classif.ksvm, iris.task, features = getTaskFeatureNames(iris.task)[1:3], 
                             err.col = "red")
 plotLearnerPredictionPlotly(classif.ksvm, iris.task, features = getTaskFeatureNames(iris.task)[1:3], 
                             show.point.legend = F)
@@ -58,11 +56,6 @@ plotLearnerPredictionPlotly(classif.ksvm, pid.task, features = getTaskFeatureNam
                             show = "region", region.alpha = 1)
 plotLearnerPredictionPlotly(classif.ksvm, pid.task, features = getTaskFeatureNames(pid.task)[1:3],
                             show = "bounding.region", bounding.region.alphahull = 3)
-plotLearnerPredictionPlotly(classif.ksvm, pid.task, greyscale = T)
-plotLearnerPredictionPlotly(classif.ksvm, pid.task, err.size = 4)
-plotLearnerPredictionPlotly(classif.ksvm, pid.task, err.col = "red")
-plotLearnerPredictionPlotly(classif.ksvm, pid.task, err.size = 4, err.col = "green")
-plotLearnerPredictionPlotly(classif.ksvm, pid.task, greyscale = T, err.size = 4, err.col = "green")
 
 
 # Learner: cvglmnet
@@ -71,7 +64,8 @@ classif.cvglmnet = makeLearner("classif.cvglmnet")
 plotLearnerPredictionPlotly(classif.cvglmnet, iris.task)
 plotLearnerPredictionPlotly(classif.cvglmnet, iris.task, features = getTaskFeatureNames(iris.task)[1:3],
                             show = "region")
-
+plotLearnerPredictionPlotly(classif.cvglmnet, iris.task, features = getTaskFeatureNames(iris.task)[1:3],
+                            show = "bounding.region")
 plotLearnerPredictionPlotly(classif.cvglmnet, pid.task)
 
 
