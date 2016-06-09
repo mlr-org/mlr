@@ -6,6 +6,9 @@ makeRLearner.regr.km = function() {
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "covtype", default = "matern5_2",
         values = list("gauss", "matern5_2", "matern3_2", "exp", "powexp")),
+      makeNumericVectorLearnerParam(id = "coef.trend"),
+      makeNumericVectorLearnerParam(id = "coef.cov"),
+      makeNumericVectorLearnerParam(id = "coef.var"),
       makeNumericLearnerParam(id = "nugget"),
       makeLogicalLearnerParam(id = "nugget.estim", default = FALSE),
       makeNumericVectorLearnerParam(id = "noise.var"),
@@ -15,10 +18,13 @@ makeRLearner.regr.km = function() {
         values = c("BFGS", "gen")),
       makeNumericVectorLearnerParam(id = "lower"),
       makeNumericVectorLearnerParam(id = "upper"),
+      makeNumericVectorLearnerParam(id = "parinit"),
+      makeIntegerLearnerParam(id = "multistart", default = 1L, lower = 1L),
       makeUntypedLearnerParam(id = "control"),
       makeLogicalLearnerParam(id = "gr", default = TRUE),
       makeLogicalLearnerParam(id = "iso", default = FALSE),
       makeLogicalLearnerParam(id = "scaling", default = FALSE),
+      makeUntypedLearnerParam(id = "knots"),
       makeLogicalLearnerParam(id = "jitter", default = FALSE, when = "predict"),
       makeNumericLearnerParam(id = "nugget.stability", requires = quote(!nugget.estim && is.null(nugget)))
     ),
