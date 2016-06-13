@@ -8,7 +8,6 @@ makeRLearner.classif.randomForestSRC = function() {
       makeDiscreteLearnerParam(id = "bootstrap", default = "by.root",
         values = c("by.root", "by.node", "none")),
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
-      makeNumericLearnerParam(id = "mtry.ratio", lower = 0L, upper = 1L),
       makeIntegerLearnerParam(id = "nodesize", lower = 1L, default = 1L),
       makeIntegerLearnerParam(id = "nodedepth", default = -1L),
       makeDiscreteLearnerParam(id = "splitrule", default = "gini",
@@ -43,20 +42,14 @@ makeRLearner.classif.randomForestSRC = function() {
     properties = c("missings", "numerics", "factors", "ordered", "prob", "twoclass", "multiclass", "weights"),
     name = "Random Forest",
     short.name = "rfsrc",
-    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.
-      `mtry.ratio` indicates the proportion of variables randomly selected as candidates for a split.'
+    note = '`na.action` has been set to `"na.impute"` by default to allow missing data support.'
   )
 }
 
 #' @export
-trainLearner.classif.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, mtry = NULL, mtry.ratio = NULL, ...) {
-  if (!is.null(mtry.ratio)) {
-    if (!is.null(mtry))
-      stop("You cannot set both 'mtry' and 'mtry.ratio'")
-    mtry = mtry.ratio * getTaskNFeats(.task)
-  }
+trainLearner.classif.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, ...) {
   f = getTaskFormula(.task)
-  randomForestSRC::rfsrc(f, data = getTaskData(.task, .subset, recode.target = "drop.levels"), forest = TRUE, mtry = mtry, case.wt = .weights, ...)
+  randomForestSRC::rfsrc(f, data = getTaskData(.task, .subset, recode.target = "drop.levels"), forest = TRUE, case.wt = .weights, ...)
 }
 
 #' @export
