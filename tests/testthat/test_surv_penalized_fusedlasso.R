@@ -16,14 +16,13 @@ test_that("surv_penalized_fusedlasso", {
       parset.list[[i]]$lambda1 = 1
     if (is.null(parset.list[[i]]$lambda2))
       parset.list[[i]]$lambda2 = 1
-    pars = c(list(response = surv.formula, data = surv.train[, -7L],
+    pars = c(list(response = surv.formula, data = surv.train,
       model = "cox", trace = FALSE, fusedl = TRUE), parset.list[[i]])
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(penalized::penalized, pars)
-    p = penalized::survival(penalized::predict(m,
-      penalized = model.matrix(surv.formula, surv.test[, -7L])[, -1L]), Inf)
+    p = penalized::survival(penalized::predict(m, data = surv.test), Inf)
     old.predicts.list[[i]] = p
   }
-  testSimpleParsets("surv.penalized.fusedlasso", surv.df[, -7L], surv.target,
+  testSimpleParsets("surv.penalized.fusedlasso", surv.df, surv.target,
     surv.train.inds, old.predicts.list, parset.list)
 })
