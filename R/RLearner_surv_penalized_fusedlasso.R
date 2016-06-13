@@ -17,7 +17,7 @@ makeRLearner.surv.penalized.fusedlasso = function() {
       makeLogicalLearnerParam(id = "standardize", default = FALSE),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(lambda1 = 1, lambda2 = 1),
+    par.vals = list(lambda1 = 1, lambda2 = 1, trace = FALSE),
     properties = c("numerics", "factors", "ordered", "rcens"),
     name = "Fused Lasso Regression",
     short.name = "fusedlasso",
@@ -35,7 +35,7 @@ trainLearner.surv.penalized.fusedlasso = function(.learner, .task, .subset, .wei
 predictLearner.surv.penalized.fusedlasso = function(.learner, .model, .newdata, ...) {
   if(.learner$predict.type == "response") {
     # Note: this is a rather ugly hack but should work according to Jelle
-    penalized::survival(penalized::predict(.model$learner.model, penalized = .newdata), Inf)
+    penalized::survival(penalized::predict(.model$learner.model, data = .newdata), Inf)
   } else {
     stop("Unknown predict type")
   }
