@@ -20,7 +20,7 @@
 #' @family costsens
 #' @aliases CostSensWeightedPairsWrapper CostSensWeightedPairsModel
 makeCostSensWeightedPairsWrapper = function(learner) {
-  learner = checkLearnerClassif(learner, weights = TRUE)
+  learner = checkLearnerClassif(learner, props = "weights")
   learner = setPredictType(learner, "response")
   id = stri_paste("costsens", learner$id, sep = ".")
   makeHomogeneousEnsemble(id, "costsens", learner, package = learner$package,
