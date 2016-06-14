@@ -15,7 +15,12 @@
 #' @param nselect [\code{integer(1)}]\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
 #' @param ... [any]\cr
-#'   Passed down to selected method.
+#'   Passed down to selected method. Can only be use if \code{method} contains one element.
+#' @param more.args [named list]\cr
+#'   Extra args passed down to filter methods. List elements are named with the filter
+#'   \code{method} name the args should be passed down to.
+#'   A more general and flexible option than \code{...}.
+#'   Default is empty list.
 #' @return [\code{FilterValues}]. A \code{list} containing:
 #'   \item{task.desc}{[\code{\link{TaskDesc}}]\cr
 #'	   Task description.}
@@ -27,7 +32,7 @@
 #'                   the feature importance values.
 #'     }}
 #' @export
-generateFilterValuesData = function(task, method = "rf.importance", nselect = getTaskNFeats(task), ...) {
+generateFilterValuesData = function(task, method = "rf.importance", nselect = getTaskNFeats(task), ..., more.args = list()) {
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
   assertSubset(method, choices = ls(.FilterRegister), empty.ok = FALSE)
   td = getTaskDescription(task)
@@ -47,11 +52,25 @@ generateFilterValuesData = function(task, method = "rf.importance", nselect = ge
           stri_paste(sapply(check_feat[check_length], function(x) stri_paste(x, collapse = ", ", sep = " ")), collapse = ", and", sep = " "))
   }
   assertCount(nselect)
+  assertList(more.args, names = "unique", max.len = length(method))
+  assertSubset(names(more.args), method)
+  dot.args = list(...)
+  if (length(dot.args) > 0L && length(more.args) > 0L)
+    stopf("Do not use both 'more.args' and '...' here!")
+
+  # we have dot.args, so we cannot have more.args. either complain (> 1 method) or
+  # auto-setup more.args as list
+  if (length(dot.args) > 0L) {
+    if (length(method) == 1L)
+     more.args = namedList(method, dot.args)
+    else
+      stopf("You use more than 1 filter method. Please pass extra arguments via 'more.args' and not '...' to filter methods!")
+  }
 
   fn = getTaskFeatureNames(task)
 
   fval = lapply(filter, function(x) {
-    x = do.call(x$fun, c(list(task = task, nselect = nselect), list(...)))
+    x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[x$name]]))
     missing.score = setdiff(fn, names(x))
     x[missing.score] = NA_real_
     x[match(names(x), fn)]
