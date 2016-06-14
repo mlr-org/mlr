@@ -6,7 +6,7 @@
 \title{Calculates feature filter values.}
 \usage{
 generateFilterValuesData(task, method = "rf.importance",
-  nselect = getTaskNFeats(task), ...)
+  nselect = getTaskNFeats(task), ..., more.args = list())
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
@@ -20,7 +20,13 @@ Default is \dQuote{rf.importance}.}
 Number of scores to request. Scores are getting calculated for all features per default.}
 
 \item{...}{[any]\cr
-Passed down to selected method.}
+Passed down to selected method. Can only be use if \code{method} contains one element.}
+
+\item{more.args}{[named list]\cr
+Extra args passed down to filter methods. List elements are named with the filter
+\code{method} name the args should be passed down to.
+A more general and flexible option than \code{...}.
+Default is empty list.}
 }
 \value{
 [\code{FilterValues}]. A \code{list} containing:
