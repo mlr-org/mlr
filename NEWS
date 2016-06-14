@@ -31,6 +31,7 @@ mlr_2.9:
   generatePartialDependence, plotPartialDependence, and plotPartialDependenceGGVIS
 - add stability.nugget parameter for "regr.km"
 - plotPartialDependence can plot classification tasks with more than one interacted features now
+- generateFilterValuesData: added argument 'more.args'
 
 - new learners
 -- classif.C50
