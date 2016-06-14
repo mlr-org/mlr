@@ -47,6 +47,7 @@
 \alias{measureMEDSE}
 \alias{measureMMCE}
 \alias{measureMSE}
+\alias{measureMulticlassBrier}
 \alias{measureNPV}
 \alias{measurePPV}
 \alias{measureRMSE}
@@ -63,6 +64,7 @@
 \alias{mmce}
 \alias{mse}
 \alias{multiclass.auc}
+\alias{multiclass.brier}
 \alias{npv}
 \alias{ppv}
 \alias{rmse}
@@ -138,13 +140,17 @@ ber
 
 multiclass.auc
 
+multiclass.brier
+
+measureMulticlassBrier(probabilities, truth)
+
 auc
 
-measureAUC(probabilites, truth, negative, positive)
+measureAUC(probabilities, truth, negative, positive)
 
 brier
 
-measureBrier(probabilites, truth, negative, positive)
+measureBrier(probabilities, truth, negative, positive)
 
 bac
 
@@ -235,8 +241,8 @@ Vector of the true class.}
 \item{response}{[\code{factor}]\cr
 Vector of the predicted class.}
 
-\item{probabilites}{[\code{numeric}]\cr
-The probabilites for the positive class.}
+\item{probabilities}{[\code{numeric}]\cr
+The probabilities for the positive class.}
 
 \item{negative}{[\code{character(1)}]\cr
 The name of the negative class.}
