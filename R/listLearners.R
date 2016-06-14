@@ -9,7 +9,7 @@ getLearnerTable = function() {
       short.name = row$short.name,
       package = list(stri_replace_first_regex(row$package, "^[!_]", "")),
       properties = list(row$properties),
-      note = row$note %??% NA_character_
+      note = row$note %??% ""
     )
   }))
 

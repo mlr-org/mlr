@@ -9,6 +9,7 @@ test_that("listLearners", {
   x1a = listLearners("classif", create = FALSE, properties = c("missings"), warn.missing.packages = FALSE)
   expect_data_frame(x1a, min.rows = 10)
   expect_true(nrow(x1a) < nrow(x1))
+  expect_character(x1a$note, any.missing = FALSE)
 
   x = listLearners(multiclass.task, create = FALSE, warn.missing.packages = FALSE)
   expect_data_frame(x, min.rows = 20, min.cols = 3)
