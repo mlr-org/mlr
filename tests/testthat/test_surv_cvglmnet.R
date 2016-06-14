@@ -5,7 +5,7 @@ test_that("surv_cvglmnet", {
 
   parset.list = list(
     list(),
-    list(alpha = 0.3),
+    list(alpha = 0.3, grouped = FALSE),
     list(alpha = 1, nlambda = 10),
     list(prec = 1e-3)
   )
