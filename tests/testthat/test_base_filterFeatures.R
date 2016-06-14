@@ -1,3 +1,7 @@
+# these are "simple" tests for generateFilterValuesData and filterFeatures.
+# we test the general code here, for exhaustive tests for all filters please look at file
+# "test_featsel_filters.R"
+
 context("filterFeatures")
 
 test_that("filterFeatures", {
@@ -43,34 +47,6 @@ test_that("filterFeatures", {
   f = getFilteredFeatures(m)
   expect_is(f, "character")
   expect_equal(length(f), 1L)
-
-  # Loop through all filters
-  filter.list = listFilterMethods(desc = FALSE, tasks = TRUE, features = FALSE)
-  filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
-  # univariate.model.score and permutation.importance are handled extra test below
-  # 'univariate' is deprecated
-  filter.list.classif = setdiff(filter.list.classif, c("univariate.model.score", "permutation.importance", "univariate"))
-  for (filter in filter.list.classif) {
-    filterFeatures(task = multiclass.task, method = filter, perc = 0.5)
-  }
-  filter.list.regr = as.character(filter.list$id)[!filter.list$task.classif & filter.list$task.regr]
-  for (filter in filter.list.regr) {
-    filterFeatures(task = regr.num.task, method = filter, perc = 0.5)
-  }
-
-  # extra test of univariate filter
-  fv = suppressWarnings(getFilterValues(task = multiclass.task, method = "univariate.model.score", perc = 0.5,
-      perf.learner = makeLearner("classif.rpart"), measures = mmce))
-  fv = generateFilterValuesData(task = multiclass.task, method = "univariate.model.score", perc = 0.5,
-    perf.learner = makeLearner("classif.rpart"), measures = mmce)
-
-  # extra test of the permutation.importance filter
-  fv = generateFilterValuesData(task = multiclass.task, method = "permutation.importance",
-                                imp.learner = makeLearner("classif.rpart"),
-                                measure = acc,
-                                contrast = function(x, y) abs(x - y),
-                                aggregation = median,
-                                nperm = 2)
 })
 
 test_that("plotFilterValues", {
@@ -80,14 +56,41 @@ test_that("plotFilterValues", {
   path = paste0(dir, "/test.svg")
   ggsave(path)
   doc = XML::xmlParse(path)
-  #expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(20))
+  # expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(20))
   ## plotFilterValuesGGVIS(fv)
 
   fv2 = generateFilterValuesData(binaryclass.task, method = c("chi.squared", "rf.importance"))
   plotFilterValues(fv2)
   ggsave(path)
   doc = XML::xmlParse(path)
-  #expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(40))
-  #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(ncol(fv2$data) - 2))
+  # expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(40))
+  # expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(ncol(fv2$data) - 2))
   ## plotFilterValuesGGVIS(fv2)
 })
+
+test_that("args are passed down to filter methods", { # we had an issue here, see #941
+
+  expect_error(generateFilterValuesData(binaryclass.task, method = c("mrmr","univariate.model.score"),
+    nselect = 3, perf.learner = "classif.lda"), "Please pass extra arguments")
+
+  # check that we can pass down perf.learner to univariate.model.score, and get no error from mrmr call
+  f = generateFilterValuesData(iris.task, method = c("mrmr","univariate.model.score"),
+    nselect = 3, more.args = list(univariate.model.score = list(perf.learner = "classif.lda")))
+
+  # create stupid dummy data and check that we can change the na.rm arg of filter "variance" in multiple ways
+  d = iris; d[1L, 1L] = NA_real_
+  task = makeClassifTask(data = d, target = "Species")
+
+  f1 = generateFilterValuesData(task, method = "variance", na.rm = FALSE)
+  f2 = generateFilterValuesData(task, method = "variance", na.rm = TRUE)
+  f3 = generateFilterValuesData(task, method = "variance", more.args = list(variance = list(na.rm = TRUE)))
+  f4 = generateFilterValuesData(task, method = c("chi.squared", "variance"), more.args = list(variance = list(na.rm = TRUE)))
+
+  expect_true(is.na(f1$data$variance[1L]))
+  expect_false(is.na(f2$data$variance[1L]))
+  expect_false(is.na(f3$data$variance[1L]))
+  expect_false(is.na(f4$data$variance[1L]))
+})
+
+
+
