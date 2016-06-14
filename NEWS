@@ -33,16 +33,18 @@ mlr_2.9:
 - plotPartialDependence can plot classification tasks with more than one interacted features now
 
 - new learners
--- surv.cv.CoxBoost
--- regr.penalized.fusedlasso
--- regr.glm
 -- classif.C50
--- classif.penalized.ridge
--- classif.penalized.lasso
+-- classif.gausspr
 -- classif.penalized.fusedlasso
--- surv.penalized.ridge
--- surv.penalized.lasso
+-- classif.penalized.lasso
+-- classif.penalized.ridge
+-- regr.penalized.fusedlasso
+-- regr.gausspr
+-- regr.glm
+-- surv.cv.CoxBoost
 -- surv.penalized.fusedlasso
+-- surv.penalized.lasso
+-- surv.penalized.ridge
 
 - removed learners
 -- surv.optimCoxBoostPenalty
