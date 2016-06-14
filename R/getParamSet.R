@@ -1,5 +1,8 @@
 #' @title Get a description of all possible parameter settings for a learner.
 #'
+#' @description
+#' Returns the \code{\link[ParamHelpers]{ParamSet}} from a \code{\link{Learner}}.
+#'
 #' @template arg_learner
 #' @template ret_ps
 #' @family learner

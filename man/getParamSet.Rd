@@ -11,6 +11,9 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 \value{
 [\code{\link[ParamHelpers]{ParamSet}}].
 }
+\description{
+Returns the \code{\link[ParamHelpers]{ParamSet}} from a \code{\link{Learner}}.
+}
 \seealso{
 Other learner: \code{\link{LearnerProperties}},
   \code{\link{getClassWeightParam}},
