@@ -123,7 +123,6 @@ before_install:
     - sudo update-alternatives --install /usr/bin/gfortran gfortran /usr/bin/gfortran-4.8 90
     - Rscript -e 'install.packages("devtools", repos = "http://cran.rstudio.com")'
     - Rscript -e 'install.packages("nlme", lib="/home/travis/R-bin/lib/R/library/")'
-    - Rscript -e 'install.packages("grid", lib="/home/travis/R-bin/lib/R/library/")'
 before_script:
     - curl -L https://raw.githubusercontent.com/mllg/travis-r-tools/master/update-packages.r -o /tmp/update-packages.r
     - Rscript /tmp/update-packages.r
