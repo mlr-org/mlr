@@ -31,8 +31,8 @@ Depends:
     R (>= 3.0.2),
     BBmisc (>= 1.9),
     ggplot2,
-    ParamHelpers (>= 1.7),
-    stats, 
+    ParamHelpers (>= 1.8),
+    stats,
     stringi
 Imports:
     checkmate (>= 1.7.1),
@@ -43,7 +43,8 @@ Imports:
     plyr,
     reshape2,
     shiny,
-    survival
+    survival,
+    utils
 Suggests:
     ada,
     adabag,
