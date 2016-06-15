@@ -6,7 +6,7 @@ context("filterFeatures")
 
 test_that("filterFeatures", {
   ns = getTaskFeatureNames(binaryclass.task)
-  f = filterFeatures(binaryclass.task, select = "threshold", threshold = -Inf)
+  f = filterFeatures(binaryclass.task, method = "chi.squared", select = "threshold", threshold = -Inf)
   expect_equal(f, binaryclass.task)
 
   feat.imp.old = suppressWarnings(getFilterValues(binaryclass.task))
@@ -59,7 +59,7 @@ test_that("plotFilterValues", {
   # expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(20))
   ## plotFilterValuesGGVIS(fv)
 
-  fv2 = generateFilterValuesData(binaryclass.task, method = c("chi.squared", "rf.importance"))
+  fv2 = generateFilterValuesData(binaryclass.task, method = c("chi.squared", "information.gain"))
   plotFilterValues(fv2)
   ggsave(path)
   doc = XML::xmlParse(path)
