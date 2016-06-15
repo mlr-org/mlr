@@ -1,8 +1,11 @@
-getFixDataInfo = function(data, restore.levels = FALSE, factors.to.dummies = FALSE, ordered.to.int = FALSE) {
+getFixDataInfo = function(data, restore.levels = FALSE, factors.to.dummies = FALSE, factors.to.int = FALSE,
+ordered.to.int = FALSE, min.int.zero = FALSE) {
   assertDataFrame(data, types = c("logical", "numeric", "factor"))
   assertFlag(restore.levels)
   assertFlag(factors.to.dummies)
+  assertFlag(factors.to.int)
   assertFlag(ordered.to.int)
+  assertFlag(min.int.zero)
 
   cl = vcapply(data, getClass1)
   factors = lapply(data[cl == "factor"], levels)
@@ -13,7 +16,9 @@ getFixDataInfo = function(data, restore.levels = FALSE, factors.to.dummies = FAL
     ordered = ordered,
     restore.levels = restore.levels,
     factors.to.dummies = factors.to.dummies && length(factors) > 0L,
-    ordered.to.int = ordered.to.int && length(ordered) > 0L
+    factors.to.int = factors.to.int && length(factors) > 0L,
+    ordered.to.int = ordered.to.int && length(ordered) > 0L,
+    min.int.zero = min.int.zero
   )
 }
 
@@ -24,7 +29,7 @@ fixDataForLearner = function(data, info) {
     stopf("Column '%s' found in info, but not in new data", cn[not.found])
 
   if (info$restore.levels) {
-    if (!info$factors.to.dummies && length(info$factors) > 0L) {
+    if (!info$factors.to.dummies && !info$factors.to.int && length(info$factors) > 0L) {
       cols = names(info$factors)
       data[cols] = Map(factor, x = data[cols], levels = info$factors)
     }
@@ -42,9 +47,14 @@ fixDataForLearner = function(data, info) {
     data = cbind(dropNamed(data, cols), do.call(cbind, new.cols))
   }
 
+  if (info$factors.to.int) {
+    cols = names(info$factors)
+    data[cols] = lapply(data[cols], function(x) as.integer(x) - as.integer(info$min.int.zero))
+  }
+
   if (info$ordered.to.int) {
     cols = names(info$ordered)
-    data[cols] = lapply(data[cols], as.integer)
+    data[cols] = lapply(data[cols], function(x) as.integer(x) - as.integer(info$min.int.zero))
   }
 
   data
