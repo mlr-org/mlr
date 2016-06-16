@@ -20,6 +20,7 @@ makeRLearner.surv.randomForestSRC = function() {
           "anti", "permute.ensemble", "random.ensemble", "anti.ensemble")),
       makeDiscreteLearnerParam(id = "na.action", default = "na.impute",
         values = c("na.omit", "na.impute"), when = "both"),
+      # FIXME default for na.action in rfsrc() is na.omit
       makeIntegerLearnerParam(id = "nimpute", default = 1L, lower = 1L),
       makeUntypedLearnerParam(id = "ntime"), # can be a single integer with number of time points or a numeric vector of time values
       makeDiscreteLearnerParam(id = "proximity", default = FALSE, tunable = FALSE,

@@ -7,6 +7,7 @@ makeRLearner.regr.avNNet = function() {
       makeIntegerLearnerParam(id = "repeats", default = 5L, lower = 1L),
       makeLogicalLearnerParam(id = "bag", default = FALSE),
       makeIntegerLearnerParam(id = "size", default = 3L, lower = 0L),
+      # FIXME size seems to have no default in nnet(), if it has 1 par.vals is redundant
       makeIntegerLearnerParam(id = "maxit", default = 100L, lower = 1L),
       makeLogicalLearnerParam(id = "linout", default = FALSE, requires = quote(entropy==FALSE && softmax==FALSE && censored==FALSE)),
       makeLogicalLearnerParam(id = "entropy", default = FALSE, requires = quote(linout==FALSE && softmax==FALSE && censored==FALSE)),

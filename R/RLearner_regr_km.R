@@ -29,6 +29,7 @@ makeRLearner.regr.km = function() {
       makeNumericLearnerParam(id = "nugget.stability", requires = quote(!nugget.estim && is.null(nugget)))
     ),
     par.vals = list(jitter = FALSE),
+    # FIXME jitter not found as parameter for km() or km.predict(). par.vals and LearnerParam are the same here.
     properties = c("numerics", "se"),
     name = "Kriging",
     short.name = "km",
