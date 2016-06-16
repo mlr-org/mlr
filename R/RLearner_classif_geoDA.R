@@ -7,6 +7,7 @@ makeRLearner.classif.geoDA = function() {
       makeDiscreteLearnerParam(id = "validation", values = list(crossval = "crossval", learntest = "learntest", NULL = NULL), default = NULL, tunable = FALSE)
     ),
     par.vals = list(validation = NULL),
+    # FIXME default of geoDa for validation is NULL, par.vals is redundant here.
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Geometric Predictive Discriminant Analysis",
     short.name = "geoda"

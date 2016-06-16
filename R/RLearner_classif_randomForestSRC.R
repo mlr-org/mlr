@@ -20,6 +20,7 @@ makeRLearner.classif.randomForestSRC = function() {
           "permute.ensemble", "random.ensemble", "anti.ensemble")),
       makeDiscreteLearnerParam(id = "na.action", default = "na.impute",
         values = c("na.omit", "na.impute"), when = "both"),
+      # FIXME the default in rfsrc() for na.action is na.omit
       makeIntegerLearnerParam(id = "nimpute", default = 1L, lower = 1L),
       makeDiscreteLearnerParam(id = "proximity", default = FALSE, tunable = FALSE,
         values = list("inbag", "oob", "all", `TRUE` = TRUE, `FALSE` = FALSE)),
