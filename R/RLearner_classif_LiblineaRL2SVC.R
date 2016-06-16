@@ -5,6 +5,7 @@ makeRLearner.classif.LiblineaRL2SVC = function() {
     package = "LiblineaR",
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "type", default = 2L, values = c(1L, 2L)),
+      # FIXME default in LiblieaR for type is 0.
       makeNumericLearnerParam(id = "cost", default = 1, lower = 0),
       ## FIXME: Add default value when parameter dependent defaults are implemented:
       ## if type = 1: eps default = 0.1, if type = 2: eps default = 0.01

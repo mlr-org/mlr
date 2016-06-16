@@ -20,6 +20,7 @@ makeRLearner.classif.neuralnet = function() {
                                values=c("backprop","rprop+","rprop-","sag","slr")),
       makeDiscreteLearnerParam(id = "err.fct", default = "ce",
                                values=c("sse","ce")),
+      # FIXME default in neuralnet() or err.fct is "sse"
       makeDiscreteLearnerParam(id = "act.fct", default = "logistic",
                                values=c("logistic","tanh")),
       makeNumericVectorLearnerParam(id = "exclude"),

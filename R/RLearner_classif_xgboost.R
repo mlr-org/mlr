@@ -25,6 +25,7 @@ makeRLearner.classif.xgboost = function() {
       makeNumericLearnerParam(id = "missing", default = 0),
       makeIntegerLearnerParam(id = "nthread", default = 16,lower = 1),
       makeIntegerLearnerParam(id = "nrounds", default = 1, lower = 1),
+      # FIXME nrounds seems to have no default in xgboost(), if it has 1, par.vals is redundant
       makeUntypedLearnerParam(id = "feval", default = NULL),
       makeIntegerLearnerParam(id = "verbose", default = 2, lower = 0, upper = 2),
       makeIntegerLearnerParam(id = "print.every.n", default = 1, lower = 1),

@@ -5,6 +5,7 @@ makeRLearner.regr.rsm = function() {
     package = "rsm",
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "modelfun", default = "FO", values = c("FO", "TWI", "SO"))
+      # FIXME rsm() seems to have no default as one expression is needed for the formula, if there is a default, par.vals is redundant
     ),
     par.vals = list(modelfun = "FO"),
     properties = c("numerics"),
