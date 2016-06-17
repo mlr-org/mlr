@@ -65,7 +65,7 @@ test_that("ber with faulty model produces NA", {
 })
 
 test_that("db with single cluster doesn't give warnings", {
-  expect_that(crossval("cluster.kmeans", agri.task), not(gives_warning()))
+  expect_warning(crossval("cluster.kmeans", agri.task), NA)
 })
 
 test_that("mcc is implemented correctly", { # see issue 363
