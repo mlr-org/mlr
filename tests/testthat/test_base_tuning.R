@@ -141,7 +141,7 @@ test_that("tuning allows usage of budget", {
   expect_identical(getOptPathLength(res$opt.path), 3L)
 })
 
-test_that("Learner cannot use expression in param requires, see #369", {
+test_that("Learner defined with expression in param requires, see #369 and PH #52", {
   ps = makeParamSet(
     makeDiscreteLearnerParam(id = "a", values = c("x", "y")),
       makeNumericLearnerParam(id = "b", lower = 0.0, upper = 1.0, requires = expression(a == "x"))
@@ -149,6 +149,5 @@ test_that("Learner cannot use expression in param requires, see #369", {
 
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlRandom()
-  expect_error(tuneParams("classif.__mlrmocklearners__5", binaryclass.task, resampling = rdesc, par.set = ps, control = ctrl),
-    "used 'expression'")
+  tuneParams("classif.__mlrmocklearners__5", binaryclass.task, resampling = rdesc, par.set = ps, control = ctrl)
 })
