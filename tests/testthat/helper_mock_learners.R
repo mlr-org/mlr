@@ -80,7 +80,7 @@ makeRLearner.classif.__mlrmocklearners__5 = function() {
     package = "mlr",
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "a", values = c("x", "y")),
-      makeNumericLearnerParam(id = "b", requires = expression(a == "x"))
+      makeNumericLearnerParam(id = "b", lower = 0.0, upper = 1.0, requires = expression(a == "x"))
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
   )

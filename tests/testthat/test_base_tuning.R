@@ -144,24 +144,11 @@ test_that("tuning allows usage of budget", {
 test_that("Learner cannot use expression in param requires, see #369", {
   ps = makeParamSet(
     makeDiscreteLearnerParam(id = "a", values = c("x", "y")),
-    makeDiscreteLearnerParam(id = "b", values = c("foo", "bar"), requires = expression(a == "x"))
+      makeNumericLearnerParam(id = "b", lower = 0.0, upper = 1.0, requires = expression(a == "x"))
   )
-  makeRLearner.classif.__mlrmocklearners__369 = function() {
-    makeRLearnerClassif(
-      cl = "classif.__mlrmocklearners__369", package = character(0L), par.set = ps,
-      properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob")
-    )
-  }
-  trainLearner.classif.__mlrmocklearners__369 = function(.learner, .task, .subset, .weights = NULL,  ...) list()
-  predictLearner.classif.__mlrmocklearners__369 = function(.learner, .model, .newdata, ...) {
-    rep(factor("M"), nrow(.newdata))
-  }
-  registerS3method("makeRLearner", "classif.__mlrmocklearners__369", makeRLearner.classif.__mlrmocklearners__369)
-  registerS3method("trainLearner", "classif.__mlrmocklearners__369", trainLearner.classif.__mlrmocklearners__369)
-  registerS3method("predictLearner", "classif.__mlrmocklearners__369", predictLearner.classif.__mlrmocklearners__369)
 
   rdesc = makeResampleDesc("Holdout")
   ctrl = makeTuneControlRandom()
-  expect_error(tuneParams("classif.__mlrmocklearners__369", binaryclass.task, resampling = rdesc, par.set = ps, control = ctrl),
+  expect_error(tuneParams("classif.__mlrmocklearners__5", binaryclass.task, resampling = rdesc, par.set = ps, control = ctrl),
     "used 'expression'")
 })
