@@ -153,7 +153,9 @@ test_that("Learner cannot use expression in param requires, see #369", {
     )
   }
   trainLearner.classif.__mlrmocklearners__369 = function(.learner, .task, .subset, .weights = NULL,  ...) list()
-  predictLearner.classif.__mlrmocklearners__369 = function(.learner, .model, .newdata, ...) stop("foo")
+  predictLearner.classif.__mlrmocklearners__369 = function(.learner, .model, .newdata, ...) {
+    rep("foo", nrow(.newdata))
+  }
   registerS3method("makeRLearner", "classif.__mlrmocklearners__369", makeRLearner.classif.__mlrmocklearners__369)
   registerS3method("trainLearner", "classif.__mlrmocklearners__369", trainLearner.classif.__mlrmocklearners__369)
   registerS3method("predictLearner", "classif.__mlrmocklearners__369", predictLearner.classif.__mlrmocklearners__369)
