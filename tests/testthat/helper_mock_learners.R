@@ -80,12 +80,20 @@ makeRLearner.classif.__mlrmocklearners__5 = function() {
     package = "mlr",
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "a", values = c("x", "y")),
-      makeNumericLearnerParam(id = "b", requires = expression(a == "x"))
+      makeNumericLearnerParam(id = "b", lower = 0.0, upper = 1.0, requires = expression(a == "x"))
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob")
   )
 }
+
+trainLearner.classif.__mlrmocklearners__5 = function(.learner, .task, .subset, .weights = NULL, ...) { }
+
+predictLearner.classif.__mlrmocklearners__5 = function(.learner, .model, .newdata) {
+  rep(factor(.model$factor.levels[[.model$task.desc$target]][1]), nrow(.newdata))
+}
 registerS3method("makeRLearner", "classif.__mlrmocklearners__5", makeRLearner.classif.__mlrmocklearners__5)
+registerS3method("trainLearner", "classif.__mlrmocklearners__5", trainLearner.classif.__mlrmocklearners__5)
+registerS3method("predictLearner", "classif.__mlrmocklearners__5", predictLearner.classif.__mlrmocklearners__5)
 
 # stores weights internally so we can see wether they are correctly passed down
 makeRLearner.regr.__mlrmocklearners__6 = function() {
