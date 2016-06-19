@@ -144,7 +144,7 @@ test_that("tuning allows usage of budget", {
 test_that("Learner cannot use expression in param requires, see #369", {
   ps = makeParamSet(
     makeDiscreteLearnerParam(id = "a", values = c("x", "y")),
-    makeNumericLearnerParam(id = "b", requires = expression(a == "x"))
+    makeNumericLearnerParam(id = "b", values = c("foo", "bar"), requires = expression(a == "x"))
   )
   makeRLearner.classif.__mlrmocklearners__369 = function() {
     makeRLearnerClassif(
