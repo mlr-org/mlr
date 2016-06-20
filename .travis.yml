@@ -28,7 +28,9 @@ before_install:
   - ln -s $(which gcc-4.9) $HOME/bin/gcc
   - ln -s $(which g++-4.9) $HOME/bin/g++
   - ln -s $(which gfortran-4.9) $HOME/bin/gfortran
-  - export PATH=$HOME/bin:$PATH
+  - export PATH=$HOME/bin:$PATHdo
+  - echo $LD_LIBRARY_PATH
+  - echo $LIBRARY_PATH
 
 before_script:
   - java -cp $HOME/R/Library/RWekajars/java/weka.jar weka.core.WekaPackageManager -install-package thirdparty/XMeans1.0.4.zip
