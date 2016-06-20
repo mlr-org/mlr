@@ -13,7 +13,7 @@ makeRLearner.regr.ksvm = function() {
       makeNumericLearnerParam(id = "nu",
         lower = 0, default = 0.2, requires = quote(type == "nu-svr")),
       makeNumericLearnerParam(id = "epsilon", lower = 0, default = 0.1,
-        requires = quote(type %in% c("eps-svr", "nu-svr", "eps-bsvm"))),
+        requires = quote(type %in% c("eps-svr", "nu-svr", "eps-bsvr"))),
       makeNumericLearnerParam(id = "sigma",
         lower = 0, requires = quote(kernel %in% c("rbfdot", "anovadot", "besseldot", "laplacedot"))),
       makeIntegerLearnerParam(id = "degree", default = 3L, lower = 1L,
