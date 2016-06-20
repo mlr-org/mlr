@@ -44,25 +44,11 @@ test_that("learners work: surv ", {
     expect_true(!is.na(performance(p)))
   }
   
-  # survival analysis with factors
+  # survival analysis with factors (Create a generalized function here)
   data = surv.df[, c("time", "status", "x3", "x4")]
   data[, 4L] = factor(sample(c("a", "b"), size = nrow(data), replace = TRUE))
   task = makeSurvTask(data = data, target = c("time", "status"))
   lrns = mylist(task, create = TRUE)
-  # delete the next for loop when penalized learners are fixd
-  logic = rep(TRUE, length(lrns))
-  for (i in 1:length(logic)) {
-    if (lrns[[i]]$id == "surv.penalized.fusedlasso") {
-      logic[[i]] = FALSE
-    }
-    if(lrns[[i]]$id == "surv.penalized.lasso") {
-      logic[[i]] = FALSE
-    }
-    if (lrns[[i]]$id == "surv.penalized.ridge") {
-      logic[[i]] = FALSE
-    }
-  }
-  lrns = lrns[logic]
   for (lrn in lrns) {
     expect_output(print(lrn), lrn$id)
     lrn = fixHyperPars(lrn)
@@ -72,7 +58,7 @@ test_that("learners work: surv ", {
   }
   
   # mlr doesn't support prediction of probabilities yet
-  # binary classif with prob (only coxph and ranger)
+  # binary classif with prob: only coxph and ranger
   # task = subsetTask(surv.task, subset = c(1:70),
   #   features = getTaskFeatureNames(surv.task)[c(3,4)])
   # lrns = mylist(task, properties = "prob")
@@ -94,19 +80,33 @@ test_that("learners work: surv ", {
     test.inds = surv.test.inds,
     weights = rep(c(1L, 5L), length.out = length(surv.train.inds)),
     pred.type = "response", get.pred.fun = getPredictionResponse)
+  # surv.randomForestSRC is not working
   
 
-  # classif with missing
-  d = surv.df
-  d[1, 3] = NA
-  task = makeSurvTask(data = d, target = surv.target)
-  lrns = mylist(task, properties = "missings", create = TRUE)
-  # coxph does handle missing values with NA (and thus in a different way than the original)
-  lrns = lrns[-2]
-  for (lrn in lrns) {
-    lrn = fixHyperPars(lrn)
-    m = train(lrn, task)
-    p = predict(m, task)
-    expect_true(!is.na(performance(p)))
+  # classif with missing. Create a generalized function
+  task = regr.task
+  checkLearnersHandleMissings = function(task) {
+    target = getTaskTargetNames(task)
+    type = getTaskType(task)
+    d = getTaskData(task, target.extra = TRUE)
+    d$data[1,1] = NA
+    d = cbind(d$data, getTaskTargets(task))
+    dnew.task = switch(type,
+      classif = makeClassifTask(data = d, target = target),
+      cluster = makeClusterTask(data = d),
+      costsens = makeCostSensTask(data = d, target = target),
+      multilabel = makeMultilabelTask(data = d, target = target),
+      regr = makeRegrTask(data = d, target = target),
+      surv = makeSurvTask(data = d, target = target))
+  
+    lrns = mylist(new.task, properties = "missings", create = TRUE)
+    
+    for (lrn in lrns) {
+      lrn = fixHyperPars(lrn)
+      m = train(lrn, task)
+      p = predict(m, task)
+      expect_true(!is.na(performance(p)))
+    }
   }
-})
+
+  })
