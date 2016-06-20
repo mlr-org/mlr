@@ -3,26 +3,8 @@ context("learners_all_surv")
 test_that("learners work: surv ", {
   
   # settings to make learners faster and deal with small sample size
-  # These values come from multi-criteria tunining (timetrain, timepredict)
   hyperpars = list(
     surv.cforest = list(mtry = 1L)
-    #surv.cforest = list(ntree = 198L, mtry = 1L, replace = TRUE, teststat = "max",
-    #testtpe = "Teststatistic", mincriterion = 0.92),
-    #surv.CoxBoost = list(penalty = 600, criterion = "pscore", stepno = 72L),
-    #surv.coxph = list(outer.max = 19L),
-    #surv.cv.CoxBoost = list(penalty = 393, stepsize.factor = 2.85), # maxstepno = 4L, 
-    #surv.cvglmnet = list(alpha = 0.1038067, nfolds = 5L, standardize = FALSE,
-    #  maxit = 29000L),
-    #surv.glmboost = list(mstop = 10L, nu = 0.6349),
-    #surv.penalized.fusedlasso = list(lambda1 = 0.4045103, lambda2 = 1,
-    #  standardize = TRUE),
-    #surv.penalized.ridge = list(maxiter = 65L),
-    #surv.randomForestSRC = list(ntree = 720, bootstrap = "none",
-    #  mtry = 2L, nodesize = 17L, splitrule = "random", na.action = "na.omit",
-     # split.depth = "by.tree"),
-    #surv.ranger = list(num.trees = 400L, mtry = 1L, min.node.size = 20L),
-    #surv.rpart = list(minsplit = 7L, minbucket = 8L, cp = 0.6900071,
-    #  maxcompete = 1L, maxdepth = 27L)
   )
   
   fixHyperPars = function(lrn) {
@@ -32,30 +14,51 @@ test_that("learners work: surv ", {
   }
   
   # normal survival analysis
-  task = subsetTask(surv.task, subset = c(1:70),
+  sub.task = subsetTask(surv.task, subset = c(1:70),
     features = getTaskFeatureNames(surv.task)[c(3,4)])
-  lrns = mylist(task)
-  lrns = lapply(lrns$class, makeLearner)
-  for (lrn in lrns){
-    expect_output(print(lrn), lrn$id)
-    lrn = fixHyperPars(lrn)
-    m = train(lrn, task)
-    p = predict(m, task)
-    expect_true(!is.na(performance(p)))
+  checkLearnersAllOnTask = function(task){
+    lrns = mylist(task)
+    lrns = lapply(lrns$class, makeLearner)
+    for (lrn in lrns){
+      expect_output(print(lrn), lrn$id)
+      lrn = fixHyperPars(lrn)
+      m = train(lrn, task)
+      p = predict(m, task)
+      expect_true(!is.na(performance(p)))
+    }
   }
   
-  # survival analysis with factors (Create a generalized function here)
-  data = surv.df[, c("time", "status", "x3", "x4")]
-  data[, 4L] = factor(sample(c("a", "b"), size = nrow(data), replace = TRUE))
-  task = makeSurvTask(data = data, target = c("time", "status"))
-  lrns = mylist(task, create = TRUE)
-  for (lrn in lrns) {
-    expect_output(print(lrn), lrn$id)
-    lrn = fixHyperPars(lrn)
-    m = train(lrn, task)
-    p = predict(m, task)
-    expect_true(!is.na(performance(p)))
+  checkLearnersAllOnTask(surv.task)
+  
+  # survival analysis with factors
+  checkLearnersHandleFactors = function(task) {
+    type = getTaskType(task) # to create new task
+    costs = getTaskCosts(task) # used to create new.task in case of costsens
+    target = getTaskTargetNames(task) # used to create new.task
+    d = getTaskData(task)
+    f = getTaskFeatureNames(task)[1] # get 1 feature to create factor variable
+    d[,f] = factor(sample(c("a", "b"), size = nrow(d), replace = TRUE)) # create factor variable
+    
+    new.task = switch(type,
+      classif = makeClassifTask(data = d, target = target),
+      cluster = makeClusterTask(data = d),
+      costsens = makeCostSensTask(data = d, costs = costs),
+      multilabel = makeMultilabelTask(data = d, target = target),
+      regr = makeRegrTask(data = d, target = target),
+      surv = makeSurvTask(data = d, target = target))
+  
+    lrns = mylist(task, properties = "factors", create = TRUE) # use task or new.task here?
+    
+    for (lrn in lrns) {
+      expect_output(print(lrn), lrn$id)
+      lrn = fixHyperPars(lrn)
+      m = train(lrn, task)
+      p = predict(m, task)
+      expect_true(!is.na(performance(p)))
+    }
   }
+  
+  checkLearnersHandleFactors(surv.task)
   
   # mlr doesn't support prediction of probabilities yet
   # binary classif with prob: only coxph and ranger
@@ -83,23 +86,23 @@ test_that("learners work: surv ", {
   # surv.randomForestSRC is not working
   
 
-  # classif with missing. Create a generalized function
-  task = regr.task
+  # surv with missing.
   checkLearnersHandleMissings = function(task) {
     target = getTaskTargetNames(task)
     type = getTaskType(task)
-    d = getTaskData(task, target.extra = TRUE)
-    d$data[1,1] = NA
-    d = cbind(d$data, getTaskTargets(task))
-    dnew.task = switch(type,
+    f = getTaskFeatureNames(task)[1] # get one feature where an NA will be placed
+    d = getTaskData(task)
+    costs = getTaskCosts(task)
+    d[1,f] = NA
+    new.task = switch(type,
       classif = makeClassifTask(data = d, target = target),
       cluster = makeClusterTask(data = d),
-      costsens = makeCostSensTask(data = d, target = target),
+      costsens = makeCostSensTask(data = d, costs = costs),
       multilabel = makeMultilabelTask(data = d, target = target),
       regr = makeRegrTask(data = d, target = target),
       surv = makeSurvTask(data = d, target = target))
-  
-    lrns = mylist(new.task, properties = "missings", create = TRUE)
+    
+    lrns = mylist(new.task, properties = "missings", create = TRUE) # do this on task instead of new.task?
     
     for (lrn in lrns) {
       lrn = fixHyperPars(lrn)
@@ -108,5 +111,6 @@ test_that("learners work: surv ", {
       expect_true(!is.na(performance(p)))
     }
   }
+  checkLearnersHandleMissings(surv.task)
 
   })
