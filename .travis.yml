@@ -12,8 +12,8 @@ addons:
     packages:
       - gcc-4.9
       - g++-4.9
+      - gfortran-4.9
       - libgmp-dev
-      - gfortran
 env:
   global:
     - secure: "WFbdUIQRi7VYUHceKrg9xnw7m+8SK658rmgWPW++zWq5J4n0ZLuTRdKHu7ijyK9zOzNGjLF+NzvnwPS+yMPJwTX/s82hrC5GAMrYs3shEvR95PwFx42nfjqU5fsKsZ9gYpqIuZoJs32yPOJ/9XBLHU8rUv5+x4Z1zM2hBJHAn74="
