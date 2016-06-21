@@ -30,7 +30,11 @@
 \alias{mcp}
 \alias{meancosts}
 \alias{measureACC}
+\alias{measureAU1P}
+\alias{measureAU1U}
 \alias{measureAUC}
+\alias{measureAUNP}
+\alias{measureAUNU}
 \alias{measureBAC}
 \alias{measureBrier}
 \alias{measureBrierScaled}
@@ -152,11 +156,21 @@ measureACC(truth, response)
 
 ber
 
-multiclass.auc
+multiclass.aunu
 
-multiclass.brier
+measureAUNU(probabilities, truth)
 
-measureMulticlassBrier(probabilities, truth)
+multiclass.aunp
+
+measureAUNP(probabilities, truth)
+
+multiclass.au1u
+
+measureAU1U(probabilities, truth)
+
+multiclass.au1p
+
+measureAU1P(probabilities, truth)
 
 logloss
 

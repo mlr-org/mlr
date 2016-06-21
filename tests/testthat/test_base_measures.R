@@ -3,7 +3,8 @@ context("measures")
 test_that("measures", {
   ct = binaryclass.task
   options(warn = 2)
-  mymeasure = makeMeasure(id = "foo", minimize = TRUE, properties = c("classif", "classif.multi", "regr", "predtype.response", "predtype.prob"),
+  mymeasure = makeMeasure(id = "foo", minimize = TRUE, properties = c("classif", "classif.multi",
+    "regr", "predtype.response", "predtype.prob"),
     fun = function(task, model, pred, feats, extra.args) {
       tt = pred
       1
@@ -19,9 +20,11 @@ test_that("measures", {
   rdesc = makeResampleDesc("Holdout", split = 0.2)
   r = resample(lrn, ct, rdesc, measures = ms)
   expect_equal(names(r$measures.train),
-    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr", "fnr", "ppv", "npv", "mcc", "f1", "foo"))
+    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr",
+      "fnr", "ppv", "npv", "mcc", "f1", "foo"))
   expect_equal(names(r$measures.test),
-    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr", "fnr", "ppv", "npv", "mcc", "f1", "foo"))
+    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr",
+      "fnr", "ppv", "npv", "mcc", "f1", "foo"))
 
   # test that measures work for se
   ms = list(mse, timetrain, timepredict, timeboth, featperc)
@@ -35,7 +38,8 @@ test_that("measures", {
   lrn = makeLearner("classif.randomForest", predict.type = "prob")
   mod = train(lrn, task = multiclass.task, subset = multiclass.train.inds)
   pred = predict(mod, task = multiclass.task, subset = multiclass.test.inds)
-  perf = performance(pred, measures = multiclass.auc)
+  perf = performance(pred, measures = list(multiclass.aunu, multiclass.aunp,
+    multiclass.au1u, multiclass.au1p))
   expect_is(perf, "numeric")
 
   # test survival measure
@@ -151,7 +155,7 @@ test_that("check measure calculations", {
   lrn.surv = makeLearner("surv.coxph")
   # lm does not converge due to small data and warns
   suppressWarnings({
-  mod.surv = train(lrn.surv, task.surv)
+    mod.surv = train(lrn.surv, task.surv)
   })
   pred.surv = predict(mod.surv, task.surv)
   pred.surv$data[,"response"] = pred.art.surv
@@ -246,49 +250,9 @@ test_that("check measure calculations", {
   expect_equal(acc.test, acc$fun(pred = pred.classif))
   expect_equal(acc.test, as.numeric(acc.perf))
   #multiclass.auc
-  n.cl = length(levels(tar.classif))
-  pred.probs = getPredictionProbabilities(pred.classif)
-  predictor = vnapply(1:length(pred.art.classif), function(i) {
-    pred.probs[i, pred.art.classif[i]]
-  })
-  names(predictor) = pred.art.classif
-  level.grid = t(combn(as.numeric(levels(tar.classif)), m = 2L))
-  level.grid = rbind(level.grid, level.grid[, ncol(level.grid):1])
-  aucs = numeric(nrow(level.grid))
-  for (i in 1:nrow(level.grid)){
-    ranks = sort(rank(predictor[names(predictor) %in% level.grid[i, ]]))
-    ranks = ranks[names(ranks) == level.grid[i]]
-    n = length(ranks)
-    ranks.sum = sum(ranks)
-    aucs[i] = ranks.sum - n * (n + 1) / 2
-  }
-  multiclass.auc.test = 1 / (n.cl * (n.cl - 1)) * sum(aucs)
-  multiclass.auc.perf = performance(pred.classif,
-   measures = multiclass.auc, model = mod.classif)
-  expect_equal(multiclass.auc.test, multiclass.auc$fun(pred = pred.classif))
-  expect_equal(multiclass.auc.test, as.numeric(multiclass.auc.perf))
-
-  p1 = p2 = matrix(c(0.1, 0.9, 0.2, 0.8), 2, 2, byrow = TRUE)
-  colnames(p1) = c("a", "b")
-  colnames(p2) = c("b", "a")
-  y1 = factor(c("a", "b"))
-  y2 = factor(c("b", "b"))
-  # multiclass.brier
-  expect_equal(measureMulticlassBrier(p1, y1), 0.5 * ((1-0.1)^2 + (0-0.9)^2 + (0-0.2)^2 + (1-0.8)^2))
-  expect_equal(measureMulticlassBrier(p1, y2), 0.5 * ((0-0.1)^2 + (1-0.9)^2 + (0-0.2)^2 + (1-0.8)^2))
-  expect_equal(measureMulticlassBrier(p2, y1), 0.5 * ((1-0.9)^2 + (0-0.1)^2 + (1-0.2)^2 + (0-0.8)^2))
-  # logloss
-  expect_equal(measureLogloss(p1, y1), -mean(log(c(0.1, 0.8))))
-  expect_equal(measureLogloss(p1, y2), -mean(log(c(0.9, 0.8))))
-  expect_equal(measureLogloss(p2, y1), -mean(log(c(0.9, 0.2))))
-
-  pred.probs = getPredictionProbabilities(pred.classif)
-  pred.probs[pred.probs > 1-1e-15] = 1-1e-15
-  pred.probs[pred.probs < 1e-15] = 1e-15
-  logloss.test = -1*mean(log(pred.probs[model.matrix(~ . + 0, data = as.data.frame(tar.classif)) - pred.probs > 0]))
-  logloss.perf = performance(pred.classif, measures = logloss, model = mod.classif)
-  expect_equal(logloss.test, logloss$fun(pred = pred.classif))
-  expect_equal(logloss.test, as.numeric(logloss.perf))
+  expect_equal(as.numeric(performance(pred.bin, measures = list(multiclass.aunu,
+    multiclass.aunp, multiclass.au1u, multiclass.au1p))), 
+    as.numeric(rep(performance(pred.bin, measures = auc), 4)))
 
   #test binaryclass measures
 
