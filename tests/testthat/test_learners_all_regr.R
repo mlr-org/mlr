@@ -10,7 +10,9 @@ test_that("learners work: regr ", {
       # see above
       replace_missing_data_with_x_j_bar = TRUE,
       num_iterations_after_burn_in = 10L),
-    regr.nodeHarvest = list(nodes = 100L, nodesize = 5L)
+    regr.nodeHarvest = list(nodes = 100L, nodesize = 5L),
+    regr.h2o.deeplearning = list(hidden = 2L, seed = getOption("mlr.debug.seed"), reproducible = TRUE),
+    regr.h2o.randomForest = list(seed = getOption("mlr.debug.seed"))
   )
 
   fixHyperPars = function(lrn) {
