@@ -18,7 +18,7 @@ test_that("test_friedmanTestBMR", {
   expect_warning(r3 <- friedmanPostHocTestBMR(res, acc, p.value = 10^(-10)))
   expect_is(r3, "htest")
   expect_false(r3$f.rejnull)
-  
+
 
   # Case: Reject null
   # Make sure nnet is always worse then rpart. (add error)
@@ -30,5 +30,5 @@ test_that("test_friedmanTestBMR", {
     expect_true(r4$f.rejnull)
   }
   expect_is(r4$crit.difference[[1]], "numeric")
-  expect_more_than(r4$crit.difference[[1]], 0L)
+  expect_gt(r4$crit.difference[[1]], 0L)
 })

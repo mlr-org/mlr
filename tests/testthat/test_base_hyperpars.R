@@ -22,7 +22,7 @@ test_that("hyperpars", {
   configureMlr(on.par.without.desc = "warn", show.learner.output = FALSE)
   expect_warning(makeLearner("classif.rpart", foo = 1), "Setting parameter foo without")
   configureMlr(on.par.without.desc = "quiet")
-  expect_that(makeLearner("classif.rpart", foo = 1), not(gives_warning()))
+  expect_warning(makeLearner("classif.rpart", foo = 1), NA)
   configureMlr(show.learner.output = FALSE)
   do.call(configureMlr, mlr.opts)
 })

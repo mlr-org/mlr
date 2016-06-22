@@ -135,5 +135,5 @@ test_that("predict doesn't warn if 'on.learner.error' is 'quiet'", {
     config = list(on.learner.error = "quiet"))
   mod = train(lrn, iris.task, subset = c(1L, 51L, 101L))
   expect_true(inherits(mod, "FailureModel"))
-  expect_that(predict(mod, multiclass.task), not(gives_warning()))
+  expect_warning(predict(mod, multiclass.task), NA)
 })
