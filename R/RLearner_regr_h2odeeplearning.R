@@ -179,7 +179,7 @@ makeRLearner.regr.h2o.deeplearning = function() {
       makeNumericLearnerParam("momentum_stable", default = 0),
       makeLogicalLearnerParam("nesterov_accelerated_gradient", default = TRUE),
       makeNumericLearnerParam("input_dropout_ratio", default = 0),
-      makeNumericLearnerParam("hidden_dropout_ratios", default = 0.5),
+      makeNumericVectorLearnerParam("hidden_dropout_ratios", default = 0.5),
       makeNumericLearnerParam("l1", default = 0),
       makeNumericLearnerParam("l2", default = 0),
       makeNumericLearnerParam("max_w2", default = Inf, allow.inf = TRUE),
