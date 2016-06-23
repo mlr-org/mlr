@@ -82,6 +82,7 @@ Suggests:
     gbm,
     GenSA,
     glmnet,
+    GPfit,
     Hmisc,
     irace (>= 1.0.7),
     kernlab,
