@@ -34,3 +34,66 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
   expect_true(any(get.pred.fun(p1) != get.pred.fun(p3)), info = lrn$id)
 }
 
+
+# Test that learner produces output on the console and whether a performance
+# measure is calculated which corresponds representing if learner works as it 
+# should.
+# This function is being used to test learners in general and in the other
+# hepler functions testing for learners that claim to handle missings, factors,...
+
+# args: learner, task, hyperpars (list which is set up in learners_all when we
+# need to deviate from the defaults for stability)
+
+checkPerformance = function(lrn, task, hyperpars) {
+  
+  if (lrn$id %in% names(hyperpars))
+    lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
+  
+  expect_output(print(lrn), lrn$id)
+  m = train(lrn, task)
+  p = predict(m, task)
+  expect_true(!is.na(performance(p)))
+}
+
+
+# Test that a given learner can handle factors:
+# Data of the task is being manipulated so that the first feature in the data
+# is a factor. A new task is being generated based on the manipulated data
+# with changeData().
+# Then checkPerformance is being called to check whether learner produces reasonable
+# performance output.
+
+# args: learner, task, and hyperpars (list we up in learners_all where we need
+# to deviate from the defaults for stability)
+
+testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
+  
+  d = getTaskData(task)
+  f = getTaskFeatureNames(task)[1]
+  d[,f] = as.factor(rep_len(c("a", "b"), length.out = nrow(d)))
+  new.task = changeData(task = task, data = d)
+  
+  checkPerformance(lrn = lrn, task = task, hyperpars = hyperpars)
+}
+
+
+# Test that a given learner can handle missings:
+# Data of the task is being manipulated so that the first obervation of the first
+# feature in the data is a factor.
+# A new task is being generated based on the manipulated data  with changeData().
+# Then checkPerformance is being called to check whether learner produces reasonable
+# performance output.
+
+# args: learner, task, and hyperpars (list we up in learners_all where we need
+# to deviate from the defaults for stability)
+
+
+testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
+  
+  d = getTaskData(task)
+  f = getTaskFeatureNames(task)[1]
+  d[1,f] = NA
+  new.task = changeData(task = task, data = d)
+  
+  checkPerformance(lrn = lrn, task = task, hyperpars = hyperpars)
+}
