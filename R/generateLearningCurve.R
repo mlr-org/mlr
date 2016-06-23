@@ -145,13 +145,13 @@ plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE) {
     facet = NULL
 
   if (!is.null(color))
-    plt = ggplot2::ggplot(data, ggplot2::aes_string(x = "percentage", y = "performance", colour = color))
+    plt = ggplot(data, aes_string(x = "percentage", y = "performance", colour = color))
   else
-    plt = ggplot2::ggplot(data, ggplot2::aes_string(x = "percentage", y = "performance"))
-  plt = plt + ggplot2::geom_point()
-  plt = plt + ggplot2::geom_line()
+    plt = ggplot(data, aes_string(x = "percentage", y = "performance"))
+  plt = plt + geom_point()
+  plt = plt + geom_line()
   if (!is.null(facet))
-    plt = plt + ggplot2::facet_wrap(as.formula(stri_paste("~", facet, sep = " ")),
+    plt = plt + facet_wrap(as.formula(stri_paste("~", facet, sep = " ")),
                                     scales = "free_y")
   return(plt)
 }
