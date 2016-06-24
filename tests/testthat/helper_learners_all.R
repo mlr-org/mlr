@@ -87,7 +87,6 @@ testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
 # args: learner, task, and hyperpars (list we up in learners_all where we need
 # to deviate from the defaults for stability)
 
-
 testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
   
   d = getTaskData(task)
