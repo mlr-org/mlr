@@ -11,4 +11,8 @@ test_that("createDummyFeatures", {
 
   dummy.task = createDummyFeatures(iris.task)
   expect_equal(dummy.task, iris.task)
+
+  df$a = as.factor(df$a)
+  expect_equal(c("a", "b", "c.A", "c.B"),
+    colnames(createDummyFeatures(df, cols = c("c"))))
 })
