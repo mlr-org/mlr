@@ -17,10 +17,7 @@
 #' @param newdata [\code{data.frame}]\cr
 #'   New observations which should be predicted.
 #'   Pass this alternatively instead of \code{task}.
-#' @param subset [\code{integer} | \code{integer}]\cr
-#'   An index vector specifying the training cases to be used for fitting.
-#'   By default the complete data set is used.
-#'   Logical vectors will be transformed to integer with \code{\link[base]{which}}.
+#' @template arg_subset
 #' @param ... [any]\cr
 #'   Currently ignored.
 #' @return [\code{\link{Prediction}}].
