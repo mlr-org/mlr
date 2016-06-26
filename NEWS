@@ -32,6 +32,7 @@ mlr_2.9:
 - add stability.nugget parameter for "regr.km"
 - plotPartialDependence can plot classification tasks with more than one interacted features now
 - generateFilterValuesData: added argument 'more.args'
+- subsetTask, getTaskData: arg "features" now also accepts logical and integer vectors
 
 - new learners
 -- classif.C50
