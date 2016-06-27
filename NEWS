@@ -42,9 +42,17 @@ mlr_2.9:
 -- classif.penalized.fusedlasso
 -- classif.penalized.lasso
 -- classif.penalized.ridge
+-- classif.h2o.deeplearning
+-- classif.h2o.gbm
+-- classif.h2o.glm
+-- classif.h2o.randomForest
 -- regr.penalized.fusedlasso
 -- regr.gausspr
 -- regr.glm
+-- regr.h2o.deeplearning
+-- regr.h2o.gbm
+-- regr.h2o.glm
+-- regr.h2o.randomForest
 -- surv.cv.CoxBoost
 -- surv.penalized.fusedlasso
 -- surv.penalized.lasso
