@@ -44,7 +44,5 @@ predictLearner.surv.coxph = function(.learner, .model, .newdata, ...) {
     # surv.range = getTrainingInfo(.model$learner.model)$surv.range
     # times = seq(from = surv.range[1L], to = surv.range[2L], length.out = 1000)
     # t(summary(survival::survfit(.model$learner.model, newdata = .newdata, se.fit = FALSE, conf.int = FALSE), times = times)$surv)
-  # } else {
-  #   stop("Unknown predict type")
-  # }
+    # } 
 }

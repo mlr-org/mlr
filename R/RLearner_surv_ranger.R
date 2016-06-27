@@ -40,7 +40,6 @@ trainLearner.surv.ranger = function(.learner, .task, .subset, .weights, ...) {
 
 #' @export
 predictLearner.surv.ranger = function(.learner, .model, .newdata, ...) {
-  if (.learner$predict.type == "response")
   p = predict(object = .model$learner.model, data = .newdata)
   rowMeans(p$chf)
 }

@@ -35,10 +35,6 @@ trainLearner.surv.penalized.lasso = function(.learner, .task, .subset, .weights 
 predictLearner.surv.penalized.lasso = function(.learner, .model, .newdata, ...) {
   #info = getTrainingInfo(.model)
   #.newdata = as.matrix(fixDataForLearner(.newdata, info))
-  if(.learner$predict.type == "response") {
-    # Note: this is a rather ugly hack but should work according to Jelle
-    penalized::survival(penalized::predict(.model$learner.model, data = .newdata), Inf)
-  } else {
-    stop("Unknown predict type")
-  }
+  # Note: this is a rather ugly hack but should work according to Jelle
+  penalized::survival(penalized::predict(.model$learner.model, data = .newdata), Inf)
 }
