@@ -14,7 +14,9 @@ test_that("learners work: classif ", {
     classif.gbm = list(bag.fraction = 1, n.minobsinnode = 1),
     classif.lssvm = list(kernel = "rbfdot", reduced = FALSE),
     classif.nodeHarvest = list(nodes = 100L, nodesize = 5L),
-    classif.xyf = list(ydim = 2L)
+    classif.xyf = list(ydim = 2L),
+    classif.h2o.deeplearning = list(hidden = 2L, seed = getOption("mlr.debug.seed"), reproducible = TRUE),
+    classif.h2o.randomForest = list(seed = getOption("mlr.debug.seed"))
   )
 
   fixHyperPars = function(lrn) {
