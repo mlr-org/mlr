@@ -66,6 +66,12 @@ test_that("plotFilterValues", {
   #expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(40))
   #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(ncol(fv2$data) - 2))
   ## plotFilterValuesGGVIS(fv2)
+  
+  # facetting works:
+  q = plotFilterValues(fv2, facet.wrap.nrow = 2L)
+  testFacetting(q, 2L)
+  q = plotFilterValues(fv2, facet.wrap.ncol = 2L)
+  testFacetting(q, ncol = 2L)
 })
 
 test_that("args are passed down to filter methods", { # we had an issue here, see #941

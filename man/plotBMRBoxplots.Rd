@@ -5,7 +5,8 @@
 \title{Create box or violin plots for a BenchmarkResult.}
 \usage{
 plotBMRBoxplots(bmr, measure = NULL, style = "box", order.lrns = NULL,
-  order.tsks = NULL, pretty.names = TRUE)
+  order.tsks = NULL, pretty.names = TRUE, facet.wrap.nrow = NULL,
+  facet.wrap.ncol = NULL)
 }
 \arguments{
 \item{bmr}{[\code{\link{BenchmarkResult}}]\cr
@@ -28,6 +29,10 @@ Character vector with \code{task.ids} in new order.}
 \item{pretty.names}{[\code{logical(1)}]\cr
 Whether to use the \code{\link{Measure}} name instead of the id in the plot.
 Default is \code{TRUE}.}
+
+\item{facet.wrap.nrow, facet.wrap.ncol}{[\code{integer()}]\cr
+Number of rows and columns for facetting. Default for both is \code{NULL}.
+In this case ggplot's \code{facet_wrap} will choose the layout itself.}
 }
 \value{
 ggplot2 plot object.

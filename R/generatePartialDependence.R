@@ -450,6 +450,7 @@ print.PartialDependenceData = function(x, ...) {
 #'   (the default) with argument \code{features} of length greater than one, then \code{facet} is ignored and
 #'   each feature is plotted in its own facet.
 #'   Default is \code{NULL}.
+#' @template arg_facet_nrow_ncol
 #' @param p [\code{numeric(1)}]\cr
 #'   If \code{individual = TRUE} then \code{sample} allows the user to sample without replacement
 #'   from the output to make the display more readable. Each row is sampled with probability \code{p}.
@@ -462,7 +463,10 @@ print.PartialDependenceData = function(x, ...) {
 #'   Default is \code{NULL}.
 #' @template ret_gg2
 #' @export
-plotPartialDependence = function(obj, geom = "line", facet = NULL, p = 1, data = NULL) {
+
+plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nrow = NULL,
+  facet.wrap.ncol = NULL,p = 1, data = NULL) {
+
   assertClass(obj, "PartialDependenceData")
   assertChoice(geom, c("tile", "line"))
   if (obj$interaction & length(obj$features) > 2L & geom != "tile")
@@ -571,8 +575,10 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, p = 1, data =
       plt = plt + scale_fill_continuous(guide = guide_colorbar(title = stri_paste(target, "(derivative)", sep = " ")))
   }
 
-  if (!is.null(facet))
-    plt = plt + facet_wrap(as.formula(stri_paste("~ ", facet)), scales = scales)
+  if (!is.null(facet)) {
+    plt = plt + facet_wrap(as.formula(stri_paste("~", facet)), scales = scales,
+      nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
+  }
 
   if (!is.null(data)) {
     data = data[, colnames(data) %in% c(obj$features, obj$task.desc$target)]

@@ -12,6 +12,14 @@ test_that("BenchmarkResult", {
   ggsave(path)
   doc = XML::xmlParse(path)
   #expect_equal(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), length(getBMRTaskIds(res)))
+  
+  # facetting works:
+  q = plotBMRBoxplots(res, facet.wrap.nrow = 2L)
+  testFacetting(q, 2L)
+  q = plotBMRBoxplots(res, facet.wrap.ncol = 2L)
+  testFacetting(q, ncol = 2L)
+  q = plotBMRBoxplots(res, facet.wrap.nrow = 2L, facet.wrap.ncol = 2L)
+  testFacetting(q, 2L, 2L)
 })
 
 test_that("BenchmarkResult allows spaces", {

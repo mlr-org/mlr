@@ -88,9 +88,9 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
   colnames(perfs) = mids
   out = cbind(learner = learner, percentage = perc, perfs)
   makeS3Obj("LearningCurveData",
-            task = task,
-            measures = measures,
-            data = out)
+    task = task,
+    measures = measures,
+    data = out)
 }
 #' @export
 print.LearningCurveData = function(x, ...) {
@@ -117,9 +117,11 @@ print.LearningCurveData = function(x, ...) {
 #' @param pretty.names [\code{logical(1)}]\cr
 #'   Whether to use the \code{\link{Measure}} name instead of the id in the plot.
 #'   Default is \code{TRUE}.
+#' @template arg_facet_nrow_ncol
 #' @template ret_gg2
 #' @export
-plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE) {
+plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE,
+  facet.wrap.nrow = NULL, facet.wrap.ncol = NULL) {
   assertClass(obj, "LearningCurveData")
   mappings = c("measure", "learner")
   assertChoice(facet, mappings)
@@ -129,13 +131,12 @@ plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE) {
   if (pretty.names) {
     mnames = replaceDupeMeasureNames(obj$measures, "name")
     colnames(obj$data) = mapValues(colnames(obj$data),
-                                   names(obj$measures),
-                                   mnames)
+      names(obj$measures), mnames)
   }
 
   data = reshape2::melt(obj$data,
-                        id.vars = c("learner", "percentage"),
-                        variable.name = "measure", value.name = "performance")
+    id.vars = c("learner", "percentage"),
+    variable.name = "measure", value.name = "performance")
   nlearn = length(unique(data$learner))
   nmeas = length(unique(data$measure))
 
@@ -150,9 +151,10 @@ plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE) {
     plt = ggplot(data, aes_string(x = "percentage", y = "performance"))
   plt = plt + geom_point()
   plt = plt + geom_line()
-  if (!is.null(facet))
-    plt = plt + facet_wrap(as.formula(stri_paste("~", facet, sep = " ")),
-                                    scales = "free_y")
+  if (!is.null(facet)) {
+    plt = plt + ggplot2::facet_wrap(as.formula(stri_paste("~", facet, sep = " ")),
+      scales = "free_y", nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
+  }
   return(plt)
 }
 #' @title Plot learning curve data using ggvis.
