@@ -70,6 +70,7 @@ mlr_2.9:
 
 - new measures
 -- measureBrier (for mutliclass problems)
+-- logloss
 
 mlr_2.8:
 - Feature filter "univariate" had a bad name, was deprecated and is now called

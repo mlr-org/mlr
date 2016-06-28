@@ -334,12 +334,12 @@ multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, 
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("pROC", why = "multiclass.auc", default.method = "load")
     resp = pred$data$response
-    predP = getPredictionProbabilities(pred)
+    predp = getPredictionProbabilities(pred)
     # choose the probablity of the choosen response
-    predV = vnapply(seq_row(predP), function(i) {
-      predP[i, resp[i]]
+    predv = vnapply(seq_row(predp), function(i) {
+      predp[i, resp[i]]
     })
-    auc = pROC::multiclass.roc(response = resp, predictor = predV)$auc
+    auc = pROC::multiclass.roc(response = resp, predictor = predv)$auc
     as.numeric(auc)
   }
 )
@@ -350,9 +350,9 @@ multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, 
 multiclass.brier = makeMeasure(id = "multiclass.brier", minimize = TRUE, best = 0, worst = 2,
   properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
   name = "Multiclass Brier score",
-  note = "Following the definition by Brier: http://docs.lib.noaa.gov/rescue/mwr/078/mwr-078-01-0001.pdf",                             
+  note = "Following the definition by Brier: http://docs.lib.noaa.gov/rescue/mwr/078/mwr-078-01-0001.pdf",
   fun = function(task, model, pred, feats, extra.args) {
-  measureMulticlassBrier(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
+    measureMulticlassBrier(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
   }
 )
 
@@ -385,11 +385,11 @@ measureLogloss = function(probabilities, truth){
   probabilities[probabilities < eps] = eps
   #We add this line because binary tasks only output one probability column
   if (nlevels(truth) == 2L) probabilities = cbind(probabilities,1-probabilities)
-  #model.matrix results in a recoded matrix with columns named as the factor levels and valued 1 when the column matches the factor and 0 elsewhere.
-  #The plus 0 in the formula is to ensure a null intercept.
+  # model.matrix results in a recoded matrix with columns named as the factor levels and valued 1 when the column matches the factor and 0 elsewhere.
+  # the plus 0 in the formula is to ensure a null intercept.
   truth.model = model.matrix(~ . + 0, data = as.data.frame(truth))
-  #(truth.model-probabilities) is bigger than 0 only in the cells corresponding to the true response, when truth.model equals 1
-  #Also it never reaches zero because we bounded the probabilities
+  # (truth.model-probabilities) is bigger than 0 only in the cells corresponding to the true response, when truth.model equals 1
+  # also it never reaches zero because we bounded the probabilities
   -1*mean(log(probabilities[(truth.model-probabilities) > 0]))
 }
 

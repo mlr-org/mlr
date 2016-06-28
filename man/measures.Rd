@@ -24,6 +24,7 @@
 \alias{gmean}
 \alias{gpr}
 \alias{hamloss}
+\alias{logloss}
 \alias{mae}
 \alias{mcc}
 \alias{mcp}
@@ -41,6 +42,7 @@
 \alias{measureGMEAN}
 \alias{measureGPR}
 \alias{measureHAMLOSS}
+\alias{measureLogloss}
 \alias{measureMAE}
 \alias{measureMCC}
 \alias{measureMEDAE}
@@ -143,6 +145,10 @@ multiclass.auc
 multiclass.brier
 
 measureMulticlassBrier(probabilities, truth)
+
+logloss
+
+measureLogloss(probabilities, truth)
 
 auc
 
