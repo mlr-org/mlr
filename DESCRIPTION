@@ -123,6 +123,7 @@ Suggests:
     ROCR,
     rotationForest,
     rpart,
+    RRF,
     rrlda,
     rsm,
     RSNNS,
