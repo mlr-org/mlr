@@ -1,5 +1,7 @@
 context("learners_classiflabelswitch")
 
+if (FALSE) {
+
 n = 50L
 p = 2L
 mydata1 = matrix(runif(2*n*p), nrow = 2*n, ncol = p)
@@ -75,3 +77,5 @@ test_that("no labels are switched", {
     checkErrsForTask(mytask4, predtype)
   }
 })
+
+}
