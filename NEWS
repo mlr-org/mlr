@@ -46,6 +46,7 @@ mlr_2.9:
 -- classif.h2o.gbm
 -- classif.h2o.glm
 -- classif.h2o.randomForest
+-- classif.rrf
 -- regr.penalized.fusedlasso
 -- regr.gausspr
 -- regr.glm
@@ -53,6 +54,7 @@ mlr_2.9:
 -- regr.h2o.gbm
 -- regr.h2o.glm
 -- regr.h2o.randomForest
+-- regr.rrf
 -- surv.cv.CoxBoost
 -- surv.penalized.fusedlasso
 -- surv.penalized.lasso
