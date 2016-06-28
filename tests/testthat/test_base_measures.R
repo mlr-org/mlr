@@ -272,7 +272,15 @@ test_that("check measure calculations", {
    measures = multiclass.auc, model = mod.classif)
   expect_equal(multiclass.auc.test, multiclass.auc$fun(pred = pred.classif))
   expect_equal(multiclass.auc.test, as.numeric(multiclass.auc.perf))
-
+  #logloss
+  pred.probs = getPredictionProbabilities(pred.classif)
+  pred.probs[pred.probs > 1-1e-15] = 1-1e-15
+  pred.probs[pred.probs < 1e-15] = 1e-15
+  logloss.test = -1*mean(log(pred.probs[model.matrix(~ . + 0, data = as.data.frame(tar.classif)) - pred.probs > 0]))
+  logloss.perf = performance(pred.classif, measures = logloss, model = mod.classif)
+  expect_equal(logloss.test, logloss$fun(pred = pred.classif))
+  expect_equal(logloss.test, as.numeric(logloss.perf))
+  
   #test binaryclass measures
 
   #brier

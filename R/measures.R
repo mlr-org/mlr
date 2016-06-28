@@ -363,6 +363,36 @@ measureMulticlassBrier = function(probabilities, truth) {
   mean(rowSums((probabilities - model.matrix( ~ . -1, data = as.data.frame(truth)))^2))
 }
 
+#' @export logloss
+#' @rdname measures
+#' @format none
+logloss = makeMeasure(id = "logloss", minimize = TRUE, best = 0, worst = Inf,
+  properties = c("classif", "classif.multi", "req.truth", "req.prob"),
+  name = "Logarithmic loss",
+  note = "Check its definition in https://www.kaggle.com/wiki/MultiClassLogLoss.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureLogloss(getPredictionProbabilities(pred), pred$data$truth)
+  }
+)
+
+#' @export measureLogloss
+#' @rdname measures
+#' @format none
+measureLogloss = function(probabilities, truth){
+  eps = 1e-15
+  #let's confine the predicted probabilities to [eps,1-eps], so logLoss doesn't reach infinity under any circumstance
+  probabilities[probabilities > 1-eps] = 1-eps
+  probabilities[probabilities < eps] = eps
+  #We add this line because binary tasks only output one probability column
+  if (nlevels(truth) == 2L) probabilities = cbind(probabilities,1-probabilities)
+  #model.matrix results in a recoded matrix with columns named as the factor levels and valued 1 when the column matches the factor and 0 elsewhere.
+  #The plus 0 in the formula is to ensure a null intercept.
+  truth.model = model.matrix(~ . + 0, data = as.data.frame(truth))
+  #(truth.model-probabilities) is bigger than 0 only in the cells corresponding to the true response, when truth.model equals 1
+  #Also it never reaches zero because we bounded the probabilities
+  -1*mean(log(probabilities[(truth.model-probabilities) > 0]))
+}
+
 ###############################################################################
 ### classif binary ###
 ###############################################################################
