@@ -51,6 +51,7 @@ test_that("no labels are switched", {
     names(lrns) = lids
     toremove = grepl("classif.mock", lids)
     toremove = toremove | grepl("classif.LiblineaRMultiClass", lids)
+    toremove = toremove | grepl("classif.h2o", lids)
     lrns = lrns[!toremove]
 
     vnapply(lrns, function(lrn) {
