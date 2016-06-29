@@ -169,22 +169,22 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
     mp = aes_string(x = "name", y = "value", fill = "type")
   else
     mp = aes_string(x = "name", y = "value")
-  plt = ggplot2::ggplot(data = data, mapping = mp)
-  plt = plt + ggplot2::geom_bar(position = "identity", stat = "identity")
+  plt = ggplot(data = data, mapping = mp)
+  plt = plt + geom_bar(position = "identity", stat = "identity")
   if (length(unique(data$method)) > 1L) {
-    plt = plt + ggplot2::facet_wrap(~ method, scales = "free_y")
-    plt = plt + ggplot2::labs(title = sprintf("%s (%i features)",
+    plt = plt + facet_wrap(~ method, scales = "free_y")
+    plt = plt + labs(title = sprintf("%s (%i features)",
                                               fvalues$task.desc$id,
                                               sum(fvalues$task.desc$n.feat)),
                               x = "", y = "")
   } else {
-    plt = plt + ggplot2::labs(title = sprintf("%s (%i features), filter = %s",
+    plt = plt + labs(title = sprintf("%s (%i features), filter = %s",
                                               fvalues$task.desc$id,
                                               sum(fvalues$task.desc$n.feat),
                                               methods),
                               x = "", y = "")
   }
-  plt = plt + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
+  plt = plt + theme(axis.text.x = element_text(angle = 45, hjust = 1))
   return(plt)
 }
 #' Plot filter values using ggvis.

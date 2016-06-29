@@ -22,18 +22,17 @@ makeRLearner.surv.ranger = function() {
       makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE),
       makeDiscreteLearnerParam(id = "splitrule", values = c("logrank", "C"), default = "logrank")
     ),
-    par.vals = list(num.threads = 1L, verbose = FALSE),
+    par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = TRUE),
     properties = c("numerics", "factors", "ordered", "rcens", "prob"),
     name = "Random Forests",
     short.name = "ranger",
-    note = "By default, internal parallelization is switched off (`num.threads = 1`) and `verbose` output is disabled. Both settings are changeable."
+    note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled and `respect.unordered.factors` is set to `TRUE`. All settings are changeable."
   )
 }
 
 #' @export
 trainLearner.surv.ranger = function(.learner, .task, .subset, .weights, ...) {
-  if (.learner$predict.type != "response")
-    stop("Unsupported predict type")
+  if (.learner$predict.type == "response")
   tn = getTaskTargetNames(.task)
   ranger::ranger(formula = NULL, dependent.variable.name = tn[1L], status.variable.name = tn[2L], data = getTaskData(.task, .subset),
                  write.forest = TRUE, ...)
@@ -41,8 +40,6 @@ trainLearner.surv.ranger = function(.learner, .task, .subset, .weights, ...) {
 
 #' @export
 predictLearner.surv.ranger = function(.learner, .model, .newdata, ...) {
-  if (.learner$predict.type != "response")
-    stop("Unsupported predict type")
   p = predict(object = .model$learner.model, data = .newdata)
   rowMeans(p$chf)
 }

@@ -33,10 +33,6 @@ trainLearner.surv.penalized.fusedlasso = function(.learner, .task, .subset, .wei
 
 #' @export
 predictLearner.surv.penalized.fusedlasso = function(.learner, .model, .newdata, ...) {
-  if(.learner$predict.type == "response") {
-    # Note: this is a rather ugly hack but should work according to Jelle
-    penalized::survival(penalized::predict(.model$learner.model, data = .newdata), Inf)
-  } else {
-    stop("Unknown predict type")
-  }
+  # Note: this is a rather ugly hack but should work according to Jelle
+  penalized::survival(penalized::predict(.model$learner.model, data = .newdata), Inf)
 }

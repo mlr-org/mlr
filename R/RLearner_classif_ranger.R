@@ -22,11 +22,11 @@ makeRLearner.classif.ranger = function() {
       makeLogicalLearnerParam(id = "verbose", default = TRUE, when = "both", tunable = FALSE),
       makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE)
     ),
-    par.vals = list(num.threads = 1L, verbose = FALSE),
+    par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = TRUE),
     properties = c("twoclass", "multiclass", "prob", "numerics", "factors", "ordered"),
     name = "Random Forests",
     short.name = "ranger",
-    note = "By default, internal parallelization is switched off (`num.threads = 1`) and `verbose` output is disabled. Both settings are changeable."
+    note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled and `respect.unordered.factors` is set to `TRUE`. All settings are changeable."
   )
 }
 

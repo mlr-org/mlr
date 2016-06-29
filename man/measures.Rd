@@ -24,6 +24,7 @@
 \alias{gmean}
 \alias{gpr}
 \alias{hamloss}
+\alias{logloss}
 \alias{mae}
 \alias{mcc}
 \alias{mcp}
@@ -41,6 +42,7 @@
 \alias{measureGMEAN}
 \alias{measureGPR}
 \alias{measureHAMLOSS}
+\alias{measureLogloss}
 \alias{measureMAE}
 \alias{measureMCC}
 \alias{measureMEDAE}
@@ -144,6 +146,10 @@ multiclass.brier
 
 measureMulticlassBrier(probabilities, truth)
 
+logloss
+
+measureLogloss(probabilities, truth)
+
 auc
 
 measureAUC(probabilities, truth, negative, positive)
@@ -241,8 +247,10 @@ Vector of the true class.}
 \item{response}{[\code{factor}]\cr
 Vector of the predicted class.}
 
-\item{probabilities}{[\code{numeric}]\cr
-The probabilities for the positive class.}
+\item{probabilities}{[\code{numeric} | \code{matrix}]\cr
+a) For purely binary classification measures: The predicted probabilities for the positive class as a numeric vector.
+b) For multiclass classification measures: The predicted probabilities for all classes, always as a numeric matrix, where
+columns are named with class labels.}
 
 \item{negative}{[\code{character(1)}]\cr
 The name of the negative class.}

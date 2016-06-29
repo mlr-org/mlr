@@ -245,11 +245,6 @@ test_that("check measure calculations", {
   acc.perf = performance(pred.classif, measures = acc, model = mod.classif)
   expect_equal(acc.test, acc$fun(pred = pred.classif))
   expect_equal(acc.test, as.numeric(acc.perf))
-  #multiclass.brier
-  multiclass.brier.test = mean(rowSums((getPredictionProbabilities(pred.classif) - matrix(c(0,0,1,0,1,0,0,1,0,1,0,0), 4, 3))^2))
-  multiclass.brier.perf = performance(pred.classif, measures = multiclass.brier, model = mod.classif)
-  expect_equal(multiclass.brier.test, multiclass.brier$fun(pred = pred.classif))
-  expect_equal(multiclass.brier.test, as.numeric(multiclass.brier.perf))
   #multiclass.auc
   n.cl = length(levels(tar.classif))
   pred.probs = getPredictionProbabilities(pred.classif)
@@ -272,6 +267,28 @@ test_that("check measure calculations", {
    measures = multiclass.auc, model = mod.classif)
   expect_equal(multiclass.auc.test, multiclass.auc$fun(pred = pred.classif))
   expect_equal(multiclass.auc.test, as.numeric(multiclass.auc.perf))
+
+  p1 = p2 = matrix(c(0.1, 0.9, 0.2, 0.8), 2, 2, byrow = TRUE)
+  colnames(p1) = c("a", "b")
+  colnames(p2) = c("b", "a")
+  y1 = factor(c("a", "b"))
+  y2 = factor(c("b", "b"))
+  # multiclass.brier
+  expect_equal(measureMulticlassBrier(p1, y1), 0.5 * ((1-0.1)^2 + (0-0.9)^2 + (0-0.2)^2 + (1-0.8)^2))
+  expect_equal(measureMulticlassBrier(p1, y2), 0.5 * ((0-0.1)^2 + (1-0.9)^2 + (0-0.2)^2 + (1-0.8)^2))
+  expect_equal(measureMulticlassBrier(p2, y1), 0.5 * ((1-0.9)^2 + (0-0.1)^2 + (1-0.2)^2 + (0-0.8)^2))
+  # logloss
+  expect_equal(measureLogloss(p1, y1), -mean(log(c(0.1, 0.8))))
+  expect_equal(measureLogloss(p1, y2), -mean(log(c(0.9, 0.8))))
+  expect_equal(measureLogloss(p2, y1), -mean(log(c(0.9, 0.2))))
+
+  pred.probs = getPredictionProbabilities(pred.classif)
+  pred.probs[pred.probs > 1-1e-15] = 1-1e-15
+  pred.probs[pred.probs < 1e-15] = 1e-15
+  logloss.test = -1*mean(log(pred.probs[model.matrix(~ . + 0, data = as.data.frame(tar.classif)) - pred.probs > 0]))
+  logloss.perf = performance(pred.classif, measures = logloss, model = mod.classif)
+  expect_equal(logloss.test, logloss$fun(pred = pred.classif))
+  expect_equal(logloss.test, as.numeric(logloss.perf))
 
   #test binaryclass measures
 

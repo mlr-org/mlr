@@ -32,6 +32,10 @@ mlr_2.9:
 - add stability.nugget parameter for "regr.km"
 - plotPartialDependence can plot classification tasks with more than one interacted features now
 - generateFilterValuesData: added argument 'more.args'
+- subsetTask, getTaskData: arg "features" now also accepts logical and integer
+- normalizeFeatures, createDummyFeatures: arg 'exclude' was replaced by 'cols'
+- normalizeFeatures is now S3 and can be called also on data.frames
+- classif.ranger, regr.ranger and surv.ranger: now respect unordered factors by default
 
 - new learners
 -- classif.C50
@@ -39,9 +43,19 @@ mlr_2.9:
 -- classif.penalized.fusedlasso
 -- classif.penalized.lasso
 -- classif.penalized.ridge
+-- classif.h2o.deeplearning
+-- classif.h2o.gbm
+-- classif.h2o.glm
+-- classif.h2o.randomForest
+-- classif.rrf
 -- regr.penalized.fusedlasso
 -- regr.gausspr
 -- regr.glm
+-- regr.h2o.deeplearning
+-- regr.h2o.gbm
+-- regr.h2o.glm
+-- regr.h2o.randomForest
+-- regr.rrf
 -- surv.cv.CoxBoost
 -- surv.penalized.fusedlasso
 -- surv.penalized.lasso
@@ -56,6 +70,7 @@ mlr_2.9:
 
 - new measures
 -- measureBrier (for mutliclass problems)
+-- logloss
 
 mlr_2.8:
 - Feature filter "univariate" had a bad name, was deprecated and is now called

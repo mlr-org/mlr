@@ -25,8 +25,10 @@
 #'   The name of the negative class.
 #' @param positive [\code{character(1)}]\cr
 #'   The name of the positive class.
-#' @param probabilities [\code{numeric}]\cr
-#'   The probabilities for the positive class.
+#' @param probabilities [\code{numeric} | \code{matrix}]\cr
+#'   a) For purely binary classification measures: The predicted probabilities for the positive class as a numeric vector.
+#'   b) For multiclass classification measures: The predicted probabilities for all classes, always as a numeric matrix, where
+#'   columns are named with class labels.
 #' @name measures
 #' @rdname measures
 #' @family performance
@@ -334,12 +336,12 @@ multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, 
   fun = function(task, model, pred, feats, extra.args) {
     requirePackages("pROC", why = "multiclass.auc", default.method = "load")
     resp = pred$data$response
-    predP = getPredictionProbabilities(pred)
+    predp = getPredictionProbabilities(pred)
     # choose the probablity of the choosen response
-    predV = vnapply(seq_row(predP), function(i) {
-      predP[i, resp[i]]
+    predv = vnapply(seq_row(predp), function(i) {
+      predp[i, resp[i]]
     })
-    auc = pROC::multiclass.roc(response = resp, predictor = predV)$auc
+    auc = pROC::multiclass.roc(response = resp, predictor = predv)$auc
     as.numeric(auc)
   }
 )
@@ -350,9 +352,9 @@ multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, 
 multiclass.brier = makeMeasure(id = "multiclass.brier", minimize = TRUE, best = 0, worst = 2,
   properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
   name = "Multiclass Brier score",
-  note = "Following the definition by Brier: http://docs.lib.noaa.gov/rescue/mwr/078/mwr-078-01-0001.pdf",                             
+  note = "Defined as: (1/n) sum_i sum_j (y_ij - p_ij)^2, where y_ij = 1 if observation i has class j (else 0), and p_ij is the predicted probablity of observation i for class j. From http://docs.lib.noaa.gov/rescue/mwr/078/mwr-078-01-0001.pdf",
   fun = function(task, model, pred, feats, extra.args) {
-  measureMulticlassBrier(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
+    measureMulticlassBrier(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
   }
 )
 
@@ -360,7 +362,34 @@ multiclass.brier = makeMeasure(id = "multiclass.brier", minimize = TRUE, best = 
 #' @rdname measures
 #' @format none
 measureMulticlassBrier = function(probabilities, truth) {
-  mean(rowSums((probabilities - model.matrix( ~ . -1, data = as.data.frame(truth)))^2))
+  truth = factor(truth, levels = colnames(probabilities))
+  mat01 = model.matrix( ~ . -1, data = as.data.frame(truth))
+  mean(rowSums((probabilities - mat01)^2))
+}
+
+#' @export logloss
+#' @rdname measures
+#' @format none
+logloss = makeMeasure(id = "logloss", minimize = TRUE, best = 0, worst = Inf,
+  properties = c("classif", "classif.multi", "req.truth", "req.prob"),
+  name = "Logarithmic loss",
+  note = "Defined as: -mean(log(p_i)), where p_i is the predicted probability of the true class of observation i. Inspired by https://www.kaggle.com/wiki/MultiClassLogLoss.",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureLogloss(getPredictionProbabilities(pred, cl = pred$task.desc$class.levels), pred$data$truth)
+  }
+)
+
+#' @export measureLogloss
+#' @rdname measures
+#' @format none
+measureLogloss = function(probabilities, truth){
+  eps = 1e-15
+  #let's confine the predicted probabilities to [eps,1-eps], so logLoss doesn't reach infinity under any circumstance
+  probabilities[probabilities > 1-eps] = 1-eps
+  probabilities[probabilities < eps] = eps
+  truth = match(as.character(truth), colnames(probabilities))
+  p = getRowEls(probabilities, truth)
+  -1*mean(log(p))
 }
 
 ###############################################################################
