@@ -36,6 +36,8 @@ mlr_2.9:
 - normalizeFeatures, createDummyFeatures: arg 'exclude' was replaced by 'cols'
 - normalizeFeatures is now S3 and can be called also on data.frames
 - classif.ranger, regr.ranger and surv.ranger: now respect unordered factors by default
+- added the ability to generate and plot data from the hyperparameter tuning
+  path for a single hyperparameter
 
 - new learners
 -- classif.C50
@@ -64,6 +66,10 @@ mlr_2.9:
 - removed learners
 -- surv.optimCoxBoostPenalty
 -- surv.penalized (split up, see new learners above)
+
+- new functions
+-- generateHyperParsEffectData
+-- plotHyperParsEffect
 
 - removed functions
 -- getParamSet generic (now in ParamHelpers package)
