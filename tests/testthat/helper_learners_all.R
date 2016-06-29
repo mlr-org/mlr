@@ -1,11 +1,15 @@
+# Helper functions for testing learners specific to the type of learning task
+# args: learner, task, hyperpars (list which is set up in learners_all when we
+# need to deviate from the defaults for stability)
+
+
 # test that a given learner respects its weights tag. we do this:
 # train without weights, with weights = 1, and with changed weights
 # then we check that changed weights actually change the output
 # note: it is not always easy to find a good data and weights combo to reliably achieve this,
 # as for some learners we need very extreme weights and for others exteme weights cause error.
 #
-# args: we pass a learner, task, train and test.inds, and weight vec for train inds
-# hyperpars is the list we set up in learners all where we need to deviate from the defaults for stability
+# further args: train and test.inds, and weight vec for train inds
 # we can also set pred.type and the getter for the output col from the preds.
 
 testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weights, hyperpars,
@@ -39,20 +43,36 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
 # measure is calculated which corresponds representing if learner works as it 
 # should.
 # This function is being used to test learners in general and in the other
-# hepler functions testing for learners that claim to handle missings, factors,...
+# helper functions testing learners that claim to handle missings, factors,...
+# It also tests if the learner can predict probabilities or standard errors.
+# When testing standard errors an additional test if there are as many predictions
+# as there are observations in the task is being performed.
+# Note: performance() needs the task argument so that it works with cluster learners.
+# further args: pred.type (only needs specification "prob" when testing learner
+# can predict probabilities or specification "se" when testing learner can
+# predict standard errors.)
 
-# args: learner, task, hyperpars (list which is set up in learners_all when we
-# need to deviate from the defaults for stability)
-
-checkPerformance = function(lrn, task, hyperpars) {
+testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "response") {
   
   if (lrn$id %in% names(hyperpars))
     lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
   
+  if (pred.type == "response") {
+    lrn = setPredictType.Learner(lrn, "response")
+  } else if (pred.type == "prob") {
+    lrn = setPredictType.Learner(lrn, "prob")
+  } else if (pred.type == "se") {
+    lrn = setPredictType.Learner(lrn, "se")
+  }
+  
   expect_output(print(lrn), lrn$id)
   m = train(lrn, task)
   p = predict(m, task)
-  expect_true(!is.na(performance(p)))
+  expect_true(!is.na(performance(pred = p, task = task)))
+  
+  if (pred.type == "se")
+    expect_equal(length(p$data$se), task$task.desc$size)
+  
 }
 
 
@@ -60,11 +80,8 @@ checkPerformance = function(lrn, task, hyperpars) {
 # Data of the task is being manipulated so that the first feature in the data
 # is a factor. A new task is being generated based on the manipulated data
 # with changeData().
-# Then checkPerformance is being called to check whether learner produces reasonable
-# performance output.
-
-# args: learner, task, and hyperpars (list we up in learners_all where we need
-# to deviate from the defaults for stability)
+# Then testThatLearnerCanTrainPredict is being called to check whether learner
+# produces reasonable performance output.
 
 testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
   
@@ -73,7 +90,7 @@ testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
   d[,f] = as.factor(rep_len(c("a", "b"), length.out = nrow(d)))
   new.task = changeData(task = task, data = d)
   
-  checkPerformance(lrn = lrn, task = task, hyperpars = hyperpars)
+  testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
 }
 
 
@@ -81,11 +98,8 @@ testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
 # Data of the task is being manipulated so that the first obervation of the first
 # feature in the data is a factor.
 # A new task is being generated based on the manipulated data  with changeData().
-# Then checkPerformance is being called to check whether learner produces reasonable
-# performance output.
-
-# args: learner, task, and hyperpars (list we up in learners_all where we need
-# to deviate from the defaults for stability)
+# Then testThatLearnerCanTrainPredict() is being called to check whether learner
+# produces reasonable performance output.
 
 testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
   
@@ -94,5 +108,5 @@ testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
   d[1,f] = NA
   new.task = changeData(task = task, data = d)
   
-  checkPerformance(lrn = lrn, task = task, hyperpars = hyperpars)
+  testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
 }
