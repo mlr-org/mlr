@@ -43,6 +43,7 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
 # measure is calculated which corresponds representing if learner works as it 
 # should.
 # This function is being used to test learners in general and in the other
+<<<<<<< HEAD
 # helper functions testing learners that claim to handle missings, factors,...
 # It also tests if the learner can predict probabilities or standard errors.
 # When testing standard errors an additional test if there are as many predictions
@@ -53,10 +54,19 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
 # predict standard errors.)
 
 testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "response") {
+=======
+# hepler functions testing for learners that claim to handle missings, factors,...
+
+# args: learner, task, hyperpars (list which is set up in learners_all when we
+# need to deviate from the defaults for stability)
+
+checkPerformance = function(lrn, task, hyperpars) {
+>>>>>>> 534a7f73d7c8a14b4ac1a9b9572a30ed6fe20649
   
   if (lrn$id %in% names(hyperpars))
     lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
   
+<<<<<<< HEAD
   if (pred.type == "response") {
     lrn = setPredictType.Learner(lrn, "response")
   } else if (pred.type == "prob") {
@@ -73,6 +83,12 @@ testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "res
   if (pred.type == "se")
     expect_equal(length(p$data$se), task$task.desc$size)
   
+=======
+  expect_output(print(lrn), lrn$id)
+  m = train(lrn, task)
+  p = predict(m, task)
+  expect_true(!is.na(performance(p)))
+>>>>>>> 534a7f73d7c8a14b4ac1a9b9572a30ed6fe20649
 }
 
 
@@ -80,8 +96,16 @@ testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "res
 # Data of the task is being manipulated so that the first feature in the data
 # is a factor. A new task is being generated based on the manipulated data
 # with changeData().
+<<<<<<< HEAD
 # Then testThatLearnerCanTrainPredict is being called to check whether learner
 # produces reasonable performance output.
+=======
+# Then checkPerformance is being called to check whether learner produces reasonable
+# performance output.
+
+# args: learner, task, and hyperpars (list we up in learners_all where we need
+# to deviate from the defaults for stability)
+>>>>>>> 534a7f73d7c8a14b4ac1a9b9572a30ed6fe20649
 
 testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
   
@@ -90,7 +114,11 @@ testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
   d[,f] = as.factor(rep_len(c("a", "b"), length.out = nrow(d)))
   new.task = changeData(task = task, data = d)
   
+<<<<<<< HEAD
   testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
+=======
+  checkPerformance(lrn = lrn, task = task, hyperpars = hyperpars)
+>>>>>>> 534a7f73d7c8a14b4ac1a9b9572a30ed6fe20649
 }
 
 
@@ -98,8 +126,16 @@ testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
 # Data of the task is being manipulated so that the first obervation of the first
 # feature in the data is a factor.
 # A new task is being generated based on the manipulated data  with changeData().
+<<<<<<< HEAD
 # Then testThatLearnerCanTrainPredict() is being called to check whether learner
 # produces reasonable performance output.
+=======
+# Then checkPerformance is being called to check whether learner produces reasonable
+# performance output.
+
+# args: learner, task, and hyperpars (list we up in learners_all where we need
+# to deviate from the defaults for stability)
+>>>>>>> 534a7f73d7c8a14b4ac1a9b9572a30ed6fe20649
 
 testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
   
@@ -108,5 +144,9 @@ testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
   d[1,f] = NA
   new.task = changeData(task = task, data = d)
   
+<<<<<<< HEAD
   testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
+=======
+  checkPerformance(lrn = lrn, task = task, hyperpars = hyperpars)
+>>>>>>> 534a7f73d7c8a14b4ac1a9b9572a30ed6fe20649
 }
