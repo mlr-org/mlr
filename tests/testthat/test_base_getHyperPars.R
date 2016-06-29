@@ -6,8 +6,8 @@ test_that("getHyperPars", {
   expect_equal(getHyperPars(lrn), list(xval = 0))
   
   lrn = makeLearner("classif.lda")
-  named_list <- list()
-  names(named_list) <- character(0)
+  named_list = list()
+  names(named_list) = character(0)
   expect_equal(getHyperPars(lrn), named_list)
 
   lrn = makeFilterWrapper(makeLearner("classif.rpart"))
