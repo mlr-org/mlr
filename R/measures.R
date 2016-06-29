@@ -25,8 +25,10 @@
 #'   The name of the negative class.
 #' @param positive [\code{character(1)}]\cr
 #'   The name of the positive class.
-#' @param probabilities [\code{numeric}]\cr
-#'   The probabilities for the positive class.
+#' @param probabilities [\code{numeric} | \code{matrix}]\cr
+#'   a) For purely binary classification measures: The predicted probabilities for the positive class as a numeric vector.
+#'   b) For multiclass classification measures: The predicted probabilities for all classes, always as a numeric matrix, where
+#'   columns are named with class labels.
 #' @name measures
 #' @rdname measures
 #' @family performance
@@ -350,7 +352,7 @@ multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, 
 multiclass.brier = makeMeasure(id = "multiclass.brier", minimize = TRUE, best = 0, worst = 2,
   properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
   name = "Multiclass Brier score",
-  note = "Following the definition by Brier: http://docs.lib.noaa.gov/rescue/mwr/078/mwr-078-01-0001.pdf",
+  note = "Defined as: (1/n) sum_i sum_j (y_ij - p_ij)^2, where y_ij = 1 if observation i has class j (else 0), and p_ij is the predicted probablity of observation i for class j. From http://docs.lib.noaa.gov/rescue/mwr/078/mwr-078-01-0001.pdf",
   fun = function(task, model, pred, feats, extra.args) {
     measureMulticlassBrier(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
   }
@@ -360,7 +362,9 @@ multiclass.brier = makeMeasure(id = "multiclass.brier", minimize = TRUE, best = 
 #' @rdname measures
 #' @format none
 measureMulticlassBrier = function(probabilities, truth) {
-  mean(rowSums((probabilities - model.matrix( ~ . -1, data = as.data.frame(truth)))^2))
+  truth = factor(truth, levels = colnames(probabilities))
+  mat01 = model.matrix( ~ . -1, data = as.data.frame(truth))
+  mean(rowSums((probabilities - mat01)^2))
 }
 
 #' @export logloss
@@ -369,9 +373,9 @@ measureMulticlassBrier = function(probabilities, truth) {
 logloss = makeMeasure(id = "logloss", minimize = TRUE, best = 0, worst = Inf,
   properties = c("classif", "classif.multi", "req.truth", "req.prob"),
   name = "Logarithmic loss",
-  note = "Check its definition in https://www.kaggle.com/wiki/MultiClassLogLoss.",
+  note = "Defined as: -mean(log(p_i)), where p_i is the predicted probability of the true class of observation i. Inspired by https://www.kaggle.com/wiki/MultiClassLogLoss.",
   fun = function(task, model, pred, feats, extra.args) {
-    measureLogloss(getPredictionProbabilities(pred), pred$data$truth)
+    measureLogloss(getPredictionProbabilities(pred, cl = pred$task.desc$class.levels), pred$data$truth)
   }
 )
 
@@ -383,14 +387,9 @@ measureLogloss = function(probabilities, truth){
   #let's confine the predicted probabilities to [eps,1-eps], so logLoss doesn't reach infinity under any circumstance
   probabilities[probabilities > 1-eps] = 1-eps
   probabilities[probabilities < eps] = eps
-  #We add this line because binary tasks only output one probability column
-  if (nlevels(truth) == 2L) probabilities = cbind(probabilities,1-probabilities)
-  # model.matrix results in a recoded matrix with columns named as the factor levels and valued 1 when the column matches the factor and 0 elsewhere.
-  # the plus 0 in the formula is to ensure a null intercept.
-  truth.model = model.matrix(~ . + 0, data = as.data.frame(truth))
-  # (truth.model-probabilities) is bigger than 0 only in the cells corresponding to the true response, when truth.model equals 1
-  # also it never reaches zero because we bounded the probabilities
-  -1*mean(log(probabilities[(truth.model-probabilities) > 0]))
+  truth = match(as.character(truth), colnames(probabilities))
+  p = getRowEls(probabilities, truth)
+  -1*mean(log(p))
 }
 
 ###############################################################################
