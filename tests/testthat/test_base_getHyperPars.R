@@ -4,8 +4,11 @@ context("getHyperPars")
 test_that("getHyperPars", {
   lrn = makeLearner("classif.rpart")
   expect_equal(getHyperPars(lrn), list(xval = 0))
+  
   lrn = makeLearner("classif.lda")
-  expect_equal(getHyperPars(lrn), list())
+  named_list = list()
+  names(named_list) = character(0)
+  expect_equal(getHyperPars(lrn), named_list)
 
   lrn = makeFilterWrapper(makeLearner("classif.rpart"))
   expect_true(setequal(names(getHyperPars(lrn)), c("xval", "fw.method")))
