@@ -53,6 +53,6 @@ predictLearner.cluster.kkmeans = function(.learner, .model, .newdata, .weights =
   # this is the squared kernel distance to the centers
   D2 = Dxx + Dcc - 2*Dxc
   # the nearest center determines cluster assignment
-  res = apply(D2, 1, which.min)
+  res = apply(D2, 1, function(x) BBmisc::getMinIndex(x, ties.method = "random"))
   return(res)
 }
