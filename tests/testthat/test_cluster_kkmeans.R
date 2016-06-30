@@ -19,7 +19,7 @@ test_that("cluster_kkmeans", {
     Dxx = matrix(rep(diag(kernlab::kernelMatrix(K, as.matrix(noclass.test))), each = ncol(Dxc)), ncol = ncol(Dxc), byrow = TRUE)
     Dcc = matrix(rep(diag(kernlab::kernelMatrix(K, as.matrix(c))), each = nrow(Dxc)), nrow = nrow(Dxc))
     D2 = Dxx + Dcc - 2*Dxc #this is the squared kernel distance to the centers
-    p = apply(D2, 1, which.min)
+    p = apply(D2, 1, function(x) BBmisc::getMinIndex(x, ties.method = "random"))
     old.predicts.list[[i]] = p
   }
 
