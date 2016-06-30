@@ -29,10 +29,9 @@ makeConstantClassWrapper = function(learner, frac = 0) {
 
 #' @export
 trainLearner.ConstantClassWrapper = function(.learner, .task, .subset, .weights = NULL, frac = 0, ...) {
-  labels.distribution = sort(table(getTaskTargets(subsetTask(.task, .subset))), decreasing = TRUE)
+  labels.distribution = sort(prop.table(table(getTaskTargets(subsetTask(.task, .subset)))), decreasing = TRUE)
   most.frequent = labels.distribution[1L]
-  fraction = most.frequent / sum(labels.distribution)
-  if (fraction >= (1 - frac)) {
+  if (most.frequent >= (1 - frac)) {
     mod = makeS3Obj("ConstantClassModelConstant",
         label = factor(names(most.frequent)),
         levels = .task$task.desc$class.levels)
