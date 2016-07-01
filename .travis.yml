@@ -54,6 +54,9 @@ after_success:
   - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
   - git push
 
+after_failure:
+  - ./travis-tool.sh dump_logs
+
 notifications:
   email:
     recipients:
