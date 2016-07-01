@@ -34,8 +34,7 @@
 #' getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 #' # above works also with predictions from resample!
 makeMultilabelDBRWrapper = function(learner) {
-  learner = checkLearner(learner, type = "classif")
-  hasLearnerProperties(learner, "twoclass")
+  learner = checkLearner(learner, type = "classif", props = "twoclass")
   id = paste("multilabel", learner$id, sep = ".")
   packs = learner$package
   x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
@@ -51,38 +50,38 @@ trainLearner.MultilabelDBRWrapper = function(.learner, .task, .subset, .weights 
   .task = subsetTask(.task, subset = .subset)
   data = getTaskData(.task)
   # train level 1 learners (binary relevance)
-  modelsLvl1 = getLearnerModel(train(makeMultilabelBinaryRelevanceWrapper(.learner$next.learner), .task, weights = .weights))
+  models.lvl1 = getLearnerModel(train(makeMultilabelBinaryRelevanceWrapper(.learner$next.learner), .task, weights = .weights))
   # train meta level learners
-  modelsMeta = namedList(targets)
+  models.meta = namedList(targets)
   for (tn in targets) {
-    data2Meta = dropNamed(data, setdiff(targets, tn))
-    trueLabelData = sapply(data.frame(data[, setdiff(targets, tn)]), as.numeric)
-    colnames(trueLabelData) = setdiff(targets, tn)
-    data2Meta = data.frame(data2Meta, trueLabelData)
-    ctask = makeClassifTask(id = tn, data = data2Meta, target = tn)
-    modelsMeta[[tn]] = train(.learner$next.learner, ctask, weights = .weights)
+    data.to.meta = dropNamed(data, setdiff(targets, tn))
+    true.label.data = sapply(data.frame(data[, setdiff(targets, tn)]), as.numeric)
+    colnames(true.label.data) = setdiff(targets, tn)
+    data.to.meta = data.frame(data.to.meta, true.label.data)
+    ctask = makeClassifTask(id = tn, data = data.to.meta, target = tn)
+    models.meta[[tn]] = train(.learner$next.learner, ctask, weights = .weights)
   }
-  makeHomChainModel(.learner, c(modelsLvl1, modelsMeta))
+  makeHomChainModel(.learner, c(models.lvl1, models.meta))
 }
 
 #' @export
 predictLearner.MultilabelDBRWrapper = function(.learner, .model, .newdata, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   # Level 1 prediction (binary relevance)
-  modelsLvl1 = models[1:length(.model$task.desc$target)]
+  models.lvl1 = models[seq_along(.model$task.desc$target)]
   f = if (.learner$predict.type == "response") {
     function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, ...)))
   } else {
     function(m) getPredictionProbabilities(predict(m, newdata = .newdata, ...), cl = "TRUE")
   }
-  predLvl1 = sapply(data.frame(asMatrixCols(lapply(modelsLvl1, f))), as.numeric)
+  pred.lvl1 = sapply(data.frame(asMatrixCols(lapply(models.lvl1, f))), as.numeric)
   # Meta level prediction
-  modelsMeta = models[(length(.model$task.desc$target) + 1):(2 * length(.model$task.desc$target))]
-  newdataMeta = data.frame(.newdata, predLvl1)
+  models.meta = models[(length(.model$task.desc$target) + 1):(2 * length(.model$task.desc$target))]
+  newdata.meta = data.frame(.newdata, pred.lvl1)
   f = if (.learner$predict.type == "response") {
-    function(m, tn) as.logical(getPredictionResponse(predict(m, newdata = newdataMeta[, which(colnames(newdataMeta) != tn)], ...)))
+    function(m, tn) as.logical(getPredictionResponse(predict(m, newdata = newdata.meta[, which(colnames(newdata.meta) != tn)], ...)))
   } else {
-    function(m, tn) getPredictionProbabilities(predict(m, newdata = newdataMeta[, which(colnames(newdataMeta) != tn)], ...), cl = "TRUE")
+    function(m, tn) getPredictionProbabilities(predict(m, newdata = newdata.meta[, which(colnames(newdata.meta) != tn)], ...), cl = "TRUE")
   }
-  mapply(f, modelsMeta, .model$task.desc$target)
+  mapply(f, models.meta, .model$task.desc$target)
 }

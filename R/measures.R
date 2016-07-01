@@ -771,15 +771,15 @@ f1mult = makeMeasure(id = "f1mult", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measureF1MULT = function(truth, response) {
-  Fi = numeric(nrow(truth))
-  for (i in 1L:nrow(truth)) {
+  fi = numeric(nrow(truth))
+  for (i in seq_row(truth)) {
     if (sum(truth[i, ]) + sum(response[i, ]) == 0) {
-      Fi[i] = 1
+      fi[i] = 1
     } else {
-      Fi[i] = 2 * sum(truth[i, ] * response[i, ]) / (sum(truth[i, ]) + sum(response[i, ]))
+      fi[i] = 2 * sum(truth[i, ] * response[i, ]) / (sum(truth[i, ]) + sum(response[i, ]))
     }
   }
-  mean(Fi) 
+  mean(fi) 
 }
 
 #' @export accmult
@@ -798,15 +798,15 @@ accmult = makeMeasure(id = "accmult", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measureACCMULT = function(truth, response) {
-  Acc = numeric(nrow(truth))
-  for (i in 1L:nrow(truth)) {
+  acc = numeric(nrow(truth))
+  for (i in seq_row(truth)) {
     if (sum(truth[i, ]) + sum(response[i, ]) == 0) {
-      Acc[i] = 1
+      acc[i] = 1
     } else {
-      Acc[i] = sum(truth[i, ] * response[i, ]) / (sum(truth[i, ]) + sum(response[i, ]) - sum(truth[i, ] * response[i, ]))
+      acc[i] = sum(truth[i, ] * response[i, ]) / (sum(truth[i, ]) + sum(response[i, ]) - sum(truth[i, ] * response[i, ]))
     }
   }
-  mean(Acc)
+  mean(acc)
 }
 
 #' @export precmult
@@ -825,15 +825,15 @@ precmult = makeMeasure(id = "precmult", minimize = FALSE, best = 1, worst = 0,
 #' @rdname measures
 #' @format none
 measurePRECMULT = function(truth, response) {
-  Prec = numeric(nrow(truth))
-  for (i in 1L:nrow(truth)) {
+  prec = numeric(nrow(truth))
+  for (i in seq_row(truth)) {
     if (sum(response[i, ]) == 0) {
-      Prec[i] = 1
+      prec[i] = 1
     } else {
-      Prec[i] = sum(truth[i, ] * response[i, ]) / sum(response[i, ])
+      prec[i] = sum(truth[i, ] * response[i, ]) / sum(response[i, ])
     }
   }
-  mean(Prec)
+  mean(prec)
 }
 
 #' @export recallmult
@@ -852,15 +852,15 @@ recallmult = makeMeasure(id = "recallmult", minimize = FALSE, best = 1, worst = 
 #' @rdname measures
 #' @format none
 measureRECALLMULT = function(truth, response) {
-  Rec = numeric(nrow(truth))
-  for (i in 1L:nrow(truth)) {
+  rec = numeric(nrow(truth))
+  for (i in seq_row(truth)) {
     if (sum(truth[i, ]) == 0) {
-      Rec[i] = 1
+      rec[i] = 1
     } else {
-      Rec[i] = sum(truth[i, ] * response[i, ]) / sum(truth[i, ])
+      rec[i] = sum(truth[i, ] * response[i, ]) / sum(truth[i, ])
     }
   }
-  mean(Rec)
+  mean(rec)
 }
 
 ###############################################################################

@@ -10,10 +10,10 @@
 #' all training data.
 #'
 #' Models can easily be accessed via \code{\link{getLearnerModel}}.
-#'
+#' 
+#' @template arg_learner
 #' @param order The chain order. E.g. for \code{m} labels, this must be a permutation of \code{1:m}. Default is \code{"random"}, i.e. \code{sample(1:m)}.
 #' @param  cv.folds The number of folds for the inner cross validation method to predict labels for the augmented feature space. Default is \code{2}.
-#' @template arg_learner
 #' @template ret_learner
 #' @references
 #' Montanes, E. et al. (2013),
@@ -37,8 +37,7 @@
 #' getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 #' # above works also with predictions from resample!
 makeMultilabelNestedStackingWrapper = function(learner, order = "random", cv.folds = 2) {
-  learner = checkLearner(learner, type = "classif")
-  hasLearnerProperties(learner, "twoclass")
+  learner = checkLearner(learner, type = "classif", props = "twoclass")
   id = paste("multilabel", learner$id, sep = ".")
   packs = learner$package
   x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
@@ -52,32 +51,32 @@ makeMultilabelNestedStackingWrapper = function(learner, order = "random", cv.fol
 #' @export
 trainLearner.MultilabelNestedStackingWrapper = function(.learner, .task, .subset, .weights = NULL, ...) {
   if (.learner$order[1] == "random") {
-    order = sample(1:length(getTaskTargetNames(.task))) #random order
+    order = sample(seq_along(getTaskTargetNames(.task))) #random order
   } else {
     order = .learner$order
   }
-  if (!identical(sort(order), 1:length(getTaskTargetNames(.task)))) {
+  if (!identical(sort(order), seq_along(getTaskTargetNames(.task)))) {
     stopf("order does not match number of targets!")
   }  
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
   data = getTaskData(.task)
   models = namedList(targets[order])
-  dataNST = dropNamed(data, targets)
-  chained_targets = targets
-  for (i in 1:length(targets)) {
+  data.nst = dropNamed(data, targets)
+  chained.targets = targets
+  for (i in seq_along(targets)) {
     tn = targets[order][i]
     if (i >= 2) {
       tnprevious = targets[order][i-1]
-      data2 = data.frame(dataNST, data[tnprevious]) #for inner resampling to produce predicted labels
+      data2 = data.frame(data.nst, data[tnprevious]) #for inner resampling to produce predicted labels
       innertask = makeClassifTask(id = tnprevious, data = data2, target = tnprevious)
       r = resample(.learner$next.learner, innertask, makeResampleDesc("CV", iters = .learner$cv.folds), weights = .weights, show.info = FALSE)
       predlabel = as.numeric(as.logical(r$pred$data[order(r$pred$data$id), ]$response)) #did not use getPredictionResponse, because of ordering
-      data2 = data.frame(dataNST, data[tn])
+      data2 = data.frame(data.nst, data[tn])
       data2[[tnprevious]] = predlabel
-      dataNST[[tnprevious]] = predlabel
+      data.nst[[tnprevious]] = predlabel
     } else {
-      data2 = dropNamed(data, setdiff(chained_targets, tn))
+      data2 = dropNamed(data, setdiff(chained.targets, tn))
     }
     ctask = makeClassifTask(id = tn, data = data2, target = tn)
     models[[tn]] = train(.learner$next.learner, ctask, weights = .weights)

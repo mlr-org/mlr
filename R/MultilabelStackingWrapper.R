@@ -9,6 +9,7 @@
 #'
 #' Models can easily be accessed via \code{\link{getLearnerModel}}.
 #'
+#' @template arg_learner
 #' @param  cv.folds The number of folds for the inner cross validation to predict labels for the augmented feature space. Default is \code{2}.
 #' @template ret_learner
 #' @references
@@ -33,8 +34,7 @@
 #' getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 #' # above works also with predictions from resample!
 makeMultilabelStackingWrapper = function(learner, cv.folds = 2) {
-  learner = checkLearner(learner, type = "classif")
-  hasLearnerProperties(learner, "twoclass")
+  learner = checkLearner(learner, type = "classif", props = "twoclass")
   id = paste("multilabel", learner$id, sep = ".")
   packs = learner$package
   x = makeHomogeneousEnsemble(id, learner$type, learner, packs, learner.subclass = "MultilabelStackingWrapper", model.subclass = "MultilabelStackingModel")
@@ -49,7 +49,7 @@ trainLearner.MultilabelStackingWrapper = function(.learner, .task, .subset, .wei
   .task = subsetTask(.task, subset = .subset)
   data = getTaskData(.task)
   # train level 1 learners
-  modelsLvl1 = getLearnerModel(train(makeMultilabelBinaryRelevanceWrapper(.learner$next.learner), .task, weights = .weights))
+  models.lvl1 = getLearnerModel(train(makeMultilabelBinaryRelevanceWrapper(.learner$next.learner), .task, weights = .weights))
   # predict labels
   f = function(tn) {
     data2 = dropNamed(data, setdiff(targets, tn))
@@ -58,40 +58,40 @@ trainLearner.MultilabelStackingWrapper = function(.learner, .task, .subset, .wei
       makeResampleDesc("CV", iters = .learner$cv.folds), show.info = FALSE)
     as.numeric(as.logical(r$pred$data[order(r$pred$data$id), ]$response)) #did not use getPredictionResponse, because of ordering
   }
-  predLabels = sapply(targets, f)
+  pred.labels = sapply(targets, f)
   # train meta level learners
   g = function(tn) {
-    dataMeta = dropNamed(data.frame(data, predLabels), setdiff(targets, tn))    
-    ctask = makeClassifTask(id = tn, data = dataMeta, target = tn)
+    data.meta = dropNamed(data.frame(data, pred.labels), setdiff(targets, tn))    
+    ctask = makeClassifTask(id = tn, data = data.meta, target = tn)
     train(.learner$next.learner, ctask, weights = .weights)
   }
-  modelsMeta = lapply(targets, g)
-  makeHomChainModel(.learner, c(modelsLvl1, modelsMeta))
+  models.meta = lapply(targets, g)
+  makeHomChainModel(.learner, c(models.lvl1, models.meta))
 }
 
 #' @export
 predictLearner.MultilabelStackingWrapper = function(.learner, .model, .newdata, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   # Level 1 prediction (binary relevance)
-  modelsLvl1 = models[1:length(.model$task.desc$target)]
+  models.lvl1 = models[seq_along(.model$task.desc$target)]
   f = if (.learner$predict.type == "response") {
     function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, ...)))
   } else {
     function(m) getPredictionProbabilities(predict(m, newdata = .newdata, ...), cl = "TRUE")
   }
   if (.learner$predict.type == "response") {
-    predLvl1 = sapply(data.frame(asMatrixCols(lapply(modelsLvl1, f))), as.numeric)
+    pred.lvl1 = sapply(data.frame(asMatrixCols(lapply(models.lvl1, f))), as.numeric)
   } else {
-    predLvl1 = data.frame(asMatrixCols(lapply(modelsLvl1, f)))
+    pred.lvl1 = data.frame(asMatrixCols(lapply(models.lvl1, f)))
   }
-  colnames(predLvl1) = paste(.model$task.desc$target, ".1", sep = "")
+  colnames(pred.lvl1) = paste(.model$task.desc$target, ".1", sep = "")
   # Meta level prediction
-  modelsMeta = models[(length(.model$task.desc$target) + 1):(2 * length(.model$task.desc$target))]
-  nd = data.frame(.newdata, predLvl1)
+  models.meta = models[(length(.model$task.desc$target) + 1):(2 * length(.model$task.desc$target))]
+  nd = data.frame(.newdata, pred.lvl1)
   g = if (.learner$predict.type == "response") {
     function(m) as.logical(getPredictionResponse(predict(m, newdata = nd, ...)))
   } else {
     function(m) getPredictionProbabilities(predict(m, newdata = nd, ...), cl = "TRUE")
   }
-  asMatrixCols(lapply(modelsMeta, g), col.names = .model$task.desc$target)
+  asMatrixCols(lapply(models.meta, g), col.names = .model$task.desc$target)
 }

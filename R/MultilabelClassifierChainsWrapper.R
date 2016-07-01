@@ -10,8 +10,8 @@
 #'
 #' Models can easily be accessed via \code{\link{getLearnerModel}}.
 #'
-#' @param order The chain order. E.g. for \code{m} labels, this must be a permutation of \code{1:m}. Default is \code{"random"}, i.e. \code{sample(1:m)}.
 #' @template arg_learner
+#' @param order The chain order. E.g. for \code{m} labels, this must be a permutation of \code{1:m}. Default is \code{"random"}, i.e. \code{sample(1:m)}.
 #' @template ret_learner
 #' @references
 #' Montanes, E. et al. (2013)
@@ -35,8 +35,7 @@
 #' getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 #' # above works also with predictions from resample!
 makeMultilabelClassifierChainsWrapper = function(learner, order = "random") {
-  learner = checkLearner(learner, type = "classif")
-  hasLearnerProperties(learner, "twoclass")
+  learner = checkLearner(learner, type = "classif", props = "twoclass")
   id = paste("multilabel", learner$id, sep = ".")
   packs = learner$package
   x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
@@ -50,23 +49,23 @@ makeMultilabelClassifierChainsWrapper = function(learner, order = "random") {
 #' @export
 trainLearner.MultilabelClassifierChainsWrapper = function(.learner, .task, .subset, .weights = NULL, ...){
   if (.learner$order[1] == "random") {
-    order = sample(1:length(getTaskTargetNames(.task))) #random order
+    order = sample(seq_along(getTaskTargetNames(.task))) #random order
   } else {
     order = .learner$order
   }
-  if (!identical(sort(order), 1:length(getTaskTargetNames(.task)))) {
+  if (!identical(sort(order), seq_along(getTaskTargetNames(.task)))) {
     stopf("order does not match number of targets!")  
   }
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
   data = getTaskData(.task)
   models = namedList(targets[order])
-  chained_targets = targets
+  chained.targets = targets
   for (tn in targets[order]) {
-    chained_targets = setdiff(chained_targets, tn)
-    data2 = dropNamed(data, chained_targets)
+    chained.targets = setdiff(chained.targets, tn)
+    data2 = dropNamed(data, chained.targets)
     index = which(names(data2) %in% setdiff(targets, tn))
-    if (length(data2[, index]) != 0) {  #convert augmented features into 0/1 variables, since boolean doesn't work
+    if (length(index) != 0) {  #convert augmented features into 0/1 variables, since boolean doesn't work
       data2[, index] = sapply(data2[, index], as.numeric) 
     }
     ctask = makeClassifTask(id = tn, data = data2, target = tn)
