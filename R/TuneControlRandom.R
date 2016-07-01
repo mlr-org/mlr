@@ -3,15 +3,19 @@
 #'   Default is 100.
 #' @export
 #' @rdname TuneControl
-makeTuneControlRandom = function(same.resampling.instance = TRUE, maxit = 100L, tune.threshold = FALSE,
+makeTuneControlRandom = function(same.resampling.instance = TRUE, maxit = NULL, tune.threshold = FALSE,
   tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL, budget = NULL) {
 
-  if (is.null(budget))
+  if (is.null(budget)) {
+    if (is.null(maxit))
+      maxit = 100L
     budget = maxit
-  else if (is.null(maxit))
-    maxit = budget
-  else if (budget != maxit)
-    stopf("The parameters budget (%i) and maxit (%i) differ.", budget, maxit)
+  } else {
+    if (is.null(maxit))
+      maxit = budget
+    else if (budget != maxit)
+      stopf("The parameters budget (%i) and maxit (%i) differ.", budget, maxit)
+  }
   maxit = asCount(maxit)
 
   makeTuneControl(same.resampling.instance = same.resampling.instance,
