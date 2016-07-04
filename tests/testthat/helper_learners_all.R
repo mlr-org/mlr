@@ -69,7 +69,7 @@ testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "res
   
   if (pred.type == "prob") {
     expect_false(anyNA(getPredictionProbabilities(p)))
-    expect_equal(nrow(getPredictionProbabilities(p)), task$task.desc$size)
+    expect_equal(NROW(getPredictionProbabilities(p)), task$task.desc$size)
   }
 }
 
