@@ -21,7 +21,7 @@ env:
     - secure: "WFbdUIQRi7VYUHceKrg9xnw7m+8SK658rmgWPW++zWq5J4n0ZLuTRdKHu7ijyK9zOzNGjLF+NzvnwPS+yMPJwTX/s82hrC5GAMrYs3shEvR95PwFx42nfjqU5fsKsZ9gYpqIuZoJs32yPOJ/9XBLHU8rUv5+x4Z1zM2hBJHAn74="
 
 warnings_are_errors: true
-r_check_args: "--as-cran --run-donttest"
+r_check_args: "--as-cran --run-donttest --run-dontrun"
 
 r_packages:
   - roxygen2
