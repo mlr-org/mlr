@@ -8,6 +8,7 @@ test_that("learners work: cluster", {
   # clustering, response
   task = noclass.task
   lrns = mylist(task, create = TRUE)
+  lrns = lrns[!vapply(lrns, inherits, what = "cluster.DBScan", logical(1))]
   lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars)
   
   # clustering, prob
