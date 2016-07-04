@@ -168,7 +168,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   assertChoice(x, choices = names(hyperpars.effect.data$data))
   assertChoice(y, choices = names(hyperpars.effect.data$data))
   assertSubset(z, choices = names(hyperpars.effect.data$data))
-  assertChoice(plot.type, choices = c("scatter", "line", "heatmap"))
+  assertChoice(plot.type, choices = c("scatter", "line", "heatmap", "contour"))
   assertFlag(loess.smooth)
   assertSubset(facet, choices = names(hyperpars.effect.data$data))
   assertFlag(pretty.names)
@@ -185,16 +185,21 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   na_flag = any(is.na(d[, hyperpars.effect.data$measures]))
   z_flag = !is.null(z)
   facet_flag = !is.null(facet)
+  grid_flag = hyperpars.effect.data$optimization == "TuneControlGrid"
   
   # deal with NAs where optimizer failed
   if (na_flag){
     d$learner_status = ifelse(is.na(d[, "exec.time"]), "Failure", "Success")
     for (col in hyperpars.effect.data$measures) {
       col_name = stri_split_fixed(col, ".test.mean", omit_empty = TRUE)[[1]]
-      if (get(col_name)$minimize){
-        d[,col][is.na(d[,col])] = max(d[,col], na.rm = TRUE)
+      if (plot.type %in% c("heatmap", "contour")){
+        d[,col][is.na(d[,col])] = get(col_name)$worst
       } else {
-        d[,col][is.na(d[,col])] = min(d[,col], na.rm = TRUE)
+        if (get(col_name)$minimize){
+          d[,col][is.na(d[,col])] = max(d[,col], na.rm = TRUE)
+        } else {
+          d[,col][is.na(d[,col])] = min(d[,col], na.rm = TRUE)
+        }
       }
     }
     d$exec.time[is.na(d$exec.time)] = max(d$exec.time, na.rm = TRUE)
@@ -211,6 +216,10 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       }
     }
   }
+  
+  # FIXME: interpolation if heatmap / contour and not grid
+  # FIXME: if nested, interpolate each fold
+  # FIXME: take mean, median, etc across folds if x,y,z used
   
   # just x, y  
   if ((length(x) == 1) && (length(y) == 1) && !(z_flag)){
@@ -231,6 +240,18 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       plt = plt + geom_smooth()
     if (facet_flag)
       plt = plt + facet_wrap(facet)
+  } else if ((length(x) == 1) && (length(y) == 1) && (z_flag)){
+    # FIXME: generalize logic here
+    if (plot.type == "heatmap"){
+      # need to categorize for even spacing
+      d[, x] = as.factor(d[, x])
+      d[, y] = as.factor(d[, y])
+      plt = ggplot(d, aes_string(x = x, y = y, fill = z)) + geom_tile()
+    } else {
+      plt = ggplot(d, aes_string(x = x, y = y, color = z)) + geom_point()
+      if (plot.type == "line")
+        plt = plt + geom_line()
+    }
   }
   
   # pretty name changing
