@@ -10,7 +10,7 @@
 #' Models can easily be accessed via \code{\link{getLearnerModel}}.
 #'
 #' @template arg_learner
-#' @param  cv.folds The number of folds for the inner cross validation to predict labels for the augmented feature space. Default is \code{2}.
+#' @template arg_multilabel_cvfolds
 #' @template ret_learner
 #' @references
 #' Montanes, E. et al. (2013)
@@ -54,8 +54,8 @@ trainLearner.MultilabelStackingWrapper = function(.learner, .task, .subset, .wei
   f = function(tn) {
     data2 = dropNamed(data, setdiff(targets, tn))
     ctask = makeClassifTask(id = tn, data = data2, target = tn)
-    r = resample(.learner$next.learner, ctask, weights = .weights,
-      makeResampleDesc("CV", iters = .learner$cv.folds), show.info = FALSE)
+    rdesc = makeResampleDesc("CV", iters = .learner$cv.folds)
+    r = resample(.learner$next.learner, ctask, rdesc, weights = .weights, show.info = FALSE)
     as.numeric(as.logical(r$pred$data[order(r$pred$data$id), ]$response)) #did not use getPredictionResponse, because of ordering
   }
   pred.labels = sapply(targets, f)

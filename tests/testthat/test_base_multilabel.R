@@ -52,11 +52,11 @@ test_that("multilabel learning", {
   expect_true(!is.na(p))
 })
 
-testMultilabelWrapper = function(fun) {
+testMultilabelWrapper = function(fun, ...) {
   desc = fun("classif.rpart")$model.subclass[1]
   test_that(desc, {
     lrn1 = makeLearner("classif.rpart")
-    lrn2 = fun(lrn1)
+    lrn2 = fun(lrn1, ...)
     lrn2 = setPredictType(lrn2, "prob")
     # train predict eval
     mod = train(lrn2, multilabel.task)
@@ -84,7 +84,7 @@ testMultilabelWrapper = function(fun) {
     expect_equal(rownames(pmulti), getTaskTargetNames(multilabel.task))
     expect_equal(colnames(pmulti), vcapply(list(mmce, auc), mlr:::measureAggrName))
     lrn1 = makeLearner("classif.rpart", predict.type = "prob")
-    lrn2 = fun(lrn1)
+    lrn2 = fun(lrn1, ...)
     r = holdout(lrn2, multilabel.task)
     expect_true(!is.na(r$aggr))
     p = getPredictionProbabilities(r$pred)
@@ -93,7 +93,7 @@ testMultilabelWrapper = function(fun) {
     expect_true(is.data.frame(p))
     
     lrn1 = makeLearner("classif.rpart")
-    lrn2 = fun(lrn1)
+    lrn2 = fun(lrn1, ...)
     lrn2 = setPredictType(lrn2, "prob")
     r = holdout(lrn2, multilabel.task)
     expect_true(!is.na(r$aggr))
@@ -108,12 +108,12 @@ testMultilabelWrapper = function(fun) {
     thresh = setThreshold(r$pred, threshold = c("y1" = 0.9, "y2" = 0.9))
     expect_true(is.data.frame(thresh$data))
     # now test that we can tune the thresholds
-    tr = tuneThreshold(r$pred, nsub = 2L, control= list(maxit = 2L))
+    tr = tuneThreshold(r$pred, nsub = 2L, control = list(maxit = 2L))
     expect_true(!is.na(tr$perf))
     expect_equal(length(tr$th), length(getTaskClassLevels(multilabel.task)))
     # Learner with Impute-Preprocessing
     lrn1 = makeLearner("classif.rpart")
-    lrn2 = fun(lrn1)
+    lrn2 = fun(lrn1, ...)
     lrn2 = makeImputeWrapper(lrn2, classes = list(integer = imputeMedian(), numeric = imputeMedian(), factor = imputeConstant("Const")))
     multilabel.df2 = multilabel.df
     multilabel.df2[c(2, 10, 14), c(1, 5)] = NA
@@ -139,12 +139,22 @@ testMultilabelWrapper = function(fun) {
     expect_true(!is.na(p))
     pmulti = getMultilabelBinaryPerformances(pred, list(mmce))
     expect_true(!any(is.na(pmulti)))
+    # check order
+    args = list(...)
+    if(!is.null(args$order)) {
+      lrn2 = fun(lrn1, ...)
+      expect_error(train(lrn2, multilabel3t.task), "Must be equal to set")
+    }
   })
 }
 
 testMultilabelWrapper(makeMultilabelBinaryRelevanceWrapper)
-testMultilabelWrapper(makeMultilabelClassifierChainsWrapper)
 testMultilabelWrapper(makeMultilabelDBRWrapper)
+testMultilabelWrapper(makeMultilabelClassifierChainsWrapper)
 testMultilabelWrapper(makeMultilabelNestedStackingWrapper)
 testMultilabelWrapper(makeMultilabelStackingWrapper)
+
+# check order
+testMultilabelWrapper(makeMultilabelClassifierChainsWrapper, order = c("y2", "y1"))
+testMultilabelWrapper(makeMultilabelNestedStackingWrapper, order = c("y2", "y1"))
 

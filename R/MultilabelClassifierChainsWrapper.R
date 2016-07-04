@@ -11,7 +11,7 @@
 #' Models can easily be accessed via \code{\link{getLearnerModel}}.
 #'
 #' @template arg_learner
-#' @param order The chain order. E.g. for \code{m} labels, this must be a permutation of \code{1:m}. Default is \code{"random"}, i.e. \code{sample(1:m)}.
+#' @template arg_multilabel_order
 #' @template ret_learner
 #' @references
 #' Montanes, E. et al. (2013)
@@ -25,7 +25,8 @@
 #' # drop some labels so example runs faster
 #' d = d[, c(1:3, 15:117)]
 #' task = makeMultilabelTask(data = d, target = c("label1", "label2", "label3"))
-#' lrn = makeMultilabelClassifierChainsWrapper("classif.rpart", order = 1:3)
+#' lrn = makeMultilabelClassifierChainsWrapper("classif.rpart", 
+#'   order = c("label2", "label3", "label1"))
 #' lrn = setPredictType(lrn, "prob")
 #' # train, predict and evaluate
 #' mod = train(lrn, task)
@@ -34,7 +35,7 @@
 #' performance(pred, measure = hamloss)
 #' getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 #' # above works also with predictions from resample!
-makeMultilabelClassifierChainsWrapper = function(learner, order = "random") {
+makeMultilabelClassifierChainsWrapper = function(learner, order = NULL) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
   id = paste("multilabel", learner$id, sep = ".")
   packs = learner$package
@@ -48,20 +49,18 @@ makeMultilabelClassifierChainsWrapper = function(learner, order = "random") {
 
 #' @export
 trainLearner.MultilabelClassifierChainsWrapper = function(.learner, .task, .subset, .weights = NULL, ...){
-  if (.learner$order[1] == "random") {
-    order = sample(seq_along(getTaskTargetNames(.task))) #random order
+  if (is.null(.learner$order)) {
+    order = sample(getTaskTargetNames(.task)) #random order
   } else {
     order = .learner$order
   }
-  if (!identical(sort(order), seq_along(getTaskTargetNames(.task)))) {
-    stopf("order does not match number of targets!")  
-  }
+  assertSetEqual(order, getTaskTargetNames(.task))
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
   data = getTaskData(.task)
-  models = namedList(targets[order])
+  models = namedList(order)
   chained.targets = targets
-  for (tn in targets[order]) {
+  for (tn in order) {
     chained.targets = setdiff(chained.targets, tn)
     data2 = dropNamed(data, chained.targets)
     index = which(names(data2) %in% setdiff(targets, tn))
@@ -80,12 +79,12 @@ predictLearner.MultilabelClassifierChainsWrapper = function(.learner, .model, .n
   if (.learner$predict.type == "response") {
     for (tn in names(models)) {
       predmatrix[, tn] = as.logical(getPredictionResponse(predict(models[[tn]], newdata = .newdata, ...)))
-      .newdata[paste(tn)] = as.numeric(predmatrix[, tn])
+      .newdata[tn] = as.numeric(predmatrix[, tn])
     }
   } else {
     for (tn in names(models)) {
       predmatrix[, tn] = getPredictionProbabilities(predict(models[[tn]], newdata = .newdata, ...), cl = "TRUE")
-      .newdata[paste(tn)] = predmatrix[, tn]
+      .newdata[tn] = predmatrix[, tn]
     }
   }
   predmatrix[, .model$task.desc$class.levels] #bring labels back in original order

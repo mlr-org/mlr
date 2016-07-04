@@ -12,8 +12,8 @@
 #' Models can easily be accessed via \code{\link{getLearnerModel}}.
 #' 
 #' @template arg_learner
-#' @param order The chain order. E.g. for \code{m} labels, this must be a permutation of \code{1:m}. Default is \code{"random"}, i.e. \code{sample(1:m)}.
-#' @param  cv.folds The number of folds for the inner cross validation method to predict labels for the augmented feature space. Default is \code{2}.
+#' @template arg_multilabel_order
+#' @template arg_multilabel_cvfolds
 #' @template ret_learner
 #' @references
 #' Montanes, E. et al. (2013),
@@ -27,7 +27,7 @@
 #' # drop some labels so example runs faster
 #' d = d[, c(1:3, 15:117)]
 #' task = makeMultilabelTask(data = d, target = c("label1", "label2", "label3"))
-#' lrn = makeMultilabelNestedStackingWrapper("classif.rpart", order = 1:3)
+#' lrn = makeMultilabelNestedStackingWrapper("classif.rpart", order = c("label2", "label3", "label1"))
 #' lrn = setPredictType(lrn, "prob")
 #' # train, predict and evaluate
 #' mod = train(lrn, task)
@@ -36,7 +36,7 @@
 #' performance(pred, measure = hamloss)
 #' getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 #' # above works also with predictions from resample!
-makeMultilabelNestedStackingWrapper = function(learner, order = "random", cv.folds = 2) {
+makeMultilabelNestedStackingWrapper = function(learner, order = NULL, cv.folds = 2) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
   id = paste("multilabel", learner$id, sep = ".")
   packs = learner$package
@@ -50,27 +50,26 @@ makeMultilabelNestedStackingWrapper = function(learner, order = "random", cv.fol
 }
 #' @export
 trainLearner.MultilabelNestedStackingWrapper = function(.learner, .task, .subset, .weights = NULL, ...) {
-  if (.learner$order[1] == "random") {
-    order = sample(seq_along(getTaskTargetNames(.task))) #random order
+  if (is.null(.learner$order)) {
+    order = sample(getTaskTargetNames(.task)) #random order
   } else {
     order = .learner$order
   }
-  if (!identical(sort(order), seq_along(getTaskTargetNames(.task)))) {
-    stopf("order does not match number of targets!")
-  }  
+  assertSetEqual(order, getTaskTargetNames(.task))
   targets = getTaskTargetNames(.task)
   .task = subsetTask(.task, subset = .subset)
   data = getTaskData(.task)
-  models = namedList(targets[order])
+  models = namedList(order)
   data.nst = dropNamed(data, targets)
   chained.targets = targets
   for (i in seq_along(targets)) {
-    tn = targets[order][i]
+    tn = order[i]
     if (i >= 2) {
-      tnprevious = targets[order][i-1]
+      tnprevious = order[i-1]
       data2 = data.frame(data.nst, data[tnprevious]) #for inner resampling to produce predicted labels
       innertask = makeClassifTask(id = tnprevious, data = data2, target = tnprevious)
-      r = resample(.learner$next.learner, innertask, makeResampleDesc("CV", iters = .learner$cv.folds), weights = .weights, show.info = FALSE)
+      rdesc = makeResampleDesc("CV", iters = .learner$cv.folds)
+      r = resample(.learner$next.learner, innertask, rdesc, weights = .weights, show.info = FALSE)
       predlabel = as.numeric(as.logical(r$pred$data[order(r$pred$data$id), ]$response)) #did not use getPredictionResponse, because of ordering
       data2 = data.frame(data.nst, data[tn])
       data2[[tnprevious]] = predlabel
