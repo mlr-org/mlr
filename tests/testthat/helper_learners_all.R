@@ -57,13 +57,7 @@ testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "res
   if (lrn$id %in% names(hyperpars))
     lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
   
-  if (pred.type == "response") {
-    lrn = setPredictType.Learner(lrn, "response")
-  } else if (pred.type == "prob") {
-    lrn = setPredictType.Learner(lrn, "prob")
-  } else if (pred.type == "se") {
-    lrn = setPredictType.Learner(lrn, "se")
-  }
+  lrn = setPredictType(lrn, pred.type)
   
   expect_output(print(lrn), lrn$id)
   m = train(lrn, task)
@@ -72,6 +66,11 @@ testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "res
   
   if (pred.type == "se")
     expect_equal(length(p$data$se), task$task.desc$size)
+  
+  if (pred.type == "prob") {
+    expect_false(anyNA(getPredictionProbabilities(p)))
+    expect_equal(nrow(getPredictionProbabilities(p)), task$task.desc$size)
+  }
 }
 
 
