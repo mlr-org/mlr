@@ -7,7 +7,7 @@ test_that("classif_randomForest", {
     list(ntree=50,  mtry=2),
     list(ntree=50, mtry=4),
     list(ntree=200, mtry=2),
-    list(ntree=2000, mtry=4)
+    list(ntree=2000, mtry=4, proximity = TRUE, oob.prox = TRUE)
   )
 
   old.predicts.list = list()
