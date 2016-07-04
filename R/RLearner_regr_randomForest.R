@@ -31,7 +31,7 @@ makeRLearner.regr.randomForest = function() {
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
       makeUntypedLearnerParam(id = "strata", tunable = FALSE),
-      makeIntegerLearnerParam(id = "sampsize", lower = 1L),
+      makeIntegerVectorLearnerParam(id = "sampsize", lower = 1L),
       makeIntegerLearnerParam(id = "nodesize", default = 5L, lower = 1L),
       makeIntegerLearnerParam(id = "maxnodes", lower = 1L),
       makeLogicalLearnerParam(id = "importance", default = FALSE),
