@@ -62,6 +62,7 @@ mlr_2.9:
 -- surv.penalized.fusedlasso
 -- surv.penalized.lasso
 -- surv.penalized.ridge
+-- cluster.kkmeans
 
 - removed learners
 -- surv.optimCoxBoostPenalty

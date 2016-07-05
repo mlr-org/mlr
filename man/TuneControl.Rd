@@ -36,7 +36,7 @@ makeTuneControlIrace(impute.val = NULL, n.instances = 100L,
   tune.threshold.args = list(), log.fun = NULL, final.dw.perc = NULL,
   budget = NULL, ...)
 
-makeTuneControlRandom(same.resampling.instance = TRUE, maxit = 100L,
+makeTuneControlRandom(same.resampling.instance = TRUE, maxit = NULL,
   tune.threshold = FALSE, tune.threshold.args = list(), log.fun = NULL,
   final.dw.perc = NULL, budget = NULL)
 }
