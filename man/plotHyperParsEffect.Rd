@@ -6,7 +6,7 @@
 \usage{
 plotHyperParsEffect(hyperpars.effect.data, x = NULL, y = NULL, z = NULL,
   plot.type = "scatter", loess.smooth = FALSE, facet = NULL,
-  pretty.names = TRUE, global.only = TRUE)
+  pretty.names = TRUE, global.only = TRUE, interpolate = TRUE)
 }
 \arguments{
 \item{hyperpars.effect.data}{[\code{HyperParsEffectData}]\cr
@@ -27,7 +27,8 @@ column from \code{HyperParsEffectData$data}. Default is \code{NULL}.}
 
 \item{plot.type}{[\code{character(1)}]\cr
 Specify the type of plot: "scatter" for a scatterplot, "heatmap" for a 
-heatmap, or "line" for a scatterplot with a connecting line.
+heatmap, "line" for a scatterplot with a connecting line, or "contour" for a
+contour plot layered ontop of a heatmap.
 Default is scatter.}
 
 \item{loess.smooth}{[\code{logical(1)}]\cr
@@ -50,6 +51,12 @@ If TRUE, will only plot the current global optima when setting
 x = "iteration" and y as a performance measure from 
 \code{HyperParsEffectData$measures}. Set this to FALSE to always plot the 
 performance of every iteration, even if it is not an improvement.
+Default is \code{TRUE}.}
+
+\item{interpolate}{[\code{logical(1)}]\cr
+If TRUE, will interpolate non-complete grids in order to visualize a more 
+complete path. Only meaningful when attempting to plot a heatmap or contour.
+This will fill in "empty" cells in the heatmap or contour plot.
 Default is \code{TRUE}.}
 }
 \value{

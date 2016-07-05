@@ -129,7 +129,8 @@ print.HyperParsEffectData = function(x, ...) {
 #'  column from \code{HyperParsEffectData$data}. Default is \code{NULL}.
 #' @param plot.type [\code{character(1)}]\cr
 #'  Specify the type of plot: "scatter" for a scatterplot, "heatmap" for a 
-#'  heatmap, or "line" for a scatterplot with a connecting line.
+#'  heatmap, "line" for a scatterplot with a connecting line, or "contour" for a
+#'  contour plot layered ontop of a heatmap.
 #'  Default is scatter.
 #' @param loess.smooth [\code{logical(1)}]\cr
 #'  If TRUE, will add loess smoothing line to plots where possible. Note that 
@@ -143,11 +144,16 @@ print.HyperParsEffectData = function(x, ...) {
 #'  Default is \code{NULL}.
 #' @template arg_prettynames
 #' @param global.only [\code{logical(1)}]\cr
-#' If TRUE, will only plot the current global optima when setting 
-#' x = "iteration" and y as a performance measure from 
-#' \code{HyperParsEffectData$measures}. Set this to FALSE to always plot the 
-#' performance of every iteration, even if it is not an improvement.
-#' Default is \code{TRUE}.
+#'  If TRUE, will only plot the current global optima when setting 
+#'  x = "iteration" and y as a performance measure from 
+#'  \code{HyperParsEffectData$measures}. Set this to FALSE to always plot the 
+#'  performance of every iteration, even if it is not an improvement.
+#'  Default is \code{TRUE}.
+#' @param interpolate [\code{logical(1)}]\cr
+#'  If TRUE, will interpolate non-complete grids in order to visualize a more 
+#'  complete path. Only meaningful when attempting to plot a heatmap or contour.
+#'  This will fill in "empty" cells in the heatmap or contour plot.
+#'  Default is \code{TRUE}.
 #'
 #' @template ret_gg2
 #'  
@@ -163,7 +169,8 @@ print.HyperParsEffectData = function(x, ...) {
 plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL, 
                                z = NULL, plot.type = "scatter", 
                                loess.smooth = FALSE, facet = NULL, 
-                               pretty.names = TRUE, global.only = TRUE) {
+                               pretty.names = TRUE, global.only = TRUE, 
+                               interpolate = TRUE) {
   assertClass(hyperpars.effect.data, classes = "HyperParsEffectData")
   assertChoice(x, choices = names(hyperpars.effect.data$data))
   assertChoice(y, choices = names(hyperpars.effect.data$data))
@@ -173,6 +180,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   assertSubset(facet, choices = names(hyperpars.effect.data$data))
   assertFlag(pretty.names)
   assertFlag(global.only)
+  assertFlag(interpolate)
  
   if (length(x) > 1 || length(y) > 1 || length(z) > 1 || length(facet) > 1)
     stopf("Greater than 1 length x, y, z or facet not yet supported")
@@ -186,13 +194,14 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   z_flag = !is.null(z)
   facet_flag = !is.null(facet)
   grid_flag = hyperpars.effect.data$optimization == "TuneControlGrid"
+  heatcontour_flag = plot.type %in% c("heatmap", "contour")
   
   # deal with NAs where optimizer failed
   if (na_flag){
     d$learner_status = ifelse(is.na(d[, "exec.time"]), "Failure", "Success")
     for (col in hyperpars.effect.data$measures) {
       col_name = stri_split_fixed(col, ".test.mean", omit_empty = TRUE)[[1]]
-      if (plot.type %in% c("heatmap", "contour")){
+      if (heatcontour_flag){
         d[,col][is.na(d[,col])] = get(col_name)$worst
       } else {
         if (get(col_name)$minimize){
@@ -218,6 +227,22 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   }
   
   # FIXME: interpolation if heatmap / contour and not grid
+  if (interpolate && z_flag && (heatcontour_flag)){
+    # what happens if z isn't a measure?
+    fld = akima::interp(d[, x], d[, y], d[, z])
+    df = reshape2::melt(fld$z, na.rm = TRUE)
+    names(df) <- c(x, y, z)
+    df[, x] = fld$x[df[, x]]
+    df[, y] = fld$y[df[, y]]
+    if (na_flag){
+      # problem: interpolation could generate a z for combos that should crash 
+      # the learner that might be better than imputed worst score!
+      col_name = stri_split_fixed(z, ".test.mean", omit_empty = TRUE)[[1]]
+      df$learner_status = ifelse(df[, z] == get(col_name)$worst, "Failure", 
+                                 "Success")
+    }
+    d = df
+  }
   # FIXME: if nested, interpolate each fold
   # FIXME: take mean, median, etc across folds if x,y,z used
   
@@ -229,8 +254,10 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       plt = ggplot(d, aes_string(x = x, y = y))
     }
     if (na_flag){
-      plt = plt + geom_point(aes_string(shape = "learner_status")) +
-        scale_shape_manual(values = c(4, 0))
+      plt = plt + geom_point(aes_string(shape = "learner_status", 
+                                        color = "learner_status")) +
+        scale_shape_manual(values = c(4, 0)) +
+        scale_color_manual(values = c("red", "black"))
     } else {
       plt = plt + geom_point()
     }
@@ -242,13 +269,27 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       plt = plt + facet_wrap(facet)
   } else if ((length(x) == 1) && (length(y) == 1) && (z_flag)){
     # FIXME: generalize logic here
-    if (plot.type == "heatmap"){
-      # need to categorize for even spacing
-      d[, x] = as.factor(d[, x])
-      d[, y] = as.factor(d[, y])
-      plt = ggplot(d, aes_string(x = x, y = y, fill = z)) + geom_tile()
+    if (heatcontour_flag){
+      # need to categorize for even spacing? what if no interpolate?
+      plt = ggplot(d, aes_string(x = x, y = y, fill = z)) + geom_raster()
+      if (na_flag){
+        plt = plt + geom_point(aes_string(shape = "learner_status", 
+                                          color = "learner_status")) +
+          scale_shape_manual(values = c(4, 0)) +
+          scale_color_manual(values = c("red", "black"))
+      } 
+      if (plot.type == "contour")
+        plt = plt + geom_contour(aes_string(z = z))
     } else {
-      plt = ggplot(d, aes_string(x = x, y = y, color = z)) + geom_point()
+      plt = ggplot(d, aes_string(x = x, y = y, color = z))
+      if (na_flag){
+        plt = plt + geom_point(aes_string(shape = "learner_status", 
+                                          color = "learner_status")) +
+          scale_shape_manual(values = c(4, 0)) +
+          scale_color_manual(values = c("red", "black"))
+      } else{
+        plt = plt + geom_point()
+      }
       if (plot.type == "line")
         plt = plt + geom_line()
     }
