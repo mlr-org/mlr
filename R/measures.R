@@ -724,6 +724,8 @@ measureGPR = function(truth, response, positive) {
 hamloss = makeMeasure(id = "hamloss", minimize = TRUE, best = 0, worst = 1,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Hamming loss",
+  note = "Proportion of labels whose relevance is incorrectly predicted, 
+  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf", 
   fun = function(task, model, pred, feats, extra.args) {
     measureHAMLOSS(getPredictionTruth.PredictionMultilabel(pred),
       getPredictionResponse.PredictionMultilabel(pred))
@@ -742,6 +744,8 @@ measureHAMLOSS = function(truth, response) {
 subset01 = makeMeasure(id = "subset01", minimize = TRUE, best = 0, worst = 1,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Subset-0-1 loss",
+  note = "Proportion of observations whose classes are not completely correctly predicted, 
+  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf",
   fun = function(task, model, pred, feats, extra.args) {
     measureSUBSET01(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
@@ -761,6 +765,8 @@ measureSUBSET01 = function(truth, response) {
 f1mult = makeMeasure(id = "f1mult", minimize = FALSE, best = 1, worst = 0,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "F1 measure",
+  note = "Harmonic mean of precision and recall on a per instance basis (Micro-F1), 
+  following the definition by Montanes et al.: http://www.sciencedirect.com/science/article/pii/S0031320313004019",
   fun = function(task, model, pred, feats, extra.args) {
     measureF1MULT(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
@@ -788,6 +794,8 @@ measureF1MULT = function(truth, response) {
 accmult = makeMeasure(id = "accmult", minimize = FALSE, best = 1, worst = 0,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Accuracy (multilabel)",
+  note = "Mean of proportion of correctly predicted labels with respect to the total number of labels for each instance, 
+  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf",
   fun = function(task, model, pred, feats, extra.args) {
     measureACCMULT(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
@@ -815,6 +823,8 @@ measureACCMULT = function(truth, response) {
 precmult = makeMeasure(id = "precmult", minimize = FALSE, best = 1, worst = 0,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Precision (multilabel)",
+  note = "Mean of ratio of truly predicted labels for each instance, 
+  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf",
   fun = function(task, model, pred, feats, extra.args) {
     measurePRECMULT(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
@@ -842,6 +852,8 @@ measurePRECMULT = function(truth, response) {
 recallmult = makeMeasure(id = "recallmult", minimize = FALSE, best = 1, worst = 0,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Recall (multilabel)",
+  note = "Mean of proportion of predicted labels which are relevant for each instance, 
+  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf",
   fun = function(task, model, pred, feats, extra.args) {
     measureRECALLMULT(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
