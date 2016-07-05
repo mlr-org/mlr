@@ -235,8 +235,9 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     df[, x] = fld$x[df[, x]]
     df[, y] = fld$y[df[, y]]
     if (na_flag){
-      # problem: interpolation could generate a z for combos that should crash 
+      # problems: interpolation could generate a z for combos that should crash 
       # the learner that might be better than imputed worst score!
+      # interpolation does not work if repeated iterations from ie SA
       col_name = stri_split_fixed(z, ".test.mean", omit_empty = TRUE)[[1]]
       df$learner_status = ifelse(df[, z] == get(col_name)$worst, "Failure", 
                                  "Success")
@@ -244,7 +245,18 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     d = df
   }
   # FIXME: if nested, interpolate each fold
+  
   # FIXME: take mean, median, etc across folds if x,y,z used
+  if (hyperpars.effect.data$nested && z_flag && !interpolate){
+    averaging = d[, !(names(d) %in% c("iteration", "nested_cv_run", 
+                                      hyperpars.effect.data$hyperparams, "eol",
+                                      "error.message"))]
+    hyperpars = lapply(d[, hyperpars.effect.data$hyperparams], "[")
+    d = aggregate(averaging, hyperpars, mean)
+    # how to deal with iterations?
+    d$iteration = 1:nrow(d)
+  }
+    
   
   # just x, y  
   if ((length(x) == 1) && (length(y) == 1) && !(z_flag)){
