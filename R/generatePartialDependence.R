@@ -1,3 +1,7 @@
+#' @importFrom plyr ldply
+#' @importFrom ggvis ggvis prop layer_ribbons layer_paths layer_points layer_lines bind_shiny ggvisOutput
+#' @importFrom shiny selectInput shinyUI pageWithSidebar headerPanel sidebarPanel mainPanel uiOutput shinyServer reactive shinyApp
+#' 
 #' @title Generate partial dependence.
 #'
 #' @description
@@ -120,19 +124,16 @@
 #'
 #' Friedman, Jerome. \dQuote{Greedy Function Approximation: A Gradient Boosting Machine.} The Annals of Statistics. Vol. 29. No. 5 (2001): 1189-1232.
 #' @examples
-#' lrn = makeLearner("regr.rpart")
+#' lrn = makeLearner("regr.svm")
 #' fit = train(lrn, bh.task)
 #' pd = generatePartialDependenceData(fit, bh.task, "lstat")
-#' plotPartialDependence(pd)
+#' plotPartialDependence(pd, data = getTaskData(bh.task))
 #'
 #' lrn = makeLearner("classif.rpart", predict.type = "prob")
 #' fit = train(lrn, iris.task)
 #' pd = generatePartialDependenceData(fit, iris.task, "Petal.Width")
-#' plotPartialDependence(pd)
+#' plotPartialDependence(pd, data = getTaskData(iris.task))
 #' @export
-#' @importFrom plyr ldply
-#' @importFrom ggvis ggvis prop layer_ribbons layer_paths layer_points layer_lines bind_shiny ggvisOutput
-#' @importFrom shiny selectInput shinyUI pageWithSidebar headerPanel sidebarPanel mainPanel uiOutput shinyServer reactive shinyApp
 generatePartialDependenceData = function(obj, input, features,
                                          interaction = FALSE, derivative = FALSE,
                                          individual = FALSE, center = NULL,
@@ -409,6 +410,7 @@ doIndividualPartialDependence = function(out, td, n, rng, target, features, cent
   }
   out
 }
+
 #' @export
 print.PartialDependenceData = function(x, ...) {
   catf("PartialDependenceData")
@@ -443,37 +445,60 @@ print.PartialDependenceData = function(x, ...) {
 #'   This feature must have been an element of the \code{features} argument to
 #'   \code{\link{generatePartialDependenceData}} and is only applicable when said argument had length
 #'   greater than 1.
+#'   The feature must be a factor or an integer.
 #'   If \code{\link{generatePartialDependenceData}} is called with the \code{interaction} argument \code{FALSE}
 #'   (the default) with argument \code{features} of length greater than one, then \code{facet} is ignored and
 #'   each feature is plotted in its own facet.
-#'   Note that if any of the elements of the \code{features} argument of \code{\link{generatePartialDependenceData}}
-#'   are factors, they will be coerced to numerics.
 #'   Default is \code{NULL}.
 #' @param p [\code{numeric(1)}]\cr
 #'   If \code{individual = TRUE} then \code{sample} allows the user to sample without replacement
 #'   from the output to make the display more readable. Each row is sampled with probability \code{p}.
 #'   Default is \code{1}.
+#' @param data [\code{data.frame}]\cr
+#'   Data points to plot. Usually the training data. For survival and binary classification tasks a rug plot
+#'   wherein ticks represent failures or instances of the positive class are shown. For regression tasks
+#'   points are shown. For multiclass classification tasks ticks are shown and colored according to their class.
+#'   Both the features and the target must be included.
+#'   Default is \code{NULL}.
 #' @template ret_gg2
 #' @export
-plotPartialDependence = function(obj, geom = "line", facet = NULL, p = 1) {
+plotPartialDependence = function(obj, geom = "line", facet = NULL, p = 1, data = NULL) {
   assertClass(obj, "PartialDependenceData")
-  if (length(obj$features) > 2L & geom != "tile" & obj$interaction)
-    stop("To plot more than 2 features geom must be 'tile'!")
   assertChoice(geom, c("tile", "line"))
-  if (geom == "tile" & !obj$interaction)
-      stop("generatePartialDependenceData was called with interaction = FALSE!")
+  if (obj$interaction & length(obj$features) > 2L & geom != "tile")
+    stop("Cannot plot more than 2 features together with line plots.")
+  if (geom == "tile") {
+    if (!(obj$task.desc$type %in% c("regr", "surv"))) {
+      if (length(obj$task.desc$class.levels) > 2L)
+        stop("Only visualization of binary classification works with tiling!")
+    }
+    feat_classes = sapply(obj$data, class)
+    if (!obj$interaction)
+      stop("obj argument created by generatePartialDependenceData was called with interaction = FALSE!")
+  }
+
+  if (!is.null(data)) {
+    assertDataFrame(data, col.names = "unique", min.rows = 1L,
+                    min.cols = length(obj$features) + length(obj$td$target))
+    assertSubset(obj$features, colnames(data), empty.ok = FALSE)
+  }
 
   if (!is.null(facet)) {
     assertChoice(facet, obj$features)
     if (!length(obj$features) %in% 2:3)
-      stop("generatePartialDependence must be called with two or three features to use this argument!")
+      stop("obj argument created by generatePartialDependenceData must be called with two or three features to use this argument!")
     if (!obj$interaction)
-      stop("generatePartialDependence must be called with interaction = TRUE to use this argument!")
+      stop("obj argument created by generatePartialDependenceData must be called with interaction = TRUE to use this argument!")
+    if (!(is.factor(obj$data[[facet]]) | is.integer(obj$data[[facet]])))
+      stop("The feature set as the facetting variable must be an integer or a factor.")
+    
     features = obj$features[which(obj$features != facet)]
-    if (!is.factor(obj$data[[facet]]))
-      obj$data[[facet]] = stri_paste(facet, "=", as.factor(signif(obj$data[[facet]], 2)), sep = " ")
+    
+    if (!is.factor(data[[facet]]))
+      obj$data[[facet]] = stri_paste(facet, "=", as.factor(signif(obj$data[[facet]], 0)), sep = " ")
     else
       obj$data[[facet]] = stri_paste(facet, "=", obj$data[[facet]], sep = " ")
+    
     scales = "fixed"
   } else {
     features = obj$features
@@ -481,14 +506,12 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, p = 1) {
       facet = "Feature"
       scales = "free_x"
     }
-    if (obj$task.desc$type == "classif" & geom == "tile" & length(features) == 2L)
-      scales = "free_x"
   }
 
   if (p != 1) {
     assertNumber(p, lower = 0, upper = 1, finite = TRUE)
     if (!obj$individual)
-      stop("generatePartialDependenceData must be called with individual = TRUE to use this argument!")
+      stop("obj argument created by generatePartialDependenceData must be called with individual = TRUE to use this argument!")
     rows = unique(obj$data$idx)
     id = sample(rows, size = floor(p * length(rows)))
     obj$data = obj$data[which(obj$data$idx %in% id), ]
@@ -507,14 +530,18 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, p = 1) {
                     variable = "Feature", value.name = "Value", na.rm = TRUE)
     if (!obj$individual) {
       if (obj$task.desc$type %in% c("regr", "surv"))
-        plt = ggplot(obj$data, aes_string("Value", target))
+        plt = ggplot(obj$data, aes_string("Value", target)) +
+          geom_line(color = ifelse(is.null(data), "black", "red"))
       else
-        plt = ggplot(obj$data, aes_string("Value", "Probability", group = "Class", color = "Class"))
+        plt = ggplot(obj$data, aes_string("Value", "Probability", group = "Class", color = "Class")) +
+          geom_line()
     } else {
       if (obj$task.desc$type %in% c("regr", "surv"))
-        plt = ggplot(obj$data, aes_string("Value", target, group = "idx"))
+        plt = ggplot(obj$data, aes_string("Value", target, group = "idx")) +
+          geom_line(alpha = .25, color = ifelse(is.null(data), "black", "red"))
       else
-        plt = ggplot(obj$data, aes_string("Value", "Probability", group = "idx", color = "Class"))
+        plt = ggplot(obj$data, aes_string("Value", "Probability", group = "idx", color = "Class")) +
+          geom_line(alpha = .25)
     }
 
     if (length(features) == 1L) {
@@ -524,11 +551,6 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, p = 1) {
         plt = plt + labs(x = features)
     }
 
-    if (obj$individual)
-      plt = plt + geom_line(alpha = .25)
-    else
-      plt = plt + geom_line() + geom_point()
-
     if (bounds)
       plt = plt + geom_ribbon(aes_string(ymin = "lower", ymax = "upper"), alpha = .5)
 
@@ -537,20 +559,59 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, p = 1) {
 
     if (obj$derivative)
       plt = plt + ylab(stri_paste(target, "(derivative)", sep = " "))
+
   } else { ## tiling
-    if (obj$task.desc$type == "classif") {
-      plt = ggplot(obj$data, aes_string(x = features[1], y = features[2], fill = "Probability"))
-      plt = plt + geom_raster()
-      facet = "Class"
-    } else {
-      plt = ggplot(obj$data, aes_string(x = features[1], y = features[2], z = target))
-      plt = plt + geom_raster(aes_string(fill = target))
-    }
+    plt = ggplot(obj$data, aes_string(x = features[1], y = features[2], fill = target))
+    plt = plt + geom_raster(aes_string(fill = target))
+
+    if (obj$center)
+      plt = plt + scale_fill_continuous(guide = guide_colorbar(title = stri_paste(target, "(centered)", sep = " ")))
+
+    if (obj$derivative)
+      plt = plt + scale_fill_continuous(guide = guide_colorbar(title = stri_paste(target, "(derivative)", sep = " ")))
   }
 
   if (!is.null(facet))
-    plt = plt + facet_wrap(as.formula(stri_paste("~", facet)), scales = scales)
+    plt = plt + facet_wrap(as.formula(stri_paste("~ ", facet)), scales = scales)
 
+  if (!is.null(data)) {
+    data = data[, colnames(data) %in% c(obj$features, obj$task.desc$target)]
+    if (!is.null(facet)) {
+      if (!facet %in% obj$features)
+        data = melt(data, id.vars = c(obj$task.desc$target, obj$features[obj$features == facet]),
+                    variable = "Feature", value.name = "Value", na.rm = TRUE)
+      if (facet %in% obj$features) {
+        if (!is.factor(data[[facet]]))
+          data[[facet]] = stri_paste(facet, "=", as.factor(signif(data[[facet]], 2)), sep = " ")
+        else
+          data[[facet]] = stri_paste(facet, "=", data[[facet]], sep = " ")
+      }
+    }
+    
+    if (geom == "line") {
+      if (obj$task.desc$type %in% c("classif", "surv")) {
+        if (obj$task.desc$type == "classif") {
+          if (!is.na(obj$task.desc$positive)) {
+            plt = plt + geom_rug(aes_string(plt$labels$x, color = obj$task.desc$target),
+                                 data[data[[obj$task.desc$target]] == obj$task.desc$positive, ],
+                                 alpha = .25, inherit.aes = FALSE)
+          } else {
+            plt = plt + geom_rug(aes_string(plt$labels$x), data, alpha = .25, inherit.aes = FALSE)
+          }
+        } else {
+          plt = plt + geom_rug(aes_string(plt$labels$x),
+                               data[data[[obj$task.desc$target[2]]], ],
+                               alpha = .25, inherit.aes = FALSE)
+        }
+      } else {
+        plt = plt + geom_point(aes_string(plt$labels$x, obj$task.desc$target),
+                               data, alpha = .25, inherit.aes = FALSE)
+      }
+    } else {
+      plt = plt + geom_point(aes_string(plt$labels$x, plt$labels$y), data, alpha = .25, inherit.aes = FALSE)
+    }
+  }
+  
   plt
 }
 #' @title Plot a partial dependence using ggvis.
@@ -585,12 +646,12 @@ plotPartialDependenceGGVIS = function(obj, interact = NULL, p = 1) {
     stop("It is only possible to plot 2 features with this function.")
 
   if (!obj$interaction & !is.null(interact))
-    stop("generatePartialDependenceData was called with interaction = FALSE!")
+    stop("obj argument created by generatePartialDependenceData was called with interaction = FALSE!")
 
   if (p != 1) {
     assertNumber(p, lower = 0, upper = 1, finite = TRUE)
     if (!obj$individual)
-      stop("generatePartialDependenceData must be called with individual = TRUE to use this argument!")
+      stop("obj argument created by generatePartialDependenceData must be called with individual = TRUE to use this argument!")
     rows = unique(obj$data$idx)
     id = sample(rows, size = floor(p * length(rows)))
     obj$data = obj$data[which(obj$data$idx %in% id), ]

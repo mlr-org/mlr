@@ -4,7 +4,8 @@
 \alias{plotPartialDependence}
 \title{Plot a partial dependence with ggplot2.}
 \usage{
-plotPartialDependence(obj, geom = "line", facet = NULL, p = 1)
+plotPartialDependence(obj, geom = "line", facet = NULL, p = 1,
+  data = NULL)
 }
 \arguments{
 \item{obj}{[\code{PartialDependenceData}]\cr
@@ -23,17 +24,23 @@ The name of a feature to be used for facetting.
 This feature must have been an element of the \code{features} argument to
 \code{\link{generatePartialDependenceData}} and is only applicable when said argument had length
 greater than 1.
+The feature must be a factor or an integer.
 If \code{\link{generatePartialDependenceData}} is called with the \code{interaction} argument \code{FALSE}
 (the default) with argument \code{features} of length greater than one, then \code{facet} is ignored and
 each feature is plotted in its own facet.
-Note that if any of the elements of the \code{features} argument of \code{\link{generatePartialDependenceData}}
-are factors, they will be coerced to numerics.
 Default is \code{NULL}.}
 
 \item{p}{[\code{numeric(1)}]\cr
 If \code{individual = TRUE} then \code{sample} allows the user to sample without replacement
 from the output to make the display more readable. Each row is sampled with probability \code{p}.
 Default is \code{1}.}
+
+\item{data}{[\code{data.frame}]\cr
+Data points to plot. Usually the training data. For survival and binary classification tasks a rug plot
+wherein ticks represent failures or instances of the positive class are shown. For regression tasks
+points are shown. For multiclass classification tasks ticks are shown and colored according to their class.
+Both the features and the target must be included.
+Default is \code{NULL}.}
 }
 \value{
 ggplot2 plot object.

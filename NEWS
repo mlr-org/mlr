@@ -38,6 +38,7 @@ mlr_2.9:
 - classif.ranger, regr.ranger and surv.ranger: now respect unordered factors by default
 - added the ability to generate and plot data from the hyperparameter tuning
   path for a single hyperparameter
+- addition of 'data' argument to plotPartialDependence which adds the training data to the graph
 
 - new learners
 -- classif.C50
