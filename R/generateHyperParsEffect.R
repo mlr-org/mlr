@@ -228,36 +228,64 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   
   # FIXME: interpolation if heatmap / contour and not grid
   if (interpolate && z_flag && (heatcontour_flag)){
-    # what happens if z isn't a measure?
-    fld = akima::interp(d[, x], d[, y], d[, z])
-    df = reshape2::melt(fld$z, na.rm = TRUE)
-    names(df) <- c(x, y, z)
-    df[, x] = fld$x[df[, x]]
-    df[, y] = fld$y[df[, y]]
-    if (na_flag){
-      # problems: interpolation could generate a z for combos that should crash 
-      # the learner that might be better than imputed worst score!
-      # interpolation does not work if repeated iterations from ie SA
-      col_name = stri_split_fixed(z, ".test.mean", omit_empty = TRUE)[[1]]
-      df$learner_status = ifelse(df[, z] == get(col_name)$worst, "Failure", 
-                                 "Success")
+    # put ifelse to determine learner status
+    if (!("learner_status" %in% names(d)))
+      d$learner_status = "Success"
+    
+    if (hyperpars.effect.data$nested){
+      new_d = data.frame()
+      # for loop for each nested cv run
+      for (run in unique(d$nested_cv_run)){
+        d_run = d[d$nested_cv_run == run, ]
+        d_succ = d_run[d_run$learner_status == "Success", c(x, y)]
+        d_fail = d_run[d_run$learner_status == "Failure", c(x, y)]
+        fld = akima::interp(d_run[, x], d_run[, y], d_run[, z])
+        df = reshape2::melt(fld$z, na.rm = TRUE)
+        names(df) <- c(x, y, z)
+        df[, x] = fld$x[df[, x]]
+        df[, y] = fld$y[df[, y]]
+        df$learner_status = apply(df[, c(x, y)], 1, 
+                                  function(df) if (duplicated(rbind(d_succ, df))[nrow(d_succ)+1]){
+                                    "Success"
+                                  } else if (duplicated(rbind(d_fail, df))[nrow(d_fail)+1]){
+                                    "Failure"
+                                  } else {
+                                    "Interpolated Point"
+                                  })
+        new_d = rbind(new_d, df)
+      }
+      d = new_d
+      
+    } else {
+      # need to unique so interp doesn't crash with duplicates
+      fld = akima::interp(d[, x], d[, y], d[, z])
+      df = reshape2::melt(fld$z, na.rm = TRUE)
+      names(df) <- c(x, y, z)
+      df[, x] = fld$x[df[, x]]
+      df[, y] = fld$y[df[, y]]
+      d = df
     }
-    d = df
+    
   }
-  # FIXME: if nested, interpolate each fold
   
-  # FIXME: take mean, median, etc across folds if x,y,z used
-  if (hyperpars.effect.data$nested && z_flag && !interpolate){
+  if (hyperpars.effect.data$nested && z_flag){
     averaging = d[, !(names(d) %in% c("iteration", "nested_cv_run", 
                                       hyperpars.effect.data$hyperparams, "eol",
-                                      "error.message"))]
-    hyperpars = lapply(d[, hyperpars.effect.data$hyperparams], "[")
+                                      "error.message", "learner_status")), 
+                  drop = FALSE]
+    if (na_flag || interpolate){
+      hyperpars = lapply(d[, c(hyperpars.effect.data$hyperparams, 
+                               "learner_status")], "[")
+    } else {
+      hyperpars = lapply(d[, hyperpars.effect.data$hyperparams], "[")
+    }
+    
     d = aggregate(averaging, hyperpars, mean)
     # how to deal with iterations?
     d$iteration = 1:nrow(d)
   }
     
-  
+  print(d[1:20,])
   # just x, y  
   if ((length(x) == 1) && (length(y) == 1) && !(z_flag)){
     if (hyperpars.effect.data$nested){
@@ -268,7 +296,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     if (na_flag){
       plt = plt + geom_point(aes_string(shape = "learner_status", 
                                         color = "learner_status")) +
-        scale_shape_manual(values = c(4, 0)) +
+        scale_shape_manual(values = c("Failure" = 4, "Success" = 0)) +
         scale_color_manual(values = c("red", "black"))
     } else {
       plt = plt + geom_point()
@@ -282,13 +310,14 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   } else if ((length(x) == 1) && (length(y) == 1) && (z_flag)){
     # FIXME: generalize logic here
     if (heatcontour_flag){
-      # need to categorize for even spacing? what if no interpolate?
       plt = ggplot(d, aes_string(x = x, y = y, fill = z)) + geom_raster()
-      if (na_flag){
-        plt = plt + geom_point(aes_string(shape = "learner_status", 
+      if (na_flag || interpolate){
+        plt = plt + geom_point(data = d[d$learner_status %in% c("Success", 
+                                                                "Failure"), ],
+                                        aes_string(shape = "learner_status", 
                                           color = "learner_status")) +
-          scale_shape_manual(values = c(4, 0)) +
-          scale_color_manual(values = c("red", "black"))
+          scale_shape_manual(values = c("Failure" = 4, "Success" = 0)) +
+          scale_color_manual(values = c("Failure" = "red", "Success" = "black"))
       } 
       if (plot.type == "contour")
         plt = plt + geom_contour(aes_string(z = z))
@@ -297,7 +326,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       if (na_flag){
         plt = plt + geom_point(aes_string(shape = "learner_status", 
                                           color = "learner_status")) +
-          scale_shape_manual(values = c(4, 0)) +
+          scale_shape_manual(values = c("Failure" = 4, "Success" = 0)) +
           scale_color_manual(values = c("red", "black"))
       } else{
         plt = plt + geom_point()
