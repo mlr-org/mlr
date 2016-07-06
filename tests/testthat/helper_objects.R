@@ -41,6 +41,7 @@ multilabel.test.inds  = setdiff(1:150, multilabel.train.inds)
 multilabel.train = multilabel.df[multilabel.train.inds, ]
 multilabel.test  = multilabel.df[multilabel.test.inds, ]
 multilabel.task = makeMultilabelTask("multilabel", data = multilabel.df, target = multilabel.target)
+multilabel.formula = as.formula(paste("cbind(", paste(multilabel.target, collapse = ",", sep = " "), ")  ~ .", sep = ""))
 
 noclass.df = iris[,-5]
 noclass.train.inds = c(1:30, 51:80, 101:130)
