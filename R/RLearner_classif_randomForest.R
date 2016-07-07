@@ -19,6 +19,7 @@ makeRLearner.classif.randomForest = function() {
       makeLogicalLearnerParam(id = "oob.prox", requires = quote(proximity == TRUE), tunable = FALSE),
       makeLogicalLearnerParam(id = "norm.votes", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "keep.forest", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob", "class.weights"),
