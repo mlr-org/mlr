@@ -40,6 +40,7 @@ makeRLearner.regr.randomForest = function() {
       makeLogicalLearnerParam(id = "proximity", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "oob.prox", requires = quote(proximity == TRUE), tunable = FALSE),
       makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "keep.forest", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(

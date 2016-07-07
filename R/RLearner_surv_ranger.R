@@ -15,6 +15,7 @@ makeRLearner.surv.ranger = function() {
       makeUntypedLearnerParam(id = "always.split.variables"),
       makeLogicalLearnerParam(id = "respect.unordered.factors", default = FALSE),
       makeDiscreteLearnerParam(id = "importance", values = c("none", "impurity", "permutation"), default = "none", tunable = FALSE),
+      makeLogicalLearnerParam(id = "write.forest", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "scale.permutation.importance", default = FALSE, requires = quote(importance == "permutation"), tunable = FALSE),
       makeIntegerLearnerParam(id = "num.threads", lower = 1L, when = "both", tunable = FALSE),
       makeLogicalLearnerParam(id = "save.memory", default = FALSE, tunable = FALSE),
@@ -22,11 +23,11 @@ makeRLearner.surv.ranger = function() {
       makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE),
       makeDiscreteLearnerParam(id = "splitrule", values = c("logrank", "C"), default = "logrank")
     ),
-    par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = TRUE),
+    par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = TRUE, write.forest = TRUE),
     properties = c("numerics", "factors", "ordered", "rcens", "prob"),
     name = "Random Forests",
     short.name = "ranger",
-    note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled and `respect.unordered.factors` is set to `TRUE`. All settings are changeable."
+    note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `TRUE` and ranger's .forest object is kept for prediction (`keep.forest` = `TRUE`). All settings are changeable."
   )
 }
 
@@ -34,8 +35,8 @@ makeRLearner.surv.ranger = function() {
 trainLearner.surv.ranger = function(.learner, .task, .subset, .weights, ...) {
   if (.learner$predict.type == "response")
   tn = getTaskTargetNames(.task)
-  ranger::ranger(formula = NULL, dependent.variable.name = tn[1L], status.variable.name = tn[2L], data = getTaskData(.task, .subset),
-                 write.forest = TRUE, ...)
+  ranger::ranger(formula = NULL, dependent.variable.name = tn[1L],
+    status.variable.name = tn[2L], data = getTaskData(.task, .subset), ...)
 }
 
 #' @export
