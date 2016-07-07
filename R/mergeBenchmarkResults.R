@@ -34,17 +34,14 @@ mergeBenchmarkResults = function(...) {
     getBMRAggrPerformances(bmr, as.df = TRUE)[, c("task.id", "learner.id")]
   })
   existing.combos = do.call("rbind", existing.combos)
-  # get all possible learner - task combinations before we collapse for teh check
+  # get task and learner names
   task.names = unique(existing.combos$task.id)
   learner.names = unique(existing.combos$learner.id)
 
-  existing.combos = apply(existing.combos, 1L, collapse, "-")
-
-  # get all possible combos
+  # check for duplicated and missing combinations
   all.combos = expand.grid(task = task.names, learner = learner.names)
   all.combos = apply(all.combos, 1L, collapse, "-")
-
-  # check for duplicated and misssing combinations
+  existing.combos = apply(existing.combos, 1L, collapse, "-")
   if (any(duplicated(existing.combos))) {
     dupls = existing.combos[which(duplicated(existing.combos))]
     stopf("The following task - learner combination(s) occur in multiple
