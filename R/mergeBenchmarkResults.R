@@ -12,8 +12,14 @@
 #'   set of measures.
 #' @export
 mergeBenchmarkResults = function(...) {
+
+  # simple wrapper for unlist() with recursive set to FALSE
+  peelList = function(x) {
+    unlist(x, recursive = FALSE)
+  }
+
   set = list(...)
-  for (i in 1:length(set)) {
+  for (i in seq_along(set)) {
     assertClass(set[[i]], "BenchmarkResult")
   }
   # Check if bmrs optimized on same measure
@@ -23,22 +29,22 @@ mergeBenchmarkResults = function(...) {
   if (length(unique(measures)) > 1L)
     stop("Benchmark results must all be calculated for the same measures.")
 
-  task.names = lapply(set, getBMRTaskIds)
-  task.names = unique(unlist(task.names))
-  learner.names = lapply(set, getBMRLearnerIds)
-  learner.names = unique(unlist(learner.names))
-
-  all.combos = expand.grid(task = task.names, learner = learner.names)
-  all.combos = apply(all.combos, 1L, collapse, "-")
-  
   # see what combinations of tasks and learners are existing
   existing.combos = lapply(set, function(bmr) {
     getBMRAggrPerformances(bmr, as.df = TRUE)[, c("task.id", "learner.id")]
   })
   existing.combos = do.call("rbind", existing.combos)
+  # get all possible learner - task combinations before we collapse for teh check
+  task.names = unique(existing.combos$task.id)
+  learner.names = unique(existing.combos$learner.id)
+
   existing.combos = apply(existing.combos, 1L, collapse, "-")
-  
-  # check for duplicated and missing task - learner combinations
+
+  # get all possible combos
+  all.combos = expand.grid(task = task.names, learner = learner.names)
+  all.combos = apply(all.combos, 1L, collapse, "-")
+
+  # check for duplicated and misssing combinations
   if (any(duplicated(existing.combos))) {
     dupls = existing.combos[which(duplicated(existing.combos))]
     stopf("The following task - learner combination(s) occur in multiple
@@ -52,8 +58,7 @@ mergeBenchmarkResults = function(...) {
   }
 
   # get BMR results, merge and set correct structure
-  res.merged = lapply(set, function(bmr) bmr$results)
-  res.merged = peelList(res.merged)
+  res.merged = peelList(extractSubList(set, "results", simplify = FALSE))
   res.merged = lapply(task.names, function(x) {
     ret = res.merged[names(res.merged) == x]
     names(ret) = NULL
@@ -70,9 +75,4 @@ mergeBenchmarkResults = function(...) {
     results = res.merged,
     measures = getBMRMeasures(set[[1L]]),
     learners = lrns.merged)
-}
-
-# simple wrapper for unlist() with recursive set to FALSE
-peelList = function(x) {
-  unlist(x, recursive = FALSE)
 }
