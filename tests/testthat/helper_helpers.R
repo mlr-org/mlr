@@ -57,6 +57,8 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     task = makeClassifTask(data = df, target = target)
   else if (is.data.frame(df[, target]) && is.numeric(df[, target[1L]]) && is.logical(df[, target[2L]]))
     task = makeSurvTask(data = df, target = target)
+  else if (is.data.frame(df[, target]) && is.logical(df[, target[1L]]))
+    task = makeMultilabelTask(data = df, target = target)
   else
     stop("Should not happen!")
   m = try(train(lrn, task, subset = inds))
@@ -65,11 +67,17 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     expect_is(old.predicts, "try-error")
   } else {
     cp = predict(m, newdata = test)
+    # Multilabel has a special data structure
+    if (is.data.frame(df[, target]) && is.logical(df[, target[1L]])) {
+      rownames(cp$data) = NULL
+      expect_equal(unname(cp$data[, substr(colnames(cp$data), 1, 8) == "response"]) , unname(old.predicts))
+    } else {
     # to avoid issues with dropped levels in the class factor we only check the elements as chars
     if (is.numeric(cp$data$response) && is.numeric(old.predicts))
       expect_equal(unname(cp$data$response), unname(old.predicts), tol = 1e-5)
     else
       expect_equal(as.character(cp$data$response), as.character(old.predicts))
+    }
   }
 }
 
