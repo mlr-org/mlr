@@ -1,9 +1,10 @@
 context("regr_h2orandomForest")
 
 test_that("regr_h2orandomForest", {
+  skip_on_travis()
   requirePackages("h2o", default.method = "load")
   h2o::h2o.init()
-  
+
   parset.list = list(
     list(),
     list(ntrees = 4),
@@ -13,11 +14,11 @@ test_that("regr_h2orandomForest", {
   debug.seed = getOption("mlr.debug.seed")
   parset.list = lapply(parset.list, function(x) c(x, seed = debug.seed))
   old.predicts.list = list()
-  
+
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     parset = c(parset,list(x = colnames(regr.train[, -regr.class.col]),
-      y = regr.target, 
+      y = regr.target,
       training_frame = h2o::as.h2o(regr.train)))
     m = do.call(h2o::h2o.randomForest, parset)
     p  = predict(m, newdata = h2o::as.h2o(regr.test))
