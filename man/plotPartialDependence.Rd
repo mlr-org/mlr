@@ -4,8 +4,8 @@
 \alias{plotPartialDependence}
 \title{Plot a partial dependence with ggplot2.}
 \usage{
-plotPartialDependence(obj, geom = "line", facet = NULL, p = 1,
-  data = NULL)
+plotPartialDependence(obj, geom = "line", facet = NULL,
+  facet.wrap.nrow = NULL, facet.wrap.ncol = NULL, p = 1, data = NULL)
 }
 \arguments{
 \item{obj}{[\code{PartialDependenceData}]\cr
@@ -29,6 +29,10 @@ If \code{\link{generatePartialDependenceData}} is called with the \code{interact
 (the default) with argument \code{features} of length greater than one, then \code{facet} is ignored and
 each feature is plotted in its own facet.
 Default is \code{NULL}.}
+
+\item{facet.wrap.nrow, facet.wrap.ncol}{[\code{integer()}]\cr
+Number of rows and columns for facetting. Default for both is \code{NULL}.
+In this case ggplot's \code{facet_wrap} will choose the layout itself.}
 
 \item{p}{[\code{numeric(1)}]\cr
 If \code{individual = TRUE} then \code{sample} allows the user to sample without replacement

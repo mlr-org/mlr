@@ -112,4 +112,11 @@ test_that("generateThreshVsPerfData", {
   doc = XML::xmlParse(path)
   #expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(1L))
   ## plotThreshVsPerfGGVIS(pvs.custom)
+
+  # test that facetting works for plotThreshVsPerf
+
+  q = plotThreshVsPerf(pvs, facet.wrap.nrow = 2L)
+  testFacetting(q, nrow = 2L)
+  q = plotThreshVsPerf(pvs, facet.wrap.ncol = 2L)
+  testFacetting(q, ncol = 2L)
 })
