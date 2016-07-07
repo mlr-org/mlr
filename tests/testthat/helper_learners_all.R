@@ -65,11 +65,11 @@ testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "res
   expect_true(!is.na(performance(pred = p, task = task)))
   
   if (pred.type == "se")
-    expect_equal(length(p$data$se), task$task.desc$size)
+    expect_equal(length(p$data$se), getTaskSize(task))
   
   if (pred.type == "prob") {
     expect_false(anyNA(getPredictionProbabilities(p)))
-    expect_equal(NROW(getPredictionProbabilities(p)), task$task.desc$size)
+    expect_equal(NROW(getPredictionProbabilities(p)), getTaskSize(task))
   }
 }
 
