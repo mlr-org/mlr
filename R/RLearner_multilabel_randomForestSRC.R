@@ -29,6 +29,7 @@ makeRLearner.multilabel.randomForestSRC = function() {
       makeDiscreteLearnerParam(id = "samptype", default = "swr", values = c("swr", "swor"),
         requires = quote(bootstrap == "by.root")),
       makeNumericVectorLearnerParam(id = "xvar.wt", lower = 0),
+      makeLogicalLearnerParam(id = "forest", default = TRUE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "var.used", default = FALSE, tunable = FALSE,
         values = list(`FALSE` = FALSE, "all.trees", "by.tree")),
       makeDiscreteLearnerParam(id = "split.depth", default = FALSE, tunable = FALSE,
@@ -40,7 +41,7 @@ makeRLearner.multilabel.randomForestSRC = function() {
       makeLogicalLearnerParam(id = "tree.err", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(na.action = "na.impute"),
-    properties = c("missings", "numerics", "factors", "prob"),
+    properties = c("missings", "numerics", "factors", "prob", "weights"),
     name = "Random Forest",
     short.name = "rfsrc",
     note = "`na.action` has been set to `na.impute` by default to allow missing data support."
@@ -50,11 +51,9 @@ makeRLearner.multilabel.randomForestSRC = function() {
 #' @export
 trainLearner.multilabel.randomForestSRC = function(.learner, .task, .subset, .weights = NULL, ...) {
   targets = getTaskTargetNames(.task)
-  f = as.formula(paste("cbind(", paste(targets, collapse = ",", sep = " "), ")  ~ .", sep = ""))
-  d = getTaskData(.task, .subset)
-  for(i in targets)
-    d[i] = factor(d[[i]], levels = c("TRUE", "FALSE"))
-  randomForestSRC::rfsrc(f , data = d, ...)
+  f = as.formula(stri_paste("cbind(", stri_paste(targets, collapse = ",", sep = " "), ")  ~ .", sep = ""))
+  d = getTaskData(.task, .subset, recode.target = "multilabel_factor")
+  randomForestSRC::rfsrc(f , data = d, case.wt = .weights, ...)
 }
 
 #' @export
