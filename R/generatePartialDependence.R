@@ -212,7 +212,7 @@ generatePartialDependenceData = function(obj, input, features,
     if (!is.numeric(test))
       stop("fun argument must return a numeric vector")
     if (td$type == "classif" & obj$learner$predict.type == "response" & length(test) != 3L)
-      stop("function argument must return a numeric vector with length equal to the number of target class levels.")
+      stop("If learner predict.type != prob, then the fun argument must return a numeric vector with length equal to the number of target class levels.")
     if (td$type == "classif" & obj$learner$predict.type == "prob" & length(test) != 1L)
       stop("function argument must return a numeric vector of length 1.")
     if (td$type == "regr" & !(length(test) %in% c(1L, 3L)))
