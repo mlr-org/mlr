@@ -33,4 +33,29 @@ test_that("BaseEnsemble", {
   bl2 = makeLearner("classif.ksvm", predict.type = "response")
   expect_error(makeBaseEnsemble(id = "foo", base.learners = list(bl1, bl2),
     par.set = ps, par.vals = pv, cl = "mywrapper"), "predict.type")
+  
+  # check getHyperPars when we have multiple wrappers
+  bl1 = makeLearner("classif.rpart", minsplit = 2L, id = "rpart")
+  bl2 = makeLearner("classif.ksvm", C = 2, id = "ksvm")
+  # now make a wrapper around bl2 (ksvm)
+  bl2 = makeOversampleWrapper(makeFilterWrapper(bl2, fw.perc = 0.5), osw.rate = 1)
+  be = makeBaseEnsemble(id = "foo", base.learners = list(bl1, bl2), cl = "mywrapper")
+  expect_output(print(be), "mywrapper")
+  expect_true(setequal(getHyperPars(be), 
+    list(rpart.xval = 0L, rpart.minsplit = 2L, 
+      ksvm.filtered.oversampled.fit = FALSE,
+      ksvm.filtered.oversampled.C = 2,
+      ksvm.filtered.oversampled.fw.method = "rf.importance",
+      ksvm.filtered.oversampled.fw.perc = 0.5,
+      ksvm.filtered.oversampled.osw.rate = 1)))
+  # check removing hyperpars
+  be.rm = removeHyperPars(be, names(getHyperPars(be)))
+  expect_true(length(getHyperPars(be.rm)) == 0)
+  # check setPredictType
+  be.pt = setPredictType(be, predict.type = "prob")
+  expect_equal(be.pt$predict.type, "prob")
+  expect_equal(lapply(be.pt$base.learners, function(x) x$predict.type), list(rpart = "prob", ksvm.filtered.oversampled = "prob"))
+  be.pt = setPredictType(be, predict.type = "response")
+  expect_equal(be.pt$predict.type, "response")
+  expect_equal(lapply(be.pt$base.learners, function(x) x$predict.type), list(rpart = "response", ksvm.filtered.oversampled = "response"))
 })
