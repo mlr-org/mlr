@@ -9,7 +9,7 @@ matchBaseEnsembleLearner = function(ensemble, pn) {
 #' @export
 getHyperPars.BaseEnsemble = function(learner, for.fun = c("train", "predict", "both")) {
   pvs = lapply(learner$base.learners, function(lrn) {
-    xs = getHyperPars.Learner(lrn, for.fun = for.fun)
+    xs = getHyperPars(lrn, for.fun = for.fun)
     if (length(xs) > 0L)
       names(xs) = stri_paste(lrn$id, ".", names(xs))
     return(xs)
@@ -48,7 +48,8 @@ removeHyperPars.BaseEnsemble = function(learner, ids) {
     if (id %in% parnames.bls) {
       # param of ensapsulated learner, remove prefix, set it in the bl list
       z = matchBaseEnsembleLearner(learner, id)
-      learner$base.learners[[z$ind]] = removeHyperPars.Learner(learner$base.learners[[z$ind]],
+      # FIXME: won't work properly when base.learners are BaseWrappers, should we support this?
+      learner$base.learners[[z$ind]] = removeHyperPars(learner$base.learners[[z$ind]],
         z$par.id)
     } else {
       # extra param of ensemble learner, just remove it normally
@@ -64,7 +65,7 @@ removeHyperPars.BaseEnsemble = function(learner, ids) {
 setPredictType.BaseEnsemble = function(learner, predict.type) {
   # this does the check for the prop
   lrn = setPredictType.Learner(learner, predict.type)
-  lrn$base.learners = lapply(lrn$base.learners, setPredictType,  predict.type = predict.type)
+  lrn$base.learners = lapply(lrn$base.learners, setPredictType, predict.type = predict.type)
   return(lrn)
 }
 
