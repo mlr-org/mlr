@@ -14,7 +14,7 @@ test_that("generatePartialDependenceData", {
   expect_that(max(dr$data$lstat), equals(40.))
   expect_that(min(dr$data$lstat), equals(1.))
   expect_that(nrow(dr$data), equals(gridsize * nfeat))
-  plotPartialDependence(dr, facet = "chas", data = regr.df)
+  plotPartialDependence(dr, facet = "chas")
   dir = tempdir()
   path = paste0(dir, "/test.svg")
   ggsave(path)
