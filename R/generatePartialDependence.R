@@ -498,7 +498,7 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
     
     features = obj$features[which(obj$features != facet)]
     
-    if (!is.factor(data[[facet]]))
+    if (!is.factor(obj$data[[facet]]))
       obj$data[[facet]] = stri_paste(facet, "=", as.factor(signif(obj$data[[facet]], 0)), sep = " ")
     else
       obj$data[[facet]] = stri_paste(facet, "=", obj$data[[facet]], sep = " ")
