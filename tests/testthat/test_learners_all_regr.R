@@ -44,5 +44,9 @@ test_that("learners work: regr ", {
   # regr with missing
   lrns = mylist("regr", properties = "missings", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars) 
+  
+  # regr variable importance
+  lrns = mylist("regr", properties = "featimp", create = TRUE)
+  lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars) 
 
 })

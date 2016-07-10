@@ -147,3 +147,32 @@ testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
 
   testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
 }
+
+testThatLearnerCanCalculateImportance = function(lrn, task, hyperpars) {
+  
+  
+  if (lrn$id %in% names(hyperpars))
+    lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
+  
+  # some learners need special param settings to compute variable importance
+  # add them here if you implement a measure that requires that.
+  # you may also want to change the params for the learner if training takes
+  # a long time
+  if (lrn$short.name == "ranger")
+    setHyperPars(lrn, importance = "impurity")
+  if (lrn$short.name == "adabag")
+    setHyperPars(lrn, mfinal = 5L)
+  if (lrn$short.name == "cforest")
+    setHyperPars(lrn, ntree = 5L)
+  if (lrn$short.name == "rfsrc")
+    setHyperPars(lrn, ntree = 5L)
+  
+  mod = train(lrn, task)
+  feat.imp = getFeatureImportance(mod)
+  expect_is(feat.imp, "numeric")
+  expect_equal(names(feat.imp), mod$features)
+  
+}
+
+
+
