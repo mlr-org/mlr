@@ -66,9 +66,9 @@ predictLearner.classif.cforest = function(.learner, .model, .newdata, ...) {
   p
 }
 
-getFeatureImportance.classif.cforest = function(.learner, .model, AUC = FALSE, ...) {
+getFeatureImportance.classif.cforest = function(.learner, .model, auc = FALSE, ...) {
   mod = getLearnerModel(.model)
-  if (AUC) {
+  if (auc) {
     fiv = as.numeric(party::varimpAUC(mod, ...))
   } else {
     fiv = as.numeric(party::varimp(mod, ...))
