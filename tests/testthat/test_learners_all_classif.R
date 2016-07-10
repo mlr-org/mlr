@@ -50,7 +50,7 @@ test_that("learners work: classif ", {
   lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars)
   
   # classif with variable importance
-  lrn = mylist("classif", properties = "featimp", create = TRUE)
+  lrns = mylist("classif", properties = "featimp", create = TRUE)
   lapply(lrns, testThatLearnerCanCalculateImportance, task = task, hyperpars = hyperpars)
 })
 

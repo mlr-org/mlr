@@ -159,13 +159,13 @@ testThatLearnerCanCalculateImportance = function(lrn, task, hyperpars) {
   # you may also want to change the params for the learner if training takes
   # a long time
   if (lrn$short.name == "ranger")
-    setHyperPars(lrn, importance = "impurity")
+    lrn = setHyperPars(lrn, importance = "impurity")
   if (lrn$short.name == "adabag")
-    setHyperPars(lrn, mfinal = 5L)
+    lrn =setHyperPars(lrn, mfinal = 5L)
   if (lrn$short.name == "cforest")
-    setHyperPars(lrn, ntree = 5L)
+    lrn = setHyperPars(lrn, ntree = 5L)
   if (lrn$short.name == "rfsrc")
-    setHyperPars(lrn, ntree = 5L)
+    lrn = setHyperPars(lrn, ntree = 5L)
   
   mod = train(lrn, task)
   feat.imp = getFeatureImportance(mod)
