@@ -1,48 +1,33 @@
 context("getFeatureImportance")
 
 test_that("getFeatureImportance", {
-
-  checkFeatureImportance = function(lrn.id) {
-    par.vals = list()
-    lrn.id.split = unlist(strsplit(lrn.id, split = ".", fixed = TRUE))
-    type = lrn.id.split[1L]
-    alg = lrn.id.split[2L]
-    if (type == "classif") {
-      tsk = binaryclass.task
-    } else {
-      if (type == "regr") {
-        tsk = regr.task
-      } else {
-        if (type == "surv") {
-          tsk = surv.task
-        } else {
-          stop("should not happen")
-        }
-      } 
-    }
-
-    # some learners need special param settings to compute variable importance
-    # add them here if you implement a measure that requires that.
-    # you may also want to change the params for the learner if training takes
-    # a long time
-    if (alg == "ranger")
-      par.vals$importance = "impurity"
-    if (alg == "boosting")
-      par.vals$mfinal = 5L
-    if (alg == "cforest")
-      par.vals$ntree = 5L
-    if (alg == "randomForestSRC")
-      par.vals$ntree = 5L
-
-    lrn = makeLearner(lrn.id, par.vals = par.vals)
-    mod = train(lrn, tsk)
-    feat.imp = getFeatureImportance(mod)
-    expect_is(feat.imp, "numeric")
-    expect_equal(names(feat.imp), mod$features)
-  }
-
-  feat.imp.methods = ls(getNamespace("mlr"), all.names = TRUE,
-    pattern = "getFeatureImportance\\.")
-  lrn.ids = gsub("getFeatureImportance.","",feat.imp.methods, fixed = TRUE)
-  sapply(lrn.ids, checkFeatureImportance)
+  
+  #type 2 for random Forest should work without setting importance
+  lrn = makeLearner("classif.randomForest")
+  mod = train(lrn, binaryclass.task)
+  feat.imp = getFeatureImportance(mod, type = 2)
+  expect_is(feat.imp, "numeric")
+  expect_equal(names(feat.imp), mod$features)
+  
+  #type 1 shouldn't
+  expect_error(getFeatureImportance(mod, type = 1), regexp = "parameter 'importance' is TRUE")
+  
+  lrn = setHyperPars(lrn, importance = TRUE)
+  mod = train(lrn, binaryclass.task)
+  feat.imp = getFeatureImportance(mod, type = 1)
+  expect_is(feat.imp, "numeric")
+  expect_equal(names(feat.imp), mod$features)
+  
+  #regression learner
+  lrn = makeLearner("regr.gbm")
+  mod = train(lrn, regr.task)
+  feat.imp = getFeatureImportance(mod)
+  expect_is(feat.imp, "numeric")
+  expect_equal(names(feat.imp), mod$features)
+  
+  #For learners without the possibility to calculate feature importance a meaningfull error should
+  #be returned
+  lrn = makeLearner("classif.qda")
+  mod = train(lrn, binaryclass.task)
+  expect_error(getFeatureImportance(mod), regexp = "no applicable method")
 })
