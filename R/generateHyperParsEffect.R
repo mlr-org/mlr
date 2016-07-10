@@ -229,41 +229,54 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   # FIXME: interpolation if heatmap / contour and not grid
   if (interpolate && z_flag && (heatcontour_flag)){
     # put ifelse to determine learner status
-    if (!("learner_status" %in% names(d)))
+    if (!("learner_status" %in% names(d))){
       d$learner_status = "Success"
+      }
     
     if (hyperpars.effect.data$nested){
+      d_new = d
       new_d = data.frame()
       # for loop for each nested cv run
       for (run in unique(d$nested_cv_run)){
-        d_run = d[d$nested_cv_run == run, ]
-        d_succ = d_run[d_run$learner_status == "Success", c(x, y)]
-        d_fail = d_run[d_run$learner_status == "Failure", c(x, y)]
+        d_run = d_new[d_new$nested_cv_run == run, ]
+        if (anyDuplicated(d_run[,c(x,y,z)])){
+          warningf("Detected duplicate (%s, %s) points on the path for nested cv
+                   run %s. The duplicates will be removed before interpolation!"
+                   , x, y, run)
+          d_run = d_run[!duplicated(d_run[,c(x,y,z)]),]
+        }
+        # save succ and fail so we can reference after interpolation
         fld = akima::interp(d_run[, x], d_run[, y], d_run[, z])
         df = reshape2::melt(fld$z, na.rm = TRUE)
         names(df) <- c(x, y, z)
         df[, x] = fld$x[df[, x]]
         df[, y] = fld$y[df[, y]]
-        df$learner_status = apply(df[, c(x, y)], 1, 
-                                  function(df) if (duplicated(rbind(d_succ, df))[nrow(d_succ)+1]){
-                                    "Success"
-                                  } else if (duplicated(rbind(d_fail, df))[nrow(d_fail)+1]){
-                                    "Failure"
-                                  } else {
-                                    "Interpolated Point"
-                                  })
-        new_d = rbind(new_d, df)
+        df$learner_status = "Interpolated Point"
+        df$iteration = NA
+        combined = rbind(d_run[,c(x,y,z,"learner_status", "iteration")], df)
+        combined = combined[!duplicated(combined[,c(x,y)]),]
+        new_d = rbind(new_d, combined)
       }
       d = new_d
       
     } else {
       # need to unique so interp doesn't crash with duplicates
-      fld = akima::interp(d[, x], d[, y], d[, z])
+      d_new = d
+      if (anyDuplicated(d[,c(x,y)])){
+        warningf("Detected duplicate (%s, %s) points on the path. The duplicates
+                 will be removed before interpolation!", x, y)
+        d_new = d[!duplicated(d[,c(x,y)]),]
+      }
+      fld = akima::interp(d_new[, x], d_new[, y], d_new[, z])
       df = reshape2::melt(fld$z, na.rm = TRUE)
       names(df) <- c(x, y, z)
       df[, x] = fld$x[df[, x]]
       df[, y] = fld$y[df[, y]]
-      d = df
+      df$learner_status = "Interpolated Point"
+      df$iteration = NA
+      combined = rbind(d_new[,c(x,y,z,"learner_status", "iteration")], df)
+      combined = combined[!duplicated(combined[,c(x,y)]),]
+      d = combined
     }
     
   }
@@ -285,7 +298,6 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     d$iteration = 1:nrow(d)
   }
     
-  print(d[1:20,])
   # just x, y  
   if ((length(x) == 1) && (length(y) == 1) && !(z_flag)){
     if (hyperpars.effect.data$nested){
@@ -310,7 +322,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   } else if ((length(x) == 1) && (length(y) == 1) && (z_flag)){
     # FIXME: generalize logic here
     if (heatcontour_flag){
-      plt = ggplot(d, aes_string(x = x, y = y, fill = z)) + geom_raster()
+      plt = ggplot(d, aes_string(x = x, y = y)) + geom_raster(aes_string(fill = z))
       if (na_flag || interpolate){
         plt = plt + geom_point(data = d[d$learner_status %in% c("Success", 
                                                                 "Failure"), ],
