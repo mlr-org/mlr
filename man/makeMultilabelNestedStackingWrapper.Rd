@@ -26,9 +26,9 @@ The number of folds for the inner cross validation method to predict labels for 
 Every learner which is implemented in mlr and which supports binary
 classification can be converted to a wrapped nested stacking multilabel learner.
 Nested stacking trains a binary classifier for each label following a given order. In training phase,
-the feature space of each classifier is extended with predicted label information (by cross validation) 
-of all previous labels in the chain. 
-During the prediction phase, predicted labels are obtained by the classifiers, which have been learned on 
+the feature space of each classifier is extended with predicted label information (by cross validation)
+of all previous labels in the chain.
+During the prediction phase, predicted labels are obtained by the classifiers, which have been learned on
 all training data.
 
 Models can easily be accessed via \code{\link{getLearnerModel}}.
@@ -44,7 +44,7 @@ lrn = setPredictType(lrn, "prob")
 mod = train(lrn, task)
 pred = predict(mod, task)
 p = performance(pred)
-performance(pred, measure = hamloss)
+performance(pred, measure = multilabel.hamloss)
 getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 # above works also with predictions from resample!
 }

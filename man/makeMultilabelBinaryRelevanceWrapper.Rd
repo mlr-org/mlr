@@ -41,7 +41,7 @@ lrn = setPredictType(lrn, "prob")
 mod = train(lrn, yeast.task)
 pred = predict(mod, yeast.task)
 p = performance(pred)
-performance(pred, measure = hamloss)
+performance(pred, measure = multilabel.hamloss)
 getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 # above works also with predictions from resample!
 }
