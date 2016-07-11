@@ -43,6 +43,10 @@
 #'    \link[ranger:ranger]{ranger} for details.}
 #'    \item{rpart} \cr
 #'    {Sum of decrease in impurity for each of the surrogate variables at each node.}
+#'    \item{xgboost} \cr
+#'    {The value implies the relative contribution of the corresponding feature to the model 
+#'    calculated by taking each feature's contribution for each tree in the model. The exact 
+#'    computation of the importance in xgboost is undocumented.}
 #'  }
 #'
 #' @section Implementing new methods:

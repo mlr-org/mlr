@@ -27,7 +27,7 @@ makeRLearner.regr.RRF = function() {
       makeUntypedLearnerParam(id = "strata"),
       makeIntegerVectorLearnerParam(id = "sampsize", lower = 0)
     ),
-    properties = c("numerics", "factors", "ordered"),
+    properties = c("numerics", "factors", "ordered", "featimp"),
     name = "Regularized Random Forests",
     short.name = "RRF",
     note = ""

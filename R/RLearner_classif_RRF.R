@@ -29,7 +29,7 @@ makeRLearner.classif.RRF = function() {
       makeUntypedLearnerParam(id = "strata"),
       makeIntegerVectorLearnerParam(id = "sampsize", lower = 0)
     ),
-    properties = c("twoclass", "multiclass", "prob", "numerics", "factors"),
+    properties = c("twoclass", "multiclass", "prob", "numerics", "factors", "featimp"),
     name = "Regularized Random Forests",
     short.name = "RRF",
     note = ""
