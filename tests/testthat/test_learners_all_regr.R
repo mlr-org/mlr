@@ -15,26 +15,27 @@ test_that("learners work: regr ", {
     regr.h2o.randomForest = list(seed = getOption("mlr.debug.seed"))
   )
 
-  # normal regr, dont use feature 2, it is nearly always 0
-  task = subsetTask(regr.task, subset = c(1:70),
-    features = getTaskFeatureNames(regr.task)[c(1, 3)])
+  # Create smaller task: dont use feature 2, it is nearly always 0, don't use feature 4, it is a factor variable
+  task = subsetTask(regr.task, subset = c(1:70), features = getTaskFeatureNames(regr.task)[c(1, 3)])
+  
+  # normal regr
   lrns = mylist("regr", create = TRUE)
   lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars)
 
   # regr with factors
-  task = subsetTask(regr.task, subset = 180:240, features = getTaskFeatureNames(regr.task)[c(1, 2)])
   lrns = mylist("regr", properties = "factors", create = TRUE)
   lapply(lrns, testThatLearnerHandlesFactors, task = task, hyperpars = hyperpars)
+  
+  # regr with ordered factors
+  lrns = mylist("regr", properties = "ordered", create = TRUE)
+  lapply(lrns, testThatLearnerHandlesOrderedFactors, task = task, hyperpars = hyperpars)
 
   # regr with se
-  task = subsetTask(regr.task, subset = c(1:70),
-  features = getTaskFeatureNames(regr.task)[c(1, 3)])
   lrns = mylist(task, properties = "se", create = TRUE)
   lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars,
     pred.type = "se")
 
   # regr with weights
-  task = subsetTask(regr.task, subset = 1:70, features = getTaskFeatureNames(regr.task)[c(1, 3)])
   lrns = mylist("regr", properties = "weights", create = TRUE)
   lapply(lrns, testThatLearnerRespectsWeights, hyperpars = hyperpars,
     task = task, train.inds = 1:70, test.inds = 1:70, weights = rep(c(1, 5), length.out = 70),
