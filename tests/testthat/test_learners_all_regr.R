@@ -47,6 +47,6 @@ test_that("learners work: regr ", {
   
   # regr variable importance
   lrns = mylist("regr", properties = "featimp", create = TRUE)
-  lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars) 
+  lapply(lrns, testThatLearnerCanCalculateImportance, task = task, hyperpars = hyperpars) 
 
 })

@@ -37,5 +37,5 @@ test_that("learners work: surv ", {
   # survival variable importance
   lrns = mylist("surv", properties = "featimp", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = surv.task, hyperpars = hyperpars) 
-
+  lapply(lrns, testThatLearnerCanCalculateImportance, task = surv.task, hyperpars = hyperpars)
 })
