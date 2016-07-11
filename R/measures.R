@@ -753,8 +753,8 @@ measureGPR = function(truth, response, positive) {
 hamloss = makeMeasure(id = "hamloss", minimize = TRUE, best = 0, worst = 1,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Hamming loss",
-  note = "Proportion of labels whose relevance is incorrectly predicted, 
-  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf", 
+  note = "Proportion of labels whose relevance is incorrectly predicted,
+  following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf",
   fun = function(task, model, pred, feats, extra.args) {
     measureHAMLOSS(getPredictionTruth.PredictionMultilabel(pred),
       getPredictionResponse.PredictionMultilabel(pred))
@@ -767,34 +767,34 @@ measureHAMLOSS = function(truth, response) {
   mean(truth != response)
 }
 
-#' @export subset01
+#' @export mlsubset01
 #' @rdname measures
 #' @format none
 subset01 = makeMeasure(id = "subset01", minimize = TRUE, best = 0, worst = 1,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Subset-0-1 loss",
-  note = "Proportion of observations whose classes are not completely correctly predicted, 
+  note = "Proportion of observations whose classes are not completely correctly predicted,
   following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf",
   fun = function(task, model, pred, feats, extra.args) {
-    measureSUBSET01(getPredictionTruth.PredictionMultilabel(pred),
+    measureSubset01(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
   }
 )
 
-#' @export measureSUBSET01
+#' @export measureSubset01
 #' @rdname measures
 #' @format none
-measureSUBSET01 = function(truth, response) {
+measureSubset01 = function(truth, response) {
   mean(!apply(truth == response, 1, all))
 }
 
-#' @export f1mult
+#' @export f1Multilab
 #' @rdname measures
 #' @format none
-f1mult = makeMeasure(id = "f1mult", minimize = FALSE, best = 1, worst = 0,
+f1Multilab = makeMeasure(id = "f1Multilab", minimize = FALSE, best = 1, worst = 0,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "F1 measure",
-  note = "Harmonic mean of precision and recall on a per instance basis (Micro-F1), 
+  note = "Harmonic mean of precision and recall on a per instance basis (Micro-F1),
   following the definition by Montanes et al.: http://www.sciencedirect.com/science/article/pii/S0031320313004019",
   fun = function(task, model, pred, feats, extra.args) {
     measureF1MULT(getPredictionTruth.PredictionMultilabel(pred),
@@ -805,7 +805,7 @@ f1mult = makeMeasure(id = "f1mult", minimize = FALSE, best = 1, worst = 0,
 #' @export measureF1MULT
 #' @rdname measures
 #' @format none
-measureF1MULT = function(truth, response) {
+measureF1MultiLab = function(truth, response) {
   fi = numeric(nrow(truth))
   for (i in seq_row(truth)) {
     if (sum(truth[i, ]) + sum(response[i, ]) == 0) {
@@ -814,16 +814,16 @@ measureF1MULT = function(truth, response) {
       fi[i] = 2 * sum(truth[i, ] * response[i, ]) / (sum(truth[i, ]) + sum(response[i, ]))
     }
   }
-  mean(fi) 
+  mean(fi)
 }
 
 #' @export accmult
 #' @rdname measures
 #' @format none
-accmult = makeMeasure(id = "accmult", minimize = FALSE, best = 1, worst = 0,
+accmultilab = makeMeasure(id = "accmultilab", minimize = FALSE, best = 1, worst = 0,
   properties = c("multilabel", "req.pred", "req.truth"),
   name = "Accuracy (multilabel)",
-  note = "Mean of proportion of correctly predicted labels with respect to the total number of labels for each instance, 
+  note = "Mean of proportion of correctly predicted labels with respect to the total number of labels for each instance,
   following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf",
   fun = function(task, model, pred, feats, extra.args) {
     measureACCMULT(getPredictionTruth.PredictionMultilabel(pred),
@@ -831,10 +831,10 @@ accmult = makeMeasure(id = "accmult", minimize = FALSE, best = 1, worst = 0,
   }
 )
 
-#' @export measureACCMULT
+#' @export measureACCMultilab
 #' @rdname measures
 #' @format none
-measureACCMULT = function(truth, response) {
+measureACCMultilab = function(truth, response) {
   acc = numeric(nrow(truth))
   for (i in seq_row(truth)) {
     if (sum(truth[i, ]) + sum(response[i, ]) == 0) {
@@ -849,21 +849,21 @@ measureACCMULT = function(truth, response) {
 #' @export precmult
 #' @rdname measures
 #' @format none
-precmult = makeMeasure(id = "precmult", minimize = FALSE, best = 1, worst = 0,
+ppvmultilab = makeMeasure(id = "precmult", minimize = FALSE, best = 1, worst = 0,
   properties = c("multilabel", "req.pred", "req.truth"),
-  name = "Precision (multilabel)",
-  note = "Mean of ratio of truly predicted labels for each instance, 
+  name = "Postive predicted value (multilabel)",
+  note = "Also called precision. Mean of ratio of truly predicted labels for each instance,
   following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf",
   fun = function(task, model, pred, feats, extra.args) {
-    measurePRECMULT(getPredictionTruth.PredictionMultilabel(pred),
+    measurePPVMultilab(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
   }
 )
 
-#' @export measurePRECMULT
+#' @export measurePPVMultilab
 #' @rdname measures
 #' @format none
-measurePRECMULT = function(truth, response) {
+measurePPVMultilab = function(truth, response) {
   prec = numeric(nrow(truth))
   for (i in seq_row(truth)) {
     if (sum(response[i, ]) == 0) {
@@ -875,24 +875,24 @@ measurePRECMULT = function(truth, response) {
   mean(prec)
 }
 
-#' @export recallmult
+#' @export tprmultilab
 #' @rdname measures
 #' @format none
-recallmult = makeMeasure(id = "recallmult", minimize = FALSE, best = 1, worst = 0,
+tprmultilab = makeMeasure(id = "tprmultilab", minimize = FALSE, best = 1, worst = 0,
   properties = c("multilabel", "req.pred", "req.truth"),
-  name = "Recall (multilabel)",
-  note = "Mean of proportion of predicted labels which are relevant for each instance, 
+  name = "TPR (multilabel)",
+  note = "Mean of proportion of predicted labels which are relevant for each instance,
   following the definition by Charte and Charte: https://journal.r-project.org/archive/2015-2/charte-charte.pdf",
   fun = function(task, model, pred, feats, extra.args) {
-    measureRECALLMULT(getPredictionTruth.PredictionMultilabel(pred),
+    measureTPRMultilab(getPredictionTruth.PredictionMultilabel(pred),
     getPredictionResponse.PredictionMultilabel(pred))
   }
 )
 
-#' @export measureRECALLMULT
+#' @export measureTPRMultilab
 #' @rdname measures
 #' @format none
-measureRECALLMULT = function(truth, response) {
+measureTPRMultilab = function(truth, response) {
   rec = numeric(nrow(truth))
   for (i in seq_row(truth)) {
     if (sum(truth[i, ]) == 0) {
