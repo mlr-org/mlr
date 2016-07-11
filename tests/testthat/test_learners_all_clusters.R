@@ -11,13 +11,12 @@ test_that("learners work: cluster", {
   lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars)
   
   # clustering, prob
-  task = subsetTask(noclass.task, subset = 1:20, features = getTaskFeatureNames(noclass.task)[1:2])
+  task = subsetTask(noclass.task, subset = 1:20, features = getTaskFeatureNames(noclass.task)[1:3])
   lrns = mylist(task, properties = "prob", create = TRUE)
   lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars,
     pred.type = "prob")
 
   # cluster with weights
-  task = subsetTask(noclass.task, subset = 1:20, features = getTaskFeatureNames(noclass.task)[1:2])
   lrns = mylist("cluster", properties = "weights", create = TRUE)
   lapply(lrns, testThatLearnerRespectsWeights, hyperpars = hyperpars,
     task = task, train.inds = 1:20, test.inds = 1:20, weights = rep(c(1, 5), length.out = 20),
