@@ -5,6 +5,7 @@
 \alias{G1}
 \alias{G2}
 \alias{acc}
+\alias{accmult}
 \alias{arsq}
 \alias{auc}
 \alias{bac}
@@ -15,6 +16,7 @@
 \alias{dunn}
 \alias{expvar}
 \alias{f1}
+\alias{f1mult}
 \alias{fdr}
 \alias{featperc}
 \alias{fn}
@@ -30,10 +32,12 @@
 \alias{mcp}
 \alias{meancosts}
 \alias{measureACC}
+\alias{measureACCMULT}
 \alias{measureAUC}
 \alias{measureBAC}
 \alias{measureBrier}
 \alias{measureEXPVAR}
+\alias{measureF1MULT}
 \alias{measureFDR}
 \alias{measureFN}
 \alias{measureFNR}
@@ -52,10 +56,13 @@
 \alias{measureMulticlassBrier}
 \alias{measureNPV}
 \alias{measurePPV}
+\alias{measurePRECMULT}
+\alias{measureRECALLMULT}
 \alias{measureRMSE}
 \alias{measureRSQ}
 \alias{measureSAE}
 \alias{measureSSE}
+\alias{measureSUBSET01}
 \alias{measureTN}
 \alias{measureTNR}
 \alias{measureTP}
@@ -69,11 +76,14 @@
 \alias{multiclass.brier}
 \alias{npv}
 \alias{ppv}
+\alias{precmult}
+\alias{recallmult}
 \alias{rmse}
 \alias{rsq}
 \alias{sae}
 \alias{silhouette}
 \alias{sse}
+\alias{subset01}
 \alias{timeboth}
 \alias{timepredict}
 \alias{timetrain}
@@ -223,6 +233,26 @@ measureGPR(truth, response, positive)
 hamloss
 
 measureHAMLOSS(truth, response)
+
+subset01
+
+measureSUBSET01(truth, response)
+
+f1mult
+
+measureF1MULT(truth, response)
+
+accmult
+
+measureACCMULT(truth, response)
+
+precmult
+
+measurePRECMULT(truth, response)
+
+recallmult
+
+measureRECALLMULT(truth, response)
 
 cindex
 
