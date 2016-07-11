@@ -322,14 +322,15 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   } else if ((length(x) == 1) && (length(y) == 1) && (z_flag)){
     # FIXME: generalize logic here
     if (heatcontour_flag){
-      plt = ggplot(d, aes_string(x = x, y = y)) + geom_raster(aes_string(fill = z))
+      plt = ggplot(d, aes_string(x = x, y = y)) + 
+        geom_point(aes_string(color = z), shape = 15)
       if (na_flag || interpolate){
-        plt = plt + geom_point(data = d[d$learner_status %in% c("Success", 
-                                                                "Failure"), ],
-                                        aes_string(shape = "learner_status", 
-                                          color = "learner_status")) +
-          scale_shape_manual(values = c("Failure" = 4, "Success" = 0)) +
-          scale_color_manual(values = c("Failure" = "red", "Success" = "black"))
+        plt = plt + geom_point(data = d[d$learner_status == "Failure", ],
+                                        aes_string(shape = "learner_status"), 
+                               color = "red", shape = 4, show.legend = T)
+        plt = plt + geom_point(data = d[d$learner_status == "Success", ],
+                               aes_string(shape = "learner_status"), 
+                               color = "black", shape = 0)
       } 
       if (plot.type == "contour")
         plt = plt + geom_contour(aes_string(z = z))
