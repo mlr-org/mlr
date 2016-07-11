@@ -39,12 +39,14 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
 }
 
 
-# Test that learner produces output on the console and whether a performance
-# measure is calculated which corresponds representing if learner works as it 
-# should.
+# Test that learner produces output on the console, can be trained, can predict
+# and whether a performance measure is calculated.
 # This function is being used to test learners in general and in the other
 # helper functions testing learners that claim to handle missings, factors,...
 # It also tests if the learner can predict probabilities or standard errors.
+# When testing probabilities an additional test if there are missing prediction
+# probabilities and if there as many probability predictions as there are 
+# observations in the task.
 # When testing standard errors an additional test if there are as many predictions
 # as there are observations in the task is being performed.
 # Note: performance() needs the task argument so that it works with cluster learners.
@@ -78,10 +80,8 @@ testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "res
 # Data of the task is being manipulated so that the first feature in the data
 # is a factor. A new task is being generated based on the manipulated data
 # with changeData().
-# Then testThatLearnerCanTrainPredict is being called to check whether learner
-# produces reasonable performance output.
-# Then checkPerformance is being called to check whether learner produces reasonable
-# performance output.
+# Then testThatLearnerCanTrainPredict() is being called to check whether learner
+# can be trained, can predict and produces reasonable performance output.
 
 testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
   
@@ -94,14 +94,31 @@ testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
 }
 
 
+# Tests that learner handles ordered factors
+# Data of task is manipulated such that the first mentioned feature is changed 
+# to a ordered factor with a < b < c. 
+# A new task is being generated based on the manipulated data with changeData().
+# Then testThatLearnerCanTrainPredict() is being called to check whether learner
+# can be trained, can predict and produces reasonable performance output.
+
+testThatLearnerHandlesOrderedFactors = function(lrn, task, hyperpars) {
+  
+  d = getTaskData(task)
+  f = getTaskFeatureNames(task)[1]
+  d[,f] = as.ordered(rep_len(c("a", "b", "c"), length.out = nrow(d)))
+  new.task = changeData(task = task, data = d)
+  
+  testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
+  
+}
+
+
 # Test that a given learner can handle missings:
 # Data of the task is being manipulated so that the first obervation of the first
-# feature in the data is a factor.
-# A new task is being generated based on the manipulated data  with changeData().
-# Then testThatLearnerCanTrainPredict() is being called to check whether learner
-# produces reasonable performance output.
-# Then checkPerformance is being called to check whether learner produces reasonable
-# performance output.
+# feature in the data is missing.
+# A new task is being generated based on the manipulated data with changeData().
+# Then testThatLearnerCanTrainPredict is being called to check whether learner
+# can be trained, can predict and produces reasonable performance output.
 
 testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
   
