@@ -1,6 +1,4 @@
 mlr_new:
-- Add multilabel wrappers: classifier chains, nested stacking, dependent 
-  binary relevance, stacking
 mlr_2.9:
 - removeConstantFeatures now also operates on data.frames and
   makeRemoveConstantFeaturesWrapper can be used to augment a learner with this
@@ -43,6 +41,8 @@ mlr_2.9:
   path for a single hyperparameter
 - addition of 'data' argument to plotPartialDependence which adds the training data to the graph
 - added new arguments "facet.wrap.nrow" and "facet.wrap.ncol" which enable arrangement of facets in rows and columns to plotting functions
+- new multilabel wrappers algorithms: classifier chains, nested stacking, dependent binary relevance, stacking
+- renamed multilabel measure "hamloss" to "multilabel.hamloss"
 
 - new learners
 -- classif.C50
@@ -76,13 +76,18 @@ mlr_2.9:
 - new functions
 -- generateHyperParsEffectData
 -- plotHyperParsEffect
+-- makeMultilabelClassifierChainsWrapper
+-- makeMultilabelDBRWrapper
+-- makeMultilabelNestedStackingWrapper
+-- makeMultilabelStackingWrapper
 
 - removed functions
 -- getParamSet generic (now in ParamHelpers package)
 
 - new measures
--- measureBrier (for mutliclass problems)
+-- multiclass.brier
 -- logloss
+-- multilabel.subset01, multilabel.f1, multilabel.acc, multilabel.ppv, multilabel.tpr
 
 mlr_2.8:
 - Feature filter "univariate" had a bad name, was deprecated and is now called

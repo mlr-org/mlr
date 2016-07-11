@@ -36,7 +36,7 @@
 #' mod = train(lrn, yeast.task)
 #' pred = predict(mod, yeast.task)
 #' p = performance(pred)
-#' performance(pred, measure = hamloss)
+#' performance(pred, measure = multilabel.hamloss)
 #' getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 #' # above works also with predictions from resample!
 #' }
@@ -71,6 +71,6 @@ predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .ne
   f = if (.learner$predict.type == "response")
     function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, ...)))
   else
-    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, ...), cl = "TRUE") 
+    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, ...), cl = "TRUE")
   asMatrixCols(lapply(models, f))
 }
