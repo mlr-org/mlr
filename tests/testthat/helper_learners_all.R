@@ -166,11 +166,13 @@ testThatLearnerCanCalculateImportance = function(lrn, task, hyperpars) {
     lrn = setHyperPars(lrn, ntree = 5L)
   if (lrn$short.name == "rfsrc")
     lrn = setHyperPars(lrn, ntree = 5L)
+  if (lrn$short.name == "xgboost")
+    lrn = setHyperPars(lrn, nrounds = 10L)
   
   mod = train(lrn, task)
   feat.imp = getFeatureImportance(mod)
   expect_is(feat.imp, "numeric")
-  expect_equal(names(feat.imp), mod$features)
+  expect_set_equal(names(feat.imp), mod$features)
   
 }
 
