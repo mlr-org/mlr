@@ -5,10 +5,10 @@ makeRLearner.regr.gpfit = function(){
     package = "GPfit",
     par.set = makeParamSet(
       makeNumericVectorLearnerParam(id = "control", len = 3, lower = c(1, 1, 1)),
-      makeNumericLearnerParam(id = "nug_thres", default = 20, lower = 10, upper = 25),
+      makeNumericLearnerParam(id = "nug_thres", default = 20, lower = 10),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
-      makeIntegerLearnerParam(id = "maxit", default = 100, lower = 0),
-      makeUntypedLearnerParam(id = "optim_start", tunable = FALSE),
+      makeIntegerLearnerParam(id = "maxit", default = 100, lower = 1),
+      makeUntypedLearnerParam(id = "optim_start", default = NULL),  
       makeLogicalLearnerParam(id = "scale", default = TRUE)
     ),
     properties = c("numerics"),
@@ -27,14 +27,13 @@ trainLearner.regr.gpfit = function(.learner, .task, .subset, scale = TRUE, ...) 
   not.const = colnames(d$data)[high != low]
   if (scale) {
     d$data[,not.const] = apply(d$data[,not.const], 2, function(x) x = (x - min(x)) / (max(x) - min(x)))
-    res = GPfit::GP_fit(d$data[, not.const], d$target, ...)
-    res = attachTrainingInfo(res, list(scaled = TRUE, not.const = not.const, high = high, low = low))
-    return(res)
+    mlist = list(scaled = TRUE, not.const = not.const, high = high, low = low)
   } else {
-    res = GPfit::GP_fit(d$data[, not.const], d$target, ...)
-    res = attachTrainingInfo(res, list(scaled = FALSE, not.const = not.const))
-    return(res)
+    mlist = list(scaled = FALSE, not.const = not.const)
   }
+  res = GPfit::GP_fit(d$data[, not.const], d$target, ...)
+  res = attachTrainingInfo(res, mlist)
+  return(res)
 }
 #' @export
 predictLearner.regr.gpfit = function(.learner, .model, .newdata, ...) {
