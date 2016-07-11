@@ -30,7 +30,7 @@
 #' mod = train(lrn, task)
 #' pred = predict(mod, task)
 #' p = performance(pred)
-#' performance(pred, measure = hamloss)
+#' performance(pred, measure = multilabel.hamloss)
 #' getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 #' # above works also with predictions from resample!
 makeMultilabelStackingWrapper = function(learner, cv.folds = 2) {
@@ -61,7 +61,7 @@ trainLearner.MultilabelStackingWrapper = function(.learner, .task, .subset, .wei
   pred.labels = sapply(targets, f)
   # train meta level learners
   g = function(tn) {
-    data.meta = dropNamed(data.frame(data, pred.labels), setdiff(targets, tn))    
+    data.meta = dropNamed(data.frame(data, pred.labels), setdiff(targets, tn))
     ctask = makeClassifTask(id = tn, data = data.meta, target = tn)
     train(.learner$next.learner, ctask, weights = .weights)
   }

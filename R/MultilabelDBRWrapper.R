@@ -4,7 +4,7 @@
 #' Every learner which is implemented in mlr and which supports binary
 #' classification can be converted to a wrapped DBR multilabel learner.
 #' The multilabel classification problem is converted into simple binary classifications
-#' for each label/target on which the binary learner is applied. 
+#' for each label/target on which the binary learner is applied.
 #' For each target, actual information of all binary labels (except the target variable) is used as additional features.
 #' During prediction these labels need are obtained by the binary relevance method using the same binary learner.
 #'
@@ -30,7 +30,7 @@
 #' mod = train(lrn, task)
 #' pred = predict(mod, task)
 #' p = performance(pred)
-#' performance(pred, measure = hamloss)
+#' performance(pred, measure = multilabel.hamloss)
 #' getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 #' # above works also with predictions from resample!
 makeMultilabelDBRWrapper = function(learner) {

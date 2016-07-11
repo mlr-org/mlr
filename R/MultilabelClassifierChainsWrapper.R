@@ -25,14 +25,14 @@
 #' # drop some labels so example runs faster
 #' d = d[, c(1:3, 15:117)]
 #' task = makeMultilabelTask(data = d, target = c("label1", "label2", "label3"))
-#' lrn = makeMultilabelClassifierChainsWrapper("classif.rpart", 
+#' lrn = makeMultilabelClassifierChainsWrapper("classif.rpart",
 #'   order = c("label2", "label3", "label1"))
 #' lrn = setPredictType(lrn, "prob")
 #' # train, predict and evaluate
 #' mod = train(lrn, task)
 #' pred = predict(mod, task)
 #' p = performance(pred)
-#' performance(pred, measure = hamloss)
+#' performance(pred, measure = multilabel.hamloss)
 #' getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 #' # above works also with predictions from resample!
 makeMultilabelClassifierChainsWrapper = function(learner, order = NULL) {
@@ -40,7 +40,7 @@ makeMultilabelClassifierChainsWrapper = function(learner, order = NULL) {
   id = paste("multilabel", learner$id, sep = ".")
   packs = learner$package
   x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
-    learner.subclass = "MultilabelClassifierChainsWrapper", 
+    learner.subclass = "MultilabelClassifierChainsWrapper",
     model.subclass = "MultilabelClassifierChainsModel")
   x$type = "multilabel"
   x$order = order
@@ -65,7 +65,7 @@ trainLearner.MultilabelClassifierChainsWrapper = function(.learner, .task, .subs
     data2 = dropNamed(data, chained.targets)
     index = which(names(data2) %in% setdiff(targets, tn))
     if (length(index) != 0) {  #convert augmented features into 0/1 variables, since boolean doesn't work
-      data2[, index] = sapply(data2[, index], as.numeric) 
+      data2[, index] = sapply(data2[, index], as.numeric)
     }
     ctask = makeClassifTask(id = tn, data = data2, target = tn)
     models[[tn]] = train(.learner$next.learner, ctask, weights = .weights)

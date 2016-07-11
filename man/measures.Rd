@@ -23,7 +23,6 @@
 \alias{fpr}
 \alias{gmean}
 \alias{gpr}
-\alias{hamloss}
 \alias{logloss}
 \alias{mae}
 \alias{mcc}
@@ -41,7 +40,6 @@
 \alias{measureFPR}
 \alias{measureGMEAN}
 \alias{measureGPR}
-\alias{measureHAMLOSS}
 \alias{measureLogloss}
 \alias{measureMAE}
 \alias{measureMCC}
@@ -49,7 +47,13 @@
 \alias{measureMEDSE}
 \alias{measureMMCE}
 \alias{measureMSE}
+\alias{measureMultiLabelF1}
 \alias{measureMulticlassBrier}
+\alias{measureMultilabelACC}
+\alias{measureMultilabelHamloss}
+\alias{measureMultilabelPPV}
+\alias{measureMultilabelSubset01}
+\alias{measureMultilabelTPR}
 \alias{measureNPV}
 \alias{measurePPV}
 \alias{measureRMSE}
@@ -67,6 +71,12 @@
 \alias{mse}
 \alias{multiclass.auc}
 \alias{multiclass.brier}
+\alias{multilabel.acc}
+\alias{multilabel.f1}
+\alias{multilabel.hamloss}
+\alias{multilabel.ppv}
+\alias{multilabel.subset01}
+\alias{multilabel.tpr}
 \alias{npv}
 \alias{ppv}
 \alias{rmse}
@@ -220,9 +230,29 @@ gpr
 
 measureGPR(truth, response, positive)
 
-hamloss
+multilabel.hamloss
 
-measureHAMLOSS(truth, response)
+measureMultilabelHamloss(truth, response)
+
+multilabel.subset01
+
+measureMultilabelSubset01(truth, response)
+
+multilabel.f1
+
+measureMultiLabelF1(truth, response)
+
+multilabel.acc
+
+measureMultilabelACC(truth, response)
+
+multilabel.ppv
+
+measureMultilabelPPV(truth, response)
+
+multilabel.tpr
+
+measureMultilabelTPR(truth, response)
 
 cindex
 
