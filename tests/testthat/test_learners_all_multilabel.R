@@ -13,4 +13,8 @@ lapply(lrns, testThatLearnerCanTrainPredict, task = multilabel.task, hyperpars =
 lrns = mylist("multilabel", properties = "factors", create = TRUE)
 lapply(lrns, testThatLearnerHandlesFactors, task = multilabel.task, hyperpars = hyperpars)
 
+# multilabel, ordered
+lrns = mylist("multilabel", properties = "ordered", create = TRUE)
+lapply(lrns, testThatLearnerHandlesOrderedFactors, task = multilabel.task, hyperpars = hyperpars)
+
 })
