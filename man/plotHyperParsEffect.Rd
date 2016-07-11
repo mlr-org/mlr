@@ -6,7 +6,8 @@
 \usage{
 plotHyperParsEffect(hyperpars.effect.data, x = NULL, y = NULL, z = NULL,
   plot.type = "scatter", loess.smooth = FALSE, facet = NULL,
-  pretty.names = TRUE, global.only = TRUE, interpolate = TRUE)
+  pretty.names = TRUE, global.only = TRUE, interpolate = TRUE,
+  heatmap.size = 4)
 }
 \arguments{
 \item{hyperpars.effect.data}{[\code{HyperParsEffectData}]\cr
@@ -58,6 +59,13 @@ If TRUE, will interpolate non-complete grids in order to visualize a more
 complete path. Only meaningful when attempting to plot a heatmap or contour.
 This will fill in "empty" cells in the heatmap or contour plot.
 Default is \code{TRUE}.}
+
+\item{heatmap.size}{[\code{numeric(1)}]\cr
+Adjust the size of rectangles that compose the "heatmap". Increasing this 
+will increase the length and width of each rectangle. You may need to adjust
+this to generate a satisfactory heatmap. Only meaningful when attempting to
+plot a heatmap or contour plot.
+Default is \code{4}.}
 }
 \value{
 ggplot2 plot object.

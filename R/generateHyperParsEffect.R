@@ -154,6 +154,12 @@ print.HyperParsEffectData = function(x, ...) {
 #'  complete path. Only meaningful when attempting to plot a heatmap or contour.
 #'  This will fill in "empty" cells in the heatmap or contour plot.
 #'  Default is \code{TRUE}.
+#' @param heatmap.size [\code{numeric(1)}]\cr
+#'  Adjust the size of rectangles that compose the "heatmap". Increasing this 
+#'  will increase the length and width of each rectangle. You may need to adjust
+#'  this to generate a satisfactory heatmap. Only meaningful when attempting to
+#'  plot a heatmap or contour plot.
+#'  Default is \code{4}.
 #'
 #' @template ret_gg2
 #'  
@@ -170,7 +176,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
                                z = NULL, plot.type = "scatter", 
                                loess.smooth = FALSE, facet = NULL, 
                                pretty.names = TRUE, global.only = TRUE, 
-                               interpolate = TRUE) {
+                               interpolate = TRUE, heatmap.size = 4) {
   assertClass(hyperpars.effect.data, classes = "HyperParsEffectData")
   assertChoice(x, choices = names(hyperpars.effect.data$data))
   assertChoice(y, choices = names(hyperpars.effect.data$data))
@@ -181,6 +187,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   assertFlag(pretty.names)
   assertFlag(global.only)
   assertFlag(interpolate)
+  assertNumber(heatmap.size, lower = 0)
  
   if (length(x) > 1 || length(y) > 1 || length(z) > 1 || length(facet) > 1)
     stopf("Greater than 1 length x, y, z or facet not yet supported")
@@ -275,7 +282,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       df$learner_status = "Interpolated Point"
       df$iteration = NA
       combined = rbind(d_new[,c(x,y,z,"learner_status", "iteration")], df)
-      combined = combined[!duplicated(combined[,c(x,y)]),]
+      combined = combined[!duplicated(combined[,c(x,y,z)]),]
       d = combined
     }
     
@@ -323,17 +330,16 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     # FIXME: generalize logic here
     if (heatcontour_flag){
       plt = ggplot(d, aes_string(x = x, y = y)) + 
-        geom_point(aes_string(color = z), shape = 15)
+        geom_point(aes_string(color = z), shape = 15, size = heatmap.size)
       if (na_flag || interpolate){
-        plt = plt + geom_point(data = d[d$learner_status == "Failure", ],
-                                        aes_string(shape = "learner_status"), 
-                               color = "red", shape = 4, show.legend = T)
-        plt = plt + geom_point(data = d[d$learner_status == "Success", ],
-                               aes_string(shape = "learner_status"), 
-                               color = "black", shape = 0)
+        plt = plt + geom_point(data = d[d$learner_status %in% c("Success", 
+                                                                "Failure"), ],
+                                        aes_string(shape = "learner_status"),
+                               fill = "red") +
+          scale_shape_manual(values = c("Failure" = 24, "Success" = 0))
       } 
       if (plot.type == "contour")
-        plt = plt + geom_contour(aes_string(z = z))
+        plt = plt + stat_density2d(aes_string(z = z))
     } else {
       plt = ggplot(d, aes_string(x = x, y = y, color = z))
       if (na_flag){
