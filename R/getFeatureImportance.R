@@ -29,6 +29,8 @@
 #'    the learner's parameter \code{importance} needs to be set to be able to compute
 #'    feature importance values.
 #'    See \link[randomForest:importance]{importance} for details.}
+#'    \item{RRF} \cr
+#'    {This is identical to randomForest.}
 #'    \item{randomForestSRC} \cr
 #'    {This method can calculate feature importance for
 #'    various measures. By default the Breiman-Cutler permutation method is used.
