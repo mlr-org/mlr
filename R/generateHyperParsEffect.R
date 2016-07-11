@@ -16,6 +16,11 @@
 #' @param include.diagnostics [\code{logical(1)}]\cr
 #'  Should diagnostic info (eol and error msg) be included?
 #'  Default is \code{FALSE}.
+#' @param trafo.scale [\code{logical(1)}]\cr
+#'  Should the units of the hyperparameter path be converted back to the 
+#'  ordinary scale? This is only necessary when trafo was used to create the
+#'  path.
+#'  Default is \code{FALSE}.
 #'
 #' @return [\code{HyperParsEffectData}]
 #'  Object containing the hyperparameter effects dataframe, the tuning 
@@ -46,7 +51,8 @@
 #' }
 #' @export
 #' @importFrom utils type.convert
-generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE)
+generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
+                                       trafo.scale = FALSE)
   {
   assert(checkClass(tune.result, "ResampleResult"), 
          checkClass(tune.result, classes = c("TuneResult", "OptResult")))
@@ -54,7 +60,14 @@ generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE)
   
   # in case we have nested CV
   if (getClass1(tune.result) == "ResampleResult"){
-    d = getNestedTuneResultsOptPathDf(tune.result)
+    if (trafo.scale){
+      d = data.frame()
+      for (i in 1:length(tune.result$extract)){
+        d = rbind(d, as.data.frame(trafoOptPath(tune.result$extract[[i]])))
+      }
+    } else {
+      d = getNestedTuneResultsOptPathDf(tune.result)
+    }
     num_hypers = length(tune.result$extract[[1]]$x)
     for (hyp in 1:num_hypers) {
       if (!is.numeric(d[, hyp]))
@@ -69,7 +82,11 @@ generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE)
     optimization = getClass1(tune.result$extract[[1]]$control)
     nested = TRUE
   } else {
-    d = as.data.frame(tune.result$opt.path)
+    if (trafo.scale){
+      d = as.data.frame(trafoOptPath(tune.result$opt.path))
+    } else {
+      d = as.data.frame(tune.result$opt.path)
+    }
     # what if we have numerics that were discretized upstream
     num_hypers = length(tune.result$x)
     for (hyp in 1:num_hypers) {

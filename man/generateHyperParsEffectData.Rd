@@ -4,7 +4,8 @@
 \alias{generateHyperParsEffectData}
 \title{Generate hyperparameter effect data.}
 \usage{
-generateHyperParsEffectData(tune.result, include.diagnostics = FALSE)
+generateHyperParsEffectData(tune.result, include.diagnostics = FALSE,
+  trafo.scale = FALSE)
 }
 \arguments{
 \item{tune.result}{[\code{\link{TuneResult}} | \code{\link{ResampleResult}}]\cr
@@ -17,6 +18,12 @@ included in the dataframe within the returned \code{HyperParsEffectData}.}
 
 \item{include.diagnostics}{[\code{logical(1)}]\cr
 Should diagnostic info (eol and error msg) be included?
+Default is \code{FALSE}.}
+
+\item{trafo.scale}{[\code{logical(1)}]\cr
+Should the units of the hyperparameter path be converted back to the 
+ordinary scale? This is only necessary when trafo was used to create the
+path.
 Default is \code{FALSE}.}
 }
 \value{
