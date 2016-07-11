@@ -401,6 +401,28 @@ test_that("check measure calculations", {
    measures = hamloss, model = mod.multilabel)
   expect_equal(hamloss.test, hamloss$fun(pred = pred.multilabel))
   expect_equal(hamloss.test, as.numeric(hamloss.perf))
+  #test only the measures
+  multi.y1 = matrix(c(TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE), 4, 2)
+  multi.p1 = matrix(c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE), 4, 2)
+  multi.p2 = matrix(c(FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE), 4, 2)
+  #hamloss
+  expect_equal(measureHAMLOSS(multi.y1, multi.p1), mean(apply(multi.y1 != multi.p1, 1, mean)))
+  expect_equal(measureHAMLOSS(multi.y1, multi.p2), mean(apply(multi.y1 != multi.p2, 1, mean)))
+  #subset01
+  expect_equal(measureSUBSET01(multi.y1, multi.p1), mean(apply(multi.y1 != multi.p1, 1, any)))
+  expect_equal(measureSUBSET01(multi.y1, multi.p2), mean(apply(multi.y1 == multi.p2, 1, all)))
+  #f1mult
+  expect_equal(measureF1MULT(multi.y1, multi.p1), mean(2 * apply((multi.y1 & multi.p1), 1, sum) / (apply((multi.y1), 1, sum) + apply((multi.p1), 1, sum))))
+  expect_equal(measureF1MULT(multi.y1, multi.p2), mean(2 * apply((multi.y1 & multi.p2), 1, sum) / (apply((multi.y1), 1, sum) + apply((multi.p2), 1, sum))))
+  #accmult
+  expect_equal(measureACCMULT(multi.y1, multi.p1), mean(apply((multi.y1 & multi.p1), 1, sum) / apply((multi.y1 | multi.p1), 1, sum)))
+  expect_equal(measureACCMULT(multi.y1, multi.p2), mean(apply((multi.y1 & multi.p2), 1, sum) / apply((multi.y1 | multi.p2), 1, sum)))
+  #precmult
+  expect_equal(measurePRECMULT(multi.y1, multi.p1), mean(c(apply((multi.y1[1:3, ] & multi.p1[1:3, ]), 1, sum) / apply((multi.p1[1:3,]), 1, sum), 1)))
+  expect_equal(measurePRECMULT(multi.y1, multi.p2), mean(apply((multi.y1 & multi.p2), 1, sum) / apply((multi.p2), 1, sum)))
+  #recallmult
+  expect_equal(measureRECALLMULT(multi.y1, multi.p1), mean(c(apply((multi.y1[c(1,2,4), ] & multi.p1[c(1,2,4), ]), 1, sum) / apply((multi.y1[c(1,2,4), ]), 1, sum), 1)))
+  expect_equal(measureRECALLMULT(multi.y1, multi.p2), mean(c(apply((multi.y1[c(1,2,4), ] & multi.p2[c(1,2,4), ]), 1, sum) / apply((multi.y1[c(1,2,4), ]), 1, sum), 1)))
 
   #test survival measures
 

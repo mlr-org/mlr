@@ -69,8 +69,8 @@ trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subse
 predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .newdata, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   f = if (.learner$predict.type == "response")
-    function(m) as.logical(predict(m, newdata = .newdata, ...)$data$response)
+    function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, ...)))
   else
-    function(m) predict(m, newdata = .newdata, ...)$data$prob.TRUE
+    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, ...), cl = "TRUE") 
   asMatrixCols(lapply(models, f))
 }
