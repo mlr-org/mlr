@@ -44,3 +44,15 @@ predictLearner.surv.ranger = function(.learner, .model, .newdata, ...) {
   p = predict(object = .model$learner.model, data = .newdata)
   rowMeans(p$chf)
 }
+
+getFeatureImportance.surv.ranger = function(.learner, .model, ...) {
+  has.fiv = .learner$par.vals$importance
+  if (is.null(has.fiv) || has.fiv == "none") {
+    stop("You must set the learners parameter value for importance to
+      'impurity' or 'permutation' to compute feature importance")
+  }
+  mod = getLearnerModel(.model)
+  fiv = as.numeric(ranger::importance(mod))
+  names(fiv) = .model$features
+  return(fiv)
+}
