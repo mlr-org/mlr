@@ -3,6 +3,8 @@
 #' @description
 #' If the training data contains only a single class (or almost only a single class), this wrapper creates a model that always predicts the constant class in the training data. In all other cases, the underlying learner is trained and the resulting model used for predictions.
 #'
+#' Probabilities can be predicted and will be 1 or 0 depending on whether the label matches the majority class or not.
+#'
 #' @template arg_learner
 #' @param frac [numeric(1)]\cr
 #' The fraction of labels in [0, 1) that can be different from the majority label. Default is 0, which means that constant labels are only predicted if there is exactly one label in the data.
@@ -18,7 +20,7 @@ makeConstantClassWrapper = function(learner, frac = 0) {
     next.learner = learner,
     package = learner$package,
     par.set = makeParamSet(
-      makeNumericLearnerParam(id = "frac", lower = 0, upper = 1)
+      makeNumericLearnerParam(id = "frac", lower = 0, upper = 1, default = 0)
     ),
     par.vals = list(frac = frac),
     learner.subclass = "ConstantClassWrapper",
