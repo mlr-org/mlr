@@ -13,8 +13,7 @@ tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
   dob = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
   res = evalOptimizationState(learner, task, resampling, measures, par.set, NULL, ctrl,
     opt.path, show.info, dob, x, remove.nas)
-  # check.feasible = FALSE if we put in transformed values
-  addOptPathEl(opt.path, x = x, y = res$y, dob = dob, eol = NA, check.feasible = !hasTrafo(par.set),
+  addOptPathEl(opt.path, x = x, y = res$y, dob = dob, eol = NA, check.feasible = TRUE,
     exec.time = res$exec.time, error.message = res$errmsg)
   convertYForTuner(res$y, measures, ctrl)
 }
