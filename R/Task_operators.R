@@ -191,7 +191,7 @@ getTaskFormula = function(x, target = getTaskTargetNames(x), explicit.features =
 #' @family task
 #' @export
 #' @examples
-#' task = makeClassifTask(data = iris, target = "Species")
+#' task = makeClassifTask(data = iris, target = "Species")m
 #' getTaskTargets(task)
 getTaskTargets = function(task, recode.target = "no") {
   UseMethod("getTaskTargets")
@@ -323,7 +323,7 @@ recodeY = function(y, type, td) {
     return(as.numeric(2L * (y == td$positive) - 1L))
   if (type %in% c("lcens", "rcens", "icens"))
     return(recodeSurvivalTimes(y, from = td$censoring, to = type))
-  if (type == "multilabel_factor")
+  if (type == "multilabel.factor")
     return(lapply(y, function(x) factor(x, levels = c("TRUE", "FALSE"))))
   stopf("Unknown value for 'type': %s", type)
 }
