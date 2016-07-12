@@ -84,6 +84,7 @@ Other tune: \code{\link{TuneControl}},
   \code{\link{tuneParams}}, \code{\link{tuneThreshold}}
 
 Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeDownsampleWrapper}},

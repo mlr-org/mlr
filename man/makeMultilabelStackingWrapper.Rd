@@ -54,6 +54,7 @@ Other multilabel: \code{\link{getMultilabelBinaryPerformances}},
   \code{\link{makeMultilabelNestedStackingWrapper}}
 
 Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeDownsampleWrapper}},

@@ -29,6 +29,7 @@ Other costsens: \code{\link{makeClassifTask}},
   \code{\link{makeCostSensWeightedPairsWrapper}}
 
 Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeDownsampleWrapper}},
   \code{\link{makeFeatSelWrapper}},

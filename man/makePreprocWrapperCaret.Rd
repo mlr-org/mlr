@@ -27,6 +27,7 @@ Fuses a learner with preprocessing methods provided by \code{\link[caret]{prePro
 }
 \seealso{
 Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeDownsampleWrapper}},
