@@ -45,7 +45,8 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
   d = convertDfCols(d, factors.as.char = TRUE)
   par.names = names(x1)
   # get all lines in opt.path which correspond to x and average their perf values
-  j = vlapply(seq_row(d), function(i) isTRUE(all.equal(as.list(d[i, par.names, drop = FALSE]), x1)))
+  j = vlapply(seq_row(d), function(i) isTRUE(all.equal(removeMissingValues(as.list(d[i, par.names, drop = FALSE])),
+      removeMissingValues(x1))))
   if (!any(j))
     stop("No matching rows for final elite candidate found in opt.path! This cannot be!")
   y = colMeans(d[j, opt.path$y.names, drop = FALSE])
