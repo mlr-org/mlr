@@ -45,7 +45,7 @@ Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
   \code{\link{generateFilterValuesData}},
   \code{\link{generateLearningCurveData}},
-  \code{\link{generatePartialPredictionData}},
+  \code{\link{generatePartialDependenceData}},
   \code{\link{getFilterValues}}
 
 Other thresh_vs_perf: \code{\link{plotROCCurves}},

@@ -61,13 +61,13 @@ makeOverBaggingWrapper = function(learner, obw.iters = 10L, obw.rate = 1, obw.ma
 
   if (learner$predict.type != "response")
     stop("Predict type of the basic learner must be response.")
-  id = paste(learner$id, "overbagged", sep = ".")
+  id = stri_paste(learner$id, "overbagged", sep = ".")
   packs = learner$package
   ps = makeParamSet(
     makeIntegerLearnerParam(id = "obw.iters", lower = 1L, default = 10L),
     makeNumericLearnerParam(id = "obw.rate", lower = 1),
     makeDiscreteLearnerParam(id = "obw.maxcl", c("boot", "all")),
-    makeUntypedLearnerParam(id = "obw.cl", default = NULL)
+    makeUntypedLearnerParam(id = "obw.cl", default = NULL, tunable = FALSE)
   )
   makeHomogeneousEnsemble(id, "classif", learner, packs, par.set = ps, par.vals = pv,
      learner.subclass = c("OverBaggingWrapper", "BaggingWrapper"), model.subclass = "BaggingModel")

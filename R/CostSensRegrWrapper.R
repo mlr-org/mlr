@@ -17,7 +17,7 @@ makeCostSensRegrWrapper = function(learner) {
   learner = checkLearnerRegr(learner)
   # we cannot make use of 'se' here
   learner = setPredictType(learner, "response")
-  id = paste("costsens", learner$id, sep = ".")
+  id = stri_paste("costsens", learner$id, sep = ".")
   makeHomogeneousEnsemble(id, type = "costsens", learner, package = learner$package,
     learner.subclass = "CostSensRegrWrapper", model.subclass = "CostSensRegrModel")
 }

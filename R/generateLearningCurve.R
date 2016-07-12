@@ -66,7 +66,7 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
       dsw = makeDownsampleWrapper(learner = lrn, dw.perc = perc, dw.stratify = stratify)
       list(
         lrn.id = lrn$id,
-        lrn = setId(dsw, paste0(lrn$id, ".", p.id)),
+        lrn = setId(dsw, stri_paste(lrn$id, ".", p.id)),
         perc = perc
       )
     })
@@ -88,15 +88,15 @@ generateLearningCurveData = function(learners, task, resampling = NULL,
   colnames(perfs) = mids
   out = cbind(learner = learner, percentage = perc, perfs)
   makeS3Obj("LearningCurveData",
-            task = task,
-            measures = measures,
-            data = out)
+    task = task,
+    measures = measures,
+    data = out)
 }
 #' @export
 print.LearningCurveData = function(x, ...) {
   catf("LearningCurveData:")
   catf("Task: %s", x$task$task.desc$id)
-  catf("Measures: %s", paste(sapply(x$measures, function(z) z$name), collapse = ", "))
+  catf("Measures: %s", collapse(extractSubList(x$measures, "name")))
   print(head(x$data))
 }
 #' @title Plot learning curve data using ggplot2.
@@ -117,9 +117,11 @@ print.LearningCurveData = function(x, ...) {
 #' @param pretty.names [\code{logical(1)}]\cr
 #'   Whether to use the \code{\link{Measure}} name instead of the id in the plot.
 #'   Default is \code{TRUE}.
+#' @template arg_facet_nrow_ncol
 #' @template ret_gg2
 #' @export
-plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE) {
+plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE,
+  facet.wrap.nrow = NULL, facet.wrap.ncol = NULL) {
   assertClass(obj, "LearningCurveData")
   mappings = c("measure", "learner")
   assertChoice(facet, mappings)
@@ -129,13 +131,12 @@ plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE) {
   if (pretty.names) {
     mnames = replaceDupeMeasureNames(obj$measures, "name")
     colnames(obj$data) = mapValues(colnames(obj$data),
-                                   names(obj$measures),
-                                   mnames)
+      names(obj$measures), mnames)
   }
 
   data = reshape2::melt(obj$data,
-                        id.vars = c("learner", "percentage"),
-                        variable.name = "measure", value.name = "performance")
+    id.vars = c("learner", "percentage"),
+    variable.name = "measure", value.name = "performance")
   nlearn = length(unique(data$learner))
   nmeas = length(unique(data$measure))
 
@@ -145,13 +146,15 @@ plotLearningCurve = function(obj, facet = "measure", pretty.names = TRUE) {
     facet = NULL
 
   if (!is.null(color))
-    plt = ggplot2::ggplot(data, ggplot2::aes_string(x = "percentage", y = "performance", colour = color))
+    plt = ggplot(data, aes_string(x = "percentage", y = "performance", colour = color))
   else
-    plt = ggplot2::ggplot(data, ggplot2::aes_string(x = "percentage", y = "performance"))
-  plt = plt + ggplot2::geom_point()
-  plt = plt + ggplot2::geom_line()
-  if (!is.null(facet))
-    plt = plt + ggplot2::facet_wrap(as.formula(paste("~", facet)), scales = "free_y")
+    plt = ggplot(data, aes_string(x = "percentage", y = "performance"))
+  plt = plt + geom_point()
+  plt = plt + geom_line()
+  if (!is.null(facet)) {
+    plt = plt + ggplot2::facet_wrap(as.formula(stri_paste("~", facet, sep = " ")),
+      scales = "free_y", nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
+  }
   return(plt)
 }
 #' @title Plot learning curve data using ggvis.
@@ -222,7 +225,7 @@ plotLearningCurveGGVIS = function(obj, interaction = "measure", pretty.names = T
             shiny::headerPanel("learning curve"),
             shiny::sidebarPanel(
                 shiny::selectInput("interaction_select",
-                                   paste("choose a", interaction),
+                                   stri_paste("choose a", interaction, sep = " "),
                                    levels(data[[interaction]]))
             ),
             shiny::mainPanel(

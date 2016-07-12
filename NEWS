@@ -1,6 +1,9 @@
+mlr_new:
 mlr_2.9:
+- removeConstantFeatures now also operates on data.frames and
+  makeRemoveConstantFeaturesWrapper can be used to augment a learner with this
+  preprocessing step.
 - SMOTEWrapper: fix a bug where "sw.nn" was not correctly passed down
-- removed classif.bartMachine and regr.bartMachine because of bugs
 - classif.blackboost, regr.blackboost: made sure that arg "stump" is passed on
   correctly
 - fixed parameter values for WEKA learners IBk, J48, PART, EM, SimpleKMeans,
@@ -12,19 +15,82 @@ mlr_2.9:
 - classif.glmboost, regr.glmboost: add parameters stopintern and trace
 - convert data.frame-ish in Task if necessary
 - fix bug with NoFeaturesModel and ModelMultiplexer
-- clean up randomForestSRC learners
+- clean up randomForestSRC and randomForestSRCSyn learners
 - fix bug with partialPredictions and GGVIS
 - remove unnecessary linear.output parameter for classif.neuralnet
 - remove unsupported KSVM parameter value stringdot
+- fix some bartMachine compatibility issues
+- add pretty.names arguments to plots that show learner short names instead of
+  IDs
+- improve documentation for permutation.importance filter and perform slight
+  argument renaming to fix potential name clashes
+- fix small bug in DownsampleWrapper when trained with weights
+- the "penalized" learner were restructured and improved (params were added), also see below.
+- makeCostMeasure: removed arg "task", names of cost matrix are checked on measure calculation
+-- fixed weight handling and weight tag for some learners
+- rename generatePartialPrediction, plotPartialPrediction, and plotPartialPredictionGGVIS to
+  generatePartialDependence, plotPartialDependence, and plotPartialDependenceGGVIS
+- add stability.nugget parameter for "regr.km"
+- plotPartialDependence can plot classification tasks with more than one interacted features now
+- generateFilterValuesData: added argument 'more.args'
+- subsetTask, getTaskData: arg "features" now also accepts logical and integer
+- normalizeFeatures, createDummyFeatures: arg 'exclude' was replaced by 'cols'
+- normalizeFeatures is now S3 and can be called also on data.frames
+- classif.ranger, regr.ranger and surv.ranger: now respect unordered factors by default
+- added the ability to generate and plot data from the hyperparameter tuning
+  path for a single hyperparameter
+- addition of 'data' argument to plotPartialDependence which adds the training data to the graph
+- added new arguments "facet.wrap.nrow" and "facet.wrap.ncol" which enable arrangement of facets in rows and columns to plotting functions
+- new multilabel wrappers algorithms: classifier chains, nested stacking, dependent binary relevance, stacking
+- renamed multilabel measure "hamloss" to "multilabel.hamloss"
+- added scaled brier measure
 
 - new learners
+-- classif.C50
+-- classif.gausspr
+-- classif.penalized.fusedlasso
+-- classif.penalized.lasso
+-- classif.penalized.ridge
+-- classif.h2o.deeplearning
+-- classif.h2o.gbm
+-- classif.h2o.glm
+-- classif.h2o.randomForest
+-- classif.rrf
+-- regr.penalized.fusedlasso
+-- regr.gausspr
+-- regr.glm
+-- regr.h2o.deeplearning
+-- regr.h2o.gbm
+-- regr.h2o.glm
+-- regr.h2o.randomForest
+-- regr.rrf
 -- surv.cv.CoxBoost
+-- surv.penalized.fusedlasso
+-- surv.penalized.lasso
+-- surv.penalized.ridge
+-- cluster.kkmeans
 
 - removed learners
 -- surv.optimCoxBoostPenalty
+-- surv.penalized (split up, see new learners above)
+
+- new functions
+-- generateHyperParsEffectData
+-- plotHyperParsEffect
+-- makeMultilabelClassifierChainsWrapper
+-- makeMultilabelDBRWrapper
+-- makeMultilabelNestedStackingWrapper
+-- makeMultilabelStackingWrapper
+-- makeConstantClassWrapper
 
 - removed functions
 -- getParamSet generic (now in ParamHelpers package)
+
+- new measures
+-- multiclass.brier
+-- brier.sc
+-- logloss
+-- multilabel.subset01, multilabel.f1, multilabel.acc, multilabel.ppv, multilabel.tpr
 
 mlr_2.8:
 - Feature filter "univariate" had a bad name, was deprecated and is now called
@@ -86,6 +152,7 @@ mlr_2.6:
 - disabled plotViperCharts unit tests as VC seems to be offline currently
 - multilabel: improve few task getter functions, especially getTaskFormula is
   now correct
+
 
 new learners
 -- regr.glmboost

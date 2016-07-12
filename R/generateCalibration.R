@@ -113,7 +113,8 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
     proportion = proportion[, -which(td$negative == colnames(proportion))]
     data = data[!data$Class == td$negative, ]
   }
-  max_bin = sapply(strsplit(levels(proportion$bin), ",|]|)"), function(x) as.numeric(x[length(x)]))
+  max_bin = sapply(stri_split(levels(proportion$bin), regex = ",|]|\\)"), 
+                   function(x) as.numeric(x[length(x)]))
   proportion$bin = ordered(proportion$bin, levels = levels(proportion$bin)[order(max_bin)])
   proportion = reshape2::melt(proportion, id.vars = c("Learner", "bin"),
                               value.name = "Proportion", variable.name = "Class")
@@ -144,6 +145,7 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #'   Whether to include a rag plot which shows a rug plot on the top which pertains to
 #'   positive cases and on the bottom which pertains to negative cases.
 #'   Default is \code{TRUE}.
+#' @template arg_facet_nrow_ncol
 #' @template ret_gg2
 #' @export
 #' @examples
@@ -162,7 +164,7 @@ generateCalibrationData.list = function(obj, breaks = "Sturges", groups = NULL, 
 #' out = generateCalibrationData(pred)
 #' plotCalibration(out)
 #' }
-plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE) {
+plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL) {
   assertClass(obj, "CalibrationData")
   assertFlag(smooth)
   assertFlag(reference)
@@ -178,8 +180,9 @@ plotCalibration = function(obj, smooth = FALSE, reference = TRUE, rag = TRUE) {
   else
     p = p + geom_point() + geom_line()
 
-  if (length(unique(obj$proportion$Learner)) > 1L)
-    p = p + facet_wrap(~ Learner)
+  if (length(unique(obj$proportion$Learner)) > 1L) {
+    p = p + facet_wrap(~ Learner, nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
+  }
 
   if (reference)
     p = p + geom_segment(aes_string(1, 0, xend = "xend", yend = 1), colour = "black", linetype = "dashed")

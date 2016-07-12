@@ -3,7 +3,9 @@
 #' Create a feature filter.
 #'
 #' Creates and registers custom feature filters. Implemented filters
-#' can be listed with \code{\link{listFilterMethods}}.
+#' can be listed with \code{\link{listFilterMethods}}. Additional
+#' documentation for the \code{fun} parameter specific to each filter can
+#' be found in the description.
 #'
 #' @param name [\code{character(1)}]\cr
 #'  Identifier for the filter.
@@ -59,7 +61,7 @@ listFilterMethods = function(desc = TRUE, tasks = FALSE, features = FALSE) {
   tag2df = function(tags, prefix = "") {
     unique.tags = sort(unique(unlist(tags)))
     res = asMatrixRows(lapply(tags, "%in%", x = unique.tags))
-    colnames(res) = paste0(prefix, unique.tags)
+    colnames(res) = stri_paste(prefix, unique.tags)
     rownames(res) = NULL
     as.data.frame(res)
   }
@@ -209,8 +211,8 @@ makeFilter(
   name = "rank.correlation",
   desc = "Spearman's correlation between feature and target",
   pkg  = "FSelector",
-  supported.tasks = c("regr"),
-  supported.features = c("numerics", "factors"),
+  supported.tasks = "regr",
+  supported.features = "numerics",
   fun = function(task, nselect, ...) {
     y = FSelector::rank.correlation(getTaskFormula(task), data = getTaskData(task))
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
@@ -342,7 +344,7 @@ makeFilter(
   fun = function(task, nselect, ...) {
     data = getTaskData(task)
     sapply(getTaskFeatureNames(task), function(feat.name) {
-      f = as.formula(paste0(feat.name,"~",getTaskTargetNames(task)))
+      f = as.formula(stri_paste(feat.name,"~",getTaskTargetNames(task)))
       aov.t = aov(f, data = data)
       summary(aov.t)[[1]][1,'F value']
     })
@@ -358,7 +360,7 @@ makeFilter(
   fun = function(task, nselect, ...) {
     data = getTaskData(task)
     sapply(getTaskFeatureNames(task), function(feat.name) {
-      f = as.formula(paste0(feat.name,"~", getTaskTargetNames(task)))
+      f = as.formula(stri_paste(feat.name,"~", getTaskTargetNames(task)))
       t = kruskal.test(f, data = data)
       unname(t$statistic)
     })
@@ -379,18 +381,29 @@ makeFilter(
   }
 )
 
+#' Filter \dQuote{permutation.importance} computes a loss function between predictions made by a
+#' learner before and after a feature is permuted. Special arguments to the filter function are
+#' \code{imp.learner}, a [\code{\link{Learner}} or \code{character(1)}] which specifies the learner
+#' to use when computing the permutation importance, \code{contrast}, a \code{function} which takes two
+#' numeric vectors and returns one (default is the difference), \code{aggregation}, a \code{function} which
+#' takes a \code{numeric} and returns a \code{numeric(1)} (default is the mean), \code{nperm},
+#' an \code{integer(1)}, and \code{replace}, a \code{logical(1)} which determines whether the feature being
+#' permuted is sampled with or without replacement.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 makeFilter(
   name = "permutation.importance",
   desc = "Aggregated difference between feature permuted and unpermuted predictions",
   pkg = character(0L),
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors"),
-  fun = function(task, learner, measure, contrast = function(x, y) x - y,
-                 aggregation = mean, nperm = 1, nselect, replace = FALSE, ...) {
-    learner = checkLearner(learner)
-    measure = checkMeasures(measure, learner)
-    if (getTaskType(task) != learner$type)
-      stopf("Expected task of type '%s', not '%s'", getTaskType(task), learner$type)
+  fun = function(task, imp.learner, measure, contrast = function(x, y) x - y,
+                 aggregation = mean, nperm = 1, replace = FALSE, nselect) {
+    imp.learner = checkLearner(imp.learner)
+    measure = checkMeasures(measure, imp.learner)
+    if (getTaskType(task) != imp.learner$type)
+      stopf("Expected task of type '%s', not '%s'", getTaskType(task), imp.learner$type)
     if (length(measure) != 1L)
       stop("Exactly one measure must be provided")
     assertCount(nperm)
@@ -399,8 +412,8 @@ makeFilter(
     test.aggregation = aggregation(1:2)
     assert(is.numeric(test.aggregation) & length(test.aggregation) == 1L)
 
-    doPermutationImportance = function(task, learner, measure, contrast, i) {
-      fit = train(learner, task)
+    doPermutationImportance = function(task, imp.learner, measure, contrast, i) {
+      fit = train(imp.learner, task)
       pred = predict(fit, task = task)
       data = getTaskData(task)
 
@@ -413,7 +426,7 @@ makeFilter(
       }, USE.NAMES = FALSE)
     }
 
-    args = list(task = task, learner = learner, measure = measure, contrast = contrast)
+    args = list(task = task, imp.learner = imp.learner, measure = measure, contrast = contrast)
     out = parallelMap::parallelMap(doPermutationImportance, seq_len(nperm), more.args = args)
     out = do.call("rbind", out)
     out = apply(out, 2, aggregation)

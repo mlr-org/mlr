@@ -15,6 +15,7 @@ makeRLearner.classif.LiblineaRL2LogReg = function() {
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(type = 0L),
+    # FIXME default in LiblieaR() for type is 0, par.vals is redundant here.
     properties = c("twoclass", "multiclass", "numerics", "class.weights", "prob"),
     class.weights.param = "wi",
     name = "L2-Regularized Logistic Regression",

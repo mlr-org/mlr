@@ -1,23 +1,24 @@
 requireLearnerPackages = function(learner) {
-  requirePackages(learner$package, why = paste("learner", learner$id), default.method = "load")
+  requirePackages(learner$package, why = stri_paste("learner", learner$id, sep = " "), default.method = "load")
 }
 
 cleanupPackageNames = function(pkgs) {
-  gsub("^[!_]", "", pkgs)
+  stri_replace_all(pkgs, "", regex = "^[!_]")
 }
 
 # paste together measure and aggregation ids
 measureAggrName = function(measure) {
-  paste(measure$id, measure$aggr$id, sep = ".")
+  stri_paste(measure$id, measure$aggr$id, sep = ".")
 }
 
 # paste together measure and aggregation names
 measureAggrPrettyName = function(measure) {
-  paste(measure$name, measure$aggr$name, sep = ": ")
+  stri_paste(measure$name, measure$aggr$name, sep = ": ")
 }
 
 perfsToString = function(y) {
-  paste(paste(names(y), "=", formatC(y, digits = 3L), sep = ""), collapse = ",")
+  stri_paste(stri_paste(names(y), "=", formatC(y, digits = 3L), sep = ""), 
+             collapse = ",", sep = " ")
 }
 
 removeFromDots = function(ns, ...) {

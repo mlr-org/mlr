@@ -15,33 +15,30 @@ test_that("regr_penalized_ridge", {
 
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
-    pars = list(regr.formula, data=regr.train)
+    pars = list(regr.formula, data = regr.train, trace = FALSE)
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     capture.output(
       m <- do.call(penalized::penalized, pars)
       )
     set.seed(getOption("mlr.debug.seed"))
-    p = penalized::predict(m, data=regr.test)
+    # FIXME: should be removed, reported in issue 840
+    m@formula$unpenalized[[2L]] = as.symbol(regr.target)
+    p = penalized::predict(m, data = regr.test)
     old.predicts.list[[i]] = p[,"mu"]
   }
 
-  testSimpleParsets("regr.penalized.ridge", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list)
+  testSimpleParsets("regr.penalized.ridge", regr.df, regr.target,
+    regr.train.inds, old.predicts.list, parset.list)
 
-  #extra cv test
-  folds=5
-  cvl.res = cvl(regr.formula, data=regr.df, lambda2=0.3, fold=folds)
-  res = makeResampleInstance(makeResampleDesc("CV", iters=folds), task=regr.task)
-  for (i in 1:folds) {
-    res$train.inds[[i]] = setdiff(1:nrow(regr.df), which(cvl.res$fold == i))
-    res$test.inds[[i]] = which(cvl.res$fold == i)
+  tt = function(formula, data, subset = 1:nrow(data), ...) {
+    penalized::penalized(formula, data = data[subset, ], fusedl = FALSE, ...)
   }
-  wl = makeLearner("regr.penalized.ridge", lambda2=0.3)
-  r = resample(wl, regr.task, res)
-  p = as.data.frame(r$pred)
-  for (i in 1:folds) {
-    test.i = res$test.inds[[i]]
-    rf.p = subset(p, subset=(iter==i), select="response", drop=TRUE)
-    expect_equal(rf.p, cvl.res$predictions[test.i])
+
+  tp = function(model, newdata, ...) {
+    penalized::predict(model, data = newdata,...)[, "mu"]
   }
+
+  testCVParsets("regr.penalized.ridge", regr.df, regr.target,
+    tune.train = tt, tune.predict = tp, parset.list = parset.list)
 })

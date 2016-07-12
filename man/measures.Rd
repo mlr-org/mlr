@@ -10,6 +10,7 @@
 \alias{bac}
 \alias{ber}
 \alias{brier}
+\alias{brier.sc}
 \alias{cindex}
 \alias{db}
 \alias{dunn}
@@ -23,7 +24,7 @@
 \alias{fpr}
 \alias{gmean}
 \alias{gpr}
-\alias{hamloss}
+\alias{logloss}
 \alias{mae}
 \alias{mcc}
 \alias{mcp}
@@ -32,6 +33,7 @@
 \alias{measureAUC}
 \alias{measureBAC}
 \alias{measureBrier}
+\alias{measureBrier.sc}
 \alias{measureEXPVAR}
 \alias{measureFDR}
 \alias{measureFN}
@@ -40,13 +42,20 @@
 \alias{measureFPR}
 \alias{measureGMEAN}
 \alias{measureGPR}
-\alias{measureHAMLOSS}
+\alias{measureLogloss}
 \alias{measureMAE}
 \alias{measureMCC}
 \alias{measureMEDAE}
 \alias{measureMEDSE}
 \alias{measureMMCE}
 \alias{measureMSE}
+\alias{measureMultiLabelF1}
+\alias{measureMulticlassBrier}
+\alias{measureMultilabelACC}
+\alias{measureMultilabelHamloss}
+\alias{measureMultilabelPPV}
+\alias{measureMultilabelSubset01}
+\alias{measureMultilabelTPR}
 \alias{measureNPV}
 \alias{measurePPV}
 \alias{measureRMSE}
@@ -63,6 +72,13 @@
 \alias{mmce}
 \alias{mse}
 \alias{multiclass.auc}
+\alias{multiclass.brier}
+\alias{multilabel.acc}
+\alias{multilabel.f1}
+\alias{multilabel.hamloss}
+\alias{multilabel.ppv}
+\alias{multilabel.subset01}
+\alias{multilabel.tpr}
 \alias{npv}
 \alias{ppv}
 \alias{rmse}
@@ -138,13 +154,25 @@ ber
 
 multiclass.auc
 
+multiclass.brier
+
+measureMulticlassBrier(probabilities, truth)
+
+logloss
+
+measureLogloss(probabilities, truth)
+
 auc
 
-measureAUC(probabilites, truth, negative, positive)
+measureAUC(probabilities, truth, negative, positive)
 
 brier
 
-measureBrier(probabilites, truth, negative, positive)
+measureBrier(probabilities, truth, negative, positive)
+
+brier.sc
+
+measureBrier.sc(probabilities, truth, negative, positive)
 
 bac
 
@@ -208,9 +236,29 @@ gpr
 
 measureGPR(truth, response, positive)
 
-hamloss
+multilabel.hamloss
 
-measureHAMLOSS(truth, response)
+measureMultilabelHamloss(truth, response)
+
+multilabel.subset01
+
+measureMultilabelSubset01(truth, response)
+
+multilabel.f1
+
+measureMultiLabelF1(truth, response)
+
+multilabel.acc
+
+measureMultilabelACC(truth, response)
+
+multilabel.ppv
+
+measureMultilabelPPV(truth, response)
+
+multilabel.tpr
+
+measureMultilabelTPR(truth, response)
 
 cindex
 
@@ -235,8 +283,10 @@ Vector of the true class.}
 \item{response}{[\code{factor}]\cr
 Vector of the predicted class.}
 
-\item{probabilites}{[\code{numeric}]\cr
-The probabilites for the positive class.}
+\item{probabilities}{[\code{numeric} | \code{matrix}]\cr
+a) For purely binary classification measures: The predicted probabilities for the positive class as a numeric vector.
+b) For multiclass classification measures: The predicted probabilities for all classes, always as a numeric matrix, where
+columns are named with class labels.}
 
 \item{negative}{[\code{character(1)}]\cr
 The name of the negative class.}

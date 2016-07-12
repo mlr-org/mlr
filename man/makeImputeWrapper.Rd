@@ -5,8 +5,9 @@
 \title{Fuse learner with an imputation method.}
 \usage{
 makeImputeWrapper(learner, classes = list(), cols = list(),
-  dummy.cols = character(0L), dummy.type = "factor",
-  impute.new.levels = TRUE, recode.factor.levels = TRUE)
+  dummy.classes = character(0L), dummy.cols = character(0L),
+  dummy.type = "factor", impute.new.levels = TRUE,
+  recode.factor.levels = TRUE)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -21,6 +22,10 @@ E.g. \code{list(numeric = imputeMedian())}.}
 Named list containing names of imputation methods to impute missing values
 in the data column referenced by the list element's name. Overrules imputation set via
 \code{classes}.}
+
+\item{dummy.classes}{[\code{character}]\cr
+Classes of columns to create dummy columns for.
+Default is \code{character(0)}.}
 
 \item{dummy.cols}{[\code{character}]\cr
 Column names to create dummy columns (containing binary missing indicator) for.
@@ -64,9 +69,14 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeFilterWrapper}},
   \code{\link{makeMulticlassWrapper}},
   \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}},
   \code{\link{makeOverBaggingWrapper}},
   \code{\link{makePreprocWrapperCaret}},
   \code{\link{makePreprocWrapper}},
+  \code{\link{makeRemoveConstantFeaturesWrapper}},
   \code{\link{makeSMOTEWrapper}},
   \code{\link{makeTuneWrapper}},
   \code{\link{makeUndersampleWrapper}},

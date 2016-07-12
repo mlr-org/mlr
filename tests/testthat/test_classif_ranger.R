@@ -14,7 +14,7 @@ test_that("classif_ranger", {
 
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
-    parset = c(parset, list(data = binaryclass.train, formula = binaryclass.formula, write.forest = TRUE, probability = TRUE))
+    parset = c(parset, list(data = binaryclass.train, formula = binaryclass.formula, write.forest = TRUE, probability = TRUE, respect.unordered.factors = TRUE))
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(ranger::ranger, parset)
     p  = predict(m, data = binaryclass.test)

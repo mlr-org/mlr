@@ -30,12 +30,17 @@ makeRLearner.regr.randomForest = function() {
       makeIntegerLearnerParam(id = "se.boot", default = 50L, lower = 1L),
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
-      makeIntegerLearnerParam(id = "sampsize", lower = 1L),
+      makeUntypedLearnerParam(id = "strata", tunable = FALSE),
+      makeIntegerVectorLearnerParam(id = "sampsize", lower = 1L),
       makeIntegerLearnerParam(id = "nodesize", default = 5L, lower = 1L),
       makeIntegerLearnerParam(id = "maxnodes", lower = 1L),
       makeLogicalLearnerParam(id = "importance", default = FALSE),
       makeLogicalLearnerParam(id = "localImp", default = FALSE),
+      makeIntegerLearnerParam(id = "nPerm", default = 1L),
+      makeLogicalLearnerParam(id = "proximity", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "oob.prox", requires = quote(proximity == TRUE), tunable = FALSE),
       makeLogicalLearnerParam(id = "do.trace", default = FALSE, tunable = FALSE),
+      makeLogicalLearnerParam(id = "keep.forest", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
     par.vals = list(

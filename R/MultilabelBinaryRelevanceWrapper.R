@@ -36,13 +36,13 @@
 #' mod = train(lrn, yeast.task)
 #' pred = predict(mod, yeast.task)
 #' p = performance(pred)
-#' performance(pred, measure = hamloss)
+#' performance(pred, measure = multilabel.hamloss)
 #' getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 #' # above works also with predictions from resample!
 #' }
 makeMultilabelBinaryRelevanceWrapper = function(learner) {
   learner = checkLearner(learner, type = "classif")
-  id = paste("multilabel", learner$id, sep = ".")
+  id = stri_paste("multilabel", learner$id, sep = ".")
   packs = learner$package
   x = makeHomogeneousEnsemble(id, learner$type, learner, packs,
     learner.subclass = "MultilabelBinaryRelevanceWrapper", model.subclass = "MultilabelBinaryRelevanceModel")
@@ -69,8 +69,8 @@ trainLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .task, .subse
 predictLearner.MultilabelBinaryRelevanceWrapper = function(.learner, .model, .newdata, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)
   f = if (.learner$predict.type == "response")
-    function(m) as.logical(predict(m, newdata = .newdata, ...)$data$response)
+    function(m) as.logical(getPredictionResponse(predict(m, newdata = .newdata, ...)))
   else
-    function(m) predict(m, newdata = .newdata, ...)$data$prob.TRUE
+    function(m) getPredictionProbabilities(predict(m, newdata = .newdata, ...), cl = "TRUE")
   asMatrixCols(lapply(models, f))
 }

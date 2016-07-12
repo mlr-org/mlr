@@ -23,4 +23,16 @@ test_that("regr_km", {
     old.predicts.list[[i]] = DiceKriging::predict(m, newdata=des2, type="SK")$mean
   }
   testSimpleParsets("regr.km", dd, regr.target, 1:25, old.predicts.list, parset.list)
+
+  ## Test that nugget.stability has an effect.
+  ps = makeNumericParamSet(len = 1, lower = 0, upper = 1)
+  set.seed(123)
+  rs = generateRandomDesign(n = 100, ps)
+  rs$y = apply(rs, 1, function(x) (x-0.5)^2)
+  tsk = makeRegrTask(data = rs, target = "y")
+  lrn = makeLearner("regr.km")
+  expect_error(train(lrn, tsk), "leading minor of order")
+  lrn = setHyperPars(lrn, nugget.stability = 10^-8)
+  m = train(lrn, tsk)
+  expect_is(m$learner.model, "km")
 })

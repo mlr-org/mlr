@@ -37,6 +37,10 @@ setHyperPars2 = function(learner, par.vals) {
 #' @export
 setHyperPars2.Learner = function(learner, par.vals) {
   ns = names(par.vals)
+  # ensure that even the empty list is named, we had problems here, see #759
+  if (is.null(ns) && is.null(names(learner$par.vals))) {
+    names(learner$par.vals) = character(0)
+  }
   pars = learner$par.set$pars
   on.par.without.desc = coalesce(learner$config$on.par.without.desc, getMlrOptions()$on.par.without.desc)
   on.par.out.of.bounds = coalesce(learner$config$on.par.out.of.bounds, getMlrOptions()$on.par.out.of.bounds)

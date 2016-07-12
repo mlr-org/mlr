@@ -17,8 +17,7 @@ makeRLearner.regr.xyf = function() {
     ),
     properties = c("numerics"),
     name = "X-Y fused self-organising maps",
-    short.name = "xyf",
-    note = ""
+    short.name = "xyf"
   )
 }
 

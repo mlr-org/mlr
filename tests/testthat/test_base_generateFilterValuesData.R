@@ -1,3 +1,7 @@
+# these are "simple" tests for generateFilterValuesData and filterFeatures.
+# we test the general code here, for exhaustive tests for all filters please look at file
+# "test_featsel_filters.R"
+
 context("filterFeatures")
 
 test_that("filterFeatures", {
@@ -43,34 +47,6 @@ test_that("filterFeatures", {
   f = getFilteredFeatures(m)
   expect_is(f, "character")
   expect_equal(length(f), 1L)
-
-  # Loop through all filters
-  filter.list = listFilterMethods(desc = FALSE, tasks = TRUE, features = FALSE)
-  filter.list.classif = as.character(filter.list$id)[filter.list$task.classif]
-  # univariate.model.score and permutation.importance are handled extra test below
-  # 'univariate' is deprecated
-  filter.list.classif = setdiff(filter.list.classif, c("univariate.model.score", "permutation.importance", "univariate"))
-  for (filter in filter.list.classif) {
-    filterFeatures(task = multiclass.task, method = filter, perc = 0.5)
-  }
-  filter.list.regr = as.character(filter.list$id)[!filter.list$task.classif & filter.list$task.regr]
-  for (filter in filter.list.regr) {
-    filterFeatures(task = regr.num.task, method = filter, perc = 0.5)
-  }
-
-  # extra test of univariate filter
-  fv = suppressWarnings(getFilterValues(task = multiclass.task, method = "univariate.model.score", perc = 0.5,
-      perf.learner = makeLearner("classif.rpart"), measures = mmce))
-  fv = generateFilterValuesData(task = multiclass.task, method = "univariate.model.score", perc = 0.5,
-    perf.learner = makeLearner("classif.rpart"), measures = mmce)
-
-  # extra test of the permutation.importance filter
-  fv = generateFilterValuesData(task = multiclass.task, method = "permutation.importance",
-                                learner = makeLearner("classif.rpart"),
-                                measure = acc,
-                                contrast = function(x, y) abs(x - y),
-                                aggregation = median,
-                                nperm = 2)
 })
 
 test_that("plotFilterValues", {
@@ -90,4 +66,25 @@ test_that("plotFilterValues", {
   #expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(40))
   #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(ncol(fv2$data) - 2))
   ## plotFilterValuesGGVIS(fv2)
+  
+  # facetting works:
+  q = plotFilterValues(fv2, facet.wrap.nrow = 2L)
+  testFacetting(q, 2L)
+  q = plotFilterValues(fv2, facet.wrap.ncol = 2L)
+  testFacetting(q, ncol = 2L)
 })
+
+test_that("args are passed down to filter methods", { # we had an issue here, see #941
+
+ expect_error(generateFilterValuesData(binaryclass.task, method = c("mrmr","univariate.model.score"),
+      nselect = 3, perf.learner = "classif.lda"), "Please pass extra arguments")
+
+  # f1 = generateFilterValuesData(iris.task, method = c("univariate.model.score"),
+  # nselect = 3, perf.learner = "classif.lda")
+
+
+
+})
+
+
+

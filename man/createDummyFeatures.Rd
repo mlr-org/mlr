@@ -5,7 +5,7 @@
 \title{Generate dummy variables for factor features.}
 \usage{
 createDummyFeatures(obj, target = character(0L), method = "1-of-n",
-  exclude = character(0L))
+  cols = NULL)
 }
 \arguments{
 \item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
@@ -25,10 +25,8 @@ Available are:\cr
 \dQuote{1-of-n}: For n factor levels there will be n dummy variables.\cr
 \dQuote{reference}: There will be n-1 dummy variables leaving out the first factor level of each variable.\cr}
 
-\item{exclude}{[\code{character}]\cr
-Names of the columns to exclude.
-The target does not have to be included here.
-Default is none.}
+\item{cols}{[\code{character}]\cr
+Columns to create dummy features for. Default is to use all columns.}
 }
 \value{
 [\code{data.frame} | \code{\link{Task}}]. Same type as \code{obj}.

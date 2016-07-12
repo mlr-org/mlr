@@ -16,8 +16,7 @@ makeRLearner.regr.nodeHarvest = function() {
     ),
     properties = c("numerics", "factors"),
     name = "Node Harvest",
-    short.name = "nodeHarvest",
-    note = ""
+    short.name = "nodeHarvest"
   )
 }
 

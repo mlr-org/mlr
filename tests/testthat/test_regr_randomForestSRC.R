@@ -6,8 +6,8 @@ test_that("regr_randomForestSRC", {
   parset.list = list(
     list(),
     list(ntree = 100),
-    list(ntree = 50, mtry = 4),
-    list(ntree = 50, nodesize = 2, na.action = "na.impute", importance = "none", proximity = FALSE)
+    list(ntree = 50, mtry = 5L),
+    list(ntree = 50, nodesize = 2, na.action = "na.impute", importance = "permute", proximity = FALSE)
   )
   old.predicts.list = list()
 

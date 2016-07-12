@@ -15,10 +15,9 @@ makeRLearner.surv.coxph = function() {
       makeLogicalLearnerParam(id = "x", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "y", default = TRUE, tunable = FALSE)
     ),
-    properties = c("missings", "numerics", "factors", "weights", "prob", "rcens"),
+    properties = c("numerics", "factors", "weights", "rcens"),
     name = "Cox Proportional Hazard Model",
-    short.name = "coxph",
-    note = ""
+    short.name = "coxph"
   )
 }
 
@@ -31,8 +30,8 @@ trainLearner.surv.coxph = function(.learner, .task, .subset, .weights = NULL,  .
   } else  {
     mod = survival::coxph(formula = f, data = data, weights = .weights, ...)
   }
-  if (.learner$predict.type == "prob")
-    mod = attachTrainingInfo(mod, list(surv.range = range(getTaskTargets(.task)[, 1L])))
+  #if (.learner$predict.type == "prob")
+  #  mod = attachTrainingInfo(mod, list(surv.range = range(getTaskTargets(.task)[, 1L])))
   mod
 }
 
@@ -40,11 +39,10 @@ trainLearner.surv.coxph = function(.learner, .task, .subset, .weights = NULL,  .
 predictLearner.surv.coxph = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type == "response") {
     predict(.model$learner.model, newdata = .newdata, type = "lp", ...)
-  } else if (.learner$predict.type == "prob") {
-    surv.range = getTrainingInfo(.model$learner.model)$surv.range
-    times = seq(from = surv.range[1L], to = surv.range[2L], length.out = 1000)
-    t(summary(survival::survfit(.model$learner.model, newdata = .newdata, se.fit = FALSE, conf.int = FALSE), times = times)$surv)
-  } else {
-    stop("Unknown predict type")
-  }
+  } 
+    # else if (.learner$predict.type == "prob") {
+    # surv.range = getTrainingInfo(.model$learner.model)$surv.range
+    # times = seq(from = surv.range[1L], to = surv.range[2L], length.out = 1000)
+    # t(summary(survival::survfit(.model$learner.model, newdata = .newdata, se.fit = FALSE, conf.int = FALSE), times = times)$surv)
+    # } 
 }

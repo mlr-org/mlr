@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/mlr)](https://cran.r-project.org/web/packages/mlr)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/mlr)](https://cran.rstudio.com/web/packages/mlr/index.html)
+[![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr-blue.svg)](https://stackoverflow.com/questions/tagged/mlr)
 
 * [Offical CRAN release site](http://cran.r-project.org/web/packages/mlr/)
 * Detailed Tutorial:
@@ -77,7 +78,7 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
 [devel](https://github.com/mlr-org/mlr/blob/master/NEWS) version on Github.
 
 * 2016-02-13:
-  * mlr 2.8 released to CRAN. Mainly a release with bug fix release and many minor improvements, also regarding the new ggplot2 release. 
+  * mlr 2.8 released to CRAN. Mainly a release with bug fix release and many minor improvements, also regarding the new ggplot2 release.
 * 2015-11-26:
   * mlr 2.6 released to CRAN. A mini update, which was required as ViperCharts seems to be offline and we needed to switch off its test for CRAN. Contains also some fixes and new learners.
 * 2015-11-21:

@@ -15,4 +15,8 @@ test_that("plotLearnerPrediction", {
 
   plotLearnerPrediction("cluster.kmeans", noclass.task, gridsize = gs)
   ggsave(tempfile(fileext = ".png"))
+
+  # pretty.names works
+  plotLearnerPrediction("classif.rpart", multiclass.task, pretty.names = FALSE)
+  ggsave(tempfile(fileext = ".png"))
 })

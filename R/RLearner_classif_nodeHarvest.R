@@ -16,8 +16,7 @@ makeRLearner.classif.nodeHarvest = function() {
     ),
     properties = c("numerics", "factors", "twoclass", "prob"),
     name = "Node Harvest",
-    short.name = "nodeHarvest",
-    note = ""
+    short.name = "nodeHarvest"
   )
 }
 

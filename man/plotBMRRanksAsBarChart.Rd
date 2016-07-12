@@ -6,7 +6,7 @@
 \usage{
 plotBMRRanksAsBarChart(bmr, measure = NULL, ties.method = "average",
   aggregation = "default", pos = "stack", order.lrns = NULL,
-  order.tsks = NULL)
+  order.tsks = NULL, pretty.names = TRUE)
 }
 \arguments{
 \item{bmr}{[\code{\link{BenchmarkResult}}]\cr
@@ -38,6 +38,9 @@ Character vector with \code{learner.ids} in new order.}
 
 \item{order.tsks}{[\code{character(n.tasks)}] \cr 
 Character vector with \code{task.ids} in new order.}
+
+\item{pretty.names}{[\code{logical{1}}]\cr
+Whether to use the short name of the learner instead of its ID in labels. Defaults to \code{TRUE}.}
 }
 \value{
 ggplot2 plot object.
@@ -82,8 +85,8 @@ Other plot: \code{\link{plotBMRBoxplots}},
   \code{\link{plotFilterValues}},
   \code{\link{plotLearningCurveGGVIS}},
   \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialPredictionGGVIS}},
-  \code{\link{plotPartialPrediction}},
+  \code{\link{plotPartialDependenceGGVIS}},
+  \code{\link{plotPartialDependence}},
   \code{\link{plotROCCurves}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}

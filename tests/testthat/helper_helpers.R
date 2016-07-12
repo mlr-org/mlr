@@ -214,3 +214,8 @@ mylist = function(..., create = FALSE) {
     return(lrns[!grepl("mock", ids),])
   }
 }
+
+testFacetting = function(obj, nrow = NULL, ncol = NULL) {
+  expect_equal(obj$facet$nrow, nrow)
+  expect_equal(obj$facet$ncol, ncol)
+}

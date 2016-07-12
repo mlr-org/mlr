@@ -105,11 +105,18 @@ test_that("generateThreshVsPerfData", {
   mcm = matrix(sample(0:3, size = (length(classes))^2, TRUE), ncol = length(classes))
   rownames(mcm) = colnames(mcm) = classes
   costs = makeCostMeasure(id = "asym.costs", name = "Asymmetric costs",
-                          minimize = TRUE, costs = mcm, binaryclass.task, combine = mean)
+                          minimize = TRUE, costs = mcm, combine = mean)
   pvs.custom = generateThreshVsPerfData(pred, costs)
   plotThreshVsPerf(pvs.custom)
   ggsave(path)
   doc = XML::xmlParse(path)
   #expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(1L))
   ## plotThreshVsPerfGGVIS(pvs.custom)
+
+  # test that facetting works for plotThreshVsPerf
+
+  q = plotThreshVsPerf(pvs, facet.wrap.nrow = 2L)
+  testFacetting(q, nrow = 2L)
+  q = plotThreshVsPerf(pvs, facet.wrap.ncol = 2L)
+  testFacetting(q, ncol = 2L)
 })

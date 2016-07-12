@@ -10,4 +10,7 @@ test_that("BenchmarkSummary", {
   nLrns = length(getBMRLearnerIds(res))
 
   plotBMRSummary(res)
+
+  # pretty.names works
+  plotBMRSummary(res, pretty.names = FALSE)
 })

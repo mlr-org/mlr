@@ -11,8 +11,7 @@ makeRLearner.regr.fnn = function() {
     ),
     properties = c("numerics"),
     name = "Fast k-Nearest Neighbor",
-    short.name = "fnn",
-    note = ""
+    short.name = "fnn"
   )
 }
 

@@ -127,7 +127,7 @@ makeMeasure = function(id, minimize, properties = character(0L),
 #'    cluster     \tab db\cr
 #'    surv        \tab cindex\cr
 #'    costsens    \tab mcp\cr
-#'    multilabel  \tab hamloss\cr
+#'    multilabel  \tab multilabel.hamloss\cr
 #' }
 #'
 #' @param x [\code{character(1)} | \code{\link{Task}} | \code{\link{TaskDesc}} | \code{\link{Learner}}]\cr
@@ -147,7 +147,7 @@ getDefaultMeasure = function(x) {
     regr = mse,
     surv = cindex,
     costsens = mcp,
-    multilabel = hamloss
+    multilabel = multilabel.hamloss
   )
 }
 

@@ -13,15 +13,15 @@
 #' @family wrapper
 #' @template ret_learner
 makeImputeWrapper = function(learner, classes = list(), cols = list(),
-  dummy.cols = character(0L), dummy.type = "factor", impute.new.levels = TRUE, recode.factor.levels = TRUE) {
+  dummy.classes = character(0L), dummy.cols = character(0L), dummy.type = "factor", impute.new.levels = TRUE, recode.factor.levels = TRUE) {
   learner = checkLearner(learner)
   args = list(classes = classes, cols = cols,
-    dummy.cols = dummy.cols, dummy.type = dummy.type, impute.new.levels = impute.new.levels,
-    recode.factor.levels = recode.factor.levels)
+    dummy.classes = dummy.classes, dummy.cols = dummy.cols, dummy.type = dummy.type,
+    impute.new.levels = impute.new.levels, recode.factor.levels = recode.factor.levels)
   rm(list = names(args))
 
   trainfun = function(data, target, args) {
-    setNames(do.call(impute, c(list(data = data, target = target), args)), c("data", "control"))
+    setNames(do.call(impute, c(list(obj = data, target = target), args)), c("data", "control"))
   }
 
   predictfun = function(data, target, args, control) {

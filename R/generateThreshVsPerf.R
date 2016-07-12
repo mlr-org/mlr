@@ -119,6 +119,7 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
 #' @param pretty.names [\code{logical(1)}]\cr
 #'   Whether to use the \code{\link{Measure}} name instead of the id in the plot.
 #'   Default is \code{TRUE}.
+#' @template arg_facet_nrow_ncol
 #' @template ret_gg2
 #' @export
 #' @examples
@@ -127,7 +128,8 @@ generateThreshVsPerfData.list = function(obj, measures, gridsize = 100L, aggrega
 #' pred = predict(mod, sonar.task)
 #' pvs = generateThreshVsPerfData(pred, list(acc, setAggregation(acc, train.mean)))
 #' plotThreshVsPerf(pvs)
-plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_, pretty.names = TRUE) {
+plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_,
+  pretty.names = TRUE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL) {
   assertClass(obj, classes = "ThreshVsPerfData")
   mappings = c("measure", "learner")
   assertChoice(facet, mappings)
@@ -176,8 +178,10 @@ plotThreshVsPerf = function(obj, facet = "measure", mark.th = NA_real_, pretty.n
   if (!is.na(mark.th))
     plt = plt + geom_vline(xintercept = mark.th)
 
-  if (!is.null(facet))
-    plt = plt + facet_wrap(facet, scales = "free_y")
+  if (!is.null(facet)) {
+    plt = plt + facet_wrap(facet, scales = "free_y", nrow = facet.wrap.nrow,
+      ncol = facet.wrap.ncol)
+  }
   else if (length(obj$measures) == 1L)
     plt = plt + ylab(obj$measures[[1]]$name)
   else
@@ -297,7 +301,7 @@ plotThreshVsPerfGGVIS = function(obj, interaction = "measure", mark.th = NA_real
         shiny::headerPanel("Threshold vs. Performance"),
         shiny::sidebarPanel(
           shiny::selectInput("interaction_select",
-                      paste("choose a", interaction),
+                      stri_paste("choose a", interaction, sep = " "),
                       levels(data[[interaction]]))
         ),
         shiny::mainPanel(

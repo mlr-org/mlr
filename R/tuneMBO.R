@@ -14,11 +14,6 @@ tuneMBO = function(learner, task, resampling, measures, par.set, control,
     par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
     convertx = cx, remove.nas = TRUE)
 
-  # remove trafos for mbo, we do this in tunerFitnFun
-  ps2 = par.set
-  for (i in seq_along(ps2$pars))
-    ps2$pars[[i]]$trafo = NULL
-
   state = mbo.control$save.file.path
   if (control$continue && file.exists(state)) {
     messagef("Resuming previous MBO run using state in '%s'...", state)

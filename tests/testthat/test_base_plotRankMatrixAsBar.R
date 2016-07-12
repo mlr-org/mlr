@@ -12,4 +12,7 @@ test_that("RankMatrix", {
   plotBMRRanksAsBarChart(res)
   plotBMRRanksAsBarChart(res, pos = "stack")
   plotBMRRanksAsBarChart(res, pos = "dodge")
+  # pretty.names works
+  plotBMRRanksAsBarChart(res, pretty.names = FALSE)
+
 })

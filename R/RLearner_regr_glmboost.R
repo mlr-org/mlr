@@ -14,6 +14,7 @@ makeRLearner.regr.glmboost = function() {
       makeDiscreteLearnerParam(id = "m", default = "mstop", values = c("mstop", "cv", "aic"))
       ),
     par.vals = list(m = "mstop"),
+    # FIXME Parameter m not found in help of glmboost() or mboost_fit() nor in mstop(), par.vals and LernerParam default are same
     properties = c("numerics", "factors", "weights"),
     name = "Boosting for GLMs",
     short.name = "glmboost",

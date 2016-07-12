@@ -22,7 +22,7 @@ Currently these are:
    cluster     \tab db\cr
    surv        \tab cindex\cr
    costsens    \tab mcp\cr
-   multilabel  \tab hamloss\cr
+   multilabel  \tab multilabel.hamloss\cr
 }
 }
 

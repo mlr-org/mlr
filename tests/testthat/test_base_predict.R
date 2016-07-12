@@ -129,3 +129,11 @@ test_that("predict.threshold", {
   r = holdout(lrn2, binaryclass.task)
   expect_true(all(r$pred$data$response == td$positive))
 })
+
+test_that("predict doesn't warn if 'on.learner.error' is 'quiet'", {
+  lrn = makeLearner("classif.qda", predict.type = "prob",
+    config = list(on.learner.error = "quiet"))
+  mod = train(lrn, iris.task, subset = c(1L, 51L, 101L))
+  expect_true(inherits(mod, "FailureModel"))
+  expect_warning(predict(mod, multiclass.task), NA)
+})

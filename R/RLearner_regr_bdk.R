@@ -17,9 +17,10 @@ makeRLearner.regr.bdk = function() {
       makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE)
     ),
     properties = c("numerics"),
+    par.vals = list(keep.data = FALSE),
     name = "Bi-Directional Kohonen map",
     short.name = "bdk",
-    note = ""
+    note = "`keep.data` is set to FALSE to reduce memory requirements."
   )
 }
 
@@ -27,7 +28,7 @@ makeRLearner.regr.bdk = function() {
 trainLearner.regr.bdk = function(.learner, .task, .subset, .weights = NULL, xdim, ydim, topo, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   grid = learnerArgsToControl(class::somgrid, xdim, ydim, topo)
-  kohonen::bdk(as.matrix(d$data), Y = d$target, grid = grid, keep.data = FALSE, ...)
+  kohonen::bdk(as.matrix(d$data), Y = d$target, grid = grid, ...)
 }
 
 #' @export

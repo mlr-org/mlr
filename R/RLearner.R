@@ -60,10 +60,10 @@ makeRLearnerInternal = function(id, type, package, par.set, par.vals, properties
   # must do that before accessing par.set
   # one case where lazy eval is actually helpful...
   assertCharacter(package, any.missing = FALSE)
-  requirePackages(package, why = paste("learner", id), default.method = "load")
+  requirePackages(package, why = stri_paste("learner", id, sep = " "), default.method = "load")
 
   assertString(id)
-  assertChoice(type, choices = c("classif", "regr", "multilabel", "surv", "cluster"))
+  assertChoice(type, choices = c("classif", "regr", "multilabel", "surv", "cluster", "costsens"))
   assertSubset(properties, getSupportedLearnerProperties(type))
   assertClass(par.set, classes = "ParamSet")
   checkListElementClass(par.set$pars, "LearnerParam")
@@ -145,4 +145,18 @@ makeRLearnerCluster = function(cl, package, par.set, par.vals = list(), properti
     c(cl, "RLearnerCluster")
   )
 }
+
+#' @export
+#' @rdname RLearner
+makeRLearnerCostSens = function(cl, package, par.set, par.vals = list(), properties = character(0L),
+  name = cl, short.name = cl, note = "") {
+
+  lrn = addClasses(
+    makeRLearnerInternal(cl, "costsens", package, par.set, par.vals, properties, name, short.name, note),
+    c(cl, "RLearnerCostSens")
+  )
+
+  return(lrn)
+}
+
 

@@ -118,9 +118,11 @@ Default is -0.001.}
   \code{\link{FeatSelControlSequential}}, \code{\link{FeatSelControlGA}}.
 }
 \description{
-Feature selection method used by \code{\link{selectFeatures}}.
-The following methods are available:
+Feature selection method used by \code{\link{selectFeatures}}.\cr
+The methods used here follow a wrapper approach, described in
+Kohavi and John (1997) (see references).
 
+The following optimization algorithms are available: 
  \describe{
    \item{FeatSelControlExhaustive}{Exhaustive search. All feature sets (up to a certain number
      of features \code{max.features}) are searched.}
@@ -155,6 +157,11 @@ The following methods are available:
      probability \code{mutation.rate}. If \code{max.features} is set, offspring are
      repeatedly generated until the setting is satisfied.}
  }
+}
+\references{
+[Ron Kohavi] and [George H. John],
+[Wrappers for feature subset selection], Artificial Intelligence Volume 97, 1997, [273-324].
+\url{http://ai.stanford.edu/~ronnyk/wrappersPrint.pdf}.\cr
 }
 \seealso{
 Other featsel: \code{\link{analyzeFeatSelResult}},

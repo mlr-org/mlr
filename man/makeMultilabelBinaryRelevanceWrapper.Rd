@@ -41,7 +41,7 @@ lrn = setPredictType(lrn, "prob")
 mod = train(lrn, yeast.task)
 pred = predict(mod, yeast.task)
 p = performance(pred)
-performance(pred, measure = hamloss)
+performance(pred, measure = multilabel.hamloss)
 getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 # above works also with predictions from resample!
 }
@@ -52,7 +52,11 @@ Tsoumakas, G., & Katakis, I. (2006)
 Dept. of Informatics, Aristotle University of Thessaloniki, Greece.
 }
 \seealso{
-Other multilabel: \code{\link{getMultilabelBinaryPerformances}}
+Other multilabel: \code{\link{getMultilabelBinaryPerformances}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}}
 
 Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
@@ -62,9 +66,14 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeFilterWrapper}},
   \code{\link{makeImputeWrapper}},
   \code{\link{makeMulticlassWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}},
   \code{\link{makeOverBaggingWrapper}},
   \code{\link{makePreprocWrapperCaret}},
   \code{\link{makePreprocWrapper}},
+  \code{\link{makeRemoveConstantFeaturesWrapper}},
   \code{\link{makeSMOTEWrapper}},
   \code{\link{makeTuneWrapper}},
   \code{\link{makeUndersampleWrapper}},
