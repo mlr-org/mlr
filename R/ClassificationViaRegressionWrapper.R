@@ -3,7 +3,7 @@
 #' @description
 #' Builds a regression models that predict the probability for each class.
 #'
-#' Note that the predictions of the regression models are truncated at 0 and 1 when class probabilities are requested.
+#' Note that the predictions of the regression models are logit-transformed when class probabilities are requested.
 #'
 #' @template arg_learner
 #' @param predict.type [\code{character(1)}]\cr
@@ -70,8 +70,7 @@ predictLearner.ClassificationViaRegressionWrapper = function(.learner, .model, .
   if (.learner$predict.type == "response") {
     factor(colnames(p)[apply(p, 1, which.max)], levels = .model$task.desc$class.levels)
   } else {
-    p[p < 0] = 0
-    p[p > 1] = 1
-    p
+    # logit transformation
+    1/(1+exp(-p))
   }
 }
