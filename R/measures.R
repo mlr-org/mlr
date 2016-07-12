@@ -450,10 +450,10 @@ brier.sc = makeMeasure(id = "brier.sc", minimize = FALSE, best = 1, worst = 0,
 #' @export measureBrier.sc
 #' @rdname measures
 #' @format none
-measureBrier.sc = function(probabilites, truth, negative, positive) {
+measureBrier.sc = function(probabilities, truth, negative, positive) {
   y = as.numeric(truth == positive)
-  brier = mean((y - probabilites)^2)
-  inc = mean(probabilites)
+  brier = mean((y - probabilities)^2)
+  inc = mean(probabilities)
   brier.max = inc * (1 - inc)^2 + (1 - inc) * inc^2
   1 - brier / brier.max
 }

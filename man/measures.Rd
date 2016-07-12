@@ -172,7 +172,7 @@ measureBrier(probabilities, truth, negative, positive)
 
 brier.sc
 
-measureBrier.sc(probabilites, truth, negative, positive)
+measureBrier.sc(probabilities, truth, negative, positive)
 
 bac
 
