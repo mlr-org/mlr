@@ -178,7 +178,7 @@ print.HyperParsEffectData = function(x, ...) {
 #'  ran. This is only useful when creating a heatmap or contour plot with 
 #'  interpolation so that you can see which points were actually on the 
 #'  original path. Note: if any learner crashes occurred within the path, this
-#'  will default to TRUE.
+#'  will become TRUE.
 #'  Default is \code{FALSE}.
 #'
 #' @template ret_gg2
@@ -196,7 +196,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
                                z = NULL, plot.type = "scatter", 
                                loess.smooth = FALSE, facet = NULL, 
                                pretty.names = TRUE, global.only = TRUE, 
-                               interpolate = TRUE, show.experiments = TRUE) {
+                               interpolate = TRUE, show.experiments = FALSE) {
   assertClass(hyperpars.effect.data, classes = "HyperParsEffectData")
   assertChoice(x, choices = names(hyperpars.effect.data$data))
   assertChoice(y, choices = names(hyperpars.effect.data$data))
@@ -253,9 +253,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     }
   }
   
-  # FIXME: interpolation if heatmap / contour and not grid
   if (interpolate && z_flag && (heatcontour_flag)){
-    # put ifelse to determine learner status
     if (!("learner_status" %in% names(d))){
       d$learner_status = "Success"
       }
@@ -270,9 +268,8 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
           warningf("Detected duplicate (%s, %s) points on the path for nested cv
                    run %s. The duplicates will be removed before interpolation!"
                    , x, y, run)
-          d_run = d_run[!duplicated(d_run[,c(x,y,z)]),]
+          d_run = d_run[!duplicated(d_run[,c(x,y)]),]
         }
-        # save succ and fail so we can reference after interpolation
         fld = akima::interp(d_run[, x], d_run[, y], d_run[, z])
         df = reshape2::melt(fld$z, na.rm = TRUE)
         names(df) <- c(x, y, z)
@@ -284,7 +281,6 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
         new_d = rbind(new_d, combined)
       }
       d = new_d
-      
     } else {
       # need to unique so interp doesn't crash with duplicates
       d_new = d
@@ -303,7 +299,6 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       combined = rbind(d_new[,c(x,y,z,"learner_status", "iteration")], df)
       d = combined
     }
-    
   }
   
   if (hyperpars.effect.data$nested && z_flag){
@@ -317,9 +312,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     } else {
       hyperpars = lapply(d[, hyperpars.effect.data$hyperparams], "[")
     }
-    
     d = aggregate(averaging, hyperpars, mean)
-    # how to deal with iterations?
     d$iteration = 1:nrow(d)
   }
     

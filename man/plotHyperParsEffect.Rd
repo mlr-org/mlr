@@ -7,7 +7,7 @@
 plotHyperParsEffect(hyperpars.effect.data, x = NULL, y = NULL, z = NULL,
   plot.type = "scatter", loess.smooth = FALSE, facet = NULL,
   pretty.names = TRUE, global.only = TRUE, interpolate = TRUE,
-  show.experiments = TRUE)
+  show.experiments = FALSE)
 }
 \arguments{
 \item{hyperpars.effect.data}{[\code{HyperParsEffectData}]\cr
@@ -67,7 +67,7 @@ If TRUE, will overlay the plot with points indicating where an experiment
 ran. This is only useful when creating a heatmap or contour plot with 
 interpolation so that you can see which points were actually on the 
 original path. Note: if any learner crashes occurred within the path, this
-will default to TRUE.
+will become TRUE.
 Default is \code{FALSE}.}
 }
 \value{
