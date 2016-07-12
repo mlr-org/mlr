@@ -81,6 +81,7 @@ mlr_2.9:
 -- makeMultilabelDBRWrapper
 -- makeMultilabelNestedStackingWrapper
 -- makeMultilabelStackingWrapper
+-- makeConstantClassWrapper
 
 - removed functions
 -- getParamSet generic (now in ParamHelpers package)
