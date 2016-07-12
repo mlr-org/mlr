@@ -298,6 +298,13 @@ test_that("check measure calculations", {
   brier.perf = performance(pred.bin, measures = brier, model = mod.bin)
   expect_equal(brier.test, brier$fun(pred = pred.bin))
   expect_equal(brier.test, as.numeric(brier.perf))
+  #brier.sc
+  inc = mean(pred.probs)
+  brier.test.max = inc * (1 - inc)^2 + (1 - inc) * inc^2
+  brier.sc.test = 1 - brier.test / brier.test.max
+  brier.sc.perf = performance(pred.bin, measures = brier.sc, model = mod.bin)
+  expect_equal(brier.sc.test, brier.sc$fun(pred = pred.bin))
+  expect_equal(brier.sc.test, as.numeric(brier.sc.perf))
   #tp
   tp.test = sum(tar.bin == pred.art.bin & pred.art.bin == 0L)
   tp.perf = performance(pred.bin, measures = tp, model = mod.bin)
