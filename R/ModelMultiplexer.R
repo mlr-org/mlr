@@ -123,6 +123,6 @@ getLearnerModel.ModelMultiplexerModel = function(model, more.unwrap = FALSE) {
 
 #' @export
 isFailureModel.ModelMultiplexerModel = function(model) {
-  NextMethod() || isFailureModel(model$learner.model$next.model)
+  NextMethod() || (!inherits(model$learner.model, "NoFeaturesModel") && isFailureModel(model$learner.model$next.model))
 }
 
