@@ -43,6 +43,7 @@ mlr_2.9:
 - added new arguments "facet.wrap.nrow" and "facet.wrap.ncol" which enable arrangement of facets in rows and columns to plotting functions
 - new multilabel wrappers algorithms: classifier chains, nested stacking, dependent binary relevance, stacking
 - renamed multilabel measure "hamloss" to "multilabel.hamloss"
+- added scaled brier measure
 
 - new learners
 -- classif.C50
@@ -86,6 +87,7 @@ mlr_2.9:
 
 - new measures
 -- multiclass.brier
+-- brier.sc
 -- logloss
 -- multilabel.subset01, multilabel.f1, multilabel.acc, multilabel.ppv, multilabel.tpr
 
