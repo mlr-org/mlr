@@ -173,6 +173,13 @@ print.HyperParsEffectData = function(x, ...) {
 #'  cases of irregular hyperparameter paths, you will most likely need to use
 #'  this to have a meaningful visualization.
 #'  Default is \code{TRUE}.
+#' @param show.experiments [\code{logical(1)}]\cr
+#'  If TRUE, will overlay the plot with points indicating where an experiment
+#'  ran. This is only useful when creating a heatmap or contour plot with 
+#'  interpolation so that you can see which points were actually on the 
+#'  original path. Note: if any learner crashes occurred within the path, this
+#'  will default to TRUE.
+#'  Default is \code{FALSE}.
 #'
 #' @template ret_gg2
 #'  
@@ -189,7 +196,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
                                z = NULL, plot.type = "scatter", 
                                loess.smooth = FALSE, facet = NULL, 
                                pretty.names = TRUE, global.only = TRUE, 
-                               interpolate = TRUE) {
+                               interpolate = TRUE, show.experiments = TRUE) {
   assertClass(hyperpars.effect.data, classes = "HyperParsEffectData")
   assertChoice(x, choices = names(hyperpars.effect.data$data))
   assertChoice(y, choices = names(hyperpars.effect.data$data))
@@ -200,6 +207,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   assertFlag(pretty.names)
   assertFlag(global.only)
   assertFlag(interpolate)
+  assertFlag(show.experiments)
  
   if (length(x) > 1 || length(y) > 1 || length(z) > 1 || length(facet) > 1)
     stopf("Greater than 1 length x, y, z or facet not yet supported")
@@ -341,7 +349,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     if (heatcontour_flag){
       plt = ggplot(data = d[d$learner_status == "Interpolated Point", ], 
                    aes_string(x = x, y = y, fill = z, z = z)) + geom_tile()
-      if (na_flag || interpolate){
+      if (na_flag || (interpolate && show.experiments)){
         plt = plt + geom_point(data = d[d$learner_status %in% c("Success", 
                                                                 "Failure"), ],
                                         aes_string(shape = "learner_status"), 

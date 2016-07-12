@@ -6,7 +6,8 @@
 \usage{
 plotHyperParsEffect(hyperpars.effect.data, x = NULL, y = NULL, z = NULL,
   plot.type = "scatter", loess.smooth = FALSE, facet = NULL,
-  pretty.names = TRUE, global.only = TRUE, interpolate = TRUE)
+  pretty.names = TRUE, global.only = TRUE, interpolate = TRUE,
+  show.experiments = TRUE)
 }
 \arguments{
 \item{hyperpars.effect.data}{[\code{HyperParsEffectData}]\cr
@@ -60,6 +61,14 @@ This will fill in "empty" cells in the heatmap or contour plot. Note that
 cases of irregular hyperparameter paths, you will most likely need to use
 this to have a meaningful visualization.
 Default is \code{TRUE}.}
+
+\item{show.experiments}{[\code{logical(1)}]\cr
+If TRUE, will overlay the plot with points indicating where an experiment
+ran. This is only useful when creating a heatmap or contour plot with 
+interpolation so that you can see which points were actually on the 
+original path. Note: if any learner crashes occurred within the path, this
+will default to TRUE.
+Default is \code{FALSE}.}
 }
 \value{
 ggplot2 plot object.
