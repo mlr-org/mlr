@@ -27,4 +27,5 @@ test_that("multilabel_randomForestSRC", {
   }
   
   testSimpleParsets("multilabel.randomForestSRC", multilabel.df, multilabel.target, multilabel.train.inds, old.predicts.list, parset.list)
+  testProbParsets ("multilabel.randomForestSRC", multilabel.df, multilabel.target, multilabel.train.inds, old.probs.list, parset.list)
 })
