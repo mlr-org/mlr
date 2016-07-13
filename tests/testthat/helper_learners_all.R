@@ -45,7 +45,7 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
 # helper functions testing learners that claim to handle missings, factors,...
 # It also tests if the learner can predict probabilities or standard errors.
 # When testing probabilities an additional test if there are missing prediction
-# probabilities and if there as many probability predictions as there are 
+# probabilities and if there as many probability predictions as there are
 # observations in the task.
 # When testing standard errors an additional test if there are as many predictions
 # as there are observations in the task is being performed.
@@ -55,23 +55,34 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
 # predict standard errors.)
 
 testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "response") {
-  
+
   if (lrn$id %in% names(hyperpars))
     lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
-  
+
   lrn = setPredictType(lrn, pred.type)
-  
+
   expect_output(print(lrn), lrn$id)
   m = train(lrn, task)
   p = predict(m, task)
   expect_true(!is.na(performance(pred = p, task = task)))
-  
-  if (pred.type == "se")
-    expect_equal(length(p$data$se), getTaskSize(task))
-  
+
+  if (pred.type == "se") {
+    s = p$data$se
+    expect_is(s, "numeric")
+    expect_length(s, getTaskSize(task))
+    expect_true(all(s >= 0))
+  }
+
   if (pred.type == "prob") {
-    expect_false(anyNA(getPredictionProbabilities(p)))
-    expect_equal(NROW(getPredictionProbabilities(p)), getTaskSize(task))
+    cls = getTaskClassLevels(task)
+    pmat = getPredictionProbabilities(p, cl = cls)
+    expect_is(pmat, "data.frame")
+    expect_equal(NROW(pmat), getTaskSize(task))
+    expect_equal(NCOL(pmat), length(cls))
+    expect_true(setequal(colnames(pmat), cls))
+    expect_false(anyNA(pmat))
+    expect_true(all(pmat >= 0 && pmat <= 1))
+    expect_equal(rowSums(pmat), 1)
   }
 }
 
@@ -84,7 +95,7 @@ testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "res
 # can be trained, can predict and produces reasonable performance output.
 
 testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
-  
+
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
   d[,f] = as.factor(rep_len(c("a", "b"), length.out = nrow(d)))
@@ -95,21 +106,21 @@ testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
 
 
 # Tests that learner handles ordered factors
-# Data of task is manipulated such that the first mentioned feature is changed 
-# to a ordered factor with a < b < c. 
+# Data of task is manipulated such that the first mentioned feature is changed
+# to a ordered factor with a < b < c.
 # A new task is being generated based on the manipulated data with changeData().
 # Then testThatLearnerCanTrainPredict() is being called to check whether learner
 # can be trained, can predict and produces reasonable performance output.
 
 testThatLearnerHandlesOrderedFactors = function(lrn, task, hyperpars) {
-  
+
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
   d[,f] = as.ordered(rep_len(c("a", "b", "c"), length.out = nrow(d)))
   new.task = changeData(task = task, data = d)
-  
+
   testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
-  
+
 }
 
 
@@ -121,7 +132,7 @@ testThatLearnerHandlesOrderedFactors = function(lrn, task, hyperpars) {
 # can be trained, can predict and produces reasonable performance output.
 
 testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
-  
+
   d = getTaskData(task)
   f = getTaskFeatureNames(task)[1]
   d[1,f] = NA
