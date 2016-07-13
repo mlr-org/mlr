@@ -1,7 +1,7 @@
 #' @title Classification via regression wrapper.
 #'
 #' @description
-#' Builds a regression models that predict the probability for each class.
+#' Builds regression models that predict the probability for each class separately, coded as 0 or 1 in the training data. Predicted probabilities are aggregated by selecting the class with the largest predicted probability.
 #'
 #' Note that the predictions of the regression models are logit-transformed when class probabilities are requested.
 #'
@@ -9,7 +9,7 @@
 #' @param predict.type [\code{character(1)}]\cr
 #'   \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
 #' @param ... [any]\cr
-#'   Additional parameters passed down to the filter.
+#'   Additional parameters passed down to the wrapped learner.
 #' @template ret_learner
 #' @export
 #' @family wrapper
@@ -27,7 +27,7 @@ makeClassificationViaRegressionWrapper = function(learner, predict.type = "respo
     id = paste(learner$id, "as.classify", sep = "."),
     type = "classif",
     predict.type = predict.type,
-    properties = c(learner$properties, "oneclass", "twoclass", "multiclass"),
+    properties = c(learner$properties, "twoclass", "multiclass"),
     package = learner$package,
     par.set = list(),
     par.vals = list()
@@ -71,6 +71,6 @@ predictLearner.ClassificationViaRegressionWrapper = function(.learner, .model, .
     factor(colnames(p)[apply(p, 1, which.max)], levels = .model$task.desc$class.levels)
   } else {
     # logit transformation
-    1/(1+exp(-p))
+    1/(1+exp(-(2*p-1)))
   }
 }
