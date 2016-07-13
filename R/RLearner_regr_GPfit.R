@@ -11,8 +11,8 @@ makeRLearner.regr.GPfit = function(){
       makeUntypedLearnerParam(id = "optim_start", default = NULL),  
       makeLogicalLearnerParam(id = "scale", default = TRUE)
     ),
-    properties = c("numerics"),
-    name = "Gaussian Process Model fitting",
+    properties = c("numerics","se"),
+    name = "Gaussian Process",
     short.name = "GPfit",
     note = "As the optimization routine assumes that the inputs are scaled to the unit hypercube [0,1]^d, 
             the input gets scaled for each variable by default. If this is not wanted, scale = FALSE has
