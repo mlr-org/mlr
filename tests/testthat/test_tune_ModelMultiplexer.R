@@ -72,13 +72,13 @@ test_that("FailureModel works", {
   expect_warning(mod <- train(lrn, task = iris.task), "foo")
   expect_true(isFailureModel(mod))
 
-  tmp_ = getMlrOptions()$on.learner.error
+  tmp = getMlrOptions()$on.learner.error
   configureMlr(on.learner.error = "warn")
   lrn = setHyperPars(lrn, classif.__mlrmocklearners__2.alpha = 1)
   lrn = removeHyperPars(lrn, "selected.learner")
   expect_warning(mod <- train(lrn, task = iris.task))
   expect_true(isFailureModel(mod))
-  configureMlr(on.learner.error = tmp_)
+  configureMlr(on.learner.error = tmp)
 })
 
 test_that("ModelMultiplexer tuning", {
@@ -158,7 +158,7 @@ test_that("ModelMultiplexer passes on hyper pars in predict with both", {
                    makeIntegerLearnerParam("tpBOTH", when="both")),
       properties=c("numerics", "twoclass"))
   testPS$fix.factors.prediction = TRUE
-  
+
   opts = NULL
   trainLearner.testPS = function(.learner, .task, .subset, .weights=NULL, ...) {
     opts <<- list(...)
@@ -166,7 +166,7 @@ test_that("ModelMultiplexer passes on hyper pars in predict with both", {
     list(dummy=getTaskData(.task, .subset)[[getTaskTargetNames(.task)[1]]][1])
   }
   registerS3method("trainLearner", "testPS", trainLearner.testPS)
-  
+
   predictLearner.testPS = function(.learner, .model, .newdata, ...) {
     opts <<- list(...)
     rep(.model$learner.model$dummy, nrow(.newdata))  # just do something
