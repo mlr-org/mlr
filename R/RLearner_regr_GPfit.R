@@ -5,7 +5,7 @@ makeRLearner.regr.GPfit = function(){
     package = "GPfit",
     par.set = makeParamSet(
       makeNumericVectorLearnerParam(id = "control", len = 3, lower = c(1, 1, 1)),
-      makeNumericLearnerParam(id = "nug_thres", default = 20, lower = 10),
+      makeNumericLearnerParam(id = "nug_thres", default = 20, lower = 0),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam(id = "maxit", default = 100, lower = 1),
       makeUntypedLearnerParam(id = "optim_start", default = NULL),  
