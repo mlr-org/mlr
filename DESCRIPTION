@@ -84,6 +84,7 @@ Suggests:
     GenSA,
     glmnet,
     h2o (>= 3.6.0.8),
+    GPfit,
     Hmisc,
     irace (>= 1.0.7),
     kernlab,
