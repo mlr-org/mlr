@@ -59,6 +59,7 @@ mlr_2.9:
 -- regr.penalized.fusedlasso
 -- regr.gausspr
 -- regr.glm
+-- regr.GPfit
 -- regr.h2o.deeplearning
 -- regr.h2o.gbm
 -- regr.h2o.glm
