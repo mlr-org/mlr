@@ -18,7 +18,7 @@ test_that("multilabel_randomForestSRC", {
       multilabel.train[i] = factor(multilabel.train[[i]], levels = c("TRUE", "FALSE"))
       multilabel.test[i] = factor(multilabel.test[[i]], levels = c("TRUE", "FALSE"))
     }
-    parset = c(parset, list(data = multilabel.train, formula = multilabel.formula, forest = TRUE))
+    parset = c(parset, list(data = multilabel.train, formula = multilabel.formula.cbind, forest = TRUE))
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(randomForestSRC::rfsrc, parset)
     p = predict(m, newdata = multilabel.test, membership = FALSE, na.action = "na.impute")
