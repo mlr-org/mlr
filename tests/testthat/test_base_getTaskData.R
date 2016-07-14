@@ -22,7 +22,7 @@ test_that("getTaskData", {
     sum(binaryclass.df[, binaryclass.target] == td$positive))
   expect_equal(sum(df[, binaryclass.target] == -1),
     sum(binaryclass.df[, binaryclass.target] == td$negative))
-  df = getTaskData(multilabel.task, recode.target="multilabel.factor")
+  df = getTaskData(multilabel.task, recode.target = "multilabel.factor")
   expect_true(all(sapply(df[, multilabel.target], is.factor)))
   expect_equal(unname(sapply(df[multilabel.small.inds, multilabel.target], function(x) sum(as.logical(x)))), c(5, 4))
   expect_equal(rownames(df[multilabel.small.inds, multilabel.target]), c("1", "52", "53", "123", "124", "125", "126", "127", "128"))
