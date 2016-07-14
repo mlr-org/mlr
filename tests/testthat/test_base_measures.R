@@ -301,16 +301,16 @@ test_that("check measure calculations", {
   expect_equal(measureBrier(c(1, 1, 0), c("a", "a", "a"), "b", "a"), 1/3)
   expect_equal(measureBrier(c(1, 1, 1), c("a", "a", "a"), "b", "a"), 0)
   expect_equal(measureBrier(c(0, 0, 0), c("a", "a", "a"), "b", "a"), 1)
-  #brier.scaled
+  #brierScaled
   inc = mean(pred.probs)
   brier.test.max = inc * (1 - inc)^2 + (1 - inc) * inc^2
-  brier.scaled.test = 1 - brier.test / brier.test.max
-  brier.scaled.perf = performance(pred.bin, measures = brier.scaled, model = mod.bin)
-  expect_equal(brier.scaled.test, brier.scaled$fun(pred = pred.bin))
-  expect_equal(brier.scaled.test, as.numeric(brier.scaled.perf))
-  expect_equal(measureBrier.scaled(c(1, 1, 0), c("a", "a", "a"), "b", "a"), 1 - ((1/3) / (2/3 * 1/3)))
-  expect_equal(measureBrier.scaled(c(1, 1, 1), c("a", "a", "a"), "b", "a"), 1 - ((0) / (1 * 0)))
-  expect_equal(measureBrier.scaled(c(0, 0, 0), c("a", "a", "a"), "b", "a"), 1 - ((1) / (0 * 1)))
+  brierScaled.test = 1 - brier.test / brier.test.max
+  brierScaled.perf = performance(pred.bin, measures = brierScaled, model = mod.bin)
+  expect_equal(brierScaled.test, brierScaled$fun(pred = pred.bin))
+  expect_equal(brierScaled.test, as.numeric(brierScaled.perf))
+  expect_equal(measureBrierScaled(c(1, 1, 0), c("a", "a", "a"), "b", "a"), 1 - ((1/3) / (2/3 * 1/3)))
+  expect_equal(measureBrierScaled(c(1, 1, 1), c("a", "a", "a"), "b", "a"), 1 - ((0) / (1 * 0)))
+  expect_equal(measureBrierScaled(c(0, 0, 0), c("a", "a", "a"), "b", "a"), 1 - ((1) / (0 * 1)))
   #tp
   tp.test = sum(tar.bin == pred.art.bin & pred.art.bin == 0L)
   tp.perf = performance(pred.bin, measures = tp, model = mod.bin)
