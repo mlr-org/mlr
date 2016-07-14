@@ -82,7 +82,7 @@ testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "res
     expect_true(setequal(colnames(pmat), cls))
     expect_false(anyNA(pmat))
     expect_true(all(pmat >= 0 && pmat <= 1))
-    expect_equal(rowSums(pmat), 1)
+    expect_equal(rowSums(pmat), rep(1, NROW(pmat)))
   }
 }
 
