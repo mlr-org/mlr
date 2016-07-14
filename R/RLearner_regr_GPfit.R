@@ -11,6 +11,7 @@ makeRLearner.regr.GPfit = function(){
       makeUntypedLearnerParam(id = "optim_start", default = NULL),  
       makeLogicalLearnerParam(id = "scale", default = TRUE)
     ),
+    par.vals = list(scale = TRUE),
     properties = c("numerics","se"),
     name = "Gaussian Process",
     short.name = "GPfit",
@@ -20,7 +21,7 @@ makeRLearner.regr.GPfit = function(){
   )
 }
 #' @export
-trainLearner.regr.GPfit = function(.learner, .task, .subset, scale = TRUE, ...) {
+trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights, ...) {
   d = getTaskData(.task, .subset, target.extra = TRUE)
   low = apply(d$data, 2, min)
   high = apply(d$data, 2, max)
