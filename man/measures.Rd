@@ -10,7 +10,7 @@
 \alias{bac}
 \alias{ber}
 \alias{brier}
-\alias{brierScaled}
+\alias{brier.scaled}
 \alias{cindex}
 \alias{db}
 \alias{dunn}
@@ -170,7 +170,7 @@ brier
 
 measureBrier(probabilities, truth, negative, positive)
 
-brierScaled
+brier.scaled
 
 measureBrierScaled(probabilities, truth, negative, positive)
 

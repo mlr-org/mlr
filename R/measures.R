@@ -436,10 +436,10 @@ measureBrier = function(probabilities, truth, negative, positive) {
   mean((y - probabilities)^2)
 }
 
-#' @export brierScaled
+#' @export brier.scaled
 #' @rdname measures
 #' @format none
-brierScaled = makeMeasure(id = "brierScaled", minimize = FALSE, best = 1, worst = 0,
+brier.scaled = makeMeasure(id = "brier.scaled", minimize = FALSE, best = 1, worst = 0,
   properties = c("classif", "req.pred", "req.truth", "req.prob"),
   name = "Brier scaled",
   note = "Brier score scaled to [0,1], see http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3575184/.",
