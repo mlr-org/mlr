@@ -68,21 +68,16 @@ testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "res
 
   if (pred.type == "se") {
     s = p$data$se
-    expect_is(s, "numeric")
-    expect_length(s, getTaskSize(task))
-    expect_true(all(s >= 0))
+    expect_numeric(s, lower = 0, finite = TRUE, any.missing = FALSE, len = getTaskSize(task))
   }
 
   if (pred.type == "prob") {
     cls = getTaskClassLevels(task)
-    pmat = getPredictionProbabilities(p, cl = cls)
-    expect_is(pmat, "data.frame")
-    expect_equal(NROW(pmat), getTaskSize(task))
-    expect_equal(NCOL(pmat), length(cls))
-    expect_true(setequal(colnames(pmat), cls))
-    expect_false(anyNA(pmat))
-    expect_true(all(pmat >= 0 && pmat <= 1))
-    expect_equal(rowSums(pmat), rep(1, NROW(pmat)))
+    probdf = getPredictionProbabilities(p, cl = cls)
+    expect_data_frame(probdf, nrows = getTaskSize(task), ncols = length(cls),
+      types = "numeric", col.names = cls, any.missing = FALSE)
+    expect_true(all(probdf >= 0 && probdf <= 1))
+    expect_equivalent(rowSums(p), rep(1, NROW(p)))
   }
 }
 
