@@ -43,4 +43,5 @@ test_that("ClassificationViaRegressionWrapper predicts with prob", {
   expect_equal(length(multiclass.test.inds), length(getPredictionResponse(p)))
   expect_equal(length(multiclass.test.inds), nrow(getPredictionProbabilities(p)))
   expect_equal(length(levels(getTaskTargets(multiclass.task))), ncol(getPredictionProbabilities(p)))
+  expect_true(all(abs(1 - rowSums(getPredictionProbabilities(p))) < 1e-6))
 })
