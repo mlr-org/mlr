@@ -26,7 +26,8 @@ trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights, ...) {
   low = apply(d$data, 2, min)
   high = apply(d$data, 2, max)
   not.const = colnames(d$data)[high != low]
-  if (scale) {
+  args = list(...)
+  if (args$scale) {
     d$data[,not.const] = apply(d$data[,not.const], 2, function(x) x = (x - min(x)) / (max(x) - min(x)))
     mlist = list(scaled = TRUE, not.const = not.const, high = high, low = low)
   } else {
