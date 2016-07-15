@@ -20,7 +20,7 @@
 #' @family wrapper
 #' @family multilabel
 #' @export
-#' @example examples/MultilabelWrapper
+#' @example examples/MultilabelWrapper.R
 makeMultilabelClassifierChainsWrapper = function(learner, order = NULL) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
   id = paste("multilabel", learner$id, sep = ".")

@@ -19,7 +19,7 @@
 #' @family wrapper
 #' @family multilabel
 #' @export
-#' @example examples/MultilabelWrapper
+#' @example examples/MultilabelWrapper.R
 makeMultilabelDBRWrapper = function(learner) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
   id = paste("multilabel", learner$id, sep = ".")

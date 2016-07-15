@@ -22,7 +22,7 @@
 #' @family wrapper
 #' @family multilabel
 #' @export
-#' @example examples/MultilabelWrapper
+#' @example examples/MultilabelWrapper.R
 makeMultilabelNestedStackingWrapper = function(learner, order = NULL, cv.folds = 2) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
   id = paste("multilabel", learner$id, sep = ".")
