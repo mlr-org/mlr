@@ -20,8 +20,7 @@
 #' @family wrapper
 #' @family multilabel
 #' @export
-#' @examples
-#' See \code{\link{makeMultilabelBinaryRelevanceWrapper}} for an example.
+#' @example examples/MultilabelWrapper
 makeMultilabelClassifierChainsWrapper = function(learner, order = NULL) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
   id = paste("multilabel", learner$id, sep = ".")
@@ -59,6 +58,7 @@ trainLearner.MultilabelClassifierChainsWrapper = function(.learner, .task, .subs
   }
   makeHomChainModel(.learner, models)
 }
+
 #' @export
 predictLearner.MultilabelClassifierChainsWrapper = function(.learner, .model, .newdata, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)

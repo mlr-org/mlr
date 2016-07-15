@@ -22,8 +22,7 @@
 #' @family wrapper
 #' @family multilabel
 #' @export
-#' @examples
-#' See \code{\link{makeMultilabelBinaryRelevanceWrapper}} for an example.
+#' @example examples/MultilabelWrapper
 makeMultilabelNestedStackingWrapper = function(learner, order = NULL, cv.folds = 2) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
   id = paste("multilabel", learner$id, sep = ".")
@@ -36,6 +35,7 @@ makeMultilabelNestedStackingWrapper = function(learner, order = NULL, cv.folds =
   x$cv.folds = cv.folds
   return(x)
 }
+
 #' @export
 trainLearner.MultilabelNestedStackingWrapper = function(.learner, .task, .subset, .weights = NULL, ...) {
   if (is.null(.learner$order)) {
@@ -70,6 +70,7 @@ trainLearner.MultilabelNestedStackingWrapper = function(.learner, .task, .subset
   }
   makeHomChainModel(.learner, models)
 }
+
 #' @export
 predictLearner.MultilabelNestedStackingWrapper = function(.learner, .model, .newdata, ...) {
   models = getLearnerModel(.model, more.unwrap = FALSE)

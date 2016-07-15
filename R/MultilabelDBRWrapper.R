@@ -19,8 +19,7 @@
 #' @family wrapper
 #' @family multilabel
 #' @export
-#' @examples
-#' See \code{\link{makeMultilabelBinaryRelevanceWrapper}} for an example.
+#' @example examples/MultilabelWrapper
 makeMultilabelDBRWrapper = function(learner) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
   id = paste("multilabel", learner$id, sep = ".")
