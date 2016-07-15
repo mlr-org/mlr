@@ -409,34 +409,100 @@ test_that("check measure calculations", {
 
   #hamloss
   hamloss.test = mean(c(tar1.multilabel != pred.multilabel$data[, 4L],
-      tar2.multilabel != pred.multilabel$data[, 5L]))
+    tar2.multilabel != pred.multilabel$data[, 5L]))
   hamloss.perf = performance(pred.multilabel,
-   measures = multilabel.hamloss, model = mod.multilabel)
+    measures = multilabel.hamloss, model = mod.multilabel)
   expect_equal(hamloss.test, multilabel.hamloss$fun(pred = pred.multilabel))
   expect_equal(hamloss.test, as.numeric(hamloss.perf))
   #test only the measures
-  multi.y1 = matrix(c(TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE), 4, 2)
-  multi.p1 = matrix(c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE), 4, 2)
-  multi.p2 = matrix(c(FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE), 4, 2)
+  bincombo = matrix(c(TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE), ncol = 2, byrow = TRUE)
+  multi.y1 = bincombo[rep(1:4, each = 4),]
+  multi.p1 = bincombo[rep(1:4, times = 4),]
+  multi.p2 = bincombo[rep(c(1,1,3,4), each = 4),]
+  multilabelF1Formula = function(truth, response) {
+    fi = numeric(nrow(truth))
+    for (i in seq_row(truth)) {
+      denominator = sum(truth[i, ] + response[i, ])
+      if (denominator == 0) {
+        fi[i] = 1
+      } else {
+        fi[i] = 2 * sum(truth[i, ] & response[i, ]) / denominator
+      }
+    }
+    return(mean(fi))
+  }
+  multilabelACCFormula = function(truth, response) {
+    acc = numeric(nrow(truth))
+    for (i in seq_row(truth)) {
+      denominator = sum(truth[i, ] | response[i, ])
+      if (denominator == 0) {
+        acc[i] = 1
+      } else {
+        acc[i] = sum(truth[i, ] & response[i, ]) / denominator
+      }
+    }
+    return(mean(acc))
+  }
+  multilabelPPVFormula = function(truth, response) {
+    ppv = numeric(nrow(truth))
+    for (i in seq_row(truth)) {
+      denominator = sum(response[i, ]) 
+      if (denominator == 0) {
+        ppv[i] = 1
+      } else {
+        ppv[i] = sum(truth[i, ] & response[i, ]) / denominator
+      }
+    }
+    mean(ppv)
+  }
+  multilabelTPRFormula = function(truth, response) {
+    tpr = numeric(nrow(truth))
+    for (i in seq_row(truth)) {
+      denominator = sum(truth[i, ])
+      if (denominator == 0) {
+        tpr[i] = 1
+      } else {
+        tpr[i] = sum(truth[i, ] & response[i, ]) / denominator
+      }
+    }
+    mean(tpr)
+  }
+  
   #hamloss
-  expect_equal(measureMultilabelHamloss(multi.y1, multi.p1), mean(apply(multi.y1 != multi.p1, 1, mean)))
-  expect_equal(measureMultilabelHamloss(multi.y1, multi.p2), mean(apply(multi.y1 != multi.p2, 1, mean)))
+  expect_equal(measureMultilabelHamloss(multi.y1, multi.p1), 
+    mean(apply(multi.y1 != multi.p1, 1, mean)))
+  expect_equal(measureMultilabelHamloss(multi.y1, multi.p2), 
+    mean(apply(multi.y1 != multi.p2, 1, mean)))
+  expect_equal(measureMultilabelHamloss(multi.y1, multi.y1), multilabel.hamloss$best)
+  expect_equal(measureMultilabelHamloss(multi.y1, !multi.y1), multilabel.hamloss$worst)
   #subset01
-  expect_equal(measureMultilabelSubset01(multi.y1, multi.p1), mean(apply(multi.y1 != multi.p1, 1, any)))
-  expect_equal(measureMultilabelSubset01(multi.y1, multi.p2), mean(apply(multi.y1 == multi.p2, 1, all)))
+  expect_equal(measureMultilabelSubset01(multi.y1, multi.p1), 
+    mean(sapply(seq_row(multi.y1), function(i) !identical(multi.y1[i,], multi.p1[i,]))))
+  expect_equal(measureMultilabelSubset01(multi.y1, multi.p2), 
+    mean(sapply(seq_row(multi.y1), function(i) !identical(multi.y1[i,], multi.p2[i,]))))
+  expect_equal(measureMultilabelSubset01(multi.y1, multi.y1), multilabel.subset01$best)
+  expect_equal(measureMultilabelSubset01(multi.y1, !multi.y1), multilabel.subset01$worst)
   #f1mult
-  expect_equal(measureMultiLabelF1(multi.y1, multi.p1), mean(2 * apply((multi.y1 & multi.p1), 1, sum) / (apply((multi.y1), 1, sum) + apply((multi.p1), 1, sum))))
-  expect_equal(measureMultiLabelF1(multi.y1, multi.p2), mean(2 * apply((multi.y1 & multi.p2), 1, sum) / (apply((multi.y1), 1, sum) + apply((multi.p2), 1, sum))))
+  expect_equal(measureMultiLabelF1(multi.y1, multi.p1), multilabelF1Formula(multi.y1, multi.p1))
+  expect_equal(measureMultiLabelF1(multi.y1, multi.p2), multilabelF1Formula(multi.y1, multi.p2))
+  expect_equal(measureMultiLabelF1(multi.y1, multi.y1), multilabel.f1$best)
+  expect_equal(measureMultiLabelF1(multi.y1, !multi.y1), multilabel.f1$worst)
   #accmult
-  expect_equal(measureMultilabelACC(multi.y1, multi.p1), mean(apply((multi.y1 & multi.p1), 1, sum) / apply((multi.y1 | multi.p1), 1, sum)))
-  expect_equal(measureMultilabelACC(multi.y1, multi.p2), mean(apply((multi.y1 & multi.p2), 1, sum) / apply((multi.y1 | multi.p2), 1, sum)))
-  #precmult
-  expect_equal(measureMultilabelPPV(multi.y1, multi.p1), mean(c(apply((multi.y1[1:3, ] & multi.p1[1:3, ]), 1, sum) / apply((multi.p1[1:3,]), 1, sum), 1)))
-  expect_equal(measureMultilabelPPV(multi.y1, multi.p2), mean(apply((multi.y1 & multi.p2), 1, sum) / apply((multi.p2), 1, sum)))
-  #recallmult
-  expect_equal(measureMultilabelTPR(multi.y1, multi.p1), mean(c(apply((multi.y1[c(1,2,4), ] & multi.p1[c(1,2,4), ]), 1, sum) / apply((multi.y1[c(1,2,4), ]), 1, sum), 1)))
-  expect_equal(measureMultilabelTPR(multi.y1, multi.p2), mean(c(apply((multi.y1[c(1,2,4), ] & multi.p2[c(1,2,4), ]), 1, sum) / apply((multi.y1[c(1,2,4), ]), 1, sum), 1)))
-
+  expect_equal(measureMultilabelACC(multi.y1, multi.p1), multilabelACCFormula(multi.y1, multi.p1))
+  expect_equal(measureMultilabelACC(multi.y1, multi.p2), multilabelACCFormula(multi.y1, multi.p2))
+  expect_equal(measureMultilabelACC(multi.y1, multi.y1), multilabel.acc$best)
+  expect_equal(measureMultilabelACC(multi.y1, !multi.y1), multilabel.acc$worst)
+  #ppvmult
+  expect_equal(measureMultilabelPPV(multi.y1, multi.p1), multilabelPPVFormula(multi.y1, multi.p1))
+  expect_equal(measureMultilabelPPV(multi.y1, multi.p2), multilabelPPVFormula(multi.y1, multi.p2))
+  expect_equal(measureMultilabelPPV(multi.y1, multi.y1), multilabel.ppv$best)
+  #expect_equal(measureMultilabelPPV(multi.y1, !multi.y1), multilabel.ppv$worst)
+  #tprmult
+  expect_equal(measureMultilabelTPR(multi.y1, multi.p1), multilabelTPRFormula(multi.y1, multi.p1))
+  expect_equal(measureMultilabelTPR(multi.y1, multi.p2), multilabelTPRFormula(multi.y1, multi.p2))
+  expect_equal(measureMultilabelTPR(multi.y1, multi.y1), multilabel.tpr$best)
+  #expect_equal(measureMultilabelTPR(multi.y1, !multi.y1), multilabel.tpr$worst)
+  
   #test survival measures
 
   #cindex
