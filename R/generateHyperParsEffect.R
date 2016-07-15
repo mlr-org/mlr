@@ -16,9 +16,9 @@
 #' @param include.diagnostics [\code{logical(1)}]\cr
 #'  Should diagnostic info (eol and error msg) be included?
 #'  Default is \code{FALSE}.
-#' @param trafo.scale [\code{logical(1)}]\cr
-#'  Should the units of the hyperparameter path be converted back to the 
-#'  ordinary scale? This is only necessary when trafo was used to create the
+#' @param trafo [\code{logical(1)}]\cr
+#'  Should the units of the hyperparameter path be converted to the 
+#'  transformed scale? This is only necessary when trafo was used to create the
 #'  path.
 #'  Default is \code{FALSE}.
 #'
@@ -52,7 +52,7 @@
 #' @export
 #' @importFrom utils type.convert
 generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
-                                       trafo.scale = FALSE)
+                                       trafo = FALSE)
   {
   assert(checkClass(tune.result, "ResampleResult"), 
          checkClass(tune.result, classes = c("TuneResult", "OptResult")))
@@ -60,7 +60,7 @@ generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
   
   # in case we have nested CV
   if (getClass1(tune.result) == "ResampleResult"){
-    if (trafo.scale){
+    if (trafo){
       ops = extractSubList(tune.result$extract, "opt.path", simplify = FALSE)
       ops = lapply(ops, trafoOptPath)
       op.dfs = lapply(ops, as.data.frame)
@@ -86,7 +86,7 @@ generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
     optimization = getClass1(tune.result$extract[[1]]$control)
     nested = TRUE
   } else {
-    if (trafo.scale){
+    if (trafo){
       d = as.data.frame(trafoOptPath(tune.result$opt.path))
     } else {
       d = as.data.frame(tune.result$opt.path)
@@ -176,7 +176,7 @@ print.HyperParsEffectData = function(x, ...) {
 #'  This will fill in "empty" cells in the heatmap or contour plot. Note that 
 #'  cases of irregular hyperparameter paths, you will most likely need to use
 #'  this to have a meaningful visualization.
-#'  Default is \code{TRUE}.
+#'  Default is \code{FALSE}.
 #' @param show.experiments [\code{logical(1)}]\cr
 #'  If TRUE, will overlay the plot with points indicating where an experiment
 #'  ran. This is only useful when creating a heatmap or contour plot with 
@@ -200,7 +200,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
                                z = NULL, plot.type = "scatter", 
                                loess.smooth = FALSE, facet = NULL, 
                                pretty.names = TRUE, global.only = TRUE, 
-                               interpolate = TRUE, show.experiments = FALSE) {
+                               interpolate = FALSE, show.experiments = FALSE) {
   assertClass(hyperpars.effect.data, classes = "HyperParsEffectData")
   assertChoice(x, choices = names(hyperpars.effect.data$data))
   assertChoice(y, choices = names(hyperpars.effect.data$data))
@@ -344,8 +344,13 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   } else if ((length(x) == 1) && (length(y) == 1) && (z_flag)){
     # FIXME: generalize logic here
     if (heatcontour_flag){
+      if (interpolate){
       plt = ggplot(data = d[d$learner_status == "Interpolated Point", ], 
                    aes_string(x = x, y = y, fill = z, z = z)) + geom_tile()
+      } else {
+        plt = ggplot(data = d, aes_string(x = x, y = y, fill = z, z = z)) +
+          geom_tile()
+      }
       if (na_flag || (interpolate && show.experiments)){
         plt = plt + geom_point(data = d[d$learner_status %in% c("Success", 
                                                                 "Failure"), ],

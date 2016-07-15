@@ -6,7 +6,7 @@
 \usage{
 plotHyperParsEffect(hyperpars.effect.data, x = NULL, y = NULL, z = NULL,
   plot.type = "scatter", loess.smooth = FALSE, facet = NULL,
-  pretty.names = TRUE, global.only = TRUE, interpolate = TRUE,
+  pretty.names = TRUE, global.only = TRUE, interpolate = FALSE,
   show.experiments = FALSE)
 }
 \arguments{
@@ -60,7 +60,7 @@ complete path. Only meaningful when attempting to plot a heatmap or contour.
 This will fill in "empty" cells in the heatmap or contour plot. Note that 
 cases of irregular hyperparameter paths, you will most likely need to use
 this to have a meaningful visualization.
-Default is \code{TRUE}.}
+Default is \code{FALSE}.}
 
 \item{show.experiments}{[\code{logical(1)}]\cr
 If TRUE, will overlay the plot with points indicating where an experiment
