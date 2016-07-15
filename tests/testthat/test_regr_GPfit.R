@@ -2,7 +2,7 @@ context("regr_GPfit")
 
 test_that("regr_GPfit", {
   test_fun = function(x) {
-  return(4*x[,1]^2 - 2*x[,2])
+    return(4*x[,1]^2 - 2*x[,2])
   }
   n = 30
   d = 2
