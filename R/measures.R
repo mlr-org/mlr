@@ -828,15 +828,9 @@ multilabel.f1 = makeMeasure(id = "multilabel.f1", minimize = FALSE, best = 1, wo
 #' @rdname measures
 #' @format none
 measureMultiLabelF1 = function(truth, response) {
-  fi = numeric(nrow(truth))
-  for (i in seq_row(truth)) {
-    if (sum(truth[i, ]) + sum(response[i, ]) == 0) {
-      fi[i] = 1
-    } else {
-      fi[i] = 2 * sum(truth[i, ] * response[i, ]) / (sum(truth[i, ]) + sum(response[i, ]))
-    }
-  }
-  mean(fi)
+  numerator = 2*rowSums(truth & response)
+  denominator = rowSums(truth + response)
+  mean(ifelse(denominator == 0, 1, numerator/denominator))
 }
 
 #' @export multilabel.acc
@@ -857,15 +851,9 @@ multilabel.acc = makeMeasure(id = "multilabel.acc", minimize = FALSE, best = 1, 
 #' @rdname measures
 #' @format none
 measureMultilabelACC = function(truth, response) {
-  acc = numeric(nrow(truth))
-  for (i in seq_row(truth)) {
-    if (sum(truth[i, ]) + sum(response[i, ]) == 0) {
-      acc[i] = 1
-    } else {
-      acc[i] = sum(truth[i, ] * response[i, ]) / (sum(truth[i, ]) + sum(response[i, ]) - sum(truth[i, ] * response[i, ]))
-    }
-  }
-  mean(acc)
+  numerator = rowSums(truth & response)
+  denominator = rowSums(truth | response)
+  mean(ifelse(denominator == 0, 1, numerator/denominator))
 }
 
 #' @export multilabel.ppv
@@ -886,15 +874,9 @@ multilabel.ppv = makeMeasure(id = "multilabel.ppv", minimize = FALSE, best = 1, 
 #' @rdname measures
 #' @format none
 measureMultilabelPPV = function(truth, response) {
-  prec = numeric(nrow(truth))
-  for (i in seq_row(truth)) {
-    if (sum(response[i, ]) == 0) {
-      prec[i] = 1
-    } else {
-      prec[i] = sum(truth[i, ] * response[i, ]) / sum(response[i, ])
-    }
-  }
-  mean(prec)
+  numerator = rowSums(truth & response)
+  denominator = rowSums(response)
+  mean(ifelse(denominator == 0, 1, numerator/denominator))
 }
 
 #' @export multilabel.tpr
@@ -915,15 +897,9 @@ multilabel.tpr = makeMeasure(id = "multilabel.tpr", minimize = FALSE, best = 1, 
 #' @rdname measures
 #' @format none
 measureMultilabelTPR = function(truth, response) {
-  rec = numeric(nrow(truth))
-  for (i in seq_row(truth)) {
-    if (sum(truth[i, ]) == 0) {
-      rec[i] = 1
-    } else {
-      rec[i] = sum(truth[i, ] * response[i, ]) / sum(truth[i, ])
-    }
-  }
-  mean(rec)
+  numerator = rowSums(truth & response)
+  denominator = rowSums(truth)
+  mean(ifelse(denominator == 0, 1, numerator/denominator))
 }
 
 ###############################################################################
