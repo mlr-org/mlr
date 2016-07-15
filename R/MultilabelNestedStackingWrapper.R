@@ -23,19 +23,7 @@
 #' @family multilabel
 #' @export
 #' @examples
-#' d = getTaskData(yeast.task)
-#' # drop some labels so example runs faster
-#' d = d[, c(1:3, 15:117)]
-#' task = makeMultilabelTask(data = d, target = c("label1", "label2", "label3"))
-#' lrn = makeMultilabelNestedStackingWrapper("classif.rpart", order = c("label2", "label3", "label1"))
-#' lrn = setPredictType(lrn, "prob")
-#' # train, predict and evaluate
-#' mod = train(lrn, task)
-#' pred = predict(mod, task)
-#' p = performance(pred)
-#' performance(pred, measure = multilabel.hamloss)
-#' getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
-#' # above works also with predictions from resample!
+#' See \code{\link{makeMultilabelBinaryRelevanceWrapper}} for an example.
 makeMultilabelNestedStackingWrapper = function(learner, order = NULL, cv.folds = 2) {
   learner = checkLearner(learner, type = "classif", props = "twoclass")
   id = paste("multilabel", learner$id, sep = ".")
