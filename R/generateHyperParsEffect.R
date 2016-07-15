@@ -61,10 +61,14 @@ generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
   # in case we have nested CV
   if (getClass1(tune.result) == "ResampleResult"){
     if (trafo.scale){
-      d = data.frame()
-      for (i in 1:length(tune.result$extract)){
-        d = rbind(d, as.data.frame(trafoOptPath(tune.result$extract[[i]])))
-      }
+      ops = extractSubList(tune.result$extract, "opt.path", simplify = FALSE)
+      ops = lapply(ops, trafoOptPath)
+      op.dfs = lapply(ops, as.data.frame)
+      op.dfs = lapply(seq_along(op.dfs), function(i) {
+        op.dfs[[i]][,"iter"] = i
+        op.dfs[[i]]
+      })
+      d = do.call(plyr::rbind.fill, op.dfs)
     } else {
       d = getNestedTuneResultsOptPathDf(tune.result)
     }
