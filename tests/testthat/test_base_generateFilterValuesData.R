@@ -17,7 +17,7 @@ test_that("filterFeatures", {
   feat.imp.new = generateFilterValuesData(binaryclass.task)
   expect_data_frame(feat.imp.new$data, types = c("character", "numeric"), nrow = length(ns), ncols = 3,
     col.names = "named")
-  expect_equal(names(feat.imp.new$data), c("name", "type", "chi.squared"))
+  expect_equal(names(feat.imp.new$data), c("name", "type", "rf.importance"))
   expect_equal(ns, feat.imp.new$data$name)
 
   feat.imp.old = suppressWarnings(getFilterValues(binaryclass.task, method = "chi.squared"))
