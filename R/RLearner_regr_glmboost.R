@@ -4,7 +4,11 @@ makeRLearner.regr.glmboost = function() {
     cl = "regr.glmboost",
     package = "mboost",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "family", default = mboost::Gaussian(), values = list(Gaussian = mboost::Gaussian(), Laplace = mboost::Laplace())),
+      makeDiscreteLearnerParam(id = "family", default = mboost::Gaussian(),
+        values = list(Gaussian = mboost::Gaussian(), Laplace = mboost::Laplace(),
+          Huber = mboost::Huber(), Poisson = mboost::Poisson(), GammaReg = mboost::GammaReg(nuirange = c(0,100)),
+          QuantReg = mboost::QuantReg(tau = 0.5, qoffset = 0.5), ExpectReg = mboost::ExpectReg())),
+      makeUntypedLearnerParam(id = "custom.family", default = mboost::Gaussian(), tunable = FALSE),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")),
@@ -22,14 +26,21 @@ makeRLearner.regr.glmboost = function() {
   )
 }
 #' @export
-trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, m, risk, trace, stopintern, ...) {
+trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, m, risk, trace, stopintern, family, custom.family, ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, trace, stopintern)
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
-  if (is.null(.weights)) {
-    model = mboost::glmboost(f, data = d, control = ctrl, ...)
+  if (!is.null(getHyperPars(.learner)$custom.family)) {
+    family = custom.family
   } else {
-    model = mboost::glmboost(f, data = d, control = ctrl, weights = .weights, ...)
+    family = family
+  }
+  if (is.null(.weights)) {
+    model = mboost::glmboost(f, data = d, control = ctrl, family = family, ...)
+    print(model)
+  } else {
+    model = mboost::glmboost(f, data = d, control = ctrl, family = family, weights = .weights, ...)
+    print(model)
   }
   if (m == "cv") {
     mboost::mstop(model) = mboost::mstop(mboost::cvrisk(model, papply = lapply))
