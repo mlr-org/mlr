@@ -3,12 +3,16 @@ test_that("regr_glmboost", {
   requirePackagesOrSkip("mboost", default.method = "load")
 
   parset.list1 = list(
-    list(family=mboost::Gaussian(), control=mboost::boost_control(nu=0.03)),
-    list(family=mboost::Gaussian(), control=mboost::boost_control(mstop=600), center=TRUE)
+    list(family = mboost::Gaussian(), control = mboost::boost_control(nu = 0.03)),
+    list(family = mboost::Gaussian(), control = mboost::boost_control(mstop = 600), center = TRUE),
+    list(family = mboost::Family(ngradient = function(y, f, w = 1) y - f,
+      loss = function(y, f) (y - f)^2, name = "My Gauss Variant"))
   )
   parset.list2 = list(
-    list(family=mboost::Gaussian(), nu=0.03),
-    list(family=mboost::Gaussian(), mstop=600, center=TRUE)
+    list(family=mboost::Gaussian(), nu = 0.03),
+    list(family=mboost::Gaussian(), mstop = 600, center = TRUE),
+    list(custom.family = mboost::Family(ngradient = function(y, f, w = 1) y - f,
+      loss = function(y, f) (y - f)^2, name = "My Gauss Variant"))
   )
   old.predicts.list = list()
   for (i in 1:length(parset.list1)) {
