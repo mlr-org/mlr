@@ -26,3 +26,14 @@ test_that("regr_glmboost", {
   }
   testSimpleParsets("regr.glmboost", regr.df, regr.target, regr.train.inds, old.predicts.list, parset.list2)
 })
+
+
+test_that("regr_glmboost works with poisson", {
+  # set some dummy counts
+  d = regr.df
+  d[, regr.target] = sample(1:100, getTaskSize(regr.task), replace = TRUE)
+  task = makeRegrTask(data = d, target = regr.target)
+  lrn = makeLearner("regr.glmboost", par.vals = list(family = mboost::Poisson()))
+  r = holdout(lrn, task)
+  expect_true(!is.na(r$aggr))
+})
