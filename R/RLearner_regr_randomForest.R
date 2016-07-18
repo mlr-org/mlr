@@ -133,6 +133,8 @@ sdStandardError = function(.learner, .model, .newdata, ...) {
   return(cbind(pred$aggregate, se))
 }
 
+#' @export
+#' @rdname getFeatureImportanceLearner
 getFeatureImportance.regr.randomForest = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   ctrl = list(...)
