@@ -210,7 +210,15 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   assertSubset(facet, choices = names(hyperpars.effect.data$data))
   assertFlag(pretty.names)
   assertFlag(global.only)
-  assertFlag(interpolate)
+  assert(checkClass(interpolate, "Learner"), checkFlag(interpolate), 
+         checkString(interpolate))
+  # assign learner for interpolation
+  if (checkClass(interpolate, "Learner") == T || checkString(interpolate) == T){
+    lrn = checkLearnerRegr(interpolate)
+    interpolate = TRUE
+  } else if (interpolate){
+    lrn = makeLearner("regr.earth")
+  }
   assertFlag(show.experiments)
  
   if (length(x) > 1 || length(y) > 1 || length(z) > 1 || length(facet) > 1)
@@ -243,6 +251,9 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       }
     }
     d$exec.time[is.na(d$exec.time)] = max(d$exec.time, na.rm = TRUE)
+  } else {
+    print("hi")
+    d$learner_status = "Success"
   }
   
   # assign for global only
@@ -258,9 +269,11 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   }
   
   if (interpolate && z_flag && (heatcontour_flag)){
-    if (!("learner_status" %in% names(d))){
-      d$learner_status = "Success"
-      }
+    # create grid
+    xo = seq(min(d[,x]), max(d[,x]), length.out = 100)
+    yo = seq(min(d[,y]), max(d[,y]), length.out = 100)
+    grid = expand.grid(xo, yo, KEEP.OUT.ATTRS = F)
+    names(grid) = c(x, y)
     
     if (hyperpars.effect.data$nested){
       d_new = d
@@ -268,41 +281,30 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       # for loop for each nested cv run
       for (run in unique(d$nested_cv_run)){
         d_run = d_new[d_new$nested_cv_run == run, ]
-        if (anyDuplicated(d_run[,c(x,y,z)])){
-          warningf("Detected duplicate (%s, %s) points on the path for nested cv
-                   run %s. The duplicates will be removed before interpolation!"
-                   , x, y, run)
-          d_run = d_run[!duplicated(d_run[,c(x,y)]),]
-        }
-        fld = akima::interp(d_run[, x], d_run[, y], d_run[, z])
-        df = reshape2::melt(fld$z, na.rm = TRUE)
-        names(df) <- c(x, y, z)
-        df[, x] = fld$x[df[, x]]
-        df[, y] = fld$y[df[, y]]
-        df$learner_status = "Interpolated Point"
-        df$iteration = NA
-        combined = rbind(d_run[,c(x,y,z,"learner_status", "iteration")], df)
+        regr.task = makeRegrTask(id = "interp", data = d_run[,c(x,y,z)], 
+                                 target = z)
+        mod = train(lrn, regr.task)
+        prediction = predict(mod, newdata = grid)
+        grid[, z] = prediction$data[, prediction$predict.type]
+        grid$learner_status = "Interpolated Point"
+        grid$iteration = NA
+        combined = rbind(d_run[,c(x,y,z,"learner_status", "iteration")], grid)
         new_d = rbind(new_d, combined)
       }
-      d = new_d
+      grid = new_d
     } else {
-      # need to unique so interp doesn't crash with duplicates
-      d_new = d
-      if (anyDuplicated(d[,c(x,y)])){
-        warningf("Detected duplicate (%s, %s) points on the path. The duplicates
-                 will be removed before interpolation!", x, y)
-        d_new = d[!duplicated(d[,c(x,y)]),]
-      }
-      fld = akima::interp(d_new[, x], d_new[, y], d_new[, z])
-      df = reshape2::melt(fld$z, na.rm = TRUE)
-      names(df) <- c(x, y, z)
-      df[, x] = fld$x[df[, x]]
-      df[, y] = fld$y[df[, y]]
-      df$learner_status = "Interpolated Point"
-      df$iteration = NA
-      combined = rbind(d_new[,c(x,y,z,"learner_status", "iteration")], df)
-      d = combined
+      regr.task = makeRegrTask(id = "interp", data = d[,c(x,y,z)], target = z)
+      mod = train(lrn, regr.task)
+      prediction = predict(mod, newdata = grid)
+      grid[, z] = prediction$data[, prediction$predict.type]
+      grid$learner_status = "Interpolated Point"
+      grid$iteration = NA
+      combined = rbind(d[,c(x,y,z,"learner_status", "iteration")], grid)
+      grid = combined
     }
+    grid[grid[,z] < min(d[,z]), z] = min(d[,z])
+    grid[grid[,z] > max(d[,z]), z] = max(d[,z])
+    d = grid
   }
   
   if (hyperpars.effect.data$nested && z_flag){
@@ -310,7 +312,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
                                       hyperpars.effect.data$hyperparams, "eol",
                                       "error.message", "learner_status")), 
                   drop = FALSE]
-    if (na_flag || interpolate){
+    if (na_flag || interpolate || show.experiments){
       hyperpars = lapply(d[, c(hyperpars.effect.data$hyperparams, 
                                "learner_status")], "[")
     } else {
@@ -319,7 +321,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     d = aggregate(averaging, hyperpars, mean)
     d$iteration = 1:nrow(d)
   }
-    
+  print(str(d))  
   # just x, y  
   if ((length(x) == 1) && (length(y) == 1) && !(z_flag)){
     if (hyperpars.effect.data$nested){
@@ -346,12 +348,12 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     if (heatcontour_flag){
       if (interpolate){
       plt = ggplot(data = d[d$learner_status == "Interpolated Point", ], 
-                   aes_string(x = x, y = y, fill = z, z = z)) + geom_tile()
+                   aes_string(x = x, y = y, fill = z, z = z)) + geom_raster()
       } else {
         plt = ggplot(data = d, aes_string(x = x, y = y, fill = z, z = z)) +
           geom_tile()
       }
-      if (na_flag || (interpolate && show.experiments)){
+      if (na_flag || show.experiments){
         plt = plt + geom_point(data = d[d$learner_status %in% c("Success", 
                                                                 "Failure"), ],
                                         aes_string(shape = "learner_status"), 
@@ -389,6 +391,5 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
           labs(fill = eval(as.name(stri_split_fixed(z, 
                                                 ".test.mean")[[1]][1]))$name) 
   }
-  
   return(plt)
 }
