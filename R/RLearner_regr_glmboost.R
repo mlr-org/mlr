@@ -17,7 +17,7 @@ makeRLearner.regr.glmboost = function() {
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "m", default = "mstop", values = c("mstop", "cv", "aic"))
       ),
-    par.vals = list(m = "mstop"),
+    par.vals = list(m = "mstop", family = mboost::Gaussian()),
     # FIXME Parameter m not found in help of glmboost() or mboost_fit() nor in mstop(), par.vals and LernerParam default are same
     properties = c("numerics", "factors", "weights"),
     name = "Boosting for GLMs",
