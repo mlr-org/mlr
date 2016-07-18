@@ -170,12 +170,13 @@ print.HyperParsEffectData = function(x, ...) {
 #'  \code{HyperParsEffectData$measures}. Set this to FALSE to always plot the 
 #'  performance of every iteration, even if it is not an improvement.
 #'  Default is \code{TRUE}.
-#' @param interpolate [\code{logical(1)}]\cr
-#'  If TRUE, will interpolate non-complete grids in order to visualize a more 
+#' @param interpolate [\code{\link{Learner}} | \code{character(1)} | \code{logical(1)}]\cr
+#'  If not FALSE, will interpolate non-complete grids in order to visualize a more 
 #'  complete path. Only meaningful when attempting to plot a heatmap or contour.
 #'  This will fill in "empty" cells in the heatmap or contour plot. Note that 
 #'  cases of irregular hyperparameter paths, you will most likely need to use
-#'  this to have a meaningful visualization.
+#'  this to have a meaningful visualization. Accepts either a \link{Learner}
+#'  object, the learner as a string, or if TRUE "regr.earth" will be used.
 #'  Default is \code{FALSE}.
 #' @param show.experiments [\code{logical(1)}]\cr
 #'  If TRUE, will overlay the plot with points indicating where an experiment
@@ -190,7 +191,8 @@ print.HyperParsEffectData = function(x, ...) {
 #' @note Any NAs incurred from learning algorithm crashes will be indicated in 
 #' the plot and the NA values will be replaced with the column min/max depending
 #' on the optimal values for the respective measure. Execution time will be
-#' replaced with the max.
+#' replaced with the max. Interpolation by its nature will result in predicted 
+#' values for the performance measure. Use interpolation with caution.
 #' 
 #' @export
 #'
@@ -252,7 +254,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     }
     d$exec.time[is.na(d$exec.time)] = max(d$exec.time, na.rm = TRUE)
   } else {
-    print("hi")
+    # in case the user wants to show this later
     d$learner_status = "Success"
   }
   
@@ -288,7 +290,9 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
         grid[, z] = prediction$data[, prediction$predict.type]
         grid$learner_status = "Interpolated Point"
         grid$iteration = NA
+        # combine the experiment data with interpolated data
         combined = rbind(d_run[,c(x,y,z,"learner_status", "iteration")], grid)
+        # combine each loop
         new_d = rbind(new_d, combined)
       }
       grid = new_d
@@ -299,9 +303,11 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       grid[, z] = prediction$data[, prediction$predict.type]
       grid$learner_status = "Interpolated Point"
       grid$iteration = NA
+      # combine the experiment data with interpolated data
       combined = rbind(d[,c(x,y,z,"learner_status", "iteration")], grid)
       grid = combined
     }
+    # remove any values that would extrapolate the z
     grid[grid[,z] < min(d[,z]), z] = min(d[,z])
     grid[grid[,z] > max(d[,z]), z] = max(d[,z])
     d = grid
@@ -312,6 +318,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
                                       hyperpars.effect.data$hyperparams, "eol",
                                       "error.message", "learner_status")), 
                   drop = FALSE]
+    # keep experiments if we need it
     if (na_flag || interpolate || show.experiments){
       hyperpars = lapply(d[, c(hyperpars.effect.data$hyperparams, 
                                "learner_status")], "[")
@@ -321,7 +328,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     d = aggregate(averaging, hyperpars, mean)
     d$iteration = 1:nrow(d)
   }
-  print(str(d))  
+  
   # just x, y  
   if ((length(x) == 1) && (length(y) == 1) && !(z_flag)){
     if (hyperpars.effect.data$nested){
@@ -344,7 +351,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     if (facet_flag)
       plt = plt + facet_wrap(facet)
   } else if ((length(x) == 1) && (length(y) == 1) && (z_flag)){
-    # FIXME: generalize logic here
+    # the data we use depends on if interpolation
     if (heatcontour_flag){
       if (interpolate){
       plt = ggplot(data = d[d$learner_status == "Interpolated Point", ], 
