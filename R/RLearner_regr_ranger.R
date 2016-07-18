@@ -42,6 +42,8 @@ predictLearner.regr.ranger = function(.learner, .model, .newdata, ...) {
   return(p$predictions)
 }
 
+#' @export
+#' @rdname getFeatureImportanceLearner
 getFeatureImportance.regr.ranger = function(.learner, .model, ...) {
   has.fiv = .learner$par.vals$importance
   if (is.null(has.fiv) || has.fiv == "none") {

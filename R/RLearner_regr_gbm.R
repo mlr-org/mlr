@@ -42,6 +42,8 @@ predictLearner.regr.gbm = function(.learner, .model, .newdata, ...) {
   gbm::predict.gbm(m, newdata = .newdata, n.trees = length(m$trees), ...)
 }
 
+#' @export
+#' @rdname getFeatureImportanceLearner
 getFeatureImportance.regr.gbm = function(.learner, .model, n.trees, ...) {
   mod = getLearnerModel(.model)
   if (missing(n.trees))

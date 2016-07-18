@@ -40,6 +40,8 @@ predictLearner.regr.rpart = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, newdata = .newdata, ...)
 }
 
+#' @export
+#' @rdname getFeatureImportanceLearner
 getFeatureImportance.regr.rpart = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   fiv = as.numeric(mod$variable.importance[names(mod$ordered)])

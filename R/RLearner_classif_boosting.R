@@ -48,6 +48,8 @@ predictLearner.classif.boosting = function(.learner, .model, .newdata, ...) {
   }
 }
 
+#' @export
+#' @rdname getFeatureImportanceLearner
 getFeatureImportance.classif.boosting = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   fiv = as.numeric(mod$importance[.model$features])

@@ -60,9 +60,11 @@ predictLearner.regr.cforest = function(.learner, .model, .newdata, ...) {
   as.vector(predict(.model$learner.model, newdata = .newdata, ...))
 }
 
-getFeatureImportance.regr.cforest = function(.learner, .model, AUC = FALSE, ...) {
+#' @export
+#' @rdname getFeatureImportanceLearner
+getFeatureImportance.regr.cforest = function(.learner, .model, auc = FALSE, ...) {
   mod = getLearnerModel(.model)
-  if (AUC) {
+  if (auc) {
     fiv = as.numeric(party::varimpAUC(mod, ...))
   } else {
     fiv = as.numeric(party::varimp(mod, ...))

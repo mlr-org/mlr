@@ -66,6 +66,8 @@ predictLearner.classif.cforest = function(.learner, .model, .newdata, ...) {
   p
 }
 
+#' @export
+#' @rdname getFeatureImportanceLearner
 getFeatureImportance.classif.cforest = function(.learner, .model, auc = FALSE, ...) {
   mod = getLearnerModel(.model)
   if (auc) {

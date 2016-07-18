@@ -45,6 +45,8 @@ predictLearner.surv.rpart = function(.learner, .model, .newdata, ...) {
   }
 }
 
+#' @export
+#' @rdname getFeatureImportanceLearner
 getFeatureImportance.surv.rpart = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   fiv = as.numeric(mod$variable.importance[names(mod$ordered)])

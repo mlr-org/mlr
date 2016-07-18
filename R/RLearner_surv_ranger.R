@@ -45,6 +45,8 @@ predictLearner.surv.ranger = function(.learner, .model, .newdata, ...) {
   rowMeans(p$chf)
 }
 
+#' @export
+#' @rdname getFeatureImportanceLearner
 getFeatureImportance.surv.ranger = function(.learner, .model, ...) {
   has.fiv = .learner$par.vals$importance
   if (is.null(has.fiv) || has.fiv == "none") {

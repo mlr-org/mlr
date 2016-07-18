@@ -47,7 +47,8 @@ predictLearner.regr.RRF <- function(.learner, .model, .newdata, ...) {
   return(p)
 }
 
-
+#' @export
+#' @rdname getFeatureImportanceLearner
 getFeatureImportance.regr.RRF = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   ctrl = list(...)

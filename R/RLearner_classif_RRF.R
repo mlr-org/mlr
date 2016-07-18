@@ -50,6 +50,8 @@ predictLearner.classif.RRF <- function(.learner, .model, .newdata, ...) {
   return(p)
 }
 
+#' @export
+#' @rdname getFeatureImportanceLearner
 getFeatureImportance.classif.RRF = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   ctrl = list(...)

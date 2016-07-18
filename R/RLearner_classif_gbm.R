@@ -70,6 +70,8 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
   }
 }
 
+#' @export
+#' @rdname getFeatureImportanceLearner
 getFeatureImportance.classif.gbm = function(.learner, .model, n.trees, ...) {
   mod = getLearnerModel(.model)
   if (missing(n.trees))

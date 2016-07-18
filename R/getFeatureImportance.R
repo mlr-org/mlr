@@ -65,9 +65,25 @@
 #' @return A named numeric vector indicating the feature importance values for each feature.
 #' @export
 getFeatureImportance = function(object, ...) {
-  getFeatureImportanceS3(object$learner, object, ...)
+  getFeatureImportanceLearner(object$learner, object, ...)
 }
 
-getFeatureImportanceS3 = function(.learner, .model, ...) {
+#' Calculates feature importance values for a given learner.
+#'
+#' For details see \code{\link{getFeatureImportance}}.
+#'
+#' @param .learner [\code{\link{Learner}} | \code{character(1)}]\cr
+#'   The learner.
+#'   If you pass a string the learner will be created via \code{\link{makeLearner}}.
+#' @param .model [\code{\link{WrappedModel}}]\cr
+#'  The model.
+#' @param auc [logical(1)]\cr Only for cforest. Should the auc based importance be calculated.
+#' @param n.trees [integer(1)]\cr Only for gbm. For how many trees should the importance be calculated.
+#'  If missing the number of trees used to fit the model is used.
+#' @param ... [any]\cr
+#' Additional parameters, which are passed to the underlying importance value 
+#' generating function.
+#' @export
+getFeatureImportanceLearner = function(.learner, .model, ...) {
 	UseMethod("getFeatureImportance")
 }

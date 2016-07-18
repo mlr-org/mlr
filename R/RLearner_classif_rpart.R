@@ -42,6 +42,8 @@ predictLearner.classif.rpart = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }
 
+#' @export
+#' @rdname getFeatureImportanceLearner
 getFeatureImportance.classif.rpart = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   fiv = as.numeric(mod$variable.importance[names(mod$ordered)])
