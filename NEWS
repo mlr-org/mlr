@@ -1,4 +1,5 @@
 mlr_new:
+
 mlr_2.9:
 - removeConstantFeatures now also operates on data.frames and
   makeRemoveConstantFeaturesWrapper can be used to augment a learner with this
