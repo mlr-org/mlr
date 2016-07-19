@@ -29,7 +29,7 @@ makeRLearner.regr.glm = function() {
       makeLogicalLearnerParam(id = "x", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "y", default = TRUE, tunable = FALSE)
     ),
-    par.vals = list(
+    mlr.defaults = list(
       family = "gaussian"
     ),
     properties = c("numerics", "factors", "se", "weights"),

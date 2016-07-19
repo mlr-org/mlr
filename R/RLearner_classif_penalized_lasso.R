@@ -16,7 +16,7 @@ makeRLearner.classif.penalized.lasso = function() {
       makeLogicalLearnerParam(id = "standardize", default = FALSE),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(trace = FALSE),
+    mlr.defaults = list(trace = FALSE),
     properties = c("twoclass", "numerics", "factors", "ordered", "prob"),
     name = "Logistic Lasso Regression",
     short.name = "lasso",

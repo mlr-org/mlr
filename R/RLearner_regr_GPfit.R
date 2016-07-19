@@ -11,7 +11,7 @@ makeRLearner.regr.GPfit = function(){
       makeUntypedLearnerParam(id = "optim_start", default = NULL),  
       makeLogicalLearnerParam(id = "scale", default = TRUE)
     ),
-    par.vals = list(scale = TRUE),
+    mlr.defaults = list(scale = TRUE),
     properties = c("numerics","se"),
     name = "Gaussian Process",
     short.name = "GPfit",

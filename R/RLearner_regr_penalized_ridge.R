@@ -18,7 +18,7 @@ makeRLearner.regr.penalized.ridge = function() {
       makeLogicalLearnerParam(id = "standardize", default = FALSE),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(trace = FALSE, model = "linear"),
+    mlr.defaults = list(trace = FALSE, model = "linear"),
     properties = c("numerics", "factors"),
     name = "Ridge Regression",
     short.name = "ridge",

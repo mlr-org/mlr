@@ -17,7 +17,7 @@ makeRLearner.regr.bdk = function() {
       makeLogicalLearnerParam(id = "keep.data", default = TRUE, tunable = FALSE)
     ),
     properties = c("numerics"),
-    par.vals = list(keep.data = FALSE),
+    mlr.defaults = list(keep.data = FALSE),
     name = "Bi-Directional Kohonen map",
     short.name = "bdk",
     note = "`keep.data` is set to FALSE to reduce memory requirements."

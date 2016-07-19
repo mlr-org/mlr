@@ -22,7 +22,7 @@ makeRLearner.classif.gausspr = function() {
       makeNumericLearnerParam(id = "tol", default = 0.001, lower = 0),
       makeLogicalLearnerParam(id = "fit", default = TRUE)
     ),
-    par.vals = list(fit = FALSE),
+    mlr.defaults = list(fit = FALSE),
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob"),
     name = "Gaussian Processes",
     short.name = "gausspr",

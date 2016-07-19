@@ -22,7 +22,7 @@ makeRLearner.cluster.kkmeans = function() {
       # FIXME:  Not sure what p changes in the model, it didn't change anything in all test runs.
       makeNumericLearnerParam(id = "p", default = 1)
     ),
-    par.vals = list(centers = 2L),
+    mlr.defaults = list(centers = 2L),
     properties = "numerics",
     name = "Kernel K-Means",
     note = "`centers` has been set to `2L` by default. The nearest center in kernel distance determines cluster assignment of new data points. Kernel parameters have to be passed directly and not by using the `kpar` list in `kkmeans`",

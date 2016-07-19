@@ -17,7 +17,7 @@ makeRLearner.surv.penalized.fusedlasso = function() {
       makeLogicalLearnerParam(id = "standardize", default = FALSE),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(lambda1 = 1, lambda2 = 1, trace = FALSE),
+    mlr.defaults = list(lambda1 = 1, lambda2 = 1, trace = FALSE),
     properties = c("numerics", "factors", "ordered", "rcens"),
     name = "Fused Lasso Regression",
     short.name = "fusedlasso",

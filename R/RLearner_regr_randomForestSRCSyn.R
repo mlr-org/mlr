@@ -50,7 +50,7 @@ makeRLearner.regr.randomForestSRCSyn = function() {
       makeLogicalLearnerParam(id = "statistics", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "tree.err", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(na.action = "na.impute", verbose = FALSE),
+    mlr.defaults = list(na.action = "na.impute", verbose = FALSE),
     properties = c("numerics", "factors", "ordered", "missings", "weights"),
     name = "Synthetic Random Forest",
     short.name = "rfsrcSyn",

@@ -16,7 +16,7 @@ makeRLearner.surv.penalized.lasso = function() {
       makeLogicalLearnerParam(id = "standardize", default = FALSE),
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(trace = FALSE),
+    mlr.defaults = list(trace = FALSE),
     properties = c("numerics", "factors", "ordered", "rcens"),
     name = "LassoRegression",
     short.name = "lasso",
