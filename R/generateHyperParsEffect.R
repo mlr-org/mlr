@@ -202,7 +202,8 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
                                z = NULL, plot.type = "scatter", 
                                loess.smooth = FALSE, facet = NULL, 
                                pretty.names = TRUE, global.only = TRUE, 
-                               interpolate = FALSE, show.experiments = FALSE) {
+                               interpolate = FALSE, show.experiments = FALSE, 
+                               nested.agg = mean) {
   assertClass(hyperpars.effect.data, classes = "HyperParsEffectData")
   assertChoice(x, choices = names(hyperpars.effect.data$data))
   assertChoice(y, choices = names(hyperpars.effect.data$data))
@@ -254,9 +255,8 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     }
     d$exec.time[is.na(d$exec.time)] = max(d$exec.time, na.rm = TRUE)
   } else {
-    # in case the user wants to show this despite no errors
-    if (show.experiments)
-      d$learner_status = "Success"
+    # in case the user wants to show this despite no learner crashes
+    d$learner_status = "Success"
   }
   
   # assign for global only
@@ -326,7 +326,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     } else {
       hyperpars = lapply(d[, hyperpars.effect.data$hyperparams], "[")
     }
-    d = aggregate(averaging, hyperpars, mean)
+    d = aggregate(averaging, hyperpars, nested.agg)
     d$iteration = 1:nrow(d)
   }
   

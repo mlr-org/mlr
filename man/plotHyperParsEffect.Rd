@@ -7,7 +7,7 @@
 plotHyperParsEffect(hyperpars.effect.data, x = NULL, y = NULL, z = NULL,
   plot.type = "scatter", loess.smooth = FALSE, facet = NULL,
   pretty.names = TRUE, global.only = TRUE, interpolate = FALSE,
-  show.experiments = FALSE)
+  show.experiments = FALSE, nested.agg = mean)
 }
 \arguments{
 \item{hyperpars.effect.data}{[\code{HyperParsEffectData}]\cr
@@ -54,12 +54,13 @@ x = "iteration" and y as a performance measure from
 performance of every iteration, even if it is not an improvement.
 Default is \code{TRUE}.}
 
-\item{interpolate}{[\code{logical(1)}]\cr
-If TRUE, will interpolate non-complete grids in order to visualize a more 
+\item{interpolate}{[\code{\link{Learner}} | \code{character(1)} | \code{logical(1)}]\cr
+If not FALSE, will interpolate non-complete grids in order to visualize a more 
 complete path. Only meaningful when attempting to plot a heatmap or contour.
 This will fill in "empty" cells in the heatmap or contour plot. Note that 
 cases of irregular hyperparameter paths, you will most likely need to use
-this to have a meaningful visualization.
+this to have a meaningful visualization. Accepts either a \link{Learner}
+object, the learner as a string, or if TRUE "regr.earth" will be used.
 Default is \code{FALSE}.}
 
 \item{show.experiments}{[\code{logical(1)}]\cr
@@ -83,7 +84,8 @@ optimizer.
 Any NAs incurred from learning algorithm crashes will be indicated in 
 the plot and the NA values will be replaced with the column min/max depending
 on the optimal values for the respective measure. Execution time will be
-replaced with the max.
+replaced with the max. Interpolation by its nature will result in predicted 
+values for the performance measure. Use interpolation with caution.
 }
 \examples{
 # see generateHyperParsEffectData

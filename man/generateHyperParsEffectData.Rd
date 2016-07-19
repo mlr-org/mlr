@@ -22,7 +22,7 @@ Default is \code{FALSE}.}
 
 \item{trafo}{[\code{logical(1)}]\cr
 Should the units of the hyperparameter path be converted to the 
-transformed scale? This is only necessary when trafo was used to create the
+transformed scale? This is only useful when trafo was used to create the
 path.
 Default is \code{FALSE}.}
 }
