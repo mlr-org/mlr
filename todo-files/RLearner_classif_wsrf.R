@@ -9,7 +9,7 @@ makeRLearner.classif.wsrf = function() {
       makeLogicalLearnerParam(id = "weights", default = TRUE),
       makeLogicalLearnerParam(id = "parallel", default = FALSE)
     ),
-    mlr.default.par.vals = list(parallel = FALSE),
+    mlr.defaults = list(parallel = FALSE),
     properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob"),
     name = "Weighted Subspace Random Forest",
     short.name = "wsrf",
