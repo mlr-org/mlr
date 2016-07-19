@@ -23,10 +23,10 @@ makeRLearner.multilabel.cforest = function() {
       makeLogicalLearnerParam(id = "savesplitstats", default = FALSE, tunable = FALSE)
       
     ),
-    properties = c("numerics", "factors", "ordered", "missings", "weights"),
+    properties = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
     name = "Random forest based on conditional inference trees",
     short.name = "cforest",
-    note = "In cforests's predict function multilabel responses are not converted to the type of response, i.e. predict.type is always 'prob' and cannot be set to 'response'"
+    note = "In contrast to cforest's predict function, mlr can convert predictions to the type of the response, for predict.type = 'response'"
   )
 }
 
@@ -50,5 +50,11 @@ trainLearner.multilabel.cforest = function(.learner, .task, .subset, .weights = 
 
 #' @export
 predictLearner.multilabel.cforest = function(.learner, .model, .newdata, ...) {
-  predict(.model$learner.model, .newdata, type = "prob", ...)
+  p = predict(.model$learner.model, newdata = .newdata, type = "prob", ...)
+  p = do.call(rbind, p)
+  if (.learner$predict.type == "response") {
+    p = t(apply(p, 1L, function(x) {ifelse(x == max(x), TRUE, FALSE)}))
+  } else {
+    p
+  }
 }
