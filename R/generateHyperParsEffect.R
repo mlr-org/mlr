@@ -18,7 +18,7 @@
 #'  Default is \code{FALSE}.
 #' @param trafo [\code{logical(1)}]\cr
 #'  Should the units of the hyperparameter path be converted to the 
-#'  transformed scale? This is only necessary when trafo was used to create the
+#'  transformed scale? This is only useful when trafo was used to create the
 #'  path.
 #'  Default is \code{FALSE}.
 #'
@@ -254,8 +254,9 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     }
     d$exec.time[is.na(d$exec.time)] = max(d$exec.time, na.rm = TRUE)
   } else {
-    # in case the user wants to show this later
-    d$learner_status = "Success"
+    # in case the user wants to show this despite no errors
+    if (show.experiments)
+      d$learner_status = "Success"
   }
   
   # assign for global only
@@ -339,7 +340,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     if (na_flag){
       plt = plt + geom_point(aes_string(shape = "learner_status", 
                                         color = "learner_status")) +
-        scale_shape_manual(values = c("Failure" = 4, "Success" = 0)) +
+        scale_shape_manual(values = c("Failure" = 24, "Success" = 0)) +
         scale_color_manual(values = c("red", "black"))
     } else {
       plt = plt + geom_point()
@@ -374,7 +375,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       if (na_flag){
         plt = plt + geom_point(aes_string(shape = "learner_status", 
                                           color = "learner_status")) +
-          scale_shape_manual(values = c("Failure" = 4, "Success" = 0)) +
+          scale_shape_manual(values = c("Failure" = 24, "Success" = 0)) +
           scale_color_manual(values = c("red", "black"))
       } else{
         plt = plt + geom_point()
