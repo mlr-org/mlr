@@ -1,4 +1,4 @@
-context("RankMatrix")
+context("orderBMRLevels")
 
 test_that("RankMatrix", {
   lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))

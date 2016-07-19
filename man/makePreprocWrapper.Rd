@@ -25,7 +25,8 @@ before predictions.}
 Function to preprocess the data before prediction.
 \code{target} is a string and denotes the target variable in \code{data}.
 \code{args} are the args that were passed to \code{train}.
-\code{control} is the object you returned in \code{train}.}
+\code{control} is the object you returned in \code{train}.
+Must return the processed data.}
 
 \item{par.set}{[\code{\link[ParamHelpers]{ParamSet}}]\cr
 Parameter set of \code{\link[ParamHelpers]{LearnerParam}} objects to describe the
@@ -46,6 +47,7 @@ If the train or predict function is called on data / a task, the preprocessing i
 }
 \seealso{
 Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeDownsampleWrapper}},
@@ -54,8 +56,13 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeImputeWrapper}},
   \code{\link{makeMulticlassWrapper}},
   \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}},
   \code{\link{makeOverBaggingWrapper}},
   \code{\link{makePreprocWrapperCaret}},
+  \code{\link{makeRemoveConstantFeaturesWrapper}},
   \code{\link{makeSMOTEWrapper}},
   \code{\link{makeTuneWrapper}},
   \code{\link{makeUndersampleWrapper}},

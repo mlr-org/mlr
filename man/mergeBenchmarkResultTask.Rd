@@ -2,13 +2,13 @@
 % Please edit documentation in R/benchmarkResult_mergers.R
 \name{mergeBenchmarkResultTask}
 \alias{mergeBenchmarkResultTask}
-\title{Merge different tasks of BenchmarkResult objects}
+\title{Merge different tasks of BenchmarkResult objects.}
 \usage{
 mergeBenchmarkResultTask(...)
 }
 \arguments{
-\item{...}{[\code{\link{BenchmarkResult}}] \cr 
-\code{BenchmarkResult} objects that should be merged}
+\item{...}{[\code{\link{BenchmarkResult}}]\cr 
+\code{BenchmarkResult} objects that should be merged.}
 }
 \description{
 Combines the \code{\link{BenchmarkResult}} objects that were performed

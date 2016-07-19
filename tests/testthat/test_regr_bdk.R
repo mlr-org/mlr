@@ -1,7 +1,8 @@
 context("regr_bdk")
 
 test_that("regr_bdk", {
-  requirePackages("kohonen", default.method = "load")
+  requirePackagesOrSkip("kohonen", default.method = "load")
+
   parset.list1 = list(
     list(),
     list(grid = class::somgrid(xdim = 2L, ydim = 4L)),
@@ -27,4 +28,9 @@ test_that("regr_bdk", {
 
   testSimpleParsets("regr.bdk", regr.num.df, regr.num.target, regr.num.train.inds,
     old.predicts.list, parset.list2)
+})
+
+test_that("regr_bdk keep.data is passed correctly", {
+  train(makeLearner("regr.bdk", keep.data = FALSE), regr.num.task)
+  train(makeLearner("regr.bdk", keep.data = TRUE), regr.num.task)
 })

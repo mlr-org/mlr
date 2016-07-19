@@ -1,9 +1,103 @@
 mlr_new:
+
+mlr_2.9:
+- removeConstantFeatures now also operates on data.frames and
+  makeRemoveConstantFeaturesWrapper can be used to augment a learner with this
+  preprocessing step.
+- SMOTEWrapper: fix a bug where "sw.nn" was not correctly passed down
+- classif.blackboost, regr.blackboost: made sure that arg "stump" is passed on
+  correctly
+- fixed parameter values for WEKA learners IBk, J48, PART, EM, SimpleKMeans,
+  XMeans
+- fixed a bug that caused hyperparameters to be not passed on correctly in the
+  ModelMultiplexer in some cases
+- various cleanups that removed unused code
+- updated gmean measure and unit test, added reference to formula of gmean
+- classif.glmboost, regr.glmboost: add parameters stopintern and trace
+- convert data.frame-ish in Task if necessary
+- fix bug with NoFeaturesModel and ModelMultiplexer
+- clean up randomForestSRC and randomForestSRCSyn learners
+- fix bug with partialPredictions and GGVIS
+- remove unnecessary linear.output parameter for classif.neuralnet
+- remove unsupported KSVM parameter value stringdot
+- fix some bartMachine compatibility issues
+- add pretty.names arguments to plots that show learner short names instead of
+  IDs
+- improve documentation for permutation.importance filter and perform slight
+  argument renaming to fix potential name clashes
+- fix small bug in DownsampleWrapper when trained with weights
+- the "penalized" learner were restructured and improved (params were added), also see below.
+- makeCostMeasure: removed arg "task", names of cost matrix are checked on measure calculation
+-- fixed weight handling and weight tag for some learners
+- rename generatePartialPrediction, plotPartialPrediction, and plotPartialPredictionGGVIS to
+  generatePartialDependence, plotPartialDependence, and plotPartialDependenceGGVIS
+- add stability.nugget parameter for "regr.km"
+- plotPartialDependence can plot classification tasks with more than one interacted features now
+- generateFilterValuesData: added argument 'more.args'
+- subsetTask, getTaskData: arg "features" now also accepts logical and integer
+- normalizeFeatures, createDummyFeatures: arg 'exclude' was replaced by 'cols'
+- normalizeFeatures is now S3 and can be called also on data.frames
+- classif.ranger, regr.ranger and surv.ranger: now respect unordered factors by default
+- added the ability to generate and plot data from the hyperparameter tuning
+  path for a single hyperparameter
+- addition of 'data' argument to plotPartialDependence which adds the training data to the graph
+- added new arguments "facet.wrap.nrow" and "facet.wrap.ncol" which enable arrangement of facets in rows and columns to plotting functions
+- new multilabel wrappers algorithms: classifier chains, nested stacking, dependent binary relevance, stacking
+- renamed multilabel measure "hamloss" to "multilabel.hamloss"
+
+- new learners
+-- classif.C50
+-- classif.gausspr
+-- classif.penalized.fusedlasso
+-- classif.penalized.lasso
+-- classif.penalized.ridge
+-- classif.h2o.deeplearning
+-- classif.h2o.gbm
+-- classif.h2o.glm
+-- classif.h2o.randomForest
+-- classif.rrf
+-- regr.penalized.fusedlasso
+-- regr.gausspr
+-- regr.glm
+-- regr.GPfit
+-- regr.h2o.deeplearning
+-- regr.h2o.gbm
+-- regr.h2o.glm
+-- regr.h2o.randomForest
+-- regr.rrf
+-- surv.cv.CoxBoost
+-- surv.penalized.fusedlasso
+-- surv.penalized.lasso
+-- surv.penalized.ridge
+-- cluster.kkmeans
+
+- removed learners
+-- surv.optimCoxBoostPenalty
+-- surv.penalized (split up, see new learners above)
+
+- new functions
+-- generateHyperParsEffectData
+-- plotHyperParsEffect
+-- makeMultilabelClassifierChainsWrapper
+-- makeMultilabelDBRWrapper
+-- makeMultilabelNestedStackingWrapper
+-- makeMultilabelStackingWrapper
+-- makeConstantClassWrapper
+
+- removed functions
+-- getParamSet generic (now in ParamHelpers package)
+
+- new measures
+-- multiclass.brier
+-- brier.scaled
+-- logloss
+-- multilabel.subset01, multilabel.f1, multilabel.acc, multilabel.ppv, multilabel.tpr
+
+mlr_2.8:
 - Feature filter "univariate" had a bad name, was deprecated and is now called
  "univariate.model.score". The new one also has better defaults.
 - (generate/plot)PartialPrediction: added new arg "geom" for tile plots
 - small fix for plotBMRSummary
-- removed learners: classif.randomForestSRCSyn, regr.randomForestSRCSyn
 - the ModelMultiplexer inherits its predict.type from the base learners now
 - check that learners in an ensemble have the same predict.type
 - new function getBMRModels to extract stored models from a benchmark result
@@ -20,6 +114,9 @@ mlr_new:
   predict were not passed down correctly
 - Fixed a bug where the function capLargeValues wasn't working if you passed a task.
 - capLargeValues now has a new argument "target", to prevent from capping response values.
+- classif.gbm, regr.gbm: Updated possible 'distribution' settings a bit.
+- oversample, undersample, makeOversampleWrapper, makeUndersampleWrapper, makeOverBaggingWrapper:
+  Added arguments to specifically select the sampled class.
 
 - API changes
 -- listLearners now returns a data frame with properties of the learners if
@@ -28,10 +125,17 @@ mlr_new:
 - new functions
 -- getBMRModels
 
+- removed functions
+-- generateROCRCurvesData, plotROCRCurves, plotROCRCurvesGGVIS
+
 new learners
 -- classif.randomForestSRCSyn
+-- classif.cvglmnet
 -- regr.randomForestSRCSyn
 -- cluster.dbscan
+
+-new measures
+-- rsq, arsq, expvar
 
 mlr_2.7:
 - New argument "models" for function benchmark
@@ -49,6 +153,7 @@ mlr_2.6:
 - disabled plotViperCharts unit tests as VC seems to be offline currently
 - multilabel: improve few task getter functions, especially getTaskFormula is
   now correct
+
 
 new learners
 -- regr.glmboost

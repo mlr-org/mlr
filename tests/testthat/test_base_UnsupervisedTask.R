@@ -8,6 +8,10 @@ test_that("UnsupervisedTask", {
   # wrong vars
   expect_error(subsetTask(noclass.task, vars = c("Sepal.Length", "x", "y")))
 
+  # subsetTask works with index vector
+  sub.task = subsetTask(noclass.task, features = 1:2)
+  expect_equal(sum(getTaskNFeats(sub.task)), 2L)
+
   # check missing accessors
   df = noclass.df
   df[1,1:3] = NA

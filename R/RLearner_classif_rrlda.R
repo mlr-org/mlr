@@ -13,8 +13,7 @@ makeRLearner.classif.rrlda = function() {
     ),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Robust Regularized Linear Discriminant Analysis",
-    short.name = "rrlda",
-    note = ""
+    short.name = "rrlda"
   )
 }
 
@@ -26,5 +25,5 @@ trainLearner.classif.rrlda = function(.learner, .task, .subset, .weights = NULL,
 
 #' @export
 predictLearner.classif.rrlda = function(.learner, .model, .newdata, ...) {
-  p = as.factor(predict(.model$learner.model, x = .newdata, ...)$class)
+  as.factor(predict(.model$learner.model, x = .newdata, ...)$class)
 }

@@ -4,7 +4,7 @@ makeRLearner.classif.gbm = function() {
     cl = "classif.gbm",
     package = "gbm",
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "distribution", values = c("bernoulli", "adaboost", "gaussian", "laplace", "huberized", "multinomial", "poisson", "pairwise")),
+      makeDiscreteLearnerParam(id = "distribution", values = c("bernoulli", "adaboost", "huberized", "multinomial")),
       makeIntegerLearnerParam(id = "n.trees", default = 100L, lower = 1L),
       makeIntegerLearnerParam(id = "cv.folds", default = 0L),
       makeIntegerLearnerParam(id = "interaction.depth", default = 1L, lower = 1L),
@@ -16,9 +16,11 @@ makeRLearner.classif.gbm = function() {
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
     properties = c("twoclass", "multiclass", "missings", "numerics", "factors", "prob", "weights"),
+    par.vals = list(keep.data = FALSE),
     name = "Gradient Boosting Machine",
     short.name = "gbm",
-    note = ""
+    note = "`keep.data` is set to FALSE to reduce memory requirements. Note on param 'distribution': gbm will select 'bernoulli' by default for 2 classes, and 'multinomial' for
+      multiclass problems. The latter is the only setting that works for > 2 classes."
   )
 }
 
@@ -31,10 +33,10 @@ trainLearner.classif.gbm = function(.learner, .task, .subset, .weights = NULL,  
     d = getTaskData(.task, .subset)
   if (is.null(.weights)) {
     f = getTaskFormula(.task)
-    gbm::gbm(f, data = d, keep.data = FALSE, ...)
+    gbm::gbm(f, data = d, ...)
   } else  {
     f = getTaskFormula(.task)
-    gbm::gbm(f, data = d, keep.data = FALSE, weights = .weights, ...)
+    gbm::gbm(f, data = d, weights = .weights, ...)
   }
 }
 

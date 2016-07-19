@@ -4,13 +4,13 @@
 \alias{impute}
 \title{Impute and re-impute data}
 \usage{
-impute(data, target = character(0L), classes = list(), cols = list(),
+impute(obj, target = character(0L), classes = list(), cols = list(),
   dummy.classes = character(0L), dummy.cols = character(0L),
   dummy.type = "factor", force.dummies = FALSE, impute.new.levels = TRUE,
   recode.factor.levels = TRUE)
 }
 \arguments{
-\item{data}{[\code{data.frame}]\cr
+\item{obj}{[\code{data.frame} | \code{\link{Task}}]\cr
 Input data.}
 
 \item{target}{[\code{character}]\cr

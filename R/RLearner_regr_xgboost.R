@@ -25,6 +25,7 @@ makeRLearner.regr.xgboost = function() {
       makeNumericLearnerParam(id = "missing", default = 0),
       makeIntegerLearnerParam(id = "nthread", default = 16, lower = 1),
       makeIntegerLearnerParam(id = "nrounds", default = 1, lower = 1),
+      # FIXME nrounds seems to have no default in xgboost(), if it has 1, par.vals is redundant
       makeUntypedLearnerParam(id = "feval", default = NULL),
       makeIntegerLearnerParam(id = "verbose", default = 1, lower = 0, upper = 2),
       makeIntegerLearnerParam(id = "print.every.n", default = 1, lower = 1),
@@ -41,18 +42,17 @@ makeRLearner.regr.xgboost = function() {
 
 #' @export
 trainLearner.regr.xgboost = function(.learner, .task, .subset, .weights = NULL,  ...) {
-  td = getTaskDescription(.task)
   data = getTaskData(.task, .subset, target.extra = TRUE)
   target = data$target
   data = data.matrix(data$data)
 
   parlist = list(...)
   obj = parlist$objective
-  if (testNull(obj)) {
+  if (is.null(obj)) {
     obj = "reg:linear"
   }
 
-  if (testNull(.weights)) {
+  if (is.null(.weights)) {
     xgboost::xgboost(data = data, label = target, objective = obj, ...)
   } else {
     xgb.dmat = xgboost::xgb.DMatrix(data = data, label = target, weight = .weights)
@@ -62,7 +62,6 @@ trainLearner.regr.xgboost = function(.learner, .task, .subset, .weights = NULL, 
 
 #' @export
 predictLearner.regr.xgboost = function(.learner, .model, .newdata, ...) {
-  td = .model$task.desc
   m = .model$learner.model
   xgboost::predict(m, newdata = data.matrix(.newdata), ...)
 }

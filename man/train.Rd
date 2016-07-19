@@ -14,15 +14,14 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 \item{task}{[\code{\link{Task}}]\cr
 The task.}
 
-\item{subset}{[\code{integer} | \code{integer}]\cr
-An index vector specifying the training cases to be used for fitting.
-By default the complete data set is used.
-Logical vectors will be transformed to integer with \code{\link[base]{which}}.}
+\item{subset}{[\code{integer} | \code{logical}]\cr
+Selected cases. Either a logical or an index vector.
+By default all observations are used.}
 
 \item{weights}{[\code{numeric}]\cr
 Optional, non-negative case weight vector to be used during fitting.
 If given, must be of same length as \code{subset} and in corresponding order.
-By default \code{NULL} which means no weights are used unless specified in the task ([\code{\link{Task}}]).
+By default \code{NULL} which means no weights are used unless specified in the task (\code{\link{Task}}).
 Weights from the task will be overwritten.}
 }
 \value{

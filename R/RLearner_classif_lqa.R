@@ -1,3 +1,6 @@
+# FIXME: the underlying learner API seems to suport weights, but the learner does not really change when we use them
+# see mlr issue 857 for further info
+
 #' @export
 makeRLearner.classif.lqa = function() {
   makeRLearnerClassif(
@@ -29,8 +32,8 @@ makeRLearner.classif.lqa = function() {
       makeNumericLearnerParam(id = "c1", default = 1e-08, lower = 0),
       makeIntegerLearnerParam(id = "digits", default = 5L, lower = 1L)
     ),
-    properties = c("numerics", "prob", "twoclass", "weights"),
     mlr.defaults = list(penalty = 'lasso', lambda = 0.1),
+    properties = c("numerics", "prob", "twoclass"),
     name = "Fitting penalized Generalized Linear Models with the LQA algorithm",
     short.name = "lqa",
     note = '`penalty` has been set to `"lasso"` and `lambda` to `0.1` by default.'
@@ -53,8 +56,8 @@ trainLearner.classif.lqa = function(.learner, .task, .subset, .weights = NULL,
   penfun = getFromNamespace(args$penalty, "lqa")
   args$penalty = do.call(penfun, list(lambda = unlist(args[is.tune.param])))
   args = args[!is.tune.param]
-  if (!is.null(.weights))
-    args$weights = .weights
+  # if (!is.null(.weights))
+    # args$weights = .weights
 
   do.call(lqa::lqa.default, args)
 }

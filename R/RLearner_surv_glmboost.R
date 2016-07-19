@@ -19,16 +19,16 @@ makeRLearner.surv.glmboost = function() {
     properties = c("numerics", "factors", "ordered", "weights", "rcens"),
     name = "Gradient Boosting with Componentwise Linear Models",
     short.name = "glmboost",
-    note = paste(
+    note = stri_paste(
       "`family` has been set to `CoxPH()` by default.",
-      "Maximum number of boosting iterations is set via `mstop`, the actual number used for prediction is controlled by `m`."
+      "Maximum number of boosting iterations is set via `mstop`, the actual number used for prediction is controlled by `m`.",
+      sep = " "
     )
   )
 }
 
 #' @export
 trainLearner.surv.glmboost = function(.learner, .task, .subset, .weights = NULL, family, mstop, nu, m, use.formula, ...) {
-  envir = loadNamespace("mboost")
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu)
   if (use.formula) {
     f = getTaskFormula(.task)
@@ -61,7 +61,7 @@ predictLearner.surv.glmboost = function(.learner, .model, .newdata, use.formula,
     info = getTrainingInfo(.model)
     .newdata = as.matrix(fixDataForLearner(.newdata, info))
   }
-  if(.learner$predict.type == "response")
+  if (.learner$predict.type == "response")
     predict(.model$learner.model, newdata = .newdata, type = "link")
   else
     stop("Unknown predict type")

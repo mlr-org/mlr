@@ -43,8 +43,8 @@ Default is \code{TRUE}.}
 
 \item{check.packages}{[\code{logical(1)}]\cr
 Check if required packages are installed. Calls
-\code{find.package()}. If \code{create} is \code{TRUE},
-this is done implicitly and the value of this parameter is ignored.
+\code{find.package()}. If \code{create} is \code{TRUE}, this is done implicitly and the value of this parameter is ignored.
+If \code{create} is \code{FALSE} and \code{check.packages} is \code{TRUE} the returned table only contains learners whose dependencies are installed.
 Default is \code{TRUE}. If set to \code{FALSE}, learners that cannot
 actually be constructed because of missing packages may be returned.}
 
@@ -55,8 +55,8 @@ Default is \code{FALSE}.}
 }
 \value{
 [\code{data.frame} | \code{list} of \code{\link{Learner}}].
-  Either descriptive data.frame that allows access to all properties of learners or a list of created learner objects.
-  The latter is named by ids of listed learners.
+  Either a descriptive data.frame that allows access to all properties of the learners
+  or a list of created learner objects (named by ids of listed learners).
 }
 \description{
 Returns learning algorithms which have specific characteristics, e.g.

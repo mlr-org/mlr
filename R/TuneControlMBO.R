@@ -5,9 +5,9 @@
 # @param learner [\code{\link{Learner}}]\cr
 #   Regression learner to model performance landscape.
 # @param continue [\code{logical(1)}]\cr
-#   Resume calculation from previous run using \code[mboContinue}?
+#   Resume calculation from previous run using \code{mboContinue}?
 #   Requires \dQuote{save.file.path) to be set.
-#   Note that the \code{OptPath} in the \code{OptResult} will only include 
+#   Note that the \code{OptPath} in the \code{OptResult} will only include
 #   the evaluations after the continuation.
 #   The complete \code{OptPath} will be found in \code{$mbo.result$opt.path}.
 # @param mbo.control [\code{\link[mlrMBO]{MBOControl}}] \cr
@@ -30,19 +30,14 @@ makeTuneControlMBO = function(same.resampling.instance = TRUE, impute.val = NULL
   assertFlag(continue)
   assertFlag(mbo.keep.result)
 
-  if (is.null(budget))
-    budget = mbo.control$init.design.points + mbo.control$iters
-  else if (mbo.control$init.design.points > budget)
+  if(!is.null(budget) && !is.null(mbo.design) && nrow(mbo.design) > budget)
     stopf("The size of the initial design (init.design.points = %i) exceeds the given budget (%i).",
-      mbo.control$init.design.points, budget)
-  else if (mbo.control$init.design.points + mbo.control$iters > budget)
-    stopf("The given budget (%i) is smaller than the sum of init.design.points (%i) and iters (%i).",
-      budget, mbo.control$init.design.points, mbo.control$iters)
-  else if (mbo.control$init.design.points + mbo.control$iters < budget) {
-    catf("The budget was reduced from %i to %i, respecting 'init.design.points = %i' and 'iters = %i'.",
-      budget, mbo.control$init.design.points + mbo.control$iters,
-      mbo.control$init.design.points, mbo.control$iters)
-    budget = mbo.control$init.design.points + mbo.control$iters
+      nrow(mbo.design), budget)
+  else if (!is.null(budget)) {
+    if (!is.null(mbo.control$stop.conds))
+      warning("The mbo.control object already has a stopping condition. However we add another one respecting the budget.", mbo.control$init.design.points, budget)
+    setMBOControlTermination = get("setMBOControlTermination", envir = getNamespace("mlrMBO")) # FIXME: Remove if mlrMBO hits CRAN
+    mbo.control = setMBOControlTermination(mbo.control, max.evals = budget)
   }
 
   x = makeTuneControl(same.resampling.instance = same.resampling.instance, impute.val = impute.val,

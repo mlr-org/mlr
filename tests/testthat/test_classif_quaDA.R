@@ -1,7 +1,7 @@
 context("classif_quaDA")
 
 test_that("classif_quaDA", {
-  requirePackages("DiscriMiner", default.method = "load")
+  requirePackagesOrSkip("DiscriMiner", default.method = "load")
   set.seed(getOption("mlr.debug.seed"))
   m = DiscriMiner::quaDA(multiclass.train[,-multiclass.class.col], group = multiclass.train[,multiclass.class.col])
   #m2 = DiscriMiner::quaDA(binaryclass.train[,1:10], group = binaryclass.train[,binaryclass.class.col], prob = TRUE)

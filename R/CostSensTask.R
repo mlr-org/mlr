@@ -16,14 +16,14 @@ makeCostSensTask = function(id = deparse(substitute(data)), data, costs, blockin
     if (is.data.frame(costs))
       costs = as.matrix(costs)
     if (is.null(colnames(costs)))
-      colnames(costs) = paste0("y", seq_col(costs))
+      colnames(costs) = stri_paste("y", seq_col(costs))
   }
   task = makeSupervisedTask("costsens", data, target, weights, blocking, fixup.data = fixup.data, check.data = check.data)
   task$env$costs = costs
 
   if (check.data) {
-    assertNumeric(costs, any.missing = FALSE, lower = 0)
-    checkColumnNames(costs)
+    assertMatrix(costs, any.missing = FALSE, col.names = "strict")
+    assertNumeric(costs, lower = 0)
     if (nrow(costs) != nrow(data))
       stopf("Number of rows in cost matrix (%s) should equal the number of observations (%s).", nrow(costs), nrow(data))
     # we use ..y.. later in the models as a name for temp labels

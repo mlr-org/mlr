@@ -1,3 +1,12 @@
+library(checkmate)
+
+requirePackagesOrSkip = function (packs, default.method = "attach") {
+  ok = requirePackages(packs, why = "unit test", stop = FALSE, suppress.warnings = TRUE, default.method = default.method)
+  if (any(!ok))
+    skip(sprintf("Required packages not installed: %s", collapse(names(ok)[!ok])))
+  invisible(TRUE)
+}
+
 e1071CVToMlrCV = function(e1071.tune.result) {
   tr = e1071.tune.result
   inds = tr$train.ind
@@ -53,7 +62,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
     stop("Should not happen!")
   m = try(train(lrn, task, subset = inds))
 
-  if(inherits(m, "FailureModel")){
+  if (inherits(m, "FailureModel")){
     expect_is(old.predicts, "try-error")
   } else {
     cp = predict(m, newdata = test)
@@ -203,4 +212,9 @@ mylist = function(..., create = FALSE) {
     ids = lrns$class
     return(lrns[!grepl("mock", ids),])
   }
+}
+
+testFacetting = function(obj, nrow = NULL, ncol = NULL) {
+  expect_equal(obj$facet$nrow, nrow)
+  expect_equal(obj$facet$ncol, ncol)
 }

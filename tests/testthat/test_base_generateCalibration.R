@@ -1,4 +1,4 @@
-context("generateCalibrationData")
+context("generateCalibration")
 
 test_that("generateCalibrationData", {
   ## single prediction
@@ -49,4 +49,11 @@ test_that("generateCalibrationData", {
   doc = XML::xmlParse(path)
   #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(length(unique(cd$data$Learner))))
   #expect_that(length(XML::getNodeSet(doc, red.xpath, ns.svg)), equals(nrow(cd$proportion) + 1))
+  
+  # facetting works:
+  q = q = plotCalibration(cd, facet.wrap.nrow = 2L)
+  testFacetting(q, 2L)
+  q = q = plotCalibration(cd, facet.wrap.ncol = 2L)
+  testFacetting(q, ncol = 2L)
+
 })

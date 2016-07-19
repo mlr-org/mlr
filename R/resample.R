@@ -47,7 +47,7 @@
 #' @param ... [any]\cr
 #'   Further hyperparameters passed to \code{learner}.
 #' @template arg_showinfo
-#' @return [\code{\link{ResampleResult}}]. List of:
+#' @return [\code{\link{ResampleResult}}].
 #' @family resample
 #' @export
 #' @examples
@@ -80,7 +80,7 @@ resample = function(learner, task, resampling, measures, weights = NULL, models 
 
   r = resampling$size
   if (n != r)
-    stop(paste("Size of data set:", n, "and resampling instance:", r, "differ!"))
+    stop(stri_paste("Size of data set:", n, "and resampling instance:", r, "differ!", sep = " "))
 
   checkLearnerBeforeTrain(task, learner, weights)
 
@@ -124,14 +124,18 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   pp = rin$desc$predict
   if (pp == "train") {
     pred.train = predict(m, task, subset = train.i)
+    if (!is.na(pred.train$error)) err.msgs[2L] = pred.train$error
     ms.train = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
   } else if (pp == "test") {
     pred.test = predict(m, task, subset = test.i)
+    if (!is.na(pred.test$error)) err.msgs[2L] = pred.test$error
     ms.test = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
   } else { # "both"
     pred.train = predict(m, task, subset = train.i)
+    if (!is.na(pred.train$error)) err.msgs[2L] = pred.train$error
     ms.train = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
     pred.test = predict(m, task, subset = test.i)
+    if (!is.na(pred.test$error)) err.msgs[2L] = paste(err.msgs[2L], pred.test$error)
     ms.test = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
   }
   ex = extract(m)
@@ -194,7 +198,7 @@ mergeResampleResult = function(learner, task, iter.results, measures, rin, model
     pred = pred,
     models = if (models) lapply(iter.results, function(x) x$model) else NULL,
     err.msgs = err.msgs,
-    extract = if(is.function(extract)) extractSubList(iter.results, "extract", simplify = FALSE) else NULL,
+    extract = if (is.function(extract)) extractSubList(iter.results, "extract", simplify = FALSE) else NULL,
     runtime = runtime
   )
 }

@@ -1,4 +1,4 @@
-context("selectFeatures basic")
+context("selectFeatures")
 # check some basic stuff here, the rest is done in test_featsel_
 
 test_that("selectFeatures", {

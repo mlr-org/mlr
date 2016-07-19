@@ -8,7 +8,7 @@ makeRLearner.classif.ksvm = function() {
       makeLogicalLearnerParam(id = "scaled", default = TRUE),
       makeDiscreteLearnerParam(id = "type", default = "C-svc", values = c("C-svc", "nu-svc", "C-bsvc", "spoc-svc", "kbb-svc")),
       makeDiscreteLearnerParam(id = "kernel", default = "rbfdot",
-        values = c("vanilladot", "polydot", "rbfdot", "tanhdot", "laplacedot", "besseldot", "anovadot", "splinedot", "stringdot")),
+        values = c("vanilladot", "polydot", "rbfdot", "tanhdot", "laplacedot", "besseldot", "anovadot", "splinedot")),
       makeNumericLearnerParam(id = "C",
         lower = 0, default = 1, requires = quote(type %in% c("C-svc", "C-bsvc", "spoc-svc", "kbb-svc"))),
       makeNumericLearnerParam(id = "nu",

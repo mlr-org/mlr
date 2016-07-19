@@ -2,11 +2,11 @@
 makeRLearner.classif.glmnet = function() {
   makeRLearnerClassif(
     cl = "classif.glmnet",
-    # Required for predict to work properly :(
-    package = "!glmnet",
+    package = "glmnet",
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
-      makeNumericLearnerParam(id = "s", default = 0.01, lower = 0, upper = 1, when = "predict"),
+      makeNumericLearnerParam(id = "s", default = 0.01, lower = 0, when = "predict"),
+      # FIXME default for s in predict.glmnet() is NULL (entire sequence)
       makeLogicalLearnerParam(id = "exact", default = FALSE, when = "predict"),
       makeIntegerLearnerParam(id = "nlambda", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "lambda.min.ratio", lower = 0, upper = 1),
@@ -38,7 +38,7 @@ makeRLearner.classif.glmnet = function() {
     mlr.defaults = list(s = 0.01),
     name = "GLM with Lasso or Elasticnet Regularization",
     short.name = "glmnet",
-    note = "Factors automatically get converted to dummy columns, ordered factors to integer."
+    note = "The family parameter is set to `binomial` for two-class problems and to `multinomial` otherwise. Factors automatically get converted to dummy columns, ordered factors to integer."
   )
 }
 
@@ -69,7 +69,7 @@ trainLearner.classif.glmnet = function(.learner, .task, .subset, .weights = NULL
 predictLearner.classif.glmnet = function(.learner, .model, .newdata, ...) {
   info = getTrainingInfo(.model)
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
-  if(.learner$predict.type == "prob") {
+  if (.learner$predict.type == "prob") {
     p = predict(.model$learner.model, newx = .newdata, type = "response", ...)
     td = .model$task.desc
     if (length(td$class.levels) == 2L) {

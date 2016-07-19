@@ -17,7 +17,7 @@ makeCostSensRegrWrapper = function(learner) {
   learner = checkLearnerRegr(learner)
   # we cannot make use of 'se' here
   learner = setPredictType(learner, "response")
-  id = paste("costsens", learner$id, sep = ".")
+  id = stri_paste("costsens", learner$id, sep = ".")
   makeHomogeneousEnsemble(id, type = "costsens", learner, package = learner$package,
     learner.subclass = "CostSensRegrWrapper", model.subclass = "CostSensRegrModel")
 }
@@ -38,7 +38,7 @@ trainLearner.CostSensRegrWrapper = function(.learner, .task, .subset, ...) {
       check.data = FALSE, fixup.data = "quiet")
     models[[i]] = train(.learner$next.learner, task)
   }
-  m = makeHomChainModel(.learner, models)
+  makeHomChainModel(.learner, models)
 }
 
 #' @export
@@ -52,6 +52,6 @@ predictLearner.CostSensRegrWrapper = function(.learner, .model, .newdata, ...) {
 
 
 #' @export
-getLearnerProperties = function(learner) {
+getLearnerProperties.CostSensRegrWrapper = function(learner) {
   setdiff(getLearnerProperties(learner$next.learner), c("weights", "prob"))
 }

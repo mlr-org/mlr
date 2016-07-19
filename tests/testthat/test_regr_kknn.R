@@ -1,7 +1,8 @@
 context("regr_kknn")
 
 test_that("regr_kknn", {
-  requirePackages("!kknn", default.method = "load")
+  requirePackagesOrSkip("!kknn", default.method = "load")
+
   parset.list = list(
     list(),
     list(k = 1),
@@ -34,4 +35,3 @@ test_that("regr_kknn", {
   testCVParsets("regr.kknn", regr.df, regr.target, tune.train = tt, tune.predict = tp,
     parset.list = parset.list)
 })
-

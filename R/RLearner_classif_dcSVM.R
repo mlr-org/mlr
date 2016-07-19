@@ -22,8 +22,7 @@ makeRLearner.classif.dcSVM = function() {
     ),
     properties = c("twoclass", "numerics"),
     name = "Divided-Conquer Support Vector Machines",
-    short.name = "dcSVM",
-    note = ""
+    short.name = "dcSVM"
   )
 }
 
@@ -33,34 +32,39 @@ trainLearner.classif.dcSVM = function(.learner, .task, .subset, .weights = NULL,
   pars = list(...)
   m.flag = FALSE
   max.levels.flag = FALSE
-  k.flag = FALSE
-  if (!any(grepl('m', names(pars)))) {
+  if (!any(stri_detect_regex(names(pars), 'm'))) {
     m = 800
     m.flag = TRUE
   } else {
     m = pars$m
   }
-  if (!any(grepl('max.levels', names(pars)))) {
+  if (!any(stri_detect_regex(names(pars), 'max.levels'))) {
     max.levels = 1
     max.levels.flag = TRUE
   } else {
     max.levels = pars$max.levels
   }
-  if (!any(grepl('k', names(pars)))) {
+  if (!any(stri_detect_regex(names(pars), 'k'))) {
     k = 4
-    k.flag = TRUE
-  } else { 
+  } else {
     k = pars$k
   }
   m = min(nrow(d$data), m)
   min.cluster = ceiling(5*m/(k^max.levels))
   if (min.cluster>m) {
     f = getTaskFormula(.task)
-    result = e1071::svm(f, data = getTaskData(.task, .subset), probability = FALSE, ...)
+    # map kernel to corresponding e1071 kernel
+    if (!is.null(pars$kernel)) {
+      kernel = c("linear", "polynomial", "radial")[pars$kernel]
+    } else {
+      kernel = c("radial")
+    }
+    pars$kernel = kernel
+    result = do.call(e1071::svm, c(f, list(data = getTaskData(.task, .subset), probability = FALSE), pars))
     return(result)
   }
 
-  
+
   if (m.flag && max.levels.flag) {
     SwarmSVM::dcSVM(x = d$data, y = d$target, m = m, max.levels = max.levels, ...)
   } else if (!m.flag && max.levels.flag) {
@@ -74,6 +78,8 @@ trainLearner.classif.dcSVM = function(.learner, .task, .subset, .weights = NULL,
 
 #' @export
 predictLearner.classif.dcSVM = function(.learner, .model, .newdata, ...) {
-  factor(predict(.model$learner.model, newdata = .newdata, ...), 
-    labels = .model$factor.levels$Class)
+  prediction = predict(.model$learner.model, newdata = .newdata, ...)
+  if (!is.factor(prediction))  # depends on parameters AND data
+    prediction = factor(prediction, levels = c(1, 2), labels = .model$factor.levels[[1]])
+  prediction
 }

@@ -10,7 +10,7 @@ test_that("predict", {
   cm2 = train(makeLearner("classif.lda"), multiclass.task, subset = inds)
   cp2 = predict(cm2, newdata = data[inds,])
   cp2b = predict(cm2, newdata = data[inds,-5])
-  requirePackages("MASS", default.method = "load")
+  requirePackagesOrSkip("MASS", default.method = "load")
   ext2 = MASS::lda(formula, data = data[inds,])
   pred2 = predict(ext2,newdata = data[inds,])$class
 
@@ -130,3 +130,10 @@ test_that("predict.threshold", {
   expect_true(all(r$pred$data$response == td$positive))
 })
 
+test_that("predict doesn't warn if 'on.learner.error' is 'quiet'", {
+  lrn = makeLearner("classif.qda", predict.type = "prob",
+    config = list(on.learner.error = "quiet"))
+  mod = train(lrn, iris.task, subset = c(1L, 51L, 101L))
+  expect_true(inherits(mod, "FailureModel"))
+  expect_warning(predict(mod, multiclass.task), NA)
+})

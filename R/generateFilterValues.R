@@ -6,6 +6,7 @@
 #'
 #' @family generate_plot_data
 #' @family filter
+#' @aliases FilterValues
 #'
 #' @template arg_task
 #' @param method [\code{character}]\cr
@@ -14,37 +15,62 @@
 #' @param nselect [\code{integer(1)}]\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
 #' @param ... [any]\cr
-#'   Passed down to selected method.
-#' @return [\code{\link{FilterValues}}].
-#' @family filter
+#'   Passed down to selected method. Can only be use if \code{method} contains one element.
+#' @param more.args [named list]\cr
+#'   Extra args passed down to filter methods. List elements are named with the filter
+#'   \code{method} name the args should be passed down to.
+#'   A more general and flexible option than \code{...}.
+#'   Default is empty list.
+#' @return [\code{FilterValues}]. A \code{list} containing:
+#'   \item{task.desc}{[\code{\link{TaskDesc}}]\cr
+#'	   Task description.}
+#'   \item{data}{[\code{data.frame}] with columns:
+#'     \itemize{
+#'       \item \code{name} Name of feature.
+#'       \item \code{type} Feature column type.
+#'       \item A column for each \code{method} with
+#'                   the feature importance values.
+#'     }}
 #' @export
-generateFilterValuesData = function(task, method = "rf.importance", nselect = getTaskNFeats(task), ...) {
+generateFilterValuesData = function(task, method = "rf.importance", nselect = getTaskNFeats(task), ..., more.args = list()) {
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
   assertSubset(method, choices = ls(.FilterRegister), empty.ok = FALSE)
   td = getTaskDescription(task)
   filter = lapply(method, function(x) .FilterRegister[[x]])
   if (!(any(sapply(filter, function(x) !isScalarNA(filter$pkg)))))
-    dummy = lapply(filter, function(x)
-      requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
+    lapply(filter, function(x) requirePackages(x$pkg, why = "generateFilterValuesData", default.method = "load"))
   check_task = sapply(filter, function(x) td$type %nin% x$supported.tasks)
   if (any(check_task))
     stopf("Filter(s) '%s' not campatible with task of type '%s'",
-          paste(method[check_task], collapse = ", "), td$type)
+          stri_paste(method[check_task], collapse = ", ", sep = " "), td$type)
 
   check_feat = lapply(filter, function(x) setdiff(names(td$nfeat[td$n.feat > 0L]), x$supported.features))
   check_length = sapply(check_feat, length) > 0L
   if (any(check_length)) {
-    unsupported = check_feat[check_length]
     stopf("Filter(s) '%s' not compatible with features of type '%s' respectively.",
           method[check_length],
-          paste(sapply(check_feat[check_length], function(x) paste(x, collapse = ", ")), collapse = ", and"))
+          stri_paste(sapply(check_feat[check_length], function(x) stri_paste(x, collapse = ", ", sep = " ")), collapse = ", and", sep = " "))
   }
   assertCount(nselect)
+  assertList(more.args, names = "unique", max.len = length(method))
+  assertSubset(names(more.args), method)
+  dot.args = list(...)
+  if (length(dot.args) > 0L && length(more.args) > 0L)
+    stopf("Do not use both 'more.args' and '...' here!")
+
+  # we have dot.args, so we cannot have more.args. either complain (> 1 method) or
+  # auto-setup more.args as list
+  if (length(dot.args) > 0L) {
+    if (length(method) == 1L)
+     more.args = namedList(method, dot.args)
+    else
+      stopf("You use more than 1 filter method. Please pass extra arguments via 'more.args' and not '...' to filter methods!")
+  }
 
   fn = getTaskFeatureNames(task)
 
   fval = lapply(filter, function(x) {
-    x = do.call(x$fun, c(list(task = task, nselect = nselect), list(...)))
+    x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[x$name]]))
     missing.score = setdiff(fn, names(x))
     x[missing.score] = NA_real_
     x[match(names(x), fn)]
@@ -60,20 +86,6 @@ generateFilterValuesData = function(task, method = "rf.importance", nselect = ge
             task.desc = td,
             data = out)
 }
-#' Result of \code{\link{generateFilterValuesData}}.
-#'
-#' @family filter
-#'
-#' \itemize{
-#'   \item{task.desc [\code{\link{TaskDesc}}]}{Task description.}
-#'   \item{data [\code{data.frame}]}{Has columns: \code{name} = Names of features;
-#'     \code{type} = Feature column type; and a column for each \code{method} with
-#'                   the feature values.}
-#' }
-#' @name FilterValues
-#' @rdname FilterValues
-#' @family filter
-NULL
 #' @export
 print.FilterValues = function(x, ...) {
   catf("FilterValues:")
@@ -130,12 +142,13 @@ getFilterValues = function(task, method = "rf.importance", nselect = getTaskNFea
 #'   Colors for factor and numeric features.
 #'   \code{FALSE} means no colors.
 #'   Default is \code{FALSE}.
+#' @template arg_facet_nrow_ncol
 #' @template ret_gg2
 #' @export
 #' @examples
 #' fv = generateFilterValuesData(iris.task, method = "chi.squared")
 #' plotFilterValues(fv)
-plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols = FALSE) {
+plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols = FALSE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL) {
   assertClass(fvalues, classes = "FilterValues")
   assertChoice(sort, choices = c("dec", "inc", "none"))
   if (!(is.null(fvalues$method)))
@@ -157,22 +170,23 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
     mp = aes_string(x = "name", y = "value", fill = "type")
   else
     mp = aes_string(x = "name", y = "value")
-  plt = ggplot2::ggplot(data = data, mapping = mp)
-  plt = plt + ggplot2::geom_bar(position = "identity", stat = "identity")
+  plt = ggplot(data = data, mapping = mp)
+  plt = plt + geom_bar(position = "identity", stat = "identity")
   if (length(unique(data$method)) > 1L) {
-    plt = plt + ggplot2::facet_wrap(~ method, scales = "free_y")
-    plt = plt + ggplot2::labs(title = sprintf("%s (%i features)",
+    plt = plt + facet_wrap(~ method, scales = "free_y",
+      nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
+    plt = plt + labs(title = sprintf("%s (%i features)",
                                               fvalues$task.desc$id,
                                               sum(fvalues$task.desc$n.feat)),
                               x = "", y = "")
   } else {
-    plt = plt + ggplot2::labs(title = sprintf("%s (%i features), filter = %s",
+    plt = plt + labs(title = sprintf("%s (%i features), filter = %s",
                                               fvalues$task.desc$id,
                                               sum(fvalues$task.desc$n.feat),
                                               methods),
                               x = "", y = "")
   }
-  plt = plt + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
+  plt = plt + theme(axis.text.x = element_text(angle = 45, hjust = 1))
   return(plt)
 }
 #' Plot filter values using ggvis.
@@ -198,7 +212,6 @@ plotFilterValuesGGVIS = function(fvalues, feat.type.cols = FALSE) {
     stop("fvalues must be generated by generateFilterValuesData, not getFilterValues, which is deprecated.")
 
   data = fvalues$data
-  methods = colnames(data[, -which(colnames(data) %in% c("name", "type")), drop = FALSE])
   data = reshape2::melt(data, id.vars = c("name", "type"), variable = "method")
 
   create_plot = function(data, feat.type.cols) {

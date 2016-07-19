@@ -26,7 +26,7 @@ makeRLearner.classif.ada = function() {
       makeIntegerLearnerParam(id = "xval", default = 10L, lower = 0L, tunable = FALSE)
     ),
     mlr.defaults = list(xval = 0L),
-    properties = c("twoclass", "numerics", "factors", "prob", "weights"),
+    properties = c("twoclass", "numerics", "factors", "prob"),
     name = "ada Boosting",
     short.name = "ada",
     note = "`xval` has been set to `0` by default for speed."
@@ -38,7 +38,7 @@ trainLearner.classif.ada = function(.learner, .task, .subset, .weights = NULL,  
   f = getTaskFormula(.task)
   #preserve list for certain parameters passed to rpart.control
   dots = list(...)
-  to.list = c("maxdepth", "cp", "minsplit", "xval")
+  to.list = c("maxdepth", "cp", "minsplit", "xval", "minbucket", "maxcompete", "maxsurrogate", "usesurrogate", "surrogatestyle")
   list = filterNull(dots[to.list])
   dots = dropNamed(dots, to.list)
   args = c(dots, list(list))

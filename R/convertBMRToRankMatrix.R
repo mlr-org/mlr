@@ -1,7 +1,5 @@
 #' @title Convert BenchmarkResult to a rank-matrix.
 #'
-#' @description
-#' Computes a matrix of all the ranks of different algorithms over different datasets (tasks).
 #' @description Computes a matrix of all the ranks of different algorithms
 #' over different datasets (tasks). Ranks are computed from aggregated
 #' measures.
@@ -11,7 +9,7 @@
 #' @template arg_bmr
 #' @template arg_measure
 #' @param ties.method [\code{character(1)}]\cr
-#'   see \code{\link[base]{rank}} for details.
+#'   See \code{\link[base]{rank}} for details.
 #' @template arg_aggregation_method
 #' @return [\code{matrix}] with measure ranks as entries.
 #'   The matrix has one row for each \code{learner}, and one column for each \code{task}.
@@ -41,16 +39,17 @@ convertBMRToRankMatrix = function(bmr, measure = NULL, ties.method = "average", 
   # calculate ranks, rank according to minimize option of the measure
   if (!measure$minimize)
     df$x = -df$x
-  df = ddply(df, "task.id", function(d) {
+  df = plyr::ddply(df, "task.id", function(d) {
     d$alg.rank = rank(d$x, ties.method = ties.method)
     return(d)
   })
 
   # convert into matrix, rows = leaner, cols = tasks
-  df = melt(df, c("task.id", "learner.id"), "alg.rank")
-  df = dcast(df, learner.id ~ task.id )
-  rownames(df) = df$learner.id
-  mat = as.matrix(df[,colnames(df) != "learner.id"])
-
+  df = reshape2::melt(df, c("task.id", "learner.id"), "alg.rank")
+  df = reshape2::dcast(df, learner.id ~ task.id )
+  task.id.names = setdiff(colnames(df), "learner.id")
+  mat = as.matrix(df[, task.id.names])
+  rownames(mat) = df$learner.id
+  colnames(mat) = task.id.names
   return(mat)
 }

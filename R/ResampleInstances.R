@@ -8,7 +8,7 @@ instantiateResampleInstance.DPSDesc = function(desc, size, task) {
   if (desc$iters > size)
     stopf("Cannot use more folds (%i) than size (%i)!", desc$iters, size)
   x = getTaskData(task, target.extra=TRUE)$data
-  if(!all(sapply(x, is.numeric))) stop("All features must be numeric")
+  if (!all(sapply(x, is.numeric))) stop("All features must be numeric")
   test.inds = doDPSSplits(x, k = log2(desc$iters))
   makeResampleInstanceInternal(desc, size, test.inds = test.inds)
 }
@@ -119,7 +119,7 @@ doDPSSplits = function(x, k, inds = 1:nrow(x)) {
     s1 = s[[1L]]
     s2 = s[[2L]]
 
-    if(any(is.na(x1)) | any(is.na(x2)))
+    if (anyMissing(x1) || anyMissing(x2))
       stop("There are NAs")
 
     s = c(

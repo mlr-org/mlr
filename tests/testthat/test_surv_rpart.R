@@ -1,7 +1,8 @@
 context("surv_rpart")
 
 test_that("surv_rpart", {
-  requirePackages("rpart", default.method = "load")
+  requirePackagesOrSkip("rpart", default.method = "load")
+
   parset.list = list(
     list(),
     list(minsplit=10, cp=0.005),

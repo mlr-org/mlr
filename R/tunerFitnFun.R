@@ -18,6 +18,27 @@ tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
   convertYForTuner(res$y, measures, ctrl)
 }
 
+tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas) {
+  force(learner)
+  force(task)
+  force(resampling)
+  force(measures)
+  force(par.set)
+  force(ctrl)
+  force(opt.path)
+  force(show.info)
+  force(convertx)
+  force(remove.nas)
+  # remove trafos for mbo, we do this in tunerFitnFun
+  ps2 = par.set
+  for (i in seq_along(ps2$pars))
+    ps2$pars[[i]]$trafo = NULL
+  f = smoof::makeSingleObjectiveFunction(
+    fn = function(x) {
+      tunerFitnFun(x, learner, task, resampling, measures, par.set, ctrl, opt.path, show.info, convertx, remove.nas)
+  }, par.set = ps2, has.simple.signature = FALSE, noisy = TRUE)
+}
+
 # multiple xs in parallel
 tunerFitnFunVectorized = function(xs, learner, task, resampling, measures, par.set, ctrl,
   opt.path, show.info, convertx, remove.nas) {

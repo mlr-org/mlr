@@ -1,7 +1,8 @@
 context("cluster_Cobweb")
 
 test_that("cluster_Cobweb", {
-  library(RWeka)
+  requirePackagesOrSkip("RWeka", default.method = "load")
+
   parset.list = list(
     list()
   )
@@ -10,9 +11,9 @@ test_that("cluster_Cobweb", {
 
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
-    ctrl = do.call(Weka_control, parset)
+    ctrl = do.call(RWeka::Weka_control, parset)
     set.seed(getOption("mlr.debug.seed"))
-    m = Cobweb(noclass.train, control = ctrl)
+    m = RWeka::Cobweb(noclass.train, control = ctrl)
     p = predict(m, noclass.test) + 1
     old.predicts.list[[i]] = p
   }

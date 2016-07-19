@@ -1,4 +1,4 @@
-#' @title Returns a list of mlr's options
+#' @title Returns a list of mlr's options.
 #'
 #' @description
 #' Gets the options for mlr.
@@ -7,10 +7,10 @@
 #' @export
 #' @family configure
 getMlrOptions = function() {
-  mlr.inds = substr(names(options()), start = 1L, stop = 4L) == "mlr."
+  mlr.inds = stri_sub(names(options()), from = 1L, to = 4L) == "mlr."
   mlr.options = options()[mlr.inds]
-  names(mlr.options) = substring(names(mlr.options), first = 5L)
-  mlr.debug.inds = substr(names(mlr.options), start = 1L, stop = 6L) == "debug."
+  names(mlr.options) = stri_sub(names(mlr.options), from = 5L)
+  mlr.debug.inds = stri_sub(names(mlr.options), from = 1L, to = 6L) == "debug."
   mlr.options[!mlr.debug.inds]
 }
 

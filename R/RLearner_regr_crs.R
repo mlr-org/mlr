@@ -42,8 +42,7 @@ makeRLearner.regr.crs = function() {
     mlr.defaults = list(),
     properties = c("numerics", "factors", "se", "weights"),
     name = "Regression Splines",
-    short.name = "crs",
-    note = ""
+    short.name = "crs"
   )
 }
 

@@ -38,7 +38,7 @@ makeMulticlassWrapper = function(learner, mcw.method = "onevsrest") {
     checkFunction(mcw.method, args = "task")
   )
   pv = list(mcw.method = mcw.method)
-  id = paste(learner$id, "multiclass", sep = ".")
+  id = stri_paste(learner$id, "multiclass", sep = ".")
 
   x = makeHomogeneousEnsemble(id = id, type = "classif", next.learner = learner,
     package = learner$package,  par.set = ps, par.vals = pv,
@@ -123,7 +123,6 @@ multi.to.binary = function(target, codematrix) {
   if (anyMissing(codematrix))
     stop("Code matrix contains missing values!")
   levs = levels(target)
-  no.class = length(levs)
   rns = rownames(codematrix)
   if (is.null(rns) || !setequal(rns, levs))
     stop("Rownames of code matrix have to be the class levels!")

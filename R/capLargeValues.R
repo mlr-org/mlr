@@ -34,7 +34,7 @@
 #' capLargeValues(iris, threshold = 5, impute = 5)
 capLargeValues = function(obj, target = character(0L), cols = NULL,
   threshold = Inf, impute = threshold, what = "abs") {
-  assertCharacter(target, any.missing = FALSE)
+  checkTargetPreproc(obj, target, cols)
   assertNumber(threshold, lower = 0)
   assertNumber(impute, lower = 0)
   assertChoice(what, c("abs", "pos", "neg"))
@@ -44,9 +44,6 @@ capLargeValues = function(obj, target = character(0L), cols = NULL,
 #' @export
 capLargeValues.Task = function(obj, target = character(0L), cols = NULL,
   threshold = Inf, impute = threshold, what = "abs") {
-  if (length(target) != 0L) {
-    stop("Don't provide target names if you pass a task!")
-  }
   d = getTaskData(obj)
   d = capLargeValues.data.frame(d, target = character(0L), cols = cols,
     threshold = threshold, impute = impute)
@@ -56,21 +53,22 @@ capLargeValues.Task = function(obj, target = character(0L), cols = NULL,
 #' @export
 capLargeValues.data.frame = function(obj, target = character(0L), cols = NULL,
   threshold = Inf, impute = threshold, what = "abs") {
-  checkTargetPreproc(obj, target, cols)
-  cns = colnames(obj)[vlapply(obj, is.numeric)]
-  cns = setdiff(cns, target)
+  allnumfeats = colnames(obj)[vlapply(obj, is.numeric)]
+  allnumfeats = setdiff(allnumfeats, target)
 
-  if (!is.null(cols)) {
-    assertSubset(cols, cns)
-    cns = intersect(cns, cols)
-  }
+  # check that user requested cols are only numeric cols with the target
+  if (!is.null(cols))
+    assertSubset(cols, allnumfeats)
+  else
+    cols = allnumfeats
+
   fun = switch(what,
     abs = function(x) abs(x) > threshold,
     pos = function(x) abs(x) > threshold & x > 0,
     neg = function(x) abs(x) > threshold & x < 0
   )
 
-  for (cn in cns) {
+  for (cn in cols) {
     x = obj[[cn]]
     ind = which(fun(x))
     if (length(ind) > 0L)

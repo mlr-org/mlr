@@ -35,6 +35,3 @@ test_that("tuneDesign works with dependent params", {
   expect_true(getOptPathLength(tr$opt.path) == 3 + 3 * 3)
   expect_true(!is.na(tr$y))
 })
-
-
-

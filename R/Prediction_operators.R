@@ -49,14 +49,14 @@ getPredictionProbabilities = function(pred, cl) {
     stop("Probabilities not present in Prediction object!")
   cns = colnames(pred$data)
   if (ttype %in% c("classif", "multilabel")) {
-    cl2 = paste("prob", cl, sep = ".")
+    cl2 = stri_paste("prob", cl, sep = ".")
     if (!all(cl2 %in% cns))
       stopf("Trying to get probabilities for nonexistant classes: %s", collapse(cl))
     y = pred$data[, cl2]
     if (length(cl) > 1L)
       colnames(y) = cl
   } else if (ttype == "cluster") {
-    y = pred$data[, grepl("prob\\.", cns)]
+    y = pred$data[, stri_detect_regex(cns, "prob\\.")]
     colnames(y) = seq_col(y)
   }
   return(y)
@@ -106,12 +106,12 @@ getPredictionResponse = function(pred) {
 #' @export
 getPredictionResponse.default = function(pred) {
   # this should work for classif, regr and cluster and surv
-  pred$data[, "response", drop = TRUE]
+  pred$data[["response"]]
 }
 
 #' @export
 getPredictionResponse.PredictionMultilabel = function(pred) {
-  i = grepl("^response\\.", colnames(pred$data))
+  i = stri_detect_regex(colnames(pred$data), "^response\\.")
   m = as.matrix(pred$data[, i])
   setColNames(m, pred$task.desc$class.levels)
 }
@@ -124,7 +124,7 @@ getPredictionSE = function(pred) {
 
 #' @export
 getPredictionSE.default = function(pred) {
-  pred$data[, "se", drop = TRUE]
+  pred$data[["se"]]
 }
 
 #' @rdname getPredictionResponse
@@ -135,7 +135,7 @@ getPredictionTruth = function(pred) {
 
 #' @export
 getPredictionTruth.default = function(pred) {
-  pred$data[, "truth", drop = TRUE]
+  pred$data[["truth"]]
 }
 
 #' @export
@@ -151,7 +151,7 @@ getPredictionTruth.PredictionSurv = function(pred) {
 
 #' @export
 getPredictionTruth.PredictionMultilabel = function(pred) {
-  i = grepl("^truth\\.", colnames(pred$data))
+  i = stri_detect_regex(colnames(pred$data), "^truth\\.")
   m = as.matrix(pred$data[, i])
   setColNames(m, pred$task.desc$class.levels)
 }

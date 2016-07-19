@@ -3,12 +3,13 @@
 [![Build Status](https://travis-ci.org/mlr-org/mlr.svg?branch=master)](https://travis-ci.org/mlr-org/mlr)
 [![CRAN Status Badge](http://www.r-pkg.org/badges/version/mlr)](https://cran.r-project.org/web/packages/mlr)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/mlr)](https://cran.rstudio.com/web/packages/mlr/index.html)
+[![StackOverflow](https://img.shields.io/badge/stackoverflow-mlr-blue.svg)](https://stackoverflow.com/questions/tagged/mlr)
 
 * [Offical CRAN release site](http://cran.r-project.org/web/packages/mlr/)
 * Detailed Tutorial:
     * [mlr release](https://mlr-org.github.io/mlr-tutorial/release/html/) ([online](https://mlr-org.github.io/mlr-tutorial/release/html/), [download for offline usage](https://mlr-org.github.io/mlr-tutorial/release/mlr_tutorial.zip))
     * [mlr devel](https://mlr-org.github.io/mlr-tutorial/devel/html/) ([online](https://mlr-org.github.io/mlr-tutorial/devel/html/), [download for offline usage](https://mlr-org.github.io/mlr-tutorial/devel/mlr_tutorial.zip))
-* [R Documentation in HTML](http://www.rdocumentation.org/packages/mlr)
+* [R Documentation in HTML](http://rpackages.ianhowson.com/cran/mlr/)
 * Internal [Jenkins test infrastructure](https://hagakure.cs.ubc.ca:2893/view/mlr/) - only for developers.
 * Install the development version
 
@@ -33,8 +34,8 @@ parallelize your experiments as well. This often forces users to make crummy
 trade-offs in their experiments due to time constraints or lacking expert
 programming skills. **mlr** provides this infrastructure so that you can focus
 on your experiments! The framework provides supervised methods like
-classification, regression and survival analysis and their corresponding
-evaluation and optimization as well as unsupervised methods like clustering. It
+classification, regression and survival analysis along with their corresponding
+evaluation and optimization methods, as well as unsupervised methods like clustering. It
 is written in a way that you can extend it yourself or deviate from the
 implemented convenience methods and construct your own complex experiments or
 algorithms.
@@ -49,17 +50,17 @@ Features
 * Parameter system for learners to encode data types and constraints
 * Many convenience methods and generic building blocks for your
   machine learning experiments
-* Resampling like bootstrapping, cross-validation and subsampling
+* Resampling methods like bootstrapping, cross-validation and subsampling
 * Extensive visualizations for e.g. ROC curves, predictions and partial
   predictions
-* Benchmarking of learners for muliple data sets
+* Benchmarking of learners for multiple data sets
 * Easy hyperparameter tuning using different optimization strategies, including
   potent configurators like iterated F-racing (irace) or sequential model-based
   optimization
 * Variable selection with filters and wrappers
 * Nested resampling of models with tuning and feature selection
 * Cost-sensitive learning, threshold tuning and imbalance correction
-* Wrapper mechanism to extend learner functionality and complex and custom ways
+* Wrapper mechanism to extend learner functionality in complex and custom ways
 * Combine different processing steps to a complex data mining chain that can be jointly optimized
 * OpenML connector for the Open Machine Learning server
 * Extension points to integrate your own stuff
@@ -76,6 +77,8 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
 [release](http://cran.r-project.org/web/packages/mlr/NEWS) and here for the
 [devel](https://github.com/mlr-org/mlr/blob/master/NEWS) version on Github.
 
+* 2016-02-13:
+  * mlr 2.8 released to CRAN. Mainly a release with bug fix release and many minor improvements, also regarding the new ggplot2 release.
 * 2015-11-26:
   * mlr 2.6 released to CRAN. A mini update, which was required as ViperCharts seems to be offline and we needed to switch off its test for CRAN. Contains also some fixes and new learners.
 * 2015-11-21:

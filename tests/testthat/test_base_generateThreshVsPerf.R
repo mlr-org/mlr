@@ -1,4 +1,4 @@
-context("generateThreshVsPerfData")
+context("generateThreshVsPerf")
 
 test_that("generateThreshVsPerfData", {
   ## single prediction
@@ -18,7 +18,7 @@ test_that("generateThreshVsPerfData", {
   plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE)
   ggsave(path)
   doc = XML::xmlParse(path)
-  #expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(length(unique(pvs$data$learner))))
+  #expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(1L))
 
   ## resample prediction
   rdesc = makeResampleDesc("CV", iters = 2L)
@@ -31,10 +31,17 @@ test_that("generateThreshVsPerfData", {
   #expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(length(pvs$measures)))
   ## plotThreshVsPerfGGVIS(pvs)
 
+  pvs = generateThreshVsPerfData(r, list(tpr, fpr), aggregate = FALSE)
+  plotThreshVsPerf(pvs)
+  ggsave(path)
+  doc = XML::xmlParse(path)
+  #expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)),
+  #            equals(length(pvs$measures) * length(unique(pvs$data$iter))))
+
   plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE)
   ggsave(path)
   doc = XML::xmlParse(path)
-  #expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(length(unique(pvs$data$learner))))
+  #expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(length(unique(pvs$data$iter))))
 
   pvs = generateThreshVsPerfData(r, list(tpr, fpr), aggregate = FALSE)
   plotROCCurves(pvs, list(fpr, tpr), diagonal = FALSE)
@@ -65,7 +72,7 @@ test_that("generateThreshVsPerfData", {
   ggsave(path)
   doc = XML::xmlParse(path)
   #expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)),
-              #equals(rdesc$iters * length(unique(pvs$data$learner))))
+  #            equals(rdesc$iters * length(unique(pvs$data$learner))))
 
   ## list of resample predictions
   rs = lapply(lrns, crossval, task = binaryclass.task, iters = 2L)
@@ -91,20 +98,25 @@ test_that("generateThreshVsPerfData", {
   doc = XML::xmlParse(path)
   #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(length(unique(pvs$data$learner))))
   #expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)),
-              #equals(rdesc$iters * length(unique(pvs$data$learner))))
+  #            equals(rdesc$iters * length(unique(pvs$data$learner))))
 
   ## test prediction obj with custom measure
   classes = levels(getTaskTargets(binaryclass.task))
   mcm = matrix(sample(0:3, size = (length(classes))^2, TRUE), ncol = length(classes))
   rownames(mcm) = colnames(mcm) = classes
   costs = makeCostMeasure(id = "asym.costs", name = "Asymmetric costs",
-                          minimize = TRUE, costs = mcm, binaryclass.task, combine = mean)
+                          minimize = TRUE, costs = mcm, combine = mean)
   pvs.custom = generateThreshVsPerfData(pred, costs)
   plotThreshVsPerf(pvs.custom)
   ggsave(path)
   doc = XML::xmlParse(path)
-  #expect_that(length(XML::getNodeSet(doc, lightgrey.xpath, ns.svg)), equals(length(pvs.custom$measures)))
-  #expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(length(unique(pvs.custom$data$learner))))
-
+  #expect_that(length(XML::getNodeSet(doc, black.line.xpath, ns.svg)), equals(1L))
   ## plotThreshVsPerfGGVIS(pvs.custom)
+
+  # test that facetting works for plotThreshVsPerf
+
+  q = plotThreshVsPerf(pvs, facet.wrap.nrow = 2L)
+  testFacetting(q, nrow = 2L)
+  q = plotThreshVsPerf(pvs, facet.wrap.ncol = 2L)
+  testFacetting(q, ncol = 2L)
 })

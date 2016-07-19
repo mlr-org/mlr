@@ -1,8 +1,7 @@
 context("classif_blackboost")
 
 test_that("classif_blackboost", {
-  requirePackages("mboost", default.method = "load")
-  requirePackages("party", default.method = "load")
+  requirePackagesOrSkip(c("mboost", "party"), default.method = "load")
 
   parset.list1 = list(
     list(family = mboost::Binomial(), tree_control = party::ctree_control(maxdepth = 2),
@@ -36,6 +35,3 @@ test_that("classif_blackboost", {
   testProbParsets("classif.blackboost", binaryclass.df, binaryclass.target,
     binaryclass.train.inds, old.probs.list, parset.list2)
 })
-
-
-

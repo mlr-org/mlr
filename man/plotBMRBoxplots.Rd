@@ -2,10 +2,11 @@
 % Please edit documentation in R/plotBMRBoxplots.R
 \name{plotBMRBoxplots}
 \alias{plotBMRBoxplots}
-\title{Create a box- or violin plots for a BenchmarkResult}
+\title{Create box or violin plots for a BenchmarkResult.}
 \usage{
 plotBMRBoxplots(bmr, measure = NULL, style = "box", order.lrns = NULL,
-  order.tsks = NULL, pretty.names = TRUE)
+  order.tsks = NULL, pretty.names = TRUE, facet.wrap.nrow = NULL,
+  facet.wrap.ncol = NULL)
 }
 \arguments{
 \item{bmr}{[\code{\link{BenchmarkResult}}]\cr
@@ -13,7 +14,7 @@ Benchmark result.}
 
 \item{measure}{[\code{\link{Measure}}]\cr
 Performance measure.
-Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
+Default is the first measure used in the benchmark experiment.}
 
 \item{style}{[\code{character(1)}]\cr
 Type of plot, can be \dQuote{box} for a boxplot or \dQuote{violin} for a violin plot.
@@ -28,13 +29,17 @@ Character vector with \code{task.ids} in new order.}
 \item{pretty.names}{[\code{logical(1)}]\cr
 Whether to use the \code{\link{Measure}} name instead of the id in the plot.
 Default is \code{TRUE}.}
+
+\item{facet.wrap.nrow, facet.wrap.ncol}{[\code{integer()}]\cr
+Number of rows and columns for facetting. Default for both is \code{NULL}.
+In this case ggplot's \code{facet_wrap} will choose the layout itself.}
 }
 \value{
 ggplot2 plot object.
 }
 \description{
-Plots boxplots or violin plots for a selected \code{measure} across all iterations
-of the resampling strategy, faceted by the \code{task.id}
+Plots box or violin plots for a selected \code{measure} across all iterations
+of the resampling strategy, faceted by the \code{task.id}.
 }
 \examples{
 # see benchmark
@@ -50,6 +55,7 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRFeatSelResults}},
   \code{\link{getBMRFilteredFeatures}},
   \code{\link{getBMRLearnerIds}},
+  \code{\link{getBMRLearnerShortNames}},
   \code{\link{getBMRLearners}},
   \code{\link{getBMRMeasureIds}},
   \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},
@@ -69,11 +75,9 @@ Other plot: \code{\link{plotBMRRanksAsBarChart}},
   \code{\link{plotFilterValues}},
   \code{\link{plotLearningCurveGGVIS}},
   \code{\link{plotLearningCurve}},
-  \code{\link{plotPartialPredictionGGVIS}},
-  \code{\link{plotPartialPrediction}},
+  \code{\link{plotPartialDependenceGGVIS}},
+  \code{\link{plotPartialDependence}},
   \code{\link{plotROCCurves}},
-  \code{\link{plotROCRCurvesGGVIS}},
-  \code{\link{plotROCRCurves}},
   \code{\link{plotThreshVsPerfGGVIS}},
   \code{\link{plotThreshVsPerf}}
 }

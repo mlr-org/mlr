@@ -1,4 +1,4 @@
-context("BenchmarkSummary")
+context("plotBMRSummary")
 
 test_that("BenchmarkSummary", {
   lrns = list(makeLearner("classif.nnet"), makeLearner("classif.rpart"))
@@ -10,4 +10,7 @@ test_that("BenchmarkSummary", {
   nLrns = length(getBMRLearnerIds(res))
 
   plotBMRSummary(res)
+
+  # pretty.names works
+  plotBMRSummary(res, pretty.names = FALSE)
 })

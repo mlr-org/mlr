@@ -14,7 +14,6 @@ makeRLearner.classif.svm = function() {
       makeNumericLearnerParam(id = "gamma", lower = 0, requires = quote(kernel!="linear")),
       makeNumericLearnerParam(id = "cachesize", default = 40L),
       makeNumericLearnerParam(id = "tolerance", default = 0.001, lower = 0),
-      makeNumericLearnerParam(id = "epsilon", default = 0.1, lower = 0),
       makeLogicalLearnerParam(id = "shrinking", default = TRUE),
       makeIntegerLearnerParam(id = "cross", default = 0L, lower = 0L, tunable = FALSE),
       makeLogicalLearnerParam(id = "fitted", default = TRUE, tunable = FALSE),
@@ -23,8 +22,7 @@ makeRLearner.classif.svm = function() {
     properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "class.weights"),
     class.weights.param = "class.weights",
     name = "Support Vector Machines (libsvm)",
-    short.name = "svm",
-    note = ""
+    short.name = "svm"
   )
 }
 
@@ -36,7 +34,7 @@ trainLearner.classif.svm = function(.learner, .task, .subset, .weights = NULL,  
 
 #' @export
 predictLearner.classif.svm = function(.learner, .model, .newdata, ...) {
-  if(.learner$predict.type == "response") {
+  if (.learner$predict.type == "response") {
     predict(.model$learner.model, newdata = .newdata, ...)
   } else {
     attr(predict(.model$learner.model, newdata = .newdata, probability = TRUE, ...), "probabilities")

@@ -1,7 +1,8 @@
 context("regr_laGP")
 
 test_that("regr_laGP", {
-  requirePackages("laGP", default.method = "load")
+  requirePackagesOrSkip("laGP", default.method = "load")
+
   parset.list = list(
     list(start = 6, end = 50, close = 50)
   )

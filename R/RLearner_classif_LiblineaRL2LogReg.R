@@ -15,6 +15,7 @@ makeRLearner.classif.LiblineaRL2LogReg = function() {
       makeLogicalLearnerParam(id = "verbose", default = FALSE, tunable = FALSE)
     ),
     mlr.defaults = list(type = 0L),
+    # FIXME default in LiblieaR() for type is 0, par.vals is redundant here.
     properties = c("twoclass", "multiclass", "numerics", "class.weights", "prob"),
     class.weights.param = "wi",
     name = "L2-Regularized Logistic Regression",
@@ -31,7 +32,7 @@ trainLearner.classif.LiblineaRL2LogReg = function(.learner, .task, .subset, .wei
 
 #' @export
 predictLearner.classif.LiblineaRL2LogReg = function(.learner, .model, .newdata, ...) {
-  if(.learner$predict.type == "response")
+  if (.learner$predict.type == "response")
     as.factor(predict(.model$learner.model, newx = .newdata, ...)$predictions)
   else
     predict(.model$learner.model, newx = .newdata, proba = TRUE, ...)$probabilities

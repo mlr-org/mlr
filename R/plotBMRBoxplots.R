@@ -1,8 +1,8 @@
-#' @title Create a box- or violin plots for a BenchmarkResult
+#' @title Create box or violin plots for a BenchmarkResult.
 #'
 #' @description
-#' Plots boxplots or violin plots for a selected \code{measure} across all iterations
-#' of the resampling strategy, faceted by the \code{task.id}
+#' Plots box or violin plots for a selected \code{measure} across all iterations
+#' of the resampling strategy, faceted by the \code{task.id}.
 #'
 #' @template arg_bmr
 #' @template arg_measure
@@ -10,8 +10,9 @@
 #'   Type of plot, can be \dQuote{box} for a boxplot or \dQuote{violin} for a violin plot.
 #'   Default is \dQuote{box}.
 #' @param pretty.names [\code{logical(1)}]\cr
-#'  Whether to use the \code{\link{Measure}} name instead of the id in the plot.
-#'  Default is \code{TRUE}.
+#'   Whether to use the \code{\link{Measure}} name instead of the id in the plot.
+#'   Default is \code{TRUE}.
+#' @template arg_facet_nrow_ncol
 #' @template arg_order_lrns
 #' @template arg_order_tsks
 #' @template ret_gg2
@@ -20,7 +21,8 @@
 #' @export
 #' @examples
 #' # see benchmark
-plotBMRBoxplots = function(bmr, measure = NULL, style = "box", order.lrns = NULL, order.tsks = NULL, pretty.names = TRUE) {
+plotBMRBoxplots = function(bmr, measure = NULL, style = "box", order.lrns = NULL,
+  order.tsks = NULL, pretty.names = TRUE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL) {
 
   assertClass(bmr, "BenchmarkResult")
   measure = checkBMRMeasure(measure, bmr)
@@ -32,7 +34,8 @@ plotBMRBoxplots = function(bmr, measure = NULL, style = "box", order.lrns = NULL
 
   p = ggplot(df, aes_string("learner.id", measure$id))
   p = p + theme(axis.title.x = element_blank(), axis.text.x = element_text(angle = -45, hjust = 0))
-  p = p + facet_grid(. ~ task.id)
+
+  p = p + facet_wrap(~ task.id, nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
 
   if (pretty.names)
     p = p + ylab(measure$name)

@@ -11,21 +11,23 @@ makeRLearner.classif.ranger = function() {
       # FIXME: Add default value when data dependent defaults are implemented: min.node.size = 1 for classification, 10 for probability prediction
       makeIntegerLearnerParam(id = "min.node.size", lower = 1L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
+      makeNumericLearnerParam(id = "sample.fraction", lower = 0L, upper = 1L),
       makeNumericVectorLearnerParam(id = "split.select.weights", lower = 0, upper = 1),
       makeUntypedLearnerParam(id = "always.split.variables"),
       makeLogicalLearnerParam(id = "respect.unordered.factors", default = FALSE),
       makeDiscreteLearnerParam(id = "importance", values = c("none", "impurity", "permutation"), default = "none", tunable = FALSE),
+      makeLogicalLearnerParam(id = "write.forest", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "scale.permutation.importance", default = FALSE, requires = quote(importance == "permutation"), tunable = FALSE),
       makeIntegerLearnerParam(id = "num.threads", lower = 1L, when = "both", tunable = FALSE),
       makeLogicalLearnerParam(id = "save.memory", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "verbose", default = TRUE, when = "both", tunable = FALSE),
       makeIntegerLearnerParam(id = "seed", when = "both", tunable = FALSE)
     ),
-    mlr.defaults = list(num.threads = 1L, verbose = FALSE),
-    properties = c("twoclass", "multiclass", "prob", "numerics", "factors"),
+    mlr.defaults = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = TRUE, write.forest = TRUE),
+    properties = c("twoclass", "multiclass", "prob", "numerics", "factors", "ordered"),
     name = "Random Forests",
     short.name = "ranger",
-    note = "By default, internal parallelization is switched off (`num.threads = 1`) and `verbose` output is disabled. Both settings are changeable."
+    note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `TRUE` and ranger's .forest object is kept for prediction (`keep.forest` = `TRUE`). All settings are changeable."
   )
 }
 
@@ -33,7 +35,7 @@ makeRLearner.classif.ranger = function() {
 trainLearner.classif.ranger = function(.learner, .task, .subset, .weights, ...) {
   tn = getTaskTargetNames(.task)
   ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset),
-    write.forest = TRUE, probability = (.learner$predict.type == "prob"), ...)
+    probability = (.learner$predict.type == "prob"), ...)
 }
 
 #' @export

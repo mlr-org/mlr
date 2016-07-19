@@ -27,7 +27,7 @@ If missing, the default measure of the first task is used.}
 Keep the prediction data in the \code{pred} slot of the result object.
 If you do many experiments (on larger data sets) these objects might unnecessarily increase
 object size / mem usage, if you do not really need them.
-In this case you can this argument to \code{FALSE}.
+In this case you can set this argument to \code{FALSE}.
 Default is \code{TRUE}.}
 
 \item{models}{[\code{logical(1)}]\cr
@@ -59,6 +59,8 @@ print(rmat)
 plotBMRSummary(bmr)
 plotBMRBoxplots(bmr, ber, style = "violin")
 plotBMRRanksAsBarChart(bmr, pos = "stack")
+friedmanTestBMR(bmr)
+friedmanPostHocTestBMR(bmr, p.value = 0.05)
 }
 \seealso{
 Other benchmark: \code{\link{BenchmarkResult}},
@@ -70,6 +72,7 @@ Other benchmark: \code{\link{BenchmarkResult}},
   \code{\link{getBMRFeatSelResults}},
   \code{\link{getBMRFilteredFeatures}},
   \code{\link{getBMRLearnerIds}},
+  \code{\link{getBMRLearnerShortNames}},
   \code{\link{getBMRLearners}},
   \code{\link{getBMRMeasureIds}},
   \code{\link{getBMRMeasures}}, \code{\link{getBMRModels}},

@@ -2,13 +2,13 @@
 makeRLearner.surv.cvglmnet = function() {
   makeRLearnerSurv(
     cl = "surv.cvglmnet",
-    # Required for predict to work properly :(
-    package = "!glmnet",
+    package = "glmnet",
     par.set = makeParamSet(
       makeNumericLearnerParam(id = "alpha", default = 1, lower = 0, upper = 1),
       makeIntegerLearnerParam(id = "nfolds", default = 10L, lower = 3L),
       makeDiscreteLearnerParam(id = "type.measure", values = c("deviance"), default = "deviance"),
       makeLogicalLearnerParam(id = "exact", default = FALSE, when = "predict"),
+      makeLogicalLearnerParam(id = "grouped", default = TRUE),
       makeDiscreteLearnerParam(id = "s", values = c("lambda.1se", "lambda.min"), default = "lambda.1se", when = "predict"),
       makeIntegerLearnerParam(id = "nlambda", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "lambda.min.ratio", lower = 0, upper = 1),
@@ -64,7 +64,5 @@ trainLearner.surv.cvglmnet = function(.learner, .task, .subset, .weights = NULL,
 predictLearner.surv.cvglmnet = function(.learner, .model, .newdata, ...) {
   info = getTrainingInfo(.model)
   .newdata = as.matrix(fixDataForLearner(.newdata, info))
-  if(.learner$predict.type == "response")
-    return(as.numeric(predict(.model$learner.model, newx = .newdata, type = "link", ...)))
-  stop("Unknown predict type")
+  as.numeric(predict(.model$learner.model, newx = .newdata, type = "link", ...))
 }

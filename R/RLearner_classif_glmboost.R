@@ -5,6 +5,7 @@ makeRLearner.classif.glmboost = function() {
     package = "mboost",
     par.set = makeParamSet(
       makeDiscreteLearnerParam(id = "family", default = mboost::Binomial(), values = list(AdaExp = mboost::AdaExp(), Binomial = mboost::Binomial())),
+      # FIXME default of glmboost() for family is Gaussian()
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")),
@@ -17,16 +18,17 @@ makeRLearner.classif.glmboost = function() {
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Boosting for GLMs",
     short.name = "glmbst",
-    note = paste(
+    note = stri_paste(
       "`family` has been set to `Binomial()` by default.",
-      "Maximum number of boosting iterations is set via `mstop`, the actual number used for prediction is controlled by `m`."
+      "Maximum number of boosting iterations is set via `mstop`, the actual number used for prediction is controlled by `m`.",
+      sep = " "
     )
   )
 }
 
 #' @export
-trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, m, risk, ...) {
-  ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk)
+trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, m, risk, stopintern, trace, ...) {
+  ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
   d = getTaskData(.task, .subset)
   if (.learner$predict.type == "prob") {
     td = getTaskDescription(.task)
@@ -55,7 +57,7 @@ predictLearner.classif.glmboost = function(.learner, .model, .newdata, ...) {
     td = .model$task.desc
     p = p[, 1L]
     levs = c(td$negative, td$positive)
-    y = propVectorToMatrix(p, levs)
+    return(propVectorToMatrix(p, levs))
   } else {
     return(p)
   }

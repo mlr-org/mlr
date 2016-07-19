@@ -7,6 +7,7 @@ makeRLearner.regr.avNNet = function() {
       makeIntegerLearnerParam(id = "repeats", default = 5L, lower = 1L),
       makeLogicalLearnerParam(id = "bag", default = FALSE),
       makeIntegerLearnerParam(id = "size", default = 3L, lower = 0L),
+      # FIXME size seems to have no default in nnet(), if it has 1 par.vals is redundant
       makeIntegerLearnerParam(id = "maxit", default = 100L, lower = 1L),
       makeLogicalLearnerParam(id = "linout", default = FALSE, requires = quote(entropy==FALSE && softmax==FALSE && censored==FALSE)),
       makeLogicalLearnerParam(id = "entropy", default = FALSE, requires = quote(linout==FALSE && softmax==FALSE && censored==FALSE)),
@@ -35,11 +36,11 @@ trainLearner.regr.avNNet = function(.learner, .task, .subset, .weights = NULL, .
   bag = FALSE
   
   nms = names(.learner$par.vals)
-  ind = grep('repeats',nms)
-  if (length(ind)>0)
+  ind = stri_detect_regex(nms, "repeats")
+  if (sum(ind)>0)
     repeats = .learner$par.vals[[ind]]
-  ind = grep('bag',nms)
-  if (length(ind)>0)
+  ind = stri_detect_regex(nms, "bag")
+  if (sum(ind)>0)
     bag = .learner$par.vals[[ind]]
   
   assertInt(repeats, lower = 1)

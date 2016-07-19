@@ -1,7 +1,8 @@
 context("classif_ada")
 
 test_that("classif_ada", {
-  requirePackages("ada", default.method = "load")
+  requirePackagesOrSkip("ada", default.method = "load")
+
   set.seed(getOption("mlr.debug.seed"))
   m = ada::ada(formula = binaryclass.formula, data = binaryclass.train, iter = 5L)
   set.seed(getOption("mlr.debug.seed"))
@@ -17,3 +18,7 @@ test_that("classif_ada", {
 
 })
 
+test_that("classif_ada passes parameters correctly to rpart.control (#732)", {
+    lrn = makeLearner("classif.ada", minsplit=20, minbucket=20, cp=0.01, maxcompete=4, maxsurrogate=5, usesurrogate=2, surrogatestyle=0, maxdepth=30, xval=10)
+    train(lrn, binaryclass.task)
+})
