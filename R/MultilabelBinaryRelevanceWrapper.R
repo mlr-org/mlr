@@ -24,7 +24,7 @@
 #' @family wrapper
 #' @family multilabel
 #' @export
-#' @example examples/MultilabelWrapper.R
+#' @example inst/examples/MultilabelWrapper.R
 makeMultilabelBinaryRelevanceWrapper = function(learner) {
   learner = checkLearner(learner, type = "classif")
   id = stri_paste("multilabel", learner$id, sep = ".")
