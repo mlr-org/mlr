@@ -7,7 +7,7 @@ test_that("regr_randomForestSRCSyn", {
     list(),
     list(ntree = 10L),
     list(ntree = 5L, mtry = 4L),
-    list(ntree = 5L, nodesize = 2L, nsplit = 5, splitrule = "random")
+    list(ntree = 5L, nodesize = 2L, nsplit = 5)
   )
   old.predicts.list = list()
 

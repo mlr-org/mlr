@@ -26,7 +26,7 @@ makeRLearner.regr.randomForest = function() {
       makeIntegerLearnerParam(id = "ntree.for.se", default = 100L, lower = 1L),
       makeDiscreteLearnerParam(id = "se.method", default = "jackknife",
                                values = c("bootstrap", "jackknife",  "sd"),
-                               requires = quote(se.method %in% c("jackknife") && keep.inbag == TRUE)),
+                               requires = quote(!se.method %in% c("jackknife") || keep.inbag == TRUE)),
       makeIntegerLearnerParam(id = "se.boot", default = 50L, lower = 1L),
       makeIntegerLearnerParam(id = "mtry", lower = 1L),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
