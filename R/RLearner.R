@@ -55,7 +55,7 @@ makeRLearner = function() {
 }
 
 makeRLearnerInternal = function(id, type, package, par.set, mlr.defaults, properties,
-  name = id, short.name = id, note = "", par.vals = list()) {
+  name = id, short.name = id, note = "") {
 
   # must do that before accessing par.set
   # one case where lazy eval is actually helpful...
@@ -68,11 +68,8 @@ makeRLearnerInternal = function(id, type, package, par.set, mlr.defaults, proper
   assertClass(par.set, classes = "ParamSet")
   checkListElementClass(par.set$pars, "LearnerParam")
   assertList(mlr.defaults)
-  if(!isProperlyNamed(mlr.defaults))
+  if (!isProperlyNamed(mlr.defaults))
     stop("Argument mlr.defaults must be a properly named list!")
-  assertList(par.vals)
-  if(!isProperlyNamed(par.vals))
-    stop("Argument par.vals must be a properly named list!")
   assertString(name)
   assertString(short.name)
   assertString(note)
@@ -82,7 +79,7 @@ makeRLearnerInternal = function(id, type, package, par.set, mlr.defaults, proper
     package = package,
     properties = unique(properties),
     par.set = par.set,
-    par.vals = par.vals,
+    par.vals = list(),
     predict.type = "response"
   )
   learner$mlr.defaults = mlr.defaults
