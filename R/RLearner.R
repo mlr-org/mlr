@@ -25,10 +25,10 @@
 #'   Parameter set of (hyper)parameters and their constraints.
 #'   Dependent parameters with a \code{requires} field must use \code{quote} and not
 #'   \code{expression} to define it.
-#' @param par.vals [\code{list}]\cr
+#' @param mlr.defaults [\code{list}]\cr
 #'   Always set hyperparameters to these values when the object is constructed.
 #'   Useful when default values are missing in the underlying function.
-#'   The values can later be overwritten when the user sets hyperparameters.
+#'   The values will be saved internally and combined with the hyperparamers set by the user later.
 #'   Default is empty list.
 #' @param name [\code{character(1)}]\cr
 #'   Meaningful name for learner.
