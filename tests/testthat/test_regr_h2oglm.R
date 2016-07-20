@@ -1,20 +1,21 @@
 context("regr_h2oglm")
 
 test_that("regr_h2oglm", {
+  skip_on_travis()
   requirePackages("h2o", default.method = "load")
   h2o::h2o.init()
-  
+
   parset.list = list(
     list(),
     list(alpha = 1),
     list(alpha = 1, lambda = 0.2)
   )
   old.predicts.list = list()
-  
+
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     parset = c(parset,list(x = colnames(regr.train[, -regr.class.col]),
-      y = regr.target, 
+      y = regr.target,
       training_frame = h2o::as.h2o(regr.train)))
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(h2o::h2o.glm, parset)

@@ -19,50 +19,24 @@ test_that("learners work: classif ", {
     classif.h2o.randomForest = list(seed = getOption("mlr.debug.seed"))
   )
 
-  fixHyperPars = function(lrn) {
-    if (lrn$id %in% names(hyperpars))
-      lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
-    return(lrn)
-  }
-
   # binary classif
   task = subsetTask(binaryclass.task, subset = c(10:20, 180:190),
     features = getTaskFeatureNames(binaryclass.task)[12:15])
   lrns = mylist(task, create = TRUE)
-  for (lrn in lrns) {
-    expect_output(print(lrn), lrn$id)
-    lrn = fixHyperPars(lrn)
-    m = train(lrn, task)
-    p = predict(m, task)
-    expect_true(!is.na(performance(p)))
-  }
+  lapply(lrns, testThatLearnerCanTrainPredict, task = task, hyperpars = hyperpars)
 
   # binary classif with factors
-  data = binaryclass.df[c(10:20, 180:190), 12:15]
-  data[, 4L] = factor(sample(c("a", "b"), size = nrow(data), replace = TRUE))
-  data$y = binaryclass.df[c(10:20, 180:190),binaryclass.target]
-  task = makeClassifTask(data = data, target = "y")
-  lrns = mylist(task, create = TRUE)
-  for (lrn in lrns) {
-    expect_output(print(lrn), lrn$id)
-    lrn = fixHyperPars(lrn)
-    m = train(lrn, task)
-    p = predict(m, task)
-    expect_true(!is.na(performance(p)))
-  }
+  lrns = mylist("classif", properties = "factors", create = TRUE)
+  lapply(lrns, testThatLearnerHandlesFactors, task = task, hyperpars = hyperpars)
+  
+  # binary classif with ordered factors
+  lrns = mylist("classif", properties = "ordered", create = TRUE)
+  lapply(lrns, testThatLearnerHandlesOrderedFactors, task = task, hyperpars = hyperpars)
 
   # binary classif with prob
-  task = subsetTask(binaryclass.task, subset = c(1:10, 180:190),
-    features = getTaskFeatureNames(binaryclass.task)[12:15])
-  lrns = mylist(task, properties = "prob")
-  lrns = lapply(lrns$class, makeLearner, predict.type = "prob")
-  lapply(lrns, function(lrn) {
-    lrn = fixHyperPars(lrn)
-    m = train(lrn, task)
-    p = predict(m, task)
-    getPredictionProbabilities(p)
-    expect_true(!is.na(performance(p)))
-  })
+  lrns = mylist(binaryclass.task, properties = "prob", create = TRUE)
+  lapply(lrns, testThatLearnerCanTrainPredict, task = binaryclass.task,
+    hyperpars = hyperpars, pred.type = "prob")
 
   # binary classif with weights
   lrns = mylist("classif", properties = "weights", create = TRUE)
@@ -72,31 +46,11 @@ test_that("learners work: classif ", {
     pred.type = "prob", get.pred.fun = getPredictionProbabilities)
 
   # classif with missing
-  d = binaryclass.df[c(1:10, 180:190), c(1:2, binaryclass.class.col)]
-  d[1, 1] = NA
-  task = makeClassifTask(data = d, target = binaryclass.target)
-  lrns = mylist(task, create = TRUE)
-  for (lrn in lrns) {
-    lrn = fixHyperPars(lrn)
-    m = train(lrn, task)
-    p = predict(m, task)
-    expect_true(!is.na(performance(p)))
-  }
-
-  # classif with factors
-  d = binaryclass.df[c(1:10, 181:190), c(1:2, binaryclass.class.col)]
-  d[, 2] = factor(rep(c("a", "b", "b", "a"), each = 5L))
-  task = makeClassifTask(data = d, target = binaryclass.target)
-  lrns = mylist(task, create = TRUE)
-  for (lrn in lrns) {
-    lrn = fixHyperPars(lrn)
-    m = train(lrn, task)
-    p = predict(m, task)
-    expect_true(!is.na(performance(p)))
-  }
-
-
+  lrns = mylist("classif", properties = "missings", create = TRUE)
+  lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars)
+  
 })
+
 
 test_that("weightedClassWrapper on all binary learners",  {
   pos = getTaskDescription(binaryclass.task)$positive
@@ -117,6 +71,7 @@ test_that("weightedClassWrapper on all binary learners",  {
     expect_true(all(cm2[, pos] <= cm3[, pos]))
   })
 })
+
 
 test_that("WeightedClassWrapper on all multiclass learners",  {
   levs = getTaskClassLevels(multiclass.task)

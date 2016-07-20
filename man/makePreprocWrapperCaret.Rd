@@ -27,6 +27,7 @@ Fuses a learner with preprocessing methods provided by \code{\link[caret]{prePro
 }
 \seealso{
 Other wrapper: \code{\link{makeBaggingWrapper}},
+  \code{\link{makeConstantClassWrapper}},
   \code{\link{makeCostSensClassifWrapper}},
   \code{\link{makeCostSensRegrWrapper}},
   \code{\link{makeDownsampleWrapper}},
@@ -35,6 +36,10 @@ Other wrapper: \code{\link{makeBaggingWrapper}},
   \code{\link{makeImputeWrapper}},
   \code{\link{makeMulticlassWrapper}},
   \code{\link{makeMultilabelBinaryRelevanceWrapper}},
+  \code{\link{makeMultilabelClassifierChainsWrapper}},
+  \code{\link{makeMultilabelDBRWrapper}},
+  \code{\link{makeMultilabelNestedStackingWrapper}},
+  \code{\link{makeMultilabelStackingWrapper}},
   \code{\link{makeOverBaggingWrapper}},
   \code{\link{makePreprocWrapper}},
   \code{\link{makeRemoveConstantFeaturesWrapper}},

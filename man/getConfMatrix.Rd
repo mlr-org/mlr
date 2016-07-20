@@ -26,6 +26,11 @@ errors for the respective row or column, i.e., the number of errors
 when you condition on the corresponding true (rows) or predicted
 (columns) class. The last element in the margin diagonal
 displays the total amount of errors.
+
+Note that for resampling no further aggregation is currently performed.
+All predictions on all test sets are joined to a vector yhat, as are all labels
+joined to a vector y. Then yhat is simply tabulated vs y, as if both were computed on
+a single test set. This probably mainly makes sense when cross-validation is used for resampling.
 }
 \examples{
 # get confusion matrix after simple manual prediction

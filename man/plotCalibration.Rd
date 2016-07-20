@@ -4,7 +4,8 @@
 \alias{plotCalibration}
 \title{Plot calibration data using ggplot2.}
 \usage{
-plotCalibration(obj, smooth = FALSE, reference = TRUE, rag = TRUE)
+plotCalibration(obj, smooth = FALSE, reference = TRUE, rag = TRUE,
+  facet.wrap.nrow = NULL, facet.wrap.ncol = NULL)
 }
 \arguments{
 \item{obj}{[\code{CalibrationData}]\cr
@@ -22,6 +23,10 @@ Default is \code{TRUE}.}
 Whether to include a rag plot which shows a rug plot on the top which pertains to
 positive cases and on the bottom which pertains to negative cases.
 Default is \code{TRUE}.}
+
+\item{facet.wrap.nrow, facet.wrap.ncol}{[\code{integer()}]\cr
+Number of rows and columns for facetting. Default for both is \code{NULL}.
+In this case ggplot's \code{facet_wrap} will choose the layout itself.}
 }
 \value{
 ggplot2 plot object.

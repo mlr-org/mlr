@@ -298,6 +298,19 @@ test_that("check measure calculations", {
   brier.perf = performance(pred.bin, measures = brier, model = mod.bin)
   expect_equal(brier.test, brier$fun(pred = pred.bin))
   expect_equal(brier.test, as.numeric(brier.perf))
+  expect_equal(measureBrier(c(1, 1, 0), c("a", "a", "a"), "b", "a"), 1/3)
+  expect_equal(measureBrier(c(1, 1, 1), c("a", "a", "a"), "b", "a"), 0)
+  expect_equal(measureBrier(c(0, 0, 0), c("a", "a", "a"), "b", "a"), 1)
+  #brier.scaled
+  inc = mean(pred.probs)
+  brier.test.max = inc * (1 - inc)^2 + (1 - inc) * inc^2
+  brier.scaled.test = 1 - brier.test / brier.test.max
+  brier.scaled.perf = performance(pred.bin, measures = brier.scaled, model = mod.bin)
+  expect_equal(brier.scaled.test, brier.scaled$fun(pred = pred.bin))
+  expect_equal(brier.scaled.test, as.numeric(brier.scaled.perf))
+  expect_equal(measureBrierScaled(c(1, 1, 0), c("a", "a", "a"), "b", "a"), 1 - ((1/3) / (2/3 * 1/3)))
+  expect_equal(measureBrierScaled(c(1, 1, 1), c("a", "a", "a"), "b", "a"), 1 - ((0) / (1 * 0)))
+  expect_equal(measureBrierScaled(c(0, 0, 0), c("a", "a", "a"), "b", "a"), 1 - ((1) / (0 * 1)))
   #tp
   tp.test = sum(tar.bin == pred.art.bin & pred.art.bin == 0L)
   tp.perf = performance(pred.bin, measures = tp, model = mod.bin)
@@ -398,9 +411,31 @@ test_that("check measure calculations", {
   hamloss.test = mean(c(tar1.multilabel != pred.multilabel$data[, 4L],
       tar2.multilabel != pred.multilabel$data[, 5L]))
   hamloss.perf = performance(pred.multilabel,
-   measures = hamloss, model = mod.multilabel)
-  expect_equal(hamloss.test, hamloss$fun(pred = pred.multilabel))
+   measures = multilabel.hamloss, model = mod.multilabel)
+  expect_equal(hamloss.test, multilabel.hamloss$fun(pred = pred.multilabel))
   expect_equal(hamloss.test, as.numeric(hamloss.perf))
+  #test only the measures
+  multi.y1 = matrix(c(TRUE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, TRUE), 4, 2)
+  multi.p1 = matrix(c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE), 4, 2)
+  multi.p2 = matrix(c(FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, TRUE), 4, 2)
+  #hamloss
+  expect_equal(measureMultilabelHamloss(multi.y1, multi.p1), mean(apply(multi.y1 != multi.p1, 1, mean)))
+  expect_equal(measureMultilabelHamloss(multi.y1, multi.p2), mean(apply(multi.y1 != multi.p2, 1, mean)))
+  #subset01
+  expect_equal(measureMultilabelSubset01(multi.y1, multi.p1), mean(apply(multi.y1 != multi.p1, 1, any)))
+  expect_equal(measureMultilabelSubset01(multi.y1, multi.p2), mean(apply(multi.y1 == multi.p2, 1, all)))
+  #f1mult
+  expect_equal(measureMultiLabelF1(multi.y1, multi.p1), mean(2 * apply((multi.y1 & multi.p1), 1, sum) / (apply((multi.y1), 1, sum) + apply((multi.p1), 1, sum))))
+  expect_equal(measureMultiLabelF1(multi.y1, multi.p2), mean(2 * apply((multi.y1 & multi.p2), 1, sum) / (apply((multi.y1), 1, sum) + apply((multi.p2), 1, sum))))
+  #accmult
+  expect_equal(measureMultilabelACC(multi.y1, multi.p1), mean(apply((multi.y1 & multi.p1), 1, sum) / apply((multi.y1 | multi.p1), 1, sum)))
+  expect_equal(measureMultilabelACC(multi.y1, multi.p2), mean(apply((multi.y1 & multi.p2), 1, sum) / apply((multi.y1 | multi.p2), 1, sum)))
+  #precmult
+  expect_equal(measureMultilabelPPV(multi.y1, multi.p1), mean(c(apply((multi.y1[1:3, ] & multi.p1[1:3, ]), 1, sum) / apply((multi.p1[1:3,]), 1, sum), 1)))
+  expect_equal(measureMultilabelPPV(multi.y1, multi.p2), mean(apply((multi.y1 & multi.p2), 1, sum) / apply((multi.p2), 1, sum)))
+  #recallmult
+  expect_equal(measureMultilabelTPR(multi.y1, multi.p1), mean(c(apply((multi.y1[c(1,2,4), ] & multi.p1[c(1,2,4), ]), 1, sum) / apply((multi.y1[c(1,2,4), ]), 1, sum), 1)))
+  expect_equal(measureMultilabelTPR(multi.y1, multi.p2), mean(c(apply((multi.y1[c(1,2,4), ] & multi.p2[c(1,2,4), ]), 1, sum) / apply((multi.y1[c(1,2,4), ]), 1, sum), 1)))
 
   #test survival measures
 

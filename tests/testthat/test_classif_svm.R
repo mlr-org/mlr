@@ -45,9 +45,10 @@ test_that("classif_svm", {
   lrn = makeLearner("classif.svm", scale = FALSE)
   model = train(lrn, multiclass.task)
   preds = predict(model, multiclass.task)
-  expect_equal(length(preds), 5)
+  expect_lt(performance(preds), 0.3)
+
   lrn = makeLearner("classif.svm", scale = c(TRUE))
   model = train(lrn, multiclass.task)
   preds = predict(model, multiclass.task)
-  expect_equal(length(preds), 5)
+  expect_lt(performance(preds), 0.3)
 })

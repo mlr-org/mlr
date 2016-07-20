@@ -30,7 +30,7 @@ Encoding: UTF-8
 Roxygen: list(wrap = FALSE)
 Depends:
     R (>= 3.0.2),
-    BBmisc (>= 1.9),
+    BBmisc (>= 1.10),
     ggplot2,
     ParamHelpers (>= 1.8),
     stats,
@@ -84,6 +84,7 @@ Suggests:
     GenSA,
     glmnet,
     h2o (>= 3.6.0.8),
+    GPfit,
     Hmisc,
     irace (>= 1.0.7),
     kernlab,
@@ -113,7 +114,7 @@ Suggests:
     pROC (>= 1.8),
     randomForest,
     randomForestSRC (>= 2.2.0),
-    ranger (>= 0.3.0),
+    ranger (>= 0.5.0),
     RCurl,
     rFerns,
     rjson,

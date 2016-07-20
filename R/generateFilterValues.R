@@ -142,12 +142,13 @@ getFilterValues = function(task, method = "rf.importance", nselect = getTaskNFea
 #'   Colors for factor and numeric features.
 #'   \code{FALSE} means no colors.
 #'   Default is \code{FALSE}.
+#' @template arg_facet_nrow_ncol
 #' @template ret_gg2
 #' @export
 #' @examples
 #' fv = generateFilterValuesData(iris.task, method = "chi.squared")
 #' plotFilterValues(fv)
-plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols = FALSE) {
+plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols = FALSE, facet.wrap.nrow = NULL, facet.wrap.ncol = NULL) {
   assertClass(fvalues, classes = "FilterValues")
   assertChoice(sort, choices = c("dec", "inc", "none"))
   if (!(is.null(fvalues$method)))
@@ -172,7 +173,8 @@ plotFilterValues = function(fvalues, sort = "dec", n.show = 20L, feat.type.cols 
   plt = ggplot(data = data, mapping = mp)
   plt = plt + geom_bar(position = "identity", stat = "identity")
   if (length(unique(data$method)) > 1L) {
-    plt = plt + facet_wrap(~ method, scales = "free_y")
+    plt = plt + facet_wrap(~ method, scales = "free_y",
+      nrow = facet.wrap.nrow, ncol = facet.wrap.ncol)
     plt = plt + labs(title = sprintf("%s (%i features)",
                                               fvalues$task.desc$id,
                                               sum(fvalues$task.desc$n.feat)),

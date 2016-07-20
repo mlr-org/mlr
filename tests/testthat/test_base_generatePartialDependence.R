@@ -9,12 +9,11 @@ test_that("generatePartialDependenceData", {
                                      interaction = TRUE, fmin = list("lstat" = 1, "chas" = NA),
                                      fmax = list("lstat" = 40, "chas" = NA), gridsize = gridsize)
   nfeat = length(dr$features)
-  nfacet = length(unique(getTaskData(regr.task)[["chas"]]))
+  nfacet = length(unique(regr.df[["chas"]]))
   n = getTaskSize(regr.task)
   expect_that(max(dr$data$lstat), equals(40.))
   expect_that(min(dr$data$lstat), equals(1.))
   expect_that(nrow(dr$data), equals(gridsize * nfeat))
-
   plotPartialDependence(dr, facet = "chas")
   dir = tempdir()
   path = paste0(dir, "/test.svg")
@@ -25,7 +24,7 @@ test_that("generatePartialDependenceData", {
   ## plotPartialDependenceGGVIS(dr, interact = "chas")
 
   ## check that if the input is a data.frame things work
-  dr.df = generatePartialDependenceData(fr, input = getTaskData(regr.task), features = "lstat")
+  dr.df = generatePartialDependenceData(fr, input = regr.df, features = "lstat")
 
   ## check that the interactions and centering work with ICE
   dr = generatePartialDependenceData(fr, input = regr.task, features = c("lstat", "chas"),
@@ -36,7 +35,7 @@ test_that("generatePartialDependenceData", {
   expect_that(min(dr$data$lstat), equals(1.))
   expect_that(nrow(dr$data), equals(gridsize * nfeat * n))
 
-  plotPartialDependence(dr, facet = "chas")
+  plotPartialDependence(dr, facet = "chas", data = regr.df, p = .25)
   ggsave(path)
   doc = XML::xmlParse(path)
   #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfacet))
@@ -51,7 +50,7 @@ test_that("generatePartialDependenceData", {
                                      fun = function(x) table(x) / length(x), gridsize = gridsize)
   nfeat = length(dc$features)
   n = getTaskSize(multiclass.task)
-  plotPartialDependence(dc)
+  plotPartialDependence(dc, data = multiclass.df)
   ggsave(path)
   doc = XML::xmlParse(path)
   ## minus one because the of the legend
@@ -72,28 +71,18 @@ test_that("generatePartialDependenceData", {
                                       interaction = TRUE, gridsize = gridsize)
   nfacet = length(unique(dcp$data$Petal.Length))
   ntarget = length(dcp$target)
-  plotPartialDependence(dcp, geom = "tile")
-  ggsave(path)
-  doc = XML::xmlParse(path)
-  #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfacet))
-  #expect_that(length(XML::getNodeSet(doc, red.xpath, ns.svg)) - 1, equals(ntarget * nfacet))
-  #expect_that(length(XML::getNodeSet(doc, blue.xpath, ns.svg)) - 1, equals(ntarget * nfacet))
-  #expect_that(length(XML::getNodeSet(doc, green.xpath, ns.svg)) - 1, equals(ntarget * nfacet))
-  ## plotPartialDependenceGGVIS(dcp, interact = "Petal.Length")
+  ## removed plotting for this. only facet with integer/factor features
 
   ## check that probability outputting classifiers work with ICE
   dcp = generatePartialDependenceData(fcp, input = multiclass.task, features = c("Petal.Width", "Petal.Length"),
                                       interaction = TRUE, individual = TRUE, gridsize = gridsize)
-  plotPartialDependence(dcp, geom = "tile")
-  ## plotPartialDependenceGGVIS(dcp, interact = "Petal.Length")
 
   ## check that survival tasks work with multiple features
-  fs = train("surv.coxph", surv.task)
-  ds = generatePartialDependenceData(fs, input = surv.task, features = c("x1", "x2"),
-                                     gridsize = gridsize)
+  fs = train("surv.rpart", surv.task)
+  ds = generatePartialDependenceData(fs, input = surv.task, features = c("x1", "x2"), gridsize = gridsize)
   nfeat = length(ds$features)
   n = getTaskSize(surv.task)
-  plotPartialDependence(ds)
+  plotPartialDependence(ds, data = surv.df)
   ggsave(path)
   doc = XML::xmlParse(path)
   #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfeat))
@@ -104,10 +93,10 @@ test_that("generatePartialDependenceData", {
   db = generatePartialDependenceData(fr, input = regr.task, features = c("lstat", "chas"),
                                      interaction = TRUE,
                                      fun = function(x) quantile(x, c(.25, .5, .75)), gridsize = gridsize)
-  nfacet = length(unique(getTaskData(regr.task)[["chas"]]))
+  nfacet = length(unique(regr.df[["chas"]]))
   n = getTaskSize(regr.task)
   expect_that(colnames(db$data), equals(c("medv", "lstat", "chas", "lower", "upper")))
-  plotPartialDependence(db, facet = "chas")
+  plotPartialDependence(db, facet = "chas", data = regr.df)
   ggsave(path)
   doc = XML::xmlParse(path)
   #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfacet))
@@ -127,7 +116,7 @@ test_that("generatePartialDependenceData", {
                                       fun = function(x) quantile(x, c(.25, .5, .75)), gridsize = gridsize)
   nfeat = length(db2$features)
   n = getTaskSize(regr.task)
-  plotPartialDependence(db2)
+  plotPartialDependence(db2, data = regr.df)
   ggsave(path)
   doc = XML::xmlParse(path)
   #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfeat))
@@ -139,7 +128,7 @@ test_that("generatePartialDependenceData", {
                                      individual = TRUE, gridsize = gridsize)
   nfeat = length(bc$features)
   n = getTaskSize(binaryclass.task)
-  plotPartialDependence(bc)
+  plotPartialDependence(bc, data = binaryclass.df)
   ggsave(path)
   doc = XML::xmlParse(path)
   #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(nfeat))
@@ -167,12 +156,21 @@ test_that("generatePartialDependenceData", {
                                        bounds = c(-2, 2), gridsize = gridsize)
 
   ## check that tile + contour plots work for two and three features with regression and survival
+  expect_error(plotPartialDependence(dcp, geom = "tile")) ## no multiclass support
   expect_error(plotPartialDependence(ds, geom = "tile")) ## interaction == FALSE
   tfr = generatePartialDependenceData(fr, regr.df, features = c("lstat", "crim", "chas"),
                                       interaction = TRUE, gridsize = gridsize)
-  plotPartialDependence(tfr, geom = "tile", facet = "chas")
+  plotPartialDependence(tfr, geom = "tile", facet = "chas", data = regr.df)
   tfs = generatePartialDependenceData(fs, surv.df, c("x1", "x2"), interaction = TRUE)
-  plotPartialDependence(tfs, geom = "tile")
+  plotPartialDependence(tfs, geom = "tile", data = surv.df)
+
+  # facetting works with plotPartialDependence:
+  q = plotPartialDependence(dr, facet = "chas", data = regr.df,
+    facet.wrap.nrow = 2L)
+  testFacetting(q, 2L)
+  q = plotPartialDependence(dr, facet = "chas", facet.wrap.ncol = 2L,
+    data = regr.df)
+  testFacetting(q, ncol = 2L)
 })
 
 test_that("generateFeatureGrid", {

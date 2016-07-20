@@ -39,6 +39,7 @@ makeRLearner.regr.randomForestSRCSyn = function() {
       makeDiscreteLearnerParam(id = "samptype", default = "swr", values = c("swr", "swor"),
         requires = quote(bootstrap == "by.root")),
       makeNumericVectorLearnerParam(id = "xvar.wt", lower = 0),
+      makeLogicalLearnerParam(id = "forest", default = TRUE, tunable = FALSE),
       makeDiscreteLearnerParam(id = "var.used", default = FALSE, tunable = FALSE,
         values = list(`FALSE` = FALSE, "all.trees", "by.tree")),
       makeDiscreteLearnerParam(id = "split.depth", default = FALSE, tunable = FALSE,
@@ -60,7 +61,7 @@ makeRLearner.regr.randomForestSRCSyn = function() {
 #' @export
 trainLearner.regr.randomForestSRCSyn = function(.learner, .task, .subset, .weights = NULL, ...) {
   f = getTaskFormula(.task)
-  randomForestSRC::rfsrcSyn(formula = f, data = getTaskData(.task, .subset), forest = TRUE, case.wt = .weights, ...)
+  randomForestSRC::rfsrcSyn(formula = f, data = getTaskData(.task, .subset), case.wt = .weights, ...)
 }
 
 #' @export

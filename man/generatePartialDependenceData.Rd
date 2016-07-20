@@ -139,15 +139,15 @@ estimating E_(x_c)(f(x_s, x_c)). The conditional expectation of f at observation
 Additionally, partial derivatives of the marginalized function w.r.t. the features can be computed.
 }
 \examples{
-lrn = makeLearner("regr.rpart")
+lrn = makeLearner("regr.svm")
 fit = train(lrn, bh.task)
 pd = generatePartialDependenceData(fit, bh.task, "lstat")
-plotPartialDependence(pd)
+plotPartialDependence(pd, data = getTaskData(bh.task))
 
 lrn = makeLearner("classif.rpart", predict.type = "prob")
 fit = train(lrn, iris.task)
 pd = generatePartialDependenceData(fit, iris.task, "Petal.Width")
-plotPartialDependence(pd)
+plotPartialDependence(pd, data = getTaskData(iris.task))
 }
 \references{
 Goldstein, Alex, Adam Kapelner, Justin Bleich, and Emil Pitkin. \dQuote{Peeking inside the black box: Visualizing statistical learning with plots of individual conditional expectation.} Journal of Computational and Graphical Statistics. Vol. 24, No. 1 (2015): 44-65.

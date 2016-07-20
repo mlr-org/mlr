@@ -10,6 +10,7 @@
 \alias{bac}
 \alias{ber}
 \alias{brier}
+\alias{brier.scaled}
 \alias{cindex}
 \alias{db}
 \alias{dunn}
@@ -23,7 +24,6 @@
 \alias{fpr}
 \alias{gmean}
 \alias{gpr}
-\alias{hamloss}
 \alias{logloss}
 \alias{mae}
 \alias{mcc}
@@ -33,6 +33,7 @@
 \alias{measureAUC}
 \alias{measureBAC}
 \alias{measureBrier}
+\alias{measureBrierScaled}
 \alias{measureEXPVAR}
 \alias{measureFDR}
 \alias{measureFN}
@@ -41,7 +42,6 @@
 \alias{measureFPR}
 \alias{measureGMEAN}
 \alias{measureGPR}
-\alias{measureHAMLOSS}
 \alias{measureLogloss}
 \alias{measureMAE}
 \alias{measureMCC}
@@ -49,7 +49,13 @@
 \alias{measureMEDSE}
 \alias{measureMMCE}
 \alias{measureMSE}
+\alias{measureMultiLabelF1}
 \alias{measureMulticlassBrier}
+\alias{measureMultilabelACC}
+\alias{measureMultilabelHamloss}
+\alias{measureMultilabelPPV}
+\alias{measureMultilabelSubset01}
+\alias{measureMultilabelTPR}
 \alias{measureNPV}
 \alias{measurePPV}
 \alias{measureRMSE}
@@ -67,6 +73,12 @@
 \alias{mse}
 \alias{multiclass.auc}
 \alias{multiclass.brier}
+\alias{multilabel.acc}
+\alias{multilabel.f1}
+\alias{multilabel.hamloss}
+\alias{multilabel.ppv}
+\alias{multilabel.subset01}
+\alias{multilabel.tpr}
 \alias{npv}
 \alias{ppv}
 \alias{rmse}
@@ -158,6 +170,10 @@ brier
 
 measureBrier(probabilities, truth, negative, positive)
 
+brier.scaled
+
+measureBrierScaled(probabilities, truth, negative, positive)
+
 bac
 
 measureBAC(truth, response, negative, positive)
@@ -220,9 +236,29 @@ gpr
 
 measureGPR(truth, response, positive)
 
-hamloss
+multilabel.hamloss
 
-measureHAMLOSS(truth, response)
+measureMultilabelHamloss(truth, response)
+
+multilabel.subset01
+
+measureMultilabelSubset01(truth, response)
+
+multilabel.f1
+
+measureMultiLabelF1(truth, response)
+
+multilabel.acc
+
+measureMultilabelACC(truth, response)
+
+multilabel.ppv
+
+measureMultilabelPPV(truth, response)
+
+multilabel.tpr
+
+measureMultilabelTPR(truth, response)
 
 cindex
 
