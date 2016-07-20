@@ -21,8 +21,9 @@ getHyperPars = function(learner,  for.fun = c("train", "predict", "both")) {
 #' @export
 getHyperPars.Learner = function(learner, for.fun = c("train", "predict", "both")) {
   assertClass(learner, classes = "Learner")
-  pars = learner$par.set$pars
-  pv = learner$par.vals
+  pars = getParamSet(learner)$pars
+  mlr.defaults = coalesce(learner$mlr.defaults, list()) # in theory this should always be an empty list and this should not be neccessary but getHyperPars.Learner is called on some Wrappers directly #FIXME?
+  pv = updateParVals(getParamSet(learner), old.par.vals = mlr.defaults, new.par.vals = learner$par.vals)  
   ns = Filter(function(x) pars[[x]]$when %in% for.fun, names(pv))
   pv[ns]
 }

@@ -54,7 +54,7 @@ makeRLearner = function() {
   UseMethod("makeRLearner")
 }
 
-makeRLearnerInternal = function(id, type, package, par.set, mlr.defaults, properties,
+makeRLearnerInternal = function(id, type, package, par.set, mlr.defaults = list(), properties,
   name = id, short.name = id, note = "") {
 
   # must do that before accessing par.set
@@ -149,11 +149,11 @@ makeRLearnerCluster = function(cl, package, par.set, mlr.defaults = list(), prop
 
 #' @export
 #' @rdname RLearner
-makeRLearnerCostSens = function(cl, package, par.set, par.vals = list(), properties = character(0L),
+makeRLearnerCostSens = function(cl, package, par.set, mlr.defaults = list(), properties = character(0L),
   name = cl, short.name = cl, note = "") {
 
   lrn = addClasses(
-    makeRLearnerInternal(cl, "costsens", package, par.set, par.vals, properties, name, short.name, note),
+    makeRLearnerInternal(cl, "costsens", package, par.set, mlr.defaults, properties, name, short.name, note),
     c(cl, "RLearnerCostSens")
   )
 
