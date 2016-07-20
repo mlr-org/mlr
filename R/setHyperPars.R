@@ -42,9 +42,10 @@ setHyperPars2 = function(learner, par.vals, reset = "no") {
 
 #' @export
 setHyperPars2.Learner = function(learner, par.vals, reset = "no") {
+    
   #load mlr-default pars of learner
   if (reset == "soft") {
-    par.vals = insertCompliantValues(learner$par.set, learner$mlr.defaults, par.vals)  
+    par.vals = updateParVals(learner$par.set, learner$mlr.defaults, par.vals)  
   } else if (reset == "no") {
     par.vals = insert(learner$par.vals, par.vals)
   } else if (reset == "hard") {
@@ -52,10 +53,6 @@ setHyperPars2.Learner = function(learner, par.vals, reset = "no") {
   }
   
   ns = names(par.vals)
-  # ensure that even the empty list is named, we had problems here, see #759
-  if (is.null(ns) && is.null(names(learner$par.vals))) {
-    names(learner$par.vals) = character(0)
-  }
   pars = learner$par.set$pars
   on.par.without.desc = coalesce(learner$config$on.par.without.desc, getMlrOptions()$on.par.without.desc)
   on.par.out.of.bounds = coalesce(learner$config$on.par.out.of.bounds, getMlrOptions()$on.par.out.of.bounds)
@@ -87,6 +84,10 @@ setHyperPars2.Learner = function(learner, par.vals, reset = "no") {
   if (length(par.vals) > 0 && !(feasibility = isFeasible(learner$par.set, par.vals, use.defaults = TRUE, filter = TRUE))) {
     msg = coalesce(attr(feasibility, "warning"), "")
     stopfun(msg)
+  }
+  # ensure that even the empty list is named, we had problems here, see #759
+  if (is.null(names(par.vals))) {
+    names(par.vals) = character(0)
   }
   learner$par.vals = par.vals
   return(learner)
