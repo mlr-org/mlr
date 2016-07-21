@@ -6,8 +6,8 @@
 \usage{
 plotHyperParsEffect(hyperpars.effect.data, x = NULL, y = NULL, z = NULL,
   plot.type = "scatter", loess.smooth = FALSE, facet = NULL,
-  pretty.names = TRUE, global.only = TRUE, interpolate = FALSE,
-  show.experiments = FALSE, nested.agg = mean)
+  pretty.names = TRUE, global.only = TRUE, interpolate = NULL,
+  show.experiments = FALSE, show.interpolated = FALSE, nested.agg = mean)
 }
 \arguments{
 \item{hyperpars.effect.data}{[\code{HyperParsEffectData}]\cr
@@ -54,14 +54,14 @@ x = "iteration" and y as a performance measure from
 performance of every iteration, even if it is not an improvement.
 Default is \code{TRUE}.}
 
-\item{interpolate}{[\code{\link{Learner}} | \code{character(1)} | \code{logical(1)}]\cr
+\item{interpolate}{[\code{\link{Learner}} | \code{character(1)}]\cr
 If not FALSE, will interpolate non-complete grids in order to visualize a more 
 complete path. Only meaningful when attempting to plot a heatmap or contour.
 This will fill in "empty" cells in the heatmap or contour plot. Note that 
 cases of irregular hyperparameter paths, you will most likely need to use
 this to have a meaningful visualization. Accepts either a \link{Learner}
-object, the learner as a string, or if TRUE "regr.earth" will be used.
-Default is \code{FALSE}.}
+object or the learner as a string for interpolation.
+Default is \code{NULL}.}
 
 \item{show.experiments}{[\code{logical(1)}]\cr
 If TRUE, will overlay the plot with points indicating where an experiment
@@ -70,6 +70,18 @@ interpolation so that you can see which points were actually on the
 original path. Note: if any learner crashes occurred within the path, this
 will become TRUE.
 Default is \code{FALSE}.}
+
+\item{show.interpolated}{[\code{logical(1)}]\cr
+If TRUE, will overlay the plot with points indicating where interpolation
+ran. This is only useful when creating a heatmap or contour plot with 
+interpolation so that you can see which points were interpolated.
+Default is \code{FALSE}.}
+
+\item{nested.agg}{[\code{function}]\cr
+The function used to aggregate nested cross validation runs when plotting 2
+hyperpars simultaneously. This is only useful when nested cross validation 
+is used along with plotting a 2 hyperpars.
+Default is \code{mean}.}
 }
 \value{
 ggplot2 plot object.

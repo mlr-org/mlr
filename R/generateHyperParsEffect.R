@@ -170,14 +170,14 @@ print.HyperParsEffectData = function(x, ...) {
 #'  \code{HyperParsEffectData$measures}. Set this to FALSE to always plot the 
 #'  performance of every iteration, even if it is not an improvement.
 #'  Default is \code{TRUE}.
-#' @param interpolate [\code{\link{Learner}} | \code{character(1)} | \code{logical(1)}]\cr
+#' @param interpolate [\code{\link{Learner}} | \code{character(1)}]\cr
 #'  If not FALSE, will interpolate non-complete grids in order to visualize a more 
 #'  complete path. Only meaningful when attempting to plot a heatmap or contour.
 #'  This will fill in "empty" cells in the heatmap or contour plot. Note that 
 #'  cases of irregular hyperparameter paths, you will most likely need to use
 #'  this to have a meaningful visualization. Accepts either a \link{Learner}
-#'  object, the learner as a string, or if TRUE "regr.earth" will be used.
-#'  Default is \code{FALSE}.
+#'  object or the learner as a string for interpolation.
+#'  Default is \code{NULL}.
 #' @param show.experiments [\code{logical(1)}]\cr
 #'  If TRUE, will overlay the plot with points indicating where an experiment
 #'  ran. This is only useful when creating a heatmap or contour plot with 
@@ -185,7 +185,16 @@ print.HyperParsEffectData = function(x, ...) {
 #'  original path. Note: if any learner crashes occurred within the path, this
 #'  will become TRUE.
 #'  Default is \code{FALSE}.
-#'
+#' @param show.interpolated [\code{logical(1)}]\cr
+#'  If TRUE, will overlay the plot with points indicating where interpolation
+#'  ran. This is only useful when creating a heatmap or contour plot with 
+#'  interpolation so that you can see which points were interpolated.
+#'  Default is \code{FALSE}.
+#' @param nested.agg [\code{function}]\cr
+#'  The function used to aggregate nested cross validation runs when plotting 2
+#'  hyperpars simultaneously. This is only useful when nested cross validation 
+#'  is used along with plotting a 2 hyperpars.
+#'  Default is \code{mean}. 
 #' @template ret_gg2
 #'  
 #' @note Any NAs incurred from learning algorithm crashes will be indicated in 
@@ -202,8 +211,8 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
                                z = NULL, plot.type = "scatter", 
                                loess.smooth = FALSE, facet = NULL, 
                                pretty.names = TRUE, global.only = TRUE, 
-                               interpolate = FALSE, show.experiments = FALSE, 
-                               nested.agg = mean) {
+                               interpolate = NULL, show.experiments = FALSE, 
+                               show.interpolated = FALSE, nested.agg = mean) {
   assertClass(hyperpars.effect.data, classes = "HyperParsEffectData")
   assertChoice(x, choices = names(hyperpars.effect.data$data))
   assertChoice(y, choices = names(hyperpars.effect.data$data))
@@ -213,17 +222,16 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   assertSubset(facet, choices = names(hyperpars.effect.data$data))
   assertFlag(pretty.names)
   assertFlag(global.only)
-  assert(checkClass(interpolate, "Learner"), checkFlag(interpolate), 
-         checkString(interpolate))
+  assert(checkClass(interpolate, "Learner"), checkString(interpolate), 
+         checkNull(interpolate))
   # assign learner for interpolation
-  if (checkClass(interpolate, "Learner") == T || checkString(interpolate) == T){
+  if (checkClass(interpolate, "Learner") == TRUE || 
+      checkString(interpolate) == TRUE){
     lrn = checkLearnerRegr(interpolate)
-    interpolate = TRUE
-  } else if (interpolate){
-    lrn = makeLearner("regr.earth")
   }
   assertFlag(show.experiments)
- 
+  assertFunction(nested.agg)
+  
   if (length(x) > 1 || length(y) > 1 || length(z) > 1 || length(facet) > 1)
     stopf("Greater than 1 length x, y, z or facet not yet supported")
   
@@ -271,7 +279,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     }
   }
   
-  if (interpolate && z_flag && (heatcontour_flag)){
+  if ((!is.null(interpolate)) && z_flag && (heatcontour_flag)){
     # create grid
     xo = seq(min(d[,x]), max(d[,x]), length.out = 100)
     yo = seq(min(d[,y]), max(d[,y]), length.out = 100)
@@ -320,7 +328,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
                                       "error.message", "learner_status")), 
                   drop = FALSE]
     # keep experiments if we need it
-    if (na_flag || interpolate || show.experiments){
+    if (na_flag || (!is.null(interpolate)) || show.experiments){
       hyperpars = lapply(d[, c(hyperpars.effect.data$hyperparams, 
                                "learner_status")], "[")
     } else {
@@ -354,20 +362,29 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   } else if ((length(x) == 1) && (length(y) == 1) && (z_flag)){
     # the data we use depends on if interpolation
     if (heatcontour_flag){
-      if (interpolate){
-      plt = ggplot(data = d[d$learner_status == "Interpolated Point", ], 
+      if (!is.null(interpolate)){
+        plt = ggplot(data = d[d$learner_status == "Interpolated Point", ], 
                    aes_string(x = x, y = y, fill = z, z = z)) + geom_raster()
+        if (show.interpolated && !(na_flag || show.experiments)){
+          plt = plt + geom_point(aes_string(shape = "learner_status")) +
+            scale_shape_manual(values = c("Interpolated Point" = 6))
+        }
       } else {
         plt = ggplot(data = d, aes_string(x = x, y = y, fill = z, z = z)) +
           geom_tile()
       }
-      if (na_flag || show.experiments){
+      if ((na_flag || show.experiments) && !(show.interpolated)){
         plt = plt + geom_point(data = d[d$learner_status %in% c("Success", 
                                                                 "Failure"), ],
                                         aes_string(shape = "learner_status"), 
                                fill = "red") +
           scale_shape_manual(values = c("Failure" = 24, "Success" = 0))
-      } 
+      } else if ((na_flag || show.experiments) && (show.interpolated)) {
+        plt = plt + geom_point(data = d, aes_string(shape = "learner_status"), 
+                               fill = "red") +
+          scale_shape_manual(values = c("Failure" = 24, "Success" = 0, 
+                                        "Interpolated Point" = 6))
+      }
       if (plot.type == "contour")
         plt = plt + geom_contour()
     } else {

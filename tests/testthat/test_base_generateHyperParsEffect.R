@@ -1,5 +1,37 @@
 context("hyperparameterValidation")
 
+test_that("generate data", {
+  # generate data
+  ps = makeParamSet(makeNumericParam("C", lower = -5, upper = 5, 
+                                     trafo = function(x) 2^x) 
+  )
+  ctrl = makeTuneControlRandom(maxit = 25L)
+  rdesc = makeResampleDesc("CV", iters = 3L)
+  lrn = makeTuneWrapper("classif.ksvm", control = ctrl, 
+                        resampling = rdesc, par.set = ps, 
+                        show.info = F)
+  res = resample(lrn, task = pid.task, resampling = cv2, 
+                 extract = getTuneResult)
+  orig = getNestedTuneResultsOptPathDf(res)
+  new = generateHyperParsEffectData(res, include.diagnostics = TRUE)
+  expect_equivalent(new$data, orig)
+  
+  # make sure plot is created and can be saved
+  plt = plotHyperParsEffect(new, x = "C", y = "mmce.test.mean")
+  print(plt)
+  dir = tempdir()
+  path = stri_paste(dir, "/test.svg")
+  ggsave(path)
+  
+  # make sure plot has expected attributes
+  expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]), 
+                   "GeomPoint")
+  expect_equal(plt$labels$x, "C")
+  expect_equal(plt$labels$y, "Mean misclassification error")
+  
+  # FIXME: make sure plot looks as expected
+})
+
 test_that("1 numeric hyperparam", {
   # generate data
   ps = makeParamSet(makeDiscreteParam("C", values = 2^(-5:5)))
@@ -108,8 +140,131 @@ test_that("1 numeric hyperparam with nested cv", {
   expect_equivalent(new$data, orig)
   
   # make sure plot is created and can be saved
-  plt = plotHyperParsEffect(new, x = "C", y = "mmce.test.mean", 
-                            facet = "nested_cv_run")
+  plt = plotHyperParsEffect(new, x = "C", y = "mmce.test.mean")
+  print(plt)
+  dir = tempdir()
+  path = stri_paste(dir, "/test.svg")
+  ggsave(path)
+  
+  # make sure plot has expected attributes
+  expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]), 
+                   "GeomPoint")
+  expect_equal(plt$labels$x, "C")
+  expect_equal(plt$labels$y, "Mean misclassification error")
+  
+  # FIXME: make sure plot looks as expected
+})
+
+test_that("2 hyperparams line", {
+  # generate data
+  ps = makeParamSet(makeNumericParam("C", lower = 0.01, upper = 2)
+  )
+  ctrl = makeTuneControlRandom(maxit = 25L)
+  rdesc = makeResampleDesc("CV", iters = 3L)
+  lrn = makeTuneWrapper("classif.ksvm", control = ctrl, 
+                        resampling = rdesc, par.set = ps, 
+                        show.info = F)
+  res = resample(lrn, task = pid.task, resampling = cv2, 
+                 extract = getTuneResult)
+  orig = getNestedTuneResultsOptPathDf(res)
+  new = generateHyperParsEffectData(res, include.diagnostics = TRUE)
+  expect_equivalent(new$data, orig)
+  
+  # make sure plot is created and can be saved
+  plt = plotHyperParsEffect(new, x = "C", y = "mmce.test.mean")
+  print(plt)
+  dir = tempdir()
+  path = stri_paste(dir, "/test.svg")
+  ggsave(path)
+  
+  # make sure plot has expected attributes
+  expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]), 
+                   "GeomPoint")
+  expect_equal(plt$labels$x, "C")
+  expect_equal(plt$labels$y, "Mean misclassification error")
+  
+  # FIXME: make sure plot looks as expected
+})
+
+test_that("2 hyperparams heatcontour", {
+  # generate data
+  ps = makeParamSet(makeNumericParam("C", lower = 0.01, upper = 2)
+  )
+  ctrl = makeTuneControlRandom(maxit = 25L)
+  rdesc = makeResampleDesc("CV", iters = 3L)
+  lrn = makeTuneWrapper("classif.ksvm", control = ctrl, 
+                        resampling = rdesc, par.set = ps, 
+                        show.info = F)
+  res = resample(lrn, task = pid.task, resampling = cv2, 
+                 extract = getTuneResult)
+  orig = getNestedTuneResultsOptPathDf(res)
+  new = generateHyperParsEffectData(res, include.diagnostics = TRUE)
+  expect_equivalent(new$data, orig)
+  
+  # make sure plot is created and can be saved
+  plt = plotHyperParsEffect(new, x = "C", y = "mmce.test.mean")
+  print(plt)
+  dir = tempdir()
+  path = stri_paste(dir, "/test.svg")
+  ggsave(path)
+  
+  # make sure plot has expected attributes
+  expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]), 
+                   "GeomPoint")
+  expect_equal(plt$labels$x, "C")
+  expect_equal(plt$labels$y, "Mean misclassification error")
+  
+  # FIXME: make sure plot looks as expected
+})
+
+test_that("2 hyperparams learner crash", {
+  # generate data
+  ps = makeParamSet(makeNumericParam("C", lower = 0.01, upper = 2)
+  )
+  ctrl = makeTuneControlRandom(maxit = 25L)
+  rdesc = makeResampleDesc("CV", iters = 3L)
+  lrn = makeTuneWrapper("classif.ksvm", control = ctrl, 
+                        resampling = rdesc, par.set = ps, 
+                        show.info = F)
+  res = resample(lrn, task = pid.task, resampling = cv2, 
+                 extract = getTuneResult)
+  orig = getNestedTuneResultsOptPathDf(res)
+  new = generateHyperParsEffectData(res, include.diagnostics = TRUE)
+  expect_equivalent(new$data, orig)
+  
+  # make sure plot is created and can be saved
+  plt = plotHyperParsEffect(new, x = "C", y = "mmce.test.mean")
+  print(plt)
+  dir = tempdir()
+  path = stri_paste(dir, "/test.svg")
+  ggsave(path)
+  
+  # make sure plot has expected attributes
+  expect_set_equal(sapply(plt$layers, function(x) class(x$geom)[1]), 
+                   "GeomPoint")
+  expect_equal(plt$labels$x, "C")
+  expect_equal(plt$labels$y, "Mean misclassification error")
+  
+  # FIXME: make sure plot looks as expected
+})
+
+test_that("2 hyperparams nested", {
+  # generate data
+  ps = makeParamSet(makeNumericParam("C", lower = 0.01, upper = 2)
+  )
+  ctrl = makeTuneControlRandom(maxit = 25L)
+  rdesc = makeResampleDesc("CV", iters = 3L)
+  lrn = makeTuneWrapper("classif.ksvm", control = ctrl, 
+                        resampling = rdesc, par.set = ps, 
+                        show.info = F)
+  res = resample(lrn, task = pid.task, resampling = cv2, 
+                 extract = getTuneResult)
+  orig = getNestedTuneResultsOptPathDf(res)
+  new = generateHyperParsEffectData(res, include.diagnostics = TRUE)
+  expect_equivalent(new$data, orig)
+  
+  # make sure plot is created and can be saved
+  plt = plotHyperParsEffect(new, x = "C", y = "mmce.test.mean")
   print(plt)
   dir = tempdir()
   path = stri_paste(dir, "/test.svg")
