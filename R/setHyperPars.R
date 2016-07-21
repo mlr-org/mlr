@@ -1,17 +1,12 @@
 #' Set the hyperparameters of a learner object.
 #'
-#' @template arg_learner
+#' @inheritParams setHyperPars2
 #' @param ... [any]\cr
 #'   Named (hyper)parameters with new setting. Alternatively these can be passed
 #'   using the \code{par.vals} argument.
 #' @param par.vals [\code{list}]\cr
 #'   Optional list of named (hyper)parameter settings. The arguments in
 #'   \code{...} take precedence over values in this list.
-#' @param reset [\code{character(1)}]\cr
-#'   The options are \code{"no"} to add and in case overwrite param settings, which is the default.
-#'   \code{"soft"} will reset the manualy set param.values and restore the mlr defaults.
-#'   \code{"hard"} will reset all param.values.
-#'   \code{"before"} will only take the param.values already present in the learner without taking any defaults.
 #' @template ret_learner
 #' @export
 #' @family learner
@@ -26,7 +21,7 @@ setHyperPars = function(learner, ..., par.vals = list(), reset = "no") {
   assertClass(learner, classes = "Learner")
   assertList(args, names = "named", .var.name = "parameter settings")
   assertList(par.vals, names = "named", .var.name = "parameter settings")
-  assertChoice(reset, c("no", "soft", "hard", "before"))
+  assertChoice(reset, c("no", "soft", "hard"))
   setHyperPars2(learner, insert(par.vals, args), reset = reset)
 }
 
@@ -37,8 +32,8 @@ setHyperPars = function(learner, ..., par.vals = list(), reset = "no") {
 #'   List of named (hyper)parameter settings.
 #' @param reset [\code{character}]\cr
 #'   Can take values \code{soft} for setting the hyper parameters while keeping the \code{mlr.defaults} as far as they are feasible. 
-#'   \code{no} for updating the old parameter values with new ones without dropping old ones.
-#'   \code{hard} for completely dropping old parameter values.
+#'   \code{no} for updating the old parameter values with new ones without dropping old ones. A feasibility error then might occur later.
+#'   \code{hard} for completely dropping old parameter values and just unsing the new ones.
 #' @export
 setHyperPars2 = function(learner, par.vals, reset = "no") {
   UseMethod("setHyperPars2")

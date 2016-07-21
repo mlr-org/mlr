@@ -7,9 +7,8 @@
 setHyperPars(learner, ..., par.vals = list(), reset = "no")
 }
 \arguments{
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
-The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+\item{learner}{[\code{\link{Learner}}]\cr
+The learner.}
 
 \item{...}{[any]\cr
 Named (hyper)parameters with new setting. Alternatively these can be passed
@@ -19,11 +18,10 @@ using the \code{par.vals} argument.}
 Optional list of named (hyper)parameter settings. The arguments in
 \code{...} take precedence over values in this list.}
 
-\item{reset}{[\code{character(1)}]\cr
-The options are \code{"no"} to add and in case overwrite param settings, which is the default.
-\code{"soft"} will reset the manualy set param.values and restore the mlr defaults.
-\code{"hard"} will reset all param.values.
-\code{"before"} will only take the param.values already present in the learner without taking any defaults.}
+\item{reset}{[\code{character}]\cr
+Can take values \code{soft} for setting the hyper parameters while keeping the \code{mlr.defaults} as far as they are feasible. 
+\code{no} for updating the old parameter values with new ones without dropping old ones. A feasibility error then might occur later.
+\code{hard} for completely dropping old parameter values and just unsing the new ones.}
 }
 \value{
 [\code{\link{Learner}}].
