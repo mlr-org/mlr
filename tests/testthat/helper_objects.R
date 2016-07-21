@@ -42,7 +42,7 @@ multilabel.train = multilabel.df[multilabel.train.inds, ]
 multilabel.test  = multilabel.df[multilabel.test.inds, ]
 multilabel.task = makeMultilabelTask("multilabel", data = multilabel.df, target = multilabel.target)
 multilabel.formula.cbind = as.formula(paste("cbind(", paste(multilabel.target, collapse = ",", sep = " "), ")  ~ .", sep = ""))
-multilabel.small.inds = c(1, 52, 53, 123:128)
+multilabel.small.inds = c(1, 52, 53, 123)
 
 noclass.df = iris[,-5]
 noclass.train.inds = c(1:30, 51:80, 101:130)
