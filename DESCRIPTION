@@ -49,7 +49,6 @@ Imports:
 Suggests:
     ada,
     adabag,
-    akima,
     bartMachine,
     brnn,
     bst,
