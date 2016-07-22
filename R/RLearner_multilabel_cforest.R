@@ -54,6 +54,13 @@ predictLearner.multilabel.cforest = function(.learner, .model, .newdata, ...) {
   p = do.call(rbind, p)
   if (.learner$predict.type == "response") {
     p = t(apply(p, 1L, function(x) {ifelse(x == max(x), TRUE, FALSE)}))
+    # p = t(apply(p, 1L, function(x) {
+    #   maxval = max(x)
+    #   max.ind = which(x == maxval)
+    #   #if (length(max.ind) > 1L) 
+    #   #  max.ind = sample(max.ind, 1L)
+    #   ifelse(seq_along(x) == max.ind, TRUE, FALSE)
+    #}))
   } else {
     p
   }
