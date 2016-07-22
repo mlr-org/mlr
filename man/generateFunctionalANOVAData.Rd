@@ -21,7 +21,7 @@ A vector of feature names contained in the training data.
 If not specified all features in the \code{input} will be used.}
 
 \item{depth}{[\code{integer(1)}]\cr
-An integer indicating the depth of interaction amongst the features to compute.}
+An integer indicating the depth of interaction amongst the features to compute. Default 1.}
 
 \item{fun}{[\code{function}]\cr
 A function that accepts a numeric vector and returns either a single number
@@ -60,7 +60,7 @@ Default is the empirical maximum of each numeric feature and NA for factor featu
 The length of the prediction grid created for each feature.
 If \code{resample = "bootstrap"} or \code{resample = "subsample"} then this defines
 the number of (possibly non-unique) values resampled. If \code{resample = NULL} it defines the
-length of the evenly spaced grid created.}
+length of the evenly spaced grid created. Default 10.}
 
 \item{...}{additional arguments to be passed to \code{\link{predict}}.}
 }
