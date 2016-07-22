@@ -53,10 +53,6 @@ test_that("1 numeric hyperparam", {
   expect_equal(plt$labels$x, "iteration")
   expect_equal(plt$labels$y, "Accuracy")
   
-  # test for global
-  orig$acc.test.mean = cummax(orig$acc.test.mean)
-  expect_equivalent(plt$data, orig) 
-  
   # FIXME: make sure plot looks as expected
 })
 
