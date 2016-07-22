@@ -44,6 +44,7 @@ mlr_2.9:
 - added new arguments "facet.wrap.nrow" and "facet.wrap.ncol" which enable arrangement of facets in rows and columns to plotting functions
 - new multilabel wrappers algorithms: classifier chains, nested stacking, dependent binary relevance, stacking
 - renamed multilabel measure "hamloss" to "multilabel.hamloss"
+- added function "generateFunctionalANOVAData" for functional ANOVA partial dependence analysis
 
 - new learners
 -- classif.C50
@@ -83,6 +84,7 @@ mlr_2.9:
 -- makeMultilabelNestedStackingWrapper
 -- makeMultilabelStackingWrapper
 -- makeConstantClassWrapper
+-- generateFunctionalANOVAData
 
 - removed functions
 -- getParamSet generic (now in ParamHelpers package)
