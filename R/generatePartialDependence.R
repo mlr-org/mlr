@@ -311,7 +311,7 @@ generatePartialDependenceData = function(obj, input, features,
 #'   A vector of feature names contained in the training data.
 #'   If not specified all features in the \code{input} will be used.
 #' @param depth [\code{integer(1)}]\cr
-#'   An integer indicating the depth of interaction amongst the features to compute.
+#'   An integer indicating the depth of interaction amongst the features to compute. Default 1.
 #' @param fun [\code{function}]\cr
 #'   A function that accepts a numeric vector and returns either a single number
 #'   such as a measure of location such as the mean, or three numbers, which give a lower bound,
@@ -344,7 +344,7 @@ generatePartialDependenceData = function(obj, input, features,
 #'   The length of the prediction grid created for each feature.
 #'   If \code{resample = "bootstrap"} or \code{resample = "subsample"} then this defines
 #'   the number of (possibly non-unique) values resampled. If \code{resample = NULL} it defines the
-#'   length of the evenly spaced grid created.
+#'   length of the evenly spaced grid created. Default 10.
 #' @param ... additional arguments to be passed to \code{\link{predict}}.
 #' @return [\code{FunctionalANOVAData}]. A named list, which contains the computed effects of the specified
 #'   depth amongst the features.
