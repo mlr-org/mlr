@@ -42,7 +42,7 @@ getFeatureImportance.classif.xgboost(.learner, .model, ...)
 
 getFeatureImportance.regr.RRF(.learner, .model, ...)
 
-getFeatureImportance.regr.cforest(.learner, .model, auc = FALSE, ...)
+getFeatureImportance.regr.cforest(.learner, .model, ...)
 
 getFeatureImportance.regr.gbm(.learner, .model, n.trees, ...)
 
@@ -78,7 +78,7 @@ The model.}
 Additional parameters, which are passed to the underlying importance value 
 generating function.}
 
-\item{auc}{[logical(1)]\cr Only for cforest. Should the auc based importance be calculated.}
+\item{auc}{[logical(1)]\cr Only for binary classification with cforest. Should the auc based importance be calculated.}
 
 \item{n.trees}{[integer(1)]\cr Only for gbm. For how many trees should the importance be calculated.
 If missing the number of trees used to fit the model is used.}

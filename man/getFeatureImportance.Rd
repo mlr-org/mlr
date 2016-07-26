@@ -31,7 +31,7 @@ The following learners have been implemented with the associated importance meas
    in a tree and the weight of that tree.}
    \item{cforest} \cr
    {Permutation principle of the 'mean decrease in accuracy' principle
-   in randomForest. If \code{AUC=TRUE} (only for classification and regression),
+   in randomForest. If \code{auc=TRUE} (only for binary classification),
    area under the curve is used as measure.  The algorithm used for the survival
    learner is 'extremely slow and experimental; use at your own risk'.
    See \link[party:varimp]{varimp} for details and further parameters.}  

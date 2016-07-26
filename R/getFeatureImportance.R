@@ -13,7 +13,7 @@
 #'    in a tree and the weight of that tree.}
 #'    \item{cforest} \cr
 #'    {Permutation principle of the 'mean decrease in accuracy' principle
-#'    in randomForest. If \code{AUC=TRUE} (only for classification and regression),
+#'    in randomForest. If \code{auc=TRUE} (only for binary classification),
 #'    area under the curve is used as measure.  The algorithm used for the survival
 #'    learner is 'extremely slow and experimental; use at your own risk'.
 #'    See \link[party:varimp]{varimp} for details and further parameters.}  
@@ -77,7 +77,7 @@ getFeatureImportance = function(object, ...) {
 #'   If you pass a string the learner will be created via \code{\link{makeLearner}}.
 #' @param .model [\code{\link{WrappedModel}}]\cr
 #'  The model.
-#' @param auc [logical(1)]\cr Only for cforest. Should the auc based importance be calculated.
+#' @param auc [logical(1)]\cr Only for binary classification with cforest. Should the auc based importance be calculated.
 #' @param n.trees [integer(1)]\cr Only for gbm. For how many trees should the importance be calculated.
 #'  If missing the number of trees used to fit the model is used.
 #' @param ... [any]\cr
