@@ -34,6 +34,14 @@ test_that("Impute data frame", {
   expect_equal(imputed$x[6], 0.5)
   expect_equal(imputed$x[6], 0.5)
   expect_true(imputed$y[6] >= 0 && imputed$y[6] <= 5)
+  
+  # learner
+  lrn = makeLearner("classif.fnn")
+  expect_false(hasLearnerProperties(lrn, "missings")) # we specifically want to check functionality with a learner that does not support NAs.
+  data2 = data[1:5, 1:3]
+  data2[1,1] = NA
+  imputed = impute(data2, cols = list(f = imputeLearner(lrn)))$data
+  expect_true(imputed$f[1] == "a")
 
   # constant replacements
   imputed = impute(data, target = target, cols = list(f = "xxx", x = 999, y = 1000))$data
