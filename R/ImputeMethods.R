@@ -144,8 +144,8 @@ imputeMax = function(multiplier = 1) {
 #'   If NA (default), it will be estimated from the data.
 #' @rdname imputations
 imputeUniform = function(min = NA_real_, max = NA_real_) {
-  assertNumber(min)
-  assertNumber(max)
+  assertNumber(min, na.ok = TRUE)
+  assertNumber(max, na.ok = TRUE)
   makeImputeMethod(
     learn = function(data, target, col, min, max)  {
       if (is.na(min)) {
@@ -291,10 +291,11 @@ imputeLearner = function(learner, features = NULL) {
     impute = function(data, target, col, model, features) {
       x = data[[col]]
       ind = is.na(x)
+      if (all(!ind)) return(x)
       # FIXME: we do get a list instead of a data.frame?
       newdata = as.data.frame(data)[ind, features, drop = FALSE]
-     p = predict(model, newdata = newdata)$data$response
-     replace(x, ind, p)
+      p = predict(model, newdata = newdata)$data$response
+      replace(x, ind, p)
     },
     args = list(learner = learner, features = features)
   )

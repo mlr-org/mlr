@@ -123,3 +123,23 @@ test_that("ImputeWrapper", {
   expect_output(print(mm), "Model")
   expect_is(mm, "WrappedModel")
 })
+
+test_that("Impute works on non missing data", {
+  data = data.frame(a = c(1,1,2), b = 1:3)
+  impute.methods = list(
+    imputeConstant(0),
+    imputeMedian(),
+    imputeMean(),
+    imputeMode(),
+    imputeMin(),
+    imputeMax(),
+    imputeUniform(),
+    imputeNormal(),
+    imputeHist(),
+    imputeLearner(learner = makeLearner("regr.fnn"))
+  )
+  for (impute.method in impute.methods) {
+    imputed = impute(data, cols = list(a=impute.method))$data
+    expect_equal(data, imputed)
+  }
+})
