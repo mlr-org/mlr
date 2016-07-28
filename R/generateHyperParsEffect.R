@@ -52,10 +52,11 @@
 #' @export
 #' @importFrom utils type.convert
 generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
-                                       trafo = FALSE)
-  {
-  assert(checkClass(tune.result, "ResampleResult"), 
-         checkClass(tune.result, classes = c("TuneResult", "OptResult")))
+                                       trafo = FALSE) {
+  assert(
+    checkClass(tune.result, "ResampleResult"), 
+    checkClass(tune.result, classes = c("TuneResult", "OptResult"))
+  )
   assertFlag(include.diagnostics)
   
   # in case we have nested CV
@@ -111,10 +112,10 @@ generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
   names(d)[names(d) == "dob"] = "iteration"
   
   makeS3Obj("HyperParsEffectData", data = d, measures = measures,
-            hyperparams = hyperparams, 
-            diagnostics = include.diagnostics, 
-            optimization = optimization,
-            nested = nested)
+    hyperparams = hyperparams, 
+    diagnostics = include.diagnostics, 
+    optimization = optimization,
+    nested = nested)
 }
 
 #' @export
@@ -226,7 +227,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
          checkNull(interpolate))
   # assign learner for interpolation
   if (checkClass(interpolate, "Learner") == TRUE || 
-      checkString(interpolate) == TRUE){
+      checkString(interpolate) == TRUE) {
     lrn = checkLearnerRegr(interpolate)
   }
   assertFlag(show.experiments)
@@ -292,7 +293,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       for (run in unique(d$nested_cv_run)){
         d_run = d_new[d_new$nested_cv_run == run, ]
         regr.task = makeRegrTask(id = "interp", data = d_run[,c(x,y,z)], 
-                                 target = z)
+          target = z)
         mod = train(lrn, regr.task)
         prediction = predict(mod, newdata = grid)
         grid[, z] = prediction$data[, prediction$predict.type]
@@ -323,13 +324,13 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   
   if (hyperpars.effect.data$nested && z.flag){
     averaging = d[, !(names(d) %in% c("iteration", "nested_cv_run", 
-                                      hyperpars.effect.data$hyperparams, "eol",
-                                      "error.message", "learner_status")), 
-                  drop = FALSE]
+      hyperpars.effect.data$hyperparams, "eol",
+      "error.message", "learner_status")), 
+      drop = FALSE]
     # keep experiments if we need it
     if (na.flag || (!is.null(interpolate)) || show.experiments){
       hyperpars = lapply(d[, c(hyperpars.effect.data$hyperparams, 
-                               "learner_status")], "[")
+        "learner_status")], "[")
     } else {
       hyperpars = lapply(d[, hyperpars.effect.data$hyperparams], "[")
     }
@@ -346,7 +347,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     }
     if (na.flag){
       plt = plt + geom_point(aes_string(shape = "learner_status", 
-                                        color = "learner_status")) +
+        color = "learner_status")) +
         scale_shape_manual(values = c("Failure" = 24, "Success" = 0)) +
         scale_color_manual(values = c("red", "black"))
     } else {
@@ -363,7 +364,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     if (heatcontour.flag){
       if (!is.null(interpolate)){
         plt = ggplot(data = d[d$learner_status == "Interpolated Point", ], 
-                   aes_string(x = x, y = y, fill = z, z = z)) + geom_raster()
+          aes_string(x = x, y = y, fill = z, z = z)) + geom_raster()
         if (show.interpolated && !(na.flag || show.experiments)){
           plt = plt + geom_point(aes_string(shape = "learner_status")) +
             scale_shape_manual(values = c("Interpolated Point" = 6))
@@ -374,15 +375,15 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       }
       if ((na.flag || show.experiments) && !(show.interpolated)){
         plt = plt + geom_point(data = d[d$learner_status %in% c("Success", 
-                                                                "Failure"), ],
-                                        aes_string(shape = "learner_status"), 
-                               fill = "red") +
+          "Failure"), ],
+          aes_string(shape = "learner_status"), 
+          fill = "red") +
           scale_shape_manual(values = c("Failure" = 24, "Success" = 0))
       } else if ((na.flag || show.experiments) && (show.interpolated)) {
         plt = plt + geom_point(data = d, aes_string(shape = "learner_status"), 
-                               fill = "red") +
+          fill = "red") +
           scale_shape_manual(values = c("Failure" = 24, "Success" = 0, 
-                                        "Interpolated Point" = 6))
+            "Interpolated Point" = 6))
       }
       if (plot.type == "contour")
         plt = plt + geom_contour()
@@ -390,7 +391,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       plt = ggplot(d, aes_string(x = x, y = y, color = z))
       if (na.flag){
         plt = plt + geom_point(aes_string(shape = "learner_status", 
-                                          color = "learner_status")) +
+          color = "learner_status")) +
           scale_shape_manual(values = c("Failure" = 24, "Success" = 0)) +
           scale_color_manual(values = c("red", "black"))
       } else{
@@ -413,7 +414,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       if (z %in% hyperpars.effect.data$measures)
         plt = plt +
           labs(fill = eval(as.name(stri_split_fixed(z, 
-                                                ".test.mean")[[1]][1]))$name) 
+            ".test.mean")[[1]][1]))$name) 
   }
   return(plt)
 }
