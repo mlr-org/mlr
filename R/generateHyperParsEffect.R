@@ -150,12 +150,12 @@ print.HyperParsEffectData = function(x, ...) {
 #'  could be for the fill on a heatmap or color aesthetic for a line. Must be a 
 #'  column from \code{HyperParsEffectData$data}. Default is \code{NULL}.
 #' @param plot.type [\code{character(1)}]\cr
-#'  Specify the type of plot: "scatter" for a scatterplot, "heatmap" for a 
-#'  heatmap, "line" for a scatterplot with a connecting line, or "contour" for a
+#'  Specify the type of plot: \dQuote{scatter} for a scatterplot, \dQuote{heatmap} for a 
+#'  heatmap, \dQuote{line} for a scatterplot with a connecting line, or \dQuote{contour} for a
 #'  contour plot layered ontop of a heatmap.
-#'  Default is scatter.
+#'  Default is \dQuote{scatter}.
 #' @param loess.smooth [\code{logical(1)}]\cr
-#'  If TRUE, will add loess smoothing line to plots where possible. Note that 
+#'  If \code{TRUE}, will add loess smoothing line to plots where possible. Note that 
 #'  this is probably only useful when \code{plot.type} is set to either 
 #'  \dQuote{scatter} or \dQuote{line}. Must be a column from \code{HyperParsEffectData$data}
 #'  Default is \code{FALSE}.
@@ -172,7 +172,7 @@ print.HyperParsEffectData = function(x, ...) {
 #'  performance of every iteration, even if it is not an improvement.
 #'  Default is \code{TRUE}.
 #' @param interpolate [\code{\link{Learner}} | \code{character(1)}]\cr
-#'  If not \code{FALSE}, will interpolate non-complete grids in order to visualize a more 
+#'  If not \code{NULL}, will interpolate non-complete grids in order to visualize a more 
 #'  complete path. Only meaningful when attempting to plot a heatmap or contour.
 #'  This will fill in \dQuote{empty} cells in the heatmap or contour plot. Note that 
 #'  cases of irregular hyperparameter paths, you will most likely need to use
