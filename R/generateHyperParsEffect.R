@@ -240,18 +240,17 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     d$nested_cv_run = as.factor(d$nested_cv_run)
   
   # set flags for building plots
-  na_flag = any(is.na(d[, hyperpars.effect.data$measures]))
-  z_flag = !is.null(z)
-  facet_flag = !is.null(facet)
-  grid_flag = hyperpars.effect.data$optimization == "TuneControlGrid"
-  heatcontour_flag = plot.type %in% c("heatmap", "contour")
+  na.flag = any(is.na(d[, hyperpars.effect.data$measures]))
+  z.flag = !is.null(z)
+  facet.flag = !is.null(facet)
+  heatcontour.flag = plot.type %in% c("heatmap", "contour")
   
   # deal with NAs where optimizer failed
-  if (na_flag){
+  if (na.flag){
     d$learner_status = ifelse(is.na(d[, "exec.time"]), "Failure", "Success")
     for (col in hyperpars.effect.data$measures) {
       col_name = stri_split_fixed(col, ".test.mean", omit_empty = TRUE)[[1]]
-      if (heatcontour_flag){
+      if (heatcontour.flag){
         d[,col][is.na(d[,col])] = get(col_name)$worst
       } else {
         if (get(col_name)$minimize){
@@ -279,7 +278,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     }
   }
   
-  if ((!is.null(interpolate)) && z_flag && (heatcontour_flag)){
+  if ((!is.null(interpolate)) && z.flag && (heatcontour.flag)){
     # create grid
     xo = seq(min(d[,x]), max(d[,x]), length.out = 100)
     yo = seq(min(d[,y]), max(d[,y]), length.out = 100)
@@ -322,13 +321,13 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     d = grid
   }
   
-  if (hyperpars.effect.data$nested && z_flag){
+  if (hyperpars.effect.data$nested && z.flag){
     averaging = d[, !(names(d) %in% c("iteration", "nested_cv_run", 
                                       hyperpars.effect.data$hyperparams, "eol",
                                       "error.message", "learner_status")), 
                   drop = FALSE]
     # keep experiments if we need it
-    if (na_flag || (!is.null(interpolate)) || show.experiments){
+    if (na.flag || (!is.null(interpolate)) || show.experiments){
       hyperpars = lapply(d[, c(hyperpars.effect.data$hyperparams, 
                                "learner_status")], "[")
     } else {
@@ -339,13 +338,13 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   }
   
   # just x, y  
-  if ((length(x) == 1) && (length(y) == 1) && !(z_flag)){
+  if ((length(x) == 1) && (length(y) == 1) && !(z.flag)){
     if (hyperpars.effect.data$nested){
       plt = ggplot(d, aes_string(x = x, y = y, color = "nested_cv_run"))
     } else {
       plt = ggplot(d, aes_string(x = x, y = y))
     }
-    if (na_flag){
+    if (na.flag){
       plt = plt + geom_point(aes_string(shape = "learner_status", 
                                         color = "learner_status")) +
         scale_shape_manual(values = c("Failure" = 24, "Success" = 0)) +
@@ -357,15 +356,15 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
       plt = plt + geom_line()
     if (loess.smooth)
       plt = plt + geom_smooth()
-    if (facet_flag)
+    if (facet.flag)
       plt = plt + facet_wrap(facet)
-  } else if ((length(x) == 1) && (length(y) == 1) && (z_flag)){
+  } else if ((length(x) == 1) && (length(y) == 1) && (z.flag)){
     # the data we use depends on if interpolation
-    if (heatcontour_flag){
+    if (heatcontour.flag){
       if (!is.null(interpolate)){
         plt = ggplot(data = d[d$learner_status == "Interpolated Point", ], 
                    aes_string(x = x, y = y, fill = z, z = z)) + geom_raster()
-        if (show.interpolated && !(na_flag || show.experiments)){
+        if (show.interpolated && !(na.flag || show.experiments)){
           plt = plt + geom_point(aes_string(shape = "learner_status")) +
             scale_shape_manual(values = c("Interpolated Point" = 6))
         }
@@ -373,13 +372,13 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
         plt = ggplot(data = d, aes_string(x = x, y = y, fill = z, z = z)) +
           geom_tile()
       }
-      if ((na_flag || show.experiments) && !(show.interpolated)){
+      if ((na.flag || show.experiments) && !(show.interpolated)){
         plt = plt + geom_point(data = d[d$learner_status %in% c("Success", 
                                                                 "Failure"), ],
                                         aes_string(shape = "learner_status"), 
                                fill = "red") +
           scale_shape_manual(values = c("Failure" = 24, "Success" = 0))
-      } else if ((na_flag || show.experiments) && (show.interpolated)) {
+      } else if ((na.flag || show.experiments) && (show.interpolated)) {
         plt = plt + geom_point(data = d, aes_string(shape = "learner_status"), 
                                fill = "red") +
           scale_shape_manual(values = c("Failure" = 24, "Success" = 0, 
@@ -389,7 +388,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
         plt = plt + geom_contour()
     } else {
       plt = ggplot(d, aes_string(x = x, y = y, color = z))
-      if (na_flag){
+      if (na.flag){
         plt = plt + geom_point(aes_string(shape = "learner_status", 
                                           color = "learner_status")) +
           scale_shape_manual(values = c("Failure" = 24, "Success" = 0)) +
