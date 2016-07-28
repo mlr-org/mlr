@@ -84,11 +84,11 @@ test_that("TuneWrapper works with getTuneResult and getNestedTuneResults", {
   
   # check trafo arg
   ps2 = makeParamSet(makeNumericParam(id = "C", lower = -2, upper = 2, 
-                                      trafo = function(x) 2^x))
+    trafo = function(x) 2^x))
   lrn2 = makeTuneWrapper(lrn1a, resampling = inner, par.set = ps2, 
-                         control = makeTuneControlGrid())
+    control = makeTuneControlGrid())
   r = resample(lrn2, binaryclass.task, outer, measures = mlr::mmce, 
-               extract = getTuneResult)
+    extract = getTuneResult)
   opdf = getNestedTuneResultsOptPathDf(r, trafo = TRUE)
   expect_true(all(c("iter", "C", "mmce.test.mean") %in% colnames(opdf)))
   expect_equal(nrow(opdf), 20)
