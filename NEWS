@@ -45,6 +45,7 @@ mlr_2.9:
 - new multilabel wrappers algorithms: classifier chains, nested stacking, dependent binary relevance, stacking
 - renamed multilabel measure "hamloss" to "multilabel.hamloss"
 - added function "generateFunctionalANOVAData" for functional ANOVA partial dependence analysis
+- getNestedTuneResultsOptPathDf: added new arg "trafo"
 
 - new learners
 -- classif.C50
