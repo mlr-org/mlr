@@ -4,104 +4,119 @@
 \alias{makeStackedLearner}
 \title{Create a stacked learner object.}
 \usage{
-makeStackedLearner(base.learners, super.learner = NULL, predict.type = NULL,
-  method = "stack.nocv", use.feat = FALSE, resampling = NULL,
-  parset = list())
+makeStackedLearner(id = "stack", method = "superlearner", base.learners,
+  predict.type = NULL, resampling = NULL, super.learner = NULL,
+  use.feat = FALSE, parset = list(), save.on.disc = FALSE,
+  save.preds = TRUE)
 }
 \arguments{
-\item{base.learners}{[(list of) \code{\link{Learner}}]\cr
-A list of learners created with \code{makeLearner}.}
+\item{id}{[\code{character(1)}]  Id string for object. Used to display object 
+and for model saving. Default is "stack".}
 
-\item{super.learner}{[\code{\link{Learner} | character(1)}]\cr
-The super learner that makes the final prediction based on the base learners.
-If you pass a string, the super learner will be created via \code{makeLearner}.
-Not used for \code{method = 'average'}. Default is \code{NULL}.}
+\item{method}{[\code{character(1)}]\cr
+\dQuote{aggregate} for averaging the predictions of the base learners,
+\dQuote{superlearner} for building a super learner using crossvalidated predictions of the base learners.
+\dQuote{ensembleselection} for averaging the (cross validated) predictions of the base learners, with the weights learned from
+ensemble selection algorithm.}
+
+\item{base.learners}{[(list of) \code{\link{Learner}}]\cr
+A list of learners created with \code{makeLearner}. The prediction type can
+be changed using \code{setPredictType}.}
 
 \item{predict.type}{[\code{character(1)}]\cr
-Sets the type of the final prediction for \code{method = 'average'}.
-For other methods, the predict type should be set within \code{super.learner}.
+Sets the type of the final prediction.
+For method \code{super.learner} the predict type can also be set within \code{super.learner}.
 If the type of the base learner prediction, which is set up within \code{base.learners}, is
 \describe{
- \item{\code{"prob"}}{then \code{predict.type = 'prob'} will use the average of all
- bease learner predictions and \code{predict.type = 'response'} will use
+ \item{\code{"prob"}}{then \code{predict.type = 'prob'} will use the aggregate of all
+ base learner predictions and \code{predict.type = 'response'} will use
  the class with highest probability as final prediction.}
  \item{\code{"response"}}{then, for classification tasks with \code{predict.type = 'prob'},
  the final prediction will be the relative frequency based on the predicted base learner classes
  and classification tasks with \code{predict.type = 'response'} will use majority vote of the base
  learner predictions to determine the final prediction.
- For regression tasks, the final prediction will be the average of the base learner predictions.}
+ For regression tasks, the final prediction will be the aggregate of the base learner predictions.}
 }}
 
-\item{method}{[\code{character(1)}]\cr
-\dQuote{average} for averaging the predictions of the base learners,
-\dQuote{stack.nocv} for building a super learner using the predictions of the base learners,
-\dQuote{stack.cv} for building a super learner using crossvalidated predictions of the base learners.
-\dQuote{hill.climb} for averaging the predictions of the base learners, with the weights learned from
-hill climbing algorithm and
-\dQuote{compress} for compressing the model to mimic the predictions of a collection of base learners
-while speeding up the predictions and reducing the size of the model.
-Default is \dQuote{stack.nocv},}
+\item{resampling}{[\code{\link{ResampleDesc}}]\cr
+Resampling strategy for \code{method = 'superlearner'} and \code{method = 'ensembleselection'}.
+Only CV is allowed for resampling. The default \code{NULL} uses 5-fold CV.}
+
+\item{super.learner}{[\code{\link{Learner} | character(1)}]\cr
+The super learner that makes the final prediction based on the cross validated
+base learners predictions. If you pass a string, the super learner will be 
+created via \code{makeLearner}. Only used for \code{method = 'superlearner'}. 
+Default is \code{NULL}.}
 
 \item{use.feat}{[\code{logical(1)}]\cr
 Whether the original features should also be passed to the super learner.
-Not used for \code{method = 'average'}.
-Default is \code{FALSE}.}
+Only used for \code{method = 'superlearner'}. Default is \code{FALSE}.}
 
-\item{resampling}{[\code{\link{ResampleDesc}}]\cr
-Resampling strategy for \code{method = 'stack.cv'}.
-Currently only CV is allowed for resampling.
-The default \code{NULL} uses 5-fold CV.}
-
-\item{parset}{the parameters for \code{hill.climb} method, including
+\item{parset}{the parameters for \code{ensembleselection} method, including
 \describe{
-  \item{\code{replace}}{Whether a base learner can be selected more than once.}
-  \item{\code{init}}{Number of best models being included before the selection algorithm.}
-  \item{\code{bagprob}}{The proportion of models being considered in one round of selection.}
-  \item{\code{bagtime}}{The number of rounds of the bagging selection.}
-  \item{\code{metric}}{The result evaluation metric function taking two parameters \code{pred} and \code{true},
-  the smaller the score the better.}
-}
-the parameters for \code{compress} method, including
-\describe{
-   \item{k}{the size multiplier of the generated data}
-   \item{prob}{the probability to exchange values}
-   \item{s}{the standard deviation of each numerical feature}
+  \item{\code{replace}}{Whether a base learner can be selected more than once within a bagging iteration.}
+  \item{\code{init}}{Number of best models being included at the beginning of each bagging iteration.}
+  \item{\code{bagprob}}{The proportion of models being considered in one bagging iteration.}
+  \item{\code{bagtime}}{The number of the bagging iterations.}
+  \item{\code{metric}}{The evaluation metric. Must be an object of type \code{Measure}.}
+  \item{\code{tolerance}}{The tolerance when inner loop should stop.}
 }}
+
+\item{save.on.disc}{[\code{logical(1)}]\cr 
+If set to \code{TRUE}, base models are saved on disc at the working directory. 
+This setting saves memory when huge models are fitted but also might take longer. 
+Later during prediction this models are loaded. Models are saved with the 
+name "saved.models<stack.id>.<base.learner.id>.RData".
+Note that it only works for train-predict procedures as well as for resampling using holdout. 
+Applying outer cross validation will result in wrong predictions due to the 
+fact that model names does not seperate between different resample iterations.
+Default is \code{FALSE}}
+
+\item{save.preds}{[\code{logical(1)}]\cr 
+If set to \code{FALSE} models will not contain predictions. This reduce the 
+object size. Note that function \code{resampleStackedLearnerAgain} does not 
+work if saving prediction is disabled. Default is \code{TRUE}.}
 }
 \description{
-A stacked learner uses predictions of several base learners and fits
-a super learner using these predictions as features in order to predict the outcome.
+A stacked learner uses predictions of several base learners to 
+obtain level 1 data. This prediction is used to train a super learner, 
+apply ensemble selection or just combine the methods using averaging.
 The following stacking methods are available:
 
  \describe{
-  \item{\code{average}}{Averaging of base learner predictions without weights.}
-  \item{\code{stack.nocv}}{Fits the super learner, where in-sample predictions of the base learners are used.}
-  \item{\code{stack.cv}}{Fits the super learner, where the base learner predictions are computed
-  by crossvalidated predictions (the resampling strategy can be set via the \code{resampling} argument).}
-  \item{\code{hill.climb}}{Select a subset of base learner predictions by hill climbing algorithm.}
-  \item{\code{compress}}{Train a neural network to compress the model from a collection of base learners.}
+  \item{\code{aggregate}}{Averaging of base learner predictions without weights.}
+  \item{\code{superlearner}}{Fits the super learner, where the base learner predictions are computed
+  by crossvalidated predictions (the internal resampling strategy can be set via the \code{resampling} argument).}
+  \item{\code{ensembleselection}}{Select a subset of base learner predictions by ensenemble selection}
  }
 }
 \examples{
+\dontrun{
   # Classification
   data(iris)
   tsk = makeClassifTask(data = iris, target = "Species")
   base = c("classif.rpart", "classif.lda", "classif.svm")
   lrns = lapply(base, makeLearner)
   lrns = lapply(lrns, setPredictType, "prob")
-  m = makeStackedLearner(base.learners = lrns,
-    predict.type = "prob", method = "hill.climb")
-  tmp = train(m, tsk)
-  res = predict(tmp, tsk)
+  stk = makeStackedLearner(method = "ensembleselection", base.learners = lrns, predict.type = "prob", parset = list(init = 1, metric = mmce))
+  res = resample(stk, tsk, cv5, mmce)
 
   # Regression
   data(BostonHousing, package = "mlbench")
   tsk = makeRegrTask(data = BostonHousing, target = "medv")
   base = c("regr.rpart", "regr.svm")
   lrns = lapply(base, makeLearner)
-  m = makeStackedLearner(base.learners = lrns,
-    predict.type = "response", method = "compress")
-  tmp = train(m, tsk)
-  res = predict(tmp, tsk)
+  stk = makeStackedLearner(base.learners = lrns, predict.type = "response", method = "compress", parset = list(init = 1, metric = mae))
+  m = train(stk, tsk)
+  res = predict(m, tsk)
+}
+}
+\references{
+Wolpert, David H. "Stacked generalization." Neural networks 5.2 (1992): 241-259.
+  \url{http://www.machine-learning.martinsewell.com/ensembles/stacking/Wolpert1992.pdf}
+
+Caruana, Rich, et al. "Ensemble selection from libraries of models." 
+  Proceedings of the twenty-first international conference on Machine learning. 
+  ACM, 2004. \url{http://www.cs.cornell.edu/~caruana/ctp/ct.papers/caruana.icml04.icdm06long.pdf}
 }
 
