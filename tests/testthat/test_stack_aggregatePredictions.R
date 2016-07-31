@@ -24,8 +24,8 @@ for (tsk in tasks) {
       like_pr0 = aggregatePredictions(pred.list[1], sm.pt = sm.pt, pL = FALSE)
       expect_true(identical(pr0, like_pr0))
       p = aggregatePredictions(pred.list, sm.pt = sm.pt, pL = FALSE)
-      p #%>% print
-      perf = performance(p) #%>% print
+      p 
+      perf = performance(p)
       expect_that(perf < 1/2, is_true())
     }
   }
@@ -48,7 +48,7 @@ for (tsk in tasks) {
   
   pred.list = list(pr0, pr1, pr2)
   p = aggregatePredictions(pred.list, sm.pt = NULL, pL = FALSE)
-  p #%>% print
-  perf = performance(p) #%>% print
+  p 
+  perf = performance(p) 
   expect_that(perf > 0.1, is_true())
 }

@@ -16,15 +16,15 @@ test_that("resampleStackedLearnerAgain", {
   )
   bls = lapply(bls, function(x) setPredictType(x, predict.type = "prob"))
   ste = makeStackedLearner(id = "stackES", bls, resampling = cv3, 
-    predict.type = "prob", method = "hill.climb", parset = list(init = 1, 
+    predict.type = "prob", method = "ensembleselection", parset = list(init = 1, 
     bagprob = 0.5, bagtime = 3, metric = mmce), save.on.disc = FALSE)
   
   stc = makeStackedLearner(id = "stackSL", bls, resampling = cv3,
-      predict.type = "prob", method = "stack.cv", 
+      predict.type = "prob", method = "superlearner", 
       super.learner = makeLearner("classif.rpart", predict.type = "prob"))
   
   for (tsk in tasks_classif) {
-    context(paste("ES on", tsk$task.desc$id))
+    #context(paste("ES on", tsk$task.desc$id))
     rdesc = cv2
     resES = resample(ste, tsk, rdesc, models = TRUE) 
     ee1 = resampleStackedLearnerAgain(obj = resES, task = tsk, measures = mmce, parset = list(init = 2, bagprob = .7, bagtime = 10, replace = TRUE, metric = mmce))
@@ -55,12 +55,12 @@ test_that("resampleStackedLearnerAgain", {
     # check if all models contain results (non-NAs)
     expect_equal(anyNA(lapply(seq_along(res), function(x) res[[x]]$aggr)), FALSE)
     # FIXME: more tests
-    context(paste("AV on", tsk$task.desc$id))
+    #context(paste("AV on", tsk$task.desc$id))
     av1 = resampleStackedLearnerAgain(obj = resES, task = tsk, measures = mmce)
 
     
     
-    context(paste("SL on", tsk$task.desc$id))
+    #context(paste("SL on", tsk$task.desc$id))
     resSL = resample(stc, tsk, cv2, models = TRUE) 
     ss1 = resampleStackedLearnerAgain(obj = resSL, task = tsk, measures = mmce, super.learner = makeLearner("classif.rpart", predict.type = "prob"))
     ss2 = resampleStackedLearnerAgain(obj = resSL, task = tsk, measures = list(mmce), super.learner = makeLearner("classif.rpart"))

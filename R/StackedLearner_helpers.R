@@ -77,10 +77,10 @@ makeSuperLearnerTask = function(type, data, target) {
   if (getMlrOption("show.info") & (length(keep.idx) < ncol(data)))
     warningf("Feature '%s' will be removed\n", names(data)[!keep.idx])
   if (type == "classif") {
-    removeConstantFeatures(task = makeClassifTask(id = "level 1 data", 
+    removeConstantFeatures(obj = makeClassifTask(id = "level1data", 
       data = data, target = target, fixup.data = "no"))
   } else {
-    removeConstantFeatures(task = makeRegrTask(id = "level 1 data", 
+    removeConstantFeatures(obj = makeRegrTask(id = "level1data", 
       data = data, target = target, fixup.data = "no"))
 
   }

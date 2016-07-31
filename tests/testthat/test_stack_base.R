@@ -44,7 +44,7 @@ test_that("Base functions", {
       for (use.feat in ufs) {
         for (sm.pt in pts) {
           for (bms.pt in pts) {
-            cat(td$type, td$id, method, use.feat, sm.pt, bms.pt, fill = TRUE)
+            #cat(td$type, td$id, method, use.feat, sm.pt, bms.pt, fill = TRUE)
             checkStack(task, method, base, super, bms.pt, sm.pt, use.feat)
           }
         }
