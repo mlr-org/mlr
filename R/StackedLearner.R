@@ -90,7 +90,7 @@
 #'   tsk = makeRegrTask(data = BostonHousing, target = "medv")
 #'   base = c("regr.rpart", "regr.svm")
 #'   lrns = lapply(base, makeLearner)
-#'   stk = makeStackedLearner(base.learners = lrns, predict.type = "response", method = "compress", parset = list(init = 1, metric = mae))
+#'   stk = makeStackedLearner(base.learners = lrns, predict.type = "response", method = "ensembleselection", parset = list(init = 1, metric = mae))
 #'   m = train(stk, tsk)
 #'   res = predict(m, tsk)
 #' }

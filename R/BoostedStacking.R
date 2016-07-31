@@ -23,23 +23,24 @@
 #' @param tolerance [\code{numeric}]\cr
 #'   Tolerance for stopping criterion.
 #' @examples 
-#'  lrns = list(
-#'    #makeLearner("classif.ksvm", kernel = "rbfdot"), # no implm for response and multiclass
-#'    makeLearner("classif.gbm"),
-#'    makeLearner("classif.randomForest"))
-#'  mm = makeModelMultiplexer(lrns)
-#'  ctrl = makeTuneControlRandom(maxit = 3L)
-#'  ps = makeModelMultiplexerParamSet(mm,
-#'    makeIntegerParam("n.trees", lower = 1L, upper = 500L),
-#'    makeIntegerParam("interaction.depth", lower = 1L, upper = 10L),
-#'    makeIntegerParam("ntree", lower = 1L, upper = 500L),
-#'    makeIntegerParam("mtry", lower = 1L, upper = getTaskNFeats(tsk)))
-#'  lrns = lapply(lrns, setPredictType, bpt)
-#'  stb = makeBoostedStackingLearner(model.multiplexer = mm, 
-#'    predict.type = spt, resampling = cv5, mm.ps = ps, control = ctrl, 
-#'    measures = mmce, niter = 2L)
-#'  r = resample(stb, task = tsk, resampling = cv2)
-#'
+#' \dontrun{
+#' lrns = list(
+#'   #makeLearner("classif.ksvm", kernel = "rbfdot"), # no implm for response and multiclass
+#'   makeLearner("classif.gbm"),
+#'   makeLearner("classif.randomForest"))
+#' mm = makeModelMultiplexer(lrns)
+#' ctrl = makeTuneControlRandom(maxit = 3L)
+#' ps = makeModelMultiplexerParamSet(mm,
+#'   makeIntegerParam("n.trees", lower = 1L, upper = 500L),
+#'   makeIntegerParam("interaction.depth", lower = 1L, upper = 10L),
+#'   makeIntegerParam("ntree", lower = 1L, upper = 500L),
+#'   makeIntegerParam("mtry", lower = 1L, upper = getTaskNFeats(pid.task)))
+#' lrns = lapply(lrns, setPredictType, "prob")
+#' stb = makeBoostedStackingLearner(model.multiplexer = mm,
+#'   predict.type = "prob", resampling = cv5, mm.ps = ps, control = ctrl,
+#'   measures = mmce, niter = 2L)
+#' r = resample(stb, task = pid.task, resampling = cv2)
+#' }
 #' @export  
 
 
