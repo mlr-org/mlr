@@ -63,6 +63,5 @@ predictLearner.surv.cforest = function(.learner, .model, .newdata, ...) {
 getFeatureImportance.surv.cforest = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   fiv = as.numeric(party::varimp(mod, ...))
-  names(fiv) = .model$features
-  return(fiv)
+  setNames(fiv, .model$features)
 }

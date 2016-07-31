@@ -53,6 +53,5 @@ predictLearner.classif.boosting = function(.learner, .model, .newdata, ...) {
 getFeatureImportance.classif.boosting = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   fiv = as.numeric(mod$importance[.model$features])
-  names(fiv) = .model$features
-  return(fiv)
+  setNames(fiv, .model$features)
 }

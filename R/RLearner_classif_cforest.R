@@ -75,6 +75,5 @@ getFeatureImportance.classif.cforest = function(.learner, .model, auc = FALSE, .
   } else {
     fiv = as.numeric(party::varimp(mod, ...))
   }
-  names(fiv) = .model$features
-  return(fiv)
+ setNames(fiv, .model$features)
 }
