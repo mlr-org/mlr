@@ -75,7 +75,10 @@
 \alias{medse}
 \alias{mmce}
 \alias{mse}
-\alias{multiclass.auc}
+\alias{multiclass.au1p}
+\alias{multiclass.au1u}
+\alias{multiclass.aunp}
+\alias{multiclass.aunu}
 \alias{multiclass.brier}
 \alias{multilabel.acc}
 \alias{multilabel.f1}
@@ -171,6 +174,10 @@ measureAU1U(probabilities, truth)
 multiclass.au1p
 
 measureAU1P(probabilities, truth)
+
+multiclass.brier
+
+measureMulticlassBrier(probabilities, truth)
 
 logloss
 

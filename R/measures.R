@@ -326,28 +326,27 @@ ber = makeMeasure(id = "ber", minimize = TRUE, best = 0, worst = 1,
   }
 )
 
-#' @export multiclass.auc
 #' @export multiclass.aunu
 #' @rdname measures
 #' @format none
 multiclass.aunu = makeMeasure(id = "multiclass.aunu", minimize = FALSE, best = 1, worst = 0.5,
   properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
-    name = "Average multiclass AUC",
-    note = "Computes the AUC treating a c-dimensional classifier as c two-dimensional classifiers, where classes are assumed to have uniform distribution, in order to have a measure which is independent of class distribution change. See Ferri et. al: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf",
+  name = "Average multiclass AUC",
+  note = "Computes the AUC treating a c-dimensional classifier as c two-dimensional classifiers, where classes are assumed to have uniform distribution, in order to have a measure which is independent of class distribution change. See Ferri et. al: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf",
   fun = function(task, model, pred, feats, extra.args) {
     measureAUNU(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
-    }
-  )
+  }
+)
 
 #' @export measureAUNU
 #' @rdname measures
 #' @format none
 measureAUNU = function(probabilities, truth) {
   mean(vnapply(1:nlevels(truth), function(i) colAUC(probabilities[, i], truth == levels(truth)[i])))
-  }
+}
 
 #' @export multiclass.aunp
-#' #' @rdname measures
+#' @rdname measures
 #' @format none
 multiclass.aunp = makeMeasure(id = "multiclass.aunp", minimize = FALSE, best = 1, worst = 0.5,
   properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
@@ -376,7 +375,7 @@ multiclass.au1u = makeMeasure(id = "multiclass.au1u", minimize = FALSE, best = 1
     measureAU1U(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
   }
 )
-  
+
 #' @export measureAU1U
 #' @rdname measures
 #' @format none
@@ -408,7 +407,6 @@ measureAU1P = function(probabilities, truth) {
   c = c(combn(1:nlevels(truth), 2))
   sum(m[cbind(rep(1:nrow(m), each = 2), c)]) / (nlevels(truth) - 1)
 }
-
 
 #' @export multiclass.brier
 #' @rdname measures
