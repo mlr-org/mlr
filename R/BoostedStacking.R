@@ -5,23 +5,25 @@
 #' 
 #' @param model.multiplexer [\code{\link{ModelMultiplexer}}]\cr
 #'   The muliplexer learner.
-#' @param predict.type [\code{character(1)}]\cr 
-#'   Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
-#'   Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
-#' @param resampling [\code{\link{ResampleDesc}} \cr
-#'   Resampling strategy.
-#'   par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
 #'  @param mm.ps Collection of parameters and their constraints for optimization.
 #'   Dependent parameters with a \code{requires} field must use \code{quote} and not
 #'   \code{expression} to define it.
 #' @param control [\code{\link{TuneControlRandom}}]\cr
 #'   Control object for search method. 
+#' @param resampling [\code{\link{ResampleDesc}} \cr
+#'   Resampling strategy.
+#' @param predict.type [\code{character(1)}]\cr 
+#'   Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
+#'   Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
+#'   par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
 #' @param measure [\code{\link{Measure}}]\cr
 #'   Performance measure.
 #' @param niter [\code{integer}]\cr
 #'   Number of boosting iterations.
 #' @param tolerance [\code{numeric}]\cr
 #'   Tolerance for stopping criterion.
+#' @param subsemble.prop  [\code{numeric}]\cr 
+#'   Proportion of data where tuning is run on. 
 #' @examples 
 #' \dontrun{
 #' lrns = list(
@@ -43,10 +45,9 @@
 #' }
 #' @export  
 
-
 makeBoostedStackingLearner = function(model.multiplexer = mm, mm.ps = ps, 
   control = ctrl, resampling = cv2, predict.type = "prob",
-  measures = mmce, niter = 2L, tolerance = 1e-8) {
+  measures = mmce, niter = 2L, tolerance = -0.1, subsemble.prop = 0.8) {
   # checks
   assertClass(model.multiplexer, "ModelMultiplexer")
   assertClass(mm.ps, "ParamSet")
@@ -80,6 +81,7 @@ makeBoostedStackingLearner = function(model.multiplexer = mm, mm.ps = ps,
   bsl$measures = measures
   bsl$control = control
   bsl$tolerance = tolerance
+  bsl$subsemble.prop = subsemble.prop
   return(bsl)
 }
 
@@ -97,9 +99,11 @@ trainLearner.BoostedStackingLearner = function(.learner, .task, .subset, ...) {
   # body
   niter = .learner$par.vals$niter
   tolerance = .learner$tolerance
+  subsemble.prop = .learner$subsemble.prop
   bms.pt = unique(extractSubList(.learner$model.multiplexer$base.learner, "predict.type"))
   if (length(bms.pt) > 1) stopf("Different predict.types for Base Learners is not supported.")
   new.task = subsetTask(.task, subset = .subset)
+  task.size = getTaskSize(new.task)
   base.models = preds = vector("list", length = niter)
   
   score = rep(ifelse(.learner$measures$minimize, Inf, -Inf), 1 + niter)
@@ -107,7 +111,8 @@ trainLearner.BoostedStackingLearner = function(.learner, .task, .subset, ...) {
 
   for (i in seq_len(niter)) {
     # Parameter Tuning
-    res = tuneParams(learner = .learner$model.multiplexer, task = new.task, 
+    subset.idx = sample(seq_len(task.size), subsemble.prop * task.size)
+    res = tuneParams(learner = .learner$model.multiplexer, task = subsetTask(new.task, subset.idx), 
       resampling = .learner$resampling, measures = .learner$measures, 
       par.set = .learner$mm.ps, control = .learner$control, show.info = FALSE)
     # Stopping criterium
@@ -194,14 +199,15 @@ predictLearner.BoostedStackingLearner = function(.learner, .model, .newdata, ...
 #' 
 #' @param tune.result [\code{\link{TuneResult}}]\cr
 #'   \code{TuneResult} from \code{ModelMultiplexer}
-#' @param base.learners [\code{list of \link{TuneResult}}]\cr
+#' @param model.multiplexer [\code{\link{ModelMultiplexer}}]\cr
+#'   Needed to exract fix parameters.
+#'   @param mm.ps [\code{list containing \link{ParamSet}}]\cr
 #'   Needed to exract fix parameters.
 #' @param x.best [\code{integer(1)}]
 #'   Number of best learners to extract.
 #' @param measure [\code{\link{Measure}}]\cr
 #'   Measure to apply to "extract from best".
 #' @return [\code{list of x best learners}]
-#' @export
 #' @examples 
 #' tsk = pid.task
 #' lrns = list(
@@ -219,7 +225,6 @@ predictLearner.BoostedStackingLearner = function(.learner, .model, .newdata, ...
 #' tune.res = tuneParams(learner = mm, task = tsk, resampling = cv2, par.set = ps, control = ctrl)
 #' best = makeXBestLearnersFromMMTuneResult(tune.result = tune.res, model.multiplexer = mm, mm.ps = ps, x.best = 2)
 #' best
-
 
 makeXBestLearnersFromMMTuneResult = function(tune.result, model.multiplexer, mm.ps = mm.ps, x.best = 5, measure = mmce) {
   # checks
@@ -272,7 +277,7 @@ makeXBestLearnersFromMMTuneResult = function(tune.result, model.multiplexer, mm.
 }
 
 
-#' Adds new feature(s) to task
+# Adds new feature(s) to task
 makeTaskWithNewFeat = function(task, new.feat, feat.name) {
   # FIXME make me nicer
   assertClass(task, "Task")
@@ -316,7 +321,7 @@ makeDataWithNewFeat = function(data, new.feat, feat.name, task.desc) {
   return(data)
 }
 
-
+# S3
 makeWrappedModel.BoostedStackingLearner = function(learner, learner.model, task.desc, subset, features, factor.levels, time) {
   x = NextMethod(x)
   addClasses(x, "BoostedStackingModel")
