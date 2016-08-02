@@ -468,18 +468,20 @@ test_that("check measure calculations", {
 
   #test clustering
 
-  #db
-  c2 = c(3, 1)
-  c1 = c((1 + 2 + 4) / 3, (3 + 4 + 2) / 3)
-  s1 = sqrt((sum((data.cluster[1, ] - c1)^2) + sum((data.cluster[2, ] - c1)^2) +
-    sum((data.cluster[4, ] - c1)^2)) / 3L)
-  M = sqrt(sum((c2 - c1)^2))
-  db.test = s1 / M
-  db.perf = performance(pred.cluster, measures = db,
-    model = mod.cluster, feats = data.cluster)
-  expect_equal(db.test,db$fun(task = task.cluster,
-   pred = pred.cluster, feats = data.cluster))
-  expect_equal(db.test, as.numeric(db.perf))
+
+  # FIXME: clusterSim is currently broken, see issue #1054
+  # #db
+  # c2 = c(3, 1)
+  # c1 = c((1 + 2 + 4) / 3, (3 + 4 + 2) / 3)
+  # s1 = sqrt((sum((data.cluster[1, ] - c1)^2) + sum((data.cluster[2, ] - c1)^2) +
+  #   sum((data.cluster[4, ] - c1)^2)) / 3L)
+  # M = sqrt(sum((c2 - c1)^2))
+  # db.test = s1 / M
+  # db.perf = performance(pred.cluster, measures = db,
+  #   model = mod.cluster, feats = data.cluster)
+  # expect_equal(db.test,db$fun(task = task.cluster,
+  #  pred = pred.cluster, feats = data.cluster))
+  # expect_equal(db.test, as.numeric(db.perf))
   #dunn
   exdist = min(sqrt(sum((c(1, 3) - c(3, 1))^2)), sqrt(sum((c(2, 4) - c(3, 1))^2)),
     sqrt(sum((c(4, 3) - c(3, 2))^2)))
