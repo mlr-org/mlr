@@ -303,7 +303,6 @@ createTask = function(type, data, target, id = deparse(substitute(data))) {
 #' Get precise type of the task, i.e. distinguish between "classif" (binary target), "multiclassif" and all other types.
 #' 
 #' @param x \code{Task} or \code{TaskDesc}.
-#' @export
 
 getPreciseTaskType = function(x) {
   if (any(class(x) == "Task"))
@@ -317,18 +316,18 @@ getPreciseTaskType = function(x) {
 
 #' Create predictions for training or testing set (depends on idx) (with base model or saved one in RDS).
 #' 
-#' @param foldi Current fold number.
+#' @param fold.i Current fold number.
 #' @param bls base.learner to use.
 #' @param idx idx for subsetting.
 #' @param task task.
 #' @param save.on.disc wether model are present in \code{bls} or must be loaded using readRDS.
 
-createPreds = function(foldi, bls, idx, task, save.on.disc) {
+createPreds = function(fold.i, bls, idx, task, save.on.disc) {
     bls.len = length(bls)
     if (save.on.disc) {
     # This only works if outer resampling is Holdout (save model does not 
     # get infos about the fold figure, therefore only one fold is allowed): 
-    if (foldi != 1) {
+    if (fold.i != 1) {
       stopf("Using 'save.on.disc = TRUE' and outer resampling strategies others 
         than Holdout is not supported. Switch save.on.disc to FALSE or use Holdout.")
     }
@@ -366,9 +365,11 @@ createNewParset = function(org.parset, new.parset) {
 
 
 #' Print \code{RecombinedResampleResult}.
+#' 
+#' @param x RecombinedResampleResult
 #' @export
 
-print.RecombinedResampleResult = function(x, ...) {
+print.RecombinedResampleResult = function(x) {
   cat("Recombined Resample Result\n")
   catf("Task: %s", x$task.id)
   catf("Learner: %s", x$learner.id)

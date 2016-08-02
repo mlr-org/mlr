@@ -4,10 +4,10 @@
 \alias{createPreds}
 \title{Create predictions for training or testing set (depends on idx) (with base model or saved one in RDS).}
 \usage{
-createPreds(foldi, bls, idx, task, save.on.disc)
+createPreds(fold.i, bls, idx, task, save.on.disc)
 }
 \arguments{
-\item{foldi}{Current fold number.}
+\item{fold.i}{Current fold number.}
 
 \item{bls}{base.learner to use.}
 

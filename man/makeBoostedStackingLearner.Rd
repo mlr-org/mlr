@@ -6,31 +6,34 @@
 \usage{
 makeBoostedStackingLearner(model.multiplexer = mm, mm.ps = ps,
   control = ctrl, resampling = cv2, predict.type = "prob",
-  measures = mmce, niter = 2L, tolerance = 1e-08)
+  measures = mmce, niter = 2L, tolerance = -0.1, subsemble.prop = 0.8)
 }
 \arguments{
 \item{model.multiplexer}{[\code{\link{ModelMultiplexer}}]\cr
-The muliplexer learner.}
+ The muliplexer learner.
+@param mm.ps Collection of parameters and their constraints for optimization.
+ Dependent parameters with a \code{requires} field must use \code{quote} and not
+ \code{expression} to define it.}
 
 \item{control}{[\code{\link{TuneControlRandom}}]\cr
 Control object for search method.}
 
 \item{resampling}{[\code{\link{ResampleDesc}} \cr
- Resampling strategy.
- par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
-@param mm.ps Collection of parameters and their constraints for optimization.
- Dependent parameters with a \code{requires} field must use \code{quote} and not
- \code{expression} to define it.}
+Resampling strategy.}
 
 \item{predict.type}{[\code{character(1)}]\cr 
 Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
-Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).}
+Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
+par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr}
 
 \item{niter}{[\code{integer}]\cr
 Number of boosting iterations.}
 
 \item{tolerance}{[\code{numeric}]\cr
 Tolerance for stopping criterion.}
+
+\item{subsemble.prop}{[\code{numeric}]\cr 
+Proportion of data where tuning is run on.}
 
 \item{measure}{[\code{\link{Measure}}]\cr
 Performance measure.}

@@ -2,17 +2,18 @@
 % Please edit documentation in R/StackedLearner_helpers.R
 \name{makeSuperLearnerTask}
 \alias{makeSuperLearnerTask}
-\title{Create a super learner task
-FIXME: "save" version which rm constant features and features with NAs. BUT 
-might not be useful owing to the fact that predictLearner does not know which 
-features are removed}
+\title{Create a super learner task}
 \usage{
 makeSuperLearnerTask(type, data, target)
 }
+\arguments{
+\item{type}{"classif" or "regr"}
+
+\item{data}{data}
+
+\item{target}{target as character}
+}
 \description{
 Create a super learner task
-FIXME: "save" version which rm constant features and features with NAs. BUT 
-might not be useful owing to the fact that predictLearner does not know which 
-features are removed
 }
 

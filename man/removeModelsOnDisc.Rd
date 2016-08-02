@@ -6,6 +6,11 @@
 \usage{
 removeModelsOnDisc(stack.id = NULL, bls.ids = NULL)
 }
+\arguments{
+\item{stack.id}{Name of stack}
+
+\item{bls.ids.}{Vector of base learner names}
+}
 \description{
 Remove models from disc
 }

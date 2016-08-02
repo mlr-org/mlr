@@ -12,8 +12,7 @@ rowiseRatio(pred.data, levels, model.weight = NULL)
 
 \item{levels}{Target levels of classifiaction task}
 
-\item{model.weight}{Model weights, default is 1/number of data points
-export}
+\item{model.weight}{Model weights, default is 1/number of data points}
 }
 \description{
 Count the ratio (used if base.learner predict.type = "response" and 

@@ -13,7 +13,6 @@ setPredictType.StackedLearner = function(learner, predict.type) {
 #' Returns response from Prediction object 
 #' @param pred Prediction
 #' @param full.matrix Wether all n prediction values should be returned or in case of binary classification only one 
-#' @export
 
 getResponse = function(pred, full.matrix = NULL) {
   # if classification with probabilities
@@ -38,7 +37,6 @@ getResponse = function(pred, full.matrix = NULL) {
 #' first feature of a multiclass classification prediction will be removed to 
 #' overcome multicollinearity problems  
 #' @param pred Prediction from predict or resample
-#' @export
 
 getPredictionDataNonMulticoll = function(pred) {
   if (any(class(pred) == "ResampleResult")) {
@@ -67,9 +65,13 @@ getPredictionDataNonMulticoll = function(pred) {
 }
 
 #' Create a super learner task
-#' FIXME: "save" version which rm constant features and features with NAs. BUT 
-#' might not be useful owing to the fact that predictLearner does not know which 
-#' features are removed  
+#' 
+#' @param type "classif" or "regr"
+#' @param data data
+#' @param target target as character
+# FIXME: "save" version which rm constant features and features with NAs. BUT 
+# might not be useful owing to the fact that predictLearner does not know which 
+# features are removed  
 
 makeSuperLearnerTask = function(type, data, target) {
   keep.idx = colSums(is.na(data)) == 0
@@ -91,7 +93,6 @@ makeSuperLearnerTask = function(type, data, target) {
 #' @param pred.data Prediction data
 #' @param levels Target levels of classifiaction task
 #' @param model.weight Model weights, default is 1/number of data points
-#' export
 
 rowiseRatio = function(pred.data, levels, model.weight = NULL) {
   m = length(levels)
@@ -166,7 +167,7 @@ doTrainResample = function(bls, task, rin, measures, show.info, id, save.on.disc
 }
 
 
-#' Check if NULL or any NA in x
+# Check if NULL or any NA in x
 
 checkIfNullOrAnyNA = function(x) {
   if (is.null(x)) return(TRUE)
@@ -175,7 +176,7 @@ checkIfNullOrAnyNA = function(x) {
 }
 
 
-#' Order a score vector and return the best init numbers
+#'Order a score vector and return the best init numbers
 
 orderScore = function(scores, minimize, init) {
   # checks
@@ -202,6 +203,9 @@ convertModelNameToBlsName = function(base.model.id, stack.id) {
 }
 
 #' Remove models from disc
+#' 
+#' @param stack.id Name of stack
+#' @param bls.ids. Vector of base learner names
 
 removeModelsOnDisc = function(stack.id = NULL, bls.ids = NULL) {
   term = paste0("rm saved.model.", stack.id, "*", bls.ids, ".RData")
