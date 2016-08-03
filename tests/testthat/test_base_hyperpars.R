@@ -61,7 +61,10 @@ test_that("setting 'when' works for hyperpars", {
   expect_equal(p$data$response, rep(1+2+2*3, getTaskSize(regr.task)))
 })
 
-
+test_that("fuzzy matching works for mistyped hyperpars", {
+  expected = "classif.ksvm: parameter sigm has no available description object!\nDid you mean one of these: sigma fit type\nYou can switch off this check by using configureMlr!"
+  expect_error(makeLearner("classif.ksvm", sigm = 2L), expected)
+})
 
 test_that("options are respected", {
   # with local option
