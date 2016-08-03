@@ -36,7 +36,7 @@ Depends:
     stats,
     stringi
 Imports:
-    checkmate (>= 1.7.1),
+    checkmate (>= 1.8.1),
     data.table,
     ggvis,
     methods,
