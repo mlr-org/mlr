@@ -11,3 +11,4 @@ pred = predict(mod, yeast.task)
 performance(pred, measure = list(multilabel.hamloss, multilabel.subset01, multilabel.f1))
 getMultilabelBinaryPerformances(pred, measures = list(mmce, auc))
 # above works also with predictions from resample!
+
