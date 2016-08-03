@@ -14,10 +14,7 @@ test_that("multilabel_cforest", {
     list(ntree = 200)
   )
   
-  old.predicts.list = list()
   old.probs.list = list()
-  
-  multilabel.formula = as.formula(paste(paste(multilabel.target, collapse = "+"), "~."))
   
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
@@ -25,11 +22,9 @@ test_that("multilabel_cforest", {
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     m = do.call(party::cforest, pars)
-    p = predict(m, newdata = multilabel.test, type = "prob")
+    p = predict(m, newdata = multilabel.test) # multivariate cforest can only predict probs
     p2 = do.call(rbind, p)
-    p2 = t(apply(p2, 1L, function(x) {ifelse(x == max(x), TRUE, FALSE)}))
-    old.predicts.list[[i]] = data.frame(p2)
-    old.probs.list[[i]] = data.frame(p)
+    old.probs.list[[i]] = data.frame(p2)
   }
   
   testProbParsets("multilabel.cforest", multilabel.df, multilabel.target,

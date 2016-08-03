@@ -29,7 +29,7 @@ makeRLearner.multilabel.cforest = function() {
     par.vals = list(),
     name = "Random forest based on conditional inference trees",
     short.name = "cforest",
-    note = "In contrast to cforest's predict function, mlr can convert predictions to the type of the response, for predict.type = 'response'"
+    note = "In contrast to the original cforest's predict function, which is not able to predict responses, mlr can predict responses (predict.type = 'response')"
   )
 }
 
@@ -57,14 +57,7 @@ predictLearner.multilabel.cforest = function(.learner, .model, .newdata, ...) {
   p = predict(.model$learner.model, newdata = .newdata, type = "prob", ...)
   p = do.call(rbind, p)
   if (.learner$predict.type == "response") {
-    p = t(apply(p, 1L, function(x) {ifelse(x == max(x), TRUE, FALSE)}))
-    # p = t(apply(p, 1L, function(x) {
-    #   maxval = max(x)
-    #   max.ind = which(x == maxval)
-    #   #if (length(max.ind) > 1L) 
-    #   #  max.ind = sample(max.ind, 1L)
-    #   ifelse(seq_along(x) == max.ind, TRUE, FALSE)
-    #}))
+    p = p >= 0.5
   } else {
     p
   }
