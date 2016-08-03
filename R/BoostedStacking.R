@@ -140,7 +140,7 @@ trainLearner.BoostedStackingLearner = function(.learner, .task, .subset, ...) {
       model.multiplexer = .learner$model.multiplexer, mm.ps = .learner$mm.ps,
       x.best = 1, measure = .learner$measures)[[1]] # TODO x.best > 1
     messagef("Best Learner: %s", best.lrn$id)
-    base.models[[i]] = train(best.lrn, new.task)
+    base.models[[i]] = train(best.lrn, new.task, subset = subset.idx)
     preds[[i]] = resample(best.lrn, new.task, resampling = .learner$resampling, 
       measures = .learner$measures, show.info = FALSE)
     # create new task
@@ -217,10 +217,11 @@ predictLearner.BoostedStackingLearner = function(.learner, .model, .newdata, ...
 #'   Needed to extract fix parameters.
 #' @param x.best [\code{integer(1)}]
 #'   Number of best learners to extract.
-#' @param measure [\code{\link{Measure(1)}}]\cr
-#'   Measure to apply to "extract from best".
+#' @param measure [\code{\link{Measure}}]\cr
+#'   One Measure to apply to "extract from best".
 #' @return [\code{list of x best learners}].
 #' @examples 
+#' \dontrun{
 #' tsk = pid.task
 #' lrns = list(
 #'   makeLearner("classif.gbm", distribution = "bernoulli"),
@@ -236,8 +237,9 @@ predictLearner.BoostedStackingLearner = function(.learner, .model, .newdata, ...
 #'   makeIntegerParam("mtry", lower = 1L, upper = getTaskNFeats(tsk)))
 #' tune.res = tuneParams(learner = mm, task = tsk, resampling = cv2, par.set = ps, control = ctrl)
 #' best = makeXBestLearnersFromMMTuneResult(tune.result = tune.res, 
-#'   model.multiplexer = mm, mm.ps = ps, x.best = 2)
+#'   model.multiplexer = mm, mm.ps = ps, x.best = 2, measure  =mmce)
 #' best
+#' }
 
 makeXBestLearnersFromMMTuneResult = function(tune.result, model.multiplexer, mm.ps, x.best = 5, measure) {
   # checks

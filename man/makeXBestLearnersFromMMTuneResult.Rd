@@ -20,8 +20,8 @@ Needed to extract fix parameters.}
 \item{x.best}{[\code{integer(1)}]
 Number of best learners to extract.}
 
-\item{measure}{[\code{\link{Measure(1)}}]\cr
-Measure to apply to "extract from best".}
+\item{measure}{[\code{\link{Measure}}]\cr
+One Measure to apply to "extract from best".}
 }
 \value{
 [\code{list of x best learners}].
@@ -30,6 +30,7 @@ Measure to apply to "extract from best".}
 Creates x best learners from ModelMultiplexer TuneResult.
 }
 \examples{
+\dontrun{
 tsk = pid.task
 lrns = list(
   makeLearner("classif.gbm", distribution = "bernoulli"),
@@ -45,7 +46,8 @@ ps = makeModelMultiplexerParamSet(mm,
   makeIntegerParam("mtry", lower = 1L, upper = getTaskNFeats(tsk)))
 tune.res = tuneParams(learner = mm, task = tsk, resampling = cv2, par.set = ps, control = ctrl)
 best = makeXBestLearnersFromMMTuneResult(tune.result = tune.res, 
-  model.multiplexer = mm, mm.ps = ps, x.best = 2)
+  model.multiplexer = mm, mm.ps = ps, x.best = 2, measure  =mmce)
 best
+}
 }
 
