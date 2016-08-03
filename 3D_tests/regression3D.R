@@ -2,12 +2,12 @@
 regr.kknn = makeLearner("regr.kknn")
 
 plotLearnerPredictionPlotly(learner = regr.kknn, task = bh.task)
-plotLearnerPredictionPlotly(learner = regr.kknn, task = bh.task, features = c("dis", "rm"))
+plotLearnerPredictionPlotly(learner = regr.kknn, task = bh.task, features = c("lstat", "rm"))
 plotLearnerPredictionPlotly(learner = regr.kknn, task = bh.task, features = c("dis", "rm"), show.point = F)
 plotLearnerPredictionPlotly(learner = regr.kknn, task = bh.task, gridsize = 10)
 plotLearnerPredictionPlotly(learner = regr.kknn, task = bh.task, pointsize = 5)
 plotLearnerPredictionPlotly(learner = regr.kknn, task = bh.task, pretty.names = F)
-plotLearnerPredictionPlotly(learner = regr.kknn, task = bh.task, greyscale = T)
+plotLearnerPredictionPlotly(learner = regr.kknn, task = bh.task, regr.greyscale = T)
 
 # Learner: lm
 regr.lm = makeLearner("regr.lm")
