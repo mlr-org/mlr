@@ -9,9 +9,12 @@ makeRLearner.regr.GPfit = function(){
       makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
       makeIntegerLearnerParam(id = "maxit", default = 100, lower = 1),
       makeUntypedLearnerParam(id = "optim_start", default = NULL),  
-      makeLogicalLearnerParam(id = "scale", default = TRUE)
+      makeLogicalLearnerParam(id = "scale", default = TRUE),
+      makeDiscreteLearnerParam(id = "corr_type", values = c("exponential", "matern"), default = "exponential"),
+      makeIntegerLearnerParam(id = "matern_nu_k", default = 0L, lower = 0L, requires = quote(corr_type == "matern")), 
+      makeNumericLearnerParam(id = "exp_power", default = 1.95, lower = 1.0, upper = 2.0, requires = quote(corr_type == "exponential"))
     ),
-    par.vals = list(scale = TRUE),
+    par.vals = list(scale = TRUE, corr_type = "exponential",  matern_nu_k = 0L, exp_power = 1.95),
     properties = c("numerics","se"),
     name = "Gaussian Process",
     short.name = "GPfit",
@@ -21,7 +24,19 @@ makeRLearner.regr.GPfit = function(){
   )
 }
 #' @export
-trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights, scale, ...) {
+trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights = NULL, scale, corr_type, matern_nu_k, exp_power, ...) {
+  # tri_dots = list(...)
+  # trans.vec = c("corr_type", "matern_nu_k", "exp_power")
+  # dots = dropNamed(tri_dots, trans.vec)
+  # print(dots)
+  # if (tri_dots$corr_type == "exponential") {
+  #   corr = list(type="exponential", power = tri_dots$"exp_power")
+  # } else {
+  #   k = tri_dots$matern_nu_k
+  #   corr = list(type="matern",nu = k+0.5 )
+  # }
+  # args = c(dots, list(corr))
+  
   d = getTaskData(.task, .subset, target.extra = TRUE)
   low = apply(d$data, 2, min)
   high = apply(d$data, 2, max)
@@ -32,7 +47,11 @@ trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights, scale, ..
   } else {
     mlist = list(scaled = FALSE, not.const = not.const)
   }
-  res = GPfit::GP_fit(d$data[, not.const], d$target, ...)
+  res = GPfit::GP_fit(d$data[, not.const], d$target, corr = list(type = corr_type, power = exp_power, nu = matern_nu_k+0.5 ), ...)
+  # h.GPfit = function(...) {
+  #   GPfit::GP_fit(X = d$data[, not.const], Y = d$target, ...)
+  # }
+  # res = do.call(h.GPfit, args)
   res = attachTrainingInfo(res, mlist)
   return(res)
 }
