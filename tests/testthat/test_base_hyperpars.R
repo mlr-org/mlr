@@ -62,8 +62,11 @@ test_that("setting 'when' works for hyperpars", {
 })
 
 test_that("fuzzy matching works for mistyped hyperpars", {
-  expected = "classif.ksvm: parameter sigm has no available description object!\nDid you mean one of these: sigma fit type\nYou can switch off this check by using configureMlr!"
-  expect_error(makeLearner("classif.ksvm", sigm = 2L), expected)
+  configureMlr(on.par.without.desc = "quiet")
+  expected = "classif.ksvm: couldn't find sigm!\nDid you mean one of these instead: sigma fit type"
+  expect_message(makeLearner("classif.ksvm", sigm = 2L), expected)
+  configureMlr(on.par.without.desc = "warn", show.learner.output = FALSE)
+  expect_warning(makeLearner("classif.ksvm", sigm = 1), "Setting parameter sigm without")
 })
 
 test_that("options are respected", {

@@ -55,16 +55,15 @@ setHyperPars2.Learner = function(learner, par.vals) {
       parnames = names(pars)
       indices = order(adist(n, parnames))[1:3]
       possibles = na.omit(parnames[indices])
+      if (length(possibles) > 0) {
+        messagef("%s: couldn't find %s!\nDid you mean one of these instead: %s", 
+          learner$id, n, stri_flatten(possibles, collapse = " "))
+      }
       
       # no description: stop warn or quiet
-      # msg depends on if we found any possible matches
-      if (length(possibles) > 0) {
-      msg = sprintf("%s: parameter %s has no available description object!\nDid you mean one of these: %s\nYou can switch off this check by using configureMlr!", 
-        learner$id, n, stri_flatten(possibles, collapse = " "))
-      } else {
-        msg = sprintf("%s: Setting parameter %s without available description object!\nYou can switch off this check by using configureMlr!", 
-          learner$id, n)
-      }
+      msg = sprintf("%s: Setting parameter %s without available description object!\nYou can switch off this check by using configureMlr!", 
+        learner$id, n)
+      
       if (on.par.without.desc == "stop") {
         stop(msg)
       } else if (on.par.without.desc == "warn") {
