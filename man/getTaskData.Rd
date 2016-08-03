@@ -31,11 +31,12 @@ with the input data.frame and an extra vector or data.frame for the targets.
 Default is \code{FALSE}.}
 
 \item{recode.target}{[\code{character(1)}]\cr
-Should target classes be recoded? Supported are binary classification and survival.
+Should target classes be recoded? Supported are binary and multilabel classification and survival.
 Possible values for binary classification are \dQuote{01}, \dQuote{-1+1} and \dQuote{drop.levels}.
 In the two latter cases the target vector is converted into a numeric vector.
 The positive class is coded as \dQuote{+1} and the negative class either as \dQuote{0} or \dQuote{-1}.
 \dQuote{drop.levels} will remove empty factor levels in the target column.
+In the multilabel case the logical targets can be converted to factors with \dQuote{multilabel.factor}.
 For survival, you may choose to recode the survival times to \dQuote{left}, \dQuote{right} or \dQuote{interval2} censored times
 using \dQuote{lcens}, \dQuote{rcens} or \dQuote{icens}, respectively.
 See \code{\link[survival]{Surv}} for the format specification.
