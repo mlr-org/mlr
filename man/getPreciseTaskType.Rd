@@ -2,7 +2,8 @@
 % Please edit documentation in R/StackedLearner_resample.R
 \name{getPreciseTaskType}
 \alias{getPreciseTaskType}
-\title{Get precise type of the task, i.e. distinguish between "classif" (binary target), "multiclassif" and all other types.}
+\title{Get precise type of the task, i.e. distinguish between "classif" (binary target), 
+"multiclassif" and all other types.}
 \usage{
 getPreciseTaskType(x)
 }
@@ -10,6 +11,7 @@ getPreciseTaskType(x)
 \item{x}{\code{Task} or \code{TaskDesc}.}
 }
 \description{
-Get precise type of the task, i.e. distinguish between "classif" (binary target), "multiclassif" and all other types.
+Get precise type of the task, i.e. distinguish between "classif" (binary target), 
+"multiclassif" and all other types.
 }
 

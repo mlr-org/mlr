@@ -5,30 +5,27 @@
 \title{Rerun a resampling procedure for a \code{StackedLearner} with a new setting to save computing time.}
 \usage{
 resampleStackedLearnerAgain(id = NULL, obj, task, measures = NULL,
-  super.learner = NULL, use.feat = NULL, parset = NULL)
+  super.learner = NULL, use.feat = NULL, es.par.vals = NULL)
 }
 \arguments{
 \item{id}{[\code{character(1)}]\cr Unique ID for object.}
 
 \item{obj}{[\code{ResampleResult}]\cr \code{ResampleResult} from \code{StackedLearner}.}
 
-\item{task}{[\code{\link{Task}}]\cr
-The task.}
+\item{task}{[\code{Task}].}
+
+\item{measures}{[\code{Measure}].}
 
 \item{super.learner}{[\code{Learner}]\cr New \code{super.learner} to apply.}
 
 \item{use.feat}{[\code{logical(1)}]\cr Whether the original features should be passed to the super learner.}
 
-\item{parset}{[\code{list}]\cr List containing parameters for \code{ensembleselection}. See \code{\link{makeStackedLearner}}.}
-
-\item{measure}{[\code{\link{Measure}}]\cr
-Performance measure.
-Default is the first measure used in the benchmark experiment.}
+\item{es.par.vals}{[\code{list}]\cr List containing parameters for \code{ensembleselection}. See \code{\link{makeStackedLearner}}.}
 }
 \value{
 Object of classes "RecombinedResampleResult" and "ResampleResult". 
   "RecombinedResampleResult" differ from classical "ResampleResult" in that way, that it 
-  contains parameters from StackedLearner (i.e. super.learner, use.feat, parset), 
+  contains parameters from StackedLearner (i.e. super.learner, use.feat, es.par.vals), 
   but has no error handling (err.msgs = NULL) and no extract functionality (extract = NULL). 
   The returned values of 'pred' as well as 'models' differ as well. 
   Moreover the performance of the base models evaluated on the test set is accessable in 'test.bls.perfs'.
@@ -53,11 +50,12 @@ This function does four things internally (in that order) to obtain the new pred
 Following parameters need to be set for the single methods. For
 \describe{
 \item{method  = "superlearner"}{\code{super.learner} and \code{use.feat} need to be set.}
-\item{method = "ensembleselection"}{\code{parset} need to be set.} 
+\item{method = "ensembleselection"}{\code{es.par.vals} need to be set.} 
 \item{method = "aggregate"}{no arguemnt of those abvoe need to be set.} 
 }
 }
 \examples{
+\dontrun{
 tsk = pid.task
 # Base learners need unique names (id)
 bls = list(makeLearner("classif.kknn"), 
@@ -71,22 +69,29 @@ bls = list(makeLearner("classif.kknn"),
 # For classification predict.type = "prob" might lead to better results.
 bls = lapply(bls, function(x) setPredictType(x, predict.type = "prob"))
 ste = makeStackedLearner(id = "stack", bls, resampling = cv3, 
-  predict.type = "prob", method = "ensembleselection", parset = list(init = 1, 
-  bagprob = 0.5, bagtime = 3, metric = mmce), save.on.disc = FALSE)
+  predict.type = "prob", method = "ensembleselection", es.par.vals = list(init = 1, 
+  bagprop = 0.5, bagtime = 3, metric = mmce), save.on.disc = FALSE)
 # To use resampleStackedLearnerAgain
-# - cross validation in outer resampling can be used only if 'save.on.disc = FALSE' in resampleStackedLearnerAgain,
+# - cross validation in outer resampling can be used only if 'save.on.disc = FALSE' 
+  in resampleStackedLearnerAgain,
 # - in resample 'models = TRUE' must be set.
 res = resample(ste, tsk, cv2, models = TRUE) 
-re2 = resampleStackedLearnerAgain(obj = res, task = tsk, parset = list(init = 2, bagtime = 15))
-re3 = resampleStackedLearnerAgain(obj = res, task = tsk, measures = list(mmce, auc), parset = list(bagprob = .2, bagprob = 10, metric = auc))
-re3 = resampleStackedLearnerAgain(obj = res, task = tsk, measures = mmce, parset = list(replace = FALSE, init = 2, bagprob = .2))
-re4 = resampleStackedLearnerAgain(obj = res, task = tsk, measures = mmce, super.learner = bls[[2]], use.feat = TRUE)
+re2 = resampleStackedLearnerAgain(obj = res, task = tsk, 
+  es.par.vals = list(init = 2, bagtime = 15))
+re3 = resampleStackedLearnerAgain(obj = res, task = tsk, measures = list(mmce, auc), 
+  es.par.vals = list(bagprop = .2, bagprop = 10, metric = auc))
+re3 = resampleStackedLearnerAgain(obj = res, task = tsk, measures = mmce, 
+  es.par.vals = list(replace = FALSE, init = 2, bagprop = .2))
+re4 = resampleStackedLearnerAgain(obj = res, task = tsk, measures = mmce, 
+  super.learner = bls[[2]], use.feat = TRUE)
 sapply(list(res, re2, re3, re4), function(x) x$aggr)
 
 # Compare running time of idential settings
 ste2 = makeStackedLearner(id = "stack", bls, resampling = cv3, 
-  predict.type = "prob", method = "ensembleselection", parset = list(init = 2, bagtime = 15))
+  predict.type = "prob", method = "ensembleselection", 
+  es.par.vals = list(init = 2, bagtime = 15))
 res2 = resample(ste2, tsk, cv2, models = TRUE) 
 sapply(list(res2, re2), function(x) x$runtime)
+}
 }
 

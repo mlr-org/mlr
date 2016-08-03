@@ -1,6 +1,8 @@
 ### other helpers ###
 
-# Sets the predict.type for the super learner of a stacked learner
+#' Sets the predict.type for the super learner of a stacked learner
+#' @param learner StackedLearner.
+#' @param predict.type "prob" or "response".
 #' @export
 
 setPredictType.StackedLearner = function(learner, predict.type) {
@@ -176,15 +178,15 @@ checkIfNullOrAnyNA = function(x) {
 }
 
 
-#'Order a score vector and return the best init numbers
+# Order a scores vector and return the best init numbers
 
 orderScore = function(scores, minimize, init) {
   # checks
-  assertClass(score, "numeric")
+  assertClass(scores, "numeric")
   assertChoice(minimize, c(TRUE, FALSE))
-  assertInt(init, lower = 1, upper = length(score))
+  assertInt(init, lower = 1, upper = length(scores))
   # body
-  if (is.null(init)) init = length(score)
+  if (is.null(init)) init = length(scores)
   if (minimize) {
     order(scores)[1:init]
   } else {
@@ -202,12 +204,13 @@ convertModelNameToBlsName = function(base.model.id, stack.id) {
   id
 }
 
-#' Remove models from disc
+#' Remove Stacking models from disc.
 #' 
-#' @param stack.id Name of stack
-#' @param bls.ids. Vector of base learner names
+#' @param stack.id Name of stack.
+#' @param bls.ids Vector of base learner names.
+#' @export
 
-removeModelsOnDisc = function(stack.id = NULL, bls.ids = NULL) {
+removeStackingModelsOnDisc = function(stack.id = NULL, bls.ids = NULL) {
   term = paste0("rm saved.model.", stack.id, "*", bls.ids, ".RData")
   system(term)
 }
@@ -222,7 +225,7 @@ removeModelsOnDisc = function(stack.id = NULL, bls.ids = NULL) {
 #' @param sm.pt Final predict type, "prob" or "response"
 #' @param pL FALSE if Predictions with truth (test data), TRUE for truth=NA (new data)
 #' @export
-# FIXME: add more methods
+# FIXME: add more methods (geometric mean, rank specific stuff)
 
 aggregatePredictions = function(pred.list, sm.pt = NULL, pL = FALSE) {
   # return pred if list only contains one pred
@@ -304,7 +307,7 @@ aggregatePredictions = function(pred.list, sm.pt = NULL, pL = FALSE) {
 #' 
 #' @param pred.list [\code{list} of \code{Predictions}]\cr
 #'  List of Predictions which should be expanded. 
-#' @param frequency [\code{named vector}]\cr
+#' @param freq [\code{named vector}]\cr
 #'  Named vector containing the frequency of the chosen predictions. 
 #'  Vector names must be set to the model names.
 #' @export
@@ -313,6 +316,7 @@ aggregatePredictions = function(pred.list, sm.pt = NULL, pL = FALSE) {
 expandPredList = function(pred.list, freq) {
   assertClass(pred.list, "list")
   assertClass(freq, "numeric")
+  # checkListElementClass(pred.list, "Prediction")
   only.preds = unique(unlist(lapply(pred.list, function(x) any(class(x) == "Prediction"))))
   if (!only.preds) stopf("List elements in 'pred.list' are not all of class 'Prediction'")
   

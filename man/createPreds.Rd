@@ -2,7 +2,8 @@
 % Please edit documentation in R/StackedLearner_resample.R
 \name{createPreds}
 \alias{createPreds}
-\title{Create predictions for training or testing set (depends on idx) (with base model or saved one in RDS).}
+\title{Create predictions for training or testing set (depends on idx) 
+(with base model or saved one in RDS).}
 \usage{
 createPreds(fold.i, bls, idx, task, save.on.disc)
 }
@@ -18,6 +19,7 @@ createPreds(fold.i, bls, idx, task, save.on.disc)
 \item{save.on.disc}{wether model are present in \code{bls} or must be loaded using readRDS.}
 }
 \description{
-Create predictions for training or testing set (depends on idx) (with base model or saved one in RDS).
+Create predictions for training or testing set (depends on idx) 
+(with base model or saved one in RDS).
 }
 

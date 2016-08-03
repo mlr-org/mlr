@@ -2,9 +2,9 @@
 % Please edit documentation in R/StackedLearner_predict.R
 \name{predictLearner.StackedLearner}
 \alias{predictLearner.StackedLearner}
-\title{Predict StackedLearner}
+\title{Predict a Stacked Learner.}
 \usage{
-\method{predictLearner}{StackedLearner}(.learner, .model, .newdata)
+\method{predictLearner}{StackedLearner}(.learner, .model, .newdata, ...)
 }
 \arguments{
 \item{.learner}{[\code{StackedLearner}]}
@@ -12,6 +12,8 @@
 \item{.model}{[\code{BaseEnsembleModel}]}
 
 \item{.newdata}{[\code{data.frame}]\cr Data to predict on}
+
+\item{...}{...}
 }
 \value{
 Predictions are returned in matrix or vector.

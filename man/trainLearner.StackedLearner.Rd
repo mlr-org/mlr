@@ -6,6 +6,15 @@
 \usage{
 \method{trainLearner}{StackedLearner}(.learner, .task, .subset, ...)
 }
+\arguments{
+\item{.learner}{StackedLearner.}
+
+\item{.task}{Task.}
+
+\item{.subset}{Subset of Task.}
+
+\item{...}{...}
+}
 \description{
 Switch to train \code{StackedLearner}.
 }

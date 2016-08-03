@@ -6,6 +6,11 @@
 \usage{
 aggregateBaseLearners(learner, task)
 }
+\arguments{
+\item{learner}{[\code{StackedLearner}].}
+
+\item{task}{[\code{Task}].}
+}
 \description{
 Train function for simple aggregation of base learner predictions without weights.
 }

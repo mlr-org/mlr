@@ -4,10 +4,12 @@
 \alias{print.RecombinedResampleResult}
 \title{Print \code{RecombinedResampleResult}.}
 \usage{
-\method{print}{RecombinedResampleResult}(x)
+\method{print}{RecombinedResampleResult}(x, ...)
 }
 \arguments{
 \item{x}{RecombinedResampleResult}
+
+\item{...}{...}
 }
 \description{
 Print \code{RecombinedResampleResult}.

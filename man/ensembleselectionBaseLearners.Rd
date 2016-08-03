@@ -5,20 +5,19 @@
 \title{Train function for "Ensemble Selection" method.}
 \usage{
 ensembleselectionBaseLearners(learner, task, replace = TRUE, init = 1,
-  bagprob = 1, bagtime = 1, maxiter = NULL, tolerance = 1e-08,
+  bagprop = 1, bagtime = 1, maxiter = NULL, tolerance = 1e-08,
   metric = NULL, ...)
 }
 \arguments{
-\item{learner}{[list of base learners]}
+\item{learner}{[\code{StackedLearner}]}
 
-\item{task}{[\code{\link{Task}}]\cr
-The task.}
+\item{task}{[\code{Task}]}
 
 \item{replace}{[\code{logical(1)}]}
 
 \item{init}{[\code{integer(1)}] init >= 1}
 
-\item{bagprob}{[\code{numeric(1)}] 0 < bagprob < 1}
+\item{bagprop}{[\code{numeric(1)}] 0 < bagprop < 1}
 
 \item{bagtime}{[\code{integer(1)}] bagtime >= 1}
 
@@ -26,9 +25,9 @@ The task.}
 
 \item{tolerance}{[\code{numeric(1)}] small numeric value.}
 
-\item{measures}{[\code{\link{Measure}} | list of \code{\link{Measure}}]\cr
-Performance measure(s) to evaluate.
-Default is the default measure for the task, see here \code{\link{getDefaultMeasure}}.}
+\item{metric}{[\code{Measure(1)}]}
+
+\item{...}{...}
 }
 \description{
 Train function for "Ensemble Selection" method.

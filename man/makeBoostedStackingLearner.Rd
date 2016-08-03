@@ -4,16 +4,17 @@
 \alias{makeBoostedStackingLearner}
 \title{Create a BoostedStacking object.}
 \usage{
-makeBoostedStackingLearner(model.multiplexer = mm, mm.ps = ps,
-  control = ctrl, resampling = cv2, predict.type = "prob",
-  measures = mmce, niter = 2L, tolerance = -0.1, subsemble.prop = 0.8)
+makeBoostedStackingLearner(model.multiplexer, mm.ps, control,
+  resampling = cv2, predict.type = "prob", measures, niter = 2L,
+  tolerance = -0.1, subsemble.prop = 0.8)
 }
 \arguments{
 \item{model.multiplexer}{[\code{\link{ModelMultiplexer}}]\cr
- The muliplexer learner.
-@param mm.ps Collection of parameters and their constraints for optimization.
- Dependent parameters with a \code{requires} field must use \code{quote} and not
- \code{expression} to define it.}
+The multiplexer learner.}
+
+\item{mm.ps}{Collection of parameters and their constraints for optimization.
+Dependent parameters with a \code{requires} field must use \code{quote} and not
+\code{expression} to define it.}
 
 \item{control}{[\code{\link{TuneControlRandom}}]\cr
 Control object for search method.}
@@ -26,6 +27,9 @@ Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities a
 Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
 par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr}
 
+\item{measures}{[\code{\link{Measure}}]\cr
+Performance measures.}
+
 \item{niter}{[\code{integer}]\cr
 Number of boosting iterations.}
 
@@ -34,9 +38,6 @@ Tolerance for stopping criterion.}
 
 \item{subsemble.prop}{[\code{numeric}]\cr 
 Proportion of data where tuning is run on.}
-
-\item{measure}{[\code{\link{Measure}}]\cr
-Performance measure.}
 }
 \description{
 A boosted stacking learner runs a tuning using a \code{\link{ModelMultiplexer}} and adds the predictions from the best model as a new feature to the training data set. This procedure is repleated several times until \code{niter} is reached.

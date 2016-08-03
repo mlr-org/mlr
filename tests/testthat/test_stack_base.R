@@ -1,3 +1,5 @@
+# FIXME: old tests here, should be redone
+
 context("stack_base")
 
 checkStack = function(task, method, base, super, bms.pt, sm.pt, use.feat) {

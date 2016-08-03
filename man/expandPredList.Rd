@@ -10,7 +10,7 @@ expandPredList(pred.list, freq)
 \item{pred.list}{[\code{list} of \code{Predictions}]\cr
 List of Predictions which should be expanded.}
 
-\item{frequency}{[\code{named vector}]\cr
+\item{freq}{[\code{named vector}]\cr
 Named vector containing the frequency of the chosen predictions. 
 Vector names must be set to the model names.}
 }

@@ -47,11 +47,11 @@
 #' @param use.feat [\code{logical(1)}]\cr
 #'   Whether the original features should also be passed to the super learner.
 #'   Only used for \code{method = 'superlearner'}. Default is \code{FALSE}.
-#' @param parset the parameters for \code{ensembleselection} method, including
+#' @param es.par.vals the parameters for \code{ensembleselection} method, including
 #' \describe{
 #'   \item{\code{replace}}{Whether a base learner can be selected more than once within a bagging iteration.}
 #'   \item{\code{init}}{Number of best models being included at the beginning of each bagging iteration.}
-#'   \item{\code{bagprob}}{The proportion of models being considered in one bagging iteration.}
+#'   \item{\code{bagprop}}{The proportion of models being considered in one bagging iteration.}
 #'   \item{\code{bagtime}}{The number of the bagging iterations.}
 #'   \item{\code{metric}}{The evaluation metric. Must be an object of type \code{Measure}.}
 #'   \item{\code{tolerance}}{The tolerance when inner loop should stop.}
@@ -82,7 +82,8 @@
 #'   base = c("classif.rpart", "classif.lda", "classif.svm")
 #'   lrns = lapply(base, makeLearner)
 #'   lrns = lapply(lrns, setPredictType, "prob")
-#'   stk = makeStackedLearner(method = "ensembleselection", base.learners = lrns, predict.type = "prob", parset = list(init = 1, metric = mmce))
+#'   stk = makeStackedLearner(method = "ensembleselection", base.learners = lrns, 
+#'     predict.type = "prob", es.par.vals = list(init = 1, metric = mmce))
 #'   res = resample(stk, tsk, cv5, mmce)
 #'
 #'   # Regression
@@ -90,7 +91,8 @@
 #'   tsk = makeRegrTask(data = BostonHousing, target = "medv")
 #'   base = c("regr.rpart", "regr.svm")
 #'   lrns = lapply(base, makeLearner)
-#'   stk = makeStackedLearner(base.learners = lrns, predict.type = "response", method = "ensembleselection", parset = list(init = 1, metric = mae))
+#'   stk = makeStackedLearner(base.learners = lrns, predict.type = "response", 
+#'     method = "ensembleselection", es.par.vals = list(init = 1, metric = mae))
 #'   m = train(stk, tsk)
 #'   res = predict(m, tsk)
 #' }
@@ -98,7 +100,7 @@
 
 makeStackedLearner = function(id = "stack", method = "superlearner", base.learners, 
   predict.type = NULL, resampling = NULL, super.learner = NULL, use.feat = FALSE, 
-  parset = list(), save.on.disc = FALSE, save.preds = TRUE) {
+  es.par.vals = list(), save.on.disc = FALSE, save.preds = TRUE) {
   # checking
   if (is.character(base.learners)) base.learners = lapply(base.learners, checkLearner)
   if (!is.null(super.learner)) {
@@ -151,16 +153,17 @@ makeStackedLearner = function(id = "stack", method = "superlearner", base.learne
   }
 
 
-  lrn$short.name = "stack"
-  lrn$name = "StackedLearner"
+  lrn$short.name = "stack" # FIXME useful?
+  lrn$name = "StackedLearner" # FIXME useful?
   lrn$method = method
   lrn$resampling = resampling
   lrn$super.learner = super.learner
   lrn$use.feat = use.feat
-  lrn$parset = parset
+  lrn$es.par.vals = es.par.vals
   lrn$fix.factors.prediction = TRUE
   lrn$save.on.disc = save.on.disc
   lrn$save.preds = save.preds
   return(lrn)
 }
+
 

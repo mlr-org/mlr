@@ -16,8 +16,8 @@ test_that("resampleStackedLearnerAgain", {
   )
   bls = lapply(bls, function(x) setPredictType(x, predict.type = "prob"))
   ste = makeStackedLearner(id = "stackES", bls, resampling = cv3, 
-    predict.type = "prob", method = "ensembleselection", parset = list(init = 1, 
-    bagprob = 0.5, bagtime = 3, metric = mmce), save.on.disc = FALSE)
+    predict.type = "prob", method = "ensembleselection", es.par.vals = list(init = 1, 
+    bagprop = 0.5, bagtime = 3, metric = mmce), save.on.disc = FALSE)
   
   stc = makeStackedLearner(id = "stackSL", bls, resampling = cv3,
       predict.type = "prob", method = "superlearner", 
@@ -27,20 +27,20 @@ test_that("resampleStackedLearnerAgain", {
     #context(paste("ES on", tsk$task.desc$id))
     rdesc = cv2
     resES = resample(ste, tsk, rdesc, models = TRUE) 
-    ee1 = resampleStackedLearnerAgain(obj = resES, task = tsk, measures = mmce, parset = list(init = 2, bagprob = .7, bagtime = 10, replace = TRUE, metric = mmce))
-    ee2 = resampleStackedLearnerAgain(obj = resES, task = tsk, measures = acc, parset = list(init = 2, bagprob = .7, bagtime = 10, replace = FALSE, metric = acc, maxiter = 2))
-    ee3 = resampleStackedLearnerAgain(obj = resES, task = tsk, measures = list(mmce), parset = list(init = 1, bagprob = .7, bagtime = 10, replace = TRUE, tolerance = 0.5))
-    ee4 = resampleStackedLearnerAgain(obj = resES, task = tsk, measures = mmce, parset = list(init = 2, bagtime = 10, replace = TRUE, maxiter = 20))
-    ee5 = resampleStackedLearnerAgain(obj = resES, task = tsk, measures = mmce, parset = list(init = 5, bagprob = .7, bagtime = 10, replace = TRUE))
+    ee1 = resampleStackedLearnerAgain(obj = resES, task = tsk, measures = mmce, es.par.vals = list(init = 2, bagprop = .7, bagtime = 10, replace = TRUE, metric = mmce))
+    ee2 = resampleStackedLearnerAgain(obj = resES, task = tsk, measures = acc, es.par.vals = list(init = 2, bagprop = .7, bagtime = 10, replace = FALSE, metric = acc, maxiter = 2))
+    ee3 = resampleStackedLearnerAgain(obj = resES, task = tsk, measures = list(mmce), es.par.vals = list(init = 1, bagprop = .7, bagtime = 10, replace = TRUE, tolerance = 0.5))
+    ee4 = resampleStackedLearnerAgain(obj = resES, task = tsk, measures = mmce, es.par.vals = list(init = 2, bagtime = 10, replace = TRUE, maxiter = 20))
+    ee5 = resampleStackedLearnerAgain(obj = resES, task = tsk, measures = mmce, es.par.vals = list(init = 5, bagprop = .7, bagtime = 10, replace = TRUE))
     # check if new settings for es1 are adopted 
     expect_is(ee1$models, "list")
     expect_equal(length(ee1$models), rdesc$iters)
     expect_equal(length(ee1$models[[1]]), 3) # i.e. freq, freq.list, weights
-    expect_equal(ee1$parset$init, 2)
-    expect_equal(ee1$parset$bagprob, 0.7)
-    expect_equal(ee1$parset$bagtime, 10)
-    expect_equal(ee1$parset$replace, TRUE)
-    expect_is(ee1$parset$metric, "Measure")
+    expect_equal(ee1$es.par.vals$init, 2)
+    expect_equal(ee1$es.par.vals$bagprop, 0.7)
+    expect_equal(ee1$es.par.vals$bagtime, 10)
+    expect_equal(ee1$es.par.vals$replace, TRUE)
+    expect_is(ee1$es.par.vals$metric, "Measure")
 
     es1 = resampleStackedLearnerAgain(obj = resES, task = tsk, measures = mmce, super.learner = makeLearner("classif.rpart"))
     es2 = resampleStackedLearnerAgain(obj = resES, task = tsk, measures = list(mmce), super.learner = makeLearner("classif.rpart", predict.type = "prob"))

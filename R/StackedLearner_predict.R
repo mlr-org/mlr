@@ -1,4 +1,4 @@
-#' Predict StackedLearner
+#' Predict a Stacked Learner.
 #' 
 #' Gets predictions from \code{getStackedBaseLearnerPredictions}. Then apply algo:
 #'  \describe{
@@ -12,10 +12,11 @@
 #' @param .learner [\code{StackedLearner}]
 #' @param .model [\code{BaseEnsembleModel}]
 #' @param .newdata [\code{data.frame}]\cr Data to predict on
+#' @param ... ...
 #' @return Predictions are returned in matrix or vector. 
 #' @export
 
-predictLearner.StackedLearner = function(.learner, .model, .newdata) { # FIXME actually only .learner$method is needed
+predictLearner.StackedLearner = function(.learner, .model, .newdata, ...) { # FIXME actually only .learner$method is needed
   # setup
   use.feat = .model$learner$use.feat
   sm.pt = .model$learner$predict.type

@@ -9,8 +9,7 @@ superlearnerBaseLearners(learner, task)
 \arguments{
 \item{learner}{[\code{StackedLearner}]}
 
-\item{task}{[\code{\link{Task}}]\cr
-The task.}
+\item{task}{[\code{Task}]}
 }
 \description{
 Train function for stacking method "Super Learner", which uses meta learner to obtain level 1 data and uses inner cross-validation for prediction.

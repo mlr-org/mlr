@@ -19,24 +19,24 @@
 #' Following parameters need to be set for the single methods. For
 #' \describe{
 #' \item{method  = "superlearner"}{\code{super.learner} and \code{use.feat} need to be set.}
-#' \item{method = "ensembleselection"}{\code{parset} need to be set.} 
+#' \item{method = "ensembleselection"}{\code{es.par.vals} need to be set.} 
 #' \item{method = "aggregate"}{no arguemnt of those abvoe need to be set.} 
 #' }
 #' @param id [\code{character(1)}]\cr Unique ID for object.
 #' @param obj [\code{ResampleResult}]\cr \code{ResampleResult} from \code{StackedLearner}.
+#' @param task [\code{Task}].
+#' @param measures [\code{Measure}].
 #' @param super.learner [\code{Learner}]\cr New \code{super.learner} to apply.
 #' @param use.feat [\code{logical(1)}]\cr Whether the original features should be passed to the super learner.
-#' @param parset [\code{list}]\cr List containing parameters for \code{ensembleselection}. See \code{\link{makeStackedLearner}}.
-#' @template arg_task
-#' @template arg_measure
-#' @export
+#' @param es.par.vals [\code{list}]\cr List containing parameters for \code{ensembleselection}. See \code{\link{makeStackedLearner}}.
 #' @return Object of classes "RecombinedResampleResult" and "ResampleResult". 
 #'   "RecombinedResampleResult" differ from classical "ResampleResult" in that way, that it 
-#'   contains parameters from StackedLearner (i.e. super.learner, use.feat, parset), 
+#'   contains parameters from StackedLearner (i.e. super.learner, use.feat, es.par.vals), 
 #'   but has no error handling (err.msgs = NULL) and no extract functionality (extract = NULL). 
 #'   The returned values of 'pred' as well as 'models' differ as well. 
 #'   Moreover the performance of the base models evaluated on the test set is accessable in 'test.bls.perfs'.
 #' @examples 
+#' \dontrun{
 #' tsk = pid.task
 #' # Base learners need unique names (id)
 #' bls = list(makeLearner("classif.kknn"), 
@@ -50,30 +50,41 @@
 #' # For classification predict.type = "prob" might lead to better results.
 #' bls = lapply(bls, function(x) setPredictType(x, predict.type = "prob"))
 #' ste = makeStackedLearner(id = "stack", bls, resampling = cv3, 
-#'   predict.type = "prob", method = "ensembleselection", parset = list(init = 1, 
-#'   bagprob = 0.5, bagtime = 3, metric = mmce), save.on.disc = FALSE)
+#'   predict.type = "prob", method = "ensembleselection", es.par.vals = list(init = 1, 
+#'   bagprop = 0.5, bagtime = 3, metric = mmce), save.on.disc = FALSE)
 #' # To use resampleStackedLearnerAgain
-#' # - cross validation in outer resampling can be used only if 'save.on.disc = FALSE' in resampleStackedLearnerAgain,
+#' # - cross validation in outer resampling can be used only if 'save.on.disc = FALSE' 
+#'   in resampleStackedLearnerAgain,
 #' # - in resample 'models = TRUE' must be set.
 #' res = resample(ste, tsk, cv2, models = TRUE) 
-#' re2 = resampleStackedLearnerAgain(obj = res, task = tsk, parset = list(init = 2, bagtime = 15))
-#' re3 = resampleStackedLearnerAgain(obj = res, task = tsk, measures = list(mmce, auc), parset = list(bagprob = .2, bagprob = 10, metric = auc))
-#' re3 = resampleStackedLearnerAgain(obj = res, task = tsk, measures = mmce, parset = list(replace = FALSE, init = 2, bagprob = .2))
-#' re4 = resampleStackedLearnerAgain(obj = res, task = tsk, measures = mmce, super.learner = bls[[2]], use.feat = TRUE)
+#' re2 = resampleStackedLearnerAgain(obj = res, task = tsk, 
+#'   es.par.vals = list(init = 2, bagtime = 15))
+#' re3 = resampleStackedLearnerAgain(obj = res, task = tsk, measures = list(mmce, auc), 
+#'   es.par.vals = list(bagprop = .2, bagprop = 10, metric = auc))
+#' re3 = resampleStackedLearnerAgain(obj = res, task = tsk, measures = mmce, 
+#'   es.par.vals = list(replace = FALSE, init = 2, bagprop = .2))
+#' re4 = resampleStackedLearnerAgain(obj = res, task = tsk, measures = mmce, 
+#'   super.learner = bls[[2]], use.feat = TRUE)
 #' sapply(list(res, re2, re3, re4), function(x) x$aggr)
 #' 
 #' # Compare running time of idential settings
 #' ste2 = makeStackedLearner(id = "stack", bls, resampling = cv3, 
-#'   predict.type = "prob", method = "ensembleselection", parset = list(init = 2, bagtime = 15))
+#'   predict.type = "prob", method = "ensembleselection", 
+#'   es.par.vals = list(init = 2, bagtime = 15))
 #' res2 = resample(ste2, tsk, cv2, models = TRUE) 
 #' sapply(list(res2, re2), function(x) x$runtime)
+#' }
+#' @export
 
 # Nomenclature:
-# 'Singular' indicates objects which contain only one object (e.g. one model from base models list from one fold).
+# 'Singular' indicates objects which contain only one object (e.g. one model from 
+#   base models list from one fold).
 # 'Plural' indicates a list of objects (e.g. list of learners, models, data sets).
-# List ends with '_f' if information from all f folds are saved in that object (may be a list of lists).
+# List ends with '_f' if information from all f folds are saved in that object 
+#   (may be a list of lists).
  
-resampleStackedLearnerAgain = function(id = NULL, obj, task, measures = NULL, super.learner = NULL, use.feat = NULL, parset = NULL) {
+resampleStackedLearnerAgain = function(id = NULL, obj, task, measures = NULL, 
+  super.learner = NULL, use.feat = NULL, es.par.vals = NULL) {
   # checks 
   if (is.null(id))
     id = paste("recombined", super.learner$id, collapse = ".") #TODO what about ES uniq name
@@ -91,23 +102,24 @@ resampleStackedLearnerAgain = function(id = NULL, obj, task, measures = NULL, su
       use.feat = FALSE
     }
     assertLogical(use.feat)  
-    assertClass(parset, "NULL")
+    assertClass(es.par.vals, "NULL")
   }
-  if (!is.null(parset)) {
-    assertClass(parset, "list")
+  if (!is.null(es.par.vals)) {
+    assertClass(es.par.vals, "list")
   }
   # method
   org.method = obj$models[[1]]$learner$method
   if (org.method == "aggregate") {
-    stopf("Method %s needs cross validated predictions from method 'superlearner.' or 'ensembleselection' in resample, which is not the case for used method 'aggregate'.", method)
+    stopf("Method %s needs cross validated predictions from method 'superlearner.' or 
+      'ensembleselection' in resample, which is not the case for used method 'aggregate'.", method)
   }
   if (!is.null(super.learner)) {
     assertClass(super.learner, "Learner")
     method = "superlearner"
-    if (!is.null(parset)) stopf("Method 'superlearner' does not need argument 'parset'.")
+    if (!is.null(es.par.vals)) stopf("Method 'superlearner' does not need argument 'es.par.vals'.")
   } else {
-    if (!is.null(parset)) {
-      assertClass(parset, "list")
+    if (!is.null(es.par.vals)) {
+      assertClass(es.par.vals, "list")
       method = "ensembleselection"
     } else {
       method = "aggregate"
@@ -119,7 +131,8 @@ resampleStackedLearnerAgain = function(id = NULL, obj, task, measures = NULL, su
   tn = getTaskTargetNames(task)
   bls.length = length(obj$models[[1]]$learner.model$base.models)
   bls.names = names(obj$models[[1]]$learner.model$base.models)
-  bm.pt = unique(unlist(lapply(seq_len(bls.length), function(x) obj$models[[1]]$learner$base.learners[[x]]$predict.type)))
+  bm.pt = unique(unlist(lapply(seq_len(bls.length), function(x) 
+    obj$models[[1]]$learner$base.learners[[x]]$predict.type)))
   folds = length(obj$models)
   if (length(bm.pt) > 1) stopf("All Base Learner must be of the same predict.type.")
   task.size = getTaskSize(task)
@@ -148,10 +161,12 @@ resampleStackedLearnerAgain = function(id = NULL, obj, task, measures = NULL, su
     # saved in "test.level1.task_f"
     for (f in seq_len(folds)) {
       test.idx = test.idxs_f[[f]]
-      pred.list = createPreds(foldi = f, bls = base.models_f[[f]], idx = test.idx, task, save.on.disc)
+      pred.list = createPreds(fold.i = f, bls = base.models_f[[f]], idx = test.idx, task, save.on.disc)
       test.bls.perfs_f[[f]] = ldply(lapply(pred.list, function(x)performance(x, measures)), .id = "bls")
-      #preds = lapply(seq_len(length(base.models[[i]])), function(b) predict(base.models[[i]][[b]], subsetTask(task, idxs)))
-      pred.data.list = lapply(seq_len(length(pred.list)), function(x) getPredictionDataNonMulticoll(pred.list[[x]]))
+      #preds = lapply(seq_len(length(base.models[[i]])), function(b) 
+      #  predict(base.models[[i]][[b]], subsetTask(task, idxs)))
+      pred.data.list = lapply(seq_len(length(pred.list)), 
+        function(x) getPredictionDataNonMulticoll(pred.list[[x]]))
       names(pred.data.list) = bls.names
       if (use.feat) {
         feat = getTaskData(task, subset = test.idx, target.extra = TRUE)$data
@@ -170,7 +185,8 @@ resampleStackedLearnerAgain = function(id = NULL, obj, task, measures = NULL, su
     train.level1.task_f = vector("list", length = folds)
     for (f in seq_len(folds)) {
       train.idx = train.idxs_f[[f]]
-      pred.data.list = lapply(seq_len(bls.length), function(x) getPredictionDataNonMulticoll(train.level1.preds_f[[f]][[x]])) # TODO naming
+      pred.data.list = lapply(seq_len(bls.length), 
+        function(x) getPredictionDataNonMulticoll(train.level1.preds_f[[f]][[x]])) 
       names(pred.data.list) = bls.names 
       if (use.feat) {
         feat = getTaskData(task, subset = train.idx, target.extra = TRUE)$data
@@ -183,11 +199,14 @@ resampleStackedLearnerAgain = function(id = NULL, obj, task, measures = NULL, su
     ### 3
     ### Fit super.learner on every fold
     #+++ here tuneParam could be applied +++
-    train.supermodel_f = lapply(seq_len(folds), function(f) train(super.learner, task = train.level1.task_f[[f]]))
-    train.preds_f = lapply(seq_len(folds), function(f) predict(train.supermodel_f[[f]], task = train.level1.task_f[[f]]))
+    train.supermodel_f = lapply(seq_len(folds), 
+      function(f) train(super.learner, task = train.level1.task_f[[f]]))
+    train.preds_f = lapply(seq_len(folds), 
+      function(f) predict(train.supermodel_f[[f]], task = train.level1.task_f[[f]]))
     ### 4.
     ### Apply train.supermodel from line above on level 1 TEST preds from (1).
-    test.preds_f = lapply(seq_len(folds), function(f) predict(train.supermodel_f[[f]], task = test.level1.task_f[[f]]))
+    test.preds_f = lapply(seq_len(folds), 
+      function(f) predict(train.supermodel_f[[f]], task = test.level1.task_f[[f]]))
     res.model_f = train.supermodel_f
     ### 
     ### 
@@ -195,15 +214,20 @@ resampleStackedLearnerAgain = function(id = NULL, obj, task, measures = NULL, su
     ###
     ###
   } else if (method %in% c("aggregate", "ensembleselection")) { 
-    # use settings from new parset
-    if (method == "ensembleselection") parset = createNewParset(org.parset = obj$models[[1]]$learner$parset, new.parset = parset)
+    # use settings from new es.par.vals
+    if (method == "ensembleselection") {
+      es.par.vals = createNewEsParVals(org.es.par.vals = obj$models[[1]]$learner$es.par.vals, 
+        new.es.par.vals = es.par.vals)
+    }
     ### 1.
     ### get level 1 TRAIN preds and perfs
     # saved as "train.level1.preds"
     # saved as "train.level1.perfs" (only for ensembleselection)
     if (method == "ensembleselection") {
-      train.level1.preds_f = lapply(seq_len(folds), function(x) obj$models[[x]]$learner.model$pred.train) # cross-validated
-      train.level1.perfs_f = lapply(seq_len(folds), function(x) obj$models[[x]]$learner.model$bls.performance)
+      train.level1.preds_f = lapply(seq_len(folds), 
+        function(x) obj$models[[x]]$learner.model$pred.train) # cross-validated
+      train.level1.perfs_f = lapply(seq_len(folds),
+        function(x) obj$models[[x]]$learner.model$bls.performance)
     } else {
       train.level1.preds_f = vector("list", folds) # see for-loop
     }
@@ -213,18 +237,19 @@ resampleStackedLearnerAgain = function(id = NULL, obj, task, measures = NULL, su
     for (f in seq_len(folds)) {
       ###  1. for aggregate
       if (method == "aggregate") { 
-        train.level1.preds_f[[f]] = createPreds(foldi = f, bls = base.models_f[[f]], idx = train.idxs_f[[f]], task, save.on.disc) #train-predict
+        train.level1.preds_f[[f]] = createPreds(fold.i = f, bls = base.models_f[[f]], 
+          idx = train.idxs_f[[f]], task, save.on.disc) #train-predict
       }
       ### 2.
       ### get level 1 TEST preds, i.e. apply bls models from training on testing data
       # saved as "test.level1.preds"
-      test.level1.preds = createPreds(foldi = f, bls = base.models_f[[f]], idx = test.idxs_f[[f]], task, save.on.disc)
+      test.level1.preds = createPreds(fold.i = f, bls = base.models_f[[f]], idx = test.idxs_f[[f]], task, save.on.disc)
       test.bls.perfs_f[[f]] =  ldply(lapply(test.level1.preds, function(x)performance(x, measures)), .id = "bls")
       ### 3.
       ### Run Ensemble Selection on level 1 TRAIN preds (1) with new parameters.
       if (method == "ensembleselection") {
         res.model_f[[f]] = applyEnsembleSelection(pred.list = train.level1.preds_f[[f]],
-          bls.performance = train.level1.perfs_f[[f]], parset = parset)
+          bls.performance = train.level1.perfs_f[[f]], es.par.vals = es.par.vals)
         freq = res.model_f[[f]]$freq
       } else {
         res.model_f[[f]] = "Method 'aggregate' does not have a model."
@@ -274,7 +299,7 @@ resampleStackedLearnerAgain = function(id = NULL, obj, task, measures = NULL, su
     test.bls.perfs = test.bls.perfs_f, # Performance of single bls for easier interpretability if ensemble was successful.
     super.learner = super.learner, 
     use.feat = use.feat,
-    parset = parset) 
+    es.par.vals = es.par.vals) 
   class(X) = c("RecombinedResampleResult", "ResampleResult")
   return(X)
 }
@@ -300,7 +325,8 @@ createTask = function(type, data, target, id = deparse(substitute(data))) {
   task
 }
 
-#' Get precise type of the task, i.e. distinguish between "classif" (binary target), "multiclassif" and all other types.
+#' Get precise type of the task, i.e. distinguish between "classif" (binary target), 
+#' "multiclassif" and all other types.
 #' 
 #' @param x \code{Task} or \code{TaskDesc}.
 
@@ -314,7 +340,8 @@ getPreciseTaskType = function(x) {
 }
 
 
-#' Create predictions for training or testing set (depends on idx) (with base model or saved one in RDS).
+#' Create predictions for training or testing set (depends on idx) 
+#' (with base model or saved one in RDS).
 #' 
 #' @param fold.i Current fold number.
 #' @param bls base.learner to use.
@@ -347,29 +374,30 @@ createPreds = function(fold.i, bls, idx, task, save.on.disc) {
 }
 
 
-#' Create new \code{parset}.
+#' Create new \code{es.par.vals}.
 #' 
-#' @param org.parset orginal/old parset from obj.
-#' @param new.parset parameters which should be updated.
+#' @param org.es.par.vals orginal/old es.par.vals from obj.
+#' @param new.es.par.vals parameters which should be updated.
  
-createNewParset = function(org.parset, new.parset) {
-  org.keep = setdiff(names(org.parset), names(new.parset))
-  org.parset = org.parset[org.keep]
-  final.parset = c(org.parset, new.parset)
-  allowed =  c("replace", "init", "bagprob", "bagtime", "maxiter", "tolerance", "metric")
-  unallowed = setdiff(names(new.parset), allowed) 
+createNewEsParVals = function(org.es.par.vals, new.es.par.vals) {
+  org.keep = setdiff(names(org.es.par.vals), names(new.es.par.vals))
+  org.es.par.vals = org.es.par.vals[org.keep]
+  final.es.par.vals = c(org.es.par.vals, new.es.par.vals)
+  allowed =  c("replace", "init", "bagprop", "bagtime", "maxiter", "tolerance", "metric")
+  unallowed = setdiff(names(new.es.par.vals), allowed) 
   if (length(unallowed) > 0) 
-    stopf("'%s' is no an allowed argument for parset.", unallowed)
-  final.parset
+    stopf("'%s' is no an allowed argument for es.par.vals.", unallowed)
+  final.es.par.vals
 }
 
 
 #' Print \code{RecombinedResampleResult}.
 #' 
 #' @param x RecombinedResampleResult
+#' @param ... ...
 #' @export
 
-print.RecombinedResampleResult = function(x) {
+print.RecombinedResampleResult = function(x, ...) {
   cat("Recombined Resample Result\n")
   catf("Task: %s", x$task.id)
   catf("Learner: %s", x$learner.id)
@@ -386,7 +414,8 @@ print.RecombinedResampleResult = function(x) {
 
 # TODO
 # 
-# [ ] allow "extract = onlybase.models" in resample (not only compulsory models = TRUE) to save more memory.
+# [ ] allow "extract = onlybase.models" in resample (not only compulsory 
+#   models = TRUE) to save more memory.
 # [ ] allow idx arguments that a special fraction of base learners will be used 
 #   (redo resampling with another base learners setting and use the alreday fitted 
 #   models -- so you just have to run a (big) number of base leaernes once and 

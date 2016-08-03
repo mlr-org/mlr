@@ -5,8 +5,9 @@
 \title{Ensemble selection algorithm}
 \usage{
 applyEnsembleSelection(pred.list = pred.list,
-  bls.performance = bls.performance, parset = list(replace = TRUE, init = 1,
-  bagprob = 1, bagtime = 1, maxiter = NULL, tolerance = 1e-08, metric = NULL))
+  bls.performance = bls.performance, es.par.vals = list(replace = TRUE, init
+  = 1, bagprop = 1, bagtime = 1, maxiter = NULL, tolerance = 1e-08, metric =
+  NULL))
 }
 \arguments{
 \item{pred.list}{A named list of predictions.}
@@ -14,7 +15,7 @@ applyEnsembleSelection(pred.list = pred.list,
 \item{bls.performance}{Named vector of performance results from training 
 (note that this should be results from resampled predictions to overcome overfitting issues).}
 
-\item{parset}{list of parameters. See /code{/{link{makeStackedLearner}}}.}
+\item{es.par.vals}{list of parameters. See \code{\link{makeStackedLearner}}.}
 }
 \description{
 Ensemble selection algorithm

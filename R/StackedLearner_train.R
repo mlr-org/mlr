@@ -1,4 +1,8 @@
 #' Switch to train \code{StackedLearner}.
+#' @param .learner StackedLearner.
+#' @param .task Task.
+#' @param .subset Subset of Task.
+#' @param ... ...
 #' @export
 trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
   .task = subsetTask(.task, subset = .subset)
@@ -6,7 +10,7 @@ trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
     aggregate = aggregateBaseLearners(.learner, .task),
     superlearner = superlearnerBaseLearners(.learner, .task),
     # ensembleselection = ensembleselectionBaseLearners(.learner, .task, ...)
-    ensembleselection = do.call(ensembleselectionBaseLearners, c(list(.learner, .task), .learner$parset))
+    ensembleselection = do.call(ensembleselectionBaseLearners, c(list(.learner, .task), .learner$es.par.vals))
   )
 }
 
@@ -16,6 +20,9 @@ trainLearner.StackedLearner = function(.learner, .task, .subset, ...) {
 
 #' Train function for simple aggregation of base learner predictions without weights.
 #' 
+#' @param learner [\code{StackedLearner}].
+#' @param task [\code{Task}].
+
 aggregateBaseLearners = function(learner, task) {
   id = learner$id
   save.on.disc = learner$save.on.disc
@@ -64,7 +71,7 @@ aggregateBaseLearners = function(learner, task) {
 #' Train function for stacking method "Super Learner", which uses meta learner to obtain level 1 data and uses inner cross-validation for prediction.
 #'
 #' @param learner [\code{StackedLearner}]
-#' @template arg_task
+#' @param task [\code{Task}]
 
 superlearnerBaseLearners = function(learner, task) {
   # setup
@@ -135,24 +142,25 @@ superlearnerBaseLearners = function(learner, task) {
 
 #' Train function for "Ensemble Selection" method.
 #' 
-#' @param learner [list of base learners]
-#' @template arg_task
+#' @param learner [\code{StackedLearner}]
+#' @param task [\code{Task}]
 #' @param replace [\code{logical(1)}]
 #' @param init [\code{integer(1)}] init >= 1
-#' @param bagprob [\code{numeric(1)}] 0 < bagprob < 1
+#' @param bagprop [\code{numeric(1)}] 0 < bagprop < 1
 #' @param bagtime [\code{integer(1)}] bagtime >= 1
 #' @param maxiter [\code{integer(1)}] maxiter >= 1
 #' @param tolerance [\code{numeric(1)}] small numeric value.
-#' @template arg_measures
+#' @param metric [\code{Measure(1)}] 
+#' @param ... ...
 #' @export
 
 
-ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1, bagprob = 1, bagtime = 1,
+ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1, bagprop = 1, bagtime = 1,
   maxiter = NULL, tolerance = 1e-8, metric = NULL, ...) {
   # check, defaults
   assertFlag(replace)
   assertInt(init, lower = 1, upper = length(learner$base.learners)) #807
-  assertNumber(bagprob, lower = 0, upper = 1)
+  assertNumber(bagprop, lower = 0, upper = 1)
   assertInt(bagtime, lower = 1)
   if (is.null(metric)) metric = getDefaultMeasure(task)
   assertClass(metric, "Measure")
@@ -206,8 +214,8 @@ ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1
   #}
 
   ensel = applyEnsembleSelection(pred.list = pred.list,
-    bls.performance = bls.performance, parset = list(replace = replace, 
-    init = init, bagprob = bagprob, bagtime = bagtime, maxiter = maxiter, 
+    bls.performance = bls.performance, es.par.vals = list(replace = replace, 
+    init = init, bagprop = bagprop, bagtime = bagtime, maxiter = maxiter, 
     metric = metric, tolerance = tolerance))
   
   # return
@@ -224,37 +232,37 @@ ensembleselectionBaseLearners = function(learner, task, replace = TRUE, init = 1
 #' @param pred.list A named list of predictions.
 #' @param bls.performance Named vector of performance results from training 
 #'   (note that this should be results from resampled predictions to overcome overfitting issues).
-#' @param parset list of parameters. See /code{/{link{makeStackedLearner}}}.
+#' @param es.par.vals list of parameters. See \code{\link{makeStackedLearner}}.
 #' @references Caruana, Rich, et al. "Ensemble selection from libraries of models." 
 #'   Proceedings of the twenty-first international conference on Machine learning. 
 #'   ACM, 2004. \url{http://www.cs.cornell.edu/~caruana/ctp/ct.papers/caruana.icml04.icdm06long.pdf}
 #' @export
 
-applyEnsembleSelection = function(pred.list = pred.list, bls.performance = bls.performance, parset = list(replace = TRUE, 
-  init = 1, bagprob = 1, bagtime = 1, maxiter = NULL, tolerance = 1e-8, metric = NULL)) {
+applyEnsembleSelection = function(pred.list = pred.list, bls.performance = bls.performance, 
+  es.par.vals = list(replace = TRUE, init = 1, bagprop = 1, bagtime = 1, maxiter = NULL, tolerance = 1e-8, metric = NULL)) {
   # check
-  assertClass(parset, "list")
+  assertClass(es.par.vals, "list")
   # setup
   bls.names = names(pred.list)
   bls.length = length(pred.list)
   
   # FIXME: Need defaults. should be nicer
-  if (is.null(parset$replace)) parset$replace = TRUE
-  if (is.null(parset$init)) parset$init = 1
-  if (is.null(parset$bagprob)) parset$bagprob = 0.5
-  if (is.null(parset$bagtime)) parset$bagtime = 20
-  if (is.null(parset$metric)) parset$metric = getDefaultMeasure(pred.list[[1]]$task.desc)
-  if (is.null(parset$maxiter)) parset$maxiter = bls.length
-  if (is.null(parset$tolerance)) parset$tolerance = 1e-8
+  if (is.null(es.par.vals$replace)) es.par.vals$replace = TRUE
+  if (is.null(es.par.vals$init)) es.par.vals$init = 1
+  if (is.null(es.par.vals$bagprop)) es.par.vals$bagprop = 0.5
+  if (is.null(es.par.vals$bagtime)) es.par.vals$bagtime = 20
+  if (is.null(es.par.vals$metric)) es.par.vals$metric = getDefaultMeasure(pred.list[[1]]$task.desc)
+  if (is.null(es.par.vals$maxiter)) es.par.vals$maxiter = bls.length
+  if (is.null(es.par.vals$tolerance)) es.par.vals$tolerance = 1e-8
     
-  #FIXME: neeeded!? or is parset$bar ok!?  
-  replace = parset$replace
-  init = parset$init
-  bagprob = parset$bagprob
-  bagtime = parset$bagtime
-  maxiter = parset$maxiter
-  metric = parset$metric
-  tolerance = parset$tolerance
+  #FIXME: neeeded!? or is es.par.vals$bar ok!?  
+  replace = es.par.vals$replace
+  init = es.par.vals$init
+  bagprop = es.par.vals$bagprop
+  bagtime = es.par.vals$bagtime
+  maxiter = es.par.vals$maxiter
+  metric = es.par.vals$metric
+  tolerance = es.par.vals$tolerance
   
   # setup
   m = bls.length
@@ -265,7 +273,7 @@ applyEnsembleSelection = function(pred.list = pred.list, bls.performance = bls.p
   # outer loop (bagtimes bagging iterations)
   for (bagind in seq_len(bagtime)) {
     # bagging of models 
-    bagsize = ceiling(m * bagprob)
+    bagsize = ceiling(m * bagprop)
     bagmodel = sample(1:m, bagsize)
     
     # Initial selection of strongest learners

@@ -4,8 +4,8 @@
 #'   A boosted stacking learner runs a tuning using a \code{\link{ModelMultiplexer}} and adds the predictions from the best model as a new feature to the training data set. This procedure is repleated several times until \code{niter} is reached. 
 #' 
 #' @param model.multiplexer [\code{\link{ModelMultiplexer}}]\cr
-#'   The muliplexer learner.
-#'  @param mm.ps Collection of parameters and their constraints for optimization.
+#'   The multiplexer learner.
+#' @param mm.ps Collection of parameters and their constraints for optimization.
 #'   Dependent parameters with a \code{requires} field must use \code{quote} and not
 #'   \code{expression} to define it.
 #' @param control [\code{\link{TuneControlRandom}}]\cr
@@ -16,8 +16,8 @@
 #'   Classification: \dQuote{response} (= labels) or \dQuote{prob} (= probabilities and labels by selecting the ones with maximal probability).
 #'   Regression: \dQuote{response} (= mean response) or \dQuote{se} (= standard errors and mean response).
 #'   par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
-#' @param measure [\code{\link{Measure}}]\cr
-#'   Performance measure.
+#' @param measures [\code{\link{Measure}}]\cr
+#'   Performance measures.
 #' @param niter [\code{integer}]\cr
 #'   Number of boosting iterations.
 #' @param tolerance [\code{numeric}]\cr
@@ -45,9 +45,9 @@
 #' }
 #' @export  
 
-makeBoostedStackingLearner = function(model.multiplexer = mm, mm.ps = ps, 
-  control = ctrl, resampling = cv2, predict.type = "prob",
-  measures = mmce, niter = 2L, tolerance = -0.1, subsemble.prop = 0.8) {
+makeBoostedStackingLearner = function(model.multiplexer, mm.ps, 
+  control, resampling = cv2, predict.type = "prob",
+  measures, niter = 2L, tolerance = -0.1, subsemble.prop = 0.8) {
   # checks
   assertClass(model.multiplexer, "ModelMultiplexer")
   assertClass(mm.ps, "ParamSet")
@@ -86,8 +86,14 @@ makeBoostedStackingLearner = function(model.multiplexer = mm, mm.ps = ps,
 }
 
 
-
+#' Train Boosted Stacking object.
+#' 
+#' @param .learner Learner
+#' @param .task [\code{Task}].
+#' @param .subset Subset of task.
+#' @param ... ...
 #' @export
+
 trainLearner.BoostedStackingLearner = function(.learner, .task, .subset, ...) {
   # checks
   if (.task$type == "regr") {
@@ -156,8 +162,14 @@ trainLearner.BoostedStackingLearner = function(.learner, .task, .subset, ...) {
 }
 
 
-
+#' Predict Boosted Stacking object.
+#' 
+#' @param .learner Learner
+#' @param .model Model.
+#' @param .newdata New data.
+#' @param ... ...
 #' @export
+
 predictLearner.BoostedStackingLearner = function(.learner, .model, .newdata, ...) {
   new.data = .newdata
   sm.pt = .learner$predict.type
@@ -201,13 +213,13 @@ predictLearner.BoostedStackingLearner = function(.learner, .model, .newdata, ...
 #'   \code{TuneResult} from \code{ModelMultiplexer}
 #' @param model.multiplexer [\code{\link{ModelMultiplexer}}]\cr
 #'   Needed to exract fix parameters.
-#'   @param mm.ps [\code{list containing \link{ParamSet}}]\cr
-#'   Needed to exract fix parameters.
+#' @param mm.ps [\code{list containing \link{ParamSet}}]\cr
+#'   Needed to extract fix parameters.
 #' @param x.best [\code{integer(1)}]
 #'   Number of best learners to extract.
-#' @param measure [\code{\link{Measure}}]\cr
+#' @param measure [\code{\link{Measure(1)}}]\cr
 #'   Measure to apply to "extract from best".
-#' @return [\code{list of x best learners}]
+#' @return [\code{list of x best learners}].
 #' @examples 
 #' tsk = pid.task
 #' lrns = list(
@@ -223,10 +235,11 @@ predictLearner.BoostedStackingLearner = function(.learner, .model, .newdata, ...
 #'   makeIntegerParam("ntree", lower = 1L, upper = 3L),
 #'   makeIntegerParam("mtry", lower = 1L, upper = getTaskNFeats(tsk)))
 #' tune.res = tuneParams(learner = mm, task = tsk, resampling = cv2, par.set = ps, control = ctrl)
-#' best = makeXBestLearnersFromMMTuneResult(tune.result = tune.res, model.multiplexer = mm, mm.ps = ps, x.best = 2)
+#' best = makeXBestLearnersFromMMTuneResult(tune.result = tune.res, 
+#'   model.multiplexer = mm, mm.ps = ps, x.best = 2)
 #' best
 
-makeXBestLearnersFromMMTuneResult = function(tune.result, model.multiplexer, mm.ps = mm.ps, x.best = 5, measure = mmce) {
+makeXBestLearnersFromMMTuneResult = function(tune.result, model.multiplexer, mm.ps, x.best = 5, measure) {
   # checks
   assertClass(tune.result, "TuneResult")
   assertClass(model.multiplexer, "ModelMultiplexer")
@@ -332,6 +345,6 @@ makeWrappedModel.BoostedStackingLearner = function(learner, learner.model, task.
 #' [ ] setPredictType.BoostedStackingLearner
 #' [ ] makeBoostedStackingLearner: check if mm and ps fit together
 #' [ ] Do we need an id?
-#' [ ] Input checks: measures and type
+#' [ ] Input checks: measure and type
 
 

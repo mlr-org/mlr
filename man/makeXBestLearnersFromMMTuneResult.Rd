@@ -4,26 +4,27 @@
 \alias{makeXBestLearnersFromMMTuneResult}
 \title{Creates x best learners from ModelMultiplexer TuneResult.}
 \usage{
-makeXBestLearnersFromMMTuneResult(tune.result, model.multiplexer,
-  mm.ps = mm.ps, x.best = 5, measure = mmce)
+makeXBestLearnersFromMMTuneResult(tune.result, model.multiplexer, mm.ps,
+  x.best = 5, measure)
 }
 \arguments{
 \item{tune.result}{[\code{\link{TuneResult}}]\cr
 \code{TuneResult} from \code{ModelMultiplexer}}
 
 \item{model.multiplexer}{[\code{\link{ModelMultiplexer}}]\cr
-Needed to exract fix parameters.
-@param mm.ps [\code{list containing \link{ParamSet}}]\cr
 Needed to exract fix parameters.}
+
+\item{mm.ps}{[\code{list containing \link{ParamSet}}]\cr
+Needed to extract fix parameters.}
 
 \item{x.best}{[\code{integer(1)}]
 Number of best learners to extract.}
 
-\item{measure}{[\code{\link{Measure}}]\cr
+\item{measure}{[\code{\link{Measure(1)}}]\cr
 Measure to apply to "extract from best".}
 }
 \value{
-[\code{list of x best learners}]
+[\code{list of x best learners}].
 }
 \description{
 Creates x best learners from ModelMultiplexer TuneResult.
@@ -43,7 +44,8 @@ ps = makeModelMultiplexerParamSet(mm,
   makeIntegerParam("ntree", lower = 1L, upper = 3L),
   makeIntegerParam("mtry", lower = 1L, upper = getTaskNFeats(tsk)))
 tune.res = tuneParams(learner = mm, task = tsk, resampling = cv2, par.set = ps, control = ctrl)
-best = makeXBestLearnersFromMMTuneResult(tune.result = tune.res, model.multiplexer = mm, mm.ps = ps, x.best = 2)
+best = makeXBestLearnersFromMMTuneResult(tune.result = tune.res, 
+  model.multiplexer = mm, mm.ps = ps, x.best = 2)
 best
 }
 
