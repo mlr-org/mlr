@@ -8,6 +8,8 @@
 #'   Optional list of named (hyper)parameter settings. The arguments in
 #'   \code{...} take precedence over values in this list.
 #' @template ret_learner
+#' @note If a named (hyper)parameter can't be found for the given learner, the 3
+#' closest (hyper)parameter names will be output in case the user mistyped.
 #' @export
 #' @family learner
 #' @examples
