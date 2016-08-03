@@ -47,6 +47,7 @@ mlr_2.9:
 - renamed multilabel measure "hamloss" to "multilabel.hamloss"
 - added function "generateFunctionalANOVAData" for functional ANOVA partial dependence analysis
 - getNestedTuneResultsOptPathDf: added new arg "trafo"
+- multiclass.auc renamed to multiclass.au1u
 
 - new learners
 -- classif.C50
@@ -96,6 +97,7 @@ mlr_2.9:
 -- brier.scaled
 -- logloss
 -- multilabel.subset01, multilabel.f1, multilabel.acc, multilabel.ppv, multilabel.tpr
+-- multiclass.au1p, multiclass.au1u, multiclass.aunp, multiclass.aunu
 
 mlr_2.8:
 - Feature filter "univariate" had a bad name, was deprecated and is now called
