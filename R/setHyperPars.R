@@ -12,6 +12,7 @@
 #' closest (hyper)parameter names will be output in case the user mistyped.
 #' @export
 #' @family learner
+#' @importFrom utils adist
 #' @examples
 #' cl1 = makeLearner("classif.ksvm", sigma = 1)
 #' cl2 = setHyperPars(cl1, sigma = 10, par.vals = list(C = 2))
