@@ -53,9 +53,6 @@
 #' @param point.alpha [\code{numeric(1)}]\cr
 #'   For classification: Set the transparancy of prediction point for classification 3D plots with value from 0 to 1.
 #'   Default is 1.
-#' @param err.alpha [\code{numeric(1)}]\cr
-#'   Set the transparancy error point for classification 3D plots with value from 0 to 1.
-#'   Default is \code{alpha}
 #' @param show [\code{character(1)}]\cr
 #'   For classification: Set the separating method. 3 Possiable values: "bounding.point", "bounding.region" and "region".
 #'   Default is \code{NULL}
@@ -69,7 +66,7 @@
 #'   For \code{show = "bounding.point"}: Show the legend of bounding point?
 #'   Default is \code{FALSE}.
 #' @param bounding.region.alphahull [\code{integer(1)}]\cr
-#'   For \code{show = "bounding.region"}: Set the alpha shapes. See \link{https://plot.ly/python/alpha-shapes/}.
+#'   For \code{show = "bounding.region"}: Set the alpha shapes. See \url{https://plot.ly/python/alpha-shapes/}.
 #'   Default is -1.
 #' @param region.alpha [\code{numeric(1)}]\cr
 #'   For \code{show = "region"}: Set the transparancy of the separating region.
@@ -85,7 +82,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
                                  bounding.point.legend = FALSE,
                                  bounding.region.alphahull = -1,
                                  region.alpha = 0.5) {
-  require(plotly)
+  requirePackages("Plotly", default.method = "load")
   learner = checkLearner(learner)
   assert(
     checkClass(task, "ClassifTask"),
