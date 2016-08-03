@@ -3,7 +3,8 @@ context("measures")
 test_that("measures", {
   ct = binaryclass.task
   options(warn = 2)
-  mymeasure = makeMeasure(id = "foo", minimize = TRUE, properties = c("classif", "classif.multi", "regr", "predtype.response", "predtype.prob"),
+  mymeasure = makeMeasure(id = "foo", minimize = TRUE, properties = c("classif", "classif.multi",
+    "regr", "predtype.response", "predtype.prob"),
     fun = function(task, model, pred, feats, extra.args) {
       tt = pred
       1
@@ -19,9 +20,11 @@ test_that("measures", {
   rdesc = makeResampleDesc("Holdout", split = 0.2)
   r = resample(lrn, ct, rdesc, measures = ms)
   expect_equal(names(r$measures.train),
-    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr", "fnr", "ppv", "npv", "mcc", "f1", "foo"))
+    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr",
+      "fnr", "ppv", "npv", "mcc", "f1", "foo"))
   expect_equal(names(r$measures.test),
-    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr", "fnr", "ppv", "npv", "mcc", "f1", "foo"))
+    c("iter", "mmce", "acc", "bac", "tp", "fp", "tn", "fn", "tpr", "fpr", "tnr",
+      "fnr", "ppv", "npv", "mcc", "f1", "foo"))
 
   # test that measures work for se
   ms = list(mse, timetrain, timepredict, timeboth, featperc)
@@ -35,7 +38,8 @@ test_that("measures", {
   lrn = makeLearner("classif.randomForest", predict.type = "prob")
   mod = train(lrn, task = multiclass.task, subset = multiclass.train.inds)
   pred = predict(mod, task = multiclass.task, subset = multiclass.test.inds)
-  perf = performance(pred, measures = multiclass.auc)
+  perf = performance(pred, measures = list(multiclass.aunu, multiclass.aunp,
+    multiclass.au1u, multiclass.au1p))
   expect_is(perf, "numeric")
 
   # test survival measure
@@ -151,7 +155,7 @@ test_that("check measure calculations", {
   lrn.surv = makeLearner("surv.coxph")
   # lm does not converge due to small data and warns
   suppressWarnings({
-  mod.surv = train(lrn.surv, task.surv)
+    mod.surv = train(lrn.surv, task.surv)
   })
   pred.surv = predict(mod.surv, task.surv)
   pred.surv$data[,"response"] = pred.art.surv
@@ -245,29 +249,57 @@ test_that("check measure calculations", {
   acc.perf = performance(pred.classif, measures = acc, model = mod.classif)
   expect_equal(acc.test, acc$fun(pred = pred.classif))
   expect_equal(acc.test, as.numeric(acc.perf))
-  #multiclass.auc
-  n.cl = length(levels(tar.classif))
-  pred.probs = getPredictionProbabilities(pred.classif)
-  predictor = vnapply(1:length(pred.art.classif), function(i) {
-    pred.probs[i, pred.art.classif[i]]
-  })
-  names(predictor) = pred.art.classif
-  level.grid = t(combn(as.numeric(levels(tar.classif)), m = 2L))
-  level.grid = rbind(level.grid, level.grid[, ncol(level.grid):1])
-  aucs = numeric(nrow(level.grid))
-  for (i in 1:nrow(level.grid)){
-    ranks = sort(rank(predictor[names(predictor) %in% level.grid[i, ]]))
-    ranks = ranks[names(ranks) == level.grid[i]]
-    n = length(ranks)
-    ranks.sum = sum(ranks)
-    aucs[i] = ranks.sum - n * (n + 1) / 2
+  # colAUC binary
+  colauc.tab = as.matrix(table(tar.bin, pred.art.bin)) # confusion matrix
+  colauc.truepos = unname(rev(cumsum(rev(colauc.tab[2, ])))) # Number of true positives
+  colauc.falsepos = unname(rev(cumsum(rev(colauc.tab[1, ])))) # Number of false positives
+  colauc.totpos = sum(colauc.tab[2, ]) # The total number of positives (one number)
+  colauc.totneg = sum(colauc.tab[1, ]) # The total number of negatives (one number)
+  colauc.sens = colauc.truepos / colauc.totpos # Sensitivity (fraction true positives)
+  colauc.omspec = colauc.falsepos / colauc.totneg # 1 − specificity (false positives)
+  colauc.sens = c(colauc.sens, 0) # Numbers when we classify all as 0
+  colauc.omspec = c(colauc.omspec, 0) # Numbers when we classify all as 0
+  colauc.height = (colauc.sens[-1] + colauc.sens[-length(colauc.sens)]) / 2
+  colauc.width = -diff(colauc.omspec) # = diff(rev(omspec))
+  expect_equal(sum(colauc.height * colauc.width), colAUC(as.numeric(pred.art.bin), truth = tar.bin)[[1]])
+  # colAUC multiclass
+  colauc.tab = as.matrix(table(tar.classif, pred.art.classif)) # confusion matrix
+  tab = t(utils::combn(0:2, 2)) # all possible 1 vs. 1 combinations
+  colauc2 = matrix(NA, 3, 1)
+  for (i in 1:3) {
+    cind = c(which(colnames(colauc.tab) == tab[i,1]), which(colnames(colauc.tab) == tab[i,2])) # column indices of i-th combination
+    rind = c(which(rownames(colauc.tab) == tab[i,1]), which(rownames(colauc.tab) == tab[i,2])) # row indices of i-th combination
+    colauc.tab.part = colauc.tab[rind, cind] # resulting patrial matrix
+    colauc.truepos = unname(rev(cumsum(rev(colauc.tab.part[2, ])))) # Number of true positives
+    colauc.falsepos = unname(rev(cumsum(rev(colauc.tab.part[1, ])))) # Number of false positives
+    colauc.totpos = sum(colauc.tab.part[2, ]) # The total number of positives (one number)
+    colauc.totneg = sum(colauc.tab.part[1, ]) # The total number of negatives (one number)
+    if (colauc.totpos > 0) {
+      colauc.sens = colauc.truepos / colauc.totpos # Sensitivity (fraction true positives)
+    } else {
+      colauc.sens = c(1, 1)
+    }
+    if (colauc.totneg > 0) {
+      colauc.omspec = colauc.falsepos / colauc.totneg # 1 − specificity (false positives)
+    } else {
+      colauc.omspec = c(1, 1)
+    }
+    colauc.sens = c(colauc.sens, 0) # Numbers when we classify all as 0
+    colauc.omspec = c(colauc.omspec, 0) # Numbers when we classify all as 0
+    colauc.height = (colauc.sens[-1] + colauc.sens[-length(colauc.sens)]) / 2
+    colauc.width = -diff(colauc.omspec) # = diff(rev(colauc.omspec))
+  if (sum(colauc.height * colauc.width) < 0.5) {
+    colauc2[i,1] = 1 - sum(colauc.height * colauc.width)  # calculate AUC using formula for the area of a trapezoid
+  } else {
+    colauc2[i,1] = sum(colauc.height * colauc.width)  # calculate AUC using formula for the area of a trapezoid
   }
-  multiclass.auc.test = 1 / (n.cl * (n.cl - 1)) * sum(aucs)
-  multiclass.auc.perf = performance(pred.classif,
-   measures = multiclass.auc, model = mod.classif)
-  expect_equal(multiclass.auc.test, multiclass.auc$fun(pred = pred.classif))
-  expect_equal(multiclass.auc.test, as.numeric(multiclass.auc.perf))
-
+}
+  expect_equal(colauc2[,1], as.numeric(colAUC(as.numeric(pred.art.classif), truth = tar.classif)[,1]))
+  # multiclass.auc
+  expect_equal(as.numeric(performance(pred.bin, measures = list(multiclass.aunu,
+    multiclass.aunp, multiclass.au1u, multiclass.au1p))), 
+    as.numeric(rep(performance(pred.bin, measures = auc), 4)))
+  
   p1 = p2 = matrix(c(0.1, 0.9, 0.2, 0.8), 2, 2, byrow = TRUE)
   colnames(p1) = c("a", "b")
   colnames(p2) = c("b", "a")
@@ -468,18 +500,20 @@ test_that("check measure calculations", {
 
   #test clustering
 
-  #db
-  c2 = c(3, 1)
-  c1 = c((1 + 2 + 4) / 3, (3 + 4 + 2) / 3)
-  s1 = sqrt((sum((data.cluster[1, ] - c1)^2) + sum((data.cluster[2, ] - c1)^2) +
-    sum((data.cluster[4, ] - c1)^2)) / 3L)
-  M = sqrt(sum((c2 - c1)^2))
-  db.test = s1 / M
-  db.perf = performance(pred.cluster, measures = db,
-    model = mod.cluster, feats = data.cluster)
-  expect_equal(db.test,db$fun(task = task.cluster,
-   pred = pred.cluster, feats = data.cluster))
-  expect_equal(db.test, as.numeric(db.perf))
+
+  # FIXME: clusterSim is currently broken, see issue #1054
+  # #db
+  # c2 = c(3, 1)
+  # c1 = c((1 + 2 + 4) / 3, (3 + 4 + 2) / 3)
+  # s1 = sqrt((sum((data.cluster[1, ] - c1)^2) + sum((data.cluster[2, ] - c1)^2) +
+  #   sum((data.cluster[4, ] - c1)^2)) / 3L)
+  # M = sqrt(sum((c2 - c1)^2))
+  # db.test = s1 / M
+  # db.perf = performance(pred.cluster, measures = db,
+  #   model = mod.cluster, feats = data.cluster)
+  # expect_equal(db.test,db$fun(task = task.cluster,
+  #  pred = pred.cluster, feats = data.cluster))
+  # expect_equal(db.test, as.numeric(db.perf))
   #dunn
   exdist = min(sqrt(sum((c(1, 3) - c(3, 1))^2)), sqrt(sum((c(2, 4) - c(3, 1))^2)),
     sqrt(sum((c(4, 3) - c(3, 2))^2)))

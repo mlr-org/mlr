@@ -52,6 +52,6 @@ predictLearner.CostSensRegrWrapper = function(.learner, .model, .newdata, ...) {
 
 
 #' @export
-getLearnerProperties = function(learner) {
+getLearnerProperties.CostSensRegrWrapper = function(learner) {
   setdiff(getLearnerProperties(learner$next.learner), c("weights", "prob"))
 }

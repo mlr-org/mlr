@@ -46,7 +46,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
   inds = train.inds
   train = df[inds,]
   test = df[-inds,]
-
+  
   lrn = do.call("makeLearner", c(list(t.name), parset))
   # FIXME this heuristic will backfire eventually
   if (length(target) == 0)
@@ -62,7 +62,7 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
   else
     stop("Should not happen!")
   m = try(train(lrn, task, subset = inds))
-
+  
   if (inherits(m, "FailureModel")){
     expect_is(old.predicts, "try-error")
   } else {
@@ -72,11 +72,11 @@ testSimple = function(t.name, df, target, train.inds, old.predicts, parset = lis
       rownames(cp$data) = NULL
       expect_equal(unname(cp$data[, substr(colnames(cp$data), 1, 8) == "response"]), unname(old.predicts))
     } else {
-    # to avoid issues with dropped levels in the class factor we only check the elements as chars
-    if (is.numeric(cp$data$response) && is.numeric(old.predicts))
-      expect_equal(unname(cp$data$response), unname(old.predicts), tol = 1e-5)
-    else
-      expect_equal(as.character(cp$data$response), as.character(old.predicts))
+      # to avoid issues with dropped levels in the class factor we only check the elements as chars
+      if (is.numeric(cp$data$response) && is.numeric(old.predicts))
+        expect_equal(unname(cp$data$response), unname(old.predicts), tol = 1e-5)
+      else
+        expect_equal(as.character(cp$data$response), as.character(old.predicts))
     }
   }
 }
@@ -85,7 +85,7 @@ testSimpleParsets = function(t.name, df, target, train.inds, old.predicts.list, 
   inds = train.inds
   train = df[inds,]
   test = df[-inds,]
-
+  
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     old.predicts = old.predicts.list[[i]]
@@ -98,16 +98,15 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) 
   inds = train.inds
   train = df[inds,]
   test = df[-inds,]
-
-  if (length(target) == 1) {
+  
+  if(length(target) == 1) {
     task = makeClassifTask(data = df, target = target)
   } else {
     task = makeMultilabelTask(data = df, target = target)
   }
-
   lrn = do.call("makeLearner", c(t.name, parset, predict.type = "prob"))
   m = try(train(lrn, task, subset = inds))
-
+  
   if (inherits(m, "FailureModel")) {
     expect_is(old.predicts, "try-error")
   } else{
@@ -117,7 +116,7 @@ testProb = function(t.name, df, target, train.inds, old.probs, parset = list()) 
       names(old.probs) = NULL
     else
       old.probs = as.matrix(old.probs)
-
+    
     p = getPredictionProbabilities(cp)
     if (is.data.frame(p))
       p = as.matrix(p)
@@ -133,7 +132,7 @@ testProbParsets = function(t.name, df, target, train.inds, old.probs.list, parse
   inds = train.inds
   train = df[inds,]
   test = df[-inds,]
-
+  
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     old.probs = old.probs.list[[i]]
@@ -146,25 +145,25 @@ testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tu
   requirePackages("e1071", default.method = "load")
   data = df
   formula = formula(paste(target, "~."))
-
+  
   tt = function(formula, data, subset = 1:nrow(data), ...) {
     pars = list(formula = formula, data = data[subset, ])
     pars = c(pars, parset)
     set.seed(getOption("mlr.debug.seed"))
     capture.output(
       m <- do.call(tune.train, pars)
-      )
+    )
     return(m)
   }
-
+  
   tp = function(model, newdata) {
     set.seed(getOption("mlr.debug.seed"))
     p = tune.predict(model, newdata)
     return(p)
   }
-
+  
   tr = e1071::tune(method = tt, predict.func = tp, train.x = formula, data = data, tunecontrol = e1071::tune.control(cross = folds, best.model = FALSE))
-
+  
   cv.instance = e1071CVToMlrCV(tr)
   lrn = do.call("makeLearner", c(t.name, parset))
   if (is.numeric(df[, target]))
@@ -182,7 +181,7 @@ testCV = function(t.name, df, target, folds = 2, parset = list(), tune.train, tu
 }
 
 testCVParsets = function(t.name, df, target, folds = 2, tune.train, tune.predict = predict, parset.list) {
-
+  
   for (i in 1:length(parset.list)) {
     parset = parset.list[[i]]
     testCV(t.name, df, target, folds, parset, tune.train, tune.predict)
@@ -197,10 +196,10 @@ testBootstrap = function(t.name, df, target, iters = 3, parset = list(), tune.tr
   formula = formula(paste(target, "~."))
   tr = e1071::tune(method = tune.train, predict.func = tune.predict, train.x = formula, data = data,
     tunecontrol = e1071::tune.control(sampling = "bootstrap", nboot = iters, boot.size = 1))
-
+  
   bs.instance = e1071BootstrapToMlrBootstrap(tr)
   lrn = do.call("makeLearner", c(t.name, parset))
-
+  
   if (is.numeric(df[, target]))
     task = makeRegrTask(data = df, target = target)
   else if (is.factor(df[, target]))
