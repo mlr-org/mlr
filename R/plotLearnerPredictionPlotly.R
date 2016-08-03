@@ -1,10 +1,89 @@
+#' @title Visualizes a learning algorithm on a 3D data set.
+#'
+#' @description
+#' Trains the model for 2 or 3 selected features, then displays it via \code{\link[plotly]{plotly}}.
+#' Good for teaching or exploring models.
+#'
+#' For classification, only 3D plots are supported. The separating area will be displayed 
+#' in three ways "region", "bounding.point" and "bounding.region"
+#'
+#' For regression, only 3D plots are supported. 
+#'
+#' The plot title displays the model id, its parameters, the training performance
+#' and the cross-validation performance.
+#'
+#' @template arg_learner
+#' @template arg_task
+#' @param features [\code{character}]\cr
+#'   Selected features for model.
+#'   By default the first 2 features are used.
+#' @template arg_measures
+#' @param cv [\code{integer(1)}]\cr
+#'   Do cross-validation and display in plot title?
+#'   Number of folds. 0 means no CV.
+#'   Default is 10.
+#' @param ... [any]\cr
+#'   Parameters for \code{learner}.
+#' @param gridsize [\code{integer(1)}]\cr
+#'   Grid resolution per axis for background predictions.
+#'   Default is 500 for 1D and 100 for 2D.
+#' @param show.point [\code{logical(1)}]\cr
+#'   Show the input data point?
+#'   Default is \code{TRUE}
+#' @param show.point.legend [\code{logical(1)}]\cr
+#'   For classification: Show the point legend?
+#'   Default is \code{TRUE}
+#' @param show.colorbar [\code{logical(1)}]\cr
+#'   Show the colorbar?
+#'   Default is \code{TRUE}
+#' @param pointsize [\code{numeric(1)}]\cr
+#'   Pointsize for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
+#'   Default is 2.
+#' @param err.mark [\code{character(1)}]:
+#'   For classification: Either mark error of the model on the training data (\dQuote{train}) or
+#'   during cross-validation (\dQuote{cv}) or not at all with \dQuote{none}.
+#'   Default is \dQuote{train}.
+#' @param err.col [\code{character(1)}]\cr
+#'   For classification: Color of misclassified data points.
+#'   Default value is \dQuote{black}
+#' @param regr.greyscale [\code{logical(1)}]\cr
+#'   For regression: Should the plot be greyscale completely?
+#'   Default is \code{FALSE}.
+#' @template arg_prettynames
+#' @param point.alpha [\code{numeric(1)}]\cr
+#'   For classification: Set the transparancy of prediction point for classification 3D plots with value from 0 to 1.
+#'   Default is 1.
+#' @param err.alpha [\code{numeric(1)}]\cr
+#'   Set the transparancy error point for classification 3D plots with value from 0 to 1.
+#'   Default is \code{alpha}
+#' @param show [\code{character(1)}]\cr
+#'   For classification: Set the separating method. 3 Possiable values: "bounding.point", "bounding.region" and "region".
+#'   Default is \code{NULL}
+#' @param bounding.alpha [\code{numeric(1)}]\cr
+#'   For \code{show = "bounding.point"}: Set the transparancy of bounding point.
+#'   Default is 0.5.
+#' @param bounding.point.size [\code{numeric(1)}]\cr
+#'   For \code{show = "bounding.point"}: Set the size of bounding point.
+#'   Default is \code{pointsize}.
+#' @param bounding.point.legend [\code{logical(1)}]\cr
+#'   For \code{show = "bounding.point"}: Show the legend of bounding point?
+#'   Default is \code{FALSE}.
+#' @param bounding.region.alphahull [\code{integer(1)}]\cr
+#'   For \code{show = "bounding.region"}: Set the alpha shapes. See \link[https://plot.ly/python/alpha-shapes/].
+#'   Default is -1.
+#' @param region.alpha [\code{numeric(1)}]\cr
+#'   For \code{show = "region"}: Set the transparancy of the separating region.
+#'   Default is 0.5.
+#' @return The plotly object.
+#' @export
 plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures, cv = 10L,  ...,
                                  gridsize, show.point = TRUE, show.point.legend = TRUE, show.colorbar = TRUE,
-                                 pointsize = 2, prob.alpha = TRUE, se.band = TRUE,
-                                 err.mark = "train", err.col = "black",
+                                 pointsize = 2, err.mark = "train", err.col = "black",
                                  regr.greyscale = FALSE, pretty.names = TRUE,
-                                 point.alpha = 1, show = NULL, bounding.alpha = 0.5, bounding.region.alphahull = -1,
-                                 bounding.point.size = pointsize, bounding.point.legend = FALSE,
+                                 point.alpha = 1, show = NULL, bounding.alpha = 0.5, 
+                                 bounding.point.size = pointsize, 
+                                 bounding.point.legend = FALSE,
+                                 bounding.region.alphahull = -1,
                                  region.alpha = 0.5) {
   
   require(plotly)
@@ -44,7 +123,6 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
     gridsize = asCount(gridsize)
   }
   assertNumber(pointsize, lower = 0)
-  assertFlag(prob.alpha)
   assertFlag(se.band)
   assertChoice(err.mark, choices = c("train", "cv", "none"))
   assertString(err.col)
@@ -232,7 +310,8 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
     if (regr.greyscale) {
       # plot 3D surface
       p = plot_ly(x = grid.3d$x, y = grid.3d$y, z = grid.3d$z, 
-                  type = "surface", colorbar = list(title = target), name = "Learned Value", colorscale = "Greys")
+                  type = "surface", colorbar = list(title = target), showscale = show.colorbar,
+                  name = "Learned Value", colorscale = "Greys")
       # set plot parameters
       p = p %>% layout(title = title,
                        scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
@@ -248,7 +327,8 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
     } else {
       # plot 3D surface
       p = plot_ly(x = grid.3d$x, y = grid.3d$y, z = grid.3d$z, 
-                  type = "surface", colorbar = list(title = target), name = "Learned Value")
+                  type = "surface", showscale = show.colorbar, 
+                  colorbar = list(title = target), name = "Learned Value")
       # set plot parameters
       p = p %>% layout(title = title,
                        scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
