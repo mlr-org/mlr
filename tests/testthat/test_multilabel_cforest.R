@@ -31,3 +31,4 @@ test_that("multilabel_cforest", {
     multilabel.train.inds, old.probs.list, parset.list2)
   
 })
+
