@@ -11,19 +11,18 @@ makeRLearner.classif.glmboost = function() {
       makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")),
       makeLogicalLearnerParam(id = "stopintern", default = FALSE),
       makeLogicalLearnerParam(id = "center", default = FALSE),
-      makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE),
-      makeDiscreteLearnerParam(id = "m", default = "mstop", values = c("mstop", "cv", "aic"))
+      makeLogicalLearnerParam(id = "trace", default = FALSE, tunable = FALSE)
     ),
-    par.vals = list(family = mboost::Binomial(), m = "mstop"),
+    par.vals = list(family = mboost::Binomial()),
     properties = c("twoclass", "numerics", "factors", "prob", "weights"),
     name = "Boosting for GLMs",
     short.name = "glmbst",
-    note = "`family` has been set to `Binomial()` by default. Maximum number of boosting iterations is set via `mstop`, the actual number used for prediction is controlled by `m`."
+    note = "`family` has been set to `Binomial()` by default."
   )
 }
 
 #' @export
-trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, m, risk, stopintern, trace, ...) {
+trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, risk, stopintern, trace, ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
   d = getTaskData(.task, .subset)
   if (.learner$predict.type == "prob") {
