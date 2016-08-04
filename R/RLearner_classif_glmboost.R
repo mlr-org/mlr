@@ -29,7 +29,7 @@ makeRLearner.classif.glmboost = function() {
 trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, risk, stopintern, trace, family, Binomial.link = "logit", ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
   d = getTaskData(.task, .subset)
-  if (family == Binomial)
+  if (family == "Binomial")
     family = mboost::Binomial(link = Binomial.link)
   if (.learner$predict.type == "prob") {
     td = getTaskDescription(.task)
