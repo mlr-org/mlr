@@ -29,3 +29,20 @@ roundIntegers = function(x, par.set) {
       v
   }, par.set$pars, x)
 }
+
+# convert logical param values from chars to true logicals,
+# eg irace produces strings in tuning    
+convertXLogicalsNotAsStrings = function(x, par.set) {
+  types = getParamTypes(par.set, use.names = TRUE)
+  j = types %in% c("logical", "logicalvector")
+  if (any(j)) {
+    x = lapply(x, function(x.sub) {
+      x.sub[j] = lapply(x.sub[j], function(par.type) {
+        as.logical(par.type)
+      })
+    x.sub
+    })
+  }
+  return(x)
+}
+

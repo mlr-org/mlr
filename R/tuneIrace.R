@@ -1,21 +1,20 @@
 tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.path, show.info) {
   requirePackages("irace", why = "tuneIrace", default.method = "load")
-  hookRun = function(experiment, config = list()) {
-    rin = experiment$instance
-    plen = getParamNr(par.set, devectorize = TRUE)
-    x = experiment$candidate
-    # FIXME: this is a bug in irace, where for 1 param only a scalar is returned
-    # BB reported this already, maybe we can remove this later
-    if (plen == 1L)
-      x = makeDataFrame(1L, 1L, init = x, col.names = getParamIds(par.set))
+  cx = function(x) convertXLogicalsNotAsStrings(x, par.set)
+  hookRunParallel = function(experiment, hook.run, config = list()) {
+    # get our param settings that irace should try
+    cands = extractSubList(experiment, "candidate", simplify = FALSE)
+    # some conversion code
+    cands = lapply(cands, as.data.frame)
+    cands = lapply(cands, dfRowToList, i = 1, par.set = par.set,
+      enforce.col.types = TRUE)
 
-    # now convert to list, we also need to convert col types, irace sometimes uses not what we need
-    # - logicals are stored as as strings
-    x = dfRowToList(x, par.set, 1L, enforce.col.types = TRUE)
+    # the instance is always the same for all different param setting
+    rin = experiment[[1L]]$instance
 
-    tunerFitnFun(x, learner = learner, task = task, resampling = rin, measures = measures,
+    tunerFitnFunVectorized(cands, learner = learner, task = task, resampling = rin, measures = measures,
       par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
-      convertx = identity, remove.nas = TRUE)
+      convertx = cx, remove.nas = TRUE)
   }
 
   n.instances = control$extra.args$n.instances
@@ -31,8 +30,8 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
 
   parameters = convertParamSetToIrace(par.set)
   log.file = tempfile()
-  tuner.config = c(list(hookRun = hookRun, instances = instances, logFile = log.file),
-    control$extra.args)
+  tuner.config = c(list(hookRunParallel = hookRunParallel,
+    instances = instances, logFile = log.file), control$extra.args)
   g = if (show.irace.output) identity else capture.output
   g(or <- irace::irace(tunerConfig = tuner.config, parameters = parameters))
   unlink(log.file)
