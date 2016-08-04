@@ -121,6 +121,11 @@ The remaining functions on this page are convenience wrappers for the various
 existing resampling strategies. Note that if you need to work with precomputed training and
 test splits (i.e., resampling instances), you have to stick with \code{resample}.
 }
+\note{
+If you would like to include results from the training data set, make 
+sure to appropriately adjust the resampling strategy and the aggregation for 
+the measure.
+}
 \examples{
 task = makeClassifTask(data = iris, target = "Species")
 rdesc = makeResampleDesc("CV", iters = 2)
@@ -128,6 +133,12 @@ r = resample(makeLearner("classif.qda"), task, rdesc)
 print(r$aggr)
 print(r$measures.test)
 print(r$pred)
+
+# include the training set performance as well
+rdesc = makeResampleDesc("CV", iters = 2, predict = "both")
+r = resample(makeLearner("classif.qda"), task, rdesc, 
+  measures = list(mmce, setAggregation(mmce, train.mean)))
+print(r$aggr)
 }
 \seealso{
 Other resample: \code{\link{ResamplePrediction}},

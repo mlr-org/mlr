@@ -50,6 +50,11 @@ by passing a corresponding control object. For a complete list of implemented al
 
 Multi-criteria tuning can be done with \code{\link{tuneParamsMultiCrit}}.
 }
+\note{
+If you would like to include results from the training data set, make 
+sure to appropriately adjust the resampling strategy and the aggregation for 
+the measure.
+}
 \examples{
 # a grid search for an SVM (with a tiny number of points...)
 # note how easily we can optimize on a log-scale
@@ -81,9 +86,17 @@ rdesc = makeResampleDesc("Holdout")
 res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 print(res)
 print(head(as.data.frame(res$opt.path)))
+
+# include the training set performance as well
+rdesc = makeResampleDesc("Holdout", predict = "both")
+res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, 
+  control = ctrl, measures = list(mmce, setAggregation(mmce, train.mean)))
+
 }
 }
 \seealso{
+[\code{\link{generateHyperParsEffectData}}]
+
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
   \code{\link{getNestedTuneResultsX}},

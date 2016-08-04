@@ -49,6 +49,9 @@
 #' @template arg_showinfo
 #' @return [\code{\link{ResampleResult}}].
 #' @family resample
+#' @note If you would like to include results from the training data set, make 
+#' sure to appropriately adjust the resampling strategy and the aggregation for 
+#' the measure.
 #' @export
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
@@ -57,6 +60,12 @@
 #' print(r$aggr)
 #' print(r$measures.test)
 #' print(r$pred)
+#' 
+#' # include the training set performance as well
+#' rdesc = makeResampleDesc("CV", iters = 2, predict = "both")
+#' r = resample(makeLearner("classif.qda"), task, rdesc, 
+#'   measures = list(mmce, setAggregation(mmce, train.mean)))
+#' print(r$aggr)
 resample = function(learner, task, resampling, measures, weights = NULL, models = FALSE,
   extract, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
 
