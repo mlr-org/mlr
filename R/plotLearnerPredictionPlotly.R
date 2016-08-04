@@ -72,7 +72,9 @@
 #'   For \code{show = "region"}: Set the transparancy of the separating region.
 #'   Default is 0.5.
 #' @return The plotly object.
-#' @import plotly
+#' @importFrom data.table dcast
+#' @importFrom RColorBrewer brewer.pal
+#' @importFrom plotly plot_ly add_trace %>% layout toRGB
 #' @export
 plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures, cv = 10L,  ...,
                                  gridsize, show.point = TRUE, show.point.legend = TRUE, show.colorbar = TRUE,
@@ -205,7 +207,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
       cdata = cbind(pred.grid, grid)
       cdata$nresponse = apply(subset(pred.grid$data, select = -response), 1, max)
       
-      grid.dcast = reshape2::dcast(cdata, as.formula(paste(x1n, x2n, sep = "~")), value.var = "nresponse")
+      grid.dcast = data.table::dcast(cdata, as.formula(paste(x1n, x2n, sep = "~")), value.var = "nresponse")
       grid.3d = list(x = grid.dcast[,1],
                      y = as.numeric(colnames(grid.dcast)[-1]),
                      z = t(as.matrix(grid.dcast[,-1])))
@@ -231,7 +233,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
         if (nlevels(data[, target]) < 3)
           cols = toRGB(c("blue", "red"))
         else
-          cols = RColorBrewer::brewer.pal(nlevels(data[, target]), "Set1")
+          cols = brewer.pal(nlevels(data[, target]), "Set1")
         data$.cols = as.character(factor(as.numeric(data[, target]), labels = cols))
         data[data$.err == TRUE, ".cols"] = toRGB(err.col)
         
@@ -296,7 +298,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
     }
   } else if (td$type == "regr" && taskdim == 2L) {
     # reform grid data
-    grid.dcast = reshape2::dcast(grid, as.formula(paste(x1n, x2n, sep = "~")), value.var = target)
+    grid.dcast = data.table::dcast(grid, as.formula(paste(x1n, x2n, sep = "~")), value.var = target)
     # generate 3D plots data list
     grid.3d = list(x = grid.dcast[,1],
                    y = as.numeric(colnames(grid.dcast)[-1]),

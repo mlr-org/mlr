@@ -33,7 +33,6 @@ Depends:
     BBmisc (>= 1.10),
     ggplot2,
     ParamHelpers (>= 1.8),
-    plotly,
     stats,
     stringi
 Imports:
@@ -42,6 +41,7 @@ Imports:
     ggvis,
     methods,
     parallelMap (>= 1.3),
+    plotly,
     plyr,
     RColorBrewer,
     reshape2,
