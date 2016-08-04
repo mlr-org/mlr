@@ -66,8 +66,8 @@ ctrl = makeTuneControlGrid(resolution = 2L)
 rdesc = makeResampleDesc("CV", iters = 2L)
 res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 print(res)
-print(as.data.frame(res$opt.path))
-print(as.data.frame(trafoOptPath(res$opt.path)))
+print(generateHyperParsEffectData(res))
+print(generateHyperParsEffectData(res, trafo = TRUE))
 
 \dontrun{
 # we optimize the SVM over 3 kernels simultanously
@@ -85,17 +85,18 @@ ctrl = makeTuneControlIrace(maxExperiments = 200L)
 rdesc = makeResampleDesc("Holdout")
 res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, control = ctrl)
 print(res)
-print(head(as.data.frame(res$opt.path)))
+print(generateHyperParsEffectData(res))
 
 # include the training set performance as well
 rdesc = makeResampleDesc("Holdout", predict = "both")
 res = tuneParams("classif.ksvm", iris.task, rdesc, par.set = ps, 
   control = ctrl, measures = list(mmce, setAggregation(mmce, train.mean)))
-
+print(res)
+print(generateHyperParsEffectData(res))
 }
 }
 \seealso{
-[\code{\link{generateHyperParsEffectData}}]
+\code{\link{generateHyperParsEffectData}}
 
 Other tune: \code{\link{TuneControl}},
   \code{\link{getNestedTuneResultsOptPathDf}},
