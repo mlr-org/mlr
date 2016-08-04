@@ -72,6 +72,7 @@
 #'   For \code{show = "region"}: Set the transparancy of the separating region.
 #'   Default is 0.5.
 #' @return The plotly object.
+#' @import plotly
 #' @export
 plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures, cv = 10L,  ...,
                                  gridsize, show.point = TRUE, show.point.legend = TRUE, show.colorbar = TRUE,
@@ -82,11 +83,10 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
                                  bounding.point.legend = FALSE,
                                  bounding.region.alphahull = -1,
                                  region.alpha = 0.5) {
-  requirePackages("Plotly", default.method = "load")
   learner = checkLearner(learner)
   assert(
     checkClass(task, "ClassifTask"),
-    checkClass(task, "RegrTask"),
+    checkClass(task, "RegrTask")
   )
   td = getTaskDescription(task)
   

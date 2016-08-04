@@ -25,8 +25,6 @@ plotPartialPredictionPlotly = function(obj, p = 1) {
   x2n = features[2]
   
   
-  require(plotly)
-  
   if (obj$task.desc$type == "regr") {
     grid.dcast = reshape2::dcast(obj$data, as.formula(paste(x1n, x2n, sep = "~")), value.var = target)
     grid.3d = list(x = grid.dcast[,1],
