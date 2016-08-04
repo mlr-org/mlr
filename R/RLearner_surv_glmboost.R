@@ -4,7 +4,9 @@ makeRLearner.surv.glmboost = function() {
     cl = "surv.glmboost",
     package = c("!survival", "mboost"),
     par.set = makeParamSet(
-      makeDiscreteLearnerParam(id = "family", default = mboost::CoxPH(), values = list(CoxPH = mboost::CoxPH(), Weibull = mboost::Weibull(), Loglog = mboost::Loglog(), Lognormal = mboost::Lognormal())),
+      makeDiscreteLearnerParam(id = "family", default = mboost::CoxPH(),
+        values = list(CoxPH = mboost::CoxPH(), Weibull = mboost::Weibull(),
+          Loglog = mboost::Loglog(), Lognormal = mboost::Lognormal(), Gehan = mboost::Gehan())),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeLogicalLearnerParam(id = "center", default = FALSE),
