@@ -224,8 +224,8 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
                       showlegend = show.point.legend)
       }
       p = p %>% layout(title = title,
-                       scene = list(xaxis = list(title = paste("x: ", x1n)),
-                                    yaxis = list(title = paste("y: ", x2n)),
+                       scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
+                                    yaxis = list(title = paste("y: ", x2n, sep = "")),
                                     zaxis = list(title = "z: f(x,y)", range = c(0, 1))),
                        legend = list(xanchor = "right"))
     }
@@ -296,6 +296,10 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
                         showlegend = bounding.point.legend)
         }
       }
+      p = p %>% layout(title = title,
+                       scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
+                                    yaxis = list(title = paste("y: ", x2n, sep = "")),
+                                    zaxis = list(title = paste("z: ", x3n, sep = ""))))
     }
   } else if (td$type == "regr" && taskdim == 2L) {
     # reform grid data
