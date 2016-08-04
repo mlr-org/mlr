@@ -1,3 +1,24 @@
+mlr_2.10:
+- functions - general
+
+- functions - new
+
+- functions - removed
+
+- functions - renamed
+
+- learners - general
+
+- learners - new
+
+- learners - removed
+
+- measures - general
+
+- measures - new
+
+- measures - renamed
+
 mlr_2.9:
 - functions - general
 -- various cleanups that removed unused code
