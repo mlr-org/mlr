@@ -206,7 +206,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
       NULL
     if (taskdim == 2L) {
       cdata = cbind(pred.grid, grid)
-      cdata$nresponse = apply(subset(pred.grid$data, select = -pred.grid$data$response), 1, max)
+      cdata$nresponse = apply(pred.grid$data[, -ncol(pred.grid$data)], 1, max)
       
       grid.dcast = data.table::dcast(cdata, as.formula(paste(x1n, x2n, sep = "~")), value.var = "nresponse")
       grid.3d = list("x" = grid.dcast[,1],
