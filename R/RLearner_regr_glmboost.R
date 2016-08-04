@@ -8,7 +8,7 @@ makeRLearner.regr.glmboost = function() {
         values = list(Gaussian = mboost::Gaussian(), Laplace = mboost::Laplace(),
           Huber = mboost::Huber(), Poisson = mboost::Poisson(), GammaReg = mboost::GammaReg(nuirange = c(0,100)),
           NBinomial = mboost::NBinomial(), Hurdle = mboost::Hurdle())),
-      #makeUntypedLearnerParam(id = "custom.family", default = mboost::Gaussian(), tunable = FALSE),
+      #makeUntypedLearnerParam(id = "custom.family.defintion", requires = quote(family = "custom.family")),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")),
@@ -29,8 +29,8 @@ trainLearner.regr.glmboost = function(.learner, .task, .subset, .weights = NULL,
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, trace, stopintern)
   d = getTaskData(.task, .subset)
   f = getTaskFormula(.task)
-  # if (!is.null(getHyperPars(.learner)$custom.family)) {
-  #   family = custom.family
+  # if (!is.null(custom.family)) {
+  #  family = custom.family
   # } else {
   #   family = family
   # }
