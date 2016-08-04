@@ -7,7 +7,7 @@ makeRLearner.regr.glmboost = function() {
       makeDiscreteLearnerParam(id = "family", default = mboost::Gaussian(),
         values = list(Gaussian = mboost::Gaussian(), Laplace = mboost::Laplace(),
           Huber = mboost::Huber(), Poisson = mboost::Poisson(), GammaReg = mboost::GammaReg(nuirange = c(0,100)),
-          QuantReg = mboost::QuantReg(tau = 0.5, qoffset = 0.5), ExpectReg = mboost::ExpectReg())),
+          NBinomial = mboost::NBinomial(), Hurdle = mboost::Hurdle())),
       #makeUntypedLearnerParam(id = "custom.family", default = mboost::Gaussian(), tunable = FALSE),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
