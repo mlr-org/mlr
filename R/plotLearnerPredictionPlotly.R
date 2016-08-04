@@ -139,6 +139,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
   x1n = features[1L]
   x1 = data[, x1n]
   
+  
   # predictions
   # if learner supports prob or se, enable it
   if (td$type == "regr" && taskdim == 1L && hasLearnerProperties(learner, "se"))
@@ -205,19 +206,19 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
       NULL
     if (taskdim == 2L) {
       cdata = cbind(pred.grid, grid)
-      cdata$nresponse = apply(subset(pred.grid$data, select = -response), 1, max)
+      cdata$nresponse = apply(subset(pred.grid$data, select = -pred.grid$data$response), 1, max)
       
       grid.dcast = data.table::dcast(cdata, as.formula(paste(x1n, x2n, sep = "~")), value.var = "nresponse")
-      grid.3d = list(x = grid.dcast[,1],
-                     y = as.numeric(colnames(grid.dcast)[-1]),
-                     z = t(as.matrix(grid.dcast[,-1])))
+      grid.3d = list("x" = grid.dcast[,1],
+                     "y" = as.numeric(colnames(grid.dcast)[-1]),
+                     "z" = t(as.matrix(grid.dcast[,-1])))
       
-      p = plot_ly(data = grid.3d, x = x, y = y, z = z,
+      p = plot_ly(data = grid.3d, x = grid.3d$x, y = grid.3d$y, z = grid.3d$z,
                   type = "surface", showscale = show.colorbar, 
                   colorbar = list(title = target), name = "Density")
       if (show.point) {
         data$.z = 0
-        p = add_trace(p, data = data, x = get(x1n), y = get(x2n), z = .z,
+        p = add_trace(p, data = data, x = get(x1n), y = get(x2n), z = data$.z,
                       type = "scatter3d", mode = "markers", symbol = get(target),
                       marker = list(size = pointsize), 
                       showlegend = show.point.legend)
@@ -242,7 +243,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
         
         p = plot_ly(data = tmp, x = get(x1n), y = get(x2n), z = get(x3n), 
                     type = "scatter3d", mode = "markers", symbol = tmp[, target], 
-                    marker = list(size = pointsize, opacity = point.alpha, color = .cols),
+                    marker = list(size = pointsize, opacity = point.alpha, color = tmp$.cols),
                     showlegend = show.point.legend)
         
         if (!missing(show)) {
@@ -300,9 +301,9 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
     # reform grid data
     grid.dcast = data.table::dcast(grid, as.formula(paste(x1n, x2n, sep = "~")), value.var = target)
     # generate 3D plots data list
-    grid.3d = list(x = grid.dcast[,1],
-                   y = as.numeric(colnames(grid.dcast)[-1]),
-                   z = t(as.matrix(grid.dcast[,-1])))
+    grid.3d = list("x" = grid.dcast[,1],
+                   "y" = as.numeric(colnames(grid.dcast)[-1]),
+                   "z" = t(as.matrix(grid.dcast[,-1])))
     
     if (regr.greyscale) {
       # plot 3D surface
@@ -323,7 +324,7 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
       }
     } else {
       # plot 3D surface
-      p = plot_ly(x = grid.3d$x, y = grid.3d$y, z = grid.3d$z, 
+      p = plot_ly(data = grid.3d, x = grid.3d$x, y = grid.3d$y, z = grid.3d$z, 
                   type = "surface", showscale = show.colorbar, 
                   colorbar = list(title = target), name = "Learned Value")
       # set plot parameters
