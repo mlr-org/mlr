@@ -8,6 +8,8 @@ makeRLearner.classif.glmboost = function() {
         values = list(AdaExp = mboost::AdaExp(), Binomial = mboost::Binomial(),
           PropOdds = mboost::PropOdds(), AUC = mboost::AUC())),
       # FIXME default of glmboost() for family is Gaussian()
+      makeDiscreteLearnerParam(id = "Binomial.link", default = "logit",
+        values = c("logit", "probit"), requires = quote(family == Binomial)),
       makeIntegerLearnerParam(id = "mstop", default = 100L, lower = 1L),
       makeNumericLearnerParam(id = "nu", default = 0.1, lower = 0, upper = 1),
       makeDiscreteLearnerParam(id = "risk", values = c("inbag", "oobag", "none")),
@@ -24,9 +26,11 @@ makeRLearner.classif.glmboost = function() {
 }
 
 #' @export
-trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, risk, stopintern, trace, ...) {
+trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NULL, mstop, nu, risk, stopintern, trace, family, Binomial.link = "logit", ...) {
   ctrl = learnerArgsToControl(mboost::boost_control, mstop, nu, risk, stopintern, trace)
   d = getTaskData(.task, .subset)
+  if (family == Binomial)
+    family = mboost::Binomial(link = Binomial.link)
   if (.learner$predict.type == "prob") {
     td = getTaskDescription(.task)
     levs = c(td$negative, td$positive)
@@ -34,9 +38,9 @@ trainLearner.classif.glmboost = function(.learner, .task, .subset, .weights = NU
   }
   f = getTaskFormula(.task)
   if (is.null(.weights)) {
-    model = mboost::glmboost(f, data = d, control = ctrl, ...)
+    model = mboost::glmboost(f, data = d, control = ctrl, family = family, ...)
   } else  {
-    model = mboost::glmboost(f, data = d, control = ctrl, weights = .weights, ...)
+    model = mboost::glmboost(f, data = d, control = ctrl, weights = .weights, family = family, ...)
   }
   if (m == "cv") {
     mboost::mstop(model) = mboost::mstop(mboost::cvrisk(model, papply = lapply))
