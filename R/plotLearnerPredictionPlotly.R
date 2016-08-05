@@ -29,33 +29,47 @@
 #'   Default is 500 for 1D and 100 for 2D.
 #' @param show.point [\code{logical(1)}]\cr
 #'   Show the input data point?
-#'   Default is \code{TRUE}
+#'   Default is \code{TRUE}.
 #' @param show.point.legend [\code{logical(1)}]\cr
-#'   For classification: Show the point legend?
-#'   Default is \code{TRUE}
+#'   For classification: Show the legend of right classified points?
+#'   Default is \code{TRUE}.
 #' @param show.colorbar [\code{logical(1)}]\cr
 #'   Show the colorbar?
-#'   Default is \code{TRUE}
+#'   Default is \code{TRUE}.
+#' @param show.err.legend [\code{logical(1)}]\cr
+#'   For classification: Show the legend of missclassified points?
+#'   Default is \code{TRUE}.
 #' @param pointsize [\code{numeric(1)}]\cr
 #'   Pointsize for ggplot2 \code{\link[ggplot2]{geom_point}} for data points.
 #'   Default is 2.
+#' @param point.col = NULL [\code{character(1)}]\cr
+#'   For classification: Set points colors. The color vector muss have either the same length with
+#'   the number of classes of response variable, or just a single color. Colors are accepted in 
+#'   several different ways, see "Color Specification" section in \code{\link[par]{par}}.
+#'   Defaul is \code{NULL}.
+#' @param point.alpha [\code{numeric(1)}]\cr
+#'   For classification: Set the transparancy of prediction point for classification 3D plots with value from 0 to 1.
+#'   Default is 1.
 #' @param err.mark [\code{character(1)}]:
 #'   For classification: Either mark error of the model on the training data (\dQuote{train}) or
 #'   during cross-validation (\dQuote{cv}) or not at all with \dQuote{none}.
 #'   Default is \dQuote{train}.
+#' @param err.size [\code{numeric(1)}]\cr
+#'   For classification: Set misclassified point size.
+#'   Default is \code{pointsize}.
 #' @param err.col [\code{character(1)}]\cr
-#'   For classification: Color of misclassified data points.
-#'   Default value is \dQuote{black}
+#'   For classification: Set the colors of missclassified data points. 
+#'   Default value is \code{NULL} with black color.
+#' @param err.alpha [\code{numeric(1)}]\cr
+#'   For classification: Set the transparancy of missclassified data points.
+#'   Default value is \code{point.alpha}. 
 #' @param regr.greyscale [\code{logical(1)}]\cr
 #'   For regression: Should the plot be greyscale completely?
 #'   Default is \code{FALSE}.
 #' @template arg_prettynames
-#' @param point.alpha [\code{numeric(1)}]\cr
-#'   For classification: Set the transparancy of prediction point for classification 3D plots with value from 0 to 1.
-#'   Default is 1.
 #' @param show [\code{character(1)}]\cr
 #'   For classification: Set the separating method. 3 Possiable values: "bounding.point", "bounding.region" and "region".
-#'   Default is \code{NULL}
+#'   Default is \code{NULL}.
 #' @param bounding.alpha [\code{numeric(1)}]\cr
 #'   For \code{show = "bounding.point"}: Set the transparancy of bounding point.
 #'   Default is 0.5.
@@ -78,9 +92,11 @@
 #' @export
 plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures, cv = 10L,  ...,
                                  gridsize, show.point = TRUE, show.point.legend = TRUE, show.colorbar = TRUE,
-                                 pointsize = 2, err.mark = "train", err.col = "black",
+                                 show.err.legend = TRUE,
+                                 pointsize = 2, point.col = NULL, point.alpha = 1, 
+                                 err.mark = "train", err.size = pointsize, err.col = NULL, err.alpha = point.alpha,
                                  regr.greyscale = FALSE, pretty.names = TRUE,
-                                 point.alpha = 1, show = NULL, bounding.alpha = 0.5, 
+                                 show = NULL, bounding.alpha = 0.5, 
                                  bounding.point.size = pointsize, 
                                  bounding.point.legend = FALSE,
                                  bounding.region.alphahull = -1,
@@ -122,7 +138,6 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
   }
   assertNumber(pointsize, lower = 0)
   assertChoice(err.mark, choices = c("train", "cv", "none"))
-  assertString(err.col)
   assertLogical(regr.greyscale)
   
   if (td$type == "classif" && err.mark == "cv" && cv == 0L)
@@ -204,6 +219,27 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
       y != pred.cv$data[order(pred.cv$data$id), "response"]
     else
       NULL
+    
+    if (!is.null(point.col)){
+      if (length(point.col) == length(levels(y)))
+        data$.cols = factor(data[, target], levels = levels(data[, target]), labels = point.col)
+      else if (length(point.col) == 1L)
+        data$.cols = point.col
+      else
+        warning("point.col must have either the same length with classes of response variable, or just single color!")
+    }
+    
+    if (!is.null(err.col)){
+      if (length(err.col) == length(levels(y)))
+        data$.errcols = factor(data[, target], levels = levels(data[, target]), labels = err.col)
+      else if (length(err.col) == 1L)
+        data$.errcols = err.col
+      else
+        warning("err.col must have either the same length with classes of response variable, or just a single color!")
+    }
+    else
+      data$.errcols = "black"
+    
     if (taskdim == 2L) {
       cdata = cbind(pred.grid, grid)
       cdata$nresponse = apply(pred.grid$data[, -ncol(pred.grid$data)], 1, max)
@@ -218,10 +254,16 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
                   colorbar = list(title = target), name = "Density")
       if (show.point) {
         data$.z = 0
-        p = add_trace(p, data = data, x = get(x1n), y = get(x2n), z = data$.z,
-                      type = "scatter3d", mode = "markers", symbol = get(target),
-                      marker = list(size = pointsize), 
-                      showlegend = show.point.legend)
+        if (!is.null(point.col))
+          p = add_trace(p, data = data, x = get(x1n), y = get(x2n), z = data$.z,
+                        type = "scatter3d", mode = "markers", group = get(target),
+                        marker = list(size = pointsize, color = toRGB(data$.cols)), 
+                        showlegend = show.point.legend)
+        else
+          p = add_trace(p, data = data, x = get(x1n), y = get(x2n), z = data$.z,
+                        type = "scatter3d", mode = "markers", group = get(target),
+                        marker = list(size = pointsize), 
+                        showlegend = show.point.legend)
       }
       p = p %>% layout(title = title,
                        scene = list(xaxis = list(title = paste("x: ", x1n, sep = "")),
@@ -231,20 +273,23 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
     }
     if (taskdim == 3L) {
       if (show.point) {
-        if (nlevels(data[, target]) < 3)
-          cols = toRGB(c("blue", "red"))
+        # Plot right classified points
+        if (!is.null(point.col))
+          p = plot_ly(data = data[!data$.err, ], x = get(x1n), y = get(x2n), z = get(x3n), 
+                      type = "scatter3d", mode = "markers", group = get(target),
+                      marker = list(size = pointsize, opacity = point.alpha, color = toRGB(data[!data$.err, ".cols"])),
+                      showlegend = show.point.legend)
         else
-          cols = brewer.pal(nlevels(data[, target]), "Set1")
-        data$.cols = as.character(factor(as.numeric(data[, target]), labels = cols))
-        data[data$.err == TRUE, ".cols"] = toRGB(err.col)
+          p = plot_ly(data = data[!data$.err, ], x = get(x1n), y = get(x2n), z = get(x3n),
+                      type = "scatter3d", mode = "markers", group = get(target),
+                      showlegend = show.point.legend,
+                      marker = list(size = pointsize, opacity = point.alpha))
         
-        tmp = data
-        tmp = tmp[order(tmp$.cols, decreasing = T), ]
-        
-        p = plot_ly(data = tmp, x = get(x1n), y = get(x2n), z = get(x3n), 
-                    type = "scatter3d", mode = "markers", symbol = tmp[, target], 
-                    marker = list(size = pointsize, opacity = point.alpha, color = tmp$.cols),
-                    showlegend = show.point.legend)
+        # Plot missclassified points
+        p = add_trace(p, data = data[data$.err, ], x = get(x1n), y = get(x2n), z = get(x3n),
+                      type = "scatter3d", mode = "markers", group = get(target),
+                      marker = list(size = err.size, opacity = err.alpha, color = toRGB(data[data$.err, ".errcols"])),
+                      showlegend = show.err.legend)
         
         if (!missing(show)) {
           if (show == "region")
