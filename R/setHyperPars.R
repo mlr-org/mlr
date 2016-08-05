@@ -57,7 +57,7 @@ setHyperPars2.Learner = function(learner, par.vals) {
       indices = order(adist(n, parnames))[1:3]
       possibles = na.omit(parnames[indices])
       if (length(possibles) > 0) {
-        messagef("%s: couldn't find %s!\nDid you mean one of these instead: %s", 
+        messagef("%s: couldn't find hyperparameter '%s'\nDid you mean one of these hyperparameters instead: %s", 
           learner$id, n, stri_flatten(possibles, collapse = " "))
       }
       
