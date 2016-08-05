@@ -10,6 +10,7 @@ mlr_2.10:
 - learners - general
 
 - learners - new
+-- multilabel.cforest
 
 - learners - removed
 
