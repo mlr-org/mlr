@@ -65,6 +65,7 @@
 #' @return A named numeric vector indicating the feature importance values for each feature.
 #' @export
 getFeatureImportance = function(object, ...) {
+  assertClass(object, classes = "WrappedModel")
   getFeatureImportanceLearner(object$learner, object, ...)
 }
 
