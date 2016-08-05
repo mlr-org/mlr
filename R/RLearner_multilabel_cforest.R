@@ -28,8 +28,7 @@ makeRLearner.multilabel.cforest = function() {
     properties = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
     par.vals = list(),
     name = "Random forest based on conditional inference trees",
-    short.name = "cforest",
-    note = "In contrast to the original cforest's predict function, which is not able to predict responses, mlr can predict responses (predict.type = 'response')"
+    short.name = "cforest"
   )
 }
 
