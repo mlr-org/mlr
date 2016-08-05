@@ -1,5 +1,6 @@
 mlr_2.10:
 - functions - general
+-- generateFilterValuesData: fixed a bug wrt feature ordering
 
 - functions - new
 
