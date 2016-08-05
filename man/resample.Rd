@@ -122,9 +122,9 @@ existing resampling strategies. Note that if you need to work with precomputed t
 test splits (i.e., resampling instances), you have to stick with \code{resample}.
 }
 \note{
-If you would like to include results from the training data set, make 
-sure to appropriately adjust the resampling strategy and the aggregation for 
-the measure.
+If you would like to include results from the training data set, make
+sure to appropriately adjust the resampling strategy and the aggregation for
+the measure. See example code below.
 }
 \examples{
 task = makeClassifTask(data = iris, target = "Species")
@@ -136,7 +136,7 @@ print(r$pred)
 
 # include the training set performance as well
 rdesc = makeResampleDesc("CV", iters = 2, predict = "both")
-r = resample(makeLearner("classif.qda"), task, rdesc, 
+r = resample(makeLearner("classif.qda"), task, rdesc,
   measures = list(mmce, setAggregation(mmce, train.mean)))
 print(r$aggr)
 }
