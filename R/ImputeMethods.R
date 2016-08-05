@@ -291,6 +291,7 @@ imputeLearner = function(learner, features = NULL) {
     impute = function(data, target, col, model, features) {
       x = data[[col]]
       ind = is.na(x)
+      # if no NAs are present in data, we always return it unchanged
       if (all(!ind)) return(x)
       # FIXME: we do get a list instead of a data.frame?
       newdata = as.data.frame(data)[ind, features, drop = FALSE]
