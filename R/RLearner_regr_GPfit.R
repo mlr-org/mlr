@@ -10,27 +10,28 @@ makeRLearner.regr.GPfit = function(){
       makeIntegerLearnerParam(id = "maxit", default = 100, lower = 1),
       makeUntypedLearnerParam(id = "optim_start", default = NULL),  
       makeLogicalLearnerParam(id = "scale", default = TRUE),
-      makeDiscreteLearnerParam(id = "corr_type", values = c("exponential", "matern"), default = "exponential"),
-      makeIntegerLearnerParam(id = "matern_nu_k", default = 0L, lower = 0L, requires = quote(corr_type == "matern")), 
-      makeNumericLearnerParam(id = "exp_power", default = 1.95, lower = 1.0, upper = 2.0, requires = quote(corr_type == "exponential"))
+      makeDiscreteLearnerParam(id = "type", values = c("exponential", "matern"), default = "exponential"),
+      makeIntegerLearnerParam(id = "matern_nu_k", default = 0L, lower = 0L, requires = quote(type == "matern")), 
+      makeNumericLearnerParam(id = "power", default = 1.95, lower = 1.0, upper = 2.0, requires = quote(type == "exponential"))
     ),
-    par.vals = list(scale = TRUE, corr_type = "exponential",  matern_nu_k = 0L, exp_power = 1.95),
+    par.vals = list(scale = TRUE, type = "exponential",  matern_nu_k = 0L, power = 1.95),
     properties = c("numerics","se"),
     name = "Gaussian Process",
     short.name = "GPfit",
-    note = "As the optimization routine assumes that the inputs are scaled to the unit hypercube [0,1]^d, 
+    note = "(1) As the optimization routine assumes that the inputs are scaled to the unit hypercube [0,1]^d, 
             the input gets scaled for each variable by default. If this is not wanted, scale = FALSE has
-            to be set."
+            to be set. (2) As in GPfit documentation, if the correlation kernal or type is set to be matern, 
+            we name this k to be called matern_nu_k"
   )
 }
 #' @export
-trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights = NULL, scale, corr_type, matern_nu_k, exp_power, ...) {
+trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights = NULL, scale, type, matern_nu_k, power, ...) {
   # tri_dots = list(...)
-  # trans.vec = c("corr_type", "matern_nu_k", "exp_power")
+  # trans.vec = c("type", "matern_nu_k", "power")
   # dots = dropNamed(tri_dots, trans.vec)
   # print(dots)
-  # if (tri_dots$corr_type == "exponential") {
-  #   corr = list(type="exponential", power = tri_dots$"exp_power")
+  # if (tri_dots$type == "exponential") {
+  #   corr = list(type="exponential", power = tri_dots$"power")
   # } else {
   #   k = tri_dots$matern_nu_k
   #   corr = list(type="matern",nu = k+0.5 )
@@ -47,7 +48,7 @@ trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights = NULL, sc
   } else {
     mlist = list(scaled = FALSE, not.const = not.const)
   }
-  res = GPfit::GP_fit(d$data[, not.const], d$target, corr = list(type = corr_type, power = exp_power, nu = matern_nu_k+0.5 ), ...)
+  res = GPfit::GP_fit(d$data[, not.const], d$target, corr = list(type = type, power = power, nu = matern_nu_k+0.5 ), ...)
   # h.GPfit = function(...) {
   #   GPfit::GP_fit(X = d$data[, not.const], Y = d$target, ...)
   # }
