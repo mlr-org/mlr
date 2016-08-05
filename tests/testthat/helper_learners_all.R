@@ -13,13 +13,13 @@
 # we can also set pred.type and the getter for the output col from the preds.
 
 testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weights, hyperpars,
-                                          pred.type, get.pred.fun) {
+  pred.type, get.pred.fun) {
   
   lrn = setPredictType(lrn, pred.type)
-  
+ 
   if (lrn$id %in% names(hyperpars))
     lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
-  
+
   rin = makeResampleInstance("Holdout", task = task)
   m1 = train(lrn, task, subset = train.inds)
   w.allone = rep(1, length(train.inds))
@@ -84,7 +84,7 @@ testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "res
     }
     expect_named(probdf, cls)
     expect_data_frame(info = info, probdf, nrows = getTaskSize(task), ncols = length(cls),
-                      types = "numeric", any.missing = FALSE)
+      types = "numeric", any.missing = FALSE)
     expect_true(info = info, all(probdf >= 0 && probdf <= 1))
     
     # FIXME: the "sum to 1" apparently does not work for all learners?
@@ -107,7 +107,7 @@ testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
   f = getTaskFeatureNames(task)[1]
   d[,f] = as.factor(rep_len(c("a", "b"), length.out = nrow(d)))
   new.task = changeData(task = task, data = d)
-  
+
   testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
 }
 
@@ -144,6 +144,6 @@ testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
   f = getTaskFeatureNames(task)[1]
   d[1,f] = NA
   new.task = changeData(task = task, data = d)
-  
+
   testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
 }
