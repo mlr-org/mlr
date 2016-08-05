@@ -14,9 +14,9 @@
 
 testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weights, hyperpars,
   pred.type, get.pred.fun) {
-  
+
   lrn = setPredictType(lrn, pred.type)
- 
+
   if (lrn$id %in% names(hyperpars))
     lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
 
