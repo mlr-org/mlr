@@ -6,16 +6,23 @@ context("filterFeatures")
 
 test_that("filterFeatures", {
   ns = getTaskFeatureNames(binaryclass.task)
-  f = filterFeatures(binaryclass.task, select = "threshold", threshold = -Inf)
+  f = filterFeatures(binaryclass.task, method = "chi.squared", select = "threshold", threshold = -Inf)
   expect_equal(f, binaryclass.task)
 
   feat.imp.old = suppressWarnings(getFilterValues(binaryclass.task))
+  expect_data_frame(feat.imp.old$data, types = c("character", "numeric"), nrow = length(ns), ncols = 3,
+    col.names = "named")
   expect_equal(ns, feat.imp.old$data$name)
 
   feat.imp.new = generateFilterValuesData(binaryclass.task)
+  expect_data_frame(feat.imp.new$data, types = c("character", "numeric"), nrow = length(ns), ncols = 3,
+    col.names = "named")
+  expect_equal(names(feat.imp.new$data), c("name", "type", "rf.importance"))
   expect_equal(ns, feat.imp.new$data$name)
 
   feat.imp.old = suppressWarnings(getFilterValues(binaryclass.task, method = "chi.squared"))
+  expect_data_frame(feat.imp.old$data, types = c("character", "numeric"), nrow = length(ns), ncols = 3,
+    col.names = "named")
   expect_equal(ns, feat.imp.old$data$name)
   f = filterFeatures(binaryclass.task, method = "chi.squared", abs = 5L)
   expect_true(setequal(getTaskFeatureNames(f), head(sortByCol(feat.imp.old$data, "val", asc = FALSE), 5L)$name))
@@ -25,6 +32,9 @@ test_that("filterFeatures", {
   expect_equal(f, ff)
 
   feat.imp.new = generateFilterValuesData(binaryclass.task, method = "chi.squared")
+  expect_data_frame(feat.imp.new$data, types = c("character", "numeric"), nrow = length(ns), ncols = 3,
+    col.names = "named")
+  expect_equal(names(feat.imp.new$data), c("name", "type", "chi.squared"))
   expect_equal(ns, feat.imp.new$data$name)
   f = filterFeatures(binaryclass.task, method = "chi.squared", abs = 5L)
   expect_true(setequal(getTaskFeatureNames(f),
@@ -76,15 +86,45 @@ test_that("plotFilterValues", {
 
 test_that("args are passed down to filter methods", { # we had an issue here, see #941
 
- expect_error(generateFilterValuesData(binaryclass.task, method = c("mrmr","univariate.model.score"),
-      nselect = 3, perf.learner = "classif.lda"), "Please pass extra arguments")
+  expect_error(generateFilterValuesData(binaryclass.task, method = c("mrmr","univariate.model.score"),
+    nselect = 3, perf.learner = "classif.lda"), "Please pass extra arguments")
 
-  # f1 = generateFilterValuesData(iris.task, method = c("univariate.model.score"),
-  # nselect = 3, perf.learner = "classif.lda")
+  # check that we can pass down perf.learner to univariate.model.score, and get no error from mrmr call
+  f = generateFilterValuesData(iris.task, method = c("mrmr","univariate.model.score"),
+    nselect = 3, more.args = list(univariate.model.score = list(perf.learner = "classif.lda")))
 
+  # create stupid dummy data and check that we can change the na.rm arg of filter "variance" in multiple ways
+  d = iris; d[1L, 1L] = NA_real_
+  task = makeClassifTask(data = d, target = "Species")
 
+  f1 = generateFilterValuesData(task, method = "variance", na.rm = FALSE)
+  f2 = generateFilterValuesData(task, method = "variance", na.rm = TRUE)
+  f3 = generateFilterValuesData(task, method = "variance", more.args = list(variance = list(na.rm = TRUE)))
+  f4 = generateFilterValuesData(task, method = c("chi.squared", "variance"), more.args = list(variance = list(na.rm = TRUE)))
 
+  expect_true(is.na(f1$data$variance[1L]))
+  expect_false(is.na(f2$data$variance[1L]))
+  expect_false(is.na(f3$data$variance[1L]))
+  expect_false(is.na(f4$data$variance[1L]))
 })
 
-
-
+test_that("filter values are named and ordered correctly", { # we had an issue here, see #940
+  ns = getTaskFeatureNames(regr.task)
+  mock.filter = makeFilter(
+    "mock.filter",
+    desc = "Mock Filter",
+    pkg = "",
+    supported.tasks = c("classif", "regr", "surv"),
+    supported.features = c("numerics", "factors"),
+    fun = function(task, nselect) {
+      ns = getTaskFeatureNames(task)
+      d = seq_along(ns)
+      names(d) = ns
+      d = c(d[-1], d[1])
+      d
+  })
+  fv = generateFilterValuesData(regr.task, method = "mock.filter")
+  expect_equal(fv$data$name, ns)
+  expect_equal(fv$data$mock.filter, seq_along(ns))
+  rm("mock.filter", envir = mlr:::.FilterRegister)
+})
