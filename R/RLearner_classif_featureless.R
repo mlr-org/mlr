@@ -7,7 +7,7 @@ makeRLearner.classif.featureless = function() {
       makeUntypedLearnerParam(
         id = "measure",
         default = mmce,
-        tunable = FALSE
+        tunable = TRUE
       )
     ),
     par.vals = list(measure = mmce),
