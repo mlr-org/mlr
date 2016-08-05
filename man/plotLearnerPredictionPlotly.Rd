@@ -65,7 +65,7 @@ Default is 2.}
 \item{point.col}{= NULL [\code{character(1)}]\cr
 For classification: Set points colors. The color vector muss have either the same length with
 the number of classes of response variable, or just a single color. Colors are accepted in 
-several different ways, see "Color Specification" section in \code{\link[par]{par}}.
+several different ways, see "Color Specification" section in \code{\link[graphics]{par}}.
 Defaul is \code{NULL}.}
 
 \item{point.alpha}{[\code{numeric(1)}]\cr

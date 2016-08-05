@@ -45,7 +45,7 @@
 #' @param point.col = NULL [\code{character(1)}]\cr
 #'   For classification: Set points colors. The color vector muss have either the same length with
 #'   the number of classes of response variable, or just a single color. Colors are accepted in 
-#'   several different ways, see "Color Specification" section in \code{\link[par]{par}}.
+#'   several different ways, see "Color Specification" section in \code{\link[graphics]{par}}.
 #'   Defaul is \code{NULL}.
 #' @param point.alpha [\code{numeric(1)}]\cr
 #'   For classification: Set the transparancy of prediction point for classification 3D plots with value from 0 to 1.
@@ -245,9 +245,9 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
       cdata$nresponse = apply(pred.grid$data[, -ncol(pred.grid$data)], 1, max)
       
       grid.dcast = data.table::dcast(cdata, as.formula(paste(x1n, x2n, sep = "~")), value.var = "nresponse")
-      grid.3d = list("x" = grid.dcast[,1],
-                     "y" = as.numeric(colnames(grid.dcast)[-1]),
-                     "z" = t(as.matrix(grid.dcast[,-1])))
+      grid.3d = list(x = grid.dcast[,1],
+                     y = as.numeric(colnames(grid.dcast)[-1]),
+                     z = t(as.matrix(grid.dcast[,-1])))
       
       p = plot_ly(data = grid.3d, x = grid.3d$x, y = grid.3d$y, z = grid.3d$z,
                   type = "surface", showscale = show.colorbar, 
@@ -350,9 +350,9 @@ plotLearnerPredictionPlotly = function(learner, task, features = NULL, measures,
     # reform grid data
     grid.dcast = data.table::dcast(grid, as.formula(paste(x1n, x2n, sep = "~")), value.var = target)
     # generate 3D plots data list
-    grid.3d = list("x" = grid.dcast[,1],
-                   "y" = as.numeric(colnames(grid.dcast)[-1]),
-                   "z" = t(as.matrix(grid.dcast[,-1])))
+    grid.3d = list(x = grid.dcast[,1],
+                   y = as.numeric(colnames(grid.dcast)[-1]),
+                   z = t(as.matrix(grid.dcast[,-1])))
     
     if (regr.greyscale) {
       # plot 3D surface
