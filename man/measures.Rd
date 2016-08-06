@@ -10,7 +10,7 @@
 \alias{bac}
 \alias{ber}
 \alias{brier}
-\alias{brier.sc}
+\alias{brier.scaled}
 \alias{cindex}
 \alias{db}
 \alias{dunn}
@@ -30,10 +30,14 @@
 \alias{mcp}
 \alias{meancosts}
 \alias{measureACC}
+\alias{measureAU1P}
+\alias{measureAU1U}
 \alias{measureAUC}
+\alias{measureAUNP}
+\alias{measureAUNU}
 \alias{measureBAC}
 \alias{measureBrier}
-\alias{measureBrier.sc}
+\alias{measureBrierScaled}
 \alias{measureEXPVAR}
 \alias{measureFDR}
 \alias{measureFN}
@@ -71,7 +75,10 @@
 \alias{medse}
 \alias{mmce}
 \alias{mse}
-\alias{multiclass.auc}
+\alias{multiclass.au1p}
+\alias{multiclass.au1u}
+\alias{multiclass.aunp}
+\alias{multiclass.aunu}
 \alias{multiclass.brier}
 \alias{multilabel.acc}
 \alias{multilabel.f1}
@@ -152,7 +159,21 @@ measureACC(truth, response)
 
 ber
 
-multiclass.auc
+multiclass.aunu
+
+measureAUNU(probabilities, truth)
+
+multiclass.aunp
+
+measureAUNP(probabilities, truth)
+
+multiclass.au1u
+
+measureAU1U(probabilities, truth)
+
+multiclass.au1p
+
+measureAU1P(probabilities, truth)
 
 multiclass.brier
 
@@ -170,9 +191,9 @@ brier
 
 measureBrier(probabilities, truth, negative, positive)
 
-brier.sc
+brier.scaled
 
-measureBrier.sc(probabilities, truth, negative, positive)
+measureBrierScaled(probabilities, truth, negative, positive)
 
 bac
 

@@ -294,6 +294,190 @@ generatePartialDependenceData = function(obj, input, features,
             individual = individual,
             center = !is.null(center))
 }
+#' @title Generate a functional ANOVA decomposition
+#'
+#' @description
+#' Decompose a learned prediction function as a sum of components estimated via partial dependence.
+#'
+#' @family partial_dependence functional_anova
+#' @family generate_plot_data
+#' @aliases FunctionalANOVAData
+#'
+#' @param obj [\code{\link{WrappedModel}}]\cr
+#'   Result of \code{\link{train}}.
+#' @param input [\code{data.frame} | \code{\link{Task}}]\cr
+#'   Input data.
+#' @param features [\code{character}]\cr
+#'   A vector of feature names contained in the training data.
+#'   If not specified all features in the \code{input} will be used.
+#' @param depth [\code{integer(1)}]\cr
+#'   An integer indicating the depth of interaction amongst the features to compute. Default 1.
+#' @param fun [\code{function}]\cr
+#'   A function that accepts a numeric vector and returns either a single number
+#'   such as a measure of location such as the mean, or three numbers, which give a lower bound,
+#'   a measure of location, and an upper bound. Note if three numbers are returned they must be
+#'   in this order. The default is the mean.
+#' @param bounds [\code{numeric(2)}]\cr
+#'   The value (lower, upper) the estimated standard error is multiplied by to estimate the bound on a
+#'   confidence region for a partial dependence. Ignored if \code{predict.type != "se"} for the learner.
+#'   Default is the 2.5 and 97.5 quantiles (-1.96, 1.96) of the Gaussian distribution.
+#' @param resample [\code{character(1)}]\cr
+#'   Defines how the prediction grid for each feature is created. If \dQuote{bootstrap} then
+#'   values are sampled with replacement from the training data. If \dQuote{subsample} then
+#'   values are sampled without replacement from the training data. If \dQuote{none} an evenly spaced
+#'   grid between either the empirical minimum and maximum, or the minimum and maximum defined by
+#'   \code{fmin} and \code{fmax}, is created.
+#'   Default is \dQuote{none}.
+#' @param fmin [\code{numeric}]\cr
+#'   The minimum value that each element of \code{features} can take.
+#'   This argument is only applicable if \code{resample = NULL} and when the empirical minimum is higher
+#'   than the theoretical minimum for a given feature. This only applies to numeric features and a
+#'   \code{NA} should be inserted into the vector if the corresponding feature is a factor.
+#'   Default is the empirical minimum of each numeric feature and NA for factor features.
+#' @param fmax [\code{numeric}]\cr
+#'   The maximum value that each element of \code{features} can take.
+#'   This argument is only applicable if \code{resample = "none"} and when the empirical maximum is lower
+#'   than the theoretical maximum for a given feature. This only applies to numeric features and a
+#'   \code{NA} should be inserted into the vector if the corresponding feature is a factor.
+#'   Default is the empirical maximum of each numeric feature and NA for factor features.
+#' @param gridsize [\code{integer(1)}]\cr
+#'   The length of the prediction grid created for each feature.
+#'   If \code{resample = "bootstrap"} or \code{resample = "subsample"} then this defines
+#'   the number of (possibly non-unique) values resampled. If \code{resample = NULL} it defines the
+#'   length of the evenly spaced grid created. Default 10.
+#' @param ... additional arguments to be passed to \code{\link{predict}}.
+#' @return [\code{FunctionalANOVAData}]. A named list, which contains the computed effects of the specified
+#'   depth amongst the features.
+#'
+#' Object members:
+#'   \item{data}{[\code{data.frame}]\cr
+#'     Has columns for the prediction: one column for regression and an additional two if bounds are used.
+#'     The \dQuote{effect} column specifies which features the prediction corresponds to.}
+#'   \item{task.desc}{[\code{\link{TaskDesc}}]\cr
+#'     Task description.}
+#'   \item{target}{The target feature for regression.}
+#'   \item{features}{[\code{character}]\cr
+#'     Features argument input.}
+#'   \item{interaction}{[\code{logical(1)}]\cr
+#'     Whether or not the \code{depth} is greater than 1.}
+#' @references
+#' Giles Hooker, \dQuote{Discovering additive structure in black box functions.} Proceedings of the 10th ACM SIGKDD international conference on Knowledge discovery and data mining (2004): 575-580.
+#' @examples
+#' fit = train("regr.rpart", bh.task)
+#' fa = generateFunctionalANOVAData(fit, bh.task, c("lstat", "crim"), depth = 2L)
+#' plotPartialDependence(fa)
+#' @export
+generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = mean,
+                                       bounds = c(qnorm(.025), qnorm(.975)),
+                                       resample = "none", fmin, fmax, gridsize = 10L) {
+  assertClass(obj, "WrappedModel")
+  if (!inherits(input, c("Task", "data.frame")))
+    stop("input must be a Task or a data.frame!")
+  if (inherits(input, "Task")) {
+    data = getTaskData(input)
+    td = input$task.desc
+  } else {
+    data = input
+    td = obj$task.desc
+    assertDataFrame(data, col.names = "unique", min.rows = 1L, min.cols = length(obj$features) + length(td$target))
+    assertSetEqual(colnames(data), c(obj$features, td$target), ordered = FALSE)
+  }
+  
+  if (!td$type == "regr")
+    stop("only regression tasks are permitted")
+  excluded = colnames(data)
+  excluded = excluded[!excluded %in% c(features, td$target)]
+  assertChoice(resample, c("none", "bootstrap", "subsample"))
+
+  if (missing(fmin))
+    fmin = sapply(features, function(x) ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
+                                               min(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
+  if (missing(fmax))
+    fmax = sapply(features, function(x) ifelse(is.ordered(data[[x]]) | is.numeric(data[[x]]),
+                                               max(data[[x]], na.rm = TRUE), NA), simplify = FALSE)
+  assertList(fmin, len = length(features))
+  if (!all(names(fmin) %in% features))
+    stop("fmin must be a named list with an NA or value corresponding to each feature.")
+  assertList(fmax, len = length(features))
+  if (!all(names(fmax) %in% features))
+    stop("fmax must be a named list with an NA or value corresponding to each feature.")
+  assertCount(gridsize, positive = TRUE)
+  assertIntegerish(depth, lower = 1L, upper = length(features), len = 1L)
+
+  assertFunction(fun)
+  test = fun(1:3)
+  if (!is.numeric(test))
+    stop("fun argument must return a numeric vector")
+  if (!(length(test) %in% c(1L, 3L)))
+    stop("function argument must return a numeric vector of length 1 or 3.")
+
+  assertNumeric(bounds, len = 2L)
+  assertNumber(bounds[1], upper = 0)
+  assertNumber(bounds[2], lower = 0)
+
+  ## generate grid
+  fixed = generateFeatureGrid(features, data, resample, gridsize, fmin, fmax)
+
+  ## generate list of effects to evaluate and associate with grid
+  U = unlist(lapply(1:depth, function(x) combn(features, x, simplify = FALSE)), recursive = FALSE)
+  depths = sapply(U, length)
+  
+  effects = sapply(U, function(u) stri_paste(u, collapse = ":"))
+  fixed_grid = lapply(U, function(u) expand.grid(fixed[u]))
+  names(fixed_grid) = effects
+
+  type = td$type
+  target = td$target
+
+  ## generate each effect
+  args = list(obj = obj, data = data, fun = fun, td = td, bounds = bounds)
+  pd = lapply(U, function(u) {
+    args$features = u
+    args$rng = fixed_grid[[stri_paste(u, collapse = ":")]]
+    out = parallelMap(doPartialDependenceIteration, i = seq_len(nrow(args$rng)), more.args = args)
+    doAggregatePartialDependence(out, td, target, u, args$rng)
+  })
+  names(pd) = effects
+
+  if (length(test) == 3L | obj$learner$predict.type == "se")
+    target = c("upper", "lower", target)
+
+  ## remove lower order effects
+  f = lapply(U, function(u) {
+    hoe = pd[[stri_paste(u, collapse = ":")]]
+    if (length(u) > 1) {
+      sub = combn(u, length(u) - 1, simplify = FALSE)
+      loe = lapply(pd[unlist(sub)], function(x) {
+        to_match = colnames(x)[!(colnames(x) %in% target)]
+        out = merge(x, hoe[, to_match, drop = FALSE], by = to_match)
+        out[, colnames(out) %in% target]
+      })
+      hoe[, target] = hoe[, target] - Reduce('+', loe)
+    }
+    hoe
+  })
+  names(f) = effects
+  makeS3Obj(c("FunctionalANOVAData", "PartialDependenceData"),
+            data = ldply(f[which(depths == depth)], .id = "effect"),
+            task.desc = td,
+            target = target[!target %in% c("upper", "lower")],
+            features = features,
+            interaction = depth > 1L,
+            derivative = FALSE,
+            individual = FALSE,
+            center = FALSE)
+}
+
+#' @export
+print.FunctionalANOVAData = function(x, ...) {
+  catf("FunctionalANOVAData")
+  catf("Task: %s", x$task.desc$id)
+  catf("Features: %s", stri_paste(x$features, collapse = ", "))
+  catf("Target: %s", stri_paste(x$target, collapse = ", "))
+  catf("Interaction Depth: %s", x$depth)
+  catf("Effects Computed: %s", stri_paste(levels(x$data$effect), collapse = ", "))
+  print(head(x$data))
+}
 
 doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individual, ...) {
   if (!individual) {
@@ -463,9 +647,8 @@ print.PartialDependenceData = function(x, ...) {
 #'   Default is \code{NULL}.
 #' @template ret_gg2
 #' @export
-
 plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nrow = NULL,
-  facet.wrap.ncol = NULL,p = 1, data = NULL) {
+  facet.wrap.ncol = NULL, p = 1, data = NULL) {
 
   assertClass(obj, "PartialDependenceData")
   assertChoice(geom, c("tile", "line"))
@@ -479,6 +662,11 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
     feat_classes = sapply(obj$data, class)
     if (!obj$interaction)
       stop("obj argument created by generatePartialDependenceData was called with interaction = FALSE!")
+  }
+
+  if ("FunctionalANOVAData" %in% class(obj)) {
+    if (length(unique(obj$data$effect)) > 1L & obj$interaction)
+      stop("Cannot plot multiple ANOVA effects of depth > 1.")
   }
 
   if (!is.null(data)) {

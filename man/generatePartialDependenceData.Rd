@@ -158,6 +158,7 @@ Friedman, Jerome. \dQuote{Greedy Function Approximation: A Gradient Boosting Mac
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
   \code{\link{generateFilterValuesData}},
+  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generateThreshVsPerfData}},
   \code{\link{getFilterValues}}

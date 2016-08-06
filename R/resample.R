@@ -49,6 +49,9 @@
 #' @template arg_showinfo
 #' @return [\code{\link{ResampleResult}}].
 #' @family resample
+#' @note If you would like to include results from the training data set, make
+#' sure to appropriately adjust the resampling strategy and the aggregation for
+#' the measure. See example code below.
 #' @export
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
@@ -57,6 +60,12 @@
 #' print(r$aggr)
 #' print(r$measures.test)
 #' print(r$pred)
+#'
+#' # include the training set performance as well
+#' rdesc = makeResampleDesc("CV", iters = 2, predict = "both")
+#' r = resample(makeLearner("classif.qda"), task, rdesc,
+#'   measures = list(mmce, setAggregation(mmce, train.mean)))
+#' print(r$aggr)
 resample = function(learner, task, resampling, measures, weights = NULL, models = FALSE,
   extract, keep.pred = TRUE, ..., show.info = getMlrOption("show.info")) {
 
@@ -124,14 +133,18 @@ doResampleIteration = function(learner, task, rin, i, measures, weights, model, 
   pp = rin$desc$predict
   if (pp == "train") {
     pred.train = predict(m, task, subset = train.i)
+    if (!is.na(pred.train$error)) err.msgs[2L] = pred.train$error
     ms.train = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
   } else if (pp == "test") {
     pred.test = predict(m, task, subset = test.i)
+    if (!is.na(pred.test$error)) err.msgs[2L] = pred.test$error
     ms.test = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
   } else { # "both"
     pred.train = predict(m, task, subset = train.i)
+    if (!is.na(pred.train$error)) err.msgs[2L] = pred.train$error
     ms.train = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.train, measures = pm))
     pred.test = predict(m, task, subset = test.i)
+    if (!is.na(pred.test$error)) err.msgs[2L] = paste(err.msgs[2L], pred.test$error)
     ms.test = vnapply(measures, function(pm) performance(task = task, model = m, pred = pred.test, measures = pm))
   }
   ex = extract(m)

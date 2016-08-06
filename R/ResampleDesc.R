@@ -76,7 +76,7 @@
 #' # Holdout a.k.a. test sample estimation
 #' makeResampleDesc("Holdout")
 makeResampleDesc = function(method, predict = "test", ..., stratify = FALSE, stratify.cols = NULL) {
-  assertChoice(method, choices = c("DPS", "Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap"))
+  assertChoice(method, choices = c("Holdout", "CV", "LOO",  "RepCV", "Subsample", "Bootstrap"))
   assertChoice(predict, choices = c("train", "test", "both"))
   assertFlag(stratify)
   if (stratify && method == "LOO")
@@ -109,13 +109,6 @@ print.ResampleDesc = function(x, ...) {
 # the methods cannot be directly exported like this!
 # FIXME: the code style is not so good here, see issue 187.
 ##############################################################################################
-makeResampleDescDPS = function(iters = 8L) {
-  iters = asCount(iters, positive = TRUE)
-  k = log2(iters)
-  if (as.integer(k) != k)
-    stopf("'iters' must be a power of 2, but it is %i!", iters)
-  makeResampleDescInternal("density preserving sampling", iters = iters)
-}
 
 makeResampleDescHoldout = function(iters, split = 2/3) {
   assertNumber(split, lower = 0, upper = 1)
