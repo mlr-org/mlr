@@ -123,3 +123,29 @@ test_that("ImputeWrapper", {
   expect_output(print(mm), "Model")
   expect_is(mm, "WrappedModel")
 })
+
+test_that("Impute works on non missing data", { # we had issues here: 848,893
+  data = data.frame(a = c(1,1,2), b = 1:3)
+  impute.methods = list(
+    imputeConstant(0),
+    imputeMedian(),
+    imputeMean(),
+    imputeMode(),
+    imputeMin(),
+    imputeMax(),
+    imputeUniform(),
+    imputeNormal(),
+    imputeHist(),
+    imputeLearner(learner = makeLearner("regr.fnn"))
+  )
+  for (impute.method in impute.methods) {
+    imputed = impute(data, cols = list(a=impute.method))$data
+    expect_equal(data, imputed)
+  }
+  # test it in resampling
+  dat = data.frame(y = rnorm(10), a = c(NA, rnorm(9)), b = rnorm(10))
+  task = makeRegrTask(data = dat, target = "y")
+  implrn = imputeLearner(makeLearner("regr.rpart"))
+  lrn = makeImputeWrapper(makeLearner("regr.lm"), cols = list(a = implrn))
+  holdout(lrn, task)
+})
