@@ -20,24 +20,14 @@ makeRLearner.regr.GPfit = function(){
     short.name = "GPfit",
     note = "(1) As the optimization routine assumes that the inputs are scaled to the unit hypercube [0,1]^d, 
             the input gets scaled for each variable by default. If this is not wanted, scale = FALSE has
-            to be set. (2) As in GPfit documentation, if the correlation kernal or type is set to be matern, 
-            we name this k to be called matern_nu_k"
+            to be set. (2) We replace the GPfit parameter 'corr = list(type='exponential',power=1.95)' to be seperate 
+            parameters 'type' and 'power', in the case of  corr = list(type='matern', nu = 0.5), the seperate parameters
+            are 'type' and 'matern_nu_k=0', and nu is computed by 'nu=(2*matern_nu_k+1)/2=0.5' 
+            "
   )
 }
 #' @export
 trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights = NULL, scale, type, matern_nu_k, power, ...) {
-  # tri_dots = list(...)
-  # trans.vec = c("type", "matern_nu_k", "power")
-  # dots = dropNamed(tri_dots, trans.vec)
-  # print(dots)
-  # if (tri_dots$type == "exponential") {
-  #   corr = list(type="exponential", power = tri_dots$"power")
-  # } else {
-  #   k = tri_dots$matern_nu_k
-  #   corr = list(type="matern",nu = k+0.5 )
-  # }
-  # args = c(dots, list(corr))
-  
   d = getTaskData(.task, .subset, target.extra = TRUE)
   low = apply(d$data, 2, min)
   high = apply(d$data, 2, max)
@@ -49,10 +39,6 @@ trainLearner.regr.GPfit = function(.learner, .task, .subset, .weights = NULL, sc
     mlist = list(scaled = FALSE, not.const = not.const)
   }
   res = GPfit::GP_fit(d$data[, not.const], d$target, corr = list(type = type, power = power, nu = matern_nu_k+0.5 ), ...)
-  # h.GPfit = function(...) {
-  #   GPfit::GP_fit(X = d$data[, not.const], Y = d$target, ...)
-  # }
-  # res = do.call(h.GPfit, args)
   res = attachTrainingInfo(res, mlist)
   return(res)
 }
@@ -65,7 +51,6 @@ predictLearner.regr.GPfit = function(.learner, .model, .newdata, ...) {
     }
   } 
   rst=predict(.model$learner.model, xnew = .newdata[, tr.info$not.const])
-  
   se = (.learner$predict.type != "response")
   if (!se)
     return(rst$Y_hat)
