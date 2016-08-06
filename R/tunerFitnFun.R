@@ -43,7 +43,7 @@ tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt
 tunerFitnFunVectorized = function(xs, learner, task, resampling, measures, par.set, ctrl,
   opt.path, show.info, convertx, remove.nas) {
 
-  xs = convertx(xs)
+  xs = lapply(xs, convertx)
   dob = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
   res.list = evalOptimizationStatesTune(learner, task, resampling, measures, par.set, ctrl,
     opt.path, show.info, xs, dobs = dob, eols = NA, remove.nas = remove.nas)
