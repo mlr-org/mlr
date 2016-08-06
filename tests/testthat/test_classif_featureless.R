@@ -27,22 +27,8 @@ test_that("classif_featureless", {
   p2 = factor(rep(lev2, 60), levels = levs)  #dim(multiclass.df)[1] = 150
   
   
-  testSimple(
-    t.name = "classif.featureless",
-    df = multiclass.df,
-    target = multiclass.target,
-    train.inds = multiclass.train.inds,
-    old.predicts = p1,
-    parset = list(measure = mmce)
-  )
+  testSimple(t.name = "classif.featureless", df = multiclass.df, target = multiclass.target, train.inds = multiclass.train.inds, old.predicts = p1, parset = list(measure = mmce))
   
-  testSimple(
-    t.name = "classif.featureless",
-    df = multiclass.df,
-    target = multiclass.target,
-    train.inds = multiclass.train.inds,
-    old.predicts = p2,
-    parset = list(measure = mymeas)
-  )
+  testSimple(t.name = "classif.featureless", df = multiclass.df, target = multiclass.target, train.inds = multiclass.train.inds, old.predicts = p2, parset = list(measure = mymeas))
   
 })

@@ -4,11 +4,7 @@ makeRLearner.classif.featureless = function() {
     cl = "classif.featureless",
     package = "mlr",
     par.set = makeParamSet(
-      makeUntypedLearnerParam(
-        id = "measure",
-        default = mmce,
-        tunable = TRUE
-      )
+      makeUntypedLearnerParam(id = "measure", default = mmce, tunable = TRUE)
     ),
     par.vals = list(measure = mmce),
     properties = c("twoclass", "multiclass", "numerics"),
@@ -19,12 +15,7 @@ makeRLearner.classif.featureless = function() {
 
 
 #' @export
-trainLearner.classif.featureless = function(.learner,
-                                            .task,
-                                            .subset,
-                                            .weights = NULL,
-                                            measure = mmce,
-                                            ...) {
+trainLearner.classif.featureless = function(.learner, .task, .subset, .weights = NULL, measure = mmce,...) {
   levs = getTaskClassLevels(.task)
   y = getTaskTargets(.task)
   n = length(y)
@@ -41,5 +32,5 @@ trainLearner.classif.featureless = function(.learner,
 
 #' @export
 predictLearner.classif.featureless = function(.learner, .model, .newdata, ...) {
-  lev = .model$learner.model
+  .model$learner.model
 }
