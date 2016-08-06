@@ -283,7 +283,9 @@ imputeLearner = function(learner, features = NULL) {
         if (col %nin% features)
           features = c(col, features)
       }
-      ind = !is.na(data[[col]]) # we train only on data where the column is not NA
+      # Remove all observations with missing values in the target for training. This is required
+      # because it should not be possible to have tasks with missing values in the target.
+      ind = !is.na(data[[col]]) 
       task = constructor("impute", data = subset(data[ind, ], select = features), target = col,
         check.data = FALSE, fixup.data = "quiet")
       list(model = train(learner, subsetTask(task, features = features)), features = features)
