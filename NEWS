@@ -12,7 +12,8 @@ mlr_2.10:
 
 - learners - general
 -- regr.GPfit: some more params for correlation kernel
--- classif.xgboost, regr.xgboost: clarified param 'missing' and set to NA by default
+-- classif.xgboost, regr.xgboost: can now properly handle NAs (property was missing)
+   and param 'missing' set to NA by default
 
 - learners - new
 -- multilabel.cforest
