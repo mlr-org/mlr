@@ -19,6 +19,8 @@
 #' @param relative [\code{logical(1)}]\cr
 #'   If \code{TRUE} rows are normalized to show relative frequencies.
 #'   Default is \code{FALSE}.
+#' @param sums {\code{logical(1)}}\cr
+#'   If \code{TRUE} add absolut or relative number of observations in each group.
 #' @return [\code{matrix}]. A confusion matrix.
 #' @export
 #' @seealso \code{\link{predict.WrappedModel}}
@@ -35,34 +37,42 @@
 #' # now after cross-validation
 #' r = crossval("classif.lda", iris.task, iters = 2L)
 #' print(getConfMatrix(r$pred))
-getConfMatrix = function(pred, relative = FALSE) {
+
+getConfMatrix = function(pred, relative = FALSE, sums = FALSE) {
   checkPrediction(pred, task.type = "classif", check.truth = TRUE, no.na = TRUE)
   assertFlag(relative)
-  cls = pred$task.desc$class.levels
+  cls = getTaskClassLevels(pred$task.desc)
   k = length(cls)
-  resp = pred$data$response
-  truth = pred$data$truth
+  n = getTaskSize(pred$task.desc)
+  resp = getPredictionResponse(pred)
+  truth = getPredictionTruth(pred)
   tab = table(truth, resp)
   mt = tab * (matrix(1, ncol = k, nrow = k) - diag(1, k, k))
-  rowsum = rowSums(mt)
-  colsum = colSums(mt)
-  result = rbind(cbind(tab, rowsum), c(colsum, sum(colsum)))
-  dimnames(result) = list(true = c(cls, "-SUM-"), predicted = c(cls, "-SUM-"))
+  row.err = rowSums(mt)
+  col.err = colSums(mt)
+  result = rbind(cbind(tab, row.err), c(col.err, sum(col.err)))
+  dimnames(result) = list(true = c(cls, "-err.-"), predicted = c(cls, "-err.-"))
+  
   if (relative) {
-    total = sum(result[1:k, 1:k])
-    k1 = k + 1
-    result[k1, 1:k] = if (result[k1, k1] != 0)
-      result[k1, 1:k] / result[k1, k1]
-    else
-      0
     rownorm = function(r, len) {
       if (any(r[1:len] > 0))
         r / sum(r[1:len])
       else
         rep(0, len + 1)
     }
+    k1 = k + 1
     result[1:k, ] = t(apply(result[1:k, ], 1, rownorm, len = k))
-    result[k1, k1] = result[k1, k1] / total
+    #colsums of offdiagonal elements
+    result[k1, 1:k] = colSums(result[1:k, 1:k]) - diag(result[1:k, 1:k]) 
+    result[k1, k1] = result[k1, k1] / n
+  }
+  
+  if (sums) {
+    rowsum = rowSums(tab)
+    colsum = colSums(tab)
+    result = rbind(cbind(result, c(rowsum, NA)), c(colsum, NA, n))
+    colnames(result)[k + 2] = "-N-"
+    rownames(result)[k + 2] = "-N-"
   }
   return(result)
 }

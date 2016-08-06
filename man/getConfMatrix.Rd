@@ -4,7 +4,7 @@
 \alias{getConfMatrix}
 \title{Confusion matrix.}
 \usage{
-getConfMatrix(pred, relative = FALSE)
+getConfMatrix(pred, relative = FALSE, sums = FALSE)
 }
 \arguments{
 \item{pred}{[\code{\link{Prediction}}]\cr
@@ -13,6 +13,9 @@ Prediction object.}
 \item{relative}{[\code{logical(1)}]\cr
 If \code{TRUE} rows are normalized to show relative frequencies.
 Default is \code{FALSE}.}
+
+\item{sums}{{\code{logical(1)}}\cr
+If \code{TRUE} add absolut or relative number of observations in each group.}
 }
 \value{
 [\code{matrix}]. A confusion matrix.
