@@ -26,6 +26,6 @@ test_that("getHyperPars", {
   lrn = makeLearner("classif.xgboost")
   expect_true(setequal(getHyperPars(lrn), list(nrounds = 1, missing = NA)))
   
-  expect_output(print(getHyperPars(lrn)), "NA")
+  expect_output(print(lrn), "missing=NA")
   
 })
