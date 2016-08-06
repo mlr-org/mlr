@@ -123,7 +123,7 @@ test_that("predict.threshold", {
 
   # now with wrapper
   lrn1 = makeLearner("classif.lda")
-  lrn2 = makeFilterWrapper(lrn1, fw.method = "chi.squared", fw.perc = 0.1)
+  lrn2 = makeFilterWrapper(lrn1, fw.method = "anova.test", fw.perc = 0.1)
   lrn2 = setPredictType(lrn2, "prob")
   lrn2 = setPredictThreshold(lrn2, 0)
   r = holdout(lrn2, binaryclass.task)
