@@ -45,7 +45,7 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
 # helper functions testing learners that claim to handle missings, factors,...
 # It also tests if the learner can predict probabilities or standard errors.
 # When testing probabilities an additional test if there are missing prediction
-# probabilities and if there as many probability predictions as there are 
+# probabilities and if there as many probability predictions as there are
 # observations in the task.
 # When testing standard errors an additional test if there are as many predictions
 # as there are observations in the task is being performed.
@@ -55,23 +55,41 @@ testThatLearnerRespectsWeights = function(lrn, task, train.inds, test.inds, weig
 # predict standard errors.)
 
 testThatLearnerCanTrainPredict = function(lrn, task, hyperpars, pred.type = "response") {
-  
+  info = lrn$id
   if (lrn$id %in% names(hyperpars))
     lrn = setHyperPars(lrn, par.vals = hyperpars[[lrn$id]])
   
   lrn = setPredictType(lrn, pred.type)
   
-  expect_output(print(lrn), lrn$id)
+  expect_output(info = info, print(lrn), lrn$id)
   m = train(lrn, task)
   p = predict(m, task)
-  expect_true(!is.na(performance(pred = p, task = task)))
+  expect_true(info = info, !is.na(performance(pred = p, task = task)))
   
-  if (pred.type == "se")
-    expect_equal(length(p$data$se), getTaskSize(task))
+  # check that se works and is > 0
+  if (pred.type == "se") {
+    s = p$data$se
+    expect_numeric(info = info, s, lower = 0, finite = TRUE, any.missing = FALSE, len = getTaskSize(task))
+  }
   
+  # check that probs works, and are in [0,1] and sum to 1
   if (pred.type == "prob") {
-    expect_false(anyNA(getPredictionProbabilities(p)))
-    expect_equal(NROW(getPredictionProbabilities(p)), getTaskSize(task))
+    if (inherits(lrn, "RLearnerCluster")) {
+      # for unsupervised tasks we don't have any class labels
+      probdf = getPredictionProbabilities(p)
+      cls = colnames(probdf)
+    } else {
+      cls = getTaskClassLevels(task)
+      probdf = getPredictionProbabilities(p, cl = cls)
+    }
+    expect_named(probdf, cls)
+    expect_data_frame(info = info, probdf, nrows = getTaskSize(task), ncols = length(cls),
+      types = "numeric", any.missing = FALSE)
+    expect_true(info = info, all(probdf >= 0 && probdf <= 1))
+    
+    # FIXME: the "sum to 1" apparently does not work for all learners?
+    # I can see differences up to 0.1 for some cases, reported in issue #1017
+    # expect_equal(info = info, unname(rowSums(probdf)), rep(1, NROW(probdf)), use.names = FALSE)
   }
 }
 
@@ -95,8 +113,8 @@ testThatLearnerHandlesFactors = function(lrn, task, hyperpars) {
 
 
 # Tests that learner handles ordered factors
-# Data of task is manipulated such that the first mentioned feature is changed 
-# to a ordered factor with a < b < c. 
+# Data of task is manipulated such that the first mentioned feature is changed
+# to a ordered factor with a < b < c.
 # A new task is being generated based on the manipulated data with changeData().
 # Then testThatLearnerCanTrainPredict() is being called to check whether learner
 # can be trained, can predict and produces reasonable performance output.
@@ -129,4 +147,3 @@ testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
 
   testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
 }
-
