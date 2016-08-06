@@ -3,6 +3,8 @@ mlr_2.10:
 -- generateFilterValuesData: fixed a bug wrt feature ordering
 -- bugfix: if a learner hyperpar was set to value "NA" this was not displayed in
    printer
+-- makeLearner, setHyperPars: if you mistype a hyperpar name, mlr uses
+   fuzzy matching to suggest the 3 closest names in the message
 
 - functions - new
 
