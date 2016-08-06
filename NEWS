@@ -1,6 +1,8 @@
 mlr_2.10:
 - functions - general
 -- generateFilterValuesData: fixed a bug wrt feature ordering
+-- bugfix: if a learner hyperpar was set to value "NA" this was not displayed in
+   printer
 
 - functions - new
 
@@ -10,6 +12,7 @@ mlr_2.10:
 
 - learners - general
 -- regr.GPfit: some more params for correlation kernel
+-- classif.xgboost, regr.xgboost: clarified param 'missing' and set to NA by default
 
 - learners - new
 -- multilabel.cforest
