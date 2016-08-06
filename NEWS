@@ -9,6 +9,7 @@ mlr_2.10:
 - functions - renamed
 
 - learners - general
+-- regr.GPfit: some more params for correlation kernel
 
 - learners - new
 -- multilabel.cforest
