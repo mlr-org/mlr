@@ -6,7 +6,7 @@ test_that("regr_featureless", {
   {
     y = getTaskTargets(.task)
     n = length(y)
-    f <- function (a) {
+    f = function (a) {
       arep = rep(a, n)
       data = data.frame(truth = y, response = arep)
       desc = makeS3Obj("TaskDesc")

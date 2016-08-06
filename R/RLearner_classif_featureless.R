@@ -25,8 +25,6 @@ trainLearner.classif.featureless = function(.learner,
                                             .weights = NULL,
                                             measure = mmce,
                                             ...) {
-  #z = getTaskData(.task, .subset, target.extra = TRUE)
-  #z$target
   levs = getTaskClassLevels(.task)
   y = getTaskTargets(.task)
   n = length(y)
