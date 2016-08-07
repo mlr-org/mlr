@@ -1,5 +1,10 @@
 mlr_2.10:
 - functions - general
+-- generateFilterValuesData: fixed a bug wrt feature ordering
+-- bugfix: if a learner hyperpar was set to value "NA" this was not displayed in
+   printer
+-- makeLearner, setHyperPars: if you mistype a hyperpar name, mlr uses
+   fuzzy matching to suggest the 3 closest names in the message
 
 - functions - new
 
@@ -8,8 +13,12 @@ mlr_2.10:
 - functions - renamed
 
 - learners - general
+-- regr.GPfit: some more params for correlation kernel
+-- classif.xgboost, regr.xgboost: can now properly handle NAs (property was missing)
+   and param 'missing' set to NA by default
 
 - learners - new
+-- multilabel.cforest
 
 - learners - removed
 

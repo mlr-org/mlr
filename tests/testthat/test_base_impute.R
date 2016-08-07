@@ -34,6 +34,17 @@ test_that("Impute data frame", {
   expect_equal(imputed$x[6], 0.5)
   expect_equal(imputed$x[6], 0.5)
   expect_true(imputed$y[6] >= 0 && imputed$y[6] <= 5)
+  
+  # learner
+  # we specifically want to check functionality with a learner that does not 
+  # support NAs. We don't check the data again when we create the task to train and the 
+  # observations we want to impute have to be removed in training.
+  lrn = makeLearner("classif.fnn")
+  expect_false(hasLearnerProperties(lrn, "missings")) 
+  data2 = data[1:5, 1:3]
+  data2[1,1] = NA
+  imputed = impute(data2, cols = list(f = imputeLearner(lrn)))$data
+  expect_true(imputed$f[1] == "a")
 
   # constant replacements
   imputed = impute(data, target = target, cols = list(f = "xxx", x = 999, y = 1000))$data
@@ -122,4 +133,30 @@ test_that("ImputeWrapper", {
   mm = getLearnerModel(m, more.unwrap = FALSE)
   expect_output(print(mm), "Model")
   expect_is(mm, "WrappedModel")
+})
+
+test_that("Impute works on non missing data", { # we had issues here: 848,893
+  data = data.frame(a = c(1,1,2), b = 1:3)
+  impute.methods = list(
+    imputeConstant(0),
+    imputeMedian(),
+    imputeMean(),
+    imputeMode(),
+    imputeMin(),
+    imputeMax(),
+    imputeUniform(),
+    imputeNormal(),
+    imputeHist(),
+    imputeLearner(learner = makeLearner("regr.fnn"))
+  )
+  for (impute.method in impute.methods) {
+    imputed = impute(data, cols = list(a=impute.method))$data
+    expect_equal(data, imputed)
+  }
+  # test it in resampling
+  dat = data.frame(y = rnorm(10), a = c(NA, rnorm(9)), b = rnorm(10))
+  task = makeRegrTask(data = dat, target = "y")
+  implrn = imputeLearner(makeLearner("regr.rpart"))
+  lrn = makeImputeWrapper(makeLearner("regr.lm"), cols = list(a = implrn))
+  holdout(lrn, task)
 })

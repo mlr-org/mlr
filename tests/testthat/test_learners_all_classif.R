@@ -28,7 +28,7 @@ test_that("learners work: classif ", {
   # binary classif with factors
   lrns = mylist("classif", properties = "factors", create = TRUE)
   lapply(lrns, testThatLearnerHandlesFactors, task = task, hyperpars = hyperpars)
-  
+
   # binary classif with ordered factors
   lrns = mylist("classif", properties = "ordered", create = TRUE)
   lapply(lrns, testThatLearnerHandlesOrderedFactors, task = task, hyperpars = hyperpars)
@@ -48,7 +48,6 @@ test_that("learners work: classif ", {
   # classif with missing
   lrns = mylist("classif", properties = "missings", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars)
-  
 })
 
 

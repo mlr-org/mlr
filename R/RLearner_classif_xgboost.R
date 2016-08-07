@@ -22,7 +22,7 @@ makeRLearner.classif.xgboost = function() {
       makeUntypedLearnerParam(id = "eval_metric", default = "error"),
       makeNumericLearnerParam(id = "base_score", default = 0.5),
 
-      makeNumericLearnerParam(id = "missing", default = 0),
+      makeNumericLearnerParam(id = "missing", default = 0, tunable = FALSE, when = "both"),
       makeIntegerLearnerParam(id = "nthread", default = 16,lower = 1),
       makeIntegerLearnerParam(id = "nrounds", default = 1, lower = 1),
       # FIXME nrounds seems to have no default in xgboost(), if it has 1, par.vals is redundant
@@ -32,11 +32,11 @@ makeRLearner.classif.xgboost = function() {
       makeIntegerLearnerParam(id = "early.stop.round", default = 1, lower = 1),
       makeLogicalLearnerParam(id = "maximize", default = TRUE)
     ),
-    par.vals = list(nrounds = 1),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights"),
+    par.vals = list(nrounds = 1, missing = NA_real_),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "prob", "weights", "missings"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
-    note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` by default. `num_class` is set internally, so do not set this manually."
+    note = "All settings are passed directly, rather than through `xgboost`'s `params` argument. `nrounds` has been set to `1` by default. `num_class` is set internally, so do not set this manually. `missing` is set by default to NA, as this is how mlr expects missing values to be encoded."
   )
 }
 
