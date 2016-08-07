@@ -3,9 +3,8 @@ makeRLearner.classif.featureless = function() {
   makeRLearnerClassif(
     cl = "classif.featureless",
     package = "mlr",
-    par.set = makeParamSet(
-      makeUntypedLearnerParam(id = "measure", default = mmce, tunable = TRUE)
-    ),
+    par.set = makeParamSet(addClasses(makeUntypedLearnerParam(id = "measure", default = mmce, tunable = TRUE), 
+      "MeasureParam")),
     par.vals = list(measure = mmce),
     properties = c("twoclass", "multiclass", "numerics"),
     name = "Featureless classifier",
@@ -33,7 +32,6 @@ trainLearner.classif.featureless = function(.learner, .task, .subset, .weights =
     arep = factor(rep(a, n), levels = levs)
     data = data.frame(truth = y, response = arep)
     desc = makeS3Obj("TaskDesc", class.levels = levs)
-    #HERE IS THE ERROR
     p = makeS3Obj("Prediction", data = data, task.desc = desc)
     measure$fun(pred = p, extra.args = measure$extra.args)
   })
@@ -46,5 +44,5 @@ trainLearner.classif.featureless = function(.learner, .task, .subset, .weights =
 
 #' @export
 predictLearner.classif.featureless = function(.learner, .model, .newdata, ...) {
-  .model$learner.model
+  rep(.model$learner.model, times = nrow(.newdata))
 }

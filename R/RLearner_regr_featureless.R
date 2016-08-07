@@ -3,7 +3,8 @@ makeRLearner.regr.featureless = function() {
   makeRLearnerRegr(
     cl = "regr.featureless",
     package = "mlr",
-    par.set = makeParamSet(makeUntypedLearnerParam(id = "measure", default = mse, tunable = TRUE)),
+    par.set = makeParamSet(par.set = makeParamSet(addClasses(makeUntypedLearnerParam(id = "measure", 
+      default = mse, tunable = TRUE)), "MeasureParam")),
     par.vals = list(measure = mse),
     properties = c("numerics"),
     name = "Featureless regressor",
@@ -36,6 +37,5 @@ trainLearner.regr.featureless = function(.learner, .task, .subset, .weights = NU
 
 #' @export
 predictLearner.regr.featureless = function(.learner, .model, .newdata, ...) {
-  .model$learner.model
+  rep(.model$learner.model, times = nrow(.newdata))
 }
-

@@ -35,3 +35,9 @@ getHyperParsString = function(learner) {
   stri_paste(ns, s, sep = "=", collapse = ",")
 }
 
+# This is required for featureless learnerns. A measure is used as a parameter and we have to print
+# the id instead of the name of the object
+paramValueToString.MeasureParam = function(par, x, show.missing.value = FALSE, num.format = "%.3g") {
+  as.character(x$id)
+}
+

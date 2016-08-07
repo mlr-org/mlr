@@ -31,11 +31,16 @@ test_that("classif_featureless", {
   testSimple(t.name = "classif.featureless", df = multiclass.df, target = multiclass.target, train.inds = multiclass.train.inds, old.predicts = p1, parset = list(measure = mmce))
   testSimple(t.name = "classif.featureless", df = multiclass.df, target = multiclass.target, train.inds = multiclass.train.inds, old.predicts = p2, parset = list(measure = mymeas))
   
-  
+  # test that bad measures cannot be used
   expect_error(train(makeLearner("classif.featureless", measure = auc), iris.task),
     "Multiclass problems cannot be used for measure auc!")
   expect_error(train(makeLearner("classif.featureless", measure = timetrain), binaryclass.task),
     "requires a fitted model")
   expect_error(train(makeLearner("classif.featureless", measure = mse), binaryclass.task),
     "Measure mse does not support task type classif!")
+  
+  # test that printers work correctly and print the measure id and not <measure>
+  lrn = makeLearner("classif.featureless", measure = auc)
+  expect_output(print(lrn), "auc")
+  expect_output(print(getHyperPars(lrn)), "auc")
 })

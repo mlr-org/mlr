@@ -30,10 +30,15 @@ test_that("regr_featureless", {
   regr.measures[["arsq"]] = NULL
   lapply(regr.measures, test.measure.learner)
   
+  # test that bad measures cannot be used
   expect_error(train(makeLearner("regr.featureless", measure = auc), regr.num.task), 
     "Measure auc does not support task type regr!")
-  
   expect_error(train(makeLearner("regr.featureless", measure = timetrain), regr.num.task), 
     "requires a fitted model")
+  
+  # test that printers work correctly and print the measure id and not <measure>
+  lrn = makeLearner("regr.featureless", measure = mae)
+  expect_output(print(lrn), "mae")
+  expect_output(print(getHyperPars(lrn)), "mae")
   
 })
