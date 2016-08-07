@@ -8,7 +8,7 @@
 tunerFitnFun = function(x, learner, task, resampling, measures, par.set, ctrl,
   opt.path, show.info, convertx, remove.nas) {
 
-  x = convertx(x)
+  x = convertx(x, par.set)
   # transform parameters
   dob = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
   res = evalOptimizationState(learner, task, resampling, measures, par.set, NULL, ctrl,
@@ -43,14 +43,13 @@ tunerSmoofFun = function(learner, task, resampling, measures, par.set, ctrl, opt
 tunerFitnFunVectorized = function(xs, learner, task, resampling, measures, par.set, ctrl,
   opt.path, show.info, convertx, remove.nas) {
 
-  xs = lapply(xs, convertx)
+  xs = convertx(xs, par.set)
   dob = ifelse(getOptPathLength(opt.path) == 0, 1, max(opt.path$env$dob) + 1)
   res.list = evalOptimizationStatesTune(learner, task, resampling, measures, par.set, ctrl,
     opt.path, show.info, xs, dobs = dob, eols = NA, remove.nas = remove.nas)
   ys = extractSubList(res.list, "y")
   # we return a numeric vec of y-values
-  # FIXME: convertYForTuner can return vectors! do not use sapply!
-  sapply(ys, convertYForTuner, measures = measures, ctrl = ctrl)
+  vnapply(ys, convertYForTuner, measures = measures, ctrl = ctrl)
 }
 
 # short helper that imputes illegal values and also negates for maximization problems

@@ -1,6 +1,5 @@
 tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.path, show.info) {
   requirePackages("irace", why = "tuneIrace", default.method = "load")
-  cx = function(x) convertXBooleanStringsToLogical(x, par.set)
   hookRunParallel = function(experiment, hook.run, config = list()) {
     # get our param settings that irace should try
     cands = extractSubList(experiment, "candidate", simplify = FALSE)
@@ -14,7 +13,7 @@ tuneIrace = function(learner, task, resampling, measures, par.set, control, opt.
 
     tunerFitnFunVectorized(cands, learner = learner, task = task, resampling = rin, measures = measures,
       par.set = par.set, ctrl = control, opt.path = opt.path, show.info = show.info,
-      convertx = cx, remove.nas = TRUE)
+      convertx = convertXVectorizedBooleanStringsToLogical, remove.nas = TRUE)
   }
 
   n.instances = control$extra.args$n.instances
