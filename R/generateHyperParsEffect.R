@@ -269,7 +269,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   # if single hyper and multiple measures, 1 graph/multiple colored lines or many graphs/1 line
   # if multiple hypers & single measure, pull from defaults and facet to get graph per hyper
   # if multiple hypers & multiple measures, graph for each hyper/multiple colored lines or column for each measure
-  if (!is.null(hyperpars.effect.data$partial) && 
+  if ((hyperpars.effect.data$partial) && 
       !("iteration" %in% c(x,y,z))) {
     partial = hyperpars.effect.data$partial.data
     # just x, y
