@@ -47,26 +47,27 @@ getConfMatrix = function(pred, relative = FALSE, sums = FALSE) {
   resp = getPredictionResponse(pred)
   truth = getPredictionTruth(pred)
   tab = table(truth, resp)
-  mt = tab * (matrix(1, ncol = k, nrow = k) - diag(1, k, k))
+  # create table for margins, where only the off-diag errs are in
+  mt = tab; diag(mt) = 0
   row.err = rowSums(mt)
   col.err = colSums(mt)
   result = rbind(cbind(tab, row.err), c(col.err, sum(col.err)))
   dimnames(result) = list(true = c(cls, "-err.-"), predicted = c(cls, "-err.-"))
-  
+  js = 1:k # indexes for nonmargin cols
+
   if (relative) {
-    rownorm = function(r, len) {
-      if (any(r[1:len] > 0))
-        r / sum(r[1:len])
+    rownorm = function(r) {
+      if (any(r[js] > 0))
+        r / sum(r[js])
       else
-        rep(0, len + 1)
+        rep(0, k + 1)
     }
-    k1 = k + 1
-    result[1:k, ] = t(apply(result[1:k, ], 1, rownorm, len = k))
+    result[js, ] = t(apply(result[js, ], 1, rownorm))
     #colsums of offdiagonal elements
-    result[k1, 1:k] = colSums(result[1:k, 1:k]) - diag(result[1:k, 1:k]) 
-    result[k1, k1] = result[k1, k1] / n
+    result[k+1, js] = colSums(result[js, js]) - diag(result[js, js])
+    result[k+1, k+1] = result[k+1, k+1] / n
   }
-  
+
   if (sums) {
     rowsum = rowSums(tab)
     colsum = colSums(tab)
