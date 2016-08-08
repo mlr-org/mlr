@@ -19,6 +19,7 @@ test_that("classif_ada", {
 })
 
 test_that("classif_ada passes parameters correctly to rpart.control (#732)", {
-    lrn = makeLearner("classif.ada", minsplit=20, minbucket=20, cp=0.01, maxcompete=4, maxsurrogate=5, usesurrogate=2, surrogatestyle=0, maxdepth=30, xval=10)
-    train(lrn, binaryclass.task)
+    lrn = makeLearner("classif.ada", cp=0.022, loss="exponential")
+    expect_equal(train(lrn, pid.task)$learner.model$model$trees[[1]]$control$cp,
+      0.022)
 })
