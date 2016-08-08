@@ -62,11 +62,11 @@ hasProperties = function(learner, props) {
 
 getSupportedLearnerProperties = function(type = NA_character_) {
   p = list(
-    classif    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "class.weights"),
+    classif    = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass", "class.weights", "oobpreds"),
     multilabel = c("numerics", "factors", "ordered", "missings", "weights", "prob", "oneclass", "twoclass", "multiclass"),
-    regr       = c("numerics", "factors", "ordered", "missings", "weights", "se"),
+    regr       = c("numerics", "factors", "ordered", "missings", "weights", "se", "oobpreds"),
     cluster    = c("numerics", "factors", "ordered", "missings", "weights", "prob"),
-    surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens"),
+    surv       = c("numerics", "factors", "ordered", "missings", "weights", "prob", "lcens", "rcens", "icens", "oobpreds"),
     costsens   = c("numerics", "factors", "ordered", "missings", "weights", "prob", "twoclass", "multiclass")
   )
   if (is.na(type))

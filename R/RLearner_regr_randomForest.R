@@ -85,6 +85,10 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
   }
 }
 
+getOutOfBag.regr.randomForest = function(.learner, .model) {
+  .model$learner.model$predicted
+}
+
 # Computes brute force or noisy bootstrap
 # Set ntree = ntree.for.se for the brute force bootstrap
 # Set ntree.for.se << ntree for the noisy bootstrap (mc bias corrected)

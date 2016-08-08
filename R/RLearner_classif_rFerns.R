@@ -27,3 +27,7 @@ trainLearner.classif.rFerns = function(.learner, .task, .subset, .weights = NULL
 predictLearner.classif.rFerns = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, .newdata, ...)
 }
+
+getOutOfBag.classif.rFerns = function(.learner, .model) {
+  .model$learner.model$oobPreds
+}

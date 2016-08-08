@@ -41,3 +41,7 @@ predictLearner.regr.ranger = function(.learner, .model, .newdata, ...) {
   p = predict(object = .model$learner.model, data = .newdata, ...)
   return(p$predictions)
 }
+
+getOutOfBag.regr.ranger = function(.learner, .model) {
+  .model$learner.model$predictions
+}

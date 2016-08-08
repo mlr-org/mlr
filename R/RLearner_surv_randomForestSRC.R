@@ -59,3 +59,7 @@ trainLearner.surv.randomForestSRC = function(.learner, .task, .subset, .weights 
 predictLearner.surv.randomForestSRC = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, newdata = .newdata, membership = FALSE, ...)$predicted
 }
+
+getOutOfBag.surv.randomForestSRC = function(.learner, .model) {
+  .model$learner.model$predicted.oob
+}

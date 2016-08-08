@@ -50,3 +50,11 @@ predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) 
   type = ifelse(.learner$predict.type=="response", "response", "prob")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }
+
+getOutOfBag.classif.randomForest = function(.learner, .model) {
+  if (.learner$predict.type == "response") {
+    .model$learner.model$predicted
+  } else {
+    predict(.model$learner.model, type = "prob")
+  }
+}
