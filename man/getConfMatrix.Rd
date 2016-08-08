@@ -11,14 +11,15 @@ getConfMatrix(pred, relative = FALSE, sums = FALSE)
 Prediction object.}
 
 \item{relative}{[\code{logical(1)}]\cr
-If \code{TRUE} rows are normalized to show relative frequencies.
-Default is \code{FALSE}.}
+If \code{TRUE} Two additional matricies are calculated. One is normalized by rows and one by
+columns, but we print the result in a compact way.}
 
 \item{sums}{{\code{logical(1)}}\cr
-If \code{TRUE} add absolut or relative number of observations in each group.}
+If \code{TRUE} add absolute number of observations in each group are added to the confusion matrix
+of absolute values.}
 }
 \value{
-[\code{matrix}]. A confusion matrix.
+[\code{confMatrix}]. A confusion matrix.
 }
 \description{
 Calculates confusion matrix for (possibly resampled) prediction.
@@ -27,8 +28,9 @@ Rows indicate true classes, columns predicted classes.
 The marginal elements count the number of classification
 errors for the respective row or column, i.e., the number of errors
 when you condition on the corresponding true (rows) or predicted
-(columns) class. The last element in the margin diagonal
-displays the total amount of errors.
+(columns) class. The last element in the margin diagonal 
+displays the total amount of errors. For the relative confusion matrix we normalize based on rows
+and columns and create two seperate matricies.
 
 Note that for resampling no further aggregation is currently performed.
 All predictions on all test sets are joined to a vector yhat, as are all labels
@@ -43,6 +45,7 @@ test = setdiff(allinds, train)
 mod = train("classif.lda", iris.task, subset = train)
 pred = predict(mod, iris.task, subset = test)
 print(getConfMatrix(pred))
+print(getConfMatrix(pred, sums = TRUE))
 print(getConfMatrix(pred, relative = TRUE))
 
 # now after cross-validation

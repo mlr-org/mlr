@@ -7,8 +7,9 @@
 #' The marginal elements count the number of classification
 #' errors for the respective row or column, i.e., the number of errors
 #' when you condition on the corresponding true (rows) or predicted
-#' (columns) class. The last element in the margin diagonal
-#' displays the total amount of errors.
+#' (columns) class. The last element in the margin diagonal 
+#' displays the total amount of errors. For the relative confusion matrix we normalize based on rows
+#' and columns and create two seperate matricies.
 #'
 #' Note that for resampling no further aggregation is currently performed.
 #' All predictions on all test sets are joined to a vector yhat, as are all labels
@@ -17,11 +18,12 @@
 #'
 #' @template arg_pred
 #' @param relative [\code{logical(1)}]\cr
-#'   If \code{TRUE} rows are normalized to show relative frequencies.
-#'   Default is \code{FALSE}.
+#'   If \code{TRUE} Two additional matricies are calculated. One is normalized by rows and one by
+#'   columns, but we print the result in a compact way.
 #' @param sums {\code{logical(1)}}\cr
-#'   If \code{TRUE} add absolut or relative number of observations in each group.
-#' @return [\code{matrix}]. A confusion matrix.
+#'   If \code{TRUE} add absolute number of observations in each group are added to the confusion matrix
+#'   of absolute values.
+#' @return [\code{confMatrix}]. A confusion matrix.
 #' @export
 #' @seealso \code{\link{predict.WrappedModel}}
 #' @examples
@@ -32,6 +34,7 @@
 #' mod = train("classif.lda", iris.task, subset = train)
 #' pred = predict(mod, iris.task, subset = test)
 #' print(getConfMatrix(pred))
+#' print(getConfMatrix(pred, sums = TRUE))
 #' print(getConfMatrix(pred, relative = TRUE))
 #'
 #' # now after cross-validation
@@ -62,6 +65,8 @@ getConfMatrix = function(pred, relative = FALSE, sums = FALSE) {
     rownames(result)[k + 2] = "-n-"
   }
   
+  result = list(result = result, k = k, n = n, cls = cls, relative = FALSE)
+  
   js = 1:k # indexes for nonmargin cols
 
   if (relative) {
@@ -81,18 +86,17 @@ getConfMatrix = function(pred, relative = FALSE, sums = FALSE) {
     result.rel.col = apply(tab, 2, norm.conf.matrix)
     result.rel.col = rbind(result.rel.col, "-err-" = colSums(result.rel.col) - diag(result.rel.col))
     
-    result = list(absolute = result, relative.row = result.rel.row, relative.col = result.rel.col, 
-      k = k, n = n, cls = cls)
+    result$relative.row = result.rel.row
+    result$relative.col = result.rel.col
+    result$relative = TRUE
   }
 
   addClasses(result, "confMatrix")
 }
 
-print.confMatrix = function(cm, digits = 1, nsmall = 2, ...) {
-  if(!is.list(cm)) {
-    print(cm)
-  }
-  else {
+#' @export
+print.confMatrix = function(cm, both = TRUE, digits = 1, nsmall = 2, ...) {
+  if (cm$relative) {
     js = 1:cm$k
     res = paste(format(cm$relative.row[js, js], digits = digits, nsmall = nsmall, ...), 
       format(cm$relative.col[js, js], digits = digits, nsmall = nsmall, ...), sep = "/")
@@ -103,14 +107,22 @@ print.confMatrix = function(cm, digits = 1, nsmall = 2, ...) {
     row.err = cm$relative.row[,cm$k + 1]
     full.err = paste(format(sum(row.err), digits = digits, nsmall = nsmall, ...),
       format(sum(col.err), digits = digits, nsmall = nsmall, ...), sep = "/")
+    
+    #bind marginal errors correctly formatted to rows and columns
     res = rbind(res, stri_pad_left(format(col.err, digits = digits, nsmall = nsmall, ...), 
       width = nchar(full.err)))
     res = cbind(res, c(format(row.err, digits = digits, nsmall = nsmall, ...), full.err))
-
+    
     dimnames(res) = list(true = c(cm$cls, "-err.-"), predicted = c(cm$cls, "-err.-"))
+    
     cat("Relative confusion matrix (normalized by row/column):\n")
     print(noquote(res))
-    cat("\n\nAbsolute confusion matrix:\n")
-    print(cm$absolute)
+    if (both) {
+      cat("\n\nAbsolute confusion matrix:\n")
+      print(cm$result)
+    }
+  }
+  else {
+    print(cm$result)
   }
 }
