@@ -81,13 +81,14 @@ getConfMatrix = function(pred, relative = FALSE, sums = FALSE) {
     result.rel.col = apply(tab, 2, norm.conf.matrix)
     result.rel.col = rbind(result.rel.col, "-err-" = colSums(result.rel.col) - diag(result.rel.col))
     
-    result = list(absolute = result, relative.row = result.rel.row, relative.col = result.rel.col, k = k, n = n)
+    result = list(absolute = result, relative.row = result.rel.row, relative.col = result.rel.col, 
+      k = k, n = n, cls = cls)
   }
 
   addClasses(result, "confMatrix")
 }
 
-print.confMatrix = function(cm, digits = 2, nsmall = 2, ...) {
+print.confMatrix = function(cm, digits = 1, nsmall = 2, ...) {
   if(!is.list(cm)) {
     print(cm)
   }
@@ -96,7 +97,20 @@ print.confMatrix = function(cm, digits = 2, nsmall = 2, ...) {
     res = paste(format(cm$relative.row[js, js], digits = digits, nsmall = nsmall, ...), 
       format(cm$relative.col[js, js], digits = digits, nsmall = nsmall, ...), sep = "/")
     attributes(res) = attributes(cm$relative.row[js, js])
-    result = rbind(cbind(tab, cm$relative.row), c(col.err, sum(col.err)))
-    noquote(res)
+    
+    
+    col.err = cm$relative.col[cm$k + 1,]
+    row.err = cm$relative.row[,cm$k + 1]
+    full.err = paste(format(sum(row.err), digits = digits, nsmall = nsmall, ...),
+      format(sum(col.err), digits = digits, nsmall = nsmall, ...), sep = "/")
+    res = rbind(res, stri_pad_left(format(col.err, digits = digits, nsmall = nsmall, ...), 
+      width = nchar(full.err)))
+    res = cbind(res, c(format(row.err, digits = digits, nsmall = nsmall, ...), full.err))
+
+    dimnames(res) = list(true = c(cm$cls, "-err.-"), predicted = c(cm$cls, "-err.-"))
+    cat("Relative confusion matrix (normalized by row/column):\n")
+    print(noquote(res))
+    cat("\n\nAbsolute confusion matrix:\n")
+    print(cm$absolute)
   }
 }
