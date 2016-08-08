@@ -36,7 +36,7 @@ test_that("filterFeatures", {
     measure = acc,
     contrast = function(x, y) abs(x - y),
     aggregation = median,
-    nperm = 2)
+    nmc = 2L)
   expect_class(fv, classes = "FilterValues")
   expect_numeric(fv$data[, 3L], any.missing = FALSE, all.missing = FALSE, len = getTaskNFeats(multiclass.task))
 
