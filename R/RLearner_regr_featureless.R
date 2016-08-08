@@ -3,8 +3,8 @@ makeRLearner.regr.featureless = function() {
   makeRLearnerRegr(
     cl = "regr.featureless",
     package = "mlr",
-    par.set = makeParamSet(par.set = makeParamSet(addClasses(makeUntypedLearnerParam(id = "measure", 
-      default = mse, tunable = TRUE)), "MeasureParam")),
+    par.set = makeParamSet(addClasses(makeUntypedLearnerParam(id = "measure", 
+      default = mse, tunable = TRUE), "MeasureParam")),
     par.vals = list(measure = mse),
     properties = c("numerics"),
     name = "Featureless regressor",
