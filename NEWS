@@ -5,6 +5,8 @@ mlr_2.10:
    printer
 -- makeLearner, setHyperPars: if you mistype a hyperpar name, mlr uses
    fuzzy matching to suggest the 3 closest names in the message
+-- tuning: tuning with irace is now also parallelized, i.e., different
+   learner config are evaluated in parallel.
 
 - functions - new
 
