@@ -19,7 +19,14 @@ test_that("classif_ada", {
 })
 
 test_that("classif_ada passes parameters correctly to rpart.control (#732)", {
-    lrn = makeLearner("classif.ada", cp=0.022, loss="exponential")
-    expect_equal(train(lrn, pid.task)$learner.model$model$trees[[1]]$control$cp,
-      0.022)
+  cp.vals = c(0.022, 0.023)
+  loss.vals = c("exponential", "logistic")
+  for(cp in cp.vals) {
+    for(loss in loss.vals) {
+      lrn = makeLearner("classif.ada", cp = cp, loss = loss)
+      mod = getLearnerModel(train(lrn, pid.task))
+      expect_equal(mod$model$trees[[1]]$control$cp, cp)
+      expect_equal(mod$model$lossObj$loss, loss)
+    }
+  }
 })
