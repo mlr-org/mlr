@@ -75,7 +75,7 @@ getConfMatrix = function(pred, relative = FALSE, sums = FALSE) {
       if (any(r[js] > 0))
         r / sum(r[js])
       else
-        rep(0, k + 1)
+        rep(0, k)
     }
     
     #normalize by rows and add margins as a new column
