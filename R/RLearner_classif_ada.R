@@ -36,12 +36,12 @@ makeRLearner.classif.ada = function() {
 #' @export
 trainLearner.classif.ada = function(.learner, .task, .subset, .weights = NULL,  ...) {
   f = getTaskFormula(.task)
-  #preserve list for certain parameters passed to rpart.control
+  #put all rpart.control parameters into a list named 'control'
   dots = list(...)
-  to.list = c("maxdepth", "cp", "minsplit", "xval", "minbucket", "maxcompete", "maxsurrogate", "usesurrogate", "surrogatestyle")
+  to.list = names(formals(rpart::rpart.control))
   list = filterNull(dots[to.list])
   dots = dropNamed(dots, to.list)
-  args = c(dots, list(list))
+  args = c(dots, control = list(list))
   h.ada = function(...) {
     ada::ada(f, getTaskData(.task, .subset), ...)
   }
