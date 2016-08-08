@@ -250,7 +250,7 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' head(getTaskData)
 #' head(getTaskData(task, features = c("Cell.size", "Cell.shape"), recode.target = "-1+1"))
 #' head(getTaskData(task, subset = 1:100, recode.target = "01"))
-getTaskData = function(task, subset, features, target.extra = FALSE, recode.target = "no") {
+getTaskData = function(task, subset, features, labels, target.extra = FALSE, recode.target = "no") {
   checkTask(task, "Task")
 
   if (missing(subset)) {
@@ -279,6 +279,29 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
   }
 
   tn = task$task.desc$target
+  ############
+  extractLabel = function(tn, labels){
+      assert(checkIntegerish(labels, lower = 1L, upper = length(tn)), checkLogical(labels), checkCharacter(labels))
+      if (is.numeric(labels)){
+        labels = asInteger(labels)
+      }
+      if (!is.character(labels)){
+        rlabels = tn[labels] # if labels are logical not enought length, the remaining will be default be be TRUE
+      }
+      else {
+        assert(length(which(is.element(labels,tn)))==length(labels))
+        labels = is.element(tn, labels) # change it to logical
+        rlabels = tn[labels]
+      }
+    rlabels
+  }
+  if(getTaskType(task) == "multilabel"){
+    if (!missing(labels)) {
+      tn = extractLabel(tn, labels)
+    }
+  }
+  tn
+  ############
 
   indexHelper = function(df, i, j, drop = TRUE) {
     switch(2L * is.null(i) + is.null(j) + 1L,
@@ -301,9 +324,12 @@ getTaskData = function(task, subset, features, target.extra = FALSE, recode.targ
     )
   } else {
     if (missing(features) || identical(features, task.features))
-      features = NULL
+      features = union(task.features, tn)
     else
       features = union(features, tn)
+    
+    coln=names(task$env$data)
+    features = coln[is.element(coln, features)]
 
     res = indexHelper(task$env$data, subset, features, drop = FALSE)
     if (recode.target %nin% c("no", "surv")) {
@@ -400,11 +426,12 @@ getTaskCosts = function(task, subset) {
 #' @examples
 #' task = makeClassifTask(data = iris, target = "Species")
 #' subsetTask(task, subset = 1:100)
-subsetTask = function(task, subset, features) {
+subsetTask = function(task, subset, features, labels) {
   # FIXME: we recompute the taskdesc for each subsetting. do we want that? speed?
   # FIXME: maybe we want this independent of changeData?
   td = task$desc
-  task = changeData(task, getTaskData(task, subset, features), getTaskCosts(task, subset), task$weights)
+  subdata = getTaskData(task, subset, features, labels)
+  task = changeData(task, subdata, getTaskCosts(task, subset), task$weights)
   if (!missing(subset)) {
     if (task$task.desc$has.blocking)
       task$blocking = task$blocking[subset]

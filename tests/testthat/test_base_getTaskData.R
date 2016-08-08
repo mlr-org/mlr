@@ -50,8 +50,9 @@ test_that("getTaskData survival", {
   expect_equal(df, surv.df)
   cn = colnames(surv.df)[3:4]
   df = getTaskData(surv.task, subset = 1:10, features = cn)
-  expect_equal(df, surv.df[1:10, union(cn, surv.target)])
-
+  #expect_equal(df, surv.df[1:10, union(cn, surv.target)])
+  colns = names(surv.df)
+  expect_equal(df, surv.df[1:10,colns[is.element(colns,union(cn,surv.target))]])
   x = getTaskData(surv.task, target.extra = TRUE)
   expect_true(setequal(names(x), c("data", "target")))
   expect_true(is.data.frame(x$data))
@@ -84,4 +85,9 @@ test_that("getTaskData multilabel", {
 
   x = getTaskData(multilabel.task, target.extra = TRUE)
   expect_equal(dim(x$target), c(150L, 2L))
+})
+
+test_that("getTaskData yeast_multilabel", {
+  df_yeast = getTaskData(yeast.task, labels = c(TRUE,FALSE))
+  expect_true(!is.null(setdiff(getTaskTargetNames(yeast.task),names(df_yeast))))
 })
