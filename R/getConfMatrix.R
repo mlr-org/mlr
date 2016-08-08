@@ -53,27 +53,50 @@ getConfMatrix = function(pred, relative = FALSE, sums = FALSE) {
   col.err = colSums(mt)
   result = rbind(cbind(tab, row.err), c(col.err, sum(col.err)))
   dimnames(result) = list(true = c(cls, "-err.-"), predicted = c(cls, "-err.-"))
+  
+  if (sums) {
+    rowsum = rowSums(tab)
+    colsum = colSums(tab)
+    result = rbind(cbind(result, c(rowsum, NA)), c(colsum, NA, n))
+    colnames(result)[k + 2] = "-n-"
+    rownames(result)[k + 2] = "-n-"
+  }
+  
   js = 1:k # indexes for nonmargin cols
 
   if (relative) {
-    rownorm = function(r) {
+    
+    norm.conf.matrix = function(r) {
       if (any(r[js] > 0))
         r / sum(r[js])
       else
         rep(0, k + 1)
     }
-    result[js, ] = t(apply(result[js, ], 1, rownorm))
-    #colsums of offdiagonal elements
-    result[k+1, js] = colSums(result[js, js]) - diag(result[js, js])
-    result[k+1, k+1] = result[k+1, k+1] / n
+    
+    #normalize by rows and add margins as a new column
+    result.rel.row = t(apply(tab, 1, norm.conf.matrix))
+    result.rel.row = cbind(result.rel.row, "-err-" = rowSums(result.rel.row) - diag(result.rel.row))
+    
+    #normalize by columns and add margins as a new row
+    result.rel.col = apply(tab, 2, norm.conf.matrix)
+    result.rel.col = rbind(result.rel.col, "-err-" = colSums(result.rel.col) - diag(result.rel.col))
+    
+    result = list(absolute = result, relative.row = result.rel.row, relative.col = result.rel.col, k = k, n = n)
   }
 
-  if (sums) {
-    rowsum = rowSums(tab)
-    colsum = colSums(tab)
-    result = rbind(cbind(result, c(rowsum, NA)), c(colsum, NA, n))
-    colnames(result)[k + 2] = "-N-"
-    rownames(result)[k + 2] = "-N-"
+  addClasses(result, "confMatrix")
+}
+
+print.confMatrix = function(cm, digits = 2, nsmall = 2, ...) {
+  if(!is.list(cm)) {
+    print(cm)
   }
-  return(result)
+  else {
+    js = 1:cm$k
+    res = paste(format(cm$relative.row[js, js], digits = digits, nsmall = nsmall, ...), 
+      format(cm$relative.col[js, js], digits = digits, nsmall = nsmall, ...), sep = "/")
+    attributes(res) = attributes(cm$relative.row[js, js])
+    result = rbind(cbind(tab, cm$relative.row), c(col.err, sum(col.err)))
+    noquote(res)
+  }
 }
