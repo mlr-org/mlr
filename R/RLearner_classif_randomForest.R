@@ -22,7 +22,7 @@ makeRLearner.classif.randomForest = function() {
       makeLogicalLearnerParam(id = "keep.forest", default = TRUE, tunable = FALSE),
       makeLogicalLearnerParam(id = "keep.inbag", default = FALSE, tunable = FALSE)
     ),
-    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob", "class.weights"),
+    properties = c("twoclass", "multiclass", "numerics", "factors", "ordered", "prob", "class.weights", "oobpreds"),
     class.weights.param = "classwt",
     name = "Random Forest",
     short.name = "rf",
@@ -49,4 +49,14 @@ trainLearner.classif.randomForest = function(.learner, .task, .subset, .weights 
 predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) {
   type = ifelse(.learner$predict.type=="response", "response", "prob")
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
+}
+
+#' @export
+getOutOfBagPredictions.classif.randomForestSRC = function(.learner, .model) {
+  preds = .model$learner.model$predicted.oob
+  if (.learner$predict.type == "response") {
+    factor(colnames(preds)[max.col(preds)], levels = colnames(preds))
+  } else {
+    preds
+  }
 }

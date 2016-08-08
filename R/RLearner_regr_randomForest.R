@@ -48,7 +48,7 @@ makeRLearner.regr.randomForest = function() {
       se.boot = 50L,
       ntree.for.se = 100L
     ),
-    properties = c("numerics", "factors", "ordered", "se"),
+    properties = c("numerics", "factors", "ordered", "se", "oobpreds"),
     name = "Random Forest",
     short.name = "rf",
     note = "See `?regr.randomForest` for information about se estimation. Note that the rf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures."
@@ -70,7 +70,6 @@ trainLearner.regr.randomForest = function(.learner, .task, .subset, .weights = N
   return(m)
 }
 
-
 #' @export
 predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type == "se") {
@@ -83,6 +82,11 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
   } else {
     predict(.model$learner.model, newdata = .newdata, ...)
   }
+}
+
+#' @export
+getOutOfBagPredictions.regr.randomForest = function(.learner, .model) {
+  .model$learner.model$predicted
 }
 
 # Computes brute force or noisy bootstrap
