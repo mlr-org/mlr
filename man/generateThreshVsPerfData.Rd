@@ -43,6 +43,7 @@ Generates data on threshold vs. performance(s) for 2-class classification that c
 \seealso{
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
   \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},

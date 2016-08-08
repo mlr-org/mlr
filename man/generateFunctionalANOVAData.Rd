@@ -94,6 +94,7 @@ Giles Hooker, \dQuote{Discovering additive structure in black box functions.} Pr
 \seealso{
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateCritDifferencesData}},
+  \code{\link{generateFeatureImportanceData}},
   \code{\link{generateFilterValuesData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
