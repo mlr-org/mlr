@@ -34,6 +34,8 @@ Note that logging output during tuning is somewhat shortened to make it more rea
 }
 \examples{
 \donttest{
+library("BBmisc")
+
 bls = list(
   makeLearner("classif.ksvm"),
   makeLearner("classif.randomForest")
