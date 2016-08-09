@@ -25,6 +25,8 @@
 #'   I.e., the artificial prefix before parameter names is suppressed.
 #' @examples
 #' \donttest{
+#' library("BBmisc")
+#' 
 #' bls = list(
 #'   makeLearner("classif.ksvm"),
 #'   makeLearner("classif.randomForest")
