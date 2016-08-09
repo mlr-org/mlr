@@ -34,18 +34,16 @@
 getOutOfBagPredictions = function(object, task) {
   assertClass(object, classes = "WrappedModel")
   assertClass(task, classes = "Task")
+  expect_identical(task$task.desc, object$task.desc)   # Does the task correspond to the model?
+
   td = object$task.desc
   # extract truth column
   subset = object$subset
   data = getTaskData(task, subset)
-  t.col = match(td$target, colnames(data))
-  if (!all(is.na(t.col))) {
-    truth = data[, t.col, drop = TRUE]
-    if (is.list(truth))
-      truth = data.frame(truth)
-  } else {
-    truth = NULL
-  }
+  t.col = match(td$target, colnames(data)) 
+  truth = data[, t.col, drop = TRUE]
+  if (is.list(truth))
+    truth = data.frame(truth)
   
   st = system.time(p <-  getOutOfBagPredictionsModel(object$learner, object))
   time.predict = as.numeric(st[3L])
