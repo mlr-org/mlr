@@ -221,6 +221,7 @@ getTaskTargets.CostSensTask = function(task, recode.target = "no") {
 #' @template arg_task
 #' @template arg_subset
 #' @template arg_features
+#' @template arg_labels
 #' @param target.extra [\code{logical(1)}]\cr
 #'   Should target vector be returned separately?
 #'   If not, a single data.frame including the target columns is returned, otherwise a list
@@ -420,6 +421,7 @@ getTaskCosts = function(task, subset) {
 #' @template arg_task
 #' @template arg_subset
 #' @template arg_features
+#' @template arg_labels
 #' @return [\code{\link{Task}}]. Task with subsetted data.
 #' @family task
 #' @export
