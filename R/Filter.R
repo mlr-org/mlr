@@ -196,6 +196,32 @@ makeFilter(
 )
 
 makeFilter(
+  name = "rf.accuracy",
+  desc = "Mean decrease in accuracy of random forest fitted in package 'randomForest'.",
+  pkg = "randomForest",
+  supported.tasks = c("classif", "regr"),
+  supported.features = c("numerics", "factors"),
+  fun = function(task, nselect, ...) {
+    rf = randomForest::randomForest(getTaskFormula(task), data = getTaskData(task), keep.forest = FALSE, importance = TRUE)
+    im = randomForest::importance(rf, ...)
+    setNames(im[, 1L], rownames(im))
+  }
+)
+
+makeFilter(
+  name = "rf.impurity",
+  desc = "Total decrease in node impuritiy of random forest fitted in package 'randomForest'.",
+  pkg = "randomForest",
+  supported.tasks = c("classif", "regr"),
+  supported.features = c("numerics", "factors"),
+  fun = function(task, nselect, ...) {
+    rf = randomForest::randomForest(getTaskFormula(task), data = getTaskData(task), keep.forest = FALSE, importance = TRUE)
+    im = randomForest::importance(rf, ...)
+    setNames(im[, 2L], rownames(im))
+  }
+)
+
+makeFilter(
   name = "linear.correlation",
   desc = "Pearson correlation between feature and target",
   pkg  = "FSelector",
