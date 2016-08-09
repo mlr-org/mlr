@@ -572,7 +572,7 @@ test_that("measures quickcheck", {
   lrn = makeLearner("classif.rpart")
       
   quickcheckTest(
-    forall(data = as.data.frame(rmatrix(elements = rinteger, nrow = c(min = 2, max = 10000), ncol = c(min = 1, max = 100))),
+    quickcheck::forall(data = as.data.frame(rmatrix(elements = rinteger, nrow = c(min = 2, max = 10000), ncol = c(min = 1, max = 100))),
       {
         classes = factor(c("foo", "bar"))
         data$target = rep_len(classes, length.out = nrow(data))
