@@ -75,7 +75,7 @@ test_that("db with single cluster doesn't give warnings", {
 test_that("mcc is implemented correctly", { # see issue 363
   r = holdout("classif.rpart", sonar.task, measure = mcc)
   p = as.data.frame(r$pred)
-  cm = getConfMatrix(r$pred)[1:2, 1:2]
+  cm = getConfMatrix(r$pred)$result[1:2, 1:2]
 
   # taken from psych::phi. the phi measure is another name for mcc
   r.sum = rowSums(cm)
