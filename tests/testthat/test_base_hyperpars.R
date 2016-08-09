@@ -62,10 +62,12 @@ test_that("setting 'when' works for hyperpars", {
 })
 
 test_that("fuzzy matching works for mistyped hyperpars", {
-  expected = "classif.ksvm: couldn't find hyperparameter 'sigm'\nDid you mean one of these hyperparameters instead: sigma fit type"
+  #expected = "classif.ksvm: couldn't find hyperparameter 'sigm'\nDid you mean one of these hyperparameters instead: sigma fit type"
   lrn = makeLearner("classif.ksvm", 
     config = list(on.par.without.desc = "quiet"))
-  expect_message(setHyperPars(lrn, sigm = 1), expected)
+  # docu says: no warning/message but parameter is passed
+  expect_equal(getHyperPars(setHyperPars(lrn, sigm = 1))$sigm, 1)
+  #expect_message(setHyperPars(lrn, sigm = 1), expected)
   lrn = makeLearner("classif.ksvm", 
     config = list(on.par.without.desc = "warn"))
   expect_warning(setHyperPars(lrn, sigm = 1), "Setting parameter sigm without")

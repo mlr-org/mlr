@@ -33,6 +33,7 @@ setHyperPars = function(learner, ..., par.vals = list(), show.info = getMlrOptio
 #'   The learner.
 #' @param par.vals [\code{list}]\cr
 #'   List of named (hyper)parameter settings.
+#' @template arg_showinfo
 #' @export
 setHyperPars2 = function(learner, par.vals, show.info = getMlrOption("show.info")) {
   UseMethod("setHyperPars2")
