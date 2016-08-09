@@ -57,3 +57,9 @@ trainLearner.surv.cforest = function(.learner, .task, .subset,
 predictLearner.surv.cforest = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, newdata = .newdata, ...)
 }
+
+#' @export
+#' @rdname getFeatureImportanceLearner
+getFeatureImportance.surv.cforest = function(.learner, .model, ...) {
+  getFeatureImportance.classif.cforest(.learner, .model, ...)
+}

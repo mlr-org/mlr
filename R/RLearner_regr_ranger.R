@@ -45,13 +45,5 @@ predictLearner.regr.ranger = function(.learner, .model, .newdata, ...) {
 #' @export
 #' @rdname getFeatureImportanceLearner
 getFeatureImportance.regr.ranger = function(.learner, .model, ...) {
-  has.fiv = .learner$par.vals$importance
-  if (is.null(has.fiv) || has.fiv == "none") {
-    stop("You must set the learners parameter value for importance to
-      'impurity' or 'permutation' to compute feature importance")
-  }
-  mod = getLearnerModel(.model)
-  fiv = as.numeric(ranger::importance(mod))
-  names(fiv) = .model$features
-  return(fiv)
+  getFeatureImportance.classif.ranger(.learner, .model, ...)
 }

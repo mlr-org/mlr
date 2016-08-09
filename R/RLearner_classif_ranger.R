@@ -35,7 +35,7 @@ makeRLearner.classif.ranger = function() {
 trainLearner.classif.ranger = function(.learner, .task, .subset, .weights, ...) {
   tn = getTaskTargetNames(.task)
   ranger::ranger(formula = NULL, dependent.variable = tn, data = getTaskData(.task, .subset),
-    write.forest = TRUE, probability = (.learner$predict.type == "prob"), ...)
+    probability = (.learner$predict.type == "prob"), ...)
 }
 
 #' @export
@@ -54,6 +54,7 @@ getFeatureImportance.classif.ranger = function(.learner, .model, ...) {
   }
   mod = getLearnerModel(.model)
   fiv = ranger::importance(mod)
-
-  return(fiv)
+  
+  fiv = as.data.frame(t(fiv))
+  addClasses(fiv, "FeatureImportance")
 }

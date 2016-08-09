@@ -121,7 +121,15 @@ getFeatureImportance.classif.xgboost = function(.learner, .model, ...) {
                                 model = mod, ...)
   
   fiv = imp$Gain
-  names(fiv) = imp$Feature
+  fiv = setNames(fiv, imp$Feature)
+  #xgboost drops features that were not selected completely, we need to add them with importance 0
+  fiv[setdiff(.model$features, imp$Feature)] = 0
+  
+  #get features back in the correct order
+  fiv = fiv[.model$features]
+  
+  fiv = as.data.frame(t(fiv))
+  addClasses(fiv, "FeatureImportance")
   return(fiv)
 }
 

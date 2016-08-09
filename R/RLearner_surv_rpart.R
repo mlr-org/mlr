@@ -41,15 +41,12 @@ predictLearner.surv.rpart = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type == "response") {
     predict(.model$learner.model, newdata = .newdata, type = "vector", ...)
   } else {
-    stop("Unsuporrted predict type")
+    stop("Unsuported predict type")
   }
 }
 
 #' @export
 #' @rdname getFeatureImportanceLearner
 getFeatureImportance.surv.rpart = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
-  fiv = as.numeric(mod$variable.importance[names(mod$ordered)])
-  names(fiv) = .model$features
-  return(fiv)
+  getFeatureImportance.classif.rpart(.learner, .model, ...)
 }

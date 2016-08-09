@@ -69,11 +69,5 @@ predictLearner.regr.xgboost = function(.learner, .model, .newdata, ...) {
 #' @export
 #' @rdname getFeatureImportanceLearner
 getFeatureImportance.regr.xgboost = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
-  imp = xgboost::xgb.importance(feature_names = .model$features,
-                                model = mod, ...)
-  
-  fiv = imp$Gain
-  names(fiv) = imp$Feature
-  return(fiv)
+  getFeatureImportance.classif.xgboost(.learner, .model, ...)
 }
