@@ -54,6 +54,9 @@ Lang, Michel, Helena Kotthaus, Peter Marwedel, Claus Weihs, Jörg Rahnenführer,
 Bischl, Bernd, Tobias Kühn, and Gero Szepannek. "On Class Imbalance Correction for Classification Algorithms in Credit Scoring." In Operations Research Proceedings 2014, pp. 37-43. Springer International Publishing, 2016.
 
 
+A list of publications that cite mlr can be found [here](https://help.github.com/articles/adding-links-to-wikis/).
+
+
 Introduction
 ============
 
