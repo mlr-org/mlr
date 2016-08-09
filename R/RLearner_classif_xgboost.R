@@ -130,7 +130,6 @@ getFeatureImportance.classif.xgboost = function(.learner, .model, ...) {
   
   fiv = as.data.frame(t(fiv))
   addClasses(fiv, "FeatureImportance")
-  return(fiv)
 }
 
 
