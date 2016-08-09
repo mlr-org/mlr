@@ -62,7 +62,8 @@
 #' @param ... [any]\cr
 #'   Additional parameters, which are passed to the underlying importance value 
 #'   generating function.
-#' @return A named numeric vector indicating the feature importance values for each feature.
+#' @return A \code{data.frame} with one column for every feature in the model
+#'  and one row for the corresponding importance value.
 #' @export
 getFeatureImportance = function(object, ...) {
   assertClass(object, classes = "WrappedModel")
@@ -79,8 +80,6 @@ getFeatureImportance = function(object, ...) {
 #' @param .model [\code{\link{WrappedModel}}]\cr
 #'  The model.
 #' @param auc [logical(1)]\cr Only for binary classification with cforest. Should the auc based importance be calculated.
-#' @param n.trees [integer(1)]\cr Only for gbm. For how many trees should the importance be calculated.
-#'  If missing the number of trees used to fit the model is used.
 #' @param ... [any]\cr
 #' Additional parameters, which are passed to the underlying importance value 
 #' generating function.

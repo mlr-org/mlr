@@ -15,7 +15,8 @@ Additional parameters, which are passed to the underlying importance value
 generating function.}
 }
 \value{
-A named numeric vector indicating the feature importance values for each feature.
+A \code{data.frame} with one column for every feature in the model
+ and one row for the corresponding importance value.
 }
 \description{
 For some learners it is possible to calculate a feature importance measure.

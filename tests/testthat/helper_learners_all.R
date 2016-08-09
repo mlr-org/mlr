@@ -171,8 +171,9 @@ testThatLearnerCanCalculateImportance = function(lrn, task, hyperpars) {
   
   mod = train(lrn, task)
   feat.imp = getFeatureImportance(mod)
-  expect_is(feat.imp, "numeric")
-  expect_set_equal(names(feat.imp), mod$features)
+  expect_data_frame(feat.imp, types = rep("numeric", getTaskNFeats(binaryclass.task)),
+    any.missing = FALSE, nrows = 1, ncols = getTaskNFeats(binaryclass.task))
+  expect_equal(colnames(feat.imp), mod$features)
   
 }
 
