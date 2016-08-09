@@ -29,6 +29,9 @@ If \code{TRUE} both the absolute and relative confusion matricies are printed.}
 
 \item{digits}{[\code{numeric(1)}]\cr
 How many numbers after the decimal point should be printed, only relevant for relative confusion matricies.}
+
+\item{...}{\cr
+Currently not used.}
 }
 \value{
 [\code{confMatrix}]. A confusion matrix.
