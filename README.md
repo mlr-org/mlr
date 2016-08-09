@@ -20,6 +20,40 @@
 * [Ask a question about mlr on Stackoverflow](https://stackoverflow.com/questions/tagged/mlr)
 
 
+mlr - How to Cite and Citing Publications
+=========================================
+
+If you use the package, please cite it. To get a citation, type in R:
+
+`citation("mlr")`
+
+Bernd Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Zachary Jones and Giuseppe Casalicchio (2016). mlr: Machine Learning in R. R package version 2.9. https://CRAN.R-project.org/package=mlr
+
+A BibTeX entry for LaTeX users is
+
+```
+@Manual{
+title = {mlr: Machine Learning in R},
+author = {Bernd Bischl and Michel Lang and Lars Kotthoff and Julia Schiffner and Jakob Richter and Zachary Jones and Giuseppe Casalicchio},
+year = {2016},
+note = {R package version 2.9},
+url = {https://CRAN.R-project.org/package=mlr},
+}
+```
+
+Some parts of the package were created as part of other publications. 
+If you use these parts, please cite the relevant work appropriately:
+
+
+**Tuning with Iterated F-Racing**
+
+Lang, Michel, Helena Kotthaus, Peter Marwedel, Claus Weihs, Jörg Rahnenführer, and Bernd Bischl. "Automatic model selection for high-dimensional survival analysis." Journal of Statistical Computation and Simulation 85, no. 1 (2015): 62-76.
+
+**Class Imbalance Correction Algorithms**
+
+Bischl, Bernd, Tobias Kühn, and Gero Szepannek. "On Class Imbalance Correction for Classification Algorithms in Credit Scoring." In Operations Research Proceedings 2014, pp. 37-43. Springer International Publishing, 2016.
+
+
 Introduction
 ============
 
