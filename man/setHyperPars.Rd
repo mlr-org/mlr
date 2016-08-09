@@ -29,6 +29,10 @@ Can take values \code{soft} for setting the hyper parameters while keeping the \
 \description{
 Set the hyperparameters of a learner object.
 }
+\note{
+If a named (hyper)parameter can't be found for the given learner, the 3
+closest (hyper)parameter names will be output in case the user mistyped.
+}
 \examples{
 cl1 = makeLearner("classif.ksvm", sigma = 1)
 cl2 = setHyperPars(cl1, sigma = 10, par.vals = list(C = 2))

@@ -77,6 +77,13 @@ Most NEWS regarding extensions and changes of the packages can be accessed here 
 [release](http://cran.r-project.org/web/packages/mlr/NEWS) and here for the
 [devel](https://github.com/mlr-org/mlr/blob/master/NEWS) version on Github.
 
+* 2016-08-06:
+  * We are hosting the first mlr workshop! It is in Palermo, and more like a sprint, as 11 core developers meet to get stuff done. Thanks to Giuseppe for organizing this! We are thinking about hosting the 2017 one in Munich and possibly opening this up more for the public. If you are interested in potentially joining, email Bernd.
+* 2016-08-06:
+  * mlr 2.9 released to CRAN. This is a pretty large release containing (among other things)
+    * Many new measures and many new learners (also h2o and its deeplearning net)
+    * More sophisticated algorithms for multilabel learning that can exploit label correlation.
+    * The first batch of functions from Mason Gallo's very cool GSOC project for hyperparameter tuning visualization.
 * 2016-02-13:
   * mlr 2.8 released to CRAN. Mainly a release with bug fix release and many minor improvements, also regarding the new ggplot2 release.
 * 2015-11-26:

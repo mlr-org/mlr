@@ -29,11 +29,11 @@ getHyperPars.Learner = function(learner, for.fun = c("train", "predict", "both")
   pv[ns]
 }
 
-getHyperParsString = function(learner) {
+getHyperParsString = function(learner, show.missing.values) {
   hps = getHyperPars(learner)
   ns = names(hps)
   pars = getParamSet(learner)$pars[ns]
-  s = Map(paramValueToString, pars, hps)
+  s = mapply(paramValueToString, pars, hps, MoreArgs = list(show.missing.values = show.missing.values))
   stri_paste(ns, s, sep = "=", collapse = ",")
 }
 

@@ -326,25 +326,87 @@ ber = makeMeasure(id = "ber", minimize = TRUE, best = 0, worst = 1,
   }
 )
 
-#' @export multiclass.auc
+#' @export multiclass.aunu
 #' @rdname measures
 #' @format none
-multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, worst = 0,
+multiclass.aunu = makeMeasure(id = "multiclass.aunu", minimize = FALSE, best = 1, worst = 0.5,
   properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
-  name = "Multiclass area under the curve",
-  note = "Calls `pROC::multiclass.roc`.",
+  name = "Average multiclass AUC",
+  note = "Computes the AUC treating a c-dimensional classifier as c two-dimensional classifiers, where classes are assumed to have uniform distribution, in order to have a measure which is independent of class distribution change. See Ferri et. al: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf",
   fun = function(task, model, pred, feats, extra.args) {
-    requirePackages("pROC", why = "multiclass.auc", default.method = "load")
-    resp = pred$data$response
-    predp = getPredictionProbabilities(pred)
-    # choose the probablity of the choosen response
-    predv = vnapply(seq_row(predp), function(i) {
-      predp[i, resp[i]]
-    })
-    auc = pROC::multiclass.roc(response = resp, predictor = predv)$auc
-    as.numeric(auc)
+    measureAUNU(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
   }
 )
+
+#' @export measureAUNU
+#' @rdname measures
+#' @format none
+measureAUNU = function(probabilities, truth) {
+  mean(vnapply(1:nlevels(truth), function(i) colAUC(probabilities[, i], truth == levels(truth)[i])))
+}
+
+#' @export multiclass.aunp
+#' @rdname measures
+#' @format none
+multiclass.aunp = makeMeasure(id = "multiclass.aunp", minimize = FALSE, best = 1, worst = 0.5,
+  properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
+  name = "Weighted average multiclass AUC",
+  note = "Computes the AUC treating a c-dimensional classifier as c two-dimensional classifiers, taking into account the prior probability of each class (p(j)). See Ferri et. al: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureAUNP(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
+  }
+)
+
+#' @export measureAUNP
+#' @rdname measures
+#' @format none
+measureAUNP = function(probabilities, truth) {
+  sum(vnapply(1:nlevels(truth), function(i) mean(truth == levels(truth)[i]) * colAUC(probabilities[,i], truth == levels(truth)[i])))  
+}
+
+#' @export multiclass.au1u
+#' @rdname measures
+#' @format none
+multiclass.au1u = makeMeasure(id = "multiclass.au1u", minimize = FALSE, best = 1, worst = 0.5,
+  properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
+  name = "Average 1 vs. 1 multiclass AUC",
+  note =  "Computes AUC of c(c - 1) binary classifiers (all possible pairwise combinations) while considering uniform distribution of the classes. See Ferri et. al: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf",
+  fun = function(task, model, pred, feats, extra.args) {
+    measureAU1U(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
+  }
+)
+
+#' @export measureAU1U
+#' @rdname measures
+#' @format none
+measureAU1U = function(probabilities, truth) {
+  m = colAUC(probabilities, truth)
+  c = c(combn(1:nlevels(truth), 2))
+  mean(m[cbind(rep(1:nrow(m), each = 2), c)])
+}
+
+#' @export multiclass.au1p
+#' @rdname measures
+#' @format none
+multiclass.au1p = makeMeasure(id = "multiclass.au1p", minimize = FALSE, best = 1, worst = 0.5,
+  properties = c("classif", "classif.multi", "req.pred", "req.truth", "req.prob"),
+  name = "Weighted average 1 vs. 1 multiclass AUC",
+  note = "Computes AUC of c(c - 1) binary classifiers while considering the a priori distribution of the classes. See Ferri et. al paper: https://www.math.ucdavis.edu/~saito/data/roc/ferri-class-perf-metrics.pdf",                             
+  fun = function(task, model, pred, feats, extra.args) {
+    measureAU1P(getPredictionProbabilities(pred, pred$task.desc$class.levels), pred$data$truth)
+  }
+)
+
+#' @export measureAU1P
+#' @rdname measures
+#' @format none
+measureAU1P = function(probabilities, truth) {
+  m = colAUC(probabilities, truth)
+  weights = table(truth) / length(truth)
+  m = m * matrix(rep(weights, each = nrow(m)), ncol = length(weights))
+  c = c(combn(1:nlevels(truth), 2))
+  sum(m[cbind(rep(1:nrow(m), each = 2), c)]) / (nlevels(truth) - 1)
+}
 
 #' @export multiclass.brier
 #' @rdname measures
@@ -468,7 +530,7 @@ bac = makeMeasure(id = "bac", minimize = FALSE, best = 1, worst = 0,
   note = "Mean of true positive rate and true negative rate.",
   fun = function(task, model, pred, feats, extra.args) {
     mean(c(tp$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$positive),
-           tn$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$negative)))
+      tn$fun(pred = pred) / sum(pred$data$truth == pred$task.desc$negative)))
   }
 )
 
@@ -1056,4 +1118,3 @@ silhouette = makeMeasure(id = "silhouette", minimize = FALSE, best = Inf, worst 
     clusterSim::index.S(clusterSim::dist.GDM(feats), r)
   }
 )
-

@@ -95,6 +95,7 @@ Other benchmark: \code{\link{BenchmarkResult}},
 
 Other generate_plot_data: \code{\link{generateCalibrationData}},
   \code{\link{generateFilterValuesData}},
+  \code{\link{generateFunctionalANOVAData}},
   \code{\link{generateLearningCurveData}},
   \code{\link{generatePartialDependenceData}},
   \code{\link{generateThreshVsPerfData}},

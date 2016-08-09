@@ -73,7 +73,7 @@ generateFilterValuesData = function(task, method = "rf.importance", nselect = ge
     x = do.call(x$fun, c(list(task = task, nselect = nselect), more.args[[x$name]]))
     missing.score = setdiff(fn, names(x))
     x[missing.score] = NA_real_
-    x[match(names(x), fn)]
+    x[match(fn, names(x))]
   })
 
   fval = do.call(cbind, fval)
