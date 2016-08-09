@@ -18,7 +18,7 @@
 #'
 #' @template arg_pred
 #' @param relative [\code{logical(1)}]\cr
-#'   If \code{TRUE} Two additional matricies are calculated. One is normalized by rows and one by
+#'   If \code{TRUE} two additional matricies are calculated. One is normalized by rows and one by
 #'   columns, but we print the result in a compact way.
 #' @param sums {\code{logical(1)}}\cr
 #'   If \code{TRUE} add absolute number of observations in each group are added to the confusion matrix
@@ -95,23 +95,36 @@ getConfMatrix = function(pred, relative = FALSE, sums = FALSE) {
 }
 
 #' @export
-print.confMatrix = function(x, both = TRUE, digits = 1, nsmall = 2, ...) {
+#' @describeIn getConfMatrix
+#' 
+#' @param  x [\code{confMatrix}]\cr
+#'  Result of \code{getConfMatrix}.
+#' @param both [\code{logical(1)}]\cr
+#'  If \code{TRUE} both the absolute and relative confusion matricies are printed.
+#' @param digits [\code{numeric(1)}]\cr
+#'  How many numbers after the decimal point should be printed, only relevant for relative confusion matricies.
+print.confMatrix = function(x, both = TRUE, digits = 4) {
+  
+  #formatting stuff, use digits numbers after(!) the decimal point.
+  nsmall = digits
+  digits = nsmall - 1
+  
   if (x$relative) {
     js = 1:x$k
-    res = paste(format(x$relative.row[js, js], digits = digits, nsmall = nsmall, ...), 
-      format(x$relative.col[js, js], digits = digits, nsmall = nsmall, ...), sep = "/")
+    res = paste(format(x$relative.row[js, js], digits = digits, nsmall = nsmall), 
+      format(x$relative.col[js, js], digits = digits, nsmall = nsmall), sep = "/")
     attributes(res) = attributes(x$relative.row[js, js])
     
     
     col.err = x$relative.col[x$k + 1,]
     row.err = x$relative.row[,x$k + 1]
-    full.err = paste(format(sum(row.err), digits = digits, nsmall = nsmall, ...),
-      format(sum(col.err), digits = digits, nsmall = nsmall, ...), sep = "/")
+    full.err = paste(format(sum(row.err), digits = digits, nsmall = nsmall),
+      format(sum(col.err), digits = digits, nsmall = nsmall), sep = "/")
     
     #bind marginal errors correctly formatted to rows and columns
-    res = rbind(res, stri_pad_left(format(col.err, digits = digits, nsmall = nsmall, ...), 
+    res = rbind(res, stri_pad_left(format(col.err, digits = digits, nsmall = nsmall), 
       width = nchar(full.err)))
-    res = cbind(res, c(format(row.err, digits = digits, nsmall = nsmall, ...), full.err))
+    res = cbind(res, c(format(row.err, digits = digits, nsmall = nsmall), full.err))
     
     dimnames(res) = list(true = c(x$cls, "-err.-"), predicted = c(x$cls, "-err.-"))
     

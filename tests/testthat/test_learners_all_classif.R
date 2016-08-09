@@ -58,7 +58,7 @@ test_that("weightedClassWrapper on all binary learners",  {
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
     m = train(lrn2, binaryclass.task)
     p = predict(m, binaryclass.task)
-    cm = getConfMatrix$result(p)
+    cm = getConfMatrix(p)$result
   }
 
   learners = listLearners(binaryclass.task, "class.weights")
@@ -80,7 +80,7 @@ test_that("WeightedClassWrapper on all multiclass learners",  {
     lrn2 = makeWeightedClassesWrapper(lrn1, wcw.weight = w)
     m = train(lrn2, multiclass.task)
     p = predict(m, multiclass.task)
-    cm = getConfMatrix$result(p)
+    cm = getConfMatrix(p)$result
   }
 
   learners = listLearners(multiclass.task, "class.weights")

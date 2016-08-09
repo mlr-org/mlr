@@ -2,21 +2,33 @@
 % Please edit documentation in R/getConfMatrix.R
 \name{getConfMatrix}
 \alias{getConfMatrix}
+\alias{print.confMatrix}
 \title{Confusion matrix.}
 \usage{
 getConfMatrix(pred, relative = FALSE, sums = FALSE)
+
+\method{print}{confMatrix}(x, both = TRUE, digits = 4)
 }
 \arguments{
 \item{pred}{[\code{\link{Prediction}}]\cr
 Prediction object.}
 
 \item{relative}{[\code{logical(1)}]\cr
-If \code{TRUE} Two additional matricies are calculated. One is normalized by rows and one by
+If \code{TRUE} two additional matricies are calculated. One is normalized by rows and one by
 columns, but we print the result in a compact way.}
 
 \item{sums}{{\code{logical(1)}}\cr
 If \code{TRUE} add absolute number of observations in each group are added to the confusion matrix
 of absolute values.}
+
+\item{x}{[\code{confMatrix}]\cr
+Result of \code{getConfMatrix}.}
+
+\item{both}{[\code{logical(1)}]\cr
+If \code{TRUE} both the absolute and relative confusion matricies are printed.}
+
+\item{digits}{[\code{numeric(1)}]\cr
+How many numbers after the decimal point should be printed, only relevant for relative confusion matricies.}
 }
 \value{
 [\code{confMatrix}]. A confusion matrix.
@@ -37,6 +49,10 @@ All predictions on all test sets are joined to a vector yhat, as are all labels
 joined to a vector y. Then yhat is simply tabulated vs y, as if both were computed on
 a single test set. This probably mainly makes sense when cross-validation is used for resampling.
 }
+\section{Methods (by generic)}{
+\itemize{
+\item \code{print}: 
+}}
 \examples{
 # get confusion matrix after simple manual prediction
 allinds = 1:150
