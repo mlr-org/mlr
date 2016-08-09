@@ -103,7 +103,7 @@ getConfMatrix = function(pred, relative = FALSE, sums = FALSE) {
 #'  If \code{TRUE} both the absolute and relative confusion matricies are printed.
 #' @param digits [\code{numeric(1)}]\cr
 #'  How many numbers after the decimal point should be printed, only relevant for relative confusion matricies.
-#' @param ... \cr
+#' @param ... [any]\cr
 #'  Currently not used.
 print.confMatrix = function(x, both = TRUE, digits = 4, ...) {
   
