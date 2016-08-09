@@ -11,14 +11,14 @@ getHyperPars.BaseWrapper = function(learner, for.fun = c("train", "predict", "bo
 
 
 #' @export
-setHyperPars2.BaseWrapper = function(learner, par.vals) {
+setHyperPars2.BaseWrapper = function(learner, par.vals, show.info = getMlrOption("show.info")) {
   ns = names(par.vals)
   pds.n = names(learner$par.set$pars)
   for (i in seq_along(par.vals)) {
     if (ns[i] %in% pds.n) {
-      learner = setHyperPars2.Learner(learner, par.vals = par.vals[i])
+      learner = setHyperPars2.Learner(learner, par.vals = par.vals[i], show.info = show.info)
     } else {
-      learner$next.learner = setHyperPars2(learner$next.learner, par.vals = par.vals[i])
+      learner$next.learner = setHyperPars2(learner$next.learner, par.vals = par.vals[i], show.info = show.info)
     }
   }
   return(learner)
