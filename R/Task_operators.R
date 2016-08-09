@@ -453,3 +453,18 @@ getTaskFactorLevels = function(task) {
 getTaskWeights = function(task) {
   task$weights
 }
+
+
+# returns a dictionary, which contains the task itself (task), the number of
+# features (p), the number of observations (n), the task type (type) and in
+# case of classification tasks the number of class levels (k)
+makeTaskDictionary = function(task) {
+  dict = list()
+  dict$task = task
+  dict$p = getTaskNFeats(task)
+  dict$n = getTaskSize(task)
+  dict$type = getTaskType(task)
+  if (dict$type == "classif")
+    dict$k = length(getTaskClassLevels(task))
+  return(dict)
+}

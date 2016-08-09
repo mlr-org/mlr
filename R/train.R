@@ -30,6 +30,8 @@
 #' print(mod)
 train = function(learner, task, subset, weights = NULL) {
   learner = checkLearner(learner)
+  if (ParamHelpers::hasExpression(learner$par.set) || any(vlapply(learner$par.vals, is.expression)))
+    learner = evaluateLearner(lrn = learner, task = task)
   assertClass(task, classes = "Task")
   if (missing(subset)) {
     subset = seq_len(getTaskSize(task))

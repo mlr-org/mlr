@@ -5,10 +5,10 @@ makeRLearner.classif.randomForest = function() {
     package = "randomForest",
     par.set = makeParamSet(
       makeIntegerLearnerParam(id = "ntree", default = 500L, lower = 1L),
-      makeIntegerLearnerParam(id = "mtry", lower = 1L),
+      makeIntegerLearnerParam(id = "mtry", lower = 1L, default = expression(floor(sqrt(p)))),
       makeLogicalLearnerParam(id = "replace", default = TRUE),
-      makeNumericVectorLearnerParam(id = "classwt", lower = 0),
-      makeNumericVectorLearnerParam(id = "cutoff", lower = 0, upper = 1),
+      makeNumericVectorLearnerParam(id = "classwt", lower = 0, len = expression(k)),
+      makeNumericVectorLearnerParam(id = "cutoff", lower = 0, upper = 1, len = expression(k)),
       makeUntypedLearnerParam(id = "strata", tunable = FALSE),
       makeIntegerVectorLearnerParam(id = "sampsize", lower = 1L),
       makeIntegerLearnerParam(id = "nodesize", default = 1L, lower = 1L),

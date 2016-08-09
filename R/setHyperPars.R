@@ -74,7 +74,7 @@ setHyperPars2.Learner = function(learner, par.vals) {
       learner$par.set$pars[[n]] = makeUntypedLearnerParam(id = n)
       learner$par.vals[[n]] = p
     } else {
-      if (on.par.out.of.bounds != "quiet" && !isFeasible(pd, p)) {
+      if (on.par.out.of.bounds != "quiet" && !isFeasible(pd, p) && !is.expression(p)) {
         msg = sprintf("%s is not feasible for parameter '%s'!", convertToShortString(p), pd$id)
         if (on.par.out.of.bounds == "stop") {
           stop(msg)
