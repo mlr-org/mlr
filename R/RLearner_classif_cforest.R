@@ -71,9 +71,13 @@ predictLearner.classif.cforest = function(.learner, .model, .newdata, ...) {
 getFeatureImportance.classif.cforest = function(.learner, .model, auc = FALSE, ...) {
   mod = getLearnerModel(.model)
   if (auc) {
-    fiv = as.numeric(party::varimpAUC(mod, ...))
+    fiv = party::varimpAUC(mod, ...)
   } else {
-    fiv = as.numeric(party::varimp(mod, ...))
+    fiv = party::varimp(mod, ...)
   }
- setNames(fiv, .model$features)
+  fiv = data.frame(as.list(fiv))
+  
+  #unselected variables get an importance of zero
+  fiv[is.na(fiv)] = 0
+  addClasses(fiv, "FeatureImportance")
 }

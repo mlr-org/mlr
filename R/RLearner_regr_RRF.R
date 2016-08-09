@@ -50,24 +50,5 @@ predictLearner.regr.RRF <- function(.learner, .model, .newdata, ...) {
 #' @export
 #' @rdname getFeatureImportanceLearner
 getFeatureImportance.regr.RRF = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
-  ctrl = list(...)
-  if (is.null(ctrl$type)) {
-    ctrl$type = 2L
-  } else if (ctrl$type == 1L) {
-      has.fiv = .learner$par.vals$importance
-      if (is.null(has.fiv) || isFALSE(has.fiv))
-        stop("You need to train the learner with parameter 'importance' is TRUE")
-  }
-  
-  fiv.obj = RRF::importance(mod, ctrl)
-  
-  if (ctrl$type == 1L) {
-    fiv = fiv.obj[, 1L]
-    names(fiv) = rownames(fiv.obj)
-  } else {
-    fiv = as.numeric(fiv.obj)
-    names(fiv) = .model$features
-  }
-  return(fiv)
+  getFeatureImportance.classif.RRF(.learner, .model, ...)
 }

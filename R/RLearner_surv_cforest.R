@@ -57,11 +57,3 @@ trainLearner.surv.cforest = function(.learner, .task, .subset,
 predictLearner.surv.cforest = function(.learner, .model, .newdata, ...) {
   predict(.model$learner.model, newdata = .newdata, ...)
 }
-
-#' @export
-#' @rdname getFeatureImportanceLearner
-getFeatureImportance.surv.cforest = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
-  fiv = as.numeric(party::varimp(mod, ...))
-  setNames(fiv, .model$features)
-}

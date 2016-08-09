@@ -63,7 +63,5 @@ predictLearner.regr.cforest = function(.learner, .model, .newdata, ...) {
 #' @export
 #' @rdname getFeatureImportanceLearner
 getFeatureImportance.regr.cforest = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
-  fiv = as.numeric(party::varimp(mod, ...))
-  setNames(fiv, .model$features)
+  getFeatureImportance.classif.cforest(.learner, .model, auc = FALSE, ...)
 }

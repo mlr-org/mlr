@@ -64,14 +64,9 @@ getFeatureImportance.classif.randomForest = function(.learner, .model, ...) {
     }
   }
   
-  fiv.obj = randomForest::importance(mod, ctrl)
+  fiv.obj = randomForest::importance(mod, ctrl$type)
 
-  if (ctrl$type == 1L) {
-    fiv = fiv.obj[, 1L]
-    names(fiv) = rownames(fiv.obj)
-  } else {
-    fiv = as.numeric(fiv.obj)
-    names(fiv) = .model$features
-  }
-  return(fiv)
+  fiv = as.data.frame(t(fiv.obj))
+  rownames(fiv) = NULL
+  addClasses(fiv, "FeatureImportance")
 }

@@ -44,11 +44,6 @@ predictLearner.regr.gbm = function(.learner, .model, .newdata, ...) {
 
 #' @export
 #' @rdname getFeatureImportanceLearner
-getFeatureImportance.regr.gbm = function(.learner, .model, n.trees, ...) {
-  mod = getLearnerModel(.model)
-  if (missing(n.trees))
-    n.trees = mod$n.trees
-  fiv = as.numeric(gbm::relative.influence(mod, n.trees, ...))
-  names(fiv) = .model$features
-  return(fiv)
-}
+getFeatureImportance.regr.gbm = function(.learner, .model, ...) {
+  getFeatureImportance.classif.gbm(.learner, .model, ...)
+  }

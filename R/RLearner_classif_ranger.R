@@ -53,7 +53,7 @@ getFeatureImportance.classif.ranger = function(.learner, .model, ...) {
       'impurity' or 'permutation' to compute feature importance")
   }
   mod = getLearnerModel(.model)
-  fiv = as.numeric(ranger::importance(mod))
-  names(fiv) = .model$features
+  fiv = ranger::importance(mod)
+
   return(fiv)
 }
