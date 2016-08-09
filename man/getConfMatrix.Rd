@@ -7,7 +7,7 @@
 \usage{
 getConfMatrix(pred, relative = FALSE, sums = FALSE)
 
-\method{print}{confMatrix}(x, both = TRUE, digits = 4)
+\method{print}{confMatrix}(x, both = TRUE, digits = 4, ...)
 }
 \arguments{
 \item{pred}{[\code{\link{Prediction}}]\cr
