@@ -53,7 +53,7 @@ plotPartialDependencePlotly = function(obj, p = 1,
   x1n = features[1]
   x2n = features[2]
   
-  
+  # Plot regression
   if (obj$task.desc$type == "regr") {
     grid.dcast = reshape2::dcast(obj$data, as.formula(paste(x1n, x2n, sep = "~")), value.var = target)
     grid.3d = list(x = grid.dcast[,1],
@@ -74,6 +74,7 @@ plotPartialDependencePlotly = function(obj, p = 1,
                                       zaxis = list(title = paste("z: ", target, sep = ""))))
   }
   
+  # Plot classification
   if (obj$task.desc$type == "classif") {
     grid.dcast.tmp = obj$data
     grid.dcast.tmp = plyr::ddply(grid.dcast.tmp, c(x1n, x2n), function (x) {x$.id = 1:nrow(x); x})
