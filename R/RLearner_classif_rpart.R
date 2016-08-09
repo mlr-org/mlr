@@ -47,6 +47,8 @@ predictLearner.classif.rpart = function(.learner, .model, .newdata, ...) {
 getFeatureImportance.classif.rpart = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   fiv = as.numeric(mod$variable.importance[names(mod$ordered)])
-  names(fiv) = .model$features
-  return(fiv)
+  
+  fiv = data.frame(as.list(fiv))
+  colnames(fiv) = names(mod$ordered)
+  addClasses(fiv, "FeatureImportance")
 }

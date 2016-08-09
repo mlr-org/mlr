@@ -43,9 +43,7 @@ predictLearner.regr.rpart = function(.learner, .model, .newdata, ...) {
 #' @export
 #' @rdname getFeatureImportanceLearner
 getFeatureImportance.regr.rpart = function(.learner, .model, ...) {
-  mod = getLearnerModel(.model)
-  fiv = as.numeric(mod$variable.importance[names(mod$ordered)])
-  names(fiv) = .model$features
-  return(fiv)
+  # Code for classification and regression is the same so we can just call the classif function
+  getFeatureImportance.classif.rpart(.learner, .model, ...)
 }
 
