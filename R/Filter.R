@@ -161,9 +161,9 @@ makeFilter(
   pkg  = "randomForestSRC",
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors"),
-  fun = function(task, nselect, ...) {
+  fun = function(task, nselect, method = "md", ...) {
     im = randomForestSRC::var.select(getTaskFormula(task), getTaskData(task),
-      method = "md", verbose = FALSE, ...)$md.obj$order
+      method = method, verbose = FALSE, ...)$md.obj$order
     setNames(-im[, 1L], rownames(im))
   }
 )
