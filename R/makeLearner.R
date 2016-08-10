@@ -55,7 +55,13 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
 
   assertString(cl)
   assertFlag(fix.factors.prediction)
-  constructor = getS3method("makeRLearner", class = cl)
+
+  constructor = try(getS3method("makeRLearner", class = cl), silent = TRUE)
+  if (inherits(constructor, "try-error")) {
+    possibles = getNameProposals(cl, possible.inputs = suppressWarnings(listLearners()$class))
+    stopf("Couldn't find learner '%s'\nDid you mean one of these learners instead: %s",
+      cl, stri_flatten(possibles, collapse = " "))
+  }
   wl = do.call(constructor, list())
 
   if (!missing(id)) {
