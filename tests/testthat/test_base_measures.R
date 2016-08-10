@@ -564,3 +564,30 @@ test_that("check measure calculations", {
   expect_equal(silhouette.test, silhouette$fun(pred = pred.cluster, feats = data.cluster))
   expect_equal(object = silhouette.test, as.numeric(silhouette.perf))
 })
+
+test_that("measures quickcheck", {
+  options(warn = 2)
+  ms = list(mmce, acc, bac, tp, fp, tn, fn, tpr, fpr, tnr, fnr, ppv, npv, mcc, f1)
+  lrn = makeLearner("classif.rpart")
+      
+  quickcheckTest(
+    quickcheck::forall(data = as.data.frame(quickcheck::rmatrix(elements = quickcheck::rinteger, nrow = c(min = 2, max = 10000), ncol = c(min = 1, max = 100))),
+      {
+        classes = factor(c("foo", "bar"))
+        data$target = rep_len(classes, length.out = nrow(data))
+  
+        trainIds = 1:(2*nrow(data)/3)
+        testIds = setdiff(1:nrow(data), trainIds)
+        task = makeClassifTask(data = data, target = "target")
+  
+        mod = train(lrn, task = task, subset = trainIds)
+        pred = predict(mod, task = task, subset = testIds)
+        perf = performance(pred, measures = ms)
+  
+        is.numeric(unlist(perf)) && all(perf >= 0 && perf <= 1)
+      }
+    ),
+    about = "binary classification measures",
+    sample.size = 100
+  )
+})

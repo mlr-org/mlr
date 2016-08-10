@@ -112,6 +112,7 @@ Suggests:
     pls,
     PMCMR (>= 4.1),
     pROC (>= 1.8),
+    quickcheck,
     randomForest,
     randomForestSRC (>= 2.2.0),
     ranger (>= 0.5.0),
