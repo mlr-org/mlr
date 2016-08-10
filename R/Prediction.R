@@ -190,5 +190,6 @@ print.Prediction = function(x, ...) {
   catf("time: %.2f", x$time)
   if (!is.na(x$error)) catf("errors: %s", x$error)
   print(head(as.data.frame(x)))
+  catf("... (%i rows, %i cols)", nrow(iris), ncol(iris))
 }
 
