@@ -22,7 +22,7 @@ makeRLearner.regr.xgboost = function() {
       makeUntypedLearnerParam(id = "eval_metric", default = "rmse"),
       makeNumericLearnerParam(id = "base_score", default = 0.5),
 
-      makeNumericLearnerParam(id = "missing", default = 0, tunable = FALSE, when = "both"),
+      makeNumericLearnerParam(id = "missing", default = 0, tunable = FALSE, when = "both", special.vals = list(NA_real_)),
       makeIntegerLearnerParam(id = "nthread", default = 16, lower = 1),
       makeIntegerLearnerParam(id = "nrounds", default = 1, lower = 1),
       # FIXME nrounds seems to have no default in xgboost(), if it has 1, par.vals is redundant
@@ -32,7 +32,7 @@ makeRLearner.regr.xgboost = function() {
       makeIntegerLearnerParam(id = "early.stop.round", default = 1, lower = 1),
       makeLogicalLearnerParam(id = "maximize", default = FALSE)
     ),
-    mlr.defaults = list(nrounds = 1, missing = NA_real_, tunable = FALSE),
+    mlr.defaults = list(nrounds = 1, missing = NA_real_),
     properties = c("numerics", "factors", "weights"),
     name = "eXtreme Gradient Boosting",
     short.name = "xgboost",
