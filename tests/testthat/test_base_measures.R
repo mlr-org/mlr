@@ -297,9 +297,9 @@ test_that("check measure calculations", {
   expect_equal(colauc2[,1], as.numeric(colAUC(as.numeric(pred.art.classif), truth = tar.classif)[,1]))
   # multiclass.auc
   expect_equal(as.numeric(performance(pred.bin, measures = list(multiclass.aunu,
-    multiclass.aunp, multiclass.au1u, multiclass.au1p))), 
+    multiclass.aunp, multiclass.au1u, multiclass.au1p))),
     as.numeric(rep(performance(pred.bin, measures = auc), 4)))
-  
+
   p1 = p2 = matrix(c(0.1, 0.9, 0.2, 0.8), 2, 2, byrow = TRUE)
   colnames(p1) = c("a", "b")
   colnames(p2) = c("b", "a")
@@ -500,20 +500,19 @@ test_that("check measure calculations", {
 
   #test clustering
 
+  #db
+  c2 = c(3, 1)
+  c1 = c((1 + 2 + 4) / 3, (3 + 4 + 2) / 3)
+  s1 = sqrt((sum((data.cluster[1, ] - c1)^2) + sum((data.cluster[2, ] - c1)^2) +
+    sum((data.cluster[4, ] - c1)^2)) / 3L)
+  M = sqrt(sum((c2 - c1)^2))
+  db.test = s1 / M
+  db.perf = performance(pred.cluster, measures = db,
+    model = mod.cluster, feats = data.cluster)
+  expect_equal(db.test,db$fun(task = task.cluster,
+   pred = pred.cluster, feats = data.cluster))
+  expect_equal(db.test, as.numeric(db.perf))
 
-  # FIXME: clusterSim is currently broken, see issue #1054
-  # #db
-  # c2 = c(3, 1)
-  # c1 = c((1 + 2 + 4) / 3, (3 + 4 + 2) / 3)
-  # s1 = sqrt((sum((data.cluster[1, ] - c1)^2) + sum((data.cluster[2, ] - c1)^2) +
-  #   sum((data.cluster[4, ] - c1)^2)) / 3L)
-  # M = sqrt(sum((c2 - c1)^2))
-  # db.test = s1 / M
-  # db.perf = performance(pred.cluster, measures = db,
-  #   model = mod.cluster, feats = data.cluster)
-  # expect_equal(db.test,db$fun(task = task.cluster,
-  #  pred = pred.cluster, feats = data.cluster))
-  # expect_equal(db.test, as.numeric(db.perf))
   #dunn
   exdist = min(sqrt(sum((c(1, 3) - c(3, 1))^2)), sqrt(sum((c(2, 4) - c(3, 1))^2)),
     sqrt(sum((c(4, 3) - c(3, 2))^2)))

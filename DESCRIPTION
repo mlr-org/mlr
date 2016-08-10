@@ -58,7 +58,7 @@ Suggests:
     class,
     clue,
     cluster,
-    clusterSim,
+    clusterSim (>= 0.44-5),
     clValid,
     cmaes,
     CoxBoost,
