@@ -71,10 +71,7 @@ predictLearner.classif.gbm = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-#' @rdname getFeatureImportanceLearner
-getFeatureImportance.classif.gbm = function(.learner, .model, ...) {
+getFeatureImportanceLearner.classif.gbm = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
-  fiv = gbm::relative.influence(mod, mod$n.trees, ...)
-  fiv = data.frame(as.list(fiv))
-  addClasses(fiv, "FeatureImportance")
+  gbm::relative.influence(mod, mod$n.trees, ...)
 }

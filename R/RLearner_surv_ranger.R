@@ -24,7 +24,7 @@ makeRLearner.surv.ranger = function() {
       makeDiscreteLearnerParam(id = "splitrule", values = c("logrank", "C"), default = "logrank")
     ),
     par.vals = list(num.threads = 1L, verbose = FALSE, respect.unordered.factors = TRUE, write.forest = TRUE),
-    properties = c("numerics", "factors", "ordered", "rcens", "prob"),
+    properties = c("numerics", "factors", "ordered", "rcens", "prob", "featimp"),
     name = "Random Forests",
     short.name = "ranger",
     note = "By default, internal parallelization is switched off (`num.threads = 1`), `verbose` output is disabled, `respect.unordered.factors` is set to `TRUE` and ranger's .forest object is kept for prediction (`keep.forest` = `TRUE`). All settings are changeable."
@@ -46,7 +46,6 @@ predictLearner.surv.ranger = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-#' @rdname getFeatureImportanceLearner
-getFeatureImportance.surv.ranger = function(.learner, .model, ...) {
-  getFeatureImportance.classif.ranger(.learner, .model, ...)
+getFeatureImportanceLearner.surv.ranger = function(.learner, .model, ...) {
+  getFeatureImportanceLearner.classif.ranger(.learner, .model, ...)
 }

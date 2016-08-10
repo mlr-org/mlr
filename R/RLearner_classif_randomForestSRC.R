@@ -65,10 +65,7 @@ predictLearner.classif.randomForestSRC = function(.learner, .model, .newdata, ..
 }
 
 #' @export
-#' @rdname getFeatureImportanceLearner
-getFeatureImportance.classif.randomForestSRC = function(.learner, .model, ...) {
+getFeatureImportanceLearner.classif.randomForestSRC = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
-  fiv = randomForestSRC::vimp(mod, ...)$importance[, "all"]
-  fiv = data.frame(as.list(fiv))
-  addClasses(fiv, "FeatureImportance")
+  randomForestSRC::vimp(mod, ...)$importance[, "all"]
 }

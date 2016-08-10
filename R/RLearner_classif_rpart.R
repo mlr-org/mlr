@@ -43,14 +43,7 @@ predictLearner.classif.rpart = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-#' @rdname getFeatureImportanceLearner
-getFeatureImportance.classif.rpart = function(.learner, .model, ...) {
+getFeatureImportanceLearner.classif.rpart = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
-  fiv = as.numeric(mod$variable.importance[names(mod$ordered)])
-  
-  fiv = data.frame(as.list(fiv))
-  fiv = setnames(fiv, names(mod$ordered))
-  #unselected variables get an importance of zero
-  fiv[is.na(fiv)] = 0
-  addClasses(fiv, "FeatureImportance")
+  mod$variable.importance
 }

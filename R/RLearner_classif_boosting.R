@@ -49,10 +49,7 @@ predictLearner.classif.boosting = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-#' @rdname getFeatureImportanceLearner
-getFeatureImportance.classif.boosting = function(.learner, .model, ...) {
+getFeatureImportanceLearner.classif.boosting = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
-  fiv = mod$importance[.model$features]
-  fiv = data.frame(as.list(fiv))
-  addClasses(fiv, "FeatureImportance")
+  mod$importance[.model$features]
 }

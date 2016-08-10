@@ -36,7 +36,7 @@ The learner properties are defined as follows:
   \item{rcens, lcens, icens}{Only for surv: Can right, left, or interval censored data be handled?}
   \item{prob}{For classif, cluster, multilabel, surv: Can probabilites be predicted?}
   \item{se}{Only for regr: Can standard errors be predicted?}
-  \item{featimp}{For classif, regr, surv: Does the model support variable importances?}
+  \item{featimp}{For classif, regr, surv: Does the model support extracting information on feature importance?}
 }
 }
 \seealso{

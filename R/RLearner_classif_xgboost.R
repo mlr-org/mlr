@@ -114,22 +114,13 @@ predictLearner.classif.xgboost = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-#' @rdname getFeatureImportanceLearner
-getFeatureImportance.classif.xgboost = function(.learner, .model, ...) {
+getFeatureImportanceLearner.classif.xgboost = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   imp = xgboost::xgb.importance(feature_names = .model$features,
                                 model = mod, ...)
   
   fiv = imp$Gain
-  fiv = setNames(fiv, imp$Feature)
-  #xgboost drops features that were not selected completely, we need to add them with importance 0
-  fiv[setdiff(.model$features, imp$Feature)] = 0
-  
-  #get features back in the correct order
-  fiv = fiv[.model$features]
-  
-  fiv = as.data.frame(t(fiv))
-  addClasses(fiv, "FeatureImportance")
+  setNames(fiv, imp$Feature)
 }
 
 

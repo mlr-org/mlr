@@ -51,8 +51,7 @@ predictLearner.classif.RRF = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-#' @rdname getFeatureImportanceLearner
-getFeatureImportance.classif.RRF = function(.learner, .model, ...) {
+getFeatureImportanceLearner.classif.RRF = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   ctrl = list(...)
   if (is.null(ctrl$type)) {
@@ -63,9 +62,5 @@ getFeatureImportance.classif.RRF = function(.learner, .model, ...) {
       stop("You need to train the learner with parameter 'importance' set to TRUE")
   }
   
-  fiv.obj = RRF::importance(mod, ctrl$type)
-  
-  fiv = as.data.frame(t(fiv.obj))
-  rownames(fiv) = NULL
-  addClasses(fiv, "FeatureImportance")
+  RRF::importance(mod, ctrl$type)[,1]
 }

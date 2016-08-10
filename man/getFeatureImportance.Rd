@@ -15,16 +15,13 @@ Additional parameters, which are passed to the underlying importance value
 generating function.}
 }
 \value{
-A \code{data.frame} with one column for every feature in the model
- and one row for the corresponding importance value.
+[\code{FeatureImportance}] An object containing a \code{data.frame} of the variable importances and further information.
 }
 \description{
 For some learners it is possible to calculate a feature importance measure.
 \code{getFeatureImportance} extracts those values from trained models.
-See Details for a list of the implemented learners that support this.
-}
-\details{
-The following learners have been implemented with the associated importance measures.
+See below for a list of supported learners.
+
 
 \itemize{
    \item{boosting} \cr
@@ -67,14 +64,5 @@ The following learners have been implemented with the associated importance meas
    calculated by taking each feature's contribution for each tree in the model. The exact 
    computation of the importance in xgboost is undocumented.}
  }
-}
-\section{Implementing new methods}{
-
-You can add more learners by implementing methods for them.
-Your implementation must adhere to the following: \cr
-The method must take arguments \code{.learner}, \code{.model} and \code{...}.
-Where, the model was fitted on the subset of \code{.task} given by \code{.subset}. 
-The parameters in \code{...} should be parameters of the underlying importance value
-generating function, so they just need to be passed to it directly.
 }
 

@@ -1,11 +1,10 @@
-#' Calculates feature importance values for trained models.
+#' @title Calculates feature importance values for trained models.
 #'
+#' @description 
 #' For some learners it is possible to calculate a feature importance measure.
 #' \code{getFeatureImportance} extracts those values from trained models.
-#' See Details for a list of the implemented learners that support this.
+#' See below for a list of supported learners.
 #' 
-#' 
-#' The following learners have been implemented with the associated importance measures.
 #' 
 #' \itemize{
 #'    \item{boosting} \cr
@@ -48,42 +47,58 @@
 #'    calculated by taking each feature's contribution for each tree in the model. The exact 
 #'    computation of the importance in xgboost is undocumented.}
 #'  }
-#'
-#' @section Implementing new methods:
-#' You can add more learners by implementing methods for them.
-#' Your implementation must adhere to the following: \cr
-#' The method must take arguments \code{.learner}, \code{.model} and \code{...}.
-#' Where, the model was fitted on the subset of \code{.task} given by \code{.subset}. 
-#' The parameters in \code{...} should be parameters of the underlying importance value
-#' generating function, so they just need to be passed to it directly. 
 #' 
 #' @param object [\code{\link{WrappedModel}}]\cr
 #'   Wrapped model, result of \code{\link{train}}.
 #' @param ... [any]\cr
 #'   Additional parameters, which are passed to the underlying importance value 
 #'   generating function.
-#' @return A \code{data.frame} with one column for every feature in the model
-#'  and one row for the corresponding importance value.
+#' @return [\code{FeatureImportance}] An object containing a \code{data.frame} of the variable importances and further information.
 #' @export
 getFeatureImportance = function(object, ...) {
+  
   assertClass(object, classes = "WrappedModel")
-  getFeatureImportanceLearner(object$learner, object, ...)
+  lrn = checkLearner(object$learner, props = "featimp")
+  imp = getFeatureImportanceLearner(lrn, object, ...)
+  assertNumeric(imp, names = "named")
+  
+  
+  #We need to add missing pars with zero and order them
+  imp[setdiff(object$features, names(imp))] = 0
+  imp = imp[object$features]
+  
+  #convert named vector to data.frame with columns and set NA to 0
+  imp[is.na(imp)] = 0L
+  imp = as.data.frame(t(imp))
+  rownames(imp) = NULL
+  
+  makeS3Obj("FeatureImportance",
+    res = imp,
+    task.desc = getTaskDescription(object),
+    learner = lrn,
+    contrast = function(x, y) x - y,
+    aggregation = identity,
+    nmc = NA,
+    replace = NA,
+    local = FALSE)
 }
 
-#' Calculates feature importance values for a given learner.
-#'
-#' For details see \code{\link{getFeatureImportance}}.
+#' @title Calculates feature importance values for a given learner.
+#' 
+#' @description 
+#' 
+#' This function is mostly for internal usage. To calculate feature importance use \code{\link{getFeatureImportance}}.
 #'
 #' @param .learner [\code{\link{Learner}} | \code{character(1)}]\cr
 #'   The learner.
-#'   If you pass a string the learner will be created via \code{\link{makeLearner}}.
 #' @param .model [\code{\link{WrappedModel}}]\cr
 #'  The model.
-#' @param auc [logical(1)]\cr Only for binary classification with cforest. Should the auc based importance be calculated.
 #' @param ... [any]\cr
 #' Additional parameters, which are passed to the underlying importance value 
 #' generating function.
+#' @return [\code(numeric)] A named vector of variable importance.
 #' @export
+#' @keywords internal
 getFeatureImportanceLearner = function(.learner, .model, ...) {
-	UseMethod("getFeatureImportance")
+	UseMethod("getFeatureImportanceLearner")
 }

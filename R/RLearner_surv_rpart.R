@@ -46,7 +46,6 @@ predictLearner.surv.rpart = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-#' @rdname getFeatureImportanceLearner
-getFeatureImportance.surv.rpart = function(.learner, .model, ...) {
-  getFeatureImportance.classif.rpart(.learner, .model, ...)
+getFeatureImportanceLearner.surv.rpart = function(.learner, .model, ...) {
+  getFeatureImportanceLearner.classif.rpart(.learner, .model, ...)
 }

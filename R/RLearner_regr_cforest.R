@@ -61,7 +61,6 @@ predictLearner.regr.cforest = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-#' @rdname getFeatureImportanceLearner
-getFeatureImportance.regr.cforest = function(.learner, .model, ...) {
-  getFeatureImportance.classif.cforest(.learner, .model, auc = FALSE, ...)
+getFeatureImportanceLearner.regr.cforest = function(.learner, .model, ...) {
+  getFeatureImportanceLearner.classif.cforest(.learner, .model, auc = FALSE, ...)
 }

@@ -5,7 +5,7 @@ test_that("getFeatureImportance", {
   #type 2 for random Forest should work without setting importance
   lrn = makeLearner("classif.randomForest")
   mod = train(lrn, binaryclass.task)
-  feat.imp = getFeatureImportance(mod, type = 2)
+  feat.imp = getFeatureImportance(mod, type = 2)$res
   expect_data_frame(feat.imp, types = rep("numeric", getTaskNFeats(binaryclass.task)),
     any.missing = FALSE, nrows = 1, ncols = getTaskNFeats(binaryclass.task))
   expect_equal(colnames(feat.imp), mod$features)
@@ -15,7 +15,7 @@ test_that("getFeatureImportance", {
   
   lrn = setHyperPars(lrn, importance = TRUE)
   mod = train(lrn, binaryclass.task)
-  feat.imp = getFeatureImportance(mod, type = 1)
+  feat.imp = getFeatureImportance(mod, type = 1)$res
   expect_data_frame(feat.imp, types = rep("numeric", getTaskNFeats(binaryclass.task)),
     any.missing = FALSE, nrows = 1, ncols = getTaskNFeats(binaryclass.task))
   expect_equal(colnames(feat.imp), mod$features)
@@ -23,7 +23,7 @@ test_that("getFeatureImportance", {
   #regression learner
   lrn = makeLearner("regr.gbm")
   mod = train(lrn, regr.task)
-  feat.imp = getFeatureImportance(mod)
+  feat.imp = getFeatureImportance(mod)$res
   expect_data_frame(feat.imp, types = rep("numeric", getTaskNFeats(regr.task)),
     any.missing = FALSE, nrows = 1, ncols = getTaskNFeats(regr.task))
   expect_equal(colnames(feat.imp), mod$features)
@@ -32,5 +32,5 @@ test_that("getFeatureImportance", {
   #be returned
   lrn = makeLearner("classif.qda")
   mod = train(lrn, binaryclass.task)
-  expect_error(getFeatureImportance(mod), regexp = "no applicable method")
+  expect_error(getFeatureImportance(mod), regexp = "does not support 'featimp'")
 })

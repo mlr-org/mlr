@@ -51,7 +51,8 @@ predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) 
   predict(.model$learner.model, newdata = .newdata, type = type, ...)
 }
 
-getFeatureImportance.classif.randomForest = function(.learner, .model, ...) {
+#' @export
+getFeatureImportanceLearner.classif.randomForest = function(.learner, .model, ...) {
   mod = getLearnerModel(.model)
   ctrl = list(...)
   if (is.null(ctrl$type)) {
@@ -64,9 +65,5 @@ getFeatureImportance.classif.randomForest = function(.learner, .model, ...) {
     }
   }
   
-  fiv.obj = randomForest::importance(mod, ctrl$type)
-
-  fiv = as.data.frame(t(fiv.obj))
-  rownames(fiv) = NULL
-  addClasses(fiv, "FeatureImportance")
+  randomForest::importance(mod, ctrl$type)[, 1]
 }

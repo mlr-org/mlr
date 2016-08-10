@@ -48,7 +48,6 @@ predictLearner.regr.RRF <- function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-#' @rdname getFeatureImportanceLearner
-getFeatureImportance.regr.RRF = function(.learner, .model, ...) {
-  getFeatureImportance.classif.RRF(.learner, .model, ...)
+getFeatureImportanceLearner.regr.RRF = function(.learner, .model, ...) {
+  getFeatureImportanceLearner.classif.RRF(.learner, .model, ...)
 }

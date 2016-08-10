@@ -61,7 +61,6 @@ predictLearner.surv.randomForestSRC = function(.learner, .model, .newdata, ...) 
 }
 
 #' @export
-#' @rdname getFeatureImportanceLearner
-getFeatureImportance.surv.randomForestSRC = function(.learner, .model, ...) {
-  getFeatureImportance.regr.randomForestSRC(.learner, .model, ...)
+getFeatureImportanceLearner.surv.randomForestSRC = function(.learner, .model, ...) {
+  getFeatureImportanceLearner.regr.randomForestSRC(.learner, .model, ...)
 }

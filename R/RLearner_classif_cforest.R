@@ -67,17 +67,11 @@ predictLearner.classif.cforest = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-#' @rdname getFeatureImportanceLearner
-getFeatureImportance.classif.cforest = function(.learner, .model, auc = FALSE, ...) {
+getFeatureImportanceLearner.classif.cforest = function(.learner, .model, auc = FALSE, ...) {
   mod = getLearnerModel(.model)
   if (auc) {
-    fiv = party::varimpAUC(mod, ...)
+    party::varimpAUC(mod, ...)
   } else {
-    fiv = party::varimp(mod, ...)
+    party::varimp(mod, ...)
   }
-  fiv = data.frame(as.list(fiv))
-  
-  #unselected variables get an importance of zero
-  fiv[is.na(fiv)] = 0
-  addClasses(fiv, "FeatureImportance")
 }

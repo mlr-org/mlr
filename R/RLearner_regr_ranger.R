@@ -43,7 +43,6 @@ predictLearner.regr.ranger = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-#' @rdname getFeatureImportanceLearner
-getFeatureImportance.regr.ranger = function(.learner, .model, ...) {
-  getFeatureImportance.classif.ranger(.learner, .model, ...)
+getFeatureImportanceLearner.regr.ranger = function(.learner, .model, ...) {
+  getFeatureImportanceLearner.classif.ranger(.learner, .model, ...)
 }

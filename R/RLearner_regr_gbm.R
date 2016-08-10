@@ -43,7 +43,6 @@ predictLearner.regr.gbm = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-#' @rdname getFeatureImportanceLearner
-getFeatureImportance.regr.gbm = function(.learner, .model, ...) {
-  getFeatureImportance.classif.gbm(.learner, .model, ...)
+getFeatureImportanceLearner.regr.gbm = function(.learner, .model, ...) {
+  getFeatureImportanceLearner.classif.gbm(.learner, .model, ...)
   }

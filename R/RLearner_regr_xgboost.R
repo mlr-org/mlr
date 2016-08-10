@@ -67,7 +67,6 @@ predictLearner.regr.xgboost = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-#' @rdname getFeatureImportanceLearner
-getFeatureImportance.regr.xgboost = function(.learner, .model, ...) {
-  getFeatureImportance.classif.xgboost(.learner, .model, ...)
+getFeatureImportanceLearner.regr.xgboost = function(.learner, .model, ...) {
+  getFeatureImportanceLearner.classif.xgboost(.learner, .model, ...)
 }

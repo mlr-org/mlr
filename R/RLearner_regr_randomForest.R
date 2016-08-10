@@ -134,7 +134,6 @@ sdStandardError = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-#' @rdname getFeatureImportanceLearner
-getFeatureImportance.regr.randomForest = function(.learner, .model, ...) {
-  getFeatureImportance.classif.randomForest(.learner, .model, ...)
+getFeatureImportanceLearner.regr.randomForest = function(.learner, .model, ...) {
+  getFeatureImportanceLearner.classif.randomForest(.learner, .model, ...)
 }
