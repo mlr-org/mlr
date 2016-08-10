@@ -11,7 +11,7 @@ test_that("getFeatureImportance", {
   expect_equal(colnames(feat.imp), mod$features)
   
   #type 1 shouldn't
-  expect_error(getFeatureImportance(mod, type = 1), regexp = "parameter 'importance' is TRUE")
+  expect_error(getFeatureImportance(mod, type = 1), regexp = ".*importance.*TRUE")
   
   lrn = setHyperPars(lrn, importance = TRUE)
   mod = train(lrn, binaryclass.task)
