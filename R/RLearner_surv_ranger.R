@@ -14,7 +14,7 @@ makeRLearner.surv.ranger = function() {
       makeNumericVectorLearnerParam(id = "split.select.weights", lower = 0, upper = 1),
       makeUntypedLearnerParam(id = "always.split.variables"),
       makeLogicalLearnerParam(id = "respect.unordered.factors", default = FALSE),
-      makeDiscreteLearnerParam(id = "importance", values = c("none", "impurity", "permutation"), default = "none", tunable = FALSE),
+      makeDiscreteLearnerParam(id = "importance", values = c("none", "permutation"), default = "none", tunable = FALSE),
       makeLogicalLearnerParam(id = "write.forest", default = FALSE, tunable = FALSE),
       makeLogicalLearnerParam(id = "scale.permutation.importance", default = FALSE, requires = quote(importance == "permutation"), tunable = FALSE),
       makeIntegerLearnerParam(id = "num.threads", lower = 1L, when = "both", tunable = FALSE),
