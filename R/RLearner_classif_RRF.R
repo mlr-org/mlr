@@ -57,12 +57,10 @@ getFeatureImportance.classif.RRF = function(.learner, .model, ...) {
   ctrl = list(...)
   if (is.null(ctrl$type)) {
     ctrl$type = 2L
-  } else {
-    if (ctrl$type == 1L) {
-      has.fiv = .learner$par.vals$importance
-      if (is.null(has.fiv) || has.fiv != TRUE)
-        stop("You need to train the learner with parameter 'importance' is TRUE")
-    }
+  } else if (ctrl$type == 1L) {
+    has.fiv = .learner$par.vals$importance
+    if (is.null(has.fiv) || has.fiv != TRUE)
+      stop("You need to train the learner with parameter 'importance' set to TRUE")
   }
   
   fiv.obj = RRF::importance(mod, ctrl$type)
