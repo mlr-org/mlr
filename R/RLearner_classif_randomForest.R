@@ -52,13 +52,7 @@ predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) 
 }
 
 #' @export
-getOutOfBagPredictions.classif.randomForestSRC = function(.learner, .model) {
-  preds = .model$learner.model$predicted.oob
-  if (.learner$predict.type == "response") {
-    factor(colnames(preds)[max.col(preds)], levels = colnames(preds))
-    # for each observation take the class with the highest probability from probability matrix 
-    # and convert resulting vector to factor
-  } else {
-    preds
-  }
+getOutOfBagPredictions.classif.randomForest = function(.learner, .model) {
+  unname(.model$learner.model$predicted)
 }
+
