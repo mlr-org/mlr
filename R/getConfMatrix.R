@@ -69,7 +69,7 @@ getConfMatrix = function(pred, relative = FALSE, sums = FALSE) {
     rownames(result)[k + 2] = "-n-"
   }
   
-  result = list(result = result, k = k, n = n, cls = cls, relative = relative, sums = sums)
+  result = list(result = result, task.desc = getTaskDescription(pred), relative = relative, sums = sums)
   
   js = 1:k # indexes for nonmargin cols
 
@@ -118,15 +118,20 @@ print.ConfMatrix = function(x, both = TRUE, digits = 2, ...) {
   nsmall = digits
   digits = nsmall - 1
   
+  cls = getTaskDescription(x$task.desc)$class.levels
+  k = length(cls)
+  n = getTaskDescription(x$task.desc)$size
+
+  
   if (x$relative) {
-    js = 1:x$k
+    js = 1:k
     res = paste(format(x$relative.row[js, js], digits = digits, nsmall = nsmall), 
       format(x$relative.col[js, js], digits = digits, nsmall = nsmall), sep = "/")
     attributes(res) = attributes(x$relative.row[js, js])
     
     
-    col.err = x$relative.col[x$k + 1,]
-    row.err = x$relative.row[,x$k + 1]
+    col.err = x$relative.col[k + 1,]
+    row.err = x$relative.row[,k + 1]
     full.err = stri_pad_both(format(x$relative.error, digits = digits, nsmall = nsmall), 
       width = nchar(res[1,1]))
     
@@ -137,10 +142,10 @@ print.ConfMatrix = function(x, both = TRUE, digits = 2, ...) {
     
     #also bind the marginal sums to the relative confusion matrix for printing
     if (x$sums) {
-      res = rbind(cbind(res, c(x$result["-n-", 1:x$k], NA)), c(x$result[1:x$k, "-n-"], NA, x$n))
-      dimnames(res) = list(true = c(x$cls, "-err.-", "-n-"), predicted = c(x$cls, "-err.-", "-n-"))
+      res = rbind(cbind(res, c(x$result["-n-", 1:k], NA)), c(x$result[1:k, "-n-"], NA, n))
+      dimnames(res) = list(true = c(cls, "-err.-", "-n-"), predicted = c(cls, "-err.-", "-n-"))
     } else {
-      dimnames(res) = list(true = c(x$cls, "-err.-"), predicted = c(x$cls, "-err.-"))
+      dimnames(res) = list(true = c(cls, "-err.-"), predicted = c(cls, "-err.-"))
     }
     
     cat("Relative confusion matrix (normalized by row/column):\n")
