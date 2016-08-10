@@ -378,7 +378,7 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
     assertDataFrame(data, col.names = "unique", min.rows = 1L, min.cols = length(obj$features) + length(td$target))
     assertSetEqual(colnames(data), c(obj$features, td$target), ordered = FALSE)
   }
-  
+
   if (!td$type == "regr")
     stop("only regression tasks are permitted")
   excluded = colnames(data)
@@ -417,7 +417,7 @@ generateFunctionalANOVAData = function(obj, input, features, depth = 1L, fun = m
   ## generate list of effects to evaluate and associate with grid
   U = unlist(lapply(1:depth, function(x) combn(features, x, simplify = FALSE)), recursive = FALSE)
   depths = sapply(U, length)
-  
+
   effects = sapply(U, function(u) stri_paste(u, collapse = ":"))
   fixed_grid = lapply(U, function(u) expand.grid(fixed[u]))
   names(fixed_grid) = effects
@@ -472,7 +472,7 @@ print.FunctionalANOVAData = function(x, ...) {
   catf("Target: %s", stri_paste(x$target, collapse = ", "))
   catf("Interaction Depth: %s", x$depth)
   catf("Effects Computed: %s", stri_paste(levels(x$data$effect), collapse = ", "))
-  print(head(x$data))
+  printHead(x$data)
 }
 
 doPartialDerivativeIteration = function(x, obj, data, features, fun, td, individual, ...) {
@@ -602,7 +602,7 @@ print.PartialDependenceData = function(x, ...) {
   catf("Individual: %s", x$individual)
   if (x$individual)
     catf("Predictions centered: %s", x$center)
-  print(head(x$data))
+  printHead(x$data)
 }
 #' @title Plot a partial dependence with ggplot2.
 #' @description
@@ -677,14 +677,14 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
       stop("obj argument created by generatePartialDependenceData must be called with two or three features to use this argument!")
     if (!obj$interaction)
       stop("obj argument created by generatePartialDependenceData must be called with interaction = TRUE to use this argument!")
-    
+
     features = obj$features[which(obj$features != facet)]
-    
+
     if (!is.factor(obj$data[[facet]]))
       obj$data[[facet]] = stri_paste(facet, "=", as.factor(obj$data[[facet]]), sep = " ")
     else
       obj$data[[facet]] = stri_paste(facet, "=", obj$data[[facet]], sep = " ")
-    
+
     scales = "fixed"
   } else {
     features = obj$features
@@ -775,7 +775,7 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
           data[[facet]] = stri_paste(facet, "=", data[[facet]], sep = " ")
       }
     }
-    
+
     if (geom == "line") {
       if (obj$task.desc$type %in% c("classif", "surv")) {
         if (obj$task.desc$type == "classif") {
@@ -799,7 +799,7 @@ plotPartialDependence = function(obj, geom = "line", facet = NULL, facet.wrap.nr
       plt = plt + geom_point(aes_string(plt$labels$x, plt$labels$y), data, alpha = .25, inherit.aes = FALSE)
     }
   }
-  
+
   plt
 }
 #' @title Plot a partial dependence using ggvis.
@@ -884,7 +884,7 @@ plotPartialDependenceGGVIS = function(obj, interact = NULL, p = 1) {
         plt = ggvis(data, prop("x", as.name(x)),
                     prop("y", as.name("Probability")),
                     prop("stroke", as.name("Class")))
-      
+
     } else { ## regression/survival
       if (interaction)
         plt = ggvis(data, prop("x", as.name(x)),
