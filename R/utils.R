@@ -11,3 +11,9 @@ getColEls = function(mat, inds) {
   getRowEls(t(mat), inds)
 }
 
+# prints more meaningful 'head' output indicating that there is more output
+printHead = function(x, n = 6L, ...) {
+  print(head(x, n = n, ...))
+  if (nrow(x) > n)
+    catf("... (%i rows, %i cols)\n", nrow(x), ncol(x))
+}
