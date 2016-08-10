@@ -1,6 +1,5 @@
-#' @title Extracts out of bag predictions from trained models
+#' Extracts out of bag predictions from trained models
 #'
-#' @description
 #' Learners like \code{randomForest} produce out of bag predictions. 
 #' \code{getOutOfBag} extracts this information from trained models and builds a 
 #' prediction object like provided by predict. 
@@ -19,12 +18,13 @@
 #' }
 #'
 #' @param object [\code{\link{WrappedModel}}]\cr
-#'   Trained model, result of \code{\link{train}}.
+#'   Wrapped model, result of \code{\link{train}}.
 #' @param task [\code{\link{Task}}]\cr
-#'   The task. The task have to correspond to the trained model. 
+#'   The task. If this is passed, data from this task is predicted.
 #' @return [\code{\link{Prediction}}].
 #' @export
 #' @examples
+#' set.seed(123)
 #' training.set = sample(1:150, 50)
 #' lrn = makeLearner("classif.ranger", predict.type = "prob", predict.threshold = 0.6)
 #' mod = train(lrn, sonar.task, subset = training.set)

@@ -52,10 +52,6 @@ predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) 
 }
 
 #' @export
-<<<<<<< HEAD
-getOutOfBagPredictions.classif.randomForest = function(.learner, .model) {
-  unname(.model$learner.model$predicted)
-=======
 getOutOfBagPredictions.classif.randomForestSRC = function(.learner, .model) {
   preds = .model$learner.model$predicted.oob
   if (.learner$predict.type == "response") {
@@ -65,5 +61,4 @@ getOutOfBagPredictions.classif.randomForestSRC = function(.learner, .model) {
   } else {
     preds
   }
->>>>>>> 46d89452d2aa09acee00279f695be4f25129f3f3
 }
