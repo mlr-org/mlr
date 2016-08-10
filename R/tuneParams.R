@@ -76,13 +76,15 @@
 #' print(head(as.data.frame(res$opt.path)))
 #' }
 #' @seealso \code{\link{generateHyperParsEffectData}}
-tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info")) {
+tuneParams = function(learner, task, resampling, measures, par.set, control, show.info = getMlrOption("show.info"), dict = NULL) {
   learner = checkLearner(learner)
-  if (ParamHelpers::hasExpression(learner$par.set) || any(vlapply(learner$par.vals, is.expression)))
-    learner = evaluateLearner(lrn = learner, task = task)
   assertClass(task, classes = "Task")
+  if (ParamHelpers::hasExpression(learner$par.set) || any(vlapply(learner$par.vals, is.expression)))
+    learner = evaluateLearner(lrn = learner, task = task, dict = dict)
   measures = checkMeasures(measures, learner)
   assertClass(par.set, classes = "ParamSet")
+  if (ParamHelpers::hasExpression(par.set))
+    par.set = evaluateParset(par.set = par.set, task = task, dict = dict)
   assertClass(control, classes = "TuneControl")
   if (!inherits(resampling, "ResampleDesc") &&  !inherits(resampling, "ResampleInstance"))
     stop("Argument resampling must be of class ResampleDesc or ResampleInstance!")

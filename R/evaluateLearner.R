@@ -1,11 +1,16 @@
-#' @title Evaluates expressions within a learner according to the task.
+#' @title Evaluates expressions within a learner or parameter set according to the task.
 #'
-#' @description Updates the learner by evaluating its expressions based on a specific task.
+#' @description Updates learners and/or parameter sets by evaluating their expressions
+#' based on a specific task.
 #' @template arg_learner
+#' @param par.set [\code{\link[ParamHelpers]{ParamSet}}]\cr
+#'   Parameter set of (hyper)parameters and their constraints.
+#'   Dependent parameters with a \code{requires} field must use \code{quote} and not
+#'   \code{expression} to define it.
 #' @template arg_task
-#' @return [\code{\link{Learner}}].
+#' @return [\code{\link{Learner}} | \code{\link[ParamHelpers]{ParamSet}}].
 #' @example 
-#' ## one can evaluate hyperparameters
+#' ## (1) evaluation of a learner's hyperparameters
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn1 = makeLearner("classif.rpart", minsplit = expression(k * p))
 #' lrn2 = evaluateLearner(lrn = lrn1, task = task)
@@ -13,7 +18,7 @@
 #' lrn1$par.vals$minsplit
 #' lrn2$par.vals$minsplit
 #' 
-#' ## alternatively, one can evaluate entire parameter sets
+#' ## (2) evaluation of a learner's entire parameter set
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn1 = makeLearner("classif.randomForest")
 #' lrn2 = evaluateLearner(lrn = lrn1, task = task)
@@ -21,16 +26,44 @@
 #' ## focus on the parameters 'mtry', 'classwt' and 'cutoff'
 #' lrn1$par.set
 #' lrn2$par.set
+#' 
+#' ## (3) evaluation of a parameter set
+#' task = makeClassifTask(data = iris, target = "Species")
+#' ps1 = makeParamSet(
+#'   makeNumericParam("C", lower = expression(a), upper = expression(b), trafo = function(x) 2^x),
+#'   makeDiscreteParam("sigma", values = 2^c(-1, 1)),
+#'   makeDiscreteParam("kernel", values = expression(list(e, f)))
+#' )
+#' ps2 = evaluateParset(par.set = ps1, task = task,
+#'   dict = list(a = -2, b = 3, e = "rbfdot", f = "laplacedot"))
 #' @export
-evaluateLearner = function(lrn, task) {
-  dict = makeTaskDictionary(task)
+evaluateLearner = function(lrn, task, dict = NULL) {
+  task.dict = makeTaskDictionary(task)
+  dict = insert(task.dict, dict)
   if (!is.null(dict)) {
-    if (ParamHelpers::hasExpression(lrn$par.set)) {
-      ParamHelpers::checkParamSet(lrn$par.set, dict = dict)
-      lrn$par.set = ParamHelpers::evaluateParamSet(par.set = lrn$par.set, dict = dict)
-    }
+    lrn$par.set = evaluateParset(lrn$par.set, task = task, dict = dict)
     if (length(lrn$par.vals) > 0 && any(vlapply(lrn$par.vals, is.expression)))
       lrn$par.vals = lapply(lrn$par.vals, function(expr) eval(expr, envir = dict))
   }
   return(lrn)
+}
+
+#' @export
+evaluateParset = function(par.set, task, dict = NULL) {
+  task.dict = makeTaskDictionary(task)
+  dict = insert(task.dict, dict)
+  if (!is.null(dict)) {
+    if (ParamHelpers::hasExpression(par.set)) {
+      ParamHelpers::checkParamSet(par.set, dict = dict)
+      par.set = ParamHelpers::evaluateParamSet(par.set = par.set, dict = dict)
+      ## assure that the value names are also shown if the values list was unnamed
+      par.set$pars = lapply(par.set$pars, function(x) {
+        if (is.null(x$values) || !is.null(names(x$values)))
+          return(x)
+        names(x$values) = unlist(lapply(x$values, function(vals) vals))
+        return(x)
+      })
+    }
+  }
+  return(par.set)
 }

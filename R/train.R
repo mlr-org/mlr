@@ -28,7 +28,7 @@
 #' learner = makeLearner("classif.rpart", minsplit = 7, predict.type = "prob")
 #' mod = train(learner, task, subset = training.set)
 #' print(mod)
-train = function(learner, task, subset, weights = NULL) {
+train = function(learner, task, subset, weights = NULL, dict = NULL) {
   learner = checkLearner(learner)
   if (ParamHelpers::hasExpression(learner$par.set) || any(vlapply(learner$par.vals, is.expression)))
     learner = evaluateLearner(lrn = learner, task = task)
