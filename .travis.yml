@@ -19,7 +19,7 @@ env:
   global:
     - _R_CHECK_TIMINGS_=0
     - _R_CHECK_FORCE_SUGGESTS_=0
-    - secure: "WFbdUIQRi7VYUHceKrg9xnw7m+8SK658rmgWPW++zWq5J4n0ZLuTRdKHu7ijyK9zOzNGjLF+NzvnwPS+yMPJwTX/s82hrC5GAMrYs3shEvR95PwFx42nfjqU5fsKsZ9gYpqIuZoJs32yPOJ/9XBLHU8rUv5+x4Z1zM2hBJHAn74="
+    - secure: "d0xff7hriQyReF4y3/iR5sHJlXocKNKcN6/Gi/r9Hxsfuh2Hx3fouQCMSPP+Oba6MDgEvAfryToAxcmaoZByQMwgevB0OBy5xkatj3oTHmhN5Nbk3jNXxXfA6P0Oqxaf7lXVZk2+Ly+PWnbgXn0uhjzdaZo0cWtVJ660ajS0x9Q="
 
 warnings_are_errors: true
 r_check_args: "--as-cran --run-donttest"
@@ -48,13 +48,14 @@ before_script:
 after_success:
   - git checkout master
   - R --no-save <<< 'library("devtools"); document()'
-  - git config user.name $GIT_NAME
-  - git config user.email $GIT_EMAIL
+  - git config user.name $GN
+  - git config user.email $GM
   - git config credential.helper "store --file=.git/credentials"
-  - echo "https://$GH_TOKEN:@github.com" >> .git/credentials
+  - echo "https://$GT:@github.com" >> .git/credentials
   - git config push.default matching
   - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
   - git push
+  - curl -s -X POST -H "Content-Type: application/json" -H "Accept: application/json" -H "Travis-API-Version: 3" -H "Authorization: token $TT" -d "{\"request\":{\"branch\":\"gh-pages\", \"message\":\"commit $TRAVIS_COMMIT, PR $TRAVIS_PULL_REQUEST\"}}" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests
 
 after_failure:
   - ./travis-tool.sh dump_logs
