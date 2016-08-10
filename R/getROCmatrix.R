@@ -41,30 +41,30 @@ getROCmatrix = function(pred, relative = TRUE) {
 print.ROCmatrix = function(r, digits = 2) {
 
   #format measures
-  r$measures = mapply(function(m, v) paste0(m, ": ", formatC(v, digits = digits)), names(r$measures), r$measures)
+  sig = paste0(": %.", digits, "f")
+  r$measures = mapply(function(m, v) paste0(m, sprintf(sig, v)), names(r$measures), r$measures)
   
-  res = cbind(r$confusionMatrix, c(r$measures[["TPR"]], r$measures[["FPR"]]), c(r$measures[["FNR"]], r$measures[["TNR"]]))
-  res = rbind(res, c(r$measures[["PPV"]], r$measures[["FOR"]], r$measures[["LRP"]], r$measures[["ACC"]]),
+  res = cbind(r$confusionMatrix, 
+    c(r$measures[["TPR"]], r$measures[["FPR"]]), 
+    c(r$measures[["FNR"]], r$measures[["TNR"]]))
+  res = rbind(res, 
+    c(r$measures[["PPV"]], r$measures[["FOR"]], r$measures[["LRP"]], r$measures[["ACC"]]),
     c(r$measures[["FDR"]], r$measures[["NPV"]], r$measures[["LRM"]], r$measures[["DOR"]]))
   
   names(dimnames(res)) = c("true", "predicted")
   print(noquote(res))
   
   cat("\n\nAbbreviations:\n")
-  cat("TPR - True positive rate (Sensisivity, Recall)
-FPR - False positve rate (Fall-out)
-FNR - False negative rate (Miss rate)
-TNR - True negative rate (Specifity)
-PPV - Positive predictive value (Precision)
-FOR - False omission rate
-LRP - Positive likelihood ratio (LR+)
-ACC - Accuracy
-LRM - Nevative likelihood ratio (LR-)
-DOR - Diagnostic odds ratio")
+  cat("TPR - True positive rate (Sensisivity, Recall)\n")
+  cat("FPR - False positve rate (Fall-out)\n")
+  cat("FNR - False negative rate (Miss rate)\n")
+  cat("TNR - True negative rate (Specifity)\n")
+  cat("PPV - Positive predictive value (Precision)\n")
+  cat("FOR - False omission rate\n")
+  cat("LRP - Positive likelihood ratio (LR+)\n")
+  cat("ACC - Accuracy\n")
+  cat("LRM - Nevative likelihood ratio (LR-)\n")
+  cat("DOR - Diagnostic odds ratio)\n")
 
 }
 
-
-
-x = getROCmatrix(pred = pred)
-print(x)
