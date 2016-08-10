@@ -53,6 +53,6 @@ getNestedTuneResultsOptPathDf = function(r, trafo = FALSE) {
     op.dfs[[i]][,"iter"] = i
     op.dfs[[i]]
   })
-  do.call(plyr::rbind.fill, op.dfs)
+  bind_rows(op.dfs)
 }
 

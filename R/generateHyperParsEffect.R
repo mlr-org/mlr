@@ -69,7 +69,7 @@ generateHyperParsEffectData = function(tune.result, include.diagnostics = FALSE,
         op.dfs[[i]][,"iter"] = i
         op.dfs[[i]]
       })
-      d = do.call(plyr::rbind.fill, op.dfs)
+      d = as.data.frame(bind_rows(op.dfs))
     } else {
       d = getNestedTuneResultsOptPathDf(tune.result)
     }

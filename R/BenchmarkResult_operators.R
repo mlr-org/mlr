@@ -105,16 +105,20 @@ getBMRObjects = function(bmr, task.ids = NULL, learner.ids = NULL, fun, as.df = 
       }
       return(p)
     })
-    if (as.df)
-      xs = do.call(plyr::rbind.fill, xs)
-    else
+    if (as.df) {
+      xs = matchFactorLevels(xs)
+      xs = as.data.frame(bind_rows(xs))
+    } else {
       xs = setNames(xs, learner.ids)
+    }
     return(xs)
   })
-  if (as.df)
-    res = do.call(plyr::rbind.fill, res)
-  else
+  if (as.df) {
+    res = matchFactorLevels(res)
+    res = as.data.frame(bind_rows(res))
+  } else {
     res = setNames(res, task.ids)
+  }
   return(res)
 }
 
