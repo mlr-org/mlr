@@ -2,9 +2,12 @@
 % Please edit documentation in R/evaluateLearner.R
 \name{evaluateLearner}
 \alias{evaluateLearner}
+\alias{evaluateParset}
 \title{Evaluates expressions within a learner or parameter set according to the task.}
 \usage{
 evaluateLearner(learner, task, dict = NULL)
+
+evaluateParset(par.set, task, dict = NULL)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -34,7 +37,7 @@ based on a specific task.
 ## (1) evaluation of a learner's hyperparameters
 task = makeClassifTask(data = iris, target = "Species")
 lrn1 = makeLearner("classif.rpart", minsplit = expression(k * p))
-lrn2 = evaluateLearner(lrn = lrn1, task = task)
+lrn2 = evaluateLearner(learner = lrn1, task = task)
 
 lrn1$par.vals$minsplit
 lrn2$par.vals$minsplit
@@ -42,7 +45,7 @@ lrn2$par.vals$minsplit
 ## (2) evaluation of a learner's entire parameter set
 task = makeClassifTask(data = iris, target = "Species")
 lrn1 = makeLearner("classif.randomForest")
-lrn2 = evaluateLearner(lrn = lrn1, task = task)
+lrn2 = evaluateLearner(learner = lrn1, task = task)
 
 ## focus on the parameters 'mtry', 'classwt' and 'cutoff'
 lrn1$par.set

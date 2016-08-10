@@ -10,11 +10,13 @@
 #' @template arg_task
 #' @template arg_dict
 #' @return [\code{\link{Learner}} | \code{\link[ParamHelpers]{ParamSet}}].
+#' @name evaluateLearner
+#' @rdname evaluateLearner
 #' @examples
 #' ## (1) evaluation of a learner's hyperparameters
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn1 = makeLearner("classif.rpart", minsplit = expression(k * p))
-#' lrn2 = evaluateLearner(lrn = lrn1, task = task)
+#' lrn2 = evaluateLearner(learner = lrn1, task = task)
 #' 
 #' lrn1$par.vals$minsplit
 #' lrn2$par.vals$minsplit
@@ -22,7 +24,7 @@
 #' ## (2) evaluation of a learner's entire parameter set
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn1 = makeLearner("classif.randomForest")
-#' lrn2 = evaluateLearner(lrn = lrn1, task = task)
+#' lrn2 = evaluateLearner(learner = lrn1, task = task)
 #' 
 #' ## focus on the parameters 'mtry', 'classwt' and 'cutoff'
 #' lrn1$par.set
@@ -49,6 +51,7 @@ evaluateLearner = function(learner, task, dict = NULL) {
   return(learner)
 }
 
+#' @rdname evaluateLearner
 #' @export
 evaluateParset = function(par.set, task, dict = NULL) {
   task.dict = makeTaskDictionary(task = task)
