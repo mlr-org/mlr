@@ -40,6 +40,6 @@ test_that("listLearners for task", {
 })
 
 test_that("fuzzy matching works for mistyped learners", {
-  expect_message(makeLearner("classi.randomFore", config = list(on.par.without.desc = "quiet"),
+  expect_error(makeLearner("classi.randomFore", config = list(on.par.without.desc = "quiet"),
     expected = "classif.randomForest"))
 })
