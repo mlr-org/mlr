@@ -55,16 +55,19 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
 
   assertString(cl)
   assertFlag(fix.factors.prediction)
+  assertList(config, names = "named")
+  # FIXME: maybe forbit show.info here issue #1098:
+  assertSubset(names(config), choices = names(formals(configureMlr)))
   constructor = getS3method("makeRLearner", class = cl)
   wl = do.call(constructor, list())
-
+  wl$config = config
+  
   if (!missing(id)) {
     assertString(id)
     wl$id = id
   }
   # predict.threshold is checked in setter below
   assertList(par.vals)
-  assertList(config, names = "named")
   if (stri_isempty(cl))
     stop("Cannot create learner from empty string!")
   if (!inherits(wl, "RLearner"))
@@ -74,7 +77,6 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
   if (!is.null(predict.threshold))
     wl = setPredictThreshold(wl, predict.threshold)
   wl$fix.factors.prediction = fix.factors.prediction
-  wl$config = config
   return(wl)
 }
 

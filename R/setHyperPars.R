@@ -55,7 +55,7 @@ setHyperPars2.Learner = function(learner, par.vals, show.info = getMlrOption("sh
     pd = pars[[n]]
     if (is.null(pd)) {
       # since we couldn't find the par let's look for 3 most similar
-      if (show.info) {
+      if (show.info & on.par.without.desc != "quiet") {
         parnames = names(pars)
         indices = head(order(adist(n, parnames)), 3L)
         possibles = parnames[indices]
