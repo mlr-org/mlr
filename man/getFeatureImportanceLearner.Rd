@@ -22,7 +22,7 @@ Additional parameters, which are passed to the underlying importance value
 generating function.}
 }
 \value{
-[\code(numeric)] A named vector of variable importance.
+[\code{numeric}] A named vector of variable importance.
 }
 \description{
 This function is mostly for internal usage. To calculate feature importance use \code{\link{getFeatureImportance}}.

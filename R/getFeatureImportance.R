@@ -96,7 +96,7 @@ getFeatureImportance = function(object, ...) {
 #' @param ... [any]\cr
 #' Additional parameters, which are passed to the underlying importance value 
 #' generating function.
-#' @return [\code(numeric)] A named vector of variable importance.
+#' @return [\code{numeric}] A named vector of variable importance.
 #' @export
 #' @keywords internal
 getFeatureImportanceLearner = function(.learner, .model, ...) {
