@@ -11,7 +11,7 @@
 #' @template arg_task
 #' @param method [\code{character}]\cr
 #'   Filter method(s), see above.
-#'   Default is \dQuote{rf.importance}.
+#'   Default is \dQuote{randomForestSRC.rfsrc}.
 #' @param nselect [\code{integer(1)}]\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
 #' @param ... [any]\cr
@@ -32,7 +32,7 @@
 #'                   the feature importance values.
 #'     }}
 #' @export
-generateFilterValuesData = function(task, method = "rf.importance", nselect = getTaskNFeats(task), ..., more.args = list()) {
+generateFilterValuesData = function(task, method = "randomForestSRC.rfsrc", nselect = getTaskNFeats(task), ..., more.args = list()) {
   assert(checkClass(task, "ClassifTask"), checkClass(task, "RegrTask"), checkClass(task, "SurvTask"))
   assertSubset(method, choices = ls(.FilterRegister), empty.ok = FALSE)
   td = getTaskDescription(task)
@@ -104,7 +104,7 @@ print.FilterValues = function(x, ...) {
 #' @template arg_task
 #' @param method [\code{character(1)}]\cr
 #'   Filter method, see above.
-#'   Default is \dQuote{rf.importance}.
+#'   Default is \dQuote{randomForestSRC.rfsrc}.
 #' @param nselect [\code{integer(1)}]\cr
 #'   Number of scores to request. Scores are getting calculated for all features per default.
 #' @param ... [any]\cr
@@ -113,7 +113,7 @@ print.FilterValues = function(x, ...) {
 #' @note \code{getFilterValues} is deprecated in favor of \code{\link{generateFilterValuesData}}.
 #' @family filter
 #' @export
-getFilterValues = function(task, method = "rf.importance", nselect = getTaskNFeats(task), ...) {
+getFilterValues = function(task, method = "randomForestSRC.rfsrc", nselect = getTaskNFeats(task), ...) {
   warning("getFilterValues is deprecated. Use generateFilterValuesData.")
   assertChoice(method, choices = ls(.FilterRegister))
   out = generateFilterValuesData(task, method, nselect, ...)

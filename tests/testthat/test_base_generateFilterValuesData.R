@@ -17,7 +17,7 @@ test_that("filterFeatures", {
   feat.imp.new = generateFilterValuesData(binaryclass.task)
   expect_data_frame(feat.imp.new$data, types = c("character", "numeric"), nrow = length(ns), ncols = 3,
     col.names = "named")
-  expect_equal(names(feat.imp.new$data), c("name", "type", "rf.importance"))
+  expect_equal(names(feat.imp.new$data), c("name", "type", "randomForestSRC.rfsrc"))
   expect_equal(ns, feat.imp.new$data$name)
 
   feat.imp.old = suppressWarnings(getFilterValues(binaryclass.task, method = "anova.test"))
@@ -69,14 +69,14 @@ test_that("plotFilterValues", {
   #expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(20))
   ## plotFilterValuesGGVIS(fv)
 
-  fv2 = generateFilterValuesData(binaryclass.task, method = c("anova.test", "rf.importance"))
+  fv2 = generateFilterValuesData(binaryclass.task, method = c("anova.test", "randomForestSRC.rfsrc"))
   plotFilterValues(fv2)
   ggsave(path)
   doc = XML::xmlParse(path)
   #expect_that(length(XML::getNodeSet(doc, black.bar.xpath, ns.svg)), equals(40))
   #expect_that(length(XML::getNodeSet(doc, grey.xpath, ns.svg)), equals(ncol(fv2$data) - 2))
   ## plotFilterValuesGGVIS(fv2)
-  
+
   # facetting works:
   q = plotFilterValues(fv2, facet.wrap.nrow = 2L)
   testFacetting(q, 2L)
