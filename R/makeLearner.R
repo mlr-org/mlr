@@ -56,7 +56,7 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
   assertString(cl)
   assertFlag(fix.factors.prediction)
   assertList(config, names = "named")
-  # FIXME: maybe forbit show.info here issue #1098:
+  # FIXME: maybe forbid show.info here issue #1098:
   assertSubset(names(config), choices = names(getMlrOptions()))
   constructor = getS3method("makeRLearner", class = cl)
   wl = do.call(constructor, list())
