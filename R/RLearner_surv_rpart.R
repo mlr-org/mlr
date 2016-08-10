@@ -41,7 +41,7 @@ predictLearner.surv.rpart = function(.learner, .model, .newdata, ...) {
   if (.learner$predict.type == "response") {
     predict(.model$learner.model, newdata = .newdata, type = "vector", ...)
   } else {
-    stop("Unsuported predict type")
+    stop("Unsupported predict type")
   }
 }
 
