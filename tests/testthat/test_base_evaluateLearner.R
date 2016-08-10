@@ -3,7 +3,7 @@ context("evaluate expressions")
 test_that("expressions in learners", {
   ## expressions within parameter sets
   lrn1 = makeLearner("classif.randomForest")
-  lrn2 = evaluateLearner(lrn = lrn1, task = binaryclass.task)
+  lrn2 = evaluateLearner(learner = lrn1, task = binaryclass.task)
   x1 = lrn1$par.set$pars$mtry$default
   x2 = lrn2$par.set$pars$mtry$default
   expect_true(is.expression(x1))
@@ -24,7 +24,7 @@ test_that("expressions in learners", {
   
   ## expressions within hyperparameters
   lrn1 = makeLearner("classif.rpart", minsplit = expression(k * p))
-  lrn2 = evaluateLearner(lrn = lrn1, task = binaryclass.task)
+  lrn2 = evaluateLearner(learner = lrn1, task = binaryclass.task)
   x1 = lrn1$par.vals$minsplit
   x2 = lrn2$par.vals$minsplit
   expect_true(is.expression(x1))

@@ -4,19 +4,19 @@
 \alias{evaluateLearner}
 \title{Evaluates expressions within a learner or parameter set according to the task.}
 \usage{
-evaluateLearner(lrn, task, dict = NULL)
+evaluateLearner(learner, task, dict = NULL)
 }
 \arguments{
+\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
+The learner.
+If you pass a string the learner will be created via \code{\link{makeLearner}}.}
+
 \item{task}{[\code{\link{Task}}]\cr
 The task.}
 
 \item{dict}{[\code{environment} | \code{list} | \code{NULL}]\cr
 Environment or list which will be used for evaluating the variables
 of expressions within a parameter set. The default is \code{NULL}.}
-
-\item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
-The learner.
-If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
 \item{par.set}{[\code{\link[ParamHelpers]{ParamSet}}]\cr
 Parameter set of (hyper)parameters and their constraints.

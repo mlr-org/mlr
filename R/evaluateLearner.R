@@ -38,24 +38,24 @@
 #' ps2 = evaluateParset(par.set = ps1, task = task,
 #'   dict = list(a = -2, b = 3, e = "rbfdot", f = "laplacedot"))
 #' @export
-evaluateLearner = function(lrn, task, dict = NULL) {
+evaluateLearner = function(learner, task, dict = NULL) {
   task.dict = makeTaskDictionary(task)
   dict = insert(task.dict, dict)
   if (!is.null(dict)) {
-    lrn$par.set = evaluateParset(lrn$par.set, task = task, dict = dict)
-    if (length(lrn$par.vals) > 0 && any(vlapply(lrn$par.vals, is.expression)))
-      lrn$par.vals = lapply(lrn$par.vals, function(expr) eval(expr, envir = dict))
+    learner$par.set = evaluateParset(learner$par.set, task = task, dict = dict)
+    if (length(learner$par.vals) > 0 && any(vlapply(learner$par.vals, is.expression)))
+      learner$par.vals = lapply(learner$par.vals, function(expr) eval(expr, envir = dict))
   }
-  return(lrn)
+  return(learner)
 }
 
 #' @export
 evaluateParset = function(par.set, task, dict = NULL) {
-  task.dict = makeTaskDictionary(task)
+  task.dict = makeTaskDictionary(task = task)
   dict = insert(task.dict, dict)
   if (!is.null(dict)) {
-    if (ParamHelpers::hasExpression(par.set)) {
-      ParamHelpers::checkParamSet(par.set, dict = dict)
+    if (ParamHelpers::hasExpression(par = par.set)) {
+      ParamHelpers::checkParamSet(par.set = par.set, dict = dict)
       par.set = ParamHelpers::evaluateParamSet(par.set = par.set, dict = dict)
       ## assure that the value names are also shown if the values list was unnamed
       par.set$pars = lapply(par.set$pars, function(x) {

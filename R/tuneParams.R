@@ -81,7 +81,7 @@ tuneParams = function(learner, task, resampling, measures, par.set, control, sho
   learner = checkLearner(learner)
   assertClass(task, classes = "Task")
   if (ParamHelpers::hasExpression(learner$par.set) || any(vlapply(learner$par.vals, is.expression)))
-    learner = evaluateLearner(lrn = learner, task = task, dict = dict)
+    learner = evaluateLearner(learner = learner, task = task, dict = dict)
   measures = checkMeasures(measures, learner)
   assertClass(par.set, classes = "ParamSet")
   if (ParamHelpers::hasExpression(par.set))
