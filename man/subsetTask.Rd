@@ -4,7 +4,7 @@
 \alias{subsetTask}
 \title{Subset data in task.}
 \usage{
-subsetTask(task, subset, features)
+subsetTask(task, subset, features, labels)
 }
 \arguments{
 \item{task}{[\code{\link{Task}}]\cr
@@ -22,6 +22,10 @@ name returned by \code{\link{getTaskFeatureNames}}.\cr
 Note that the target feature is always included in the
 resulting task, you should not pass it here.
 Default is to use all features.}
+
+\item{labels}{[\code{character}|\code{logical}|\code{numerical}|\code{integer}]\cr
+supply the subset for the labels in the multi-label classification problem, can be integer index
+which is the column index in the dataframe, or the column name directly or logical vector}
 }
 \value{
 [\code{\link{Task}}]. Task with subsetted data.

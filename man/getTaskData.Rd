@@ -4,7 +4,7 @@
 \alias{getTaskData}
 \title{Extract data in task.}
 \usage{
-getTaskData(task, subset, features, target.extra = FALSE,
+getTaskData(task, subset, features, labels, target.extra = FALSE,
   recode.target = "no")
 }
 \arguments{
@@ -23,6 +23,10 @@ name returned by \code{\link{getTaskFeatureNames}}.\cr
 Note that the target feature is always included in the
 resulting task, you should not pass it here.
 Default is to use all features.}
+
+\item{labels}{[\code{character}|\code{logical}|\code{numerical}|\code{integer}]\cr
+supply the subset for the labels in the multi-label classification problem, can be integer index
+which is the column index in the dataframe, or the column name directly or logical vector}
 
 \item{target.extra}{[\code{logical(1)}]\cr
 Should target vector be returned separately?
