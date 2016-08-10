@@ -159,7 +159,7 @@ testThatLearnerCanCalculateImportance = function(lrn, task, hyperpars) {
   # you may also want to change the params for the learner if training takes
   # a long time
   if (lrn$short.name == "ranger")
-    lrn = setHyperPars(lrn, importance = "impurity")
+    lrn = setHyperPars(lrn, importance = "permutation")
   if (lrn$short.name == "adabag")
     lrn = setHyperPars(lrn, mfinal = 5L)
   if (lrn$short.name == "cforest")
