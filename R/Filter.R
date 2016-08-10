@@ -136,12 +136,12 @@ makeFilter(
   }
 )
 
-makeFilter(
-  name = "rf.importance",
+rf.importance = makeFilter(
+  name = "randomForestSRC.rfsrc",
   desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'.",
   pkg  = "randomForestSRC",
   supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics", "factors"),
+  supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, ...) {
     im = randomForestSRC::rfsrc(getTaskFormula(task), data = getTaskData(task), proximity = FALSE, forest = FALSE, importance = "permute", ...)$importance
     if (inherits(task, "ClassifTask")) {
@@ -154,19 +154,31 @@ makeFilter(
     setNames(y, ns)
   }
 )
+.FilterRegister[["rf.importance"]] = rf.importance
+.FilterRegister[["rf.importance"]]$desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'. (DEPRECATED)"
+.FilterRegister[["rf.importance"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'rf.importance'", new = "Filter 'randomForestSRC.rfsrc'")
+  .FilterRegister[["randomForestSRC.rfsrc"]]$fun(...)
+}
 
-makeFilter(
-  name = "rf.min.depth",
+rf.min.depth = makeFilter(
+  name = "randomForestSRC.var.select",
   desc = "Minimal depth of random forest fitted in package 'randomForestSRC'",
   pkg  = "randomForestSRC",
   supported.tasks = c("classif", "regr", "surv"),
-  supported.features = c("numerics", "factors"),
+  supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, nselect, method = "md", ...) {
     im = randomForestSRC::var.select(getTaskFormula(task), getTaskData(task),
       method = method, verbose = FALSE, ...)$md.obj$order
     setNames(-im[, 1L], rownames(im))
   }
 )
+.FilterRegister[["rf.min.depth"]] = rf.min.depth
+.FilterRegister[["rf.min.depth"]]$desc = "Minimal depth of random forest fitted in package 'randomForestSRC. (DEPRECATED)"
+.FilterRegister[["rf.min.depth"]]$fun = function(...) {
+  .Deprecated(old = "Filter 'rf.min.depth'", new = "Filter 'randomForestSRC.var.select'")
+  .FilterRegister[["randomForestSRC.var.select"]]$fun(...)
+}
 
 makeFilter(
   name = "cforest.importance",
@@ -196,28 +208,19 @@ makeFilter(
 )
 
 makeFilter(
-  name = "rf.accuracy",
-  desc = "Mean decrease in accuracy of random forest fitted in package 'randomForest'.",
+  name = "randomForest.importance",
+  desc = "Importance based on OOB-accuracy or node inpurity of random forest fitted in package 'randomForest'.",
   pkg = "randomForest",
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
-  fun = function(task, nselect, ...) {
-    rf = randomForest::randomForest(getTaskFormula(task), data = getTaskData(task), keep.forest = FALSE, importance = TRUE)
-    im = randomForest::importance(rf, ...)
-    setNames(im[, 1L], rownames(im))
-  }
-)
-
-makeFilter(
-  name = "rf.impurity",
-  desc = "Total decrease in node impuritiy of random forest fitted in package 'randomForest'.",
-  pkg = "randomForest",
-  supported.tasks = c("classif", "regr"),
-  supported.features = c("numerics", "factors"),
-  fun = function(task, nselect, ...) {
-    rf = randomForest::randomForest(getTaskFormula(task), data = getTaskData(task), keep.forest = FALSE, importance = TRUE)
-    im = randomForest::importance(rf, ...)
-    setNames(im[, 2L], rownames(im))
+  fun = function(task, nselect, method = "oob.accuracy", ...) {
+    assertChoice(method, choices = c("oob.accuracy", "node.impurity"))
+    type = if (method == "oob.accuracy") 1L else 2L
+    # no need to set importance = TRUE for node impurity (type = 2)
+    rf = randomForest::randomForest(getTaskFormula(task), data = getTaskData(task),
+      keep.forest = FALSE, importance = (type != 2L))
+    im = randomForest::importance(rf, type = type, ...)
+    setNames(im, rownames(im))
   }
 )
 
