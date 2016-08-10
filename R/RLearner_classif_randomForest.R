@@ -60,7 +60,7 @@ getFeatureImportance.classif.randomForest = function(.learner, .model, ...) {
     if (ctrl$type == 1L) {
       has.fiv = .learner$par.vals$importance
       if (is.null(has.fiv) || has.fiv != TRUE)
-        stop("You need to train the learner with parameter 'importance' is TRUE")
+        stop("You need to train the learner with parameter 'importance' set to TRUE")
     }
   }
   
