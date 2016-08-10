@@ -424,37 +424,12 @@ makeFilter(
   supported.features = c("numerics", "factors", "ordered"),
   fun = function(task, imp.learner, measure, contrast = function(x, y) x - y,
                  aggregation = mean, nperm = 1, replace = FALSE, nselect) {
-    imp.learner = checkLearner(imp.learner)
-    measure = checkMeasures(measure, imp.learner)
-    if (getTaskType(task) != imp.learner$type)
-      stopf("Expected task of type '%s', not '%s'", getTaskType(task), imp.learner$type)
-    if (length(measure) != 1L)
-      stop("Exactly one measure must be provided")
-    assertCount(nperm)
-    test.contrast = contrast(1, 1)
-    assert(is.numeric(test.contrast) & length(test.contrast) == 1L)
-    test.aggregation = aggregation(1:2)
-    assert(is.numeric(test.aggregation) & length(test.aggregation) == 1L)
-
-    doPermutationImportance = function(task, imp.learner, measure, contrast, i) {
-      fit = train(imp.learner, task)
-      pred = predict(fit, task = task)
-      data = getTaskData(task)
-
-      sapply(getTaskFeatureNames(task), function(x) {
-        data[[x]] = sample(data[[x]], length(data[[x]]), replace)
-        pred.permuted = predict(fit, newdata = data)
-        perf = performance(pred, measure)
-        perf.permuted = performance(pred.permuted, measure)
-        contrast(perf.permuted, perf)
-      }, USE.NAMES = FALSE)
-    }
-
-    args = list(task = task, imp.learner = imp.learner, measure = measure, contrast = contrast)
-    out = parallelMap::parallelMap(doPermutationImportance, seq_len(nperm), more.args = args)
-    out = do.call("rbind", out)
-    out = apply(out, 2, aggregation)
-    names(out) = getTaskFeatureNames(task)
-    return(out)
+    imp = generateFeatureImportanceData(task, "permutation.importance",
+      imp.learner, interaction = FALSE, measure = measure,
+      contrast = contrast, aggregation = aggregation,
+      nperm = nperm, replace = replace, local = FALSE)
+    imp = as.numeric(imp$data)
+    names(imp) = getTaskFeatureNames(task)
+    return(imp)
   }
 )
