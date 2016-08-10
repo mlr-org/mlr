@@ -2,12 +2,12 @@
 % Please edit documentation in R/getConfMatrix.R
 \name{getConfMatrix}
 \alias{getConfMatrix}
-\alias{print.confMatrix}
+\alias{print.ConfMatrix}
 \title{Confusion matrix.}
 \usage{
 getConfMatrix(pred, relative = FALSE, sums = FALSE)
 
-\method{print}{confMatrix}(x, both = TRUE, digits = 4, ...)
+\method{print}{ConfMatrix}(x, both = TRUE, digits = 2, ...)
 }
 \arguments{
 \item{pred}{[\code{\link{Prediction}}]\cr
@@ -15,7 +15,7 @@ Prediction object.}
 
 \item{relative}{[\code{logical(1)}]\cr
 If \code{TRUE} two additional matricies are calculated. One is normalized by rows and one by
-columns, but we print the result in a compact way.}
+columns.}
 
 \item{sums}{{\code{logical(1)}}\cr
 If \code{TRUE} add absolute number of observations in each group are added to the confusion matrix
@@ -34,18 +34,21 @@ How many numbers after the decimal point should be printed, only relevant for re
 Currently not used.}
 }
 \value{
-[\code{confMatrix}]. A confusion matrix.
+[\code{\link{ConfMatrix}}]. A list containing one or three matricies 
+(one absolute and two relative) as well as additional information about the resampling.
 }
 \description{
-Calculates confusion matrix for (possibly resampled) prediction.
-Rows indicate true classes, columns predicted classes.
+Calculates the confusion matrix for (possibly resampled) prediction.
+Rows indicate true classes, columns predicted classes.#The marginal elements count the number of 
+classification errors for the respective row or column, i.e., the number of errors
+when you condition on the corresponding true (rows) or predicted (columns) class. 
+The last element in the margin diagonal displays the total amount of errors.
 
-The marginal elements count the number of classification
-errors for the respective row or column, i.e., the number of errors
-when you condition on the corresponding true (rows) or predicted
-(columns) class. The last element in the margin diagonal 
-displays the total amount of errors. For the relative confusion matrix we normalize based on rows
-and columns and create two seperate matricies.
+A list is returned that contains multiple matricies, if \code{relative = TRUE} we compute three
+matricies, one with absolute values and two with relative. The relative confusion matricies are 
+normalized based on rows and columns respectively. The \code{print} function returns the relative matricies in
+a compact way so that both row and column marginals can be seen in one matrix. For details see
+\code{\link{ConfMatrix}}.
 
 Note that for resampling no further aggregation is currently performed.
 All predictions on all test sets are joined to a vector yhat, as are all labels
