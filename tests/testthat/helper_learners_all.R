@@ -147,3 +147,22 @@ testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
 
   testThatLearnerCanTrainPredict(lrn = lrn, task = task, hyperpars = hyperpars)
 }
+
+# Test that the extraction of the out-of-bag predictions for the learner that supports 
+# this works correctly
+
+testThatGetOOBPredsWorks = function(lrn, task) {
+  mod = train(lrn, task)
+  oob = getOOBPreds(mod, task)
+  
+  if (type == "classif") {
+    expect_is(oob$data, "data.frame")
+    expect_equal(levels(oob$data$response), tsk$task.desc$class.levels)
+  } else {
+    if (type %in% c("regr", "surv")) {
+      expect_is(oob$data$response, "numeric")
+    } 
+  }
+  expect_equal(nrow(oob$data), nrow(getTaskData(tsk)))
+}
+

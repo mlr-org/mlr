@@ -52,7 +52,7 @@ predictLearner.classif.randomForest = function(.learner, .model, .newdata, ...) 
 }
 
 #' @export
-getOutOfBagPredictions.classif.randomForest = function(.learner, .model) {
+getOOBPreds.classif.randomForest = function(.learner, .model) {
   unname(.model$learner.model$predicted)
 }
 

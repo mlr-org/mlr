@@ -85,7 +85,7 @@ predictLearner.regr.randomForest = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-getOutOfBagPredictions.regr.randomForest = function(.learner, .model) {
+getOOBPreds.regr.randomForest = function(.learner, .model) {
   .model$learner.model$predicted
 }
 

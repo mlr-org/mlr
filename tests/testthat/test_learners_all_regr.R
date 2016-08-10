@@ -45,4 +45,7 @@ test_that("learners work: regr ", {
   lrns = mylist("regr", properties = "missings", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars) 
 
+  # regr with oobpreds
+  lrns = mylist("regr", properties = "oobpreds", create = TRUE)
+  lapply(lrns, testThatGetOOBPredsWorks, task = task)
 })

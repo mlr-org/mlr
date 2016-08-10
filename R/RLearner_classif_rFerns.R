@@ -29,6 +29,6 @@ predictLearner.classif.rFerns = function(.learner, .model, .newdata, ...) {
 }
 
 #' @export
-getOutOfBagPredictions.classif.rFerns = function(.learner, .model) {
+getOOBPreds.classif.rFerns = function(.learner, .model) {
   .model$learner.model$oobPreds
 }

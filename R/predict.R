@@ -10,8 +10,7 @@
 #'
 #' The row names of the input \code{task} or \code{newdata} are preserved in the output.
 #'
-#' @param object [\code{\link{WrappedModel}}]\cr
-#'   Wrapped model, result of \code{\link{train}}.
+#' @template arg_train
 #' @param task [\code{\link{Task}}]\cr
 #'   The task. If this is passed, data from this task is predicted.
 #' @param newdata [\code{data.frame}]\cr

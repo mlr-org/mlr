@@ -61,6 +61,6 @@ predictLearner.surv.randomForestSRC = function(.learner, .model, .newdata, ...) 
 }
 
 #' @export
-getOutOfBagPredictions.surv.randomForestSRC = function(.learner, .model) {
+getOOBPreds.surv.randomForestSRC = function(.learner, .model) {
   .model$learner.model$predicted.oob
 }

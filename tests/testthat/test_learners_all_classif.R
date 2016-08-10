@@ -48,6 +48,10 @@ test_that("learners work: classif ", {
   # classif with missing
   lrns = mylist("classif", properties = "missings", create = TRUE)
   lapply(lrns, testThatLearnerHandlesMissings, task = task, hyperpars = hyperpars)
+  
+  # classif with oobpreds
+  lrns = mylist("classif", properties = "oobpreds", create = TRUE)
+  lapply(lrns, testThatGetOOBPredsWorks, task = task)
 })
 
 
