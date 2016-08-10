@@ -77,7 +77,7 @@ test_that("fuzzy matching works for mistyped hyperpars", {
   expect_silent(makeLearner("classif.ksvm", sigm = 1, show.info = TRUE))
   expect_silent(makeLearner("classif.ksvm", sigm = 1, show.info = FALSE))
 
-  # show.info on/off and warn
+  # show.info on/off and warn -- need nested expectations here because we get 2 different kinds of messages
   expect_message(expect_warning(makeLearner("classif.ksvm", config = cw, sigm = 1, show.info = TRUE),
     warn.msg), expected)
   expect_silent(expect_warning(makeLearner("classif.ksvm", config = cw, sigm = 1, show.info = FALSE),
