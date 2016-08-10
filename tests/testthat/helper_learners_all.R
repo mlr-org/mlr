@@ -161,7 +161,7 @@ testThatLearnerCanCalculateImportance = function(lrn, task, hyperpars) {
   if (lrn$short.name == "ranger")
     lrn = setHyperPars(lrn, importance = "impurity")
   if (lrn$short.name == "adabag")
-    lrn =setHyperPars(lrn, mfinal = 5L)
+    lrn = setHyperPars(lrn, mfinal = 5L)
   if (lrn$short.name == "cforest")
     lrn = setHyperPars(lrn, ntree = 5L)
   if (lrn$short.name == "rfsrc")
