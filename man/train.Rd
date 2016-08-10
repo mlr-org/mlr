@@ -4,7 +4,7 @@
 \alias{train}
 \title{Train a learning algorithm.}
 \usage{
-train(learner, task, subset, weights = NULL)
+train(learner, task, subset, weights = NULL, dict = NULL)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr

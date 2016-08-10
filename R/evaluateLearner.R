@@ -8,8 +8,9 @@
 #'   Dependent parameters with a \code{requires} field must use \code{quote} and not
 #'   \code{expression} to define it.
 #' @template arg_task
+#' @template arg_dict
 #' @return [\code{\link{Learner}} | \code{\link[ParamHelpers]{ParamSet}}].
-#' @example 
+#' @examples
 #' ## (1) evaluation of a learner's hyperparameters
 #' task = makeClassifTask(data = iris, target = "Species")
 #' lrn1 = makeLearner("classif.rpart", minsplit = expression(k * p))

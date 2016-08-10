@@ -26,6 +26,7 @@
 #' @param control [\code{\link{TuneControl}}]\cr
 #'   Control object for search method. Also selects the optimization algorithm for tuning.
 #' @template arg_showinfo
+#' @template arg_dict
 #' @return [\code{\link{TuneResult}}].
 #' @family tune
 #' @note If you would like to include results from the training data set, make
