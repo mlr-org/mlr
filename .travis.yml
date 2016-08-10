@@ -47,6 +47,7 @@ before_script:
 
 after_success:
   - git checkout master
+  - "export TRAVIS_COMMIT_MSG=\"$(git log --format=%B --no-merges -n 1)\""
   - R --no-save <<< 'library("devtools"); document()'
   - git config user.name $GN
   - git config user.email $GM
@@ -55,7 +56,7 @@ after_success:
   - git config push.default matching
   - git commit man DESCRIPTION NAMESPACE -m "update auto-generated documentation [ci skip]" || true
   - git push
-  - curl -s -X POST -H "Content-Type:application/json" -H "Accept:application/json" -H "Travis-API-Version:3" -H "Authorization:token $TT" -d "{\"request\":{\"branch\":\"gh-pages\", \"message\":\"commit $TRAVIS_COMMIT, PR $TRAVIS_PULL_REQUEST\"}}" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests
+  - \[ \$TRAVIS_PULL_REQUEST == "false" -a \$TRAVIS_BRANCH == "master" ] \&\& curl -s -X POST -H "Content-Type:application/json" -H "Accept:application/json" -H "Travis-API-Version:3" -H "Authorization:token $TT" -d "{\"request\":{\"branch\":\"gh-pages\", \"message\":\"commit $TRAVIS_COMMIT $TRAVIS_COMMIT_MSG\"}}" https://api.travis-ci.org/repo/mlr-org%2Fmlr-tutorial/requests
 
 after_failure:
   - ./travis-tool.sh dump_logs
