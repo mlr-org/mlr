@@ -95,19 +95,18 @@ trainLearner.BaggingWrapper = function(.learner, .task, .subset, .weights = NULL
   # number of features to sample
   k = max(round(bw.feats * getTaskNFeats(.task)), 1)
 
-  args = list("n" = n, "m" = m, "k" = k, "bw.replace" = bw.replace, "bw.feats" = bw.feats,
-              "task" = .task, "learner" = .learner, "weights" = .weights)
+  args = list(n = n, m = m, k = k, bw.replace = bw.replace,
+              task = .task, learner = .learner, weights = .weights)
   parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
   exportMlrOptions(level = "mlr.ensemble")
   models = parallelMap(doBaggingTrainIteration, i = seq_len(bw.iters), more.args = args, level = "mlr.ensemble")
   makeHomChainModel(.learner, models)
 }
 
-doBaggingTrainIteration = function(i, n, m, k, bw.replace, bw.feats, task, learner, weights) {
+doBaggingTrainIteration = function(i, n, m, k, bw.replace, task, learner, weights) {
   setSlaveOptions()
   bag = sample(seq_len(n), m, replace = bw.replace)
-  if (bw.feats < 1L)
-    .task = subsetTask(task, features = sample(getTaskFeatureNames(task), k, replace = FALSE))
+  .task = subsetTask(task, features = sample(getTaskFeatureNames(task), k, replace = FALSE))
   train(learner$next.learner, task, subset = bag, weights = weights[bag])
 }
 
