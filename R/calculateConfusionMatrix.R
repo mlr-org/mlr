@@ -1,14 +1,15 @@
 #' @title Confusion matrix.
 #'
 #' @description
-#' Calculates the confusion matrix for (possibly resampled) prediction.
-#' Rows indicate true classes, columns predicted classes.#The marginal elements count the number of 
+#' Calculates the confusion matrix for a (possibly resampled) prediction.
+#' Rows indicate true classes, columns predicted classes. The marginal elements count the number of 
 #' classification errors for the respective row or column, i.e., the number of errors
 #' when you condition on the corresponding true (rows) or predicted (columns) class. 
-#' The last element in the margin diagonal displays the total amount of errors.
+#' The last bottom right element displays the total amount of errors.
 #' 
-#' A list is returned that contains multiple matricies, if \code{relative = TRUE} we compute three
-#' matricies, one with absolute values and two with relative. The relative confusion matricies are 
+#' A list is returned that contains multiple matrices.
+#' If \code{relative = TRUE} we compute three
+#' matrices, one with absolute values and two with relative. The relative confusion matricies are 
 #' normalized based on rows and columns respectively. The \code{print} function returns the relative matricies in
 #' a compact way so that both row and column marginals can be seen in one matrix. For details see
 #' \code{\link{ConfMatrix}}.
