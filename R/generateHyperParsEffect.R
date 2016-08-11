@@ -292,7 +292,7 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
     if (na.flag){
       d$learner_status = ifelse(is.na(d[, "exec.time"]), "Failure", "Success")
       for (col in hyperpars.effect.data$measures) {
-        col_name = stri_split_fixed(col, ".test.mean", omit_empty = TRUE)[[1]]
+        col_name = stri_split_fixed(col, ".", omit_empty = TRUE)[[1]][1]
         if (heatcontour.flag){
           d[,col][is.na(d[,col])] = get(col_name)$worst
         } else {
@@ -449,15 +449,14 @@ plotHyperParsEffect = function(hyperpars.effect.data, x = NULL, y = NULL,
   if (pretty.names) {
     if (x %in% hyperpars.effect.data$measures)
       plt = plt + 
-        xlab(eval(as.name(stri_split_fixed(x, ".test.mean")[[1]][1]))$name)
+        xlab(eval(as.name(stri_split_fixed(x, ".")[[1]][1]))$name)
     if (y %in% hyperpars.effect.data$measures)
       plt = plt + 
-        ylab(eval(as.name(stri_split_fixed(y, ".test.mean")[[1]][1]))$name)
+        ylab(eval(as.name(stri_split_fixed(y, ".")[[1]][1]))$name)
     if (!is.null(z))
       if (z %in% hyperpars.effect.data$measures)
         plt = plt +
-          labs(fill = eval(as.name(stri_split_fixed(z, 
-            ".test.mean")[[1]][1]))$name) 
+          labs(fill = eval(as.name(stri_split_fixed(z, ".")[[1]][1]))$name) 
   }
   return(plt)
 }
