@@ -1,27 +1,39 @@
 mlr_2.10:
 - functions - general
 -- generateFilterValuesData: fixed a bug wrt feature ordering
--- bugfix: if a learner hyperpar was set to value "NA" this was not displayed in
+-- imputeLearner: fixed a bug when data actually contained no NAs
+-- print.Learner: if a learner hyperpar was set to value "NA" this was not displayed in
    printer
--- makeLearner, setHyperPars: if you mistype a hyperpar name, mlr uses
+-- makeLearner, setHyperPars: if you mistype a learner or hyperpar name, mlr uses
    fuzzy matching to suggest the 3 closest names in the message
--- tuning: tuning with irace is now also parallelized, i.e., different
+-- tuneParams: tuning with irace is now also parallelized, i.e., different
    learner config are evaluated in parallel.
--- removed parameters "minprob", "pvalue", "randomsplits" from classif.cforest as these are set internally and cannot be changed by the user
+-- randomForestSRC.var.select: new arg "method"
+-- mrmr filter: fixed some smaller bugs and updated properties
+-- generateLearningCurveData: also accepts single learner, does not require a list
+-- object printers: some mlr printers show head previews of data.frame data.
+   these now also print info on the total nr of rows and cols and are less
+   confusing
+-- setHyperPars: added "show.info" arg
+
 
 - functions - new
+-- filter: randomForest.importance
 
 - functions - removed
 
 - functions - renamed
--- Renamed rf.importance filter to randomForestSRC.var.rfsrc (now deprecated)
--- Renamed rf.min.depth filter to randomForestSRC.var.select (now deprecated)
--- Replaced rf.impurity and rf.accuracy filters with a single randomForest.importance filter with a method parameter
+-- Renamed rf.importance filter (now deprecated) to randomForestSRC.var.rfsrc
+-- Renamed rf.min.depth filter (now deprecated) to randomForestSRC.var.select
 
 - learners - general
+-- classif.ada: fixed some param problem with rpart.control params
+-- classif.cforest: removed parameters "minprob", "pvalue", "randomsplits"
+   as these are set internally and cannot be changed by the user
 -- regr.GPfit: some more params for correlation kernel
 -- classif.xgboost, regr.xgboost: can now properly handle NAs (property was missing)
    and param 'missing' set to NA by default
+
 
 - learners - new
 -- multilabel.cforest
