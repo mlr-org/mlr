@@ -68,6 +68,7 @@ notifications:
       - larsko@cs.ubc.ca
       - schiffner@math.uni-duesseldorf.de
       - erich.studerus@gmail.com
+  slack: mlr-org:DYNA3KIwcG9F4sQoeyTnPBhF#buildnotifications
 on_success: change
 on_failure: always
 
