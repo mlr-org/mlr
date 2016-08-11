@@ -5,7 +5,7 @@
 \title{Hyperparameter tuning.}
 \usage{
 tuneParams(learner, task, resampling, measures, par.set, control,
-  show.info = getMlrOption("show.info"), dict = NULL)
+  show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -37,10 +37,6 @@ Control object for search method. Also selects the optimization algorithm for tu
 \item{show.info}{[\code{logical(1)}]\cr
 Print verbose output on console?
 Default is set via \code{\link{configureMlr}}.}
-
-\item{dict}{[\code{environment} | \code{list} | \code{NULL}]\cr
-Environment or list which will be used for evaluating the variables
-of expressions within a parameter set. The default is \code{NULL}.}
 }
 \value{
 [\code{\link{TuneResult}}].

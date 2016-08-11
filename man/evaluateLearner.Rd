@@ -5,9 +5,9 @@
 \alias{evaluateParset}
 \title{Evaluates expressions within a learner or parameter set according to the task.}
 \usage{
-evaluateLearner(learner, task, dict = NULL)
+evaluateLearner(learner, task)
 
-evaluateParset(par.set, task, dict = NULL)
+evaluateParset(par.set, task)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -16,10 +16,6 @@ If you pass a string the learner will be created via \code{\link{makeLearner}}.}
 
 \item{task}{[\code{\link{Task}}]\cr
 The task.}
-
-\item{dict}{[\code{environment} | \code{list} | \code{NULL}]\cr
-Environment or list which will be used for evaluating the variables
-of expressions within a parameter set. The default is \code{NULL}.}
 
 \item{par.set}{[\code{\link[ParamHelpers]{ParamSet}}]\cr
 Parameter set of (hyper)parameters and their constraints.
@@ -54,11 +50,9 @@ lrn2$par.set
 ## (3) evaluation of a parameter set
 task = makeClassifTask(data = iris, target = "Species")
 ps1 = makeParamSet(
-  makeNumericParam("C", lower = expression(a), upper = expression(b), trafo = function(x) 2^x),
-  makeDiscreteParam("sigma", values = 2^c(-1, 1)),
-  makeDiscreteParam("kernel", values = expression(list(e, f)))
+  makeNumericParam("C", lower = expression(k), upper = expression(n), trafo = function(x) 2^x),
+  makeDiscreteParam("sigma", values = expression(list(k, p)))
 )
-ps2 = evaluateParset(par.set = ps1, task = task,
-  dict = list(a = -2, b = 3, e = "rbfdot", f = "laplacedot"))
+ps2 = evaluateParset(par.set = ps1, task = task)
 }
 

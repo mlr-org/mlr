@@ -4,7 +4,7 @@
 \alias{train}
 \title{Train a learning algorithm.}
 \usage{
-train(learner, task, subset, weights = NULL, dict = NULL)
+train(learner, task, subset, weights = NULL)
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}} | \code{character(1)}]\cr
@@ -23,10 +23,6 @@ Optional, non-negative case weight vector to be used during fitting.
 If given, must be of same length as \code{subset} and in corresponding order.
 By default \code{NULL} which means no weights are used unless specified in the task (\code{\link{Task}}).
 Weights from the task will be overwritten.}
-
-\item{dict}{[\code{environment} | \code{list} | \code{NULL}]\cr
-Environment or list which will be used for evaluating the variables
-of expressions within a parameter set. The default is \code{NULL}.}
 }
 \value{
 [\code{\link{WrappedModel}}].
