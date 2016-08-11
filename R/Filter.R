@@ -469,7 +469,6 @@ makeFilter(
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
     data = getTaskData(task)
-    printHead(data)
     sapply(getTaskFeatureNames(task), function(feat.name) {
       f = as.formula(stri_paste(feat.name,"~", getTaskTargetNames(task)))
       t = kruskal.test(f, data = data)
