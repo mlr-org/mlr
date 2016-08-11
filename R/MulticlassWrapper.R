@@ -55,8 +55,7 @@ trainLearner.MulticlassWrapper = function(.learner, .task, .subset, .weights = N
   y = getTaskTargets(.task)
   cm = buildCMatrix(mcw.method, .task)
   x = multi.to.binary(y, cm)
-  args = list("x" = x, "d" = getTaskData(.task), "y" = getTaskTargets(.task), "learner" = .learner,
-              "task" = .task, "tn" = getTaskTargetNames(.task), "weights" = .weights)
+  args = list(x = x, learner = .learner, task = .task, weights = .weights)
   parallelLibrary("mlr", master = FALSE, level = "mlr.ensemble", show.info = FALSE)
   exportMlrOptions(level = "mlr.ensemble")
   models = parallelMap(i = seq_along(x$row.inds), doMulticlassTrainIteration,
@@ -66,8 +65,10 @@ trainLearner.MulticlassWrapper = function(.learner, .task, .subset, .weights = N
   return(m)
 }
 
-doMulticlassTrainIteration = function(x, i, d, y, learner, task, tn, weights) {
+doMulticlassTrainIteration = function(x, i, learner, task, weights) {
   setSlaveOptions()
+  d = getTaskData(.task)
+  tn = getTaskTargetNames(task)
   data2 = d[x$row.inds[[i]],, drop = FALSE]
   data2[, tn] = x$targets[[i]]
   ct = changeData(task, data2)
