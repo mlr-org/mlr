@@ -36,5 +36,5 @@ test_that("learners work: surv ", {
 
   # surv with oobpreds
   lrns = mylist("surv", properties = "oobpreds", create = TRUE)
-  lapply(lrns, testThatGetOOBPredsWorks, task = task)
+  lapply(lrns, testThatGetOOBPredsWorks, task = sub.task)
 })

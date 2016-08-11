@@ -152,17 +152,18 @@ testThatLearnerHandlesMissings = function(lrn, task, hyperpars) {
 # this works correctly
 
 testThatGetOOBPredsWorks = function(lrn, task) {
+  type = lrn$type
   mod = train(lrn, task)
   oob = getOOBPreds(mod, task)
   
   if (type == "classif") {
     expect_is(oob$data, "data.frame")
-    expect_equal(levels(oob$data$response), tsk$task.desc$class.levels)
+    expect_equal(levels(oob$data$response), task$task.desc$class.levels)
   } else {
     if (type %in% c("regr", "surv")) {
       expect_is(oob$data$response, "numeric")
     } 
   }
-  expect_equal(nrow(oob$data), nrow(getTaskData(tsk)))
+  expect_equal(nrow(oob$data), nrow(getTaskData(task)))
 }
 
