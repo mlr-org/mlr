@@ -46,7 +46,7 @@ Calculate the relative number of correct/incorrect classifications and the follo
  \item \code{npv} Negative predictive value
  \item \code{acc} Accuracy
  \item \code{lrm} Nevative likelihood ratio (LR-)
- \item \code{dor} Diagnostic odds ratio)
+ \item \code{dor} Diagnostic odds ratio
 }
 
 For details on the used measures see \code{\link{measures}} and also
