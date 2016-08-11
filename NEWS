@@ -14,6 +14,9 @@ mlr_2.10:
 - functions - removed
 
 - functions - renamed
+-- Renamed rf.importance filter to randomForestSRC.var.rfsrc (now deprecated)
+-- Renamed rf.min.depth filter to randomForestSRC.var.select (now deprecated)
+-- Replaced rf.impurity and rf.accuracy filters with a single randomForest.importance filter with a method parameter
 
 - learners - general
 -- regr.GPfit: some more params for correlation kernel
