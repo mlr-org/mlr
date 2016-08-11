@@ -55,7 +55,9 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
 
   assertString(cl)
   assertFlag(fix.factors.prediction)
-
+  assertList(config, names = "named")
+  # FIXME: maybe forbid show.info here issue #1098:
+  assertSubset(names(config), choices = names(getMlrOptions()))
   constructor = try(getS3method("makeRLearner", class = cl), silent = TRUE)
   if (inherits(constructor, "try-error")) {
     possibles = getNameProposals(cl, possible.inputs = suppressWarnings(listLearners()$class))
@@ -63,6 +65,7 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
       cl, stri_flatten(possibles, collapse = " "))
   }
   wl = do.call(constructor, list())
+  wl$config = config
 
   if (!missing(id)) {
     assertString(id)
@@ -70,7 +73,6 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
   }
   # predict.threshold is checked in setter below
   assertList(par.vals)
-  assertList(config, names = "named")
   if (stri_isempty(cl))
     stop("Cannot create learner from empty string!")
   if (!inherits(wl, "RLearner"))
@@ -80,7 +82,6 @@ makeLearner = function(cl, id = cl, predict.type = "response", predict.threshold
   if (!is.null(predict.threshold))
     wl = setPredictThreshold(wl, predict.threshold)
   wl$fix.factors.prediction = fix.factors.prediction
-  wl$config = config
   return(wl)
 }
 

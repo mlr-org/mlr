@@ -4,7 +4,7 @@
 \alias{setHyperPars2}
 \title{Only exported for internal use.}
 \usage{
-setHyperPars2(learner, par.vals)
+setHyperPars2(learner, par.vals, show.info = getMlrOption("show.info"))
 }
 \arguments{
 \item{learner}{[\code{\link{Learner}}]\cr
@@ -12,6 +12,10 @@ The learner.}
 
 \item{par.vals}{[\code{list}]\cr
 List of named (hyper)parameter settings.}
+
+\item{show.info}{[\code{logical(1)}]\cr
+Print verbose output on console?
+Default is set via \code{\link{configureMlr}}.}
 }
 \description{
 Only exported for internal use.
