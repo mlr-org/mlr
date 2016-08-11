@@ -140,14 +140,25 @@ makeFilter(
   }
 )
 
+#' Filter \dQuote{randomForestSRC.rfsrc} computes the importance of random forests
+#' fitted in package \pkg{randomForestSRC}. The concrete method is selected via
+#' the \code{method} parameter. Possible values are \code{permute} (default), \code{random},
+#' \code{anti}, \code{permute.ensemble}, \code{random.ensemble}, \code{anti.ensemble}.
+#' See the VIMP section in the docs for \code{\link[randomForestSRC]{rfsrc}} for
+#' details.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 rf.importance = makeFilter(
   name = "randomForestSRC.rfsrc",
   desc = "Importance of random forests fitted in package 'randomForestSRC'. Importance is calculated using argument 'permute'.",
   pkg  = "randomForestSRC",
   supported.tasks = c("classif", "regr", "surv"),
   supported.features = c("numerics", "factors", "ordered"),
-  fun = function(task, nselect, ...) {
-    im = randomForestSRC::rfsrc(getTaskFormula(task), data = getTaskData(task), proximity = FALSE, forest = FALSE, importance = "permute", ...)$importance
+  fun = function(task, nselect, method = "permute", ...) {
+    assertChoice(method, choices = c("permute", "random", "anti", "permute.ensemble", "random.ensemble",  "anti.ensemble"))
+    im = randomForestSRC::rfsrc(getTaskFormula(task), data = getTaskData(task), proximity = FALSE,
+      forest = FALSE, importance = method, ...)$importance
     if (inherits(task, "ClassifTask")) {
       ns = rownames(im)
       y = im[, "all"]
@@ -165,6 +176,7 @@ rf.importance = makeFilter(
   .FilterRegister[["randomForestSRC.rfsrc"]]$fun(...)
 }
 
+#'
 rf.min.depth = makeFilter(
   name = "randomForestSRC.var.select",
   desc = "Minimal depth of random forest fitted in package 'randomForestSRC'",
@@ -272,6 +284,11 @@ makeFilter(
   }
 )
 
+#' Filter \dQuote{information.gain} uses the entropy-based information gain
+#' between each feature and target individually as an importance measure.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 makeFilter(
   name = "information.gain",
   desc = "Entropy-based information gain between feature and target",
@@ -284,6 +301,11 @@ makeFilter(
   }
 )
 
+#' Filter \dQuote{gain.ratio} uses the entropy-based information gain ratio
+#' between each feature and target individually as an importance measure.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 makeFilter(
   name = "gain.ratio",
   desc = "Entropy-based gain ratio between feature and target",
@@ -296,6 +318,11 @@ makeFilter(
   }
 )
 
+#' Filter \dQuote{symmetrical.uncertainty} uses the entropy-based symmetrical uncertainty
+#' between each feature and target individually as an importance measure.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 makeFilter(
   name = "symmetrical.uncertainty",
   desc = "Entropy-based symmetrical uncertainty between feature and target",
