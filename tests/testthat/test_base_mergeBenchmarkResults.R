@@ -53,8 +53,17 @@ test_that("mergeBenchmarkResults", {
   l1t1 = benchmark(learners[[1L]], tasks[[1L]], cv2)
   l2t1 = benchmark(learners[[2L]], tasks[[1L]], cv2)
   l2t2 = benchmark(learners[[2L]], tasks[[2L]], cv2)
-  expect_error(mergeBenchmarkResults(l1t1, l2t1, l2t1), "occur in multiple")
+  expect_error(mergeBenchmarkResults(l1t1, l2t1, l2t1), "multiple times")
   expect_error(mergeBenchmarkResults(l1t1, l2t2), "are missing")
-  l1t1.acc = benchmark(learners[[1L]], tasks[[1L]], cv2, measures = list(acc))
-  expect_error(mergeBenchmarkResults(l2t1, l1t1.acc), "same measures")
+  # FIXME: do we want to merge BMR with different measures?
+  #l1t1.acc = benchmark(learners[[1L]], tasks[[1L]], cv2, measures = acc)
+  #expect_error(mergeBenchmarkResults(l2t1, l1t1.acc), "same measures")
+  
+  # check measures
+  bench1 = benchmark(learners[1:2], tasks[[1L]], cv2, measures = list(acc, mmce))
+  bench2 = benchmark(learners[2:1], tasks[[2L]], cv2, measures = list(mmce, acc))
+  bench2 = benchmark(learners[2:1], tasks[[2L]], cv2, measures = list(mmce, acc))
+  
+  
+  # check inequal task descriptions
 })

@@ -12,48 +12,48 @@
 #'   set of measures.
 #' @export
 mergeBenchmarkResults = function(...) {
-
-  # simple wrapper for unlist() with recursive set to FALSE
-  peelList = function(x) {
-    unlist(x, recursive = FALSE)
-  }
-
+  # check all objects have the class BenchmarkResult
   set = list(...)
-  for (i in seq_along(set)) {
-    assertClass(set[[i]], "BenchmarkResult")
-  }
-  # Check if bmrs optimized on same measure
-  measures = lapply(set, function(bmr) {
-    getBMRMeasureIds(bmr)
-  })
-  if (length(unique(measures)) > 1L)
-    stop("Benchmark results must all be calculated for the same measures.")
-
-  # see what combinations of tasks and learners are existing
-  existing.combos = lapply(set, function(bmr) {
-    getBMRAggrPerformances(bmr, as.df = TRUE)[, c("task.id", "learner.id")]
-  })
-  existing.combos = do.call("rbind", existing.combos)
-  # get task and learner names
-  task.names = unique(existing.combos$task.id)
-  learner.names = unique(existing.combos$learner.id)
-
-  # check for duplicated and missing combinations
+  assertList(set, types = "BenchmarkResult")
+  
+  # check for duplicated and missing task-learner combinations
+  learner.names = unique(unlist(lapply(set, getBMRLearnerIds)))
+  task.names = unique(unlist(lapply(set, getBMRTaskIds)))
   all.combos = expand.grid(task = task.names, learner = learner.names)
-  all.combos = apply(all.combos, 1L, collapse, "-")
-  existing.combos = apply(existing.combos, 1L, collapse, "-")
-  if (any(duplicated(existing.combos))) {
-    dupls = existing.combos[which(duplicated(existing.combos))]
-    stopf("The following task - learner combination(s) occur in multiple
-      benchmark experiments: \n-%s\n",
-      collapse(dupls, "\n-"))
-  }
-  if (length(existing.combos) < length(all.combos)) {
+  all.combos = apply(all.combos, 1L, collapse, " - ")
+  # existing.combos = unlist(lapply(set, function(bmr) {
+  #   paste(getBMRTaskIds(bmr), getBMRLearnerIds(bmr), sep = " - ")
+  # }))
+  existing.combos = rbindlist(lapply(set, function(bmr) {
+    getBMRAggrPerformances(bmr, as.df = TRUE)[, c("task.id", "learner.id")]
+  }))
+  existing.combos = apply(existing.combos, 1L, collapse, " - ")
+  if (!identical(sort(existing.combos), sort(all.combos))) {
+    dupls = existing.combos[duplicated(existing.combos)]
     diff = setdiff(all.combos, existing.combos)
-    stopf("The following task - learner combination(s) are missing: \n-%s\n",
-      collapse(diff, "\n-"))
+    msg = collapse(unique(c(dupls, diff)), "\n* ")
+    stopf("The following task - learner combination(s) occur either multiple times or are missing: \n* %s\n", msg)
   }
-
+  
+  # check if all task.desc are equal for each task and stop if there are tasks with more than 1 unique td
+  td = peelList(lapply(set, getBMRTaskDescriptions))
+  inequal.td = vlapply(td, function(x) length(unique(x)) > 1)
+  if (any(inequal.td)) 
+    stopf("Task descriptions not equal for tasks: %s", collapse(names(unique.td)[!unique.td]))
+  
+  # check if BMR use same measures
+  # measures = lapply(set, function(x) unique(getBMRMeasureIds(x)))
+  # intersect.measures = Reduce(intersect, measures)
+  # all.measures = unique(peelList(lapply(set, getBMRMeasures))) 
+  # names(all.measures) = vcapply(all.measures, function(x) x$id)
+  # measures.merged = unname(all.measures[intersect.measures])
+  measures.merged = peelList(lapply(set, getBMRMeasures))
+  measures.merged = measures.merged[!duplicated(measures.merged)]
+  
+  # get all actual learners and merge
+  lrns.merged = peelList(lapply(set, getBMRLearners))
+  lrns.merged = lrns.merged[!duplicated(lrns.merged)]
+  
   # get BMR results, merge and set correct structure
   res.merged = peelList(extractSubList(set, "results", simplify = FALSE))
   res.merged = lapply(task.names, function(x) {
@@ -63,13 +63,14 @@ mergeBenchmarkResults = function(...) {
   })
   names(res.merged) = task.names
   res.merged = res.merged[order(names(res.merged))]
-  
-  # get all actual learners and merge
-  lrns.merged = peelList(lapply(set, getBMRLearners))
-  lrns.merged = lrns.merged[!duplicated(lrns.merged)]
 
   makeS3Obj("BenchmarkResult",
     results = res.merged,
-    measures = getBMRMeasures(set[[1L]]),
+    measures = measures.merged,
     learners = lrns.merged)
+}
+
+# simple wrapper for unlist() with recursive set to FALSE
+peelList = function(x) {
+  unlist(x, recursive = FALSE)
 }
