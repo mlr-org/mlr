@@ -205,6 +205,16 @@ makeFilter(
   }
 )
 
+#' Filter \dQuote{randomForest.importance} makes use of the \code{\link[randomForest]{importance}}
+#' from package \pkg{randomForest}. The importance measure to use is selected via
+#' the \code{method} parameter:
+#' \describe{
+#'   \item{oob.accuracy}{Permutation of Out of Bag (OOB) data.}
+#'   \item{node.impurity}{Total decrease in node impurity.}
+#' }
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 makeFilter(
   name = "randomForest.importance",
   desc = "Importance based on OOB-accuracy or node inpurity of random forest fitted in package 'randomForest'.",
@@ -222,6 +232,11 @@ makeFilter(
   }
 )
 
+#' The Pearson correlation between each feature and the target is used as an indicator
+#' of feature importance. Rows with NA values are not taken into consideration.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 makeFilter(
   name = "linear.correlation",
   desc = "Pearson correlation between feature and target",
@@ -234,6 +249,11 @@ makeFilter(
   }
 )
 
+#' The Spearman correlation between each feature and the target is used as an indicator
+#' of feature importance. Rows with NA values are not taken into consideration.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 makeFilter(
   name = "rank.correlation",
   desc = "Spearman's correlation between feature and target",
@@ -282,6 +302,15 @@ makeFilter(
   }
 )
 
+#' The chi-square test is a statistical test of independence to determine whether
+#' two variables are independent. Filter \dQuote{chi.squared} applies this
+#' test in the following way. For each feature the chi-square test statistic is
+#' computed checking if there is a dependency between the feature and the target
+#' variable. Low values of the test statistic indicate a poor relationship. High
+#' values, i.e., high dependency identifies a feature as more important.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 makeFilter(
   name = "chi.squared",
   desc = "Chi-squared statistic of independence between feature and target",
@@ -294,6 +323,22 @@ makeFilter(
   }
 )
 
+#' Filter \dQuote{relief} is based on the feature selection algorithm \dQuote{ReliefF}
+#' by Kononenko et al., which is a generalization of the orignal \dQuote{Relief}
+#' algorithm originally proposed by Kira and Rendell. Feature weights are initialized
+#' with zeros. Then for each instance \code{sample.size} instances are sampled,
+#' \code{neighbours.count} nearest-hit and nearest-miss neighbours are computed
+#' and the weight vector for each feature is updated based on these values.
+#'
+#' @references
+#' Kira, Kenji and Rendell, Larry (1992). The Feature Selection Problem: Traditional
+#' Methods and a New Algorithm. AAAI-92 Proceedings.
+#'
+#' Kononenko, Igor et al. Overcoming the myopia of inductive learning algorithms
+#' with RELIEFF (1997), Applied Intelligence, 7(1), p39-55.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 makeFilter(
   name = "relief",
   desc = "RELIEF algorithm",
@@ -301,11 +346,19 @@ makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
-    y = FSelector::relief(getTaskFormula(task), data = getTaskData(task))
+    y = FSelector::relief(getTaskFormula(task), data = getTaskData(task), ...)
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   }
 )
 
+#' Filter \dQuote{oneR} makes use of a simple \dQuote{One-Rule} (OneR) learner to
+#' determine feature importance. For this purpose the OneR learner generates one
+#' simple association rule for each feature in the data individually and computes
+#' the total error. The lower the error value the more important the correspoding
+#' feature.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 makeFilter(
   name = "oneR",
   desc = "oneR association rule",
@@ -313,11 +366,20 @@ makeFilter(
   supported.tasks = c("classif", "regr"),
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
+    print(getTaskFormula(task))
     y = FSelector::oneR(getTaskFormula(task), data = getTaskData(task))
     setNames(y[["attr_importance"]], getTaskFeatureNames(task))
   }
 )
 
+#' The \dQuote{univariate.model.score} feature filter resamples an \pkg{mlr}
+#' learner specified via \code{perf.learner} for each feature individually
+#' with randomForest from package \pkg{rpart} being the default learner.
+#' Further parameter are the resamling strategey \code{perf.resampling} and
+#' the performance measure \code{perf.measure}.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 univariate = makeFilter(
   name = "univariate.model.score",
   desc = "Resamples an mlr learner for each input feature individually. The resampling performance is used as filter score, with rpart as default learner.",
@@ -362,6 +424,12 @@ univariate = makeFilter(
   .FilterRegister[["univariate.model.score"]]$fun(...)
 }
 
+#' Filter \dQuote{anova.test} is based on the Analysis of Variance (ANOVA) between
+#' feature and class. The value of the F-statistic is used as a measure of feature
+#' importance.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 makeFilter(
   name = "anova.test",
   desc = "ANOVA Test for binary and multiclass classification tasks",
@@ -378,6 +446,15 @@ makeFilter(
   }
 )
 
+#' Filter \dQuote{kruskal.test} applies a Kruskal-Wallis rank sum test of the
+#' null hypothesis that the location parameters of the distribution of a feature
+#' are the same in each class and considers the test statistic as an variable
+#' importance measure: if the location parameters do not differ in at least one
+#' case, i.e., the null hypothesis cannot be rejected, there is little evidence
+#' that the corresponding feature is suitable for classification.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 makeFilter(
   name = "kruskal.test",
   desc = "Kruskal Test for binary and multiclass classification tasks",
@@ -386,6 +463,7 @@ makeFilter(
   supported.features = c("numerics", "factors"),
   fun = function(task, nselect, ...) {
     data = getTaskData(task)
+    printHead(data)
     sapply(getTaskFeatureNames(task), function(feat.name) {
       f = as.formula(stri_paste(feat.name,"~", getTaskTargetNames(task)))
       t = kruskal.test(f, data = data)
@@ -394,6 +472,12 @@ makeFilter(
   }
 )
 
+#' Simple filter based on the variance of the features indepentent of each other.
+#' Features with higher variance are considered more important than features with
+#' low importance.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 makeFilter(
   name = "variance",
   desc = "A simple variance filter",
