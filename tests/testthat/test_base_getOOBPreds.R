@@ -7,7 +7,7 @@ test_that("getOOBPreds", {
   mod = train(lrn, task)
   oob = getOOBPreds(mod, task)
   pred = predict(mod, task)
-  expect_true(is.numeric(performance(oob, measures = list(acc, timetrain))))
+  expect_true(is.numeric(performance(oob, measures = list(acc))))
   expect_equal(dim(oob$data), dim(pred$data))
   expect_equal(names(oob$data), names(pred$data))
   expect_equal(names(oob), names(pred))
