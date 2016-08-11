@@ -15,6 +15,7 @@ either a numeric or a factor, the true target values.
 If probabilities were predicted, as many numeric columns as there were classes named
 \code{prob.classname}. If standard errors were predicted, a numeric column named \code{se}.
 
+The constructor \code{makePrediction} is mainly for internal use.
 
 Object members:
 \describe{
