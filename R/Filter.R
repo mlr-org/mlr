@@ -121,6 +121,12 @@ makeFilter(
     setNames(scores, res@feature_names[as.integer(mRMRe::solutions(res)[[1L]])])
 })
 
+#' Filter \dQuote{carscore} determines the \dQuote{Correlation-Adjusted (marginal) coRelation
+#' scores} (short CAR scores). The CAR scores for a set of features are defined as the
+#' correlations between the target and the decorrelated features.
+#'
+#' @rdname makeFilter
+#' @name makeFilter
 makeFilter(
   name = "carscore",
   desc = "CAR scores",
