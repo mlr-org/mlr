@@ -75,7 +75,7 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE) {
   
   if (relative) {
     
-    norm.conf.matrix = function(r) {
+    normConfMatrix = function(r) {
       if (any(r[js] > 0))
         r / sum(r[js])
       else
@@ -83,11 +83,11 @@ calculateConfusionMatrix = function(pred, relative = FALSE, sums = FALSE) {
     }
     
     #normalize by rows and add margins as a new column
-    result.rel.row = t(apply(tab, 1, norm.conf.matrix))
+    result.rel.row = t(apply(tab, 1, normConfMatrix))
     result.rel.row = cbind(result.rel.row, "-err-" = rowSums(result.rel.row) - diag(result.rel.row))
     
     #normalize by columns and add margins as a new row
-    result.rel.col = apply(tab, 2, norm.conf.matrix)
+    result.rel.col = apply(tab, 2, normConfMatrix)
     result.rel.col = rbind(result.rel.col, "-err-" = colSums(result.rel.col) - diag(result.rel.col))
     
     result$relative.row = result.rel.row
@@ -132,7 +132,7 @@ print.ConfMatrix = function(x, both = TRUE, digits = 2, ...) {
     
     col.err = x$relative.col[k + 1,]
     row.err = x$relative.row[,k + 1]
-    full.err = stri_pad_both(format(x$relative.error, digits = digits, nsmall = nsmall), 
+    full.err = stri_pad_right(format(x$relative.error, digits = digits, nsmall = nsmall), 
       width = nchar(res[1,1]))
     
     #bind marginal errors correctly formatted to rows and columns
