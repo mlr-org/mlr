@@ -76,7 +76,8 @@ r = crossval("classif.lda", iris.task, iters = 2L)
 print(calculateConfusionMatrix(r$pred))
 }
 \seealso{
-Other performance: \code{\link{estimateRelativeOverfitting}},
+Other performance: \code{\link{ConfMatrix}},
+  \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},
   \code{\link{makeMeasure}}, \code{\link{measures}},

@@ -106,7 +106,8 @@ f = function(task, model, pred, extra.args)
 makeMeasure(id = "my.sse", minimize = TRUE, properties = c("regr", "response"), fun = f)
 }
 \seealso{
-Other performance: \code{\link{calculateConfusionMatrix}},
+Other performance: \code{\link{ConfMatrix}},
+  \code{\link{calculateConfusionMatrix}},
   \code{\link{estimateRelativeOverfitting}},
   \code{\link{makeCostMeasure}},
   \code{\link{makeCustomResampledMeasure}},

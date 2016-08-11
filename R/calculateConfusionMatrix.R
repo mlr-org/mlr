@@ -170,12 +170,13 @@ print.ConfMatrix = function(x, both = TRUE, digits = 2, ...) {
 #' \describe{
 #' \item{result [\code{matrix}]}{Confusion matrix of absolute values and marginals. Can also contain
 #'   row and column sums of observations.}
-#' \item{task.desc [\code{\link{TaskDesc}}]}{Additional information about the used task.}
-#' \item{sums [\code{logical(1)}]}{Flag if marginal sums of observations are computed and should be printed.}
-#' \item{relative [\code{logical(1)}]}{Flag if the relative confusion matricies are calculated.}
+#' \item{task.desc [\code{\link{TaskDesc}}]}{Additional information about the task.}
+#' \item{sums [\code{logical(1)}]}{Flag if marginal sums of observations are calculated.}
+#' \item{relative [\code{logical(1)}]}{Flag if the relative confusion matrices are calculated.}
 #' \item{relative.row [\code{matrix}]}{Confusion matrix of relative values and marginals normalized by row.}
 #' \item{relative.col [\code{matrix}]}{Confusion matrix of relative values and marginals normalized by column.}
 #' \item{relative.error [\code{numeric(1)}]}{Relative error overall.}
 #' }
 #' @name ConfMatrix
+#' @family performance
 NULL
